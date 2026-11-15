@@ -1,0 +1,11702 @@
+{
+"_about": "FFXiMain.pdb, made by sdk/pdb/make_pdb.py for the build with TimeDateStamp 0x6A995428",
+"symbols": [
+{
+"address": "0x10001520",
+"name": "CApp::RunMainLoop",
+"kind": "function",
+"size": 406,
+"source": "tree"
+},
+{
+"address": "0x10001B50",
+"name": "App_RenderFrameMaskedFPU",
+"kind": "function",
+"size": 90,
+"source": "tree"
+},
+{
+"address": "0x10002040",
+"name": "Gfx_CopySurfaceRectToTexture",
+"kind": "function",
+"size": 231,
+"source": "tree"
+},
+{
+"address": "0x10002130",
+"name": "Gfx_ProbeDeviceCaps",
+"kind": "function",
+"size": 637,
+"source": "tree"
+},
+{
+"address": "0x10002F20",
+"name": "Gfx_CreateD3DHolder",
+"kind": "function",
+"size": 288,
+"source": "tree"
+},
+{
+"address": "0x100031F0",
+"name": "Gfx_D3DBootstrap",
+"kind": "function",
+"size": 450,
+"source": "tree"
+},
+{
+"address": "0x100033C0",
+"name": "Gfx_TryCreateDeviceForMode",
+"kind": "function",
+"size": 150,
+"source": "tree"
+},
+{
+"address": "0x100034B0",
+"name": "Gfx_CreateDevice",
+"kind": "function",
+"size": 234,
+"source": "tree"
+},
+{
+"address": "0x10003710",
+"name": "DebugOverlay_Update",
+"kind": "function",
+"size": 184,
+"source": "tree"
+},
+{
+"address": "0x10003890",
+"name": "Unit10003890_DrawActorAxes",
+"kind": "function",
+"size": 710,
+"source": "tree"
+},
+{
+"address": "0x10003B60",
+"name": "Debug_DrawTextTable",
+"kind": "function",
+"size": 518,
+"source": "tree"
+},
+{
+"address": "0x10003D70",
+"name": "Debug_DrawWorldText",
+"kind": "function",
+"size": 654,
+"source": "tree"
+},
+{
+"address": "0x100091B0",
+"name": "CDx::Initialize",
+"kind": "function",
+"size": 1116,
+"source": "tree"
+},
+{
+"address": "0x100096B0",
+"name": "CDx::EndClearBegin",
+"kind": "function",
+"size": 83,
+"source": "tree"
+},
+{
+"address": "0x10009710",
+"name": "CDx::TestCooperativeLevel",
+"kind": "function",
+"size": 15,
+"source": "tree"
+},
+{
+"address": "0x10009720",
+"name": "CDx::Present",
+"kind": "function",
+"size": 11,
+"source": "tree"
+},
+{
+"address": "0x10009730",
+"name": "CDx::BeginScene",
+"kind": "function",
+"size": 13,
+"source": "tree"
+},
+{
+"address": "0x10009740",
+"name": "CDx::EndScene",
+"kind": "function",
+"size": 13,
+"source": "tree"
+},
+{
+"address": "0x10009920",
+"name": "CDx_SetDefaultRenderState",
+"kind": "function",
+"size": 1015,
+"source": "dm"
+},
+{
+"address": "0x10009DC0",
+"name": "CDx::SetViewport",
+"kind": "function",
+"size": 53,
+"source": "tree"
+},
+{
+"address": "0x10009E20",
+"name": "CDx::PushRenderTarget",
+"kind": "function",
+"size": 51,
+"source": "tree"
+},
+{
+"address": "0x10009E60",
+"name": "sub_10009E60",
+"kind": "function",
+"size": 50,
+"source": "none"
+},
+{
+"address": "0x10009EA0",
+"name": "CDx::PushRenderTargetTexture_Flag1",
+"kind": "function",
+"size": 50,
+"source": "tree"
+},
+{
+"address": "0x10009EE0",
+"name": "CDx::PushRenderTargetTexture_Flag0",
+"kind": "function",
+"size": 49,
+"source": "tree"
+},
+{
+"address": "0x10009F20",
+"name": "CDx::PushRenderTargetTexture",
+"kind": "function",
+"size": 328,
+"source": "tree"
+},
+{
+"address": "0x1000A1D0",
+"name": "CDx::SetTexture",
+"kind": "function",
+"size": 44,
+"source": "tree"
+},
+{
+"address": "0x1000A390",
+"name": "CDx::EndAndClearBegin",
+"kind": "function",
+"size": 32,
+"source": "tree"
+},
+{
+"address": "0x1000A3B0",
+"name": "CDx::DrawScreenQuadAtDepth",
+"kind": "function",
+"size": 306,
+"source": "tree"
+},
+{
+"address": "0x1000A4F0",
+"name": "CDx::DrawTextureToViewport",
+"kind": "function",
+"size": 86,
+"source": "tree"
+},
+{
+"address": "0x1000A550",
+"name": "CDx::DrawTexturedScreenQuadUnit",
+"kind": "function",
+"size": 68,
+"source": "tree"
+},
+{
+"address": "0x1000A5A0",
+"name": "CDx::DrawTexturedScreenQuad",
+"kind": "function",
+"size": 305,
+"source": "tree"
+},
+{
+"address": "0x1000A6E0",
+"name": "CDx::CreateTexture",
+"kind": "function",
+"size": 243,
+"source": "tree"
+},
+{
+"address": "0x1000A800",
+"name": "CDx::PushRenderTargetRet1",
+"kind": "function",
+"size": 25,
+"source": "tree"
+},
+{
+"address": "0x1000A820",
+"name": "CDx::DrawFadeQuad",
+"kind": "function",
+"size": 651,
+"source": "tree"
+},
+{
+"address": "0x1000AAB0",
+"name": "CDx::Post_DepthBlurComposite",
+"kind": "function",
+"size": 289,
+"source": "tree"
+},
+{
+"address": "0x1000ABE0",
+"name": "CDx_CompositeUITarget",
+"kind": "function",
+"size": 387,
+"source": "dm"
+},
+{
+"address": "0x1000AEA0",
+"name": "sub_1000AEA0",
+"kind": "function",
+"size": 776,
+"source": "none"
+},
+{
+"address": "0x1000B1B0",
+"name": "sub_1000B1B0",
+"kind": "function",
+"size": 576,
+"source": "none"
+},
+{
+"address": "0x1000B460",
+"name": "sub_1000B460",
+"kind": "function",
+"size": 850,
+"source": "none"
+},
+{
+"address": "0x1000B7C0",
+"name": "sub_1000B7C0",
+"kind": "function",
+"size": 845,
+"source": "none"
+},
+{
+"address": "0x1000BB90",
+"name": "CDx::DrawStereoOddFrameOverlay",
+"kind": "function",
+"size": 437,
+"source": "tree"
+},
+{
+"address": "0x1000BD50",
+"name": "CDx::SetTransform",
+"kind": "function",
+"size": 82,
+"source": "tree"
+},
+{
+"address": "0x1000BF30",
+"name": "CDx::SetLight",
+"kind": "function",
+"size": 243,
+"source": "tree"
+},
+{
+"address": "0x1000C0B0",
+"name": "CDx::CompositeSceneToBackBuffer",
+"kind": "function",
+"size": 1569,
+"source": "tree"
+},
+{
+"address": "0x1000C6E0",
+"name": "CDx::CreateStereoResources",
+"kind": "function",
+"size": 218,
+"source": "tree"
+},
+{
+"address": "0x1000C850",
+"name": "CDx::CreateRampTexture1x16",
+"kind": "function",
+"size": 175,
+"source": "tree"
+},
+{
+"address": "0x1000C900",
+"name": "CDx::CreateRampTextures1024x2",
+"kind": "function",
+"size": 245,
+"source": "tree"
+},
+{
+"address": "0x1000CA00",
+"name": "CDx_GetStereoSecondEyeTarget",
+"kind": "function",
+"size": 279,
+"source": "dm"
+},
+{
+"address": "0x1000CB20",
+"name": "CDx::DrawPrimitive",
+"kind": "function",
+"size": 218,
+"source": "tree"
+},
+{
+"address": "0x1000CC00",
+"name": "CDx::DrawIndexedPrimitive",
+"kind": "function",
+"size": 248,
+"source": "tree"
+},
+{
+"address": "0x1000CD00",
+"name": "CDx::DrawPrimitiveUP",
+"kind": "function",
+"size": 233,
+"source": "tree"
+},
+{
+"address": "0x1000CDF0",
+"name": "sub_1000CDF0",
+"kind": "function",
+"size": 293,
+"source": "none"
+},
+{
+"address": "0x1000CF20",
+"name": "CDx::ApplyStereoEyeProjection",
+"kind": "function",
+"size": 110,
+"source": "tree"
+},
+{
+"address": "0x1000CF90",
+"name": "CDx::RestoreProjection",
+"kind": "function",
+"size": 22,
+"source": "tree"
+},
+{
+"address": "0x100106C0",
+"name": "CAtelIdleTask::UpdateFrame",
+"kind": "function",
+"size": 53,
+"source": "tree"
+},
+{
+"address": "0x10010D20",
+"name": "App_InitScene",
+"kind": "function",
+"size": 3061,
+"source": "dm"
+},
+{
+"address": "0x10011A00",
+"name": "Frame_Render",
+"kind": "function",
+"size": 5355,
+"source": "tree"
+},
+{
+"address": "0x10012F40",
+"name": "Post_Afterimage",
+"kind": "function",
+"size": 868,
+"source": "tree"
+},
+{
+"address": "0x100132B0",
+"name": "Post_FlashAndZoomFeedback",
+"kind": "function",
+"size": 1814,
+"source": "tree"
+},
+{
+"address": "0x10013AD0",
+"name": "sub_10013AD0",
+"kind": "function",
+"size": 775,
+"source": "none"
+},
+{
+"address": "0x10014170",
+"name": "App_DispatchSubState",
+"kind": "function",
+"size": 60,
+"source": "tree"
+},
+{
+"address": "0x10014350",
+"name": "Unit10014350_RunStepThenLoadAll",
+"kind": "function",
+"size": 55,
+"source": "tree"
+},
+{
+"address": "0x10014C10",
+"name": "Camera_ReleaseAll",
+"kind": "function",
+"size": 69,
+"source": "tree"
+},
+{
+"address": "0x10015510",
+"name": "Camera_ApplyViewProjection",
+"kind": "function",
+"size": 166,
+"source": "dm"
+},
+{
+"address": "0x100157B0",
+"name": "App_WinMainClearFileMng",
+"kind": "function",
+"size": 31,
+"source": "tree"
+},
+{
+"address": "0x10015AB0",
+"name": "App_RunWithCOM",
+"kind": "function",
+"size": 205,
+"source": "tree"
+},
+{
+"address": "0x100161B0",
+"name": "App_CreateRendererAndApp",
+"kind": "function",
+"size": 336,
+"source": "tree"
+},
+{
+"address": "0x10016300",
+"name": "App_RunMainLoopThenSetPtr",
+"kind": "function",
+"size": 31,
+"source": "tree"
+},
+{
+"address": "0x10016320",
+"name": "App_DestroyGlobalObjects",
+"kind": "function",
+"size": 116,
+"source": "tree"
+},
+{
+"address": "0x10016870",
+"name": "App_WndProc",
+"kind": "function",
+"size": 1298,
+"source": "tree"
+},
+{
+"address": "0x10017230",
+"name": "GammaRamp_ApplyIfChanged",
+"kind": "function",
+"size": 152,
+"source": "tree"
+},
+{
+"address": "0x100172D0",
+"name": "sub_100172D0",
+"kind": "function",
+"size": 57,
+"source": "none"
+},
+{
+"address": "0x10017310",
+"name": "Unit10014350_Draw",
+"kind": "function",
+"size": 525,
+"source": "tree"
+},
+{
+"address": "0x10017780",
+"name": "CShader::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x100177A0",
+"name": "CShader::CShader_Destructor",
+"kind": "function",
+"size": 57,
+"source": "tree"
+},
+{
+"address": "0x10017810",
+"name": "Shader_CreateVertexShader",
+"kind": "function",
+"size": 50,
+"source": "tree"
+},
+{
+"address": "0x10017C20",
+"name": "Unit10017C10_Step",
+"kind": "function",
+"size": 54,
+"source": "tree"
+},
+{
+"address": "0x10017C60",
+"name": "Unit10017C10_Begin",
+"kind": "function",
+"size": 191,
+"source": "tree"
+},
+{
+"address": "0x10018B50",
+"name": "Unit10018840_UpdateRangeEntries",
+"kind": "function",
+"size": 241,
+"source": "tree"
+},
+{
+"address": "0x1001C930",
+"name": "sub_1001C930",
+"kind": "function",
+"size": 1608,
+"source": "none"
+},
+{
+"address": "0x1001D0A0",
+"name": "Model_CreateTranslucentTargets",
+"kind": "function",
+"size": 108,
+"source": "tree"
+},
+{
+"address": "0x1001D240",
+"name": "Model_BeginTranslucentPass",
+"kind": "function",
+"size": 270,
+"source": "tree"
+},
+{
+"address": "0x1001D350",
+"name": "Model_TranslucentUnbindTexture",
+"kind": "function",
+"size": 54,
+"source": "tree"
+},
+{
+"address": "0x1001D3B0",
+"name": "Model_CompositeTranslucentPass",
+"kind": "function",
+"size": 1104,
+"source": "tree"
+},
+{
+"address": "0x1001D800",
+"name": "TexRes_LoadBm2",
+"kind": "function",
+"size": 194,
+"source": "tree"
+},
+{
+"address": "0x1001DC70",
+"name": "Tex_DrawNamedTexturePreview",
+"kind": "function",
+"size": 142,
+"source": "tree"
+},
+{
+"address": "0x1001DD00",
+"name": "Gfx_DrawScreenQuad256",
+"kind": "function",
+"size": 598,
+"source": "tree"
+},
+{
+"address": "0x100224D0",
+"name": "CYyModelDt_PrepareRenderState",
+"kind": "function",
+"size": 2762,
+"source": "dm"
+},
+{
+"address": "0x10022FA0",
+"name": "CYyModelDt::SetVertexShader",
+"kind": "function",
+"size": 48,
+"source": "tree"
+},
+{
+"address": "0x10025030",
+"name": "CYyModelDt::PrepareRenderStateEntry",
+"kind": "function",
+"size": 46,
+"source": "tree"
+},
+{
+"address": "0x10025260",
+"name": "Unit10025220_Init",
+"kind": "function",
+"size": 109,
+"source": "tree"
+},
+{
+"address": "0x10025330",
+"name": "ProjTex_BeginPass",
+"kind": "function",
+"size": 643,
+"source": "tree"
+},
+{
+"address": "0x100255C0",
+"name": "ProjTex_EndPass",
+"kind": "function",
+"size": 657,
+"source": "tree"
+},
+{
+"address": "0x10025870",
+"name": "ProjTex_CaptureToTarget",
+"kind": "function",
+"size": 801,
+"source": "tree"
+},
+{
+"address": "0x10025C40",
+"name": "EnvMap_BeginPass",
+"kind": "function",
+"size": 810,
+"source": "tree"
+},
+{
+"address": "0x10025F70",
+"name": "EnvMap_EndPass",
+"kind": "function",
+"size": 663,
+"source": "tree"
+},
+{
+"address": "0x100262C0",
+"name": "sub_100262C0",
+"kind": "function",
+"size": 296,
+"source": "none"
+},
+{
+"address": "0x100263F0",
+"name": "Dbg_DrawViewAxisGizmo",
+"kind": "function",
+"size": 708,
+"source": "tree"
+},
+{
+"address": "0x100266C0",
+"name": "Dbg_DrawAxesAt",
+"kind": "function",
+"size": 422,
+"source": "tree"
+},
+{
+"address": "0x10026990",
+"name": "CYyIcon::Draw",
+"kind": "function",
+"size": 311,
+"source": "tree"
+},
+{
+"address": "0x10026AD0",
+"name": "CXiMovie::Draw",
+"kind": "function",
+"size": 414,
+"source": "tree"
+},
+{
+"address": "0x10026C70",
+"name": "CYyIcon::DrawSubRect",
+"kind": "function",
+"size": 361,
+"source": "tree"
+},
+{
+"address": "0x10027930",
+"name": "Gfx_ScreenDeltaToNdc",
+"kind": "function",
+"size": 81,
+"source": "tree"
+},
+{
+"address": "0x100294B0",
+"name": "sub_100294B0",
+"kind": "function",
+"size": 237,
+"source": "none"
+},
+{
+"address": "0x100295A0",
+"name": "Mem_DrawHeapUsageBar",
+"kind": "function",
+"size": 720,
+"source": "tree"
+},
+{
+"address": "0x10029A50",
+"name": "CreateSharedVertexBuffers",
+"kind": "function",
+"size": 264,
+"source": "tree"
+},
+{
+"address": "0x1002A000",
+"name": "CYyModelDt::PrepareRenderStateV2Entry",
+"kind": "function",
+"size": 55,
+"source": "tree"
+},
+{
+"address": "0x1002A3B0",
+"name": "CYyModelBase::DrawLit",
+"kind": "function",
+"size": 837,
+"source": "tree"
+},
+{
+"address": "0x1002B4B0",
+"name": "CYyModel::Constructor",
+"kind": "function",
+"size": 115,
+"source": "tree"
+},
+{
+"address": "0x1002B6E0",
+"name": "CXiSkeletonActor::DrawModel",
+"kind": "function",
+"size": 2959,
+"source": "tree"
+},
+{
+"address": "0x1002C360",
+"name": "CXiSkeletonActor::PrepareModelsOnce",
+"kind": "function",
+"size": 114,
+"source": "tree"
+},
+{
+"address": "0x1002CCB0",
+"name": "CYyOs2VtxBuffer::CreateBuffersStep",
+"kind": "function",
+"size": 332,
+"source": "tree"
+},
+{
+"address": "0x1002D660",
+"name": "CYyOs2VtxBuffer_ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x1002D680",
+"name": "CYyOs2VtxBuffer::Constructor",
+"kind": "function",
+"size": 126,
+"source": "tree"
+},
+{
+"address": "0x1002D700",
+"name": "CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor",
+"kind": "function",
+"size": 227,
+"source": "tree"
+},
+{
+"address": "0x1002D7F0",
+"name": "CMoResource_VT_1032C854::CheckVersionAndInit",
+"kind": "function",
+"size": 97,
+"source": "tree"
+},
+{
+"address": "0x1002D8F0",
+"name": "Unit1002D8E0_FixOffsetsAndCreateVtxBuffer",
+"kind": "function",
+"size": 133,
+"source": "tree"
+},
+{
+"address": "0x1002DC10",
+"name": "CYyModelDt::SkinAndDrawV2",
+"kind": "function",
+"size": 5315,
+"source": "tree"
+},
+{
+"address": "0x1002F130",
+"name": "Gfx_SetStreamSourceCached",
+"kind": "function",
+"size": 36,
+"source": "tree"
+},
+{
+"address": "0x1002F160",
+"name": "Gfx_ApplyCachedStreamSource",
+"kind": "function",
+"size": 50,
+"source": "tree"
+},
+{
+"address": "0x1002F1A0",
+"name": "Gfx_ApplyCachedVertexShader",
+"kind": "function",
+"size": 32,
+"source": "tree"
+},
+{
+"address": "0x10033710",
+"name": "Unit100310A0_Construct",
+"kind": "function",
+"size": 134,
+"source": "tree"
+},
+{
+"address": "0x10033800",
+"name": "Model_BeginOffscreenPass",
+"kind": "function",
+"size": 616,
+"source": "tree"
+},
+{
+"address": "0x10033A70",
+"name": "Model_EndOffscreenPassBindTextures",
+"kind": "function",
+"size": 813,
+"source": "tree"
+},
+{
+"address": "0x10033DA0",
+"name": "Shadow_DrawByMode",
+"kind": "function",
+"size": 255,
+"source": "tree"
+},
+{
+"address": "0x10036230",
+"name": "CYySoundElem::UpdateQueue",
+"kind": "function",
+"size": 297,
+"source": "tree"
+},
+{
+"address": "0x100364A0",
+"name": "CYySoundElem::UpdateOne",
+"kind": "function",
+"size": 52,
+"source": "tree"
+},
+{
+"address": "0x100364E0",
+"name": "CYySoundElem::UpdateTimerAndPosition",
+"kind": "function",
+"size": 645,
+"source": "tree"
+},
+{
+"address": "0x100368B0",
+"name": "CYySoundElem::UpdateFromCamera",
+"kind": "function",
+"size": 193,
+"source": "tree"
+},
+{
+"address": "0x10038520",
+"name": "Font_DrawPass",
+"kind": "function",
+"size": 507,
+"source": "tree"
+},
+{
+"address": "0x10038720",
+"name": "Font_DrawString",
+"kind": "function",
+"size": 502,
+"source": "tree"
+},
+{
+"address": "0x10038930",
+"name": "Post_CreateScreenEffectTargets",
+"kind": "function",
+"size": 134,
+"source": "tree"
+},
+{
+"address": "0x10038A80",
+"name": "Post_CaptureSceneToTarget",
+"kind": "function",
+"size": 899,
+"source": "tree"
+},
+{
+"address": "0x10038E10",
+"name": "Post_DrawRotatingGhostLayers",
+"kind": "function",
+"size": 1507,
+"source": "tree"
+},
+{
+"address": "0x10039A30",
+"name": "TexObj_CreateAndUpload",
+"kind": "function",
+"size": 37,
+"source": "tree"
+},
+{
+"address": "0x10039A60",
+"name": "TexObj_Reupload",
+"kind": "function",
+"size": 25,
+"source": "tree"
+},
+{
+"address": "0x10039A80",
+"name": "TexObj_Create",
+"kind": "function",
+"size": 974,
+"source": "dm"
+},
+{
+"address": "0x10039E50",
+"name": "TexObj_Upload",
+"kind": "function",
+"size": 2853,
+"source": "tree"
+},
+{
+"address": "0x1003AB70",
+"name": "TexMgr_UploadPumpEntry",
+"kind": "function",
+"size": 8,
+"source": "tree"
+},
+{
+"address": "0x1003ABB0",
+"name": "TexMgr_UploadPump",
+"kind": "function",
+"size": 144,
+"source": "tree"
+},
+{
+"address": "0x1003B080",
+"name": "sub_1003B080",
+"kind": "function",
+"size": 285,
+"source": "none"
+},
+{
+"address": "0x1003B210",
+"name": "CYyVbMng::AcquireVertexBuffer",
+"kind": "function",
+"size": 420,
+"source": "tree"
+},
+{
+"address": "0x1003D640",
+"name": "sub_1003D640",
+"kind": "function",
+"size": 751,
+"source": "none"
+},
+{
+"address": "0x1003D9A0",
+"name": "Sky_DrawDome",
+"kind": "function",
+"size": 422,
+"source": "tree"
+},
+{
+"address": "0x1003DB60",
+"name": "Sky_DrawDomeViewCentered",
+"kind": "function",
+"size": 653,
+"source": "tree"
+},
+{
+"address": "0x1003E910",
+"name": "YmElem_DrawD3ASegment",
+"kind": "function",
+"size": 133,
+"source": "tree"
+},
+{
+"address": "0x1003E9A0",
+"name": "YmElem_SetD3ADrawState",
+"kind": "function",
+"size": 346,
+"source": "tree"
+},
+{
+"address": "0x1003EB30",
+"name": "CMoD3aElem::vf18",
+"kind": "function",
+"size": 41,
+"source": "tree"
+},
+{
+"address": "0x1003EBF0",
+"name": "sub_1003EBF0",
+"kind": "function",
+"size": 576,
+"source": "none"
+},
+{
+"address": "0x1003EE70",
+"name": "sub_1003EE70",
+"kind": "function",
+"size": 131,
+"source": "none"
+},
+{
+"address": "0x1003F130",
+"name": "sub_1003F130",
+"kind": "function",
+"size": 750,
+"source": "none"
+},
+{
+"address": "0x1003F440",
+"name": "CMoDistMorphElem::ApplyMorph",
+"kind": "function",
+"size": 1094,
+"source": "tree"
+},
+{
+"address": "0x1003FBB0",
+"name": "CXi471011C8_VT_1032AC90_RebuildBlendWeights",
+"kind": "function",
+"size": 124,
+"source": "dm"
+},
+{
+"address": "0x10040220",
+"name": "CMoDistModelElem::DrawBatches",
+"kind": "function",
+"size": 1006,
+"source": "tree"
+},
+{
+"address": "0x10040670",
+"name": "CMoDistModelElem::DrawMesh",
+"kind": "function",
+"size": 1235,
+"source": "tree"
+},
+{
+"address": "0x10040BA0",
+"name": "sub_10040BA0",
+"kind": "function",
+"size": 119,
+"source": "none"
+},
+{
+"address": "0x10040C20",
+"name": "CMoElemFamily_SharedEarlyExit",
+"kind": "function",
+"size": 494,
+"source": "dm"
+},
+{
+"address": "0x10040E70",
+"name": "CXi471011C8_VT_1032B3B8::RebuildBlendWeights",
+"kind": "function",
+"size": 316,
+"source": "tree"
+},
+{
+"address": "0x10041160",
+"name": "CMoD3mSpecularElem::BindTintedTexture",
+"kind": "function",
+"size": 336,
+"source": "tree"
+},
+{
+"address": "0x100412B0",
+"name": "YmElem_DrawSpecular",
+"kind": "function",
+"size": 1867,
+"source": "facts"
+},
+{
+"address": "0x10041AF0",
+"name": "CMoElem_VT_1032ADE8::vf18",
+"kind": "function",
+"size": 296,
+"source": "tree"
+},
+{
+"address": "0x10041C20",
+"name": "sub_10041C20",
+"kind": "function",
+"size": 780,
+"source": "none"
+},
+{
+"address": "0x100421A0",
+"name": "CMoOtTask_Draw",
+"kind": "function",
+"size": 846,
+"source": "dm"
+},
+{
+"address": "0x100426F0",
+"name": "YmElem_DrawScreenDistortion",
+"kind": "function",
+"size": 1504,
+"source": "tree"
+},
+{
+"address": "0x10042D00",
+"name": "CMoDistMorphElem_ValidateMorphData",
+"kind": "function",
+"size": 923,
+"source": "dm"
+},
+{
+"address": "0x100431B0",
+"name": "CMoDistModelElem::Draw",
+"kind": "function",
+"size": 338,
+"source": "tree"
+},
+{
+"address": "0x10043320",
+"name": "CMoDistModelElem_BuildDistortedMesh",
+"kind": "function",
+"size": 582,
+"source": "dm"
+},
+{
+"address": "0x10043590",
+"name": "CMoDistMorphElem_UpdateMorphBlend",
+"kind": "function",
+"size": 362,
+"source": "dm"
+},
+{
+"address": "0x10043720",
+"name": "CMoDistRingElem::AllocRingGeometry",
+"kind": "function",
+"size": 642,
+"source": "tree"
+},
+{
+"address": "0x10043F40",
+"name": "CMoVuElem_Draw",
+"kind": "function",
+"size": 201,
+"source": "tree"
+},
+{
+"address": "0x10044210",
+"name": "Gfx_SetViewMatrixFromField10",
+"kind": "function",
+"size": 23,
+"source": "tree"
+},
+{
+"address": "0x10044230",
+"name": "Gfx_SetViewMatrixFromField90",
+"kind": "function",
+"size": 26,
+"source": "tree"
+},
+{
+"address": "0x10044250",
+"name": "sub_10044250",
+"kind": "function",
+"size": 21,
+"source": "none"
+},
+{
+"address": "0x10044270",
+"name": "Mo_InitSharedRenderResources",
+"kind": "function",
+"size": 529,
+"source": "tree"
+},
+{
+"address": "0x100446A0",
+"name": "Unit10043E40_ReleaseResourcesOf",
+"kind": "function",
+"size": 340,
+"source": "tree"
+},
+{
+"address": "0x10044AE0",
+"name": "CMoElem::AdvanceTimer",
+"kind": "function",
+"size": 318,
+"source": "tree"
+},
+{
+"address": "0x10045A40",
+"name": "CMoElem::PrepareDraw",
+"kind": "function",
+"size": 147,
+"source": "tree"
+},
+{
+"address": "0x10046070",
+"name": "YmElem_DrawWithOwnProjection",
+"kind": "function",
+"size": 775,
+"source": "tree"
+},
+{
+"address": "0x100464D0",
+"name": "Fog_SetRenderStates",
+"kind": "function",
+"size": 88,
+"source": "tree"
+},
+{
+"address": "0x10046550",
+"name": "sub_10046550",
+"kind": "function",
+"size": 618,
+"source": "none"
+},
+{
+"address": "0x100467E0",
+"name": "YmElem_SetupDevice",
+"kind": "function",
+"size": 2643,
+"source": "tree"
+},
+{
+"address": "0x100472F0",
+"name": "YmElem_RestoreDevice",
+"kind": "function",
+"size": 234,
+"source": "tree"
+},
+{
+"address": "0x10047CE0",
+"name": "CMoGeneratorClone::FixupClonedPointers",
+"kind": "function",
+"size": 658,
+"source": "tree"
+},
+{
+"address": "0x10047FE0",
+"name": "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x1004A870",
+"name": "GateEffectBoxProjection",
+"kind": "function",
+"size": 263,
+"source": "tree"
+},
+{
+"address": "0x1004E630",
+"name": "ScaleElemVisibilityByProbe",
+"kind": "function",
+"size": 231,
+"source": "tree"
+},
+{
+"address": "0x1004E720",
+"name": "CMoGeneratorClone::ExecuteCmdList",
+"kind": "function",
+"size": 402,
+"source": "tree"
+},
+{
+"address": "0x100531D0",
+"name": "SharedConditionalStateReset",
+"kind": "function",
+"size": 381,
+"source": "tree"
+},
+{
+"address": "0x100536C0",
+"name": "CMoGeneratorClone::CreateInstance",
+"kind": "function",
+"size": 368,
+"source": "tree"
+},
+{
+"address": "0x10053840",
+"name": "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x100538E0",
+"name": "YmGenerater_Stop",
+"kind": "function",
+"size": 256,
+"source": "tree"
+},
+{
+"address": "0x10053A00",
+"name": "Unit10053860_StopGenerators",
+"kind": "function",
+"size": 627,
+"source": "tree"
+},
+{
+"address": "0x10054220",
+"name": "CMoTask_VT_1032B654::RunGeneratorAndFinish",
+"kind": "function",
+"size": 174,
+"source": "tree"
+},
+{
+"address": "0x100542F0",
+"name": "CMoGeneratorClone::Destructor",
+"kind": "function",
+"size": 111,
+"source": "tree"
+},
+{
+"address": "0x10054D70",
+"name": "BeginEffectOffscreenPass",
+"kind": "function",
+"size": 502,
+"source": "facts"
+},
+{
+"address": "0x10054F80",
+"name": "EndEffectOffscreenPass",
+"kind": "function",
+"size": 57,
+"source": "tree"
+},
+{
+"address": "0x100565A0",
+"name": "CXi471011C8_VT_1032B478_RebuildBlendWeights",
+"kind": "function",
+"size": 672,
+"source": "dm"
+},
+{
+"address": "0x100575A0",
+"name": "sub_100575A0",
+"kind": "function",
+"size": 1423,
+"source": "none"
+},
+{
+"address": "0x10057E10",
+"name": "CMoSchedularTask::vf8",
+"kind": "function",
+"size": 410,
+"source": "tree"
+},
+{
+"address": "0x10057FB0",
+"name": "CMoSchedularTask_Interpret",
+"kind": "function",
+"size": 23660,
+"source": "dm"
+},
+{
+"address": "0x1006A020",
+"name": "Gfx_CreateVertexBuffer",
+"kind": "function",
+"size": 58,
+"source": "tree"
+},
+{
+"address": "0x1006A150",
+"name": "CMoDX::CreateTexture",
+"kind": "function",
+"size": 33,
+"source": "tree"
+},
+{
+"address": "0x1006A300",
+"name": "sub_1006A300",
+"kind": "function",
+"size": 185,
+"source": "none"
+},
+{
+"address": "0x1006A480",
+"name": "CMoDX::SetWorldMatrix",
+"kind": "function",
+"size": 24,
+"source": "tree"
+},
+{
+"address": "0x1006A4F0",
+"name": "CMoDX::PopViewMatrix",
+"kind": "function",
+"size": 34,
+"source": "tree"
+},
+{
+"address": "0x1006A520",
+"name": "CMoDX::SetViewMatrix",
+"kind": "function",
+"size": 21,
+"source": "tree"
+},
+{
+"address": "0x1006A630",
+"name": "sub_1006A630",
+"kind": "function",
+"size": 920,
+"source": "none"
+},
+{
+"address": "0x1006AA30",
+"name": "Batch_DrawPrimitives",
+"kind": "function",
+"size": 228,
+"source": "tree"
+},
+{
+"address": "0x1006ADC0",
+"name": "sub_1006ADC0",
+"kind": "function",
+"size": 47,
+"source": "none"
+},
+{
+"address": "0x1006AF00",
+"name": "StateBlockHolder_ApplyRenderStates",
+"kind": "function",
+"size": 142,
+"source": "tree"
+},
+{
+"address": "0x1006AF90",
+"name": "StateBlock_ApplyTSS",
+"kind": "function",
+"size": 146,
+"source": "tree"
+},
+{
+"address": "0x1006B070",
+"name": "CMoDxStatusMng::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x1006B090",
+"name": "sub_1006B090",
+"kind": "function",
+"size": 41,
+"source": "none"
+},
+{
+"address": "0x1006B2B0",
+"name": "CMoDX::CreateAndInitSystem",
+"kind": "function",
+"size": 256,
+"source": "tree"
+},
+{
+"address": "0x1006C140",
+"name": "sub_1006C140",
+"kind": "function",
+"size": 117,
+"source": "none"
+},
+{
+"address": "0x1006C220",
+"name": "CMoOcclusionMng::OcclusionMng_CreateTarget",
+"kind": "function",
+"size": 49,
+"source": "tree"
+},
+{
+"address": "0x1006C280",
+"name": "Occlusion_QueryScreenRect",
+"kind": "function",
+"size": 121,
+"source": "tree"
+},
+{
+"address": "0x1006C300",
+"name": "Occlusion_QueryScreenRectImpl",
+"kind": "function",
+"size": 550,
+"source": "tree"
+},
+{
+"address": "0x1006C530",
+"name": "Occlusion_DrawQuery",
+"kind": "function",
+"size": 849,
+"source": "tree"
+},
+{
+"address": "0x1006C8B0",
+"name": "Occlusion_ReadbackCount",
+"kind": "function",
+"size": 252,
+"source": "tree"
+},
+{
+"address": "0x1006C9B0",
+"name": "OcclusionMng_Prepare",
+"kind": "function",
+"size": 112,
+"source": "tree"
+},
+{
+"address": "0x10075280",
+"name": "Gfx_InitCubeMapTextures",
+"kind": "function",
+"size": 526,
+"source": "tree"
+},
+{
+"address": "0x100755A0",
+"name": "TexRef_EnsureRenderTarget",
+"kind": "function",
+"size": 239,
+"source": "tree"
+},
+{
+"address": "0x10075690",
+"name": "sub_10075690",
+"kind": "function",
+"size": 111,
+"source": "none"
+},
+{
+"address": "0x10075700",
+"name": "TextureHolder_BindWarped",
+"kind": "function",
+"size": 577,
+"source": "tree"
+},
+{
+"address": "0x10075960",
+"name": "TexRef_SetTexture",
+"kind": "function",
+"size": 81,
+"source": "tree"
+},
+{
+"address": "0x100759C0",
+"name": "TextureHolder_BindTinted",
+"kind": "function",
+"size": 622,
+"source": "tree"
+},
+{
+"address": "0x10075C40",
+"name": "sub_10075C40",
+"kind": "function",
+"size": 826,
+"source": "none"
+},
+{
+"address": "0x10075FF0",
+"name": "sub_10075FF0",
+"kind": "function",
+"size": 56,
+"source": "none"
+},
+{
+"address": "0x10076030",
+"name": "CMoTask::DrawQuadStates",
+"kind": "function",
+"size": 1166,
+"source": "tree"
+},
+{
+"address": "0x100764C0",
+"name": "sub_100764C0",
+"kind": "function",
+"size": 93,
+"source": "none"
+},
+{
+"address": "0x10076520",
+"name": "CMoTask::DrawQuadDynVB",
+"kind": "function",
+"size": 456,
+"source": "tree"
+},
+{
+"address": "0x10085060",
+"name": "CXiActor::SpawnResourceGenerators",
+"kind": "function",
+"size": 378,
+"source": "tree"
+},
+{
+"address": "0x10086210",
+"name": "Actor_DrawWorldText",
+"kind": "function",
+"size": 1774,
+"source": "tree"
+},
+{
+"address": "0x10086900",
+"name": "DrawNameplateSecondString",
+"kind": "function",
+"size": 1378,
+"source": "facts"
+},
+{
+"address": "0x1008E4D0",
+"name": "Unit10086E90_UpdateFlags120Bit23",
+"kind": "function",
+"size": 507,
+"source": "tree"
+},
+{
+"address": "0x1008E9A0",
+"name": "Acter_UpdateOne",
+"kind": "function",
+"size": 1017,
+"source": "tree"
+},
+{
+"address": "0x10095900",
+"name": "Acter_UpdateAllLists",
+"kind": "function",
+"size": 1137,
+"source": "tree"
+},
+{
+"address": "0x10096640",
+"name": "Acter_UpdateFrame",
+"kind": "function",
+"size": 1613,
+"source": "tree"
+},
+{
+"address": "0x100AB700",
+"name": "CXiDancerActor::Construct",
+"kind": "function",
+"size": 69,
+"source": "tree"
+},
+{
+"address": "0x100AC390",
+"name": "sub_100AC390",
+"kind": "function",
+"size": 333,
+"source": "none"
+},
+{
+"address": "0x100C4C20",
+"name": "XiModelActor::BuildMatrixAndDraw",
+"kind": "function",
+"size": 190,
+"source": "tree"
+},
+{
+"address": "0x100C4CE0",
+"name": "sub_100C4CE0",
+"kind": "function",
+"size": 357,
+"source": "none"
+},
+{
+"address": "0x100C52A0",
+"name": "CXiSkeletonActor::Constructor_1Arg",
+"kind": "function",
+"size": 365,
+"source": "tree"
+},
+{
+"address": "0x100C5540",
+"name": "CXiSkeletonActor::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x100C5560",
+"name": "CXiSkeletonActor::Constructor_2Arg",
+"kind": "function",
+"size": 372,
+"source": "tree"
+},
+{
+"address": "0x100C56E0",
+"name": "CXiSkeletonActor::Constructor_3Arg",
+"kind": "function",
+"size": 412,
+"source": "tree"
+},
+{
+"address": "0x100C5880",
+"name": "CXiSkeletonActor::Constructor_4Arg",
+"kind": "function",
+"size": 304,
+"source": "tree"
+},
+{
+"address": "0x100C59B0",
+"name": "CXiSkeletonActor::Constructor_Factory",
+"kind": "function",
+"size": 577,
+"source": "tree"
+},
+{
+"address": "0x100C5C00",
+"name": "CXiSkeletonActor::DestructorBody",
+"kind": "function",
+"size": 338,
+"source": "tree"
+},
+{
+"address": "0x100C63D0",
+"name": "CXiSkeletonActor_OnMove",
+"kind": "function",
+"size": 7763,
+"source": "dm"
+},
+{
+"address": "0x100CB4E0",
+"name": "Actor_SelectNearestLights",
+"kind": "function",
+"size": 2161,
+"source": "tree"
+},
+{
+"address": "0x100CBD60",
+"name": "CXiSkeletonActor::RunStaggeredUpdates",
+"kind": "function",
+"size": 44,
+"source": "tree"
+},
+{
+"address": "0x100CBDE0",
+"name": "CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate",
+"kind": "function",
+"size": 4153,
+"source": "tree"
+},
+{
+"address": "0x100CD040",
+"name": "fn_100CD040",
+"kind": "function",
+"size": 912,
+"source": "tree"
+},
+{
+"address": "0x100D0740",
+"name": "CXiSkeletonActor::ProjectToScreen",
+"kind": "function",
+"size": 315,
+"source": "tree"
+},
+{
+"address": "0x100D0880",
+"name": "CXiSkeletonActor::DrawNameIfVisible",
+"kind": "function",
+"size": 46,
+"source": "tree"
+},
+{
+"address": "0x100D08B0",
+"name": "CXiSkeletonActor_DrawName2IfVisible",
+"kind": "function",
+"size": 36,
+"source": "tree"
+},
+{
+"address": "0x100D0B50",
+"name": "CXiSkeletonActor::AddPartAndMarkSlot",
+"kind": "function",
+"size": 466,
+"source": "tree"
+},
+{
+"address": "0x100D0D70",
+"name": "CXiSkeletonActor_AttachPartResource",
+"kind": "function",
+"size": 267,
+"source": "tree"
+},
+{
+"address": "0x100D1070",
+"name": "CXiSkeletonActor::RunPendingPartStep",
+"kind": "function",
+"size": 256,
+"source": "tree"
+},
+{
+"address": "0x100D1450",
+"name": "Unit100D13B0_ProcessResidentListEntries",
+"kind": "function",
+"size": 103,
+"source": "tree"
+},
+{
+"address": "0x100D14C0",
+"name": "CXiActor::RequestModelParts",
+"kind": "function",
+"size": 508,
+"source": "tree"
+},
+{
+"address": "0x100D2F40",
+"name": "CXiSkeletonActor::OnSkeletonLoaded",
+"kind": "function",
+"size": 18,
+"source": "tree"
+},
+{
+"address": "0x100D2F60",
+"name": "CXiSkeletonActor::LoadSkeletonSync",
+"kind": "function",
+"size": 4476,
+"source": "tree"
+},
+{
+"address": "0x100D4330",
+"name": "CXiSkeletonActor::LoadSkeletonResource",
+"kind": "function",
+"size": 172,
+"source": "tree"
+},
+{
+"address": "0x100D62C0",
+"name": "CXiSkeletonActor::DrawResourceShadows",
+"kind": "function",
+"size": 167,
+"source": "tree"
+},
+{
+"address": "0x100D7FA0",
+"name": "sub_100D7FA0",
+"kind": "function",
+"size": 124,
+"source": "none"
+},
+{
+"address": "0x101177D0",
+"name": "Menu_DrawWindowItems",
+"kind": "function",
+"size": 1807,
+"source": "tree"
+},
+{
+"address": "0x10119F80",
+"name": "Unit100D7420_DrawUnscaled",
+"kind": "function",
+"size": 43,
+"source": "tree"
+},
+{
+"address": "0x1011AA40",
+"name": "Unit100D7420_SetViewport",
+"kind": "function",
+"size": 120,
+"source": "tree"
+},
+{
+"address": "0x1011AAC0",
+"name": "Gfx_ApplyViewport1B70",
+"kind": "function",
+"size": 17,
+"source": "tree"
+},
+{
+"address": "0x1011BAE0",
+"name": "Font_BindGlyphTexture",
+"kind": "function",
+"size": 180,
+"source": "tree"
+},
+{
+"address": "0x1011BBA0",
+"name": "Font_DrawGlyphQuadGrey",
+"kind": "function",
+"size": 33,
+"source": "tree"
+},
+{
+"address": "0x1011BBD0",
+"name": "Font_DrawGlyphQuad",
+"kind": "function",
+"size": 316,
+"source": "tree"
+},
+{
+"address": "0x1011BDC0",
+"name": "Gfx_SetAdditiveBlend",
+"kind": "function",
+"size": 66,
+"source": "tree"
+},
+{
+"address": "0x1011BE10",
+"name": "sub_1011BE10",
+"kind": "function",
+"size": 212,
+"source": "none"
+},
+{
+"address": "0x1011BF40",
+"name": "Font_DrawChar",
+"kind": "function",
+"size": 140,
+"source": "tree"
+},
+{
+"address": "0x1011C080",
+"name": "Obj_104E1B90::Obj_104E1B90_DrawString",
+"kind": "function",
+"size": 365,
+"source": "tree"
+},
+{
+"address": "0x1011C1F0",
+"name": "Gfx_SetCellBlendMode",
+"kind": "function",
+"size": 992,
+"source": "tree"
+},
+{
+"address": "0x1011C720",
+"name": "Font_LoadHighResTexture",
+"kind": "function",
+"size": 227,
+"source": "tree"
+},
+{
+"address": "0x1011E800",
+"name": "Cell_DrawAt",
+"kind": "function",
+"size": 370,
+"source": "tree"
+},
+{
+"address": "0x1011E980",
+"name": "Cell_DrawTexturedQuad",
+"kind": "function",
+"size": 993,
+"source": "tree"
+},
+{
+"address": "0x1011ED70",
+"name": "sub_1011ED70",
+"kind": "function",
+"size": 104,
+"source": "none"
+},
+{
+"address": "0x1011EDE0",
+"name": "Cell_DrawTransformed",
+"kind": "function",
+"size": 370,
+"source": "tree"
+},
+{
+"address": "0x1011EF60",
+"name": "Cell_DrawStretchedWrapped",
+"kind": "function",
+"size": 873,
+"source": "tree"
+},
+{
+"address": "0x1011F2D0",
+"name": "Cell_DrawWithDefaultBlend",
+"kind": "function",
+"size": 34,
+"source": "tree"
+},
+{
+"address": "0x1011F300",
+"name": "Cell_DrawQuadBlended",
+"kind": "function",
+"size": 1914,
+"source": "tree"
+},
+{
+"address": "0x1011FB60",
+"name": "sub_1011FB60",
+"kind": "function",
+"size": 133,
+"source": "none"
+},
+{
+"address": "0x1011FBF0",
+"name": "sub_1011FBF0",
+"kind": "function",
+"size": 139,
+"source": "none"
+},
+{
+"address": "0x1011FC80",
+"name": "sub_1011FC80",
+"kind": "function",
+"size": 349,
+"source": "none"
+},
+{
+"address": "0x1011FDE0",
+"name": "sub_1011FDE0",
+"kind": "function",
+"size": 275,
+"source": "none"
+},
+{
+"address": "0x1011FF70",
+"name": "sub_1011FF70",
+"kind": "function",
+"size": 129,
+"source": "none"
+},
+{
+"address": "0x10120000",
+"name": "Cell_DrawFirstStretched",
+"kind": "function",
+"size": 99,
+"source": "tree"
+},
+{
+"address": "0x10120590",
+"name": "Obj_104E1BF8::ShapeMng_BindFontTexture",
+"kind": "function",
+"size": 205,
+"source": "tree"
+},
+{
+"address": "0x101207B0",
+"name": "Obj_104E1BF8::ShapeMng_BindDmgNumTexture",
+"kind": "function",
+"size": 205,
+"source": "tree"
+},
+{
+"address": "0x10129F00",
+"name": "sub_10129F00",
+"kind": "function",
+"size": 49,
+"source": "none"
+},
+{
+"address": "0x10129F40",
+"name": "Font_DrawStringFlags44",
+"kind": "function",
+"size": 49,
+"source": "tree"
+},
+{
+"address": "0x1013A350",
+"name": "Unit1012AC80_DrawPanel",
+"kind": "function",
+"size": 140,
+"source": "tree"
+},
+{
+"address": "0x10150B40",
+"name": "sub_10150B40",
+"kind": "function",
+"size": 265,
+"source": "none"
+},
+{
+"address": "0x1015B580",
+"name": "sub_1015B580",
+"kind": "function",
+"size": 320,
+"source": "none"
+},
+{
+"address": "0x1015F6A0",
+"name": "Menu_DrawLayers",
+"kind": "function",
+"size": 180,
+"source": "tree"
+},
+{
+"address": "0x1015FA00",
+"name": "Menu_DrawAll",
+"kind": "function",
+"size": 1995,
+"source": "tree"
+},
+{
+"address": "0x101604B0",
+"name": "Gfx_SetDefault2DStates",
+"kind": "function",
+"size": 402,
+"source": "tree"
+},
+{
+"address": "0x10160650",
+"name": "Gfx_DisableFogAndAlphaBlend",
+"kind": "function",
+"size": 69,
+"source": "tree"
+},
+{
+"address": "0x10161990",
+"name": "Unit1012AC80_DrawImageAtRightOfRect",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10161D60",
+"name": "Unit1012AC80_DrawImageA4AtRightOfRect",
+"kind": "function",
+"size": 217,
+"source": "tree"
+},
+{
+"address": "0x10162010",
+"name": "Viewport_SetClipped",
+"kind": "function",
+"size": 157,
+"source": "tree"
+},
+{
+"address": "0x101620B0",
+"name": "Gfx_ApplyViewport1904",
+"kind": "function",
+"size": 17,
+"source": "tree"
+},
+{
+"address": "0x101620D0",
+"name": "Font_SetupAdditiveDraw",
+"kind": "function",
+"size": 22,
+"source": "tree"
+},
+{
+"address": "0x101630E0",
+"name": "Obj_10621944::Obj_10621944_Draw",
+"kind": "function",
+"size": 72,
+"source": "tree"
+},
+{
+"address": "0x10163390",
+"name": "Obj_10621944_DrawBgRect",
+"kind": "function",
+"size": 15,
+"source": "tree"
+},
+{
+"address": "0x10163400",
+"name": "Gfx_DrawSolidRect2D",
+"kind": "function",
+"size": 534,
+"source": "tree"
+},
+{
+"address": "0x1016DDF0",
+"name": "Dbg_DrawTriangleLines",
+"kind": "function",
+"size": 465,
+"source": "tree"
+},
+{
+"address": "0x1016FCD0",
+"name": "ParseZoneMeshData",
+"kind": "function",
+"size": 3660,
+"source": "tree"
+},
+{
+"address": "0x10174B10",
+"name": "sub_10174B10",
+"kind": "function",
+"size": 939,
+"source": "none"
+},
+{
+"address": "0x10174EC0",
+"name": "Dbg_DrawOrientedBoxes",
+"kind": "function",
+"size": 2166,
+"source": "tree"
+},
+{
+"address": "0x101771B0",
+"name": "Gfx_CompileVertexShader",
+"kind": "function",
+"size": 139,
+"source": "tree"
+},
+{
+"address": "0x10177240",
+"name": "Gfx_AssembleVertexShader",
+"kind": "function",
+"size": 150,
+"source": "tree"
+},
+{
+"address": "0x101772E0",
+"name": "Gfx_CompilePixelShader",
+"kind": "function",
+"size": 93,
+"source": "tree"
+},
+{
+"address": "0x10177400",
+"name": "Gfx_SetZBias",
+"kind": "function",
+"size": 25,
+"source": "tree"
+},
+{
+"address": "0x101779C0",
+"name": "Gfx_SetupLineDrawState",
+"kind": "function",
+"size": 369,
+"source": "tree"
+},
+{
+"address": "0x10177B40",
+"name": "Gfx_DrawQuadOutline",
+"kind": "function",
+"size": 259,
+"source": "tree"
+},
+{
+"address": "0x10177C50",
+"name": "Gfx_DrawLine3D",
+"kind": "function",
+"size": 125,
+"source": "tree"
+},
+{
+"address": "0x10177F80",
+"name": "sub_10177F80",
+"kind": "function",
+"size": 30,
+"source": "none"
+},
+{
+"address": "0x10178070",
+"name": "CTsZoneMap::CTsZoneMap_Destructor",
+"kind": "function",
+"size": 344,
+"source": "tree"
+},
+{
+"address": "0x10178250",
+"name": "sub_10178250",
+"kind": "function",
+"size": 641,
+"source": "none"
+},
+{
+"address": "0x101787C0",
+"name": "ZoneMap_UpdateLoadState",
+"kind": "function",
+"size": 313,
+"source": "tree"
+},
+{
+"address": "0x10178A20",
+"name": "ZoneMap_SetArea",
+"kind": "function",
+"size": 157,
+"source": "tree"
+},
+{
+"address": "0x10178AC0",
+"name": "ZoneMap_ReleaseSlot",
+"kind": "function",
+"size": 58,
+"source": "tree"
+},
+{
+"address": "0x10178B00",
+"name": "ZoneMap_ReleaseStateBlock",
+"kind": "function",
+"size": 48,
+"source": "tree"
+},
+{
+"address": "0x10178B30",
+"name": "CTsZoneMap::Render",
+"kind": "function",
+"size": 516,
+"source": "tree"
+},
+{
+"address": "0x10178F70",
+"name": "ZoneMap_Reset",
+"kind": "function",
+"size": 27,
+"source": "tree"
+},
+{
+"address": "0x101791F0",
+"name": "ZoneMap_DrawBox",
+"kind": "function",
+"size": 176,
+"source": "tree"
+},
+{
+"address": "0x101792A0",
+"name": "ZoneMap_CreateVertexShaders",
+"kind": "function",
+"size": 71,
+"source": "tree"
+},
+{
+"address": "0x101792F0",
+"name": "sub_101792F0",
+"kind": "function",
+"size": 66,
+"source": "none"
+},
+{
+"address": "0x1017ADE0",
+"name": "ZoneMap_DrawMeshGroupsWithFog",
+"kind": "function",
+"size": 335,
+"source": "tree"
+},
+{
+"address": "0x1017B110",
+"name": "ZoneMap_FreeSlot",
+"kind": "function",
+"size": 200,
+"source": "tree"
+},
+{
+"address": "0x1017B1E0",
+"name": "ZoneMap_TeardownStep",
+"kind": "function",
+"size": 292,
+"source": "tree"
+},
+{
+"address": "0x1017B510",
+"name": "XiZone_Draw",
+"kind": "function",
+"size": 4863,
+"source": "facts"
+},
+{
+"address": "0x1017C8B0",
+"name": "sub_1017C8B0",
+"kind": "function",
+"size": 269,
+"source": "none"
+},
+{
+"address": "0x1017C9C0",
+"name": "XiZone_DrawElement",
+"kind": "function",
+"size": 5196,
+"source": "facts"
+},
+{
+"address": "0x1017DE20",
+"name": "sub_1017DE20",
+"kind": "function",
+"size": 13056,
+"source": "none"
+},
+{
+"address": "0x10182700",
+"name": "CTsZoneMap::DrawProjectedTexture",
+"kind": "function",
+"size": 2050,
+"source": "tree"
+},
+{
+"address": "0x10182F10",
+"name": "Gfx_DrawWireBox",
+"kind": "function",
+"size": 1115,
+"source": "tree"
+},
+{
+"address": "0x10183490",
+"name": "XiZone_DrawModelAtMatrix",
+"kind": "function",
+"size": 710,
+"source": "facts"
+},
+{
+"address": "0x10183760",
+"name": "XiZone_DrawEffectElementModel",
+"kind": "function",
+"size": 1539,
+"source": "facts"
+},
+{
+"address": "0x10183DA0",
+"name": "ZoneMap_DrawMeshById",
+"kind": "function",
+"size": 1811,
+"source": "tree"
+},
+{
+"address": "0x101844C0",
+"name": "ModelActor_Draw",
+"kind": "function",
+"size": 1969,
+"source": "tree"
+},
+{
+"address": "0x10184C90",
+"name": "XiZone::DrawGroundShadowQuad",
+"kind": "function",
+"size": 843,
+"source": "tree"
+},
+{
+"address": "0x10184FE0",
+"name": "CTsZoneMap::DrawProjectedShadow",
+"kind": "function",
+"size": 3262,
+"source": "tree"
+},
+{
+"address": "0x10185CA0",
+"name": "XiZone::DrawDecalOnTriangles",
+"kind": "function",
+"size": 3800,
+"source": "tree"
+},
+{
+"address": "0x10186DB0",
+"name": "ZoneMap_ClearSlots",
+"kind": "function",
+"size": 31,
+"source": "tree"
+},
+{
+"address": "0x10186DD0",
+"name": "ZoneMap_FreeSubAreas",
+"kind": "function",
+"size": 118,
+"source": "tree"
+},
+{
+"address": "0x10187030",
+"name": "ZoneMap_ReleaseChain",
+"kind": "function",
+"size": 31,
+"source": "tree"
+},
+{
+"address": "0x10188A10",
+"name": "XiZone::DestroyChildList",
+"kind": "function",
+"size": 60,
+"source": "tree"
+},
+{
+"address": "0x1018AA50",
+"name": "fn_1018AA50",
+"kind": "function",
+"size": 100,
+"source": "tree"
+},
+{
+"address": "0x1018AAE0",
+"name": "fn_1018AAE0",
+"kind": "function",
+"size": 85,
+"source": "tree"
+},
+{
+"address": "0x1018AB60",
+"name": "fn_1018AB60",
+"kind": "function",
+"size": 77,
+"source": "tree"
+},
+{
+"address": "0x1018ABF0",
+"name": "YmCombineWeather::Release",
+"kind": "function",
+"size": 341,
+"source": "tree"
+},
+{
+"address": "0x1018ADE0",
+"name": "Blend_Update",
+"kind": "function",
+"size": 208,
+"source": "tree"
+},
+{
+"address": "0x1018B620",
+"name": "XiZone::ResetState",
+"kind": "function",
+"size": 124,
+"source": "tree"
+},
+{
+"address": "0x1018B860",
+"name": "XiZone::DrawScene",
+"kind": "function",
+"size": 70,
+"source": "tree"
+},
+{
+"address": "0x101907E0",
+"name": "sub_101907E0",
+"kind": "function",
+"size": 46,
+"source": "none"
+},
+{
+"address": "0x1019EBB0",
+"name": "Unit1018BA60_DrawTextBlockOnce",
+"kind": "function",
+"size": 76,
+"source": "tree"
+},
+{
+"address": "0x1019EDB0",
+"name": "Unit1018BA60_DrawTextLines",
+"kind": "function",
+"size": 423,
+"source": "tree"
+},
+{
+"address": "0x101C7CB0",
+"name": "sub_101C7CB0",
+"kind": "function",
+"size": 92,
+"source": "none"
+},
+{
+"address": "0x101C8DA0",
+"name": "Gfx_ProjectWorldToScreen",
+"kind": "function",
+"size": 322,
+"source": "tree"
+},
+{
+"address": "0x101C9780",
+"name": "Unit101C72E0_DrawUnscaled",
+"kind": "function",
+"size": 41,
+"source": "tree"
+},
+{
+"address": "0x101C97B0",
+"name": "Unit101C72E0_DrawTextItem0",
+"kind": "function",
+"size": 628,
+"source": "tree"
+},
+{
+"address": "0x101C9D50",
+"name": "Unit101C72E0_DrawString",
+"kind": "function",
+"size": 580,
+"source": "tree"
+},
+{
+"address": "0x101CA180",
+"name": "Unit101C72E0_DrawTruncated",
+"kind": "function",
+"size": 193,
+"source": "tree"
+},
+{
+"address": "0x101CAD00",
+"name": "Unit101C72E0_DrawFractionRange",
+"kind": "function",
+"size": 436,
+"source": "tree"
+},
+{
+"address": "0x101CAEC0",
+"name": "Unit101C72E0_DrawFractionDefault",
+"kind": "function",
+"size": 59,
+"source": "tree"
+},
+{
+"address": "0x101CAF00",
+"name": "Unit101C72E0_DrawSmoothed",
+"kind": "function",
+"size": 255,
+"source": "tree"
+},
+{
+"address": "0x101CB000",
+"name": "Unit101C72E0_DrawSmoothedDefault",
+"kind": "function",
+"size": 59,
+"source": "tree"
+},
+{
+"address": "0x101CB040",
+"name": "Unit101C72E0_DrawFractionItem1A",
+"kind": "function",
+"size": 65,
+"source": "tree"
+},
+{
+"address": "0x101CB090",
+"name": "Unit101C72E0_DrawSmoothedItem1A",
+"kind": "function",
+"size": 52,
+"source": "tree"
+},
+{
+"address": "0x101CB1B0",
+"name": "Unit101C72E0_DrawSmoothedItem1B",
+"kind": "function",
+"size": 52,
+"source": "tree"
+},
+{
+"address": "0x101CB230",
+"name": "Unit101C72E0_DrawSmoothedExItem1B",
+"kind": "function",
+"size": 72,
+"source": "tree"
+},
+{
+"address": "0x101CB430",
+"name": "Unit101C72E0_DrawEasedPercent",
+"kind": "function",
+"size": 196,
+"source": "tree"
+},
+{
+"address": "0x101CB500",
+"name": "Unit101C72E0_DrawEasedPercentUnitScale",
+"kind": "function",
+"size": 69,
+"source": "tree"
+},
+{
+"address": "0x101CB550",
+"name": "Unit101C72E0_DrawEasedPercentItem1A",
+"kind": "function",
+"size": 62,
+"source": "tree"
+},
+{
+"address": "0x101CB770",
+"name": "Unit101C72E0_BeginCapture",
+"kind": "function",
+"size": 31,
+"source": "tree"
+},
+{
+"address": "0x101CF410",
+"name": "sub_101CF410",
+"kind": "function",
+"size": 184,
+"source": "none"
+},
+{
+"address": "0x101CF510",
+"name": "sub_101CF510",
+"kind": "function",
+"size": 264,
+"source": "none"
+},
+{
+"address": "0x101D0B00",
+"name": "CopyrightText_Draw",
+"kind": "function",
+"size": 312,
+"source": "tree"
+},
+{
+"address": "0x101D0EA0",
+"name": "Unit101D0910_TakeScreenshot",
+"kind": "function",
+"size": 349,
+"source": "tree"
+},
+{
+"address": "0x101D1000",
+"name": "Unit101D0910_SaveJpeg512x382",
+"kind": "function",
+"size": 94,
+"source": "tree"
+},
+{
+"address": "0x101D1060",
+"name": "YkJpeg::CaptureAndEncode",
+"kind": "function",
+"size": 85,
+"source": "tree"
+},
+{
+"address": "0x101D1100",
+"name": "Unit101D0910_SaveJpegScreenSize",
+"kind": "function",
+"size": 118,
+"source": "tree"
+},
+{
+"address": "0x101D3FC0",
+"name": "Unit101D2FF0_Draw",
+"kind": "function",
+"size": 186,
+"source": "tree"
+},
+{
+"address": "0x101D5680",
+"name": "Unit101D2FF0_Update",
+"kind": "function",
+"size": 19,
+"source": "tree"
+},
+{
+"address": "0x101D5DD0",
+"name": "sub_101D5DD0",
+"kind": "function",
+"size": 25,
+"source": "none"
+},
+{
+"address": "0x101EEBD0",
+"name": "sub_101EEBD0",
+"kind": "function",
+"size": 948,
+"source": "none"
+},
+{
+"address": "0x101FA9A0",
+"name": "sub_101FA9A0",
+"kind": "function",
+"size": 23,
+"source": "none"
+},
+{
+"address": "0x10201340",
+"name": "Unit101D7020_DrawCountersAndGauge",
+"kind": "function",
+"size": 382,
+"source": "tree"
+},
+{
+"address": "0x102015D0",
+"name": "Yk_UpdateLayout",
+"kind": "function",
+"size": 100,
+"source": "tree"
+},
+{
+"address": "0x10202380",
+"name": "Unit101D7020_Call101CA180IfText",
+"kind": "function",
+"size": 35,
+"source": "tree"
+},
+{
+"address": "0x10202AF0",
+"name": "Unit101D7020_DrawLabelIfStateGroup06Or38",
+"kind": "function",
+"size": 144,
+"source": "tree"
+},
+{
+"address": "0x10211050",
+"name": "Unit101D7020_Call10156C30InRect",
+"kind": "function",
+"size": 108,
+"source": "tree"
+},
+{
+"address": "0x1021D4C0",
+"name": "CXiMovie::DrawFrame",
+"kind": "function",
+"size": 811,
+"source": "tree"
+},
+{
+"address": "0x1021E060",
+"name": "Movie_CreateFrameTextures",
+"kind": "function",
+"size": 177,
+"source": "tree"
+},
+{
+"address": "0x1021F410",
+"name": "Unit1021D930_DrawPanelForActor",
+"kind": "function",
+"size": 103,
+"source": "tree"
+},
+{
+"address": "0x1021F480",
+"name": "Unit1021D930_DrawActorPanelFigures",
+"kind": "function",
+"size": 1226,
+"source": "tree"
+},
+{
+"address": "0x1021F950",
+"name": "Unit1021D930_DrawEntryRows",
+"kind": "function",
+"size": 315,
+"source": "tree"
+},
+{
+"address": "0x1021FA90",
+"name": "Unit1021D930_DrawLabelledRow",
+"kind": "function",
+"size": 121,
+"source": "tree"
+},
+{
+"address": "0x1021FB10",
+"name": "Unit1021D930_DrawTwoDigitValue",
+"kind": "function",
+"size": 97,
+"source": "tree"
+},
+{
+"address": "0x1021FB80",
+"name": "Unit1021D930_DrawBarRow",
+"kind": "function",
+"size": 78,
+"source": "tree"
+},
+{
+"address": "0x1021FBD0",
+"name": "Unit1021D930_DrawNameRows",
+"kind": "function",
+"size": 267,
+"source": "tree"
+},
+{
+"address": "0x1021FCE0",
+"name": "ActerBuff_DrawNearby",
+"kind": "function",
+"size": 298,
+"source": "tree"
+},
+{
+"address": "0x1021FE10",
+"name": "Unit1021D930_DrawStrongholdPanel",
+"kind": "function",
+"size": 905,
+"source": "tree"
+},
+{
+"address": "0x102201A0",
+"name": "Unit1021D930_DrawLabelBar",
+"kind": "function",
+"size": 78,
+"source": "tree"
+},
+{
+"address": "0x102201F0",
+"name": "Unit1021D930_DrawGameTime",
+"kind": "function",
+"size": 347,
+"source": "tree"
+},
+{
+"address": "0x102214D0",
+"name": "Unit1021D930_Draw",
+"kind": "function",
+"size": 418,
+"source": "tree"
+},
+{
+"address": "0x10227F70",
+"name": "Unit1021D930_DrawMovie",
+"kind": "function",
+"size": 266,
+"source": "tree"
+},
+{
+"address": "0x10228080",
+"name": "Unit1021D930_DrawTimeLeftText",
+"kind": "function",
+"size": 298,
+"source": "tree"
+},
+{
+"address": "0x10228440",
+"name": "Unit1021D930_DrawTargetEntryIcons",
+"kind": "function",
+"size": 1174,
+"source": "tree"
+},
+{
+"address": "0x10234660",
+"name": "Unit1021D930_DrawProgressBar",
+"kind": "function",
+"size": 363,
+"source": "tree"
+},
+{
+"address": "0x10239240",
+"name": "fn_10239240",
+"kind": "function",
+"size": 482,
+"source": "tree"
+},
+{
+"address": "0x102394A0",
+"name": "Ui_DrawKeyPrompt",
+"kind": "function",
+"size": 548,
+"source": "tree"
+},
+{
+"address": "0x102454E0",
+"name": "fn_102454E0",
+"kind": "function",
+"size": 61,
+"source": "tree"
+},
+{
+"address": "0x10245BB0",
+"name": "LobbyThread_ResetZone",
+"kind": "function",
+"size": 42,
+"source": "tree"
+},
+{
+"address": "0x1024CF50",
+"name": "StAvatarInit",
+"kind": "function",
+"size": 473,
+"source": "tree"
+},
+{
+"address": "0x1024D180",
+"name": "StAvatar_Teardown",
+"kind": "function",
+"size": 312,
+"source": "tree"
+},
+{
+"address": "0x1024D5C0",
+"name": "StAvatar_SetPending",
+"kind": "function",
+"size": 73,
+"source": "tree"
+},
+{
+"address": "0x1024D790",
+"name": "StAvatar_StopAndFreeBuffers",
+"kind": "function",
+"size": 190,
+"source": "tree"
+},
+{
+"address": "0x1024D850",
+"name": "StAvatar_ResolveItemsAndStart",
+"kind": "function",
+"size": 369,
+"source": "tree"
+},
+{
+"address": "0x1024DB60",
+"name": "StAvatar_Update",
+"kind": "function",
+"size": 417,
+"source": "tree"
+},
+{
+"address": "0x1024F900",
+"name": "StAvatar_SetViewFromDancerCamera",
+"kind": "function",
+"size": 772,
+"source": "tree"
+},
+{
+"address": "0x10250190",
+"name": "StAvatar_RenderIfEnabled",
+"kind": "function",
+"size": 44,
+"source": "tree"
+},
+{
+"address": "0x102501C0",
+"name": "StAvatarRender",
+"kind": "function",
+"size": 267,
+"source": "tree"
+},
+{
+"address": "0x102504D0",
+"name": "StAvatarFini",
+"kind": "function",
+"size": 162,
+"source": "tree"
+},
+{
+"address": "0x10251500",
+"name": "StDancer_Update",
+"kind": "function",
+"size": 226,
+"source": "tree"
+},
+{
+"address": "0x102515F0",
+"name": "Dancer_WorldEnd",
+"kind": "function",
+"size": 34,
+"source": "tree"
+},
+{
+"address": "0x10251620",
+"name": "StAvatar_SetActive",
+"kind": "function",
+"size": 137,
+"source": "tree"
+},
+{
+"address": "0x102516B0",
+"name": "StAvatar_SetStateTeardown",
+"kind": "function",
+"size": 51,
+"source": "tree"
+},
+{
+"address": "0x10251A80",
+"name": "Dancer_InitDevice",
+"kind": "function",
+"size": 597,
+"source": "tree"
+},
+{
+"address": "0x102528D0",
+"name": "StModelItem_Resolve",
+"kind": "function",
+"size": 297,
+"source": "tree"
+},
+{
+"address": "0x10253F60",
+"name": "Gfx_DrawSpriteAlphaTested",
+"kind": "function",
+"size": 260,
+"source": "tree"
+},
+{
+"address": "0x1025C790",
+"name": "sub_1025C790",
+"kind": "function",
+"size": 152,
+"source": "none"
+},
+{
+"address": "0x1025CAF0",
+"name": "FontGlyphCache_Construct",
+"kind": "function",
+"size": 454,
+"source": "dm"
+},
+{
+"address": "0x1025D760",
+"name": "FontGlyphCache_CreateTexture",
+"kind": "function",
+"size": 74,
+"source": "tree"
+},
+{
+"address": "0x1025D7B0",
+"name": "FontGlyphCache_CreateVertexBuffer",
+"kind": "function",
+"size": 64,
+"source": "tree"
+},
+{
+"address": "0x1026E730",
+"name": "sub_1026E730",
+"kind": "function",
+"size": 308,
+"source": "none"
+},
+{
+"address": "0x1026E870",
+"name": "sub_1026E870",
+"kind": "function",
+"size": 129,
+"source": "none"
+},
+{
+"address": "0x102717F0",
+"name": "StAvatar_DrawScene",
+"kind": "function",
+"size": 12,
+"source": "tree"
+},
+{
+"address": "0x10271800",
+"name": "sub_10271800",
+"kind": "function",
+"size": 823,
+"source": "none"
+},
+{
+"address": "0x10280DE0",
+"name": "sub_10280DE0",
+"kind": "function",
+"size": 1486,
+"source": "none"
+},
+{
+"address": "0x102813B0",
+"name": "Unit10280C40_CompositeBlendPasses",
+"kind": "function",
+"size": 133,
+"source": "tree"
+},
+{
+"address": "0x10281440",
+"name": "sub_10281440",
+"kind": "function",
+"size": 186,
+"source": "none"
+},
+{
+"address": "0x10281510",
+"name": "sqgxTextureCreateFromImage",
+"kind": "function",
+"size": 461,
+"source": "tree"
+},
+{
+"address": "0x102816E0",
+"name": "sqgxTextureAddZ",
+"kind": "function",
+"size": 289,
+"source": "tree"
+},
+{
+"address": "0x10281830",
+"name": "sqgxTextureAdd",
+"kind": "function",
+"size": 388,
+"source": "tree"
+},
+{
+"address": "0x102819D0",
+"name": "sqgxTextureClutAdd",
+"kind": "function",
+"size": 139,
+"source": "tree"
+},
+{
+"address": "0x10281D60",
+"name": "sqgxTextureClut",
+"kind": "function",
+"size": 78,
+"source": "tree"
+},
+{
+"address": "0x10281DB0",
+"name": "sqgxTextureUpdate",
+"kind": "function",
+"size": 600,
+"source": "tree"
+},
+{
+"address": "0x10282010",
+"name": "sqgxTextureStencilClear",
+"kind": "function",
+"size": 30,
+"source": "tree"
+},
+{
+"address": "0x10282030",
+"name": "sqgxTextureClear",
+"kind": "function",
+"size": 166,
+"source": "tree"
+},
+{
+"address": "0x102820E0",
+"name": "sqgxTextureDrawZ",
+"kind": "function",
+"size": 167,
+"source": "tree"
+},
+{
+"address": "0x10282190",
+"name": "sqgxTextureDraw",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10282350",
+"name": "sqgxZTest",
+"kind": "function",
+"size": 81,
+"source": "tree"
+},
+{
+"address": "0x102823F0",
+"name": "sqgxAlphaTest",
+"kind": "function",
+"size": 116,
+"source": "tree"
+},
+{
+"address": "0x10282470",
+"name": "sqgxZMask",
+"kind": "function",
+"size": 79,
+"source": "tree"
+},
+{
+"address": "0x102824C0",
+"name": "sqgxFBMask",
+"kind": "function",
+"size": 162,
+"source": "tree"
+},
+{
+"address": "0x10282640",
+"name": "Unit102822A0_SetSelectArg1",
+"kind": "function",
+"size": 128,
+"source": "tree"
+},
+{
+"address": "0x102826C0",
+"name": "sqgxBlendAdd",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x102827D0",
+"name": "Unit102822A0_SetMultiplyAdd",
+"kind": "function",
+"size": 292,
+"source": "tree"
+},
+{
+"address": "0x10282910",
+"name": "sqgxBlendSub",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10282A30",
+"name": "sqgxBlendLin",
+"kind": "function",
+"size": 340,
+"source": "tree"
+},
+{
+"address": "0x10282B90",
+"name": "sqgxBlendTrsp",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10282CB0",
+"name": "sqgxBlendTrspInv",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10282DC0",
+"name": "sqgxBlendAddDestAlpha",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10282ED0",
+"name": "Unit102822A0_SetModulateAlphaAdd",
+"kind": "function",
+"size": 279,
+"source": "tree"
+},
+{
+"address": "0x10282FF0",
+"name": "sqgxBlendMultAlpha",
+"kind": "function",
+"size": 279,
+"source": "tree"
+},
+{
+"address": "0x10283110",
+"name": "sqgxBlendMul",
+"kind": "function",
+"size": 261,
+"source": "tree"
+},
+{
+"address": "0x10283220",
+"name": "sqgxBlendOff",
+"kind": "function",
+"size": 19,
+"source": "tree"
+},
+{
+"address": "0x10283420",
+"name": "sqgxColorUpdate",
+"kind": "function",
+"size": 680,
+"source": "tree"
+},
+{
+"address": "0x10283A10",
+"name": "sqgxViewport",
+"kind": "function",
+"size": 295,
+"source": "tree"
+},
+{
+"address": "0x10283F70",
+"name": "sqgxPassAdd",
+"kind": "function",
+"size": 67,
+"source": "tree"
+},
+{
+"address": "0x10283FC0",
+"name": "sqgxPass",
+"kind": "function",
+"size": 63,
+"source": "tree"
+},
+{
+"address": "0x10284410",
+"name": "sqgxMatrixUpdate",
+"kind": "function",
+"size": 990,
+"source": "tree"
+},
+{
+"address": "0x10284950",
+"name": "sqgxVertexShaderCreate",
+"kind": "function",
+"size": 302,
+"source": "tree"
+},
+{
+"address": "0x10284A80",
+"name": "sqgxVertexShaderSelect",
+"kind": "function",
+"size": 155,
+"source": "tree"
+},
+{
+"address": "0x10284B20",
+"name": "sqgxShader",
+"kind": "function",
+"size": 909,
+"source": "tree"
+},
+{
+"address": "0x10284EF0",
+"name": "sqgxVertexShaderRelease",
+"kind": "function",
+"size": 47,
+"source": "tree"
+},
+{
+"address": "0x10287FB0",
+"name": "SqmdDMB_Resolve",
+"kind": "function",
+"size": 1702,
+"source": "tree"
+},
+{
+"address": "0x102886D0",
+"name": "SqmdDMB_ResolveTextures",
+"kind": "function",
+"size": 633,
+"source": "tree"
+},
+{
+"address": "0x10288E60",
+"name": "sqmdDMBBuildShapes",
+"kind": "function",
+"size": 371,
+"source": "tree"
+},
+{
+"address": "0x1028A800",
+"name": "sqgxContext_BatchIndices",
+"kind": "function",
+"size": 612,
+"source": "dm"
+},
+{
+"address": "0x1028AA70",
+"name": "sqgxShapeIndexBufferBegin",
+"kind": "function",
+"size": 218,
+"source": "tree"
+},
+{
+"address": "0x1028AB50",
+"name": "SqgxShape_FillBuffers",
+"kind": "function",
+"size": 1137,
+"source": "tree"
+},
+{
+"address": "0x1028AFE0",
+"name": "sqgxShapeBegin",
+"kind": "function",
+"size": 2857,
+"source": "tree"
+},
+{
+"address": "0x1028F4C0",
+"name": "SqsnScene_DrawMatrixShape",
+"kind": "function",
+"size": 46,
+"source": "tree"
+},
+{
+"address": "0x1028F8C0",
+"name": "sqsnSceneDraw",
+"kind": "function",
+"size": 1288,
+"source": "tree"
+},
+{
+"address": "0x1028FDD0",
+"name": "sqsnSceneLayerDraw",
+"kind": "function",
+"size": 420,
+"source": "tree"
+},
+{
+"address": "0x1028FF80",
+"name": "SqsnScene_DrawFadeSprite",
+"kind": "function",
+"size": 101,
+"source": "tree"
+},
+{
+"address": "0x1028FFF0",
+"name": "sqsnSceneLayerDrawShadowed",
+"kind": "function",
+"size": 706,
+"source": "tree"
+},
+{
+"address": "0x102902C0",
+"name": "sqsnSceneLayerSnapShotComposite",
+"kind": "function",
+"size": 367,
+"source": "tree"
+},
+{
+"address": "0x10290B60",
+"name": "SqsdGeneric_DrawPasses",
+"kind": "function",
+"size": 1106,
+"source": "tree"
+},
+{
+"address": "0x10290FC0",
+"name": "sqsdGeneric_BakeOntoShape",
+"kind": "function",
+"size": 233,
+"source": "tree"
+},
+{
+"address": "0x10297CC0",
+"name": "sqsnShadowVolumeSetPass",
+"kind": "function",
+"size": 505,
+"source": "tree"
+},
+{
+"address": "0x10297EC0",
+"name": "sqgxShadowStencilEnable",
+"kind": "function",
+"size": 196,
+"source": "tree"
+},
+{
+"address": "0x102981B0",
+"name": "sub_102981B0",
+"kind": "function",
+"size": 23,
+"source": "none"
+},
+{
+"address": "0x102981E0",
+"name": "sqsnShadowVolumeBeginVB",
+"kind": "function",
+"size": 180,
+"source": "tree"
+},
+{
+"address": "0x10298C90",
+"name": "sub_10298C90",
+"kind": "function",
+"size": 154,
+"source": "none"
+},
+{
+"address": "0x10298E10",
+"name": "Texture_CreateEntry",
+"kind": "function",
+"size": 113,
+"source": "tree"
+},
+{
+"address": "0x10299090",
+"name": "SqsdSampling_DrawPasses",
+"kind": "function",
+"size": 448,
+"source": "tree"
+},
+{
+"address": "0x10299250",
+"name": "sqsdSampling_BakeOntoShape",
+"kind": "function",
+"size": 104,
+"source": "tree"
+},
+{
+"address": "0x102993B0",
+"name": "SqsdAniso_DrawPasses",
+"kind": "function",
+"size": 598,
+"source": "tree"
+},
+{
+"address": "0x10299610",
+"name": "sqsdAniso_BakeOntoShape",
+"kind": "function",
+"size": 207,
+"source": "tree"
+},
+{
+"address": "0x102997A0",
+"name": "SqsdCartoon_Draw",
+"kind": "function",
+"size": 146,
+"source": "tree"
+},
+{
+"address": "0x102999A0",
+"name": "SqsdGlow_ApplyShader",
+"kind": "function",
+"size": 205,
+"source": "tree"
+},
+{
+"address": "0x10299AB0",
+"name": "sqsdGlow_BakeOntoShape",
+"kind": "function",
+"size": 113,
+"source": "tree"
+},
+{
+"address": "0x1029B620",
+"name": "sqgxDlistEnd",
+"kind": "function",
+"size": 792,
+"source": "tree"
+},
+{
+"address": "0x1029B9D0",
+"name": "sqgxDlistDraw",
+"kind": "function",
+"size": 383,
+"source": "tree"
+},
+{
+"address": "0x102A1F20",
+"name": "sub_102A1F20",
+"kind": "function",
+"size": 88,
+"source": "none"
+},
+{
+"address": "0x102A21F0",
+"name": "sqsnShadowVolumeDraw",
+"kind": "function",
+"size": 568,
+"source": "tree"
+},
+{
+"address": "0x102A2430",
+"name": "sub_102A2430",
+"kind": "function",
+"size": 245,
+"source": "none"
+},
+{
+"address": "0x102A2530",
+"name": "sqsnPlanarShadowDraw",
+"kind": "function",
+"size": 495,
+"source": "tree"
+},
+{
+"address": "0x102A2720",
+"name": "Unit102A2530_RenderShadowTexture",
+"kind": "function",
+"size": 414,
+"source": "tree"
+},
+{
+"address": "0x102A28C0",
+"name": "sub_102A28C0",
+"kind": "function",
+"size": 356,
+"source": "none"
+},
+{
+"address": "0x102A2A80",
+"name": "sub_102A2A80",
+"kind": "function",
+"size": 131,
+"source": "none"
+},
+{
+"address": "0x102A2B10",
+"name": "sub_102A2B10",
+"kind": "function",
+"size": 230,
+"source": "none"
+},
+{
+"address": "0x102A2C00",
+"name": "Unit102A2530_DrawShadowedShape",
+"kind": "function",
+"size": 184,
+"source": "tree"
+},
+{
+"address": "0x102A2CC0",
+"name": "sub_102A2CC0",
+"kind": "function",
+"size": 353,
+"source": "none"
+},
+{
+"address": "0x102A2F80",
+"name": "sub_102A2F80",
+"kind": "function",
+"size": 943,
+"source": "none"
+},
+{
+"address": "0x102B2CA0",
+"name": "Drawable_DrawTwoPass",
+"kind": "function",
+"size": 309,
+"source": "tree"
+},
+{
+"address": "0x102B2DE0",
+"name": "sqshDraw_Submit",
+"kind": "function",
+"size": 349,
+"source": "dm"
+},
+{
+"address": "0x102B2F40",
+"name": "sub_102B2F40",
+"kind": "function",
+"size": 286,
+"source": "none"
+},
+{
+"address": "0x102B3090",
+"name": "sub_102B3090",
+"kind": "function",
+"size": 546,
+"source": "none"
+},
+{
+"address": "0x102B3320",
+"name": "sub_102B3320",
+"kind": "function",
+"size": 19,
+"source": "none"
+},
+{
+"address": "0x102B3340",
+"name": "sub_102B3340",
+"kind": "function",
+"size": 407,
+"source": "none"
+},
+{
+"address": "0x102B34E0",
+"name": "sub_102B34E0",
+"kind": "function",
+"size": 399,
+"source": "none"
+},
+{
+"address": "0x102B3670",
+"name": "sub_102B3670",
+"kind": "function",
+"size": 249,
+"source": "none"
+},
+{
+"address": "0x102B3770",
+"name": "sub_102B3770",
+"kind": "function",
+"size": 163,
+"source": "none"
+},
+{
+"address": "0x102B3820",
+"name": "sub_102B3820",
+"kind": "function",
+"size": 133,
+"source": "none"
+},
+{
+"address": "0x103290F8",
+"name": "Sleep",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329118",
+"name": "GetCurrentDirectoryA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032919C",
+"name": "GetLocalTime",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103291A0",
+"name": "SetPriorityClass",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103291A4",
+"name": "GetCurrentProcess",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329318",
+"name": "PostQuitMessage",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329348",
+"name": "AdjustWindowRectEx",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329368",
+"name": "ShowWindow",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329378",
+"name": "LoadCursorFromFileA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032937C",
+"name": "LoadCursorA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329380",
+"name": "SetCursor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293A0",
+"name": "GetSystemMetrics",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293C8",
+"name": "DispatchMessageA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293CC",
+"name": "GetWindowPlacement",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293D0",
+"name": "MoveWindow",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293D4",
+"name": "DefWindowProcA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293E4",
+"name": "GetWindowRect",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293E8",
+"name": "PeekMessageA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103293EC",
+"name": "TranslateMessage",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103294B4",
+"name": "CoUninitialize",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103294B8",
+"name": "CoInitialize",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103299F0",
+"name": "CYyObject_vtbl_ambiguous0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329C18",
+"name": "CXiActorNameDraw_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329C44",
+"name": "CXiActorDraw_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329C70",
+"name": "CMoTask_vtbl_ambiguous0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329C9C",
+"name": "CMoResourceMng_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329CB8",
+"name": "CMoTaskMng_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329ED0",
+"name": "CShader_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10329FBC",
+"name": "CXiOpening_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032A460",
+"name": "Vtbl_1032A460",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032A75C",
+"name": "PTR_CYyModel_GetRuntimeClass_1032a75c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032A7B0",
+"name": "CYyOs2VtxBuffer_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032A844",
+"name": "Vtbl_1032A844",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032AD20",
+"name": "CMoD3mSpecularElem_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032AFD8",
+"name": "CYyObject_vtbl_ambiguous2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032B654",
+"name": "PTR_CMoTask_GetRuntimeClass_variant12_1032b654",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032B680",
+"name": "mixin_of_CMoGeneratorClone_0x1032B680",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032B69C",
+"name": "CMoGeneratorClone_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032C0D8",
+"name": "CMoDX_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032C17C",
+"name": "unk_1032C17C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032C18C",
+"name": "unk_1032C18C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032D36C",
+"name": "off_1032D36C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032D374",
+"name": "off_1032D374",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1032F4F0",
+"name": "PTR_CXiDancerActor_GetRuntimeClass_variant0_1032f4f0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10330F40",
+"name": "CXiSkeletonActor_vtbl_ambiguous0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10333000",
+"name": "g_hiResFont_fileId",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10333004",
+"name": "g_hiResFont_width",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10333008",
+"name": "g_hiResFont_height",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10336748",
+"name": "CTsZoneMap_vtbl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10336814",
+"name": "PTR_YmCombineWeather_GetRuntimeClass_10336814",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F2B8",
+"name": "c_strSpace",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F698",
+"name": "g_deviceFormatPairsByDepth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F6A0",
+"name": "aDeviceLost",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F6BC",
+"name": "DAT_1034f6bc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F6C0",
+"name": "g_debugAxisLineVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F720",
+"name": "g_debugLineVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F72C",
+"name": "g_debugLineVerts_v0_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F730",
+"name": "g_debugLineVerts_v1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F740",
+"name": "g_debugTextQuad_p0_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F744",
+"name": "g_debugTextQuad_p0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F74C",
+"name": "g_debugTextQuad_p1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F750",
+"name": "g_debugTextQuad_p1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F758",
+"name": "g_debugTextQuad_p2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F75C",
+"name": "g_debugTextQuad_p2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F764",
+"name": "g_debugTextQuad_p3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F768",
+"name": "g_debugTextQuad_p3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F770",
+"name": "aErrorSSD",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034F8E0",
+"name": "c_strBackslash",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FBB0",
+"name": "aMousenorAni",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FDF0",
+"name": "g_fadeQuadVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FDF4",
+"name": "g_fadeQuadVerts_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE00",
+"name": "g_fadeQuadVerts_v0_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE04",
+"name": "g_fadeQuadVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE08",
+"name": "g_fadeQuadVerts_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE14",
+"name": "g_fadeQuadVerts_v1_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE18",
+"name": "g_fadeQuadVerts_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE1C",
+"name": "g_fadeQuadVerts_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE28",
+"name": "g_fadeQuadVerts_v2_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE2C",
+"name": "g_fadeQuadVerts_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE30",
+"name": "g_fadeQuadVerts_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FE3C",
+"name": "g_fadeQuadVerts_v3_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FFA0",
+"name": "g_stereoEyeOffset",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1034FFB8",
+"name": "c_strSlash",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350174",
+"name": "g_screenFadeLevel",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035017C",
+"name": "Stream",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501A4",
+"name": "g_frameCounterLastSecond",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501A8",
+"name": "g_feedbackQuad",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501AC",
+"name": "g_flashQuadVerts_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501B8",
+"name": "g_flashQuadVerts_v0_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501BC",
+"name": "g_flashQuadVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501C0",
+"name": "g_flashQuadVerts_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501D0",
+"name": "g_flashQuadVerts_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501D4",
+"name": "g_flashQuadVerts_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501E4",
+"name": "g_flashQuadVerts_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103501E8",
+"name": "g_flashQuadVerts_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350208",
+"name": "dword_10350208",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103502E8",
+"name": "aMenuChdummy",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103502FC",
+"name": "aNet3Port54001",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350550",
+"name": "DAT_10350550",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103505A4",
+"name": "DAT_103505a4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103505A8",
+"name": "DAT_103505a8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350748",
+"name": "g_rampGraphVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035074C",
+"name": "g_rampGraphVerts_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350758",
+"name": "g_rampGraphVerts_v0_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035075C",
+"name": "g_rampGraphVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350760",
+"name": "g_rampGraphVerts_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035076C",
+"name": "g_rampGraphVerts_v1_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350E60",
+"name": "DAT_10350e60",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10350E64",
+"name": "DAT_10350e64",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103511CC",
+"name": "c_dxtFourCCs",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351514",
+"name": "c_texNameCubemapSpec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351518",
+"name": "c_defaultModelMaterial",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103515BC",
+"name": "c_ps2White",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351628",
+"name": "g_vsDecl_1628",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351654",
+"name": "s_Os2_Version_Error__d__10351654",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351704",
+"name": "DAT_10351704",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351C94",
+"name": "g_texFourccTable",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351D60",
+"name": "Sky_DrawDome_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351DB8",
+"name": "Sky_DrawDome_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351DF8",
+"name": "Sky_DrawDomeViewCentered_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351E4C",
+"name": "Sky_DrawDomeViewCentered_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351EC8",
+"name": "Fn1003E9A0_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10351FA0",
+"name": "Fn1003E9A0_textureStageStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352084",
+"name": "Fn1003E9A0_textureStageStates3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352258",
+"name": "CMoDistMorphElem_ApplyMorph_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352348",
+"name": "Fn10040220_textureStageStates5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103523B4",
+"name": "Fn10040220_textureStageStates6",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103523D0",
+"name": "Fn10040220_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103524A8",
+"name": "Fn10040220_textureStageStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352590",
+"name": "Fn10040220_textureStageStates3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352648",
+"name": "Fn10040220_textureStageStates4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103526B8",
+"name": "CMoDistModelElem_DrawMesh_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352724",
+"name": "CMoDistModelElem_DrawMesh_textureStageStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352740",
+"name": "CMoDistModelElem_DrawMesh_textureStageStates3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352848",
+"name": "CMoDistModelElem_DrawMesh_textureStageStates4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352860",
+"name": "CMoDistModelElem_DrawMesh_textureStageStates5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10352FF0",
+"name": "aD_4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353028",
+"name": "CMoDist_vf18_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103530D0",
+"name": "CMoDist_vf18_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353108",
+"name": "CMoDist_vf18_textureStageStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353178",
+"name": "CMoDist_vf18_renderStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353260",
+"name": "Fn100431B0_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353378",
+"name": "CMoDistRingElem_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353444",
+"name": "c_flt_0_03",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353598",
+"name": "Fn100467E0_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10353668",
+"name": "Fn100472F0_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354068",
+"name": "Fn1006C530_quadVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035406C",
+"name": "Fn1006C530_quadVerts_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035407C",
+"name": "Fn1006C530_quadVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354080",
+"name": "Fn1006C530_quadVerts_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354090",
+"name": "Fn1006C530_quadVerts_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354094",
+"name": "Fn1006C530_quadVerts_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540A4",
+"name": "Fn1006C530_quadVerts_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540A8",
+"name": "Fn1006C530_quadVerts_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540B8",
+"name": "Fn1006C530_quadVerts2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540BC",
+"name": "Fn1006C530_quadVerts2_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540C0",
+"name": "Fn1006C530_quadVerts2_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540CC",
+"name": "Fn1006C530_quadVerts2_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540D0",
+"name": "Fn1006C530_quadVerts2_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540D4",
+"name": "Fn1006C530_quadVerts2_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540E0",
+"name": "Fn1006C530_quadVerts2_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540E4",
+"name": "Fn1006C530_quadVerts2_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540E8",
+"name": "Fn1006C530_quadVerts2_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540F4",
+"name": "Fn1006C530_quadVerts2_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540F8",
+"name": "Fn1006C530_quadVerts2_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103540FC",
+"name": "Fn1006C530_quadVerts2_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354108",
+"name": "Fn1006C530_quadVerts3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354118",
+"name": "Fn1006C530_quadVerts3_v0_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035411C",
+"name": "Fn1006C530_quadVerts3_v0_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354120",
+"name": "Fn1006C530_quadVerts3_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354130",
+"name": "Fn1006C530_quadVerts3_v1_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354134",
+"name": "Fn1006C530_quadVerts3_v1_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035413C",
+"name": "Fn1006C530_quadVerts3_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354148",
+"name": "Fn1006C530_quadVerts3_v2_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035414C",
+"name": "Fn1006C530_quadVerts3_v2_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354150",
+"name": "Fn1006C530_quadVerts3_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354154",
+"name": "Fn1006C530_quadVerts3_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354160",
+"name": "Fn1006C530_quadVerts3_v3_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354164",
+"name": "Fn1006C530_quadVerts3_v3_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354168",
+"name": "Fn1006C530_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103541E0",
+"name": "Fn1006C530_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354228",
+"name": "Fn1006C530_textureStageStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354264",
+"name": "Fn1006C530_renderStates2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546A0",
+"name": "c_cubeFaceOrder",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546B8",
+"name": "Gfx_InitCubeMapTextures_quadVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546CC",
+"name": "Gfx_InitCubeMapTextures_quadVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546E4",
+"name": "Gfx_InitCubeMapTextures_quadVerts_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546F4",
+"name": "Gfx_InitCubeMapTextures_quadVerts_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103546F8",
+"name": "Gfx_InitCubeMapTextures_quadVerts_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354708",
+"name": "Fn10075700_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103547A4",
+"name": "Fn10075700_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103547D8",
+"name": "Fn100759C0_textureStageStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10354874",
+"name": "Fn100759C0_renderStates",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10358288",
+"name": "DAT_10358288",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582E0",
+"name": "g_worldTextQuad",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582E4",
+"name": "g_worldTextQuad_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582EC",
+"name": "g_worldTextQuad_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582F0",
+"name": "g_worldTextQuad_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582F8",
+"name": "g_worldTextQuad_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103582FC",
+"name": "g_worldTextQuad_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10358304",
+"name": "g_worldTextQuad_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10358308",
+"name": "g_worldTextQuad_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035AF38",
+"name": "DAT_1035af38",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035AF3C",
+"name": "DAT_1035af3c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035AF40",
+"name": "DAT_1035af40",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035AF44",
+"name": "_DAT_1035af44",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035AF48",
+"name": "_DAT_1035af48",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035BAEC",
+"name": "DAT_1035baec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F410",
+"name": "c_resourceIdByModelByte",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F598",
+"name": "DAT_1035f598",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F638",
+"name": "aNoOwnerChocobo",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F680",
+"name": "aNoOwnerGroundTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F6D8",
+"name": "aNoOwnerRange",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F728",
+"name": "aNoOwnerBorder",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F778",
+"name": "aNoOwnerChair",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F7C0",
+"name": "aNoOwnerFishingRod",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F808",
+"name": "aNoOwnerMagicCircle",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035F9A0",
+"name": "DAT_1035f9a0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035FA30",
+"name": "c_msgActorGraphicsLoadFailed",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035FA94",
+"name": "c_msgBadRaceChairActor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035FAD0",
+"name": "c_msgBadRaceFishingRodActor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035FB0C",
+"name": "c_msgBadGrpNumber",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1035FB3C",
+"name": "c_msgBadRaceNumber",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103601BC",
+"name": "g_pGameMode",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C190",
+"name": "DAT_1036c190_as_v1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C224",
+"name": "aFontMoji",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C238",
+"name": "aCellTextureTex_1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C25C",
+"name": "aCellTextureTex_0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C27C",
+"name": "aCellTextureTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C29C",
+"name": "aCellTextureFra",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C2B8",
+"name": "aCellTextureZer",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C2D8",
+"name": "aCellFrameTextu",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C2F4",
+"name": "aCellFrameFrame_1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C314",
+"name": "aCellFrameFrame_0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C330",
+"name": "aCellFrameFrame",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C34C",
+"name": "aCellZeroTextur_0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C36C",
+"name": "aCellZeroTextur",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C388",
+"name": "aCellZeroFrameZ",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C3A4",
+"name": "aCellZeroZeroTe",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C3C0",
+"name": "aCellZeroZeroFr",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036C3DC",
+"name": "aCellZeroZeroZe",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036F890",
+"name": "DAT_1036f890",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036F9FC",
+"name": "DAT_1036f9fc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1036FFC8",
+"name": "aMenuKeytops3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10370084",
+"name": "DAT_10370084",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037629C",
+"name": "DAT_1037629c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10376AC0",
+"name": "c_byteSubstTable",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10376CA4",
+"name": "aCTestVsh",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10376EE8",
+"name": "DAT_10376ee8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10376FF0",
+"name": "_DAT_10376ff0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103772E8",
+"name": "g_zoneVSDeclA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377304",
+"name": "g_zoneVSDeclB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377338",
+"name": "CTsZoneMap_DrawProjectedTexture_m30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037733C",
+"name": "CTsZoneMap_DrawProjectedTexture_m31",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377340",
+"name": "CTsZoneMap_DrawProjectedTexture_m32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377344",
+"name": "CTsZoneMap_DrawProjectedTexture_m00",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377348",
+"name": "CTsZoneMap_DrawProjectedTexture_m11",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037734C",
+"name": "CTsZoneMap_DrawProjectedTexture_m22",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377350",
+"name": "g_overlayScaleX",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377354",
+"name": "g_overlayScaleY",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377358",
+"name": "g_overlayScaleZ",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10377360",
+"name": "g_overlayQuadVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773C0",
+"name": "c_projectedShadowBiasX",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773C4",
+"name": "c_projectedShadowBiasY",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773C8",
+"name": "c_projectedShadowBiasZ",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773CC",
+"name": "Fn10185CA0_m30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773D0",
+"name": "Fn10185CA0_m31",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773D4",
+"name": "Fn10185CA0_m32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773D8",
+"name": "Fn10185CA0_m00",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773DC",
+"name": "Fn10185CA0_m11",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103773E0",
+"name": "Fn10185CA0_m22",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037E862",
+"name": "DAT_1037e862",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037E89C",
+"name": "s_screenshots__s_jpg_1037e89c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037E8B0",
+"name": "s__s_jpg_1037e8b0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1037E8B8",
+"name": "s__c_c_c_02d_02d_02d_02d_02d_02d_c_1037e8b8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385290",
+"name": "DAT_10385290",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385EE8",
+"name": "u_jmolknpq_10385ee8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F08",
+"name": "s__d___d_10385f08",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F14",
+"name": "DAT_10385f14",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F1C",
+"name": "s_x__02d_10385f1c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F24",
+"name": "s_Balamor_s_Adumbration_10385f24",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F3C",
+"name": "s_Stronghold_10385f3c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F48",
+"name": "s_Marchland_10385f48",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F54",
+"name": "s__2d___10385f54",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10385F5C",
+"name": "s__d__02d__s_10385f5c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10386278",
+"name": "DAT_10386278",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1038627C",
+"name": "DAT_1038627c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10386280",
+"name": "DAT_10386280",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10386284",
+"name": "DAT_10386284",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103890E4",
+"name": "c_flt_0_1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389538",
+"name": "DAT_10389538",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389578",
+"name": "DAT_10389578",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389874",
+"name": "kF_0_9874",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389894",
+"name": "DAT_10389894",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389908",
+"name": "s_____Error___dancerInit___failed_10389908",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1038992C",
+"name": "aWorkmem",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389934",
+"name": "aMainmem",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1038993C",
+"name": "aMainpool0x08xB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1038995C",
+"name": "aWorkpool0x08xB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389984",
+"name": "aMemtotal0x08xB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103899A4",
+"name": "aErrorCouldnTAl",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389A74",
+"name": "s_D__build0001_FFXi_Win_Main_dance_10389a74",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389AF4",
+"name": "g_10389AF4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389B0C",
+"name": "g_10389B0C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389BC8",
+"name": "s_____StModelItemResolve____called_10389bc8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389BFC",
+"name": "s_____Error__sqmdDMBResolve__p___p_10389bfc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10389C28",
+"name": "s_____StModelItemResolve____called_10389c28",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B4854",
+"name": "aErrorCouldNotL",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B4874",
+"name": "aErrorCouldNotA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B48A8",
+"name": "aErrorSqgxtextu",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B48D0",
+"name": "aError",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B48D8",
+"name": "aCreatingTextur",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B4910",
+"name": "g_sqgxVertexShaderHandle",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B5910",
+"name": "g_sqgxVertexShaderKeyA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B5914",
+"name": "g_sqgxVertexShaderKeyB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8A4C",
+"name": "s_____Error__sqmdDMBResolve___call_103b8a4c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8A8C",
+"name": "g_103B8A8C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8AC0",
+"name": "g_103B8AC0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8AF4",
+"name": "g_103B8AF4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8B2C",
+"name": "g_103B8B2C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8B60",
+"name": "g_103B8B60",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8B94",
+"name": "g_103B8B94",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8BC4",
+"name": "g_103B8BC4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8BF8",
+"name": "g_103B8BF8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8C28",
+"name": "g_103B8C28",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8C54",
+"name": "g_103B8C54",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8C84",
+"name": "g_103B8C84",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8CB0",
+"name": "g_103B8CB0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8CE4",
+"name": "g_103B8CE4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8D14",
+"name": "g_103B8D14",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8D44",
+"name": "g_103B8D44",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8D78",
+"name": "g_103B8D78",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8DA8",
+"name": "g_103B8DA8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8DDC",
+"name": "g_103B8DDC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8E0C",
+"name": "g_103B8E0C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8E40",
+"name": "g_103B8E40",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8E70",
+"name": "s__06ld_____sqmdDMBResolve___103b8e70",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8E8C",
+"name": "s_____Error__sqmdDMBResolve___expe_103b8e8c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8EF8",
+"name": "s__06ld__clutData___d_bytes__103b8ef8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8F1C",
+"name": "s_____Error__borrowTex_doesn_t_con_103b8f1c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8F4C",
+"name": "s_current__d_borrows_from__d_103b8f4c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8F70",
+"name": "s_____Error__sqmdDMBResolveTexture_103b8f70",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8FB8",
+"name": "s__06ld__data___d_bytes__103b8fb8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8FD8",
+"name": "s__06ld__image_103b8fd8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B8FEC",
+"name": "s__06ld__texture__3d_103b8fec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B9004",
+"name": "s__06ld_____sqmdDMBResolveTextures_103b9004",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B91B4",
+"name": "s_size____d_103b91b4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B91C4",
+"name": "s_flags___0x_08X_103b91c4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B91D8",
+"name": "s_shape__d_of__d_103b91d8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B91EC",
+"name": "s_____Error__Non_shape_encountered_103b91ec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B921C",
+"name": "s_____Error__sqshBuildSQO__p___d__f_103b921c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103B9244",
+"name": "s__06ld_____sqmdDMBBuildShapes___103b9244",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BA68C",
+"name": "g_sceneFadeMaskRT",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BACE4",
+"name": "s_ERROR__model_is_missing_vertex_c_103bace4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BAD0C",
+"name": "s_ERROR__model_is_missing_vertex_u_103bad0c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BAD30",
+"name": "s_ERROR__model_is_missing_vertex_n_103bad30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BAD58",
+"name": "s_WARNING__Spherigon_object_cannot_103bad58",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BBC38",
+"name": "aErrorInSetVert",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BBC54",
+"name": "aErrorInSetStre",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BBDE0",
+"name": "DAT_103bbde0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BC70C",
+"name": "aCDevDancerModu_30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BD524",
+"name": "DAT_103bd524",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BD56C",
+"name": "aShadowVolumesO_0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103BD5A0",
+"name": "aShadowVolumesO",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103D3C64",
+"name": "g_pApp",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103D3C84",
+"name": "Read",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103D3CB8",
+"name": "g_pAppSettings",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x103D3CBC",
+"name": "g_pD3DHolder",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10455AF8",
+"name": "g_pDebugOverlay",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10455C20",
+"name": "g_pAppInputState",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456560",
+"name": "CDx_DrawStereoOddFrameOverlay_staticGuard",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456568",
+"name": "g_currentDirectory",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045666C",
+"name": "g_pCDx",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456678",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045667C",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456680",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456684",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_rhw",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456688",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045668C",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456690",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v0_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456694",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456698",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045669C",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566A0",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_rhw",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566A4",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566A8",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566AC",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v1_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566B0",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566B4",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566B8",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566BC",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_rhw",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566C0",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566C4",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566C8",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v2_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566CC",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566D0",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566D4",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566D8",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_rhw",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566DC",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_color",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566E0",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566E4",
+"name": "CDx_DrawStereoOddFrameOverlay_quadVerts_v3_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104566E8",
+"name": "g_pEnv",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456790",
+"name": "g_appMeshRes_39551",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456794",
+"name": "g_appMeshResB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045689C",
+"name": "g_afterimageStrength",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568A0",
+"name": "g_appMeshResA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568A8",
+"name": "g_frameWorldMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568E8",
+"name": "g_appMeshRes_39560",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568EC",
+"name": "g_frameMeshRes",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568F0",
+"name": "g_appMeshResC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104568FC",
+"name": "g_pCamera",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456900",
+"name": "Code",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456904",
+"name": "g_modelsDrawnThisFrame",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456908",
+"name": "g_modelDrawCallCount",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045690C",
+"name": "DAT_1045690c_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456910",
+"name": "g_afterimageTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456918",
+"name": "g_afterimageDepth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456920",
+"name": "g_afterimageState",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456924",
+"name": "g_afterimageBufferState",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456928",
+"name": "g_afterimagePhase",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045692C",
+"name": "g_feedbackBufferIndex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456930",
+"name": "g_feedbackBufferState",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456934",
+"name": "g_feedbackActive",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456938",
+"name": "g_feedbackTexHalfRes",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045693C",
+"name": "g_halfScreenTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456940",
+"name": "g_feedbackDepth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456944",
+"name": "dword_10456944",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456948",
+"name": "dword_10456948",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045694C",
+"name": "dword_1045694C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456950",
+"name": "dword_10456950",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456954",
+"name": "dword_10456954",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456958",
+"name": "dword_10456958",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045695C",
+"name": "dword_1045695C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456960",
+"name": "g_frameStepFps",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456964",
+"name": "g_frameStepRing",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456974",
+"name": "g_frameStepRingIndex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569A8",
+"name": "hWnd",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569AC",
+"name": "hmod",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569B8",
+"name": "g_installDir",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569BC",
+"name": "g_sceneStateStorage_38",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569C0",
+"name": "g_sceneStateStorage_3C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569CC",
+"name": "_DAT_104569cc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104569EC",
+"name": "g_sceneStateStorage_68_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A00",
+"name": "g_sceneStateStorage_7C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A28",
+"name": "g_pSceneState",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A30",
+"name": "DAT_10456a30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A58",
+"name": "xRight",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A74",
+"name": "g_cfgGraphicsStabilization",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A7C",
+"name": "g_windowMode",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A80",
+"name": "dword_10456A80",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A84",
+"name": "DAT_10456a84",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A90",
+"name": "g_cfgMenuResY",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456A98",
+"name": "g_cfg0000",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AA0",
+"name": "g_cfgFontCompression",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AA4",
+"name": "g_cfg0023",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AAC",
+"name": "DAT_10456aac",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AC0",
+"name": "g_cfg0011",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AC8",
+"name": "g_cfgMenuResX",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456ACC",
+"name": "g_shadowSetting",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AD8",
+"name": "g_depthBlurEnabled_Dead",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456AE0",
+"name": "DAT_10456ae0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456BE4",
+"name": "g_cfg0022",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456C00",
+"name": "g_cfg0020",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456C08",
+"name": "yBottom",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456C0C",
+"name": "g_pXiCapture",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D18",
+"name": "g_pObj_Vtbl10329F8C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D1C",
+"name": "g_pXiOpening",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D48",
+"name": "g_translucentForce",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D4C",
+"name": "g_translucentColor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D50",
+"name": "pTexture",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D54",
+"name": "g_translucentTargetEye2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D58",
+"name": "g_translucentTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456D5C",
+"name": "g_translucentDepth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E4C",
+"name": "g_vertexShader_6E4C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E50",
+"name": "g_projTexFactor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E54",
+"name": "dword_10456E54",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E58",
+"name": "g_projTexPrevTex0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E5C",
+"name": "g_projTexPrevTex1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E60",
+"name": "dword_10456E60",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E64",
+"name": "g_projTexTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E68",
+"name": "g_projTexPrevFactor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E6C",
+"name": "Fn10025260_targetTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E70",
+"name": "dword_10456E70",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E74",
+"name": "g_envMapTexOffsetU",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E78",
+"name": "g_envMapTexOffsetV",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E7C",
+"name": "g_envMapPrevFactor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E80",
+"name": "g_envMapPrevTex0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E84",
+"name": "g_envMapPrevTex1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E88",
+"name": "g_pEnvMapTexObj",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10456E8C",
+"name": "g_envMapFactor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570B0",
+"name": "DAT_104570b0_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570E0",
+"name": "DAT_104570e0_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570F0",
+"name": "byte_104570F0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570F4",
+"name": "dword_104570F4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570F8",
+"name": "dword_104570F8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104570FC",
+"name": "g_envMapEnabled",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457100",
+"name": "dword_10457100",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457108",
+"name": "g_texture1Matrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457130",
+"name": "dword_10457130",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457140",
+"name": "dword_10457140",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457148",
+"name": "g_vertexBuffer_7148",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045714C",
+"name": "g_vertexBuffer_714C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457150",
+"name": "g_vertexBuffer_7150",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457154",
+"name": "g_vertexBuffer_7154",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457158",
+"name": "g_envMapTexMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457198",
+"name": "g_shadowTexMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571AC",
+"name": "dword_104571AC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571C0",
+"name": "dword_104571C0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571D8",
+"name": "g_ambientColor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571D9",
+"name": "g_ambientColorG",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571DA",
+"name": "g_ambientColorR",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571DB",
+"name": "g_ambientColorA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104571E0",
+"name": "g_modelMaterial",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457228",
+"name": "g_matrix_7228",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457268",
+"name": "dword_10457268",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045726C",
+"name": "dword_1045726C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457270",
+"name": "g_matrix_7270",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104572B0",
+"name": "g_projTexEnabled",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104572B8",
+"name": "g_lightTable_Start",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457388",
+"name": "flt_10457388",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457458",
+"name": "g_lightTable_End",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045745C",
+"name": "dword_1045745C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457460",
+"name": "g_skinningCapabilityFlag",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457468",
+"name": "g_matrix_7468",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574A8",
+"name": "g_modelPrimitiveCount",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574AC",
+"name": "g_modelColor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574B0",
+"name": "dword_104574B0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574B4",
+"name": "dword_104574B4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574B8",
+"name": "g_identityWorldMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104574F8",
+"name": "g_projTexMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457528",
+"name": "flt_10457528",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457538",
+"name": "byte_10457538",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457540",
+"name": "g_vertexBuffer_7540",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457548",
+"name": "g_sharedVertexBuffersCreated",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457550",
+"name": "g_boneWeightMatrixTableCur",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457554",
+"name": "g_streamSourceStride",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457568",
+"name": "g_skinLight",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045756C",
+"name": "g_skinLightDiffuseR",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457570",
+"name": "g_skinLightDiffuseG",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10457574",
+"name": "g_skinLightDiffuseB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B618",
+"name": "dword_1045B618",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B61C",
+"name": "dword_1045B61C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B620",
+"name": "dword_1045B620",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B648",
+"name": "CYyModelDt_SkinAndDrawV2_passToken",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B64C",
+"name": "dword_1045B64C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B650",
+"name": "g_os2VtxBufferSlots",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B690",
+"name": "g_streamSourceVB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B6A0",
+"name": "g_vertexShader_B6A0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B774",
+"name": "dword_1045B774",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B77A",
+"name": "g_actorShadowMode",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B780",
+"name": "g_offscreenWorldMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B7C0",
+"name": "g_lightViewMatrix",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B800",
+"name": "g_offscreenPrevTex0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B804",
+"name": "g_offscreenPrevTex1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B808",
+"name": "g_texturefactor_B808",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B80C",
+"name": "g_shadowCasterDistance",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B810",
+"name": "dword_1045B810",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B814",
+"name": "word_1045B814",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B818",
+"name": "Fn10033710_targetTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045B81C",
+"name": "dword_1045B81C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1045EC20",
+"name": "g_boneWeightMatrixTable",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10462538",
+"name": "DAT_10462538",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10462590",
+"name": "DAT_10462590",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104638F5",
+"name": "DAT_104638f5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104638F8",
+"name": "DAT_104638f8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104638FC",
+"name": "DAT_104638fc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10463900",
+"name": "DAT_10463900",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10463904",
+"name": "_DAT_10463904",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10463908",
+"name": "DAT_10463908",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10463909",
+"name": "DAT_10463909_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1046390C",
+"name": "DAT_1046390c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1046393C",
+"name": "DAT_1046393c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10463950",
+"name": "dword_10463950",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B950",
+"name": "dword_1047B950",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B954",
+"name": "g_sceneCaptureTint",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B958",
+"name": "g_sceneCaptureTex",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B95C",
+"name": "g_sceneCaptureTexEye2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B960",
+"name": "g_sceneCaptureDepth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B964",
+"name": "g_sceneCaptureDepthEye2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B970",
+"name": "g_pTextureMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B974",
+"name": "g_pVbMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B978",
+"name": "g_pVertexBufferListHead",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B984",
+"name": "Sky_DrawDomeViewCentered_staticGuard",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B985",
+"name": "Sky_DrawDome_staticGuard",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B988",
+"name": "Sky_DrawDome_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B994",
+"name": "Sky_DrawDomeViewCentered_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9B8",
+"name": "Fn1003E9A0_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9C4",
+"name": "Fn1003E9A0_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9C8",
+"name": "Fn1003E9A0_stateBlock2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9D8",
+"name": "Fn1003E9A0_stateBlock3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9E4",
+"name": "CMoDistMorphElem_ApplyMorph_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9E8",
+"name": "CMoDistMorphElem_ApplyMorph_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047B9F4",
+"name": "Fn10040220_stateBlock4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA00",
+"name": "Fn10040220_stateBlock6",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA0C",
+"name": "CMoDistModelElem_DrawMesh_stateBlock4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA28",
+"name": "CMoDistModelElem_DrawMesh_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA29",
+"name": "Fn10040220_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA50",
+"name": "Fn10040220_stateBlock3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA5C",
+"name": "Fn10040220_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA68",
+"name": "Fn10040220_stateBlock2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA74",
+"name": "CMoDistModelElem_DrawMesh_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA80",
+"name": "CMoDistModelElem_DrawMesh_stateBlock3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA8C",
+"name": "CMoDistModelElem_DrawMesh_stateBlock2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BA98",
+"name": "CMoDistModelElem_DrawMesh_stateBlock5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BAA8",
+"name": "Fn10040220_stateBlock5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB04",
+"name": "CMoDist_vf18_static_BB04",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB08",
+"name": "CMoDist_vf18_static_BB08",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB0C",
+"name": "CMoDist_vf18_static_BB0C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB10",
+"name": "CMoDist_vf18_static_BB10",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB14",
+"name": "CMoDist_vf18_static_BB14",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB18",
+"name": "CMoDist_vf18_static_BB18",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB1C",
+"name": "CMoDist_vf18_static_BB1C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB20",
+"name": "CMoDist_vf18_static_BB20",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB24",
+"name": "CMoDist_vf18_static_BB24",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB28",
+"name": "CMoDist_vf18_static_BB28",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB2C",
+"name": "CMoDist_vf18_static_BB2C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB30",
+"name": "CMoDist_vf18_static_BB30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB34",
+"name": "CMoDist_vf18_static_BB34",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB38",
+"name": "CMoDist_vf18_static_BB38",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB3C",
+"name": "CMoDist_vf18_static_BB3C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB40",
+"name": "CMoDist_vf18_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB44",
+"name": "CMoDist_vf18_stateBlock2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB50",
+"name": "CMoDist_vf18_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB68",
+"name": "Fn100431B0_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB74",
+"name": "Fn100431B0_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB78",
+"name": "CMoDistRingElem_AllocRingGeometry_staticGuard",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB7C",
+"name": "CMoDistRingElem_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB88",
+"name": "g_pMoAccumTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BB90",
+"name": "g_cubemapSpecName",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBA0",
+"name": "g_pDynVB_FVF42",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBA4",
+"name": "g_pDynVB_FVF44",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBA8",
+"name": "g_pDynVB_FVF144",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBAC",
+"name": "g_pDynVB_FVF142",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBB0",
+"name": "g_pDynVB_FVF152",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBB4",
+"name": "g_pMoCamera",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBB8",
+"name": "Fn100467E0_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBC4",
+"name": "Fn100472F0_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBDC",
+"name": "g_zoneFogOut2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBE0",
+"name": "g_zoneFogOut1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBE4",
+"name": "Fn100467E0_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BBF8",
+"name": "g_zoneFogOut3",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC0C",
+"name": "g_scratchValue",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC1C",
+"name": "Fn100472F0_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC28",
+"name": "Fn100467E0_material",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC78",
+"name": "Fn10054D70_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC7C",
+"name": "Fn10054D70_lookAtUp",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC80",
+"name": "Fn10054D70_lookAtUp_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC84",
+"name": "Fn10054D70_lookAtUp_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BC8C",
+"name": "DAT_1047bc8c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BEF8",
+"name": "Fn10057E10_static_BEF8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BFA8",
+"name": "g_pResourceMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BFF4",
+"name": "g_pDxStatusMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BFF8",
+"name": "g_pVbPool",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047BFFC",
+"name": "dword_1047BFFC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047C004",
+"name": "g_pOcclusionMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047CAD0",
+"name": "Fn1006C530_stateBlock2",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047CADC",
+"name": "Fn1006C530_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047CAE0",
+"name": "Fn1006C530_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047CF7C",
+"name": "g_pProcessor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D128",
+"name": "g_pMeshResourceMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D12C",
+"name": "byte_1047D12C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D13C",
+"name": "g_resourcesDirty",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D13D",
+"name": "byte_1047D13D",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D140",
+"name": "dword_1047D140",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D14C",
+"name": "g_cubeMapCount",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D150",
+"name": "g_cubeMapTargetHeight",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D154",
+"name": "Fn100759C0_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D158",
+"name": "g_pCubeMapTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D15C",
+"name": "g_cubeMapTexObjs",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D168",
+"name": "g_cubeMapTextures",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D174",
+"name": "Fn10075700_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D180",
+"name": "Fn10076030_static_D180",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D184",
+"name": "Fn10076030_static_D184",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D188",
+"name": "Fn10076030_static_D188",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D18C",
+"name": "Fn10076030_static_D18C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D190",
+"name": "Fn10076030_static_D190",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D194",
+"name": "Fn10076030_static_D194",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D198",
+"name": "Fn10076030_static_D198",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D19C",
+"name": "Fn10076030_static_D19C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1A0",
+"name": "Fn10076030_static_D1A0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1A4",
+"name": "Fn10076030_static_D1A4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1A8",
+"name": "Fn10076030_static_D1A8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1AC",
+"name": "Fn10076030_static_D1AC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1B0",
+"name": "Fn10076030_static_D1B0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1B4",
+"name": "Fn10076030_static_D1B4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1B8",
+"name": "Fn10076030_static_D1B8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1BC",
+"name": "Fn10076030_static_D1BC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1C0",
+"name": "Fn10076030_static_D1C0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1C4",
+"name": "Fn10076030_static_D1C4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1C8",
+"name": "Fn10076030_static_D1C8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1CC",
+"name": "Fn10076030_static_D1CC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1D0",
+"name": "Fn10076030_static_D1D0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1D4",
+"name": "Fn10076030_static_D1D4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1D8",
+"name": "Fn10076030_static_D1D8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1DC",
+"name": "Fn10076030_static_D1DC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1E0",
+"name": "Fn10076030_static_D1E0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1E4",
+"name": "Fn10076030_static_D1E4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1E8",
+"name": "Fn10076030_static_D1E8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1EC",
+"name": "Fn10076030_static_D1EC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D1FC",
+"name": "Fn10075700_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D200",
+"name": "g_cubeMapTargetWidth",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D210",
+"name": "Fn100759C0_stateBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D600",
+"name": "g_targetActorHandle",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D688",
+"name": "dword_1047D688",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D68C",
+"name": "dword_1047D68C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D694",
+"name": "byte_1047D694",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047D698",
+"name": "_DAT_1047d698",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047FB3A",
+"name": "DAT_1047fb3a",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047FB3C",
+"name": "DAT_1047fb3c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1047FB40",
+"name": "DAT_1047fb40",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104804C2",
+"name": "DAT_104804c2_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104804C4",
+"name": "DAT_104804c4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104807F0",
+"name": "DAT_104807f0_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104807F5",
+"name": "DAT_104807f5",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104808F0",
+"name": "DAT_104808f0_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104808FC",
+"name": "DAT_104808fc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048098E",
+"name": "DAT_1048098e",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480990",
+"name": "DAT_10480990",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480994",
+"name": "DAT_10480994",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480998",
+"name": "DAT_10480998",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048099C",
+"name": "_DAT_1048099c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480A91",
+"name": "DAT_10480a91",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480AA4",
+"name": "DAT_10480aa4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480AEC",
+"name": "DAT_10480aec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10480AF0",
+"name": "ActerBuffPtr",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F18",
+"name": "DAT_10482f18",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F1A",
+"name": "DAT_10482f1a",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F1E",
+"name": "DAT_10482f1e_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F20",
+"name": "DAT_10482f20",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F43",
+"name": "DAT_10482f43",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F44",
+"name": "DAT_10482f44_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F88",
+"name": "DAT_10482f88",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F8C",
+"name": "DAT_10482f8c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F90",
+"name": "DAT_10482f90",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10482F94",
+"name": "DAT_10482f94",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485578",
+"name": "DAT_10485578",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048557C",
+"name": "_DAT_1048557c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485584",
+"name": "_DAT_10485584",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485630",
+"name": "DAT_10485630",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485A70",
+"name": "DAT_10485a70_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F7A",
+"name": "DAT_10485f7a",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F7C",
+"name": "DAT_10485f7c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F80",
+"name": "_DAT_10485f80",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F84",
+"name": "_DAT_10485f84",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F88",
+"name": "_DAT_10485f88",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485F90",
+"name": "_DAT_10485f90",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485FE0",
+"name": "DAT_10485fe0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10485FF8",
+"name": "DAT_10485ff8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10486000",
+"name": "DAT_10486000_as_s8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10486020",
+"name": "DAT_10486020",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487034",
+"name": "DAT_10487034",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487E48",
+"name": "DAT_10487e48",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487E4C",
+"name": "DAT_10487e4c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487E50",
+"name": "_DAT_10487e50",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487EEE",
+"name": "DAT_10487eee",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487F58",
+"name": "XiControlActor_userControlTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487F80",
+"name": "XiControlActor_isFirstPersonView",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10487F81",
+"name": "XiControlActor_isAutoRunning",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10488208",
+"name": "DAT_10488208",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104898F9",
+"name": "DAT_104898f9",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A308",
+"name": "g_nearestLight",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A30C",
+"name": "g_lightLookAtTarget",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A310",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A310",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A314",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A314",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A318",
+"name": "g_lightLookAtEye",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A31C",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A31C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A320",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A320",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A328",
+"name": "PerActor_FourBucketStaggeredUpdate_staticGuards",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A32C",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A32C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A330",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A330",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A334",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A334",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A338",
+"name": "g_lightLookAtUp",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A33C",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A33C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A340",
+"name": "PerActor_FourBucketStaggeredUpdate_static_A340",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A34C",
+"name": "g_actorSerialCounter_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A350",
+"name": "g_actorUpdateCounter",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A354",
+"name": "g_actorUpdateInterval",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A358",
+"name": "g_actorUpdateBucketCountA",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1048A368",
+"name": "g_actorUpdateBucketCountB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104DFD98",
+"name": "DAT_104dfd98",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E0AF4",
+"name": "DAT_104e0af4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1B70",
+"name": "g_viewport_1B70",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1B88",
+"name": "g_textCursorX",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1B8C",
+"name": "g_textCursorY",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1B90",
+"name": "g_pFontGlyphs",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1B98",
+"name": "DAT_104e1b98",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1BE0",
+"name": "DAT_104e1be0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1BE4",
+"name": "DAT_104e1be4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1BF4",
+"name": "dword_104E1BF4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1BF8",
+"name": "g_shapeMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1D44",
+"name": "dword_104E1D44",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x104E1D4C",
+"name": "g_pCursor",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10578158",
+"name": "g_pTkMsgWinData",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1057815C",
+"name": "dword_1057815C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10578160",
+"name": "dword_10578160",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x105781AC",
+"name": "DAT_105781ac",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x105781CC",
+"name": "DAT_105781cc_as_s32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x105781F8",
+"name": "g_pTkHelp_as_s32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10578474",
+"name": "DAT_10578474_as_s32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10578478",
+"name": "DAT_10578478_as_s32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1057847C",
+"name": "g_pTkTitle",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10578480",
+"name": "DAT_10578480_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1057876C",
+"name": "g_pTargetMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621838",
+"name": "g_menuMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1062188C",
+"name": "DAT_1062188c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621898",
+"name": "DAT_10621898_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621899",
+"name": "DAT_10621898_1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106218B4",
+"name": "g_screenRectTopLeft",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106218B8",
+"name": "g_screenRectBottomRight",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621904",
+"name": "g_viewport_1904",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1062191C",
+"name": "Fn10162010_static_191C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621934",
+"name": "DAT_10621934",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621944",
+"name": "DAT_10621944",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621988",
+"name": "g_upVerts_1988",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1062198C",
+"name": "g_upVerts_1988_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621990",
+"name": "g_upVerts_1988_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621998",
+"name": "g_upVerts_1988_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1062199C",
+"name": "g_upVerts_1988_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219A0",
+"name": "g_upVerts_1988_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219A8",
+"name": "g_upVerts_1988_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219AC",
+"name": "g_upVerts_1988_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219B0",
+"name": "g_upVerts_1988_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219B8",
+"name": "g_upVerts_1988_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219BC",
+"name": "g_upVerts_1988_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219C0",
+"name": "g_upVerts_1988_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219C8",
+"name": "g_upVerts_1988_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219CC",
+"name": "g_upVerts_1988_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219D0",
+"name": "g_upVerts_1988_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219D8",
+"name": "g_upVerts_1988_v5_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219DC",
+"name": "g_upVerts_1988_v5_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106219E0",
+"name": "g_upVerts_1988_v5_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A08",
+"name": "g_dbgBoxList",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A10",
+"name": "dword_10621A10",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A18",
+"name": "g_upVerts_1A18",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A1C",
+"name": "g_upVerts_1A18_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A20",
+"name": "g_upVerts_1A18_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A24",
+"name": "g_upVerts_1A18_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A28",
+"name": "g_upVerts_1A18_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A2C",
+"name": "g_upVerts_1A18_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A30",
+"name": "g_upVerts_1A18_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A34",
+"name": "g_upVerts_1A18_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A38",
+"name": "g_upVerts_1A18_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A3C",
+"name": "g_upVerts_1A18_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A40",
+"name": "g_upVerts_1A18_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A44",
+"name": "g_upVerts_1A18_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A48",
+"name": "g_upVerts_1A18_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A4C",
+"name": "g_upVerts_1A18_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A50",
+"name": "g_upVerts_1A18_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A54",
+"name": "g_upVerts_1A18_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A58",
+"name": "g_upVerts_1A18_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A5C",
+"name": "g_upVerts_1A18_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A60",
+"name": "g_upVerts_1A18_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A64",
+"name": "g_upVerts_1A18_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A68",
+"name": "g_upVerts_1A68",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A6C",
+"name": "g_upVerts_1A68_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A70",
+"name": "g_upVerts_1A68_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A74",
+"name": "g_upVerts_1A68_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A78",
+"name": "g_upVerts_1A68_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A7C",
+"name": "g_upVerts_1A68_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A80",
+"name": "g_upVerts_1A68_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A84",
+"name": "g_upVerts_1A68_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A88",
+"name": "g_upVerts_1A68_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A8C",
+"name": "g_upVerts_1A68_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A90",
+"name": "g_upVerts_1A68_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A94",
+"name": "g_upVerts_1A68_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A98",
+"name": "g_upVerts_1A68_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621A9C",
+"name": "g_upVerts_1A68_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AA0",
+"name": "g_upVerts_1A68_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AA4",
+"name": "g_upVerts_1A68_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AA8",
+"name": "g_upVerts_1A68_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AAC",
+"name": "g_upVerts_1A68_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AB0",
+"name": "g_upVerts_1A68_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AB4",
+"name": "g_upVerts_1A68_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AB8",
+"name": "g_upVerts_1AB8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621ABC",
+"name": "g_upVerts_1AB8_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AC0",
+"name": "g_upVerts_1AB8_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AC4",
+"name": "g_upVerts_1AB8_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AC8",
+"name": "g_upVerts_1AB8_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621ACC",
+"name": "g_upVerts_1AB8_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AD0",
+"name": "g_upVerts_1AB8_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AD4",
+"name": "g_upVerts_1AB8_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AD8",
+"name": "g_upVerts_1AB8_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621ADC",
+"name": "g_upVerts_1AB8_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AE0",
+"name": "g_upVerts_1AB8_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AE4",
+"name": "g_upVerts_1AB8_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AE8",
+"name": "g_upVerts_1AB8_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AEC",
+"name": "g_upVerts_1AB8_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AF0",
+"name": "g_upVerts_1AB8_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AF4",
+"name": "g_upVerts_1AB8_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AF8",
+"name": "g_upVerts_1AB8_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621AFC",
+"name": "g_upVerts_1AB8_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B00",
+"name": "g_upVerts_1AB8_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B04",
+"name": "g_upVerts_1AB8_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B08",
+"name": "g_upVerts_1AB8_v5_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B0C",
+"name": "g_upVerts_1AB8_v5_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B10",
+"name": "g_upVerts_1AB8_v5_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B14",
+"name": "g_upVerts_1AB8_v5_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B18",
+"name": "g_upVerts_1AB8_v6_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B1C",
+"name": "g_upVerts_1AB8_v6_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B20",
+"name": "g_upVerts_1AB8_v6_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B24",
+"name": "g_upVerts_1AB8_v6_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B28",
+"name": "g_upVerts_1AB8_v7_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B2C",
+"name": "g_upVerts_1AB8_v7_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B30",
+"name": "g_upVerts_1AB8_v7_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621B34",
+"name": "g_upVerts_1AB8_v7_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621C00",
+"name": "g_zbiasRestore",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621C7C",
+"name": "DAT_10621c7c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621C80",
+"name": "DAT_10621c80",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10621C88",
+"name": "DAT_10621c88",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10624DD3",
+"name": "c_div2000Magic",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631C88",
+"name": "g_zbiasOverlay",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631C90",
+"name": "g_upVerts_1C90",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631C94",
+"name": "g_upVerts_1C90_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631C98",
+"name": "g_upVerts_1C90_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631C9C",
+"name": "g_upVerts_1C90_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CA0",
+"name": "g_upVerts_1C90_v0_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CA4",
+"name": "g_upVerts_1C90_v0_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CA8",
+"name": "g_upVerts_1C90_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CAC",
+"name": "g_upVerts_1C90_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CB0",
+"name": "g_upVerts_1C90_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CB4",
+"name": "g_upVerts_1C90_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CB8",
+"name": "g_upVerts_1C90_v1_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CBC",
+"name": "g_upVerts_1C90_v1_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CC0",
+"name": "g_upVerts_1C90_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CC4",
+"name": "g_upVerts_1C90_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CC8",
+"name": "g_upVerts_1C90_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CCC",
+"name": "g_upVerts_1C90_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CD0",
+"name": "g_upVerts_1C90_v2_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CD4",
+"name": "g_upVerts_1C90_v2_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CD8",
+"name": "g_upVerts_1C90_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CDC",
+"name": "g_upVerts_1C90_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CE0",
+"name": "g_upVerts_1C90_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CE4",
+"name": "g_upVerts_1C90_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CE8",
+"name": "g_upVerts_1C90_v3_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CEC",
+"name": "g_upVerts_1C90_v3_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CF0",
+"name": "g_upVerts_1C90_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CF4",
+"name": "g_upVerts_1C90_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CF8",
+"name": "g_upVerts_1C90_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631CFC",
+"name": "g_upVerts_1C90_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D00",
+"name": "g_upVerts_1C90_v4_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D04",
+"name": "g_upVerts_1C90_v4_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D08",
+"name": "g_upVerts_1C90_v5_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D0C",
+"name": "g_upVerts_1C90_v5_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D10",
+"name": "g_upVerts_1C90_v5_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D14",
+"name": "g_upVerts_1C90_v5_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D18",
+"name": "g_upVerts_1C90_v5_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D1C",
+"name": "g_upVerts_1C90_v5_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D20",
+"name": "g_upVerts_1C90_v6_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D24",
+"name": "g_upVerts_1C90_v6_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D28",
+"name": "g_upVerts_1C90_v6_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D2C",
+"name": "g_upVerts_1C90_v6_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D30",
+"name": "g_upVerts_1C90_v6_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D34",
+"name": "g_upVerts_1C90_v6_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D38",
+"name": "g_upVerts_1C90_v7_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D3C",
+"name": "g_upVerts_1C90_v7_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D40",
+"name": "g_upVerts_1C90_v7_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D44",
+"name": "g_upVerts_1C90_v7_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D48",
+"name": "g_upVerts_1C90_v7_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D4C",
+"name": "g_upVerts_1C90_v7_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D50",
+"name": "g_upVerts_1D50",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D54",
+"name": "g_upVerts_1D50_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D58",
+"name": "g_upVerts_1D50_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D5C",
+"name": "g_upVerts_1D50_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D60",
+"name": "g_upVerts_1D50_v0_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D64",
+"name": "g_upVerts_1D50_v0_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D68",
+"name": "g_upVerts_1D50_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D6C",
+"name": "g_upVerts_1D50_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D70",
+"name": "g_upVerts_1D50_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D74",
+"name": "g_upVerts_1D50_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D78",
+"name": "g_upVerts_1D50_v1_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D7C",
+"name": "g_upVerts_1D50_v1_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D80",
+"name": "g_upVerts_1D50_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D84",
+"name": "g_upVerts_1D50_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D88",
+"name": "g_upVerts_1D50_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D8C",
+"name": "g_upVerts_1D50_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D90",
+"name": "g_upVerts_1D50_v2_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D94",
+"name": "g_upVerts_1D50_v2_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D98",
+"name": "g_upVerts_1D50_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631D9C",
+"name": "g_upVerts_1D50_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DA0",
+"name": "g_upVerts_1D50_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DA4",
+"name": "g_upVerts_1D50_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DA8",
+"name": "g_upVerts_1D50_v3_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DAC",
+"name": "g_upVerts_1D50_v3_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DB0",
+"name": "g_upVerts_1D50_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DB4",
+"name": "g_upVerts_1D50_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DB8",
+"name": "g_upVerts_1D50_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DBC",
+"name": "g_upVerts_1D50_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DC0",
+"name": "g_upVerts_1D50_v4_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631DC4",
+"name": "g_upVerts_1D50_v4_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E10",
+"name": "g_upVerts_1E10",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E14",
+"name": "g_upVerts_1E10_v0_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E18",
+"name": "g_upVerts_1E10_v0_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E1C",
+"name": "g_upVerts_1E10_v0_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E20",
+"name": "g_upVerts_1E10_v0_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E24",
+"name": "g_upVerts_1E10_v0_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E28",
+"name": "g_upVerts_1E10_v1_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E2C",
+"name": "g_upVerts_1E10_v1_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E30",
+"name": "g_upVerts_1E10_v1_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E34",
+"name": "g_upVerts_1E10_v1_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E38",
+"name": "g_upVerts_1E10_v1_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E3C",
+"name": "g_upVerts_1E10_v1_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E40",
+"name": "g_upVerts_1E10_v2_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E44",
+"name": "g_upVerts_1E10_v2_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E48",
+"name": "g_upVerts_1E10_v2_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E4C",
+"name": "g_upVerts_1E10_v2_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E50",
+"name": "g_upVerts_1E10_v2_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E54",
+"name": "g_upVerts_1E10_v2_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E58",
+"name": "g_upVerts_1E10_v3_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E5C",
+"name": "g_upVerts_1E10_v3_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E60",
+"name": "g_upVerts_1E10_v3_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E64",
+"name": "g_upVerts_1E10_v3_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E68",
+"name": "g_upVerts_1E10_v3_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E6C",
+"name": "g_upVerts_1E10_v3_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E70",
+"name": "g_upVerts_1E10_v4_x",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E74",
+"name": "g_upVerts_1E10_v4_y",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E78",
+"name": "g_upVerts_1E10_v4_z",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E7C",
+"name": "g_upVerts_1E10_v4_diffuse",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E80",
+"name": "g_upVerts_1E10_v4_u",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631E84",
+"name": "g_upVerts_1E10_v4_v",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631ED0",
+"name": "DAT_10631ed0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631ED4",
+"name": "DAT_10631ed4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631ED8",
+"name": "_DAT_10631ed8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EDC",
+"name": "_DAT_10631edc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EE0",
+"name": "_DAT_10631ee0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EE4",
+"name": "_DAT_10631ee4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EE8",
+"name": "_DAT_10631ee8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EEC",
+"name": "_DAT_10631eec",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EF0",
+"name": "_DAT_10631ef0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EF4",
+"name": "_DAT_10631ef4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EF8",
+"name": "_DAT_10631ef8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631EFC",
+"name": "_DAT_10631efc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F00",
+"name": "_DAT_10631f00",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F04",
+"name": "_DAT_10631f04",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F08",
+"name": "_DAT_10631f08",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F0C",
+"name": "_DAT_10631f0c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F10",
+"name": "g_boxIB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F20",
+"name": "g_boxPositionVB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F24",
+"name": "g_pZoneMap",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10631F38",
+"name": "DAT_10631f38",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10632038",
+"name": "g_zbiasZoneMesh_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10639040",
+"name": "g_boxStream1VB",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10639088",
+"name": "g_zoneProjVerts",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106390B0",
+"name": "unk_106390B0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106390B4",
+"name": "unk_106390B4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106390C8",
+"name": "unk_106390C8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106390CC",
+"name": "unk_106390CC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065C4CC",
+"name": "DAT_1065c4cc",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065C4D0",
+"name": "g_zbiasPreset_C4D0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065C4D4",
+"name": "DAT_1065c4d4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065C5D8",
+"name": "_DAT_1065c5d8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065CA28",
+"name": "DAT_1065ca28",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065CA2C",
+"name": "DAT_1065ca2c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065CB04",
+"name": "g_pXiZone",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1065CB0C",
+"name": "_DAT_1065cb0c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1066279C",
+"name": "dword_1066279C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106627EC",
+"name": "dword_106627EC",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10662DA8",
+"name": "dword_10662DA8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10662DBC",
+"name": "ArgList",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10662DCC",
+"name": "g_pFileMng",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10663178",
+"name": "DAT_10663178_as_v0",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1066317A",
+"name": "DAT_1066317a",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106631D4",
+"name": "g_C_106631D4",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106631D8",
+"name": "DAT_106631d8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10663888",
+"name": "DAT_10663888",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10663ACC",
+"name": "DAT_10663acc_as_s32",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106643A8",
+"name": "DAT_106643a8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E2C",
+"name": "DAT_10666e2c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E30",
+"name": "DAT_10666e30",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E34",
+"name": "DAT_10666e34",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E38",
+"name": "DAT_10666e38",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E3C",
+"name": "DAT_10666e3c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E40",
+"name": "DAT_10666e40",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E44",
+"name": "DAT_10666e44",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E48",
+"name": "DAT_10666e48",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E4C",
+"name": "DAT_10666e4c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E50",
+"name": "DAT_10666e50",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E54",
+"name": "DAT_10666e54",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E58",
+"name": "DAT_10666e58",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E5C",
+"name": "DAT_10666e5c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E60",
+"name": "DAT_10666e60",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E64",
+"name": "DAT_10666e64",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E68",
+"name": "DAT_10666e68",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E6C",
+"name": "DAT_10666e6c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E70",
+"name": "DAT_10666e70",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10666E7C",
+"name": "g_pMovie",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106671B8",
+"name": "DAT_106671b8",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10668FD8",
+"name": "g_pKeyPrompt",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669014",
+"name": "dword_10669014",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669094",
+"name": "DAT_10669094",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1066914C",
+"name": "g_stateBlock_914C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669150",
+"name": "g_stateBlock_9150",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669158",
+"name": "DAT_10669158",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x106693FC",
+"name": "g_pStDancer",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669400",
+"name": "g_dancerMainMemSize",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669404",
+"name": "g_dancerMainMemBase",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669408",
+"name": "g_dancerMemBlock",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1066940C",
+"name": "g_dancerWorkMemSize",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669410",
+"name": "g_dancerWorkMemBase",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669418",
+"name": "g_This_10669418",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1066941C",
+"name": "g_pDancerDevice",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669420",
+"name": "byte_10669420",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x10669424",
+"name": "g_pObj_Vtbl1033CE34",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D200",
+"name": "g_pSqgxContext",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D218",
+"name": "sqgxTextureCreateFromImage_static_D218",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D219",
+"name": "sqgxTextureCreateFromImage_static_D219",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D21A",
+"name": "sqgxTextureCreateFromImage_static_D21A",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D21B",
+"name": "byte_1099D21B",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D618",
+"name": "g_sqgxTex_name",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D61C",
+"name": "g_sqgxTex_width",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D620",
+"name": "g_sqgxTex_height",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D624",
+"name": "g_sqgxTex_kind",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D628",
+"name": "g_sqgxTex_log2Width",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D62C",
+"name": "g_sqgxTex_log2Height",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D630",
+"name": "g_sqgxTex_format",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D634",
+"name": "g_sqgxTex_paletteSlot",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D638",
+"name": "g_sqgxTex_texture",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x1099D63C",
+"name": "g_sqgxTex_surface",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2618",
+"name": "g_sqgxRenderStateDirty",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A261C",
+"name": "g_counter_109A261C",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2620",
+"name": "g_sqgxPaletteUsed",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2720",
+"name": "dword_109A2720",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2730",
+"name": "g_sqgxViewportDirty",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2740",
+"name": "g_sqgxShaderDirty",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2744",
+"name": "g_counter_109A2744",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2750",
+"name": "DAT_109a2750",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2754",
+"name": "DAT_109a2754",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2770",
+"name": "DAT_109a2770",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2774",
+"name": "DAT_109a2774",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2778",
+"name": "DAT_109a2778",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A277C",
+"name": "DAT_109a277c",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2780",
+"name": "DAT_109a2780",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2788",
+"name": "DAT_109a2788",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A2798",
+"name": "g_sceneRT",
+"kind": "data",
+"size": 0,
+"source": "globals"
+},
+{
+"address": "0x109A279C",
+"name": "g_sceneRT1",
+"kind": "data",
+"size": 0,
+"source": "globals"
+}
+]
+}

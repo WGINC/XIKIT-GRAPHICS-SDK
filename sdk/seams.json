@@ -1,0 +1,5248 @@
+{
+ "_about": "sdk/seams.py: per function, depth = fewest direct calls to a function with a proven Direct3D call site (0 = has one; null = none by direct calls); units = the same counted per source unit; cut to the functions with a depth (sdk/public_prune.py) and the units that hold one",
+ "functions": {
+  "0x10001520": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CApp::RunMainLoop",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x10001B50": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "App_RenderFrameMaskedFPU",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x10002040": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": "Gfx_CopySurfaceRectToTexture",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x10002130": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ProbeDeviceCaps",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x10002F20": {
+   "depth": 3,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_CreateD3DHolder",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x100031F0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_D3DBootstrap",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x100033C0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_TryCreateDeviceForMode",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x100034B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_CreateDevice",
+   "tree": true,
+   "unit": "unit_100014A0_Gfx"
+  },
+  "0x10003710": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "DebugOverlay_Update",
+   "tree": true,
+   "unit": "Debug"
+  },
+  "0x10003890": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10003890_DrawActorAxes",
+   "tree": true,
+   "unit": "unit_10003890_DirectInput"
+  },
+  "0x10003B60": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Debug_DrawTextTable",
+   "tree": true,
+   "unit": "unit_10003890_DirectInput"
+  },
+  "0x10003D70": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Debug_DrawWorldText",
+   "tree": true,
+   "unit": "unit_10003890_DirectInput"
+  },
+  "0x100091B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::Initialize",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x100096B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::EndClearBegin",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009710": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::TestCooperativeLevel",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009720": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::Present",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009730": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::BeginScene",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009740": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::EndScene",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009920": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x10009DC0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::SetViewport",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009E20": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::PushRenderTarget",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009E60": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x10009EA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::PushRenderTargetTexture_Flag1",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009EE0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::PushRenderTargetTexture_Flag0",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x10009F20": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::PushRenderTargetTexture",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A1D0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::SetTexture",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A390": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::EndAndClearBegin",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A3B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawScreenQuadAtDepth",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A4F0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawTextureToViewport",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A550": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawTexturedScreenQuadUnit",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A5A0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawTexturedScreenQuad",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A6E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::CreateTexture",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A800": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::PushRenderTargetRet1",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000A820": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawFadeQuad",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000AAB0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::Post_DepthBlurComposite",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000ABE0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000AEA0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000B1B0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000B460": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000B7C0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000BB90": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawStereoOddFrameOverlay",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000BD50": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::SetTransform",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000BF30": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::SetLight",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000C0B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::CompositeSceneToBackBuffer",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000C6E0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::CreateStereoResources",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000C850": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::CreateRampTexture1x16",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000C900": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::CreateRampTextures1024x2",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000CA00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000CB20": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawPrimitive",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000CC00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawIndexedPrimitive",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000CD00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::DrawPrimitiveUP",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000CDF0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CDx"
+  },
+  "0x1000CF20": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::ApplyStereoEyeProjection",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x1000CF90": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CDx::RestoreProjection",
+   "tree": true,
+   "unit": "CDx"
+  },
+  "0x100106C0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "CAtelIdleTask::UpdateFrame",
+   "tree": true,
+   "unit": "unit_10010370_App"
+  },
+  "0x10010D20": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10010370_App"
+  },
+  "0x10011A00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Frame_Render",
+   "tree": true,
+   "unit": "unit_10011A00_Post"
+  },
+  "0x10012F40": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Post_Afterimage",
+   "tree": true,
+   "unit": "unit_10011A00_Post"
+  },
+  "0x100132B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Post_FlashAndZoomFeedback",
+   "tree": true,
+   "unit": "unit_10011A00_Post"
+  },
+  "0x10013AD0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10011A00_Post"
+  },
+  "0x10014170": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "App_DispatchSubState",
+   "tree": true,
+   "unit": "unit_10011A00_Post"
+  },
+  "0x10014350": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10014350_RunStepThenLoadAll",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10014C10": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Camera_ReleaseAll",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10015510": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x100157B0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "App_WinMainClearFileMng",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10015AB0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "App_RunWithCOM",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x100161B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "App_CreateRendererAndApp",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10016300": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "App_RunMainLoopThenSetPtr",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10016320": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "App_DestroyGlobalObjects",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10016870": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "App_WndProc",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10017230": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "GammaRamp_ApplyIfChanged",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x100172D0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10017310": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Unit10014350_Draw",
+   "tree": true,
+   "unit": "unit_10014350_Camera"
+  },
+  "0x10017780": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "CShader::ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CShader"
+  },
+  "0x100177A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CShader::CShader_Destructor",
+   "tree": true,
+   "unit": "CShader"
+  },
+  "0x10017810": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Shader_CreateVertexShader",
+   "tree": true,
+   "unit": "unit_100177E0"
+  },
+  "0x10017C20": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10017C10_Step",
+   "tree": true,
+   "unit": "unit_10017C10"
+  },
+  "0x10017C60": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10017C10_Begin",
+   "tree": true,
+   "unit": "unit_10017C10"
+  },
+  "0x10018B50": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10018840_UpdateRangeEntries",
+   "tree": true,
+   "unit": "unit_10018840"
+  },
+  "0x1001C930": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1001B890"
+  },
+  "0x1001D0A0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_CreateTranslucentTargets",
+   "tree": true,
+   "unit": "unit_1001B890"
+  },
+  "0x1001D240": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_BeginTranslucentPass",
+   "tree": true,
+   "unit": "unit_1001B890"
+  },
+  "0x1001D350": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_TranslucentUnbindTexture",
+   "tree": true,
+   "unit": "unit_1001B890"
+  },
+  "0x1001D3B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_CompositeTranslucentPass",
+   "tree": true,
+   "unit": "unit_1001B890"
+  },
+  "0x1001D800": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "TexRes_LoadBm2",
+   "tree": true,
+   "unit": "unit_1001B890"
+  },
+  "0x1001DC70": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Tex_DrawNamedTexturePreview",
+   "tree": true,
+   "unit": "unit_1001DC30"
+  },
+  "0x1001DD00": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_DrawScreenQuad256",
+   "tree": true,
+   "unit": "unit_1001DC30"
+  },
+  "0x100224D0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CYyModelDt"
+  },
+  "0x10022FA0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CYyModelDt::SetVertexShader",
+   "tree": true,
+   "unit": "CYyModelDt"
+  },
+  "0x10025030": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "CYyModelDt::PrepareRenderStateEntry",
+   "tree": true,
+   "unit": "CYyModelDt"
+  },
+  "0x10025260": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10025220_Init",
+   "tree": true,
+   "unit": "unit_10025220"
+  },
+  "0x10025330": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ProjTex_BeginPass",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x100255C0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ProjTex_EndPass",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x10025870": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ProjTex_CaptureToTarget",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x10025C40": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "EnvMap_BeginPass",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x10025F70": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "EnvMap_EndPass",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x100262C0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100252F0"
+  },
+  "0x100263F0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Dbg_DrawViewAxisGizmo",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x100266C0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Dbg_DrawAxesAt",
+   "tree": true,
+   "unit": "unit_100252F0"
+  },
+  "0x10026990": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CYyIcon::Draw",
+   "tree": true,
+   "unit": "unit_10026990"
+  },
+  "0x10026AD0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiMovie::Draw",
+   "tree": true,
+   "unit": "CXiMovie"
+  },
+  "0x10026C70": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CYyIcon::DrawSubRect",
+   "tree": true,
+   "unit": "unit_10026C70_Vec3"
+  },
+  "0x10027930": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_ScreenDeltaToNdc",
+   "tree": true,
+   "unit": "unit_10026C70_Vec3"
+  },
+  "0x100294B0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10029260"
+  },
+  "0x100295A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Mem_DrawHeapUsageBar",
+   "tree": true,
+   "unit": "unit_10029260"
+  },
+  "0x10029A50": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CreateSharedVertexBuffers",
+   "tree": true,
+   "unit": "unit_100298D0"
+  },
+  "0x1002A000": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyModelDt::PrepareRenderStateV2Entry",
+   "tree": true,
+   "unit": "CYyModelDt"
+  },
+  "0x1002A3B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyModelBase::DrawLit",
+   "tree": true,
+   "unit": "unit_1002A0C0"
+  },
+  "0x1002B4B0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyModel::Constructor",
+   "tree": true,
+   "unit": "CYyModel"
+  },
+  "0x1002B6E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::DrawModel",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x1002C360": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::PrepareModelsOnce",
+   "tree": true,
+   "unit": "unit_1002C270"
+  },
+  "0x1002CCB0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyOs2VtxBuffer::CreateBuffersStep",
+   "tree": true,
+   "unit": "CYyOs2VtxBuffer"
+  },
+  "0x1002D660": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyOs2VtxBuffer_ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CYyOs2VtxBuffer"
+  },
+  "0x1002D680": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CYyOs2VtxBuffer::Constructor",
+   "tree": true,
+   "unit": "CYyOs2VtxBuffer"
+  },
+  "0x1002D700": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor",
+   "tree": true,
+   "unit": "CYyOs2VtxBuffer"
+  },
+  "0x1002D7F0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoResource_VT_1032C854::CheckVersionAndInit",
+   "tree": true,
+   "unit": "unit_1002D7F0"
+  },
+  "0x1002D8F0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1002D8E0_FixOffsetsAndCreateVtxBuffer",
+   "tree": true,
+   "unit": "unit_1002D8E0"
+  },
+  "0x1002DC10": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyModelDt::SkinAndDrawV2",
+   "tree": true,
+   "unit": "CYyModelDt"
+  },
+  "0x1002F130": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_SetStreamSourceCached",
+   "tree": true,
+   "unit": "unit_1002F130"
+  },
+  "0x1002F160": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ApplyCachedStreamSource",
+   "tree": true,
+   "unit": "unit_1002F130"
+  },
+  "0x1002F1A0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ApplyCachedVertexShader",
+   "tree": true,
+   "unit": "unit_1002F130"
+  },
+  "0x10033710": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit100310A0_Construct",
+   "tree": true,
+   "unit": "unit_100310A0"
+  },
+  "0x10033800": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_BeginOffscreenPass",
+   "tree": true,
+   "unit": "unit_100310A0"
+  },
+  "0x10033A70": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Model_EndOffscreenPassBindTextures",
+   "tree": true,
+   "unit": "unit_100310A0"
+  },
+  "0x10033DA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Shadow_DrawByMode",
+   "tree": true,
+   "unit": "unit_100310A0"
+  },
+  "0x10036230": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "CYySoundElem::UpdateQueue",
+   "tree": true,
+   "unit": "unit_10035B00"
+  },
+  "0x100364A0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CYySoundElem::UpdateOne",
+   "tree": true,
+   "unit": "unit_10035B00"
+  },
+  "0x100364E0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "CYySoundElem::UpdateTimerAndPosition",
+   "tree": true,
+   "unit": "unit_10035B00"
+  },
+  "0x100368B0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "CYySoundElem::UpdateFromCamera",
+   "tree": true,
+   "unit": "unit_10035B00"
+  },
+  "0x10038520": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawPass",
+   "tree": true,
+   "unit": "unit_10037AC0_SetMusicTrackVolume"
+  },
+  "0x10038720": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawString",
+   "tree": true,
+   "unit": "unit_10037AC0_SetMusicTrackVolume"
+  },
+  "0x10038930": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Post_CreateScreenEffectTargets",
+   "tree": true,
+   "unit": "unit_10038930"
+  },
+  "0x10038A80": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Post_CaptureSceneToTarget",
+   "tree": true,
+   "unit": "unit_10038930"
+  },
+  "0x10038E10": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Post_DrawRotatingGhostLayers",
+   "tree": true,
+   "unit": "unit_10038930"
+  },
+  "0x10039A30": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "TexObj_CreateAndUpload",
+   "tree": true,
+   "unit": "unit_100399D0_TexObj"
+  },
+  "0x10039A60": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "TexObj_Reupload",
+   "tree": true,
+   "unit": "unit_100399D0_TexObj"
+  },
+  "0x10039A80": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100399D0_TexObj"
+  },
+  "0x10039E50": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "TexObj_Upload",
+   "tree": true,
+   "unit": "unit_100399D0_TexObj"
+  },
+  "0x1003AB70": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "TexMgr_UploadPumpEntry",
+   "tree": true,
+   "unit": "unit_1003AAB0_TexMgr"
+  },
+  "0x1003ABB0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "TexMgr_UploadPump",
+   "tree": true,
+   "unit": "unit_1003AAB0_TexMgr"
+  },
+  "0x1003B080": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CYyVbMng"
+  },
+  "0x1003B210": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CYyVbMng::AcquireVertexBuffer",
+   "tree": true,
+   "unit": "unit_1003B210"
+  },
+  "0x1003D640": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003D0B0"
+  },
+  "0x1003D9A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Sky_DrawDome",
+   "tree": true,
+   "unit": "unit_1003D990"
+  },
+  "0x1003DB60": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Sky_DrawDomeViewCentered",
+   "tree": true,
+   "unit": "unit_1003D990"
+  },
+  "0x1003E910": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "YmElem_DrawD3ASegment",
+   "tree": true,
+   "unit": "unit_1003E6B0"
+  },
+  "0x1003E9A0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "YmElem_SetD3ADrawState",
+   "tree": true,
+   "unit": "unit_1003E6B0"
+  },
+  "0x1003EB30": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoD3aElem::vf18",
+   "tree": true,
+   "unit": "unit_1003E6B0"
+  },
+  "0x1003EBF0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003E6B0"
+  },
+  "0x1003EE70": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003EE70"
+  },
+  "0x1003F130": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003EFC0"
+  },
+  "0x1003F440": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoDistMorphElem::ApplyMorph",
+   "tree": true,
+   "unit": "CMoDistMorphElem"
+  },
+  "0x1003FBB0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003FB70"
+  },
+  "0x10040220": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDistModelElem::DrawBatches",
+   "tree": true,
+   "unit": "unit_1003FB70"
+  },
+  "0x10040670": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDistModelElem::DrawMesh",
+   "tree": true,
+   "unit": "unit_1003FB70"
+  },
+  "0x10040BA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003FB70"
+  },
+  "0x10040C20": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1003FB70"
+  },
+  "0x10040E70": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CXi471011C8_VT_1032B3B8::RebuildBlendWeights",
+   "tree": true,
+   "unit": "unit_1003FB70"
+  },
+  "0x10041160": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoD3mSpecularElem::BindTintedTexture",
+   "tree": true,
+   "unit": "unit_10041160"
+  },
+  "0x100412B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10041160"
+  },
+  "0x10041AF0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoElem_VT_1032ADE8::vf18",
+   "tree": true,
+   "unit": "unit_10041A40"
+  },
+  "0x10041C20": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10041A40"
+  },
+  "0x100421A0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoOtTask"
+  },
+  "0x100426F0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "YmElem_DrawScreenDistortion",
+   "tree": true,
+   "unit": "unit_100426F0"
+  },
+  "0x10042D00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoDistMorphElem"
+  },
+  "0x100431B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoDistModelElem::Draw",
+   "tree": true,
+   "unit": "CMoDistModelElem"
+  },
+  "0x10043320": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoDistModelElem"
+  },
+  "0x10043590": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoDistMorphElem"
+  },
+  "0x10043720": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoDistRingElem::AllocRingGeometry",
+   "tree": true,
+   "unit": "CMoDistRingElem"
+  },
+  "0x10043F40": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoVuElem_Draw",
+   "tree": true,
+   "unit": "unit_10043E40"
+  },
+  "0x10044210": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_SetViewMatrixFromField10",
+   "tree": true,
+   "unit": "unit_10043E40"
+  },
+  "0x10044230": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_SetViewMatrixFromField90",
+   "tree": true,
+   "unit": "unit_10043E40"
+  },
+  "0x10044250": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10043E40"
+  },
+  "0x10044270": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Mo_InitSharedRenderResources",
+   "tree": true,
+   "unit": "unit_10043E40"
+  },
+  "0x100446A0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10043E40_ReleaseResourcesOf",
+   "tree": true,
+   "unit": "unit_10043E40"
+  },
+  "0x10044AE0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoElem::AdvanceTimer",
+   "tree": true,
+   "unit": "CMoElem"
+  },
+  "0x10045A40": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoElem::PrepareDraw",
+   "tree": true,
+   "unit": "CMoElem"
+  },
+  "0x10046070": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "YmElem_DrawWithOwnProjection",
+   "tree": true,
+   "unit": "unit_10044C40"
+  },
+  "0x100464D0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Fog_SetRenderStates",
+   "tree": true,
+   "unit": "unit_10044C40"
+  },
+  "0x10046550": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10044C40"
+  },
+  "0x100467E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "YmElem_SetupDevice",
+   "tree": true,
+   "unit": "CMoElem"
+  },
+  "0x100472F0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "YmElem_RestoreDevice",
+   "tree": true,
+   "unit": "CMoElem"
+  },
+  "0x10047CE0": {
+   "depth": 6,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoGeneratorClone::FixupClonedPointers",
+   "tree": true,
+   "unit": "CMoGeneratorClone"
+  },
+  "0x10047FE0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CMoGeneratorClone_VT_1032B114"
+  },
+  "0x1004A870": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "GateEffectBoxProjection",
+   "tree": true,
+   "unit": "unit_10048000"
+  },
+  "0x1004E630": {
+   "depth": 2,
+   "frame": false,
+   "hookable": true,
+   "name": "ScaleElemVisibilityByProbe",
+   "tree": true,
+   "unit": "unit_10048000"
+  },
+  "0x1004E720": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoGeneratorClone::ExecuteCmdList",
+   "tree": true,
+   "unit": "unit_10048000"
+  },
+  "0x100531D0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "SharedConditionalStateReset",
+   "tree": true,
+   "unit": "unit_100531D0"
+  },
+  "0x100536C0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoGeneratorClone::CreateInstance",
+   "tree": true,
+   "unit": "CMoGeneratorClone"
+  },
+  "0x10053840": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CMoGeneratorClone_VT_1032B69C"
+  },
+  "0x100538E0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": false,
+   "name": "YmGenerater_Stop",
+   "tree": true,
+   "unit": "unit_10053860"
+  },
+  "0x10053A00": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10053860_StopGenerators",
+   "tree": true,
+   "unit": "unit_10053860"
+  },
+  "0x10054220": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoTask_VT_1032B654::RunGeneratorAndFinish",
+   "tree": true,
+   "unit": "unit_10053E60"
+  },
+  "0x100542F0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoGeneratorClone::Destructor",
+   "tree": true,
+   "unit": "CMoGeneratorClone"
+  },
+  "0x10054D70": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100548D0"
+  },
+  "0x10054F80": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "EndEffectOffscreenPass",
+   "tree": true,
+   "unit": "unit_100548D0"
+  },
+  "0x100565A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100563E0"
+  },
+  "0x100575A0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoSchedularTask"
+  },
+  "0x10057E10": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoSchedularTask::vf8",
+   "tree": true,
+   "unit": "CMoSchedularTask"
+  },
+  "0x10057FB0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoSchedularTask"
+  },
+  "0x1006A020": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_CreateVertexBuffer",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A150": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDX::CreateTexture",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A300": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A480": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDX::SetWorldMatrix",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A4F0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDX::PopViewMatrix",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A520": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDX::SetViewMatrix",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006A630": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006AA30": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "Batch_DrawPrimitives",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006ADC0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006AF00": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "StateBlockHolder_ApplyRenderStates",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006AF90": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "StateBlock_ApplyTSS",
+   "tree": true,
+   "unit": "unit_10069DD0"
+  },
+  "0x1006B070": {
+   "depth": 2,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoDxStatusMng::ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CMoDxStatusMng"
+  },
+  "0x1006B090": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoDxStatusMng"
+  },
+  "0x1006B2B0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoDX::CreateAndInitSystem",
+   "tree": true,
+   "unit": "CMoDX"
+  },
+  "0x1006C140": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CMoOcclusionMng"
+  },
+  "0x1006C220": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CMoOcclusionMng::OcclusionMng_CreateTarget",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x1006C280": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Occlusion_QueryScreenRect",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x1006C300": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": "Occlusion_QueryScreenRectImpl",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x1006C530": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Occlusion_DrawQuery",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x1006C8B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Occlusion_ReadbackCount",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x1006C9B0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "OcclusionMng_Prepare",
+   "tree": true,
+   "unit": "unit_1006C210_Occlusion"
+  },
+  "0x10075280": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_InitCubeMapTextures",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x100755A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "TexRef_EnsureRenderTarget",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x10075690": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10074CA0"
+  },
+  "0x10075700": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "TextureHolder_BindWarped",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x10075960": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "TexRef_SetTexture",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x100759C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "TextureHolder_BindTinted",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x10075C40": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10074CA0"
+  },
+  "0x10075FF0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10074CA0"
+  },
+  "0x10076030": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoTask::DrawQuadStates",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x100764C0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10074CA0"
+  },
+  "0x10076520": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CMoTask::DrawQuadDynVB",
+   "tree": true,
+   "unit": "unit_10074CA0"
+  },
+  "0x10085060": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiActor::SpawnResourceGenerators",
+   "tree": true,
+   "unit": "CXiActor"
+  },
+  "0x10086210": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Actor_DrawWorldText",
+   "tree": true,
+   "unit": "CXiAtelActor"
+  },
+  "0x10086900": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CXiAtelActor"
+  },
+  "0x1008E4D0": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10086E90_UpdateFlags120Bit23",
+   "tree": true,
+   "unit": "unit_10086E90"
+  },
+  "0x1008E9A0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "Acter_UpdateOne",
+   "tree": true,
+   "unit": "unit_10086E90"
+  },
+  "0x10095900": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Acter_UpdateAllLists",
+   "tree": true,
+   "unit": "unit_10086E90"
+  },
+  "0x10096640": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "Acter_UpdateFrame",
+   "tree": true,
+   "unit": "unit_10086E90"
+  },
+  "0x100AB700": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiDancerActor::Construct",
+   "tree": true,
+   "unit": "CXiDancerActor"
+  },
+  "0x100AC390": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "XiDoorActor"
+  },
+  "0x100C4C20": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "XiModelActor::BuildMatrixAndDraw",
+   "tree": true,
+   "unit": "unit_100C4410"
+  },
+  "0x100C4CE0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100C4410"
+  },
+  "0x100C52A0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::Constructor_1Arg",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C5540": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::ScalarDeletingDtor",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C5560": {
+   "depth": 3,
+   "frame": false,
+   "hookable": true,
+   "name": "CXiSkeletonActor::Constructor_2Arg",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C56E0": {
+   "depth": 3,
+   "frame": false,
+   "hookable": true,
+   "name": "CXiSkeletonActor::Constructor_3Arg",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C5880": {
+   "depth": 3,
+   "frame": false,
+   "hookable": true,
+   "name": "CXiSkeletonActor::Constructor_4Arg",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C59B0": {
+   "depth": 3,
+   "frame": false,
+   "hookable": true,
+   "name": "CXiSkeletonActor::Constructor_Factory",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C5C00": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::DestructorBody",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100C63D0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100CB4E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Actor_SelectNearestLights",
+   "tree": true,
+   "unit": "unit_100C8280"
+  },
+  "0x100CBD60": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::RunStaggeredUpdates",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100CBDE0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": "CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100CD040": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_100CD040",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D0740": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::ProjectToScreen",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D0880": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::DrawNameIfVisible",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D08B0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": "CXiSkeletonActor_DrawName2IfVisible",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D0B50": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::AddPartAndMarkSlot",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D0D70": {
+   "depth": 9,
+   "frame": true,
+   "hookable": false,
+   "name": "CXiSkeletonActor_AttachPartResource",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D1070": {
+   "depth": 9,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::RunPendingPartStep",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D1450": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit100D13B0_ProcessResidentListEntries",
+   "tree": true,
+   "unit": "unit_100D13B0"
+  },
+  "0x100D14C0": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiActor::RequestModelParts",
+   "tree": true,
+   "unit": "unit_100D13B0"
+  },
+  "0x100D2F40": {
+   "depth": 10,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::OnSkeletonLoaded",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D2F60": {
+   "depth": 9,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::LoadSkeletonSync",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D4330": {
+   "depth": 10,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiSkeletonActor::LoadSkeletonResource",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D62C0": {
+   "depth": 7,
+   "frame": false,
+   "hookable": true,
+   "name": "CXiSkeletonActor::DrawResourceShadows",
+   "tree": true,
+   "unit": "CXiSkeletonActor"
+  },
+  "0x100D7FA0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x101177D0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Menu_DrawWindowItems",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x10119F80": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit100D7420_DrawUnscaled",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011AA40": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit100D7420_SetViewport",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011AAC0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ApplyViewport1B70",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BAE0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_BindGlyphTexture",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BBA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawGlyphQuadGrey",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BBD0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawGlyphQuad",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BDC0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_SetAdditiveBlend",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BE10": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011BF40": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawChar",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011C080": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Obj_104E1B90::Obj_104E1B90_DrawString",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011C1F0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_SetCellBlendMode",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011C720": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_LoadHighResTexture",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011E800": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Cell_DrawAt",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011E980": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawTexturedQuad",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011ED70": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011EDE0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawTransformed",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011EF60": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawStretchedWrapped",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011F2D0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawWithDefaultBlend",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011F300": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawQuadBlended",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1011FB60": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011FBF0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011FC80": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011FDE0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x1011FF70": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x10120000": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Cell_DrawFirstStretched",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x10120590": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Obj_104E1BF8::ShapeMng_BindFontTexture",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x101207B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Obj_104E1BF8::ShapeMng_BindDmgNumTexture",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x10129F00": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_100D7420"
+  },
+  "0x10129F40": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_DrawStringFlags44",
+   "tree": true,
+   "unit": "unit_100D7420"
+  },
+  "0x1013A350": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1012AC80_DrawPanel",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10150B40": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1012AC80"
+  },
+  "0x1015B580": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1012AC80"
+  },
+  "0x1015F6A0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Menu_DrawLayers",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x1015FA00": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Menu_DrawAll",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x101604B0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_SetDefault2DStates",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10160650": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_DisableFogAndAlphaBlend",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10161990": {
+   "depth": 2,
+   "frame": true,
+   "hookable": false,
+   "name": "Unit1012AC80_DrawImageAtRightOfRect",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10161D60": {
+   "depth": 2,
+   "frame": true,
+   "hookable": false,
+   "name": "Unit1012AC80_DrawImageA4AtRightOfRect",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10162010": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Viewport_SetClipped",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x101620B0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ApplyViewport1904",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x101620D0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Font_SetupAdditiveDraw",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x101630E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Obj_10621944::Obj_10621944_Draw",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10163390": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Obj_10621944_DrawBgRect",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x10163400": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_DrawSolidRect2D",
+   "tree": true,
+   "unit": "unit_1012AC80"
+  },
+  "0x1016DDF0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Dbg_DrawTriangleLines",
+   "tree": true,
+   "unit": "unit_10163E60"
+  },
+  "0x1016FCD0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ParseZoneMeshData",
+   "tree": true,
+   "unit": "unit_10163E60"
+  },
+  "0x10174B10": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10163E60"
+  },
+  "0x10174EC0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Dbg_DrawOrientedBoxes",
+   "tree": true,
+   "unit": "unit_10163E60"
+  },
+  "0x101771B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_CompileVertexShader",
+   "tree": true,
+   "unit": "unit_10177070"
+  },
+  "0x10177240": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_AssembleVertexShader",
+   "tree": true,
+   "unit": "unit_10177070"
+  },
+  "0x101772E0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_CompilePixelShader",
+   "tree": true,
+   "unit": "unit_10177070"
+  },
+  "0x10177400": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_SetZBias",
+   "tree": true,
+   "unit": "CTsZoneMap"
+  },
+  "0x101779C0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_SetupLineDrawState",
+   "tree": true,
+   "unit": "CTsZoneMap"
+  },
+  "0x10177B40": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_DrawQuadOutline",
+   "tree": true,
+   "unit": "CTsZoneMap"
+  },
+  "0x10177C50": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_DrawLine3D",
+   "tree": true,
+   "unit": "CTsZoneMap"
+  },
+  "0x10177F80": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CTsZoneMap"
+  },
+  "0x10178070": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "CTsZoneMap::CTsZoneMap_Destructor",
+   "tree": true,
+   "unit": "CTsZoneMap"
+  },
+  "0x10178250": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "CTsZoneMap"
+  },
+  "0x101787C0": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_UpdateLoadState",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10178A20": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_SetArea",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10178AC0": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_ReleaseSlot",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10178B00": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ZoneMap_ReleaseStateBlock",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10178B30": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "CTsZoneMap::Render",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10178F70": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_Reset",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x101791F0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ZoneMap_DrawBox",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x101792A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "ZoneMap_CreateVertexShaders",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x101792F0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017ADE0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_DrawMeshGroupsWithFog",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017B110": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_FreeSlot",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017B1E0": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_TeardownStep",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017B510": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017C8B0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017C9C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x1017DE20": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10182700": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CTsZoneMap::DrawProjectedTexture",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10182F10": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_DrawWireBox",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10183490": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10183760": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10183DA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_DrawMeshById",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x101844C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": false,
+   "name": "ModelActor_Draw",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10184C90": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "XiZone::DrawGroundShadowQuad",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10184FE0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CTsZoneMap::DrawProjectedShadow",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10185CA0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "XiZone::DrawDecalOnTriangles",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10186DB0": {
+   "depth": 10,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_ClearSlots",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10186DD0": {
+   "depth": 9,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_FreeSubAreas",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10187030": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "ZoneMap_ReleaseChain",
+   "tree": true,
+   "unit": "unit_10178790_ZoneMap"
+  },
+  "0x10188A10": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "XiZone::DestroyChildList",
+   "tree": true,
+   "unit": "XiZone"
+  },
+  "0x1018AA50": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_1018AA50",
+   "tree": true,
+   "unit": "YmCombineWeather"
+  },
+  "0x1018AAE0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_1018AAE0",
+   "tree": true,
+   "unit": "YmCombineWeather"
+  },
+  "0x1018AB60": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_1018AB60",
+   "tree": true,
+   "unit": "YmCombineWeather"
+  },
+  "0x1018ABF0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "YmCombineWeather::Release",
+   "tree": true,
+   "unit": "YmCombineWeather"
+  },
+  "0x1018ADE0": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "Blend_Update",
+   "tree": true,
+   "unit": "unit_1018AD50"
+  },
+  "0x1018B620": {
+   "depth": 8,
+   "frame": true,
+   "hookable": true,
+   "name": "XiZone::ResetState",
+   "tree": true,
+   "unit": "XiZone"
+  },
+  "0x1018B860": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "XiZone::DrawScene",
+   "tree": true,
+   "unit": "XiZone"
+  },
+  "0x101907E0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1018BA60"
+  },
+  "0x1019EBB0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1018BA60_DrawTextBlockOnce",
+   "tree": true,
+   "unit": "unit_1018BA60"
+  },
+  "0x1019EDB0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1018BA60_DrawTextLines",
+   "tree": true,
+   "unit": "unit_1018BA60"
+  },
+  "0x101C7CB0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101C72E0"
+  },
+  "0x101C8DA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Gfx_ProjectWorldToScreen",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101C9780": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawUnscaled",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101C97B0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawTextItem0",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101C9D50": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawString",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CA180": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawTruncated",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CAD00": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawFractionRange",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CAEC0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawFractionDefault",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CAF00": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawSmoothed",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB000": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawSmoothedDefault",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB040": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawFractionItem1A",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB090": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawSmoothedItem1A",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB1B0": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawSmoothedItem1B",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB230": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawSmoothedExItem1B",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB430": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawEasedPercent",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB500": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawEasedPercentUnitScale",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB550": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_DrawEasedPercentItem1A",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CB770": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101C72E0_BeginCapture",
+   "tree": true,
+   "unit": "unit_101C72E0"
+  },
+  "0x101CF410": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101CD990"
+  },
+  "0x101CF510": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101CD990"
+  },
+  "0x101D0B00": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "CopyrightText_Draw",
+   "tree": true,
+   "unit": "unit_101D0910"
+  },
+  "0x101D0EA0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D0910_TakeScreenshot",
+   "tree": true,
+   "unit": "unit_101D0910"
+  },
+  "0x101D1000": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D0910_SaveJpeg512x382",
+   "tree": true,
+   "unit": "unit_101D0910"
+  },
+  "0x101D1060": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "YkJpeg::CaptureAndEncode",
+   "tree": true,
+   "unit": "unit_101D0910"
+  },
+  "0x101D1100": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D0910_SaveJpegScreenSize",
+   "tree": true,
+   "unit": "unit_101D0910"
+  },
+  "0x101D3FC0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D2FF0_Draw",
+   "tree": true,
+   "unit": "unit_101D2FF0"
+  },
+  "0x101D5680": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D2FF0_Update",
+   "tree": true,
+   "unit": "unit_101D2FF0"
+  },
+  "0x101D5DD0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101D2FF0"
+  },
+  "0x101EEBD0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101D7020"
+  },
+  "0x101FA9A0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_101D7020"
+  },
+  "0x10201340": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D7020_DrawCountersAndGauge",
+   "tree": true,
+   "unit": "unit_101D7020"
+  },
+  "0x102015D0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Yk_UpdateLayout",
+   "tree": true,
+   "unit": "unit_101D7020"
+  },
+  "0x10202380": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D7020_Call101CA180IfText",
+   "tree": true,
+   "unit": "unit_101D7020"
+  },
+  "0x10202AF0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": false,
+   "name": "Unit101D7020_DrawLabelIfStateGroup06Or38",
+   "tree": true,
+   "unit": "unit_101D7020"
+  },
+  "0x10211050": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit101D7020_Call10156C30InRect",
+   "tree": true,
+   "unit": "unit_101D7020"
+  },
+  "0x1021D4C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "CXiMovie::DrawFrame",
+   "tree": true,
+   "unit": "CXiMovie"
+  },
+  "0x1021E060": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Movie_CreateFrameTextures",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021F410": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawPanelForActor",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021F480": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawActorPanelFigures",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021F950": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawEntryRows",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FA90": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawLabelledRow",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FB10": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawTwoDigitValue",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FB80": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawBarRow",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FBD0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawNameRows",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FCE0": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "ActerBuff_DrawNearby",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x1021FE10": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawStrongholdPanel",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x102201A0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawLabelBar",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x102201F0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawGameTime",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x102214D0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_Draw",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x10227F70": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawMovie",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x10228080": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawTimeLeftText",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x10228440": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawTargetEntryIcons",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x10234660": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit1021D930_DrawProgressBar",
+   "tree": true,
+   "unit": "unit_1021D930"
+  },
+  "0x10239240": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_10239240",
+   "tree": true,
+   "unit": "unit_10237880"
+  },
+  "0x102394A0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Ui_DrawKeyPrompt",
+   "tree": true,
+   "unit": "unit_10237880"
+  },
+  "0x102454E0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "fn_102454E0",
+   "tree": true,
+   "unit": "unit_10244EA0_LobbyThread"
+  },
+  "0x10245BB0": {
+   "depth": 9,
+   "frame": true,
+   "hookable": true,
+   "name": "LobbyThread_ResetZone",
+   "tree": true,
+   "unit": "unit_10244EA0_LobbyThread"
+  },
+  "0x1024CF50": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatarInit",
+   "tree": true,
+   "unit": "unit_10244EA0_LobbyThread"
+  },
+  "0x1024D180": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_Teardown",
+   "tree": true,
+   "unit": "StAvatar"
+  },
+  "0x1024D5C0": {
+   "depth": 6,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_SetPending",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x1024D790": {
+   "depth": 5,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_StopAndFreeBuffers",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x1024D850": {
+   "depth": 4,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_ResolveItemsAndStart",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x1024DB60": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_Update",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x1024F900": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_SetViewFromDancerCamera",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x10250190": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_RenderIfEnabled",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x102501C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatarRender",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x102504D0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatarFini",
+   "tree": true,
+   "unit": "unit_1024D400"
+  },
+  "0x10251500": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "StDancer_Update",
+   "tree": true,
+   "unit": "unit_10251320"
+  },
+  "0x102515F0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Dancer_WorldEnd",
+   "tree": true,
+   "unit": "unit_10251320"
+  },
+  "0x10251620": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_SetActive",
+   "tree": true,
+   "unit": "unit_10251320"
+  },
+  "0x102516B0": {
+   "depth": 7,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_SetStateTeardown",
+   "tree": true,
+   "unit": "unit_10251320"
+  },
+  "0x10251A80": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Dancer_InitDevice",
+   "tree": true,
+   "unit": "unit_10251320"
+  },
+  "0x102528D0": {
+   "depth": 3,
+   "frame": true,
+   "hookable": true,
+   "name": "StModelItem_Resolve",
+   "tree": true,
+   "unit": "StModel"
+  },
+  "0x10253F60": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Gfx_DrawSpriteAlphaTested",
+   "tree": true,
+   "unit": "unit_10253A20"
+  },
+  "0x1025C790": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10253A20"
+  },
+  "0x1025CAF0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1025C9E0_FontGlyphCache"
+  },
+  "0x1025D760": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "FontGlyphCache_CreateTexture",
+   "tree": true,
+   "unit": "unit_1025C9E0_FontGlyphCache"
+  },
+  "0x1025D7B0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "FontGlyphCache_CreateVertexBuffer",
+   "tree": true,
+   "unit": "unit_1025C9E0_FontGlyphCache"
+  },
+  "0x1026E730": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1026E3D0"
+  },
+  "0x1026E870": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_1026E3D0"
+  },
+  "0x102717F0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "StAvatar_DrawScene",
+   "tree": true,
+   "unit": "unit_102706F0"
+  },
+  "0x10271800": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102706F0"
+  },
+  "0x10280DE0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10280C40"
+  },
+  "0x102813B0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit10280C40_CompositeBlendPasses",
+   "tree": true,
+   "unit": "unit_10280C40"
+  },
+  "0x10281440": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10280C40"
+  },
+  "0x10281510": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureCreateFromImage",
+   "tree": true,
+   "unit": "unit_10280C40"
+  },
+  "0x102816E0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureAddZ",
+   "tree": true,
+   "unit": "unit_10280C40"
+  },
+  "0x10281830": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureAdd",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x102819D0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureClutAdd",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10281D60": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureClut",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10281DB0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureUpdate",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10282010": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureStencilClear",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10282030": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureClear",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x102820E0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxTextureDrawZ",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10282190": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxTextureDraw",
+   "tree": true,
+   "unit": "sqgxTexture"
+  },
+  "0x10282350": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxZTest",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x102823F0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxAlphaTest",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282470": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxZMask",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x102824C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxFBMask",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282640": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Unit102822A0_SetSelectArg1",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x102826C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendAdd",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x102827D0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit102822A0_SetMultiplyAdd",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282910": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendSub",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282A30": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendLin",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282B90": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendTrsp",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282CB0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxBlendTrspInv",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282DC0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendAddDestAlpha",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282ED0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "Unit102822A0_SetModulateAlphaAdd",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10282FF0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendMultAlpha",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283110": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendMul",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283220": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxBlendOff",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283420": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxColorUpdate",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283A10": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxViewport",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283F70": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxPassAdd",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10283FC0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxPass",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10284410": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxMatrixUpdate",
+   "tree": true,
+   "unit": "unit_102822A0"
+  },
+  "0x10284950": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxVertexShaderCreate",
+   "tree": true,
+   "unit": "unit_10284900"
+  },
+  "0x10284A80": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxVertexShaderSelect",
+   "tree": true,
+   "unit": "unit_10284900"
+  },
+  "0x10284B20": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxShader",
+   "tree": true,
+   "unit": "sqgxContext"
+  },
+  "0x10284EF0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxVertexShaderRelease",
+   "tree": true,
+   "unit": "unit_10284EB0"
+  },
+  "0x10287FB0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "SqmdDMB_Resolve",
+   "tree": true,
+   "unit": "sqmdDMB"
+  },
+  "0x102886D0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqmdDMB_ResolveTextures",
+   "tree": true,
+   "unit": "sqmdDMB"
+  },
+  "0x10288E60": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "sqmdDMBBuildShapes",
+   "tree": true,
+   "unit": "sqmdDMB"
+  },
+  "0x1028A800": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqgxShape"
+  },
+  "0x1028AA70": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxShapeIndexBufferBegin",
+   "tree": true,
+   "unit": "sqgxShape"
+  },
+  "0x1028AB50": {
+   "depth": 0,
+   "frame": false,
+   "hookable": false,
+   "name": "SqgxShape_FillBuffers",
+   "tree": true,
+   "unit": "sqgxShape"
+  },
+  "0x1028AFE0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxShapeBegin",
+   "tree": true,
+   "unit": "sqgxShape"
+  },
+  "0x1028F4C0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsnScene_DrawMatrixShape",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x1028F8C0": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsnSceneDraw",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x1028FDD0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsnSceneLayerDraw",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x1028FF80": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsnScene_DrawFadeSprite",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x1028FFF0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsnSceneLayerDrawShadowed",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x102902C0": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsnSceneLayerSnapShotComposite",
+   "tree": true,
+   "unit": "sqsnScene"
+  },
+  "0x10290B60": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsdGeneric_DrawPasses",
+   "tree": true,
+   "unit": "sqsdGeneric"
+  },
+  "0x10290FC0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsdGeneric_BakeOntoShape",
+   "tree": true,
+   "unit": "sqsdGeneric"
+  },
+  "0x10297CC0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqsnShadowVolumeSetPass",
+   "tree": true,
+   "unit": "unit_102971F0"
+  },
+  "0x10297EC0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxShadowStencilEnable",
+   "tree": true,
+   "unit": "unit_102971F0"
+  },
+  "0x102981B0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102971F0"
+  },
+  "0x102981E0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqsnShadowVolumeBeginVB",
+   "tree": true,
+   "unit": "unit_102971F0"
+  },
+  "0x10298C90": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_10298C50"
+  },
+  "0x10298E10": {
+   "depth": 2,
+   "frame": true,
+   "hookable": true,
+   "name": "Texture_CreateEntry",
+   "tree": true,
+   "unit": "unit_10298C50"
+  },
+  "0x10299090": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsdSampling_DrawPasses",
+   "tree": true,
+   "unit": "sqsdSampling"
+  },
+  "0x10299250": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsdSampling_BakeOntoShape",
+   "tree": true,
+   "unit": "sqsdSampling"
+  },
+  "0x102993B0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsdAniso_DrawPasses",
+   "tree": true,
+   "unit": "sqsdAniso"
+  },
+  "0x10299610": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsdAniso_BakeOntoShape",
+   "tree": true,
+   "unit": "sqsdAniso"
+  },
+  "0x102997A0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsdCartoon_Draw",
+   "tree": true,
+   "unit": "sqsdCartoon"
+  },
+  "0x102999A0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "SqsdGlow_ApplyShader",
+   "tree": true,
+   "unit": "sqsdGlow"
+  },
+  "0x10299AB0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsdGlow_BakeOntoShape",
+   "tree": true,
+   "unit": "sqsdGlow"
+  },
+  "0x1029B620": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqgxDlistEnd",
+   "tree": true,
+   "unit": "sqgxDlist"
+  },
+  "0x1029B9D0": {
+   "depth": 0,
+   "frame": false,
+   "hookable": true,
+   "name": "sqgxDlistDraw",
+   "tree": true,
+   "unit": "sqgxDlist"
+  },
+  "0x102A1F20": {
+   "depth": 1,
+   "frame": true,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A1F20"
+  },
+  "0x102A21F0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": true,
+   "name": "sqsnShadowVolumeDraw",
+   "tree": true,
+   "unit": "unit_102A2130"
+  },
+  "0x102A2430": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqsnShadow"
+  },
+  "0x102A2530": {
+   "depth": 0,
+   "frame": true,
+   "hookable": true,
+   "name": "sqsnPlanarShadowDraw",
+   "tree": true,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2720": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit102A2530_RenderShadowTexture",
+   "tree": true,
+   "unit": "unit_102A2530"
+  },
+  "0x102A28C0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2A80": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2B10": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2C00": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Unit102A2530_DrawShadowedShape",
+   "tree": true,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2CC0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A2530"
+  },
+  "0x102A2F80": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "unit_102A2530"
+  },
+  "0x102B2CA0": {
+   "depth": 1,
+   "frame": true,
+   "hookable": true,
+   "name": "Drawable_DrawTwoPass",
+   "tree": true,
+   "unit": "unit_102B2CA0"
+  },
+  "0x102B2DE0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B2F40": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3090": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3320": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3340": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B34E0": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3670": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3770": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  },
+  "0x102B3820": {
+   "depth": 1,
+   "frame": false,
+   "hookable": false,
+   "name": null,
+   "tree": false,
+   "unit": "sqshDraw"
+  }
+ },
+ "units": {
+  "CDx": {
+   "depth0": 26,
+   "depth1": 13,
+   "frame": 60,
+   "functions": 81,
+   "hookable": 54,
+   "reaches": 43,
+   "tree": 57
+  },
+  "CMoDX": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 4,
+   "hookable": 3,
+   "reaches": 1,
+   "tree": 3
+  },
+  "CMoDistModelElem": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 8,
+   "hookable": 6,
+   "reaches": 2,
+   "tree": 6
+  },
+  "CMoDistMorphElem": {
+   "depth0": 2,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 10,
+   "hookable": 7,
+   "reaches": 3,
+   "tree": 7
+  },
+  "CMoDistRingElem": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 1,
+   "functions": 6,
+   "hookable": 6,
+   "reaches": 1,
+   "tree": 6
+  },
+  "CMoDxStatusMng": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 4,
+   "hookable": 3,
+   "reaches": 2,
+   "tree": 3
+  },
+  "CMoElem": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 15,
+   "functions": 28,
+   "hookable": 13,
+   "reaches": 6,
+   "tree": 18
+  },
+  "CMoOcclusionMng": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 1,
+   "functions": 4,
+   "hookable": 2,
+   "reaches": 1,
+   "tree": 2
+  },
+  "CMoOtTask": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 0,
+   "functions": 3,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 2
+  },
+  "CMoSchedularTask": {
+   "depth0": 1,
+   "depth1": 2,
+   "frame": 9,
+   "functions": 34,
+   "hookable": 8,
+   "reaches": 3,
+   "tree": 8
+  },
+  "CShader": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 0,
+   "functions": 4,
+   "hookable": 3,
+   "reaches": 2,
+   "tree": 3
+  },
+  "CTsZoneMap": {
+   "depth0": 4,
+   "depth1": 3,
+   "frame": 10,
+   "functions": 32,
+   "hookable": 13,
+   "reaches": 7,
+   "tree": 14
+  },
+  "CXiAtelActor": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 6,
+   "functions": 14,
+   "hookable": 3,
+   "reaches": 3,
+   "tree": 5
+  },
+  "CXiMovie": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 8,
+   "functions": 11,
+   "hookable": 6,
+   "reaches": 2,
+   "tree": 7
+  },
+  "CXiSkeletonActor": {
+   "depth0": 1,
+   "depth1": 5,
+   "frame": 75,
+   "functions": 194,
+   "hookable": 86,
+   "reaches": 33,
+   "tree": 124
+  },
+  "CYyModelDt": {
+   "depth0": 2,
+   "depth1": 2,
+   "frame": 3,
+   "functions": 16,
+   "hookable": 9,
+   "reaches": 5,
+   "tree": 9
+  },
+  "CYyOs2VtxBuffer": {
+   "depth0": 2,
+   "depth1": 2,
+   "frame": 5,
+   "functions": 13,
+   "hookable": 4,
+   "reaches": 5,
+   "tree": 4
+  },
+  "CYyVbMng": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 4,
+   "hookable": 0,
+   "reaches": 1,
+   "tree": 0
+  },
+  "Debug": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 4,
+   "functions": 6,
+   "hookable": 3,
+   "reaches": 1,
+   "tree": 4
+  },
+  "XiDoorActor": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 4,
+   "functions": 13,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 3
+  },
+  "XiZone": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 17,
+   "functions": 29,
+   "hookable": 17,
+   "reaches": 8,
+   "tree": 17
+  },
+  "sqgxContext": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 3,
+   "functions": 7,
+   "hookable": 3,
+   "reaches": 1,
+   "tree": 3
+  },
+  "sqgxDlist": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 3,
+   "functions": 6,
+   "hookable": 4,
+   "reaches": 2,
+   "tree": 4
+  },
+  "sqgxShape": {
+   "depth0": 3,
+   "depth1": 1,
+   "frame": 0,
+   "functions": 6,
+   "hookable": 2,
+   "reaches": 4,
+   "tree": 3
+  },
+  "sqgxTexture": {
+   "depth0": 7,
+   "depth1": 1,
+   "frame": 13,
+   "functions": 27,
+   "hookable": 14,
+   "reaches": 8,
+   "tree": 14
+  },
+  "sqmdDMB": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 11,
+   "functions": 46,
+   "hookable": 11,
+   "reaches": 4,
+   "tree": 11
+  },
+  "sqsdAniso": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 2,
+   "functions": 8,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 2
+  },
+  "sqsdCartoon": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 8,
+   "hookable": 2,
+   "reaches": 1,
+   "tree": 2
+  },
+  "sqsdGeneric": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 3,
+   "functions": 9,
+   "hookable": 3,
+   "reaches": 2,
+   "tree": 3
+  },
+  "sqsdGlow": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 2,
+   "functions": 8,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 2
+  },
+  "sqsdSampling": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 2,
+   "functions": 10,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 2
+  },
+  "sqshDraw": {
+   "depth0": 0,
+   "depth1": 9,
+   "frame": 0,
+   "functions": 12,
+   "hookable": 0,
+   "reaches": 10,
+   "tree": 0
+  },
+  "sqsnScene": {
+   "depth0": 1,
+   "depth1": 2,
+   "frame": 31,
+   "functions": 52,
+   "hookable": 31,
+   "reaches": 9,
+   "tree": 31
+  },
+  "sqsnShadow": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 0,
+   "functions": 1,
+   "hookable": 0,
+   "reaches": 1,
+   "tree": 0
+  },
+  "unit_100014A0_Gfx": {
+   "depth0": 4,
+   "depth1": 3,
+   "frame": 33,
+   "functions": 77,
+   "hookable": 35,
+   "reaches": 9,
+   "tree": 37
+  },
+  "unit_10003890_DirectInput": {
+   "depth0": 3,
+   "depth1": 0,
+   "frame": 26,
+   "functions": 73,
+   "hookable": 22,
+   "reaches": 3,
+   "tree": 22
+  },
+  "unit_10010370_App": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 8,
+   "functions": 10,
+   "hookable": 5,
+   "reaches": 2,
+   "tree": 5
+  },
+  "unit_10011A00_Post": {
+   "depth0": 3,
+   "depth1": 1,
+   "frame": 15,
+   "functions": 16,
+   "hookable": 13,
+   "reaches": 5,
+   "tree": 14
+  },
+  "unit_10014350_Camera": {
+   "depth0": 4,
+   "depth1": 3,
+   "frame": 70,
+   "functions": 172,
+   "hookable": 63,
+   "reaches": 14,
+   "tree": 65
+  },
+  "unit_100177E0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 9,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  },
+  "unit_10017C10": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 18,
+   "functions": 48,
+   "hookable": 14,
+   "reaches": 2,
+   "tree": 17
+  },
+  "unit_1001B890": {
+   "depth0": 2,
+   "depth1": 3,
+   "frame": 10,
+   "functions": 25,
+   "hookable": 9,
+   "reaches": 6,
+   "tree": 9
+  },
+  "unit_1001DC30": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 5,
+   "hookable": 2,
+   "reaches": 3,
+   "tree": 2
+  },
+  "unit_10025220": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 2,
+   "hookable": 2,
+   "reaches": 1,
+   "tree": 2
+  },
+  "unit_100252F0": {
+   "depth0": 8,
+   "depth1": 0,
+   "frame": 3,
+   "functions": 25,
+   "hookable": 10,
+   "reaches": 8,
+   "tree": 10
+  },
+  "unit_10026990": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 1,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  },
+  "unit_10026C70_Vec3": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 56,
+   "functions": 136,
+   "hookable": 55,
+   "reaches": 2,
+   "tree": 56
+  },
+  "unit_10029260": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 11,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 2
+  },
+  "unit_100298D0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 4,
+   "functions": 25,
+   "hookable": 3,
+   "reaches": 1,
+   "tree": 3
+  },
+  "unit_1002A0C0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 11,
+   "functions": 22,
+   "hookable": 9,
+   "reaches": 1,
+   "tree": 9
+  },
+  "unit_1002C270": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 11,
+   "functions": 18,
+   "hookable": 8,
+   "reaches": 1,
+   "tree": 8
+  },
+  "unit_1002D8E0": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 6,
+   "hookable": 1,
+   "reaches": 2,
+   "tree": 1
+  },
+  "unit_1002F130": {
+   "depth0": 2,
+   "depth1": 1,
+   "frame": 5,
+   "functions": 13,
+   "hookable": 5,
+   "reaches": 3,
+   "tree": 5
+  },
+  "unit_100310A0": {
+   "depth0": 0,
+   "depth1": 4,
+   "frame": 16,
+   "functions": 41,
+   "hookable": 13,
+   "reaches": 4,
+   "tree": 14
+  },
+  "unit_10037AC0_SetMusicTrackVolume": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 17,
+   "functions": 28,
+   "hookable": 14,
+   "reaches": 2,
+   "tree": 17
+  },
+  "unit_10038930": {
+   "depth0": 2,
+   "depth1": 1,
+   "frame": 6,
+   "functions": 11,
+   "hookable": 6,
+   "reaches": 3,
+   "tree": 6
+  },
+  "unit_100399D0_TexObj": {
+   "depth0": 2,
+   "depth1": 2,
+   "frame": 5,
+   "functions": 7,
+   "hookable": 4,
+   "reaches": 4,
+   "tree": 4
+  },
+  "unit_1003B210": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 2,
+   "functions": 3,
+   "hookable": 2,
+   "reaches": 1,
+   "tree": 2
+  },
+  "unit_1003D0B0": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 9,
+   "hookable": 0,
+   "reaches": 1,
+   "tree": 0
+  },
+  "unit_1003D990": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 10,
+   "functions": 29,
+   "hookable": 15,
+   "reaches": 2,
+   "tree": 15
+  },
+  "unit_1003E6B0": {
+   "depth0": 2,
+   "depth1": 2,
+   "frame": 3,
+   "functions": 14,
+   "hookable": 4,
+   "reaches": 4,
+   "tree": 4
+  },
+  "unit_1003EE70": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 0,
+   "functions": 2,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  },
+  "unit_1003EFC0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 3,
+   "hookable": 0,
+   "reaches": 1,
+   "tree": 0
+  },
+  "unit_1003FB70": {
+   "depth0": 2,
+   "depth1": 4,
+   "frame": 10,
+   "functions": 32,
+   "hookable": 9,
+   "reaches": 6,
+   "tree": 9
+  },
+  "unit_10041160": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 2,
+   "hookable": 1,
+   "reaches": 2,
+   "tree": 1
+  },
+  "unit_10041A40": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 3,
+   "hookable": 1,
+   "reaches": 2,
+   "tree": 1
+  },
+  "unit_100426F0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 4,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  },
+  "unit_10043E40": {
+   "depth0": 1,
+   "depth1": 3,
+   "frame": 10,
+   "functions": 26,
+   "hookable": 12,
+   "reaches": 6,
+   "tree": 13
+  },
+  "unit_10044C40": {
+   "depth0": 3,
+   "depth1": 0,
+   "frame": 10,
+   "functions": 13,
+   "hookable": 9,
+   "reaches": 3,
+   "tree": 9
+  },
+  "unit_100548D0": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 5,
+   "functions": 14,
+   "hookable": 3,
+   "reaches": 3,
+   "tree": 4
+  },
+  "unit_100563E0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 1,
+   "functions": 7,
+   "hookable": 2,
+   "reaches": 1,
+   "tree": 2
+  },
+  "unit_10069DD0": {
+   "depth0": 4,
+   "depth1": 6,
+   "frame": 21,
+   "functions": 45,
+   "hookable": 18,
+   "reaches": 12,
+   "tree": 19
+  },
+  "unit_1006C210_Occlusion": {
+   "depth0": 3,
+   "depth1": 2,
+   "frame": 11,
+   "functions": 20,
+   "hookable": 9,
+   "reaches": 6,
+   "tree": 11
+  },
+  "unit_10074CA0": {
+   "depth0": 8,
+   "depth1": 3,
+   "frame": 32,
+   "functions": 74,
+   "hookable": 32,
+   "reaches": 11,
+   "tree": 32
+  },
+  "unit_100C4410": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 4,
+   "functions": 12,
+   "hookable": 4,
+   "reaches": 3,
+   "tree": 4
+  },
+  "unit_100C8280": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 7,
+   "functions": 21,
+   "hookable": 4,
+   "reaches": 1,
+   "tree": 4
+  },
+  "unit_100D7420": {
+   "depth0": 12,
+   "depth1": 16,
+   "frame": 762,
+   "functions": 2763,
+   "hookable": 652,
+   "reaches": 44,
+   "tree": 690
+  },
+  "unit_1012AC80": {
+   "depth0": 4,
+   "depth1": 9,
+   "frame": 458,
+   "functions": 2008,
+   "hookable": 376,
+   "reaches": 135,
+   "tree": 415
+  },
+  "unit_10163E60": {
+   "depth0": 4,
+   "depth1": 0,
+   "frame": 52,
+   "functions": 231,
+   "hookable": 47,
+   "reaches": 6,
+   "tree": 49
+  },
+  "unit_10177070": {
+   "depth0": 3,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 13,
+   "hookable": 4,
+   "reaches": 3,
+   "tree": 4
+  },
+  "unit_10178790_ZoneMap": {
+   "depth0": 14,
+   "depth1": 5,
+   "frame": 79,
+   "functions": 170,
+   "hookable": 72,
+   "reaches": 36,
+   "tree": 75
+  },
+  "unit_1018BA60": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 588,
+   "functions": 1702,
+   "hookable": 524,
+   "reaches": 66,
+   "tree": 545
+  },
+  "unit_101C72E0": {
+   "depth0": 0,
+   "depth1": 3,
+   "frame": 66,
+   "functions": 164,
+   "hookable": 46,
+   "reaches": 33,
+   "tree": 53
+  },
+  "unit_101CD990": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 21,
+   "functions": 50,
+   "hookable": 18,
+   "reaches": 5,
+   "tree": 19
+  },
+  "unit_101D2FF0": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 20,
+   "functions": 105,
+   "hookable": 19,
+   "reaches": 11,
+   "tree": 19
+  },
+  "unit_101D7020": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 176,
+   "functions": 1703,
+   "hookable": 141,
+   "reaches": 108,
+   "tree": 158
+  },
+  "unit_1021D930": {
+   "depth0": 1,
+   "depth1": 3,
+   "frame": 171,
+   "functions": 789,
+   "hookable": 148,
+   "reaches": 85,
+   "tree": 151
+  },
+  "unit_10237880": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 17,
+   "functions": 203,
+   "hookable": 15,
+   "reaches": 41,
+   "tree": 17
+  },
+  "unit_10244EA0_LobbyThread": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 29,
+   "functions": 162,
+   "hookable": 28,
+   "reaches": 10,
+   "tree": 28
+  },
+  "unit_1024D400": {
+   "depth0": 2,
+   "depth1": 2,
+   "frame": 46,
+   "functions": 48,
+   "hookable": 41,
+   "reaches": 8,
+   "tree": 42
+  },
+  "unit_10251320": {
+   "depth0": 1,
+   "depth1": 2,
+   "frame": 18,
+   "functions": 41,
+   "hookable": 17,
+   "reaches": 6,
+   "tree": 18
+  },
+  "unit_10253A20": {
+   "depth0": 1,
+   "depth1": 1,
+   "frame": 96,
+   "functions": 341,
+   "hookable": 88,
+   "reaches": 3,
+   "tree": 90
+  },
+  "unit_1025C9E0_FontGlyphCache": {
+   "depth0": 2,
+   "depth1": 1,
+   "frame": 46,
+   "functions": 684,
+   "hookable": 40,
+   "reaches": 5,
+   "tree": 40
+  },
+  "unit_1026E3D0": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 5,
+   "functions": 8,
+   "hookable": 5,
+   "reaches": 2,
+   "tree": 5
+  },
+  "unit_102706F0": {
+   "depth0": 0,
+   "depth1": 2,
+   "frame": 31,
+   "functions": 58,
+   "hookable": 28,
+   "reaches": 3,
+   "tree": 28
+  },
+  "unit_10280C40": {
+   "depth0": 2,
+   "depth1": 3,
+   "frame": 7,
+   "functions": 9,
+   "hookable": 5,
+   "reaches": 5,
+   "tree": 5
+  },
+  "unit_102822A0": {
+   "depth0": 21,
+   "depth1": 0,
+   "frame": 41,
+   "functions": 68,
+   "hookable": 44,
+   "reaches": 21,
+   "tree": 44
+  },
+  "unit_10284900": {
+   "depth0": 2,
+   "depth1": 0,
+   "frame": 0,
+   "functions": 3,
+   "hookable": 2,
+   "reaches": 2,
+   "tree": 2
+  },
+  "unit_10284EB0": {
+   "depth0": 1,
+   "depth1": 0,
+   "frame": 2,
+   "functions": 8,
+   "hookable": 3,
+   "reaches": 1,
+   "tree": 3
+  },
+  "unit_102971F0": {
+   "depth0": 3,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 18,
+   "hookable": 5,
+   "reaches": 4,
+   "tree": 5
+  },
+  "unit_10298C50": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 6,
+   "hookable": 2,
+   "reaches": 4,
+   "tree": 2
+  },
+  "unit_102A1F20": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 2,
+   "functions": 2,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  },
+  "unit_102A2130": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 3,
+   "functions": 5,
+   "hookable": 4,
+   "reaches": 1,
+   "tree": 4
+  },
+  "unit_102A2530": {
+   "depth0": 1,
+   "depth1": 7,
+   "frame": 5,
+   "functions": 11,
+   "hookable": 5,
+   "reaches": 8,
+   "tree": 5
+  },
+  "unit_102B2CA0": {
+   "depth0": 0,
+   "depth1": 1,
+   "frame": 1,
+   "functions": 1,
+   "hookable": 1,
+   "reaches": 1,
+   "tree": 1
+  }
+ }
+}

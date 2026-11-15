@@ -1,0 +1,760 @@
+# d3d8on11: our own Direct3D 8 device on Direct3D 11
+
+Design A of docs/D3D11.md: a `d3d8.dll` that takes dgVoodoo's place in the game's folder and implements the part of
+Direct3D 8 the game uses (`data/d3d8_scope.json`) on Direct3D 11.
+
+## How it is built
+
+Two halves joined by a command stream (`d8_proto.h`): the D3D8 side, which the game calls, and the executor, the only
+code that uses Direct3D 11.
+
+- D3D8 side, in `d3d8.dll`:
+  - `d8_main.cpp`: the module (`Direct3DCreate8`), caps, IDirect3D8.
+  - `d8_device.cpp`: IDirect3DDevice8: the state the game sets and reads back, state blocks, resources, frames.
+  - `d8_res.cpp`: textures, cube textures, surfaces, vertex and index buffers, each with a CPU copy the game locks.
+  - `d8_ff.cpp`: a draw, decided: the fixed-function state becomes the shader keys, the constants and the D3D11 state
+    descriptions, in one draw packet (`XDraw`) with the ids of the buffers and textures it reads.
+  - `gen_stubs.py` → `d8_gen.h` (generated at build): every method of every interface, logging "not implemented"
+    once and failing. The device's classes override what they implement. A method the game calls that is not
+    implemented is found in the log, not guessed. The vtable order is the D3D8 header's: a method missing from the
+    generator leaves a class abstract and the build fails.
+- The stream, `d8_proto.h`: fixed-width records with no pointers, laid out the same in an x86 and an ARM64 build
+  (pinned by static_asserts). Objects are named by ids. Four records are answered (X_INIT, X_RESIZE, X_READBACK,
+  X_FINISH); the D3D8 side waits only for those. Everything else runs later, in order.
+- The executor, `d8_exec.cpp`: runs the records in order on Direct3D 11. It holds the device, the swap chain on the
+  game's window, the resources by id, and the shader generator: each key becomes HLSL once, is compiled with
+  `D3DCompile` from `d3dcompiler_47.dll` (loaded at run time), and is cached; state objects are cached by
+  description.
+- The transport, `d8_link.cpp`, one of three modes:
+  - `direct`: each record runs as it is written, on the game's thread (phase 1);
+  - `thread` (the default): a 32 MB ring in the game's process, read by an executor thread (phase 2, design A2).
+    The game waits only for answered records, for room in the ring, and when it is two Presents ahead of the
+    executor;
+  - `remote`: the same ring in a shared mapping, read by an executor process started next to the DLL (design B, "ARM
+    mode"): `d8x_arm64.exe`, built natively for ARM64, when Windows reports an ARM64 machine (IsWow64Process2) and
+    it is there, else `d8x.exe` (x86). It presents into the game's window. Its log is `d3d8on11_exec.log`. If it
+    cannot be started, or cannot make the device and swap chain, the device falls back to `thread` and logs why. If
+    it ends while the game runs, the game is ended with a log line: the game's resources live in it.
+  - Chosen by `d3d8on11.ini` next to the DLL (`[d3d8on11]` `mode=direct|thread|remote`), or the `D8ON11_MODE`
+    environment variable, which wins. The log's second line names the mode in use.
+  - Every 600 Presents the log gets `executor stats` (the executor's busy time a frame, split into draws, uploads,
+    Present, readbacks and the rest) and, in `thread` and `remote`,
+    `ring stats`: how long the game thread waited for room, for pacing and for answers, and the MB it sent. In
+    `remote` mode the executor's line is in `d3d8on11_exec.log`.
+  - The executor filter, `exec_filter=1` in `d3d8on11.ini` (`D8ON11_EXEC_FILTER` wins; default 1 since the owner's run of 16 Oct, `exec_filter=0` turns it off): a draw skips the
+    Direct3D 11 calls that would set what the executor last set (shaders, layout, states, views, samplers, buffers,
+    viewport, topology), the constant-buffer writes whose bytes equal the last, and the key and description lookups
+    of a draw like the one before it. Whatever else sets context state (Clear of rectangles, render targets, a swap
+    chain change, a freed object) makes it forget what it set. The tests check that each mode draws every scene
+    exactly as `direct` without it. `exec_ab=1` measures it in the game: `exec_ab_after` seconds (60) after the start,
+    the filter alternates off, on, on, off for `exec_ab_phase` seconds (30) each, `exec_ab_rounds` times (4), the
+    first `exec_ab_settle` frames (60) of a phase left out; the log gets `executor ab:` lines with the game's frame
+    time and the executor's busy time per phase, then `exec_filter` as set again.
+  - The executor's batches, `exec_batch=1` (`D8ON11_EXEC_BATCH` wins; default 1, `exec_batch=0` turns them off):
+    the executor holds the game's records (draws, binds, states, uploads) and runs them together when it must
+    answer, at Present, when the ring is empty, or when the game waits for room. Before a batch runs it maps each
+    arena once: the vertex and pixel shader constants of every draw in it, its DrawPrimitiveUP vertices and its UP
+    and inline indices. A draw then binds its constants at its offset (`VSSetConstantBuffers1`/`PSSetConstantBuffers1`)
+    instead of a Map of its own. Why: run 14204 (dgVoodoo) counted about 2,102 `NtGdiDdDDILock2` a frame on the
+    render thread, 1,730 inside draws and binds; that each D3D11 Map costs such a pair is inferred, not measured.
+    Constant offsets are used only where the driver reports `ConstantBufferOffsetting`, NOOVERWRITE on the constant
+    arenas only where it reports `MapNoOverwriteOnDynamicConstantBuffer`; the log's `constant buffer offsets:` line
+    says which. Without offsets, constants are mapped per draw as before. The tests check that each mode, filter off
+    and on, draws every scene exactly as `direct` without batches. `exec_ab_lever=batch` makes `exec_ab` alternate
+    the batches instead of the filter; the `executor batches` stats line gives flushes, arena Maps and draw Maps a frame.
+  - Diagnostics: `D8ON11_DRIVER=warp` makes the D3D11 device on WARP, Microsoft's software rasterizer, instead of the
+    GPU; `D8ON11_DEBUG_LAYER=1` asks for the D3D11 debug layer and writes its messages to the log at each Present
+    (Windows needs the optional Graphics Tools feature, or the device is not made). Both log a `D3D11 device:` line.
+  - For the tests only: `D8ON11_RING_KB` (a power of two, 64 to 32768) makes the ring small so it wraps, and
+    `D8ON11_RING_START` (hex) starts its byte counters near 2^32 so they wrap too. The ring's size must divide 2^32:
+    positions are counter % size.
+- `build.sh` builds `dist/d3d8.dll` and `dist/d8x.exe` with MinGW-w64, and `dist/d8x_arm64.exe` with zig's clang
+  (PyPI `ziglang` 0.16.0, as kit/d3d11probe does). All three are reproducible and locked in kit/BUILD.lock.json.
+
+**Locked data.** Textures and buffers keep a CPU copy that the game writes through Lock. Unlock sends what changed
+(a buffer's range, a texture level). A lockable render target or the back buffer read back at LockRect waits for the
+executor to reach it, as the game's occlusion readback does on any D3D8.
+
+**Readback snapshots (X_SNAP).** One exception lets a lock skip that wait: a small lockable render target (up to 1 KB,
+the 16x16 occlusion target's size) that is only written by CopyRects.
+- After each such copy the executor copies the target to a staging texture. At each Present it maps the copies the GPU
+  has finished, with D3D11_MAP_FLAG_DO_NOT_WAIT, so it never waits. Each one goes into a slot of a table after the
+  reply area (1024 slots), under a sequence lock.
+- The D3D8 side counts every write to the surface: a copy, or an unlock after a writing lock. A surface ever set as
+  the render target (so draws and Clear write it) never takes a snapshot.
+- LockRect reads the slot only when the slot's count equals the surface's, so the snapshot is the surface as it is
+  now. Otherwise it reads back as before.
+- This is exact because the only D3D8 methods that write a plain render-target surface are CopyRects, being the bound
+  target (Clear and draws), and an unlock after a writing lock.
+- It helps only a lock made after a Present that follows the copy: the game's own readback (0x1006C8B0) locks right
+  after its copy, so it reads back as before. speedfix's `occlusion_late` lever locks a frame later.
+- Every 600 Presents the log gets `readback snapshots` (locks answered from a snapshot, and locks that read back).
+
+**The do-not-wait lock (`D8ON11_LOCK_DONOTWAIT`, 0x4000; 10 Nov).** A mod that finds `D8ON11_LockDoNotWait` exported
+(it returns the flag) may pass the flag to LockRect of a lockable render target. Bit 0x4000 is not a Direct3D 8 lock
+flag (d3d8types.h).
+- If the surface's snapshot is not there yet, the lock fails at once with 0x8876021C (`D8ON11_NOTYET`; Direct3D 9's
+  D3DERR_WASSTILLDRAWING value) and nothing waits.
+- A surface that takes no snapshot (never copied into, or drawn into) is locked as ever.
+- Why: in `thread` and `remote` the executor runs up to two frames behind the game, so a lock a frame after the copy
+  finds no snapshot. The owner's run of 12 Nov (start 3): a quarter of speedfix's late locks read back with a wait.
+- speedfix's `occlusion_nowait` uses it. The snapshots line counts the locks told "not yet".
+- t8 `nowait`: 1,200 frames in each mode. In `thread` and `remote` an answer came every third frame, each one the
+  copied frame's colour, with no read-back.
+
+**Buffer arena (`buffer_arena=1`; 10 Nov; off by default until it is measured in the game).** Needs dynamic_buffers.
+- What: the game's dynamic buffers' contents live in two large Direct3D 11 dynamic buffers (vertex data 16 MB, indices
+  4 MB; `buffer_arena=N` for N KB) instead of a Direct3D 11 buffer each. Buffers larger than an eighth of the arena
+  stay their own.
+- An upload that replaces a buffer (DISCARD, or no flag) puts the buffer's whole contents at a new place in the arena.
+  A NOOVERWRITE upload writes its range where the buffer already is. A draw binds the arena at the buffer's offset
+  (IASetVertexBuffers' offset, IASetIndexBuffer's offset).
+- A new place each time is what Map(DISCARD) of the buffer itself gives. So in a batch every upload is written before
+  the batch's first draw, under one Map of the arena (d8_exec.cpp, `Exec::plan`). A record that makes or frees a buffer
+  ends the batch's chunk.
+- When the arena is full it starts again with Map(DISCARD) and a new generation. That happens only at the start of a
+  chunk, before any of its draws has been given a place. A buffer still at a place of an older generation is written
+  to its own Direct3D 11 buffer when next drawn, and stays there until its next upload.
+- Why: the owner's plaza has 300 to 650 buffer uploads a frame, each a Map(DISCARD) of its own buffer.
+- Measured (the owner's run of 16 Nov): the upload line 2.4-2.7 ms a frame without it, 0.05-0.07 with it; the
+  batch's copies are timed with the draws, which cost about 1 ms a frame more: net about 1.4 ms a frame. Present did
+  not change (it follows the draw count).
+- A NOOVERWRITE range into a buffer that a draw of the same chunk reads ends the chunk first, so the write follows
+  that draw as it does without the arena (11 Nov).
+- Tests: every scene drawn with the arena equals the scene without it, pixel for pixel, in each mode, with records
+  run one by one and in batches, with the 16 MB arena and with an 8 KB test arena that starts again several times.
+  The `buffer_arena` scene writes one buffer again before each of 320 draws.
+
+**Draw merging (`draw_merge=1`; 11 Nov; off by default until it is measured in the game).** Needs buffer_arena and
+exec_batch.
+- Why: the owner's run of 16 Nov. Present's time is 4.9 us a draw and the draw line 2.9 us a draw (r 0.90 and 0.95
+  over 81 windows), at 1,500 to 1,700 draws a frame in the plaza.
+- What merges: consecutive draws of a batch that are DrawIndexedPrimitive triangle lists, solid fill, streams 0 to 3
+  only, and whose packets are equal up to the stream table (shader keys, constants, states, viewport, textures and
+  samplers) with the same strides and index width. Only buffer uploads may lie between them.
+- How: the executor keeps a copy of every buffer up to 256 KB. Each draw of a run has its stream buffers copied whole
+  to one vertex slot v of the slot arenas (stream s at byte v x its stride, so one vertex number reads all streams);
+  its indices go to the index arena as 32-bit numbers plus v and its base vertex. The run's first draw draws them
+  all with one DrawIndexed. A set of buffers already at a slot, none uploaded since, is not copied again.
+- The copies are made in the records' order, so a buffer written again between two draws of a run gives each draw
+  what it read.
+- When an arena is full, merging stops for that chunk and the arenas start again at the next.
+- The same triangles are drawn in the same order with the same state, so the picture is the same. One difference
+  from the unmerged path: a 16-bit index 0xFFFF is a strip cut in Direct3D 11 but lists have no cuts, so none here.
+- `exec_ab_lever=merge` (with `exec_ab=1`) switches it off, on, on, off while the game runs; `executor draw merge` in
+  the log (every 600 Presents) counts the merged draws and the draws they took in.
+- Tests: every scene with it equals the scene without it, in each mode, with 4 MB slot arenas and with 512-byte ones that fill and start again.
+
+**Delta draws (`draw_delta=1`; 11 Nov; off by default until it is measured in the game).**
+- A draw packet is 3,200 bytes, built from the device's state at every draw (2.2-2.4 us of the game's thread each in
+  the owner's run of 16 Nov).
+- `sgen` counts every device call that can change what the packet's first 3,024 bytes are built from: the 28 methods
+  that write the state, the state blocks, the targets or the vertex shader table. The stream sources and the index
+  buffer are in the last 176 bytes.
+- A buffer draw (not a fan, not ...UP) made with `sgen` as it was at the last full packet sends only those 176 bytes
+  (X_DRAW_SAME). The executor puts them after the last packet's head and runs the draw as any other.
+- `draw delta` in the log (every 600 Presents) counts draws sent as deltas and in full.
+- Tests: every scene equals the scene without it, in each mode, one by one and with batches, the arena and merging.
+
+**GPU skinning (`gpu_skin=1`; 11 Nov; off by default until it is measured in the game; `d8_skin.h`).**
+- `D8ON11_Skin(const D8Skin *)` (exported) takes one skinning job from a mod in the game's own layout
+  (docs/FORMATS.md 2.4): the source vertices, the bone words, the bone list, the duplicates, the bone matrices, and the
+  two vertex buffers the skinned positions and normals would have been written to. It answers 1 if taken.
+- The D3D8 side makes a static source buffer once per mesh and variant: 64 bytes a vertex (both bones' position and
+  normal terms, the two bone numbers after the bone list). It is kept with the mesh's index buffer and freed with it.
+- The bone table (up to 256 bones) is sent with the job only when a bone this mesh uses differs from the last sent.
+- The two buffers then stand for the mesh until either is written again. A draw that reads them as float3 positions
+  from stream 0 and float3 normals from stream 1 of one job gets its position element as `SE_SKIN` and no normal
+  element; the executor binds the source in stream 0's place and the palette as constant buffer 1, and the vertex
+  shader computes `pa . bones[a] + pb . bones[b]` (w on row 3) and the normal from rows 0 to 2.
+- A draw that reads such a buffer any other way is not made; the log says so once.
+- Refused (the caller skins as before): buffers that are not this device's (another layer wrapping them), a bone
+  number of 256 or more, a duplicate past the mesh's vertices, a locked buffer.
+- draw_merge treats a skinned draw's stream 0 as its source, and merges only draws of one palette.
+- Tests: scenes `skin_cpu` (t8 skins on the CPU) and `skin_gpu` (through D8ON11_Skin) are equal pixel for pixel in
+  each mode, alone and with every other lever on.
+A draw from the caller's memory reads no stream and is never looked at for this (until 11 Nov it was, and the game's
+occlusion rectangles were dropped while a skinned buffer was bound: docs/HISTORY.md). The log's periodic `gpu skin`
+line and the totals count the draws not made; 0 is right.
+
+**Lazy depth (Direct3D 12; 18 Nov; on; `D8ON11_D3D12_LAZY_DEPTH=0` turns it off).** A target's depth surface is bound
+only when a draw or clear uses it (depth or stencil test or write; a depth or stencil clear). A draw with depth and
+stencil off never reads or writes the depth surface, so leaving it unbound changes no pixel; on a tile-based GPU it
+saves the surface's load and store for the pass. Each target remembers whether its last pass used depth and binds it
+at once if so (no extra target switch for the scene); a pass bound without depth that then draws with depth binds it
+then. Why it was made: the game's advanced shadows draw each character's silhouette with depth off (0x10033800); I had read
+its call as binding a depth surface too. It binds none (the call's depth argument is 0; docs/HISTORY.md, 13 Nov 13th
+entry), so for the shadows it saves nothing; it stays for any depth-off pass that has a depth surface. The `D3D12 render targets`
+line counts passes bound without depth and later binds. Tests: every scene and the random cases identical on and off;
+scene `lazy_depth` (passes with depth off into a texture with a depth surface, one that turns depth on midway).
+
+**In-between frames (`interp=1`; 17 Nov; off by default; d8_device.cpp "interp").** Above 60 fps most frames carry
+no game time (speedfix's frame_step: 0 whole ticks), and the game draws its characters where its last tick left them.
+With interp on, those frames draw each skinned character at the blend of its last two ticks, one tick behind the
+game (weight of the newer tick (s - 1 + c) / s, c the carry, s the ticks of the last tick frame; speedfix's
+Liminality rule). The clock comes from a mod: `D8ON11_InterpClock(&whole, &carry, &mode)` (speedfix hands its step's).
+What is blended is only what d3d8on11 is handed: a skinning job's bone palette (needs gpu_skin=1) and the world
+matrix of the draws that read a skinned buffer (by their ordinal after the job). A track is the job's position buffer,
+variant, bone table address and its place among the frame's jobs with those. Each tick frame's palette and world matrices are keyframes and every frame draws the blend of the last two;
+a change the game makes between ticks is counted and shows at the next tick (17 Nov: drawing the game's change on
+those frames and the blend on the others made what was drawn go back and forth, the owner's jitter and blur). Not blended: a
+track not seen at the tick before, a move of 4 units or more in a tick. The blend is linear entry by entry. A blended
+draw is sent in full (draw_delta's head holds the world matrix), and so is the draw after it. The log's `interp`
+line counts each case every 600 frames. Not blended: anything else (effects, nameplates, rigid models, the camera).
+Tests: `t8 interp`, six cases each equal to a reference drawn with the clock off and the expected palette and world
+(both executors, draw_delta on and off).
+
+**Mip levels (`mipmaps=1`, `anisotropy=N`; 19 Nov; off by default; d8_mip.cpp, d8_res.cpp, d8_ff.cpp).** The owner's
+frame captures: every texture the game draws has one level (148 of 148), no draw has a mip filter, and the names come
+from a 2048x4096 A8R8G8B8 font atlas drawn as 3D quads; minified with no levels, distant text and textures skip texels.
+With mipmaps on, a managed one-level 2D texture (A8R8G8B8, X8R8G8B8, DXT1/3/5; not a render target, dynamic or a cube;
+4x4 or larger, whole blocks) is created on the executor with a full chain, and levels 1.. are made here from level 0
+each time it is written: the 2x2 box average in the stored values (odd sizes: the last row or column read twice);
+block formats decoded, averaged and encoded again (a principal-axis endpoint fit; DXT1's punch-through kept); a cutout
+(every alpha 0 or full) has each level's alpha scaled so that the share at or above 128 is level 0's (128 is a choice:
+the alpha reference of the draws is not known when the levels are made). The game still sees one level. A write to
+part of level 0 (LockRect with a rectangle, CopyRects) of a 32-bit texture that is not a cutout makes again only the
+part of each level it reaches (mip_update, equal to a whole build byte for byte: test/mip_test.cpp). A texture rebuilt
+more than twice its size within 60 frames gets no levels from then on (`mipdrop`). With `mip_async=1` (the default since 21 Nov) a whole build runs on a worker
+thread: the game's thread copies level 0 and goes on, and at the next Present finished builds whose texture has not
+been written since are sent; until then the texture is drawn with level 0 only (one or a few frames after a load).
+Only draws with 3D vertices use the
+levels (pre-transformed draws, the interface, keep the game's sampler): MINFILTER and MIPFILTER LINEAR, the game's
+MAGFILTER; with `anisotropy` above 1, anisotropic where the game's MAGFILTER is LINEAR. `mipmaps_point_mag=0` leaves
+draws that magnify POINT (the names: the font atlas is drawn MAGFILTER POINT, MINFILTER LINEAR) to the game's sampling.
+The names pulse as one moves with levels and without (the owner's 20 Nov run, start plain too): a likely reading, not
+shown, is that their glyphs are drawn near their atlas size, where the sampling switches between POINT (magnified) and
+LINEAR (minified); the owner's 21 Nov run refuted it (magnifying them LINEAR too changed nothing; that experiment,
+`text_linear`, is removed). The cause is not known. Measured natively here: a
+whole build takes about 1.3-1.7 ms for a 256x256 DXT texture, 45 ms for the 2048x4096 atlas; the log gives the counts
+and times (`mipmaps, 600 frames`, `mipmaps totals`). Replays of the owner's two captures: the far ground's speckle
+becomes even; the distant names change little (their glyphs are drawn near their size). Tests: t8's mipmaps scenes
+(the one-level texture with mipmaps on draws exactly as t8's own chain sampled trilinear, before and after a write to
+part of it, on both executors) and mip_test.
+
+**Architecture-specific (22 Nov).** `mip_exec=1` (default): a whole mip build is sent as X_MIPS with level 0 and
+made by the executor (d8_mip.cpp is in d8x.exe and d8x_arm64.exe too): in its thread, or natively in d8x_arm64.exe with
+mode=remote on an ARM64 machine; in stream order, so a draw after it has the levels (t8: every scene equal to the
+build on the game's thread, both executors, thread and remote). A level 0 larger than one ring record goes to
+mip_async. The box filter uses SSE2 on x86 when the CPU says it has it (`mip_simd`; the same bytes as the plain loop,
+mip_test), and a build no longer copies each level (2048x4096 A8R8G8B8: 51 ms -> 10 ms natively here). The log names
+the path (`mipmaps: the levels are averaged here with ...`). `discard_hints=1` (Direct3D 12, off by default): at
+Present, each render target and depth surface bound this frame (one subresource, not the back buffer) is checked
+against the records already in the ring after the Present (d8_peek): if its next use is a Clear of all of it while
+bound (a depth surface with stencil: depth and stencil), DiscardResource; anything that may read it first, a partial
+clear, or the end of what is written keeps it. For tile-based GPUs, whose stores of such a target are then not
+needed; whether a translation layer (Parallels to Metal) makes use of it is not known. t8: every scene and the random
+cases identical on and off (D3D12, thread mode; under Wine the remote D3D12 executor falls back to D3D11).
+
+**Crash reporting (21 Nov; d8_common.cpp).** Exceptions of the fatal kinds (access violation, illegal instruction,
+stack overflow, divide by zero, fail-fast, heap corruption ...) are logged with their module and offset, the thread
+and the registers, and the values on the stack that point into a module's code (a scan, not an unwound stack): first
+chance (a vectored handler, once per address, at most 24 lines; such an exception may still be handled) and unhandled
+(a filter chained to the one before it). The previous start's log is kept as `d3d8on11_prev.log`. Test: t8 crash.
+
+**Loading the kit (`load_kit=1`; 21 Nov; d8_main.cpp).** At the first Direct3DCreate8, if xikit.dll is next to d3d8.dll
+and not loaded yet, the game's build (FFXiMain.dll's TimeDateStamp in memory) is looked up in `xikit_manifest_<stamp>.txt`
+or xikit_manifest.txt's `!game_timestamp`: found, xikit.dll is loaded (it waits for the device and loads speedfix); not
+found, the kit is not loaded, the log says so, and (`update_notice=1`) a console window says the kit needs an update
+and where (`update_url`). The renderer runs either way. kit/install installs it all into the game's folder. Tests:
+t8 kit with stand-in FFXiMain.dll and xikit.dll (test/kitload).
+
+**CopyRects into a lockable texture.** A CopyRects from a GPU surface (a render target, the back buffer, another
+texture) into a texture level marks that level's CPU copy stale; the level's next LockRect reads it back first
+(X_READBACK, which waits for the executor to run the copy), so the lock holds the copied texels and its unlock sends
+them, not the older ones, back. Before 26 Oct the lock read the older texels and the unlock wrote those over the copy:
+the owner's log had `copystale` from FFXiMain.dll+0x2D465B, in the statically linked D3DX 8.1
+D3DXLoadSurfaceFromSurface (data/d3dx/d3dx81_manifest.json, 0x102D4515), which copies with CopyRects and then locks
+the destination, so every texture the game builds that way from rendered content read stale texels. The log line
+`copystale` now says the lock reads back, and names the first caller. t8 basic: "a copy from a render target into a
+managed texture" (Wine's d3d8 passes it; ours before the change failed it in every mode). Direct3D 8 has no other
+GPU-to-texture copy the game could use here: UpdateTexture is not implemented in ours (it logs "not implemented"
+when called; the owner's logs have not shown it) and StretchRect is Direct3D 9's.
+
+**CopyRects from the back buffer.** The back buffer is B8G8R8A8 (DXGI swap chains have no B8G8R8X8), while an
+X8R8G8B8 surface is B8G8R8X8. D3D11's CopySubresourceRegion copies only within a type group, so before 18 Oct a copy
+from the back buffer into an X8R8G8B8 surface silently copied nothing. D3D8 counts the two as one format and allows the
+copy. Such a copy is now drawn instead (d8_exec.cpp `copy_draw`: through two scratch textures, reading exact texels with
+Load). It was found by the new `basic` check below; Wine's d3d8 passed it.
+
+**Ring memory.** `thread` and `remote` take 48 MB of the game's address space (the 32 MB ring and a 16 MB reply
+area). A reply larger than the reply area goes in pieces of 16 MB (d8_link.cpp: the executor hands each piece over
+with `reply_part` and waits for the game's side to copy it, `reply_ack`; ring version 5). Before 26 Oct it was cut to
+16 MB: the owner's log had `a reply of 22958208 bytes is larger than the reply area (16777216): cut` nine times, so
+those read-backs got only their first 16 MB (which read-backs they were is not in the log). t8 basic reads back a
+2304x2048 lockable render target (18,874,368 bytes) and compares every texel. A record larger than half the ring (16 MB) ends the game with a log line. Uploads
+never reach that: a texture upload larger than a record may carry goes in bands of whole rows, a buffer's in byte
+ranges (d8_link.h `upload_tex`, `upload_buf`). The game makes a 2048x4096 A8R8G8B8 texture at startup, whose one level
+is 32 MB; before the bands, `thread` ended the game there (owner, 15 Oct; t8 scene `big_texture`). How large the game's
+largest draw record is (a ...UP draw carries its vertices) is not established.
+
+**Bytes per draw.** A draw packet is 3,128 bytes before any ...UP or fan data (pinned in d8_proto.h for both builds),
+so 3,000 draws make about 9.4 MB a frame through the ring, written by the game's thread and read by the executor.
+What that copying costs, against `direct` (which builds the same packet but runs it in place), is not measured.
+
+**The D3D12 check (`d3d12_probe`, 12 Nov, on by default).** Once, after the first Present, the executor tries to
+make a Direct3D 12 device on its D3D11 device's adapter, in its own process (32-bit x86 in `thread` and `direct`),
+then a command queue and list, and waits up to 2 s for a fence; each step's result is a `D3D12 probe:` line, and all
+it made is released. It answers whether D3D12 exists for the game's process on the owner's machine, which a
+feature level reported through D3D11 does not. Under Wine it takes 40-230 ms once. `d3d12_probe=0` in
+d3d8on11.ini (or `D8ON11_D3D12_PROBE=0`) turns it off. Threaded recording itself is measured outside the game by
+`kit/d3d11probe` probe12.
+
+## The Direct3D 12 executor (`backend=d3d12`, 12 Nov; `d8_exec12.h`, `d8_exec12.cpp`)
+
+The same command stream, run on Direct3D 12 instead of Direct3D 11. Chosen in d3d8on11.ini (`backend=d3d12`; default
+`d3d11`) or by `D8ON11_BACKEND`, for a whole start (X_OPTION OPT_BACKEND before X_INIT). If a Direct3D 12 device, the
+upload ring, the root signature or the swap chain cannot be made, the log says which and the start runs on Direct3D
+11 as before. Why: on the owner's Mac (kit/d3d11probe probe12, 12 Nov) 2,000 small draws took 6.1 ms through Direct3D
+11's immediate context and 2.0 ms through Direct3D 12 (docs/HISTORY.md).
+
+- **Shading:** the Direct3D 11 executor's own HLSL (gen_vs, gen_ps), compiled for shader model 5.0; one root
+  signature: b0 (vertex constants), b1 (gpu skinning's bone palette), b0 (pixel constants) as root descriptors, t0-t7
+  and s0-s7 as tables.
+- **Memory the CPU writes for the GPU:** one 64 MB upload ring, mapped once; a region is reused only after the GPU has
+  passed the submission that read it (fence values). A dynamic buffer's contents are copied into the ring from its
+  CPU copy at its first draw in each submission; within a submission DISCARD gives it a new place, NOOVERWRITE writes
+  in place. An upload larger than half the ring gets a buffer of its own. Static buffers and textures live in default
+  heaps and are written by copies recorded in order with the draws.
+- **State:** a pipeline state object per combination of shaders, blend, depth-stencil, rasterizer, topology type and
+  target formats, made once and cached; the last draw's keys are remembered so a repeated draw looks nothing up.
+  Resources are moved between states (render target, shader resource, copy source/destination, depth write, present)
+  before each use. A draw that samples the texture it renders into reads no texture, as Direct3D 11 does.
+- **Swap chain:** the flip model (FLIP_DISCARD, 2 buffers), the only one Direct3D 12 has; the CPU may be
+  `frame_latency + 1` frames ahead of the GPU (at most 3).
+- **Not used:** exec_batch, exec_filter, buffer_arena, gpu_time (the Direct3D 12 executor measures the GPU's time always). They exist to save Direct3D 11 Map calls
+  or measure through Direct3D 11 queries; the log names each one set as not applied. draw_delta and gpu_skin are the
+  D3D8 side's and work as before.
+- **A lost device:** the first failed call logs the device's removal reason; from then on nothing waits for the GPU
+  (a wait is in 5 s steps, checking the device between), so the game goes on without drawing instead of hanging.
+- **Tested here (test_d3d8on11.py, Wine: Direct3D 12 is vkd3d on Mesa's Vulkan rasterizer):** in direct, thread and
+  remote mode, t8 basic (Reset included), the 33 scenes, frames 600, nowait 1200 (the occlusion snapshots), threads,
+  churn and gpu skinning; rt_downsample and rt_sample_after (13 Nov: a render-target texture twice the size shrunk
+  with LINEAR, and sampled with CLAMP after another draw into it; both executors draw them identically). 28 scenes are pixel for pixel the Direct3D 11 executor's; in the other 5 every differing pixel
+  is a point-sampling tie (marked by D8ON11_TEST_TIES=0.01: a sample within 0.01 texel of a texel boundary, where a
+  driver may read either texel), which the two rasterizers (Vulkan for 12, OpenGL for 11) break differently. Also
+  tested: the fallback (D8ON11_TEST_D3D12_FAIL) and a device lost at the 50th Present (D8ON11_TEST_D3D12_LOST=50: logged,
+  and t8 runs to its end). In remote mode Wine makes no Direct3D 12 swap chain on another process's window
+  (0x8007000E), so there the start falls back to Direct3D 11 (checked); whether Windows does is not known.
+- **Format report and texture checks (13 Nov).** At the start the executor also logs what the driver reports for each
+  texture format the D3D8 side maps (2d, sample, mip, rt, blend) and draws test pixels through B8G8R8A8, B8G8R8X8, the
+  mip levels of a B8G8R8A8 texture and those of a BC1 texture, each logged with what is right; then every sampler
+  Filter d8_ff.cpp sends (with MaxAnisotropy 0 and 1), and the same LINEAR sampler at several places in the sampler
+  heap. They log, and one of them chooses: where a sampler table is read only at its heap's start (the owner's
+  Parallels: the place check wrong), and a heap check shows the driver reads the heap bound last, each sampler table
+  gets a heap of its own and a change of table sets the heaps again; the heap check wrong too: Direct3D 11
+  (docs/HISTORY.md, 13 Nov fifth to seventh entries).
+- **The sampler check (13 Nov).** At the start the executor draws two pixels through the same root signature,
+  descriptor tables and sampler path as a draw: a LINEAR sample between four texels of a 2x2 checker (128 is right) and
+  a CLAMP sample past the edge (255 is right; WRAP gives 0). Samplers are written into the shader-visible heap by
+  copying CPU-only descriptors (tried first), else made there directly; the first way that samples right is kept;
+  neither: the start runs on Direct3D 11 (logged). Why: in the owner's 13 Nov run on Parallels (resource binding tier
+  1; Wine's is tier 3) the Direct3D 12 start drew as if no sampler state applied: the game's double-size scene
+  (background resolution 3024x1898 for a 1512x949 window) shrunk without blending ("pixelated", shimmering edges,
+  colours slightly off), blob shadows speckled, the projected shadow wrapping inside its box. That those come from the
+  sampler state is a reading of the symptoms; the check's log line on the owner's machine settles it.
+  D8ON11_TEST_D3D12_SAMPLERS makes both ways count as wrong (the fallback's test).
+- **Measured in every start (13 Nov):** `D3D12 gpu time` every 600 frames: the GPU's time for a frame (timestamps at
+  its start, at each change of render target and before its Present, read once its fence has passed), by render-target
+  size, so the game's double-size scene pass shows apart from the rest; `D3D12 binds`: draws, pipeline switches,
+  descriptor tables and barriers a frame, and the pipelines and shaders made with the time it took.
+- **Caches on disk (13 Nov):** compiled shaders by their HLSL text's hash (`d3d8on11_d3d12_shaders.bin`) and the
+  driver's pipeline library (`d3d8on11_d3d12_pipelines.bin`, where the device has ID3D12Device1; Wine's has none) next
+  to the executor's module, written every 1,800 Presents with news (the game never releases its device at exit, so a
+  write at shutdown would not come). D8ON11_NO_DISK_CACHE=1 turns them off.
+- **draw_merge on Direct3D 12 (13 Nov):** with draw_delta=1, a run of delta draws of indexed triangle lists is drawn as
+  one: each draw's vertex buffers copied by the GPU, once per version, to a slot of four 16 MB slot buffers (GPU
+  memory, not the game's address space), its indices rewritten as 32-bit into the ring. Needs neither buffer_arena nor
+  exec_batch. Tested: every scene identical with and without it, also with gpu_skin and with the slots forced to start
+  again every second run (D8ON11_TEST_SLOT_WRAP=2). The 13 Nov crowd frames had about 1,040 of 1,650 draws a frame as
+  delta draws: what merging can take there, not yet measured in the game.
+- **The owner's run (13 Nov), crowd windows of 1,600-2,000 draws:** the executor 11-13 ms a frame on Direct3D 12
+  against 17.5-19.7 ms on Direct3D 11 (draws about 5 ms against 8.5-9; the 13 Nov build counted delta draws as
+  "other", fixed). The picture was wrong as above.
+
+## Present interval (`present_interval`)
+
+The executor's swap chain is windowed, DXGI_SWAP_EFFECT_DISCARD, one buffer, whatever the game asks (unchanged).
+Its IDXGISwapChain::Present takes a SyncInterval: 0, "the presentation occurs immediately, there is no
+synchronization"; 1 to 4, "synchronize presentation after the nth vertical blank" (DXGI, IDXGISwapChain::Present).
+Before 26 Oct every Present was Present(0, 0) and the log did not say what the game asked for.
+
+At CreateDevice and at each Reset the log now has the game's D3DPRESENT_PARAMETERS as it passed them, and the
+SyncInterval used:
+
+    CreateDevice: the game asked SwapEffect 1 (DISCARD), FullScreen_PresentationInterval 0x0, BackBufferCount 0, Flags 0x0, windowed; Present's SyncInterval 0 (windowed)
+
+(that line is t8's; **which values the game itself sets is not known until the next run logs it**.) The SyncInterval
+comes from the game's parameters (d8_device.cpp, `Dev::present_interval`; the values from d3d8types.h and d3d8caps.h,
+their meaning from the DirectX 8.1 reference, D3DPRESENT_PARAMETERS and D3DSWAPEFFECT):
+- SwapEffect D3DSWAPEFFECT_COPY_VSYNC (4; a windowed effect that copies at the vertical retrace): 1;
+- full screen with FullScreen_PresentationInterval D3DPRESENT_INTERVAL_ONE, TWO, THREE or FOUR (1, 2, 4, 8): 1, 2,
+  3, 4;
+- D3DPRESENT_INTERVAL_IMMEDIATE (0x80000000), and windowed with any other swap effect (there the interval must be
+  DEFAULT): 0;
+- full screen with D3DPRESENT_INTERVAL_DEFAULT (0) or any other value: 0, as before. This one is not mapped from a
+  source: this device renders full screen as windowed, and what DEFAULT means in full screen is not quoted in this
+  repository. The log line says so ("not mapped from a source").
+
+`present_interval` in `d3d8on11.ini` (`[d3d8on11]`; `D8ON11_PRESENT_INTERVAL` wins) overrides that:
+- not set, or anything but a single digit 0 to 4 (the default): the SyncInterval the game's parameters map to, above;
+- `present_interval=0`: every Present at once, without waiting for a vertical blank (what every Present did before
+  26 Oct);
+- `present_interval=1`: each Present waits for the next vertical blank, so presents are held to the display's
+  refresh rate (60 a second on a 60 Hz display; more on a faster one);
+- `present_interval=2`, `3`, `4`: each Present waits for the 2nd, 3rd or 4th vertical blank: at most a half, a
+  third or a quarter of the refresh rate.
+With it set the log line ends "(present_interval in d3d8on11.ini)" and a second line gives what the game's parameters
+would have given.
+
+Why it matters for the game's speed (owner, 26 Oct): Windower sets the game's frame divisor, the limiter's minimum
+`[g_pCamera+0x30]` (docs/RENDERER.md section 3: the minimum number of 1/60 s ticks a frame), to 0, so the game's own
+wait loop never waits and the game advances at least one tick per frame (RENDERER 3a: the step is
+`max([this+0x28], 1.0)`); its speed then follows the frame rate. With the divisor at 0, `present_interval=1` holds
+frames to the display's refresh, since nothing else in the frame waits. The owner also saw the speed vary with and
+without speedfix loaded. Whether `present_interval=1` steadies it is not measured: this container's Wine runs under
+Xvfb, where no vertical blank can be observed (the test checks only that the setting reaches the log and the
+device works). In `direct` the game's own Present call waits. In `thread` and `remote` the executor's Present
+waits, and the game waits for the executor only when it is two Presents ahead (d8_link.cpp, MAX_AHEAD): the game is
+then held to the display's rate with up to two frames queued, not at each of its Presents.
+
+## Milestone 1: everything but drawing
+
+Done and tested:
+- device creation with its swap chain on the game's window (windowed), automatic depth buffer, Reset;
+- textures (BC1/BC2/BC3, 32-bit, 16-bit, A8), cube textures, render targets, depth surfaces, image surfaces, vertex
+  and index buffers, with Lock/Unlock uploads;
+- Clear of the whole target, Present, SetRenderTarget (which resets the viewport, as D3D8 does), CopyRects (GPU to
+  GPU, and GPU to an image surface), read-back through LockRect;
+- every state the game sets and reads back: render states, stage states, transforms, viewport, material, lights,
+  textures, streams, indices, vertex shader handles;
+- state blocks recorded with Begin/End, applied, captured, deleted, and CreateStateBlock of each type.
+
+## Milestone 2: drawing (`d8_ff.cpp`)
+
+At a draw, the state that decides the vertex work becomes a key (VSKey), and so does the state that decides the pixel
+work (PSKey):
+- vertex work: the layout from the FVF or the declaration, lighting, material sources, texture coordinate sources and
+  transforms, the fog coordinate, flat shading;
+- pixel work: the stages, alpha test, fog mode, specular, flat shading.
+
+The keys, the constants and the state descriptions go to the executor in the draw packet. There each key becomes
+HLSL once, compiled with `D3DCompile` and cached; blend, depth-stencil, rasterizer and sampler states are D3D11 state
+objects, cached by description. Fans become indexed lists, their indices made on the D3D8 side. ...UP draws carry
+their vertices and indices in the packet; the executor writes them into a dynamic ring buffer.
+
+Where each behaviour comes from (named in the code where it is used): the DirectX 8.1 (C++) reference first (see
+"Checked against Microsoft's documentation" below), then Microsoft's Direct3D 9 pages where the 8.1 reference is
+silent, each named as such; Wine 9.0's wined3d only where neither says, and then named as Wine's. Windows' own
+behaviour in those cases is not established. Still Wine's:
+- the fog model's specular-alpha case and vertex linear fog's start == end case (`get_fog_start_end`);
+- ZBIAS as −ZBIAS units and −ZBIAS times the slope (d3d8 `WINED3D_LEGACY_DEPTH_BIAS`): the reference says only that a
+  higher value draws in front;
+- the half-pixel offset's arithmetic (`get_projection_matrix`); that pixel centres are at integer coordinates is the
+  reference's ("Triangle Rasterization Rules");
+- the clamp of each light's N.L at 0, specular's N.L > 0 and N.H > 0, the spot factor;
+- DOTPRODUCT3's scale of 4 (the reference: inputs "shifted down by half", no scale given).
+
+Taken from Microsoft's own DirectX 8.1 runtime with its reference device (14 Oct; "Microsoft's reference device"
+below), where Wine or the reference text said otherwise:
+- vertex fog makes the fog factor per vertex, clamped to [0, 1], and interpolates it (Wine interpolates the distance
+  and makes the factor per pixel). The reference says the same: "it applies fog calculations at each vertex in a
+  polygon, and then interpolates the results" ("Vertex Fog");
+- D3DRS_AMBIENTMATERIALSOURCE defaults to D3DMCS_MATERIAL, D3DRS_DEBUGMONITORTOKEN answers 0xBAADCAFE ("defaults").
+- a stage's texture read when none is set (other than through COLORARG1, below) reads (0, 0, 0, 1): through ARG2,
+  ARG0, the alpha args, with COMPLEMENT and ALPHAREPLICATE (the reference does not say; Wine passes CURRENT on, its
+  `is_invalid_op`);
+- the alpha test compares floor(alpha * 255), taken once after the last stage, with ALPHAREF, for every function
+  (alpha T*T, a two-stage chain and ADDSIGNED's half steps against each). The reference says ALPHAREF "is an 8-bit
+  value" and not how the incoming alpha becomes one. Ours compared the float for LESS and GREATER and within half a
+  step for EQUAL and NOTEQUAL (Wine: the float), so it could pass EQUAL 145 and fail GREATEREQUAL 145 on one value.
+  The 1/512 added before the floor is ours (a product of 8-bit values is m/255; float rounding must not drop it a
+  step). The game alpha-tests nearly all its draws, with GREATER 0, GREATER 0x45 and GREATER 0x60 (traces 5180,
+  6080, 6796).
+
+From the DirectX 8.1 text, where Wine did otherwise:
+- "When a texture stage has D3DTSS_COLORARG1 equal to D3DTA_TEXTURE and the texture pointer for the stage is NULL,
+  this stage and all stages after it are not processed" ("Texture Blending"). Microsoft's reference device does so
+  for every op (SELECTARG2 too) and for alpha; a stage 0 so skipped draws the diffuse colour and alpha, as DISABLE
+  does; TEXTURE with a modifier is not "equal". Wine 9.0 passes CURRENT on and runs the later stages. The game draws
+  so: 23 and 28 draws of traces 6796_1 and 6796_2, stage 0 from 0x1000CBF3 (colour MODULATE(TEXTURE, TFACTOR),
+  alpha MODULATE4X), some with a later stage on; traces 5180 and 6080 have none.
+
+Measured on Microsoft's reference device and not taken (each a reference-device artefact, not Direct3D's rule):
+- it truncates the lit vertex colour to 8 bits per vertex before interpolating (ours interpolates the float): one
+  step lower, which a stage squaring the colour makes four (random case s2r0073: 934 pixels differ, 0 with ours
+  truncated). It does so with D3DCREATE_HARDWARE_VERTEXPROCESSING too. The game creates its device with
+  HARDWARE_VERTEXPROCESSING (0x40) unless its setting at g_pAppSettings+88 is set or that fails, then SOFTWARE (0x20)
+  (Gfx_CreateDevice 0x100034B0, Gfx_CreateD3DHolder's callers); what its machines' drivers do here is not known;
+- point sampling near a texel boundary: "the reference rasterizer does not perform this operation with perfect
+  accuracy" (DirectX 8.1, "Nearest-Point Sampling"). Measured (14 Oct) on the random cases that differ from it with no
+  class: the unmatched pixels of the point-filtered perspective cases lie within 0.05 texels of a texel boundary
+  (mostly within 0.006) by the exact texture coordinates; ours takes the texel the exact coordinate falls in, the
+  reference device the neighbour (case m4: 17 of 17 pixels). The test switch D8ON11_TEST_TEXEDGE=eps makes ours read
+  the texel across the nearer boundary wherever the coordinate is within eps texels of it (every 2D stage; a test
+  only): at eps 0.05, 58 of the 59 unmatched pixels of the four reduced cases then match, and of the 1920 unmatched
+  pixels of the 67 random cases (of 142) that still differ with their classes' changes, 856 match; of the 1064
+  left, 934 are s2r0073 (the lit colour, above) and the rest (at most 29 a case, many differing by 4 or 5 where 3 is allowed) are not analysed: not
+  explained.
+- point sampling at a texel boundary, on D3D11: D3D11 converts the scaled coordinate to "at least 16.8 Fixed Point"
+  and takes its integer part (D3D11.3 functional spec 7.18.7), with a conversion tolerance (3.2.4.1), so within about
+  1/256 texel of a boundary drivers may read different texels; the owner's GPU and WARP did (docs/HISTORY.md, 15 Oct).
+  The test switch D8ON11_TEST_TIES=eps draws magenta (after the alpha test and fog) where a 2D stage whose effective
+  filter is POINT samples within eps texels of a boundary (eps <= 0: 1/256). Minified or magnified, and the level, by
+  the spec's isotropic LOD (7.18.11) and mip selection (7.18.10), computed by ours, not taken from the driver;
+  MIPMAPLODBIAS is not applied (the game's traces never set it). kit/fcap/ties.py counts it on a frame capture. On
+  t8's scenes (here, Wine): texture_transform_2d 832 pixels, every pixel where the owner's runs and the reference device differ
+  from it here among them; rhw_texture all 1024 of its point-sampled pixels, none of which differed
+  anywhere (a coordinate exactly on a boundary that arrives exact is read alike): the count is an upper bound.
+
+Known gaps, each logged when hit:
+- full screen (renders windowed);
+- palettized texture formats (the palettes themselves are kept and read back; the game creates no palettized texture);
+- textures in a block format whose top level is not whole 4x4 blocks: D3D11 wants whole blocks; behaviour to be
+  checked;
+- caps: the device answers with dgVoodoo's own D3DCAPS8 from the owner's machine (probe8's caps.raw, 13 Oct;
+  data/dgvoodoo_caps8.json), so the game takes the paths it takes there. They promise features not implemented here
+  yet (vertex blending, the game's own shaders); those are logged when used.
+
+## Checked against Microsoft's documentation
+
+Sources: the DirectX 8.1 SDK's own documentation (directx8_c.chm, 19 Oct 2001) and headers (d3d8types.h), from the
+owner's copy of the SDK (14 Oct; neither is in the repository; the code quotes what it relies on), and Microsoft's
+Direct3D 9 pages where named, and the Direct3D 11 pages of the June 2010 SDK (windows_graphics.chm) where named.
+Checked, area by area:
+- Render-state and stage-state defaults: all as the reference states (README "defaults" below), and as Microsoft's
+  runtime answers them. Changed: POSITIONORDER, NORMALORDER; AMBIENTMATERIALSOURCE and DEBUGMONITORTOKEN, where the
+  runtime answers otherwise than the reference text (the text contradicts itself on the first).
+- Texture operations (D3DTEXTUREOP's formulas) and argument flags: as the reference. Not stated there: whether results
+  are clamped (ours: each to [0, 1]); DOTPRODUCT3's scale.
+- Default vertex colours: diffuse 0xFFFFFFFF, specular 0 ("Untransformed and Lit Vertices", "Transformed and Lit
+  Vertices"; the "Texture Argument Flags" page says 0xFFFFFFFF for specular, against both).
+- Texture coordinates: a missing set reads (0,0) (D3DTSS_TEXCOORDINDEX); a 2D set enters a transform with 1 as its
+  third component, as the reference's own example needs ("Special Effects": translation in the matrix's third
+  row); its fourth (ours 0) is not stated. No transform on pre-transformed vertices (Direct3D 9, "Texture Coordinate
+  Transformations"). Filtering: MAGFILTER and MINFILTER by magnification, MIPFILTER NONE "disables mipmapping".
+- Lighting: the "Mathematics of Lighting" pages, term for term; the ambient term differs between 8.1 (no attenuation)
+  and 9 (with), ours is 9's, and every SetLight the game traced has ambient 0.
+- Fog: the formulas (linear, exp, exp2, the blend), the depths (camera |z|, range), vertex fog's factor made per
+  vertex and interpolated ("Vertex Fog"; changed 14 Oct, found against Microsoft's runtime), and pixel fog's depth: w on a
+  device with D3DPRASTERCAPS_WFOG (ours: dgVoodoo's caps) unless the projection is affine, 1/RHW for pre-transformed
+  vertices (changed: was z, as Wine; no test compares this case).
+- Flat shading: colour and specular from the first vertex (fans: vertex i + 1), specular alpha interpolated (changed:
+  it was held too).
+- Blend factors and operations, culling, the fill convention: as the reference. The alpha test: as above (the
+  reference does not say how the alpha is made 8-bit).
+- Clear: the viewport, or rectangles clipped to it; fails for Z or stencil with no depth buffer or no stencil
+  (changed: rectangles and smaller viewports failed; now drawn, test scene clear_viewport_rects, equal to Wine's).
+- State blocks: CreateStateBlock takes all three D3DSTATEBLOCKTYPEs, each capturing what Microsoft's DirectX 8.1 runtime
+  captures, measured on it (test/t8.c `sbtypes`; its render and texture stage state lists are also data in that
+  d3d8.dll), not what the documentation lists: its two lists for the pixel and vertex blocks disagree with each other,
+  and D3DSBT_ALL there omits the index buffer, which the runtime captures (changed twice: ALL first held the index
+  buffer, then followed the documentation and dropped it; now it holds it again, as the runtime does, and takes
+  neither D3DRS_ZVISIBLE nor D3DRS_DEBUGMONITORTOKEN). Shader constants are in all three on the runtime; ours keeps
+  none (SetVertexShaderConstant is not implemented). Recorded blocks record the methods the reference lists.
+- Palettes: SetPaletteEntries / SetCurrentTexturePalette as the reference (they failed before; the game calls both).
+- CopyRects: fails as the reference lists (the same surface, formats that differ, depth formats, a rectangle not
+  inside both surfaces; changed: none of these was checked). A copy into a texture level also updates the copy the
+  game locks (changed: it did not); a copy from the GPU into a texture level makes its next lock read it back
+  (changed 26 Oct: the lock read the older texels; "CopyRects into a lockable texture" above).
+- Locks: "Textures created in D3DPOOL_DEFAULT are not lockable" unless dynamic (changed: they were; in run 2's resource
+  log every DEFAULT-pool texture the game made is a render target, whose locks were already refused); READONLY sends
+  nothing back; a render target or back buffer locked for writing gets the locked rows back (changed: they were
+  dropped; basic check "a texel written through a rectangle lock"). A draw with a locked vertex buffer set fails, as
+  IDirect3DVertexBuffer8::Lock says (changed: it drew; logged `drawlocked`). Whether the game ever does this is not
+  known: its traces record vertex-buffer unlocks, not locks. The DISCARD / NOOVERWRITE / READONLY combinations the
+  reference allows per pool are not enforced.
+- Reset and lost devices: a failed Reset leaves the device "not reset": TestCooperativeLevel answers
+  D3DERR_DEVICENOTRESET and Present D3DERR_DEVICELOST until a Reset succeeds (changed: both answered D3D_OK).
+- Vertex declarations: registers as D3DVSDE_* (d3d8types.h); 15 and 16 (POSITION2, NORMAL2) were not mapped (a draw
+  was skipped). Now mapped, and read when D3DRS_VERTEXBLEND is D3DVBF_TWEENING: "POSITION = POSITION1 * (1.0 -
+  TWEENFACTOR) + POSITION2 * TWEENFACTOR", the same for normals ("Vertex Tweening"; dgVoodoo's caps report
+  D3DVTXPCAPS_TWEENING). This changes nothing the game was seen doing: its 2,253 captured shaders are three
+  declarations without register 15 or 16 (docs/HISTORY.md); v15 is only in the declarations of its shader programs,
+  which have code and were never reached. Scene v15_declaration (that declaration without code, VERTEXBLEND 0)
+  equals Wine's; the basic check "tweening at 0.5" runs on ours only (Wine's d3d8 does not report the cap). Other
+  VERTEXBLEND values are logged (`vblend`). Types expand as D3DVSD_REG says ("(value, value, 0.0, 1.0)" and so on);
+  SHORT2 did not compile (changed; scenes decl_short2, decl_short4).
+- Texture addressing and border colour: D3DTEXTUREADDRESS's five modes have the same definitions, word for word, as
+  D3D11_TEXTURE_ADDRESS_MODE's (June 2010 SDK); the border colour's default is 0, as D3DTSS_BORDERCOLOR says.
+- Present: rectangles and another window are not implemented (logged `presentargs`). The game passes NULL for all
+  four arguments in each of the 34 Presents of its two traces.
+- Present's pacing: see "Present interval" below.
+- MAXMIPLEVEL: neither the 8.1 reference (D3DTSS_MAXMIPLEVEL) nor the Direct3D 11 pages of the June 2010 SDK
+  (D3D11_SAMPLER_DESC, D3D11_TEX2D_SRV, SetResourceMinLOD) say whether magnification and minification are decided
+  against level 0 or against the most detailed level allowed. Ours decides against the latter (a view starting at
+  that level). The game was not seen setting MAXMIPLEVEL or MIPMAPLODBIAS in its traces (MIPFILTER NONE then gives
+  level 0, where both readings agree). For Direct3D 11 itself the functional specification says: "The selection of
+  minification vs magnification occurs after LOD clamping. Prior to feature level 11.0, it was undefined whether
+  magnification selection occurred before or after LOD clamping" (D3D11.3 Functional Spec 7.18.11); that is about
+  the sampler's own clamp, which ours does not use for this.
+- Not yet checked against the reference: the caps' use.
+
+## Tests (`test/test_d3d8on11.py`, Wine on Mesa's software renderer in a virtual X server)
+
+`t8.exe` makes the same D3D8 calls through Wine's own d3d8 and through ours, ours in each of the three modes (`remote`
+with the x86 `d8x.exe`: Wine here runs x86 only):
+- `basic`: 28 checks (Clear and read back, a lockable render target, a copied lockable render target read after a
+  write through a lock, a render target copied into a managed texture and locked, a read-back larger than the reply
+  area, textures, buffers, state blocks, transforms, lights, shader handles, Reset, release, a rectangle lock of the
+  target, tweening). With ours the log must hold the presentation parameters at CreateDevice and Reset and no cut
+  reply; `basic` runs once more (remote mode) with `present_interval=1` in d3d8on11.ini, which the log must show. All pass on both (tweening on ours
+  only: Wine's d3d8 does not report D3DVTXPCAPS_TWEENING).
+- `scenes`: 27 scenes, each drawn on a 64x64 back buffer and read back whole, compared pixel by pixel. They cover:
+  - the six FVF codes the game uses (data/d3d8_scope.json), a declaration with register 15, SHORT2 and SHORT4 elements
+    (as texture coordinates, which Microsoft's runtime does not define for the fixed-function pipeline: the debug
+    runtime rejects them; these two check our expansion against the D3DVSD_REG text only);
+  - strips, lists, fans, indexed and ...UP draws, base vertex;
+  - depth and culling, ZBIAS 8;
+  - lighting with material and vertex colour sources, specular, eight point and spot lights;
+  - texture stages with TFACTOR, MODULATE2X and BLENDTEXTUREALPHA;
+  - the blend modes and BLENDOP values the game sets, alpha test;
+  - vertex, table linear and table exp fog, table fog on pre-transformed vertices (untextured: a texture minified toward the horizon made those pictures
+    turn on where each pixel samples);
+  - texture transforms, camera-space position, normal and reflection texgen into a cube texture;
+  - DXT1 with mips, flat shading;
+  - Clear of a smaller viewport and of rectangles;
+  - a stage whose colour op is on and whose alpha op is DISABLE, on stage 0 and on stage 1, in the game's state at
+    its draws from 0x1000CBF3 (alphaop_disabled_stage0/1).
+
+  On 14 Oct 25 of 27 match Wine's d3d8 (worst channel difference 1 of 255, lights_8; none beyond the test's
+  tolerance of 8), and `thread` and `remote` draw exactly what `direct` draws (every pixel). Two differ from Wine as
+  listed in the test (WINE_DIFFERS), and Microsoft's runtime draws both as ours does: fog_vertex_linear (Wine's
+  vertex fog is not Microsoft's, below) and fog_table_rhw (table fog on pre-transformed vertices: the DirectX 8.1
+  "Pixel Fog" text takes 1/RHW "to reproduce true w", as ours; Wine 9.0 reads the vertex z, glsl_shader.c). The game
+  draws such vertices with table fog (trace 6796: 255 draws, from 0x1000CDE2 and 0x1000CBF3). The tolerance and the 1% limit
+  are the test's own criteria. With KEEP=1 each scene is written as a PNG (Wine | ours | difference).
+- Microsoft's reference device (with D3D8REF_DIR and WDK_DDI set; otherwise the test says it did not run): the
+  DirectX 8.1 SDK's retail d3d8.dll and d3dref8.dll under Wine, with our stand-in for d3d8thk.dll, the runtime's calls
+  into the NT kernel's DirectDraw (test/msref: kthunk.c emulates a display driver with no 3D; each thunk's argument
+  count from the real d3d8thk.dll's `ret N`, gen_thunks.py). t8 makes a D3DDEVTYPE_REF device (T8_REF=1), and the
+  scenes and defaults are compared with ours:
+  - scenes: a pixel passes within 3 of the reference's pixel or, both ways, of one of its 3x3 neighbours. Every pixel
+    beyond 3 on 14 Oct was computed to be a tie: a pixel centre on a triangle edge (or within 0.013 px of one), or a
+    point sample on a texel boundary (within 0.006 texel), or a cube lookup within 0.2% of a face edge; the four the
+    neighbourhood does not absorb are listed in the test with their numbers (REF_TIES). Not compared: zbias (the
+    reference device does not report D3DPRASTERCAPS_ZBIAS; its RasterCaps are 0x00772199) and decl_short2/4 (above).
+    Listed as undefined, not failed: alphaop_disabled_stage0/1 (below). All 22 others pass;
+  - defaults: 290 states equal; left out are D3DRS_SOFTWAREVERTEXPROCESSING (it follows the creation flags), numbers
+    above 173, and the 51 the runtime answers 0xBAADCAFE (its fill for a state never set), and Microsoft's runtime
+    fails GetRenderState for the retired numbers (1-6, 11-13, ...) where ours answers 0.
+  What it found: vertex fog (above), and the two defaults below. And one case the reference leaves undefined that the
+  game relies on: a stage whose colour op is on and whose alpha op is D3DTOP_DISABLE ("Setting the alpha operation to
+  D3DTOP_DISABLE when color blending is enabled causes undefined behavior", D3DTEXTUREOP). The reference device makes
+  alpha 1 there; ours and Wine pass the previous stage's alpha on. The game does it from 0x1000CBF3, with SRCALPHA
+  blending, in 8,715 of the 34,011 draws of trace 6796 (1,132 in 5180, 85 in 6080), and the alpha shows on screen.
+  What the owner's dgVoodoo makes there is not known: the scenes alphaop_disabled_stage0/1 draw it, and `owner_run/`
+  runs them on the owner's machine. Ours is unchanged until that is known. Microsoft's debug runtime (d3d8d.dll) checks more than
+  the retail one: it rejects a fixed-function declaration whose position is not FLOAT3 or whose texture coordinates are
+  not FLOAT1-4, among others; the retail runtime, which the game runs on, does not check, and neither does ours.
+- `defaults`: every render state and stage state of a fresh device, read on both and compared, and (by hand, 14 Oct)
+  with the defaults the DirectX 8.1 reference states (D3DRENDERSTATETYPE, D3DTEXTURESTAGESTATETYPE). Every one of the
+  76 render states Microsoft's d3d8types.h defines, and every stage state, now has the reference's stated default:
+  - two did not, and were changed: D3DRS_POSITIONORDER (172) to D3DORDER_CUBIC and D3DRS_NORMALORDER (173) to
+    D3DORDER_LINEAR (both as Wine has them; ours had 0);
+  - D3DRS_AMBIENTMATERIALSOURCE (147): the reference contradicts itself (D3DRENDERSTATETYPE: D3DMCS_COLOR2; "Color
+    Vertices": D3DMCS_MATERIAL). Ours had COLOR2; Microsoft's runtime answers MATERIAL, as Wine and the Direct3D 9
+    reference, and ours does now (no difference to the game's vertex formats: d8_device.cpp);
+  - D3DRS_DEBUGMONITORTOKEN (165): the reference says it "defaults to D3DDMT_ENABLE" (0), which ours had; Microsoft's
+    runtime answers 0xBAADCAFE, as Wine, and ours does now. D3DRS_POINTSIZE_MAX (166) is 64.0 on ours and on
+    Microsoft's runtime with its reference device (Wine 256.0);
+  - the other differences from Wine are numbers above 173, which d3d8types.h does not define (Wine's d3d8 shares
+    its state with D3D9). An earlier version of this file put 172 and 173 among them; they are defined.
+  - ALPHAREF, ZVISIBLE and WRAP0-7 have no default in the reference; ours are 0, as Wine's.
+
+    KEEP=1 python3 test/test_d3d8on11.py
+
+- `frames`, in each mode: 600 frames of Clear and Present, with a read-back each frame from frame 30, through a 64 KB
+  ring. All must run, and the stats lines must be written. Each frame also locks a 16x16 lockable render target that
+  the frame before copied the back buffer into, then copies this frame's. Every lock must read the frame before's
+  colour, and the `readback snapshots` line must show some answered from a snapshot. On 18 Oct: `direct`, 599 of 599;
+  `thread` and `remote`, 569 (30 read back: frames 1 to 30, when nothing yet makes the game wait for the executor,
+  which then runs up to two frames behind, so the copy has not run when the next frame locks). (This test exists because a change made while adding the
+  stats wrote a wrong size into every record header; the scenes, which present a few times, had not shown it. It was
+  found and fixed before any commit.)
+- The scenes again in `thread` and `remote` through a 64 KB ring whose counters start at 0xFFFF0100: about 165 KB
+  go through, so the ring wraps twice and the counters pass 2^32. The pictures must equal `direct`'s exactly.
+- `orphan` (remote mode only): t8 ends its executor process at frame 30 and goes on presenting and reading back. The
+  game must end with exit code 3 and the log line, not hang. It does.
+- `random`: randomized cases (`test/random_cases.py`), each state drawn from the values the game was seen setting
+  (data/d3d8_scope.json), over its six FVF codes, strips and lists, UP, buffer and indexed draws, with lights, texture
+  transforms and cube textures. 200 per run (`RANDOM_SEED`, `RANDOM_CASES`); compared with Wine's d3d8 as the scenes
+  are. A difference fails unless it falls in a class below and the case, changed only as its class says, then draws
+  the same on both (0 pixels in every case of seeds 1 to 3, 14 Oct, after the two fixes below the classes). A case
+  that still differs is drawn by Microsoft's runtime too when D3D8REF_DIR is set: where that matches ours by the
+  reference criterion, the difference is listed as Wine's alone, not failed:
+  - A: pre-transformed vertices with a stage generating coordinates. Wine 9.0 generates them from the screen
+    position; ours reads the set as given. Microsoft's text: "Direct3D does not modify transformed and lit vertices"
+    (Direct3D 9, "Texture Coordinate Transformations"; the same in the Windows CE .NET 4.2 Direct3D text). It names
+    transforms, not generation, so for generation this is a reading. Wine's own bug 37313 reads it the same way.
+    Change: the stage stops generating.
+  - C: a stage reading a coordinate set the vertex format does not have. Ours reads zeros; not in the reference.
+    Change: the stage reads set 0 (or, with no set, is turned off: COLOROP DISABLE; a stage left without its
+    texture is drawn by the "Texture Blending" rule above, and by Wine otherwise).
+  - S: a cube texture filtered linearly. Wine's d3d8 filters each face apart (WINED3D_LEGACY_CUBEMAP_FILTERING,
+    dlls/d3d8/d3d8_private.h); ours leaves it to Direct3D 11, whose functional specification requires filtering
+    across faces ("TextureCube filtering near Cube edges, where 2x2 (bilinear) filter taps would fall off a face are
+    required to spill over by one texel row/column to the appropriate adjacent map", D3D11.3 Functional Spec 7.18.12).
+    Neither the 8.1 reference nor the June 2010 SDK's Direct3D 11 pages say which a Direct3D 8 device does, and what
+    Direct3D 8 hardware did is not established.
+    Change: that stage point-filtered.
+  - L: lighting with normals longer than 1, NORMALIZENORMALS off. Wine clamps each light's N.L at 1; the reference's
+    equation, sum[Cd*Ld*(N.Ldir)*Atten*Spot] clamped after all lights ("Diffuse Lighting", Direct3D 9), does not;
+    ours follows the equation. Change: NORMALIZENORMALS on.
+  - F: linear fog with FOGSTART >= FOGEND. The DirectX 8.1 text defines start as where fog "begins" and end as where
+    it "no longer increases" ("Fog Formulas"), which contradict each other then. Microsoft's reference device fogs
+    fully from end on and not before (measured along a depth ramp, 14 Oct); Wine and ours compute the formula. The
+    game never sets it (every fogged draw of traces 5180, 6080 and 6796 has start < end). Change: FOGEND above
+    FOGSTART.
+  - W: table fog on pre-transformed vertices: Wine fogs by z, Microsoft's runtime and ours by 1/RHW (scene
+    fog_table_rhw, above). Change: fog off.
+  - D: a stage with its colour op on and its alpha op DISABLE, which the DirectX 8.1 text calls undefined
+    (D3DTEXTUREOP). The game does it (0x1000CBF3). Change: that alpha op SELECTARG1 of CURRENT.
+  - N: a stage reading a texture it was not given: ours by the "Texture Blending" rule above, Wine otherwise. The
+    game does it (0x1000CBF3). Change: that stage off.
+  - T: the alpha test (a function other than NEVER or ALWAYS): Wine compares the float alpha with ALPHAREF / 255
+    (wined3d_private.h:3117, glsl_shader.c:7529 of Wine 9.0), ours floor(alpha x 255) as Microsoft's reference device
+    (above); they differ where alpha x 255 falls between two integers. Counted against Wine only. Change: the alpha
+    test off.
+  The game was seen using none of A and C in its traces (a trace's state at a draw is partial, so this is "not seen",
+  not "never"). It does create cube textures and set linear filtering, and it sets NORMALIZENORMALS off, so S and L
+  may show in the game.
+- Not established and not tested apart: what the third component of a 2D coordinate set reads as when a cube texture
+  is addressed with it (ours 1, by the PROVISIONAL rule in d8_exec.cpp; Wine 0). The rechecks avoid it.
+- What was wrong with the randomized test itself (found 14 Oct, fixed):
+  - the scope lists at most 24 values a state and ends a longer list with a "..." entry; the generator drew it as a
+    value, and t8 skipped the line (sscanf). Those states were then left at their starting value.
+  - each case started from reset_state, which sets only some states: the others a case set were left for the cases
+    after it, so a case's text was not all of its state (and the classes, read from the text, could be wrong). t8 now
+    reads each state a case sets before setting it and puts it back before the next case. The rest of the device's
+    state is the same for every case.
+- What the randomized test fixed (14 Oct):
+  - MIPFILTER NONE and MAXMIPLEVEL were sent as the sampler's LOD clamp, and a clamp to one level can decide
+    magnification against minification (on Mesa a minified texture was drawn with MAGFILTER). The reference applies
+    MAGFILTER and MINFILTER when the texture is magnified or minified "respectively" and MIPFILTER NONE "disables
+    mipmapping" (Direct3D 9, D3DTEXTUREFILTERTYPE). Now the executor binds a view of only the levels the stage may
+    read and leaves the LOD range open.
+  - Pre-transformed vertices with generated coordinates read the constant (0,0,0,1), which had no source; now the
+    set as given (class A).
+- `threads` and `churn` (above) are checked against the executor's own invariants too: an object created twice or
+  destroyed unknown is logged as a stream error. Object ids were taken from a counter that was not atomic: with two
+  threads creating objects, the log of each of two runs had stream errors (5 and 2 lines); the counter is atomic now and the test
+  fails on any stream error.
+- `where` prints the d3d8.dll t8 loaded (path and file version) and the adapter, for runs on other machines.
+- On the owner's machine (`owner_run/`: run_t8.bat, README.md): where, basic, defaults, scenes and random (seeds 1 to
+  3) through the game's dgVoodoo d3d8.dll, Windows' own and ours in direct and remote mode, each in a folder of its
+  own; `owner_run/owner_compare.py` compares each with ours by the reference criterion and names, per random case
+  that differs, its classes. dgVoodoo does not run under Wine here (packed; it faults at the same place on Wine's
+  D3D11 and on DXVK), so this is the only way to see what it draws.
+- Elsewhere: kit/xikit/test (`realdev_ours`) hooks this device with the kit as the game's device is hooked and gets
+  its frame times; kit/fcap/test captures a frame through it and replays that through Wine's d3d8 to the same picture.
+
+Not tested here:
+- `d8x_arm64.exe` itself: this container runs no ARM64 Windows code.
+- The fallback when the executor process starts but cannot make its device or swap chain (the fallback when it
+  cannot be started is tested by hand: no d8x.exe beside the DLL gives `thread`).
+- What is established for the ARM64 path comes from the owner's machine. Phase 0's xproc probe (docs/HISTORY.md,
+  6 Oct) saw a child's swap chain present into the parent's window, with an x86 parent and an ARM64 child and the
+  reverse. The probe's swap chain is the executor's kind (windowed, DISCARD, one buffer) but R8G8B8A8, not
+  B8G8R8A8. The raw probe logs are not in the repository; HISTORY.md records the result.
+- Speed in any mode: Wine on a software renderer says nothing about it.

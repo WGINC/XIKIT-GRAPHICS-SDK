@@ -1,0 +1,28 @@
+// CXiOpening -- graphics members reconstructed from Hex-Rays output, gate-verified.
+// Unnamed fields are field_XXX (the offset); sizes come from the class descriptor.
+#pragma once
+#include "gfx_common.hpp"
+#pragma pack(push, 1)
+class XI_API CXiOpening {
+public:
+
+    void **vftable;  // +0x0
+    uint8_t _pad_4[0x104];
+    uint32_t field_108;  // +0x108
+    uint8_t _pad_10C[0x4];
+    uint32_t field_110;  // +0x110
+    uint32_t savedGammaR;  // +0x114 restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t savedGammaG;  // +0x118 restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t savedGammaB;  // +0x11C restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t openingSubtitle;  // +0x120 owned OpeningSubtitle object
+    uint32_t field_124;  // +0x124
+};
+#pragma pack(pop)
+static_assert(sizeof(CXiOpening) == 0x128, "CXiOpening: sizeof");
+static_assert(XI_OFFSETOF(CXiOpening, field_108) == 0x108, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, field_110) == 0x110, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, savedGammaR) == 0x114, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, savedGammaG) == 0x118, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, savedGammaB) == 0x11C, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, openingSubtitle) == 0x120, "CXiOpening: layout");
+static_assert(XI_OFFSETOF(CXiOpening, field_124) == 0x124, "CXiOpening: layout");

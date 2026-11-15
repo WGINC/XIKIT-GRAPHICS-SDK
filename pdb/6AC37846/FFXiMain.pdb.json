@@ -1,0 +1,4301 @@
+{
+"_about": "FFXiMain.pdb, made by sdk/pdb/make_pdb.py for the build with TimeDateStamp 0x6AC37846",
+"symbols": [
+{
+"address": "0x10001520",
+"name": "CApp::RunMainLoop",
+"kind": "function",
+"size": 406,
+"source": "tree",
+"analysed_address": "0x10001520"
+},
+{
+"address": "0x10001B50",
+"name": "App_RenderFrameMaskedFPU",
+"kind": "function",
+"size": 90,
+"source": "tree",
+"analysed_address": "0x10001B50"
+},
+{
+"address": "0x10002040",
+"name": "Gfx_CopySurfaceRectToTexture",
+"kind": "function",
+"size": 231,
+"source": "tree",
+"analysed_address": "0x10002040"
+},
+{
+"address": "0x10002130",
+"name": "Gfx_ProbeDeviceCaps",
+"kind": "function",
+"size": 637,
+"source": "tree",
+"analysed_address": "0x10002130"
+},
+{
+"address": "0x10002F20",
+"name": "Gfx_CreateD3DHolder",
+"kind": "function",
+"size": 288,
+"source": "tree",
+"analysed_address": "0x10002F20"
+},
+{
+"address": "0x100031F0",
+"name": "Gfx_D3DBootstrap",
+"kind": "function",
+"size": 450,
+"source": "tree",
+"analysed_address": "0x100031F0"
+},
+{
+"address": "0x100033C0",
+"name": "Gfx_TryCreateDeviceForMode",
+"kind": "function",
+"size": 150,
+"source": "tree",
+"analysed_address": "0x100033C0"
+},
+{
+"address": "0x100034B0",
+"name": "Gfx_CreateDevice",
+"kind": "function",
+"size": 234,
+"source": "tree",
+"analysed_address": "0x100034B0"
+},
+{
+"address": "0x10003710",
+"name": "DebugOverlay_Update",
+"kind": "function",
+"size": 184,
+"source": "tree",
+"analysed_address": "0x10003710"
+},
+{
+"address": "0x10003890",
+"name": "Unit10003890_DrawActorAxes",
+"kind": "function",
+"size": 710,
+"source": "tree",
+"analysed_address": "0x10003890"
+},
+{
+"address": "0x10003B60",
+"name": "Debug_DrawTextTable",
+"kind": "function",
+"size": 518,
+"source": "tree",
+"analysed_address": "0x10003B60"
+},
+{
+"address": "0x10003D70",
+"name": "Debug_DrawWorldText",
+"kind": "function",
+"size": 654,
+"source": "tree",
+"analysed_address": "0x10003D70"
+},
+{
+"address": "0x100091B0",
+"name": "CDx::Initialize",
+"kind": "function",
+"size": 1116,
+"source": "tree",
+"analysed_address": "0x100091B0"
+},
+{
+"address": "0x100096B0",
+"name": "CDx::EndClearBegin",
+"kind": "function",
+"size": 83,
+"source": "tree",
+"analysed_address": "0x100096B0"
+},
+{
+"address": "0x10009710",
+"name": "CDx::TestCooperativeLevel",
+"kind": "function",
+"size": 15,
+"source": "tree",
+"analysed_address": "0x10009710"
+},
+{
+"address": "0x10009720",
+"name": "CDx::Present",
+"kind": "function",
+"size": 11,
+"source": "tree",
+"analysed_address": "0x10009720"
+},
+{
+"address": "0x10009730",
+"name": "CDx::BeginScene",
+"kind": "function",
+"size": 13,
+"source": "tree",
+"analysed_address": "0x10009730"
+},
+{
+"address": "0x10009740",
+"name": "CDx::EndScene",
+"kind": "function",
+"size": 13,
+"source": "tree",
+"analysed_address": "0x10009740"
+},
+{
+"address": "0x10009920",
+"name": "CDx_SetDefaultRenderState",
+"kind": "function",
+"size": 1015,
+"source": "dm",
+"analysed_address": "0x10009920"
+},
+{
+"address": "0x10009DC0",
+"name": "CDx::SetViewport",
+"kind": "function",
+"size": 53,
+"source": "tree",
+"analysed_address": "0x10009DC0"
+},
+{
+"address": "0x10009E20",
+"name": "CDx::PushRenderTarget",
+"kind": "function",
+"size": 51,
+"source": "tree",
+"analysed_address": "0x10009E20"
+},
+{
+"address": "0x10009E60",
+"name": "sub_10009E60",
+"kind": "function",
+"size": 50,
+"source": "none",
+"analysed_address": "0x10009E60"
+},
+{
+"address": "0x10009EA0",
+"name": "CDx::PushRenderTargetTexture_Flag1",
+"kind": "function",
+"size": 50,
+"source": "tree",
+"analysed_address": "0x10009EA0"
+},
+{
+"address": "0x10009EE0",
+"name": "CDx::PushRenderTargetTexture_Flag0",
+"kind": "function",
+"size": 49,
+"source": "tree",
+"analysed_address": "0x10009EE0"
+},
+{
+"address": "0x10009F20",
+"name": "CDx::PushRenderTargetTexture",
+"kind": "function",
+"size": 328,
+"source": "tree",
+"analysed_address": "0x10009F20"
+},
+{
+"address": "0x1000A1D0",
+"name": "CDx::SetTexture",
+"kind": "function",
+"size": 44,
+"source": "tree",
+"analysed_address": "0x1000A1D0"
+},
+{
+"address": "0x1000A390",
+"name": "CDx::EndAndClearBegin",
+"kind": "function",
+"size": 32,
+"source": "tree",
+"analysed_address": "0x1000A390"
+},
+{
+"address": "0x1000A3B0",
+"name": "CDx::DrawScreenQuadAtDepth",
+"kind": "function",
+"size": 306,
+"source": "tree",
+"analysed_address": "0x1000A3B0"
+},
+{
+"address": "0x1000A4F0",
+"name": "CDx::DrawTextureToViewport",
+"kind": "function",
+"size": 86,
+"source": "tree",
+"analysed_address": "0x1000A4F0"
+},
+{
+"address": "0x1000A550",
+"name": "CDx::DrawTexturedScreenQuadUnit",
+"kind": "function",
+"size": 68,
+"source": "tree",
+"analysed_address": "0x1000A550"
+},
+{
+"address": "0x1000A5A0",
+"name": "CDx::DrawTexturedScreenQuad",
+"kind": "function",
+"size": 305,
+"source": "tree",
+"analysed_address": "0x1000A5A0"
+},
+{
+"address": "0x1000A6E0",
+"name": "CDx::CreateTexture",
+"kind": "function",
+"size": 243,
+"source": "tree",
+"analysed_address": "0x1000A6E0"
+},
+{
+"address": "0x1000A800",
+"name": "CDx::PushRenderTargetRet1",
+"kind": "function",
+"size": 25,
+"source": "tree",
+"analysed_address": "0x1000A800"
+},
+{
+"address": "0x1000A820",
+"name": "CDx::DrawFadeQuad",
+"kind": "function",
+"size": 651,
+"source": "tree",
+"analysed_address": "0x1000A820"
+},
+{
+"address": "0x1000AAB0",
+"name": "CDx::Post_DepthBlurComposite",
+"kind": "function",
+"size": 289,
+"source": "tree",
+"analysed_address": "0x1000AAB0"
+},
+{
+"address": "0x1000ABE0",
+"name": "CDx_CompositeUITarget",
+"kind": "function",
+"size": 387,
+"source": "dm",
+"analysed_address": "0x1000ABE0"
+},
+{
+"address": "0x1000AEA0",
+"name": "sub_1000AEA0",
+"kind": "function",
+"size": 776,
+"source": "none",
+"analysed_address": "0x1000AEA0"
+},
+{
+"address": "0x1000B1B0",
+"name": "sub_1000B1B0",
+"kind": "function",
+"size": 576,
+"source": "none",
+"analysed_address": "0x1000B1B0"
+},
+{
+"address": "0x1000B460",
+"name": "sub_1000B460",
+"kind": "function",
+"size": 850,
+"source": "none",
+"analysed_address": "0x1000B460"
+},
+{
+"address": "0x1000B7C0",
+"name": "sub_1000B7C0",
+"kind": "function",
+"size": 845,
+"source": "none",
+"analysed_address": "0x1000B7C0"
+},
+{
+"address": "0x1000BB90",
+"name": "CDx::DrawStereoOddFrameOverlay",
+"kind": "function",
+"size": 437,
+"source": "tree",
+"analysed_address": "0x1000BB90"
+},
+{
+"address": "0x1000BD50",
+"name": "CDx::SetTransform",
+"kind": "function",
+"size": 82,
+"source": "tree",
+"analysed_address": "0x1000BD50"
+},
+{
+"address": "0x1000BF30",
+"name": "CDx::SetLight",
+"kind": "function",
+"size": 243,
+"source": "tree",
+"analysed_address": "0x1000BF30"
+},
+{
+"address": "0x1000C0B0",
+"name": "CDx::CompositeSceneToBackBuffer",
+"kind": "function",
+"size": 1569,
+"source": "tree",
+"analysed_address": "0x1000C0B0"
+},
+{
+"address": "0x1000C6E0",
+"name": "CDx::CreateStereoResources",
+"kind": "function",
+"size": 218,
+"source": "tree",
+"analysed_address": "0x1000C6E0"
+},
+{
+"address": "0x1000C850",
+"name": "CDx::CreateRampTexture1x16",
+"kind": "function",
+"size": 175,
+"source": "tree",
+"analysed_address": "0x1000C850"
+},
+{
+"address": "0x1000C900",
+"name": "CDx::CreateRampTextures1024x2",
+"kind": "function",
+"size": 245,
+"source": "tree",
+"analysed_address": "0x1000C900"
+},
+{
+"address": "0x1000CA00",
+"name": "CDx_GetStereoSecondEyeTarget",
+"kind": "function",
+"size": 279,
+"source": "dm",
+"analysed_address": "0x1000CA00"
+},
+{
+"address": "0x1000CB20",
+"name": "CDx::DrawPrimitive",
+"kind": "function",
+"size": 218,
+"source": "tree",
+"analysed_address": "0x1000CB20"
+},
+{
+"address": "0x1000CC00",
+"name": "CDx::DrawIndexedPrimitive",
+"kind": "function",
+"size": 248,
+"source": "tree",
+"analysed_address": "0x1000CC00"
+},
+{
+"address": "0x1000CD00",
+"name": "CDx::DrawPrimitiveUP",
+"kind": "function",
+"size": 233,
+"source": "tree",
+"analysed_address": "0x1000CD00"
+},
+{
+"address": "0x1000CDF0",
+"name": "sub_1000CDF0",
+"kind": "function",
+"size": 293,
+"source": "none",
+"analysed_address": "0x1000CDF0"
+},
+{
+"address": "0x1000CF20",
+"name": "CDx::ApplyStereoEyeProjection",
+"kind": "function",
+"size": 110,
+"source": "tree",
+"analysed_address": "0x1000CF20"
+},
+{
+"address": "0x1000CF90",
+"name": "CDx::RestoreProjection",
+"kind": "function",
+"size": 22,
+"source": "tree",
+"analysed_address": "0x1000CF90"
+},
+{
+"address": "0x100106C0",
+"name": "CAtelIdleTask::UpdateFrame",
+"kind": "function",
+"size": 53,
+"source": "tree",
+"analysed_address": "0x100106C0"
+},
+{
+"address": "0x10010D20",
+"name": "App_InitScene",
+"kind": "function",
+"size": 3061,
+"source": "dm",
+"analysed_address": "0x10010D20"
+},
+{
+"address": "0x10011A00",
+"name": "Frame_Render",
+"kind": "function",
+"size": 5355,
+"source": "tree",
+"analysed_address": "0x10011A00"
+},
+{
+"address": "0x10012F40",
+"name": "Post_Afterimage",
+"kind": "function",
+"size": 868,
+"source": "tree",
+"analysed_address": "0x10012F40"
+},
+{
+"address": "0x100132B0",
+"name": "Post_FlashAndZoomFeedback",
+"kind": "function",
+"size": 1814,
+"source": "tree",
+"analysed_address": "0x100132B0"
+},
+{
+"address": "0x10013AD0",
+"name": "sub_10013AD0",
+"kind": "function",
+"size": 775,
+"source": "none",
+"analysed_address": "0x10013AD0"
+},
+{
+"address": "0x10014170",
+"name": "App_DispatchSubState",
+"kind": "function",
+"size": 60,
+"source": "tree",
+"analysed_address": "0x10014170"
+},
+{
+"address": "0x10014350",
+"name": "Unit10014350_RunStepThenLoadAll",
+"kind": "function",
+"size": 55,
+"source": "tree",
+"analysed_address": "0x10014350"
+},
+{
+"address": "0x10014C10",
+"name": "Camera_ReleaseAll",
+"kind": "function",
+"size": 69,
+"source": "tree",
+"analysed_address": "0x10014C10"
+},
+{
+"address": "0x10015510",
+"name": "Camera_ApplyViewProjection",
+"kind": "function",
+"size": 166,
+"source": "dm",
+"analysed_address": "0x10015510"
+},
+{
+"address": "0x100157B0",
+"name": "App_WinMainClearFileMng",
+"kind": "function",
+"size": 31,
+"source": "tree",
+"analysed_address": "0x100157B0"
+},
+{
+"address": "0x10015AB0",
+"name": "App_RunWithCOM",
+"kind": "function",
+"size": 205,
+"source": "tree",
+"analysed_address": "0x10015AB0"
+},
+{
+"address": "0x100161B0",
+"name": "App_CreateRendererAndApp",
+"kind": "function",
+"size": 336,
+"source": "tree",
+"analysed_address": "0x100161B0"
+},
+{
+"address": "0x10016300",
+"name": "App_RunMainLoopThenSetPtr",
+"kind": "function",
+"size": 31,
+"source": "tree",
+"analysed_address": "0x10016300"
+},
+{
+"address": "0x10016320",
+"name": "App_DestroyGlobalObjects",
+"kind": "function",
+"size": 116,
+"source": "tree",
+"analysed_address": "0x10016320"
+},
+{
+"address": "0x10016870",
+"name": "App_WndProc",
+"kind": "function",
+"size": 1298,
+"source": "tree",
+"analysed_address": "0x10016870"
+},
+{
+"address": "0x10017230",
+"name": "GammaRamp_ApplyIfChanged",
+"kind": "function",
+"size": 152,
+"source": "tree",
+"analysed_address": "0x10017230"
+},
+{
+"address": "0x100172D0",
+"name": "sub_100172D0",
+"kind": "function",
+"size": 57,
+"source": "none",
+"analysed_address": "0x100172D0"
+},
+{
+"address": "0x10017310",
+"name": "Unit10014350_Draw",
+"kind": "function",
+"size": 525,
+"source": "tree",
+"analysed_address": "0x10017310"
+},
+{
+"address": "0x10017780",
+"name": "CShader::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x10017780"
+},
+{
+"address": "0x100177A0",
+"name": "CShader::CShader_Destructor",
+"kind": "function",
+"size": 57,
+"source": "tree",
+"analysed_address": "0x100177A0"
+},
+{
+"address": "0x10017810",
+"name": "Shader_CreateVertexShader",
+"kind": "function",
+"size": 50,
+"source": "tree",
+"analysed_address": "0x10017810"
+},
+{
+"address": "0x10017C20",
+"name": "Unit10017C10_Step",
+"kind": "function",
+"size": 54,
+"source": "tree",
+"analysed_address": "0x10017C20"
+},
+{
+"address": "0x10017C60",
+"name": "Unit10017C10_Begin",
+"kind": "function",
+"size": 191,
+"source": "tree",
+"analysed_address": "0x10017C60"
+},
+{
+"address": "0x10018B50",
+"name": "Unit10018840_UpdateRangeEntries",
+"kind": "function",
+"size": 241,
+"source": "tree",
+"analysed_address": "0x10018B50"
+},
+{
+"address": "0x1001C930",
+"name": "sub_1001C930",
+"kind": "function",
+"size": 1608,
+"source": "none",
+"analysed_address": "0x1001C930"
+},
+{
+"address": "0x1001D0A0",
+"name": "Model_CreateTranslucentTargets",
+"kind": "function",
+"size": 108,
+"source": "tree",
+"analysed_address": "0x1001D0A0"
+},
+{
+"address": "0x1001D240",
+"name": "Model_BeginTranslucentPass",
+"kind": "function",
+"size": 270,
+"source": "tree",
+"analysed_address": "0x1001D240"
+},
+{
+"address": "0x1001D350",
+"name": "Model_TranslucentUnbindTexture",
+"kind": "function",
+"size": 54,
+"source": "tree",
+"analysed_address": "0x1001D350"
+},
+{
+"address": "0x1001D3B0",
+"name": "Model_CompositeTranslucentPass",
+"kind": "function",
+"size": 1104,
+"source": "tree",
+"analysed_address": "0x1001D3B0"
+},
+{
+"address": "0x1001D800",
+"name": "TexRes_LoadBm2",
+"kind": "function",
+"size": 194,
+"source": "tree",
+"analysed_address": "0x1001D800"
+},
+{
+"address": "0x1001DC70",
+"name": "Tex_DrawNamedTexturePreview",
+"kind": "function",
+"size": 142,
+"source": "tree",
+"analysed_address": "0x1001DC70"
+},
+{
+"address": "0x1001DD00",
+"name": "Gfx_DrawScreenQuad256",
+"kind": "function",
+"size": 598,
+"source": "tree",
+"analysed_address": "0x1001DD00"
+},
+{
+"address": "0x100224D0",
+"name": "CYyModelDt_PrepareRenderState",
+"kind": "function",
+"size": 2762,
+"source": "dm",
+"analysed_address": "0x100224D0"
+},
+{
+"address": "0x10022FA0",
+"name": "CYyModelDt::SetVertexShader",
+"kind": "function",
+"size": 48,
+"source": "tree",
+"analysed_address": "0x10022FA0"
+},
+{
+"address": "0x10025030",
+"name": "CYyModelDt::PrepareRenderStateEntry",
+"kind": "function",
+"size": 46,
+"source": "tree",
+"analysed_address": "0x10025030"
+},
+{
+"address": "0x10025260",
+"name": "Unit10025220_Init",
+"kind": "function",
+"size": 109,
+"source": "tree",
+"analysed_address": "0x10025260"
+},
+{
+"address": "0x10025330",
+"name": "ProjTex_BeginPass",
+"kind": "function",
+"size": 643,
+"source": "tree",
+"analysed_address": "0x10025330"
+},
+{
+"address": "0x100255C0",
+"name": "ProjTex_EndPass",
+"kind": "function",
+"size": 657,
+"source": "tree",
+"analysed_address": "0x100255C0"
+},
+{
+"address": "0x10025870",
+"name": "ProjTex_CaptureToTarget",
+"kind": "function",
+"size": 801,
+"source": "tree",
+"analysed_address": "0x10025870"
+},
+{
+"address": "0x10025C40",
+"name": "EnvMap_BeginPass",
+"kind": "function",
+"size": 810,
+"source": "tree",
+"analysed_address": "0x10025C40"
+},
+{
+"address": "0x10025F70",
+"name": "EnvMap_EndPass",
+"kind": "function",
+"size": 663,
+"source": "tree",
+"analysed_address": "0x10025F70"
+},
+{
+"address": "0x100262C0",
+"name": "sub_100262C0",
+"kind": "function",
+"size": 296,
+"source": "none",
+"analysed_address": "0x100262C0"
+},
+{
+"address": "0x100263F0",
+"name": "Dbg_DrawViewAxisGizmo",
+"kind": "function",
+"size": 708,
+"source": "tree",
+"analysed_address": "0x100263F0"
+},
+{
+"address": "0x100266C0",
+"name": "Dbg_DrawAxesAt",
+"kind": "function",
+"size": 422,
+"source": "tree",
+"analysed_address": "0x100266C0"
+},
+{
+"address": "0x10026990",
+"name": "CYyIcon::Draw",
+"kind": "function",
+"size": 311,
+"source": "tree",
+"analysed_address": "0x10026990"
+},
+{
+"address": "0x10026AD0",
+"name": "CXiMovie::Draw",
+"kind": "function",
+"size": 414,
+"source": "tree",
+"analysed_address": "0x10026AD0"
+},
+{
+"address": "0x10026C70",
+"name": "CYyIcon::DrawSubRect",
+"kind": "function",
+"size": 361,
+"source": "tree",
+"analysed_address": "0x10026C70"
+},
+{
+"address": "0x10027930",
+"name": "Gfx_ScreenDeltaToNdc",
+"kind": "function",
+"size": 81,
+"source": "tree",
+"analysed_address": "0x10027930"
+},
+{
+"address": "0x100294B0",
+"name": "sub_100294B0",
+"kind": "function",
+"size": 237,
+"source": "none",
+"analysed_address": "0x100294B0"
+},
+{
+"address": "0x100295A0",
+"name": "Mem_DrawHeapUsageBar",
+"kind": "function",
+"size": 720,
+"source": "tree",
+"analysed_address": "0x100295A0"
+},
+{
+"address": "0x10029A50",
+"name": "CreateSharedVertexBuffers",
+"kind": "function",
+"size": 264,
+"source": "tree",
+"analysed_address": "0x10029A50"
+},
+{
+"address": "0x1002A000",
+"name": "CYyModelDt::PrepareRenderStateV2Entry",
+"kind": "function",
+"size": 55,
+"source": "tree",
+"analysed_address": "0x1002A000"
+},
+{
+"address": "0x1002A3B0",
+"name": "CYyModelBase::DrawLit",
+"kind": "function",
+"size": 837,
+"source": "tree",
+"analysed_address": "0x1002A3B0"
+},
+{
+"address": "0x1002B4B0",
+"name": "CYyModel::Constructor",
+"kind": "function",
+"size": 115,
+"source": "tree",
+"analysed_address": "0x1002B4B0"
+},
+{
+"address": "0x1002B6E0",
+"name": "CXiSkeletonActor::DrawModel",
+"kind": "function",
+"size": 2959,
+"source": "tree",
+"analysed_address": "0x1002B6E0"
+},
+{
+"address": "0x1002C360",
+"name": "CXiSkeletonActor::PrepareModelsOnce",
+"kind": "function",
+"size": 114,
+"source": "tree",
+"analysed_address": "0x1002C360"
+},
+{
+"address": "0x1002CCB0",
+"name": "CYyOs2VtxBuffer::CreateBuffersStep",
+"kind": "function",
+"size": 332,
+"source": "tree",
+"analysed_address": "0x1002CCB0"
+},
+{
+"address": "0x1002D660",
+"name": "CYyOs2VtxBuffer_ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x1002D660"
+},
+{
+"address": "0x1002D680",
+"name": "CYyOs2VtxBuffer::Constructor",
+"kind": "function",
+"size": 126,
+"source": "tree",
+"analysed_address": "0x1002D680"
+},
+{
+"address": "0x1002D700",
+"name": "CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor",
+"kind": "function",
+"size": 227,
+"source": "tree",
+"analysed_address": "0x1002D700"
+},
+{
+"address": "0x1002D7F0",
+"name": "CMoResource_VT_1032C854::CheckVersionAndInit",
+"kind": "function",
+"size": 97,
+"source": "tree",
+"analysed_address": "0x1002D7F0"
+},
+{
+"address": "0x1002D8F0",
+"name": "Unit1002D8E0_FixOffsetsAndCreateVtxBuffer",
+"kind": "function",
+"size": 133,
+"source": "tree",
+"analysed_address": "0x1002D8F0"
+},
+{
+"address": "0x1002DC10",
+"name": "CYyModelDt::SkinAndDrawV2",
+"kind": "function",
+"size": 5315,
+"source": "tree",
+"analysed_address": "0x1002DC10"
+},
+{
+"address": "0x1002F130",
+"name": "Gfx_SetStreamSourceCached",
+"kind": "function",
+"size": 36,
+"source": "tree",
+"analysed_address": "0x1002F130"
+},
+{
+"address": "0x1002F160",
+"name": "Gfx_ApplyCachedStreamSource",
+"kind": "function",
+"size": 50,
+"source": "tree",
+"analysed_address": "0x1002F160"
+},
+{
+"address": "0x1002F1A0",
+"name": "Gfx_ApplyCachedVertexShader",
+"kind": "function",
+"size": 32,
+"source": "tree",
+"analysed_address": "0x1002F1A0"
+},
+{
+"address": "0x10033710",
+"name": "Unit100310A0_Construct",
+"kind": "function",
+"size": 134,
+"source": "tree",
+"analysed_address": "0x10033710"
+},
+{
+"address": "0x10033800",
+"name": "Model_BeginOffscreenPass",
+"kind": "function",
+"size": 616,
+"source": "tree",
+"analysed_address": "0x10033800"
+},
+{
+"address": "0x10033A70",
+"name": "Model_EndOffscreenPassBindTextures",
+"kind": "function",
+"size": 813,
+"source": "tree",
+"analysed_address": "0x10033A70"
+},
+{
+"address": "0x10033DA0",
+"name": "Shadow_DrawByMode",
+"kind": "function",
+"size": 255,
+"source": "tree",
+"analysed_address": "0x10033DA0"
+},
+{
+"address": "0x10036230",
+"name": "CYySoundElem::UpdateQueue",
+"kind": "function",
+"size": 297,
+"source": "tree",
+"analysed_address": "0x10036230"
+},
+{
+"address": "0x100364A0",
+"name": "CYySoundElem::UpdateOne",
+"kind": "function",
+"size": 52,
+"source": "tree",
+"analysed_address": "0x100364A0"
+},
+{
+"address": "0x100364E0",
+"name": "CYySoundElem::UpdateTimerAndPosition",
+"kind": "function",
+"size": 645,
+"source": "tree",
+"analysed_address": "0x100364E0"
+},
+{
+"address": "0x100368B0",
+"name": "CYySoundElem::UpdateFromCamera",
+"kind": "function",
+"size": 193,
+"source": "tree",
+"analysed_address": "0x100368B0"
+},
+{
+"address": "0x10038520",
+"name": "Font_DrawPass",
+"kind": "function",
+"size": 507,
+"source": "tree",
+"analysed_address": "0x10038520"
+},
+{
+"address": "0x10038720",
+"name": "Font_DrawString",
+"kind": "function",
+"size": 502,
+"source": "tree",
+"analysed_address": "0x10038720"
+},
+{
+"address": "0x10038930",
+"name": "Post_CreateScreenEffectTargets",
+"kind": "function",
+"size": 134,
+"source": "tree",
+"analysed_address": "0x10038930"
+},
+{
+"address": "0x10038A80",
+"name": "Post_CaptureSceneToTarget",
+"kind": "function",
+"size": 899,
+"source": "tree",
+"analysed_address": "0x10038A80"
+},
+{
+"address": "0x10038E10",
+"name": "Post_DrawRotatingGhostLayers",
+"kind": "function",
+"size": 1507,
+"source": "tree",
+"analysed_address": "0x10038E10"
+},
+{
+"address": "0x10039A30",
+"name": "TexObj_CreateAndUpload",
+"kind": "function",
+"size": 37,
+"source": "tree",
+"analysed_address": "0x10039A30"
+},
+{
+"address": "0x10039A60",
+"name": "TexObj_Reupload",
+"kind": "function",
+"size": 25,
+"source": "tree",
+"analysed_address": "0x10039A60"
+},
+{
+"address": "0x10039A80",
+"name": "TexObj_Create",
+"kind": "function",
+"size": 974,
+"source": "dm",
+"analysed_address": "0x10039A80"
+},
+{
+"address": "0x10039E50",
+"name": "TexObj_Upload",
+"kind": "function",
+"size": 2853,
+"source": "tree",
+"analysed_address": "0x10039E50"
+},
+{
+"address": "0x1003AB70",
+"name": "TexMgr_UploadPumpEntry",
+"kind": "function",
+"size": 8,
+"source": "tree",
+"analysed_address": "0x1003AB70"
+},
+{
+"address": "0x1003ABB0",
+"name": "TexMgr_UploadPump",
+"kind": "function",
+"size": 144,
+"source": "tree",
+"analysed_address": "0x1003ABB0"
+},
+{
+"address": "0x1003B080",
+"name": "sub_1003B080",
+"kind": "function",
+"size": 285,
+"source": "none",
+"analysed_address": "0x1003B080"
+},
+{
+"address": "0x1003B210",
+"name": "CYyVbMng::AcquireVertexBuffer",
+"kind": "function",
+"size": 420,
+"source": "tree",
+"analysed_address": "0x1003B210"
+},
+{
+"address": "0x1003D640",
+"name": "sub_1003D640",
+"kind": "function",
+"size": 751,
+"source": "none",
+"analysed_address": "0x1003D640"
+},
+{
+"address": "0x1003D9A0",
+"name": "Sky_DrawDome",
+"kind": "function",
+"size": 422,
+"source": "tree",
+"analysed_address": "0x1003D9A0"
+},
+{
+"address": "0x1003DB60",
+"name": "Sky_DrawDomeViewCentered",
+"kind": "function",
+"size": 653,
+"source": "tree",
+"analysed_address": "0x1003DB60"
+},
+{
+"address": "0x1003E910",
+"name": "YmElem_DrawD3ASegment",
+"kind": "function",
+"size": 133,
+"source": "tree",
+"analysed_address": "0x1003E910"
+},
+{
+"address": "0x1003E9A0",
+"name": "YmElem_SetD3ADrawState",
+"kind": "function",
+"size": 346,
+"source": "tree",
+"analysed_address": "0x1003E9A0"
+},
+{
+"address": "0x1003EB30",
+"name": "CMoD3aElem::vf18",
+"kind": "function",
+"size": 41,
+"source": "tree",
+"analysed_address": "0x1003EB30"
+},
+{
+"address": "0x1003EBF0",
+"name": "sub_1003EBF0",
+"kind": "function",
+"size": 576,
+"source": "none",
+"analysed_address": "0x1003EBF0"
+},
+{
+"address": "0x1003EE70",
+"name": "sub_1003EE70",
+"kind": "function",
+"size": 131,
+"source": "none",
+"analysed_address": "0x1003EE70"
+},
+{
+"address": "0x1003F130",
+"name": "sub_1003F130",
+"kind": "function",
+"size": 750,
+"source": "none",
+"analysed_address": "0x1003F130"
+},
+{
+"address": "0x1003F440",
+"name": "CMoDistMorphElem::ApplyMorph",
+"kind": "function",
+"size": 1094,
+"source": "tree",
+"analysed_address": "0x1003F440"
+},
+{
+"address": "0x1003FBB0",
+"name": "CXi471011C8_VT_1032AC90_RebuildBlendWeights",
+"kind": "function",
+"size": 124,
+"source": "dm",
+"analysed_address": "0x1003FBB0"
+},
+{
+"address": "0x10040220",
+"name": "CMoDistModelElem::DrawBatches",
+"kind": "function",
+"size": 1006,
+"source": "tree",
+"analysed_address": "0x10040220"
+},
+{
+"address": "0x10040670",
+"name": "CMoDistModelElem::DrawMesh",
+"kind": "function",
+"size": 1235,
+"source": "tree",
+"analysed_address": "0x10040670"
+},
+{
+"address": "0x10040BA0",
+"name": "sub_10040BA0",
+"kind": "function",
+"size": 119,
+"source": "none",
+"analysed_address": "0x10040BA0"
+},
+{
+"address": "0x10040C20",
+"name": "CMoElemFamily_SharedEarlyExit",
+"kind": "function",
+"size": 494,
+"source": "dm",
+"analysed_address": "0x10040C20"
+},
+{
+"address": "0x10040E70",
+"name": "CXi471011C8_VT_1032B3B8::RebuildBlendWeights",
+"kind": "function",
+"size": 316,
+"source": "tree",
+"analysed_address": "0x10040E70"
+},
+{
+"address": "0x10041160",
+"name": "CMoD3mSpecularElem::BindTintedTexture",
+"kind": "function",
+"size": 336,
+"source": "tree",
+"analysed_address": "0x10041160"
+},
+{
+"address": "0x100412B0",
+"name": "YmElem_DrawSpecular",
+"kind": "function",
+"size": 1867,
+"source": "facts",
+"analysed_address": "0x100412B0"
+},
+{
+"address": "0x10041AF0",
+"name": "CMoElem_VT_1032ADE8::vf18",
+"kind": "function",
+"size": 296,
+"source": "tree",
+"analysed_address": "0x10041AF0"
+},
+{
+"address": "0x10041C20",
+"name": "sub_10041C20",
+"kind": "function",
+"size": 780,
+"source": "none",
+"analysed_address": "0x10041C20"
+},
+{
+"address": "0x100421A0",
+"name": "CMoOtTask_Draw",
+"kind": "function",
+"size": 846,
+"source": "dm",
+"analysed_address": "0x100421A0"
+},
+{
+"address": "0x100426F0",
+"name": "YmElem_DrawScreenDistortion",
+"kind": "function",
+"size": 1504,
+"source": "tree",
+"analysed_address": "0x100426F0"
+},
+{
+"address": "0x10042D00",
+"name": "CMoDistMorphElem_ValidateMorphData",
+"kind": "function",
+"size": 923,
+"source": "dm",
+"analysed_address": "0x10042D00"
+},
+{
+"address": "0x100431B0",
+"name": "CMoDistModelElem::Draw",
+"kind": "function",
+"size": 338,
+"source": "tree",
+"analysed_address": "0x100431B0"
+},
+{
+"address": "0x10043320",
+"name": "CMoDistModelElem_BuildDistortedMesh",
+"kind": "function",
+"size": 582,
+"source": "dm",
+"analysed_address": "0x10043320"
+},
+{
+"address": "0x10043590",
+"name": "CMoDistMorphElem_UpdateMorphBlend",
+"kind": "function",
+"size": 362,
+"source": "dm",
+"analysed_address": "0x10043590"
+},
+{
+"address": "0x10043720",
+"name": "CMoDistRingElem::AllocRingGeometry",
+"kind": "function",
+"size": 642,
+"source": "tree",
+"analysed_address": "0x10043720"
+},
+{
+"address": "0x10043F40",
+"name": "CMoVuElem_Draw",
+"kind": "function",
+"size": 201,
+"source": "tree",
+"analysed_address": "0x10043F40"
+},
+{
+"address": "0x10044210",
+"name": "Gfx_SetViewMatrixFromField10",
+"kind": "function",
+"size": 23,
+"source": "tree",
+"analysed_address": "0x10044210"
+},
+{
+"address": "0x10044230",
+"name": "Gfx_SetViewMatrixFromField90",
+"kind": "function",
+"size": 26,
+"source": "tree",
+"analysed_address": "0x10044230"
+},
+{
+"address": "0x10044250",
+"name": "sub_10044250",
+"kind": "function",
+"size": 21,
+"source": "none",
+"analysed_address": "0x10044250"
+},
+{
+"address": "0x10044270",
+"name": "Mo_InitSharedRenderResources",
+"kind": "function",
+"size": 529,
+"source": "tree",
+"analysed_address": "0x10044270"
+},
+{
+"address": "0x100446A0",
+"name": "Unit10043E40_ReleaseResourcesOf",
+"kind": "function",
+"size": 340,
+"source": "tree",
+"analysed_address": "0x100446A0"
+},
+{
+"address": "0x10044AE0",
+"name": "CMoElem::AdvanceTimer",
+"kind": "function",
+"size": 318,
+"source": "tree",
+"analysed_address": "0x10044AE0"
+},
+{
+"address": "0x10045A40",
+"name": "CMoElem::PrepareDraw",
+"kind": "function",
+"size": 147,
+"source": "tree",
+"analysed_address": "0x10045A40"
+},
+{
+"address": "0x10046070",
+"name": "YmElem_DrawWithOwnProjection",
+"kind": "function",
+"size": 775,
+"source": "tree",
+"analysed_address": "0x10046070"
+},
+{
+"address": "0x100464D0",
+"name": "Fog_SetRenderStates",
+"kind": "function",
+"size": 88,
+"source": "tree",
+"analysed_address": "0x100464D0"
+},
+{
+"address": "0x10046550",
+"name": "sub_10046550",
+"kind": "function",
+"size": 618,
+"source": "none",
+"analysed_address": "0x10046550"
+},
+{
+"address": "0x100467E0",
+"name": "YmElem_SetupDevice",
+"kind": "function",
+"size": 2643,
+"source": "tree",
+"analysed_address": "0x100467E0"
+},
+{
+"address": "0x100472F0",
+"name": "YmElem_RestoreDevice",
+"kind": "function",
+"size": 234,
+"source": "tree",
+"analysed_address": "0x100472F0"
+},
+{
+"address": "0x10047CE0",
+"name": "CMoGeneratorClone::FixupClonedPointers",
+"kind": "function",
+"size": 658,
+"source": "tree",
+"analysed_address": "0x10047CE0"
+},
+{
+"address": "0x10047FE0",
+"name": "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x10047FE0"
+},
+{
+"address": "0x1004A870",
+"name": "GateEffectBoxProjection",
+"kind": "function",
+"size": 263,
+"source": "tree",
+"analysed_address": "0x1004A870"
+},
+{
+"address": "0x1004E630",
+"name": "ScaleElemVisibilityByProbe",
+"kind": "function",
+"size": 231,
+"source": "tree",
+"analysed_address": "0x1004E630"
+},
+{
+"address": "0x1004E720",
+"name": "CMoGeneratorClone::ExecuteCmdList",
+"kind": "function",
+"size": 402,
+"source": "tree",
+"analysed_address": "0x1004E720"
+},
+{
+"address": "0x100531D0",
+"name": "SharedConditionalStateReset",
+"kind": "function",
+"size": 381,
+"source": "tree",
+"analysed_address": "0x100531D0"
+},
+{
+"address": "0x100536C0",
+"name": "CMoGeneratorClone::CreateInstance",
+"kind": "function",
+"size": 368,
+"source": "tree",
+"analysed_address": "0x100536C0"
+},
+{
+"address": "0x10053840",
+"name": "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x10053840"
+},
+{
+"address": "0x100538E0",
+"name": "YmGenerater_Stop",
+"kind": "function",
+"size": 256,
+"source": "tree",
+"analysed_address": "0x100538E0"
+},
+{
+"address": "0x10053A00",
+"name": "Unit10053860_StopGenerators",
+"kind": "function",
+"size": 627,
+"source": "tree",
+"analysed_address": "0x10053A00"
+},
+{
+"address": "0x10054220",
+"name": "CMoTask_VT_1032B654::RunGeneratorAndFinish",
+"kind": "function",
+"size": 174,
+"source": "tree",
+"analysed_address": "0x10054220"
+},
+{
+"address": "0x100542F0",
+"name": "CMoGeneratorClone::Destructor",
+"kind": "function",
+"size": 111,
+"source": "tree",
+"analysed_address": "0x100542F0"
+},
+{
+"address": "0x10054D70",
+"name": "BeginEffectOffscreenPass",
+"kind": "function",
+"size": 502,
+"source": "facts",
+"analysed_address": "0x10054D70"
+},
+{
+"address": "0x10054F80",
+"name": "EndEffectOffscreenPass",
+"kind": "function",
+"size": 57,
+"source": "tree",
+"analysed_address": "0x10054F80"
+},
+{
+"address": "0x100565A0",
+"name": "CXi471011C8_VT_1032B478_RebuildBlendWeights",
+"kind": "function",
+"size": 672,
+"source": "dm",
+"analysed_address": "0x100565A0"
+},
+{
+"address": "0x100575A0",
+"name": "sub_100575A0",
+"kind": "function",
+"size": 1423,
+"source": "none",
+"analysed_address": "0x100575A0"
+},
+{
+"address": "0x10057E10",
+"name": "CMoSchedularTask::vf8",
+"kind": "function",
+"size": 410,
+"source": "tree",
+"analysed_address": "0x10057E10"
+},
+{
+"address": "0x10057FB0",
+"name": "CMoSchedularTask_Interpret",
+"kind": "function",
+"size": 23660,
+"source": "dm",
+"analysed_address": "0x10057FB0"
+},
+{
+"address": "0x1006A020",
+"name": "Gfx_CreateVertexBuffer",
+"kind": "function",
+"size": 58,
+"source": "tree",
+"analysed_address": "0x1006A020"
+},
+{
+"address": "0x1006A150",
+"name": "CMoDX::CreateTexture",
+"kind": "function",
+"size": 33,
+"source": "tree",
+"analysed_address": "0x1006A150"
+},
+{
+"address": "0x1006A300",
+"name": "sub_1006A300",
+"kind": "function",
+"size": 185,
+"source": "none",
+"analysed_address": "0x1006A300"
+},
+{
+"address": "0x1006A480",
+"name": "CMoDX::SetWorldMatrix",
+"kind": "function",
+"size": 24,
+"source": "tree",
+"analysed_address": "0x1006A480"
+},
+{
+"address": "0x1006A4F0",
+"name": "CMoDX::PopViewMatrix",
+"kind": "function",
+"size": 34,
+"source": "tree",
+"analysed_address": "0x1006A4F0"
+},
+{
+"address": "0x1006A520",
+"name": "CMoDX::SetViewMatrix",
+"kind": "function",
+"size": 21,
+"source": "tree",
+"analysed_address": "0x1006A520"
+},
+{
+"address": "0x1006A630",
+"name": "sub_1006A630",
+"kind": "function",
+"size": 920,
+"source": "none",
+"analysed_address": "0x1006A630"
+},
+{
+"address": "0x1006AA30",
+"name": "Batch_DrawPrimitives",
+"kind": "function",
+"size": 228,
+"source": "tree",
+"analysed_address": "0x1006AA30"
+},
+{
+"address": "0x1006ADC0",
+"name": "sub_1006ADC0",
+"kind": "function",
+"size": 47,
+"source": "none",
+"analysed_address": "0x1006ADC0"
+},
+{
+"address": "0x1006AF00",
+"name": "StateBlockHolder_ApplyRenderStates",
+"kind": "function",
+"size": 142,
+"source": "tree",
+"analysed_address": "0x1006AF00"
+},
+{
+"address": "0x1006AF90",
+"name": "StateBlock_ApplyTSS",
+"kind": "function",
+"size": 146,
+"source": "tree",
+"analysed_address": "0x1006AF90"
+},
+{
+"address": "0x1006B070",
+"name": "CMoDxStatusMng::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x1006B070"
+},
+{
+"address": "0x1006B090",
+"name": "sub_1006B090",
+"kind": "function",
+"size": 41,
+"source": "none",
+"analysed_address": "0x1006B090"
+},
+{
+"address": "0x1006B2B0",
+"name": "CMoDX::CreateAndInitSystem",
+"kind": "function",
+"size": 256,
+"source": "tree",
+"analysed_address": "0x1006B2B0"
+},
+{
+"address": "0x1006C140",
+"name": "sub_1006C140",
+"kind": "function",
+"size": 117,
+"source": "none",
+"analysed_address": "0x1006C140"
+},
+{
+"address": "0x1006C220",
+"name": "CMoOcclusionMng::OcclusionMng_CreateTarget",
+"kind": "function",
+"size": 49,
+"source": "tree",
+"analysed_address": "0x1006C220"
+},
+{
+"address": "0x1006C280",
+"name": "Occlusion_QueryScreenRect",
+"kind": "function",
+"size": 121,
+"source": "tree",
+"analysed_address": "0x1006C280"
+},
+{
+"address": "0x1006C300",
+"name": "Occlusion_QueryScreenRectImpl",
+"kind": "function",
+"size": 550,
+"source": "tree",
+"analysed_address": "0x1006C300"
+},
+{
+"address": "0x1006C530",
+"name": "Occlusion_DrawQuery",
+"kind": "function",
+"size": 849,
+"source": "tree",
+"analysed_address": "0x1006C530"
+},
+{
+"address": "0x1006C8B0",
+"name": "Occlusion_ReadbackCount",
+"kind": "function",
+"size": 252,
+"source": "tree",
+"analysed_address": "0x1006C8B0"
+},
+{
+"address": "0x1006C9B0",
+"name": "OcclusionMng_Prepare",
+"kind": "function",
+"size": 112,
+"source": "tree",
+"analysed_address": "0x1006C9B0"
+},
+{
+"address": "0x10075280",
+"name": "Gfx_InitCubeMapTextures",
+"kind": "function",
+"size": 526,
+"source": "tree",
+"analysed_address": "0x10075280"
+},
+{
+"address": "0x100755A0",
+"name": "TexRef_EnsureRenderTarget",
+"kind": "function",
+"size": 239,
+"source": "tree",
+"analysed_address": "0x100755A0"
+},
+{
+"address": "0x10075690",
+"name": "sub_10075690",
+"kind": "function",
+"size": 111,
+"source": "none",
+"analysed_address": "0x10075690"
+},
+{
+"address": "0x10075700",
+"name": "TextureHolder_BindWarped",
+"kind": "function",
+"size": 577,
+"source": "tree",
+"analysed_address": "0x10075700"
+},
+{
+"address": "0x10075960",
+"name": "TexRef_SetTexture",
+"kind": "function",
+"size": 81,
+"source": "tree",
+"analysed_address": "0x10075960"
+},
+{
+"address": "0x100759C0",
+"name": "TextureHolder_BindTinted",
+"kind": "function",
+"size": 622,
+"source": "tree",
+"analysed_address": "0x100759C0"
+},
+{
+"address": "0x10075C40",
+"name": "sub_10075C40",
+"kind": "function",
+"size": 826,
+"source": "none",
+"analysed_address": "0x10075C40"
+},
+{
+"address": "0x10075FF0",
+"name": "sub_10075FF0",
+"kind": "function",
+"size": 56,
+"source": "none",
+"analysed_address": "0x10075FF0"
+},
+{
+"address": "0x10076030",
+"name": "CMoTask::DrawQuadStates",
+"kind": "function",
+"size": 1166,
+"source": "tree",
+"analysed_address": "0x10076030"
+},
+{
+"address": "0x100764C0",
+"name": "sub_100764C0",
+"kind": "function",
+"size": 93,
+"source": "none",
+"analysed_address": "0x100764C0"
+},
+{
+"address": "0x10076520",
+"name": "CMoTask::DrawQuadDynVB",
+"kind": "function",
+"size": 456,
+"source": "tree",
+"analysed_address": "0x10076520"
+},
+{
+"address": "0x10085060",
+"name": "CXiActor::SpawnResourceGenerators",
+"kind": "function",
+"size": 378,
+"source": "tree",
+"analysed_address": "0x10085060"
+},
+{
+"address": "0x10086210",
+"name": "Actor_DrawWorldText",
+"kind": "function",
+"size": 1774,
+"source": "tree",
+"analysed_address": "0x10086210"
+},
+{
+"address": "0x10086900",
+"name": "DrawNameplateSecondString",
+"kind": "function",
+"size": 1378,
+"source": "facts",
+"analysed_address": "0x10086900"
+},
+{
+"address": "0x1008E4D0",
+"name": "Unit10086E90_UpdateFlags120Bit23",
+"kind": "function",
+"size": 507,
+"source": "tree",
+"analysed_address": "0x1008E4D0"
+},
+{
+"address": "0x1008E9A0",
+"name": "Acter_UpdateOne",
+"kind": "function",
+"size": 1017,
+"source": "tree",
+"analysed_address": "0x1008E9A0"
+},
+{
+"address": "0x10095900",
+"name": "Acter_UpdateAllLists",
+"kind": "function",
+"size": 1137,
+"source": "tree",
+"analysed_address": "0x10095900"
+},
+{
+"address": "0x10096640",
+"name": "Acter_UpdateFrame",
+"kind": "function",
+"size": 1613,
+"source": "tree",
+"analysed_address": "0x10096640"
+},
+{
+"address": "0x100AB700",
+"name": "CXiDancerActor::Construct",
+"kind": "function",
+"size": 69,
+"source": "tree",
+"analysed_address": "0x100AB700"
+},
+{
+"address": "0x100AC390",
+"name": "sub_100AC390",
+"kind": "function",
+"size": 333,
+"source": "none",
+"analysed_address": "0x100AC390"
+},
+{
+"address": "0x100C4C20",
+"name": "XiModelActor::BuildMatrixAndDraw",
+"kind": "function",
+"size": 190,
+"source": "tree",
+"analysed_address": "0x100C4C20"
+},
+{
+"address": "0x100C4CE0",
+"name": "sub_100C4CE0",
+"kind": "function",
+"size": 357,
+"source": "none",
+"analysed_address": "0x100C4CE0"
+},
+{
+"address": "0x100C52A0",
+"name": "CXiSkeletonActor::Constructor_1Arg",
+"kind": "function",
+"size": 365,
+"source": "tree",
+"analysed_address": "0x100C52A0"
+},
+{
+"address": "0x100C5540",
+"name": "CXiSkeletonActor::ScalarDeletingDtor",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x100C5540"
+},
+{
+"address": "0x100C5560",
+"name": "CXiSkeletonActor::Constructor_2Arg",
+"kind": "function",
+"size": 372,
+"source": "tree",
+"analysed_address": "0x100C5560"
+},
+{
+"address": "0x100C56E0",
+"name": "CXiSkeletonActor::Constructor_3Arg",
+"kind": "function",
+"size": 412,
+"source": "tree",
+"analysed_address": "0x100C56E0"
+},
+{
+"address": "0x100C5880",
+"name": "CXiSkeletonActor::Constructor_4Arg",
+"kind": "function",
+"size": 304,
+"source": "tree",
+"analysed_address": "0x100C5880"
+},
+{
+"address": "0x100C59B0",
+"name": "CXiSkeletonActor::Constructor_Factory",
+"kind": "function",
+"size": 577,
+"source": "tree",
+"analysed_address": "0x100C59B0"
+},
+{
+"address": "0x100C5C00",
+"name": "CXiSkeletonActor::DestructorBody",
+"kind": "function",
+"size": 338,
+"source": "tree",
+"analysed_address": "0x100C5C00"
+},
+{
+"address": "0x100C63D0",
+"name": "CXiSkeletonActor_OnMove",
+"kind": "function",
+"size": 7763,
+"source": "dm",
+"analysed_address": "0x100C63D0"
+},
+{
+"address": "0x100CB4E0",
+"name": "Actor_SelectNearestLights",
+"kind": "function",
+"size": 2161,
+"source": "tree",
+"analysed_address": "0x100CB4E0"
+},
+{
+"address": "0x100CBD60",
+"name": "CXiSkeletonActor::RunStaggeredUpdates",
+"kind": "function",
+"size": 44,
+"source": "tree",
+"analysed_address": "0x100CBD60"
+},
+{
+"address": "0x100CBDE0",
+"name": "CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate",
+"kind": "function",
+"size": 4153,
+"source": "tree",
+"analysed_address": "0x100CBDE0"
+},
+{
+"address": "0x100CD040",
+"name": "fn_100CD040",
+"kind": "function",
+"size": 912,
+"source": "tree",
+"analysed_address": "0x100CD040"
+},
+{
+"address": "0x100D0740",
+"name": "CXiSkeletonActor::ProjectToScreen",
+"kind": "function",
+"size": 315,
+"source": "tree",
+"analysed_address": "0x100D0740"
+},
+{
+"address": "0x100D0880",
+"name": "CXiSkeletonActor::DrawNameIfVisible",
+"kind": "function",
+"size": 46,
+"source": "tree",
+"analysed_address": "0x100D0880"
+},
+{
+"address": "0x100D08B0",
+"name": "CXiSkeletonActor_DrawName2IfVisible",
+"kind": "function",
+"size": 36,
+"source": "tree",
+"analysed_address": "0x100D08B0"
+},
+{
+"address": "0x100D0B50",
+"name": "CXiSkeletonActor::AddPartAndMarkSlot",
+"kind": "function",
+"size": 466,
+"source": "tree",
+"analysed_address": "0x100D0B50"
+},
+{
+"address": "0x100D0D70",
+"name": "CXiSkeletonActor_AttachPartResource",
+"kind": "function",
+"size": 267,
+"source": "tree",
+"analysed_address": "0x100D0D70"
+},
+{
+"address": "0x100D1070",
+"name": "CXiSkeletonActor::RunPendingPartStep",
+"kind": "function",
+"size": 256,
+"source": "tree",
+"analysed_address": "0x100D1070"
+},
+{
+"address": "0x100D1450",
+"name": "Unit100D13B0_ProcessResidentListEntries",
+"kind": "function",
+"size": 103,
+"source": "tree",
+"analysed_address": "0x100D1450"
+},
+{
+"address": "0x100D14C0",
+"name": "CXiActor::RequestModelParts",
+"kind": "function",
+"size": 508,
+"source": "tree",
+"analysed_address": "0x100D14C0"
+},
+{
+"address": "0x100D2F40",
+"name": "CXiSkeletonActor::OnSkeletonLoaded",
+"kind": "function",
+"size": 18,
+"source": "tree",
+"analysed_address": "0x100D2F40"
+},
+{
+"address": "0x100D2F60",
+"name": "CXiSkeletonActor::LoadSkeletonSync",
+"kind": "function",
+"size": 4476,
+"source": "tree",
+"analysed_address": "0x100D2F60"
+},
+{
+"address": "0x100D4330",
+"name": "CXiSkeletonActor::LoadSkeletonResource",
+"kind": "function",
+"size": 172,
+"source": "tree",
+"analysed_address": "0x100D4330"
+},
+{
+"address": "0x100D62C0",
+"name": "CXiSkeletonActor::DrawResourceShadows",
+"kind": "function",
+"size": 167,
+"source": "tree",
+"analysed_address": "0x100D62C0"
+},
+{
+"address": "0x100D7FA0",
+"name": "sub_100D7FA0",
+"kind": "function",
+"size": 124,
+"source": "none",
+"analysed_address": "0x100D7FA0"
+},
+{
+"address": "0x101177D0",
+"name": "Menu_DrawWindowItems",
+"kind": "function",
+"size": 1807,
+"source": "tree",
+"analysed_address": "0x101177D0"
+},
+{
+"address": "0x10119F80",
+"name": "Unit100D7420_DrawUnscaled",
+"kind": "function",
+"size": 43,
+"source": "tree",
+"analysed_address": "0x10119F80"
+},
+{
+"address": "0x1011AA40",
+"name": "Unit100D7420_SetViewport",
+"kind": "function",
+"size": 120,
+"source": "tree",
+"analysed_address": "0x1011AA40"
+},
+{
+"address": "0x1011AAC0",
+"name": "Gfx_ApplyViewport1B70",
+"kind": "function",
+"size": 17,
+"source": "tree",
+"analysed_address": "0x1011AAC0"
+},
+{
+"address": "0x1011BAE0",
+"name": "Font_BindGlyphTexture",
+"kind": "function",
+"size": 180,
+"source": "tree",
+"analysed_address": "0x1011BAE0"
+},
+{
+"address": "0x1011BBA0",
+"name": "Font_DrawGlyphQuadGrey",
+"kind": "function",
+"size": 33,
+"source": "tree",
+"analysed_address": "0x1011BBA0"
+},
+{
+"address": "0x1011BBD0",
+"name": "Font_DrawGlyphQuad",
+"kind": "function",
+"size": 316,
+"source": "tree",
+"analysed_address": "0x1011BBD0"
+},
+{
+"address": "0x1011BDC0",
+"name": "Gfx_SetAdditiveBlend",
+"kind": "function",
+"size": 66,
+"source": "tree",
+"analysed_address": "0x1011BDC0"
+},
+{
+"address": "0x1011BE10",
+"name": "sub_1011BE10",
+"kind": "function",
+"size": 212,
+"source": "none",
+"analysed_address": "0x1011BE10"
+},
+{
+"address": "0x1011BF40",
+"name": "Font_DrawChar",
+"kind": "function",
+"size": 140,
+"source": "tree",
+"analysed_address": "0x1011BF40"
+},
+{
+"address": "0x1011C080",
+"name": "Obj_104E1B90::Obj_104E1B90_DrawString",
+"kind": "function",
+"size": 365,
+"source": "tree",
+"analysed_address": "0x1011C080"
+},
+{
+"address": "0x1011C1F0",
+"name": "Gfx_SetCellBlendMode",
+"kind": "function",
+"size": 992,
+"source": "tree",
+"analysed_address": "0x1011C1F0"
+},
+{
+"address": "0x1011C720",
+"name": "Font_LoadHighResTexture",
+"kind": "function",
+"size": 227,
+"source": "tree",
+"analysed_address": "0x1011C720"
+},
+{
+"address": "0x1011E800",
+"name": "Cell_DrawAt",
+"kind": "function",
+"size": 370,
+"source": "tree",
+"analysed_address": "0x1011E800"
+},
+{
+"address": "0x1011E980",
+"name": "Cell_DrawTexturedQuad",
+"kind": "function",
+"size": 993,
+"source": "tree",
+"analysed_address": "0x1011E980"
+},
+{
+"address": "0x1011ED70",
+"name": "sub_1011ED70",
+"kind": "function",
+"size": 104,
+"source": "none",
+"analysed_address": "0x1011ED70"
+},
+{
+"address": "0x1011EDE0",
+"name": "Cell_DrawTransformed",
+"kind": "function",
+"size": 370,
+"source": "tree",
+"analysed_address": "0x1011EDE0"
+},
+{
+"address": "0x1011EF60",
+"name": "Cell_DrawStretchedWrapped",
+"kind": "function",
+"size": 873,
+"source": "tree",
+"analysed_address": "0x1011EF60"
+},
+{
+"address": "0x1011F2D0",
+"name": "Cell_DrawWithDefaultBlend",
+"kind": "function",
+"size": 34,
+"source": "tree",
+"analysed_address": "0x1011F2D0"
+},
+{
+"address": "0x1011F300",
+"name": "Cell_DrawQuadBlended",
+"kind": "function",
+"size": 1914,
+"source": "tree",
+"analysed_address": "0x1011F300"
+},
+{
+"address": "0x1011FB60",
+"name": "sub_1011FB60",
+"kind": "function",
+"size": 133,
+"source": "none",
+"analysed_address": "0x1011FB60"
+},
+{
+"address": "0x1011FBF0",
+"name": "sub_1011FBF0",
+"kind": "function",
+"size": 139,
+"source": "none",
+"analysed_address": "0x1011FBF0"
+},
+{
+"address": "0x1011FC80",
+"name": "sub_1011FC80",
+"kind": "function",
+"size": 349,
+"source": "none",
+"analysed_address": "0x1011FC80"
+},
+{
+"address": "0x1011FDE0",
+"name": "sub_1011FDE0",
+"kind": "function",
+"size": 275,
+"source": "none",
+"analysed_address": "0x1011FDE0"
+},
+{
+"address": "0x1011FF70",
+"name": "sub_1011FF70",
+"kind": "function",
+"size": 129,
+"source": "none",
+"analysed_address": "0x1011FF70"
+},
+{
+"address": "0x10120000",
+"name": "Cell_DrawFirstStretched",
+"kind": "function",
+"size": 99,
+"source": "tree",
+"analysed_address": "0x10120000"
+},
+{
+"address": "0x10120590",
+"name": "Obj_104E1BF8::ShapeMng_BindFontTexture",
+"kind": "function",
+"size": 205,
+"source": "tree",
+"analysed_address": "0x10120590"
+},
+{
+"address": "0x101207B0",
+"name": "Obj_104E1BF8::ShapeMng_BindDmgNumTexture",
+"kind": "function",
+"size": 205,
+"source": "tree",
+"analysed_address": "0x101207B0"
+},
+{
+"address": "0x10129F00",
+"name": "sub_10129F00",
+"kind": "function",
+"size": 49,
+"source": "none",
+"analysed_address": "0x10129F00"
+},
+{
+"address": "0x10129F40",
+"name": "Font_DrawStringFlags44",
+"kind": "function",
+"size": 49,
+"source": "tree",
+"analysed_address": "0x10129F40"
+},
+{
+"address": "0x1013A350",
+"name": "Unit1012AC80_DrawPanel",
+"kind": "function",
+"size": 140,
+"source": "tree",
+"analysed_address": "0x1013A350"
+},
+{
+"address": "0x10150B40",
+"name": "sub_10150B40",
+"kind": "function",
+"size": 265,
+"source": "none",
+"analysed_address": "0x10150B40"
+},
+{
+"address": "0x1015B580",
+"name": "sub_1015B580",
+"kind": "function",
+"size": 320,
+"source": "none",
+"analysed_address": "0x1015B580"
+},
+{
+"address": "0x1015F6A0",
+"name": "Menu_DrawLayers",
+"kind": "function",
+"size": 180,
+"source": "tree",
+"analysed_address": "0x1015F6A0"
+},
+{
+"address": "0x1015FA00",
+"name": "Menu_DrawAll",
+"kind": "function",
+"size": 1995,
+"source": "tree",
+"analysed_address": "0x1015FA00"
+},
+{
+"address": "0x101604B0",
+"name": "Gfx_SetDefault2DStates",
+"kind": "function",
+"size": 402,
+"source": "tree",
+"analysed_address": "0x101604B0"
+},
+{
+"address": "0x10160650",
+"name": "Gfx_DisableFogAndAlphaBlend",
+"kind": "function",
+"size": 69,
+"source": "tree",
+"analysed_address": "0x10160650"
+},
+{
+"address": "0x10161990",
+"name": "Unit1012AC80_DrawImageAtRightOfRect",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10161990"
+},
+{
+"address": "0x10161D60",
+"name": "Unit1012AC80_DrawImageA4AtRightOfRect",
+"kind": "function",
+"size": 217,
+"source": "tree",
+"analysed_address": "0x10161D60"
+},
+{
+"address": "0x10162010",
+"name": "Viewport_SetClipped",
+"kind": "function",
+"size": 157,
+"source": "tree",
+"analysed_address": "0x10162010"
+},
+{
+"address": "0x101620B0",
+"name": "Gfx_ApplyViewport1904",
+"kind": "function",
+"size": 17,
+"source": "tree",
+"analysed_address": "0x101620B0"
+},
+{
+"address": "0x101620D0",
+"name": "Font_SetupAdditiveDraw",
+"kind": "function",
+"size": 22,
+"source": "tree",
+"analysed_address": "0x101620D0"
+},
+{
+"address": "0x101630E0",
+"name": "Obj_10621944::Obj_10621944_Draw",
+"kind": "function",
+"size": 72,
+"source": "tree",
+"analysed_address": "0x101630E0"
+},
+{
+"address": "0x10163390",
+"name": "Obj_10621944_DrawBgRect",
+"kind": "function",
+"size": 15,
+"source": "tree",
+"analysed_address": "0x10163390"
+},
+{
+"address": "0x10163400",
+"name": "Gfx_DrawSolidRect2D",
+"kind": "function",
+"size": 534,
+"source": "tree",
+"analysed_address": "0x10163400"
+},
+{
+"address": "0x1016DDF0",
+"name": "Dbg_DrawTriangleLines",
+"kind": "function",
+"size": 465,
+"source": "tree",
+"analysed_address": "0x1016DDF0"
+},
+{
+"address": "0x1016FCD0",
+"name": "ParseZoneMeshData",
+"kind": "function",
+"size": 3660,
+"source": "tree",
+"analysed_address": "0x1016FCD0"
+},
+{
+"address": "0x10174B10",
+"name": "sub_10174B10",
+"kind": "function",
+"size": 939,
+"source": "none",
+"analysed_address": "0x10174B10"
+},
+{
+"address": "0x10174EC0",
+"name": "Dbg_DrawOrientedBoxes",
+"kind": "function",
+"size": 2166,
+"source": "tree",
+"analysed_address": "0x10174EC0"
+},
+{
+"address": "0x101771B0",
+"name": "Gfx_CompileVertexShader",
+"kind": "function",
+"size": 139,
+"source": "tree",
+"analysed_address": "0x101771B0"
+},
+{
+"address": "0x10177240",
+"name": "Gfx_AssembleVertexShader",
+"kind": "function",
+"size": 150,
+"source": "tree",
+"analysed_address": "0x10177240"
+},
+{
+"address": "0x101772E0",
+"name": "Gfx_CompilePixelShader",
+"kind": "function",
+"size": 93,
+"source": "tree",
+"analysed_address": "0x101772E0"
+},
+{
+"address": "0x10177400",
+"name": "Gfx_SetZBias",
+"kind": "function",
+"size": 25,
+"source": "tree",
+"analysed_address": "0x10177400"
+},
+{
+"address": "0x101779C0",
+"name": "Gfx_SetupLineDrawState",
+"kind": "function",
+"size": 369,
+"source": "tree",
+"analysed_address": "0x101779C0"
+},
+{
+"address": "0x10177B40",
+"name": "Gfx_DrawQuadOutline",
+"kind": "function",
+"size": 259,
+"source": "tree",
+"analysed_address": "0x10177B40"
+},
+{
+"address": "0x10177C50",
+"name": "Gfx_DrawLine3D",
+"kind": "function",
+"size": 125,
+"source": "tree",
+"analysed_address": "0x10177C50"
+},
+{
+"address": "0x10177F80",
+"name": "sub_10177F80",
+"kind": "function",
+"size": 30,
+"source": "none",
+"analysed_address": "0x10177F80"
+},
+{
+"address": "0x10178070",
+"name": "CTsZoneMap::CTsZoneMap_Destructor",
+"kind": "function",
+"size": 344,
+"source": "tree",
+"analysed_address": "0x10178070"
+},
+{
+"address": "0x10178250",
+"name": "sub_10178250",
+"kind": "function",
+"size": 641,
+"source": "none",
+"analysed_address": "0x10178250"
+},
+{
+"address": "0x101787C0",
+"name": "ZoneMap_UpdateLoadState",
+"kind": "function",
+"size": 313,
+"source": "tree",
+"analysed_address": "0x101787C0"
+},
+{
+"address": "0x10178A20",
+"name": "ZoneMap_SetArea",
+"kind": "function",
+"size": 157,
+"source": "tree",
+"analysed_address": "0x10178A20"
+},
+{
+"address": "0x10178AC0",
+"name": "ZoneMap_ReleaseSlot",
+"kind": "function",
+"size": 58,
+"source": "tree",
+"analysed_address": "0x10178AC0"
+},
+{
+"address": "0x10178B00",
+"name": "ZoneMap_ReleaseStateBlock",
+"kind": "function",
+"size": 48,
+"source": "tree",
+"analysed_address": "0x10178B00"
+},
+{
+"address": "0x10178B30",
+"name": "CTsZoneMap::Render",
+"kind": "function",
+"size": 516,
+"source": "tree",
+"analysed_address": "0x10178B30"
+},
+{
+"address": "0x10178F70",
+"name": "ZoneMap_Reset",
+"kind": "function",
+"size": 27,
+"source": "tree",
+"analysed_address": "0x10178F70"
+},
+{
+"address": "0x101791F0",
+"name": "ZoneMap_DrawBox",
+"kind": "function",
+"size": 176,
+"source": "tree",
+"analysed_address": "0x101791F0"
+},
+{
+"address": "0x101792A0",
+"name": "ZoneMap_CreateVertexShaders",
+"kind": "function",
+"size": 71,
+"source": "tree",
+"analysed_address": "0x101792A0"
+},
+{
+"address": "0x101792F0",
+"name": "sub_101792F0",
+"kind": "function",
+"size": 66,
+"source": "none",
+"analysed_address": "0x101792F0"
+},
+{
+"address": "0x1017ADE0",
+"name": "ZoneMap_DrawMeshGroupsWithFog",
+"kind": "function",
+"size": 335,
+"source": "tree",
+"analysed_address": "0x1017ADE0"
+},
+{
+"address": "0x1017B110",
+"name": "ZoneMap_FreeSlot",
+"kind": "function",
+"size": 200,
+"source": "tree",
+"analysed_address": "0x1017B110"
+},
+{
+"address": "0x1017B1E0",
+"name": "ZoneMap_TeardownStep",
+"kind": "function",
+"size": 292,
+"source": "tree",
+"analysed_address": "0x1017B1E0"
+},
+{
+"address": "0x1017B510",
+"name": "XiZone_Draw",
+"kind": "function",
+"size": 4863,
+"source": "facts",
+"analysed_address": "0x1017B510"
+},
+{
+"address": "0x1017C8B0",
+"name": "sub_1017C8B0",
+"kind": "function",
+"size": 269,
+"source": "none",
+"analysed_address": "0x1017C8B0"
+},
+{
+"address": "0x1017C9C0",
+"name": "XiZone_DrawElement",
+"kind": "function",
+"size": 5196,
+"source": "facts",
+"analysed_address": "0x1017C9C0"
+},
+{
+"address": "0x1017DE20",
+"name": "sub_1017DE20",
+"kind": "function",
+"size": 13056,
+"source": "none",
+"analysed_address": "0x1017DE20"
+},
+{
+"address": "0x10182700",
+"name": "CTsZoneMap::DrawProjectedTexture",
+"kind": "function",
+"size": 2050,
+"source": "tree",
+"analysed_address": "0x10182700"
+},
+{
+"address": "0x10182F10",
+"name": "Gfx_DrawWireBox",
+"kind": "function",
+"size": 1115,
+"source": "tree",
+"analysed_address": "0x10182F10"
+},
+{
+"address": "0x10183490",
+"name": "XiZone_DrawModelAtMatrix",
+"kind": "function",
+"size": 710,
+"source": "facts",
+"analysed_address": "0x10183490"
+},
+{
+"address": "0x10183760",
+"name": "XiZone_DrawEffectElementModel",
+"kind": "function",
+"size": 1539,
+"source": "facts",
+"analysed_address": "0x10183760"
+},
+{
+"address": "0x10183DA0",
+"name": "ZoneMap_DrawMeshById",
+"kind": "function",
+"size": 1811,
+"source": "tree",
+"analysed_address": "0x10183DA0"
+},
+{
+"address": "0x101844C0",
+"name": "ModelActor_Draw",
+"kind": "function",
+"size": 1969,
+"source": "tree",
+"analysed_address": "0x101844C0"
+},
+{
+"address": "0x10184C90",
+"name": "XiZone::DrawGroundShadowQuad",
+"kind": "function",
+"size": 843,
+"source": "tree",
+"analysed_address": "0x10184C90"
+},
+{
+"address": "0x10184FE0",
+"name": "CTsZoneMap::DrawProjectedShadow",
+"kind": "function",
+"size": 3262,
+"source": "tree",
+"analysed_address": "0x10184FE0"
+},
+{
+"address": "0x10185CA0",
+"name": "XiZone::DrawDecalOnTriangles",
+"kind": "function",
+"size": 3800,
+"source": "tree",
+"analysed_address": "0x10185CA0"
+},
+{
+"address": "0x10186DB0",
+"name": "ZoneMap_ClearSlots",
+"kind": "function",
+"size": 31,
+"source": "tree",
+"analysed_address": "0x10186DB0"
+},
+{
+"address": "0x10186DD0",
+"name": "ZoneMap_FreeSubAreas",
+"kind": "function",
+"size": 118,
+"source": "tree",
+"analysed_address": "0x10186DD0"
+},
+{
+"address": "0x10187030",
+"name": "ZoneMap_ReleaseChain",
+"kind": "function",
+"size": 31,
+"source": "tree",
+"analysed_address": "0x10187030"
+},
+{
+"address": "0x10188A10",
+"name": "XiZone::DestroyChildList",
+"kind": "function",
+"size": 60,
+"source": "tree",
+"analysed_address": "0x10188A10"
+},
+{
+"address": "0x1018AA50",
+"name": "fn_1018AA50",
+"kind": "function",
+"size": 100,
+"source": "tree",
+"analysed_address": "0x1018AA50"
+},
+{
+"address": "0x1018AAE0",
+"name": "fn_1018AAE0",
+"kind": "function",
+"size": 85,
+"source": "tree",
+"analysed_address": "0x1018AAE0"
+},
+{
+"address": "0x1018AB60",
+"name": "fn_1018AB60",
+"kind": "function",
+"size": 77,
+"source": "tree",
+"analysed_address": "0x1018AB60"
+},
+{
+"address": "0x1018ABF0",
+"name": "YmCombineWeather::Release",
+"kind": "function",
+"size": 341,
+"source": "tree",
+"analysed_address": "0x1018ABF0"
+},
+{
+"address": "0x1018ADE0",
+"name": "Blend_Update",
+"kind": "function",
+"size": 208,
+"source": "tree",
+"analysed_address": "0x1018ADE0"
+},
+{
+"address": "0x1018B620",
+"name": "XiZone::ResetState",
+"kind": "function",
+"size": 124,
+"source": "tree",
+"analysed_address": "0x1018B620"
+},
+{
+"address": "0x1018B860",
+"name": "XiZone::DrawScene",
+"kind": "function",
+"size": 70,
+"source": "tree",
+"analysed_address": "0x1018B860"
+},
+{
+"address": "0x101907E0",
+"name": "sub_101907E0",
+"kind": "function",
+"size": 46,
+"source": "none",
+"analysed_address": "0x101907E0"
+},
+{
+"address": "0x1019EBB0",
+"name": "Unit1018BA60_DrawTextBlockOnce",
+"kind": "function",
+"size": 76,
+"source": "tree",
+"analysed_address": "0x1019EBB0"
+},
+{
+"address": "0x1019EDB0",
+"name": "Unit1018BA60_DrawTextLines",
+"kind": "function",
+"size": 423,
+"source": "tree",
+"analysed_address": "0x1019EDB0"
+},
+{
+"address": "0x101C7CB0",
+"name": "sub_101C7CB0",
+"kind": "function",
+"size": 92,
+"source": "none",
+"analysed_address": "0x101C7CB0"
+},
+{
+"address": "0x101C8DA0",
+"name": "Gfx_ProjectWorldToScreen",
+"kind": "function",
+"size": 322,
+"source": "tree",
+"analysed_address": "0x101C8DA0"
+},
+{
+"address": "0x101C9780",
+"name": "Unit101C72E0_DrawUnscaled",
+"kind": "function",
+"size": 41,
+"source": "tree",
+"analysed_address": "0x101C9780"
+},
+{
+"address": "0x101C97B0",
+"name": "Unit101C72E0_DrawTextItem0",
+"kind": "function",
+"size": 628,
+"source": "tree",
+"analysed_address": "0x101C97B0"
+},
+{
+"address": "0x101C9D50",
+"name": "Unit101C72E0_DrawString",
+"kind": "function",
+"size": 580,
+"source": "tree",
+"analysed_address": "0x101C9D50"
+},
+{
+"address": "0x101CA180",
+"name": "Unit101C72E0_DrawTruncated",
+"kind": "function",
+"size": 193,
+"source": "tree",
+"analysed_address": "0x101CA180"
+},
+{
+"address": "0x101CAD00",
+"name": "Unit101C72E0_DrawFractionRange",
+"kind": "function",
+"size": 436,
+"source": "tree",
+"analysed_address": "0x101CAD00"
+},
+{
+"address": "0x101CAEC0",
+"name": "Unit101C72E0_DrawFractionDefault",
+"kind": "function",
+"size": 59,
+"source": "tree",
+"analysed_address": "0x101CAEC0"
+},
+{
+"address": "0x101CAF00",
+"name": "Unit101C72E0_DrawSmoothed",
+"kind": "function",
+"size": 255,
+"source": "tree",
+"analysed_address": "0x101CAF00"
+},
+{
+"address": "0x101CB000",
+"name": "Unit101C72E0_DrawSmoothedDefault",
+"kind": "function",
+"size": 59,
+"source": "tree",
+"analysed_address": "0x101CB000"
+},
+{
+"address": "0x101CB040",
+"name": "Unit101C72E0_DrawFractionItem1A",
+"kind": "function",
+"size": 65,
+"source": "tree",
+"analysed_address": "0x101CB040"
+},
+{
+"address": "0x101CB090",
+"name": "Unit101C72E0_DrawSmoothedItem1A",
+"kind": "function",
+"size": 52,
+"source": "tree",
+"analysed_address": "0x101CB090"
+},
+{
+"address": "0x101CB1B0",
+"name": "Unit101C72E0_DrawSmoothedItem1B",
+"kind": "function",
+"size": 52,
+"source": "tree",
+"analysed_address": "0x101CB1B0"
+},
+{
+"address": "0x101CB230",
+"name": "Unit101C72E0_DrawSmoothedExItem1B",
+"kind": "function",
+"size": 72,
+"source": "tree",
+"analysed_address": "0x101CB230"
+},
+{
+"address": "0x101CB430",
+"name": "Unit101C72E0_DrawEasedPercent",
+"kind": "function",
+"size": 196,
+"source": "tree",
+"analysed_address": "0x101CB430"
+},
+{
+"address": "0x101CB500",
+"name": "Unit101C72E0_DrawEasedPercentUnitScale",
+"kind": "function",
+"size": 69,
+"source": "tree",
+"analysed_address": "0x101CB500"
+},
+{
+"address": "0x101CB550",
+"name": "Unit101C72E0_DrawEasedPercentItem1A",
+"kind": "function",
+"size": 62,
+"source": "tree",
+"analysed_address": "0x101CB550"
+},
+{
+"address": "0x101CB770",
+"name": "Unit101C72E0_BeginCapture",
+"kind": "function",
+"size": 31,
+"source": "tree",
+"analysed_address": "0x101CB770"
+},
+{
+"address": "0x101CF410",
+"name": "sub_101CF410",
+"kind": "function",
+"size": 184,
+"source": "none",
+"analysed_address": "0x101CF410"
+},
+{
+"address": "0x101CF510",
+"name": "sub_101CF510",
+"kind": "function",
+"size": 264,
+"source": "none",
+"analysed_address": "0x101CF510"
+},
+{
+"address": "0x101D0B00",
+"name": "CopyrightText_Draw",
+"kind": "function",
+"size": 312,
+"source": "tree",
+"analysed_address": "0x101D0B00"
+},
+{
+"address": "0x101D0EA0",
+"name": "Unit101D0910_TakeScreenshot",
+"kind": "function",
+"size": 349,
+"source": "tree",
+"analysed_address": "0x101D0EA0"
+},
+{
+"address": "0x101D1000",
+"name": "Unit101D0910_SaveJpeg512x382",
+"kind": "function",
+"size": 94,
+"source": "tree",
+"analysed_address": "0x101D1000"
+},
+{
+"address": "0x101D1060",
+"name": "YkJpeg::CaptureAndEncode",
+"kind": "function",
+"size": 85,
+"source": "tree",
+"analysed_address": "0x101D1060"
+},
+{
+"address": "0x101D1100",
+"name": "Unit101D0910_SaveJpegScreenSize",
+"kind": "function",
+"size": 118,
+"source": "tree",
+"analysed_address": "0x101D1100"
+},
+{
+"address": "0x101D3FC0",
+"name": "Unit101D2FF0_Draw",
+"kind": "function",
+"size": 186,
+"source": "tree",
+"analysed_address": "0x101D3FC0"
+},
+{
+"address": "0x101D5680",
+"name": "Unit101D2FF0_Update",
+"kind": "function",
+"size": 19,
+"source": "tree",
+"analysed_address": "0x101D5680"
+},
+{
+"address": "0x101D5DD0",
+"name": "sub_101D5DD0",
+"kind": "function",
+"size": 25,
+"source": "none",
+"analysed_address": "0x101D5DD0"
+},
+{
+"address": "0x101EEBD0",
+"name": "sub_101EEBD0",
+"kind": "function",
+"size": 948,
+"source": "none",
+"analysed_address": "0x101EEBD0"
+},
+{
+"address": "0x101FA9A0",
+"name": "sub_101FA9A0",
+"kind": "function",
+"size": 23,
+"source": "none",
+"analysed_address": "0x101FA9A0"
+},
+{
+"address": "0x10201340",
+"name": "Unit101D7020_DrawCountersAndGauge",
+"kind": "function",
+"size": 382,
+"source": "tree",
+"analysed_address": "0x10201340"
+},
+{
+"address": "0x102015D0",
+"name": "Yk_UpdateLayout",
+"kind": "function",
+"size": 100,
+"source": "tree",
+"analysed_address": "0x102015D0"
+},
+{
+"address": "0x10202380",
+"name": "Unit101D7020_Call101CA180IfText",
+"kind": "function",
+"size": 35,
+"source": "tree",
+"analysed_address": "0x10202380"
+},
+{
+"address": "0x10202AF0",
+"name": "Unit101D7020_DrawLabelIfStateGroup06Or38",
+"kind": "function",
+"size": 144,
+"source": "tree",
+"analysed_address": "0x10202AF0"
+},
+{
+"address": "0x10211050",
+"name": "Unit101D7020_Call10156C30InRect",
+"kind": "function",
+"size": 108,
+"source": "tree",
+"analysed_address": "0x10211050"
+},
+{
+"address": "0x1021D4C0",
+"name": "CXiMovie::DrawFrame",
+"kind": "function",
+"size": 811,
+"source": "tree",
+"analysed_address": "0x1021D4C0"
+},
+{
+"address": "0x1021E060",
+"name": "Movie_CreateFrameTextures",
+"kind": "function",
+"size": 177,
+"source": "tree",
+"analysed_address": "0x1021E060"
+},
+{
+"address": "0x1021F410",
+"name": "Unit1021D930_DrawPanelForActor",
+"kind": "function",
+"size": 103,
+"source": "tree",
+"analysed_address": "0x1021F410"
+},
+{
+"address": "0x1021F480",
+"name": "Unit1021D930_DrawActorPanelFigures",
+"kind": "function",
+"size": 1226,
+"source": "tree",
+"analysed_address": "0x1021F480"
+},
+{
+"address": "0x1021F950",
+"name": "Unit1021D930_DrawEntryRows",
+"kind": "function",
+"size": 315,
+"source": "tree",
+"analysed_address": "0x1021F950"
+},
+{
+"address": "0x1021FA90",
+"name": "Unit1021D930_DrawLabelledRow",
+"kind": "function",
+"size": 121,
+"source": "tree",
+"analysed_address": "0x1021FA90"
+},
+{
+"address": "0x1021FB10",
+"name": "Unit1021D930_DrawTwoDigitValue",
+"kind": "function",
+"size": 97,
+"source": "tree",
+"analysed_address": "0x1021FB10"
+},
+{
+"address": "0x1021FB80",
+"name": "Unit1021D930_DrawBarRow",
+"kind": "function",
+"size": 78,
+"source": "tree",
+"analysed_address": "0x1021FB80"
+},
+{
+"address": "0x1021FBD0",
+"name": "Unit1021D930_DrawNameRows",
+"kind": "function",
+"size": 267,
+"source": "tree",
+"analysed_address": "0x1021FBD0"
+},
+{
+"address": "0x1021FCE0",
+"name": "ActerBuff_DrawNearby",
+"kind": "function",
+"size": 298,
+"source": "tree",
+"analysed_address": "0x1021FCE0"
+},
+{
+"address": "0x1021FE10",
+"name": "Unit1021D930_DrawStrongholdPanel",
+"kind": "function",
+"size": 905,
+"source": "tree",
+"analysed_address": "0x1021FE10"
+},
+{
+"address": "0x102201A0",
+"name": "Unit1021D930_DrawLabelBar",
+"kind": "function",
+"size": 78,
+"source": "tree",
+"analysed_address": "0x102201A0"
+},
+{
+"address": "0x102201F0",
+"name": "Unit1021D930_DrawGameTime",
+"kind": "function",
+"size": 347,
+"source": "tree",
+"analysed_address": "0x102201F0"
+},
+{
+"address": "0x102214D0",
+"name": "Unit1021D930_Draw",
+"kind": "function",
+"size": 418,
+"source": "tree",
+"analysed_address": "0x102214D0"
+},
+{
+"address": "0x10227F70",
+"name": "Unit1021D930_DrawMovie",
+"kind": "function",
+"size": 266,
+"source": "tree",
+"analysed_address": "0x10227F70"
+},
+{
+"address": "0x10228080",
+"name": "Unit1021D930_DrawTimeLeftText",
+"kind": "function",
+"size": 298,
+"source": "tree",
+"analysed_address": "0x10228080"
+},
+{
+"address": "0x10228440",
+"name": "Unit1021D930_DrawTargetEntryIcons",
+"kind": "function",
+"size": 1174,
+"source": "tree",
+"analysed_address": "0x10228440"
+},
+{
+"address": "0x10234680",
+"name": "Unit1021D930_DrawProgressBar",
+"kind": "function",
+"size": 363,
+"source": "tree",
+"analysed_address": "0x10234660"
+},
+{
+"address": "0x10239260",
+"name": "fn_10239240",
+"kind": "function",
+"size": 482,
+"source": "tree",
+"analysed_address": "0x10239240"
+},
+{
+"address": "0x102394C0",
+"name": "Ui_DrawKeyPrompt",
+"kind": "function",
+"size": 548,
+"source": "tree",
+"analysed_address": "0x102394A0"
+},
+{
+"address": "0x10245500",
+"name": "fn_102454E0",
+"kind": "function",
+"size": 61,
+"source": "tree",
+"analysed_address": "0x102454E0"
+},
+{
+"address": "0x10245BD0",
+"name": "LobbyThread_ResetZone",
+"kind": "function",
+"size": 42,
+"source": "tree",
+"analysed_address": "0x10245BB0"
+},
+{
+"address": "0x1024CF70",
+"name": "StAvatarInit",
+"kind": "function",
+"size": 473,
+"source": "tree",
+"analysed_address": "0x1024CF50"
+},
+{
+"address": "0x1024D1A0",
+"name": "StAvatar_Teardown",
+"kind": "function",
+"size": 312,
+"source": "tree",
+"analysed_address": "0x1024D180"
+},
+{
+"address": "0x1024D5E0",
+"name": "StAvatar_SetPending",
+"kind": "function",
+"size": 73,
+"source": "tree",
+"analysed_address": "0x1024D5C0"
+},
+{
+"address": "0x1024D7B0",
+"name": "StAvatar_StopAndFreeBuffers",
+"kind": "function",
+"size": 190,
+"source": "tree",
+"analysed_address": "0x1024D790"
+},
+{
+"address": "0x1024D870",
+"name": "StAvatar_ResolveItemsAndStart",
+"kind": "function",
+"size": 369,
+"source": "tree",
+"analysed_address": "0x1024D850"
+},
+{
+"address": "0x1024DB80",
+"name": "StAvatar_Update",
+"kind": "function",
+"size": 417,
+"source": "tree",
+"analysed_address": "0x1024DB60"
+},
+{
+"address": "0x1024F920",
+"name": "StAvatar_SetViewFromDancerCamera",
+"kind": "function",
+"size": 772,
+"source": "tree",
+"analysed_address": "0x1024F900"
+},
+{
+"address": "0x102501B0",
+"name": "StAvatar_RenderIfEnabled",
+"kind": "function",
+"size": 44,
+"source": "tree",
+"analysed_address": "0x10250190"
+},
+{
+"address": "0x102501E0",
+"name": "StAvatarRender",
+"kind": "function",
+"size": 267,
+"source": "tree",
+"analysed_address": "0x102501C0"
+},
+{
+"address": "0x102504F0",
+"name": "StAvatarFini",
+"kind": "function",
+"size": 162,
+"source": "tree",
+"analysed_address": "0x102504D0"
+},
+{
+"address": "0x10251520",
+"name": "StDancer_Update",
+"kind": "function",
+"size": 226,
+"source": "tree",
+"analysed_address": "0x10251500"
+},
+{
+"address": "0x10251610",
+"name": "Dancer_WorldEnd",
+"kind": "function",
+"size": 34,
+"source": "tree",
+"analysed_address": "0x102515F0"
+},
+{
+"address": "0x10251640",
+"name": "StAvatar_SetActive",
+"kind": "function",
+"size": 137,
+"source": "tree",
+"analysed_address": "0x10251620"
+},
+{
+"address": "0x102516D0",
+"name": "StAvatar_SetStateTeardown",
+"kind": "function",
+"size": 51,
+"source": "tree",
+"analysed_address": "0x102516B0"
+},
+{
+"address": "0x10251AA0",
+"name": "Dancer_InitDevice",
+"kind": "function",
+"size": 597,
+"source": "tree",
+"analysed_address": "0x10251A80"
+},
+{
+"address": "0x102528F0",
+"name": "StModelItem_Resolve",
+"kind": "function",
+"size": 297,
+"source": "tree",
+"analysed_address": "0x102528D0"
+},
+{
+"address": "0x10253F80",
+"name": "Gfx_DrawSpriteAlphaTested",
+"kind": "function",
+"size": 260,
+"source": "tree",
+"analysed_address": "0x10253F60"
+},
+{
+"address": "0x1025C7B0",
+"name": "sub_1025C790",
+"kind": "function",
+"size": 152,
+"source": "none",
+"analysed_address": "0x1025C790"
+},
+{
+"address": "0x1025CB10",
+"name": "FontGlyphCache_Construct",
+"kind": "function",
+"size": 454,
+"source": "dm",
+"analysed_address": "0x1025CAF0"
+},
+{
+"address": "0x1025D780",
+"name": "FontGlyphCache_CreateTexture",
+"kind": "function",
+"size": 74,
+"source": "tree",
+"analysed_address": "0x1025D760"
+},
+{
+"address": "0x1025D7D0",
+"name": "FontGlyphCache_CreateVertexBuffer",
+"kind": "function",
+"size": 64,
+"source": "tree",
+"analysed_address": "0x1025D7B0"
+},
+{
+"address": "0x1026E750",
+"name": "sub_1026E730",
+"kind": "function",
+"size": 308,
+"source": "none",
+"analysed_address": "0x1026E730"
+},
+{
+"address": "0x1026E890",
+"name": "sub_1026E870",
+"kind": "function",
+"size": 129,
+"source": "none",
+"analysed_address": "0x1026E870"
+},
+{
+"address": "0x10271810",
+"name": "StAvatar_DrawScene",
+"kind": "function",
+"size": 12,
+"source": "tree",
+"analysed_address": "0x102717F0"
+},
+{
+"address": "0x10271820",
+"name": "sub_10271800",
+"kind": "function",
+"size": 823,
+"source": "none",
+"analysed_address": "0x10271800"
+},
+{
+"address": "0x10280E00",
+"name": "sub_10280DE0",
+"kind": "function",
+"size": 1486,
+"source": "none",
+"analysed_address": "0x10280DE0"
+},
+{
+"address": "0x102813D0",
+"name": "Unit10280C40_CompositeBlendPasses",
+"kind": "function",
+"size": 133,
+"source": "tree",
+"analysed_address": "0x102813B0"
+},
+{
+"address": "0x10281460",
+"name": "sub_10281440",
+"kind": "function",
+"size": 186,
+"source": "none",
+"analysed_address": "0x10281440"
+},
+{
+"address": "0x10281530",
+"name": "sqgxTextureCreateFromImage",
+"kind": "function",
+"size": 461,
+"source": "tree",
+"analysed_address": "0x10281510"
+},
+{
+"address": "0x10281700",
+"name": "sqgxTextureAddZ",
+"kind": "function",
+"size": 289,
+"source": "tree",
+"analysed_address": "0x102816E0"
+},
+{
+"address": "0x10281850",
+"name": "sqgxTextureAdd",
+"kind": "function",
+"size": 388,
+"source": "tree",
+"analysed_address": "0x10281830"
+},
+{
+"address": "0x102819F0",
+"name": "sqgxTextureClutAdd",
+"kind": "function",
+"size": 139,
+"source": "tree",
+"analysed_address": "0x102819D0"
+},
+{
+"address": "0x10281D80",
+"name": "sqgxTextureClut",
+"kind": "function",
+"size": 78,
+"source": "tree",
+"analysed_address": "0x10281D60"
+},
+{
+"address": "0x10281DD0",
+"name": "sqgxTextureUpdate",
+"kind": "function",
+"size": 600,
+"source": "tree",
+"analysed_address": "0x10281DB0"
+},
+{
+"address": "0x10282030",
+"name": "sqgxTextureStencilClear",
+"kind": "function",
+"size": 30,
+"source": "tree",
+"analysed_address": "0x10282010"
+},
+{
+"address": "0x10282050",
+"name": "sqgxTextureClear",
+"kind": "function",
+"size": 166,
+"source": "tree",
+"analysed_address": "0x10282030"
+},
+{
+"address": "0x10282100",
+"name": "sqgxTextureDrawZ",
+"kind": "function",
+"size": 167,
+"source": "tree",
+"analysed_address": "0x102820E0"
+},
+{
+"address": "0x102821B0",
+"name": "sqgxTextureDraw",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10282190"
+},
+{
+"address": "0x10282370",
+"name": "sqgxZTest",
+"kind": "function",
+"size": 81,
+"source": "tree",
+"analysed_address": "0x10282350"
+},
+{
+"address": "0x10282410",
+"name": "sqgxAlphaTest",
+"kind": "function",
+"size": 116,
+"source": "tree",
+"analysed_address": "0x102823F0"
+},
+{
+"address": "0x10282490",
+"name": "sqgxZMask",
+"kind": "function",
+"size": 79,
+"source": "tree",
+"analysed_address": "0x10282470"
+},
+{
+"address": "0x102824E0",
+"name": "sqgxFBMask",
+"kind": "function",
+"size": 162,
+"source": "tree",
+"analysed_address": "0x102824C0"
+},
+{
+"address": "0x10282660",
+"name": "Unit102822A0_SetSelectArg1",
+"kind": "function",
+"size": 128,
+"source": "tree",
+"analysed_address": "0x10282640"
+},
+{
+"address": "0x102826E0",
+"name": "sqgxBlendAdd",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x102826C0"
+},
+{
+"address": "0x102827F0",
+"name": "Unit102822A0_SetMultiplyAdd",
+"kind": "function",
+"size": 292,
+"source": "tree",
+"analysed_address": "0x102827D0"
+},
+{
+"address": "0x10282930",
+"name": "sqgxBlendSub",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10282910"
+},
+{
+"address": "0x10282A50",
+"name": "sqgxBlendLin",
+"kind": "function",
+"size": 340,
+"source": "tree",
+"analysed_address": "0x10282A30"
+},
+{
+"address": "0x10282BB0",
+"name": "sqgxBlendTrsp",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10282B90"
+},
+{
+"address": "0x10282CD0",
+"name": "sqgxBlendTrspInv",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10282CB0"
+},
+{
+"address": "0x10282DE0",
+"name": "sqgxBlendAddDestAlpha",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10282DC0"
+},
+{
+"address": "0x10282EF0",
+"name": "Unit102822A0_SetModulateAlphaAdd",
+"kind": "function",
+"size": 279,
+"source": "tree",
+"analysed_address": "0x10282ED0"
+},
+{
+"address": "0x10283010",
+"name": "sqgxBlendMultAlpha",
+"kind": "function",
+"size": 279,
+"source": "tree",
+"analysed_address": "0x10282FF0"
+},
+{
+"address": "0x10283130",
+"name": "sqgxBlendMul",
+"kind": "function",
+"size": 261,
+"source": "tree",
+"analysed_address": "0x10283110"
+},
+{
+"address": "0x10283240",
+"name": "sqgxBlendOff",
+"kind": "function",
+"size": 19,
+"source": "tree",
+"analysed_address": "0x10283220"
+},
+{
+"address": "0x10283440",
+"name": "sqgxColorUpdate",
+"kind": "function",
+"size": 680,
+"source": "tree",
+"analysed_address": "0x10283420"
+},
+{
+"address": "0x10283A30",
+"name": "sqgxViewport",
+"kind": "function",
+"size": 295,
+"source": "tree",
+"analysed_address": "0x10283A10"
+},
+{
+"address": "0x10283F90",
+"name": "sqgxPassAdd",
+"kind": "function",
+"size": 67,
+"source": "tree",
+"analysed_address": "0x10283F70"
+},
+{
+"address": "0x10283FE0",
+"name": "sqgxPass",
+"kind": "function",
+"size": 63,
+"source": "tree",
+"analysed_address": "0x10283FC0"
+},
+{
+"address": "0x10284430",
+"name": "sqgxMatrixUpdate",
+"kind": "function",
+"size": 990,
+"source": "tree",
+"analysed_address": "0x10284410"
+},
+{
+"address": "0x10284970",
+"name": "sqgxVertexShaderCreate",
+"kind": "function",
+"size": 302,
+"source": "tree",
+"analysed_address": "0x10284950"
+},
+{
+"address": "0x10284AA0",
+"name": "sqgxVertexShaderSelect",
+"kind": "function",
+"size": 155,
+"source": "tree",
+"analysed_address": "0x10284A80"
+},
+{
+"address": "0x10284B40",
+"name": "sqgxShader",
+"kind": "function",
+"size": 909,
+"source": "tree",
+"analysed_address": "0x10284B20"
+},
+{
+"address": "0x10284F10",
+"name": "sqgxVertexShaderRelease",
+"kind": "function",
+"size": 47,
+"source": "tree",
+"analysed_address": "0x10284EF0"
+},
+{
+"address": "0x10287FD0",
+"name": "SqmdDMB_Resolve",
+"kind": "function",
+"size": 1702,
+"source": "tree",
+"analysed_address": "0x10287FB0"
+},
+{
+"address": "0x102886F0",
+"name": "SqmdDMB_ResolveTextures",
+"kind": "function",
+"size": 633,
+"source": "tree",
+"analysed_address": "0x102886D0"
+},
+{
+"address": "0x10288E80",
+"name": "sqmdDMBBuildShapes",
+"kind": "function",
+"size": 371,
+"source": "tree",
+"analysed_address": "0x10288E60"
+},
+{
+"address": "0x1028A820",
+"name": "sqgxContext_BatchIndices",
+"kind": "function",
+"size": 612,
+"source": "dm",
+"analysed_address": "0x1028A800"
+},
+{
+"address": "0x1028AA90",
+"name": "sqgxShapeIndexBufferBegin",
+"kind": "function",
+"size": 218,
+"source": "tree",
+"analysed_address": "0x1028AA70"
+},
+{
+"address": "0x1028AB70",
+"name": "SqgxShape_FillBuffers",
+"kind": "function",
+"size": 1137,
+"source": "tree",
+"analysed_address": "0x1028AB50"
+},
+{
+"address": "0x1028B000",
+"name": "sqgxShapeBegin",
+"kind": "function",
+"size": 2857,
+"source": "tree",
+"analysed_address": "0x1028AFE0"
+},
+{
+"address": "0x1028F4E0",
+"name": "SqsnScene_DrawMatrixShape",
+"kind": "function",
+"size": 46,
+"source": "tree",
+"analysed_address": "0x1028F4C0"
+},
+{
+"address": "0x1028F8E0",
+"name": "sqsnSceneDraw",
+"kind": "function",
+"size": 1288,
+"source": "tree",
+"analysed_address": "0x1028F8C0"
+},
+{
+"address": "0x1028FDF0",
+"name": "sqsnSceneLayerDraw",
+"kind": "function",
+"size": 420,
+"source": "tree",
+"analysed_address": "0x1028FDD0"
+},
+{
+"address": "0x1028FFA0",
+"name": "SqsnScene_DrawFadeSprite",
+"kind": "function",
+"size": 101,
+"source": "tree",
+"analysed_address": "0x1028FF80"
+},
+{
+"address": "0x10290010",
+"name": "sqsnSceneLayerDrawShadowed",
+"kind": "function",
+"size": 706,
+"source": "tree",
+"analysed_address": "0x1028FFF0"
+},
+{
+"address": "0x102902E0",
+"name": "sqsnSceneLayerSnapShotComposite",
+"kind": "function",
+"size": 367,
+"source": "tree",
+"analysed_address": "0x102902C0"
+},
+{
+"address": "0x10290B80",
+"name": "SqsdGeneric_DrawPasses",
+"kind": "function",
+"size": 1106,
+"source": "tree",
+"analysed_address": "0x10290B60"
+},
+{
+"address": "0x10290FE0",
+"name": "sqsdGeneric_BakeOntoShape",
+"kind": "function",
+"size": 233,
+"source": "tree",
+"analysed_address": "0x10290FC0"
+},
+{
+"address": "0x10297CE0",
+"name": "sqsnShadowVolumeSetPass",
+"kind": "function",
+"size": 505,
+"source": "tree",
+"analysed_address": "0x10297CC0"
+},
+{
+"address": "0x10297EE0",
+"name": "sqgxShadowStencilEnable",
+"kind": "function",
+"size": 196,
+"source": "tree",
+"analysed_address": "0x10297EC0"
+},
+{
+"address": "0x102981D0",
+"name": "sub_102981B0",
+"kind": "function",
+"size": 23,
+"source": "none",
+"analysed_address": "0x102981B0"
+},
+{
+"address": "0x10298200",
+"name": "sqsnShadowVolumeBeginVB",
+"kind": "function",
+"size": 180,
+"source": "tree",
+"analysed_address": "0x102981E0"
+},
+{
+"address": "0x10298CB0",
+"name": "sub_10298C90",
+"kind": "function",
+"size": 154,
+"source": "none",
+"analysed_address": "0x10298C90"
+},
+{
+"address": "0x10298E30",
+"name": "Texture_CreateEntry",
+"kind": "function",
+"size": 113,
+"source": "tree",
+"analysed_address": "0x10298E10"
+},
+{
+"address": "0x102990B0",
+"name": "SqsdSampling_DrawPasses",
+"kind": "function",
+"size": 448,
+"source": "tree",
+"analysed_address": "0x10299090"
+},
+{
+"address": "0x10299270",
+"name": "sqsdSampling_BakeOntoShape",
+"kind": "function",
+"size": 104,
+"source": "tree",
+"analysed_address": "0x10299250"
+},
+{
+"address": "0x102993D0",
+"name": "SqsdAniso_DrawPasses",
+"kind": "function",
+"size": 598,
+"source": "tree",
+"analysed_address": "0x102993B0"
+},
+{
+"address": "0x10299630",
+"name": "sqsdAniso_BakeOntoShape",
+"kind": "function",
+"size": 207,
+"source": "tree",
+"analysed_address": "0x10299610"
+},
+{
+"address": "0x102997C0",
+"name": "SqsdCartoon_Draw",
+"kind": "function",
+"size": 146,
+"source": "tree",
+"analysed_address": "0x102997A0"
+},
+{
+"address": "0x102999C0",
+"name": "SqsdGlow_ApplyShader",
+"kind": "function",
+"size": 205,
+"source": "tree",
+"analysed_address": "0x102999A0"
+},
+{
+"address": "0x10299AD0",
+"name": "sqsdGlow_BakeOntoShape",
+"kind": "function",
+"size": 113,
+"source": "tree",
+"analysed_address": "0x10299AB0"
+},
+{
+"address": "0x1029B640",
+"name": "sqgxDlistEnd",
+"kind": "function",
+"size": 792,
+"source": "tree",
+"analysed_address": "0x1029B620"
+},
+{
+"address": "0x1029B9F0",
+"name": "sqgxDlistDraw",
+"kind": "function",
+"size": 383,
+"source": "tree",
+"analysed_address": "0x1029B9D0"
+},
+{
+"address": "0x102A1F40",
+"name": "sub_102A1F20",
+"kind": "function",
+"size": 88,
+"source": "none",
+"analysed_address": "0x102A1F20"
+},
+{
+"address": "0x102A2210",
+"name": "sqsnShadowVolumeDraw",
+"kind": "function",
+"size": 568,
+"source": "tree",
+"analysed_address": "0x102A21F0"
+},
+{
+"address": "0x102A2450",
+"name": "sub_102A2430",
+"kind": "function",
+"size": 245,
+"source": "none",
+"analysed_address": "0x102A2430"
+},
+{
+"address": "0x102A2550",
+"name": "sqsnPlanarShadowDraw",
+"kind": "function",
+"size": 495,
+"source": "tree",
+"analysed_address": "0x102A2530"
+},
+{
+"address": "0x102A2740",
+"name": "Unit102A2530_RenderShadowTexture",
+"kind": "function",
+"size": 414,
+"source": "tree",
+"analysed_address": "0x102A2720"
+},
+{
+"address": "0x102A28E0",
+"name": "sub_102A28C0",
+"kind": "function",
+"size": 356,
+"source": "none",
+"analysed_address": "0x102A28C0"
+},
+{
+"address": "0x102A2AA0",
+"name": "sub_102A2A80",
+"kind": "function",
+"size": 131,
+"source": "none",
+"analysed_address": "0x102A2A80"
+},
+{
+"address": "0x102A2B30",
+"name": "sub_102A2B10",
+"kind": "function",
+"size": 230,
+"source": "none",
+"analysed_address": "0x102A2B10"
+},
+{
+"address": "0x102A2C20",
+"name": "Unit102A2530_DrawShadowedShape",
+"kind": "function",
+"size": 184,
+"source": "tree",
+"analysed_address": "0x102A2C00"
+},
+{
+"address": "0x102A2CE0",
+"name": "sub_102A2CC0",
+"kind": "function",
+"size": 353,
+"source": "none",
+"analysed_address": "0x102A2CC0"
+},
+{
+"address": "0x102A2FA0",
+"name": "sub_102A2F80",
+"kind": "function",
+"size": 943,
+"source": "none",
+"analysed_address": "0x102A2F80"
+},
+{
+"address": "0x102B2CC0",
+"name": "Drawable_DrawTwoPass",
+"kind": "function",
+"size": 309,
+"source": "tree",
+"analysed_address": "0x102B2CA0"
+},
+{
+"address": "0x102B2E00",
+"name": "sqshDraw_Submit",
+"kind": "function",
+"size": 349,
+"source": "dm",
+"analysed_address": "0x102B2DE0"
+},
+{
+"address": "0x102B2F60",
+"name": "sub_102B2F40",
+"kind": "function",
+"size": 286,
+"source": "none",
+"analysed_address": "0x102B2F40"
+},
+{
+"address": "0x102B30B0",
+"name": "sub_102B3090",
+"kind": "function",
+"size": 546,
+"source": "none",
+"analysed_address": "0x102B3090"
+},
+{
+"address": "0x102B3340",
+"name": "sub_102B3320",
+"kind": "function",
+"size": 19,
+"source": "none",
+"analysed_address": "0x102B3320"
+},
+{
+"address": "0x102B3360",
+"name": "sub_102B3340",
+"kind": "function",
+"size": 407,
+"source": "none",
+"analysed_address": "0x102B3340"
+},
+{
+"address": "0x102B3500",
+"name": "sub_102B34E0",
+"kind": "function",
+"size": 399,
+"source": "none",
+"analysed_address": "0x102B34E0"
+},
+{
+"address": "0x102B3690",
+"name": "sub_102B3670",
+"kind": "function",
+"size": 249,
+"source": "none",
+"analysed_address": "0x102B3670"
+},
+{
+"address": "0x102B3790",
+"name": "sub_102B3770",
+"kind": "function",
+"size": 163,
+"source": "none",
+"analysed_address": "0x102B3770"
+},
+{
+"address": "0x102B3840",
+"name": "sub_102B3820",
+"kind": "function",
+"size": 133,
+"source": "none",
+"analysed_address": "0x102B3820"
+}
+]
+}

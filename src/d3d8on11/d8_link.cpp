@@ -1,0 +1,506 @@
+// d8_link.cpp -- the command stream's transports (d8_link.h).
+//
+// The ring's counters are published with sequentially consistent atomics (__atomic, GCC and clang), so the same code
+// is right between two threads and between an x86 process and an ARM64 one on shared memory. Neither side makes a
+// system call per record: the reader sleeps on an event only when the ring is empty and says so in `reader_sleeping`;
+// the writer signals only then. Each side checks again after saying it sleeps, so no wake-up is lost.
+#include "d8_link.h"
+#include "d8_exec.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
+
+static inline uint32_t ld(volatile uint32_t *p) { return __atomic_load_n(p, __ATOMIC_SEQ_CST); }
+static inline void st(volatile uint32_t *p, uint32_t v) { __atomic_store_n(p, v, __ATOMIC_SEQ_CST); }
+static inline uint32_t pad8(uint32_t n) { return (n + 7) & ~7u; }
+static bool is_sync(uint16_t op) { return op == X_INIT || op == X_RESIZE || op == X_READBACK || op == X_FINISH || op == X_PASS_SHADER; }
+#define reader_sleeping pad[0]
+#define writer_waiting pad[1]
+enum { MAX_AHEAD = 2 };                       // frames the game may be ahead of the executor's Presents
+enum { STATS_EVERY = 600 };                   // Presents between the stats lines in the logs
+
+// time, for the stats lines (QueryPerformanceCounter)
+static double qpc_ms() {
+  static LARGE_INTEGER f; if (!f.QuadPart) QueryPerformanceFrequency(&f);
+  LARGE_INTEGER t; QueryPerformanceCounter(&t); return (double)t.QuadPart * 1000.0 / (double)f.QuadPart;
+}
+// the executor's side of the stats: the time spent running records, per frame, split by kind (draws; texture and
+// buffer uploads; Present, which is IDXGISwapChain::Present and so includes any wait the swap chain makes; readbacks
+// (X_READBACK, which waits for the GPU to finish the copy it reads); the rest).
+// An X_OPTION (the A/B, d8_device.cpp) ends a phase: its figures are logged under the option's previous value and
+// added to that value's totals, leaving out the first `settle` frames after each switch.
+struct ExecStats {
+  enum { K_DRAW, K_UPLOAD, K_PRESENT, K_READBACK, K_OTHER, NK };
+  double busy[NK] = {}, since = 0; uint32_t frames = 0, records = 0;
+  double up_ms[2] = {}; uint64_t u0[8] = {};              // upload time: textures, buffers; Exec's upload counters at the last line
+  uint64_t m0[4] = {};                                     // draw_merge's counters at the last stats line
+  uint64_t b0[6] = {};                                     // the buffer arena's counters at the last stats line
+  double mips_ms = 0, mips_max = 0; uint32_t mips_n = 0;   // mip_exec: the levels made here since the last stats line
+  Exec *x = nullptr; uint64_t x0[3] = {};                  // the executor's batch counters at the last stats line
+  double s0p = 0, s0a = 0, s0b = 0; uint64_t s0n = 0;          // the split's counters at the last stats line
+  static void hook(void *s, uint16_t op, double ms) { ((ExecStats *)s)->ran(op, ms); }
+  void attach(Exec *e) { x = e; e->timed = hook; e->timed_ctx = this; }
+  // the A/B: the phase now running, its option value, frames still to leave out, totals per value (0 and 1)
+  bool ab = false; uint32_t key = OPT_FILTER, value = 0, settle = 0, phase = 0, pframes = 0; double pbusy[NK] = {}, tbusy[2][NK] = {}; uint32_t tframes[2] = {};
+  static int kind(uint16_t op) {
+    return op == X_DRAW ? K_DRAW : op == X_UPLOAD_TEX || op == X_UPLOAD_BUF ? K_UPLOAD : op == X_PRESENT ? K_PRESENT :
+           op == X_READBACK ? K_READBACK : K_OTHER;
+  }
+  const char *kname() const { return key == OPT_BATCH ? "batch" : key == OPT_FLIP ? "flip" : key == OPT_MERGE ? "merge" : "filter"; }
+  static double sum(const double *b) { double s = 0; for (int k = 0; k < NK; k++) s += b[k]; return s; }
+  void phase_end() {
+    if (!ab) return;
+    if (pframes) {
+      uint32_t v = value ? 1 : 0;
+      d8_log("executor ab: phase %u, %s=%u, %u frames: busy %.3f ms a frame (draws %.3f, uploads %.3f, Present %.3f, "
+             "readbacks %.3f, other %.3f)", phase, kname(), value, pframes, sum(pbusy) / pframes, pbusy[0] / pframes, pbusy[1] / pframes,
+             pbusy[2] / pframes, pbusy[3] / pframes, pbusy[4] / pframes);
+      for (int k = 0; k < NK; k++) tbusy[v][k] += pbusy[k];
+      tframes[v] += pframes;
+      for (int i = 0; i < 2; i++) if (tframes[i])
+        d8_log("executor ab: so far %s=%d: %u frames, busy %.3f ms a frame (draws %.3f, uploads %.3f, Present %.3f, "
+               "readbacks %.3f, other %.3f)", kname(), i, tframes[i], sum(tbusy[i]) / tframes[i], tbusy[i][0] / tframes[i],
+               tbusy[i][1] / tframes[i], tbusy[i][2] / tframes[i], tbusy[i][3] / tframes[i], tbusy[i][4] / tframes[i]);
+    }
+    for (int k = 0; k < NK; k++) pbusy[k] = 0;
+    pframes = 0;
+  }
+  void option(const uint8_t *p) {
+    const XOption &o = *(const XOption *)p;
+    if (!o.settle && !ab) return;                         // a setting at the start, not the A/B's
+    phase_end();
+    key = o.key;
+    if (ab || o.settle) { ab = true; phase++; }
+    value = o.value; settle = o.settle;
+  }
+  // the draws' time by the game's call site (XDraw::site, the Draw* method's return address in FFXiMain.dll): what the
+  // executor spends on the draws each place in the game makes. ~0: draws made by a mod (speedfix's merged ...UP draws)
+  struct SiteT { double ms = 0; uint32_t n = 0; };
+  std::unordered_map<uint32_t, SiteT> sites;
+  void ran(uint16_t op, double ms) {
+    int k = kind(op);
+    busy[k] += ms; records++;
+    if (op == X_UPLOAD_TEX) up_ms[0] += ms; else if (op == X_UPLOAD_BUF) up_ms[1] += ms;
+    if (op == X_MIPS) { mips_ms += ms; mips_n++; if (ms > mips_max) mips_max = ms; }
+    if (op == X_DRAW && x && x->sites_on) { SiteT &t = sites[x->last_site]; t.ms += ms; t.n++; }
+    if (ab && !settle) pbusy[k] += ms;
+    if (op != X_PRESENT) return;
+    if (ab) { if (settle) settle--; else pframes++; }
+    if (++frames < STATS_EVERY) return;
+    report();
+  }
+  // the stats line for the frames since the last one; also at shutdown (finish), so that a run shorter than
+  // STATS_EVERY Presents (a replay) still gets one, and the A/B's last phase is logged
+  void finish() { phase_end(); if (frames) report(); }
+  void report() {
+    D8StatsScope q;
+    double now = qpc_ms(), span = since ? now - since : 0;
+    d8_log("executor stats, %u frames: busy %.3f ms a frame (%.1f%% of the time; draws %.3f, uploads %.3f, Present %.3f, "
+           "readbacks %.3f, other %.3f), %u records a frame", frames, sum(busy) / frames, span > 0 ? 100.0 * sum(busy) / span : 0.0,
+           busy[0] / frames, busy[1] / frames, busy[2] / frames, busy[3] / frames, busy[4] / frames, records / frames);
+    if (x) {
+      // Maps a frame: of the arenas (one each per flush, Exec::plan) and by draws themselves (constants, ...UP data)
+      d8_log("executor batches, %u frames: batch=%u, %.1f flushes, %.1f arena Maps, %.1f draw Maps a frame", frames, x->batch,
+             (double)(x->flushes - x0[0]) / frames, (double)(x->arena_maps - x0[1]) / frames, (double)(x->draw_maps - x0[2]) / frames);
+      x0[0] = x->flushes; x0[1] = x->arena_maps; x0[2] = x->draw_maps;
+      // (12 Nov) what a second thread could take: planning, and draws' preparing vs submitting (sampled 1 in 32)
+      if (x->split_n > s0n) d8_log("executor split, %u frames: planning %.3f ms a frame; draws (%llu sampled): preparing %.2f us, submitting %.2f us each",
+                                  frames, (x->plan_ms - s0p) / frames, (unsigned long long)(x->split_n - s0n),
+                                  1000.0 * (x->split_prep - s0a) / (x->split_n - s0n), 1000.0 * (x->split_sub - s0b) / (x->split_n - s0n));
+      s0p = x->plan_ms; s0a = x->split_prep; s0b = x->split_sub; s0n = x->split_n;
+      // uploads split: textures and buffers, their time, count and MB a frame; the dynamic buffers' Maps a frame
+      d8_log("executor uploads, %u frames: textures %.3f ms, %.1f uploads, %.3f MB a frame; buffers %.3f ms, %.1f uploads, %.3f MB "
+             "a frame (dynamic: %.1f DISCARD, %.1f NOOVERWRITE Maps a frame); to objects also uploaded this frame or the one before: "
+             "textures %.3f MB, buffers %.3f MB a frame", frames, up_ms[0] / frames, (double)(x->up_n[0] - u0[1]) / frames,
+             (double)(x->up_bytes[0] - u0[0]) / frames / 1048576.0, up_ms[1] / frames, (double)(x->up_n[1] - u0[3]) / frames,
+             (double)(x->up_bytes[1] - u0[2]) / frames / 1048576.0, (double)(x->dyn_discard - u0[4]) / frames, (double)(x->dyn_noov - u0[5]) / frames,
+             (double)(x->up_again[0] - u0[6]) / frames / 1048576.0, (double)(x->up_again[1] - u0[7]) / frames / 1048576.0);
+      u0[0] = x->up_bytes[0]; u0[1] = x->up_n[0]; u0[2] = x->up_bytes[1]; u0[3] = x->up_n[1]; u0[4] = x->dyn_discard; u0[5] = x->dyn_noov; u0[6] = x->up_again[0]; u0[7] = x->up_again[1];
+      up_ms[0] = up_ms[1] = 0;
+      if (mips_n) d8_log("executor mip levels, %u frames: %u textures' levels made here (mip_exec), %.1f ms in all, the longest %.2f ms", frames, mips_n, mips_ms, mips_max);
+      mips_n = 0; mips_ms = mips_max = 0;
+      if (x->arena_kb) {
+        // buffer_arena: uploads put at a new place and written in place, the MB written, the arena's Maps, how often it
+        // started again, and buffers written back to their own buffer (drawn from a place of an older generation)
+        d8_log("executor buffer arena, %u frames: %.1f buffers placed, %.1f ranges written in place, %.3f MB, %.1f Maps of an arena, "
+               "%.2f times an arena started again, %.1f buffers back to their own a frame", frames, (double)(x->ba_place - b0[0]) / frames,
+               (double)(x->ba_range - b0[1]) / frames, (double)(x->ba_bytes - b0[2]) / frames / 1048576.0, (double)(x->ba_maps - b0[3]) / frames,
+               (double)(x->ba_wraps - b0[4]) / frames, (double)(x->ba_own - b0[5]) / frames);
+        if (x->merge_cap) {
+          d8_log("executor draw merge, %u frames: merge=%u, %.1f merged draws a frame took in %.1f other draws, %.3f MB written to the slot arenas, "
+                 "%.2f times they started again a frame; %.1f MB of static buffers' copies kept", frames, x->merge_on, (double)(x->mg_runs - m0[0]) / frames, (double)(x->mg_saved - m0[1]) / frames,
+                 (double)(x->mg_bytes - m0[2]) / frames / 1048576.0, (double)(x->mg_wraps - m0[3]) / frames, (double)x->mg_kept / 1048576.0);
+          m0[0] = x->mg_runs; m0[1] = x->mg_saved; m0[2] = x->mg_bytes; m0[3] = x->mg_wraps;
+        }
+        b0[0] = x->ba_place; b0[1] = x->ba_range; b0[2] = x->ba_bytes; b0[3] = x->ba_maps; b0[4] = x->ba_wraps; b0[5] = x->ba_own;
+      }
+    }
+    if (!sites.empty()) {
+      std::vector<std::pair<uint32_t, SiteT>> v(sites.begin(), sites.end());
+      std::sort(v.begin(), v.end(), [](const std::pair<uint32_t, SiteT> &a, const std::pair<uint32_t, SiteT> &b) { return a.second.ms > b.second.ms; });
+      char line[1400]; int o = snprintf(line, sizeof line, "executor draws by game call site, %u frames (FFXiMain.dll+offset: ms a frame, draws a frame):", frames);
+      double rest = 0; uint32_t restn = 0;
+      for (size_t i = 0; i < v.size(); i++) {
+        if (i < 16 && o < (int)sizeof line - 80) {
+          if (v[i].first == ~0u) o += snprintf(line + o, sizeof line - o, " mod %.3f/%.1f;", v[i].second.ms / frames, (double)v[i].second.n / frames);
+          else o += snprintf(line + o, sizeof line - o, " +0x%X %.3f/%.1f;", v[i].first, v[i].second.ms / frames, (double)v[i].second.n / frames);
+        } else { rest += v[i].second.ms; restn += v[i].second.n; }
+      }
+      if (restn) snprintf(line + o, sizeof line - o, " %zu more sites %.3f/%.1f", v.size() - 16, rest / frames, (double)restn / frames);
+      d8_log("%s", line);
+      sites.clear();
+    }
+    for (int i = 0; i < NK; i++) busy[i] = 0;
+    frames = records = 0; since = now;
+  }
+};
+
+// the hang watch's test (test_d3d8on11.py): D8ON11_TEST_STALL=N makes the executor stop 8 s before its Nth Present
+static bool stall_test(uint16_t op) {
+  static int n = -1, seen = 0;
+  if (n < 0) { char b[16] = ""; GetEnvironmentVariableA("D8ON11_TEST_STALL", b, sizeof b); n = atoi(b); }
+  return n > 0 && op == X_PRESENT && ++seen == n;
+}
+
+// ---- the records after the one being run (d8_peek): the reader thread's view, set before each record runs ----------
+static RingHdr *pk_h; static uint8_t *pk_data; static uint32_t pk_from, pk_to;
+bool d8_peek(D8PeekFn f, void *ctx) {
+  if (!pk_h) return false;
+  for (uint32_t pos = pk_from; pos != pk_to;) {
+    const XHdr *hd = (const XHdr *)(pk_data + pos % pk_h->size);
+    uint32_t need = 8 + pad8(hd->bytes);
+    if (hd->op != X_PAD && f(hd->op, (const uint8_t *)(hd + 1), hd->bytes, ctx)) return true;
+    pos += need;
+  }
+  return false;
+}
+// ---- the reader (the executor's side) -----------------------------------------------------------------------------
+void ring_consume(RingHdr *h, uint8_t *data, uint8_t *reply, Exec *x, HANDLE wake, HANDLE space, HANDLE replied, HANDLE parent) {
+  std::vector<uint8_t> out; ExecStats xs; xs.since = qpc_ms(); xs.attach(x);
+  struct Finish { ExecStats &s; ~Finish() { s.finish(); } } fin{xs};   // every return below logs the last figures
+  // r: the next record; h->read: the first byte the writer may not reuse. While the executor holds records (Exec::batch)
+  // their bytes stay in the ring: h->read stays at the first held one, and moves when they have run. They run when the
+  // ring is empty, when the writer waits for room, or at the next record that is not held (Exec::run)
+  uint32_t r = h->read;
+  auto release = [&]() { st(&h->read, r); if (ld(&h->writer_waiting)) SetEvent(space); };
+  for (;;) {
+    uint32_t w = ld(&h->write);
+    if (r != w && x->holding() && ld(&h->writer_waiting)) { x->flush(); release(); }
+    if (r == w) {
+      if (x->holding()) { x->flush(); release(); continue; }
+      st(&h->reader_sleeping, 1);
+      if (ld(&h->write) == r) {
+        if (ld(&h->quit)) return;
+        HANDLE hs[2] = {wake, parent};
+        DWORD got = WaitForMultipleObjects(parent ? 2 : 1, hs, FALSE, 50);
+        if (got == WAIT_OBJECT_0 + 1) { d8_log("the game's process ended: the executor stops"); st(&h->reader_sleeping, 0); return; }
+      }
+      st(&h->reader_sleeping, 0);
+      continue;
+    }
+    const XHdr *hd = (const XHdr *)(data + r % h->size);
+    uint32_t need = 8 + pad8(hd->bytes);
+#ifdef D8_TRACE
+    d8_log("R r=%u w=%u op=%u bytes=%u", r, w, hd->op, hd->bytes);
+#endif
+    if (hd->op == X_QUIT) { x->flush(); st(&h->read, r + need); return; }
+    if (hd->op != X_PAD) {
+      int32_t hr = 0; out.clear();
+      st(&h->exec_since, GetTickCount()); st(&h->exec_op, hd->op);
+      if (stall_test(hd->op)) Sleep(8000);
+      pk_h = h; pk_data = data; pk_from = r + need; pk_to = w;          // (what is written up to now: complete records)
+      x->run(hd->op, (const uint8_t *)(hd + 1), hd->bytes, &hr, &out);
+      pk_h = nullptr;
+      st(&h->exec_op, 0); st(&h->exec_records, ld(&h->exec_records) + 1); st(&h->exec_site, x->last_site);
+      if (hd->op == X_OPTION) xs.option((const uint8_t *)(hd + 1));
+      if (is_sync(hd->op)) {
+        // a reply larger than the reply area goes in pieces of the area's size: each but the last is handed over by
+        // reply_part and waited for (reply_ack, the writer's copy of it; the writer holds its lock and waits in
+        // answer(), so nothing else comes meanwhile), the last is answered below. Before 26 Oct it was cut to the
+        // area (owner's log: 22,958,208 bytes against 16,777,216, nine times)
+        uint32_t n = (uint32_t)out.size(), o = 0;
+        while (n - o > h->reply_max) {
+          memcpy(reply, out.data() + o, h->reply_max); h->reply_bytes = h->reply_max;
+          uint32_t part = ld(&h->reply_part) + 1; st(&h->reply_part, part); SetEvent(replied);
+          while (ld(&h->reply_ack) != part) {
+            if (ld(&h->quit)) return;
+            HANDLE hs[2] = {wake, parent};
+            if (WaitForMultipleObjects(parent ? 2 : 1, hs, FALSE, 50) == WAIT_OBJECT_0 + 1) { d8_log("the game's process ended: the executor stops"); return; }
+          }
+          o += h->reply_max;
+        }
+        n -= o;
+        if (n) memcpy(reply, out.data() + o, n);
+        h->reply_hr = hr; h->reply_bytes = n;
+        st(&h->answered, ld(&h->answered) + 1);
+        SetEvent(replied);
+      }
+      if (hd->op == X_PRESENT) { st(&h->presents_done, ld(&h->presents_done) + 1); SetEvent(replied); }
+    }
+    r += need;
+    if (!x->holding()) release();
+  }
+}
+
+// ---- the writer (the D3D8 side): the ring in memory or in a mapping ----------------------------------------------------
+struct RingLink : Link {
+  RingHdr *h = nullptr; uint8_t *data = nullptr, *reply = nullptr;
+  HANDLE wake = NULL, space = NULL, replied = NULL;
+  HANDLE peer = NULL;                                            // remote: the executor's process
+  CRITICAL_SECTION lock;
+  // the hang watch (12 Nov): every wait of the game's thread for the executor (room, pacing, an answer) has no time
+  // limit, so an executor that stops makes the game stop with it ("stopped interacting with Windows"). After 5 s of one
+  // wait with no record finished, and every 30 s after, the log says what the game waits for, what the executor runs and
+  // for how long, and (thread mode) where the executor thread is: its EIP and the return addresses on its stack, by
+  // module. The wait goes on: there is nothing safe to give the game instead.
+  const char *wait_what = nullptr; uint32_t wait_tick = 0, wait_start = 0, wait_records = 0, wait_next = 0; bool wait_reported = false;
+  virtual HANDLE exec_thread() { return NULL; }
+  void watch_begin(const char *what) { wait_what = what; wait_tick = wait_start = GetTickCount(); wait_records = ld(&h->exec_records); wait_next = 5000; wait_reported = false; }
+  void watch_end() { if (wait_reported) d8_log("hang watch: the wait for %s ended after %lu ms", wait_what, (unsigned long)(GetTickCount() - wait_start)); wait_what = nullptr; }
+  void watch() {
+    if (!wait_what) return;
+    uint32_t now = GetTickCount(), recs = ld(&h->exec_records);
+    if (recs != wait_records) { wait_records = recs; wait_tick = now; wait_next = 5000; return; }   // progress: not stuck
+    if (now - wait_tick < wait_next) return;
+    wait_next += 30000; wait_reported = true;
+    uint32_t op = ld(&h->exec_op), since = ld(&h->exec_since);
+    char line[1400]; int n = snprintf(line, sizeof line, "hang watch: the game has waited %lu ms for %s (record %u of op %u) with no record finished; the executor %s",
+      (unsigned long)(now - wait_tick), wait_what, (unsigned)sent, (unsigned)cur_op,
+      op ? "" : "is between records");
+    if (op) n += snprintf(line + n, sizeof line - n, "runs op %u since %lu ms (records run %u, last draw's call site 0x%08X)", op, (unsigned long)(now - since), recs, ld(&h->exec_site));
+    n += snprintf(line + n, sizeof line - n, "; ring write %u read %u, presents sent %u done %u, answered %u", ld(&h->write), ld(&h->read), ld(&h->presents_sent), ld(&h->presents_done), ld(&h->answered));
+    HANDLE t = exec_thread();
+    if (t) {
+      DWORD code = 0; GetExitCodeThread(t, &code);
+      if (code != STILL_ACTIVE) n += snprintf(line + n, sizeof line - n, "; the executor thread has ENDED (exit code 0x%lX)", (unsigned long)code);
+#if defined(__i386__) || defined(_M_IX86)                       // (the game side is x86; the ARM64 build is only the executor)
+      else if (SuspendThread(t) != (DWORD)-1) {
+        CONTEXT c; memset(&c, 0, sizeof c); c.ContextFlags = CONTEXT_CONTROL;
+        if (GetThreadContext(t, &c)) {
+          auto where = [&](uintptr_t a, char *o, int cap) {
+            if (a < 0x10000) return 0;                                 // (0 would name the main program)
+            HMODULE m = NULL; char path[MAX_PATH] = "?";
+            if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)a, &m) && m) {
+              GetModuleFileNameA(m, path, sizeof path); const char *b = strrchr(path, '\\'); return snprintf(o, cap, "%s+0x%lX", b ? b + 1 : path, (unsigned long)(a - (uintptr_t)m)); }
+            return 0; };
+          n += snprintf(line + n, sizeof line - n, "; executor thread at ");
+          int w = where(c.Eip, line + n, sizeof line - n); n += w ? w : snprintf(line + n, sizeof line - n, "0x%08lX", (unsigned long)c.Eip);
+          n += snprintf(line + n, sizeof line - n, ", stack:");
+          const uintptr_t *sp = (const uintptr_t *)(uintptr_t)c.Esp; int found = 0;
+          for (int k = 0; k < 512 && found < 12 && n < (int)sizeof line - 80; k++) {
+            uintptr_t v; if (!ReadProcessMemory(GetCurrentProcess(), sp + k, &v, sizeof v, NULL)) break;
+            char tmp[160]; if (where(v, tmp, sizeof tmp) > 0) { n += snprintf(line + n, sizeof line - n, " %s", tmp); found++; }
+          }
+        }
+        ResumeThread(t);
+      }
+#endif
+    }
+    d8_log("%s", line);
+  }
+  // every wait for the executor: if its process has ended nothing will ever answer, and the game's state is in it
+  void wait_for(HANDLE ev) {
+    watch();
+    HANDLE hs[2] = {ev, peer};
+    if (WaitForMultipleObjects(peer ? 2 : 1, hs, FALSE, 5) == WAIT_OBJECT_0 + 1) {
+      DWORD code = 0; GetExitCodeProcess(peer, &code);
+      d8_log("the executor process ended (exit code %lu; d3d8on11_exec.log): the game cannot go on", (unsigned long)code);
+      ExitProcess(3);
+    }
+  }
+  uint32_t cur_w = 0, cur_need = 0, sent = 0; uint16_t cur_op = 0;
+  // the game's side of the stats: time waited for room, for pacing, for answers; bytes and records sent
+  double waited[3] = {0, 0, 0}, since = 0; uint64_t sent_bytes = 0; uint32_t records = 0, frames = 0;
+  RingLink() { InitializeCriticalSection(&lock); since = qpc_ms(); }
+  uint32_t max_payload() const override { return h->size / 2 - 8; }   // begin's limit: 8 + pad8(bytes) <= size / 2
+  void stats_frame() {
+    if (++frames < STATS_EVERY) return;
+    D8StatsScope q;
+    double now = qpc_ms();
+    d8_log("ring stats, %u frames: the game waited %.3f ms a frame for room, %.3f for pacing (%d frames ahead), %.3f for "
+           "answers; sent %.2f MB and %u records a frame", frames, waited[0] / frames,
+           waited[1] / frames, (int)MAX_AHEAD, waited[2] / frames, (double)sent_bytes / frames / 1048576.0, records / frames);
+    waited[0] = waited[1] = waited[2] = 0; sent_bytes = 0; records = frames = 0; since = now;
+  }
+  uint8_t *begin(uint16_t op, uint32_t bytes) override {
+    EnterCriticalSection(&lock);
+    uint32_t need = 8 + pad8(bytes), size = h->size;             // size: a power of two (ring_bytes)
+    if (need > size / 2) { d8_log("a record of %u bytes does not fit the ring (%u): the device stops", bytes, size); ExitProcess(3); }
+    uint32_t w = h->write, pos = w % size, padb = pos + need > size ? size - pos : 0;
+    if (size - (w - ld(&h->read)) < need + padb) {
+      double t0 = qpc_ms(); watch_begin("room in the ring");
+      while (size - (w - ld(&h->read)) < need + padb) {         // wait for room
+        st(&h->writer_waiting, 1);
+        if (size - (w - ld(&h->read)) < need + padb) wait_for(space);
+        st(&h->writer_waiting, 0);
+      }
+      watch_end(); waited[0] += qpc_ms() - t0;
+    }
+    sent_bytes += need + padb; records++;
+    if (padb) { XHdr *p = (XHdr *)(data + pos); p->op = X_PAD; p->pad = 0; p->bytes = padb - 8; w += padb; pos = 0; }
+    XHdr *hd = (XHdr *)(data + pos); hd->op = op; hd->pad = 0; hd->bytes = bytes;
+#ifdef D8_TRACE
+    d8_log("W w=%u op=%u bytes=%u", w, op, bytes);
+#endif
+    cur_w = w; cur_need = need; cur_op = op;
+    return (uint8_t *)(hd + 1);
+  }
+  void end() override {
+    st(&h->write, cur_w + cur_need);
+    if (ld(&h->reader_sleeping)) SetEvent(wake);
+    if (cur_op == X_PRESENT) {                                   // pacing: at most MAX_AHEAD frames queued
+      uint32_t sent_p = ld(&h->presents_sent) + 1; st(&h->presents_sent, sent_p);
+      if (sent_p - ld(&h->presents_done) > MAX_AHEAD) {
+        double t0 = qpc_ms(); watch_begin("pacing (the executor's Presents)");
+        while (sent_p - ld(&h->presents_done) > MAX_AHEAD) wait_for(replied);
+        watch_end(); waited[1] += qpc_ms() - t0;
+      }
+      stats_frame();
+    }
+    if (is_sync(cur_op)) { sent++; return; }                     // the lock is kept until answer()
+    LeaveCriticalSection(&lock);
+  }
+  int32_t answer(std::vector<uint8_t> *out) override {
+    double t0 = qpc_ms(); watch_begin("an answer");
+    if (out) out->clear();
+    for (;;) {
+      if ((int32_t)(ld(&h->answered) - sent) >= 0) break;
+      uint32_t part = ld(&h->reply_part);
+      if (part != h->reply_ack) {                               // a piece of a reply larger than the reply area
+        if (out) out->insert(out->end(), reply, reply + h->reply_bytes);
+        st(&h->reply_ack, part); SetEvent(wake);
+        continue;
+      }
+      wait_for(replied);
+    }
+    watch_end(); waited[2] += qpc_ms() - t0;
+    int32_t hr = h->reply_hr;
+    if (out) out->insert(out->end(), reply, reply + h->reply_bytes);
+    LeaveCriticalSection(&lock);
+    return hr;
+  }
+};
+static void ring_init(RingHdr *h, uint32_t size, uint32_t reply_max) {
+  memset(h, 0, sizeof *h);
+  h->magic = RING_MAGIC; h->version = RING_VERSION; h->size = size; h->reply_max = reply_max; h->parent_pid = GetCurrentProcessId();
+  // D8ON11_RING_START (hex, a multiple of 8): where the byte counters start, so that a test reaches their wrap at 2^32
+  char v[16]; DWORD n = GetEnvironmentVariableA("D8ON11_RING_START", v, sizeof v);
+  if (n > 0 && n < sizeof v) { uint32_t s0 = (uint32_t)strtoul(v, NULL, 16) & ~7u; h->write = h->read = s0; d8_log("ring: counters start at 0x%08X (D8ON11_RING_START)", s0); }
+}
+enum : uint32_t { RING_BYTES = 32u << 20, REPLY_BYTES = 16u << 20, SNAP_TABLE = SNAP_SLOTS * (uint32_t)sizeof(SnapSlot) };
+// the ring's size: 32 MB, or D8ON11_RING_KB (a power of two from 64 to 32768; the tests make it small, so that it wraps
+// often). A power of two because positions are counter % size and the counters wrap at 2^32: only a size dividing 2^32
+// keeps the position continuous across that wrap (at 9 MB a frame the counters wrap every few minutes).
+static uint32_t ring_bytes() {
+  char v[16]; DWORD n = GetEnvironmentVariableA("D8ON11_RING_KB", v, sizeof v);
+  unsigned long kb = n > 0 && n < sizeof v ? strtoul(v, NULL, 10) : 0;
+  if (kb < 64 || kb > (RING_BYTES >> 10) || (kb & (kb - 1))) return RING_BYTES;
+  d8_log("ring: %lu KB (D8ON11_RING_KB)", kb);
+  return (uint32_t)kb << 10;
+}
+
+// thread: the ring in this process, the executor on a thread of its own
+struct ThreadLink : RingLink {
+  HANDLE exec_thread() override { return thread; }               // the hang watch reads where it is
+  Exec x; HANDLE thread = NULL; uint8_t *mem = nullptr;
+  static DWORD WINAPI main(LPVOID p) {
+    ThreadLink *t = (ThreadLink *)p;
+    ring_consume(t->h, t->data, t->reply, &t->x, t->wake, t->space, t->replied, NULL);
+    t->x.shutdown();
+    return 0;
+  }
+  bool start() {
+    uint32_t rb = ring_bytes();
+    mem = (uint8_t *)VirtualAlloc(NULL, 4096 + rb + REPLY_BYTES + SNAP_TABLE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    if (!mem) return false;
+    h = (RingHdr *)mem; data = mem + 4096; reply = data + rb;
+    snaps = x.snaps = (SnapSlot *)(reply + REPLY_BYTES);
+    ring_init(h, rb, REPLY_BYTES);
+    wake = CreateEventA(NULL, FALSE, FALSE, NULL); space = CreateEventA(NULL, FALSE, FALSE, NULL); replied = CreateEventA(NULL, FALSE, FALSE, NULL);
+    thread = CreateThread(NULL, 0, main, this, 0, NULL);
+    return thread != NULL;
+  }
+  ~ThreadLink() override {
+    if (thread) { put(X_QUIT, nullptr, 0); WaitForSingleObject(thread, 5000); CloseHandle(thread); }
+    if (mem) VirtualFree(mem, 0, MEM_RELEASE);
+  }
+  const char *name() const override { return "thread"; }
+};
+
+// remote: the ring in a shared mapping, the executor in d8x.exe (d8x_arm64.exe on an ARM64 machine, when it is there)
+struct RemoteLink : RingLink {
+  HANDLE map = NULL, proc = NULL; uint8_t *mem = nullptr; char exe[MAX_PATH] = "";
+  bool start() {
+    char nm[96]; static LONG n;
+    snprintf(nm, sizeof nm, "Local\\d3d8on11_%lu_%ld", (unsigned long)GetCurrentProcessId(), (long)InterlockedIncrement(&n));
+    uint32_t rb = ring_bytes();
+    map = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 4096 + rb + REPLY_BYTES + SNAP_TABLE, nm);
+    if (!map) return false;
+    mem = (uint8_t *)MapViewOfFile(map, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+    if (!mem) return false;
+    h = (RingHdr *)mem; data = mem + 4096; reply = data + rb;
+    snaps = (SnapSlot *)(reply + REPLY_BYTES);                 // the executor finds it at the same place (d8x_main.cpp)
+    ring_init(h, rb, REPLY_BYTES);
+    char e[128];
+    snprintf(e, sizeof e, "%s_w", nm); wake = CreateEventA(NULL, FALSE, FALSE, e);
+    snprintf(e, sizeof e, "%s_s", nm); space = CreateEventA(NULL, FALSE, FALSE, e);
+    snprintf(e, sizeof e, "%s_r", nm); replied = CreateEventA(NULL, FALSE, FALSE, e);
+    // the executor next to this DLL: the ARM64 build on an ARM64 machine, else the x86 one
+    char dir[MAX_PATH]; HMODULE m = NULL;
+    GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&ring_init, &m);
+    GetModuleFileNameA(m, dir, sizeof dir); char *s = strrchr(dir, '\\'); if (s) s[1] = 0; else dir[0] = 0;
+    USHORT pm = 0, nmach = 0;
+    typedef BOOL (WINAPI *PW2)(HANDLE, USHORT *, USHORT *);
+    PW2 w2 = (PW2)(void *)GetProcAddress(GetModuleHandleA("kernel32.dll"), "IsWow64Process2");
+    if (w2) w2(GetCurrentProcess(), &pm, &nmach);
+    snprintf(exe, sizeof exe, "%sd8x_arm64.exe", dir);
+    if (nmach != 0xAA64 || GetFileAttributesA(exe) == INVALID_FILE_ATTRIBUTES) snprintf(exe, sizeof exe, "%sd8x.exe", dir);
+    char cmd[MAX_PATH + 160]; snprintf(cmd, sizeof cmd, "\"%s\" %s %lu", exe, nm, (unsigned long)GetCurrentProcessId());
+    STARTUPINFOA si = {}; si.cb = sizeof si; PROCESS_INFORMATION pi = {};
+    if (!CreateProcessA(NULL, cmd, NULL, NULL, FALSE, 0, NULL, dir, &si, &pi)) { d8_log("could not start the executor %s: error %lu", exe, (unsigned long)GetLastError()); return false; }
+    proc = pi.hProcess; CloseHandle(pi.hThread);
+    for (int i = 0; i < 1000 && !ld(&h->ready); i++) {           // up to 10 s
+      if (WaitForSingleObject(proc, 10) == WAIT_OBJECT_0) { d8_log("the executor %s ended at its start", exe); return false; }
+    }
+    if (!ld(&h->ready)) { d8_log("the executor %s did not start in 10 s", exe); return false; }
+    d8_log("executor process: %s (machine 0x%X)", exe, (unsigned)nmach);
+    peer = proc;
+    return true;
+  }
+  ~RemoteLink() override {
+    if (proc && WaitForSingleObject(proc, 0) == WAIT_OBJECT_0) { CloseHandle(proc); proc = NULL; }
+    peer = NULL;
+    if (proc) { if (h && ld(&h->ready)) put(X_QUIT, nullptr, 0); if (WaitForSingleObject(proc, 3000) != WAIT_OBJECT_0) TerminateProcess(proc, 1); CloseHandle(proc); }
+    if (mem) UnmapViewOfFile(mem); if (map) CloseHandle(map);
+  }
+  const char *name() const override { return "remote"; }
+};
+
+// direct: the executor runs each record as it is written (phase 1)
+struct DirectLink : Link {
+  Exec x; std::vector<uint8_t> buf; uint32_t n = 0; uint16_t op = 0; int32_t hr = 0; std::vector<uint8_t> out; ExecStats xs;
+  CRITICAL_SECTION lock;
+  DirectLink() {
+    InitializeCriticalSection(&lock); xs.since = qpc_ms(); xs.attach(&x); x.copy_held = true;
+    snaps = x.snaps = (SnapSlot *)VirtualAlloc(NULL, SNAP_TABLE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+  }
+  ~DirectLink() override { x.flush(); xs.finish(); x.shutdown(); if (snaps) VirtualFree(snaps, 0, MEM_RELEASE); }
+  uint8_t *begin(uint16_t o, uint32_t bytes) override { EnterCriticalSection(&lock); op = o; n = bytes; buf.resize(bytes ? bytes : 1); return buf.data(); }
+  void end() override {
+    out.clear(); hr = 0;
+    x.run(op, buf.data(), n, &hr, &out);
+    if (op == X_OPTION) xs.option(buf.data());
+    if (!is_sync(op)) LeaveCriticalSection(&lock);
+  }
+  int32_t answer(std::vector<uint8_t> *o) override { if (o) *o = out; int32_t r = hr; LeaveCriticalSection(&lock); return r; }
+  const char *name() const override { return "direct"; }
+};
+
+Link *link_make(const char *mode) {
+  if (!strcmp(mode, "direct")) return new DirectLink();
+  if (!strcmp(mode, "remote")) { RemoteLink *r = new RemoteLink(); if (r->start()) return r; delete r; return nullptr; }
+  ThreadLink *t = new ThreadLink(); if (t->start()) return t; delete t; return nullptr;
+}

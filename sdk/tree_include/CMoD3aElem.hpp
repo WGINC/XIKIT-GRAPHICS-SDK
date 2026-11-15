@@ -1,0 +1,17 @@
+// CMoD3aElem -- graphics members reconstructed from Hex-Rays output, gate-verified.
+// Unnamed fields are field_XXX (the offset); sizes come from the class descriptor.
+#pragma once
+#include "gfx_common.hpp"
+#pragma pack(push, 1)
+class XI_API CMoD3aElem {
+public:
+    int * vf18();  // 0x1003EB30
+
+    void **vftable;  // +0x0
+    uint8_t _pad_4[0x100];
+    int * d3aDrawHandle;  // +0x104 pointer to a handle (dereferenced once) that vf18 passes to YmElem_DrawD3ASegment; null means nothing is drawn
+    uint8_t _pad_108[0x8C];
+};
+#pragma pack(pop)
+static_assert(sizeof(CMoD3aElem) == 0x194, "CMoD3aElem: sizeof");
+static_assert(XI_OFFSETOF(CMoD3aElem, d3aDrawHandle) == 0x104, "CMoD3aElem: layout");

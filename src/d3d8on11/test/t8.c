@@ -1,0 +1,1873 @@
+/* t8.c -- d3d8on11's test program: the same D3D8 calls through whichever d3d8.dll Windows loads (Wine's own, or ours
+   next to this program with WINEDLLOVERRIDES=d3d8=n). test_d3d8on11.py runs both and compares.
+
+     t8 where       which d3d8.dll was loaded (path, file version) and the adapter it reports
+     t8 defaults    every render state and texture stage state of a fresh device, one per line ("rs N V", "tss S T V")
+     t8 basic       the milestone-1 checks, one line each: "ok: ..." or "FAIL: ..."
+     t8 scenes      feature scenes (the vertex formats, primitives, states and stage setups the game uses, data/d3d8_scope.json),
+                    each drawn on a 64x64 back buffer and read back whole: "scene NAME <hex RGB per pixel>"
+     t8 random FILE the cases of FILE (random_cases.py: states drawn from the values the game sets), each drawn on a
+                    64x64 back buffer and read back whole, as the scenes are
+     t8 threads     a second thread creates, writes and releases textures and buffers while this one draws, presents and
+                    reads back; then a textured draw must read back right. "ok:" / "FAIL:" lines
+     t8 churn       5,000 rounds of creating and releasing every kind of object; then a textured draw must read back
+                    right (ours logs at the end how many objects its executor still holds)
+     t8 frames      600 frames of Clear and Present, with a back-buffer read-back from frame 30: "presented N" lines
+     t8 orphan      (ours, remote mode) the same, ending every d8x*.exe process at frame 30: the device must end this
+                    process (exit code 3), not hang */
+#define COBJMACROS
+#include <windows.h>
+#include <d3d8.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <tlhelp32.h>
+
+static IDirect3DDevice8 *d; static int fails;
+static void check(int c, const char *what) { printf("%s: %s\n", c ? "ok" : "FAIL", what); if (!c) fails++; }
+static LRESULT CALLBACK wp(HWND h, UINT m, WPARAM w, LPARAM l) { return DefWindowProcA(h, m, w, l); }
+
+static HWND window(void) {
+  WNDCLASSA wc; memset(&wc, 0, sizeof wc); wc.lpfnWndProc = wp; wc.hInstance = GetModuleHandleA(NULL); wc.lpszClassName = "t8"; RegisterClassA(&wc);
+  return CreateWindowA("t8", "t8", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, 0, 320, 240, NULL, NULL, wc.hInstance, NULL);
+}
+static IDirect3D8 *g_d3d;
+static HRESULT make(HWND w, D3DPRESENT_PARAMETERS *pp) {
+  memset(pp, 0, sizeof *pp);
+  pp->Windowed = TRUE; pp->SwapEffect = D3DSWAPEFFECT_DISCARD; pp->BackBufferFormat = D3DFMT_X8R8G8B8;
+  pp->BackBufferWidth = 64; pp->BackBufferHeight = 64; pp->EnableAutoDepthStencil = TRUE; pp->AutoDepthStencilFormat = D3DFMT_D24S8;
+  pp->hDeviceWindow = w;
+  /* T8_REF=1: Microsoft's reference device (D3DDEVTYPE_REF), with software vertex processing as its caps allow */
+  const char *ref = getenv("T8_REF");
+  if (ref && *ref == '1')
+    return IDirect3D8_CreateDevice(g_d3d, D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, w, D3DCREATE_SOFTWARE_VERTEXPROCESSING, pp, &d);
+  return IDirect3D8_CreateDevice(g_d3d, D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, w, D3DCREATE_HARDWARE_VERTEXPROCESSING, pp, &d);
+}
+/* the back buffer's pixel at x,y, read through CopyRects into an image surface (as the game's code reads surfaces) */
+static DWORD bb_pixel(int x, int y) {
+  IDirect3DSurface8 *bb = NULL, *img = NULL; DWORD v = 0xDEADBEEF; D3DLOCKED_RECT lr;
+  IDirect3DDevice8_GetBackBuffer(d, 0, D3DBACKBUFFER_TYPE_MONO, &bb);
+  IDirect3DDevice8_CreateImageSurface(d, 64, 64, D3DFMT_X8R8G8B8, &img);
+  if (bb && img && SUCCEEDED(IDirect3DDevice8_CopyRects(d, bb, NULL, 0, img, NULL)) &&
+      SUCCEEDED(IDirect3DSurface8_LockRect(img, &lr, NULL, D3DLOCK_READONLY))) {
+    v = ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(img);
+  }
+  if (img) IDirect3DSurface8_Release(img); if (bb) IDirect3DSurface8_Release(bb);
+  return v;
+}
+
+/* ---- scenes ------------------------------------------------------------------------------------------------------- */
+typedef struct { float x, y, z, rhw; DWORD c; } VRhw;                       /* 0x44  XYZRHW|DIFFUSE */
+typedef struct { float x, y, z, rhw; DWORD c; float u, v; } VRhwT;          /* 0x144 XYZRHW|DIFFUSE|TEX1 */
+typedef struct { float x, y, z; DWORD c; } VXyz;                            /* 0x42  XYZ|DIFFUSE */
+typedef struct { float x, y, z; DWORD c; float u, v; } VXyzT;               /* 0x142 XYZ|DIFFUSE|TEX1 */
+typedef struct { float x, y, z, nx, ny, nz; DWORD c; float u, v; } VXyzN;   /* 0x152 XYZ|NORMAL|DIFFUSE|TEX1 */
+
+static void dump(const char *name) {
+  IDirect3DSurface8 *bb = NULL, *img = NULL; D3DLOCKED_RECT lr;
+  IDirect3DDevice8_GetBackBuffer(d, 0, D3DBACKBUFFER_TYPE_MONO, &bb);
+  IDirect3DDevice8_CreateImageSurface(d, 64, 64, D3DFMT_X8R8G8B8, &img);
+  printf("scene %s ", name);
+  if (bb && img && SUCCEEDED(IDirect3DDevice8_CopyRects(d, bb, NULL, 0, img, NULL)) &&
+      SUCCEEDED(IDirect3DSurface8_LockRect(img, &lr, NULL, D3DLOCK_READONLY))) {
+    for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++) printf("%06lX", (unsigned long)(((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] & 0xFFFFFF));
+    IDirect3DSurface8_UnlockRect(img);
+  } else printf("none");
+  printf("\n");
+  if (img) IDirect3DSurface8_Release(img); if (bb) IDirect3DSurface8_Release(bb);
+}
+static void begin(DWORD clear) {
+  IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, clear, 1.0f, 0);
+  IDirect3DDevice8_BeginScene(d);
+}
+/* the scene's name also goes to the debugger output, between the runtime's own messages for it and for the next */
+static void end(const char *name) { IDirect3DDevice8_EndScene(d); dump(name); OutputDebugStringA("t8: end of scene "); OutputDebugStringA(name); OutputDebugStringA("\n"); }
+static void reset_state(void) {
+  /* back to the state a scene starts from: the defaults the scenes rely on, set explicitly */
+  D3DMATRIX id; memset(&id, 0, sizeof id); id._11 = id._22 = id._33 = id._44 = 1;
+  IDirect3DDevice8_SetTransform(d, D3DTS_WORLD, &id); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &id);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &id); IDirect3DDevice8_SetTransform(d, D3DTS_TEXTURE0, &id);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_ZWRITEENABLE, TRUE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHABLENDENABLE, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHATESTENABLE, FALSE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_FOGENABLE, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_SPECULARENABLE, FALSE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_FOGTABLEMODE, D3DFOG_NONE); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGVERTEXMODE, D3DFOG_NONE);
+  for (int i = 0; i < 4; i++) {
+    IDirect3DDevice8_SetTexture(d, i, NULL);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_COLOROP, i ? D3DTOP_DISABLE : D3DTOP_MODULATE);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_ALPHAOP, i ? D3DTOP_DISABLE : D3DTOP_SELECTARG1);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_COLORARG1, D3DTA_TEXTURE); IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_COLORARG2, D3DTA_CURRENT);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_ALPHAARG1, D3DTA_TEXTURE); IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_TEXCOORDINDEX, i);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_MAGFILTER, D3DTEXF_POINT); IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_MINFILTER, D3DTEXF_POINT);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_MIPFILTER, D3DTEXF_NONE);
+    IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP); IDirect3DDevice8_SetTextureStageState(d, i, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
+  }
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+}
+/* a texture: w x h A8R8G8B8, each texel from f(x, y) */
+static IDirect3DTexture8 *texture(int w, int h, DWORD (*f)(int, int)) {
+  IDirect3DTexture8 *t = NULL; D3DLOCKED_RECT lr;
+  if (FAILED(IDirect3DDevice8_CreateTexture(d, w, h, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &t))) return NULL;
+  IDirect3DTexture8_LockRect(t, 0, &lr, NULL, 0);
+  for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] = f(x, y);
+  IDirect3DTexture8_UnlockRect(t, 0);
+  return t;
+}
+static DWORD tx_checker(int x, int y) { return ((x ^ y) & 1) ? 0xFFFFFFFF : 0xFF2040C0; }
+static DWORD tx_grad(int x, int y) { return 0x80000000 | (x * 16) << 16 | (y * 16) << 8 | 0x40; }
+static DWORD tx_alpha(int x, int y) { return (DWORD)((x * 255 / 15) << 24) | 0x00FF8000; }
+static DWORD tx_rows(int x, int y) { return 0xFF000000 | ((DWORD)(y * 2654435761u >> 8 ^ x * 40503u) & 0xFFFFFF); }
+static void persp(D3DMATRIX *m, float fov, float zn, float zf) {   /* the D3DX left-handed perspective, written out */
+  float ys = 1.0f / (float)tan(fov / 2); memset(m, 0, sizeof *m);
+  m->_11 = ys; m->_22 = ys; m->_33 = zf / (zf - zn); m->_34 = 1; m->_43 = -zn * zf / (zf - zn);
+}
+static void quad_rhw(float x0, float y0, float x1, float y1, float z, DWORD c0, DWORD c1, DWORD c2, DWORD c3) {
+  VRhw v[4] = {{x0, y0, z, 1, c0}, {x1, y0, z, 1, c1}, {x0, y1, z, 1, c2}, {x1, y1, z, 1, c3}};
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+  IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+}
+static void scenes(void) {
+  IDirect3DTexture8 *chk = texture(16, 16, tx_checker), *grad = texture(16, 16, tx_grad), *alp = texture(16, 16, tx_alpha);
+  D3DMATRIX proj, view; persp(&proj, 1.0f, 1.0f, 100.0f);
+  memset(&view, 0, sizeof view); view._11 = view._22 = view._33 = view._44 = 1; view._43 = 5;    /* camera 5 units back */
+
+  /* pre-transformed rectangles on whole and half pixel edges: where D3D8 puts pixel centres */
+  reset_state(); begin(0xFF000000);
+  quad_rhw(8, 8, 24, 20, 0.5f, 0xFFFF0000, 0xFFFF0000, 0xFFFF0000, 0xFFFF0000);
+  quad_rhw(30.5f, 8.5f, 40.5f, 20.5f, 0.5f, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00);
+  quad_rhw(8, 30, 56, 56, 0.5f, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFFFF);
+  end("rhw_rects");
+
+  /* a 16x16 texture drawn 1:1 and stretched 2x, point filtered: where texel centres fall */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+  { VRhwT v[4] = {{4, 4, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {20, 4, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {4, 20, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {20, 20, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad);
+  { VRhwT v[4] = {{28, 4, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {60, 4, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {28, 36, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {60, 36, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+  { VRhwT v[4] = {{4, 40, 0.5f, 1, 0xFFFF8080, 0, 0}, {36, 40, 0.5f, 1, 0xFFFF8080, 1, 0}, {4, 60, 0.5f, 1, 0xFFFF8080, 0, 1}, {36, 60, 0.5f, 1, 0xFFFF8080, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  end("rhw_texture");
+
+  /* a 2048x4096 A8R8G8B8 texture, as the game makes at startup (owner, 15 Oct): its one level is 32 MB, more than a
+     ring record may carry, so it goes in bands of rows (d8_link.h upload_tex). Drawn 32:1 across, 64:1 down, point
+     filtered: each pixel reads texel (32i+16, 64j+32), half a texel from any edge; every row gets its own colour */
+  { IDirect3DTexture8 *big = texture(2048, 4096, tx_rows);
+    reset_state(); begin(0xFF000000);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)big);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    { VRhwT v[4] = {{0, 0, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {64, 0, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {0, 64, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {64, 64, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+    end("big_texture");
+    IDirect3DDevice8_SetTexture(d, 0, NULL); if (big) IDirect3DTexture8_Release(big); }
+
+  /* transformed triangles with a perspective camera, depth test and culling */
+  reset_state(); begin(0xFF101010);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_CCW);
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+  { VXyz a[3] = {{-2, -1.5f, 1, 0xFFFF0000}, {0, 2, 1, 0xFFFF0000}, {2, -1.5f, 1, 0xFFFF0000}};          /* clockwise: drawn */
+    VXyz b[3] = {{-1.5f, 1.5f, 0, 0xFF00FF00}, {2.5f, 1, 2, 0xFF00FF00}, {-1, -2, 0, 0xFF00FF00}};       /* crosses a in depth */
+    VXyz c[3] = {{-2, 2, 0, 0xFF0000FF}, {2, 2, 0, 0xFF0000FF}, {0, -2, 0, 0xFF0000FF}};                 /* clockwise? listed for cull */
+    VXyz e[3] = {{-2, -2, -1, 0xFFFFFF00}, {0, -1, -1, 0xFFFFFF00}, {2, -2, -1, 0xFFFFFF00}};            /* counter-clockwise: culled */
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLELIST, 1, a, sizeof *a);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLELIST, 1, b, sizeof *b);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_CW);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_GREATER);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLELIST, 1, c, sizeof *c);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_CCW);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLELIST, 1, e, sizeof *e); }
+  end("xyz_depth_cull");
+
+  /* lighting: a directional and a point light on a grid of normals, material and vertex colour sources */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF202020);
+  { D3DMATERIAL8 m; memset(&m, 0, sizeof m); m.Diffuse.r = 1; m.Diffuse.g = 0.8f; m.Diffuse.b = 0.6f; m.Diffuse.a = 1;
+    m.Ambient.r = m.Ambient.g = m.Ambient.b = 1; m.Specular.r = m.Specular.g = m.Specular.b = 1; m.Power = 8;
+    IDirect3DDevice8_SetMaterial(d, &m);
+    D3DLIGHT8 l; memset(&l, 0, sizeof l); l.Type = D3DLIGHT_DIRECTIONAL; l.Diffuse.r = 0.7f; l.Diffuse.g = 0.7f; l.Diffuse.b = 0.9f;
+    l.Direction.x = 0.5f; l.Direction.y = -0.5f; l.Direction.z = 1;
+    IDirect3DDevice8_SetLight(d, 0, &l); IDirect3DDevice8_LightEnable(d, 0, TRUE);
+    memset(&l, 0, sizeof l); l.Type = D3DLIGHT_POINT; l.Diffuse.r = 1; l.Diffuse.g = 0.3f; l.Specular.r = l.Specular.g = l.Specular.b = 1;
+    l.Position.x = -1.5f; l.Position.y = 1; l.Position.z = -1; l.Range = 10; l.Attenuation0 = 0.2f; l.Attenuation1 = 0.3f;
+    IDirect3DDevice8_SetLight(d, 1, &l); IDirect3DDevice8_LightEnable(d, 1, TRUE); }
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+  { VXyzN g[8 * 8]; WORD ix[7 * 7 * 6]; int n = 0;
+    for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+      float fx = x / 7.0f * 2 - 1, fy = y / 7.0f * 2 - 1, nz = -(float)sqrt(fmax(0.0, 1.0 - 0.5 * (fx * fx + fy * fy)));
+      VXyzN v = {fx * 2.2f, -fy * 2.2f, 0, fx * 0.7f, -fy * 0.7f, nz, 0xFF40FF40, 0, 0}; g[y * 8 + x] = v; }
+    for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) {
+      WORD a = (WORD)(y * 8 + x); ix[n++] = a; ix[n++] = a + 1; ix[n++] = a + 8; ix[n++] = a + 1; ix[n++] = a + 9; ix[n++] = a + 8; }
+    IDirect3DDevice8_DrawIndexedPrimitiveUP(d, D3DPT_TRIANGLELIST, 0, 64, 7 * 7 * 2, ix, D3DFMT_INDEX16, g, sizeof *g);
+    /* again with the diffuse colour from the vertex, and specular on, offset right */
+    end("lit_material");
+    reset_state(); begin(0xFF000000);
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF202020);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_COLORVERTEX, TRUE);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_SPECULARENABLE, TRUE);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    IDirect3DDevice8_DrawIndexedPrimitiveUP(d, D3DPT_TRIANGLELIST, 0, 64, 7 * 7 * 2, ix, D3DFMT_INDEX16, g, sizeof *g); }
+  end("lit_vertexcolor_specular");
+  IDirect3DDevice8_LightEnable(d, 0, FALSE); IDirect3DDevice8_LightEnable(d, 1, FALSE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_COLORVERTEX, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
+
+  /* two texture stages: texture * diffuse, then + texture 2 by its alpha; TFACTOR; alpha blend and alpha test */
+  reset_state(); begin(0xFF303030);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad); IDirect3DDevice8_SetTexture(d, 1, (IDirect3DBaseTexture8 *)alp);
+  IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+  IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
+  IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_TEXCOORDINDEX, 0);
+  { VRhwT v[4] = {{2, 2, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {30, 2, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {2, 30, 0.5f, 1, 0xFF8080FF, 0, 1}, {30, 30, 0.5f, 1, 0xFF8080FF, 1, 1}};
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
+  IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLORARG1, D3DTA_TFACTOR);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_TEXTUREFACTOR, 0xFF60A040);
+  { VRhwT v[4] = {{34, 2, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {62, 2, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {34, 30, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {62, 30, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  IDirect3DDevice8_SetTexture(d, 1, NULL); IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)alp);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHABLENDENABLE, TRUE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); IDirect3DDevice8_SetRenderState(d, D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+  { VRhwT v[4] = {{2, 34, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {30, 34, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {2, 62, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {30, 62, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  IDirect3DDevice8_SetRenderState(d, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); IDirect3DDevice8_SetRenderState(d, D3DRS_DESTBLEND, D3DBLEND_ONE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHATESTENABLE, TRUE);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAREF, 0x80); IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+  { VRhwT v[4] = {{34, 34, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {62, 34, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {34, 62, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {62, 62, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  end("stages_blend_alphatest");
+
+  /* a stage whose colour op is on and whose alpha op is D3DTOP_DISABLE: "Setting the alpha operation to D3DTOP_DISABLE
+     when color blending is enabled causes undefined behavior" (DirectX 8.1, D3DTEXTUREOP). The game does it: its
+     draws from 0x1000CBF3 with stage 0 MODULATE / alpha MODULATE4X (diffuse, texture), stage 1 MODULATE4X (current,
+     TFACTOR) / alpha DISABLE, alpha test ALWAYS, blend SRCALPHA onto ONE or INVSRCALPHA (8,715 of the 34,011 draws of
+     trace 6796, 13 Oct). Here that state, blended SRCALPHA / INVSRCALPHA so that the alpha shows; and stage 0 alone
+     with its alpha op disabled. Microsoft's reference device takes alpha 1 there; Wine's d3d8 passes the previous
+     stage's alpha (stage 0: the diffuse alpha) on */
+  { static const char *nm[2] = {"alphaop_disabled_stage1", "alphaop_disabled_stage0"};
+    for (int k = 0; k < 2; k++) {
+      reset_state(); begin(0xFF203040);
+      IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)alp);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLORARG1, D3DTA_TEXTURE); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ALPHAOP, k ? D3DTOP_DISABLE : D3DTOP_MODULATE4X);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
+      if (!k) {
+        IDirect3DDevice8_SetTexture(d, 1, (IDirect3DBaseTexture8 *)grad);
+        IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLOROP, D3DTOP_MODULATE4X);
+        IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLORARG1, D3DTA_CURRENT); IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+        IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+        IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_ALPHAARG1, D3DTA_CURRENT); IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+        IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_TEXCOORDINDEX, 0);
+        IDirect3DDevice8_SetRenderState(d, D3DRS_TEXTUREFACTOR, 0x80808080);
+      }
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHATESTENABLE, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAREF, 0x60);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHABLENDENABLE, TRUE);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); IDirect3DDevice8_SetRenderState(d, D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+      VRhwT v[4] = {{4, 4, 0.5f, 1, 0x20FFC080, 0.01f, 0.01f}, {60, 4, 0.5f, 1, 0x20FFC080, 0.99f, 0.01f},
+                    {4, 60, 0.5f, 1, 0x50FFC080, 0.01f, 0.99f}, {60, 60, 0.5f, 1, 0x50FFC080, 0.99f, 0.99f}};
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+      end(nm[k]);
+    } }
+
+  /* fog: vertex linear fog, then table (pixel) linear and exp fog, on a floor going into the distance. Untextured: a
+     texture minified toward the horizon makes the picture turn on where each pixel samples, not on the fog */
+  { static const DWORD tm[3][2] = {{D3DFOG_NONE, D3DFOG_LINEAR}, {D3DFOG_LINEAR, D3DFOG_NONE}, {D3DFOG_EXP, D3DFOG_NONE}};
+    static const char *names[3] = {"fog_vertex_linear", "fog_table_linear", "fog_table_exp"};
+    for (int k = 0; k < 3; k++) {
+      reset_state(); begin(0xFF000000);
+      IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_FOGENABLE, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGCOLOR, 0xFF8090A0);
+      float fs = 5, fe = 30, fd = 0.08f;
+      IDirect3DDevice8_SetRenderState(d, D3DRS_FOGSTART, *(DWORD *)&fs); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGEND, *(DWORD *)&fe);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_FOGDENSITY, *(DWORD *)&fd);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_FOGTABLEMODE, tm[k][0]); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGVERTEXMODE, tm[k][1]);
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+      VXyzT v[4] = {{-6, -1.5f, -2, 0xFFFF4040, 0, 0}, {6, -1.5f, -2, 0xFFFF4040, 8, 0}, {-6, -1.5f, 40, 0xFFFF4040, 0, 8}, {6, -1.5f, 40, 0xFFFF4040, 8, 8}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+      end(names[k]);
+    } }
+  /* table fog on pre-transformed vertices (the game draws them: trace 6796, 0x1000CDE2 and 0x1000CBF3, FVF 0x144): a
+     floor in screen space, w from 2 (bottom) to 18 (top), z as the scenes' projection makes it, linear fog 5 to 30.
+     The depth fog reads for them: "Direct3D takes the reciprocal of the RHW element ... to reproduce true w" (DirectX
+     8.1, "Pixel Fog"), with a projection set that is not affine (as here) */
+  { reset_state(); begin(0xFF000000);
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_FOGENABLE, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGCOLOR, 0xFF8090A0);
+    float fs = 5, fe = 30;
+    IDirect3DDevice8_SetRenderState(d, D3DRS_FOGSTART, *(DWORD *)&fs); IDirect3DDevice8_SetRenderState(d, D3DRS_FOGEND, *(DWORD *)&fe);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+    float w0 = 2, w1 = 18, z0 = 100.0f / 99 * (1 - 1 / w0), z1 = 100.0f / 99 * (1 - 1 / w1);
+    VRhw v[4] = {{4, 20, z1, 1 / w1, 0xFFFF4040}, {60, 20, z1, 1 / w1, 0xFF40FF40}, {4, 60, z0, 1 / w0, 0xFFFF4040}, {60, 60, z0, 1 / w0, 0xFF40FF40}};
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+    end("fog_table_rhw"); }
+
+  /* the primitives from buffers: a vertex buffer and an index buffer with a base vertex; a strip, a fan, a list */
+  reset_state(); begin(0xFF000000);
+  { IDirect3DVertexBuffer8 *vb = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p;
+    IDirect3DDevice8_CreateVertexBuffer(d, 32 * sizeof(VRhw), D3DUSAGE_WRITEONLY, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_MANAGED, &vb);
+    IDirect3DDevice8_CreateIndexBuffer(d, 32 * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib);
+    IDirect3DVertexBuffer8_Lock(vb, 0, 0, &p, 0);
+    VRhw *v = (VRhw *)p;
+    VRhw strip[4] = {{4, 4, 0.5f, 1, 0xFFFF0000}, {28, 4, 0.5f, 1, 0xFF00FF00}, {4, 28, 0.5f, 1, 0xFF0000FF}, {28, 28, 0.5f, 1, 0xFFFFFF00}};
+    VRhw fan[6] = {{46, 16, 0.5f, 1, 0xFFFFFFFF}, {46, 2, 0.5f, 1, 0xFFFF0000}, {60, 10, 0.5f, 1, 0xFF00FF00}, {60, 24, 0.5f, 1, 0xFF0000FF},
+                   {46, 30, 0.5f, 1, 0xFFFF00FF}, {32, 22, 0.5f, 1, 0xFF00FFFF}};
+    VRhw list[6] = {{4, 36, 0.5f, 1, 0xFFFF8000}, {28, 36, 0.5f, 1, 0xFFFF8000}, {4, 60, 0.5f, 1, 0xFF0080FF},
+                    {36, 36, 0.5f, 1, 0xFF80FF80}, {60, 60, 0.5f, 1, 0xFF80FF80}, {36, 60, 0.5f, 1, 0xFF808080}};
+    memcpy(v, strip, sizeof strip); memcpy(v + 4, fan, sizeof fan); memcpy(v + 10, list, sizeof list);
+    IDirect3DVertexBuffer8_Unlock(vb);
+    IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, 0);
+    WORD ix[6] = {0, 1, 2, 3, 4, 5}; memcpy(p, ix, sizeof ix);
+    IDirect3DIndexBuffer8_Unlock(ib);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_SetStreamSource(d, 0, vb, sizeof(VRhw));
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLEFAN, 4, 4);
+    IDirect3DDevice8_SetIndices(d, ib, 10);                                 /* base vertex 10: the list */
+    IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, 6, 0, 2);
+    IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0); IDirect3DDevice8_SetIndices(d, NULL, 0);
+    IDirect3DVertexBuffer8_Release(vb); IDirect3DIndexBuffer8_Release(ib); }
+  end("buffers_strip_fan_indexed");
+
+  /* a declaration (no shader code), as the game makes its vertex shaders; and a fan through ...UP. The position is
+     FLOAT3: Microsoft's debug runtime rejects FLOAT4 ("Position register must be FLOAT3 for fixed-function pipeline"),
+     and its retail runtime then draws the fan without the colours, so a FLOAT4 position is not defined behaviour. */
+  reset_state(); begin(0xFF000000);
+  { static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_REG(5, D3DVSDT_D3DCOLOR), D3DVSD_END()};
+    DWORD h = 0;
+    IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetVertexShader(d, h);
+    struct { float x, y, z; DWORD c; } v[5] = {{0, 0, 0, 0xFFFFFFFF}, {0, 2, 0, 0xFFFF0000}, {2, 0, 0, 0xFF00FF00},
+                                                {0, -2, 0, 0xFF0000FF}, {-2, 0, 0, 0xFFFFFF00}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLEFAN, 3, v, sizeof v[0]);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DeleteVertexShader(d, h); }
+  end("declaration_fan");
+
+  /* texture coordinates generated from the camera-space position, through a texture transform */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+  { D3DMATRIX t; memset(&t, 0, sizeof t); t._11 = 0.5f; t._22 = -0.5f; t._33 = 1; t._44 = 1; t._41 = 0.25f; t._42 = 0.125f;
+    IDirect3DDevice8_SetTransform(d, D3DTS_TEXTURE0, &t);
+    VXyz v[4] = {{-2, 2, 0, 0xFFFFFFFF}, {2, 2, 0, 0xFFFFFFFF}, {-2, -2, 0, 0xFFFFFFFF}, {2, -2, 0, 0xFFFFFFFF}};
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  end("texgen_cameraspace_transform");
+
+  /* a 2D texture transform on the vertex's own coordinates (translation in the third row) */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+  { D3DMATRIX t; memset(&t, 0, sizeof t); t._11 = 2; t._22 = 1; t._33 = 1; t._44 = 1; t._31 = 0.25f; t._32 = 0.5f;
+    IDirect3DDevice8_SetTransform(d, D3DTS_TEXTURE0, &t);
+    VRhwT v[4] = {{4, 4, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {60, 4, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {4, 60, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {60, 60, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+  end("texture_transform_2d");
+
+  /* flat shading on a list, a strip and a fan (the colour of each triangle's first vertex) */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_SHADEMODE, D3DSHADE_FLAT);
+  quad_rhw(4, 4, 30, 30, 0.5f, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFFFF);
+  { VRhw l[6] = {{34, 4, 0.5f, 1, 0xFFFF8000}, {60, 4, 0.5f, 1, 0xFF00FF00}, {34, 30, 0.5f, 1, 0xFF0000FF},
+                 {60, 8, 0.5f, 1, 0xFF00FFFF}, {60, 30, 0.5f, 1, 0xFFFF00FF}, {38, 30, 0.5f, 1, 0xFFFFFF00}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLELIST, 2, l, sizeof *l);
+    VRhw f[5] = {{16, 46, 0.5f, 1, 0xFFFFFFFF}, {16, 34, 0.5f, 1, 0xFFFF0000}, {28, 46, 0.5f, 1, 0xFF00FF00},
+                 {16, 60, 0.5f, 1, 0xFF0000FF}, {4, 46, 0.5f, 1, 0xFFFFFF00}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLEFAN, 3, f, sizeof *f); }
+  IDirect3DDevice8_SetRenderState(d, D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+  end("flat_shading");
+
+  /* ZBIAS: coplanar quads, the later one with ZBIAS 8 (as the game sets it) and ZFUNC LESS */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_LESS);
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+  { VXyz a[4] = {{-2, 2, 3, 0xFF0000FF}, {2, 2, -1, 0xFF0000FF}, {-2, -2, 3, 0xFF0000FF}, {2, -2, -1, 0xFF0000FF}};
+    VXyz b[4] = {{-2, 2, 3, 0xFFFFFF00}, {2, 2, -1, 0xFFFFFF00}, {-2, -2, 3, 0xFFFFFF00}, {2, -2, -1, 0xFFFFFF00}};
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, a, sizeof *a);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZBIAS, 8);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, b, sizeof *b);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZBIAS, 0); }
+  end("zbias");
+
+  /* the blend modes the game sets: SRCBLEND 5/1/2 with DESTBLEND 2/6/4, BLENDOP ADD and REVSUBTRACT */
+  reset_state(); begin(0xFF406080);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHABLENDENABLE, TRUE);
+  { static const DWORD m[6][3] = {{D3DBLEND_SRCALPHA, D3DBLEND_ONE, D3DBLENDOP_ADD}, {D3DBLEND_SRCALPHA, D3DBLEND_INVSRCALPHA, D3DBLENDOP_ADD},
+                                  {D3DBLEND_ZERO, D3DBLEND_SRCCOLOR, D3DBLENDOP_ADD}, {D3DBLEND_ONE, D3DBLEND_ONE, D3DBLENDOP_REVSUBTRACT},
+                                  {D3DBLEND_SRCALPHA, D3DBLEND_ONE, D3DBLENDOP_REVSUBTRACT}, {D3DBLEND_ONE, D3DBLEND_ZERO, D3DBLENDOP_ADD}};
+    for (int i = 0; i < 6; i++) {
+      IDirect3DDevice8_SetRenderState(d, D3DRS_SRCBLEND, m[i][0]); IDirect3DDevice8_SetRenderState(d, D3DRS_DESTBLEND, m[i][1]);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_BLENDOP, m[i][2]);
+      float x = 2.0f + (i % 3) * 20, y = 2.0f + (i / 3) * 30;
+      quad_rhw(x, y, x + 18, y + 28, 0.5f, 0x80FF8040, 0x20FF8040, 0xC040A0FF, 0xFF40A0FF);
+    }
+    IDirect3DDevice8_SetRenderState(d, D3DRS_BLENDOP, D3DBLENDOP_ADD); }
+  end("blend_modes");
+
+  /* stage 1 from a cube texture through the camera-space reflection vector, COUNT3 (as the game sets stage 1) */
+  reset_state(); begin(0xFF000000);
+  { IDirect3DCubeTexture8 *cube = NULL;
+    IDirect3DDevice8_CreateCubeTexture(d, 8, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &cube);
+    static const DWORD fc[6] = {0xFFFF0000, 0xFF00FFFF, 0xFF00FF00, 0xFFFF00FF, 0xFF0000FF, 0xFFFFFF00};
+    for (int f = 0; cube && f < 6; f++) { D3DLOCKED_RECT lr;
+      IDirect3DCubeTexture8_LockRect(cube, (D3DCUBEMAP_FACES)f, 0, &lr, NULL, 0);
+      for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] = ((x ^ y) & 2) ? fc[f] : (fc[f] & 0xFF7F7F7F);
+      IDirect3DCubeTexture8_UnlockRect(cube, (D3DCUBEMAP_FACES)f, 0); }
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad);
+    IDirect3DDevice8_SetTexture(d, 1, (IDirect3DBaseTexture8 *)cube);
+    IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
+    IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
+    IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR | 1);
+    IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT3);
+    D3DMATRIX r; memset(&r, 0, sizeof r); r._11 = (float)cos(0.6); r._13 = (float)-sin(0.6); r._22 = 1; r._31 = (float)sin(0.6); r._33 = (float)cos(0.6); r._44 = 1;
+    IDirect3DDevice8_SetTransform(d, D3DTS_TEXTURE1, &r);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    VXyzN g[8 * 8]; WORD ix[7 * 7 * 6]; int n = 0;
+    for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+      float fx = x / 7.0f * 2 - 1, fy = y / 7.0f * 2 - 1, nz = -(float)sqrt(fmax(0.0, 1.0 - 0.5 * (fx * fx + fy * fy)));
+      VXyzN v = {fx * 2.2f, -fy * 2.2f, 0, fx * 0.7f, -fy * 0.7f, nz, 0xFFFFFFFF, x / 7.0f, y / 7.0f}; g[y * 8 + x] = v; }
+    for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) {
+      WORD a = (WORD)(y * 8 + x); ix[n++] = a; ix[n++] = a + 1; ix[n++] = a + 8; ix[n++] = a + 1; ix[n++] = a + 9; ix[n++] = a + 8; }
+    IDirect3DDevice8_DrawIndexedPrimitiveUP(d, D3DPT_TRIANGLELIST, 0, 64, 7 * 7 * 2, ix, D3DFMT_INDEX16, g, sizeof *g);
+    /* the camera-space normal as well, at the right with 0x10001 (seen in the game's traces) */
+    IDirect3DDevice8_SetTextureStageState(d, 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACENORMAL | 1);
+    D3DMATRIX w; memset(&w, 0, sizeof w); w._11 = w._22 = w._33 = 0.4f; w._44 = 1; w._41 = 1.4f; w._42 = -1.4f;
+    IDirect3DDevice8_SetTransform(d, D3DTS_WORLD, &w);
+    IDirect3DDevice8_DrawIndexedPrimitiveUP(d, D3DPT_TRIANGLELIST, 0, 64, 7 * 7 * 2, ix, D3DFMT_INDEX16, g, sizeof *g);
+    IDirect3DDevice8_SetTexture(d, 1, NULL);
+    if (cube) IDirect3DCubeTexture8_Release(cube); }
+  end("texgen_reflection_cube");
+
+  /* a DXT1 texture (the game's textures are block compressed), linear filtered, with a mip chain */
+  reset_state(); begin(0xFF000000);
+  { IDirect3DTexture8 *t = NULL;
+    IDirect3DDevice8_CreateTexture(d, 16, 16, 0, 0, D3DFMT_DXT1, D3DPOOL_MANAGED, &t);
+    for (UINT l = 0; t && l < IDirect3DTexture8_GetLevelCount(t); l++) { D3DLOCKED_RECT lr; D3DSURFACE_DESC sd;
+      IDirect3DTexture8_GetLevelDesc(t, l, &sd); IDirect3DTexture8_LockRect(t, l, &lr, NULL, 0);
+      UINT bw = (sd.Width + 3) / 4, bh = (sd.Height + 3) / 4;
+      for (UINT y = 0; y < bh; y++) for (UINT x = 0; x < bw; x++) {
+        WORD *b = (WORD *)((BYTE *)lr.pBits + y * lr.Pitch + x * 8);
+        b[0] = (WORD)(0xF800 >> (l * 5 % 11)) | 0x001F; b[1] = (WORD)(0x07E0 + x * 0x0841 + y * 0x1000);
+        b[2] = 0x1B4E; b[3] = 0xE4B1; }
+      IDirect3DTexture8_UnlockRect(t, l); }
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t);
+    IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+    IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MIPFILTER, D3DTEXF_POINT);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    { VRhwT v[4] = {{2, 2, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {34, 2, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {2, 34, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {34, 34, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+    { VRhwT v[4] = {{38, 38, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {46, 38, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {38, 46, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {46, 46, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+    /* FVF 0x104 (XYZRHW|TEX1, no colour: the diffuse reads as white) */
+    { struct { float x, y, z, rhw, u, v; } q[4] = {{2, 38, 0.5f, 1, 0, 0}, {34, 38, 0.5f, 1, 1, 0}, {2, 62, 0.5f, 1, 0, 1}, {34, 62, 0.5f, 1, 1, 1}};
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_TEX1);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]); }
+    if (t) IDirect3DTexture8_Release(t); }
+  end("dxt1_mips_fvf104");
+
+  /* eight lights at once: point and spot lights around a grid, normals renormalized, ambient from the material */
+  reset_state(); begin(0xFF000000);
+  IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF42404C);
+  IDirect3DDevice8_SetRenderState(d, D3DRS_COLORVERTEX, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_NORMALIZENORMALS, TRUE);
+  { D3DMATERIAL8 m; memset(&m, 0, sizeof m); m.Diffuse.r = m.Diffuse.g = m.Diffuse.b = m.Diffuse.a = 1; m.Ambient = m.Diffuse;
+    IDirect3DDevice8_SetMaterial(d, &m);
+    for (int i = 0; i < 8; i++) {
+      D3DLIGHT8 l; memset(&l, 0, sizeof l); float a = i * 0.785f;
+      l.Type = i % 3 == 2 ? D3DLIGHT_SPOT : D3DLIGHT_POINT;
+      l.Diffuse.r = (i & 1) ? 0.6f : 0.1f; l.Diffuse.g = (i & 2) ? 0.6f : 0.1f; l.Diffuse.b = (i & 4) ? 0.6f : 0.2f;
+      l.Ambient.r = l.Ambient.g = l.Ambient.b = 0.02f;
+      l.Position.x = 2.2f * (float)cos(a); l.Position.y = 2.2f * (float)sin(a); l.Position.z = -1.2f;
+      l.Direction.x = -l.Position.x; l.Direction.y = -l.Position.y; l.Direction.z = 1.5f;
+      l.Range = 4; l.Attenuation0 = 0.5f; l.Attenuation1 = 0.4f; l.Falloff = 1; l.Theta = 0.4f; l.Phi = 1.0f;
+      IDirect3DDevice8_SetLight(d, i, &l); IDirect3DDevice8_LightEnable(d, i, TRUE); }
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    VXyzN g[8 * 8]; WORD ix[7 * 7 * 6]; int n = 0;
+    for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+      float fx = x / 7.0f * 2 - 1, fy = y / 7.0f * 2 - 1;
+      VXyzN v = {fx * 2.4f, -fy * 2.4f, 0, fx * 3, -fy * 3, -4, 0xFFFFFFFF, 0, 0}; g[y * 8 + x] = v; }
+    for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) {
+      WORD a = (WORD)(y * 8 + x); ix[n++] = a; ix[n++] = a + 1; ix[n++] = a + 8; ix[n++] = a + 1; ix[n++] = a + 9; ix[n++] = a + 8; }
+    IDirect3DDevice8_DrawIndexedPrimitiveUP(d, D3DPT_TRIANGLELIST, 0, 64, 7 * 7 * 2, ix, D3DFMT_INDEX16, g, sizeof *g);
+    for (int i = 0; i < 8; i++) IDirect3DDevice8_LightEnable(d, i, FALSE); }
+  end("lights_8");
+
+  /* the game's character layout (run 2's captured declaration, handle 3): position, normal and texcoord each from
+     its own stream (SkinAndDrawV2's streams 0, 1, 2, strides 12, 12, 8), indexed, lit, textured */
+  reset_state(); begin(0xFF000000);
+  { static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_STREAM(1), D3DVSD_REG(3, D3DVSDT_FLOAT3),
+                                 D3DVSD_STREAM(2), D3DVSD_REG(7, D3DVSDT_FLOAT2), D3DVSD_END()};
+    DWORD h = 0; IDirect3DVertexBuffer8 *vp = NULL, *vn = NULL, *vt = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p;
+    IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    IDirect3DDevice8_CreateVertexBuffer(d, 64 * 12, D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &vp);
+    IDirect3DDevice8_CreateVertexBuffer(d, 64 * 12, D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &vn);
+    IDirect3DDevice8_CreateVertexBuffer(d, 64 * 8, D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &vt);
+    IDirect3DDevice8_CreateIndexBuffer(d, 7 * 7 * 6 * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib);
+    float *P, *N, *T; WORD *I;
+    IDirect3DVertexBuffer8_Lock(vp, 0, 0, &p, 0); P = (float *)p;
+    IDirect3DVertexBuffer8_Lock(vn, 0, 0, &p, 0); N = (float *)p;
+    IDirect3DVertexBuffer8_Lock(vt, 0, 0, &p, 0); T = (float *)p;
+    for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+      int k = y * 8 + x; float fx = x / 7.0f * 2 - 1, fy = y / 7.0f * 2 - 1;
+      P[3 * k] = fx * 2.2f; P[3 * k + 1] = -fy * 2.2f; P[3 * k + 2] = 0.3f * fx * fx;
+      N[3 * k] = fx * 0.6f; N[3 * k + 1] = -fy * 0.6f; N[3 * k + 2] = -1;
+      /* 1.9, not 2: at exactly u = 1.0 between vertices point sampling ties between two texels, and Wine (which nudges
+         GL geometry for D3D's fill convention, wined3d get_projection_matrix) and D3D11 break the tie differently;
+         which way Windows' D3D8 does is not established (docs/HISTORY.md, 14 Oct corrections) */
+      T[2 * k] = x / 7.0f * 1.9f; T[2 * k + 1] = y / 7.0f * 1.9f; }
+    IDirect3DVertexBuffer8_Unlock(vp); IDirect3DVertexBuffer8_Unlock(vn); IDirect3DVertexBuffer8_Unlock(vt);
+    IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, 0); I = (WORD *)p; int n = 0;
+    for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) {
+      WORD a = (WORD)(y * 8 + x); I[n++] = a; I[n++] = a + 1; I[n++] = a + 8; I[n++] = a + 1; I[n++] = a + 9; I[n++] = a + 8; }
+    IDirect3DIndexBuffer8_Unlock(ib);
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF42404C);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+    D3DMATERIAL8 m; memset(&m, 0, sizeof m); m.Diffuse.r = m.Diffuse.g = m.Diffuse.b = m.Diffuse.a = 1; m.Ambient = m.Diffuse;
+    IDirect3DDevice8_SetMaterial(d, &m);
+    D3DLIGHT8 l; memset(&l, 0, sizeof l); l.Type = D3DLIGHT_DIRECTIONAL; l.Diffuse.r = l.Diffuse.g = l.Diffuse.b = 0.8f;
+    l.Direction.x = 0.4f; l.Direction.y = -0.6f; l.Direction.z = 1;
+    IDirect3DDevice8_SetLight(d, 0, &l); IDirect3DDevice8_LightEnable(d, 0, TRUE);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad);
+    IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
+    IDirect3DDevice8_SetVertexShader(d, h);
+    IDirect3DDevice8_SetStreamSource(d, 0, vp, 12); IDirect3DDevice8_SetStreamSource(d, 1, vn, 12); IDirect3DDevice8_SetStreamSource(d, 2, vt, 8);
+    IDirect3DDevice8_SetIndices(d, ib, 0);
+    IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, 64, 0, 7 * 7 * 2);
+    IDirect3DDevice8_LightEnable(d, 0, FALSE);
+    for (int i = 0; i < 3; i++) IDirect3DDevice8_SetStreamSource(d, i, NULL, 0);
+    IDirect3DDevice8_SetIndices(d, NULL, 0); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DeleteVertexShader(d, h);
+    IDirect3DVertexBuffer8_Release(vp); IDirect3DVertexBuffer8_Release(vn); IDirect3DVertexBuffer8_Release(vt); IDirect3DIndexBuffer8_Release(ib); }
+  end("three_stream_declaration");
+  /* draw_merge: character parts as the game draws them (SkinAndDrawV2): each part's positions and normals in dynamic
+     buffers of its own, written before its draws, in two sets (A and B); its texcoords and indices static; each of
+     its two index ranges drawn from set A and then from set B. With nothing else changed between them the draws
+     differ only in buffers and range. The quads overlap with the depth test off, so their order shows. Part 2 has its
+     vertices at 4 in its buffers (a base vertex), part 3 a different material (a run ends there), and part 4 writes
+     part 0's buffers again and draws from them (the earlier draws must keep what they read) */
+  reset_state(); begin(0xFF101018);
+  { static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_STREAM(1), D3DVSD_REG(3, D3DVSDT_FLOAT3),
+                                 D3DVSD_STREAM(2), D3DVSD_REG(7, D3DVSDT_FLOAT2), D3DVSD_END()};
+    DWORD h = 0; IDirect3DVertexBuffer8 *vp[4][2] = {{0}}, *vn[4][2] = {{0}}, *vt[5] = {0}; IDirect3DIndexBuffer8 *ib[5] = {0}; BYTE *p;
+    IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    for (int k = 0; k < 4; k++) for (int ab = 0; ab < 2; ab++) {
+      IDirect3DDevice8_CreateVertexBuffer(d, 8 * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vp[k][ab]);
+      IDirect3DDevice8_CreateVertexBuffer(d, 8 * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vn[k][ab]); }
+    for (int k = 0; k < 5; k++) {
+      IDirect3DDevice8_CreateVertexBuffer(d, 8 * 8, D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &vt[k]);
+      IDirect3DDevice8_CreateIndexBuffer(d, 6 * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib[k]);
+      if (vt[k] && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vt[k], 0, 0, &p, 0))) { float *T = (float *)p;
+        for (int v = 0; v < 8; v++) { T[2 * v] = (k + 0.5f) / 5.0f * 0.9f; T[2 * v + 1] = ((v & 3) < 2 ? 0.1f : 0.8f); }
+        IDirect3DVertexBuffer8_Unlock(vt[k]); }
+      if (ib[k] && SUCCEEDED(IDirect3DIndexBuffer8_Lock(ib[k], 0, 0, &p, 0))) { WORD *I = (WORD *)p;
+        I[0] = 0; I[1] = 1; I[2] = 2; I[3] = 1; I[4] = 3; I[5] = 2; IDirect3DIndexBuffer8_Unlock(ib[k]); } }
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF808080);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE);
+    D3DMATERIAL8 m; memset(&m, 0, sizeof m); m.Diffuse.r = m.Diffuse.g = m.Diffuse.b = m.Diffuse.a = 1; m.Ambient = m.Diffuse;
+    IDirect3DDevice8_SetMaterial(d, &m);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad);
+    IDirect3DDevice8_SetVertexShader(d, h);
+    for (int part = 0; part < 5; part++) {
+      int k = part == 4 ? 0 : part, base = part == 2 ? 4 : 0;
+      if (part == 3) { m.Ambient.g = 0.4f; IDirect3DDevice8_SetMaterial(d, &m); }
+      for (int ab = 0; ab < 2; ab++) {
+        float x0 = -2.0f + part * 0.7f + ab * 0.35f, y0 = 1.6f - part * 0.55f - ab * 0.3f, w = 1.3f;
+        if (vp[k][ab] && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vp[k][ab], 0, 0, &p, D3DLOCK_DISCARD))) { float *P = (float *)p + 3 * base;
+          float q[12] = {x0, y0, 0.2f, x0 + w, y0, 0.2f, x0, y0 - w, 0.2f, x0 + w, y0 - w, 0.2f}; memset(p, 0, 8 * 12); memcpy(P, q, sizeof q);
+          IDirect3DVertexBuffer8_Unlock(vp[k][ab]); }
+        if (vn[k][ab] && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vn[k][ab], 0, 0, &p, D3DLOCK_DISCARD))) { float *N = (float *)p;
+          for (int v = 0; v < 8; v++) { N[3 * v] = 0; N[3 * v + 1] = 0; N[3 * v + 2] = -1; } IDirect3DVertexBuffer8_Unlock(vn[k][ab]); }
+      }
+      IDirect3DDevice8_SetStreamSource(d, 2, vt[part], 8); IDirect3DDevice8_SetIndices(d, ib[part], base);
+      for (int rec = 0; rec < 2; rec++) for (int ab = 0; ab < 2; ab++) {
+        IDirect3DDevice8_SetStreamSource(d, 0, vp[k][ab], 12); IDirect3DDevice8_SetStreamSource(d, 1, vn[k][ab], 12);
+        IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, 4, rec * 3, 1);
+      }
+    }
+    for (int i = 0; i < 3; i++) IDirect3DDevice8_SetStreamSource(d, i, NULL, 0);
+    IDirect3DDevice8_SetIndices(d, NULL, 0); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DeleteVertexShader(d, h);
+    for (int k = 0; k < 4; k++) for (int ab = 0; ab < 2; ab++) { if (vp[k][ab]) IDirect3DVertexBuffer8_Release(vp[k][ab]); if (vn[k][ab]) IDirect3DVertexBuffer8_Release(vn[k][ab]); }
+    for (int k = 0; k < 5; k++) { if (vt[k]) IDirect3DVertexBuffer8_Release(vt[k]); if (ib[k]) IDirect3DIndexBuffer8_Release(ib[k]); } }
+  end("draw_merge");
+  /* gpu skinning (d8_skin.h): one mesh in the game's skinned layout (32 one-bone vertices, 32 two-bone, 4 duplicates;
+     a bone list that names bones 5, 9 and 130), drawn three times side by side: skinned here on the CPU with the sums
+     Model_SkinVerticesCpu makes, written to dynamic buffers and drawn (scene skin_cpu); and handed to D8ON11_Skin
+     with the same source and bones (scene skin_gpu: where the export is missing or refuses, skinned here too, so the
+     scene draws on any Direct3D 8). In both, the third copy is a job followed by a lock that writes the buffers again
+     (the CPU's result with other bones): the write must win. The mirrored variant (shift 7) is the second copy. */
+  for (int gpu = 0; gpu < 2; gpu++) {
+    static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_STREAM(1), D3DVSD_REG(3, D3DVSDT_FLOAT3),
+                                 D3DVSD_STREAM(2), D3DVSD_REG(7, D3DVSDT_FLOAT2), D3DVSD_END()};
+    typedef struct { unsigned size; void *pos, *nrm, *key; unsigned variant; const float *src; unsigned count1, count2;
+                     const unsigned short *words; unsigned shift; const unsigned short *bonelist; const unsigned short *dups; unsigned ndups;
+                     const float *matrices; } Skin;
+    typedef int (__stdcall *PFN_SKIN)(const Skin *);
+    PFN_SKIN pskin = (PFN_SKIN)(void *)GetProcAddress(GetModuleHandleA("d3d8.dll"), "D8ON11_Skin");
+    enum { C1 = 32, C2 = 32, ND = 4, NV = C1 + C2 + ND };
+    static float src[C1 * 6 + C2 * 14], mats[131 * 16]; static unsigned short words[2 * (C1 + C2)], dups[ND] = {0, 7, 33, 63};
+    static const unsigned short blist[3] = {5, 9, 130};
+    for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+      int k = y * 8 + x; float px = x / 7.0f * 1.2f - 0.6f, py = 0.6f - y / 7.0f * 1.2f, pz = 0.25f * px * px, nx = px * 0.5f, ny = py * 0.5f, nz = -1;
+      if (k < C1) { float *f = src + 6 * k; f[0] = px; f[1] = py; f[2] = pz; f[3] = nx; f[4] = ny; f[5] = nz;
+        words[2 * k] = (unsigned short)((x & 1) | (((x >> 1) & 1) << 7)); words[2 * k + 1] = 0; }
+      else { float w = (y - 3) / 5.0f, u = 1 - w, *f = src + 6 * C1 + 14 * (k - C1);
+        f[0] = px * w; f[1] = px * u; f[2] = py * w; f[3] = py * u; f[4] = pz * w; f[5] = pz * u; f[6] = w; f[7] = u;
+        f[8] = nx * w; f[9] = nx * u; f[10] = ny * w; f[11] = ny * u; f[12] = nz * w; f[13] = nz * u;
+        words[2 * k] = (unsigned short)(1 | (2 << 7)); words[2 * k + 1] = (unsigned short)(2 | (0 << 7)); }
+    }
+    DWORD h = 0; IDirect3DVertexBuffer8 *vp = NULL, *vn = NULL, *vt = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p;
+    IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    IDirect3DDevice8_CreateVertexBuffer(d, NV * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vp);
+    IDirect3DDevice8_CreateVertexBuffer(d, NV * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vn);
+    IDirect3DDevice8_CreateVertexBuffer(d, NV * 8, D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &vt);
+    IDirect3DDevice8_CreateIndexBuffer(d, (7 * 7 * 6 + 6) * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib);
+    if (vt && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vt, 0, 0, &p, 0))) { float *T = (float *)p;
+      for (int k = 0; k < NV; k++) { int q = k < C1 + C2 ? k : dups[k - C1 - C2]; T[2 * k] = (q % 8) / 7.0f * 0.9f; T[2 * k + 1] = (q / 8) / 7.0f * 0.9f; }
+      IDirect3DVertexBuffer8_Unlock(vt); }
+    if (ib && SUCCEEDED(IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, 0))) { WORD *I = (WORD *)p; int n = 0;
+      for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) { WORD a0 = (WORD)(y * 8 + x); I[n++] = a0; I[n++] = a0 + 1; I[n++] = a0 + 8; I[n++] = a0 + 1; I[n++] = a0 + 9; I[n++] = a0 + 8; }
+      I[n++] = C1 + C2; I[n++] = C1 + C2 + 1; I[n++] = C1 + C2 + 2; I[n++] = C1 + C2 + 1; I[n++] = C1 + C2 + 3; I[n++] = C1 + C2 + 2;
+      IDirect3DIndexBuffer8_Unlock(ib); }
+    reset_state(); begin(0xFF181018);
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF404040);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE); IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+    { D3DMATERIAL8 m; memset(&m, 0, sizeof m); m.Diffuse.r = m.Diffuse.g = m.Diffuse.b = m.Diffuse.a = 1; m.Ambient = m.Diffuse; IDirect3DDevice8_SetMaterial(d, &m);
+      D3DLIGHT8 l; memset(&l, 0, sizeof l); l.Type = D3DLIGHT_DIRECTIONAL; l.Diffuse.r = l.Diffuse.g = l.Diffuse.b = 0.8f; l.Direction.x = 0.4f; l.Direction.y = -0.6f; l.Direction.z = 1;
+      IDirect3DDevice8_SetLight(d, 0, &l); IDirect3DDevice8_LightEnable(d, 0, TRUE); }
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)grad);
+    IDirect3DDevice8_SetVertexShader(d, h);
+    IDirect3DDevice8_SetStreamSource(d, 0, vp, 12); IDirect3DDevice8_SetStreamSource(d, 1, vn, 12); IDirect3DDevice8_SetStreamSource(d, 2, vt, 8);
+    IDirect3DDevice8_SetIndices(d, ib, 0);
+    int handed = 0;
+    for (int copy = 0; copy < 3; copy++) {
+      /* the bones for this copy: 5, 9 and 130 (through the list); a rotation about z and a shift each */
+      memset(mats, 0, sizeof mats);
+      for (int b = 0; b < 3; b++) { float *M = mats + 16 * blist[b], an = 0.25f * (b - 1) * (copy + 1), c = cosf(an), sn = sinf(an);
+        M[0] = c; M[1] = sn; M[4] = -sn; M[5] = c; M[10] = 1; M[15] = 1; M[12] = -1.5f + copy * 1.5f + 0.1f * b; M[13] = 0.15f * b - 0.1f; M[14] = 0.1f * b; }
+      int shift = copy == 1 ? 7 : 0, did = 0;
+      for (int pass = 0; pass < (copy == 2 ? 2 : 1); pass++) {
+        if (pass == 1) for (int b = 0; b < 3; b++) mats[16 * blist[b] + 13] -= 0.9f;     /* the write after the job: other bones */
+        if (gpu && pskin && !(copy == 2 && pass == 1)) {
+          Skin j = {sizeof j, vp, vn, ib, (unsigned)(copy == 1), src, C1, C2, words, (unsigned)shift, blist, dups, ND, mats};
+          did = pskin(&j); handed += did;
+          if (did) continue;
+        }
+        if (copy == 2 && pass == 0 && !(gpu && pskin)) continue;      /* (on the CPU the first write would only be replaced) */
+        float *P = NULL, *N = NULL;
+        if (SUCCEEDED(IDirect3DVertexBuffer8_Lock(vp, 0, 0, &p, D3DLOCK_DISCARD))) P = (float *)p;
+        if (SUCCEEDED(IDirect3DVertexBuffer8_Lock(vn, 0, 0, &p, D3DLOCK_DISCARD))) N = (float *)p;
+        for (int k = 0; P && N && k < NV; k++) {
+          int q = k < C1 + C2 ? k : dups[k - C1 - C2]; float o[6] = {0};
+          const float *A = mats + 16 * blist[(words[2 * q] >> shift) & 0x7F], *B = mats + 16 * blist[(words[2 * q + 1] >> shift) & 0x7F];
+          if (q < C1) { const float *f = src + 6 * q;
+            for (int c = 0; c < 3; c++) { o[c] = f[0] * A[c] + f[1] * A[4 + c] + f[2] * A[8 + c] + A[12 + c]; o[3 + c] = f[3] * A[c] + f[4] * A[4 + c] + f[5] * A[8 + c]; } }
+          else { const float *f = src + 6 * C1 + 14 * (q - C1);
+            for (int c = 0; c < 3; c++) { o[c] = f[0] * A[c] + f[2] * A[4 + c] + f[4] * A[8 + c] + f[6] * A[12 + c] + f[1] * B[c] + f[3] * B[4 + c] + f[5] * B[8 + c] + f[7] * B[12 + c];
+              o[3 + c] = f[8] * A[c] + f[10] * A[4 + c] + f[12] * A[8 + c] + f[9] * B[c] + f[11] * B[4 + c] + f[13] * B[8 + c]; } }
+          memcpy(P + 3 * k, o, 12); memcpy(N + 3 * k, o + 3, 12);
+        }
+        if (P) IDirect3DVertexBuffer8_Unlock(vp); if (N) IDirect3DVertexBuffer8_Unlock(vn);
+      }
+      IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, NV, 0, 7 * 7);
+      IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, NV, 7 * 7 * 6, 2);
+      /* a draw from memory while the skinned buffers are still bound (the game's occlusion rectangles come like this),
+         then the mesh's shader and stream 0 again (a draw from memory unsets stream 0) */
+      { float x0 = 20 + 70 * copy; struct { float x, y, z, w; DWORD c; } q[4] = {{x0, 20, 0.5f, 1, 0xFF30C060}, {x0 + 50, 20, 0.5f, 1, 0xFF30C060}, {x0, 50, 0.5f, 1, 0xFFC03060}, {x0 + 50, 50, 0.5f, 1, 0xFFC03060}};
+        IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+        IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+        IDirect3DDevice8_SetVertexShader(d, h); IDirect3DDevice8_SetStreamSource(d, 0, vp, 12); }
+    }
+    if (gpu) printf("skin: %d jobs taken by D8ON11_Skin\n", handed);
+    IDirect3DDevice8_LightEnable(d, 0, FALSE);
+    for (int i = 0; i < 3; i++) IDirect3DDevice8_SetStreamSource(d, i, NULL, 0);
+    IDirect3DDevice8_SetIndices(d, NULL, 0); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_DeleteVertexShader(d, h);
+    if (vp) IDirect3DVertexBuffer8_Release(vp); if (vn) IDirect3DVertexBuffer8_Release(vn); if (vt) IDirect3DVertexBuffer8_Release(vt); if (ib) IDirect3DIndexBuffer8_Release(ib);
+    end(gpu ? "skin_gpu" : "skin_cpu");
+  }
+
+  /* a shader pass (D8ON11_PassShader, D8ON11_Pass; docs/DEVKIT.md D3b): a 32x32 render-target texture cleared to four
+     quadrants, a pass of a pixel shader over it in place (Sample through s0 at uv, times the constant k[0] =
+     (0.5, 1, 0, 1): every channel product exact in 8 bits), then drawn over the back buffer, point-sampled, 2x2 pixels a
+     texel. Where the exports are missing (any other Direct3D 8), the quadrants are cleared to the products directly, so
+     the scene is the same picture on every device when the pass is right: its top left as it is, its bottom right too. */
+  reset_state();
+  { typedef unsigned (__stdcall *PFN_PSH)(const char *, unsigned);
+    typedef int (__stdcall *PFN_PASS)(unsigned, IDirect3DTexture8 *, IDirect3DSurface8 *, const float *, unsigned);
+    HMODULE m8 = GetModuleHandleA("d3d8.dll");
+    PFN_PSH psh = (PFN_PSH)(void *)GetProcAddress(m8, "D8ON11_PassShader"); PFN_PASS pas = (PFN_PASS)(void *)GetProcAddress(m8, "D8ON11_Pass");
+    static const char *hl =
+      "Texture2D src : register(t0); SamplerState smp : register(s0); cbuffer C : register(b0) { float4 k[64]; };\n"
+      "float4 ps(float4 pos : SV_Position, float2 uv : TEXCOORD0) : SV_Target { return src.Sample(smp, uv) * k[0]; }\n";
+    static const float k[4] = {0.5f, 1.0f, 0.0f, 1.0f};
+    IDirect3DTexture8 *t = NULL; IDirect3DSurface8 *ts = NULL, *bb = NULL, *bz = NULL;
+    IDirect3DDevice8_CreateTexture(d, 32, 32, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &t);
+    if (t) IDirect3DTexture8_GetSurfaceLevel(t, 0, &ts);
+    IDirect3DDevice8_GetRenderTarget(d, &bb); IDirect3DDevice8_GetDepthStencilSurface(d, &bz);
+    unsigned sh = psh ? psh(hl, (unsigned)strlen(hl)) : 0;
+    int taken = 0;
+    if (ts && SUCCEEDED(IDirect3DDevice8_SetRenderTarget(d, ts, NULL))) {
+      static const DWORD in[4] = {0xFFC86432, 0xFF3264C8, 0xFF64C832, 0xFF80C8C8}, out[4] = {0xFF646400, 0xFF196400, 0xFF32C800, 0xFF40C800};
+      for (int pass = 0; pass < 2 && !taken; pass++) {      /* the quadrants as they are, then the pass; or the products */
+        int direct = pass == 1 || !sh || !pas;
+        for (int q = 0; q < 4; q++) { D3DRECT r = {(q & 1) * 16, (q >> 1) * 16, (q & 1) * 16 + 16, (q >> 1) * 16 + 16};
+          IDirect3DDevice8_Clear(d, 1, &r, D3DCLEAR_TARGET, direct ? out[q] : in[q], 1.0f, 0); }
+        if (direct) break;
+        taken = pas(sh, t, ts, k, 1);
+      }
+      IDirect3DDevice8_SetRenderTarget(d, bb, bz);
+    }
+    printf("pass: shader %s, %s\n", sh ? "compiled" : psh ? "not compiled" : "no export", taken ? "the pass was taken" : "drawn directly");
+    begin(0xFF000000);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_TEX1);
+    { struct { float x, y, z, rhw, u, v; } q[4] = {{0, 0, 0.5f, 1, 0, 0}, {64, 0, 0.5f, 1, 1, 0}, {0, 64, 0.5f, 1, 0, 1}, {64, 64, 0.5f, 1, 1, 1}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]); }
+    IDirect3DDevice8_SetTexture(d, 0, NULL);
+    end("shader_pass");
+    if (ts) IDirect3DSurface8_Release(ts); if (t) IDirect3DTexture8_Release(t); if (bb) IDirect3DSurface8_Release(bb); if (bz) IDirect3DSurface8_Release(bz); }
+
+  /* a shader pass reading depth (D8ON11_PassDepth, docs/DEVKIT.md D3c; needs depth_reads=1): a 32x32 render-target
+     texture with its own D24S8 depth surface; the left half drawn at depth 0.2, the bottom right at 0.6, the top right
+     left at the clear's 1.0. The pass writes each pixel's depth as grey (0.2 -> 51, 0.6 -> 153, 1.0 -> 255: 0.2 and
+     0.6 in 24 bits read back within 1e-7, so 8 bits round to them). Where it is refused (no export, or depth_reads=0),
+     the greys are cleared directly: the same picture. */
+  reset_state();
+  { typedef unsigned (__stdcall *PFN_PSH)(const char *, unsigned);
+    typedef int (__stdcall *PFN_PASSZ)(unsigned, IDirect3DTexture8 *, IDirect3DSurface8 *, IDirect3DSurface8 *, const float *, unsigned);
+    HMODULE m8 = GetModuleHandleA("d3d8.dll");
+    PFN_PSH psh = (PFN_PSH)(void *)GetProcAddress(m8, "D8ON11_PassShader"); PFN_PASSZ pz = (PFN_PASSZ)(void *)GetProcAddress(m8, "D8ON11_PassDepth");
+    static const char *hl =
+      "Texture2D src : register(t0); Texture2D<float> dep : register(t1);\n"
+      "float4 ps(float4 pos : SV_Position, float2 uv : TEXCOORD0) : SV_Target { float z = dep.Load(int3(pos.xy, 0)); return float4(z, z, z, 1); }\n";
+    IDirect3DTexture8 *t = NULL; IDirect3DSurface8 *ts = NULL, *zs = NULL, *bb = NULL, *bz = NULL;
+    IDirect3DDevice8_CreateTexture(d, 32, 32, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &t);
+    if (t) IDirect3DTexture8_GetSurfaceLevel(t, 0, &ts);
+    IDirect3DDevice8_CreateDepthStencilSurface(d, 32, 32, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, &zs);
+    IDirect3DDevice8_GetRenderTarget(d, &bb); IDirect3DDevice8_GetDepthStencilSurface(d, &bz);
+    unsigned sh = psh ? psh(hl, (unsigned)strlen(hl)) : 0;
+    int taken = 0;
+    if (ts && zs && SUCCEEDED(IDirect3DDevice8_SetRenderTarget(d, ts, zs))) {
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFF000000, 1.0f, 0);
+      IDirect3DDevice8_BeginScene(d);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_ZWRITEENABLE, TRUE);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+      { VRhw a[4] = {{0, 0, 0.2f, 1, 0xFF808080}, {16, 0, 0.2f, 1, 0xFF808080}, {0, 32, 0.2f, 1, 0xFF808080}, {16, 32, 0.2f, 1, 0xFF808080}};
+        IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, a, sizeof a[0]);
+        VRhw b2[4] = {{16, 16, 0.6f, 1, 0xFF808080}, {32, 16, 0.6f, 1, 0xFF808080}, {16, 32, 0.6f, 1, 0xFF808080}, {32, 32, 0.6f, 1, 0xFF808080}};
+        IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, b2, sizeof b2[0]); }
+      IDirect3DDevice8_EndScene(d);
+      taken = sh && pz ? pz(sh, t, zs, ts, NULL, 0) : 0;
+      if (!taken) {                                          /* the products directly */
+        static const D3DRECT r[3] = {{0, 0, 16, 32}, {16, 0, 32, 16}, {16, 16, 32, 32}}; static const DWORD c[3] = {0xFF333333, 0xFFFFFFFF, 0xFF999999};
+        for (int q = 0; q < 3; q++) IDirect3DDevice8_Clear(d, 1, &r[q], D3DCLEAR_TARGET, c[q], 1.0f, 0);
+      }
+      IDirect3DDevice8_SetRenderTarget(d, bb, bz);
+    }
+    printf("depth pass: %s\n", taken ? "the pass was taken" : "drawn directly");
+    reset_state(); begin(0xFF000000);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_TEX1);
+    { struct { float x, y, z, rhw, u, v; } q[4] = {{0, 0, 0.5f, 1, 0, 0}, {64, 0, 0.5f, 1, 1, 0}, {0, 64, 0.5f, 1, 0, 1}, {64, 64, 0.5f, 1, 1, 1}};
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]); }
+    IDirect3DDevice8_SetTexture(d, 0, NULL);
+    end("depth_pass");
+    if (ts) IDirect3DSurface8_Release(ts); if (zs) IDirect3DSurface8_Release(zs); if (t) IDirect3DTexture8_Release(t);
+    if (bb) IDirect3DSurface8_Release(bb); if (bz) IDirect3DSurface8_Release(bz); }
+
+  /* the declaration of the game's shader programs (data/d3d8_scope.json: stream 0, v0 FLOAT3, v3 FLOAT3, v5 D3DCOLOR,
+     v7 FLOAT2, v15 FLOAT3), here without code: register 15 is D3DVSDE_POSITION2, unused unless D3DRS_VERTEXBLEND is
+     D3DVBF_TWEENING. The game was not seen using it (docs/HISTORY.md: its 2,253 captured shaders are three other
+     declarations); it is here for register 15 */
+  { typedef struct { float x, y, z, nx, ny, nz; DWORD c; float u, v; float x2, y2, z2; } VG;
+    DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_REG(3, D3DVSDT_FLOAT3), D3DVSD_REG(5, D3DVSDT_D3DCOLOR),
+                    D3DVSD_REG(7, D3DVSDT_FLOAT2), D3DVSD_REG(15, D3DVSDT_FLOAT3), D3DVSD_END()};
+    DWORD h = 0; IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    reset_state();
+    D3DMATRIX pr; persp(&pr, 1.2f, 1.0f, 20.0f); IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &pr);
+    D3DLIGHT8 L; memset(&L, 0, sizeof L); L.Type = D3DLIGHT_DIRECTIONAL; L.Diffuse.r = L.Diffuse.g = L.Diffuse.b = 1; L.Direction.z = 1; L.Direction.x = 0.4f;
+    IDirect3DDevice8_SetLight(d, 0, &L); IDirect3DDevice8_LightEnable(d, 0, TRUE);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, TRUE); IDirect3DDevice8_SetRenderState(d, D3DRS_AMBIENT, 0xFF202020);
+    D3DMATERIAL8 mt; memset(&mt, 0, sizeof mt); mt.Diffuse.r = mt.Diffuse.g = mt.Diffuse.b = mt.Diffuse.a = 1; mt.Ambient = mt.Diffuse; IDirect3DDevice8_SetMaterial(d, &mt);
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+    VG v[4] = {{-2, -2, 6, 0, 0, -1, 0xFFFF8040, 0, 1, -1, -3, 6}, {2, -2, 6, 0.3f, 0, -1, 0xFF40FF80, 2, 1, 3, -1, 6},
+               {-2, 2, 6, -0.3f, 0, -1, 0xFF8040FF, 0, 0, -3, 1, 6}, {2, 2, 6, 0, 0.3f, -1, 0xFFFFFFFF, 2, 0, 1, 3, 6}};
+    begin(0xFF000000); IDirect3DDevice8_SetVertexShader(d, h);
+    IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+    IDirect3DDevice8_SetTexture(d, 0, NULL); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    end("v15_declaration");
+    IDirect3DDevice8_DeleteVertexShader(d, h); IDirect3DDevice8_LightEnable(d, 0, FALSE); }
+  /* SHORT2 and SHORT4 elements: "2-D signed short expanded to (value, value, 0.0, 1.0)" (DirectX 8.1, D3DVSD_REG), here
+     as texture coordinates of a checker texture, so a wrong expansion shows. Outside the fixed-function pipeline's
+     defined inputs: Microsoft's debug runtime rejects these ("Invalid data type set for texture register"; texture
+     coordinates must be FLOAT1-4) and its retail runtime with the reference device draws one flat texel colour, so
+     these scenes check our expansion against the documentation, not against Microsoft's device. */
+  { typedef struct { float x, y, z; DWORD c; short u, v; short s[4]; } VS2;
+    DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_REG(5, D3DVSDT_D3DCOLOR),
+                    D3DVSD_REG(7, D3DVSDT_SHORT2), D3DVSD_REG(8, D3DVSDT_SHORT4), D3DVSD_END()};
+    for (int pass = 0; pass < 2; pass++) {
+      DWORD h = 0; IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+      reset_state();
+      D3DMATRIX pr; persp(&pr, 1.2f, 1.0f, 20.0f); IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &pr);
+      IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_TEXCOORDINDEX, pass);
+      VS2 v[4] = {{-2, -2, 5, 0xFFFFFFFF, 0, 3, {0, 2, 0, 0}}, {2, -2, 5, 0xFFFFFFFF, 3, 3, {2, 2, 0, 0}},
+                  {-2, 2, 5, 0xFFFFFFFF, 0, 0, {0, 0, 0, 0}}, {2, 2, 5, 0xFFFFFFFF, 3, 0, {2, 0, 0, 0}}};
+      begin(0xFF000000); IDirect3DDevice8_SetVertexShader(d, h);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+      IDirect3DDevice8_SetTexture(d, 0, NULL); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_TEXCOORDINDEX, 0);
+      end(pass ? "decl_short4" : "decl_short2");
+      IDirect3DDevice8_DeleteVertexShader(d, h);
+    } }
+  /* Clear of part of the target: "the viewport, or a set of rectangles in the viewport", rectangles "clipped to the
+     bounds of the viewport rectangle" (DirectX 8.1, IDirect3DDevice8::Clear); depth cleared only there too */
+  reset_state();
+  IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFF800000, 1.0f, 0);
+  { D3DVIEWPORT8 v = {8, 12, 30, 24, 0.0f, 1.0f}; IDirect3DDevice8_SetViewport(d, &v);
+    IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFF00A000, 0.0f, 0);
+    D3DVIEWPORT8 v2 = {20, 30, 40, 30, 0.0f, 1.0f}; IDirect3DDevice8_SetViewport(d, &v2);
+    D3DRECT rr[2] = {{0, 0, 30, 40}, {50, 50, 70, 70}};
+    IDirect3DDevice8_Clear(d, 2, rr, D3DCLEAR_TARGET, 0xFF2040FF, 1.0f, 0);
+    D3DVIEWPORT8 vf = {0, 0, 64, 64, 0.0f, 1.0f}; IDirect3DDevice8_SetViewport(d, &vf); }
+  IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+  IDirect3DDevice8_BeginScene(d);
+  quad_rhw(4, 4, 60, 60, 0.5f, 0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00, 0xFFFFFF00);
+  end("clear_viewport_rects");
+  /* dynamic buffers locked as a game does (dynamic_buffers=1 writes them by Map): a DISCARD of the whole buffer, an
+     append with NOOVERWRITE, a lock with no flags in the middle, a second DISCARD of only its first part after a draw
+     read the buffer; and a dynamic index buffer. Each quad drawn right after its write */
+  { IDirect3DVertexBuffer8 *vb = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p = NULL;
+    IDirect3DDevice8_CreateVertexBuffer(d, 64 * sizeof(VRhw), D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &vb);
+    IDirect3DDevice8_CreateIndexBuffer(d, 64 * 2, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &ib);
+    reset_state(); IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE);
+    begin(0xFF101010);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    IDirect3DDevice8_SetStreamSource(d, 0, vb, sizeof(VRhw));
+    #define DQ(at, x0, y0, x1, y1, c) do { VRhw *q = (VRhw *)(p) + (at); VRhw t[4] = {{x0, y0, 0.5f, 1, c}, {x1, y0, 0.5f, 1, c}, {x0, y1, 0.5f, 1, c}, {x1, y1, 0.5f, 1, c}}; memcpy(q, t, sizeof t); } while (0)
+    if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 0, 0, &p, D3DLOCK_DISCARD))) { DQ(0, 2, 2, 20, 20, 0xFFFF0000); DQ(4, 0, 0, 1, 1, 0xFF000000); IDirect3DVertexBuffer8_Unlock(vb); }
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+    if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 8 * sizeof(VRhw), 4 * sizeof(VRhw), &p, D3DLOCK_NOOVERWRITE))) { p -= 8 * sizeof(VRhw); DQ(8, 22, 2, 40, 20, 0xFF00FF00); IDirect3DVertexBuffer8_Unlock(vb); }
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 8, 2);
+    if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 4 * sizeof(VRhw), 4 * sizeof(VRhw), &p, 0))) { p -= 4 * sizeof(VRhw); DQ(4, 42, 2, 60, 20, 0xFF0000FF); IDirect3DVertexBuffer8_Unlock(vb); }
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 4, 2);
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);          /* the first quad again: kept by the no-flag lock */
+    if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 0, 4 * sizeof(VRhw), &p, D3DLOCK_DISCARD))) { DQ(0, 2, 24, 30, 40, 0xFFFFFF00); IDirect3DVertexBuffer8_Unlock(vb); }
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+    if (ib && SUCCEEDED(IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, D3DLOCK_DISCARD))) { WORD *x = (WORD *)p; x[0] = 8; x[1] = 9; x[2] = 10; x[3] = 9; x[4] = 11; x[5] = 10; IDirect3DIndexBuffer8_Unlock(ib); }
+    if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 8 * sizeof(VRhw), 4 * sizeof(VRhw), &p, D3DLOCK_NOOVERWRITE))) { p -= 8 * sizeof(VRhw); DQ(8, 34, 30, 62, 62, 0xFF00FFFF); IDirect3DVertexBuffer8_Unlock(vb); }
+    IDirect3DDevice8_SetIndices(d, ib, 0);
+    IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 8, 4, 0, 2);
+    #undef DQ
+    end("dynamic_buffers");
+    IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0); IDirect3DDevice8_SetIndices(d, NULL, 0);
+    if (vb) IDirect3DVertexBuffer8_Release(vb); if (ib) IDirect3DIndexBuffer8_Release(ib); }
+  /* buffer_arena: one small dynamic buffer written again with DISCARD before each of 320 draws, as the game writes a
+     skinned model's vertices and draws it (every draw must read its own write, not a later one); a second buffer
+     written once before them and drawn after them (with a small test arena it has started again in between); the same
+     with a dynamic index buffer written again before each indexed draw; and a buffer made and released in between */
+  { IDirect3DVertexBuffer8 *vb = NULL, *keep = NULL, *tmp = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p = NULL;
+    IDirect3DDevice8_CreateVertexBuffer(d, 4 * sizeof(VRhw), D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &vb);
+    IDirect3DDevice8_CreateVertexBuffer(d, 8 * sizeof(VRhw), D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &keep);
+    IDirect3DDevice8_CreateIndexBuffer(d, 6 * 2, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &ib);
+    reset_state(); IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE);
+    begin(0xFF101010);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    #define AQ(q, x0, y0, x1, y1, c) do { VRhw t[4] = {{x0, y0, 0.5f, 1, c}, {x1, y0, 0.5f, 1, c}, {x0, y1, 0.5f, 1, c}, {x1, y1, 0.5f, 1, c}}; memcpy(q, t, sizeof t); } while (0)
+    if (keep && SUCCEEDED(IDirect3DVertexBuffer8_Lock(keep, 0, 0, &p, D3DLOCK_DISCARD))) {
+      AQ(p, 0, 48, 64, 56, 0xFFFFFFFF); AQ(p + 4 * sizeof(VRhw), 0, 56, 64, 64, 0xFF808080); IDirect3DVertexBuffer8_Unlock(keep); }
+    for (int i = 0; i < 320; i++) {
+      float x = (float)(i % 32) * 2, y = (float)(i / 32) * 2; DWORD c = 0xFF000000 | (DWORD)(i * 0x030507 + 0x202020);
+      if (vb && SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 0, 0, &p, D3DLOCK_DISCARD))) { AQ(p, x, y, x + 2, y + 2, c); IDirect3DVertexBuffer8_Unlock(vb); }
+      IDirect3DDevice8_SetStreamSource(d, 0, vb, sizeof(VRhw));
+      if (i % 3) IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+      else {
+        if (ib && SUCCEEDED(IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, D3DLOCK_DISCARD))) { WORD *w = (WORD *)p;
+          if (i % 2) { w[0] = 0; w[1] = 1; w[2] = 2; w[3] = 1; w[4] = 3; w[5] = 2; } else { w[0] = 2; w[1] = 0; w[2] = 1; w[3] = 2; w[4] = 1; w[5] = 3; }
+          IDirect3DIndexBuffer8_Unlock(ib); }
+        IDirect3DDevice8_SetIndices(d, ib, 0);
+        IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, 4, 0, i % 6 ? 2 : 1);
+      }
+      if (i == 100 || i == 200) {                      /* a buffer made, written, drawn and released among them */
+        IDirect3DDevice8_CreateVertexBuffer(d, 4 * sizeof(VRhw), D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, D3DFVF_XYZRHW | D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &tmp);
+        if (tmp && SUCCEEDED(IDirect3DVertexBuffer8_Lock(tmp, 0, 0, &p, D3DLOCK_DISCARD))) { AQ(p, (float)(i / 5), 24, (float)(i / 5 + 10), 34, 0xFFFF00FF); IDirect3DVertexBuffer8_Unlock(tmp); }
+        IDirect3DDevice8_SetStreamSource(d, 0, tmp, sizeof(VRhw)); IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+        IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0); if (tmp) IDirect3DVertexBuffer8_Release(tmp); tmp = NULL;
+      }
+    }
+    IDirect3DDevice8_SetStreamSource(d, 0, keep, sizeof(VRhw));
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 0, 2);
+    if (keep && SUCCEEDED(IDirect3DVertexBuffer8_Lock(keep, 4 * sizeof(VRhw), 4 * sizeof(VRhw), &p, D3DLOCK_NOOVERWRITE))) { AQ(p, 8, 58, 56, 62, 0xFF00C000); IDirect3DVertexBuffer8_Unlock(keep); }
+    IDirect3DDevice8_DrawPrimitive(d, D3DPT_TRIANGLESTRIP, 4, 2);
+    #undef AQ
+    end("buffer_arena");
+    IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0); IDirect3DDevice8_SetIndices(d, NULL, 0);
+    if (vb) IDirect3DVertexBuffer8_Release(vb); if (keep) IDirect3DVertexBuffer8_Release(keep); if (ib) IDirect3DIndexBuffer8_Release(ib); }
+  /* mipmaps (19 Nov; d8_mip.cpp): a receding plane, drawn in two scenes. mipmaps_one: a one-level managed
+     A8R8G8B8 texture with the game's sampling (MINFILTER POINT, MIPFILTER NONE). mipmaps_ref: the same texels with a mip
+     chain made here (the 2x2 box average, d8_mip.cpp's rule) and MINFILTER LINEAR, MIPFILTER LINEAR. With mipmaps=1
+     mipmaps_one must equal mipmaps_ref; off, it is the game's look. A screen-space strip of the one-level texture on top
+     stays as the game draws it either way */
+  { IDirect3DTexture8 *t1 = NULL, *tm = NULL; D3DLOCKED_RECT lr;
+    IDirect3DDevice8_CreateTexture(d, 64, 64, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &t1);
+    IDirect3DDevice8_CreateTexture(d, 64, 64, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &tm);
+    static DWORD lv[7][64 * 64];
+    for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++) lv[0][y * 64 + x] = ((x / 2 + y / 2) & 1) ? 0xFFE0E0E0 : (0xFF000000 | (x * 4) << 16 | (y * 4) << 8 | 0x30);
+    for (int l = 1, sz = 32; l < 7; l++, sz /= 2) for (int y = 0; y < sz; y++) for (int x = 0; x < sz; x++) {
+      DWORD o = 0; int ps = sz * 2;
+      for (int k = 0; k < 32; k += 8) { unsigned a = (lv[l - 1][(2 * y) * ps + 2 * x] >> k & 255) + (lv[l - 1][(2 * y) * ps + 2 * x + 1] >> k & 255) +
+                                                   (lv[l - 1][(2 * y + 1) * ps + 2 * x] >> k & 255) + (lv[l - 1][(2 * y + 1) * ps + 2 * x + 1] >> k & 255);
+                                        o |= (DWORD)((a + 2) / 4) << k; }
+      lv[l][y * sz + x] = o; }
+    if (t1 && SUCCEEDED(IDirect3DTexture8_LockRect(t1, 0, &lr, NULL, 0))) { for (int y = 0; y < 64; y++) memcpy((BYTE *)lr.pBits + y * lr.Pitch, &lv[0][y * 64], 256); IDirect3DTexture8_UnlockRect(t1, 0); }
+    for (int l = 0, sz = 64; tm && l < 7; l++, sz /= 2) if (SUCCEEDED(IDirect3DTexture8_LockRect(tm, l, &lr, NULL, 0))) {
+      for (int y = 0; y < sz; y++) memcpy((BYTE *)lr.pBits + y * lr.Pitch, &lv[l][y * sz], sz * 4); IDirect3DTexture8_UnlockRect(tm, l); }
+    for (int pass = 0; pass < 2; pass++) {
+    if (pass == 1) {   /* a write to part of level 0 through LockRect with a rectangle: the levels made again in part
+                          (mip_update) must equal t8's whole chain of the new texels */
+      RECT rc = {9, 20, 31, 43};
+      for (int y = rc.top; y < rc.bottom; y++) for (int x = rc.left; x < rc.right; x++) lv[0][y * 64 + x] = 0xFF000000 | ((x * 37 + y * 11) & 255) << 16 | 0xC000 | (y * 5 & 255);
+      for (int l = 1, sz = 32; l < 7; l++, sz /= 2) for (int y = 0; y < sz; y++) for (int x = 0; x < sz; x++) {
+        DWORD o = 0; int ps = sz * 2;
+        for (int k = 0; k < 32; k += 8) { unsigned a = (lv[l - 1][(2 * y) * ps + 2 * x] >> k & 255) + (lv[l - 1][(2 * y) * ps + 2 * x + 1] >> k & 255) +
+                                                     (lv[l - 1][(2 * y + 1) * ps + 2 * x] >> k & 255) + (lv[l - 1][(2 * y + 1) * ps + 2 * x + 1] >> k & 255);
+                                          o |= (DWORD)((a + 2) / 4) << k; }
+        lv[l][y * sz + x] = o; }
+      if (t1 && SUCCEEDED(IDirect3DTexture8_LockRect(t1, 0, &lr, &rc, 0))) {
+        for (int y = 0; y < rc.bottom - rc.top; y++) memcpy((BYTE *)lr.pBits + y * lr.Pitch, &lv[0][(rc.top + y) * 64 + rc.left], (rc.right - rc.left) * 4);
+        IDirect3DTexture8_UnlockRect(t1, 0); }
+      for (int l = 0, sz = 64; tm && l < 7; l++, sz /= 2) if (SUCCEEDED(IDirect3DTexture8_LockRect(tm, l, &lr, NULL, 0))) {
+        for (int y = 0; y < sz; y++) memcpy((BYTE *)lr.pBits + y * lr.Pitch, &lv[l][y * sz], sz * 4); IDirect3DTexture8_UnlockRect(tm, l); }
+    }
+    /* mip_async: the levels are built on d3d8on11's worker and taken at a Present: two Presents around a wait first */
+    IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); Sleep(300); IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+    for (int side = 0; side < 2; side++) {
+    reset_state(); begin(0xFF102010);
+    D3DMATRIX pr, vw; persp(&pr, 1.0f, 0.5f, 200.0f); memset(&vw, 0, sizeof vw); vw._11 = vw._22 = vw._33 = vw._44 = 1;
+    IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &pr); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &vw);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE);
+    IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_TEX1);
+    { float x0 = -1.2f, x1 = 1.2f;
+      struct { float x, y, z, u, v; } q[4] = {{x0, -0.6f, 1.0f, 0, 0}, {x1, -0.6f, 1.0f, 8, 0}, {x0, -0.6f, 60.0f, 0, 40}, {x1, -0.6f, 60.0f, 8, 40}};
+      IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)(side ? tm : t1));
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, side ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MIPFILTER, side ? D3DTEXF_LINEAR : D3DTEXF_NONE);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+    }
+    /* the screen-space strip: the one-level texture minified 4x, POINT */
+    IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t1);
+    IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, D3DTEXF_POINT); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MIPFILTER, D3DTEXF_NONE);
+    { VRhwT v[4] = {{0, 0, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {64, 0, 0.5f, 1, 0xFFFFFFFF, 4, 0}, {0, 8, 0.5f, 1, 0xFFFFFFFF, 0, 0.5f}, {64, 8, 0.5f, 1, 0xFFFFFFFF, 4, 0.5f}};
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+    IDirect3DDevice8_SetTexture(d, 0, NULL);
+    end(pass ? (side ? "mipmaps_part_ref" : "mipmaps_part_one") : (side ? "mipmaps_ref" : "mipmaps_one")); } }
+    /* mipmaps_pointmag: the one-level texture as the game draws its names (MAGFILTER POINT, MINFILTER LINEAR, no mip
+       filter), on a plane magnified near and minified far: with mipmaps=1 it uses the levels; mipmaps_point_mag=0: as
+       the game samples it (as with mipmaps off). mipmaps_pointmag_ref: the same texels with t8's chain, LINEAR/LINEAR/LINEAR
+       (it served the text_linear experiment, removed; kept as a scene) */
+    for (int side = 0; side < 2; side++) {
+      reset_state(); begin(0xFF102010);
+      D3DMATRIX pr, vw; persp(&pr, 1.0f, 0.5f, 200.0f); memset(&vw, 0, sizeof vw); vw._11 = vw._22 = vw._33 = vw._44 = 1;
+      IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &pr); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &vw);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_TEX1);
+      struct { float x, y, z, u, v; } q[4] = {{-1.2f, -0.6f, 1.0f, 0, 0}, {1.2f, -0.6f, 1.0f, 0.25f, 0}, {-1.2f, -0.6f, 60.0f, 0, 6}, {1.2f, -0.6f, 60.0f, 0.25f, 6}};
+      IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)(side ? tm : t1));
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MAGFILTER, side ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MIPFILTER, side ? D3DTEXF_LINEAR : D3DTEXF_NONE);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+      IDirect3DDevice8_SetTexture(d, 0, NULL);
+      end(side ? "mipmaps_pointmag_ref" : "mipmaps_pointmag"); }
+    if (t1) IDirect3DTexture8_Release(t1); if (tm) IDirect3DTexture8_Release(tm); }
+  /* lazy_depth (18 Nov; d8_exec12.cpp bind_targets): passes into a render-target texture that has a depth surface,
+     drawn with depth off (as the game's shadow silhouettes, 0x10033800), between passes on the back buffer with depth
+     on; one pass starts with depth off and then draws with depth on (the depth surface must be there for that draw).
+     Four frames, so a target's pass is seen again; the last frame's picture is the scene's */
+  { IDirect3DTexture8 *rt = NULL; IDirect3DSurface8 *rs = NULL, *rds = NULL, *bbs = NULL, *ds = NULL;
+    if (SUCCEEDED(IDirect3DDevice8_CreateTexture(d, 64, 64, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &rt)) && rt &&
+        SUCCEEDED(IDirect3DDevice8_CreateDepthStencilSurface(d, 64, 64, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, &rds))) {
+      IDirect3DTexture8_GetSurfaceLevel(rt, 0, &rs);
+      IDirect3DDevice8_GetRenderTarget(d, &bbs); IDirect3DDevice8_GetDepthStencilSurface(d, &ds);
+      for (int frame = 0; frame < 4; frame++) {
+        reset_state();
+        IDirect3DDevice8_SetRenderTarget(d, rs, rds);
+        IDirect3DDevice8_BeginScene(d);
+        IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFF000000, 0.25f, 0);   /* depth 0.25 in the target's surface */
+        IDirect3DDevice8_EndScene(d);
+        for (int pass = 0; pass < 3; pass++) {
+          /* the back buffer, depth on */
+          IDirect3DDevice8_SetRenderTarget(d, bbs, ds);
+          if (pass == 0) begin(0xFF102030); else IDirect3DDevice8_BeginScene(d);
+          IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+          quad_rhw(4.0f + 8 * pass, 4, 20.0f + 8 * pass, 20, 0.5f, 0xFF40A040, 0xFF40A040, 0xFF40A040, 0xFF40A040);
+          IDirect3DDevice8_EndScene(d);
+          /* the texture, depth off: a silhouette */
+          IDirect3DDevice8_SetRenderTarget(d, rs, rds);
+          IDirect3DDevice8_BeginScene(d);
+          IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE);
+          quad_rhw(8.0f * pass, 8.0f * pass, 8.0f * pass + 24, 8.0f * pass + 24, 0.9f, 0xFFC0C0C0, 0xFFC0C0C0, 0xFFC0C0C0, 0xFFC0C0C0);
+          if (pass == 2) {          /* then depth on: z 0.1 passes the 0.25 there, z 0.5 does not */
+            IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+            quad_rhw(30, 4, 60, 20, 0.1f, 0xFFFF0000, 0xFFFF0000, 0xFFFF0000, 0xFFFF0000);
+            quad_rhw(30, 30, 60, 46, 0.5f, 0xFF0000FF, 0xFF0000FF, 0xFF0000FF, 0xFF0000FF);
+          }
+          IDirect3DDevice8_EndScene(d);
+        }
+        /* the texture onto the back buffer */
+        IDirect3DDevice8_SetRenderTarget(d, bbs, ds);
+        IDirect3DDevice8_BeginScene(d);
+        IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_FALSE);
+        IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)rt);
+        { VRhwT v[4] = {{0, 24, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {40, 24, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {0, 64, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {40, 64, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+          IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+          IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+        IDirect3DDevice8_SetTexture(d, 0, NULL);
+        if (frame == 3) end("lazy_depth"); else { IDirect3DDevice8_EndScene(d); IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); }
+      }
+      if (bbs) IDirect3DSurface8_Release(bbs); if (ds) IDirect3DSurface8_Release(ds); if (rs) IDirect3DSurface8_Release(rs);
+    } else printf("scene lazy_depth none\n");
+    if (rds) IDirect3DSurface8_Release(rds); if (rt) IDirect3DTexture8_Release(rt); }
+  /* rt_downsample (13 Nov): what the game's "background resolution" twice the window does (the owner's registry:
+     3024x1898 for a 1512x949 window): the scene drawn into a render-target texture twice the size, then that texture
+     drawn onto the back buffer at half size with linear filtering. Here a one-pixel checker in a 128x128 render target,
+     drawn into the 64x64 back buffer: each pixel's sample falls between four texels, so the picture is their blend. A
+     point sample there shows the checker (the owner's 13 Nov Direct3D 12 start: "everything looks pixelated").
+     rt_sample_after: the same render target drawn again after another draw into it, bound as a texture while a
+     different target is set; and its one-pixel border, by CLAMP */
+  { IDirect3DTexture8 *rt = NULL; IDirect3DSurface8 *rs = NULL, *bbs = NULL, *ds = NULL;
+    if (SUCCEEDED(IDirect3DDevice8_CreateTexture(d, 128, 128, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &rt)) && rt) {
+      IDirect3DTexture8_GetSurfaceLevel(rt, 0, &rs);
+      IDirect3DDevice8_GetRenderTarget(d, &bbs); IDirect3DDevice8_GetDepthStencilSurface(d, &ds);
+      for (int pass = 0; pass < 2; pass++) {
+        reset_state();
+        IDirect3DDevice8_SetRenderTarget(d, rs, NULL);
+        IDirect3DDevice8_BeginScene(d);
+        IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000, 1.0f, 0);
+        IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)chk);      /* 16x16 checker, one texel per pixel */
+        { VRhwT v[4] = {{0, 0, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {128, 0, 0.5f, 1, 0xFFFFFFFF, 8, 0}, {0, 128, 0.5f, 1, 0xFFFFFFFF, 0, 8}, {128, 128, 0.5f, 1, 0xFFFFFFFF, 8, 8}};
+          IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+          IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+        if (pass) {                                    /* a red band drawn into it as well */
+          IDirect3DDevice8_SetTexture(d, 0, NULL);
+          VRhwT v[4] = {{0, 40, 0.5f, 1, 0xFFFF0000, 0, 0}, {128, 40, 0.5f, 1, 0xFFFF0000, 1, 0}, {0, 56, 0.5f, 1, 0xFFFF0000, 0, 1}, {128, 56, 0.5f, 1, 0xFFFF0000, 1, 1}};
+          IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
+          IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v);
+          IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        }
+        IDirect3DDevice8_EndScene(d);
+        IDirect3DDevice8_SetRenderTarget(d, bbs, ds);
+        begin(0xFF101010);
+        IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)rt);
+        IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+        if (pass) { IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP); IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP); }
+        { float e = pass ? 0.1f : 0;                  /* pass 1 reads a little past the edges (CLAMP) */
+          VRhwT v[4] = {{0, 0, 0.5f, 1, 0xFFFFFFFF, -e, -e}, {64, 0, 0.5f, 1, 0xFFFFFFFF, 1 + e, -e}, {0, 64, 0.5f, 1, 0xFFFFFFFF, -e, 1 + e}, {64, 64, 0.5f, 1, 0xFFFFFFFF, 1 + e, 1 + e}};
+          IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+          IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, v, sizeof *v); }
+        IDirect3DDevice8_SetTexture(d, 0, NULL);
+        end(pass ? "rt_sample_after" : "rt_downsample");
+      }
+      if (bbs) IDirect3DSurface8_Release(bbs); if (ds) IDirect3DSurface8_Release(ds); if (rs) IDirect3DSurface8_Release(rs);
+      IDirect3DTexture8_Release(rt);
+    } else printf("scene rt_downsample none\nscene rt_sample_after none\n");
+  }
+  if (chk) IDirect3DTexture8_Release(chk); if (grad) IDirect3DTexture8_Release(grad); if (alp) IDirect3DTexture8_Release(alp);
+}
+
+/* ---- random cases (random_cases.py writes them) -------------------------------------------------------------------
+   Lines: "case NAME FVF PRIM KIND" (FVF hex; PRIM 4 list, 5 strip; KIND 0 UP, 1 vertex buffer, 2 indexed), then
+   "rs S V", "tss STAGE T V", "tex STAGE K" (0 none, 1 checker, 2 gradient, 3 alpha ramp, 4 cube, 5 cube of one
+   colour, 6 cube with one colour per face), "light I ON",
+   "tt STAGE m11 m12 m21 m22 m31 m32" (a texture transform), "mat R G B A", then "draw". Values hex, floats decimal. */
+static IDirect3DCubeTexture8 *g_cube, *g_cube_flat, *g_cube_faces;
+static IDirect3DCubeTexture8 *cube_of(DWORD (*f)(int fc, int x, int y)) {
+  IDirect3DCubeTexture8 *c = NULL;
+  if (FAILED(IDirect3DDevice8_CreateCubeTexture(d, 4, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &c))) return NULL;
+  for (int fc = 0; fc < 6; fc++) { D3DLOCKED_RECT lr; IDirect3DCubeTexture8_LockRect(c, (D3DCUBEMAP_FACES)fc, 0, &lr, NULL, 0);
+    for (int y = 0; y < 4; y++) for (int x = 0; x < 4; x++) ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] = f(fc, x, y);
+    IDirect3DCubeTexture8_UnlockRect(c, (D3DCUBEMAP_FACES)fc, 0); }
+  return c;
+}
+static DWORD cube_flat(int fc, int x, int y) { (void)fc; (void)x; (void)y; return 0xFF4080C0; }
+static DWORD cube_faces(int fc, int x, int y) { static const DWORD c[6] = {0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00, 0xFF00FFFF, 0xFFFF00FF}; (void)x; (void)y; return c[fc]; }
+static float frand(unsigned *s) { *s = *s * 1103515245u + 12345u; return (float)((*s >> 8) & 0xFFFF) / 65535.0f; }
+static int vsize_of(DWORD fvf) {
+  int n = (fvf & D3DFVF_POSITION_MASK) == D3DFVF_XYZRHW ? 16 : 12;
+  if (fvf & D3DFVF_NORMAL) n += 12; if (fvf & D3DFVF_DIFFUSE) n += 4; if (fvf & D3DFVF_SPECULAR) n += 4;
+  return n + 8 * (int)((fvf & D3DFVF_TEXCOUNT_MASK) >> D3DFVF_TEXCOUNT_SHIFT);
+}
+/* a vertex of a GxG grid layer: L 0 the far layer (whole view), 1 the near one (part of it, tilted) */
+static void rvertex(BYTE *o, DWORD fvf, int L, int i, int j, int G) {
+  float u = (float)i / (G - 1), v = (float)j / (G - 1); unsigned sd = (unsigned)(L * 977 + i * 131 + j * 31 + 7);
+  float *f = (float *)o;
+  if ((fvf & D3DFVF_POSITION_MASK) == D3DFVF_XYZRHW) {
+    float x = L ? 8 + u * 44 : -2 + u * 68, y = L ? 12 + v * 44 : -2 + v * 68, z = L ? 0.3f + 0.3f * u : 0.7f + 0.2f * v;
+    float w = L ? 1.5f + 3 * u : 6 + 3 * v;
+    f[0] = x; f[1] = y; f[2] = z; f[3] = 1 / w; f += 4;
+  } else {
+    float x = L ? -1.2f + 2.4f * u : -6 + 12 * u, y = L ? -1.2f + 2.4f * v : -6 + 12 * v, z = L ? 2.5f + 2.0f * u : 7 + 2 * v;
+    f[0] = x; f[1] = y; f[2] = z; f += 3;
+  }
+  if (fvf & D3DFVF_NORMAL) { float nx = (u - 0.5f) * (L ? 1.6f : 0.6f), ny = (v - 0.5f) * 1.2f, nz = -1.0f; f[0] = nx; f[1] = ny; f[2] = nz; f += 3; }
+  DWORD *c = (DWORD *)f;
+  if (fvf & D3DFVF_DIFFUSE) { DWORD a = (DWORD)(frand(&sd) * 255), r = (DWORD)(frand(&sd) * 255), g = (DWORD)(frand(&sd) * 255), b = (DWORD)(frand(&sd) * 255);
+                              *c++ = a << 24 | r << 16 | g << 8 | b; }
+  if (fvf & D3DFVF_SPECULAR) *c++ = 0x80404040;
+  f = (float *)c;
+  int nt = (int)((fvf & D3DFVF_TEXCOUNT_MASK) >> D3DFVF_TEXCOUNT_SHIFT);
+  /* offset by a fraction of a texel, so that no texel boundary falls on a pixel centre (a tie each device breaks by its
+     own rounding: 14 Oct, the scene centre lines) */
+  for (int t = 0; t < nt; t++) { f[0] = -0.5f + 2.0f * u + 0.13f * t + 0.0137f; f[1] = -0.25f + 1.5f * v + 0.0071f; f += 2; }
+}
+static void rdraw(DWORD fvf, int prim, int kind) {
+  enum { G = 6 }; int vs = vsize_of(fvf);
+  static BYTE vb[2 * G * G * 64]; static WORD ib[2 * (G - 1) * (G - 1) * 6 + 64]; int nv = 0, ni = 0;
+  for (int L = 0; L < 2; L++) for (int j = 0; j < G; j++) for (int i = 0; i < G; i++) rvertex(vb + (nv++) * vs, fvf, L, i, j, G);
+  IDirect3DDevice8_SetVertexShader(d, fvf);
+  IDirect3DVertexBuffer8 *b = NULL; IDirect3DIndexBuffer8 *x = NULL;
+  for (int L = 0; L < 2; L++) {
+    int base = L * G * G;
+    ni = 0;
+    if (prim == 4) {                                              /* a list: two triangles per cell */
+      for (int j = 0; j < G - 1; j++) for (int i = 0; i < G - 1; i++) {
+        WORD a = (WORD)(base + j * G + i), c = (WORD)(a + G);
+        ib[ni++] = a; ib[ni++] = a + 1; ib[ni++] = c; ib[ni++] = c; ib[ni++] = a + 1; ib[ni++] = c + 1;
+      }
+    } else {                                                      /* a strip per row, joined by degenerate triangles */
+      for (int j = 0; j < G - 1; j++) {
+        if (j) { ib[ni] = ib[ni - 1]; ni++; ib[ni++] = (WORD)(base + j * G); }
+        for (int i = 0; i < G; i++) { ib[ni++] = (WORD)(base + j * G + i); ib[ni++] = (WORD)(base + (j + 1) * G + i); }
+      }
+    }
+    int prims = prim == 4 ? ni / 3 : ni - 2;
+    if (kind == 0) {                                              /* DrawPrimitiveUP: the vertices in index order */
+      static BYTE up[4096 * 64]; for (int k = 0; k < ni; k++) memcpy(up + k * vs, vb + ib[k] * vs, vs);
+      IDirect3DDevice8_DrawPrimitiveUP(d, (D3DPRIMITIVETYPE)prim, prims, up, vs);
+    } else if (kind == 1) {                                       /* DrawPrimitive from a vertex buffer, the same */
+      if (FAILED(IDirect3DDevice8_CreateVertexBuffer(d, ni * vs, D3DUSAGE_WRITEONLY, fvf, D3DPOOL_MANAGED, &b))) continue;
+      BYTE *p; IDirect3DVertexBuffer8_Lock(b, 0, 0, &p, 0); for (int k = 0; k < ni; k++) memcpy(p + k * vs, vb + ib[k] * vs, vs);
+      IDirect3DVertexBuffer8_Unlock(b);
+      IDirect3DDevice8_SetStreamSource(d, 0, b, vs); IDirect3DDevice8_DrawPrimitive(d, (D3DPRIMITIVETYPE)prim, 0, prims);
+      IDirect3DVertexBuffer8_Release(b); b = NULL;
+    } else {                                                      /* DrawIndexedPrimitive, the layer's vertices at a base */
+      if (FAILED(IDirect3DDevice8_CreateVertexBuffer(d, nv * vs, D3DUSAGE_WRITEONLY, fvf, D3DPOOL_MANAGED, &b))) continue;
+      if (FAILED(IDirect3DDevice8_CreateIndexBuffer(d, ni * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &x))) { IDirect3DVertexBuffer8_Release(b); continue; }
+      BYTE *p; IDirect3DVertexBuffer8_Lock(b, 0, 0, &p, 0); memcpy(p, vb, nv * vs); IDirect3DVertexBuffer8_Unlock(b);
+      WORD *q; IDirect3DIndexBuffer8_Lock(x, 0, 0, (BYTE **)&q, 0); for (int k = 0; k < ni; k++) q[k] = (WORD)(ib[k] - base); IDirect3DIndexBuffer8_Unlock(x);
+      IDirect3DDevice8_SetStreamSource(d, 0, b, vs); IDirect3DDevice8_SetIndices(d, x, (UINT)base);
+      IDirect3DDevice8_DrawIndexedPrimitive(d, (D3DPRIMITIVETYPE)prim, 0, G * G, 0, prims);
+      IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0); IDirect3DDevice8_SetIndices(d, NULL, 0);
+      IDirect3DVertexBuffer8_Release(b); IDirect3DIndexBuffer8_Release(x); b = NULL; x = NULL;
+    }
+  }
+}
+static DWORD tx_cube(int x, int y) { return 0xFF000000u | (DWORD)(x * 60) << 16 | (DWORD)(y * 60) << 8 | 0x80; }
+static void random_cases(const char *path) {
+  FILE *f = fopen(path, "r"); if (!f) { printf("FAIL: cannot open %s\n", path); return; }
+  IDirect3DTexture8 *tx[4] = {NULL, texture(16, 16, tx_checker), texture(16, 16, tx_grad), texture(16, 16, tx_alpha)};
+  if (SUCCEEDED(IDirect3DDevice8_CreateCubeTexture(d, 4, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &g_cube)))
+    for (int fc = 0; fc < 6; fc++) { D3DLOCKED_RECT lr; IDirect3DCubeTexture8_LockRect(g_cube, (D3DCUBEMAP_FACES)fc, 0, &lr, NULL, 0);
+      for (int y = 0; y < 4; y++) for (int x = 0; x < 4; x++) ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] = tx_cube(x, y) ^ (DWORD)(fc * 0x2A0000);
+      IDirect3DCubeTexture8_UnlockRect(g_cube, (D3DCUBEMAP_FACES)fc, 0); }
+  g_cube_flat = cube_of(cube_flat); g_cube_faces = cube_of(cube_faces);
+  D3DLIGHT8 lt[3]; memset(lt, 0, sizeof lt);
+  lt[0].Type = D3DLIGHT_DIRECTIONAL; lt[0].Direction.x = 0.3f; lt[0].Direction.y = -0.5f; lt[0].Direction.z = 1;
+  lt[1].Type = D3DLIGHT_POINT; lt[1].Position.x = 1; lt[1].Position.y = 1; lt[1].Position.z = 1; lt[1].Range = 20; lt[1].Attenuation0 = 0.5f; lt[1].Attenuation1 = 0.1f;
+  lt[2].Type = D3DLIGHT_SPOT; lt[2].Position.z = -1; lt[2].Direction.z = 1; lt[2].Range = 30; lt[2].Attenuation0 = 1; lt[2].Theta = 0.3f; lt[2].Phi = 0.9f; lt[2].Falloff = 1;
+  for (int i = 0; i < 3; i++) {
+    lt[i].Diffuse.r = 0.9f - 0.2f * i; lt[i].Diffuse.g = 0.5f + 0.2f * i; lt[i].Diffuse.b = 0.4f; lt[i].Diffuse.a = 1;
+    lt[i].Ambient.r = lt[i].Ambient.g = lt[i].Ambient.b = 0.1f; IDirect3DDevice8_SetLight(d, i, &lt[i]);
+  }
+  char line[512], name[64] = ""; unsigned fvf = 0; int prim = 5, kind = 0;
+  /* every render state and stage state a case sets is put back, before the next case, to the value it had before the
+     case (read with Get): reset_state covers only some states, and a case is to start from the same state whatever
+     cases came before it (random_cases.py: "left at the case's starting state") */
+  static struct { int rs; unsigned st, t, v; } undo[1024]; int nu = 0;
+  while (fgets(line, sizeof line, f)) {
+    unsigned a, b, c; int i; float m[6];
+    if (sscanf(line, "case %63s %x %d %d", name, &fvf, &prim, &kind) == 4) {
+      while (nu > 0) { nu--;
+        if (undo[nu].rs) IDirect3DDevice8_SetRenderState(d, (D3DRENDERSTATETYPE)undo[nu].t, undo[nu].v);
+        else IDirect3DDevice8_SetTextureStageState(d, undo[nu].st, (D3DTEXTURESTAGESTATETYPE)undo[nu].t, undo[nu].v); }
+      reset_state();
+      D3DMATRIX pr; persp(&pr, 1.2f, 1.0f, 20.0f); IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &pr);
+      for (i = 0; i < 3; i++) IDirect3DDevice8_LightEnable(d, i, FALSE);
+      D3DMATERIAL8 mt; memset(&mt, 0, sizeof mt); mt.Diffuse.r = mt.Diffuse.g = mt.Diffuse.b = mt.Diffuse.a = 1; mt.Ambient = mt.Diffuse;
+      IDirect3DDevice8_SetMaterial(d, &mt);
+      for (i = 0; i < 4; i++) { D3DMATRIX id; memset(&id, 0, sizeof id); id._11 = id._22 = id._33 = id._44 = 1; IDirect3DDevice8_SetTransform(d, (D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0 + i), &id); }
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, D3DZB_TRUE);
+    } else if (sscanf(line, "rs %u %x", &a, &b) == 2) {
+      DWORD o = 0; if (nu < 1024 && SUCCEEDED(IDirect3DDevice8_GetRenderState(d, (D3DRENDERSTATETYPE)a, &o))) { undo[nu].rs = 1; undo[nu].t = a; undo[nu].v = o; nu++; }
+      IDirect3DDevice8_SetRenderState(d, (D3DRENDERSTATETYPE)a, b);
+    } else if (sscanf(line, "tss %u %u %x", &a, &b, &c) == 3) {
+      DWORD o = 0; if (nu < 1024 && SUCCEEDED(IDirect3DDevice8_GetTextureStageState(d, a, (D3DTEXTURESTAGESTATETYPE)b, &o))) { undo[nu].rs = 0; undo[nu].st = a; undo[nu].t = b; undo[nu].v = o; nu++; }
+      IDirect3DDevice8_SetTextureStageState(d, a, (D3DTEXTURESTAGESTATETYPE)b, c);
+    }
+    else if (sscanf(line, "tex %u %u", &a, &b) == 2) IDirect3DDevice8_SetTexture(d, a, b == 4 ? (IDirect3DBaseTexture8 *)g_cube : b == 5 ? (IDirect3DBaseTexture8 *)g_cube_flat :
+                                                                     b == 6 ? (IDirect3DBaseTexture8 *)g_cube_faces : b < 4 ? (IDirect3DBaseTexture8 *)tx[b] : NULL);
+    else if (sscanf(line, "light %u %u", &a, &b) == 2) IDirect3DDevice8_LightEnable(d, a, b);
+    else if (sscanf(line, "tt %u %f %f %f %f %f %f", &a, &m[0], &m[1], &m[2], &m[3], &m[4], &m[5]) == 7) {
+      D3DMATRIX t; memset(&t, 0, sizeof t); t._11 = m[0]; t._12 = m[1]; t._21 = m[2]; t._22 = m[3]; t._31 = m[4]; t._32 = m[5]; t._33 = 1; t._44 = 1;
+      IDirect3DDevice8_SetTransform(d, (D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0 + a), &t);
+    } else if (sscanf(line, "mat %f %f %f %f", &m[0], &m[1], &m[2], &m[3]) == 4) {
+      D3DMATERIAL8 mt; memset(&mt, 0, sizeof mt); mt.Diffuse.r = m[0]; mt.Diffuse.g = m[1]; mt.Diffuse.b = m[2]; mt.Diffuse.a = m[3];
+      mt.Ambient.r = mt.Ambient.g = mt.Ambient.b = 0.5f; mt.Ambient.a = 1; mt.Emissive.b = 0.1f; IDirect3DDevice8_SetMaterial(d, &mt);
+    } else if (!strncmp(line, "draw", 4)) {
+      begin(0xFF203040); rdraw(fvf, prim, kind); end(name);
+    }
+  }
+  fclose(f);
+  for (int i = 1; i < 4; i++) if (tx[i]) IDirect3DTexture8_Release(tx[i]);
+  if (g_cube) IDirect3DCubeTexture8_Release(g_cube);
+  if (g_cube_flat) IDirect3DCubeTexture8_Release(g_cube_flat); if (g_cube_faces) IDirect3DCubeTexture8_Release(g_cube_faces);
+}
+
+/* ---- threads and churn ---------------------------------------------------------------------------------------------- */
+static volatile LONG g_side_done, g_side_fail;
+static DWORD tx_solid(int x, int y) { (void)x; (void)y; return 0xFF30C050; }
+static void churn_round(int i) {
+  IDirect3DTexture8 *t = NULL; IDirect3DVertexBuffer8 *v = NULL; IDirect3DIndexBuffer8 *x = NULL; D3DLOCKED_RECT lr; BYTE *p;
+  if (SUCCEEDED(IDirect3DDevice8_CreateTexture(d, 8 + (i & 7) * 4, 8, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &t)) &&
+      SUCCEEDED(IDirect3DTexture8_LockRect(t, 0, &lr, NULL, 0))) { memset(lr.pBits, i & 255, lr.Pitch * 8); IDirect3DTexture8_UnlockRect(t, 0); }
+  else InterlockedIncrement(&g_side_fail);
+  if (SUCCEEDED(IDirect3DDevice8_CreateVertexBuffer(d, 256 + (i & 15) * 16, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &v)) &&
+      SUCCEEDED(IDirect3DVertexBuffer8_Lock(v, 0, 0, &p, D3DLOCK_DISCARD))) { memset(p, i & 255, 256); IDirect3DVertexBuffer8_Unlock(v); }
+  else InterlockedIncrement(&g_side_fail);
+  if (SUCCEEDED(IDirect3DDevice8_CreateIndexBuffer(d, 64, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &x)) &&
+      SUCCEEDED(IDirect3DIndexBuffer8_Lock(x, 0, 0, &p, 0))) { memset(p, 0, 64); IDirect3DIndexBuffer8_Unlock(x); }
+  else InterlockedIncrement(&g_side_fail);
+  if (t) IDirect3DTexture8_Release(t); if (v) IDirect3DVertexBuffer8_Release(v); if (x) IDirect3DIndexBuffer8_Release(x);
+}
+static DWORD WINAPI side_thread(LPVOID n) { for (int i = 0; i < (int)(INT_PTR)n; i++) churn_round(i); InterlockedExchange(&g_side_done, 1); return 0; }
+static void textured_check(const char *what) {
+  IDirect3DTexture8 *t = texture(4, 4, tx_solid);
+  reset_state(); IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t);
+  IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+  begin(0xFF000000);
+  VRhwT q[4] = {{0, 0, 0.5f, 1, 0xFFFFFFFF, 0, 0}, {64, 0, 0.5f, 1, 0xFFFFFFFF, 1, 0}, {0, 64, 0.5f, 1, 0xFFFFFFFF, 0, 1}, {64, 64, 0.5f, 1, 0xFFFFFFFF, 1, 1}};
+  IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+  IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof *q);
+  IDirect3DDevice8_EndScene(d);
+  DWORD px = bb_pixel(20, 30);
+  char m[160]; snprintf(m, sizeof m, "%s: a textured draw afterwards reads back the texture's colour (%06lX)", what, (unsigned long)px);
+  check(px == 0x30C050, m);
+  IDirect3DDevice8_SetTexture(d, 0, NULL); IDirect3DTexture8_Release(t);
+}
+static void threads_test(void) {
+  HANDLE h = CreateThread(NULL, 0, side_thread, (LPVOID)(INT_PTR)2000, 0, NULL);
+  int frames = 0;
+  while (!g_side_done && frames < 100000) {
+    IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000 | (DWORD)frames, 1.0f, 0);
+    begin(0xFF102030); quad_rhw(4, 4, 60, 60, 0.5f, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFFFF); IDirect3DDevice8_EndScene(d);
+    IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+    if (frames % 10 == 0) bb_pixel(1, 1);
+    churn_round(frames);                                  /* objects made here too, at the same time as there */
+    frames++;
+  }
+  WaitForSingleObject(h, 60000); CloseHandle(h);
+  char m[120]; snprintf(m, sizeof m, "threads: 2,000 rounds on the second thread, every create and lock succeeded, while %d frames ran here", frames);
+  check(g_side_done && !g_side_fail, m);
+  textured_check("threads");
+}
+static void churn_test(void) {
+  for (int i = 0; i < 5000; i++) {
+    churn_round(i);
+    IDirect3DSurface8 *rt = NULL, *ds = NULL, *img = NULL;
+    if (FAILED(IDirect3DDevice8_CreateRenderTarget(d, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, i & 1, &rt))) g_side_fail++;
+    if (FAILED(IDirect3DDevice8_CreateDepthStencilSurface(d, 16, 16, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, &ds))) g_side_fail++;
+    if (FAILED(IDirect3DDevice8_CreateImageSurface(d, 16, 16, D3DFMT_A8R8G8B8, &img))) g_side_fail++;
+    if (rt) IDirect3DSurface8_Release(rt); if (ds) IDirect3DSurface8_Release(ds); if (img) IDirect3DSurface8_Release(img);
+    if (i % 500 == 0) IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+  }
+  check(!g_side_fail, "churn: 5,000 rounds of textures, buffers and surfaces, every create and lock succeeded");
+  textured_check("churn");
+}
+
+
+/* interp (17 Nov; d8_device.cpp "interp"): t8 is the step clock (D8ON11_InterpClock) and draws one skinned mesh through
+   D8ON11_Skin over a few frames, each case ending on a frame whose picture is dumped. Each case has a reference drawn
+   with the clock off and the palette and world matrix the case expects (computed here as d3d8on11 computes them:
+   p0 + (p1 - p0) * a, entry by entry). Needs D8ON11_GPU_SKIN=1 and D8ON11_INTERP=1. */
+static volatile float ic_whole; static volatile double ic_carry; static volatile int ic_mode;
+typedef struct { unsigned size; void *pos, *nrm, *key; unsigned variant; const float *src; unsigned count1, count2;
+                 const unsigned short *words; unsigned shift; const unsigned short *bonelist; const unsigned short *dups; unsigned ndups;
+                 const float *matrices; } ISkin;
+static void interp_mats(float *M, float an, float tx) {    /* bones 0..2: a rotation about z by an*(b-1) and a shift tx */
+  memset(M, 0, 3 * 64);
+  for (int b = 0; b < 3; b++) { float *m = M + 16 * b, c = cosf(an * (b - 1)), sn = sinf(an * (b - 1));
+    m[0] = c; m[1] = sn; m[4] = -sn; m[5] = c; m[10] = 1; m[15] = 1; m[12] = tx + 0.1f * b; m[13] = 0.15f * b - 0.1f; m[14] = 0.1f * b; }
+}
+static void interp_world(D3DMATRIX *w, float x) { memset(w, 0, sizeof *w); w->_11 = w->_22 = w->_33 = w->_44 = 1; w->_41 = x; }
+static void interp_lerp(float *o, const float *a, const float *b, int n, float t) { for (int i = 0; i < n; i++) o[i] = a[i] + (b[i] - a[i]) * t; }
+static void interp_test(void) {
+  typedef void (__stdcall *PFN_CLK)(volatile float *, volatile double *, volatile int *);
+  typedef int (__stdcall *PFN_SKIN)(const ISkin *);
+  PFN_CLK clk = (PFN_CLK)(void *)GetProcAddress(GetModuleHandleA("d3d8.dll"), "D8ON11_InterpClock");
+  PFN_SKIN pskin = (PFN_SKIN)(void *)GetProcAddress(GetModuleHandleA("d3d8.dll"), "D8ON11_Skin");
+  if (!clk || !pskin) { printf("interp: no D8ON11_InterpClock or D8ON11_Skin\n"); return; }
+  clk(&ic_whole, &ic_carry, &ic_mode);
+  static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_STREAM(1), D3DVSD_REG(3, D3DVSDT_FLOAT3), D3DVSD_END()};
+  enum { C1 = 32, C2 = 32, NV = C1 + C2 };
+  static float src[C1 * 6 + C2 * 14]; static unsigned short words[2 * NV];
+  for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) {
+    int k = y * 8 + x; float px = x / 7.0f * 1.2f - 0.6f, py = 0.6f - y / 7.0f * 1.2f, pz = 0.25f * px * px;
+    if (k < C1) { float *f = src + 6 * k; f[0] = px; f[1] = py; f[2] = pz; f[3] = 0; f[4] = 0; f[5] = -1; words[2 * k] = (unsigned short)(x & 1); words[2 * k + 1] = 0; }
+    else { float w = (y - 3) / 5.0f, u = 1 - w, *f = src + 6 * C1 + 14 * (k - C1);
+      f[0] = px * w; f[1] = px * u; f[2] = py * w; f[3] = py * u; f[4] = pz * w; f[5] = pz * u; f[6] = w; f[7] = u;
+      f[8] = 0; f[9] = 0; f[10] = 0; f[11] = 0; f[12] = -w; f[13] = -u; words[2 * k] = 1; words[2 * k + 1] = 2; }
+  }
+  DWORD h = 0; IDirect3DVertexBuffer8 *vp = NULL, *vn = NULL; IDirect3DIndexBuffer8 *ib = NULL; BYTE *p;
+  IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+  IDirect3DDevice8_CreateVertexBuffer(d, NV * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vp);
+  IDirect3DDevice8_CreateVertexBuffer(d, NV * 12, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vn);
+  IDirect3DDevice8_CreateIndexBuffer(d, 7 * 7 * 6 * 2, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib);
+  if (ib && SUCCEEDED(IDirect3DIndexBuffer8_Lock(ib, 0, 0, &p, 0))) { WORD *I = (WORD *)p; int n = 0;
+    for (int y = 0; y < 7; y++) for (int x = 0; x < 7; x++) { WORD a0 = (WORD)(y * 8 + x); I[n++] = a0; I[n++] = a0 + 1; I[n++] = a0 + 8; I[n++] = a0 + 1; I[n++] = a0 + 9; I[n++] = a0 + 8; }
+    IDirect3DIndexBuffer8_Unlock(ib); }
+  D3DMATRIX proj, view; persp(&proj, 1.0f, 1.0f, 100.0f);
+  memset(&view, 0, sizeof view); view._11 = view._22 = view._33 = view._44 = 1; view._43 = 5;
+  static float MT[48]; float P0[48], P1[48], P2[48], P3[48], E[48]; D3DMATRIX W0, W1, WE;
+  interp_mats(P0, 0.0f, -0.6f); interp_mats(P1, 0.5f, 0.2f); interp_mats(P2, -0.4f, 0.0f); interp_mats(P3, 0.5f, 10.2f);
+  interp_world(&W0, -0.4f); interp_world(&W1, 0.4f);
+  /* one frame: the clock, the job, the draw (and its picture when named), Present */
+  #define IFRAME(W_, C_, M_, WM_, NAME_) do { ic_whole = (W_); ic_carry = (C_); \
+      reset_state(); begin(0xFF101010); \
+      IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &proj); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &view); \
+      IDirect3DDevice8_SetTransform(d, D3DTS_WORLD, (WM_)); \
+      IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE); \
+      IDirect3DDevice8_SetTextureStageState(d, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2); \
+      IDirect3DDevice8_SetVertexShader(d, h); IDirect3DDevice8_SetStreamSource(d, 0, vp, 12); IDirect3DDevice8_SetStreamSource(d, 1, vn, 12); \
+      IDirect3DDevice8_SetIndices(d, ib, 0); \
+      memcpy(MT, (M_), sizeof MT);  /* one bone table, written each frame (as the game's) */ \
+      { ISkin j = {sizeof j, vp, vn, ib, 0, src, C1, C2, words, 0, NULL, NULL, 0, MT}; if (!pskin(&j)) printf("interp: a job refused\n"); } \
+      IDirect3DDevice8_DrawIndexedPrimitive(d, D3DPT_TRIANGLELIST, 0, NV, 0, 7 * 7); \
+      if (NAME_) end(NAME_); else IDirect3DDevice8_EndScene(d); \
+      IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); } while (0)
+  /* 1 blend: ticks P0/W0, P1/W1, then a frame between ticks at c 0.5 */
+  ic_mode = 3;
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(1, 0.0, P1, &W1, NULL); IFRAME(0, 0.5, P1, &W1, "interp_blend");
+  ic_mode = 0; interp_lerp(E, P0, P1, 48, 0.5f); interp_lerp(&WE._11, &W0._11, &W1._11, 16, 0.5f); IFRAME(0, 0.0, E, &WE, "interp_blend_ref");
+  /* 2 the tick frame itself, c 0.25: P1 arrives, drawn at the blend 0.25 */
+  ic_mode = 3;
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(1, 0.25, P1, &W1, "interp_tick");
+  ic_mode = 0; interp_lerp(E, P0, P1, 48, 0.25f); interp_lerp(&WE._11, &W0._11, &W1._11, 16, 0.25f); IFRAME(0, 0.0, E, &WE, "interp_tick_ref");
+  /* 3 a frame of two ticks, c 0.5: (2 - 1 + 0.5) / 2 = 0.75 */
+  ic_mode = 3;
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(2, 0.5, P1, &W1, "interp_span2");
+  ic_mode = 0; interp_lerp(E, P0, P1, 48, 0.75f); interp_lerp(&WE._11, &W0._11, &W1._11, 16, 0.75f); IFRAME(0, 0.0, E, &WE, "interp_span2_ref");
+  /* 4 the game changes the palette between ticks: still the blend of the last two ticks (the change waits for the next) */
+  ic_mode = 3;
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(1, 0.0, P1, &W1, NULL); IFRAME(0, 0.5, P2, &W1, "interp_changed");
+  ic_mode = 0; interp_lerp(E, P0, P1, 48, 0.5f); interp_lerp(&WE._11, &W0._11, &W1._11, 16, 0.5f); IFRAME(0, 0.0, E, &WE, "interp_changed_ref");
+  /* 5 a bone moves 10 units in a tick: not blended */
+  ic_mode = 3;
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(1, 0.0, P3, &W1, NULL); IFRAME(0, 0.5, P3, &W1, "interp_warp");
+  ic_mode = 0; IFRAME(0, 0.0, P3, &W1, "interp_warp_ref");
+  /* 6 no clock running (mode 0): as handed */
+  IFRAME(1, 0.0, P0, &W0, NULL); IFRAME(0, 0.5, P1, &W1, "interp_off");
+  IFRAME(0, 0.0, P1, &W1, "interp_off_ref");
+  #undef IFRAME
+  for (int i = 0; i < 3; i++) IDirect3DDevice8_SetStreamSource(d, i, NULL, 0);
+  IDirect3DDevice8_SetIndices(d, NULL, 0); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+  IDirect3DDevice8_DeleteVertexShader(d, h);
+  if (vp) IDirect3DVertexBuffer8_Release(vp); if (vn) IDirect3DVertexBuffer8_Release(vn); if (ib) IDirect3DIndexBuffer8_Release(ib);
+}
+/* t8 crash (21 Nov): an access violation after the device is made; d3d8on11's crash reporting must log it (first chance
+   and unhandled, with t8.exe and its offset) and hand on to the filter that was there before it: this one, which exits 3 */
+static LONG WINAPI t8_filter(EXCEPTION_POINTERS *e) { (void)e; printf("t8: the filter set before d3d8.dll's was reached\n"); ExitProcess(3); return 0; }
+int main(int argc, char **argv) {
+  setvbuf(stdout, NULL, _IONBF, 0);
+  if (argc > 1 && !strcmp(argv[1], "crash")) SetUnhandledExceptionFilter(t8_filter);
+  /* t8 kit (21 Nov): a stand-in FFXiMain.dll is loaded first, as the game is when it calls Direct3DCreate8 (load_kit) */
+  if (argc > 1 && !strcmp(argv[1], "kit") && !LoadLibraryA("FFXiMain.dll")) { printf("FAIL: no FFXiMain.dll next to t8\n"); return 2; }
+  g_d3d = Direct3DCreate8(D3D_SDK_VERSION);
+  if (!g_d3d) { printf("FAIL: Direct3DCreate8\n"); return 2; }
+  HWND w = window(); D3DPRESENT_PARAMETERS pp;
+  HRESULT hr = make(w, &pp);
+  if (FAILED(hr)) { printf("FAIL: CreateDevice 0x%08lX\n", (unsigned long)hr); return 2; }
+  /* t8 manysnap N (22 Nov): N 16x16 lockable render targets, each copied from the back buffer, as speedfix's
+     occlusion_late keeps three per occlusion object; after two Presents each do-not-wait lock must find its snapshot
+     (none told "not yet"): prints how many of N did */
+  if (argc > 2 && !strcmp(argv[1], "manysnap")) {
+    int n = atoi(argv[2]), okn = 0, notyet = 0, fail = 0; IDirect3DSurface8 **rt = calloc(n, sizeof *rt), *bb = NULL;
+    RECT r16 = {0, 0, 16, 16}; POINT p0 = {0, 0};
+    { IDirect3DTexture8 *tx = NULL;                /* the source as speedfix's: a 16x16 render-target texture's level */
+      if (SUCCEEDED(IDirect3DDevice8_CreateTexture(d, 16, 16, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &tx)) && tx) {
+        IDirect3DTexture8_GetSurfaceLevel(tx, 0, &bb); IDirect3DTexture8_Release(tx); } }
+    if (bb) { IDirect3DSurface8 *keep = NULL; IDirect3DDevice8_GetRenderTarget(d, &keep); IDirect3DDevice8_SetRenderTarget(d, bb, NULL);
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF102030, 1.0f, 0); IDirect3DDevice8_SetRenderTarget(d, keep, NULL); if (keep) IDirect3DSurface8_Release(keep); }
+    for (int i = 0; i < n; i++) if (SUCCEEDED(IDirect3DDevice8_CreateRenderTarget(d, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt[i])))
+      IDirect3DDevice8_CopyRects(d, bb, &r16, 1, rt[i], &p0);
+    for (int k = 0; k < 3; k++) { IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); Sleep(200); }
+    for (int i = 0; i < n; i++) { D3DLOCKED_RECT q; if (!rt[i]) { fail++; continue; }
+      HRESULT h = IDirect3DSurface8_LockRect(rt[i], &q, NULL, D3DLOCK_READONLY | 0x4000u);
+      if (h == (HRESULT)0x8876021CL) notyet++; else if (SUCCEEDED(h)) { okn++; IDirect3DSurface8_UnlockRect(rt[i]); } else fail++; }
+    printf("manysnap: %d surfaces: %d locked from their snapshot or read, %d told not yet, %d failed\n", n, okn, notyet, fail);
+    for (int i = 0; i < n; i++) if (rt[i]) IDirect3DSurface8_Release(rt[i]);
+    if (bb) IDirect3DSurface8_Release(bb); free(rt);
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d); return 0;
+  }
+  if (argc > 1 && !strcmp(argv[1], "kit")) { printf("t8: kit done\n"); IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d); return 0; }
+  if (argc > 1 && !strcmp(argv[1], "crash")) { printf("t8: crashing on purpose\n"); *(volatile int *)(uintptr_t)0x10 = 1; return 0; }
+  if (argc > 1 && !strcmp(argv[1], "interp")) {
+    interp_test();
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+  if (argc > 1 && !strcmp(argv[1], "scenes")) {
+    scenes();
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+  if (argc > 1 && (!strcmp(argv[1], "threads") || !strcmp(argv[1], "churn"))) {
+    if (!strcmp(argv[1], "threads")) threads_test(); else churn_test();
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    return fails != 0;
+  }
+  if (argc > 2 && !strcmp(argv[1], "random")) {
+    random_cases(argv[2]);
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+  if (argc > 1 && !strcmp(argv[1], "nowait")) {
+    /* the do-not-wait lock (d8_res.cpp, D8ON11_LOCK_DONOTWAIT; the flag from the export D8ON11_LockDoNotWait): each
+       frame locks a 16x16 lockable render target that an earlier frame copied the back buffer into. A lock that
+       succeeds must read that frame's colour; one told 0x8876021C (not yet) leaves the copy as it is and no new
+       copy is made, as speedfix's occlusion_late does. No other read-back runs, so the device may run ahead. */
+    typedef unsigned (__stdcall *PFN)(void);
+    PFN pf = (PFN)(void *)GetProcAddress(GetModuleHandleA("d3d8.dll"), "D8ON11_LockDoNotWait");
+    DWORD fl = pf ? pf() : 0;
+    IDirect3DSurface8 *late = NULL, *lbb = NULL; RECT lr16 = {0, 0, 16, 16}; POINT lp0 = {0, 0};
+    D3DSURFACE_DESC lbd; memset(&lbd, 0, sizeof lbd);
+    IDirect3DDevice8_GetBackBuffer(d, 0, D3DBACKBUFFER_TYPE_MONO, &lbb); if (lbb) IDirect3DSurface8_GetDesc(lbb, &lbd);
+    IDirect3DDevice8_CreateRenderTarget(d, 16, 16, lbd.Format, D3DMULTISAMPLE_NONE, TRUE, &late);
+    int nf = argc > 2 ? atoi(argv[2]) : 600, got = 0, notyet = 0, bad = 0, other = 0, pend = -1, longest = 0, run = 0;
+    for (int f = 0; f < nf && late && lbb && fl; f++) {
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000 | (f * 4), 1.0f, 0);
+      int copy = pend < 0;
+      if (pend >= 0) {
+        D3DLOCKED_RECT q; HRESULT hr = IDirect3DSurface8_LockRect(late, &q, NULL, D3DLOCK_READONLY | fl);
+        if (SUCCEEDED(hr)) {
+          DWORD px = ((DWORD *)((BYTE *)q.pBits + 9 * q.Pitch))[7] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(late);
+          if (px != (DWORD)(pend * 4)) bad++;
+          got++; copy = 1; run = 0;
+        } else if (hr == (HRESULT)0x8876021CL) { notyet++; if (++run > longest) longest = run; }
+        else other++;
+      }
+      if (copy) { IDirect3DDevice8_CopyRects(d, lbb, &lr16, 1, late, &lp0); pend = f; }
+      IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+    }
+    printf("nowait: %d frames, %d locks answered, %d told not yet (longest run %d), %d wrong, %d other failures\n", nf, got, notyet, longest, bad, other);
+    check(fl == 0x4000, "the device exports D8ON11_LockDoNotWait and its flag is 0x4000");
+    check(late && lbb && got > nf / 8 && !bad && !other && longest < 64, "do-not-wait locks of a copied render target: every answer is the copied frame's colour, none fails otherwise, and answers keep coming");
+    /* a surface that takes no snapshot is locked as ever with the flag: one never copied into */
+    IDirect3DSurface8 *plain = NULL; D3DLOCKED_RECT q;
+    IDirect3DDevice8_CreateRenderTarget(d, 16, 16, lbd.Format, D3DMULTISAMPLE_NONE, TRUE, &plain);
+    HRESULT hp = plain ? IDirect3DSurface8_LockRect(plain, &q, NULL, D3DLOCK_READONLY | fl) : E_FAIL;
+    if (SUCCEEDED(hp)) IDirect3DSurface8_UnlockRect(plain);
+    check(SUCCEEDED(hp), "a render target never copied into is locked as ever with the flag");
+    if (plain) IDirect3DSurface8_Release(plain);
+    if (late) IDirect3DSurface8_Release(late); if (lbb) IDirect3DSurface8_Release(lbb);
+    return 0;
+  }
+  if (argc > 1 && (!strcmp(argv[1], "frames") || !strcmp(argv[1], "orphan"))) {
+    int kill = !strcmp(argv[1], "orphan"), late_bad = 0;
+    /* the occlusion readback done a frame late (d8_proto.h, X_SNAP): each frame locks a 16x16 lockable render target
+       the frame before copied the back buffer into, then copies this frame's; the lock must read the frame before's colour */
+    IDirect3DSurface8 *late = NULL, *lbb = NULL; RECT lr16 = {0, 0, 16, 16}; POINT lp0 = {0, 0};
+    D3DSURFACE_DESC lbd; memset(&lbd, 0, sizeof lbd);
+    IDirect3DDevice8_GetBackBuffer(d, 0, D3DBACKBUFFER_TYPE_MONO, &lbb); if (lbb) IDirect3DSurface8_GetDesc(lbb, &lbd);
+    IDirect3DDevice8_CreateRenderTarget(d, 16, 16, lbd.Format, D3DMULTISAMPLE_NONE, TRUE, &late);
+    int nf = argc > 2 ? atoi(argv[2]) : 600; if (nf < 31) nf = 600;   /* t8 frames N: N frames (600 by default) */
+    int fdraw = argc > 3 && !strcmp(argv[3], "draw");   /* t8 frames N draw: also a small quad each frame (d3d8on11's executor split line) */
+    for (int f = 0; f < nf; f++) {
+      if (f == 30 && kill) {
+        int n = 0; HANDLE sn = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0); PROCESSENTRY32 pe; pe.dwSize = sizeof pe;
+        for (BOOL more = Process32First(sn, &pe); more; more = Process32Next(sn, &pe))
+          if (!_strnicmp(pe.szExeFile, "d8x", 3)) {
+            HANDLE p = OpenProcess(PROCESS_TERMINATE | SYNCHRONIZE, FALSE, pe.th32ProcessID);
+            if (p) { TerminateProcess(p, 7); WaitForSingleObject(p, 5000); CloseHandle(p); n++; }
+          }
+        CloseHandle(sn);
+        printf("ended %d executor process(es)\n", n);
+      }
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000 | (f * 4), 1.0f, 0);
+      if (!kill && f > 0 && late) {
+        D3DLOCKED_RECT q; DWORD px = 0;
+        if (SUCCEEDED(IDirect3DSurface8_LockRect(late, &q, NULL, D3DLOCK_READONLY))) {
+          px = ((DWORD *)((BYTE *)q.pBits + 9 * q.Pitch))[7] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(late); }
+        if (px != (DWORD)((f - 1) * 4)) late_bad++;
+      }
+      if (!kill && late && lbb) IDirect3DDevice8_CopyRects(d, lbb, &lr16, 1, late, &lp0);
+      if (fdraw) { struct { float x, y, z, w; DWORD c; } q[4] = {{40, 40, 0.5f, 1, 0xFF20A040}, {50, 40, 0.5f, 1, 0xFF20A040}, {40, 50, 0.5f, 1, 0xFF20A040}, {50, 50, 0.5f, 1, 0xFF20A040}};   /* (clear of the 16x16 the readback check reads) */
+        IDirect3DDevice8_BeginScene(d); IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+        for (int k = 0; k < 40; k++) IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+        IDirect3DDevice8_EndScene(d); }
+      IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+      if (f >= 30) bb_pixel(1, 1);                 /* a read-back: waits for an answer that cannot come */
+      printf("presented %d\n", f);
+    }
+    if (!kill) { char what[160]; snprintf(what, sizeof what, "a frame-late lock of a copied lockable render target reads the frame before's colour (%d frames)", nf - 1);
+                 check(late && lbb && !late_bad, what); }
+    if (late) IDirect3DSurface8_Release(late); if (lbb) IDirect3DSurface8_Release(lbb);
+    printf("still running after %d frames\n", nf);
+    return 0;
+  }
+  if (argc > 1 && !strcmp(argv[1], "where")) {
+    HMODULE m = GetModuleHandleA("d3d8.dll"); char p[MAX_PATH] = "?"; if (m) GetModuleFileNameA(m, p, sizeof p);
+    char fv[64] = "?"; DWORD h = 0, sz = GetFileVersionInfoSizeA(p, &h);
+    void *buf = sz ? malloc(sz) : NULL; VS_FIXEDFILEINFO *fi = NULL; UINT fl = 0;
+    if (buf && GetFileVersionInfoA(p, 0, sz, buf) && VerQueryValueA(buf, "\\", (LPVOID *)&fi, &fl) && fi)
+      snprintf(fv, sizeof fv, "%u.%u.%u.%u", (unsigned)(fi->dwFileVersionMS >> 16), (unsigned)(fi->dwFileVersionMS & 0xFFFF),
+               (unsigned)(fi->dwFileVersionLS >> 16), (unsigned)(fi->dwFileVersionLS & 0xFFFF));
+    free(buf);
+    D3DADAPTER_IDENTIFIER8 ai; memset(&ai, 0, sizeof ai); IDirect3D8_GetAdapterIdentifier(g_d3d, D3DADAPTER_DEFAULT, 0, &ai);
+    printf("d3d8.dll: %s, version %s\nadapter: %s (%s)\n", p, fv, ai.Description, ai.Driver);
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+  /* sbtypes: what a state block of each D3DSTATEBLOCKTYPE captures, measured one state at a time: the state at its
+     value A, CreateStateBlock, the state set to B, ApplyStateBlock, the state read back. A again: captured; B: not.
+     "unset" where Set did not take B (Get answered something else), so nothing is measured there */
+  if (argc > 1 && !strcmp(argv[1], "sbtypes")) {
+    static const DWORD psc[] = {0xFFFF0101, 0x00000001, 0x800F0000, 0x90E40000, 0x0000FFFF}; DWORD ps = 0;
+    IDirect3DDevice8_CreatePixelShader(d, psc, &ps);
+    IDirect3DTexture8 *tx = NULL; IDirect3DDevice8_CreateTexture(d, 4, 4, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &tx);
+    IDirect3DVertexBuffer8 *vb = NULL; IDirect3DDevice8_CreateVertexBuffer(d, 64, 0, 0, D3DPOOL_MANAGED, &vb);
+    IDirect3DIndexBuffer8 *ib = NULL; IDirect3DDevice8_CreateIndexBuffer(d, 64, 0, D3DFMT_INDEX16, D3DPOOL_MANAGED, &ib);
+    { D3DLIGHT8 l; memset(&l, 0, sizeof l); l.Type = D3DLIGHT_DIRECTIONAL; l.Direction.z = 1; l.Diffuse.r = 1; IDirect3DDevice8_SetLight(d, 0, &l); }
+    PALETTEENTRY pal[256]; memset(pal, 0, sizeof pal); IDirect3DDevice8_SetPaletteEntries(d, 0, pal); IDirect3DDevice8_SetPaletteEntries(d, 1, pal);
+    static const char *tn[] = {"all", "pixel", "vertex"};
+    for (int ty = 1; ty <= 3; ty++) {
+      DWORD h; int nc = 0, nn = 0, nu = 0;
+#define SB_ONE(NAME, GETA, SETB, ISA, ISB, RESTORE) do { \
+        if (FAILED(IDirect3DDevice8_CreateStateBlock(d, (D3DSTATEBLOCKTYPE)ty, &h))) { printf("sb %s %s create-failed\n", tn[ty - 1], NAME); break; } \
+        SETB; const char *r_ = (ISB) ? NULL : "unset"; \
+        if (!r_) { IDirect3DDevice8_ApplyStateBlock(d, h); r_ = (ISA) ? "captured" : (ISB) ? "not" : "other"; } \
+        IDirect3DDevice8_DeleteStateBlock(d, h); RESTORE; \
+        if (!strcmp(r_, "captured")) nc++; else if (!strcmp(r_, "not")) nn++; else nu++; \
+        printf("sb %s %s %s\n", tn[ty - 1], NAME, r_); } while (0)
+      char nm[64];
+      for (int s = 1; s < 256; s++) {
+        DWORD a, v = 0; if (FAILED(IDirect3DDevice8_GetRenderState(d, (D3DRENDERSTATETYPE)s, &a))) continue;
+        snprintf(nm, sizeof nm, "rs %d", s);
+        SB_ONE(nm, , IDirect3DDevice8_SetRenderState(d, (D3DRENDERSTATETYPE)s, a ^ 1),
+               (IDirect3DDevice8_GetRenderState(d, (D3DRENDERSTATETYPE)s, &v), v == a),
+               (IDirect3DDevice8_GetRenderState(d, (D3DRENDERSTATETYPE)s, &v), v == (a ^ 1)),
+               IDirect3DDevice8_SetRenderState(d, (D3DRENDERSTATETYPE)s, a));
+      }
+      for (int st = 0; st < 8; st++) for (int t = 1; t < 29; t++) {
+        DWORD a, v = 0; if (FAILED(IDirect3DDevice8_GetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, &a))) continue;
+        snprintf(nm, sizeof nm, "tss %d %d", st, t);
+        SB_ONE(nm, , IDirect3DDevice8_SetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, a ^ 1),
+               (IDirect3DDevice8_GetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, &v), v == a),
+               (IDirect3DDevice8_GetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, &v), v == (a ^ 1)),
+               IDirect3DDevice8_SetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, a));
+      }
+      { static const int ts[] = {D3DTS_VIEW, D3DTS_PROJECTION, D3DTS_TEXTURE0, D3DTS_TEXTURE7, 256 /* WORLD */, 257 /* WORLD1 */};
+        for (unsigned i = 0; i < sizeof ts / sizeof *ts; i++) {
+          D3DMATRIX a, b, v; IDirect3DDevice8_GetTransform(d, (D3DTRANSFORMSTATETYPE)ts[i], &a); b = a; b._41 += 1;
+          snprintf(nm, sizeof nm, "transform %d", ts[i]);
+          SB_ONE(nm, , IDirect3DDevice8_SetTransform(d, (D3DTRANSFORMSTATETYPE)ts[i], &b),
+                 (IDirect3DDevice8_GetTransform(d, (D3DTRANSFORMSTATETYPE)ts[i], &v), !memcmp(&v, &a, sizeof v)),
+                 (IDirect3DDevice8_GetTransform(d, (D3DTRANSFORMSTATETYPE)ts[i], &v), !memcmp(&v, &b, sizeof v)),
+                 IDirect3DDevice8_SetTransform(d, (D3DTRANSFORMSTATETYPE)ts[i], &a)); } }
+      { float a[4], b[4], v[4]; IDirect3DDevice8_GetClipPlane(d, 0, a); memcpy(b, a, sizeof b); b[3] += 1;
+        SB_ONE("clipplane 0", , IDirect3DDevice8_SetClipPlane(d, 0, b), (IDirect3DDevice8_GetClipPlane(d, 0, v), !memcmp(v, a, sizeof v)),
+               (IDirect3DDevice8_GetClipPlane(d, 0, v), !memcmp(v, b, sizeof v)), IDirect3DDevice8_SetClipPlane(d, 0, a)); }
+      { BOOL a = 0, v = 0; IDirect3DDevice8_GetLightEnable(d, 0, &a);
+        SB_ONE("lightenable 0", , IDirect3DDevice8_LightEnable(d, 0, !a), (IDirect3DDevice8_GetLightEnable(d, 0, &v), !v == !a),
+               (IDirect3DDevice8_GetLightEnable(d, 0, &v), !v != !a), IDirect3DDevice8_LightEnable(d, 0, a)); }
+      { D3DLIGHT8 a, b, v; IDirect3DDevice8_GetLight(d, 0, &a); b = a; b.Diffuse.g += 1;
+        SB_ONE("light 0", , IDirect3DDevice8_SetLight(d, 0, &b), (IDirect3DDevice8_GetLight(d, 0, &v), !memcmp(&v, &a, sizeof v)),
+               (IDirect3DDevice8_GetLight(d, 0, &v), !memcmp(&v, &b, sizeof v)), IDirect3DDevice8_SetLight(d, 0, &a)); }
+      { D3DMATERIAL8 a, b, v; IDirect3DDevice8_GetMaterial(d, &a); b = a; b.Power += 1;
+        SB_ONE("material", , IDirect3DDevice8_SetMaterial(d, &b), (IDirect3DDevice8_GetMaterial(d, &v), !memcmp(&v, &a, sizeof v)),
+               (IDirect3DDevice8_GetMaterial(d, &v), !memcmp(&v, &b, sizeof v)), IDirect3DDevice8_SetMaterial(d, &a)); }
+      { D3DVIEWPORT8 a, b, v; IDirect3DDevice8_GetViewport(d, &a); b = a; b.Width -= 1;
+        SB_ONE("viewport", , IDirect3DDevice8_SetViewport(d, &b), (IDirect3DDevice8_GetViewport(d, &v), !memcmp(&v, &a, sizeof v)),
+               (IDirect3DDevice8_GetViewport(d, &v), !memcmp(&v, &b, sizeof v)), IDirect3DDevice8_SetViewport(d, &a)); }
+      { DWORD a = D3DFVF_XYZ, b = D3DFVF_XYZ | D3DFVF_DIFFUSE, v = 0; IDirect3DDevice8_SetVertexShader(d, a);
+        SB_ONE("vertexshader", , IDirect3DDevice8_SetVertexShader(d, b), (IDirect3DDevice8_GetVertexShader(d, &v), v == a),
+               (IDirect3DDevice8_GetVertexShader(d, &v), v == b), IDirect3DDevice8_SetVertexShader(d, a)); }
+      { DWORD v = 0; IDirect3DDevice8_SetPixelShader(d, 0);
+        SB_ONE(ps ? "pixelshader" : "pixelshader (no shader made)", , IDirect3DDevice8_SetPixelShader(d, ps), (IDirect3DDevice8_GetPixelShader(d, &v), v == 0),
+               (IDirect3DDevice8_GetPixelShader(d, &v), v == ps && ps), IDirect3DDevice8_SetPixelShader(d, 0)); }
+      { float a[4] = {1, 2, 3, 4}, b[4] = {5, 6, 7, 8}, v[4]; IDirect3DDevice8_SetVertexShaderConstant(d, 0, a, 1);
+        SB_ONE("vsconst 0", , IDirect3DDevice8_SetVertexShaderConstant(d, 0, b, 1), (IDirect3DDevice8_GetVertexShaderConstant(d, 0, v, 1), !memcmp(v, a, sizeof v)),
+               (IDirect3DDevice8_GetVertexShaderConstant(d, 0, v, 1), !memcmp(v, b, sizeof v)), ); }
+      { float a[4] = {.1f, .2f, .3f, .4f}, b[4] = {.5f, .6f, .7f, .8f}, v[4]; IDirect3DDevice8_SetPixelShaderConstant(d, 0, a, 1);
+        SB_ONE("psconst 0", , IDirect3DDevice8_SetPixelShaderConstant(d, 0, b, 1), (IDirect3DDevice8_GetPixelShaderConstant(d, 0, v, 1), !memcmp(v, a, sizeof v)),
+               (IDirect3DDevice8_GetPixelShaderConstant(d, 0, v, 1), !memcmp(v, b, sizeof v)), ); }
+      { IDirect3DBaseTexture8 *v = NULL; IDirect3DDevice8_SetTexture(d, 0, NULL);
+#define TXGET(X) (IDirect3DDevice8_GetTexture(d, 0, &v), (v ? IDirect3DBaseTexture8_Release(v) : 0), (X))
+        SB_ONE("texture 0", , IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)tx), TXGET(v == NULL),
+               TXGET(v == (IDirect3DBaseTexture8 *)tx && tx), IDirect3DDevice8_SetTexture(d, 0, NULL)); }
+      { IDirect3DVertexBuffer8 *v = NULL; UINT sd = 0; IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0);
+#define VBGET(X) (IDirect3DDevice8_GetStreamSource(d, 0, &v, &sd), (v ? IDirect3DVertexBuffer8_Release(v) : 0), (X))
+        SB_ONE("stream 0", , IDirect3DDevice8_SetStreamSource(d, 0, vb, 16), VBGET(v == NULL), VBGET(v == vb && vb),
+               IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0)); }
+      { IDirect3DIndexBuffer8 *v = NULL; UINT bi = 0; IDirect3DDevice8_SetIndices(d, NULL, 0);
+#define IBGET(X) (IDirect3DDevice8_GetIndices(d, &v, &bi), (v ? IDirect3DIndexBuffer8_Release(v) : 0), (X))
+        SB_ONE("indices", , IDirect3DDevice8_SetIndices(d, ib, 0), IBGET(v == NULL), IBGET(v == ib && ib), IDirect3DDevice8_SetIndices(d, NULL, 0)); }
+      { UINT v = 0; IDirect3DDevice8_SetCurrentTexturePalette(d, 0);
+        SB_ONE("palette", , IDirect3DDevice8_SetCurrentTexturePalette(d, 1), (IDirect3DDevice8_GetCurrentTexturePalette(d, &v), v == 0),
+               (IDirect3DDevice8_GetCurrentTexturePalette(d, &v), v == 1), IDirect3DDevice8_SetCurrentTexturePalette(d, 0)); }
+      printf("sbtotal %s captured %d not %d unmeasured %d\n", tn[ty - 1], nc, nn, nu);
+    }
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+  if (argc > 1 && !strcmp(argv[1], "defaults")) {
+    for (int s = 0; s < 256; s++) { DWORD v = 0; if (SUCCEEDED(IDirect3DDevice8_GetRenderState(d, (D3DRENDERSTATETYPE)s, &v))) printf("rs %d %08lX\n", s, (unsigned long)v); }
+    for (int st = 0; st < 8; st++) for (int t = 1; t < 29; t++) { DWORD v = 0; if (SUCCEEDED(IDirect3DDevice8_GetTextureStageState(d, st, (D3DTEXTURESTAGESTATETYPE)t, &v))) printf("tss %d %d %08lX\n", st, t, (unsigned long)v); }
+    IDirect3DDevice8_Release(d); IDirect3D8_Release(g_d3d);
+    return 0;
+  }
+
+  /* Clear and read back */
+  IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFFFF0000, 1.0f, 0);
+  check(bb_pixel(5, 5) == 0xFF0000, "Clear: the back buffer reads back red through CopyRects into an image surface");
+  hr = IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+  check(hr == D3D_OK, "Present");
+
+  /* a lockable render target: draw target, clear, read back (the occlusion readback's path) */
+  { IDirect3DSurface8 *rt = NULL, *bb = NULL, *ds = NULL; D3DLOCKED_RECT lr; DWORD px = 0;
+    IDirect3DDevice8_CreateRenderTarget(d, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
+    IDirect3DDevice8_GetRenderTarget(d, &bb); IDirect3DDevice8_GetDepthStencilSurface(d, &ds);
+    IDirect3DDevice8_SetRenderTarget(d, rt, NULL);
+    D3DVIEWPORT8 vp; IDirect3DDevice8_GetViewport(d, &vp);
+    check(vp.Width == 16 && vp.Height == 16, "SetRenderTarget sets the viewport to the new target");
+    IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF0000FF, 1.0f, 0);
+    if (rt && SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) { px = ((DWORD *)lr.pBits)[17] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(rt); }
+    check(px == 0x0000FF, "a lockable render target: cleared blue, read back blue");
+    /* written through a lock (a rectangle), then read back: the written texels are in the target */
+    { RECT q = {2, 3, 6, 5}; px = 0;
+      if (rt && SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, &q, 0))) { ((DWORD *)lr.pBits)[1] = 0xFF00FF00; IDirect3DSurface8_UnlockRect(rt); }
+      if (rt && SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) {
+        DWORD a = ((DWORD *)((BYTE *)lr.pBits + 3 * lr.Pitch))[3] & 0xFFFFFF, b = ((DWORD *)((BYTE *)lr.pBits + 3 * lr.Pitch))[2] & 0xFFFFFF;
+        px = (a == 0x00FF00 && b == 0x0000FF); IDirect3DSurface8_UnlockRect(rt); }
+      check(px == 1, "a lockable render target: a texel written through a rectangle lock is in the target, its neighbour unchanged"); }
+    IDirect3DDevice8_SetRenderTarget(d, bb, ds);
+    /* a lockable render target only ever copied into (the occlusion target): copied, presented, written through a lock,
+       presented; the next lock must read the write, not the copy (d8_res.cpp: the write makes the snapshot stale) */
+    { IDirect3DSurface8 *c = NULL; RECT r4 = {0, 0, 16, 16}; POINT p0 = {0, 0}; DWORD a = 0, b2 = 0;
+      D3DSURFACE_DESC bd; memset(&bd, 0, sizeof bd); if (bb) IDirect3DSurface8_GetDesc(bb, &bd);   /* CopyRects: the formats must match */
+      IDirect3DDevice8_CreateRenderTarget(d, 16, 16, bd.Format, D3DMULTISAMPLE_NONE, TRUE, &c);
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF102030, 1.0f, 0);
+      if (c && bb) IDirect3DDevice8_CopyRects(d, bb, &r4, 1, c, &p0);
+      IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+      if (c && SUCCEEDED(IDirect3DSurface8_LockRect(c, &lr, NULL, D3DLOCK_READONLY))) { a = ((DWORD *)lr.pBits)[5] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(c); }
+      if (c && SUCCEEDED(IDirect3DSurface8_LockRect(c, &lr, NULL, 0))) { ((DWORD *)lr.pBits)[5] = 0xFF405060; IDirect3DSurface8_UnlockRect(c); }
+      IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL); IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
+      if (c && SUCCEEDED(IDirect3DSurface8_LockRect(c, &lr, NULL, D3DLOCK_READONLY))) { b2 = ((DWORD *)lr.pBits)[5] & 0xFFFFFF; IDirect3DSurface8_UnlockRect(c); }
+      check(a == 0x102030 && b2 == 0x405060, "a copied lockable render target reads the copy, then what a lock wrote after it");
+      if (c) IDirect3DSurface8_Release(c); }
+    if (bb) IDirect3DSurface8_Release(bb); if (ds) IDirect3DSurface8_Release(ds); if (rt) IDirect3DSurface8_Release(rt); }
+
+  /* CopyRects from a render target into a managed (lockable) texture level, then LockRect of that level: the lock must
+     read the copied texels, and the texels the copy did not reach must keep what a lock wrote before (D3DX 8.1's
+     D3DXLoadSurfaceFromSurface does this, FFXiMain.dll+0x2D465B; ours read the older texels before 26 Oct). After the
+     unlock the texture, read back through CopyRects into an image surface, must still hold the copy */
+  { IDirect3DSurface8 *rt = NULL, *bb = NULL, *ds = NULL, *lv = NULL, *img = NULL; IDirect3DTexture8 *t = NULL; D3DLOCKED_RECT lr;
+    int pre = 0, got = 0, after = 0;
+    IDirect3DDevice8_CreateRenderTarget(d, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, FALSE, &rt);
+    IDirect3DDevice8_CreateTexture(d, 16, 16, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &t);
+    IDirect3DDevice8_CreateImageSurface(d, 16, 16, D3DFMT_A8R8G8B8, &img);
+    if (t && SUCCEEDED(IDirect3DTexture8_LockRect(t, 0, &lr, NULL, 0))) {
+      for (int y = 0; y < 16; y++) for (int x = 0; x < 16; x++) ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] = 0xFF111111;
+      IDirect3DTexture8_UnlockRect(t, 0); pre = 1; }
+    IDirect3DDevice8_GetRenderTarget(d, &bb); IDirect3DDevice8_GetDepthStencilSurface(d, &ds);
+    if (rt) { IDirect3DDevice8_SetRenderTarget(d, rt, NULL); IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF2080C0, 1.0f, 0); }
+    IDirect3DDevice8_SetRenderTarget(d, bb, ds);
+    if (t) IDirect3DTexture8_GetSurfaceLevel(t, 0, &lv);
+    RECT r = {0, 0, 8, 16}; POINT p4 = {4, 0};             /* texels x 4..11 get the render target's colour */
+    hr = rt && lv ? IDirect3DDevice8_CopyRects(d, rt, &r, 1, lv, &p4) : E_FAIL;
+    if (SUCCEEDED(hr) && SUCCEEDED(IDirect3DTexture8_LockRect(t, 0, &lr, NULL, 0))) {
+      got = 1;
+      for (int y = 0; y < 16; y++) for (int x = 0; x < 16; x++) {
+        DWORD v = ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x], want = x >= 4 && x < 12 ? 0xFF2080C0 : 0xFF111111;
+        if (v != want) { if (got) printf("copy into a texture: texel (%d,%d) %08lX, want %08lX\n", x, y, v, want); got = 0; }
+      }
+      IDirect3DTexture8_UnlockRect(t, 0); }
+    if (lv && img && SUCCEEDED(IDirect3DDevice8_CopyRects(d, lv, NULL, 0, img, NULL)) && SUCCEEDED(IDirect3DSurface8_LockRect(img, &lr, NULL, D3DLOCK_READONLY))) {
+      after = ((DWORD *)((BYTE *)lr.pBits + 7 * lr.Pitch))[6] == 0xFF2080C0 && ((DWORD *)((BYTE *)lr.pBits + 7 * lr.Pitch))[2] == 0xFF111111 &&
+              ((DWORD *)((BYTE *)lr.pBits + 15 * lr.Pitch))[13] == 0xFF111111;
+      IDirect3DSurface8_UnlockRect(img); }
+    check(pre && SUCCEEDED(hr) && got, "a copy from a render target into a managed texture: LockRect reads the copied texels, the rest unchanged");
+    check(after, "... and after that lock's unlock the texture still holds the copy");
+    if (lv) IDirect3DSurface8_Release(lv); if (img) IDirect3DSurface8_Release(img); if (t) IDirect3DTexture8_Release(t);
+    if (rt) IDirect3DSurface8_Release(rt); if (bb) IDirect3DSurface8_Release(bb); if (ds) IDirect3DSurface8_Release(ds); }
+
+  /* a read-back larger than the ring's 16 MB reply area (d8_link.cpp: it goes in pieces; before 26 Oct it was cut): a
+     2304x2048 32-bit lockable render target is 18,874,368 bytes. Three bands cleared in three colours, the last one the
+     final row, so a reply cut or out of order shows; every texel is compared */
+  { IDirect3DSurface8 *rt = NULL, *bb = NULL, *ds = NULL; D3DLOCKED_RECT lr; int ok = 0; const int W = 2304, Hh = 2048;
+    IDirect3DDevice8_CreateRenderTarget(d, W, Hh, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
+    IDirect3DDevice8_GetRenderTarget(d, &bb); IDirect3DDevice8_GetDepthStencilSurface(d, &ds);
+    if (rt) {
+      D3DRECT b1 = {0, 0, W, 1024}, b2 = {0, 1024, W, Hh - 1}, b3 = {0, Hh - 1, W, Hh};
+      IDirect3DDevice8_SetRenderTarget(d, rt, NULL);
+      IDirect3DDevice8_Clear(d, 1, &b1, D3DCLEAR_TARGET, 0xFF102030, 1.0f, 0);
+      IDirect3DDevice8_Clear(d, 1, &b2, D3DCLEAR_TARGET, 0xFF405060, 1.0f, 0);
+      IDirect3DDevice8_Clear(d, 1, &b3, D3DCLEAR_TARGET, 0xFF708090, 1.0f, 0);
+      IDirect3DDevice8_SetRenderTarget(d, bb, ds);
+      if (SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) {
+        ok = 1;
+        for (int y = 0; y < Hh && ok; y++) {
+          DWORD want = y < 1024 ? 0x102030 : y < Hh - 1 ? 0x405060 : 0x708090;
+          for (int x = 0; x < W; x++)
+            if ((((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] & 0xFFFFFF) != want) {
+              printf("large read-back: texel (%d,%d) %06lX, want %06lX\n", x, y, ((DWORD *)((BYTE *)lr.pBits + y * lr.Pitch))[x] & 0xFFFFFF, want); ok = 0; break; }
+        }
+        IDirect3DSurface8_UnlockRect(rt); }
+      IDirect3DSurface8_Release(rt); }
+    check(ok, "a 2304x2048 lockable render target (18 MB, larger than the 16 MB reply area) reads back whole");
+    if (bb) IDirect3DSurface8_Release(bb); if (ds) IDirect3DSurface8_Release(ds); }
+
+  /* tweening against the reference's formula, "POSITION = POSITION1 * (1.0 - TWEENFACTOR) + POSITION2 * TWEENFACTOR"
+     (DirectX 8.1, "Vertex Tweening"): a quad tweened at 0.5 between two shapes covers the same pixels as the plain quad
+     at their midpoint. Only on a device that reports D3DVTXPCAPS_TWEENING */
+  { D3DCAPS8 cp; IDirect3DDevice8_GetDeviceCaps(d, &cp);
+    if (cp.VertexProcessingCaps & D3DVTXPCAPS_TWEENING) {
+      typedef struct { float x, y, z; DWORD c; float x2, y2, z2; } VT;
+      DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_REG(5, D3DVSDT_D3DCOLOR), D3DVSD_REG(15, D3DVSDT_FLOAT3), D3DVSD_END()};
+      DWORD h = 0; IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+      D3DMATRIX id; memset(&id, 0, sizeof id); id._11 = id._22 = id._33 = id._44 = 1;
+      IDirect3DDevice8_SetTransform(d, D3DTS_WORLD, &id); IDirect3DDevice8_SetTransform(d, D3DTS_VIEW, &id); IDirect3DDevice8_SetTransform(d, D3DTS_PROJECTION, &id);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(d, D3DRS_CULLMODE, D3DCULL_NONE);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_ZENABLE, FALSE);
+      VT a[4] = {{-0.9f, -0.5f, 0.5f, 0xFFFF0000, -0.1f, -0.9f, 0.5f}, {0.3f, -0.5f, 0.5f, 0xFFFF0000, 0.9f, -0.9f, 0.5f},
+                 {-0.9f, 0.7f, 0.5f, 0xFFFF0000, -0.1f, 0.1f, 0.5f}, {0.3f, 0.7f, 0.5f, 0xFFFF0000, 0.9f, 0.1f, 0.5f}};
+      float t = 0.5f; IDirect3DDevice8_SetRenderState(d, D3DRS_TWEENFACTOR, *(DWORD *)&t);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_VERTEXBLEND, D3DVBF_TWEENING);
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000, 1.0f, 0);
+      IDirect3DDevice8_BeginScene(d); IDirect3DDevice8_SetVertexShader(d, h);
+      IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, a, sizeof *a); IDirect3DDevice8_EndScene(d);
+      /* 64x64 target: the midpoint quad covers pixels x 16..51, y 19..54; the first shape x 3..41, y 10..48. (40,40) is in the
+         midpoint quad; (6,30) is in the first shape only, so it stays black only if the shapes were blended */
+      DWORD in1 = bb_pixel(40, 40), out1 = bb_pixel(6, 30);
+      IDirect3DDevice8_SetRenderState(d, D3DRS_VERTEXBLEND, D3DVBF_DISABLE);
+      IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF000000, 1.0f, 0);
+      VT b[4]; for (int i = 0; i < 4; i++) { b[i] = a[i]; b[i].x = (a[i].x + a[i].x2) / 2; b[i].y = (a[i].y + a[i].y2) / 2; }
+      IDirect3DDevice8_BeginScene(d); IDirect3DDevice8_DrawPrimitiveUP(d, D3DPT_TRIANGLESTRIP, 2, b, sizeof *b); IDirect3DDevice8_EndScene(d);
+      DWORD in2 = bb_pixel(40, 40), out2 = bb_pixel(6, 30);
+      if (!(in1 == 0xFF0000 && out1 == 0)) printf("tween: in %06lX out %06lX; plain midpoint: in %06lX out %06lX\n", in1, out1, in2, out2);
+      IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE); IDirect3DDevice8_DeleteVertexShader(d, h);
+      check(in1 == 0xFF0000 && out1 == 0 && in2 == in1 && out2 == out1, "tweening at 0.5 draws the midpoint quad (D3DVBF_TWEENING)");
+    } else printf("note: the device does not report D3DVTXPCAPS_TWEENING; tweening not checked\n");
+  }
+  /* textures and buffers */
+  { IDirect3DTexture8 *t = NULL; D3DLOCKED_RECT lr; D3DSURFACE_DESC sd;
+    hr = IDirect3DDevice8_CreateTexture(d, 32, 32, 0, 0, D3DFMT_DXT1, D3DPOOL_MANAGED, &t);
+    check(hr == D3D_OK && t && IDirect3DTexture8_GetLevelCount(t) == 6, "a 32x32 DXT1 texture with a full chain has 6 levels");
+    if (t) {
+      hr = IDirect3DTexture8_LockRect(t, 0, &lr, NULL, 0);
+      check(hr == D3D_OK && lr.Pitch == 64, "DXT1 level 0: Pitch 64 (8 blocks of 8 bytes)");
+      if (hr == D3D_OK) { memset(lr.pBits, 0x55, 64 * 8); IDirect3DTexture8_UnlockRect(t, 0); }
+      IDirect3DTexture8_GetLevelDesc(t, 5, &sd);
+      check(sd.Width == 1 && sd.Height == 1, "level 5 is 1x1");
+      IDirect3DSurface8 *s = NULL; IDirect3DTexture8_GetSurfaceLevel(t, 1, &s);
+      check(s != NULL, "GetSurfaceLevel");
+      if (s) IDirect3DSurface8_Release(s);
+      IDirect3DDevice8_SetTexture(d, 0, (IDirect3DBaseTexture8 *)t);
+      IDirect3DBaseTexture8 *g = NULL; IDirect3DDevice8_GetTexture(d, 0, &g);
+      check(g == (IDirect3DBaseTexture8 *)t, "GetTexture gives the bound texture");
+      if (g) IDirect3DBaseTexture8_Release(g);
+      IDirect3DDevice8_SetTexture(d, 0, NULL);
+      IDirect3DTexture8_Release(t);
+    } }
+  { IDirect3DVertexBuffer8 *vb = NULL; BYTE *p = NULL;
+    hr = IDirect3DDevice8_CreateVertexBuffer(d, 4096, D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC, 0, D3DPOOL_DEFAULT, &vb);
+    check(hr == D3D_OK, "a dynamic vertex buffer");
+    if (vb) { check(SUCCEEDED(IDirect3DVertexBuffer8_Lock(vb, 0, 0, &p, D3DLOCK_DISCARD)) && p, "Lock DISCARD of the whole buffer");
+      if (p) { memset(p, 1, 4096); IDirect3DVertexBuffer8_Unlock(vb); }
+      IDirect3DDevice8_SetStreamSource(d, 0, vb, 24);
+      IDirect3DVertexBuffer8 *g = NULL; UINT stride = 0; IDirect3DDevice8_GetStreamSource(d, 0, &g, &stride);
+      check(g == vb && stride == 24, "GetStreamSource");
+      if (g) IDirect3DVertexBuffer8_Release(g);
+      IDirect3DDevice8_SetStreamSource(d, 0, NULL, 0);
+      IDirect3DVertexBuffer8_Release(vb); } }
+
+  /* state blocks: the same check as probe8's */
+  { DWORD tok = 0, v1 = 0, v2 = 0;
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAREF, 0x10); IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    IDirect3DDevice8_BeginStateBlock(d);
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAREF, 0x60); IDirect3DDevice8_SetRenderState(d, D3DRS_ALPHAREF, 0x61);
+    IDirect3DDevice8_EndStateBlock(d, &tok);
+    IDirect3DDevice8_GetRenderState(d, D3DRS_ALPHAREF, &v1);
+    check(v1 == 0x10, "a set while a block records is recorded, not applied");
+    IDirect3DDevice8_SetRenderState(d, D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    IDirect3DDevice8_ApplyStateBlock(d, tok);
+    IDirect3DDevice8_GetRenderState(d, D3DRS_ALPHAREF, &v1); IDirect3DDevice8_GetRenderState(d, D3DRS_ZFUNC, &v2);
+    check(v1 == 0x61 && v2 == D3DCMP_ALWAYS, "applying it sets its last value and leaves the rest");
+    IDirect3DDevice8_DeleteStateBlock(d, tok); }
+
+  /* transforms and lights read back */
+  { D3DMATRIX m, g; memset(&m, 0, sizeof m); m._11 = 2; m._22 = 3; m._33 = 4; m._44 = 1; m._41 = 7;
+    IDirect3DDevice8_SetTransform(d, D3DTS_WORLD, &m); IDirect3DDevice8_GetTransform(d, D3DTS_WORLD, &g);
+    check(!memcmp(&m, &g, sizeof m), "GetTransform gives the matrix set");
+    D3DLIGHT8 l, gl; memset(&l, 0, sizeof l); l.Type = D3DLIGHT_POINT; l.Range = 5; l.Diffuse.g = 1;
+    IDirect3DDevice8_SetLight(d, 3, &l); IDirect3DDevice8_LightEnable(d, 3, TRUE); BOOL on = FALSE;
+    IDirect3DDevice8_GetLight(d, 3, &gl); IDirect3DDevice8_GetLightEnable(d, 3, &on);
+    check(!memcmp(&l, &gl, sizeof l) && on, "GetLight and GetLightEnable give what was set"); }
+
+  /* vertex shader handles: declarations only, as the game makes them */
+  { static const DWORD decl[] = {D3DVSD_STREAM(0), D3DVSD_REG(0, D3DVSDT_FLOAT3), D3DVSD_REG(3, D3DVSDT_FLOAT3), D3DVSD_END()};
+    DWORD h = 0, g = 0;
+    hr = IDirect3DDevice8_CreateVertexShader(d, decl, NULL, &h, 0);
+    check(hr == D3D_OK && (h & 1), "CreateVertexShader of a declaration: a handle with bit 0 set");
+    IDirect3DDevice8_SetVertexShader(d, h); IDirect3DDevice8_GetVertexShader(d, &g);
+    check(g == h, "GetVertexShader");
+    IDirect3DDevice8_SetVertexShader(d, D3DFVF_XYZ | D3DFVF_DIFFUSE);
+    check(IDirect3DDevice8_DeleteVertexShader(d, h) == D3D_OK, "DeleteVertexShader"); }
+
+  /* Reset to another size */
+  pp.BackBufferWidth = 96; pp.BackBufferHeight = 80;
+  hr = IDirect3DDevice8_Reset(d, &pp);
+  check(hr == D3D_OK, "Reset to 96x80");
+  { IDirect3DSurface8 *bb = NULL; D3DSURFACE_DESC sd; memset(&sd, 0, sizeof sd);
+    IDirect3DDevice8_GetBackBuffer(d, 0, D3DBACKBUFFER_TYPE_MONO, &bb);
+    if (bb) { IDirect3DSurface8_GetDesc(bb, &sd); IDirect3DSurface8_Release(bb); }
+    check(sd.Width == 96 && sd.Height == 80, "after Reset the back buffer is 96x80"); }
+
+  ULONG left = IDirect3DDevice8_Release(d);
+  check(left == 0, "the device's last reference released");
+  IDirect3D8_Release(g_d3d);
+  printf(fails ? "FAILED (%d)\n" : "ALL OK\n", fails);
+  return fails ? 1 : 0;
+}

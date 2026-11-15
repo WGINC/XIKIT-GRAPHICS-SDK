@@ -1,0 +1,88 @@
+"""manifest_for_build.py -- the kit's manifest for another build of FFXiMain.dll (build translation, docs/KIT.md).
+
+    python3 manifest_for_build.py dist/xikit_manifest.txt builds/<stamp>.json OTHER_unpacked.dll dist/xikit_manifest_<stamp>.txt [SWAPSET.json]
+
+The kit keeps the analysed build's numbering everywhere. For another build it needs, per function, the bytes its entry
+holds there (to check before it writes a jmp) and that build's relocated dwords in that window, and the code ranges
+that moved (!shift lines), which it passes to the reconstruction and the mods. builds/<stamp>.json comes from
+pipeline/build_translate.py, which proved every manifest function the same code at its range's shift and every
+address the reconstruction and speedfix name; this refuses a build file that does not say so.
+
+Per line: RVA, flags, export, name and trampoline (T=) stay; EXPECTED is the other build's 20 bytes from entry-4 at
+the translated address (image at 0x10000000, so relocated dwords hold their preferred-base values, as the kit
+compares them); RELOCS is the other build's relocation table over that window. A function shorter than the 5-byte
+jmp keeps only padding (int3/nop) after it in the other build too, or it is left out and named.
+
+A build where some functions changed (`partial`) needs SWAPSET.json (pipeline/swap_set_for_build.py over the probe
+build): each reconstructed function whose compiled code uses an address not settled there gets flag 32 (the kit keeps
+the game's code for it; mods can still hook it through a trampoline), and the manifest says `!swap_set`. It still
+says `!no_swap` too: a kit from before 15 Nov does not know flag 32, so it must swap nothing; a kit that reads
+`!swap_set` ignores `!no_swap`. Without SWAPSET.json only `!no_swap` is written: nothing is swapped in."""
+import json, os, sys
+import pefile
+HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.join(HERE, '..', '..')
+sys.path.insert(0, os.path.join(ROOT, 'pipeline'))
+from dump_verify import reloc_blocks
+BASE = 0x10000000
+
+
+def main(man_p, build_p, dll_p, out_p, swap_p=None):
+    b = json.load(open(build_p))
+    keep_game = None
+    if swap_p:
+        sw = json.load(open(swap_p))
+        if sw.get('build') != b['timestamp']: sys.exit('manifest_for_build: %s is for build %s, not %s' % (swap_p, sw.get('build'), b['timestamp']))
+        keep_game = set(sw['left_out'])
+    partial = b.get('partial', False)
+    if not partial and (b['failures']['manifest'] or b['failures']['addresses'] or b['manifest_proven'] != b['manifest_functions']):
+        sys.exit('manifest_for_build: %s does not settle every function and address' % build_p)
+    unproven = {int(k, 16) for k in b['failures']['manifest']}   # (absolute addresses, analysed numbering)
+    dranges = [(int(lo, 16), int(hi, 16), d) for lo, hi, d in b.get('data_ranges', [])]
+    ranges = [(int(lo, 16), int(hi, 16), d) for lo, hi, d in b['ranges']]
+    live = lambda ea: ea + next((d for lo, hi, d in ranges if lo <= ea < hi), 0)
+    pe = pefile.PE(dll_p, fast_load=True); img = pe.get_memory_mapped_image()
+    if '%08X' % pe.FILE_HEADER.TimeDateStamp != b['timestamp']: sys.exit('manifest_for_build: the DLL is not build %s' % b['timestamp'])
+    relocs = set()
+    blocks, _ = reloc_blocks(pe, img)
+    for page, ents in blocks:
+        for e in ents:
+            if e >> 12 == 3: relocs.add(BASE + page + (e & 0xFFF))
+    ext = json.load(open(os.path.join(ROOT, 'data', 'func_extents.json')))
+    out, left, flagged = [], [], []
+    for l in open(man_p):
+        if l.startswith('#'):
+            out.append(l.replace('FFXiMain.dll TimeDateStamp', 'FFXiMain.dll TimeDateStamp %s (translated from' % b['timestamp'], 1) if 'TimeDateStamp' in l else l)
+            continue
+        if l.startswith('!game_timestamp'):
+            out.append('!game_timestamp %s\n!analysed_timestamp %s\n' % (b['timestamp'], b['analysed_timestamp']))
+            out += ['!shift %08X %08X %d\n' % r for r in sorted(ranges + dranges) if r[2]]
+            if partial and keep_game is not None:   # read by kits from 15 Nov: !no_swap below is then ignored, flag 32 decides
+                out.append('!swap_set %d functions kept on the game\'s code (flag 32): their reconstruction uses an address not settled in this build (pipeline/swap_set_for_build.py)\n'
+                           % sum(1 for l in open(man_p) if l[:1] not in '#!' and l.strip() and l.split(' ')[2] in keep_game and BASE + int(l.split(' ')[0], 16) not in unproven))
+            if partial:   # some functions changed: a kit from before 15 Nov swaps nothing in (it does not know flag 32)
+                out.append('!no_swap %d manifest functions and %d addresses the reconstruction names are not the same in this build (builds/%s.json)\n'
+                           % (len(b['failures']['manifest']), len(b['failures']['addresses']), b['timestamp']))
+            continue
+        if l.startswith('!') or not l.strip(): out.append(l); continue
+        f = l.split(' ')
+        ea = BASE + int(f[0], 16); nea = live(ea)
+        if ea in unproven: left.append('%08X: not the same code in this build' % ea); continue
+        rs = ext.get('0x%x' % ea, [])
+        end = max((e for s, e in rs if s <= ea < e), default=ea + 5)
+        if end < ea + 5 and not all(x in (0xCC, 0x90) for x in img[end - ea + nea - BASE:nea + 5 - BASE]):
+            left.append('%08X: shorter than the jmp, and not padding after it in this build' % ea); continue
+        raw = bytes(img[nea - 4 - BASE:nea + 16 - BASE])
+        rel = [r - (nea - 4) for r in sorted(relocs) if nea - 7 <= r <= nea + 15]
+        f[3] = raw.hex().upper(); f[4] = ','.join(map(str, rel)) if rel else '-'
+        if keep_game is not None and f[2] in keep_game: f[1] = str(int(f[1]) | 32); flagged.append(f[2])
+        out.append(' '.join(f))
+    open(out_p, 'w').write(''.join(out))
+    n = sum(1 for x in out if x[:1] not in '#!' and x.strip())
+    print('%s: %d functions for build %s (%d code ranges and %d data ranges moved)%s' % (out_p, n, b['timestamp'], sum(1 for r in ranges if r[2]),
+          sum(1 for r in dranges if r[2]), '; left out: %d (%s)' % (len(left), '; '.join(left[:6]) + (' ...' if len(left) > 6 else '')) if left else '')
+          + ('; %d kept on the game\'s code (flag 32)' % len(flagged) if keep_game is not None else ''))
+
+
+if __name__ == '__main__':
+    if len(sys.argv) not in (5, 6): sys.exit(__doc__)
+    main(*sys.argv[1:])

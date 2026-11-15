@@ -1,0 +1,16 @@
+// CYyVbMng -- graphics members reconstructed from Hex-Rays output, gate-verified.
+// Unnamed fields are field_XXX (the offset); sizes come from the class descriptor.
+#pragma once
+#include "gfx_common.hpp"
+#pragma pack(push, 1)
+class XI_API CYyVbMng {
+public:
+    int AcquireVertexBuffer(int a2, int a3, int a4, int a5, int *a6, char a7);  // 0x1003B210
+
+    void **vftable;  // +0x0
+    uint32_t pooledBufferCount;  // +0x4 number of pooled vertex buffers
+    uint8_t _pad_8[0x4];
+};
+#pragma pack(pop)
+static_assert(sizeof(CYyVbMng) == 0xC, "CYyVbMng: sizeof");
+static_assert(XI_OFFSETOF(CYyVbMng, pooledBufferCount) == 0x4, "CYyVbMng: layout");
