@@ -31,7 +31,7 @@ Why the file has this name (data/unit_names.json): Target_* (46 named), Menu_* a
 | `TargetMenu_ConstructVt10333898` | 0x10135850 | 35 | yes | - | Runs the base constructor, sets the vtable to PTR_FUN_10333898, and clears three fields. | medium |
 | `TargetMenu_ConstructVt10333908` | 0x10136380 | 139 | yes | - | Initialises the object, stores its argument at +0x64, and sets the vtable to PTR_FUN_10333908. | medium |
 | `TargetMenu_UpdateLayout` | 0x10136560 | 271 | yes | - | Refreshes the window rectangle of the object at +8, marks it dirty, then records the list head and a count capped at four. | low |
-| `sub_10136670` | 0x10136670 | 374 | no | - | Lays out a message into lines for the message window and adds it to its list and the chat log. | low |
+| `TargetMenu_LayoutMessage` | 0x10136670 | 374 | no | - | Lays out a message into lines for the message window and adds it to its list and the chat log. | low |
 | `TargetMenu_SetPosition` | 0x10136870 | 132 | yes | - | Sets a menu's position, with negative coordinates measured from the screen's bottom-right edge. | medium |
 | `TargetMenu_ClearBlock` | 0x10136900 | 49 | yes | - | Zeroes the object's data block and its trailing fields. | low |
 | `TargetMenu_ConstructVt10333950` | 0x10136950 | 25 | yes | - | Runs the FEMultiLineText base constructor, then sets the vtable to PTR_FUN_10333950. | medium |
@@ -134,8 +134,8 @@ Why the file has this name (data/unit_names.json): Target_* (46 named), Menu_* a
 | `TargetMenu_Read2Byte7Bit` | 0x101531B0 | 21 | yes | - | Decodes a two-byte value stored in 7-bit groups. | medium |
 | `TargetMenu_ReadArgCode` | 0x101531D0 | 84 | yes | - | Decodes one argument code of a message string. | low |
 | `TargetMenu_FormatDecimal` | 0x10153230 | 121 | yes | - | Writes a number's decimal digits into a buffer. | low |
-| `sub_101532F0` | 0x101532F0 | 20 | no | - | Passes the two bytes at p, read as a big-endian word, to 0x101532B0. | low |
-| `sub_10153310` | 0x10153310 | 1762 | no | - | Expands a game message's control codes (nested messages, choices, numbers, string and name arguments) into a buffer; returns the length or -1. | medium |
+| `TargetMenu_Call101532B0OnWordBE` | 0x101532F0 | 20 | no | - | Passes the two bytes at p, read as a big-endian word, to 0x101532B0. | low |
+| `TargetMenu_ExpandMessageCodes` | 0x10153310 | 1762 | no | - | Expands a game message's control codes (nested messages, choices, numbers, string and name arguments) into a buffer; returns the length or -1. | medium |
 | `TargetMenu_FormatMessageWithArgs` | 0x10153A40 | 175 | yes | - | Formats message (param_3, param_4) with an argument array of param_5 values. | medium |
 | `TargetMenu_LoadMessageBlocksSetA` | 0x10153AF0 | 57 | yes | - | Loads message blocks 0, 8 and 10 from the first file set. | low |
 | `TargetMenu_LoadMessageBlocksSetB` | 0x10153B30 | 57 | yes | - | Loads message blocks 0, 8 and 10 from the second file set. | low |
@@ -427,7 +427,7 @@ Why the file has this name (data/unit_names.json): Target_* (46 named), Menu_* a
 | `TargetMenu_CtorZeroed` | 0x10163090 | 20 | yes | - | Constructs a zeroed object. | low |
 | `TargetMenu_ZeroWordsAndDwords` | 0x10163350 | 29 | yes | - | Zeroes four word fields at the start of the object and then the three dwords through Unit1012AC80_ZeroDwords. | low |
 | `TargetMenu_NoOpE` | 0x10163380 | 1 | yes | - | Does nothing. | low |
-| `Obj_10621944_DrawBgRect` | 0x10163390 | 15 | yes | 1 | - | - |
+| `MenuTextBlock_DrawBgRect` | 0x10163390 | 15 | yes | 1 | - | - |
 | `TargetMenu_ZeroDwords` | 0x101633D0 | 13 | yes | - | Zeroes a 3-component dword vector. | medium |
 | `Gfx_DrawSolidRect2D` | 0x10163400 | 534 | yes | 0 | - | - |
 
@@ -458,7 +458,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TargetMenu_ConstructVt10333898` calls `TargetMenu_ConstructVt10333670`
 - `TargetMenu_ConstructVt10333908` calls `NetCellFont_ClearWords`, `NetCellFont_Clear`, `NetCellFont_FreeListsAndReset`
 - `TargetMenu_UpdateLayout` calls `sub_10119110`, `NetCellFont_ClearFlag12FromValue`, `NetCellFont_MarkDirty`, `NetCellFont_GetRect`, `NetCellFont_SetRectAndUpdateNodes`, `sub_1015DB80`, `NetCellFont_GetHead`
-- `sub_10136670` calls `NetCellFont_InitTextLayout`, `NetCellFont_FindByKeyByte`, `NetCellFont_SetString`, `NetCellFont_GetField20`, `Allocator_Generic`, `TargetMenu_ClearBlock`, `sub_1012A4F0`, `sub_101284F0`, `NetCellFont_PushBack`, `ChatLog_AddMessage`, `NetCellFont_CallClearBuffers`
+- `TargetMenu_LayoutMessage` calls `NetCellFont_InitTextLayout`, `NetCellFont_FindByKeyByte`, `NetCellFont_SetString`, `NetCellFont_GetField20`, `Allocator_Generic`, `TargetMenu_ClearBlock`, `sub_1012A4F0`, `sub_101284F0`, `NetCellFont_PushBack`, `ChatLog_AddMessage`, `NetCellFont_CallClearBuffers`
 - `TargetMenu_SetPosition` calls nothing directly
 - `TargetMenu_ClearBlock` calls `NetCellFont_ClearWords`
 - `TargetMenu_ConstructVt10333950` calls `TargetMenu_ConstructVt103339F0`
@@ -561,9 +561,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TargetMenu_Read2Byte7Bit` calls nothing directly
 - `TargetMenu_ReadArgCode` calls `TargetMenu_Read2Byte7Bit`
 - `TargetMenu_FormatDecimal` calls nothing directly
-- `sub_101532F0` calls nothing directly
-- `sub_10153310` calls `TargetMenu_GetMessageFwd`, `sub_101532F0`, `TargetMenu_IsMinus6Word`, `TargetMenu_GetEntryWord3E`, `TargetMenu_ReadArgCode`, `TargetMenu_Read2Byte7Bit`, `TargetMenu_FormatDecimal`, `sub_10312050`, `TargetMenu_LookupObjectPtr`, `DmsgText_IsInSjisSet`, `DmsgText_ClearListHeader`, `DmsgText_AppendNodeType2`, `DmsgText_AppendString`, `DmsgText_AppendValueNode`, `TextInputFiles_Init`, `DmsgText_ComposeTextA`, `TextInputFiles_GetCStr`, `TextInputFiles_Free`, `sub_102590E0`, `DmsgText_ClearHead`, `DmsgText_AppendTypeTwo`, `DmsgText_AppendStringNode`, `DmsgText_AppendIdString`, `DmsgText_ComposeTextB`, `sub_1025A800`
-- `TargetMenu_FormatMessageWithArgs` calls `TargetMenu_GetMessageFwd`, `TargetMenu_GetEntryWord3E`, `sub_10153310`
+- `TargetMenu_Call101532B0OnWordBE` calls nothing directly
+- `TargetMenu_ExpandMessageCodes` calls `TargetMenu_GetMessageFwd`, `TargetMenu_Call101532B0OnWordBE`, `TargetMenu_IsMinus6Word`, `TargetMenu_GetEntryWord3E`, `TargetMenu_ReadArgCode`, `TargetMenu_Read2Byte7Bit`, `TargetMenu_FormatDecimal`, `sub_10312050`, `TargetMenu_LookupObjectPtr`, `DmsgText_IsInSjisSet`, `DmsgText_ClearListHeader`, `DmsgText_AppendNodeType2`, `DmsgText_AppendString`, `DmsgText_AppendValueNode`, `TextInputFiles_Init`, `DmsgText_ComposeTextA`, `TextInputFiles_GetCStr`, `TextInputFiles_Free`, `sub_102590E0`, `DmsgText_ClearHead`, `DmsgText_AppendTypeTwo`, `DmsgText_AppendStringNode`, `DmsgText_AppendIdString`, `DmsgText_ComposeTextB`, `sub_1025A800`
+- `TargetMenu_FormatMessageWithArgs` calls `TargetMenu_GetMessageFwd`, `TargetMenu_GetEntryWord3E`, `TargetMenu_ExpandMessageCodes`
 - `TargetMenu_LoadMessageBlocksSetA` calls `TargetMenu_LoadMessageBlock`
 - `TargetMenu_LoadMessageBlocksSetB` calls `TargetMenu_LoadMessageBlock`
 - `TargetMenu_LoadAllMessageTables` calls `sub_10153B70`, `TargetMenu_LoadMessageBlocksSetA`, `TargetMenu_LoadMessageBlocksSetB`, `Scene_GetTableValue`, `TargetMenu_LoadMessageBlock`, `TargetMenu_LoadStringTable`
@@ -694,7 +694,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Target_CycleInView` calls `Entry_ValidateKey`, `Target_GetCachedIfValid`, `CXiActor::FindNearestHigherInView`, `CXiActor::FindNearestLowerInView`, `ActorHandle_Resolve`
 - `Target_CycleInViewOrFirst` calls `Entry_ValidateKey`, `Target_GetCachedIfValid`, `CXiActor::FindNearestHigherInView`, `CXiActor::FindNearestLowerInView`, `Target_FindNearestOnLocalPositiveX`
 - `Target_PickNearestToPoint` calls `CXiActor::FindNearestToPoint`
-- `Target_ApplyAction` calls `Target_GetActorPtr`, `Target_GetCachedIfValid`, `Entry_ValidateKey`, `Entry_SetNameAndKey`, `MusicTrack_SetVolumeId0009`, `Target_CommitSubTarget`, `NetCellFont_GetFlagsMasked`, `fn_1007BF30`, `Acter_GetActerAt10485F7A`, `Target_CanTarget`, `CXiActor::IsFlag1d0Clear`, `Acter_IsFlag40DB6OrState17`, `MenuMng_OpenByName`, `MusicTrack_SetVolumeId0011`
+- `Target_ApplyAction` calls `Target_GetActorPtr`, `Target_GetCachedIfValid`, `Entry_ValidateKey`, `Entry_SetNameAndKey`, `MusicTrack_SetVolumeId0009`, `Target_CommitSubTarget`, `NetCellFont_GetFlagsMasked`, `TextCommand_TargetActionToPacket`, `Acter_GetActerAt10485F7A`, `Target_CanTarget`, `CXiActor::IsFlag1d0Clear`, `Acter_IsFlag40DB6OrState17`, `MenuMng_OpenByName`, `MusicTrack_SetVolumeId0011`
 - `Target_ClearAll` calls `Target_SetDisplayName`, `Target_Clear`, `Target_CommitSubTarget`
 - `Target_CommitSubTarget` calls `Target_GetCachedIfValid`, `Target_Select`, `Target_ResetRecord`, `TargetMenu_SetTargetMode`
 - `Target_ClearAndSetFlag53` calls `Target_Clear`
@@ -791,7 +791,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Menu_CallChildSlot34ForEachItem` calls `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_InvokeChild34`
 - `MenuMng_UpdateForSceneState` calls `Menu_ApplyFlagsToItems`, `Cell_SetGlobal1036E3A0`, `NetCellFont_ClearGlobalLists2150And2154`, `TextInputFiles_RunPairB`, `TextInputFiles_RunPairA`, `Menu_CallSlot30ForEachEntry`, `ActorHandle_Resolve`, `Acter_IsEvent`, `IsEvent`, `NetCellFont_TestCommand36CF60`, `Menu_GetStateB4`, `Menu_SetStateB4`, `Menu_IsStateB4Eq1`, `Cell_SetFlag104E1C3C`, `TextInputFiles_IsModeFourOrFive`, `YkCommon_IsActorField170`, `Menu_FindByFlags34`, `ChatLog_AddTableMessage7`, `TargetMenu_OpenNoticeDialog101608D0`, `TargetMenu_OpenNoticeDialog101608B0`, `YkWindows_DestroyDrawMenuIfAt14`, `YkWindows_CloseIfAt14`
 - `Menu_ApplyFlagsToItems` calls `Menu_HasAnyFlag`, `Menu_CloseEntry`, `TargetMenu_ClearTargetAndRedraw`, `Acter_IsFlag40DB6OrState17`, `MenuMng_OpenByName`, `Target_ReleaseSelection`, `YkWindows_RunCallbackAndResetTarget`, `TargetMenu_ClearField68AndDraw`, `TextInputFiles_GetSetting41`, `TextInputFiles_Call10311386`
-- `Menu_DrawLayers` calls `Gfx_SetDefault2DStates`, `Obj_10621944::Obj_10621944_Draw`, `NetCellFont_CursorUpdateEdgeAxes`, `TargetMenu_MenuTest48OrStateB4`, `MenuPanels_SendMenuEventByKind`, `NetCellFont_GetHead`, `Menu_NextVisibleItem`, `Menu_IsStateB4Eq1`, `Menu_DrawWindowItems`, `sub_10124EB0`, `Gfx_DisableFogAndAlphaBlend`
+- `Menu_DrawLayers` calls `Gfx_SetDefault2DStates`, `MenuTextBlock::MenuTextBlock_Draw`, `NetCellFont_CursorUpdateEdgeAxes`, `TargetMenu_MenuTest48OrStateB4`, `MenuPanels_SendMenuEventByKind`, `NetCellFont_GetHead`, `Menu_NextVisibleItem`, `Menu_IsStateB4Eq1`, `Menu_DrawWindowItems`, `sub_10124EB0`, `Gfx_DisableFogAndAlphaBlend`
 - `UI_DockReset` calls `Menu_GetDwordAt8C`, `Menu_PositionWindow`
 - `Menu_PositionWindow` calls `IsEvent`, `NetCellFont_GetRect`, `NetCellFont_FindFreeEntry`, `sub_10119110`
 - `TargetMenu_MenuGetItemRect` calls `NetCellFont_GetRect`
@@ -854,6 +854,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TargetMenu_CtorZeroed` calls `TargetMenu_ZeroWordsAndDwords`
 - `TargetMenu_ZeroWordsAndDwords` calls `TargetMenu_ZeroDwords`
 - `TargetMenu_NoOpE` calls nothing directly
-- `Obj_10621944_DrawBgRect` calls `Gfx_DrawSolidRect2D`
+- `MenuTextBlock_DrawBgRect` calls `Gfx_DrawSolidRect2D`
 - `TargetMenu_ZeroDwords` calls nothing directly
 - `Gfx_DrawSolidRect2D` calls `CDx_SetDefaultRenderState`, `CDx::DrawPrimitiveUP`, `Gfx_SetDefault2DStates`

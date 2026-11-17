@@ -1534,14 +1534,14 @@
   "symbol": "CXiTimerLow::GetElapsed"
  },
  "0x10019a30": {
-  "class": "CMoResource_VT_1032C7FC",
-  "method": "vf004",
-  "symbol": "CMoResource_VT_1032C7FC::vf004"
+  "class": "CMoMo2Res",
+  "method": "Slot4StoreInHandle",
+  "symbol": "CMoMo2Res::Slot4StoreInHandle"
  },
  "0x10019a40": {
-  "class": "CMoResource_VT_1032C7FC",
-  "method": "vf005",
-  "symbol": "CMoResource_VT_1032C7FC::vf005"
+  "class": "CMoMo2Res",
+  "method": "Slot5Nop",
+  "symbol": "CMoMo2Res::Slot5Nop"
  },
  "0x10019a50": {
   "class": null,
@@ -1694,14 +1694,14 @@
   "unit": "ModelTranslucent"
  },
  "0x1001dbd0": {
-  "class": "CMoResource_VT_1032C8AC",
+  "class": "CMoBm2Res",
   "method": "ReleaseTexture",
-  "symbol": "CMoResource_VT_1032C8AC::ReleaseTexture"
+  "symbol": "CMoBm2Res::ReleaseTexture"
  },
  "0x1001dc20": {
-  "class": "CMoResource_VT_1032C8AC",
-  "method": "vf004",
-  "symbol": "CMoResource_VT_1032C8AC::vf004"
+  "class": "CMoBm2Res",
+  "method": "Slot4StoreInHandle",
+  "symbol": "CMoBm2Res::Slot4StoreInHandle"
  },
  "0x1001dc70": {
   "class": null,
@@ -1716,14 +1716,14 @@
   "unit": "TexturePreview"
  },
  "0x1001e050": {
-  "class": "CMoResource_VT_1032C880",
-  "method": "vf004",
-  "symbol": "CMoResource_VT_1032C880::vf004"
+  "class": "CMoResType5D",
+  "method": "Slot4StoreInHandle",
+  "symbol": "CMoResType5D::Slot4StoreInHandle"
  },
  "0x1001e060": {
-  "class": "CMoResource_VT_1032C880",
-  "method": "vf005",
-  "symbol": "CMoResource_VT_1032C880::vf005"
+  "class": "CMoResType5D",
+  "method": "Slot5Nop",
+  "symbol": "CMoResType5D::Slot5Nop"
  },
  "0x1001e2f0": {
   "class": null,
@@ -1861,14 +1861,14 @@
   "symbol": "CYyModelDt::PrepareRenderStateSimpleEntry"
  },
  "0x10025090": {
-  "class": "CYyModelDt_VT_1032A430",
-  "method": "vf011",
-  "symbol": "CYyModelDt_VT_1032A430::vf011"
+  "class": "CYyModelDtStreamed",
+  "method": "Slot11ReturnZero",
+  "symbol": "CYyModelDtStreamed::Slot11ReturnZero"
  },
  "0x100250a0": {
-  "class": "CYyModelDt_VT_1032A430",
+  "class": "CYyModelDtStreamed",
   "method": "ScalarDeletingDtor",
-  "symbol": "CYyModelDt_VT_1032A430::ScalarDeletingDtor"
+  "symbol": "CYyModelDtStreamed::ScalarDeletingDtor"
  },
  "0x100250f0": {
   "class": "CYyModelBase",
@@ -1893,9 +1893,9 @@
   "unit": "ProjTexTarget"
  },
  "0x100252d0": {
-  "class": "CYyModelDt_VT_1032A430",
+  "class": "CYyModelDtStreamed",
   "method": "ScalarDeletingDtor_2",
-  "symbol": "CYyModelDt_VT_1032A430::ScalarDeletingDtor_2"
+  "symbol": "CYyModelDtStreamed::ScalarDeletingDtor_2"
  },
  "0x10025330": {
   "class": null,
@@ -2505,9 +2505,9 @@
   "symbol": "CYyModelDt::GetResourceWord5E"
  },
  "0x1002a0a0": {
-  "class": "CYyModelDt_VT_1032A72C",
+  "class": "CYyModelDtBuffered",
   "method": "ScalarDeletingDtor",
-  "symbol": "CYyModelDt_VT_1032A72C::ScalarDeletingDtor"
+  "symbol": "CYyModelDtBuffered::ScalarDeletingDtor"
  },
  "0x1002a0c0": {
   "class": "CYyModelBase",
@@ -2705,9 +2705,9 @@
   "symbol": "CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor"
  },
  "0x1002d7f0": {
-  "class": "CMoResource_VT_1032C854",
+  "class": "CMoOs2Res",
   "method": "CheckVersionAndInit",
-  "symbol": "CMoResource_VT_1032C854::CheckVersionAndInit"
+  "symbol": "CMoOs2Res::CheckVersionAndInit"
  },
  "0x1002d860": {
   "class": null,
@@ -2716,9 +2716,9 @@
   "unit": "Os2Resource"
  },
  "0x1002d880": {
-  "class": "CMoResource_VT_1032C854",
-  "method": "vf004",
-  "symbol": "CMoResource_VT_1032C854::vf004"
+  "class": "CMoOs2Res",
+  "method": "Slot4PointersToWordOffsets",
+  "symbol": "CMoOs2Res::Slot4PointersToWordOffsets"
  },
  "0x1002d8f0": {
   "class": null,
@@ -2851,14 +2851,14 @@
   "unit": "BoneShadow"
  },
  "0x10034170": {
-  "class": "CMoResource_VT_1032C828",
-  "method": "vf004",
-  "symbol": "CMoResource_VT_1032C828::vf004"
+  "class": "CMoSk2Res",
+  "method": "Slot4StoreInHandle",
+  "symbol": "CMoSk2Res::Slot4StoreInHandle"
  },
  "0x10034180": {
-  "class": "CMoResource_VT_1032C828",
-  "method": "vf005",
-  "symbol": "CMoResource_VT_1032C828::vf005"
+  "class": "CMoSk2Res",
+  "method": "Slot5Nop",
+  "symbol": "CMoSk2Res::Slot5Nop"
  },
  "0x10034230": {
   "class": "CYySkl",
@@ -2959,9 +2959,9 @@
   "symbol": "CMoTask::CtorByMode"
  },
  "0x10035ae0": {
-  "class": "CMoTask_VT_1032A904",
+  "class": "CMoModeRampTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032A904::ScalarDeletingDtor"
+  "symbol": "CMoModeRampTask::ScalarDeletingDtor"
  },
  "0x10035d40": {
   "class": "CMoTask",
@@ -3309,9 +3309,9 @@
   "unit": "MusicFont"
  },
  "0x10038920": {
-  "class": "CMoResource_VT_1032C7A4",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C7A4::vf008"
+  "class": "CMoResType5E",
+  "method": "SetupNop",
+  "symbol": "CMoResType5E::SetupNop"
  },
  "0x10038930": {
   "class": null,
@@ -3355,19 +3355,19 @@
   "class": null,
   "method": null,
   "symbol": "ThreadPool_StartThread",
-  "unit": "CYyObject_VT_1032A9F8"
+  "unit": "CYyThreadPool"
  },
  "0x10039550": {
   "class": null,
   "method": null,
   "symbol": "ThreadPool_Shutdown",
-  "unit": "CYyObject_VT_1032A9F8"
+  "unit": "CYyThreadPool"
  },
  "0x100395d0": {
   "class": null,
   "method": "fn_100395D0",
-  "symbol": "CYyObject_VT_1032A9F8_Construct",
-  "unit": "CYyObject_VT_1032A9F8"
+  "symbol": "CYyThreadPool_Construct",
+  "unit": "CYyThreadPool"
  },
  "0x10039670": {
   "class": null,
@@ -3876,8 +3876,8 @@
  },
  "0x1003ef90": {
   "class": "CMoVuAnmElem",
-  "method": "vf008",
-  "symbol": "CMoVuAnmElem::vf008"
+  "method": "Slot8CallSlot10",
+  "symbol": "CMoVuAnmElem::Slot8CallSlot10"
  },
  "0x1003efa0": {
   "class": "CMoVuAnmElem",
@@ -3885,9 +3885,9 @@
   "symbol": "CMoVuAnmElem::ScalarDeletingDtor"
  },
  "0x1003f430": {
-  "class": "CMoResource_VT_1032C6F4",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C6F4::vf009"
+  "class": "CMoResType25",
+  "method": "Slot9Nop",
+  "symbol": "CMoResType25::Slot9Nop"
  },
  "0x1003f440": {
   "class": "CMoDistMorphElem",
@@ -3905,9 +3905,9 @@
   }
  },
  "0x1003fb70": {
-  "class": "CXi471011C8_VT_1032AC90",
+  "class": "CMoMorphElem",
   "method": "Ctor",
-  "symbol": "CXi471011C8_VT_1032AC90::Ctor"
+  "symbol": "CMoMorphElem::Ctor"
  },
  "0x1003fcb0": {
   "class": "CMoDistModelElem",
@@ -3944,9 +3944,9 @@
   }
  },
  "0x10040e70": {
-  "class": "CXi471011C8_VT_1032B3B8",
+  "class": "CMoD3mElemFlag200000",
   "method": "RebuildBlendWeights",
-  "symbol": "CXi471011C8_VT_1032B3B8::RebuildBlendWeights"
+  "symbol": "CMoD3mElemFlag200000::RebuildBlendWeights"
  },
  "0x10041000": {
   "class": "CMoElem",
@@ -3981,8 +3981,8 @@
  "0x10041130": {
   "class": null,
   "method": "DeletingDtor",
-  "symbol": "CXi471011C8_VT_1032AD80_DeletingDtor",
-  "unit": "CXi471011C8_VT_1032AD80"
+  "symbol": "CMoD3mElem_DeletingDtor",
+  "unit": "CMoD3mElem"
  },
  "0x10041160": {
   "class": "CMoD3mSpecularElem",
@@ -3990,26 +3990,26 @@
   "symbol": "CMoD3mSpecularElem::BindTintedTexture"
  },
  "0x10041af0": {
-  "class": "CMoElem_VT_1032ADE8",
-  "method": "vf18",
-  "symbol": "CMoElem_VT_1032ADE8::vf18"
+  "class": "CMoElemKind5C",
+  "method": "Slot18DrawTextAtTarget",
+  "symbol": "CMoElemKind5C::Slot18DrawTextAtTarget"
  },
  "0x10041f40": {
   "class": null,
   "method": null,
   "symbol": "CXiSub_10041E70_Ctor",
-  "unit": "CMoElem_VT_1032ADE8",
+  "unit": "CMoElemKind5C",
   "reloc_literals": 1
  },
  "0x10041fe0": {
-  "class": "CMoElem_VT_1032ADE8",
+  "class": "CMoElemKind5C",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoElem_VT_1032ADE8::ScalarDeletingDtor"
+  "symbol": "CMoElemKind5C::ScalarDeletingDtor"
  },
  "0x10042020": {
-  "class": "CMoOtTask_VT_1032AE64",
-  "method": "vf8",
-  "symbol": "CMoOtTask_VT_1032AE64::vf8"
+  "class": "CMoOtDrawUPTask",
+  "method": "Slot8Update",
+  "symbol": "CMoOtDrawUPTask::Slot8Update"
  },
  "0x10042640": {
   "class": "CMoTask",
@@ -4022,9 +4022,9 @@
   "symbol": "CMoOtTask::Slot11DoNothing"
  },
  "0x10042690": {
-  "class": "CMoAttachments_VT_1032AE94",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032AE94::vf001"
+  "class": "CMoOtDrawUPTaskAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner"
  },
  "0x100426a0": {
   "class": "CMoElem",
@@ -4111,24 +4111,24 @@
   }
  },
  "0x10043a90": {
-  "class": "CMoTask_VT_1032AF60",
+  "class": "CMoSchOp0DTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032AF60::ScalarDeletingDtor"
+  "symbol": "CMoSchOp0DTask::ScalarDeletingDtor"
  },
  "0x10043c90": {
-  "class": "CMoTask_VT_1032AFA8",
+  "class": "CMoSchOp0CTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032AFA8::ScalarDeletingDtor"
+  "symbol": "CMoSchOp0CTask::ScalarDeletingDtor"
  },
  "0x10043db0": {
-  "class": "CMoAttachments_VT_1032AF44",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032AF44::vf001"
+  "class": "CMoSchOp0DAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp0DAttachments::Slot1DeleteOwner"
  },
  "0x10043dc0": {
-  "class": "CMoAttachments_VT_1032AF8C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032AF8C::vf001"
+  "class": "CMoSchOp0CAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp0CAttachments::Slot1DeleteOwner"
  },
  "0x10043dd0": {
   "class": null,
@@ -4149,9 +4149,9 @@
   "unit": "DynVBCtor"
  },
  "0x10043e20": {
-  "class": "CMoTask_VT_1032AFA8",
+  "class": "CMoSchOp0CTask",
   "method": "ScalarDeletingDtor_2",
-  "symbol": "CMoTask_VT_1032AFA8::ScalarDeletingDtor_2"
+  "symbol": "CMoSchOp0CTask::ScalarDeletingDtor_2"
  },
  "0x10043e50": {
   "class": null,
@@ -4427,7 +4427,7 @@
  "0x10047f80": {
   "class": null,
   "method": null,
-  "symbol": "CMoGeneratorClone_VT_1032B114_Constructor",
+  "symbol": "CMoGeneratorRes_Constructor",
   "unit": "GeneratorCloneCtor"
  },
  "0x10047fc0": {
@@ -4441,9 +4441,9 @@
   "symbol": "CMoResource::Slot5DoNothing"
  },
  "0x10047fe0": {
-  "class": "CMoGeneratorClone_VT_1032B114",
+  "class": "CMoGeneratorRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor"
+  "symbol": "CMoGeneratorRes::ScalarDeletingDtor"
  },
  "0x100480d0": {
   "class": "CMoGeneratorClone",
@@ -5003,8 +5003,8 @@
  },
  "0x10052de0": {
   "class": "CMoVuDist",
-  "method": "vf008",
-  "symbol": "CMoVuDist::vf008"
+  "method": "Slot8CallSlot10",
+  "symbol": "CMoVuDist::Slot8CallSlot10"
  },
  "0x10052df0": {
   "class": "CMoVuDist",
@@ -5038,14 +5038,14 @@
   "unit": "ElemCtor471011C8"
  },
  "0x10052e90": {
-  "class": "CXi471011C8_VT_1032B3B8",
+  "class": "CMoD3mElemFlag200000",
   "method": "Ctor",
-  "symbol": "CXi471011C8_VT_1032B3B8::Ctor"
+  "symbol": "CMoD3mElemFlag200000::Ctor"
  },
  "0x10052f00": {
-  "class": "CXi471011C8_VT_1032AD80",
+  "class": "CMoD3mElem",
   "method": "Ctor",
-  "symbol": "CXi471011C8_VT_1032AD80::Ctor"
+  "symbol": "CMoD3mElem::Ctor"
  },
  "0x10052f20": {
   "class": "CMoDistModelElem",
@@ -5068,9 +5068,9 @@
   "symbol": "CMoDistModelElem::ScalarDeletingDtor"
  },
  "0x10052f80": {
-  "class": "CXi471011C8_VT_1032B478",
+  "class": "CMoRingElem",
   "method": "Ctor",
-  "symbol": "CXi471011C8_VT_1032B478::Ctor"
+  "symbol": "CMoRingElem::Ctor"
  },
  "0x10052fd0": {
   "class": "CMoDistRingElem",
@@ -5161,8 +5161,8 @@
  },
  "0x10053140": {
   "class": "CMoDisintegrateProgElem",
-  "method": "vf008",
-  "symbol": "CMoDisintegrateProgElem::vf008"
+  "method": "Slot8CallSlot10",
+  "symbol": "CMoDisintegrateProgElem::Slot8CallSlot10"
  },
  "0x10053150": {
   "class": "CMoDisintegrateProgElem",
@@ -5186,9 +5186,9 @@
   "unit": "GeneratorReset"
  },
  "0x10053350": {
-  "class": "CMoTask_VT_1032B654",
+  "class": "CMoGeneratorTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032B654::ScalarDeletingDtor"
+  "symbol": "CMoGeneratorTask::ScalarDeletingDtor"
  },
  "0x10053370": {
   "class": "CMoTask",
@@ -5206,9 +5206,9 @@
   "symbol": "CMoGeneratorClone::CreateInstance"
  },
  "0x10053840": {
-  "class": "CMoGeneratorClone_VT_1032B69C",
+  "class": "CMoGeneratorClone",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor"
+  "symbol": "CMoGeneratorClone::ScalarDeletingDtor"
  },
  "0x10053890": {
   "class": null,
@@ -5253,14 +5253,14 @@
   "symbol": "CMoGeneratorClone::InitDefaultParams"
  },
  "0x10054220": {
-  "class": "CMoTask_VT_1032B654",
+  "class": "CMoGeneratorTask",
   "method": "RunGeneratorAndFinish",
-  "symbol": "CMoTask_VT_1032B654::RunGeneratorAndFinish"
+  "symbol": "CMoGeneratorTask::RunGeneratorAndFinish"
  },
  "0x100542e0": {
-  "class": "CMoGeneratorClone_VT_1032B69C",
+  "class": "CMoGeneratorClone",
   "method": "CMoGeneratorClone_GetRuntimeClass",
-  "symbol": "CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass"
+  "symbol": "CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass"
  },
  "0x100542f0": {
   "class": "CMoGeneratorClone",
@@ -5280,29 +5280,29 @@
   "unit": "GeneratorRelease"
  },
  "0x10054450": {
-  "class": "CMoAttachments_VT_1032B140",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032B140::vf001"
+  "class": "CMoGeneratorResAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoGeneratorResAttachments::Slot1DeleteOwner"
  },
  "0x10054460": {
-  "class": "CMoTask_VT_1032B654",
-  "method": "vf011",
-  "symbol": "CMoTask_VT_1032B654::vf011"
+  "class": "CMoGeneratorTask",
+  "method": "Slot11GetCloneRuntimeClass",
+  "symbol": "CMoGeneratorTask::Slot11GetCloneRuntimeClass"
  },
  "0x10054470": {
-  "class": "CMoTask_VT_1032B654",
-  "method": "vf012",
-  "symbol": "CMoTask_VT_1032B654::vf012"
+  "class": "CMoGeneratorTask",
+  "method": "Slot12DeleteClone",
+  "symbol": "CMoGeneratorTask::Slot12DeleteClone"
  },
  "0x10054480": {
-  "class": "CMoResource_VT_1032C5FC",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C5FC::vf008"
+  "class": "CMoResType19",
+  "method": "SetupNop",
+  "symbol": "CMoResType19::SetupNop"
  },
  "0x10054490": {
-  "class": "CMoResource_VT_1032C5FC",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C5FC::vf009"
+  "class": "CMoResType19",
+  "method": "Slot9Nop",
+  "symbol": "CMoResType19::Slot9Nop"
  },
  "0x100544d0": {
   "class": null,
@@ -5704,19 +5704,19 @@
   "unit": "AfterimageTask"
  },
  "0x10062f50": {
-  "class": "CMoAttachments_VT_1032BCCC",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BCCC::vf001"
+  "class": "CMoSchOp48Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp48Attachments::Slot1DeleteOwner"
  },
  "0x10062f60": {
-  "class": "CMoAttachments_VT_1032BAF0",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BAF0::vf001"
+  "class": "CMoSchOp1FAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp1FAttachments::Slot1DeleteOwner"
  },
  "0x10062f70": {
-  "class": "CMoAttachments_VT_1032BBAC",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BBAC::vf001"
+  "class": "CMoSchOp2CAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp2CAttachments::Slot1DeleteOwner"
  },
  "0x10062f80": {
   "class": "CMoLockLookAtDriveTask",
@@ -5729,24 +5729,24 @@
   "symbol": "CMoLockLookAtDriveTask::Slot12ThunkDeletingDtor"
  },
  "0x10062fa0": {
-  "class": "CMoAttachments_VT_1032BF0C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BF0C::vf001"
+  "class": "CMoSchOp7AAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp7AAttachments::Slot1DeleteOwner"
  },
  "0x10062fb0": {
-  "class": "CMoAttachments_VT_1032BD14",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BD14::vf001"
+  "class": "CMoSchOp7FAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp7FAttachments::Slot1DeleteOwner"
  },
  "0x10062fc0": {
-  "class": "CMoAttachments_VT_1032BF54",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BF54::vf001"
+  "class": "CMoSchOpB4Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOpB4Attachments::Slot1DeleteOwner"
  },
  "0x10062fd0": {
-  "class": "CMoAttachments_VT_1032BBF4",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BBF4::vf001"
+  "class": "CMoSchOpBFAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOpBFAttachments::Slot1DeleteOwner"
  },
  "0x10062fe0": {
   "class": "CMoActorColorDriveTask",
@@ -5759,44 +5759,44 @@
   "symbol": "CMoActorColorDriveTask::Slot12ThunkDeletingDtor"
  },
  "0x10063000": {
-  "class": "CMoAttachments_VT_1032BD5C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BD5C::vf001"
+  "class": "CMoSchOp42Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp42Attachments::Slot1DeleteOwner"
  },
  "0x10063010": {
-  "class": "CMoAttachments_VT_1032BF9C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BF9C::vf001"
+  "class": "CMoSchOp2EAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp2EAttachments::Slot1DeleteOwner"
  },
  "0x10063020": {
-  "class": "CMoAttachments_VT_1032BC68",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BC68::vf001"
+  "class": "CMoSchOp62Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp62Attachments::Slot1DeleteOwner"
  },
  "0x10063030": {
-  "class": "CMoAttachments_VT_1032BDA4",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BDA4::vf001"
+  "class": "CMoSchOp40Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp40Attachments::Slot1DeleteOwner"
  },
  "0x10063040": {
-  "class": "CMoAttachments_VT_1032BFE4",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BFE4::vf001"
+  "class": "CMoSchOp2FAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp2FAttachments::Slot1DeleteOwner"
  },
  "0x10063070": {
-  "class": "CMoAttachments_VT_1032BB38",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BB38::vf001"
+  "class": "CMoSchOp07Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp07Attachments::Slot1DeleteOwner"
  },
  "0x10063080": {
-  "class": "CMoAttachments_VT_1032BDEC",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BDEC::vf001"
+  "class": "CMoSchOp75Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp75Attachments::Slot1DeleteOwner"
  },
  "0x10063090": {
-  "class": "CMoAttachments_VT_1032C02C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032C02C::vf001"
+  "class": "CMoSchOp59Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp59Attachments::Slot1DeleteOwner"
  },
  "0x100630a0": {
   "class": "CMoPathDriveActorTask",
@@ -5809,19 +5809,19 @@
   "symbol": "CMoPathDriveActorTask::Slot12ThunkDeletingDtor"
  },
  "0x100630c0": {
-  "class": "CMoAttachments_VT_1032BE34",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BE34::vf001"
+  "class": "CMoSchOpB5Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOpB5Attachments::Slot1DeleteOwner"
  },
  "0x100630d0": {
-  "class": "CMoAttachments_VT_1032BE7C",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BE7C::vf001"
+  "class": "CMoSchOpBCAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOpBCAttachments::Slot1DeleteOwner"
  },
  "0x100630e0": {
-  "class": "CMoAttachments_VT_1032B940",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032B940::vf001"
+  "class": "CMoSchOp1DAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp1DAttachments::Slot1DeleteOwner"
  },
  "0x100630f0": {
   "class": "CMoLockColorDriveTask",
@@ -5834,24 +5834,24 @@
   "symbol": "CMoLockColorDriveTask::Slot12ThunkDeletingDtor"
  },
  "0x10063110": {
-  "class": "CMoAttachments_VT_1032BC84",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BC84::vf001"
+  "class": "CMoSchOpSharedAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOpSharedAttachments::Slot1DeleteOwner"
  },
  "0x10063120": {
-  "class": "CMoAttachments_VT_1032BEC4",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032BEC4::vf001"
+  "class": "CMoSchOp9BAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoSchOp9BAttachments::Slot1DeleteOwner"
  },
  "0x10063130": {
-  "class": "CMoTask_VT_1032B95C",
-  "method": "vf011",
-  "symbol": "CMoTask_VT_1032B95C::vf011"
+  "class": "CMoSchOp1DTask",
+  "method": "Slot11GetPathDriveActorRuntimeClass",
+  "symbol": "CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass"
  },
  "0x10063140": {
-  "class": "CMoTask_VT_1032B95C",
-  "method": "vf012",
-  "symbol": "CMoTask_VT_1032B95C::vf012"
+  "class": "CMoSchOp1DTask",
+  "method": "Slot12DeletePathDriveActorTask",
+  "symbol": "CMoSchOp1DTask::Slot12DeletePathDriveActorTask"
  },
  "0x10063450": {
   "class": "CMoSpline",
@@ -5921,9 +5921,9 @@
   "symbol": "CMoSpline::SetValue"
  },
  "0x10063c50": {
-  "class": "CMoResource_VT_1032C55C",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C55C::vf008"
+  "class": "CMoResType3E",
+  "method": "SetupClearField34",
+  "symbol": "CMoResType3E::SetupClearField34"
  },
  "0x10063c80": {
   "class": null,
@@ -6120,14 +6120,14 @@
   "symbol": "CMoDX::CreateAndInitSystem"
  },
  "0x1006b480": {
-  "class": "CMoTask_VT_10329C70",
-  "method": "vf8",
-  "symbol": "CMoTask_VT_10329C70::vf8"
+  "class": "CMoCameraSetupTask",
+  "method": "Slot8SetupCameraAfterOneTick",
+  "symbol": "CMoCameraSetupTask::Slot8SetupCameraAfterOneTick"
  },
  "0x1006b4c0": {
-  "class": "CMoTask_VT_10329C70",
-  "method": "vf1",
-  "symbol": "CMoTask_VT_10329C70::vf1"
+  "class": "CMoCameraSetupTask",
+  "method": "Slot1NopOnMessage6",
+  "symbol": "CMoCameraSetupTask::Slot1NopOnMessage6"
  },
  "0x1006bd90": {
   "class": null,
@@ -6249,39 +6249,39 @@
   "unit": "Occlusion"
  },
  "0x1006cc40": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf008",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf008"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot8CallSlot9",
+  "symbol": "CMoProcessor3DNow::Slot8CallSlot9"
  },
  "0x1006cc50": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf010",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf010"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot10CallSlot11",
+  "symbol": "CMoProcessor3DNow::Slot10CallSlot11"
  },
  "0x1006cc60": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf040",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf040"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot40CallSlot41",
+  "symbol": "CMoProcessor3DNow::Slot40CallSlot41"
  },
  "0x1006cc70": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf038",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf038"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot38CallSlot39",
+  "symbol": "CMoProcessor3DNow::Slot38CallSlot39"
  },
  "0x1006cc80": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf046",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf046"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot46CallSlot48",
+  "symbol": "CMoProcessor3DNow::Slot46CallSlot48"
  },
  "0x1006cc90": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf045",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf045"
+  "class": "CMoProcessor3DNow",
+  "method": "Slot45CallSlot47",
+  "symbol": "CMoProcessor3DNow::Slot45CallSlot47"
  },
  "0x1006ccd0": {
-  "class": "CMoProcessor_VT_1032C1C8",
+  "class": "CMoProcessor3DNow",
   "method": "CMoProcessor_GetRuntimeClass",
-  "symbol": "CMoProcessor_VT_1032C1C8::CMoProcessor_GetRuntimeClass"
+  "symbol": "CMoProcessor3DNow::CMoProcessor_GetRuntimeClass"
  },
  "0x1006ce70": {
   "class": "CMoProcessor",
@@ -6291,7 +6291,7 @@
  "0x1006d0a0": {
   "class": null,
   "method": null,
-  "symbol": "CMoProcessor_VT_1032C368_SetIdentity",
+  "symbol": "CMoProcessorX87_SetIdentity",
   "unit": "ProcessorMatrix"
  },
  "0x1006d190": {
@@ -6307,14 +6307,14 @@
   "unit": "ProcessorMatrix"
  },
  "0x1006d380": {
-  "class": "CMoProcessor_VT_1032C298",
-  "method": "vf007",
-  "symbol": "CMoProcessor_VT_1032C298::vf007"
+  "class": "CMoProcessorSSE",
+  "method": "Vec3Scale",
+  "symbol": "CMoProcessorSSE::Vec3Scale"
  },
  "0x1006d3b0": {
-  "class": "CMoProcessor_VT_1032C368",
-  "method": "vf012",
-  "symbol": "CMoProcessor_VT_1032C368::vf012"
+  "class": "CMoProcessorX87",
+  "method": "Vec3AddScaled",
+  "symbol": "CMoProcessorX87::Vec3AddScaled"
  },
  "0x1006d3e0": {
   "class": "CMoProcessor",
@@ -6322,9 +6322,9 @@
   "symbol": "CMoProcessor::TransposeInPlace"
  },
  "0x1006d4d0": {
-  "class": "CMoProcessor_VT_1032C368",
-  "method": "vf014",
-  "symbol": "CMoProcessor_VT_1032C368::vf014"
+  "class": "CMoProcessorX87",
+  "method": "Vec3Dot",
+  "symbol": "CMoProcessorX87::Vec3Dot"
  },
  "0x1006d580": {
   "class": "CMoProcessor",
@@ -6332,24 +6332,24 @@
   "symbol": "CMoProcessor::LengthSafe"
  },
  "0x1006d680": {
-  "class": "CMoProcessor_VT_1032C368",
-  "method": "vf042",
-  "symbol": "CMoProcessor_VT_1032C368::vf042"
+  "class": "CMoProcessorX87",
+  "method": "Vec3Add",
+  "symbol": "CMoProcessorX87::Vec3Add"
  },
  "0x1006d6b0": {
-  "class": "CMoProcessor_VT_1032C368",
-  "method": "vf043",
-  "symbol": "CMoProcessor_VT_1032C368::vf043"
+  "class": "CMoProcessorX87",
+  "method": "Vec3MulComponents",
+  "symbol": "CMoProcessorX87::Vec3MulComponents"
  },
  "0x1006d720": {
-  "class": "CMoProcessor_VT_1032C368",
+  "class": "CMoProcessorX87",
   "method": "TransformPoint",
-  "symbol": "CMoProcessor_VT_1032C368::TransformPoint"
+  "symbol": "CMoProcessorX87::TransformPoint"
  },
  "0x1006d980": {
-  "class": "CMoProcessor_VT_1032C368",
-  "method": "vf021",
-  "symbol": "CMoProcessor_VT_1032C368::vf021"
+  "class": "CMoProcessorX87",
+  "method": "Vec3Lerp",
+  "symbol": "CMoProcessorX87::Vec3Lerp"
  },
  "0x1006d9c0": {
   "class": null,
@@ -6358,24 +6358,24 @@
   "unit": "ProcessorRotation"
  },
  "0x1006dcf0": {
-  "class": "CMoProcessor_VT_1032C368",
+  "class": "CMoProcessorX87",
   "method": "RotationFromAnglesZYX",
-  "symbol": "CMoProcessor_VT_1032C368::RotationFromAnglesZYX"
+  "symbol": "CMoProcessorX87::RotationFromAnglesZYX"
  },
  "0x1006e140": {
-  "class": "CMoProcessor_VT_1032C368",
+  "class": "CMoProcessorX87",
   "method": "RotationY",
-  "symbol": "CMoProcessor_VT_1032C368::RotationY"
+  "symbol": "CMoProcessorX87::RotationY"
  },
  "0x1006e260": {
-  "class": "CMoProcessor_VT_1032C368",
+  "class": "CMoProcessorX87",
   "method": "RotationZ",
-  "symbol": "CMoProcessor_VT_1032C368::RotationZ"
+  "symbol": "CMoProcessorX87::RotationZ"
  },
  "0x1006e380": {
-  "class": "CMoProcessor_VT_1032C368",
+  "class": "CMoProcessorX87",
   "method": "RotationFromAnglesXYZ",
-  "symbol": "CMoProcessor_VT_1032C368::RotationFromAnglesXYZ"
+  "symbol": "CMoProcessorX87::RotationFromAnglesXYZ"
  },
  "0x1006e6b0": {
   "class": "CMoProcessor",
@@ -6405,9 +6405,9 @@
   "unit": "ProcessorBounds"
  },
  "0x1006f5b0": {
-  "class": "CMoProcessor_VT_1032C298",
-  "method": "vf014",
-  "symbol": "CMoProcessor_VT_1032C298::vf014"
+  "class": "CMoProcessorSSE",
+  "method": "Vec3Dot",
+  "symbol": "CMoProcessorSSE::Vec3Dot"
  },
  "0x1006f800": {
   "class": "CMoProcessor",
@@ -6415,9 +6415,9 @@
   "symbol": "CMoProcessor::MulPointVec3"
  },
  "0x1006fa30": {
-  "class": "CMoProcessor_VT_1032C298",
-  "method": "vf021",
-  "symbol": "CMoProcessor_VT_1032C298::vf021"
+  "class": "CMoProcessorSSE",
+  "method": "Vec3Lerp",
+  "symbol": "CMoProcessorSSE::Vec3Lerp"
  },
  "0x1006fae0": {
   "class": "CMoProcessor",
@@ -6430,14 +6430,14 @@
   "symbol": "CMoProcessor::SetRotationFromAngles"
  },
  "0x10070020": {
-  "class": "CMoProcessor_VT_1032C298",
-  "method": "vf035",
-  "symbol": "CMoProcessor_VT_1032C298::vf035"
+  "class": "CMoProcessorSSE",
+  "method": "CalcScreenBoundsAndVisible",
+  "symbol": "CMoProcessorSSE::CalcScreenBoundsAndVisible"
  },
  "0x10070040": {
-  "class": "CMoProcessor_VT_1032C298",
-  "method": "vf036",
-  "symbol": "CMoProcessor_VT_1032C298::vf036"
+  "class": "CMoProcessorSSE",
+  "method": "CalcScreenBounds",
+  "symbol": "CMoProcessorSSE::CalcScreenBounds"
  },
  "0x100700e0": {
   "class": null,
@@ -6446,49 +6446,49 @@
   "unit": "ProcessorInit"
  },
  "0x10070780": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf012",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf012"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec3AddScaled",
+  "symbol": "CMoProcessor3DNow::Vec3AddScaled"
  },
  "0x10070790": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf014",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf014"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec3Dot",
+  "symbol": "CMoProcessor3DNow::Vec3Dot"
  },
  "0x10070aa0": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf018",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf018"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec4TransformB",
+  "symbol": "CMoProcessor3DNow::Vec4TransformB"
  },
  "0x10070ab0": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf017",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf017"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec4Transform",
+  "symbol": "CMoProcessor3DNow::Vec4Transform"
  },
  "0x10070ac0": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf016",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf016"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec3Transform",
+  "symbol": "CMoProcessor3DNow::Vec3Transform"
  },
  "0x10070ad0": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf021",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf021"
+  "class": "CMoProcessor3DNow",
+  "method": "Vec3Lerp",
+  "symbol": "CMoProcessor3DNow::Vec3Lerp"
  },
  "0x10070e20": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf033",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf033"
+  "class": "CMoProcessor3DNow",
+  "method": "ProjectVertsAndBounds",
+  "symbol": "CMoProcessor3DNow::ProjectVertsAndBounds"
  },
  "0x10070e40": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf035",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf035"
+  "class": "CMoProcessor3DNow",
+  "method": "CalcScreenBoundsAndVisible",
+  "symbol": "CMoProcessor3DNow::CalcScreenBoundsAndVisible"
  },
  "0x10070e60": {
-  "class": "CMoProcessor_VT_1032C1C8",
-  "method": "vf036",
-  "symbol": "CMoProcessor_VT_1032C1C8::vf036"
+  "class": "CMoProcessor3DNow",
+  "method": "CalcScreenBounds",
+  "symbol": "CMoProcessor3DNow::CalcScreenBounds"
  },
  "0x10070f40": {
   "class": "CMoTask",
@@ -6496,9 +6496,9 @@
   "symbol": "CMoTask::InitVariant12"
  },
  "0x10070f60": {
-  "class": "CMoTask_VT_1032C490",
+  "class": "CMoResourceWaitTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032C490::ScalarDeletingDtor"
+  "symbol": "CMoResourceWaitTask::ScalarDeletingDtor"
  },
  "0x10070f90": {
   "class": "CMoTask",
@@ -6559,19 +6559,19 @@
   "symbol": "CMoCamera::GetSharedInstance"
  },
  "0x100719c0": {
-  "class": "CMoResource_VT_1032C7D0",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C7D0::vf008"
+  "class": "CMoResType45",
+  "method": "SetupNop",
+  "symbol": "CMoResType45::SetupNop"
  },
  "0x100719d0": {
-  "class": "CMoResource_VT_1032C7D0",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C7D0::vf009"
+  "class": "CMoResType45",
+  "method": "Slot9Nop",
+  "symbol": "CMoResType45::Slot9Nop"
  },
  "0x100719e0": {
-  "class": "CMoResource_VT_1032C828",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C828::vf009"
+  "class": "CMoSk2Res",
+  "method": "Slot9Nop",
+  "symbol": "CMoSk2Res::Slot9Nop"
  },
  "0x100719f0": {
   "class": "CMoCamera",
@@ -6579,106 +6579,106 @@
   "symbol": "CMoCamera::Slot9DoNothing"
  },
  "0x10071a00": {
-  "class": "CMoResource_VT_1032C7FC",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C7FC::vf009"
+  "class": "CMoMo2Res",
+  "method": "Slot9Nop",
+  "symbol": "CMoMo2Res::Slot9Nop"
  },
  "0x10071a10": {
-  "class": "CMoResource_VT_1032C7A4",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C7A4::vf009"
+  "class": "CMoResType5E",
+  "method": "Slot9Nop",
+  "symbol": "CMoResType5E::Slot9Nop"
  },
  "0x10071a20": {
-  "class": "CMoResource_VT_1032C778",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C778::vf008",
+  "class": "CMoAfbRes",
+  "method": "Setup",
+  "symbol": "CMoAfbRes::Setup",
   "partial_regs": {
    "store left: operand not a local or parameter": 1,
    "lvalue use left": 1
   }
  },
  "0x10071a30": {
-  "class": "CMoResource_VT_1032C778",
-  "method": "vf009",
-  "symbol": "CMoResource_VT_1032C778::vf009",
+  "class": "CMoAfbRes",
+  "method": "Slot9UnfixPointers",
+  "symbol": "CMoAfbRes::Slot9UnfixPointers",
   "partial_regs": {
    "store rewritten": 1
   }
  },
  "0x10071a40": {
-  "class": "CMoResource_VT_1032C8AC",
+  "class": "CMoBm2Res",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C8AC::ScalarDeletingDtor"
+  "symbol": "CMoBm2Res::ScalarDeletingDtor"
  },
  "0x10071a60": {
-  "class": "CMoResource_VT_1032C880",
+  "class": "CMoResType5D",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C880::ScalarDeletingDtor"
+  "symbol": "CMoResType5D::ScalarDeletingDtor"
  },
  "0x10071a80": {
-  "class": "CMoResource_VT_1032C854",
+  "class": "CMoOs2Res",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C854::ScalarDeletingDtor"
+  "symbol": "CMoOs2Res::ScalarDeletingDtor"
  },
  "0x10071aa0": {
-  "class": "CMoResource_VT_1032C828",
+  "class": "CMoSk2Res",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C828::ScalarDeletingDtor"
+  "symbol": "CMoSk2Res::ScalarDeletingDtor"
  },
  "0x10071ac0": {
-  "class": "CMoResource_VT_1032C7FC",
+  "class": "CMoMo2Res",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C7FC::ScalarDeletingDtor"
+  "symbol": "CMoMo2Res::ScalarDeletingDtor"
  },
  "0x10071ae0": {
-  "class": "CMoResource_VT_1032C7D0",
+  "class": "CMoResType45",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C7D0::ScalarDeletingDtor"
+  "symbol": "CMoResType45::ScalarDeletingDtor"
  },
  "0x10071b00": {
-  "class": "CMoResource_VT_1032C7A4",
+  "class": "CMoResType5E",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C7A4::ScalarDeletingDtor"
+  "symbol": "CMoResType5E::ScalarDeletingDtor"
  },
  "0x10071b50": {
-  "class": "CMoResource_VT_1032C74C",
+  "class": "CMoResType1F",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C74C::ScalarDeletingDtor"
+  "symbol": "CMoResType1F::ScalarDeletingDtor"
  },
  "0x10071b70": {
-  "class": "CMoResource_VT_1032C720",
+  "class": "CMoResType21",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C720::ScalarDeletingDtor"
+  "symbol": "CMoResType21::ScalarDeletingDtor"
  },
  "0x10071b90": {
-  "class": "CMoResource_VT_1032C6F4",
+  "class": "CMoResType25",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C6F4::ScalarDeletingDtor"
+  "symbol": "CMoResType25::ScalarDeletingDtor"
  },
  "0x10071bb0": {
-  "class": "CMoResource_VT_1032C6C8",
+  "class": "CMoResType31",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C6C8::ScalarDeletingDtor"
+  "symbol": "CMoResType31::ScalarDeletingDtor"
  },
  "0x10071bd0": {
-  "class": "CMoResource_VT_1032C69C",
+  "class": "CMoResType30",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C69C::ScalarDeletingDtor"
+  "symbol": "CMoResType30::ScalarDeletingDtor"
  },
  "0x10071bf0": {
-  "class": "CMoResource_VT_1032C670",
+  "class": "CMoResType5F",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C670::ScalarDeletingDtor"
+  "symbol": "CMoResType5F::ScalarDeletingDtor"
  },
  "0x10071c40": {
-  "class": "CMoResource_VT_1032C5FC",
+  "class": "CMoResType19",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C5FC::ScalarDeletingDtor"
+  "symbol": "CMoResType19::ScalarDeletingDtor"
  },
  "0x10071c90": {
-  "class": "CMoResource_VT_1032C588",
+  "class": "CMoScopeRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C588::ScalarDeletingDtor"
+  "symbol": "CMoScopeRes::ScalarDeletingDtor"
  },
  "0x10071d00": {
   "class": "CMoSphRes",
@@ -6793,7 +6793,7 @@
  "0x100729c0": {
   "class": null,
   "method": null,
-  "symbol": "unknown_libname_61",
+  "symbol": "Resource_ResetGlobals",
   "unit": "Resource"
  },
  "0x100729d0": {
@@ -6803,9 +6803,9 @@
   "unit": "Resource"
  },
  "0x10072a30": {
-  "class": "CMoTask_VT_1032C908",
+  "class": "CMoResourceLoadTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032C908::ScalarDeletingDtor"
+  "symbol": "CMoResourceLoadTask::ScalarDeletingDtor"
  },
  "0x10072a70": {
   "class": null,
@@ -6848,9 +6848,9 @@
   "unit": "MeshResourceMng"
  },
  "0x10073730": {
-  "class": "CMoResource_VT_1032C934",
+  "class": "CMoBm2RefRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_1032C934::ScalarDeletingDtor"
+  "symbol": "CMoBm2RefRes::ScalarDeletingDtor"
  },
  "0x10073a60": {
   "class": "CMoResource",
@@ -6947,29 +6947,29 @@
   "unit": "ResourceIter"
  },
  "0x100745d0": {
-  "class": "CMoAttachments_VT_1032C4E8",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032C4E8::vf001"
+  "class": "CMoResourceWaitTaskAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoResourceWaitTaskAttachments::Slot1DeleteOwner"
  },
  "0x100745e0": {
-  "class": "CMoResource_VT_1032C588",
-  "method": "vf011",
-  "symbol": "CMoResource_VT_1032C588::vf011"
+  "class": "CMoScopeRes",
+  "method": "Slot11GetCameraRuntimeClass",
+  "symbol": "CMoScopeRes::Slot11GetCameraRuntimeClass"
  },
  "0x100745f0": {
-  "class": "CMoResource_VT_1032C588",
-  "method": "vf012",
-  "symbol": "CMoResource_VT_1032C588::vf012"
+  "class": "CMoScopeRes",
+  "method": "Slot12DeleteOwner",
+  "symbol": "CMoScopeRes::Slot12DeleteOwner"
  },
  "0x10074600": {
-  "class": "CMoAttachments_VT_1032C628",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032C628::vf001"
+  "class": "CMoResType07Attachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoResType07Attachments::Slot1DeleteOwner"
  },
  "0x10074610": {
-  "class": "CMoResource_VT_1032C588",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_1032C588::vf008"
+  "class": "CMoScopeRes",
+  "method": "SetupNop",
+  "symbol": "CMoScopeRes::SetupNop"
  },
  "0x100746a0": {
   "class": null,
@@ -7264,25 +7264,25 @@
  "0x1007a9a0": {
   "class": null,
   "method": null,
-  "symbol": "fn_1007A9A0",
+  "symbol": "TextCommand_PacketForIdPairKind04",
   "unit": "TextCommand"
  },
  "0x1007aa80": {
   "class": null,
   "method": null,
-  "symbol": "fn_1007AA80",
+  "symbol": "TextCommand_PacketForIdPairKind12",
   "unit": "TextCommand"
  },
  "0x1007bb90": {
   "class": null,
   "method": null,
-  "symbol": "fn_1007BB90",
+  "symbol": "TextCommand_PacketForIdPairKind1A",
   "unit": "TextCommand"
  },
  "0x1007bf30": {
   "class": null,
   "method": null,
-  "symbol": "fn_1007BF30",
+  "symbol": "TextCommand_TargetActionToPacket",
   "unit": "TextCommand"
  },
  "0x1007d240": {
@@ -7294,7 +7294,7 @@
  "0x1007e490": {
   "class": null,
   "method": null,
-  "symbol": "fn_1007E490",
+  "symbol": "TextCommand_CheckThenPostUiRequest0E",
   "unit": "TextCommand"
  },
  "0x1007e8d0": {
@@ -8665,9 +8665,9 @@
   "unit": "Acter"
  },
  "0x100a27f0": {
-  "class": "CMoTask_VT_1032D6D4",
+  "class": "CMoAuctionMenuTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032D6D4::ScalarDeletingDtor"
+  "symbol": "CMoAuctionMenuTask::ScalarDeletingDtor"
  },
  "0x100a28e0": {
   "class": null,
@@ -9101,9 +9101,9 @@
   "symbol": "CMoTask::GetRuntimeClass_variant17"
  },
  "0x100a9db0": {
-  "class": "CMoTask_VT_1032E808",
+  "class": "CMoCasterTargetTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoTask_VT_1032E808::ScalarDeletingDtor"
+  "symbol": "CMoCasterTargetTask::ScalarDeletingDtor"
  },
  "0x100aaef0": {
   "class": "CXiControlActor",
@@ -9121,9 +9121,9 @@
   "symbol": "CXiControlActor::Slot138_Scan3F0"
  },
  "0x100ab060": {
-  "class": "CMoAttachments_VT_1032E7EC",
-  "method": "vf001",
-  "symbol": "CMoAttachments_VT_1032E7EC::vf001"
+  "class": "CMoCasterTargetTaskAttachments",
+  "method": "Slot1DeleteOwner",
+  "symbol": "CMoCasterTargetTaskAttachments::Slot1DeleteOwner"
  },
  "0x100ab070": {
   "class": "CXiSkeletonActor",
@@ -10925,7 +10925,7 @@
  "0x101061d0": {
   "class": null,
   "method": null,
-  "symbol": "fn_101061D0",
+  "symbol": "NetCellFont_UnpackBitFields",
   "unit": "NetCellFont"
  },
  "0x101072d0": {
@@ -11680,9 +11680,9 @@
   "unit": "NetCellFont"
  },
  "0x1011c080": {
-  "class": "Obj_104E1B90",
-  "method": "Obj_104E1B90_DrawString",
-  "symbol": "Obj_104E1B90::Obj_104E1B90_DrawString"
+  "class": "FontGlyphs",
+  "method": "FontGlyphs_DrawString",
+  "symbol": "FontGlyphs::FontGlyphs_DrawString"
  },
  "0x1011c1f0": {
   "class": null,
@@ -11961,9 +11961,9 @@
   "unit": "NetCellFont"
  },
  "0x10120590": {
-  "class": "Obj_104E1BF8",
+  "class": "ShapeMng",
   "method": "ShapeMng_BindFontTexture",
-  "symbol": "Obj_104E1BF8::ShapeMng_BindFontTexture"
+  "symbol": "ShapeMng::ShapeMng_BindFontTexture"
  },
  "0x10120660": {
   "class": null,
@@ -11973,9 +11973,9 @@
   "reloc_literals": 1
  },
  "0x101207b0": {
-  "class": "Obj_104E1BF8",
+  "class": "ShapeMng",
   "method": "ShapeMng_BindDmgNumTexture",
-  "symbol": "Obj_104E1BF8::ShapeMng_BindDmgNumTexture"
+  "symbol": "ShapeMng::ShapeMng_BindDmgNumTexture"
  },
  "0x10120950": {
   "class": null,
@@ -15398,9 +15398,9 @@
   "unit": "TargetMenu"
  },
  "0x101630e0": {
-  "class": "Obj_10621944",
-  "method": "Obj_10621944_Draw",
-  "symbol": "Obj_10621944::Obj_10621944_Draw"
+  "class": "MenuTextBlock",
+  "method": "MenuTextBlock_Draw",
+  "symbol": "MenuTextBlock::MenuTextBlock_Draw"
  },
  "0x10163350": {
   "class": null,
@@ -15417,7 +15417,7 @@
  "0x10163390": {
   "class": null,
   "method": null,
-  "symbol": "Obj_10621944_DrawBgRect",
+  "symbol": "MenuTextBlock_DrawBgRect",
   "unit": "TargetMenu"
  },
  "0x101633d0": {
@@ -15593,7 +15593,7 @@
  "0x1016bdf0": {
   "class": null,
   "method": null,
-  "symbol": "fn_1016BDF0",
+  "symbol": "ZoneMapLoad_BuildMatrixFromNegatedPosRot",
   "unit": "ZoneMapLoad"
  },
  "0x1016c060": {
@@ -15731,9 +15731,9 @@
   "unit": "ZoneMapLoad"
  },
  "0x10176ea0": {
-  "class": "CMoResource_VT_10336698",
+  "class": "CMoResType2E",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_10336698::ScalarDeletingDtor"
+  "symbol": "CMoResType2E::ScalarDeletingDtor"
  },
  "0x10176f60": {
   "class": null,
@@ -15742,9 +15742,9 @@
   "unit": "ZoneResWeather"
  },
  "0x10176f80": {
-  "class": "CMoResource_VT_103366C4",
+  "class": "CMoResType1C",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_103366C4::ScalarDeletingDtor"
+  "symbol": "CMoResType1C::ScalarDeletingDtor"
  },
  "0x10176fe0": {
   "class": null,
@@ -15753,9 +15753,9 @@
   "unit": "ZoneResource"
  },
  "0x10177000": {
-  "class": "CMoResource_VT_103366F0",
+  "class": "CMoResType36",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_103366F0::ScalarDeletingDtor"
+  "symbol": "CMoResType36::ScalarDeletingDtor"
  },
  "0x101771b0": {
   "class": null,
@@ -16382,14 +16382,14 @@
   "unit": "EnvLight"
  },
  "0x101893d0": {
-  "class": "CMoResource_VT_103367E8",
+  "class": "CMoResType2F",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResource_VT_103367E8::ScalarDeletingDtor"
+  "symbol": "CMoResType2F::ScalarDeletingDtor"
  },
  "0x101893f0": {
-  "class": "CMoResource_VT_103367E8",
-  "method": "vf008",
-  "symbol": "CMoResource_VT_103367E8::vf008"
+  "class": "CMoResType2F",
+  "method": "SetupNop",
+  "symbol": "CMoResType2F::SetupNop"
  },
  "0x10189400": {
   "class": null,
@@ -21107,7 +21107,7 @@
  "0x101f79e0": {
   "class": null,
   "method": null,
-  "symbol": "fn_101F79E0",
+  "symbol": "YkWindows_MapEntryForTargetOrArea",
   "unit": "YkWindows"
  },
  "0x101f7c00": {
@@ -21204,7 +21204,7 @@
  "0x101f9110": {
   "class": null,
   "method": null,
-  "symbol": "fn_101F9110",
+  "symbol": "YkWindows_AddMarkerRecord",
   "unit": "YkWindows"
  },
  "0x101f92b0": {
@@ -21228,7 +21228,7 @@
  "0x101f9a20": {
   "class": null,
   "method": null,
-  "symbol": "fn_101F9A20",
+  "symbol": "YkWindows_IsMarkerAllowed",
   "unit": "YkWindows"
  },
  "0x101fa420": {
@@ -21246,7 +21246,7 @@
  "0x101faaf0": {
   "class": null,
   "method": null,
-  "symbol": "fn_101FAAF0",
+  "symbol": "YkWindows_ShowMapTitleIfAllowed",
   "unit": "YkWindows"
  },
  "0x101fad00": {
@@ -22769,7 +22769,7 @@
  "0x10234610": {
   "class": null,
   "method": null,
-  "symbol": "fn_10234610",
+  "symbol": "MenuPanels_InitDrawRect",
   "unit": "MenuPanels"
  },
  "0x10234660": {

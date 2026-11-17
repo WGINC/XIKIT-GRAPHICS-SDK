@@ -13,7 +13,7 @@ Why the file has this name (data/unit_names.json): XiErrMsgGetErrCode, ReportAnd
 | `ErrorReport_NoOpVarargsA` | 0x10017D20 | 1 | yes | - | Takes any arguments and does nothing. | medium |
 | `ErrorReport_NoOpVarargsB` | 0x10017D30 | 1 | yes | - | Takes any arguments and does nothing. | medium |
 | `XiErrMsgGetErrCode` | 0x10017D90 | 148 | yes | - | - | - |
-| `sub_100180D0` | 0x100180D0 | 97 | no | - | Finds an error code in the error table and calls its handler with the code's message, or sends the default game message when the code is not listed. | medium |
+| `ErrorReport_DispatchErrorCode` | 0x100180D0 | 97 | no | - | Finds an error code in the error table and calls its handler with the code's message, or sends the default game message when the code is not listed. | medium |
 | `ErrorReport_SendMessage7_1To10668FF8` | 0x10018140 | 64 | yes | - | Formats game message (7, 1, arg) and passes the text to the object at 0x10668FF8. | low |
 | `ErrorReport_RegisterCallback` | 0x10018180 | 73 | yes | - | Registers the callback 0x10018280 and records whether it succeeded. | low |
 | `ErrorReport_SendMessage7_0To10668FF8` | 0x100181D0 | 149 | yes | - | Formats game message (7, 0, \|arg1\|), optionally followed by arg2, and passes the text to the object at 0x10668FF8. | low |
@@ -36,7 +36,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ErrorReport_NoOpVarargsA` calls nothing directly
 - `ErrorReport_NoOpVarargsB` calls nothing directly
 - `XiErrMsgGetErrCode` calls `sub_10311877`, `TargetMenu_GetMessageFwd`
-- `sub_100180D0` calls `ErrorReport_SendMessage7_1To10668FF8`, `XiErrMsgGetErrCode`
+- `ErrorReport_DispatchErrorCode` calls `ErrorReport_SendMessage7_1To10668FF8`, `XiErrMsgGetErrCode`
 - `ErrorReport_SendMessage7_1To10668FF8` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `LobbyUi_StoreTextIfIdle`
 - `ErrorReport_RegisterCallback` calls `NetCellFont_StartRequestSlot24WithCallback`, `ErrorReport_SendMessage7_0To10668FF8`
 - `ErrorReport_SendMessage7_0To10668FF8` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `LobbyUi_StoreTextIfIdle`
@@ -44,7 +44,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ErrorReport_Call10114F10NoArgs` calls `ErrorReport_Thunk10114F10`
 - `_exit_0` calls `ErrorReport_ReportAndHandleError`
 - `ErrorReport_Thunk10114F10` calls `NetCellFont_ReportError`
-- `ErrorReport_ReportAndHandleError` calls `NetCellFont_ReportError`, `ErrorReport_RegisterCallback`, `sub_100180D0`
+- `ErrorReport_ReportAndHandleError` calls `NetCellFont_ReportError`, `ErrorReport_RegisterCallback`, `ErrorReport_DispatchErrorCode`
 - `ErrorReport_CtorVt10329F88` calls `TextInputFiles_SetVtable10337C64`
 - `ErrorReport_CtorVt10329F8C` calls `ErrorReport_CtorVt10329F88`, `ErrorReport_CtorVt10329F90`
 - `ErrorReport_CtorVt10329F90` calls `TextInputFiles_SetVtable10337C64`

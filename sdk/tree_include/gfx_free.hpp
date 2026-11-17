@@ -400,7 +400,7 @@ XI_API int __thiscall Post_CaptureSceneToTarget(void *self_);  // 0x10038A80
 XI_API undefined4 __thiscall Post_DrawRotatingGhostLayers(void * self_);  // 0x10038E10
 XI_API void __thiscall ThreadPool_StartThread(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3);  // 0x100394D0
 XI_API void __thiscall ThreadPool_Shutdown(void * self_);  // 0x10039550
-XI_API undefined4 __thiscall CYyObject_VT_1032A9F8_Construct(void * self_);  // 0x100395D0
+XI_API undefined4 __thiscall CYyThreadPool_Construct(void * self_);  // 0x100395D0
 XI_API void __thiscall ThreadPool_CreateSuspendedThread(void * self_, LPTHREAD_START_ROUTINE param_1, LPVOID param_2, undefined4 xi_s3);  // 0x10039670
 XI_API void __thiscall Thread_ResumeAndWait(void * self_);  // 0x100396A0
 XI_API undefined4 __thiscall TexBase_CopyName16(void * self_, char * param_1);  // 0x100397A0
@@ -440,7 +440,7 @@ XI_API void __thiscall SkyDome_AddScaledToByte3(void *self_, int a1);  // 0x1003
 XI_API void __thiscall YmElem_DrawD3ASegment(void * self_, undefined4 param_1, undefined4 param_2, int param_3);  // 0x1003E910
 XI_API int __thiscall YmElem_SetD3ADrawState(int self_);  // 0x1003E9A0
 XI_API int __thiscall MoElem_GetVertexData(void * self_);  // 0x1003FD70
-XI_API void * __thiscall CXi471011C8_VT_1032AD80_DeletingDtor(void * self_, undefined4 param_1);  // 0x10041130
+XI_API void * __thiscall CMoD3mElem_DeletingDtor(void * self_, undefined4 param_1);  // 0x10041130
 XI_API undefined8 __thiscall CXiSub_10041E70_Ctor(void * self_, int param_1);  // 0x10041F40
 XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_);  // 0x100426F0
 XI_API undefined4 __attribute__((stdcall, regparm(3))) DynVBCtor_ToggleByte45(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_);  // 0x10043DD0
@@ -472,7 +472,7 @@ XI_API int __thiscall YmElem_SetupDevice(void *self_, int a1);  // 0x100467E0
 XI_API int __thiscall YmElem_RestoreDevice(_WORD *a1, __int16 a4);  // 0x100472F0
 XI_API unsigned __int8 * __cdecl ElemFields_InitFromRenderTarget(void);  // 0x100474D0
 XI_API undefined * __thiscall ElemOffset_GetOffsetVec(void * self_);  // 0x10047B80
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) CMoGeneratorClone_VT_1032B114_Constructor(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1);  // 0x10047F80
+XI_API undefined4 * __attribute__((stdcall, regparm(3))) CMoGeneratorRes_Constructor(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1);  // 0x10047F80
 XI_API uint32_t * __thiscall GeneratorClone_FindRecordByType(void * self_, uint32_t param_1);  // 0x10049330
 XI_API int __thiscall GeneratorClone_GetShort22ViaPtrE4(void * self_);  // 0x100493B0
 XI_API undefined * __thiscall GeneratorClone_GetCmdType1Data(void * self_);  // 0x100493C0
@@ -632,7 +632,7 @@ XI_API int __thiscall OcclusionMng_Prepare(_DWORD *self_);  // 0x1006C9B0
 XI_API undefined4 __cdecl Occlusion_IsFloatClassAccepted(float param_1);  // 0x1006CA20
 XI_API undefined4 __cdecl Occlusion_AreAll16FloatsAccepted(undefined4 * param_1);  // 0x1006CA60
 XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 xi_ecx);  // 0x1006CB50
-XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoProcessor_VT_1032C368_SetIdentity(undefined4 xi_eax, undefined4 * param_1);  // 0x1006D0A0
+XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoProcessorX87_SetIdentity(undefined4 xi_eax, undefined4 * param_1);  // 0x1006D0A0
 XI_API void __stdcall ProcessorMatrix_InvertMat4InPlace(float * param_1);  // 0x1006D190
 XI_API void __stdcall ProcessorMatrix_MultiplyTo(float * param_1, int param_2, float * param_3);  // 0x1006D270
 XI_API undefined4 __thiscall ProcessorRotation_MakeFromAngles(void * self_, undefined4 param_1, float * param_2);  // 0x1006D9C0
@@ -657,7 +657,7 @@ XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoResource_FindInScope(u
 XI_API undefined4 __attribute__((stdcall, regparm(3))) YmResourceFile_FindResourceUnder(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 * param_2, uint32_t param_3, int param_4);  // 0x100724C0
 XI_API undefined4 __attribute__((stdcall, regparm(3))) Resource_FindInChainByKind(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, uint32_t param_2, int param_3, undefined * param_4, undefined4 param_5);  // 0x10072540
 XI_API void __attribute__((stdcall, regparm(3))) Resource_InitFieldsTakeFlag1047D12C(uint32_t xi_eax_unused, undefined4 xi_edx, int param_1);  // 0x10072990
-XI_API void __cdecl unknown_libname_61(void);  // 0x100729C0
+XI_API void __cdecl Resource_ResetGlobals(void);  // 0x100729C0
 XI_API void __cdecl Resource_ClearGlobal1047D138(void);  // 0x100729D0
 XI_API void __thiscall ResourceLoadTask_Step(void * self_);  // 0x10072A70
 XI_API undefined8 __thiscall ResourceLoadTask_Start(void * self_, undefined4 * param_1, undefined4 param_2);  // 0x10072C30
@@ -707,12 +707,12 @@ XI_API int __cdecl TextCommand_ParseNumber(char * param_1);  // 0x10079A00
 XI_API int * __cdecl SeekIdByString(char * param_1, undefined4 param_2, int param_3, undefined4 param_4);  // 0x1007A1C0
 XI_API int __cdecl Actor_FindInRange(int param_1, int param_2, int param_3);  // 0x1007A440
 XI_API int __cdecl Actor_FindByName(char * param_1, uint32_t param_2, int param_3, int param_4, undefined4 param_5);  // 0x1007A4C0
-XI_API int __cdecl fn_1007A9A0(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007A9A0
-XI_API int __cdecl fn_1007AA80(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007AA80
-XI_API int __cdecl fn_1007BB90(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007BB90
-XI_API undefined4 __cdecl fn_1007BF30(uint32_t * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x1007BF30
+XI_API int __cdecl TextCommand_PacketForIdPairKind04(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007A9A0
+XI_API int __cdecl TextCommand_PacketForIdPairKind12(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007AA80
+XI_API int __cdecl TextCommand_PacketForIdPairKind1A(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007BB90
+XI_API undefined4 __cdecl TextCommand_TargetActionToPacket(uint32_t * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x1007BF30
 XI_API undefined4 __cdecl UI_QuestCommand(undefined4 param_1, undefined4 param_2, undefined4 param_3);  // 0x1007D240
-XI_API int __cdecl fn_1007E490(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007E490
+XI_API int __cdecl TextCommand_CheckThenPostUiRequest0E(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007E490
 XI_API int __cdecl TextCommand_ChangeMyroomMode2(undefined4 param_1, undefined4 param_2, int param_3);  // 0x1007E8D0
 XI_API undefined4 __cdecl TextCommand_Run100A3040(undefined4 param_1, undefined4 param_2, undefined4 param_3);  // 0x10080340
 XI_API undefined4 __cdecl Actor_GetObjectByName(char * param_1);  // 0x10080C70
@@ -1128,7 +1128,7 @@ XI_API uint32_t __cdecl Time_ModDiv6C00Scaled(uint32_t param_1);  // 0x10103AE0
 XI_API undefined4 __cdecl Time_ModDivD80Div90(uint32_t param_1);  // 0x10103B10
 XI_API uint32_t __cdecl Time_ModMul3CDiv90(uint32_t param_1);  // 0x10103B30
 XI_API void __cdecl NetCellFont_SetZero(undefined2 * param_1);  // 0x10103F50
-XI_API uint8_t * __cdecl fn_101061D0(uint8_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x101061D0
+XI_API uint8_t * __cdecl NetCellFont_UnpackBitFields(uint8_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x101061D0
 XI_API int __cdecl NetCellFont_LookupMaskedTable(uint32_t param_1, uint32_t param_2, int param_3);  // 0x101072D0
 XI_API undefined4 __cdecl NetCellFont_LookupTable10364CB0(undefined4 param_1, uint32_t param_2);  // 0x10107320
 XI_API undefined4 __cdecl NetCellFont_AppendMax20(uint16_t * param_1, undefined4 param_2);  // 0x10107610
@@ -1869,7 +1869,7 @@ XI_API int __thiscall TargetMenu_GetShortAt56(void * self_);  // 0x10163080
 XI_API void * __thiscall TargetMenu_CtorZeroed(void * self_);  // 0x10163090
 XI_API void * __thiscall TargetMenu_ZeroWordsAndDwords(void * self_);  // 0x10163350
 XI_API void __cdecl TargetMenu_NoOpE(void);  // 0x10163380
-XI_API void __thiscall Obj_10621944_DrawBgRect(void * self_);  // 0x10163390
+XI_API void __thiscall MenuTextBlock_DrawBgRect(void * self_);  // 0x10163390
 XI_API void __thiscall TargetMenu_ZeroDwords(void * self_);  // 0x101633D0
 XI_API int __stdcall Gfx_DrawSolidRect2D(int a1, int a2);  // 0x10163400
 XI_API void __thiscall ZoneMapLoad_ResetFieldsA(void * self_);  // 0x10163F30
@@ -1898,7 +1898,7 @@ XI_API uint32_t __thiscall ZoneMapLoad_SegmentHit34139(void * self_, float * par
 XI_API uint32_t __thiscall ZoneMapLoad_SegmentTest34139(void * self_, float * param_1, float * param_2, undefined4 xi_s3);  // 0x1016A2D0
 XI_API uint32_t __thiscall ZoneMapLoad_SegmentHitGridTriangles(void * self_, float * param_1, float * param_2, float * param_3);  // 0x1016A990
 XI_API undefined4 __thiscall ZoneMapLoad_SegmentHitWithObjects(void * self_, float * param_1, float * param_2, float * param_3);  // 0x1016B1D0
-XI_API void __stdcall fn_1016BDF0(float * param_1, int param_2, float * param_3);  // 0x1016BDF0
+XI_API void __stdcall ZoneMapLoad_BuildMatrixFromNegatedPosRot(float * param_1, int param_2, float * param_3);  // 0x1016BDF0
 XI_API void __cdecl Mat44_Multiply(float * param_1, int param_2, float * param_3);  // 0x1016C060
 XI_API undefined4 __thiscall ZoneMap_GetHitCount(void * self_);  // 0x1016C150
 XI_API undefined4 __stdcall ZoneMap_IsPointInTriangle(float * param_1, int param_2);  // 0x1016C390
@@ -2764,7 +2764,7 @@ XI_API undefined4 __cdecl YkWindows_TestFlagBitFwd(int param_1);  // 0x101F74E0
 XI_API uint32_t __cdecl YkWindows_GetEntryPosition(int param_1, int param_2, short * param_3, short * param_4, undefined4 param_5, undefined4 param_6);  // 0x101F74F0
 XI_API long double __cdecl YkWindows_GetEntryRate(int param_1);  // 0x101F75C0
 XI_API undefined * __cdecl YkWindows_FormatTargetMapGrid(undefined4 param_1);  // 0x101F7600
-XI_API undefined4 __attribute__((cdecl, regparm(1))) fn_101F79E0(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4);  // 0x101F79E0
+XI_API undefined4 __attribute__((cdecl, regparm(1))) YkWindows_MapEntryForTargetOrArea(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4);  // 0x101F79E0
 XI_API void __attribute__((stdcall, regparm(3))) YkWindows_SetMapWindowState(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_);  // 0x101F7C00
 XI_API void __thiscall YkWindows_PlaceListedActerMarkers(void * self_, undefined4 param_1);  // 0x101F7DB0
 XI_API void __cdecl YkWindows_PlaceActerMarker(undefined4 param_1, uint32_t param_2, int param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6);  // 0x101F7EC0
@@ -2780,14 +2780,14 @@ XI_API void * __thiscall YkWindows_CtorVt1033A8B8(void * self_);  // 0x101F86C0
 XI_API void __thiscall YkWindows_UpdateTargetMarker(void * self_, undefined4 param_1);  // 0x101F8EA0
 XI_API void __cdecl YkWindows_GetTargetMapCoords(undefined4 param_1, undefined2 * param_2, short * param_3);  // 0x101F8FB0
 XI_API void __thiscall YkWindows_ClearMapMarkers(void * self_, undefined4 param_1);  // 0x101F9010
-XI_API undefined4 __thiscall fn_101F9110(void * self_, undefined4 param_1, undefined4 param_2, uint8_t * param_3, undefined4 param_4);  // 0x101F9110
+XI_API undefined4 __thiscall YkWindows_AddMarkerRecord(void * self_, undefined4 param_1, undefined4 param_2, uint8_t * param_3, undefined4 param_4);  // 0x101F9110
 XI_API void __thiscall Yk_ResetSlots(void * self_);  // 0x101F92B0
 XI_API void __thiscall YkWindows_ResetMapBuffers(void * self_, int param_1);  // 0x101F92E0
 XI_API void __thiscall Yk_FreeBuffers(void * self_);  // 0x101F9370
-XI_API undefined4 __attribute__((stdcall, regparm(3))) fn_101F9A20(int * xi_eax, uint32_t xi_edx_unused, void * self_, int param_2);  // 0x101F9A20
+XI_API undefined4 __attribute__((stdcall, regparm(3))) YkWindows_IsMarkerAllowed(int * xi_eax, uint32_t xi_edx_unused, void * self_, int param_2);  // 0x101F9A20
 XI_API undefined4 __thiscall YkWindows_CloseMapMenus(void * self_, undefined4 param_1);  // 0x101FA420
 XI_API undefined4 __thiscall YkWindows_CanShowMapTitle(void * self_);  // 0x101FAAB0
-XI_API void __thiscall fn_101FAAF0(void * self_);  // 0x101FAAF0
+XI_API void __thiscall YkWindows_ShowMapTitleIfAllowed(void * self_);  // 0x101FAAF0
 XI_API undefined4 __thiscall YkWindows_MarkGroupMarkers(void * self_, int param_1);  // 0x101FAD00
 XI_API void __thiscall YkWindows_ClearMarkerFlags(void * self_, undefined4 param_1);  // 0x101FAD40
 XI_API undefined4 __thiscall YkWindows_StepMarkerGroup(void * self_, int param_1);  // 0x101FAD70
@@ -3033,7 +3033,7 @@ XI_API void * __thiscall MenuPanels_CtorVt1033C718(void * self_);  // 0x102303B0
 XI_API void __thiscall MenuPanels_Reset(void * self_);  // 0x10230410
 XI_API void * __thiscall MenuPanels_PanelCtorVt1033C720(void * self_);  // 0x10233BE0
 XI_API void * __thiscall MenuPanels_PanelCtorVt1033C788(void * self_);  // 0x102340A0
-XI_API undefined4 __thiscall fn_10234610(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x10234610
+XI_API undefined4 __thiscall MenuPanels_InitDrawRect(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x10234610
 XI_API void __thiscall MenuPanels_DrawProgressBar(void * self_);  // 0x10234660
 XI_API void __thiscall MenuPanels_SendMenuEventByKind(void * self_);  // 0x10234910
 XI_API int __thiscall MenuPanels_ComputeClampedIndex(void * self_, undefined4 xi_s1, undefined4 xi_s2);  // 0x10234A00

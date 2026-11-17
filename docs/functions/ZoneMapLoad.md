@@ -34,7 +34,7 @@ Why the file has this name (data/unit_names.json): ParseZoneMeshData, the ZoneMa
 | `ZoneMapLoad_SegmentTest34139` | 0x1016A2D0 | 1719 | yes | - | Tests the segment against the grid triangles and returns whether it hits, recording only the hit triangle's flags. | low |
 | `ZoneMapLoad_SegmentHitGridTriangles` | 0x1016A990 | 2103 | yes | - | Tests a segment against the zone map's triangles in the grid cells it passes and returns the nearest hit. | medium |
 | `ZoneMapLoad_SegmentHitWithObjects` | 0x1016B1D0 | 3096 | yes | - | Segment test against the grid triangles that also consults objects through g_C_106631D4; what the objects are is not established. | low |
-| `fn_1016BDF0` | 0x1016BDF0 | 618 | yes | - | - | - |
+| `ZoneMapLoad_BuildMatrixFromNegatedPosRot` | 0x1016BDF0 | 618 | yes | - | Builds a matrix from the negated position and angles of an object, for ZoneMapLoad_SegmentHitObjectTriangles. | low |
 | `Mat44_Multiply` | 0x1016C060 | 231 | yes | - | - | - |
 | `ZoneMap_GetHitCount` | 0x1016C150 | 7 | yes | - | Returns the value at +0x1807C, which the zone-map queries reset to zero. | low |
 | `ZoneMap_IsPointInTriangle` | 0x1016C390 | 559 | yes | - | Returns whether a point lies inside a triangle of the zone map's record. | medium |
@@ -88,11 +88,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ZoneMapLoad_SegmentTest34139` calls `sub_10311C2C`, `ZoneMap_IsPointInTriangle`
 - `ZoneMapLoad_SegmentHitGridTriangles` calls `sub_10311C2C`, `ZoneMap_IsPointInTriangle`
 - `ZoneMapLoad_SegmentHitWithObjects` calls `sub_10311C2C`, `ZoneMap_IsPointInTriangle`, `TextInputFiles_GetSetting99`, `MyRoom_Is104DFD98Bit40DB1x10Clear`, `sub_10085240`, `CYyObject_IsKindOf`, `ModelActorDraw_GetVec3PairIfModel`, `ZoneMapLoad_SegmentHitObjectTriangles`, `sub_10085270`
-- `fn_1016BDF0` calls `Mat44_Multiply`
+- `ZoneMapLoad_BuildMatrixFromNegatedPosRot` calls `Mat44_Multiply`
 - `Mat44_Multiply` calls nothing directly
 - `ZoneMap_GetHitCount` calls nothing directly
 - `ZoneMap_IsPointInTriangle` calls nothing directly
-- `ZoneMapLoad_SegmentHitObjectTriangles` calls `fn_1016BDF0`, `ZoneMapLoad_TriangleNormal`, `ZoneMap_IsPointInTriangle`
+- `ZoneMapLoad_SegmentHitObjectTriangles` calls `ZoneMapLoad_BuildMatrixFromNegatedPosRot`, `ZoneMapLoad_TriangleNormal`, `ZoneMap_IsPointInTriangle`
 - `ZoneMapLoad_TriangleNormal` calls nothing directly
 - `Dbg_DrawTriangleLines` calls `CDx::DrawPrimitiveUP`
 - `ZoneMapLoad_SweepSetupAndTest` calls `sub_1016FA20`, `sub_10311C2C`, `sub_1016C5C0`, `sub_1016DFD0`, `MyRoom_Is104DFD98Bit40DB1x10Clear`, `sub_10085240`, `CYyObject_IsKindOf`, `ModelActorDraw_GetVec3PairIfModel`, `sub_1016D580`, `sub_10085270`, `ZoneMapLoad_SweepStep`

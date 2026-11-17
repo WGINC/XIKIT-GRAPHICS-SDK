@@ -21,5 +21,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiAtelActor::IsAtelType83` calls nothing directly
 - `CXiAtelActor_UnlinkCasterAttachments` calls `CMoAttachments::ClearCaster`
 - `CXiAtelActor_UnlinkTargetAttachments` calls `CMoAttachments::ClearTarget`
-- `Actor_DrawWorldText` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `CDx::SetTransform`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `sub_10027050`, `Camera_GetViewportWidth`, `Camera_GetViewportHeight`, `ShapeMng_GetFontGlyph`, `sub_10311C2C`, `Vec2_Add`, `Obj_104E1BF8::ShapeMng_BindFontTexture`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`
+- `Actor_DrawWorldText` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `CDx::SetTransform`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `sub_10027050`, `Camera_GetViewportWidth`, `Camera_GetViewportHeight`, `ShapeMng_GetFontGlyph`, `sub_10311C2C`, `Vec2_Add`, `ShapeMng::ShapeMng_BindFontTexture`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`
 - `CXiAtelActor::CopyAndWrapAngles` calls `Vec4_Copy`

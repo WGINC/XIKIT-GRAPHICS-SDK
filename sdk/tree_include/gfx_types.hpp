@@ -8,33 +8,33 @@ class CEnv;
 class CMoActorColorDriveTask;
 class CMoActorRotationDriveTask;
 class CMoAttachments;
-class CMoAttachments_VT_1032AE94;
-class CMoAttachments_VT_1032AF44;
-class CMoAttachments_VT_1032AF8C;
-class CMoAttachments_VT_1032B140;
-class CMoAttachments_VT_1032B940;
-class CMoAttachments_VT_1032BAF0;
-class CMoAttachments_VT_1032BB38;
-class CMoAttachments_VT_1032BBAC;
-class CMoAttachments_VT_1032BBF4;
-class CMoAttachments_VT_1032BC68;
-class CMoAttachments_VT_1032BC84;
-class CMoAttachments_VT_1032BCCC;
-class CMoAttachments_VT_1032BD14;
-class CMoAttachments_VT_1032BD5C;
-class CMoAttachments_VT_1032BDA4;
-class CMoAttachments_VT_1032BDEC;
-class CMoAttachments_VT_1032BE34;
-class CMoAttachments_VT_1032BE7C;
-class CMoAttachments_VT_1032BEC4;
-class CMoAttachments_VT_1032BF0C;
-class CMoAttachments_VT_1032BF54;
-class CMoAttachments_VT_1032BF9C;
-class CMoAttachments_VT_1032BFE4;
-class CMoAttachments_VT_1032C02C;
-class CMoAttachments_VT_1032C4E8;
-class CMoAttachments_VT_1032C628;
-class CMoAttachments_VT_1032E7EC;
+class CMoOtDrawUPTaskAttachments;
+class CMoSchOp0DAttachments;
+class CMoSchOp0CAttachments;
+class CMoGeneratorResAttachments;
+class CMoSchOp1DAttachments;
+class CMoSchOp1FAttachments;
+class CMoSchOp07Attachments;
+class CMoSchOp2CAttachments;
+class CMoSchOpBFAttachments;
+class CMoSchOp62Attachments;
+class CMoSchOpSharedAttachments;
+class CMoSchOp48Attachments;
+class CMoSchOp7FAttachments;
+class CMoSchOp42Attachments;
+class CMoSchOp40Attachments;
+class CMoSchOp75Attachments;
+class CMoSchOpB5Attachments;
+class CMoSchOpBCAttachments;
+class CMoSchOp9BAttachments;
+class CMoSchOp7AAttachments;
+class CMoSchOpB4Attachments;
+class CMoSchOp2EAttachments;
+class CMoSchOp2FAttachments;
+class CMoSchOp59Attachments;
+class CMoResourceWaitTaskAttachments;
+class CMoResType07Attachments;
+class CMoCasterTargetTaskAttachments;
 class CMoCamera;
 class CMoCameraTask;
 class CMoCelestial;
@@ -49,10 +49,10 @@ class CMoDistMorphElem;
 class CMoDistRingElem;
 class CMoDxStatusMng;
 class CMoElem;
-class CMoElem_VT_1032ADE8;
+class CMoElemKind5C;
 class CMoGeneratorClone;
-class CMoGeneratorClone_VT_1032B114;
-class CMoGeneratorClone_VT_1032B69C;
+class CMoGeneratorRes;
+class CMoGeneratorClone;
 class CMoLfdElem;
 class CMoLockColorDriveTask;
 class CMoLockLookAtDriveTask;
@@ -60,63 +60,63 @@ class CMoNullProgElem;
 class CMoOT;
 class CMoOcclusionMng;
 class CMoOtTask;
-class CMoOtTask_VT_1032AE64;
+class CMoOtDrawUPTask;
 class CMoPathDriveActorTask;
 class CMoPathObject;
 class CMoPointLightProgElem;
 class CMoProcessor;
-class CMoProcessor_VT_1032C1C8;
-class CMoProcessor_VT_1032C298;
-class CMoProcessor_VT_1032C368;
+class CMoProcessor3DNow;
+class CMoProcessorSSE;
+class CMoProcessorX87;
 class CMoResource;
 class CMoResourceMng;
-class CMoResource_VT_1032C55C;
-class CMoResource_VT_1032C588;
-class CMoResource_VT_1032C5FC;
-class CMoResource_VT_1032C670;
-class CMoResource_VT_1032C69C;
-class CMoResource_VT_1032C6C8;
-class CMoResource_VT_1032C6F4;
-class CMoResource_VT_1032C720;
-class CMoResource_VT_1032C74C;
-class CMoResource_VT_1032C778;
-class CMoResource_VT_1032C7A4;
-class CMoResource_VT_1032C7D0;
-class CMoResource_VT_1032C7FC;
-class CMoResource_VT_1032C828;
-class CMoResource_VT_1032C854;
-class CMoResource_VT_1032C880;
-class CMoResource_VT_1032C8AC;
-class CMoResource_VT_1032C934;
-class CMoResource_VT_10336698;
-class CMoResource_VT_103366C4;
-class CMoResource_VT_103366F0;
-class CMoResource_VT_103367E8;
+class CMoResType3E;
+class CMoScopeRes;
+class CMoResType19;
+class CMoResType5F;
+class CMoResType30;
+class CMoResType31;
+class CMoResType25;
+class CMoResType21;
+class CMoResType1F;
+class CMoAfbRes;
+class CMoResType5E;
+class CMoResType45;
+class CMoMo2Res;
+class CMoSk2Res;
+class CMoOs2Res;
+class CMoResType5D;
+class CMoBm2Res;
+class CMoBm2RefRes;
+class CMoResType2E;
+class CMoResType1C;
+class CMoResType36;
+class CMoResType2F;
 class CMoSchedularTask;
 class CMoSkeletonElem;
 class CMoSphRes;
 class CMoSpline;
 class CMoTask;
 class CMoTaskMng;
-class CMoTask_VT_10329C70;
-class CMoTask_VT_1032A904;
-class CMoTask_VT_1032AF60;
-class CMoTask_VT_1032AFA8;
-class CMoTask_VT_1032B654;
-class CMoTask_VT_1032B95C;
-class CMoTask_VT_1032C490;
-class CMoTask_VT_1032C908;
-class CMoTask_VT_1032D6D4;
-class CMoTask_VT_1032E808;
+class CMoCameraSetupTask;
+class CMoModeRampTask;
+class CMoSchOp0DTask;
+class CMoSchOp0CTask;
+class CMoGeneratorTask;
+class CMoSchOp1DTask;
+class CMoResourceWaitTask;
+class CMoResourceLoadTask;
+class CMoAuctionMenuTask;
+class CMoCasterTargetTask;
 class CMoVuAnmElem;
 class CMoVuDist;
 class CMoVuLineProgElem;
 class CShader;
 class CTsZoneMap;
-class CXi471011C8_VT_1032AC90;
-class CXi471011C8_VT_1032AD80;
-class CXi471011C8_VT_1032B3B8;
-class CXi471011C8_VT_1032B478;
+class CMoMorphElem;
+class CMoD3mElem;
+class CMoD3mElemFlag200000;
+class CMoRingElem;
 class CXiActor;
 class CXiActorDraw;
 class CXiActorNameDraw;
@@ -134,8 +134,8 @@ class CYyIcon;
 class CYyModel;
 class CYyModelBase;
 class CYyModelDt;
-class CYyModelDt_VT_1032A430;
-class CYyModelDt_VT_1032A72C;
+class CYyModelDtStreamed;
+class CYyModelDtBuffered;
 class CYyMotionQue;
 class CYyMusicLoadTask;
 class CYyObject;
@@ -147,9 +147,9 @@ class CYyTexBase;
 class CYyTexMng;
 class CYyVb;
 class CYyVbMng;
-class Obj_104E1B90;
-class Obj_104E1BF8;
-class Obj_10621944;
+class FontGlyphs;
+class ShapeMng;
+class MenuTextBlock;
 class XiDoorActor;
 class XiFurnitureActor;
 class XiModelActor;
@@ -161,23 +161,23 @@ class YkMyroom;
 class YkZip;
 class YmCombineWeather;
 struct CMoProcessor_recon;
-struct CMoTask_VT_1032B890;
-struct CMoTask_VT_1032B8BC;
-struct CMoTask_VT_1032B914;
-struct CMoTask_VT_1032BB0C;
-struct CMoTask_VT_1032BB54;
-struct CMoTask_VT_1032BB80;
-struct CMoTask_VT_1032BC10;
-struct CMoTask_VT_1032BC3C;
-struct CMoTask_VT_1032BE08;
-struct CMoTask_VT_1032BE50;
-struct CMoTask_VT_1032BE98;
-struct CMoTask_VT_1032BEE0;
-struct CMoTask_VT_1032BF28;
-struct CMoTask_VT_1032BF70;
-struct CMoTask_VT_1032BFB8;
-struct CMoTask_VT_1032C000;
-struct CMoTask_VT_1032C048;
+struct CMoSchOp82Task;
+struct CMoSchOp0FTask;
+struct CMoSchOp10Task;
+struct CMoSchOp1FTask;
+struct CMoSchOp07Task;
+struct CMoSchOp6FTask;
+struct CMoSchOpBFTask;
+struct CMoSchOp62Task;
+struct CMoSchOp75Task;
+struct CMoSchOpB5Task;
+struct CMoSchOpBCTask;
+struct CMoSchOp9BTask;
+struct CMoSchOp7ATask;
+struct CMoSchOpB4Task;
+struct CMoSchOp2ETask;
+struct CMoSchOp2FTask;
+struct CMoSchOp59Task;
 struct XiActorTimerTask;
 // Game types exported from the IDB (IDA print_decls); D3D types come from xi_d3d8.hpp.
 
@@ -755,7 +755,7 @@ struct _D3DVIEWPORT9
 /* 525 */
 struct /*VFT*/ Vt_1032A460_vtbl
 {
-  int (__thiscall *vf0_CYyModelDt_VT_1032A430_ScalarDeletingDtor_2)(CYyModelDt_VT_1032A430 *self, int a1);
+  int (__thiscall *vf0_CYyModelDtStreamed_ScalarDeletingDtor_2)(CYyModelDtStreamed *self, int a1);
 };
 
 /* 526 */
@@ -767,7 +767,7 @@ struct Vt_1032A460
 /* 527 */
 struct /*VFT*/ Vt_1032AFD4_vtbl
 {
-  int (__thiscall *vf0_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2)(CMoTask_VT_1032AFA8 *self, int a1);
+  int (__thiscall *vf0_CMoSchOp0CTask_ScalarDeletingDtor_2)(CMoSchOp0CTask *self, int a1);
 };
 
 /* 528 */
@@ -779,8 +779,8 @@ struct Vt_1032AFD4
 /* 529 */
 struct /*VFT*/ Vt_1032B680_vtbl
 {
-  int (__thiscall *vf0_CMoTask_VT_1032B654_vf011)(CMoTask_VT_1032B654 *self);
-  int (__thiscall *vf1_CMoTask_VT_1032B654_vf012)(CMoTask_VT_1032B654 *self, int a1);
+  int (__thiscall *vf0_CMoGeneratorTask_vf011)(CMoGeneratorTask *self);
+  int (__thiscall *vf1_CMoGeneratorTask_vf012)(CMoGeneratorTask *self, int a1);
   int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
   int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
   char (__thiscall *vf4_sub_10054380)(void *self);
@@ -797,8 +797,8 @@ struct Vt_1032B680
 /* 531 */
 struct /*VFT*/ Vt_1032B988_vtbl
 {
-  int (__thiscall *vf0_CMoTask_VT_1032B95C_vf011)(CMoTask_VT_1032B95C *self);
-  int (__thiscall *vf1_CMoTask_VT_1032B95C_vf012)(CMoTask_VT_1032B95C *self, int a1);
+  int (__thiscall *vf0_CMoSchOp1DTask_vf011)(CMoSchOp1DTask *self);
+  int (__thiscall *vf1_CMoSchOp1DTask_vf012)(CMoSchOp1DTask *self, int a1);
   int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
   int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
   bool (__thiscall *vf4_sub_1005E980)(char *self);
@@ -887,8 +887,8 @@ struct Vt_1032BAA8
 /* 541 */
 struct Vt_1032C5B4_vtbl
 {
-  int (__thiscall *vf0_CMoResource_VT_1032C588_vf011)(CMoResource_VT_1032C588 *self);
-  int (__thiscall *vf1_CMoResource_VT_1032C588_vf012)(CMoResource_VT_1032C588 *self, int a1);
+  int (__thiscall *vf0_CMoScopeRes_vf011)(CMoScopeRes *self);
+  int (__thiscall *vf1_CMoScopeRes_vf012)(CMoScopeRes *self, int a1);
   int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
   int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
   void *vf4_CMoAttachments_vf004;
@@ -1042,13 +1042,13 @@ struct CMoD3mSpecularElem_vtbl
   double (__thiscall *vf17_sub_10041A40)(int self);
   void *vf18_sub_100412B0;
   char (__thiscall *vf19_sub_10041160)(CMoD3mSpecularElem *self);
-  int *(__thiscall *vf20_CXi471011C8_VT_1032AD80_SubmitVertices)(int **self);
+  int *(__thiscall *vf20_CMoD3mElem_SubmitVertices)(int **self);
   void *vf21_sub_10045AE0;
   void *vf22_sub_10045BB0;
 };
 
 /* 634 */
-struct CMoTask_VT_10329C70_vtbl
+struct CMoCameraSetupTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   int (__stdcall *vf1_sub_1006B4C0)(_DWORD *);
@@ -1056,9 +1056,9 @@ struct CMoTask_VT_10329C70_vtbl
   int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoTask_VT_10329C70_ScalarDeletingDtor)(CMoTask_VT_10329C70 *C, char);
+  _DWORD *(__thiscall *vf6_CMoCameraSetupTask_ScalarDeletingDtor)(CMoCameraSetupTask *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_sub_1006B480)(CMoTask_VT_10329C70 *self);
+  char (__thiscall *vf8_sub_1006B480)(CMoCameraSetupTask *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
@@ -1096,7 +1096,7 @@ struct CYyOs2VtxBuffer_vtbl
 };
 
 /* 669 */
-struct CMoTask_VT_1032B890_vtbl
+struct CMoSchOp82Task_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
@@ -1106,13 +1106,13 @@ struct CMoTask_VT_1032B890_vtbl
   void *vf5_CApp_vf005;
   int (__thiscall *vf6_sub_10060590)(int C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_CMoTask_VT_1032B890_vf8)(void *self);
+  char (__thiscall *vf8_CMoSchOp82Task_vf8)(void *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
 
 /* 670 */
-struct CMoTask_VT_1032B8BC_vtbl
+struct CMoSchOp0FTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
@@ -1122,13 +1122,13 @@ struct CMoTask_VT_1032B8BC_vtbl
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_sub_10060750)(int *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_CMoTask_VT_1032B8BC_vf8)(__int16 *self);
+  char (__thiscall *vf8_CMoSchOp0FTask_vf8)(__int16 *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
 
 /* 671 */
-struct CMoTask_VT_1032B8E8_vtbl
+struct CMoSchOp0ETask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
@@ -1138,13 +1138,13 @@ struct CMoTask_VT_1032B8E8_vtbl
   void *vf5_CApp_vf005;
   int (__thiscall *vf6_sub_10060450)(int C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_CMoTask_VT_1032B8E8_vf8)(float *self);
+  char (__thiscall *vf8_CMoSchOp0ETask_vf8)(float *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
 
 /* 672 */
-struct CMoTask_VT_1032B914_vtbl
+struct CMoSchOp10Task_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
@@ -1160,7 +1160,7 @@ struct CMoTask_VT_1032B914_vtbl
 };
 
 /* 673 */
-struct CMoTask_VT_1032B95C_vtbl
+struct CMoSchOp1DTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
@@ -1168,9 +1168,9 @@ struct CMoTask_VT_1032B95C_vtbl
   int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoAttachments_VT_1032B940_ScalarDeletingDtor)(_DWORD *C, char);
+  _DWORD *(__thiscall *vf6_CMoSchOp1DAttachments_ScalarDeletingDtor)(_DWORD *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_CMoTask_VT_1032B95C_vf8)(void *self);
+  char (__thiscall *vf8_CMoSchOp1DTask_vf8)(void *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };

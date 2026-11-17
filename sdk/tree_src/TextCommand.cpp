@@ -457,7 +457,7 @@ XI_API int __cdecl Actor_FindByName(char * param_1, uint32_t param_2, int param_
 
 // FUNCTION: FFXIMAIN 0x1007A9A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl fn_1007A9A0(undefined4 param_1, undefined4 param_2, int param_3)
+XI_API int __cdecl TextCommand_PacketForIdPairKind04(undefined4 param_1, undefined4 param_2, int param_3)
 {
   uint32_t *puVar1;
   
@@ -471,7 +471,7 @@ XI_API int __cdecl fn_1007A9A0(undefined4 param_1, undefined4 param_2, int param
 
 // FUNCTION: FFXIMAIN 0x1007AA80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl fn_1007AA80(undefined4 param_1, undefined4 param_2, int param_3)
+XI_API int __cdecl TextCommand_PacketForIdPairKind12(undefined4 param_1, undefined4 param_2, int param_3)
 {
   uint32_t *puVar1;
   
@@ -485,7 +485,7 @@ XI_API int __cdecl fn_1007AA80(undefined4 param_1, undefined4 param_2, int param
 
 // FUNCTION: FFXIMAIN 0x1007BB90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl fn_1007BB90(undefined4 param_1, undefined4 param_2, int param_3)
+XI_API int __cdecl TextCommand_PacketForIdPairKind1A(undefined4 param_1, undefined4 param_2, int param_3)
 {
   uint32_t *xi_eax;
   uint32_t uVar1;
@@ -510,7 +510,7 @@ XI_API int __cdecl fn_1007BB90(undefined4 param_1, undefined4 param_2, int param
 
 // FUNCTION: FFXIMAIN 0x1007BF30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl fn_1007BF30(uint32_t * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API undefined4 __cdecl TextCommand_TargetActionToPacket(uint32_t * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
 {
   long double fVar1;
   uint32_t uVar2;
@@ -639,7 +639,7 @@ XI_API undefined4 __cdecl UI_QuestCommand(undefined4 param_1, undefined4 param_2
 
 // FUNCTION: FFXIMAIN 0x1007E490
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl fn_1007E490(undefined4 param_1, undefined4 param_2, int param_3)
+XI_API int __cdecl TextCommand_CheckThenPostUiRequest0E(undefined4 param_1, undefined4 param_2, int param_3)
 {
   uint32_t uVar1;
   int iVar2;

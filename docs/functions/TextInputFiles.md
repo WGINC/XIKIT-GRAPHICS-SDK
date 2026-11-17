@@ -456,7 +456,7 @@ Why the file has this name (data/unit_names.json): FsTextInput_* (37), FsWordCom
 | `File_WriteChunked` | 0x101BE590 | 177 | yes | - | Writes a large block in 256 KB chunks, yielding between them. | medium |
 | `TextInputFiles_Call10312296` | 0x101BE650 | 28 | yes | - | Calls sub_10312296(buffer, 1, count, handle). | high |
 | `TextInputFiles_DeleteFile` | 0x101BE670 | 22 | yes | - | Deletes the named file, returning 1 on success and -1 on failure. | high |
-| `sub_101BE6C0` | 0x101BE6C0 | 112 | no | - | Queries an item through 0x10312487 and fills a record with one value and three dates. | low |
+| `TextInputFiles_FillSizeAndThreeDates` | 0x101BE6C0 | 112 | no | - | Queries an item through 0x10312487 and fills a record with one value and three dates. | low |
 | `File_CreateParentDirs` | 0x101BE730 | 85 | yes | - | Creates each parent directory of a file path. | medium |
 | `XiFileImpl_QueueLoad` | 0x101BECC0 | 270 | yes | - | Builds a file load request and queues it. | low |
 | `TextInputFiles_SubmitFileNumKind1` | 0x101BF280 | 229 | yes | - | Builds a kind-1 file request from a file number and has it handled at once. | medium |
@@ -727,7 +727,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_WaitEvent18At8` calls `TextInputFiles_WaitEvent18`
 - `TextInputFiles_SignalMember8` calls `TextInputFiles_SignalMember18`
 - `TextInputFiles_Call101BE510IfSize4` calls `sub_101BE510`
-- `TextInputFiles_FillSizeAndDatesFwd` calls `sub_101BE6C0`
+- `TextInputFiles_FillSizeAndDatesFwd` calls `TextInputFiles_FillSizeAndThreeDates`
 - `TextInputFiles_Call101BE670` calls `TextInputFiles_DeleteFile`
 - `TextInputFiles_Call101BE690` calls `sub_101BE690`
 - `TextInputFiles_RunKind8WithCallback` calls `sub_101BE690`
@@ -905,7 +905,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_EndMode4Or5` calls nothing directly
 - `TextInputFiles_HandleEditKey` calls `TextInputFiles_GetFlag8C81`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `List_Retreat`, `List_Advance`, `TextInputFiles_GetLastWord`, `FsTextInput_HasText`, `FsTextInput_GetCursorOrLength`, `FsTextInput_GetPendingBuffer`, `TextInputFiles_InputNotify`, `FsTextInput_DeleteLastWord`, `TextInputFiles_InputSubmit`, `TextInputFiles_DeleteLast`, `FsTextInput_CursorLeft`, `TextInputFiles_DeleteForward`, `FsTextInput_RebuildAtCursor`, `TextInputFiles_IsModeFourOrFive`, `TextInputFiles_ClearAll`, `FsTextInput_ClearState`, `FsTextInput_ClearPair`, `FsTextInput_Reset`, `FsTextInput_HistoryNext`, `FsTextInput_HistoryPrev`, `FsTextInput_GetFlag`, `TextInputFiles_MoveBack`, `FsTextInput_MoveCursorLeft`, `TextInputFiles_MoveForward`, `FsTextInput_MoveCursorRight`, `List_PageDown`, `List_PageUp`
 - `FsTextInput_OnChar` calls `TextInputFiles_GetFlag8C81`, `sub_10311344`, `TextInputFiles_InputSubmit`, `FsTextInput_GetMaxLength`, `TextInputFiles_AppendByte`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`, `SetMusicTrackVolume_Tag0004`
-- `TextInputFiles_InputSubmit` calls `sub_10124050`, `TextInputFiles_GetFlag8C81`, `TextInputFiles_GetEntry`, `FsTextInput_CommitEntry`, `FsTextInput_ClearState`, `FsTextInput_ClearPair`, `FsTextInput_GetFlag`, `FsTextInput_GetCode`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`
+- `TextInputFiles_InputSubmit` calls `Cell_ClearAllFlags`, `TextInputFiles_GetFlag8C81`, `TextInputFiles_GetEntry`, `FsTextInput_CommitEntry`, `FsTextInput_ClearState`, `FsTextInput_ClearPair`, `FsTextInput_GetFlag`, `FsTextInput_GetCode`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`
 - `TextInputFiles_AcceptsChar` calls `Font_IsPrintableAscii`, `sub_10314801`, `sub_103146DE`, `sub_1031475C`
 - `TextInputFiles_InputNotify` calls `FsTextInput_ResetBuffer`
 - `TextInputFiles_GetFlag8C81` calls nothing directly
@@ -1004,7 +1004,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `File_WriteChunked` calls `sub_1031217F`
 - `TextInputFiles_Call10312296` calls `sub_10312296`
 - `TextInputFiles_DeleteFile` calls nothing directly
-- `sub_101BE6C0` calls `sub_10312487`, `TextInputFiles_SetField4`, `TextInputFiles_SetDateAt9`, `TextInputFiles_SetDateAt11`, `TextInputFiles_SetDateAt19`
+- `TextInputFiles_FillSizeAndThreeDates` calls `sub_10312487`, `TextInputFiles_SetField4`, `TextInputFiles_SetDateAt9`, `TextInputFiles_SetDateAt11`, `TextInputFiles_SetDateAt19`
 - `File_CreateParentDirs` calls nothing directly
 - `XiFileImpl_QueueLoad` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_PushWithRetry`
 - `TextInputFiles_SubmitFileNumKind1` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`

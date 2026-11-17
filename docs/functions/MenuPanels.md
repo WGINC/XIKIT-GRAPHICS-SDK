@@ -66,7 +66,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_Draw` | 0x102214D0 | 418 | yes | 1 | Draws a text panel's contents and its sub-panels. | low |
 | `MenuPanels_SelectShownLine` | 0x10221680 | 185 | yes | - | Chooses which of the panel's lines is shown and whether it is too wide and must scroll. | low |
 | `MenuPanels_IsDone` | 0x10221740 | 38 | yes | - | Tests whether a text panel has finished its work. | low |
-| `sub_102217A0` | 0x102217A0 | 15 | no | - | Fills the menu shapes and runs two more menu initialisers at scene start. | medium |
+| `MenuPanels_InitMenuShapes` | 0x102217A0 | 15 | no | - | Fills the menu shapes and runs two more menu initialisers at scene start. | medium |
 | `MenuPanels_Construct` | 0x102217C0 | 59 | yes | - | Constructs a text panel and sets its default fields. | low |
 | `MenuPanels_InitRect` | 0x10221900 | 30 | yes | - | Initialises a text panel's rectangle. | low |
 | `MenuPanels_AllocEntriesAndSetCounts` | 0x10221920 | 221 | yes | - | Reallocates the object's 8-byte entry array and sets its counts and state fields. | low |
@@ -77,7 +77,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_CreateSubsystems` | 0x10222960 | 315 | yes | - | Allocates and constructs the UI subsystem objects. | medium |
 | `MenuPanels_ResolveAlias` | 0x10222C10 | 128 | yes | - | Maps an item to a matching alias record when the flag is set. | low |
 | `MenuPanels_GetSlotInfo` | 0x10222C90 | 350 | yes | - | Computes the slot count and duration for an item. | low |
-| `sub_10222E20` | 0x10222E20 | 539 | no | - | Finds the record whose text matches the given string and returns its id (-1 when none). | medium |
+| `MenuPanels_FindRecordIdByText` | 0x10222E20 | 539 | no | - | Finds the record whose text matches the given string and returns its id (-1 when none). | medium |
 | `MenuPanels_FindByTypeIndex` | 0x10223040 | 130 | yes | - | Finds the n-th item record of a given type. | low |
 | `MenuPanels_IsListedIdFlagged` | 0x102231F0 | 80 | yes | - | Returns whether an id in the 16-entry table is flagged for the current acter's group. | low |
 | `MenuPanels_FindEntryByCallback` | 0x10223240 | 279 | yes | - | Returns the index of the first table entry that the registered callback accepts for the given text. | low |
@@ -91,7 +91,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_LoadFromFile` | 0x102239C0 | 201 | yes | - | Loads a table's entries from a file. | low |
 | `MenuPanels_InitAndRegister` | 0x10223BB0 | 76 | yes | - | Initialises a table and registers it with the data manager. | low |
 | `MenuPanels_ClearRecordIfAskedOrFull` | 0x10223C00 | 36 | yes | - | Clears a record when asked or when its count is past 0x6FF. | low |
-| `sub_10223C90` | 0x10223C90 | 91 | no | - | Refreshes a table from its source. | low |
+| `MenuPanels_Refresh` | 0x10223C90 | 91 | no | - | Refreshes a table from its source. | low |
 | `MenuPanels_ConstructFillMinus1` | 0x10223E60 | 33 | yes | - | Constructs the base object, sets its vtable and fills 24 dwords from offset 0x70 with -1. | low |
 | `MenuPanels_GetEntryId` | 0x10224120 | 50 | yes | - | Returns the id of a list entry by index, or -1. | low |
 | `MenuPanels_GetRecord` | 0x10224160 | 56 | yes | - | Returns the 48-byte record for an index (or for the current entry). | low |
@@ -158,7 +158,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_Reset` | 0x10230410 | 52 | yes | - | Resets a UI object's counters and its five table entries. | medium |
 | `MenuPanels_PanelCtorVt1033C720` | 0x10233BE0 | 22 | yes | - | Constructs a text panel with vtable 0x1033C720. | low |
 | `MenuPanels_PanelCtorVt1033C788` | 0x102340A0 | 25 | yes | - | Constructs a text panel with vtable 0x1033C788. | low |
-| `fn_10234610` | 0x10234610 | 66 | yes | - | - | - |
+| `MenuPanels_InitDrawRect` | 0x10234610 | 66 | yes | - | Fills a draw rectangle record: position, size, grey colour, unit scales. | medium |
 | `MenuPanels_DrawProgressBar` | 0x10234660 | 363 | yes | 2 | Draws a progress bar and its segments from the object's values. | medium |
 | `MenuPanels_SendMenuEventByKind` | 0x10234910 | 218 | yes | - | When fn_10123A70(0x3E, 0x8B, n, -1) returns 1, sends menu event 0x16..0x19 chosen by the kind byte +0x28 (kind 3 toggles +0x29 instead); what fn_10123A70 tests is not established. | low |
 | `MenuPanels_ComputeClampedIndex` | 0x10234A00 | 97 | yes | - | Computes a clamped index into the UI list from a position. | low |
@@ -226,7 +226,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_Draw` calls `sub_10220EF0`, `CDx::GetRenderTargetTop`, `CDx::SetViewport`, `sub_1011D050`, `Font_DrawGlyphQuadGrey`, `sub_10221770`, `sub_10220F40`
 - `MenuPanels_SelectShownLine` calls `Font_MeasureTextAll2`
 - `MenuPanels_IsDone` calls nothing directly
-- `sub_102217A0` calls `ShapeMng_FillMenuShapes`, `sub_102224C0`, `Allocator_Generic`, `MenuPanels_InitFieldsDTo38`
+- `MenuPanels_InitMenuShapes` calls `ShapeMng_FillMenuShapes`, `sub_102224C0`, `Allocator_Generic`, `MenuPanels_InitFieldsDTo38`
 - `MenuPanels_Construct` calls `NetCellFont_ClearWords`, `MenuPanels_InitRect`
 - `MenuPanels_InitRect` calls `MenuPanels_AllocEntriesAndSetCounts`
 - `MenuPanels_AllocEntriesAndSetCounts` calls `operator_delete`, `Allocator_Generic`, `sub_10221ED0`
@@ -237,8 +237,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_CreateSubsystems` calls `Allocator_Generic`, `NetCellFont_ClearWords`, `MenuPanels_ConstructFillMinus1`, `MenuPanels_InitAndRegister`, `MenuPanels_ConstructFromScene`, `MenuPanels_InitIndexMap128`, `MenuPanels_ConstructSetGlobals`, `MenuPanels_InitIndexMap64`, `MenuPanels_ConstructZeroFields`
 - `MenuPanels_ResolveAlias` calls nothing directly
 - `MenuPanels_GetSlotInfo` calls `MenuPanels_ResolveAlias`, `MenuPanels_ComputeCount`, `MenuPanels_ComputeDelta`
-- `sub_10222E20` calls `MenuPanels_GetObjectOnce`, `sub_10223A90`, `sub_10223B10`, `sub_10223C90`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `XI_PACKET_100FC9C0 (left out)`
-- `MenuPanels_FindByTypeIndex` calls `sub_10223C90`
+- `MenuPanels_FindRecordIdByText` calls `MenuPanels_GetObjectOnce`, `sub_10223A90`, `sub_10223B10`, `MenuPanels_Refresh`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `XI_PACKET_100FC9C0 (left out)`
+- `MenuPanels_FindByTypeIndex` calls `MenuPanels_Refresh`
 - `MenuPanels_IsListedIdFlagged` calls `Acter_IsByte10483158Set`
 - `MenuPanels_FindEntryByCallback` calls `MenuPanels_IsListedIdFlagged`, `MenuPanels_GetObjectOnce`, `sub_10223A90`, `sub_10223B10`
 - `MenuPanels_HasBitIdPlus200` calls `NetCellFont_GetBlock2CDE8IfReady`, `MenuPanels_TestBit`
@@ -251,7 +251,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_LoadFromFile` calls `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `DmsgText_Clone`, `operator_delete`, `YkCommon_Load`
 - `MenuPanels_InitAndRegister` calls `MenuPanels_ClearArrays`, `TextInputFiles_Register`
 - `MenuPanels_ClearRecordIfAskedOrFull` calls nothing directly
-- `sub_10223C90` calls `NetCellFont_GetBlock2CDE8IfReady`, `MenuPanels_UpdateIndexList`, `Acter_IsFlag40DB6OrState17`
+- `MenuPanels_Refresh` calls `NetCellFont_GetBlock2CDE8IfReady`, `MenuPanels_UpdateIndexList`, `Acter_IsFlag40DB6OrState17`
 - `MenuPanels_ConstructFillMinus1` calls `MenuPanels_Construct`
 - `MenuPanels_GetEntryId` calls nothing directly
 - `MenuPanels_GetRecord` calls `MenuPanels_GetEntryId`
@@ -318,7 +318,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_Reset` calls nothing directly
 - `MenuPanels_PanelCtorVt1033C720` calls `MenuPanels_Construct`
 - `MenuPanels_PanelCtorVt1033C788` calls `MenuPanels_Construct`
-- `fn_10234610` calls nothing directly
+- `MenuPanels_InitDrawRect` calls nothing directly
 - `MenuPanels_DrawProgressBar` calls `sub_10311C2C`, `Menu_GetTableEntry`, `Cell_DrawFirstStretched`
 - `MenuPanels_SendMenuEventByKind` calls `NetCellFont_TestCommand36CF60`, `Menu_HandleEvent`
 - `MenuPanels_ComputeClampedIndex` calls `sub_10311C2C`

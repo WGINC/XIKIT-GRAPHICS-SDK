@@ -87,7 +87,7 @@ Group: `CXi` (by the file name only). Source: `sdk/tree_src/CXiSkeletonActor.cpp
 | `CXiSkeletonActor_ComputeCameraFade` | 0x100CD040 | 912 | yes | 8 | Returns the actor's opacity value, lowered as the camera comes close to it. | low |
 | `CXiSkeletonActor::SetMotion` | 0x100CD490 | 78 | yes | - | - | - |
 | `CXiSkeletonActor::SetSlotMotion` | 0x100CD4E0 | 84 | yes | - | Sets a motion on the model's motion queue slot. (reviewed as sub_100CD4E0) | medium |
-| `sub_100CD540` | 0x100CD540 | 978 | no | - | - | - |
+| `CXiSkeletonActor::SetMotion@100CD540` | 0x100CD540 | 978 | no | - | - | - |
 | `CXiSkeletonActor::SetMotionFromSources` | 0x100CD920 | 1060 | yes | - | Applies a motion request to the actor through CXiSkeletonActor_SetMotion, trying its motion resources in turn; what the result means is not established. (reviewed as sub_100CD920) | low |
 | `CXiSkeletonActor::UpdateRandomTimer` | 0x100CDF90 | 219 | yes | - | Counts down a random interval by the frame scale and, when it expires, starts a motion found in the actor's resources. (reviewed as sub_100CDF90) | medium |
 | `CXiSkeletonActor::AdvanceMotionQueue` | 0x100CE160 | 31 | yes | - | Advances the actor model's motion queue list by a fixed step of 8.0 when the model has a list. (reviewed as sub_100CE160) | medium |
@@ -101,13 +101,13 @@ Group: `CXi` (by the file name only). Source: `sdk/tree_src/CXiSkeletonActor.cpp
 | `CXiSkeletonActor::SetAttack_SchStatus` | 0x100CF030 | 39 | yes | - | - | - |
 | `CXiSkeletonActor::ForParts0To9` | 0x100CF100 | 86 | yes | - | For each of the 10 parts calls one of two per-part routines (sub_100D5FE0 or sub_100D6180), chosen by the actor's state; what they do is not established. (reviewed as sub_100CF100) | low |
 | `CXiSkeletonActor::ForwardToModelField24` | 0x100CF200 | 11 | yes | - | Passes its argument on to the actor model's object at +0x44 (CYyModelBase_ForwardToField24). (reviewed as sub_100CF200) | low |
-| `sub_100CFA50` | 0x100CFA50 | 119 | no | - | Adds a part to the model for each resource of the given type, and spawns generators when the resource asks for them. | medium |
+| `CXiSkeletonActor::AddResourceParts` | 0x100CFA50 | 119 | no | - | Adds a part to the model for each resource of the given type, and spawns generators when the resource asks for them. (reviewed as sub_100CFA50) | medium |
 | `CXiSkeletonActor::GetTableOrDefault` | 0x100CFAD0 | 34 | yes | - | Returns the table that sub_100CFB40 gives for this actor, or a fallback address when that is null. (reviewed as sub_100CFAD0) | low |
 | `CXiSkeletonActor::GetTableEntryByModelKind` | 0x100CFB40 | 128 | yes | - | Returns entry 0, 1 or 2 of the skeleton's after-bones table, chosen by the actor's model kind (field 170). (reviewed as sub_100CFB40) | medium |
 | `CXiSkeletonActor::Slot244_Unknown` | 0x100CFC10 | 814 | yes | - | - | - |
 | `CXiSkeletonActor::GetField878Ptr_Candidate` | 0x100D04B0 | 7 | yes | - | - | - |
 | `CXiSkeletonActor::GetNamePos` | 0x100D04C0 | 79 | yes | - | - | - |
-| `CXiSkeletonActor_OnDrawName` | 0x100D0510 | 445 | no | - | - | - |
+| `CXiSkeletonActor::OnDrawName` | 0x100D0510 | 445 | no | - | - | - |
 | `CXiSkeletonActor::GetArrowPos` | 0x100D06F0 | 71 | yes | - | - | - |
 | `CXiSkeletonActor::ProjectToScreen` | 0x100D0740 | 315 | yes | 1 | - | - |
 | `CXiSkeletonActor::DrawNameIfVisible` | 0x100D0880 | 46 | yes | 1 | - | - |
@@ -227,8 +227,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiSkeletonActor_ComputeCameraFade` calls `CXiControlActor::GetSpeed`, `Camera_GetField50`, `Vec3_Sub`, `Vec3_MulComponents`, `ActorHandle_Resolve`, `Entity_GetIndexedPtr`, `Acter_GetActerAt10485F7A`, `Acter_IsStateGroup06Or38`, `Acter_GetByte10480826IfFlag`, `sub_10087AD0`, `sub_10085AC0`, `sub_10085B10`, `sub_10085AB0`, `sub_10085AD0`
 - `CXiSkeletonActor::SetMotion` calls `CYyModel::GetField44Addr`, `CYyMotionQue::SetSlotMotion`
 - `CXiSkeletonActor::SetSlotMotion` calls `CYyModel::GetField44Addr`, `CYyMotionQue::SetSlotMotion`
-- `sub_100CD540` calls `ResourceIter_FindFirst`, `sub_10312872`, `ErrorReport_NoOpVarargsA`, `CXiActor::GetModelByteEE`, `CYyModel::GetField44Addr`, `MotionQueList_QueueMotion`, `CYyMotionQue::SetSlotMotion`, `ResourceIter_FindNext`, `CMoResource::GetParent`
-- `CXiSkeletonActor::SetMotionFromSources` calls `CYyModel::GetField44Addr`, `sub_1001B360`, `CXiActor::GetModelByteEE`, `ResourceHandle_IsResident`, `sub_100CD540`, `List_GetTail`, `CXiActor::GetModelByteEF`, `sub_1001B140`
+- `CXiSkeletonActor::SetMotion@100CD540` calls `ResourceIter_FindFirst`, `sub_10312872`, `ErrorReport_NoOpVarargsA`, `CXiActor::GetModelByteEE`, `CYyModel::GetField44Addr`, `MotionQueList_QueueMotion`, `CYyMotionQue::SetSlotMotion`, `ResourceIter_FindNext`, `CMoResource::GetParent`
+- `CXiSkeletonActor::SetMotionFromSources` calls `CYyModel::GetField44Addr`, `sub_1001B360`, `CXiActor::GetModelByteEE`, `ResourceHandle_IsResident`, `CXiSkeletonActor::SetMotion@100CD540`, `List_GetTail`, `CXiActor::GetModelByteEF`, `sub_1001B140`
 - `CXiSkeletonActor::UpdateRandomTimer` calls `Camera_GetFrameScale`, `sub_103149A0`, `CXiSkeletonActor_IsReadCompleteBody`, `ResourceHandle_IsResident`, `CMoResource_FindInScope`, `CXiSkeletonActor::SetSlotMotion`
 - `CXiSkeletonActor::AdvanceMotionQueue` calls `CYyModel::GetField44Addr`, `KzMotionQueList_AdvanceAll`
 - `CXiSkeletonActor::ReverseFindRes` calls `List_GetTail`, `ResourceHandle_IsResident`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `CMoResource::GetParent`
@@ -241,13 +241,13 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiSkeletonActor::SetAttack_SchStatus` calls `Sch_GetStatusEntry`
 - `CXiSkeletonActor::ForParts0To9` calls `CXiActor::GetModelField170`, `CXiSkeletonActor::FindPartValue`, `sub_100D5FE0`, `sub_100D6180`
 - `CXiSkeletonActor::ForwardToModelField24` calls `CYyModel::GetField44Addr`, `sub_1002AC50`
-- `sub_100CFA50` calls `ResourceIter_FindFirst`, `CYyModelBase::AddPartFromResource`, `sub_10071E90`, `ResourceIter_FindNext`, `CXiActor::SpawnResourceGenerators`
+- `CXiSkeletonActor::AddResourceParts` calls `ResourceIter_FindFirst`, `CYyModelBase::AddPartFromResource`, `sub_10071E90`, `ResourceIter_FindNext`, `CXiActor::SpawnResourceGenerators`
 - `CXiSkeletonActor::GetTableOrDefault` calls `CXiSkeletonActor::GetTableEntryByModelKind`
 - `CXiSkeletonActor::GetTableEntryByModelKind` calls `CXiActor::GetModelField170`, `CXiActor_ModelTest95680`, `CXiActor_ModelTest956A0`, `CYyModel::GetField44Addr`, `Skel_GetTableAfterBones`
 - `CXiSkeletonActor::Slot244_Unknown` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateY`, `Mat4_SetTranslation`, `Mat4_PostMultiply`, `MathVector_Nop`, `Mat4_TransformCoordInPlace`, `Vec4_Copy`
 - `CXiSkeletonActor::GetField878Ptr_Candidate` calls nothing directly
 - `CXiSkeletonActor::GetNamePos` calls `CXiActor::NameCalc`
-- `CXiSkeletonActor_OnDrawName` calls `ActorHandle_Resolve`, `Entity_GetIndexedPtr`, `sub_100845B0`, `sub_10098320`, `Acter_GetActerAt10485F7A`, `Quat_SetIdentity`, `sub_10311FF1`, `CXiSkeletonActor::DrawNameIfVisible`, `CXiSkeletonActor_DrawName2IfVisible`
+- `CXiSkeletonActor::OnDrawName` calls `ActorHandle_Resolve`, `Entity_GetIndexedPtr`, `sub_100845B0`, `sub_10098320`, `Acter_GetActerAt10485F7A`, `Quat_SetIdentity`, `sub_10311FF1`, `CXiSkeletonActor::DrawNameIfVisible`, `CXiSkeletonActor_DrawName2IfVisible`
 - `CXiSkeletonActor::GetArrowPos` calls nothing directly
 - `CXiSkeletonActor::ProjectToScreen` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `Camera_GetViewMatrixPtr`, `CDx::SetTransform`, `Vec4_Set`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `MathVector_Nop`
 - `CXiSkeletonActor::DrawNameIfVisible` calls `Actor_DrawWorldText`
@@ -255,7 +255,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiSkeletonActor::GetWidthScale` calls `CYyModel::GetField44Addr`, `Skel_GetTableAfterBones`
 - `CXiSkeletonActor::GetHeightScale` calls `CYyModel::GetField44Addr`, `Skel_GetTableAfterBones`
 - `CXiSkeletonActor::GetDepthScale` calls `CYyModel::GetField44Addr`, `Skel_GetTableAfterBones`
-- `CXiSkeletonActor::AddPartAndMarkSlot` calls `CXiActor::GetModelByteEE`, `CXiActor::GetModelPartWord`, `CXiActor_SetField0B4`, `CXiActor::GetModelByteEF`, `GeneratorClone_SetDwordAndCopyOut`, `sub_10071E90`, `CYyModel::GetField44Addr`, `CYyModel::CreateModelBase`, `sub_100CFA50`, `CMoResource_FindInScope`
+- `CXiSkeletonActor::AddPartAndMarkSlot` calls `CXiActor::GetModelByteEE`, `CXiActor::GetModelPartWord`, `CXiActor_SetField0B4`, `CXiActor::GetModelByteEF`, `GeneratorClone_SetDwordAndCopyOut`, `sub_10071E90`, `CYyModel::GetField44Addr`, `CYyModel::CreateModelBase`, `CXiSkeletonActor::AddResourceParts`, `CMoResource_FindInScope`
 - `CXiSkeletonActor::SetField0B4IfField9EC` calls `CXiActor_SetField0B4`, `sub_100CF750`
 - `CXiSkeletonActor_AttachPartResource` calls `CXiActor_SetField0B4`, `CXiSkeletonActor::SelectStateMessage`, `CXiActor::GetModelByteEE`, `CXiActor::GetModelPartWord`, `ModelCodeIndex_MapCodeIndex`, `CMoResource::FindOrCreateTask`, `ResourceHandle_IsResident`, `CXiSkeletonActor::AddPartAndMarkSlot`, `Allocator_Generic`, `ActorHandle_Constructor`, `sub_100814F0`, `MeshResourceCreate_Create`
 - `CXiSkeletonActor::SelectStateMessage` calls nothing directly
@@ -273,7 +273,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiSkeletonActor::IsDirectionLock_Set` calls nothing directly
 - `CXiSkeletonActor::BuildBasisFromVf210` calls `MathVector_ReturnThis`, `Vec3_Copy`, `Vec3_Scale`, `Mat4_SetIdentity`, `Vec4_Copy`, `Mat4_PostRotateX`, `Mat4_PostRotateY`, `Mat4_PostRotateZ`, `Mat4_TransformPointInPlace`, `sub_100274B0`, `Vec3_Cross`, `MathVector_Nop`
 - `CXiSkeletonActor::UpdateHeadLook` calls `CYyModel::GetField44Addr`, `CXiActor::GetModelFlag120Bit5`, `TargetMenu_GetCachedUnlessFlag21`, `sub_100845E0`, `CXiActor::GetModelByteEE`, `CXiActor::GetModelField170`, `CXiActor_ModelTest95790`, `CXiActor_ModelTest95680`, `CXiActor_ModelTest956A0`, `Vec3_SubInPlace`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateY`, `Mat4_TransformPointInPlace`, `MathVector_Nop`, `Acter_IsEvent`, `sub_10027530`, `Mat4_SetTranslation`
-- `CXiSkeletonActor::FindPartValue` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`, `sub_1002C710`, `sub_1002C750`
+- `CXiSkeletonActor::FindPartValue` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`, `CYyModel::QueryPartsA`, `CYyModel::QueryPartsB`
 - `CXiSkeletonActor::DrawResourceShadows` calls `ResourceHandle_IsResident`, `CXiActor::SpawnResourceGenerators`, `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`
 - `CXiSkeletonActor::Slot33DoNothing` calls nothing directly
 - `CXiSkeletonActor::Slot34DoNothing` calls nothing directly

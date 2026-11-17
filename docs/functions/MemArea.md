@@ -16,4 +16,4 @@ Why the file has this name (data/unit_names.json): Mem_AllocFromArea (the area a
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `Mem_AllocFromArea` calls `MemBlock_AllocFromBack`, `MemBlock_AllocFromFront`, `_exit_0`
-- `MemArea_CallListByKind` calls `sub_100289F0`
+- `MemArea_CallListByKind` calls `MemBlock_FindLargestFreeSize`

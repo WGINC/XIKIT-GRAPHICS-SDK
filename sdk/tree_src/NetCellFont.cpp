@@ -4306,7 +4306,7 @@ XI_API void __cdecl NetCellFont_SetZero(uint16_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x101061D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl fn_101061D0(uint8_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API uint8_t * __cdecl NetCellFont_UnpackBitFields(uint8_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
 {
   uint8_t bVar1;
   uint8_t bVar2;
@@ -7519,11 +7519,11 @@ XI_API void __thiscall NetCellFont_PlaceCursorObject(void * self_, undefined4 pa
   iVar1 = (int)(short)(*(short *)((int)self_ + 0x3e) + -8);
   iVar2 = (int)*(short *)((int)self_ + 0x3c);
   if ((short)param_2 != -1) {
-    orig::FUN_10234610(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
+    orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
                  (int)(short)param_2,(int)(short)param_1);
     return;
   }
-  orig::FUN_10234610(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
+  orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
                (int)*(short *)((int)self_ + 0x58),(int)(short)param_1);
   return;
 }
@@ -15929,7 +15929,7 @@ XI_API uint64_t __cdecl Font_DrawStringFlags44(int param_1, undefined4 param_2, 
 {
   uint64_t uVar1;
   
-  uVar1 = orig::Obj_104E1B90_DrawString
+  uVar1 = orig::FontGlyphs_DrawString
                     (g_pFontGlyphs,param_1,param_2,param_3,param_4,param_5,(char *)0x44,param_6,
                      param_7);
   return uVar1;

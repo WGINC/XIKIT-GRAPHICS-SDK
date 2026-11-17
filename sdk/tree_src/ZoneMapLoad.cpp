@@ -3074,7 +3074,7 @@ XI_API undefined4 __thiscall ZoneMapLoad_SegmentHitWithObjects(void * self_, flo
 
 // FUNCTION: FFXIMAIN 0x1016BDF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall fn_1016BDF0(float * param_1, int param_2, float * param_3)
+XI_API void __stdcall ZoneMapLoad_BuildMatrixFromNegatedPosRot(float * param_1, int param_2, float * param_3)
 {
   float fVar1;
   float fVar2;
@@ -3503,7 +3503,7 @@ XI_API void __thiscall ZoneMapLoad_SegmentHitObjectTriangles(void * self_, float
   
   local_108 = *param_1;
   local_e8 = self_;
-  orig::FUN_1016bdf0(&local_bc,(int)param_4,param_3);
+  orig::ZoneMapLoad_BuildMatrixFromNegatedPosRot(&local_bc,(int)param_4,param_3);
   fVar13 = xi_castbits<long double>(fcos((long double)*param_4));
   local_44 = param_3[2];
   local_4c = *param_3;

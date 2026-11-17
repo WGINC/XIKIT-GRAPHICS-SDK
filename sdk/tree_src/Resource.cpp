@@ -222,7 +222,7 @@ XI_API void __attribute__((stdcall, regparm(3))) Resource_InitFieldsTakeFlag1047
 
 // FUNCTION: FFXIMAIN 0x100729C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl unknown_libname_61(void)
+XI_API void __cdecl Resource_ResetGlobals(void)
 {
   orig::Resource_ClearGlobal1047D138();
   orig::FUN_10072970();

@@ -1241,7 +1241,7 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
   byte_1047D12C = 1;
   if ( v5 != nullptr )
   {
-    orig::CMoGeneratorClone_VT_1032B114_Constructor((int)v5);
+    orig::CMoGeneratorRes_Constructor((int)v5);
     *(_DWORD *)v6 = &CMoGeneratorClone_vtbl;
     *(_DWORD *)(v6 + 48) = &mixin_of_CMoGeneratorClone_0x1032B680;
     *(_DWORD *)(v6 + 240) = 0;
@@ -1333,6 +1333,24 @@ void __thiscall CMoGeneratorClone::Destructor(void * self)
     *(uint32_t *)(*(int *)((int)self + 0xf8) + 0x164) = 0;
   }
   orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,*(uint32_t **)((int)self + 0x14));
-  orig::CMoGeneratorClone_VT_1032B114_Destructor_v1(self);
+  orig::CMoGeneratorRes_Destructor_v1(self);
   return;
+}
+
+// FUNCTION: FFXIMAIN 0x10053840
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char * CMoGeneratorClone::ScalarDeletingDtor(char a2)
+{
+  char * self = reinterpret_cast<char *>(this);  // byte-exact view for the rest
+  orig::CMoGeneratorClone_Destructor(self);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)self);
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x100542E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass()
+{
+  return &CMoGeneratorClone_classdesc;
 }

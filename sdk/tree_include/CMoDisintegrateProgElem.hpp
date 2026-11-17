@@ -9,7 +9,7 @@ public:
     void Slot18DoNothing();  // 0x100426C0
     static undefined8 __thiscall Construct(void * self, undefined4 param_1);  // 0x100530F0
     BOOL IsKind13(int a1);  // 0x10053130
-    int vf008();  // 0x10053140
+    int Slot8CallSlot10();  // 0x10053140
     int * ScalarDeletingDtor(char a2);  // 0x10053150
 
     void **vftable;  // +0x0

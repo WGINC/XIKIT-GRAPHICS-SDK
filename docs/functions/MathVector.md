@@ -63,7 +63,7 @@ Why the file has this name (data/unit_names.json): Mat4_*, Vec3_*, Gfx_ProjectWo
 | `Mem_GetPtrMinus0x20` | 0x10028730 | 8 | yes | - | Returns its pointer argument minus 0x20. | low |
 | `MemBlock_AllocFromFront` | 0x10028850 | 211 | yes | - | Allocates from the first free block that fits, walking forward. | medium |
 | `MemBlock_AllocFromBack` | 0x10028930 | 179 | yes | - | Allocates from the end of a free block that fits, walking backward. | medium |
-| `sub_100289F0` | 0x100289F0 | 53 | no | - | Returns the size of the largest block with a clear in-use word in a block list range. | medium |
+| `MemBlock_FindLargestFreeSize` | 0x100289F0 | 53 | no | - | Returns the size of the largest block with a clear in-use word in a block list range. | medium |
 
 ## Direct calls
 
@@ -124,4 +124,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Mem_GetPtrMinus0x20` calls nothing directly
 - `MemBlock_AllocFromFront` calls `MemBlock_GetSize`
 - `MemBlock_AllocFromBack` calls `MemBlock_GetSize`
-- `sub_100289F0` calls `MemBlock_GetSize`
+- `MemBlock_FindLargestFreeSize` calls `MemBlock_GetSize`

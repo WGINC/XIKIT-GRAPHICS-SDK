@@ -2,7 +2,7 @@
 
 Group: `Os2` (by the file name only). Source: `sdk/tree_src/Os2Resource.cpp`.
 
-Why the file has this name (data/unit_names.json): CMoResource_VT_1032C854::CheckVersionAndInit with the string "Os2 Version Error %d"
+Why the file has this name (data/unit_names.json): CMoOs2Res::CheckVersionAndInit with the string "Os2 Version Error %d"
 
 1 functions.
 

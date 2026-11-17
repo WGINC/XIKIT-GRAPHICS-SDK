@@ -2,7 +2,7 @@
 
 Group: `Elem` (by the file name only). Source: `sdk/tree_src/ElemCtor471011C8.cpp`.
 
-Why the file has this name (data/unit_names.json): CXi471011C8_VT_1032B3B8::Ctor (an element constructor); called from the generator code
+Why the file has this name (data/unit_names.json): CMoD3mElemFlag200000::Ctor (an element constructor); called from the generator code
 
 1 functions.
 

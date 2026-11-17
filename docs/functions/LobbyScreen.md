@@ -36,7 +36,7 @@ Why the file has this name (data/unit_names.json): the lobby menus "loby1win", "
 | `LobbyThread_CtorVt1033CCA8` | 0x1024C210 | 125 | yes | - | Constructs an object with vtable 0x1033CCA8 and creates the lobby message queue once. | low |
 | `LobbyThread_ConstructQueue` | 0x1024C930 | 38 | yes | - | Constructs the lobby message queue and sets its vtable and defaults. | medium |
 | `StAvatarInit` | 0x1024CF50 | 473 | yes | 0 | - | - |
-| `sub_1024D130` | 0x1024D130 | 78 | no | - | Sets the five avatar parts' transforms and flags from their default tables. | low |
+| `StAvatar_InitEntriesFromTables` | 0x1024D130 | 78 | no | - | Sets the five avatar parts' transforms and flags from their default tables. | low |
 
 ## Direct calls
 
@@ -69,5 +69,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `LobbyThread_PushCmd` calls nothing directly
 - `LobbyThread_CtorVt1033CCA8` calls `NetCellFont_ClearWords`, `Allocator_Generic`, `LobbyThread_ConstructQueue`
 - `LobbyThread_ConstructQueue` calls `NetCellFont_ClearWords`
-- `StAvatarInit` calls `SqTimer_GetMicroseconds`, `PackVec4`, `SceneRecord_InitRecord`, `StAvatar_InitSlotRecord`, `StAvatar_InitIndices`, `StModelItem_Init`, `StAvatarScene_InitScene`, `StAvatar_SetSceneValue1`, `StAvatar_SetSceneValue2`, `sub_1024D130`, `StAvatar_InitGlobals1099AEB8`, `scnFini`, `StAvatar_AllocArrays`
-- `sub_1024D130` calls `StAvatar_SetEntryTransform`, `StAvatar_SetEntryFlag2`, `StAvatar_SetEntryFlag`, `StAvatar_ToggleFlag168`
+- `StAvatarInit` calls `SqTimer_GetMicroseconds`, `PackVec4`, `SceneRecord_InitRecord`, `StAvatar_InitSlotRecord`, `StAvatar_InitIndices`, `StModelItem_Init`, `StAvatarScene_InitScene`, `StAvatar_SetSceneValue1`, `StAvatar_SetSceneValue2`, `StAvatar_InitEntriesFromTables`, `StAvatar_InitGlobals1099AEB8`, `scnFini`, `StAvatar_AllocArrays`
+- `StAvatar_InitEntriesFromTables` calls `StAvatar_SetEntryTransform`, `StAvatar_SetEntryFlag2`, `StAvatar_SetEntryFlag`, `StAvatar_ToggleFlag168`

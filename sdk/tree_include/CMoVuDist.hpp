@@ -8,7 +8,7 @@ public:
     static char ** __cdecl GetRuntimeClass();  // 0x100430C0
     static undefined8 __thiscall Construct(void * self);  // 0x10052DA0
     BOOL IsKind10(int a1);  // 0x10052DD0
-    int vf008();  // 0x10052DE0
+    int Slot8CallSlot10();  // 0x10052DE0
     int * ScalarDeletingDtor(char a2);  // 0x10052DF0
 
     void **vftable;  // +0x0

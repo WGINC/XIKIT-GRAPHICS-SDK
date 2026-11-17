@@ -26,15 +26,15 @@ The rest is here:
 
 - **Hookable:** 4,602 functions in the manifests of 6A995428 and 6AC37846, 4,532 in that of 6AE818B4.
 - **Source:** `sdk/tree_src` holds the source of 4,635 functions, reconstructed and checked against the game's code,
-  in 410 files named for what they hold. A few files are address ranges holding several of the original files; the
+  in 409 files named for what they hold. A few files are address ranges holding several of the original files; the
   analysis repository's `data/unit_names.json` gives the evidence for each name.
 - **Calls into the left-out code:** the kept source calls 36 functions of the left-out code. Each is declared in
   `sdk/tree_include/gfx_orig.hpp` as `orig::XI_<CATEGORY>_<address>`, with its address and call signature only. The
   category says which part of the left-out code it is: `XI_NETWORK`, `XI_PACKET`, `XI_CRYPT`, `XI_LOBBY` or
   `XI_DEBUGLINK` (a helper shared by several parts is `XI_NETWORK`).
-- **Symbols:** the PDBs and symbol lists (`pdb/`, `sdk/symbols/`) name every function but the left-out ones: 20,300
-  in 6A995428. Of those, 4,602 are named by the source, 428 by other recorded evidence, and the rest are
-  `sub_<address>`. They also name the globals: 4,242 in 6A995428 and in 6AC37846, 4,061 in 6AE818B4. Each PDB holds 602 class, struct and union types.
+- **Symbols:** the PDBs and symbol lists (`pdb/`, `sdk/symbols/`) name every function but the left-out ones: 20,294
+  in 6A995428. Of those, 4,635 (every function with source) are named by the source, 425 by other recorded
+  evidence, and the rest are `sub_<address>`. They also name the globals: 4,242 in 6A995428 and in 6AC37846, 4,061 in 6AE818B4. Each PDB holds 602 class, struct and union types.
 
 The kit does not swap reconstructed code into the game: `gfx_recon_ingame.dll` is not part of it. A mod's hooks run on
 the game's own code. Every function in these manifests has a trampoline, so `previous` is always the game's own

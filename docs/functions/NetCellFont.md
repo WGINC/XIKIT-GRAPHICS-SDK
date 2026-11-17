@@ -68,7 +68,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `NetCellFont_BuildListA90` | 0x100E6B20 | 210 | yes | - | Rebuilds the list of entry indexes at +0x832 from the 300 entries at +0xA90 and returns the count. | low |
 | `NetCellFont_GetEntryPtrA90` | 0x100E6C40 | 44 | yes | - | Returns the entry in the state's table at +0xA90 for an index. | low |
 | `NetCellFont_ClearPending` | 0x100E7260 | 28 | yes | - | Clears the pending byte and word of the state object. | low |
-| `sub_100E7B20` | 0x100E7B20 | 63 | no | - | Calls one of two thunked routines according to whether the index is below 200, and returns its result. | low |
+| `NetCellFont_ThunkByIndex200` | 0x100E7B20 | 63 | no | - | Calls one of two thunked routines according to whether the index is below 200, and returns its result. | low |
 | `NetCellFont_SetByte9800AndGetEntry` | 0x100E8B80 | 227 | yes | - | Stores its argument at byte +0x9800, sets the index at +0x97FC to 1, fills the entry selected by the argument from globals, and returns that entry. | low |
 | `NetCellFont_SelectNext` | 0x100E8C70 | 307 | yes | - | Returns the next entry of a 20-entry table that passes the state test. | low |
 | `NetCellFont_GetSlotPtr` | 0x100EB490 | 86 | yes | - | Returns the slot record for an index, claiming it when the second argument is 0 and the record is free. | medium |
@@ -180,7 +180,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `Time_ModDivD80Div90` | 0x10103B10 | 26 | yes | - | Returns a time value modulo 0xD80, divided by 0x90. | low |
 | `Time_ModMul3CDiv90` | 0x10103B30 | 35 | yes | - | Returns a time value modulo 0x90 scaled to 0 to 0x3C. | low |
 | `NetCellFont_SetZero` | 0x10103F50 | 10 | yes | - | Clears the word at the given address. | low |
-| `fn_101061D0` | 0x101061D0 | 2585 | yes | - | - | - |
+| `NetCellFont_UnpackBitFields` | 0x101061D0 | 2585 | yes | - | Unpacks a length-prefixed bit string into a flag mask and fields at param_2. | low |
 | `NetCellFont_LookupMaskedTable` | 0x101072D0 | 35 | yes | - | Returns the text of a masked index's entry in a 12-byte-entry table. | low |
 | `NetCellFont_LookupTable10364CB0` | 0x10107320 | 21 | yes | - | Returns the entry of the table at 0x10364CB0 for an index (masked to 4 bits). | low |
 | `NetCellFont_AppendMax20` | 0x10107610 | 38 | yes | - | Appends a dword to a list of at most twenty entries. | low |
@@ -245,7 +245,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `NetCellFont_PlaceCursorObject` | 0x10118530 | 133 | yes | - | Creates the window's 0x2C-byte helper object once and places it by the window's position and an entry. | low |
 | `NetCellFont_GetFocusedValueA` | 0x101185E0 | 81 | yes | - | Returns a value of the focused menu's first entry. | low |
 | `NetCellFont_GetFocusedValueB` | 0x10118640 | 81 | yes | - | Returns another value of the focused menu's first entry. | low |
-| `sub_101186A0` | 0x101186A0 | 244 | no | - | Updates the help and title windows for the focused menu's current entry. | medium |
+| `NetCellFont_MenuUpdateFocusedHelp` | 0x101186A0 | 244 | no | - | Updates the help and title windows for the focused menu's current entry. | medium |
 | `NetCellFont_MenuStartFade` | 0x101187F0 | 54 | yes | - | Starts the menu's fade (state 0xE). | low |
 | `NetCellFont_SelectFirstVisible` | 0x10118870 | 75 | yes | - | Selects the menu's starting entry. | low |
 | `NetCellFont_SetStateByIndex` | 0x10118B60 | 83 | yes | - | Sets the state of the layout entry with a given index. | medium |
@@ -275,7 +275,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `NetCellFont_SetState` | 0x10119970 | 158 | yes | - | Sets a layout's state and its timer by a state code. | medium |
 | `NetCellFont_SetNames` | 0x10119A50 | 128 | yes | - | Sets a layout's source and its two text strings. | medium |
 | `NetCellFont_ComputeOffsets` | 0x10119AD0 | 235 | yes | - | Computes a layout's offsets and extents from its source. | low |
-| `sub_10119BC0` | 0x10119BC0 | 63 | no | - | Tests whether the point the argument points to lies inside the rectangle (x, y, width, height words at +0x2A..+0x30). | medium |
+| `NetCellFont_ContainsPoint` | 0x10119BC0 | 63 | no | - | Tests whether the point the argument points to lies inside the rectangle (x, y, width, height words at +0x2A..+0x30). | medium |
 | `NetCellFont_UpdateState` | 0x10119C00 | 370 | yes | - | Advances a layout's timer and refreshes its shape from its source. | low |
 | `NetCellFont_InitDefaults` | 0x10119DA0 | 83 | yes | - | Initialises a layout object's fields to their defaults. | medium |
 | `NetCellFont_SetShape` | 0x10119E20 | 15 | yes | - | Sets a layout's shape reference and resolves it. | low |
@@ -331,8 +331,8 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `Sjis_IsLeadByte` | 0x1011DA30 | 67 | yes | - | Tests whether a byte is a Shift-JIS lead byte. | medium |
 | `Sjis_GetCharByteLen` | 0x1011DA80 | 25 | yes | - | - | - |
 | `Sjis_IsCodeInSet` | 0x1011DB40 | 92 | yes | - | Tests whether a 16-bit code is one of a fixed set of ranges and values. | low |
-| `sub_1011DC00` | 0x1011DC00 | 180 | no | - | Maps an ASCII or Shift-JIS character to its upper-case form and passes it with arg1 to 0x1011DAE0. | low |
-| `sub_1011DCC0` | 0x1011DCC0 | 174 | no | - | Maps an ASCII or Shift-JIS character to its lower-case form and passes it with arg1 to 0x1011DAE0. | low |
+| `NetCellFont_UppercaseCharThen1011DAE0` | 0x1011DC00 | 180 | no | - | Maps an ASCII or Shift-JIS character to its upper-case form and passes it with arg1 to 0x1011DAE0. | low |
+| `NetCellFont_LowercaseCharThen1011DAE0` | 0x1011DCC0 | 174 | no | - | Maps an ASCII or Shift-JIS character to its lower-case form and passes it with arg1 to 0x1011DAE0. | low |
 | `Sjis_CopyPrefix` | 0x1011DE80 | 86 | yes | - | Copies the longest prefix of a Shift-JIS string that fits in a byte count. | medium |
 | `Cell_GetField20Ptr` | 0x1011E290 | 4 | yes | - | Returns the address of the object's field at offset +0x20. | low |
 | `Cell_ResolveSubCells` | 0x1011E2A0 | 41 | yes | - | Runs the texture resolve on each entry of the sub-cell array. | low |
@@ -390,7 +390,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `Cell_SetFlagBit10` | 0x10123FE0 | 17 | yes | - | Sets bit 0x10 of the byte selected by the argument. | low |
 | `Cell_ClearByte` | 0x10124000 | 16 | yes | - | Clears the byte selected by the argument. | low |
 | `Cell_ClearFlag01And08` | 0x10124010 | 17 | yes | - | Clears bits 0x01 and 0x08 of the byte selected by the argument. | low |
-| `sub_10124050` | 0x10124050 | 25 | no | - | Clears the flag bytes for all 256 indices. | low |
+| `Cell_ClearAllFlags` | 0x10124050 | 25 | no | - | Clears the flag bytes for all 256 indices. | low |
 | `Cell_TestFlagBit1` | 0x10124070 | 19 | yes | - | Returns bit 0x02 of the byte selected by the argument. | low |
 | `Cell_TakeFlagBit2` | 0x10124090 | 31 | yes | - | Tests and clears bit 0x02 of the byte selected by the argument. | low |
 | `Cell_TestFlagBit3` | 0x101240B0 | 20 | yes | - | Returns bit 0x08 of the byte selected by the argument. | low |
@@ -449,7 +449,7 @@ Why the file has this name (data/unit_names.json): the network (604 of its 2,763
 | `NetCellFont_ClearAllAndNotifyOwner` | 0x10126A00 | 144 | yes | - | Removes and deletes all entries of the list, resets it and notifies its owner object. | low |
 | `NetCellFont_MessageCtor` | 0x10126B60 | 84 | yes | - | Constructs a 0x844-byte message entry. | low |
 | `NetCellFont_MessageSet` | 0x10126BC0 | 157 | yes | - | Fills a message entry with its header and text and hands the formatted text to the owner. | low |
-| `sub_10126C60` | 0x10126C60 | 1289 | no | - | Splits a message at its 0x7F control code and sets the message window's mode (and wait) from the code. | medium |
+| `NetCellFont_ParseMessageControlCode` | 0x10126C60 | 1289 | no | - | Splits a message at its 0x7F control code and sets the message window's mode (and wait) from the code. | medium |
 | `NetCellFont_MsgWinDataCtor` | 0x10127190 | 22 | yes | - | Constructs a message-window data object. | low |
 | `NetCellFont_MsgWinDataReset` | 0x101271C0 | 129 | yes | - | Resets a message-window data object and measures its marker character. | low |
 | `NetCellFont_ResetEntryRing` | 0x10127250 | 35 | yes | - | Clears the ring of 100 entries and its indices. | medium |
@@ -555,7 +555,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_ClearBit0Slot` calls nothing directly
 - `NetCellFont_SetFlagFCBit1` calls nothing directly
 - `NetCellFont_ClearBit1Fc` calls nothing directly
-- `NetCellFont_ScanEntriesAndInit` calls `NetCellFont_IsBeforeDeadline`, `NetCellFont_IsCountOrByte134Set`, `sub_100E7B20`, `NetCellFont_ClearBit0Slot`, `NetCellFont_AllocEntryFromTable`, `NetCellFont_SetZero`, `NetCellFont_AppendMax20`, `NetCellFont_InitEncrypt`
+- `NetCellFont_ScanEntriesAndInit` calls `NetCellFont_IsBeforeDeadline`, `NetCellFont_IsCountOrByte134Set`, `NetCellFont_ThunkByIndex200`, `NetCellFont_ClearBit0Slot`, `NetCellFont_AllocEntryFromTable`, `NetCellFont_SetZero`, `NetCellFont_AppendMax20`, `NetCellFont_InitEncrypt`
 - `NetCellFont_InitEncrypt` calls `NetCellFont_RegisterHandler1369CFlag1`
 - `NetCellFont_IsBeforeDeadline` calls `NetCellFont_GetSeconds`
 - `NetCellFont_IsCountOrByte134Set` calls `NetCellFont_CountActive`
@@ -563,10 +563,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_ScanIfTimer140Set` calls `NetCellFont_IsTimer140Clear`, `NetCellFont_ScanEntriesAndInit`
 - `NetCellFont_IsTimer140Clear` calls nothing directly
 - `NetCellFont_GetWord132` calls nothing directly
-- `NetCellFont_BuildListA90` calls `sub_100E7B20`
+- `NetCellFont_BuildListA90` calls `NetCellFont_ThunkByIndex200`
 - `NetCellFont_GetEntryPtrA90` calls nothing directly
 - `NetCellFont_ClearPending` calls nothing directly
-- `sub_100E7B20` calls `sub_100F1770`, `sub_100F1780`, `_exit_0`
+- `NetCellFont_ThunkByIndex200` calls `sub_100F1770`, `sub_100F1780`, `_exit_0`
 - `NetCellFont_SetByte9800AndGetEntry` calls `sub_10312050`
 - `NetCellFont_SelectNext` calls `NetCellFont_GetTotalMilliseconds`, `XI_PACKET_100E9550 (left out)`
 - `NetCellFont_GetSlotPtr` calls nothing directly
@@ -678,7 +678,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Time_ModDivD80Div90` calls nothing directly
 - `Time_ModMul3CDiv90` calls nothing directly
 - `NetCellFont_SetZero` calls nothing directly
-- `fn_101061D0` calls nothing directly
+- `NetCellFont_UnpackBitFields` calls nothing directly
 - `NetCellFont_LookupMaskedTable` calls nothing directly
 - `NetCellFont_LookupTable10364CB0` calls `NetCellFont_LookupMaskedTable`
 - `NetCellFont_AppendMax20` calls nothing directly
@@ -740,24 +740,24 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_FindFreeEntry` calls `NetCellFont_GetHead`, `sub_10126520`
 - `NetCellFont_MenuMoveSelection` calls `sub_101181D0`, `NetCellFont_GetFieldByIndex`, `NetCellFont_SelectEntry`, `SetMusicTrackVolume_C`, `SetMusicTrackVolume_Tag0004`, `SetMusicTrackVolume_A`, `NetCellFont_GetEntryValueById`, `NetCellFont_SetState`, `SetMusicTrackVolume_B`, `TargetMenu_MenuInitAndFadeItem`, `MenuMng_TestNameForSceneState`
 - `NetCellFont_NoOpB` calls nothing directly
-- `NetCellFont_PlaceCursorObject` calls `Allocator_Generic`, `fn_10234610`
+- `NetCellFont_PlaceCursorObject` calls `Allocator_Generic`, `MenuPanels_InitDrawRect`
 - `NetCellFont_GetFocusedValueA` calls `Menu_GetFocusedItem`, `NetCellFont_GetHead`, `sub_10126520`
 - `NetCellFont_GetFocusedValueB` calls `Menu_GetFocusedItem`, `NetCellFont_GetHead`, `sub_10126520`
-- `sub_101186A0` calls `Menu_GetFocusedItem`, `sub_101181D0`, `NetCellFont_GetFocusedValueA`, `TargetMenu_ForwardToPanel`, `TargetMenu_SetTextFwd`, `NetCellFont_GetFocusedValueB`
+- `NetCellFont_MenuUpdateFocusedHelp` calls `Menu_GetFocusedItem`, `sub_101181D0`, `NetCellFont_GetFocusedValueA`, `TargetMenu_ForwardToPanel`, `TargetMenu_SetTextFwd`, `NetCellFont_GetFocusedValueB`
 - `NetCellFont_MenuStartFade` calls nothing directly
 - `NetCellFont_SelectFirstVisible` calls `NetCellFont_GetOffsets`, `NetCellFont_SelectEntry`
 - `NetCellFont_SetStateByIndex` calls `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_SetState`
 - `NetCellFont_FindEntryValueById` calls `NetCellFont_GetHead`, `sub_10126520`
 - `NetCellFont_HitTest` calls nothing directly
 - `NetCellFont_PickEntry` calls `NetCellFont_GetHead`, `sub_10126520`
-- `NetCellFont_SelectEntryMoveCursor` calls `sub_101181D0`, `NetCellFont_SetState`, `NetCellFont_AttachSelection`, `NetCellFont_MenuMoveSelection`, `NetCellFont_GetCenter`, `Cursor_SetPosition`, `sub_101186A0`
-- `NetCellFont_SelectEntry` calls `sub_101181D0`, `NetCellFont_SetState`, `NetCellFont_AttachSelection`, `sub_101186A0`
+- `NetCellFont_SelectEntryMoveCursor` calls `sub_101181D0`, `NetCellFont_SetState`, `NetCellFont_AttachSelection`, `NetCellFont_MenuMoveSelection`, `NetCellFont_GetCenter`, `Cursor_SetPosition`, `NetCellFont_MenuUpdateFocusedHelp`
+- `NetCellFont_SelectEntry` calls `sub_101181D0`, `NetCellFont_SetState`, `NetCellFont_AttachSelection`, `NetCellFont_MenuUpdateFocusedHelp`
 - `NetCellFont_SetChildOwner` calls nothing directly
 - `NetCellFont_CallMember0CSlot2` calls nothing directly
 - `NetCellFont_FreeChild` calls nothing directly
 - `NetCellFont_GetRect` calls `Menu_GetNormalizedPos`, `sub_10311C2C`
 - `NetCellFont_SetState10ForIndex58` calls `NetCellFont_SetStateByIndex`
-- `NetCellFont_SetActive` calls `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_ClearField34`, `NetCellFont_ApplyHelpAndTitle`, `sub_101186A0`, `sub_1011A560`
+- `NetCellFont_SetActive` calls `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_ClearField34`, `NetCellFont_ApplyHelpAndTitle`, `NetCellFont_MenuUpdateFocusedHelp`, `sub_1011A560`
 - `NetCellFont_ClearEntryFlags` calls `sub_101181D0`
 - `NetCellFont_MarkDirty` calls `sub_101181D0`
 - `NetCellFont_InitScaled` calls `NetCellFont_ClearWords`
@@ -773,8 +773,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_SetState` calls nothing directly
 - `NetCellFont_SetNames` calls nothing directly
 - `NetCellFont_ComputeOffsets` calls `Menu_GetNormalizedPos`, `sub_10311C2C`
-- `sub_10119BC0` calls nothing directly
-- `NetCellFont_UpdateState` calls `NetCellFont_SetState`, `sub_10119BC0`, `NetCellFont_MapKind119870`, `ShapeMng_FindShape`, `Menu_GetNormalizedPos`
+- `NetCellFont_ContainsPoint` calls nothing directly
+- `NetCellFont_UpdateState` calls `NetCellFont_SetState`, `NetCellFont_ContainsPoint`, `NetCellFont_MapKind119870`, `ShapeMng_FindShape`, `Menu_GetNormalizedPos`
 - `NetCellFont_InitDefaults` calls `NetCellFont_ClearWords`
 - `NetCellFont_SetShape` calls `NetCellFont_ResolveShape`
 - `NetCellFont_AttachTo` calls nothing directly
@@ -788,8 +788,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_SetViewport` calls `CDx::GetRenderTargetTop`, `CDx::SetViewport`
 - `Gfx_ApplyViewport1B70` calls `CDx::SetViewport`
 - `NetCellFont_GetCenter` calls `NetCellFont_GetHead`, `sub_10126520`
-- `NetCellFont_SetEntryValue4C` calls `sub_101181D0`, `sub_101186A0`
-- `NetCellFont_AddEntry` calls `NetCellFont_FindFreeEntry`, `sub_101186A0`
+- `NetCellFont_SetEntryValue4C` calls `sub_101181D0`, `NetCellFont_MenuUpdateFocusedHelp`
+- `NetCellFont_AddEntry` calls `NetCellFont_FindFreeEntry`, `NetCellFont_MenuUpdateFocusedHelp`
 - `NetCellFont_GetFieldByIndex` calls nothing directly
 - `NetCellFont_GetEntryValueById` calls nothing directly
 - `NetCellFont_GetEntry` calls nothing directly
@@ -829,8 +829,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Sjis_IsLeadByte` calls nothing directly
 - `Sjis_GetCharByteLen` calls `Sjis_IsLeadByte`
 - `Sjis_IsCodeInSet` calls `sub_1011DAA0`
-- `sub_1011DC00` calls `sub_1011DAA0`
-- `sub_1011DCC0` calls `sub_1011DAA0`
+- `NetCellFont_UppercaseCharThen1011DAE0` calls `sub_1011DAA0`
+- `NetCellFont_LowercaseCharThen1011DAE0` calls `sub_1011DAA0`
 - `Sjis_CopyPrefix` calls `Sjis_GetCharByteLen`, `sub_10312050`
 - `Cell_GetField20Ptr` calls nothing directly
 - `Cell_ResolveSubCells` calls `Cell_ResolveTextureList`
@@ -888,7 +888,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Cell_SetFlagBit10` calls nothing directly
 - `Cell_ClearByte` calls nothing directly
 - `Cell_ClearFlag01And08` calls nothing directly
-- `sub_10124050` calls `Cell_ClearFlag01And08`
+- `Cell_ClearAllFlags` calls `Cell_ClearFlag01And08`
 - `Cell_TestFlagBit1` calls nothing directly
 - `Cell_TakeFlagBit2` calls nothing directly
 - `Cell_TestFlagBit3` calls nothing directly
@@ -946,8 +946,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `NetCellFont_AddMessage` calls `Allocator_Generic`, `NetCellFont_MessageCtor`, `NetCellFont_MessageSet`, `NetCellFont_PushBack`
 - `NetCellFont_ClearAllAndNotifyOwner` calls `NetCellFont_ClearFlag12FromValue`, `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_Remove`, `NetCellFont_NoOp`, `operator_delete`, `NetCellFont_FreeListsAndReset`
 - `NetCellFont_MessageCtor` calls `NetCellFont_ClearWords`
-- `NetCellFont_MessageSet` calls `sub_10312050`, `sub_10126C60`, `sub_10136670`
-- `sub_10126C60` calls `NetCellFont_InitTextLayout`, `sub_10312050`, `NetCellFont_CallClearBuffers`, `NetCellFont_SetString`, `NetCellFont_GetWord1A`, `NetCellFont_GetField20`, `sub_1012A4F0`, `NetCellFont_GetByte9`, `sub_1012A340`, `sub_10315BE0`
+- `NetCellFont_MessageSet` calls `sub_10312050`, `NetCellFont_ParseMessageControlCode`, `TargetMenu_LayoutMessage`
+- `NetCellFont_ParseMessageControlCode` calls `NetCellFont_InitTextLayout`, `sub_10312050`, `NetCellFont_CallClearBuffers`, `NetCellFont_SetString`, `NetCellFont_GetWord1A`, `NetCellFont_GetField20`, `sub_1012A4F0`, `NetCellFont_GetByte9`, `sub_1012A340`, `sub_10315BE0`
 - `NetCellFont_MsgWinDataCtor` calls `NetCellFont_MsgWinDataReset`
 - `NetCellFont_MsgWinDataReset` calls `NetCellFont_ResetEntryRing`, `Font_GetCharWidthAt`, `NetCellFont_CountTextChars`
 - `NetCellFont_ResetEntryRing` calls nothing directly
@@ -988,7 +988,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ChatLog_AddTextCode379` calls `ChatLog_AddMessage`
 - `ChatLog_AddTextCode37B` calls `ChatLog_AddMessage`
 - `Font_DrawStringDefault` calls `Font_MeasureString`
-- `Font_DrawStringFlags44` calls `Obj_104E1B90::Obj_104E1B90_DrawString`
+- `Font_DrawStringFlags44` calls `FontGlyphs::FontGlyphs_DrawString`
 - `NetCellFont_MapCode1BTo54` calls nothing directly
 - `NetCellFont_MapCode54ToIndex` calls nothing directly
 - `NetCellFont_CallClearBuffers` calls `NetCellFont_ClearBuffers`

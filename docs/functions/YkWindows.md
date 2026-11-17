@@ -78,7 +78,7 @@ Why the file has this name (data/unit_names.json): Yk_* (the window lists), YkWn
 | `YkWindows_GetEntryPosition` | 0x101F74F0 | 119 | yes | - | Returns an entry's position relative to its offsets. | low |
 | `YkWindows_GetEntryRate` | 0x101F75C0 | 57 | yes | - | Returns 2560 divided by an entry's rate byte. | low |
 | `YkWindows_FormatTargetMapGrid` | 0x101F7600 | 299 | yes | - | Returns a static string with the map grid square of the current target, such as (H-8), or (?-?) when it cannot be placed. | medium |
-| `fn_101F79E0` | 0x101F79E0 | 207 | yes | - | - | - |
+| `YkWindows_MapEntryForTargetOrArea` | 0x101F79E0 | 207 | yes | - | From a map click: resolves the area (or the target's) and acts on its map entry. | low |
 | `YkWindows_SetMapWindowState` | 0x101F7C00 | 67 | yes | - | Sets the map window's state (5 or 11) by two flags. | low |
 | `YkWindows_PlaceListedActerMarkers` | 0x101F7DB0 | 268 | yes | - | Clears the map's markers and places one for each acter of a list that is in the same map area. | low |
 | `YkWindows_PlaceActerMarker` | 0x101F7EC0 | 275 | yes | - | Places one listed acter's marker on the map when it is in the shown area. | low |
@@ -94,14 +94,14 @@ Why the file has this name (data/unit_names.json): Yk_* (the window lists), YkWn
 | `YkWindows_UpdateTargetMarker` | 0x101F8EA0 | 269 | yes | - | Puts the target actor's position and heading into the map's marker. | low |
 | `YkWindows_GetTargetMapCoords` | 0x101F8FB0 | 93 | yes | - | Converts the target actor's position into map coordinates. | low |
 | `YkWindows_ClearMapMarkers` | 0x101F9010 | 89 | yes | - | Clears the map window's markers. | low |
-| `fn_101F9110` | 0x101F9110 | 383 | yes | - | - | - |
+| `YkWindows_AddMarkerRecord` | 0x101F9110 | 383 | yes | - | Stores a marker in the first free marker record of the map window. | low |
 | `Yk_ResetSlots` | 0x101F92B0 | 34 | yes | - | Clears two slot pointers and sets their index words to -1. | low |
 | `YkWindows_ResetMapBuffers` | 0x101F92E0 | 142 | yes | - | Reallocates the map window's two work buffers. | low |
 | `Yk_FreeBuffers` | 0x101F9370 | 92 | yes | - | Frees the two buffers held by the object and resets its indices. | medium |
-| `fn_101F9A20` | 0x101F9A20 | 41 | yes | - | - | - |
+| `YkWindows_IsMarkerAllowed` | 0x101F9A20 | 41 | yes | - | Tests whether a marker may be shown: kind 4 or no list, and the actor word 0x104802BA is set. | low |
 | `YkWindows_CloseMapMenus` | 0x101FA420 | 260 | yes | - | Frees its buffers, saves its marker file if changed, stores a setting 0x8A and closes the map0/mapv2/mapv3/scanlist/mapscan menus. | medium |
 | `YkWindows_CanShowMapTitle` | 0x101FAAB0 | 56 | yes | - | Returns whether the map window's title can be shown. | low |
-| `fn_101FAAF0` | 0x101FAAF0 | 40 | yes | - | - | - |
+| `YkWindows_ShowMapTitleIfAllowed` | 0x101FAAF0 | 40 | yes | - | When the map title may be shown, hands it to 0x101FA680. | low |
 | `YkWindows_MarkGroupMarkers` | 0x101FAD00 | 54 | yes | - | Clears the marker flags and marks the active markers of one group. | low |
 | `YkWindows_ClearMarkerFlags` | 0x101FAD40 | 48 | yes | - | Clears the flag of every map marker descriptor (and a second byte when asked). | low |
 | `YkWindows_StepMarkerGroup` | 0x101FAD70 | 171 | yes | - | Moves to the next (or previous) map marker group that has markers and marks it. | low |
@@ -154,7 +154,7 @@ Why the file has this name (data/unit_names.json): Yk_* (the window lists), YkWn
 | `YkWindows_CtorVt1033B3A0` | 0x10209B90 | 38 | yes | - | Constructs the Yk object with vtable 0x1033B3A0. | low |
 | `YkWindows_CtorVt1033B948` | 0x1020B500 | 1071 | yes | - | Constructs the Yk object with vtable 0x1033B948. | low |
 | `YkWindows_RecordInit` | 0x1020BA40 | 53 | yes | - | Initialises a record with its id. | low |
-| `sub_1020BE90` | 0x1020BE90 | 252 | no | - | Fills the object's tables from the indexed records of the loaded data. | medium |
+| `Yk_LoadIndexedTables` | 0x1020BE90 | 252 | no | - | Fills the object's tables from the indexed records of the loaded data. | medium |
 | `YkWindows_CtorVt1033B9D8` | 0x1020C470 | 152 | yes | - | Constructs the Yk object with vtable 0x1033B9D8. | low |
 | `YkWindows_CtorVt1033BA20` | 0x1020CC30 | 38 | yes | - | Constructs the Yk object with vtable 0x1033BA20. | low |
 | `YkWindows_CtorVt1033BA68` | 0x1020ED00 | 50 | yes | - | Constructs the Yk object with vtable 0x1033BA68. | low |
@@ -242,10 +242,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_GetEntryPosition` calls `Yk_FindEntryIndex`, `YkWindows_GetEntryCode`, `sub_101F7570`
 - `YkWindows_GetEntryRate` calls nothing directly
 - `YkWindows_FormatTargetMapGrid` calls `ActorHandle_Resolve`, `YkCommon_TestFlags100Or40DAC`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `YkWindows_GetEntryPosition`, `sub_10311FF1`
-- `fn_101F79E0` calls `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `Yk_FindEntryIndex`, `sub_101F9A50`
+- `YkWindows_MapEntryForTargetOrArea` calls `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `Yk_FindEntryIndex`, `sub_101F9A50`
 - `YkWindows_SetMapWindowState` calls `NetCellFont_SetStateByIndex`, `YkCommon_CC4F0ActorTest400`
 - `YkWindows_PlaceListedActerMarkers` calls `YkWindows_ClearMapMarkers`, `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `YkWindows_PlaceActerMarker`
-- `YkWindows_PlaceActerMarker` calls `KaHelpMes_ResetLoadMes`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Yk_FindEntryIndex`, `sub_101F7570`, `fn_101F9110`
+- `YkWindows_PlaceActerMarker` calls `KaHelpMes_ResetLoadMes`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Yk_FindEntryIndex`, `sub_101F7570`, `YkWindows_AddMarkerRecord`
 - `YkWindows_TerminateMarkerNames` calls nothing directly
 - `YkWindows_InitMapMarkers` calls nothing directly
 - `YkWindows_LoadMapMarkerFile` calls `sub_10311FF1`, `TextInputFiles_FileMngFwd101C1DF0`, `TextInputFiles_FileMngSubmitPathKind1`, `Allocator_Generic`, `operator_delete`, `YkCommon_Checksum`, `YkWindows_TerminateMarkerNames`, `YkWindows_ClearMapMarkers`, `YkWindows_InitMapMarkers`
@@ -258,18 +258,18 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_UpdateTargetMarker` calls `ActorHandle_Resolve`, `YkWindows_GetTargetMapCoords`, `NetCellFont_GetActiveBlock3AE98`, `sub_101F7570`
 - `YkWindows_GetTargetMapCoords` calls `ActorHandle_Resolve`, `sub_101F7570`
 - `YkWindows_ClearMapMarkers` calls nothing directly
-- `fn_101F9110` calls `YkWindows_GetRecord10664390`, `YkWindows_StepMarkerGroup`
+- `YkWindows_AddMarkerRecord` calls `YkWindows_GetRecord10664390`, `YkWindows_StepMarkerGroup`
 - `Yk_ResetSlots` calls nothing directly
 - `YkWindows_ResetMapBuffers` calls `operator_delete`, `Allocator_Generic`
 - `Yk_FreeBuffers` calls `operator_delete`
-- `fn_101F9A20` calls `Acter_IsWord104802BASet`
+- `YkWindows_IsMarkerAllowed` calls `Acter_IsWord104802BASet`
 - `YkWindows_CloseMapMenus` calls `Yk_FreeBuffers`, `YkWindows_SubmitMarkerFile`, `sub_10311C2C`, `SetConfig`, `Menu_CloseEntry`
 - `YkWindows_CanShowMapTitle` calls nothing directly
-- `fn_101FAAF0` calls `YkWindows_CanShowMapTitle`, `XI_PACKET_101FA680 (left out)`
+- `YkWindows_ShowMapTitleIfAllowed` calls `YkWindows_CanShowMapTitle`, `XI_PACKET_101FA680 (left out)`
 - `YkWindows_MarkGroupMarkers` calls `YkWindows_ClearMarkerFlags`
 - `YkWindows_ClearMarkerFlags` calls nothing directly
 - `YkWindows_StepMarkerGroup` calls `YkWindows_ClearMarkerFlags`, `YkWindows_MarkGroupMarkers`
-- `YkWindows_OnMapClick` calls `fn_101F79E0`, `MenuMng_AttachWindowAndPosition`
+- `YkWindows_OnMapClick` calls `YkWindows_MapEntryForTargetOrArea`, `MenuMng_AttachWindowAndPosition`
 - `YkWindows_SetupMapImage` calls `sub_101CC620`, `Settings_GetValue`, `YkWindows_UpdateScreenTransform`
 - `YkWindows_CtorVt1033A918` calls `Yk_InitBase`
 - `YkWindows_CtorVt1033A988` calls `NetCellFont_ClearWords`
@@ -316,9 +316,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_CtorVt1033B28C` calls nothing directly
 - `YkWindows_CtorVt1033B340` calls `NetCellFont_ClearWords`, `Allocator_Generic`
 - `YkWindows_CtorVt1033B3A0` calls `Yk_InitBase`
-- `YkWindows_CtorVt1033B948` calls `Yk_InitBase`, `Allocator_Generic`, `YkWindows_CtorVt1033B9D8`, `YkWindows_CtorVt1033BA20`, `NetCellFont_ClearWords`, `TargetMenu_Construct`, `YkWindows_CtorVt1033BA68`, `YkWindows_RecordInit`, `sub_1020BE90`
+- `YkWindows_CtorVt1033B948` calls `Yk_InitBase`, `Allocator_Generic`, `YkWindows_CtorVt1033B9D8`, `YkWindows_CtorVt1033BA20`, `NetCellFont_ClearWords`, `TargetMenu_Construct`, `YkWindows_CtorVt1033BA68`, `YkWindows_RecordInit`, `Yk_LoadIndexedTables`
 - `YkWindows_RecordInit` calls nothing directly
-- `sub_1020BE90` calls `YkCommon_GetIndexed`
+- `Yk_LoadIndexedTables` calls `YkCommon_GetIndexed`
 - `YkWindows_CtorVt1033B9D8` calls `NetCellFont_ClearWords`, `YkCommon_GetIndexed`
 - `YkWindows_CtorVt1033BA20` calls `NetCellFont_ClearWords`
 - `YkWindows_CtorVt1033BA68` calls `Yk_InitBase`

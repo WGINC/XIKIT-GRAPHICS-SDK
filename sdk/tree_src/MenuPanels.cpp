@@ -4990,7 +4990,7 @@ XI_API void * __thiscall MenuPanels_PanelCtorVt1033C788(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10234610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall fn_10234610(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API undefined4 __thiscall MenuPanels_InitDrawRect(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
 {
   *(uint32_t *)((int)self_ + 4) = param_2;
   *(uint32_t *)self_ = param_1;

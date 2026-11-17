@@ -6879,7 +6879,7 @@ XI_API undefined4 __thiscall Target_ApplyAction(void * self_, undefined4 param_1
   uVar4 = orig::NetCellFont_GetFlagsMasked();
   if ((char)uVar4 == '\x01') {
     if (((puVar6[1] & 0xff000000) == 0x1000000) && (puVar6[1] != 0x1000000)) {
-      uVar7 = orig::FUN_1007bf30(puVar6,0,0,0,0);
+      uVar7 = orig::TextCommand_TargetActionToPacket(puVar6,0,0,0,0);
       return uVar7;
     }
     if ((*(code **)((int)self_ + 0xcc) != (code *)0x0) &&
@@ -6912,7 +6912,7 @@ XI_API undefined4 __thiscall Target_ApplyAction(void * self_, undefined4 param_1
          ((((*(uint32_t *)((int)this_00 + 0x1d0) & 0x100) == 0 ||
            ((*(uint32_t *)((int)this_00 + 300) >> 0x1e & 1) != 0)) &&
           (uVar7 = orig::CXiActor_IsFlag1d0Clear(this_00), (char)uVar7 == '\0')))))) && (!bVar2)) {
-      iVar5 = orig::FUN_1007bf30(puVar6,0,0,0,0);
+      iVar5 = orig::TextCommand_TargetActionToPacket(puVar6,0,0,0,0);
       if (iVar5 == 0) {
         return 0;
       }
@@ -9680,7 +9680,7 @@ XI_API void __thiscall Menu_DrawLayers(void * self_)
   local_4 = self_;
   orig::Gfx_SetDefault2DStates_v1();
   if (DAT_10621944 != (void *)0x0) {
-    orig::Obj_10621944_Draw(DAT_10621944);
+    orig::MenuTextBlock_Draw(DAT_10621944);
   }
   uVar4 = orig::NetCellFont_CursorUpdateEdgeAxes(g_pCursor_as_v2);
   xi_edx = (uint32_t)((uint64_t)uVar4 >> 0x20);
@@ -11191,7 +11191,7 @@ XI_API void __cdecl TargetMenu_NoOpE(void)
 
 // FUNCTION: FFXIMAIN 0x10163390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Obj_10621944_DrawBgRect(void * self_)
+XI_API void __thiscall MenuTextBlock_DrawBgRect(void * self_)
 {
   if (*(int *)((int)self_ + 8) != 0) {
     orig::Gfx_DrawSolidRect2D(self_,*(int *)((int)self_ + 8));

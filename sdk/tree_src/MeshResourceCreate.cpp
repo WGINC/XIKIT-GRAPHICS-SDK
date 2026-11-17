@@ -146,7 +146,7 @@ LAB_1007183f:
       uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x118,1);
       byte_1047D12C_as_v0 = 1;
       if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::CMoGeneratorClone_VT_1032B114_Constructor_v1((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      this_00 =(int*)(orig::CMoGeneratorRes_Constructor_v1((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
       break;
     case 6:
       uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0xa8,1);
@@ -156,7 +156,7 @@ LAB_1007183f:
       orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
       orig::CMoAttachments_Construct(this_00 + 0xc);
       *this_00 = (int)&PTR_CMoCamera_GetRuntimeClass_1032c5d0;
-      this_00[0xc] = (int)&PTR_CMoResource_VT_1032C588_vf011_1032c5b4;
+      this_00[0xc] = (int)&PTR_CMoScopeRes_vf011_1032c5b4;
       break;
     case 7:
       uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x88,1);

@@ -616,7 +616,7 @@ typedef int (*CXiActorNameDraw_vtbl_t)();
 #define CXiActorNameDraw_vtbl XI_EA(CXiActorNameDraw_vtbl_t, 0x10329C18u)
 typedef int (*CXiActorDraw_vtbl_t)();
 #define CXiActorDraw_vtbl XI_EA(CXiActorDraw_vtbl_t, 0x10329C44u)
-typedef CMoTask_VT_10329C70_vtbl CMoTask_vtbl_ambiguous0_t;
+typedef CMoCameraSetupTask_vtbl CMoTask_vtbl_ambiguous0_t;
 #define CMoTask_vtbl_ambiguous0 XI_EA(CMoTask_vtbl_ambiguous0_t, 0x10329C70u)
 typedef CMoResourceMng_vtbl CMoResourceMng_vtbl_t;
 #define CMoResourceMng_vtbl XI_EA(CMoResourceMng_vtbl_t, 0x10329C9Cu)
@@ -710,8 +710,8 @@ typedef void * PTR_FUN_1032a9ec_t;
 #define PTR_FUN_1032a9ec XI_EA(PTR_FUN_1032a9ec_t, 0x1032A9ECu)
 typedef undefined * PTR_CYyObject_GetRuntimeClass_variant18_1032a9f8_t;
 #define PTR_CYyObject_GetRuntimeClass_variant18_1032a9f8 XI_EA(PTR_CYyObject_GetRuntimeClass_variant18_1032a9f8_t, 0x1032A9F8u)
-typedef undefined * PTR_CYyObject_VT_1032A9F8_ScalarDeletingDtor_2_1032aa14_t;
-#define PTR_CYyObject_VT_1032A9F8_ScalarDeletingDtor_2_1032aa14 XI_EA(PTR_CYyObject_VT_1032A9F8_ScalarDeletingDtor_2_1032aa14_t, 0x1032AA14u)
+typedef undefined * PTR_CYyThreadPool_ScalarDeletingDtor_2_1032aa14_t;
+#define PTR_CYyThreadPool_ScalarDeletingDtor_2_1032aa14 XI_EA(PTR_CYyThreadPool_ScalarDeletingDtor_2_1032aa14_t, 0x1032AA14u)
 typedef char * CYyTexBase_classdesc_t;
 #define CYyTexBase_classdesc XI_EA(CYyTexBase_classdesc_t, 0x1032AA34u)
 typedef _UNKNOWN * CYyTex_classdesc_t;
@@ -770,8 +770,8 @@ typedef char * CMoDistMorphElem_classdesc_t;
 #define CMoDistMorphElem_classdesc XI_EA(CMoDistMorphElem_classdesc_t, 0x1032AF2Cu)
 typedef char * CMoDistRingElem_classdesc_t;
 #define CMoDistRingElem_classdesc XI_EA(CMoDistRingElem_classdesc_t, 0x1032AF38u)
-typedef undefined * PTR_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2_1032afd4_t;
-#define PTR_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2_1032afd4 XI_EA(PTR_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2_1032afd4_t, 0x1032AFD4u)
+typedef undefined * PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4_t;
+#define PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4 XI_EA(PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4_t, 0x1032AFD4u)
 typedef int (*CYyObject_vtbl_ambiguous2_t)();
 #define CYyObject_vtbl_ambiguous2 XI_EA(CYyObject_vtbl_ambiguous2_t, 0x1032AFD8u)
 typedef char * CMoElem_classdesc_t;
@@ -886,14 +886,14 @@ typedef _BYTE unk_1032C18C_t;
 #define unk_1032C18C XI_EA(unk_1032C18C_t, 0x1032C18Cu)
 typedef char * CMoProcessor_classdesc_t;
 #define CMoProcessor_classdesc XI_EA(CMoProcessor_classdesc_t, 0x1032C1BCu)
-typedef undefined * PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c1c8_t;
-#define PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c1c8 XI_EA(PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c1c8_t, 0x1032C1C8u)
-typedef undefined * PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c298_t;
-#define PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c298 XI_EA(PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c298_t, 0x1032C298u)
-typedef undefined * PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368_t;
-#define PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368 XI_EA(PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368_t, 0x1032C368u)
-typedef undefined * PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c434_t;
-#define PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c434 XI_EA(PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c434_t, 0x1032C434u)
+typedef undefined * PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8_t;
+#define PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8 XI_EA(PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8_t, 0x1032C1C8u)
+typedef undefined * PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298_t;
+#define PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298 XI_EA(PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298_t, 0x1032C298u)
+typedef undefined * PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368_t;
+#define PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368 XI_EA(PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368_t, 0x1032C368u)
+typedef undefined * PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434_t;
+#define PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434 XI_EA(PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434_t, 0x1032C434u)
 typedef char * CMoResource_classdesc_t;
 #define CMoResource_classdesc XI_EA(CMoResource_classdesc_t, 0x1032C46Cu)
 typedef char * CMoResourceMng_classdesc_t;
@@ -912,8 +912,8 @@ typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c55c_t;
 #define PTR_CMoResource_GetRuntimeClass_variant3_1032c55c XI_EA(PTR_CMoResource_GetRuntimeClass_variant3_1032c55c_t, 0x1032C55Cu)
 typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c588_t;
 #define PTR_CMoResource_GetRuntimeClass_variant3_1032c588 XI_EA(PTR_CMoResource_GetRuntimeClass_variant3_1032c588_t, 0x1032C588u)
-typedef undefined * PTR_CMoResource_VT_1032C588_vf011_1032c5b4_t;
-#define PTR_CMoResource_VT_1032C588_vf011_1032c5b4 XI_EA(PTR_CMoResource_VT_1032C588_vf011_1032c5b4_t, 0x1032C5B4u)
+typedef undefined * PTR_CMoScopeRes_vf011_1032c5b4_t;
+#define PTR_CMoScopeRes_vf011_1032c5b4 XI_EA(PTR_CMoScopeRes_vf011_1032c5b4_t, 0x1032C5B4u)
 typedef undefined * PTR_CMoCamera_GetRuntimeClass_1032c5d0_t;
 #define PTR_CMoCamera_GetRuntimeClass_1032c5d0 XI_EA(PTR_CMoCamera_GetRuntimeClass_1032c5d0_t, 0x1032C5D0u)
 typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c5fc_t;

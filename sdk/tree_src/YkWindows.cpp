@@ -2638,7 +2638,7 @@ XI_API uint8_t * __cdecl YkWindows_FormatTargetMapGrid(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x101F79E0
 // GATE: PASS -- 100 trials, 100 returned normally, 36 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) fn_101F79E0(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
+XI_API undefined4 __attribute__((cdecl, regparm(1))) YkWindows_MapEntryForTargetOrArea(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, int param_3, undefined4 param_4)
 {
   uint32_t uVar1;
   uint32_t uVar2;
@@ -2785,7 +2785,7 @@ XI_API void __cdecl YkWindows_PlaceActerMarker(undefined4 param_1, uint32_t para
         xi_s4 = param_4;
         iVar3 = orig::Yk_FindEntryIndex((int)(short)param_1,iVar3,0);
         orig::FUN_101f7570(iVar3,(uint16_t *)piVar4,psVar5,xi_s4,xi_s5);
-        orig::FUN_101f9110(DAT_10663888_as_v0,param_3,param_1,(uint8_t *)(iVar2 + 2),param_2);
+        orig::YkWindows_AddMarkerRecord(DAT_10663888_as_v0,param_3,param_1,(uint8_t *)(iVar2 + 2),param_2);
       }
     }
   }
@@ -3325,7 +3325,7 @@ XI_API void __thiscall YkWindows_ClearMapMarkers(void * self_, undefined4 param_
 
 // FUNCTION: FFXIMAIN 0x101F9110
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall fn_101F9110(void * self_, undefined4 param_1, undefined4 param_2, uint8_t * param_3, undefined4 param_4)
+XI_API undefined4 __thiscall YkWindows_AddMarkerRecord(void * self_, undefined4 param_1, undefined4 param_2, uint8_t * param_3, undefined4 param_4)
 {
   undefined4 *puVar1;
   uint8_t *pbVar2;
@@ -3482,7 +3482,7 @@ XI_API void __thiscall Yk_FreeBuffers(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101F9A20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) fn_101F9A20(int * xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API undefined4 __attribute__((stdcall, regparm(3))) YkWindows_IsMarkerAllowed(int * xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
 {
   if (((param_2 == 4) || (xi_eax = *(int **)((int)self_ + 0x6c4), xi_eax == (int *)0x0)) ||
      (*xi_eax == 0)) {
@@ -3546,7 +3546,7 @@ XI_API undefined4 __thiscall YkWindows_CanShowMapTitle(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101FAAF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall fn_101FAAF0(void * self_)
+XI_API void __thiscall YkWindows_ShowMapTitleIfAllowed(void * self_)
 {
   uint32_t uVar1;
   
@@ -3663,7 +3663,7 @@ XI_API undefined4 __cdecl YkWindows_OnMapClick(undefined4 param_1, char * param_
     *(uint16_t *)(DAT_10663888 + 0x112) = 0xffff;
     piVar5 = g_pSceneState_as_v0;
     if ((*g_pSceneState_as_v0 == 0x60) && (-1 < sVar2)) {
-      uVar4 = orig::FUN_101f79e0((int)*(short *)(param_2 + 2),(int)sVar2,(int)sVar3,
+      uVar4 = orig::YkWindows_MapEntryForTargetOrArea((int)*(short *)(param_2 + 2),(int)sVar2,(int)sVar3,
                            (int)*(short *)(param_2 + 4),(int)sVar3);
       return uVar4;
     }

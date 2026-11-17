@@ -11,7 +11,7 @@ Why the file has this name (data/unit_names.json): the files kb_faq.pib, kb_faq_
 | `FaqHelp_CtorVt1033BCF8` | 0x10216570 | 61 | yes | - | Constructs the object with vtable 0x1033BCF8. | low |
 | `FaqHelp_CtorVt1033BD58` | 0x102175C0 | 229 | yes | - | Constructs the object with vtable 0x1033BD58 and its 37 entries. | low |
 | `FaqHelp_ClearWords0To0A` | 0x1021B330 | 31 | yes | - | Zeroes six words and the byte at +0xC. | low |
-| `sub_1021BB90` | 0x1021BB90 | 58 | no | - | Creates the slot system object once. | low |
+| `FaqHelp_Create` | 0x1021BB90 | 58 | no | - | Creates the slot system object once. | low |
 | `FaqHelp_SetVtable1033BDA0` | 0x1021BC20 | 9 | yes | - | Sets the record's vtable to 0x1033BDA0. | low |
 | `FaqHelp_CopyRecordCtor` | 0x1021BC30 | 69 | yes | - | Constructs an object holding a copy of a 24-byte record. | low |
 | `FaqHelp_ReturnTrue` | 0x1021BCB0 | 3 | yes | - | Returns true. | low |
@@ -25,7 +25,7 @@ Why the file has this name (data/unit_names.json): the files kb_faq.pib, kb_faq_
 | `FaqHelp_AssignItem` | 0x1021C210 | 203 | yes | - | Assigns an item to a slot and updates the item counts. | low |
 | `FaqHelp_ClearAndAssign` | 0x1021C2E0 | 110 | yes | - | Clears a slot and assigns a new item to it. | low |
 | `FaqHelp_ResetSlot` | 0x1021C350 | 42 | yes | - | Resets one slot entry. | low |
-| `sub_1021C380` | 0x1021C380 | 309 | no | - | Brings the 81 slots up to date with the item state when it has changed. | low |
+| `FaqHelp_SyncSlots` | 0x1021C380 | 309 | no | - | Brings the 81 slots up to date with the item state when it has changed. | low |
 | `FaqHelp_Update` | 0x1021C4C0 | 230 | yes | - | Updates the slot states each frame. | low |
 | `FaqHelp_AppendEntry` | 0x1021C5B0 | 207 | yes | - | Appends a record to one of the four slot lists. | low |
 | `FaqHelp_RemoveByKey` | 0x1021C680 | 284 | yes | - | Removes the record with the given key from the slot lists. | low |
@@ -45,7 +45,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FaqHelp_CtorVt1033BCF8` calls `NetCellFont_ClearWords`
 - `FaqHelp_CtorVt1033BD58` calls `NetCellFont_ClearWords`, `FaqHelp_ClearWords0To0A`
 - `FaqHelp_ClearWords0To0A` calls nothing directly
-- `sub_1021BB90` calls `Allocator_Generic`, `FaqHelp_CtorVt1033BD58`, `FaqHelp_CtorVt1033BCF8`
+- `FaqHelp_Create` calls `Allocator_Generic`, `FaqHelp_CtorVt1033BD58`, `FaqHelp_CtorVt1033BCF8`
 - `FaqHelp_SetVtable1033BDA0` calls nothing directly
 - `FaqHelp_CopyRecordCtor` calls `FaqHelp_SetVtable1033BDA0`
 - `FaqHelp_ReturnTrue` calls nothing directly
@@ -59,8 +59,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FaqHelp_AssignItem` calls `sub_1015BC40`, `FaqHelp_Reset`, `FaqHelp_RemoveByKey`, `FaqHelp_AppendEntry`, `FaqHelp_SetId`
 - `FaqHelp_ClearAndAssign` calls `FaqHelp_Reset`, `FaqHelp_RemoveByKey`, `FaqHelp_AppendEntry`, `FaqHelp_SetId`
 - `FaqHelp_ResetSlot` calls `FaqHelp_Reset`, `FaqHelp_RemoveByKey`
-- `sub_1021C380` calls `NetCellFont_GetSlotPtr`, `NetCellFont_FindOrRemove`, `operator_delete`, `Allocator_Generic`, `FaqHelp_CopyRecordCtor`, `NetCellFont_RemoveRecord`, `FaqHelp_ClearAndAssign`, `FaqHelp_AssignItem`, `FaqHelp_ResetSlot`
-- `FaqHelp_Update` calls `FaqHelp_CanUpdate`, `sub_1021C380`, `FaqHelp_IsSpecialKey`, `NetCellFont_ApplyStatusText`, `NetCellFont_GetSlotPtr`, `FaqHelp_ReturnTrue`, `NetCellFont_CountFreeEntries`, `FaqHelp_RebuildWithGlobalFlag`
+- `FaqHelp_SyncSlots` calls `NetCellFont_GetSlotPtr`, `NetCellFont_FindOrRemove`, `operator_delete`, `Allocator_Generic`, `FaqHelp_CopyRecordCtor`, `NetCellFont_RemoveRecord`, `FaqHelp_ClearAndAssign`, `FaqHelp_AssignItem`, `FaqHelp_ResetSlot`
+- `FaqHelp_Update` calls `FaqHelp_CanUpdate`, `FaqHelp_SyncSlots`, `FaqHelp_IsSpecialKey`, `NetCellFont_ApplyStatusText`, `NetCellFont_GetSlotPtr`, `FaqHelp_ReturnTrue`, `NetCellFont_CountFreeEntries`, `FaqHelp_RebuildWithGlobalFlag`
 - `FaqHelp_AppendEntry` calls nothing directly
 - `FaqHelp_RemoveByKey` calls nothing directly
 - `FaqHelp_RebuildWithGlobalFlag` calls `FaqHelp_Rebuild`

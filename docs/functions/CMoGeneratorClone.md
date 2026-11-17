@@ -2,7 +2,7 @@
 
 Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoGeneratorClone.cpp`.
 
-16 functions.
+18 functions.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
@@ -20,7 +20,9 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoGeneratorClone.cp
 | `CMoGeneratorClone::SetFlagBit1At17B` | 0x10052980 | 28 | yes | - | Sets bit 1 of the generator's +0x17B flags from its argument. (reviewed as sub_10052980) | low |
 | `CMoGeneratorClone::CopyParams` | 0x10053450 | 621 | yes | - | - | - |
 | `CMoGeneratorClone::CreateInstance` | 0x100536C0 | 368 | yes | 6 | - | - |
+| `CMoGeneratorClone::ScalarDeletingDtor` | 0x10053840 | 30 | yes | 6 | - | - |
 | `CMoGeneratorClone::InitDefaultParams` | 0x10053E00 | 81 | yes | - | - | - |
+| `CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass` | 0x100542E0 | 6 | yes | - | - | - |
 | `CMoGeneratorClone::Destructor` | 0x100542F0 | 111 | yes | 5 | - | - |
 
 ## Direct calls
@@ -40,6 +42,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CMoGeneratorClone::SetFlagBit0At17B` calls nothing directly
 - `CMoGeneratorClone::SetFlagBit1At17B` calls nothing directly
 - `CMoGeneratorClone::CopyParams` calls `AttachNotify_CopyFields`
-- `CMoGeneratorClone::CreateInstance` calls `Mem_AllocWithFallback`, `CMoGeneratorClone_VT_1032B114_Constructor`, `CMoGeneratorClone::CopyParams`, `CMoAttachments::Reset`, `MeshResourceMng_AllocHandle`, `CMoAttachments::SetCaster`, `CMoAttachments::SetTarget`, `CMoResource::RegisterInTypeList`, `SharedConditionalStateReset`, `CMoResource::FindByTypeAndId`
+- `CMoGeneratorClone::CreateInstance` calls `Mem_AllocWithFallback`, `CMoGeneratorRes_Constructor`, `CMoGeneratorClone::CopyParams`, `CMoAttachments::Reset`, `MeshResourceMng_AllocHandle`, `CMoAttachments::SetCaster`, `CMoAttachments::SetTarget`, `CMoResource::RegisterInTypeList`, `SharedConditionalStateReset`, `CMoResource::FindByTypeAndId`
+- `CMoGeneratorClone::ScalarDeletingDtor` calls `CMoGeneratorClone::Destructor`, `SharedDeleteHelper`
 - `CMoGeneratorClone::InitDefaultParams` calls `Mem_AllocWithHeader12`, `MoProcessor_CallVSlot49`
+- `CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass` calls nothing directly
 - `CMoGeneratorClone::Destructor` calls `YmGenerater_Stop`, `CMoAttachments::ResetAll`, `NodePool_ReleaseNode`, `sub_10048000`

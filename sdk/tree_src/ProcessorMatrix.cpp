@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x1006D0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoProcessor_VT_1032C368_SetIdentity(undefined4 xi_eax, undefined4 * param_1)
+XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoProcessorX87_SetIdentity(undefined4 xi_eax, undefined4 * param_1)
 {
   int iVar1;
   int iVar2;

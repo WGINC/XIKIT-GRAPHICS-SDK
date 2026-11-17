@@ -446,7 +446,7 @@ XI_API char __thiscall App_InitScene(int self_, int a4)
           orig::CMoTaskMng_InitPool(v7);
           dword_1047D140 = (int)v7;
           byte_1047D13D = 0;
-          orig::unknown_libname_61();
+          orig::Resource_ResetGlobals();
           v9 = orig::Mem_AllocDefault(262160);
           v10 = (int)v9;
           if ( v9 == nullptr )

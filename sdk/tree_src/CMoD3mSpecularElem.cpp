@@ -56,7 +56,7 @@ BOOL CMoD3mSpecularElem::IsKind7(int a1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 _DWORD * CMoD3mSpecularElem::ScalarDeletingDtor(char a2)
 {
-  orig::CXi471011C8_VT_1032AD80_Dtor(this);
+  orig::CMoD3mElem_Dtor(this);
   if ( (a2 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));

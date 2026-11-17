@@ -84,7 +84,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `WinMain_TryShutdownActors` calls `WinMain_ShutdownActorsAndTables`
 - `WinMain_StepStagedRelease` calls `WinMain_ShutdownActorsAndTables`, `NetCellFont_DestroyGlobal`, `NetCellFont_UpdateActive`
 - `WinMain_StepMenuOkThenRelease` calls `GameMode_PollPendingState`, `TextInputFiles_LoadAllAndTimestamp`, `YkMyroom::Destructor`, `thunk_sub_10028AA0`, `Menu_CloseEntry`, `AppStartup_IncrementShort6`, `TargetMenu_SetPosition`, `TextInputFiles_AssignWhole`, `LobbyUi_ForwardFlag1`, `MenuMng_OpenByName`
-- `Camera_ReleaseAll` calls `TextInputFiles_RunPairB`, `StAvatar_SetActive`, `sub_10029B60`, `Acter_ShutdownGlobals`, `WinMain_ApplyTables103501F8`, `TargetMenu_ReleaseAll32`
+- `Camera_ReleaseAll` calls `TextInputFiles_RunPairB`, `StAvatar_SetActive`, `ModelDtInit_ReleaseAll`, `Acter_ShutdownGlobals`, `WinMain_ApplyTables103501F8`, `TargetMenu_ReleaseAll32`
 - `WinMain_ApplyTables103501F8` calls `MemHeapDebug_ApplyFourTables`
 - `WinMain_ShutdownActorsAndTables` calls `Acter_ShutdownGlobals`, `WinMain_ApplyTables10350210`
 - `WinMain_ApplyTables10350210` calls `MemHeapDebug_ApplyFourTables`
@@ -144,4 +144,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `GammaRamp_ApplyIfChanged` calls `GammaRamp_BuildRamps`
 - `WinMain_Draw` calls `CDx::DrawPrimitiveUP`
 - `setPolUrl` calls `sub_1031111E`
-- `App_SetGlobalAndClearCamera` calls `sub_10010520`, `App_SetGlobal_104569C8`, `Camera_ClearByte0A`
+- `App_SetGlobalAndClearCamera` calls `App_SaveAllSlotData`, `App_SetGlobal_104569C8`, `Camera_ClearByte0A`

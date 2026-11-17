@@ -2819,18 +2819,18 @@
 },
 {
 "address": "0x10010370",
-"name": "sub_10010370",
+"name": "App_RegisterSystemDats",
 "kind": "function",
 "size": 429,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10010370"
 },
 {
 "address": "0x10010520",
-"name": "sub_10010520",
+"name": "App_SaveAllSlotData",
 "kind": "function",
 "size": 403,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10010520"
 },
 {
@@ -2894,7 +2894,7 @@
 "name": "App_InitScene",
 "kind": "function",
 "size": 3061,
-"source": "dm",
+"source": "tree",
 "analysed_address": "0x10010D20"
 },
 {
@@ -4739,10 +4739,10 @@
 },
 {
 "address": "0x100180D0",
-"name": "sub_100180D0",
+"name": "ErrorReport_DispatchErrorCode",
 "kind": "function",
 "size": 97,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100180D0"
 },
 {
@@ -5603,7 +5603,7 @@
 },
 {
 "address": "0x10019A30",
-"name": "CMoResource_VT_1032C7FC::vf004",
+"name": "CMoMo2Res::Slot4StoreInHandle",
 "kind": "function",
 "size": 12,
 "source": "tree",
@@ -5611,7 +5611,7 @@
 },
 {
 "address": "0x10019A40",
-"name": "CMoResource_VT_1032C7FC::vf005",
+"name": "CMoMo2Res::Slot5Nop",
 "kind": "function",
 "size": 3,
 "source": "tree",
@@ -6411,7 +6411,7 @@
 },
 {
 "address": "0x1001DBD0",
-"name": "CMoResource_VT_1032C8AC::ReleaseTexture",
+"name": "CMoBm2Res::ReleaseTexture",
 "kind": "function",
 "size": 72,
 "source": "tree",
@@ -6419,7 +6419,7 @@
 },
 {
 "address": "0x1001DC20",
-"name": "CMoResource_VT_1032C8AC::vf004",
+"name": "CMoBm2Res::Slot4StoreInHandle",
 "kind": "function",
 "size": 12,
 "source": "tree",
@@ -6467,7 +6467,7 @@
 },
 {
 "address": "0x1001E050",
-"name": "CMoResource_VT_1032C880::vf004",
+"name": "CMoResType5D::Slot4StoreInHandle",
 "kind": "function",
 "size": 12,
 "source": "tree",
@@ -6475,7 +6475,7 @@
 },
 {
 "address": "0x1001E060",
-"name": "CMoResource_VT_1032C880::vf005",
+"name": "CMoResType5D::Slot5Nop",
 "kind": "function",
 "size": 3,
 "source": "tree",
@@ -7291,7 +7291,7 @@
 },
 {
 "address": "0x10025090",
-"name": "CYyModelDt_VT_1032A430::vf011",
+"name": "CYyModelDtStreamed::Slot11ReturnZero",
 "kind": "function",
 "size": 3,
 "source": "tree",
@@ -7299,7 +7299,7 @@
 },
 {
 "address": "0x100250A0",
-"name": "CYyModelDt_VT_1032A430::ScalarDeletingDtor",
+"name": "CYyModelDtStreamed::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -7363,7 +7363,7 @@
 },
 {
 "address": "0x100252D0",
-"name": "CYyModelDt_VT_1032A430::ScalarDeletingDtor_2",
+"name": "CYyModelDtStreamed::ScalarDeletingDtor_2",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -8691,10 +8691,10 @@
 },
 {
 "address": "0x100289F0",
-"name": "sub_100289F0",
+"name": "MemBlock_FindLargestFreeSize",
 "kind": "function",
 "size": 53,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100289F0"
 },
 {
@@ -9299,10 +9299,10 @@
 },
 {
 "address": "0x10029B60",
-"name": "sub_10029B60",
+"name": "ModelDtInit_ReleaseAll",
 "kind": "function",
 "size": 71,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10029B60"
 },
 {
@@ -9483,7 +9483,7 @@
 },
 {
 "address": "0x1002A0A0",
-"name": "CYyModelDt_VT_1032A72C::ScalarDeletingDtor",
+"name": "CYyModelDtBuffered::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -9875,10 +9875,10 @@
 },
 {
 "address": "0x1002C710",
-"name": "sub_1002C710",
+"name": "CYyModel::QueryPartsA",
 "kind": "function",
 "size": 21,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1002C710"
 },
 {
@@ -9891,10 +9891,10 @@
 },
 {
 "address": "0x1002C750",
-"name": "sub_1002C750",
+"name": "CYyModel::QueryPartsB",
 "kind": "function",
 "size": 21,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1002C750"
 },
 {
@@ -10155,7 +10155,7 @@
 },
 {
 "address": "0x1002D7F0",
-"name": "CMoResource_VT_1032C854::CheckVersionAndInit",
+"name": "CMoOs2Res::CheckVersionAndInit",
 "kind": "function",
 "size": 97,
 "source": "tree",
@@ -10171,7 +10171,7 @@
 },
 {
 "address": "0x1002D880",
-"name": "CMoResource_VT_1032C854::vf004",
+"name": "CMoOs2Res::Slot4PointersToWordOffsets",
 "kind": "function",
 "size": 90,
 "source": "tree",
@@ -10867,7 +10867,7 @@
 },
 {
 "address": "0x10034170",
-"name": "CMoResource_VT_1032C828::vf004",
+"name": "CMoSk2Res::Slot4StoreInHandle",
 "kind": "function",
 "size": 12,
 "source": "tree",
@@ -10875,7 +10875,7 @@
 },
 {
 "address": "0x10034180",
-"name": "CMoResource_VT_1032C828::vf005",
+"name": "CMoSk2Res::Slot5Nop",
 "kind": "function",
 "size": 3,
 "source": "tree",
@@ -11379,7 +11379,7 @@
 },
 {
 "address": "0x10035AE0",
-"name": "CMoTask_VT_1032A904::ScalarDeletingDtor",
+"name": "CMoModeRampTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -12251,7 +12251,7 @@
 },
 {
 "address": "0x10038920",
-"name": "CMoResource_VT_1032C7A4::vf008",
+"name": "CMoResType5E::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -12395,7 +12395,7 @@
 },
 {
 "address": "0x100395D0",
-"name": "CYyObject_VT_1032A9F8_Construct",
+"name": "CYyThreadPool_Construct",
 "kind": "function",
 "size": 27,
 "source": "tree",
@@ -13803,7 +13803,7 @@
 },
 {
 "address": "0x1003EF90",
-"name": "CMoVuAnmElem::vf008",
+"name": "CMoVuAnmElem::Slot8CallSlot10",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -13843,7 +13843,7 @@
 },
 {
 "address": "0x1003F430",
-"name": "CMoResource_VT_1032C6F4::vf009",
+"name": "CMoResType25::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -13875,7 +13875,7 @@
 },
 {
 "address": "0x1003FB10",
-"name": "CXi471011C8_VT_1032AC90_Dtor",
+"name": "CMoMorphElem_Dtor",
 "kind": "function",
 "size": 36,
 "source": "dm",
@@ -13883,7 +13883,7 @@
 },
 {
 "address": "0x1003FB40",
-"name": "CXi471011C8_VT_1032AC90_IsKind",
+"name": "CMoMorphElem_IsKind",
 "kind": "function",
 "size": 15,
 "source": "dm",
@@ -13899,7 +13899,7 @@
 },
 {
 "address": "0x1003FB70",
-"name": "CXi471011C8_VT_1032AC90::Ctor",
+"name": "CMoMorphElem::Ctor",
 "kind": "function",
 "size": 57,
 "source": "tree",
@@ -13907,7 +13907,7 @@
 },
 {
 "address": "0x1003FBB0",
-"name": "CXi471011C8_VT_1032AC90_RebuildBlendWeights",
+"name": "CMoMorphElem_RebuildBlendWeights",
 "kind": "function",
 "size": 124,
 "source": "dm",
@@ -13915,7 +13915,7 @@
 },
 {
 "address": "0x1003FC30",
-"name": "CXi471011C8_VT_1032AC90_ReleaseBlendWeights",
+"name": "CMoMorphElem_ReleaseBlendWeights",
 "kind": "function",
 "size": 122,
 "source": "dm",
@@ -14123,7 +14123,7 @@
 },
 {
 "address": "0x10040E20",
-"name": "CXi471011C8_VT_1032AD80_SubmitVertices",
+"name": "CMoD3mElem_SubmitVertices",
 "kind": "function",
 "size": 80,
 "source": "dm",
@@ -14131,7 +14131,7 @@
 },
 {
 "address": "0x10040E70",
-"name": "CXi471011C8_VT_1032B3B8::RebuildBlendWeights",
+"name": "CMoD3mElemFlag200000::RebuildBlendWeights",
 "kind": "function",
 "size": 316,
 "source": "tree",
@@ -14139,7 +14139,7 @@
 },
 {
 "address": "0x10040FB0",
-"name": "CXi471011C8_VT_1032B3B8_SubmitVertices",
+"name": "CMoD3mElemFlag200000_SubmitVertices",
 "kind": "function",
 "size": 80,
 "source": "dm",
@@ -14187,7 +14187,7 @@
 },
 {
 "address": "0x10041110",
-"name": "CXi471011C8_VT_1032AD80_Dtor",
+"name": "CMoD3mElem_Dtor",
 "kind": "function",
 "size": 11,
 "source": "dm",
@@ -14203,7 +14203,7 @@
 },
 {
 "address": "0x10041130",
-"name": "CXi471011C8_VT_1032AD80_DeletingDtor",
+"name": "CMoD3mElem_DeletingDtor",
 "kind": "function",
 "size": 36,
 "source": "tree",
@@ -14267,7 +14267,7 @@
 },
 {
 "address": "0x10041AF0",
-"name": "CMoElem_VT_1032ADE8::vf18",
+"name": "CMoElemKind5C::Slot18DrawTextAtTarget",
 "kind": "function",
 "size": 296,
 "source": "tree",
@@ -14299,7 +14299,7 @@
 },
 {
 "address": "0x10041FE0",
-"name": "CMoElem_VT_1032ADE8::ScalarDeletingDtor",
+"name": "CMoElemKind5C::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -14323,7 +14323,7 @@
 },
 {
 "address": "0x10042020",
-"name": "CMoOtTask_VT_1032AE64::vf8",
+"name": "CMoOtDrawUPTask::Slot8Update",
 "kind": "function",
 "size": 377,
 "source": "tree",
@@ -14419,7 +14419,7 @@
 },
 {
 "address": "0x10042690",
-"name": "CMoAttachments_VT_1032AE94::vf001",
+"name": "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -14667,7 +14667,7 @@
 },
 {
 "address": "0x10043A90",
-"name": "CMoTask_VT_1032AF60::ScalarDeletingDtor",
+"name": "CMoSchOp0DTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -14715,7 +14715,7 @@
 },
 {
 "address": "0x10043C90",
-"name": "CMoTask_VT_1032AFA8::ScalarDeletingDtor",
+"name": "CMoSchOp0CTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -14739,7 +14739,7 @@
 },
 {
 "address": "0x10043DB0",
-"name": "CMoAttachments_VT_1032AF44::vf001",
+"name": "CMoSchOp0DAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -14747,7 +14747,7 @@
 },
 {
 "address": "0x10043DC0",
-"name": "CMoAttachments_VT_1032AF8C::vf001",
+"name": "CMoSchOp0CAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -14779,7 +14779,7 @@
 },
 {
 "address": "0x10043E20",
-"name": "CMoTask_VT_1032AFA8::ScalarDeletingDtor_2",
+"name": "CMoSchOp0CTask::ScalarDeletingDtor_2",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -15163,7 +15163,7 @@
 },
 {
 "address": "0x10045D00",
-"name": "CXi471011C8_VT_1032B478_FadeRemaining",
+"name": "CMoRingElem_FadeRemaining",
 "kind": "function",
 "size": 51,
 "source": "dm",
@@ -15427,7 +15427,7 @@
 },
 {
 "address": "0x10047F80",
-"name": "CMoGeneratorClone_VT_1032B114_Constructor",
+"name": "CMoGeneratorRes_Constructor",
 "kind": "function",
 "size": 54,
 "source": "tree",
@@ -15451,7 +15451,7 @@
 },
 {
 "address": "0x10047FE0",
-"name": "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor",
+"name": "CMoGeneratorRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -16547,7 +16547,7 @@
 },
 {
 "address": "0x10052DE0",
-"name": "CMoVuDist::vf008",
+"name": "CMoVuDist::Slot8CallSlot10",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -16603,7 +16603,7 @@
 },
 {
 "address": "0x10052E90",
-"name": "CXi471011C8_VT_1032B3B8::Ctor",
+"name": "CMoD3mElemFlag200000::Ctor",
 "kind": "function",
 "size": 27,
 "source": "tree",
@@ -16611,7 +16611,7 @@
 },
 {
 "address": "0x10052EB0",
-"name": "CXi471011C8_VT_1032B3B8_SetField198",
+"name": "CMoD3mElemFlag200000_SetField198",
 "kind": "function",
 "size": 13,
 "source": "dm",
@@ -16635,7 +16635,7 @@
 },
 {
 "address": "0x10052F00",
-"name": "CXi471011C8_VT_1032AD80::Ctor",
+"name": "CMoD3mElem::Ctor",
 "kind": "function",
 "size": 18,
 "source": "tree",
@@ -16675,7 +16675,7 @@
 },
 {
 "address": "0x10052F80",
-"name": "CXi471011C8_VT_1032B478::Ctor",
+"name": "CMoRingElem::Ctor",
 "kind": "function",
 "size": 27,
 "source": "tree",
@@ -16683,7 +16683,7 @@
 },
 {
 "address": "0x10052FA0",
-"name": "CXi471011C8_VT_1032B478_IsKind",
+"name": "CMoRingElem_IsKind",
 "kind": "function",
 "size": 15,
 "source": "dm",
@@ -16691,7 +16691,7 @@
 },
 {
 "address": "0x10052FB0",
-"name": "CXi471011C8_VT_1032B478_Dtor",
+"name": "CMoRingElem_Dtor",
 "kind": "function",
 "size": 30,
 "source": "dm",
@@ -16827,7 +16827,7 @@
 },
 {
 "address": "0x10053140",
-"name": "CMoDisintegrateProgElem::vf008",
+"name": "CMoDisintegrateProgElem::Slot8CallSlot10",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -16875,7 +16875,7 @@
 },
 {
 "address": "0x10053350",
-"name": "CMoTask_VT_1032B654::ScalarDeletingDtor",
+"name": "CMoGeneratorTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -16915,7 +16915,7 @@
 },
 {
 "address": "0x10053840",
-"name": "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor",
+"name": "CMoGeneratorClone::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -17011,7 +17011,7 @@
 },
 {
 "address": "0x10054220",
-"name": "CMoTask_VT_1032B654::RunGeneratorAndFinish",
+"name": "CMoGeneratorTask::RunGeneratorAndFinish",
 "kind": "function",
 "size": 174,
 "source": "tree",
@@ -17027,7 +17027,7 @@
 },
 {
 "address": "0x100542E0",
-"name": "CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass",
+"name": "CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass",
 "kind": "function",
 "size": 6,
 "source": "tree",
@@ -17107,7 +17107,7 @@
 },
 {
 "address": "0x10054450",
-"name": "CMoAttachments_VT_1032B140::vf001",
+"name": "CMoGeneratorResAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -17115,7 +17115,7 @@
 },
 {
 "address": "0x10054460",
-"name": "CMoTask_VT_1032B654::vf011",
+"name": "CMoGeneratorTask::Slot11GetCloneRuntimeClass",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -17123,7 +17123,7 @@
 },
 {
 "address": "0x10054470",
-"name": "CMoTask_VT_1032B654::vf012",
+"name": "CMoGeneratorTask::Slot12DeleteClone",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -17131,7 +17131,7 @@
 },
 {
 "address": "0x10054480",
-"name": "CMoResource_VT_1032C5FC::vf008",
+"name": "CMoResType19::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -17139,7 +17139,7 @@
 },
 {
 "address": "0x10054490",
-"name": "CMoResource_VT_1032C5FC::vf009",
+"name": "CMoResType19::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -17243,7 +17243,7 @@
 },
 {
 "address": "0x100548D0",
-"name": "CMoLfdElem_vf11",
+"name": "CMoLfdElem_Draw",
 "kind": "function",
 "size": 1172,
 "source": "facts",
@@ -17254,7 +17254,7 @@
 "name": "BeginEffectOffscreenPass",
 "kind": "function",
 "size": 502,
-"source": "facts",
+"source": "tree",
 "analysed_address": "0x10054D70"
 },
 {
@@ -17771,7 +17771,7 @@
 },
 {
 "address": "0x100565A0",
-"name": "CXi471011C8_VT_1032B478_RebuildBlendWeights",
+"name": "CMoRingElem_RebuildBlendWeights",
 "kind": "function",
 "size": 672,
 "source": "dm",
@@ -20507,7 +20507,7 @@
 },
 {
 "address": "0x10062F50",
-"name": "CMoAttachments_VT_1032BCCC::vf001",
+"name": "CMoSchOp48Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20515,7 +20515,7 @@
 },
 {
 "address": "0x10062F60",
-"name": "CMoAttachments_VT_1032BAF0::vf001",
+"name": "CMoSchOp1FAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20523,7 +20523,7 @@
 },
 {
 "address": "0x10062F70",
-"name": "CMoAttachments_VT_1032BBAC::vf001",
+"name": "CMoSchOp2CAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20547,7 +20547,7 @@
 },
 {
 "address": "0x10062FA0",
-"name": "CMoAttachments_VT_1032BF0C::vf001",
+"name": "CMoSchOp7AAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20555,7 +20555,7 @@
 },
 {
 "address": "0x10062FB0",
-"name": "CMoAttachments_VT_1032BD14::vf001",
+"name": "CMoSchOp7FAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20563,7 +20563,7 @@
 },
 {
 "address": "0x10062FC0",
-"name": "CMoAttachments_VT_1032BF54::vf001",
+"name": "CMoSchOpB4Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20571,7 +20571,7 @@
 },
 {
 "address": "0x10062FD0",
-"name": "CMoAttachments_VT_1032BBF4::vf001",
+"name": "CMoSchOpBFAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20595,7 +20595,7 @@
 },
 {
 "address": "0x10063000",
-"name": "CMoAttachments_VT_1032BD5C::vf001",
+"name": "CMoSchOp42Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20603,7 +20603,7 @@
 },
 {
 "address": "0x10063010",
-"name": "CMoAttachments_VT_1032BF9C::vf001",
+"name": "CMoSchOp2EAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20611,7 +20611,7 @@
 },
 {
 "address": "0x10063020",
-"name": "CMoAttachments_VT_1032BC68::vf001",
+"name": "CMoSchOp62Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20619,7 +20619,7 @@
 },
 {
 "address": "0x10063030",
-"name": "CMoAttachments_VT_1032BDA4::vf001",
+"name": "CMoSchOp40Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20627,7 +20627,7 @@
 },
 {
 "address": "0x10063040",
-"name": "CMoAttachments_VT_1032BFE4::vf001",
+"name": "CMoSchOp2FAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20651,7 +20651,7 @@
 },
 {
 "address": "0x10063070",
-"name": "CMoAttachments_VT_1032BB38::vf001",
+"name": "CMoSchOp07Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20659,7 +20659,7 @@
 },
 {
 "address": "0x10063080",
-"name": "CMoAttachments_VT_1032BDEC::vf001",
+"name": "CMoSchOp75Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20667,7 +20667,7 @@
 },
 {
 "address": "0x10063090",
-"name": "CMoAttachments_VT_1032C02C::vf001",
+"name": "CMoSchOp59Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20691,7 +20691,7 @@
 },
 {
 "address": "0x100630C0",
-"name": "CMoAttachments_VT_1032BE34::vf001",
+"name": "CMoSchOpB5Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20699,7 +20699,7 @@
 },
 {
 "address": "0x100630D0",
-"name": "CMoAttachments_VT_1032BE7C::vf001",
+"name": "CMoSchOpBCAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20707,7 +20707,7 @@
 },
 {
 "address": "0x100630E0",
-"name": "CMoAttachments_VT_1032B940::vf001",
+"name": "CMoSchOp1DAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20731,7 +20731,7 @@
 },
 {
 "address": "0x10063110",
-"name": "CMoAttachments_VT_1032BC84::vf001",
+"name": "CMoSchOpSharedAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20739,7 +20739,7 @@
 },
 {
 "address": "0x10063120",
-"name": "CMoAttachments_VT_1032BEC4::vf001",
+"name": "CMoSchOp9BAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20747,7 +20747,7 @@
 },
 {
 "address": "0x10063130",
-"name": "CMoTask_VT_1032B95C::vf011",
+"name": "CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20755,7 +20755,7 @@
 },
 {
 "address": "0x10063140",
-"name": "CMoTask_VT_1032B95C::vf012",
+"name": "CMoSchOp1DTask::Slot12DeletePathDriveActorTask",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -20979,7 +20979,7 @@
 },
 {
 "address": "0x10063C50",
-"name": "CMoResource_VT_1032C55C::vf008",
+"name": "CMoResType3E::SetupClearField34",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -22619,7 +22619,7 @@
 },
 {
 "address": "0x1006B480",
-"name": "CMoTask_VT_10329C70::vf8",
+"name": "CMoCameraSetupTask::Slot8SetupCameraAfterOneTick",
 "kind": "function",
 "size": 61,
 "source": "tree",
@@ -22627,7 +22627,7 @@
 },
 {
 "address": "0x1006B4C0",
-"name": "CMoTask_VT_10329C70::vf1",
+"name": "CMoCameraSetupTask::Slot1NopOnMessage6",
 "kind": "function",
 "size": 23,
 "source": "tree",
@@ -23243,7 +23243,7 @@
 },
 {
 "address": "0x1006CC40",
-"name": "CMoProcessor_VT_1032C1C8::vf008",
+"name": "CMoProcessor3DNow::Slot8CallSlot9",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -23251,7 +23251,7 @@
 },
 {
 "address": "0x1006CC50",
-"name": "CMoProcessor_VT_1032C1C8::vf010",
+"name": "CMoProcessor3DNow::Slot10CallSlot11",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -23259,7 +23259,7 @@
 },
 {
 "address": "0x1006CC60",
-"name": "CMoProcessor_VT_1032C1C8::vf040",
+"name": "CMoProcessor3DNow::Slot40CallSlot41",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -23267,7 +23267,7 @@
 },
 {
 "address": "0x1006CC70",
-"name": "CMoProcessor_VT_1032C1C8::vf038",
+"name": "CMoProcessor3DNow::Slot38CallSlot39",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -23275,7 +23275,7 @@
 },
 {
 "address": "0x1006CC80",
-"name": "CMoProcessor_VT_1032C1C8::vf046",
+"name": "CMoProcessor3DNow::Slot46CallSlot48",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -23283,7 +23283,7 @@
 },
 {
 "address": "0x1006CC90",
-"name": "CMoProcessor_VT_1032C1C8::vf045",
+"name": "CMoProcessor3DNow::Slot45CallSlot47",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -23307,7 +23307,7 @@
 },
 {
 "address": "0x1006CCD0",
-"name": "CMoProcessor_VT_1032C1C8::CMoProcessor_GetRuntimeClass",
+"name": "CMoProcessor3DNow::CMoProcessor_GetRuntimeClass",
 "kind": "function",
 "size": 6,
 "source": "tree",
@@ -23355,7 +23355,7 @@
 },
 {
 "address": "0x1006D0A0",
-"name": "CMoProcessor_VT_1032C368_SetIdentity",
+"name": "CMoProcessorX87_SetIdentity",
 "kind": "function",
 "size": 222,
 "source": "tree",
@@ -23395,7 +23395,7 @@
 },
 {
 "address": "0x1006D380",
-"name": "CMoProcessor_VT_1032C298::vf007",
+"name": "CMoProcessorSSE::Vec3Scale",
 "kind": "function",
 "size": 35,
 "source": "tree",
@@ -23403,7 +23403,7 @@
 },
 {
 "address": "0x1006D3B0",
-"name": "CMoProcessor_VT_1032C368::vf012",
+"name": "CMoProcessorX87::Vec3AddScaled",
 "kind": "function",
 "size": 47,
 "source": "tree",
@@ -23427,7 +23427,7 @@
 },
 {
 "address": "0x1006D4D0",
-"name": "CMoProcessor_VT_1032C368::vf014",
+"name": "CMoProcessorX87::Vec3Dot",
 "kind": "function",
 "size": 31,
 "source": "tree",
@@ -23475,7 +23475,7 @@
 },
 {
 "address": "0x1006D680",
-"name": "CMoProcessor_VT_1032C368::vf042",
+"name": "CMoProcessorX87::Vec3Add",
 "kind": "function",
 "size": 39,
 "source": "tree",
@@ -23483,7 +23483,7 @@
 },
 {
 "address": "0x1006D6B0",
-"name": "CMoProcessor_VT_1032C368::vf043",
+"name": "CMoProcessorX87::Vec3MulComponents",
 "kind": "function",
 "size": 39,
 "source": "tree",
@@ -23499,7 +23499,7 @@
 },
 {
 "address": "0x1006D720",
-"name": "CMoProcessor_VT_1032C368::TransformPoint",
+"name": "CMoProcessorX87::TransformPoint",
 "kind": "function",
 "size": 94,
 "source": "tree",
@@ -23539,7 +23539,7 @@
 },
 {
 "address": "0x1006D980",
-"name": "CMoProcessor_VT_1032C368::vf021",
+"name": "CMoProcessorX87::Vec3Lerp",
 "kind": "function",
 "size": 59,
 "source": "tree",
@@ -23579,7 +23579,7 @@
 },
 {
 "address": "0x1006DCF0",
-"name": "CMoProcessor_VT_1032C368::RotationFromAnglesZYX",
+"name": "CMoProcessorX87::RotationFromAnglesZYX",
 "kind": "function",
 "size": 758,
 "source": "tree",
@@ -23627,7 +23627,7 @@
 },
 {
 "address": "0x1006E140",
-"name": "CMoProcessor_VT_1032C368::RotationY",
+"name": "CMoProcessorX87::RotationY",
 "kind": "function",
 "size": 262,
 "source": "tree",
@@ -23643,7 +23643,7 @@
 },
 {
 "address": "0x1006E260",
-"name": "CMoProcessor_VT_1032C368::RotationZ",
+"name": "CMoProcessorX87::RotationZ",
 "kind": "function",
 "size": 262,
 "source": "tree",
@@ -23659,7 +23659,7 @@
 },
 {
 "address": "0x1006E380",
-"name": "CMoProcessor_VT_1032C368::RotationFromAnglesXYZ",
+"name": "CMoProcessorX87::RotationFromAnglesXYZ",
 "kind": "function",
 "size": 758,
 "source": "tree",
@@ -23819,7 +23819,7 @@
 },
 {
 "address": "0x1006F5B0",
-"name": "CMoProcessor_VT_1032C298::vf014",
+"name": "CMoProcessorSSE::Vec3Dot",
 "kind": "function",
 "size": 31,
 "source": "tree",
@@ -23931,7 +23931,7 @@
 },
 {
 "address": "0x1006FA30",
-"name": "CMoProcessor_VT_1032C298::vf021",
+"name": "CMoProcessorSSE::Vec3Lerp",
 "kind": "function",
 "size": 13,
 "source": "tree",
@@ -24011,7 +24011,7 @@
 },
 {
 "address": "0x10070020",
-"name": "CMoProcessor_VT_1032C298::vf035",
+"name": "CMoProcessorSSE::CalcScreenBoundsAndVisible",
 "kind": "function",
 "size": 21,
 "source": "tree",
@@ -24019,7 +24019,7 @@
 },
 {
 "address": "0x10070040",
-"name": "CMoProcessor_VT_1032C298::vf036",
+"name": "CMoProcessorSSE::CalcScreenBounds",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -24083,7 +24083,7 @@
 },
 {
 "address": "0x10070780",
-"name": "CMoProcessor_VT_1032C1C8::vf012",
+"name": "CMoProcessor3DNow::Vec3AddScaled",
 "kind": "function",
 "size": 13,
 "source": "tree",
@@ -24091,7 +24091,7 @@
 },
 {
 "address": "0x10070790",
-"name": "CMoProcessor_VT_1032C1C8::vf014",
+"name": "CMoProcessor3DNow::Vec3Dot",
 "kind": "function",
 "size": 31,
 "source": "tree",
@@ -24179,7 +24179,7 @@
 },
 {
 "address": "0x10070AA0",
-"name": "CMoProcessor_VT_1032C1C8::vf018",
+"name": "CMoProcessor3DNow::Vec4TransformB",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -24187,7 +24187,7 @@
 },
 {
 "address": "0x10070AB0",
-"name": "CMoProcessor_VT_1032C1C8::vf017",
+"name": "CMoProcessor3DNow::Vec4Transform",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -24195,7 +24195,7 @@
 },
 {
 "address": "0x10070AC0",
-"name": "CMoProcessor_VT_1032C1C8::vf016",
+"name": "CMoProcessor3DNow::Vec3Transform",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -24203,7 +24203,7 @@
 },
 {
 "address": "0x10070AD0",
-"name": "CMoProcessor_VT_1032C1C8::vf021",
+"name": "CMoProcessor3DNow::Vec3Lerp",
 "kind": "function",
 "size": 13,
 "source": "tree",
@@ -24275,7 +24275,7 @@
 },
 {
 "address": "0x10070E20",
-"name": "CMoProcessor_VT_1032C1C8::vf033",
+"name": "CMoProcessor3DNow::ProjectVertsAndBounds",
 "kind": "function",
 "size": 21,
 "source": "tree",
@@ -24283,7 +24283,7 @@
 },
 {
 "address": "0x10070E40",
-"name": "CMoProcessor_VT_1032C1C8::vf035",
+"name": "CMoProcessor3DNow::CalcScreenBoundsAndVisible",
 "kind": "function",
 "size": 21,
 "source": "tree",
@@ -24291,7 +24291,7 @@
 },
 {
 "address": "0x10070E60",
-"name": "CMoProcessor_VT_1032C1C8::vf036",
+"name": "CMoProcessor3DNow::CalcScreenBounds",
 "kind": "function",
 "size": 5,
 "source": "tree",
@@ -24323,7 +24323,7 @@
 },
 {
 "address": "0x10070F60",
-"name": "CMoTask_VT_1032C490::ScalarDeletingDtor",
+"name": "CMoResourceWaitTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24475,7 +24475,7 @@
 },
 {
 "address": "0x100719C0",
-"name": "CMoResource_VT_1032C7D0::vf008",
+"name": "CMoResType45::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -24483,7 +24483,7 @@
 },
 {
 "address": "0x100719D0",
-"name": "CMoResource_VT_1032C7D0::vf009",
+"name": "CMoResType45::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -24491,7 +24491,7 @@
 },
 {
 "address": "0x100719E0",
-"name": "CMoResource_VT_1032C828::vf009",
+"name": "CMoSk2Res::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -24507,7 +24507,7 @@
 },
 {
 "address": "0x10071A00",
-"name": "CMoResource_VT_1032C7FC::vf009",
+"name": "CMoMo2Res::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -24515,7 +24515,7 @@
 },
 {
 "address": "0x10071A10",
-"name": "CMoResource_VT_1032C7A4::vf009",
+"name": "CMoResType5E::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -24523,7 +24523,7 @@
 },
 {
 "address": "0x10071A20",
-"name": "CMoResource_VT_1032C778::vf008",
+"name": "CMoAfbRes::Setup",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -24531,7 +24531,7 @@
 },
 {
 "address": "0x10071A30",
-"name": "CMoResource_VT_1032C778::vf009",
+"name": "CMoAfbRes::Slot9UnfixPointers",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -24539,7 +24539,7 @@
 },
 {
 "address": "0x10071A40",
-"name": "CMoResource_VT_1032C8AC::ScalarDeletingDtor",
+"name": "CMoBm2Res::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24547,7 +24547,7 @@
 },
 {
 "address": "0x10071A60",
-"name": "CMoResource_VT_1032C880::ScalarDeletingDtor",
+"name": "CMoResType5D::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24555,7 +24555,7 @@
 },
 {
 "address": "0x10071A80",
-"name": "CMoResource_VT_1032C854::ScalarDeletingDtor",
+"name": "CMoOs2Res::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24563,7 +24563,7 @@
 },
 {
 "address": "0x10071AA0",
-"name": "CMoResource_VT_1032C828::ScalarDeletingDtor",
+"name": "CMoSk2Res::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24571,7 +24571,7 @@
 },
 {
 "address": "0x10071AC0",
-"name": "CMoResource_VT_1032C7FC::ScalarDeletingDtor",
+"name": "CMoMo2Res::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24579,7 +24579,7 @@
 },
 {
 "address": "0x10071AE0",
-"name": "CMoResource_VT_1032C7D0::ScalarDeletingDtor",
+"name": "CMoResType45::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24587,7 +24587,7 @@
 },
 {
 "address": "0x10071B00",
-"name": "CMoResource_VT_1032C7A4::ScalarDeletingDtor",
+"name": "CMoResType5E::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24603,7 +24603,7 @@
 },
 {
 "address": "0x10071B50",
-"name": "CMoResource_VT_1032C74C::ScalarDeletingDtor",
+"name": "CMoResType1F::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24611,7 +24611,7 @@
 },
 {
 "address": "0x10071B70",
-"name": "CMoResource_VT_1032C720::ScalarDeletingDtor",
+"name": "CMoResType21::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24619,7 +24619,7 @@
 },
 {
 "address": "0x10071B90",
-"name": "CMoResource_VT_1032C6F4::ScalarDeletingDtor",
+"name": "CMoResType25::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24627,7 +24627,7 @@
 },
 {
 "address": "0x10071BB0",
-"name": "CMoResource_VT_1032C6C8::ScalarDeletingDtor",
+"name": "CMoResType31::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24635,7 +24635,7 @@
 },
 {
 "address": "0x10071BD0",
-"name": "CMoResource_VT_1032C69C::ScalarDeletingDtor",
+"name": "CMoResType30::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24643,7 +24643,7 @@
 },
 {
 "address": "0x10071BF0",
-"name": "CMoResource_VT_1032C670::ScalarDeletingDtor",
+"name": "CMoResType5F::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24659,7 +24659,7 @@
 },
 {
 "address": "0x10071C40",
-"name": "CMoResource_VT_1032C5FC::ScalarDeletingDtor",
+"name": "CMoResType19::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24675,7 +24675,7 @@
 },
 {
 "address": "0x10071C90",
-"name": "CMoResource_VT_1032C588::ScalarDeletingDtor",
+"name": "CMoScopeRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -24931,10 +24931,10 @@
 },
 {
 "address": "0x10072240",
-"name": "sub_10072240",
+"name": "Resource_FindSelfLinkedNode",
 "kind": "function",
 "size": 33,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10072240"
 },
 {
@@ -25043,10 +25043,10 @@
 },
 {
 "address": "0x100729C0",
-"name": "sub_100729C0",
+"name": "Resource_ResetGlobals",
 "kind": "function",
 "size": 10,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100729C0"
 },
 {
@@ -25067,7 +25067,7 @@
 },
 {
 "address": "0x10072A30",
-"name": "CMoTask_VT_1032C908::ScalarDeletingDtor",
+"name": "CMoResourceLoadTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -25291,7 +25291,7 @@
 },
 {
 "address": "0x10073730",
-"name": "CMoResource_VT_1032C934::ScalarDeletingDtor",
+"name": "CMoBm2RefRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -25507,7 +25507,7 @@
 },
 {
 "address": "0x100745E0",
-"name": "CMoAttachments_VT_1032C4E8::vf001",
+"name": "CMoResourceWaitTaskAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -25515,7 +25515,7 @@
 },
 {
 "address": "0x100745F0",
-"name": "CMoResource_VT_1032C588::vf011",
+"name": "CMoScopeRes::Slot11GetCameraRuntimeClass",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -25523,7 +25523,7 @@
 },
 {
 "address": "0x10074600",
-"name": "CMoResource_VT_1032C588::vf012",
+"name": "CMoScopeRes::Slot12DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -25531,7 +25531,7 @@
 },
 {
 "address": "0x10074600",
-"name": "CMoAttachments_VT_1032C628::vf001",
+"name": "CMoResType07Attachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -25539,7 +25539,7 @@
 },
 {
 "address": "0x10074610",
-"name": "CMoResource_VT_1032C588::vf008",
+"name": "CMoScopeRes::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -26771,7 +26771,7 @@
 },
 {
 "address": "0x1007A9A0",
-"name": "fn_1007A9A0",
+"name": "TextCommand_PacketForIdPairKind04",
 "kind": "function",
 "size": 42,
 "source": "tree",
@@ -26795,7 +26795,7 @@
 },
 {
 "address": "0x1007AA80",
-"name": "fn_1007AA80",
+"name": "TextCommand_PacketForIdPairKind12",
 "kind": "function",
 "size": 42,
 "source": "tree",
@@ -26939,7 +26939,7 @@
 },
 {
 "address": "0x1007BB90",
-"name": "fn_1007BB90",
+"name": "TextCommand_PacketForIdPairKind1A",
 "kind": "function",
 "size": 113,
 "source": "tree",
@@ -26971,7 +26971,7 @@
 },
 {
 "address": "0x1007BF30",
-"name": "fn_1007BF30",
+"name": "TextCommand_TargetActionToPacket",
 "kind": "function",
 "size": 666,
 "source": "tree",
@@ -27491,7 +27491,7 @@
 },
 {
 "address": "0x1007E490",
-"name": "fn_1007E490",
+"name": "TextCommand_CheckThenPostUiRequest0E",
 "kind": "function",
 "size": 194,
 "source": "tree",
@@ -34011,7 +34011,7 @@
 },
 {
 "address": "0x100A27F0",
-"name": "CMoTask_VT_1032D6D4::ScalarDeletingDtor",
+"name": "CMoAuctionMenuTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -35435,7 +35435,7 @@
 },
 {
 "address": "0x100A4ED0",
-"name": "CXiCollisionActor_vf8",
+"name": "CXiCollisionActor_Slot8StepAgainstZoneMap",
 "kind": "function",
 "size": 1858,
 "source": "facts",
@@ -36139,7 +36139,7 @@
 },
 {
 "address": "0x100A9DB0",
-"name": "CMoTask_VT_1032E808::ScalarDeletingDtor",
+"name": "CMoCasterTargetTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -36371,7 +36371,7 @@
 },
 {
 "address": "0x100AB060",
-"name": "CMoAttachments_VT_1032E7EC::vf001",
+"name": "CMoCasterTargetTaskAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree",
@@ -41091,10 +41091,10 @@
 },
 {
 "address": "0x100CD540",
-"name": "sub_100CD540",
+"name": "CXiSkeletonActor::SetMotion@100CD540",
 "kind": "function",
 "size": 978,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100CD540"
 },
 {
@@ -41371,10 +41371,10 @@
 },
 {
 "address": "0x100CFA50",
-"name": "sub_100CFA50",
+"name": "CXiSkeletonActor::AddResourceParts",
 "kind": "function",
 "size": 119,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100CFA50"
 },
 {
@@ -41435,10 +41435,10 @@
 },
 {
 "address": "0x100D0510",
-"name": "CXiSkeletonActor_OnDrawName",
+"name": "CXiSkeletonActor::OnDrawName",
 "kind": "function",
 "size": 445,
-"source": "dm",
+"source": "tree",
 "analysed_address": "0x100D0510"
 },
 {
@@ -45003,10 +45003,10 @@
 },
 {
 "address": "0x100E7C60",
-"name": "sub_100E7B20",
+"name": "NetCellFont_ThunkByIndex200",
 "kind": "function",
 "size": 63,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x100E7B20"
 },
 {
@@ -51115,7 +51115,7 @@
 },
 {
 "address": "0x10106320",
-"name": "fn_101061D0",
+"name": "NetCellFont_UnpackBitFields",
 "kind": "function",
 "size": 2585,
 "source": "tree",
@@ -54987,10 +54987,10 @@
 },
 {
 "address": "0x10119B30",
-"name": "sub_101186A0",
+"name": "NetCellFont_MenuUpdateFocusedHelp",
 "kind": "function",
 "size": 244,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x101186A0"
 },
 {
@@ -55347,10 +55347,10 @@
 },
 {
 "address": "0x1011B050",
-"name": "sub_10119BC0",
+"name": "NetCellFont_ContainsPoint",
 "kind": "function",
 "size": 63,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10119BC0"
 },
 {
@@ -56019,7 +56019,7 @@
 },
 {
 "address": "0x1011D510",
-"name": "Obj_104E1B90::Obj_104E1B90_DrawString",
+"name": "FontGlyphs::FontGlyphs_DrawString",
 "kind": "function",
 "size": 365,
 "source": "tree",
@@ -56395,18 +56395,18 @@
 },
 {
 "address": "0x1011F090",
-"name": "sub_1011DC00",
+"name": "NetCellFont_UppercaseCharThen1011DAE0",
 "kind": "function",
 "size": 180,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1011DC00"
 },
 {
 "address": "0x1011F150",
-"name": "sub_1011DCC0",
+"name": "NetCellFont_LowercaseCharThen1011DAE0",
 "kind": "function",
 "size": 174,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1011DCC0"
 },
 {
@@ -56827,7 +56827,7 @@
 },
 {
 "address": "0x10121A20",
-"name": "Obj_104E1BF8::ShapeMng_BindFontTexture",
+"name": "ShapeMng::ShapeMng_BindFontTexture",
 "kind": "function",
 "size": 205,
 "source": "tree",
@@ -56851,7 +56851,7 @@
 },
 {
 "address": "0x10121C40",
-"name": "Obj_104E1BF8::ShapeMng_BindDmgNumTexture",
+"name": "ShapeMng::ShapeMng_BindDmgNumTexture",
 "kind": "function",
 "size": 205,
 "source": "tree",
@@ -57875,10 +57875,10 @@
 },
 {
 "address": "0x101254E0",
-"name": "sub_10124050",
+"name": "Cell_ClearAllFlags",
 "kind": "function",
 "size": 25,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10124050"
 },
 {
@@ -58515,10 +58515,10 @@
 },
 {
 "address": "0x101280F0",
-"name": "sub_10126C60",
+"name": "NetCellFont_ParseMessageControlCode",
 "kind": "function",
 "size": 1289,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10126C60"
 },
 {
@@ -61979,10 +61979,10 @@
 },
 {
 "address": "0x10137A70",
-"name": "sub_10136670",
+"name": "TargetMenu_LayoutMessage",
 "kind": "function",
 "size": 374,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10136670"
 },
 {
@@ -69963,18 +69963,18 @@
 },
 {
 "address": "0x101548C0",
-"name": "sub_101532F0",
+"name": "TargetMenu_Call101532B0OnWordBE",
 "kind": "function",
 "size": 20,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x101532F0"
 },
 {
 "address": "0x101548E0",
-"name": "sub_10153310",
+"name": "TargetMenu_ExpandMessageCodes",
 "kind": "function",
 "size": 1762,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10153310"
 },
 {
@@ -74859,7 +74859,7 @@
 },
 {
 "address": "0x101646B0",
-"name": "Obj_10621944::Obj_10621944_Draw",
+"name": "MenuTextBlock::MenuTextBlock_Draw",
 "kind": "function",
 "size": 72,
 "source": "tree",
@@ -74899,7 +74899,7 @@
 },
 {
 "address": "0x10164960",
-"name": "Obj_10621944_DrawBgRect",
+"name": "MenuTextBlock_DrawBgRect",
 "kind": "function",
 "size": 15,
 "source": "tree",
@@ -76139,7 +76139,7 @@
 },
 {
 "address": "0x1016D3C0",
-"name": "fn_1016BDF0",
+"name": "ZoneMapLoad_BuildMatrixFromNegatedPosRot",
 "kind": "function",
 "size": 618,
 "source": "tree",
@@ -76787,7 +76787,7 @@
 },
 {
 "address": "0x10178470",
-"name": "CMoResource_VT_10336698::ScalarDeletingDtor",
+"name": "CMoResType2E::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -76819,7 +76819,7 @@
 },
 {
 "address": "0x10178550",
-"name": "CMoResource_VT_103366C4::ScalarDeletingDtor",
+"name": "CMoResType1C::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -76851,7 +76851,7 @@
 },
 {
 "address": "0x101785D0",
-"name": "CMoResource_VT_103366F0::ScalarDeletingDtor",
+"name": "CMoResType36::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -78691,7 +78691,7 @@
 },
 {
 "address": "0x1018A9A0",
-"name": "CMoResource_VT_103367E8::ScalarDeletingDtor",
+"name": "CMoResType2F::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree",
@@ -78699,7 +78699,7 @@
 },
 {
 "address": "0x1018A9C0",
-"name": "CMoResource_VT_103367E8::vf008",
+"name": "CMoResType2F::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree",
@@ -90603,10 +90603,10 @@
 },
 {
 "address": "0x101BFC90",
-"name": "sub_101BE6C0",
+"name": "TextInputFiles_FillSizeAndThreeDates",
 "kind": "function",
 "size": 112,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x101BE6C0"
 },
 {
@@ -103587,7 +103587,7 @@
 },
 {
 "address": "0x101F8FF0",
-"name": "fn_101F79E0",
+"name": "YkWindows_MapEntryForTargetOrArea",
 "kind": "function",
 "size": 207,
 "source": "tree",
@@ -103923,7 +103923,7 @@
 },
 {
 "address": "0x101FA720",
-"name": "fn_101F9110",
+"name": "YkWindows_AddMarkerRecord",
 "kind": "function",
 "size": 383,
 "source": "tree",
@@ -104019,7 +104019,7 @@
 },
 {
 "address": "0x101FB030",
-"name": "fn_101F9A20",
+"name": "YkWindows_IsMarkerAllowed",
 "kind": "function",
 "size": 41,
 "source": "tree",
@@ -104131,7 +104131,7 @@
 },
 {
 "address": "0x101FC100",
-"name": "fn_101FAAF0",
+"name": "YkWindows_ShowMapTitleIfAllowed",
 "kind": "function",
 "size": 1,
 "source": "tree (not shown the same in this build)",
@@ -108307,10 +108307,10 @@
 },
 {
 "address": "0x1020D4A0",
-"name": "sub_1020BE90",
+"name": "Yk_LoadIndexedTables",
 "kind": "function",
 "size": 252,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1020BE90"
 },
 {
@@ -110939,10 +110939,10 @@
 },
 {
 "address": "0x1021D1A0",
-"name": "sub_1021BB90",
+"name": "FaqHelp_Create",
 "kind": "function",
 "size": 58,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1021BB90"
 },
 {
@@ -111107,10 +111107,10 @@
 },
 {
 "address": "0x1021D990",
-"name": "sub_1021C380",
+"name": "FaqHelp_SyncSlots",
 "kind": "function",
 "size": 309,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1021C380"
 },
 {
@@ -112379,10 +112379,10 @@
 },
 {
 "address": "0x10222DB0",
-"name": "sub_102217A0",
+"name": "MenuPanels_InitMenuShapes",
 "kind": "function",
 "size": 15,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x102217A0"
 },
 {
@@ -112947,10 +112947,10 @@
 },
 {
 "address": "0x10224430",
-"name": "sub_10222E20",
+"name": "MenuPanels_FindRecordIdByText",
 "kind": "function",
 "size": 539,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10222E20"
 },
 {
@@ -113147,10 +113147,10 @@
 },
 {
 "address": "0x102252A0",
-"name": "sub_10223C90",
+"name": "MenuPanels_Refresh",
 "kind": "function",
 "size": 91,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x10223C90"
 },
 {
@@ -117323,7 +117323,7 @@
 },
 {
 "address": "0x10235C40",
-"name": "fn_10234610",
+"name": "MenuPanels_InitDrawRect",
 "kind": "function",
 "size": 66,
 "source": "tree",
@@ -120699,10 +120699,10 @@
 },
 {
 "address": "0x1024E760",
-"name": "sub_1024D130",
+"name": "StAvatar_InitEntriesFromTables",
 "kind": "function",
 "size": 78,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1024D130"
 },
 {
@@ -125563,10 +125563,10 @@
 },
 {
 "address": "0x10260C70",
-"name": "sub_1025F640",
+"name": "FitFont_EndTimerPeriodIfActive",
 "kind": "function",
 "size": 104,
-"source": "none",
+"source": "tree",
 "analysed_address": "0x1025F640"
 },
 {
@@ -162627,7 +162627,7 @@
 },
 {
 "address": "0x1032BA14",
-"name": "PTR_CYyObject_VT_1032A9F8_ScalarDeletingDtor_2_1032aa14",
+"name": "PTR_CYyThreadPool_ScalarDeletingDtor_2_1032aa14",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -162859,7 +162859,7 @@
 },
 {
 "address": "0x1032BFD4",
-"name": "PTR_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2_1032afd4",
+"name": "PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -163299,7 +163299,7 @@
 },
 {
 "address": "0x1032D1C8",
-"name": "PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c1c8",
+"name": "PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -163307,7 +163307,7 @@
 },
 {
 "address": "0x1032D298",
-"name": "PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c298",
+"name": "PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -163315,7 +163315,7 @@
 },
 {
 "address": "0x1032D368",
-"name": "PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368",
+"name": "PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -163323,7 +163323,7 @@
 },
 {
 "address": "0x1032D434",
-"name": "PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c434",
+"name": "PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434",
 "kind": "data",
 "size": 0,
 "source": "globals",
@@ -163403,7 +163403,7 @@
 },
 {
 "address": "0x1032D5B4",
-"name": "PTR_CMoResource_VT_1032C588_vf011_1032c5b4",
+"name": "PTR_CMoScopeRes_vf011_1032c5b4",
 "kind": "data",
 "size": 0,
 "source": "globals",

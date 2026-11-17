@@ -28,7 +28,7 @@ XI_API uint64_t __thiscall DynVB_Constructor(void * self_)
   int iVar2;
   
   iVar2 = 2;
-  *(uint8_t ***)self_ = &PTR_CMoTask_VT_1032AFA8_ScalarDeletingDtor_2_1032afd4;
+  *(uint8_t ***)self_ = &PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4;
   puVar1 = (uint32_t *)((int)self_ + 4);
   do {
     *puVar1 = 0;

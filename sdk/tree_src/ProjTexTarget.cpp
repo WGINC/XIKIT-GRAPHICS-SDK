@@ -34,7 +34,7 @@ XI_API Vt_1032A460_vtbl ** __thiscall ProjTexTarget_Init(Vt_1032A460_vtbl **self
         Fn10025260_targetTex = (int)Texture,
         Texture != nullptr) )
   {
-    (*((void (__stdcall **)(Vt_1032A460_vtbl *))Texture->vf0_CYyModelDt_VT_1032A430_ScalarDeletingDtor_2 + 1))(Texture);
+    (*((void (__stdcall **)(Vt_1032A460_vtbl *))Texture->vf0_CYyModelDtStreamed_ScalarDeletingDtor_2 + 1))(Texture);
     Texture = (Vt_1032A460_vtbl *)Fn10025260_targetTex;
   }
   *(self_ + 1) = Texture;

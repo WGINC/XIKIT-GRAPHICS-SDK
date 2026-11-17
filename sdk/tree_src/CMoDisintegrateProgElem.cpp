@@ -42,7 +42,7 @@ BOOL CMoDisintegrateProgElem::IsKind13(int a1)
 
 // FUNCTION: FFXIMAIN 0x10053140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoDisintegrateProgElem::vf008()
+int CMoDisintegrateProgElem::Slot8CallSlot10()
 {
   return ((int (__thiscall *)(CMoDisintegrateProgElem *))(*(CMoTask_vtbl * *)&this->vftable)[1].vf10_CMoTask_vf010)(this);
 }

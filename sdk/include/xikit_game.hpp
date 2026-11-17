@@ -9,39 +9,21 @@
 #include "CEnv.hpp"
 #include "CMoActorColorDriveTask.hpp"
 #include "CMoActorRotationDriveTask.hpp"
+#include "CMoAfbRes.hpp"
 #include "CMoAttachments.hpp"
-#include "CMoAttachments_VT_1032AE94.hpp"
-#include "CMoAttachments_VT_1032AF44.hpp"
-#include "CMoAttachments_VT_1032AF8C.hpp"
-#include "CMoAttachments_VT_1032B140.hpp"
-#include "CMoAttachments_VT_1032B940.hpp"
-#include "CMoAttachments_VT_1032BAF0.hpp"
-#include "CMoAttachments_VT_1032BB38.hpp"
-#include "CMoAttachments_VT_1032BBAC.hpp"
-#include "CMoAttachments_VT_1032BBF4.hpp"
-#include "CMoAttachments_VT_1032BC68.hpp"
-#include "CMoAttachments_VT_1032BC84.hpp"
-#include "CMoAttachments_VT_1032BCCC.hpp"
-#include "CMoAttachments_VT_1032BD14.hpp"
-#include "CMoAttachments_VT_1032BD5C.hpp"
-#include "CMoAttachments_VT_1032BDA4.hpp"
-#include "CMoAttachments_VT_1032BDEC.hpp"
-#include "CMoAttachments_VT_1032BE34.hpp"
-#include "CMoAttachments_VT_1032BE7C.hpp"
-#include "CMoAttachments_VT_1032BEC4.hpp"
-#include "CMoAttachments_VT_1032BF0C.hpp"
-#include "CMoAttachments_VT_1032BF54.hpp"
-#include "CMoAttachments_VT_1032BF9C.hpp"
-#include "CMoAttachments_VT_1032BFE4.hpp"
-#include "CMoAttachments_VT_1032C02C.hpp"
-#include "CMoAttachments_VT_1032C4E8.hpp"
-#include "CMoAttachments_VT_1032C628.hpp"
-#include "CMoAttachments_VT_1032E7EC.hpp"
+#include "CMoAuctionMenuTask.hpp"
+#include "CMoBm2RefRes.hpp"
+#include "CMoBm2Res.hpp"
 #include "CMoCamera.hpp"
+#include "CMoCameraSetupTask.hpp"
 #include "CMoCameraTask.hpp"
+#include "CMoCasterTargetTask.hpp"
+#include "CMoCasterTargetTaskAttachments.hpp"
 #include "CMoCelestial.hpp"
 #include "CMoD3aElem.hpp"
 #include "CMoD3aLightmapElem.hpp"
+#include "CMoD3mElem.hpp"
+#include "CMoD3mElemFlag200000.hpp"
 #include "CMoD3mSpecularElem.hpp"
 #include "CMoDX.hpp"
 #include "CMoDisintegrateProgElem.hpp"
@@ -51,74 +33,91 @@
 #include "CMoDistRingElem.hpp"
 #include "CMoDxStatusMng.hpp"
 #include "CMoElem.hpp"
-#include "CMoElem_VT_1032ADE8.hpp"
+#include "CMoElemKind5C.hpp"
 #include "CMoGeneratorClone.hpp"
-#include "CMoGeneratorClone_VT_1032B114.hpp"
-#include "CMoGeneratorClone_VT_1032B69C.hpp"
+#include "CMoGeneratorRes.hpp"
+#include "CMoGeneratorResAttachments.hpp"
+#include "CMoGeneratorTask.hpp"
 #include "CMoLfdElem.hpp"
 #include "CMoLockColorDriveTask.hpp"
 #include "CMoLockLookAtDriveTask.hpp"
+#include "CMoMo2Res.hpp"
+#include "CMoModeRampTask.hpp"
+#include "CMoMorphElem.hpp"
 #include "CMoNullProgElem.hpp"
 #include "CMoOT.hpp"
 #include "CMoOcclusionMng.hpp"
+#include "CMoOs2Res.hpp"
+#include "CMoOtDrawUPTask.hpp"
+#include "CMoOtDrawUPTaskAttachments.hpp"
 #include "CMoOtTask.hpp"
-#include "CMoOtTask_VT_1032AE64.hpp"
 #include "CMoPathDriveActorTask.hpp"
 #include "CMoPathObject.hpp"
 #include "CMoPointLightProgElem.hpp"
 #include "CMoProcessor.hpp"
-#include "CMoProcessor_VT_1032C1C8.hpp"
-#include "CMoProcessor_VT_1032C298.hpp"
-#include "CMoProcessor_VT_1032C368.hpp"
+#include "CMoProcessor3DNow.hpp"
+#include "CMoProcessorSSE.hpp"
+#include "CMoProcessorX87.hpp"
+#include "CMoResType07Attachments.hpp"
+#include "CMoResType19.hpp"
+#include "CMoResType1C.hpp"
+#include "CMoResType1F.hpp"
+#include "CMoResType21.hpp"
+#include "CMoResType25.hpp"
+#include "CMoResType2E.hpp"
+#include "CMoResType2F.hpp"
+#include "CMoResType30.hpp"
+#include "CMoResType31.hpp"
+#include "CMoResType36.hpp"
+#include "CMoResType3E.hpp"
+#include "CMoResType45.hpp"
+#include "CMoResType5D.hpp"
+#include "CMoResType5E.hpp"
+#include "CMoResType5F.hpp"
 #include "CMoResource.hpp"
+#include "CMoResourceLoadTask.hpp"
 #include "CMoResourceMng.hpp"
-#include "CMoResource_VT_1032C55C.hpp"
-#include "CMoResource_VT_1032C588.hpp"
-#include "CMoResource_VT_1032C5FC.hpp"
-#include "CMoResource_VT_1032C670.hpp"
-#include "CMoResource_VT_1032C69C.hpp"
-#include "CMoResource_VT_1032C6C8.hpp"
-#include "CMoResource_VT_1032C6F4.hpp"
-#include "CMoResource_VT_1032C720.hpp"
-#include "CMoResource_VT_1032C74C.hpp"
-#include "CMoResource_VT_1032C778.hpp"
-#include "CMoResource_VT_1032C7A4.hpp"
-#include "CMoResource_VT_1032C7D0.hpp"
-#include "CMoResource_VT_1032C7FC.hpp"
-#include "CMoResource_VT_1032C828.hpp"
-#include "CMoResource_VT_1032C854.hpp"
-#include "CMoResource_VT_1032C880.hpp"
-#include "CMoResource_VT_1032C8AC.hpp"
-#include "CMoResource_VT_1032C934.hpp"
-#include "CMoResource_VT_10336698.hpp"
-#include "CMoResource_VT_103366C4.hpp"
-#include "CMoResource_VT_103366F0.hpp"
-#include "CMoResource_VT_103367E8.hpp"
+#include "CMoResourceWaitTask.hpp"
+#include "CMoResourceWaitTaskAttachments.hpp"
+#include "CMoRingElem.hpp"
+#include "CMoSchOp07Attachments.hpp"
+#include "CMoSchOp0CAttachments.hpp"
+#include "CMoSchOp0CTask.hpp"
+#include "CMoSchOp0DAttachments.hpp"
+#include "CMoSchOp0DTask.hpp"
+#include "CMoSchOp1DAttachments.hpp"
+#include "CMoSchOp1DTask.hpp"
+#include "CMoSchOp1FAttachments.hpp"
+#include "CMoSchOp2CAttachments.hpp"
+#include "CMoSchOp2EAttachments.hpp"
+#include "CMoSchOp2FAttachments.hpp"
+#include "CMoSchOp40Attachments.hpp"
+#include "CMoSchOp42Attachments.hpp"
+#include "CMoSchOp48Attachments.hpp"
+#include "CMoSchOp59Attachments.hpp"
+#include "CMoSchOp62Attachments.hpp"
+#include "CMoSchOp75Attachments.hpp"
+#include "CMoSchOp7AAttachments.hpp"
+#include "CMoSchOp7FAttachments.hpp"
+#include "CMoSchOp9BAttachments.hpp"
+#include "CMoSchOpB4Attachments.hpp"
+#include "CMoSchOpB5Attachments.hpp"
+#include "CMoSchOpBCAttachments.hpp"
+#include "CMoSchOpBFAttachments.hpp"
+#include "CMoSchOpSharedAttachments.hpp"
 #include "CMoSchedularTask.hpp"
+#include "CMoScopeRes.hpp"
+#include "CMoSk2Res.hpp"
 #include "CMoSkeletonElem.hpp"
 #include "CMoSphRes.hpp"
 #include "CMoSpline.hpp"
 #include "CMoTask.hpp"
 #include "CMoTaskMng.hpp"
-#include "CMoTask_VT_10329C70.hpp"
-#include "CMoTask_VT_1032A904.hpp"
-#include "CMoTask_VT_1032AF60.hpp"
-#include "CMoTask_VT_1032AFA8.hpp"
-#include "CMoTask_VT_1032B654.hpp"
-#include "CMoTask_VT_1032B95C.hpp"
-#include "CMoTask_VT_1032C490.hpp"
-#include "CMoTask_VT_1032C908.hpp"
-#include "CMoTask_VT_1032D6D4.hpp"
-#include "CMoTask_VT_1032E808.hpp"
 #include "CMoVuAnmElem.hpp"
 #include "CMoVuDist.hpp"
 #include "CMoVuLineProgElem.hpp"
 #include "CShader.hpp"
 #include "CTsZoneMap.hpp"
-#include "CXi471011C8_VT_1032AC90.hpp"
-#include "CXi471011C8_VT_1032AD80.hpp"
-#include "CXi471011C8_VT_1032B3B8.hpp"
-#include "CXi471011C8_VT_1032B478.hpp"
 #include "CXiActor.hpp"
 #include "CXiActorDraw.hpp"
 #include "CXiActorNameDraw.hpp"
@@ -136,8 +135,8 @@
 #include "CYyModel.hpp"
 #include "CYyModelBase.hpp"
 #include "CYyModelDt.hpp"
-#include "CYyModelDt_VT_1032A430.hpp"
-#include "CYyModelDt_VT_1032A72C.hpp"
+#include "CYyModelDtBuffered.hpp"
+#include "CYyModelDtStreamed.hpp"
 #include "CYyMotionQue.hpp"
 #include "CYyMusicLoadTask.hpp"
 #include "CYyObject.hpp"
@@ -149,9 +148,9 @@
 #include "CYyTexMng.hpp"
 #include "CYyVb.hpp"
 #include "CYyVbMng.hpp"
-#include "Obj_104E1B90.hpp"
-#include "Obj_104E1BF8.hpp"
-#include "Obj_10621944.hpp"
+#include "FontGlyphs.hpp"
+#include "MenuTextBlock.hpp"
+#include "ShapeMng.hpp"
 #include "XiDoorActor.hpp"
 #include "XiFurnitureActor.hpp"
 #include "XiModelActor.hpp"
@@ -429,8 +428,8 @@ inline ::xikit::fn<decltype(&::CXiTimerLow::Init)> CXiTimerLow__Init() { return 
 inline ::xikit::fn<decltype(&::CXiTimerLow::AccumulateElapsed)> CXiTimerLow__AccumulateElapsed() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiTimerLow::AccumulateElapsed)> >(XI_GAME(0x100194F0u)); }
 inline ::xikit::fn<decltype(&::CXiTimerLow::GetFrameRate)> CXiTimerLow__GetFrameRate() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiTimerLow::GetFrameRate)> >(XI_GAME(0x10019550u)); }
 inline ::xikit::fn<decltype(&::CXiTimerLow::GetElapsed)> CXiTimerLow__GetElapsed() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiTimerLow::GetElapsed)> >(XI_GAME(0x10019590u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf004)> CMoResource_VT_1032C7FC__vf004() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf004)> >(XI_GAME(0x10019A30u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf005)> CMoResource_VT_1032C7FC__vf005() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf005)> >(XI_GAME(0x10019A40u)); }
+inline ::xikit::fn<decltype(&::CMoMo2Res::Slot4StoreInHandle)> CMoMo2Res__Slot4StoreInHandle() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoMo2Res::Slot4StoreInHandle)> >(XI_GAME(0x10019A30u)); }
+inline ::xikit::fn<decltype(&::CMoMo2Res::Slot5Nop)> CMoMo2Res__Slot5Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoMo2Res::Slot5Nop)> >(XI_GAME(0x10019A40u)); }
 inline ::xikit::fn<decltype(&::MotionQueue_ApplyPolicy)> MotionQueue_ApplyPolicy() { return reinterpret_cast< ::xikit::fn<decltype(&::MotionQueue_ApplyPolicy)> >(XI_GAME(0x10019A50u)); }
 inline ::xikit::fn<decltype(&::SampleAnimationTrack_ToBuffer)> SampleAnimationTrack_ToBuffer() { return reinterpret_cast< ::xikit::fn<decltype(&::SampleAnimationTrack_ToBuffer)> >(XI_GAME(0x10019B30u)); }
 inline ::xikit::fn<decltype(&::SampleAnimationTrack_Live)> SampleAnimationTrack_Live() { return reinterpret_cast< ::xikit::fn<decltype(&::SampleAnimationTrack_Live)> >(XI_GAME(0x10019EE0u)); }
@@ -457,12 +456,12 @@ inline ::xikit::fn<decltype(&::Model_TranslucentUnbindTexture)> Model_Translucen
 inline ::xikit::fn<decltype(&::ModelTranslucent_SetColorForce)> ModelTranslucent_SetColorForce() { return reinterpret_cast< ::xikit::fn<decltype(&::ModelTranslucent_SetColorForce)> >(XI_GAME(0x1001D390u)); }
 inline ::xikit::fn<decltype(&::Model_CompositeTranslucentPass)> Model_CompositeTranslucentPass() { return reinterpret_cast< ::xikit::fn<decltype(&::Model_CompositeTranslucentPass)> >(XI_GAME(0x1001D3B0u)); }
 inline ::xikit::fn<decltype(&::TexRes_LoadBm2)> TexRes_LoadBm2() { return reinterpret_cast< ::xikit::fn<decltype(&::TexRes_LoadBm2)> >(XI_GAME(0x1001D800u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::ReleaseTexture)> CMoResource_VT_1032C8AC__ReleaseTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::ReleaseTexture)> >(XI_GAME(0x1001DBD0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::vf004)> CMoResource_VT_1032C8AC__vf004() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::vf004)> >(XI_GAME(0x1001DC20u)); }
+inline ::xikit::fn<decltype(&::CMoBm2Res::ReleaseTexture)> CMoBm2Res__ReleaseTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoBm2Res::ReleaseTexture)> >(XI_GAME(0x1001DBD0u)); }
+inline ::xikit::fn<decltype(&::CMoBm2Res::Slot4StoreInHandle)> CMoBm2Res__Slot4StoreInHandle() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoBm2Res::Slot4StoreInHandle)> >(XI_GAME(0x1001DC20u)); }
 inline ::xikit::fn<decltype(&::Tex_DrawNamedTexturePreview)> Tex_DrawNamedTexturePreview() { return reinterpret_cast< ::xikit::fn<decltype(&::Tex_DrawNamedTexturePreview)> >(XI_GAME(0x1001DC70u)); }
 inline ::xikit::fn<decltype(&::Gfx_DrawScreenQuad256)> Gfx_DrawScreenQuad256() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_DrawScreenQuad256)> >(XI_GAME(0x1001DD00u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C880::vf004)> CMoResource_VT_1032C880__vf004() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C880::vf004)> >(XI_GAME(0x1001E050u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C880::vf005)> CMoResource_VT_1032C880__vf005() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C880::vf005)> >(XI_GAME(0x1001E060u)); }
+inline ::xikit::fn<decltype(&::CMoResType5D::Slot4StoreInHandle)> CMoResType5D__Slot4StoreInHandle() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5D::Slot4StoreInHandle)> >(XI_GAME(0x1001E050u)); }
+inline ::xikit::fn<decltype(&::CMoResType5D::Slot5Nop)> CMoResType5D__Slot5Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5D::Slot5Nop)> >(XI_GAME(0x1001E060u)); }
 inline ::xikit::fn<decltype(&::CYyCamMng2_SetGlobalFlags)> CYyCamMng2_SetGlobalFlags() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyCamMng2_SetGlobalFlags)> >(XI_GAME(0x1001E2F0u)); }
 inline ::xikit::fn<decltype(&::CYyCamMng2::CreateGlobal)> CYyCamMng2__CreateGlobal() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyCamMng2::CreateGlobal)> >(XI_GAME(0x1001E470u)); }
 inline ::xikit::fn<decltype(&::CYyCamMng2_CallGlobalVfunc1)> CYyCamMng2_CallGlobalVfunc1() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyCamMng2_CallGlobalVfunc1)> >(XI_GAME(0x1001E4B0u)); }
@@ -487,13 +486,13 @@ inline ::xikit::fn<decltype(&::CYyModelDt::SetVertexShader)> CYyModelDt__SetVert
 inline ::xikit::fn<decltype(&::CYyModelDt::Construct)> CYyModelDt__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::Construct)> >(XI_GAME(0x10025010u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateEntry)> CYyModelDt__PrepareRenderStateEntry() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateEntry)> >(XI_GAME(0x10025030u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateSimpleEntry)> CYyModelDt__PrepareRenderStateSimpleEntry() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateSimpleEntry)> >(XI_GAME(0x10025060u)); }
-inline ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::vf011)> CYyModelDt_VT_1032A430__vf011() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::vf011)> >(XI_GAME(0x10025090u)); }
-inline ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::ScalarDeletingDtor)> CYyModelDt_VT_1032A430__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::ScalarDeletingDtor)> >(XI_GAME(0x100250A0u)); }
+inline ::xikit::fn<decltype(&::CYyModelDtStreamed::Slot11ReturnZero)> CYyModelDtStreamed__Slot11ReturnZero() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDtStreamed::Slot11ReturnZero)> >(XI_GAME(0x10025090u)); }
+inline ::xikit::fn<decltype(&::CYyModelDtStreamed::ScalarDeletingDtor)> CYyModelDtStreamed__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDtStreamed::ScalarDeletingDtor)> >(XI_GAME(0x100250A0u)); }
 inline ::xikit::fn<decltype(&::CYyModelBase::AllocParts)> CYyModelBase__AllocParts() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelBase::AllocParts)> >(XI_GAME(0x100250F0u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::MarkReferencedBones)> CYyModelDt__MarkReferencedBones() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::MarkReferencedBones)> >(XI_GAME(0x100251A0u)); }
 inline ::xikit::fn<decltype(&::ProjTexTarget_Release)> ProjTexTarget_Release() { return reinterpret_cast< ::xikit::fn<decltype(&::ProjTexTarget_Release)> >(XI_GAME(0x10025220u)); }
 inline ::xikit::fn<decltype(&::ProjTexTarget_Init)> ProjTexTarget_Init() { return reinterpret_cast< ::xikit::fn<decltype(&::ProjTexTarget_Init)> >(XI_GAME(0x10025260u)); }
-inline ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::ScalarDeletingDtor_2)> CYyModelDt_VT_1032A430__ScalarDeletingDtor_2() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt_VT_1032A430::ScalarDeletingDtor_2)> >(XI_GAME(0x100252D0u)); }
+inline ::xikit::fn<decltype(&::CYyModelDtStreamed::ScalarDeletingDtor_2)> CYyModelDtStreamed__ScalarDeletingDtor_2() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDtStreamed::ScalarDeletingDtor_2)> >(XI_GAME(0x100252D0u)); }
 inline ::xikit::fn<decltype(&::ProjTex_BeginPass)> ProjTex_BeginPass() { return reinterpret_cast< ::xikit::fn<decltype(&::ProjTex_BeginPass)> >(XI_GAME(0x10025330u)); }
 inline ::xikit::fn<decltype(&::ProjTex_EndPass)> ProjTex_EndPass() { return reinterpret_cast< ::xikit::fn<decltype(&::ProjTex_EndPass)> >(XI_GAME(0x100255C0u)); }
 inline ::xikit::fn<decltype(&::ProjTex_CaptureToTarget)> ProjTex_CaptureToTarget() { return reinterpret_cast< ::xikit::fn<decltype(&::ProjTex_CaptureToTarget)> >(XI_GAME(0x10025870u)); }
@@ -596,7 +595,7 @@ inline ::xikit::fn<decltype(&::CYyModelBase::AddPartFromResource)> CYyModelBase_
 inline ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateV2Entry)> CYyModelDt__PrepareRenderStateV2Entry() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateV2Entry)> >(XI_GAME(0x1002A000u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateV2SimpleEntry)> CYyModelDt__PrepareRenderStateV2SimpleEntry() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::PrepareRenderStateV2SimpleEntry)> >(XI_GAME(0x1002A040u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::GetResourceWord5E)> CYyModelDt__GetResourceWord5E() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::GetResourceWord5E)> >(XI_GAME(0x1002A080u)); }
-inline ::xikit::fn<decltype(&::CYyModelDt_VT_1032A72C::ScalarDeletingDtor)> CYyModelDt_VT_1032A72C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt_VT_1032A72C::ScalarDeletingDtor)> >(XI_GAME(0x1002A0A0u)); }
+inline ::xikit::fn<decltype(&::CYyModelDtBuffered::ScalarDeletingDtor)> CYyModelDtBuffered__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDtBuffered::ScalarDeletingDtor)> >(XI_GAME(0x1002A0A0u)); }
 inline ::xikit::fn<decltype(&::CYyModelBase::RefreshParts)> CYyModelBase__RefreshParts() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelBase::RefreshParts)> >(XI_GAME(0x1002A0C0u)); }
 inline ::xikit::fn<decltype(&::CYyModelBase::DrawLit)> CYyModelBase__DrawLit() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelBase::DrawLit)> >(XI_GAME(0x1002A3B0u)); }
 inline ::xikit::fn<decltype(&::CYyModelBase::CallPartsSlot20)> CYyModelBase__CallPartsSlot20() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelBase::CallPartsSlot20)> >(XI_GAME(0x1002A700u)); }
@@ -633,9 +632,9 @@ inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CreateBuffersStep)> CYyOs2VtxBuf
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> CYyOs2VtxBuffer_ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> >(XI_GAME(0x1002D660u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer::Constructor)> CYyOs2VtxBuffer__Constructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer::Constructor)> >(XI_GAME(0x1002D680u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor)> CYyOs2VtxBuffer__CYyOs2VtxBuffer_Destructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor)> >(XI_GAME(0x1002D700u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C854::CheckVersionAndInit)> CMoResource_VT_1032C854__CheckVersionAndInit() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C854::CheckVersionAndInit)> >(XI_GAME(0x1002D7F0u)); }
+inline ::xikit::fn<decltype(&::CMoOs2Res::CheckVersionAndInit)> CMoOs2Res__CheckVersionAndInit() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOs2Res::CheckVersionAndInit)> >(XI_GAME(0x1002D7F0u)); }
 inline ::xikit::fn<decltype(&::CMoResource_DropObjectAt5E)> CMoResource_DropObjectAt5E() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_DropObjectAt5E)> >(XI_GAME(0x1002D860u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C854::vf004)> CMoResource_VT_1032C854__vf004() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C854::vf004)> >(XI_GAME(0x1002D880u)); }
+inline ::xikit::fn<decltype(&::CMoOs2Res::Slot4PointersToWordOffsets)> CMoOs2Res__Slot4PointersToWordOffsets() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOs2Res::Slot4PointersToWordOffsets)> >(XI_GAME(0x1002D880u)); }
 inline ::xikit::fn<decltype(&::Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer)> Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer() { return reinterpret_cast< ::xikit::fn<decltype(&::Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer)> >(XI_GAME(0x1002D8F0u)); }
 inline ::xikit::fn<decltype(&::CYyModelDt::SkinAndDrawV2)> CYyModelDt__SkinAndDrawV2() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelDt::SkinAndDrawV2)> >(XI_GAME(0x1002DC10u)); }
 inline ::xikit::fn<decltype(&::Gfx_SetStreamSourceCached)> Gfx_SetStreamSourceCached() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_SetStreamSourceCached)> >(XI_GAME(0x1002F130u)); }
@@ -657,8 +656,8 @@ inline ::xikit::fn<decltype(&::Model_BeginOffscreenPass)> Model_BeginOffscreenPa
 inline ::xikit::fn<decltype(&::Model_EndOffscreenPassBindTextures)> Model_EndOffscreenPassBindTextures() { return reinterpret_cast< ::xikit::fn<decltype(&::Model_EndOffscreenPassBindTextures)> >(XI_GAME(0x10033A70u)); }
 inline ::xikit::fn<decltype(&::Shadow_DrawByMode)> Shadow_DrawByMode() { return reinterpret_cast< ::xikit::fn<decltype(&::Shadow_DrawByMode)> >(XI_GAME(0x10033DA0u)); }
 inline ::xikit::fn<decltype(&::Shadow_SmoothLightDirection)> Shadow_SmoothLightDirection() { return reinterpret_cast< ::xikit::fn<decltype(&::Shadow_SmoothLightDirection)> >(XI_GAME(0x10033EA0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf004)> CMoResource_VT_1032C828__vf004() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf004)> >(XI_GAME(0x10034170u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf005)> CMoResource_VT_1032C828__vf005() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf005)> >(XI_GAME(0x10034180u)); }
+inline ::xikit::fn<decltype(&::CMoSk2Res::Slot4StoreInHandle)> CMoSk2Res__Slot4StoreInHandle() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSk2Res::Slot4StoreInHandle)> >(XI_GAME(0x10034170u)); }
+inline ::xikit::fn<decltype(&::CMoSk2Res::Slot5Nop)> CMoSk2Res__Slot5Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSk2Res::Slot5Nop)> >(XI_GAME(0x10034180u)); }
 inline ::xikit::fn<decltype(&::CYySkl::Construct)> CYySkl__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CYySkl::Construct)> >(XI_GAME(0x10034230u)); }
 inline ::xikit::fn<decltype(&::CYyModelBase::AllocMatrixBuffers)> CYyModelBase__AllocMatrixBuffers() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyModelBase::AllocMatrixBuffers)> >(XI_GAME(0x100342A0u)); }
 inline ::xikit::fn<decltype(&::Skel_BindShared)> Skel_BindShared() { return reinterpret_cast< ::xikit::fn<decltype(&::Skel_BindShared)> >(XI_GAME(0x10034330u)); }
@@ -676,7 +675,7 @@ inline ::xikit::fn<decltype(&::Skel_MarkMarkedChains)> Skel_MarkMarkedChains() {
 inline ::xikit::fn<decltype(&::Skel_MarkChain)> Skel_MarkChain() { return reinterpret_cast< ::xikit::fn<decltype(&::Skel_MarkChain)> >(XI_GAME(0x10035330u)); }
 inline ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant0)> CMoElem__GetRuntimeClass_variant0() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant0)> >(XI_GAME(0x100353C0u)); }
 inline ::xikit::fn<decltype(&::CMoTask::CtorByMode)> CMoTask__CtorByMode() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::CtorByMode)> >(XI_GAME(0x10035A00u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032A904::ScalarDeletingDtor)> CMoTask_VT_1032A904__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032A904::ScalarDeletingDtor)> >(XI_GAME(0x10035AE0u)); }
+inline ::xikit::fn<decltype(&::CMoModeRampTask::ScalarDeletingDtor)> CMoModeRampTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoModeRampTask::ScalarDeletingDtor)> >(XI_GAME(0x10035AE0u)); }
 inline ::xikit::fn<decltype(&::CMoTask::CreateMode2)> CMoTask__CreateMode2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::CreateMode2)> >(XI_GAME(0x10035D40u)); }
 inline ::xikit::fn<decltype(&::CMoTask::CreateMode1)> CMoTask__CreateMode1() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::CreateMode1)> >(XI_GAME(0x10035D90u)); }
 inline ::xikit::fn<decltype(&::CMoTask::CreateMode4)> CMoTask__CreateMode4() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::CreateMode4)> >(XI_GAME(0x10035DE0u)); }
@@ -738,7 +737,7 @@ inline ::xikit::fn<decltype(&::Music_SetTrackVolume)> Music_SetTrackVolume() { r
 inline ::xikit::fn<decltype(&::Font_QueueText)> Font_QueueText() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_QueueText)> >(XI_GAME(0x100384B0u)); }
 inline ::xikit::fn<decltype(&::Font_DrawPass)> Font_DrawPass() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_DrawPass)> >(XI_GAME(0x10038520u)); }
 inline ::xikit::fn<decltype(&::Font_DrawString)> Font_DrawString() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_DrawString)> >(XI_GAME(0x10038720u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::vf008)> CMoResource_VT_1032C7A4__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::vf008)> >(XI_GAME(0x10038920u)); }
+inline ::xikit::fn<decltype(&::CMoResType5E::SetupNop)> CMoResType5E__SetupNop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5E::SetupNop)> >(XI_GAME(0x10038920u)); }
 inline ::xikit::fn<decltype(&::Post_CreateScreenEffectTargets)> Post_CreateScreenEffectTargets() { return reinterpret_cast< ::xikit::fn<decltype(&::Post_CreateScreenEffectTargets)> >(XI_GAME(0x10038930u)); }
 inline ::xikit::fn<decltype(&::PostCapture_ReleaseTextures)> PostCapture_ReleaseTextures() { return reinterpret_cast< ::xikit::fn<decltype(&::PostCapture_ReleaseTextures)> >(XI_GAME(0x100389C0u)); }
 inline ::xikit::fn<decltype(&::PostCapture_Init)> PostCapture_Init() { return reinterpret_cast< ::xikit::fn<decltype(&::PostCapture_Init)> >(XI_GAME(0x10038A20u)); }
@@ -747,7 +746,7 @@ inline ::xikit::fn<decltype(&::Post_DrawRotatingGhostLayers)> Post_DrawRotatingG
 inline ::xikit::fn<decltype(&::CYyObject::Init)> CYyObject__Init() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyObject::Init)> >(XI_GAME(0x10039440u)); }
 inline ::xikit::fn<decltype(&::ThreadPool_StartThread)> ThreadPool_StartThread() { return reinterpret_cast< ::xikit::fn<decltype(&::ThreadPool_StartThread)> >(XI_GAME(0x100394D0u)); }
 inline ::xikit::fn<decltype(&::ThreadPool_Shutdown)> ThreadPool_Shutdown() { return reinterpret_cast< ::xikit::fn<decltype(&::ThreadPool_Shutdown)> >(XI_GAME(0x10039550u)); }
-inline ::xikit::fn<decltype(&::CYyObject_VT_1032A9F8_Construct)> CYyObject_VT_1032A9F8_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyObject_VT_1032A9F8_Construct)> >(XI_GAME(0x100395D0u)); }
+inline ::xikit::fn<decltype(&::CYyThreadPool_Construct)> CYyThreadPool_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyThreadPool_Construct)> >(XI_GAME(0x100395D0u)); }
 inline ::xikit::fn<decltype(&::ThreadPool_CreateSuspendedThread)> ThreadPool_CreateSuspendedThread() { return reinterpret_cast< ::xikit::fn<decltype(&::ThreadPool_CreateSuspendedThread)> >(XI_GAME(0x10039670u)); }
 inline ::xikit::fn<decltype(&::Thread_ResumeAndWait)> Thread_ResumeAndWait() { return reinterpret_cast< ::xikit::fn<decltype(&::Thread_ResumeAndWait)> >(XI_GAME(0x100396A0u)); }
 inline ::xikit::fn<decltype(&::CYyTexBase::GetRuntimeClass_variant0)> CYyTexBase__GetRuntimeClass_variant0() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyTexBase::GetRuntimeClass_variant0)> >(XI_GAME(0x10039770u)); }
@@ -837,34 +836,34 @@ inline ::xikit::fn<decltype(&::CMoD3aLightmapElem::GetRuntimeClass)> CMoD3aLight
 inline ::xikit::fn<decltype(&::CMoD3aElem::GetRuntimeClass_variant2)> CMoD3aElem__GetRuntimeClass_variant2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3aElem::GetRuntimeClass_variant2)> >(XI_GAME(0x1003EF00u)); }
 inline ::xikit::fn<decltype(&::CMoVuAnmElem::GetRuntimeClass)> CMoVuAnmElem__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuAnmElem::GetRuntimeClass)> >(XI_GAME(0x1003EF10u)); }
 inline ::xikit::fn<decltype(&::CMoVuAnmElem::IsKind8)> CMoVuAnmElem__IsKind8() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuAnmElem::IsKind8)> >(XI_GAME(0x1003EF80u)); }
-inline ::xikit::fn<decltype(&::CMoVuAnmElem::vf008)> CMoVuAnmElem__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuAnmElem::vf008)> >(XI_GAME(0x1003EF90u)); }
+inline ::xikit::fn<decltype(&::CMoVuAnmElem::Slot8CallSlot10)> CMoVuAnmElem__Slot8CallSlot10() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuAnmElem::Slot8CallSlot10)> >(XI_GAME(0x1003EF90u)); }
 inline ::xikit::fn<decltype(&::CMoVuAnmElem::ScalarDeletingDtor)> CMoVuAnmElem__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuAnmElem::ScalarDeletingDtor)> >(XI_GAME(0x1003EFA0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C6F4::vf009)> CMoResource_VT_1032C6F4__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C6F4::vf009)> >(XI_GAME(0x1003F430u)); }
+inline ::xikit::fn<decltype(&::CMoResType25::Slot9Nop)> CMoResType25__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType25::Slot9Nop)> >(XI_GAME(0x1003F430u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::ApplyMorph)> CMoDistMorphElem__ApplyMorph() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::ApplyMorph)> >(XI_GAME(0x1003F440u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::ComputeMorphHandle)> CMoDistMorphElem__ComputeMorphHandle() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::ComputeMorphHandle)> >(XI_GAME(0x1003F8A0u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032AC90::Ctor)> CXi471011C8_VT_1032AC90__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032AC90::Ctor)> >(XI_GAME(0x1003FB70u)); }
+inline ::xikit::fn<decltype(&::CMoMorphElem::Ctor)> CMoMorphElem__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoMorphElem::Ctor)> >(XI_GAME(0x1003FB70u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::IsDistortedMode)> CMoDistModelElem__IsDistortedMode() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::IsDistortedMode)> >(XI_GAME(0x1003FCB0u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::GetVertexBase)> CMoDistModelElem__GetVertexBase() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::GetVertexBase)> >(XI_GAME(0x1003FCE0u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::GetDataEnd)> CMoDistModelElem__GetDataEnd() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::GetDataEnd)> >(XI_GAME(0x1003FCF0u)); }
 inline ::xikit::fn<decltype(&::MoElem_GetVertexData)> MoElem_GetVertexData() { return reinterpret_cast< ::xikit::fn<decltype(&::MoElem_GetVertexData)> >(XI_GAME(0x1003FD70u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::DrawBatches)> CMoDistModelElem__DrawBatches() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::DrawBatches)> >(XI_GAME(0x10040220u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::DrawMesh)> CMoDistModelElem__DrawMesh() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::DrawMesh)> >(XI_GAME(0x10040670u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032B3B8::RebuildBlendWeights)> CXi471011C8_VT_1032B3B8__RebuildBlendWeights() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032B3B8::RebuildBlendWeights)> >(XI_GAME(0x10040E70u)); }
+inline ::xikit::fn<decltype(&::CMoD3mElemFlag200000::RebuildBlendWeights)> CMoD3mElemFlag200000__RebuildBlendWeights() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mElemFlag200000::RebuildBlendWeights)> >(XI_GAME(0x10040E70u)); }
 inline ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant2)> CMoElem__GetRuntimeClass_variant2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant2)> >(XI_GAME(0x10041000u)); }
 inline ::xikit::fn<decltype(&::CMoD3mSpecularElem::GetRuntimeClass)> CMoD3mSpecularElem__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mSpecularElem::GetRuntimeClass)> >(XI_GAME(0x10041010u)); }
 inline ::xikit::fn<decltype(&::CMoD3mSpecularElem::Ctor)> CMoD3mSpecularElem__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mSpecularElem::Ctor)> >(XI_GAME(0x10041020u)); }
 inline ::xikit::fn<decltype(&::CMoD3mSpecularElem::IsKind7)> CMoD3mSpecularElem__IsKind7() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mSpecularElem::IsKind7)> >(XI_GAME(0x100410E0u)); }
 inline ::xikit::fn<decltype(&::CMoD3mSpecularElem::ScalarDeletingDtor)> CMoD3mSpecularElem__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mSpecularElem::ScalarDeletingDtor)> >(XI_GAME(0x100410F0u)); }
 inline ::xikit::fn<decltype(&::CMoElem::CMoElemFamily_IsKind0)> CMoElem__CMoElemFamily_IsKind0() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::CMoElemFamily_IsKind0)> >(XI_GAME(0x10041120u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032AD80_DeletingDtor)> CXi471011C8_VT_1032AD80_DeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032AD80_DeletingDtor)> >(XI_GAME(0x10041130u)); }
+inline ::xikit::fn<decltype(&::CMoD3mElem_DeletingDtor)> CMoD3mElem_DeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mElem_DeletingDtor)> >(XI_GAME(0x10041130u)); }
 inline ::xikit::fn<decltype(&::CMoD3mSpecularElem::BindTintedTexture)> CMoD3mSpecularElem__BindTintedTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mSpecularElem::BindTintedTexture)> >(XI_GAME(0x10041160u)); }
-inline ::xikit::fn<decltype(&::CMoElem_VT_1032ADE8::vf18)> CMoElem_VT_1032ADE8__vf18() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem_VT_1032ADE8::vf18)> >(XI_GAME(0x10041AF0u)); }
+inline ::xikit::fn<decltype(&::CMoElemKind5C::Slot18DrawTextAtTarget)> CMoElemKind5C__Slot18DrawTextAtTarget() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElemKind5C::Slot18DrawTextAtTarget)> >(XI_GAME(0x10041AF0u)); }
 inline ::xikit::fn<decltype(&::CXiSub_10041E70_Ctor)> CXiSub_10041E70_Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiSub_10041E70_Ctor)> >(XI_GAME(0x10041F40u)); }
-inline ::xikit::fn<decltype(&::CMoElem_VT_1032ADE8::ScalarDeletingDtor)> CMoElem_VT_1032ADE8__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem_VT_1032ADE8::ScalarDeletingDtor)> >(XI_GAME(0x10041FE0u)); }
-inline ::xikit::fn<decltype(&::CMoOtTask_VT_1032AE64::vf8)> CMoOtTask_VT_1032AE64__vf8() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOtTask_VT_1032AE64::vf8)> >(XI_GAME(0x10042020u)); }
+inline ::xikit::fn<decltype(&::CMoElemKind5C::ScalarDeletingDtor)> CMoElemKind5C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElemKind5C::ScalarDeletingDtor)> >(XI_GAME(0x10041FE0u)); }
+inline ::xikit::fn<decltype(&::CMoOtDrawUPTask::Slot8Update)> CMoOtDrawUPTask__Slot8Update() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOtDrawUPTask::Slot8Update)> >(XI_GAME(0x10042020u)); }
 inline ::xikit::fn<decltype(&::CMoTask::Slot8ReturnFalse)> CMoTask__Slot8ReturnFalse() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::Slot8ReturnFalse)> >(XI_GAME(0x10042640u)); }
 inline ::xikit::fn<decltype(&::CMoOtTask::Slot11DoNothing)> CMoOtTask__Slot11DoNothing() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOtTask::Slot11DoNothing)> >(XI_GAME(0x10042650u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032AE94::vf001)> CMoAttachments_VT_1032AE94__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032AE94::vf001)> >(XI_GAME(0x10042690u)); }
+inline ::xikit::fn<decltype(&::CMoOtDrawUPTaskAttachments::Slot1DeleteOwner)> CMoOtDrawUPTaskAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOtDrawUPTaskAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10042690u)); }
 inline ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant3)> CMoElem__GetRuntimeClass_variant3() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant3)> >(XI_GAME(0x100426A0u)); }
 inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::GetRuntimeClass)> CMoDisintegrateProgElem__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::GetRuntimeClass)> >(XI_GAME(0x100426B0u)); }
 inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Slot18DoNothing)> CMoDisintegrateProgElem__Slot18DoNothing() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Slot18DoNothing)> >(XI_GAME(0x100426C0u)); }
@@ -881,14 +880,14 @@ inline ::xikit::fn<decltype(&::CMoDistMorphElem::GetRuntimeClass)> CMoDistMorphE
 inline ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant7)> CMoElem__GetRuntimeClass_variant7() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant7)> >(XI_GAME(0x10043700u)); }
 inline ::xikit::fn<decltype(&::CMoDistRingElem::GetRuntimeClass)> CMoDistRingElem__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistRingElem::GetRuntimeClass)> >(XI_GAME(0x10043710u)); }
 inline ::xikit::fn<decltype(&::CMoDistRingElem::AllocRingGeometry)> CMoDistRingElem__AllocRingGeometry() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistRingElem::AllocRingGeometry)> >(XI_GAME(0x10043720u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032AF60::ScalarDeletingDtor)> CMoTask_VT_1032AF60__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032AF60::ScalarDeletingDtor)> >(XI_GAME(0x10043A90u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032AFA8::ScalarDeletingDtor)> CMoTask_VT_1032AFA8__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032AFA8::ScalarDeletingDtor)> >(XI_GAME(0x10043C90u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032AF44::vf001)> CMoAttachments_VT_1032AF44__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032AF44::vf001)> >(XI_GAME(0x10043DB0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032AF8C::vf001)> CMoAttachments_VT_1032AF8C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032AF8C::vf001)> >(XI_GAME(0x10043DC0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp0DTask::ScalarDeletingDtor)> CMoSchOp0DTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp0DTask::ScalarDeletingDtor)> >(XI_GAME(0x10043A90u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp0CTask::ScalarDeletingDtor)> CMoSchOp0CTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp0CTask::ScalarDeletingDtor)> >(XI_GAME(0x10043C90u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp0DAttachments::Slot1DeleteOwner)> CMoSchOp0DAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp0DAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10043DB0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp0CAttachments::Slot1DeleteOwner)> CMoSchOp0CAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp0CAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10043DC0u)); }
 inline ::xikit::fn<decltype(&::DynVBCtor_ToggleByte45)> DynVBCtor_ToggleByte45() { return reinterpret_cast< ::xikit::fn<decltype(&::DynVBCtor_ToggleByte45)> >(XI_GAME(0x10043DD0u)); }
 inline ::xikit::fn<decltype(&::DynVBCtor_ReturnZero)> DynVBCtor_ReturnZero() { return reinterpret_cast< ::xikit::fn<decltype(&::DynVBCtor_ReturnZero)> >(XI_GAME(0x10043DE0u)); }
 inline ::xikit::fn<decltype(&::DynVB_Constructor)> DynVB_Constructor() { return reinterpret_cast< ::xikit::fn<decltype(&::DynVB_Constructor)> >(XI_GAME(0x10043DF0u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032AFA8::ScalarDeletingDtor_2)> CMoTask_VT_1032AFA8__ScalarDeletingDtor_2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032AFA8::ScalarDeletingDtor_2)> >(XI_GAME(0x10043E20u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp0CTask::ScalarDeletingDtor_2)> CMoSchOp0CTask__ScalarDeletingDtor_2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp0CTask::ScalarDeletingDtor_2)> >(XI_GAME(0x10043E20u)); }
 inline ::xikit::fn<decltype(&::DynVB_Create)> DynVB_Create() { return reinterpret_cast< ::xikit::fn<decltype(&::DynVB_Create)> >(XI_GAME(0x10043E50u)); }
 inline ::xikit::fn<decltype(&::DynVB_ReturnBuffersToPool)> DynVB_ReturnBuffersToPool() { return reinterpret_cast< ::xikit::fn<decltype(&::DynVB_ReturnBuffersToPool)> >(XI_GAME(0x10043F00u)); }
 inline ::xikit::fn<decltype(&::CMoVuElem_Draw)> CMoVuElem_Draw() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuElem_Draw)> >(XI_GAME(0x10043F40u)); }
@@ -936,10 +935,10 @@ inline ::xikit::fn<decltype(&::CMoSkeletonElem::ScalarDeletingDtor)> CMoSkeleton
 inline ::xikit::fn<decltype(&::ElemOffset_GetOffsetVec)> ElemOffset_GetOffsetVec() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemOffset_GetOffsetVec)> >(XI_GAME(0x10047B80u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::InitCloneFromSource)> CMoGeneratorClone__InitCloneFromSource() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::InitCloneFromSource)> >(XI_GAME(0x10047C30u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::FixupClonedPointers)> CMoGeneratorClone__FixupClonedPointers() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::FixupClonedPointers)> >(XI_GAME(0x10047CE0u)); }
-inline ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B114_Constructor)> CMoGeneratorClone_VT_1032B114_Constructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B114_Constructor)> >(XI_GAME(0x10047F80u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorRes_Constructor)> CMoGeneratorRes_Constructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorRes_Constructor)> >(XI_GAME(0x10047F80u)); }
 inline ::xikit::fn<decltype(&::CMoResource::CMoCamera_SetLinkedObject)> CMoResource__CMoCamera_SetLinkedObject() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::CMoCamera_SetLinkedObject)> >(XI_GAME(0x10047FC0u)); }
 inline ::xikit::fn<decltype(&::CMoResource::Slot5DoNothing)> CMoResource__Slot5DoNothing() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::Slot5DoNothing)> >(XI_GAME(0x10047FD0u)); }
-inline ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor)> CMoGeneratorClone_VT_1032B114__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor)> >(XI_GAME(0x10047FE0u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorRes::ScalarDeletingDtor)> CMoGeneratorRes__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorRes::ScalarDeletingDtor)> >(XI_GAME(0x10047FE0u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::Release)> CMoGeneratorClone__Release() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::Release)> >(XI_GAME(0x100480D0u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::UnlinkElemListA)> CMoGeneratorClone__UnlinkElemListA() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::UnlinkElemListA)> >(XI_GAME(0x10048140u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::ResolveCmdTargets)> CMoGeneratorClone__ResolveCmdTargets() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::ResolveCmdTargets)> >(XI_GAME(0x10048220u)); }
@@ -1037,20 +1036,20 @@ inline ::xikit::fn<decltype(&::CMoDist::set_field_194)> CMoDist__set_field_194()
 inline ::xikit::fn<decltype(&::CMoDist::ScalarDeletingDtor)> CMoDist__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDist::ScalarDeletingDtor)> >(XI_GAME(0x10052D80u)); }
 inline ::xikit::fn<decltype(&::CMoVuDist::Construct)> CMoVuDist__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuDist::Construct)> >(XI_GAME(0x10052DA0u)); }
 inline ::xikit::fn<decltype(&::CMoVuDist::IsKind10)> CMoVuDist__IsKind10() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuDist::IsKind10)> >(XI_GAME(0x10052DD0u)); }
-inline ::xikit::fn<decltype(&::CMoVuDist::vf008)> CMoVuDist__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuDist::vf008)> >(XI_GAME(0x10052DE0u)); }
+inline ::xikit::fn<decltype(&::CMoVuDist::Slot8CallSlot10)> CMoVuDist__Slot8CallSlot10() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuDist::Slot8CallSlot10)> >(XI_GAME(0x10052DE0u)); }
 inline ::xikit::fn<decltype(&::CMoVuDist::ScalarDeletingDtor)> CMoVuDist__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuDist::ScalarDeletingDtor)> >(XI_GAME(0x10052DF0u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::Construct)> CMoDistMorphElem__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::Construct)> >(XI_GAME(0x10052E20u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::IsKind6)> CMoDistMorphElem__IsKind6() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::IsKind6)> >(XI_GAME(0x10052E40u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::set_field_1C0)> CMoDistMorphElem__set_field_1C0() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::set_field_1C0)> >(XI_GAME(0x10052E50u)); }
 inline ::xikit::fn<decltype(&::CMoDistMorphElem::ScalarDeletingDtor)> CMoDistMorphElem__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistMorphElem::ScalarDeletingDtor)> >(XI_GAME(0x10052E60u)); }
 inline ::xikit::fn<decltype(&::ElemCtor471011C8_Set194)> ElemCtor471011C8_Set194() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemCtor471011C8_Set194)> >(XI_GAME(0x10052E80u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032B3B8::Ctor)> CXi471011C8_VT_1032B3B8__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032B3B8::Ctor)> >(XI_GAME(0x10052E90u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032AD80::Ctor)> CXi471011C8_VT_1032AD80__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032AD80::Ctor)> >(XI_GAME(0x10052F00u)); }
+inline ::xikit::fn<decltype(&::CMoD3mElemFlag200000::Ctor)> CMoD3mElemFlag200000__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mElemFlag200000::Ctor)> >(XI_GAME(0x10052E90u)); }
+inline ::xikit::fn<decltype(&::CMoD3mElem::Ctor)> CMoD3mElem__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoD3mElem::Ctor)> >(XI_GAME(0x10052F00u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::Init)> CMoDistModelElem__Init() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::Init)> >(XI_GAME(0x10052F20u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::IsKind4)> CMoDistModelElem__IsKind4() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::IsKind4)> >(XI_GAME(0x10052F40u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::set_field_194)> CMoDistModelElem__set_field_194() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::set_field_194)> >(XI_GAME(0x10052F50u)); }
 inline ::xikit::fn<decltype(&::CMoDistModelElem::ScalarDeletingDtor)> CMoDistModelElem__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistModelElem::ScalarDeletingDtor)> >(XI_GAME(0x10052F60u)); }
-inline ::xikit::fn<decltype(&::CXi471011C8_VT_1032B478::Ctor)> CXi471011C8_VT_1032B478__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CXi471011C8_VT_1032B478::Ctor)> >(XI_GAME(0x10052F80u)); }
+inline ::xikit::fn<decltype(&::CMoRingElem::Ctor)> CMoRingElem__Ctor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoRingElem::Ctor)> >(XI_GAME(0x10052F80u)); }
 inline ::xikit::fn<decltype(&::CMoDistRingElem::Construct)> CMoDistRingElem__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistRingElem::Construct)> >(XI_GAME(0x10052FD0u)); }
 inline ::xikit::fn<decltype(&::CMoDistRingElem::IsKind5)> CMoDistRingElem__IsKind5() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistRingElem::IsKind5)> >(XI_GAME(0x10052FF0u)); }
 inline ::xikit::fn<decltype(&::CMoDistRingElem::set_field_1B6)> CMoDistRingElem__set_field_1B6() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDistRingElem::set_field_1B6)> >(XI_GAME(0x10053000u)); }
@@ -1067,16 +1066,16 @@ inline ::xikit::fn<decltype(&::ElemFields194_SetField1A4)> ElemFields194_SetFiel
 inline ::xikit::fn<decltype(&::ElemFields194_SetField1A8)> ElemFields194_SetField1A8() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemFields194_SetField1A8)> >(XI_GAME(0x100530E0u)); }
 inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Construct)> CMoDisintegrateProgElem__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Construct)> >(XI_GAME(0x100530F0u)); }
 inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::IsKind13)> CMoDisintegrateProgElem__IsKind13() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::IsKind13)> >(XI_GAME(0x10053130u)); }
-inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::vf008)> CMoDisintegrateProgElem__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::vf008)> >(XI_GAME(0x10053140u)); }
+inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Slot8CallSlot10)> CMoDisintegrateProgElem__Slot8CallSlot10() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::Slot8CallSlot10)> >(XI_GAME(0x10053140u)); }
 inline ::xikit::fn<decltype(&::CMoDisintegrateProgElem::ScalarDeletingDtor)> CMoDisintegrateProgElem__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDisintegrateProgElem::ScalarDeletingDtor)> >(XI_GAME(0x10053150u)); }
 inline ::xikit::fn<decltype(&::CMoNullProgElem::Construct)> CMoNullProgElem__Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoNullProgElem::Construct)> >(XI_GAME(0x10053180u)); }
 inline ::xikit::fn<decltype(&::CMoNullProgElem::Destructor)> CMoNullProgElem__Destructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoNullProgElem::Destructor)> >(XI_GAME(0x100531B0u)); }
 inline ::xikit::fn<decltype(&::SharedConditionalStateReset)> SharedConditionalStateReset() { return reinterpret_cast< ::xikit::fn<decltype(&::SharedConditionalStateReset)> >(XI_GAME(0x100531D0u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B654::ScalarDeletingDtor)> CMoTask_VT_1032B654__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B654::ScalarDeletingDtor)> >(XI_GAME(0x10053350u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorTask::ScalarDeletingDtor)> CMoGeneratorTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorTask::ScalarDeletingDtor)> >(XI_GAME(0x10053350u)); }
 inline ::xikit::fn<decltype(&::CMoTask::Restart)> CMoTask__Restart() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::Restart)> >(XI_GAME(0x10053370u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::CopyParams)> CMoGeneratorClone__CopyParams() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::CopyParams)> >(XI_GAME(0x10053450u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::CreateInstance)> CMoGeneratorClone__CreateInstance() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::CreateInstance)> >(XI_GAME(0x100536C0u)); }
-inline ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor)> CMoGeneratorClone_VT_1032B69C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor)> >(XI_GAME(0x10053840u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorClone::ScalarDeletingDtor)> CMoGeneratorClone__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::ScalarDeletingDtor)> >(XI_GAME(0x10053840u)); }
 inline ::xikit::fn<decltype(&::Generator_ClearSubobjectOrSetFlag)> Generator_ClearSubobjectOrSetFlag() { return reinterpret_cast< ::xikit::fn<decltype(&::Generator_ClearSubobjectOrSetFlag)> >(XI_GAME(0x10053890u)); }
 inline ::xikit::fn<decltype(&::YmGenerater_Stop)> YmGenerater_Stop() { return reinterpret_cast< ::xikit::fn<decltype(&::YmGenerater_Stop)> >(XI_GAME(0x100538E0u)); }
 inline ::xikit::fn<decltype(&::Generator_IsFlag400OrField22Zero)> Generator_IsFlag400OrField22Zero() { return reinterpret_cast< ::xikit::fn<decltype(&::Generator_IsFlag400OrField22Zero)> >(XI_GAME(0x100539E0u)); }
@@ -1084,16 +1083,16 @@ inline ::xikit::fn<decltype(&::Generator_StopGenerators)> Generator_StopGenerato
 inline ::xikit::fn<decltype(&::YmGenerater_UpdateAttach)> YmGenerater_UpdateAttach() { return reinterpret_cast< ::xikit::fn<decltype(&::YmGenerater_UpdateAttach)> >(XI_GAME(0x10053C80u)); }
 inline ::xikit::fn<decltype(&::YmGenerater_UpdateAttachIfPresent)> YmGenerater_UpdateAttachIfPresent() { return reinterpret_cast< ::xikit::fn<decltype(&::YmGenerater_UpdateAttachIfPresent)> >(XI_GAME(0x10053DD0u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::InitDefaultParams)> CMoGeneratorClone__InitDefaultParams() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::InitDefaultParams)> >(XI_GAME(0x10053E00u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B654::RunGeneratorAndFinish)> CMoTask_VT_1032B654__RunGeneratorAndFinish() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B654::RunGeneratorAndFinish)> >(XI_GAME(0x10054220u)); }
-inline ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass)> CMoGeneratorClone_VT_1032B69C__CMoGeneratorClone_GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass)> >(XI_GAME(0x100542E0u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorTask::RunGeneratorAndFinish)> CMoGeneratorTask__RunGeneratorAndFinish() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorTask::RunGeneratorAndFinish)> >(XI_GAME(0x10054220u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass)> CMoGeneratorClone__CMoGeneratorClone_GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass)> >(XI_GAME(0x100542E0u)); }
 inline ::xikit::fn<decltype(&::CMoGeneratorClone::Destructor)> CMoGeneratorClone__Destructor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorClone::Destructor)> >(XI_GAME(0x100542F0u)); }
 inline ::xikit::fn<decltype(&::GeneratorRelease_Get10353710)> GeneratorRelease_Get10353710() { return reinterpret_cast< ::xikit::fn<decltype(&::GeneratorRelease_Get10353710)> >(XI_GAME(0x10054410u)); }
 inline ::xikit::fn<decltype(&::GeneratorRelease_CopyFromPtr)> GeneratorRelease_CopyFromPtr() { return reinterpret_cast< ::xikit::fn<decltype(&::GeneratorRelease_CopyFromPtr)> >(XI_GAME(0x10054430u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032B140::vf001)> CMoAttachments_VT_1032B140__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032B140::vf001)> >(XI_GAME(0x10054450u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B654::vf011)> CMoTask_VT_1032B654__vf011() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B654::vf011)> >(XI_GAME(0x10054460u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B654::vf012)> CMoTask_VT_1032B654__vf012() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B654::vf012)> >(XI_GAME(0x10054470u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::vf008)> CMoResource_VT_1032C5FC__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::vf008)> >(XI_GAME(0x10054480u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::vf009)> CMoResource_VT_1032C5FC__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::vf009)> >(XI_GAME(0x10054490u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorResAttachments::Slot1DeleteOwner)> CMoGeneratorResAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorResAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10054450u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorTask::Slot11GetCloneRuntimeClass)> CMoGeneratorTask__Slot11GetCloneRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorTask::Slot11GetCloneRuntimeClass)> >(XI_GAME(0x10054460u)); }
+inline ::xikit::fn<decltype(&::CMoGeneratorTask::Slot12DeleteClone)> CMoGeneratorTask__Slot12DeleteClone() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoGeneratorTask::Slot12DeleteClone)> >(XI_GAME(0x10054470u)); }
+inline ::xikit::fn<decltype(&::CMoResType19::SetupNop)> CMoResType19__SetupNop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType19::SetupNop)> >(XI_GAME(0x10054480u)); }
+inline ::xikit::fn<decltype(&::CMoResType19::Slot9Nop)> CMoResType19__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType19::Slot9Nop)> >(XI_GAME(0x10054490u)); }
 inline ::xikit::fn<decltype(&::ElemCurve_EvaluateWithFlag34)> ElemCurve_EvaluateWithFlag34() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemCurve_EvaluateWithFlag34)> >(XI_GAME(0x100544D0u)); }
 inline ::xikit::fn<decltype(&::ElemCurve_Evaluate)> ElemCurve_Evaluate() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemCurve_Evaluate)> >(XI_GAME(0x10054500u)); }
 inline ::xikit::fn<decltype(&::ElemCurve_EvaluateEaseIn)> ElemCurve_EvaluateEaseIn() { return reinterpret_cast< ::xikit::fn<decltype(&::ElemCurve_EvaluateEaseIn)> >(XI_GAME(0x100546F0u)); }
@@ -1167,36 +1166,36 @@ inline ::xikit::fn<decltype(&::AfterimageTask_SetTarget)> AfterimageTask_SetTarg
 inline ::xikit::fn<decltype(&::AfterimageTask_Execute)> AfterimageTask_Execute() { return reinterpret_cast< ::xikit::fn<decltype(&::AfterimageTask_Execute)> >(XI_GAME(0x10062E20u)); }
 inline ::xikit::fn<decltype(&::AfterimageTask_Kill)> AfterimageTask_Kill() { return reinterpret_cast< ::xikit::fn<decltype(&::AfterimageTask_Kill)> >(XI_GAME(0x10062E80u)); }
 inline ::xikit::fn<decltype(&::AfterimageTask_IsResourceMoving)> AfterimageTask_IsResourceMoving() { return reinterpret_cast< ::xikit::fn<decltype(&::AfterimageTask_IsResourceMoving)> >(XI_GAME(0x10062ED0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BCCC::vf001)> CMoAttachments_VT_1032BCCC__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BCCC::vf001)> >(XI_GAME(0x10062F50u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BAF0::vf001)> CMoAttachments_VT_1032BAF0__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BAF0::vf001)> >(XI_GAME(0x10062F60u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BBAC::vf001)> CMoAttachments_VT_1032BBAC__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BBAC::vf001)> >(XI_GAME(0x10062F70u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp48Attachments::Slot1DeleteOwner)> CMoSchOp48Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp48Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10062F50u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp1FAttachments::Slot1DeleteOwner)> CMoSchOp1FAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp1FAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10062F60u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp2CAttachments::Slot1DeleteOwner)> CMoSchOp2CAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp2CAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10062F70u)); }
 inline ::xikit::fn<decltype(&::CMoLockLookAtDriveTask::Slot11CallGetRuntimeClass)> CMoLockLookAtDriveTask__Slot11CallGetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoLockLookAtDriveTask::Slot11CallGetRuntimeClass)> >(XI_GAME(0x10062F80u)); }
 inline ::xikit::fn<decltype(&::CMoLockLookAtDriveTask::Slot12ThunkDeletingDtor)> CMoLockLookAtDriveTask__Slot12ThunkDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoLockLookAtDriveTask::Slot12ThunkDeletingDtor)> >(XI_GAME(0x10062F90u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF0C::vf001)> CMoAttachments_VT_1032BF0C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF0C::vf001)> >(XI_GAME(0x10062FA0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BD14::vf001)> CMoAttachments_VT_1032BD14__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BD14::vf001)> >(XI_GAME(0x10062FB0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF54::vf001)> CMoAttachments_VT_1032BF54__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF54::vf001)> >(XI_GAME(0x10062FC0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BBF4::vf001)> CMoAttachments_VT_1032BBF4__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BBF4::vf001)> >(XI_GAME(0x10062FD0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp7AAttachments::Slot1DeleteOwner)> CMoSchOp7AAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp7AAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10062FA0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp7FAttachments::Slot1DeleteOwner)> CMoSchOp7FAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp7FAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10062FB0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOpB4Attachments::Slot1DeleteOwner)> CMoSchOpB4Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOpB4Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10062FC0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOpBFAttachments::Slot1DeleteOwner)> CMoSchOpBFAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOpBFAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10062FD0u)); }
 inline ::xikit::fn<decltype(&::CMoActorColorDriveTask::Slot11CallGetRuntimeClass)> CMoActorColorDriveTask__Slot11CallGetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoActorColorDriveTask::Slot11CallGetRuntimeClass)> >(XI_GAME(0x10062FE0u)); }
 inline ::xikit::fn<decltype(&::CMoActorColorDriveTask::Slot12ThunkDeletingDtor)> CMoActorColorDriveTask__Slot12ThunkDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoActorColorDriveTask::Slot12ThunkDeletingDtor)> >(XI_GAME(0x10062FF0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BD5C::vf001)> CMoAttachments_VT_1032BD5C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BD5C::vf001)> >(XI_GAME(0x10063000u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF9C::vf001)> CMoAttachments_VT_1032BF9C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BF9C::vf001)> >(XI_GAME(0x10063010u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BC68::vf001)> CMoAttachments_VT_1032BC68__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BC68::vf001)> >(XI_GAME(0x10063020u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BDA4::vf001)> CMoAttachments_VT_1032BDA4__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BDA4::vf001)> >(XI_GAME(0x10063030u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BFE4::vf001)> CMoAttachments_VT_1032BFE4__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BFE4::vf001)> >(XI_GAME(0x10063040u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BB38::vf001)> CMoAttachments_VT_1032BB38__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BB38::vf001)> >(XI_GAME(0x10063070u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BDEC::vf001)> CMoAttachments_VT_1032BDEC__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BDEC::vf001)> >(XI_GAME(0x10063080u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032C02C::vf001)> CMoAttachments_VT_1032C02C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032C02C::vf001)> >(XI_GAME(0x10063090u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp42Attachments::Slot1DeleteOwner)> CMoSchOp42Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp42Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063000u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp2EAttachments::Slot1DeleteOwner)> CMoSchOp2EAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp2EAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10063010u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp62Attachments::Slot1DeleteOwner)> CMoSchOp62Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp62Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063020u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp40Attachments::Slot1DeleteOwner)> CMoSchOp40Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp40Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063030u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp2FAttachments::Slot1DeleteOwner)> CMoSchOp2FAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp2FAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10063040u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp07Attachments::Slot1DeleteOwner)> CMoSchOp07Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp07Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063070u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp75Attachments::Slot1DeleteOwner)> CMoSchOp75Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp75Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063080u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp59Attachments::Slot1DeleteOwner)> CMoSchOp59Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp59Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10063090u)); }
 inline ::xikit::fn<decltype(&::CMoPathDriveActorTask::Slot11CallGetRuntimeClass)> CMoPathDriveActorTask__Slot11CallGetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoPathDriveActorTask::Slot11CallGetRuntimeClass)> >(XI_GAME(0x100630A0u)); }
 inline ::xikit::fn<decltype(&::CMoPathDriveActorTask::Slot12ThunkDeletingDtor)> CMoPathDriveActorTask__Slot12ThunkDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoPathDriveActorTask::Slot12ThunkDeletingDtor)> >(XI_GAME(0x100630B0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BE34::vf001)> CMoAttachments_VT_1032BE34__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BE34::vf001)> >(XI_GAME(0x100630C0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BE7C::vf001)> CMoAttachments_VT_1032BE7C__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BE7C::vf001)> >(XI_GAME(0x100630D0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032B940::vf001)> CMoAttachments_VT_1032B940__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032B940::vf001)> >(XI_GAME(0x100630E0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOpB5Attachments::Slot1DeleteOwner)> CMoSchOpB5Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOpB5Attachments::Slot1DeleteOwner)> >(XI_GAME(0x100630C0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOpBCAttachments::Slot1DeleteOwner)> CMoSchOpBCAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOpBCAttachments::Slot1DeleteOwner)> >(XI_GAME(0x100630D0u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp1DAttachments::Slot1DeleteOwner)> CMoSchOp1DAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp1DAttachments::Slot1DeleteOwner)> >(XI_GAME(0x100630E0u)); }
 inline ::xikit::fn<decltype(&::CMoLockColorDriveTask::Slot11CallGetRuntimeClass)> CMoLockColorDriveTask__Slot11CallGetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoLockColorDriveTask::Slot11CallGetRuntimeClass)> >(XI_GAME(0x100630F0u)); }
 inline ::xikit::fn<decltype(&::CMoLockColorDriveTask::Slot12ThunkDeletingDtor)> CMoLockColorDriveTask__Slot12ThunkDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoLockColorDriveTask::Slot12ThunkDeletingDtor)> >(XI_GAME(0x10063100u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BC84::vf001)> CMoAttachments_VT_1032BC84__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BC84::vf001)> >(XI_GAME(0x10063110u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032BEC4::vf001)> CMoAttachments_VT_1032BEC4__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032BEC4::vf001)> >(XI_GAME(0x10063120u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B95C::vf011)> CMoTask_VT_1032B95C__vf011() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B95C::vf011)> >(XI_GAME(0x10063130u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032B95C::vf012)> CMoTask_VT_1032B95C__vf012() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032B95C::vf012)> >(XI_GAME(0x10063140u)); }
+inline ::xikit::fn<decltype(&::CMoSchOpSharedAttachments::Slot1DeleteOwner)> CMoSchOpSharedAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOpSharedAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10063110u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp9BAttachments::Slot1DeleteOwner)> CMoSchOp9BAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp9BAttachments::Slot1DeleteOwner)> >(XI_GAME(0x10063120u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass)> CMoSchOp1DTask__Slot11GetPathDriveActorRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass)> >(XI_GAME(0x10063130u)); }
+inline ::xikit::fn<decltype(&::CMoSchOp1DTask::Slot12DeletePathDriveActorTask)> CMoSchOp1DTask__Slot12DeletePathDriveActorTask() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSchOp1DTask::Slot12DeletePathDriveActorTask)> >(XI_GAME(0x10063140u)); }
 inline ::xikit::fn<decltype(&::CMoSpline::GetRuntimeClass)> CMoSpline__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline::GetRuntimeClass)> >(XI_GAME(0x10063450u)); }
 inline ::xikit::fn<decltype(&::CMoSpline_Construct)> CMoSpline_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline_Construct)> >(XI_GAME(0x10063460u)); }
 inline ::xikit::fn<decltype(&::CMoSpline::ScalarDeletingDtor)> CMoSpline__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline::ScalarDeletingDtor)> >(XI_GAME(0x10063480u)); }
@@ -1210,7 +1209,7 @@ inline ::xikit::fn<decltype(&::CMoSpline::GetWrapped)> CMoSpline__GetWrapped() {
 inline ::xikit::fn<decltype(&::CMoSpline::GetData)> CMoSpline__GetData() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline::GetData)> >(XI_GAME(0x10063B70u)); }
 inline ::xikit::fn<decltype(&::CMoSpline::EnsureSamples)> CMoSpline__EnsureSamples() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline::EnsureSamples)> >(XI_GAME(0x10063B80u)); }
 inline ::xikit::fn<decltype(&::CMoSpline::SetValue)> CMoSpline__SetValue() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSpline::SetValue)> >(XI_GAME(0x10063C30u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C55C::vf008)> CMoResource_VT_1032C55C__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C55C::vf008)> >(XI_GAME(0x10063C50u)); }
+inline ::xikit::fn<decltype(&::CMoResType3E::SetupClearField34)> CMoResType3E__SetupClearField34() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType3E::SetupClearField34)> >(XI_GAME(0x10063C50u)); }
 inline ::xikit::fn<decltype(&::YmElem_ForEachInstance)> YmElem_ForEachInstance() { return reinterpret_cast< ::xikit::fn<decltype(&::YmElem_ForEachInstance)> >(XI_GAME(0x10063C80u)); }
 inline ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant13)> CMoElem__GetRuntimeClass_variant13() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoElem::GetRuntimeClass_variant13)> >(XI_GAME(0x10064160u)); }
 inline ::xikit::fn<decltype(&::CMoVuLineProgElem::GetRuntimeClass)> CMoVuLineProgElem__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoVuLineProgElem::GetRuntimeClass)> >(XI_GAME(0x10064170u)); }
@@ -1245,8 +1244,8 @@ inline ::xikit::fn<decltype(&::VBPool_Constructor)> VBPool_Constructor() { retur
 inline ::xikit::fn<decltype(&::VBPool_Insert)> VBPool_Insert() { return reinterpret_cast< ::xikit::fn<decltype(&::VBPool_Insert)> >(XI_GAME(0x1006B120u)); }
 inline ::xikit::fn<decltype(&::VBPool_FindMatch)> VBPool_FindMatch() { return reinterpret_cast< ::xikit::fn<decltype(&::VBPool_FindMatch)> >(XI_GAME(0x1006B1D0u)); }
 inline ::xikit::fn<decltype(&::CMoDX::CreateAndInitSystem)> CMoDX__CreateAndInitSystem() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoDX::CreateAndInitSystem)> >(XI_GAME(0x1006B2B0u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_10329C70::vf8)> CMoTask_VT_10329C70__vf8() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_10329C70::vf8)> >(XI_GAME(0x1006B480u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_10329C70::vf1)> CMoTask_VT_10329C70__vf1() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_10329C70::vf1)> >(XI_GAME(0x1006B4C0u)); }
+inline ::xikit::fn<decltype(&::CMoCameraSetupTask::Slot8SetupCameraAfterOneTick)> CMoCameraSetupTask__Slot8SetupCameraAfterOneTick() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCameraSetupTask::Slot8SetupCameraAfterOneTick)> >(XI_GAME(0x1006B480u)); }
+inline ::xikit::fn<decltype(&::CMoCameraSetupTask::Slot1NopOnMessage6)> CMoCameraSetupTask__Slot1NopOnMessage6() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCameraSetupTask::Slot1NopOnMessage6)> >(XI_GAME(0x1006B4C0u)); }
 inline ::xikit::fn<decltype(&::Rand_SeedMT19937)> Rand_SeedMT19937() { return reinterpret_cast< ::xikit::fn<decltype(&::Rand_SeedMT19937)> >(XI_GAME(0x1006BD90u)); }
 inline ::xikit::fn<decltype(&::RandAndHeader_Next)> RandAndHeader_Next() { return reinterpret_cast< ::xikit::fn<decltype(&::RandAndHeader_Next)> >(XI_GAME(0x1006BE20u)); }
 inline ::xikit::fn<decltype(&::Rand_NextMod)> Rand_NextMod() { return reinterpret_cast< ::xikit::fn<decltype(&::Rand_NextMod)> >(XI_GAME(0x1006BF40u)); }
@@ -1267,55 +1266,55 @@ inline ::xikit::fn<decltype(&::OcclusionMng_Prepare)> OcclusionMng_Prepare() { r
 inline ::xikit::fn<decltype(&::Occlusion_IsFloatClassAccepted)> Occlusion_IsFloatClassAccepted() { return reinterpret_cast< ::xikit::fn<decltype(&::Occlusion_IsFloatClassAccepted)> >(XI_GAME(0x1006CA20u)); }
 inline ::xikit::fn<decltype(&::Occlusion_AreAll16FloatsAccepted)> Occlusion_AreAll16FloatsAccepted() { return reinterpret_cast< ::xikit::fn<decltype(&::Occlusion_AreAll16FloatsAccepted)> >(XI_GAME(0x1006CA60u)); }
 inline ::xikit::fn<decltype(&::CreateProcessorInstance)> CreateProcessorInstance() { return reinterpret_cast< ::xikit::fn<decltype(&::CreateProcessorInstance)> >(XI_GAME(0x1006CB50u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf008)> CMoProcessor_VT_1032C1C8__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf008)> >(XI_GAME(0x1006CC40u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf010)> CMoProcessor_VT_1032C1C8__vf010() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf010)> >(XI_GAME(0x1006CC50u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf040)> CMoProcessor_VT_1032C1C8__vf040() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf040)> >(XI_GAME(0x1006CC60u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf038)> CMoProcessor_VT_1032C1C8__vf038() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf038)> >(XI_GAME(0x1006CC70u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf046)> CMoProcessor_VT_1032C1C8__vf046() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf046)> >(XI_GAME(0x1006CC80u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf045)> CMoProcessor_VT_1032C1C8__vf045() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf045)> >(XI_GAME(0x1006CC90u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::CMoProcessor_GetRuntimeClass)> CMoProcessor_VT_1032C1C8__CMoProcessor_GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::CMoProcessor_GetRuntimeClass)> >(XI_GAME(0x1006CCD0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot8CallSlot9)> CMoProcessor3DNow__Slot8CallSlot9() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot8CallSlot9)> >(XI_GAME(0x1006CC40u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot10CallSlot11)> CMoProcessor3DNow__Slot10CallSlot11() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot10CallSlot11)> >(XI_GAME(0x1006CC50u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot40CallSlot41)> CMoProcessor3DNow__Slot40CallSlot41() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot40CallSlot41)> >(XI_GAME(0x1006CC60u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot38CallSlot39)> CMoProcessor3DNow__Slot38CallSlot39() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot38CallSlot39)> >(XI_GAME(0x1006CC70u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot46CallSlot48)> CMoProcessor3DNow__Slot46CallSlot48() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot46CallSlot48)> >(XI_GAME(0x1006CC80u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot45CallSlot47)> CMoProcessor3DNow__Slot45CallSlot47() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Slot45CallSlot47)> >(XI_GAME(0x1006CC90u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::CMoProcessor_GetRuntimeClass)> CMoProcessor3DNow__CMoProcessor_GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::CMoProcessor_GetRuntimeClass)> >(XI_GAME(0x1006CCD0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::InitRotationMatrices)> CMoProcessor__InitRotationMatrices() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::InitRotationMatrices)> >(XI_GAME(0x1006CE70u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368_SetIdentity)> CMoProcessor_VT_1032C368_SetIdentity() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368_SetIdentity)> >(XI_GAME(0x1006D0A0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87_SetIdentity)> CMoProcessorX87_SetIdentity() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87_SetIdentity)> >(XI_GAME(0x1006D0A0u)); }
 inline ::xikit::fn<decltype(&::ProcessorMatrix_InvertMat4InPlace)> ProcessorMatrix_InvertMat4InPlace() { return reinterpret_cast< ::xikit::fn<decltype(&::ProcessorMatrix_InvertMat4InPlace)> >(XI_GAME(0x1006D190u)); }
 inline ::xikit::fn<decltype(&::ProcessorMatrix_MultiplyTo)> ProcessorMatrix_MultiplyTo() { return reinterpret_cast< ::xikit::fn<decltype(&::ProcessorMatrix_MultiplyTo)> >(XI_GAME(0x1006D270u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf007)> CMoProcessor_VT_1032C298__vf007() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf007)> >(XI_GAME(0x1006D380u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf012)> CMoProcessor_VT_1032C368__vf012() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf012)> >(XI_GAME(0x1006D3B0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Scale)> CMoProcessorSSE__Vec3Scale() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Scale)> >(XI_GAME(0x1006D380u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::Vec3AddScaled)> CMoProcessorX87__Vec3AddScaled() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::Vec3AddScaled)> >(XI_GAME(0x1006D3B0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::TransposeInPlace)> CMoProcessor__TransposeInPlace() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::TransposeInPlace)> >(XI_GAME(0x1006D3E0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf014)> CMoProcessor_VT_1032C368__vf014() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf014)> >(XI_GAME(0x1006D4D0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Dot)> CMoProcessorX87__Vec3Dot() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Dot)> >(XI_GAME(0x1006D4D0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::LengthSafe)> CMoProcessor__LengthSafe() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::LengthSafe)> >(XI_GAME(0x1006D580u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf042)> CMoProcessor_VT_1032C368__vf042() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf042)> >(XI_GAME(0x1006D680u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf043)> CMoProcessor_VT_1032C368__vf043() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf043)> >(XI_GAME(0x1006D6B0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::TransformPoint)> CMoProcessor_VT_1032C368__TransformPoint() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::TransformPoint)> >(XI_GAME(0x1006D720u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf021)> CMoProcessor_VT_1032C368__vf021() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::vf021)> >(XI_GAME(0x1006D980u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Add)> CMoProcessorX87__Vec3Add() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Add)> >(XI_GAME(0x1006D680u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::Vec3MulComponents)> CMoProcessorX87__Vec3MulComponents() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::Vec3MulComponents)> >(XI_GAME(0x1006D6B0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::TransformPoint)> CMoProcessorX87__TransformPoint() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::TransformPoint)> >(XI_GAME(0x1006D720u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Lerp)> CMoProcessorX87__Vec3Lerp() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::Vec3Lerp)> >(XI_GAME(0x1006D980u)); }
 inline ::xikit::fn<decltype(&::ProcessorRotation_MakeFromAngles)> ProcessorRotation_MakeFromAngles() { return reinterpret_cast< ::xikit::fn<decltype(&::ProcessorRotation_MakeFromAngles)> >(XI_GAME(0x1006D9C0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationFromAnglesZYX)> CMoProcessor_VT_1032C368__RotationFromAnglesZYX() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationFromAnglesZYX)> >(XI_GAME(0x1006DCF0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationY)> CMoProcessor_VT_1032C368__RotationY() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationY)> >(XI_GAME(0x1006E140u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationZ)> CMoProcessor_VT_1032C368__RotationZ() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationZ)> >(XI_GAME(0x1006E260u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationFromAnglesXYZ)> CMoProcessor_VT_1032C368__RotationFromAnglesXYZ() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C368::RotationFromAnglesXYZ)> >(XI_GAME(0x1006E380u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::RotationFromAnglesZYX)> CMoProcessorX87__RotationFromAnglesZYX() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::RotationFromAnglesZYX)> >(XI_GAME(0x1006DCF0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::RotationY)> CMoProcessorX87__RotationY() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::RotationY)> >(XI_GAME(0x1006E140u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::RotationZ)> CMoProcessorX87__RotationZ() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::RotationZ)> >(XI_GAME(0x1006E260u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorX87::RotationFromAnglesXYZ)> CMoProcessorX87__RotationFromAnglesXYZ() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorX87::RotationFromAnglesXYZ)> >(XI_GAME(0x1006E380u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::ScratchMatrixOp)> CMoProcessor__ScratchMatrixOp() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::ScratchMatrixOp)> >(XI_GAME(0x1006E6B0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::CalcScreenBounds)> CMoProcessor__CalcScreenBounds() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::CalcScreenBounds)> >(XI_GAME(0x1006E970u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::CalcScreenBoundsAndVisible)> CMoProcessor__CalcScreenBoundsAndVisible() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::CalcScreenBoundsAndVisible)> >(XI_GAME(0x1006ED10u)); }
 inline ::xikit::fn<decltype(&::Processor_InitIdentityMatrices)> Processor_InitIdentityMatrices() { return reinterpret_cast< ::xikit::fn<decltype(&::Processor_InitIdentityMatrices)> >(XI_GAME(0x1006EF70u)); }
 inline ::xikit::fn<decltype(&::Mat4x4_SafeTranspose)> Mat4x4_SafeTranspose() { return reinterpret_cast< ::xikit::fn<decltype(&::Mat4x4_SafeTranspose)> >(XI_GAME(0x1006F0A0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf014)> CMoProcessor_VT_1032C298__vf014() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf014)> >(XI_GAME(0x1006F5B0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Dot)> CMoProcessorSSE__Vec3Dot() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Dot)> >(XI_GAME(0x1006F5B0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::MulPointVec3)> CMoProcessor__MulPointVec3() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::MulPointVec3)> >(XI_GAME(0x1006F800u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf021)> CMoProcessor_VT_1032C298__vf021() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf021)> >(XI_GAME(0x1006FA30u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Lerp)> CMoProcessorSSE__Vec3Lerp() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorSSE::Vec3Lerp)> >(XI_GAME(0x1006FA30u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::BuildRotationXYZ)> CMoProcessor__BuildRotationXYZ() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::BuildRotationXYZ)> >(XI_GAME(0x1006FAE0u)); }
 inline ::xikit::fn<decltype(&::CMoProcessor::SetRotationFromAngles)> CMoProcessor__SetRotationFromAngles() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor::SetRotationFromAngles)> >(XI_GAME(0x1006FC40u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf035)> CMoProcessor_VT_1032C298__vf035() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf035)> >(XI_GAME(0x10070020u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf036)> CMoProcessor_VT_1032C298__vf036() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C298::vf036)> >(XI_GAME(0x10070040u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorSSE::CalcScreenBoundsAndVisible)> CMoProcessorSSE__CalcScreenBoundsAndVisible() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorSSE::CalcScreenBoundsAndVisible)> >(XI_GAME(0x10070020u)); }
+inline ::xikit::fn<decltype(&::CMoProcessorSSE::CalcScreenBounds)> CMoProcessorSSE__CalcScreenBounds() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessorSSE::CalcScreenBounds)> >(XI_GAME(0x10070040u)); }
 inline ::xikit::fn<decltype(&::ProcessorInit_InitMatrices)> ProcessorInit_InitMatrices() { return reinterpret_cast< ::xikit::fn<decltype(&::ProcessorInit_InitMatrices)> >(XI_GAME(0x100700E0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf012)> CMoProcessor_VT_1032C1C8__vf012() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf012)> >(XI_GAME(0x10070780u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf014)> CMoProcessor_VT_1032C1C8__vf014() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf014)> >(XI_GAME(0x10070790u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf018)> CMoProcessor_VT_1032C1C8__vf018() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf018)> >(XI_GAME(0x10070AA0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf017)> CMoProcessor_VT_1032C1C8__vf017() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf017)> >(XI_GAME(0x10070AB0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf016)> CMoProcessor_VT_1032C1C8__vf016() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf016)> >(XI_GAME(0x10070AC0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf021)> CMoProcessor_VT_1032C1C8__vf021() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf021)> >(XI_GAME(0x10070AD0u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf033)> CMoProcessor_VT_1032C1C8__vf033() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf033)> >(XI_GAME(0x10070E20u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf035)> CMoProcessor_VT_1032C1C8__vf035() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf035)> >(XI_GAME(0x10070E40u)); }
-inline ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf036)> CMoProcessor_VT_1032C1C8__vf036() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor_VT_1032C1C8::vf036)> >(XI_GAME(0x10070E60u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3AddScaled)> CMoProcessor3DNow__Vec3AddScaled() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3AddScaled)> >(XI_GAME(0x10070780u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Dot)> CMoProcessor3DNow__Vec3Dot() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Dot)> >(XI_GAME(0x10070790u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec4TransformB)> CMoProcessor3DNow__Vec4TransformB() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec4TransformB)> >(XI_GAME(0x10070AA0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec4Transform)> CMoProcessor3DNow__Vec4Transform() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec4Transform)> >(XI_GAME(0x10070AB0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Transform)> CMoProcessor3DNow__Vec3Transform() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Transform)> >(XI_GAME(0x10070AC0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Lerp)> CMoProcessor3DNow__Vec3Lerp() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::Vec3Lerp)> >(XI_GAME(0x10070AD0u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::ProjectVertsAndBounds)> CMoProcessor3DNow__ProjectVertsAndBounds() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::ProjectVertsAndBounds)> >(XI_GAME(0x10070E20u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::CalcScreenBoundsAndVisible)> CMoProcessor3DNow__CalcScreenBoundsAndVisible() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::CalcScreenBoundsAndVisible)> >(XI_GAME(0x10070E40u)); }
+inline ::xikit::fn<decltype(&::CMoProcessor3DNow::CalcScreenBounds)> CMoProcessor3DNow__CalcScreenBounds() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoProcessor3DNow::CalcScreenBounds)> >(XI_GAME(0x10070E60u)); }
 inline ::xikit::fn<decltype(&::CMoTask::InitVariant12)> CMoTask__InitVariant12() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::InitVariant12)> >(XI_GAME(0x10070F40u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032C490::ScalarDeletingDtor)> CMoTask_VT_1032C490__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032C490::ScalarDeletingDtor)> >(XI_GAME(0x10070F60u)); }
+inline ::xikit::fn<decltype(&::CMoResourceWaitTask::ScalarDeletingDtor)> CMoResourceWaitTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResourceWaitTask::ScalarDeletingDtor)> >(XI_GAME(0x10070F60u)); }
 inline ::xikit::fn<decltype(&::CMoTask::InitAndRegister)> CMoTask__InitAndRegister() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::InitAndRegister)> >(XI_GAME(0x10070F90u)); }
 inline ::xikit::fn<decltype(&::ResHandle_FreeIfUnreferenced)> ResHandle_FreeIfUnreferenced() { return reinterpret_cast< ::xikit::fn<decltype(&::ResHandle_FreeIfUnreferenced)> >(XI_GAME(0x10071050u)); }
 inline ::xikit::fn<decltype(&::ResourceHandle_IsResident)> ResourceHandle_IsResident() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceHandle_IsResident)> >(XI_GAME(0x10071060u)); }
@@ -1326,29 +1325,29 @@ inline ::xikit::fn<decltype(&::MeshResourceCreate_CopyField14At4)> MeshResourceC
 inline ::xikit::fn<decltype(&::MeshResourceCreate_CopyField14At8)> MeshResourceCreate_CopyField14At8() { return reinterpret_cast< ::xikit::fn<decltype(&::MeshResourceCreate_CopyField14At8)> >(XI_GAME(0x10071200u)); }
 inline ::xikit::fn<decltype(&::MeshResourceMng_CreateResourceByKind)> MeshResourceMng_CreateResourceByKind() { return reinterpret_cast< ::xikit::fn<decltype(&::MeshResourceMng_CreateResourceByKind)> >(XI_GAME(0x10071270u)); }
 inline ::xikit::fn<decltype(&::CMoCamera::GetSharedInstance)> CMoCamera__GetSharedInstance() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCamera::GetSharedInstance)> >(XI_GAME(0x10071980u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::vf008)> CMoResource_VT_1032C7D0__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::vf008)> >(XI_GAME(0x100719C0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::vf009)> CMoResource_VT_1032C7D0__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::vf009)> >(XI_GAME(0x100719D0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf009)> CMoResource_VT_1032C828__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C828::vf009)> >(XI_GAME(0x100719E0u)); }
+inline ::xikit::fn<decltype(&::CMoResType45::SetupNop)> CMoResType45__SetupNop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType45::SetupNop)> >(XI_GAME(0x100719C0u)); }
+inline ::xikit::fn<decltype(&::CMoResType45::Slot9Nop)> CMoResType45__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType45::Slot9Nop)> >(XI_GAME(0x100719D0u)); }
+inline ::xikit::fn<decltype(&::CMoSk2Res::Slot9Nop)> CMoSk2Res__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSk2Res::Slot9Nop)> >(XI_GAME(0x100719E0u)); }
 inline ::xikit::fn<decltype(&::CMoCamera::Slot9DoNothing)> CMoCamera__Slot9DoNothing() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCamera::Slot9DoNothing)> >(XI_GAME(0x100719F0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf009)> CMoResource_VT_1032C7FC__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::vf009)> >(XI_GAME(0x10071A00u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::vf009)> CMoResource_VT_1032C7A4__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::vf009)> >(XI_GAME(0x10071A10u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C778::vf008)> CMoResource_VT_1032C778__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C778::vf008)> >(XI_GAME(0x10071A20u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C778::vf009)> CMoResource_VT_1032C778__vf009() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C778::vf009)> >(XI_GAME(0x10071A30u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::ScalarDeletingDtor)> CMoResource_VT_1032C8AC__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C8AC::ScalarDeletingDtor)> >(XI_GAME(0x10071A40u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C880::ScalarDeletingDtor)> CMoResource_VT_1032C880__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C880::ScalarDeletingDtor)> >(XI_GAME(0x10071A60u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C854::ScalarDeletingDtor)> CMoResource_VT_1032C854__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C854::ScalarDeletingDtor)> >(XI_GAME(0x10071A80u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C828::ScalarDeletingDtor)> CMoResource_VT_1032C828__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C828::ScalarDeletingDtor)> >(XI_GAME(0x10071AA0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::ScalarDeletingDtor)> CMoResource_VT_1032C7FC__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7FC::ScalarDeletingDtor)> >(XI_GAME(0x10071AC0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::ScalarDeletingDtor)> CMoResource_VT_1032C7D0__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7D0::ScalarDeletingDtor)> >(XI_GAME(0x10071AE0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::ScalarDeletingDtor)> CMoResource_VT_1032C7A4__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C7A4::ScalarDeletingDtor)> >(XI_GAME(0x10071B00u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C74C::ScalarDeletingDtor)> CMoResource_VT_1032C74C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C74C::ScalarDeletingDtor)> >(XI_GAME(0x10071B50u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C720::ScalarDeletingDtor)> CMoResource_VT_1032C720__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C720::ScalarDeletingDtor)> >(XI_GAME(0x10071B70u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C6F4::ScalarDeletingDtor)> CMoResource_VT_1032C6F4__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C6F4::ScalarDeletingDtor)> >(XI_GAME(0x10071B90u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C6C8::ScalarDeletingDtor)> CMoResource_VT_1032C6C8__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C6C8::ScalarDeletingDtor)> >(XI_GAME(0x10071BB0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C69C::ScalarDeletingDtor)> CMoResource_VT_1032C69C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C69C::ScalarDeletingDtor)> >(XI_GAME(0x10071BD0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C670::ScalarDeletingDtor)> CMoResource_VT_1032C670__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C670::ScalarDeletingDtor)> >(XI_GAME(0x10071BF0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::ScalarDeletingDtor)> CMoResource_VT_1032C5FC__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C5FC::ScalarDeletingDtor)> >(XI_GAME(0x10071C40u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C588::ScalarDeletingDtor)> CMoResource_VT_1032C588__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C588::ScalarDeletingDtor)> >(XI_GAME(0x10071C90u)); }
+inline ::xikit::fn<decltype(&::CMoMo2Res::Slot9Nop)> CMoMo2Res__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoMo2Res::Slot9Nop)> >(XI_GAME(0x10071A00u)); }
+inline ::xikit::fn<decltype(&::CMoResType5E::Slot9Nop)> CMoResType5E__Slot9Nop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5E::Slot9Nop)> >(XI_GAME(0x10071A10u)); }
+inline ::xikit::fn<decltype(&::CMoAfbRes::Setup)> CMoAfbRes__Setup() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAfbRes::Setup)> >(XI_GAME(0x10071A20u)); }
+inline ::xikit::fn<decltype(&::CMoAfbRes::Slot9UnfixPointers)> CMoAfbRes__Slot9UnfixPointers() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAfbRes::Slot9UnfixPointers)> >(XI_GAME(0x10071A30u)); }
+inline ::xikit::fn<decltype(&::CMoBm2Res::ScalarDeletingDtor)> CMoBm2Res__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoBm2Res::ScalarDeletingDtor)> >(XI_GAME(0x10071A40u)); }
+inline ::xikit::fn<decltype(&::CMoResType5D::ScalarDeletingDtor)> CMoResType5D__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5D::ScalarDeletingDtor)> >(XI_GAME(0x10071A60u)); }
+inline ::xikit::fn<decltype(&::CMoOs2Res::ScalarDeletingDtor)> CMoOs2Res__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoOs2Res::ScalarDeletingDtor)> >(XI_GAME(0x10071A80u)); }
+inline ::xikit::fn<decltype(&::CMoSk2Res::ScalarDeletingDtor)> CMoSk2Res__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSk2Res::ScalarDeletingDtor)> >(XI_GAME(0x10071AA0u)); }
+inline ::xikit::fn<decltype(&::CMoMo2Res::ScalarDeletingDtor)> CMoMo2Res__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoMo2Res::ScalarDeletingDtor)> >(XI_GAME(0x10071AC0u)); }
+inline ::xikit::fn<decltype(&::CMoResType45::ScalarDeletingDtor)> CMoResType45__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType45::ScalarDeletingDtor)> >(XI_GAME(0x10071AE0u)); }
+inline ::xikit::fn<decltype(&::CMoResType5E::ScalarDeletingDtor)> CMoResType5E__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5E::ScalarDeletingDtor)> >(XI_GAME(0x10071B00u)); }
+inline ::xikit::fn<decltype(&::CMoResType1F::ScalarDeletingDtor)> CMoResType1F__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType1F::ScalarDeletingDtor)> >(XI_GAME(0x10071B50u)); }
+inline ::xikit::fn<decltype(&::CMoResType21::ScalarDeletingDtor)> CMoResType21__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType21::ScalarDeletingDtor)> >(XI_GAME(0x10071B70u)); }
+inline ::xikit::fn<decltype(&::CMoResType25::ScalarDeletingDtor)> CMoResType25__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType25::ScalarDeletingDtor)> >(XI_GAME(0x10071B90u)); }
+inline ::xikit::fn<decltype(&::CMoResType31::ScalarDeletingDtor)> CMoResType31__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType31::ScalarDeletingDtor)> >(XI_GAME(0x10071BB0u)); }
+inline ::xikit::fn<decltype(&::CMoResType30::ScalarDeletingDtor)> CMoResType30__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType30::ScalarDeletingDtor)> >(XI_GAME(0x10071BD0u)); }
+inline ::xikit::fn<decltype(&::CMoResType5F::ScalarDeletingDtor)> CMoResType5F__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType5F::ScalarDeletingDtor)> >(XI_GAME(0x10071BF0u)); }
+inline ::xikit::fn<decltype(&::CMoResType19::ScalarDeletingDtor)> CMoResType19__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType19::ScalarDeletingDtor)> >(XI_GAME(0x10071C40u)); }
+inline ::xikit::fn<decltype(&::CMoScopeRes::ScalarDeletingDtor)> CMoScopeRes__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoScopeRes::ScalarDeletingDtor)> >(XI_GAME(0x10071C90u)); }
 inline ::xikit::fn<decltype(&::CMoSphRes::ScalarDeletingDtor)> CMoSphRes__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoSphRes::ScalarDeletingDtor)> >(XI_GAME(0x10071D00u)); }
 inline ::xikit::fn<decltype(&::CMoResource::GetRuntimeClass_variant3)> CMoResource__GetRuntimeClass_variant3() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::GetRuntimeClass_variant3)> >(XI_GAME(0x10071D70u)); }
 inline ::xikit::fn<decltype(&::CMoResource_ConstructBase)> CMoResource_ConstructBase() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_ConstructBase)> >(XI_GAME(0x10071D80u)); }
@@ -1369,9 +1368,9 @@ inline ::xikit::fn<decltype(&::CMoResource_FindInScope)> CMoResource_FindInScope
 inline ::xikit::fn<decltype(&::YmResourceFile_FindResourceUnder)> YmResourceFile_FindResourceUnder() { return reinterpret_cast< ::xikit::fn<decltype(&::YmResourceFile_FindResourceUnder)> >(XI_GAME(0x100724C0u)); }
 inline ::xikit::fn<decltype(&::Resource_FindInChainByKind)> Resource_FindInChainByKind() { return reinterpret_cast< ::xikit::fn<decltype(&::Resource_FindInChainByKind)> >(XI_GAME(0x10072540u)); }
 inline ::xikit::fn<decltype(&::Resource_InitFieldsTakeFlag1047D12C)> Resource_InitFieldsTakeFlag1047D12C() { return reinterpret_cast< ::xikit::fn<decltype(&::Resource_InitFieldsTakeFlag1047D12C)> >(XI_GAME(0x10072990u)); }
-inline ::xikit::fn<decltype(&::unknown_libname_61)> unknown_libname_61() { return reinterpret_cast< ::xikit::fn<decltype(&::unknown_libname_61)> >(XI_GAME(0x100729C0u)); }
+inline ::xikit::fn<decltype(&::Resource_ResetGlobals)> Resource_ResetGlobals() { return reinterpret_cast< ::xikit::fn<decltype(&::Resource_ResetGlobals)> >(XI_GAME(0x100729C0u)); }
 inline ::xikit::fn<decltype(&::Resource_ClearGlobal1047D138)> Resource_ClearGlobal1047D138() { return reinterpret_cast< ::xikit::fn<decltype(&::Resource_ClearGlobal1047D138)> >(XI_GAME(0x100729D0u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032C908::ScalarDeletingDtor)> CMoTask_VT_1032C908__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032C908::ScalarDeletingDtor)> >(XI_GAME(0x10072A30u)); }
+inline ::xikit::fn<decltype(&::CMoResourceLoadTask::ScalarDeletingDtor)> CMoResourceLoadTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResourceLoadTask::ScalarDeletingDtor)> >(XI_GAME(0x10072A30u)); }
 inline ::xikit::fn<decltype(&::ResourceLoadTask_Step)> ResourceLoadTask_Step() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceLoadTask_Step)> >(XI_GAME(0x10072A70u)); }
 inline ::xikit::fn<decltype(&::ResourceLoadTask_Start)> ResourceLoadTask_Start() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceLoadTask_Start)> >(XI_GAME(0x10072C30u)); }
 inline ::xikit::fn<decltype(&::CMoResourceMng::GetRuntimeClass)> CMoResourceMng__GetRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResourceMng::GetRuntimeClass)> >(XI_GAME(0x10072D00u)); }
@@ -1379,7 +1378,7 @@ inline ::xikit::fn<decltype(&::MeshResourceMng_LoadSystemResources)> MeshResourc
 inline ::xikit::fn<decltype(&::ResourceHandle_Deref)> ResourceHandle_Deref() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceHandle_Deref)> >(XI_GAME(0x10072FB0u)); }
 inline ::xikit::fn<decltype(&::CMoResource::FindOrCreateTask)> CMoResource__FindOrCreateTask() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::FindOrCreateTask)> >(XI_GAME(0x100730E0u)); }
 inline ::xikit::fn<decltype(&::MeshResourceMng_ResolveTree)> MeshResourceMng_ResolveTree() { return reinterpret_cast< ::xikit::fn<decltype(&::MeshResourceMng_ResolveTree)> >(XI_GAME(0x10073430u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C934::ScalarDeletingDtor)> CMoResource_VT_1032C934__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C934::ScalarDeletingDtor)> >(XI_GAME(0x10073730u)); }
+inline ::xikit::fn<decltype(&::CMoBm2RefRes::ScalarDeletingDtor)> CMoBm2RefRes__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoBm2RefRes::ScalarDeletingDtor)> >(XI_GAME(0x10073730u)); }
 inline ::xikit::fn<decltype(&::CMoResource::RegisterAndMark)> CMoResource__RegisterAndMark() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::RegisterAndMark)> >(XI_GAME(0x10073A60u)); }
 inline ::xikit::fn<decltype(&::MoRes_FreeIfUnreferenced)> MoRes_FreeIfUnreferenced() { return reinterpret_cast< ::xikit::fn<decltype(&::MoRes_FreeIfUnreferenced)> >(XI_GAME(0x10073B20u)); }
 inline ::xikit::fn<decltype(&::CMoResource::InitAndGetFlag)> CMoResource__InitAndGetFlag() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource::InitAndGetFlag)> >(XI_GAME(0x10073B80u)); }
@@ -1396,11 +1395,11 @@ inline ::xikit::fn<decltype(&::ResourceIter_Start)> ResourceIter_Start() { retur
 inline ::xikit::fn<decltype(&::ResourceIter_MatchCurrent)> ResourceIter_MatchCurrent() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceIter_MatchCurrent)> >(XI_GAME(0x10074380u)); }
 inline ::xikit::fn<decltype(&::ResourceIter_Advance)> ResourceIter_Advance() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceIter_Advance)> >(XI_GAME(0x100743D0u)); }
 inline ::xikit::fn<decltype(&::ResourceIter_FindNext)> ResourceIter_FindNext() { return reinterpret_cast< ::xikit::fn<decltype(&::ResourceIter_FindNext)> >(XI_GAME(0x100745C0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032C4E8::vf001)> CMoAttachments_VT_1032C4E8__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032C4E8::vf001)> >(XI_GAME(0x100745D0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf011)> CMoResource_VT_1032C588__vf011() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf011)> >(XI_GAME(0x100745E0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf012)> CMoResource_VT_1032C588__vf012() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf012)> >(XI_GAME(0x100745F0u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032C628::vf001)> CMoAttachments_VT_1032C628__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032C628::vf001)> >(XI_GAME(0x10074600u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf008)> CMoResource_VT_1032C588__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_1032C588::vf008)> >(XI_GAME(0x10074610u)); }
+inline ::xikit::fn<decltype(&::CMoResourceWaitTaskAttachments::Slot1DeleteOwner)> CMoResourceWaitTaskAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResourceWaitTaskAttachments::Slot1DeleteOwner)> >(XI_GAME(0x100745D0u)); }
+inline ::xikit::fn<decltype(&::CMoScopeRes::Slot11GetCameraRuntimeClass)> CMoScopeRes__Slot11GetCameraRuntimeClass() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoScopeRes::Slot11GetCameraRuntimeClass)> >(XI_GAME(0x100745E0u)); }
+inline ::xikit::fn<decltype(&::CMoScopeRes::Slot12DeleteOwner)> CMoScopeRes__Slot12DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoScopeRes::Slot12DeleteOwner)> >(XI_GAME(0x100745F0u)); }
+inline ::xikit::fn<decltype(&::CMoResType07Attachments::Slot1DeleteOwner)> CMoResType07Attachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType07Attachments::Slot1DeleteOwner)> >(XI_GAME(0x10074600u)); }
+inline ::xikit::fn<decltype(&::CMoScopeRes::SetupNop)> CMoScopeRes__SetupNop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoScopeRes::SetupNop)> >(XI_GAME(0x10074610u)); }
 inline ::xikit::fn<decltype(&::MoProcessor_CallVSlot49)> MoProcessor_CallVSlot49() { return reinterpret_cast< ::xikit::fn<decltype(&::MoProcessor_CallVSlot49)> >(XI_GAME(0x100746A0u)); }
 inline ::xikit::fn<decltype(&::ProcessorSlot_ProcessorSlot41)> ProcessorSlot_ProcessorSlot41() { return reinterpret_cast< ::xikit::fn<decltype(&::ProcessorSlot_ProcessorSlot41)> >(XI_GAME(0x10074700u)); }
 inline ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant12)> CMoTask__GetRuntimeClass_variant12() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant12)> >(XI_GAME(0x10074730u)); }
@@ -1453,12 +1452,12 @@ inline ::xikit::fn<decltype(&::TextCommand_ParseNumber)> TextCommand_ParseNumber
 inline ::xikit::fn<decltype(&::SeekIdByString)> SeekIdByString() { return reinterpret_cast< ::xikit::fn<decltype(&::SeekIdByString)> >(XI_GAME(0x1007A1C0u)); }
 inline ::xikit::fn<decltype(&::Actor_FindInRange)> Actor_FindInRange() { return reinterpret_cast< ::xikit::fn<decltype(&::Actor_FindInRange)> >(XI_GAME(0x1007A440u)); }
 inline ::xikit::fn<decltype(&::Actor_FindByName)> Actor_FindByName() { return reinterpret_cast< ::xikit::fn<decltype(&::Actor_FindByName)> >(XI_GAME(0x1007A4C0u)); }
-inline ::xikit::fn<decltype(&::fn_1007A9A0)> fn_1007A9A0() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1007A9A0)> >(XI_GAME(0x1007A9A0u)); }
-inline ::xikit::fn<decltype(&::fn_1007AA80)> fn_1007AA80() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1007AA80)> >(XI_GAME(0x1007AA80u)); }
-inline ::xikit::fn<decltype(&::fn_1007BB90)> fn_1007BB90() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1007BB90)> >(XI_GAME(0x1007BB90u)); }
-inline ::xikit::fn<decltype(&::fn_1007BF30)> fn_1007BF30() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1007BF30)> >(XI_GAME(0x1007BF30u)); }
+inline ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind04)> TextCommand_PacketForIdPairKind04() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind04)> >(XI_GAME(0x1007A9A0u)); }
+inline ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind12)> TextCommand_PacketForIdPairKind12() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind12)> >(XI_GAME(0x1007AA80u)); }
+inline ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind1A)> TextCommand_PacketForIdPairKind1A() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_PacketForIdPairKind1A)> >(XI_GAME(0x1007BB90u)); }
+inline ::xikit::fn<decltype(&::TextCommand_TargetActionToPacket)> TextCommand_TargetActionToPacket() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_TargetActionToPacket)> >(XI_GAME(0x1007BF30u)); }
 inline ::xikit::fn<decltype(&::UI_QuestCommand)> UI_QuestCommand() { return reinterpret_cast< ::xikit::fn<decltype(&::UI_QuestCommand)> >(XI_GAME(0x1007D240u)); }
-inline ::xikit::fn<decltype(&::fn_1007E490)> fn_1007E490() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1007E490)> >(XI_GAME(0x1007E490u)); }
+inline ::xikit::fn<decltype(&::TextCommand_CheckThenPostUiRequest0E)> TextCommand_CheckThenPostUiRequest0E() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_CheckThenPostUiRequest0E)> >(XI_GAME(0x1007E490u)); }
 inline ::xikit::fn<decltype(&::TextCommand_ChangeMyroomMode2)> TextCommand_ChangeMyroomMode2() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_ChangeMyroomMode2)> >(XI_GAME(0x1007E8D0u)); }
 inline ::xikit::fn<decltype(&::TextCommand_Run100A3040)> TextCommand_Run100A3040() { return reinterpret_cast< ::xikit::fn<decltype(&::TextCommand_Run100A3040)> >(XI_GAME(0x10080340u)); }
 inline ::xikit::fn<decltype(&::Actor_GetObjectByName)> Actor_GetObjectByName() { return reinterpret_cast< ::xikit::fn<decltype(&::Actor_GetObjectByName)> >(XI_GAME(0x10080C70u)); }
@@ -1694,7 +1693,7 @@ inline ::xikit::fn<decltype(&::Acter_CheckIdAgainstBlockBits)> Acter_CheckIdAgai
 inline ::xikit::fn<decltype(&::Acter_MatchActorNameOrKind)> Acter_MatchActorNameOrKind() { return reinterpret_cast< ::xikit::fn<decltype(&::Acter_MatchActorNameOrKind)> >(XI_GAME(0x100A1A00u)); }
 inline ::xikit::fn<decltype(&::ActerBuff_GetStringByIdLookup)> ActerBuff_GetStringByIdLookup() { return reinterpret_cast< ::xikit::fn<decltype(&::ActerBuff_GetStringByIdLookup)> >(XI_GAME(0x100A1D50u)); }
 inline ::xikit::fn<decltype(&::Acter_ConstructTask1032D6D4)> Acter_ConstructTask1032D6D4() { return reinterpret_cast< ::xikit::fn<decltype(&::Acter_ConstructTask1032D6D4)> >(XI_GAME(0x100A2790u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032D6D4::ScalarDeletingDtor)> CMoTask_VT_1032D6D4__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032D6D4::ScalarDeletingDtor)> >(XI_GAME(0x100A27F0u)); }
+inline ::xikit::fn<decltype(&::CMoAuctionMenuTask::ScalarDeletingDtor)> CMoAuctionMenuTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAuctionMenuTask::ScalarDeletingDtor)> >(XI_GAME(0x100A27F0u)); }
 inline ::xikit::fn<decltype(&::AuctionMenu_ResetAndFillHeader)> AuctionMenu_ResetAndFillHeader() { return reinterpret_cast< ::xikit::fn<decltype(&::AuctionMenu_ResetAndFillHeader)> >(XI_GAME(0x100A28E0u)); }
 inline ::xikit::fn<decltype(&::AuctionMenu_WriteHeader)> AuctionMenu_WriteHeader() { return reinterpret_cast< ::xikit::fn<decltype(&::AuctionMenu_WriteHeader)> >(XI_GAME(0x100A2B70u)); }
 inline ::xikit::fn<decltype(&::AuctionMenu_InitRecord)> AuctionMenu_InitRecord() { return reinterpret_cast< ::xikit::fn<decltype(&::AuctionMenu_InitRecord)> >(XI_GAME(0x100A2FD0u)); }
@@ -1776,11 +1775,11 @@ inline ::xikit::fn<decltype(&::CXiControlActor::Constructor)> CXiControlActor__C
 inline ::xikit::fn<decltype(&::CXiControlActor_CallTargetSlot207With0)> CXiControlActor_CallTargetSlot207With0() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiControlActor_CallTargetSlot207With0)> >(XI_GAME(0x100A8C20u)); }
 inline ::xikit::fn<decltype(&::CXiControlActor_CallTargetSlot207With1)> CXiControlActor_CallTargetSlot207With1() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiControlActor_CallTargetSlot207With1)> >(XI_GAME(0x100A8C40u)); }
 inline ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant17)> CMoTask__GetRuntimeClass_variant17() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant17)> >(XI_GAME(0x100A8E10u)); }
-inline ::xikit::fn<decltype(&::CMoTask_VT_1032E808::ScalarDeletingDtor)> CMoTask_VT_1032E808__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask_VT_1032E808::ScalarDeletingDtor)> >(XI_GAME(0x100A9DB0u)); }
+inline ::xikit::fn<decltype(&::CMoCasterTargetTask::ScalarDeletingDtor)> CMoCasterTargetTask__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCasterTargetTask::ScalarDeletingDtor)> >(XI_GAME(0x100A9DB0u)); }
 inline ::xikit::fn<decltype(&::CXiControlActor::GetSpeed)> CXiControlActor__GetSpeed() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiControlActor::GetSpeed)> >(XI_GAME(0x100AAEF0u)); }
 inline ::xikit::fn<decltype(&::CXiControlActor::Slot137_Set388)> CXiControlActor__Slot137_Set388() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiControlActor::Slot137_Set388)> >(XI_GAME(0x100AAF50u)); }
 inline ::xikit::fn<decltype(&::CXiControlActor::Slot138_Scan3F0)> CXiControlActor__Slot138_Scan3F0() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiControlActor::Slot138_Scan3F0)> >(XI_GAME(0x100AAF70u)); }
-inline ::xikit::fn<decltype(&::CMoAttachments_VT_1032E7EC::vf001)> CMoAttachments_VT_1032E7EC__vf001() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoAttachments_VT_1032E7EC::vf001)> >(XI_GAME(0x100AB060u)); }
+inline ::xikit::fn<decltype(&::CMoCasterTargetTaskAttachments::Slot1DeleteOwner)> CMoCasterTargetTaskAttachments__Slot1DeleteOwner() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoCasterTargetTaskAttachments::Slot1DeleteOwner)> >(XI_GAME(0x100AB060u)); }
 inline ::xikit::fn<decltype(&::CXiSkeletonActor::GetRuntimeClass_variant0)> CXiSkeletonActor__GetRuntimeClass_variant0() { return reinterpret_cast< ::xikit::fn<decltype(&::CXiSkeletonActor::GetRuntimeClass_variant0)> >(XI_GAME(0x100AB070u)); }
 inline ::xikit::fn<decltype(&::Acter_DestroyAndClearSlot)> Acter_DestroyAndClearSlot() { return reinterpret_cast< ::xikit::fn<decltype(&::Acter_DestroyAndClearSlot)> >(XI_GAME(0x100AB320u)); }
 inline ::xikit::fn<decltype(&::FurnitureRelease_ReleaseSlot)> FurnitureRelease_ReleaseSlot() { return reinterpret_cast< ::xikit::fn<decltype(&::FurnitureRelease_ReleaseSlot)> >(XI_GAME(0x100AB550u)); }
@@ -2089,7 +2088,7 @@ inline ::xikit::fn<decltype(&::Time_ModDiv6C00Scaled)> Time_ModDiv6C00Scaled() {
 inline ::xikit::fn<decltype(&::Time_ModDivD80Div90)> Time_ModDivD80Div90() { return reinterpret_cast< ::xikit::fn<decltype(&::Time_ModDivD80Div90)> >(XI_GAME(0x10103B10u)); }
 inline ::xikit::fn<decltype(&::Time_ModMul3CDiv90)> Time_ModMul3CDiv90() { return reinterpret_cast< ::xikit::fn<decltype(&::Time_ModMul3CDiv90)> >(XI_GAME(0x10103B30u)); }
 inline ::xikit::fn<decltype(&::NetCellFont_SetZero)> NetCellFont_SetZero() { return reinterpret_cast< ::xikit::fn<decltype(&::NetCellFont_SetZero)> >(XI_GAME(0x10103F50u)); }
-inline ::xikit::fn<decltype(&::fn_101061D0)> fn_101061D0() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_101061D0)> >(XI_GAME(0x101061D0u)); }
+inline ::xikit::fn<decltype(&::NetCellFont_UnpackBitFields)> NetCellFont_UnpackBitFields() { return reinterpret_cast< ::xikit::fn<decltype(&::NetCellFont_UnpackBitFields)> >(XI_GAME(0x101061D0u)); }
 inline ::xikit::fn<decltype(&::NetCellFont_LookupMaskedTable)> NetCellFont_LookupMaskedTable() { return reinterpret_cast< ::xikit::fn<decltype(&::NetCellFont_LookupMaskedTable)> >(XI_GAME(0x101072D0u)); }
 inline ::xikit::fn<decltype(&::NetCellFont_LookupTable10364CB0)> NetCellFont_LookupTable10364CB0() { return reinterpret_cast< ::xikit::fn<decltype(&::NetCellFont_LookupTable10364CB0)> >(XI_GAME(0x10107320u)); }
 inline ::xikit::fn<decltype(&::NetCellFont_AppendMax20)> NetCellFont_AppendMax20() { return reinterpret_cast< ::xikit::fn<decltype(&::NetCellFont_AppendMax20)> >(XI_GAME(0x10107610u)); }
@@ -2215,7 +2214,7 @@ inline ::xikit::fn<decltype(&::Font_DrawGlyphQuad)> Font_DrawGlyphQuad() { retur
 inline ::xikit::fn<decltype(&::Gfx_SetAdditiveBlend)> Gfx_SetAdditiveBlend() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_SetAdditiveBlend)> >(XI_GAME(0x1011BDC0u)); }
 inline ::xikit::fn<decltype(&::Font_DrawChar)> Font_DrawChar() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_DrawChar)> >(XI_GAME(0x1011BF40u)); }
 inline ::xikit::fn<decltype(&::Font_MeasureString)> Font_MeasureString() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_MeasureString)> >(XI_GAME(0x1011BFD0u)); }
-inline ::xikit::fn<decltype(&::Obj_104E1B90::Obj_104E1B90_DrawString)> Obj_104E1B90__Obj_104E1B90_DrawString() { return reinterpret_cast< ::xikit::fn<decltype(&::Obj_104E1B90::Obj_104E1B90_DrawString)> >(XI_GAME(0x1011C080u)); }
+inline ::xikit::fn<decltype(&::FontGlyphs::FontGlyphs_DrawString)> FontGlyphs__FontGlyphs_DrawString() { return reinterpret_cast< ::xikit::fn<decltype(&::FontGlyphs::FontGlyphs_DrawString)> >(XI_GAME(0x1011C080u)); }
 inline ::xikit::fn<decltype(&::Gfx_SetCellBlendMode)> Gfx_SetCellBlendMode() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_SetCellBlendMode)> >(XI_GAME(0x1011C1F0u)); }
 inline ::xikit::fn<decltype(&::Font_AllocHighResImage)> Font_AllocHighResImage() { return reinterpret_cast< ::xikit::fn<decltype(&::Font_AllocHighResImage)> >(XI_GAME(0x1011C5D0u)); }
 inline ::xikit::fn<decltype(&::Tex_LoadSurfaceFromDatFile)> Tex_LoadSurfaceFromDatFile() { return reinterpret_cast< ::xikit::fn<decltype(&::Tex_LoadSurfaceFromDatFile)> >(XI_GAME(0x1011C670u)); }
@@ -2261,9 +2260,9 @@ inline ::xikit::fn<decltype(&::Color_ModulateArgb128)> Color_ModulateArgb128() {
 inline ::xikit::fn<decltype(&::ShapeMng_FindShape)> ShapeMng_FindShape() { return reinterpret_cast< ::xikit::fn<decltype(&::ShapeMng_FindShape)> >(XI_GAME(0x10120450u)); }
 inline ::xikit::fn<decltype(&::Cell_FindEntryByName)> Cell_FindEntryByName() { return reinterpret_cast< ::xikit::fn<decltype(&::Cell_FindEntryByName)> >(XI_GAME(0x101204B0u)); }
 inline ::xikit::fn<decltype(&::ShapeMng_GetFontGlyph)> ShapeMng_GetFontGlyph() { return reinterpret_cast< ::xikit::fn<decltype(&::ShapeMng_GetFontGlyph)> >(XI_GAME(0x10120510u)); }
-inline ::xikit::fn<decltype(&::Obj_104E1BF8::ShapeMng_BindFontTexture)> Obj_104E1BF8__ShapeMng_BindFontTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::Obj_104E1BF8::ShapeMng_BindFontTexture)> >(XI_GAME(0x10120590u)); }
+inline ::xikit::fn<decltype(&::ShapeMng::ShapeMng_BindFontTexture)> ShapeMng__ShapeMng_BindFontTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::ShapeMng::ShapeMng_BindFontTexture)> >(XI_GAME(0x10120590u)); }
 inline ::xikit::fn<decltype(&::ShapeMng_LoadFontTextures)> ShapeMng_LoadFontTextures() { return reinterpret_cast< ::xikit::fn<decltype(&::ShapeMng_LoadFontTextures)> >(XI_GAME(0x10120660u)); }
-inline ::xikit::fn<decltype(&::Obj_104E1BF8::ShapeMng_BindDmgNumTexture)> Obj_104E1BF8__ShapeMng_BindDmgNumTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::Obj_104E1BF8::ShapeMng_BindDmgNumTexture)> >(XI_GAME(0x101207B0u)); }
+inline ::xikit::fn<decltype(&::ShapeMng::ShapeMng_BindDmgNumTexture)> ShapeMng__ShapeMng_BindDmgNumTexture() { return reinterpret_cast< ::xikit::fn<decltype(&::ShapeMng::ShapeMng_BindDmgNumTexture)> >(XI_GAME(0x101207B0u)); }
 inline ::xikit::fn<decltype(&::Cell_ResolveAllSubCells)> Cell_ResolveAllSubCells() { return reinterpret_cast< ::xikit::fn<decltype(&::Cell_ResolveAllSubCells)> >(XI_GAME(0x10120950u)); }
 inline ::xikit::fn<decltype(&::Cell_TestAny38Or0B8)> Cell_TestAny38Or0B8() { return reinterpret_cast< ::xikit::fn<decltype(&::Cell_TestAny38Or0B8)> >(XI_GAME(0x10120B80u)); }
 inline ::xikit::fn<decltype(&::Cell_TestAny1DOr9D)> Cell_TestAny1DOr9D() { return reinterpret_cast< ::xikit::fn<decltype(&::Cell_TestAny1DOr9D)> >(XI_GAME(0x10120BB0u)); }
@@ -2831,10 +2830,10 @@ inline ::xikit::fn<decltype(&::TargetMenu_ToggleTo)> TargetMenu_ToggleTo() { ret
 inline ::xikit::fn<decltype(&::TargetMenu_SetWord56)> TargetMenu_SetWord56() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_SetWord56)> >(XI_GAME(0x10163070u)); }
 inline ::xikit::fn<decltype(&::TargetMenu_GetShortAt56)> TargetMenu_GetShortAt56() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_GetShortAt56)> >(XI_GAME(0x10163080u)); }
 inline ::xikit::fn<decltype(&::TargetMenu_CtorZeroed)> TargetMenu_CtorZeroed() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_CtorZeroed)> >(XI_GAME(0x10163090u)); }
-inline ::xikit::fn<decltype(&::Obj_10621944::Obj_10621944_Draw)> Obj_10621944__Obj_10621944_Draw() { return reinterpret_cast< ::xikit::fn<decltype(&::Obj_10621944::Obj_10621944_Draw)> >(XI_GAME(0x101630E0u)); }
+inline ::xikit::fn<decltype(&::MenuTextBlock::MenuTextBlock_Draw)> MenuTextBlock__MenuTextBlock_Draw() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuTextBlock::MenuTextBlock_Draw)> >(XI_GAME(0x101630E0u)); }
 inline ::xikit::fn<decltype(&::TargetMenu_ZeroWordsAndDwords)> TargetMenu_ZeroWordsAndDwords() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_ZeroWordsAndDwords)> >(XI_GAME(0x10163350u)); }
 inline ::xikit::fn<decltype(&::TargetMenu_NoOpE)> TargetMenu_NoOpE() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_NoOpE)> >(XI_GAME(0x10163380u)); }
-inline ::xikit::fn<decltype(&::Obj_10621944_DrawBgRect)> Obj_10621944_DrawBgRect() { return reinterpret_cast< ::xikit::fn<decltype(&::Obj_10621944_DrawBgRect)> >(XI_GAME(0x10163390u)); }
+inline ::xikit::fn<decltype(&::MenuTextBlock_DrawBgRect)> MenuTextBlock_DrawBgRect() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuTextBlock_DrawBgRect)> >(XI_GAME(0x10163390u)); }
 inline ::xikit::fn<decltype(&::TargetMenu_ZeroDwords)> TargetMenu_ZeroDwords() { return reinterpret_cast< ::xikit::fn<decltype(&::TargetMenu_ZeroDwords)> >(XI_GAME(0x101633D0u)); }
 inline ::xikit::fn<decltype(&::Gfx_DrawSolidRect2D)> Gfx_DrawSolidRect2D() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_DrawSolidRect2D)> >(XI_GAME(0x10163400u)); }
 inline ::xikit::fn<decltype(&::ZoneMapLoad_ResetFieldsA)> ZoneMapLoad_ResetFieldsA() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_ResetFieldsA)> >(XI_GAME(0x10163F30u)); }
@@ -2863,7 +2862,7 @@ inline ::xikit::fn<decltype(&::ZoneMapLoad_SegmentHit34139)> ZoneMapLoad_Segment
 inline ::xikit::fn<decltype(&::ZoneMapLoad_SegmentTest34139)> ZoneMapLoad_SegmentTest34139() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_SegmentTest34139)> >(XI_GAME(0x1016A2D0u)); }
 inline ::xikit::fn<decltype(&::ZoneMapLoad_SegmentHitGridTriangles)> ZoneMapLoad_SegmentHitGridTriangles() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_SegmentHitGridTriangles)> >(XI_GAME(0x1016A990u)); }
 inline ::xikit::fn<decltype(&::ZoneMapLoad_SegmentHitWithObjects)> ZoneMapLoad_SegmentHitWithObjects() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_SegmentHitWithObjects)> >(XI_GAME(0x1016B1D0u)); }
-inline ::xikit::fn<decltype(&::fn_1016BDF0)> fn_1016BDF0() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1016BDF0)> >(XI_GAME(0x1016BDF0u)); }
+inline ::xikit::fn<decltype(&::ZoneMapLoad_BuildMatrixFromNegatedPosRot)> ZoneMapLoad_BuildMatrixFromNegatedPosRot() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_BuildMatrixFromNegatedPosRot)> >(XI_GAME(0x1016BDF0u)); }
 inline ::xikit::fn<decltype(&::Mat44_Multiply)> Mat44_Multiply() { return reinterpret_cast< ::xikit::fn<decltype(&::Mat44_Multiply)> >(XI_GAME(0x1016C060u)); }
 inline ::xikit::fn<decltype(&::ZoneMap_GetHitCount)> ZoneMap_GetHitCount() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMap_GetHitCount)> >(XI_GAME(0x1016C150u)); }
 inline ::xikit::fn<decltype(&::ZoneMap_IsPointInTriangle)> ZoneMap_IsPointInTriangle() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMap_IsPointInTriangle)> >(XI_GAME(0x1016C390u)); }
@@ -2886,11 +2885,11 @@ inline ::xikit::fn<decltype(&::Mat4_SetIdentity_2)> Mat4_SetIdentity_2() { retur
 inline ::xikit::fn<decltype(&::ZoneMap_FindDbgBoxHitBySegment)> ZoneMap_FindDbgBoxHitBySegment() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMap_FindDbgBoxHitBySegment)> >(XI_GAME(0x10176620u)); }
 inline ::xikit::fn<decltype(&::ZoneMapLoad_SetFlag2000OnUnderscoreEntries)> ZoneMapLoad_SetFlag2000OnUnderscoreEntries() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_SetFlag2000OnUnderscoreEntries)> >(XI_GAME(0x10176DD0u)); }
 inline ::xikit::fn<decltype(&::ZoneMapLoad_ConstructResource10336698)> ZoneMapLoad_ConstructResource10336698() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneMapLoad_ConstructResource10336698)> >(XI_GAME(0x10176E80u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_10336698::ScalarDeletingDtor)> CMoResource_VT_10336698__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_10336698::ScalarDeletingDtor)> >(XI_GAME(0x10176EA0u)); }
+inline ::xikit::fn<decltype(&::CMoResType2E::ScalarDeletingDtor)> CMoResType2E__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType2E::ScalarDeletingDtor)> >(XI_GAME(0x10176EA0u)); }
 inline ::xikit::fn<decltype(&::ZoneResWeather_Construct)> ZoneResWeather_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneResWeather_Construct)> >(XI_GAME(0x10176F60u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_103366C4::ScalarDeletingDtor)> CMoResource_VT_103366C4__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_103366C4::ScalarDeletingDtor)> >(XI_GAME(0x10176F80u)); }
+inline ::xikit::fn<decltype(&::CMoResType1C::ScalarDeletingDtor)> CMoResType1C__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType1C::ScalarDeletingDtor)> >(XI_GAME(0x10176F80u)); }
 inline ::xikit::fn<decltype(&::ZoneResource_Construct)> ZoneResource_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::ZoneResource_Construct)> >(XI_GAME(0x10176FE0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_103366F0::ScalarDeletingDtor)> CMoResource_VT_103366F0__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_103366F0::ScalarDeletingDtor)> >(XI_GAME(0x10177000u)); }
+inline ::xikit::fn<decltype(&::CMoResType36::ScalarDeletingDtor)> CMoResType36__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType36::ScalarDeletingDtor)> >(XI_GAME(0x10177000u)); }
 inline ::xikit::fn<decltype(&::Gfx_CompileVertexShader)> Gfx_CompileVertexShader() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_CompileVertexShader)> >(XI_GAME(0x101771B0u)); }
 inline ::xikit::fn<decltype(&::Gfx_AssembleVertexShader)> Gfx_AssembleVertexShader() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_AssembleVertexShader)> >(XI_GAME(0x10177240u)); }
 inline ::xikit::fn<decltype(&::Gfx_CompilePixelShader)> Gfx_CompilePixelShader() { return reinterpret_cast< ::xikit::fn<decltype(&::Gfx_CompilePixelShader)> >(XI_GAME(0x101772E0u)); }
@@ -2995,8 +2994,8 @@ inline ::xikit::fn<decltype(&::Env_ComputeAmbient)> Env_ComputeAmbient() { retur
 inline ::xikit::fn<decltype(&::Env_ComputeAmbientFloat4)> Env_ComputeAmbientFloat4() { return reinterpret_cast< ::xikit::fn<decltype(&::Env_ComputeAmbientFloat4)> >(XI_GAME(0x10188FA0u)); }
 inline ::xikit::fn<decltype(&::Env_ComputeFog)> Env_ComputeFog() { return reinterpret_cast< ::xikit::fn<decltype(&::Env_ComputeFog)> >(XI_GAME(0x10189120u)); }
 inline ::xikit::fn<decltype(&::WeatherRes_Construct)> WeatherRes_Construct() { return reinterpret_cast< ::xikit::fn<decltype(&::WeatherRes_Construct)> >(XI_GAME(0x101893B0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_103367E8::ScalarDeletingDtor)> CMoResource_VT_103367E8__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_103367E8::ScalarDeletingDtor)> >(XI_GAME(0x101893D0u)); }
-inline ::xikit::fn<decltype(&::CMoResource_VT_103367E8::vf008)> CMoResource_VT_103367E8__vf008() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResource_VT_103367E8::vf008)> >(XI_GAME(0x101893F0u)); }
+inline ::xikit::fn<decltype(&::CMoResType2F::ScalarDeletingDtor)> CMoResType2F__ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType2F::ScalarDeletingDtor)> >(XI_GAME(0x101893D0u)); }
+inline ::xikit::fn<decltype(&::CMoResType2F::SetupNop)> CMoResType2F__SetupNop() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoResType2F::SetupNop)> >(XI_GAME(0x101893F0u)); }
 inline ::xikit::fn<decltype(&::WeatherRes_InitKeyDefaults)> WeatherRes_InitKeyDefaults() { return reinterpret_cast< ::xikit::fn<decltype(&::WeatherRes_InitKeyDefaults)> >(XI_GAME(0x10189400u)); }
 inline ::xikit::fn<decltype(&::Env_BlendKeys)> Env_BlendKeys() { return reinterpret_cast< ::xikit::fn<decltype(&::Env_BlendKeys)> >(XI_GAME(0x10189490u)); }
 inline ::xikit::fn<decltype(&::Env_LerpFloat)> Env_LerpFloat() { return reinterpret_cast< ::xikit::fn<decltype(&::Env_LerpFloat)> >(XI_GAME(0x10189810u)); }
@@ -3786,7 +3785,7 @@ inline ::xikit::fn<decltype(&::YkWindows_TestFlagBitFwd)> YkWindows_TestFlagBitF
 inline ::xikit::fn<decltype(&::YkWindows_GetEntryPosition)> YkWindows_GetEntryPosition() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_GetEntryPosition)> >(XI_GAME(0x101F74F0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_GetEntryRate)> YkWindows_GetEntryRate() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_GetEntryRate)> >(XI_GAME(0x101F75C0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_FormatTargetMapGrid)> YkWindows_FormatTargetMapGrid() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_FormatTargetMapGrid)> >(XI_GAME(0x101F7600u)); }
-inline ::xikit::fn<decltype(&::fn_101F79E0)> fn_101F79E0() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_101F79E0)> >(XI_GAME(0x101F79E0u)); }
+inline ::xikit::fn<decltype(&::YkWindows_MapEntryForTargetOrArea)> YkWindows_MapEntryForTargetOrArea() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_MapEntryForTargetOrArea)> >(XI_GAME(0x101F79E0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_SetMapWindowState)> YkWindows_SetMapWindowState() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_SetMapWindowState)> >(XI_GAME(0x101F7C00u)); }
 inline ::xikit::fn<decltype(&::YkWindows_PlaceListedActerMarkers)> YkWindows_PlaceListedActerMarkers() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_PlaceListedActerMarkers)> >(XI_GAME(0x101F7DB0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_PlaceActerMarker)> YkWindows_PlaceActerMarker() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_PlaceActerMarker)> >(XI_GAME(0x101F7EC0u)); }
@@ -3802,14 +3801,14 @@ inline ::xikit::fn<decltype(&::YkWindows_CtorVt1033A8B8)> YkWindows_CtorVt1033A8
 inline ::xikit::fn<decltype(&::YkWindows_UpdateTargetMarker)> YkWindows_UpdateTargetMarker() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_UpdateTargetMarker)> >(XI_GAME(0x101F8EA0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_GetTargetMapCoords)> YkWindows_GetTargetMapCoords() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_GetTargetMapCoords)> >(XI_GAME(0x101F8FB0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_ClearMapMarkers)> YkWindows_ClearMapMarkers() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_ClearMapMarkers)> >(XI_GAME(0x101F9010u)); }
-inline ::xikit::fn<decltype(&::fn_101F9110)> fn_101F9110() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_101F9110)> >(XI_GAME(0x101F9110u)); }
+inline ::xikit::fn<decltype(&::YkWindows_AddMarkerRecord)> YkWindows_AddMarkerRecord() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_AddMarkerRecord)> >(XI_GAME(0x101F9110u)); }
 inline ::xikit::fn<decltype(&::Yk_ResetSlots)> Yk_ResetSlots() { return reinterpret_cast< ::xikit::fn<decltype(&::Yk_ResetSlots)> >(XI_GAME(0x101F92B0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_ResetMapBuffers)> YkWindows_ResetMapBuffers() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_ResetMapBuffers)> >(XI_GAME(0x101F92E0u)); }
 inline ::xikit::fn<decltype(&::Yk_FreeBuffers)> Yk_FreeBuffers() { return reinterpret_cast< ::xikit::fn<decltype(&::Yk_FreeBuffers)> >(XI_GAME(0x101F9370u)); }
-inline ::xikit::fn<decltype(&::fn_101F9A20)> fn_101F9A20() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_101F9A20)> >(XI_GAME(0x101F9A20u)); }
+inline ::xikit::fn<decltype(&::YkWindows_IsMarkerAllowed)> YkWindows_IsMarkerAllowed() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_IsMarkerAllowed)> >(XI_GAME(0x101F9A20u)); }
 inline ::xikit::fn<decltype(&::YkWindows_CloseMapMenus)> YkWindows_CloseMapMenus() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_CloseMapMenus)> >(XI_GAME(0x101FA420u)); }
 inline ::xikit::fn<decltype(&::YkWindows_CanShowMapTitle)> YkWindows_CanShowMapTitle() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_CanShowMapTitle)> >(XI_GAME(0x101FAAB0u)); }
-inline ::xikit::fn<decltype(&::fn_101FAAF0)> fn_101FAAF0() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_101FAAF0)> >(XI_GAME(0x101FAAF0u)); }
+inline ::xikit::fn<decltype(&::YkWindows_ShowMapTitleIfAllowed)> YkWindows_ShowMapTitleIfAllowed() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_ShowMapTitleIfAllowed)> >(XI_GAME(0x101FAAF0u)); }
 inline ::xikit::fn<decltype(&::YkWindows_MarkGroupMarkers)> YkWindows_MarkGroupMarkers() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_MarkGroupMarkers)> >(XI_GAME(0x101FAD00u)); }
 inline ::xikit::fn<decltype(&::YkWindows_ClearMarkerFlags)> YkWindows_ClearMarkerFlags() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_ClearMarkerFlags)> >(XI_GAME(0x101FAD40u)); }
 inline ::xikit::fn<decltype(&::YkWindows_StepMarkerGroup)> YkWindows_StepMarkerGroup() { return reinterpret_cast< ::xikit::fn<decltype(&::YkWindows_StepMarkerGroup)> >(XI_GAME(0x101FAD70u)); }
@@ -4061,7 +4060,7 @@ inline ::xikit::fn<decltype(&::MenuPanels_CtorVt1033C718)> MenuPanels_CtorVt1033
 inline ::xikit::fn<decltype(&::MenuPanels_Reset)> MenuPanels_Reset() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_Reset)> >(XI_GAME(0x10230410u)); }
 inline ::xikit::fn<decltype(&::MenuPanels_PanelCtorVt1033C720)> MenuPanels_PanelCtorVt1033C720() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_PanelCtorVt1033C720)> >(XI_GAME(0x10233BE0u)); }
 inline ::xikit::fn<decltype(&::MenuPanels_PanelCtorVt1033C788)> MenuPanels_PanelCtorVt1033C788() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_PanelCtorVt1033C788)> >(XI_GAME(0x102340A0u)); }
-inline ::xikit::fn<decltype(&::fn_10234610)> fn_10234610() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_10234610)> >(XI_GAME(0x10234610u)); }
+inline ::xikit::fn<decltype(&::MenuPanels_InitDrawRect)> MenuPanels_InitDrawRect() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_InitDrawRect)> >(XI_GAME(0x10234610u)); }
 inline ::xikit::fn<decltype(&::MenuPanels_DrawProgressBar)> MenuPanels_DrawProgressBar() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_DrawProgressBar)> >(XI_GAME(0x10234660u)); }
 inline ::xikit::fn<decltype(&::MenuPanels_SendMenuEventByKind)> MenuPanels_SendMenuEventByKind() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_SendMenuEventByKind)> >(XI_GAME(0x10234910u)); }
 inline ::xikit::fn<decltype(&::MenuPanels_ComputeClampedIndex)> MenuPanels_ComputeClampedIndex() { return reinterpret_cast< ::xikit::fn<decltype(&::MenuPanels_ComputeClampedIndex)> >(XI_GAME(0x10234A00u)); }
@@ -5064,8 +5063,8 @@ constexpr unsigned CXiTimerLow__Init = 4, CXiTimerLow__Init_TRAMP = 1;  // "CXiT
 constexpr unsigned CXiTimerLow__AccumulateElapsed = 4, CXiTimerLow__AccumulateElapsed_TRAMP = 1;  // "CXiTimerLow::AccumulateElapsed" 0x100194F0
 constexpr unsigned CXiTimerLow__GetFrameRate = 4, CXiTimerLow__GetFrameRate_TRAMP = 1;  // "CXiTimerLow::GetFrameRate" 0x10019550
 constexpr unsigned CXiTimerLow__GetElapsed = 4, CXiTimerLow__GetElapsed_TRAMP = 1;  // "CXiTimerLow::GetElapsed" 0x10019590
-constexpr unsigned CMoResource_VT_1032C7FC__vf004 = 0, CMoResource_VT_1032C7FC__vf004_TRAMP = 1;  // "CMoResource_VT_1032C7FC::vf004" 0x10019A30
-constexpr unsigned CMoResource_VT_1032C7FC__vf005 = 8, CMoResource_VT_1032C7FC__vf005_TRAMP = 0;  // "CMoResource_VT_1032C7FC::vf005" 0x10019A40
+constexpr unsigned CMoMo2Res__Slot4StoreInHandle = 0, CMoMo2Res__Slot4StoreInHandle_TRAMP = 1;  // "CMoMo2Res::Slot4StoreInHandle" 0x10019A30
+constexpr unsigned CMoMo2Res__Slot5Nop = 8, CMoMo2Res__Slot5Nop_TRAMP = 0;  // "CMoMo2Res::Slot5Nop" 0x10019A40
 constexpr unsigned MotionQueue_ApplyPolicy = 28, MotionQueue_ApplyPolicy_TRAMP = 1;  // "MotionQueue_ApplyPolicy" 0x10019A50
 constexpr unsigned SampleAnimationTrack_ToBuffer = 20, SampleAnimationTrack_ToBuffer_TRAMP = 1;  // "SampleAnimationTrack_ToBuffer" 0x10019B30
 constexpr unsigned SampleAnimationTrack_Live = 4, SampleAnimationTrack_Live_TRAMP = 1;  // "SampleAnimationTrack_Live" 0x10019EE0
@@ -5092,12 +5091,12 @@ constexpr unsigned Model_TranslucentUnbindTexture = 16, Model_TranslucentUnbindT
 constexpr unsigned ModelTranslucent_SetColorForce = 20, ModelTranslucent_SetColorForce_TRAMP = 1;  // "ModelTranslucent_SetColorForce" 0x1001D390
 constexpr unsigned Model_CompositeTranslucentPass = 16, Model_CompositeTranslucentPass_TRAMP = 1;  // "Model_CompositeTranslucentPass" 0x1001D3B0
 constexpr unsigned TexRes_LoadBm2 = 4, TexRes_LoadBm2_TRAMP = 1;  // "TexRes_LoadBm2" 0x1001D800
-constexpr unsigned CMoResource_VT_1032C8AC__ReleaseTexture = 4, CMoResource_VT_1032C8AC__ReleaseTexture_TRAMP = 1;  // "CMoResource_VT_1032C8AC::ReleaseTexture" 0x1001DBD0
-constexpr unsigned CMoResource_VT_1032C8AC__vf004 = 0, CMoResource_VT_1032C8AC__vf004_TRAMP = 1;  // "CMoResource_VT_1032C8AC::vf004" 0x1001DC20
+constexpr unsigned CMoBm2Res__ReleaseTexture = 4, CMoBm2Res__ReleaseTexture_TRAMP = 1;  // "CMoBm2Res::ReleaseTexture" 0x1001DBD0
+constexpr unsigned CMoBm2Res__Slot4StoreInHandle = 0, CMoBm2Res__Slot4StoreInHandle_TRAMP = 1;  // "CMoBm2Res::Slot4StoreInHandle" 0x1001DC20
 constexpr unsigned Tex_DrawNamedTexturePreview = 0, Tex_DrawNamedTexturePreview_TRAMP = 1;  // "Tex_DrawNamedTexturePreview" 0x1001DC70
 constexpr unsigned Gfx_DrawScreenQuad256 = 16, Gfx_DrawScreenQuad256_TRAMP = 1;  // "Gfx_DrawScreenQuad256" 0x1001DD00
-constexpr unsigned CMoResource_VT_1032C880__vf004 = 0, CMoResource_VT_1032C880__vf004_TRAMP = 1;  // "CMoResource_VT_1032C880::vf004" 0x1001E050
-constexpr unsigned CMoResource_VT_1032C880__vf005 = 8, CMoResource_VT_1032C880__vf005_TRAMP = 0;  // "CMoResource_VT_1032C880::vf005" 0x1001E060
+constexpr unsigned CMoResType5D__Slot4StoreInHandle = 0, CMoResType5D__Slot4StoreInHandle_TRAMP = 1;  // "CMoResType5D::Slot4StoreInHandle" 0x1001E050
+constexpr unsigned CMoResType5D__Slot5Nop = 8, CMoResType5D__Slot5Nop_TRAMP = 0;  // "CMoResType5D::Slot5Nop" 0x1001E060
 constexpr unsigned CYyCamMng2_SetGlobalFlags = 4, CYyCamMng2_SetGlobalFlags_TRAMP = 1;  // "CYyCamMng2_SetGlobalFlags" 0x1001E2F0
 constexpr unsigned CYyCamMng2__CreateGlobal = 4, CYyCamMng2__CreateGlobal_TRAMP = 1;  // "CYyCamMng2::CreateGlobal" 0x1001E470
 constexpr unsigned CYyCamMng2_CallGlobalVfunc1 = 12, CYyCamMng2_CallGlobalVfunc1_TRAMP = 1;  // "CYyCamMng2_CallGlobalVfunc1" 0x1001E4B0
@@ -5122,13 +5121,13 @@ constexpr unsigned CYyModelDt__SetVertexShader = 4, CYyModelDt__SetVertexShader_
 constexpr unsigned CYyModelDt__Construct = 4, CYyModelDt__Construct_TRAMP = 1;  // "CYyModelDt::Construct" 0x10025010
 constexpr unsigned CYyModelDt__PrepareRenderStateEntry = 0, CYyModelDt__PrepareRenderStateEntry_TRAMP = 1;  // "CYyModelDt::PrepareRenderStateEntry" 0x10025030
 constexpr unsigned CYyModelDt__PrepareRenderStateSimpleEntry = 0, CYyModelDt__PrepareRenderStateSimpleEntry_TRAMP = 1;  // "CYyModelDt::PrepareRenderStateSimpleEntry" 0x10025060
-constexpr unsigned CYyModelDt_VT_1032A430__vf011 = 0, CYyModelDt_VT_1032A430__vf011_TRAMP = 0;  // "CYyModelDt_VT_1032A430::vf011" 0x10025090
-constexpr unsigned CYyModelDt_VT_1032A430__ScalarDeletingDtor = 0, CYyModelDt_VT_1032A430__ScalarDeletingDtor_TRAMP = 1;  // "CYyModelDt_VT_1032A430::ScalarDeletingDtor" 0x100250A0
+constexpr unsigned CYyModelDtStreamed__Slot11ReturnZero = 0, CYyModelDtStreamed__Slot11ReturnZero_TRAMP = 0;  // "CYyModelDtStreamed::Slot11ReturnZero" 0x10025090
+constexpr unsigned CYyModelDtStreamed__ScalarDeletingDtor = 0, CYyModelDtStreamed__ScalarDeletingDtor_TRAMP = 1;  // "CYyModelDtStreamed::ScalarDeletingDtor" 0x100250A0
 constexpr unsigned CYyModelBase__AllocParts = 4, CYyModelBase__AllocParts_TRAMP = 1;  // "CYyModelBase::AllocParts" 0x100250F0
 constexpr unsigned CYyModelDt__MarkReferencedBones = 0, CYyModelDt__MarkReferencedBones_TRAMP = 1;  // "CYyModelDt::MarkReferencedBones" 0x100251A0
 constexpr unsigned ProjTexTarget_Release = 4, ProjTexTarget_Release_TRAMP = 1;  // "ProjTexTarget_Release" 0x10025220
 constexpr unsigned ProjTexTarget_Init = 16, ProjTexTarget_Init_TRAMP = 1;  // "ProjTexTarget_Init" 0x10025260
-constexpr unsigned CYyModelDt_VT_1032A430__ScalarDeletingDtor_2 = 0, CYyModelDt_VT_1032A430__ScalarDeletingDtor_2_TRAMP = 1;  // "CYyModelDt_VT_1032A430::ScalarDeletingDtor_2" 0x100252D0
+constexpr unsigned CYyModelDtStreamed__ScalarDeletingDtor_2 = 0, CYyModelDtStreamed__ScalarDeletingDtor_2_TRAMP = 1;  // "CYyModelDtStreamed::ScalarDeletingDtor_2" 0x100252D0
 constexpr unsigned ProjTex_BeginPass = 0, ProjTex_BeginPass_TRAMP = 1;  // "ProjTex_BeginPass" 0x10025330
 constexpr unsigned ProjTex_EndPass = 0, ProjTex_EndPass_TRAMP = 1;  // "ProjTex_EndPass" 0x100255C0
 constexpr unsigned ProjTex_CaptureToTarget = 16, ProjTex_CaptureToTarget_TRAMP = 1;  // "ProjTex_CaptureToTarget" 0x10025870
@@ -5229,7 +5228,7 @@ constexpr unsigned CYyModelBase__AddPartFromResource = 4, CYyModelBase__AddPartF
 constexpr unsigned CYyModelDt__PrepareRenderStateV2Entry = 4, CYyModelDt__PrepareRenderStateV2Entry_TRAMP = 1;  // "CYyModelDt::PrepareRenderStateV2Entry" 0x1002A000
 constexpr unsigned CYyModelDt__PrepareRenderStateV2SimpleEntry = 4, CYyModelDt__PrepareRenderStateV2SimpleEntry_TRAMP = 1;  // "CYyModelDt::PrepareRenderStateV2SimpleEntry" 0x1002A040
 constexpr unsigned CYyModelDt__GetResourceWord5E = 20, CYyModelDt__GetResourceWord5E_TRAMP = 1;  // "CYyModelDt::GetResourceWord5E" 0x1002A080
-constexpr unsigned CYyModelDt_VT_1032A72C__ScalarDeletingDtor = 0, CYyModelDt_VT_1032A72C__ScalarDeletingDtor_TRAMP = 1;  // "CYyModelDt_VT_1032A72C::ScalarDeletingDtor" 0x1002A0A0
+constexpr unsigned CYyModelDtBuffered__ScalarDeletingDtor = 0, CYyModelDtBuffered__ScalarDeletingDtor_TRAMP = 1;  // "CYyModelDtBuffered::ScalarDeletingDtor" 0x1002A0A0
 constexpr unsigned CYyModelBase__RefreshParts = 4, CYyModelBase__RefreshParts_TRAMP = 1;  // "CYyModelBase::RefreshParts" 0x1002A0C0
 constexpr unsigned CYyModelBase__DrawLit = 20, CYyModelBase__DrawLit_TRAMP = 1;  // "CYyModelBase::DrawLit" 0x1002A3B0
 constexpr unsigned CYyModelBase__CallPartsSlot20 = 20, CYyModelBase__CallPartsSlot20_TRAMP = 1;  // "CYyModelBase::CallPartsSlot20" 0x1002A700
@@ -5264,9 +5263,9 @@ constexpr unsigned CYyOs2VtxBuffer__CreateBuffersStep = 4, CYyOs2VtxBuffer__Crea
 constexpr unsigned CYyOs2VtxBuffer_ScalarDeletingDtor = 4, CYyOs2VtxBuffer_ScalarDeletingDtor_TRAMP = 1;  // "CYyOs2VtxBuffer_ScalarDeletingDtor" 0x1002D660
 constexpr unsigned CYyOs2VtxBuffer__Constructor = 4, CYyOs2VtxBuffer__Constructor_TRAMP = 1;  // "CYyOs2VtxBuffer::Constructor" 0x1002D680
 constexpr unsigned CYyOs2VtxBuffer__CYyOs2VtxBuffer_Destructor = 4, CYyOs2VtxBuffer__CYyOs2VtxBuffer_Destructor_TRAMP = 1;  // "CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor" 0x1002D700
-constexpr unsigned CMoResource_VT_1032C854__CheckVersionAndInit = 4, CMoResource_VT_1032C854__CheckVersionAndInit_TRAMP = 1;  // "CMoResource_VT_1032C854::CheckVersionAndInit" 0x1002D7F0
+constexpr unsigned CMoOs2Res__CheckVersionAndInit = 4, CMoOs2Res__CheckVersionAndInit_TRAMP = 1;  // "CMoOs2Res::CheckVersionAndInit" 0x1002D7F0
 constexpr unsigned CMoResource_DropObjectAt5E = 12, CMoResource_DropObjectAt5E_TRAMP = 1;  // "CMoResource_DropObjectAt5E" 0x1002D860
-constexpr unsigned CMoResource_VT_1032C854__vf004 = 0, CMoResource_VT_1032C854__vf004_TRAMP = 1;  // "CMoResource_VT_1032C854::vf004" 0x1002D880
+constexpr unsigned CMoOs2Res__Slot4PointersToWordOffsets = 0, CMoOs2Res__Slot4PointersToWordOffsets_TRAMP = 1;  // "CMoOs2Res::Slot4PointersToWordOffsets" 0x1002D880
 constexpr unsigned Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer = 4, Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer_TRAMP = 1;  // "Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer" 0x1002D8F0
 constexpr unsigned CYyModelDt__SkinAndDrawV2 = 20, CYyModelDt__SkinAndDrawV2_TRAMP = 1;  // "CYyModelDt::SkinAndDrawV2" 0x1002DC10
 constexpr unsigned Gfx_SetStreamSourceCached = 4, Gfx_SetStreamSourceCached_TRAMP = 1;  // "Gfx_SetStreamSourceCached" 0x1002F130
@@ -5288,8 +5287,8 @@ constexpr unsigned Model_BeginOffscreenPass = 16, Model_BeginOffscreenPass_TRAMP
 constexpr unsigned Model_EndOffscreenPassBindTextures = 20, Model_EndOffscreenPassBindTextures_TRAMP = 1;  // "Model_EndOffscreenPassBindTextures" 0x10033A70
 constexpr unsigned Shadow_DrawByMode = 4, Shadow_DrawByMode_TRAMP = 1;  // "Shadow_DrawByMode" 0x10033DA0
 constexpr unsigned Shadow_SmoothLightDirection = 4, Shadow_SmoothLightDirection_TRAMP = 1;  // "Shadow_SmoothLightDirection" 0x10033EA0
-constexpr unsigned CMoResource_VT_1032C828__vf004 = 0, CMoResource_VT_1032C828__vf004_TRAMP = 1;  // "CMoResource_VT_1032C828::vf004" 0x10034170
-constexpr unsigned CMoResource_VT_1032C828__vf005 = 8, CMoResource_VT_1032C828__vf005_TRAMP = 0;  // "CMoResource_VT_1032C828::vf005" 0x10034180
+constexpr unsigned CMoSk2Res__Slot4StoreInHandle = 0, CMoSk2Res__Slot4StoreInHandle_TRAMP = 1;  // "CMoSk2Res::Slot4StoreInHandle" 0x10034170
+constexpr unsigned CMoSk2Res__Slot5Nop = 8, CMoSk2Res__Slot5Nop_TRAMP = 0;  // "CMoSk2Res::Slot5Nop" 0x10034180
 constexpr unsigned CYySkl__Construct = 4, CYySkl__Construct_TRAMP = 1;  // "CYySkl::Construct" 0x10034230
 constexpr unsigned CYyModelBase__AllocMatrixBuffers = 4, CYyModelBase__AllocMatrixBuffers_TRAMP = 1;  // "CYyModelBase::AllocMatrixBuffers" 0x100342A0
 constexpr unsigned Skel_BindShared = 20, Skel_BindShared_TRAMP = 1;  // "Skel_BindShared" 0x10034330
@@ -5307,7 +5306,7 @@ constexpr unsigned Skel_MarkMarkedChains = 4, Skel_MarkMarkedChains_TRAMP = 1;  
 constexpr unsigned Skel_MarkChain = 4, Skel_MarkChain_TRAMP = 1;  // "Skel_MarkChain" 0x10035330
 constexpr unsigned CMoElem__GetRuntimeClass_variant0 = 0, CMoElem__GetRuntimeClass_variant0_TRAMP = 1;  // "CMoElem::GetRuntimeClass_variant0" 0x100353C0
 constexpr unsigned CMoTask__CtorByMode = 4, CMoTask__CtorByMode_TRAMP = 1;  // "CMoTask::CtorByMode" 0x10035A00
-constexpr unsigned CMoTask_VT_1032A904__ScalarDeletingDtor = 0, CMoTask_VT_1032A904__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032A904::ScalarDeletingDtor" 0x10035AE0
+constexpr unsigned CMoModeRampTask__ScalarDeletingDtor = 0, CMoModeRampTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoModeRampTask::ScalarDeletingDtor" 0x10035AE0
 constexpr unsigned CMoTask__CreateMode2 = 4, CMoTask__CreateMode2_TRAMP = 1;  // "CMoTask::CreateMode2" 0x10035D40
 constexpr unsigned CMoTask__CreateMode1 = 4, CMoTask__CreateMode1_TRAMP = 1;  // "CMoTask::CreateMode1" 0x10035D90
 constexpr unsigned CMoTask__CreateMode4 = 4, CMoTask__CreateMode4_TRAMP = 1;  // "CMoTask::CreateMode4" 0x10035DE0
@@ -5369,7 +5368,7 @@ constexpr unsigned Music_SetTrackVolume = 12, Music_SetTrackVolume_TRAMP = 1;  /
 constexpr unsigned Font_QueueText = 4, Font_QueueText_TRAMP = 1;  // "Font_QueueText" 0x100384B0
 constexpr unsigned Font_DrawPass = 4, Font_DrawPass_TRAMP = 1;  // "Font_DrawPass" 0x10038520
 constexpr unsigned Font_DrawString = 20, Font_DrawString_TRAMP = 1;  // "Font_DrawString" 0x10038720
-constexpr unsigned CMoResource_VT_1032C7A4__vf008 = 8, CMoResource_VT_1032C7A4__vf008_TRAMP = 0;  // "CMoResource_VT_1032C7A4::vf008" 0x10038920
+constexpr unsigned CMoResType5E__SetupNop = 8, CMoResType5E__SetupNop_TRAMP = 0;  // "CMoResType5E::SetupNop" 0x10038920
 constexpr unsigned Post_CreateScreenEffectTargets = 16, Post_CreateScreenEffectTargets_TRAMP = 1;  // "Post_CreateScreenEffectTargets" 0x10038930
 constexpr unsigned PostCapture_ReleaseTextures = 4, PostCapture_ReleaseTextures_TRAMP = 1;  // "PostCapture_ReleaseTextures" 0x100389C0
 constexpr unsigned PostCapture_Init = 4, PostCapture_Init_TRAMP = 1;  // "PostCapture_Init" 0x10038A20
@@ -5378,7 +5377,7 @@ constexpr unsigned Post_DrawRotatingGhostLayers = 20, Post_DrawRotatingGhostLaye
 constexpr unsigned CYyObject__Init = 4, CYyObject__Init_TRAMP = 1;  // "CYyObject::Init" 0x10039440
 constexpr unsigned ThreadPool_StartThread = 4, ThreadPool_StartThread_TRAMP = 1;  // "ThreadPool_StartThread" 0x100394D0
 constexpr unsigned ThreadPool_Shutdown = 4, ThreadPool_Shutdown_TRAMP = 1;  // "ThreadPool_Shutdown" 0x10039550
-constexpr unsigned CYyObject_VT_1032A9F8_Construct = 4, CYyObject_VT_1032A9F8_Construct_TRAMP = 1;  // "CYyObject_VT_1032A9F8_Construct" 0x100395D0
+constexpr unsigned CYyThreadPool_Construct = 4, CYyThreadPool_Construct_TRAMP = 1;  // "CYyThreadPool_Construct" 0x100395D0
 constexpr unsigned ThreadPool_CreateSuspendedThread = 4, ThreadPool_CreateSuspendedThread_TRAMP = 1;  // "ThreadPool_CreateSuspendedThread" 0x10039670
 constexpr unsigned Thread_ResumeAndWait = 4, Thread_ResumeAndWait_TRAMP = 1;  // "Thread_ResumeAndWait" 0x100396A0
 constexpr unsigned CYyTexBase__GetRuntimeClass_variant0 = 0, CYyTexBase__GetRuntimeClass_variant0_TRAMP = 1;  // "CYyTexBase::GetRuntimeClass_variant0" 0x10039770
@@ -5468,34 +5467,34 @@ constexpr unsigned CMoD3aLightmapElem__GetRuntimeClass = 0, CMoD3aLightmapElem__
 constexpr unsigned CMoD3aElem__GetRuntimeClass_variant2 = 0, CMoD3aElem__GetRuntimeClass_variant2_TRAMP = 1;  // "CMoD3aElem::GetRuntimeClass_variant2" 0x1003EF00
 constexpr unsigned CMoVuAnmElem__GetRuntimeClass = 0, CMoVuAnmElem__GetRuntimeClass_TRAMP = 1;  // "CMoVuAnmElem::GetRuntimeClass" 0x1003EF10
 constexpr unsigned CMoVuAnmElem__IsKind8 = 0, CMoVuAnmElem__IsKind8_TRAMP = 1;  // "CMoVuAnmElem::IsKind8" 0x1003EF80
-constexpr unsigned CMoVuAnmElem__vf008 = 0, CMoVuAnmElem__vf008_TRAMP = 0;  // "CMoVuAnmElem::vf008" 0x1003EF90
+constexpr unsigned CMoVuAnmElem__Slot8CallSlot10 = 0, CMoVuAnmElem__Slot8CallSlot10_TRAMP = 0;  // "CMoVuAnmElem::Slot8CallSlot10" 0x1003EF90
 constexpr unsigned CMoVuAnmElem__ScalarDeletingDtor = 0, CMoVuAnmElem__ScalarDeletingDtor_TRAMP = 1;  // "CMoVuAnmElem::ScalarDeletingDtor" 0x1003EFA0
-constexpr unsigned CMoResource_VT_1032C6F4__vf009 = 8, CMoResource_VT_1032C6F4__vf009_TRAMP = 0;  // "CMoResource_VT_1032C6F4::vf009" 0x1003F430
+constexpr unsigned CMoResType25__Slot9Nop = 8, CMoResType25__Slot9Nop_TRAMP = 0;  // "CMoResType25::Slot9Nop" 0x1003F430
 constexpr unsigned CMoDistMorphElem__ApplyMorph = 20, CMoDistMorphElem__ApplyMorph_TRAMP = 1;  // "CMoDistMorphElem::ApplyMorph" 0x1003F440
 constexpr unsigned CMoDistMorphElem__ComputeMorphHandle = 4, CMoDistMorphElem__ComputeMorphHandle_TRAMP = 1;  // "CMoDistMorphElem::ComputeMorphHandle" 0x1003F8A0
-constexpr unsigned CXi471011C8_VT_1032AC90__Ctor = 4, CXi471011C8_VT_1032AC90__Ctor_TRAMP = 1;  // "CXi471011C8_VT_1032AC90::Ctor" 0x1003FB70
+constexpr unsigned CMoMorphElem__Ctor = 4, CMoMorphElem__Ctor_TRAMP = 1;  // "CMoMorphElem::Ctor" 0x1003FB70
 constexpr unsigned CMoDistModelElem__IsDistortedMode = 4, CMoDistModelElem__IsDistortedMode_TRAMP = 1;  // "CMoDistModelElem::IsDistortedMode" 0x1003FCB0
 constexpr unsigned CMoDistModelElem__GetVertexBase = 4, CMoDistModelElem__GetVertexBase_TRAMP = 0;  // "CMoDistModelElem::GetVertexBase" 0x1003FCE0
 constexpr unsigned CMoDistModelElem__GetDataEnd = 4, CMoDistModelElem__GetDataEnd_TRAMP = 1;  // "CMoDistModelElem::GetDataEnd" 0x1003FCF0
 constexpr unsigned MoElem_GetVertexData = 4, MoElem_GetVertexData_TRAMP = 1;  // "MoElem_GetVertexData" 0x1003FD70
 constexpr unsigned CMoDistModelElem__DrawBatches = 20, CMoDistModelElem__DrawBatches_TRAMP = 1;  // "CMoDistModelElem::DrawBatches" 0x10040220
 constexpr unsigned CMoDistModelElem__DrawMesh = 20, CMoDistModelElem__DrawMesh_TRAMP = 1;  // "CMoDistModelElem::DrawMesh" 0x10040670
-constexpr unsigned CXi471011C8_VT_1032B3B8__RebuildBlendWeights = 20, CXi471011C8_VT_1032B3B8__RebuildBlendWeights_TRAMP = 1;  // "CXi471011C8_VT_1032B3B8::RebuildBlendWeights" 0x10040E70
+constexpr unsigned CMoD3mElemFlag200000__RebuildBlendWeights = 20, CMoD3mElemFlag200000__RebuildBlendWeights_TRAMP = 1;  // "CMoD3mElemFlag200000::RebuildBlendWeights" 0x10040E70
 constexpr unsigned CMoElem__GetRuntimeClass_variant2 = 0, CMoElem__GetRuntimeClass_variant2_TRAMP = 1;  // "CMoElem::GetRuntimeClass_variant2" 0x10041000
 constexpr unsigned CMoD3mSpecularElem__GetRuntimeClass = 0, CMoD3mSpecularElem__GetRuntimeClass_TRAMP = 1;  // "CMoD3mSpecularElem::GetRuntimeClass" 0x10041010
 constexpr unsigned CMoD3mSpecularElem__Ctor = 4, CMoD3mSpecularElem__Ctor_TRAMP = 1;  // "CMoD3mSpecularElem::Ctor" 0x10041020
 constexpr unsigned CMoD3mSpecularElem__IsKind7 = 0, CMoD3mSpecularElem__IsKind7_TRAMP = 1;  // "CMoD3mSpecularElem::IsKind7" 0x100410E0
 constexpr unsigned CMoD3mSpecularElem__ScalarDeletingDtor = 0, CMoD3mSpecularElem__ScalarDeletingDtor_TRAMP = 1;  // "CMoD3mSpecularElem::ScalarDeletingDtor" 0x100410F0
 constexpr unsigned CMoElem__CMoElemFamily_IsKind0 = 0, CMoElem__CMoElemFamily_IsKind0_TRAMP = 1;  // "CMoElem::CMoElemFamily_IsKind0" 0x10041120
-constexpr unsigned CXi471011C8_VT_1032AD80_DeletingDtor = 4, CXi471011C8_VT_1032AD80_DeletingDtor_TRAMP = 1;  // "CXi471011C8_VT_1032AD80_DeletingDtor" 0x10041130
+constexpr unsigned CMoD3mElem_DeletingDtor = 4, CMoD3mElem_DeletingDtor_TRAMP = 1;  // "CMoD3mElem_DeletingDtor" 0x10041130
 constexpr unsigned CMoD3mSpecularElem__BindTintedTexture = 20, CMoD3mSpecularElem__BindTintedTexture_TRAMP = 1;  // "CMoD3mSpecularElem::BindTintedTexture" 0x10041160
-constexpr unsigned CMoElem_VT_1032ADE8__vf18 = 16, CMoElem_VT_1032ADE8__vf18_TRAMP = 1;  // "CMoElem_VT_1032ADE8::vf18" 0x10041AF0
+constexpr unsigned CMoElemKind5C__Slot18DrawTextAtTarget = 16, CMoElemKind5C__Slot18DrawTextAtTarget_TRAMP = 1;  // "CMoElemKind5C::Slot18DrawTextAtTarget" 0x10041AF0
 constexpr unsigned CXiSub_10041E70_Ctor = 4, CXiSub_10041E70_Ctor_TRAMP = 1;  // "CXiSub_10041E70_Ctor" 0x10041F40
-constexpr unsigned CMoElem_VT_1032ADE8__ScalarDeletingDtor = 0, CMoElem_VT_1032ADE8__ScalarDeletingDtor_TRAMP = 1;  // "CMoElem_VT_1032ADE8::ScalarDeletingDtor" 0x10041FE0
-constexpr unsigned CMoOtTask_VT_1032AE64__vf8 = 4, CMoOtTask_VT_1032AE64__vf8_TRAMP = 1;  // "CMoOtTask_VT_1032AE64::vf8" 0x10042020
+constexpr unsigned CMoElemKind5C__ScalarDeletingDtor = 0, CMoElemKind5C__ScalarDeletingDtor_TRAMP = 1;  // "CMoElemKind5C::ScalarDeletingDtor" 0x10041FE0
+constexpr unsigned CMoOtDrawUPTask__Slot8Update = 4, CMoOtDrawUPTask__Slot8Update_TRAMP = 1;  // "CMoOtDrawUPTask::Slot8Update" 0x10042020
 constexpr unsigned CMoTask__Slot8ReturnFalse = 8, CMoTask__Slot8ReturnFalse_TRAMP = 0;  // "CMoTask::Slot8ReturnFalse" 0x10042640
 constexpr unsigned CMoOtTask__Slot11DoNothing = 8, CMoOtTask__Slot11DoNothing_TRAMP = 0;  // "CMoOtTask::Slot11DoNothing" 0x10042650
-constexpr unsigned CMoAttachments_VT_1032AE94__vf001 = 0, CMoAttachments_VT_1032AE94__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032AE94::vf001" 0x10042690
+constexpr unsigned CMoOtDrawUPTaskAttachments__Slot1DeleteOwner = 0, CMoOtDrawUPTaskAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner" 0x10042690
 constexpr unsigned CMoElem__GetRuntimeClass_variant3 = 0, CMoElem__GetRuntimeClass_variant3_TRAMP = 1;  // "CMoElem::GetRuntimeClass_variant3" 0x100426A0
 constexpr unsigned CMoDisintegrateProgElem__GetRuntimeClass = 0, CMoDisintegrateProgElem__GetRuntimeClass_TRAMP = 1;  // "CMoDisintegrateProgElem::GetRuntimeClass" 0x100426B0
 constexpr unsigned CMoDisintegrateProgElem__Slot18DoNothing = 8, CMoDisintegrateProgElem__Slot18DoNothing_TRAMP = 0;  // "CMoDisintegrateProgElem::Slot18DoNothing" 0x100426C0
@@ -5512,14 +5511,14 @@ constexpr unsigned CMoDistMorphElem__GetRuntimeClass = 0, CMoDistMorphElem__GetR
 constexpr unsigned CMoElem__GetRuntimeClass_variant7 = 0, CMoElem__GetRuntimeClass_variant7_TRAMP = 1;  // "CMoElem::GetRuntimeClass_variant7" 0x10043700
 constexpr unsigned CMoDistRingElem__GetRuntimeClass = 0, CMoDistRingElem__GetRuntimeClass_TRAMP = 1;  // "CMoDistRingElem::GetRuntimeClass" 0x10043710
 constexpr unsigned CMoDistRingElem__AllocRingGeometry = 20, CMoDistRingElem__AllocRingGeometry_TRAMP = 1;  // "CMoDistRingElem::AllocRingGeometry" 0x10043720
-constexpr unsigned CMoTask_VT_1032AF60__ScalarDeletingDtor = 0, CMoTask_VT_1032AF60__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032AF60::ScalarDeletingDtor" 0x10043A90
-constexpr unsigned CMoTask_VT_1032AFA8__ScalarDeletingDtor = 0, CMoTask_VT_1032AFA8__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032AFA8::ScalarDeletingDtor" 0x10043C90
-constexpr unsigned CMoAttachments_VT_1032AF44__vf001 = 0, CMoAttachments_VT_1032AF44__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032AF44::vf001" 0x10043DB0
-constexpr unsigned CMoAttachments_VT_1032AF8C__vf001 = 0, CMoAttachments_VT_1032AF8C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032AF8C::vf001" 0x10043DC0
+constexpr unsigned CMoSchOp0DTask__ScalarDeletingDtor = 0, CMoSchOp0DTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoSchOp0DTask::ScalarDeletingDtor" 0x10043A90
+constexpr unsigned CMoSchOp0CTask__ScalarDeletingDtor = 0, CMoSchOp0CTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoSchOp0CTask::ScalarDeletingDtor" 0x10043C90
+constexpr unsigned CMoSchOp0DAttachments__Slot1DeleteOwner = 0, CMoSchOp0DAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp0DAttachments::Slot1DeleteOwner" 0x10043DB0
+constexpr unsigned CMoSchOp0CAttachments__Slot1DeleteOwner = 0, CMoSchOp0CAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp0CAttachments::Slot1DeleteOwner" 0x10043DC0
 constexpr unsigned DynVBCtor_ToggleByte45 = 12, DynVBCtor_ToggleByte45_TRAMP = 1;  // "DynVBCtor_ToggleByte45" 0x10043DD0
 constexpr unsigned DynVBCtor_ReturnZero = 20, DynVBCtor_ReturnZero_TRAMP = 0;  // "DynVBCtor_ReturnZero" 0x10043DE0
 constexpr unsigned DynVB_Constructor = 4, DynVB_Constructor_TRAMP = 1;  // "DynVB_Constructor" 0x10043DF0
-constexpr unsigned CMoTask_VT_1032AFA8__ScalarDeletingDtor_2 = 0, CMoTask_VT_1032AFA8__ScalarDeletingDtor_2_TRAMP = 1;  // "CMoTask_VT_1032AFA8::ScalarDeletingDtor_2" 0x10043E20
+constexpr unsigned CMoSchOp0CTask__ScalarDeletingDtor_2 = 0, CMoSchOp0CTask__ScalarDeletingDtor_2_TRAMP = 1;  // "CMoSchOp0CTask::ScalarDeletingDtor_2" 0x10043E20
 constexpr unsigned DynVB_Create = 0, DynVB_Create_TRAMP = 1;  // "DynVB_Create" 0x10043E50
 constexpr unsigned DynVB_ReturnBuffersToPool = 4, DynVB_ReturnBuffersToPool_TRAMP = 1;  // "DynVB_ReturnBuffersToPool" 0x10043F00
 constexpr unsigned CMoVuElem_Draw = 16, CMoVuElem_Draw_TRAMP = 1;  // "CMoVuElem_Draw" 0x10043F40
@@ -5567,10 +5566,10 @@ constexpr unsigned CMoSkeletonElem__ScalarDeletingDtor = 0, CMoSkeletonElem__Sca
 constexpr unsigned ElemOffset_GetOffsetVec = 4, ElemOffset_GetOffsetVec_TRAMP = 1;  // "ElemOffset_GetOffsetVec" 0x10047B80
 constexpr unsigned CMoGeneratorClone__InitCloneFromSource = 0, CMoGeneratorClone__InitCloneFromSource_TRAMP = 1;  // "CMoGeneratorClone::InitCloneFromSource" 0x10047C30
 constexpr unsigned CMoGeneratorClone__FixupClonedPointers = 4, CMoGeneratorClone__FixupClonedPointers_TRAMP = 1;  // "CMoGeneratorClone::FixupClonedPointers" 0x10047CE0
-constexpr unsigned CMoGeneratorClone_VT_1032B114_Constructor = 12, CMoGeneratorClone_VT_1032B114_Constructor_TRAMP = 1;  // "CMoGeneratorClone_VT_1032B114_Constructor" 0x10047F80
+constexpr unsigned CMoGeneratorRes_Constructor = 12, CMoGeneratorRes_Constructor_TRAMP = 1;  // "CMoGeneratorRes_Constructor" 0x10047F80
 constexpr unsigned CMoResource__CMoCamera_SetLinkedObject = 0, CMoResource__CMoCamera_SetLinkedObject_TRAMP = 1;  // "CMoResource::CMoCamera_SetLinkedObject" 0x10047FC0
 constexpr unsigned CMoResource__Slot5DoNothing = 8, CMoResource__Slot5DoNothing_TRAMP = 0;  // "CMoResource::Slot5DoNothing" 0x10047FD0
-constexpr unsigned CMoGeneratorClone_VT_1032B114__ScalarDeletingDtor = 0, CMoGeneratorClone_VT_1032B114__ScalarDeletingDtor_TRAMP = 1;  // "CMoGeneratorClone_VT_1032B114::ScalarDeletingDtor" 0x10047FE0
+constexpr unsigned CMoGeneratorRes__ScalarDeletingDtor = 0, CMoGeneratorRes__ScalarDeletingDtor_TRAMP = 1;  // "CMoGeneratorRes::ScalarDeletingDtor" 0x10047FE0
 constexpr unsigned CMoGeneratorClone__Release = 4, CMoGeneratorClone__Release_TRAMP = 1;  // "CMoGeneratorClone::Release" 0x100480D0
 constexpr unsigned CMoGeneratorClone__UnlinkElemListA = 4, CMoGeneratorClone__UnlinkElemListA_TRAMP = 1;  // "CMoGeneratorClone::UnlinkElemListA" 0x10048140
 constexpr unsigned CMoGeneratorClone__ResolveCmdTargets = 4, CMoGeneratorClone__ResolveCmdTargets_TRAMP = 1;  // "CMoGeneratorClone::ResolveCmdTargets" 0x10048220
@@ -5668,20 +5667,20 @@ constexpr unsigned CMoDist__set_field_194 = 0, CMoDist__set_field_194_TRAMP = 1;
 constexpr unsigned CMoDist__ScalarDeletingDtor = 0, CMoDist__ScalarDeletingDtor_TRAMP = 1;  // "CMoDist::ScalarDeletingDtor" 0x10052D80
 constexpr unsigned CMoVuDist__Construct = 4, CMoVuDist__Construct_TRAMP = 1;  // "CMoVuDist::Construct" 0x10052DA0
 constexpr unsigned CMoVuDist__IsKind10 = 0, CMoVuDist__IsKind10_TRAMP = 1;  // "CMoVuDist::IsKind10" 0x10052DD0
-constexpr unsigned CMoVuDist__vf008 = 0, CMoVuDist__vf008_TRAMP = 0;  // "CMoVuDist::vf008" 0x10052DE0
+constexpr unsigned CMoVuDist__Slot8CallSlot10 = 0, CMoVuDist__Slot8CallSlot10_TRAMP = 0;  // "CMoVuDist::Slot8CallSlot10" 0x10052DE0
 constexpr unsigned CMoVuDist__ScalarDeletingDtor = 0, CMoVuDist__ScalarDeletingDtor_TRAMP = 1;  // "CMoVuDist::ScalarDeletingDtor" 0x10052DF0
 constexpr unsigned CMoDistMorphElem__Construct = 4, CMoDistMorphElem__Construct_TRAMP = 1;  // "CMoDistMorphElem::Construct" 0x10052E20
 constexpr unsigned CMoDistMorphElem__IsKind6 = 0, CMoDistMorphElem__IsKind6_TRAMP = 1;  // "CMoDistMorphElem::IsKind6" 0x10052E40
 constexpr unsigned CMoDistMorphElem__set_field_1C0 = 0, CMoDistMorphElem__set_field_1C0_TRAMP = 1;  // "CMoDistMorphElem::set_field_1C0" 0x10052E50
 constexpr unsigned CMoDistMorphElem__ScalarDeletingDtor = 0, CMoDistMorphElem__ScalarDeletingDtor_TRAMP = 1;  // "CMoDistMorphElem::ScalarDeletingDtor" 0x10052E60
 constexpr unsigned ElemCtor471011C8_Set194 = 4, ElemCtor471011C8_Set194_TRAMP = 1;  // "ElemCtor471011C8_Set194" 0x10052E80
-constexpr unsigned CXi471011C8_VT_1032B3B8__Ctor = 4, CXi471011C8_VT_1032B3B8__Ctor_TRAMP = 1;  // "CXi471011C8_VT_1032B3B8::Ctor" 0x10052E90
-constexpr unsigned CXi471011C8_VT_1032AD80__Ctor = 4, CXi471011C8_VT_1032AD80__Ctor_TRAMP = 1;  // "CXi471011C8_VT_1032AD80::Ctor" 0x10052F00
+constexpr unsigned CMoD3mElemFlag200000__Ctor = 4, CMoD3mElemFlag200000__Ctor_TRAMP = 1;  // "CMoD3mElemFlag200000::Ctor" 0x10052E90
+constexpr unsigned CMoD3mElem__Ctor = 4, CMoD3mElem__Ctor_TRAMP = 1;  // "CMoD3mElem::Ctor" 0x10052F00
 constexpr unsigned CMoDistModelElem__Init = 4, CMoDistModelElem__Init_TRAMP = 1;  // "CMoDistModelElem::Init" 0x10052F20
 constexpr unsigned CMoDistModelElem__IsKind4 = 0, CMoDistModelElem__IsKind4_TRAMP = 1;  // "CMoDistModelElem::IsKind4" 0x10052F40
 constexpr unsigned CMoDistModelElem__set_field_194 = 0, CMoDistModelElem__set_field_194_TRAMP = 1;  // "CMoDistModelElem::set_field_194" 0x10052F50
 constexpr unsigned CMoDistModelElem__ScalarDeletingDtor = 0, CMoDistModelElem__ScalarDeletingDtor_TRAMP = 1;  // "CMoDistModelElem::ScalarDeletingDtor" 0x10052F60
-constexpr unsigned CXi471011C8_VT_1032B478__Ctor = 4, CXi471011C8_VT_1032B478__Ctor_TRAMP = 1;  // "CXi471011C8_VT_1032B478::Ctor" 0x10052F80
+constexpr unsigned CMoRingElem__Ctor = 4, CMoRingElem__Ctor_TRAMP = 1;  // "CMoRingElem::Ctor" 0x10052F80
 constexpr unsigned CMoDistRingElem__Construct = 4, CMoDistRingElem__Construct_TRAMP = 1;  // "CMoDistRingElem::Construct" 0x10052FD0
 constexpr unsigned CMoDistRingElem__IsKind5 = 0, CMoDistRingElem__IsKind5_TRAMP = 1;  // "CMoDistRingElem::IsKind5" 0x10052FF0
 constexpr unsigned CMoDistRingElem__set_field_1B6 = 0, CMoDistRingElem__set_field_1B6_TRAMP = 1;  // "CMoDistRingElem::set_field_1B6" 0x10053000
@@ -5698,16 +5697,16 @@ constexpr unsigned ElemFields194_SetField1A4 = 4, ElemFields194_SetField1A4_TRAM
 constexpr unsigned ElemFields194_SetField1A8 = 4, ElemFields194_SetField1A8_TRAMP = 1;  // "ElemFields194_SetField1A8" 0x100530E0
 constexpr unsigned CMoDisintegrateProgElem__Construct = 4, CMoDisintegrateProgElem__Construct_TRAMP = 1;  // "CMoDisintegrateProgElem::Construct" 0x100530F0
 constexpr unsigned CMoDisintegrateProgElem__IsKind13 = 0, CMoDisintegrateProgElem__IsKind13_TRAMP = 1;  // "CMoDisintegrateProgElem::IsKind13" 0x10053130
-constexpr unsigned CMoDisintegrateProgElem__vf008 = 0, CMoDisintegrateProgElem__vf008_TRAMP = 0;  // "CMoDisintegrateProgElem::vf008" 0x10053140
+constexpr unsigned CMoDisintegrateProgElem__Slot8CallSlot10 = 0, CMoDisintegrateProgElem__Slot8CallSlot10_TRAMP = 0;  // "CMoDisintegrateProgElem::Slot8CallSlot10" 0x10053140
 constexpr unsigned CMoDisintegrateProgElem__ScalarDeletingDtor = 0, CMoDisintegrateProgElem__ScalarDeletingDtor_TRAMP = 1;  // "CMoDisintegrateProgElem::ScalarDeletingDtor" 0x10053150
 constexpr unsigned CMoNullProgElem__Construct = 4, CMoNullProgElem__Construct_TRAMP = 1;  // "CMoNullProgElem::Construct" 0x10053180
 constexpr unsigned CMoNullProgElem__Destructor = 0, CMoNullProgElem__Destructor_TRAMP = 1;  // "CMoNullProgElem::Destructor" 0x100531B0
 constexpr unsigned SharedConditionalStateReset = 4, SharedConditionalStateReset_TRAMP = 1;  // "SharedConditionalStateReset" 0x100531D0
-constexpr unsigned CMoTask_VT_1032B654__ScalarDeletingDtor = 0, CMoTask_VT_1032B654__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032B654::ScalarDeletingDtor" 0x10053350
+constexpr unsigned CMoGeneratorTask__ScalarDeletingDtor = 0, CMoGeneratorTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoGeneratorTask::ScalarDeletingDtor" 0x10053350
 constexpr unsigned CMoTask__Restart = 4, CMoTask__Restart_TRAMP = 1;  // "CMoTask::Restart" 0x10053370
 constexpr unsigned CMoGeneratorClone__CopyParams = 4, CMoGeneratorClone__CopyParams_TRAMP = 1;  // "CMoGeneratorClone::CopyParams" 0x10053450
 constexpr unsigned CMoGeneratorClone__CreateInstance = 4, CMoGeneratorClone__CreateInstance_TRAMP = 1;  // "CMoGeneratorClone::CreateInstance" 0x100536C0
-constexpr unsigned CMoGeneratorClone_VT_1032B69C__ScalarDeletingDtor = 0, CMoGeneratorClone_VT_1032B69C__ScalarDeletingDtor_TRAMP = 1;  // "CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor" 0x10053840
+constexpr unsigned CMoGeneratorClone__ScalarDeletingDtor = 0, CMoGeneratorClone__ScalarDeletingDtor_TRAMP = 1;  // "CMoGeneratorClone::ScalarDeletingDtor" 0x10053840
 constexpr unsigned Generator_ClearSubobjectOrSetFlag = 12, Generator_ClearSubobjectOrSetFlag_TRAMP = 1;  // "Generator_ClearSubobjectOrSetFlag" 0x10053890
 constexpr unsigned YmGenerater_Stop = 12, YmGenerater_Stop_TRAMP = 1;  // "YmGenerater_Stop" 0x100538E0
 constexpr unsigned Generator_IsFlag400OrField22Zero = 4, Generator_IsFlag400OrField22Zero_TRAMP = 1;  // "Generator_IsFlag400OrField22Zero" 0x100539E0
@@ -5715,16 +5714,16 @@ constexpr unsigned Generator_StopGenerators = 4, Generator_StopGenerators_TRAMP 
 constexpr unsigned YmGenerater_UpdateAttach = 20, YmGenerater_UpdateAttach_TRAMP = 1;  // "YmGenerater_UpdateAttach" 0x10053C80
 constexpr unsigned YmGenerater_UpdateAttachIfPresent = 12, YmGenerater_UpdateAttachIfPresent_TRAMP = 1;  // "YmGenerater_UpdateAttachIfPresent" 0x10053DD0
 constexpr unsigned CMoGeneratorClone__InitDefaultParams = 0, CMoGeneratorClone__InitDefaultParams_TRAMP = 1;  // "CMoGeneratorClone::InitDefaultParams" 0x10053E00
-constexpr unsigned CMoTask_VT_1032B654__RunGeneratorAndFinish = 4, CMoTask_VT_1032B654__RunGeneratorAndFinish_TRAMP = 1;  // "CMoTask_VT_1032B654::RunGeneratorAndFinish" 0x10054220
-constexpr unsigned CMoGeneratorClone_VT_1032B69C__CMoGeneratorClone_GetRuntimeClass = 0, CMoGeneratorClone_VT_1032B69C__CMoGeneratorClone_GetRuntimeClass_TRAMP = 1;  // "CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass" 0x100542E0
+constexpr unsigned CMoGeneratorTask__RunGeneratorAndFinish = 4, CMoGeneratorTask__RunGeneratorAndFinish_TRAMP = 1;  // "CMoGeneratorTask::RunGeneratorAndFinish" 0x10054220
+constexpr unsigned CMoGeneratorClone__CMoGeneratorClone_GetRuntimeClass = 0, CMoGeneratorClone__CMoGeneratorClone_GetRuntimeClass_TRAMP = 1;  // "CMoGeneratorClone::CMoGeneratorClone_GetRuntimeClass" 0x100542E0
 constexpr unsigned CMoGeneratorClone__Destructor = 4, CMoGeneratorClone__Destructor_TRAMP = 1;  // "CMoGeneratorClone::Destructor" 0x100542F0
 constexpr unsigned GeneratorRelease_Get10353710 = 4, GeneratorRelease_Get10353710_TRAMP = 1;  // "GeneratorRelease_Get10353710" 0x10054410
 constexpr unsigned GeneratorRelease_CopyFromPtr = 4, GeneratorRelease_CopyFromPtr_TRAMP = 1;  // "GeneratorRelease_CopyFromPtr" 0x10054430
-constexpr unsigned CMoAttachments_VT_1032B140__vf001 = 0, CMoAttachments_VT_1032B140__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032B140::vf001" 0x10054450
-constexpr unsigned CMoTask_VT_1032B654__vf011 = 0, CMoTask_VT_1032B654__vf011_TRAMP = 1;  // "CMoTask_VT_1032B654::vf011" 0x10054460
-constexpr unsigned CMoTask_VT_1032B654__vf012 = 0, CMoTask_VT_1032B654__vf012_TRAMP = 1;  // "CMoTask_VT_1032B654::vf012" 0x10054470
-constexpr unsigned CMoResource_VT_1032C5FC__vf008 = 8, CMoResource_VT_1032C5FC__vf008_TRAMP = 0;  // "CMoResource_VT_1032C5FC::vf008" 0x10054480
-constexpr unsigned CMoResource_VT_1032C5FC__vf009 = 8, CMoResource_VT_1032C5FC__vf009_TRAMP = 0;  // "CMoResource_VT_1032C5FC::vf009" 0x10054490
+constexpr unsigned CMoGeneratorResAttachments__Slot1DeleteOwner = 0, CMoGeneratorResAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoGeneratorResAttachments::Slot1DeleteOwner" 0x10054450
+constexpr unsigned CMoGeneratorTask__Slot11GetCloneRuntimeClass = 0, CMoGeneratorTask__Slot11GetCloneRuntimeClass_TRAMP = 1;  // "CMoGeneratorTask::Slot11GetCloneRuntimeClass" 0x10054460
+constexpr unsigned CMoGeneratorTask__Slot12DeleteClone = 0, CMoGeneratorTask__Slot12DeleteClone_TRAMP = 1;  // "CMoGeneratorTask::Slot12DeleteClone" 0x10054470
+constexpr unsigned CMoResType19__SetupNop = 8, CMoResType19__SetupNop_TRAMP = 0;  // "CMoResType19::SetupNop" 0x10054480
+constexpr unsigned CMoResType19__Slot9Nop = 8, CMoResType19__Slot9Nop_TRAMP = 0;  // "CMoResType19::Slot9Nop" 0x10054490
 constexpr unsigned ElemCurve_EvaluateWithFlag34 = 4, ElemCurve_EvaluateWithFlag34_TRAMP = 1;  // "ElemCurve_EvaluateWithFlag34" 0x100544D0
 constexpr unsigned ElemCurve_Evaluate = 20, ElemCurve_Evaluate_TRAMP = 1;  // "ElemCurve_Evaluate" 0x10054500
 constexpr unsigned ElemCurve_EvaluateEaseIn = 4, ElemCurve_EvaluateEaseIn_TRAMP = 1;  // "ElemCurve_EvaluateEaseIn" 0x100546F0
@@ -5797,36 +5796,36 @@ constexpr unsigned AfterimageTask_SetTarget = 4, AfterimageTask_SetTarget_TRAMP 
 constexpr unsigned AfterimageTask_Execute = 4, AfterimageTask_Execute_TRAMP = 1;  // "AfterimageTask_Execute" 0x10062E20
 constexpr unsigned AfterimageTask_Kill = 4, AfterimageTask_Kill_TRAMP = 1;  // "AfterimageTask_Kill" 0x10062E80
 constexpr unsigned AfterimageTask_IsResourceMoving = 4, AfterimageTask_IsResourceMoving_TRAMP = 1;  // "AfterimageTask_IsResourceMoving" 0x10062ED0
-constexpr unsigned CMoAttachments_VT_1032BCCC__vf001 = 0, CMoAttachments_VT_1032BCCC__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BCCC::vf001" 0x10062F50
-constexpr unsigned CMoAttachments_VT_1032BAF0__vf001 = 0, CMoAttachments_VT_1032BAF0__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BAF0::vf001" 0x10062F60
-constexpr unsigned CMoAttachments_VT_1032BBAC__vf001 = 0, CMoAttachments_VT_1032BBAC__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BBAC::vf001" 0x10062F70
+constexpr unsigned CMoSchOp48Attachments__Slot1DeleteOwner = 0, CMoSchOp48Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp48Attachments::Slot1DeleteOwner" 0x10062F50
+constexpr unsigned CMoSchOp1FAttachments__Slot1DeleteOwner = 0, CMoSchOp1FAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp1FAttachments::Slot1DeleteOwner" 0x10062F60
+constexpr unsigned CMoSchOp2CAttachments__Slot1DeleteOwner = 0, CMoSchOp2CAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp2CAttachments::Slot1DeleteOwner" 0x10062F70
 constexpr unsigned CMoLockLookAtDriveTask__Slot11CallGetRuntimeClass = 0, CMoLockLookAtDriveTask__Slot11CallGetRuntimeClass_TRAMP = 1;  // "CMoLockLookAtDriveTask::Slot11CallGetRuntimeClass" 0x10062F80
 constexpr unsigned CMoLockLookAtDriveTask__Slot12ThunkDeletingDtor = 0, CMoLockLookAtDriveTask__Slot12ThunkDeletingDtor_TRAMP = 1;  // "CMoLockLookAtDriveTask::Slot12ThunkDeletingDtor" 0x10062F90
-constexpr unsigned CMoAttachments_VT_1032BF0C__vf001 = 0, CMoAttachments_VT_1032BF0C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BF0C::vf001" 0x10062FA0
-constexpr unsigned CMoAttachments_VT_1032BD14__vf001 = 0, CMoAttachments_VT_1032BD14__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BD14::vf001" 0x10062FB0
-constexpr unsigned CMoAttachments_VT_1032BF54__vf001 = 0, CMoAttachments_VT_1032BF54__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BF54::vf001" 0x10062FC0
-constexpr unsigned CMoAttachments_VT_1032BBF4__vf001 = 0, CMoAttachments_VT_1032BBF4__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BBF4::vf001" 0x10062FD0
+constexpr unsigned CMoSchOp7AAttachments__Slot1DeleteOwner = 0, CMoSchOp7AAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp7AAttachments::Slot1DeleteOwner" 0x10062FA0
+constexpr unsigned CMoSchOp7FAttachments__Slot1DeleteOwner = 0, CMoSchOp7FAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp7FAttachments::Slot1DeleteOwner" 0x10062FB0
+constexpr unsigned CMoSchOpB4Attachments__Slot1DeleteOwner = 0, CMoSchOpB4Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOpB4Attachments::Slot1DeleteOwner" 0x10062FC0
+constexpr unsigned CMoSchOpBFAttachments__Slot1DeleteOwner = 0, CMoSchOpBFAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOpBFAttachments::Slot1DeleteOwner" 0x10062FD0
 constexpr unsigned CMoActorColorDriveTask__Slot11CallGetRuntimeClass = 0, CMoActorColorDriveTask__Slot11CallGetRuntimeClass_TRAMP = 1;  // "CMoActorColorDriveTask::Slot11CallGetRuntimeClass" 0x10062FE0
 constexpr unsigned CMoActorColorDriveTask__Slot12ThunkDeletingDtor = 0, CMoActorColorDriveTask__Slot12ThunkDeletingDtor_TRAMP = 1;  // "CMoActorColorDriveTask::Slot12ThunkDeletingDtor" 0x10062FF0
-constexpr unsigned CMoAttachments_VT_1032BD5C__vf001 = 0, CMoAttachments_VT_1032BD5C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BD5C::vf001" 0x10063000
-constexpr unsigned CMoAttachments_VT_1032BF9C__vf001 = 0, CMoAttachments_VT_1032BF9C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BF9C::vf001" 0x10063010
-constexpr unsigned CMoAttachments_VT_1032BC68__vf001 = 0, CMoAttachments_VT_1032BC68__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BC68::vf001" 0x10063020
-constexpr unsigned CMoAttachments_VT_1032BDA4__vf001 = 0, CMoAttachments_VT_1032BDA4__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BDA4::vf001" 0x10063030
-constexpr unsigned CMoAttachments_VT_1032BFE4__vf001 = 0, CMoAttachments_VT_1032BFE4__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BFE4::vf001" 0x10063040
-constexpr unsigned CMoAttachments_VT_1032BB38__vf001 = 0, CMoAttachments_VT_1032BB38__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BB38::vf001" 0x10063070
-constexpr unsigned CMoAttachments_VT_1032BDEC__vf001 = 0, CMoAttachments_VT_1032BDEC__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BDEC::vf001" 0x10063080
-constexpr unsigned CMoAttachments_VT_1032C02C__vf001 = 0, CMoAttachments_VT_1032C02C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032C02C::vf001" 0x10063090
+constexpr unsigned CMoSchOp42Attachments__Slot1DeleteOwner = 0, CMoSchOp42Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp42Attachments::Slot1DeleteOwner" 0x10063000
+constexpr unsigned CMoSchOp2EAttachments__Slot1DeleteOwner = 0, CMoSchOp2EAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp2EAttachments::Slot1DeleteOwner" 0x10063010
+constexpr unsigned CMoSchOp62Attachments__Slot1DeleteOwner = 0, CMoSchOp62Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp62Attachments::Slot1DeleteOwner" 0x10063020
+constexpr unsigned CMoSchOp40Attachments__Slot1DeleteOwner = 0, CMoSchOp40Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp40Attachments::Slot1DeleteOwner" 0x10063030
+constexpr unsigned CMoSchOp2FAttachments__Slot1DeleteOwner = 0, CMoSchOp2FAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp2FAttachments::Slot1DeleteOwner" 0x10063040
+constexpr unsigned CMoSchOp07Attachments__Slot1DeleteOwner = 0, CMoSchOp07Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp07Attachments::Slot1DeleteOwner" 0x10063070
+constexpr unsigned CMoSchOp75Attachments__Slot1DeleteOwner = 0, CMoSchOp75Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp75Attachments::Slot1DeleteOwner" 0x10063080
+constexpr unsigned CMoSchOp59Attachments__Slot1DeleteOwner = 0, CMoSchOp59Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp59Attachments::Slot1DeleteOwner" 0x10063090
 constexpr unsigned CMoPathDriveActorTask__Slot11CallGetRuntimeClass = 0, CMoPathDriveActorTask__Slot11CallGetRuntimeClass_TRAMP = 1;  // "CMoPathDriveActorTask::Slot11CallGetRuntimeClass" 0x100630A0
 constexpr unsigned CMoPathDriveActorTask__Slot12ThunkDeletingDtor = 0, CMoPathDriveActorTask__Slot12ThunkDeletingDtor_TRAMP = 1;  // "CMoPathDriveActorTask::Slot12ThunkDeletingDtor" 0x100630B0
-constexpr unsigned CMoAttachments_VT_1032BE34__vf001 = 0, CMoAttachments_VT_1032BE34__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BE34::vf001" 0x100630C0
-constexpr unsigned CMoAttachments_VT_1032BE7C__vf001 = 0, CMoAttachments_VT_1032BE7C__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BE7C::vf001" 0x100630D0
-constexpr unsigned CMoAttachments_VT_1032B940__vf001 = 0, CMoAttachments_VT_1032B940__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032B940::vf001" 0x100630E0
+constexpr unsigned CMoSchOpB5Attachments__Slot1DeleteOwner = 0, CMoSchOpB5Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOpB5Attachments::Slot1DeleteOwner" 0x100630C0
+constexpr unsigned CMoSchOpBCAttachments__Slot1DeleteOwner = 0, CMoSchOpBCAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOpBCAttachments::Slot1DeleteOwner" 0x100630D0
+constexpr unsigned CMoSchOp1DAttachments__Slot1DeleteOwner = 0, CMoSchOp1DAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp1DAttachments::Slot1DeleteOwner" 0x100630E0
 constexpr unsigned CMoLockColorDriveTask__Slot11CallGetRuntimeClass = 0, CMoLockColorDriveTask__Slot11CallGetRuntimeClass_TRAMP = 1;  // "CMoLockColorDriveTask::Slot11CallGetRuntimeClass" 0x100630F0
 constexpr unsigned CMoLockColorDriveTask__Slot12ThunkDeletingDtor = 0, CMoLockColorDriveTask__Slot12ThunkDeletingDtor_TRAMP = 1;  // "CMoLockColorDriveTask::Slot12ThunkDeletingDtor" 0x10063100
-constexpr unsigned CMoAttachments_VT_1032BC84__vf001 = 0, CMoAttachments_VT_1032BC84__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BC84::vf001" 0x10063110
-constexpr unsigned CMoAttachments_VT_1032BEC4__vf001 = 0, CMoAttachments_VT_1032BEC4__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032BEC4::vf001" 0x10063120
-constexpr unsigned CMoTask_VT_1032B95C__vf011 = 0, CMoTask_VT_1032B95C__vf011_TRAMP = 1;  // "CMoTask_VT_1032B95C::vf011" 0x10063130
-constexpr unsigned CMoTask_VT_1032B95C__vf012 = 0, CMoTask_VT_1032B95C__vf012_TRAMP = 1;  // "CMoTask_VT_1032B95C::vf012" 0x10063140
+constexpr unsigned CMoSchOpSharedAttachments__Slot1DeleteOwner = 0, CMoSchOpSharedAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOpSharedAttachments::Slot1DeleteOwner" 0x10063110
+constexpr unsigned CMoSchOp9BAttachments__Slot1DeleteOwner = 0, CMoSchOp9BAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoSchOp9BAttachments::Slot1DeleteOwner" 0x10063120
+constexpr unsigned CMoSchOp1DTask__Slot11GetPathDriveActorRuntimeClass = 0, CMoSchOp1DTask__Slot11GetPathDriveActorRuntimeClass_TRAMP = 1;  // "CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass" 0x10063130
+constexpr unsigned CMoSchOp1DTask__Slot12DeletePathDriveActorTask = 0, CMoSchOp1DTask__Slot12DeletePathDriveActorTask_TRAMP = 1;  // "CMoSchOp1DTask::Slot12DeletePathDriveActorTask" 0x10063140
 constexpr unsigned CMoSpline__GetRuntimeClass = 0, CMoSpline__GetRuntimeClass_TRAMP = 1;  // "CMoSpline::GetRuntimeClass" 0x10063450
 constexpr unsigned CMoSpline_Construct = 4, CMoSpline_Construct_TRAMP = 1;  // "CMoSpline_Construct" 0x10063460
 constexpr unsigned CMoSpline__ScalarDeletingDtor = 0, CMoSpline__ScalarDeletingDtor_TRAMP = 1;  // "CMoSpline::ScalarDeletingDtor" 0x10063480
@@ -5840,7 +5839,7 @@ constexpr unsigned CMoSpline__GetWrapped = 4, CMoSpline__GetWrapped_TRAMP = 1;  
 constexpr unsigned CMoSpline__GetData = 4, CMoSpline__GetData_TRAMP = 0;  // "CMoSpline::GetData" 0x10063B70
 constexpr unsigned CMoSpline__EnsureSamples = 4, CMoSpline__EnsureSamples_TRAMP = 1;  // "CMoSpline::EnsureSamples" 0x10063B80
 constexpr unsigned CMoSpline__SetValue = 4, CMoSpline__SetValue_TRAMP = 1;  // "CMoSpline::SetValue" 0x10063C30
-constexpr unsigned CMoResource_VT_1032C55C__vf008 = 8, CMoResource_VT_1032C55C__vf008_TRAMP = 1;  // "CMoResource_VT_1032C55C::vf008" 0x10063C50
+constexpr unsigned CMoResType3E__SetupClearField34 = 8, CMoResType3E__SetupClearField34_TRAMP = 1;  // "CMoResType3E::SetupClearField34" 0x10063C50
 constexpr unsigned YmElem_ForEachInstance = 4, YmElem_ForEachInstance_TRAMP = 1;  // "YmElem_ForEachInstance" 0x10063C80
 constexpr unsigned CMoElem__GetRuntimeClass_variant13 = 0, CMoElem__GetRuntimeClass_variant13_TRAMP = 1;  // "CMoElem::GetRuntimeClass_variant13" 0x10064160
 constexpr unsigned CMoVuLineProgElem__GetRuntimeClass = 0, CMoVuLineProgElem__GetRuntimeClass_TRAMP = 1;  // "CMoVuLineProgElem::GetRuntimeClass" 0x10064170
@@ -5875,8 +5874,8 @@ constexpr unsigned VBPool_Constructor = 4, VBPool_Constructor_TRAMP = 1;  // "VB
 constexpr unsigned VBPool_Insert = 4, VBPool_Insert_TRAMP = 1;  // "VBPool_Insert" 0x1006B120
 constexpr unsigned VBPool_FindMatch = 4, VBPool_FindMatch_TRAMP = 1;  // "VBPool_FindMatch" 0x1006B1D0
 constexpr unsigned CMoDX__CreateAndInitSystem = 20, CMoDX__CreateAndInitSystem_TRAMP = 1;  // "CMoDX::CreateAndInitSystem" 0x1006B2B0
-constexpr unsigned CMoTask_VT_10329C70__vf8 = 0, CMoTask_VT_10329C70__vf8_TRAMP = 1;  // "CMoTask_VT_10329C70::vf8" 0x1006B480
-constexpr unsigned CMoTask_VT_10329C70__vf1 = 0, CMoTask_VT_10329C70__vf1_TRAMP = 1;  // "CMoTask_VT_10329C70::vf1" 0x1006B4C0
+constexpr unsigned CMoCameraSetupTask__Slot8SetupCameraAfterOneTick = 0, CMoCameraSetupTask__Slot8SetupCameraAfterOneTick_TRAMP = 1;  // "CMoCameraSetupTask::Slot8SetupCameraAfterOneTick" 0x1006B480
+constexpr unsigned CMoCameraSetupTask__Slot1NopOnMessage6 = 0, CMoCameraSetupTask__Slot1NopOnMessage6_TRAMP = 1;  // "CMoCameraSetupTask::Slot1NopOnMessage6" 0x1006B4C0
 constexpr unsigned Rand_SeedMT19937 = 4, Rand_SeedMT19937_TRAMP = 1;  // "Rand_SeedMT19937" 0x1006BD90
 constexpr unsigned RandAndHeader_Next = 4, RandAndHeader_Next_TRAMP = 1;  // "RandAndHeader_Next" 0x1006BE20
 constexpr unsigned Rand_NextMod = 4, Rand_NextMod_TRAMP = 1;  // "Rand_NextMod" 0x1006BF40
@@ -5897,55 +5896,55 @@ constexpr unsigned OcclusionMng_Prepare = 4, OcclusionMng_Prepare_TRAMP = 1;  //
 constexpr unsigned Occlusion_IsFloatClassAccepted = 4, Occlusion_IsFloatClassAccepted_TRAMP = 1;  // "Occlusion_IsFloatClassAccepted" 0x1006CA20
 constexpr unsigned Occlusion_AreAll16FloatsAccepted = 4, Occlusion_AreAll16FloatsAccepted_TRAMP = 1;  // "Occlusion_AreAll16FloatsAccepted" 0x1006CA60
 constexpr unsigned CreateProcessorInstance = 12, CreateProcessorInstance_TRAMP = 1;  // "CreateProcessorInstance" 0x1006CB50
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf008 = 16, CMoProcessor_VT_1032C1C8__vf008_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf008" 0x1006CC40
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf010 = 0, CMoProcessor_VT_1032C1C8__vf010_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf010" 0x1006CC50
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf040 = 0, CMoProcessor_VT_1032C1C8__vf040_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf040" 0x1006CC60
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf038 = 0, CMoProcessor_VT_1032C1C8__vf038_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf038" 0x1006CC70
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf046 = 0, CMoProcessor_VT_1032C1C8__vf046_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf046" 0x1006CC80
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf045 = 0, CMoProcessor_VT_1032C1C8__vf045_TRAMP = 0;  // "CMoProcessor_VT_1032C1C8::vf045" 0x1006CC90
-constexpr unsigned CMoProcessor_VT_1032C1C8__CMoProcessor_GetRuntimeClass = 0, CMoProcessor_VT_1032C1C8__CMoProcessor_GetRuntimeClass_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::CMoProcessor_GetRuntimeClass" 0x1006CCD0
+constexpr unsigned CMoProcessor3DNow__Slot8CallSlot9 = 16, CMoProcessor3DNow__Slot8CallSlot9_TRAMP = 0;  // "CMoProcessor3DNow::Slot8CallSlot9" 0x1006CC40
+constexpr unsigned CMoProcessor3DNow__Slot10CallSlot11 = 0, CMoProcessor3DNow__Slot10CallSlot11_TRAMP = 0;  // "CMoProcessor3DNow::Slot10CallSlot11" 0x1006CC50
+constexpr unsigned CMoProcessor3DNow__Slot40CallSlot41 = 0, CMoProcessor3DNow__Slot40CallSlot41_TRAMP = 0;  // "CMoProcessor3DNow::Slot40CallSlot41" 0x1006CC60
+constexpr unsigned CMoProcessor3DNow__Slot38CallSlot39 = 0, CMoProcessor3DNow__Slot38CallSlot39_TRAMP = 0;  // "CMoProcessor3DNow::Slot38CallSlot39" 0x1006CC70
+constexpr unsigned CMoProcessor3DNow__Slot46CallSlot48 = 0, CMoProcessor3DNow__Slot46CallSlot48_TRAMP = 0;  // "CMoProcessor3DNow::Slot46CallSlot48" 0x1006CC80
+constexpr unsigned CMoProcessor3DNow__Slot45CallSlot47 = 0, CMoProcessor3DNow__Slot45CallSlot47_TRAMP = 0;  // "CMoProcessor3DNow::Slot45CallSlot47" 0x1006CC90
+constexpr unsigned CMoProcessor3DNow__CMoProcessor_GetRuntimeClass = 0, CMoProcessor3DNow__CMoProcessor_GetRuntimeClass_TRAMP = 1;  // "CMoProcessor3DNow::CMoProcessor_GetRuntimeClass" 0x1006CCD0
 constexpr unsigned CMoProcessor__InitRotationMatrices = 0, CMoProcessor__InitRotationMatrices_TRAMP = 1;  // "CMoProcessor::InitRotationMatrices" 0x1006CE70
-constexpr unsigned CMoProcessor_VT_1032C368_SetIdentity = 12, CMoProcessor_VT_1032C368_SetIdentity_TRAMP = 1;  // "CMoProcessor_VT_1032C368_SetIdentity" 0x1006D0A0
+constexpr unsigned CMoProcessorX87_SetIdentity = 12, CMoProcessorX87_SetIdentity_TRAMP = 1;  // "CMoProcessorX87_SetIdentity" 0x1006D0A0
 constexpr unsigned ProcessorMatrix_InvertMat4InPlace = 4, ProcessorMatrix_InvertMat4InPlace_TRAMP = 1;  // "ProcessorMatrix_InvertMat4InPlace" 0x1006D190
 constexpr unsigned ProcessorMatrix_MultiplyTo = 4, ProcessorMatrix_MultiplyTo_TRAMP = 1;  // "ProcessorMatrix_MultiplyTo" 0x1006D270
-constexpr unsigned CMoProcessor_VT_1032C298__vf007 = 0, CMoProcessor_VT_1032C298__vf007_TRAMP = 1;  // "CMoProcessor_VT_1032C298::vf007" 0x1006D380
-constexpr unsigned CMoProcessor_VT_1032C368__vf012 = 0, CMoProcessor_VT_1032C368__vf012_TRAMP = 1;  // "CMoProcessor_VT_1032C368::vf012" 0x1006D3B0
+constexpr unsigned CMoProcessorSSE__Vec3Scale = 0, CMoProcessorSSE__Vec3Scale_TRAMP = 1;  // "CMoProcessorSSE::Vec3Scale" 0x1006D380
+constexpr unsigned CMoProcessorX87__Vec3AddScaled = 0, CMoProcessorX87__Vec3AddScaled_TRAMP = 1;  // "CMoProcessorX87::Vec3AddScaled" 0x1006D3B0
 constexpr unsigned CMoProcessor__TransposeInPlace = 20, CMoProcessor__TransposeInPlace_TRAMP = 1;  // "CMoProcessor::TransposeInPlace" 0x1006D3E0
-constexpr unsigned CMoProcessor_VT_1032C368__vf014 = 0, CMoProcessor_VT_1032C368__vf014_TRAMP = 1;  // "CMoProcessor_VT_1032C368::vf014" 0x1006D4D0
+constexpr unsigned CMoProcessorX87__Vec3Dot = 0, CMoProcessorX87__Vec3Dot_TRAMP = 1;  // "CMoProcessorX87::Vec3Dot" 0x1006D4D0
 constexpr unsigned CMoProcessor__LengthSafe = 4, CMoProcessor__LengthSafe_TRAMP = 1;  // "CMoProcessor::LengthSafe" 0x1006D580
-constexpr unsigned CMoProcessor_VT_1032C368__vf042 = 0, CMoProcessor_VT_1032C368__vf042_TRAMP = 1;  // "CMoProcessor_VT_1032C368::vf042" 0x1006D680
-constexpr unsigned CMoProcessor_VT_1032C368__vf043 = 0, CMoProcessor_VT_1032C368__vf043_TRAMP = 1;  // "CMoProcessor_VT_1032C368::vf043" 0x1006D6B0
-constexpr unsigned CMoProcessor_VT_1032C368__TransformPoint = 4, CMoProcessor_VT_1032C368__TransformPoint_TRAMP = 1;  // "CMoProcessor_VT_1032C368::TransformPoint" 0x1006D720
-constexpr unsigned CMoProcessor_VT_1032C368__vf021 = 0, CMoProcessor_VT_1032C368__vf021_TRAMP = 1;  // "CMoProcessor_VT_1032C368::vf021" 0x1006D980
+constexpr unsigned CMoProcessorX87__Vec3Add = 0, CMoProcessorX87__Vec3Add_TRAMP = 1;  // "CMoProcessorX87::Vec3Add" 0x1006D680
+constexpr unsigned CMoProcessorX87__Vec3MulComponents = 0, CMoProcessorX87__Vec3MulComponents_TRAMP = 1;  // "CMoProcessorX87::Vec3MulComponents" 0x1006D6B0
+constexpr unsigned CMoProcessorX87__TransformPoint = 4, CMoProcessorX87__TransformPoint_TRAMP = 1;  // "CMoProcessorX87::TransformPoint" 0x1006D720
+constexpr unsigned CMoProcessorX87__Vec3Lerp = 0, CMoProcessorX87__Vec3Lerp_TRAMP = 1;  // "CMoProcessorX87::Vec3Lerp" 0x1006D980
 constexpr unsigned ProcessorRotation_MakeFromAngles = 4, ProcessorRotation_MakeFromAngles_TRAMP = 1;  // "ProcessorRotation_MakeFromAngles" 0x1006D9C0
-constexpr unsigned CMoProcessor_VT_1032C368__RotationFromAnglesZYX = 4, CMoProcessor_VT_1032C368__RotationFromAnglesZYX_TRAMP = 1;  // "CMoProcessor_VT_1032C368::RotationFromAnglesZYX" 0x1006DCF0
-constexpr unsigned CMoProcessor_VT_1032C368__RotationY = 4, CMoProcessor_VT_1032C368__RotationY_TRAMP = 1;  // "CMoProcessor_VT_1032C368::RotationY" 0x1006E140
-constexpr unsigned CMoProcessor_VT_1032C368__RotationZ = 4, CMoProcessor_VT_1032C368__RotationZ_TRAMP = 1;  // "CMoProcessor_VT_1032C368::RotationZ" 0x1006E260
-constexpr unsigned CMoProcessor_VT_1032C368__RotationFromAnglesXYZ = 4, CMoProcessor_VT_1032C368__RotationFromAnglesXYZ_TRAMP = 1;  // "CMoProcessor_VT_1032C368::RotationFromAnglesXYZ" 0x1006E380
+constexpr unsigned CMoProcessorX87__RotationFromAnglesZYX = 4, CMoProcessorX87__RotationFromAnglesZYX_TRAMP = 1;  // "CMoProcessorX87::RotationFromAnglesZYX" 0x1006DCF0
+constexpr unsigned CMoProcessorX87__RotationY = 4, CMoProcessorX87__RotationY_TRAMP = 1;  // "CMoProcessorX87::RotationY" 0x1006E140
+constexpr unsigned CMoProcessorX87__RotationZ = 4, CMoProcessorX87__RotationZ_TRAMP = 1;  // "CMoProcessorX87::RotationZ" 0x1006E260
+constexpr unsigned CMoProcessorX87__RotationFromAnglesXYZ = 4, CMoProcessorX87__RotationFromAnglesXYZ_TRAMP = 1;  // "CMoProcessorX87::RotationFromAnglesXYZ" 0x1006E380
 constexpr unsigned CMoProcessor__ScratchMatrixOp = 0, CMoProcessor__ScratchMatrixOp_TRAMP = 1;  // "CMoProcessor::ScratchMatrixOp" 0x1006E6B0
 constexpr unsigned CMoProcessor__CalcScreenBounds = 0, CMoProcessor__CalcScreenBounds_TRAMP = 1;  // "CMoProcessor::CalcScreenBounds" 0x1006E970
 constexpr unsigned CMoProcessor__CalcScreenBoundsAndVisible = 20, CMoProcessor__CalcScreenBoundsAndVisible_TRAMP = 1;  // "CMoProcessor::CalcScreenBoundsAndVisible" 0x1006ED10
 constexpr unsigned Processor_InitIdentityMatrices = 4, Processor_InitIdentityMatrices_TRAMP = 1;  // "Processor_InitIdentityMatrices" 0x1006EF70
 constexpr unsigned Mat4x4_SafeTranspose = 20, Mat4x4_SafeTranspose_TRAMP = 1;  // "Mat4x4_SafeTranspose" 0x1006F0A0
-constexpr unsigned CMoProcessor_VT_1032C298__vf014 = 0, CMoProcessor_VT_1032C298__vf014_TRAMP = 1;  // "CMoProcessor_VT_1032C298::vf014" 0x1006F5B0
+constexpr unsigned CMoProcessorSSE__Vec3Dot = 0, CMoProcessorSSE__Vec3Dot_TRAMP = 1;  // "CMoProcessorSSE::Vec3Dot" 0x1006F5B0
 constexpr unsigned CMoProcessor__MulPointVec3 = 20, CMoProcessor__MulPointVec3_TRAMP = 1;  // "CMoProcessor::MulPointVec3" 0x1006F800
-constexpr unsigned CMoProcessor_VT_1032C298__vf021 = 0, CMoProcessor_VT_1032C298__vf021_TRAMP = 1;  // "CMoProcessor_VT_1032C298::vf021" 0x1006FA30
+constexpr unsigned CMoProcessorSSE__Vec3Lerp = 0, CMoProcessorSSE__Vec3Lerp_TRAMP = 1;  // "CMoProcessorSSE::Vec3Lerp" 0x1006FA30
 constexpr unsigned CMoProcessor__BuildRotationXYZ = 4, CMoProcessor__BuildRotationXYZ_TRAMP = 1;  // "CMoProcessor::BuildRotationXYZ" 0x1006FAE0
 constexpr unsigned CMoProcessor__SetRotationFromAngles = 4, CMoProcessor__SetRotationFromAngles_TRAMP = 1;  // "CMoProcessor::SetRotationFromAngles" 0x1006FC40
-constexpr unsigned CMoProcessor_VT_1032C298__vf035 = 0, CMoProcessor_VT_1032C298__vf035_TRAMP = 1;  // "CMoProcessor_VT_1032C298::vf035" 0x10070020
-constexpr unsigned CMoProcessor_VT_1032C298__vf036 = 0, CMoProcessor_VT_1032C298__vf036_TRAMP = 1;  // "CMoProcessor_VT_1032C298::vf036" 0x10070040
+constexpr unsigned CMoProcessorSSE__CalcScreenBoundsAndVisible = 0, CMoProcessorSSE__CalcScreenBoundsAndVisible_TRAMP = 1;  // "CMoProcessorSSE::CalcScreenBoundsAndVisible" 0x10070020
+constexpr unsigned CMoProcessorSSE__CalcScreenBounds = 0, CMoProcessorSSE__CalcScreenBounds_TRAMP = 1;  // "CMoProcessorSSE::CalcScreenBounds" 0x10070040
 constexpr unsigned ProcessorInit_InitMatrices = 4, ProcessorInit_InitMatrices_TRAMP = 1;  // "ProcessorInit_InitMatrices" 0x100700E0
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf012 = 0, CMoProcessor_VT_1032C1C8__vf012_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf012" 0x10070780
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf014 = 0, CMoProcessor_VT_1032C1C8__vf014_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf014" 0x10070790
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf018 = 0, CMoProcessor_VT_1032C1C8__vf018_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf018" 0x10070AA0
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf017 = 0, CMoProcessor_VT_1032C1C8__vf017_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf017" 0x10070AB0
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf016 = 0, CMoProcessor_VT_1032C1C8__vf016_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf016" 0x10070AC0
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf021 = 0, CMoProcessor_VT_1032C1C8__vf021_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf021" 0x10070AD0
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf033 = 0, CMoProcessor_VT_1032C1C8__vf033_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf033" 0x10070E20
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf035 = 0, CMoProcessor_VT_1032C1C8__vf035_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf035" 0x10070E40
-constexpr unsigned CMoProcessor_VT_1032C1C8__vf036 = 0, CMoProcessor_VT_1032C1C8__vf036_TRAMP = 1;  // "CMoProcessor_VT_1032C1C8::vf036" 0x10070E60
+constexpr unsigned CMoProcessor3DNow__Vec3AddScaled = 0, CMoProcessor3DNow__Vec3AddScaled_TRAMP = 1;  // "CMoProcessor3DNow::Vec3AddScaled" 0x10070780
+constexpr unsigned CMoProcessor3DNow__Vec3Dot = 0, CMoProcessor3DNow__Vec3Dot_TRAMP = 1;  // "CMoProcessor3DNow::Vec3Dot" 0x10070790
+constexpr unsigned CMoProcessor3DNow__Vec4TransformB = 0, CMoProcessor3DNow__Vec4TransformB_TRAMP = 1;  // "CMoProcessor3DNow::Vec4TransformB" 0x10070AA0
+constexpr unsigned CMoProcessor3DNow__Vec4Transform = 0, CMoProcessor3DNow__Vec4Transform_TRAMP = 1;  // "CMoProcessor3DNow::Vec4Transform" 0x10070AB0
+constexpr unsigned CMoProcessor3DNow__Vec3Transform = 0, CMoProcessor3DNow__Vec3Transform_TRAMP = 1;  // "CMoProcessor3DNow::Vec3Transform" 0x10070AC0
+constexpr unsigned CMoProcessor3DNow__Vec3Lerp = 0, CMoProcessor3DNow__Vec3Lerp_TRAMP = 1;  // "CMoProcessor3DNow::Vec3Lerp" 0x10070AD0
+constexpr unsigned CMoProcessor3DNow__ProjectVertsAndBounds = 0, CMoProcessor3DNow__ProjectVertsAndBounds_TRAMP = 1;  // "CMoProcessor3DNow::ProjectVertsAndBounds" 0x10070E20
+constexpr unsigned CMoProcessor3DNow__CalcScreenBoundsAndVisible = 0, CMoProcessor3DNow__CalcScreenBoundsAndVisible_TRAMP = 1;  // "CMoProcessor3DNow::CalcScreenBoundsAndVisible" 0x10070E40
+constexpr unsigned CMoProcessor3DNow__CalcScreenBounds = 0, CMoProcessor3DNow__CalcScreenBounds_TRAMP = 1;  // "CMoProcessor3DNow::CalcScreenBounds" 0x10070E60
 constexpr unsigned CMoTask__InitVariant12 = 4, CMoTask__InitVariant12_TRAMP = 1;  // "CMoTask::InitVariant12" 0x10070F40
-constexpr unsigned CMoTask_VT_1032C490__ScalarDeletingDtor = 0, CMoTask_VT_1032C490__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032C490::ScalarDeletingDtor" 0x10070F60
+constexpr unsigned CMoResourceWaitTask__ScalarDeletingDtor = 0, CMoResourceWaitTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoResourceWaitTask::ScalarDeletingDtor" 0x10070F60
 constexpr unsigned CMoTask__InitAndRegister = 4, CMoTask__InitAndRegister_TRAMP = 1;  // "CMoTask::InitAndRegister" 0x10070F90
 constexpr unsigned ResHandle_FreeIfUnreferenced = 4, ResHandle_FreeIfUnreferenced_TRAMP = 1;  // "ResHandle_FreeIfUnreferenced" 0x10071050
 constexpr unsigned ResourceHandle_IsResident = 4, ResourceHandle_IsResident_TRAMP = 1;  // "ResourceHandle_IsResident" 0x10071060
@@ -5956,29 +5955,29 @@ constexpr unsigned MeshResourceCreate_CopyField14At4 = 4, MeshResourceCreate_Cop
 constexpr unsigned MeshResourceCreate_CopyField14At8 = 4, MeshResourceCreate_CopyField14At8_TRAMP = 1;  // "MeshResourceCreate_CopyField14At8" 0x10071200
 constexpr unsigned MeshResourceMng_CreateResourceByKind = 4, MeshResourceMng_CreateResourceByKind_TRAMP = 1;  // "MeshResourceMng_CreateResourceByKind" 0x10071270
 constexpr unsigned CMoCamera__GetSharedInstance = 0, CMoCamera__GetSharedInstance_TRAMP = 1;  // "CMoCamera::GetSharedInstance" 0x10071980
-constexpr unsigned CMoResource_VT_1032C7D0__vf008 = 8, CMoResource_VT_1032C7D0__vf008_TRAMP = 0;  // "CMoResource_VT_1032C7D0::vf008" 0x100719C0
-constexpr unsigned CMoResource_VT_1032C7D0__vf009 = 8, CMoResource_VT_1032C7D0__vf009_TRAMP = 0;  // "CMoResource_VT_1032C7D0::vf009" 0x100719D0
-constexpr unsigned CMoResource_VT_1032C828__vf009 = 8, CMoResource_VT_1032C828__vf009_TRAMP = 0;  // "CMoResource_VT_1032C828::vf009" 0x100719E0
+constexpr unsigned CMoResType45__SetupNop = 8, CMoResType45__SetupNop_TRAMP = 0;  // "CMoResType45::SetupNop" 0x100719C0
+constexpr unsigned CMoResType45__Slot9Nop = 8, CMoResType45__Slot9Nop_TRAMP = 0;  // "CMoResType45::Slot9Nop" 0x100719D0
+constexpr unsigned CMoSk2Res__Slot9Nop = 8, CMoSk2Res__Slot9Nop_TRAMP = 0;  // "CMoSk2Res::Slot9Nop" 0x100719E0
 constexpr unsigned CMoCamera__Slot9DoNothing = 8, CMoCamera__Slot9DoNothing_TRAMP = 0;  // "CMoCamera::Slot9DoNothing" 0x100719F0
-constexpr unsigned CMoResource_VT_1032C7FC__vf009 = 8, CMoResource_VT_1032C7FC__vf009_TRAMP = 0;  // "CMoResource_VT_1032C7FC::vf009" 0x10071A00
-constexpr unsigned CMoResource_VT_1032C7A4__vf009 = 8, CMoResource_VT_1032C7A4__vf009_TRAMP = 0;  // "CMoResource_VT_1032C7A4::vf009" 0x10071A10
-constexpr unsigned CMoResource_VT_1032C778__vf008 = 8, CMoResource_VT_1032C778__vf008_TRAMP = 1;  // "CMoResource_VT_1032C778::vf008" 0x10071A20
-constexpr unsigned CMoResource_VT_1032C778__vf009 = 8, CMoResource_VT_1032C778__vf009_TRAMP = 1;  // "CMoResource_VT_1032C778::vf009" 0x10071A30
-constexpr unsigned CMoResource_VT_1032C8AC__ScalarDeletingDtor = 0, CMoResource_VT_1032C8AC__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C8AC::ScalarDeletingDtor" 0x10071A40
-constexpr unsigned CMoResource_VT_1032C880__ScalarDeletingDtor = 0, CMoResource_VT_1032C880__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C880::ScalarDeletingDtor" 0x10071A60
-constexpr unsigned CMoResource_VT_1032C854__ScalarDeletingDtor = 0, CMoResource_VT_1032C854__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C854::ScalarDeletingDtor" 0x10071A80
-constexpr unsigned CMoResource_VT_1032C828__ScalarDeletingDtor = 0, CMoResource_VT_1032C828__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C828::ScalarDeletingDtor" 0x10071AA0
-constexpr unsigned CMoResource_VT_1032C7FC__ScalarDeletingDtor = 0, CMoResource_VT_1032C7FC__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C7FC::ScalarDeletingDtor" 0x10071AC0
-constexpr unsigned CMoResource_VT_1032C7D0__ScalarDeletingDtor = 0, CMoResource_VT_1032C7D0__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C7D0::ScalarDeletingDtor" 0x10071AE0
-constexpr unsigned CMoResource_VT_1032C7A4__ScalarDeletingDtor = 0, CMoResource_VT_1032C7A4__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C7A4::ScalarDeletingDtor" 0x10071B00
-constexpr unsigned CMoResource_VT_1032C74C__ScalarDeletingDtor = 0, CMoResource_VT_1032C74C__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C74C::ScalarDeletingDtor" 0x10071B50
-constexpr unsigned CMoResource_VT_1032C720__ScalarDeletingDtor = 0, CMoResource_VT_1032C720__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C720::ScalarDeletingDtor" 0x10071B70
-constexpr unsigned CMoResource_VT_1032C6F4__ScalarDeletingDtor = 0, CMoResource_VT_1032C6F4__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C6F4::ScalarDeletingDtor" 0x10071B90
-constexpr unsigned CMoResource_VT_1032C6C8__ScalarDeletingDtor = 0, CMoResource_VT_1032C6C8__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C6C8::ScalarDeletingDtor" 0x10071BB0
-constexpr unsigned CMoResource_VT_1032C69C__ScalarDeletingDtor = 0, CMoResource_VT_1032C69C__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C69C::ScalarDeletingDtor" 0x10071BD0
-constexpr unsigned CMoResource_VT_1032C670__ScalarDeletingDtor = 0, CMoResource_VT_1032C670__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C670::ScalarDeletingDtor" 0x10071BF0
-constexpr unsigned CMoResource_VT_1032C5FC__ScalarDeletingDtor = 0, CMoResource_VT_1032C5FC__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C5FC::ScalarDeletingDtor" 0x10071C40
-constexpr unsigned CMoResource_VT_1032C588__ScalarDeletingDtor = 0, CMoResource_VT_1032C588__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C588::ScalarDeletingDtor" 0x10071C90
+constexpr unsigned CMoMo2Res__Slot9Nop = 8, CMoMo2Res__Slot9Nop_TRAMP = 0;  // "CMoMo2Res::Slot9Nop" 0x10071A00
+constexpr unsigned CMoResType5E__Slot9Nop = 8, CMoResType5E__Slot9Nop_TRAMP = 0;  // "CMoResType5E::Slot9Nop" 0x10071A10
+constexpr unsigned CMoAfbRes__Setup = 8, CMoAfbRes__Setup_TRAMP = 1;  // "CMoAfbRes::Setup" 0x10071A20
+constexpr unsigned CMoAfbRes__Slot9UnfixPointers = 8, CMoAfbRes__Slot9UnfixPointers_TRAMP = 1;  // "CMoAfbRes::Slot9UnfixPointers" 0x10071A30
+constexpr unsigned CMoBm2Res__ScalarDeletingDtor = 0, CMoBm2Res__ScalarDeletingDtor_TRAMP = 1;  // "CMoBm2Res::ScalarDeletingDtor" 0x10071A40
+constexpr unsigned CMoResType5D__ScalarDeletingDtor = 0, CMoResType5D__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType5D::ScalarDeletingDtor" 0x10071A60
+constexpr unsigned CMoOs2Res__ScalarDeletingDtor = 0, CMoOs2Res__ScalarDeletingDtor_TRAMP = 1;  // "CMoOs2Res::ScalarDeletingDtor" 0x10071A80
+constexpr unsigned CMoSk2Res__ScalarDeletingDtor = 0, CMoSk2Res__ScalarDeletingDtor_TRAMP = 1;  // "CMoSk2Res::ScalarDeletingDtor" 0x10071AA0
+constexpr unsigned CMoMo2Res__ScalarDeletingDtor = 0, CMoMo2Res__ScalarDeletingDtor_TRAMP = 1;  // "CMoMo2Res::ScalarDeletingDtor" 0x10071AC0
+constexpr unsigned CMoResType45__ScalarDeletingDtor = 0, CMoResType45__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType45::ScalarDeletingDtor" 0x10071AE0
+constexpr unsigned CMoResType5E__ScalarDeletingDtor = 0, CMoResType5E__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType5E::ScalarDeletingDtor" 0x10071B00
+constexpr unsigned CMoResType1F__ScalarDeletingDtor = 0, CMoResType1F__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType1F::ScalarDeletingDtor" 0x10071B50
+constexpr unsigned CMoResType21__ScalarDeletingDtor = 0, CMoResType21__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType21::ScalarDeletingDtor" 0x10071B70
+constexpr unsigned CMoResType25__ScalarDeletingDtor = 0, CMoResType25__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType25::ScalarDeletingDtor" 0x10071B90
+constexpr unsigned CMoResType31__ScalarDeletingDtor = 0, CMoResType31__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType31::ScalarDeletingDtor" 0x10071BB0
+constexpr unsigned CMoResType30__ScalarDeletingDtor = 0, CMoResType30__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType30::ScalarDeletingDtor" 0x10071BD0
+constexpr unsigned CMoResType5F__ScalarDeletingDtor = 0, CMoResType5F__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType5F::ScalarDeletingDtor" 0x10071BF0
+constexpr unsigned CMoResType19__ScalarDeletingDtor = 0, CMoResType19__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType19::ScalarDeletingDtor" 0x10071C40
+constexpr unsigned CMoScopeRes__ScalarDeletingDtor = 0, CMoScopeRes__ScalarDeletingDtor_TRAMP = 1;  // "CMoScopeRes::ScalarDeletingDtor" 0x10071C90
 constexpr unsigned CMoSphRes__ScalarDeletingDtor = 0, CMoSphRes__ScalarDeletingDtor_TRAMP = 1;  // "CMoSphRes::ScalarDeletingDtor" 0x10071D00
 constexpr unsigned CMoResource__GetRuntimeClass_variant3 = 0, CMoResource__GetRuntimeClass_variant3_TRAMP = 1;  // "CMoResource::GetRuntimeClass_variant3" 0x10071D70
 constexpr unsigned CMoResource_ConstructBase = 12, CMoResource_ConstructBase_TRAMP = 1;  // "CMoResource_ConstructBase" 0x10071D80
@@ -5999,7 +5998,7 @@ constexpr unsigned YmResourceFile_FindResourceUnder = 12, YmResourceFile_FindRes
 constexpr unsigned Resource_FindInChainByKind = 12, Resource_FindInChainByKind_TRAMP = 1;  // "Resource_FindInChainByKind" 0x10072540
 constexpr unsigned Resource_InitFieldsTakeFlag1047D12C = 12, Resource_InitFieldsTakeFlag1047D12C_TRAMP = 1;  // "Resource_InitFieldsTakeFlag1047D12C" 0x10072990
 constexpr unsigned Resource_ClearGlobal1047D138 = 4, Resource_ClearGlobal1047D138_TRAMP = 1;  // "Resource_ClearGlobal1047D138" 0x100729D0
-constexpr unsigned CMoTask_VT_1032C908__ScalarDeletingDtor = 0, CMoTask_VT_1032C908__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032C908::ScalarDeletingDtor" 0x10072A30
+constexpr unsigned CMoResourceLoadTask__ScalarDeletingDtor = 0, CMoResourceLoadTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoResourceLoadTask::ScalarDeletingDtor" 0x10072A30
 constexpr unsigned ResourceLoadTask_Step = 4, ResourceLoadTask_Step_TRAMP = 1;  // "ResourceLoadTask_Step" 0x10072A70
 constexpr unsigned ResourceLoadTask_Start = 4, ResourceLoadTask_Start_TRAMP = 1;  // "ResourceLoadTask_Start" 0x10072C30
 constexpr unsigned CMoResourceMng__GetRuntimeClass = 0, CMoResourceMng__GetRuntimeClass_TRAMP = 1;  // "CMoResourceMng::GetRuntimeClass" 0x10072D00
@@ -6007,7 +6006,7 @@ constexpr unsigned MeshResourceMng_LoadSystemResources = 4, MeshResourceMng_Load
 constexpr unsigned ResourceHandle_Deref = 4, ResourceHandle_Deref_TRAMP = 1;  // "ResourceHandle_Deref" 0x10072FB0
 constexpr unsigned CMoResource__FindOrCreateTask = 4, CMoResource__FindOrCreateTask_TRAMP = 1;  // "CMoResource::FindOrCreateTask" 0x100730E0
 constexpr unsigned MeshResourceMng_ResolveTree = 4, MeshResourceMng_ResolveTree_TRAMP = 1;  // "MeshResourceMng_ResolveTree" 0x10073430
-constexpr unsigned CMoResource_VT_1032C934__ScalarDeletingDtor = 0, CMoResource_VT_1032C934__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_1032C934::ScalarDeletingDtor" 0x10073730
+constexpr unsigned CMoBm2RefRes__ScalarDeletingDtor = 0, CMoBm2RefRes__ScalarDeletingDtor_TRAMP = 1;  // "CMoBm2RefRes::ScalarDeletingDtor" 0x10073730
 constexpr unsigned CMoResource__RegisterAndMark = 4, CMoResource__RegisterAndMark_TRAMP = 1;  // "CMoResource::RegisterAndMark" 0x10073A60
 constexpr unsigned MoRes_FreeIfUnreferenced = 4, MoRes_FreeIfUnreferenced_TRAMP = 1;  // "MoRes_FreeIfUnreferenced" 0x10073B20
 constexpr unsigned CMoResource__InitAndGetFlag = 4, CMoResource__InitAndGetFlag_TRAMP = 1;  // "CMoResource::InitAndGetFlag" 0x10073B80
@@ -6024,11 +6023,11 @@ constexpr unsigned ResourceIter_Start = 4, ResourceIter_Start_TRAMP = 1;  // "Re
 constexpr unsigned ResourceIter_MatchCurrent = 4, ResourceIter_MatchCurrent_TRAMP = 1;  // "ResourceIter_MatchCurrent" 0x10074380
 constexpr unsigned ResourceIter_Advance = 20, ResourceIter_Advance_TRAMP = 1;  // "ResourceIter_Advance" 0x100743D0
 constexpr unsigned ResourceIter_FindNext = 4, ResourceIter_FindNext_TRAMP = 1;  // "ResourceIter_FindNext" 0x100745C0
-constexpr unsigned CMoAttachments_VT_1032C4E8__vf001 = 0, CMoAttachments_VT_1032C4E8__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032C4E8::vf001" 0x100745D0
-constexpr unsigned CMoResource_VT_1032C588__vf011 = 0, CMoResource_VT_1032C588__vf011_TRAMP = 1;  // "CMoResource_VT_1032C588::vf011" 0x100745E0
-constexpr unsigned CMoResource_VT_1032C588__vf012 = 0, CMoResource_VT_1032C588__vf012_TRAMP = 1;  // "CMoResource_VT_1032C588::vf012" 0x100745F0
-constexpr unsigned CMoAttachments_VT_1032C628__vf001 = 0, CMoAttachments_VT_1032C628__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032C628::vf001" 0x10074600
-constexpr unsigned CMoResource_VT_1032C588__vf008 = 8, CMoResource_VT_1032C588__vf008_TRAMP = 0;  // "CMoResource_VT_1032C588::vf008" 0x10074610
+constexpr unsigned CMoResourceWaitTaskAttachments__Slot1DeleteOwner = 0, CMoResourceWaitTaskAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoResourceWaitTaskAttachments::Slot1DeleteOwner" 0x100745D0
+constexpr unsigned CMoScopeRes__Slot11GetCameraRuntimeClass = 0, CMoScopeRes__Slot11GetCameraRuntimeClass_TRAMP = 1;  // "CMoScopeRes::Slot11GetCameraRuntimeClass" 0x100745E0
+constexpr unsigned CMoScopeRes__Slot12DeleteOwner = 0, CMoScopeRes__Slot12DeleteOwner_TRAMP = 1;  // "CMoScopeRes::Slot12DeleteOwner" 0x100745F0
+constexpr unsigned CMoResType07Attachments__Slot1DeleteOwner = 0, CMoResType07Attachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoResType07Attachments::Slot1DeleteOwner" 0x10074600
+constexpr unsigned CMoScopeRes__SetupNop = 8, CMoScopeRes__SetupNop_TRAMP = 0;  // "CMoScopeRes::SetupNop" 0x10074610
 constexpr unsigned MoProcessor_CallVSlot49 = 4, MoProcessor_CallVSlot49_TRAMP = 1;  // "MoProcessor_CallVSlot49" 0x100746A0
 constexpr unsigned ProcessorSlot_ProcessorSlot41 = 4, ProcessorSlot_ProcessorSlot41_TRAMP = 1;  // "ProcessorSlot_ProcessorSlot41" 0x10074700
 constexpr unsigned CMoTask__GetRuntimeClass_variant12 = 0, CMoTask__GetRuntimeClass_variant12_TRAMP = 1;  // "CMoTask::GetRuntimeClass_variant12" 0x10074730
@@ -6081,12 +6080,12 @@ constexpr unsigned TextCommand_ParseNumber = 4, TextCommand_ParseNumber_TRAMP = 
 constexpr unsigned SeekIdByString = 4, SeekIdByString_TRAMP = 1;  // "SeekIdByString" 0x1007A1C0
 constexpr unsigned Actor_FindInRange = 4, Actor_FindInRange_TRAMP = 1;  // "Actor_FindInRange" 0x1007A440
 constexpr unsigned Actor_FindByName = 4, Actor_FindByName_TRAMP = 1;  // "Actor_FindByName" 0x1007A4C0
-constexpr unsigned fn_1007A9A0 = 4, fn_1007A9A0_TRAMP = 1;  // "fn_1007A9A0" 0x1007A9A0
-constexpr unsigned fn_1007AA80 = 4, fn_1007AA80_TRAMP = 1;  // "fn_1007AA80" 0x1007AA80
-constexpr unsigned fn_1007BB90 = 4, fn_1007BB90_TRAMP = 1;  // "fn_1007BB90" 0x1007BB90
-constexpr unsigned fn_1007BF30 = 4, fn_1007BF30_TRAMP = 1;  // "fn_1007BF30" 0x1007BF30
+constexpr unsigned TextCommand_PacketForIdPairKind04 = 4, TextCommand_PacketForIdPairKind04_TRAMP = 1;  // "TextCommand_PacketForIdPairKind04" 0x1007A9A0
+constexpr unsigned TextCommand_PacketForIdPairKind12 = 4, TextCommand_PacketForIdPairKind12_TRAMP = 1;  // "TextCommand_PacketForIdPairKind12" 0x1007AA80
+constexpr unsigned TextCommand_PacketForIdPairKind1A = 4, TextCommand_PacketForIdPairKind1A_TRAMP = 1;  // "TextCommand_PacketForIdPairKind1A" 0x1007BB90
+constexpr unsigned TextCommand_TargetActionToPacket = 4, TextCommand_TargetActionToPacket_TRAMP = 1;  // "TextCommand_TargetActionToPacket" 0x1007BF30
 constexpr unsigned UI_QuestCommand = 4, UI_QuestCommand_TRAMP = 1;  // "UI_QuestCommand" 0x1007D240
-constexpr unsigned fn_1007E490 = 4, fn_1007E490_TRAMP = 1;  // "fn_1007E490" 0x1007E490
+constexpr unsigned TextCommand_CheckThenPostUiRequest0E = 4, TextCommand_CheckThenPostUiRequest0E_TRAMP = 1;  // "TextCommand_CheckThenPostUiRequest0E" 0x1007E490
 constexpr unsigned TextCommand_ChangeMyroomMode2 = 4, TextCommand_ChangeMyroomMode2_TRAMP = 1;  // "TextCommand_ChangeMyroomMode2" 0x1007E8D0
 constexpr unsigned TextCommand_Run100A3040 = 4, TextCommand_Run100A3040_TRAMP = 1;  // "TextCommand_Run100A3040" 0x10080340
 constexpr unsigned Actor_GetObjectByName = 4, Actor_GetObjectByName_TRAMP = 1;  // "Actor_GetObjectByName" 0x10080C70
@@ -6322,7 +6321,7 @@ constexpr unsigned Acter_CheckIdAgainstBlockBits = 12, Acter_CheckIdAgainstBlock
 constexpr unsigned Acter_MatchActorNameOrKind = 4, Acter_MatchActorNameOrKind_TRAMP = 1;  // "Acter_MatchActorNameOrKind" 0x100A1A00
 constexpr unsigned ActerBuff_GetStringByIdLookup = 4, ActerBuff_GetStringByIdLookup_TRAMP = 1;  // "ActerBuff_GetStringByIdLookup" 0x100A1D50
 constexpr unsigned Acter_ConstructTask1032D6D4 = 4, Acter_ConstructTask1032D6D4_TRAMP = 1;  // "Acter_ConstructTask1032D6D4" 0x100A2790
-constexpr unsigned CMoTask_VT_1032D6D4__ScalarDeletingDtor = 0, CMoTask_VT_1032D6D4__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032D6D4::ScalarDeletingDtor" 0x100A27F0
+constexpr unsigned CMoAuctionMenuTask__ScalarDeletingDtor = 0, CMoAuctionMenuTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoAuctionMenuTask::ScalarDeletingDtor" 0x100A27F0
 constexpr unsigned AuctionMenu_ResetAndFillHeader = 4, AuctionMenu_ResetAndFillHeader_TRAMP = 1;  // "AuctionMenu_ResetAndFillHeader" 0x100A28E0
 constexpr unsigned AuctionMenu_WriteHeader = 4, AuctionMenu_WriteHeader_TRAMP = 1;  // "AuctionMenu_WriteHeader" 0x100A2B70
 constexpr unsigned AuctionMenu_InitRecord = 12, AuctionMenu_InitRecord_TRAMP = 1;  // "AuctionMenu_InitRecord" 0x100A2FD0
@@ -6404,11 +6403,11 @@ constexpr unsigned CXiControlActor__Constructor = 4, CXiControlActor__Constructo
 constexpr unsigned CXiControlActor_CallTargetSlot207With0 = 4, CXiControlActor_CallTargetSlot207With0_TRAMP = 1;  // "CXiControlActor_CallTargetSlot207With0" 0x100A8C20
 constexpr unsigned CXiControlActor_CallTargetSlot207With1 = 4, CXiControlActor_CallTargetSlot207With1_TRAMP = 1;  // "CXiControlActor_CallTargetSlot207With1" 0x100A8C40
 constexpr unsigned CMoTask__GetRuntimeClass_variant17 = 0, CMoTask__GetRuntimeClass_variant17_TRAMP = 1;  // "CMoTask::GetRuntimeClass_variant17" 0x100A8E10
-constexpr unsigned CMoTask_VT_1032E808__ScalarDeletingDtor = 0, CMoTask_VT_1032E808__ScalarDeletingDtor_TRAMP = 1;  // "CMoTask_VT_1032E808::ScalarDeletingDtor" 0x100A9DB0
+constexpr unsigned CMoCasterTargetTask__ScalarDeletingDtor = 0, CMoCasterTargetTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoCasterTargetTask::ScalarDeletingDtor" 0x100A9DB0
 constexpr unsigned CXiControlActor__GetSpeed = 4, CXiControlActor__GetSpeed_TRAMP = 1;  // "CXiControlActor::GetSpeed" 0x100AAEF0
 constexpr unsigned CXiControlActor__Slot137_Set388 = 4, CXiControlActor__Slot137_Set388_TRAMP = 1;  // "CXiControlActor::Slot137_Set388" 0x100AAF50
 constexpr unsigned CXiControlActor__Slot138_Scan3F0 = 4, CXiControlActor__Slot138_Scan3F0_TRAMP = 1;  // "CXiControlActor::Slot138_Scan3F0" 0x100AAF70
-constexpr unsigned CMoAttachments_VT_1032E7EC__vf001 = 0, CMoAttachments_VT_1032E7EC__vf001_TRAMP = 1;  // "CMoAttachments_VT_1032E7EC::vf001" 0x100AB060
+constexpr unsigned CMoCasterTargetTaskAttachments__Slot1DeleteOwner = 0, CMoCasterTargetTaskAttachments__Slot1DeleteOwner_TRAMP = 1;  // "CMoCasterTargetTaskAttachments::Slot1DeleteOwner" 0x100AB060
 constexpr unsigned CXiSkeletonActor__GetRuntimeClass_variant0 = 0, CXiSkeletonActor__GetRuntimeClass_variant0_TRAMP = 1;  // "CXiSkeletonActor::GetRuntimeClass_variant0" 0x100AB070
 constexpr unsigned Acter_DestroyAndClearSlot = 4, Acter_DestroyAndClearSlot_TRAMP = 1;  // "Acter_DestroyAndClearSlot" 0x100AB320
 constexpr unsigned FurnitureRelease_ReleaseSlot = 4, FurnitureRelease_ReleaseSlot_TRAMP = 1;  // "FurnitureRelease_ReleaseSlot" 0x100AB550
@@ -6714,7 +6713,7 @@ constexpr unsigned Time_ModDiv6C00Scaled = 4, Time_ModDiv6C00Scaled_TRAMP = 1;  
 constexpr unsigned Time_ModDivD80Div90 = 4, Time_ModDivD80Div90_TRAMP = 1;  // "Time_ModDivD80Div90" 0x10103B10
 constexpr unsigned Time_ModMul3CDiv90 = 4, Time_ModMul3CDiv90_TRAMP = 1;  // "Time_ModMul3CDiv90" 0x10103B30
 constexpr unsigned NetCellFont_SetZero = 4, NetCellFont_SetZero_TRAMP = 1;  // "NetCellFont_SetZero" 0x10103F50
-constexpr unsigned fn_101061D0 = 4, fn_101061D0_TRAMP = 1;  // "fn_101061D0" 0x101061D0
+constexpr unsigned NetCellFont_UnpackBitFields = 4, NetCellFont_UnpackBitFields_TRAMP = 1;  // "NetCellFont_UnpackBitFields" 0x101061D0
 constexpr unsigned NetCellFont_LookupMaskedTable = 4, NetCellFont_LookupMaskedTable_TRAMP = 1;  // "NetCellFont_LookupMaskedTable" 0x101072D0
 constexpr unsigned NetCellFont_LookupTable10364CB0 = 4, NetCellFont_LookupTable10364CB0_TRAMP = 1;  // "NetCellFont_LookupTable10364CB0" 0x10107320
 constexpr unsigned NetCellFont_AppendMax20 = 4, NetCellFont_AppendMax20_TRAMP = 1;  // "NetCellFont_AppendMax20" 0x10107610
@@ -6838,7 +6837,7 @@ constexpr unsigned Font_DrawGlyphQuad = 16, Font_DrawGlyphQuad_TRAMP = 1;  // "F
 constexpr unsigned Gfx_SetAdditiveBlend = 0, Gfx_SetAdditiveBlend_TRAMP = 1;  // "Gfx_SetAdditiveBlend" 0x1011BDC0
 constexpr unsigned Font_DrawChar = 4, Font_DrawChar_TRAMP = 1;  // "Font_DrawChar" 0x1011BF40
 constexpr unsigned Font_MeasureString = 4, Font_MeasureString_TRAMP = 1;  // "Font_MeasureString" 0x1011BFD0
-constexpr unsigned Obj_104E1B90__Obj_104E1B90_DrawString = 4, Obj_104E1B90__Obj_104E1B90_DrawString_TRAMP = 1;  // "Obj_104E1B90::Obj_104E1B90_DrawString" 0x1011C080
+constexpr unsigned FontGlyphs__FontGlyphs_DrawString = 4, FontGlyphs__FontGlyphs_DrawString_TRAMP = 1;  // "FontGlyphs::FontGlyphs_DrawString" 0x1011C080
 constexpr unsigned Gfx_SetCellBlendMode = 4, Gfx_SetCellBlendMode_TRAMP = 1;  // "Gfx_SetCellBlendMode" 0x1011C1F0
 constexpr unsigned Font_AllocHighResImage = 4, Font_AllocHighResImage_TRAMP = 1;  // "Font_AllocHighResImage" 0x1011C5D0
 constexpr unsigned Tex_LoadSurfaceFromDatFile = 4, Tex_LoadSurfaceFromDatFile_TRAMP = 1;  // "Tex_LoadSurfaceFromDatFile" 0x1011C670
@@ -6882,9 +6881,9 @@ constexpr unsigned Color_ModulateArgb128 = 4, Color_ModulateArgb128_TRAMP = 1;  
 constexpr unsigned ShapeMng_FindShape = 4, ShapeMng_FindShape_TRAMP = 1;  // "ShapeMng_FindShape" 0x10120450
 constexpr unsigned Cell_FindEntryByName = 4, Cell_FindEntryByName_TRAMP = 1;  // "Cell_FindEntryByName" 0x101204B0
 constexpr unsigned ShapeMng_GetFontGlyph = 4, ShapeMng_GetFontGlyph_TRAMP = 1;  // "ShapeMng_GetFontGlyph" 0x10120510
-constexpr unsigned Obj_104E1BF8__ShapeMng_BindFontTexture = 0, Obj_104E1BF8__ShapeMng_BindFontTexture_TRAMP = 1;  // "Obj_104E1BF8::ShapeMng_BindFontTexture" 0x10120590
+constexpr unsigned ShapeMng__ShapeMng_BindFontTexture = 0, ShapeMng__ShapeMng_BindFontTexture_TRAMP = 1;  // "ShapeMng::ShapeMng_BindFontTexture" 0x10120590
 constexpr unsigned ShapeMng_LoadFontTextures = 4, ShapeMng_LoadFontTextures_TRAMP = 1;  // "ShapeMng_LoadFontTextures" 0x10120660
-constexpr unsigned Obj_104E1BF8__ShapeMng_BindDmgNumTexture = 4, Obj_104E1BF8__ShapeMng_BindDmgNumTexture_TRAMP = 1;  // "Obj_104E1BF8::ShapeMng_BindDmgNumTexture" 0x101207B0
+constexpr unsigned ShapeMng__ShapeMng_BindDmgNumTexture = 4, ShapeMng__ShapeMng_BindDmgNumTexture_TRAMP = 1;  // "ShapeMng::ShapeMng_BindDmgNumTexture" 0x101207B0
 constexpr unsigned Cell_ResolveAllSubCells = 4, Cell_ResolveAllSubCells_TRAMP = 1;  // "Cell_ResolveAllSubCells" 0x10120950
 constexpr unsigned Cell_TestAny38Or0B8 = 4, Cell_TestAny38Or0B8_TRAMP = 1;  // "Cell_TestAny38Or0B8" 0x10120B80
 constexpr unsigned Cell_TestAny1DOr9D = 4, Cell_TestAny1DOr9D_TRAMP = 1;  // "Cell_TestAny1DOr9D" 0x10120BB0
@@ -7447,10 +7446,10 @@ constexpr unsigned TargetMenu_ToggleTo = 4, TargetMenu_ToggleTo_TRAMP = 1;  // "
 constexpr unsigned TargetMenu_SetWord56 = 4, TargetMenu_SetWord56_TRAMP = 1;  // "TargetMenu_SetWord56" 0x10163070
 constexpr unsigned TargetMenu_GetShortAt56 = 4, TargetMenu_GetShortAt56_TRAMP = 0;  // "TargetMenu_GetShortAt56" 0x10163080
 constexpr unsigned TargetMenu_CtorZeroed = 4, TargetMenu_CtorZeroed_TRAMP = 1;  // "TargetMenu_CtorZeroed" 0x10163090
-constexpr unsigned Obj_10621944__Obj_10621944_Draw = 0, Obj_10621944__Obj_10621944_Draw_TRAMP = 1;  // "Obj_10621944::Obj_10621944_Draw" 0x101630E0
+constexpr unsigned MenuTextBlock__MenuTextBlock_Draw = 0, MenuTextBlock__MenuTextBlock_Draw_TRAMP = 1;  // "MenuTextBlock::MenuTextBlock_Draw" 0x101630E0
 constexpr unsigned TargetMenu_ZeroWordsAndDwords = 4, TargetMenu_ZeroWordsAndDwords_TRAMP = 1;  // "TargetMenu_ZeroWordsAndDwords" 0x10163350
 constexpr unsigned TargetMenu_NoOpE = 4, TargetMenu_NoOpE_TRAMP = 0;  // "TargetMenu_NoOpE" 0x10163380
-constexpr unsigned Obj_10621944_DrawBgRect = 4, Obj_10621944_DrawBgRect_TRAMP = 1;  // "Obj_10621944_DrawBgRect" 0x10163390
+constexpr unsigned MenuTextBlock_DrawBgRect = 4, MenuTextBlock_DrawBgRect_TRAMP = 1;  // "MenuTextBlock_DrawBgRect" 0x10163390
 constexpr unsigned TargetMenu_ZeroDwords = 4, TargetMenu_ZeroDwords_TRAMP = 1;  // "TargetMenu_ZeroDwords" 0x101633D0
 constexpr unsigned Gfx_DrawSolidRect2D = 16, Gfx_DrawSolidRect2D_TRAMP = 1;  // "Gfx_DrawSolidRect2D" 0x10163400
 constexpr unsigned ZoneMapLoad_ResetFieldsA = 4, ZoneMapLoad_ResetFieldsA_TRAMP = 1;  // "ZoneMapLoad_ResetFieldsA" 0x10163F30
@@ -7479,7 +7478,7 @@ constexpr unsigned ZoneMapLoad_SegmentHit34139 = 20, ZoneMapLoad_SegmentHit34139
 constexpr unsigned ZoneMapLoad_SegmentTest34139 = 20, ZoneMapLoad_SegmentTest34139_TRAMP = 1;  // "ZoneMapLoad_SegmentTest34139" 0x1016A2D0
 constexpr unsigned ZoneMapLoad_SegmentHitGridTriangles = 20, ZoneMapLoad_SegmentHitGridTriangles_TRAMP = 1;  // "ZoneMapLoad_SegmentHitGridTriangles" 0x1016A990
 constexpr unsigned ZoneMapLoad_SegmentHitWithObjects = 20, ZoneMapLoad_SegmentHitWithObjects_TRAMP = 1;  // "ZoneMapLoad_SegmentHitWithObjects" 0x1016B1D0
-constexpr unsigned fn_1016BDF0 = 4, fn_1016BDF0_TRAMP = 1;  // "fn_1016BDF0" 0x1016BDF0
+constexpr unsigned ZoneMapLoad_BuildMatrixFromNegatedPosRot = 4, ZoneMapLoad_BuildMatrixFromNegatedPosRot_TRAMP = 1;  // "ZoneMapLoad_BuildMatrixFromNegatedPosRot" 0x1016BDF0
 constexpr unsigned Mat44_Multiply = 20, Mat44_Multiply_TRAMP = 1;  // "Mat44_Multiply" 0x1016C060
 constexpr unsigned ZoneMap_GetHitCount = 4, ZoneMap_GetHitCount_TRAMP = 1;  // "ZoneMap_GetHitCount" 0x1016C150
 constexpr unsigned ZoneMap_IsPointInTriangle = 4, ZoneMap_IsPointInTriangle_TRAMP = 1;  // "ZoneMap_IsPointInTriangle" 0x1016C390
@@ -7502,11 +7501,11 @@ constexpr unsigned Mat4_SetIdentity_2 = 4, Mat4_SetIdentity_2_TRAMP = 1;  // "Ma
 constexpr unsigned ZoneMap_FindDbgBoxHitBySegment = 20, ZoneMap_FindDbgBoxHitBySegment_TRAMP = 1;  // "ZoneMap_FindDbgBoxHitBySegment" 0x10176620
 constexpr unsigned ZoneMapLoad_SetFlag2000OnUnderscoreEntries = 12, ZoneMapLoad_SetFlag2000OnUnderscoreEntries_TRAMP = 1;  // "ZoneMapLoad_SetFlag2000OnUnderscoreEntries" 0x10176DD0
 constexpr unsigned ZoneMapLoad_ConstructResource10336698 = 12, ZoneMapLoad_ConstructResource10336698_TRAMP = 1;  // "ZoneMapLoad_ConstructResource10336698" 0x10176E80
-constexpr unsigned CMoResource_VT_10336698__ScalarDeletingDtor = 0, CMoResource_VT_10336698__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_10336698::ScalarDeletingDtor" 0x10176EA0
+constexpr unsigned CMoResType2E__ScalarDeletingDtor = 0, CMoResType2E__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType2E::ScalarDeletingDtor" 0x10176EA0
 constexpr unsigned ZoneResWeather_Construct = 12, ZoneResWeather_Construct_TRAMP = 1;  // "ZoneResWeather_Construct" 0x10176F60
-constexpr unsigned CMoResource_VT_103366C4__ScalarDeletingDtor = 0, CMoResource_VT_103366C4__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_103366C4::ScalarDeletingDtor" 0x10176F80
+constexpr unsigned CMoResType1C__ScalarDeletingDtor = 0, CMoResType1C__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType1C::ScalarDeletingDtor" 0x10176F80
 constexpr unsigned ZoneResource_Construct = 12, ZoneResource_Construct_TRAMP = 1;  // "ZoneResource_Construct" 0x10176FE0
-constexpr unsigned CMoResource_VT_103366F0__ScalarDeletingDtor = 0, CMoResource_VT_103366F0__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_103366F0::ScalarDeletingDtor" 0x10177000
+constexpr unsigned CMoResType36__ScalarDeletingDtor = 0, CMoResType36__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType36::ScalarDeletingDtor" 0x10177000
 constexpr unsigned Gfx_CompileVertexShader = 0, Gfx_CompileVertexShader_TRAMP = 1;  // "Gfx_CompileVertexShader" 0x101771B0
 constexpr unsigned Gfx_AssembleVertexShader = 0, Gfx_AssembleVertexShader_TRAMP = 1;  // "Gfx_AssembleVertexShader" 0x10177240
 constexpr unsigned Gfx_CompilePixelShader = 0, Gfx_CompilePixelShader_TRAMP = 1;  // "Gfx_CompilePixelShader" 0x101772E0
@@ -7611,8 +7610,8 @@ constexpr unsigned Env_ComputeAmbient = 20, Env_ComputeAmbient_TRAMP = 1;  // "E
 constexpr unsigned Env_ComputeAmbientFloat4 = 4, Env_ComputeAmbientFloat4_TRAMP = 1;  // "Env_ComputeAmbientFloat4" 0x10188FA0
 constexpr unsigned Env_ComputeFog = 4, Env_ComputeFog_TRAMP = 1;  // "Env_ComputeFog" 0x10189120
 constexpr unsigned WeatherRes_Construct = 12, WeatherRes_Construct_TRAMP = 1;  // "WeatherRes_Construct" 0x101893B0
-constexpr unsigned CMoResource_VT_103367E8__ScalarDeletingDtor = 0, CMoResource_VT_103367E8__ScalarDeletingDtor_TRAMP = 1;  // "CMoResource_VT_103367E8::ScalarDeletingDtor" 0x101893D0
-constexpr unsigned CMoResource_VT_103367E8__vf008 = 8, CMoResource_VT_103367E8__vf008_TRAMP = 0;  // "CMoResource_VT_103367E8::vf008" 0x101893F0
+constexpr unsigned CMoResType2F__ScalarDeletingDtor = 0, CMoResType2F__ScalarDeletingDtor_TRAMP = 1;  // "CMoResType2F::ScalarDeletingDtor" 0x101893D0
+constexpr unsigned CMoResType2F__SetupNop = 8, CMoResType2F__SetupNop_TRAMP = 0;  // "CMoResType2F::SetupNop" 0x101893F0
 constexpr unsigned WeatherRes_InitKeyDefaults = 4, WeatherRes_InitKeyDefaults_TRAMP = 1;  // "WeatherRes_InitKeyDefaults" 0x10189400
 constexpr unsigned Env_BlendKeys = 4, Env_BlendKeys_TRAMP = 1;  // "Env_BlendKeys" 0x10189490
 constexpr unsigned Env_LerpFloat = 4, Env_LerpFloat_TRAMP = 1;  // "Env_LerpFloat" 0x10189810
@@ -8401,7 +8400,7 @@ constexpr unsigned YkWindows_TestFlagBitFwd = 4, YkWindows_TestFlagBitFwd_TRAMP 
 constexpr unsigned YkWindows_GetEntryPosition = 4, YkWindows_GetEntryPosition_TRAMP = 1;  // "YkWindows_GetEntryPosition" 0x101F74F0
 constexpr unsigned YkWindows_GetEntryRate = 4, YkWindows_GetEntryRate_TRAMP = 1;  // "YkWindows_GetEntryRate" 0x101F75C0
 constexpr unsigned YkWindows_FormatTargetMapGrid = 4, YkWindows_FormatTargetMapGrid_TRAMP = 1;  // "YkWindows_FormatTargetMapGrid" 0x101F7600
-constexpr unsigned fn_101F79E0 = 12, fn_101F79E0_TRAMP = 1;  // "fn_101F79E0" 0x101F79E0
+constexpr unsigned YkWindows_MapEntryForTargetOrArea = 12, YkWindows_MapEntryForTargetOrArea_TRAMP = 1;  // "YkWindows_MapEntryForTargetOrArea" 0x101F79E0
 constexpr unsigned YkWindows_SetMapWindowState = 12, YkWindows_SetMapWindowState_TRAMP = 1;  // "YkWindows_SetMapWindowState" 0x101F7C00
 constexpr unsigned YkWindows_PlaceListedActerMarkers = 4, YkWindows_PlaceListedActerMarkers_TRAMP = 1;  // "YkWindows_PlaceListedActerMarkers" 0x101F7DB0
 constexpr unsigned YkWindows_PlaceActerMarker = 4, YkWindows_PlaceActerMarker_TRAMP = 1;  // "YkWindows_PlaceActerMarker" 0x101F7EC0
@@ -8417,14 +8416,14 @@ constexpr unsigned YkWindows_CtorVt1033A8B8 = 4, YkWindows_CtorVt1033A8B8_TRAMP 
 constexpr unsigned YkWindows_UpdateTargetMarker = 4, YkWindows_UpdateTargetMarker_TRAMP = 1;  // "YkWindows_UpdateTargetMarker" 0x101F8EA0
 constexpr unsigned YkWindows_GetTargetMapCoords = 4, YkWindows_GetTargetMapCoords_TRAMP = 1;  // "YkWindows_GetTargetMapCoords" 0x101F8FB0
 constexpr unsigned YkWindows_ClearMapMarkers = 4, YkWindows_ClearMapMarkers_TRAMP = 1;  // "YkWindows_ClearMapMarkers" 0x101F9010
-constexpr unsigned fn_101F9110 = 4, fn_101F9110_TRAMP = 1;  // "fn_101F9110" 0x101F9110
+constexpr unsigned YkWindows_AddMarkerRecord = 4, YkWindows_AddMarkerRecord_TRAMP = 1;  // "YkWindows_AddMarkerRecord" 0x101F9110
 constexpr unsigned Yk_ResetSlots = 4, Yk_ResetSlots_TRAMP = 1;  // "Yk_ResetSlots" 0x101F92B0
 constexpr unsigned YkWindows_ResetMapBuffers = 4, YkWindows_ResetMapBuffers_TRAMP = 1;  // "YkWindows_ResetMapBuffers" 0x101F92E0
 constexpr unsigned Yk_FreeBuffers = 4, Yk_FreeBuffers_TRAMP = 1;  // "Yk_FreeBuffers" 0x101F9370
-constexpr unsigned fn_101F9A20 = 12, fn_101F9A20_TRAMP = 1;  // "fn_101F9A20" 0x101F9A20
+constexpr unsigned YkWindows_IsMarkerAllowed = 12, YkWindows_IsMarkerAllowed_TRAMP = 1;  // "YkWindows_IsMarkerAllowed" 0x101F9A20
 constexpr unsigned YkWindows_CloseMapMenus = 4, YkWindows_CloseMapMenus_TRAMP = 1;  // "YkWindows_CloseMapMenus" 0x101FA420
 constexpr unsigned YkWindows_CanShowMapTitle = 4, YkWindows_CanShowMapTitle_TRAMP = 1;  // "YkWindows_CanShowMapTitle" 0x101FAAB0
-constexpr unsigned fn_101FAAF0 = 4, fn_101FAAF0_TRAMP = 1;  // "fn_101FAAF0" 0x101FAAF0
+constexpr unsigned YkWindows_ShowMapTitleIfAllowed = 4, YkWindows_ShowMapTitleIfAllowed_TRAMP = 1;  // "YkWindows_ShowMapTitleIfAllowed" 0x101FAAF0
 constexpr unsigned YkWindows_MarkGroupMarkers = 4, YkWindows_MarkGroupMarkers_TRAMP = 1;  // "YkWindows_MarkGroupMarkers" 0x101FAD00
 constexpr unsigned YkWindows_ClearMarkerFlags = 4, YkWindows_ClearMarkerFlags_TRAMP = 1;  // "YkWindows_ClearMarkerFlags" 0x101FAD40
 constexpr unsigned YkWindows_StepMarkerGroup = 4, YkWindows_StepMarkerGroup_TRAMP = 1;  // "YkWindows_StepMarkerGroup" 0x101FAD70
@@ -8670,7 +8669,7 @@ constexpr unsigned MenuPanels_CtorVt1033C718 = 4, MenuPanels_CtorVt1033C718_TRAM
 constexpr unsigned MenuPanels_Reset = 4, MenuPanels_Reset_TRAMP = 1;  // "MenuPanels_Reset" 0x10230410
 constexpr unsigned MenuPanels_PanelCtorVt1033C720 = 4, MenuPanels_PanelCtorVt1033C720_TRAMP = 1;  // "MenuPanels_PanelCtorVt1033C720" 0x10233BE0
 constexpr unsigned MenuPanels_PanelCtorVt1033C788 = 4, MenuPanels_PanelCtorVt1033C788_TRAMP = 1;  // "MenuPanels_PanelCtorVt1033C788" 0x102340A0
-constexpr unsigned fn_10234610 = 4, fn_10234610_TRAMP = 1;  // "fn_10234610" 0x10234610
+constexpr unsigned MenuPanels_InitDrawRect = 4, MenuPanels_InitDrawRect_TRAMP = 1;  // "MenuPanels_InitDrawRect" 0x10234610
 constexpr unsigned MenuPanels_DrawProgressBar = 4, MenuPanels_DrawProgressBar_TRAMP = 1;  // "MenuPanels_DrawProgressBar" 0x10234660
 constexpr unsigned MenuPanels_SendMenuEventByKind = 4, MenuPanels_SendMenuEventByKind_TRAMP = 1;  // "MenuPanels_SendMenuEventByKind" 0x10234910
 constexpr unsigned MenuPanels_ComputeClampedIndex = 4, MenuPanels_ComputeClampedIndex_TRAMP = 1;  // "MenuPanels_ComputeClampedIndex" 0x10234A00

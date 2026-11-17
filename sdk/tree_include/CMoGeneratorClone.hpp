@@ -5,6 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CMoGeneratorClone {
 public:
+    char * ScalarDeletingDtor(char a2);  // 0x10053840
+    static char ** __cdecl CMoGeneratorClone_GetRuntimeClass();  // 0x100542E0
     int InitCloneFromSource(_DWORD *a2);  // 0x10047C30
     _DWORD * FixupClonedPointers();  // 0x10047CE0
     static void __thiscall Release(void * self);  // 0x100480D0

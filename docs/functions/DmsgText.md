@@ -173,7 +173,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DmsgText_AppendNode` calls nothing directly
 - `DmsgText_FindNextTyped9` calls nothing directly
 - `DmsgText_ContainsChar` calls `DmsgText_GetCellCol0`, `Sjis_GetCharByteLen`
-- `DmsgText_BuildNodeString` calls `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetText14`, `Sjis_IsCodeInSet`, `sub_1011DCC0`, `Sjis_GetCharByteLen`, `sub_10312050`, `DmsgText_ContainsChar`
+- `DmsgText_BuildNodeString` calls `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetText14`, `Sjis_IsCodeInSet`, `NetCellFont_LowercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`, `sub_10312050`, `DmsgText_ContainsChar`
 - `DmsgText_HasNoHead` calls nothing directly
 - `DmsgText_ComposeTextB` calls `DmsgText_HasNoHead`, `sub_1018D3D0`, `TextInputFiles_Append`, `TextInputFiles_AppendBuf`, `DmsgText_BuildNodeString`, `DmsgText_GetSuffixByFlag`, `DmsgText_GetPrefixByFlags`, `DmsgText_GetPrefixByFlags2`, `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetEntryById`, `DmsgText_IsTypeTwoZero`, `DmsgText_GetFormAlt`, `DmsgText_GetFormById`, `DmsgText_GetText14`, `TextInputFiles_AssignWhole`
 - `DmsgText_AppendStringNode` calls `Allocator_Generic`, `TextInputFiles_AssignCStr`, `DmsgText_AppendNode`, `DmsgText_HasNoHead`
@@ -191,5 +191,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DmsgText_FindPrefixEntry` calls `sub_10312940`
 - `DmsgText_FindMarker` calls `Sjis_GetCharByteLen`
 - `DmsgText_IsWrapBreak` calls nothing directly
-- `DmsgText_ConvertCharByLanguage` calls `sub_1011DAA0`, `sub_1011DC00`, `Sjis_GetCharByteLen`
+- `DmsgText_ConvertCharByLanguage` calls `sub_1011DAA0`, `NetCellFont_UppercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`
 - `DmsgText_WrapSjisAt` calls `sub_1025BE80`, `DmsgText_ConvertCharByLanguage`, `Sjis_GetCharByteLen`, `Sjis_CopyPrefix`

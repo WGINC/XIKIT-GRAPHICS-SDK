@@ -18,8 +18,8 @@ Group: `CYy` (by the file name only). Source: `sdk/tree_src/CYyModel.cpp`.
 | `CYyModel::ForEachPart130` | 0x1002C2A0 | 41 | yes | - | Calls the part handler FUN_1002A130 on every part of the model. (reviewed as sub_1002C2A0) | low |
 | `CYyModel::GetPartOffset` | 0x1002C400 | 253 | yes | - | Adds the transformed offset of a part to the given vector. (reviewed as sub_1002C400) | low |
 | `CYyModel::CallPartIndex` | 0x1002C600 | 58 | yes | - | Calls the handler on the part at an index. (reviewed as sub_1002C600) | low |
-| `sub_1002C710` | 0x1002C710 | 21 | no | - | Returns FUN_1002B3F0 of the argument when the model has parts. | low |
-| `sub_1002C750` | 0x1002C750 | 21 | no | - | Returns FUN_1002B470 of the argument when the model has parts. | low |
+| `CYyModel::QueryPartsA` | 0x1002C710 | 21 | no | - | Returns FUN_1002B3F0 of the argument when the model has parts. (reviewed as sub_1002C710) | low |
+| `CYyModel::QueryPartsB` | 0x1002C750 | 21 | no | - | Returns FUN_1002B470 of the argument when the model has parts. (reviewed as sub_1002C750) | low |
 
 ## Direct calls
 
@@ -37,5 +37,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CYyModel::ForEachPart130` calls `CYyModel::GetField44Addr`, `sub_1002A130`
 - `CYyModel::GetPartOffset` calls `CYyModel::GetField44Addr`, `Part_AddTranslation`, `Vec3_MulInPlace`, `Vec3_AddInPlace`, `CYyModelBase::TransformVec4ByPart`
 - `CYyModel::CallPartIndex` calls `CYyModel::GetField44Addr`, `sub_1002A9E0`
-- `sub_1002C710` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`, `ModelDtBase_GetField20`
-- `sub_1002C750` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`
+- `CYyModel::QueryPartsA` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`, `ModelDtBase_GetField20`
+- `CYyModel::QueryPartsB` calls `CYyModel::GetField44Addr`, `CYyModelBase::GetPartList`

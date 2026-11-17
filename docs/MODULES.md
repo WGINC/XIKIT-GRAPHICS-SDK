@@ -6,12 +6,12 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 |---|---|---|
 | `Text` | 2 | 568 |
 | `Net` | 1 | 493 |
-| `CMo` | 106 | 434 |
+| `CMo` | 109 | 440 |
 | `Target` | 1 | 422 |
 | `sq` | 93 | 384 |
-| `CXi` | 18 | 273 |
+| `CXi` | 14 | 267 |
 | `Yk` | 7 | 241 |
-| `Menu` | 1 | 155 |
+| `Menu` | 2 | 156 |
 | `Acter` | 1 | 126 |
 | `St` | 11 | 126 |
 | `Zone` | 5 | 121 |
@@ -69,7 +69,6 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 | `Post` | 1 | 5 |
 | `Skin` | 1 | 5 |
 | `CEnv` | 1 | 4 |
-| `Obj` | 3 | 4 |
 | `Byte` | 1 | 3 |
 | `CAtel` | 1 | 3 |
 | `CShader` | 1 | 3 |
@@ -88,9 +87,11 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 | `Que` | 1 | 2 |
 | `Rab` | 1 | 2 |
 | `Script` | 1 | 2 |
+| `Shape` | 1 | 2 |
 | `Texture` | 1 | 2 |
 | `Thread` | 1 | 2 |
 | `CAcc` | 1 | 1 |
+| `Font` | 1 | 1 |
 | `Schedular` | 1 | 1 |
 | `Screen` | 1 | 1 |
 | `Shader` | 1 | 1 |
@@ -165,39 +166,21 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 - [CMoActorColorDriveTask](functions/CMoActorColorDriveTask.md): 3 functions
 - [CMoActorRotationDriveTask](functions/CMoActorRotationDriveTask.md): 1 functions
+- [CMoAfbRes](functions/CMoAfbRes.md): 2 functions
 - [CMoAttachments](functions/CMoAttachments.md): 23 functions
-- [CMoAttachments_VT_1032AE94](functions/CMoAttachments_VT_1032AE94.md): 1 functions
-- [CMoAttachments_VT_1032AF44](functions/CMoAttachments_VT_1032AF44.md): 1 functions
-- [CMoAttachments_VT_1032AF8C](functions/CMoAttachments_VT_1032AF8C.md): 1 functions
-- [CMoAttachments_VT_1032B140](functions/CMoAttachments_VT_1032B140.md): 1 functions
-- [CMoAttachments_VT_1032B940](functions/CMoAttachments_VT_1032B940.md): 1 functions
-- [CMoAttachments_VT_1032BAF0](functions/CMoAttachments_VT_1032BAF0.md): 1 functions
-- [CMoAttachments_VT_1032BB38](functions/CMoAttachments_VT_1032BB38.md): 1 functions
-- [CMoAttachments_VT_1032BBAC](functions/CMoAttachments_VT_1032BBAC.md): 1 functions
-- [CMoAttachments_VT_1032BBF4](functions/CMoAttachments_VT_1032BBF4.md): 1 functions
-- [CMoAttachments_VT_1032BC68](functions/CMoAttachments_VT_1032BC68.md): 1 functions
-- [CMoAttachments_VT_1032BC84](functions/CMoAttachments_VT_1032BC84.md): 1 functions
-- [CMoAttachments_VT_1032BCCC](functions/CMoAttachments_VT_1032BCCC.md): 1 functions
-- [CMoAttachments_VT_1032BD14](functions/CMoAttachments_VT_1032BD14.md): 1 functions
-- [CMoAttachments_VT_1032BD5C](functions/CMoAttachments_VT_1032BD5C.md): 1 functions
-- [CMoAttachments_VT_1032BDA4](functions/CMoAttachments_VT_1032BDA4.md): 1 functions
-- [CMoAttachments_VT_1032BDEC](functions/CMoAttachments_VT_1032BDEC.md): 1 functions
-- [CMoAttachments_VT_1032BE34](functions/CMoAttachments_VT_1032BE34.md): 1 functions
-- [CMoAttachments_VT_1032BE7C](functions/CMoAttachments_VT_1032BE7C.md): 1 functions
-- [CMoAttachments_VT_1032BEC4](functions/CMoAttachments_VT_1032BEC4.md): 1 functions
-- [CMoAttachments_VT_1032BF0C](functions/CMoAttachments_VT_1032BF0C.md): 1 functions
-- [CMoAttachments_VT_1032BF54](functions/CMoAttachments_VT_1032BF54.md): 1 functions
-- [CMoAttachments_VT_1032BF9C](functions/CMoAttachments_VT_1032BF9C.md): 1 functions
-- [CMoAttachments_VT_1032BFE4](functions/CMoAttachments_VT_1032BFE4.md): 1 functions
-- [CMoAttachments_VT_1032C02C](functions/CMoAttachments_VT_1032C02C.md): 1 functions
-- [CMoAttachments_VT_1032C4E8](functions/CMoAttachments_VT_1032C4E8.md): 1 functions
-- [CMoAttachments_VT_1032C628](functions/CMoAttachments_VT_1032C628.md): 1 functions
-- [CMoAttachments_VT_1032E7EC](functions/CMoAttachments_VT_1032E7EC.md): 1 functions
+- [CMoAuctionMenuTask](functions/CMoAuctionMenuTask.md): 1 functions
+- [CMoBm2RefRes](functions/CMoBm2RefRes.md): 1 functions
+- [CMoBm2Res](functions/CMoBm2Res.md): 3 functions
 - [CMoCamera](functions/CMoCamera.md): 5 functions
+- [CMoCameraSetupTask](functions/CMoCameraSetupTask.md): 2 functions
 - [CMoCameraTask](functions/CMoCameraTask.md): 2 functions
+- [CMoCasterTargetTask](functions/CMoCasterTargetTask.md): 1 functions
+- [CMoCasterTargetTaskAttachments](functions/CMoCasterTargetTaskAttachments.md): 1 functions
 - [CMoCelestial](functions/CMoCelestial.md): 2 functions
 - [CMoD3aElem](functions/CMoD3aElem.md): 6 functions
 - [CMoD3aLightmapElem](functions/CMoD3aLightmapElem.md): 5 functions
+- [CMoD3mElem](functions/CMoD3mElem.md): 2 functions
+- [CMoD3mElemFlag200000](functions/CMoD3mElemFlag200000.md): 2 functions
 - [CMoD3mSpecularElem](functions/CMoD3mSpecularElem.md): 5 functions
 - [CMoDX](functions/CMoDX.md): 8 functions
 - [CMoDisintegrateProgElem](functions/CMoDisintegrateProgElem.md): 6 functions
@@ -207,65 +190,86 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoDistRingElem](functions/CMoDistRingElem.md): 6 functions
 - [CMoDxStatusMng](functions/CMoDxStatusMng.md): 3 functions
 - [CMoElem](functions/CMoElem.md): 34 functions
-- [CMoElem_VT_1032ADE8](functions/CMoElem_VT_1032ADE8.md): 3 functions
-- [CMoGeneratorClone](functions/CMoGeneratorClone.md): 16 functions
-- [CMoGeneratorClone_VT_1032B114](functions/CMoGeneratorClone_VT_1032B114.md): 1 functions
-- [CMoGeneratorClone_VT_1032B69C](functions/CMoGeneratorClone_VT_1032B69C.md): 2 functions
+- [CMoElemKind5C](functions/CMoElemKind5C.md): 3 functions
+- [CMoGeneratorClone](functions/CMoGeneratorClone.md): 18 functions
+- [CMoGeneratorRes](functions/CMoGeneratorRes.md): 1 functions
+- [CMoGeneratorResAttachments](functions/CMoGeneratorResAttachments.md): 1 functions
+- [CMoGeneratorTask](functions/CMoGeneratorTask.md): 4 functions
 - [CMoLfdElem](functions/CMoLfdElem.md): 4 functions
 - [CMoLockColorDriveTask](functions/CMoLockColorDriveTask.md): 3 functions
 - [CMoLockLookAtDriveTask](functions/CMoLockLookAtDriveTask.md): 3 functions
+- [CMoMo2Res](functions/CMoMo2Res.md): 4 functions
+- [CMoModeRampTask](functions/CMoModeRampTask.md): 1 functions
+- [CMoMorphElem](functions/CMoMorphElem.md): 1 functions
 - [CMoNullProgElem](functions/CMoNullProgElem.md): 3 functions
 - [CMoOT](functions/CMoOT.md): 3 functions
 - [CMoOcclusionMng](functions/CMoOcclusionMng.md): 3 functions
+- [CMoOs2Res](functions/CMoOs2Res.md): 3 functions
+- [CMoOtDrawUPTask](functions/CMoOtDrawUPTask.md): 1 functions
+- [CMoOtDrawUPTaskAttachments](functions/CMoOtDrawUPTaskAttachments.md): 1 functions
 - [CMoOtTask](functions/CMoOtTask.md): 5 functions
-- [CMoOtTask_VT_1032AE64](functions/CMoOtTask_VT_1032AE64.md): 1 functions
 - [CMoPathDriveActorTask](functions/CMoPathDriveActorTask.md): 5 functions
 - [CMoPathObject](functions/CMoPathObject.md): 1 functions
 - [CMoPointLightProgElem](functions/CMoPointLightProgElem.md): 5 functions
 - [CMoProcessor](functions/CMoProcessor.md): 9 functions
-- [CMoProcessor_VT_1032C1C8](functions/CMoProcessor_VT_1032C1C8.md): 16 functions
-- [CMoProcessor_VT_1032C298](functions/CMoProcessor_VT_1032C298.md): 5 functions
-- [CMoProcessor_VT_1032C368](functions/CMoProcessor_VT_1032C368.md): 10 functions
+- [CMoProcessor3DNow](functions/CMoProcessor3DNow.md): 16 functions
+- [CMoProcessorSSE](functions/CMoProcessorSSE.md): 5 functions
+- [CMoProcessorX87](functions/CMoProcessorX87.md): 10 functions
+- [CMoResType07Attachments](functions/CMoResType07Attachments.md): 1 functions
+- [CMoResType19](functions/CMoResType19.md): 3 functions
+- [CMoResType1C](functions/CMoResType1C.md): 1 functions
+- [CMoResType1F](functions/CMoResType1F.md): 1 functions
+- [CMoResType21](functions/CMoResType21.md): 1 functions
+- [CMoResType25](functions/CMoResType25.md): 2 functions
+- [CMoResType2E](functions/CMoResType2E.md): 1 functions
+- [CMoResType2F](functions/CMoResType2F.md): 2 functions
+- [CMoResType30](functions/CMoResType30.md): 1 functions
+- [CMoResType31](functions/CMoResType31.md): 1 functions
+- [CMoResType36](functions/CMoResType36.md): 1 functions
+- [CMoResType3E](functions/CMoResType3E.md): 1 functions
+- [CMoResType45](functions/CMoResType45.md): 3 functions
+- [CMoResType5D](functions/CMoResType5D.md): 3 functions
+- [CMoResType5E](functions/CMoResType5E.md): 3 functions
+- [CMoResType5F](functions/CMoResType5F.md): 1 functions
 - [CMoResource](functions/CMoResource.md): 18 functions
+- [CMoResourceLoadTask](functions/CMoResourceLoadTask.md): 1 functions
 - [CMoResourceMng](functions/CMoResourceMng.md): 1 functions
-- [CMoResource_VT_1032C55C](functions/CMoResource_VT_1032C55C.md): 1 functions
-- [CMoResource_VT_1032C588](functions/CMoResource_VT_1032C588.md): 4 functions
-- [CMoResource_VT_1032C5FC](functions/CMoResource_VT_1032C5FC.md): 3 functions
-- [CMoResource_VT_1032C670](functions/CMoResource_VT_1032C670.md): 1 functions
-- [CMoResource_VT_1032C69C](functions/CMoResource_VT_1032C69C.md): 1 functions
-- [CMoResource_VT_1032C6C8](functions/CMoResource_VT_1032C6C8.md): 1 functions
-- [CMoResource_VT_1032C6F4](functions/CMoResource_VT_1032C6F4.md): 2 functions
-- [CMoResource_VT_1032C720](functions/CMoResource_VT_1032C720.md): 1 functions
-- [CMoResource_VT_1032C74C](functions/CMoResource_VT_1032C74C.md): 1 functions
-- [CMoResource_VT_1032C778](functions/CMoResource_VT_1032C778.md): 2 functions
-- [CMoResource_VT_1032C7A4](functions/CMoResource_VT_1032C7A4.md): 3 functions
-- [CMoResource_VT_1032C7D0](functions/CMoResource_VT_1032C7D0.md): 3 functions
-- [CMoResource_VT_1032C7FC](functions/CMoResource_VT_1032C7FC.md): 4 functions
-- [CMoResource_VT_1032C828](functions/CMoResource_VT_1032C828.md): 4 functions
-- [CMoResource_VT_1032C854](functions/CMoResource_VT_1032C854.md): 3 functions
-- [CMoResource_VT_1032C880](functions/CMoResource_VT_1032C880.md): 3 functions
-- [CMoResource_VT_1032C8AC](functions/CMoResource_VT_1032C8AC.md): 3 functions
-- [CMoResource_VT_1032C934](functions/CMoResource_VT_1032C934.md): 1 functions
-- [CMoResource_VT_10336698](functions/CMoResource_VT_10336698.md): 1 functions
-- [CMoResource_VT_103366C4](functions/CMoResource_VT_103366C4.md): 1 functions
-- [CMoResource_VT_103366F0](functions/CMoResource_VT_103366F0.md): 1 functions
-- [CMoResource_VT_103367E8](functions/CMoResource_VT_103367E8.md): 2 functions
+- [CMoResourceWaitTask](functions/CMoResourceWaitTask.md): 1 functions
+- [CMoResourceWaitTaskAttachments](functions/CMoResourceWaitTaskAttachments.md): 1 functions
+- [CMoRingElem](functions/CMoRingElem.md): 1 functions
+- [CMoSchOp07Attachments](functions/CMoSchOp07Attachments.md): 1 functions
+- [CMoSchOp0CAttachments](functions/CMoSchOp0CAttachments.md): 1 functions
+- [CMoSchOp0CTask](functions/CMoSchOp0CTask.md): 2 functions
+- [CMoSchOp0DAttachments](functions/CMoSchOp0DAttachments.md): 1 functions
+- [CMoSchOp0DTask](functions/CMoSchOp0DTask.md): 1 functions
+- [CMoSchOp1DAttachments](functions/CMoSchOp1DAttachments.md): 1 functions
+- [CMoSchOp1DTask](functions/CMoSchOp1DTask.md): 2 functions
+- [CMoSchOp1FAttachments](functions/CMoSchOp1FAttachments.md): 1 functions
+- [CMoSchOp2CAttachments](functions/CMoSchOp2CAttachments.md): 1 functions
+- [CMoSchOp2EAttachments](functions/CMoSchOp2EAttachments.md): 1 functions
+- [CMoSchOp2FAttachments](functions/CMoSchOp2FAttachments.md): 1 functions
+- [CMoSchOp40Attachments](functions/CMoSchOp40Attachments.md): 1 functions
+- [CMoSchOp42Attachments](functions/CMoSchOp42Attachments.md): 1 functions
+- [CMoSchOp48Attachments](functions/CMoSchOp48Attachments.md): 1 functions
+- [CMoSchOp59Attachments](functions/CMoSchOp59Attachments.md): 1 functions
+- [CMoSchOp62Attachments](functions/CMoSchOp62Attachments.md): 1 functions
+- [CMoSchOp75Attachments](functions/CMoSchOp75Attachments.md): 1 functions
+- [CMoSchOp7AAttachments](functions/CMoSchOp7AAttachments.md): 1 functions
+- [CMoSchOp7FAttachments](functions/CMoSchOp7FAttachments.md): 1 functions
+- [CMoSchOp9BAttachments](functions/CMoSchOp9BAttachments.md): 1 functions
+- [CMoSchOpB4Attachments](functions/CMoSchOpB4Attachments.md): 1 functions
+- [CMoSchOpB5Attachments](functions/CMoSchOpB5Attachments.md): 1 functions
+- [CMoSchOpBCAttachments](functions/CMoSchOpBCAttachments.md): 1 functions
+- [CMoSchOpBFAttachments](functions/CMoSchOpBFAttachments.md): 1 functions
+- [CMoSchOpSharedAttachments](functions/CMoSchOpSharedAttachments.md): 1 functions
 - [CMoSchedularTask](functions/CMoSchedularTask.md): 8 functions
+- [CMoScopeRes](functions/CMoScopeRes.md): 4 functions
+- [CMoSk2Res](functions/CMoSk2Res.md): 4 functions
 - [CMoSkeletonElem](functions/CMoSkeletonElem.md): 2 functions
 - [CMoSphRes](functions/CMoSphRes.md): 4 functions
 - [CMoSpline](functions/CMoSpline.md): 12 functions
 - [CMoTask](functions/CMoTask.md): 43 functions
 - [CMoTaskMng](functions/CMoTaskMng.md): 11 functions
-- [CMoTask_VT_10329C70](functions/CMoTask_VT_10329C70.md): 2 functions
-- [CMoTask_VT_1032A904](functions/CMoTask_VT_1032A904.md): 1 functions
-- [CMoTask_VT_1032AF60](functions/CMoTask_VT_1032AF60.md): 1 functions
-- [CMoTask_VT_1032AFA8](functions/CMoTask_VT_1032AFA8.md): 2 functions
-- [CMoTask_VT_1032B654](functions/CMoTask_VT_1032B654.md): 4 functions
-- [CMoTask_VT_1032B95C](functions/CMoTask_VT_1032B95C.md): 2 functions
-- [CMoTask_VT_1032C490](functions/CMoTask_VT_1032C490.md): 1 functions
-- [CMoTask_VT_1032C908](functions/CMoTask_VT_1032C908.md): 1 functions
-- [CMoTask_VT_1032D6D4](functions/CMoTask_VT_1032D6D4.md): 1 functions
-- [CMoTask_VT_1032E808](functions/CMoTask_VT_1032E808.md): 1 functions
 - [CMoVuAnmElem](functions/CMoVuAnmElem.md): 5 functions
 - [CMoVuDist](functions/CMoVuDist.md): 5 functions
 - [CMoVuLineProgElem](functions/CMoVuLineProgElem.md): 5 functions
@@ -280,10 +284,6 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 ## CXi
 
-- [CXi471011C8_VT_1032AC90](functions/CXi471011C8_VT_1032AC90.md): 1 functions
-- [CXi471011C8_VT_1032AD80](functions/CXi471011C8_VT_1032AD80.md): 2 functions
-- [CXi471011C8_VT_1032B3B8](functions/CXi471011C8_VT_1032B3B8.md): 2 functions
-- [CXi471011C8_VT_1032B478](functions/CXi471011C8_VT_1032B478.md): 1 functions
 - [CXiActor](functions/CXiActor.md): 73 functions
 - [CXiActorDraw](functions/CXiActorDraw.md): 2 functions
 - [CXiActorNameDraw](functions/CXiActorNameDraw.md): 1 functions
@@ -306,19 +306,19 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CYyModel](functions/CYyModel.md): 14 functions
 - [CYyModelBase](functions/CYyModelBase.md): 14 functions
 - [CYyModelDt](functions/CYyModelDt.md): 13 functions
-- [CYyModelDt_VT_1032A430](functions/CYyModelDt_VT_1032A430.md): 3 functions
-- [CYyModelDt_VT_1032A72C](functions/CYyModelDt_VT_1032A72C.md): 1 functions
+- [CYyModelDtBuffered](functions/CYyModelDtBuffered.md): 1 functions
+- [CYyModelDtStreamed](functions/CYyModelDtStreamed.md): 3 functions
 - [CYyMotionQue](functions/CYyMotionQue.md): 6 functions
 - [CYyMotionQueList](functions/CYyMotionQueList.md): 1 functions
 - [CYyMusicLoadTask](functions/CYyMusicLoadTask.md): 2 functions
 - [CYyObject](functions/CYyObject.md): 1 functions
-- [CYyObject_VT_1032A9F8](functions/CYyObject_VT_1032A9F8.md): 3 functions
 - [CYyOs2VtxBuffer](functions/CYyOs2VtxBuffer.md): 4 functions
 - [CYySkl](functions/CYySkl.md): 1 functions
 - [CYySoundElem](functions/CYySoundElem.md): 12 functions
 - [CYyTex](functions/CYyTex.md): 3 functions
 - [CYyTexBase](functions/CYyTexBase.md): 5 functions
 - [CYyTexMng](functions/CYyTexMng.md): 5 functions
+- [CYyThreadPool](functions/CYyThreadPool.md): 3 functions
 - [CYyVb](functions/CYyVb.md): 4 functions
 - [CYyVbMng](functions/CYyVbMng.md): 2 functions
 
@@ -358,7 +358,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 ## Elem
 
-- [ElemCtor471011C8](functions/ElemCtor471011C8.md): 1 functions. CXi471011C8_VT_1032B3B8::Ctor (an element constructor); called from the generator code
+- [ElemCtor471011C8](functions/ElemCtor471011C8.md): 1 functions. CMoD3mElemFlag200000::Ctor (an element constructor); called from the generator code
 - [ElemCurve](functions/ElemCurve.md): 4 functions. Evaluate, EvaluateEaseIn, EvaluateEaseInOut: the element curves
 - [ElemFields](functions/ElemFields.md): 1 functions. CMoElem::GetActiveField0A4 / GetAddr78 / GetAddr84
 - [ElemFields194](functions/ElemFields194.md): 7 functions. getters and setters of the element fields +0x194 to +0x1A8; called only from the generator code
@@ -385,6 +385,10 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 - [FitFont](functions/FitFont.md): 27 functions. FontGlyphCache_* and the FiT font engine (FiTRodinL-U.fit, FiTWrapperd.dll, CreateFiTWrapper), and a TCP server and client with its own threads (the strings "server start (port %d)", "client accepted(%d)."; its socket code is in data/security_set.json) (an address range between two evidenced source files, holding several of the original files: named for its main contents). Named for the font code: the TCP library is in data/security_set.json (debuglink) and is not in the public kit
 
+## Font
+
+- [FontGlyphs](functions/FontGlyphs.md): 1 functions
+
 ## Frame
 
 - [FrameRender](functions/FrameRender.md): 14 functions. Frame_Render and the per-state frame functions (App_StepGameState6-9, App_RunOpening), the afterimage and flash post effects; called from App_RenderFrameMaskedFPU
@@ -398,7 +402,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 - [Generator](functions/Generator.md): 6 functions. YmGenerater_Stop / UpdateAttach, Generator_ClearSubobjectOrSetFlag
 - [GeneratorClone](functions/GeneratorClone.md): 69 functions. CMoGeneratorClone::* (the effect generator command list), GateEffectBoxProjection
-- [GeneratorCloneCtor](functions/GeneratorCloneCtor.md): 1 functions. CMoGeneratorClone_VT_1032B114_Constructor
+- [GeneratorCloneCtor](functions/GeneratorCloneCtor.md): 1 functions. CMoGeneratorRes_Constructor
 - [GeneratorRelease](functions/GeneratorRelease.md): 2 functions. frees resources and attachments (CMoAttachments::ResetAll, YmGenerater_Stop); called from actor destructors
 - [GeneratorReset](functions/GeneratorReset.md): 1 functions. SharedConditionalStateReset: stops the generators (YmGenerater_Stop) and resets
 
@@ -442,6 +446,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 ## Menu
 
 - [MenuPanels](functions/MenuPanels.md): 155 functions. Menu_* panels, Movie_CreateFrameTextures / GetCurrentTexture, ActerBuff_DrawNearby, the menus "abisortw", "subwindo", "quest01" (an address range between two evidenced source files, holding several of the original files: named for its main contents)
+- [MenuTextBlock](functions/MenuTextBlock.md): 1 functions
 
 ## Mesh
 
@@ -480,12 +485,6 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 - [NetCellFont](functions/NetCellFont.md): 493 functions. the network (604 of its 2,763 functions are in data/security_set.json: the game connection, its packet queue and handlers, the encryption), the UI cells (Cell_*), the cursor, the fonts, the chat log (an address range between two evidenced source files, holding several of the original files: named for its main contents)
 
-## Obj
-
-- [Obj_104E1B90](functions/Obj_104E1B90.md): 1 functions
-- [Obj_104E1BF8](functions/Obj_104E1BF8.md): 2 functions
-- [Obj_10621944](functions/Obj_10621944.md): 1 functions
-
 ## Occlusion
 
 - [Occlusion](functions/Occlusion.md): 10 functions. Occlusion_QueryScreenRect / DrawQuery / ReadbackCount, OcclusionMng_*, CreateProcessorInstance
@@ -496,7 +495,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 ## Os2
 
-- [Os2Resource](functions/Os2Resource.md): 1 functions. CMoResource_VT_1032C854::CheckVersionAndInit with the string "Os2 Version Error %d"
+- [Os2Resource](functions/Os2Resource.md): 1 functions. CMoOs2Res::CheckVersionAndInit with the string "Os2 Version Error %d"
 - [Os2VtxBuffer](functions/Os2VtxBuffer.md): 1 functions. FixOffsetsAndCreateVtxBuffer, called only from the Os2 resource check; calls CYyOs2VtxBuffer::Constructor
 
 ## Ot
@@ -516,8 +515,8 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 - [ProcessorBounds](functions/ProcessorBounds.md): 2 functions. CMoProcessor::CalcScreenBounds, Processor_InitIdentityMatrices, Mat4x4_SafeTranspose
 - [ProcessorInit](functions/ProcessorInit.md): 1 functions. InitMatrices; called only from CreateProcessorInstance
-- [ProcessorMatrix](functions/ProcessorMatrix.md): 3 functions. CMoProcessor_VT_1032C368_SetIdentity, MultiplyTo
-- [ProcessorRotation](functions/ProcessorRotation.md): 1 functions. CMoProcessor_VT_1032C368::RotationFromAnglesXYZ / ZYX, RotationY, RotationZ
+- [ProcessorMatrix](functions/ProcessorMatrix.md): 3 functions. CMoProcessorX87_SetIdentity, MultiplyTo
+- [ProcessorRotation](functions/ProcessorRotation.md): 1 functions. CMoProcessorX87::RotationFromAnglesXYZ / ZYX, RotationY, RotationZ
 - [ProcessorSlot](functions/ProcessorSlot.md): 2 functions. MoProcessor_CallVSlot49, ProcessorSlot41
 
 ## Proj
@@ -567,6 +566,10 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 ## Shader
 
 - [ShaderSetup](functions/ShaderSetup.md): 1 functions. Shader_CreateVertexShader, with the menu resolution settings (g_cfgMenuResX/Y); called from the device code
+
+## Shape
+
+- [ShapeMng](functions/ShapeMng.md): 2 functions
 
 ## Skel
 

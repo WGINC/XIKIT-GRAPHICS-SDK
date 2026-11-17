@@ -27,10 +27,10 @@ Why the file has this name (data/unit_names.json): ResourceIter_*, MeshResourceM
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `MoRes_FreeIfUnreferenced` calls `sub_10072240`, `CMoResource_Destroy`
+- `MoRes_FreeIfUnreferenced` calls `Resource_FindSelfLinkedNode`, `CMoResource_Destroy`
 - `ResourceIter_FindById` calls nothing directly
 - `ResourceIter_FindOrStartTask` calls `TaskAndTextArgs_FindTask`, `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `sub_10074A00`, `ResourceLoadTask_Start`
-- `MeshResourceMng_Evict` calls `sub_10072240`, `MoRes_FreeIfUnreferenced`
+- `MeshResourceMng_Evict` calls `Resource_FindSelfLinkedNode`, `MoRes_FreeIfUnreferenced`
 - `ResourceIter_PopFreeNode` calls nothing directly
 - `MeshResourceMng_AllocHandle` calls nothing directly
 - `NodePool_ReleaseNode` calls nothing directly

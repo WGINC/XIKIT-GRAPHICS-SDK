@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x10047F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) CMoGeneratorClone_VT_1032B114_Constructor(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
+XI_API undefined4 * __attribute__((stdcall, regparm(3))) CMoGeneratorRes_Constructor(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
 {
   int iVar1;
   undefined4 *puVar2;

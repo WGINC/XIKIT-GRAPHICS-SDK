@@ -28,4 +28,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MeshResourceCreate_CopyField14At0` calls nothing directly
 - `MeshResourceCreate_CopyField14At4` calls nothing directly
 - `MeshResourceCreate_CopyField14At8` calls nothing directly
-- `MeshResourceMng_CreateResourceByKind` calls `MathVector_Call10029150`, `MeshResourceMng_Evict`, `Mem_AllocWithFallback`, `CMoResource_ConstructBase`, `ZoneResWeather_Construct`, `ZoneMapLoad_ConstructResource10336698`, `ZoneResource_Construct`, `Actor_ClearIndexTable`, `ModelTranslucent_ReturnSelf`, `CMoGeneratorClone_VT_1032B114_Constructor`, `CMoAttachments::Construct`, `WeatherRes_Construct`
+- `MeshResourceMng_CreateResourceByKind` calls `MathVector_Call10029150`, `MeshResourceMng_Evict`, `Mem_AllocWithFallback`, `CMoResource_ConstructBase`, `ZoneResWeather_Construct`, `ZoneMapLoad_ConstructResource10336698`, `ZoneResource_Construct`, `Actor_ClearIndexTable`, `ModelTranslucent_ReturnSelf`, `CMoGeneratorRes_Constructor`, `CMoAttachments::Construct`, `WeatherRes_Construct`

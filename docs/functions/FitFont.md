@@ -23,7 +23,7 @@ Why the file has this name (data/unit_names.json): FontGlyphCache_* and the FiT 
 | `FitFont_BaseCtor` | 0x1025E260 | 248 | yes | - | Constructs the object with three critical sections and three event objects. | low |
 | `FitFont_BaseDtor` | 0x1025E380 | 216 | yes | - | Destroys the object built by Unit1025C9E0_BaseCtor. | low |
 | `FitFont_ReleaseField6C` | 0x1025F2F0 | 97 | yes | - | Releases the interface held at +0x6C under the object's lock. | low |
-| `sub_1025F640` | 0x1025F640 | 104 | no | - | If the object's timer period is active, marks it inactive, calls its virtual slot 17 and ends the 1 ms timer period. | medium |
+| `FitFont_EndTimerPeriodIfActive` | 0x1025F640 | 104 | no | - | If the object's timer period is active, marks it inactive, calls its virtual slot 17 and ends the 1 ms timer period. | medium |
 | `FitFont_DerivedCtor` | 0x1025FD50 | 157 | yes | - | Constructs the derived object on top of the base. | low |
 | `FitFont_ResetState` | 0x1025FE40 | 191 | yes | - | Resets the derived object's state and records the current time. | low |
 | `FontGlyphCache_StoreElapsed158` | 0x1025FF10 | 25 | yes | - | Stores the time elapsed since the last value at +0x158. | low |
@@ -53,9 +53,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FontGlyphCache_ClearCounter` calls nothing directly
 - `FontGlyphCache_DecayCounter` calls nothing directly
 - `FitFont_BaseCtor` calls `FitFont_InnerCtor`, `FitFont_CreateEvent`, `FitFont_InnerDtor`, `sub_10265B90`, `sub_103162F7`
-- `FitFont_BaseDtor` calls `sub_1025F640`, `FitFont_ReleaseField6C`, `sub_10265B90`, `FitFont_InnerDtor`, `sub_103162F7`
+- `FitFont_BaseDtor` calls `FitFont_EndTimerPeriodIfActive`, `FitFont_ReleaseField6C`, `sub_10265B90`, `FitFont_InnerDtor`, `sub_103162F7`
 - `FitFont_ReleaseField6C` calls `sub_103162F7`
-- `sub_1025F640` calls `sub_103162F7`
+- `FitFont_EndTimerPeriodIfActive` calls `sub_103162F7`
 - `FitFont_DerivedCtor` calls `FitFont_BaseCtor`, `FitFont_ResetState`, `FitFont_BaseDtor`, `sub_103162F7`
 - `FitFont_ResetState` calls nothing directly
 - `FontGlyphCache_StoreElapsed158` calls nothing directly

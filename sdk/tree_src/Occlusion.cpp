@@ -347,7 +347,7 @@ XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_
     if (DAT_1047ce60 == '\0') {
       puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xaa0);
       if (puVar1 != (undefined4 *)0x0) {
-        *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368;
+        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
         orig::CMoProcessor_InitRotationMatrices(puVar1);
         g_pProcessor_as_v2 = puVar1;
         return;
@@ -356,9 +356,9 @@ XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_
     else {
       puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xbb0);
       if (puVar1 != (undefined4 *)0x0) {
-        *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368;
+        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
         orig::CMoProcessor_InitRotationMatrices(puVar1);
-        *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c1c8;
+        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8;
         orig::ProcessorInit_InitMatrices(puVar1);
         g_pProcessor_as_v2 = puVar1;
         return;
@@ -368,11 +368,11 @@ XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_
   else {
     puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xbb0);
     if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c434;
+      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434;
       orig::VectorCtorIterator_CallForEachElement(puVar1 + 0x204,0x40,4,&LAB_1006cc30);
-      *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c368;
+      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
       orig::CMoProcessor_InitRotationMatrices(puVar1);
-      *puVar1 = &PTR_CMoProcessor_VT_1032C1C8_CMoProcessor_GetRuntimeClass_1032c298;
+      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298;
       orig::Processor_InitIdentityMatrices(puVar1);
       g_pProcessor_as_v2 = puVar1;
       return;

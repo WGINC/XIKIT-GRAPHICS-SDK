@@ -19,5 +19,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CMoD3mSpecularElem::GetRuntimeClass` calls nothing directly
 - `CMoD3mSpecularElem::Ctor` calls `CMoElem::Constructor`
 - `CMoD3mSpecularElem::IsKind7` calls nothing directly
-- `CMoD3mSpecularElem::ScalarDeletingDtor` calls `CXi471011C8_VT_1032AD80_Dtor`, `SharedDeleteHelper`
+- `CMoD3mSpecularElem::ScalarDeletingDtor` calls `CMoD3mElem_Dtor`, `SharedDeleteHelper`
 - `CMoD3mSpecularElem::BindTintedTexture` calls `sub_10311C2C`, `TextureHolder_BindTinted`, `sub_10044250`

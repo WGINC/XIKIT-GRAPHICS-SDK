@@ -2,7 +2,7 @@
 
 Group: `Processor` (by the file name only). Source: `sdk/tree_src/ProcessorRotation.cpp`.
 
-Why the file has this name (data/unit_names.json): CMoProcessor_VT_1032C368::RotationFromAnglesXYZ / ZYX, RotationY, RotationZ
+Why the file has this name (data/unit_names.json): CMoProcessorX87::RotationFromAnglesXYZ / ZYX, RotationY, RotationZ
 
 1 functions.
 
