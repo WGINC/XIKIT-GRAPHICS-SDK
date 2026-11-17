@@ -6,7 +6,7 @@ draw between the world and the interface, run their own HLSL shaders and read de
 with settings that apply while the game runs. It covers the game's builds 6A995428 (3 Sep 2026), 6AC37846 and 6AE818B4
 (2 Nov 2026, the current one).
 
-This repository is the devkit's public home: release 1, built and ready to use, and its source.
+This repository is the devkit's public home: release 2, built and ready to use, and its source.
 
 ## What this kit covers, and what it leaves out
 

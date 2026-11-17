@@ -37,6 +37,15 @@ def main(man_p, build_p, dll_p, out_p, swap_p=None):
     if not partial and (b['failures']['manifest'] or b['failures']['addresses'] or b['manifest_proven'] != b['manifest_functions']):
         sys.exit('manifest_for_build: %s does not settle every function and address' % build_p)
     unproven = {int(k, 16) for k in b['failures']['manifest']}   # (absolute addresses, analysed numbering)
+    # the functions the build file compared: a manifest function it did not compare is not known to be the same code there
+    checked = {int(k, 16) for k in b['manifest_checked']} if 'manifest_checked' in b else None
+    mf = [BASE + int(l.split(' ')[0], 16) for l in open(man_p) if l[:1] not in '#!' and l.strip()]
+    if checked is None and len(mf) != b['manifest_functions']:
+        sys.exit('manifest_for_build: %s compared %d manifest functions, this manifest has %d; run pipeline/build_translate.py again'
+                 % (build_p, b['manifest_functions'], len(mf)))
+    if checked is not None and set(mf) - checked:
+        sys.exit('manifest_for_build: %d functions of this manifest were not compared in %s (%s ...); run pipeline/build_translate.py again'
+                 % (len(set(mf) - checked), build_p, ' '.join('%08X' % a for a in sorted(set(mf) - checked)[:5])))
     dranges = [(int(lo, 16), int(hi, 16), d) for lo, hi, d in b.get('data_ranges', [])]
     ranges = [(int(lo, 16), int(hi, 16), d) for lo, hi, d in b['ranges']]
     live = lambda ea: ea + next((d for lo, hi, d in ranges if lo <= ea < hi), 0)

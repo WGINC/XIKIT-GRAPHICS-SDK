@@ -1,2 +1,2 @@
-xikit SDK, source c0326034d6a7+modified, built 2026-11-17 20:11 UTC
+xikit SDK, source 1b91737db0ed+modified, built 2026-11-17 21:34 UTC
 with the kit: xikit kit, source c0326034d6a7+modified, built 2026-11-17 20:11 UTC; tree gate 4867 PASS of 4880

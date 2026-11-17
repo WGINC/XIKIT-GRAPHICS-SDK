@@ -1,7 +1,16 @@
-# xikit devkit, release 1
+# xikit devkit, release 2
 
 A kit for changing how FINAL FANTASY XI draws, for the game's builds 6A995428 (3 Sep 2026), 6AC37846 and 6AE818B4
 (2 Nov 2026, the current one). It holds no game code or data.
+
+## What changed since release 1
+
+- Every function with source is named: the 101 classes that were known only by their vtable address (resources by
+  their chunk type and format, scheduler tasks by the command that creates them, the vector processors by the CPU
+  feature that picks them, ...), and the remaining address and slot names. The source, headers and PDBs use them.
+  Names only: the manifests list the same functions, at the same addresses, with the same flags.
+- The PDBs name every function with source by its source's name (before: only the hookable ones).
+- d3d8on11: `SetPixelShader(0)` succeeds and `GetPixelShader` answers 0 (the fixed-function pipeline).
 
 ## What is in it
 

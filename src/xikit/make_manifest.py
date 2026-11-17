@@ -212,7 +212,7 @@ def main(recon, out, report=None, raw_json=None):
             sym = p[2][1:] if p[2].startswith('_') else p[2]        # (the i686 C symbol underscore)
             code.append('!code %X %s' % (int(p[0], 16) - rbase, sym[:-5] if sym.endswith('.cold') else sym))
     with open(out, 'w', newline='\n') as f:
-        f.write('# xikit manifest: RVA FLAGS EXPORT EXPECTED RELOCS NAME T=TRAMPOLINE (kit/xikit/make_manifest.py; flags 1=SEH 2=speedfix site 4=untested 8=register input 16=render path 32=kept on the game's code in this build)\n')
+        f.write('# xikit manifest: RVA FLAGS EXPORT EXPECTED RELOCS NAME T=TRAMPOLINE (kit/xikit/make_manifest.py; flags 1=SEH 2=speedfix site 4=untested 8=register input 16=render path 32=kept on the game\'s code in this build)\n')
         f.write('# FFXiMain.dll TimeDateStamp 0x%08X\n' % pe.FILE_HEADER.TimeDateStamp)
         f.write('!game_timestamp %08X\n!recon_size %d\n!recon_crc32 %08X\n' % (pe.FILE_HEADER.TimeDateStamp, len(rd), zlib.crc32(rd) & 0xFFFFFFFF))
         f.write('\n'.join(lines) + '\n')

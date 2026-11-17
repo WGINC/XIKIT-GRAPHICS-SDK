@@ -906,6 +906,17 @@ HRESULT Dev::SetVertexShader(DWORD h) { sgen++;
   return D3D_OK;
 }
 HRESULT Dev::GetVertexShader(DWORD *h) { if (!h) return D3DERR_INVALIDCALL; *h = st.vs; return D3D_OK; }
+// Pixel shaders: the device makes none (CreatePixelShader is not implemented), so the only handle there is 0, the
+// fixed-function pipeline, which is what draws always use. SetPixelShader(0) succeeds and GetPixelShader answers 0, as
+// Direct3D 8 does on Windows (Wine 9.0's conformance tests, dlls/d3d8/tests: visual.c SetPixelShader(device, 0) ==
+// D3D_OK; device.c GetPixelShader on a new device D3D_OK with handle 0). Any other handle is not one of ours: refused.
+// 17 Nov: FFXIDB.dll (Windower) called SetPixelShader and was refused
+HRESULT Dev::SetPixelShader(DWORD h) {
+  if (!h) return D3D_OK;
+  d8_once("psnonzero", "SetPixelShader(0x%lX): not a handle of this device (no pixel shader is ever made): refused", (unsigned long)h);
+  return D3DERR_INVALIDCALL;
+}
+HRESULT Dev::GetPixelShader(DWORD *h) { if (!h) return D3DERR_INVALIDCALL; *h = 0; return D3D_OK; }
 HRESULT Dev::DeleteVertexShader(DWORD h) { sgen++;
   size_t i = h >> 1;
   if (!(h & 1) || i >= vshaders.size() || !vshaders[i].used) return D3DERR_INVALIDCALL;

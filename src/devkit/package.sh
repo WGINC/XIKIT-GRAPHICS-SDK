@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# package.sh OUT.zip -- the devkit's release 1 (kit/devkit/README.md): devkit_r1/ with
+# package.sh OUT.zip -- the devkit release named in kit/devkit/README.md (its first line): devkit_r<N>/ with
 #   kit/        kit/xikit/dist: xikit.dll, gfx_recon_ingame.dll, every manifest, VERSION.txt
 #   d3d8on11/   kit/d3d8on11/dist: d3d8.dll, d8x.exe, d8x_arm64.exe
 #   sdk/        sdk/package.sh's xikit_sdk (headers, the tree's headers and source, examples, template, build scripts)
@@ -9,7 +9,8 @@
 # Build first: kit/xikit/build.sh (FFXI_DLL_6AE818B4 set), kit/d3d8on11/build.sh, kit/fcap/build.sh, sdk/package.sh.
 set -euo pipefail
 H="$(cd "$(dirname "$0")" && pwd)"; ROOT="$H/../.."; OUT="$(realpath -m "$1")"
-T="$(mktemp -d)"; R="$T/devkit_r1"; mkdir -p "$R/kit" "$R/d3d8on11" "$R/pdb" "$R/tools/fcap" "$R/tools/d3dprof"
+N="$(sed -n '1s/.*release \([0-9]\+\).*/\1/p' "$H/README.md")"; [ -n "$N" ] || { echo "README.md: no release number on its first line"; exit 1; }
+T="$(mktemp -d)"; R="$T/devkit_r$N"; mkdir -p "$R/kit" "$R/d3d8on11" "$R/pdb" "$R/tools/fcap" "$R/tools/d3dprof"
 D="$ROOT/kit/xikit/dist"
 grep -q '^!swap_set' "$D/xikit_manifest_6AE818B4.txt" || { echo "dist/xikit_manifest_6AE818B4.txt has no !swap_set: build with \$FFXI_DLL_6AE818B4 set"; exit 1; }
 for f in xikit.dll gfx_recon_ingame.dll xikit_manifest.txt VERSION.txt; do cp "$D/$f" "$R/kit/"; done
@@ -23,5 +24,5 @@ cp "$H/README.md" "$R/"
 ( cd "$R" && find . -type f ! -name README.md ! -name SHA256SUMS.txt | sed 's|^\./||' | sort | xargs sha256sum > SHA256SUMS.txt )
 i686-w64-mingw32-gcc -O2 -Wall -std=gnu99 -static-libgcc -Wl,--no-insert-timestamp -o "$R/devkit_check.exe" "$H/check.c" -lbcrypt
 find "$R" -name "*.bat" -exec sed -i 's/\r*$/\r/' {} +
-rm -f "$OUT"; ( cd "$T" && zip -qr "$OUT" devkit_r1 ); rm -rf "$T"
+rm -f "$OUT"; ( cd "$T" && zip -qr "$OUT" "devkit_r$N" ); rm -rf "$T"
 echo "wrote $OUT"; unzip -l "$OUT" | tail -1
