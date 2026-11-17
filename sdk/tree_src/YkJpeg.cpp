@@ -3,6 +3,531 @@
 #include "YkJpeg.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x101CF870
+// GATE: PASS -- 100 trials, 57 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 57
+void __thiscall YkJpeg::InitTables(void * self)
+{
+  orig::JpegTables_BuildCodeTable((int)self + 0x8bc,(int)self + 0x69c,(int)XI_GAME(0x1037E6C4u),(int)XI_GAME(0x1037E6B0u));
+  orig::JpegTables_BuildCodeTable((int)self + 0x8dc,(int)self + 0x6ac,(int)XI_GAME(0x1037E708u),(int)XI_GAME(0x1037E6F0u));
+  orig::JpegTables_BuildCodeTable((int)self + 0xadc,(int)self + 0x7ac,(int)XI_GAME(0x1037E6E4u),(int)XI_GAME(0x1037E6D0u));
+  orig::JpegTables_BuildCodeTable((int)self + 0xafc,(int)self + 0x7bc,(int)XI_GAME(0x1037E7C0u),(int)XI_GAME(0x1037E7ACu));
+  orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self + 8),0xc4);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),0x1f);
+  orig::JpegScreenshot_PutByte(*(void **)((int)self + 8),0);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E6B1u),0x10);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E6C4u),0xc);
+  orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self + 8),0xc4);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),0xb5);
+  orig::JpegScreenshot_PutByte(*(void **)((int)self + 8),0x10);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E6F1u),0x10);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E708u),0xa2);
+  orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self + 8),0xc4);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),0x1f);
+  orig::JpegScreenshot_PutByte(*(void **)((int)self + 8),1);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E6D1u),0x10);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E6E4u),0xc);
+  orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self + 8),0xc4);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),0xb5);
+  orig::JpegScreenshot_PutByte(*(void **)((int)self + 8),0x11);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E7ADu),0x10);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E7C0u),0xa2);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101CFDB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __stdcall YkJpeg::CopyBlock(int param_1, int param_2, int param_3, int param_4, int param_5, int param_6)
+{
+  uint32_t uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  uVar1 = 0;
+  iVar4 = 0;
+  iVar3 = param_1 * param_5;
+  iVar2 = param_4;
+  do {
+    if ((((-1 < iVar2) && (-1 < param_5)) && (iVar2 < param_1)) && (param_5 < param_2)) {
+      uVar1 = *(uint32_t *)(param_3 + (iVar3 + iVar2) * 4);
+    }
+    iVar2 = iVar2 + 1;
+    *(uint32_t *)(param_6 + iVar4 * 4) = uVar1;
+    if (param_4 + 0x10 <= iVar2) {
+      param_5 = param_5 + 1;
+      iVar3 = iVar3 + param_1;
+      iVar2 = param_4;
+    }
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 0x100);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101CFE20
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __stdcall YkJpeg::Unpack565(uint32_t param_1, int * param_2, int * param_3, int param_4)
+{
+  int iVar1;
+  uint32_t uVar2;
+  
+  uVar2 = param_1 >> 0x10;
+  if (param_2 != (int *)0x0) {
+    param_4 = (((uVar2 & 0xf800) << 3 | uVar2 & 0x7e0) << 2 | uVar2 & 0x1f) * 8;
+    *param_2 = param_4;
+  }
+  if (param_3 != (int *)0x0) {
+    iVar1 = (((param_1 & 0xf800) << 3 | param_1 & 0x7e0) << 2 | param_1 & 0x1f) * 8;
+    *param_3 = iVar1;
+    return iVar1;
+  }
+  return param_4;
+}
+
+// FUNCTION: FFXIMAIN 0x101CFEB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall YkJpeg::UnpackBlock565(void * self, int param_1, int param_2, int param_3, int param_4, int param_5, int * param_6)
+{
+  uint32_t uVar1;
+  int iVar2;
+  uint32_t uVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar2 = 0;
+  uVar3 = 0;
+  iVar4 = param_1 * param_5;
+  iVar5 = param_4;
+  do {
+    if ((((iVar5 < 0) || (param_5 < 0)) || (param_1 <= iVar5)) || (param_2 <= param_5)) {
+      *param_6 = iVar2;
+    }
+    else {
+      uVar1 = *(uint32_t *)(param_3 + ((iVar4 + iVar5) / 2) * 4);
+      if ((uVar3 & 1) == 0) {
+        iVar2 = orig::YkJpeg_Unpack565(uVar1,param_6,(int *)0x0,iVar2);
+      }
+      else {
+        iVar2 = orig::YkJpeg_Unpack565(uVar1,(int *)0x0,param_6,iVar2);
+      }
+    }
+    iVar5 = iVar5 + 1;
+    if (param_4 + 0x10 <= iVar5) {
+      param_5 = param_5 + 1;
+      iVar4 = iVar4 + param_1;
+      iVar5 = param_4;
+    }
+    uVar3 = uVar3 + 1;
+    param_6 = param_6 + 1;
+  } while ((int)uVar3 < 0x100);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101CFF60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __stdcall YkJpeg::ForwardDct(int param_1)
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int local_4;
+  
+  iVar8 = param_1;
+  piVar1 = (int *)(param_1 + 8);
+  local_4 = 8;
+  do {
+    iVar7 = piVar1[-2] + piVar1[5];
+    iVar5 = piVar1[-2] - piVar1[5];
+    iVar4 = piVar1[-1] + piVar1[4];
+    iVar2 = piVar1[-1] - piVar1[4];
+    iVar9 = piVar1[3] + *piVar1;
+    iVar3 = *piVar1 - piVar1[3];
+    iVar10 = piVar1[2] + piVar1[1];
+    iVar11 = piVar1[2];
+    iVar6 = iVar10 + iVar7;
+    iVar7 = iVar7 - iVar10;
+    piVar1[-2] = iVar9 + iVar4 + iVar6;
+    piVar1[2] = iVar6 - (iVar9 + iVar4);
+    iVar4 = ((iVar7 - iVar9) + iVar4) * 0xb5 >> 8;
+    piVar1[4] = iVar7 - iVar4;
+    *piVar1 = iVar4 + iVar7;
+    iVar4 = (piVar1[1] - iVar11) + iVar3;
+    iVar7 = iVar5 + iVar2;
+    iVar6 = (iVar4 - iVar7) * 0x62 >> 8;
+    iVar4 = (iVar4 * 0x8b >> 8) + iVar6;
+    iVar6 = (iVar7 * 0x14e >> 8) + iVar6;
+    iVar11 = (iVar3 + iVar2) * 0xb5 >> 8;
+    iVar7 = iVar11 + iVar5;
+    iVar5 = iVar5 - iVar11;
+    piVar1[1] = iVar5 - iVar4;
+    piVar1[3] = iVar5 + iVar4;
+    piVar1[-1] = iVar7 + iVar6;
+    piVar1[5] = iVar7 - iVar6;
+    piVar1 = piVar1 + 8;
+    local_4 = local_4 + -1;
+  } while (local_4 != 0);
+  param_1 = 8;
+  piVar1 = (int *)(iVar8 + 0x40);
+  do {
+    iVar8 = piVar1[-0x10] + piVar1[0x28];
+    iVar3 = piVar1[-0x10] - piVar1[0x28];
+    iVar7 = piVar1[-8] + piVar1[0x20];
+    iVar11 = piVar1[-8] - piVar1[0x20];
+    iVar5 = piVar1[0x18] + *piVar1;
+    iVar2 = *piVar1 - piVar1[0x18];
+    iVar9 = piVar1[0x10] + piVar1[8];
+    iVar6 = piVar1[0x10];
+    iVar4 = iVar9 + iVar8;
+    iVar8 = iVar8 - iVar9;
+    piVar1[-0x10] = iVar5 + iVar7 + iVar4;
+    piVar1[0x10] = iVar4 - (iVar5 + iVar7);
+    iVar7 = ((iVar8 - iVar5) + iVar7) * 0xb5 >> 8;
+    piVar1[0x20] = iVar8 - iVar7;
+    *piVar1 = iVar7 + iVar8;
+    iVar7 = (piVar1[8] - iVar6) + iVar2;
+    iVar8 = iVar3 + iVar11;
+    iVar4 = (iVar7 - iVar8) * 0x62 >> 8;
+    iVar7 = (iVar7 * 0x8b >> 8) + iVar4;
+    iVar4 = (iVar8 * 0x14e >> 8) + iVar4;
+    iVar6 = (iVar2 + iVar11) * 0xb5 >> 8;
+    iVar8 = iVar6 + iVar3;
+    iVar3 = iVar3 - iVar6;
+    piVar1[8] = iVar3 - iVar7;
+    piVar1[0x18] = iVar3 + iVar7;
+    piVar1[-8] = iVar8 + iVar4;
+    piVar1[0x28] = iVar8 - iVar4;
+    piVar1 = piVar1 + 1;
+    param_1 = param_1 + -1;
+  } while (param_1 != 0);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D0210
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall YkJpeg::EncodeBlock(void * self, int * param_1, char * param_2)
+{
+  uint16_t *puVar1;
+  uint32_t uVar2;
+  int iVar3;
+  uint16_t uVar4;
+  int iVar5;
+  uint32_t uVar6;
+  uint32_t uVar7;
+  uint32_t uVar8;
+  int *local_4;
+  
+  if (param_2 == (char *)0x0) {
+    param_2 = (char *)((int)self + 0x6ac);
+    iVar3 = (int)self + 0x69c;
+    iVar5 = (int)self + 0x8bc;
+    puVar1 = (uint16_t *)((int)self + 0x8dc);
+  }
+  else {
+    param_2 = (char *)((int)self + 0x7bc);
+    iVar3 = (int)self + 0x7ac;
+    iVar5 = (int)self + 0xadc;
+    puVar1 = (uint16_t *)((int)self + 0xafc);
+  }
+  uVar6 = *param_1;
+  uVar2 = uVar6;
+  if ((int)uVar6 < 0) {
+    uVar2 = -uVar6;
+    uVar6 = uVar6 - 1;
+  }
+  uVar7 = 0;
+  for (; uVar2 != 0; uVar2 = (int)uVar2 >> 1) {
+    uVar7 = uVar7 + 1;
+  }
+  orig::YkJpeg_PutBits(*(void **)((int)self + 8),
+               ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar5 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(iVar5 + uVar7 * 2)))),
+               (int)*(char *)(uVar7 + iVar3));
+  if (uVar7 != 0) {
+    orig::YkJpeg_PutBits(*(void **)((int)self + 8),uVar6,uVar7);
+  }
+  uVar6 = 0;
+  local_4 =(int*)(&DAT_1037e334);
+  do {
+    uVar2 = param_1[*local_4];
+    uVar4 = (uint16_t)((uint32_t)param_2 >> 0x10);
+    if (uVar2 == 0) {
+      uVar6 = uVar6 + 1;
+    }
+    else {
+      if (0xf < (int)uVar6) {
+        uVar7 = uVar6 >> 4;
+        uVar6 = uVar6 + uVar7 * -0x10;
+        do {
+          orig::YkJpeg_PutBits(*(void **)((int)self + 8),((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)(puVar1[0xf0]))),(int)param_2[0xf0]);
+          uVar7 = uVar7 - 1;
+        } while (uVar7 != 0);
+      }
+      uVar7 = uVar2;
+      if ((int)uVar2 < 0) {
+        uVar7 = -uVar2;
+        uVar2 = uVar2 - 1;
+      }
+      uVar8 = 1;
+      while (uVar7 = (int)uVar7 >> 1, uVar7 != 0) {
+        uVar8 = uVar8 + 1;
+      }
+      iVar3 = uVar6 * 0x10 + uVar8;
+      orig::YkJpeg_PutBits(*(void **)((int)self + 8),((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar3 >> 0x10)) << 16) | (uint16_t)(puVar1[iVar3]))),
+                   (int)param_2[iVar3]);
+      orig::YkJpeg_PutBits(*(void **)((int)self + 8),uVar2,uVar8);
+      uVar6 = 0;
+    }
+    local_4 = local_4 + 1;
+  } while ((int)local_4 < (int)XI_GAME(0x1037E430u));
+  if (0 < (int)uVar6) {
+    orig::YkJpeg_PutBits(*(void **)((int)self + 8),((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)(*puVar1))),(int)*param_2);
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D0370
+// GATE: PASS -- 100 trials, 13 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 13
+undefined4 __thiscall YkJpeg::Encode(void * self, uint32_t param_1, uint32_t param_2, int param_3, int param_4)
+{
+  char cVar1;
+  void *pvVar2;
+  char *pcVar3;
+  uint8_t *puVar4;
+  uint32_t uVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  uint8_t bVar9;
+  uint64_t uVar10;
+  char xi_frame[1028] __attribute__((aligned(4)));
+  int  &local_404 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  (&local_400)[256] = *reinterpret_cast<int  (*)[256]>(xi_frame + 4);
+  
+  if (*(int *)((int)self + 4) != 0) {
+    orig::JpegTables_Free(self);
+  }
+  orig::JpegTables_Reset(self);
+  bVar9 = param_4 < 0;
+  if (bVar9) {
+    param_4 = -param_4;
+  }
+  uVar10 = orig::Allocator_Generic_v1(0xa00000);
+  *(int *)((int)self + 4) = (int)uVar10;
+  if ((int)uVar10 == 0) {
+    return 1;
+  }
+  pvVar2 = (void *)orig::Mem_AllocDefault_v1(0x14);
+  if (pvVar2 == (void *)0x0) {
+    pvVar2 = (void *)0x0;
+  }
+  else {
+    pvVar2 = (void *)orig::YkJpgBit_Init(pvVar2,*(uint32_t *)((int)self + 4),0xa00000);
+  }
+  *(void **)((int)self + 8) = pvVar2;
+  if (pvVar2 == (void *)0x0) {
+    return 1;
+  }
+  orig::YkJpeg_PutBytes(pvVar2,(int)XI_GAME(0x1037E2F4u),0x19);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),param_2 & 0xffff);
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),param_1 & 0xffff);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E310u),10);
+  orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self + 8),0xfe);
+  pcVar3 = orig::YkJpeg_GetCopyrightString();
+  uVar5 = 0xffffffff;
+  do {
+    if (uVar5 == 0) break;
+    uVar5 = uVar5 - 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  uVar5 = ~uVar5;
+  orig::JpegScreenshot_PutWordBE(*(void **)((int)self + 8),uVar5 + 2);
+  puVar4 = orig::YkJpeg_GetCopyrightString();
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)puVar4,uVar5);
+  orig::JpegTables_BuildTables(self,param_4);
+  orig::YkJpeg_InitTables(self);
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E31Cu),0xe);
+  local_404 = 0;
+  if (0 < (int)param_2) {
+    do {
+      iVar7 = 0;
+      if (0 < (int)param_1) {
+        do {
+          if (bVar9) {
+            orig::YkJpeg_UnpackBlock565(self,param_1,param_2,param_3,iVar7,local_404,local_400);
+          }
+          else {
+            orig::YkJpeg_CopyBlock(param_1,param_2,param_3,iVar7,local_404,(int)local_400);
+          }
+          orig::YkJpeg_CutColor(self,local_400);
+          piVar8 = (int *)((int)self + 0x1c);
+          iVar6 = 4;
+          do {
+            orig::YkJpeg_ForwardDct((int)piVar8);
+            orig::FUN_101d01b0(self,piVar8,0);
+            orig::YkJpeg_EncodeBlock(self,piVar8,(char *)0x0);
+            piVar8 = piVar8 + 0x40;
+            iVar6 = iVar6 + -1;
+          } while (iVar6 != 0);
+          piVar8 = (int *)((int)self + 0x41c);
+          orig::YkJpeg_ForwardDct((int)piVar8);
+          orig::FUN_101d01b0(self,piVar8,1);
+          orig::YkJpeg_EncodeBlock(self,piVar8,(char *)0x1);
+          piVar8 = (int *)((int)self + 0x51c);
+          orig::YkJpeg_ForwardDct((int)piVar8);
+          orig::FUN_101d01b0(self,piVar8,2);
+          orig::YkJpeg_EncodeBlock(self,piVar8,(char *)0x2);
+          iVar7 = iVar7 + 0x10;
+        } while (iVar7 < (int)param_1);
+      }
+      local_404 = local_404 + 0x10;
+    } while (local_404 < (int)param_2);
+  }
+  orig::YkJpeg_FlushBits(*(void **)((int)self + 8));
+  orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E32Au),2);
+  return (uint32_t)(*(int *)(*(int *)((int)self + 8) + 0x10) <= *(int *)(*(int *)((int)self + 8) + 0xc))
+  ;
+}
+
+// FUNCTION: FFXIMAIN 0x101D05E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint8_t * __cdecl YkJpeg::GetCopyrightString()
+{
+  orig::YkCommon_GetOffset();
+  orig::_sprintf(&DAT_10662f78,s__C__SQUARE_ENIX_1037e878);
+  return(uint8_t*)(&DAT_10662f78);
+}
+
+// FUNCTION: FFXIMAIN 0x101D0600
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __thiscall YkJpeg::EncodeChecked(void * self, uint32_t param_1, uint32_t param_2, int param_3, int param_4)
+{
+  int iVar1;
+  
+  iVar1 = orig::YkJpeg_Encode(self,param_1,param_2,param_3,param_4);
+  if (iVar1 != 0) {
+    orig::JpegTables_Free(self);
+  }
+  return iVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x101D08C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall YkJpeg::Destructor(void * self)
+{
+  *(uint8_t ***)self = &PTR_YkJpeg_GetRuntimeClass_10337e80;
+  orig::JpegTables_Reset(self);
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x101D08D0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall YkJpeg::Release(void * self)
+{
+  *(uint8_t ***)self = &PTR_YkJpeg_GetRuntimeClass_10337e80;
+  orig::JpegTables_Free(self);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D0910
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall YkJpeg::PutBit(void * self, int param_1)
+{
+  uint8_t bVar1;
+  int iVar2;
+  
+  if (param_1 != 0) {
+    *(uint8_t *)((int)self + 5) = *(uint8_t *)((int)self + 5) | *(uint8_t *)((int)self + 4);
+  }
+  bVar1 = *(uint8_t *)((int)self + 4) >> 1;
+  *(uint8_t *)((int)self + 4) = bVar1;
+  if ((bVar1 == 0) && (*(int *)((int)self + 0xc) < *(int *)((int)self + 0x10))) {
+    *(uint8_t *)(*(int *)((int)self + 0xc) + *(int *)((int)self + 8)) =
+         *(uint8_t *)((int)self + 5);
+    iVar2 = *(int *)((int)self + 0xc) + 1;
+    *(int *)((int)self + 0xc) = iVar2;
+    if (*(char *)((int)self + 5) == -1) {
+      *(uint8_t *)(iVar2 + *(int *)((int)self + 8)) = 0;
+      *(int *)((int)self + 0xc) = *(int *)((int)self + 0xc) + 1;
+    }
+    *(uint8_t *)((int)self + 4) = 0x80;
+    *(uint8_t *)((int)self + 5) = 0;
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D0970
+// GATE: PASS -- 100 trials, 74 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 74
+void __thiscall YkJpeg::PutBits(void * self, uint32_t param_1, uint32_t param_2)
+{
+  uint32_t uVar1;
+  
+  if (0 < (int)param_2) {
+    uVar1 = param_2;
+    param_2 = 1 << ((char)param_2 - 1U & 0x1f);
+    do {
+      orig::YkJpeg_PutBit(self,param_2 & 0xffff & param_1 & 0xffff);
+      param_2 = param_2 >> 1 & 0x7fff;
+      uVar1 = uVar1 - 1;
+    } while (uVar1 != 0);
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D09E0
+// GATE: PASS -- 100 trials, 79 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
+void __thiscall YkJpeg::PutBytes(void * self, int param_1, int param_2)
+{
+  int iVar1;
+  
+  iVar1 = 0;
+  if (0 < param_2) {
+    do {
+      if (*(int *)((int)self + 0x10) <= *(int *)((int)self + 0xc)) {
+        return;
+      }
+      *(uint8_t *)(*(int *)((int)self + 0xc) + *(int *)((int)self + 8)) =
+           *(uint8_t *)(iVar1 + param_1);
+      iVar1 = iVar1 + 1;
+      *(int *)((int)self + 0xc) = *(int *)((int)self + 0xc) + 1;
+    } while (iVar1 < param_2);
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x101D0A60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall YkJpeg::FlushBits(void * self)
+{
+  uint8_t bVar1;
+  uint8_t bVar2;
+  
+  bVar1 = *(uint8_t *)((int)self + 4);
+  if (bVar1 != 0) {
+    bVar2 = *(uint8_t *)((int)self + 5);
+    do {
+      bVar2 = bVar2 | bVar1;
+      bVar1 = bVar1 >> 1;
+    } while (bVar1 != 0);
+    *(uint8_t *)((int)self + 4) = 0;
+    *(uint8_t *)((int)self + 5) = bVar2;
+  }
+  if (*(int *)((int)self + 0xc) < *(int *)((int)self + 0x10)) {
+    *(uint8_t *)(*(int *)((int)self + 0xc) + *(int *)((int)self + 8)) =
+         *(uint8_t *)((int)self + 5);
+    *(uint8_t *)((int)self + 4) = 0x80;
+    *(int *)((int)self + 0xc) = *(int *)((int)self + 0xc) + 1;
+    *(uint8_t *)((int)self + 5) = 0;
+  }
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x101D1060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 undefined4 __cdecl YkJpeg::CaptureAndEncode(void * param_1, uint32_t param_2, uint32_t param_3)
@@ -14,14 +539,14 @@ undefined4 __cdecl YkJpeg::CaptureAndEncode(void * param_1, uint32_t param_2, ui
   uint64_t uVar5;
   
   bVar4 = false;
-  uVar5 = orig::sub_10311BBB_2(param_2 * param_3 * 4);
+  uVar5 = orig::Allocator_Generic_v1(param_2 * param_3 * 4);
   pvVar1 = (LPVOID)uVar5;
   uVar3 = 0;
   if (pvVar1 != (LPVOID)0x0) {
-    orig::Unit101C72E0_BeginCapture(pvVar1,param_2,param_3);
-    iVar2 = orig::sub_101D0600(param_1,param_2,param_3,(int)pvVar1,0x5a);
+    orig::YkCommon_BeginCapture(pvVar1,param_2,param_3);
+    iVar2 = orig::YkJpeg_EncodeChecked(param_1,param_2,param_3,(int)pvVar1,0x5a);
     bVar4 = iVar2 == 0;
-    uVar5 = orig::sub_10311BB0_2(pvVar1);
+    uVar5 = orig::operator_delete_v1(pvVar1);
     uVar3 = (uint32_t)uVar5;
   }
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(bVar4)));

@@ -14,21 +14,21 @@ undefined4 __thiscall CMoResource_VT_1032C854::CheckVersionAndInit(void * self)
   
   if ((*(char *)((int)self + 0x30) != '\0') && (*(char *)((int)self + 0x30) != '\x01')) {
     pvVar4 = self;
-    orig::sub_10017D50_2();
+    orig::nullsub_90_v1();
     bVar1 = *(uint8_t *)((int)self + 0x30);
-    orig::sub_10017D20_2(s_Os2_Version_Error__d__10351654,(uint32_t)bVar1,pvVar4);
+    orig::ErrorReport_NoOpVarargsA_v1(s_Os2_Version_Error__d__10351654,(uint32_t)bVar1,pvVar4);
     return (uint32_t)bVar1;
   }
   uVar2 = (uint32_t)*(uint8_t *)((int)self + 0x31);
   if (*(uint8_t *)((int)self + 0x31) == 0) {
     if ((*(uint8_t *)((int)self + 0x32) & 0x7f) == 0) {
       *(uint32_t *)((int)self + 0x5e) = 0;
-      uVar2 = orig::Unit1002D8E0_FixOffsetsAndCreateVtxBuffer(self);
+      uVar2 = orig::Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer(self);
     }
     else {
       uVar2 = (*(uint8_t *)((int)self + 0x32) & 0x7f) - 1;
       if (uVar2 == 0) {
-        uVar3 = orig::sub_10022470(self);
+        uVar3 = orig::FUN_10022470(self);
         *(uint8_t *)((int)self + 0x31) = 1;
         return uVar3;
       }
@@ -38,3 +38,36 @@ undefined4 __thiscall CMoResource_VT_1032C854::CheckVersionAndInit(void * self)
   return uVar2;
 }
 
+// FUNCTION: FFXIMAIN 0x1002D880
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoResource_VT_1032C854::vf004(int a2)
+{
+  unsigned int v2;
+  unsigned int v3;
+  unsigned int v4;
+  unsigned int v5;
+  unsigned int v6;
+  v2 = (this->field_3C - (unsigned int)this - 48) >> 1;
+  this->field_36 = (this->field_36 - (unsigned int)this - 48) >> 1;
+  v3 = this->field_42;
+  this->field_3C = v2;
+  v4 = (this->field_48 - (unsigned int)this - 48) >> 1;
+  this->field_42 = (v3 - (unsigned int)this - 48) >> 1;
+  v5 = this->field_4E;
+  this->field_48 = v4;
+  v6 = (this->field_54 - (unsigned int)this - 48) >> 1;
+  this->field_4E = (v5 - (unsigned int)this - 48) >> 1;
+  this->field_54 = v6;
+  *(_DWORD *)(*(unsigned __int32 *)((char *)this + 0x14)) = a2;
+  return a2;
+}
+
+// FUNCTION: FFXIMAIN 0x10071A80
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+unsigned int ** CMoResource_VT_1032C854::ScalarDeletingDtor(char a2)
+{
+  orig::CMoResource_Destructor((unsigned int **)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (unsigned int **)this;
+}

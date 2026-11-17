@@ -5,9 +5,17 @@
 #pragma pack(push, 1)
 class XI_API CMoDistModelElem {
 public:
+    static undefined4 __thiscall IsDistortedMode(void * self);  // 0x1003FCB0
+    static int __thiscall GetVertexBase(void * self);  // 0x1003FCE0
+    static int __thiscall GetDataEnd(void * self);  // 0x1003FCF0
     static undefined4 __thiscall DrawBatches(void * self, uint32_t * param_1, int param_2);  // 0x10040220
     int DrawMesh(int a1, int a2, int a3, int a4);  // 0x10040670
+    static char ** __cdecl GetRuntimeClass();  // 0x100431A0
     int Draw();  // 0x100431B0
+    static undefined8 __thiscall Init(void * self);  // 0x10052F20
+    BOOL IsKind4(int a1);  // 0x10052F40
+    int set_field_194(int a2);  // 0x10052F50
+    int * ScalarDeletingDtor(char a2);  // 0x10052F60
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2E];

@@ -2,6 +2,235 @@
 #include "gfx_all.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10276260
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __cdecl sqgxContext_Create(void)
+{
+  undefined4 *puVar1;
+  
+  puVar1 = orig::FUN_10275d80(1,0xe28,s_C__dev_dancer_modules_sqGrafix_s_103b2e54,0x1b);
+  orig::sqgxContext_Init(puVar1);
+  return puVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10276290
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl sqgxContext_Init(undefined4 * param_1)
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  float *pfVar5;
+  int local_4;
+  
+  puVar1 = param_1;
+  *param_1 = 0x170002;
+  param_1[2] = &sqgxContext_Unimplemented_Stub;
+  param_1[3] = XI_CODE(FUN_10276770);
+  param_1[4] = XI_CODE(sqgxContext_Dump);
+  param_1[5] = 0x3f800000;
+  param_1[0x47] = 0xffffffff;
+  param_1[0x48] = 0x40a00000;
+  param_1[0x49] = 0;
+  param_1[0x4a] = 0x40093f7d;
+  param_1[0x4f] = 0;
+  param_1[0x51] = 0;
+  param_1[0x50] = 0;
+  orig::PackVec4_v1((float *)(param_1 + 0x4b),0.0f,1.0f,0.0f,0.0f);
+  param_1[0xb4] = 0;
+  orig::SqMatrixConnect_SetIdentity(param_1 + 0x62);
+  orig::SqMatrixConnect_SetIdentity(param_1 + 0x82);
+  orig::SqMatrixConnect_SetIdentity(param_1 + 0x72);
+  orig::SqMatrixConnect_SetIdentity(param_1 + 0x52);
+  param_1[0xab] = 0x42200000;
+  param_1[0xac] = 0x44200000;
+  param_1[0xad] = 0x43f00000;
+  param_1[0xaf] = 0x3dcccccd;
+  param_1[0xae] = 0x447a0000;
+  param_1[0xb5] = 0x280;
+  param_1[0xb6] = 0x1e0;
+  param_1[0xb7] = 0x3f800000;
+  param_1[0xb8] = 0;
+  param_1[0xb9] = 0;
+  param_1[0xba] = 0;
+  orig::SqMatrixConnect_Set((float *)(param_1 + 0xbb),1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,(-1.0f),0.0f,0.0f,
+               0.0f,0.0f);
+  puVar3 = param_1 + 0xcb;
+  puVar2 = param_1 + 0x1cb;
+  local_4 = 2;
+  do {
+    param_1 = (undefined4 *)&DAT_00000008;
+    do {
+      orig::SqMatrixConnect_SetIdentity(puVar3);
+      puVar3 = puVar3 + 0x10;
+      param_1 = (undefined4 *)((int)param_1 + -1);
+      *puVar2 = 0;
+    } while (param_1 != (undefined4 *)0x0);
+    puVar2 = puVar2 + 1;
+    local_4 = local_4 + -1;
+  } while (local_4 != 0);
+  puVar1[0x1d3] = 0x3f800000;
+  puVar1[0x1d4] = 0x3f800000;
+  *(uint8_t *)(puVar1 + 0x1d5) = 0;
+  orig::PackVec4_v1((float *)(puVar1 + 0x1d6),0.0f,0.0f,0.0f,0.0f);
+  puVar1[0x1da] = 0;
+  puVar1[0x1db] = 0;
+  puVar1[0x1dc] = 0;
+  puVar1[0x1dd] = 0;
+  orig::PackVec4_v1((float *)(puVar1 + 0x1de),0.0f,0.0f,0.0f,0.0f);
+  puVar1[0x1e2] = 0;
+  puVar1[0x1e3] = 0;
+  pfVar5 = (float *)(puVar1 + 0x1e5);
+  puVar3 = puVar1 + 0x215;
+  local_4 = 2;
+  do {
+    param_1 = (undefined4 *)&DAT_00000008;
+    do {
+      orig::SqVec_SetXyz(pfVar5,0.0f,0.0f,0.0f);
+      *puVar3 = 0;
+      pfVar5 = pfVar5 + 3;
+      puVar3 = puVar3 + 1;
+      param_1 = (undefined4 *)((int)param_1 + -1);
+    } while (param_1 != (undefined4 *)0x0);
+    local_4 = local_4 + -1;
+  } while (local_4 != 0);
+  puVar1[0x237] = 0x80;
+  puVar1[0x238] = 0x80;
+  puVar1[0x226] = 0;
+  puVar1[0x227] = 1;
+  puVar1[0x229] = 0;
+  puVar1[0x22a] = 1;
+  puVar1[0x22b] = 2;
+  puVar1[0x228] = 2;
+  puVar1[0x236] = 1;
+  puVar1[0x239] = 1;
+  puVar1[0x225] = 0;
+  puVar1[0x23a] = 1;
+  puVar1[0x23b] = 0;
+  puVar1[0x23e] = 0;
+  puVar1[0x23c] = 0;
+  puVar1[0x23d] = 0;
+  puVar3 = puVar1 + 0x22e;
+  iVar4 = 2;
+  do {
+    puVar3[-2] = 0xffffffff;
+    *puVar3 = 0xffffffff;
+    puVar3[2] = 0;
+    puVar3[4] = 0;
+    puVar3[6] = 0;
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + -1;
+  } while (iVar4 != 0);
+  puVar1[0x23f] = 0;
+  puVar1[0x240] = 0;
+  puVar1[0x241] = 0;
+  puVar1[0x242] = 0;
+  puVar1[0x243] = 0;
+  puVar1[0x244] = 0;
+  puVar1[0x245] = 1;
+  puVar1[0x246] = 0;
+  puVar1[0x247] = 0;
+  puVar1[0x24a] = 0;
+  puVar1[0x24b] = 0;
+  puVar1[0x24c] = 0;
+  puVar3 = puVar1 + 0x24d;
+  iVar4 = 2;
+  do {
+    puVar3[-5] = 0;
+    *puVar3 = 0;
+    puVar3[4] = 0;
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + -1;
+  } while (iVar4 != 0);
+  puVar1[0x24f] = 0;
+  puVar1[0x250] = 0;
+  puVar1[0x253] = 0;
+  puVar1[0x254] = 0;
+  puVar1[0x255] = 0;
+  puVar1[0x256] = 0;
+  puVar1[599] = 0;
+  puVar1[600] = 0;
+  puVar1[0x259] = 0;
+  puVar3 = puVar1 + 0x25c;
+  iVar4 = 2;
+  do {
+    puVar3[-2] = 0;
+    *puVar3 = 0;
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + -1;
+  } while (iVar4 != 0);
+  puVar1[0x25e] = 0;
+  puVar1[0x25f] = 0;
+  puVar1[0x260] = 0;
+  puVar1[0x261] = 0;
+  puVar1[0x262] = 0;
+  puVar1[0x263] = 0;
+  puVar1[0x264] = 0;
+  puVar1[0x265] = 0;
+  puVar1[0x266] = 0;
+  puVar1[0x267] = 0;
+  puVar1[0x268] = 0;
+  puVar1[0x269] = 0x3c23d70a;
+  puVar1[0x26a] = 0;
+  orig::PackVec4_v1((float *)(puVar1 + 0x26b),0.0f,0.0f,0.0f,0.0f);
+  orig::PackVec4_v1((float *)(puVar1 + 0x26f),0.0f,0.0f,0.0f,0.0f);
+  puVar1[0x273] = 0x3d4ccccd;
+  puVar1[0x274] = 0;
+  puVar1[0x275] = 0;
+  puVar1[0x276] = 0xffffffff;
+  puVar1[0x277] = 0xffffffff;
+  puVar1[0x278] = 0;
+  puVar1[0x279] = 0;
+  puVar1[0x27a] = 0;
+  puVar1[0x27b] = 0;
+  puVar1[0x27c] = 0;
+  puVar1[0x27d] = puVar1[0xb5];
+  puVar1[0x27e] = puVar1[0xb6];
+  puVar1[0x27f] = 0;
+  puVar1[0x280] = 0;
+  puVar1[0x281] = 0;
+  puVar1[0x282] = 0;
+  puVar1[0x283] = 0;
+  puVar1[0x284] = 0;
+  puVar1[0x285] = 0;
+  puVar3 = puVar1 + 0x28d;
+  puVar2 = puVar1 + 0x288;
+  iVar4 = 2;
+  do {
+    *puVar2 = 0xffffffff;
+    puVar2[1] = 0xffffffff;
+    *puVar3 = 0;
+    puVar2 = puVar2 + 2;
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + -1;
+  } while (iVar4 != 0);
+  puVar1[0x28c] = 0;
+  puVar1[0x28f] = 0;
+  puVar1[0x292] = 0;
+  puVar1[699] = 0;
+  puVar1[0x2c6] = 0;
+  puVar3 = puVar1 + 0x327;
+  iVar4 = 0x10;
+  do {
+    puVar3[-0x10] = 0xffffffff;
+    *puVar3 = 0xffffffff;
+    puVar3[0x20] = 0;
+    puVar3[0x40] = 0;
+    puVar3[0x50] = 0;
+    puVar3[-0x60] = 0;
+    puVar3[-0x50] = 0;
+    puVar3[-0x30] = 0;
+    puVar3[-0x40] = 0;
+    puVar3[-0x20] = 0;
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + -1;
+  } while (iVar4 != 0);
+  puVar1[0x387] = 0;
+  puVar1[0x388] = 0;
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x10284B20
 // GATE: PASS -- 100 trials, 100 returned normally, 46 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int * __cdecl sqgxShader(int a1, int a2)
@@ -43,7 +272,7 @@ XI_API int * __cdecl sqgxShader(int a1, int a2)
     {
       g_pDancerDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     }
-    orig::sub_10284EB0();
+    orig::SqgxVertexShaderRelease_NoOp();
     v3 = g_pSqgxContext;
   }
   v3[v3[710] + 653] = 1;
@@ -75,16 +304,16 @@ XI_API int * __cdecl sqgxShader(int a1, int a2)
   }
   if ( (result[2 * result[710] + 648] & 0x40) != 0 )
   {
-    orig::sub_10281C80(1);
-    orig::sub_10281C50(1);
+    orig::sqgxTextureClamp(1);
+    orig::sqgxTextureDecal(1);
     v11 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
     *v11 |= 2u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 0x20000000) != 0 )
   {
-    orig::sub_10281C80(1);
-    orig::sub_10281C50(1);
+    orig::sqgxTextureClamp(1);
+    orig::sqgxTextureDecal(1);
     v12 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
     *v12 |= 4u;
     result = g_pSqgxContext;
@@ -103,15 +332,15 @@ XI_API int * __cdecl sqgxShader(int a1, int a2)
   }
   if ( (result[2 * result[710] + 648] & 8) != 0 )
   {
-    orig::sub_10281C50(1);
-    orig::sub_10281C80(0);
+    orig::sqgxTextureDecal(1);
+    orig::sqgxTextureClamp(0);
     v15 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
     *v15 |= 4u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 0x100000) != 0 )
   {
-    orig::sub_10281C80(1);
+    orig::sqgxTextureClamp(1);
     v16 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
     *v16 |= 0xEu;
     result = g_pSqgxContext;
@@ -126,8 +355,8 @@ XI_API int * __cdecl sqgxShader(int a1, int a2)
   if ( (result[2 * v18 + 648] & 0x10) != 0 )
   {
     result[v18 + 653] |= 0xCu;
-    orig::sub_10281C50(0);
-    orig::sub_10281C80(1);
+    orig::sqgxTextureDecal(0);
+    orig::sqgxTextureClamp(1);
     result = g_pSqgxContext;
   }
   v19 = result[653];

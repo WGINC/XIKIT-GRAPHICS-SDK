@@ -17,7 +17,7 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
   uint64_t uVar9;
   
   if (((uint32_t)param_1 & 0xf) != 0) {
-    orig::sub_10285890_2(s_____Error__sqmdDMBResolve___expe_103b8e8c,0x10);
+    orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolve___expe_103b8e8c,0x10);
     return 0;
   }
   if (((*param_1 == 'D') && (param_1[1] == 'M')) && (param_1[2] == 'B')) {
@@ -27,16 +27,16 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     param_1[0xe] = '\0';
     param_1[0xf] = '\0';
     if (DAT_109a2788 != 0) {
-      iVar1 = orig::sub_10288660((int)param_1);
-      orig::sub_10314D55(DAT_109a2788,s__06ld_____sqmdDMBResolve___103b8e70,iVar1);
+      iVar1 = orig::SqmdDMB_TraceDelta((int)param_1);
+      orig::FUN_10314d55(DAT_109a2788,s__06ld_____sqmdDMBResolve___103b8e70,iVar1);
     }
-    uVar2 = orig::sub_10288680((uint32_t)(param_1 + 0x10));
-    *(code **)(uVar2 + 8) = XI_CODE(sub_10277A50_2);
-    *(code **)(uVar2 + 0xc) = XI_CODE(sub_10277AB0_2);
-    *(code **)(uVar2 + 0x10) = XI_CODE(sub_10277FF0);
-    *(code **)(uVar2 + 0x18) = XI_CODE(sub_10278490_2);
-    uVar3 = orig::sub_10288680(uVar2 + 0xac);
-    iVar4 = orig::sub_10275090_2();
+    uVar2 = orig::SqmdDMB_AlignMem((uint32_t)(param_1 + 0x10));
+    *(code **)(uVar2 + 8) = XI_CODE(SqmdModel_Validate_v1);
+    *(code **)(uVar2 + 0xc) = XI_CODE(SqmdModel_Free_v1);
+    *(code **)(uVar2 + 0x10) = XI_CODE(FUN_10277ff0);
+    *(code **)(uVar2 + 0x18) = XI_CODE(SqmdModel_Update_v1);
+    uVar3 = orig::SqmdDMB_AlignMem(uVar2 + 0xac);
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     iVar1 = *(int *)(uVar2 + 0x28);
     if (*(int *)(uVar2 + 0x28) <= *(int *)(uVar2 + 0x24)) {
       iVar1 = *(int *)(uVar2 + 0x24);
@@ -48,14 +48,14 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x1c) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8E40,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8E40,iVar5);
       }
       iVar5 = uVar3 + iVar1 * 4;
       *(int *)(uVar2 + 0x20) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8E0C,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8E0C,iVar6);
       }
       uVar3 = iVar5 + iVar1 * 4;
     }
@@ -70,14 +70,14 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x2c) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8DDC,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8DDC,iVar5);
       }
       iVar5 = uVar3 + iVar1 * 4;
       *(int *)(uVar2 + 0x30) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8DA8,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8DA8,iVar6);
       }
       uVar3 = iVar5 + iVar1 * 4;
     }
@@ -92,14 +92,14 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x3c) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8D78,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8D78,iVar5);
       }
       iVar5 = uVar3 + iVar1 * 4;
       *(int *)(uVar2 + 0x40) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8D44,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8D44,iVar6);
       }
       uVar3 = iVar5 + iVar1 * 4;
     }
@@ -115,21 +115,21 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x4c) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8D14,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8D14,iVar5);
       }
       iVar1 = iVar1 * 4;
       iVar5 = uVar3 + iVar1;
       *(int *)(uVar2 + 0x50) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8CE4,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8CE4,iVar6);
       }
       iVar5 = iVar5 + iVar1;
       *(int *)(uVar2 + 0x54) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8CB0,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8CB0,iVar6);
       }
       uVar3 = iVar5 + iVar1;
     }
@@ -144,14 +144,14 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x60) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8C84,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8C84,iVar5);
       }
       iVar5 = uVar3 + iVar1 * 4;
       *(int *)(uVar2 + 100) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8C54,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8C54,iVar6);
       }
       uVar3 = iVar5 + iVar1 * 4;
     }
@@ -167,21 +167,21 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x70) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8C28,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8C28,iVar5);
       }
       iVar1 = iVar1 * 4;
       iVar5 = uVar3 + iVar1;
       *(int *)(uVar2 + 0x74) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8BF8,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8BF8,iVar6);
       }
       iVar5 = iVar5 + iVar1;
       *(int *)(uVar2 + 0x78) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8BC4,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8BC4,iVar6);
       }
       uVar3 = iVar5 + iVar1;
     }
@@ -197,21 +197,21 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x84) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8B94,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8B94,iVar5);
       }
       iVar1 = iVar1 * 4;
       iVar5 = uVar3 + iVar1;
       *(int *)(uVar2 + 0x88) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8B60,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8B60,iVar6);
       }
       iVar5 = iVar5 + iVar1;
       *(int *)(uVar2 + 0x8c) = iVar5;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(iVar5);
-        orig::sub_10314D55(DAT_109a2788,g_103B8B2C,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8B2C,iVar6);
       }
       uVar3 = iVar5 + iVar1;
     }
@@ -225,8 +225,8 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x98) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8AF4,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8AF4,iVar5);
       }
       uVar3 = uVar3 + iVar1 * 4;
     }
@@ -240,8 +240,8 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0xa0) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8AC0,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8AC0,iVar5);
       }
       uVar3 = uVar3 + iVar1 * 4;
     }
@@ -255,45 +255,78 @@ XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
     else {
       *(uint32_t *)(uVar2 + 0x9c) = uVar3;
       if (DAT_109a2788 != 0) {
-        iVar5 = orig::sub_10288660(uVar3);
-        orig::sub_10314D55(DAT_109a2788,g_103B8A8C,iVar5);
+        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
+        orig::FUN_10314d55(DAT_109a2788,g_103B8A8C,iVar5);
       }
       uVar3 = uVar3 + iVar1 * 4;
     }
-    iVar1 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2770 = iVar1 - iVar4;
-    iVar1 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
     uVar3 = orig::SqmdDMB_ResolveTextures(uVar2,uVar3);
-    iVar4 = orig::sub_10275090_2();
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2774 = iVar4 - iVar1;
-    iVar1 = orig::sub_10275090_2();
-    piVar7 = orig::sub_10288950(uVar2,uVar3);
-    iVar4 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
+    piVar7 = orig::SqmdDMB_ResolveShaders(uVar2,uVar3);
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2778 = iVar4 - iVar1;
-    iVar1 = orig::sub_10275090_2();
-    uVar3 = orig::sub_10288BB0(uVar2,(uint32_t)piVar7);
-    iVar4 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
+    uVar3 = orig::SqmdDMB_ResolveMatrices(uVar2,(uint32_t)piVar7);
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a277c = iVar4 - iVar1;
-    iVar1 = orig::sub_10275090_2();
-    orig::sub_10288C20(uVar2,uVar3);
-    iVar4 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
+    orig::SqmdDMB_ResolveStrings(uVar2,uVar3);
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2780 = iVar4 - iVar1;
-    orig::sub_10288DC0(uVar2);
-    orig::sub_10288E00(uVar2);
-    iVar1 = orig::sub_10275090_2();
+    orig::SqmdDMB_ClearTables(uVar2);
+    orig::SqmdDMB_ResetCounts(uVar2);
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
     pbVar8 = orig::FUN_10288e60(uVar2,param_2);
-    iVar4 = orig::sub_10275090_2();
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2750 = iVar4 - iVar1;
-    iVar1 = orig::sub_10275090_2();
-    orig::sub_10288FF0(uVar2,pbVar8);
-    iVar4 = orig::sub_10275090_2();
+    iVar1 = orig::SqTimer_GetMicroseconds_v1();
+    orig::SqmdDMB_BuildUpdaters(uVar2,pbVar8);
+    iVar4 = orig::SqTimer_GetMicroseconds_v1();
     DAT_109a2754 = iVar4 - iVar1;
     *(uint32_t *)(uVar2 + 0xa8) = *(uint32_t *)(uVar2 + 0xa8) | 0x200;
     return uVar2;
   }
-  uVar9 = orig::sub_10285890_2(s_____Error__sqmdDMBResolve___call_103b8a4c);
-  orig::sub_102755C0((int)param_1,0x100,(int)uVar9,(int)((uint64_t)uVar9 >> 0x20));
+  uVar9 = orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolve___call_103b8a4c);
+  orig::SqMem_HexDump((int)param_1,0x100,(int)uVar9,(int)((uint64_t)uVar9 >> 0x20));
   return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x10288660
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API int __cdecl SqmdDMB_TraceDelta(int param_1)
+{
+  if (DAT_109a278c == 0) {
+    DAT_109a278c = param_1;
+    return 0;
+  }
+  return param_1 - DAT_109a278c;
+}
+
+// FUNCTION: FFXIMAIN 0x10288680
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API uint32_t __cdecl SqmdDMB_AlignMem(uint32_t param_1)
+{
+  int iVar1;
+  int xi_s3;
+  int iVar2;
+  
+  iVar1 = DAT_109a2788;
+  if ((param_1 & 0xf) != 0) {
+    iVar2 = 0x10 - (param_1 & 0xf);
+    if (DAT_109a2788 != 0) {
+      xi_s3 = orig::SqmdDMB_TraceDelta(param_1);
+      orig::FUN_10314d55(iVar1,s__06ld__sqmdDMBAlignMem___adding___103b8ec8,xi_s3);
+    }
+    if (iVar2 != 0) {
+      param_1 = param_1 + iVar2;
+    }
+  }
+  return param_1;
 }
 
 // FUNCTION: FFXIMAIN 0x102886D0
@@ -313,10 +346,10 @@ XI_API uint32_t __cdecl SqmdDMB_ResolveTextures(int param_1, uint32_t param_2)
   
   iVar2 = DAT_109a2788;
   if (DAT_109a2788 != 0) {
-    iVar4 = orig::sub_10288660(param_2);
-    orig::sub_10314D55(iVar2,s__06ld_____sqmdDMBResolveTextures_103b9004,iVar4);
+    iVar4 = orig::SqmdDMB_TraceDelta(param_2);
+    orig::FUN_10314d55(iVar2,s__06ld_____sqmdDMBResolveTextures_103b9004,iVar4);
   }
-  uVar5 = orig::sub_10288680(param_2);
+  uVar5 = orig::SqmdDMB_AlignMem(param_2);
   iVar2 = *(int *)(param_1 + 0x24);
   param_2 = 0;
   uVar9 = uVar5;
@@ -324,14 +357,14 @@ XI_API uint32_t __cdecl SqmdDMB_ResolveTextures(int param_1, uint32_t param_2)
     do {
       piVar1 = (int *)(uVar5 + 0x14);
       *(uint8_t **)(uVar5 + 8) =(uint8_t*)(&LAB_10298b50);
-      *(code **)(uVar5 + 0xc) = XI_CODE(sub_10298B60);
-      *(code **)(uVar5 + 0x10) = XI_CODE(sub_10298C10);
+      *(code **)(uVar5 + 0xc) = XI_CODE(FUN_10298b60);
+      *(code **)(uVar5 + 0x10) = XI_CODE(sqrdTexturePrint);
       *piVar1 = -1;
       *(int *)(uVar5 + 0x18) = -1;
       iVar4 = DAT_109a2788;
       if (DAT_109a2788 != 0) {
-        iVar6 = orig::sub_10288660(uVar5);
-        orig::sub_10314D55(iVar4,s__06ld__texture__3d_103b8fec,iVar6);
+        iVar6 = orig::SqmdDMB_TraceDelta(uVar5);
+        orig::FUN_10314d55(iVar4,s__06ld__texture__3d_103b8fec,iVar6);
       }
       uVar9 = uVar5 + 0x24;
       *(uint32_t *)(*(int *)(param_1 + 0x1c) + param_2 * 4) = uVar5;
@@ -341,12 +374,12 @@ XI_API uint32_t __cdecl SqmdDMB_ResolveTextures(int param_1, uint32_t param_2)
       else {
         *(uint32_t *)(uVar5 + 0x1c) = uVar9;
         *(uint8_t **)(uVar5 + 0x2c) =(uint8_t*)(&LAB_10298530);
-        *(code **)(uVar5 + 0x30) = XI_CODE(sub_10298540);
+        *(code **)(uVar5 + 0x30) = XI_CODE(FUN_10298540);
         *(uint8_t **)(uVar5 + 0x34) =(uint8_t*)(&LAB_102985a0);
         iVar4 = DAT_109a2788;
         if (DAT_109a2788 != 0) {
-          iVar6 = orig::sub_10288660(uVar9);
-          orig::sub_10314D55(iVar4,s__06ld__image_103b8fd8,iVar6);
+          iVar6 = orig::SqmdDMB_TraceDelta(uVar9);
+          orig::FUN_10314d55(iVar4,s__06ld__image_103b8fd8,iVar6);
         }
         uVar3 = *(uint32_t *)(uVar5 + 0x4c);
         uVar9 = uVar5 + 0x60;
@@ -367,24 +400,24 @@ LAB_102888c0:
                 *(uint32_t *)(uVar5 + 0x20) = *(uint32_t *)(uVar5 + 0x20) | 1;
                 goto LAB_102888c7;
               }
-              orig::sub_10285890_2(s_____Error__borrowTex_doesn_t_con_103b8f1c);
+              orig::sqDebugPrintf_v1(s_____Error__borrowTex_doesn_t_con_103b8f1c);
             }
             else {
-              orig::sub_10285890_2(s_____Error__sqmdDMBResolveTexture_103b8f70);
-              orig::sub_10285890_2(s_current__d_borrows_from__d_103b8f4c,param_2,
+              orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolveTexture_103b8f70);
+              orig::sqDebugPrintf_v1(s_current__d_borrows_from__d_103b8f4c,param_2,
                            *(uint32_t *)(uVar5 + 0x4c));
             }
             goto LAB_102888c0;
           }
-          uVar9 = orig::sub_10288680(uVar9);
+          uVar9 = orig::SqmdDMB_AlignMem(uVar9);
           iVar4 = *(int *)(uVar5 + 0x44);
           iVar6 = *(int *)(uVar5 + 0x48);
           iVar8 = *(int *)(uVar5 + 0x40);
           *(uint32_t *)(uVar5 + 0x4c) = uVar9;
           iVar7 = DAT_109a2788;
           if (DAT_109a2788 != 0) {
-            xi_s3 = orig::sub_10288660(uVar9);
-            orig::sub_10314D55(iVar7,s__06ld__data___d_bytes__103b8fb8,xi_s3);
+            xi_s3 = orig::SqmdDMB_TraceDelta(uVar9);
+            orig::FUN_10314d55(iVar7,s__06ld__data___d_bytes__103b8fb8,xi_s3);
           }
           iVar7 = orig::sqgxTextureAdd_v1(*(int *)(uVar5 + 0x40),*(int *)(uVar5 + 0x44),
                                  *(int *)(uVar5 + 0x48),*(int *)(uVar5 + 0x4c));
@@ -397,14 +430,14 @@ LAB_102888c7:
           *(uint32_t *)(uVar5 + 0x5c) = 0;
         }
         else {
-          uVar9 = orig::sub_10288680(uVar9);
+          uVar9 = orig::SqmdDMB_AlignMem(uVar9);
           iVar4 = *(int *)(uVar5 + 0x58);
           iVar6 = *(int *)(uVar5 + 0x54);
           *(uint32_t *)(uVar5 + 0x5c) = uVar9;
           iVar8 = DAT_109a2788;
           if (DAT_109a2788 != 0) {
-            iVar7 = orig::sub_10288660(uVar9);
-            orig::sub_10314D55(iVar8,s__06ld__clutData___d_bytes__103b8ef8,iVar7);
+            iVar7 = orig::SqmdDMB_TraceDelta(uVar9);
+            orig::FUN_10314d55(iVar8,s__06ld__clutData___d_bytes__103b8ef8,iVar7);
           }
           iVar8 = orig::sqgxTextureClutAdd(*(uint32_t *)(uVar5 + 0x58),*(int *)(uVar5 + 0x54),
                                      *(int *)(uVar5 + 0x5c));
@@ -417,6 +450,300 @@ LAB_102888c7:
     } while ((int)param_2 < iVar2);
   }
   return uVar9;
+}
+
+// FUNCTION: FFXIMAIN 0x10288950
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API int * __cdecl SqmdDMB_ResolveShaders(int param_1, uint32_t param_2)
+{
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar4 = DAT_109a2788;
+  if (DAT_109a2788 != 0) {
+    iVar1 = orig::SqmdDMB_TraceDelta(param_2);
+    orig::FUN_10314d55(iVar4,s__06ld_____sqmdDMBResolveShaders__103b90b0,iVar1);
+  }
+  piVar2 = (int *)orig::SqmdDMB_AlignMem(param_2);
+  param_2 = *(uint32_t *)(param_1 + 0x38);
+  if ((int)*(uint32_t *)(param_1 + 0x38) <= (int)*(uint32_t *)(param_1 + 0x34)) {
+    param_2 = *(uint32_t *)(param_1 + 0x34);
+  }
+  iVar4 = 0;
+  if (0 < (int)param_2) {
+    do {
+      *(int **)(*(int *)(param_1 + 0x2c) + iVar4 * 4) = piVar2;
+      iVar1 = *piVar2;
+      if (iVar1 == 0xf0001) {
+        piVar2[2] = (int)&LAB_102908d0;
+        piVar2[3] = (int)XI_CODE(FUN_102908e0);
+        piVar2[4] = (int)&LAB_10290a80;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x13]);
+        piVar2[0x13] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x14]);
+        piVar2[0x14] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x15]);
+        piVar2[0x15] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x16]);
+        piVar2[0x16] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x17]);
+        piVar2[0x17] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x18]);
+        piVar2[0x18] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x19]);
+        piVar2[0x19] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x2b]);
+        piVar2[0x2b] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x2c]);
+        piVar2[0x2c] = iVar1;
+        iVar1 = DAT_109a2788;
+        if (DAT_109a2788 != 0) {
+          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
+          orig::FUN_10314d55(iVar1,g_103B9058,iVar3);
+        }
+        piVar2 = piVar2 + 0x60;
+      }
+      else if (iVar1 == 0xf0002) {
+        piVar2[2] = (int)&LAB_10298ed0;
+        piVar2[3] = (int)XI_CODE(FUN_10298ee0);
+        piVar2[4] = (int)&LAB_10298fa0;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x14]);
+        piVar2[0x14] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x15]);
+        piVar2[0x15] = iVar1;
+        iVar1 = DAT_109a2788;
+        if (DAT_109a2788 != 0) {
+          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
+          orig::FUN_10314d55(iVar1,g_103B9074,iVar3);
+        }
+        piVar2 = piVar2 + 0x5b;
+      }
+      else {
+        if (iVar1 != 0xf0005) {
+          orig::sqDebugPrintf_v1(s_____Error__Encountered_unsupport_103b9028);
+          return (int *)0x0;
+        }
+        piVar2[2] = (int)&LAB_102992e0;
+        piVar2[3] = (int)XI_CODE(FUN_102992f0);
+        piVar2[4] = (int)&LAB_10299390;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x18]);
+        piVar2[0x18] = iVar1;
+        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x19]);
+        piVar2[0x19] = iVar1;
+        iVar1 = DAT_109a2788;
+        if (DAT_109a2788 != 0) {
+          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
+          orig::FUN_10314d55(iVar1,g_103B9094,iVar3);
+        }
+        piVar2 = piVar2 + 0x1b;
+      }
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < (int)param_2);
+  }
+  return piVar2;
+}
+
+// FUNCTION: FFXIMAIN 0x10288B70
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __cdecl SqmdDMB_TextureLink(int param_1, uint32_t param_2)
+{
+  if (param_2 != 0xefbeddba) {
+    if (param_2 < *(uint32_t *)(param_1 + 0x24)) {
+      return *(uint32_t *)(*(int *)(param_1 + 0x1c) + param_2 * 4);
+    }
+    orig::sqDebugPrintf_v1(s_____Error__sqmdDMBTextureLink___t_103b90e8);
+    orig::sqDebugPrintf_v1(s__word____d_103b90d4,param_2);
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x10288BB0
+// GATE: PASS -- 100 trials, 40 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 40
+XI_API undefined4 __cdecl SqmdDMB_ResolveMatrices(int param_1, uint32_t param_2)
+{
+  int iVar1;
+  uint32_t uVar2;
+  int iVar3;
+  
+  iVar3 = DAT_109a2788;
+  if (DAT_109a2788 != 0) {
+    iVar1 = orig::SqmdDMB_TraceDelta(param_2);
+    orig::FUN_10314d55(iVar3,s__06ld_____sqmdDMBResolveMatrices_103b9134,iVar1);
+  }
+  uVar2 = orig::SqmdDMB_AlignMem(param_2);
+  iVar3 = *(int *)(param_1 + 0x5c);
+  if (*(int *)(param_1 + 0x5c) <= *(int *)(param_1 + 0x58)) {
+    iVar3 = *(int *)(param_1 + 0x58);
+  }
+  iVar1 = 0;
+  if (0 < iVar3) {
+    do {
+      if (*(int *)(*(int *)(param_1 + 0x50) + iVar1 * 4) == -0x10412246) {
+        *(uint32_t *)(*(int *)(param_1 + 0x50) + iVar1 * 4) = uVar2;
+        uVar2 = uVar2 + 0x40;
+      }
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < iVar3);
+  }
+  return uVar2;
+}
+
+// FUNCTION: FFXIMAIN 0x10288C20
+// GATE: PASS -- 100 trials, 12 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 12
+XI_API char * __cdecl SqmdDMB_ResolveStrings(int param_1, uint32_t param_2)
+{
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  uint32_t uVar6;
+  int iVar7;
+  char *pcVar8;
+  
+  iVar7 = DAT_109a2788;
+  if (DAT_109a2788 != 0) {
+    iVar2 = orig::SqmdDMB_TraceDelta(param_2);
+    orig::FUN_10314d55(iVar7,s__06ld_____sqmdDMBResolveStrings__103b9190,iVar2);
+  }
+  pcVar3 = (char *)orig::SqmdDMB_AlignMem(param_2);
+  iVar7 = 0;
+  if (0 < *(int *)(param_1 + 0x7c)) {
+    do {
+      iVar2 = DAT_109a2788;
+      if (DAT_109a2788 != 0) {
+        iVar4 = orig::SqmdDMB_TraceDelta((int)pcVar3);
+        orig::FUN_10314d55(iVar2,s__06ld__tag_string__s_103b9174,iVar4);
+      }
+      uVar6 = 0xffffffff;
+      *(char **)(*(int *)(param_1 + 0x70) + iVar7 * 4) = pcVar3;
+      iVar2 = DAT_109a2788;
+      pcVar8 = pcVar3;
+      do {
+        if (uVar6 == 0) break;
+        uVar6 = uVar6 - 1;
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar1 != '\0');
+      pcVar3 = pcVar3 + ~uVar6;
+      if (((uint32_t)pcVar3 & 3) != 0) {
+        iVar4 = 4 - ((uint32_t)pcVar3 & 3);
+        if (DAT_109a2788 != 0) {
+          iVar5 = orig::SqmdDMB_TraceDelta((int)pcVar3);
+          orig::FUN_10314d55(iVar2,s__06ld__adding__d_align_bytes_103b8850,iVar5);
+        }
+        if (iVar4 != 0) {
+          pcVar3 = pcVar3 + iVar4;
+        }
+      }
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < *(int *)(param_1 + 0x7c));
+  }
+  iVar7 = *(int *)(param_1 + 0x7c);
+  if (iVar7 < *(int *)(param_1 + 0x80)) {
+    do {
+      iVar7 = iVar7 + 1;
+      *(uint32_t *)(*(int *)(param_1 + 0x70) + -4 + iVar7 * 4) = 0;
+    } while (iVar7 < *(int *)(param_1 + 0x80));
+  }
+  iVar7 = 0;
+  if (0 < *(int *)(param_1 + 0x90)) {
+    do {
+      iVar2 = DAT_109a2788;
+      if (DAT_109a2788 != 0) {
+        iVar4 = orig::SqmdDMB_TraceDelta((int)pcVar3);
+        orig::FUN_10314d55(iVar2,s__06ld__file_string__s_103b9158,iVar4);
+      }
+      uVar6 = 0xffffffff;
+      *(char **)(*(int *)(param_1 + 0x84) + iVar7 * 4) = pcVar3;
+      iVar2 = DAT_109a2788;
+      pcVar8 = pcVar3;
+      do {
+        if (uVar6 == 0) break;
+        uVar6 = uVar6 - 1;
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar1 != '\0');
+      pcVar3 = pcVar3 + ~uVar6;
+      if (((uint32_t)pcVar3 & 3) != 0) {
+        iVar4 = 4 - ((uint32_t)pcVar3 & 3);
+        if (DAT_109a2788 != 0) {
+          iVar5 = orig::SqmdDMB_TraceDelta((int)pcVar3);
+          orig::FUN_10314d55(iVar2,s__06ld__adding__d_align_bytes_103b8850,iVar5);
+        }
+        if (iVar4 != 0) {
+          pcVar3 = pcVar3 + iVar4;
+        }
+      }
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < *(int *)(param_1 + 0x90));
+  }
+  iVar7 = *(int *)(param_1 + 0x90);
+  if (iVar7 < *(int *)(param_1 + 0x94)) {
+    do {
+      iVar7 = iVar7 + 1;
+      *(uint32_t *)(*(int *)(param_1 + 0x84) + -4 + iVar7 * 4) = 0;
+    } while (iVar7 < *(int *)(param_1 + 0x94));
+  }
+  return pcVar3;
+}
+
+// FUNCTION: FFXIMAIN 0x10288DC0
+// GATE: PASS -- 100 trials, 34 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 34
+XI_API void __cdecl SqmdDMB_ClearTables(int param_1)
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = *(int *)(param_1 + 0x68);
+  if (*(int *)(param_1 + 0x68) < *(int *)(param_1 + 0x6c)) {
+    iVar2 = *(int *)(param_1 + 0x6c);
+  }
+  iVar1 = 0;
+  if (0 < iVar2) {
+    do {
+      iVar1 = iVar1 + 1;
+      *(uint32_t *)(*(int *)(param_1 + 100) + -4 + iVar1 * 4) = 0;
+      *(uint32_t *)(*(int *)(param_1 + 0x60) + -4 + iVar1 * 4) = 0;
+    } while (iVar1 < iVar2);
+  }
+  *(uint32_t *)(param_1 + 0x68) = 0;
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10288E00
+// GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
+XI_API void __cdecl SqmdDMB_ResetCounts(int param_1)
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = *(int *)(param_1 + 0xa4);
+  if (*(int *)(param_1 + 0xa4) < *(int *)(param_1 + 0x5c)) {
+    iVar2 = *(int *)(param_1 + 0x5c);
+  }
+  iVar1 = 0;
+  if (0 < iVar2) {
+    do {
+      iVar1 = iVar1 + 1;
+      *(uint32_t *)(*(int *)(param_1 + 0x9c) + -4 + iVar1 * 4) = 0;
+    } while (iVar1 < iVar2);
+  }
+  iVar2 = *(int *)(param_1 + 0x58);
+  if (*(int *)(param_1 + 0x58) < *(int *)(param_1 + 0x5c)) {
+    iVar2 = *(int *)(param_1 + 0x5c);
+  }
+  iVar1 = 0;
+  if (0 < iVar2) {
+    do {
+      iVar1 = iVar1 + 1;
+      *(uint32_t *)(*(int *)(param_1 + 0xa0) + -4 + iVar1 * 4) = 0;
+    } while (iVar1 < iVar2);
+  }
+  *(uint32_t *)(param_1 + 0xa4) = 0;
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x10288E60
@@ -433,24 +760,24 @@ XI_API uint8_t * __cdecl sqmdDMBBuildShapes(int param_1, uint32_t param_2)
   
   iVar6 = DAT_109a2788;
   if (DAT_109a2788 != 0) {
-    xi_s3 = orig::sub_10288660(param_2);
-    orig::sub_10314D55(iVar6,s__06ld_____sqmdDMBBuildShapes___103b9244,xi_s3);
+    xi_s3 = orig::SqmdDMB_TraceDelta(param_2);
+    orig::FUN_10314d55(iVar6,s__06ld_____sqmdDMBBuildShapes___103b9244,xi_s3);
   }
-  pbVar3 = (uint8_t *)orig::sub_10288680(param_2);
+  pbVar3 = (uint8_t *)orig::SqmdDMB_AlignMem(param_2);
   iVar6 = 0;
   if (0 < *(int *)(param_1 + 0x58)) {
     do {
       if ((*pbVar3 & 4) == 0) {
-        orig::sub_10285890_2(s_____Error__Non_shape_encountered_103b91ec);
-        orig::sub_10285890_2(s_shape__d_of__d_103b91d8,iVar6,*(int *)(param_1 + 0x58) + -1);
-        orig::sub_10285890_2(s_flags___0x_08X_103b91c4,*(uint32_t *)pbVar3);
-        orig::sub_10285890_2(s_size____d_103b91b4,*(uint32_t *)(pbVar3 + 4));
+        orig::sqDebugPrintf_v1(s_____Error__Non_shape_encountered_103b91ec);
+        orig::sqDebugPrintf_v1(s_shape__d_of__d_103b91d8,iVar6,*(int *)(param_1 + 0x58) + -1);
+        orig::sqDebugPrintf_v1(s_flags___0x_08X_103b91c4,*(uint32_t *)pbVar3);
+        orig::sqDebugPrintf_v1(s_size____d_103b91b4,*(uint32_t *)(pbVar3 + 4));
       }
       else {
         pbVar5 = pbVar3 + 0x40;
-        piVar4 = (int *)orig::sub_10299B30((char *)pbVar5,*(uint32_t *)(pbVar3 + 4));
+        piVar4 = (int *)orig::SqshBuild_BuildSQO((char *)pbVar5,*(uint32_t *)(pbVar3 + 4));
         if (piVar4 == (int *)0x0) {
-          orig::sub_10285890_2(s_____Error__sqshBuildSQO__p___d__f_103b921c,pbVar5,
+          orig::sqDebugPrintf_v1(s_____Error__sqshBuildSQO__p___d__f_103b921c,pbVar5,
                        *(uint32_t *)(pbVar3 + 4));
         }
         else {
@@ -471,17 +798,17 @@ XI_API uint8_t * __cdecl sqmdDMBBuildShapes(int param_1, uint32_t param_2)
                 piVar4 = orig::sqsdGlow_BakeOntoShape(puVar2,piVar4);
                 break;
               case 0xf0004:
-                piVar4 = (int *)orig::sub_10299840();
+                piVar4 = (int *)orig::sqsdCartoon_BakeOntoShape_Stub();
                 break;
               case 0xf0005:
                 piVar4 = orig::sqsdAniso_BakeOntoShape((int)puVar2,piVar4);
               }
             }
-            orig::sub_1027A220(param_1,piVar4);
+            orig::SqmdModel_AppendPair68Flag100(param_1,piVar4);
           }
           *(int **)(*(int *)(param_1 + 0x4c) + iVar6 * 4) = piVar4;
         }
-        pbVar3 = (uint8_t *)orig::sub_10288680((uint32_t)(pbVar5 + *(int *)(pbVar3 + 4)));
+        pbVar3 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)(pbVar5 + *(int *)(pbVar3 + 4)));
       }
       iVar6 = iVar6 + 1;
     } while (iVar6 < *(int *)(param_1 + 0x58));

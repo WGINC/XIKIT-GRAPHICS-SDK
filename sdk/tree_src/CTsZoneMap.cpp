@@ -15,20 +15,27 @@ XI_API int __thiscall Gfx_AssembleVertexShader(void *self_, int a1, int a2)
   char TextLength;
   struct ID3DXBuffer *v11;
   char Buffer[512];
-  TextLength = orig::sub_10177350((const char **)self_);
-  Text = (char *)orig::sub_10177340(self_);
-  v5 = orig::sub_102DAA0D(Text, TextLength, 0, nullptr, &v11, nullptr);
-  orig::sub_102DAA71(v5, Buffer, 0x200u);
+  TextLength = orig::Gfx_ShaderSrc_GetTextLength((const char **)self_);
+  Text = (char *)orig::Gfx_ShaderSrc_GetText(self_);
+  v5 = orig::fn_102DAA0D(Text, TextLength, 0, nullptr, &v11, nullptr);
+  orig::fn_102DAA71(v5, Buffer, 0x200u);
   if ( v5 >= 0 )
   {
     pDevice = (g_pCDx->pDevice);
     lpVtbl = pDevice->lpVtbl;
     v8 = (*(int (__stdcall **)(struct ID3DXBuffer *))(*(_DWORD *)v11 + 12))(v11);
     v5 = lpVtbl->CreateVertexShader(pDevice, (void *)a1, (void *)v8, (void *)a2, 0);
-    orig::sub_102DAA71(v5, Buffer, 0x200u);
+    orig::fn_102DAA71(v5, Buffer, 0x200u);
     (*(void (__stdcall **)(struct ID3DXBuffer *))(*(_DWORD *)v11 + 8))(v11);
   }
   return v5;
+}
+
+// FUNCTION: FFXIMAIN 0x101773F0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 * __cdecl ZoneMap_GetMatrixGlobal(void)
+{
+  return &DAT_10631ed0;
 }
 
 // FUNCTION: FFXIMAIN 0x10177400
@@ -36,6 +43,56 @@ XI_API int __thiscall Gfx_AssembleVertexShader(void *self_, int a1, int a2)
 XI_API int __cdecl Gfx_SetZBias(unsigned int a1)
 {
   return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZBIAS, a1);
+}
+
+// FUNCTION: FFXIMAIN 0x10177420
+// GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __thiscall ZoneMap_SetOverlayProjection(void * self_)
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  long double fVar5;
+  char xi_frame[64] __attribute__((aligned(4)));
+  float  (&afStack_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
+  
+  fVar1 = *(float *)(g_pCamera_as_s32 + 0x2f4);
+  fVar2 = *(float *)(g_pCamera_as_s32 + 0x2e8);
+  fVar3 = *(float *)(g_pCamera_as_s32 + 0x2dc);
+  fVar4 = *(float *)(g_pCamera_as_s32 + 0x2e0);
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pCDx_as_s32 + 0xc) + 200))))(*(int **)(g_pCDx_as_s32 + 0xc),0x2f,0);
+  fVar5 = xi_castbits<long double>(fpatan((long double)192.0,(long double)fVar1));
+  orig::D3DXMatrixPerspectiveFovLH_static_v1
+            (afStack_40,(float)(fVar5 + fVar5),
+             (float)((long double)1.0f / ((long double)fVar2 * (long double)*(float *)(g_pCamera_as_s32 + 0x2f0))),
+             (float)((long double)fVar3 + (long double)*(float *)((int)self_ + 0x39590)),
+             (float)((long double)fVar4 + (long double)*(float *)((int)self_ + 0x39590)));
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pCDx_as_s32 + 0xc) + 0x94))))(*(int **)(g_pCDx_as_s32 + 0xc),3,afStack_40);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10177770
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API uint32_t __attribute__((cdecl, regparm(1))) ZoneMap_QueryBoxHeightGlobal(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, undefined4 param_3, float * param_4)
+{
+  uint32_t uVar1;
+  
+  if (g_pZoneMap != (void *)0x0) {
+    uVar1 = orig::ZoneMap_IsBoxHeightHitByRadius(g_pZoneMap,param_1,param_2,param_3,param_4);
+    return uVar1;
+  }
+  return xi_eax & 0xffffff00;
+}
+
+// FUNCTION: FFXIMAIN 0x101779B0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __thiscall ZoneMap_Call10173AE0(void * self_, undefined4 * param_1, int param_2)
+{
+  uint32_t uVar1;
+  
+  uVar1 = orig::ZoneMap_FindDbgBoxMPosById(param_1,param_2);
+  return uVar1;
 }
 
 // FUNCTION: FFXIMAIN 0x101779C0
@@ -155,6 +212,152 @@ XI_API int __cdecl Gfx_DrawLine3D(int a1, int a2, int a3, int a4, int a5, int a6
   return orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)v11, 24);
 }
 
+// FUNCTION: FFXIMAIN 0x10177D00
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * __thiscall CTsZoneMap::Init(void * self)
+{
+  void *this_00;
+  int iVar1;
+  undefined4 *puVar2;
+  
+  orig::CMoTask_Constructor_v1(self);
+  iVar1 = 2;
+  this_00 = (void *)((int)self + 0xa4);
+  do {
+    orig::ZoneMap_ConstructVt10336668(this_00);
+    this_00 = (void *)((int)this_00 + 0x78);
+    iVar1 = iVar1 + -1;
+  } while (iVar1 != 0);
+  orig::ZoneMap_ConstructVt10336634((void *)((int)self + 0x178));
+  orig::ZoneMap_ConstructVt1033668C((void *)((int)self + 0x34330));
+  orig::MathVector_ReturnThis_v1((void *)((int)self + 0x343e8));
+  orig::ZoneMap_ConstructVt10336614((void *)((int)self + 0x34428));
+  orig::EffectOffscreen_Init((void *)((int)self + 0x3959c));
+  *(uint8_t ***)self = &CTsZoneMap_vtbl_as_v0;
+  *(uint16_t *)((int)self + 0x34) = 0;
+  *(undefined4 *)((int)self + 0x58) = 0;
+  *(undefined4 *)((int)self + 0x5c) = 0;
+  puVar2 = (undefined4 *)((int)self + 0x60);
+  for (iVar1 = 0x3c; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  puVar2 = (undefined4 *)((int)self + 0x37508);
+  for (iVar1 = 0xe; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  *(undefined4 *)((int)self + 0x54) = 0;
+  *(undefined4 *)((int)self + 0x150) = 1;
+  *(undefined4 *)((int)self + 0x154) = 0;
+  *(undefined4 *)((int)self + 0x39454) = 0;
+  *(undefined4 *)((int)self + 0x39458) = 0;
+  *(undefined4 *)((int)self + 0x39498) = 0;
+  *(undefined4 *)((int)self + 0x3946c) = 0;
+  *(undefined4 *)((int)self + 0x39470) = 0;
+  *(undefined4 *)((int)self + 0x39474) = 0;
+  *(undefined4 *)((int)self + 0x39478) = 0;
+  *(undefined4 *)((int)self + 0x3947c) = 0;
+  *(undefined4 *)((int)self + 0x39494) = 0;
+  *(undefined4 *)((int)self + 0x158) = 0;
+  *(undefined4 *)((int)self + 0x3944c) = 0;
+  *(undefined4 *)((int)self + 0x39450) = 0;
+  *(undefined4 *)((int)self + 0x38e54) = 0;
+  *(undefined4 *)((int)self + 0x38e50) = 0;
+  *(undefined4 *)((int)self + 0x38e4c) = 0;
+  *(undefined4 *)((int)self + 0x38e48) = 0;
+  *(undefined4 *)((int)self + 0x38e40) = 0;
+  *(undefined4 *)((int)self + 0x38e3c) = 0;
+  *(undefined4 *)((int)self + 0x38e38) = 0;
+  *(undefined4 *)((int)self + 0x38e34) = 0;
+  *(undefined4 *)((int)self + 0x38e2c) = 0;
+  *(undefined4 *)((int)self + 0x38e28) = 0;
+  *(undefined4 *)((int)self + 0x38e24) = 0;
+  *(undefined4 *)((int)self + 0x38e20) = 0;
+  *(undefined4 *)((int)self + 0x38e58) = 0x3f800000;
+  *(undefined4 *)((int)self + 0x38e44) = 0x3f800000;
+  *(undefined4 *)((int)self + 0x38e30) = 0x3f800000;
+  *(undefined4 *)((int)self + 0x38e1c) = 0x3f800000;
+  orig::ZoneMap_ResetGlobalTables();
+  *(undefined4 *)((int)self + 0x38) = 0;
+  *(undefined4 *)((int)self + 0x17c) = 0xffffffff;
+  *(undefined4 *)((int)self + 0x3c) = 0;
+  _DAT_1065c5d8 = 0;
+  *(undefined4 *)((int)self + 0x40) = 0;
+  *(undefined4 *)((int)self + 0x44) = 0;
+  *(undefined4 *)((int)self + 0x48) = 0;
+  *(undefined4 *)((int)self + 0x50) = 0;
+  *(undefined4 *)((int)self + 0x174) = 0;
+  *(undefined4 *)((int)self + 0x3942c) = 0;
+  *(undefined4 *)((int)self + 0x39430) = 0;
+  *(undefined4 *)((int)self + 0x39438) = 0;
+  *(undefined4 *)((int)self + 0x3943c) = 0;
+  *(undefined4 *)((int)self + 0x39440) = 0;
+  *(undefined4 *)((int)self + 0x39444) = 0;
+  *(undefined4 *)((int)self + 0x38d90) = 0;
+  *(undefined4 *)((int)self + 0x39130) = 0;
+  *(undefined4 *)((int)self + 0x39448) = 0;
+  *(undefined4 *)((int)self + 0x39420) = 0;
+  *(undefined4 *)((int)self + 0x343e4) = 0;
+  DAT_10376ee8 = 1;
+  *(undefined4 *)((int)self + 0x15c) = 0;
+  *(undefined4 *)((int)self + 0x3949c) = 0;
+  *(undefined4 *)((int)self + 0x16c) = 0x40000000;
+  *(undefined4 *)((int)self + 0x170) = 0x40000000;
+  *(undefined4 *)((int)self + 0x38d94) = 0;
+  *(uint8_t *)((int)self + 0x38d98) = 0;
+  g_zbiasZoneMesh_as_v0 = 0;
+  g_zbiasPresetAux_as_v0 = 8;
+  g_zbiasPreset_C4D0_as_v0 = 0xf;
+  g_zbiasOverlay_as_v0 = 0xf;
+  g_zbiasRestore_as_v0 = 0;
+  *(undefined4 *)((int)self + 0x3954c) = 0x3f800000;
+  puVar2 = &DAT_10621c88;
+  for (iVar1 = 0x4000; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  puVar2 = (undefined4 *)&DAT_10631f38;
+  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  DAT_10621c80 = 0;
+  DAT_10621c7c = 0;
+  DAT_1065c4d4 = 0;
+  DAT_1065c4cc = 0;
+  _DAT_10621c70 = 0;
+  _DAT_10621c74 = 0;
+  _DAT_10621c78 = 0;
+  *(undefined4 *)((int)self + 0x394a4) = 1;
+  orig::CTsZoneMap_SetLayerOrder(self);
+  *(uint8_t *)((int)self + 0x39598) = 1;
+  *(undefined4 *)((int)self + 0x39590) = 0x399d4952;
+  *(undefined4 *)((int)self + 0x39594) = 0x399d4952;
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x10177FA0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CTsZoneMap::SetLayerOrder(void * self)
+{
+  *(uint32_t *)((int)self + 0x394ac) = 0;
+  *(uint32_t *)((int)self + 0x394a8) = 0;
+  *(uint32_t *)((int)self + 0x394b0) = 1;
+  *(uint32_t *)((int)self + 0x394b4) = 2;
+  *(uint32_t *)((int)self + 0x394b8) = 3;
+  *(uint32_t *)((int)self + 0x394bc) = 4;
+  if (*(int *)((int)self + 0x394a4) != 0) {
+    *(uint32_t *)((int)self + 0x394a8) = 0;
+    *(uint32_t *)((int)self + 0x394ac) = 1;
+    *(uint32_t *)((int)self + 0x394b0) = 2;
+    *(uint32_t *)((int)self + 0x394b4) = 3;
+    *(uint32_t *)((int)self + 0x394b8) = 4;
+    *(uint32_t *)((int)self + 0x394bc) = 5;
+  }
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x10178070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CTsZoneMap::CTsZoneMap_Destructor()
@@ -180,18 +383,70 @@ char CTsZoneMap::CTsZoneMap_Destructor()
     (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), this->vsHandleExtra4);
   if ( this->psHandle != 0 )
     (g_pCDx->pDevice)->lpVtbl->DeletePixelShader((g_pCDx->pDevice), this->psHandle);
-  orig::sub_10055000((int **)&this->field_3959C);
-  orig::sub_101674B0(&this->field_34428);
-  orig::sub_100279A0();
-  orig::sub_10171920(&this->field_34330);
-  orig::sub_101678D0((int *)&this->field_178);
+  orig::Vt1032B6D8_Destructor((int **)&this->field_3959C);
+  orig::Vt10336614_Destructor(&this->field_34428);
+  orig::MathVector_Nop();
+  orig::Vt1033668C_Destructor(&this->field_34330);
+  orig::Vt10336634_Destructor((int *)&this->field_178);
   v2 = &this->field_194;
   for ( i = 2; i != 0; --i )
   {
     v2 -= 120;
-    orig::sub_1016FC80(v2);
+    orig::Vt10336668_Destructor(v2);
   }
-  return orig::sub_100747C0(this);
+  return orig::CMoTask_Destructor(this);
+}
+
+// FUNCTION: FFXIMAIN 0x101781D0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CTsZoneMap::InitZBiasPresets()
+{
+  int result;
+  result = 0;
+  g_zbiasZoneMesh = 0;
+  g_zbiasPresetAux = 8;
+  g_zbiasPreset_C4D0 = 15;
+  g_zbiasOverlay = 15;
+  g_zbiasRestore = 0;
+  this->field_3954C = 1065353216;
+  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x920)) != 0 )
+  {
+    g_zbiasZoneMesh = 0;
+    g_zbiasPresetAux = 1;
+    g_zbiasPreset_C4D0 = 2;
+    g_zbiasOverlay = 2;
+    g_zbiasRestore = 0;
+    this->field_3954C = 1065353216;
+  }
+  return result;
+}
+
+// FUNCTION: FFXIMAIN 0x101784E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl ZoneMap_ResetGlobalTables(void)
+{
+  undefined4 *puVar1;
+  int iVar2;
+  
+  puVar1 = &DAT_10632040;
+  for (iVar2 = 0x1c00; iVar2 != 0; iVar2 = iVar2 + -1) {
+    *puVar1 = 0;
+    puVar1 = puVar1 + 1;
+  }
+  puVar1 = &DAT_1063208c;
+  do {
+    puVar1[-0x11] = 3;
+    puVar1[-1] = 0;
+    *puVar1 = 0x3f800000;
+    puVar1[1] = 0;
+    puVar1 = puVar1 + 0x1c;
+  } while ((int)puVar1 < (int)XI_GAME(0x1063908Cu));
+  puVar1 = &DAT_1065c4d8;
+  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
+    *puVar1 = 0;
+    puVar1 = puVar1 + 1;
+  }
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x10178B00
@@ -227,7 +482,7 @@ uint32_t __thiscall CTsZoneMap::Render(void * self)
   if (*(short *)((int)self + 0x34) == 0) {
     orig::FUN_10178250(self);
     *(undefined4 *)((int)self + 0x394a0) = *(undefined4 *)((int)self + 0x3949c);
-    orig::sub_101781D0(self);
+    orig::CTsZoneMap_InitZBiasPresets(self);
     orig::ZoneMap_CreateVertexShaders(self);
     *(short *)((int)self + 0x34) = *(short *)((int)self + 0x34) + 1;
     goto LAB_10178cf8;
@@ -241,17 +496,17 @@ uint32_t __thiscall CTsZoneMap::Render(void * self)
     local_4 = 0.0f;
   }
   if (DAT_1047bc8c == 0) {
-    uVar1 = orig::sub_10055130((void *)((int)self + 0x3959c),local_4,
+    uVar1 = orig::FUN_10055130((void *)((int)self + 0x3959c),local_4,
                          ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)self >> 8))) << 8) | (uint8_t)(DAT_1065ca28))));
     if ((char)uVar1 == '\0') goto LAB_10178c10;
-    puVar2 = (undefined4 *)orig::sub_10055160((void *)((int)self + 0x3959c));
+    puVar2 = (undefined4 *)orig::FUN_10055160((void *)((int)self + 0x3959c));
     puVar6 = &DAT_10631ed0;
     for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
       *puVar6 = *puVar2;
       puVar2 = puVar2 + 1;
       puVar6 = puVar6 + 1;
     }
-    uVar1 = orig::sub_10183370((float *)((int)self + 0x38e1c),(float *)&DAT_10631ed0);
+    uVar1 = orig::FUN_10183370((float *)((int)self + 0x38e1c),(float *)&DAT_10631ed0);
     pfVar5 = (float *)((int)self + 0x38e1c);
     pfVar7 = (float *)&DAT_10631ed0;
     for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
@@ -259,7 +514,7 @@ uint32_t __thiscall CTsZoneMap::Render(void * self)
       pfVar5 = pfVar5 + 1;
       pfVar7 = pfVar7 + 1;
     }
-    fVar9 = orig::sub_10014CF0_2(uVar1);
+    fVar9 = orig::Camera_GetFrameScale_v1(uVar1);
     fVar9 = fVar9 * (long double)_DAT_10376ff0 + (long double)DAT_1065ca2c;
     DAT_1065ca2c = (float)fVar9;
     if (fVar9 > (long double)1.0f) {
@@ -293,14 +548,41 @@ LAB_10178c10:
   }
 LAB_10178cf8:
   if (DAT_1065c4cc_as_s32 != 0) {
-    orig::sub_10177800(DAT_1065c4cc_as_s32);
+    orig::CTsZoneMap_LogZoneMetrics(DAT_1065c4cc_as_s32);
   }
-  uVar3 = orig::sub_101D29C0(0x1000,0);
+  uVar3 = orig::JpegScreenshot_TestMask10663188(0x1000,0);
   if ((char)uVar3 != '\0') {
-    orig::sub_10186E70();
-    uVar3 = orig::sub_101D2260(0x1000,0);
+    orig::FUN_10186e70();
+    uVar3 = orig::FUN_101d2260(0x1000,0);
   }
   return uVar3 & 0xffffff00;
+}
+
+// FUNCTION: FFXIMAIN 0x10179390
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CTsZoneMap::UpdateViewerPosition(void * self)
+{
+  uint32_t uVar1;
+  int iVar2;
+  char xi_frame[12] __attribute__((aligned(4)));
+  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  
+  uVar1 = orig::ZoneMap_GetHitCount((void *)((int)self + 0x178));
+  *(uint32_t *)((int)self + 0x3912c) = uVar1;
+  iVar2 = orig::Camera_GetField50_v1();
+  if (iVar2 != 0) {
+    iVar2 = orig::Camera_GetField50_v1();
+    orig::Vec3_Copy_v1(&local_c,(uint32_t *)(iVar2 + 0x44));
+    *(uint32_t *)((int)self + 0x38d4c) = local_c;
+    *(uint32_t *)((int)self + 0x38d50) = local_8;
+    *(uint32_t *)((int)self + 0x38d54) = local_4;
+    *(uint32_t *)((int)self + 0x38d58) = *(uint32_t *)((int)self + 0x3912c);
+    return;
+  }
+  *(uint32_t *)((int)self + 0x38d58) = *(uint32_t *)((int)self + 0x3912c);
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x10182700
@@ -442,7 +724,7 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int a3, IDirect3DBaseTextu
   v70 = 1.0;
   v71 = 0;
   v75 = 1065353216;
-  orig::sub_1016C060(v94, (int)v94, &v60);
+  orig::Mat44_Multiply(v94, (int)v94, &v60);
   v60 = CTsZoneMap_DrawProjectedTexture_m00;
   v65 = *(float *)&CTsZoneMap_DrawProjectedTexture_m11;
   v70 = CTsZoneMap_DrawProjectedTexture_m22;
@@ -459,7 +741,7 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int a3, IDirect3DBaseTextu
   v73 = 0;
   v74 = 0.0;
   v75 = 1065353216;
-  orig::sub_1016C060(v94, (int)v94, &v60);
+  orig::Mat44_Multiply(v94, (int)v94, &v60);
   v72 = *(float *)&CTsZoneMap_DrawProjectedTexture_m30;
   v73 = CTsZoneMap_DrawProjectedTexture_m31;
   v74 = *(float *)&CTsZoneMap_DrawProjectedTexture_m32;
@@ -476,8 +758,8 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int a3, IDirect3DBaseTextu
   v70 = 1.0;
   v71 = 0;
   v75 = 1065353216;
-  orig::sub_1016C060(v94, (int)v94, &v60);
-  result = (float *)orig::sub_10167940((_DWORD *)(self + 376));
+  orig::Mat44_Multiply(v94, (int)v94, &v60);
+  result = (float *)orig::GetPtr8IfField60Set((_DWORD *)(self + 376));
   v9 = *(float *)&result;
   v86 = result;
   if ( result != nullptr )
@@ -816,7 +1098,7 @@ int CTsZoneMap::DrawProjectedShadow(int a1, int a2)
     if ( this->overlayUseProjection != 0 )
     {
       (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &v101);
-      orig::sub_10177420((float *)self);
+      orig::ZoneMap_SetOverlayProjection((float *)self);
     }
     else
     {
@@ -833,7 +1115,7 @@ int CTsZoneMap::DrawProjectedShadow(int a1, int a2)
     v100[15] = 1.0;
     v100[13] = c_projectedShadowBiasY + v98;
     v100[14] = v99 * v94 + c_projectedShadowBiasZ;
-    Ptr8IfField60Set = (float *)orig::sub_10167940((_DWORD *)self + 94);
+    Ptr8IfField60Set = (float *)orig::GetPtr8IfField60Set((_DWORD *)self + 94);
     if ( Ptr8IfField60Set != nullptr )
     {
       v6 = Ptr8IfField60Set[14] + *(float *)a1;

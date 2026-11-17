@@ -16,7 +16,7 @@ char Obj_104E1BF8::ShapeMng_BindFontTexture(int a2, _DWORD *a3, _DWORD *a4)
   v5 = this->fontTexture;
   if ( v5 == 0 )
   {
-    orig::sub_10120660(self);
+    orig::ShapeMng_LoadFontTextures(self);
     v5 = this->fontTexture;
     if ( v5 == 0 )
       return 0;
@@ -81,7 +81,7 @@ char Obj_104E1BF8::ShapeMng_BindDmgNumTexture(int a2, _DWORD *a3, _DWORD *a4)
   v5 = this->dmgNumTexture;
   if ( v5 == 0 )
   {
-    orig::sub_10120880(self);
+    orig::ShapeMng_LoadDmgNumTextures(self);
     v5 = this->dmgNumTexture;
     if ( v5 == 0 )
       return 0;

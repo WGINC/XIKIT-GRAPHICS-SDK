@@ -6,6 +6,7 @@
 class XI_API CMoElem_VT_1032ADE8 {
 public:
     void vf18();  // 0x10041AF0
+    int * ScalarDeletingDtor(char a2);  // 0x10041FE0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xF8];

@@ -37,7 +37,7 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
   {
     if ( *v6 != 655369 )
     {
-      orig::sub_10285890(aShadowVolumesO);
+      orig::sqDebugPrintf(aShadowVolumesO);
       return;
     }
   }
@@ -46,13 +46,13 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
     v6 = *(_DWORD **)a2;
     if ( **(_DWORD **)a2 != 655369 )
     {
-      orig::sub_10285890(aShadowVolumesO_0);
+      orig::sqDebugPrintf(aShadowVolumesO_0);
       return;
     }
   }
   v7 = (int *)v6[18];
   v17 = *v7;
-  orig::sub_1027F0E0(v22, *(_DWORD *)(a2 + 4));
+  orig::sqMatrix4_1027F0E0(v22, *(_DWORD *)(a2 + 4));
   v8 = *(_DWORD *)(*v4 + 48);
   v9 = v8 == 0;
   v10 = v8 == 0;
@@ -74,11 +74,11 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
     v22[11] = 0.0;
     v20 = v12;
   }
-  orig::sub_1027EF20((float *)v21, v22, &v18);
+  orig::M4fTransform((float *)v21, v22, &v18);
   v13 = v6[13];
   if ( v13 != 0 )
     v13 = *(_DWORD *)(v13 + 84);
-  orig::sub_10297F90(
+  orig::sqsnShadowComputeFacing(
     *(_DWORD *)(a2 + 20),
     (float *)v6[21],
     v6[17],
@@ -97,7 +97,7 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
       {
         if ( v15 != 0 )
           v15 = *(_DWORD *)(v15 + 84);
-        orig::sub_10297B10(
+        orig::sqsnShadowVolumeExtrudeTriStrip(
           -v14,
           v24,
           v5,
@@ -114,7 +114,7 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
       {
         if ( v15 != 0 )
           v15 = *(_DWORD *)(v15 + 84);
-        orig::sub_102979E0(
+        orig::sqsnShadowVolumeExtrudeTriList(
           v14,
           v24,
           v5,

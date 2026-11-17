@@ -31,7 +31,7 @@ XI_API int __cdecl sqgxTextureAdd(int a1, int a2, IDirect3DTexture8 *a3, _BYTE *
   {
     if ( g_counter_109A261C == 512 )
     {
-      orig::sub_10285890(aErrorSqgxtextu);
+      orig::sqDebugPrintf(aErrorSqgxtextu);
       return -1;
     }
     v8 = 10 * v5;
@@ -39,8 +39,8 @@ XI_API int __cdecl sqgxTextureAdd(int a1, int a2, IDirect3DTexture8 *a3, _BYTE *
     g_sqgxTex_width[v8] = a1;
     g_sqgxTex_height[v8] = a2;
     g_sqgxTex_kind[v8] = (int)v4;
-    g_sqgxTex_log2Width[10 * v5] = orig::sub_10281810(a1);
-    g_sqgxTex_log2Height[10 * v5] = orig::sub_10281810(a2);
+    g_sqgxTex_log2Width[10 * v5] = orig::sqgxCeilLog2(a1);
+    g_sqgxTex_log2Height[10 * v5] = orig::sqgxCeilLog2(a2);
   }
   v9 = a4;
   g_sqgxTex_name[10 * v5] = (int)a4;
@@ -67,7 +67,7 @@ XI_API int __cdecl sqgxTextureAdd(int a1, int a2, IDirect3DTexture8 *a3, _BYTE *
   }
   else
   {
-    orig::sub_10285890(aCreatingTextur);
+    orig::sqDebugPrintf(aCreatingTextur);
     if ( g_pDancerDevice->lpVtbl->CreateTexture(
            g_pDancerDevice,
            g_sqgxTex_width[10 * v5],
@@ -77,12 +77,20 @@ XI_API int __cdecl sqgxTextureAdd(int a1, int a2, IDirect3DTexture8 *a3, _BYTE *
            (D3DFORMAT)g_sqgxTex_format[10 * v5],
            D3DPOOL_DEFAULT,
            &a3) != 0 )
-      orig::sub_10285890(aError);
+      orig::sqDebugPrintf(aError);
     (&g_sqgxTex_texture)[10 * v5] = a3;
   }
   g_sqgxTex_paletteSlot[10 * v5] = -2;
   g_sqgxTex_surface[10 * v5] = 0;
   return v5;
+}
+
+// FUNCTION: FFXIMAIN 0x102819C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl SqgxTexture_ClearPaletteUsed(int param_1)
+{
+  ((uint8_t *)((&g_sqgxPaletteUsed_as_v0)))[param_1] = 0;
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x102819D0
@@ -116,6 +124,81 @@ XI_API int __cdecl sqgxTextureClutAdd(int a1, int a2, int a3)
   while ( v4 < 256 );
   g_pDancerDevice->SetPaletteEntries(i, v7);
   return i;
+}
+
+// FUNCTION: FFXIMAIN 0x10281A70
+// GATE: PASS -- 100 trials, 96 returned normally, 87 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
+XI_API void __cdecl SqgxTexture_FreeSlot(int param_1)
+{
+  int *piVar1;
+  
+  if ((&g_sqgxTex_format_as_v0)[param_1 * 10] != -1) {
+    piVar1 = *(int **)(((char *)&g_sqgxTex_texture_as_v0) + param_1 * 0x28);
+    (&g_sqgxTex_format_as_v0)[param_1 * 10] = 0xffffffff;
+    if (piVar1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+    }
+    piVar1 = *(int **)(((char *)&g_sqgxTex_surface_as_v0) + param_1 * 0x28);
+    if (piVar1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+    }
+    if (0 < g_counter_109A261C) {
+      piVar1 = (int *)(((char *)&DAT_1099d608) + g_counter_109A261C * 0x28);
+      do {
+        if (*piVar1 != -1) {
+          return;
+        }
+        g_counter_109A261C = g_counter_109A261C + -1;
+        piVar1 = piVar1 + -10;
+      } while (0 < g_counter_109A261C);
+    }
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10281B60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl sqgxTextureGetSize(int param_1, undefined4 * param_2, undefined4 * param_3)
+{
+  *param_2 = (&g_sqgxTex_width_as_v0)[param_1 * 10];
+  *param_3 = (&g_sqgxTex_height_as_v0)[param_1 * 10];
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10281C20
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __cdecl sqgxTextureSet(int param_1)
+{
+  int *piVar1;
+  
+  piVar1 = (int *)(g_pSqgxContext_as_s32 + 0x8b0 + *(int *)(g_pSqgxContext_as_s32 + 0xb18) * 4);
+  if (param_1 != *(int *)(g_pSqgxContext_as_s32 + 0x8b0 + *(int *)(g_pSqgxContext_as_s32 + 0xb18) * 4)) {
+    *piVar1 = param_1;
+    g_sqgxRenderStateDirty_as_v0 = 1;
+  }
+  return piVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10281C50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __cdecl sqgxTextureDecal(undefined4 param_1)
+{
+  int iVar1;
+  
+  iVar1 = g_pSqgxContext_as_s32;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x8c0 + *(int *)(g_pSqgxContext_as_s32 + 0xb18) * 4) = param_1;
+  g_sqgxRenderStateDirty_as_v0 = 1;
+  return iVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10281C80
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl sqgxTextureClamp(undefined4 param_1)
+{
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x8c8 + *(int *)(g_pSqgxContext_as_s32 + 0xb18) * 4) = param_1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x8d0 + *(int *)(g_pSqgxContext_as_s32 + 0xb18) * 4) = param_1;
+  g_sqgxRenderStateDirty_as_v0 = 1;
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x10281D60
@@ -313,11 +396,11 @@ XI_API int * __cdecl sqgxTextureDraw(int a1, char a2)
   {
     v7 = (double)g_pSqgxContext[182] / (double)g_sqgxTex_height[10 * a1];
     v5 = (double)g_pSqgxContext[181] / (double)g_sqgxTex_width[10 * a1];
-    orig::sub_102838A0(v5, v7);
+    orig::sqgxPixelSize(v5, v7);
   }
   else
   {
-    orig::sub_102838A0(1.0, 1.0);
+    orig::sqgxPixelSize(1.0, 1.0);
   }
   if ( a1 == g_pSqgxContext[554] )
   {

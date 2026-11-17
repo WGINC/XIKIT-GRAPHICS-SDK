@@ -8,20 +8,27 @@ XI_API void __cdecl SqsdCartoon_Draw(int param_1, int * param_2)
 {
   int iVar1;
   
-  if ((*(int *)(param_1 + 0x54) != 0) && (iVar1 = orig::sub_102A1FA0(*param_2), iVar1 == 2)) {
+  if ((*(int *)(param_1 + 0x54) != 0) && (iVar1 = orig::SqsdPassTest_TestSeparationHalf(*param_2), iVar1 == 2)) {
     return;
   }
-  orig::sub_102A34D0(param_1 + 0x14);
-  orig::sub_10298C50(*(int *)(param_1 + 0x50));
+  orig::SqgxLighting_ApplyLighting(param_1 + 0x14);
+  orig::Texture_BindFromObject(*(int *)(param_1 + 0x50));
   orig::sqgxShader_v1(0x10000,0);
-  orig::sub_10285850_2(*param_2);
+  orig::sqDrawableDraw_v1(*param_2);
   orig::sqgxPassAdd_v1(2);
   orig::sqgxBlendSub();
-  orig::sub_10298C50(*(int *)(param_1 + 0x4c));
+  orig::Texture_BindFromObject(*(int *)(param_1 + 0x4c));
   orig::sqgxShader_v1(0x800000,0);
-  orig::sub_10285850_2(*param_2);
+  orig::sqDrawableDraw_v1(*param_2);
   orig::sqgxPassAdd_v1(-2);
   orig::sqgxBlendOff_v1();
   return;
 }
 
+// FUNCTION: FFXIMAIN 0x10299840
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __cdecl sqsdCartoon_BakeOntoShape_Stub(void)
+{
+  orig::sqDebugPrintf_v1(s_warning_not_implemented_yet_103bc04c);
+  return 0;
+}

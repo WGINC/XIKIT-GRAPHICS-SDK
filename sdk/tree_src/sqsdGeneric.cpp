@@ -2,6 +2,62 @@
 #include "gfx_all.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10290910
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl SqsdGeneric_Init(undefined4 * param_1)
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  
+  param_1[0x20] = 0x3f000000;
+  param_1[0x1b] = 0x3f000000;
+  param_1[0x28] = 1;
+  param_1[0x1d] = 0x3f800000;
+  param_1[0x1f] = 0x3f800000;
+  param_1[0x22] = 1;
+  param_1[0x23] = 1;
+  param_1[0x26] = 1;
+  *param_1 = 0xf0001;
+  param_1[2] = &LAB_102908d0;
+  param_1[3] = XI_CODE(FUN_102908e0);
+  param_1[4] = &LAB_10290a80;
+  param_1[0x13] = 0;
+  param_1[0x14] = 0;
+  param_1[0x15] = 0;
+  param_1[0x16] = 0;
+  param_1[0x17] = 0;
+  param_1[0x19] = 0;
+  param_1[0x1c] = 0x3ba3d70a;
+  param_1[0x29] = 0;
+  param_1[0x1e] = 0;
+  param_1[0x21] = 0;
+  param_1[0x24] = 0;
+  param_1[0x25] = 0;
+  param_1[0x2a] = 0;
+  param_1[0x27] = 0;
+  param_1[0x2c] = 0;
+  param_1[0x2b] = 0;
+  param_1[0x2d] = 0;
+  puVar2 = param_1 + 0x56;
+  puVar1 = param_1 + 0x2f;
+  iVar3 = 10;
+  do {
+    puVar1[-1] = 0;
+    *puVar1 = 0;
+    puVar1[1] = 0;
+    puVar2[-10] = 0;
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+    puVar1 = puVar1 + 3;
+    iVar3 = iVar3 + -1;
+  } while (iVar3 != 0);
+  param_1[0x18] = 0;
+  param_1[0x1a] = 0;
+  orig::SqrdMaterial_Init(param_1 + 5);
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x10290B60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
@@ -19,8 +75,8 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
   uVar5 = 0;
   if (*(int *)(param_1 + 0x8c) != 0) {
     if ((*(int *)(param_1 + 0x88) != 0) &&
-       (iVar4 = orig::sub_102A1FA0(*param_2), iVar4 == 2)) {
-      orig::sub_102A3760();
+       (iVar4 = orig::SqsdPassTest_TestSeparationHalf(*param_2), iVar4 == 2)) {
+      orig::Sqgx_ResetCounter();
       return;
     }
     local_10 = 0;
@@ -40,12 +96,12 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
     else if ((iVar4 == 0xa0009) && (((int *)*param_2)[0x14] != 0)) {
       uVar5 = 0x200000;
     }
-    orig::sub_10281C50_2(0);
-    orig::sub_10281C80_2(*(uint32_t *)(param_1 + 0x94));
+    orig::sqgxTextureDecal_v1(0);
+    orig::sqgxTextureClamp_v1(*(uint32_t *)(param_1 + 0x94));
     orig::sqgxPassAdd_v1(*(int *)(param_1 + 0x90));
     iVar4 = *(int *)(param_1 + 0x90);
-    orig::sub_10281C80_2(*(uint32_t *)(param_1 + 0x94));
-    orig::sub_102A34D0(param_1 + 0x14);
+    orig::sqgxTextureClamp_v1(*(uint32_t *)(param_1 + 0x94));
+    orig::SqgxLighting_ApplyLighting(param_1 + 0x14);
     bVar7 = NAN((long double)*(float *)(param_1 + 0x44)) || NAN((long double)0.999000012874603271484375f);
     if ((bVar7 || (long double)*(float *)(param_1 + 0x44) < (long double)0.999000012874603271484375f) != bVar7) {
       uVar6 = uVar5 | local_10;
@@ -56,10 +112,10 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
         uVar6 = uVar6 | 0x2000;
       }
       if (*(int *)(param_1 + 0x4c) == 0) {
-        orig::sub_10281C20_2(-1);
+        orig::sqgxTextureSet_v1(-1);
       }
       else {
-        orig::sub_10281C20_2(*(int *)(*(int *)(param_1 + 0x4c) + 0x14));
+        orig::sqgxTextureSet_v1(*(int *)(*(int *)(param_1 + 0x4c) + 0x14));
         orig::sqgxTextureClut(*(int *)(*(int *)(param_1 + 0x4c) + 0x18));
         uVar6 = uVar6 | 4;
         iVar1 = *(int *)(*(int *)(param_1 + 0x4c) + 0x1c);
@@ -77,13 +133,13 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
         orig::sqgxBlendLin_v1((float)((long double)1.0f - (long double)*(float *)(param_1 + 0x44)));
       }
       orig::sqgxShader_v2(uVar6,0);
-      orig::sub_10285850_2(*param_2);
+      orig::sqDrawableDraw_v1(*param_2);
       uVar6 = local_10;
     }
     if (*(int *)(param_1 + 100) != 0) {
       orig::sqgxPassAdd_v1(1);
-      orig::sub_102A3540(*(float *)(param_1 + 0x7c));
-      orig::sub_10281C20_2(*(int *)(*(int *)(param_1 + 100) + 0x14));
+      orig::Sqgx_SetParam9cc(*(float *)(param_1 + 0x7c));
+      orig::sqgxTextureSet_v1(*(int *)(*(int *)(param_1 + 100) + 0x14));
       orig::sqgxTextureClut(*(int *)(*(int *)(param_1 + 100) + 0x18));
       if ((*(uint8_t *)(param_1 + 0xa0) & 0x10) == 0) {
         bVar7 = NAN((long double)*(float *)(param_1 + 0x44)) || NAN((long double)0.999000012874603271484375f);
@@ -95,7 +151,7 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
         orig::sqgxBlendAddDestAlpha();
       }
       orig::sqgxShader_v2(uVar5 | uVar6 | 0x40,0);
-      orig::sub_10285850_2(*param_2);
+      orig::sqDrawableDraw_v1(*param_2);
       iVar4 = iVar4 + 1;
     }
     param_1 = iVar4;
@@ -108,41 +164,41 @@ XI_API void __cdecl SqsdGeneric_DrawPasses(int param_1, int * param_2)
       else {
         orig::sqgxBlendAddDestAlpha();
       }
-      orig::sub_10281C20_2(*(int *)(*(int *)(iVar3 + 0x50) + 0x14));
+      orig::sqgxTextureSet_v1(*(int *)(*(int *)(iVar3 + 0x50) + 0x14));
       orig::sqgxTextureClut(*(int *)(*(int *)(iVar3 + 0x50) + 0x18));
       orig::sqgxShader_v2(uVar5 | uVar6 | 8,0);
-      orig::sub_10281C50_2(1);
-      orig::sub_10281C80_2(0);
-      orig::sub_10285850_2(*param_2);
+      orig::sqgxTextureDecal_v1(1);
+      orig::sqgxTextureClamp_v1(0);
+      orig::sqDrawableDraw_v1(*param_2);
     }
     if (*(int *)(iVar3 + 0x5c) != 0) {
       orig::sqgxPassAdd_v1(1);
       param_1 = param_1 + 1;
       orig::sqgxBlendOff_v1();
-      orig::sub_10281C50_2(1);
+      orig::sqgxTextureDecal_v1(1);
       orig::sqgxShader_v2(uVar5 | uVar6 | 4,0);
       orig::sqgxFBMask_v1(0xff,0xff,0xff,0);
-      orig::sub_10281C80_2(*(uint32_t *)(iVar3 + 0x94));
-      orig::sub_10281C20_2(*(int *)(*(int *)(iVar3 + 0x5c) + 0x14));
+      orig::sqgxTextureClamp_v1(*(uint32_t *)(iVar3 + 0x94));
+      orig::sqgxTextureSet_v1(*(int *)(*(int *)(iVar3 + 0x5c) + 0x14));
       orig::sqgxTextureClut(*(int *)(*(int *)(iVar3 + 0x5c) + 0x18));
-      orig::sub_10285850_2(*param_2);
+      orig::sqDrawableDraw_v1(*param_2);
       orig::sqgxFBMask_v1(0,0,0,0);
     }
     if (*(int *)(iVar3 + 0x58) != 0) {
       orig::sqgxZMask_v1(0);
-      orig::sub_10283F20(*(float *)(iVar3 + 0x80));
+      orig::SqgxContext_SetInverseFactor(*(float *)(iVar3 + 0x80));
       orig::sqgxPassAdd_v1(1);
       param_1 = param_1 + 1;
       if (((*(uint8_t *)(iVar3 + 0xa0) & 2) == 0) && (*(int *)(iVar3 + 0x5c) == 0)) {
-        orig::Unit102822A0_SetMultiplyAdd(*(uint32_t *)(iVar3 + 0x74));
+        orig::SqgxContext_SetMultiplyAdd(*(uint32_t *)(iVar3 + 0x74));
       }
       else {
         orig::sqgxBlendAddDestAlpha();
       }
-      orig::sub_10281C20_2(*(int *)(*(int *)(iVar3 + 0x58) + 0x14));
+      orig::sqgxTextureSet_v1(*(int *)(*(int *)(iVar3 + 0x58) + 0x14));
       orig::sqgxTextureClut(*(int *)(*(int *)(iVar3 + 0x58) + 0x18));
       orig::sqgxShader_v2(uVar5 | uVar6 | 0x10,0);
-      orig::sub_10285850_2(*param_2);
+      orig::sqDrawableDraw_v1(*param_2);
       orig::sqgxZMask_v1(1);
     }
     orig::sqgxBlendOff_v1();
@@ -162,27 +218,27 @@ XI_API int * __cdecl sqsdGeneric_BakeOntoShape(int param_1, int * param_2)
   
   uVar4 = 0;
   if ((*param_2 == 0xa0009) && (param_2[0x14] != 0)) {
-    orig::sub_10285890_2(s_WARNING__Spherigon_object_cannot_103bad58);
+    orig::sqDebugPrintf_v1(s_WARNING__Spherigon_object_cannot_103bad58);
     return param_2;
   }
   iVar1 = param_2[0xd];
   if ((*(int *)(param_1 + 0x98) != 0) && (uVar4 = 2, *(int *)(iVar1 + 0x58) == 0)) {
-    orig::sub_10285890_2(s_ERROR__model_is_missing_vertex_n_103bad30);
+    orig::sqDebugPrintf_v1(s_ERROR__model_is_missing_vertex_n_103bad30);
   }
   if ((*(int *)(param_1 + 0x4c) != 0) && (uVar4 = uVar4 | 4, *(int *)(iVar1 + 0x5c) == 0)) {
-    orig::sub_10285890_2(s_ERROR__model_is_missing_vertex_u_103bad0c);
+    orig::sqDebugPrintf_v1(s_ERROR__model_is_missing_vertex_u_103bad0c);
   }
   if ((*(int *)(param_1 + 0xa8) != 0) && (uVar4 = uVar4 | 1, *(int *)(iVar1 + 0x60) == 0)) {
-    orig::sub_10285890_2(s_ERROR__model_is_missing_vertex_c_103bace4);
+    orig::sqDebugPrintf_v1(s_ERROR__model_is_missing_vertex_c_103bace4);
   }
   orig::sqgxShader_v1(uVar4,0);
-  orig::sub_1029B5C0();
-  orig::sub_10285850_2((int)param_2);
+  orig::SqgxDlist_CreateContextList();
+  orig::sqDrawableDraw_v1((int)param_2);
   puVar2 = orig::FUN_1029b620();
-  orig::sub_102A3760();
-  piVar3 =(int*)(orig::sub_102A2000());
+  orig::Sqgx_ResetCounter();
+  piVar3 =(int*)(orig::SqshDispList_Create());
   piVar3[0x11] = (int)puVar2;
-  orig::sub_1028D9C0(piVar3 + 5,param_2 + 5);
-  orig::sub_10285740((int *)&param_2);
+  orig::SqBounds_Copy(piVar3 + 5,param_2 + 5);
+  orig::SqObject_Release((int *)&param_2);
   return piVar3;
 }

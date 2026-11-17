@@ -6,6 +6,7 @@
 class XI_API CAtelIdleTask {
 public:
     static uint32_t __cdecl UpdateFrame();  // 0x100106C0
+    static undefined4 __cdecl Create();  // 0x100142B0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

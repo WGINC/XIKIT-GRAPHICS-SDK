@@ -9,7 +9,13 @@ char * CMoGeneratorClone_VT_1032B69C::ScalarDeletingDtor(char a2)
   char * self = reinterpret_cast<char *>(this);  // byte-exact view for the rest
   orig::CMoGeneratorClone_Destructor(self);
   if ( (a2 & 1) != 0 )
-    orig::sub_10028710((int)self);
+    orig::SharedDeleteHelper((int)self);
   return self;
 }
 
+// FUNCTION: FFXIMAIN 0x100542E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoGeneratorClone_VT_1032B69C::CMoGeneratorClone_GetRuntimeClass()
+{
+  return &CMoGeneratorClone_classdesc;
+}

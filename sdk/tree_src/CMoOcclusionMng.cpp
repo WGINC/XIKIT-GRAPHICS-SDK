@@ -2,6 +2,23 @@
 #include "gfx_all.hpp"
 #include "CMoOcclusionMng.hpp"
 
+// FUNCTION: FFXIMAIN 0x1006C130
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoOcclusionMng::GetRuntimeClass()
+{
+  return &CMoOcclusionMng_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x1006C1C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoOcclusionMng::ScalarDeletingDtor(char a2)
+{
+  orig::CMoOcclusionMng_Destructor(this);
+  if ( (a2 & 1) != 0 )
+    orig::thunk_sub_10028AA0((int)this);
+  return (int *)this;
+}
+
 // FUNCTION: FFXIMAIN 0x1006C220
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 _DWORD * CMoOcclusionMng::OcclusionMng_CreateTarget()

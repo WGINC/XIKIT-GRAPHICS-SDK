@@ -5,15 +5,44 @@
 #pragma pack(push, 1)
 class XI_API CMoElem {
 public:
+    static char ** __cdecl GetRuntimeClass_variant0();  // 0x100353C0
+    void Slot13DoNothing(int a1);  // 0x10036A80
+    void Slot14DoNothing(int a1);  // 0x10036A90
+    int Slot15ReturnZero();  // 0x10036AA0
+    void Slot19DoNothing();  // 0x10036AB0
+    static char ** __cdecl GetRuntimeClass_variant1();  // 0x1003E690
+    static char ** __cdecl GetRuntimeClass_variant2();  // 0x10041000
+    BOOL CMoElemFamily_IsKind0(int a1);  // 0x10041120
+    static char ** __cdecl GetRuntimeClass_variant3();  // 0x100426A0
+    static char ** __cdecl GetRuntimeClass_variant4();  // 0x100426D0
+    static char ** __cdecl GetRuntimeClass_variant5();  // 0x10043190
+    static char ** __cdecl GetRuntimeClass_variant6();  // 0x10043570
+    static char ** __cdecl GetRuntimeClass_variant7();  // 0x10043700
+    static char ** __cdecl GetRuntimeClass_variant8();  // 0x10044880
+    static undefined8 __thiscall Constructor(void * self);  // 0x10044890
+    int * ScalarDeletingDtor(char a2);  // 0x10044950
+    char CMoElemFamily_SharedCleanup();  // 0x10044970
+    static unsigned char __thiscall IsSourceAt0FCTest(void * self);  // 0x10044AC0
     static undefined4 __thiscall AdvanceTimer(void * self);  // 0x10044AE0
+    static int __cdecl InvertInPlace(float * param_1);  // 0x10045800
+    static undefined4 __thiscall CheckAt138ThenCall(void * self);  // 0x100458F0
     static undefined4 __thiscall PrepareDraw(void * self);  // 0x10045A40
+    void Slot18DoNothing();  // 0x100472E0
+    static int __thiscall GetActiveField0A4(void * self);  // 0x100473F0
+    static int __thiscall GetAddr78(void * self);  // 0x10047450
+    static int __thiscall GetAddr84(void * self);  // 0x10047490
+    static char ** __cdecl GetRuntimeClass_variant9();  // 0x10047550
+    static char ** __cdecl GetRuntimeClass_variant10();  // 0x10047570
+    static char ** __cdecl GetRuntimeClass_variant11();  // 0x100548A0
+    static char ** __cdecl GetRuntimeClass_variant12();  // 0x100562D0
+    static char ** __cdecl GetRuntimeClass_variant13();  // 0x10064160
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xF8];
     int32_t listAResourceHandle;  // +0xFC pointer to a handle of the resource this element is linked to through list A
     int32_t listBResourceHandle;  // +0x100 pointer to a handle of the resource this element is linked to through list B
     uint8_t _pad_104[0x4];
-    int32_t headeredAllocation;  // +0x108 block freed with sub_1006C110 by the cleanup
+    int32_t headeredAllocation;  // +0x108 block freed with Mem_FreeWithHeader12 by the cleanup
     uint8_t _pad_10C[0x58];
     int32_t backrefResourceHandle;  // +0x164 pointer to a handle of a resource whose +248 back-reference the cleanup clears and releases
     uint8_t _pad_168[0x2C];

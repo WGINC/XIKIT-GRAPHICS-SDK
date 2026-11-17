@@ -3,6 +3,96 @@
 #include "CXiAtelActor.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10082960
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CXiAtelActor::IsAtelType82(void * self)
+{
+  if ((0x51 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x53)) {
+    return 1;
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x100829C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CXiAtelActor::IsAtelType83(void * self)
+{
+  if ((0x52 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x54)) {
+    return 1;
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x10085C90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkCasterAttachments(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+{
+  int iVar1;
+  int iVar2;
+  uint32_t uVar3;
+  int iVar4;
+  
+  if (param_2 != 0) {
+    xi_eax = 0;
+    iVar1 = *(int *)((int)self_ + 0x68);
+    iVar4 = 0;
+    if (*(int *)((int)self_ + 0x68) != 0) {
+      while (iVar2 = iVar1, iVar2 != param_2) {
+        iVar1 = *(int *)(iVar2 + 0x2c);
+        iVar4 = iVar2;
+        if (*(int *)(iVar2 + 0x2c) == 0) {
+          return 0;
+        }
+      }
+      if (iVar4 != 0) {
+        *(uint32_t *)(iVar4 + 0x2c) = *(uint32_t *)(iVar2 + 0x2c);
+        *(uint32_t *)(param_2 + 0x2c) = 0;
+        uVar3 = orig::CMoAttachments_ClearCaster_v2((void *)param_2,0);
+        return uVar3;
+      }
+      *(uint32_t *)((int)self_ + 0x68) = *(uint32_t *)(iVar2 + 0x2c);
+      *(uint32_t *)(param_2 + 0x2c) = 0;
+      xi_eax = orig::CMoAttachments_ClearCaster_v2((void *)param_2,0);
+    }
+  }
+  return xi_eax;
+}
+
+// FUNCTION: FFXIMAIN 0x10085CF0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkTargetAttachments(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+{
+  int iVar1;
+  int iVar2;
+  uint32_t uVar3;
+  int iVar4;
+  
+  if (param_2 != 0) {
+    xi_eax = 0;
+    iVar1 = *(int *)((int)self_ + 0x6c);
+    iVar4 = 0;
+    if (*(int *)((int)self_ + 0x6c) != 0) {
+      while (iVar2 = iVar1, iVar2 != param_2) {
+        iVar1 = *(int *)(iVar2 + 0x30);
+        iVar4 = iVar2;
+        if (*(int *)(iVar2 + 0x30) == 0) {
+          return 0;
+        }
+      }
+      if (iVar4 != 0) {
+        *(uint32_t *)(iVar4 + 0x30) = *(uint32_t *)(iVar2 + 0x30);
+        *(uint32_t *)(param_2 + 0x30) = 0;
+        uVar3 = orig::CMoAttachments_ClearTarget_v2((void *)param_2,0);
+        return uVar3;
+      }
+      *(uint32_t *)((int)self_ + 0x6c) = *(uint32_t *)(iVar2 + 0x30);
+      *(uint32_t *)(param_2 + 0x30) = 0;
+      xi_eax = orig::CMoAttachments_ClearTarget_v2((void *)param_2,0);
+    }
+  }
+  return xi_eax;
+}
+
 // FUNCTION: FFXIMAIN 0x10086210
 // GATE: PASS -- 100 trials, 100 returned normally, 216 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Actor_DrawWorldText(_DWORD *a1, const char *a2, float a3, unsigned int a4, int a5)
@@ -80,31 +170,31 @@ XI_API void __cdecl Actor_DrawWorldText(_DWORD *a1, const char *a2, float a3, un
   char &v74 = *reinterpret_cast<char *>(xi_frame + 0x258);
   bool xi_fpu_unord = false;
 
-  orig::sub_10027990_3((Iostream_init *)v68);
+  orig::fn_10027990((Iostream_init *)v68);
   v58 = 0.0;
   v59 = 0.0;
   v60 = 0.0;
   v61 = 1065353216;
-  orig::sub_100279B0(v68);
-  orig::sub_10027CF0(v68, a1);
+  orig::Mat4_SetIdentity(v68);
+  orig::Mat4_SetTranslation(v68, a1);
   orig::CDx_SetTransform(g_pCDx, 256, v68);
-  orig::sub_100276F0(&v58, &v58);
+  orig::Gfx_ProjectWorldToClip(&v58, &v58);
   (xi_fpu_unord = __builtin_isunordered(v60, 1.0), v6 = v60 < 1.0);
   v7 = 0;
   v8 = v60 == 1.0;
   v64 = v60;
   if ( ((__int16)(((v6 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 && !(v60 < 0.0) )
   {
-    orig::sub_100278E0(&v58);
-    orig::sub_10027050(&v58, -0.5);
+    orig::Gfx_NdcToScreen(&v58);
+    orig::Vec2_AddScalar(&v58, -0.5);
     v47 = v58 >= 0.0 ? v58 : -v58;
-    if ( !((double)(unsigned __int16)orig::sub_10015680() + 100.0 < v47) )
+    if ( !((double)(unsigned __int16)orig::Camera_GetViewportWidth() + 100.0 < v47) )
     {
       v48 = v59 >= 0.0 ? v59 : -v59;
-      if ( !((double)(unsigned __int16)orig::sub_10015690() + 100.0 < v48) )
+      if ( !((double)(unsigned __int16)orig::Camera_GetViewportHeight() + 100.0 < v48) )
       {
-        v65 = (double)(unsigned __int16)orig::sub_10015680() * 0x1.3333340000000p-9 * a3;
-        ViewportHeight = (double)(unsigned __int16)orig::sub_10015690();
+        v65 = (double)(unsigned __int16)orig::Camera_GetViewportWidth() * 0x1.3333340000000p-9 * a3;
+        ViewportHeight = (double)(unsigned __int16)orig::Camera_GetViewportHeight();
         v10 = strlen(a2);
         v49 = v10;
         v66 = ViewportHeight * 0x1.3333340000000p-9 * a3;
@@ -170,7 +260,7 @@ XI_API void __cdecl Actor_DrawWorldText(_DWORD *a1, const char *a2, float a3, un
             }
             else
             {
-              orig::sub_10120510(g_shapeMng, v21, (int)v51, v20, &v69[v19 + 72], &v69[v19 + 108]);
+              orig::ShapeMng_GetFontGlyph(g_shapeMng, v21, (int)v51, v20, &v69[v19 + 72], &v69[v19 + 108]);
               if ( v19 == 0 )
                 goto LABEL_31;
               if ( v21 < 0x8Eu || v21 > 0xA8u )
@@ -270,7 +360,7 @@ LABEL_50:
             {
               v67[0] = v65 * *(v32 - 1);
               v67[1] = v66 * *v32;
-              orig::sub_10026FD0(v31 - 2, &v58, v67);
+              orig::Vec2_Add(v31 - 2, &v58, v67);
               v35 = *(v29 - 1);
               v36 = *v29;
               *v31 = v64;
@@ -337,6 +427,46 @@ LABEL_62:
     }
   }
 LABEL_63:
-  orig::sub_100279A0();
+  orig::MathVector_Nop();
 }
 
+// FUNCTION: FFXIMAIN 0x10086E90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CXiAtelActor::CopyAndWrapAngles(void * self)
+{
+  float *pfVar1;
+  long double fVar2;
+  uint8_t bVar3;
+  uint8_t bVar4;
+  long double fVar5;
+  
+  orig::Vec4_Copy_v1((uint32_t *)((int)self + 0xc4),(uint32_t *)((int)self + 0x34));
+  pfVar1 = (float *)((int)self + 0x44);
+  orig::Vec4_Copy_v1(pfVar1,pfVar1);
+  if ((long double)*pfVar1 > (long double)3.141499996185302734375f) {
+    *pfVar1 = (float)((long double)*pfVar1 - (long double)6.28299999237060546875f);
+  }
+  bVar3 = NAN((long double)*pfVar1) || NAN((long double)(-3.141499996185302734375f));
+  if ((bVar3 || (long double)*pfVar1 < (long double)(-3.141499996185302734375f)) != bVar3) {
+    *pfVar1 = (float)((long double)*pfVar1 + (long double)6.28299999237060546875f);
+  }
+  if ((long double)*(float *)((int)self + 0x48) > (long double)3.141499996185302734375f) {
+    *(float *)((int)self + 0x48) = (float)((long double)*(float *)((int)self + 0x48) - (long double)6.28299999237060546875f);
+  }
+  bVar3 = NAN((long double)*(float *)((int)self + 0x48)) || NAN((long double)(-3.141499996185302734375f));
+  if ((bVar3 || (long double)*(float *)((int)self + 0x48) < (long double)(-3.141499996185302734375f)) != bVar3) {
+    *(float *)((int)self + 0x48) = (float)((long double)*(float *)((int)self + 0x48) + (long double)6.28299999237060546875f);
+  }
+  if ((long double)*(float *)((int)self + 0x4c) > (long double)3.141499996185302734375f) {
+    *(float *)((int)self + 0x4c) = (float)((long double)*(float *)((int)self + 0x4c) - (long double)6.28299999237060546875f);
+  }
+  fVar5 = (long double)*(float *)((int)self + 0x4c);
+  fVar2 = (long double)(-3.141499996185302734375f);
+  bVar4 = NAN(fVar5) || NAN(fVar2);
+  bVar3 = bVar4 || fVar5 < fVar2;
+  if (bVar3 != bVar4) {
+    *(float *)((int)self + 0x4c) = (float)((long double)*(float *)((int)self + 0x4c) + (long double)6.28299999237060546875f);
+  }
+  return (uint32_t)(uint8_t)(bVar3 | (uint8_t)((uint16_t)((uint16_t)bVar4 << 10) >> 8) |
+                     (uint8_t)((uint16_t)((uint16_t)(bVar4 || fVar5 == fVar2) << 0xe) >> 8)) << 8;
+}

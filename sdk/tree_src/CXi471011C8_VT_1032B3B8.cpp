@@ -48,7 +48,7 @@ undefined4 __thiscall CXi471011C8_VT_1032B3B8::RebuildBlendWeights(void * self)
     else {
       orig::CMoElemFamily_SharedEarlyExit(self);
     }
-    puVar2 = (uint32_t *)orig::sub_10044C40_2(self,afStack_c);
+    puVar2 = (uint32_t *)orig::ElemFog_ComputeWorldPos_v1(self,afStack_c);
     uStack_18 = *puVar2;
     uStack_14 = puVar2[1];
     uStack_10 = puVar2[2];
@@ -56,9 +56,9 @@ undefined4 __thiscall CXi471011C8_VT_1032B3B8::RebuildBlendWeights(void * self)
     uStack_20 = 0;
     uStack_24 = 0;
     orig::YmElem_RestoreDevice(self,0xffff);
-    orig::sub_1006A450(g_pResourceMng_as_v0);
+    orig::FUN_1006a450(g_pResourceMng_as_v0);
     orig::CMoDX_PopViewMatrix_v1(g_pResourceMng_as_v0);
-    orig::sub_1006A0E0_2(g_pResourceMng_as_v0,0,0);
+    orig::FUN_1006a0e0(g_pResourceMng_as_v0,0,0);
     uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3c))))((void *)(self));
     orig::YmElem_SetupDevice(self,uVar3);
     orig::EndEffectOffscreenPass(&uStack_18,&uStack_24);
@@ -72,3 +72,14 @@ undefined4 __thiscall CXi471011C8_VT_1032B3B8::RebuildBlendWeights(void * self)
   return iVar4;
 }
 
+// FUNCTION: FFXIMAIN 0x10052E90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CXi471011C8_VT_1032B3B8::Ctor(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &PTR_CMoElem_GetRuntimeClass_variant8_1032b3b8;
+  *(uint16_t *)((int)self + 0x176) = 0x19c;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}

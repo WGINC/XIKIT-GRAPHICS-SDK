@@ -13,7 +13,7 @@ int Obj_10621944::Obj_10621944_Draw()
   {
     orig::Obj_10621944_DrawBgRect(self);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-    orig::Unit1018BA60_DrawTextBlockOnce(this->textBlock);
+    orig::TextInputFiles_DrawTextBlockOnce(this->textBlock);
     return (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
   }
   return result;

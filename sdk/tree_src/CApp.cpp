@@ -14,18 +14,18 @@ char CApp::RunMainLoop()
   char &v5 = *reinterpret_cast<char *>(xi_frame + 0x13);
   struct tagMSG &Msg = *reinterpret_cast<struct tagMSG *>(xi_frame + 0x14);
 
-  orig::sub_100014A0(*((HWND *)self + 6));
-  if ( orig::CDx_Initialize(g_pCDx) != 0 && orig::sub_10001BB0(*((HINSTANCE *)self + 5)) != 0 )
+  orig::App_ForceForegroundWindow(*((HWND *)self + 6));
+  if ( orig::CDx_Initialize(g_pCDx) != 0 && orig::App_CreateInputSystem(*((HINSTANCE *)self + 5)) != 0 )
   {
     GetWindowRect(*((HWND *)self + 6), (LPRECT)self + 2);
-    v2 = (char *)orig::sub_10311BBB(0x33Cu);
+    v2 = (char *)orig::Allocator_Generic(0x33Cu);
     if ( v2 != nullptr )
     {
-      v3 = orig::sub_10010700(v2);
+      v3 = orig::App_Constructor(v2);
       g_pCamera = (std::codecvt_base *)v3;
       if ( v3 != nullptr )
       {
-        orig::sub_10010CE0(v3, 0);
+        orig::App_SetSeqStep(v3, 0);
         do
         {
           v5 = 0;
@@ -35,7 +35,7 @@ char CApp::RunMainLoop()
         while ( v5 != 1 );
         this->mainLoopActive = 1;
 LABEL_9:
-        orig::sub_100014A0(*((HWND *)self + 6));
+        orig::App_ForceForegroundWindow(*((HWND *)self + 6));
         if ( (unsigned __int8)orig::App_RenderFrameMaskedFPU(self) == 0 )
           goto LABEL_23;
         while ( 1 )
@@ -57,7 +57,7 @@ LABEL_9:
             if ( Msg.wParam == 44 )
               goto LABEL_17;
 LABEL_21:
-            orig::sub_100016C0((int)Msg.hwnd, Msg.message, Msg.wParam, Msg.lParam);
+            orig::App_PreTranslateInputMessage((int)Msg.hwnd, Msg.message, Msg.wParam, Msg.lParam);
             TranslateMessage(&Msg);
             DispatchMessageA(&Msg);
           }
@@ -66,7 +66,7 @@ LABEL_21:
             if ( Msg.message != 257 || Msg.wParam != 44 )
               goto LABEL_21;
 LABEL_17:
-            orig::sub_10001CC0((HWND *)self, &Read);
+            orig::CApp_CopyTextToClipboard((HWND *)self, &Read);
           }
         }
       }
@@ -81,3 +81,31 @@ LABEL_23:
   return orig::Camera_ReleaseAll(g_pCamera);
 }
 
+// FUNCTION: FFXIMAIN 0x10001CC0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CApp::CopyTextToClipboard(void * self, LPCSTR param_1)
+{
+  char cVar1;
+  HGLOBAL hMem;
+  LPSTR lpString1;
+  uint32_t uVar2;
+  LPCSTR pCVar3;
+  
+  uVar2 = 0xffffffff;
+  pCVar3 = param_1;
+  do {
+    if (uVar2 == 0) break;
+    uVar2 = uVar2 - 1;
+    cVar1 = *pCVar3;
+    pCVar3 = pCVar3 + 1;
+  } while (cVar1 != '\0');
+  hMem = GlobalAlloc(0x2002,~uVar2);
+  lpString1 = GlobalLock(hMem);
+  lstrcpyA(lpString1,param_1);
+  GlobalUnlock(hMem);
+  OpenClipboard(*(HWND *)((int)self + 0x18));
+  EmptyClipboard();
+  SetClipboardData(1,hMem);
+  CloseClipboard();
+  return;
+}

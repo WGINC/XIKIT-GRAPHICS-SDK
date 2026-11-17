@@ -5,7 +5,12 @@
 #pragma pack(push, 1)
 class XI_API CMoDistRingElem {
 public:
+    static char ** __cdecl GetRuntimeClass();  // 0x10043710
     void AllocRingGeometry();  // 0x10043720
+    static undefined8 __thiscall Construct(void * self);  // 0x10052FD0
+    BOOL IsKind5(int a1);  // 0x10052FF0
+    int set_field_1B6(int a2);  // 0x10053000
+    int * ScalarDeletingDtor(char a2);  // 0x10053010
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x9C];

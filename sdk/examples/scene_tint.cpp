@@ -13,7 +13,7 @@
 // same with its own drawing; one that wants a modern shader needs d3d8on11's extension (docs/DEVKIT.md, D3b).
 //
 // What is checked at run time rather than assumed: the value at a1 + 4 is a texture (GetType() == D3DRTYPE_TEXTURE);
-// stereo mode is skipped (the game's own test, sub_1000D660(g_pEnv) == 1). The render target, the depth surface
+// stereo mode is skipped (the game's own test, CEnv::IsStereoMode(g_pEnv) == 1). The render target, the depth surface
 // and the viewport are put back as they were: setting a render target resets the viewport in Direct3D 8, and the game
 // set its own just before this call (CDx_SetViewport, step 5).
 #include "xikit_sdk.hpp"
@@ -66,7 +66,7 @@ static xikit::fn<decltype(&CDx::CompositeSceneToBackBuffer)> prev_Composite;
 static int __thiscall my_Composite(CDx *self, int a1, int a2, int a3, int a4) {
   IDirect3DTexture8 *scene = a1 ? *reinterpret_cast<IDirect3DTexture8 **>(a1 + 4) : nullptr;
   IDirect3DDevice8 *dev = *reinterpret_cast<IDirect3DDevice8 **>(reinterpret_cast<char *>(self) + 0xC);   // CDx +0x0C: the device (RENDERER.md 9)
-  if (scene && dev && orig::sub_1000D660(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE) tint(dev, scene);
+  if (scene && dev && orig::CEnv_IsStereoMode(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE) tint(dev, scene);
   else g_skipped++;
   return prev_Composite(self, a1, a2, a3, a4);           // the game's own composite, unchanged
 }

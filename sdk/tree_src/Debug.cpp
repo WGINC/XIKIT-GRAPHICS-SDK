@@ -2,6 +2,26 @@
 #include "gfx_all.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10003650
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __thiscall DebugOverlay_Draw(void * self_)
+{
+  orig::DebugOverlay_Update((void *)((int)self_ + 4));
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10003660
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __thiscall Debug_Construct(void * self_)
+{
+  *(uint8_t ***)self_ = &PTR_FUN_10329660;
+  *(uint32_t *)((int)self_ + 0xc) = 0;
+  *(uint32_t *)((int)self_ + 0x10) = 0;
+  *(uint32_t *)((int)self_ + 0x14) = 0;
+  *(uint32_t *)((int)self_ + 0x18) = 0;
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x10003710
 // GATE: PASS -- 100 trials, 88 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 88
 XI_API void __thiscall DebugOverlay_Update(void * self_)
@@ -15,13 +35,13 @@ XI_API void __thiscall DebugOverlay_Update(void * self_)
   
   if (*(char *)((int)self_ + 4) != '\0') {
     if (*(int *)((int)self_ + 8) == 0) {
-      uVar4 = orig::sub_10311BBB_2(0x4800);
+      uVar4 = orig::Allocator_Generic_v1(0x4800);
       *(int *)((int)self_ + 0xc) = (int)uVar4;
-      uVar4 = orig::sub_10311BBB_2(0x9000);
+      uVar4 = orig::Allocator_Generic_v1(0x9000);
       *(int *)((int)self_ + 0x10) = (int)uVar4;
-      uVar4 = orig::sub_10311BBB_2(0x240000);
+      uVar4 = orig::Allocator_Generic_v1(0x240000);
       *(int *)((int)self_ + 0x14) = (int)uVar4;
-      uVar4 = orig::sub_10311BBB_2(0x2400);
+      uVar4 = orig::Allocator_Generic_v1(0x2400);
       *(int *)((int)self_ + 0x18) = (int)uVar4;
       puVar3 = *(uint32_t **)((int)self_ + 0x14);
       for (iVar1 = 0x90000; iVar1 != 0; iVar1 = iVar1 + -1) {
@@ -32,18 +52,48 @@ XI_API void __thiscall DebugOverlay_Update(void * self_)
       do {
         local_8[1] = 0xffffffff;
         local_8[0] = uVar2;
-        orig::sub_100037D0(self_,local_8,0.0f,0.0f,0.0f,0.0f,&DAT_1034f6bc,0x80808080,local_8);
+        orig::DebugOverlay_SetEntry(self_,local_8,0.0f,0.0f,0.0f,0.0f,&DAT_1034f6bc,0x80808080,local_8);
         uVar2 = uVar2 + 1;
       } while ((int)uVar2 < 0x900);
       *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + 1;
     }
     else if (*(int *)((int)self_ + 8) == 1) {
-      orig::Unit10003890_DrawActorAxes(self_);
+      orig::InputDevices_DrawActorAxes(self_);
       orig::Debug_DrawTextTable(self_);
       return;
     }
   }
   return;
+}
+
+// FUNCTION: FFXIMAIN 0x100037D0
+// GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
+XI_API undefined4 __attribute__((stdcall, regparm(3))) DebugOverlay_SetEntry(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, uint32_t * param_2, float param_3, float param_4, float param_5, float param_6, char * param_7, undefined4 param_8)
+{
+  uint32_t uVar1;
+  char *_Dest;
+  
+  if (*(int *)((int)self_ + 0xc) != 0) {
+    uVar1 = *param_2;
+    if (0x900 < uVar1) {
+      orig::ErrorReport_NoOpVarargsA_v1
+                (aErrorSSD,s_D__build0001_FFXi_Win_Main_Debug_1034f788,0x92,
+                 uVar1);
+      return uVar1;
+    }
+    *(uint32_t *)(*(int *)((int)self_ + 0xc) + uVar1 * 8) = uVar1;
+    *(uint32_t *)(*(int *)((int)self_ + 0xc) + 4 + *param_2 * 8) = param_2[1];
+    *(float *)(*param_2 * 0x10 + *(int *)((int)self_ + 0x10)) = (float)(long double)param_3;
+    *(float *)(*param_2 * 0x10 + 4 + *(int *)((int)self_ + 0x10)) = (float)(long double)param_4;
+    *(float *)(*param_2 * 0x10 + 8 + *(int *)((int)self_ + 0x10)) = (float)(long double)param_5;
+    *(float *)(*param_2 * 0x10 + 0xc + *(int *)((int)self_ + 0x10)) = (float)(long double)param_6;
+    _Dest = (char *)(*param_2 * 0x400 + *(int *)((int)self_ + 0x14));
+    orig::_strncpy_v1(_Dest,param_7,0x400);
+    _Dest[0x3ff] = '\0';
+    xi_eax = *param_2;
+    *(uint32_t *)(*(int *)((int)self_ + 0x18) + xi_eax * 4) = param_8;
+  }
+  return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x10003B60
@@ -125,16 +175,16 @@ XI_API void __stdcall Debug_DrawWorldText(_DWORD *a1, const char *a2, int arg8)
   char &v31 = *reinterpret_cast<char *>(xi_frame + 0x10EC);
   _BYTE (&v32)[32764] = *reinterpret_cast<_BYTE (*)[32764]>(xi_frame + 0x10F0);
 
-  orig::sub_10027990_3((Iostream_init *)v27);
+  orig::fn_10027990((Iostream_init *)v27);
   memset(v24, 0, sizeof(v24));
   v25 = 1065353216;
   if ( orig::ShapeMng_BindFontTexture(g_shapeMng, 0xFFFFFFFF, nullptr, nullptr) != 0 )
   {
-    orig::sub_100279B0(v27);
-    orig::sub_10027CF0(v27, a1);
+    orig::Mat4_SetIdentity(v27);
+    orig::Mat4_SetTranslation(v27, a1);
     orig::CDx_SetTransform(g_pCDx, 256, v27);
-    orig::sub_100276F0(v24, v24);
-    orig::sub_100278E0(v24);
+    orig::Gfx_ProjectWorldToClip(v24, v24);
+    orig::Gfx_NdcToScreen(v24);
     v3 = strlen(a2);
     v25 = 1065353216;
     v21 = v3;
@@ -160,7 +210,7 @@ XI_API void __stdcall Debug_DrawWorldText(_DWORD *a1, const char *a2, int arg8)
         }
         else
         {
-          orig::sub_10120510(g_shapeMng, v8, (int)v7, v6, nullptr, nullptr);
+          orig::ShapeMng_GetFontGlyph(g_shapeMng, v8, (int)v7, v6, nullptr, nullptr);
           v3 = v21;
         }
         ++v5;
@@ -204,8 +254,8 @@ XI_API void __stdcall Debug_DrawWorldText(_DWORD *a1, const char *a2, int arg8)
           g_debugTextQuad_p3_y = g_debugTextQuad_p2_y;
           do
           {
-            orig::sub_100272E0((float *)v26, v17, 1.0);
-            orig::sub_10026FA0(v12 - 3, v24, (float *)v26);
+            orig::Vec3_Scale((float *)v26, v17, 1.0);
+            orig::Vec3_Add_10026FA0(v12 - 3, v24, (float *)v26);
             v18 = *(v10 - 1);
             v19 = *v10;
             *v12 = 1.0;
@@ -229,5 +279,5 @@ XI_API void __stdcall Debug_DrawWorldText(_DWORD *a1, const char *a2, int arg8)
       while ( v9 < v3 );
     }
   }
-  orig::sub_100279A0();
+  orig::MathVector_Nop();
 }

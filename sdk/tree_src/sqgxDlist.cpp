@@ -2,6 +2,21 @@
 #include "gfx_all.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x1029B5C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl SqgxDlist_CreateContextList(void)
+{
+  undefined4 *puVar1;
+  
+  puVar1 = orig::FUN_10275d80(1,0x2c,aCDevDancerModu_30,0x1a);
+  *(undefined4 **)(g_pSqgxContext_as_s32 + 0xa04) = puVar1;
+  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa08) = 0;
+  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa0c) = 0;
+  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa10) = 0;
+  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa14) = 0;
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x1029B620
 // GATE: PASS -- 100 trials, 16 returned normally, 216 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 16
 XI_API _DWORD * __cdecl sqgxDlistEnd(void)
@@ -107,12 +122,12 @@ XI_API _DWORD * __cdecl sqgxDlistEnd(void)
   v0[9] = v9;
   v5 = g_pSqgxContext[643];
   if ( v5 != 0 )
-    orig::sub_102760F0(v5, aCDevDancerModu_30, 107);
+    orig::sqFree(v5, aCDevDancerModu_30, 107);
   g_pSqgxContext[643] = 0;
   g_pSqgxContext[642] = 0;
   v6 = g_pSqgxContext[645];
   if ( v6 != 0 )
-    orig::sub_102760F0(v6, aCDevDancerModu_30, 112);
+    orig::sqFree(v6, aCDevDancerModu_30, 112);
   g_pSqgxContext[645] = 0;
   g_pSqgxContext[644] = 0;
   return v0;
@@ -199,3 +214,9 @@ XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **a1)
   orig::sub_1028BBD0();
 }
 
+// FUNCTION: FFXIMAIN 0x1029BB50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __cdecl SqgxDlist_Nop(void)
+{
+  return;
+}

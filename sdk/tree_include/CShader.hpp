@@ -5,6 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CShader {
 public:
+    static char ** __cdecl GetRuntimeClass();  // 0x10017750
     unsigned int * ScalarDeletingDtor(char a2);  // 0x10017780
     int CShader_Destructor();  // 0x100177A0
 

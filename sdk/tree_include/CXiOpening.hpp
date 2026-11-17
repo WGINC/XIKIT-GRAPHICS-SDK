@@ -5,15 +5,17 @@
 #pragma pack(push, 1)
 class XI_API CXiOpening {
 public:
+    void * Constructor(char *Source);  // 0x100186C0
+    CDx * CXiOpening_Destructor();  // 0x100187D0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x104];
     uint32_t field_108;  // +0x108
     uint8_t _pad_10C[0x4];
     uint32_t field_110;  // +0x110
-    uint32_t savedGammaR;  // +0x114 restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
-    uint32_t savedGammaG;  // +0x118 restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
-    uint32_t savedGammaB;  // +0x11C restored with sub_100170A0(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t savedGammaR;  // +0x114 restored with GammaRamp_SetRGB(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t savedGammaG;  // +0x118 restored with GammaRamp_SetRGB(CDx gamma ramp, R, G, B) by the CXiOpening destructor
+    uint32_t savedGammaB;  // +0x11C restored with GammaRamp_SetRGB(CDx gamma ramp, R, G, B) by the CXiOpening destructor
     uint32_t openingSubtitle;  // +0x120 owned OpeningSubtitle object
     uint32_t field_124;  // +0x124
 };

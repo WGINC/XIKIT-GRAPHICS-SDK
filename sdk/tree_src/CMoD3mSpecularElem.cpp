@@ -3,6 +3,65 @@
 #include "CMoD3mSpecularElem.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10041010
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoD3mSpecularElem::GetRuntimeClass()
+{
+  return &CMoD3mSpecularElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10041020
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoD3mSpecularElem::Ctor(void * self)
+{
+  orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &CMoD3mSpecularElem_vtbl;
+  *(uint16_t *)((int)self + 0x176) = 0x1c0;
+  *(uint32_t *)((int)self + 0x1a8) = 0;
+  *(uint32_t *)((int)self + 0x198) = *(uint32_t *)((int)self + 0x198) & 0xfffffff7;
+  if (*(uint32_t *)(g_pResourceMng + 0xe64) < 3) {
+    *(uint32_t *)((int)self + 0x1b8) = 0;
+  }
+  else if ((*(uint32_t *)(g_pResourceMng + 0xdec) & 0x400) == 0) {
+    *(uint32_t *)((int)self + 0x1b8) = 2;
+  }
+  else {
+    *(uint32_t *)((int)self + 0x1b8) = 3;
+  }
+  switch(xi_sw(*(uint32_t *)((int)self + 0x1b8))) {
+  case 0:
+    *(uint8_t *)((int)self + 0x1bd) = 1;
+    *(uint8_t *)((int)self + 0x1bc) = 0;
+    return ((uint64_t)(((uint64_t)(uint32_t)(2) << 32) | (uint32_t)(self)));
+  case 1:
+    *(uint8_t *)((int)self + 0x1bc) = 1;
+    *(uint8_t *)((int)self + 0x1bd) = 0;
+    return ((uint64_t)(((uint64_t)(uint32_t)(2) << 32) | (uint32_t)(self)));
+  case 2:
+  case 3:
+    *(uint8_t *)((int)self + 0x1bd) = 2;
+    *(uint8_t *)((int)self + 0x1bc) = 0;
+  }
+  return ((uint64_t)(((uint64_t)(uint32_t)(2) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x100410E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+BOOL CMoD3mSpecularElem::IsKind7(int a1)
+{
+  return a1 == 7;
+}
+
+// FUNCTION: FFXIMAIN 0x100410F0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+_DWORD * CMoD3mSpecularElem::ScalarDeletingDtor(char a2)
+{
+  orig::CXi471011C8_VT_1032AD80_Dtor(this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+}
+
 // FUNCTION: FFXIMAIN 0x10041160
 // GATE: PASS -- 100 trials, 91 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 91
 undefined4 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)

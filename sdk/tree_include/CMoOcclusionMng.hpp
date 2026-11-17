@@ -5,6 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CMoOcclusionMng {
 public:
+    static char ** __cdecl GetRuntimeClass();  // 0x1006C130
+    int * ScalarDeletingDtor(char a2);  // 0x1006C1C0
     _DWORD * OcclusionMng_CreateTarget();  // 0x1006C220
 
     void **vftable;  // +0x0

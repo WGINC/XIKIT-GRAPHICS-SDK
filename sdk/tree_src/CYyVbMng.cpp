@@ -90,10 +90,10 @@ LABEL_26:
   v23 = pDevice->CreateVertexBuffer(v9, a3, a4, (D3DPOOL)a5, (IDirect3DVertexBuffer8 **)a6);
   if ( v23 < 0 )
     return v23;
-  v19 = orig::sub_1002C890(32);
+  v19 = orig::Mem_AllocDefault(32);
   if ( v19 == nullptr )
     return -1;
-  v20 = orig::sub_1003B450(v19, v9, a3, a4, a5, *a6);
+  v20 = orig::CYyVb_Constructor(v19, v9, a3, a4, a5, *a6);
   if ( v20 == nullptr )
     return -1;
   if ( a7 != 0 )
@@ -109,3 +109,23 @@ LABEL_26:
   return v23;
 }
 
+// FUNCTION: FFXIMAIN 0x1003B3C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __stdcall CYyVbMng::ReleaseVertexBuffer(int * param_1)
+{
+  int *piVar1;
+  int iVar2;
+  
+  iVar2 = *(int *)(g_pVertexBufferListHead + 8);
+  if (iVar2 != 0) {
+    while ((piVar1 = (int *)(iVar2 + 8), *(int *)(iVar2 + 4) != 3 ||
+           (*(int *)(iVar2 + 0x1c) != *param_1))) {
+      iVar2 = *piVar1;
+      if (*piVar1 == 0) {
+        return 0;
+      }
+    }
+    *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + -1;
+  }
+  return 0;
+}

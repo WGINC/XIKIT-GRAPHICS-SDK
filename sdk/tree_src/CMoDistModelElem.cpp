@@ -3,6 +3,62 @@
 #include "CMoDistModelElem.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x1003FCB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CMoDistModelElem::IsDistortedMode(void * self)
+{
+  uint32_t xi_entry_eax = 0;
+  uint32_t uVar1;
+  uint8_t bVar2;
+  
+  uVar1 = xi_entry_eax & 0xffffff00;
+  if (((*(char *)((int)self + 0x34) == '\0') &&
+      (bVar2 = *(uint8_t *)((int)self + 0x30) & 0xf, 4 < bVar2)) && (bVar2 < 8)) {
+    uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24((xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
+  }
+  return uVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x1003FCE0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __thiscall CMoDistModelElem::GetVertexBase(void * self)
+{
+  return (int)self + 0x38;
+}
+
+// FUNCTION: FFXIMAIN 0x1003FCF0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __thiscall CMoDistModelElem::GetDataEnd(void * self)
+{
+  uint8_t bVar1;
+  int iVar2;
+  uint32_t uVar3;
+  
+  bVar1 = *(uint8_t *)((int)self + 0x30) & 0xf;
+  if (4 < bVar1) {
+    if (bVar1 < 7) {
+      iVar2 = orig::CMoDistModelElem_GetVertexBase_v1(self);
+      uVar3 = (uint32_t)*(uint8_t *)((int)self + 0x35) + (uint32_t)*(uint8_t *)((int)self + 0x34);
+      if ((uVar3 & 3) != 0) {
+        return iVar2 + 6 + (uVar3 - (uVar3 & 3)) * 2;
+      }
+      return iVar2 + uVar3 * 2;
+    }
+    if (bVar1 == 7) {
+      iVar2 = orig::CMoDistModelElem_GetVertexBase_v1(self);
+      if (*(uint8_t *)((int)self + 0x34) == 0) {
+        return iVar2;
+      }
+      uVar3 = (uint32_t)*(uint8_t *)((int)self + 0x35) + (uint32_t)*(uint8_t *)((int)self + 0x34);
+      if ((uVar3 & 3) != 0) {
+        return iVar2 + 6 + (uVar3 - (uVar3 & 3)) * 2;
+      }
+      return iVar2 + uVar3 * 2;
+    }
+  }
+  return (int)self + 0x40;
+}
+
 // FUNCTION: FFXIMAIN 0x10040220
 // GATE: PASS -- 100 trials, 59 returned normally, 104 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 59
 undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * param_1, int param_2)
@@ -23,7 +79,7 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
   undefined4 *puVar10;
   undefined4 local_8;
   
-  iVar1 = orig::sub_1003FCF0_2(self);
+  iVar1 = orig::CMoDistModelElem_GetDataEnd_v1(self);
   if (*(int *)(iVar1 + 4) != 0) {
     if (*(char *)(param_2 + 0x16c) == 'D') {
       uVar2 = *param_1;
@@ -43,15 +99,15 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
       ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pResourceMng + 0xebc) + 0xf4))))(*(int **)(g_pResourceMng + 0xebc),0,0);
       if ((Fn10040220_staticGuards & 1) == 0) {
         Fn10040220_staticGuards = Fn10040220_staticGuards | 1;
-        orig::sub_1006AD90(&Fn10040220_stateBlock5);
-        orig::sub_10313486_2(&LAB_10040660);
+        orig::MoDX_SetInvalid(&Fn10040220_stateBlock5);
+        orig::_atexit_v1(&LAB_10040660);
       }
       orig::StateBlock_ApplyTSS_v1(&Fn10040220_stateBlock5,(undefined4 *)&Fn10040220_textureStageStates5);
       if (*(char *)(param_2 + 0x16c) == 'D') {
         if ((Fn10040220_staticGuards & 2) == 0) {
           Fn10040220_staticGuards = Fn10040220_staticGuards | 2;
-          orig::sub_1006AD90(&Fn10040220_stateBlock6);
-          orig::sub_10313486_2(&LAB_10040650);
+          orig::MoDX_SetInvalid(&Fn10040220_stateBlock6);
+          orig::_atexit_v1(&LAB_10040650);
         }
         orig::StateBlock_ApplyTSS_v1(&Fn10040220_stateBlock6,(undefined4 *)&Fn10040220_textureStageStates6);
       }
@@ -60,15 +116,15 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
       uVar9 = 0;
       uVar8 = 4;
       uVar7 = 0;
-      iVar1 = orig::sub_1003FCF0_2(self);
+      iVar1 = orig::CMoDistModelElem_GetDataEnd_v1(self);
       uVar7 = orig::VertexBatch_BindAndDraw_v2(*(void **)(iVar1 + 4),uVar7,uVar2,uVar8,uVar9,xi_s5);
       return uVar7;
     }
     if ((*(uint32_t *)(param_2 + 0x10c) >> 0x1c & 1) == 0) {
       if ((Fn10040220_staticGuards & 8) == 0) {
         Fn10040220_staticGuards = Fn10040220_staticGuards | 8;
-        orig::sub_1006AD90(&Fn10040220_stateBlock2);
-        orig::sub_10313486_2(&LAB_10040630);
+        orig::MoDX_SetInvalid(&Fn10040220_stateBlock2);
+        orig::_atexit_v1(&LAB_10040630);
       }
       puVar10 = (undefined4 *)&Fn10040220_textureStageStates2;
       this_01 =(uint8_t*)(&Fn10040220_stateBlock2);
@@ -76,8 +132,8 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
     else {
       if ((Fn10040220_staticGuards & 4) == 0) {
         Fn10040220_staticGuards = Fn10040220_staticGuards | 4;
-        orig::sub_1006AD90(&Fn10040220_stateBlock);
-        orig::sub_10313486_2(&LAB_10040640);
+        orig::MoDX_SetInvalid(&Fn10040220_stateBlock);
+        orig::_atexit_v1(&LAB_10040640);
       }
       puVar10 = (undefined4 *)&Fn10040220_textureStageStates;
       this_01 =(uint8_t*)(&Fn10040220_stateBlock);
@@ -86,7 +142,7 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
     if ((*(uint8_t *)(param_2 + 0x17b) & 3) != 0) {
       puVar10 = *(undefined4 **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
       *(int *)(g_pProcessor_as_s32 + 0xa90) = *(int *)(g_pProcessor_as_s32 + 0xa90) + 1;
-      orig::sub_100746A0_2(puVar10);
+      orig::MoProcessor_CallVSlot49_v1(puVar10);
       puVar10[8] = (float)(long double)*(float *)(param_2 + 0x120);
       puVar10[9] = (float)(long double)*(float *)(param_2 + 0x124);
       ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pResourceMng + 0xebc) + 0xfc))
@@ -97,14 +153,14 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
       *(int *)(g_pProcessor_as_s32 + 0xa90) = iVar4;
       *(undefined4 **)(iVar1 + 0xa10 + iVar4 * 4) = puVar10;
     }
-    iVar1 = orig::sub_1003FCE0_2(self);
-    this_00 = (void *)orig::sub_1003FCF0_2(self);
+    iVar1 = orig::CMoDistModelElem_GetVertexBase_v1(self);
+    this_00 = (void *)orig::CMoDistModelElem_GetDataEnd_v1(self);
     uVar7 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)this_00 >> 8))) << 8) | (uint8_t)(*(char *)(param_2 + 0x16c))));
     if (*(char *)(param_2 + 0x16c) == 'I') {
       if ((Fn10040220_staticGuards & 0x10) == 0) {
         Fn10040220_staticGuards = Fn10040220_staticGuards | 0x10;
-        orig::sub_1006AD90(&Fn10040220_stateBlock3);
-        orig::sub_10313486_2(&LAB_10040620);
+        orig::MoDX_SetInvalid(&Fn10040220_stateBlock3);
+        orig::_atexit_v1(&LAB_10040620);
       }
       orig::StateBlock_ApplyTSS_v1(&Fn10040220_stateBlock3,(undefined4 *)&Fn10040220_textureStageStates3);
       ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pResourceMng + 0xebc) + 200))
@@ -124,7 +180,7 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
         uVar2 = (uint32_t)*(uint16_t *)(iVar1 + iVar5 * 2);
         uVar7 = 4;
         xi_s1 = iVar4;
-        iVar3 = orig::sub_1003FCF0_2(self);
+        iVar3 = orig::CMoDistModelElem_GetDataEnd_v1(self);
         orig::VertexBatch_BindAndDraw_v2(*(void **)(iVar3 + 4),xi_s1,uVar2,uVar7,uVar8,uVar9);
         this_00 = (void *)((int)this_00 + 0x10);
         uVar2 = (uint32_t)*(uint16_t *)(iVar1 + iVar5 * 2);
@@ -136,15 +192,15 @@ undefined4 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * para
     if (*(char *)((int)self + 0x35) != '\0') {
       if ((Fn10040220_staticGuards & 0x20) == 0) {
         Fn10040220_staticGuards = Fn10040220_staticGuards | 0x20;
-        orig::sub_1006AD90(&Fn10040220_stateBlock4);
-        orig::sub_10313486_2(&LAB_10040610);
+        orig::MoDX_SetInvalid(&Fn10040220_stateBlock4);
+        orig::_atexit_v1(&LAB_10040610);
       }
       orig::StateBlock_ApplyTSS_v1(&Fn10040220_stateBlock4,(undefined4 *)&Fn10040220_textureStageStates4);
       uVar9 = 0xffffffff;
       uVar8 = 0;
       uVar7 = 4;
       iVar5 = (uint32_t)*(uint16_t *)((int)self + 0x36) - iVar4 / 3;
-      iVar1 = orig::sub_1003FCF0_2(self);
+      iVar1 = orig::CMoDistModelElem_GetDataEnd_v1(self);
       iVar1 = orig::VertexBatch_BindAndDraw_v2(*(void **)(iVar1 + 4),iVar4,iVar5,uVar7,uVar8,uVar9);
     }
     if ((*(uint8_t *)(param_2 + 0x17b) & 3) != 0) {
@@ -187,7 +243,7 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
   float v29;
   float v30;
   int v31;
-  result = (int)orig::sub_1003FCF0((char *)self);
+  result = (int)orig::CMoDistModelElem_GetDataEnd((char *)self);
   if ( *(_DWORD *)(result + 4) == 0 )
     return result;
   if ( (this->alphaTestFlags & 1) != 0 )
@@ -214,8 +270,8 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
     if ( (CMoDistModelElem_DrawMesh_staticGuards & 1) == 0 )
     {
       CMoDistModelElem_DrawMesh_staticGuards |= 1u;
-      orig::sub_1006AD90_2((exception *)CMoDistModelElem_DrawMesh_stateBlock);
-      orig::sub_10313486(XI_CODE(sub_10040B90));
+      orig::fn_1006AD90((exception *)CMoDistModelElem_DrawMesh_stateBlock);
+      orig::_atexit(XI_CODE(unknown_libname_37));
     }
     orig::StateBlock_ApplyTSS(CMoDistModelElem_DrawMesh_stateBlock, (int)CMoDistModelElem_DrawMesh_textureStageStates);
     if ( *(_BYTE *)(a3 + 364) == 68 )
@@ -223,20 +279,20 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
       if ( (CMoDistModelElem_DrawMesh_staticGuards & 2) == 0 )
       {
         CMoDistModelElem_DrawMesh_staticGuards |= 2u;
-        orig::sub_1006AD90_2((exception *)CMoDistModelElem_DrawMesh_stateBlock2);
-        orig::sub_10313486(XI_CODE(sub_10040B80));
+        orig::fn_1006AD90((exception *)CMoDistModelElem_DrawMesh_stateBlock2);
+        orig::_atexit(XI_CODE(unknown_libname_36));
       }
       orig::StateBlock_ApplyTSS(CMoDistModelElem_DrawMesh_stateBlock2, (int)CMoDistModelElem_DrawMesh_textureStageStates2);
     }
     v28 = this->triangleCount;
-    v9 = orig::sub_1003FCF0((char *)self);
+    v9 = orig::CMoDistModelElem_GetDataEnd((char *)self);
     return orig::VertexBatch_BindAndDraw(*((int **)v9 + 1), 0, v28, 4, 0, -1);
   }
   if ( (CMoDistModelElem_DrawMesh_staticGuards & 4) == 0 )
   {
     CMoDistModelElem_DrawMesh_staticGuards |= 4u;
-    orig::sub_1006AD90_2((exception *)CMoDistModelElem_DrawMesh_stateBlock3);
-    orig::sub_10313486(XI_CODE(sub_10040B70));
+    orig::fn_1006AD90((exception *)CMoDistModelElem_DrawMesh_stateBlock3);
+    orig::_atexit(XI_CODE(unknown_libname_35));
   }
   orig::StateBlock_ApplyTSS(CMoDistModelElem_DrawMesh_stateBlock3, (int)CMoDistModelElem_DrawMesh_textureStageStates3);
   if ( *(_BYTE *)(a3 + 364) == 68 )
@@ -244,8 +300,8 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
     if ( (CMoDistModelElem_DrawMesh_staticGuards & 8) == 0 )
     {
       CMoDistModelElem_DrawMesh_staticGuards |= 8u;
-      orig::sub_1006AD90_2((exception *)CMoDistModelElem_DrawMesh_stateBlock4);
-      orig::sub_10313486(XI_CODE(sub_10040B60));
+      orig::fn_1006AD90((exception *)CMoDistModelElem_DrawMesh_stateBlock4);
+      orig::_atexit(XI_CODE(unknown_libname_34));
     }
     orig::StateBlock_ApplyTSS(CMoDistModelElem_DrawMesh_stateBlock4, (int)CMoDistModelElem_DrawMesh_textureStageStates4);
   }
@@ -254,7 +310,7 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
     v11 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    orig::sub_100746A0(v11);
+    orig::MoProcessor_CallVSlot49(v11);
     v11[8] = *(float *)(a3 + 288);
     v11[9] = *(float *)(a3 + 292);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_TEXCOORDINDEX, 0);
@@ -269,7 +325,7 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
   v15 = 0;
   if ( this->batchCount != 0 )
   {
-    v16 = orig::sub_1003FCE0((char *)self);
+    v16 = orig::CMoDistModelElem_GetVertexBase((char *)self);
     do
     {
       if ( (_BYTE)a4 != 0 )
@@ -277,7 +333,7 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
         v30 = *(float *)(a3 + 328);
         v29 = *(float *)(a3 + 324);
         v27 = *(float *)(a3 + 320);
-        v17 = (int *)orig::sub_1003FCF0((char *)self);
+        v17 = (int *)orig::CMoDistModelElem_GetDataEnd((char *)self);
         orig::TextureHolder_BindWarped(v17, 1, v27, v29, v30);
       }
       orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, v14, *(unsigned __int16 *)&v16[2 * v15], 4, 0, -1);
@@ -295,15 +351,15 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
       if ( (CMoDistModelElem_DrawMesh_staticGuards & 0x10) == 0 )
       {
         CMoDistModelElem_DrawMesh_staticGuards |= 0x10u;
-        orig::sub_1006AD90_2((exception *)CMoDistModelElem_DrawMesh_stateBlock5);
-        orig::sub_10313486(XI_CODE(sub_10040B50));
+        orig::fn_1006AD90((exception *)CMoDistModelElem_DrawMesh_stateBlock5);
+        orig::_atexit(XI_CODE(unknown_libname_33));
       }
       orig::StateBlock_ApplyTSS(CMoDistModelElem_DrawMesh_stateBlock5, (int)CMoDistModelElem_DrawMesh_textureStageStates5);
       v19 = a4;
     }
     if ( a1 != 0 )
     {
-      if ( v19 != 0 || !orig::sub_1003FCB0(self) )
+      if ( v19 != 0 || !orig::CMoDistModelElem_IsDistortedMode(self) )
       {
         orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, v14, this->triangleCount - v14 / 3, 4, 0, -1);
       }
@@ -318,13 +374,13 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
     {
       if ( v19 == 0 )
       {
-        if ( orig::sub_1003FCB0(self) )
+        if ( orig::CMoDistModelElem_IsDistortedMode(self) )
         {
-          v21 = *(_WORD *)&orig::sub_1003FCE0((char *)self)[2 * v15];
+          v21 = *(_WORD *)&orig::CMoDistModelElem_GetVertexBase((char *)self)[2 * v15];
           if ( v21 - 1 > 0 )
           {
             v25 = v21 - 1;
-            v22 = orig::sub_1003FCF0((char *)self);
+            v22 = orig::CMoDistModelElem_GetDataEnd((char *)self);
             orig::VertexBatch_BindAndDraw(*((int **)v22 + 1), v14 + 3, v25, 4, 0, -1);
           }
           v7 = a3;
@@ -332,8 +388,8 @@ int CMoDistModelElem::DrawMesh(int a1, int a2, int a3, int a4)
         }
         v7 = a3;
       }
-      v26 = *(unsigned __int16 *)&orig::sub_1003FCE0((char *)self)[2 * v15];
-      v24 = orig::sub_1003FCF0((char *)self);
+      v26 = *(unsigned __int16 *)&orig::CMoDistModelElem_GetVertexBase((char *)self)[2 * v15];
+      v24 = orig::CMoDistModelElem_GetDataEnd((char *)self);
       orig::VertexBatch_BindAndDraw(*((int **)v24 + 1), v14, v26, 4, 0, -1);
     }
   }
@@ -347,6 +403,13 @@ LABEL_49:
     return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
   }
   return result;
+}
+
+// FUNCTION: FFXIMAIN 0x100431A0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoDistModelElem::GetRuntimeClass()
+{
+  return &CMoDistModelElem_classdesc;
 }
 
 // FUNCTION: FFXIMAIN 0x100431B0
@@ -363,7 +426,7 @@ int CMoDistModelElem::Draw()
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
     v3 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    orig::sub_100746A0(v3);
+    orig::MoProcessor_CallVSlot49(v3);
     v3[8] = this->textureOffsetU;
     v3[9] = this->textureOffsetV;
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
@@ -381,13 +444,49 @@ int CMoDistModelElem::Draw()
   if ( (Fn100431B0_staticGuards & 1) == 0 )
   {
     Fn100431B0_staticGuards |= 1u;
-    orig::sub_1006AD90_2((exception *)&Fn100431B0_stateBlock);
-    orig::sub_10313486(XI_CODE(sub_10043310));
+    orig::fn_1006AD90((exception *)&Fn100431B0_stateBlock);
+    orig::_atexit(XI_CODE(unknown_libname_49));
   }
   orig::StateBlock_ApplyTSS(&Fn100431B0_stateBlock, (int)&Fn100431B0_textureStageStates);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, g_scratchValue);
-  orig::sub_10045D40((int)self);
+  orig::RegisterWithProcessor((int)self);
   orig::XiZone_DrawModelAtMatrix((float *)g_pZoneMap, (float *)self + 40, this->field_104);
   return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
 }
 
+// FUNCTION: FFXIMAIN 0x10052F20
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoDistModelElem::Init(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &PTR_CMoDistModelElem_GetRuntimeClass_1032b418;
+  *(uint16_t *)((int)self + 0x176) = 0x198;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x10052F40
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+BOOL CMoDistModelElem::IsKind4(int a1)
+{
+  return a1 == 4;
+}
+
+// FUNCTION: FFXIMAIN 0x10052F50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoDistModelElem::set_field_194(int a2)
+{
+  (*(unsigned __int32 *)((char *)this + 0x194)) = a2;
+  return a2;
+}
+
+// FUNCTION: FFXIMAIN 0x10052F60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoDistModelElem::ScalarDeletingDtor(char a2)
+{
+  orig::CMoElemFamily_SharedCleanup((int *)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (int *)this;
+}

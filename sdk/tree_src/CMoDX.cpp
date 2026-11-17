@@ -3,6 +3,23 @@
 #include "CMoDX.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10069D60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoDX::GetRuntimeClass()
+{
+  return &CMoDX_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10069DB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+_BYTE * CMoDX::ScalarDeletingDtor(char a2)
+{
+  orig::CMoDX_Destructor(this);
+  if ( (a2 & 1) != 0 )
+    orig::thunk_sub_10028AA0((int)this);
+  return(_BYTE*)(this);
+}
+
 // FUNCTION: FFXIMAIN 0x1006A150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 undefined4 __thiscall CMoDX::CreateTexture(void * self, undefined4 param_1, undefined4 param_2, undefined4 * param_3)
@@ -18,6 +35,17 @@ undefined4 __thiscall CMoDX::CreateTexture(void * self, undefined4 param_1, unde
 void __thiscall CMoDX::SetWorldMatrix(void * self, undefined4 * param_1)
 {
   orig::CDx_SetTransform_v1(*(void **)((int)self + 0xdc8),0x100,param_1);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x1006A4C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoDX::PushViewMatrix(void * self)
+{
+  if (*(int *)((int)self + 0xea4) != 8) {
+    orig::Dx_GetCachedTransform2(self,(uint32_t *)(*(int *)((int)self + 0xea4) * 0x40 + 0x910 + (int)self));
+    *(int *)((int)self + 0xea4) = *(int *)((int)self + 0xea4) + 1;
+  }
   return;
 }
 
@@ -56,20 +84,20 @@ _DWORD * CMoDX::CreateAndInitSystem()
   CMoOcclusionMng_vtbl **v6;
   void *v8;
   v8 = self;
-  v1 = orig::sub_1002C890(7884);
+  v1 = orig::Mem_AllocDefault(7884);
   if ( v1 != nullptr )
     *v1 = &CMoDX_vtbl;
   else
     v1 = nullptr;
   g_pResourceMng = (int)v1;
-  orig::sub_10069DD0((int)v1, (int)g_pCDx);
-  v2 = orig::sub_1002C890(1192);
+  orig::CMoDX_Initialize((int)v1, (int)g_pCDx);
+  v2 = orig::Mem_AllocDefault(1192);
   if ( v2 != nullptr )
-    g_pVbPool = (int)orig::sub_1006B0C0(v2);
+    g_pVbPool = (int)orig::VBPool_Constructor(v2);
   else
     g_pVbPool = 0;
-  orig::sub_10072ED0(g_pMeshResourceMng, 0);
-  v3 = (int *)*orig::sub_10072290(**(_DWORD ***)(g_pMeshResourceMng + 262152), &v8, 7, 1668248176);
+  orig::MeshResourceMng_LoadSystemResources(g_pMeshResourceMng, 0);
+  v3 = (int *)*orig::CMoResource_FindByTypeAndId(**(_DWORD ***)(g_pMeshResourceMng + 262152), &v8, 7, 1668248176);
   if ( v3 != nullptr )
   {
     v4 = *v3;
@@ -77,22 +105,22 @@ _DWORD * CMoDX::CreateAndInitSystem()
       **(_BYTE **)(v4 + 116) = 0x80;
   }
   orig::Mo_InitSharedRenderResources();
-  v5 = orig::sub_1002C890(16);
+  v5 = orig::Mem_AllocDefault(16);
   if ( v5 != nullptr )
-    g_pDxStatusMng = (int)orig::sub_1006B050((int)v5);
+    g_pDxStatusMng = (int)orig::CMoDxStatusMng_Constructor((int)v5);
   else
     g_pDxStatusMng = 0;
   orig::Gfx_InitCubeMapTextures();
-  orig::sub_100555D0();
-  v6 = (CMoOcclusionMng_vtbl **)orig::sub_1002C890(28);
+  orig::CMoOt_InitSystem();
+  v6 = (CMoOcclusionMng_vtbl **)orig::Mem_AllocDefault(28);
   if ( v6 != nullptr )
   {
     g_pOcclusionMng = (int)orig::CMoOcclusionMng_Constructor(v6);
-    return orig::sub_1006C210((_DWORD *)g_pOcclusionMng);
+    return orig::j_OcclusionMng_CreateTarget((_DWORD *)g_pOcclusionMng);
   }
   else
   {
     g_pOcclusionMng = 0;
-    return orig::sub_1006C210(nullptr);
+    return orig::j_OcclusionMng_CreateTarget(nullptr);
   }
 }

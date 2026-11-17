@@ -3,12 +3,28 @@
 #include "CMoDxStatusMng.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x1006B040
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoDxStatusMng::GetRuntimeClass()
+{
+  return &CMoDxStatusMng_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x1006B050
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 * __thiscall CMoDxStatusMng::Constructor(void * self)
+{
+  orig::MoDX_SetInvalid((void *)((int)self + 4));
+  *(uint8_t ***)self = &PTR_CMoDxStatusMng_GetRuntimeClass_1032c10c;
+  return self;
+}
+
 // FUNCTION: FFXIMAIN 0x1006B070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int * CMoDxStatusMng::ScalarDeletingDtor(char a2)
 {
   orig::CMoDxStatusMng_Destructor(this);
   if ( (a2 & 1) != 0 )
-    orig::sub_1002C8B0((int)this);
+    orig::thunk_sub_10028AA0((int)this);
   return (int *)this;
 }

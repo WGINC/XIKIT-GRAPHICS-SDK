@@ -2,13 +2,20 @@
 #include "gfx_all.hpp"
 #include "CShader.hpp"
 
+// FUNCTION: FFXIMAIN 0x10017750
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CShader::GetRuntimeClass()
+{
+  return &CShader_classdesc;
+}
+
 // FUNCTION: FFXIMAIN 0x10017780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 unsigned int * CShader::ScalarDeletingDtor(char a2)
 {
   orig::CShader_Destructor(this);
   if ( (a2 & 1) != 0 )
-    orig::sub_1002C8B0((int)this);
+    orig::thunk_sub_10028AA0((int)this);
   return (unsigned int *)this;
 }
 

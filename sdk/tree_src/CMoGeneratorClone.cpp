@@ -3,6 +3,28 @@
 #include "CMoGeneratorClone.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10047C30
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoGeneratorClone::InitCloneFromSource(_DWORD *a2)
+{
+  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
+  memset(self + 28, 0, 0x50u);
+  this->typeTag = *a2;
+  this->typeSizeFlags = a2[1];
+  this->pParentNode = a2[2];
+  this->field_2C = a2[3];
+  this->field_34 = a2[4];
+  this->field_38 = a2[5];
+  this->field_3C = a2[6];
+  this->field_40 = a2[7];
+  qmemcpy(self + 48, a2 + 24, 16 * (((a2[1] >> 7) & 0x7FFFF) - 6));
+  this->field_9C = 0;
+  this->field_70 = a2[8];
+  this->field_74 = a2[9];
+  this->field_98 = a2[11];
+  return orig::CMoAttachments_Reset(self + 12);
+}
+
 // FUNCTION: FFXIMAIN 0x10047CE0
 // GATE: PASS -- 100 trials, 32 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 32
 _DWORD * CMoGeneratorClone::FixupClonedPointers()
@@ -35,8 +57,8 @@ _DWORD * CMoGeneratorClone::FixupClonedPointers()
   this->field_DC = 0;
   this->elemListHead = 0;
   this->pExecCommandStream = self + 96 + v3;
-  orig::sub_1003B750((_DWORD *)(self + 48), 0);
-  orig::sub_1003B780((_DWORD *)v5, 0);
+  orig::CMoAttachments_ClearCaster((_DWORD *)(self + 48), 0);
+  orig::CMoAttachments_ClearTarget((_DWORD *)v5, 0);
   this->field_78 = 1065353216;
   this->field_7C = 1065353216;
   this->field_80 = 1065353216;
@@ -44,8 +66,8 @@ _DWORD * CMoGeneratorClone::FixupClonedPointers()
   this->field_88 = 1065353216;
   this->field_8C = 1065353216;
   if ( at<uint8_t>(this, 0x20) != 126
-    || orig::sub_10049570((_DWORD *)self) != 0
-    && (*(_BYTE *)(orig::sub_10049570((_DWORD *)self) + 36) & 0x7F) == 0x3D )
+    || orig::CMoGeneratorClone_ResolveTarget((_DWORD *)self) != 0
+    && (*(_BYTE *)(orig::CMoGeneratorClone_ResolveTarget((_DWORD *)self) + 36) & 0x7F) == 0x3D )
   {
     this->field_DE = 0;
     this->field_DF = 0;
@@ -79,7 +101,7 @@ _DWORD * CMoGeneratorClone::FixupClonedPointers()
   if ( v8[8] == 1953723748 )
     this->field_DE |= 0x20u;
 LABEL_21:
-  Global_1047D114 = orig::sub_10074290();
+  Global_1047D114 = orig::GetGlobal_1047D114();
   if ( Global_1047D114 == 56885 )
   {
     v14 = this->field_DF | 1;
@@ -126,14 +148,876 @@ LABEL_49:
      && (*(_DWORD *)(v5 + 4) & 0xF) + 16 * (*(_BYTE *)(v5 + 6) & 1u) <= 0xF)
     && v7 )
   {
-    orig::sub_1003B7B0((int *)v5, nullptr);
-    orig::sub_1003B830((int *)v5, nullptr);
+    orig::CMoAttachments_SetCaster((int *)v5, nullptr);
+    orig::CMoAttachments_SetTarget((int *)v5, nullptr);
     orig::SharedConditionalStateReset(self);
   }
-  result = orig::sub_100492F0((_DWORD *)self, 123);
+  result = orig::CMoGeneratorClone_FindCmdByType((_DWORD *)self, 123);
   if ( result == nullptr )
     this->field_98 = 0;
   return result;
+}
+
+// FUNCTION: FFXIMAIN 0x100480D0
+// GATE: PASS -- 100 trials, 100 returned normally, 74 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoGeneratorClone::Release(void * self)
+{
+  int *this_00;
+  
+  this_00 = *(int **)((int)self + 0xa8);
+  if (this_00 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+    *(uint32_t *)((int)self + 0xa8) = 0;
+  }
+  orig::FUN_100720b0(self);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10048140
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoGeneratorClone::UnlinkElemListA(void * self, int param_1)
+{
+  if (*(int *)(param_1 + 0x14c) == 0) {
+    *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(param_1 + 0x150);
+  }
+  else {
+    *(uint32_t *)(*(int *)(param_1 + 0x14c) + 0x150) = *(uint32_t *)(param_1 + 0x150);
+  }
+  if (*(int *)(param_1 + 0x150) != 0) {
+    *(uint32_t *)(*(int *)(param_1 + 0x150) + 0x14c) = *(uint32_t *)(param_1 + 0x14c);
+  }
+  orig::CMoResource_ReleaseChain_v1(self);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10048220
+// GATE: PASS -- 100 trials, 27 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 27
+void __thiscall CMoGeneratorClone::ResolveCmdTargets(void * self)
+{
+  uint8_t *puVar1;
+  uint32_t *puVar2;
+  uint64_t uVar3;
+  char xi_frame[308] __attribute__((aligned(4)));
+  uint32_t  &uVar4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &uVar5 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint8_t  (&local_124)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 16);
+  uint8_t  (&local_120)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 20);
+  uint8_t  (&local_11c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 24);
+  uint8_t  (&local_118)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 28);
+  uint8_t  (&local_114)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 32);
+  uint8_t  (&local_110)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 36);
+  uint8_t  (&local_10c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 40);
+  uint8_t  (&local_108)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 44);
+  uint8_t  (&local_104)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 48);
+  uint8_t  (&local_100)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 52);
+  uint8_t  (&local_fc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 56);
+  uint8_t  (&local_f8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 60);
+  uint8_t  (&local_f4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 64);
+  uint8_t  (&local_f0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 68);
+  uint8_t  (&local_ec)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 72);
+  uint8_t  (&local_e8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 76);
+  uint8_t  (&local_e4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 80);
+  uint8_t  (&local_e0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 84);
+  uint8_t  (&local_dc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 88);
+  uint8_t  (&local_d8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 92);
+  uint8_t  (&local_d4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 96);
+  uint8_t  (&local_d0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 100);
+  uint8_t  (&local_cc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 104);
+  uint8_t  (&local_c8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 108);
+  uint8_t  (&local_c4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 112);
+  uint8_t  (&local_c0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 116);
+  uint8_t  (&local_bc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 120);
+  uint8_t  (&local_b8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 124);
+  uint8_t  (&local_b4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 128);
+  uint8_t  (&local_b0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 132);
+  uint8_t  (&local_ac)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 136);
+  uint8_t  (&local_a8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 140);
+  uint8_t  (&local_a4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 144);
+  uint8_t  (&local_a0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 148);
+  uint8_t  (&local_9c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 152);
+  uint8_t  (&local_98)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 156);
+  uint8_t  (&local_94)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 160);
+  uint8_t  (&local_90)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 164);
+  uint8_t  (&local_8c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 168);
+  uint8_t  (&local_88)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 172);
+  uint8_t  (&local_84)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 176);
+  uint8_t  (&local_80)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 180);
+  uint8_t  (&local_7c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 184);
+  uint8_t  (&local_78)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 188);
+  uint8_t  (&local_74)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 192);
+  uint8_t  (&local_70)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 196);
+  uint8_t  (&local_6c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 200);
+  uint8_t  (&local_68)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 204);
+  uint8_t  (&local_64)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 208);
+  uint8_t  (&local_60)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 212);
+  uint8_t  (&local_5c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 216);
+  uint8_t  (&local_58)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 220);
+  uint8_t  (&local_54)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 224);
+  uint8_t  (&local_50)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 228);
+  uint8_t  (&local_4c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 232);
+  uint8_t  (&local_48)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 236);
+  uint8_t  (&local_44)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 240);
+  uint8_t  (&local_40)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 244);
+  uint8_t  (&local_3c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 248);
+  uint8_t  (&local_38)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 252);
+  uint8_t  (&local_34)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 256);
+  uint8_t  (&local_30)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 260);
+  uint8_t  (&local_2c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 264);
+  uint8_t  (&local_28)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 268);
+  uint8_t  (&local_24)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 272);
+  uint8_t  (&local_20)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 276);
+  uint8_t  (&local_1c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 280);
+  uint8_t  (&local_18)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 284);
+  uint8_t  (&local_14)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 288);
+  uint8_t  (&local_10)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 292);
+  uint8_t  (&local_c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 296);
+  uint8_t  (&local_8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 300);
+  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 304);
+  
+  orig::CMoGeneratorClone_ResolveTarget_v1(self);
+  puVar2 = *(uint32_t **)((int)self + 0xe0);
+  *(uint32_t *)((int)self + 0x78) = 0x3f800000;
+  *(uint32_t *)((int)self + 0x7c) = 0x3f800000;
+  *(uint32_t *)((int)self + 0x80) = 0x3f800000;
+  *(uint32_t *)((int)self + 0x84) = 0x3f800000;
+  *(uint32_t *)((int)self + 0x88) = 0x3f800000;
+  *(uint32_t *)((int)self + 0x8c) = 0x3f800000;
+  for (; puVar2 != (uint32_t *)0x0; puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f)) {
+    switch(xi_sw(*puVar2 & 0xff)) {
+    case 5:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_f0;
+LAB_100483c4:
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,0x19,uVar5);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 6:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_e4;
+        goto LAB_100483c4;
+      }
+      break;
+    case 7:
+      if (puVar2[1] == 0) {
+        puVar1 = local_e0;
+LAB_100483bd:
+        uVar5 = puVar2[2];
+        goto LAB_100483c4;
+      }
+      break;
+    case 8:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_ec;
+        goto LAB_100483c4;
+      }
+      break;
+    case 9:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_114;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0xb:
+      if (puVar2[1] == 0) {
+        puVar1 = local_10c;
+        goto LAB_100483bd;
+      }
+      break;
+    case 0xc:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_f4;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0xd:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_104;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0xe:
+      if (puVar2[1] == 0) {
+        puVar1 = local_110;
+        goto LAB_100483bd;
+      }
+      break;
+    case 0xf:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_108;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0x10:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_100;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0x12:
+      if (puVar2[1] == 0) {
+        puVar1 = local_11c;
+        goto LAB_100483bd;
+      }
+      break;
+    case 0x13:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_fc;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0x14:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_118;
+        goto LAB_100483c4;
+      }
+      break;
+    case 0x17:
+      if (puVar2[1] == 0) {
+        puVar1 = local_f8;
+        goto LAB_100483bd;
+      }
+    }
+    if ((char)*puVar2 == '\0') break;
+  }
+  puVar2 = *(uint32_t **)((int)self + 0xe4);
+  while (puVar2 != (uint32_t *)0x0) {
+    switch(xi_sw(*puVar2 & 0xff)) {
+    case 0x21:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_fc,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x22:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x23:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x24:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_28,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x25:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_dc,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x26:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_48,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x27:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_88,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x28:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x29:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_80,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2a:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_40,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2b:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_78,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_20,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2d:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_70,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2e:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_bc,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x2f:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x33:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_ac,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x34:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x35:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_9c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x36:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_94,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x37:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_8c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x38:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_84,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x39:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_7c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x3c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_110,5,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x44:
+    case 0x53:
+    case 0x6a:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_118,5,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x4e:
+    case 0x4f:
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_f8;
+        uVar4 = 0x3e;
+LAB_1004845e:
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,uVar4,uVar5);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      goto LAB_1004846b;
+    case 0x50:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_24,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x51:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_1c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x52:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x54:
+      if (puVar2[4] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_100,0x3e,puVar2[5]);
+        puVar2[4] = *(uint32_t *)uVar3;
+      }
+      uVar5 = puVar2[2];
+      if ((uVar5 != 0) && (puVar2[1] == 0)) {
+        uVar4 = 0x19;
+        puVar1 = local_108;
+        goto LAB_1004845e;
+      }
+LAB_1004846b:
+      *(uint32_t *)((int)self + 0xa0) = puVar2[1];
+      break;
+    case 0x55:
+      if ((puVar2[4] != 0) && (puVar2[5] == 0)) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_120,10,puVar2[4]);
+        puVar2[5] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x59:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_74,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5a:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_6c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5b:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_64,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_5c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5d:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_54,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5e:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_4c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x5f:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_44,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x60:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_60,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x61:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x62:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_30,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 99:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 100:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x65:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_10,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x66:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x68:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_58,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x69:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_3c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x6b:
+      if (puVar2[2] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_124,0x4a,puVar2[1]);
+        puVar2[2] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x6c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a8,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x6d:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_18,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x6e:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x6f:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_50,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x70:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_98,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x74:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x75:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_38,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x76:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_11c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x77:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_104,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x78:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_f4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x7c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_cc,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x7d:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x80:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x81:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_68,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x82:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_2c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x83:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_10c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x84:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_ec,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x85:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_114,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x8b:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_90,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x8c:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_14,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x8d:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x93:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_34,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x95:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x96:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e4,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      break;
+    case 0x97:
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_f0,0x19,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+    }
+    if ((char)*puVar2 == '\0') {
+      puVar2 = (uint32_t *)0x0;
+    }
+    else {
+      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+    }
+  }
+  puVar2 = *(uint32_t **)((int)self + 0xe8);
+  while (puVar2 != (uint32_t *)0x0) {
+    if ((*puVar2 & 0xff) == 0x47) {
+      if (puVar2[3] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e8,10,puVar2[2]);
+        puVar2[3] = *(uint32_t *)uVar3;
+      }
+    }
+    else if ((*puVar2 & 0xff) == 0x65) {
+      if (puVar2[1] == 0) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_120,7,puVar2[2]);
+        puVar2[1] = *(uint32_t *)uVar3;
+      }
+      if ((puVar2[1] != 0) && (puVar2[2] == 0)) {
+        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_124,5,puVar2[1]);
+        puVar2[2] = *(uint32_t *)uVar3;
+      }
+    }
+    if ((char)*puVar2 == '\0') {
+      puVar2 = (uint32_t *)0x0;
+    }
+    else {
+      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+    }
+  }
+  puVar2 = *(uint32_t **)((int)self + 0xec);
+  do {
+    if (puVar2 == (uint32_t *)0x0) {
+      return;
+    }
+    if ((*puVar2 & 0xff) == 1) {
+      if (puVar2[1] == 0) {
+        uVar5 = puVar2[2];
+        puVar1 = local_124;
+        uVar4 = 5;
+        goto LAB_1004907c;
+      }
+    }
+    else if (((*puVar2 & 0xff) == 2) && (puVar2[1] == 0)) {
+      uVar5 = puVar2[2];
+      puVar1 = local_120;
+      uVar4 = 7;
+LAB_1004907c:
+      uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,uVar4,uVar5);
+      puVar2[1] = *(uint32_t *)uVar3;
+    }
+    if ((char)*puVar2 == '\0') {
+      puVar2 = (uint32_t *)0x0;
+    }
+    else {
+      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+    }
+  } while( true );
+}
+
+// FUNCTION: FFXIMAIN 0x100492F0
+// GATE: PASS -- 100 trials, 70 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
+uint32_t * __thiscall CMoGeneratorClone::FindCmdByType(void * self, uint32_t param_1)
+{
+  uint32_t *puVar1;
+  uint32_t uVar2;
+  
+  puVar1 = *(uint32_t **)((int)self + 0xe4);
+  while( true ) {
+    if (puVar1 == (uint32_t *)0x0) {
+      return (uint32_t *)0x0;
+    }
+    uVar2 = *puVar1 & 0xff;
+    if (uVar2 == param_1) break;
+    if (uVar2 == 0) {
+      return (uint32_t *)0x0;
+    }
+    puVar1 = puVar1 + (*puVar1 >> 8 & 0x1f);
+  }
+  return puVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10049520
+// GATE: PASS -- 100 trials, 1 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 1
+void __thiscall CMoGeneratorClone::CopyType1Dwords(void * self, uint32_t * param_1)
+{
+  uint32_t *puVar1;
+  
+  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  *param_1 = puVar1[5];
+  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  param_1[1] = puVar1[6];
+  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  param_1[2] = puVar1[7];
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10049570
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CMoGeneratorClone::ResolveTarget(void * self)
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  uint32_t *puVar4;
+  int iVar5;
+  int *piVar6;
+  uint8_t bVar7;
+  uint64_t uVar8;
+  char xi_frame[4] __attribute__((aligned(4)));
+  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  
+  iVar1 = *(int *)((int)self + 0xe4);
+  if (*(int *)(iVar1 + 8) == 0) {
+    iVar5 = (int)*(char *)(iVar1 + 0x21);
+    switch(xi_sw(iVar5)) {
+    case 0xb:
+    case 0xc:
+    case 0x1f:
+      iVar5 = 0x1f;
+      break;
+    case 0xe:
+    case 0x21:
+    case 0x39:
+      iVar5 = 0x21;
+      break;
+    case 0x1d:
+      iVar5 = 0x25;
+    }
+    *(uint8_t *)(iVar1 + 0x28) = 0;
+    if ((((iVar5 == 0x57) || (iVar5 == 0x47)) || (iVar5 == 0x22)) ||
+       ((iVar5 == 0x24 || (iVar5 == 0x5c)))) {
+      *(uint32_t *)(*(int *)((int)self + 0xe4) + 8) = 1;
+      return 0;
+    }
+    iVar1 = *(int *)((int)self + 0xe4);
+    local_4 = self;
+    uVar8 = orig::CMoResource_FindByTypeAndId_v1(self,&local_4,iVar5,*(uint32_t *)(iVar1 + 0xc));
+    iVar2 = *(int *)uVar8;
+    *(int *)(iVar1 + 8) = iVar2;
+    if ((iVar2 == 0) && (iVar5 == 0x1f)) {
+      *(uint32_t *)(*(int *)((int)self + 0xe4) + 8) = 0;
+      piVar6 = *(int **)((int)self + 0x14);
+      do {
+        if ((piVar6 == (int *)0x0) || ((void *)*piVar6 == (void *)0x0)) break;
+        uVar8 = orig::CMoResource_FindByTypeAndId_v1
+                          ((void *)*piVar6,&local_4,0x2e,
+                           *(uint32_t *)(*(int *)((int)self + 0xe4) + 0xc));
+        piVar3 = (int *)*(int *)uVar8;
+        if ((piVar3 != (int *)0x0) && (*piVar3 != 0)) {
+          iVar1 = *(int *)((int)self + 0xe4);
+          iVar5 = orig::ZoneMap_FindSlotByName(g_pZoneMap,*piVar3 + 0x30);
+          *(int *)(iVar1 + 8) = iVar5;
+          *(uint8_t *)(*(int *)((int)self + 0xe4) + 0x28) = 1;
+          break;
+        }
+        bVar7 = *(int **)(*piVar6 + 0x28) != piVar6;
+        piVar6 = *(int **)(*piVar6 + 0x28);
+      } while (bVar7);
+    }
+  }
+  puVar4 = *(uint32_t **)(*(int *)((int)self + 0xe4) + 8);
+  if (((uint32_t *)0x1 < puVar4) && (puVar4 != (uint32_t *)0x0)) {
+    return *puVar4;
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x1004E470
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CMoGeneratorClone::TestFlag20000000(void * self)
+{
+  uint32_t uVar1;
+  
+  uVar1 = *(uint32_t *)((int)self + 0xd8) & 0x20000000;
+  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(uVar1 == 0x20000000)));
 }
 
 // FUNCTION: FFXIMAIN 0x1004E720
@@ -180,14 +1064,14 @@ void CMoGeneratorClone::ExecuteCmdList(int a2)
               if ( *v9 != 0 )
               {
                 v11 = *(_WORD *)(v10 + 214);
-                if ( orig::sub_100539E0((_DWORD *)*v9) )
+                if ( orig::Generator_IsFlag400OrField22Zero((_DWORD *)*v9) )
                   orig::YmGenerater_Stop(v10, nullptr);
                 *(_WORD *)(v10 + 214) = (__int64)(*(float *)(g_pResourceMng + 3760) + 1.0);
                 *(_DWORD *)(v10 + 204) = 0;
-                orig::sub_10053370(v10);
+                orig::CMoTask_Restart(v10);
                 v2 = a2;
                 orig::sub_100496F0(v10, a2);
-                orig::sub_10053890(v10, 0);
+                orig::Generator_ClearSubobjectOrSetFlag(v10, 0);
                 *(_WORD *)(v10 + 214) = v11;
               }
             }
@@ -198,15 +1082,15 @@ void CMoGeneratorClone::ExecuteCmdList(int a2)
             {
               v13 = *v12;
               v14 = self + 12;
-              v16 = (_DWORD *)orig::sub_1003B700(self + 12);
-              v15 = (_DWORD *)orig::sub_1003B6D0(v14);
-              orig::sub_10056C70(v13, v15, v16, 0, 0);
+              v16 = (_DWORD *)orig::CMoAttachments_GetTarget(self + 12);
+              v15 = (_DWORD *)orig::CMoAttachments_GetCaster(v14);
+              orig::Scheduler_Execute(v13, v15, v16, 0, 0);
             }
             break;
           case 3u:
             v8 = *(_DWORD *)(v4 + 4 * ((*v3 >> 13) & 0x3F) + 28);
             if ( v8 != 0 )
-              orig::sub_10063B20((_DWORD *)(*(_DWORD *)v8 + 48));
+              orig::CMoSpline_ReleaseRef((_DWORD *)(*(_DWORD *)v8 + 48));
             break;
           case 4u:
             *(float *)(v2 + 272) = *(float *)(v2 + 276);
@@ -242,6 +1126,105 @@ LABEL_20:
   }
 }
 
+// FUNCTION: FFXIMAIN 0x10052960
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoGeneratorClone::SetFlagBit0At17B(void * self, undefined4 param_1)
+{
+  *(uint32_t *)((int)self + 0x17b) = param_1 & 1 | *(uint32_t *)((int)self + 0x17b) & 0xfffffffe;
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10052980
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoGeneratorClone::SetFlagBit1At17B(void * self, undefined4 param_1)
+{
+  *(uint32_t *)((int)self + 0x17b) = (param_1 & 1) * 2 ^ *(uint32_t *)((int)self + 0x17b) & 0xfffffffd;
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10053450
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoGeneratorClone::CopyParams(void * self, int param_1)
+{
+  int iVar1;
+  uint32_t uVar2;
+  uint32_t uVar3;
+  uint32_t uVar4;
+  uint32_t *puVar5;
+  
+  *(uint32_t *)((int)self + 0x20) = *(uint32_t *)(param_1 + 0x20);
+  *(uint32_t *)((int)self + 0x24) = *(uint32_t *)(param_1 + 0x24);
+  *(uint32_t *)((int)self + 0x28) = *(uint32_t *)(param_1 + 0x28);
+  *(uint32_t *)((int)self + 0x2c) = *(uint32_t *)(param_1 + 0x2c);
+  orig::AttachNotify_CopyFields((void *)((int)self + 0x30),param_1 + 0x30);
+  *(uint32_t *)((int)self + 0x70) = *(uint32_t *)(param_1 + 0x70);
+  *(uint32_t *)((int)self + 0x74) = *(uint32_t *)(param_1 + 0x74);
+  *(uint32_t *)((int)self + 0x78) = *(uint32_t *)(param_1 + 0x78);
+  *(uint32_t *)((int)self + 0x7c) = *(uint32_t *)(param_1 + 0x7c);
+  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(param_1 + 0x80);
+  *(uint32_t *)((int)self + 0x84) = *(uint32_t *)(param_1 + 0x84);
+  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(param_1 + 0x88);
+  *(uint32_t *)((int)self + 0x8c) = *(uint32_t *)(param_1 + 0x8c);
+  *(uint32_t *)((int)self + 0x90) = *(uint32_t *)(param_1 + 0x90);
+  *(uint32_t *)((int)self + 0x94) = *(uint32_t *)(param_1 + 0x94);
+  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(param_1 + 0x98);
+  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(param_1 + 0x98);
+  *(uint32_t *)((int)self + 0x9c) = *(uint32_t *)(param_1 + 0x9c);
+  *(uint32_t *)((int)self + 0xa0) = *(uint32_t *)(param_1 + 0xa0);
+  *(uint32_t *)((int)self + 0xa4) = *(uint32_t *)(param_1 + 0xa4);
+  *(uint32_t *)((int)self + 0xa8) = *(uint32_t *)(param_1 + 0xa8);
+  *(uint32_t *)((int)self + 0xac) = *(uint32_t *)(param_1 + 0xac);
+  *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(param_1 + 0xb0);
+  puVar5 = (uint32_t *)((int)self + 0xb4);
+  iVar1 = 3;
+  do {
+    *puVar5 = *(uint32_t *)(((param_1 + 0x70) - ((int)self + 0x70)) + (int)puVar5);
+    puVar5 = puVar5 + 1;
+    iVar1 = iVar1 + -1;
+  } while (iVar1 != 0);
+  *(uint32_t *)((int)self + 0xb0) = 0;
+  *(uint32_t *)((int)self + 0xac) = 0;
+  *(uint32_t *)((int)self + 0xa8) = 0;
+  *(uint32_t *)((int)self + 0xa4) = 0;
+  *(uint32_t *)((int)self + 0xc0) = *(uint32_t *)(param_1 + 0xc0);
+  *(uint32_t *)((int)self + 0xc4) = *(uint32_t *)(param_1 + 0xc4);
+  *(uint32_t *)((int)self + 200) = *(uint32_t *)(param_1 + 200);
+  *(uint32_t *)((int)self + 0xcc) = *(uint32_t *)(param_1 + 0xcc);
+  *(uint32_t *)((int)self + 0xd0) = *(uint32_t *)(param_1 + 0xd0);
+  *(uint16_t *)((int)self + 0xd4) = *(uint16_t *)(param_1 + 0xd4);
+  *(uint16_t *)((int)self + 0xd6) = *(uint16_t *)(param_1 + 0xd6);
+  uVar3 = *(uint32_t *)((int)self + 0xd8);
+  uVar4 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x1ff ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar4;
+  uVar2 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar4) & 0x200 ^ uVar4;
+  *(uint32_t *)((int)self + 0xd8) = uVar2;
+  uVar3 = ((uint32_t)(((uint32_t)(uint16_t)((short)(uVar3 >> 0x10)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)(uVar2 >> 8)) << 8) | (uint8_t)((char)uVar4)))))) & 0xfffff3ff ^
+          *(uint32_t *)(param_1 + 0xd8) & 0x400;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x1000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x2000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0xfffc000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x10000000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x20000000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x40000000 ^ uVar3;
+  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  *(uint32_t *)((int)self + 0xd8) =
+       (uVar3 ^ *(uint32_t *)(param_1 + 0xd8)) & 0x7fffffff ^ *(uint32_t *)(param_1 + 0xd8);
+  *(uint16_t *)((int)self + 0xdc) = *(uint16_t *)(param_1 + 0xdc);
+  *(uint8_t *)((int)self + 0xde) = *(uint8_t *)(param_1 + 0xde);
+  *(uint8_t *)((int)self + 0xdf) = *(uint8_t *)(param_1 + 0xdf);
+  *(uint32_t *)((int)self + 0xe0) = *(uint32_t *)(param_1 + 0xe0);
+  *(uint32_t *)((int)self + 0xe4) = *(uint32_t *)(param_1 + 0xe4);
+  *(uint32_t *)((int)self + 0xe8) = *(uint32_t *)(param_1 + 0xe8);
+  *(uint32_t *)((int)self + 0xec) = *(uint32_t *)(param_1 + 0xec);
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x100536C0
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
 int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
@@ -253,12 +1236,12 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
   int v8;
   int i;
   int v11;
-  v5 = orig::sub_100286B0(252, 1);
+  v5 = orig::Mem_AllocWithFallback(252, 1);
   v6 = (int)v5;
   byte_1047D12C = 1;
   if ( v5 != nullptr )
   {
-    orig::sub_10047F80((int)v5);
+    orig::CMoGeneratorClone_VT_1032B114_Constructor((int)v5);
     *(_DWORD *)v6 = &CMoGeneratorClone_vtbl;
     *(_DWORD *)(v6 + 48) = &mixin_of_CMoGeneratorClone_0x1032B680;
     *(_DWORD *)(v6 + 240) = 0;
@@ -268,22 +1251,22 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
   {
     v6 = 0;
   }
-  orig::sub_10053450(v6, (int)self);
+  orig::CMoGeneratorClone_CopyParams(v6, (int)self);
   *(_DWORD *)(v6 + 120) = 1065353216;
   *(_DWORD *)(v6 + 124) = 1065353216;
   *(_DWORD *)(v6 + 128) = 1065353216;
   *(_DWORD *)(v6 + 132) = 1065353216;
   *(_DWORD *)(v6 + 136) = 1065353216;
   *(_DWORD *)(v6 + 140) = 1065353216;
-  orig::sub_1003B640((_DWORD *)(v6 + 48));
+  orig::CMoAttachments_Reset((_DWORD *)(v6 + 48));
   v7 = *(_DWORD *)(v6 + 36);
   *(_BYTE *)(v6 + 26) |= 5u;
   *(_DWORD *)(v6 + 156) = 0;
   *(_DWORD *)(v6 + 36) = v7 | 0x4000000;
   *(_DWORD *)(v6 + 244) = this->field_14;
-  orig::sub_10074140((_DWORD *)g_pMeshResourceMng, &v11, v6);
-  orig::sub_1003B7B0((int *)(v6 + 48), a2);
-  orig::sub_1003B830((int *)(v6 + 48), a3);
+  orig::MeshResourceMng_AllocHandle((_DWORD *)g_pMeshResourceMng, &v11, v6);
+  orig::CMoAttachments_SetCaster((int *)(v6 + 48), a2);
+  orig::CMoAttachments_SetTarget((int *)(v6 + 48), a3);
   v8 = *(_DWORD *)(v6 + 216);
   *(_DWORD *)(v6 + 32) = 1852796003;
   *(_DWORD *)(v6 + 156) = 0;
@@ -291,7 +1274,7 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
   *(_DWORD *)(v6 + 40) = this->field_14;
   *(_WORD *)(v6 + 24) &= 0x8000u;
   *(_DWORD *)(v6 + 36) &= ~0x8000000u;
-  orig::sub_10072030((_DWORD *)v6);
+  orig::CMoResource_RegisterInTypeList((_DWORD *)v6);
   if ( (_BYTE)a4 != 0 )
     orig::SharedConditionalStateReset(v6);
   for ( i = this->pCommandStream; i != 0; i += 4 * ((*(_DWORD *)i >> 8) & 0x1F) )
@@ -299,7 +1282,7 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
     if ( *(_BYTE *)i == 4 )
     {
       if ( *(_DWORD *)(i + 4) == 0 )
-        *(_DWORD *)(i + 4) = *orig::sub_10072290(self, &a2, 25, *(_DWORD *)(i + 8));
+        *(_DWORD *)(i + 4) = *orig::CMoResource_FindByTypeAndId(self, &a2, 25, *(_DWORD *)(i + 8));
       a4 = this->flags & 0x1FF;
       *(float *)(i + 16) = (float)a4;
     }
@@ -307,6 +1290,26 @@ int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
       break;
   }
   return v6;
+}
+
+// FUNCTION: FFXIMAIN 0x10053E00
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoGeneratorClone::InitDefaultParams()
+{
+  _DWORD *v2;
+  if ( this->field_A4 == 0 )
+  {
+    v2 = orig::Mem_AllocWithHeader12(64, 1);
+    this->field_A4 = v2;
+    orig::MoProcessor_CallVSlot49(v2);
+    this->field_78 = 1065353216;
+    this->field_7C = 1065353216;
+    this->field_80 = 1065353216;
+    this->field_84 = 1065353216;
+    this->field_88 = 1065353216;
+    this->field_8C = 1065353216;
+  }
+  return this->field_A4;
 }
 
 // FUNCTION: FFXIMAIN 0x100542F0
@@ -320,7 +1323,7 @@ void __thiscall CMoGeneratorClone::Destructor(void * self)
        &CMoGeneratorClone_vtbl_as_v0;
   *(uint32_t *)((int)self + 0x30) = &mixin_of_CMoGeneratorClone_0x1032B680_as_v0;
   orig::YmGenerater_Stop_v3(self,(int *)0x0,&xi_frame[0]);
-  orig::sub_1003B690_2((uint32_t *)((int)self + 0x30));
+  orig::CMoAttachments_ResetAll_v1((uint32_t *)((int)self + 0x30));
   this_00 = *(int **)((int)self + 0xa8);
   if (this_00 != (int *)0x0) {
     ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
@@ -329,7 +1332,7 @@ void __thiscall CMoGeneratorClone::Destructor(void * self)
   if (*(int *)((int)self + 0xf8) != 0) {
     *(uint32_t *)(*(int *)((int)self + 0xf8) + 0x164) = 0;
   }
-  orig::sub_10074180_2(g_pMeshResourceMng_as_v1,*(uint32_t **)((int)self + 0x14));
-  orig::sub_10048000_2(self);
+  orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,*(uint32_t **)((int)self + 0x14));
+  orig::CMoGeneratorClone_VT_1032B114_Destructor_v1(self);
   return;
 }

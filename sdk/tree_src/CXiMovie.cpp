@@ -71,6 +71,84 @@ int CXiMovie::Draw(int a1, int a2, int a3, int a4, int a5)
   return result;
 }
 
+// FUNCTION: FFXIMAIN 0x1021D3D0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __cdecl CXiMovie::Create(undefined4 param_1)
+{
+  int iVar1;
+  void *self;
+  uint32_t uVar2;
+  
+  iVar1 = orig::FUN_10311fde(param_1,&DAT_1034f2d0);
+  if (iVar1 != 0) {
+    orig::FUN_10311f30(iVar1);
+    self = (void *)orig::Mem_AllocDefault_v1(0x28);
+    if (self == (void *)0x0) {
+      g_pMovie_as_v1 = (void *)0x0;
+    }
+    else {
+      g_pMovie_as_v1 = orig::CXiMovie_Construct(self);
+      if (g_pMovie_as_v1 != (void *)0x0) {
+        uVar2 = orig::MenuPanels_InitAndMarkReady(g_pMovie_as_v1,param_1);
+        if ((char)uVar2 == '\0') {
+          uVar2 = orig::CXiMovie_DestroyGlobal(uVar2);
+          return uVar2 & 0xffffff00;
+        }
+        return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+      }
+    }
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x1021D440
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __cdecl CXiMovie::UpdateIfPresent()
+{
+  uint32_t xi_entry_eax = 0;
+  uint32_t uVar1;
+  
+  if (g_pMovie != 0) {
+    uVar1 = orig::FUN_1021d960(*(void **)(unsigned int)XI_GAME(0x10666E7Cu));
+    return uVar1;
+  }
+  return xi_entry_eax & 0xffffff00;
+}
+
+// FUNCTION: FFXIMAIN 0x1021D460
+// GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __attribute__((cdecl, regparm(1))) CXiMovie_DestroyGlobal(undefined4 xi_eax)
+{
+  if (g_pMovie_as_v0 != (int *)0x0) {
+    xi_eax = orig::MenuPanels_ReleaseReturnTrue(xi_eax);
+    if (g_pMovie_as_v0 != (int *)0x0) {
+      xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pMovie_as_v0 + 0x18))))((void *)(g_pMovie_as_v0),1);
+      g_pMovie_as_v0 = (int *)0x0;
+    }
+  }
+  return xi_eax;
+}
+
+// FUNCTION: FFXIMAIN 0x1021D490
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __cdecl CXiMovie::GetField4()
+{
+  if (g_pMovie != 0) {
+    return *(uint32_t *)(g_pMovie + 4);
+  }
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x1021D4A0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+long double __cdecl CXiMovie::GetDoubleField8()
+{
+  if (g_pMovie != 0) {
+    return (long double)*(double *)(g_pMovie + 8);
+  }
+  return (long double)0.0f;
+}
+
 // FUNCTION: FFXIMAIN 0x1021D4C0
 // GATE: PASS -- 100 trials, 25 returned normally, 51 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 25
 int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom, float * scale)
@@ -114,15 +192,15 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
 
   if ( g_pMovie != 0 )
   {
-    orig::sub_1021D980(g_pMovie);
-    result = orig::sub_1021DDF0((_DWORD *)g_pMovie);
+    orig::Movie_Update(g_pMovie);
+    result = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
     if ( result != 0 )
     {
       pDevice = (g_pCDx->pDevice);
       lpVtbl = pDevice->lpVtbl;
-      CurrentTexture = orig::sub_1021DDF0((_DWORD *)g_pMovie);
+      CurrentTexture = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
       lpVtbl->SetTexture(pDevice, 0, (IDirect3DBaseTexture8 *)CurrentTexture);
-      v4 = orig::sub_1021DDF0((_DWORD *)g_pMovie);
+      v4 = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
       result = (*(int (__stdcall **)(int, _DWORD, _BYTE *))(*(_DWORD *)v4 + 56))(v4, 0, v34);
       if ( result >= 0 )
       {
@@ -182,3 +260,38 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
   return result;
 }
 
+// FUNCTION: FFXIMAIN 0x1021D7F0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * __thiscall CXiMovie::Construct(void * self)
+{
+  int *piVar1;
+  
+  *(uint32_t *)((int)self + 0x10) = 0;
+  *(uint32_t *)((int)self + 0x14) = 0;
+  *(uint32_t *)((int)self + 0x18) = 0;
+  *(uint32_t *)((int)self + 0x1c) = 0;
+  *(uint8_t ***)self = &PTR_CXiMovie_GetRuntimeClass_1033bdd0;
+  *(uint32_t *)((int)self + 4) = 0;
+  piVar1 = *(int **)((int)self + 0x10);
+  if (piVar1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  }
+  *(uint32_t *)((int)self + 0x10) = 0;
+  piVar1 = *(int **)((int)self + 0x14);
+  if (piVar1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  }
+  *(uint32_t *)((int)self + 0x14) = 0;
+  piVar1 = *(int **)((int)self + 0x18);
+  if (piVar1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  }
+  *(uint32_t *)((int)self + 0x18) = 0;
+  piVar1 = *(int **)((int)self + 0x1c);
+  if (piVar1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  }
+  *(uint32_t *)((int)self + 0x1c) = 0;
+  *(uint32_t *)((int)self + 0x20) = 0;
+  return self;
+}

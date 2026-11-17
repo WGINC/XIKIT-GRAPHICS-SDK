@@ -5,7 +5,13 @@
 #pragma pack(push, 1)
 class XI_API CMoSchedularTask {
 public:
-    static undefined4 __thiscall vf8(void * self);  // 0x10057E10
+    static char ** __cdecl GetRuntimeClass();  // 0x10057090
+    void * ScalarDeletingDtor(char a2);  // 0x10057250
+    static void * __thiscall Construct(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3);  // 0x10057270
+    static undefined4 __thiscall InitFromSource(void * self, int param_1, uint32_t param_2, short * param_3);  // 0x100573E0
+    static void __thiscall Destructor(void * self);  // 0x100574A0
+    static void __thiscall SetSharedRef(void * self, short * param_1);  // 0x10057CC0
+    static undefined4 __thiscall Update(void * self);  // 0x10057E10
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x146];

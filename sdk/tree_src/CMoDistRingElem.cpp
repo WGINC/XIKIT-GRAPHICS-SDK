@@ -3,6 +3,13 @@
 #include "CMoDistRingElem.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10043710
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoDistRingElem::GetRuntimeClass()
+{
+  return &CMoDistRingElem_classdesc;
+}
+
 // FUNCTION: FFXIMAIN 0x10043720
 // GATE: PASS -- 100 trials, 77 returned normally, 1220 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 77
 void CMoDistRingElem::AllocRingGeometry()
@@ -46,7 +53,7 @@ void CMoDistRingElem::AllocRingGeometry()
   _BYTE v38[16];
   a2 = 2 * (char)this->segmentCount + 2;
   v35 = a2 * (char)this->ringLevelCount;
-  v2 = (float *)orig::sub_10311BBB(36 * v35);
+  v2 = (float *)orig::Allocator_Generic(36 * v35);
   v3 = (char)this->ringLevelCount;
   v4 = 0;
   a3 = (int)v2;
@@ -117,15 +124,15 @@ void CMoDistRingElem::AllocRingGeometry()
     while ( v8 < v31 );
     v7 = v31;
   }
-  orig::sub_10045D40((int)this);
+  orig::RegisterWithProcessor((int)this);
   v19 = (char *)a3;
   if ( orig::CMoDistMorphElem_ValidateMorphData(a3, v35, (int)&this->field_A0, 0) != 0 )
   {
     if ( (CMoDistRingElem_AllocRingGeometry_staticGuard & 1) == 0 )
     {
       CMoDistRingElem_AllocRingGeometry_staticGuard |= 1u;
-      orig::sub_1006AD90_2((exception *)CMoDistRingElem_stateBlock);
-      orig::sub_10313486(XI_CODE(sub_100439B0));
+      orig::fn_1006AD90((exception *)CMoDistRingElem_stateBlock);
+      orig::_atexit(XI_CODE(StaticDtor_StateBlock_1047BB7C));
     }
     orig::StateBlock_ApplyTSS(CMoDistRingElem_stateBlock, (int)CMoDistRingElem_textureStageStates);
     if ( v7 > 0 )
@@ -139,7 +146,7 @@ void CMoDistRingElem::AllocRingGeometry()
         v23 = g_pResourceMng;
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(338);
         v24 = *(void **)(v23 + 3528);
-        v25 = orig::sub_1006A560(0x152u);
+        v25 = orig::Gfx_CalcFVFStride(0x152u);
         orig::CDx_DrawPrimitiveUP(v24, 5, a2a, (int)v19, v25);
         v19 += v22;
         --v20;
@@ -147,7 +154,44 @@ void CMoDistRingElem::AllocRingGeometry()
       while ( v20 != 0 );
       v19 = (char *)a3;
     }
-    orig::sub_10311BB0(v19);
+    orig::operator_delete(v19);
   }
 }
 
+// FUNCTION: FFXIMAIN 0x10052FD0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoDistRingElem::Construct(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &PTR_CMoDistRingElem_GetRuntimeClass_1032b4d8;
+  *(uint16_t *)((int)self + 0x176) = 0x1ba;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x10052FF0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+BOOL CMoDistRingElem::IsKind5(int a1)
+{
+  return a1 == 5;
+}
+
+// FUNCTION: FFXIMAIN 0x10053000
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoDistRingElem::set_field_1B6(int a2)
+{
+  (*(unsigned __int32 *)((char *)this + 0x1B6)) = a2;
+  return a2;
+}
+
+// FUNCTION: FFXIMAIN 0x10053010
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoDistRingElem::ScalarDeletingDtor(char a2)
+{
+  int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
+  orig::CMoElemFamily_SharedCleanup(self);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)self);
+  return self;
+}

@@ -5,6 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CMoTask_VT_1032B95C {
 public:
+    int vf011();  // 0x10063130
+    int vf012(int a1);  // 0x10063140
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

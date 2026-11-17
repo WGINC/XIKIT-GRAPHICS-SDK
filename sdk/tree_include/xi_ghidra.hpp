@@ -86,6 +86,7 @@ static inline long double xi_fptan(long double x) { long double r; __asm__("fpta
 #define fcos(x) xi_fcos((x))
 
 // Ghidra's unkbyte10: ten bytes of no type, which it gives an x87 register value it could not type (fpatan's result
+// fed to fcos, 0x1002B140). An x87 value is the 80-bit extended format, which long double holds in its first 10 bytes.
 typedef long double unkbyte10;
 // `switch (x)` on what Ghidra typed a pointer or undefined4: the switch is on its 32-bit value (C++ needs an integer)
 template <class T> static inline uint32_t xi_sw(T *p) { return (uint32_t)(uintptr_t)p; }

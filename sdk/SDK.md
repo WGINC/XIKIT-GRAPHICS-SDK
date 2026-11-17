@@ -1,9 +1,9 @@
-# XIKIT SDK: writing graphics mods (the public kit)
+# XIKIT SDK: writing mods (the public kit)
 
 A mod is a 32-bit DLL that xikit loads into the game. It can:
 
-- **replace** any of the graphics functions in the kit's manifest (432; 428 on build 6AE818B4) and **call the game's
-  own version** of the function it replaced;
+- **replace** any of the functions in the kit's manifest (4,602, the same on build 6AC37846; 4,532 on 6AE818B4) and
+  **call the game's own version** of the function it replaced;
 - **intercept the Direct3D 8 device's methods**;
 - read and write the game's objects through the class layouts in `tree_include/`;
 - **draw every frame** with the game's device;
@@ -12,10 +12,11 @@ A mod is a 32-bit DLL that xikit loads into the game. It can:
 
 With `mod_reload=1`, a rebuilt mod is loaded again while the game runs.
 
-This kit holds the game's graphics functions only. Those are the 537 functions that `seams.json` gives a depth: the
-fewest direct calls from the function to one with a Direct3D call site proven in the game (`README.md`, "Graphics
-only"). What it says about such a function comes from the reconstruction checked against the game's code: its
-declaration (`tree_include/`) and its body (`tree_src/`, 434 functions). Read the body before you change a function.
+This kit holds the game's code except its network, its encryption and its packets (`README.md`, "What this kit
+covers"). What it says about a function comes from the reconstruction checked against the game's code: its
+declaration (`tree_include/`) and its body (`tree_src/`, 4,635 functions). Read the body before you change a function.
+`seams.json` gives each function's depth: the fewest direct calls from it to one with a Direct3D call site proven in
+the game (0: it has one). The graphics system is the functions with a depth.
 
 The kit does not swap reconstructed code into the game. Every hook's `previous` is the game's own code.
 
@@ -34,14 +35,14 @@ The kit does not swap reconstructed code into the game. Every hook's `previous` 
 | `include/xikit_sdk.hpp` | The one header a mod includes: `XI_HOOK`, `XI_DEVICE_HOOK`, `xikit::fn`, `xikit::game`, `XIKIT_MOD_GLOBALS` |
 | `include/xikit_mod.h` | The kit–mod interface in C: `XikitHost`, the exports a mod has, the result codes |
 | `include/xikit_render.h` | Shader passes and depth reads through d3d8on11 |
-| `include/xikit_game.hpp` | Includes the headers below, and adds two things: `xigame::Name()`, a typed pointer to each graphics function's game entry; and `xihook::Name`, the manifest flags of each hookable function |
-| `tree_include/` | The headers of the graphics functions and their classes, whose field offsets are checked by `static_assert`. Also `orig::` (game code by address), the globals the source uses, and Direct3D 8 |
-| `tree_src/` | The source of the graphics functions, one place to read what each one does |
+| `include/xikit_game.hpp` | Includes the headers below, and adds two things: `xigame::Name()`, a typed pointer to each function's game entry; and `xihook::Name`, the manifest flags of each hookable function |
+| `tree_include/` | The headers of the functions and their classes, whose field offsets are checked by `static_assert`. Also `orig::` (game code by address), the globals the source uses, and Direct3D 8 |
+| `tree_src/` | The reconstructed source, one place to read what each function does (files named for what they hold) |
 | `template/` | A starting point, with Visual Studio / VS Code projects |
 | `examples/` | `overlay.cpp` (a pass-through hook plus a box drawn every frame), `scene_tint.cpp`, `scene_shader.cpp`, `depth_view.cpp` |
 | `build_mod.sh`, `build_mod.bat` | Build a mod |
 | `symbols/` | `FFXiMain.pdb` and its symbol list for each build (the same as `../pdb/`) |
-| `seams.json` | The graphics set: each function's depth and unit |
+| `seams.json` | Each function's depth (its distance from the Direct3D device by direct calls) and unit |
 
 ## A mod in five steps
 
@@ -135,7 +136,7 @@ The manifest's `T=` says, per function, that this is safe. It is decided from th
 | Call | What it runs |
 |---|---|
 | `xigame::CDx__SetTexture()(cdx, stage, tex)` | Whatever is at the game's entry: the game's code, or another mod's hook. The type comes from the declaration. |
-| `orig::Name(...)` (`tree_include/gfx_orig.hpp`) | The same, for the game functions the source calls. A function outside the graphics set is `orig::sub_<address>`: its address and call signature, nothing else |
+| `orig::Name(...)` (`tree_include/gfx_orig.hpp`) | The same, for the game functions the source calls. A function of the left-out code is `orig::XI_<CATEGORY>_<address>` (`XI_NETWORK_...`, `XI_PACKET_...`, `XI_CRYPT_...`): its category, address and call signature, nothing else |
 | Game globals (`tree_include/gfx_globals.hpp`) and objects | Use the class layouts; `xikit::game<T>(0x1045666C)` turns any analysed address into a pointer |
 
 A member function of a tree class called directly (`cdx->SetTexture(...)`) would run the reconstruction's code, which
@@ -240,26 +241,20 @@ The build can then write `my_mod.dll` while the game runs.
 
 ## Limits
 
-- **Only manifest functions can be hooked:** the graphics functions the kit has verified are safe to patch at the
-  entry. Other game code can be called (`orig::`, `xigame::`) but not replaced.
+- **Only manifest functions can be hooked:** the functions the kit has verified are safe to patch at the entry. The
+  network, encryption and packet code is not among them. Other game code can be called (`orig::`, `xigame::`) but
+  not replaced.
 - **No reconstruction:** with `swap=1` the kit finds no `gfx_recon_ingame.dll` and does nothing at all, mods
   included. Keep `swap=0`.
 - **No forks.** `XI_FORK` and `fork.py gate` need the reconstruction DLL, so neither works in this kit. `fork.py new`
   and `fork.py diff` still copy a function's source and compare an edit against it.
 - **How much a declaration is worth depends on the gate.** Flag 4 marks incomplete gate coverage, which means less
-  evidence behind the declaration: 272 functions in the manifests of 6A995428 and 6AC37846, 268 in that of 6AE818B4.
+  evidence behind the declaration: 4,055 functions in the manifest of 6A995428, 3,926 in that of 6AC37846 and 4,018
+  in that of 6AE818B4.
 - **Register inputs (flag 8).** Flag 8 marks a function whose game code reads a register its declaration does not
   carry. `hook` refuses these, because the replacement could neither see the register nor pass it on.
-  `hook_keeping_registers` accepts them. Nine functions in these manifests have the flag:
-  - `Gfx_CopySurfaceRectToTexture`
-  - `YmGenerater_Stop`
-  - `CXiSkeletonActor_DrawName2IfVisible`
-  - `CXiSkeletonActor_AttachPartResource`
-  - `Unit1012AC80_DrawImageAtRightOfRect`
-  - `Unit1012AC80_DrawImageA4AtRightOfRect`
-  - `ModelActor_Draw`
-  - `Unit101D7020_DrawLabelIfStateGroup06Or38`
-  - `SqgxShape_FillBuffers`
+  `hook_keeping_registers` accepts them. 321 functions in the manifest of 6A995428 have the flag (`xihook::` shows
+  each function's flags).
 - **A mod's code is not quarantined.** A crash in it is a crash of the game.
 - **What is tested.** The public kit was tested under Wine (the analysis repository's `kit/xikit/test/test_public.py`)
   on builds 6A995428 and 6AE818B4. A mod built with this SDK was loaded, and the test checked:

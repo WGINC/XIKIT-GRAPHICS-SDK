@@ -6,6 +6,8 @@
 class XI_API CMoResource_VT_1032C854 {
 public:
     static undefined4 __thiscall CheckVersionAndInit(void * self);  // 0x1002D7F0
+    int vf004(int a2);  // 0x1002D880
+    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071A80
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x32];

@@ -34,7 +34,7 @@ static xikit::fn<decltype(&CDx::CompositeSceneToBackBuffer)> prev_Composite;
 static int __thiscall my_Composite(CDx *self, int a1, int a2, int a3, int a4) {
   IDirect3DTexture8 *scene = a1 ? *reinterpret_cast<IDirect3DTexture8 **>(a1 + 4) : nullptr;
   IDirect3DSurface8 *lv = nullptr;
-  if (g_shader && scene && orig::sub_1000D660(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE && scene->GetSurfaceLevel(0, &lv) >= 0 && lv) {
+  if (g_shader && scene && orig::CEnv_IsStereoMode(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE && scene->GetSurfaceLevel(0, &lv) >= 0 && lv) {
     // c[0]: the grade (warm=1) or none (warm=0); c[1].x: the vignette's strength (vignette, in percent of 1.0)
     int warm = g_warm, vig = g_vig;
     float k[8] = {1.0f, warm ? 0.62f : 1.0f, warm ? 0.30f : 1.0f, 1.0f,   vig / 100.0f, 0, 0, 0};

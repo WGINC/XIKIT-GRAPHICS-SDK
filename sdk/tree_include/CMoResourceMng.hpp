@@ -5,6 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoResourceMng {
 public:
+    static char ** __cdecl GetRuntimeClass();  // 0x10072D00
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x4000C];

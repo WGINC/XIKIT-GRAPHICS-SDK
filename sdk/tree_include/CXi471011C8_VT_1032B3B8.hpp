@@ -6,6 +6,7 @@
 class XI_API CXi471011C8_VT_1032B3B8 {
 public:
     static undefined4 __thiscall RebuildBlendWeights(void * self);  // 0x10040E70
+    static undefined8 __thiscall Ctor(void * self);  // 0x10052E90
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x198];

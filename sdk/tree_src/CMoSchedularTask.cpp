@@ -3,9 +3,167 @@
 #include "CMoSchedularTask.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10057090
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoSchedularTask::GetRuntimeClass()
+{
+  return &CMoSchedularTask_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10057250
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * CMoSchedularTask::ScalarDeletingDtor(char a2)
+{
+  void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
+  orig::CMoSchedularTask_Destructor((int)self);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)self);
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x10057270
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * __thiscall CMoSchedularTask::Construct(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+{
+  uint32_t *puVar1;
+  int iVar2;
+  
+  orig::CMoTask_Constructor_v1(self);
+  orig::CMoAttachments_Construct((uint32_t *)((int)self + 0x34));
+  orig::CMoOtTask_Clear((void *)((int)self + 0xb4));
+  puVar1 = (uint32_t *)((int)self + 0xc0);
+  iVar2 = 0x10;
+  do {
+    *puVar1 = 0;
+    puVar1 = puVar1 + 2;
+    iVar2 = iVar2 + -1;
+  } while (iVar2 != 0);
+  *(uint8_t ***)self = &PTR_CMoSchedularTask_GetRuntimeClass_1032b860;
+  *(uint32_t *)((int)self + 0x34) = &PTR_LAB_1032b844;
+  orig::CMoSchedularTask_ResetFlags(self);
+  orig::CMoSchedularTask_InitFromSource(self,param_1,param_2,param_3);
+  orig::FUN_10074a00();
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x100573B0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API void __thiscall CMoSchedularTask_ResetFlags(void * self_)
+{
+  *(uint8_t *)((int)self_ + 0x141) = 0;
+  *(uint8_t *)((int)self_ + 0x143) = 0;
+  *(uint8_t *)((int)self_ + 0x144) = 0;
+  *(uint8_t *)((int)self_ + 0x140) = 0;
+  *(uint8_t *)((int)self_ + 0x145) = 0;
+  *(uint32_t *)((int)self_ + 0x146) = 0;
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x100573E0
+// GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
+undefined4 __thiscall CMoSchedularTask::InitFromSource(void * self, int param_1, uint32_t param_2, short * param_3)
+{
+  uint32_t uVar1;
+  int iVar2;
+  
+  *(uint32_t *)((int)self + 0x90) = 0;
+  *(uint8_t *)((int)self + 0x140) = 0;
+  *(uint32_t *)((int)self + 0xac) = 0;
+  orig::CMoSchedularTask_SetSharedRef(self,param_3);
+  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(param_1 + 0x14);
+  if (param_2 != 0) {
+    if (param_2 != 1) {
+      if (*(int **)((int)self + 0x80) == (int *)0x0) {
+        iVar2 = 0;
+      }
+      else {
+        iVar2 = **(int **)((int)self + 0x80);
+      }
+      *(float *)((int)self + 0x9c) = (float)((long double)param_2 / (long double)*(int *)(iVar2 + 0x7c));
+      goto LAB_1005742f;
+    }
+    *(uint8_t *)((int)self + 0x141) = 1;
+  }
+  *(uint32_t *)((int)self + 0x9c) = 0x3f800000;
+LAB_1005742f:
+  *(uint32_t *)((int)self + 0xa0) = 0;
+  *(uint32_t *)((int)self + 0x84) = 0;
+  uVar1 = *(uint32_t *)(param_1 + 0x14);
+  *(uint32_t *)((int)self + 0x80) = uVar1;
+  *(uint32_t *)((int)self + 0x94) = 0;
+  *(uint32_t *)((int)self + 0x98) = 0;
+  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(param_1 + 0x74);
+  return uVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x100574A0
+// GATE: PASS -- 100 trials, 28 returned normally, 144 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
+void __thiscall CMoSchedularTask::Destructor(void * self)
+{
+  uint32_t *this_00;
+  uint32_t xi_eax;
+  int iVar1;
+  void *this_01;
+  uint64_t uVar2;
+  
+  this_00 = (uint32_t *)((int)self + 0x34);
+  *(uint8_t ***)self = &PTR_CMoSchedularTask_GetRuntimeClass_1032b860;
+  *this_00 = &PTR_LAB_1032b844;
+  uVar2 = orig::CMoAttachments_GetCaster_v1(this_00);
+  if ((int)uVar2 != 0) {
+    uVar2 = orig::CMoAttachments_GetCaster_v1(this_00);
+    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar2 + 0x16c))))((void *)((int *)uVar2));
+  }
+  uVar2 = orig::CMoAttachments_GetTarget_v1(this_00);
+  if ((int)uVar2 != 0) {
+    uVar2 = orig::CMoAttachments_GetTarget_v1(this_00);
+    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar2 + 0x16c))))((void *)((int *)uVar2));
+  }
+  for (iVar1 = *(int *)(dword_1047D140 + 0xd50); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0xc)) {
+    if ((*(int *)(iVar1 + 0x1c) == 0x4d730000) && (*(void **)(iVar1 + 0x84) == self)) {
+      *(uint32_t *)(iVar1 + 0x84) = 0;
+    }
+  }
+  if (*(void **)((int)self + 0x84) != (void *)0x0) {
+    orig::FUN_10074a50(*(void **)((int)self + 0x84),0);
+  }
+  if (*(void **)((int)self + 0x90) != (void *)0x0) {
+    orig::FUN_1018cea0(*(void **)((int)self + 0x90));
+  }
+  orig::CMoResource_ReleaseChain_v1((void *)**(uint32_t **)((int)self + 0x80));
+  if (*(code **)((int)self + 0xac) != (code *)0x0) {
+    (**(code **)((int)self + 0xac))(self,*(uint32_t *)((int)self + 0xb0));
+  }
+  xi_eax = orig::CMoAttachments_ResetAll(this_00);
+  this_01 = (void *)((int)self + 0x140);
+  iVar1 = 0x10;
+  do {
+    this_01 = (void *)((int)this_01 + -8);
+    xi_eax = orig::FUN_100683d0(this_01,xi_eax);
+    iVar1 = iVar1 + -1;
+  } while (iVar1 != 0);
+  orig::FUN_10055650((void *)((int)self + 0xb4));
+  orig::ReleaseSubObjectIfPresent_v1(this_00);
+  orig::CMoTask_Destructor_v1(self);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10057CC0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CMoSchedularTask::SetSharedRef(void * self, short * param_1)
+{
+  if (param_1 != (short *)0x0) {
+    *(short **)((int)self + 0x90) = param_1;
+    *param_1 = *param_1 + 1;
+    orig::ScriptMacro_SetDwordValue((void *)((int)self + 0xc0),0);
+    return;
+  }
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x10057E10
 // GATE: PASS -- 100 trials, 100 returned normally, 55 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoSchedularTask::vf8(void * self)
+undefined4 __thiscall CMoSchedularTask::Update(void * self)
 {
   uint32_t uVar1;
   uint32_t uVar2;
@@ -23,7 +181,7 @@ undefined4 __thiscall CMoSchedularTask::vf8(void * self)
 LAB_10057e27:
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar2 = orig::sub_10071060_2((void *)((int)self + 0x80));
+  uVar2 = orig::ResourceHandle_IsResident_v1((void *)((int)self + 0x80));
   if ((char)uVar2 == '\0') {
 LAB_10057ef9:
     return uVar2 & 0xffffff00;
@@ -53,7 +211,7 @@ LAB_10057ef9:
     iVar3 = *(int *)((int)self + 0x88);
     if (iVar3 == 0) {
       if (bVar6 != bVar7) {
-        uVar2 = orig::sub_10057C20(self);
+        uVar2 = orig::FUN_10057c20(self);
         if ((char)uVar2 != '\0') {
           *(uint8_t *)((int)self + 0x145) = 1;
         }
@@ -77,7 +235,7 @@ LAB_10057ef9:
         else {
           puVar4 = *(uint32_t **)((int)self + 0x88) + (uVar2 >> 8 & 0x1f);
         }
-        uVar1 = orig::sub_10062DE0(self,(char *)puVar4);
+        uVar1 = orig::FUN_10062de0(self,(char *)puVar4);
         bVar6 = NAN((long double)*(float *)((int)self + 0x98)) || NAN((long double)0.0f);
         uVar5 = (uint16_t)((uint32_t)uVar1 >> 0x10);
         if (bVar6 == (bVar6 || (long double)*(float *)((int)self + 0x98) == (long double)0.0f)) {

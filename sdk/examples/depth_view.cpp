@@ -46,7 +46,7 @@ static xikit::fn<decltype(&CDx::CompositeSceneToBackBuffer)> prev_Composite;
 static int __thiscall my_Composite(CDx *self, int a1, int a2, int a3, int a4) {
   IDirect3DTexture8 *scene = a1 ? *reinterpret_cast<IDirect3DTexture8 **>(a1 + 4) : nullptr;
   IDirect3DSurface8 *lv = nullptr;
-  if (scene && orig::sub_1000D660(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE && scene->GetSurfaceLevel(0, &lv) >= 0 && lv) {
+  if (scene && orig::CEnv_IsStereoMode(g_pEnv) != 1 && scene->GetType() == D3DRTYPE_TEXTURE && scene->GetSurfaceLevel(0, &lv) >= 0 && lv) {
     g_scene_lv = lv;                                       // (compared by address in the hook; the texture keeps it alive)
     IDirect3DSurface8 *z = g_world_z;
     if (z && g_r.PassDepth && g_r.PassDepth(g_shader, scene, z, lv, nullptr, 0)) g_shown++; else g_nodepth++;

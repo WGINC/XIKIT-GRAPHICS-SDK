@@ -47,7 +47,7 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
     orig::TextureHolder_BindWarped((int *)(v7 + 64), 0, *(float *)(a2 + 320), *(float *)(a2 + 324), *(float *)(a2 + 328));
   v8 = C;
   if ( C == nullptr )
-    v8 = orig::sub_1003F8A0(v7, a4, a5);
+    v8 = orig::CMoDistMorphElem_ComputeMorphHandle(v7, a4, a5);
   Ca = (int *)(*(unsigned __int16 *)(v7 + 60) + v7 + 48);
   if ( *(_WORD *)(v7 + 60) >= *(_WORD *)(v7 + 62) )
     v9 = *(unsigned __int16 *)(v7 + 62) + 0x10000;
@@ -56,8 +56,8 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
   v34 = (_DWORD *)(v9 + v7 + 48);
   v10 = (unsigned __int16 *)(*(unsigned __int16 *)(v7 + 56) + (*(char *)(v7 + 51) << 16) + v7 + 48);
   v11 = &v10[3 * *(unsigned __int16 *)(v7 + 58)];
-  orig::sub_10044010((void *)g_pDynVB_FVF152, 3 * *(unsigned __int16 *)(v7 + 58));
-  v12 = orig::sub_10044130((void *)g_pDynVB_FVF152);
+  orig::DynVB_Reserve((void *)g_pDynVB_FVF152, 3 * *(unsigned __int16 *)(v7 + 58));
+  v12 = orig::DynVB_Lock((void *)g_pDynVB_FVF152);
   v36 = 0;
   if ( a7 != 0 )
   {
@@ -127,13 +127,13 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
       v11 = (unsigned __int16 *)v33;
     }
   }
-  orig::sub_100441A0((void *)g_pDynVB_FVF152);
-  orig::sub_10028700((int)v8);
+  orig::DynVB_Unlock((void *)g_pDynVB_FVF152);
+  orig::Mem_FreeObject((int)v8);
   if ( (CMoDistMorphElem_ApplyMorph_staticGuards & 1) == 0 )
   {
     CMoDistMorphElem_ApplyMorph_staticGuards |= 1u;
-    orig::sub_1006AD90_2((exception *)CMoDistMorphElem_ApplyMorph_stateBlock);
-    orig::sub_10313486(XI_CODE(sub_1003F890));
+    orig::fn_1006AD90((exception *)CMoDistMorphElem_ApplyMorph_stateBlock);
+    orig::_atexit(XI_CODE(unknown_libname_25));
   }
   orig::StateBlock_ApplyTSS(CMoDistMorphElem_ApplyMorph_stateBlock, (int)CMoDistMorphElem_ApplyMorph_textureStageStates);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, *a3);
@@ -142,7 +142,7 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
     v28 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    orig::sub_100746A0(v28);
+    orig::MoProcessor_CallVSlot49(v28);
     v28[8] = *(float *)(a2 + 288);
     v28[9] = *(float *)(a2 + 292);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
@@ -161,3 +161,211 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
   return result;
 }
 
+// FUNCTION: FFXIMAIN 0x1003F8A0
+// GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
+_DWORD * CMoDistMorphElem::ComputeMorphHandle(int a2, int a3)
+{
+  int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
+  __int16 v4;
+  __int16 v5;
+  int v6;
+  double v7;
+  int v8;
+  int v9;
+  int v10;
+  int v11;
+  int v12;
+  int v13;
+  int v14;
+  int v15;
+  int v16;
+  int v17;
+  float v18;
+  int v19;
+  float *v20;
+  int v21;
+  float v22;
+  double v23;
+  int v24;
+  float *v25;
+  int v26;
+  float v27;
+  int v28;
+  alignas(16) unsigned char xi_frame[0x460];  // address-taken locals at their original offsets
+  _DWORD * &v30 = *reinterpret_cast<_DWORD * *>(xi_frame + 0x10);
+  int &i = *reinterpret_cast<int *>(xi_frame + 0x14);
+  float &v32 = *reinterpret_cast<float *>(xi_frame + 0x1C);
+  float &v33 = *reinterpret_cast<float *>(xi_frame + 0x20);
+  float (&v34)[15] = *reinterpret_cast<float (*)[15]>(xi_frame + 0x24);
+
+  v4 = at<uint16_t>(this, 0x36);
+  v5 = at<uint16_t>(this, 0x34);
+  if ( v5 > v4 )
+    v4 = v5;
+  v30 = orig::Mem_AllocObject(36 * v4, 4);
+  v6 = 0;
+  v7 = 0.0;
+  v8 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
+  v9 = 0;
+  if ( v8 <= 0 )
+    goto LABEL_6;
+  do
+  {
+    ++v9;
+    v7 = v7 + *(float *)(a2 + 4 * v9 - 4);
+  }
+  while ( v9 < v8 );
+  if ( !(v7 < 0x1.0000000000000p-126) )
+  {
+    if ( v7 == 0.0 )
+      goto LABEL_13;
+  }
+  else
+  {
+LABEL_6:
+    v10 = 1;
+    for ( i = 0; v10 < v8; ++v10 )
+    {
+      if ( *(float *)(v6 + a3) < (double)*(float *)(4 * v10 + a3) )
+      {
+        i = v10;
+        v6 = 4 * v10;
+      }
+    }
+    v7 = 1.0;
+    *(_DWORD *)(a2 + 4 * i) = 1065353216;
+  }
+  v7 = 1.0 / v7;
+LABEL_13:
+  v11 = 0;
+  v12 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
+  if ( v12 > 0 )
+  {
+    do
+    {
+      v13 = a2 - (_DWORD)v34 + 4 * v11++;
+      v34[v11 - 1] = v7 * *(float *)((char *)v34 + v13);
+    }
+    while ( v11 < v12 );
+  }
+  v14 = this->positionCount;
+  v15 = 0;
+  v16 = 4 * (this->packedNormalCount + 3 * v14);
+  if ( v12 > 0 )
+  {
+    v17 = self + 80 + 12 * v14;
+    LODWORD(v18) = self + 80;
+    do
+    {
+      v34[v15 + 5] = v18;
+      LODWORD(v34[v15++ + 10]) = v17;
+      LODWORD(v18) += v16;
+      v17 += v16;
+    }
+    while ( v15 < v12 );
+  }
+  v19 = 0;
+  if ( v14 > 0 )
+  {
+    v20 = (float *)(v30 + 2);
+    do
+    {
+      *v20 = 0.0;
+      *(v20 - 1) = 0.0;
+      *(v20 - 2) = 0.0;
+      v21 = 0;
+      if ( (char)(2 * this->morphTargetCountAndFlags) > 0 )
+      {
+        do
+        {
+          v22 = v34[v21 + 5];
+          LODWORD(v34[v21++ + 5]) = LODWORD(v22) + 12;
+          v32 = *(float *)(LODWORD(v22) + 4);
+          v23 = *(float *)LODWORD(v22) * v34[v21 - 1] + *(v20 - 2);
+          v33 = *(float *)(LODWORD(v22) + 8);
+          *(v20 - 2) = v23;
+          *(v20 - 1) = v32 * v34[v21 - 1] + *(v20 - 1);
+          *v20 = v33 * v34[v21 - 1] + *v20;
+        }
+        while ( v21 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
+      }
+      v20 += 9;
+      ++v19;
+    }
+    while ( v19 < this->positionCount );
+  }
+  v24 = 0;
+  if ( this->packedNormalCount > 0 )
+  {
+    v25 = (float *)(v30 + 4);
+    do
+    {
+      v25[1] = 0.0;
+      *v25 = 0.0;
+      *(v25 - 1) = 0.0;
+      v26 = 0;
+      if ( (char)(2 * this->morphTargetCountAndFlags) > 0 )
+      {
+        do
+        {
+          v27 = v34[v26 + 10];
+          v28 = *(_DWORD *)LODWORD(v27);
+          LODWORD(v27) += 4;
+          v34[v26 + 10] = v27;
+          *(v25 - 1) = (double)(v28 << 22 >> 22) * v34[v26] * 0.001953125 + *(v25 - 1);
+          *v25 = (double)((int)(*(_DWORD *)(LODWORD(v27) - 4) << 12) >> 22) * v34[v26++] * 0.001953125 + *v25;
+          v25[1] = (double)((4 * *(_DWORD *)(LODWORD(v27) - 4)) >> 22) * v34[v26 - 1] * 0.001953125 + v25[1];
+        }
+        while ( v26 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
+      }
+      v25 += 9;
+      ++v24;
+    }
+    while ( v24 < this->packedNormalCount );
+  }
+  return v30;
+}
+
+// FUNCTION: FFXIMAIN 0x10043580
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoDistMorphElem::GetRuntimeClass()
+{
+  return &CMoDistMorphElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10052E20
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoDistMorphElem::Construct(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CXi471011C8_VT_1032AC90_Ctor(self);
+  *(uint8_t ***)self = &PTR_CMoDistMorphElem_GetRuntimeClass_1032b358;
+  *(uint16_t *)((int)self + 0x176) = 0x1c4;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x10052E40
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+BOOL CMoDistMorphElem::IsKind6(int a1)
+{
+  return a1 == 6;
+}
+
+// FUNCTION: FFXIMAIN 0x10052E50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoDistMorphElem::set_field_1C0(int a2)
+{
+  this->field_1C0 = a2;
+  return a2;
+}
+
+// FUNCTION: FFXIMAIN 0x10052E60
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoDistMorphElem::ScalarDeletingDtor(char a2)
+{
+  orig::CXi471011C8_VT_1032AC90_Dtor((int *)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (int *)this;
+}

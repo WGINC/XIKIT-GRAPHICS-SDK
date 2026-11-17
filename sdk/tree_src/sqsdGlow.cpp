@@ -22,7 +22,7 @@ XI_API undefined4 __cdecl SqsdGlow_ApplyShader(int param_1, int param_2)
   local_1c[4] = 65536.0f;
   local_1c[5] = 4294969856.0f;
   local_1c[6] = 18446700093244440576.0f;
-  if ((*(int *)(param_1 + 0x60) != 0) && (iVar1 = orig::sub_102A1FA0(param_2), iVar1 == 2)) {
+  if ((*(int *)(param_1 + 0x60) != 0) && (iVar1 = orig::SqsdPassTest_TestSeparationHalf(param_2), iVar1 == 2)) {
     return 0;
   }
   local_30 = *(uint32_t *)(param_1 + 0x5c);
@@ -37,7 +37,7 @@ XI_API undefined4 __cdecl SqsdGlow_ApplyShader(int param_1, int param_2)
   local_24 = (float)(fVar3 * (long double)*(float *)(param_1 + 0x50));
   local_20 = (float)(fVar3 * (long double)*(float *)(param_1 + 0x54));
   local_1c[0] = (float)(long double)(int)local_30;
-  orig::sub_10283970(&local_28);
+  orig::SqgxContext_SetViewportVec4(&local_28);
   uVar2 = orig::sqgxShader_v1(0x400000,0);
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(0xff)));
 }
@@ -55,13 +55,13 @@ XI_API int * __cdecl sqsdGlow_BakeOntoShape(int param_1, int * param_2)
     if ((char)uVar1 == '\0') {
       return param_2;
     }
-    orig::sub_1029B5C0();
-    orig::sub_10285850_2((int)param_2);
+    orig::SqgxDlist_CreateContextList();
+    orig::sqDrawableDraw_v1((int)param_2);
     puVar2 = orig::FUN_1029b620();
-    piVar3 =(int*)(orig::sub_102A2000());
+    piVar3 =(int*)(orig::SqshDispList_Create());
     piVar3[0x11] = (int)puVar2;
-    orig::sub_1028D9C0(piVar3 + 5,param_2 + 5);
-    orig::sub_10285740((int *)&param_2);
+    orig::SqBounds_Copy(piVar3 + 5,param_2 + 5);
+    orig::SqObject_Release((int *)&param_2);
   }
   return piVar3;
 }

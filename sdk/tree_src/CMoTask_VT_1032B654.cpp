@@ -3,6 +3,16 @@
 #include "CMoTask_VT_1032B654.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10053350
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+_DWORD * CMoTask_VT_1032B654::ScalarDeletingDtor(char a2)
+{
+  orig::CMoTask_VT_1032B654_Destructor(this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+}
+
 // FUNCTION: FFXIMAIN 0x10054220
 // GATE: PASS -- 100 trials, 94 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
 undefined4 __thiscall CMoTask_VT_1032B654::RunGeneratorAndFinish(void * self)
@@ -33,7 +43,7 @@ undefined4 __thiscall CMoTask_VT_1032B654::RunGeneratorAndFinish(void * self)
     else {
       this_00 = (void *)**(uint32_t **)((int)self + 0x38);
     }
-    uVar3 = orig::sub_100496F0_2(this_00,0,this_00);
+    uVar3 = orig::FUN_100496f0(this_00,0,this_00);
     if ((char)uVar3 != '\0') {
       *(uint8_t *)((int)self + 0x3c) = 1;
       if (*(uint32_t **)((int)self + 0x38) == (uint32_t *)0x0) {
@@ -52,10 +62,10 @@ undefined4 __thiscall CMoTask_VT_1032B654::RunGeneratorAndFinish(void * self)
         }
         if ((*(uint8_t *)(uVar3 + 0x1a) >> 2 & 1) != 0) {
           if (*(int **)((int)self + 0x38) != (int *)0x0) {
-            uVar4 = orig::sub_10073B20_2(*(int **)(**(int **)((int)self + 0x38) + 0x14));
+            uVar4 = orig::MoRes_FreeIfUnreferenced_v1(*(int **)(**(int **)((int)self + 0x38) + 0x14));
             return uVar4;
           }
-          uVar3 = orig::sub_10073B20_2(unk_14);
+          uVar3 = orig::MoRes_FreeIfUnreferenced_v1(unk_14);
         }
       }
     }
@@ -63,3 +73,17 @@ undefined4 __thiscall CMoTask_VT_1032B654::RunGeneratorAndFinish(void * self)
   return uVar3;
 }
 
+// FUNCTION: FFXIMAIN 0x10054460
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoTask_VT_1032B654::vf011()
+{
+  return (int)orig::CMoGeneratorClone_GetRuntimeClass();
+}
+
+// FUNCTION: FFXIMAIN 0x10054470
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoTask_VT_1032B654::vf012(int a1)
+{
+  Vt_1032B680 * self = reinterpret_cast<Vt_1032B680 *>(this);  // byte-exact view for the rest
+  return (int)orig::CMoGeneratorClone_VT_1032B69C_ScalarDeletingDtor((char *)self - 48, a1);
+}

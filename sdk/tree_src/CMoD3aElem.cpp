@@ -3,9 +3,16 @@
 #include "CMoD3aElem.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x1003E6A0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoD3aElem::GetRuntimeClass_variant0()
+{
+  return &CMoD3aElem_classdesc;
+}
+
 // FUNCTION: FFXIMAIN 0x1003EB30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoD3aElem::vf18()
+int * CMoD3aElem::DrawSegment()
 {
   int ** self = reinterpret_cast<int **>(this);  // byte-exact view for the rest
   int *result;
@@ -15,3 +22,37 @@ int * CMoD3aElem::vf18()
   return result;
 }
 
+// FUNCTION: FFXIMAIN 0x1003EE50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoD3aElem::GetRuntimeClass_variant1()
+{
+  return &CMoD3aElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x1003EF00
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoD3aElem::GetRuntimeClass_variant2()
+{
+  return &CMoD3aElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10052C90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoD3aElem::Init(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &PTR_CMoD3aElem_GetRuntimeClass_variant0_1032b238;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x10052CB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoD3aElem::ScalarDeletingDtor(char a2)
+{
+  orig::CMoElemFamily_SharedCleanup((int *)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (int *)this;
+}

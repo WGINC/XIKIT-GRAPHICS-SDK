@@ -3,6 +3,61 @@
 #include "XiModelActor.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x100C3FB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API int __thiscall XiModelActor_GetPtr734(void * self_)
+{
+  return (int)self_ + 0x734;
+}
+
+// FUNCTION: FFXIMAIN 0x100C3FC0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API int __thiscall XiModelActor_GetPtr744(void * self_)
+{
+  return (int)self_ + 0x744;
+}
+
+// FUNCTION: FFXIMAIN 0x100C4B00
+// GATE: PASS -- 100 trials, 100 returned normally, 400 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall XiModelActor::CopyRectFromSlot(void * self, undefined4 param_1, undefined4 * param_2)
+{
+  uint32_t uVar1;
+  uint32_t *puVar2;
+  int iVar3;
+  
+  puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
+  *param_2 = *puVar2;
+  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
+  param_2[1] = *(uint32_t *)(iVar3 + 4);
+  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
+  param_2[2] = *(uint32_t *)(iVar3 + 8);
+  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
+  uVar1 = *(uint32_t *)(iVar3 + 0xc);
+  param_2[3] = uVar1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+}
+
+// FUNCTION: FFXIMAIN 0x100C4B50
+// GATE: PASS -- 100 trials, 100 returned normally, 400 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall XiModelActor::BuildWorldMatrix(void * self, undefined4 param_1, void * param_2)
+{
+  int iVar1;
+  float *pfVar2;
+  uint32_t *puVar3;
+  uint32_t uVar4;
+  
+  orig::Mat4_SetIdentity_v1(param_2);
+  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateZ_v1(param_2,*(float *)(iVar1 + 8));
+  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateY_v1(param_2,*(float *)(iVar1 + 4));
+  pfVar2 = (float *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateX_v1(param_2,*pfVar2);
+  puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
+  uVar4 = orig::Mat4_SetTranslation_v1(param_2,puVar3);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+}
+
 // FUNCTION: FFXIMAIN 0x100C4C20
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 undefined4 __thiscall XiModelActor::BuildMatrixAndDraw(void * self)
@@ -27,11 +82,11 @@ undefined4 __thiscall XiModelActor::BuildMatrixAndDraw(void * self)
     uVar3 = *(uint32_t *)(*(int *)((int)self + 0x5c4) + 0x30);
     *(uint16_t *)((int)self + 0x69c) = 0;
     *(uint32_t *)((int)self + 0x5e0) = uVar3;
-    orig::sub_100279B0_3(this_00);
-    orig::sub_10027C20_2(this_00,pfVar2[2]);
-    orig::sub_10027BD0_2(this_00,pfVar2[1]);
-    orig::sub_10027B80_2(this_00,*pfVar2);
-    orig::sub_10027CF0_3(this_00,puVar1);
+    orig::Mat4_SetIdentity_v2(this_00);
+    orig::Mat4_PostRotateZ_v1(this_00,pfVar2[2]);
+    orig::Mat4_PostRotateY_v1(this_00,pfVar2[1]);
+    orig::Mat4_PostRotateX_v1(this_00,*pfVar2);
+    orig::Mat4_SetTranslation_v2(this_00,puVar1);
     if (*(int *)((int)self + 0x774) == 0) {
       uVar3 = orig::FUN_101844c0(g_pZoneMap,(int)self + 0x5c8,*(uint32_t *)((int)self + 0x770),
                            *(uint32_t *)((int)self + 0x770));

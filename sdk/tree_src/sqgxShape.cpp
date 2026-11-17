@@ -11,7 +11,7 @@ XI_API int * __cdecl sqgxShapeIndexBufferBegin(void)
   {
     g_pSqgxContext[613] = 3072;
     if ( g_pSqgxContext[180] != 0 )
-      g_pSqgxContext[615] = (int)orig::sub_10312F96(2 * g_pSqgxContext[613]);
+      g_pSqgxContext[615] = (int)orig::_malloc_0(2 * g_pSqgxContext[613]);
     else
       g_pDancerDevice->lpVtbl->CreateIndexBuffer(
         g_pDancerDevice,
@@ -362,8 +362,8 @@ XI_API int * __cdecl sqgxShapeBegin(void)
     }
     v0 = g_pSqgxContext;
   }
-  orig::sub_10284EC0();
-  orig::sub_10283240();
+  orig::j_sqgxVertexShaderSelect();
+  orig::SqgxContext_NoOpA();
   orig::sqgxMatrixUpdate();
   orig::sqgxColorUpdate();
   orig::sqgxTextureUpdate();

@@ -3,6 +3,23 @@
 #include "CDx.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x10008F80
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+_UNKNOWN ** __cdecl CDx::GetRuntimeClass()
+{
+  return &CDx_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10009100
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * CDx::ScalarDeletingDtor(char a2)
+{
+  orig::CDx_Destructor(this);
+  if ( (a2 & 1) != 0 )
+    orig::thunk_sub_10028AA0((int)this);
+  return this;
+}
+
 // FUNCTION: FFXIMAIN 0x100091B0
 // GATE: PASS -- 100 trials, 100 returned normally, 900 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CDx::Initialize()
@@ -165,8 +182,8 @@ LABEL_68:
     *(_DWORD *)&this->field_A4C = 0;
     goto LABEL_69;
   }
-  v8 = orig::sub_103127C0(g_currentDirectory, 92);
-  if ( v8 != nullptr || (v8 = orig::sub_103127C0(g_currentDirectory, 47), v7 = 1, v8 != nullptr) )
+  v8 = orig::_strrchr(g_currentDirectory, 92);
+  if ( v8 != nullptr || (v8 = orig::_strrchr(g_currentDirectory, 47), v7 = 1, v8 != nullptr) )
   {
     if ( v8[1] != 0 )
     {
@@ -198,6 +215,34 @@ LABEL_68:
 LABEL_69:
   SetCursor(nullptr);
   return 1;
+}
+
+// FUNCTION: FFXIMAIN 0x10009620
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char CDx::SetDefaultRenderTargets(int a2, int a3, int a4)
+{
+  *(_DWORD *)&at<uint8_t>(this, 0x90) = a3;
+  *(_DWORD *)&this->defaultDepthSurface = a4;
+  return 1;
+}
+
+// FUNCTION: FFXIMAIN 0x10009640
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CDx::SetClearParams(int a2, int a3, int a4, int a5)
+{
+  *(_DWORD *)&this->clearFlags = a2;
+  *(_DWORD *)&this->clearColor = a3;
+  *(_DWORD *)&this->clearZ = a4;
+  *(_DWORD *)&this->clearStencil = a5;
+  return a4;
+}
+
+// FUNCTION: FFXIMAIN 0x10009670
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CDx::SetClearColor(int a2)
+{
+  *(_DWORD *)&this->clearColor = a2;
+  return a2;
 }
 
 // FUNCTION: FFXIMAIN 0x100096B0
@@ -244,7 +289,7 @@ int __cdecl CDx::Present()
     if ( result == 0 )
       break;
     if ( result == -2005530520 )
-      result = orig::sub_10017D20(aDeviceLost);
+      result = orig::ErrorReport_NoOpVarargsA(aDeviceLost);
   }
   while ( v1 != 0 );
   return result;
@@ -264,12 +309,180 @@ int CDx::EndScene()
   return (*(int (__stdcall **)(_DWORD))(*at<_DWORD *>(this, 0xC) + 140))(at<_DWORD *>(this, 0xC));
 }
 
+// FUNCTION: FFXIMAIN 0x10009750
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __stdcall CDx::SetHardwareCursor(HCURSOR param_1)
+{
+  if (g_cfgHardwareMouse != 0) {
+                    /* WARNING: Could not recover jumptable at 0x10009759. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    SetCursor(param_1);
+    return;
+  }
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10009770
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API BOOL __stdcall SetCursorPos(int X, int Y)
+{
+  BOOL BVar1;
+  
+                    /* WARNING: Could not recover jumptable at 0x10009770. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  BVar1 = g_SetCursorPos_10329374(X,Y);
+  return BVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10009780
+// GATE: PASS -- 100 trials, 100 returned normally, 95 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CDx::ShowCursor(void * self, undefined4 param_1)
+{
+  uint32_t uVar1;
+  HCURSOR pHVar2;
+  
+  if (g_cfgHardwareMouse == 0) {
+    uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_windowMode >> 8))) << 8) | (uint8_t)((uint8_t)param_1)));
+    if (g_windowMode == 3) {
+      if ((uint8_t)param_1 == 0) {
+                    /* WARNING: Could not recover jumptable at 0x100097cd. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+        pHVar2 = SetCursor((HCURSOR)0x0);
+        return pHVar2;
+      }
+    }
+    else if ((uint8_t)param_1 != 0) {
+                    /* WARNING: Could not recover jumptable at 0x100097df. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+      pHVar2 = SetCursor((HCURSOR)0x0);
+      return pHVar2;
+    }
+  }
+  else {
+    uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0x30))
+                      ))(*(int **)((int)self + 0xc),(uint32_t)(uint8_t)param_1);
+    if ((uint8_t)param_1 == 0) {
+                    /* WARNING: Could not recover jumptable at 0x100097ad. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+      pHVar2 = SetCursor((HCURSOR)0x0);
+      return pHVar2;
+    }
+  }
+  return uVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x100097F0
+// GATE: PASS -- 100 trials, 77 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 77
+HCURSOR CDx::SetCursorShape(int a2, int a3)
+{
+  HCURSOR result;
+  int HwCursorSlot;
+  HCURSOR CursorA;
+  result = (HCURSOR)g_cfgHardwareMouse;
+  if ( g_cfgHardwareMouse != 0 )
+  {
+    HwCursorSlot = 0;
+    switch ( a2 )
+    {
+      case 0:
+      case 3:
+      case 6:
+        HwCursorSlot = 0;
+        break;
+      case 1:
+      case 2:
+        HwCursorSlot = 1;
+        break;
+      case 4:
+      case 5:
+        HwCursorSlot = orig::Cursor_GetHwCursorSlot(g_pCursor);
+        break;
+      default:
+        break;
+    }
+    CursorA = *(HCURSOR *)&((unsigned __int8 *)((char *)this + 0x1F4))[4 * HwCursorSlot + 2064];
+    if ( CursorA == nullptr )
+    {
+      CursorA = LoadCursorA(nullptr, (LPCSTR)0x7F00);
+      *(_DWORD *)&((unsigned __int8 *)((char *)this + 0x1F4))[4 * HwCursorSlot + 2064] = CursorA;
+    }
+    return SetCursor(CursorA);
+  }
+  return result;
+}
+
+// FUNCTION: FFXIMAIN 0x10009870
+// GATE: PASS -- 100 trials, 96 returned normally, 24 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
+undefined4 __thiscall CDx::CreateDeviceObjectOnce(void * self, undefined4 param_1, int * param_2)
+{
+  if ((*(char *)((int)self + 0x909) == '\0') || (*(char *)((int)self + 0x90a) == '\0')) {
+    *param_2 = -1;
+  }
+  else if (*param_2 == 0) {
+    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0xe4))))(*(int **)((int)self + 0xc),param_1,param_2);
+    if (*param_2 != -1) {
+      ((int (__stdcall *)(XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0xd0))))(*(int **)((int)self + 0xc));
+      return 1;
+    }
+  }
+  else if (*param_2 != -1) {
+    return 0;
+  }
+  return 1;
+}
+
+// FUNCTION: FFXIMAIN 0x100098E0
+// GATE: PASS -- 100 trials, 95 returned normally, 68 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
+XI_API undefined4 __attribute__((stdcall, regparm(3))) CDx_EndAndApplyStateBlock(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2, int * param_3, undefined4 param_4)
+{
+  int a2;
+  uint32_t uVar1;
+  
+  uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)param_4)));
+  if ((char)param_4 == '\x01') {
+    uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0xc) + 0xd4))))(*(int **)((int)self_ + 0xc),param_3);
+  }
+  a2 = *param_3;
+  if ((a2 != 0) && (a2 != -1)) {
+    uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0xc) + 0xd8))))(*(int **)((int)self_ + 0xc),a2);
+  }
+  return uVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x10009D20
+// GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CDx::AppendStateRecord(void * self)
+{
+  uint32_t uVar1;
+  
+  *(uint32_t *)((int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0x98) = 0;
+  *(uint32_t *)((int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0x9c) = 0;
+  *(uint32_t *)((int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0xa0) =
+       *(uint32_t *)((int)self + 0x15c);
+  *(uint32_t *)((int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0xa4) =
+       *(uint32_t *)((int)self + 0x160);
+  *(uint32_t *)((int)self + (*(uint8_t *)((int)self + 0x158) + 7) * 0x18) = 0;
+  *(uint32_t *)((int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0xac) = 0x3f800000;
+  uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0xa0))
+                    ))(*(int **)((int)self + 0xc),
+                     (int)self + (uint32_t)*(uint8_t *)((int)self + 0x158) * 0x18 + 0x98);
+  return uVar1;
+}
+
 // FUNCTION: FFXIMAIN 0x10009DC0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int CDx::SetViewport(const void *a2)
 {
   qmemcpy(&((unsigned __int8 *)((char *)this + 0x10))[24 * this->renderTargetDepth + 136], a2, 0x18u);
   return (this->pDevice)->lpVtbl->SetViewport((this->pDevice), (void *)a2);
+}
+
+// FUNCTION: FFXIMAIN 0x10009E00
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+unsigned __int8 * CDx::GetRenderTargetTop()
+{
+  unsigned __int8 * self = reinterpret_cast<unsigned __int8 *>(this);  // byte-exact view for the rest
+  return self + 24 * this->renderTargetDepth + 152;
 }
 
 // FUNCTION: FFXIMAIN 0x10009E20
@@ -346,13 +559,51 @@ int CDx::PushRenderTargetTexture(int a2, int a3, int a4, __int16 *a5, __int16 *a
   return result;
 }
 
+// FUNCTION: FFXIMAIN 0x1000A070
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CDx::Call1000A0A0Zeroed(void * self, int * param_1, undefined4 param_2, undefined4 param_3)
+{
+  char xi_frame[4] __attribute__((aligned(4)));
+  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  
+  local_4 = 0;
+  orig::FUN_1000a0a0(self,param_1,param_2,param_3,&local_4,&local_4);
+  return;
+}
+
 // FUNCTION: FFXIMAIN 0x1000A1D0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int CDx::SetTexture(int a2, int a3)
 {
   _DWORD ** self = reinterpret_cast<_DWORD **>(this);  // byte-exact view for the rest
   (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD))(*at<_DWORD *>(this, 0xC) + 244))(at<_DWORD *>(this, 0xC), 0, 0);
-  return orig::sub_1000A2B0((int)self, a2, a3, 1, 1);
+  return orig::CDx_PopRenderTarget((int)self, a2, a3, 1, 1);
+}
+
+// FUNCTION: FFXIMAIN 0x1000A200
+// GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CDx::PopRenderTargetA(void * self, undefined4 xi_s1, undefined4 xi_s2)
+{
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0xf4))))(*(int **)((int)self + 0xc),0,0);
+  orig::CDx_PopRenderTarget_v1(self,xi_s1,xi_s2,1,0);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x1000A230
+// GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CDx::PopRenderTargetB(void * self, undefined4 xi_s1, undefined4 xi_s2)
+{
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self + 0xc) + 0xf4))))(*(int **)((int)self + 0xc),0,0);
+  orig::CDx_PopRenderTarget_v1(self,xi_s1,xi_s2,0,1);
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x1000A290
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CDx::PopRenderTargetDefault(void * self, undefined4 xi_s1, undefined4 xi_s2)
+{
+  orig::CDx_PopRenderTarget_v1(self,xi_s1,xi_s2,1,1);
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x1000A390
@@ -395,8 +646,8 @@ int CDx::DrawScreenQuadAtDepth(int a1, int a2)
   int &v28 = *reinterpret_cast<int *>(xi_frame + 0x8C);
   int &v29 = *reinterpret_cast<int *>(xi_frame + 0x98);
 
-  v28 = *((_DWORD *)orig::sub_10009E00((unsigned __int8 *)self) + 2);
-  v29 = *((_DWORD *)orig::sub_10009E00((unsigned __int8 *)self) + 3);
+  v28 = *((_DWORD *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)self) + 2);
+  v29 = *((_DWORD *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)self) + 3);
   v7 = (float)v28;
   a3[4] = -2139062144;
   v9 = a2;
@@ -657,14 +908,14 @@ int CDx::DrawFadeQuad(int a1, int a2)
     g_fadeQuadVerts_v1_color = v4;
     g_fadeQuadVerts_v2_color = v4;
     g_fadeQuadVerts_v3_color = v4;
-    g_fadeQuadVerts = (float)*(unsigned int *)orig::sub_10009E00((unsigned __int8 *)this);
-    g_fadeQuadVerts_v2_x = (float)*(unsigned int *)orig::sub_10009E00((unsigned __int8 *)this);
-    g_fadeQuadVerts_v1_x = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 2);
-    g_fadeQuadVerts_v3_x = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 2);
-    g_fadeQuadVerts_v0_y = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 1);
-    g_fadeQuadVerts_v1_y = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 1);
-    g_fadeQuadVerts_v2_y = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 3);
-    g_fadeQuadVerts_v3_y = (float)*((unsigned int *)orig::sub_10009E00((unsigned __int8 *)this) + 3);
+    g_fadeQuadVerts = (float)*(unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this);
+    g_fadeQuadVerts_v2_x = (float)*(unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this);
+    g_fadeQuadVerts_v1_x = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 2);
+    g_fadeQuadVerts_v3_x = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 2);
+    g_fadeQuadVerts_v0_y = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 1);
+    g_fadeQuadVerts_v1_y = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 1);
+    g_fadeQuadVerts_v2_y = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 3);
+    g_fadeQuadVerts_v3_y = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)this) + 3);
     (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_LIGHTING, FALSE);
@@ -705,6 +956,58 @@ int CDx::Post_DepthBlurComposite(int a1, int a2)
   (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
   return (this->pDevice)->lpVtbl->SetRenderState((this->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
+}
+
+// FUNCTION: FFXIMAIN 0x1000AE40
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint32_t __thiscall CDx::StepFadeCounter(void * self, float param_1, float param_2, int param_3)
+{
+  long double fVar1;
+  uint32_t uVar2;
+  uint8_t bVar3;
+  uint16_t uVar4;
+  long double fVar5;
+  
+  if (param_3 == 0) {
+    *(uint32_t *)((int)self + 0x174) = 0x43000000;
+    uVar2 = 0;
+  }
+  else {
+    uVar2 = param_3 - 1;
+    if (uVar2 == 0) {
+      fVar5 = (long double)param_1 * (long double)param_2;
+      fVar1 = (long double)0.0f;
+      if (fVar5 <= fVar1) {
+        fVar5 = (long double)0.00999999977648258209228515625f;
+      }
+      fVar5 = (long double)*(float *)((int)self + 0x174) - fVar5;
+      *(float *)((int)self + 0x174) = (float)fVar5;
+      fVar1 = (long double)0.0f;
+      bVar3 = NAN(fVar5) || NAN(fVar1);
+      uVar4 = (uint16_t)(bVar3 || fVar5 < fVar1) << 8 | (uint16_t)bVar3 << 10 |
+              (uint16_t)(bVar3 || fVar5 == fVar1) << 0xe;
+      uVar2 = (uint32_t)uVar4;
+      if (fVar5 <= fVar1) {
+        *(uint32_t *)((int)self + 0x174) = 0;
+        return ((uint32_t)(((uint32_t)(xi_trunc24((uint8_t)(uVar4 >> 8))) << 8) | (uint8_t)(1)));
+      }
+    }
+  }
+  return uVar2 & 0xffffff00;
+}
+
+// FUNCTION: FFXIMAIN 0x1000BB10
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __cdecl CDx::NopA()
+{
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x1000BB20
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __cdecl CDx::NopB()
+{
+  return;
 }
 
 // FUNCTION: FFXIMAIN 0x1000BB90
@@ -757,7 +1060,7 @@ char CDx::DrawStereoOddFrameOverlay(int a1)
   }
   if ( g_pEnv != nullptr )
   {
-    result = orig::sub_1000D660(g_pEnv);
+    result = orig::CEnv_IsStereoMode(g_pEnv);
     if ( result != 0 && at<uint32_t>(this, 0x82C) != 0 )
     {
       ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTexture(0, (IDirect3DBaseTexture8 *)(at<uint32_t>(this, 0x82C)));
@@ -797,6 +1100,115 @@ LABEL_7:
   return (*(int (__stdcall **)(_DWORD, int, const void *))(*at<_DWORD *>(this, 0xC) + 148))(at<_DWORD *>(this, 0xC), a2, a3);
 }
 
+// FUNCTION: FFXIMAIN 0x1000BDB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CDx::GetTransformCached(int a2, void *a3)
+{
+  int result;
+  result = a2 - 2;
+  if ( a2 == 2 )
+  {
+    qmemcpy(a3, &at<uint8_t>(this, 0x97C), 0x40u);
+  }
+  else
+  {
+    result = a2 - 3;
+    if ( a2 == 3 )
+    {
+      qmemcpy(a3, &at<uint8_t>(this, 0x9BC), 0x40u);
+    }
+    else
+    {
+      result = a2 - 256;
+      if ( a2 == 256 )
+        qmemcpy(a3, &at<uint8_t>(this, 0x93C), 0x40u);
+    }
+  }
+  return result;
+}
+
+// FUNCTION: FFXIMAIN 0x1000BE10
+// GATE: PASS -- 100 trials, 100 returned normally, 83 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __attribute__((stdcall, regparm(3))) CDx_SetVertexShaderCached(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+{
+  if (param_2 == 0) {
+    *(uint32_t *)((int)self_ + 0x9fc) = 0;
+    return xi_eax;
+  }
+  if (*(int *)((int)self_ + 0x9fc) != param_2) {
+    xi_eax = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0xc) + 0x130))))(*(int **)((int)self_ + 0xc),param_2);
+    *(int *)((int)self_ + 0x9fc) = param_2;
+  }
+  return xi_eax;
+}
+
+// FUNCTION: FFXIMAIN 0x1000BE50
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __thiscall Light_ApplyTimeOfDayTint(void * self_, int param_1)
+{
+  uint32_t uVar1;
+  uint16_t uVar2;
+  uint8_t bVar3;
+  uint8_t bVar4;
+  long double fVar5;
+  long double fVar6;
+  long double fVar7;
+  char xi_frame[12] __attribute__((aligned(4)));
+  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 4);
+  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  
+  uVar1 = 0;
+  if (g_windowMode != 0) {
+    uVar1 = orig::GammaRamp_GetChannelSamples_v1((void *)((int)self_ + 500),&local_c,&local_8,&local_4);
+    fVar5 = (long double)*(float *)(param_1 + 4);
+    fVar6 = (long double)0.800000011920928955078125f;
+    bVar4 = NAN(fVar5) || NAN(fVar6);
+    bVar3 = bVar4 || fVar5 < fVar6;
+    uVar2 = (uint16_t)((uint32_t)uVar1 >> 0x10);
+    uVar1 = ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((uint16_t)bVar3 << 8 | (uint16_t)bVar4 << 10 |
+                           (uint16_t)(bVar4 || fVar5 == fVar6) << 0xe)));
+    if (bVar3 != bVar4) {
+      fVar5 = (long double)*(float *)(param_1 + 8);
+      fVar6 = (long double)0.800000011920928955078125f;
+      bVar4 = NAN(fVar5) || NAN(fVar6);
+      bVar3 = bVar4 || fVar5 < fVar6;
+      uVar1 = ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((uint16_t)bVar3 << 8 | (uint16_t)bVar4 << 10 |
+                             (uint16_t)(bVar4 || fVar5 == fVar6) << 0xe)));
+      if (bVar3 != bVar4) {
+        fVar5 = (long double)*(float *)(param_1 + 0xc);
+        fVar6 = (long double)0.800000011920928955078125f;
+        bVar4 = NAN(fVar5) || NAN(fVar6);
+        bVar3 = bVar4 || fVar5 < fVar6;
+        uVar1 = ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((uint16_t)bVar3 << 8 | (uint16_t)bVar4 << 10 |
+                               (uint16_t)(bVar4 || fVar5 == fVar6) << 0xe)));
+        if (bVar3 != bVar4) {
+          fVar6 = (long double)local_c * (long double)*(float *)(param_1 + 4);
+          *(float *)(param_1 + 4) = (float)fVar6;
+          fVar5 = (long double)local_8 * (long double)*(float *)(param_1 + 8);
+          *(float *)(param_1 + 8) = (float)fVar5;
+          fVar7 = (long double)local_4 * (long double)*(float *)(param_1 + 0xc);
+          *(float *)(param_1 + 0xc) = (float)fVar7;
+          fVar6 = (long double)(float)fVar6;
+          if (fVar6 >= (long double)1.0f) {
+            *(uint32_t *)(param_1 + 4) = 0x3f800000;
+          }
+          if (fVar5 >= (long double)1.0f) {
+            *(uint32_t *)(param_1 + 8) = 0x3f800000;
+          }
+          fVar5 = (long double)(float)fVar7;
+          fVar6 = (long double)1.0f;
+          if (fVar5 >= fVar6) {
+            *(uint32_t *)(param_1 + 0xc) = 0x3f800000;
+          }
+          return ((uint32_t)(((uint32_t)(xi_trunc24(!(fVar5 >= fVar6))) << 8) | (uint8_t)(1)));
+        }
+      }
+    }
+  }
+  return uVar1;
+}
+
 // FUNCTION: FFXIMAIN 0x1000BF30
 // GATE: PASS -- 100 trials, 100 returned normally, 3 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int CDx::SetLight(int a2, float *a3)
@@ -817,7 +1229,7 @@ int CDx::SetLight(int a2, float *a3)
       return -2005530516;
   }
   qmemcpy(v5, a3, sizeof(v5));
-  if ( orig::sub_1000BE50((unsigned __int16 *)this, v5) == 1 )
+  if ( orig::Light_ApplyTimeOfDayTint((unsigned __int16 *)this, v5) == 1 )
     return (this->pDevice)->lpVtbl->SetLight((this->pDevice), a2, v5);
   else
     return (this->pDevice)->lpVtbl->SetLight((this->pDevice), a2, a3);
@@ -871,7 +1283,7 @@ int CDx::CompositeSceneToBackBuffer(int a1, int a2, int a3, int a4)
   int &v45 = *reinterpret_cast<int *>(xi_frame + 0x2AC);
   int &v46 = *reinterpret_cast<int *>(xi_frame + 0x2B0);
 
-  if ( orig::sub_1000D660(g_pEnv) == 1 )
+  if ( orig::CEnv_IsStereoMode(g_pEnv) == 1 )
   {
     v6 = at<uint32_t>(this, 0x824);
     orig::CDx_PushRenderTarget((CDx *)self, v6, 0, 0);
@@ -1037,9 +1449,58 @@ int CDx::CreateStereoResources(unsigned __int16 a1, unsigned __int16 a2)
           at<uint32_t>(this, 0x824) = result,
           result == 0) )
     {
-      orig::sub_1000D620();
-      return orig::sub_1000C7C0((CDx *)self);
+      orig::CEnv_Nop();
+      return orig::CDx_ReleaseStereoResources((CDx *)self);
     }
+  }
+  return result;
+}
+
+// FUNCTION: FFXIMAIN 0x1000C7C0
+// GATE: PASS -- 100 trials, 100 returned normally, 464 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CDx::ReleaseStereoResources()
+{
+  int v2;
+  int v3;
+  int v4;
+  int v5;
+  int v6;
+  int result;
+  v2 = *(_DWORD *)&this->stereoStripeTexture0;
+  if ( v2 != 0 )
+  {
+    (*(void (__stdcall **)(int))(*(_DWORD *)v2 + 8))(v2);
+    *(_DWORD *)&this->stereoStripeTexture0 = 0;
+  }
+  v3 = *(_DWORD *)&this->stereoStripeTexture1;
+  if ( v3 != 0 )
+  {
+    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v3 + 8))(*(_DWORD *)&this->stereoStripeTexture1);
+    *(_DWORD *)&this->stereoStripeTexture1 = 0;
+  }
+  v4 = *(_DWORD *)&this->stereoStripeTexture2;
+  if ( v4 != 0 )
+  {
+    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v4 + 8))(*(_DWORD *)&this->stereoStripeTexture2);
+    *(_DWORD *)&this->stereoStripeTexture2 = 0;
+  }
+  v5 = *(_DWORD *)&this->stereoStripeTexture3;
+  if ( v5 != 0 )
+  {
+    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v5 + 8))(*(_DWORD *)&this->stereoStripeTexture3);
+    *(_DWORD *)&this->stereoStripeTexture3 = 0;
+  }
+  v6 = *(_DWORD *)&this->stereoRenderTargetTexture;
+  if ( v6 != 0 )
+  {
+    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v6 + 8))(*(_DWORD *)&this->stereoRenderTargetTexture);
+    *(_DWORD *)&this->stereoRenderTargetTexture = 0;
+  }
+  result = *(_DWORD *)&at<uint8_t>(this, 0x82C);
+  if ( result != 0 )
+  {
+    result = (*(int (__stdcall **)(_DWORD))(*(_DWORD *)result + 8))(*(_DWORD *)&at<uint8_t>(this, 0x82C));
+    *(_DWORD *)&at<uint8_t>(this, 0x82C) = 0;
   }
   return result;
 }
@@ -1062,7 +1523,7 @@ int CDx::CreateRampTexture1x16(int a1)
   if ( g_pEnv[6] != 0 )
   {
     v3 = (_DWORD *)a1;
-    result = orig::sub_102D2FB9(
+    result = orig::fn_102D2FB9(
                *((struct IDirect3DDevice8 **)self + 3),
                1u,
                0x10u,
@@ -1122,7 +1583,7 @@ char CDx::CreateRampTextures1024x2(IDirect3DTexture8 **a2, int a3)
     return 1;
   v3 = a2;
   v4 = 0;
-  while ( orig::sub_102D2FB9((this->pDevice), 0x400u, 2u, 1u, 0, D3DFMT_A8R8G8B8, 1, v3) >= 0 )
+  while ( orig::fn_102D2FB9((this->pDevice), 0x400u, 2u, 1u, 0, D3DFMT_A8R8G8B8, 1, v3) >= 0 )
   {
     (*v3)->lpVtbl->LockRect(*v3, 0, (D3DLOCKED_RECT *)v10, nullptr, 0);
     for ( i = 0; i < 2; ++i )
@@ -1182,7 +1643,7 @@ int CDx::DrawPrimitive(int a1, int a2, int a3)
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
   orig::CDx_PushRenderTarget((CDx *)self, v9, 0, v8);
   v6 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(a1), a2, a3);
-  orig::sub_1000A290(self, 0, 0);
+  orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((_DWORD **)self);
   this->stereoEye = v5;
   return v6;
@@ -1210,7 +1671,7 @@ int CDx::DrawIndexedPrimitive(int a1, int a2, int a3, int a4, int a5)
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
   orig::CDx_PushRenderTarget((CDx *)self, v11, 0, v10);
   v8 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(a1), a2, a3, a4, a5);
-  orig::sub_1000A290(self, 0, 0);
+  orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((_DWORD **)self);
   this->stereoEye = v7;
   return v8;
@@ -1238,7 +1699,7 @@ int CDx::DrawPrimitiveUP(int a1, int a2, int a3, int a4)
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
   orig::CDx_PushRenderTarget((CDx *)self, v10, 0, v9);
   v7 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(a1), a2, (void *)(a3), a4);
-  orig::sub_1000A290(self, 0, 0);
+  orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((_DWORD **)self);
   this->stereoEye = v6;
   return v7;
@@ -1253,8 +1714,8 @@ void CDx::ApplyStereoEyeProjection()
   float (&v3)[12] = *reinterpret_cast<float (*)[12]>(xi_frame + 0xC);
   float &v4 = *reinterpret_cast<float *>(xi_frame + 0x3C);
 
-  orig::sub_10027990_3((Iostream_init *)v3);
-  orig::sub_100279B0(v3);
+  orig::fn_10027990((Iostream_init *)v3);
+  orig::Mat4_SetIdentity(v3);
   v2 = *(_DWORD *)&at<uint8_t>(this, 0x810);
   if ( v2 != 0 )
   {
@@ -1265,9 +1726,9 @@ void CDx::ApplyStereoEyeProjection()
   {
     v4 = -*(float *)&g_stereoEyeOffset;
   }
-  orig::sub_10027E90(v3, (float *)&at<uint8_t>(this, 0x9BC));
+  orig::Mat4_PreMultiply(v3, (float *)&at<uint8_t>(this, 0x9BC));
   (this->pDevice)->lpVtbl->SetTransform((this->pDevice), D3DTS_PROJECTION, v3);
-  orig::sub_100279A0();
+  orig::MathVector_Nop();
 }
 
 // FUNCTION: FFXIMAIN 0x1000CF90

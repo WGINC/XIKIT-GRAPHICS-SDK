@@ -14,14 +14,106 @@ int __cdecl CYyModelDt::SetVertexShader(int a1)
     return 0;
 }
 
+// FUNCTION: FFXIMAIN 0x10025010
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void * __thiscall CYyModelDt::Construct(void * self)
+{
+  orig::CYyModelDt_Init(self);
+  *(uint8_t ***)self = &PTR_CYyModelDt_GetRuntimeClass_1032a430;
+  *(uint32_t *)((int)self + 0x40) = 0;
+  *(uint8_t *)((int)self + 0x3c) = 1;
+  return self;
+}
+
 // FUNCTION: FFXIMAIN 0x10025030
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CYyModelDt::PrepareRenderStateEntry(int a2, int a3, int a4, int a5, int a6, int a7)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   _BYTE *v7;
-  v7 = (_BYTE *)orig::sub_10072FB0(this->modelResourceHandle);
+  v7 = (_BYTE *)orig::ResourceHandle_Deref(this->modelResourceHandle);
   return orig::CYyModelDt_PrepareRenderState(v7, a2, a3, a4, a5, (int)self);
+}
+
+// FUNCTION: FFXIMAIN 0x10025060
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+unsigned __int16 CYyModelDt::PrepareRenderStateSimpleEntry(int a2, int a3, int a4, int a5, int a6)
+{
+  int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
+  void *v6;
+  v6 = (void *)orig::ResourceHandle_Deref(this->modelResourceHandle);
+  return orig::CYyModelDt_PrepareRenderStateSimple(v6, a2, a3, a4, (int)self);
+}
+
+// FUNCTION: FFXIMAIN 0x100251A0
+// GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
+int CYyModelDt::MarkReferencedBones(int a2)
+{
+  int v2;
+  int v3;
+  int i;
+  int v5;
+  v2 = this->modelResourceHandle;
+  if ( v2 == 0 )
+    return 0;
+  v3 = orig::ResourceHandle_Deref(v2);
+  if ( v3 == 0 )
+    return 0;
+  for ( i = 0;
+        (unsigned __int16)i < *(_WORD *)(v3 + 64);
+        *(_BYTE *)(*(unsigned __int16 *)(*(_DWORD *)(v3 + 60) + 2 * v5) + a2) = 0x80 )
+  {
+    v5 = (unsigned __int16)i++;
+  }
+  return *(unsigned __int16 *)(v3 + 64);
+}
+
+// FUNCTION: FFXIMAIN 0x10029880
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CYyModelDt::GetRuntimeClass()
+{
+  return &CYyModelDt_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10029BB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void __thiscall CYyModelDt::InitBase(void * self)
+{
+  *(uint8_t ***)self = &PTR_FUN_1032a6dc;
+  *(uint32_t *)((int)self + 4) = 0;
+  *(uint32_t *)((int)self + 8) = 0;
+  *(uint32_t *)((int)self + 0xc) = 0;
+  *(uint32_t *)((int)self + 0x10) = 0;
+  *(uint32_t *)((int)self + 0x14) = 0;
+  *(uint32_t *)((int)self + 0x18) = 0;
+  *(uint32_t *)((int)self + 0x1c) = 0;
+  *(uint32_t *)((int)self + 0x20) = 0;
+  *(uint32_t *)((int)self + 0x24) = 0;
+  *(uint32_t *)((int)self + 0x28) = 0;
+  return;
+}
+
+// FUNCTION: FFXIMAIN 0x10029C90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 * __thiscall CYyModelDt::Init(void * self)
+{
+  orig::CYyModelDt_InitBase((void *)((int)self + 0x10));
+  *(uint8_t ***)self = &PTR_CYyModelDt_GetRuntimeClass_1032a6e0;
+  *(uint32_t *)((int)self + 4) = 0;
+  *(uint32_t *)((int)self + 8) = 0;
+  *(uint32_t *)((int)self + 0xc) = 0;
+  return self;
+}
+
+// FUNCTION: FFXIMAIN 0x10029CB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+_DWORD * CYyModelDt::ScalarDeletingDtor(char a1)
+{
+  int v2;
+  orig::CYyModelDtBase_Destructor(this, v2);
+  if ( (a1 & 1) != 0 )
+    orig::thunk_sub_10028AA0((int)this);
+  return(_DWORD*)(&(*(CYyModelDt_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x1002A000
@@ -30,9 +122,30 @@ void __thiscall CYyModelDt::PrepareRenderStateV2Entry(void * self, undefined4 pa
 {
   void *this_00;
   
-  this_00 = (void *)orig::sub_10072FB0_2(*(uint32_t **)((int)self + 8));
+  this_00 = (void *)orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
   orig::CYyModelDt_SkinAndDrawV2(this_00,param_1,param_2,param_3,param_4,param_5,param_6);
   return;
+}
+
+// FUNCTION: FFXIMAIN 0x1002A040
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CYyModelDt::PrepareRenderStateV2SimpleEntry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+{
+  uint32_t uVar1;
+  
+  uVar1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
+  orig::FUN_10030bd0(param_1,param_2,param_3,param_4,param_5);
+  return uVar1;
+}
+
+// FUNCTION: FFXIMAIN 0x1002A080
+// GATE: PASS -- 100 trials, 80 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 80
+undefined4 __thiscall CYyModelDt::GetResourceWord5E(void * self)
+{
+  int iVar1;
+  
+  iVar1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
+  return *(uint32_t *)(iVar1 + 0x5e);
 }
 
 // FUNCTION: FFXIMAIN 0x1002DC10
@@ -70,7 +183,7 @@ __int16 CYyModelDt::SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, 
   float *v37;
   int v38;
   float v39[11];
-  orig::sub_1002F1C0(0);
+  orig::Gfx_SetVertexShaderCached(0);
   g_boneWeightMatrixTableCur = g_boneWeightMatrixTable;
   v8 = (*(unsigned __int8 *)((char *)g_pCDx + 0x921));
   *a6 = 0;
@@ -144,7 +257,7 @@ __int16 CYyModelDt::SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, 
                 0x2000) != 0 )
         Sleep(0);
     }
-    orig::sub_1002F1D0((char *)self);
+    orig::Model_SkinVerticesCpu((char *)self);
     *(_BYTE *)(a3 + 184) = 1;
     while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 68) + 48))(*(_DWORD *)(v10 + 68)) != 0 )
       Sleep(0);
@@ -228,7 +341,7 @@ __int16 CYyModelDt::SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, 
           {
             if ( !v29 )
             {
-              orig::sub_1002F1C0(*(_DWORD *)(v10 + 100));
+              orig::Gfx_SetVertexShaderCached(*(_DWORD *)(v10 + 100));
               orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
               orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
               orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
@@ -399,7 +512,7 @@ LABEL_125:
             {
               if ( !v29 )
               {
-                orig::sub_1002F1C0(*(_DWORD *)(v10 + 100));
+                orig::Gfx_SetVertexShaderCached(*(_DWORD *)(v10 + 100));
                 orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
                 orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
                 orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
@@ -567,7 +680,7 @@ LABEL_145:
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
         if ( (*v13 & 1) == 0 )
         {
-          v23 = orig::sub_1003AF10(g_pTextureMng, v13 + 2, self);
+          v23 = orig::CYyTexMng_FindByNameInResource(g_pTextureMng, v13 + 2, self);
           *v13 |= 1u;
           *(_DWORD *)(v13 + 2) = v23;
         }

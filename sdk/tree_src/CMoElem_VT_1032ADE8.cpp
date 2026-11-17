@@ -27,19 +27,19 @@ void CMoElem_VT_1032ADE8::vf18()
     v3 = *v2;
   else
     v3 = 0;
-  v4 = (_DWORD *)orig::sub_1003B700((_DWORD *)(v3 + 48));
+  v4 = (_DWORD *)orig::CMoAttachments_GetTarget((_DWORD *)(v3 + 48));
   if ( v4 != nullptr )
   {
     v7 = 1.0;
-    v5 = (int *)orig::sub_10044C40((int)self, v12);
+    v5 = (int *)orig::ElemFog_ComputeWorldPos((int)self, v12);
     a1[0] = *v5;
     a1[1] = v5[1];
     a1[2] = v5[2];
-    if ( orig::sub_100830C0(v4, a1, (int)v13, &v7, (int)v9) != 0 )
+    if ( orig::CXiActor_NameCalc(v4, a1, (int)v13, &v7, (int)v9) != 0 )
     {
-      v8 = *((_DWORD *)orig::sub_10009E00(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2);
+      v8 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2);
       *(float *)a4 = (double)v8 * v7 * 0x1.3333340000000p-9;
-      v8 = *((_DWORD *)orig::sub_10009E00(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3);
+      v8 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3);
       v6 = g_scratchValue;
       *(float *)&a4[1] = (double)v8 * v7 * 0x1.3333340000000p-9;
       if ( (g_scratchValue & 0xFFFFFF) == 0x808080 )
@@ -50,3 +50,47 @@ void CMoElem_VT_1032ADE8::vf18()
   }
 }
 
+// FUNCTION: FFXIMAIN 0x10041F40
+// GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
+XI_API uint64_t __thiscall CXiSub_10041E70_Ctor(void * self_, int param_1)
+{
+  uint8_t *puVar1;
+  int iVar2;
+  uint32_t uVar3;
+  uint64_t uVar4;
+  
+  uVar4 = orig::CMoElem_Constructor(self_);
+  uVar3 = (uint32_t)((uint64_t)uVar4 >> 0x20);
+  puVar1 = (uint8_t *)((int)self_ + 0x198);
+  *(uint8_t ***)self_ = &PTR_CMoElem_GetRuntimeClass_variant8_1032ade8;
+  *(uint16_t *)((int)self_ + 0x176) = 0x1a8;
+  *puVar1 = 0;
+  if ((param_1 != 0) && (*(void **)(param_1 + 100) != (void *)0x0)) {
+    uVar4 = orig::CYyObject_IsKindOf(*(void **)(param_1 + 100),(int)XI_GAME(0x1032B7F8u));
+    uVar3 = (uint32_t)((uint64_t)uVar4 >> 0x20);
+    if ((char)uVar4 != '\0') {
+      iVar2 = *(int *)(param_1 + 100);
+      if (*(int *)(**(int **)(iVar2 + 0x80) + 0x20) == 0x7673696d) {
+        *puVar1 = 0x3a;
+        *(uint8_t *)((int)self_ + 0x199) = 0;
+        uVar3 = *(uint32_t *)(iVar2 + 0xa4);
+        *(uint32_t *)((int)self_ + 0x194) = uVar3;
+        return ((uint64_t)(((uint64_t)(uint32_t)(uVar3) << 32) | (uint32_t)(self_)));
+      }
+      orig::_sprintf(puVar1,&aD_4,*(uint32_t *)(iVar2 + 0xa8));
+      uVar3 = *(uint32_t *)(iVar2 + 0xa4);
+      *(uint32_t *)((int)self_ + 0x194) = uVar3;
+    }
+  }
+  return ((uint64_t)(((uint64_t)(uint32_t)(uVar3) << 32) | (uint32_t)(self_)));
+}
+
+// FUNCTION: FFXIMAIN 0x10041FE0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoElem_VT_1032ADE8::ScalarDeletingDtor(char a2)
+{
+  orig::CMoElemFamily_SharedCleanup((int *)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (int *)this;
+}

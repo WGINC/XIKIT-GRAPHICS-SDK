@@ -21,7 +21,7 @@ switchD_1002ccce_default:
   }
   switch(xi_sw(*(undefined4 *)((int)self + 0x3c))) {
   case 0:
-    puVar1 = orig::sub_10028640_2(iVar2 * 2,4);
+    puVar1 = orig::Mem_AllocObject_v1(iVar2 * 2,4);
     *(undefined4 **)((int)self + 0x5c) = puVar1;
     if (puVar1 == (undefined4 *)0x0) goto LAB_1002cd93;
     uVar3 = 0;
@@ -61,7 +61,7 @@ switchD_1002ccce_default:
   if (iVar2 < 0) {
 LAB_1002cd93:
     if (*(int *)((int)self + 0x5c) != 0) {
-      orig::sub_10028700_2(*(int *)((int)self + 0x5c));
+      orig::Mem_FreeObject_v1(*(int *)((int)self + 0x5c));
       *(undefined4 *)((int)self + 0x5c) = 0;
     }
     a1 = *(int **)((int)self + 0x40);
@@ -72,7 +72,7 @@ LAB_1002cd93:
     }
     uVar3 = 0;
     if (*(int *)((int)self + 0x4c) != 0) {
-      uVar3 = orig::sub_1003B3C0_2((int *)((int)self + 0x4c));
+      uVar3 = orig::CYyVbMng_ReleaseVertexBuffer_v1((int *)((int)self + 0x4c));
       *(int *)((int)self + 0x4c) = 0;
     }
     *(undefined4 *)((int)self + 0x44) = 0;
@@ -93,7 +93,7 @@ XI_API void * __thiscall CYyOs2VtxBuffer_ScalarDeletingDtor(void * self_, undefi
 {
   orig::CYyOs2VtxBuffer_CYyOs2VtxBuffer_Destructor(self_);
   if ((param_1 & 1) != 0) {
-    orig::sub_10028710_2(self_);
+    orig::SharedDeleteHelper_v1(self_);
   }
   return self_;
 }
@@ -104,7 +104,7 @@ int CYyOs2VtxBuffer::Constructor(_DWORD **a2)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
   _DWORD *v3;
-  orig::sub_10074740((_DWORD *)self);
+  orig::CMoTask_Constructor((_DWORD *)self);
   at<uint32_t>(this, 0x0) = &CYyOs2VtxBuffer_vtbl;
   this->field_38 = 0;
   this->field_34 = a2;
@@ -147,7 +147,7 @@ char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
   (*(CMoTask_vtbl * *)&this->vftable) = (CMoTask_vtbl *)&CYyOs2VtxBuffer_vtbl;
   if ( v2 != 0 )
   {
-    orig::sub_10028700(v2);
+    orig::Mem_FreeObject(v2);
     this->pIndices = 0;
   }
   v3 = this->indexBuffer;
@@ -159,7 +159,7 @@ char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
   }
   if ( this->vertexBuffer != 0 )
   {
-    orig::sub_1003B3C0(&this->vertexBuffer);
+    orig::CYyVbMng_ReleaseVertexBuffer(&this->vertexBuffer);
     this->vertexBuffer = 0;
   }
   v4 = this->vertexShader;
@@ -178,14 +178,14 @@ char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
   this->field_69 = 0;
   if ( v5 != 0 )
   {
-    orig::sub_10028700(v5);
+    orig::Mem_FreeObject(v5);
     this->field_6A = 0;
   }
   v6 = this->field_72;
   this->field_6E = 0;
   if ( v6 != 0 )
   {
-    orig::sub_10028700(v6);
+    orig::Mem_FreeObject(v6);
     this->field_72 = 0;
   }
   this->field_76 = 0;
@@ -198,8 +198,8 @@ char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
     g_os2VtxBufferSlots[i] = 0;
   if ( this->field_7A != 0 )
   {
-    orig::sub_10028700(this->field_7A);
+    orig::Mem_FreeObject(this->field_7A);
     this->field_7A = 0;
   }
-  return orig::sub_100747C0(this);
+  return orig::CMoTask_Destructor(this);
 }

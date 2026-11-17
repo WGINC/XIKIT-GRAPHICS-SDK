@@ -34,12 +34,12 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * param_1, int * param_2)
   else {
     iVar4 = piVar2[0xd];
   }
-  if ((uVar1 != 0) && (iVar3 = orig::sub_102A1FA0((int)piVar2), iVar3 == 2)) {
+  if ((uVar1 != 0) && (iVar3 = orig::SqsdPassTest_TestSeparationHalf((int)piVar2), iVar3 == 2)) {
     return;
   }
   if ((((param_1[0x16] != 0) && (*param_1 != 0xa000b)) && (iVar4 != 0)) &&
      (*(int *)(iVar4 + 100) == 0)) {
-    orig::sub_102912F0(*param_2);
+    orig::SqIOHooks_CallHook40(*param_2);
   }
   if ((param_1[0x13] & 2U) != 0) {
     uVar5 = 0x4000;
@@ -47,14 +47,14 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * param_1, int * param_2)
   if ((param_1[0x13] & 4U) != 0) {
     uVar5 = uVar5 | 0x8000;
   }
-  orig::sub_102A34D0((int)(param_1 + 5));
+  orig::SqgxLighting_ApplyLighting((int)(param_1 + 5));
   if (param_1[0x18] == 0) {
     orig::sqgxShader_v2(uVar5 | 2,0);
   }
   else {
-    orig::sub_10281C20_2(*(int *)(param_1[0x18] + 0x14));
+    orig::sqgxTextureSet_v1(*(int *)(param_1[0x18] + 0x14));
     orig::sqgxTextureClut(*(int *)(param_1[0x18] + 0x18));
-    orig::sub_10281C50_2(0);
+    orig::sqgxTextureDecal_v1(0);
     orig::sqgxShader_v2(uVar5 | 6,0);
     iVar4 = *(int *)(*(int *)(param_1[0x18] + 0x1c) + 0x24);
     if (((iVar4 == 2) || (iVar4 == 4)) || (*(int *)(*(int *)(param_1[0x18] + 0x1c) + 0x30) == 4)) {
@@ -64,9 +64,9 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * param_1, int * param_2)
   if (param_1[0x15] != 0) {
     orig::sqgxAlphaTest(1,0x5f);
   }
-  orig::sub_102A3770();
-  orig::sub_10281C50_2(0);
-  orig::Unit102822A0_SetMultiplyAdd(param_1[0xf]);
+  orig::Sqgx_IncCounter();
+  orig::sqgxTextureDecal_v1(0);
+  orig::SqgxContext_SetMultiplyAdd(param_1[0xf]);
   if (param_1[0x19] == 0) {
     local_c = (float)((long double)xi_castbits<float>(param_1[10]) * (long double)xi_castbits<float>(param_1[0xd]));
     local_8 = (float)((long double)xi_castbits<float>(param_1[0xb]) * (long double)xi_castbits<float>(param_1[0xd]));
@@ -88,7 +88,7 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * param_1, int * param_2)
     param_1[0x19] = iVar4;
   }
   orig::sqgxShader_v2(uVar5 | 0x100000,0);
-  orig::sub_10281C20_2(*(int *)(param_1[0x19] + 0x14));
+  orig::sqgxTextureSet_v1(*(int *)(param_1[0x19] + 0x14));
   orig::sqgxTextureClut(-1);
   iVar4 = param_1[0x16];
   if (iVar4 == 0) {
@@ -102,14 +102,14 @@ LAB_102995bf:
     }
     uVar6 = 0;
   }
-  orig::sub_1029C460(uVar6);
+  orig::Sqgx_SetContextFieldE24(uVar6);
 LAB_102995c9:
-  orig::sub_10285850_2(*param_2);
+  orig::sqDrawableDraw_v1(*param_2);
   if (param_1[0x15] != 0) {
     orig::sqgxAlphaTest(0,0);
   }
   orig::sqgxBlendOff_v1();
-  orig::sub_102A3760();
+  orig::Sqgx_ResetCounter();
   return;
 }
 
@@ -135,7 +135,7 @@ XI_API int * __cdecl sqsdAniso_BakeOntoShape(int param_1, int * param_2)
     }
     orig::sqgxShader_v1(uVar6,0);
     if ((*(int *)(param_1 + 0x58) != 0) && (*(int *)(iVar1 + 100) == 0)) {
-      orig::sub_102912F0((int)param_2);
+      orig::SqIOHooks_CallHook40((int)param_2);
     }
     iVar2 = *(int *)(param_1 + 0x58);
     if (iVar2 == 0) {
@@ -149,15 +149,15 @@ XI_API int * __cdecl sqsdAniso_BakeOntoShape(int param_1, int * param_2)
     }
     uVar6 = *(undefined4 *)(iVar1 + 100);
     *(undefined4 *)(iVar1 + 100) = uVar5;
-    orig::sub_1029B5C0();
-    orig::sub_10285850_2((int)param_2);
+    orig::SqgxDlist_CreateContextList();
+    orig::sqDrawableDraw_v1((int)param_2);
     puVar3 = orig::FUN_1029b620();
-    orig::sub_102A3760();
+    orig::Sqgx_ResetCounter();
     *(undefined4 *)(iVar1 + 100) = uVar6;
-    piVar4 =(int*)(orig::sub_102A2000());
+    piVar4 =(int*)(orig::SqshDispList_Create());
     piVar4[0x11] = (int)puVar3;
-    orig::sub_1028D9C0(piVar4 + 5,param_2 + 5);
-    orig::sub_10285740((int *)&param_2);
+    orig::SqBounds_Copy(piVar4 + 5,param_2 + 5);
+    orig::SqObject_Release((int *)&param_2);
   }
   return piVar4;
 }

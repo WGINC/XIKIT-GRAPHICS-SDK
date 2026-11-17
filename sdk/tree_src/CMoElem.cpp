@@ -3,6 +3,236 @@
 #include "CMoElem.hpp"
 #include "xi_ghidra.hpp"     // the Ghidra decompiler's types and helpers (float10, NAN, ...)
 
+// FUNCTION: FFXIMAIN 0x100353C0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant0()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10036A80
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void CMoElem::Slot13DoNothing(int a1)
+{
+  ;
+}
+
+// FUNCTION: FFXIMAIN 0x10036A90
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void CMoElem::Slot14DoNothing(int a1)
+{
+  ;
+}
+
+// FUNCTION: FFXIMAIN 0x10036AA0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int CMoElem::Slot15ReturnZero()
+{
+  return 0;
+}
+
+// FUNCTION: FFXIMAIN 0x10036AB0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void CMoElem::Slot19DoNothing()
+{
+  ;
+}
+
+// FUNCTION: FFXIMAIN 0x1003E690
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant1()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10041000
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant2()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10041120
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+BOOL CMoElem::CMoElemFamily_IsKind0(int a1)
+{
+  return a1 == 0;
+}
+
+// FUNCTION: FFXIMAIN 0x100426A0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant3()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x100426D0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant4()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10043190
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant5()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10043570
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant6()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10043700
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant7()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10044880
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant8()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10044890
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+uint64_t __thiscall CMoElem::Constructor(void * self)
+{
+  uint64_t uVar1;
+  
+  uVar1 = orig::CMoOtTask_Constructor(self);
+  orig::OcclusionQuery_Init_v1((void *)((int)self + 0x17f));
+  *(uint8_t ***)self = &CMoElem_vtbl_ambiguous3_as_v0;
+  *(uint16_t *)((int)self + 0x176) = 0x194;
+  *(uint32_t *)((int)self + 0x164) = 0;
+  *(uint32_t *)((int)self + 0xfc) = 0;
+  *(uint32_t *)((int)self + 0x100) = 0;
+  *(uint32_t *)((int)self + 300) = 0;
+  *(uint32_t *)((int)self + 0x130) = 0;
+  *(uint32_t *)((int)self + 0x154) = 0;
+  *(uint32_t *)((int)self + 0x158) = 0;
+  *(uint32_t *)((int)self + 0x14c) = 0;
+  *(uint32_t *)((int)self + 0x150) = 0;
+  g_countdown_1047BC6C = g_countdown_1047BC6C + 1;
+  *(uint32_t *)((int)self + 0x140) = 0;
+  *(uint32_t *)((int)self + 0x144) = 0;
+  *(uint32_t *)((int)self + 0x108) = 0;
+  *(uint32_t *)((int)self + 0x54) = 0;
+  *(uint32_t *)((int)self + 0x58) = 0;
+  *(uint32_t *)((int)self + 0x5c) = 0;
+  *(uint32_t *)((int)self + 0x188) = 0;
+  *(uint32_t *)((int)self + 0x18c) = 0;
+  *(uint32_t *)((int)self + 400) = 0;
+  *(uint32_t *)((int)self + 0x138) = 0;
+  *(uint8_t *)((int)self + 0x17a) = 0;
+  *(uint32_t *)((int)self + 0x134) = 0x3f800000;
+  *(uint8_t *)((int)self + 0x178) = 1;
+  *(uint8_t *)((int)self + 0x187) = 1;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+}
+
+// FUNCTION: FFXIMAIN 0x10044950
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int * CMoElem::ScalarDeletingDtor(char a2)
+{
+  orig::CMoElemFamily_SharedCleanup((int *)this);
+  if ( (a2 & 1) != 0 )
+    orig::SharedDeleteHelper((int)this);
+  return (int *)this;
+}
+
+// FUNCTION: FFXIMAIN 0x10044970
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char CMoElem::CMoElemFamily_SharedCleanup()
+{
+  int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
+  int v2;
+  int *v3;
+  int v4;
+  _DWORD **v5;
+  _DWORD *v6;
+  int v7;
+  int *v8;
+  int v9;
+  *self = (int)&CMoElem_vtbl_ambiguous3;
+  v2 = --g_countdown_1047BC6C;
+  v3 = (int *)this->listAResourceHandle;
+  if ( v3 != nullptr )
+    v4 = *v3;
+  else
+    v4 = 0;
+  v5 = (_DWORD **)this->listBResourceHandle;
+  this->listAResourceHandle = 0;
+  if ( v5 == nullptr )
+    v5 = (_DWORD **)this->listAResourceHandle;
+  if ( v5 != nullptr )
+    v6 = *v5;
+  else
+    v6 = nullptr;
+  this->listBResourceHandle = 0;
+  if ( v6 != nullptr )
+    orig::CMoGeneratorClone_UnlinkElemListB(v6, (int)self);
+  if ( v4 != 0 )
+  {
+    orig::CMoGeneratorClone_UnlinkElemListA((_DWORD *)v4, (int)self);
+    orig::CMoResource_ReleaseChain(v4, v7);
+  }
+  v8 = (int *)this->backrefResourceHandle;
+  if ( v8 != nullptr )
+  {
+    v9 = *v8;
+    orig::CMoResource_ReleaseChain(*v8, v2);
+    *(_DWORD *)(v9 + 248) = 0;
+    this->backrefResourceHandle = 0;
+    if ( (*(_WORD *)(v9 + 24) & 0x7FFF) == 0 )
+    {
+      orig::MoRes_FreeIfUnreferenced(*(int **)(v9 + 20));
+      orig::NodePool_ReleaseNode((unsigned int *)g_pMeshResourceMng, *(unsigned int **)(v9 + 20));
+    }
+  }
+  if ( v4 != 0 && (*(_BYTE *)(v4 + 26) & 4) != 0 && (*(_WORD *)(v4 + 24) & 0x7FFF) == 0 )
+  {
+    orig::MoRes_FreeIfUnreferenced(*(int **)(v4 + 20));
+    orig::NodePool_ReleaseNode((unsigned int *)g_pMeshResourceMng, *(unsigned int **)(v4 + 20));
+  }
+  if ( this->headeredAllocation != 0 )
+  {
+    orig::Mem_FreeWithHeader12(this->headeredAllocation);
+    this->headeredAllocation = 0;
+  }
+  orig::OcclusionQuery_Release((int *)((char *)self + 383));
+  *self = (int)&CMoOtTask_vtbl_ambiguous1;
+  orig::LinkNode_Unlink(self + 13);
+  return orig::CMoTask_Destructor(self);
+}
+
+// FUNCTION: FFXIMAIN 0x10044AC0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+unsigned char __thiscall CMoElem::IsSourceAt0FCTest(void * self)
+{
+  void *this_00;
+  uint32_t uVar1;
+  
+  if (*(uint32_t **)((int)self + 0xfc) == (uint32_t *)0x0) {
+    this_00 = (void *)0x0;
+  }
+  else {
+    this_00 = (void *)**(uint32_t **)((int)self + 0xfc);
+  }
+  if (this_00 != (void *)0x0) {
+    uVar1 = orig::Generator_IsFlag400OrField22Zero_v1(this_00);
+    return SUB41(uVar1,0);
+  }
+  return false;
+}
+
 // FUNCTION: FFXIMAIN 0x10044AE0
 // GATE: PASS -- 100 trials, 95 returned normally, 74 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
 undefined4 __thiscall CMoElem::AdvanceTimer(void * self)
@@ -67,12 +297,12 @@ LAB_10044b8c:
     uVar2 = *(uint32_t *)((int)this_00 + 0xd8);
 LAB_10044bda:
     if ((uVar2 >> 9 & 1) != 0) {
-      xi_eax = orig::sub_100473F0_2(self);
-      uVar4 = orig::sub_10053DD0(this_00,xi_eax,xi_eax);
+      xi_eax = orig::CMoElem_GetActiveField0A4_v1(self);
+      uVar4 = orig::YmGenerater_UpdateAttachIfPresent(this_00,xi_eax,xi_eax);
     }
   }
   if (this_00 != (void *)0x0) {
-    uVar4 = orig::sub_1004A980(this_00,self);
+    uVar4 = orig::FUN_1004a980(this_00,self);
     return uVar4 & 0xffffff00;
   }
 LAB_10044bfd:
@@ -83,6 +313,146 @@ LAB_10044bfd:
   *(uint32_t *)((int)self + 0x18c) = 0;
   *(uint32_t *)((int)self + 400) = 0;
   return uVar4 & 0xffffff00;
+}
+
+// FUNCTION: FFXIMAIN 0x10045800
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __cdecl CMoElem::InvertInPlace(float * param_1)
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
+  uint8_t bVar10;
+  long double fVar11;
+  long double fVar12;
+  int local_10;
+  float *local_c;
+  float *local_8;
+  
+  local_10 = 0;
+  local_8 = param_1;
+  local_c = param_1;
+  pfVar8 = param_1;
+  do {
+    fVar11 = (long double)*local_c;
+    bVar10 = NAN(fVar11) || NAN((long double)0.0f);
+    if (bVar10 != (bVar10 || fVar11 == (long double)0.0f)) {
+      fVar11 = (long double)1.0f;
+    }
+    fVar11 = (long double)1.0f / fVar11;
+    bVar10 = NAN(fVar11) || NAN((long double)0.0f);
+    if (bVar10 != (bVar10 || fVar11 == (long double)0.0f)) {
+      fVar11 = (long double)1.0f;
+    }
+    iVar2 = 4;
+    pfVar5 = pfVar8;
+    do {
+      pfVar6 = pfVar5 + 1;
+      iVar2 = iVar2 + -1;
+      *pfVar5 = (float)(fVar11 * (long double)*pfVar5);
+      pfVar5 = pfVar6;
+    } while (iVar2 != 0);
+    *local_c = (float)fVar11;
+    iVar2 = 0;
+    pfVar5 = local_8;
+    pfVar9 = param_1;
+    do {
+      if (iVar2 != local_10) {
+        fVar1 = *pfVar5;
+        iVar3 = 0;
+        pfVar4 = pfVar9;
+        pfVar7 = pfVar8;
+        do {
+          if (iVar3 == local_10) {
+            fVar12 = -((long double)fVar1 * fVar11);
+          }
+          else {
+            fVar12 = (long double)*pfVar4 - (long double)fVar1 * (long double)*pfVar7;
+          }
+          *pfVar4 = (float)fVar12;
+          iVar3 = iVar3 + 1;
+          pfVar7 = pfVar7 + 1;
+          pfVar4 = pfVar4 + 1;
+        } while (iVar3 < 4);
+      }
+      iVar2 = iVar2 + 1;
+      pfVar5 = pfVar5 + 4;
+      pfVar9 = pfVar9 + 4;
+    } while (iVar2 < 4);
+    local_10 = local_10 + 1;
+    local_c = local_c + 5;
+    local_8 = local_8 + 1;
+    pfVar8 = pfVar6;
+  } while (local_10 < 4);
+  return 4;
+}
+
+// FUNCTION: FFXIMAIN 0x100458F0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+undefined4 __thiscall CMoElem::CheckAt138ThenCall(void * self)
+{
+  uint32_t uVar1;
+  uint32_t uVar2;
+  
+  uVar1 = (uint32_t)(!((long double)*(float *)((int)self + 0x138) >= (long double)0.00999999977648258209228515625f));
+  if (uVar1 == 0) {
+    uVar2 = orig::FUN_100555b0(self,(float)(long double)*(float *)((int)self + 300));
+    return uVar2;
+  }
+  *(uint32_t *)((int)self + 0x138) = 0x3f800000;
+  return uVar1 << 8;
+}
+
+// FUNCTION: FFXIMAIN 0x10045920
+// GATE: PASS -- 100 trials, 100 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+XI_API undefined4 __attribute__((stdcall, regparm(3))) YmElem_BuildDrawMatrixAndTest(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+{
+  uint32_t a7;
+  uint32_t a6;
+  int *piVar1;
+  char xi_frame[16] __attribute__((aligned(4)));
+  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  
+  piVar1 = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x179))));
+  if (((*(char *)((int)self_ + 0x179) == '\0') &&
+      (piVar1 = *(int **)((int)self_ + 0xfc), piVar1 != (int *)0x0)) && (*piVar1 != 0)) {
+    if (piVar1 == (int *)0x0) {
+      piVar1 = (int *)0x0;
+    }
+    else {
+      piVar1 = (int *)*piVar1;
+    }
+    if (-1 < *(char *)((int)piVar1 + 0xde)) {
+      orig::RegisterWithProcessor_v1(self_);
+      piVar1 = (int *)(*(uint32_t *)((int)self_ + 0x10c) >> 0x12);
+      if (((uint32_t)piVar1 & 1) != 0) {
+        if ((Fn10045920_staticGuards & 1) == 0) {
+          Fn10045920_staticGuards = Fn10045920_staticGuards | 1;
+          Fn10045920_static_BC10 = 0;
+          Fn10045920_static_BC14 = 0;
+          Fn10045920_static_BC18 = 0;
+          orig::_atexit_v1(&DAT_10045a30);
+        }
+        a7 = *(uint32_t *)(g_pResourceMng + 0xdc4);
+        a6 = *(uint32_t *)(g_pResourceMng + 0xdc0);
+        orig::RegisterWithProcessor_v1(self_);
+        ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0x8c))
+                  ))((void *)(g_pProcessor_as_v1),local_10,&Fn10045920_static_BC10,1,(int)self_ + 0xa0,g_pResourceMng + 0xb10,a6,
+                   a7);
+        piVar1 = g_pProcessor_as_v1;
+        if (g_pProcessor_as_v1[0x2a5] == 0) {
+          return (uint32_t)g_pProcessor_as_v1 & 0xffffff00;
+        }
+      }
+    }
+  }
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10045A40
@@ -106,7 +476,7 @@ undefined4 __thiscall CMoElem::PrepareDraw(void * self)
   if ((char)uVar5 != '\0') {
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar5 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar5 = orig::sub_10044F10(self);
+  uVar5 = orig::YmElem_ComputeViewDepthKey(self);
   fVar9 = (long double)*(float *)((int)self + 0x138);
   fVar4 = (long double)0.0f;
   bVar7 = NAN(fVar9) || NAN(fVar4);
@@ -116,11 +486,11 @@ undefined4 __thiscall CMoElem::PrepareDraw(void * self)
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar5 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar7 || fVar9 < fVar4) << 8 | (uint16_t)bVar7 << 10 |
                     (uint16_t)bVar8 << 0xe)));
   }
-  orig::sub_10044D40(self);
-  uVar5 = orig::sub_10045190(self,fVar1,fVar2,fVar3);
-  uVar6 = orig::sub_10045920(self,uVar5);
+  orig::ElemFog_UpdateTransform(self);
+  uVar5 = orig::FUN_10045190(self,fVar1,fVar2,fVar3);
+  uVar6 = orig::YmElem_BuildDrawMatrixAndTest(self,uVar5);
   if ((char)uVar6 != '\0') {
-    uVar6 = orig::sub_100458F0(self);
+    uVar6 = orig::CMoElem_CheckAt138ThenCall(self);
   }
   return uVar6 & 0xffffff00;
 }
@@ -230,7 +600,7 @@ LABEL_9:
     default:
       break;
   }
-  orig::sub_10045D40((int)v2);
+  orig::RegisterWithProcessor((int)v2);
   orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, v2 + 40);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
@@ -243,7 +613,7 @@ LABEL_9:
     (*(void (__stdcall **)(int, int, _DWORD))(*(_DWORD *)v6 + 200))(v6, 14, 0);
   if ( (*((_BYTE *)v2 + 270) & 1) != 0 )
   {
-    qmemcpy(v4, (const void *)orig::sub_10045C50(v2), 0x40u);
+    qmemcpy(v4, (const void *)orig::ElemFog_GetFlaggedMatrix(v2), 0x40u);
     v4[12] = 0.0;
     v4[13] = 0.0;
     v4[14] = 0.0;
@@ -252,18 +622,18 @@ LABEL_9:
     v8 = false;
     if ( v7 != nullptr && *v7 != 0 )
       v8 = (*(_BYTE *)(*v7 + 223) & 2) != 0;
-    if ( *((_BYTE *)v2 + 377) == 0 && !v8 && orig::sub_100473F0(v2) != 0 )
+    if ( *((_BYTE *)v2 + 377) == 0 && !v8 && orig::CMoElem_GetActiveField0A4(v2) != 0 )
     {
       v9 = (g_pProcessor->ScratchMatrixStackTop);
       v10 = ((float * *)((char *)g_pProcessor + 0xA10))[v9];
       (g_pProcessor->ScratchMatrixStackTop) = v9 + 1;
-      qmemcpy(v10, (const void *)orig::sub_100473F0((int **)v35), 0x40u);
+      qmemcpy(v10, (const void *)orig::CMoElem_GetActiveField0A4((int **)v35), 0x40u);
       (*((void (__thiscall **)(CMoProcessor *, float *, float *, int))(*(void * *)&g_pProcessor->vftable) + 30))(
         g_pProcessor,
         v4,
         v4,
         1083624418);
-      orig::sub_10045800(v10);
+      orig::CMoElem_InvertInPlace(v10);
       (*((void (__thiscall **)(CMoProcessor *, float *, float *, float *))(*(void * *)&g_pProcessor->vftable) + 8))(
         g_pProcessor,
         v4,
@@ -306,9 +676,9 @@ LABEL_9:
     if ( *((_DWORD *)g_pZoneMap + 58663) != 0 )
     {
       if ( v17 != nullptr && *v17 != 0 )
-        orig::sub_1018B9A0(g_pXiZone, &v36, 0, *(_DWORD *)(*v17 + 196));
+        orig::XiZone_GetDirLight(g_pXiZone, &v36, 0, *(_DWORD *)(*v17 + 196));
       else
-        orig::sub_1018B9A0(g_pXiZone, &v36, 0, 0);
+        orig::XiZone_GetDirLight(g_pXiZone, &v36, 0, 0);
       (*((void (__thiscall **)(CMoProcessor *, _BYTE *, float *, _BYTE *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
         v37,
@@ -327,11 +697,11 @@ LABEL_9:
           v19 = *v18;
         else
           v19 = 0;
-        orig::sub_1018B960(g_pXiZone, &v36, v38, *(_DWORD *)(v19 + 196));
+        orig::XiZone_GetDirLightsForArea(g_pXiZone, &v36, v38, *(_DWORD *)(v19 + 196));
       }
       else
       {
-        orig::sub_10188B70((int)g_pXiZone, &v36, v38);
+        orig::XiZone_GetDirLights((int)g_pXiZone, &v36, v38);
       }
       (*((void (__thiscall **)(CMoProcessor *, _BYTE *, float *, _BYTE *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
@@ -374,7 +744,7 @@ LABEL_9:
     v31 = 1.0 / (*((float *)g_pCamera + 186) * *((float *)g_pCamera + 188));
     v23 = atan2(192.0, *((float *)g_pCamera + 189));
     v30 = v23 + v23;
-    orig::sub_102D83C6((int)&v36, v30, v31, v32, v33);
+    orig::D3DXMatrixPerspectiveFovLH_static((int)&v36, v30, v31, v32, v33);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTransform(D3DTS_PROJECTION, (void *)(&v36));
   }
   else
@@ -392,7 +762,7 @@ LABEL_9:
   {
     v24 = v2[63];
     if ( v24 != nullptr && *v24 != 0 )
-      orig::sub_1018BA20(
+      orig::XiZone_GetFog(
         g_pXiZone,
         &g_zoneFogOut1,
         (float *)&g_zoneFogOut2,
@@ -400,7 +770,7 @@ LABEL_9:
         0,
         *(_DWORD *)(*v24 + 196));
     else
-      orig::sub_1018BA20(g_pXiZone, &g_zoneFogOut1, (float *)&g_zoneFogOut2, (float *)&g_zoneFogOut3, 0, 0);
+      orig::XiZone_GetFog(g_pXiZone, &g_zoneFogOut1, (float *)&g_zoneFogOut2, (float *)&g_zoneFogOut3, 0, 0);
     orig::Fog_SetRenderStates();
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_FOGENABLE, TRUE);
     v25 = *(_DWORD *)(g_pResourceMng + 3528);
@@ -427,17 +797,17 @@ LABEL_9:
   {
     v27 = v2[63];
     if ( v27 != nullptr && *v27 != 0 )
-      orig::sub_1018B9E0((char *)g_pXiZone, &v35, 0, *(_DWORD *)(*v27 + 196));
+      orig::XiZone_GetAmbient((char *)g_pXiZone, &v35, 0, *(_DWORD *)(*v27 + 196));
     else
-      orig::sub_1018B9E0((char *)g_pXiZone, &v35, 0, 0);
+      orig::XiZone_GetAmbient((char *)g_pXiZone, &v35, 0, 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, v35);
     (g_pCDx->pDevice)->lpVtbl->SetMaterial((g_pCDx->pDevice), &Fn100467E0_material);
   }
   if ( (Fn100467E0_staticGuards & 1) == 0 )
   {
     Fn100467E0_staticGuards |= 1u;
-    orig::sub_1006AD90_2((exception *)Fn100467E0_stateBlock);
-    orig::sub_10313486(XI_CODE(sub_100472D0));
+    orig::fn_1006AD90((exception *)Fn100467E0_stateBlock);
+    orig::_atexit(XI_CODE(unknown_libname_53));
   }
   orig::StateBlock_ApplyTSS(Fn100467E0_stateBlock, (int)Fn100467E0_textureStageStates);
   result = (int)g_pProcessor;
@@ -446,6 +816,13 @@ LABEL_9:
   *(_DWORD *)(result + 4 * v28 + 2576) = v4;
   result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(0) << 0));
   return result;
+}
+
+// FUNCTION: FFXIMAIN 0x100472E0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+void CMoElem::Slot18DoNothing()
+{
+  ;
 }
 
 // FUNCTION: FFXIMAIN 0x100472F0
@@ -463,8 +840,8 @@ XI_API int __thiscall YmElem_RestoreDevice(_WORD *a1, __int16 a4)
   if ( (Fn100472F0_staticGuards & 1) == 0 )
   {
     Fn100472F0_staticGuards |= 1u;
-    orig::sub_1006AD90_2((exception *)Fn100472F0_stateBlock);
-    orig::sub_10313486(XI_CODE(sub_100473E0));
+    orig::fn_1006AD90((exception *)Fn100472F0_stateBlock);
+    orig::_atexit(XI_CODE(unknown_libname_54));
   }
   orig::StateBlockHolder_ApplyRenderStates(Fn100472F0_stateBlock, Fn100472F0_renderStates);
   if ( *((_BYTE *)g_pZoneMap + 234904) == 0 )
@@ -473,3 +850,113 @@ XI_API int __thiscall YmElem_RestoreDevice(_WORD *a1, __int16 a4)
   return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTransform(D3DTS_PROJECTION, (void *)(v6));
 }
 
+// FUNCTION: FFXIMAIN 0x100473F0
+// GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
+int __thiscall CMoElem::GetActiveField0A4(void * self)
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  
+  iVar2 = *(int *)((int)self + 0x108);
+  if (iVar2 == 0) {
+    piVar3 = *(int **)((int)self + 0x100);
+    piVar1 = piVar3;
+    if (piVar3 == (int *)0x0) {
+      piVar1 = *(int **)((int)self + 0xfc);
+    }
+    if (piVar1 == (int *)0x0) {
+      iVar2 = 0;
+    }
+    else {
+      iVar2 = *piVar1;
+    }
+    if (*(int *)(iVar2 + 0xa4) != 0) {
+      if (piVar3 == (int *)0x0) {
+        piVar3 = *(int **)((int)self + 0xfc);
+      }
+      else {
+        piVar3 = *(int **)((int)self + 0x100);
+      }
+      if (piVar3 == (int *)0x0) {
+        return iRam000000a4;
+      }
+      return *(int *)(*piVar3 + 0xa4);
+    }
+    iVar2 = 0;
+  }
+  return iVar2;
+}
+
+// FUNCTION: FFXIMAIN 0x10047450
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __thiscall CMoElem::GetAddr78(void * self)
+{
+  int *piVar1;
+  
+  if (*(int *)((int)self + 0x108) != 0) {
+    return *(int *)((int)self + 0x108) + 0x40;
+  }
+  piVar1 = *(int **)((int)self + 0x100);
+  if (piVar1 == (int *)0x0) {
+    piVar1 = *(int **)((int)self + 0xfc);
+  }
+  if (piVar1 == (int *)0x0) {
+    return 0x78;
+  }
+  return *piVar1 + 0x78;
+}
+
+// FUNCTION: FFXIMAIN 0x10047490
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+int __thiscall CMoElem::GetAddr84(void * self)
+{
+  int *piVar1;
+  
+  if (*(int *)((int)self + 0x108) != 0) {
+    return *(int *)((int)self + 0x108) + 0x50;
+  }
+  piVar1 = *(int **)((int)self + 0x100);
+  if (piVar1 == (int *)0x0) {
+    piVar1 = *(int **)((int)self + 0xfc);
+  }
+  if (piVar1 == (int *)0x0) {
+    return 0x84;
+  }
+  return *piVar1 + 0x84;
+}
+
+// FUNCTION: FFXIMAIN 0x10047550
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant9()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10047570
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant10()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x100548A0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant11()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x100562D0
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant12()
+{
+  return &CMoElem_classdesc;
+}
+
+// FUNCTION: FFXIMAIN 0x10064160
+// GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
+char ** __cdecl CMoElem::GetRuntimeClass_variant13()
+{
+  return &CMoElem_classdesc;
+}
