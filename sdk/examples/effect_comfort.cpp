@@ -27,11 +27,27 @@
 // to the kit gives lines "<path prefix> <percent>": the first line whose prefix starts the path applies, on top of
 // fx_intensity; 0 leaves the element's draws out altogether. fx_list=1 logs each path once when it is first drawn, to
 // find them. What a path's ids mean (which spell, which part of it) is the effect files' own naming: not read here.
-// Swapping one effect for another is file_overlay's: the effect's DAT file replaced by another's.
+// What each command number of the effect generator and scheduler does is in docs/EFFECT_COMMANDS.md (read from the
+// game's two switches); which PS2 tag name goes with which number is not known (it would take the PS2 executable).
 //
-// Tested offline (kit/xikit/test, mode fx2mod): an element's path named and looked up in effects.txt, its draw left
-// out at 0 and drawn after, through the mod's test exports (the game's YmElem_SetupDevice did not return with the
-// test's stand-in renderer state, so the bracketing by the game's two functions has not run offline).
+// The file an effect came from. ResourceLoadTask_Step (0x10072A70, tree/src/ResourceLoadTask.cpp) loads a file by the
+// number at task +0x34 (ResourceLoadTask_Start: its argument), handing that number to the file manager's open and
+// read (0x101C4BC0, 0x101C46D0); when the file's resources are resolved (MeshResourceMng_ResolveTree) it writes the
+// same number to the root resource's +0x34 and sets bit 1 of its +0x1A. ResourceIter_FindOrStartTask (0x10073D80)
+// finds a loaded file again by that number. So the mod takes, up the element's chain, the resource with +0x1A bit 1
+// and logs its +0x34 as the file number ("effect <path> from file <n>"), and effects.txt also takes "file:<n>
+// <percent>" lines for every effect of that file. (An element whose chain has no such resource logs no number.)
+// The game turns a file number into a path in XiFileImpl_getFileName (0x101C3A90): with the ROM tables in use, the
+// ROM is byte n of the table read from VTABLE.DAT (0: no such file) and v is word n of the table read from FTABLE.DAT;
+// ROM 1 gives ROM\<v / 128>\<v % 128>.DAT, ROM k gives ROM<k>\<v / 128>\<v % 128>.DAT. How the expansions' own
+// ROM<k>\VTABLE<k>.DAT and FTABLE<k>.DAT are merged into those tables (0x101C3400) was not read: the tables in
+// memory are the merged ones. Swapping one effect for another is file_overlay's: the effect's DAT file replaced by
+// another's.
+//
+// Tested offline (kit/xikit/test, mode fx2mod): the game's own YmElem_SetupDevice and YmElem_RestoreDevice on an
+// element whose resource path is spel/fire, effects.txt "spel/fire 0": a draw between them is left out, the same draw
+// after them is drawn, and fx_list logs the path; an element under a file's root (+0x1A bit 1, file 4321 at +0x34, as
+// the load task leaves it) is left out by "file:4321 0", and fx_list logs "efct/wind from file 4321".
 // Tested offline (kit/xikit/test, mode fxmod): the game's own DrawFadeQuad with the limit, on Wine's Direct3D 8,
 // and the stage on a real draw read back. The bracketing by YmElem_SetupDevice/RestoreDevice has not run (an element
 // needs the game running). Not yet run in the game.
@@ -62,9 +78,10 @@ static int elem_percent(void *e) {
   if (!res || !readable((char *)res + 0x20, 12)) return 100;
   unsigned id0 = *(unsigned *)((char *)res + 0x20);
   for (int i = 0; i < g_ncache; i++) if (g_cache[i].res == res && g_cache[i].id == id0) return g_cache[i].pct;
-  unsigned ids[16]; int n = 0;
+  unsigned ids[16]; int n = 0; long file = -1;
   for (void *r = res; r && n < 16 && readable((char *)r + 0x20, 12); n++) {
     ids[n] = *(unsigned *)((char *)r + 0x20);
+    if (readable((char *)r + 0x1A, 0x1E) && (*((unsigned char *)r + 0x1A) & 1)) file = (long)*(unsigned *)((char *)r + 0x34);   // (the file's root: see above)
     void *ph = *(void **)((char *)r + 0x28); r = ph ? deref(ph) : nullptr;
   }
   char path[16 * 9 + 1]; int k = 0;
@@ -76,9 +93,16 @@ static int elem_percent(void *e) {
     if (i) path[k++] = '/';
   }
   path[k] = 0;
+  char fkey[24] = "";
+  if (file >= 0) { char d[12]; int m = 0; unsigned long v = (unsigned long)file; do d[m++] = (char)('0' + v % 10); while (v /= 10);
+                   memcpy(fkey, "file:", 5); for (int i = 0; i < m; i++) fkey[5 + i] = d[m - 1 - i]; fkey[5 + m] = 0; }
   int pct = 100;
-  for (int i = 0; i < g_nkeys; i++) if (!strncmp(path, g_keys[i], strlen(g_keys[i]))) { pct = g_pcts[i]; break; }
-  if (g_host->setting_int("fx_list", 0)) g_host->log("effect_comfort: effect %s (%d%%)", path, pct);
+  for (int i = 0; i < g_nkeys; i++)
+    if ((fkey[0] && !strcmp(fkey, g_keys[i])) || !strncmp(path, g_keys[i], strlen(g_keys[i]))) { pct = g_pcts[i]; break; }
+  if (g_host->setting_int("fx_list", 0)) {
+    if (file >= 0) g_host->log("effect_comfort: effect %s from file %ld (%d%%)", path, file, pct);
+    else g_host->log("effect_comfort: effect %s (%d%%)", path, pct);
+  }
   if (g_ncache == 512) g_ncache = 0;
   g_cache[g_ncache++] = { res, id0, pct };
   return pct;
@@ -181,11 +205,6 @@ static xikit::fn<decltype(&YmElem_RestoreDevice)> prev_Restore;
 static void enter_elem(void *e) { g_in_elem = 1; g_elem_pct = e && (g_nkeys || g_host->setting_int("fx_list", 0)) ? elem_percent(e) : 100; }
 static int __thiscall my_Setup(void *e, int a1) { int r = prev_Setup(e, a1); enter_elem(e); return r; }
 static int __thiscall my_Restore(_WORD *e, __int16 a4) { g_in_elem = 0; return prev_Restore(e, a4); }
-// for the kit's test (mode fx2mod) only: what the two hooks do after and before the game's code, without it (the game's
-// YmElem_SetupDevice needs the game's renderer state, which the test does not have)
-extern "C" __declspec(dllexport) void effect_comfort_test_enter(void *e) { enter_elem(e); }
-extern "C" __declspec(dllexport) void effect_comfort_test_leave(void) { g_in_elem = 0; }
-
 extern "C" __declspec(dllexport) void xikit_mod_frame(void *) {
   static unsigned n;
   if (++n % 1800 == 0 && (g_scaled || g_skipped || g_flashes || g_left_out))

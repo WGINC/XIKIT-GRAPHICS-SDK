@@ -384,7 +384,7 @@ static int fxmod_run(IDirect3DDevice8 *dev) {
 }
 
 /* ------------------------------------------------------------------------------------------------ cammod mode
-   sdk/examples/camera_view.dll through the kit (fov_deg=90, far_percent=200), with the game's own
+   sdk/examples/camera_view.dll through the kit (fov_deg=90, far_percent=200, draw_percent=200), with the game's own
    Camera_BuildPerspectiveFov (0x10015490) on a camera object: the projection at +0x154 (D3DXMatrixPerspectiveFovLH:
    _22 = 1 / tan(fov / 2), _33 = -far / (far - near), as run) has the mod's field of view and far distance; building twice does
    not compound the far scaling; a far value the game writes afterwards is the new base. */
@@ -410,6 +410,17 @@ static int cammod_run(IDirect3DDevice8 *dev) {
   f[0x2E0 / 4] = 50.0f; build(cam); m33 = f[0x154 / 4 + 10];
   snprintf(what, sizeof what, "cammod: the game writes far 50: the mod's far is %.1f, _33 %.6f (-100 / 99.5)", f[0x2E0 / 4], m33);
   check(f[0x2E0 / 4] == 100.0f && m33 < -1.005025f + 1e-5f && m33 > -1.005025f - 1e-5f, what);
+  /* draw_percent=200 with the game's own XiZone::ComputeFogDistance (0x1018B8F0) on a zone object: no zone record
+     (+0x1C 0) and env -0x1C not 1, so Env_FogDistanceFactor gives its constant 1.0 (0x1032961C); +0x1D0 0: the game's
+     100 alone; +0x1D0 300: the game's max(1.0 * 100, 300) */
+  check(*(uint8_t *)ga(0x1018B8F0u) == 0xE9, "cammod: XiZone::ComputeFogDistance's entry jumps (the mod's hook)");
+  static uint8_t zbuf[0x40 + 0x200]; memset(zbuf, 0, sizeof zbuf); uint8_t *zone = zbuf + 0x40;
+  typedef float (__thiscall *DistFn)(void *, int);
+  DistFn dist = (DistFn)(void *)ga(0x1018B8F0u);
+  float d0 = dist(zone, 1);
+  *(float *)(zone + 0x1D0) = 300.0f; float d1 = dist(zone, 0);
+  snprintf(what, sizeof what, "cammod: draw_percent=200: the zone's draw distance is %.1f (200: the game's 100), %.1f with the floor 300 (600)", d0, d1);
+  check(d0 == 200.0f && d1 == 600.0f, what);
   return 0;
 }
 
@@ -624,12 +635,33 @@ static int uimod_run(IDirect3DDevice8 *dev) {
   return 0;
 }
 
+/* a watchdog for finding where game code stops in a test: after `ms`, the main thread's EIP and the return-looking
+   dwords on its stack (inside FFXiMain.dll) are printed, then the process ends */
+static HANDLE g_wd_main; static DWORD g_wd_ms;
+static DWORD WINAPI wd_thread(void *p) {
+  (void)p; Sleep(g_wd_ms);
+  SuspendThread(g_wd_main); CONTEXT c; memset(&c, 0, sizeof c); c.ContextFlags = CONTEXT_FULL;
+  GetThreadContext(g_wd_main, &c);
+  printf("  watchdog: main thread at eip %08lx (analysed %08lx), esp %08lx\n", (unsigned long)c.Eip, (unsigned long)(c.Eip - g_hrel), (unsigned long)c.Esp);
+  uint32_t *sp = (uint32_t *)(uintptr_t)c.Esp; int n = 0;
+  for (int i = 0; i < 2048 && n < 24; i++) { uint32_t v = sp[i]; if (v - g_hrel >= 0x10001000u && v - g_hrel < 0x10330000u) { printf("    [esp+%x] %08lx\n", i * 4, (unsigned long)(v - g_hrel)); n++; } }
+  ExitProcess(3); return 0;
+}
+static LONG WINAPI wd_fault(EXCEPTION_POINTERS *e) {
+  printf("  fault: code %08lx at %08lx (analysed %08lx), address %08lx\n", (unsigned long)e->ExceptionRecord->ExceptionCode,
+         (unsigned long)(uintptr_t)e->ExceptionRecord->ExceptionAddress, (unsigned long)((uintptr_t)e->ExceptionRecord->ExceptionAddress - g_hrel),
+         (unsigned long)(e->ExceptionRecord->NumberParameters > 1 ? e->ExceptionRecord->ExceptionInformation[1] : 0));
+  ExitProcess(4); return 0;
+}
+static void watchdog(DWORD ms) { SetUnhandledExceptionFilter(wd_fault); DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &g_wd_main, 0, FALSE, DUPLICATE_SAME_ACCESS); g_wd_ms = ms; CreateThread(NULL, 0, wd_thread, NULL, 0, NULL); }
+
 /* ------------------------------------------------------------------------------------------------ fx2mod mode
    sdk/examples/effect_comfort.dll's per-effect control (effects.txt: "spel/fire 0"; fx_list=1): an element whose
    resource (element +0xFC, a handle) is chunk "fire" (type 5) under the scope "spel" (type 1, its parent at +0x28);
-   the mod's test export does what its YmElem_SetupDevice hook does after the game's code (the game's own function
-   did not return with stand-ins for the renderer's state), then a white draw onto black is left out; the export for
-   RestoreDevice, then the same draw is drawn. */
+   the game's own YmElem_SetupDevice (0x100467E0) on it, then a white draw onto black is left out; the game's own
+   YmElem_RestoreDevice (0x100472F0), then the same draw is drawn. Stand-ins: the processor (g_pProcessor: the game's
+   CMoProcessorX87 vtable, a scratch matrix stack) and the CMoDX (g_pResourceMng) with the real device; the element
+   has no fog (+0x10C bit 0x2000000), so SetupDevice does not ask the zone. */
 typedef int (__thiscall *SetupFn)(void *, int);
 typedef int (__thiscall *RestoreFn)(void *, int);
 static uint32_t fx2_draw(IDirect3DDevice8 *dev, IDirect3DSurface8 *rt) {
@@ -652,31 +684,48 @@ static int fx2mod_run(IDirect3DDevice8 *dev) {
     IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
   }
   check(*(uint8_t *)ga(0x100467E0u) == 0xE9 && *(uint8_t *)ga(0x100472F0u) == 0xE9, "fx2mod: YmElem_SetupDevice's and RestoreDevice's entries jump (the mod's hooks)");
-  (void)(SetupFn)0; (void)(RestoreFn)0;
+  
   static uint8_t elem[0x400], res[0x80], scope[0x80], proc[0x1000], mats[16][64], resmng[0x10000]; static void *hres, *hscope;
   memset(elem, 0, sizeof elem); memset(res, 0, sizeof res); memset(scope, 0, sizeof scope); memset(proc, 0, sizeof proc); memset(resmng, 0, sizeof resmng);
   memcpy(res + 0x20, "fire", 4); *(uint32_t *)(res + 0x24) = 5; memcpy(scope + 0x20, "spel", 4); *(uint32_t *)(scope + 0x24) = 1;
   hres = res; hscope = scope; *(void **)(res + 0x28) = &hscope; *(void **)(elem + 0xFC) = &hres;
   for (int i = 0; i < 16; i++) { ((void **)(proc + 0xA10))[i] = mats[i]; memset(mats[i], 0, 64); }
+  *(void **)proc = (void *)ga(0x1032C368u);                  /* the game's CMoProcessorX87 vtable (data/class_vtables.json) */
+  *(uint32_t *)(elem + 0x10C) |= 0x2000000u;                  /* an element without fog (SetupDevice's branch: no XiZone needed) */
   *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx;
   void **pp = (void **)ga(0x1047CF7Cu), **pr = (void **)ga(0x1047BFA8u); void *op = *pp, *orr = *pr; *pp = proc; *pr = resmng;
   IDirect3DSurface8 *rt = NULL, *old = NULL, *oldz = NULL; char what[160];
   IDirect3DDevice8_GetRenderTarget(dev, &old); IDirect3DDevice8_GetDepthStencilSurface(dev, &oldz);
   IDirect3DDevice8_CreateRenderTarget(dev, 4, 4, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
-  /* (the game's YmElem_SetupDevice does not return with these stand-ins: the mod's test exports do what its hooks do) */
-  HMODULE fm = GetModuleHandleA("effect_comfort.dll");
-  void (*enter)(void *) = fm ? (void (*)(void *))(void *)GetProcAddress(fm, "effect_comfort_test_enter") : NULL;
-  void (*leave)(void) = fm ? (void (*)(void))(void *)GetProcAddress(fm, "effect_comfort_test_leave") : NULL;
-  check(enter && leave, "fx2mod: the mod's test exports");
-  if (!enter || !leave) return 1;
-  enter(elem);
+  /* the two function-local statics these functions set up on first use (a guard bit, then MoDX_SetInvalid on the state
+     block, then atexit for its destructor): done here as the game does them, without the atexit (this host does not run
+     the DLL's C runtime start-up, and atexit waits on its lock) */
+  typedef void (__thiscall *InvFn)(void *);
+  static uint8_t sblist[0x40]; void **psb = (void **)ga(0x1047BFF4u), *osb = *psb; if (!*psb) *psb = sblist;   /* the state blocks' list owner (0x1006ADF0 links each block at +0xC) */
+  *(uint8_t *)ga(0x1047BBE4u) |= 1; ((InvFn)(void *)ga(0x1006AD90u))((void *)ga(0x1047BBB8u));
+  *(uint8_t *)ga(0x1047BBC4u) |= 1; ((InvFn)(void *)ga(0x1006AD90u))((void *)ga(0x1047BC1Cu));
+  watchdog(60000);
+  ((SetupFn)(void *)ga(0x100467E0u))(elem, 0);              /* the game's own; the mod's hook names the element after it */
   uint32_t in = fx2_draw(dev, rt);
-  leave();
+  ((RestoreFn)(void *)ga(0x100472F0u))(elem, 0);
   uint32_t out = fx2_draw(dev, rt);
   snprintf(what, sizeof what, "fx2mod: inside the element (spel/fire at 0%%) the white draw is left out (%06lx); after RestoreDevice it is drawn (%06lx)", (unsigned long)in, (unsigned long)out);
   check(in == 0 && out == 0xFFFFFF, what);
+  /* a second element, chunk "wind" under a scope "efct" that is a file's root as the game's ResourceLoadTask_Step
+     leaves it (+0x1A bit 1, the file number 4321 at +0x34): effects.txt "file:4321 0" leaves its draw out */
+  static uint8_t elem2[0x400], res2[0x80], root2[0x80]; static void *hres2, *hroot2;
+  memcpy(elem2, elem, sizeof elem2); memset(res2, 0, sizeof res2); memset(root2, 0, sizeof root2);
+  memcpy(res2 + 0x20, "wind", 4); *(uint32_t *)(res2 + 0x24) = 5; memcpy(root2 + 0x20, "efct", 4); *(uint32_t *)(root2 + 0x24) = 1;
+  root2[0x1A] |= 1; *(uint32_t *)(root2 + 0x34) = 4321;
+  hres2 = res2; hroot2 = root2; *(void **)(res2 + 0x28) = &hroot2; *(void **)(elem2 + 0xFC) = &hres2;
+  ((SetupFn)(void *)ga(0x100467E0u))(elem2, 0);
+  in = fx2_draw(dev, rt);
+  ((RestoreFn)(void *)ga(0x100472F0u))(elem2, 0);
+  out = fx2_draw(dev, rt);
+  snprintf(what, sizeof what, "fx2mod: an element of file 4321 (efct/wind, \"file:4321 0\") is left out (%06lx); after RestoreDevice drawn (%06lx)", (unsigned long)in, (unsigned long)out);
+  check(in == 0 && out == 0xFFFFFF, what);
   IDirect3DDevice8_SetRenderTarget(dev, old, oldz); if (old) IDirect3DSurface8_Release(old); if (oldz) IDirect3DSurface8_Release(oldz); if (rt) IDirect3DSurface8_Release(rt);
-  *pp = op; *pr = orr;
+  *pp = op; *pr = orr; *psb = osb;
   return 0;
 }
 
@@ -776,7 +825,7 @@ int main(int argc, char **argv) {
                  : fxrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=effect_comfort.dll\n"
                           : "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\n");
     if (fx2run) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nfx_list=1\n", mf); fclose(mf); }
-                  mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\n", mf); fclose(mf); } fill_iat(g); }
+                  mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\nfile:4321 0\n", mf); fclose(mf); } fill_iat(g); }
     if (uirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=100\nui_list=1\n", mf); fclose(mf); }
                  mf = fopen("ui_layout.txt", "w"); if (mf) { fputs("# window dx dy\nmenuinventor 5 -3\n", mf); fclose(mf); } fill_iat(g); }
     if (cfrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[color_filter]\ncb_mode=2\ncb_simulate=1\ncb_strength=100\ncb_check=1\n", mf); fclose(mf); } }
@@ -784,7 +833,7 @@ int main(int argc, char **argv) {
     if (envrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[world_light]\nfog_distance=50\nfog_r=200\nambient=150\nlight=200\n", mf); fclose(mf); } fill_iat(g); }
     if (audrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=50\nvol_effects=150\nvol_ambient=25\n", mf); fclose(mf); } fill_iat(g); }
     if (ovlrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[file_overlay]\noverlay_log=1\n", mf); fclose(mf); } fill_iat(g); }
-    if (camrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[camera_view]\nfov_deg=90\nfar_percent=200\n", mf); fclose(mf); } fill_iat(g); }
+    if (camrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[camera_view]\nfov_deg=90\nfar_percent=200\ndraw_percent=200\n", mf); fclose(mf); } fill_iat(g); }
     if (fxrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nflash_limit=50\nfx_intensity=50\nfx_all_blended=1\n", mf); fclose(mf); } fill_iat(g); }
     if (texrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[texture_replace]\ntex_dump=1\ntex_log=1\n", mf); fclose(mf); } fill_iat(g); }
     if (!LoadLibraryA("xikit.dll")) { printf("FAIL: xikit.dll not loaded (%lu)\n", GetLastError()); return 2; }

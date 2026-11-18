@@ -196,6 +196,8 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
     if mode == 'fx2mod':
         ok = 'effect_comfort: effect spel/fire (0%)' in log
         print('%s: fx2mod: fx_list logged the element\'s path spel/fire and its percent from effects.txt' % ('ok' if ok else 'FAIL')); bad += not ok
+        ok = 'effect_comfort: effect efct/wind from file 4321 (0%)' in log
+        print('%s: fx2mod: fx_list logged the second element\'s path efct/wind, its file 4321 and its percent from the file: line' % ('ok' if ok else 'FAIL')); bad += not ok
     if mode == 'cfmod':
         m = re.search(r"color_filter: check: the filtered frame's centre is ([0-9a-f-]+)", log)
         v = int(m.group(1), 16) if m and m.group(1) != '-1' else -1

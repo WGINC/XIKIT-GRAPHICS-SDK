@@ -108,8 +108,8 @@ none has run in the game yet.
 |---|---|
 | `texture_replace` | Textures from DDS files (`textures\<name>_<crc>.dds` or `<name>.dds`), any size; `tex_dump=1` writes the game's textures out to find their names. Fonts are textures too |
 | `file_overlay` | Any of the game's files from overlay packs (`overlay\<pack>\<path below FINAL FANTASY XI>`): models, zones, effects, sound effects, music. Reads only |
-| `effect_comfort` | A limit on full-screen flashes (`flash_limit`, `flash_rise_ms`), an effect intensity (`fx_intensity`), and per-effect percentages from `effects.txt` (`fx_list=1` names them) |
-| `camera_view` | Field of view (`fov_deg`) and far clip distance (`far_percent`) |
+| `effect_comfort` | A limit on full-screen flashes (`flash_limit`, `flash_rise_ms`), an effect intensity (`fx_intensity`), and per-effect percentages from `effects.txt`, by path or by file number (`fx_list=1` names them; `docs/EFFECT_COMMANDS.md` lists the effect commands) |
+| `camera_view` | Field of view (`fov_deg`), far clip distance (`far_percent`) and the zone's and actors' draw distance (`draw_percent`) |
 | `photo_mode` | A free camera orbiting the game's (`photo`, `photo_yaw`, ...), the interface hidden (`photo_hide_ui`), a picture of the world without it (`photo_shot`) |
 | `world_light` | Fog distance, colour and off; ambient and light brightness |
 | `audio_mix` | Interface, effect, ambient and music volume |

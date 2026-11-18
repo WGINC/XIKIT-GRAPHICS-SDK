@@ -5,6 +5,7 @@ Made by `sdk/public_docs.py` in the analysis repository, from this kit's own fil
 - [MODULES.md](MODULES.md): the 409 source files in 98 groups. A group is the first part of the file names, nothing more.
 - [FUNCTION_TREE.md](FUNCTION_TREE.md): group, file, function; then the direct-call trees from `CApp::RunMainLoop` and `Frame_Render`.
 - [GENERIC.md](GENERIC.md): the names that are still generic.
+- [EFFECT_COMMANDS.md](EFFECT_COMMANDS.md): what each command number of the effect generator and scheduler does, read from their switches (written by `pipeline/effect_commands.py`; security-set calls hidden).
 - `functions/<file>.md`: one page per source file.
 
 ## The columns

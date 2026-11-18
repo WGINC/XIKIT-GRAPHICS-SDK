@@ -12,8 +12,12 @@
 // rebuilt every frame while photo mode is on, and once more when it is turned off.
 // The mod's eye: the game's eye orbited about the game's look-at point (photo_yaw, photo_pitch in degrees), its
 // distance scaled (photo_dist percent), and raised along the game's Y axis (photo_raise, hundredths of a unit; which
-// sign is up was not checked). Not known: what the game culls with its own camera (objects outside the game's view
-// may be left out when the free camera looks past them); the camera's collision with walls is the game's eye's only.
+// sign is up was not checked). What the game culls with: the zone's culling frustum and the actors' depth test are
+// built from the view last set on the device (CDx::GetTransformCached(2): 0x1017BEFC in XiZone_Draw, 0x100C7C3C in
+// CXiSkeletonActor_OnMove), and Camera_ApplyViewProjection sets it at the end of Frame_Render (0x10012E1E), before
+// the next frame's XiZone::DrawScene (0x10011C97). So the zone and the actors are culled with this mod's eye, not the
+// game's (sdk/examples/camera_view.cpp, draw_percent, has the distances). Not read: whether any other drawing
+// (effects, the sky) culls with a camera copy of its own. The camera's collision with walls is the game's eye's only.
 //
 // The picture and the interface. CDx::CompositeSceneToBackBuffer (0x1000C0B0) is handed the world as it will be shown,
 // before the interface (sdk/examples/scene_tint.cpp says how that is known: the texture at its first argument + 4).
