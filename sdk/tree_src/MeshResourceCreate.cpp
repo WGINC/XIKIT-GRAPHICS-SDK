@@ -156,7 +156,7 @@ LAB_1007183f:
       orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
       orig::CMoAttachments_Construct(this_00 + 0xc);
       *this_00 = (int)&PTR_CMoCamera_GetRuntimeClass_1032c5d0;
-      this_00[0xc] = (int)&PTR_CMoScopeRes_vf011_1032c5b4;
+      this_00[0xc] = (int)&PTR_CMoRmpRes_vf011_1032c5b4;
       break;
     case 7:
       uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x88,1);

@@ -1,16 +1,26 @@
-# xikit devkit, release 2
+# xikit devkit, release 3
 
 A kit for changing how FINAL FANTASY XI draws, for the game's builds 6A995428 (3 Sep 2026), 6AC37846 and 6AE818B4
 (2 Nov 2026, the current one). It holds no game code or data.
 
-## What changed since release 1
+## What changed since release 2
 
-- Every function with source is named: the 101 classes that were known only by their vtable address (resources by
-  their chunk type and format, scheduler tasks by the command that creates them, the vector processors by the CPU
-  feature that picks them, ...), and the remaining address and slot names. The source, headers and PDBs use them.
-  Names only: the manifests list the same functions, at the same addresses, with the same flags.
-- The PDBs name every function with source by its source's name (before: only the hookable ones).
-- d3d8on11: `SetPixelShader(0)` succeeds and `GetPixelShader` answers 0 (the fixed-function pipeline).
+- Example mods for players, each with what it hooks, what it reads of the game and from where, and what is not known
+  in its first comment, and each run offline through the kit with the game's own code (kit/xikit/test):
+  - **World:** `texture_replace` (textures from DDS files, and a dump to find them), `file_overlay` (any of the game's
+    files from overlay packs: models, zones, effects, sound effects, music), `world_light` (fog distance, colour and
+    off; ambient light);
+  - **Interface:** `ui_layout` (windows moved by name or all together, drawn and clicked there), `color_filter`
+    (colour-blind correction or simulation of the whole frame; needs d3d8on11); fonts are textures (`texture_replace`);
+    the interface's scale is the game's own menu resolution;
+  - **Effects:** `effect_comfort` (a limit on full-screen flashes, an effect intensity, and per-effect percentages or
+    removal from `effects.txt`); swapping an effect is `file_overlay` with another effect's file;
+  - **Camera:** `camera_view` (field of view, far clip), `photo_mode` (a free camera orbiting the game's, the interface
+    hidden, a picture of the world without it);
+  - **Audio:** `audio_mix` (interface, effect, ambient and music volume); sound replacement is `file_overlay`.
+- Names: 20 classes renamed from the game's own table of type names (0x103542A8) and the PS2 build's types; class-name
+  confidence 89 high, 12 medium, none low.
+- None of the new mods has run in the game yet.
 
 ## What is in it
 
@@ -19,6 +29,7 @@ A kit for changing how FINAL FANTASY XI draws, for the game's builds 6A995428 (3
 | `kit/` | `xikit.dll` (the kit: loads mods, swaps in the reconstruction, measures), `gfx_recon_ingame.dll` (the reconstruction: the game's graphics functions as gate-verified C++), the manifests of the three builds | docs/KIT.md |
 | `d3d8on11/` | the renderer: Direct3D 8 on Direct3D 12 (or 11), with shader passes for mods | its README in the repository |
 | `sdk/` | the headers (`include/`), the reconstruction's headers and source, the examples, the Visual Studio / VS Code template, `build_mod.sh` / `build_mod.bat`, `SDK.md` | `sdk/SDK.md` |
+| `mods/` | the example mods for players, built: list one in `xikit.ini` (`mods=texture_replace.dll,...`); their settings appear in `xikit_mods.ini` | sdk/SDK.md, "Example mods for players" |
 | `pdb/` | `FFXiMain.pdb` for each build: the reconstruction's names, sizes and class types for a debugger, and its symbol list as JSON | docs/DEVKIT.md |
 | `tools/` | the frame inspector (`tools/fcap/frame_inspect.py`, with the replayer) | below |
 | `devkit_check.exe` | the first-run check | below |
@@ -45,6 +56,11 @@ and list it in `xikit.ini` (`mods=speedfix.dll,my_mod.dll`).
   `examples/scene_shader.cpp`, `examples/depth_view.cpp`).
 - Declare settings, kept in `xikit_mods.ini` and applied while the game runs (`declare_int`; listed in
   `xikit_settings.txt`).
+- Start from the example mods for players: textures (`texture_replace`), any of the game's files from overlay packs
+  (`file_overlay`: models, zones, effects, sound, music), flashes and effects per effect (`effect_comfort`), field of
+  view and far clip (`camera_view`), a photo mode (`photo_mode`), fog and light (`world_light`), volumes
+  (`audio_mix`), colour-blind correction (`color_filter`), window positions (`ui_layout`); sdk/SDK.md says what each
+  does and what is not known.
 - Be rebuilt and reloaded while the game runs (`mod_reload=1`), and debugged at source level in Visual Studio
   (the template; `XIKIT_PDB=1`).
 

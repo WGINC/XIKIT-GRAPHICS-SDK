@@ -912,8 +912,8 @@ typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c55c_t;
 #define PTR_CMoResource_GetRuntimeClass_variant3_1032c55c XI_EA(PTR_CMoResource_GetRuntimeClass_variant3_1032c55c_t, 0x1032C55Cu)
 typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c588_t;
 #define PTR_CMoResource_GetRuntimeClass_variant3_1032c588 XI_EA(PTR_CMoResource_GetRuntimeClass_variant3_1032c588_t, 0x1032C588u)
-typedef undefined * PTR_CMoScopeRes_vf011_1032c5b4_t;
-#define PTR_CMoScopeRes_vf011_1032c5b4 XI_EA(PTR_CMoScopeRes_vf011_1032c5b4_t, 0x1032C5B4u)
+typedef undefined * PTR_CMoRmpRes_vf011_1032c5b4_t;
+#define PTR_CMoRmpRes_vf011_1032c5b4 XI_EA(PTR_CMoRmpRes_vf011_1032c5b4_t, 0x1032C5B4u)
 typedef undefined * PTR_CMoCamera_GetRuntimeClass_1032c5d0_t;
 #define PTR_CMoCamera_GetRuntimeClass_1032c5d0 XI_EA(PTR_CMoCamera_GetRuntimeClass_1032c5d0_t, 0x1032C5D0u)
 typedef undefined * PTR_CMoResource_GetRuntimeClass_variant3_1032c5fc_t;

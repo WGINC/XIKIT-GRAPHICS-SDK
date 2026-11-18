@@ -2429,17 +2429,17 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType5D::Slot4StoreInHandle",
+   "name": "CMoBpRes::Slot4StoreInHandle",
    "tree": true,
-   "unit": "CMoResType5D"
+   "unit": "CMoBpRes"
   },
   "0x1001E060": {
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType5D::Slot5Nop",
+   "name": "CMoBpRes::Slot5Nop",
    "tree": true,
-   "unit": "CMoResType5D"
+   "unit": "CMoBpRes"
   },
   "0x1001E2F0": {
    "depth": null,
@@ -4141,9 +4141,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoModeRampTask::ScalarDeletingDtor",
+   "name": "CMoVolumeChangeTask::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoModeRampTask"
+   "unit": "CMoVolumeChangeTask"
   },
   "0x10035D40": {
    "depth": null,
@@ -5477,9 +5477,9 @@
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType25::Slot9Nop",
+   "name": "CMoD3bRes::Slot9Nop",
    "tree": true,
-   "unit": "CMoResType25"
+   "unit": "CMoD3bRes"
   },
   "0x1003F440": {
    "depth": 0,
@@ -5501,7 +5501,7 @@
    "depth": null,
    "frame": true,
    "hookable": true,
-   "name": "CMoMorphElem::Ctor",
+   "name": "CMoD3bElem::Ctor",
    "tree": true,
    "unit": "DistModelElem"
   },
@@ -5581,7 +5581,7 @@
    "depth": 1,
    "frame": true,
    "hookable": true,
-   "name": "CMoD3mElemFlag200000::RebuildBlendWeights",
+   "name": "CMoD3mLightmapElem::DrawLightmapPass",
    "tree": true,
    "unit": "DistModelElem"
   },
@@ -5661,7 +5661,7 @@
    "depth": 0,
    "frame": false,
    "hookable": true,
-   "name": "CMoElemKind5C::Slot18DrawTextAtTarget",
+   "name": "CMoDamValueProgElem::Slot18DrawTextAtTarget",
    "tree": true,
    "unit": "unit_10041A40"
   },
@@ -5677,23 +5677,23 @@
    "depth": null,
    "frame": true,
    "hookable": true,
-   "name": "CXiSub_10041E70_Ctor",
+   "name": "CMoDamValueProgElem_Construct",
    "tree": true,
-   "unit": "CMoElemKind5C"
+   "unit": "CMoDamValueProgElem"
   },
   "0x10041FE0": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoElemKind5C::ScalarDeletingDtor",
+   "name": "CMoDamValueProgElem::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoElemKind5C"
+   "unit": "CMoDamValueProgElem"
   },
   "0x10042020": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoOtDrawUPTask::Slot8Update",
+   "name": "CMoFloatingNumberTask::Slot8Update",
    "tree": true,
    "unit": "unit_10042000"
   },
@@ -5725,9 +5725,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner",
+   "name": "CMoFloatingNumberTaskAttachments::Slot1DeleteOwner",
    "tree": true,
-   "unit": "CMoOtDrawUPTaskAttachments"
+   "unit": "CMoFloatingNumberTaskAttachments"
   },
   "0x100426A0": {
    "depth": null,
@@ -7205,7 +7205,7 @@
    "depth": null,
    "frame": true,
    "hookable": true,
-   "name": "CMoD3mElemFlag200000::Ctor",
+   "name": "CMoD3mLightmapElem::Ctor",
    "tree": true,
    "unit": "ElemCtor471011C8"
   },
@@ -7253,7 +7253,7 @@
    "depth": null,
    "frame": true,
    "hookable": true,
-   "name": "CMoRingElem::Ctor",
+   "name": "CMoRingProgElem::Ctor",
    "tree": true,
    "unit": "unit_10052F80"
   },
@@ -7589,17 +7589,17 @@
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType19::SetupNop",
+   "name": "CMoKeyFrameRes::SetupNop",
    "tree": true,
-   "unit": "CMoResType19"
+   "unit": "CMoKeyFrameRes"
   },
   "0x10054490": {
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType19::Slot9Nop",
+   "name": "CMoKeyFrameRes::Slot9Nop",
    "tree": true,
-   "unit": "CMoResType19"
+   "unit": "CMoKeyFrameRes"
   },
   "0x100544D0": {
    "depth": null,
@@ -8557,9 +8557,9 @@
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType3E::SetupClearField34",
+   "name": "CMoSepRes::SetupClearField34",
    "tree": true,
-   "unit": "CMoResType3E"
+   "unit": "CMoSepRes"
   },
   "0x10063C80": {
    "depth": null,
@@ -9509,17 +9509,17 @@
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType45::SetupNop",
+   "name": "CMoCibRes::SetupNop",
    "tree": true,
-   "unit": "CMoResType45"
+   "unit": "CMoCibRes"
   },
   "0x100719D0": {
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType45::Slot9Nop",
+   "name": "CMoCibRes::Slot9Nop",
    "tree": true,
-   "unit": "CMoResType45"
+   "unit": "CMoCibRes"
   },
   "0x100719E0": {
    "depth": null,
@@ -9581,9 +9581,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType5D::ScalarDeletingDtor",
+   "name": "CMoBpRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType5D"
+   "unit": "CMoBpRes"
   },
   "0x10071A80": {
    "depth": null,
@@ -9613,9 +9613,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType45::ScalarDeletingDtor",
+   "name": "CMoCibRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType45"
+   "unit": "CMoCibRes"
   },
   "0x10071B00": {
    "depth": null,
@@ -9629,41 +9629,41 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType1F::ScalarDeletingDtor",
+   "name": "CMoD3mRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType1F"
+   "unit": "CMoD3mRes"
   },
   "0x10071B70": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType21::ScalarDeletingDtor",
+   "name": "CMoD3aRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType21"
+   "unit": "CMoD3aRes"
   },
   "0x10071B90": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType25::ScalarDeletingDtor",
+   "name": "CMoD3bRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType25"
+   "unit": "CMoD3bRes"
   },
   "0x10071BB0": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType31::ScalarDeletingDtor",
+   "name": "CMoMsbRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType31"
+   "unit": "CMoMsbRes"
   },
   "0x10071BD0": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType30::ScalarDeletingDtor",
+   "name": "CMoMebRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType30"
+   "unit": "CMoMebRes"
   },
   "0x10071BF0": {
    "depth": null,
@@ -9677,17 +9677,17 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType19::ScalarDeletingDtor",
+   "name": "CMoKeyFrameRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType19"
+   "unit": "CMoKeyFrameRes"
   },
   "0x10071C90": {
    "depth": null,
    "frame": true,
    "hookable": true,
-   "name": "CMoScopeRes::ScalarDeletingDtor",
+   "name": "CMoRmpRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoScopeRes"
+   "unit": "CMoRmpRes"
   },
   "0x10071D00": {
    "depth": null,
@@ -10061,33 +10061,33 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoScopeRes::Slot11GetCameraRuntimeClass",
+   "name": "CMoRmpRes::Slot11GetCameraRuntimeClass",
    "tree": true,
-   "unit": "CMoScopeRes"
+   "unit": "CMoRmpRes"
   },
   "0x100745F0": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoScopeRes::Slot12DeleteOwner",
+   "name": "CMoRmpRes::Slot12DeleteOwner",
    "tree": true,
-   "unit": "CMoScopeRes"
+   "unit": "CMoRmpRes"
   },
   "0x10074600": {
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType07Attachments::Slot1DeleteOwner",
+   "name": "CMoSchedulerResAttachments::Slot1DeleteOwner",
    "tree": true,
-   "unit": "CMoResType07Attachments"
+   "unit": "CMoSchedulerResAttachments"
   },
   "0x10074610": {
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoScopeRes::SetupNop",
+   "name": "CMoRmpRes::SetupNop",
    "tree": true,
-   "unit": "CMoScopeRes"
+   "unit": "CMoRmpRes"
   },
   "0x100746A0": {
    "depth": null,
@@ -13125,9 +13125,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoCasterTargetTask::ScalarDeletingDtor",
+   "name": "CMoUseMagicWaitTask::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoCasterTargetTask"
+   "unit": "CMoUseMagicWaitTask"
   },
   "0x100AAEF0": {
    "depth": null,
@@ -13157,9 +13157,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoCasterTargetTaskAttachments::Slot1DeleteOwner",
+   "name": "CMoUseMagicWaitTaskAttachments::Slot1DeleteOwner",
    "tree": true,
-   "unit": "CMoCasterTargetTaskAttachments"
+   "unit": "CMoUseMagicWaitTaskAttachments"
   },
   "0x100AB070": {
    "depth": null,
@@ -21533,7 +21533,7 @@
    "depth": 0,
    "frame": true,
    "hookable": true,
-   "name": "MenuTextBlock::MenuTextBlock_Draw",
+   "name": "EventTextBlock::EventTextBlock_Draw",
    "tree": true,
    "unit": "TargetMenu"
   },
@@ -21557,7 +21557,7 @@
    "depth": 1,
    "frame": true,
    "hookable": true,
-   "name": "MenuTextBlock_DrawBgRect",
+   "name": "EventTextBlock_DrawBgRect",
    "tree": true,
    "unit": "TargetMenu"
   },
@@ -21981,9 +21981,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType2E::ScalarDeletingDtor",
+   "name": "CMoMmbRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType2E"
+   "unit": "CMoMmbRes"
   },
   "0x10176F60": {
    "depth": null,
@@ -21997,9 +21997,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType1C::ScalarDeletingDtor",
+   "name": "CMoMzbRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType1C"
+   "unit": "CMoMzbRes"
   },
   "0x10176FE0": {
    "depth": null,
@@ -22013,9 +22013,9 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType36::ScalarDeletingDtor",
+   "name": "CMoRidRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType36"
+   "unit": "CMoRidRes"
   },
   "0x101771B0": {
    "depth": 0,
@@ -22925,17 +22925,17 @@
    "depth": null,
    "frame": false,
    "hookable": true,
-   "name": "CMoResType2F::ScalarDeletingDtor",
+   "name": "CMoWeatherRes::ScalarDeletingDtor",
    "tree": true,
-   "unit": "CMoResType2F"
+   "unit": "CMoWeatherRes"
   },
   "0x101893F0": {
    "depth": null,
    "frame": false,
    "hookable": false,
-   "name": "CMoResType2F::SetupNop",
+   "name": "CMoWeatherRes::SetupNop",
    "tree": true,
-   "unit": "CMoResType2F"
+   "unit": "CMoWeatherRes"
   },
   "0x10189400": {
    "depth": null,

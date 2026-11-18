@@ -5659,14 +5659,14 @@
 },
 {
 "address": "0x1001E050",
-"name": "CMoResType5D::Slot4StoreInHandle",
+"name": "CMoBpRes::Slot4StoreInHandle",
 "kind": "function",
 "size": 12,
 "source": "tree"
 },
 {
 "address": "0x1001E060",
-"name": "CMoResType5D::Slot5Nop",
+"name": "CMoBpRes::Slot5Nop",
 "kind": "function",
 "size": 3,
 "source": "tree"
@@ -9957,7 +9957,7 @@
 },
 {
 "address": "0x10035AE0",
-"name": "CMoModeRampTask::ScalarDeletingDtor",
+"name": "CMoVolumeChangeTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -12113,7 +12113,7 @@
 },
 {
 "address": "0x1003F430",
-"name": "CMoResType25::Slot9Nop",
+"name": "CMoD3bRes::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree"
@@ -12141,14 +12141,14 @@
 },
 {
 "address": "0x1003FB10",
-"name": "CMoMorphElem_Dtor",
+"name": "CMoD3bElem_Dtor",
 "kind": "function",
 "size": 36,
 "source": "dm"
 },
 {
 "address": "0x1003FB40",
-"name": "CMoMorphElem_IsKind",
+"name": "CMoD3bElem_IsKind",
 "kind": "function",
 "size": 15,
 "source": "dm"
@@ -12162,21 +12162,21 @@
 },
 {
 "address": "0x1003FB70",
-"name": "CMoMorphElem::Ctor",
+"name": "CMoD3bElem::Ctor",
 "kind": "function",
 "size": 57,
 "source": "tree"
 },
 {
 "address": "0x1003FBB0",
-"name": "CMoMorphElem_RebuildBlendWeights",
+"name": "CMoD3bElem_RebuildBlendWeights",
 "kind": "function",
 "size": 124,
 "source": "dm"
 },
 {
 "address": "0x1003FC30",
-"name": "CMoMorphElem_ReleaseBlendWeights",
+"name": "CMoD3bElem_ReleaseBlendWeights",
 "kind": "function",
 "size": 122,
 "source": "dm"
@@ -12365,14 +12365,14 @@
 },
 {
 "address": "0x10040E70",
-"name": "CMoD3mElemFlag200000::RebuildBlendWeights",
+"name": "CMoD3mLightmapElem::DrawLightmapPass",
 "kind": "function",
 "size": 316,
 "source": "tree"
 },
 {
 "address": "0x10040FB0",
-"name": "CMoD3mElemFlag200000_SubmitVertices",
+"name": "CMoD3mLightmapElem_SubmitVertices",
 "kind": "function",
 "size": 80,
 "source": "dm"
@@ -12484,7 +12484,7 @@
 },
 {
 "address": "0x10041AF0",
-"name": "CMoElemKind5C::Slot18DrawTextAtTarget",
+"name": "CMoDamValueProgElem::Slot18DrawTextAtTarget",
 "kind": "function",
 "size": 296,
 "source": "tree"
@@ -12505,14 +12505,14 @@
 },
 {
 "address": "0x10041F40",
-"name": "CXiSub_10041E70_Ctor",
+"name": "CMoDamValueProgElem_Construct",
 "kind": "function",
 "size": 154,
 "source": "tree"
 },
 {
 "address": "0x10041FE0",
-"name": "CMoElemKind5C::ScalarDeletingDtor",
+"name": "CMoDamValueProgElem::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -12533,7 +12533,7 @@
 },
 {
 "address": "0x10042020",
-"name": "CMoOtDrawUPTask::Slot8Update",
+"name": "CMoFloatingNumberTask::Slot8Update",
 "kind": "function",
 "size": 377,
 "source": "tree"
@@ -12617,7 +12617,7 @@
 },
 {
 "address": "0x10042690",
-"name": "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner",
+"name": "CMoFloatingNumberTaskAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree"
@@ -13268,7 +13268,7 @@
 },
 {
 "address": "0x10045D00",
-"name": "CMoRingElem_FadeRemaining",
+"name": "CMoRingProgElem_FadeRemaining",
 "kind": "function",
 "size": 51,
 "source": "dm"
@@ -14528,14 +14528,14 @@
 },
 {
 "address": "0x10052E90",
-"name": "CMoD3mElemFlag200000::Ctor",
+"name": "CMoD3mLightmapElem::Ctor",
 "kind": "function",
 "size": 27,
 "source": "tree"
 },
 {
 "address": "0x10052EB0",
-"name": "CMoD3mElemFlag200000_SetField198",
+"name": "CMoD3mLightmapElem_SetField198",
 "kind": "function",
 "size": 13,
 "source": "dm"
@@ -14591,21 +14591,21 @@
 },
 {
 "address": "0x10052F80",
-"name": "CMoRingElem::Ctor",
+"name": "CMoRingProgElem::Ctor",
 "kind": "function",
 "size": 27,
 "source": "tree"
 },
 {
 "address": "0x10052FA0",
-"name": "CMoRingElem_IsKind",
+"name": "CMoRingProgElem_IsKind",
 "kind": "function",
 "size": 15,
 "source": "dm"
 },
 {
 "address": "0x10052FB0",
-"name": "CMoRingElem_Dtor",
+"name": "CMoRingProgElem_Dtor",
 "kind": "function",
 "size": 30,
 "source": "dm"
@@ -14990,14 +14990,14 @@
 },
 {
 "address": "0x10054480",
-"name": "CMoResType19::SetupNop",
+"name": "CMoKeyFrameRes::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree"
 },
 {
 "address": "0x10054490",
-"name": "CMoResType19::Slot9Nop",
+"name": "CMoKeyFrameRes::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree"
@@ -15550,7 +15550,7 @@
 },
 {
 "address": "0x100565A0",
-"name": "CMoRingElem_RebuildBlendWeights",
+"name": "CMoRingProgElem_RebuildBlendWeights",
 "kind": "function",
 "size": 672,
 "source": "dm"
@@ -18357,7 +18357,7 @@
 },
 {
 "address": "0x10063C50",
-"name": "CMoResType3E::SetupClearField34",
+"name": "CMoSepRes::SetupClearField34",
 "kind": "function",
 "size": 8,
 "source": "tree"
@@ -21416,14 +21416,14 @@
 },
 {
 "address": "0x100719C0",
-"name": "CMoResType45::SetupNop",
+"name": "CMoCibRes::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree"
 },
 {
 "address": "0x100719D0",
-"name": "CMoResType45::Slot9Nop",
+"name": "CMoCibRes::Slot9Nop",
 "kind": "function",
 "size": 1,
 "source": "tree"
@@ -21479,7 +21479,7 @@
 },
 {
 "address": "0x10071A60",
-"name": "CMoResType5D::ScalarDeletingDtor",
+"name": "CMoBpRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -21507,7 +21507,7 @@
 },
 {
 "address": "0x10071AE0",
-"name": "CMoResType45::ScalarDeletingDtor",
+"name": "CMoCibRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -21528,35 +21528,35 @@
 },
 {
 "address": "0x10071B50",
-"name": "CMoResType1F::ScalarDeletingDtor",
+"name": "CMoD3mRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
 },
 {
 "address": "0x10071B70",
-"name": "CMoResType21::ScalarDeletingDtor",
+"name": "CMoD3aRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
 },
 {
 "address": "0x10071B90",
-"name": "CMoResType25::ScalarDeletingDtor",
+"name": "CMoD3bRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
 },
 {
 "address": "0x10071BB0",
-"name": "CMoResType31::ScalarDeletingDtor",
+"name": "CMoMsbRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
 },
 {
 "address": "0x10071BD0",
-"name": "CMoResType30::ScalarDeletingDtor",
+"name": "CMoMebRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -21577,7 +21577,7 @@
 },
 {
 "address": "0x10071C40",
-"name": "CMoResType19::ScalarDeletingDtor",
+"name": "CMoKeyFrameRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -21591,7 +21591,7 @@
 },
 {
 "address": "0x10071C90",
-"name": "CMoScopeRes::ScalarDeletingDtor",
+"name": "CMoRmpRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -22326,28 +22326,28 @@
 },
 {
 "address": "0x100745E0",
-"name": "CMoScopeRes::Slot11GetCameraRuntimeClass",
+"name": "CMoRmpRes::Slot11GetCameraRuntimeClass",
 "kind": "function",
 "size": 8,
 "source": "tree"
 },
 {
 "address": "0x100745F0",
-"name": "CMoScopeRes::Slot12DeleteOwner",
+"name": "CMoRmpRes::Slot12DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree"
 },
 {
 "address": "0x10074600",
-"name": "CMoResType07Attachments::Slot1DeleteOwner",
+"name": "CMoSchedulerResAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree"
 },
 {
 "address": "0x10074610",
-"name": "CMoScopeRes::SetupNop",
+"name": "CMoRmpRes::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree"
@@ -31622,7 +31622,7 @@
 },
 {
 "address": "0x100A9DB0",
-"name": "CMoCasterTargetTask::ScalarDeletingDtor",
+"name": "CMoUseMagicWaitTask::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -31825,7 +31825,7 @@
 },
 {
 "address": "0x100AB060",
-"name": "CMoCasterTargetTaskAttachments::Slot1DeleteOwner",
+"name": "CMoUseMagicWaitTaskAttachments::Slot1DeleteOwner",
 "kind": "function",
 "size": 8,
 "source": "tree"
@@ -65502,7 +65502,7 @@
 },
 {
 "address": "0x101630E0",
-"name": "MenuTextBlock::MenuTextBlock_Draw",
+"name": "EventTextBlock::EventTextBlock_Draw",
 "kind": "function",
 "size": 72,
 "source": "tree"
@@ -65537,7 +65537,7 @@
 },
 {
 "address": "0x10163390",
-"name": "MenuTextBlock_DrawBgRect",
+"name": "EventTextBlock_DrawBgRect",
 "kind": "function",
 "size": 15,
 "source": "tree"
@@ -67189,7 +67189,7 @@
 },
 {
 "address": "0x10176EA0",
-"name": "CMoResType2E::ScalarDeletingDtor",
+"name": "CMoMmbRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -67217,7 +67217,7 @@
 },
 {
 "address": "0x10176F80",
-"name": "CMoResType1C::ScalarDeletingDtor",
+"name": "CMoMzbRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -67245,7 +67245,7 @@
 },
 {
 "address": "0x10177000",
-"name": "CMoResType36::ScalarDeletingDtor",
+"name": "CMoRidRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
@@ -68855,14 +68855,14 @@
 },
 {
 "address": "0x101893D0",
-"name": "CMoResType2F::ScalarDeletingDtor",
+"name": "CMoWeatherRes::ScalarDeletingDtor",
 "kind": "function",
 "size": 30,
 "source": "tree"
 },
 {
 "address": "0x101893F0",
-"name": "CMoResType2F::SetupNop",
+"name": "CMoWeatherRes::SetupNop",
 "kind": "function",
 "size": 1,
 "source": "tree"
@@ -143678,7 +143678,7 @@
 },
 {
 "address": "0x1032C5B4",
-"name": "PTR_CMoScopeRes_vf011_1032c5b4",
+"name": "PTR_CMoRmpRes_vf011_1032c5b4",
 "kind": "data",
 "size": 0,
 "source": "globals"

@@ -9680,7 +9680,7 @@ XI_API void __thiscall Menu_DrawLayers(void * self_)
   local_4 = self_;
   orig::Gfx_SetDefault2DStates_v1();
   if (DAT_10621944 != (void *)0x0) {
-    orig::MenuTextBlock_Draw(DAT_10621944);
+    orig::EventTextBlock_Draw(DAT_10621944);
   }
   uVar4 = orig::NetCellFont_CursorUpdateEdgeAxes(g_pCursor_as_v2);
   xi_edx = (uint32_t)((uint64_t)uVar4 >> 0x20);
@@ -11191,7 +11191,7 @@ XI_API void __cdecl TargetMenu_NoOpE(void)
 
 // FUNCTION: FFXIMAIN 0x10163390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MenuTextBlock_DrawBgRect(void * self_)
+XI_API void __thiscall EventTextBlock_DrawBgRect(void * self_)
 {
   if (*(int *)((int)self_ + 8) != 0) {
     orig::Gfx_DrawSolidRect2D(self_,*(int *)((int)self_ + 8));

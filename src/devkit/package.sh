@@ -4,6 +4,7 @@
 #   d3d8on11/   kit/d3d8on11/dist: d3d8.dll, d8x.exe, d8x_arm64.exe
 #   sdk/        sdk/package.sh's xikit_sdk (headers, the tree's headers and source, examples, template, build scripts)
 #   pdb/        sdk/dist_pdb: FFXiMain.pdb for each known build
+#   mods/       the SDK's example mods for players, built (sdk/build_mod.sh)
 #   tools/      the frame inspector: kit/fcap/frame_inspect.py, compare.py, fcap_replay.exe, and kit/d3dprof/pictures.py
 #   README.md, devkit_check.exe (kit/devkit/check.c) and SHA256SUMS.txt (every file but those two)
 # Build first: kit/xikit/build.sh (FFXI_DLL_6AE818B4 set), kit/d3d8on11/build.sh, kit/fcap/build.sh, sdk/package.sh.
@@ -20,6 +21,12 @@ cp -r "$ROOT/sdk/dist/xikit_sdk" "$R/sdk"
 for b in "$ROOT"/sdk/dist_pdb/*/; do mkdir -p "$R/pdb/$(basename "$b")"; cp "$b/FFXiMain.pdb" "$b/FFXiMain.pdb.json" "$R/pdb/$(basename "$b")/"; done
 cp "$ROOT/kit/fcap/frame_inspect.py" "$ROOT/kit/fcap/compare.py" "$R/tools/fcap/"; mkdir -p "$R/tools/fcap/dist"; cp "$ROOT/kit/fcap/dist/fcap_replay.exe" "$R/tools/fcap/dist/"
 cp "$ROOT/kit/d3dprof/pictures.py" "$R/tools/d3dprof/"
+mkdir -p "$R/mods"; X="$ROOT/sdk/examples"
+for m in texture_replace:texture_replace_core effect_comfort:effect_comfort_core camera_view file_overlay audio_mix world_light \
+         photo_mode:photo_mode_core color_filter:color_filter_core ui_layout:ui_layout_core; do
+  src=(); for s in ${m//:/ }; do src+=("$X/$s.cpp"); done
+  "$ROOT/sdk/build_mod.sh" "$R/mods/${m%%:*}.dll" "${src[@]}" >/dev/null
+done
 cp "$H/README.md" "$R/"
 ( cd "$R" && find . -type f ! -name README.md ! -name SHA256SUMS.txt | sed 's|^\./||' | sort | xargs sha256sum > SHA256SUMS.txt )
 i686-w64-mingw32-gcc -O2 -Wall -std=gnu99 -static-libgcc -Wl,--no-insert-timestamp -o "$R/devkit_check.exe" "$H/check.c" -lbcrypt

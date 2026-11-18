@@ -441,7 +441,7 @@ XI_API void __thiscall YmElem_DrawD3ASegment(void * self_, undefined4 param_1, u
 XI_API int __thiscall YmElem_SetD3ADrawState(int self_);  // 0x1003E9A0
 XI_API int __thiscall MoElem_GetVertexData(void * self_);  // 0x1003FD70
 XI_API void * __thiscall CMoD3mElem_DeletingDtor(void * self_, undefined4 param_1);  // 0x10041130
-XI_API undefined8 __thiscall CXiSub_10041E70_Ctor(void * self_, int param_1);  // 0x10041F40
+XI_API undefined8 __thiscall CMoDamValueProgElem_Construct(void * self_, int param_1);  // 0x10041F40
 XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_);  // 0x100426F0
 XI_API undefined4 __attribute__((stdcall, regparm(3))) DynVBCtor_ToggleByte45(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_);  // 0x10043DD0
 XI_API undefined4 __cdecl DynVBCtor_ReturnZero(void);  // 0x10043DE0
@@ -1869,7 +1869,7 @@ XI_API int __thiscall TargetMenu_GetShortAt56(void * self_);  // 0x10163080
 XI_API void * __thiscall TargetMenu_CtorZeroed(void * self_);  // 0x10163090
 XI_API void * __thiscall TargetMenu_ZeroWordsAndDwords(void * self_);  // 0x10163350
 XI_API void __cdecl TargetMenu_NoOpE(void);  // 0x10163380
-XI_API void __thiscall MenuTextBlock_DrawBgRect(void * self_);  // 0x10163390
+XI_API void __thiscall EventTextBlock_DrawBgRect(void * self_);  // 0x10163390
 XI_API void __thiscall TargetMenu_ZeroDwords(void * self_);  // 0x101633D0
 XI_API int __stdcall Gfx_DrawSolidRect2D(int a1, int a2);  // 0x10163400
 XI_API void __thiscall ZoneMapLoad_ResetFieldsA(void * self_);  // 0x10163F30

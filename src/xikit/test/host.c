@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <setjmp.h>
+#include <math.h>
 
 #define G_PCDX 0x1045666Cu
 /* an analysed address -> the mapped game's, as the kit translates it: on another build its manifest's !shift ranges
@@ -263,13 +264,434 @@ static int measure_run(HMODULE g, uint32_t rel) {
   return 0;
 }
 
+
+/* ------------------------------------------------------------------------------------------------ texmod mode
+   sdk/examples/texture_replace.dll through the kit, with the game's own TexObj_Create (0x10039A80) and TexObj_Upload
+   (0x10039E50, hooked by the mod) on a real Direct3D 8 device. Three texture objects (docs/FORMATS.md 5.3: name +0x0C,
+   pixels +0x20, width/height +0x24/+0x26, bpp +0x28, format +0x29, levels +0x2A, class (+0x2C >> 4) 9 = uncompressed),
+   8x8 32-bit: "trtest01" (textures\trtest01.dds, 16x16, no mips: replaced, with a generated chain), "trtest02"
+   (textures\trtest02_<crc>.dds, 32x32 with 6 levels: replaced by its key), "trtest03" (no file: the game's). tex_dump=1:
+   textures_dump\ gets each as the game uploaded it. The test (test_xikit.py) wrote the files and the CRCs. */
+typedef uint8_t (__thiscall *TexCreateFn)(void *);
+static int texmod_run(IDirect3DDevice8 *dev) {
+  static uint32_t px[3][64]; static uint8_t obj[3][0x48];
+  const char *names[3] = { "trtest01", "trtest02", "trtest03" };
+  for (int i = 0; i < 3; i++) {
+    for (int k = 0; k < 64; k++) px[i][k] = 0xFF000000u | (uint32_t)(i * 0x400000 + k * 0x0301);   /* deterministic, per object */
+    memset(obj[i], 0, sizeof obj[i]); memset(obj[i] + 0x0C, ' ', 16); memcpy(obj[i] + 0x0C, names[i], strlen(names[i]));
+    *(uint32_t *)(obj[i] + 0x04) = 1; *(void **)(obj[i] + 0x20) = px[i];
+    *(uint16_t *)(obj[i] + 0x24) = 8; *(uint16_t *)(obj[i] + 0x26) = 8; obj[i][0x28] = 32; obj[i][0x29] = 32; obj[i][0x2A] = 1;
+    *(uint32_t *)(obj[i] + 0x2C) = 9u << 4;
+  }
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x10039E50u) != 0xE9; t++) {   /* (the kit loads mods on the render thread: frames) */
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x10039E50u) == 0xE9, "texmod: TexObj_Upload's entry jumps (the mod's hook)");
+  TexCreateFn create = (TexCreateFn)(void *)ga(0x10039A80u);
+  unsigned want_w[3] = { 16, 32, 8 }, want_l[3] = { 5, 6, 0 };
+  for (int i = 0; i < 3; i++) {
+    uint8_t r = create(obj[i]);
+    IDirect3DTexture8 *tx = *(IDirect3DTexture8 **)(obj[i] + 0x40);
+    D3DSURFACE_DESC sd; memset(&sd, 0, sizeof sd);
+    int ok = r && tx && SUCCEEDED(IDirect3DTexture8_GetLevelDesc(tx, 0, &sd));
+    char what[160]; snprintf(what, sizeof what, "texmod: %s: the game's TexObj_Create succeeded and +0x40 is %ux%u (%s)", names[i], ok ? sd.Width : 0, ok ? sd.Height : 0,
+                             i < 2 ? "the replacement's size" : "the game's own, no file");
+    check(ok && sd.Width == want_w[i] && sd.Height == want_w[i], what);
+    if (ok && want_l[i]) { snprintf(what, sizeof what, "texmod: %s: %lu mip levels", names[i], (unsigned long)IDirect3DTexture8_GetLevelCount(tx)); check(IDirect3DTexture8_GetLevelCount(tx) == want_l[i], what); }
+    if (ok && i < 2) {                                         /* level 0's first texel is the file's (written as 0xFF000000 | 0x10101 * (i + 1)) */
+      D3DLOCKED_RECT lr; uint32_t v = 0;
+      if (SUCCEEDED(IDirect3DTexture8_LockRect(tx, 0, &lr, NULL, D3DLOCK_READONLY))) { v = *(uint32_t *)lr.pBits; IDirect3DTexture8_UnlockRect(tx, 0); }
+      snprintf(what, sizeof what, "texmod: %s: level 0 holds the file's pixels (%08lx)", names[i], (unsigned long)v);
+      check(v == (0xFF000000u | 0x10101u * (uint32_t)(i + 1)), what);
+    }
+    if (ok && i == 0) {                                        /* the generated chain: the file is two colours in columns, so level 1 is their mean */
+      D3DLOCKED_RECT lr; uint32_t v = 0;
+      if (SUCCEEDED(IDirect3DTexture8_LockRect(tx, 1, &lr, NULL, D3DLOCK_READONLY))) { v = *(uint32_t *)lr.pBits; IDirect3DTexture8_UnlockRect(tx, 1); }
+      snprintf(what, sizeof what, "texmod: trtest01: level 1 is the 2x2 mean of level 0 (%08lx)", (unsigned long)v);
+      check(v == 0xFF808080u, what);
+    }
+  }
+  /* the dumps: each object's texture as the game uploaded it, 8x8 A8R8G8B8, the source's rows bottom-up (FORMATS.md 5.1) */
+  for (int i = 0; i < 3; i++) {
+    char pat[MAX_PATH], what[200]; snprintf(pat, sizeof pat, "textures_dump\\%s_*.dds", names[i]);
+    WIN32_FIND_DATAA fd; HANDLE h = FindFirstFileA(pat, &fd); int ok = 0; char path[MAX_PATH] = "";
+    if (h != INVALID_HANDLE_VALUE) {
+      snprintf(path, sizeof path, "textures_dump\\%s", fd.cFileName); FindClose(h);
+      FILE *f = fopen(path, "rb"); uint32_t hd[32], row[8]; int good = f && fread(hd, 4, 32, f) == 32 && hd[3] == 8 && hd[4] == 8 && hd[22] == 32;
+      for (int y = 0; good && y < 8; y++) good = fread(row, 4, 8, f) == 8 && !memcmp(row, &px[i][(7 - y) * 8], 32);
+      if (f) fclose(f); ok = good;
+    }
+    snprintf(what, sizeof what, "texmod: %s: dumped as the game uploaded it (%s)", names[i], path[0] ? path : "no file");
+    check(ok, what);
+  }
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ fxmod mode
+   sdk/examples/effect_comfort.dll through the kit on a real Direct3D 8 device, with flash_limit=50, fx_intensity=50,
+   fx_all_blended=1 (xikit_mods.ini, written below). 1: the game's own CDx::DrawFadeQuad (0x1000A820) on the host's
+   CDx: the colour it writes into its quad's vertices (g_fadeQuadVerts_v0_color, 0x1034FE00) is the limited one for
+   an adding colour (alpha above 0x80) and the game's for a darkening one. 2: an adding draw (SRCALPHA, ONE) of white
+   onto black, read back: half as bright; the device's stage and factor states are as they were afterwards. */
+typedef int (__thiscall *FadeFn)(void *, int, int);
+static int fxmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1000A820u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x1000A820u) == 0xE9, "fxmod: CDx::DrawFadeQuad's entry jumps (the mod's hook)");
+  FadeFn fade = (FadeFn)(void *)ga(0x1000A820u); char what[200];
+  IDirect3DDevice8_BeginScene(dev);
+  fade(g_cdx, 0, (int)0xFFFFFFFFu); uint32_t v = *(uint32_t *)ga(0x1034FE00u);
+  snprintf(what, sizeof what, "fxmod: the game's DrawFadeQuad, an adding white flash: its quad colour is %08lx (half the light)", (unsigned long)v);
+  check(v == 0xFF7F7F7Fu, what);
+  fade(g_cdx, 0, 0x40FFFFFF); v = *(uint32_t *)ga(0x1034FE00u);
+  snprintf(what, sizeof what, "fxmod: a darkening fade is the game's (%08lx: alpha 0x40, the game's code drops the colour)", (unsigned long)v);
+  check(v == 0x40000000u, what);
+  IDirect3DDevice8_EndScene(dev);
+  IDirect3DSurface8 *rt = NULL, *old = NULL, *oldz = NULL;
+  HRESULT hr = IDirect3DDevice8_CreateRenderTarget(dev, 4, 4, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
+  check(SUCCEEDED(hr) && rt, "fxmod: a lockable 4x4 render target");
+  if (!rt) return 1;
+  IDirect3DDevice8_GetRenderTarget(dev, &old); IDirect3DDevice8_GetDepthStencilSurface(dev, &oldz);
+  IDirect3DDevice8_SetRenderTarget(dev, rt, NULL);
+  IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_ZENABLE, FALSE); IDirect3DDevice8_SetRenderState(dev, D3DRS_LIGHTING, FALSE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_CULLMODE, D3DCULL_NONE); IDirect3DDevice8_SetRenderState(dev, D3DRS_FOGENABLE, FALSE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_ALPHABLENDENABLE, TRUE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); IDirect3DDevice8_SetRenderState(dev, D3DRS_DESTBLEND, D3DBLEND_ONE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_TEXTUREFACTOR, 0x12345678);
+  IDirect3DDevice8_SetTexture(dev, 0, NULL);
+  IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+  IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1); IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+  IDirect3DDevice8_SetTextureStageState(dev, 2, D3DTSS_COLOROP, D3DTOP_MODULATE);    /* stale, beyond the disabled stage: must stay ignored */
+  IDirect3DDevice8_SetVertexShader(dev, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+  struct { float x, y, z, w; DWORD c; } q[4] = { { -0.5f, -0.5f, 0, 1, 0xFFFFFFFFu }, { 3.5f, -0.5f, 0, 1, 0xFFFFFFFFu }, { -0.5f, 3.5f, 0, 1, 0xFFFFFFFFu }, { 3.5f, 3.5f, 0, 1, 0xFFFFFFFFu } };
+  IDirect3DDevice8_BeginScene(dev);
+  IDirect3DDevice8_DrawPrimitiveUP(dev, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+  IDirect3DDevice8_EndScene(dev);
+  D3DLOCKED_RECT lr; uint32_t px = 0;
+  if (SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) { px = ((uint32_t *)lr.pBits)[1 * lr.Pitch / 4 + 1]; IDirect3DSurface8_UnlockRect(rt); }
+  unsigned g = (px >> 8) & 0xFF;
+  snprintf(what, sizeof what, "fxmod: an adding white draw onto black with fx_intensity=50 reads back %08lx (green %u: half, 126..129)", (unsigned long)px, g);
+  check(g >= 126 && g <= 129, what);
+  DWORD s1 = 0, s2 = 0, tf = 0;
+  IDirect3DDevice8_GetTextureStageState(dev, 1, D3DTSS_COLOROP, &s1); IDirect3DDevice8_GetTextureStageState(dev, 2, D3DTSS_COLOROP, &s2);
+  IDirect3DDevice8_GetRenderState(dev, D3DRS_TEXTUREFACTOR, &tf);
+  check(s1 == D3DTOP_DISABLE && s2 == D3DTOP_MODULATE && tf == 0x12345678, "fxmod: stages 1 and 2 and the texture factor are as they were after the draw");
+  IDirect3DDevice8_SetRenderTarget(dev, old, oldz); if (old) IDirect3DSurface8_Release(old); if (oldz) IDirect3DSurface8_Release(oldz); IDirect3DSurface8_Release(rt);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ cammod mode
+   sdk/examples/camera_view.dll through the kit (fov_deg=90, far_percent=200), with the game's own
+   Camera_BuildPerspectiveFov (0x10015490) on a camera object: the projection at +0x154 (D3DXMatrixPerspectiveFovLH:
+   _22 = 1 / tan(fov / 2), _33 = -far / (far - near), as run) has the mod's field of view and far distance; building twice does
+   not compound the far scaling; a far value the game writes afterwards is the new base. */
+typedef void (__thiscall *BuildFn)(void *);
+static int cammod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x10015490u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x10015490u) == 0xE9, "cammod: Camera_BuildPerspectiveFov's entry jumps (the mod's hook)");
+  static uint8_t cam[0x300]; memset(cam, 0, sizeof cam);
+  float *f = (float *)cam; char what[200];
+  f[0x2F4 / 4] = 411.7f; f[0x2E8 / 4] = 1.0f; f[0x2F0 / 4] = 0.75f; f[0x2DC / 4] = 0.5f; f[0x2E0 / 4] = 100.0f;
+  BuildFn build = (BuildFn)(void *)ga(0x10015490u);
+  build(cam); float m22 = f[0x154 / 4 + 5], m33 = f[0x154 / 4 + 10];
+  snprintf(what, sizeof what, "cammod: fov_deg=90: the game's matrix has _22 %.5f (1), its focal field %.3f (192)", m22, f[0x2F4 / 4]);
+  check(m22 > 0.9999f && m22 < 1.0001f && f[0x2F4 / 4] > 191.99f && f[0x2F4 / 4] < 192.01f, what);
+  /* (the game's routine gives _33 = -far / (far - near) and _34 = -1: the right-handed form, whatever its tree name says) */
+  snprintf(what, sizeof what, "cammod: far_percent=200: _33 %.6f (-200 / 199.5), _34 %.1f, far field %.1f", m33, f[0x154 / 4 + 11], f[0x2E0 / 4]);
+  check(m33 < -1.00250f + 1e-5f && m33 > -1.00250f - 1e-5f && f[0x2E0 / 4] == 200.0f, what);
+  build(cam);
+  snprintf(what, sizeof what, "cammod: built again: the far field is still %.1f (not compounded)", f[0x2E0 / 4]);
+  check(f[0x2E0 / 4] == 200.0f, what);
+  f[0x2E0 / 4] = 50.0f; build(cam); m33 = f[0x154 / 4 + 10];
+  snprintf(what, sizeof what, "cammod: the game writes far 50: the mod's far is %.1f, _33 %.6f (-100 / 99.5)", f[0x2E0 / 4], m33);
+  check(f[0x2E0 / 4] == 100.0f && m33 < -1.005025f + 1e-5f && m33 > -1.005025f - 1e-5f, what);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ ovlmod mode
+   sdk/examples/file_overlay.dll through the kit: opens through the game's own import slot of CreateFileA (0x103291EC
+   in the analysed build: the C runtime's open and the other openers call [slot]). test_xikit.py made ROM\1\2.DAT
+   ("orig2"), ROM\1\3.DAT ("orig3"), overlay\10_a\ROM\1\2.DAT ("packA"), overlay\20_b\ROM\1\2.DAT ("packB"). */
+typedef HANDLE (WINAPI *CFA)(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
+static void read5(CFA cf, const char *path, DWORD access, char *out) {
+  HANDLE h = cf(path, access, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); DWORD n = 0; out[0] = 0;
+  if (h != INVALID_HANDLE_VALUE) { ReadFile(h, out, 5, &n, NULL); out[n] = 0; CloseHandle(h); }
+}
+static int ovlmod_run(IDirect3DDevice8 *dev, HMODULE g) {
+  CFA *slot = (CFA *)ga(0x103291ECu); void *orig = (void *)GetProcAddress(GetModuleHandleA("kernel32.dll"), "CreateFileA");
+  for (int t = 0; t < 400 && *(void **)slot == orig; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(void **)slot != orig, "ovlmod: the game's CreateFileA import slot goes to the mod");
+  char dir[MAX_PATH], p[MAX_PATH + 32], b[8], what[300]; GetModuleFileNameA(g, dir, sizeof dir); *strrchr(dir, '\\') = 0;
+  snprintf(p, sizeof p, "%s/ROM/1/2.DAT", dir); read5(*slot, p, GENERIC_READ, b);      /* the game's spelling: "%s%s" with "/ROM/1/2.DAT" */
+  snprintf(what, sizeof what, "ovlmod: %s through the game's slot reads \"%s\" (the later pack's)", p, b); check(!strcmp(b, "packB"), what);
+  snprintf(p, sizeof p, "%s\\rom\\1\\3.dat", dir); read5(*slot, p, GENERIC_READ, b);
+  snprintf(what, sizeof what, "ovlmod: a file no pack has reads \"%s\" (the game's)", b); check(!strcmp(b, "orig3"), what);
+  snprintf(p, sizeof p, "%s\\ROM\\1\\2.DAT", dir); read5(*slot, p, GENERIC_READ | GENERIC_WRITE, b);
+  snprintf(what, sizeof what, "ovlmod: a write open reads \"%s\" (the game's file, not redirected)", b); check(!strcmp(b, "orig2"), what);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ audmod mode
+   sdk/examples/audio_mix.dll through the kit (vol_interface=50, vol_effects=150, vol_ambient=25): the game's own
+   SoundElem_SetScaled10351700/04/08 called with level 1.0 and the configured factors [0x103516FC], [0x103516F8] at 1:
+   the category values (0x10351700, 0x10351704, 0x10351708) are the mod's share of the game's. Then xikit_mods.ini
+   says vol_interface=200: the kit reads it again and the mod sets the interface value from the game's last level. */
+typedef void (__cdecl *SetFn)(float);
+static int audmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x100360A0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x100360A0u) == 0xE9 && *(uint8_t *)ga(0x10036050u) == 0xE9 && *(uint8_t *)ga(0x10035FB0u) == 0xE9 && *(uint8_t *)ga(0x100360F0u) == 0xE9,
+        "audmod: the four volume setters' entries jump (the mod's stubs)");
+  *(float *)ga(0x103516FCu) = 1.0f; *(float *)ga(0x103516F8u) = 1.0f; *(uint32_t *)ga(0x10463914u) = 0;
+  ((SetFn)(void *)ga(0x100360A0u))(1.0f); ((SetFn)(void *)ga(0x10036050u))(1.0f); ((SetFn)(void *)ga(0x10035FB0u))(1.0f);
+  float a = *(float *)ga(0x10351700u), b = *(float *)ga(0x10351704u), c = *(float *)ga(0x10351708u); char what[200];
+  snprintf(what, sizeof what, "audmod: the game's setters at level 1.0 leave interface %.3f, effects %.3f, ambient %.3f (0.5, 1.5, 0.25)", a, b, c);
+  check(a == 0.5f && b == 1.5f && c == 0.25f, what);
+  FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=200\nvol_effects=150\nvol_ambient=25\n", mf); fclose(mf); }
+  for (int f = 0; f < 120 && *(float *)ga(0x10351700u) != 2.0f; f++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(30);
+  }
+  a = *(float *)ga(0x10351700u);
+  snprintf(what, sizeof what, "audmod: vol_interface=200 in xikit_mods.ini while running: the interface value is %.3f (2.0, from the game's last level)", a);
+  check(a == 2.0f, what);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ envmod mode
+   sdk/examples/world_light.dll through the kit (fog_distance=50, fog_r=200, ambient=150, light=200), with the game's own
+   Env_ComputeFog (0x10189120) and Env_ComputeAmbient (0x10188E00) on an environment object: a zone record (env -0x1C
+   = 1) without fog data (env +0x18 = 0) gives 0x808080, 400, 300 in the game's code; the ambient floats at +0x104
+   (0.5) and +0x84 (0.25) give 0x404040 and 0x202020 (128 = 1.0) with g_windowMode 0. */
+typedef void (__thiscall *FogFn)(void *, uint32_t *, float *, float *, int);
+typedef uint32_t *(__thiscall *AmbFn)(void *, uint32_t *, int);
+static int envmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x10189120u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x10189120u) == 0xE9 && *(uint8_t *)ga(0x10188E00u) == 0xE9, "envmod: Env_ComputeFog's and Env_ComputeAmbient's entries jump (the mod's hooks)");
+  static uint8_t buf[0x400]; memset(buf, 0, sizeof buf); uint8_t *env = buf + 0x40; char what[200];
+  *(int *)(env - 0x1C) = 1; *(int *)(env + 0x18) = 0;
+  for (int i = 0; i < 3; i++) { ((float *)(env + 0x104))[i] = 0.5f; ((float *)(env + 0x84))[i] = 0.25f; }
+  *(int *)ga(0x10456A7Cu) = 0;
+  uint32_t col = 0; float end = 0, start = 0;
+  ((FogFn)(void *)ga(0x10189120u))(env, &col, &end, &start, 0);
+  snprintf(what, sizeof what, "envmod: the game's fog 0x808080, 400, 300 comes out %06lx, end %.1f, start %.1f (ff8080, 200, 150)", (unsigned long)col, end, start);
+  check(col == 0xFF8080u && end == 200.0f && start == 150.0f, what);
+  uint32_t a0 = 0, a1 = 0;
+  ((AmbFn)(void *)ga(0x10188E00u))(env, &a0, 0); ((AmbFn)(void *)ga(0x10188E00u))(env, &a1, 1);
+  snprintf(what, sizeof what, "envmod: ambient %06lx (0x404040 * 1.5 = 606060), light %06lx (0x202020 * 2 = 404040)", (unsigned long)a0, (unsigned long)a1);
+  check(a0 == 0x606060u && a1 == 0x404040u, what);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ phomod mode
+   sdk/examples/photo_mode.dll through the kit (photo=1, photo_yaw=90, photo_dist=200, photo_shot=1, photo_hide_ui=1).
+   1: the game's own Camera_SnapshotState (0x10021B70) on a controller with its eye at (0,0,-10) and look-at point at
+   the origin: the view it builds at +4 is the look-at from the mod's eye (-20,0,0) (its forward axis, the third column,
+   is +x; the eye 20 from the origin along it), and the game's eye is back at +0x44. 2: the game's own
+   CDx::CompositeSceneToBackBuffer (0x1000C0B0) with a world texture filled with 0xFF336699: the picture in
+   screenshots\ is 8x8 of that colour, and photo_shot is 0 again. 3: a frame: the cover draws that texture over the
+   render target (a lockable one here), read back. */
+typedef int (__thiscall *SnapFn)(void *);
+typedef int (__thiscall *CompFn)(void *, int, int, int, int);
+static int phomod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x10021B70u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x10021B70u) == 0xE9 && *(uint8_t *)ga(0x1000C0B0u) == 0xE9, "phomod: Camera_SnapshotState's and the composite's entries jump (the mod's hooks)");
+  static uint8_t ctl[0x200]; memset(ctl, 0, sizeof ctl); float *c = (float *)ctl; char what[260];
+  c[0x44 / 4 + 2] = -10.0f; c[0xA8 / 4 + 1] = 1.0f;
+  ((SnapFn)(void *)ga(0x10021B70u))(ctl);
+  float *m = c + 1;                                           /* the view at +4, row-major 4x4 */
+  snprintf(what, sizeof what, "phomod: the game's view has forward (%.3f %.3f %.3f) and _43 %.3f (|forward| along x, |_43| 20); the game's eye is back (%.1f %.1f %.1f)",
+           m[2], m[6], m[10], m[14], c[0x44 / 4], c[0x44 / 4 + 1], c[0x44 / 4 + 2]);
+  check(fabsf(fabsf(m[2]) - 1.0f) < 1e-4f && fabsf(m[6]) < 1e-4f && fabsf(m[10]) < 1e-4f && fabsf(fabsf(m[14]) - 20.0f) < 1e-3f &&
+        c[0x44 / 4] == 0 && c[0x44 / 4 + 2] == -10.0f, what);
+  IDirect3DTexture8 *tex = NULL; IDirect3DSurface8 *ts = NULL, *old = NULL, *oldz = NULL, *rt = NULL;
+  HRESULT hr = IDirect3DDevice8_CreateTexture(dev, 8, 8, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &tex);
+  check(SUCCEEDED(hr) && tex, "phomod: an 8x8 render-target texture for the world");
+  if (!tex) return 1;
+  IDirect3DTexture8_GetSurfaceLevel(tex, 0, &ts);
+  IDirect3DDevice8_GetRenderTarget(dev, &old); IDirect3DDevice8_GetDepthStencilSurface(dev, &oldz);
+  IDirect3DDevice8_SetRenderTarget(dev, ts, NULL); IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF336699u, 1.0f, 0);
+  IDirect3DDevice8_SetRenderTarget(dev, old, oldz);
+  static uint8_t env[0x200]; memset(env, 0, sizeof env); *(void **)ga(0x104566E8u) = env;   /* g_pEnv: not stereo */
+  void *a1[2] = { NULL, tex }; int r3[4] = { 0, 0, 64, 64 }, r4[4] = { 0, 0, 64, 64 };
+  IDirect3DDevice8_BeginScene(dev);
+  ((CompFn)(void *)ga(0x1000C0B0u))(g_cdx, (int)(uintptr_t)a1, (int)0x80808080u, (int)(uintptr_t)r3, (int)(uintptr_t)r4);
+  IDirect3DDevice8_EndScene(dev);
+  WIN32_FIND_DATAA fd; HANDLE h = FindFirstFileA("screenshots\\photo_*.bmp", &fd); int good = 0; char path[MAX_PATH] = "";
+  if (h != INVALID_HANDLE_VALUE) {
+    snprintf(path, sizeof path, "screenshots\\%s", fd.cFileName); FindClose(h);
+    FILE *f = fopen(path, "rb"); uint8_t hd[54], px[3];
+    if (f && fread(hd, 1, 54, f) == 54 && *(int32_t *)(hd + 18) == 8 && *(int32_t *)(hd + 22) == 8 && fread(px, 1, 3, f) == 3) good = px[0] == 0x99 && px[1] == 0x66 && px[2] == 0x33;
+    if (f) fclose(f);
+  }
+  snprintf(what, sizeof what, "phomod: the game's composite with photo_shot=1 wrote %s, 8x8, 336699", path[0] ? path : "no picture");
+  check(good, what);
+  char line[256]; int reset = 0; FILE *mi = fopen("xikit_mods.ini", "r");
+  if (mi) { while (fgets(line, sizeof line, mi)) if (!strncmp(line, "photo_shot=0", 12)) reset = 1; fclose(mi); }
+  check(reset, "phomod: photo_shot is 0 again in xikit_mods.ini");
+  hr = IDirect3DDevice8_CreateRenderTarget(dev, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
+  if (SUCCEEDED(hr) && rt) {
+    IDirect3DDevice8_SetRenderTarget(dev, rt, NULL); IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0);
+    IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL);                      /* the mod's frame: the cover */
+    D3DLOCKED_RECT lr; uint32_t v = 0;
+    if (SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) { v = ((uint32_t *)lr.pBits)[8 * lr.Pitch / 4 + 8]; IDirect3DSurface8_UnlockRect(rt); }
+    snprintf(what, sizeof what, "phomod: photo_hide_ui=1: the frame's render target holds the world texture after the mod's frame (%08lx)", (unsigned long)v);
+    check((v & 0xFFFFFF) == 0x336699u, what);
+    IDirect3DDevice8_SetRenderTarget(dev, old, oldz); IDirect3DSurface8_Release(rt);
+  } else check(0, "phomod: a lockable render target");
+  if (old) IDirect3DSurface8_Release(old); if (oldz) IDirect3DSurface8_Release(oldz); IDirect3DSurface8_Release(ts);
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ cfmod mode
+   sdk/examples/color_filter.dll through the kit on kit/d3d8on11's d3d8.dll (cb_mode=2, cb_simulate=1, cb_strength=100):
+   a frame cleared to pure red, Present (the mod's frame runs before it: copy, pass, drawn back); the back buffer
+   (D3DSWAPEFFECT_COPY, lockable) read back is the deuteranopia simulation's first column, 0.367322 0.280085 -0.011820
+   (Machado et al. 2009) times 255: 94, 71, 0 (within 2). */
+static int cfmod_run(IDirect3DDevice8 *dev) {
+  int ok = 0; char what[200]; uint32_t v = 0;
+  for (int f = 0; f < 60; f++) {                              /* (the kit loads the mod on the render thread: frames) */
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFFFF0000u, 1.0f, 0);
+    if (f == 0) { IDirect3DSurface8 *bb0 = NULL, *im0 = NULL; uint32_t v0 = 0;        /* the control: the clear read back before Present */
+      if (SUCCEEDED(IDirect3DDevice8_GetBackBuffer(dev, 0, D3DBACKBUFFER_TYPE_MONO, &bb0)) && SUCCEEDED(IDirect3DDevice8_CreateImageSurface(dev, 64, 64, D3DFMT_X8R8G8B8, &im0)) &&
+          SUCCEEDED(IDirect3DDevice8_CopyRects(dev, bb0, NULL, 0, im0, NULL))) { D3DLOCKED_RECT l0; if (SUCCEEDED(IDirect3DSurface8_LockRect(im0, &l0, NULL, D3DLOCK_READONLY))) { v0 = ((uint32_t *)l0.pBits)[32 * l0.Pitch / 4 + 32]; IDirect3DSurface8_UnlockRect(im0); } }
+      printf("  (control: before Present the back buffer reads %08lx)\n", (unsigned long)v0); if (im0) IDirect3DSurface8_Release(im0); if (bb0) IDirect3DSurface8_Release(bb0); }
+    IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(30);
+    IDirect3DSurface8 *bb = NULL, *img = NULL;
+    if (SUCCEEDED(IDirect3DDevice8_GetBackBuffer(dev, 0, D3DBACKBUFFER_TYPE_MONO, &bb)) && bb &&
+        SUCCEEDED(IDirect3DDevice8_CreateImageSurface(dev, 64, 64, D3DFMT_X8R8G8B8, &img)) && SUCCEEDED(IDirect3DDevice8_CopyRects(dev, bb, NULL, 0, img, NULL))) {
+      D3DLOCKED_RECT lr; if (SUCCEEDED(IDirect3DSurface8_LockRect(img, &lr, NULL, D3DLOCK_READONLY))) { v = ((uint32_t *)lr.pBits)[32 * lr.Pitch / 4 + 32]; IDirect3DSurface8_UnlockRect(img); }
+    }
+    if (img) IDirect3DSurface8_Release(img); if (bb) IDirect3DSurface8_Release(bb);
+    int r = (v >> 16) & 0xFF, g = (v >> 8) & 0xFF, b = v & 0xFF;
+    if (abs(r - 94) <= 2 && abs(g - 71) <= 2 && b <= 2) { ok = 1; break; }
+  }
+  (void)ok; (void)what;                                  /* (after Present d3d8on11's back buffer is not kept: the mod's cb_check line is read instead) */
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ uimod mode
+   sdk/examples/ui_layout.dll through the kit (ui_dx=100; ui_layout.txt: "menuinventor 5 -3"). Two windows in the menu
+   manager's own list (g_menuMng 0x10621838 +0: nodes {next +0, window +0x10, free +0x14}; a window's name at
+   [+4] +0x46, its rectangle at +0x3A; visible while +0x70 is 0), on layer 9, which Menu_DrawLayers' loop (0..8) does
+   not draw. The game's own Menu_DrawLayers runs (the mod moves the windows first), then the game's own hit test
+   (NetCellFont_HitTest 0x10118C10) is asked about a point in the moved rectangle; then the game "rebuilds" one window
+   and draws again: the offset applies to the new rectangle. */
+typedef void (__thiscall *DrawLayersFn)(void *);
+typedef uint32_t (__thiscall *HitFn)(void *, uint32_t *);
+static int uimod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1015F6A0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x1015F6A0u) == 0xE9, "uimod: Menu_DrawLayers' entry jumps (the mod's hook)");
+  static uint8_t w1[0x100], w2[0x100], md1[0x80], md2[0x80], n1[0x18], n2[0x18], cursor[0x400], resmng[0x10000];
+  memset(w1, 0, sizeof w1); memset(w2, 0, sizeof w2);
+  memcpy(md1 + 0x46, "menu    inventor", 16); memcpy(md2 + 0x46, "menu    equip   ", 16);
+  *(void **)(w1 + 4) = md1; *(void **)(w2 + 4) = md2; w1[0x60] = 9; w2[0x60] = 9;
+  short r1[4] = { 10, 20, 110, 220 }, r2[4] = { 0, 0, 50, 50 }; memcpy(w1 + 0x3A, r1, 8); memcpy(w2 + 0x3A, r2, 8);
+  memset(n1, 0, sizeof n1); memset(n2, 0, sizeof n2); *(void **)n1 = n2; *(void **)(n1 + 0x10) = w1; *(void **)(n2 + 0x10) = w2;
+  uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0x60]; memcpy(saved, mng, sizeof saved);
+  memset(mng, 0, sizeof saved); *(void **)mng = n1;
+  memset(cursor, 0, sizeof cursor); memset(resmng, 0, sizeof resmng);
+  void **pcur = (void **)ga(0x104E1D4Cu), **pres = (void **)ga(0x1047BFA8u); void *oc = *pcur, *orr = *pres;
+  if (!*pcur) *pcur = cursor;
+  if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
+  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u); HitFn hit = (HitFn)(void *)ga(0x10118C10u); char what[220];
+  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
+  short *a = (short *)(w1 + 0x3A), *b = (short *)(w2 + 0x3A);
+  snprintf(what, sizeof what, "uimod: menuinventor moved by 105,-3 to %d,%d..%d,%d; menuequip by 100,0 to %d,%d..%d,%d", a[0], a[1], a[2], a[3], b[0], b[1], b[2], b[3]);
+  check(a[0] == 115 && a[1] == 17 && a[2] == 215 && a[3] == 217 && b[0] == 100 && b[1] == 0 && b[2] == 150 && b[3] == 50, what);
+  uint32_t pin[2] = { 200, 30 }, pout[2] = { 50, 30 };
+  check((hit(w1, pin) & 0xFF) == 1 && (hit(w1, pout) & 0xFF) == 0, "uimod: the game's hit test finds (200,30) in the moved window and not (50,30)");
+  short rb[4] = { 0, 0, 10, 10 }; memcpy(w1 + 0x3A, rb, 8);       /* the game rebuilds it */
+  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
+  snprintf(what, sizeof what, "uimod: rebuilt to 0,0..10,10 by the game: now %d,%d..%d,%d (105,-3..115,7)", a[0], a[1], a[2], a[3]);
+  check(a[0] == 105 && a[1] == -3 && a[2] == 115 && a[3] == 7, what);
+  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
+  check(a[0] == 105 && a[1] == -3, "uimod: drawn again: not moved twice");
+  memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr;
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ fx2mod mode
+   sdk/examples/effect_comfort.dll's per-effect control (effects.txt: "spel/fire 0"; fx_list=1): an element whose
+   resource (element +0xFC, a handle) is chunk "fire" (type 5) under the scope "spel" (type 1, its parent at +0x28);
+   the mod's test export does what its YmElem_SetupDevice hook does after the game's code (the game's own function
+   did not return with stand-ins for the renderer's state), then a white draw onto black is left out; the export for
+   RestoreDevice, then the same draw is drawn. */
+typedef int (__thiscall *SetupFn)(void *, int);
+typedef int (__thiscall *RestoreFn)(void *, int);
+static uint32_t fx2_draw(IDirect3DDevice8 *dev, IDirect3DSurface8 *rt) {
+  IDirect3DDevice8_SetRenderTarget(dev, rt, NULL); IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_ALPHABLENDENABLE, FALSE); IDirect3DDevice8_SetRenderState(dev, D3DRS_ZENABLE, FALSE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_LIGHTING, FALSE); IDirect3DDevice8_SetRenderState(dev, D3DRS_CULLMODE, D3DCULL_NONE);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_FOGENABLE, FALSE); IDirect3DDevice8_SetRenderState(dev, D3DRS_ALPHATESTENABLE, FALSE);
+  IDirect3DDevice8_SetTexture(dev, 0, NULL);
+  IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1); IDirect3DDevice8_SetTextureStageState(dev, 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+  IDirect3DDevice8_SetVertexShader(dev, D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+  struct { float x, y, z, w; DWORD c; } q[4] = { { -0.5f, -0.5f, 0, 1, 0xFFFFFFFFu }, { 3.5f, -0.5f, 0, 1, 0xFFFFFFFFu }, { -0.5f, 3.5f, 0, 1, 0xFFFFFFFFu }, { 3.5f, 3.5f, 0, 1, 0xFFFFFFFFu } };
+  IDirect3DDevice8_BeginScene(dev); IDirect3DDevice8_DrawPrimitiveUP(dev, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]); IDirect3DDevice8_EndScene(dev);
+  D3DLOCKED_RECT lr; uint32_t v = 0;
+  if (SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) { v = ((uint32_t *)lr.pBits)[lr.Pitch / 4 + 1]; IDirect3DSurface8_UnlockRect(rt); }
+  return v & 0xFFFFFF;
+}
+static int fx2mod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x100467E0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x100467E0u) == 0xE9 && *(uint8_t *)ga(0x100472F0u) == 0xE9, "fx2mod: YmElem_SetupDevice's and RestoreDevice's entries jump (the mod's hooks)");
+  (void)(SetupFn)0; (void)(RestoreFn)0;
+  static uint8_t elem[0x400], res[0x80], scope[0x80], proc[0x1000], mats[16][64], resmng[0x10000]; static void *hres, *hscope;
+  memset(elem, 0, sizeof elem); memset(res, 0, sizeof res); memset(scope, 0, sizeof scope); memset(proc, 0, sizeof proc); memset(resmng, 0, sizeof resmng);
+  memcpy(res + 0x20, "fire", 4); *(uint32_t *)(res + 0x24) = 5; memcpy(scope + 0x20, "spel", 4); *(uint32_t *)(scope + 0x24) = 1;
+  hres = res; hscope = scope; *(void **)(res + 0x28) = &hscope; *(void **)(elem + 0xFC) = &hres;
+  for (int i = 0; i < 16; i++) { ((void **)(proc + 0xA10))[i] = mats[i]; memset(mats[i], 0, 64); }
+  *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx;
+  void **pp = (void **)ga(0x1047CF7Cu), **pr = (void **)ga(0x1047BFA8u); void *op = *pp, *orr = *pr; *pp = proc; *pr = resmng;
+  IDirect3DSurface8 *rt = NULL, *old = NULL, *oldz = NULL; char what[160];
+  IDirect3DDevice8_GetRenderTarget(dev, &old); IDirect3DDevice8_GetDepthStencilSurface(dev, &oldz);
+  IDirect3DDevice8_CreateRenderTarget(dev, 4, 4, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
+  /* (the game's YmElem_SetupDevice does not return with these stand-ins: the mod's test exports do what its hooks do) */
+  HMODULE fm = GetModuleHandleA("effect_comfort.dll");
+  void (*enter)(void *) = fm ? (void (*)(void *))(void *)GetProcAddress(fm, "effect_comfort_test_enter") : NULL;
+  void (*leave)(void) = fm ? (void (*)(void))(void *)GetProcAddress(fm, "effect_comfort_test_leave") : NULL;
+  check(enter && leave, "fx2mod: the mod's test exports");
+  if (!enter || !leave) return 1;
+  enter(elem);
+  uint32_t in = fx2_draw(dev, rt);
+  leave();
+  uint32_t out = fx2_draw(dev, rt);
+  snprintf(what, sizeof what, "fx2mod: inside the element (spel/fire at 0%%) the white draw is left out (%06lx); after RestoreDevice it is drawn (%06lx)", (unsigned long)in, (unsigned long)out);
+  check(in == 0 && out == 0xFFFFFF, what);
+  IDirect3DDevice8_SetRenderTarget(dev, old, oldz); if (old) IDirect3DSurface8_Release(old); if (oldz) IDirect3DSurface8_Release(oldz); if (rt) IDirect3DSurface8_Release(rt);
+  *pp = op; *pr = orr;
+  return 0;
+}
+
 int main(int argc, char **argv) {
   int reloadrun = argc > 1 && !strcmp(argv[1], "reload");
   int modrun = argc > 1 && (!strcmp(argv[1], "mod") || !strcmp(argv[1], "modrel") || reloadrun);
   int caprun = argc > 1 && !strcmp(argv[1], "capture");
   int factrun = argc > 1 && !strcmp(argv[1], "facts");
   int abrun = argc > 1 && !strcmp(argv[1], "ab");
-  int realrun = argc > 1 && !strcmp(argv[1], "realdev");
+  int texrun = argc > 1 && !strcmp(argv[1], "texmod"), fxrun = argc > 1 && !strcmp(argv[1], "fxmod");
+  int camrun = argc > 1 && !strcmp(argv[1], "cammod"), ovlrun = argc > 1 && !strcmp(argv[1], "ovlmod");
+  int audrun = argc > 1 && !strcmp(argv[1], "audmod"), envrun = argc > 1 && !strcmp(argv[1], "envmod");
+  int phorun = argc > 1 && !strcmp(argv[1], "phomod"), cfrun = argc > 1 && !strcmp(argv[1], "cfmod");
+  int uirun = argc > 1 && !strcmp(argv[1], "uimod"), fx2run = argc > 1 && !strcmp(argv[1], "fx2mod");
+  int realrun = argc > 1 && (!strcmp(argv[1], "realdev") || texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || fx2run);
   int nativerun = argc > 1 && !strcmp(argv[1], "native");
   int blockrun = argc > 1 && !strcmp(argv[1], "traceblock");
   int measrun = argc > 1 && !strcmp(argv[1], "measure");
@@ -335,15 +757,43 @@ int main(int argc, char **argv) {
     if (!d3d) { printf("FAIL: Direct3DCreate8\n"); return 2; }
     D3DPRESENT_PARAMETERS pp; memset(&pp, 0, sizeof pp);
     pp.BackBufferWidth = 64; pp.BackBufferHeight = 64; pp.BackBufferFormat = D3DFMT_X8R8G8B8; pp.BackBufferCount = 1;
-    pp.SwapEffect = D3DSWAPEFFECT_DISCARD; pp.hDeviceWindow = w; pp.Windowed = TRUE;
+    pp.SwapEffect = cfrun ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_DISCARD; pp.hDeviceWindow = w; pp.Windowed = TRUE;
+    if (cfrun) pp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
     IDirect3DDevice8 *dev = NULL;
     HRESULT hr = IDirect3D8_CreateDevice(d3d, D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, w, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pp, &dev);
     if (FAILED(hr) || !dev) { printf("FAIL: CreateDevice 0x%08lX\n", (unsigned long)hr); return 2; }
     void *vt0 = *(void **)dev;
     *(void **)(g_cdx + 0xC) = dev;
-    touch_ini(ini, "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\n");
+    touch_ini(ini, texrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=texture_replace.dll\n"
+                 : fx2run ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=effect_comfort.dll\n"
+                 : uirun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=ui_layout.dll\n"
+                 : cfrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=color_filter.dll\n"
+                 : phorun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=photo_mode.dll\n"
+                 : envrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=world_light.dll\n"
+                 : audrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=audio_mix.dll\n"
+                 : ovlrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=file_overlay.dll\n"
+                 : camrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=camera_view.dll\n"
+                 : fxrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=effect_comfort.dll\n"
+                          : "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\n");
+    if (fx2run) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nfx_list=1\n", mf); fclose(mf); }
+                  mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\n", mf); fclose(mf); } fill_iat(g); }
+    if (uirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=100\nui_list=1\n", mf); fclose(mf); }
+                 mf = fopen("ui_layout.txt", "w"); if (mf) { fputs("# window dx dy\nmenuinventor 5 -3\n", mf); fclose(mf); } fill_iat(g); }
+    if (cfrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[color_filter]\ncb_mode=2\ncb_simulate=1\ncb_strength=100\ncb_check=1\n", mf); fclose(mf); } }
+    if (phorun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[photo_mode]\nphoto=1\nphoto_yaw=90\nphoto_dist=200\nphoto_shot=1\nphoto_hide_ui=1\n", mf); fclose(mf); } fill_iat(g); }
+    if (envrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[world_light]\nfog_distance=50\nfog_r=200\nambient=150\nlight=200\n", mf); fclose(mf); } fill_iat(g); }
+    if (audrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=50\nvol_effects=150\nvol_ambient=25\n", mf); fclose(mf); } fill_iat(g); }
+    if (ovlrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[file_overlay]\noverlay_log=1\n", mf); fclose(mf); } fill_iat(g); }
+    if (camrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[camera_view]\nfov_deg=90\nfar_percent=200\n", mf); fclose(mf); } fill_iat(g); }
+    if (fxrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nflash_limit=50\nfx_intensity=50\nfx_all_blended=1\n", mf); fclose(mf); } fill_iat(g); }
+    if (texrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[texture_replace]\ntex_dump=1\ntex_log=1\n", mf); fclose(mf); } fill_iat(g); }
     if (!LoadLibraryA("xikit.dll")) { printf("FAIL: xikit.dll not loaded (%lu)\n", GetLastError()); return 2; }
     for (int t = 0; t < 400 && *(void **)dev == vt0; t++) Sleep(50);
+    if (texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || fx2run) {
+      if (texrun) texmod_run(dev); else if (fxrun) fxmod_run(dev); else if (camrun) cammod_run(dev); else if (ovlrun) ovlmod_run(dev, g); else if (audrun) audmod_run(dev); else if (envrun) envmod_run(dev); else if (phorun) phomod_run(dev); else if (cfrun) cfmod_run(dev); else if (uirun) uimod_run(dev); else fx2mod_run(dev);
+      printf("%s\n", fails ? "FAILED" : "ALL OK");
+      ExitProcess(fails ? 1 : 0);
+    }
     check(*(void **)dev != vt0, "the kit hooked the real device (its own vtable copy)");
     int okp = 1;
     for (int f = 0; f < 200; f++) {                         /* through the object's vtable, as the game calls it */

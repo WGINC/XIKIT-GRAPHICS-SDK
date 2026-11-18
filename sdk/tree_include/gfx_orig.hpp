@@ -641,7 +641,7 @@ XI_ORIG void Skel_MarkMarkedChains(void * a0) { reinterpret_cast<void (__thiscal
 XI_ORIG void FUN_10035330(void * a0, XI_ANY a1, XI_ANY a2, XI_ANY a3) { reinterpret_cast<void (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY)>(XI_GAME(0x10035330u))(a0, a1, a2, a3); }
 XI_ORIG void Skel_MarkChain(void * a0, XI_ANY a1, XI_ANY a2, XI_ANY a3) { reinterpret_cast<void (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY)>(XI_GAME(0x10035330u))(a0, a1, a2, a3); }
 XI_ORIG void * CMoTask_CtorByMode(void * a0, XI_ANY a1, XI_ANY a2, XI_ANY a3) { return reinterpret_cast<void * (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY)>(XI_GAME(0x10035A00u))(a0, a1, a2, a3); }
-XI_ORIG char CMoModeRampTask_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x10035B00u))(a0); }
+XI_ORIG char CMoVolumeChangeTask_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x10035B00u))(a0); }
 XI_ORIG void CMoTask_CreateMode2(XI_ANY a0, XI_ANY a1) { reinterpret_cast<void (__cdecl *)(XI_ANY, XI_ANY)>(XI_GAME(0x10035D40u))(a0, a1); }
 XI_ORIG void CMoTask_CreateMode4(XI_ANY a0, XI_ANY a1) { reinterpret_cast<void (__cdecl *)(XI_ANY, XI_ANY)>(XI_GAME(0x10035DE0u))(a0, a1); }
 XI_ORIG void SoundElem_SetFactor103516F8(XI_ANY a0) { reinterpret_cast<void (__cdecl *)(XI_ANY)>(XI_GAME(0x10035E80u))(a0); }
@@ -855,8 +855,8 @@ XI_ORIG void unknown_libname_22() { reinterpret_cast<void (__cdecl *)()>(XI_GAME
 XI_ORIG char CMoVuAnmElem_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x1003EF20u))(a0); }
 XI_ORIG void unknown_libname_25() { reinterpret_cast<void (__cdecl *)()>(XI_GAME(0x1003F890u))(); }
 XI_ORIG _DWORD * CMoDistMorphElem_ComputeMorphHandle(int a0, int a1, int a2) { return reinterpret_cast<_DWORD * (__thiscall *)(int, int, int)>(XI_GAME(0x1003F8A0u))(a0, a1, a2); }
-XI_ORIG char CMoMorphElem_Dtor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x1003FB10u))(a0); }
-XI_ORIG undefined8 CMoMorphElem_Ctor(void * a0) { return reinterpret_cast<undefined8 (__thiscall *)(void *)>(XI_GAME(0x1003FB70u))(a0); }
+XI_ORIG char CMoD3bElem_Dtor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x1003FB10u))(a0); }
+XI_ORIG undefined8 CMoD3bElem_Ctor(void * a0) { return reinterpret_cast<undefined8 (__thiscall *)(void *)>(XI_GAME(0x1003FB70u))(a0); }
 XI_ORIG uint8_t CMoDistModelElem_IsDistortedMode(void * a0) { return reinterpret_cast<uint8_t (__thiscall *)(void *)>(XI_GAME(0x1003FCB0u))(a0); }
 XI_ORIG char * CMoDistModelElem_GetVertexBase(void * a0) { return reinterpret_cast<char * (__thiscall *)(void *)>(XI_GAME(0x1003FCE0u))(a0); }
 XI_ORIG int CMoDistModelElem_GetVertexBase_v1(void * a0) { return reinterpret_cast<int (__thiscall *)(void *)>(XI_GAME(0x1003FCE0u))(a0); }
@@ -1225,8 +1225,8 @@ XI_ORIG void MeshResourceCreate_CopyField14At4(void * a0, XI_ANY a1) { reinterpr
 XI_ORIG void MeshResourceCreate_CopyField14At8(void * a0, XI_ANY a1) { reinterpret_cast<void (__thiscall *)(void *, XI_ANY)>(XI_GAME(0x10071200u))(a0, a1); }
 XI_ORIG int * MeshResourceMng_CreateResourceByKind(void * a0, XI_ANY a1) { return reinterpret_cast<int * (__thiscall *)(void *, XI_ANY)>(XI_GAME(0x10071270u))(a0, a1); }
 XI_ORIG void nullsub_171() { reinterpret_cast<void (__cdecl *)()>(XI_GAME(0x100719B0u))(); }
-XI_ORIG unsigned int ** CMoResType07Attachments_ScalarDeletingDtor(void * a0, char a1) { return reinterpret_cast<unsigned int ** (__thiscall *)(void *, char)>(XI_GAME(0x10071C10u))(a0, a1); }
-XI_ORIG unsigned int ** CMoScopeRes_ScalarDeletingDtor_10071C60(void * a0, char a1) { return reinterpret_cast<unsigned int ** (__thiscall *)(void *, char)>(XI_GAME(0x10071C60u))(a0, a1); }
+XI_ORIG unsigned int ** CMoSchedulerResAttachments_ScalarDeletingDtor(void * a0, char a1) { return reinterpret_cast<unsigned int ** (__thiscall *)(void *, char)>(XI_GAME(0x10071C10u))(a0, a1); }
+XI_ORIG unsigned int ** CMoRmpRes_ScalarDeletingDtor_10071C60(void * a0, char a1) { return reinterpret_cast<unsigned int ** (__thiscall *)(void *, char)>(XI_GAME(0x10071C60u))(a0, a1); }
 XI_ORIG undefined4 * CMoResource_ConstructBase(void * a0, void * a1) { return reinterpret_cast<undefined4 * (__fastcall *)(void *, void *)>(XI_GAME(0x10071D80u))(a0, a1); }
 XI_ORIG unsigned int * CMoResource_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10071DE0u))(a0); }
 XI_ORIG void FUN_10071e50() { reinterpret_cast<void (__cdecl *)()>(XI_GAME(0x10071E50u))(); }
@@ -1870,8 +1870,8 @@ XI_ORIG void FUN_100a6240(void * a0, XI_ANY a1) { reinterpret_cast<void (__thisc
 XI_ORIG void * CXiControlActor_Constructor(void * a0) { return reinterpret_cast<void * (__thiscall *)(void *)>(XI_GAME(0x100A89E0u))(a0); }
 XI_ORIG char CXiControlActor_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x100A8CA0u))(a0); }
 XI_ORIG undefined4 FUN_100a8cc0(XI_ANY a0) { return reinterpret_cast<undefined4 (__cdecl *)(XI_ANY)>(XI_GAME(0x100A8CC0u))(a0); }
-XI_ORIG char CMoCasterTargetTask_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x100A9D30u))(a0); }
-XI_ORIG _DWORD * CMoCasterTargetTask_ScalarDeletingDtor(void * a0, char a1) { return reinterpret_cast<_DWORD * (__thiscall *)(void *, char)>(XI_GAME(0x100A9DB0u))(a0, a1); }
+XI_ORIG char CMoUseMagicWaitTask_Destructor(void * a0) { return reinterpret_cast<char (__thiscall *)(void *)>(XI_GAME(0x100A9D30u))(a0); }
+XI_ORIG _DWORD * CMoUseMagicWaitTask_ScalarDeletingDtor(void * a0, char a1) { return reinterpret_cast<_DWORD * (__thiscall *)(void *, char)>(XI_GAME(0x100A9DB0u))(a0, a1); }
 XI_ORIG unsigned long long FUN_100aaee0(XI_ANY a0, XI_ANY a1, XI_ANY a2) {
     uint32_t xs[1] = {a1.bits}; uint32_t ra = a2.bits, rc = a0.bits, rd = 0;
     __asm__ volatile("pushl 0(%%esi)\n\t""call *%%edi\n\t"
@@ -3307,9 +3307,9 @@ XI_ORIG void FUN_10163050(XI_ANY a0) { reinterpret_cast<void (__stdcall *)(XI_AN
 XI_ORIG void TargetMenu_SetWord56(void * a0, XI_ANY a1) { reinterpret_cast<void (__thiscall *)(void *, XI_ANY)>(XI_GAME(0x10163070u))(a0, a1); }
 XI_ORIG void * TargetMenu_CtorZeroed(void * a0) { return reinterpret_cast<void * (__thiscall *)(void *)>(XI_GAME(0x10163090u))(a0); }
 XI_ORIG void TargetMenu_DrawIfActive(void * a0) { reinterpret_cast<void (__thiscall *)(void *)>(XI_GAME(0x101630C0u))(a0); }
-XI_ORIG void MenuTextBlock_Draw(void * a0) { reinterpret_cast<void (__thiscall *)(void *)>(XI_GAME(0x101630E0u))(a0); }
+XI_ORIG void EventTextBlock_Draw(void * a0) { reinterpret_cast<void (__thiscall *)(void *)>(XI_GAME(0x101630E0u))(a0); }
 XI_ORIG void * TargetMenu_ZeroWordsAndDwords(void * a0) { return reinterpret_cast<void * (__thiscall *)(void *)>(XI_GAME(0x10163350u))(a0); }
-XI_ORIG int MenuTextBlock_DrawBgRect(void * a0) { return reinterpret_cast<int (__thiscall *)(void *)>(XI_GAME(0x10163390u))(a0); }
+XI_ORIG int EventTextBlock_DrawBgRect(void * a0) { return reinterpret_cast<int (__thiscall *)(void *)>(XI_GAME(0x10163390u))(a0); }
 XI_ORIG void TargetMenu_ZeroDwords(void * a0) { reinterpret_cast<void (__thiscall *)(void *)>(XI_GAME(0x101633D0u))(a0); }
 XI_ORIG void Gfx_DrawSolidRect2D(XI_ANY a0, XI_ANY a1) { reinterpret_cast<void (__stdcall *)(XI_ANY, XI_ANY)>(XI_GAME(0x10163400u))(a0, a1); }
 XI_ORIG char ZoneMapLoad_CreateUiObjects() { return reinterpret_cast<char (__cdecl *)()>(XI_GAME(0x10165070u))(); }
@@ -3371,11 +3371,11 @@ XI_ORIG unsigned long long ZoneMapLoad_SetFlag2000OnUnderscoreEntries(XI_ANY a0,
     return ((unsigned long long)rd << 32) | ra;
 }
 XI_ORIG undefined4 * ZoneMapLoad_ConstructResource10336698(void * a0, void * a1) { return reinterpret_cast<undefined4 * (__fastcall *)(void *, void *)>(XI_GAME(0x10176E80u))(a0, a1); }
-XI_ORIG unsigned int * CMoResType2E_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10176EC0u))(a0); }
+XI_ORIG unsigned int * CMoMmbRes_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10176EC0u))(a0); }
 XI_ORIG undefined4 * ZoneResWeather_Construct(void * a0, void * a1) { return reinterpret_cast<undefined4 * (__fastcall *)(void *, void *)>(XI_GAME(0x10176F60u))(a0, a1); }
-XI_ORIG unsigned int * CMoResType1C_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10176FA0u))(a0); }
+XI_ORIG unsigned int * CMoMzbRes_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10176FA0u))(a0); }
 XI_ORIG undefined4 * ZoneResource_Construct(void * a0, void * a1) { return reinterpret_cast<undefined4 * (__fastcall *)(void *, void *)>(XI_GAME(0x10176FE0u))(a0, a1); }
-XI_ORIG unsigned int * CMoResType36_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10177020u))(a0); }
+XI_ORIG unsigned int * CMoRidRes_Destructor(void * a0) { return reinterpret_cast<unsigned int * (__thiscall *)(void *)>(XI_GAME(0x10177020u))(a0); }
 XI_ORIG int Gfx_ShaderSrc_GetText(void * a0) { return reinterpret_cast<int (__thiscall *)(void *)>(XI_GAME(0x10177340u))(a0); }
 XI_ORIG unsigned int Gfx_ShaderSrc_GetTextLength(void * a0) { return reinterpret_cast<unsigned int (__thiscall *)(void *)>(XI_GAME(0x10177350u))(a0); }
 XI_ORIG int * ZoneMap_GetMatrixGlobal() { return reinterpret_cast<int * (__cdecl *)()>(XI_GAME(0x101773F0u))(); }
@@ -6443,7 +6443,7 @@ constexpr uint32_t Skel_MarkMarkedChains = 0x100352F0u;
 constexpr uint32_t FUN_10035330 = 0x10035330u;
 constexpr uint32_t Skel_MarkChain = 0x10035330u;
 constexpr uint32_t CMoTask_CtorByMode = 0x10035A00u;
-constexpr uint32_t CMoModeRampTask_Destructor = 0x10035B00u;
+constexpr uint32_t CMoVolumeChangeTask_Destructor = 0x10035B00u;
 constexpr uint32_t CMoTask_CreateMode2 = 0x10035D40u;
 constexpr uint32_t CMoTask_CreateMode4 = 0x10035DE0u;
 constexpr uint32_t SoundElem_SetFactor103516F8 = 0x10035E80u;
@@ -6612,8 +6612,8 @@ constexpr uint32_t unknown_libname_22 = 0x1003EB20u;
 constexpr uint32_t CMoVuAnmElem_Destructor = 0x1003EF20u;
 constexpr uint32_t unknown_libname_25 = 0x1003F890u;
 constexpr uint32_t CMoDistMorphElem_ComputeMorphHandle = 0x1003F8A0u;
-constexpr uint32_t CMoMorphElem_Dtor = 0x1003FB10u;
-constexpr uint32_t CMoMorphElem_Ctor = 0x1003FB70u;
+constexpr uint32_t CMoD3bElem_Dtor = 0x1003FB10u;
+constexpr uint32_t CMoD3bElem_Ctor = 0x1003FB70u;
 constexpr uint32_t CMoDistModelElem_IsDistortedMode = 0x1003FCB0u;
 constexpr uint32_t CMoDistModelElem_GetVertexBase = 0x1003FCE0u;
 constexpr uint32_t CMoDistModelElem_GetVertexBase_v1 = 0x1003FCE0u;
@@ -6937,8 +6937,8 @@ constexpr uint32_t MeshResourceCreate_CopyField14At4 = 0x100711E0u;
 constexpr uint32_t MeshResourceCreate_CopyField14At8 = 0x10071200u;
 constexpr uint32_t MeshResourceMng_CreateResourceByKind = 0x10071270u;
 constexpr uint32_t nullsub_171 = 0x100719B0u;
-constexpr uint32_t CMoResType07Attachments_ScalarDeletingDtor = 0x10071C10u;
-constexpr uint32_t CMoScopeRes_ScalarDeletingDtor_10071C60 = 0x10071C60u;
+constexpr uint32_t CMoSchedulerResAttachments_ScalarDeletingDtor = 0x10071C10u;
+constexpr uint32_t CMoRmpRes_ScalarDeletingDtor_10071C60 = 0x10071C60u;
 constexpr uint32_t CMoResource_ConstructBase = 0x10071D80u;
 constexpr uint32_t CMoResource_Destructor = 0x10071DE0u;
 constexpr uint32_t FUN_10071e50 = 0x10071E50u;
@@ -7366,8 +7366,8 @@ constexpr uint32_t FUN_100a6240 = 0x100A6240u;
 constexpr uint32_t CXiControlActor_Constructor = 0x100A89E0u;
 constexpr uint32_t CXiControlActor_Destructor = 0x100A8CA0u;
 constexpr uint32_t FUN_100a8cc0 = 0x100A8CC0u;
-constexpr uint32_t CMoCasterTargetTask_Destructor = 0x100A9D30u;
-constexpr uint32_t CMoCasterTargetTask_ScalarDeletingDtor = 0x100A9DB0u;
+constexpr uint32_t CMoUseMagicWaitTask_Destructor = 0x100A9D30u;
+constexpr uint32_t CMoUseMagicWaitTask_ScalarDeletingDtor = 0x100A9DB0u;
 constexpr uint32_t FUN_100aaee0 = 0x100AAEE0u;
 constexpr uint32_t CXiControlActor_GetSpeed = 0x100AAEF0u;
 constexpr uint32_t FUN_100aafb0 = 0x100AAFB0u;
@@ -8409,9 +8409,9 @@ constexpr uint32_t FUN_10163050 = 0x10163050u;
 constexpr uint32_t TargetMenu_SetWord56 = 0x10163070u;
 constexpr uint32_t TargetMenu_CtorZeroed = 0x10163090u;
 constexpr uint32_t TargetMenu_DrawIfActive = 0x101630C0u;
-constexpr uint32_t MenuTextBlock_Draw = 0x101630E0u;
+constexpr uint32_t EventTextBlock_Draw = 0x101630E0u;
 constexpr uint32_t TargetMenu_ZeroWordsAndDwords = 0x10163350u;
-constexpr uint32_t MenuTextBlock_DrawBgRect = 0x10163390u;
+constexpr uint32_t EventTextBlock_DrawBgRect = 0x10163390u;
 constexpr uint32_t TargetMenu_ZeroDwords = 0x101633D0u;
 constexpr uint32_t Gfx_DrawSolidRect2D = 0x10163400u;
 constexpr uint32_t ZoneMapLoad_CreateUiObjects = 0x10165070u;
@@ -8468,11 +8468,11 @@ constexpr uint32_t Mat4_MulTranslation = 0x10175780u;
 constexpr uint32_t FUN_101768a0 = 0x101768A0u;
 constexpr uint32_t ZoneMapLoad_SetFlag2000OnUnderscoreEntries = 0x10176DD0u;
 constexpr uint32_t ZoneMapLoad_ConstructResource10336698 = 0x10176E80u;
-constexpr uint32_t CMoResType2E_Destructor = 0x10176EC0u;
+constexpr uint32_t CMoMmbRes_Destructor = 0x10176EC0u;
 constexpr uint32_t ZoneResWeather_Construct = 0x10176F60u;
-constexpr uint32_t CMoResType1C_Destructor = 0x10176FA0u;
+constexpr uint32_t CMoMzbRes_Destructor = 0x10176FA0u;
 constexpr uint32_t ZoneResource_Construct = 0x10176FE0u;
-constexpr uint32_t CMoResType36_Destructor = 0x10177020u;
+constexpr uint32_t CMoRidRes_Destructor = 0x10177020u;
 constexpr uint32_t Gfx_ShaderSrc_GetText = 0x10177340u;
 constexpr uint32_t Gfx_ShaderSrc_GetTextLength = 0x10177350u;
 constexpr uint32_t ZoneMap_GetMatrixGlobal = 0x101773F0u;

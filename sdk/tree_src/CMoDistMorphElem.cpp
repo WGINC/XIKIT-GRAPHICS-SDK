@@ -339,7 +339,7 @@ uint64_t __thiscall CMoDistMorphElem::Construct(void * self)
 {
   uint64_t uVar1;
   
-  uVar1 = orig::CMoMorphElem_Ctor(self);
+  uVar1 = orig::CMoD3bElem_Ctor(self);
   *(uint8_t ***)self = &PTR_CMoDistMorphElem_GetRuntimeClass_1032b358;
   *(uint16_t *)((int)self + 0x176) = 0x1c4;
   return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
@@ -364,7 +364,7 @@ int CMoDistMorphElem::set_field_1C0(int a2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int * CMoDistMorphElem::ScalarDeletingDtor(char a2)
 {
-  orig::CMoMorphElem_Dtor((int *)this);
+  orig::CMoD3bElem_Dtor((int *)this);
   if ( (a2 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;

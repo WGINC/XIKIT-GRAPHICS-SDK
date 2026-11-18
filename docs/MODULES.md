@@ -11,7 +11,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 | `sq` | 93 | 384 |
 | `CXi` | 14 | 267 |
 | `Yk` | 7 | 241 |
-| `Menu` | 2 | 156 |
+| `Menu` | 1 | 155 |
 | `Acter` | 1 | 126 |
 | `St` | 11 | 126 |
 | `Zone` | 5 | 121 |
@@ -91,6 +91,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 | `Texture` | 1 | 2 |
 | `Thread` | 1 | 2 |
 | `CAcc` | 1 | 1 |
+| `Event` | 1 | 1 |
 | `Font` | 1 | 1 |
 | `Schedular` | 1 | 1 |
 | `Screen` | 1 | 1 |
@@ -171,18 +172,23 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoAuctionMenuTask](functions/CMoAuctionMenuTask.md): 1 functions
 - [CMoBm2RefRes](functions/CMoBm2RefRes.md): 1 functions
 - [CMoBm2Res](functions/CMoBm2Res.md): 3 functions
+- [CMoBpRes](functions/CMoBpRes.md): 3 functions
 - [CMoCamera](functions/CMoCamera.md): 5 functions
 - [CMoCameraSetupTask](functions/CMoCameraSetupTask.md): 2 functions
 - [CMoCameraTask](functions/CMoCameraTask.md): 2 functions
-- [CMoCasterTargetTask](functions/CMoCasterTargetTask.md): 1 functions
-- [CMoCasterTargetTaskAttachments](functions/CMoCasterTargetTaskAttachments.md): 1 functions
 - [CMoCelestial](functions/CMoCelestial.md): 2 functions
+- [CMoCibRes](functions/CMoCibRes.md): 3 functions
 - [CMoD3aElem](functions/CMoD3aElem.md): 6 functions
 - [CMoD3aLightmapElem](functions/CMoD3aLightmapElem.md): 5 functions
+- [CMoD3aRes](functions/CMoD3aRes.md): 1 functions
+- [CMoD3bElem](functions/CMoD3bElem.md): 1 functions
+- [CMoD3bRes](functions/CMoD3bRes.md): 2 functions
 - [CMoD3mElem](functions/CMoD3mElem.md): 2 functions
-- [CMoD3mElemFlag200000](functions/CMoD3mElemFlag200000.md): 2 functions
+- [CMoD3mLightmapElem](functions/CMoD3mLightmapElem.md): 2 functions
+- [CMoD3mRes](functions/CMoD3mRes.md): 1 functions
 - [CMoD3mSpecularElem](functions/CMoD3mSpecularElem.md): 5 functions
 - [CMoDX](functions/CMoDX.md): 8 functions
+- [CMoDamValueProgElem](functions/CMoDamValueProgElem.md): 3 functions
 - [CMoDisintegrateProgElem](functions/CMoDisintegrateProgElem.md): 6 functions
 - [CMoDist](functions/CMoDist.md): 6 functions
 - [CMoDistModelElem](functions/CMoDistModelElem.md): 11 functions
@@ -190,23 +196,25 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoDistRingElem](functions/CMoDistRingElem.md): 6 functions
 - [CMoDxStatusMng](functions/CMoDxStatusMng.md): 3 functions
 - [CMoElem](functions/CMoElem.md): 34 functions
-- [CMoElemKind5C](functions/CMoElemKind5C.md): 3 functions
+- [CMoFloatingNumberTask](functions/CMoFloatingNumberTask.md): 1 functions
+- [CMoFloatingNumberTaskAttachments](functions/CMoFloatingNumberTaskAttachments.md): 1 functions
 - [CMoGeneratorClone](functions/CMoGeneratorClone.md): 18 functions
 - [CMoGeneratorRes](functions/CMoGeneratorRes.md): 1 functions
 - [CMoGeneratorResAttachments](functions/CMoGeneratorResAttachments.md): 1 functions
 - [CMoGeneratorTask](functions/CMoGeneratorTask.md): 4 functions
+- [CMoKeyFrameRes](functions/CMoKeyFrameRes.md): 3 functions
 - [CMoLfdElem](functions/CMoLfdElem.md): 4 functions
 - [CMoLockColorDriveTask](functions/CMoLockColorDriveTask.md): 3 functions
 - [CMoLockLookAtDriveTask](functions/CMoLockLookAtDriveTask.md): 3 functions
+- [CMoMebRes](functions/CMoMebRes.md): 1 functions
+- [CMoMmbRes](functions/CMoMmbRes.md): 1 functions
 - [CMoMo2Res](functions/CMoMo2Res.md): 4 functions
-- [CMoModeRampTask](functions/CMoModeRampTask.md): 1 functions
-- [CMoMorphElem](functions/CMoMorphElem.md): 1 functions
+- [CMoMsbRes](functions/CMoMsbRes.md): 1 functions
+- [CMoMzbRes](functions/CMoMzbRes.md): 1 functions
 - [CMoNullProgElem](functions/CMoNullProgElem.md): 3 functions
 - [CMoOT](functions/CMoOT.md): 3 functions
 - [CMoOcclusionMng](functions/CMoOcclusionMng.md): 3 functions
 - [CMoOs2Res](functions/CMoOs2Res.md): 3 functions
-- [CMoOtDrawUPTask](functions/CMoOtDrawUPTask.md): 1 functions
-- [CMoOtDrawUPTaskAttachments](functions/CMoOtDrawUPTaskAttachments.md): 1 functions
 - [CMoOtTask](functions/CMoOtTask.md): 5 functions
 - [CMoPathDriveActorTask](functions/CMoPathDriveActorTask.md): 5 functions
 - [CMoPathObject](functions/CMoPathObject.md): 1 functions
@@ -215,20 +223,6 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoProcessor3DNow](functions/CMoProcessor3DNow.md): 16 functions
 - [CMoProcessorSSE](functions/CMoProcessorSSE.md): 5 functions
 - [CMoProcessorX87](functions/CMoProcessorX87.md): 10 functions
-- [CMoResType07Attachments](functions/CMoResType07Attachments.md): 1 functions
-- [CMoResType19](functions/CMoResType19.md): 3 functions
-- [CMoResType1C](functions/CMoResType1C.md): 1 functions
-- [CMoResType1F](functions/CMoResType1F.md): 1 functions
-- [CMoResType21](functions/CMoResType21.md): 1 functions
-- [CMoResType25](functions/CMoResType25.md): 2 functions
-- [CMoResType2E](functions/CMoResType2E.md): 1 functions
-- [CMoResType2F](functions/CMoResType2F.md): 2 functions
-- [CMoResType30](functions/CMoResType30.md): 1 functions
-- [CMoResType31](functions/CMoResType31.md): 1 functions
-- [CMoResType36](functions/CMoResType36.md): 1 functions
-- [CMoResType3E](functions/CMoResType3E.md): 1 functions
-- [CMoResType45](functions/CMoResType45.md): 3 functions
-- [CMoResType5D](functions/CMoResType5D.md): 3 functions
 - [CMoResType5E](functions/CMoResType5E.md): 3 functions
 - [CMoResType5F](functions/CMoResType5F.md): 1 functions
 - [CMoResource](functions/CMoResource.md): 18 functions
@@ -236,7 +230,9 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoResourceMng](functions/CMoResourceMng.md): 1 functions
 - [CMoResourceWaitTask](functions/CMoResourceWaitTask.md): 1 functions
 - [CMoResourceWaitTaskAttachments](functions/CMoResourceWaitTaskAttachments.md): 1 functions
-- [CMoRingElem](functions/CMoRingElem.md): 1 functions
+- [CMoRidRes](functions/CMoRidRes.md): 1 functions
+- [CMoRingProgElem](functions/CMoRingProgElem.md): 1 functions
+- [CMoRmpRes](functions/CMoRmpRes.md): 4 functions
 - [CMoSchOp07Attachments](functions/CMoSchOp07Attachments.md): 1 functions
 - [CMoSchOp0CAttachments](functions/CMoSchOp0CAttachments.md): 1 functions
 - [CMoSchOp0CTask](functions/CMoSchOp0CTask.md): 2 functions
@@ -263,16 +259,21 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 - [CMoSchOpBFAttachments](functions/CMoSchOpBFAttachments.md): 1 functions
 - [CMoSchOpSharedAttachments](functions/CMoSchOpSharedAttachments.md): 1 functions
 - [CMoSchedularTask](functions/CMoSchedularTask.md): 8 functions
-- [CMoScopeRes](functions/CMoScopeRes.md): 4 functions
+- [CMoSchedulerResAttachments](functions/CMoSchedulerResAttachments.md): 1 functions
+- [CMoSepRes](functions/CMoSepRes.md): 1 functions
 - [CMoSk2Res](functions/CMoSk2Res.md): 4 functions
 - [CMoSkeletonElem](functions/CMoSkeletonElem.md): 2 functions
 - [CMoSphRes](functions/CMoSphRes.md): 4 functions
 - [CMoSpline](functions/CMoSpline.md): 12 functions
 - [CMoTask](functions/CMoTask.md): 43 functions
 - [CMoTaskMng](functions/CMoTaskMng.md): 11 functions
+- [CMoUseMagicWaitTask](functions/CMoUseMagicWaitTask.md): 1 functions
+- [CMoUseMagicWaitTaskAttachments](functions/CMoUseMagicWaitTaskAttachments.md): 1 functions
+- [CMoVolumeChangeTask](functions/CMoVolumeChangeTask.md): 1 functions
 - [CMoVuAnmElem](functions/CMoVuAnmElem.md): 5 functions
 - [CMoVuDist](functions/CMoVuDist.md): 5 functions
 - [CMoVuLineProgElem](functions/CMoVuLineProgElem.md): 5 functions
+- [CMoWeatherRes](functions/CMoWeatherRes.md): 2 functions
 
 ## CShader
 
@@ -358,7 +359,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 ## Elem
 
-- [ElemCtor471011C8](functions/ElemCtor471011C8.md): 1 functions. CMoD3mElemFlag200000::Ctor (an element constructor); called from the generator code
+- [ElemCtor471011C8](functions/ElemCtor471011C8.md): 1 functions. CMoD3mLightmapElem::Ctor (an element constructor); called from the generator code
 - [ElemCurve](functions/ElemCurve.md): 4 functions. Evaluate, EvaluateEaseIn, EvaluateEaseInOut: the element curves
 - [ElemFields](functions/ElemFields.md): 1 functions. CMoElem::GetActiveField0A4 / GetAddr78 / GetAddr84
 - [ElemFields194](functions/ElemFields194.md): 7 functions. getters and setters of the element fields +0x194 to +0x1A8; called only from the generator code
@@ -376,6 +377,10 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 ## Error
 
 - [ErrorReport](functions/ErrorReport.md): 18 functions. XiErrMsgGetErrCode, ReportAndHandleError, error callbacks (RegisterCallback, IsRegistered); called from event, menu and actor code
+
+## Event
+
+- [EventTextBlock](functions/EventTextBlock.md): 1 functions
 
 ## Faq
 
@@ -446,7 +451,6 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 ## Menu
 
 - [MenuPanels](functions/MenuPanels.md): 155 functions. Menu_* panels, Movie_CreateFrameTextures / GetCurrentTexture, ActerBuff_DrawNearby, the menus "abisortw", "subwindo", "quest01" (an address range between two evidenced source files, holding several of the original files: named for its main contents)
-- [MenuTextBlock](functions/MenuTextBlock.md): 1 functions
 
 ## Mesh
 

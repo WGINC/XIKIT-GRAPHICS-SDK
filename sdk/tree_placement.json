@@ -1716,14 +1716,14 @@
   "unit": "TexturePreview"
  },
  "0x1001e050": {
-  "class": "CMoResType5D",
+  "class": "CMoBpRes",
   "method": "Slot4StoreInHandle",
-  "symbol": "CMoResType5D::Slot4StoreInHandle"
+  "symbol": "CMoBpRes::Slot4StoreInHandle"
  },
  "0x1001e060": {
-  "class": "CMoResType5D",
+  "class": "CMoBpRes",
   "method": "Slot5Nop",
-  "symbol": "CMoResType5D::Slot5Nop"
+  "symbol": "CMoBpRes::Slot5Nop"
  },
  "0x1001e2f0": {
   "class": null,
@@ -2959,9 +2959,9 @@
   "symbol": "CMoTask::CtorByMode"
  },
  "0x10035ae0": {
-  "class": "CMoModeRampTask",
+  "class": "CMoVolumeChangeTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoModeRampTask::ScalarDeletingDtor"
+  "symbol": "CMoVolumeChangeTask::ScalarDeletingDtor"
  },
  "0x10035d40": {
   "class": "CMoTask",
@@ -3885,9 +3885,9 @@
   "symbol": "CMoVuAnmElem::ScalarDeletingDtor"
  },
  "0x1003f430": {
-  "class": "CMoResType25",
+  "class": "CMoD3bRes",
   "method": "Slot9Nop",
-  "symbol": "CMoResType25::Slot9Nop"
+  "symbol": "CMoD3bRes::Slot9Nop"
  },
  "0x1003f440": {
   "class": "CMoDistMorphElem",
@@ -3905,9 +3905,9 @@
   }
  },
  "0x1003fb70": {
-  "class": "CMoMorphElem",
+  "class": "CMoD3bElem",
   "method": "Ctor",
-  "symbol": "CMoMorphElem::Ctor"
+  "symbol": "CMoD3bElem::Ctor"
  },
  "0x1003fcb0": {
   "class": "CMoDistModelElem",
@@ -3944,9 +3944,9 @@
   }
  },
  "0x10040e70": {
-  "class": "CMoD3mElemFlag200000",
-  "method": "RebuildBlendWeights",
-  "symbol": "CMoD3mElemFlag200000::RebuildBlendWeights"
+  "class": "CMoD3mLightmapElem",
+  "method": "DrawLightmapPass",
+  "symbol": "CMoD3mLightmapElem::DrawLightmapPass"
  },
  "0x10041000": {
   "class": "CMoElem",
@@ -3990,26 +3990,26 @@
   "symbol": "CMoD3mSpecularElem::BindTintedTexture"
  },
  "0x10041af0": {
-  "class": "CMoElemKind5C",
+  "class": "CMoDamValueProgElem",
   "method": "Slot18DrawTextAtTarget",
-  "symbol": "CMoElemKind5C::Slot18DrawTextAtTarget"
+  "symbol": "CMoDamValueProgElem::Slot18DrawTextAtTarget"
  },
  "0x10041f40": {
   "class": null,
   "method": null,
-  "symbol": "CXiSub_10041E70_Ctor",
-  "unit": "CMoElemKind5C",
+  "symbol": "CMoDamValueProgElem_Construct",
+  "unit": "CMoDamValueProgElem",
   "reloc_literals": 1
  },
  "0x10041fe0": {
-  "class": "CMoElemKind5C",
+  "class": "CMoDamValueProgElem",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoElemKind5C::ScalarDeletingDtor"
+  "symbol": "CMoDamValueProgElem::ScalarDeletingDtor"
  },
  "0x10042020": {
-  "class": "CMoOtDrawUPTask",
+  "class": "CMoFloatingNumberTask",
   "method": "Slot8Update",
-  "symbol": "CMoOtDrawUPTask::Slot8Update"
+  "symbol": "CMoFloatingNumberTask::Slot8Update"
  },
  "0x10042640": {
   "class": "CMoTask",
@@ -4022,9 +4022,9 @@
   "symbol": "CMoOtTask::Slot11DoNothing"
  },
  "0x10042690": {
-  "class": "CMoOtDrawUPTaskAttachments",
+  "class": "CMoFloatingNumberTaskAttachments",
   "method": "Slot1DeleteOwner",
-  "symbol": "CMoOtDrawUPTaskAttachments::Slot1DeleteOwner"
+  "symbol": "CMoFloatingNumberTaskAttachments::Slot1DeleteOwner"
  },
  "0x100426a0": {
   "class": "CMoElem",
@@ -5038,9 +5038,9 @@
   "unit": "ElemCtor471011C8"
  },
  "0x10052e90": {
-  "class": "CMoD3mElemFlag200000",
+  "class": "CMoD3mLightmapElem",
   "method": "Ctor",
-  "symbol": "CMoD3mElemFlag200000::Ctor"
+  "symbol": "CMoD3mLightmapElem::Ctor"
  },
  "0x10052f00": {
   "class": "CMoD3mElem",
@@ -5068,9 +5068,9 @@
   "symbol": "CMoDistModelElem::ScalarDeletingDtor"
  },
  "0x10052f80": {
-  "class": "CMoRingElem",
+  "class": "CMoRingProgElem",
   "method": "Ctor",
-  "symbol": "CMoRingElem::Ctor"
+  "symbol": "CMoRingProgElem::Ctor"
  },
  "0x10052fd0": {
   "class": "CMoDistRingElem",
@@ -5295,14 +5295,14 @@
   "symbol": "CMoGeneratorTask::Slot12DeleteClone"
  },
  "0x10054480": {
-  "class": "CMoResType19",
+  "class": "CMoKeyFrameRes",
   "method": "SetupNop",
-  "symbol": "CMoResType19::SetupNop"
+  "symbol": "CMoKeyFrameRes::SetupNop"
  },
  "0x10054490": {
-  "class": "CMoResType19",
+  "class": "CMoKeyFrameRes",
   "method": "Slot9Nop",
-  "symbol": "CMoResType19::Slot9Nop"
+  "symbol": "CMoKeyFrameRes::Slot9Nop"
  },
  "0x100544d0": {
   "class": null,
@@ -5921,9 +5921,9 @@
   "symbol": "CMoSpline::SetValue"
  },
  "0x10063c50": {
-  "class": "CMoResType3E",
+  "class": "CMoSepRes",
   "method": "SetupClearField34",
-  "symbol": "CMoResType3E::SetupClearField34"
+  "symbol": "CMoSepRes::SetupClearField34"
  },
  "0x10063c80": {
   "class": null,
@@ -6559,14 +6559,14 @@
   "symbol": "CMoCamera::GetSharedInstance"
  },
  "0x100719c0": {
-  "class": "CMoResType45",
+  "class": "CMoCibRes",
   "method": "SetupNop",
-  "symbol": "CMoResType45::SetupNop"
+  "symbol": "CMoCibRes::SetupNop"
  },
  "0x100719d0": {
-  "class": "CMoResType45",
+  "class": "CMoCibRes",
   "method": "Slot9Nop",
-  "symbol": "CMoResType45::Slot9Nop"
+  "symbol": "CMoCibRes::Slot9Nop"
  },
  "0x100719e0": {
   "class": "CMoSk2Res",
@@ -6611,9 +6611,9 @@
   "symbol": "CMoBm2Res::ScalarDeletingDtor"
  },
  "0x10071a60": {
-  "class": "CMoResType5D",
+  "class": "CMoBpRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType5D::ScalarDeletingDtor"
+  "symbol": "CMoBpRes::ScalarDeletingDtor"
  },
  "0x10071a80": {
   "class": "CMoOs2Res",
@@ -6631,9 +6631,9 @@
   "symbol": "CMoMo2Res::ScalarDeletingDtor"
  },
  "0x10071ae0": {
-  "class": "CMoResType45",
+  "class": "CMoCibRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType45::ScalarDeletingDtor"
+  "symbol": "CMoCibRes::ScalarDeletingDtor"
  },
  "0x10071b00": {
   "class": "CMoResType5E",
@@ -6641,29 +6641,29 @@
   "symbol": "CMoResType5E::ScalarDeletingDtor"
  },
  "0x10071b50": {
-  "class": "CMoResType1F",
+  "class": "CMoD3mRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType1F::ScalarDeletingDtor"
+  "symbol": "CMoD3mRes::ScalarDeletingDtor"
  },
  "0x10071b70": {
-  "class": "CMoResType21",
+  "class": "CMoD3aRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType21::ScalarDeletingDtor"
+  "symbol": "CMoD3aRes::ScalarDeletingDtor"
  },
  "0x10071b90": {
-  "class": "CMoResType25",
+  "class": "CMoD3bRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType25::ScalarDeletingDtor"
+  "symbol": "CMoD3bRes::ScalarDeletingDtor"
  },
  "0x10071bb0": {
-  "class": "CMoResType31",
+  "class": "CMoMsbRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType31::ScalarDeletingDtor"
+  "symbol": "CMoMsbRes::ScalarDeletingDtor"
  },
  "0x10071bd0": {
-  "class": "CMoResType30",
+  "class": "CMoMebRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType30::ScalarDeletingDtor"
+  "symbol": "CMoMebRes::ScalarDeletingDtor"
  },
  "0x10071bf0": {
   "class": "CMoResType5F",
@@ -6671,14 +6671,14 @@
   "symbol": "CMoResType5F::ScalarDeletingDtor"
  },
  "0x10071c40": {
-  "class": "CMoResType19",
+  "class": "CMoKeyFrameRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType19::ScalarDeletingDtor"
+  "symbol": "CMoKeyFrameRes::ScalarDeletingDtor"
  },
  "0x10071c90": {
-  "class": "CMoScopeRes",
+  "class": "CMoRmpRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoScopeRes::ScalarDeletingDtor"
+  "symbol": "CMoRmpRes::ScalarDeletingDtor"
  },
  "0x10071d00": {
   "class": "CMoSphRes",
@@ -6952,24 +6952,24 @@
   "symbol": "CMoResourceWaitTaskAttachments::Slot1DeleteOwner"
  },
  "0x100745e0": {
-  "class": "CMoScopeRes",
+  "class": "CMoRmpRes",
   "method": "Slot11GetCameraRuntimeClass",
-  "symbol": "CMoScopeRes::Slot11GetCameraRuntimeClass"
+  "symbol": "CMoRmpRes::Slot11GetCameraRuntimeClass"
  },
  "0x100745f0": {
-  "class": "CMoScopeRes",
+  "class": "CMoRmpRes",
   "method": "Slot12DeleteOwner",
-  "symbol": "CMoScopeRes::Slot12DeleteOwner"
+  "symbol": "CMoRmpRes::Slot12DeleteOwner"
  },
  "0x10074600": {
-  "class": "CMoResType07Attachments",
+  "class": "CMoSchedulerResAttachments",
   "method": "Slot1DeleteOwner",
-  "symbol": "CMoResType07Attachments::Slot1DeleteOwner"
+  "symbol": "CMoSchedulerResAttachments::Slot1DeleteOwner"
  },
  "0x10074610": {
-  "class": "CMoScopeRes",
+  "class": "CMoRmpRes",
   "method": "SetupNop",
-  "symbol": "CMoScopeRes::SetupNop"
+  "symbol": "CMoRmpRes::SetupNop"
  },
  "0x100746a0": {
   "class": null,
@@ -9101,9 +9101,9 @@
   "symbol": "CMoTask::GetRuntimeClass_variant17"
  },
  "0x100a9db0": {
-  "class": "CMoCasterTargetTask",
+  "class": "CMoUseMagicWaitTask",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoCasterTargetTask::ScalarDeletingDtor"
+  "symbol": "CMoUseMagicWaitTask::ScalarDeletingDtor"
  },
  "0x100aaef0": {
   "class": "CXiControlActor",
@@ -9121,9 +9121,9 @@
   "symbol": "CXiControlActor::Slot138_Scan3F0"
  },
  "0x100ab060": {
-  "class": "CMoCasterTargetTaskAttachments",
+  "class": "CMoUseMagicWaitTaskAttachments",
   "method": "Slot1DeleteOwner",
-  "symbol": "CMoCasterTargetTaskAttachments::Slot1DeleteOwner"
+  "symbol": "CMoUseMagicWaitTaskAttachments::Slot1DeleteOwner"
  },
  "0x100ab070": {
   "class": "CXiSkeletonActor",
@@ -15398,9 +15398,9 @@
   "unit": "TargetMenu"
  },
  "0x101630e0": {
-  "class": "MenuTextBlock",
-  "method": "MenuTextBlock_Draw",
-  "symbol": "MenuTextBlock::MenuTextBlock_Draw"
+  "class": "EventTextBlock",
+  "method": "EventTextBlock_Draw",
+  "symbol": "EventTextBlock::EventTextBlock_Draw"
  },
  "0x10163350": {
   "class": null,
@@ -15417,7 +15417,7 @@
  "0x10163390": {
   "class": null,
   "method": null,
-  "symbol": "MenuTextBlock_DrawBgRect",
+  "symbol": "EventTextBlock_DrawBgRect",
   "unit": "TargetMenu"
  },
  "0x101633d0": {
@@ -15731,9 +15731,9 @@
   "unit": "ZoneMapLoad"
  },
  "0x10176ea0": {
-  "class": "CMoResType2E",
+  "class": "CMoMmbRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType2E::ScalarDeletingDtor"
+  "symbol": "CMoMmbRes::ScalarDeletingDtor"
  },
  "0x10176f60": {
   "class": null,
@@ -15742,9 +15742,9 @@
   "unit": "ZoneResWeather"
  },
  "0x10176f80": {
-  "class": "CMoResType1C",
+  "class": "CMoMzbRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType1C::ScalarDeletingDtor"
+  "symbol": "CMoMzbRes::ScalarDeletingDtor"
  },
  "0x10176fe0": {
   "class": null,
@@ -15753,9 +15753,9 @@
   "unit": "ZoneResource"
  },
  "0x10177000": {
-  "class": "CMoResType36",
+  "class": "CMoRidRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType36::ScalarDeletingDtor"
+  "symbol": "CMoRidRes::ScalarDeletingDtor"
  },
  "0x101771b0": {
   "class": null,
@@ -16382,14 +16382,14 @@
   "unit": "EnvLight"
  },
  "0x101893d0": {
-  "class": "CMoResType2F",
+  "class": "CMoWeatherRes",
   "method": "ScalarDeletingDtor",
-  "symbol": "CMoResType2F::ScalarDeletingDtor"
+  "symbol": "CMoWeatherRes::ScalarDeletingDtor"
  },
  "0x101893f0": {
-  "class": "CMoResType2F",
+  "class": "CMoWeatherRes",
   "method": "SetupNop",
-  "symbol": "CMoResType2F::SetupNop"
+  "symbol": "CMoWeatherRes::SetupNop"
  },
  "0x10189400": {
   "class": null,

@@ -427,7 +427,7 @@ Why the file has this name (data/unit_names.json): Target_* (46 named), Menu_* a
 | `TargetMenu_CtorZeroed` | 0x10163090 | 20 | yes | - | Constructs a zeroed object. | low |
 | `TargetMenu_ZeroWordsAndDwords` | 0x10163350 | 29 | yes | - | Zeroes four word fields at the start of the object and then the three dwords through Unit1012AC80_ZeroDwords. | low |
 | `TargetMenu_NoOpE` | 0x10163380 | 1 | yes | - | Does nothing. | low |
-| `MenuTextBlock_DrawBgRect` | 0x10163390 | 15 | yes | 1 | - | - |
+| `EventTextBlock_DrawBgRect` | 0x10163390 | 15 | yes | 1 | - | - |
 | `TargetMenu_ZeroDwords` | 0x101633D0 | 13 | yes | - | Zeroes a 3-component dword vector. | medium |
 | `Gfx_DrawSolidRect2D` | 0x10163400 | 534 | yes | 0 | - | - |
 
@@ -791,7 +791,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Menu_CallChildSlot34ForEachItem` calls `NetCellFont_GetHead`, `sub_10126520`, `NetCellFont_InvokeChild34`
 - `MenuMng_UpdateForSceneState` calls `Menu_ApplyFlagsToItems`, `Cell_SetGlobal1036E3A0`, `NetCellFont_ClearGlobalLists2150And2154`, `TextInputFiles_RunPairB`, `TextInputFiles_RunPairA`, `Menu_CallSlot30ForEachEntry`, `ActorHandle_Resolve`, `Acter_IsEvent`, `IsEvent`, `NetCellFont_TestCommand36CF60`, `Menu_GetStateB4`, `Menu_SetStateB4`, `Menu_IsStateB4Eq1`, `Cell_SetFlag104E1C3C`, `TextInputFiles_IsModeFourOrFive`, `YkCommon_IsActorField170`, `Menu_FindByFlags34`, `ChatLog_AddTableMessage7`, `TargetMenu_OpenNoticeDialog101608D0`, `TargetMenu_OpenNoticeDialog101608B0`, `YkWindows_DestroyDrawMenuIfAt14`, `YkWindows_CloseIfAt14`
 - `Menu_ApplyFlagsToItems` calls `Menu_HasAnyFlag`, `Menu_CloseEntry`, `TargetMenu_ClearTargetAndRedraw`, `Acter_IsFlag40DB6OrState17`, `MenuMng_OpenByName`, `Target_ReleaseSelection`, `YkWindows_RunCallbackAndResetTarget`, `TargetMenu_ClearField68AndDraw`, `TextInputFiles_GetSetting41`, `TextInputFiles_Call10311386`
-- `Menu_DrawLayers` calls `Gfx_SetDefault2DStates`, `MenuTextBlock::MenuTextBlock_Draw`, `NetCellFont_CursorUpdateEdgeAxes`, `TargetMenu_MenuTest48OrStateB4`, `MenuPanels_SendMenuEventByKind`, `NetCellFont_GetHead`, `Menu_NextVisibleItem`, `Menu_IsStateB4Eq1`, `Menu_DrawWindowItems`, `sub_10124EB0`, `Gfx_DisableFogAndAlphaBlend`
+- `Menu_DrawLayers` calls `Gfx_SetDefault2DStates`, `EventTextBlock::EventTextBlock_Draw`, `NetCellFont_CursorUpdateEdgeAxes`, `TargetMenu_MenuTest48OrStateB4`, `MenuPanels_SendMenuEventByKind`, `NetCellFont_GetHead`, `Menu_NextVisibleItem`, `Menu_IsStateB4Eq1`, `Menu_DrawWindowItems`, `sub_10124EB0`, `Gfx_DisableFogAndAlphaBlend`
 - `UI_DockReset` calls `Menu_GetDwordAt8C`, `Menu_PositionWindow`
 - `Menu_PositionWindow` calls `IsEvent`, `NetCellFont_GetRect`, `NetCellFont_FindFreeEntry`, `sub_10119110`
 - `TargetMenu_MenuGetItemRect` calls `NetCellFont_GetRect`
@@ -854,6 +854,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TargetMenu_CtorZeroed` calls `TargetMenu_ZeroWordsAndDwords`
 - `TargetMenu_ZeroWordsAndDwords` calls `TargetMenu_ZeroDwords`
 - `TargetMenu_NoOpE` calls nothing directly
-- `MenuTextBlock_DrawBgRect` calls `Gfx_DrawSolidRect2D`
+- `EventTextBlock_DrawBgRect` calls `Gfx_DrawSolidRect2D`
 - `TargetMenu_ZeroDwords` calls nothing directly
 - `Gfx_DrawSolidRect2D` calls `CDx_SetDefaultRenderState`, `CDx::DrawPrimitiveUP`, `Gfx_SetDefault2DStates`

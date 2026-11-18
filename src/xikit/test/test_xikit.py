@@ -74,7 +74,44 @@ def run_host(cmd, d, env, mode, timeout=600):
     print('-- files: ' + ', '.join('%s %d' % (f, os.path.getsize(os.path.join(d, f))) for f in sorted(os.listdir(d)) if os.path.isfile(os.path.join(d, f))))
     print('-- kept for reading: %s' % d)
     return None
-ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'native', 'measure')
+ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'fx2mod', 'native', 'measure')
+# texmod: sdk/examples/texture_replace through the kit with the game's TexObj_Create/TexObj_Upload on Wine's d3d8
+TEXMOD = os.path.join(os.path.dirname(MODDLL), 'texture_replace.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), TEXMOD, os.path.join(SDK, 'examples', 'texture_replace.cpp'),
+                os.path.join(SDK, 'examples', 'texture_replace_core.cpp')], check=True)
+FXMOD = os.path.join(os.path.dirname(MODDLL), 'effect_comfort.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), FXMOD, os.path.join(SDK, 'examples', 'effect_comfort.cpp'), os.path.join(SDK, 'examples', 'effect_comfort_core.cpp')], check=True)
+CAMMOD = os.path.join(os.path.dirname(MODDLL), 'camera_view.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), CAMMOD, os.path.join(SDK, 'examples', 'camera_view.cpp')], check=True)
+OVLMOD = os.path.join(os.path.dirname(MODDLL), 'file_overlay.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), OVLMOD, os.path.join(SDK, 'examples', 'file_overlay.cpp')], check=True)
+AUDMOD = os.path.join(os.path.dirname(MODDLL), 'audio_mix.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), AUDMOD, os.path.join(SDK, 'examples', 'audio_mix.cpp')], check=True)
+ENVMOD = os.path.join(os.path.dirname(MODDLL), 'world_light.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), ENVMOD, os.path.join(SDK, 'examples', 'world_light.cpp')], check=True)
+PHOMOD = os.path.join(os.path.dirname(MODDLL), 'photo_mode.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), PHOMOD, os.path.join(SDK, 'examples', 'photo_mode.cpp'), os.path.join(SDK, 'examples', 'photo_mode_core.cpp')], check=True)
+CFMOD = os.path.join(os.path.dirname(MODDLL), 'color_filter.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), CFMOD, os.path.join(SDK, 'examples', 'color_filter.cpp'), os.path.join(SDK, 'examples', 'color_filter_core.cpp')], check=True)
+UIMOD = os.path.join(os.path.dirname(MODDLL), 'ui_layout.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), UIMOD, os.path.join(SDK, 'examples', 'ui_layout.cpp'), os.path.join(SDK, 'examples', 'ui_layout_core.cpp')], check=True)
+def ovl_files(d):
+    for rel, s in (('ROM/1/2.DAT', 'orig2'), ('ROM/1/3.DAT', 'orig3'), ('overlay/10_a/ROM/1/2.DAT', 'packA'), ('overlay/20_b/ROM/1/2.DAT', 'packB')):
+        os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True); open(os.path.join(d, rel), 'w').write(s)
+def dds32(w, h, levels):                # A8R8G8B8 DDS (dds.h): levels = [bytes of each level]
+    import struct
+    hd = [0] * 31; hd[0] = 124; hd[1] = 0x100F | (0x20000 if len(levels) > 1 else 0); hd[2] = h; hd[3] = w; hd[4] = w * 4
+    hd[6] = len(levels); hd[18] = 32; hd[19] = 0x41; hd[21] = 32; hd[22:26] = [0xFF0000, 0xFF00, 0xFF, 0xFF000000]; hd[26] = 0x1000
+    return b'DDS ' + struct.pack('<31I', *hd) + b''.join(levels)
+def texmod_files(d):                    # what host.c's texmod_run expects (its comment)
+    import struct, zlib
+    os.makedirs(os.path.join(d, 'textures'))
+    col = lambda w, h, f: b''.join(struct.pack('<I', f(x, y)) for y in range(h) for x in range(w))
+    open(os.path.join(d, 'textures', 'trtest01.dds'), 'wb').write(dds32(16, 16, [col(16, 16, lambda x, y: 0xFF010101 if x % 2 == 0 else 0xFFFFFFFF)]))
+    src = b''.join(struct.pack('<I', 0xFF000000 | (0x400000 + k * 0x0301)) for k in range(64))      # object 2's pixels
+    lv = [col(max(32 >> i, 1), max(32 >> i, 1), lambda x, y: 0xFF020202) for i in range(6)]
+    open(os.path.join(d, 'textures', 'trtest02_%08X.dds' % zlib.crc32(src)), 'wb').write(dds32(32, 32, lv))
+    open(os.path.join(d, 'textures', 'trtest02.dds'), 'wb').write(b'not a dds: the keyed file must win')
 # the measure run's table: the game's import slots from the kit's own xikit_measure.txt, and three call sites in game
 # functions the host can run (host.c, measure mode)
 def measure_table(d):
@@ -107,6 +144,17 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
     if mode.startswith('mod') or mode == 'reload': shutil.copy(MODDLL, d)
     if mode == 'reload': shutil.copy(MODDLL2, d)
     if mode == 'facts': shutil.copy(FACTS, d)
+    if mode == 'texmod': shutil.copy(TEXMOD, d); texmod_files(d)
+    if mode in ('fxmod', 'fx2mod'): shutil.copy(FXMOD, d)
+    if mode == 'cammod': shutil.copy(CAMMOD, d)
+    if mode == 'ovlmod': shutil.copy(OVLMOD, d); ovl_files(d)
+    if mode == 'audmod': shutil.copy(AUDMOD, d)
+    if mode == 'envmod': shutil.copy(ENVMOD, d)
+    if mode == 'phomod': shutil.copy(PHOMOD, d)
+    if mode == 'uimod': shutil.copy(UIMOD, d)
+    if mode == 'cfmod':                           # on kit/d3d8on11 (shader passes); its own kit load off (realdev_ours says why)
+        shutil.copy(CFMOD, d); shutil.copy(os.path.join(H, '..', '..', 'd3d8on11', 'dist', 'd3d8.dll'), d)
+        with open(os.path.join(d, 'd3d8on11.ini'), 'w') as f: f.write('[d3d8on11]\r\nload_kit=0\r\n')
     env = dict(os.environ, WINEDEBUG='-all')
     cmd = ['wine', 'host.exe', mode]
     if mode == 'native':                          # sample=2 starts xisamp_x64.exe: a Wine prefix with 64-bit Windows
@@ -114,6 +162,8 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
         env['WINEPREFIX'] = os.path.join(d, 'pfx64'); subprocess.run(['wineboot', '-i'], env=env, capture_output=True, timeout=600)
     if mode == 'measure':                         # a window for DispatchMessageA: a virtual X server
         env.update(measure_table(d)); cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', 'measure']
+    if mode in ('texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'fx2mod'): cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', mode]
+    if mode == 'cfmod': env['WINEDLLOVERRIDES'] = 'd3d8=n'
     if mode.startswith('realdev'):                # a real D3D8 device: Wine's d3d8, then kit/d3d8on11's (thread mode)
         cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', 'realdev']
         if mode == 'realdev_ours':
@@ -142,6 +192,15 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
     if mode == 'base':
         ok = 'kit build: ' + open(os.path.join(DIST, 'VERSION.txt')).readline().strip() in log
         print('%s: xikit.log names the kit\'s build (VERSION.txt line 1)' % ('ok' if ok else 'FAIL')); bad += not ok
+    if mode == 'cfmod' and os.path.exists(os.path.join(d, 'd3d8on11.log')): print('-- d3d8on11.log (end) --'); print(open(os.path.join(d, 'd3d8on11.log'), errors='replace').read()[-2500:])
+    if mode == 'fx2mod':
+        ok = 'effect_comfort: effect spel/fire (0%)' in log
+        print('%s: fx2mod: fx_list logged the element\'s path spel/fire and its percent from effects.txt' % ('ok' if ok else 'FAIL')); bad += not ok
+    if mode == 'cfmod':
+        m = re.search(r"color_filter: check: the filtered frame's centre is ([0-9a-f-]+)", log)
+        v = int(m.group(1), 16) if m and m.group(1) != '-1' else -1
+        ok = v >= 0 and abs((v >> 16) - 94) <= 2 and abs(((v >> 8) & 0xFF) - 71) <= 2 and (v & 0xFF) <= 2
+        print('%s: cfmod: pure red through the deuteranopia simulation (Machado et al. 2009: 0.367 0.280 -0.012) is %s in the filtered frame (5e4700 within 2)' % ('ok' if ok else 'FAIL', m.group(1) if m else 'not logged')); bad += not ok
     print('-- xikit.log --'); print('\n'.join(l for l in log.splitlines() if 'swapped ' not in l and 'restored ' not in l)[-3000:])
     if r.returncode != 0 or 'ALL OK' not in r.stdout: bad += 1
     if mode == 'base':

@@ -6,7 +6,7 @@ draw between the world and the interface, run their own HLSL shaders and read de
 with settings that apply while the game runs. It covers the game's builds 6A995428 (3 Sep 2026), 6AC37846 and 6AE818B4
 (2 Nov 2026, the current one).
 
-This repository is the devkit's public home: release 2, built and ready to use, and its source.
+This repository is the devkit's public home: release 3, built and ready to use, and its source.
 
 ## What this kit covers, and what it leaves out
 
@@ -47,6 +47,7 @@ function.
 | `kit/` | `xikit.dll` (loads mods, hooks the device, captures frames), its `xikit.ini` (`swap=0`, list your mods on `mods=`), and the manifests of the three builds |
 | `d3d8on11/` | the renderer: Direct3D 8 on Direct3D 12 (or 11), with shader passes for mods (`d3d8.dll`, `d8x.exe`, `d8x_arm64.exe`) |
 | `sdk/` | the headers (`include/`, `tree_include/`), the reconstructed source (`tree_src/`), the examples, the Visual Studio / VS Code template, `build_mod.sh` / `build_mod.bat`, and `SDK.md` |
+| `mods/` | nine example mods for players, built from `sdk/examples` (below): list one in `kit/xikit.ini`'s `mods=` |
 | `docs/` | the reference: a page per source file (every function, its address, whether it is hookable, its review's summary, what it calls), the files by name group, the call trees from the main loop and `Frame_Render`, and the names still generic (`docs/README.md` says where each column comes from) |
 | `pdb/` | `FFXiMain.pdb` for each build (names, sizes and class types for a debugger) and its symbol list as JSON |
 | `tools/` | the frame inspector (`tools/fcap/frame_inspect.py`) and its replayer |
@@ -97,6 +98,27 @@ checks the layout at compile time.
 - forks (`XI_FORK`, `fork.py gate`), and calling a reconstructed member function directly. Both link against the
   reconstruction DLL. `fork.py new` and `fork.py diff` still copy and compare a function's source.
 
+## The example mods (`mods/`, source in `sdk/examples`)
+
+Each source file's first comment says where the mod hooks, what it reads of the game and from which code, and what is
+not known. Their settings appear in `xikit_mods.ini` once the mod has run. All of them were tested offline (below);
+none has run in the game yet.
+
+| Mod | What it does |
+|---|---|
+| `texture_replace` | Textures from DDS files (`textures\<name>_<crc>.dds` or `<name>.dds`), any size; `tex_dump=1` writes the game's textures out to find their names. Fonts are textures too |
+| `file_overlay` | Any of the game's files from overlay packs (`overlay\<pack>\<path below FINAL FANTASY XI>`): models, zones, effects, sound effects, music. Reads only |
+| `effect_comfort` | A limit on full-screen flashes (`flash_limit`, `flash_rise_ms`), an effect intensity (`fx_intensity`), and per-effect percentages from `effects.txt` (`fx_list=1` names them) |
+| `camera_view` | Field of view (`fov_deg`) and far clip distance (`far_percent`) |
+| `photo_mode` | A free camera orbiting the game's (`photo`, `photo_yaw`, ...), the interface hidden (`photo_hide_ui`), a picture of the world without it (`photo_shot`) |
+| `world_light` | Fog distance, colour and off; ambient and light brightness |
+| `audio_mix` | Interface, effect, ambient and music volume |
+| `color_filter` | Colour-blind correction or simulation of the whole frame (`cb_mode`; needs d3d8on11) |
+| `ui_layout` | Interface windows moved, each by name (`ui_layout.txt`) or all together (`ui_dx`, `ui_dy`) |
+
+Each changes how the game looks or sounds on your own screen. None reads or sends anything the game sends, nor shows
+anything the game hides.
+
 ## The frame inspector
 
 Capture one frame in the game: set `fcap=1` in `xikit.ini`, then create `xikit_fcap_now.txt` next to `xikit.dll`.
@@ -118,6 +140,11 @@ The inspector names a call site's function from `pdb/`. A site in a left-out fun
   - that nothing else in the game is patched.
 
   Every example and the template compile against these headers, and so does every source file in `sdk/tree_src`.
+- **The example mods:** each through the full kit under Wine, with the game's own code where it hooks it (the
+  analysis repository's `kit/xikit/test`, modes texmod, fxmod, fx2mod, cammod, ovlmod, audmod, envmod, phomod,
+  cfmod, uimod; `src/xikit/test` here): for example the game's own texture creation with a replacement in place, the
+  game's own fade pass with the flash limited, the game's own camera build from the free camera's eye, the game's own
+  window drawing and hit test with a window moved. Not run in the game.
 - **In the game, not yet in this configuration:** the same `xikit.dll` and d3d8on11 ran in the owner's game (build
   6AE818B4) with the full kit, which had the reconstruction swapped in. There, these ran:
   - mods drawing each frame;

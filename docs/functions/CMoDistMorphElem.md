@@ -21,7 +21,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CMoDistMorphElem::ApplyMorph` calls `TextureHolder_BindWarped`, `CMoDistMorphElem::ComputeMorphHandle`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `Mem_FreeObject`, `MoDX_SetInvalid`, `sub_10313486`, `StateBlock_ApplyTSS`, `MoProcessor_CallVSlot49`, `CDx::SetTransform`, `CMoVuElem_Draw`
 - `CMoDistMorphElem::ComputeMorphHandle` calls `Mem_AllocObject`
 - `CMoDistMorphElem::GetRuntimeClass` calls nothing directly
-- `CMoDistMorphElem::Construct` calls `CMoMorphElem::Ctor`
+- `CMoDistMorphElem::Construct` calls `CMoD3bElem::Ctor`
 - `CMoDistMorphElem::IsKind6` calls nothing directly
 - `CMoDistMorphElem::set_field_1C0` calls nothing directly
-- `CMoDistMorphElem::ScalarDeletingDtor` calls `CMoMorphElem_Dtor`, `SharedDeleteHelper`
+- `CMoDistMorphElem::ScalarDeletingDtor` calls `CMoD3bElem_Dtor`, `SharedDeleteHelper`
