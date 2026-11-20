@@ -82,8 +82,28 @@ typedef struct XikitHost {
      void xikit_mod_settings(void);                  optional (version 4): a declared setting changed in xikit_mods.ini;
                                                      render thread; read the new values with setting_int
      uintptr_t xi_rel;                               optional data export: set to host->rel before init (the tree
-                                                     headers' XI_GAME / orig:: / globals use it; xikit_sdk.hpp
-                                                     defines it) */
+                                                     headers' XI_GAME / orig:: / globals use it)
+     int32_t xi_shift[], xi_shift_cap;               data exports: the build's moved code ranges, set before init.
+                                                     On a game build whose code moved, the kit does not use a mod
+                                                     without xi_shift (the mark of an SDK from before build
+                                                     translation, whose game addresses would be wrong there)
+   XIKIT_MOD_GLOBALS, once per mod at file scope, defines and exports all three. A mod that holds no game address of
+   its own (it uses only the host's functions) still needs it, to be used on such a build. */
+#ifdef __cplusplus
+#define XIKIT_EXTERN_C_ extern "C"
+#else
+#define XIKIT_EXTERN_C_
+#endif
+#ifdef __clang__
+/* (clang refuses dllexport on a definition whose earlier declaration, the tree's `extern "C" uintptr_t xi_rel;`, had
+   none: the three are exported by a linker directive instead) */
+#define XIKIT_MOD_GLOBALS XIKIT_EXTERN_C_ uintptr_t xi_rel = 0; XIKIT_EXTERN_C_ int32_t xi_shift[1 + 3 * 64] = {0}; \
+  XIKIT_EXTERN_C_ int32_t xi_shift_cap = 64; \
+  __asm__(".section .drectve\n\t.ascii \" -export:xi_rel,data -export:xi_shift,data -export:xi_shift_cap,data\"\n\t.text\n");
+#else
+#define XIKIT_MOD_GLOBALS XIKIT_EXTERN_C_ __declspec(dllexport) uintptr_t xi_rel = 0; \
+  XIKIT_EXTERN_C_ __declspec(dllexport) int32_t xi_shift[1 + 3 * 64] = {0}; XIKIT_EXTERN_C_ __declspec(dllexport) int32_t xi_shift_cap = 64;
+#endif
 /* The interface is frozen as released (devkit release 1: version 4): fields are only ever added after the last, and
    no field moves or changes type. Every build of a mod and of the kit checks the layout here (32-bit). */
 #if defined(__cplusplus) && __cplusplus >= 201103L

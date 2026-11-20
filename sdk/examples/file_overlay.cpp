@@ -34,6 +34,7 @@
 #include <vector>
 #include <algorithm>
 #include "xikit_mod.h"
+XIKIT_MOD_GLOBALS        // (no game address of its own; the exports let the kit use it on a build whose code moved)
 
 static const XikitHost *g_host;
 static std::string g_game_dir, g_overlay;               // lower case, '\\', no trailing '\\'
