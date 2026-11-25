@@ -65,10 +65,17 @@ the whole game was scanned for other writers: section 5.
   +0x17 is set. Width and height are the UI rectangle `[0x106218B4]` (left, top, right, bottom shorts), which
   `ZoneMapLoad_CreateUiObjects` sets to 0, 0, `Camera_GetWord14()`, `Camera_GetWord16()` (the +0x14 and +0x16 words of `[0x104568FC]`, which the tree
   calls `g_pCamera` but which holds the App object `CApp::RunMainLoop` makes with `App_Constructor`, 0x10010700, 0x33C
-  bytes; what writes those two words: not found among direct 16-bit writes, the two word setters 0x10015620 and
-  0x10015630 having no reference); `Frame_Render` changes it only around `CopyrightText_Draw` and puts it
+  bytes). Those two words (read 25 Nov): `App_InitScene` (0x100114EF..0x1001150A, called by `CApp::RunMainLoop`)
+  writes them from the globals 0x10456AC8 and 0x10456A90, which the configuration table 0x103507DC (records
+  {pointer, number, 0}) fills from the game's registry values numbered 0x25 and 0x26 (named `%04d`, so "0037" and
+  "0038"; read with RegQueryValueExA by 0x100179E0); both are 0 by default (0x100178B0). When either is 0, equal to
+  the screen size (+0x10/+0x12, from CDx +0x15C/+0x160), or its render target cannot be made, the screen size is used
+  instead (0x10011712); `Frame_Render` changes it only around `CopyrightText_Draw` and puts it
   back (0x1001262C..0x1001266C). In the owner's game (1512x949) the chat log was placed at 16,863 size 1366,70 (its
   definition's anchor and y not read: a bottom anchor would make its y 362).
+
+Where the definitions come from (read 25 Nov): resource chunks of type 0x30 in the game's DAT files, frames of type
+0x31 (docs/DATA_FILES.md section 4, with the file numbers the code loads).
 
 ## 5. Not known
 
@@ -82,17 +89,37 @@ the whole game was scanned for other writers: section 5.
     `MenuMng_OpenByName`); 0x10232B20 (a byte at +0x90, where a window keeps its width); 0x1015AAB0 (its own
     stack frame, [esp + 0x8E]).
   - 32-bit writes at +0x8C (74 instructions): the one in the window's own unit, `NetCellFont_CursorUpdateEdgeAxes`,
-    writes the menu cursor `[0x104E1D4C]` (its callers `Menu_DrawLayers` and 0x10160C60 pass that). The other 73 are
-    in functions of other classes by their names (`YkWindows_*` of other vtables, `Target_Reset`, `MenuMng_Init`,
-    `CMoGeneratorClone::ResolveCmdTargets`, ...); each one's object has not been followed.
+    writes the menu cursor `[0x104E1D4C]` (its callers `Menu_DrawLayers` and 0x10160C60 pass that). The others (26 Nov,
+    the whole game scanned again: 80 writes in 67 functions): 60 of the functions neither touch the menu manager
+    (0x10621838) nor call the functions that hand out windows (`MenuMng_OpenByName`, `Menu_FindItemByName`,
+    `Menu_NextVisibleItem`, `NetCellFont_MenuCtor` and the like); the 7 that do write their own object, not the window:
+    0x101E7980, 0x101E7EF0 and 0x101FA550 use fields of it up to +0x174, +0x158 and +0x6C8, past a window's 0xD4 bytes;
+    0x10130A80 writes `[0x10663740]`, a 0x9C-byte `YkWindows` object (vtable 0x1033A5D8, made in `YkInit`); 0x101EB660
+    runs on `[0x10663684]` (vtable 0x10339D78, made in `YkInit`); 0x10233C30 and 0x10233CD0 are slots of the panel
+    vtable 0x1033C720 (`MenuPanels_PanelCtorVt1033C720`). A window has no vtable (`NetCellFont_MenuCtor` writes none).
+    So no window is placed by a 32-bit write at +0x8C, as far as where each function gets its object shows (a window
+    passed in by a caller of one of the 60 was not ruled out function by function).
 - Clamping to the screen (read 25 Nov): neither `NetCellFont_SetRectAndUpdateNodes` nor the per-frame easing
   0x10117520 reads the UI rectangle `[0x106218B4]` or any screen size: they do not clamp. The UI rectangle is read by
-  the placement from a definition (0x1011A8F0, its anchoring). Whether a window's own layout function clamps after
-  placing it: per window, the 40 callers (not each read).
+  the placement from a definition (0x1011A8F0, its anchoring). The window layout functions (26 Nov, every function
+  that calls `NetCellFont_SetRectAndUpdateNodes`: 37 of them): 22 read neither the UI rectangle `[0x106218B4..BA]` nor
+  `[0x104568FC]` nor its size getters (0x10015640, 0x10015650), so they cannot clamp to the screen; 0x101626E0 reads
+  `[0x104568FC]` (what for: not read); the other 14 read the UI rectangle to anchor (width - 0x200, height - 0x1C0:
+  0x1011A8F0, 0x1011ACC0), to centre ((size - 0x200) / 2, (size - 0x1C0) / 2: 0x1011ACC0, 0x10164350, 0x10164430,
+  0x102408D0, 0x10240A50, 0x10240DE0, 0x10240E70), to give a window the screen's width (0x102411D0), to right-align it
+  (width - 0x98, 0x101E9880), or as a fraction of the width (0x1013A250, with `MenuMng_GetOffsetX`); 0x101376A0,
+  0x10162D90 and 0x102418F0 the same way. The only comparison with it near those reads is 0x10162D90's, which limits a
+  window's +0x32 (a width) to the screen width - 0xA0 or +0x52, whichever is less: a width, not a position. So no window
+  is moved back onto the screen by its layout function, as far as their reads of the screen size show (each function
+  was not read in full).
 - +0x9B (the viewport switch) and +0x88, read 25 Nov: +0x9B is written by `NetCellFont_MenuCtor` (cleared) and set only
   by 0x1011A7B0, which has no caller and no stored pointer anywhere in the image (the other two byte writes at
   +0x9B are in other units' functions); so no window turns `NetCellFont_SetViewport`'s
   clipping on in this build. 0x1011A7B0 would set the viewport (+0x9C..+0xA2), place the window with it, and give
   the object at +0x88 its x (right - 6), y (top), the visible height, the content height (+0xB4) and the scroll
   offset (+0xB8): the values of a scroll bar. Otherwise the object at +0x88 only gets its position from
-  `NetCellFont_SetRectAndUpdateNodes` (right - 6, top); what draws it: **not read**.
+  `NetCellFont_SetRectAndUpdateNodes` (right - 6, top). It is made (26 Nov) by `NetCellFont_PlaceCursorObject`
+  (0x10118530): 0x2C bytes, set by `MenuPanels_InitDrawRect` (0x10234610) with x = right - 8, y = top, the window's
+  height, its row count (+0x58, or the argument) and a second argument; `Menu_DrawWindowItems` draws it
+  (`MenuPanels_DrawProgressBar` 0x10234660, at 0x10117EB9) when the window's +0x69 and +0x74 are set and its +0x10 is
+  above its +0xC: the scroll bar, drawn only when the rows do not all fit.

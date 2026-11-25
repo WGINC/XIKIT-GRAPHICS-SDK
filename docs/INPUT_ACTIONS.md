@@ -141,7 +141,7 @@ ends where the handler table starts: 0x1036D6B0 + 6*188 = 0x1036DB18); entries w
 | 121 (0x79) | 0004 | - | - | - | first stick x (byte - 0x80) / 128 / keyboard/mouse axis 1 (0x10122E30) | - |
 | 122 (0x7A) | 0004 | - | - | - | first stick y (byte - 0x80) / 128 / keyboard/mouse axis 2 (0x10122E30) | - |
 | 123 (0x7B) | 0004 | - | - | - | second stick x (byte - 0x80) / 128 / keyboard/mouse axis 3 (0x10122E30), or other values, by the state 0x10123060 tests | - |
-| 124 (0x7C) | 0004 | - | - | - | second stick y (byte - 0x80) / 128 / not read (0x10123100) | - |
+| 124 (0x7C) | 0004 | - | - | - | second stick y (byte - 0x80) / 128 / -1 x (-1 while action 165 held; +1 while action 164 held) | - |
 | 125 (0x7D) | 0004 | V[Ctrl-or-Alt+opt5C] Num5[no-Ctrl/Alt] | NetCellFont_QueryState1D44Mask4000 | pad bit 14 | - | 101E89C0 (kind 1); 101EF0A0 (kind 1) |
 | 126 (0x7E) | 0004 | Num*[no-Ctrl/Alt] | 10121310 | pad bit 10 | - | 101EF0A0 (kind 1) |
 | 127 (0x7F) | FFFF | J[Ctrl-or-Alt+opt5C] | - | - | - | - |

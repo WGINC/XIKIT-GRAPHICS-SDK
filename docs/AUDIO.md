@@ -117,7 +117,27 @@ stream thread has ended the buffer is stopped and released.
 1 and 2) do the same (their calls, disassembly): read the file through the C runtime (0x102CA030..0x102CA1C0),
 decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it into the DirectSound buffer
 (`Lock` +0x2C, `Unlock` +0x4C), `Play` (+0x30), `SetCurrentPosition` (+0x34), poll `GetCurrentPosition` (+0x10), and
-`Sleep(1)` between polls; `Stop` (+0x48) at the end. The decoders' formats: **not read line by line**.
+`Sleep(1)` between polls; `Stop` (+0x48) at the end.
+
+**The decoders** (read 26 Nov, disassembly). Both decode through 0x10246AB0 after 0x10246A70 has combined the block
+with the 4-byte words of the object's table at +8. 0x10246AB0 is a 4-bit ADPCM: each block starts with a header byte
+whose high nibble picks one of the five coefficient pairs at 0x10388BF0 ((0, 0), (60, 0), (115, -52), (98, -55),
+(122, -60)) and whose low nibble is a shift; each following byte holds two samples, low nibble first, each
+(nibble << 12, as a 16-bit value) >> shift + (c0 x s1 + c1 x s2) >> 6, with s1, s2 the last two samples; no clamp;
+16-bit output (0x10246AF1..0x10246B78). With a first argument of 2 or more (0x10246B98..0x10246D1D) the channels come
+as separate blocks, left then right, each with its own last two samples (state +0/+4 and +8/+0xC), and the output is
+interleaved L, R. 0x102CA1F0 (called from both decoders) is another step: not read.
+Checked 26 Nov on the viewer's `se000154.spw` (pipeline/spw_decode.py follows this): the data from +0x30 to the end
+is exactly 17,600 blocks of 9 bytes (a header byte, 8 bytes = 16 samples), every filter nibble 0..4, header +8 equal
+to the file's size, and the decode gives 2.93 s of 48 kHz stereo peaking near +-18,000 with no sample past 16 bits.
+
+**A sound block's header** (command 1's "SeWave" blocks, 0x1024A7A0; checked 26 Nov against a real file, the
+PlayOnline viewer's `se000154.spw` from the owner's archive). The function fills a WAVEFORMATEX (field order from the
+Windows SDK's mmreg.h) from it: PCM, channels = byte +0x2A, bits per sample = byte +0x2B, block align =
+channels x bits / 8, sample rate = (+0x1C + +0x20) & 0x7FFFFFFF (that file: 0xDE602B66 + 0x21A0901A = 48000 Hz, 2
+channels, 16 bits). Byte +0x29 holds flags: 0x80, the level is table[+0x28] (the level table 0x103889F0); 0x20, a
+path through 0x1024A190 first and level 0x4E20 with a pitch slide (+0x6C = 0x96); 0x08, level 0x4E20; otherwise the
+command's own volume. +0x10 is passed to 0x1024A190. "SeWave" at +0 (0x10388C8C).
 
 0x102466F0 answers questions about stream channel 0 without the ring: (0, id) whether that id plays, (1, id) its level
 (+0x4C >> 12), (3, id) its fade steps left. The music therefore plays on stream channel 0, the only one command 7
@@ -142,5 +162,8 @@ naming pipeline.
 ## 6. Not known
 
 - Which options in the game's menus settings 9, 10 and 0xA8 are (their labels are the game's data files).
-- Commands 1 and 2 past their dispatch (the sound data blocks' layout), the two decoders, and the field
-  `[stream pool + 0x434]` (cleared by commands 0, 1 and 2).
+- Commands 1 and 2: the header is read (section 4, 26 Nov); the data after the header and the stereo decode are read
+  and checked on a file (section 4); 0x102CA1F0 and the table step 0x10246A70 applies when a decoder has one: not read. `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
+  pool is three channels of 0x1C0 bytes): commands 0 and 1 write 0 there (0x1024A72C, 0x1024A7BA) and no instruction
+  in the game reads [register + 0x434] on the pool, nor +0xB4 of a stream channel in the sound code (the only reads of
+  +0xB4 there are the effect thread's, 0x102480C0, on its own channel). As far as direct reads show, nothing uses it.

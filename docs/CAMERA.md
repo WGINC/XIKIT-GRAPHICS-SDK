@@ -52,17 +52,57 @@ zone's value times the time-of-day factor, but at least 43.0; in zone 0xC1 the p
 makes it when `g_pXiZone` is empty (0x1018B14C, the constructor, then the 43.0); slot 1 of its vtable 0x10336838
 (0x1018B360, an event handler) releases it and clears `g_pXiZone` for events of type 2 and 5. So after one of those
 the next zone gets a new object and the floor 43.0 again. Which events those two types are (whether every zone
-change sends one): **not read**.
+change sends one), read 26 Nov (disassembly): the zone object
+lives in a block of the game's memory areas (`Mem_AllocFromArea`; its base slots 2 and 3, 0x1002C930/0x1002C920, read
+and set a flag in the block header at object - 8). `MemBlock_CallEnabledEntries` (0x10028BF0) calls slot 1 of every
+enabled block of an area with an event record; `MemHeapDebug_ApplyFourTables` (0x10029390) does it for the four
+areas. The records are two series of {type, 0}: 0x103501F8 = {1}, {2}, {3}, sent in turn by 0x10014C60 (from
+`Camera_ReleaseAll`, called by `CApp::RunMainLoop` 0x100016A9 and 0x100013C0), and 0x10350210 = {4}, {5}, {6}, sent by
+0x10014CB0 (from `WinMain_ShutdownActorsAndTables`, which `WinMain_EnterState4AfterShutdown`,
+`WinMain_TryShutdownActors` and `WinMain_StepStagedRelease` call; from 0x100B5C30, called by 0x100B5A90 and
+0x100B5B70; and from `LobbyThread_ResetZone`). So the zone object is released by the second event of either series.
+0x100B5A90 and 0x100B5B70 are opcodes 0x34 and 0x35 of the byte-code interpreter 0x100BC280 (jump table
+0x100BC960, 219 entries; 0x100BCCD0 feeds it bytes from [object + 0x20] at +0x256): after a 300-step wait
+([0x10489910]) each sends events 4..6 (0x100B5C30) and changes the zone with 0x1018B3A0 (section 3a), unless
+[0x10489918] is set, when it resets the zone object instead (`XiZone::ResetState`). So a zone change made by those
+two opcodes always gets a new zone object and the 43.0 floor. Whether every zone change in play goes through them
+(what that interpreter's scripts are): not read.
 
 ## 4. Not known
 
-- The zone's value is the float at +0xC of the record `[zone + 0x1C]` (`ZoneMap_GetFloatRef1CPlus0C`); which file or
-  packet fills that record: **not read**. (+0x1D0, the floor, is read: 3a.) Whether models stay loaded beyond the
-  game's distance: **not read**.
-- Other copies of the view (read 25 Nov): every function in the tree that reads the view or projection does it
-  through `CDx::GetTransformCached` (callers in tree/src/CXiSkeletonActor.cpp, MoDX.cpp, DynVB.cpp, ElemFog.cpp,
-  EnvMapProjTex.cpp, CMoFloatingNumberTask.cpp, YkCommon.cpp, MathVector.cpp, InputDevices.cpp), the one copy
-  `Camera_ApplyViewProjection` sets each frame; those that keep a copy (MoDX, DynVB) take it from there (how often each refreshes it: per call site, not each read). Functions
-  without source in the tree that might read the device's transforms another way: **not read**.
+- The zone's value is the float at +0xC of the record `[zone + 0x1C]` (`ZoneMap_GetFloatRef1CPlus0C`). Read 26 Nov
+  (disassembly): `ZoneMap_SetRecord` (0x101880C0) sets +0x18 to its record and +0x1C to the record + 0x4C, so the value
+  is the record's float at **+0x58**. The record at a zone's start: 0x1018B6A0 (from 0x1018B500, the zone load) takes
+  the zone's resource, finds its chunk of type 0x2F (`CMoResource::FindByTypeAndId`, 0x1018B6CE; the factory's class
+  `WeatherRes`, ctor 0x101893B0) and hands its data to 0x1018B010, which copies 0xAC bytes unchanged to 0x1065CA58
+  (0x1018A760, `rep movsd` of 0x2B dwords) and sets that record on every zone map. The zone's resource is the file
+  numbered zone + 100, or zone + 0x144F7 for zones 600 and above (0x10178DF0, 0x10178EB1..0x10178EF1; file numbers to
+  paths: docs/DATA_FILES.md). So the draw distance is the float at +0x58 of the type-0x2F chunk's data in the zone's
+  file. Later records: `ZoneMap_Update` sets `[map + 0x10] + 0x20` (the environment blend's record),
+  `YmCombineWeather::Release` and 0x101873A0 set others (their records' source: not read).
+  Checked 26 Nov on a real file: the owner's file 218 (`ROM/0/71.DAT`, zone 118 taken from row 118 of the English
+  zone-name table, ROM/165/84.DAT, "Buburimu Peninsula"; that the table's row is the zone number is not shown by the
+  code read). It walks as 1,794 resource chunks to its exact end, with the zone-map types 0x1C, 0x2E, 0x36 and 57
+  chunks of type 0x2F (176 bytes of data each; ids of four digits: 0000, 0500, 0600, 1200, 1700, 1800, 2100). The float
+  at +0x58 is 396.0 in the first 43 of them and 120.0 in the last 14. Which one the zone load takes:
+  `FindByTypeAndId` is called with id 0 (0x1018B6C5), and with a type given, id 0 matches any id
+  (`CMoResource::FindWorker`, tree/src/CMoResource.cpp:258): the first type-0x2F chunk its walk meets. In file order
+  that is the "0600" chunk, 396.0; whether the walk's order is the file's order: not read (all of the first 43 hold
+  396.0 either way). So in that zone the draw distance is 396 times the time-of-day factor, at least 43, until a
+  later record replaces it. (+0x1D0, the floor, is read: 3a.) Whether models stay loaded beyond the
+  game's distance (read 26 Nov, every instruction of the game that touches an actor's +0xB2): the distance bit gates
+  work only: the draw list (`CXiActorDraw::UpdateDrawList`), names, lights (`Actor_SelectNearestLights`), the parts
+  (`CXiSkeletonActor::ForParts0To9`), head look, effect generators whose caster or target is beyond (0x100575A0,
+  0x10057840/0x1005785F) and spawning the actor's resource generators (`CXiActor::SpawnResourceGenerators`,
+  0x1008507C). None of them frees or unloads anything, so a model beyond the distance stays loaded; what does release
+  an actor is not this flag.
+- Other copies of the view (read 25 Nov; 26 Nov, the whole game scanned): every function in the tree that reads the
+  view does it through `CDx::GetTransformCached` (0x1000BDB0), the copy `Camera_ApplyViewProjection` sets each frame;
+  nine calls in five functions without source read the same copy (0x1006A4A0, 0x100AC390, 0x100C4CE0, 0x100C63D0,
+  0x1017B510). Calls of the device's own `GetTransform` (slot +0x98 with the device `[[0x1045666C] + 0xC]` pushed):
+  four, all for D3DTS_PROJECTION (3, d3d8types.h), none for the view: `XiZone::DrawGroundShadowQuad`,
+  `CTsZoneMap::DrawProjectedShadow`, `XiZone::DrawDecalOnTriangles`, `YmElem_SetupDevice`. The other 11 calls through
+  a slot +0x98 in functions without source pass a game object in ecx (the game's own methods), not the device. So
+  no code reads the view another way.
 - Whether other tools running in the game (Windower, Ashita) write the same camera fields: their code is closed; the
   owner's run with and without Windower (kit/sessions/ltp_25nov R6) is the test.

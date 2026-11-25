@@ -672,6 +672,9 @@ static int uimod_run(IDirect3DDevice8 *dev) {
   memset(w1, 0, sizeof w1); memset(w2, 0, sizeof w2); memset(f1, 0, sizeof f1); memset(f2, 0, sizeof f2); memset(l1, 0, sizeof l1); memset(l2, 0, sizeof l2);
   memcpy(md1 + 0x46, "menu    inventor", 16); memcpy(md2 + 0x46, "menu    equip   ", 16);
   *(void **)(w1 + 4) = md1; *(void **)(w2 + 4) = md2; w1[0x60] = 9; w2[0x60] = 9;
+  /* (25 Nov) inventor's title as the game keeps it: record +8 = its frame, frame +0xC = the title text (0x1011B5BE) */
+  static uint8_t uframe1[0x20]; static char utitle1[] = "Items"; memset(uframe1, 0, sizeof uframe1); *(void **)(uframe1 + 0xC) = utitle1;
+  *(void **)(md1 + 8) = uframe1; *(void **)(md2 + 8) = 0;
   *(void **)(l1 + 0x10) = f1; *(void **)(l2 + 0x10) = f2; *(void **)(w1 + 0x14) = l1; *(void **)(w2 + 0x14) = l2;
   memset(n1, 0, sizeof n1); memset(n2, 0, sizeof n2); *(void **)n1 = n2; *(void **)(n1 + 0x10) = w1; *(void **)(n2 + 0x10) = w2;
   uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0x60]; memcpy(saved, mng, sizeof saved);
@@ -696,6 +699,10 @@ static int uimod_run(IDirect3DDevice8 *dev) {
   for (int i = 0; i < 80 && t1[0] != 55; i++) { IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(25); }
   snprintf(what, sizeof what, "uimod: ui_dx 40: placed again at %d,%d (55,17), equip at %d,%d (40,0), frame node %d,%d", t1[0], t1[1], t2[0], t2[1], fr1[0xd], fr1[0xe]);
   check(t1[0] == 55 && t1[1] == 17 && t2[0] == 40 && t2[1] == 0 && fr1[0xd] == 55, what);
+  { FILE *lg = fopen("xikit.log", "r"); char l[600]; int t = 0, e = 0;
+    while (lg && fgets(l, sizeof l, lg)) { if (strstr(l, "window menuinventor (\"Items\")")) t = 1; if (strstr(l, "window menuequip (\"\")")) e = 1; }
+    if (lg) fclose(lg);
+    check(t && e, "uimod: ui_list names inventor by the title the game keeps (\"Items\"), equip (no frame) with none"); }
   memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr;
   return 0;
 }

@@ -14,6 +14,10 @@
 //   +0x9A); in the tree's source it is the only writer of +0x8C and +0x3A, and 40 of the game's functions call it to
 //   place their windows;
 // - a window's name is the 16 characters at (window +4) +0x46: the game looks windows up by it.
+// - (25 Nov) its title: window +4 is its layout record (NetCellFont_Rebuild, tree/src/NetCellFont.cpp:13645, from
+//   MenuMng_OpenByName's Menu_FindItemByNameAt1C); the record's +8 is its frame (0x1011B06D) and the frame's +0xC the
+//   title text the game took from message table 13 (0x1011B5BE), or 0 (docs/DATA_FILES.md section 4). ui_list logs it
+//   (its printable characters; the text's inline codes are left out), so the log names windows the way the game shows them.
 //
 // (25 Nov) The first version wrote +0x3A..+0x40 before each draw: that moved only the hit rectangle, never what is
 // drawn (the owner's run: "does not work at all"). This one hooks NetCellFont_SetRectAndUpdateNodes: each time the
@@ -58,6 +62,14 @@ static void offset_of(void *w, int *dx, int *dy, char key[17]) {
   *dx = g_host->setting_int("ui_dx", 0); *dy = g_host->setting_int("ui_dy", 0);
   for (int i = 0; i < g_nrules; i++) if (!strcmp(g_rules[i].key, key)) { *dx += g_rules[i].dx; *dy += g_rules[i].dy; break; }
 }
+static void title_of(void *w, char out[64]) {                 // the window's title, as the game loaded it, or ""
+  out[0] = 0;
+  const char *md = *reinterpret_cast<char **>(reinterpret_cast<char *>(w) + 4); if (!md) return;
+  const char *fr = *reinterpret_cast<char *const *>(md + 8); if (!fr) return;
+  const char *t = *reinterpret_cast<char *const *>(fr + 0xC); if (!t) return;
+  int k = 0; for (int i = 0; t[i] && i < 200 && k < 63; i++) { unsigned char c = (unsigned char)t[i]; if (c >= 0x20 && c < 0x7F) out[k++] = (char)c; }
+  out[k] = 0;
+}
 static Win *win_of(void *w) {
   for (int i = 0; i < g_nwin; i++) if (g_win[i].w == w) return &g_win[i];
   if (g_nwin == 256) g_nwin = 0;                         // (forget the oldest set: each is recorded again when the game places it)
@@ -68,7 +80,7 @@ static xikit::fn<decltype(&NetCellFont_SetRectAndUpdateNodes)> prev_SetRect;
 static undefined4 __thiscall my_SetRect(void *w, undefined4 x, undefined4 y, undefined4 wd, undefined4 ht, undefined4 p5, undefined4 snap, undefined4 p7) {
   int dx, dy; char key[17]; offset_of(w, &dx, &dy, key);
   Win *r = win_of(w); r->bx = (int)x; r->by = (int)y; r->bw = (int)wd; r->bh = (int)ht; r->p5 = (int)p5; r->p7 = (int)p7; r->dx = dx; r->dy = dy;
-  if (g_host->setting_int("ui_list", 0) && !r->listed) { r->listed = true; g_host->log("ui_layout: window %s placed by the game at %d,%d size %d,%d; offset %d,%d", key, (int)x, (int)y, (int)wd, (int)ht, dx, dy); }
+  if (g_host->setting_int("ui_list", 0) && !r->listed) { r->listed = true; char t[64]; title_of(w, t); g_host->log("ui_layout: window %s (\"%s\") placed by the game at %d,%d size %d,%d; offset %d,%d", key, t, (int)x, (int)y, (int)wd, (int)ht, dx, dy); }
   return prev_SetRect(w, (undefined4)((int)x + dx), (undefined4)((int)y + dy), wd, ht, p5, snap, p7);
 }
 

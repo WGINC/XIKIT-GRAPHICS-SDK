@@ -204,8 +204,8 @@ call in the game's code pushes an action above 0xBA; entry 187 (0xBB) has no con
   constructor (the start) and from the ByteTable panels' close (0x1019D090, 0x1019D450); mode 2 from their open
   (0x1019CFF0, 0x1019D3B0) and from 0x1023FE20 and 0x102450C0; **mode 4, typing**, from the text input's own key
   handling: `TextInputFiles_HandleKeyDownWithIme` (twice), `TextInputFiles_OnChar`, 0x101B13F0, 0x101B20E0,
-  0x101B5760 (twice), each with (4, 0, 5, 0x78, 0, 0, 0, 0xA); mode 5 from 0x101C69C0 (called by 0x101C6870; on
-  which object and screen: **not read**). So 3 is the line at rest, 2 the line held while a config panel takes the
+  0x101B5760 (twice), each with (4, 0, 5, 0x78, 0, 0, 0, 0xA); mode 5 from 0x101C69C0 (called by 0x101C6870, a method of the
+  object at `[0x10662DA0]`: below, "Chat mode 5", 26 Nov). So 3 is the line at rest, 2 the line held while a config panel takes the
   keys, 4 the player typing. `TextInputFiles_EndMode4Or5` returns 4 to 3. Mode 1 is also set by 0x101B5300 (from
   0x101B0040).
   A binding of a modifier key itself (LCtrl, LShift, LAlt) with kind 4 is answered by "either side held".
@@ -218,8 +218,8 @@ call in the game's code pushes an action above 0xBA; entry 187 (0xBB) has no con
   `TextInputFiles_ByteTableDefaultCtor` and `TextInputFiles_ByteTableAltCtor` (both made by
   `TextInputFiles_CreateConfigObjects`). The clearing slot opens the panel (cursor, help, a 0x1D/0x1E state); the
   setting slot first stores the panel's 32 bytes as settings 0x6A..0x89 (`SetConfig`). So the 0x10 bindings work
-  except while one of those panels is open. Which screen of the game the panels are, and what settings
-  0x6A..0x89 hold: **not read**.
+  except while one of those panels is open. Which screen of the game the panels are: **not read**. What settings 0x6A..0x89 hold (read 26 Nov): see "The
+  key-config settings" below.
 
 **The analog query**, 0x10123970 (unused, action): a float. Per action, a pair of analog handlers at
 0x1036D0D8 + 8*action (the table runs from the context table's end to the binding table's start: 187 entries).
@@ -242,8 +242,8 @@ asks for each, with the kind): docs/INPUT_ACTIONS.md, made by `pipeline/input_ac
 | 0-3 | Up, Down, Right, Left | pad bits 6, 7, 4, 5 (the d-pad: the poll's d-pad pair, 3c); as analog, 1.0 while held; asked held (kind 4) by 0x1013A5B0 and `MenuPanels_SetMode`, as trigger (kind 0) by 0x101E5280 |
 | 14, 143, 145, 147 | Enter, keypad Enter | pad bit 0, the same action in four contexts (docs/INPUT_ACTIONS.md lists each one's askers) |
 | 15, 144, 146, 148, 149 | Esc | pad bit 3; asked by `Acter_UpdateFrame`, `MenuMng_UpdateForSceneState`, `Target_CycleMenuStep`, `StAvatar_UpdateSteer` (held) and others (INPUT_ACTIONS) |
-| 70-78, 82 | F1-F10 | targeting: `Target_RunActiveCommand` (0x101585F0) walks the table 0x10371EE0 ({context word, action, kind, command}, 16 bytes each, ended by action -1) with `TargetMenu_FindActiveCommand` and acts on the first action that fires: F1-F6 (70-75, kind 1) commands 6-11, F7 (76) 6, F8 (77) 28, F9 (78) 21, F10 (82) 18; the same table maps actions 176-179 (24-27), 145 (1), 39-42 (2, 2, 3, 4), 83, 84, 132, 151, 146 (13-17), 171, 172 (19, 20), 139 and 140 released (22, 23), 184 (28). What each command number does: `Target_ActOrTrySubSelect` and the code after, **not read** |
-| 88-97 | 0-9 with Shift and the 0x10 condition | `TextInputFiles_HandleReadPosKeys` (0x101A3550): each sets `TextInputFiles_SetReadPos([self + 4], 0, 2, 4, ... 18)`; what that position is on screen: **not read** |
+| 70-78, 82 | F1-F10 | targeting: `Target_RunActiveCommand` (0x101585F0) walks the table 0x10371EE0 ({context word, action, kind, command}, 16 bytes each, ended by action -1) with `TargetMenu_FindActiveCommand` and acts on the first action that fires: F1-F6 (70-75, kind 1) commands 6-11, F7 (76) 6, F8 (77) 28, F9 (78) 21, F10 (82) 18; the same table maps actions 176-179 (24-27), 145 (1), 39-42 (2, 2, 3, 4), 83, 84, 132, 151, 146 (13-17), 171, 172 (19, 20), 139 and 140 released (22, 23), 184 (28). What each command number does: below, "The targeting commands" (26 Nov) |
+| 88-97 | 0-9 with Shift and the 0x10 condition | `TextInputFiles_HandleReadPosKeys` (0x101A3550): each sets `TextInputFiles_SetReadPos([self + 4], 0, 2, 4, ... 18)`; that position is the macro set (26 Nov): below, "The macro set position" |
 | 98-107 | Alt+0..Alt+9 | the Alt macro palette's slots (5) |
 | 108-117 | Ctrl+0..Ctrl+9 | the Ctrl macro palette's slots (5) |
 | 118 | LCtrl, with Ctrl | "Ctrl held": opens the Ctrl palette (5) |
@@ -377,3 +377,96 @@ Ashita: not run with the kit yet beyond prishe_probe (P1); how it hooks input is
 `get_memory_mapped_image()` of the unpacked 6A995428 DLL (a disassembly, a scan of the calls into the key table, the
 callers of a function with their pushed arguments, the references to an address, the loads of 0x104E1D44 and the
 fields used after them); each line above names the address it was read at.
+
+## Read 26 Nov (disassembly of 6A995428; the tree's names)
+
+**The key-config settings 0x6A..0x86.** Every setting is an entry of 0x2C bytes defined by `TextInputFiles_DefineEntry`
+(0x10195460: +4 the number, +8 the value, +0xC its kind, +0x18 minimum, +0x1C maximum (-1: none), +0x20 the value
+used when a new one is out of range, +0x28 flags), all defined in `FsConfig_Constructor` (0x10193BF0, 224 calls);
+`TextInputFiles_SetConfigEntryValue` keeps a value inside +0x18..+0x1C. Settings 0x6A..0x89 are defined with range
+0..255 and defaults that are DirectInput key codes (0x6A: 0x1E, DIK_A in dinput.h); for the language numbers 2 and 3
+(`[eax+8]`, 0x10194B1C) some are defined again with other keys (0x70 and 0x76 swap 0x15 and 0x2C, DIK_Y and DIK_Z).
+They are applied by 0x1019CFA0: for each of the 29 records of 5 action numbers at 0x1037A290 (0xFFFF ends a record),
+setting 0x6A + record is written as the **first key binding** of each of those actions (`Cell_SetWord1036D6B0`
+0x10123680: binding 0 of the action, the key with condition 0x10, or 0 when the key is 0). 0x1019D540 takes only
+0x6A..0x86, so 0x87..0x89 are defined but nothing applies them. Each setting, the actions it binds and their keys
+(INPUT_ACTIONS.md):
+
+```
+0x6A 59 A[Ctrl-or-Alt+opt5C]
+0x6B 57 I[Ctrl-or-Alt+opt5C]
+0x6C 65 M[Ctrl-or-Alt+opt5C]
+0x6D 127 J[Ctrl-or-Alt+opt5C]
+0x6E 128 W[Ctrl-or-Alt+opt5C]
+0x6F 159 B[Ctrl-or-Alt+opt5C]
+0x70 14 Y[Ctrl-or-Alt+opt5C] Enter NumEnter; 66 Y[Ctrl-or-Alt+opt5C] Enter[Ctrl-or-Alt+opt5C] NumEnter[Ctrl-or-Alt+opt5C]; 143 Y[Ctrl-or-Alt+opt5C] Enter[no-Ctrl/Alt] NumEnter[no-Ctrl/Alt]; 145 Y[Ctrl-or-Alt+opt5C] Enter[no-Ctrl/Alt] NumEnter[no-Ctrl/Alt]; 147 Y[Ctrl-or-Alt+opt5C] Enter NumEnter
+0x71 15 N[Ctrl-or-Alt+opt5C] Esc[no-Ctrl/Alt]; 144 N[Ctrl-or-Alt+opt5C] Esc[no-Ctrl/Alt]; 146 N[Ctrl-or-Alt+opt5C] Esc[no-Ctrl/Alt]; 148 N[Ctrl-or-Alt+opt5C] Esc; 149 N[Ctrl-or-Alt+opt5C] Esc
+0x72 24 -[Ctrl-or-Alt+opt5C] Num-[no-Ctrl/Alt]
+0x73 120 F[Ctrl-or-Alt+opt5C] Num+[no-Ctrl/Alt]; 17 F[Ctrl-or-Alt+opt5C] Num+[no-Ctrl/Alt]
+0x74 86 ][Ctrl-or-Alt+opt5C] Scroll[no-Ctrl/Alt]
+0x75 85 [[Ctrl-or-Alt+opt5C] SysRq[no-Ctrl/Alt] SysRq[no-Ctrl/Alt]
+0x76 69 Z[Ctrl-or-Alt+opt5C] Num/[not-typing,no-Ctrl/Alt]
+0x77 79 .[Ctrl-or-Alt+opt5C] PgUp[not-typing,no-Ctrl/Alt] Num9[not-typing,no-Ctrl/Alt]; 164 .[Ctrl-or-Alt+opt5C] PgUp[not-typing,no-Ctrl/Alt] Num9[not-typing,no-Ctrl/Alt]
+0x78 80 ,[Ctrl-or-Alt+opt5C] PgDn[not-typing,no-Ctrl/Alt] Num3[not-typing,no-Ctrl/Alt]; 165 ,[Ctrl-or-Alt+opt5C] PgDn[not-typing,no-Ctrl/Alt] Num3[not-typing,no-Ctrl/Alt]
+0x79 129 -
+0x7A 130 -
+0x7B 54 E[Ctrl-or-Alt+opt5C]
+0x7C 64 V[Ctrl-or-Alt+opt5C]; 16 V[Ctrl-or-Alt+opt5C] Num5[not-typing,no-Ctrl/Alt]
+0x7D 61 H[Ctrl-or-Alt+opt5C]
+0x7E 63 C[Ctrl-or-Alt+opt5C]
+0x7F 60 S[Ctrl-or-Alt+opt5C]
+0x80 58 P[Ctrl-or-Alt+opt5C]
+0x81 56 T[Ctrl-or-Alt+opt5C]
+0x82 62 L[Ctrl-or-Alt+opt5C]
+0x83 55 R[Ctrl-or-Alt+opt5C]
+0x84 173 U[Ctrl-or-Alt+opt5C]
+0x85 174 X[Ctrl-or-Alt+opt5C]
+0x86 180 Q[Ctrl-or-Alt+opt5C]
+```
+
+**The window-style setting 0x12** is defined with range 0..7, default 0 (0x10193E27); it selects files 14..21
+(docs/DATA_FILES.md section 3), the eight files that hold window frames.
+
+**The targeting commands** (the table 0x10371EE0 above; `Target_ActOrTrySubSelect` passes a non-zero command to
+0x101587F0, its jump table 0x10158A2C for commands 1..28). Each case finds an actor and the common end selects it
+(`Target_Select` 0x10157B40, then 0x10037DD0 when the selection took):
+
+| Command | What the case calls (0x101587F0) |
+|---|---|
+| 1 | `Target_FindNearestOnLocalPositiveX` (+0x60, +0x64) |
+| 2 | `Target_CycleEntryTarget` |
+| 3, 4 | `Target_CycleInView` (0, 1) |
+| 5, 6, 12 | 0x10081550 on 0x1047D600, when +0x60 has 0x200 |
+| 7..11 | `Yk_GetActerPtrA0(command - 6)` on `[0x106643A8]`, when +0x60 has 4 |
+| 13, 14 | `Yk_GetActerPtrA0(6)`, `(12)`, when +0x60 has 8 |
+| 15, 16 | `Target_CycleInViewOrFirst` (1, 0) |
+| 17, 23 | when a target is held (`Target_GetCachedIfValid`): `Target_ClearAll` |
+| 18, 20 | `CXiActor::FindNearestToTarget_Mode1(0x12, 0)`, else a further search (not read) |
+| 19 | `CXiActor::FindNearestToTarget_Mode2(0x10, 0)` |
+| 21 | `CXiActor::FindNearestToTarget_Mode0` (+0x60, +0x64) |
+| 22 | `Target_PickNearestToPoint`, unless +0x22 is set |
+| 24..27 | direction 0..3 to `TargetMenu_MoveByDirectionIf58` (when +0x58 is set and +0x59 or +0xC4) |
+| 28 | `CXiActor::FindNearestToTarget_Mode1(0x10, 0)`, else a further search (not read) |
+
+So F1..F6 (commands 6..11) take, besides 6, the actors 1..5 of the list at `[0x106643A8]`; F7 is 6 again; what the
+object 0x1047D600 and the list are, by their data: **not read**.
+
+**The macro set position** (`TextInputFiles_SetReadPos` 0x101A2890): the argument (0..19, wrapped) is a position in
+the current page of 20 (+0x1DC0; +0x1DBC = page x 20 + position); when it changes, the game passes the old file
+(+0x1DBC / 2) to `TextInputFiles_LoadNumberedDatIntoBuffer` and loads the new one with `TextInputFiles_LoadMacroDat`;
+the file is `mcr<index / 2>.dat` (`mcr.dat` for 0: `TextInputFiles_FormatNumberedDatName`, the strings at
+0x10360244, 0x1037AA64..0x1037AA74). Shift + 0..9 (actions 88..97) pass 0, 2, .. 18: a macro set, two positions per file.
+
+**Chat mode 5**: 0x101C6870 is called 48 times, every time on the object `[0x10662DA0]` (each call site loads ecx
+from it). With 0 the line goes back to mode 3 (0x101C6B9D); with a field object it calls the line's slot +0x28 with
+mode 5, the field's text (+4), its length (+0x398) and two values (+0x698, +0x69C), one of 11 set-ups chosen by the
+field's kind (+8, 1..11; table 0x101C6BC8), and keeps the field at `[+0x10]` +0x2218. So mode 5 is typing into a
+window's own text field (the callers are the windows' functions); mode 4 is the chat line.
+
+**The pad's repeat delay**: device +0x94 (the auto-repeat threshold the poll compares with, 0x10007686) is written,
+among the input code (0x10001000..0x10009000 scanned), only by `Input_InitState` (16, 0x10005698): the first repeat
+after 16 frame steps, then every 2.
+
+**Analog handler 0x10123100**: -1 times 0x101230B0, which is 1.0 while action 164 is held (kind 4), else -1.0 while
+action 165 is held, else 0 (constants 0x1032961C, 0x1032A3F0, 0x103295D8). So action 124's analog value is the second
+stick's y or this axis of actions 164 and 165 (PgUp / PgDn, Num9 / Num3, pad bits 27 / 28).
