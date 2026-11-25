@@ -65,8 +65,45 @@ areas. The records are two series of {type, 0}: 0x103501F8 = {1}, {2}, {3}, sent
 0x100BC960, 219 entries; 0x100BCCD0 feeds it bytes from [object + 0x20] at +0x256): after a 300-step wait
 ([0x10489910]) each sends events 4..6 (0x100B5C30) and changes the zone with 0x1018B3A0 (section 3a), unless
 [0x10489918] is set, when it resets the zone object instead (`XiZone::ResetState`). So a zone change made by those
-two opcodes always gets a new zone object and the 43.0 floor. Whether every zone change in play goes through them
-(what that interpreter's scripts are): not read.
+two opcodes always gets a new zone object and the 43.0 floor.
+
+What that interpreter's scripts are, read 27 Nov (disassembly):
+- **The interpreter is the zone's event system.** One interpreter object (0x268 bytes) per actor, at actor + 0xD4,
+  made by 0x1008EDC0 and set up by 0x100BD1A0 from one block of an event file: +4 the number of events (word, kept at
+  +0xC), then that many 16-bit entry offsets (+0x10), that many 16-bit event numbers (+0x14), a count and a table of
+  4-byte values (+0x18, +0x1C), and the byte code after it (+0x20).
+- **The event file is one per event key.** 0x100AEB80 loads it with `FileMng` 0x101C4820 and keeps it at [0x10489904].
+  Its file number comes from the zone key:
+  - key + 0x16BC below 0x100;
+  - key + 0x14AFF for 0x100 .. 0x3E7;
+  - key + 0xDE31 for 0x3E8 .. 0x7CF;
+  - key + 0x1004B from 0x7D0.
+  - Whether the key is the zone's number is not read (see below for where it comes from). If it is, zone 118
+    (Buburimu Peninsula) would have event file 5938, which is ROM\20\55.DAT by the owner's tables.
+- **The zone's dialogue file is loaded beside it.** 0x100AE1E0 loads it as file table 0x6B..0x6E[key] (0x1025B560)
+  and keeps it at [0x10489908].
+- **One block of the event file per actor.** 0x100AEEA0 walks the file (a count, then a size per block) and gives
+  each block to the actor it names (0x100AF180, 0x100BD130), which then gets its interpreter.
+- **What starts an event:**
+  - **Zone setup:** 0x100AED00 sets up a zone's events and takes the event number it should run first into
+    [0x104886dc]. At the first step 0x100BCDD0 runs the entry whose event number is that one, or else the entry
+    numbered 0xFFFE.
+  - **Another script:** 0x100B3A50, opcode 0x7A of the interpreter itself (jump table entry 0x7A, 0x100BC65F), starts an event of
+    another actor through 0x100B3CC0 and 0x100B37D0. 0x100B37D0 sets the pending event at +0x224, and 0x100BD0E0
+    moves it into slot 0.
+  - **Each step:** 0x100BCD10 runs the slot with the lowest priority word among 16 slots at +0x24.
+- **Where the zone setup's inputs come from:**
+  - 0x100AED00 is called from the event system's step 0x10096640, with values from the game state block
+    [0x104dfd98] + 0x40D90, 0x40D92, 0x40D8E and 0x3C35A.
+  - The code that writes those values, and three more callers of 0x100AED00, are left out of the public kit
+    (security set).
+  - The zone key is the first value when it equals the third, else the third + 1000. When the fourth is in
+    1000 .. 1299, the key is the fourth + 1000.
+- **So opcodes 0x34 and 0x35 run when an event in the zone's event file reaches them.** That includes the zone's
+  first event at setup, and events started by other events.
+- **Which events hold them is not read.** It needs the zone event files, which the owner has not sent (none of the
+  416 game files received is an event file of a known zone), and the length of every opcode, so the code can be walked
+  from each entry.
 
 ## 4. Not known
 

@@ -11,7 +11,7 @@ them: docs/DATA_FILES.md, docs/AUDIO.md (sound), docs/CAMERA.md (the zone record
 | `dmsg.py FILE [N]` | a `d_msg` text file's rows (most of the game's labels and messages) |
 | `xistring.py FILE [N]` | an `XISTRING` text file's rows |
 | `menu_layouts.py DAT_ROOT HELP_DMSG TITLE_DMSG LAYOUT_DAT...` | every window layout (type-0x30 chunks): name, position, size, anchor, title, help; JSON |
-| `spw_decode.py IN.spw OUT.wav` | a `SeWave` sound file to a WAV (the game's 4-bit ADPCM) |
+| `spw_decode.py IN OUT.wav` | a `SeWave` sound (`se*.spw`) or a `BGMStream` music file (`music*.bgw`, format 0) to a WAV (the game's 4-bit ADPCM); for music, its loop start too |
 
 Example (English window titles): `file_paths.py <game folder> 55651 55652 39542` gives the help table, the title table
 and the layout file; then `menu_layouts.py <game folder> <help path> <title path> <layout path>`.

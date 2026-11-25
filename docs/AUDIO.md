@@ -60,6 +60,25 @@ through `LobbyThread_SendCmd8(-1, v, fade)` too (its callers: 0x100372A0 and 0x1
 0x10037A30 (volume x the two factors), StartTrack, 0x10017690 (volume 0), 0x10250030 (volume 0 over 0x2D)).
 `LobbyThread_SendCmd8` keeps the volume & 0x7F (0x10246784).
 
+**A music file** (read 27 Nov from the stream code, 0x1024AFC0 and 0x10246D30, the stream object being the header at
++8). Checked on the 14 `.bgw` files of the PlayOnline viewer the owner sent: every one is format 0, 44,100 Hz,
+2 channels, and data offset 48.
+- `+0` "BGMStream".
+- `+0xC` the format (section 4).
+- `+0x10` the file's size, in all 14 files.
+- `+0x14` a track id (0x1024B2C4 looks up the saved position by it, below 0x400).
+- `+0x18` the length in block rows. A row is one block per channel: ((+0x2F >> 1) + 1) bytes per block, so 9 bytes
+  at +0x2F = 16. The end position is +0x18 x row bytes + the data offset (0x10246DFD..0x10246E11). In all 14 files,
+  (size - 48) / 18 = +0x18 exactly.
+- `+0x1C` the loop start in block rows. While it is 0 or more, the thread reads again from +0x1C x row bytes + the
+  data offset at the end (0x10246E89..0x10246EB6). A negative value means no loop.
+- `+0x20`, `+0x24` the sample rate as (+0x20 + +0x24) & 0x7FFFFFFF (0x1024B1F3).
+- `+0x28` the data offset (object +0x30).
+- `+0x2C` the stream's own volume (0x7F in 13 files, 100 in one).
+- `+0x2D` bits per sample.
+- `+0x2E` channels.
+- `+0x2F` the block parameter above (format 3: the frame size).
+
 ## 4. The sound thread and its command ring
 
 **The thread.** `0x10245DE0` (called from the sound system's start 0x100355F0) creates DirectSound
@@ -119,14 +138,32 @@ decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it 
 (`Lock` +0x2C, `Unlock` +0x4C), `Play` (+0x30), `SetCurrentPosition` (+0x34), poll `GetCurrentPosition` (+0x10), and
 `Sleep(1)` between polls; `Stop` (+0x48) at the end.
 
-**The decoders** (read 26 Nov, disassembly). Both decode through 0x10246AB0 after 0x10246A70 has combined the block
-with the 4-byte words of the object's table at +8. 0x10246AB0 is a 4-bit ADPCM: each block starts with a header byte
+**The decoders** (read 26 Nov, corrected 27 Nov, disassembly). Each decoder picks the decode by the header's word
++0xC, the format (the stream thread keeps the whole 0x30-byte header at its object + 8, 0x1024B34C, so object
++0x14 is header +0xC):
+- **Format 0** decodes through 0x10246AB0 (0x10246F31, 0x10247413) and nothing else.
+- **Format 3** decodes frames (0x10246F47..0x1024716B, the same in 0x10247230):
+  - Before each frame is decoded, 0x10246A70 combines it with a table of 4-byte words that 0x10246A20 makes when the
+    stream starts. The table is made from a header value (the steps are in the development history, not published:
+    this is the music data's protection).
+  - Then 0x102CA1F0 decodes the frame. 0x102CA240 copies the frame and calls the frame decoder 0x102CEBF0 (which goes
+    on through a function pointer at its context + 0x36D0, not read). It turns the decoder's two float outputs into
+    1,024 stereo 16-bit frames: each value is clamped to -32767..32767 and rounded by adding 12,582,912.0
+    (1.5 x 2^23), then taking its low 16 bits.
+  - The first frame gives no output (0x102CA225).
+  - The frame size is set when the stream starts (0x10247A00): 0x130 bytes when header byte +0x2F is 1, 0xC0 when it
+    is 2, 0x180 otherwise.
+  - Those three sizes and the 1,024 samples per frame are the frame sizes of ATRAC3, a public codec. That is a match
+    of numbers, not a name in the code.
+- **A file without "BGMStream"** has its header made by 0x10249AD0, as format 1 or 2 (0x1024B063). Not read.
+
+**Format 0 is a 4-bit ADPCM** (0x10246AB0): each block starts with a header byte
 whose high nibble picks one of the five coefficient pairs at 0x10388BF0 ((0, 0), (60, 0), (115, -52), (98, -55),
 (122, -60)) and whose low nibble is a shift; each following byte holds two samples, low nibble first, each
 (nibble << 12, as a 16-bit value) >> shift + (c0 x s1 + c1 x s2) >> 6, with s1, s2 the last two samples; no clamp;
 16-bit output (0x10246AF1..0x10246B78). With a first argument of 2 or more (0x10246B98..0x10246D1D) the channels come
 as separate blocks, left then right, each with its own last two samples (state +0/+4 and +8/+0xC), and the output is
-interleaved L, R. 0x102CA1F0 (called from both decoders) is another step: not read.
+interleaved L, R.
 Checked 26 Nov on the viewer's `se000154.spw` (pipeline/spw_decode.py follows this): the data from +0x30 to the end
 is exactly 17,600 blocks of 9 bytes (a header byte, 8 bytes = 16 samples), every filter nibble 0..4, header +8 equal
 to the file's size, and the decode gives 2.93 s of 48 kHz stereo peaking near +-18,000 with no sample past 16 bits.
@@ -163,7 +200,9 @@ naming pipeline.
 
 - Which options in the game's menus settings 9, 10 and 0xA8 are (their labels are the game's data files).
 - Commands 1 and 2: the header is read (section 4, 26 Nov); the data after the header and the stereo decode are read
-  and checked on a file (section 4); 0x102CA1F0 and the table step 0x10246A70 applies when a decoder has one: not read. `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
+  and checked on a file (section 4). 0x102CA1F0 and the table step 0x10246A70 were read 27 Nov: they are format 3
+  (section 4). Format 3's frame decoder 0x102CEBF0 past its first call is not read, and no file the owner sent is
+  format 3. `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
   pool is three channels of 0x1C0 bytes): commands 0 and 1 write 0 there (0x1024A72C, 0x1024A7BA) and no instruction
   in the game reads [register + 0x434] on the pool, nor +0xB4 of a stream channel in the sound code (the only reads of
   +0xB4 there are the effect thread's, 0x102480C0, on its own channel). As far as direct reads show, nothing uses it.
