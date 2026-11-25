@@ -20,6 +20,9 @@ the game (0: it has one). The graphics system is the functions with a depth.
 
 The kit does not swap reconstructed code into the game. Every hook's `previous` is the game's own code.
 
+A first mod, step by step: `TUTORIAL.md`. Every declaration of the headers with its comment: `API.md` (made by the
+analysis repository's `sdk/api_reference.py`). What stays the same between kit versions: `COMPATIBILITY.md`.
+
 ## What you need
 
 - **MinGW-w64, 32-bit (i686) g++.** On Windows, use MSYS2's `mingw32` shell (`pacman -S mingw-w64-i686-gcc`) or a
@@ -35,6 +38,7 @@ The kit does not swap reconstructed code into the game. Every hook's `previous` 
 | `include/xikit_sdk.hpp` | The one header a mod includes: `XI_HOOK`, `XI_DEVICE_HOOK`, `xikit::fn`, `xikit::game`, `XIKIT_MOD_GLOBALS` |
 | `include/xikit_mod.h` | The kit–mod interface in C: `XikitHost`, the exports a mod has, the result codes |
 | `include/xikit_render.h` | Shader passes and depth reads through d3d8on11 |
+| `include/xikit_ui.hpp` | The game's window, interface units, cursor, command line and font (below, "Game services") |
 | `include/xikit_game.hpp` | Includes the headers below, and adds two things: `xigame::Name()`, a typed pointer to each function's game entry; and `xihook::Name`, the manifest flags of each hookable function |
 | `tree_include/` | The headers of the functions and their classes, whose field offsets are checked by `static_assert`. Also `orig::` (game code by address), the globals the source uses, and Direct3D 8 |
 | `tree_src/` | The reconstructed source, one place to read what each function does (files named for what they hold) |
@@ -87,13 +91,14 @@ A mod exports:
 | `void xikit_mod_frame(void *device)` | Optional. Called every frame on the render thread, just before Present. The game has already ended its scene by then, so wrap any drawing in `BeginScene`/`EndScene` (see the overlay example). |
 | `void xikit_mod_settings(void)` | Optional. Called on the render thread after the kit has read a change to `xikit_mods.ini` |
 | `void xikit_mod_unload(void)` | Optional. Called before a reload replaces this build (`mod_reload=1`): release what the mod created (textures, threads). Its hooks are already off. |
+| `XikitModInfo xikit_mod_info` | Optional, version 5: `XIKIT_MOD_INFO("name", "version", api, "about")`. The kit logs it and does not start a mod whose `api` is newer than its own |
 | `uintptr_t xi_rel` | Defined by `XIKIT_MOD_GLOBALS`. The kit sets it to the game's load delta before init. The headers' `XI_GAME`, `orig::` and globals rebase through it. |
 
 `XikitHost` gives the mod:
 
 | Field | |
 |---|---|
-| `version`, `size` | `XIKIT_API_VERSION` (4). Fields are only ever added at the end; a field exists when `size` reaches past it (`XI_DEVICE_HOOK` checks). |
+| `version`, `size` | `XIKIT_API_VERSION` (5). Fields are only ever added at the end; a field exists when `size` reaches past it (`XI_DEVICE_HOOK` checks). |
 | `game_base`, `rel` | Where `FFXiMain.dll` is loaded; `rel` is `game_base - 0x10000000` |
 | `device` | The game's `IDirect3DDevice8` when the mod was loaded. If the game ever makes a new device, the kit hooks that one too, so use the argument of `xikit_mod_frame`, which is always the current one |
 | `recon`, `dir` | `recon` is NULL in this kit (there is no reconstruction DLL); `dir` is the kit's folder |
@@ -110,7 +115,7 @@ A mod exports:
 |---|---|
 | `XIKIT_OK` | Hooked |
 | `XIKIT_E_UNKNOWN` | Not in the manifest |
-| `XIKIT_E_TAKEN` | Another mod hooks it |
+| `XIKIT_E_TAKEN` | This mod hooks it already, or 8 mods do. Before version 5: any other mod hooks it |
 | `XIKIT_E_REFUSED` | Its live entry differs from the analysed build, `speedfix_hook` patches it, or it has a register input (flag 8, below) |
 | `XIKIT_E_LATE` | Called outside init |
 | `XIKIT_E_NOPREV` | No way to reach its previous code |
@@ -130,6 +135,96 @@ The manifest's `T=` says, per function, that this is safe. It is decided from th
 - any code in the game jumps into them.
 
 `xihook::Name_TRAMP` says it at compile time.
+
+## Several mods on one function (version 5)
+
+Two mods may hook the same function. The one that hooked it last runs first. Its `previous` runs the hook of the
+mod before it, and the first mod's `previous` is the game's own code (the trampoline). So every hook that calls
+`previous` runs, in reverse order of hooking, and a hook that does not call it keeps the call from the mods before it
+and from the game.
+
+- The first hook's `previous` is the trampoline itself. A later hook's `previous` is a small jump (`jmp [slot]`) the
+  kit owns, which leaves every register and flag as it found them. That includes `hook_keeping_registers`.
+- When one mod is reloaded, its hooks come off and the kit re-aims the jumps around them. The other mods'
+  `previous` stay valid. The reloaded mod's new hooks go in front of the others.
+- The order between mods follows `mods=` in `xikit.ini` (mods are started in that order), and a reload moves a mod to
+  the front.
+- Up to 8 mods per function. The log says which mod's hook a new one is chained to.
+
+A kit older than version 5 answers a second mod `XIKIT_E_TAKEN`. Check `host->version >= 5` if a mod depends on
+sharing a function.
+
+## Game services (`xikit_ui.hpp`)
+
+The things mods kept reading from the game for themselves, in one header (include it after `xikit_sdk.hpp`). Each is
+read from the game's code, and the header names the function each comes from.
+
+| Call | What |
+|---|---|
+| `xiui::window()` | The game's main window, or NULL |
+| `xiui::unit_x()`, `unit_y()` | The interface's scale: the game lays out its menus in 640x480 units |
+| `xiui::render_target_size(&w, &h)` | The size of the render target being drawn, in pixels |
+| `xiui::interface_hidden()` | The menu manager's +0xB4 is 1, while which the game draws only windows with flag 0x40. That this is the player's hide-interface key is not proven: in the owner's game (24 Nov) it did not change when the interface was hidden; in-game test U5 logs which byte does |
+| `xiui::chat_line_text()`, `chat_line_stamp()` | The chat line's text (where typed characters go), and a fingerprint of it that changes when a key types into it. Whether the chat line is open is not known (the earlier `chat_takes_keys()` was always true and was removed) |
+| `xiui::cursor(&x, &y)` | The game's cursor, in interface pixels |
+| `xiui::run_line("/ma Cure <t>")` | One line through the game's command line, as typed and Enter pressed |
+| `xiui::text(x, y, "text", colour, scale)` | Text in the game's font (colours as the game's menus: `0x80808080`) |
+| `xiui::text_width("text")` | Its width in pixels |
+
+Call them on the render thread: in `xikit_mod_frame`, or in a hook of the game's drawing. `sdk/examples/hotbar.cpp`
+and `click_target.cpp` use them.
+
+## Dear ImGui in the game (`xiimgui/`)
+
+Dear ImGui (v1.91.5, `sdk/imgui`, MIT) draws on the game's Direct3D 8 device through `xiimgui/`. The easy way:
+`xiimgui_game_install(host, draw, 1)` in `xikit_mod_init`, with `draw` a function of yours that makes the ImGui
+calls. It draws over the interface after `Menu_DrawLayers`, keeps left clicks on an ImGui window from the game (hooks
+that chain with other mods' at version 5), and stays hidden while the interface is. Put the ImGui calls in a file that
+includes `imgui.h` and not the game's headers (`sdk/examples/imgui_panel.cpp` and `imgui_panel_ui.cpp`).
+
+- Build it with the mod: `xiimgui/xiimgui_game.cpp`, `xiimgui/xiimgui_d3d8.cpp` and `imgui/imgui.cpp`,
+  `imgui_draw.cpp`, `imgui_tables.cpp`, `imgui_widgets.cpp`.
+- Known: in the kit's test host under Wine, the process is killed at exit once xiimgui has drawn
+  (`xiimgui_d3d8.cpp`, at `xiimgui_render`, says what was ruled out). Whether that happens in the game is not known.
+
+## Input
+
+There is no input callback: a mod reads input where the game does, and with version 5 several mods can do so at
+once.
+
+- **Clicks.** The window procedure turns the left button into `Cursor_EnterMode1` (down) and `Cursor_ToggleFlag1`
+  (up), and DirectInput's left button goes to the same two (`Input_DispatchButtons`). A mod hooks both. To keep a
+  click from the game it does not call `previous`, and it keeps the release of the same press too.
+  `sdk/examples/hotbar.cpp` does this over its bars.
+- **Chat commands, not hotkeys.** The SDK's mods take their switches as chat commands (`/stext`, `/photo shot`,
+  `/hb run 1.3`, `/prishe panel`), with `xikit_cmd.hpp`: `xicmd::add("word", handler)`, then `xicmd::install(host)`
+  in `xikit_mod_init`. A command also works from the game's macros, and it cannot clash with another mod's key or
+  the game's. Choose a word the game does not have: its own commands are `/word` strings in FFXiMain.dll
+  (`strings FFXiMain.dll | grep '^/'`). A handler runs inside the game's Command_RunLine; to run a line of the game's
+  in answer, do it at the next frame, not inside the handler.
+- **Keys** (a hotbar's slots, which the player binds). Take them from the game window's messages, not by polling:
+  subclass `xiui::window()` once and queue each fresh `WM_KEYDOWN` / `WM_SYSKEYDOWN` (lParam bit 30 set means an
+  auto-repeat; bit 29 in `WM_SYSKEYDOWN` means Alt), as `hotbar_core.cpp` does. To tell a slot key from a character
+  typed into the chat line, take `xiui::chat_line_stamp()` in the window procedure at the key's message (before the
+  `WM_CHAR` the game types from it) and act a few frames later only if it is unchanged.
+- **Running a line.** `xiui::run_line` runs a line as the player typing it would.
+
+## The frame budget
+
+The game's own code is most of every frame, and on an ARM Mac it runs under x86 emulation, where every call into
+Windows is a switch out of the emulator. Small per-frame calls have shown up in the owner's profiles as whole percents
+of the game thread (XIKit's docs/HISTORY.md, 22 Nov: `GetCurrentThreadId` once per hooked device call, `getenv` per
+textured stage, `GetModuleHandleExA` per draw; all removed since). So, for every mod:
+
+- **No system call per frame per item.** Not per key, per slot, per actor, per draw. A handful per frame in all, or one
+  per second for a file check, is the limit. Keys come from window messages (Input, above), times from one call per
+  frame if any, files from a check every 30 or more frames.
+- **Per-frame work is in memory.** Compare pointers, not names; look a thing up once and keep it; copy, do not
+  allocate.
+- **Heavy work leaves the frame.** File reads and resolving go to a worker thread (as Prishe's resolve does); large work
+  goes to another process (a sidecar, XIKit docs/CLIENT_LIBRARY.md section 6).
+- **Measure it.** d3dprof's `kernel_calls=1` counts the system calls a frame makes; its sampler (`sample=1`) shows a
+  mod's share of the game thread. A mod that adds to the frame says by how much, from a profile, not an estimate.
 
 ## Calling other game code
 

@@ -47,7 +47,7 @@ function.
 | `kit/` | `xikit.dll` (loads mods, hooks the device, captures frames), its `xikit.ini` (`swap=0`, list your mods on `mods=`), and the manifests of the three builds |
 | `d3d8on11/` | the renderer: Direct3D 8 on Direct3D 12 (or 11), with shader passes for mods (`d3d8.dll`, `d8x.exe`, `d8x_arm64.exe`) |
 | `sdk/` | the headers (`include/`, `tree_include/`), the reconstructed source (`tree_src/`), the examples, the Visual Studio / VS Code template, `build_mod.sh` / `build_mod.bat`, and `SDK.md` |
-| `mods/` | nine example mods for players, built from `sdk/examples` (below): list one in `kit/xikit.ini`'s `mods=` |
+| `mods/` | twelve example mods for players, built from `sdk/examples` (below): list one in `kit/xikit.ini`'s `mods=` |
 | `docs/` | the reference: a page per source file (every function, its address, whether it is hookable, its review's summary, what it calls), the files by name group, the call trees from the main loop and `Frame_Render`, and the names still generic (`docs/README.md` says where each column comes from) |
 | `pdb/` | `FFXiMain.pdb` for each build (names, sizes and class types for a debugger) and its symbol list as JSON |
 | `tools/` | the frame inspector (`tools/fcap/frame_inspect.py`) and its replayer |
@@ -89,7 +89,7 @@ To use the kit in the game:
 - Debug at source level in Visual Studio. The template builds with clang from llvm-mingw, because Visual Studio's own
   compiler cannot read the headers.
 
-The interface is version 4 and frozen: fields are only ever added after the last one. `sdk/include/xikit_mod.h`
+The interface is version 5 (hook chains, mod info) and frozen: fields are only ever added after the last one. `sdk/include/xikit_mod.h`
 checks the layout at compile time.
 
 **Not in this kit:**
@@ -110,14 +110,16 @@ none has run in the game yet.
 | `file_overlay` | Any of the game's files from overlay packs (`overlay\<pack>\<path below FINAL FANTASY XI>`): models, zones, effects, sound effects, music. Reads only |
 | `effect_comfort` | A limit on full-screen flashes (`flash_limit`, `flash_rise_ms`), an effect intensity (`fx_intensity`), and per-effect percentages from `effects.txt`, by path or by file number (`fx_list=1` names them; `docs/EFFECT_COMMANDS.md` lists the effect commands) |
 | `camera_view` | Field of view (`fov_deg`), far clip distance (`far_percent`) and the zone's and actors' draw distance (`draw_percent`) |
-| `photo_mode` | A free camera orbiting the game's (`photo`, `photo_yaw`, ...), the interface hidden (`photo_hide_ui`), a picture of the world without it (`photo_shot`) |
+| `photo_mode` | A free camera orbiting the game's (`photo`, `photo_yaw`, ...), the interface hidden (`photo_hide_ui`), a picture of the world without it (`photo_shot`); chat commands `/photo ...` |
 | `world_light` | Fog distance, colour and off; ambient and light brightness |
 | `audio_mix` | Interface, effect, ambient and music volume |
 | `color_filter` | Colour-blind correction or simulation of the whole frame (`cb_mode`; needs d3d8on11) |
 | `ui_layout` | Interface windows moved, each by name (`ui_layout.txt`) or all together (`ui_dx`, `ui_dy`) |
+| `hotbar` | Action bars from XIVhotbar2's job files, icons and keybinds, drawn with the game's font; a slot runs its line through the game's command line, as typed (`hotbar.txt`); default keys 1-0 - = (bar 2 with Ctrl, 3 Alt, 4 Shift); the game's macro keys run bars 2 and 3 (`/hb mode hotbar`) or the game's macros (`/hb mode macro`); `/hb run 1.3` |
+| `click_target` | Click anywhere on a nameplate to target its character; a click on nothing deselects (`ct_deselect`) |
+| `status_text` | The local time over the interface (the tutorial's mod: `sdk/TUTORIAL.md`); `/stext` shows or hides it |
 
-Each changes how the game looks or sounds on your own screen. None reads or sends anything the game sends, nor shows
-anything the game hides.
+Each changes how the game looks or sounds on your own screen, except that `hotbar` and `click_target` act as the player's own input does: a hotbar slot runs its line through the game's command line, exactly as typing it and pressing Enter would, and a click targets or deselects as the game's own click does. None reads or sends network data itself, nor shows anything the game hides.
 
 ## The frame inspector
 

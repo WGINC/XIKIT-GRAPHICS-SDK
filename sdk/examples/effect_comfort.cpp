@@ -16,7 +16,9 @@
 // after the element's own (the first disabled one), which multiplies by the texture factor: the alpha for SRCALPHA
 // source blending, the colour for ONE. So fx_intensity percent scales what each effect adds or covers, linearly. A
 // draw is left as it is when a stage before it already reads the texture factor, a pixel shader is set, or the
-// device has no free stage (its MaxTextureBlendStages). fx_all_blended=1 applies the same to every blended draw
+// device has no free stage (its MaxTextureBlendStages). (25 Nov) A draw whose own stages multiply by the texture factor
+// (the game's model draw, CYyModelDt: docs/EFFECTS_DRAW.md) is scaled through the factor instead (its colour for ONE,
+// its alpha for SRCALPHA). fx_all_blended=1 applies the same to every blended draw
 // (the interface too); it is meant for checking the mod.
 //
 // Per effect. An element's +0xFC is a handle to the resource it was made from (CMoElem.hpp: listAResourceHandle; the
@@ -60,6 +62,9 @@ static const XikitHost *g_host;
 static int g_in_elem;                  // inside YmElem_SetupDevice ... YmElem_RestoreDevice (render thread)
 static unsigned g_max_stages;          // D3DCAPS8::MaxTextureBlendStages, read once
 static long g_scaled, g_skipped, g_flashes, g_left_out;
+// (25 Nov) why a draw was left as it is (the owner's run: every effect draw left, reason not logged): a pixel shader,
+// the draw's own stages read the texture factor, no free stage, a source blend other than ONE or SRCALPHA (the last seen)
+static long g_sk_ps, g_sk_tf, g_sk_stage, g_sk_blend, g_sc_tf; static unsigned g_sk_src;
 static int g_elem_pct = 100;           // the current element's percent from effects.txt
 extern "C" int ec_read(const char *dir, char (*keys)[96], int *pct, int max);   // effect_comfort_core.cpp
 static char g_keys[256][96]; static int g_pcts[256], g_nkeys;
@@ -134,32 +139,52 @@ static int __thiscall my_Fade(CDx *self, int a1, int a2) {
 }
 
 // ---- effect intensity
-struct Saved { unsigned stage, tf, op[2][3], nextop; bool on; };
+struct Saved { unsigned stage, tf, op[2][3], nextop; bool on, tf_only; };
 // false: leave the draw out (an element at 0 percent)
 static bool begin_draw(IDirect3DDevice8 *dev, Saved *s) {
-  s->on = false;
+  s->on = false; s->tf_only = false;
   int k = g_host->setting_int("fx_intensity", 100);
   if (g_in_elem) k = k * g_elem_pct / 100;
   if (g_in_elem && k <= 0) { g_left_out++; return false; }
   if (k >= 100 || !(g_in_elem || g_host->setting_int("fx_all_blended", 0))) return true;
   unsigned v = 0;
   dev->GetRenderState(D3DRENDERSTATETYPE(RS_ALPHABLENDENABLE), &v); if (!v) return true;
-  unsigned ps = 0; dev->GetPixelShader(&ps); if (ps) { g_skipped++; return true; }
+  unsigned ps = 0; dev->GetPixelShader(&ps); if (ps) { g_skipped++; g_sk_ps++; return true; }
   if (!g_max_stages) { D3DCAPS8 caps = {}; g_max_stages = dev->GetDeviceCaps(&caps) >= 0 && caps.MaxTextureBlendStages ? caps.MaxTextureBlendStages : 1; }
-  unsigned st = 0, op = 0;
+  unsigned st = 0, op = 0; bool reads_tf = false, tf_mul = true;
   for (; st < 8 && st < g_max_stages; st++) {
     dev->GetTextureStageState(st, D3DTEXTURESTAGESTATETYPE(TSS_COLOROP), &op);
     if (op == TOP_DISABLE) break;
+    unsigned aop = 0; dev->GetTextureStageState(st, D3DTEXTURESTAGESTATETYPE(TSS_ALPHAOP), &aop);
     static const unsigned args[4] = { TSS_COLORARG1, TSS_COLORARG2, TSS_ALPHAARG1, TSS_ALPHAARG2 };
-    for (unsigned t : args) {
-      unsigned arg = 0; dev->GetTextureStageState(st, D3DTEXTURESTAGESTATETYPE(t), &arg);
-      if ((arg & TA_SELECTMASK) == TA_TFACTOR) { g_skipped++; return true; }  // the draw's own stages use the factor
+    for (int a = 0; a < 4; a++) {
+      unsigned arg = 0; dev->GetTextureStageState(st, D3DTEXTURESTAGESTATETYPE(args[a]), &arg);
+      if ((arg & TA_SELECTMASK) != TA_TFACTOR) continue;
+      reads_tf = true;
+      unsigned o = a < 2 ? op : aop;                     // MODULATE, MODULATE2X, MODULATE4X (D3DTOP 4, 5, 6): a product
+      if (o < TOP_MODULATE || o > TOP_MODULATE + 2 || (arg & ~TA_SELECTMASK)) tf_mul = false;
     }
   }
-  if (st == 0 || st >= g_max_stages || st >= 8) { g_skipped++; return true; }
+  // (25 Nov) the game's model draw (CYyModelDt, tree/src/CYyModelDt.cpp:285 and :773) multiplies stage 1 by the
+  // texture factor (colour MODULATE2X, alpha MODULATE4X) and the effect elements put their colour and alpha there
+  // (D3DRS_TEXTUREFACTOR in D3aElem, CMoDistModelElem, CMoDistMorphElem, CMoDamValueProgElem): the factor already
+  // multiplies all the draw adds or covers. Such a draw is scaled through the factor itself (its colour for source
+  // ONE, its alpha for SRCALPHA); where the 2X/4X product was already at full it can stay brighter than k (the
+  // product is clamped after the factor). Any other use of the factor: left as it is.
+  if (reads_tf && !tf_mul) { g_skipped++; g_sk_tf++; return true; }
   unsigned src = 0; dev->GetRenderState(D3DRENDERSTATETYPE(RS_SRCBLEND), &src);
   bool colour = src == BLEND_ONE;                                              // ONE: the colour is what is added
-  if (!colour && src != BLEND_SRCALPHA) { g_skipped++; return true; }          // (no other source blend is the element's)
+  if (!colour && src != BLEND_SRCALPHA) { g_skipped++; g_sk_blend++; g_sk_src = src; return true; }          // (no other source blend is the element's)
+  if (reads_tf) {                                                              // through the draw's own factor
+    dev->GetRenderState(D3DRENDERSTATETYPE(RS_TEXTUREFACTOR), &s->tf);
+    unsigned t = s->tf, kk = (unsigned)(k < 0 ? 0 : k);
+    auto sc = [&](int sh) { unsigned c = (t >> sh) & 0xFF; return (c * kk / 100) << sh; };
+    unsigned nt = colour ? (t & 0xFF000000u) | sc(16) | sc(8) | sc(0) : (t & 0x00FFFFFFu) | sc(24);
+    dev->SetRenderState(D3DRENDERSTATETYPE(RS_TEXTUREFACTOR), nt);
+    s->on = true; s->tf_only = true; g_scaled++; g_sc_tf++;
+    return true;
+  }
+  if (st == 0 || st >= g_max_stages || st >= 8) { g_skipped++; g_sk_stage++; return true; }
   s->stage = st; s->on = true;
   dev->GetRenderState(D3DRENDERSTATETYPE(RS_TEXTUREFACTOR), &s->tf);
   const unsigned ts[2][3] = { { TSS_COLOROP, TSS_COLORARG1, TSS_COLORARG2 }, { TSS_ALPHAOP, TSS_ALPHAARG1, TSS_ALPHAARG2 } };
@@ -179,6 +204,7 @@ static bool begin_draw(IDirect3DDevice8 *dev, Saved *s) {
 }
 static void end_draw(IDirect3DDevice8 *dev, const Saved *s) {
   if (!s->on) return;
+  if (s->tf_only) { dev->SetRenderState(D3DRENDERSTATETYPE(RS_TEXTUREFACTOR), s->tf); return; }
   const unsigned ts[2][3] = { { TSS_COLOROP, TSS_COLORARG1, TSS_COLORARG2 }, { TSS_ALPHAOP, TSS_ALPHAARG1, TSS_ALPHAARG2 } };
   for (int i = 0; i < 2; i++) for (int j = 0; j < 3; j++) dev->SetTextureStageState(s->stage, D3DTEXTURESTAGESTATETYPE(ts[i][j]), s->op[i][j]);
   if (s->stage + 1 < 8) dev->SetTextureStageState(s->stage + 1, D3DTEXTURESTAGESTATETYPE(TSS_COLOROP), s->nextop);
@@ -208,7 +234,9 @@ static int __thiscall my_Restore(_WORD *e, __int16 a4) { g_in_elem = 0; return p
 extern "C" __declspec(dllexport) void xikit_mod_frame(void *) {
   static unsigned n;
   if (++n % 1800 == 0 && (g_scaled || g_skipped || g_flashes || g_left_out))
-    g_host->log("effect_comfort: %ld effect draws scaled, %ld left as they are, %ld left out, %ld flash frames limited", g_scaled, g_skipped, g_left_out, g_flashes), g_scaled = g_skipped = g_left_out = g_flashes = 0;
+    g_host->log("effect_comfort: %ld effect draws scaled (%ld through their own texture factor), %ld left as they are (pixel shader %ld, own stages use the texture factor otherwise %ld, no free stage %ld, source blend %ld, the last D3DBLEND %u), %ld left out, %ld flash frames limited; fx_intensity %d, flash_limit %d",
+                g_scaled, g_sc_tf, g_skipped, g_sk_ps, g_sk_tf, g_sk_stage, g_sk_blend, g_sk_src, g_left_out, g_flashes, g_host->setting_int("fx_intensity", 100), g_host->setting_int("flash_limit", 100)),
+    g_scaled = g_skipped = g_left_out = g_flashes = g_sk_ps = g_sk_tf = g_sk_stage = g_sk_blend = g_sc_tf = 0;
 }
 extern "C" __declspec(dllexport) void xikit_mod_settings(void) { read_effects(); }
 extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {

@@ -15,12 +15,12 @@
 extern "C" {
 #endif
 
-#define XIKIT_API_VERSION 4      /* 2: device_hook; 3: hook_keeping_registers; 4: declared settings */
+#define XIKIT_API_VERSION 5      /* 2: device_hook; 3: hook_keeping_registers; 4: declared settings; 5: hook chains */
 
 /* hook() results */
 #define XIKIT_OK              0
 #define XIKIT_E_UNKNOWN      -1   /* no function of that name / address in the manifest */
-#define XIKIT_E_TAKEN        -2   /* another mod already hooks it */
+#define XIKIT_E_TAKEN        -2   /* this mod hooks it already, or 8 mods do (API 5: other mods chain; before 5, any other mod) */
 #define XIKIT_E_REFUSED      -3   /* the live entry is not the analysed build's, or speedfix_hook patches it */
 #define XIKIT_E_LATE         -4   /* hook() called outside xikit_mod_init */
 #define XIKIT_E_NOPREV       -5   /* no way to reach the previous code (no trampoline and no reconstruction export) */
@@ -126,6 +126,21 @@ typedef int (__cdecl *xikit_mod_init_fn)(const XikitHost *host);
 typedef void (__cdecl *xikit_mod_frame_fn)(void *device);
 typedef void (__cdecl *xikit_mod_unload_fn)(void);
 typedef void (__cdecl *xikit_mod_settings_fn)(void);
+
+/* Optional (kit API 5): what the mod is and the kit API it needs. XIKIT_MOD_INFO("name", "1.2", 5, "what it does"),
+   once at file scope. The kit logs it, and does not start a mod that needs a newer API than its own: the mod would
+   otherwise find a field missing or a call answered XIKIT_E_OLDKIT later. A mod without it is started as before. */
+typedef struct XikitModInfo {
+  uint32_t size;           /* sizeof(XikitModInfo); fields are only ever added at the end */
+  uint32_t api;            /* the lowest XIKIT_API_VERSION the mod works with */
+  const char *name, *version, *about;
+} XikitModInfo;
+#ifdef __clang__
+#define XIKIT_MOD_INFO(name_, version_, api_, about_) XIKIT_EXTERN_C_ const XikitModInfo xikit_mod_info = { sizeof(XikitModInfo), (api_), (name_), (version_), (about_) }; \
+  __asm__(".section .drectve\n\t.ascii \" -export:xikit_mod_info,data\"\n\t.text\n");
+#else
+#define XIKIT_MOD_INFO(name_, version_, api_, about_) XIKIT_EXTERN_C_ __declspec(dllexport) const XikitModInfo xikit_mod_info = { sizeof(XikitModInfo), (api_), (name_), (version_), (about_) };
+#endif
 
 #ifdef __cplusplus
 }

@@ -58,6 +58,9 @@ static void apply(void *cam) {
   focal = fov > 0 ? (float)(192.0 / __builtin_tan(fov * 3.14159265358979323846 / 360.0)) : g_game_focal;
   far_ = fp != 100 ? g_game_far * (float)fp / 100.0f : g_game_far;
   g_set_focal = focal; g_set_far = far_;
+  static int lf = -1, lp = -1; static float lgf = -1;                 // (25 Nov) say what was applied when it changes
+  if (fov != lf || fp != lp || g_game_far != lgf) { lf = fov; lp = fp; lgf = g_game_far;
+    g_host->log("camera_view: field of view %s (focal %.1f), far clip %.1f (the game's %.1f, %d%%), draw_percent %d", fov ? "set" : "the game's", focal, far_, g_game_far, fp, g_host->setting_int("draw_percent", 100)); }
 }
 
 static xikit::fn<decltype(&XiZone::ComputeFogDistance)> prev_Dist;

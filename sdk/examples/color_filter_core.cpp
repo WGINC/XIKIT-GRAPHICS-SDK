@@ -6,8 +6,8 @@
 #include "color_filter_core.h"
 
 // Simulation of dichromacy, severity 1.0: Machado, Oliveira and Fernandes, "A Physiologically-based Model for
-// Simulation of Color Vision Deficiency" (IEEE TVCG 2009), the published table, applied to linear-ish RGB as most
-// filters do (the game's colours are used as they are)
+// Simulation of Color Vision Deficiency" (IEEE TVCG 2009), the published table, for linear RGB: color_filter.cpp's
+// shader decodes each pixel from sRGB before the matrix and encodes it after (25 Nov)
 static const float kSim[3][9] = {
   { 0.152286f, 1.052583f, -0.204868f,   0.114503f, 0.786281f, 0.099216f,   -0.003882f, -0.048116f, 1.051998f },   // protanopia
   { 0.367322f, 0.860646f, -0.227968f,   0.280085f, 0.672501f, 0.047413f,   -0.011820f, 0.042940f, 0.968881f },    // deuteranopia

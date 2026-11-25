@@ -379,6 +379,24 @@ static int fxmod_run(IDirect3DDevice8 *dev) {
   IDirect3DDevice8_GetTextureStageState(dev, 1, D3DTSS_COLOROP, &s1); IDirect3DDevice8_GetTextureStageState(dev, 2, D3DTSS_COLOROP, &s2);
   IDirect3DDevice8_GetRenderState(dev, D3DRS_TEXTUREFACTOR, &tf);
   check(s1 == D3DTOP_DISABLE && s2 == D3DTOP_MODULATE && tf == 0x12345678, "fxmod: stages 1 and 2 and the texture factor are as they were after the draw");
+  /* (25 Nov) a draw set up as the game's model draw (CYyModelDt): stage 1 multiplies by the texture factor (colour
+     MODULATE2X, alpha MODULATE4X), the factor holding the element's colour and alpha (0x20808080: alpha 0x20 x 4 = half,
+     colour 0x80 x 2 = full). White, SRCALPHA onto ONE, onto black: the game's draw adds half (green about 128); with
+     fx_intensity=50 the mod scales the factor's alpha, so a quarter (about 64); the factor is the game's again after */
+  IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0);
+  IDirect3DDevice8_SetRenderState(dev, D3DRS_TEXTUREFACTOR, 0x20808080u);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_COLOROP, D3DTOP_MODULATE2X); IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_COLORARG1, D3DTA_CURRENT);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_ALPHAOP, D3DTOP_MODULATE4X); IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_ALPHAARG1, D3DTA_CURRENT);
+  IDirect3DDevice8_SetTextureStageState(dev, 1, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+  IDirect3DDevice8_SetTextureStageState(dev, 2, D3DTSS_COLOROP, D3DTOP_DISABLE);
+  IDirect3DDevice8_BeginScene(dev);
+  IDirect3DDevice8_DrawPrimitiveUP(dev, D3DPT_TRIANGLESTRIP, 2, q, sizeof q[0]);
+  IDirect3DDevice8_EndScene(dev);
+  px = 0; if (SUCCEEDED(IDirect3DSurface8_LockRect(rt, &lr, NULL, D3DLOCK_READONLY))) { px = ((uint32_t *)lr.pBits)[1 * lr.Pitch / 4 + 1]; IDirect3DSurface8_UnlockRect(rt); }
+  g = (px >> 8) & 0xFF; IDirect3DDevice8_GetRenderState(dev, D3DRS_TEXTUREFACTOR, &tf);
+  snprintf(what, sizeof what, "fxmod: a draw that multiplies by its own texture factor (the game's model draw), fx_intensity=50: %08lx (green %u: a quarter, 60..68; the game's half 128); the factor after %08lx (20808080)", (unsigned long)px, g, (unsigned long)tf);
+  check(g >= 60 && g <= 68 && tf == 0x20808080u, what);
   IDirect3DDevice8_SetRenderTarget(dev, old, oldz); if (old) IDirect3DSurface8_Release(old); if (oldz) IDirect3DSurface8_Release(oldz); IDirect3DSurface8_Release(rt);
   return 0;
 }
@@ -551,6 +569,13 @@ static int phomod_run(IDirect3DDevice8 *dev) {
   char line[256]; int reset = 0; FILE *mi = fopen("xikit_mods.ini", "r");
   if (mi) { while (fgets(line, sizeof line, mi)) if (!strncmp(line, "photo_shot=0", 12)) reset = 1; fclose(mi); }
   check(reset, "phomod: photo_shot is 0 again in xikit_mods.ini");
+  { /* the chat command: "/photo turn 30" through the game's Command_RunLine entry is taken and writes photo_yaw (90 -> 120) */
+    typedef int (__cdecl *RunFn)(char *, uint32_t); char cl[] = "/photo turn 30";
+    int rr = ((RunFn)(void *)ga(0x10080DC0u))(cl, 0); char cwd[MAX_PATH], ini[MAX_PATH + 20];
+    GetCurrentDirectoryA(sizeof cwd, cwd); snprintf(ini, sizeof ini, "%s\\xikit_mods.ini", cwd);
+    int yaw = GetPrivateProfileIntA("photo_mode", "photo_yaw", -999, ini);
+    snprintf(what, sizeof what, "phomod: \"/photo turn 30\" through Command_RunLine: returned %d (0); photo_yaw in xikit_mods.ini %d (120)", rr, yaw);
+    check(*(uint8_t *)ga(0x10080DC0u) == 0xE9 && rr == 0 && yaw == 120, what); }
   hr = IDirect3DDevice8_CreateRenderTarget(dev, 16, 16, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, TRUE, &rt);
   if (SUCCEEDED(hr) && rt) {
     IDirect3DDevice8_SetRenderTarget(dev, rt, NULL); IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0);
@@ -601,16 +626,19 @@ static int cfmod_run(IDirect3DDevice8 *dev) {
    and draws again: the offset applies to the new rectangle. */
 typedef void (__thiscall *DrawLayersFn)(void *);
 typedef uint32_t (__thiscall *HitFn)(void *, uint32_t *);
+typedef uint32_t (__thiscall *SetRectFn)(void *, int, int, int, int, int, int, int);
 static int uimod_run(IDirect3DDevice8 *dev) {
-  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1015F6A0u) != 0xE9; t++) {
+  for (int t = 0; t < 400 && !(*(uint8_t *)ga(0x1015F6A0u) == 0xE9 && *(uint8_t *)ga(0x1011A5A0u) == 0xE9); t++) {
     IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
   }
-  check(*(uint8_t *)ga(0x1015F6A0u) == 0xE9, "uimod: Menu_DrawLayers' entry jumps (the mod's hook)");
-  static uint8_t w1[0x100], w2[0x100], md1[0x80], md2[0x80], n1[0x18], n2[0x18], cursor[0x400], resmng[0x10000];
-  memset(w1, 0, sizeof w1); memset(w2, 0, sizeof w2);
+  check(*(uint8_t *)ga(0x1015F6A0u) == 0xE9 && *(uint8_t *)ga(0x1011A5A0u) == 0xE9, "uimod: Menu_DrawLayers' and NetCellFont_SetRectAndUpdateNodes' entries jump (the mod's hooks)");
+  /* (25 Nov) two windows as the game has them: the name at [+4]+0x46, a node list at +0x14 whose first node is the
+     frame (kind 0); in the menu manager's list (+0) for the draw */
+  static uint8_t w1[0x100], w2[0x100], md1[0x80], md2[0x80], n1[0x18], n2[0x18], f1[0x40], f2[0x40], l1[0x18], l2[0x18], cursor[0x400], resmng[0x10000];
+  memset(w1, 0, sizeof w1); memset(w2, 0, sizeof w2); memset(f1, 0, sizeof f1); memset(f2, 0, sizeof f2); memset(l1, 0, sizeof l1); memset(l2, 0, sizeof l2);
   memcpy(md1 + 0x46, "menu    inventor", 16); memcpy(md2 + 0x46, "menu    equip   ", 16);
   *(void **)(w1 + 4) = md1; *(void **)(w2 + 4) = md2; w1[0x60] = 9; w2[0x60] = 9;
-  short r1[4] = { 10, 20, 110, 220 }, r2[4] = { 0, 0, 50, 50 }; memcpy(w1 + 0x3A, r1, 8); memcpy(w2 + 0x3A, r2, 8);
+  *(void **)(l1 + 0x10) = f1; *(void **)(l2 + 0x10) = f2; *(void **)(w1 + 0x14) = l1; *(void **)(w2 + 0x14) = l2;
   memset(n1, 0, sizeof n1); memset(n2, 0, sizeof n2); *(void **)n1 = n2; *(void **)(n1 + 0x10) = w1; *(void **)(n2 + 0x10) = w2;
   uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0x60]; memcpy(saved, mng, sizeof saved);
   memset(mng, 0, sizeof saved); *(void **)mng = n1;
@@ -618,20 +646,412 @@ static int uimod_run(IDirect3DDevice8 *dev) {
   void **pcur = (void **)ga(0x104E1D4Cu), **pres = (void **)ga(0x1047BFA8u); void *oc = *pcur, *orr = *pres;
   if (!*pcur) *pcur = cursor;
   if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
-  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u); HitFn hit = (HitFn)(void *)ga(0x10118C10u); char what[220];
-  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
-  short *a = (short *)(w1 + 0x3A), *b = (short *)(w2 + 0x3A);
-  snprintf(what, sizeof what, "uimod: menuinventor moved by 105,-3 to %d,%d..%d,%d; menuequip by 100,0 to %d,%d..%d,%d", a[0], a[1], a[2], a[3], b[0], b[1], b[2], b[3]);
-  check(a[0] == 115 && a[1] == 17 && a[2] == 215 && a[3] == 217 && b[0] == 100 && b[1] == 0 && b[2] == 150 && b[3] == 50, what);
+  SetRectFn place = (SetRectFn)(void *)ga(0x1011A5A0u); HitFn hit = (HitFn)(void *)ga(0x10118C10u); char what[260];
+  /* the game places them (snap 0): inventor at 10,20 size 100,200; equip at 0,0 size 50,50 */
+  place(w1, 10, 20, 100, 200, 0, 0, 0); place(w2, 0, 0, 50, 50, 0, 0, 0);
+  short *t1 = (short *)(w1 + 0x8C), *h1 = (short *)(w1 + 0x3A), *t2 = (short *)(w2 + 0x8C), *fr1 = (short *)f1;
+  snprintf(what, sizeof what, "uimod: the game's placement offset: inventor drawn at %d,%d size %d,%d (115,17 100,200: ui_dx 100 + its line 5,-3), equip at %d,%d (100,0)", t1[0], t1[1], t1[2], t1[3], t2[0], t2[1]);
+  check(t1[0] == 115 && t1[1] == 17 && t1[2] == 100 && t1[3] == 200 && t2[0] == 100 && t2[1] == 0, what);
+  snprintf(what, sizeof what, "uimod: the frame node there at once (snap 0): %d,%d; the hit rectangle with it: %d,%d..%d,%d (115,17..215,217)", fr1[0xd], fr1[0xe], h1[0], h1[1], h1[2], h1[3]);
+  check(fr1[0xd] == 115 && fr1[0xe] == 17 && h1[0] == 115 && h1[1] == 17 && h1[2] == 215 && h1[3] == 217, what);
   uint32_t pin[2] = { 200, 30 }, pout[2] = { 50, 30 };
   check((hit(w1, pin) & 0xFF) == 1 && (hit(w1, pout) & 0xFF) == 0, "uimod: the game's hit test finds (200,30) in the moved window and not (50,30)");
-  short rb[4] = { 0, 0, 10, 10 }; memcpy(w1 + 0x3A, rb, 8);       /* the game rebuilds it */
-  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
-  snprintf(what, sizeof what, "uimod: rebuilt to 0,0..10,10 by the game: now %d,%d..%d,%d (105,-3..115,7)", a[0], a[1], a[2], a[3]);
-  check(a[0] == 105 && a[1] == -3 && a[2] == 115 && a[3] == 7, what);
-  IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev);
-  check(a[0] == 105 && a[1] == -3, "uimod: drawn again: not moved twice");
+  /* a settings change: ui_dx 100 -> 40; the next draw places the listed windows again from the game's base */
+  { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=40\nui_list=1\n", mf); fclose(mf); } }
+  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u);
+  for (int i = 0; i < 80 && t1[0] != 55; i++) { IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(25); }
+  snprintf(what, sizeof what, "uimod: ui_dx 40: placed again at %d,%d (55,17), equip at %d,%d (40,0), frame node %d,%d", t1[0], t1[1], t2[0], t2[1], fr1[0xd], fr1[0xe]);
+  check(t1[0] == 55 && t1[1] == 17 && t2[0] == 40 && t2[1] == 0 && fr1[0xd] == 55, what);
   memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr;
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ ctmod mode
+   sdk/examples/click_target.dll through the kit. (1) The hooks: FindNearestToPoint, Slot244_Unknown, and the nameplate
+   pair (DrawNameIfVisible, CDx::DrawPrimitiveUP). (2) The game's own FindNearestToPoint with an empty camera (g_pCamera's
+   +0x50 is 0: it returns at once): recorded, nothing picked. (3) The game's own CXiSkeletonActor::Slot244_Unknown on a
+   stand-in actor (its vtable's +0x1BC position, +0x1C0 heading, +0x3C8 box are the test's) with an identity view x
+   projection: the box the game computes, recorded by the mod, against the box the code's reading gives (x from the box's
+   third and fourth floats, y from the first and second, negated). (4) The mod's rule on given boxes and names: a name
+   wins over the game's pick; the game's pick stands otherwise; with none, the nearest centre among the boxes grown by
+   ct_grow (125%); a point outside every grown box picks nothing. */
+typedef int *(__cdecl *FindFn)(float *, uint32_t, uint32_t);
+typedef uint32_t (__thiscall *BoxFn)(void *, float *, float *, void *);
+static float pv_pos[4] = { 0.1f, 0.2f, 0.5f, 1.0f }, pv_dir[4] = { 0, 0, 0, 0 };
+static float pv_tab[6] = { -0.3f, 0.4f, -0.2f, 0.25f, 0.1f, 0.2f };
+static void *__attribute__((thiscall)) pv_getpos(void *self) { (void)self; return pv_pos; }
+static void *__attribute__((thiscall)) pv_getdir(void *self) { (void)self; return pv_dir; }
+static void *__attribute__((thiscall)) pv_gettab(void *self, int k) { (void)self; (void)k; return pv_tab; }
+typedef void *(*DecideFn)(float, float, int, void **, const float *, void *, int, void **, const float *, int *);
+static int ctmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x10083750u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x10083750u) == 0xE9 && *(uint8_t *)ga(0x100CFC10u) == 0xE9, "ctmod: FindNearestToPoint's and Slot244_Unknown's entries jump (the mod's hooks)");
+  check(*(uint8_t *)ga(0x100D0880u) == 0xE9 && *(uint8_t *)ga(0x1000CD00u) == 0xE9, "ctmod: DrawNameIfVisible's and CDx::DrawPrimitiveUP's entries jump (the nameplate hooks)");
+  HMODULE m = GetModuleHandleA("click_target.dll"); char what[300];
+  int (*last)(float *, float *, int *, void **, void **) = (int (*)(float *, float *, int *, void **, void **))(void *)GetProcAddress(m, "ct_test_last");
+  int (*tbox)(int, float *) = (int (*)(int, float *))(void *)GetProcAddress(m, "ct_test_box");
+  void (*inpick)(int) = (void (*)(int))(void *)GetProcAddress(m, "ct_test_inpick");
+  DecideFn decide = (DecideFn)(void *)GetProcAddress(m, "ct_test_decide");
+  check(m && last && tbox && inpick && decide, "ctmod: the mod's test exports");
+  if (!(m && last && tbox && inpick && decide)) return 0;
+  float pt[4] = { 0.25f, -0.5f, 0, 0 };
+  static uint8_t nocam[0x100]; memset(nocam, 0, sizeof nocam);
+  void **pcam = (void **)ga(0x104568FCu), *ocam = *pcam; *pcam = nocam;
+  int *won = ((FindFn)(void *)ga(0x10083750u))(pt, 0x11u, 0x22u);
+  *pcam = ocam;
+  float px = 0, py = 0; int n = -1; void *g = (void *)1, *w = (void *)1; int seq = last(&px, &py, &n, &g, &w);
+  snprintf(what, sizeof what, "ctmod: the game's FindNearestToPoint (empty camera) returned %p; the mod recorded pick %d at %.2f,%.2f, %d boxes, result %p", (void *)won, seq, px, py, n, w);
+  check(won == NULL && seq == 1 && px == 0.25f && py == -0.5f && n == 0 && w == NULL, what);
+  static void *vt[0x400 / 4]; static uint8_t actor[0x800]; memset(actor, 0, sizeof actor);
+  vt[0x1BC / 4] = (void *)pv_getpos; vt[0x1C0 / 4] = (void *)pv_getdir; vt[0x3C8 / 4] = (void *)pv_gettab; *(void ***)actor = vt;
+  float ident[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 }, mn[4] = { 0 }, mx[4] = { 0 };
+  inpick(1);
+  uint32_t r = ((BoxFn)(void *)ga(0x100CFC10u))(actor, mn, mx, ident);
+  inpick(0);
+  float b[5] = { 0 }; int ok = tbox(0, b); last(&px, &py, &n, &g, &w);
+  printf("  (the game's box: min %.4f %.4f %.4f %.4f  max %.4f %.4f %.4f %.4f, returned %u)\n", mn[0], mn[1], mn[2], mn[3], mx[0], mx[1], mx[2], mx[3], (unsigned)(r & 0xFF));
+  snprintf(what, sizeof what, "ctmod: the mod recorded the game's box (%d box, ok %d): %.4f,%.4f..%.4f,%.4f w %.4f = the game's output", n, ok, b[0], b[1], b[2], b[3], b[4]);
+  check(n == 1 && ok == 1 && b[0] == mn[0] && b[1] == mn[1] && b[2] == mx[0] && b[3] == mx[1] && b[4] == mn[3], what);
+  float ex0 = 0.1f - 0.2f, ex1 = 0.1f + 0.25f, ey0 = -(0.2f + 0.4f), ey1 = -(0.2f - 0.3f);
+  snprintf(what, sizeof what, "ctmod: the game's box is the file's box moved and y negated: x %.4f..%.4f (%.4f..%.4f), y %.4f..%.4f (%.4f..%.4f)", mn[0], mx[0], ex0, ex1, mn[1], mx[1], ey0, ey1);
+  check(fabsf(mn[0] - ex0) < 1e-4f && fabsf(mx[0] - ex1) < 1e-4f && fabsf(mn[1] - ey0) < 1e-4f && fabsf(mx[1] - ey1) < 1e-4f, what);
+  { /* the box crossing the camera's plane (click_target's box_crosses_near): the same actor under a matrix that puts the
+       box's depth in w (w = z, z kept: x, y, z of a corner over w), the actor moved to z -0.15 so its corners' z are
+       -0.05 .. 0.05: the game's box divides by w <= 0 for half of them; the mod marks the box crossing (not used). The
+       first box (identity, z 0.6 .. 0.7, w 1) is not crossing. */
+    int (*tnear)(int) = (int (*)(int))(void *)GetProcAddress(m, "ct_test_near");
+    int n0 = tnear ? tnear(0) : -2;
+    float persp[16] = { 1,0,0,0, 0,1,0,0, 0,0,1,1, 0,0,0,0 }, z0 = pv_pos[2]; pv_pos[2] = -0.15f;
+    inpick(1); ((BoxFn)(void *)ga(0x100CFC10u))(actor, mn, mx, persp); inpick(0); pv_pos[2] = z0;
+    int n1 = tnear ? tnear(0) : -2;
+    snprintf(what, sizeof what, "ctmod: a box in front of the camera: crossing %d (0); a box whose corners have w -0.05..0.05: crossing %d (1); the game's box for it x %.1f..%.1f", n0, n1, mn[0], mx[0]);
+    check(n0 == 0 && n1 == 1, what); }
+  /* the rule: A's box 0,0..0.2,0.2 (centre 0.1,0.1; grown 125%: -0.025..0.225), B's 0.3,0..0.5,0.2 (centre 0.4,0.1) */
+  void *A = (void *)0xA0, *B = (void *)0xB0, *C = (void *)0xC0; void *acts[2] = { A, B };
+  float boxes[8] = { 0, 0, 0.2f, 0.2f, 0.3f, 0, 0.5f, 0.2f };
+  void *nacts[2] = { B, C }; float names[8] = { 0.3f, -0.3f, 0.5f, -0.25f, 0.6f, -0.3f, 0.8f, -0.25f };
+  int how = -1; void *res;
+  res = decide(0.21f, 0.1f, 2, acts, boxes, NULL, 0, NULL, NULL, &how);
+  snprintf(what, sizeof what, "ctmod: the game picked nothing; 0.21,0.1 is outside A's box but inside it grown 125%%: %p (A), how %d (2)", res, how); check(res == A && how == 2, what);
+  res = decide(0.26f, 0.1f, 2, acts, boxes, NULL, 0, NULL, NULL, &how);
+  snprintf(what, sizeof what, "ctmod: 0.26,0.1 is in both grown boxes' reach? A's ends at 0.225, B's starts at 0.275: %p (nothing), how %d (3)", res, how); check(res == NULL && how == 3, what);
+  res = decide(0.29f, 0.1f, 2, acts, boxes, NULL, 0, NULL, NULL, &how);
+  snprintf(what, sizeof what, "ctmod: 0.29,0.1: B's grown box: %p (B), how %d (2)", res, how); check(res == B && how == 2, what);
+  res = decide(0.1f, 0.1f, 2, acts, boxes, B, 0, NULL, NULL, &how);
+  snprintf(what, sizeof what, "ctmod: the game's own pick stands: %p (B), how %d (0)", res, how); check(res == B && how == 0, what);
+  res = decide(0.4f, -0.27f, 2, acts, boxes, A, 2, nacts, names, &how);
+  snprintf(what, sizeof what, "ctmod: a click on B's nameplate wins over the game's pick of A: %p (B), how %d (1)", res, how); check(res == B && how == 1, what);
+  res = decide(0.7f, -0.27f, 2, acts, boxes, NULL, 2, nacts, names, &how);
+  snprintf(what, sizeof what, "ctmod: C's nameplate, C not among the actors the game's filter let through: %p (nothing), how %d (3)", res, how); check(res == NULL && how == 3, what);
+  check(*(uint8_t *)ga(0x101585F0u) == 0xE9 && *(uint8_t *)ga(0x10158DB0u) == 0xE9, "ctmod: Target_RunActiveCommand's and Target_ApplyAction's entries jump (the click hooks)");
+  int (*wd)(void *, int, int, int) = (int (*)(void *, int, int, int))(void *)GetProcAddress(m, "ct_test_would_deselect");
+  static uint8_t tm[0x200]; memset(tm, 0, sizeof tm);
+  if (wd) {
+    int a1 = wd(tm, 1, 1, 1), a2 = wd(tm, 1, 0, 1), a3 = wd(tm, 1, 1, 0), a4 = wd(tm, 0, 1, 1);
+    *(uint32_t *)(tm + 0xC4) = 0x1000; int a5 = wd(tm, 1, 1, 1); *(uint32_t *)(tm + 0xC4) = 0;
+    snprintf(what, sizeof what, "ctmod: deselect only for a click (inside Target_RunActiveCommand) that picked nobody with a target selected and no command waiting: %d (1), no target %d, picked someone %d, not a click %d, a command waiting %d (0s)", a1, a2, a3, a4, a5);
+    check(a1 == 1 && !a2 && !a3 && !a4 && !a5, what);
+  } else check(0, "ctmod: ct_test_would_deselect");
+  for (int f = 0; f < 5; f++) {          /* the mod's frame (ct_show=1 in this test) draws the recorded pick */
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20);
+  }
+  check(1, "ctmod: five frames drawn with ct_show=1");
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ igmod mode
+   sdk/examples/imgui_panel.dll (Dear ImGui through sdk/xiimgui) on Wine's Direct3D 8: its window drawn inside the game's
+   own Menu_DrawLayers; a press over the window kept from the game (the cursor object's +0x58 untouched), a press
+   elsewhere reaching the game's Cursor_EnterMode1; nothing drawn while the interface is hidden; pixels of the window in
+   the back buffer when it can be read. */
+typedef void (__thiscall *IgCurFn)(void *);
+static int igmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1015F6A0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x1015F6A0u) == 0xE9 && *(uint8_t *)ga(0x10158D90u) == 0xE9 && *(uint8_t *)ga(0x10124930u) == 0xE9 && *(uint8_t *)ga(0x101249E0u) == 0xE9,
+        "igmod: Menu_DrawLayers, Target_PickNearestToPoint and the two left-button entries jump (xiimgui's hooks)");
+  HMODULE m = GetModuleHandleA("imgui_panel.dll"); char what[300];
+  long (*frames)(void) = (long (*)(void))(void *)GetProcAddress(m, "ip_test_frames");
+  int (*hadm)(void) = (int (*)(void))(void *)GetProcAddress(m, "ip_test_had_mouse");
+  void (*clicks)(long *, long *) = (void (*)(long *, long *))(void *)GetProcAddress(m, "ip_test_clicks");
+  check(m && frames && hadm && clicks, "igmod: the mod's test exports");
+  if (!(m && frames && hadm && clicks)) return 0;
+  long kept = 0, passed = 0;
+  void (*ffocus)(int) = (void (*)(int))(void *)GetProcAddress(m, "ip_test_force_focus"); if (ffocus) ffocus(1);   /* (no game window here) */
+  uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0xC0]; memcpy(saved, mng, sizeof saved); memset(mng, 0, sizeof saved);
+  short *sr = (short *)ga(0x106218B4u); sr[0] = 0; sr[1] = 0; sr[2] = 640; sr[3] = 480;
+  static uint8_t cursor[0x400]; memset(cursor, 0, sizeof cursor);
+  void **pcur = (void **)ga(0x104E1D4Cu), *oc = *pcur; *pcur = cursor;
+  static uint8_t resmng[0x10000]; memset(resmng, 0, sizeof resmng);
+  void **pres = (void **)ga(0x1047BFA8u), *orr = *pres; if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
+  if (!*(void **)(g_cdx + 0xC)) *(IDirect3DDevice8 **)(g_cdx + 0xC) = dev;
+  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u);
+  #define IG_FRAME() do { IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); } while (0)
+  *(int *)(cursor + 4) = 100; *(int *)(cursor + 8) = 60;              /* inside the window (40,40, 320 wide) */
+  long f0 = frames();
+  for (int f = 0; f < 10; f++) IG_FRAME();
+  snprintf(what, sizeof what, "igmod: 10 frames drawn through Menu_DrawLayers: %ld (10)", frames() - f0); check(frames() - f0 == 10, what);
+  snprintf(what, sizeof what, "igmod: the cursor over the window: ImGui wants the mouse (%d)", hadm()); check(hadm() == 1, what);
+  { IDirect3DSurface8 *bb = NULL; D3DLOCKED_RECT lr; int lit = -1;
+    if (SUCCEEDED(IDirect3DDevice8_GetBackBuffer(dev, 0, D3DBACKBUFFER_TYPE_MONO, &bb)) && bb) {
+      if (SUCCEEDED(IDirect3DSurface8_LockRect(bb, &lr, NULL, D3DLOCK_READONLY))) {
+        uint32_t px = *(uint32_t *)((uint8_t *)lr.pBits + 100 * lr.Pitch + 100 * 4); lit = (px & 0xFFFFFF) != 0;
+        IDirect3DSurface8_UnlockRect(bb);
+      }
+      IDirect3DSurface8_Release(bb);
+    }
+    if (lit < 0) printf("note: igmod: the back buffer cannot be read here (not lockable): pixels not checked\n");
+    else check(lit == 1, "igmod: a pixel inside the window (100,100) is not the cleared black"); }
+  *(uint32_t *)(cursor + 0x58) = 0x12340000;
+  ((IgCurFn)(void *)ga(0x10124930u))(cursor); IG_FRAME(); ((IgCurFn)(void *)ga(0x101249E0u))(cursor); IG_FRAME();
+  clicks(&kept, &passed);
+  snprintf(what, sizeof what, "igmod: a press over the window kept from the game: kept %ld (1), passed %ld (0)", kept, passed);
+  check(kept == 1 && passed == 0, what);
+  *(int *)(cursor + 4) = 600; *(int *)(cursor + 8) = 450; IG_FRAME(); IG_FRAME();
+  snprintf(what, sizeof what, "igmod: the cursor away from the window: ImGui does not want the mouse (%d)", hadm()); check(hadm() == 0, what);
+  ((IgCurFn)(void *)ga(0x10124930u))(cursor); ((IgCurFn)(void *)ga(0x101249E0u))(cursor);
+  clicks(&kept, &passed);
+  snprintf(what, sizeof what, "igmod: a press away from the window passed on to the game's Cursor_EnterMode1: kept %ld (1), passed %ld (1)", kept, passed);
+  check(kept == 1 && passed == 1, what);
+  mng[0xB4] = 1; long f1 = frames(); IG_FRAME(); IG_FRAME();
+  snprintf(what, sizeof what, "igmod: the interface hidden (+0xB4 = 1): no frame drawn (%ld)", frames() - f1); check(frames() == f1, what);
+  mng[0xB4] = 0;
+  memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr;
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ xtmod mode
+   kit/sessions/experimental_tests' in-game test (xitest.dll, xitest_b.dll) on Wine's Direct3D 8: it starts, draws
+   through the game's own Menu_DrawLayers, and writes xitest_results.txt with the kit's checks passed (K1, K2, K4).
+   The other checks need the game itself (a window, a cursor, a target): they are the owner's run. */
+static int xtmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1015F6A0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(GetModuleHandleA("xitest.dll") && GetModuleHandleA("xitest_b.dll"), "xtmod: xitest.dll and xitest_b.dll loaded");
+  uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0xC0]; memcpy(saved, mng, sizeof saved); memset(mng, 0, sizeof saved);
+  short *sr = (short *)ga(0x106218B4u); sr[0] = 0; sr[1] = 0; sr[2] = 640; sr[3] = 480;
+  static uint8_t cursor[0x400]; memset(cursor, 0, sizeof cursor);       /* (the game's Menu_DrawLayers reads the cursor object) */
+  void **pcur = (void **)ga(0x104E1D4Cu), *oc = *pcur; *pcur = cursor;
+  static uint8_t resmng[0x10000]; memset(resmng, 0, sizeof resmng);
+  void **pres = (void **)ga(0x1047BFA8u), *orr = *pres; if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
+  if (!*(void **)(g_cdx + 0xC)) *(IDirect3DDevice8 **)(g_cdx + 0xC) = dev;
+  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u);
+  for (int f = 0; f < 200; f++) { IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); if (f % 50 == 0) printf("note: xtmod: frame %d\n", f); }
+  FILE *f = fopen("xitest_results.txt", "r"); static char t[1 << 16]; size_t n = f ? fread(t, 1, sizeof t - 1, f) : 0; t[n] = 0; if (f) fclose(f);
+  check(n > 0, "xtmod: xitest_results.txt written (at frame 160)");
+  check(strstr(t, "PASS K1") != NULL, "xtmod: K1 PASS (kit API 5)");
+  check(strstr(t, "PASS K2") != NULL, "xtmod: K2 PASS (xitest's and xitest_b's hooks of Menu_DrawLayers both ran, as often)");
+  check(strstr(t, "PASS K4") != NULL, "xtmod: K4 PASS (BeginScene through the device hook)");
+  check(strstr(t, "PASS G1") != NULL, "xtmod: G1 PASS (xiimgui drew its window)");
+  for (char *l = t; *l; ) { char *e = strchr(l, '\n'); if (!e) break; if (!strncmp(l, "FAIL", 4) || !strncmp(l, "WAIT", 4)) printf("note: xtmod: %.*s\n", (int)(e - l), l); l = e + 1; }
+  memcpy(mng, saved, sizeof saved); *pres = orr; *pcur = oc;
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ hbmod mode
+   sdk/examples/hotbar.dll through the kit (hb_dry=1: a slot's line is logged and kept, not run). hotbar.txt: bar 1 of 3
+   slots at 100,100; bar 2 of 4 slots down at 10,10; XIVhotbar2's folder "xiv" (written here: General.lua's Root,
+   war.lua's Base and Sword, the priv_res tables; icons copied from WGINC/XIVhotbar2 by test_xikit.py); job war, set
+   Sword. The interface's size 1280x960 (two pixels a unit). Checks: the hooks (Menu_DrawLayers,
+   Target_PickNearestToPoint, Cursor_EnterMode1, Cursor_ToggleFlag1); the layout; XIVhotbar2's rows resolved (a
+   spell's line, cost and icon; a weapon skill only from the Sword set; a macro's lines); keys F9 and Ctrl+1 inside
+   the game's own Menu_DrawLayers, none while the chat line takes characters; a left press over a slot handled by the
+   mod and kept from the game (the cursor object's +0x58, which the game's Cursor_EnterMode1 sets, untouched), its
+   release too; a macro's second line 200 ms after its first; the Field/Battle tag; an "hb env" slot; the bars not
+   hit while the interface is hidden (menu manager +0xB4 = 1); icons made into textures (WIC). */
+typedef uint32_t (__thiscall *PickFn)(void *);
+typedef void (__thiscall *CurFn)(void *);
+/* hbmod plays another tool that hooked Command_RunLine before the kit (as Windower's Hook.dll does in the owner's game,
+   24 Nov): a jmp rel32 at its entry to this stub, written before the kit loads. The kit puts the mod's hook in front
+   of it, so a line the mod does not take reaches the stub (it answers 7 and runs no game code). */
+static volatile long g_fake_tool_calls;
+static int __cdecl fake_tool_runline(char *line, uint32_t mode) { (void)line; (void)mode; g_fake_tool_calls++; return 7; }
+/* (25 Nov) the forms another tool's hook can take at an entry (prishe_probe's jump_of): XT_TOOL_FORM = e9 (jmp rel32,
+   the instruction's sixth byte left as it was), e990 (jmp rel32 and a nop over the rest of the 6-byte instruction),
+   ff25 (jmp [slot]), pushret (push imm32; ret), bad (e990 with a byte after the first instruction changed: refused) */
+static void *g_tool_slot;
+static void fake_tool_form(const char *form) {
+  uint8_t *e = (uint8_t *)ga(0x10080DC0u); DWORD o; VirtualProtect(e, 16, PAGE_EXECUTE_READWRITE, &o);
+  void *to = (void *)fake_tool_runline; int32_t d = (int32_t)((uintptr_t)to - ((uintptr_t)e + 5));
+  if (!strcmp(form, "ff25")) { g_tool_slot = to; void **sl = &g_tool_slot; e[0] = 0xFF; e[1] = 0x25; memcpy(e + 2, &sl, 4); }
+  else if (!strcmp(form, "pushret")) { uint32_t a = (uint32_t)(uintptr_t)to; e[0] = 0x68; memcpy(e + 1, &a, 4); e[5] = 0xC3; }
+  else { e[0] = 0xE9; memcpy(e + 1, &d, 4); if (strcmp(form, "e9")) e[5] = 0x90; if (!strcmp(form, "bad")) e[10] ^= 0x55; }
+  VirtualProtect(e, 16, o, &o); FlushInstructionCache(GetCurrentProcess(), e, 16);
+}
+static void fake_tool_hook(void) {
+  uint8_t *e = (uint8_t *)ga(0x10080DC0u); DWORD o; VirtualProtect(e, 5, PAGE_EXECUTE_READWRITE, &o);
+  int32_t d = (int32_t)((uintptr_t)fake_tool_runline - ((uintptr_t)e + 5)); e[0] = 0xE9; memcpy(e + 1, &d, 4);
+  VirtualProtect(e, 5, o, &o); FlushInstructionCache(GetCurrentProcess(), e, 5);
+}
+
+static int hbmod_run(IDirect3DDevice8 *dev) {
+  for (int t = 0; t < 400 && *(uint8_t *)ga(0x1015F6A0u) != 0xE9; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(uint8_t *)ga(0x1015F6A0u) == 0xE9 && *(uint8_t *)ga(0x10158D90u) == 0xE9, "hbmod: Menu_DrawLayers' and Target_PickNearestToPoint's entries jump (the mod's hooks)");
+  check(*(uint8_t *)ga(0x10124930u) == 0xE9 && *(uint8_t *)ga(0x101249E0u) == 0xE9, "hbmod: Cursor_EnterMode1's and Cursor_ToggleFlag1's entries jump (the left button)");
+  HMODULE m = GetModuleHandleA("hotbar.dll"); char what[400];
+  int (*over)(int, int) = (int (*)(int, int))(void *)GetProcAddress(m, "hb_test_over");
+  int (*rect)(int, int, float *) = (int (*)(int, int, float *))(void *)GetProcAddress(m, "hb_test_rect");
+  int (*state)(int *, int *, char *, int) = (int (*)(int *, int *, char *, int))(void *)GetProcAddress(m, "hb_test_state");
+  void (*focus)(int) = (void (*)(int))(void *)GetProcAddress(m, "hb_test_force_focus");
+  int (*env)(int) = (int (*)(int))(void *)GetProcAddress(m, "hb_test_env");
+  int (*slot)(int, int, char *, char *, int *, int *, int *) = (int (*)(int, int, char *, char *, int *, int *, int *))(void *)GetProcAddress(m, "hb_test_slot");
+  int (*texs)(void) = (int (*)(void))(void *)GetProcAddress(m, "hb_test_textures");
+  check(m && over && rect && state && focus && env && slot && texs, "hbmod: the mod's test exports");
+  if (!(m && over && rect && state && focus && env && slot && texs)) return 0;
+  short *sr = (short *)ga(0x106218B4u); short osr[4]; memcpy(osr, sr, 8); sr[0] = 0; sr[1] = 0; sr[2] = 1280; sr[3] = 960;
+  env(1);
+  int nb = 0, ns = 0; char last[256] = ""; int runs = state(&nb, &ns, last, sizeof last);
+  snprintf(what, sizeof what, "hbmod: hotbar.txt and the XIVhotbar2 files read: %d bars, %d battle slots (2, 7)", nb, ns); check(nb == 2 && ns == 7 && runs == 0, what);
+  float b[4] = { 0 }, s1[4] = { 0 }, v1[4] = { 0 }; rect(1, 0, b); rect(1, 1, s1); rect(2, 2, v1);
+  snprintf(what, sizeof what, "hbmod: bar 1 at %.0f,%.0f..%.0f,%.0f (200,200..360,260), slot 1 %.0f,%.0f..%.0f,%.0f (208,208..252,252); bar 2 (down) slot 2 %.0f,%.0f..%.0f,%.0f (28,78..72,122)",
+           b[0], b[1], b[2], b[3], s1[0], s1[1], s1[2], s1[3], v1[0], v1[1], v1[2], v1[3]);
+  check(b[0] == 200 && b[1] == 200 && b[2] == 360 && b[3] == 260 && s1[0] == 208 && s1[3] == 252 && v1[0] == 28 && v1[1] == 78 && v1[2] == 72 && v1[3] == 122, what);
+  snprintf(what, sizeof what, "hbmod: hit test: (220,220) %d (101), (330,220) %d (103), (50,150) %d (203), (150,210) %d (1000, the tag), (10,10) %d (0)", over(220, 220), over(330, 220), over(50, 150), over(150, 210), over(10, 10));
+  check(over(220, 220) == 101 && over(330, 220) == 103 && over(50, 150) == 203 && over(150, 210) == 1000 && over(10, 10) == 0, what);
+  char lab[64], l0[256]; int nl = 0, ic = 0, mp = 0;
+  int u = slot(2, 3, lab, l0, &nl, &ic, &mp);
+  snprintf(what, sizeof what, "hbmod: XIVhotbar2 war.lua Base 'battle 2 3' ma Cure stpc: \"%s\" -> \"%s\", %d line, MP %d (8, spells.lua), icon %d", lab, l0, nl, mp, ic);
+  check(u && !strcmp(lab, "Cure") && !strcmp(l0, "/ma \"Cure\" <stpc>") && nl == 1 && mp == 8 && ic, what);
+  u = slot(2, 4, lab, l0, &nl, &ic, &mp);
+  snprintf(what, sizeof what, "hbmod: the Sword set's 'battle 2 4' ws Fast Blade: \"%s\" -> \"%s\", icon %d (weapons/02)", lab, l0, ic);
+  check(u && !strcmp(lab, "FB") && !strcmp(l0, "/ws \"Fast Blade\" <t>") && ic, what);
+  u = slot(2, 2, lab, l0, &nl, &ic, &mp);
+  snprintf(what, sizeof what, "hbmod: General.lua Root 'battle 2 2' macro: \"%s\", %d lines, the first \"%s\" (/sit)", lab, nl, l0);
+  check(u && !strcmp(lab, "Sit") && nl == 2 && !strcmp(l0, "/sit"), what);
+  u = slot(1, 2, lab, l0, &nl, &ic, &mp);
+  snprintf(what, sizeof what, "hbmod: hotbar.txt's own 1.2 wins over war.lua's 'battle 1 2' Provoke: \"%s\" -> \"%s\"", lab, l0);
+  check(u && !strcmp(lab, "Check") && !strcmp(l0, "/check <t>"), what);
+  static uint8_t cursor[0x400], tmng[0x200]; memset(cursor, 0, sizeof cursor); memset(tmng, 0, sizeof tmng);
+  void **pcur = (void **)ga(0x104E1D4Cu), *oc = *pcur; *pcur = cursor;
+  void **pcam = (void **)ga(0x104568FCu), *ocam = *pcam; *pcam = NULL;
+  *(int *)(cursor + 4) = 220; *(int *)(cursor + 8) = 220; tmng[0x55] = 1;
+  uint32_t pk = ((PickFn)(void *)ga(0x10158D90u))(tmng);
+  snprintf(what, sizeof what, "hbmod: over a slot the world pick returns %u and clears +0x55 (%d) without the game's code", (unsigned)pk, tmng[0x55]);
+  check(pk == 0 && tmng[0x55] == 0, what);
+  *pcam = ocam;
+  uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0xC0]; memcpy(saved, mng, sizeof saved); memset(mng, 0, sizeof saved);
+  sr[0] = 0; sr[1] = 0; sr[2] = 1280; sr[3] = 960;                    /* (the screen rectangle is the manager's +0x7C..+0x82: cleared just now) */
+  static uint8_t resmng[0x10000]; memset(resmng, 0, sizeof resmng);
+  void **pres = (void **)ga(0x1047BFA8u), *orr = *pres; if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
+  if (!*(void **)(g_cdx + 0xC)) *(IDirect3DDevice8 **)(g_cdx + 0xC) = dev;
+  DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u);
+  focus(1);
+  #define HB_FRAME() do { IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); } while (0)
+  for (int f = 0; f < 30; f++) HB_FRAME();
+  snprintf(what, sizeof what, "hbmod: %d icons made into textures (WIC) after 30 frames (3 or more)", texs()); check(texs() >= 3, what);
+  #define HB_FRAMES4() do { for (int q_ = 0; q_ < 4; q_++) HB_FRAME(); } while (0)      /* (a key runs 3 frames after its press) */
+  /* keys by message (the hotbar's default since 24 Nov): the host has no game window, so the hotbar subclasses a window
+     of the test's own (hb_test_msg_window), and the test sends it the messages Windows would: WM_KEYDOWN / WM_KEYUP,
+     WM_SYSKEYDOWN with lParam bit 29 for Alt, bit 30 for an auto-repeat */
+  int (*msgwin)(void *) = (int (*)(void *))(void *)GetProcAddress(m, "hb_test_msg_window");
+  HWND kw = CreateWindowExA(0, "STATIC", "hbkeys", WS_POPUP, 0, 0, 8, 8, NULL, NULL, GetModuleHandleA(NULL), NULL);
+  int kok = msgwin && kw && msgwin(kw);
+  check(kok, "hbmod: the hotbar subclassed a test window for key messages");
+  #define KDN(vk) SendMessageA(kw, WM_KEYDOWN, (WPARAM)(vk), 1)
+  #define KUP(vk) SendMessageA(kw, WM_KEYUP, (WPARAM)(vk), (LPARAM)0xC0000001u)
+  #define KREP(vk) SendMessageA(kw, WM_KEYDOWN, (WPARAM)(vk), (LPARAM)0x40000001u)
+  KDN(VK_F9); HB_FRAME(); KUP(VK_F9); HB_FRAMES4();
+  runs = state(&nb, &ns, last, sizeof last);
+  snprintf(what, sizeof what, "hbmod: F9: %d run(s), the line \"%s\" (/heal)", runs, last); check(runs == 1 && !strcmp(last, "/heal"), what);
+  KDN(VK_CONTROL); KDN('1'); HB_FRAME(); KUP('1'); KUP(VK_CONTROL); HB_FRAMES4();
+  runs = state(&nb, &ns, last, sizeof last);
+  snprintf(what, sizeof what, "hbmod: Ctrl+1: %d runs, the line \"%s\" (/check <t>)", runs, last); check(runs == 2 && !strcmp(last, "/check <t>"), what);
+  { /* a key typed into the chat line: the chat buffer ([0x10578490], text at +0x14, cursor +0x114: Input_HandleChar) is a
+       test buffer; its text changes after F9's press, as a typed character would: the slot does not run */
+    long (*drops)(void) = (long (*)(void))(void *)GetProcAddress(m, "hb_test_typed_drops");
+    static uint8_t chatbuf[0x200]; memset(chatbuf, 0, sizeof chatbuf);
+    uint8_t **pc = (uint8_t **)ga(0x10578490u), *oc1 = *pc; *pc = chatbuf; long d0 = drops ? drops() : -1;
+    KDN(VK_F9); HB_FRAME();
+    chatbuf[0x14] = 'x'; chatbuf[0x114] = 1;                    /* the character the key typed */
+    KUP(VK_F9); HB_FRAMES4();
+    *pc = oc1;
+    runs = state(&nb, &ns, last, sizeof last);
+    snprintf(what, sizeof what, "hbmod: F9 typed into the chat line (its text changed): still %d runs (2), %ld dropped as typed (1)", runs, drops ? drops() - d0 : -1);
+    check(runs == 2 && drops && drops() - d0 == 1, what); }
+  /* a press and release over slot 1.3, through the game's entries (the mod's hooks) */
+  *(int *)(cursor + 4) = 330; *(int *)(cursor + 8) = 230; *(uint32_t *)(cursor + 0x58) = 0x12340000;
+  ((CurFn)(void *)ga(0x10124930u))(cursor); HB_FRAME(); ((CurFn)(void *)ga(0x101249E0u))(cursor); HB_FRAME();
+  runs = state(&nb, &ns, last, sizeof last);
+  snprintf(what, sizeof what, "hbmod: a left press on slot 1.3: %d runs, \"%s\" (/wave); the cursor's +0x58 %08x (12340000: the game's code did not run)", runs, last, *(uint32_t *)(cursor + 0x58));
+  check(runs == 3 && !strcmp(last, "/wave") && *(uint32_t *)(cursor + 0x58) == 0x12340000u, what);
+  /* a macro: 2.1 "/wave; wait 0.2; /bow" */
+  *(int *)(cursor + 4) = 50; *(int *)(cursor + 8) = 50;
+  ((CurFn)(void *)ga(0x10124930u))(cursor); HB_FRAME(); ((CurFn)(void *)ga(0x101249E0u))(cursor);
+  runs = state(&nb, &ns, last, sizeof last); int r1 = runs; char first[64]; snprintf(first, sizeof first, "%s", last);
+  for (int f = 0; f < 20; f++) { Sleep(20); HB_FRAME(); }
+  runs = state(&nb, &ns, last, sizeof last);
+  snprintf(what, sizeof what, "hbmod: the macro on 2.1: at once %d runs \"%s\" (4, /wave); 400 ms later %d runs \"%s\" (5, /bow)", r1, first, runs, last);
+  check(r1 == 4 && !strcmp(first, "/wave") && runs == 5 && !strcmp(last, "/bow"), what);
+  /* the tag, then an hb command slot in the field set */
+  *(int *)(cursor + 4) = 150; *(int *)(cursor + 8) = 210;
+  ((CurFn)(void *)ga(0x10124930u))(cursor); HB_FRAME(); ((CurFn)(void *)ga(0x101249E0u))(cursor); HB_FRAME();
+  int e1 = env(-1);
+  *(int *)(cursor + 4) = 50; *(int *)(cursor + 8) = 100;
+  ((CurFn)(void *)ga(0x10124930u))(cursor); HB_FRAME(); ((CurFn)(void *)ga(0x101249E0u))(cursor); HB_FRAME();
+  int e2 = env(-1);
+  snprintf(what, sizeof what, "hbmod: the tag switched battle to %d (0, field); field's 2.2 \"hb env battle\" back to %d (1)", e1, e2);
+  check(e1 == 0 && e2 == 1, what);
+  { /* xikit_cmd.hpp: a typed "/HB env field" through the game's Command_RunLine entry reaches the mod's hook, which takes
+       it (returns 0) without the game's code */
+    typedef int (__cdecl *RunFn)(char *, uint32_t); char line[] = "/HB env field";
+    int rr = ((RunFn)(void *)ga(0x10080DC0u))(line, 0); int e3 = env(-1);
+    snprintf(what, sizeof what, "hbmod: \"/HB env field\" through Command_RunLine: returned %d (0), environment %d (0, field)", rr, e3);
+    check(*(uint8_t *)ga(0x10080DC0u) == 0xE9 && rr == 0 && e3 == 0, what);
+    /* another tool's hook was at the entry first (fake_tool_hook): a line the hotbar does not take reaches it */
+    char other[] = "/wave"; long fc = g_fake_tool_calls; int ro = ((RunFn)(void *)ga(0x10080DC0u))(other, 0);
+    snprintf(what, sizeof what, "hbmod: with another tool's jmp at Command_RunLine first: \"/wave\" returned %d (7: the other tool's), the other tool called %ld time(s) (1); \"/HB env field\" did not reach it", ro, g_fake_tool_calls - fc);
+    check(ro == 7 && g_fake_tool_calls - fc == 1, what);
+    /* "/hb run 1.1": the slot runs as its key or a click runs it */
+    int r0 = state(&nb, &ns, last, sizeof last); char l2[] = "/hb run 1.1";
+    rr = ((RunFn)(void *)ga(0x10080DC0u))(l2, 0); HB_FRAME();
+    runs = state(&nb, &ns, last, sizeof last);
+    snprintf(what, sizeof what, "hbmod: \"/hb run 1.1\": returned %d (0), %d run(s) more (1), the line \"%s\" (/heal)", rr, runs - r0, last);
+    check(rr == 0 && runs - r0 == 1 && !strcmp(last, "/heal"), what); }
+  { /* the default keys: 1.3 has none of its own ("none"), so it has 3; 1.1 was given f9, so 1 runs nothing */
+    int r0 = state(&nb, &ns, last, sizeof last);
+    KDN('1'); HB_FRAME(); KUP('1'); HB_FRAMES4();
+    int r1 = state(&nb, &ns, last, sizeof last);
+    KDN('3'); HB_FRAME(); KUP('3'); HB_FRAMES4();
+    runs = state(&nb, &ns, last, sizeof last);
+    snprintf(what, sizeof what, "hbmod: default keys: 1 ran %d (0: 1.1 has f9); 3 ran %d (1), the line \"%s\" (/wave)", r1 - r0, runs - r1, last);
+    check(r1 == r0 && runs - r1 == 1 && !strcmp(last, "/wave"), what);
+    /* a held key's auto-repeat (lParam bit 30) runs nothing more */
+    int r2 = state(&nb, &ns, last, sizeof last);
+    KDN('3'); HB_FRAME(); KREP('3'); KREP('3'); HB_FRAMES4(); KUP('3'); HB_FRAMES4();
+    runs = state(&nb, &ns, last, sizeof last);
+    snprintf(what, sizeof what, "hbmod: 3 held (one press, two auto-repeats): %d run(s) (1)", runs - r2); check(runs - r2 == 1, what); }
+  { /* the game's macros (hb_mode 1, the default): TextInputFiles_QueueEntry (0x101A1C60, thiscall, entry 0-19) through its
+       entry. Entry 1 (palette 1, macro 2) -> bar 2 slot 2, field's "hb env battle": taken, the game's code not run (+0x21C4
+       left as it was); entry 10 (palette 2, macro 1) -> bar 3, which hotbar.txt has not: the game's own QueueEntry runs
+       and copies entry 10 (its first line at +4 of the entry, entry n at +4 + n * 0x17C) to the running one at +0x2048 */
+    typedef uint32_t (__thiscall *QueueFn)(void *, int);
+    void (*mac)(long *, long *) = (void (*)(long *, long *))(void *)GetProcAddress(m, "hb_test_macros");
+    static uint8_t tif[0x2400]; memset(tif, 0, sizeof tif); *(uint32_t *)(tif + 0x21C4) = 0xFFFFFFFFu;
+    strcpy((char *)tif + 4 + 10 * 0x17C + 4, "/sit");
+    long t0 = 0, p0 = 0, t1 = 0, p1 = 0; if (mac) mac(&t0, &p0);
+    int e0 = env(-1);
+    uint32_t q1 = ((QueueFn)(void *)ga(0x101A1C60u))(tif, 1); HB_FRAME(); int e1 = env(-1); uint32_t run1 = *(uint32_t *)(tif + 0x21C4);
+    uint32_t q2 = ((QueueFn)(void *)ga(0x101A1C60u))(tif, 10); if (mac) mac(&t1, &p1);
+    snprintf(what, sizeof what, "hbmod: macros: QueueEntry(1) returned %u (1), the set %d -> %d (0 -> 1: bar 2 slot 2 ran), +0x21C4 %08x (ffffffff: the game's code not run); "
+             "QueueEntry(10) returned %u (1), +0x21C4 %u (0), the running entry's line \"%s\" (/sit: the game's code ran); taken %ld, passed %ld (1, 1)",
+             q1, e0, e1, run1, q2, *(uint32_t *)(tif + 0x21C4), (char *)tif + 0x2048 + 4, t1 - t0, p1 - p0);
+    check(mac && *(uint8_t *)ga(0x101A1C60u) == 0xE9 && q1 == 1 && e0 == 0 && e1 == 1 && run1 == 0xFFFFFFFFu && q2 == 1 && *(uint32_t *)(tif + 0x21C4) == 0 &&
+          !strcmp((char *)tif + 0x2048 + 4, "/sit") && t1 - t0 == 1 && p1 - p0 == 1, what);
+    typedef int (__cdecl *RunFn)(char *, uint32_t); char ml[] = "/hb mode macro"; char cwd[MAX_PATH], ini[MAX_PATH + 20];
+    int rr = ((RunFn)(void *)ga(0x10080DC0u))(ml, 0); GetCurrentDirectoryA(sizeof cwd, cwd); snprintf(ini, sizeof ini, "%s\\xikit_mods.ini", cwd);
+    int md = GetPrivateProfileIntA("hotbar", "hb_mode", -1, ini);
+    snprintf(what, sizeof what, "hbmod: \"/hb mode macro\": returned %d (0), hb_mode in xikit_mods.ini %d (0)", rr, md); check(rr == 0 && md == 0, what); }
+  mng[0xB4] = 1;
+  snprintf(what, sizeof what, "hbmod: the interface hidden (menu manager +0xB4 = 1): (220,220) hits %d (0)", over(220, 220)); check(over(220, 220) == 0, what);
+  mng[0xB4] = 0;
+  focus(0); if (kw) DestroyWindow(kw);
+  memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr; memcpy(sr, osr, 8);
   return 0;
 }
 
@@ -729,8 +1149,143 @@ static int fx2mod_run(IDirect3DDevice8 *dev) {
   return 0;
 }
 
+/* ------------------------------------------------------------------------------------------------ prishe mode
+   Prishe's probe/prishe_probe.dll (WGINC/Prishe) through the kit, with this host acting as "another tool" before the probe's first
+   frame: the game's CreateFileA import slot (0x103291EC in the analysed build) holds this host's function instead of
+   kernel32's, and App_ForceForegroundWindow's entry (0x100014A0) starts with a jmp into this host. The probe's report
+   must name host.exe as the owner of both, call the device's Present the kit's (xikit.dll, the kit's vtable copy),
+   and count the jump as another module's. */
+static HANDLE WINAPI other_createfile(LPCSTR a, DWORD b, DWORD c, LPSECURITY_ATTRIBUTES d, DWORD e, DWORD f, HANDLE g) { return CreateFileA(a, b, c, d, e, f, g); }
+static void other_entry(void) {}
+static int prishe_patch(void) {
+  void **slot = (void **)ga(0x103291ECu);
+  FARPROC k = GetProcAddress(GetModuleHandleA("kernel32.dll"), "CreateFileA");
+  check(*slot == (void *)k, "prishe: the game's CreateFileA slot holds kernel32's before the other tool");
+  DWORD old; VirtualProtect(slot, 4, PAGE_READWRITE, &old); *slot = (void *)other_createfile;
+  uint8_t *e = (uint8_t *)ga(0x100014A0u);
+  VirtualProtect(e, 8, PAGE_EXECUTE_READWRITE, &old);
+  e[0] = 0xE9; *(int32_t *)(e + 1) = (int32_t)((uint8_t *)other_entry - (e + 5));
+  return 0;
+}
+static int prishe_run(IDirect3DDevice8 *dev) {
+  FILE *f = NULL;
+  for (int t = 0; t < 400 && !(f = fopen("prishe_probe.txt", "r")); t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(f != NULL, "prishe: the probe wrote prishe_probe.txt at the first frame");
+  if (!f) return 0;
+  static char txt[1 << 20]; size_t n = fread(txt, 1, sizeof txt - 1, f); txt[n] = 0; fclose(f);
+  const char *ss[][2] = {
+    { "[modules]", "prishe: the report lists the modules" },
+    { "FFXiMain.dll", "prishe: the game's module is among them" },
+    { "not d3d8on11's", "prishe: Wine's d3d8.dll is told apart from d3d8on11's" },
+    { "in host.exe", "prishe: an owner outside the kit is named by its module" },
+    { "something replaced it", "prishe: the CreateFileA slot is reported as replaced" },
+  };
+  for (size_t i = 0; i < sizeof ss / sizeof ss[0]; i++) check(strstr(txt, ss[i][0]) != NULL, ss[i][1]);
+  const char *cf = strstr(txt, "FFXiMain.dll's import slot");
+  check(cf && strstr(cf, "in host.exe") && strstr(cf, "in host.exe") < strstr(cf, "\n"), "prishe: the slot's owner is host.exe");
+  const char *ap = strstr(txt, "App_ForceForegroundWindow ");
+  check(ap && strstr(ap, "starts with a jump to") && strstr(ap, "in host.exe") < strchr(ap, '\n'), "prishe: App_ForceForegroundWindow's entry jumps into host.exe (another tool's hook)");
+  const char *pr = strstr(txt, "Present ");
+  check(pr && strstr(pr, "xikit.dll (ours)") && strstr(pr, "xikit.dll (ours)") < strchr(pr, '\n'), "prishe: the device's Present is the kit's (ours)");
+  const char *sm = strstr(txt, "functions: ");
+  check(sm && strstr(sm, " 1 jump elsewhere") && strstr(sm, " 1 jump elsewhere") < strchr(sm, '\n'), "prishe: the summary counts one jump to another module");
+  check(strstr(txt, "[windows]") != NULL, "prishe: the window section is written");
+  { const char *m = strstr(txt, "[manifest]"); int k = 0;   /* the jumps the probe saw, for reading */
+    for (const char *l = m; l && *l && k < 40; l = strchr(l, '\n'), l = l ? l + 1 : NULL)
+      if (strstr(l, "jump to") && strstr(l, "jump to") < strchr(l, '\n')) { printf("note: %.*s\n", (int)(strchr(l, '\n') - l), l); k++; } }
+  return 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ prishert mode
+   Prishe's runtime/prishe.dll (WGINC/Prishe) through the kit, opens through the game's own CreateFileA import slot. test_xikit.py made
+   ROM\1\2.DAT ("orig2"), ROM\1\3.DAT ("orig3") and three packs under prishe\packs: a_one (files\ROM\1\2.DAT "packA"),
+   b_two (files\rom\1\2.dat "packB"), c_off (files\ROM\1\3.DAT "packC"); profile.json: a_one priority 20, b_two 10,
+   c_off turned off. Then the profile is rewritten (b_two 30) while running: the new winner is read. */
+static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
+  CFA *slot = (CFA *)ga(0x103291ECu); void *orig = (void *)GetProcAddress(GetModuleHandleA("kernel32.dll"), "CreateFileA");
+  for (int t = 0; t < 400 && *(void **)slot == orig; t++) {
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
+  }
+  check(*(void **)slot != orig, "prishert: the game's CreateFileA import slot goes to prishe.dll");
+  char dir[MAX_PATH], p[MAX_PATH + 32], b[8], what[300]; GetModuleFileNameA(g, dir, sizeof dir); *strrchr(dir, '\\') = 0;
+  snprintf(p, sizeof p, "%s/ROM/1/2.DAT", dir); read5(*slot, p, GENERIC_READ, b);
+  snprintf(what, sizeof what, "prishert: ROM/1/2.DAT reads \"%s\" (a_one: priority 20 over b_two's 10, although b_two's folder name is later)", b); check(!strcmp(b, "packA"), what);
+  snprintf(p, sizeof p, "%s\\rom\\1\\3.dat", dir); read5(*slot, p, GENERIC_READ, b);
+  snprintf(what, sizeof what, "prishert: ROM/1/3.DAT reads \"%s\" (the game's: c_off is turned off)", b); check(!strcmp(b, "orig3"), what);
+  snprintf(p, sizeof p, "%s\\ROM\\1\\2.DAT", dir); read5(*slot, p, GENERIC_READ | GENERIC_WRITE, b);
+  snprintf(what, sizeof what, "prishert: a write open reads \"%s\" (the game's file, never redirected)", b); check(!strcmp(b, "orig2"), what);
+  FILE *r = fopen("prishe\\report.txt", "r"); static char rep[1 << 16]; size_t n = r ? fread(rep, 1, sizeof rep - 1, r) : 0; rep[n] = 0; if (r) fclose(r);
+  check(strstr(rep, "file rom\\1\\2.dat: a_one wins (priority 20 over 10) over b_two") != NULL, "prishert: prishe\\report.txt names the conflict and its winner");
+  Sleep(1100);                                                  /* (a later last-write time than the first profile's) */
+  FILE *pf = fopen("prishe\\profile.json", "w");
+  if (pf) { fputs("{\"prishe\": 1, \"packs\": [{\"folder\": \"a_one\", \"priority\": 20}, {\"folder\": \"b_two\", \"priority\": 30}, {\"folder\": \"c_off\", \"enabled\": false}]}", pf); fclose(pf); }
+  snprintf(p, sizeof p, "%s/ROM/1/2.DAT", dir);
+  for (int t = 0; t < 600; t++) {
+    read5(*slot, p, GENERIC_READ, b); if (!strcmp(b, "packB")) break;
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20);
+  }
+  snprintf(what, sizeof what, "prishert: after profile.json gives b_two priority 30 while running, ROM/1/2.DAT reads \"%s\" (b_two's)", b); check(!strcmp(b, "packB"), what);
+  { int (*lg)(const char *, char *, int) = (int (*)(const char *, char *, int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_log");
+    char pk[64] = "";
+    if (!lg) printf("note: prishert: prishe.dll has no resource log (an older Prishe)\n");
+    else { int f = lg("rom\\1\\2.dat", pk, sizeof pk); snprintf(what, sizeof what, "prishert: the resource log has rom\\1\\2.dat from \"%s\" (b_two)", f ? pk : "(not logged)"); check(f && !strcmp(pk, "b_two"), what);
+           f = lg("rom\\1\\3.dat", pk, sizeof pk); snprintf(what, sizeof what, "prishert: the resource log has rom\\1\\3.dat as the game's own (\"%s\")", f ? pk : "(not logged)"); check(f && !pk[0], what); } }
+  /* textures (runtime/textures.cpp): an 8x8 32-bit object named prtex01 through the game's own TexObj_Create; b_two now has
+     priority 30, so its prtex01.dds (16x16, 0xFF445566) wins over a_one's (0xFF112233) */
+  check(*(uint8_t *)ga(0x10039E50u) == 0xE9, "prishert: TexObj_Upload's entry jumps (Prishe's texture hook)");
+  { static uint32_t px[64]; static uint8_t obj[0x48];
+    for (int k = 0; k < 64; k++) px[k] = 0xFF000000u | (uint32_t)(k * 0x0301);
+    memset(obj, 0, sizeof obj); memset(obj + 0x0C, ' ', 16); memcpy(obj + 0x0C, "prtex01", 7);
+    *(uint32_t *)(obj + 0x04) = 1; *(void **)(obj + 0x20) = px;
+    *(uint16_t *)(obj + 0x24) = 8; *(uint16_t *)(obj + 0x26) = 8; obj[0x28] = 32; obj[0x29] = 32; obj[0x2A] = 1; *(uint32_t *)(obj + 0x2C) = 9u << 4;
+    uint8_t rc = ((TexCreateFn)(void *)ga(0x10039A80u))(obj);
+    IDirect3DTexture8 *tx = *(IDirect3DTexture8 **)(obj + 0x40); D3DSURFACE_DESC sd; memset(&sd, 0, sizeof sd); uint32_t v = 0;
+    int ok = rc && tx && SUCCEEDED(IDirect3DTexture8_GetLevelDesc(tx, 0, &sd));
+    if (ok) { D3DLOCKED_RECT lr; if (SUCCEEDED(IDirect3DTexture8_LockRect(tx, 0, &lr, NULL, D3DLOCK_READONLY))) { v = *(uint32_t *)lr.pBits; IDirect3DTexture8_UnlockRect(tx, 0); } }
+    snprintf(what, sizeof what, "prishert: prtex01 through the game's TexObj_Create: %ux%u, first texel %08lx (16x16, ff445566: b_two's, priority 30)", ok ? sd.Width : 0, ok ? sd.Height : 0, (unsigned long)v);
+    check(ok && sd.Width == 16 && sd.Height == 16 && v == 0xFF445566u, what); }
+  /* the in-game panel (runtime/panel.cpp, when Prishe was built with the SDK's xiimgui): panel_show=1 (xikit_mods.ini),
+     five frames through the game's Menu_DrawLayers */
+  { int (*panel)(int) = (int (*)(int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_panel");
+    if (!panel) printf("note: prishert: prishe.dll has no in-game panel (built without the SDK's xiimgui)\n");
+    else {
+      uint8_t *mng = (uint8_t *)ga(0x10621838u); uint8_t saved[0xC0]; memcpy(saved, mng, sizeof saved); memset(mng, 0, sizeof saved);
+      short *sr = (short *)ga(0x106218B4u); sr[0] = 0; sr[1] = 0; sr[2] = 640; sr[3] = 480;
+      static uint8_t cursor[0x400]; memset(cursor, 0, sizeof cursor); void **pcur = (void **)ga(0x104E1D4Cu), *oc = *pcur; *pcur = cursor;
+      static uint8_t resmng[0x10000]; memset(resmng, 0, sizeof resmng);
+      void **pres = (void **)ga(0x1047BFA8u), *orr = *pres; if (!*pres) { *pres = resmng; *(IDirect3DDevice8 **)(resmng + 0xEBC) = dev; *(void **)(resmng + 0xDC8) = g_cdx; }
+      if (!*(void **)(g_cdx + 0xC)) *(IDirect3DDevice8 **)(g_cdx + 0xC) = dev;
+      DrawLayersFn draw = (DrawLayersFn)(void *)ga(0x1015F6A0u);
+      int f0 = panel(1);
+      for (int f = 0; f < 5; f++) { IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_BeginScene(dev); draw(mng); IDirect3DDevice8_EndScene(dev); }
+      snprintf(what, sizeof what, "prishert: the in-game panel drew 5 frames through Menu_DrawLayers (%d)", panel(1) - f0); check(panel(1) - f0 == 5, what);
+      memcpy(mng, saved, sizeof saved); *pcur = oc; *pres = orr;
+    } }
+  /* the chat command (runtime/commands.cpp): "/Prishe off b_two" through the game's Command_RunLine entry is taken
+     (returns 0, the game's code not run), b_two turned off in profile.json, and the runtime follows: ROM/1/2.DAT is
+     a_one's again. (replies_in_chat=0: the reply's /echo is not run in this host) */
+  { long (*taken)(void) = (long (*)(void))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_commands");
+    if (!taken) printf("note: prishert: prishe.dll has no chat commands (an older Prishe)\n");
+    else {
+      typedef int (__cdecl *RunFn)(char *, uint32_t); char line[] = "/Prishe off b_two"; long t0 = taken();
+      Sleep(1100);                                              /* (a later last-write time for profile.json) */
+      int rr = ((RunFn)(void *)ga(0x10080DC0u))(line, 0);
+      snprintf(p, sizeof p, "%s/ROM/1/2.DAT", dir);
+      for (int t = 0; t < 600; t++) {
+        read5(*slot, p, GENERIC_READ, b); if (!strcmp(b, "packA")) break;
+        IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20);
+      }
+      snprintf(what, sizeof what, "prishert: \"/Prishe off b_two\" through Command_RunLine: returned %d (0), %ld line taken (1); ROM/1/2.DAT then reads \"%s\" (packA: b_two off)", rr, taken() - t0, b);
+      check(*(uint8_t *)ga(0x10080DC0u) == 0xE9 && rr == 0 && taken() - t0 == 1 && !strcmp(b, "packA"), what);
+    } }
+  return 0;
+}
+
 int main(int argc, char **argv) {
-  int reloadrun = argc > 1 && !strcmp(argv[1], "reload");
+  int reloadrun = argc > 1 && !strcmp(argv[1], "reload"), chainrun = argc > 1 && !strcmp(argv[1], "chain");
+  int toolrun = argc > 1 && !strcmp(argv[1], "toolhook");   /* (25 Nov) another tool's jump at Command_RunLine first */
   int modrun = argc > 1 && (!strcmp(argv[1], "mod") || !strcmp(argv[1], "modrel") || reloadrun);
   int caprun = argc > 1 && !strcmp(argv[1], "capture");
   int factrun = argc > 1 && !strcmp(argv[1], "facts");
@@ -739,8 +1294,10 @@ int main(int argc, char **argv) {
   int camrun = argc > 1 && !strcmp(argv[1], "cammod"), ovlrun = argc > 1 && !strcmp(argv[1], "ovlmod");
   int audrun = argc > 1 && !strcmp(argv[1], "audmod"), envrun = argc > 1 && !strcmp(argv[1], "envmod");
   int phorun = argc > 1 && !strcmp(argv[1], "phomod"), cfrun = argc > 1 && !strcmp(argv[1], "cfmod");
-  int uirun = argc > 1 && !strcmp(argv[1], "uimod"), fx2run = argc > 1 && !strcmp(argv[1], "fx2mod");
-  int realrun = argc > 1 && (!strcmp(argv[1], "realdev") || texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || fx2run);
+  int pvrun = argc > 1 && !strcmp(argv[1], "ctmod"), hbrun = argc > 1 && !strcmp(argv[1], "hbmod");
+  int uirun = argc > 1 && !strcmp(argv[1], "uimod"), fx2run = argc > 1 && !strcmp(argv[1], "fx2mod"), igrun = argc > 1 && !strcmp(argv[1], "igmod"), xtrun = argc > 1 && !strcmp(argv[1], "xtmod");
+  int prirun = argc > 1 && !strcmp(argv[1], "prishe"), prtrun = argc > 1 && !strcmp(argv[1], "prishert");
+  int realrun = argc > 1 && (!strcmp(argv[1], "realdev") || texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || pvrun || hbrun || fx2run || igrun || xtrun || prirun || prtrun);
   int nativerun = argc > 1 && !strcmp(argv[1], "native");
   int blockrun = argc > 1 && !strcmp(argv[1], "traceblock");
   int measrun = argc > 1 && !strcmp(argv[1], "measure");
@@ -813,8 +1370,14 @@ int main(int argc, char **argv) {
     if (FAILED(hr) || !dev) { printf("FAIL: CreateDevice 0x%08lX\n", (unsigned long)hr); return 2; }
     void *vt0 = *(void **)dev;
     *(void **)(g_cdx + 0xC) = dev;
-    touch_ini(ini, texrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=texture_replace.dll\n"
+    touch_ini(ini, prtrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=0\nreport_every=60\nhotkey=0\nmods=prishe.dll\n"
+                 : prirun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=0\nreport_every=60\nhotkey=0\nmods=prishe_probe.dll\n"
+                 : texrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=texture_replace.dll\n"
                  : fx2run ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=effect_comfort.dll\n"
+                 : hbrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=hotbar.dll\n"
+                 : xtrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=xitest.dll,xitest_b.dll\n"
+                 : igrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=imgui_panel.dll\n"
+                 : pvrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=click_target.dll\n"
                  : uirun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=ui_layout.dll\n"
                  : cfrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=color_filter.dll\n"
                  : phorun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nmods=photo_mode.dll\n"
@@ -828,6 +1391,21 @@ int main(int argc, char **argv) {
                   mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\nfile:4321 0\n", mf); fclose(mf); } fill_iat(g); }
     if (uirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=100\nui_list=1\n", mf); fclose(mf); }
                  mf = fopen("ui_layout.txt", "w"); if (mf) { fputs("# window dx dy\nmenuinventor 5 -3\n", mf); fclose(mf); } fill_iat(g); }
+    if (prtrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe]\npanel_show=1\nreplies_in_chat=0\n", mf); fclose(mf); } }   /* (Prishe's in-game panel shown) */
+    if (hbrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[hotbar]\nhb_dry=1\n", mf); fclose(mf); }
+                 mf = fopen("hotbar.txt", "w"); if (mf) { fputs("bar 1 3 100 100\nbar 2 4 10 10 v\nxiv xiv\njob war\nset Sword\n"
+                   "1.1 f9 Heal = /heal\n1.2 c-1 Check = /check <t>\n1.3 none Wave = /wave\nbattle 2.1 none Seq = /wave; wait 0.2; /bow\n"
+                   "field 2.2 none Tag = hb env battle\n", mf); fclose(mf); }
+                 CreateDirectoryA("xiv", NULL); CreateDirectoryA("xiv\\data", NULL); CreateDirectoryA("xiv\\priv_res", NULL);
+                 mf = fopen("xiv\\data\\General.lua", "w"); if (mf) { fputs("xivhotbar_keybinds_general['Root'] = {\n  { 'battle 2 2', 'macro', 'input /sit;wait 0.1;input /stand', '', 'Sit' },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\data\\war.lua", "w"); if (mf) { fputs("xivhotbar_keybinds_job['Base'] = {\n  { 'battle 1 2', 'ja', 'Provoke', 't', 'Prov' },\n"
+                   "  { 'battle 2 3', 'ma', 'Cure', 'stpc', 'Cure' },\n}\nxivhotbar_keybinds_job['Sword'] = {\n  { 'battle 2 4', 'ws', \"Fast Blade\", 't', 'FB' },\n}\n"
+                   "xivhotbar_keybinds_job['Club'] = {\n  { 'battle 2 4', 'ws', 'Brainshaker', 't', 'BS' },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\spells.lua", "w"); if (mf) { fputs("return {\n  [1] = { id = 1, en = \"Cure\", ja = \"x\", mp_cost = 8, recast = 5 },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\job_abilities.lua", "w"); if (mf) { fputs("return {\n  [35] = { id = 35, en = \"Provoke\", mp_cost = 0, tp_cost = 0 },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\weapon_skills.lua", "w"); if (mf) { fputs("return {\n  [32] = { id = 32, en = \"Fast Blade\", element = 0 },\n}\n", mf); fclose(mf); }
+                 fill_iat(g); fake_tool_hook(); }
+    if (pvrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[click_target]\nct_show=1\nct_log=1\n", mf); fclose(mf); } fill_iat(g); }
     if (cfrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[color_filter]\ncb_mode=2\ncb_simulate=1\ncb_strength=100\ncb_check=1\n", mf); fclose(mf); } }
     if (phorun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[photo_mode]\nphoto=1\nphoto_yaw=90\nphoto_dist=200\nphoto_shot=1\nphoto_hide_ui=1\n", mf); fclose(mf); } fill_iat(g); }
     if (envrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[world_light]\nfog_distance=50\nfog_r=200\nambient=150\nlight=200\n", mf); fclose(mf); } fill_iat(g); }
@@ -836,10 +1414,12 @@ int main(int argc, char **argv) {
     if (camrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[camera_view]\nfov_deg=90\nfar_percent=200\ndraw_percent=200\n", mf); fclose(mf); } fill_iat(g); }
     if (fxrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nflash_limit=50\nfx_intensity=50\nfx_all_blended=1\n", mf); fclose(mf); } fill_iat(g); }
     if (texrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[texture_replace]\ntex_dump=1\ntex_log=1\n", mf); fclose(mf); } fill_iat(g); }
+    if (prtrun) fill_iat(g);
+    if (prirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe_probe]\nprobe_again=0\n", mf); fclose(mf); } fill_iat(g); prishe_patch(); }
     if (!LoadLibraryA("xikit.dll")) { printf("FAIL: xikit.dll not loaded (%lu)\n", GetLastError()); return 2; }
     for (int t = 0; t < 400 && *(void **)dev == vt0; t++) Sleep(50);
-    if (texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || fx2run) {
-      if (texrun) texmod_run(dev); else if (fxrun) fxmod_run(dev); else if (camrun) cammod_run(dev); else if (ovlrun) ovlmod_run(dev, g); else if (audrun) audmod_run(dev); else if (envrun) envmod_run(dev); else if (phorun) phomod_run(dev); else if (cfrun) cfmod_run(dev); else if (uirun) uimod_run(dev); else fx2mod_run(dev);
+    if (texrun || fxrun || camrun || ovlrun || audrun || envrun || phorun || cfrun || uirun || pvrun || hbrun || fx2run || igrun || xtrun || prirun || prtrun) {
+      if (prtrun) prishert_run(dev, g); else if (prirun) prishe_run(dev); else if (texrun) texmod_run(dev); else if (fxrun) fxmod_run(dev); else if (camrun) cammod_run(dev); else if (ovlrun) ovlmod_run(dev, g); else if (audrun) audmod_run(dev); else if (envrun) envmod_run(dev); else if (phorun) phomod_run(dev); else if (cfrun) cfmod_run(dev); else if (uirun) uimod_run(dev); else if (pvrun) ctmod_run(dev); else if (hbrun) hbmod_run(dev); else if (igrun) igmod_run(dev); else if (xtrun) xtmod_run(dev); else fx2mod_run(dev);
       printf("%s\n", fails ? "FAILED" : "ALL OK");
       ExitProcess(fails ? 1 : 0);
     }
@@ -864,6 +1444,8 @@ int main(int argc, char **argv) {
   if (modrun && !reloadrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[mod_test]\nmt_level=5\n", mf); fclose(mf); } }   /* (settings, below) */
   if (pubrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[mod_public]\nmp_level=5\n", mf); fclose(mf); } }
   touch_ini(ini, pubrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_public.dll\n"
+                 : toolrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_cmd.dll\n"
+                 : chainrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll,mod_chain.dll\nmod_reload=1\n"
                  : abrun ? "[xikit]\nlog_folder=1\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nab=1\nab_after=0\nab_phase=1\nab_rounds=2\nab_settle=3\n"
                  : profile ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nprofile=1\ncall_time=1\nkernel_calls=2\ntrace=1\ntrace_after=4\ntrace_count=1\nsample=1\ntrace_pictures=1\n"
                  : reloadrun ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll\nmod_reload=1\n"
@@ -873,6 +1455,8 @@ int main(int argc, char **argv) {
                  : nativerun ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nsample=2\nsample_ms=1\nsample_window=1\n"
                  : caprun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\ncapture=CXiSkeletonActor::GetColor,CXiSkeletonActor::SetColor\ncapture_count=1\ncapture_pages=4096\n"
                          : "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\n");
+  const char *tform = getenv("XT_TOOL_FORM"); if (!tform) tform = "e9";
+  if (toolrun) fake_tool_form(tform);
   if (!LoadLibraryA("xikit.dll")) { printf("FAIL: xikit.dll not loaded (%lu)\n", GetLastError()); return 2; }
   for (int t = 0; t < 400 && g_dev.vt == g_vtbl; t++) Sleep(50);
   check(g_dev.vt != g_vtbl, "the kit hooked the device (its own vtable copy)");
@@ -985,8 +1569,8 @@ int main(int argc, char **argv) {
     printf(fails ? "FAILED (%d)\n" : "ALL OK\n", fails);
     ExitProcess(fails ? 1 : 0);
   }
-  if (!caprun && !factrun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
-  if (!caprun && !factrun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
+  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
+  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
   if (g_swap_set && (argc < 2 || !strcmp(argv[1], "base"))) {      /* (at its base: the manifest's bytes are the preferred-base ones) */
     check(g_keep32 && !memcmp((uint8_t *)(uintptr_t)ga(g_keep32), g_keep32_bytes, 5), "swap_set build: a function of flag 32 keeps the game's code while the others swap");
     FILE *lf = fopen("xikit.log", "r"); char line[600]; int said = 0;
@@ -1068,6 +1652,73 @@ int main(int argc, char **argv) {
     FILE *lg = fopen("xikit.log", "r"); int logged = 0;
     if (lg) { while (fgets(line, sizeof line, lg)) if (strstr(line, "capture 1 of CXiSkeletonActor::GetColor")) logged = 1; fclose(lg); }
     check(logged, "xikit.log has the capture");
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (toolrun) {
+    /* (25 Nov) another tool's jump was at Command_RunLine's entry before the kit (Windower's, in the owner's game):
+       mod_cmd.dll hooks it through xikit_cmd.hpp. Every form but "bad" goes in front of the other tool: /xtcmd is the
+       mod's, /wave reaches the other tool; "bad" is refused and the log names the bytes it saw */
+    present(4);
+    HMODULE c = GetModuleHandleA("mod_cmd.dll"); char what[400], l[900];
+    check(c != NULL, "toolhook: mod_cmd.dll loaded");
+    if (!c) { printf("FAILED\n"); ExitProcess(1); }
+    long inst = *(volatile long *)GetProcAddress(c, "cmd_install");
+    int said_front = 0, said_bytes = 0; FILE *lg = fopen("xikit.log", "r");
+    if (lg) { while (fgets(l, sizeof l, lg)) { said_front |= strstr(l, "previous = another tool's hook in host.exe") != NULL; said_bytes |= strstr(l, "live bytes entry-4..+15:") != NULL; } fclose(lg); }
+    typedef int (__cdecl *TRunFn)(char *, uint32_t);
+    if (!strcmp(tform, "bad")) {
+      snprintf(what, sizeof what, "toolhook %s: a byte after the other tool's jump differs from the game's: refused (%ld, not 0), the log names the live bytes", tform, inst);
+      check(inst != 0 && said_bytes, what);
+    } else {
+      snprintf(what, sizeof what, "toolhook %s: the mod's hook went in front of the other tool's (%ld), logged", tform, inst);
+      check(inst == 0 && said_front, what);
+      char a[] = "/XTCMD hello", b[] = "/wave"; long t0 = g_fake_tool_calls, s0 = *(volatile long *)GetProcAddress(c, "cmd_seen");
+      ((TRunFn)(void *)ga(0x10080DC0u))(a, 0); long t1 = g_fake_tool_calls, s1 = *(volatile long *)GetProcAddress(c, "cmd_seen");
+      int rb = ((TRunFn)(void *)ga(0x10080DC0u))(b, 0); long t2 = g_fake_tool_calls;
+      snprintf(what, sizeof what, "toolhook %s: /XTCMD taken by the mod (%ld) and not passed on (%ld); /wave reached the other tool (%ld, returned %d: 7)", tform, s1 - s0, t1 - t0, t2 - t1, rb);
+      check(s1 - s0 == 1 && t1 == t0 && t2 - t1 == 1 && rb == 7, what);
+    }
+    { FILE *lg2 = fopen("xikit.log", "r"); if (lg2) { while (fgets(l, sizeof l, lg2)) if (strstr(l, "Command_RunLine")) printf("  log: %s", l); fclose(lg2); } }
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (chainrun) {
+    /* API 5, hook chains: mod_test.dll (game + 1) and mod_chain.dll (+ 100) both hook CXiSkeletonActor::GetColor; the
+       later one runs first, its previous runs the earlier one's hook, whose previous is the game's code. A reload of
+       either re-aims the chain without breaking the other's previous */
+    present(4);
+    HMODULE m = GetModuleHandleA("mod_test.0.dll"), c = GetModuleHandleA("mod_chain.0.dll");
+    check(m && c, "mods=mod_test.dll,mod_chain.dll (mod_reload=1): both loaded (copies .0)");
+    if (!m || !c) { printf("FAILED\n"); ExitProcess(1); }
+    check(*(volatile long *)GetProcAddress(c, "chain_api") == 5 && *(volatile long *)GetProcAddress(c, "chain_result") == 0,
+          "the second mod's hook of the same function returned XIKIT_OK (kit API 5)");
+    uint8_t *get = (uint8_t *)(uintptr_t)ga(GETCOLOR); int32_t d; memcpy(&d, get + 1, 4); uintptr_t to = (uintptr_t)get + 5 + d;
+    IMAGE_NT_HEADERS *cn = (IMAGE_NT_HEADERS *)((char *)c + ((IMAGE_DOS_HEADER *)c)->e_lfanew);
+    check(get[0] == 0xE9 && to >= (uintptr_t)c && to < (uintptr_t)c + cn->OptionalHeader.SizeOfImage, "GetColor's entry jumps into the mod that hooked it last");
+    ((SetColorFn)(uintptr_t)ga(SETCOLOR))(actor, 0x11223344u);
+    check(((GetColorFn)get)(actor) == 0x11223344u + 101, "both hooks ran: the game's value + 1 + 100");
+    void *cp = *(void **)GetProcAddress(c, "chain_prev"), *mp = *(void **)GetProcAddress(m, "mod_prev");
+    check(cp && ((GetColorFn)cp)(actor) == 0x11223345u, "the last mod's previous runs the first mod's hook (+ 1)");
+    check(mp && ((GetColorFn)mp)(actor) == 0x11223344u, "the first mod's previous is the game's own code");
+    { FILE *lg = fopen("xikit.log", "r"); char l[600]; int said = 0; if (lg) { while (fgets(l, sizeof l, lg)) said |= strstr(l, "previous = mod_test.dll's hook (chained") != NULL; fclose(lg); }
+      check(said, "logged as chained"); }
+    { FILE *lg = fopen("xikit.log", "r"); char l[600]; int said = 0; if (lg) { while (fgets(l, sizeof l, lg)) said |= strstr(l, "mod mod_chain.dll: mod_chain 1 (kit API 5 or later): the chain test's second mod") != NULL; fclose(lg); }
+      check(said, "xikit_mod_info: the mod's name, version, API and description logged"); }
+    /* only the inner mod rebuilt (mod_test2.dll: + 2): its hook comes off and goes on again, now outermost */
+    check(CopyFileA("mod_test2.dll", "mod_test.dll", FALSE), "the inner mod rebuilt (mod_test2.dll written over mod_test.dll)");
+    present(100);
+    HMODULE m1 = GetModuleHandleA("mod_test.1.dll");
+    check(m1 != NULL, "the kit loaded the inner mod's new build (mod_test.1.dll)");
+    check(((GetColorFn)get)(actor) == 0x11223344u + 102, "after the reload: the game's value + 100 + 2, both hooks still run");
+    check(((GetColorFn)cp)(actor) == 0x11223344u, "the other mod's previous, unchanged, now runs the game's own code (its link re-aimed)");
+    memcpy(&d, get + 1, 4); to = (uintptr_t)get + 5 + d;
+    IMAGE_NT_HEADERS *n1 = m1 ? (IMAGE_NT_HEADERS *)((char *)m1 + ((IMAGE_DOS_HEADER *)m1)->e_lfanew) : NULL;
+    check(n1 && get[0] == 0xE9 && to >= (uintptr_t)m1 && to < (uintptr_t)m1 + n1->OptionalHeader.SizeOfImage, "the entry now jumps into the reloaded mod (outermost)");
+    FILE *t = fopen("xikit_reload_now.txt", "w"); if (t) fclose(t);
+    present(40);
+    check(GetModuleHandleA("mod_test.2.dll") && GetModuleHandleA("mod_chain.1.dll") && ((GetColorFn)get)(actor) == 0x11223344u + 102,
+          "xikit_reload_now.txt: both loaded again, both hooks run");
     printf("%s\n", fails ? "FAILED" : "ALL OK");
     ExitProcess(fails ? 1 : 0);
   }
@@ -1192,7 +1843,10 @@ int main(int argc, char **argv) {
   }
   if (g_no_swap && nativerun) {   /* a no_swap build: the sampler over the game's own GetColor (nothing is swapped in to check) */
     DWORD t = GetTickCount(); volatile uint32_t sink = 0;
-    while (GetTickCount() - t < 2500) { for (int k = 0; k < 10000; k++) sink += ((GetColorFn)(uintptr_t)ga(GETCOLOR))(actor); present(1); }
+    /* (20 Nov) GetColor for 50 ms between frames, not 10000 calls: under a WoW64 Wine a frame's syscalls (the message
+       pump, the kit's writes) outweighed 10000 calls, and the loop sampled mostly the frame */
+    GetColorFn gc_ = (GetColorFn)(uintptr_t)ga(GETCOLOR);   /* (once: on a translated build ga() searches the moved ranges, which outweighed GetColor) */
+    while (GetTickCount() - t < 2500) { DWORD t2 = GetTickCount(); while (GetTickCount() - t2 < 50) for (int k = 0; k < 1000; k++) sink += gc_(actor); present(1); }
     Sleep(2500);
     printf("%s\n", fails ? "FAILED" : "ALL OK");
     ExitProcess(fails ? 1 : 0);
@@ -1208,7 +1862,10 @@ int main(int argc, char **argv) {
   check(seen, "the call count of SetColor is in the report (1 call)");
   if (nativerun) {         /* sample=2: the game's GetColor for 2.5 s, then time for the sampler's windows (test_xikit.py reads them) */
     DWORD t = GetTickCount(); volatile uint32_t sink = 0;
-    while (GetTickCount() - t < 2500) { for (int k = 0; k < 10000; k++) sink += ((GetColorFn)(uintptr_t)ga(GETCOLOR))(actor); present(1); }
+    /* (20 Nov) GetColor for 50 ms between frames, not 10000 calls: under a WoW64 Wine a frame's syscalls (the message
+       pump, the kit's writes) outweighed 10000 calls, and the loop sampled mostly the frame */
+    GetColorFn gc_ = (GetColorFn)(uintptr_t)ga(GETCOLOR);   /* (once: on a translated build ga() searches the moved ranges, which outweighed GetColor) */
+    while (GetTickCount() - t < 2500) { DWORD t2 = GetTickCount(); while (GetTickCount() - t2 < 50) for (int k = 0; k < 1000; k++) sink += gc_(actor); present(1); }
     Sleep(2500);
   }
   touch_ini(ini, "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\n");
@@ -1329,7 +1986,8 @@ int main(int argc, char **argv) {
     /* the sampler should find the render thread in game or reconstructed code when it is there: GetColor (swapped)
        called for about half a second, then a window of frames so the samples are written */
     { DWORD t = GetTickCount(); volatile uint32_t sink = 0;
-      while (GetTickCount() - t < 500) for (int k = 0; k < 10000; k++) sink += ((GetColorFn)(uintptr_t)ga(GETCOLOR))(actor);
+      GetColorFn gc_ = (GetColorFn)(uintptr_t)ga(GETCOLOR);   /* (once, as in the native mode) */
+      while (GetTickCount() - t < 500) for (int k = 0; k < 10000; k++) sink += gc_(actor);
       present(60); }
     /* resources: a texture and a vertex shader created through the device (as the game would), logged by d3dprof's
        wrappers; the shader saved as the game passed it: stream 0, v0 <- FLOAT3, v5 <- D3DCOLOR; m4x4 oPos, v0, c0; mov oD0, v5 */

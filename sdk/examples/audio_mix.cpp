@@ -46,7 +46,10 @@ static const char *const kNames[4] = { "SoundElem_SetScaled10351700", "SoundElem
 static const char *const kKeys[4] = { "vol_interface", "vol_effects", "vol_ambient", "vol_music" };
 static void (*const kStubs[4])(void) = { au_stub0, au_stub1, au_stub2, au_stub3 };
 
-static void read_settings() { for (int i = 0; i < 4; i++) g_au_k[i] = g_host->setting_int(kKeys[i], 100) / 100.0f; }
+static void read_settings() {
+  for (int i = 0; i < 4; i++) g_au_k[i] = g_host->setting_int(kKeys[i], 100) / 100.0f;
+  g_host->log("audio_mix: interface %d%%, effects %d%%, ambient %d%%, music %d%%", (int)(g_au_k[0] * 100 + 0.5f), (int)(g_au_k[1] * 100 + 0.5f), (int)(g_au_k[2] * 100 + 0.5f), (int)(g_au_k[3] * 100 + 0.5f));
+}
 extern "C" __declspec(dllexport) void xikit_mod_settings(void) {
   read_settings();
   for (int i = 0; i < 4; i++)                            // again with the game's last level, through the stub (scaled there)
@@ -57,7 +60,10 @@ extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {
   host->declare_int("vol_interface", 100, 0, 200, "percent of the game's volume for menu and target sounds");
   host->declare_int("vol_effects", 100, 0, 200, "percent of the game's volume for spell and ability effect sounds");
   host->declare_int("vol_ambient", 100, 0, 200, "percent of the game's volume for the zone's ambient sound");
-  host->declare_int("vol_music", 100, 0, 200, "percent of the game's volume for the music");
+  // (25 Nov) the music track's volume is sent as a whole number clamped to 0..127 (0x10038470), and Music_ApplyVolume
+  // makes it factors x level x 127.0 (0x1032A34C): at the game's full volume it is already 127, so more than 100 cannot
+  // raise it; the setting stops at 100
+  host->declare_int("vol_music", 100, 0, 100, "percent of the game's volume for the music (at most 100: the game's full music volume is the most the track takes)");
   read_settings();
   int r = 0;
   for (int i = 0; i < 4; i++) r |= host->hook_keeping_registers(kNames[i], (void *)kStubs[i], &g_au_prev[i]);

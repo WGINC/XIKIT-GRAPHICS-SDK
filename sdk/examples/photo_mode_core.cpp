@@ -1,4 +1,4 @@
-// photo_mode_core.cpp -- the maths, keys, picture file and drawing of photo_mode (Windows and the MinGW-w64 Direct3D 8
+// photo_mode_core.cpp -- the maths, picture file and drawing of photo_mode (Windows and the MinGW-w64 Direct3D 8
 // headers only; photo_mode.cpp has the hooks and says what they read of the game).
 #include <windows.h>
 #include <d3d8.h>
@@ -23,19 +23,6 @@ extern "C" void ph_orbit(const float eye[3], const float at[3], float yaw_deg, f
   out[0] = (float)(at[0] + rr * cos(pitch) * sin(yaw));
   out[1] = (float)(at[1] + rr * sin(pitch) + raise);
   out[2] = (float)(at[2] + rr * cos(pitch) * cos(yaw));
-}
-
-static bool down(int vk) { return (GetAsyncKeyState(vk) & 0x8000) != 0; }
-extern "C" int ph_keys(float *dyaw, float *dpitch, float *ddist, float *draise) {
-  static bool was[3];
-  if (!(down(VK_CONTROL) && down(VK_SHIFT))) { was[0] = was[1] = was[2] = false; return 0; }
-  *dyaw += 1.5f * (down(VK_RIGHT) - down(VK_LEFT));
-  *dpitch += 1.0f * (down(VK_UP) - down(VK_DOWN));
-  *ddist += 1.0f * (down(VK_NEXT) - down(VK_PRIOR));
-  *draise += 0.05f * (down(VK_HOME) - down(VK_END));
-  int r = 0; const int keys[3] = { 'P', 'H', 'O' };
-  for (int i = 0; i < 3; i++) { bool d = down(keys[i]); if (d && !was[i]) r |= 1 << i; was[i] = d; }   // (on the press, once)
-  return r;
 }
 
 extern "C" int ph_shot(void *device, void *texture) {

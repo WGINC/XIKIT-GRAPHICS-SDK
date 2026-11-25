@@ -10,7 +10,7 @@ A function is listed only if (docs/KIT.md):
     func_extents.json decoded): such a jump would land inside the kit's `jmp`;
   * it calls no game code through a tree wrapper (tree/include/gfx_orig.hpp) that passes no ECX to code whose
     reading of ECX is not ruled out: a target that is not a function start (data/func_extents.json: a piece of another
-    function, reached in the original by a tail jump with ECX set -- 4 Nov: sub_10092900's
+    function, reached in the original by a tail jump with ECX set -- 4 Nov: Acter_ReleaseAllSlots 0x10092900's
     `orig::FUN_1008f1d0()`, the original's `mov ecx, esi; jmp 0x1008f1d0`, faulted in the owner's game at 0x1008F1D0
     reading [ecx+0x124]), or a start data/ecx_use.json says reads it. The gate stubs such a callee and compares ECX only
     where a fact says it is read, so its PASS did not cover this;

@@ -85,6 +85,15 @@ def main(man_p, build_p, dll_p, out_p, swap_p=None):
         f[3] = raw.hex().upper(); f[4] = ','.join(map(str, rel)) if rel else '-'
         if keep_game is not None and f[2] in keep_game: f[1] = str(int(f[1]) | 32); flagged.append(f[2])
         out.append(' '.join(f))
+    # (24 Nov) the shipped DLL is packed (its code is unpacked in memory at run time): given it in place of the unpacked
+    # image, every function's window came out the same bytes and the kit refused every hook in the game (V0.7.2's first
+    # build). A check, not a proof: distinct functions do not share one 20-byte window at their entries
+    import collections
+    wins = collections.Counter(x.split(' ')[3] for x in out if x[:1] not in '#!' and x.strip())
+    top, cnt = wins.most_common(1)[0] if wins else ('', 0)
+    if cnt > max(20, len(wins and list(wins.elements())) // 20):
+        sys.exit('manifest_for_build: %d of %d functions have the same entry bytes (%s...) in %s: is it the packed DLL as shipped? '
+                 'Give the unpacked image (pipeline/unpack_pol.py); nothing written' % (cnt, sum(wins.values()), top[:16], dll_p))
     open(out_p, 'w').write(''.join(out))
     n = sum(1 for x in out if x[:1] not in '#!' and x.strip())
     print('%s: %d functions for build %s (%d code ranges and %d data ranges moved)%s' % (out_p, n, b['timestamp'], sum(1 for r in ranges if r[2]),

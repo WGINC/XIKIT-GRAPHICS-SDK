@@ -21,35 +21,38 @@
 //
 // The picture and the interface. CDx::CompositeSceneToBackBuffer (0x1000C0B0) is handed the world as it will be shown,
 // before the interface (sdk/examples/scene_tint.cpp says how that is known: the texture at its first argument + 4).
-// photo_shot=1 (or Ctrl+Shift+P with photo_keys=1) writes that texture to <kit folder>\screenshots\photo_<time>.bmp
+// photo_shot=1 (or /photo shot) writes that texture to <kit folder>\screenshots\photo_<time>.bmp
 // and sets photo_shot back to 0. photo_hide_ui=1 draws the same texture over the whole frame after the game has
 // drawn it (xikit_mod_frame, before Present), so the interface is covered; the game's interface code runs as usual.
 //
-// Keys (photo_keys=1; Ctrl+Shift held; the game sees these keys too): arrows turn and tilt, Page Up/Down nearer and
-// farther, Home/End up and down, O photo mode on/off, H the interface hidden or shown, P a picture.
+// Commands (typed in the chat line; xikit_cmd.hpp): /photo (on <-> off), /photo on, /photo off, /photo shot,
+// /photo ui (the interface covered <-> not), /photo turn <degrees>, /photo tilt <degrees>, /photo dist <percent>,
+// /photo raise <hundredths>, /photo reset. Each writes the settings above (so they last and xikit_mods.ini shows
+// them); the kit reads them back within 30 frames. "/photo" is not one of the game's commands: the game's own are
+// "/word" strings in FFXiMain.dll, and it is not among them. No keys: the mod reads no keyboard.
 //
 // Tested offline (kit/xikit/test, mode phomod): the game's own Camera_SnapshotState on a controller: the view it
 // builds has the mod's eye, the game's eye is put back; a picture of a texture read back from the file; the cover
 // drawn over a render target and read back. Not yet run in the game.
 #include "xikit_sdk.hpp"
+#include "xikit_cmd.hpp"
 #include "photo_mode_core.h"
+#include <stdlib.h>
 XIKIT_MOD_GLOBALS
 
 static const XikitHost *g_host;
-static float g_kyaw, g_kpitch, g_kdist, g_kraise;            // what the keys added
-static int g_kon = -1, g_khide = -1;                         // the keys' toggles (-1: the settings decide)
 static IDirect3DTexture8 *g_world;                           // the last world texture (a reference held)
 static void log_line(const char *s) { g_host->log("%s", s); }
-static bool photo_on() { return g_kon >= 0 ? g_kon : g_host->setting_int("photo", 0); }
-static bool hide_on() { return g_khide >= 0 ? g_khide : g_host->setting_int("photo_hide_ui", 0); }
+static bool photo_on() { return g_host->setting_int("photo", 0) != 0; }
+static bool hide_on() { return g_host->setting_int("photo_hide_ui", 0) != 0; }
 
 static xikit::fn<decltype(&Camera_SnapshotState)> prev_Snap;
 static int __thiscall my_Snap(void *ctl) {
   if (!ctl || !photo_on()) return prev_Snap(ctl);
   float *eye = reinterpret_cast<float *>(reinterpret_cast<char *>(ctl) + 0x44), *at = reinterpret_cast<float *>(reinterpret_cast<char *>(ctl) + 0x50);
   float game[3] = { eye[0], eye[1], eye[2] }, mine[3];
-  ph_orbit(game, at, g_host->setting_int("photo_yaw", 0) + g_kyaw, g_host->setting_int("photo_pitch", 0) + g_kpitch,
-           g_host->setting_int("photo_dist", 100) + g_kdist, g_host->setting_int("photo_raise", 0) / 100.0f + g_kraise, mine);
+  ph_orbit(game, at, (float)g_host->setting_int("photo_yaw", 0), (float)g_host->setting_int("photo_pitch", 0),
+           (float)g_host->setting_int("photo_dist", 100), g_host->setting_int("photo_raise", 0) / 100.0f, mine);
   for (int i = 0; i < 3; i++) eye[i] = mine[i];
   int r = prev_Snap(ctl);                                    // the game's build of the view, from the mod's eye
   for (int i = 0; i < 3; i++) eye[i] = game[i];              // (the copy at +0x60 keeps the mod's: rebuilt next frame)
@@ -68,15 +71,33 @@ static int __thiscall my_Comp(CDx *self, int a1, int a2, int a3, int a4) {
 }
 
 extern "C" __declspec(dllexport) void xikit_mod_frame(void *device) {
-  if (g_host->setting_int("photo_keys", 0)) {
-    int k = ph_keys(&g_kyaw, &g_kpitch, &g_kdist, &g_kraise);
-    if (k & 4) g_kon = !photo_on();
-    if (k & 2) g_khide = !hide_on();
-    if ((k & 1) && g_world && device) ph_shot(device, g_world);
-  }
   if (hide_on() && g_world && device) ph_cover(device, g_world);
 }
-extern "C" __declspec(dllexport) void xikit_mod_settings(void) { g_kon = g_khide = -1; }   // a setting written wins over the keys
+
+// /photo ...: each word writes a setting (within its declared range)
+static int clampi(int v, int lo, int hi) { return v < lo ? lo : v > hi ? hi : v; }
+static void add_to(const char *key, int def, int lo, int hi, const char *n, bool wrap) {
+  char *end; long d = strtol(n, &end, 10);
+  if (end == n) { g_host->log("photo_mode: /photo %s needs a whole number", key); return; }
+  int v = g_host->setting_int(key, def) + (int)d;
+  if (wrap) { while (v > 180) v -= 360; while (v < -180) v += 360; }
+  g_host->set_int(key, clampi(v, lo, hi));
+}
+static void command(const char *args) {
+  char w[16]; int k = 0; while (args[k] && args[k] != ' ' && k < 15) { w[k] = xicmd::lower(args[k]); k++; } w[k] = 0;
+  const char *n = args + k; while (*n == ' ') n++;
+  if (!w[0]) g_host->set_int("photo", !photo_on());
+  else if (!strcmp(w, "on")) g_host->set_int("photo", 1);
+  else if (!strcmp(w, "off")) g_host->set_int("photo", 0);
+  else if (!strcmp(w, "shot")) g_host->set_int("photo_shot", 1);
+  else if (!strcmp(w, "ui")) g_host->set_int("photo_hide_ui", !hide_on());
+  else if (!strcmp(w, "turn")) add_to("photo_yaw", 0, -180, 180, n, true);
+  else if (!strcmp(w, "tilt")) add_to("photo_pitch", 0, -89, 89, n, false);
+  else if (!strcmp(w, "dist")) add_to("photo_dist", 100, 10, 1000, n, false);
+  else if (!strcmp(w, "raise")) add_to("photo_raise", 0, -2000, 2000, n, false);
+  else if (!strcmp(w, "reset")) { g_host->set_int("photo_yaw", 0); g_host->set_int("photo_pitch", 0); g_host->set_int("photo_dist", 100); g_host->set_int("photo_raise", 0); }
+  else g_host->log("photo_mode: /photo %s: the words are on, off, shot, ui, turn N, tilt N, dist N, raise N, reset", args);
+}
 extern "C" __declspec(dllexport) void xikit_mod_unload(void) { if (g_world) g_world->Release(), g_world = nullptr; }
 extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {
   g_host = host; ph_init(host->dir ? host->dir : ".", log_line);
@@ -87,7 +108,8 @@ extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {
   host->declare_int("photo_raise", 0, -2000, 2000, "hundredths of a unit along the game's Y axis");
   host->declare_int("photo_hide_ui", 0, 0, 1, "1: cover the interface with the world picture");
   host->declare_int("photo_shot", 0, 0, 1, "1: write a picture of the world (no interface) to screenshots\\, then back to 0");
-  host->declare_int("photo_keys", 0, 0, 1, "1: Ctrl+Shift+arrows/PgUp/PgDn/Home/End move, O on/off, H interface, P picture");
+  xicmd::add("photo", command);
+  if (xicmd::install(host) != XIKIT_OK) host->log("photo_mode: Command_RunLine not hooked: no /photo (the settings in xikit_mods.ini still work)");
   int r = XI_HOOK(host, Camera_SnapshotState, my_Snap, prev_Snap);
   r |= XI_HOOK(host, CDx::CompositeSceneToBackBuffer, my_Comp, prev_Comp);
   return r;

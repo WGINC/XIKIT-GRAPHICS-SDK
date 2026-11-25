@@ -13,6 +13,11 @@ H="$(cd "$(dirname "$0")" && pwd)"; ROOT="$H/../.."; OUT="$(realpath -m "$1")"
 N="$(sed -n '1s/.*release \([0-9]\+\).*/\1/p' "$H/README.md")"; [ -n "$N" ] || { echo "README.md: no release number on its first line"; exit 1; }
 T="$(mktemp -d)"; R="$T/devkit_r$N"; mkdir -p "$R/kit" "$R/d3d8on11" "$R/pdb" "$R/tools/fcap" "$R/tools/d3dprof"
 D="$ROOT/kit/xikit/dist"
+# a release is built from committed source only: the kit's and the SDK's stamps say +modified otherwise
+# (DEVKIT_ALLOW_MODIFIED=1 for a trial package that is not released)
+if [ "${DEVKIT_ALLOW_MODIFIED:-0}" != 1 ] && grep -l '+modified' "$D/VERSION.txt" "$ROOT/sdk/dist/xikit_sdk/VERSION.txt" 2>/dev/null; then
+  echo "built from a working tree with uncommitted changes (+modified above): commit, rebuild, package again"; exit 1
+fi
 grep -q '^!swap_set' "$D/xikit_manifest_6AE818B4.txt" || { echo "dist/xikit_manifest_6AE818B4.txt has no !swap_set: build with \$FFXI_DLL_6AE818B4 set"; exit 1; }
 for f in xikit.dll gfx_recon_ingame.dll xikit_manifest.txt VERSION.txt; do cp "$D/$f" "$R/kit/"; done
 cp "$D"/xikit_manifest_*.txt "$R/kit/"
@@ -23,9 +28,10 @@ cp "$ROOT/kit/fcap/frame_inspect.py" "$ROOT/kit/fcap/compare.py" "$R/tools/fcap/
 cp "$ROOT/kit/d3dprof/pictures.py" "$R/tools/d3dprof/"
 mkdir -p "$R/mods"; X="$ROOT/sdk/examples"
 for m in texture_replace:texture_replace_core effect_comfort:effect_comfort_core camera_view file_overlay audio_mix world_light \
-         photo_mode:photo_mode_core color_filter:color_filter_core ui_layout:ui_layout_core; do
+         photo_mode:photo_mode_core color_filter:color_filter_core ui_layout:ui_layout_core click_target hotbar:hotbar_core status_text:status_text_core; do
   src=(); for s in ${m//:/ }; do src+=("$X/$s.cpp"); done
-  "$ROOT/sdk/build_mod.sh" "$R/mods/${m%%:*}.dll" "${src[@]}" >/dev/null
+  extra=(); [ "${m%%:*}" = hotbar ] && extra=(-- -lwindowscodecs -lole32)    # (the hotbar reads icons with WIC)
+  "$ROOT/sdk/build_mod.sh" "$R/mods/${m%%:*}.dll" "${src[@]}" "${extra[@]}" >/dev/null
 done
 cp "$H/README.md" "$R/"
 ( cd "$R" && find . -type f ! -name README.md ! -name SHA256SUMS.txt | sed 's|^\./||' | sort | xargs sha256sum > SHA256SUMS.txt )

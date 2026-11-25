@@ -16,6 +16,7 @@
 #include <string.h>
 static float rhw_offset();   // (below; a test switch)
 Exec12 *exec12_new(Exec &o); void exec12_delete(Exec12 *x);    // the Direct3D 12 executor (d8_exec12.cpp)
+bool exec12_start_lost(const Exec12 *x); void exec12_second_start(Exec12 *x);
 void exec12_run(Exec12 *x, uint16_t op, const uint8_t *p, uint32_t n, int32_t *hr, std::vector<uint8_t> *reply);
 
 typedef HRESULT (WINAPI *PFN_Compile)(const void *, SIZE_T, const char *, const D3D_SHADER_MACRO *, ID3DInclude *,
@@ -950,6 +951,17 @@ void Exec::run(uint16_t op, const uint8_t *p, uint32_t n, int32_t *hr, std::vect
     double t0 = timed ? qpc_ms() : 0;
     exec12_run(x12, op, p, n, hr, reply);
     if (*hr >= 0) { if (timed) timed(timed_ctx, op, qpc_ms() - t0); return; }
+    // (24 Nov) the device lost during the start: on the owner's Parallels VM with ReShade's dxgi.dll in the game's folder,
+    // every start's first Direct3D 12 device was removed before CreateRootSignature, while a second device made later in
+    // the same process (the D3D12 probe, also through ReShade, naming its adapter) ran a command list (docs/HISTORY.md 84). So once, naming adapter 0: the first
+    // executor and its device released, a new one started; Direct3D 11 as before if that fails too
+    if (exec12_start_lost(x12)) {
+      d8_log("the Direct3D 12 executor's device was lost during its start (0x%08X): released, and Direct3D 12 started once more", (unsigned)*hr);
+      exec12_delete(x12); x12 = exec12_new(*this); exec12_second_start(x12);
+      for (auto &o2 : opts12) { int32_t h2 = 0; exec12_run(x12, X_OPTION, o2.data(), (uint32_t)o2.size(), &h2, nullptr); }
+      exec12_run(x12, op, p, n, hr, reply);
+      if (*hr >= 0) { d8_log("the Direct3D 12 executor started at the second try"); if (timed) timed(timed_ctx, op, qpc_ms() - t0); return; }
+    }
     d8_log("the Direct3D 12 executor could not start (0x%08X): Direct3D 11 runs the stream", (unsigned)*hr);
     exec12_delete(x12); x12 = nullptr; want12 = false;
   }

@@ -15,6 +15,7 @@ bad = 0
 # SizeOfHeaders (rounded to SectionAlignment), SizeOfImage the end of the last one, raw data aligned and in the file
 import pefile
 for f in ('xikit.dll', 'gfx_recon_ingame.dll'):
+    if not os.path.exists(os.path.join(DIST, f)): print('note: no %s in dist (a public kit)' % f); continue
     p = os.path.join(DIST, f); pe = pefile.PE(p); oh = pe.OPTIONAL_HEADER; al = oh.SectionAlignment
     up = lambda n: (n + al - 1) // al * al; s = sorted(pe.sections, key=lambda x: x.VirtualAddress); n = os.path.getsize(p)
     why = [] if s[0].VirtualAddress == up(oh.SizeOfHeaders) else ['first section does not follow the headers']
@@ -40,6 +41,13 @@ print('%s: fork.py gate: the unedited fork, compiled as the mod compiles it, PAS
 for src in ('examples/overlay.cpp', 'examples/scene_tint.cpp', 'template/my_mod.cpp'):     # the SDK's example and template build (not run here:
     subprocess.run([os.path.join(SDK, 'build_mod.sh'), os.path.join(os.path.dirname(MODDLL), os.path.basename(src) + '.dll'),
                     os.path.join(SDK, src)], check=True)          # the host's fake device has Present only)
+# (25 Nov) toolhook_*: another tool's jump at Command_RunLine first (host.c fake_tool_form), mod_cmd.dll's chat command
+# in front of it; _pub_: with the public kit's fingerprint manifests (kit/install/public_manifest.py), as gobbiefix ships
+CMDDLL = os.path.join(os.path.dirname(MODDLL), 'mod_cmd.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), CMDDLL, os.path.join(H, 'mod_cmd.cpp')], check=True)
+TOOL_MODES = tuple('toolhook_' + f for f in ('e9', 'e990', 'ff25', 'pushret', 'bad', 'pub_e9', 'pub_e990', 'pub_ff25', 'pub_pushret', 'pub_bad'))
+CHAINDLL = os.path.join(os.path.dirname(MODDLL), 'mod_chain.dll')          # the chain run's second mod (API 5)
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), CHAINDLL, os.path.join(H, 'mod_chain.cpp')], check=True)
 FACTS = os.path.join(os.path.dirname(MODDLL), 'xikit_facts.txt')
 # a facts file is in the analysed build's numbering, with its bytes: made from the analysed DLL ($FFXI_DLL_6A995428
 # when the run is on another build). On a build where a site's code moved and its bytes hold a moved address (the
@@ -51,6 +59,9 @@ import pefile as _pe1
 _ts1 = '%08X' % _pe1.PE(os.environ['FFXI_DLL'], fast_load=True).FILE_HEADER.TimeDateStamp
 _bj1 = os.path.join(H, '..', 'builds', _ts1 + '.json')
 SWITCH_MOVED = os.path.exists(_bj1) and any(int(lo, 16) <= 0x101AFB56 < int(hi, 16) and dd for lo, hi, dd in json.load(open(_bj1))['ranges'])
+if _ts1 != '6A995428' and 'FFXI_DLL_6A995428' not in os.environ:   # (20 Nov: the cause of a misleading kind-jmp FAIL)
+    print('note: build %s and no FFXI_DLL_6A995428: the facts file was made from this build\'s DLL, not the analysed one, so the '
+          'facts mode\'s kind-jmp check cannot pass; set FFXI_DLL_6A995428 to the analysed DLL' % _ts1)
 # host.exe under wine (and xvfb-run): its own process group, so a run past the timeout can be stopped whole (killing
 # only xvfb-run leaves wine holding the output pipe). On a timeout what it printed is kept (host.c's stdout is
 # unbuffered: its last line is the last check it reached), with the end of xikit.log and the folder's files: the
@@ -74,13 +85,34 @@ def run_host(cmd, d, env, mode, timeout=600):
     print('-- files: ' + ', '.join('%s %d' % (f, os.path.getsize(os.path.join(d, f))) for f in sorted(os.listdir(d)) if os.path.isfile(os.path.join(d, f))))
     print('-- kept for reading: %s' % d)
     return None
-ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'fx2mod', 'native', 'measure')
+ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'chain', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'ctmod', 'hbmod', 'igmod', 'xtmod', 'fx2mod', 'prishe', 'prishert', 'native', 'measure') + TOOL_MODES
 # texmod: sdk/examples/texture_replace through the kit with the game's TexObj_Create/TexObj_Upload on Wine's d3d8
 TEXMOD = os.path.join(os.path.dirname(MODDLL), 'texture_replace.dll')
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), TEXMOD, os.path.join(SDK, 'examples', 'texture_replace.cpp'),
                 os.path.join(SDK, 'examples', 'texture_replace_core.cpp')], check=True)
 FXMOD = os.path.join(os.path.dirname(MODDLL), 'effect_comfort.dll')
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), FXMOD, os.path.join(SDK, 'examples', 'effect_comfort.cpp'), os.path.join(SDK, 'examples', 'effect_comfort_core.cpp')], check=True)
+# Prishe (WGINC/Prishe, a separate repository): its checkout at PRISHE_SRC, else a sibling folder named prishe; without
+# one, the modes prishe and prishert are skipped
+PRISHE = os.environ.get('PRISHE_SRC', os.path.join(SDK, '..', '..', 'prishe'))
+HAVE_PRISHE = os.path.isfile(os.path.join(PRISHE, 'core', 'prishe_core.cpp'))
+PRIMOD = os.path.join(os.path.dirname(MODDLL), 'prishe_probe.dll')   # Prishe, phase 0 (probe/)
+if HAVE_PRISHE: subprocess.run([os.path.join(SDK, 'build_mod.sh'), PRIMOD, os.path.join(PRISHE, 'probe', 'prishe_probe.cpp')], check=True)
+else: print('note: no Prishe checkout at %s (set PRISHE_SRC): modes prishe and prishert skipped' % PRISHE)
+PRTMOD = os.path.join(os.path.dirname(MODDLL), 'prishe.dll')         # Prishe's runtime (runtime/)
+if HAVE_PRISHE:                        # with Prishe's own build.sh (the in-game panel too, when this SDK has xiimgui)
+    subprocess.run([os.path.join(PRISHE, 'build.sh'), os.path.dirname(MODDLL)], check=True, env=dict(os.environ, XIKIT_SDK=os.path.abspath(SDK)))
+def prishert_files(d):                 # what host.c's prishert_run expects (its comment)
+    for rel, s in (('ROM/1/2.DAT', 'orig2'), ('ROM/1/3.DAT', 'orig3'), ('prishe/packs/a_one/files/ROM/1/2.DAT', 'packA'),
+                   ('prishe/packs/b_two/files/rom/1/2.dat', 'packB'), ('prishe/packs/c_off/files/ROM/1/3.DAT', 'packC')):
+        os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True); open(os.path.join(d, rel), 'w').write(s)
+    for f, n in (('a_one', 'One'), ('b_two', 'Two'), ('c_off', 'Off')):
+        open(os.path.join(d, 'prishe', 'packs', f, 'prishe.json'), 'w').write('{"prishe": 1, "name": "%s"}' % n)
+    open(os.path.join(d, 'prishe', 'profile.json'), 'w').write('{"prishe": 1, "packs": [{"folder": "a_one", "priority": 20}, {"folder": "b_two", "priority": 10}, {"folder": "c_off", "enabled": false}]}')
+    import struct                          # textures: prtex01 in a_one (16x16, 0xFF112233) and b_two (0xFF445566): a_one wins
+    for f, v in (('a_one', 0xFF112233), ('b_two', 0xFF445566)):
+        os.makedirs(os.path.join(d, 'prishe', 'packs', f, 'textures'), exist_ok=True)
+        open(os.path.join(d, 'prishe', 'packs', f, 'textures', 'prtex01.dds'), 'wb').write(dds32(16, 16, [struct.pack('<I', v) * 256]))
 CAMMOD = os.path.join(os.path.dirname(MODDLL), 'camera_view.dll')
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), CAMMOD, os.path.join(SDK, 'examples', 'camera_view.cpp')], check=True)
 OVLMOD = os.path.join(os.path.dirname(MODDLL), 'file_overlay.dll')
@@ -94,6 +126,22 @@ subprocess.run([os.path.join(SDK, 'build_mod.sh'), PHOMOD, os.path.join(SDK, 'ex
 CFMOD = os.path.join(os.path.dirname(MODDLL), 'color_filter.dll')
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), CFMOD, os.path.join(SDK, 'examples', 'color_filter.cpp'), os.path.join(SDK, 'examples', 'color_filter_core.cpp')], check=True)
 UIMOD = os.path.join(os.path.dirname(MODDLL), 'ui_layout.dll')
+IGMOD = os.path.join(os.path.dirname(MODDLL), 'imgui_panel.dll')     # Dear ImGui through sdk/xiimgui
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), IGMOD] + [os.path.join(SDK, *p) for p in (('examples', 'imgui_panel.cpp'), ('examples', 'imgui_panel_ui.cpp'),
+               ('xiimgui', 'xiimgui_game.cpp'), ('xiimgui', 'xiimgui_d3d8.cpp'), ('imgui', 'imgui.cpp'), ('imgui', 'imgui_draw.cpp'),
+               ('imgui', 'imgui_tables.cpp'), ('imgui', 'imgui_widgets.cpp'))], check=True)
+XT = os.path.join(H, '..', '..', 'sessions', 'experimental_tests')     # the in-game test (xitest), smoke-tested here
+XTMOD = os.path.join(os.path.dirname(MODDLL), 'xitest.dll'); XTBMOD = os.path.join(os.path.dirname(MODDLL), 'xitest_b.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), XTMOD] + [os.path.join(XT, f) for f in ('xitest.cpp', 'xitest_ui.cpp', 'xitest_sys.cpp')]
+               + [os.path.join(SDK, *p) for p in (('xiimgui', 'xiimgui_game.cpp'), ('xiimgui', 'xiimgui_d3d8.cpp'), ('imgui', 'imgui.cpp'), ('imgui', 'imgui_draw.cpp'),
+                                                  ('imgui', 'imgui_tables.cpp'), ('imgui', 'imgui_widgets.cpp'))] + ['--', '-I' + os.path.join(SDK, 'imgui')], check=True)
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), XTBMOD, os.path.join(XT, 'xitest_b.cpp')], check=True)
+HBMOD = os.path.join(os.path.dirname(MODDLL), 'hotbar.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), HBMOD, os.path.join(SDK, 'examples', 'hotbar.cpp'), os.path.join(SDK, 'examples', 'hotbar_core.cpp'), '--', '-lwindowscodecs', '-lole32'], check=True)
+# icons for the hotbar test: XIVhotbar2's own (WGINC/XIVhotbar2-Petit_Trois_Edition at XIVHOTBAR_SRC, else a sibling folder)
+XIVHB = os.environ.get('XIVHOTBAR_SRC', os.path.join(SDK, '..', '..', 'xivhotbar2-petit_trois_edition'))
+CTMOD = os.path.join(os.path.dirname(MODDLL), 'click_target.dll')
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), CTMOD, os.path.join(SDK, 'examples', 'click_target.cpp')], check=True)
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), UIMOD, os.path.join(SDK, 'examples', 'ui_layout.cpp'), os.path.join(SDK, 'examples', 'ui_layout_core.cpp')], check=True)
 def ovl_files(d):
     for rel, s in (('ROM/1/2.DAT', 'orig2'), ('ROM/1/3.DAT', 'orig3'), ('overlay/10_a/ROM/1/2.DAT', 'packA'), ('overlay/20_b/ROM/1/2.DAT', 'packB')):
@@ -135,34 +183,54 @@ _mf0 = os.path.join(DIST, 'xikit_manifest_%s.txt' % _ts0)
 NO_SWAP = os.path.exists(_mf0) and any(l.startswith('!no_swap') for l in open(_mf0)) and not any(l.startswith('!swap_set') for l in open(_mf0))   # (!swap_set: flag 32 decides, the rest swaps)
 SWAP_MODES = ('profile', 'traceblock', 'capture', 'ab', 'reload')
 if NO_SWAP: print('build %s is no_swap: modes %s skipped (they test the reconstruction swapped in)' % (_ts0, ', '.join(SWAP_MODES)))
-for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_MODES)).split() and not (NO_SWAP and m in SWAP_MODES)]:
+for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_MODES)).split() and not (NO_SWAP and m in SWAP_MODES) and (HAVE_PRISHE or m not in ('prishe', 'prishert'))]:
     d = tempfile.mkdtemp(prefix='xikit_')
-    for f in ('xikit.dll', 'gfx_recon_ingame.dll', 'xikit_manifest.txt', 'VERSION.txt'): shutil.copy(os.path.join(DIST, f), d)
+    for f in ('xikit.dll', 'gfx_recon_ingame.dll', 'xikit_manifest.txt', 'VERSION.txt'):
+        if os.path.exists(os.path.join(DIST, f)): shutil.copy(os.path.join(DIST, f), d)   # (a public kit has no gfx_recon_ingame.dll)
     for f in os.listdir(DIST):                                   # the manifests of other builds (build translation)
         if f.startswith('xikit_manifest_'): shutil.copy(os.path.join(DIST, f), d)
     shutil.copy(os.environ['FFXI_DLL'], os.path.join(d, 'FFXiMain.dll')); shutil.copy(os.path.join(H, 'host.exe'), d)
-    if mode.startswith('mod') or mode == 'reload': shutil.copy(MODDLL, d)
-    if mode == 'reload': shutil.copy(MODDLL2, d)
+    if mode.startswith('mod') or mode in ('reload', 'chain'): shutil.copy(MODDLL, d)
+    if mode in ('reload', 'chain'): shutil.copy(MODDLL2, d)
+    if mode == 'chain': shutil.copy(CHAINDLL, d)
+    if mode.startswith('toolhook_'):
+        shutil.copy(CMDDLL, d)
+        if '_pub_' in mode:                      # the public kit's manifests: fingerprints (H...) and J=, no bytes
+            for f in os.listdir(d):
+                if f.startswith('xikit_manifest'):
+                    subprocess.run([sys.executable, os.path.join(H, '..', '..', 'install', 'public_manifest.py'), os.path.join(d, f), os.path.join(d, f)], check=True)
     if mode == 'facts': shutil.copy(FACTS, d)
     if mode == 'texmod': shutil.copy(TEXMOD, d); texmod_files(d)
     if mode in ('fxmod', 'fx2mod'): shutil.copy(FXMOD, d)
     if mode == 'cammod': shutil.copy(CAMMOD, d)
+    if mode == 'prishe': shutil.copy(PRIMOD, d)
+    if mode == 'prishert': shutil.copy(PRTMOD, d); prishert_files(d)
     if mode == 'ovlmod': shutil.copy(OVLMOD, d); ovl_files(d)
     if mode == 'audmod': shutil.copy(AUDMOD, d)
     if mode == 'envmod': shutil.copy(ENVMOD, d)
     if mode == 'phomod': shutil.copy(PHOMOD, d)
     if mode == 'uimod': shutil.copy(UIMOD, d)
+    if mode == 'ctmod': shutil.copy(CTMOD, d)
+    if mode == 'igmod': shutil.copy(IGMOD, d)
+    if mode == 'xtmod': shutil.copy(XTMOD, d); shutil.copy(XTBMOD, d)
+    if mode == 'hbmod':
+        shutil.copy(HBMOD, d)
+        for rel in ('images/icons/spells/00001.png', 'images/icons/weapons/02.png', 'images/icons/custom/macro.png', 'images/icons/custom/gear3.png'):
+            src = os.path.join(XIVHB, rel)
+            if os.path.isfile(src):
+                os.makedirs(os.path.join(d, 'xiv', os.path.dirname(rel)), exist_ok=True); shutil.copy(src, os.path.join(d, 'xiv', rel))
     if mode == 'cfmod':                           # on kit/d3d8on11 (shader passes); its own kit load off (realdev_ours says why)
         shutil.copy(CFMOD, d); shutil.copy(os.path.join(H, '..', '..', 'd3d8on11', 'dist', 'd3d8.dll'), d)
         with open(os.path.join(d, 'd3d8on11.ini'), 'w') as f: f.write('[d3d8on11]\r\nload_kit=0\r\n')
     env = dict(os.environ, WINEDEBUG='-all')
     cmd = ['wine', 'host.exe', mode]
+    if mode.startswith('toolhook_'): env['XT_TOOL_FORM'] = mode.split('_')[-1]; cmd = ['wine', 'host.exe', 'toolhook']
     if mode == 'native':                          # sample=2 starts xisamp_x64.exe: a Wine prefix with 64-bit Windows
         for f in ('xisamp_x64.exe', 'xisamp_arm64.exe'): shutil.copy(os.path.join(DIST, f), d)
         env['WINEPREFIX'] = os.path.join(d, 'pfx64'); subprocess.run(['wineboot', '-i'], env=env, capture_output=True, timeout=600)
     if mode == 'measure':                         # a window for DispatchMessageA: a virtual X server
         env.update(measure_table(d)); cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', 'measure']
-    if mode in ('texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'fx2mod'): cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', mode]
+    if mode in ('texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'ctmod', 'hbmod', 'igmod', 'xtmod', 'fx2mod', 'prishe', 'prishert'): cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', mode]
     if mode == 'cfmod': env['WINEDLLOVERRIDES'] = 'd3d8=n'
     if mode.startswith('realdev'):                # a real D3D8 device: Wine's d3d8, then kit/d3d8on11's (thread mode)
         cmd = ['xvfb-run', '-a', '-s', '-screen 0 1024x768x24', 'wine', 'host.exe', 'realdev']
@@ -201,8 +269,12 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
     if mode == 'cfmod':
         m = re.search(r"color_filter: check: the filtered frame's centre is ([0-9a-f-]+)", log)
         v = int(m.group(1), 16) if m and m.group(1) != '-1' else -1
-        ok = v >= 0 and abs((v >> 16) - 94) <= 2 and abs(((v >> 8) & 0xFF) - 71) <= 2 and (v & 0xFF) <= 2
-        print('%s: cfmod: pure red through the deuteranopia simulation (Machado et al. 2009: 0.367 0.280 -0.012) is %s in the filtered frame (5e4700 within 2)' % ('ok' if ok else 'FAIL', m.group(1) if m else 'not logged')); bad += not ok
+        # (25 Nov) the matrix applies to linear RGB: pure red is (1,0,0) either way; the result is encoded with the sRGB
+        # transfer function (IEC 61966-2-1), as the mod's shader does
+        enc = lambda l: 0 if l <= 0 else round(255 * (l * 12.92 if l <= 0.0031308 else 1.055 * l ** (1 / 2.4) - 0.055))
+        er, eg = enc(0.367322), enc(0.280085)
+        ok = v >= 0 and abs((v >> 16) - er) <= 2 and abs(((v >> 8) & 0xFF) - eg) <= 2 and (v & 0xFF) <= 2
+        print('%s: cfmod: pure red through the deuteranopia simulation (Machado et al. 2009: 0.367 0.280 -0.012, linear; sRGB-encoded %02x%02x00) is %s in the filtered frame (within 2)' % ('ok' if ok else 'FAIL', er, eg, m.group(1) if m else 'not logged')); bad += not ok
     print('-- xikit.log --'); print('\n'.join(l for l in log.splitlines() if 'swapped ' not in l and 'restored ' not in l)[-3000:])
     if r.returncode != 0 or 'ALL OK' not in r.stdout: bad += 1
     if mode == 'base':
@@ -270,9 +342,23 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
         # the wrapped Sleep the window procedure makes inside DispatchMessageA is outside DispatchMessageA's exclusive time
         pr = open([os.path.join(d, f) for f in os.listdir(d) if f.startswith('xikit_probes_')][0]).read()
         disp = sorted((l.split(',') for l in pr.splitlines() if ',DispatchMessageA,' in l and ',render,' in l), key=lambda r: -int(r[10]))   # the loop's call site (most calls), not the longjmp's
-        ok = bool(disp) and float(disp[0][11]) > 100 * max(float(disp[0][12]), 0.001) and 'stale entries dropped 1,' in pr
-        print('%s: nesting: DispatchMessageA inclusive %s ms, exclusive %s ms (the Sleep inside it excluded); the entry the longjmp left was dropped' % (
-            'ok' if ok else 'FAIL', disp[0][11] if disp else '-', disp[0][12] if disp else '-')); bad += not ok
+        # (20 Nov) the Sleep the window procedure makes: its row's return address inside m_wndproc (host.exe's symbols).
+        # DispatchMessageA's inclusive minus exclusive time is the time of the wrapped calls inside it, that Sleep's: equal
+        # to the Sleep's inclusive time but for the one Sleep under the call the longjmp left (its entry dropped), at most
+        # the Sleep's longest call. (Before: exclusive under 1% of inclusive, which also held Wine's own dispatch time,
+        # 1 to 5.5 ms over 299 calls on one machine, and failed when Wine was slow.)
+        import pefile as _pe2
+        hx = os.path.join(d, 'host.exe'); hb = _pe2.PE(hx, fast_load=True).OPTIONAL_HEADER.ImageBase
+        nm = [l.split() for l in subprocess.run(['i686-w64-mingw32-nm', '-n', hx], capture_output=True, text=True).stdout.splitlines()]
+        nm = [(int(a, 16) - hb, n) for a, t, n in (x for x in nm if len(x) == 3) if t in 'tT']
+        wp = [(a, nm[i + 1][0]) for i, (a, n) in enumerate(nm[:-1]) if n.split('@')[0] == '_m_wndproc']
+        inwp = lambda rt: rt.startswith('module:host.exe+0x') and wp and wp[0][0] <= int(rt.split('+0x')[1], 16) < wp[0][1]
+        slp = [r for r in (l.split(',') for l in pr.splitlines() if ',Sleep,' in l and ',render,' in l) if inwp(r[9])]
+        dx = float(disp[0][11]) - float(disp[0][12]) if disp else -1
+        ok = bool(disp) and len(slp) == 1 and abs(dx - float(slp[0][11])) <= float(slp[0][13]) and 'stale entries dropped 1,' in pr
+        print('%s: nesting: DispatchMessageA inclusive %s ms, exclusive %s ms: the %.3f ms between them is the Sleep inside it (%s ms in %s calls, '
+              'one under the call the longjmp left); the entry the longjmp left was dropped' % (
+            'ok' if ok else 'FAIL', disp[0][11] if disp else '-', disp[0][12] if disp else '-', dx, slp[0][11] if slp else '-', slp[0][10] if slp else '-')); bad += not ok
         env_txt = open([os.path.join(d, f) for f in os.listdir(d) if f.startswith('xikit_env_')][0]).read()
         ok = '[wine] version' in env_txt and 'Sleep(1), 200 calls:' in env_txt and 'timeGetTime steps' in env_txt and ' ns a call' in env_txt
         print('%s: env=1: xikit_env names Wine, the measured Sleep(1) and timeGetTime steps, and call costs' % ('ok' if ok else 'FAIL')); bad += not ok

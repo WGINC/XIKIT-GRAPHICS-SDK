@@ -720,6 +720,7 @@ if 'thread' in MODES:
     # longer run when it is missing)
     ok = p1 and p2 and g1 is not None and float(g1.group(1)) > 0 and b1 is not None
     print('%s: d3d12: the GPU\'s time per frame and by render target is logged (%s), and the binds line' % ('ok' if ok else 'FAIL', (g1.group(1) + ' ms; ' + g1.group(2)[:80]) if g1 else 'no line')); bad += not ok
+    if not ok: print('\n'.join('    ' + l for l in got_logs[0].splitlines() if re.search(r'D3D12|Direct3D 1[12]|fall|gpu|presented', l))[-3000:])
     # (14 Nov) where a draw's time goes: the record's handling and the ten stages of draw(), sampled 1 record in 32
     dt = re.search(r'D3D12 draw time, 600 frames \(1 record in 32 sampled\): a draw record\'s handling ([0-9.]+) us \((\d+) sampled\); in draw\(\) ([0-9.]+) us: '
                    r'shaders [0-9.]+, samplers [0-9.]+, room [0-9.]+, merge slots [0-9.]+, targets [0-9.]+, pipeline [0-9.]+, constants [0-9.]+, '
@@ -883,6 +884,11 @@ if 'thread' in MODES:
     clear_logs(); sf = scenes(ours, True, 'thread', dict(D12, D8ON11_TEST_D3D12_FAIL='1')); t = logs()
     ok = sf == scenes(ours, True, 'thread') and 'Direct3D 11 runs the stream' in t
     print('%s: d3d12 that cannot start: the stream runs on Direct3D 11 (logged), the scenes exactly the Direct3D 11 executor\'s' % ('ok' if ok else 'FAIL')); bad += not ok
+    # (24 Nov) the first start's device lost (D8ON11_TEST_D3D12_LOST_START): released, Direct3D 12 started once more, logged,
+    # and the scenes exactly the Direct3D 12 executor's
+    clear_logs(); sf = scenes(ours, True, 'thread', dict(D12, D8ON11_TEST_D3D12_LOST_START='1')); t = logs()
+    ok = sf == scenes(ours, True, 'thread', D12) and 'started once more' in t and 'started at the second try' in t and 'the second start names adapter 0' in t and 'Direct3D 11 runs the stream' not in t
+    print('%s: d3d12 whose first start loses its device: started once more (logged), the scenes exactly the Direct3D 12 executor\'s' % ('ok' if ok else 'FAIL')); bad += not ok
     # a driver whose samplers are wrong by both ways (D8ON11_TEST_D3D12_SAMPLERS makes the check count them wrong): the
     # start runs on Direct3D 11, logged, and draws exactly what the Direct3D 11 executor draws
     clear_logs(); sf = scenes(ours, True, 'thread', dict(D12, D8ON11_TEST_D3D12_SAMPLERS='1')); t = logs()

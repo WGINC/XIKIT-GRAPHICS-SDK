@@ -46,6 +46,8 @@ enum { RING_MB = 64, GV_CAP = 65536 };
 // ---- the bridge to Exec (d8_exec.cpp includes no Direct3D 12 header of ours) -------------------------------------
 Exec12 *exec12_new(Exec &o) { return new Exec12(o); }
 void exec12_delete(Exec12 *x) { if (x) { x->shutdown(); delete x; } }
+bool exec12_start_lost(const Exec12 *x) { return x && x->start_lost; }
+void exec12_second_start(Exec12 *x) { if (x) x->second_start = true; }
 void exec12_run(Exec12 *x, uint16_t op, const uint8_t *p, uint32_t n, int32_t *hr, std::vector<uint8_t> *reply) { x->run(op, p, n, hr, reply); }
 
 // ---- descriptors -------------------------------------------------------------------------------------------------------
@@ -246,17 +248,29 @@ int32_t Exec12::init(const XInit &x, bool resize) {
     IUnknown *adapter = nullptr; IDXGIAdapter *warp = nullptr;
     const char *drv = getenv("D8ON11_DRIVER");
     if (drv && !_stricmp(drv, "warp") && SUCCEEDED(fac->EnumWarpAdapter(__uuidof(IDXGIAdapter), (void **)&warp))) adapter = warp;
+    // (24 Nov) the second start (d8_exec.cpp: the first one's device lost) names the factory's first adapter, as the D3D12
+    // probe does (it names the Direct3D 11 device's), where the first start leaves the choice to D3D12CreateDevice
+    else if (second_start && SUCCEEDED(fac->EnumAdapters(0, &warp))) {
+      DXGI_ADAPTER_DESC ad = {}; warp->GetDesc(&ad);
+      d8_log("D3D12: the second start names adapter 0: \"%ls\"", ad.Description); adapter = warp; }
     h = create(adapter, D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), (void **)&dev);
     rel(warp);
     if (FAILED(h) || !dev) { d8_log("D3D12: D3D12CreateDevice (feature level 11_0): 0x%08lX", (unsigned long)h); dev = nullptr; return D3DERR_NOTAVAILABLE; }
+    // (24 Nov) which step of the start leaves the device removed: checked after each, the first one logged (the owner's
+    // Parallels VM with ReShade's dxgi.dll: removed before CreateRootSignature, reason 0x887A0020; docs/HISTORY.md 84-85)
+    bool gone_said = false;
+    auto gone_after = [&](const char *step) { HRESULT r = dev->GetDeviceRemovedReason();
+      if (FAILED(r) && !gone_said) { gone_said = true; d8_log("D3D12: the device was removed by the end of this start step: %s (reason 0x%08lX)", step, (unsigned long)r); } };
+    gone_after("D3D12CreateDevice");
     D3D12_COMMAND_QUEUE_DESC qd = {}; qd.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-    if (FAILED(h = dev->CreateCommandQueue(&qd, __uuidof(ID3D12CommandQueue), (void **)&q))) { d8_log("D3D12: CreateCommandQueue: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
-    if (FAILED(h = dev->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void **)&fence))) { d8_log("D3D12: CreateFence: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
+    if (FAILED(h = dev->CreateCommandQueue(&qd, __uuidof(ID3D12CommandQueue), (void **)&q))) { d8_log("D3D12: CreateCommandQueue: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; } gone_after("CreateCommandQueue");
+    if (FAILED(h = dev->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void **)&fence))) { d8_log("D3D12: CreateFence: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; } gone_after("CreateFence");
     fev = CreateEventA(NULL, FALSE, FALSE, NULL);
     for (int i = 0; i < NF; i++)
       if (FAILED(h = dev->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void **)&alloc[i]))) { d8_log("D3D12: CreateCommandAllocator: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
     if (FAILED(h = dev->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, alloc[0], nullptr, __uuidof(ID3D12GraphicsCommandList), (void **)&cl))) { d8_log("D3D12: CreateCommandList: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
     cl->Close();
+    gone_after("the command allocators and the command list");
     // the upload ring
     { D3D12_HEAP_PROPERTIES hp = {}; hp.Type = D3D12_HEAP_TYPE_UPLOAD;
       D3D12_RESOURCE_DESC rd = {}; rd.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER; rd.Width = (uint64_t)RING_MB << 20; rd.Height = 1; rd.DepthOrArraySize = 1;
@@ -265,6 +279,7 @@ int32_t Exec12::init(const XInit &x, bool resize) {
       D3D12_RANGE none = {0, 0};
       if (FAILED(h = ring->Map(0, &none, (void **)&ring_m))) { d8_log("D3D12: Map of the upload ring: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
       ring_va = ring->GetGPUVirtualAddress(); ring_cap = rd.Width; }
+    gone_after("the upload ring (made and mapped)");
     // descriptor heaps
     h_srv.type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV; h_rtv.type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV; h_dsv.type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
     h_smp.type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
@@ -275,10 +290,12 @@ int32_t Exec12::init(const XInit &x, bool resize) {
       hd.Type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER; hd.NumDescriptors = SMP_CAP;
       if (FAILED(h = dev->CreateDescriptorHeap(&hd, __uuidof(ID3D12DescriptorHeap), (void **)&gv_smp))) { d8_log("D3D12: the sampler heap: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; }
       smp_inc = dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER); }
+    gone_after("the shader-visible descriptor and sampler heaps");
     // null views for the stages a draw does not use (resource binding tier 1 wants every descriptor of a table valid)
     null_srv2d = h_srv.take(dev); null_srvcube = h_srv.take(dev);
     { D3D12_SHADER_RESOURCE_VIEW_DESC v = srv_desc(DXGI_FORMAT_R8G8B8A8_UNORM, false, 0, 1); dev->CreateShaderResourceView(nullptr, &v, h_srv.at(null_srv2d));
       v = srv_desc(DXGI_FORMAT_R8G8B8A8_UNORM, true, 0, 1); dev->CreateShaderResourceView(nullptr, &v, h_srv.at(null_srvcube)); }
+    gone_after("the two null views");
     // the root signature: b0 (VS constants), b1 (the bone palette), b0 (PS constants), t0..t7, s0..s7
     { D3D12_DESCRIPTOR_RANGE rt = {D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 8, 0, 0, 0}, rsm = {D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER, 8, 0, 0, 0};
       D3D12_ROOT_PARAMETER rp[5] = {};
@@ -293,7 +310,12 @@ int32_t Exec12::init(const XInit &x, bool resize) {
       if (FAILED(h)) { d8_log("D3D12: D3D12SerializeRootSignature: 0x%08lX %s", (unsigned long)h, e ? (const char *)e->GetBufferPointer() : ""); rel(e); return D3DERR_NOTAVAILABLE; }
       rel(e);
       h = dev->CreateRootSignature(0, b->GetBufferPointer(), b->GetBufferSize(), __uuidof(ID3D12RootSignature), (void **)&rs); rel(b);
-      if (FAILED(h)) { d8_log("D3D12: CreateRootSignature: 0x%08lX", (unsigned long)h); return D3DERR_NOTAVAILABLE; } }
+      { static LONG test_lost; const char *tl = getenv("D8ON11_TEST_D3D12_LOST_START");   // a test: the first start's device lost here
+        if (tl && SUCCEEDED(h) && InterlockedIncrement(&test_lost) == 1) { rel(rs); h = DXGI_ERROR_DEVICE_REMOVED; d8_log("D3D12: the device taken as lost at the start (D8ON11_TEST_D3D12_LOST_START, a test)"); start_lost = true; } }
+      if (h == DXGI_ERROR_DEVICE_REMOVED || FAILED(dev->GetDeviceRemovedReason())) start_lost = true;
+      // (24 Nov) 0x887A0005 here on the owner's Parallels VM, in every start with ReShade's dxgi.dll in the game's folder
+      // and in none without it (docs/HISTORY.md 84): the device was removed before this call; its own reason logged
+      if (FAILED(h)) { d8_log("D3D12: CreateRootSignature: 0x%08lX; the device's removal reason: 0x%08lX", (unsigned long)h, (unsigned long)dev->GetDeviceRemovedReason()); return D3DERR_NOTAVAILABLE; } }
     HMODULE cm = LoadLibraryA("d3dcompiler_47.dll");
     compile = cm ? (PFN_Compile)(void *)GetProcAddress(cm, "D3DCompile") : nullptr;
     create_blob = cm ? (PFN_CreateBlob)(void *)GetProcAddress(cm, "D3DCreateBlob") : nullptr;

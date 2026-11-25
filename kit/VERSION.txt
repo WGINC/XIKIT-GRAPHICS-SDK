@@ -1,6 +1,6 @@
-xikit kit, source 284aec856c68+modified, built 2026-11-17 23:27 UTC
+xikit kit, source 629452a7baa6, built 2026-11-25 03:53 UTC
 public kit (sdk/public_prune.py): the graphics set only, no reconstruction
-sha256 d38a4d1e5c99dbef9703685d64862a11d0569063bb1d96d11c4fc13b9bb7ae44  xikit.dll
+sha256 9180bc3f9027fd06216d6c79be67496f3f3294d9aee4eb6a8bae76f2f51fba8f  xikit.dll
 sha256 dd3db7e67c5cec56670610e6c38bde82f94467ba7c31ebaa19c41a39a1ef2fbc  xikit.ini
 sha256 00e0441c06386cfd4f2515f5479ee9ad865e240bf43453766cd80dbf0ef644f9  xikit_manifest.txt
 sha256 3621f5202c4a814f5704429fdba2febb03115de8faa8fc197d3a385fc513b0d2  xikit_manifest_6AC37846.txt

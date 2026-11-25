@@ -1,0 +1,11 @@
+# The public repository's CI: every example mod and the template compile against the headers (ci/build_examples.sh).
+# Nothing of the game is here, so nothing runs a mod; the kit's tests with the game are in the analysis repository.
+name: build
+on: [push, pull_request]
+jobs:
+  examples:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y g++-mingw-w64-i686
+      - run: ci/build_examples.sh out

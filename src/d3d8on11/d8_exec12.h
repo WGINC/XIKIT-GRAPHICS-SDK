@@ -256,6 +256,8 @@ struct Exec12 {
   std::vector<SnapPend> snap_pend;
   void snap_poll();
   bool lost = false; void check_lost(const char *where, HRESULT h);
+  bool second_start = false;   // set by d8_exec.cpp for the start after a lost one
+  bool start_lost = false;     // the start failed on a removed device (d8_exec.cpp then starts Direct3D 12 once more)
 
   // ---- the GPU's time (13 Nov): timestamps at a frame's start, at each change of render target, and before its Present,
   // resolved with the frame and read once its fence has passed (never waited for); logged every 600 Presents by

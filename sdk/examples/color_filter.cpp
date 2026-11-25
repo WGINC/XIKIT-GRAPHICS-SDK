@@ -27,14 +27,21 @@ static const XikitHost *g_host;
 static XikitRender g_r;
 static unsigned g_shader;
 static float g_m[12];
+// (25 Nov) The matrices are defined on linear RGB (Machado et al. 2009 build them from linear-RGB primaries); the
+// frame holds sRGB-encoded values. The first version applied them to the encoded values, which turns the simulated
+// colours (the owner: "everything desaturated and green"); each pixel is now decoded with the sRGB transfer function
+// (IEC 61966-2-1), multiplied, and encoded again.
 static const char k_hlsl[] =
   "Texture2D src : register(t0); SamplerState smp : register(s0); cbuffer C : register(b0) { float4 c[64]; };\n"
+  "float3 lin(float3 e) { return e <= 0.04045 ? e / 12.92 : pow((e + 0.055) / 1.055, 2.4); }\n"
+  "float3 enc(float3 l) { return l <= 0.0031308 ? l * 12.92 : 1.055 * pow(l, 1.0 / 2.4) - 0.055; }\n"
   "float4 ps(float4 pos : SV_Position, float2 uv : TEXCOORD0) : SV_Target {\n"
-  "  float3 v = src.Sample(smp, uv).rgb;\n"
-  "  return float4(saturate(float3(dot(c[0].xyz, v), dot(c[1].xyz, v), dot(c[2].xyz, v))), 1);\n"
+  "  float3 v = lin(src.Sample(smp, uv).rgb);\n"
+  "  return float4(enc(saturate(float3(dot(c[0].xyz, v), dot(c[1].xyz, v), dot(c[2].xyz, v)))), 1);\n"
   "}\n";
 static void log_line(const char *s) { g_host->log("%s", s); }
 static void settings() {
+  if (!g_host->setting_int("cb_mode", 0)) g_host->log("color_filter: cb_mode 0: off (cb_simulate and cb_strength act only with cb_mode 1, 2 or 3)");
   cf_matrix(g_host->setting_int("cb_mode", 0), g_host->setting_int("cb_strength", 100), g_host->setting_int("cb_simulate", 0), g_m);
 }
 static int __stdcall pass(unsigned s, void *src, void *dst, const float *c, unsigned n) {

@@ -71,11 +71,15 @@ typedef struct {
   int bs_susp, bs_test;                /* bisect: still a suspect / in the set being tested */
   volatile LONG calls; LONG calls_reported;
   int tlen, nfix; int8_t tfix[4];      /* trampoline (manifest T=): whole instructions copied from the entry, rel32 to re-aim */
-  void *mod_target; int mod;           /* a mod's replacement (sdk/: xikit_mod.h), and which mod (index into g_mods + 1) */
+  void *mod_target; int mod;           /* the outermost mod hook (sdk/: xikit_mod.h), and its mod (index into g_mods + 1) */
+  int nchain; short chain[8];          /* every mod's hook of it, innermost first (indices into g_link) */
+  void *chain_base;                    /* what the innermost hook's previous runs: the trampoline or the reconstruction */
   int mod_on_recon;                    /* the hook's previous is the reconstruction (no trampoline) */
   void *tramp;                         /* the trampoline, once built (from the untouched entry; a reload reuses it) */
   void *cap_stub; volatile LONG cap_done;  /* capture= (an entry snapshot, below): the stub while captures remain */
   void *jmp_to;                        /* where the jmp the kit wrote at the entry goes (while patched) */
+  void *foreign;                       /* another tool's hook: the entry held its jump to here (foreign_jmp) */
+  int has_j; uint64_t jhash;           /* (25 Nov) a public manifest's J=: the window's fingerprint without the entry's first max(5,T) bytes */
 } Fn;
 
 typedef struct {
@@ -414,6 +418,8 @@ static int load_manifest(const char *path) {
       for (int i = 1; i < 17; i++) f->ehash = f->ehash << 4 | (uint64_t)hexval(hex[i]);
     } else for (int i = 0; i < 20; i++) f->expect[i] = (uint8_t)(hexval(hex[2 * i]) << 4 | hexval(hex[2 * i + 1]));
     if (strcmp(rels, "-")) for (char *p = rels; *p && f->nrel < 8;) { f->rel[f->nrel++] = (int8_t)strtol(p, &p, 10); if (*p == ',') p++; }
+    { char *j = strstr(line, " J=H");              /* (25 Nov) public manifests: foreign_jmp's fingerprint */
+      if (j) { f->has_j = 1; for (int i = 4; i < 20 && hexval(j[i]) >= 0; i++) f->jhash = f->jhash << 4 | (uint64_t)hexval(j[i]); } }
     char *t = strstr(line, " T=");                  /* (a manifest from before the SDK has none: no trampolines) */
     if (t && t[3] >= '0' && t[3] <= '9') {
       char *q = t + 3; f->tlen = (int)strtol(q, &q, 10);
@@ -460,6 +466,62 @@ static int check_bytes(const Fn *f) {
   if (f->hashed) return bytes_hash(live, care) == f->ehash ? -1 : 99;
   for (int i = 0; i < 20; i++) if (care[i] && live[i] != f->expect[i]) return i - 4;
   return -1;
+}
+
+/* Another tool hooked the entry before the kit (24 Nov, the owner's game: Windower's Hook.dll puts a jump at
+   Command_RunLine's entry, prishe_probe.txt). The entry starts with a jump out of FFXiMain.dll, in one of the three
+   forms prishe_probe reads (E9 rel32; FF 25 [abs32]; 68 imm32 C3). A tool that writes a jump at an entry overwrites
+   whole instructions (else the instruction it cut runs half-written); so the bytes from the entry to the end of the
+   instructions the jump covers are the other tool's, and nobody runs them while its jump is there. Where those
+   instructions end is the manifest's T= (the trampoline's length: whole instructions of the game's code covering at
+   least 5 bytes, made from the game's bytes by make_manifest.py); a jump longer than T is not accepted. Every other
+   byte of the window (entry-4 .. entry-1, entry+cover .. entry+15) must be the analysed build's: compared one by one
+   with a byte manifest, or with a public (fingerprint) manifest through its J= fingerprint, which is the same window
+   with entry .. entry+max(5,T)-1 left out (kit/install/public_manifest.py). Then the jump's target is what the game's
+   callers reach today: a mod's hook goes in front of it, and its previous is that target (the other tool's code,
+   which runs the game's own code itself). Returns the target, or NULL with why in *why. (25 Nov: until now only E9,
+   only 5 bytes left out, and never with a fingerprint manifest: Windower's Command_RunLine was refused in every
+   start of the owner's 24 Nov run, both with gobbiefix's public manifest and with the test kit's byte manifest.) */
+static void *foreign_jmp(const Fn *f, const char **why) {
+  static const char *w0; if (!why) why = &w0; *why = "the entry does not start with a jump";
+  const uint8_t *e = f->site; void *to = NULL; int jlen = 0;
+  if (e[0] == 0xE9) { int32_t d; memcpy(&d, e + 1, 4); to = (void *)(e + 5 + d); jlen = 5; }
+  else if (e[0] == 0xFF && e[1] == 0x25) { void **slot; memcpy(&slot, e + 2, 4);
+    MEMORY_BASIC_INFORMATION mb;                   /* (VirtualQuery, not IsBadReadPtr: see readable_ranges) */
+    if (!VirtualQuery(slot, &mb, sizeof mb) || mb.State != MEM_COMMIT || (mb.Protect & (PAGE_GUARD | PAGE_NOACCESS)) || !(mb.Protect & 0xEE)) { *why = "a jmp [mem] whose slot cannot be read"; return NULL; }
+    to = *slot; jlen = 6; }
+  else if (e[0] == 0x68 && e[5] == 0xC3) { uint32_t a; memcpy(&a, e + 1, 4); to = (void *)(uintptr_t)a; jlen = 6; }
+  if (!to) return NULL;
+  HMODULE game = (HMODULE)(uintptr_t)(ANALYSED_BASE + g_rel), m = NULL;
+  if (!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)to, &m) || !m) { *why = "the jump goes to no module"; return NULL; }
+  if (m == game) { *why = "the jump stays inside FFXiMain.dll"; return NULL; }
+  int cover = f->tlen >= JMP_LEN ? f->tlen : JMP_LEN;
+  if (jlen > cover) { *why = "the jump is longer than the entry's first whole instructions (manifest T=)"; return NULL; }
+  uint8_t live[20], care[20];
+  memcpy(live, f->site - 4, 20); memset(care, 1, 20);
+  for (int k = 4; k < 4 + cover; k++) care[k] = 0;              /* entry .. entry+cover-1: the other tool's */
+  for (int i = 0; i < f->nrel; i++) {
+    int p = f->rel[i];
+    if (p >= 0 && p + 4 <= 20) { uint32_t v; memcpy(&v, live + p, 4); v -= g_rel; memcpy(live + p, &v, 4); }
+    else for (int k = 0; k < 4; k++) if (p + k >= 0 && p + k < 20) care[p + k] = 0;
+  }
+  if (f->hashed) {
+    if (!f->has_j) { *why = "this manifest has no J= fingerprint for the bytes after the jump"; return NULL; }
+    if (bytes_hash(live, care) != f->jhash) { *why = "the bytes after the jump are not the game's (J= fingerprint)"; return NULL; }
+    return to;
+  }
+  for (int i = 0; i < 20; i++) if (care[i] && live[i] != f->expect[i]) { *why = "the bytes after the jump are not the game's"; return NULL; }
+  return to;
+}
+/* the live window entry-4 .. entry+15 as hex, for the log (25 Nov: a refusal names the bytes it saw) */
+static const char *live_hex(const Fn *f) {
+  static char b[64]; for (int i = 0; i < 20; i++) snprintf(b + 3 * i, 4, "%02X%s", f->site[i - 4], i == 3 ? "|" : " ");
+  b[59] = 0; return b;
+}
+static void module_of(const void *a, char *out, size_t n) {
+  HMODULE m = NULL; char p[MAX_PATH] = "";
+  if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)a, &m) && m) GetModuleFileNameA(m, p, sizeof p);
+  const char *b = strrchr(p, '\\'); snprintf(out, n, "%s", b ? b + 1 : p[0] ? p : "(no module)");
 }
 
 static void make_jmp(uint8_t *out, const uint8_t *at, const void *to) {
@@ -535,6 +597,7 @@ static void apply(void) {
     uint8_t jmp[JMP_LEN], cur[JMP_LEN];
     if (!f->patched) {
       int d = check_bytes(f);
+      if (d != -1 && f->foreign && foreign_jmp(f, NULL) == f->foreign) d = -1;   /* the other tool's jmp is still there, as at the hook */
       if (d != -1) {
         f->refused = 1; refused++;
         if (nmsg < 64) snprintf(msgs[nmsg++], 200, "refused %s (0x%08X): live byte at entry%+d is not the analysed build's",
@@ -1468,14 +1531,71 @@ static void *build_tramp(Fn *f) {
   return f->tramp = t;
 }
 
+/* ---- hook chains (API 5): several mods may hook one function. Each hook gets a link whose thunk (jmp [slot]) is the
+   `previous` that mod was given; the slot holds what comes next inward: the hook of the mod that hooked it before, or
+   the game's code. The entry jumps to the outermost hook. A mod taken off (a reload) only re-aims the slots, so every
+   other mod's previous stays valid. jmp [mem] leaves every register and flag as it found them (Intel SDM, JMP). */
+typedef struct { uint8_t thunk[6]; uint8_t pad[2]; void *volatile slot; void *repl; int mod; int used; } Link;
+#define MAXLINK 1024
+static Link *g_link; static int g_nlink;
+static int link_new(void *repl, int mod) {
+  if (!g_link) g_link = (Link *)VirtualAlloc(NULL, MAXLINK * sizeof(Link), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+  if (!g_link) return -1;
+  int i = 0; while (i < g_nlink && g_link[i].used) i++;
+  if (i == MAXLINK) return -1;
+  if (i == g_nlink) g_nlink++;
+  Link *l = &g_link[i]; memset(l, 0, sizeof *l);
+  l->thunk[0] = 0xFF; l->thunk[1] = 0x25; uint32_t a = (uint32_t)(uintptr_t)&l->slot; memcpy(l->thunk + 2, &a, 4);
+  l->repl = repl; l->mod = mod; l->used = 1;
+  FlushInstructionCache(GetCurrentProcess(), l, sizeof *l);
+  return i;
+}
+static void chain_aim(Fn *f) {                 /* each link's slot to what is inside it; the entry to the outermost */
+  for (int k = 0; k < f->nchain; k++) g_link[f->chain[k]].slot = k ? g_link[f->chain[k - 1]].repl : f->chain_base;
+  if (f->nchain) { Link *o = &g_link[f->chain[f->nchain - 1]]; f->mod_target = o->repl; f->mod = o->mod; }
+  else { f->mod_target = NULL; f->mod = 0; f->mod_on_recon = 0; }
+  g_dirty = 1;
+}
+static int chain_drop_mod(Fn *f, int mod) {    /* this mod's links taken off; returns how many */
+  int n = 0, w = 0;
+  for (int k = 0; k < f->nchain; k++) { Link *l = &g_link[f->chain[k]]; if (l->mod == mod) { l->used = 0; n++; } else f->chain[w++] = f->chain[k]; }
+  if (n) { f->nchain = w; chain_aim(f); }
+  return n;
+}
+
 static int hook_impl(const char *what, void *repl, void **prev, int keeps_regs) {
   if (prev) *prev = NULL;
   if (!g_mods_open) { host_log("hook(%s): only inside xikit_mod_init", what ? what : "?"); return XIKIT_E_LATE; }
   Fn *f = what ? fn_named(what) : NULL;
   if (!f || !repl) { host_log("hook(%s): not a function of the manifest", what ? what : "NULL"); return XIKIT_E_UNKNOWN; }
-  if (f->mod_target) { host_log("hook(%s): already hooked by %s", f->name, g_mods[f->mod - 1].name); return XIKIT_E_TAKEN; }
+  for (int k = 0; k < f->nchain; k++) if (g_link[f->chain[k]].mod == g_mod_cur + 1) { host_log("hook(%s): this mod hooks it already", f->name); return XIKIT_E_TAKEN; }
+  if (f->nchain == 8) { host_log("hook(%s): 8 mods hook it already", f->name); return XIKIT_E_TAKEN; }
+  if (f->nchain) {                             /* chained in front of the mods that hooked it before */
+    int li = link_new(repl, g_mod_cur + 1);
+    if (li < 0) { host_log("hook(%s): no room for another chained hook", f->name); return XIKIT_E_TAKEN; }
+    const char *under = g_mods[f->mod - 1].name;
+    f->chain[f->nchain++] = (short)li; chain_aim(f); f->refused = 0;
+    if (prev) *prev = g_link[li].thunk;
+    host_log("hooked %s (0x%08X); previous = %s's hook (chained; the game's code below it)", f->name, f->rva + ANALYSED_BASE, under);
+    return XIKIT_OK;
+  }
   int d = f->patched ? -1 : check_bytes(f);       /* (patched: a reload; the bytes were checked before the kit wrote its jmp) */
-  if (d != -1) { host_log("hook(%s): the live entry differs from the analysed build at %+d", f->name, d); return XIKIT_E_REFUSED; }
+  const char *fwhy = NULL;
+  void *other = d != -1 ? foreign_jmp(f, &fwhy) : (f->patched ? f->foreign : NULL);
+  if (d != -1 && !other) { host_log("hook(%s): the live entry differs from the analysed build at %+d%s; not in front of another tool's hook: %s; live bytes entry-4..+15: %s",
+                                    f->name, d, d == 99 ? " (fingerprint manifest: where is not known)" : "", fwhy ? fwhy : "?", live_hex(f)); return XIKIT_E_REFUSED; }
+  if (other) {                                   /* in front of another tool's hook (foreign_jmp) */
+    if ((f->flags & 8) && !keeps_regs) { host_log("hook(%s): the game's code reads a register at its entry that its declaration does not carry (manifest flag 8)", f->name); return XIKIT_E_REFUSED; }
+    int li = link_new(repl, g_mod_cur + 1);
+    if (li < 0) { host_log("hook(%s): no room for another hook", f->name); return XIKIT_E_TAKEN; }
+    f->foreign = other; f->chain_base = other; f->chain[0] = (short)li; f->nchain = 1; chain_aim(f);
+    if (prev) *prev = other;
+    f->mod_on_recon = 0; f->refused = 0;
+    char mn[MAX_PATH]; module_of(other, mn, sizeof mn);
+    host_log("hooked %s (0x%08X); previous = another tool's hook in %s (its jump was at the entry; the rest of the entry is the game's), which runs the game's code itself; entry was %s",
+             f->name, f->rva + ANALYSED_BASE, mn, live_hex(f));
+    return XIKIT_OK;
+  }
   if ((f->flags & 2) && g_cfg.respect_speedfix && g_speedfix_loaded) { host_log("hook(%s): speedfix (speedfix_hook or the speedfix mod) patches inside it (respect_speedfix=1)", f->name); return XIKIT_E_REFUSED; }
   if ((f->flags & 8) && !keeps_regs) { host_log("hook(%s): the game's code reads a register at its entry that its declaration does not carry (manifest flag 8)", f->name); return XIKIT_E_REFUSED; }
   void *p = build_tramp(f); const char *via = "the game's code (trampoline)";
@@ -1484,8 +1604,11 @@ static int hook_impl(const char *what, void *repl, void **prev, int keeps_regs) 
   if (!p) { p = f->target; via = "the reconstruction (no trampoline for this entry)"; }
   if (!p) { host_log("hook(%s): no way to reach its previous code", f->name); return XIKIT_E_NOPREV; }
   if (p == f->target && f->quarantined) { host_log("hook(%s): its previous would be the reconstruction, which is quarantined (xikit_quarantine.txt)", f->name); return XIKIT_E_REFUSED; }
-  if (prev) *prev = p;
-  f->mod_target = repl; f->mod = g_mod_cur + 1; f->mod_on_recon = p == f->target; f->refused = 0; g_dirty = 1;
+  int li = link_new(repl, g_mod_cur + 1);
+  if (li < 0) { host_log("hook(%s): no room for another hook", f->name); return XIKIT_E_TAKEN; }
+  f->chain_base = p; f->chain[0] = (short)li; f->nchain = 1; chain_aim(f);
+  if (prev) *prev = p;                         /* the first hook is innermost for as long as it stays: its previous is the game's code itself */
+  f->mod_on_recon = p == f->target; f->refused = 0;
   host_log("hooked %s (0x%08X)%s%s; previous = %s%s", f->name, f->rva + ANALYSED_BASE, f->flags & 4 ? " [gate coverage incomplete]" : "",
            (f->flags & 8) ? " [manifest flag 8: the mod keeps the registers]" : "",
            via, (f->flags & 4) && p == f->target ? " [its gate coverage is incomplete]" : "");
@@ -1698,6 +1821,12 @@ static int start_mod(int i, HMODULE h, const char *loaded) {
   xikit_mod_init_fn init = (xikit_mod_init_fn)GetProcAddress(h, "xikit_mod_init");
   if (!init) { klog("mod %s: %s exports no xikit_mod_init; not used", m->name, loaded); return 0; }
   m->h = h; m->frame = (xikit_mod_frame_fn)GetProcAddress(h, "xikit_mod_frame"); m->unload = (xikit_mod_unload_fn)GetProcAddress(h, "xikit_mod_unload"); m->settings = (xikit_mod_settings_fn)GetProcAddress(h, "xikit_mod_settings");
+  const XikitModInfo *mi = (const XikitModInfo *)GetProcAddress(h, "xikit_mod_info");
+  if (mi && mi->size >= 8) {
+    if (mi->api > XIKIT_API_VERSION) { klog("mod %s: needs kit API %u; this kit is %d: not used (update the kit)", m->name, mi->api, XIKIT_API_VERSION); return 0; }
+    if (mi->size >= 20) klog("mod %s: %s %s (kit API %u or later)%s%s", m->name, mi->name ? mi->name : "?", mi->version ? mi->version : "", mi->api,
+                             mi->about ? ": " : "", mi->about ? mi->about : "");
+  }
   uintptr_t *mr = (uintptr_t *)GetProcAddress(h, "xi_rel"); if (mr) *mr = g_rel;
   int32_t *ms = (int32_t *)GetProcAddress(h, "xi_shift");
   if (ms) { if (!give_shift(h, ms, m->name)) return 0; }
@@ -1758,7 +1887,7 @@ static void reload_mod(int i) {
   if (m->unload) m->unload();
   g_mod_cur = -1;
   int nf = 0, nd = 0;
-  for (int k = 0; k < g_nfn; k++) if (g_fn[k].mod_target && g_fn[k].mod == i + 1) { g_fn[k].mod_target = NULL; g_fn[k].mod = 0; g_fn[k].mod_on_recon = 0; nf++; }
+  for (int k = 0; k < g_nfn; k++) if (g_fn[k].nchain) nf += chain_drop_mod(&g_fn[k], i + 1);
   for (int k = 0; k < g_ndh; k++) nd += g_dh[k].live && g_dh[k].mod == i + 1;
   dh_remove_mod(i + 1);
   m->frame = NULL; m->unload = NULL; m->settings = NULL;

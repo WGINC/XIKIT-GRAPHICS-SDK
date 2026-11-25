@@ -334,7 +334,9 @@ upload ring, the root signature or the swap chain cannot be made, the log says w
   is a point-sampling tie (marked by D8ON11_TEST_TIES=0.01: a sample within 0.01 texel of a texel boundary, where a
   driver may read either texel), which the two rasterizers (Vulkan for 12, OpenGL for 11) break differently. Also
   tested: the fallback (D8ON11_TEST_D3D12_FAIL) and a device lost at the 50th Present (D8ON11_TEST_D3D12_LOST=50: logged,
-  and t8 runs to its end). In remote mode Wine makes no Direct3D 12 swap chain on another process's window
+  and t8 runs to its end). A start whose device is lost before it is done (D8ON11_TEST_D3D12_LOST_START, 24 Nov: what
+  the owner's Parallels VM does with ReShade's dxgi.dll in the game's folder) is released and made once more, naming
+  adapter 0, before falling back to Direct3D 11 (docs/HISTORY.md 84). In remote mode Wine makes no Direct3D 12 swap chain on another process's window
   (0x8007000E), so there the start falls back to Direct3D 11 (checked); whether Windows does is not known.
 - **Format report and texture checks (13 Nov).** At the start the executor also logs what the driver reports for each
   texture format the D3D8 side maps (2d, sample, mip, rt, blend) and draws test pixels through B8G8R8A8, B8G8R8X8, the

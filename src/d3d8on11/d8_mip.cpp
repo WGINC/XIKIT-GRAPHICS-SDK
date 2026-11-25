@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: GPL-3.0-only
 //
 // d8_mip.cpp -- mip levels for the game's textures that have none (mipmaps=1; 19 Nov). The owner's frame captures:
 // every texture the game draws with has one level (148 of 148: DXT3, DXT1, A8R8G8B8), no draw uses a mip filter, and

@@ -14,8 +14,8 @@ A kit for changing how FINAL FANTASY XI draws, for the game's builds 6A995428 (3
     (colour-blind correction or simulation of the whole frame; needs d3d8on11); fonts are textures (`texture_replace`);
     the interface's scale is the game's own menu resolution;
   - **Effects:** `effect_comfort` (a limit on full-screen flashes, an effect intensity, and per-effect percentages or
-    removal from `effects.txt`); swapping an effect is `file_overlay` with another effect's file;
-  - **Camera:** `camera_view` (field of view, far clip), `photo_mode` (a free camera orbiting the game's, the interface
+    removal from `effects.txt`, by effect path or by the file it came from); swapping an effect is `file_overlay` with another effect's file;
+  - **Camera:** `camera_view` (field of view, far clip, the zone's and actors' draw distance), `photo_mode` (a free camera orbiting the game's, the interface
     hidden, a picture of the world without it);
   - **Audio:** `audio_mix` (interface, effect, ambient and music volume); sound replacement is `file_overlay`.
 - Names: 20 classes renamed from the game's own table of type names (0x103542A8) and the PS2 build's types; class-name
@@ -58,7 +58,7 @@ and list it in `xikit.ini` (`mods=speedfix.dll,my_mod.dll`).
   `xikit_settings.txt`).
 - Start from the example mods for players: textures (`texture_replace`), any of the game's files from overlay packs
   (`file_overlay`: models, zones, effects, sound, music), flashes and effects per effect (`effect_comfort`), field of
-  view and far clip (`camera_view`), a photo mode (`photo_mode`), fog and light (`world_light`), volumes
+  view, far clip and draw distance (`camera_view`), a photo mode (`photo_mode`), fog and light (`world_light`), volumes
   (`audio_mix`), colour-blind correction (`color_filter`), window positions (`ui_layout`); sdk/SDK.md says what each
   does and what is not known.
 - Be rebuilt and reloaded while the game runs (`mod_reload=1`), and debugged at source level in Visual Studio

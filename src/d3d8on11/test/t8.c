@@ -1664,6 +1664,14 @@ int main(int argc, char **argv) {
   check(bb_pixel(5, 5) == 0xFF0000, "Clear: the back buffer reads back red through CopyRects into an image surface");
   hr = IDirect3DDevice8_Present(d, NULL, NULL, NULL, NULL);
   check(hr == D3D_OK, "Present");
+  /* pixel shaders: handle 0 is the fixed-function pipeline (Direct3D 8: Wine's conformance tests, d3d8/tests visual.c
+     and device.c); this device makes no pixel shaders, so no other handle is valid */
+  { DWORD h = 0xDEAD; HRESULT g0 = IDirect3DDevice8_GetPixelShader(d, &h);
+    check(g0 == D3D_OK && h == 0, "GetPixelShader on a new device: D3D_OK, handle 0");
+    check(IDirect3DDevice8_SetPixelShader(d, 0) == D3D_OK, "SetPixelShader(0): D3D_OK (the fixed-function pipeline)");
+    check(IDirect3DDevice8_SetPixelShader(d, 0x1234) == D3DERR_INVALIDCALL, "SetPixelShader of a handle the device never made: D3DERR_INVALIDCALL");
+    IDirect3DDevice8_Clear(d, 0, NULL, D3DCLEAR_TARGET, 0xFF00FF00, 1.0f, 0);
+    check(bb_pixel(5, 5) == 0x00FF00, "after SetPixelShader(0) the device still draws: a clear reads back green"); }
 
   /* a lockable render target: draw target, clear, read back (the occlusion readback's path) */
   { IDirect3DSurface8 *rt = NULL, *bb = NULL, *ds = NULL; D3DLOCKED_RECT lr; DWORD px = 0;
