@@ -59,16 +59,29 @@ the whole game was scanned for other writers: section 5.
 - To move a window: hook `NetCellFont_SetRectAndUpdateNodes` and change x and y (sdk/examples/ui_layout.cpp since
   25 Nov); to move one already shown, call it again with snap 0 and its +0x9A byte.
 - To find a window: its name at [+4]+0x46; the visible ones from `g_menuMng` with `Menu_NextVisibleItem`.
-- Units: the values the game passes. In the owner's game (1512x949) the chat log was placed at 16,863 size 1366,70:
-  screen pixels, not the 512x448 layout. Where the game scales its layout to the screen: **not yet read**.
+- Units: screen pixels of the UI rectangle, moved, not scaled (25 Nov, disassembly of 0x1011A8F0, the placement from a
+  window's definition): a definition's position (+2, +4) and size (+0xA, +0xC) are in a 512 x 448 layout; its byte
+  +0x13 anchors it (0 none; 1 right: x += width - 0x200; 2 bottom: y += height - 0x1C0; 3 both), unless its byte
+  +0x17 is set. Width and height are the UI rectangle `[0x106218B4]` (left, top, right, bottom shorts), which
+  `ZoneMapLoad_CreateUiObjects` sets to 0, 0, `Camera_GetWord14()`, `Camera_GetWord16()` (the camera's +0x14 and
+  +0x16 words; what sets those: **not read**); `Frame_Render` changes it only around `CopyrightText_Draw` and puts it
+  back (0x1001262C..0x1001266C). In the owner's game (1512x949) the chat log was placed at 16,863 size 1366,70 (its
+  definition's anchor and y not read: a bottom anchor would make its y 362).
 
 ## 5. Not known
 
-- Whether any window is placed by code that writes +0x8C without `NetCellFont_SetRectAndUpdateNodes`. Read so far (a scan
-  of every function of the game for writes at +0x8C and +0x8E): 16-bit writes to +0x8C are only that function and
-  0x10232B20, whose object has a byte at +0x90 where a window keeps its width (another kind of object); 16-bit
-  writes to +0x8E are that function, `MenuPanels_ClearMenu`, `MenuPanels_ConstructInitAt64`, 0x1015AAB0 and
-  0x1022A660 (what those objects are: **not read**); 32-bit writes at +0x8C are in 101 functions, too common an
-  offset to attribute by the offset alone.
+- Whether any window is placed by code that writes +0x8C without `NetCellFont_SetRectAndUpdateNodes`. Read so far
+  (25 Nov; a scan of every function of the game). A window is a 0xD4-byte object made by `NetCellFont_MenuCtor`
+  (`MenuMng_OpenByName`, tree/src/TargetMenu.cpp), and `NetCellFont_SetRectAndUpdateNodes` writes its +0x8C..+0x92 as
+  four 16-bit stores (0x1011A632..0x1011A647).
+  - The other 16-bit writes at +0x8C/+0x8E are to other objects, as their own fields show:
+    `MenuPanels_ConstructInitAt64`/`MenuPanels_ClearMenu` (vtable 0x1033C418; a byte at +0x8C);
+    0x1022A660 (a byte at +0x88, where a window keeps a pointer; it opens a window by name with
+    `MenuMng_OpenByName`); 0x10232B20 (a byte at +0x90, where a window keeps its width); 0x1015AAB0 (its own
+    stack frame, [esp + 0x8E]).
+  - 32-bit writes at +0x8C (74 instructions): the one in the window's own unit, `NetCellFont_CursorUpdateEdgeAxes`,
+    writes the menu cursor `[0x104E1D4C]` (its callers `Menu_DrawLayers` and 0x10160C60 pass that). The other 73 are
+    in functions of other classes by their names (`YkWindows_*` of other vtables, `Target_Reset`, `MenuMng_Init`,
+    `CMoGeneratorClone::ResolveCmdTargets`, ...); each one's object has not been followed.
 - Whether a window's own code clamps it to the screen after it is moved.
 - What +0x9B (the viewport switch) is set from; what the sub-object at +0x88 is.

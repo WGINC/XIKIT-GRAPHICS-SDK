@@ -42,9 +42,20 @@ factor (`Env_FogDistanceFactor` 0x101892B0) but not less than +0x1D0. Used by:
   `CXiActorDraw::UpdateDrawList` (0x10082DC7) draws it only while that word is 0.
 The fog's own distances are another computation (`Env_ComputeFog`, sdk/examples/world_light.cpp).
 
+### 3a. The floor +0x1D0 (25 Nov, disassembly)
+
+`XiZone::Constructor` (0x1018B170) sets +0x1D0 to 43.0 (0x422C0000). The zone change 0x1018B3A0 (argument: the zone
+number, kept at +0x1B4; called from three functions of the game) writes `[g_pXiZone]` +0x1D0 = 0 only for
+zone 0xC1, and +0x1D4 = 0.7 only for zone 0x32; nothing in the game sets +0x1D0 back to 43.0 (the scan of every
+store to +0x1D0 in XiZone's range: the constructor and this one). So while +0x1D0 is 43.0 the draw distance is the
+zone's value times the time-of-day factor, but at least 43.0; in zone 0xC1 the product with no floor. Whether the
+XiZone object is made again for each zone (which would restore 43.0 after zone 0xC1): **not read**.
+
 ## 4. Not known
 
-- What +0x1D0 and the zone's value are set from; whether models stay loaded beyond the game's distance.
+- The zone's value is the float at +0xC of the record `[zone + 0x1C]` (`ZoneMap_GetFloatRef1CPlus0C`); which file or
+  packet fills that record: **not read**. (+0x1D0, the floor, is read: 3a.) Whether models stay loaded beyond the
+  game's distance: **not read**.
 - Whether any other drawing (effects, the sky) culls with a camera copy of its own.
 - Whether other tools running in the game (Windower, Ashita) write the same camera fields: their code is closed; the
   owner's run with and without Windower (kit/sessions/ltp_25nov R6) is the test.

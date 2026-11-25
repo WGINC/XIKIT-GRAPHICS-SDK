@@ -41,6 +41,17 @@ flash.
 
 ## 5. Not known
 
-- Which other effect draws set stages of their own that do not go through `CYyModelDt` (the mod now counts what it
-  leaves, by reason, in xikit.log).
+- Which other effect draws set stages of their own: read for the effect files (25 Nov, every `SetTextureStageState`
+  in tree/src/CMoDistModelElem.cpp, CMoDistMorphElem.cpp, CMoTask.cpp, ModelTranslucent.cpp, EnvMapProjTex.cpp):
+  - `CMoDistModelElem` (0x10040670, 0x100431B0) and `CMoDistMorphElem` (0x1003F440) set only texture coordinates
+    and transforms (and disable stage 1 after): their colour stages are the model draw's, so the texture factor (section 2) applies;
+  - the environment map and projected texture passes (`EnvMap_BeginPass`/`EndPass`, `ProjTex_BeginPass`/`EndPass`)
+    multiply by the factor too (MODULATE2X of CURRENT and TFACTOR);
+  - `Model_CompositeTranslucentPass` (from `CXiSkeletonActor::DrawModel`) is diffuse x texture x 2 with no factor:
+    a character's draw, not an effect's;
+  - `CMoTask::DrawQuadStates` (0x10076030) and `CMoTask::DrawQuadDynVB` (0x10076520) take the texture's colour and the
+    vertex's alpha, no factor; their only callers, 0x10075FF0 and 0x100764C0, have no reference anywhere in the image
+    (no call, jump or stored pointer): as far as the image shows, not used.
+  Files outside these (the scene, UI and shadow draws) are not effects. effect_comfort counts what it leaves, by
+  reason, in xikit.log; which draws those are in play is the owner's log.
 - Whether a given pulse in play (the owner's thunder spirit) is a DrawFadeQuad flash or an element.

@@ -471,8 +471,27 @@ static int ovlmod_run(IDirect3DDevice8 *dev, HMODULE g) {
    sdk/examples/audio_mix.dll through the kit (vol_interface=50, vol_effects=150, vol_ambient=25): the game's own
    SoundElem_SetScaled10351700/04/08 called with level 1.0 and the configured factors [0x103516FC], [0x103516F8] at 1:
    the category values (0x10351700, 0x10351704, 0x10351708) are the mod's share of the game's. Then xikit_mods.ini
-   says vol_interface=200: the kit reads it again and the mod sets the interface value from the game's last level. */
+   says vol_interface=200: the kit reads it again and the mod sets the interface value from the game's last level.
+   The music (vol_music=50), on a ring the host gives the sound thread's writer (0x106690E8/C4/F0) and a sound object
+   ([0x1046393C], only tested for non-zero there) with the music on ([0x104638F5] = 1): the game's own
+   TextInputFiles_ApplyConfigSetting (0x101AA650) with setting 10 at 100 sends command 8 for all channels (-1) at
+   127 x 50% = 63 through the mod's LobbyThread_SendCmd8 hook (the ring's last record); the game's
+   Music_LoadTrackIfRunning (0x100382A0) called with volume 100 leaves its argument at 50 (the mod's stub; the queue
+   function returns at once on the host's empty file table [0x10669108]). Then vol_music=100 in the file: the mod
+   sends the game's last volume again, 127. */
 typedef void (__cdecl *SetFn)(float);
+typedef int (__cdecl *CfgSetFn)(int, int);
+/* call a cdecl (int, int) function and return its second argument's slot as the callee left it */
+static int call_arg2_after(void *fn, int a1, int a2) {
+  int out;
+  __asm__ volatile("pushl %3\n\tpushl %2\n\tcall *%1\n\tmovl 4(%%esp), %0\n\taddl $8, %%esp"
+                   : "=&b"(out) : "S"(fn), "D"(a1), "r"(a2) : "eax", "ecx", "edx", "memory", "cc");
+  return out;
+}
+static uint32_t *ring_last(void) {             /* the record before the ring's write pointer */
+  uint8_t *b = *(uint8_t **)ga(0x106690E8u), *w = *(uint8_t **)ga(0x106690C4u);
+  return (uint32_t *)(w == b ? b + 0x2000 - 0x20 : w - 0x20);
+}
 static int audmod_run(IDirect3DDevice8 *dev) {
   for (int t = 0; t < 400 && *(uint8_t *)ga(0x100360A0u) != 0xE9; t++) {
     IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(50);
@@ -484,13 +503,28 @@ static int audmod_run(IDirect3DDevice8 *dev) {
   float a = *(float *)ga(0x10351700u), b = *(float *)ga(0x10351704u), c = *(float *)ga(0x10351708u); char what[200];
   snprintf(what, sizeof what, "audmod: the game's setters at level 1.0 leave interface %.3f, effects %.3f, ambient %.3f (0.5, 1.5, 0.25)", a, b, c);
   check(a == 0.5f && b == 1.5f && c == 0.25f, what);
-  FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=200\nvol_effects=150\nvol_ambient=25\n", mf); fclose(mf); }
-  for (int f = 0; f < 120 && *(float *)ga(0x10351700u) != 2.0f; f++) {
+  static uint8_t ring[0x2000], files[0x200]; static uint32_t sound_obj[16];
+  *(uint8_t **)ga(0x106690E8u) = ring; *(uint8_t **)ga(0x106690C4u) = ring; *(uint8_t **)ga(0x106690F0u) = ring;
+  *(void **)ga(0x1046393Cu) = sound_obj; *(void **)ga(0x10669108u) = files; *(uint8_t *)ga(0x104638F5u) = 1;
+  *(float *)ga(0x103517F8u) = 1.0f;
+  ((CfgSetFn)(void *)ga(0x101AA650u))(10, 100);
+  uint32_t *r = ring_last();
+  snprintf(what, sizeof what, "audmod: the game's setting 10 at 100 with vol_music=50: the ring's last record is command %u, track %d, volume %u (8, -1, 63)", r[0], (int)r[1], r[2]);
+  check(r[0] == 8 && (int)r[1] == -1 && r[2] == 63, what);
+  int lv = call_arg2_after(ga(0x100382A0u), 5, 100);
+  snprintf(what, sizeof what, "audmod: Music_LoadTrackIfRunning(5, 100) with vol_music=50: its volume argument is %d (50, the mod's stub)", lv);
+  check(lv == 50, what);
+  FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=200\nvol_effects=150\nvol_ambient=25\nvol_music=100\n", mf); fclose(mf); }
+  for (int f = 0; f < 120 && (*(float *)ga(0x10351700u) != 2.0f || ring_last()[2] != 127); f++) {
     IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(30);
   }
   a = *(float *)ga(0x10351700u);
   snprintf(what, sizeof what, "audmod: vol_interface=200 in xikit_mods.ini while running: the interface value is %.3f (2.0, from the game's last level)", a);
   check(a == 2.0f, what);
+  r = ring_last();
+  snprintf(what, sizeof what, "audmod: vol_music=100 in xikit_mods.ini while running: the ring's last record is command %u, track %d, volume %u (8, -1, 127: the game's last volume again)", r[0], (int)r[1], r[2]);
+  check(r[0] == 8 && (int)r[1] == -1 && r[2] == 127, what);
+  *(void **)ga(0x1046393Cu) = NULL; *(uint8_t *)ga(0x104638F5u) = 0;
   return 0;
 }
 
@@ -1409,7 +1443,7 @@ int main(int argc, char **argv) {
     if (cfrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[color_filter]\ncb_mode=2\ncb_simulate=1\ncb_strength=100\ncb_check=1\n", mf); fclose(mf); } }
     if (phorun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[photo_mode]\nphoto=1\nphoto_yaw=90\nphoto_dist=200\nphoto_shot=1\nphoto_hide_ui=1\n", mf); fclose(mf); } fill_iat(g); }
     if (envrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[world_light]\nfog_distance=50\nfog_r=200\nambient=150\nlight=200\n", mf); fclose(mf); } fill_iat(g); }
-    if (audrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=50\nvol_effects=150\nvol_ambient=25\n", mf); fclose(mf); } fill_iat(g); }
+    if (audrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[audio_mix]\nvol_interface=50\nvol_effects=150\nvol_ambient=25\nvol_music=50\n", mf); fclose(mf); } fill_iat(g); }
     if (ovlrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[file_overlay]\noverlay_log=1\n", mf); fclose(mf); } fill_iat(g); }
     if (camrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[camera_view]\nfov_deg=90\nfar_percent=200\ndraw_percent=200\n", mf); fclose(mf); } fill_iat(g); }
     if (fxrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[effect_comfort]\nflash_limit=50\nfx_intensity=50\nfx_all_blended=1\n", mf); fclose(mf); } fill_iat(g); }

@@ -149,15 +149,27 @@ call in the game's code pushes an action above 0xBA). Per action:
 - **three key bindings** at 0x1036D6B0 + 2*(3*action + i): low byte the DIK key, high byte its conditions:
   0x01 Shift held, 0x02 Ctrl held, 0x04 Alt held, 0x08 Ctrl and Alt held, 0x10 Ctrl or Alt held and the byte
   0x1036CF5C set, 0x20 Shift not held, 0x40 not while typing (mode 4/5), 0x80 neither Ctrl nor Alt held. "Typing" is
-  the text input's mode word ([0x10662D40]+0xF108) being 4 or 5 (`TextInputFiles_IsModeFourOrFive` 0x101B5C90); what
-  modes 0-3 are: **not read**.
+  the text input's mode word ([0x10662D40]+0xF108) being 4 or 5 (`TextInputFiles_IsModeFourOrFive` 0x101B5C90).
+  The mode word's values (25 Nov, tree/src/TextInputFiles.cpp:10616-10856): 1 when `FsTextInput_init` could not
+  load the word-completion data (then `TextInputFiles_BeginInput` and `FsTextInput_copyDecidedString` refuse);
+  2 after a good init, and from `TextInputFiles_BeginInput` with its first argument 2 (the line cleared, cursor
+  reset); 3 from argument 3, and from `TextInputFiles_EndMode4Or5` when the mode was 4; 4 from argument 4 unless
+  `TargetMenu_GetByteAE(menuMng, 2)` is set (also sets byte +0x10D of `[0x1066268C]`); 5 from argument 5 (the line
+  cleared, the 0x58 slot called, +0x8C80 set). `TextInputFiles_BeginInput` is called only by
+  `TextInputFiles_BeginInputWithIme`, slot +0x80 of the vtable 0x10337A40; which callers pass 2..5 (so which
+  screens each mode is): **not traced** (no direct call through that slot found next to `[0x10662D40]`).
   A binding of a modifier key itself (LCtrl, LShift, LAlt) with kind 4 is answered by "either side held".
 - the byte 0x104E1C3C = 1 allows only kind 4 (held) for every action: set (`Cell_SetFlag104E1C3C` 0x10123EA0) by the
   menu and target code when one of their steps takes the input (`Target_CycleMenuStep`, `Target_RunActiveCommand`,
   `MenuMng_UpdateForSceneState`, 0x10138230, 0x1015E530, 0x1015E6E0), cleared once a frame by `Frame_Render`;
-- the option byte 0x1036CF5C (the 0x10 condition) is written only by 0x10123EF0, called by the key configuration's
-  objects (0x1019CFF0, 0x1019D090, 0x1019D3B0, 0x1019D450) with 0 or 1; which option of the game's screen it is:
-  **not read**.
+- the option byte 0x1036CF5C (the 0x10 condition) is 1 in the file and written only by 0x10123EF0 (read only by
+  `Cell_GetByte1036CF5C`). It is cleared by 0x1019CFF0 and 0x1019D3B0 and set again by 0x1019D090 and 0x1019D450
+  (25 Nov, disassembly): slots of the vtables 0x10337028 and 0x10337090 of the config panels
+  `TextInputFiles_ByteTableDefaultCtor` and `TextInputFiles_ByteTableAltCtor` (both made by
+  `TextInputFiles_CreateConfigObjects`). The clearing slot opens the panel (cursor, help, a 0x1D/0x1E state); the
+  setting slot first stores the panel's 32 bytes as settings 0x6A..0x89 (`SetConfig`). So the 0x10 bindings work
+  except while one of those panels is open. Which screen of the game the panels are, and what settings
+  0x6A..0x89 hold: **not read**.
 
 These tables are in `.data`: the game's key configuration rewrites them at run time; the values below are the file's
 defaults (6A995428). **The full list of the actions** (contexts, default keys, handler, and every function that
