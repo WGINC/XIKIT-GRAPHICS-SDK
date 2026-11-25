@@ -43,7 +43,8 @@
 //   (+0x21C4 = 0); TextInputFiles_StepScript then runs its lines through Command_RunLine, mode 2. SetSlot is
 //   QueueEntry's only caller in the tree. Which palette Ctrl and Alt open is the game's key configuration (commands
 //   0x76, 0x77): not read here.
-// - The mode (hb_mode, "/hb mode"): 1 hotbar (the default): a macro the game starts runs the hotbar's slot instead,
+// - The mode (hb_mode, "/hb mode"): 1 hotbar (the default): the game's macro palettes are never shown (the hook of
+//   MenuMng_OpenByName below), and a macro the game starts runs the hotbar's slot instead,
 //   palette 1's macro N on bar 2 slot N, palette 2's on bar 3 (N 1-10; 0 is slot 10); an empty slot there, or the
 //   bars hidden, leaves the game's macro to run. Bars 2 and 3 then have no keys of their own for slots 1-10 (the
 //   game's macro keys are theirs), so a press runs one slot. 0 macros: the game's macros run as always; of the default
@@ -149,6 +150,7 @@ static void textures_release() {
 }
 
 // ---------------------------------------------------------------------------------------------- reading
+static void close_palettes();
 static void reload(bool force) {
   const char *dir = g_host->dir ? g_host->dir : ".";
   long long m = hb_mtime(dir);
@@ -208,7 +210,8 @@ static void hb_command(const char *cmd) {
   else if (hb_ieq(w[1], "mode")) {                          // /hb mode [hotbar|macro]: hb_mode, kept in xikit_mods.ini
     int m = n >= 3 ? (hb_ieq(w[2], "hotbar") ? 1 : hb_ieq(w[2], "macro") || hb_ieq(w[2], "macros") ? 0 : -1) : !g_host->setting_int("hb_mode", 1);
     if (m < 0) g_host->log("hotbar: /hb mode hotbar | macro");
-    else { g_host->set_int("hb_mode", m); g_host->log("hotbar: mode %s (the game's macros %s)", m ? "hotbar" : "macro", m ? "run the hotbar's bars 2 and 3" : "run as always"); }
+    else { g_host->set_int("hb_mode", m); g_host->log("hotbar: mode %s (the game's macros %s)", m ? "hotbar" : "macro", m ? "run the hotbar's bars 2 and 3, their palettes hidden" : "run as always");
+           if (m) close_palettes(); }
   }
   else if (hb_ieq(w[1], "run") && n >= 3) {                 // /hb run 1.3: the slot, as its key or a click runs it
     int b = 0, sl = 0; char dot = 0;
@@ -484,8 +487,28 @@ static undefined4 __thiscall my_Queue(void *self, int n) {
 }
 extern "C" __declspec(dllexport) void hb_test_macros(long *taken, long *passed) { *taken = g_macro_taken; *passed = g_macro_passed; }
 
+// The game's macro palettes, never shown in hotbar mode. TextInputFiles_UpdateMenuState (0x101A2E80) is the only code
+// that opens them: MenuMng_OpenByName (0x1015E350) with "menu    mcr1pall" or "menu    mcr2pall" (the requested name;
+// MenuMng_BuildMenuName maps it to the window's own, e.g. mcr1long). It keeps its Ctrl/Alt state (+0xC, +0xD) whether
+// or not the window opens, and the macro keys read that state, so the keys still reach TextInputFiles_QueueEntry.
+static long g_pal_refused;
+static bool is_palette(const char *n) {
+  return n && (!strncmp(n, "menu    mcr1pall", 16) || !strncmp(n, "menu    mcr2pall", 16)) && !n[16];
+}
+static xikit::fn<decltype(&MenuMng_OpenByName)> prev_Open;
+static int __thiscall my_Open(void *self, char *name, undefined4 a, undefined4 b) {
+  if (hb_mode() == 1 && is_palette(name)) { g_pal_refused++; return 0; }   // 0: what it returns when it opens nothing
+  return prev_Open(self, name, a, b);
+}
+// close an open palette (hotbar mode turned on while one shows); Menu_CloseEntry does nothing for a window not open
+static void close_palettes() {
+  orig::Menu_CloseEntry(&g_menuMng_as_v0, (char *)"menu    mcr1pall");
+  orig::Menu_CloseEntry(&g_menuMng_as_v0, (char *)"menu    mcr2pall");
+}
+extern "C" __declspec(dllexport) long hb_test_palettes(void) { return g_pal_refused; }
+
 static void typed_hb(const char *args) { char l[200]; hb_fmt(l, sizeof l, "hb %s", args); hb_command(l); }
-extern "C" __declspec(dllexport) void xikit_mod_settings(void) { reload(true); }
+extern "C" __declspec(dllexport) void xikit_mod_settings(void) { reload(true); if (hb_mode() == 1) close_palettes(); }
 extern "C" __declspec(dllexport) void xikit_mod_unload(void) { seq_clear(); textures_release(); hb_msg_uninstall(); }
 
 // ---------------------------------------------------------------------------------------------- for the offline test (mode hbmod)
@@ -551,7 +574,7 @@ extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {
   host->declare_int("hb_empty", 1, 0, 1, "1: draw empty slots");
   host->declare_int("hb_tips", 1, 0, 1, "1: a tooltip (the label and the line) over the slot under the cursor");
   host->declare_int("hb_keys_poll", 0, 0, 1, "1: read keys by polling each frame (a system call per key per frame); 0: from the game window's messages");
-  host->declare_int("hb_mode", 1, 0, 1, "1 hotbar: the game's macro keys run bars 2 and 3; 0 macro: the game's macros run, keys for bar 1 (/hb mode)");
+  host->declare_int("hb_mode", 1, 0, 1, "1 hotbar: the game's macro keys run bars 2 and 3 and its macro palettes stay hidden; 0 macro: the game's macros run, keys for bar 1 (/hb mode)");
   const char *dir = host->dir ? host->dir : ".";
   if (!hb_mtime(dir) && hb_write_file(dir, "hotbar.txt", k_default)) host->log("hotbar: wrote an example hotbar.txt");
   reload(true);
@@ -562,6 +585,8 @@ extern "C" __declspec(dllexport) int xikit_mod_init(const XikitHost *host) {
   if (r) return r;
   if (XI_HOOK(host, TextInputFiles_QueueEntry, my_Queue, prev_Queue))
     host->log("hotbar: TextInputFiles_QueueEntry not hooked: the game's macros always run (hotbar mode has no effect)");
+  if (XI_HOOK(host, MenuMng_OpenByName, my_Open, prev_Open))
+    host->log("hotbar: MenuMng_OpenByName not hooked: the game's macro palettes show in hotbar mode");
   if (XI_HOOK(host, Cursor_EnterMode1, my_Down, prev_Down) || XI_HOOK(host, Cursor_ToggleFlag1, my_Up, prev_Up))
     host->log("hotbar: the left-button hooks were refused: slots are not clickable (keys work)");
   return 0;

@@ -24,8 +24,11 @@ volumes:
 is the last written to both pairs. Which options of the game's menus these keys are: **not read** (the menus' text
 for them is not traced).
 
-`[0x103517F8]` is also toggled by 0x1007F680 (a pointer to it is at 0x10357500): 0 with chat message 0x147, 1.0 with
-0x148 (`ChatLog_AddMessage9Code379`); what calls it through that pointer: **not read**.
+The two factors that settings 9 and 10 reset to 1.0 are the typed mutes (25 Nov): `Command_RunLine` dispatches
+through the table 0x10356E30 (216 entries of {command, handler, flag}) after looking the typed word up in the table
+0x10355408 (277 entries of {name[20], command, ...}): **`/mutebgm`** is command 0x99, handler 0x1007F680, which
+toggles `[0x103517F8]` between 0 (chat message 0x147) and 1.0 (0x148) through 0x100372E0; **`/mutese`** is 0x9A,
+0x1007F750, which toggles `[0x103516FC]` the same way (messages 0x149, 0x14A) through `SoundElem_SetFactor103516FC`.
 
 ## 2. The categories of the effects' sounds and their setters
 
@@ -59,32 +62,72 @@ through `LobbyThread_SendCmd8(-1, v, fade)` too (its callers: 0x100372A0 and 0x1
 
 ## 4. The sound thread and its command ring
 
-`LobbyThread_PushCmd` (0x1024C060) writes 32-byte records {command, 7 arguments} into the 0x2000-byte ring at
-`[0x106690E8]` (write pointer 0x106690C4, read pointer 0x106690F0), refusing when full; command 7 also copies 8 more
-blocks (the file name). It takes no lock: the game's thread is its one writer. The ring and the channel pools are made
-by 0x1024B990 (called from 0x10245C60).
+**The thread.** `0x10245DE0` (called from the sound system's start 0x100355F0) creates DirectSound
+(0x1026A890 -> `[0x106690F4]`), sets its cooperative level (`IDirectSound::SetCooperativeLevel`, vtable +0x18, level 2:
+DSSCL_PRIORITY in dsound.h) and starts the thread 0x10245C20 at priority 2 (THREAD_PRIORITY_HIGHEST). The thread
+loops while its object's +8 is set: 0x1024C020, then `Sleep(16)`. 0x1024C020 runs, in order: 0x102489A0 (the 20
+effect channels' tick), 0x10248AE0 (the stream channels' tick), 0x1024C170 (the ring's reader). Commands 3, 4 and 5
+take the critical section 0x106690CC, which the ticks share.
 
-The reader is 0x1024C170, called by 0x1024C020 (from 0x10245C20; which thread runs it: **not read**). For each record
-below command 14 it calls `[0x10388C18 + 4 x command]` with the arguments:
+**The ring.** `LobbyThread_PushCmd` (0x1024C060) writes 32-byte records {command, 7 arguments} into the 0x2000-byte
+ring at `[0x106690E8]` (write pointer 0x106690C4, read pointer 0x106690F0), refusing when full; command 7 also copies 8
+more blocks (the file name). It takes no lock: the game's thread is its one writer. The ring and the channel pools are
+made by 0x1024B990 (called from 0x10245C60). The reader 0x1024C170 calls `[0x10388C18 + 4 x command]` for each record
+below command 14.
 
-| Command | Handler | What it does (read so far) |
-|---|---|---|
-| 0 | 0x1024B760 -> 0x1024A720 | stop (from `LobbyThread_SendCmd0`) |
-| 4 | 0x1024B7E0 -> 0x1024ABD0 | volume of the **20-channel pool** `[0x106690C8]` (0xF4 bytes each). Record (track, id2, volume, fade) from `LobbyThread_SendCmd4` (track, 0, volume & 0x7F, fade): the channels whose +0xC0 is the track (all for a negative track; with track 0, those whose +0xC4 is id2); target level = `[0x103889F0 + 4 x volume]` << 12, reached in fade x 50 / 60 steps (at once for 0) |
-| 7 | 0x1024B830 -> 0x1024AFC0 | open a stream file on the **3-channel pool** `[0x106690B8]` (0x1C0 bytes each) (from `LobbyThread_QueueMusicFile` and `LobbyThread_QueueStreamFile`) |
-| 8 | 0x1024B8B0 -> 0x1024B440 | volume of the 3-channel pool `[0x106690B8]`, record (track, volume & 0x7F, fade): of its **first two** channels (the loop ends at base + 0x380), those whose +0x94 is the track or is negative, or both for a negative track; level = `[0x103889F0 + 4 x volume]` << 12 at +0x4C, in fade x 50 / 60 steps |
-| 10, 11 | 0x1024B8F0, 0x1024B920 | write / clear entries of the 1024-entry table `[0x106690BC]` |
-| 12 | 0x1024B960 | `[0x106690EC]` = argument x the float at 0x10330250 |
-| 1, 2, 3, 5, 6, 9, 13 | 0x1024AB50, 0x1024AB80, 0x1024AE50, 0x1024AD00, 0x1024AF80, 0x1024B4E0, 0x1024B580 | **not read** |
+**The two pools.** 20 effect channels at `[0x106690C8]`, 0xF4 bytes each (id +0xC0, second id +0xC4, its
+DirectSound buffer +4, a playing thread's handle +0x3C, the level: steps +0x6C, value +0x70, step +0x74, stop at the end
++0x78; the pan: steps +0x7C, value +0x80, step +0x84). 3 stream channels at `[0x106690B8]`, 0x1C0 bytes each (buffer
++4, thread +0x38, steps +0x48, level +0x4C, step +0x50, stop at the end +0x54, track id +0x94, position +0x98).
 
-So the effects' sounds and the scheduled track play on the 20 channels (command 4) and the music on the stream
-channels (commands 7 and 8); both commands turn a volume 0..127 into a level through the one 128-entry table at
-0x103889F0. What plays on the third stream channel, which command 8 does not reach: **not read**.
+**The tick** (0x102489A0, the effect channels; disassembly): each channel's level and pan step toward their targets;
+a level that has finished with "stop at the end" set clears +0x48 (stops it). Then 0x10248900 turns them into
+DirectSound units: pan p (0..127, 64 the centre) -> (|p - 64| scaled to 0..10000, negative left of 64); level
+(0..4096) x the side's attenuation `[0x103888F0 + 4 x (p or 127 - p)]` / 4096 -> volume = that x 10000 / 4096 -
+10000, in hundredths of a dB; `IDirectSoundBuffer::SetVolume` (vtable +0x3C) clamped to -10000..0 and `SetPan`
+(+0x40) to -10000..10000 (0x102468E0, 0x10246910). A channel whose thread has ended (`WaitForSingleObject(+0x3C, 0)`)
+is closed: `Stop` (+0x48), its buffer released, +0xC0 cleared. 0 is DSBVOLUME_MAX in dsound.h: **at a level of 4096
+a channel is at DirectSound's full volume; no volume the game sends makes it louder.**
+
+The level table `[0x103889F0]` (128 entries, read from the file): 0, 2340, 2511, 2633, ... 4092, 4096 (entry 127).
+
+| Command | Sender | Handler | What it does |
+|---|---|---|---|
+| 0 | `LobbyThread_SendCmd0` (track, id2) | 0x1024A720 | stop the effect channels with that id (all for a negative id; by id2 when id is 0): +0x48 = 0; also clears `[stream pool + 0x434]` |
+| 1 | `LobbyThread_QueueSoundCmd` (data not named "SeSep") | 0x1024AB50 | play a sound from a data block: blocks starting "SeWave" (0x10388C8C) go to 0x1024A7A0, others to 0x1024A440; each starts a playing thread 0x102480C0 |
+| 2 | `LobbyThread_QueueSoundCmd` ("SeSep" blocks), 0x102460A0, 0x102460E0 | 0x1024AB80 | play a sound by number: looked up (0x10249D10) or loaded (0x10249E00), then 0x1024A7A0. 0x102460E0 picks one of 4 entries of `[0x10669104]` |
+| 3 | `LobbyThread_SendCmd3` (track, pan & 0x7F, fade), from `LobbyThread_SendCmd3FromFloat` | 0x1024AE50 | **pan** of the effect channels with that id, over fade x 50 / 60 steps (it reaches `SetPan`) |
+| 4 | `LobbyThread_SendCmd4` (track, 0, volume & 0x7F, fade) | 0x1024ABD0 | **volume** of the effect channels with that id: level = table[volume] << 12 over fade x 50 / 60 steps |
+| 5 | 0x10246350 (track, fade), called from 0x10036BE0 | 0x1024AD00 | fade the effect channels with that id to table[1] and stop them at the end |
+| 6 | `LobbyThread_SendCmd6` (track) | 0x1024B820 -> 0x1024AF80 | forget a stream track id: the first two stream channels whose +0x94 is it (or any, for a negative id) get -1 |
+| 7 | `LobbyThread_QueueMusicFile` (music%3.3u.bgw), `LobbyThread_QueueStreamFile`, 0x102464A0 ("BGM" names) | 0x1024B830 -> 0x1024AFC0 | play a stream on **stream channel 0** (always the pool's first): read the file's 0x30-byte header ("BGMStream", or parsed by 0x10249AD0); stop what plays there; make a DirectSound buffer (`IDirectSound::CreateSoundBuffer`, +0xC); start at the position saved for its track id (command 10), else at the header's length x command 12's fraction (then cleared); start the stream thread 0x10247940 (priority 1); fade in from table[1] to table[volume] over fade steps |
+| 8 | `LobbyThread_SendCmd8` (track, volume & 0x7F, fade) | 0x1024B8B0 -> 0x1024B440 | volume of the first two stream channels whose +0x94 is the track or is negative (both for a negative track): level = table[volume] << 12 at +0x4C, over fade x 50 / 60 steps |
+| 9 | `LobbyThread_SendCmd9` (track, fade) | 0x1024B8D0 -> 0x1024B4E0 | fade the stream channels with that track to table[1] and stop them at the end |
+| 10 | 0x102467D0 | 0x1024B8F0 | save stream channel 0's position (+0x98) for its track id in the 1024-entry table `[0x106690BC]` (command 7 resumes from it) |
+| 11 | `LobbyThread_SendCmd11` (track) | 0x1024B920 | clear a track's saved position (all 1024 for a negative track) |
+| 12 | 0x10246820 (float x 4096) | 0x1024B960 | the next stream's start, as a fraction of its length: `[0x106690EC]` = argument / 4096 |
+| 13 | 0x102468B0 (a buffer) | 0x1024B980 -> 0x1024B580 | copy each effect channel's `GetVolume`, `GetPan`, `GetFrequency`, `GetStatus` (vtable +0x18..+0x24) into the buffer |
+
+**The stream tick** (0x10248AE0) reads only stream channel 0: its level steps as the effect channels' do; the
+volume is the level x the stream's own volume (the header's byte +0x2C, kept at +0xB8; 0x7F when the header has none)
+at the centre pan, sent with `SetVolume`; a fade-out with "stop at the end" sets its track id to -1, and once the
+stream thread has ended the buffer is stopped and released.
+
+**The playing threads.** The stream thread 0x10247940 (command 7) and the effect sound thread 0x102480C0 (commands
+1 and 2) do the same (their calls, disassembly): read the file through the C runtime (0x102CA030..0x102CA1C0),
+decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it into the DirectSound buffer
+(`Lock` +0x2C, `Unlock` +0x4C), `Play` (+0x30), `SetCurrentPosition` (+0x34), poll `GetCurrentPosition` (+0x10), and
+`Sleep(1)` between polls; `Stop` (+0x48) at the end. The decoders' formats: **not read line by line**.
+
+0x102466F0 answers questions about stream channel 0 without the ring: (0, id) whether that id plays, (1, id) its level
+(+0x4C >> 12), (3, id) its fade steps left. The music therefore plays on stream channel 0, the only one command 7
+fills and the tick drives; channels 1 and 2 are made (0x1024B990) and commands 6 and 8 loop over channel 1, but no
+code starts a stream on them.
 
 **The repo's name "LobbyThread" for this unit is from low- and medium-confidence evidence (data/names/
 316_unit_10244EA0_LobbyThread.json); everything that writes the ring is sound or music, and none of it is in the
-security set (data/security_set.json).** From what the reader does it is the sound thread's command queue; the names
-stay until the unit is renamed with the naming pipeline.
+security set (data/security_set.json).** It is the sound thread; the names stay until the unit is renamed with the
+naming pipeline.
 
 ## 5. What a mod uses
 
@@ -93,11 +136,11 @@ stay until the unit is renamed with the naming pipeline.
   game's last level.
 - Scale the music: scale the volume in `LobbyThread_SendCmd8` (track -1) and `Music_LoadTrackIfRunning`, where every
   music volume ends whichever setting wrote the factors (audio_mix.cpp since 25 Nov). Re-apply: send the game's last
-  command-8 volume again. Never above 127 (the & 0x7F): above the game's full volume it cannot go louder through the
-  commands; louder would mean changing the level table at 0x103889F0, which every sound shares.
+  command-8 volume again. Never above 127 (the & 0x7F). Louder than the game's full volume is not possible at all:
+  volume 127 is level 4096, which the tick sends as 0, DirectSound's maximum (section 4).
 
 ## 6. Not known
 
-- Which options in the game's menus settings 9, 10 and 0xA8 are; who calls 0x1007F680.
-- Commands 1, 2, 3, 5, 6, 9, 13; which thread runs the reader; how the level table's values reach the mixer (the
-  sound device's own volume).
+- Which options in the game's menus settings 9, 10 and 0xA8 are (their labels are the game's data files).
+- Commands 1 and 2 past their dispatch (the sound data blocks' layout), the two decoders, and the field
+  `[stream pool + 0x434]` (cleared by commands 0, 1 and 2).

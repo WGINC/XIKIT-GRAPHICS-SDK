@@ -33,7 +33,7 @@ returns the head; 0x10126520 returns the next node's data whose skip byte is 0 a
 | +0x90, +0x92 | its size | the same |
 | +0x94 | an easing timer (set to 0 when placed) | 0x10117520 counts it down by the frame step |
 | +0x9A | a byte kept by the placement (its 7th argument) | |
-| +0x9C..+0xA2 | the viewport its contents are clipped to (X, Y, right, bottom) | `NetCellFont_SetViewport` (0x1011AA40), when +0x9B is set |
+| +0x9C..+0xA2 | the viewport its contents are clipped to (X, Y, right, bottom) | `NetCellFont_SetViewport` (0x1011AA40), when +0x9B is set (never in this build: 5) |
 | +0xB8 | a scroll offset added to its items' y | `Menu_DrawWindowItems` |
 
 The frame node (kind 0), as shorts from its start: +0x1A, +0x1C its drawn position, +0x1E, +0x20 moved with the
@@ -63,8 +63,10 @@ the whole game was scanned for other writers: section 5.
   window's definition): a definition's position (+2, +4) and size (+0xA, +0xC) are in a 512 x 448 layout; its byte
   +0x13 anchors it (0 none; 1 right: x += width - 0x200; 2 bottom: y += height - 0x1C0; 3 both), unless its byte
   +0x17 is set. Width and height are the UI rectangle `[0x106218B4]` (left, top, right, bottom shorts), which
-  `ZoneMapLoad_CreateUiObjects` sets to 0, 0, `Camera_GetWord14()`, `Camera_GetWord16()` (the camera's +0x14 and
-  +0x16 words; what sets those: **not read**); `Frame_Render` changes it only around `CopyrightText_Draw` and puts it
+  `ZoneMapLoad_CreateUiObjects` sets to 0, 0, `Camera_GetWord14()`, `Camera_GetWord16()` (the +0x14 and +0x16 words of `[0x104568FC]`, which the tree
+  calls `g_pCamera` but which holds the App object `CApp::RunMainLoop` makes with `App_Constructor`, 0x10010700, 0x33C
+  bytes; what writes those two words: not found among direct 16-bit writes, the two word setters 0x10015620 and
+  0x10015630 having no reference); `Frame_Render` changes it only around `CopyrightText_Draw` and puts it
   back (0x1001262C..0x1001266C). In the owner's game (1512x949) the chat log was placed at 16,863 size 1366,70 (its
   definition's anchor and y not read: a bottom anchor would make its y 362).
 
@@ -83,5 +85,14 @@ the whole game was scanned for other writers: section 5.
     writes the menu cursor `[0x104E1D4C]` (its callers `Menu_DrawLayers` and 0x10160C60 pass that). The other 73 are
     in functions of other classes by their names (`YkWindows_*` of other vtables, `Target_Reset`, `MenuMng_Init`,
     `CMoGeneratorClone::ResolveCmdTargets`, ...); each one's object has not been followed.
-- Whether a window's own code clamps it to the screen after it is moved.
-- What +0x9B (the viewport switch) is set from; what the sub-object at +0x88 is.
+- Clamping to the screen (read 25 Nov): neither `NetCellFont_SetRectAndUpdateNodes` nor the per-frame easing
+  0x10117520 reads the UI rectangle `[0x106218B4]` or any screen size: they do not clamp. The UI rectangle is read by
+  the placement from a definition (0x1011A8F0, its anchoring). Whether a window's own layout function clamps after
+  placing it: per window, the 40 callers (not each read).
+- +0x9B (the viewport switch) and +0x88, read 25 Nov: +0x9B is written by `NetCellFont_MenuCtor` (cleared) and set only
+  by 0x1011A7B0, which has no caller and no stored pointer anywhere in the image (the other two byte writes at
+  +0x9B are in other units' functions); so no window turns `NetCellFont_SetViewport`'s
+  clipping on in this build. 0x1011A7B0 would set the viewport (+0x9C..+0xA2), place the window with it, and give
+  the object at +0x88 its x (right - 6), y (top), the visible height, the content height (+0xB4) and the scroll
+  offset (+0xB8): the values of a scroll bar. Otherwise the object at +0x88 only gets its position from
+  `NetCellFont_SetRectAndUpdateNodes` (right - 6, top); what draws it: **not read**.

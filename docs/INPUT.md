@@ -97,8 +97,9 @@ Read from the disassembly, in order:
    35, 36 (the table at 0x1034F930), a negative number giving the mask -1 << ... (0x10005209: the bits from it up).
    **The axes and the POV** (0x1000641B..0x10006630): the eight axes and sliders and the POV read, the option bytes
    0x10455C35 (POV), 0x10455C36 (sliders), 0x10455C3B, 0x10455C3C, 0x10455C3E (a word) deciding which; the result into
-   the stick bytes +0x250..+0x253 and bits of +0x220. Which pad bit each of the 32 numbers is in play (the game's own
-   pad configuration screen names them): **not read**; the axes' exact formulas: **not read line by line**.
+   the stick bytes +0x250..+0x253 and bits of +0x220. Read line by line in 3c. What each pad bit does in play is
+   the action that answers to it (docs/INPUT_ACTIONS.md, its "Pad / mouse" column, from each handler's code); the
+   names the game's pad configuration screen shows for them are its data files, not in FFXiMain.dll.
 9. The keyboard's movement and camera keys: the second table (4, 0x10123700) ORs their bits into the virtual pad's
    +0x220 and sets its stick bytes (+0x250..+0x253: 0x00 or 0xFF, 0x80 centred) for the four held directions.
 
@@ -114,7 +115,7 @@ found by scanning the game's code for loads of 0x104E1D44 and these offsets):
 | +0x228 (64 bits), +0x22C | pressed this frame | kind 1; kinds 2 and 3 set +0x228 to +0x228 AND the button's bit and +0x22C to 0 |
 | +0x230 (64 bits) | released this frame | kind 5 |
 | +0x238 (64 bits), +0x23C | trigger (press and repeat) | kind 0 |
-| +0x248 | a float the poll compares and stores (**not known**) | the poll |
+| +0x248 | the buttons' auto-repeat timer (3c) | the poll |
 | +0x250, +0x251, +0x252, +0x253 | the two sticks' axes, 0x80 centred | 0x10120C70, 0x10120CA0, 0x10120C10, `Cell_GetByte253Scaled`, `StAvatar_UpdateInput` |
 
 The readers are the action handlers of the bindings table (4: 0x1036DB18), one per action: each answers the action's
@@ -133,6 +134,46 @@ The key table's bits (the methods at 0x10123F40-0x10124130, each a one-line read
 
 Only 66 places read the table directly; everything else goes through the queries below.
 
+
+### 3c. The pad poll, line by line (0x10005A40, 0x1000624C..0x10007787; disassembly)
+
+1. **Buttons.** For each of the 32 DirectInput buttons pressed (`rgbButtons` at +0xA74 of the device's state, bit
+   0x80): its 64-bit mask from the table 0x10455C48 (8 bytes a button), or from the layer table 0x10456048 when a
+   pressed button's mask is bit 34 (the layer button). The mask is ORed into the held word +0x220. A mask that is
+   one of these single bits also drives an axis at full deflection (-127 or +127): bits 4 and 5 (0x10, 0x20) the
+   d-pad pair's x (+, -), bits 6 and 7 its y (-, +); bits 17-20 the second stick (x +, x -, y -, y +), bits 21-24
+   the first stick (x +, x -, y -, y +).
+2. **Axes.** For each entry of the axis table 0x10456448 (8 bytes an entry, to 0x104564A8; uninitialised data,
+   filled from the pad configuration), a source -10..10: 1..6 the six axes of DirectInput's DIJOYSTATE (lX, lY, lZ,
+   lRx, lRy, lRz: +0xA44..+0xA58, the layout of dinput.h), 7 and 8 the two sliders (+0xA5C, +0xA60) when the byte
+   0x10455C36 is set, 9 and 10 the POV (+0xA64) through `Input_MapAxisLow` / `Input_MapAxisHigh` when 0x10455C35 is
+   set (a POV angle in 1/100 degree, -1 centred: Low gives +127 for 22.5..157.5, -127 for 202.5..337.5, else 0;
+   High gives -127 below 67.5 or above 292.5, +127 for 112.5..247.5, else 0; both 0 when centred or the byte is
+   off); a negative source is the same axis negated; 0 none.
+   The option byte 0x10455C3B clears the d-pad pair and 0x10455C3C the second stick before the next step.
+3. **Stick modes.** If pad bit 25 is held, or the mode word 0x10455C3E is 1, the first stick's values move to the
+   d-pad pair (the stick reads 0); if bit 26 is held, or the mode is 2, they move to the second stick. Pad bit 31
+   pressed steps the mode 0 -> 1 -> 2 -> 0, skipping mode 1 unless 0x10455C3B is set and mode 2 unless 0x10455C3C is.
+4. **Dead zone and shape.** Every value under 42 in magnitude becomes 0. For the first stick, when x^2 + y^2 is over
+   9677 (98.4^2), both are multiplied by r^2 / (the larger of x^2, y^2) (a circle pushed out toward the square's
+   corners), then each is clamped to +-127 (`v / |v| * 127`).
+5. **Stick bytes.** +0x252 = first stick x + 0x80, +0x253 = its y + 0x80, +0x250 = second stick x + 0x80, +0x251 =
+   its y + 0x80.
+6. **The d-pad pair as buttons.** Its x over 63 sets bit 4 (0x10) held, and pressed and trigger when it was not
+   held; under -63 bit 5; its y the same for bits 7 and 6.
+7. **Auto-repeat** (+0x248): while some button is held and none released, the timer adds the frame step
+   (`Camera_GetFrameScale`); the first frame only arms it (device +0xDAC); once it reaches the device's +0x94 the
+   trigger word gets every held button (a repeat) and the timer goes back to that value minus 2.0 (0x10329990), so
+   repeats come every 2.0 frame steps; a release resets it to 0.
+
+The range the device's axes are set to: no `DIPROP_RANGE` call was found in the input unit; the code's own
+thresholds are 42 (dead zone) and 127 (clamp).
+
+**The mouse** as actions: actions 139, 140 and 150 are the left, right and middle buttons (their handlers read the
+cursor object `[0x104E1D4C]` +0x58 held, +0x5C trigger, +0x60 pressed, +0x64 released, bits 0, 1, 2; the window
+procedure sets those bits on WM_LBUTTONDOWN, WM_RBUTTONDOWN and WM_MBUTTONDOWN (message - 0x200 = 1, 4, 7) through
+`Cursor_EnterMode1/2/4`, and clears the held bit on the button's up message).
+
 ## 4. Keys to actions: the bindings
 
 **The plain key query**, 0x10123380 (key, kind); kind 0 trigger, 1 pressed, 2 take trigger, 3 take pressed, 4 held,
@@ -142,7 +183,8 @@ NumLock on, the keypad keys (0x47-0x52) are answered by another table. 0x1012316
 
 **The action query**, 0x10123A70 (unused, action, kind, binding): 188 table entries (0..0xBB; the query does not bound the action: the size is the
 binding table's, which at 3 words per action ends where the handler table starts, 0x1036D6B0 + 6*188 = 0x1036DB18; no
-call in the game's code pushes an action above 0xBA). Per action:
+call in the game's code pushes an action above 0xBA; entry 187 (0xBB) has no contexts, no keys and a handler word,
+0x00040011, that is not code: the last action in use is 186). Per action:
 - a word of contexts at 0x1036CF60 + 2*action, ANDed with the context mask at 0x1036E3A0 (0xFFFF in the file); flags
   0x41 in it mean "not while the chat line is in mode 4 or 5";
 - an optional handler pair at 0x1036DB18 + 8*action (pad or mouse equivalents: called first, a yes counts);
@@ -156,8 +198,16 @@ call in the game's code pushes an action above 0xBA). Per action:
   reset); 3 from argument 3, and from `TextInputFiles_EndMode4Or5` when the mode was 4; 4 from argument 4 unless
   `TargetMenu_GetByteAE(menuMng, 2)` is set (also sets byte +0x10D of `[0x1066268C]`); 5 from argument 5 (the line
   cleared, the 0x58 slot called, +0x8C80 set). `TextInputFiles_BeginInput` is called only by
-  `TextInputFiles_BeginInputWithIme`, slot +0x80 of the vtable 0x10337A40; which callers pass 2..5 (so which
-  screens each mode is): **not traced** (no direct call through that slot found next to `[0x10662D40]`).
+  `TextInputFiles_BeginInputWithIme` (0x101B4360), slot +0x28 of the object's own vtable 0x10337A98 (its
+  constructor 0x101B8E70, from `App_InitScene`, replaces the base vtable 0x10337A40, where it is slot +0x80). Every
+  call through that slot (a scan of the game's functions for 8-argument calls through +0x28): mode 3 from the
+  constructor (the start) and from the ByteTable panels' close (0x1019D090, 0x1019D450); mode 2 from their open
+  (0x1019CFF0, 0x1019D3B0) and from 0x1023FE20 and 0x102450C0; **mode 4, typing**, from the text input's own key
+  handling: `TextInputFiles_HandleKeyDownWithIme` (twice), `TextInputFiles_OnChar`, 0x101B13F0, 0x101B20E0,
+  0x101B5760 (twice), each with (4, 0, 5, 0x78, 0, 0, 0, 0xA); mode 5 from 0x101C69C0 (called by 0x101C6870; on
+  which object and screen: **not read**). So 3 is the line at rest, 2 the line held while a config panel takes the
+  keys, 4 the player typing. `TextInputFiles_EndMode4Or5` returns 4 to 3. Mode 1 is also set by 0x101B5300 (from
+  0x101B0040).
   A binding of a modifier key itself (LCtrl, LShift, LAlt) with kind 4 is answered by "either side held".
 - the byte 0x104E1C3C = 1 allows only kind 4 (held) for every action: set (`Cell_SetFlag104E1C3C` 0x10123EA0) by the
   menu and target code when one of their steps takes the input (`Target_CycleMenuStep`, `Target_RunActiveCommand`,
@@ -171,28 +221,45 @@ call in the game's code pushes an action above 0xBA). Per action:
   except while one of those panels is open. Which screen of the game the panels are, and what settings
   0x6A..0x89 hold: **not read**.
 
+**The analog query**, 0x10123970 (unused, action): a float. Per action, a pair of analog handlers at
+0x1036D0D8 + 8*action (the table runs from the context table's end to the binding table's start: 187 entries).
+With one handler its value; with two, the one of larger magnitude. The forms (each read; per action in
+docs/INPUT_ACTIONS.md, "Analog"): a stick byte (0x10120C10 first stick x = (+0x252 - 0x80) / 128, 0x10120C40 its y
++0x253, 0x10120C70 and 0x10120CA0 the second stick +0x250, +0x251); 1.0 while a pad bit is held; +1 / -1 from two
+pad bits (0x10120CD0: bit 6 / bit 7; 0x10120D20: bit 4 / bit 5); +1 / -1 from two actions held (0x101230B0: 164 /
+165); and the keyboard's or mouse's axis n, 0x10122E30(n): with the cursor in its mode 4 or 5 (cursor +0x4D) the
+mouse's movement (`Cursor_GetNormalizedDeltaY` and its siblings), otherwise the key table's value for axis n
+(0x10124150), with actions 160 and 161 held giving -1 and +1 for axis 2. Actions 4, 5 are the first stick (movement)
+and 6, 7 the second (camera), each with the keyboard/mouse axis as its second handler; 121-124 and 157, 158 the same
+sticks in other contexts.
+
 These tables are in `.data`: the game's key configuration rewrites them at run time; the values below are the file's
 defaults (6A995428). **The full list of the actions** (contexts, default keys, handler, and every function that
 asks for each, with the kind): docs/INPUT_ACTIONS.md, made by `pipeline/input_actions.py`.
 
 | Actions | Default keys | Meaning, where known from the code that asks |
 |---|---|---|
-| 0-3 | Up, Down, Right, Left | each has a handler (0x10121F90 ...); what they do: **not yet read** |
-| 14, 143, 145, 147 | Enter, keypad Enter | **not yet read** (the same set of keys in four contexts) |
-| 15, 144, 146, 148, 149 | Esc | **not yet read** |
-| 70-78, 82 | F1-F10 | **not yet read** (the code that asks passes the action in a register) |
-| 88-97 | 0-9 with Shift and the 0x10 condition | **not known** |
+| 0-3 | Up, Down, Right, Left | pad bits 6, 7, 4, 5 (the d-pad: the poll's d-pad pair, 3c); as analog, 1.0 while held; asked held (kind 4) by 0x1013A5B0 and `MenuPanels_SetMode`, as trigger (kind 0) by 0x101E5280 |
+| 14, 143, 145, 147 | Enter, keypad Enter | pad bit 0, the same action in four contexts (docs/INPUT_ACTIONS.md lists each one's askers) |
+| 15, 144, 146, 148, 149 | Esc | pad bit 3; asked by `Acter_UpdateFrame`, `MenuMng_UpdateForSceneState`, `Target_CycleMenuStep`, `StAvatar_UpdateSteer` (held) and others (INPUT_ACTIONS) |
+| 70-78, 82 | F1-F10 | targeting: `Target_RunActiveCommand` (0x101585F0) walks the table 0x10371EE0 ({context word, action, kind, command}, 16 bytes each, ended by action -1) with `TargetMenu_FindActiveCommand` and acts on the first action that fires: F1-F6 (70-75, kind 1) commands 6-11, F7 (76) 6, F8 (77) 28, F9 (78) 21, F10 (82) 18; the same table maps actions 176-179 (24-27), 145 (1), 39-42 (2, 2, 3, 4), 83, 84, 132, 151, 146 (13-17), 171, 172 (19, 20), 139 and 140 released (22, 23), 184 (28). What each command number does: `Target_ActOrTrySubSelect` and the code after, **not read** |
+| 88-97 | 0-9 with Shift and the 0x10 condition | `TextInputFiles_HandleReadPosKeys` (0x101A3550): each sets `TextInputFiles_SetReadPos([self + 4], 0, 2, 4, ... 18)`; what that position is on screen: **not read** |
 | 98-107 | Alt+0..Alt+9 | the Alt macro palette's slots (5) |
 | 108-117 | Ctrl+0..Ctrl+9 | the Ctrl macro palette's slots (5) |
 | 118 | LCtrl, with Ctrl | "Ctrl held": opens the Ctrl palette (5) |
 | 119 | LAlt, with Alt | "Alt held": opens the Alt palette (5) |
-| 169, 170 | Q, E | **not known** |
+| 169, 170 | Q, E | an axis: 0x1025E1E0 returns E - Q (0x1025E170 and 0x1025E100: 1.0 while held, only when the option byte 0x1036CF5C is 1 and analog actions 6 and 7, the second stick, both read 0), used by the camera update 0x1001EE60 (`Camera_SetPosition`) and the player-control code 0x100A6240 |
 
 A second, older table walked by 0x10123700 (from the poll; 16-byte records at 0x1036E0F0, 42 in the file: key,
 condition 0 none / 1 Ctrl / 2 Alt / 4 Shift / 8 no Shift / 7 any, focus class 4 always / 6 no menu focused / 5 a menu
 focused, then a 64-bit action mask) gives the movement and camera keys held this frame as a bit mask (W 0x800000,
 S 0x1000000, A 0x400000, D 0x200000, I/J/K/L by Shift, ...); it also sets the camera bytes `[0x104E1D44]+0x250..+0x253`
-for four of the bits. Which bit is which movement: **not known** beyond those writes.
+for four of the bits. Which bit is which movement (25 Nov, 0x10123870..0x10123939): for a single-bit mask it writes
+the stick bytes itself, bit 21 +0x252 = 0xFF, 22 +0x252 = 0, 23 +0x253 = 0, 24 +0x253 = 0xFF, and bits 17-20 the
+second stick's +0x250 (0xFF, 0) and +0x251 (0, 0xFF) the same way: the directions the joystick poll gives the same
+bits (3c, step 1). So W (0x800000, bit 23) puts the first stick's y at its minimum, S (bit 24) at its maximum, A
+(bit 22) x at its minimum, D (bit 21) at its maximum; the first stick is analog actions 4 and 5 (4, the analog
+query).
 
 ## 5. Macros and the palettes
 
@@ -236,9 +303,15 @@ from DirectInput too.
 (mode 1), the game's own menus. What the mode changes, from its source:
 - while a target or menu selection is active (target manager +0x59 or +0xC4): mode 1 refuses a command word without
   flag 2 (+0x16) with message 0xA4 in the chat log; mode 2 refuses it without a message; mode 0 is not restricted;
-- mode 2 sets the byte 0x1047D497 (on only for mode 2: read by what, **not read**); modes 1 and 2 clear 0x1047D3FE;
+- mode 2 sets the byte 0x1047D497 (on only for mode 2; read only by `preprocessArg` 0x10076AB0, which copies it to
+  0x1047D496 when a line's argument opens the sub-target window (`YkWindows_SetModeFwd` with the callback 0x10077A20,
+  which, with 0x10077A00, is that byte's only reader)); modes 1 and 2 clear 0x1047D3FE;
 - modes 3-7 turn the line into one of the game's sub-target tokens: `<st>`, `<stpc>`, `<stnpc>`, `<stpt>`, `<stal>`
   (the strings at 0x10357F88 down to 0x10357F68).
+- **The commands** (25 Nov): it looks the line's first word up (`Arg_LookupWord`) in the word table 0x10355408
+  (24-byte records: the word; +0x14 its command number; +0x16, +0x17 flags, +0x16 bit 0x2 the test above) and runs the
+  command's handler from the table 0x10356E30 ({command, handler, a third word}, 12 bytes each). All 277 words and
+  215 commands: docs/COMMANDS.md (made by `pipeline/commands.py`; handlers of the security set left out).
 
 Its first instruction in the game is `sub esp, 0x404` (81 EC 04 04 00 00: 6 bytes; the kit's manifest has T=6, the
 trampoline's length). **Windower's Hook.dll replaces that start with a jump into Hook.dll** (prishe_probe under
@@ -274,12 +347,21 @@ Ashita: not run with the kit yet beyond prishe_probe (P1); how it hooks input is
 - **"The macro book shows after holding Ctrl, not on a tap"**: that is the game's own rule (5): the palette opens once
   Ctrl has been held into a later game-time tick; the macros run on Ctrl+digit either way. The hotbar's "hotbar mode"
   takes the Ctrl/Alt digits at `TextInputFiles_QueueEntry` (the macro runs bar 2 or 3 instead), but the palette window
-  is the game's and still opens on a hold. Whether it should stay closed in hotbar mode is the owner's choice.
+  is the game's and still opened on a hold. The owner (25 Nov): in hotbar mode it stays hidden. Done (10).
 - **Number keys** pressed for the hotbar also reach the game's own bindings (the table is read from DirectInput); the
   default binds nothing to plain 0-9 (88-97 need Shift), so with the default configuration nothing else happens.
 
 ## 10. Changes made from this document
 
+- 25 Nov, the hotbar (sdk/examples/hotbar.cpp): in hotbar mode the game's macro palettes are never shown. The only
+  code that opens them is `TextInputFiles_UpdateMenuState` (5), through `MenuMng_OpenByName` (0x1015E350) with the
+  requested names `menu    mcr1pall` and `menu    mcr2pall` (every reference to the two strings in the code: that
+  function, `TextInputFiles_SetSlot`'s close, the name builder 0x10160760 that maps them to `mcr1long`/`mcr2long`, and
+  a test at 0x101AE010 that allows its case while a palette, or no window, has the focus). The mod refuses those two
+  opens (returning 0, what the function returns when it opens nothing) and closes any open palette when hotbar mode
+  starts. `UpdateMenuState` sets its Ctrl/Alt state (+0xC, +0xD) whether or not the window opens, and the macro keys
+  read that state, so they still reach `TextInputFiles_QueueEntry` and the hotbar. Tested offline (hbmod): the
+  game's entry with the two names returns 0, counted by the mod.
 - 25 Nov, the kit (kit/xikit/xikit.c `foreign_jmp`): another tool's jump at an entry is taken in its three forms
   (E9 rel32, FF 25 [abs], 68 imm32 C3); the entry's first whole instructions (the manifest's T=) are left out of the
   comparison, the rest compared one by one with a byte manifest or through the public manifest's J= fingerprint

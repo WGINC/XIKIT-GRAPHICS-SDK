@@ -1077,10 +1077,22 @@ static int hbmod_run(IDirect3DDevice8 *dev) {
              q1, e0, e1, run1, q2, *(uint32_t *)(tif + 0x21C4), (char *)tif + 0x2048 + 4, t1 - t0, p1 - p0);
     check(mac && *(uint8_t *)ga(0x101A1C60u) == 0xE9 && q1 == 1 && e0 == 0 && e1 == 1 && run1 == 0xFFFFFFFFu && q2 == 1 && *(uint32_t *)(tif + 0x21C4) == 0 &&
           !strcmp((char *)tif + 0x2048 + 4, "/sit") && t1 - t0 == 1 && p1 - p0 == 1, what);
+    /* the game's macro palettes in hotbar mode: MenuMng_OpenByName (0x1015E350, thiscall) through its entry with
+       "menu    mcr1pall" and "menu    mcr2pall": refused (0) by the mod, counted. (In macro mode the call goes on to the
+       game's code, which the host's empty menu manager cannot run: not called here.) */
+    typedef int (__thiscall *OpenFn)(void *, char *, uint32_t, uint32_t);
+    long (*pal)(void) = (long (*)(void))(void *)GetProcAddress(m, "hb_test_palettes");
+    char p1n[] = "menu    mcr1pall", p2n[] = "menu    mcr2pall";
+    long pc0 = pal ? pal() : -1;
+    int o1 = ((OpenFn)(void *)ga(0x1015E350u))(mng, p1n, 1, 0), o2 = ((OpenFn)(void *)ga(0x1015E350u))(mng, p2n, 1, 0);
+    long pc1 = pal ? pal() : -1;
+    snprintf(what, sizeof what, "hbmod: hotbar mode: MenuMng_OpenByName(\"%s\") returned %d, (\"%s\") %d (0, 0); refused %ld (2)", p1n, o1, p2n, o2, pc1 - pc0);
+    check(pal && *(uint8_t *)ga(0x1015E350u) == 0xE9 && o1 == 0 && o2 == 0 && pc1 - pc0 == 2, what);
     typedef int (__cdecl *RunFn)(char *, uint32_t); char ml[] = "/hb mode macro"; char cwd[MAX_PATH], ini[MAX_PATH + 20];
     int rr = ((RunFn)(void *)ga(0x10080DC0u))(ml, 0); GetCurrentDirectoryA(sizeof cwd, cwd); snprintf(ini, sizeof ini, "%s\\xikit_mods.ini", cwd);
     int md = GetPrivateProfileIntA("hotbar", "hb_mode", -1, ini);
-    snprintf(what, sizeof what, "hbmod: \"/hb mode macro\": returned %d (0), hb_mode in xikit_mods.ini %d (0)", rr, md); check(rr == 0 && md == 0, what); }
+    snprintf(what, sizeof what, "hbmod: \"/hb mode macro\": returned %d (0), hb_mode in xikit_mods.ini %d (0)", rr, md); check(rr == 0 && md == 0, what);
+  }
   mng[0xB4] = 1;
   snprintf(what, sizeof what, "hbmod: the interface hidden (menu manager +0xB4 = 1): (220,220) hits %d (0)", over(220, 220)); check(over(220, 220) == 0, what);
   mng[0xB4] = 0;

@@ -48,14 +48,21 @@ The fog's own distances are another computation (`Env_ComputeFog`, sdk/examples/
 number, kept at +0x1B4; called from three functions of the game) writes `[g_pXiZone]` +0x1D0 = 0 only for
 zone 0xC1, and +0x1D4 = 0.7 only for zone 0x32; nothing in the game sets +0x1D0 back to 43.0 (the scan of every
 store to +0x1D0 in XiZone's range: the constructor and this one). So while +0x1D0 is 43.0 the draw distance is the
-zone's value times the time-of-day factor, but at least 43.0; in zone 0xC1 the product with no floor. Whether the
-XiZone object is made again for each zone (which would restore 43.0 after zone 0xC1): **not read**.
+zone's value times the time-of-day factor, but at least 43.0; in zone 0xC1 the product with no floor. The object: `XiZone::GetInstance`
+makes it when `g_pXiZone` is empty (0x1018B14C, the constructor, then the 43.0); slot 1 of its vtable 0x10336838
+(0x1018B360, an event handler) releases it and clears `g_pXiZone` for events of type 2 and 5. So after one of those
+the next zone gets a new object and the floor 43.0 again. Which events those two types are (whether every zone
+change sends one): **not read**.
 
 ## 4. Not known
 
 - The zone's value is the float at +0xC of the record `[zone + 0x1C]` (`ZoneMap_GetFloatRef1CPlus0C`); which file or
   packet fills that record: **not read**. (+0x1D0, the floor, is read: 3a.) Whether models stay loaded beyond the
   game's distance: **not read**.
-- Whether any other drawing (effects, the sky) culls with a camera copy of its own.
+- Other copies of the view (read 25 Nov): every function in the tree that reads the view or projection does it
+  through `CDx::GetTransformCached` (callers in tree/src/CXiSkeletonActor.cpp, MoDX.cpp, DynVB.cpp, ElemFog.cpp,
+  EnvMapProjTex.cpp, CMoFloatingNumberTask.cpp, YkCommon.cpp, MathVector.cpp, InputDevices.cpp), the one copy
+  `Camera_ApplyViewProjection` sets each frame; those that keep a copy (MoDX, DynVB) take it from there (how often each refreshes it: per call site, not each read). Functions
+  without source in the tree that might read the device's transforms another way: **not read**.
 - Whether other tools running in the game (Windower, Ashita) write the same camera fields: their code is closed; the
   owner's run with and without Windower (kit/sessions/ltp_25nov R6) is the test.
