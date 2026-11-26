@@ -203,8 +203,8 @@ naming pipeline.
 - Which options in the game's menus settings 9, 10 and 0xA8 are (their labels are the game's data files).
 - Commands 1 and 2: the header is read (section 4, 26 Nov); the data after the header and the stereo decode are read
   and checked on a file (section 4). 0x102CA1F0 and the table step 0x10246A70 were read 27 Nov: they are format 3
-  (section 4). Format 3's frame decoder 0x102CEBF0 past its first call is not read, and no file the owner sent is
-  format 3. `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
+  (section 4). Format 3's frame decoder 0x102CEBF0 past its first call is not read. No file the owner sent is
+  format 3, but the owner's game holds 81 (Prishe's audio-formats on 26 Nov: 81 of 224 music files, 143 format 0). `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
   pool is three channels of 0x1C0 bytes): commands 0 and 1 write 0 there (0x1024A72C, 0x1024A7BA) and no instruction
   in the game reads [register + 0x434] on the pool, nor +0xB4 of a stream channel in the sound code (the only reads of
   +0xB4 there are the effect thread's, 0x102480C0, on its own channel). As far as direct reads show, nothing uses it.

@@ -62,7 +62,11 @@ inline void *self_record() {
   return i ? record(i) : nullptr;
 }
 // The record's kind byte (+0xEE; LoadSkeletonSync switches on it; kinds 0, 1, 2, 6, 7, 8 have their position copied
-// to the actor). What each value means is Ashita's lead (0 a player, 1 an NPC, ...), not yet the game's code.
+// to the actor). What each value means is not read in the game's code. Seen in the owner's run (26 Nov, probe.log,
+// 258 named records): 0 characters with a race and nine gear words (players, and some named NPCs, these with race 0 and
+// no words); 1 NPCs drawn with a race and gear words; 2 characters of one model (race 0, the model in the face word:
+// chocobos, Carbuncle, goblins); 3 doors and street lamps (no words); 5 one record named "NPC". Ashita's lead (0 a
+// player, 1 an NPC) agrees for 1, not wholly for 0.
 inline int record_kind(void *rec) { return rec ? *(static_cast<uint8_t *>(rec) + 0xEE) : -1; }
 inline int record_race(void *rec) { return rec ? *(static_cast<uint8_t *>(rec) + 0xEF) : -1; }       // GetModelByteEF
 // The model word of a slot 0..8 (+0xFC + 2 * slot: CXiActor::GetModelPartWord; LoadSkeletonSync reads all nine)
@@ -87,11 +91,18 @@ inline void record_name(void *rec, char *out, size_t n) {
 struct Vec3 { float x, y, z; };
 inline Vec3 record_position(void *rec) { Vec3 v = { 0, 0, 0 }; if (rec) memcpy(&v, static_cast<char *>(rec) + 4, 12); return v; }
 // The three angles at +0x14, +0x18, +0x1C (the same function copies them to the actor's +0x44 and wraps each into
-// -pi..pi). Which one is the heading is not read; the state probe logs all three while the player turns.
+// -pi..pi). The heading is the second, +0x18 (record_angles().y): in the owner's run (26 Nov, 589 reports of the
+// player's record over an hour of standing, walking and zoning) it took 54 values in -pi..pi while the other two
+// stayed 0.000. The position's middle value is the height (Acter_SnapHeightToZoneMap's +0x08, above).
 inline Vec3 record_angles(void *rec) { Vec3 v = { 0, 0, 0 }; if (rec) memcpy(&v, static_cast<char *>(rec) + 0x14, 12); return v; }
 
 // ---- the zone (27 Nov): the zone change 0x1018B3A0 keeps its argument, the zone number, at [g_pXiZone] + 0x1B4 (its
 // store at 0x1018B4C2). g_pXiZone (0x1065CB04) is NULL between zones (released on events 2 and 5: CAMERA.md 3a): -1.
+// Until that store, +0x1B4 holds whatever the memory held: XiZone::GetInstance (0x1018B130) allocates the object and
+// its constructor (0x1018B170) does not write +0x1B4. The owner's run saw 16777472, 16777728 and 767279312 for about 3 s
+// after the object appeared, then the zone. Sometimes the store is in the same frame as the object's making (the
+// function calling 0x100B5C30 then 0x1018B3A0 at 0x100B5AF2), so a reader alone cannot tell such a value from a zone;
+// the functions run only after the store (0x1001E2B0, 0x1017A3D0) are not in the kit's manifest, so no hook marks it.
 inline void *zone_object() { return *xikit::game<void *>(0x1065CB04u); }
 inline int zone() { void *z = zone_object(); return z ? *reinterpret_cast<int *>(static_cast<char *>(z) + 0x1B4) : -1; }
 
