@@ -169,6 +169,13 @@ interleaved L, R.
 Checked 26 Nov on the viewer's `se000154.spw` (pipeline/spw_decode.py follows this): the data from +0x30 to the end
 is exactly 17,600 blocks of 9 bytes (a header byte, 8 bytes = 16 samples), every filter nibble 0..4, header +8 equal
 to the file's size, and the decode gives 2.93 s of 48 kHz stereo peaking near +-18,000 with no sample past 16 bits.
+Checked again 26 Nov by running the game's own 0x10246AB0 under an emulator (pipeline/bgm_game_decode_check.py in the
+analysis repository), called as the stream code calls it (0x10246F31: channels = header byte +0x2E, samples per block
+= byte +0x2F, so a block is 1 + +0x2F / 2 bytes), on three of the owner's game music files: music023 and music089
+(128 samples per block, 65-byte blocks) and music160 (16 per block): 53.7 million samples, every one equal to
+Prishe's decoder (core/spw.cpp). The decoder keeps its state in 32 bits and stores the low 16 bits with no clamp
+(0x10246B37, 0x10246B39), so a sample past 16 bits wraps: music023 has about 570 such steps in 170 s, in the game's
+own output as in Prishe's.
 
 **A sound block's header** (command 1's "SeWave" blocks, 0x1024A7A0; checked 26 Nov against a real file, the
 PlayOnline viewer's `se000154.spw` from the owner's archive). The function fills a WAVEFORMATEX (field order from the
