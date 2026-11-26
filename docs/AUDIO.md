@@ -157,6 +157,14 @@ decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it 
     is 2, 0x180 otherwise.
   - Those three sizes and the 1,024 samples per frame are the frame sizes of ATRAC3, a public codec. That is a match
     of numbers, not a name in the code.
+**Format 3 is ATRAC3 under the XOR table (26 Nov, the owner's music040, music041 and music138).** Each 0x180-byte frame,
+with its words XORed with the table above (pipeline/bgm_format3_to_atrac3_wav.py), is accepted by ffmpeg's ATRAC3
+decoder as a stereo frame (not joint stereo: that is refused at the first frame), with its sound-unit sync word in
+place in every frame of all three files (11,568 frames). Without the XOR, every frame fails that check. The output is
+music: 98, 74 and 95 s of 44.1 kHz stereo, each exactly its frame count x 1,024 samples, smooth (mean step 0.03 of
+the mean level, where noise gives about 1.4), its channels correlated 0.92. What this does not show: that ffmpeg's
+samples equal the game's (0x102CEBF0 and the function at its context + 0x36D0 are not read or run here); the frame
+sizes 0x130 and 0xC0 (header +0x2F = 1 and 2) are not in these files.
 - **A file without "BGMStream"** has its header made by 0x10249AD0, as format 1 or 2 (0x1024B063). Not read.
 
 **Format 0 is a 4-bit ADPCM** (0x10246AB0): each block starts with a header byte
