@@ -14,27 +14,29 @@ XI_API int * __cdecl Target_FindNearestOnLocalPositiveX(bits32 arg1, bits32 arg2
   uint8_t u2;
   long double f1;
   uint64_t u3;
-  char xi_frame[84] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 4);
-  float  (&f3)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[84];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int * p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3[3]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; uint8_t u4[64]; };   // at 0x14
+  } frame;
   
   u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   if ((int)u3 == 0) {
     return (int *)0x0;
   }
-  orig::MathVector_ReturnThis(u4);
-  orig::Mat4_SetIdentity_v1(u4);
+  orig::MathVector_ReturnThis(frame.u4);
+  orig::Mat4_SetIdentity_v1(frame.u4);
   u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1c0))))((void *)((int *)u3));
-  orig::Mat4_PostRotateY_v1(u4,*(float *)(i1 + 4));
+  orig::Mat4_PostRotateY_v1(frame.u4,*(float *)(i1 + 4));
   u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1bc))))((void *)((int *)u3));
-  orig::Mat4_SetRow3_v1(u4,p1);
-  orig::Mat4_InvertOrthonormal_v2(u4);
-  p3 = (int *)0x0;
-  f2 = 2.5e+03f;
+  orig::Mat4_SetRow3_v1(frame.u4,p1);
+  orig::Mat4_InvertOrthonormal_v2(frame.u4);
+  frame.p3 = (int *)0x0;
+  frame.f2 = 2.5e+03f;
   i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
   u3 = orig::game_10085240();
   self_ = (int *)u3;
@@ -42,18 +44,18 @@ XI_API int * __cdecl Target_FindNearestOnLocalPositiveX(bits32 arg1, bits32 arg2
     u1 = orig::CXiActor_ComputeDrawState(self_,i1,arg1,arg2,1);
     if ((char)u1 != '\0') {
       p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
-      orig::Mat4_TransformPoint_v2(u4,f3,p2);
-      u2 = ((f3[0]) != (f3[0])) || ((0.0f) != (0.0f));
-      if (((u2 || f3[0] < 0.0f) == u2) &&
-         (f1 = orig::game_10027530(f3,f3), u2 = ((f1) != (f1)) || ((f2) != (f2))
-         , (u2 || f1 < f2) != u2)) {
-        f2 = (float)f1;
-        p3 = self_;
+      orig::Mat4_TransformPoint_v2(frame.u4,frame.f3,p2);
+      u2 = ((frame.f3[0]) != (frame.f3[0])) || ((0.0f) != (0.0f));
+      if (((u2 || frame.f3[0] < 0.0f) == u2) &&
+         (f1 = orig::game_10027530(frame.f3,frame.f3), u2 = ((f1) != (f1)) || ((frame.f2) != (frame.f2))
+         , (u2 || f1 < frame.f2) != u2)) {
+        frame.f2 = (float)f1;
+        frame.p3 = self_;
       }
     }
     u3 = orig::game_10085270(self_);
     self_ = (int *)u3;
   }
   orig::MathVector_Nop();
-  return p3;
+  return frame.p3;
 }

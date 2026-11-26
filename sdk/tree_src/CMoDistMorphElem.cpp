@@ -176,7 +176,7 @@ uint32_t * CMoDistMorphElem::ComputeMorphHandle(int arg1, int arg2)
   int i7;
   int i8;
   int i9;
-  int i10;
+  int positionCount;
   int i11;
   int i12;
   int i13;
@@ -191,18 +191,20 @@ uint32_t * CMoDistMorphElem::ComputeMorphHandle(int arg1, int arg2)
   int i17;
   float f5;
   int i18;
-  alignas(16) unsigned char xi_frame[0x460];  // address-taken locals at their original offsets
-  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 0x10);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  float (&f8)[15] = *reinterpret_cast<float (*)[15]>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x460];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t * p3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; float f6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_4[0x20]; float f7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_5[0x24]; float f8[15]; };   // at 0x24
+  } frame;
 
   i1 = at<uint16_t>(this, 0x36);
   i2 = at<uint16_t>(this, 0x34);
   if ( i2 > i1 )
     i1 = i2;
-  p3 = orig::Mem_AllocObject(36 * i1, 4);
+  frame.p3 = orig::Mem_AllocObject(36 * i1, 4);
   i3 = 0;
   f1 = 0.0;
   i4 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
@@ -224,16 +226,16 @@ uint32_t * CMoDistMorphElem::ComputeMorphHandle(int arg1, int arg2)
   {
 L1:
     i6 = 1;
-    for ( i = 0; i6 < i4; ++i6 )
+    for ( frame.i = 0; i6 < i4; ++i6 )
     {
       if ( *(float *)(i3 + arg2) < (double)*(float *)(4 * i6 + arg2) )
       {
-        i = i6;
+        frame.i = i6;
         i3 = 4 * i6;
       }
     }
     f1 = 1.0;
-    *(uint32_t *)(arg1 + 4 * i) = 1065353216;
+    *(uint32_t *)(arg1 + 4 * frame.i) = 1065353216;
   }
   f1 = 1.0 / f1;
 L2:
@@ -243,31 +245,31 @@ L2:
   {
     do
     {
-      i9 = arg1 - (uint32_t)f8 + 4 * i7++;
-      f8[i7 - 1] = f1 * *(float *)((char *)f8 + i9);
+      i9 = arg1 - (uint32_t)frame.f8 + 4 * i7++;
+      frame.f8[i7 - 1] = f1 * *(float *)((char *)frame.f8 + i9);
     }
     while ( i7 < i8 );
   }
-  i10 = this->positionCount;
+  positionCount = this->positionCount;
   i11 = 0;
-  i12 = 4 * (this->packedNormalCount + 3 * i10);
+  i12 = 4 * (this->packedNormalCount + 3 * positionCount);
   if ( i8 > 0 )
   {
-    i13 = self + 80 + 12 * i10;
+    i13 = self + 80 + 12 * positionCount;
     (*(uint32_t *)&(f2)) = self + 80;
     do
     {
-      f8[i11 + 5] = f2;
-      (*(uint32_t *)&(f8[i11++ + 10])) = i13;
+      frame.f8[i11 + 5] = f2;
+      (*(uint32_t *)&(frame.f8[i11++ + 10])) = i13;
       (*(uint32_t *)&(f2)) += i12;
       i13 += i12;
     }
     while ( i11 < i8 );
   }
   i14 = 0;
-  if ( i10 > 0 )
+  if ( positionCount > 0 )
   {
-    p1 = (float *)(p3 + 2);
+    p1 = (float *)(frame.p3 + 2);
     do
     {
       *p1 = 0.0;
@@ -278,14 +280,14 @@ L2:
       {
         do
         {
-          f3 = f8[i15 + 5];
-          (*(uint32_t *)&(f8[i15++ + 5])) = (*(uint32_t *)&(f3)) + 12;
-          f6 = *(float *)((*(uint32_t *)&(f3)) + 4);
-          f4 = *(float *)(*(uint32_t *)&(f3)) * f8[i15 - 1] + *(p1 - 2);
-          f7 = *(float *)((*(uint32_t *)&(f3)) + 8);
+          f3 = frame.f8[i15 + 5];
+          (*(uint32_t *)&(frame.f8[i15++ + 5])) = (*(uint32_t *)&(f3)) + 12;
+          frame.f6 = *(float *)((*(uint32_t *)&(f3)) + 4);
+          f4 = *(float *)(*(uint32_t *)&(f3)) * frame.f8[i15 - 1] + *(p1 - 2);
+          frame.f7 = *(float *)((*(uint32_t *)&(f3)) + 8);
           *(p1 - 2) = f4;
-          *(p1 - 1) = f6 * f8[i15 - 1] + *(p1 - 1);
-          *p1 = f7 * f8[i15 - 1] + *p1;
+          *(p1 - 1) = frame.f6 * frame.f8[i15 - 1] + *(p1 - 1);
+          *p1 = frame.f7 * frame.f8[i15 - 1] + *p1;
         }
         while ( i15 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
       }
@@ -297,7 +299,7 @@ L2:
   i16 = 0;
   if ( this->packedNormalCount > 0 )
   {
-    p2 = (float *)(p3 + 4);
+    p2 = (float *)(frame.p3 + 4);
     do
     {
       p2[1] = 0.0;
@@ -308,13 +310,13 @@ L2:
       {
         do
         {
-          f5 = f8[i17 + 10];
+          f5 = frame.f8[i17 + 10];
           i18 = *(uint32_t *)(*(uint32_t *)&(f5));
           (*(uint32_t *)&(f5)) += 4;
-          f8[i17 + 10] = f5;
-          *(p2 - 1) = (double)(i18 << 22 >> 22) * f8[i17] * 0.001953125 + *(p2 - 1);
-          *p2 = (double)((int)(*(uint32_t *)((*(uint32_t *)&(f5)) - 4) << 12) >> 22) * f8[i17++] * 0.001953125 + *p2;
-          p2[1] = (double)((4 * *(uint32_t *)((*(uint32_t *)&(f5)) - 4)) >> 22) * f8[i17 - 1] * 0.001953125 + p2[1];
+          frame.f8[i17 + 10] = f5;
+          *(p2 - 1) = (double)(i18 << 22 >> 22) * frame.f8[i17] * 0.001953125 + *(p2 - 1);
+          *p2 = (double)((int)(*(uint32_t *)((*(uint32_t *)&(f5)) - 4) << 12) >> 22) * frame.f8[i17++] * 0.001953125 + *p2;
+          p2[1] = (double)((4 * *(uint32_t *)((*(uint32_t *)&(f5)) - 4)) >> 22) * frame.f8[i17 - 1] * 0.001953125 + p2[1];
         }
         while ( i17 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
       }
@@ -323,7 +325,7 @@ L2:
     }
     while ( i16 < this->packedNormalCount );
   }
-  return p3;
+  return frame.p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10043580

@@ -62,8 +62,10 @@ XI_API void __stdcall StAvatar_LoadInfoFile(int arg1)
   int i2;
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&u3)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u3[32]; };   // at 0x0
+  } frame;
   
   if (arg1 < 4) {
     i1 = arg1 * 0x14;
@@ -87,8 +89,8 @@ XI_API void __stdcall StAvatar_LoadInfoFile(int arg1)
       }
       if (((g_pFileMng_as_v0 != (void *)0x0) && (((uint8_t *)((&g_10389D0C)))[i1] != '\0')) &&
          (*(int *)(((char *)&g_10389D14) + i1) != 0)) {
-        orig::TextInputFiles_CtorVt10337C60(u3);
-        i2 = orig::TextInputFiles_FileMngFwd101C2450(g_pFileMng_as_v0,*p1,u3);
+        orig::TextInputFiles_CtorVt10337C60(frame.u3);
+        i2 = orig::TextInputFiles_FileMngFwd101C2450(g_pFileMng_as_v0,*p1,frame.u3);
         if (-1 < i2) {
           i2 = orig::TextInputFiles_FileMngSubmitPath3F4Kind1(g_pFileMng_as_v0,*p1,*(LPVOID *)(((char *)&g_10389D14) + i1),
                                *(uint32_t *)(((char *)&g_10389D10) + i1),0);
@@ -96,12 +98,12 @@ XI_API void __stdcall StAvatar_LoadInfoFile(int arg1)
             orig::TextInputFiles_FileMngSubmitPath3F4Kind6(g_pFileMng_as_v0,*p1);
           }
           ((uint8_t *)((&g_10389D0C)))[i1] = 0;
-          orig::TextInputFiles_SetVtable10337C60(u3);
+          orig::TextInputFiles_SetVtable10337C60(frame.u3);
           return;
         }
         orig::operator_delete_v1(*(LPVOID *)(((char *)&g_10389D14) + i1));
         *(uint32_t *)(((char *)&g_10389D14) + i1) = 0;
-        orig::TextInputFiles_SetVtable10337C60(u3);
+        orig::TextInputFiles_SetVtable10337C60(frame.u3);
       }
     }
   }

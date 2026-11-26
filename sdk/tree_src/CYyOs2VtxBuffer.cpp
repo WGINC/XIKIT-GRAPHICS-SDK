@@ -137,24 +137,24 @@ int CYyOs2VtxBuffer::Constructor(uint32_t **arg1)
 // GATE: PASS -- 100 trials, 100 returned normally, 158 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
 {
-  unsigned int u1;
-  unsigned int u2;
+  unsigned int pIndices;
+  unsigned int indexBuffer;
   unsigned int u3;
   unsigned int u4;
   unsigned int u5;
   int i;
-  u1 = this->pIndices;
+  pIndices = this->pIndices;
   (*(CMoTask_vtbl * *)&this->vftable) = (CMoTask_vtbl *)&CYyOs2VtxBuffer_vtbl;
-  if ( u1 != 0 )
+  if ( pIndices != 0 )
   {
-    orig::Mem_FreeObject(u1);
+    orig::Mem_FreeObject(pIndices);
     this->pIndices = 0;
   }
-  u2 = this->indexBuffer;
+  indexBuffer = this->indexBuffer;
   this->field_60 = 0;
-  if ( u2 != 0 )
+  if ( indexBuffer != 0 )
   {
-    (*(void (__stdcall **)(unsigned int))(*(uint32_t *)u2 + 8))(u2);
+    (*(void (__stdcall **)(unsigned int))(*(uint32_t *)indexBuffer + 8))(indexBuffer);
     this->indexBuffer = 0;
   }
   if ( this->vertexBuffer != 0 )

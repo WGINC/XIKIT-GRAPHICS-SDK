@@ -10,7 +10,7 @@ int CXiMovie::Draw(int arg1, int arg2, int arg3, int arg4, int arg5)
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int result;
   IDirect3DBaseTexture8 *p1;
-  int i1;
+  int pMovieTexture;
   double f1;
   double f2;
   double f3;
@@ -36,9 +36,9 @@ int CXiMovie::Draw(int arg1, int arg2, int arg3, int arg4, int arg5)
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 96u);
     }
-    i1 = this->pMovieTexture;
-    i3 = *(unsigned short *)(i1 + 38);
-    f4 = (double)*(unsigned short *)(i1 + 36) * *(float *)&arg3;
+    pMovieTexture = this->pMovieTexture;
+    i3 = *(unsigned short *)(pMovieTexture + 38);
+    f4 = (double)*(unsigned short *)(pMovieTexture + 36) * *(float *)&arg3;
     f1 = (double)arg1 - 0.5;
     a1a = (double)arg2 - 0.5;
     this->quad0_x = f1;
@@ -158,37 +158,39 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
   struct IDirect3DDevice8Vtbl *lpVtbl;
   int CurrentTexture;
   int i1;
-  alignas(16) unsigned char xi_frame[0x560];  // address-taken locals at their original offsets
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0xCC);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0xD0);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0xD8);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0xEC);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0xF0);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0xF4);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x10C);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x110);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x118);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x120);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x124);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x128);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x12C);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x130);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x134);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x138);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x13C);
-  uint8_t (&u1)[32] = *reinterpret_cast<uint8_t (*)[32]>(xi_frame + 0x140);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x560];
+    struct __attribute__((packed)) { unsigned char pad_1[0xCC]; float f1; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_2[0xD0]; int i2; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_3[0xD4]; float f2; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_4[0xD8]; float f3; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_5[0xDC]; int i3; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_6[0xE0]; int i4; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_7[0xE4]; int i5; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_8[0xE8]; int i6; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_9[0xEC]; float f4; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_10[0xF0]; float f5; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_11[0xF4]; float f6; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_12[0xF8]; int i7; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_13[0xFC]; int i8; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_14[0x100]; int i9; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_15[0x104]; int i10; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_16[0x108]; int i11; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_17[0x10C]; float f7; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_18[0x110]; float f8; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_19[0x114]; int i12; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_20[0x118]; int i13; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_21[0x11C]; int i14; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_22[0x120]; int i15; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_23[0x124]; float f9; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_24[0x128]; float f10; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_25[0x12C]; int i16; };   // at 0x12C
+    struct __attribute__((packed)) { unsigned char pad_26[0x130]; int i17; };   // at 0x130
+    struct __attribute__((packed)) { unsigned char pad_27[0x134]; int i18; };   // at 0x134
+    struct __attribute__((packed)) { unsigned char pad_28[0x138]; int i19; };   // at 0x138
+    struct __attribute__((packed)) { unsigned char pad_29[0x13C]; int i20; };   // at 0x13C
+    struct __attribute__((packed)) { unsigned char pad_30[0x140]; uint8_t u1[32]; };   // at 0x140
+  } frame;
 
   if ( g_pMovie != 0 )
   {
@@ -201,42 +203,42 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
       CurrentTexture = orig::Movie_GetCurrentTexture((uint32_t *)g_pMovie);
       lpVtbl->SetTexture(pDevice, 0, (IDirect3DBaseTexture8 *)CurrentTexture);
       i1 = orig::Movie_GetCurrentTexture((uint32_t *)g_pMovie);
-      result = (*(int (__stdcall **)(int, uint32_t, uint8_t *))(*(uint32_t *)i1 + 56))(i1, 0, u1);
+      result = (*(int (__stdcall **)(int, uint32_t, uint8_t *))(*(uint32_t *)i1 + 56))(i1, 0, frame.u1);
       if ( result >= 0 )
       {
         rcLeft = (long long)(((double)rcLeft + *scale) * scale[1]);
         rcRight = (long long)(((double)rcRight + *scale) * scale[1]);
         rcBottom = (long long)(((double)rcBottom + scale[2]) * scale[3]);
         rcTop = (long long)(((double)rcTop + scale[2]) * scale[3]);
-        f3 = 0.0;
-        i3 = 1065353216;
-        *(float *)&i2 = (float)rcLeft;
-        i4 = -2139062144;
-        i5 = 0;
-        i6 = 1065353216;
-        f6 = 0.0;
-        f2 = (float)rcTop;
-        i7 = 1065353216;
-        i8 = -2139062144;
-        i9 = 1065353216;
-        i10 = 1065353216;
-        f1 = (float)rcRight;
-        f4 = f1;
-        f8 = 0.0;
-        f5 = f2;
-        f9 = f1;
-        i11 = i2;
-        i12 = 1065353216;
-        i13 = -2139062144;
-        i14 = 0;
-        i15 = 0;
-        f7 = (float)rcBottom;
-        f10 = f7;
-        i16 = 0;
-        i17 = 1065353216;
-        i18 = -2139062144;
-        i19 = 1065353216;
-        i20 = 0;
+        frame.f3 = 0.0;
+        frame.i3 = 1065353216;
+        *(float *)&frame.i2 = (float)rcLeft;
+        frame.i4 = -2139062144;
+        frame.i5 = 0;
+        frame.i6 = 1065353216;
+        frame.f6 = 0.0;
+        frame.f2 = (float)rcTop;
+        frame.i7 = 1065353216;
+        frame.i8 = -2139062144;
+        frame.i9 = 1065353216;
+        frame.i10 = 1065353216;
+        frame.f1 = (float)rcRight;
+        frame.f4 = frame.f1;
+        frame.f8 = 0.0;
+        frame.f5 = frame.f2;
+        frame.f9 = frame.f1;
+        frame.i11 = frame.i2;
+        frame.i12 = 1065353216;
+        frame.i13 = -2139062144;
+        frame.i14 = 0;
+        frame.i15 = 0;
+        frame.f7 = (float)rcBottom;
+        frame.f10 = frame.f7;
+        frame.i16 = 0;
+        frame.i17 = 1065353216;
+        frame.i18 = -2139062144;
+        frame.i19 = 1065353216;
+        frame.i20 = 0;
         orig::CDx_SetDefaultRenderState(g_pCDx);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
@@ -251,7 +253,7 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
         (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&i2, 28);
+        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&frame.i2, 28);
         orig::CDx_SetDefaultRenderState(g_pCDx);
         return (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
       }

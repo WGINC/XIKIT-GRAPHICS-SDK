@@ -385,8 +385,10 @@ XI_API uint32_t __stdcall LobbyThread_QueueMusicFile(uint32_t arg1, uint32_t arg
   char *p3;
   int i2;
   uint64_t u1;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  (&u2)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint32_t u2[16]; };   // at 0x0
+  } frame;
   
   p3 = (char *)(g_10669108 + 4);
   if (*p3 != '\0') {
@@ -397,12 +399,12 @@ XI_API uint32_t __stdcall LobbyThread_QueueMusicFile(uint32_t arg1, uint32_t arg
       i2 = 0;
       do {
         u1 = orig::Allocator_Generic_v1(0x104);
-        u2[i2] = (int)u1;
+        frame.u2[i2] = (int)u1;
         i2 = i2 + 1;
       } while (i2 < 0x10);
       i2 = 0;
       while( true ) {
-        p1 = (uint8_t *)u2[i2];
+        p1 = (uint8_t *)frame.u2[i2];
         if (p1 != (uint8_t *)0x0) {
           orig::_sprintf(p1,str__s_music_3_3u_bgw_103888DC,p3,arg1);
         }
@@ -412,7 +414,7 @@ XI_API uint32_t __stdcall LobbyThread_QueueMusicFile(uint32_t arg1, uint32_t arg
         i2 = i2 + 1;
         if (0xf < i2) goto code_10246691;
       }
-      p3 = (char *)u2[i2];
+      p3 = (char *)frame.u2[i2];
       i2 = (int)p2 - (int)p3;
       do {
         c1 = *p3;
@@ -427,8 +429,8 @@ code_10246691:
       orig::operator_delete_v1(p2);
       i2 = 0;
       do {
-        if ((LPVOID)u2[i2] != (LPVOID)0x0) {
-          orig::operator_delete_v1((LPVOID)u2[i2]);
+        if ((LPVOID)frame.u2[i2] != (LPVOID)0x0) {
+          orig::operator_delete_v1((LPVOID)frame.u2[i2]);
         }
         i2 = i2 + 1;
       } while (i2 < 0x10);

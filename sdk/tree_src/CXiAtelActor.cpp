@@ -133,80 +133,82 @@ XI_API void __cdecl Actor_DrawWorldText(uint32_t *arg1, const char *arg2, float 
   unsigned int u1;
   unsigned int *p6;
   int i;
-  alignas(16) unsigned char xi_frame[0x659];  // address-taken locals at their original offsets
-  unsigned char &c5 = *reinterpret_cast<unsigned char *>(xi_frame + 0x10);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  char * &p7 = *reinterpret_cast<char * *>(xi_frame + 0x18);
-  char * &p8 = *reinterpret_cast<char * *>(xi_frame + 0x1C);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0x24);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float (&f19)[12] = *reinterpret_cast<float (*)[12]>(xi_frame + 0x54);
-  uint32_t (&u3)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x84);
-  uint16_t (&u4)[144] = *reinterpret_cast<uint16_t (*)[144]>(xi_frame + 0xC4);
-  char (&val1)[8] = *reinterpret_cast<char (*)[8]>(xi_frame + 0x1E4);
-  char &c6 = *reinterpret_cast<char *>(xi_frame + 0x1EC);
-  char &c7 = *reinterpret_cast<char *>(xi_frame + 0x1F4);
-  char &c8 = *reinterpret_cast<char *>(xi_frame + 0x254);
-  char &c9 = *reinterpret_cast<char *>(xi_frame + 0x258);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x659];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; unsigned char c5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i16; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; int i17; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f7; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; int i18; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; int i19; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f8; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x18]; float f9; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_9[0x18]; int i20; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_10[0x18]; char * p7; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_11[0x1C]; char * p8; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_12[0x1C]; float f10; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_13[0x20]; int i21; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_14[0x20]; int i22; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_15[0x24]; unsigned int u2; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_16[0x28]; float f11; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_17[0x2C]; int i23; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_18[0x30]; float f12; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_19[0x34]; float f13; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_20[0x38]; float f14; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_21[0x3C]; int i24; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_22[0x40]; float f15; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_23[0x44]; int i25; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_24[0x48]; float f16; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_25[0x4C]; float f17; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_26[0x50]; float f18; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_27[0x54]; float f19[12]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_28[0x84]; uint32_t u3[16]; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_29[0xC4]; uint16_t u4[144]; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_30[0x1E4]; char val1[8]; };   // at 0x1E4
+    struct __attribute__((packed)) { unsigned char pad_31[0x1EC]; char c6; };   // at 0x1EC
+    struct __attribute__((packed)) { unsigned char pad_32[0x1F4]; char c7; };   // at 0x1F4
+    struct __attribute__((packed)) { unsigned char pad_33[0x254]; char c8; };   // at 0x254
+    struct __attribute__((packed)) { unsigned char pad_34[0x258]; char c9; };   // at 0x258
+  } frame;
   bool xi_fpu_unord = false;
 
-  orig::fn_10027990((Iostream_init *)u3);
-  f12 = 0.0;
-  f13 = 0.0;
-  f14 = 0.0;
-  i24 = 1065353216;
-  orig::Mat4_SetIdentity(u3);
-  orig::Mat4_SetTranslation(u3, arg1);
-  orig::CDx_SetTransform(g_pCDx, 256, u3);
-  orig::Gfx_ProjectWorldToClip(&f12, &f12);
-  (xi_fpu_unord = __builtin_isunordered(f14, 1.0), b1 = f14 < 1.0);
+  orig::fn_10027990((Iostream_init *)frame.u3);
+  frame.f12 = 0.0;
+  frame.f13 = 0.0;
+  frame.f14 = 0.0;
+  frame.i24 = 1065353216;
+  orig::Mat4_SetIdentity(frame.u3);
+  orig::Mat4_SetTranslation(frame.u3, arg1);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u3);
+  orig::Gfx_ProjectWorldToClip(&frame.f12, &frame.f12);
+  (xi_fpu_unord = __builtin_isunordered(frame.f14, 1.0), b1 = frame.f14 < 1.0);
   c1 = 0;
-  b2 = f14 == 1.0;
-  f16 = f14;
-  if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 && !(f14 < 0.0) )
+  b2 = frame.f14 == 1.0;
+  frame.f16 = frame.f14;
+  if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 && !(frame.f14 < 0.0) )
   {
-    orig::Gfx_NdcToScreen(&f12);
-    orig::Vec2_AddScalar(&f12, -0.5);
-    f8 = f12 >= 0.0 ? f12 : -f12;
-    if ( !((double)(unsigned short)orig::Camera_GetViewportWidth() + 100.0 < f8) )
+    orig::Gfx_NdcToScreen(&frame.f12);
+    orig::Vec2_AddScalar(&frame.f12, -0.5);
+    frame.f8 = frame.f12 >= 0.0 ? frame.f12 : -frame.f12;
+    if ( !((double)(unsigned short)orig::Camera_GetViewportWidth() + 100.0 < frame.f8) )
     {
-      f9 = f13 >= 0.0 ? f13 : -f13;
-      if ( !((double)(unsigned short)orig::Camera_GetViewportHeight() + 100.0 < f9) )
+      frame.f9 = frame.f13 >= 0.0 ? frame.f13 : -frame.f13;
+      if ( !((double)(unsigned short)orig::Camera_GetViewportHeight() + 100.0 < frame.f9) )
       {
-        f17 = (double)(unsigned short)orig::Camera_GetViewportWidth() * 0x1.3333340000000p-9 * arg3;
+        frame.f17 = (double)(unsigned short)orig::Camera_GetViewportWidth() * 0x1.3333340000000p-9 * arg3;
         ViewportHeight = (double)(unsigned short)orig::Camera_GetViewportHeight();
         i2 = strlen(arg2);
-        i20 = i2;
-        f18 = ViewportHeight * 0x1.3333340000000p-9 * arg3;
+        frame.i20 = i2;
+        frame.f18 = ViewportHeight * 0x1.3333340000000p-9 * arg3;
         if ( i2 > 36 )
         {
           i2 = 36;
-          i20 = 36;
+          frame.i20 = 36;
         }
         i3 = 0;
         i4 = 0;
         i5 = 0;
-        i25 = 0;
+        frame.i25 = 0;
         if ( i2 > 0 )
         {
           do
@@ -214,53 +216,53 @@ XI_API void __cdecl Actor_DrawWorldText(uint32_t *arg1, const char *arg2, float 
             c2 = arg2[i5];
             if ( (unsigned char)c2 < 0xC8u || (unsigned char)c2 > 0xCDu )
             {
-              *((uint8_t *)&f19[3] + i4++) = c2;
+              *((uint8_t *)&frame.f19[3] + i4++) = c2;
               if ( c2 == -84 )
-                *((uint8_t *)&f19[3] + i4++) = -83;
+                *((uint8_t *)&frame.f19[3] + i4++) = -83;
             }
             else
             {
               i6 = (unsigned char)arg2[i5];
               ++i4;
-              c5 = *((uint8_t *)&g_1032D374 + i6);
-              *((uint8_t *)&f19[2] + i4 + 3) = *((uint8_t *)&g_1032D36C + i6);
-              if ( c5 != 0 )
+              frame.c5 = *((uint8_t *)&g_1032D374 + i6);
+              *((uint8_t *)&frame.f19[2] + i4 + 3) = *((uint8_t *)&g_1032D36C + i6);
+              if ( frame.c5 != 0 )
               {
-                i7 = c5 >> 2;
-                memset((char *)&f19[3] + i4, 0xAAu, 4 * i7);
-                p1 = (char *)&f19[i7 + 3] + i4;
-                i4 += c5;
-                memset(p1, 170, c5 & 3);
-                i2 = i20;
+                i7 = frame.c5 >> 2;
+                memset((char *)&frame.f19[3] + i4, 0xAAu, 4 * i7);
+                p1 = (char *)&frame.f19[i7 + 3] + i4;
+                i4 += frame.c5;
+                memset(p1, 170, frame.c5 & 3);
+                i2 = frame.i20;
               }
             }
             ++i5;
           }
           while ( i5 < i2 );
-          i25 = i4;
+          frame.i25 = i4;
           i3 = 0;
         }
         i8 = 0;
         i9 = 0;
-        i18 = 0;
-        f15 = 0.0;
+        frame.i18 = 0;
+        frame.f15 = 0.0;
         if ( i4 > 0 )
         {
-          p2 = u4;
-          p8 = &c8;
+          p2 = frame.u4;
+          frame.p8 = &frame.c8;
           while ( 1 )
           {
-            c3 = *((uint8_t *)&f19[3] + i9);
+            c3 = *((uint8_t *)&frame.f19[3] + i9);
             if ( c3 < 0x20u )
             {
               *p2 = 0;
               p2[1] = 0;
-              u4[i9 + 72] = 0;
-              u4[i9 + 108] = 0;
+              frame.u4[i9 + 72] = 0;
+              frame.u4[i9 + 108] = 0;
             }
             else
             {
-              orig::ShapeMng_GetFontGlyph(g_shapeMng, c3, (int)p8, p2, &u4[i9 + 72], &u4[i9 + 108]);
+              orig::ShapeMng_GetFontGlyph(g_shapeMng, c3, (int)frame.p8, p2, &frame.u4[i9 + 72], &frame.u4[i9 + 108]);
               if ( i9 == 0 )
                 goto L1;
               if ( c3 < 0x8Eu || c3 > 0xA8u )
@@ -269,50 +271,50 @@ XI_API void __cdecl Actor_DrawWorldText(uint32_t *arg1, const char *arg2, float 
                 {
 L1:
                   if ( c3 != 0xAD )
-                    i18 += *p2;
+                    frame.i18 += *p2;
                   goto L2;
                 }
                 i11 = (long long)((double)*p2 * 0.5);
                 f1 = (double)p2[1];
                 *p2 = i11;
                 p2[1] = (long long)(f1 * 0.5);
-                i18 = (long long)((double)i11 * 0.5 + (double)i18);
+                frame.i18 = (long long)((double)i11 * 0.5 + (double)frame.i18);
               }
               else
               {
-                i16 = *p2;
-                i18 += i16 / 2;
-                i10 = (long long)((double)i16 * 0x1.99999a0000000p-1);
-                i17 = p2[1];
+                frame.i16 = *p2;
+                frame.i18 += frame.i16 / 2;
+                i10 = (long long)((double)frame.i16 * 0x1.99999a0000000p-1);
+                frame.i17 = p2[1];
                 *p2 = i10;
-                p2[1] = (long long)((double)i17 * 0x1.99999a0000000p-1);
+                p2[1] = (long long)((double)frame.i17 * 0x1.99999a0000000p-1);
               }
             }
 L2:
             ++i9;
             p2 += 2;
-            p8 += 32;
+            frame.p8 += 32;
             i3 = 0;
             if ( i9 >= i4 )
             {
-              i8 = i18;
+              i8 = frame.i18;
               break;
             }
           }
         }
         i12 = 0;
-        f7 = (double)-i8 * 0.5;
-        f10 = f7;
+        frame.f7 = (double)-i8 * 0.5;
+        frame.f10 = frame.f7;
         if ( i4 > 0 )
         {
-          p7 = &c9;
+          frame.p7 = &frame.c9;
           while ( 1 )
           {
-            c4 = *((uint8_t *)&f19[3] + i12);
+            c4 = *((uint8_t *)&frame.f19[3] + i12);
             if ( c4 == 10 )
             {
-              f10 = f7;
-              f15 = f15 + 8.0;
+              frame.f10 = frame.f7;
+              frame.f15 = frame.f15 + 8.0;
               goto L3;
             }
             if ( i12 == 0 )
@@ -322,48 +324,48 @@ L2:
               if ( c4 != 0xAA )
                 break;
               f2 = 1.0;
-              i19 = (short)u4[2 * i12];
-              i21 = (short)u4[2 * i12 + 1];
-              i23 = -i19;
-              f3 = (double)i19 * 0.5;
+              frame.i19 = (short)frame.u4[2 * i12];
+              frame.i21 = (short)frame.u4[2 * i12 + 1];
+              frame.i23 = -frame.i19;
+              f3 = (double)frame.i19 * 0.5;
             }
             else
             {
               f2 = 0x1.99999a0000000p-1;
-              i19 = (short)u4[2 * i12];
-              i23 = i19 / -2;
-              f3 = (double)i19 * 0.625;
-              i21 = (short)u4[2 * i12 + 1] / 2;
+              frame.i19 = (short)frame.u4[2 * i12];
+              frame.i23 = frame.i19 / -2;
+              f3 = (double)frame.i19 * 0.625;
+              frame.i21 = (short)frame.u4[2 * i12 + 1] / 2;
             }
 L4:
-            (*(uint32_t *)&(f11)) = (short)u4[i12 + 72];
-            p3 = (int *)p7;
-            f4 = (double)(*(int32_t *)&(f11)) + (double)i23;
-            (*(uint32_t *)&(f11)) = (short)u4[i12 + 108];
-            p4 = (float *)&c6;
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[i12 + 72];
+            p3 = (int *)frame.p7;
+            f4 = (double)(*(int32_t *)&(frame.f11)) + (double)frame.i23;
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[i12 + 108];
+            p4 = (float *)&frame.c6;
             p5 = (float *)&g_worldTextQuad_v0_y;
-            f5 = (double)(*(int32_t *)&(f11));
-            (*(uint32_t *)&(f11)) = (short)u4[2 * i12 + 1];
-            *(float *)&i22 = f5 + (double)i21 + f15;
-            g_worldTextQuad_v0_y = i22;
-            g_worldTextQuad_v1_y = i22;
-            f11 = (double)(*(int32_t *)&(f11)) * f2;
-            f6 = f4 + f10;
+            f5 = (double)(*(int32_t *)&(frame.f11));
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[2 * i12 + 1];
+            *(float *)&frame.i22 = f5 + (double)frame.i21 + frame.f15;
+            g_worldTextQuad_v0_y = frame.i22;
+            g_worldTextQuad_v1_y = frame.i22;
+            frame.f11 = (double)(*(int32_t *)&(frame.f11)) * f2;
+            f6 = f4 + frame.f10;
             g_worldTextQuad = f6;
-            g_worldTextQuad_v1_x = (double)i19 * f2 + f6;
+            g_worldTextQuad_v1_x = (double)frame.i19 * f2 + f6;
             g_worldTextQuad_v2_x = f6;
             g_worldTextQuad_v3_x = g_worldTextQuad_v1_x;
-            g_worldTextQuad_v2_y = f11 + *(float *)&i22;
+            g_worldTextQuad_v2_y = frame.f11 + *(float *)&frame.i22;
             g_worldTextQuad_v3_y = g_worldTextQuad_v2_y;
-            f10 = f3 + f10;
+            frame.f10 = f3 + frame.f10;
             do
             {
-              f19[0] = f17 * *(p5 - 1);
-              f19[1] = f18 * *p5;
-              orig::Vec2_Add(p4 - 2, &f12, f19);
+              frame.f19[0] = frame.f17 * *(p5 - 1);
+              frame.f19[1] = frame.f18 * *p5;
+              orig::Vec2_Add(p4 - 2, &frame.f12, frame.f19);
               i13 = *(p3 - 1);
               i14 = *p3;
-              *p4 = f16;
+              *p4 = frame.f16;
               p4[1] = 1.0;
               *((uint32_t *)p4 + 3) = i13;
               *((uint32_t *)p4 + 4) = i14;
@@ -372,15 +374,15 @@ L4:
               p4 += 7;
             }
             while ( (int)p5 < (int)XI_GAME(0x10358314u) );
-            u2 = arg4;
-            if ( orig::ShapeMng_BindFontTexture(g_shapeMng, *((unsigned char *)&f19[3] + i12), &u2, &arg5) == 0 )
+            frame.u2 = arg4;
+            if ( orig::ShapeMng_BindFontTexture(g_shapeMng, *((unsigned char *)&frame.f19[3] + i12), &frame.u2, &arg5) == 0 )
               goto L5;
             i15 = arg5;
-            if ( u2 == arg5 )
+            if ( frame.u2 == arg5 )
             {
-              if ( *((uint8_t *)&f19[3] + i12) != 0x92 )
+              if ( *((uint8_t *)&frame.f19[3] + i12) != 0x92 )
                 i15 = -2139062144;
-              u2 = i15 & 0xFF00 | (uint8_t)((uint32_t)(i15) >> 16) | (((unsigned char)i15 | 0xFFFF8000) << 16);
+              frame.u2 = i15 & 0xFF00 | (uint8_t)((uint32_t)(i15) >> 16) | (((unsigned char)i15 | 0xFFFF8000) << 16);
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 96u);
             }
             else
@@ -388,39 +390,39 @@ L4:
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 0);
             }
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
-            u1 = u2;
-            p6 = (unsigned int *)&c7;
+            u1 = frame.u2;
+            p6 = (unsigned int *)&frame.c7;
             for ( i = 4; i != 0; --i )
             {
               *p6 = u1;
               p6 += 7;
             }
             (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-            orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)val1, 28);
+            orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.val1, 28);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 0);
-            i4 = i25;
+            i4 = frame.i25;
 L3:
             ++i12;
-            p7 += 32;
+            frame.p7 += 32;
             if ( i12 >= i4 )
               goto L5;
             i3 = 0;
           }
-          i19 = (short)u4[2 * i12];
+          frame.i19 = (short)frame.u4[2 * i12];
           if ( c4 == 0xAD )
           {
             f2 = 0.5;
             f3 = 0.0;
-            i21 = -2;
-            i3 = -2 - (short)u4[2 * i12];
+            frame.i21 = -2;
+            i3 = -2 - (short)frame.u4[2 * i12];
           }
           else
           {
             f2 = 1.0;
-            f3 = (double)i19;
-            i21 = 0;
+            f3 = (double)frame.i19;
+            frame.i21 = 0;
           }
-          i23 = i3;
+          frame.i23 = i3;
           goto L4;
         }
       }

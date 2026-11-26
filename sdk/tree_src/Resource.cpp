@@ -33,16 +33,18 @@ XI_API bits32 __thiscall MoRes_FindPrevious(void * self_)
 XI_API bits32 __thiscall WeatherRes_GetTimeKey(void * self_, bits32 * arg2)
 {
   uint32_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
   u1 = *(uint32_t *)((int)self_ + 0x20);
-  u3 = u1;
-  orig::unknown_libname_158(&u2);
-  orig::Time_FromHours_as_v0(&u2,((u1 >> 8 & 0xff) - 0x210) + (u1 & 0xff) * 10);
-  orig::Time_SetModulo216000Div3600(&u2,((u1 >> 0x18) - 0x210) + (u3 >> 0x10 & 0xff) * 10);
-  *arg2 = u2;
+  frame.u3 = u1;
+  orig::unknown_libname_158(&frame.u2);
+  orig::Time_FromHours_as_v0(&frame.u2,((u1 >> 8 & 0xff) - 0x210) + (u1 & 0xff) * 10);
+  orig::Time_SetModulo216000Div3600(&frame.u2,((u1 >> 0x18) - 0x210) + (frame.u3 >> 0x10 & 0xff) * 10);
+  *arg2 = frame.u2;
   return arg2;
 }
 

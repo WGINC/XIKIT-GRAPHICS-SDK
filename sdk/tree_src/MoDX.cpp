@@ -59,11 +59,11 @@ XI_API void __thiscall MoDX_Update(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API unsigned int __stdcall Gfx_CreateVertexBuffer(unsigned int arg1, int arg2, int arg3, int arg4)
 {
-  unsigned int u1;
+  unsigned int FVF;
   int i1;
-  u1 = arg1;
+  FVF = arg1;
   i1 = orig::Gfx_CalcFVFStride(arg1);
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * i1, 8, u1, D3DPOOL_MANAGED, (IDirect3DVertexBuffer8 **)(&arg1));
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * i1, 8, FVF, D3DPOOL_MANAGED, (IDirect3DVertexBuffer8 **)(&arg1));
   return arg1;
 }
 
@@ -193,20 +193,20 @@ XI_API int __thiscall Batch_DrawPrimitives(uint32_t *self_, int arg0)
   int i5;
   int i6;
   int i7;
-  int i8;
+  int StartVertex;
   i1 = 0;
-  i8 = 0;
+  StartVertex = 0;
   if ( *(self_ + 6) != 0 )
   {
-    for ( i = 0; (int)(i) < (int)(*(self_ + 3)); i8 = i1 )
+    for ( i = 0; (int)(i) < (int)(*(self_ + 3)); StartVertex = i1 )
     {
       (*(void (__stdcall **)(uint32_t, uint32_t))(**(uint32_t **)(arg0 + 3772) + 304))(*(uint32_t *)(arg0 + 3772), *(self_ + 8));
       i4 = *(uint32_t *)(arg0 + 3772);
       i2 = *(uint32_t *)i4;
       i3 = orig::Gfx_CalcFVFStride(*(self_ + 8));
       (*(void (__stdcall **)(int, uint32_t, uint32_t, int))(i2 + 332))(i4, 0, *(self_ + 1), i3);
-      orig::CDx_DrawPrimitive(*(void **)(arg0 + 3528), 5, i8, *(short *)(*(self_ + 6) + 2 * i) - 2);
-      i1 = *(short *)(*(self_ + 6) + 2 * i++) + i8;
+      orig::CDx_DrawPrimitive(*(void **)(arg0 + 3528), 5, StartVertex, *(short *)(*(self_ + 6) + 2 * i) - 2);
+      i1 = *(short *)(*(self_ + 6) + 2 * i++) + StartVertex;
     }
   }
   if ( *(self_ + 2) != 0 )

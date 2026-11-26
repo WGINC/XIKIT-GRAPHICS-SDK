@@ -7,16 +7,18 @@
 XI_API void __thiscall CYyModelDtBase_Destructor(void * self_)
 {
   int *obj1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
   *(uint8_t ***)self_ = &ptr_to_CYyModelDt_GetRuntimeClass_1032A6E0;
   if (*(uint32_t **)((int)self_ + 8) != (uint32_t *)0x0) {
-    p1 = self_;
+    frame.p1 = self_;
     orig::CMoResource_ReleaseChain_v1((void *)**(uint32_t **)((int)self_ + 8));
   }
-  p1 = *(void **)((int)self_ + 8);
-  orig::ResHandle_FreeIfUnreferenced_v1(&p1);
+  frame.p1 = *(void **)((int)self_ + 8);
+  orig::ResHandle_FreeIfUnreferenced_v1(&frame.p1);
   obj1 = *(int **)((int)self_ + 4);
   if (obj1 != (int *)0x0) {
     ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);

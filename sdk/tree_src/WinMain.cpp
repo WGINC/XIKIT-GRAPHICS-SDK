@@ -658,9 +658,11 @@ XI_API char __cdecl App_CreateRendererAndApp(void)
   uint32_t *p3;
   void *p4;
   int *p5;
-  alignas(16) unsigned char xi_frame[0x428];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x428];
+    struct __attribute__((packed)) { unsigned char pad_1[0x20]; int i1; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_2[0x24]; int i2; };   // at 0x24
+  } frame;
 
   orig::MenuMng_Init((int)g_menuMng);
   orig::ShapeMng_Init(g_shapeMng);
@@ -676,11 +678,11 @@ XI_API char __cdecl App_CreateRendererAndApp(void)
     return 0;
   *(uint32_t *)&(*(unsigned char *)((char *)p2 + 0x15C)) = xRight;
   *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x160)) = yBottom;
-  (g_pCDx->pDevice)->lpVtbl->GetBackBuffer((g_pCDx->pDevice), 0, D3DBACKBUFFER_TYPE_MONO, (IDirect3DSurface8 **)&i2);
-  (*(void (__stdcall **)(int))(*(uint32_t *)i2 + 8))(i2);
-  (g_pCDx->pDevice)->lpVtbl->GetDepthStencilSurface((g_pCDx->pDevice), (IDirect3DSurface8 **)&i1);
-  (*(void (__stdcall **)(int))(*(uint32_t *)i1 + 8))(i1);
-  if ( orig::CDx_SetDefaultRenderTargets(g_pCDx, 0, i2, i1) == 0 )
+  (g_pCDx->pDevice)->lpVtbl->GetBackBuffer((g_pCDx->pDevice), 0, D3DBACKBUFFER_TYPE_MONO, (IDirect3DSurface8 **)&frame.i2);
+  (*(void (__stdcall **)(int))(*(uint32_t *)frame.i2 + 8))(frame.i2);
+  (g_pCDx->pDevice)->lpVtbl->GetDepthStencilSurface((g_pCDx->pDevice), (IDirect3DSurface8 **)&frame.i1);
+  (*(void (__stdcall **)(int))(*(uint32_t *)frame.i1 + 8))(frame.i1);
+  if ( orig::CDx_SetDefaultRenderTargets(g_pCDx, 0, frame.i2, frame.i1) == 0 )
     return 0;
   p3 = orig::Mem_AllocDefault(68);
   if ( p3 == nullptr )
@@ -822,24 +824,26 @@ XI_API LRESULT __stdcall App_WndProc(HWND arg1, uint32_t arg2, uint32_t arg3, in
   int i6;
   uint8_t u2;
   int64_t i7;
-  char xi_frame[100] __attribute__((aligned(4)));
-  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i9 = *reinterpret_cast<int  *>(xi_frame + 4);
-  tagRECT  &val3 = *reinterpret_cast<tagRECT  *>(xi_frame + 24);
-  tagRECT  &val4 = *reinterpret_cast<tagRECT  *>(xi_frame + 40);
-  WINDOWPLACEMENT  &WStack_2c = *reinterpret_cast<WINDOWPLACEMENT  *>(xi_frame + 56);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[100];
+    struct __attribute__((packed)) { int i8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i9; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; tagRECT val3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x28]; tagRECT val4; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_5[0x38]; WINDOWPLACEMENT WStack_2c; };   // at 0x38
+  } frame;
   
   c1 = g_10456A30;
   if (arg2 < 0x47) {
     if (arg2 == 0x46) {
       if (((*(uint8_t *)(arg4 + 0x18) & 1) == 0) && (g_windowMode != 0)) {
         i2 = GetSystemMetrics(0x20);
-        i9 = GetSystemMetrics(0x21);
-        i8 = GetSystemMetrics(4);
+        frame.i9 = GetSystemMetrics(0x21);
+        frame.i8 = GetSystemMetrics(4);
         if (g_windowMode == 3) {
           i2 = 0;
-          i9 = 0;
-          i8 = 0;
+          frame.i9 = 0;
+          frame.i8 = 0;
         }
         i3 = GetSystemMetrics(0x1c);
         i7 = XI_CALL_ST0(0x10311C2Cu)(((long double)(i3 + i2 * -2) / (long double)xRight) *
@@ -847,32 +851,32 @@ XI_API LRESULT __stdcall App_WndProc(HWND arg1, uint32_t arg2, uint32_t arg3, in
         u1 = *(int *)(arg4 + 0x14) < (int)i7;
         if (u1) {
           *(int *)(arg4 + 0x10) = i2 * 2;
-          *(int *)(arg4 + 0x14) = (int)i7 + i9 * 2 + i8;
+          *(int *)(arg4 + 0x14) = (int)i7 + frame.i9 * 2 + frame.i8;
         }
         if ((c1 != '\0') || (u1)) {
-          GetWindowRect(arg1,&val3);
+          GetWindowRect(arg1,&frame.val3);
           i3 = *(int *)(arg4 + 0x10);
-          i4 = (val3.right - i3) - val3.left;
+          i4 = (frame.val3.right - i3) - frame.val3.left;
           if (i4 < 0) {
-            i4 = (i3 - val3.right) + val3.left;
+            i4 = (i3 - frame.val3.right) + frame.val3.left;
           }
           i1 = *(int *)(arg4 + 0x14);
-          i6 = (val3.bottom - i1) - val3.top;
+          i6 = (frame.val3.bottom - i1) - frame.val3.top;
           if (i6 < 0) {
-            i6 = (i1 - val3.bottom) + val3.top;
+            i6 = (i1 - frame.val3.bottom) + frame.val3.top;
           }
           u2 = (((long double)i4) != ((long double)i4)) || (((long double)i6) != ((long double)i6));
           if (((u2 || (long double)i4 < (long double)i6) != u2) || (u1)) {
             i7 = XI_CALL_ST0(0x10311C2Cu)((long double)xRight *
-                            (long double)(float)((long double)((i1 + i9 * -2) - i8) /
+                            (long double)(float)((long double)((i1 + frame.i9 * -2) - frame.i8) /
                                             (long double)(float)(long double)yBottom) +
                             (long double)(i2 * 2));
             *(int *)(arg4 + 0x10) = (int)i7;
           }
           else {
             i7 = XI_CALL_ST0(0x10311C2Cu)(((long double)(i3 + i2 * -2) / (long double)xRight) *
-                            (long double)(float)(long double)yBottom + (long double)(i9 * 2) +
-                            (long double)i8);
+                            (long double)(float)(long double)yBottom + (long double)(frame.i9 * 2) +
+                            (long double)frame.i8);
             *(int *)(arg4 + 0x14) = (int)i7;
           }
         }
@@ -922,17 +926,17 @@ L2:
             }
             if (arg3 == 1) {
               if (g_windowMode != 0) {
-                WStack_2c.length = 0x2c;
-                i5 = GetWindowPlacement(arg1,&WStack_2c);
-                if ((i5 == 0) || ((WStack_2c.showCmd != 2 && (WStack_2c.showCmd != 3)))) {
-                  GetWindowRect(arg1,&val4);
-                  val3.right = xRight;
-                  val3.bottom = yBottom;
-                  val3.left = 0;
-                  val3.top = 0;
-                  AdjustWindowRectEx(&val3,g_103505A8,0,g_103505A4);
-                  MoveWindow(arg1,val4.left,val4.top,val3.right - val3.left,
-                             val3.bottom - val3.top,1);
+                frame.WStack_2c.length = 0x2c;
+                i5 = GetWindowPlacement(arg1,&frame.WStack_2c);
+                if ((i5 == 0) || ((frame.WStack_2c.showCmd != 2 && (frame.WStack_2c.showCmd != 3)))) {
+                  GetWindowRect(arg1,&frame.val4);
+                  frame.val3.right = xRight;
+                  frame.val3.bottom = yBottom;
+                  frame.val3.left = 0;
+                  frame.val3.top = 0;
+                  AdjustWindowRectEx(&frame.val3,g_103505A8,0,g_103505A4);
+                  MoveWindow(arg1,frame.val4.left,frame.val4.top,frame.val3.right - frame.val3.left,
+                             frame.val3.bottom - frame.val3.top,1);
                 }
                 else {
                   ShowWindow(arg1,1);

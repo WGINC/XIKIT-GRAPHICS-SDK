@@ -129,11 +129,13 @@ XI_API void __stdcall ProcessorMatrix_MultiplyTo(float * arg1, int arg2, float *
   float *p4;
   float *p5;
   long double f3;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&f4)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f4[16]; };   // at 0x0
+  } frame;
   
-  i2 = arg2 - (int)f4;
-  p4 = f4;
+  i2 = arg2 - (int)frame.f4;
+  p4 = frame.f4;
   arg2 = 4;
   do {
     p3 = (float *)(i2 + (int)p4);
@@ -160,7 +162,7 @@ XI_API void __stdcall ProcessorMatrix_MultiplyTo(float * arg1, int arg2, float *
     } while (i3 != 0);
     arg2 = arg2 + -1;
   } while (arg2 != 0);
-  p4 = f4;
+  p4 = frame.f4;
   for (i2 = 0x10; i2 != 0; i2 = i2 + -1) {
     *arg1 = *p4;
     p4 = p4 + 1;

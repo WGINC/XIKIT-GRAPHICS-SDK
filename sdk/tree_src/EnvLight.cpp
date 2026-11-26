@@ -8,17 +8,19 @@ XI_API void __thiscall ZoneMap_FillDirLight(void * self_, bits32 * arg2, int arg
 {
   float *p1;
   long double f1;
-  char xi_frame[48] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[48];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x20]; uint32_t u7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_9[0x24]; uint32_t u8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_10[0x28]; uint32_t u9; };   // at 0x28
+  } frame;
   
   arg2[0xd] = 0;
   arg2[0xe] = 0;
@@ -45,31 +47,31 @@ XI_API void __thiscall ZoneMap_FillDirLight(void * self_, bits32 * arg2, int arg
     goto code_10188DD7;
   }
   if (arg3 == 0) {
-    orig::Vec4_Copy_v1(&u1,(uint32_t *)&g_1065CA34);
-    orig::Vec4_Copy_v1(&u7,(uint32_t *)((int)self_ + 0x14c));
+    orig::Vec4_Copy_v1(&frame.u1,(uint32_t *)&g_1065CA34);
+    orig::Vec4_Copy_v1(&frame.u7,(uint32_t *)((int)self_ + 0x14c));
     f1 = orig::ZoneMap_GetFloatRef18Plus44(self_);
     p1 = (float *)((int)self_ + 0x16c);
 code_10188D82:
-    orig::Vec3_Scale_v1(&f2,p1,(float)f1);
+    orig::Vec3_Scale_v1(&frame.f2,p1,(float)f1);
   }
   else if (arg3 == 1) {
-    orig::Vec4_Copy_v1(&u1,(uint32_t *)&g_1065CA34);
-    orig::Vec4_Copy_v1(&u7,(uint32_t *)((int)self_ + 0x17c));
+    orig::Vec4_Copy_v1(&frame.u1,(uint32_t *)&g_1065CA34);
+    orig::Vec4_Copy_v1(&frame.u7,(uint32_t *)((int)self_ + 0x17c));
     f1 = orig::game_10186F60(self_);
     p1 = (float *)((int)self_ + 0x19c);
     goto code_10188D82;
   }
-  arg2[1] = f2;
-  arg2[2] = u5;
-  arg2[3] = u6;
-  arg2[9] = u1;
-  arg2[10] = u2;
-  arg2[0xb] = u3;
-  arg2[0xc] = u4;
+  arg2[1] = frame.f2;
+  arg2[2] = frame.u5;
+  arg2[3] = frame.u6;
+  arg2[9] = frame.u1;
+  arg2[10] = frame.u2;
+  arg2[0xb] = frame.u3;
+  arg2[0xc] = frame.u4;
   arg2[4] = 0x3f800000;
-  arg2[0x10] = u7;
-  arg2[0x11] = u8;
-  arg2[0x12] = u9;
+  arg2[0x10] = frame.u7;
+  arg2[0x11] = frame.u8;
+  arg2[0x12] = frame.u9;
 code_10188DD7:
   arg2[5] = 0;
   arg2[6] = 0;
@@ -98,13 +100,15 @@ XI_API uint32_t * __thiscall Env_ComputeAmbient(char *self_, uint32_t *arg2, int
   bool b5; // c0
   char c3; // c2
   bool b6; // c3
-  alignas(16) unsigned char xi_frame[0x424];  // address-taken locals at their original offsets
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0xC);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float (&f7)[2] = *reinterpret_cast<float (*)[2]>(xi_frame + 0x1C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x424];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f7[2]; };   // at 0x1C
+  } frame;
   int i4;
   bool xi_fpu_unord = false;
 
@@ -120,47 +124,47 @@ XI_API uint32_t * __thiscall Env_ComputeAmbient(char *self_, uint32_t *arg2, int
         {
           ColorPtr84 = (float *)orig::Env_GetColorPtr84(self_);
           f1 = ColorPtr84[2];
-          f4 = ColorPtr84[2];
-          f2 = *ColorPtr84;
-          f3 = ColorPtr84[1];
+          frame.f4 = ColorPtr84[2];
+          frame.f2 = *ColorPtr84;
+          frame.f3 = ColorPtr84[1];
         }
         else
         {
-          f1 = f4;
+          f1 = frame.f4;
         }
       }
       else
       {
         AmbientColorPtr = (float *)orig::Env_GetAmbientColorPtr(self_);
         f1 = AmbientColorPtr[2];
-        f4 = AmbientColorPtr[2];
-        f2 = *AmbientColorPtr;
-        f3 = AmbientColorPtr[1];
+        frame.f4 = AmbientColorPtr[2];
+        frame.f2 = *AmbientColorPtr;
+        frame.f3 = AmbientColorPtr[1];
       }
-      if ( g_windowMode != 0 && f2 < 0x1.99999a0000000p-1 && f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
+      if ( g_windowMode != 0 && frame.f2 < 0x1.99999a0000000p-1 && frame.f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
       {
-        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &f5, &f6, f7);
-        f2 = f5 * f2;
-        f3 = f6 * f3;
-        f1 = f7[0] * f4;
-        (xi_fpu_unord = __builtin_isunordered(f2, 1.0), b1 = f2 < 1.0);
+        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.f5, &frame.f6, frame.f7);
+        frame.f2 = frame.f5 * frame.f2;
+        frame.f3 = frame.f6 * frame.f3;
+        f1 = frame.f7[0] * frame.f4;
+        (xi_fpu_unord = __builtin_isunordered(frame.f2, 1.0), b1 = frame.f2 < 1.0);
         c1 = 0;
-        b2 = f2 == 1.0;
+        b2 = frame.f2 == 1.0;
         if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          f2 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(f3, 1.0), b3 = f3 < 1.0);
+          frame.f2 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(frame.f3, 1.0), b3 = frame.f3 < 1.0);
         c2 = 0;
-        b4 = f3 == 1.0;
+        b4 = frame.f3 == 1.0;
         if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          f3 = 1.0;
+          frame.f3 = 1.0;
         (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b5 = f1 < 1.0);
         c3 = 0;
         b6 = f1 == 1.0;
         if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
           f1 = 1.0;
       }
-      i4 = (int)(((uint32_t)(i4) & 0xFFFFu) | ((uint32_t)(uint16_t)((unsigned char)(long long)(f2 * 128.0)) << 16));
-      i4 = (int)(((uint32_t)(i4) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)((long long)(f3 * 128.0)) << 8));
+      i4 = (int)(((uint32_t)(i4) & 0xFFFFu) | ((uint32_t)(uint16_t)((unsigned char)(long long)(frame.f2 * 128.0)) << 16));
+      i4 = (int)(((uint32_t)(i4) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)((long long)(frame.f3 * 128.0)) << 8));
       i1 = (long long)(f1 * 128.0);
       i4 = (int)(((uint32_t)(i4) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i1) << 0));
       *arg2 = i4;
@@ -191,13 +195,15 @@ XI_API float * __thiscall Env_ComputeAmbientFloat4(char *self_, float *arg2)
   bool b5; // c0
   char c3; // c2
   bool b6; // c3
-  alignas(16) unsigned char xi_frame[0x420];  // address-taken locals at their original offsets
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float (&f7)[2] = *reinterpret_cast<float (*)[2]>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x420];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; float f7[2]; };   // at 0x18
+  } frame;
   bool xi_fpu_unord = false;
 
   if ( *((uint32_t *)self_ - 7) == 1 )
@@ -214,25 +220,25 @@ XI_API float * __thiscall Env_ComputeAmbientFloat4(char *self_, float *arg2)
     {
       AmbientColorPtr = (float *)orig::Env_GetAmbientColorPtr(self_);
       f1 = AmbientColorPtr[2];
-      f2 = *AmbientColorPtr;
-      f4 = AmbientColorPtr[2];
-      f3 = AmbientColorPtr[1];
-      if ( g_windowMode != 0 && f2 < 0x1.99999a0000000p-1 && f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
+      frame.f2 = *AmbientColorPtr;
+      frame.f4 = AmbientColorPtr[2];
+      frame.f3 = AmbientColorPtr[1];
+      if ( g_windowMode != 0 && frame.f2 < 0x1.99999a0000000p-1 && frame.f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
       {
-        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &f5, &f6, f7);
-        f2 = f5 * f2;
-        f3 = f6 * f3;
-        f1 = f7[0] * f4;
-        (xi_fpu_unord = __builtin_isunordered(f2, 1.0), b1 = f2 < 1.0);
+        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.f5, &frame.f6, frame.f7);
+        frame.f2 = frame.f5 * frame.f2;
+        frame.f3 = frame.f6 * frame.f3;
+        f1 = frame.f7[0] * frame.f4;
+        (xi_fpu_unord = __builtin_isunordered(frame.f2, 1.0), b1 = frame.f2 < 1.0);
         c1 = 0;
-        b2 = f2 == 1.0;
+        b2 = frame.f2 == 1.0;
         if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          f2 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(f3, 1.0), b3 = f3 < 1.0);
+          frame.f2 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(frame.f3, 1.0), b3 = frame.f3 < 1.0);
         c2 = 0;
-        b4 = f3 == 1.0;
+        b4 = frame.f3 == 1.0;
         if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          f3 = 1.0;
+          frame.f3 = 1.0;
         (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b5 = f1 < 1.0);
         c3 = 0;
         b6 = f1 == 1.0;
@@ -240,8 +246,8 @@ XI_API float * __thiscall Env_ComputeAmbientFloat4(char *self_, float *arg2)
           f1 = 1.0;
       }
       arg2[3] = 0.0;
-      *arg2 = f2 * 0.5;
-      arg2[1] = f3 * 0.5;
+      *arg2 = frame.f2 * 0.5;
+      arg2[1] = frame.f3 * 0.5;
       arg2[2] = f1 * 0.5;
       return arg2;
     }

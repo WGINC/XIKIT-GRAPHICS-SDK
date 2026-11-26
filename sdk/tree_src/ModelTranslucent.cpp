@@ -15,18 +15,18 @@ XI_API uint32_t * __cdecl Model_CreateTranslucentTargets(void)
 {
   unsigned short ViewportWidth;
   uint32_t *result;
-  unsigned short u1;
+  unsigned short width;
   unsigned short ViewportHeight;
-  unsigned short u2;
+  unsigned short height;
   ViewportHeight = orig::Camera_GetViewportHeight();
   ViewportWidth = orig::Camera_GetViewportWidth();
   pTexture = (IDirect3DTexture8 *)orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &g_translucentTarget, 1, 0);
   result = g_pEnv;
   if ( g_pEnv[6] != 0 )
   {
-    u2 = orig::Camera_GetViewportHeight();
-    u1 = orig::Camera_GetViewportWidth();
-    result = orig::CDx_CreateTexture(g_pCDx, u1, u2, &g_translucentDepth, 1, 0);
+    height = orig::Camera_GetViewportHeight();
+    width = orig::Camera_GetViewportWidth();
+    result = orig::CDx_CreateTexture(g_pCDx, width, height, &g_translucentDepth, 1, 0);
     g_translucentTargetEye2 = (int)result;
   }
   else
@@ -232,8 +232,10 @@ XI_API void __thiscall TexRes_LoadBm2(void * self_)
 {
   uint8_t u1;
   void *p1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&u2)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u2[16]; };   // at 0x0
+  } frame;
   
   p1 = self_;
   switch(xi_sw((*(uint8_t *)((int)self_ + 0x30) & 0x70) >> 4)) {
@@ -251,8 +253,8 @@ XI_API void __thiscall TexRes_LoadBm2(void * self_)
   }
   orig::ErrorReport_NoOpVarargsA_v1(c_dxtFourCCs + 0x28,(u1 & 0x70) >> 4,p1);
 L1:
-  orig::Util_Copy16Bytes_v1(u2,(int)self_ + 0x31);
-  p1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)u2,(int)self_,0);
+  orig::Util_Copy16Bytes_v1(frame.u2,(int)self_ + 0x31);
+  p1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)frame.u2,(int)self_,0);
   if (p1 == (void *)0x0) {
     p1 = (void *)orig::Mem_AllocDefault_v1(0x48);
     if (p1 == (void *)0x0) {

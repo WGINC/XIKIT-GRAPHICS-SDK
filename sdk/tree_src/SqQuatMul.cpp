@@ -20,14 +20,16 @@ XI_API void __cdecl SqQuatMul_RotateVec(float * arg1, float * arg2, float * arg3
   long double f2;
   long double f3;
   long double f4;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f8; };   // at 0xC
+  } frame;
   
-  orig::SqQuat_Copy_v1(&f5,arg2);
-  orig::SqQuatMul_NegateInPlace(&f5);
+  orig::SqQuat_Copy_v1(&frame.f5,arg2);
+  orig::SqQuatMul_NegateInPlace(&frame.f5);
   f1 = (arg2[3] * *arg3 + arg3[2] * arg2[1]) -
           arg3[1] * arg2[2];
   f2 = (arg2[3] * arg3[1] + arg2[2] * *arg3) -
@@ -36,15 +38,15 @@ XI_API void __cdecl SqQuatMul_RotateVec(float * arg1, float * arg2, float * arg3
           *arg3 * arg2[1];
   f4 = (-(*arg2 * *arg3) - arg3[1] * arg2[1]) -
           arg2[2] * arg3[2];
-  *arg1 = (float)((f8 * f1 +
-                     f7 * f2 + f5 * f4) -
-                    f6 * f3);
-  arg1[1] = (float)((f8 * f2 +
-                       f5 * f3 + f6 * f4) -
-                      f7 * f1);
-  arg1[2] = (float)((f6 * f1 +
-                       f8 * f3 + f7 * f4) -
-                      f5 * f2);
+  *arg1 = (float)((frame.f8 * f1 +
+                     frame.f7 * f2 + frame.f5 * f4) -
+                    frame.f6 * f3);
+  arg1[1] = (float)((frame.f8 * f2 +
+                       frame.f5 * f3 + frame.f6 * f4) -
+                      frame.f7 * f1);
+  arg1[2] = (float)((frame.f6 * f1 +
+                       frame.f8 * f3 + frame.f7 * f4) -
+                      frame.f5 * f2);
   return;
 }
 

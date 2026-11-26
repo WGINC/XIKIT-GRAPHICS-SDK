@@ -126,15 +126,17 @@ void __thiscall CMoSpline::BuildSegmentTables(void * self)
   long double f8;
   long double f9;
   long double f10;
-  char xi_frame[24] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 8);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i6; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f11; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f12; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f13; };   // at 0x14
+  } frame;
   
-  i5 = 3;
+  frame.i5 = 3;
   p4 = (int *)((int)self + 0xc);
   do {
     p3 = (float *)*p4;
@@ -155,54 +157,54 @@ void __thiscall CMoSpline::BuildSegmentTables(void * self)
       }
     }
     p4 = p4 + 1;
-    i5 = i5 + -1;
-  } while (i5 != 0);
-  i6 = *(int *)((int)self + 0xc);
+    frame.i5 = frame.i5 + -1;
+  } while (frame.i5 != 0);
+  frame.i6 = *(int *)((int)self + 0xc);
   p3 = *(float **)((int)self + 0x18);
   i1 = *(int *)((int)self + 0x14);
   i3 = 0;
   i2 = *(int *)((int)self + 0x10);
-  f13 = 0.0f;
-  f12 = 0.0f;
-  f11 = 0.0f;
+  frame.f13 = 0.0f;
+  frame.f12 = 0.0f;
+  frame.f11 = 0.0f;
   *(uint32_t *)((int)self + 8) = 0;
-  i4 = i1;
-  i5 = i2;
+  frame.i4 = i1;
+  frame.i5 = i2;
   if (*(int *)((int)self + 4) != 1 && -1 < *(int *)((int)self + 4) + -1) {
     do {
       p3 = p3 + 1;
-      if (i6 != 0) {
-        p1 = (float *)(i6 + 8);
-        p2 = (float *)(i6 + 4);
-        i6 = i6 + 4;
-        f11 = (float)(*p1 - *p2);
+      if (frame.i6 != 0) {
+        p1 = (float *)(frame.i6 + 8);
+        p2 = (float *)(frame.i6 + 4);
+        frame.i6 = frame.i6 + 4;
+        frame.f11 = (float)(*p1 - *p2);
       }
       if (i2 != 0) {
         p1 = (float *)(i2 + 8);
         p2 = (float *)(i2 + 4);
         i2 = i2 + 4;
-        f12 = (float)(*p1 - *p2);
-        i5 = i2;
+        frame.f12 = (float)(*p1 - *p2);
+        frame.i5 = i2;
       }
       if (i1 != 0) {
         p1 = (float *)(i1 + 8);
         p2 = (float *)(i1 + 4);
         i1 = i1 + 4;
-        f13 = (float)(*p1 - *p2);
-        i4 = i1;
+        frame.f13 = (float)(*p1 - *p2);
+        frame.i4 = i1;
       }
       if (*(char *)((int)self + 0x25) == '\0') {
-        u1 = ((f11) != (f11)) || ((0.0f) != (0.0f));
-        if (((u1 == (u1 || f11 == 0.0f)) ||
-            (u1 = ((f12) != (f12)) || ((0.0f) != (0.0f)),
-            u1 == (u1 || f12 == 0.0f))) ||
-           (u1 = ((f13) != (f13)) || ((0.0f) != (0.0f)),
-           u1 == (u1 || f13 == 0.0f))) {
-          xi_st0ret = ((long double (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x94))))((void *)(g_pProcessor_as_v1),&f11);
+        u1 = ((frame.f11) != (frame.f11)) || ((0.0f) != (0.0f));
+        if (((u1 == (u1 || frame.f11 == 0.0f)) ||
+            (u1 = ((frame.f12) != (frame.f12)) || ((0.0f) != (0.0f)),
+            u1 == (u1 || frame.f12 == 0.0f))) ||
+           (u1 = ((frame.f13) != (frame.f13)) || ((0.0f) != (0.0f)),
+           u1 == (u1 || frame.f13 == 0.0f))) {
+          xi_st0ret = ((long double (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x94))))((void *)(g_pProcessor_as_v1),&frame.f11);
           *p3 = (float)xi_st0ret;
           u1 = ((xi_st0ret) != (xi_st0ret)) || ((0.00999999977648258209228515625f) != (0.00999999977648258209228515625f));
-          i1 = i4;
-          i2 = i5;
+          i1 = frame.i4;
+          i2 = frame.i5;
           if ((u1 || xi_st0ret < 0.00999999977648258209228515625f) == u1) goto code_10063717;
         }
         *p3 = 0.00999999977648258209228515625f;

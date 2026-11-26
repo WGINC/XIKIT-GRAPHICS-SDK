@@ -30,14 +30,16 @@ XI_API void __cdecl Sq_PrintFloat4x4Indented(float * arg1, bits32 arg2, int arg3
 // GATE: PASS -- 100 trials, 61 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 61
 XI_API void __cdecl SqgxTextureImage_CompositeBlendPasses(int arg1, float arg2)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
   orig::sqgxTextureDecal_v1(1);
   orig::sqgxZMask_v1(0);
   orig::sqgxTextureUpdate_v1();
-  orig::sqgxTextureGetSize_v1(*(int *)(g_pSqgxContext_as_s32 + 0x8b0),&u2,&u1);
+  orig::sqgxTextureGetSize_v1(*(int *)(g_pSqgxContext_as_s32 + 0x8b0),&frame.u2,&frame.u1);
   if (0 < arg1) {
     do {
       orig::sqgxBlendAdd((float)(1.0f / arg2));
@@ -68,10 +70,12 @@ XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
   int i7;
   int k;
   int result;
-  alignas(16) unsigned char xi_frame[0x45C];  // address-taken locals at their original offsets
-  IDirect3DTexture8 * &p2 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x50);
-  char (&val1)[4] = *reinterpret_cast<char (*)[4]>(xi_frame + 0x54);
-  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 0x58);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x45C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x50]; IDirect3DTexture8 * p2; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_2[0x54]; char val1[4]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_3[0x58]; uint8_t * p3; };   // at 0x58
+  } frame;
   int i8;
   i1 = 10 * arg1;
   i2 = 0;
@@ -83,9 +87,9 @@ XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
          0,
          (D3DFORMAT)g_sqgxTex_format[10 * arg1],
          D3DPOOL_MANAGED,
-         &p2) != 0 )
+         &frame.p2) != 0 )
     orig::sqDebugPrintf(aErrorCouldNotL);
-  p2->LockRect(0, (D3DLOCKED_RECT *)val1, nullptr, 0);
+  frame.p2->LockRect(0, (D3DLOCKED_RECT *)frame.val1, nullptr, 0);
   i3 = g_sqgxTex_kind[10 * arg1];
   if ( i3 == 3 )
   {
@@ -100,9 +104,9 @@ XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
           i5 = i + i8 * i4;
           ++i;
           p1 = &arg2[2 * i5];
-          p3[4 * i5 + 2] = p1[i5];
-          p3[4 * i5 + 1] = p1[i5 + 1];
-          p3[4 * i5] = p1[i5 + 2];
+          frame.p3[4 * i5 + 2] = p1[i5];
+          frame.p3[4 * i5 + 1] = p1[i5 + 1];
+          frame.p3[4 * i5] = p1[i5 + 2];
         }
         ++i8;
       }
@@ -118,10 +122,10 @@ XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
       {
         i7 = j + i2 * i6;
         ++j;
-        p3[4 * i7 + 3] = arg2[4 * i7 + 3];
-        p3[4 * i7 + 2] = arg2[4 * i7];
-        p3[4 * i7 + 1] = arg2[4 * i7 + 1];
-        p3[4 * i7] = arg2[4 * i7 + 2];
+        frame.p3[4 * i7 + 3] = arg2[4 * i7 + 3];
+        frame.p3[4 * i7 + 2] = arg2[4 * i7];
+        frame.p3[4 * i7 + 1] = arg2[4 * i7 + 1];
+        frame.p3[4 * i7] = arg2[4 * i7 + 2];
       }
       ++i2;
     }
@@ -138,10 +142,10 @@ XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
     }
     g_pDancerDevice->SetPaletteEntries(0, sqgxTextureCreateFromImage_static_D218);
     g_pDancerDevice->SetCurrentTexturePalette(0);
-    memcpy(p3, arg2, g_sqgxTex_width[i1] * g_sqgxTex_height[i1]);
+    memcpy(frame.p3, arg2, g_sqgxTex_width[i1] * g_sqgxTex_height[i1]);
   }
-  result = p2->UnlockRect(0);
-  (&g_sqgxTex_texture)[i1] = p2;
+  result = frame.p2->UnlockRect(0);
+  (&g_sqgxTex_texture)[i1] = frame.p2;
   return result;
 }
 
@@ -153,8 +157,8 @@ XI_API int __cdecl sqgxTextureAddZ(int arg1, int arg2, int arg3)
   int *p1;
   int i2;
   IDirect3DDevice8 *p2;
-  int i3;
-  int i4;
+  int Width;
+  int Height;
   int i5;
   i1 = 0;
   i5 = 0;
@@ -200,13 +204,13 @@ XI_API int __cdecl sqgxTextureAddZ(int arg1, int arg2, int arg3)
     }
     p2 = g_pDancerDevice;
     g_sqgxTex_format[10 * i1] = i5;
-    i4 = g_sqgxTex_height[10 * i1];
-    i3 = g_sqgxTex_width[10 * i1];
+    Height = g_sqgxTex_height[10 * i1];
+    Width = g_sqgxTex_width[10 * i1];
     (&g_sqgxTex_texture)[10 * i1] = nullptr;
     if ( p2->lpVtbl->CreateDepthStencilSurface(
            p2,
-           i3,
-           i4,
+           Width,
+           Height,
            (D3DFORMAT)i5,
            D3DMULTISAMPLE_NONE,
            (IDirect3DSurface8 **)&g_sqgxTex_surface[i2]) == -2005530516 )

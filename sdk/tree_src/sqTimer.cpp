@@ -9,9 +9,11 @@ XI_API int __cdecl SqTimer_GetMicroseconds(void)
   int i1;
   BOOL i2;
   int64_t i3;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+  } frame;
   
   if (g_103B27E8 != 0) {
     i2 = QueryPerformanceFrequency((LARGE_INTEGER *)&g_1099CEE0_as_v0);
@@ -24,11 +26,11 @@ XI_API int __cdecl SqTimer_GetMicroseconds(void)
     g_103B27E8 = 0;
     return g_1099CEF0;
   }
-  QueryPerformanceCounter(&i4);
+  QueryPerformanceCounter(&frame.i4);
   i1 = g_1099CEE8;
-  g_1099CEE8 = i4;
-  g_1099CEEC = u1;
-  i3 = XI_CALL_ST0(0x10311C2Cu)((1e+06f / g_1099CEE0_as_v0) * (i4 - i1));
+  g_1099CEE8 = frame.i4;
+  g_1099CEEC = frame.u1;
+  i3 = XI_CALL_ST0(0x10311C2Cu)((1e+06f / g_1099CEE0_as_v0) * (frame.i4 - i1));
   g_1099CEF0 = g_1099CEF0 + (int)i3;
   return g_1099CEF0;
 }

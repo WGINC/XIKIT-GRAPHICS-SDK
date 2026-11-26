@@ -20,7 +20,7 @@ the game (0: it has one). The graphics system is the functions with a depth.
 
 The kit does not swap reconstructed code into the game. Every hook's `previous` is the game's own code.
 
-A first mod, step by step: `TUTORIAL.md`. Every declaration of the headers with its comment: `API.md` (made by the
+How to read the tree's code (its names, types and helpers): `TREE.md`. A first mod, step by step: `TUTORIAL.md`. Every declaration of the headers with its comment: `API.md` (made by the
 analysis repository's `sdk/api_reference.py`). What stays the same between kit versions: `COMPATIBILITY.md`.
 
 ## What you need

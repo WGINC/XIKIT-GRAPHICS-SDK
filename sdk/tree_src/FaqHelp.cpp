@@ -160,17 +160,19 @@ XI_API unsigned char __thiscall FaqHelp_SaveToDat(void * self_, char * arg2)
   uint32_t u1;
   int i2;
   uint32_t *p1;
-  char xi_frame[2880] __attribute__((aligned(4)));
-  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
-  uint32_t  (&u3)[648] = *reinterpret_cast<uint32_t  (*)[648]>(xi_frame + 288);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[2880];
+    struct __attribute__((packed)) { uint8_t u2[288]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x120]; uint32_t u3[648]; };   // at 0x120
+  } frame;
   
   i1 = 0;
-  p1 = u3;
+  p1 = frame.u3;
   for (i2 = 0x288; i2 != 0; i2 = i2 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  p1 = u3;
+  p1 = frame.u3;
   do {
     i2 = i1 + 0x1368;
     i1 = i1 + 1;
@@ -178,9 +180,9 @@ XI_API unsigned char __thiscall FaqHelp_SaveToDat(void * self_, char * arg2)
     p1 = p1 + 8;
   } while (i1 < 0x51);
   if ((arg2 != (char *)0x0) && (*arg2 != '\0')) {
-    orig::TextInputFiles_DatEntryCtor(u2,0xa200101,arg2,u3,0xa20,0,0,1);
-    u1 = orig::XI_CRYPT_101B9A10(u2);
-    orig::TextInputFiles_ClearVtable(u2);
+    orig::TextInputFiles_DatEntryCtor(frame.u2,0xa200101,arg2,frame.u3,0xa20,0,0,1);
+    u1 = orig::XI_CRYPT_101B9A10(frame.u2);
+    orig::TextInputFiles_ClearVtable(frame.u2);
     return ((uint8_t)(to_bits32(u1) >> 0));
   }
   return false;
@@ -194,17 +196,19 @@ XI_API bits32 __thiscall FaqHelp_LoadFromDat(void * self_, char * arg2, bits32 x
   short *p2;
   uint8_t *p3;
   int i1;
-  char xi_frame[2880] __attribute__((aligned(4)));
-  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
-  uint8_t  (&u2)[2592] = *reinterpret_cast<uint8_t  (*)[2592]>(xi_frame + 288);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[2880];
+    struct __attribute__((packed)) { uint8_t u1[288]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x120]; uint8_t u2[2592]; };   // at 0x120
+  } frame;
   
   if ((arg2 != (char *)0x0) && (*arg2 != '\0')) {
-    orig::TextInputFiles_DatEntryCtor(u1,0xa200101,arg2,u2,0xa20,0,0,1);
-    arg2 = (char *)orig::XI_CRYPT_101B9BC0(u1,0);
+    orig::TextInputFiles_DatEntryCtor(frame.u1,0xa200101,arg2,frame.u2,0xa20,0,0,1);
+    arg2 = (char *)orig::XI_CRYPT_101B9BC0(frame.u1,0);
     if ((char)arg2 != '\0') {
       p1 = (uint8_t *)((int)self_ + 0x1368);
       p2 = (short *)((int)self_ + 0x80);
-      p3 = u2;
+      p3 = frame.u2;
       i1 = 0x51;
       do {
         if (*p2 == 0) {
@@ -218,10 +222,10 @@ XI_API bits32 __thiscall FaqHelp_LoadFromDat(void * self_, char * arg2, bits32 x
         p1 = p1 + 1;
         i1 = i1 + -1;
       } while (i1 != 0);
-      orig::TextInputFiles_ClearVtable(u1);
+      orig::TextInputFiles_ClearVtable(frame.u1);
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    orig::TextInputFiles_ClearVtable(u1);
+    orig::TextInputFiles_ClearVtable(frame.u1);
   }
   return (uint32_t)arg2 & 0xffffff00;
 }

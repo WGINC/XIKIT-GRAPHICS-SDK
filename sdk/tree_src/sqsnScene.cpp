@@ -560,22 +560,24 @@ XI_API void __cdecl sqsnSceneDraw(int arg1)
   bool b4; // c3
   void (*var2)(void);
   int i19;
-  alignas(16) unsigned char xi_frame[0x454];  // address-taken locals at their original offsets
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x50);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x454];
+    struct __attribute__((packed)) { unsigned char pad_1[0x34]; int i20; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_2[0x38]; int i21; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_3[0x3C]; int i22; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_4[0x40]; int i23; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_5[0x44]; int i24; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_6[0x48]; int i25; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_7[0x4C]; int i26; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_8[0x50]; int i27; };   // at 0x50
+  } frame;
   float *a1a;
   bool xi_fpu_unord = false;
 
   i1 = 0;
   i2 = 0;
-  i21 = 0;
-  i20 = 0;
+  frame.i21 = 0;
+  frame.i20 = 0;
   if ( *(uint32_t *)(arg1 + 20) != 0 )
   {
     i3 = 0;
@@ -604,7 +606,7 @@ XI_API void __cdecl sqsnSceneDraw(int arg1)
         --i6;
       }
       while ( i6 != 0 );
-      i20 = i2;
+      frame.i20 = i2;
       if ( i2 > 0 )
       {
         i7 = g_sceneRT[0];
@@ -638,7 +640,7 @@ XI_API void __cdecl sqsnSceneDraw(int arg1)
         i12 = i11 + *(uint32_t *)(arg1 + 72);
         if ( *(uint8_t *)(i12 + 24) != 0 && *(float *)i12 != 0.0 )
         {
-          --i20;
+          --frame.i20;
           orig::sqgxTextureDraw(g_sceneRT[i9], 1);
           orig::sqrdCamera_Apply(a1a);
           orig::sqgxMatrixCamera(*(uint32_t **)(*(uint32_t *)(arg1 + 24) + 12 * *(uint32_t *)(arg1 + 28) + 4));
@@ -648,7 +650,7 @@ XI_API void __cdecl sqsnSceneDraw(int arg1)
             orig::sqsnSceneLayerDraw((uint32_t *)arg1, i10);
           orig::sqgxTextureSet(g_sceneRT[i9]);
           i9 = 1 - i9;
-          if ( i20 != 0 )
+          if ( frame.i20 != 0 )
           {
             orig::sqgxTextureDraw(g_sceneRT[i9], 1);
           }
@@ -668,21 +670,21 @@ XI_API void __cdecl sqsnSceneDraw(int arg1)
     orig::sqgxMatrixCamera(*(uint32_t **)(*(uint32_t *)(arg1 + 24) + 12 * *(uint32_t *)(arg1 + 28) + 4));
     if ( *(float *)(arg1 + 56) < 1.0 )
     {
-      orig::sqgxTextureGetSize(g_pSqgxContext[554], &i23, &i22);
+      orig::sqgxTextureGetSize(g_pSqgxContext[554], &frame.i23, &frame.i22);
       i13 = g_sceneFadeMaskRT;
       if ( g_sceneFadeMaskRT == -1 )
       {
-        i13 = orig::sqgxTextureAdd(i23, i22, (IDirect3DTexture8 *)4, nullptr);
+        i13 = orig::sqgxTextureAdd(frame.i23, frame.i22, (IDirect3DTexture8 *)4, nullptr);
         g_sceneFadeMaskRT = i13;
       }
-      i21 = g_pSqgxContext[554];
+      frame.i21 = g_pSqgxContext[554];
       orig::sqgxTextureDraw(i13, 1);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-      i24 = 0;
-      i25 = 0;
-      i26 = 0;
-      i27 = 0;
-      orig::sqgxTextureClear((float *)&i24, 1);
+      frame.i24 = 0;
+      frame.i25 = 0;
+      frame.i26 = 0;
+      frame.i27 = 0;
+      orig::sqgxTextureClear((float *)&frame.i24, 1);
       orig::sqgxTextureStencilClear(0);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
@@ -751,20 +753,20 @@ L2:
     if ( *(float *)(arg1 + 56) < 1.0 )
     {
       orig::sqgxTextureSet(g_sceneFadeMaskRT);
-      orig::sqgxTextureDraw(i21, 1);
+      orig::sqgxTextureDraw(frame.i21, 1);
       i19 = *(uint32_t *)(arg1 + 56);
-      i24 = 1065353216;
-      i25 = 1065353216;
-      i26 = 1065353216;
-      i27 = i19;
-      orig::sqgxColor(&i24);
+      frame.i24 = 1065353216;
+      frame.i25 = 1065353216;
+      frame.i26 = 1065353216;
+      frame.i27 = i19;
+      orig::sqgxColor(&frame.i24);
       orig::sqgxBlendTrsp();
       orig::sqgxTextureDecal(2);
       orig::sqgxTextureClamp(1);
       orig::sqgxZTest(0);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILREF, 0);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESS);
-      orig::sqgxSprite(0, 0, i23, i22, 0, 0, i23, i22, 0);
+      orig::sqgxSprite(0, 0, frame.i23, frame.i22, 0, 0, frame.i23, frame.i22, 0);
       g_pDancerDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
       orig::sqgxZTest(1);
       orig::sqgxBlendOff();
@@ -989,50 +991,52 @@ XI_API void __cdecl sqsnSceneLayerSnapShotComposite(int arg1, int arg2)
   int i2;
   int i3;
   long double f1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  float  (&f2)[64] = *reinterpret_cast<float  (*)[64]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { float f2[64]; };   // at 0x0
+  } frame;
   
-  f2[0] = (-0.98712098598480224609375f);
-  f2[1] = (-0.0008849999867379665374755859375f);
-  f2[2] = (-0.78350198268890380859375f);
-  f2[3] = (-0.671986997127532958984375f);
-  f2[4] = (-0.1738030016422271728515625f);
-  f2[5] = 0.4612869918346405029296875f;
-  f2[6] = (-0.71648299694061279296875f);
-  f2[7] = 0.2858670055866241455078125f;
+  frame.f2[0] = (-0.98712098598480224609375f);
+  frame.f2[1] = (-0.0008849999867379665374755859375f);
+  frame.f2[2] = (-0.78350198268890380859375f);
+  frame.f2[3] = (-0.671986997127532958984375f);
+  frame.f2[4] = (-0.1738030016422271728515625f);
+  frame.f2[5] = 0.4612869918346405029296875f;
+  frame.f2[6] = (-0.71648299694061279296875f);
+  frame.f2[7] = 0.2858670055866241455078125f;
   i1 = *(int *)(arg1 + 0x48);
-  f2[8] = 0.917843997478485107421875f;
-  f2[9] = 0.967467010021209716796875f;
-  f2[10] = (-0.60502898693084716796875f);
+  frame.f2[8] = 0.917843997478485107421875f;
+  frame.f2[9] = 0.967467010021209716796875f;
+  frame.f2[10] = (-0.60502898693084716796875f);
   f1 = *(float *)(i1 + arg2 * 0x2c);
-  f2[0xb] = 0.14377300441265106201171875f;
-  f2[0xc] = (-0.4791100025177001953125f);
-  f2[0xd] = 0.36570298671722412109375f;
-  f2[0xe] = 0.3630180060863494873046875f;
-  f2[0xf] = (-0.60380899906158447265625f);
-  f2[0x10] = 0.36051499843597412109375f;
-  f2[0x11] = 0.8568680286407470703125f;
-  f2[0x12] = (-0.543076992034912109375f);
-  f2[0x13] = (-0.3810850083827972412109375f);
-  f2[0x14] = (-0.4420000016689300537109375f);
-  f2[0x15] = 0.53111398220062255859375f;
-  f2[0x16] = 0.04422099888324737548828125f;
-  f2[0x17] = 0.796441972255706787109375f;
-  f2[0x18] = (-0.101168997585773468017578125f);
-  f2[0x19] = (-0.18576599657535552978515625f);
-  f2[0x1a] = (-0.4992519915103912353515625f);
-  f2[0x1b] = (-0.15897099673748016357421875f);
-  f2[0x1c] = 0.526230990886688232421875f;
-  f2[0x1d] = 0.636951982975006103515625f;
-  f2[0x1e] = 0.9534900188446044921875f;
-  f2[0x1f] = 0.0f;
+  frame.f2[0xb] = 0.14377300441265106201171875f;
+  frame.f2[0xc] = (-0.4791100025177001953125f);
+  frame.f2[0xd] = 0.36570298671722412109375f;
+  frame.f2[0xe] = 0.3630180060863494873046875f;
+  frame.f2[0xf] = (-0.60380899906158447265625f);
+  frame.f2[0x10] = 0.36051499843597412109375f;
+  frame.f2[0x11] = 0.8568680286407470703125f;
+  frame.f2[0x12] = (-0.543076992034912109375f);
+  frame.f2[0x13] = (-0.3810850083827972412109375f);
+  frame.f2[0x14] = (-0.4420000016689300537109375f);
+  frame.f2[0x15] = 0.53111398220062255859375f;
+  frame.f2[0x16] = 0.04422099888324737548828125f;
+  frame.f2[0x17] = 0.796441972255706787109375f;
+  frame.f2[0x18] = (-0.101168997585773468017578125f);
+  frame.f2[0x19] = (-0.18576599657535552978515625f);
+  frame.f2[0x1a] = (-0.4992519915103912353515625f);
+  frame.f2[0x1b] = (-0.15897099673748016357421875f);
+  frame.f2[0x1c] = 0.526230990886688232421875f;
+  frame.f2[0x1d] = 0.636951982975006103515625f;
+  frame.f2[0x1e] = 0.9534900188446044921875f;
+  frame.f2[0x1f] = 0.0f;
   i2 = 0;
   do {
     i3 = i2 + 8;
-    *(float *)((int)f2 + i2 + 0x80) =
-         (float)(f1 * *(float *)((int)f2 + i2));
-    *(float *)((int)f2 + i2 + 0x84) =
-         (float)(f1 * *(float *)((int)f2 + i2 + 4));
+    *(float *)((int)frame.f2 + i2 + 0x80) =
+         (float)(f1 * *(float *)((int)frame.f2 + i2));
+    *(float *)((int)frame.f2 + i2 + 0x84) =
+         (float)(f1 * *(float *)((int)frame.f2 + i2 + 4));
     i2 = i3;
   } while (i3 < 0x80);
   i1 = *(int *)(i1 + arg2 * 0x2c + 0x10);
@@ -1057,14 +1061,16 @@ XI_API void __cdecl sqsnSceneLayerSort(int arg1, int arg2)
   int i4;
   int i5;
   uint8_t u1;
-  char xi_frame[2156] __attribute__((aligned(4)));
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  (&f1)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 4);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  (&f3)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 16);
-  float  (&f4)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 28);
-  float  (&f5)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 92);
-  float  (&f6)[500] = *reinterpret_cast<float  (*)[500]>(xi_frame + 156);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[2156];
+    struct __attribute__((packed)) { int i6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f1[2]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f3[3]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; float f4[16]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x5C]; float f5[16]; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_7[0x9C]; float f6[500]; };   // at 0x9C
+  } frame;
   
   i5 = arg2 * 0x2c;
   orig::sqgxMatrixCamera_v1(*(uint32_t **)
@@ -1075,16 +1081,16 @@ XI_API void __cdecl sqsnSceneLayerSort(int arg1, int arg2)
   if (0 < *(int *)(i5 + 4 + i2)) {
     i4 = 0;
     do {
-      orig::SqBounds_GetCenter((float *)(*(int *)(*(int *)(i5 + i2 + 0x28) + i4) + 0x14),f3);
+      orig::SqBounds_GetCenter((float *)(*(int *)(*(int *)(i5 + i2 + 0x28) + i4) + 0x14),frame.f3);
       orig::sqgxMatrixShape_v1(*(uint32_t **)
                        (*(int *)(i5 + 0x28 + *(int *)(arg1 + 0x48)) + 4 + i4));
-      orig::sqMatrix4_10280140_v1(f4,(float *)(g_pSqgxContext_as_s32 + 0x1c8),
+      orig::sqMatrix4_10280140_v1(frame.f4,(float *)(g_pSqgxContext_as_s32 + 0x1c8),
                          (float *)(g_pSqgxContext_as_s32 + 0x208));
-      orig::M4fTranspose_v1(f5,f4);
-      orig::M4fTransform_v1(f1,f5,f3);
+      orig::M4fTranspose_v1(frame.f5,frame.f4);
+      orig::M4fTransform_v1(frame.f1,frame.f5,frame.f3);
       i2 = *(int *)(arg1 + 0x48);
       i1 = *(int *)(i5 + 4 + i2);
-      f6[i3] = (float)-f2;
+      frame.f6[i3] = (float)-frame.f2;
       i3 = i3 + 1;
       i4 = i4 + 0x90;
     } while (i3 < i1);
@@ -1100,22 +1106,22 @@ XI_API void __cdecl sqsnSceneLayerSort(int arg1, int arg2)
   }
   i2 = 1;
   if (1 < *(int *)(i5 + 4 + *(int *)(arg1 + 0x48))) {
-    i6 = 4;
+    frame.i6 = 4;
     do {
       i3 = 0;
-      if (0 < i6) {
+      if (0 < frame.i6) {
         do {
           if (((i3 + -1 < 0) ||
               (i4 = *(int *)(i5 + 0x24 + *(int *)(arg1 + 0x48)),
-              u1 = ((f6[*(int *)(i6 + i4)]) != (f6[*(int *)(i6 + i4)])) ||
-                      ((f6[*(int *)(i4 + -4 + i3 * 4)]) != (f6[*(int *)(i4 + -4 + i3 * 4)])),
-              (u1 || f6[*(int *)(i6 + i4)] <
-                        f6[*(int *)(i4 + -4 + i3 * 4)]) != u1)) &&
+              u1 = ((frame.f6[*(int *)(frame.i6 + i4)]) != (frame.f6[*(int *)(frame.i6 + i4)])) ||
+                      ((frame.f6[*(int *)(i4 + -4 + i3 * 4)]) != (frame.f6[*(int *)(i4 + -4 + i3 * 4)])),
+              (u1 || frame.f6[*(int *)(frame.i6 + i4)] <
+                        frame.f6[*(int *)(i4 + -4 + i3 * 4)]) != u1)) &&
              (i4 = *(int *)(i5 + 0x24 + *(int *)(arg1 + 0x48)), i1 = i2,
-             (!((f6[*(int *)(i6 + i4)]) != (f6[*(int *)(i6 + i4)])) &&
-             !((f6[*(int *)(i4 + i3 * 4)]) != (f6[*(int *)(i4 + i3 * 4)]))) &&
-             f6[*(int *)(i4 + i3 * 4)] <
-             f6[*(int *)(i6 + i4)])) {
+             (!((frame.f6[*(int *)(frame.i6 + i4)]) != (frame.f6[*(int *)(frame.i6 + i4)])) &&
+             !((frame.f6[*(int *)(i4 + i3 * 4)]) != (frame.f6[*(int *)(i4 + i3 * 4)]))) &&
+             frame.f6[*(int *)(i4 + i3 * 4)] <
+             frame.f6[*(int *)(frame.i6 + i4)])) {
             for (; i3 < i1; i1 = i1 + -1) {
               i4 = *(int *)(i5 + 0x24 + *(int *)(arg1 + 0x48));
               *(uint32_t *)(i4 + i1 * 4) = *(uint32_t *)(i4 + -4 + i1 * 4);
@@ -1126,7 +1132,7 @@ XI_API void __cdecl sqsnSceneLayerSort(int arg1, int arg2)
         } while (i3 < i2);
       }
       i2 = i2 + 1;
-      i6 = i6 + 4;
+      frame.i6 = frame.i6 + 4;
     } while (i2 < *(int *)(i5 + 4 + *(int *)(arg1 + 0x48)));
   }
   return;

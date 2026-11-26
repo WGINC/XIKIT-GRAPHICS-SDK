@@ -24,7 +24,7 @@ unsigned int * CShader::ScalarDeletingDtor(char arg1)
 int CShader::CShader_Destructor()
 {
   int result;
-  unsigned int u1;
+  unsigned int Handle;
   result = (*(unsigned int *)((char *)this + 0x8));
   (*(void * *)&this->vftable) = &CShader_vtbl;
   if ( result != 0 )
@@ -32,8 +32,8 @@ int CShader::CShader_Destructor()
     result = (*(int (__stdcall **)(int))(*(uint32_t *)result + 8))(result);
     (*(unsigned int *)((char *)this + 0x8)) = 0;
   }
-  u1 = (*(unsigned int *)((char *)this + 0x10));
-  if ( u1 != 0 )
-    return (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), u1);
+  Handle = (*(unsigned int *)((char *)this + 0x10));
+  if ( Handle != 0 )
+    return (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), Handle);
   return result;
 }

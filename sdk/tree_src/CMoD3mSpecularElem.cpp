@@ -67,7 +67,7 @@ uint32_t * CMoD3mSpecularElem::ScalarDeletingDtor(char arg1)
 bits32 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
 {
   uint32_t u1;
-  uint32_t u2;
+  uint32_t Value;
   int i1;
   uint32_t u3;
   int64_t i2;
@@ -76,9 +76,9 @@ bits32 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
   uint8_t u4;
   uint8_t u5;
   
-  u2 = *(uint32_t *)((int)self + 0x10c) & 0xfffeffff | 0x2000000;
-  *(uint32_t *)((int)self + 0x10c) = u2;
-  u3 = ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x179))));
+  Value = *(uint32_t *)((int)self + 0x10c) & 0xfffeffff | 0x2000000;
+  *(uint32_t *)((int)self + 0x10c) = Value;
+  u3 = ((uint32_t)(((uint32_t)(xi_strunc24((Value >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x179))));
   if (*(char *)((int)self + 0x179) == '\0') {
     if (*(int **)((int)self + 0x104) == (int *)0x0) {
       i1 = 0;
@@ -90,17 +90,17 @@ bits32 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
       *(uint8_t *)((int)self + 0x1bc) = 0;
       *(uint8_t *)((int)self + 0x1bd) = 1;
     }
-    u2 = *(uint32_t *)((int)self + 0x1ac);
-    u4 = (uint8_t)(u2 >> 8);
-    u5 = (uint8_t)(u2 >> 0x18);
+    Value = *(uint32_t *)((int)self + 0x1ac);
+    u4 = (uint8_t)(Value >> 8);
+    u5 = (uint8_t)(Value >> 0x18);
     if ((*(uint8_t *)((int)self + 0x198) & 1) == 0) {
       i2 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 0x10 & 0xff) *
-                     (long double)((uint16_t)(u2 >> 0x10) & 0xff) * (long double)0.0078125f);
+                     (long double)((uint16_t)(Value >> 0x10) & 0xff) * (long double)0.0078125f);
       u1 = g_scratchValue_as_v0;
       i3 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 8 & 0xff) *
                      (long double)(((uint16_t)(((uint16_t)(uint8_t)((char)i2) << 8) | (uint8_t)(u4))) & 0xff) * (long double)0.0078125f);
-      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)(u1 & 0xff) * (long double)(u2 & 0xff) * (long double)0.0078125f);
-      u2 = ((uint32_t)(((uint32_t)(uint8_t)(u5) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)((char)i2) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)i3) << 8) | (uint8_t)((char)i4))))))) & 0xFFFFFFu)));
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)(u1 & 0xff) * (long double)(Value & 0xff) * (long double)0.0078125f);
+      Value = ((uint32_t)(((uint32_t)(uint8_t)(u5) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)((char)i2) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)i3) << 8) | (uint8_t)((char)i4))))))) & 0xFFFFFFu)));
     }
     if ((*(int **)((int)self + 0x1a8) != (int *)0x0) &&
        (*(int *)(**(int **)((int)self + 0x1a8) + 0x30) != 0)) {
@@ -111,10 +111,10 @@ bits32 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
         i1 = **(int **)((int)self + 0x1a8);
       }
       u3 = orig::TextureHolder_BindTinted
-                        ((void *)(i1 + 0x30),(int)*(char *)((int)self + 0x1bd),u2);
+                        ((void *)(i1 + 0x30),(int)*(char *)((int)self + 0x1bd),Value);
       return u3;
     }
-    u3 = orig::game_10044250((int)*(char *)((int)self + 0x1bd),u2);
+    u3 = orig::game_10044250((int)*(char *)((int)self + 0x1bd),Value);
   }
   return u3;
 }

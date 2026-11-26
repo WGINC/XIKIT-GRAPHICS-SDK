@@ -211,31 +211,33 @@ XI_API void __cdecl StAvatarScene_RotatePanZoomRoll(int arg1, int arg2, bits32 a
   long double f1;
   int i2;
   long double f2;
-  char xi_frame[68] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  (&f7)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 20);
-  float  (&f8)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 36);
-  float  (&f9)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 52);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[68];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f6; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f7[4]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; float f8[4]; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x34]; float f9[4]; };   // at 0x34
+  } frame;
   
   i2 = g_1099B0F4;
-  f3 = 1.0f;
+  frame.f3 = 1.0f;
   i1 = g_1099B0F4 * 0x7c;
   p1 = ((char *)&g_1099B33C) + i1;
   f1 = (float)(1e+06f / arg4);
   switch(xi_sw(arg3)) {
   case 1:
     if (f1 > 1e+01f) {
-      f3 = (float)(6e+01f / f1);
+      frame.f3 = (float)(6e+01f / f1);
     }
     orig::SqQuat_FromRotationY
-              (&f4,(float)(arg1 * f3 * (-0.01745329238474369049072265625f)));
+              (&frame.f4,(float)(arg1 * frame.f3 * (-0.01745329238474369049072265625f)));
     orig::SqQuat_FromRotationX
-              (f8,(float)(arg2 * f3 * 0.01745329238474369049072265625f));
-    orig::SqQuatMul_Mul(f7,&f4,(float *)(((char *)&g_1099B3A4) + i1));
-    orig::SqQuatMul_Mul((float *)(((char *)&g_1099B3A4) + i1),f7,f8);
+              (frame.f8,(float)(arg2 * frame.f3 * 0.01745329238474369049072265625f));
+    orig::SqQuatMul_Mul(frame.f7,&frame.f4,(float *)(((char *)&g_1099B3A4) + i1));
+    orig::SqQuatMul_Mul((float *)(((char *)&g_1099B3A4) + i1),frame.f7,frame.f8);
     orig::sqxfXformTD_Update((int)p1);
     return;
   case 2:
@@ -245,15 +247,15 @@ XI_API void __cdecl StAvatarScene_RotatePanZoomRoll(int arg1, int arg2, bits32 a
     if (f1 > 1e+01f) {
       f2 = (6e+01f / f1) * f2;
     }
-    orig::SqVec_SetXyz(f7,(float)(arg1 * f2),(float)(arg2 * f2)
+    orig::SqVec_SetXyz(frame.f7,(float)(arg1 * f2),(float)(arg2 * f2)
                         ,0.0f);
-    orig::SqQuatMul_RotateVec(&f4,(float *)(((char *)&g_1099B3A4) + i1),f7);
+    orig::SqQuatMul_RotateVec(&frame.f4,(float *)(((char *)&g_1099B3A4) + i1),frame.f7);
     (&g_1099B398)[i2 * 0x1f] =
-         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B398)[i2 * 0x1f]) - f4));
+         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B398)[i2 * 0x1f]) - frame.f4));
     (&g_1099B39C)[i2 * 0x1f] =
-         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B39C)[i2 * 0x1f]) - f5));
+         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B39C)[i2 * 0x1f]) - frame.f5));
     (&g_1099B3A0)[i2 * 0x1f] =
-         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B3A0)[i2 * 0x1f]) - f6));
+         bit_cast<uint32_t>((float)(bit_cast<float>((&g_1099B3A0)[i2 * 0x1f]) - frame.f6));
     orig::sqxfXformTD_Update((int)p1);
     return;
   case 3:
@@ -271,9 +273,9 @@ XI_API void __cdecl StAvatarScene_RotatePanZoomRoll(int arg1, int arg2, bits32 a
     orig::sqxfXformTD_Update((int)p1);
     return;
   case 4:
-    orig::SqQuat_FromRotationZ(f9,(float)(arg1 * (-0.01745329238474369049072265625f)));
-    orig::SqQuat_Copy(f7,(uint32_t *)(((char *)&g_1099B3A4) + i1));
-    orig::SqQuatMul_Mul((float *)(((char *)&g_1099B3A4) + i1),f7,f9);
+    orig::SqQuat_FromRotationZ(frame.f9,(float)(arg1 * (-0.01745329238474369049072265625f)));
+    orig::SqQuat_Copy(frame.f7,(uint32_t *)(((char *)&g_1099B3A4) + i1));
+    orig::SqQuatMul_Mul((float *)(((char *)&g_1099B3A4) + i1),frame.f7,frame.f9);
   }
   orig::sqxfXformTD_Update((int)p1);
   return;
@@ -301,14 +303,16 @@ XI_API void __cdecl StAvatar_UpdateAngles(int arg1, int arg2, bits32 arg3, float
 {
   int i1;
   long double f1;
-  char xi_frame[76] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  float  (&f3)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 12);
-  float  (&f4)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 28);
-  float  (&f5)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 44);
-  float  (&f6)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 60);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f3[4]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; float f4[4]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; float f5[4]; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x3C]; float f6[4]; };   // at 0x3C
+  } frame;
   
   if (((&g_1099C514)[g_1099B0F8 * 0x14] & 2) == 0) {
     f1 = 1e+06f / bit_cast<int>(arg4);
@@ -319,26 +323,26 @@ XI_API void __cdecl StAvatar_UpdateAngles(int arg1, int arg2, bits32 arg3, float
       arg4 = (float)(6e+01f / f1);
     }
     i1 = g_1099B0F4 * 0x7c;
-    f2 = *(float *)(((char *)&g_1099B35C) + i1);
-    u1 = *(uint32_t *)(((char *)&g_1099B36C) + i1);
-    u2 = *(uint32_t *)(((char *)&g_1099B37C) + i1);
-    orig::SqQuat_FromAxisAngle(f6,&f2,
+    frame.f2 = *(float *)(((char *)&g_1099B35C) + i1);
+    frame.u1 = *(uint32_t *)(((char *)&g_1099B36C) + i1);
+    frame.u2 = *(uint32_t *)(((char *)&g_1099B37C) + i1);
+    orig::SqQuat_FromAxisAngle(frame.f6,&frame.f2,
                  (float)((arg1 >> 1) * arg4 * 0.01745329238474369049072265625f));
     i1 = g_1099B0F4 * 0x7c;
-    f2 = *(float *)(((char *)&g_1099B358) + i1);
-    u1 = *(uint32_t *)(((char *)&g_1099B368) + i1);
-    u2 = *(uint32_t *)(((char *)&g_1099B378) + i1);
-    orig::SqQuat_FromAxisAngle(f5,&f2,
+    frame.f2 = *(float *)(((char *)&g_1099B358) + i1);
+    frame.u1 = *(uint32_t *)(((char *)&g_1099B368) + i1);
+    frame.u2 = *(uint32_t *)(((char *)&g_1099B378) + i1);
+    orig::SqQuat_FromAxisAngle(frame.f5,&frame.f2,
                  (float)((arg2 >> 1) * arg4 * (-0.01745329238474369049072265625f)));
     i1 = g_1099B0F8 * 0x7c;
-    orig::SqQuatMul_Mul(f3,f6,f5);
-    orig::SqQuatMul_Mul(f4,f3,(float *)(((char *)&g_1099BD1C) + i1));
-    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&g_1099BD1C) + i1),f4);
+    orig::SqQuatMul_Mul(frame.f3,frame.f6,frame.f5);
+    orig::SqQuatMul_Mul(frame.f4,frame.f3,(float *)(((char *)&g_1099BD1C) + i1));
+    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&g_1099BD1C) + i1),frame.f4);
     orig::sqxfXformTD_Update((int)(((char *)&g_1099BCB4) + i1));
     i1 = g_1099B0F8 * 0x7c;
-    orig::SqQuatMul_Mul(f3,f6,f5);
-    orig::SqQuatMul_Mul(f4,f3,(float *)(((char *)&g_1099BF88) + i1));
-    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&g_1099BF88) + i1),f4);
+    orig::SqQuatMul_Mul(frame.f3,frame.f6,frame.f5);
+    orig::SqQuatMul_Mul(frame.f4,frame.f3,(float *)(((char *)&g_1099BF88) + i1));
+    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&g_1099BF88) + i1),frame.f4);
     orig::sqxfXformTD_Update((int)(((char *)&g_1099BF20) + i1));
     orig::SqMatrix4_ScaleAxes((int)(((char *)&g_1099BF3C) + i1),0.25f,0.25f,0.25f);
   }
@@ -493,8 +497,10 @@ XI_API void __cdecl StAvatar_InitEntry(int arg1)
   uint32_t u3;
   int i1;
   int i2;
-  char xi_frame[24] __attribute__((aligned(4)));
-  float  (&f1)[6] = *reinterpret_cast<float  (*)[6]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { float f1[6]; };   // at 0x0
+  } frame;
   
   i1 = arg1 * 0x7c;
   p1 = (uint32_t *)(((char *)&g_1099BCB4) + i1);
@@ -540,9 +546,9 @@ XI_API void __cdecl StAvatar_InitEntry(int arg1)
   }
   orig::sqxfXformTD_Update((int)p2);
   orig::SqMatrix4_ScaleAxes((int)(((char *)&g_1099BF3C) + i1),0.25f,0.25f,0.25f);
-  i1 = orig::ModelMinMax_ComputeMinMax(f1);
+  i1 = orig::ModelMinMax_ComputeMinMax(frame.f1);
   if (i1 == 0) {
-    orig::StAvatar_SetEntryPosition(arg1,f1);
+    orig::StAvatar_SetEntryPosition(arg1,frame.f1);
   }
   return;
 }
@@ -559,18 +565,20 @@ XI_API void __cdecl StAvatarScene_NoOpA(void)
 XI_API void __cdecl StAvatar_SetEntryPosition(int arg1, float * arg2)
 {
   int i1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  (&f1)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1[2]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
   if (arg1 == -1) {
     arg1 = g_1099B0F8;
   }
-  orig::SqBounds_GetCenter(arg2,f1);
+  orig::SqBounds_GetCenter(arg2,frame.f1);
   i1 = arg1 * 0x7c;
-  *(float *)(((char *)&g_1099BF7C) + i1) = f1[0];
+  *(float *)(((char *)&g_1099BF7C) + i1) = frame.f1[0];
   *(uint32_t *)(((char *)&g_1099BF80) + i1) = 0;
-  *(uint32_t *)(((char *)&g_1099BF84) + i1) = u1;
+  *(uint32_t *)(((char *)&g_1099BF84) + i1) = frame.u1;
   orig::sqxfXformTD_Update((int)(((char *)&g_1099BF20) + i1));
   orig::SqMatrix4_ScaleAxes((int)(((char *)&g_1099BF3C) + i1),0.25f,0.25f,0.25f);
   return;
@@ -620,8 +628,10 @@ XI_API void __cdecl StAvatar_SetFlag3(int arg1)
 XI_API void __cdecl StAvatar_SetEntryFlag2(int arg1, int arg2)
 {
   uint32_t u1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
   if (arg1 == -1) {
     arg1 = g_1099B0F8;
@@ -639,9 +649,9 @@ XI_API void __cdecl StAvatar_SetEntryFlag2(int arg1, int arg2)
     }
     *(uint32_t *)(&g_1099C514 + arg1 * 0x14) = u1;
     if ((u1 & 2) != 0) {
-      orig::SqQuat_Copy_v1(f1,(uint32_t *)(((char *)&g_1099B3A4) + g_1099B0F4 * 0x7c));
-      orig::SqQuat_Invert(f1);
-      orig::SqQuatMul_Mul((float *)(&g_1099C518 + arg1 * 5),f1,
+      orig::SqQuat_Copy_v1(frame.f1,(uint32_t *)(((char *)&g_1099B3A4) + g_1099B0F4 * 0x7c));
+      orig::SqQuat_Invert(frame.f1);
+      orig::SqQuatMul_Mul((float *)(&g_1099C518 + arg1 * 5),frame.f1,
                    (float *)(((char *)&g_1099BD1C) + arg1 * 0x7c));
     }
   }

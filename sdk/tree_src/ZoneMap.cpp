@@ -78,8 +78,10 @@ XI_API bits32 __thiscall ZoneMap_SetArea(void * self_, int arg2, int arg3)
   uint32_t u1;
   int xi_eax;
   int i1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  (&u2)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u2[4]; };   // at 0x0
+  } frame;
   
   i1 = *(int *)((int)self_ + 0x44);
   if (i1 == 0) {
@@ -97,7 +99,7 @@ XI_API bits32 __thiscall ZoneMap_SetArea(void * self_, int arg2, int arg3)
         }
       }
       else {
-        xi_eax = orig::ZoneMap_Call10173AE0(self_,u2,arg3);
+        xi_eax = orig::ZoneMap_Call10173AE0(self_,frame.u2,arg3);
         i1 = 0;
         if (xi_eax != 0) {
           *(int *)((int)self_ + 0x48) = arg3;
@@ -384,25 +386,27 @@ XI_API bits32 __thiscall ZoneMap_QueryBoxHeightBandThenGetCount34154(void * self
 XI_API bits32 __thiscall ZoneMap_QueryBoxHeight(void * self_, bits32 arg2, float arg3, bits32 arg4, float arg5, float * arg6)
 {
   uint32_t u1;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; float f6; };   // at 0x1C
+  } frame;
   
-  f3 = arg2;
-  f1 = arg2;
-  u3 = arg4;
-  u2 = arg4;
-  f2 = (float)(arg3 + arg5);
-  f4 = arg3;
-  u1 = orig::ZoneMapLoad_SegmentHit3413A((void *)((int)self_ + 0x178),&f3,&f1,&f5);
+  frame.f3 = arg2;
+  frame.f1 = arg2;
+  frame.u3 = arg4;
+  frame.u2 = arg4;
+  frame.f2 = (float)(arg3 + arg5);
+  frame.f4 = arg3;
+  u1 = orig::ZoneMapLoad_SegmentHit3413A((void *)((int)self_ + 0x178),&frame.f3,&frame.f1,&frame.f5);
   if ((char)u1 != '\0') {
-    *arg6 = (float)f6;
+    *arg6 = (float)frame.f6;
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg6 >> 8))) << 8) | (uint8_t)(1)));
   }
   *arg6 = (float)arg3;
@@ -449,25 +453,27 @@ XI_API bits32 __thiscall ZoneMap_QueryBoxHeightByRadius(void * self_, bits32 arg
 XI_API bits32 __thiscall ZoneMap_QueryExpandedBox(void * self_, float arg2, float arg3, float arg4, float arg5, float * arg6)
 {
   uint32_t u1;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f7; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; float f8; };   // at 0x1C
+  } frame;
   
-  f5 = arg3;
-  f1 = (float)(arg2 + xi_k4(0x358637BDull));
-  f4 = (float)(arg2 + xi_k4(0x358637BDull));
-  f3 = (float)(arg4 + xi_k4(0x358637BDull));
-  f6 = (float)(arg4 + xi_k4(0x358637BDull));
-  f2 = (float)(arg3 - arg5);
-  u1 = orig::ZoneMapLoad_SegmentHitWithObjects((void *)((int)self_ + 0x178),&f4,&f1,&f7);
+  frame.f5 = arg3;
+  frame.f1 = (float)(arg2 + xi_k4(0x358637BDull));
+  frame.f4 = (float)(arg2 + xi_k4(0x358637BDull));
+  frame.f3 = (float)(arg4 + xi_k4(0x358637BDull));
+  frame.f6 = (float)(arg4 + xi_k4(0x358637BDull));
+  frame.f2 = (float)(arg3 - arg5);
+  u1 = orig::ZoneMapLoad_SegmentHitWithObjects((void *)((int)self_ + 0x178),&frame.f4,&frame.f1,&frame.f7);
   if ((char)u1 != '\0') {
-    *arg6 = (float)f8;
+    *arg6 = (float)frame.f8;
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg6 >> 8))) << 8) | (uint8_t)(1)));
   }
   return u1 & 0xffffff00;
@@ -478,33 +484,35 @@ XI_API bits32 __thiscall ZoneMap_QueryExpandedBox(void * self_, float arg2, floa
 XI_API void __thiscall ZoneMap_FindGroundHeight(void * self_, bits32 arg2, float arg3, bits32 arg4, float arg5, float * arg6)
 {
   uint32_t u1;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint8_t  (&u4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 24);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint8_t u4[4]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; float f5; };   // at 0x1C
+  } frame;
   
-  f3 = arg2;
+  frame.f3 = arg2;
   *arg6 = (float)arg3;
-  f1 = arg2;
-  u3 = arg4;
-  f4 = (float)(arg3 - 0.5099999904632568359375f);
-  u2 = arg4;
-  f2 = (float)(arg3 + arg5);
-  u1 = orig::ZoneMapLoad_SegmentTest34139((void *)((int)self_ + 0x178),&f3,&f1,u4);
+  frame.f1 = arg2;
+  frame.u3 = arg4;
+  frame.f4 = (float)(arg3 - 0.5099999904632568359375f);
+  frame.u2 = arg4;
+  frame.f2 = (float)(arg3 + arg5);
+  u1 = orig::ZoneMapLoad_SegmentTest34139((void *)((int)self_ + 0x178),&frame.f3,&frame.f1,frame.u4);
   if ((char)u1 != '\0') {
-    *arg6 = f5;
+    *arg6 = frame.f5;
     return;
   }
-  f4 = (float)(arg3 + 0.5099999904632568359375f);
-  f2 = (float)(arg3 - 15.0f);
-  u1 = orig::ZoneMapLoad_SegmentTest34139((void *)((int)self_ + 0x178),&f3,&f1,u4);
+  frame.f4 = (float)(arg3 + 0.5099999904632568359375f);
+  frame.f2 = (float)(arg3 - 15.0f);
+  u1 = orig::ZoneMapLoad_SegmentTest34139((void *)((int)self_ + 0x178),&frame.f3,&frame.f1,frame.u4);
   if ((char)u1 != '\0') {
-    *arg6 = f5;
+    *arg6 = frame.f5;
   }
   return;
 }
@@ -541,15 +549,17 @@ XI_API uint64_t __thiscall ZoneMap_IsTargetAheadKind9(void * self_)
   long double f1;
   long double f2;
   uint64_t u2;
-  char xi_frame[168] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  (&f9)[33] = *reinterpret_cast<float  (*)[33]>(xi_frame + 24);
-  float  (&f10)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 156);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[168];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f6; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f7; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f8; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f9[33]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x9C]; float f10[3]; };   // at 0x9C
+  } frame;
   
   u2 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   obj1 = (int *)u2;
@@ -558,79 +568,79 @@ XI_API uint64_t __thiscall ZoneMap_IsTargetAheadKind9(void * self_)
       return ((uint64_t)(((uint64_t)(uint32_t)((int)(u2 >> 0x20)) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(1))))));
     }
     p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1bc))))((void *)(obj1));
-    f3 = *p1;
-    f4 = p1[1];
-    f5 = p1[2];
+    frame.f3 = *p1;
+    frame.f4 = p1[1];
+    frame.f5 = p1[2];
     i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1c0))))((void *)(obj1));
     f1 = bit_cast<long double>(x87_fcos(*(float *)(i1 + 4)));
-    f9[0x10] = 1.0f;
-    f9[0x11] = 0.0f;
-    f9[0x12] = 0.0f;
-    f9[0x13] = 0.0f;
-    f9[0x14] = 0.0f;
-    f9[0x15] = 1.0f;
-    f9[0x16] = 0.0f;
-    f9[0x17] = 0.0f;
-    f9[0x18] = 0.0f;
-    f9[0x19] = 0.0f;
-    f9[0x1a] = 1.0f;
-    f9[0x1b] = 0.0f;
-    f9[0x1c] = 0.0f;
-    f9[0x1d] = 0.0f;
-    f9[0x1e] = 0.0f;
-    f9[0x1f] = 1.0f;
-    f9[1] = 0.0f;
-    f9[3] = 0.0f;
-    f9[4] = 0.0f;
-    f9[5] = 1.0f;
-    f9[6] = 0.0f;
-    f9[7] = 0.0f;
-    f9[9] = 0.0f;
-    f9[0xb] = 0.0f;
-    f9[0xc] = 0.0f;
-    f9[0xd] = 0.0f;
-    f9[0xe] = 0.0f;
-    f9[0xf] = 1.0f;
-    f9[0] = (float)f1;
+    frame.f9[0x10] = 1.0f;
+    frame.f9[0x11] = 0.0f;
+    frame.f9[0x12] = 0.0f;
+    frame.f9[0x13] = 0.0f;
+    frame.f9[0x14] = 0.0f;
+    frame.f9[0x15] = 1.0f;
+    frame.f9[0x16] = 0.0f;
+    frame.f9[0x17] = 0.0f;
+    frame.f9[0x18] = 0.0f;
+    frame.f9[0x19] = 0.0f;
+    frame.f9[0x1a] = 1.0f;
+    frame.f9[0x1b] = 0.0f;
+    frame.f9[0x1c] = 0.0f;
+    frame.f9[0x1d] = 0.0f;
+    frame.f9[0x1e] = 0.0f;
+    frame.f9[0x1f] = 1.0f;
+    frame.f9[1] = 0.0f;
+    frame.f9[3] = 0.0f;
+    frame.f9[4] = 0.0f;
+    frame.f9[5] = 1.0f;
+    frame.f9[6] = 0.0f;
+    frame.f9[7] = 0.0f;
+    frame.f9[9] = 0.0f;
+    frame.f9[0xb] = 0.0f;
+    frame.f9[0xc] = 0.0f;
+    frame.f9[0xd] = 0.0f;
+    frame.f9[0xe] = 0.0f;
+    frame.f9[0xf] = 1.0f;
+    frame.f9[0] = (float)f1;
     f2 = bit_cast<long double>(x87_fsin(*(float *)(i1 + 4)));
-    f9[2] = (float)-f2;
-    f9[8] = (float)f2;
-    f9[10] = (float)f1;
-    orig::Mat44_Multiply_v1(f9 + 0x10,(int)(f9 + 0x10),f9);
-    f9[0] = 1.0f;
-    f9[1] = 0.0f;
-    f9[2] = 0.0f;
-    f9[3] = 0.0f;
-    f9[4] = 0.0f;
-    f9[5] = 1.0f;
-    f9[6] = 0.0f;
-    f9[7] = 0.0f;
-    f9[8] = 0.0f;
-    f9[9] = 0.0f;
-    f9[10] = 1.0f;
-    f9[0xb] = 0.0f;
-    f9[0xf] = 1.0f;
-    f9[0xc] = f3;
-    f9[0xd] = f4;
-    f9[0xe] = f5;
-    orig::Mat44_Multiply_v1(f9 + 0x10,(int)(f9 + 0x10),f9);
+    frame.f9[2] = (float)-f2;
+    frame.f9[8] = (float)f2;
+    frame.f9[10] = (float)f1;
+    orig::Mat44_Multiply_v1(frame.f9 + 0x10,(int)(frame.f9 + 0x10),frame.f9);
+    frame.f9[0] = 1.0f;
+    frame.f9[1] = 0.0f;
+    frame.f9[2] = 0.0f;
+    frame.f9[3] = 0.0f;
+    frame.f9[4] = 0.0f;
+    frame.f9[5] = 1.0f;
+    frame.f9[6] = 0.0f;
+    frame.f9[7] = 0.0f;
+    frame.f9[8] = 0.0f;
+    frame.f9[9] = 0.0f;
+    frame.f9[10] = 1.0f;
+    frame.f9[0xb] = 0.0f;
+    frame.f9[0xf] = 1.0f;
+    frame.f9[0xc] = frame.f3;
+    frame.f9[0xd] = frame.f4;
+    frame.f9[0xe] = frame.f5;
+    orig::Mat44_Multiply_v1(frame.f9 + 0x10,(int)(frame.f9 + 0x10),frame.f9);
     f1 = g_1035818C;
-    f6 = (float)(f9[0x10] * 4.0f +
-                        f9[0x18] * 0.0f + f9[0x14] * f1
-                       + f9[0x1c]);
-    f7 = (float)(f9[0x11] * 4.0f +
-                        f9[0x19] * 0.0f + f9[0x15] * f1
-                       + f9[0x1d]);
-    f8 = (float)(f9[0x12] * 4.0f +
-                        f9[0x1a] * 0.0f + f9[0x16] * f1
-                       + f9[0x1e]);
-    f4 = (float)(f4 - 1.0f);
+    frame.f6 = (float)(frame.f9[0x10] * 4.0f +
+                        frame.f9[0x18] * 0.0f + frame.f9[0x14] * f1
+                       + frame.f9[0x1c]);
+    frame.f7 = (float)(frame.f9[0x11] * 4.0f +
+                        frame.f9[0x19] * 0.0f + frame.f9[0x15] * f1
+                       + frame.f9[0x1d]);
+    frame.f8 = (float)(frame.f9[0x12] * 4.0f +
+                        frame.f9[0x1a] * 0.0f + frame.f9[0x16] * f1
+                       + frame.f9[0x1e]);
+    frame.f4 = (float)(frame.f4 - 1.0f);
     u2 = orig::ZoneMapLoad_SegmentHitWithObjects_v1
-                      ((void *)((int)self_ + 0x178),&f3,&f6,f10);
+                      ((void *)((int)self_ + 0x178),&frame.f3,&frame.f6,frame.f10);
     if ((char)u2 == '\0') {
       u2 = orig::ZoneMap_QueryBoxHeight_v1
-                        (self_,f6,(float)(f7 - 1.0f),f8,1e+02f,
-                         f9 + 0x20);
+                        (self_,frame.f6,(float)(frame.f7 - 1.0f),frame.f8,1e+02f,
+                         frame.f9 + 0x20);
       u1 = (uint32_t)(u2 >> 0x20);
       if ((char)u2 != '\0') {
         i1 = orig::ZoneMapLoad_GetField34148((void *)((int)self_ + 0x178));
@@ -653,10 +663,12 @@ XI_API uint64_t __thiscall ZoneMap_GetTargetGroundKindByte(void * self_)
   int i1;
   uint64_t u1;
   uint64_t u2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; uint32_t u4; };   // at 0xC
+  } frame;
   
   u1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   obj1 = (int *)u1;
@@ -664,11 +676,11 @@ XI_API uint64_t __thiscall ZoneMap_GetTargetGroundKindByte(void * self_)
     return u1 & 0xffffffffffffff00;
   }
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1bc))))((void *)(obj1));
-  u3 = *p1;
-  u4 = p1[2];
+  frame.u3 = *p1;
+  frame.u4 = p1[2];
   u2 = orig::ZoneMap_QueryBoxHeight_v1
-                    (self_,u3,(float)(bit_cast<float>(p1[1]) - 1.0f),u4,1e+01f,
-                     &f1);
+                    (self_,frame.u3,(float)(bit_cast<float>(p1[1]) - 1.0f),frame.u4,1e+01f,
+                     &frame.f1);
   if ((char)u2 == '\0') {
     return u2;
   }
@@ -729,83 +741,85 @@ XI_API void __stdcall ZoneMap_BuildPerspective(float * arg1, float arg2, float a
   float *p3;
   float *p4;
   long double f3;
-  char xi_frame[196] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  (&f4)[17] = *reinterpret_cast<float  (*)[17]>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 80);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 84);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 88);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 96);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 108);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 112);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 116);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 120);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 124);
-  uint32_t  &u12 = *reinterpret_cast<uint32_t  *>(xi_frame + 128);
-  float  (&f8)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 132);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 148);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 152);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 156);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 160);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 164);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 168);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 172);
-  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 176);
-  float  &f17 = *reinterpret_cast<float  *>(xi_frame + 180);
-  float  &f18 = *reinterpret_cast<float  *>(xi_frame + 184);
-  float  &f19 = *reinterpret_cast<float  *>(xi_frame + 188);
-  float  &f20 = *reinterpret_cast<float  *>(xi_frame + 192);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[196];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4[17]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x48]; uint32_t u1; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_4[0x4C]; uint32_t u2; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_5[0x50]; uint32_t u3; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_6[0x54]; uint32_t u4; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_7[0x58]; float f5; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_8[0x5C]; uint32_t u5; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_9[0x60]; uint32_t u6; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_10[0x64]; uint32_t u7; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_11[0x68]; uint32_t u8; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_12[0x6C]; float f6; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_13[0x70]; uint32_t u9; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_14[0x74]; uint32_t u10; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_15[0x78]; uint32_t u11; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_16[0x7C]; float f7; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_17[0x80]; uint32_t u12; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_18[0x84]; float f8[4]; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_19[0x94]; float f9; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_20[0x98]; float f10; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_21[0x9C]; float f11; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_22[0xA0]; float f12; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_23[0xA4]; float f13; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_24[0xA8]; float f14; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_25[0xAC]; float f15; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_26[0xB0]; float f16; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_27[0xB4]; float f17; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_28[0xB8]; float f18; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_29[0xBC]; float f19; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_30[0xC0]; float f20; };   // at 0xC0
+  } frame;
   
   f3 = arg4 + arg4;
-  u1 = 0;
-  u2 = 0;
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u10 = 0;
-  u11 = 0;
-  u9 = 0x3f800000;
-  u12 = 0;
-  f4[0] = 1.0f;
-  f4[1] = 0.0f;
-  f4[2] = 0.0f;
-  f4[3] = 0.0f;
-  f4[4] = 0.0f;
-  f4[5] = 1.0f;
-  f4[6] = 0.0f;
-  f4[7] = 0.0f;
-  f4[8] = 0.0f;
-  f4[9] = 0.0f;
-  f4[0xb] = 0.0f;
-  f4[0xc] = 0.0f;
-  f4[0xd] = 0.0f;
-  f4[0xe] = 0.0f;
-  f4[0xf] = 1.0f;
-  f4[10] = (-1.0f);
+  frame.u1 = 0;
+  frame.u2 = 0;
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u10 = 0;
+  frame.u11 = 0;
+  frame.u9 = 0x3f800000;
+  frame.u12 = 0;
+  frame.f4[0] = 1.0f;
+  frame.f4[1] = 0.0f;
+  frame.f4[2] = 0.0f;
+  frame.f4[3] = 0.0f;
+  frame.f4[4] = 0.0f;
+  frame.f4[5] = 1.0f;
+  frame.f4[6] = 0.0f;
+  frame.f4[7] = 0.0f;
+  frame.f4[8] = 0.0f;
+  frame.f4[9] = 0.0f;
+  frame.f4[0xb] = 0.0f;
+  frame.f4[0xc] = 0.0f;
+  frame.f4[0xd] = 0.0f;
+  frame.f4[0xe] = 0.0f;
+  frame.f4[0xf] = 1.0f;
+  frame.f4[10] = (-1.0f);
   i2 = 0;
-  f4[0x10] = (float)(f3 / arg2);
-  f5 = (float)(f3 / arg3);
-  f6 = (float)((arg5 + arg6) / (arg6 - arg5));
-  f7 = (float)((arg5 * arg6 * (-2.0f)) /
+  frame.f4[0x10] = (float)(f3 / arg2);
+  frame.f5 = (float)(f3 / arg3);
+  frame.f6 = (float)((arg5 + arg6) / (arg6 - arg5));
+  frame.f7 = (float)((arg5 * arg6 * (-2.0f)) /
                     (arg6 - arg5));
   do {
-    p4 = f4 + 0x10;
-    p3 = (float *)((int)f8 + i2);
-    i3 = 4;
+    p4 = frame.f4 + 0x10;
+    p3 = (float *)((int)frame.f8 + i2);
+    frame.i3 = 4;
     do {
       f3 = 0.0f;
       *p3 = 0.0f;
       i1 = 4;
       p1 = p4;
-      p2 = (float *)((int)f4 + i2);
+      p2 = (float *)((int)frame.f4 + i2);
       do {
         f1 = *p2;
         f2 = *p1;
@@ -817,26 +831,26 @@ XI_API void __stdcall ZoneMap_BuildPerspective(float * arg1, float arg2, float a
       *p3 = (float)f3;
       p3 = p3 + 1;
       p4 = p4 + 1;
-      i3 = i3 + -1;
-    } while (i3 != 0);
+      frame.i3 = frame.i3 + -1;
+    } while (frame.i3 != 0);
     i2 = i2 + 0x10;
   } while (i2 < 0x40);
-  arg1[1] = f8[1];
-  arg1[2] = f8[2];
-  arg1[3] = f8[3];
-  arg1[4] = f9;
-  arg1[5] = f10;
-  arg1[6] = f11;
-  arg1[7] = f12;
-  arg1[8] = f13;
-  arg1[9] = f14;
-  *arg1 = (float)f8[0];
-  arg1[10] = f15;
-  arg1[0xb] = f16;
-  arg1[0xc] = f17;
-  arg1[0xd] = f18;
-  arg1[0xe] = f19;
-  arg1[0xf] = f20;
+  arg1[1] = frame.f8[1];
+  arg1[2] = frame.f8[2];
+  arg1[3] = frame.f8[3];
+  arg1[4] = frame.f9;
+  arg1[5] = frame.f10;
+  arg1[6] = frame.f11;
+  arg1[7] = frame.f12;
+  arg1[8] = frame.f13;
+  arg1[9] = frame.f14;
+  *arg1 = (float)frame.f8[0];
+  arg1[10] = frame.f15;
+  arg1[0xb] = frame.f16;
+  arg1[0xc] = frame.f17;
+  arg1[0xd] = frame.f18;
+  arg1[0xe] = frame.f19;
+  arg1[0xf] = frame.f20;
   return;
 }
 
@@ -1331,27 +1345,29 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) ModelActor_Draw(bits32 xi_eax
   int i2;
   int i3;
   int *p3;
-  char xi_frame[260] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &a3_00 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 24);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 32);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  int * &p4 = *reinterpret_cast<int * *>(xi_frame + 40);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
-  int  (&i6)[26] = *reinterpret_cast<int  (*)[26]>(xi_frame + 52);
-  int  (&i7)[26] = *reinterpret_cast<int  (*)[26]>(xi_frame + 156);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[260];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t a3_00; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; uint32_t u2; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; uint32_t u3; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; int * p4; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; uint32_t u4; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; uint32_t u5; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x34]; int light[26]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_11[0x9C]; int i7[26]; };   // at 0x9C
+  } frame;
   
   i1 = *(int *)(arg4 + 0x18);
   if (i1 == 0) {
     return xi_eax;
   }
-  p4 = (int *)0x0;
+  frame.p4 = (int *)0x0;
   if (g_C_106631D4 != 0) {
     p1 = orig::game_10178760(0x31305f6c);
-    p4 = p1;
+    frame.p4 = p1;
     if (p1 == (int *)0x0) {
       ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xb8))
                 ))(*(int **)((int)g_pCDx_as_v1 + 0xc),*(uint32_t *)((int)self_ + 0x394b0),0);
@@ -1364,30 +1380,30 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) ModelActor_Draw(bits32 xi_eax
   }
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
             ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x89,1);
-  p1 = i6;
+  p1 = frame.light;
   for (i3 = 0x1a; i3 != 0; i3 = i3 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
   if (*(int *)((int)self_ + 0x394a4) == 0) {
-    orig::XiZone_GetDirLight_v1(g_pXiZone,i6,0,0);
-    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394a8),i6);
-    u1 = *(uint32_t *)((int)self_ + 0x394a8);
+    orig::XiZone_GetDirLight_v1(g_pXiZone,frame.light,0,0);
+    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394a8),frame.light);
+    frame.u1 = *(uint32_t *)((int)self_ + 0x394a8);
   }
   else {
-    orig::XiZone_GetDirLights_v1(g_pXiZone,i6,i7);
-    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394a8),i6);
-    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394ac),i7);
+    orig::XiZone_GetDirLights_v1(g_pXiZone,frame.light,frame.i7);
+    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394a8),frame.light);
+    orig::CDx_SetLight_v1(g_pCDx_as_v1,*(uint32_t *)((int)self_ + 0x394ac),frame.i7);
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xb8))
               ))(*(int **)((int)g_pCDx_as_v1 + 0xc),*(uint32_t *)((int)self_ + 0x394a8),1);
-    u1 = *(uint32_t *)((int)self_ + 0x394ac);
+    frame.u1 = *(uint32_t *)((int)self_ + 0x394ac);
   }
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xb8))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),u1,1);
-  orig::XiZone_GetAmbient_v1(g_pXiZone,&u2,0,0);
-  orig::XiZone_GetFog_v1(g_pXiZone,&u4,&u5,&u3,0,0);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),frame.u1,1);
+  orig::XiZone_GetAmbient_v1(g_pXiZone,&frame.u2,0,0);
+  orig::XiZone_GetFog_v1(g_pXiZone,&frame.u4,&frame.u5,&frame.u3,0,0);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x8b,u2);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x8b,frame.u2);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
             ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1c,1);
   if (*(char *)((int)g_pCDx_as_v1 + 0x92d) == '\0') {
@@ -1412,11 +1428,11 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) ModelActor_Draw(bits32 xi_eax
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 200))))(p1,0x30,0);
 code_101846E1:
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x22,u4);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x22,frame.u4);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x24,u3);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x24,frame.u3);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x25,u5);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x25,frame.u5);
   ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xa8))
             ))(*(int **)((int)g_pCDx_as_v1 + 0xc),(int)self_ + 0x3913c);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))
@@ -1457,69 +1473,69 @@ code_101846E1:
   p1 = *(int **)((int)g_pCDx_as_v1 + 0xc);
   i3 = *p1;
   if (xi_s2 == 0) {
-    a3_00 = 0;
-    u1 = 0xf;
+    frame.a3_00 = 0;
+    frame.u1 = 0xf;
   }
   else {
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i3 + 200))))(p1,0xf,1);
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
               ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x19,5);
-    a3_00 = 0x60;
-    u1 = 0x18;
+    frame.a3_00 = 0x60;
+    frame.u1 = 0x18;
     p1 = *(int **)((int)g_pCDx_as_v1 + 0xc);
     i3 = *p1;
   }
-  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i3 + 200))))(p1,u1,a3_00);
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i3 + 200))))(p1,frame.u1,frame.a3_00);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
             ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x13,5);
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
             ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x14,6);
   if (*(short *)(arg4 + 0xd4) == 0) {
-    u1 = 3;
+    frame.u1 = 3;
   }
   else {
-    u1 = 2;
+    frame.u1 = 2;
   }
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x16,u1);
+            ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x16,frame.u1);
   *(uint32_t *)((int)self_ + 0x39120) = 0;
-  u1 = orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,(uint32_t *)(arg4 + 0x40));
+  frame.u1 = orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,(uint32_t *)(arg4 + 0x40));
   p1 = *(int **)(i1 + 0x60);
   if (p1 != (int *)0x0) {
-    i5 = 0;
+    frame.i5 = 0;
     if (0 < *(int *)(i1 + 0x44)) {
       do {
-        i4 = 0;
+        frame.i4 = 0;
         if (0 < *p1) {
           p3 = (int *)(p1[1] + 4);
           do {
             if (p3[9] != 0) {
-              orig::CDx_SetLight_v1(g_pCDx_as_v1,0,i6);
+              orig::CDx_SetLight_v1(g_pCDx_as_v1,0,frame.light);
               ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x8b,u2);
+                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x8b,frame.u2);
               ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x22,u4);
+                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x22,frame.u4);
               ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x24,u3);
+                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x24,frame.u3);
               ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
-                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x25,u5);
+                        ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x25,frame.u5);
               i3 = (int)(short)p3[8];
               if (i3 != *(int *)((int)self_ + 0x39120)) {
                 *(int *)((int)self_ + 0x39120) = i3;
                 if (i3 == 0) {
                   p2 = *(int **)((int)g_pCDx_as_v1 + 0xc);
                   if (*(int *)((int)self_ + 0x390fc) == 0) {
-                    u1 = 3;
+                    frame.u1 = 3;
                   }
                   else {
-                    u1 = 2;
+                    frame.u1 = 2;
                   }
                 }
                 else {
-                  u1 = 1;
+                  frame.u1 = 1;
                   p2 = *(int **)((int)g_pCDx_as_v1 + 0xc);
                 }
-                ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p2 + 200))))(p2,0x16,u1);
+                ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p2 + 200))))(p2,0x16,frame.u1);
               }
               i3 = *p3;
               if (i3 == 0) {
@@ -1543,13 +1559,13 @@ code_101846E1:
                          *(uint32_t *)(i1 + 0x24));
               orig::CDx_DrawPrimitive_v1(g_pCDx_as_v1,*(uint32_t *)(i1 + 0x2c),0,p3[5]);
             }
-            i4 = i4 + 1;
+            frame.i4 = frame.i4 + 1;
             p3 = p3 + 0x30;
-          } while (i4 < *p1);
+          } while (frame.i4 < *p1);
         }
-        i5 = i5 + 1;
+        frame.i5 = frame.i5 + 1;
         p1 = p1 + 9;
-      } while (i5 < *(int *)(i1 + 0x44));
+      } while (frame.i5 < *(int *)(i1 + 0x44));
     }
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
               ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x8b,0);
@@ -1561,13 +1577,13 @@ code_101846E1:
               ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0xf,1);
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
               ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x16,1);
-    u1 = 0;
-    if (p4 != (int *)0x0) {
-      u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xb8))
+    frame.u1 = 0;
+    if (frame.p4 != (int *)0x0) {
+      frame.u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xb8))
                         ))(*(int **)((int)g_pCDx_as_v1 + 0xc),*(uint32_t *)((int)self_ + 0x394b0),0);
     }
   }
-  return u1;
+  return frame.u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10186DB0
@@ -1978,46 +1994,48 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
   uint8_t u5;
   long double f3;
   long double f4;
-  char xi_frame[180] __attribute__((aligned(4)));
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 32);
-  uint32_t  &u12 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &u13 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint32_t  &u14 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 48);
-  uint32_t  &u15 = *reinterpret_cast<uint32_t  *>(xi_frame + 52);
-  uint32_t  &u16 = *reinterpret_cast<uint32_t  *>(xi_frame + 56);
-  uint32_t  &u17 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 64);
-  uint32_t  &u18 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
-  uint32_t  &u19 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  uint32_t  &u20 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 80);
-  uint32_t  &u21 = *reinterpret_cast<uint32_t  *>(xi_frame + 84);
-  uint32_t  &u22 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
-  uint32_t  &u23 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 96);
-  float  (&f11)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 100);
-  uint8_t  (&u24)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 116);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[180];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u8; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u9; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u10; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; uint32_t u11; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_9[0x20]; float f7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_10[0x24]; uint32_t u12; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_11[0x28]; uint32_t u13; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_12[0x2C]; uint32_t u14; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_13[0x30]; float f8; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_14[0x34]; uint32_t u15; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_15[0x38]; uint32_t u16; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_16[0x3C]; uint32_t u17; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_17[0x40]; float f9; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_18[0x44]; uint32_t u18; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_19[0x48]; uint32_t u19; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_20[0x4C]; uint32_t u20; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_21[0x50]; float f10; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_22[0x54]; uint32_t u21; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_23[0x58]; uint32_t u22; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_24[0x5C]; uint32_t u23; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_25[0x60]; int i2; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_26[0x64]; float f11[4]; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_27[0x74]; uint8_t u24[64]; };   // at 0x74
+  } frame;
   
   if (-1 < *(int *)(g_pXiZone_as_s32 + 0x1c8)) {
     arg2 = *(int *)(g_pXiZone_as_s32 + 0x1c8);
   }
   f1 = (float)(arg2 * xi_k4(0x344F204Aull) * 6.28299999237060546875f);
   if ((**(uint8_t **)((int)self_ + 0x18) & 1) == 0) {
-    orig::MathVector_ReturnThis_v1(u24);
+    orig::MathVector_ReturnThis_v1(frame.u24);
     u4 = *(short *)(g_pXiZone_as_s32 + 0x1cc) != 0;
     if (u4) {
-      orig::Mat4_SetIdentity_v1(u24);
-      i2 = (int)*(short *)(g_pXiZone_as_s32 + 0x1cc);
-      orig::Mat4_PostRotateX_v1(u24,(float)(i2 * 0.01745277829468250274658203125f));
+      orig::Mat4_SetIdentity_v1(frame.u24);
+      frame.i2 = (int)*(short *)(g_pXiZone_as_s32 + 0x1cc);
+      orig::Mat4_PostRotateX_v1(frame.u24,(float)(frame.i2 * 0.01745277829468250274658203125f));
     }
     f3 = bit_cast<long double>(x87_fsin(f1));
     p2 = (float *)((int)self_ + 0xc4);
@@ -2027,7 +2045,7 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
     f3 = bit_cast<long double>(x87_fcos(f1));
     *(float *)((int)self_ + 200) = (float)f3;
     if (u4) {
-      orig::Mat4_TransformPointInPlace_v2(u24,p2);
+      orig::Mat4_TransformPointInPlace_v2(frame.u24,p2);
     }
     i1 = orig::Camera_GetField50_v1();
     *(float *)((int)self_ + 0xd4) =
@@ -2065,7 +2083,7 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
     f3 = bit_cast<long double>(x87_fcos(f3));
     *(float *)((int)self_ + 0xa8) = (float)f3;
     if (u4) {
-      orig::Mat4_TransformPointInPlace_v2(u24,p1);
+      orig::Mat4_TransformPointInPlace_v2(frame.u24,p1);
     }
     i1 = orig::Camera_GetField50_v1();
     *(float *)((int)self_ + 0xb4) =
@@ -2090,81 +2108,81 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
     *(uint32_t *)((int)self_ + 0x30) = *(uint32_t *)((int)self_ + 0xb0);
     if (*g_pSceneState_as_v0 == 0x60) {
       if (u4) {
-        f5 = *p2;
-        u6 = *(uint32_t *)((int)self_ + 200);
-        u7 = *(uint32_t *)((int)self_ + 0xcc);
-        u8 = *(uint32_t *)((int)self_ + 0xd0);
-        f7 = *(float *)((int)self_ + 0xd4);
-        u12 = *(uint32_t *)((int)self_ + 0xd8);
-        u13 = *(uint32_t *)((int)self_ + 0xdc);
-        u14 = *(uint32_t *)((int)self_ + 0xe0);
-        f10 = *(float *)((int)self_ + 0xf4);
-        u21 = *(uint32_t *)((int)self_ + 0xf8);
-        u22 = *(uint32_t *)((int)self_ + 0xfc);
-        u23 = *(uint32_t *)((int)self_ + 0x100);
+        frame.f5 = *p2;
+        frame.u6 = *(uint32_t *)((int)self_ + 200);
+        frame.u7 = *(uint32_t *)((int)self_ + 0xcc);
+        frame.u8 = *(uint32_t *)((int)self_ + 0xd0);
+        frame.f7 = *(float *)((int)self_ + 0xd4);
+        frame.u12 = *(uint32_t *)((int)self_ + 0xd8);
+        frame.u13 = *(uint32_t *)((int)self_ + 0xdc);
+        frame.u14 = *(uint32_t *)((int)self_ + 0xe0);
+        frame.f10 = *(float *)((int)self_ + 0xf4);
+        frame.u21 = *(uint32_t *)((int)self_ + 0xf8);
+        frame.u22 = *(uint32_t *)((int)self_ + 0xfc);
+        frame.u23 = *(uint32_t *)((int)self_ + 0x100);
       }
       else {
-        f5 = *p1;
-        u6 = *(uint32_t *)((int)self_ + 0xa8);
-        u7 = *(uint32_t *)((int)self_ + 0xac);
-        u8 = *(uint32_t *)((int)self_ + 0xb0);
-        f7 = *(float *)((int)self_ + 0xb4);
-        u12 = *(uint32_t *)((int)self_ + 0xb8);
-        u13 = *(uint32_t *)((int)self_ + 0xbc);
-        u14 = *(uint32_t *)((int)self_ + 0xc0);
-        f10 = *(float *)((int)self_ + 0xe4);
-        u21 = *(uint32_t *)((int)self_ + 0xe8);
-        u22 = *(uint32_t *)((int)self_ + 0xec);
-        u23 = *(uint32_t *)((int)self_ + 0xf0);
+        frame.f5 = *p1;
+        frame.u6 = *(uint32_t *)((int)self_ + 0xa8);
+        frame.u7 = *(uint32_t *)((int)self_ + 0xac);
+        frame.u8 = *(uint32_t *)((int)self_ + 0xb0);
+        frame.f7 = *(float *)((int)self_ + 0xb4);
+        frame.u12 = *(uint32_t *)((int)self_ + 0xb8);
+        frame.u13 = *(uint32_t *)((int)self_ + 0xbc);
+        frame.u14 = *(uint32_t *)((int)self_ + 0xc0);
+        frame.f10 = *(float *)((int)self_ + 0xe4);
+        frame.u21 = *(uint32_t *)((int)self_ + 0xe8);
+        frame.u22 = *(uint32_t *)((int)self_ + 0xec);
+        frame.u23 = *(uint32_t *)((int)self_ + 0xf0);
       }
       if (!(*(float *)((int)self_ + 0x28) >= 0.0f)) {
-        f6 = *(float *)((int)self_ + 0x44);
-        u9 = *(uint32_t *)((int)self_ + 0x48);
-        u10 = *(uint32_t *)((int)self_ + 0x4c);
-        u11 = *(uint32_t *)((int)self_ + 0x50);
-        f8 = *(float *)((int)self_ + 0x54);
-        u15 = *(uint32_t *)((int)self_ + 0x58);
-        u16 = *(uint32_t *)((int)self_ + 0x5c);
-        u17 = *(uint32_t *)((int)self_ + 0x60);
-        f9 = *(float *)((int)self_ + 0x74);
-        u18 = *(uint32_t *)((int)self_ + 0x78);
-        u19 = *(uint32_t *)((int)self_ + 0x7c);
-        u20 = *(uint32_t *)((int)self_ + 0x80);
+        frame.f6 = *(float *)((int)self_ + 0x44);
+        frame.u9 = *(uint32_t *)((int)self_ + 0x48);
+        frame.u10 = *(uint32_t *)((int)self_ + 0x4c);
+        frame.u11 = *(uint32_t *)((int)self_ + 0x50);
+        frame.f8 = *(float *)((int)self_ + 0x54);
+        frame.u15 = *(uint32_t *)((int)self_ + 0x58);
+        frame.u16 = *(uint32_t *)((int)self_ + 0x5c);
+        frame.u17 = *(uint32_t *)((int)self_ + 0x60);
+        frame.f9 = *(float *)((int)self_ + 0x74);
+        frame.u18 = *(uint32_t *)((int)self_ + 0x78);
+        frame.u19 = *(uint32_t *)((int)self_ + 0x7c);
+        frame.u20 = *(uint32_t *)((int)self_ + 0x80);
       }
       else {
-        f6 = *(float *)((int)self_ + 0x24);
-        u9 = *(uint32_t *)((int)self_ + 0x28);
-        u10 = *(uint32_t *)((int)self_ + 0x2c);
-        u11 = *(uint32_t *)((int)self_ + 0x30);
-        f8 = *(float *)((int)self_ + 0x34);
-        u15 = *(uint32_t *)((int)self_ + 0x38);
-        u16 = *(uint32_t *)((int)self_ + 0x3c);
-        u17 = *(uint32_t *)((int)self_ + 0x40);
-        f9 = *(float *)((int)self_ + 100);
-        u18 = *(uint32_t *)((int)self_ + 0x68);
-        u19 = *(uint32_t *)((int)self_ + 0x6c);
-        u20 = *(uint32_t *)((int)self_ + 0x70);
+        frame.f6 = *(float *)((int)self_ + 0x24);
+        frame.u9 = *(uint32_t *)((int)self_ + 0x28);
+        frame.u10 = *(uint32_t *)((int)self_ + 0x2c);
+        frame.u11 = *(uint32_t *)((int)self_ + 0x30);
+        frame.f8 = *(float *)((int)self_ + 0x34);
+        frame.u15 = *(uint32_t *)((int)self_ + 0x38);
+        frame.u16 = *(uint32_t *)((int)self_ + 0x3c);
+        frame.u17 = *(uint32_t *)((int)self_ + 0x40);
+        frame.f9 = *(float *)((int)self_ + 100);
+        frame.u18 = *(uint32_t *)((int)self_ + 0x68);
+        frame.u19 = *(uint32_t *)((int)self_ + 0x6c);
+        frame.u20 = *(uint32_t *)((int)self_ + 0x70);
       }
       if (*(char *)((int)self_ + 0x148) == '\0') {
         *(uint8_t *)((int)self_ + 0x148) = 1;
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x14c),&f5);
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x17c),&f6);
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x15c),&f7);
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x18c),&f8);
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x16c),&f10);
-        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x19c),&f9);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x14c),&frame.f5);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x17c),&frame.f6);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x15c),&frame.f7);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x18c),&frame.f8);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x16c),&frame.f10);
+        orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x19c),&frame.f9);
       }
       else {
         p2 = (float *)((int)self_ + 0x14c);
-        orig::Vec3_SubInPlace(&f5,p2);
-        orig::Vec3_Copy_v1(f11,&f5);
-        orig::Vec3_ScaleInPlace(&f5,0.100000001490116119384765625f);
-        u2 = orig::Vec3_AddInPlace_v1(p2,&f5);
+        orig::Vec3_SubInPlace(&frame.f5,p2);
+        orig::Vec3_Copy_v1(frame.f11,&frame.f5);
+        orig::Vec3_ScaleInPlace(&frame.f5,0.100000001490116119384765625f);
+        u2 = orig::Vec3_AddInPlace_v1(p2,&frame.f5);
         orig::game_100274B0(p2,u2);
-        f3 = orig::game_10027530(f11,p2);
-        orig::Vec3_SubInPlace(&f7,(float *)((int)self_ + 0x15c));
-        orig::Vec3_ScaleInPlace(&f7,0.100000001490116119384765625f);
-        orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x15c),&f7);
+        f3 = orig::game_10027530(frame.f11,p2);
+        orig::Vec3_SubInPlace(&frame.f7,(float *)((int)self_ + 0x15c));
+        orig::Vec3_ScaleInPlace(&frame.f7,0.100000001490116119384765625f);
+        orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x15c),&frame.f7);
         f4 = (float)f3;
         u4 = ((f4) != (f4)) || ((0.0f) != (0.0f));
         f3 = (float)f3;
@@ -2176,20 +2194,20 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
           orig::Vec3_ScaleInPlace((float *)((int)self_ + 0x16c),0.699999988079071044921875f);
         }
         else {
-          orig::Vec3_SubInPlace(&f10,(float *)((int)self_ + 0x16c));
-          orig::Vec3_ScaleInPlace(&f10,0.100000001490116119384765625f);
-          orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x16c),&f10);
+          orig::Vec3_SubInPlace(&frame.f10,(float *)((int)self_ + 0x16c));
+          orig::Vec3_ScaleInPlace(&frame.f10,0.100000001490116119384765625f);
+          orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x16c),&frame.f10);
         }
         p2 = (float *)((int)self_ + 0x17c);
-        orig::Vec3_SubInPlace(&f6,p2);
-        orig::Vec3_Copy_v1(f11,&f6);
-        orig::Vec3_ScaleInPlace(&f6,0.100000001490116119384765625f);
-        u2 = orig::Vec3_AddInPlace_v1(p2,&f6);
+        orig::Vec3_SubInPlace(&frame.f6,p2);
+        orig::Vec3_Copy_v1(frame.f11,&frame.f6);
+        orig::Vec3_ScaleInPlace(&frame.f6,0.100000001490116119384765625f);
+        u2 = orig::Vec3_AddInPlace_v1(p2,&frame.f6);
         orig::game_100274B0(p2,u2);
-        f3 = orig::game_10027530(f11,p2);
-        orig::Vec3_SubInPlace(&f8,(float *)((int)self_ + 0x18c));
-        orig::Vec3_ScaleInPlace(&f8,0.100000001490116119384765625f);
-        orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x18c),&f8);
+        f3 = orig::game_10027530(frame.f11,p2);
+        orig::Vec3_SubInPlace(&frame.f8,(float *)((int)self_ + 0x18c));
+        orig::Vec3_ScaleInPlace(&frame.f8,0.100000001490116119384765625f);
+        orig::Vec3_AddInPlace_v1((float *)((int)self_ + 0x18c),&frame.f8);
         f4 = (float)f3;
         u4 = ((f4) != (f4)) || ((0.0f) != (0.0f));
         f3 = (float)f3;
@@ -2202,9 +2220,9 @@ XI_API void __thiscall ZoneMap_UpdateOrbit(void * self_, int arg2)
           orig::Vec3_ScaleInPlace(p2,0.699999988079071044921875f);
         }
         else {
-          orig::Vec3_SubInPlace(&f9,p2);
-          orig::Vec3_ScaleInPlace(&f9,0.100000001490116119384765625f);
-          orig::Vec3_AddInPlace_v1(p2,&f9);
+          orig::Vec3_SubInPlace(&frame.f9,p2);
+          orig::Vec3_ScaleInPlace(&frame.f9,0.100000001490116119384765625f);
+          orig::Vec3_AddInPlace_v1(p2,&frame.f9);
         }
       }
     }

@@ -22,11 +22,11 @@ uint8_t * CMoDX::ScalarDeletingDtor(char arg1)
 
 // FUNCTION: FFXIMAIN 0x1006A150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-bits32 __thiscall CMoDX::CreateTexture(void * self, bits32 arg2, bits32 arg3, bits32 * arg4)
+bits32 __thiscall CMoDX::CreateTexture(void * self, bits32 width, bits32 height, bits32 * arg4)
 {
   uint64_t u1;
   
-  u1 = orig::CDx_CreateTexture_v1(*(void **)((int)self + 0xdc8),arg2,arg3,arg4,1,0);
+  u1 = orig::CDx_CreateTexture_v1(*(void **)((int)self + 0xdc8),width,height,arg4,1,0);
   return (int)u1;
 }
 

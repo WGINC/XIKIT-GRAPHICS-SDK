@@ -166,9 +166,11 @@ XI_API int * __cdecl SeekIdByString(char * arg1, bits32 arg2, int arg3, bits32 a
   uint8_t *p5;
   uint8_t u2;
   long double f1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  uint8_t  (&u3)[23] = *reinterpret_cast<uint8_t  (*)[23]>(xi_frame + 0);
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 23);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { uint8_t u3[23]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x17]; uint8_t u4; };   // at 0x17
+  } frame;
   
   i2 = arg3;
   c1 = (char)arg3;
@@ -325,7 +327,7 @@ code_1007A368:
       }
     }
 code_1007A375:
-    p5 = u3;
+    p5 = frame.u3;
     for (i3 = 6; i3 != 0; i3 = i3 + -1) {
       p5[0] = 0;
       p5[1] = 0;
@@ -333,10 +335,10 @@ code_1007A375:
       p5[3] = 0;
       p5 = p5 + 4;
     }
-    orig::_strncpy_v1((char *)u3,arg1,0x17);
-    u4 = 0;
-    orig::TaskAndTextArgs_MapNameLetters(u3);
-    p2 = (int *)orig::Actor_FindByName((char *)u3,0x18,0x400,
+    orig::_strncpy_v1((char *)frame.u3,arg1,0x17);
+    frame.u4 = 0;
+    orig::TaskAndTextArgs_MapNameLetters(frame.u3);
+    p2 = (int *)orig::Actor_FindByName((char *)frame.u3,0x18,0x400,
                                      (-(uint32_t)(c1 != '\0') & 0x200) + 0x700,i2);
     if ((p2 != (int *)0x0) || ((char)arg4 != '\0')) goto code_1007A41E;
   }
@@ -399,12 +401,14 @@ XI_API int __cdecl Actor_FindByName(char * arg1, uint32_t arg2, int arg3, int ar
   int i1;
   uint32_t u2;
   char *p1;
-  char xi_frame[32] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char  (&val1)[23] = *reinterpret_cast<char  (*)[23]>(xi_frame + 4);
-  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 27);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char val1[23]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x1B]; uint8_t u3; };   // at 0x1B
+  } frame;
   
-  i2 = 0;
+  frame.i2 = 0;
   if ((((arg1 != (char *)0x0) && (*arg1 != '\0')) && (0 < (int)arg2)) &&
      ((int)arg2 < 0x19)) {
     if (arg3 < 0) {
@@ -413,7 +417,7 @@ XI_API int __cdecl Actor_FindByName(char * arg1, uint32_t arg2, int arg3, int ar
     if (0x900 < arg4) {
       arg4 = 0x900;
     }
-    p1 = val1;
+    p1 = frame.val1;
     for (i1 = 6; i1 != 0; i1 = i1 + -1) {
       p1[0] = '\0';
       p1[1] = '\0';
@@ -421,7 +425,7 @@ XI_API int __cdecl Actor_FindByName(char * arg1, uint32_t arg2, int arg3, int ar
       p1[3] = '\0';
       p1 = p1 + 4;
     }
-    p1 = val1;
+    p1 = frame.val1;
     for (u2 = arg2 >> 2; u2 != 0; u2 = u2 - 1) {
       *(uint32_t *)p1 = *(uint32_t *)arg1;
       arg1 = arg1 + 4;
@@ -432,10 +436,10 @@ XI_API int __cdecl Actor_FindByName(char * arg1, uint32_t arg2, int arg3, int ar
       arg1 = arg1 + 1;
       p1 = p1 + 1;
     }
-    u3 = 0;
+    frame.u3 = 0;
     if (arg3 < arg4) {
       while ((((((self_ = (void *)(&ActerBuffPtr_as_v0)[arg3], self_ == (void *)0x0 ||
-                 (i2 = (int)self_ + 0x74, i2 == 0)) ||
+                 (frame.i2 = (int)self_ + 0x74, frame.i2 == 0)) ||
                 ((*(int *)((int)self_ + 0x78) == 0 ||
                  (((*(uint32_t *)((int)self_ + 0x124) >> 0xc & 1) != 0 ||
                   ((*(uint32_t *)((int)self_ + 0x120) >> 7 & 1) != 0)))))) ||
@@ -443,14 +447,14 @@ XI_API int __cdecl Actor_FindByName(char * arg1, uint32_t arg2, int arg3, int ar
               ((((char)arg5 != '\0' && (0x6ff < arg3)) &&
                (((*(uint32_t *)((int)self_ + 300) >> 0x16 & 1) == 0 ||
                 (u1 = orig::Actor_FindByField2a4(self_), (char)u1 == '\0')))))) ||
-             (i1 = orig::Actor_FindByNameEntry(self_,val1,arg5), i1 == 0))) {
+             (i1 = orig::Actor_FindByNameEntry(self_,frame.val1,arg5), i1 == 0))) {
         arg3 = arg3 + 1;
         if (arg4 <= arg3) {
           return 0;
         }
       }
     }
-    return i2;
+    return frame.i2;
   }
   return 0;
 }
@@ -520,18 +524,20 @@ XI_API bits32 __cdecl TextCommand_TargetActionToPacket(uint32_t * arg1, bits32 a
   int i2;
   long double f2;
   long double f3;
-  char xi_frame[168] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint16_t  &u5 = *reinterpret_cast<uint16_t  *>(xi_frame + 8);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint8_t  &u8 = *reinterpret_cast<uint8_t  *>(xi_frame + 80);
-  uint8_t  &u9 = *reinterpret_cast<uint8_t  *>(xi_frame + 81);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 84);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
-  uint16_t  &u12 = *reinterpret_cast<uint16_t  *>(xi_frame + 92);
-  uint8_t  &u13 = *reinterpret_cast<uint8_t  *>(xi_frame + 164);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[168];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint16_t u5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u6; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u7; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x50]; uint8_t u8; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_7[0x51]; uint8_t u9; };   // at 0x51
+    struct __attribute__((packed)) { unsigned char pad_8[0x54]; uint32_t u10; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_9[0x58]; uint32_t u11; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_10[0x5C]; uint16_t u12; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_11[0xA4]; uint8_t u13; };   // at 0xA4
+  } frame;
   
   if (g_10487E48 != '\0') {
     return 0;
@@ -583,14 +589,14 @@ XI_API bits32 __cdecl TextCommand_TargetActionToPacket(uint32_t * arg1, bits32 a
       if ((char)arg5 != '\0') {
         return 1;
       }
-      u3 = *(uint32_t *)(i2 + 0x78);
-      u5 = 0xac;
-      u6 = 0;
-      u7 = 0;
-      u8 = 0;
-      u9 = 0;
-      u4 = u3;
-      orig::game_100A1AB0(&u3);
+      frame.u3 = *(uint32_t *)(i2 + 0x78);
+      frame.u5 = 0xac;
+      frame.u6 = 0;
+      frame.u7 = 0;
+      frame.u8 = 0;
+      frame.u9 = 0;
+      frame.u4 = frame.u3;
+      orig::game_100A1AB0(&frame.u3);
       return 1;
     }
     if (((char)arg4 != '\0') ||
@@ -618,11 +624,11 @@ code_1007C0EC:
   if ((char)arg5 != '\0') {
     return 1;
   }
-  u10 = *(uint32_t *)(i2 + 0x78);
-  u11 = *(uint32_t *)(i2 + 0x78);
-  u12 = 9;
-  u13 = 0;
-  orig::game_100A1AB0(&u10);
+  frame.u10 = *(uint32_t *)(i2 + 0x78);
+  frame.u11 = *(uint32_t *)(i2 + 0x78);
+  frame.u12 = 9;
+  frame.u13 = 0;
+  orig::game_100A1AB0(&frame.u10);
   return 1;
 }
 
@@ -826,17 +832,17 @@ XI_API int __cdecl Command_RunLine(char * arg1, bits32 arg2)
   bits32  &xi_s2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
   int  &i3 = *reinterpret_cast<int  *>(xi_frame + 20);
   char  (&val1)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 24);
-  char  (&val2)[511] = *reinterpret_cast<char  (*)[511]>(xi_frame + 536);
+  char  (&orgstr)[511] = *reinterpret_cast<char  (*)[511]>(xi_frame + 536);
   uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 1047);
   
   i3 = 0;
-  orig::TextInputFiles_ProcessInputLine(g_10662DA4_as_v0,arg1,(int)val2,0x200);
+  orig::TextInputFiles_ProcessInputLine(g_10662DA4_as_v0,arg1,(int)orgstr,0x200);
   u3 = 0;
   g_1047D3F8 = 0;
   if (g_1047D3F0_as_s32 == 0) {
     return 0;
   }
-  if (val2[0] == '\0') {
+  if (orgstr[0] == '\0') {
     return 0;
   }
   if (((char)arg2 == '\x01') || (g_1047D3FE = '\x01', (char)arg2 == '\x02')) {
@@ -844,7 +850,7 @@ XI_API int __cdecl Command_RunLine(char * arg1, bits32 arg2)
   }
   g_1047D497 = (char)arg2 == '\x02';
   if ((*(char *)(g_pTargetMng_as_s32 + 0x59) != '\0') || (*(int *)(g_pTargetMng_as_s32 + 0xc4) != 0)) {
-    i1 = orig::Arg_LookupWord(&g_10355408,val2);
+    i1 = orig::Arg_LookupWord(&g_10355408,orgstr);
     if ((char)arg2 == '\x01') {
       if ((i1 == 0) || ((*(uint8_t *)(i1 + 0x16) & 2) == 0)) {
         orig::ChatLog_AddMessage7Code37B_v1(g_pTkMsgWinData_as_v1,0xa4);
@@ -884,7 +890,7 @@ XI_API int __cdecl Command_RunLine(char * arg1, bits32 arg2)
   g_1047D490 = 0;
   g_103551E0 = (uint8_t *)&g_1047D400;
   g_103551E4 = &g_1047D448;
-  orig::preprocessArg(val2,&g_10354BE0,0x200);
+  orig::preprocessArg(orgstr,&g_10354BE0,0x200);
   if (g_10354BE0 == '\0') {
     return 0;
   }
@@ -943,7 +949,7 @@ XI_API int __cdecl Command_RunLine(char * arg1, bits32 arg2)
             if ((g_1047D498_as_s8 != '\0') && ((char)p4[2] == '\0')) {
               return 0;
             }
-            i3 = (*(untyped_fn *)p4[1])(val2,&g_10354DE0,i1);
+            i3 = (*(untyped_fn *)p4[1])(orgstr,&g_10354DE0,i1);
           }
           break;
         }
@@ -1153,8 +1159,10 @@ XI_API bits32 __thiscall ActorHandle_ResolveObject(void * self_)
 {
   int i1;
   int i2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  uint8_t  (&u1)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { uint8_t u1[12]; };   // at 0x0
+  } frame;
   
   i2 = (&ActerBuffPtr_as_v0)[*(int *)((int)self_ + 4)];
   if ((i2 != 0) && (*(char *)((int)self_ + 0xb) != '\x04')) {
@@ -1174,8 +1182,8 @@ XI_API bits32 __thiscall ActorHandle_ResolveObject(void * self_)
       }
       i2 = i2 + 1;
     } while (i2 < 0x900);
-    orig::ActorHandle_Constructor_v1(u1);
-    orig::ActorHandle_Destructor_v1(u1);
+    orig::ActorHandle_Constructor_v1(frame.u1);
+    orig::ActorHandle_Destructor_v1(frame.u1);
   }
   return 0;
 }

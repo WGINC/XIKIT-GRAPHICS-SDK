@@ -28,13 +28,15 @@ XI_API uint32_t * __cdecl sqgxDlistEnd(void)
   int i3;
   int i4;
   int i5;
-  alignas(16) unsigned char xi_frame[0x46C];  // address-taken locals at their original offsets
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x60);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  void * &p3 = *reinterpret_cast<void * *>(xi_frame + 0x68);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x46C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x60]; int i6; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_2[0x64]; int i7; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_3[0x68]; void * p3; };   // at 0x68
+  } frame;
 
-  i6 = 0;
-  i7 = 0;
+  frame.i6 = 0;
+  frame.i7 = 0;
   p1 = (uint32_t *)g_pSqgxContext[641];
   g_pSqgxContext[641] = 0;
   if ( (g_pSqgxContext[652] & 1) != 0 )
@@ -87,15 +89,15 @@ XI_API uint32_t * __cdecl sqgxDlistEnd(void)
       520u,
       D3DFMT_INDEX16,
       D3DPOOL_DEFAULT,
-      (IDirect3DIndexBuffer8 **)&i6);
-    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)i6 + 44))(
-      i6,
+      (IDirect3DIndexBuffer8 **)&frame.i6);
+    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)frame.i6 + 44))(
+      frame.i6,
       0,
       2 * g_pSqgxContext[642],
-      &p3,
+      &frame.p3,
       0x2000);
-    memcpy(p3, (const void *)g_pSqgxContext[643], 2 * g_pSqgxContext[642]);
-    (*(void (__stdcall **)(int))(*(uint32_t *)i6 + 48))(i6);
+    memcpy(frame.p3, (const void *)g_pSqgxContext[643], 2 * g_pSqgxContext[642]);
+    (*(void (__stdcall **)(int))(*(uint32_t *)frame.i6 + 48))(frame.i6);
   }
   i3 = g_pSqgxContext[644];
   if ( i3 != 0 )
@@ -106,20 +108,20 @@ XI_API uint32_t * __cdecl sqgxDlistEnd(void)
       520u,
       D3DFMT_INDEX16,
       D3DPOOL_DEFAULT,
-      (IDirect3DIndexBuffer8 **)&i7);
-    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)i7 + 44))(
-      i7,
+      (IDirect3DIndexBuffer8 **)&frame.i7);
+    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)frame.i7 + 44))(
+      frame.i7,
       0,
       2 * g_pSqgxContext[644],
-      &p3,
+      &frame.p3,
       0x2000);
-    memcpy(p3, (const void *)g_pSqgxContext[645], 2 * g_pSqgxContext[644]);
-    (*(void (__stdcall **)(int))(*(uint32_t *)i7 + 48))(i7);
+    memcpy(frame.p3, (const void *)g_pSqgxContext[645], 2 * g_pSqgxContext[644]);
+    (*(void (__stdcall **)(int))(*(uint32_t *)frame.i7 + 48))(frame.i7);
   }
   p1[8] = g_pSqgxContext[642] - 2;
-  p1[7] = i6;
+  p1[7] = frame.i6;
   p1[10] = g_pSqgxContext[644] / 3;
-  p1[9] = i7;
+  p1[9] = frame.i7;
   i4 = g_pSqgxContext[643];
   if ( i4 != 0 )
     orig::sqFree(i4, aCDevDancerModu_30, 107);
@@ -137,28 +139,28 @@ XI_API uint32_t * __cdecl sqgxDlistEnd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 553 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **arg1)
 {
-  unsigned int u1;
+  unsigned int StreamNumber;
   int *p1;
   int i1;
-  IDirect3DIndexBuffer8 *p2;
+  IDirect3DIndexBuffer8 *pIndexData;
   IDirect3DIndexBuffer8 *p3;
   unsigned int u2;
   unsigned int u3;
   unsigned int u4;
   int i2;
-  u1 = 0;
+  StreamNumber = 0;
   orig::game_1028A730(0, 0);
   orig::sqgxShapeBegin();
   p1 = g_pSqgxContext;
   if ( (g_pSqgxContext[652] & 1) != 0 )
   {
-    u1 = 1;
+    StreamNumber = 1;
     g_pDancerDevice->SetStreamSource(0, *arg1, 12u);
     p1 = g_pSqgxContext;
   }
   if ( (p1[652] & 2) != 0 )
   {
-    u3 = u1++;
+    u3 = StreamNumber++;
     g_pDancerDevice->SetStreamSource(u3, arg1[1], 12u);
     p1 = g_pSqgxContext;
   }
@@ -170,7 +172,7 @@ XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **arg1)
     {
       if ( (p1[i1] & 4) != 0 )
       {
-        u2 = u1++;
+        u2 = StreamNumber++;
         g_pDancerDevice->SetStreamSource(u2, arg1[i1 - 651], 8u);
         p1 = g_pSqgxContext;
       }
@@ -181,16 +183,16 @@ XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **arg1)
   }
   if ( (p1[652] & 8) != 0 )
   {
-    u4 = u1++;
+    u4 = StreamNumber++;
     g_pDancerDevice->SetStreamSource(u4, arg1[4], 4u);
     p1 = g_pSqgxContext;
   }
   if ( (p1[652] & 0x10) != 0 )
-    g_pDancerDevice->SetStreamSource(u1, arg1[5], 12u);
-  p2 = (IDirect3DIndexBuffer8 *)arg1[7];
-  if ( p2 != nullptr )
+    g_pDancerDevice->SetStreamSource(StreamNumber, arg1[5], 12u);
+  pIndexData = (IDirect3DIndexBuffer8 *)arg1[7];
+  if ( pIndexData != nullptr )
   {
-    g_pDancerDevice->SetIndices(p2, 0);
+    g_pDancerDevice->SetIndices(pIndexData, 0);
     g_pDancerDevice->lpVtbl->DrawIndexedPrimitive(
       g_pDancerDevice,
       D3DPT_TRIANGLESTRIP,

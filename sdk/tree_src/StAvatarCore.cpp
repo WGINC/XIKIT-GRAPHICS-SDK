@@ -320,14 +320,16 @@ XI_API void __cdecl StAvatar_FormatNames(void)
 {
   int i1;
   uint8_t *p1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&u1)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u1[16]; };   // at 0x0
+  } frame;
   
   p1 = (uint8_t *)&g_103890E8;
   i1 = 0;
   do {
     if ((*p1 & 1) == 0) {
-      orig::_sprintf(u1,str_jo_02d_103896CC,i1 + 1);
+      orig::_sprintf(frame.u1,str_jo_02d_103896CC,i1 + 1);
     }
     p1 = p1 + 0x24;
     i1 = i1 + 1;
@@ -481,37 +483,39 @@ XI_API void __cdecl StAvatar_UpdateCameraYaw(float arg1)
   uint8_t u2;
   long double f2;
   long double f3;
-  char xi_frame[72] __attribute__((aligned(4)));
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 16);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  double  &f6 = *reinterpret_cast<double  *>(xi_frame + 32);
-  float  (&f7)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 40);
-  float  (&f8)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 56);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[72];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; float f5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; uint32_t u3; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; double f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; float f7[4]; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x38]; float f8[4]; };   // at 0x38
+  } frame;
   
   f1 = arg1;
-  orig::scnGetFlags_v1(&u3);
-  if ((u3 & 0x100) == 0) {
-    i1 = *(int *)(bit_cast<int>(arg1) + 0x1c);
+  orig::scnGetFlags_v1(&frame.u3);
+  if ((frame.u3 & 0x100) == 0) {
+    frame.i1 = *(int *)(bit_cast<int>(arg1) + 0x1c);
   }
   else {
-    i1 = 6;
+    frame.i1 = 6;
   }
-  orig::scnCameraGetInfo_v1(i1,(uint32_t *)0x0,&i2);
+  orig::scnCameraGetInfo_v1(frame.i1,(uint32_t *)0x0,&frame.i2);
   f2 = orig::GetAnalogKey(0x3f,6);
   f3 = orig::GetAnalogKey(0x3f,7);
-  f5 = (float)-f3;
+  frame.f5 = (float)-f3;
   f3 = (float)-f2 * 1.48352992534637451171875f;
   f2 = f3 - *(float *)(bit_cast<int>(arg1) + 0x44);
-  f4 = (float)f2;
-  f6 = (double)((f2) < 0 ? -(f2) : (f2));
+  frame.f4 = (float)f2;
+  frame.f6 = (double)((f2) < 0 ? -(f2) : (f2));
   f2 = orig::Camera_GetFrameScale_v1(xi_eax);
-  u2 = ((f2 * 0.10471975803375244140625f) != (f2 * 0.10471975803375244140625f)) || ((f6) != (f6));
-  if ((u2 || f2 * 0.10471975803375244140625f < f6) != u2) {
-    u2 = ((f4) != (f4)) || ((0.0f) != (0.0f));
-    if ((u2 || f4 < 0.0f) == u2) {
+  u2 = ((f2 * 0.10471975803375244140625f) != (f2 * 0.10471975803375244140625f)) || ((frame.f6) != (frame.f6));
+  if ((u2 || f2 * 0.10471975803375244140625f < frame.f6) != u2) {
+    u2 = ((frame.f4) != (frame.f4)) || ((0.0f) != (0.0f));
+    if ((u2 || frame.f4 < 0.0f) == u2) {
       f3 = *(float *)(bit_cast<int>(arg1) + 0x44) + 0.10471975803375244140625f;
     }
     else {
@@ -520,10 +524,10 @@ XI_API void __cdecl StAvatar_UpdateCameraYaw(float arg1)
   }
   arg1 = (float)f3;
   *(float *)(bit_cast<int>(f1) + 0x44) = arg1;
-  orig::SqQuat_FromRotationY(f7,arg1);
-  orig::SqQuatMul_Mul(f8,f7,(float *)(i2 + 0x68));
-  orig::SqQuat_Copy_v1((uint32_t *)(i2 + 0x68),f8);
-  f3 = f5;
+  orig::SqQuat_FromRotationY(frame.f7,arg1);
+  orig::SqQuatMul_Mul(frame.f8,frame.f7,(float *)(frame.i2 + 0x68));
+  orig::SqQuat_Copy_v1((uint32_t *)(frame.i2 + 0x68),frame.f8);
+  f3 = frame.f5;
   f2 = 0.0f;
   u2 = !(f3 >= f2);
   u1 = (uint16_t)((((f3) != (f3)) || ((f2) != (f2))) || f3 == f2);
@@ -533,15 +537,15 @@ XI_API void __cdecl StAvatar_UpdateCameraYaw(float arg1)
   else {
     f2 = 0.698131740093231201171875f;
   }
-  arg1 = (float)(f5 * f2);
+  arg1 = (float)(frame.f5 * f2);
   f2 = arg1 - *(float *)(bit_cast<int>(f1) + 0x48);
-  f4 = (float)f2;
-  f6 = (double)((f2) < 0 ? -(f2) : (f2));
+  frame.f4 = (float)f2;
+  frame.f6 = (double)((f2) < 0 ? -(f2) : (f2));
   f2 = orig::Camera_GetFrameScale_v1((uint32_t)(uint16_t)((uint16_t)u2 << 8 | u1 << 0xe));
-  u2 = ((f2 * 0.10471975803375244140625f) != (f2 * 0.10471975803375244140625f)) || ((f6) != (f6));
-  if ((u2 || f2 * 0.10471975803375244140625f < f6) != u2) {
-    u2 = ((f4) != (f4)) || ((0.0f) != (0.0f));
-    if ((u2 || f4 < 0.0f) == u2) {
+  u2 = ((f2 * 0.10471975803375244140625f) != (f2 * 0.10471975803375244140625f)) || ((frame.f6) != (frame.f6));
+  if ((u2 || f2 * 0.10471975803375244140625f < frame.f6) != u2) {
+    u2 = ((frame.f4) != (frame.f4)) || ((0.0f) != (0.0f));
+    if ((u2 || frame.f4 < 0.0f) == u2) {
       f2 = *(float *)(bit_cast<int>(f1) + 0x48) + 0.10471975803375244140625f;
     }
     else {
@@ -550,10 +554,10 @@ XI_API void __cdecl StAvatar_UpdateCameraYaw(float arg1)
     arg1 = (float)f2;
   }
   *(float *)(bit_cast<int>(f1) + 0x48) = arg1;
-  orig::SqQuat_FromRotationX(f7,arg1);
-  orig::SqQuatMul_Mul(f8,(float *)(i2 + 0x68),f7);
-  orig::SqQuat_Copy_v1((uint32_t *)(i2 + 0x68),f8);
-  orig::sqxfXformTD_Update(i2);
+  orig::SqQuat_FromRotationX(frame.f7,arg1);
+  orig::SqQuatMul_Mul(frame.f8,(float *)(frame.i2 + 0x68),frame.f7);
+  orig::SqQuat_Copy_v1((uint32_t *)(frame.i2 + 0x68),frame.f8);
+  orig::sqxfXformTD_Update(frame.i2);
   return;
 }
 
@@ -567,95 +571,97 @@ XI_API void __cdecl StAvatar_UpdateCameraFollow(int arg1)
   float f1;
   uint8_t u1;
   long double f2;
-  char xi_frame[132] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 48);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 52);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 56);
-  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 60);
-  float  &f17 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &f18 = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &f19 = *reinterpret_cast<float  *>(xi_frame + 72);
-  float  &f20 = *reinterpret_cast<float  *>(xi_frame + 76);
-  float  &f21 = *reinterpret_cast<float  *>(xi_frame + 80);
-  float  &f22 = *reinterpret_cast<float  *>(xi_frame + 84);
-  float  (&f23)[7] = *reinterpret_cast<float  (*)[7]>(xi_frame + 88);
-  float  (&f24)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 116);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[132];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f7; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f8; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; float f9; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_9[0x20]; float f10; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_10[0x24]; float f11; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_11[0x28]; float f12; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_12[0x2C]; float f13; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_13[0x30]; float f14; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_14[0x34]; int i4; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_15[0x38]; float f15; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_16[0x3C]; float f16; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_17[0x40]; float f17; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_18[0x44]; float f18; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_19[0x48]; float f19; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_20[0x4C]; float f20; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_21[0x50]; float f21; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_22[0x54]; float f22; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_23[0x58]; float f23[7]; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_24[0x74]; float f24[4]; };   // at 0x74
+  } frame;
   
   if (((uint8_t *)(arg1 + 0xcc) != (uint8_t *)0x0) && ((*(uint8_t *)(arg1 + 0xcc) & 4) != 0)) {
-    orig::scnCameraGetInfo_v1(3,(uint32_t *)0x0,&i3);
-    orig::SqQuat_Copy_v1(&f11,(uint32_t *)(i3 + 0x68));
-    orig::scnCameraGetInfo_v1(4,(uint32_t *)0x0,&i3);
+    orig::scnCameraGetInfo_v1(3,(uint32_t *)0x0,&frame.i3);
+    orig::SqQuat_Copy_v1(&frame.f11,(uint32_t *)(frame.i3 + 0x68));
+    orig::scnCameraGetInfo_v1(4,(uint32_t *)0x0,&frame.i3);
     i2 = *(int *)(arg1 + 0xec);
-    f3 = 0.0f;
-    i4 = i2;
+    frame.f3 = 0.0f;
+    frame.i4 = i2;
     if (0 < *(int *)(i2 + 0x44)) {
       do {
-        f1 = f3;
-        p1 = (int *)orig::SqmdModel_GetItemKind2(i2,f3);
+        f1 = frame.f3;
+        p1 = (int *)orig::SqmdModel_GetItemKind2(i2,frame.f3);
         if (*p1 == 0xb0001) {
           i1 = *(int *)(p1[7] + 0x68);
           *(uint32_t *)(p1[7] + 0x68) = 0;
-          orig::SqBoneTransform_TransformOrigin(p1,p1[8] + 0x1f0,&f4);
+          orig::SqBoneTransform_TransformOrigin(p1,p1[8] + 0x1f0,&frame.f4);
           if (i1 == 0) {
-            orig::SqQuat_SetIdentity(&f7);
+            orig::SqQuat_SetIdentity(&frame.f7);
           }
           else {
             i2 = *(int *)(i1 + 100);
-            orig::SqQuatMul_RotateVec(&f4,(float *)(i2 + 0x68),&f4);
-            f4 = (float)(f4 + *(float *)(i2 + 0x5c));
-            f5 = (float)(f5 + *(float *)(i2 + 0x60));
-            f6 = (float)(f6 + *(float *)(i2 + 100));
-            orig::SqQuat_Copy_v1(&f7,(float *)(i2 + 0x68));
-            i2 = i4;
-            f1 = f3;
+            orig::SqQuatMul_RotateVec(&frame.f4,(float *)(i2 + 0x68),&frame.f4);
+            frame.f4 = (float)(frame.f4 + *(float *)(i2 + 0x5c));
+            frame.f5 = (float)(frame.f5 + *(float *)(i2 + 0x60));
+            frame.f6 = (float)(frame.f6 + *(float *)(i2 + 100));
+            orig::SqQuat_Copy_v1(&frame.f7,(float *)(i2 + 0x68));
+            i2 = frame.i4;
+            f1 = frame.f3;
           }
-          orig::SqQuat_FromRotationY(f23 + 3,3.1415927410125732421875f);
-          orig::SqQuatMul_Mul(f24,f23 + 3,&f7);
-          orig::SqQuat_Copy_v1(&f7,f24);
-          f15 = (float)(f11 - f7);
-          f16 = (float)(f12 - f8);
-          f17 = (float)(f13 - f9);
-          f18 = (float)(f14 - f10);
-          f19 = (float)(f7 + f11);
-          f20 = (float)(f8 + f12);
-          f21 = (float)(f9 + f13);
-          f22 = (float)(f10 + f14);
-          f2 = orig::game_1027AEC0(&f15,&f15);
-          f3 = (float)f2;
-          f2 = orig::game_1027AEC0(&f19,&f19);
-          u1 = ((f2) != (f2)) || ((f3) != (f3));
-          if ((u1 || f2 < f3) != u1) {
-            orig::SqQuat_Negate(&f7);
+          orig::SqQuat_FromRotationY(frame.f23 + 3,3.1415927410125732421875f);
+          orig::SqQuatMul_Mul(frame.f24,frame.f23 + 3,&frame.f7);
+          orig::SqQuat_Copy_v1(&frame.f7,frame.f24);
+          frame.f15 = (float)(frame.f11 - frame.f7);
+          frame.f16 = (float)(frame.f12 - frame.f8);
+          frame.f17 = (float)(frame.f13 - frame.f9);
+          frame.f18 = (float)(frame.f14 - frame.f10);
+          frame.f19 = (float)(frame.f7 + frame.f11);
+          frame.f20 = (float)(frame.f8 + frame.f12);
+          frame.f21 = (float)(frame.f9 + frame.f13);
+          frame.f22 = (float)(frame.f10 + frame.f14);
+          f2 = orig::game_1027AEC0(&frame.f15,&frame.f15);
+          frame.f3 = (float)f2;
+          f2 = orig::game_1027AEC0(&frame.f19,&frame.f19);
+          u1 = ((f2) != (f2)) || ((frame.f3) != (frame.f3));
+          if ((u1 || f2 < frame.f3) != u1) {
+            orig::SqQuat_Negate(&frame.f7);
           }
           *(int *)(p1[7] + 0x68) = i1;
-          orig::SqQuat_Copy_v1((uint32_t *)(i3 + 0x68),&f7);
-          *(uint32_t *)(i3 + 0x78) = 0x41a00000;
-          f23[0] = 0.0f;
-          f23[1] = 0.0f;
-          f23[2] = (-2e+01f);
-          orig::SqQuatMul_RotateVec((float *)(i3 + 0x5c),(float *)(i3 + 0x68),f23);
-          *(float *)(i3 + 0x5c) =
-               (float)(f4 + *(float *)(i3 + 0x5c));
-          *(float *)(i3 + 0x60) =
-               (float)(f5 + *(float *)(i3 + 0x60));
-          *(float *)(i3 + 100) =
-               (float)(f6 + *(float *)(i3 + 100));
-          orig::sqxfXformTD_Update(i3);
+          orig::SqQuat_Copy_v1((uint32_t *)(frame.i3 + 0x68),&frame.f7);
+          *(uint32_t *)(frame.i3 + 0x78) = 0x41a00000;
+          frame.f23[0] = 0.0f;
+          frame.f23[1] = 0.0f;
+          frame.f23[2] = (-2e+01f);
+          orig::SqQuatMul_RotateVec((float *)(frame.i3 + 0x5c),(float *)(frame.i3 + 0x68),frame.f23);
+          *(float *)(frame.i3 + 0x5c) =
+               (float)(frame.f4 + *(float *)(frame.i3 + 0x5c));
+          *(float *)(frame.i3 + 0x60) =
+               (float)(frame.f5 + *(float *)(frame.i3 + 0x60));
+          *(float *)(frame.i3 + 100) =
+               (float)(frame.f6 + *(float *)(frame.i3 + 100));
+          orig::sqxfXformTD_Update(frame.i3);
         }
-        f3 = bit_cast<float>((bit_cast<int>(f1) + 1));
-      } while (bit_cast<int>(f3) < *(int *)(i2 + 0x44));
+        frame.f3 = bit_cast<float>((bit_cast<int>(f1) + 1));
+      } while (bit_cast<int>(frame.f3) < *(int *)(i2 + 0x44));
     }
   }
   return;
@@ -678,42 +684,44 @@ XI_API void __cdecl StAvatarCore_MoveByAnalogStick(uint32_t * arg1, int arg2)
   uint8_t u3;
   long double f3;
   long double f4;
-  char xi_frame[41] __attribute__((aligned(4)));
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 1);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 5);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 9);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 13);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 17);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 21);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 25);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 29);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 33);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 37);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[41];
+    struct __attribute__((packed)) { uint8_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; float f5; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x5]; float f6; };   // at 0x5
+    struct __attribute__((packed)) { unsigned char pad_4[0x9]; float f7; };   // at 0x9
+    struct __attribute__((packed)) { unsigned char pad_5[0xD]; float f8; };   // at 0xD
+    struct __attribute__((packed)) { unsigned char pad_6[0x11]; float f9; };   // at 0x11
+    struct __attribute__((packed)) { unsigned char pad_7[0x15]; float f10; };   // at 0x15
+    struct __attribute__((packed)) { unsigned char pad_8[0x19]; float f11; };   // at 0x19
+    struct __attribute__((packed)) { unsigned char pad_9[0x1D]; float f12; };   // at 0x1D
+    struct __attribute__((packed)) { unsigned char pad_10[0x21]; float f13; };   // at 0x21
+    struct __attribute__((packed)) { unsigned char pad_11[0x25]; uint32_t u5; };   // at 0x25
+  } frame;
   
   p4 = arg1;
-  f11 = 0.0f;
-  f12 = 0.0f;
-  f13 = 0.0f;
-  u5 = 0;
+  frame.f11 = 0.0f;
+  frame.f12 = 0.0f;
+  frame.f13 = 0.0f;
+  frame.u5 = 0;
   f3 = orig::GetAnalogKey(0x3f,4);
-  f7 = (float)f3;
+  frame.f7 = (float)f3;
   f3 = orig::GetAnalogKey(0x3f,5);
-  f6 = (float)f3;
-  f5 = (float)x87_fsqrt((long double)f7 * (long double)f7 + f3 * (long double)f6);
-  f9 = (float)((long double)1.0f / (long double)f5);
-  if (!((long double)f5 > (long double)0.89999997615814208984375f)) {
-    if ((long double)f5 > (long double)0.0500000007450580596923828125f) {
+  frame.f6 = (float)f3;
+  frame.f5 = (float)x87_fsqrt((long double)frame.f7 * (long double)frame.f7 + f3 * (long double)frame.f6);
+  frame.f9 = (float)((long double)1.0f / (long double)frame.f5);
+  if (!((long double)frame.f5 > (long double)0.89999997615814208984375f)) {
+    if ((long double)frame.f5 > (long double)0.0500000007450580596923828125f) {
       u2 = 3;
       goto code_1024E359;
     }
     u2 = 2;
     if ((*arg1 & 0x1000) != 0) {
-      f11 = 0.0f;
-      f12 = 0.0f;
-      f13 = 0.0f;
-      u5 = 0x3f800000;
-      orig::StAvatar_UpdateHeading((int)arg1,&f11,2);
+      frame.f11 = 0.0f;
+      frame.f12 = 0.0f;
+      frame.f13 = 0.0f;
+      frame.u5 = 0x3f800000;
+      orig::StAvatar_UpdateHeading((int)arg1,&frame.f11,2);
       goto code_1024E359;
     }
   }
@@ -721,43 +729,43 @@ XI_API void __cdecl StAvatarCore_MoveByAnalogStick(uint32_t * arg1, int arg2)
     u2 = 1;
 code_1024E359:
     if (((((*arg1 & 0x1000) != 0) &&
-         ((long double)f5 > (long double)0.0500000007450580596923828125f)) &&
-        ((long double)f6 > (long double)0.0f)) &&
-       (u3 = (((((long double)f7) < 0 ? -((long double)f7) : ((long double)f7))) != ((((long double)f7) < 0 ? -((long double)f7) : ((long double)f7)))) || (((((long double)f6) < 0 ? -((long double)f6) : ((long double)f6))) != ((((long double)f6) < 0 ? -((long double)f6) : ((long double)f6)))),
-       (u3 || (((long double)f7) < 0 ? -((long double)f7) : ((long double)f7)) < (((long double)f6) < 0 ? -((long double)f6) : ((long double)f6))) != u3)) {
+         ((long double)frame.f5 > (long double)0.0500000007450580596923828125f)) &&
+        ((long double)frame.f6 > (long double)0.0f)) &&
+       (u3 = (((((long double)frame.f7) < 0 ? -((long double)frame.f7) : ((long double)frame.f7))) != ((((long double)frame.f7) < 0 ? -((long double)frame.f7) : ((long double)frame.f7)))) || (((((long double)frame.f6) < 0 ? -((long double)frame.f6) : ((long double)frame.f6))) != ((((long double)frame.f6) < 0 ? -((long double)frame.f6) : ((long double)frame.f6)))),
+       (u3 || (((long double)frame.f7) < 0 ? -((long double)frame.f7) : ((long double)frame.f7)) < (((long double)frame.f6) < 0 ? -((long double)frame.f6) : ((long double)frame.f6))) != u3)) {
       u2 = 0;
     }
   }
   p1 = arg1 + 0xa0;
-  f5 = (float)(long double)*(float *)(((char *)&g_10389438) + (u2 + arg1[2] * 4) * 4);
-  i1 = orig::Chasm_ApplyAtCurrentIndex((int)p1,0,&f10);
+  frame.f5 = (float)(long double)*(float *)(((char *)&g_10389438) + (u2 + arg1[2] * 4) * 4);
+  i1 = orig::Chasm_ApplyAtCurrentIndex((int)p1,0,&frame.f10);
   orig::game_1024E760(arg1);
   if ((i1 != 0) &&
-     (u3 = (((long double)f5) != ((long double)f5)) || (((long double)0.0f) != ((long double)0.0f)),
-     u3 != (u3 || (long double)f5 == (long double)0.0f))) goto code_1024E649;
-  u5 = 0x3f800000;
-  f12 = 0.0f;
+     (u3 = (((long double)frame.f5) != ((long double)frame.f5)) || (((long double)0.0f) != ((long double)0.0f)),
+     u3 != (u3 || (long double)frame.f5 == (long double)0.0f))) goto code_1024E649;
+  frame.u5 = 0x3f800000;
+  frame.f12 = 0.0f;
   if ((*arg1 & 0x1000) == 0) {
-    f11 = (float)-(long double)f6;
-    f13 = f7;
-    orig::StAvatar_GetCameraMatrix((int)arg1,&f11);
-    f3 = bit_cast<long double>(x87_fpatan((long double)f13,-(long double)f11));
-    f8 = (float)((long double)bit_cast<float>(arg1[0x27]) - (long double)4.7123889923095703125f);
-    u3 = (((long double)f5) != ((long double)f5)) || (((long double)0.0f) != ((long double)0.0f));
-    if (u3 == (u3 || (long double)f5 == (long double)0.0f)) {
-      f4 = (((long double)f8 - f3) < 0 ? -((long double)f8 - f3) : ((long double)f8 - f3));
+    frame.f11 = (float)-(long double)frame.f6;
+    frame.f13 = frame.f7;
+    orig::StAvatar_GetCameraMatrix((int)arg1,&frame.f11);
+    f3 = bit_cast<long double>(x87_fpatan((long double)frame.f13,-(long double)frame.f11));
+    frame.f8 = (float)((long double)bit_cast<float>(arg1[0x27]) - (long double)4.7123889923095703125f);
+    u3 = (((long double)frame.f5) != ((long double)frame.f5)) || (((long double)0.0f) != ((long double)0.0f));
+    if (u3 == (u3 || (long double)frame.f5 == (long double)0.0f)) {
+      f4 = (((long double)frame.f8 - f3) < 0 ? -((long double)frame.f8 - f3) : ((long double)frame.f8 - f3));
       arg1 = bit_cast<uint32_t *>((float)((long double)arg2 * (long double)xi_k4(0x3745A6E5ull)));
       if (f4 > (long double)3.1415927410125732421875f) {
         f4 = (long double)6.283185482025146484375f - f4;
         arg1 = bit_cast<uint32_t *>((float)((long double)bit_cast<float>(arg1) * (long double)(-1.0f)));
       }
       if ((!((f4) != (f4)) && !(((long double)bit_cast<float>(arg1)) != ((long double)bit_cast<float>(arg1)))) && (long double)bit_cast<float>(arg1) < f4) {
-        u3 = (((long double)f8) != ((long double)f8)) || ((f3) != (f3));
-        if ((u3 || (long double)f8 < f3) == u3) {
-          f3 = (long double)f8 - (long double)bit_cast<float>(arg1);
+        u3 = (((long double)frame.f8) != ((long double)frame.f8)) || ((f3) != (f3));
+        if ((u3 || (long double)frame.f8 < f3) == u3) {
+          f3 = (long double)frame.f8 - (long double)bit_cast<float>(arg1);
         }
         else {
-          f3 = (long double)f8 + (long double)bit_cast<float>(arg1);
+          f3 = (long double)frame.f8 + (long double)bit_cast<float>(arg1);
         }
         if (f3 > (long double)3.1415927410125732421875f) {
           p4[0x27] = bit_cast<uint32_t>((float)((f3 - (long double)6.283185482025146484375f) + (long double)4.7123889923095703125f));
@@ -773,29 +781,29 @@ code_1024E359:
 code_1024E539:
     if (((i1 != 0) || ((int)p4[0xa5] < 0)) ||
        (p3 = (int *)(p4[0xa8] + p4[0xa5] * 0xd8), p3 == (int *)0x0)) {
-      f3 = (long double)f5;
+      f3 = (long double)frame.f5;
     }
     else {
-      f3 = ((long double)f5 -
+      f3 = ((long double)frame.f5 -
                (long double)*(float *)(((char *)&g_10389438) + (*p3 + p4[2] * 4) * 4)) *
-               (long double)f10 +
+               (long double)frame.f10 +
                (long double)*(float *)(((char *)&g_10389438) + (*p3 + p4[2] * 4) * 4);
     }
-    f12 = 0.0f;
-    u5 = 0x3f800000;
-    f3 = f3 * (long double)arg2 * (long double)xi_k4(0x387BA883ull) * (long double)f9;
-    f11 = (float)-((long double)f6 * f3);
-    f13 = (float)(f3 * (long double)f7);
-    orig::StAvatar_GetCameraMatrix((int)p4,&f11);
-    p4[0x22] = bit_cast<uint32_t>((float)((long double)f11 + (long double)bit_cast<float>(p4[0x22])));
-    p4[0x23] = bit_cast<uint32_t>((float)((long double)f12 + (long double)bit_cast<float>(p4[0x23])));
-    p4[0x24] = bit_cast<uint32_t>((float)((long double)f13 + (long double)bit_cast<float>(p4[0x24])));
+    frame.f12 = 0.0f;
+    frame.u5 = 0x3f800000;
+    f3 = f3 * (long double)arg2 * (long double)xi_k4(0x387BA883ull) * (long double)frame.f9;
+    frame.f11 = (float)-((long double)frame.f6 * f3);
+    frame.f13 = (float)(f3 * (long double)frame.f7);
+    orig::StAvatar_GetCameraMatrix((int)p4,&frame.f11);
+    p4[0x22] = bit_cast<uint32_t>((float)((long double)frame.f11 + (long double)bit_cast<float>(p4[0x22])));
+    p4[0x23] = bit_cast<uint32_t>((float)((long double)frame.f12 + (long double)bit_cast<float>(p4[0x23])));
+    p4[0x24] = bit_cast<uint32_t>((float)((long double)frame.f13 + (long double)bit_cast<float>(p4[0x24])));
   }
   else {
-    f3 = (long double)arg2 * (long double)f5 * (long double)xi_k4(0x387BA883ull) * (long double)f9;
-    f11 = (float)-((long double)f6 * f3);
-    f13 = (float)(f3 * (long double)f7);
-    orig::StAvatar_UpdateHeading((int)arg1,&f11,u2);
+    f3 = (long double)arg2 * (long double)frame.f5 * (long double)xi_k4(0x387BA883ull) * (long double)frame.f9;
+    frame.f11 = (float)-((long double)frame.f6 * f3);
+    frame.f13 = (float)(f3 * (long double)frame.f7);
+    orig::StAvatar_UpdateHeading((int)arg1,&frame.f11,u2);
   }
   p2 = (float *)(p4 + 0x22);
   f3 = x87_fsqrt((long double)bit_cast<float>(p4[0x22]) * (long double)bit_cast<float>(p4[0x22]) +
@@ -823,8 +831,8 @@ code_1024E649:
       f1 = *(float *)(i2 + 0x20);
       f2 = *(float *)(i2 + 0x24);
       i1 = orig::Chn_GetSubIndex(*(int *)(i1 + 0x14));
-      i2 = orig::game_1027D110((float)((f3 - (long double)f1) / (long double)f2),i1,&u4,
-                           &f10);
+      i2 = orig::game_1027D110((float)((f3 - (long double)f1) / (long double)f2),i1,&frame.u4,
+                           &frame.f10);
       if ((-1 < i2) && (i2 < i1)) {
         orig::StTrigger_FindIndexAtLeast(p4 + 0x90,u2 + 2,i2);
       }
@@ -846,22 +854,24 @@ XI_API void __cdecl StAvatar_SetFlagsBoth(int arg1, bits32 * arg2, bits32 * arg3
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl StAvatar_GetCameraMatrix(int arg1, float * arg2)
 {
-  char xi_frame[84] __attribute__((aligned(4)));
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  (&f1)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[84];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; uint32_t u1; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint32_t u2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f1[16]; };   // at 0x14
+  } frame;
   
-  orig::scnGetFlags_v1(&u1);
-  if ((u1 & 0x100) == 0) {
-    i1 = *(int *)(arg1 + 0x1c);
+  orig::scnGetFlags_v1(&frame.u1);
+  if ((frame.u1 & 0x100) == 0) {
+    frame.i1 = *(int *)(arg1 + 0x1c);
   }
   else {
-    i1 = 6;
+    frame.i1 = 6;
   }
-  orig::scnCameraGetInfo_v1(i1,(uint32_t *)0x0,&u2);
-  orig::SqMatrixConnect_SetIdentity(f1);
-  orig::SqMatrixConnect_TransformVec3(arg2,f1,arg2);
+  orig::scnCameraGetInfo_v1(frame.i1,(uint32_t *)0x0,&frame.u2);
+  orig::SqMatrixConnect_SetIdentity(frame.f1);
+  orig::SqMatrixConnect_TransformVec3(arg2,frame.f1,arg2);
   return;
 }
 
@@ -875,61 +885,63 @@ XI_API void __cdecl StAvatar_UpdateHeading(int arg1, float * arg2, int arg3)
   long double f1;
   long double f2;
   long double f3;
-  char xi_frame[112] __attribute__((aligned(4)));
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  float  (&f7)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 16);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  (&f11)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[112];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f6; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f7[2]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; float f8; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; float f9; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; float f10; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f11[16]; };   // at 0x30
+  } frame;
   
   i1 = *(int *)(arg1 + 0x24);
   if ((-1 < i1) && (i1 < 0xf)) {
-    f9 = bit_cast<float>((&g_103890F4)[i1 * 9]);
+    frame.f9 = bit_cast<float>((&g_103890F4)[i1 * 9]);
     p1 = (float *)(arg1 + 0x88);
-    f10 = bit_cast<float>((&g_103890F8)[i1 * 9]);
-    f4 = (float)(*(float *)(arg1 + 0x88) - f9);
-    f5 = (float)(*(float *)(arg1 + 0x8c) - 2.0f);
-    f6 = (float)(*(float *)(arg1 + 0x90) - f10);
-    orig::SqMatrixConnect_SetIdentity(f11);
-    orig::SqMatrixConnect_TransformVec3(&f4,f11,&f4);
-    orig::SqVec_CopyVec3(f7,&f4);
-    orig::SqVec_ScaleVec3ByInverseOf102746C0(f7);
-    f1 = f4;
-    f2 = f6;
+    frame.f10 = bit_cast<float>((&g_103890F8)[i1 * 9]);
+    frame.f4 = (float)(*(float *)(arg1 + 0x88) - frame.f9);
+    frame.f5 = (float)(*(float *)(arg1 + 0x8c) - 2.0f);
+    frame.f6 = (float)(*(float *)(arg1 + 0x90) - frame.f10);
+    orig::SqMatrixConnect_SetIdentity(frame.f11);
+    orig::SqMatrixConnect_TransformVec3(&frame.f4,frame.f11,&frame.f4);
+    orig::SqVec_CopyVec3(frame.f7,&frame.f4);
+    orig::SqVec_ScaleVec3ByInverseOf102746C0(frame.f7);
+    f1 = frame.f4;
+    f2 = frame.f6;
     f3 = x87_fsqrt(f1 * f1 + f2 * f2);
     u1 = ((f3) != (f3)) || ((0.6749999523162841796875f) != (0.6749999523162841796875f));
     if (((u1 || f3 < 0.6749999523162841796875f) == u1) ||
        (*arg2 > 0.0f)) {
-      f1 = f1 - f7[0] * *arg2;
-      f2 = f2 - f8 * *arg2;
+      f1 = f1 - frame.f7[0] * *arg2;
+      f2 = f2 - frame.f8 * *arg2;
     }
-    f4 = (float)(f1 + f9);
-    f5 = (float)(f5 + 2.0f);
-    f2 = f2 + f10;
-    f6 = (float)f2;
-    *arg2 = (float)(f4 - *p1);
-    arg2[1] = (float)(f5 - *(float *)(arg1 + 0x8c));
+    frame.f4 = (float)(f1 + frame.f9);
+    frame.f5 = (float)(frame.f5 + 2.0f);
+    f2 = f2 + frame.f10;
+    frame.f6 = (float)f2;
+    *arg2 = (float)(frame.f4 - *p1);
+    arg2[1] = (float)(frame.f5 - *(float *)(arg1 + 0x8c));
     arg2[2] = (float)(f2 - *(float *)(arg1 + 0x90));
-    *(uint32_t *)(arg1 + 0x94) = u2;
+    *(uint32_t *)(arg1 + 0x94) = frame.u2;
     *(float *)(arg1 + 0x90) = (float)f2;
-    *p1 = f4;
-    *(float *)(arg1 + 0x8c) = f5;
+    *p1 = frame.f4;
+    *(float *)(arg1 + 0x8c) = frame.f5;
     if ((arg3 == 0) || (arg3 == 2)) {
-      f1 = bit_cast<long double>(x87_fpatan(f8,-f7[0]));
+      f1 = bit_cast<long double>(x87_fpatan(frame.f8,-frame.f7[0]));
       f1 = f1 + 1.57079637050628662109375f;
     }
     else {
-      f1 = orig::game_10027530(f7,arg2);
+      f1 = orig::game_10027530(frame.f7,arg2);
       if (!(f1 > 0.0f)) {
         f1 = bit_cast<long double>(x87_fpatan(arg2[2],-*arg2));
         f1 = f1 + 4.7123889923095703125f;
       }
       else {
-        f1 = bit_cast<long double>(x87_fpatan(f8,-f7[0]));
+        f1 = bit_cast<long double>(x87_fpatan(frame.f8,-frame.f7[0]));
         f3 = orig::GetAnalogKey(0x3f,4);
         u1 = ((f3) != (f3)) || ((0.0f) != (0.0f));
         f1 = (float)f1;
@@ -957,66 +969,68 @@ XI_API void __cdecl StAvatar_ProjectNodes(int arg1)
   long double f2;
   long double f3;
   long double f4;
-  char xi_frame[240] __attribute__((aligned(4)));
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  (&f10)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 48);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 72);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 76);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 80);
-  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 84);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  float  (&f17)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 96);
-  float  (&f18)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 112);
-  float  (&f19)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 176);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[240];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; float f5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; float f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; float f7; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; float f8; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; float f9; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x30]; float f10[3]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_8[0x3C]; uint32_t u2; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_9[0x40]; float f11; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_10[0x44]; float f12; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_11[0x48]; float f13; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_12[0x4C]; float f14; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_13[0x50]; float f15; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_14[0x54]; float f16; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_15[0x58]; uint32_t u3; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_16[0x5C]; uint32_t u4; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_17[0x60]; float f17[4]; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_18[0x70]; float f18[16]; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_19[0xB0]; float f19[16]; };   // at 0xB0
+  } frame;
   
-  orig::scnGetFlags_v1(&u3);
-  if ((u3 & 0x100) == 0) {
-    i1 = *(int *)(arg1 + 0x1c);
+  orig::scnGetFlags_v1(&frame.u3);
+  if ((frame.u3 & 0x100) == 0) {
+    frame.i1 = *(int *)(arg1 + 0x1c);
   }
   else {
-    i1 = 6;
+    frame.i1 = 6;
   }
-  orig::scnCameraGetInfo_v1(i1,(uint32_t *)0x0,&u4);
-  orig::M4fTranspose_v1(f18,(uint32_t *)(g_pSqgxContext_as_s32 + 0x208));
-  orig::M4fTranspose_v1(f19,(uint32_t *)(g_pSqgxContext_as_s32 + 0x2ec));
+  orig::scnCameraGetInfo_v1(frame.i1,(uint32_t *)0x0,&frame.u4);
+  orig::M4fTranspose_v1(frame.f18,(uint32_t *)(g_pSqgxContext_as_s32 + 0x208));
+  orig::M4fTranspose_v1(frame.f19,(uint32_t *)(g_pSqgxContext_as_s32 + 0x2ec));
   p1 = (float *)(arg1 + 0x88);
-  f9 = *(float *)(g_pSqgxContext_as_s32 + 0x750);
-  orig::Mat4x4_TransformVec4(f17,f18,p1);
-  orig::Mat4x4_TransformVec4(&f13,f19,f17);
-  f2 = 1.0f / f16;
-  f16 = 1.0f;
+  frame.f9 = *(float *)(g_pSqgxContext_as_s32 + 0x750);
+  orig::Mat4x4_TransformVec4(frame.f17,frame.f18,p1);
+  orig::Mat4x4_TransformVec4(&frame.f13,frame.f19,frame.f17);
+  f2 = 1.0f / frame.f16;
+  frame.f16 = 1.0f;
   *(uint32_t *)(arg1 + 0x20) = 0xffffffff;
-  f11 = 1e+05f;
-  i1 = 0;
+  frame.f11 = 1e+05f;
+  frame.i1 = 0;
   p2 = (float *)&g_103890FC;
-  f13 = (float)(f13 * f2);
-  f14 = (float)(f14 * f2);
-  f15 = (float)(f2 * f15);
+  frame.f13 = (float)(frame.f13 * f2);
+  frame.f14 = (float)(frame.f14 * f2);
+  frame.f15 = (float)(f2 * frame.f15);
   do {
     if ((bit_cast<uint32_t>(p2[-5]) & 1) != 0) {
-      f10[0] = p2[-2];
-      f10[2] = p2[-1];
-      f10[1] = 2.0f;
-      u2 = 0x3f800000;
-      orig::Mat4x4_TransformVec4(f17,f18,f10);
-      orig::Mat4x4_TransformVec4(&f5,f19,f17);
-      f2 = 1.0f / f8;
-      f8 = 1.0f;
-      f10[1] = 35.0f;
-      f5 = (float)(f5 * f2);
-      f6 = (float)(f6 * f2);
-      f7 = (float)(f2 * f7);
-      orig::Mat4x4_TransformVec4(f17,f18,f10);
-      orig::Mat4x4_TransformVec4(p2,f19,f17);
+      frame.f10[0] = p2[-2];
+      frame.f10[2] = p2[-1];
+      frame.f10[1] = 2.0f;
+      frame.u2 = 0x3f800000;
+      orig::Mat4x4_TransformVec4(frame.f17,frame.f18,frame.f10);
+      orig::Mat4x4_TransformVec4(&frame.f5,frame.f19,frame.f17);
+      f2 = 1.0f / frame.f8;
+      frame.f8 = 1.0f;
+      frame.f10[1] = 35.0f;
+      frame.f5 = (float)(frame.f5 * f2);
+      frame.f6 = (float)(frame.f6 * f2);
+      frame.f7 = (float)(f2 * frame.f7);
+      orig::Mat4x4_TransformVec4(frame.f17,frame.f18,frame.f10);
+      orig::Mat4x4_TransformVec4(p2,frame.f19,frame.f17);
       f2 = 1.0f / p2[3];
       f1 = bit_cast<float>((bit_cast<uint32_t>(p2[-5]) & 0xfffffff9));
       p2[3] = 1.0f;
@@ -1024,22 +1038,22 @@ XI_API void __cdecl StAvatar_ProjectNodes(int arg1)
       *p2 = (float)(f2 * *p2);
       p2[1] = (float)(f2 * p2[1]);
       p2[2] = (float)(f2 * p2[2]);
-      f12 = (float)-f9;
-      if (f5 >= f12) {
-        f3 = f5;
-        f2 = f9;
+      frame.f12 = (float)-frame.f9;
+      if (frame.f5 >= frame.f12) {
+        f3 = frame.f5;
+        f2 = frame.f9;
         if ((f3 <= f2) &&
-           (f6 >= f12)) {
-          f3 = f6;
-          f2 = f9;
+           (frame.f6 >= frame.f12)) {
+          f3 = frame.f6;
+          f2 = frame.f9;
           if ((f3 <= f2) &&
-             (f7 >= 0.0f))
+             (frame.f7 >= 0.0f))
           {
-            f3 = f7;
+            f3 = frame.f7;
             f2 = 1.0f;
             if (f3 <= f2) {
-              u1 = ((f5) != (f5)) || ((f13) != (f13));
-              if ((u1 || f5 < f13) == u1) {
+              u1 = ((frame.f5) != (frame.f5)) || ((frame.f13) != (frame.f13));
+              if ((u1 || frame.f5 < frame.f13) == u1) {
                 f1 = bit_cast<float>((bit_cast<uint32_t>(f1) | 4));
               }
               else {
@@ -1064,15 +1078,15 @@ XI_API void __cdecl StAvatar_ProjectNodes(int arg1)
              (float)((float)((f4 / f3) * f2) + p2[-1]);
       }
       if (((bit_cast<uint32_t>(p2[-5]) & 6) != 0) &&
-         (u1 = ((p2[-3]) != (p2[-3])) || ((f11) != (f11)),
-         (u1 || p2[-3] < f11) != u1)) {
-        *(int *)(arg1 + 0x20) = i1;
-        f11 = p2[-3];
+         (u1 = ((p2[-3]) != (p2[-3])) || ((frame.f11) != (frame.f11)),
+         (u1 || p2[-3] < frame.f11) != u1)) {
+        *(int *)(arg1 + 0x20) = frame.i1;
+        frame.f11 = p2[-3];
       }
     }
     p2 = p2 + 9;
-    i1 = i1 + 1;
-  } while (i1 < 0xf);
+    frame.i1 = frame.i1 + 1;
+  } while (frame.i1 < 0xf);
   return;
 }
 
@@ -1095,30 +1109,32 @@ XI_API void __cdecl StAvatar_UpdateSteer(int arg1, int arg2)
   long double f6;
   long double f7;
   uint64_t u3;
-  char xi_frame[33] __attribute__((aligned(4)));
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 1);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 5);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 9);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 13);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 17);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[33];
+    struct __attribute__((packed)) { uint8_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; float f8; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x5]; float f9; };   // at 0x5
+    struct __attribute__((packed)) { unsigned char pad_4[0x9]; float f10; };   // at 0x9
+    struct __attribute__((packed)) { unsigned char pad_5[0xD]; float f11; };   // at 0xD
+    struct __attribute__((packed)) { unsigned char pad_6[0x11]; float f12; };   // at 0x11
+  } frame;
   
   f3 = orig::GetAnalogKey(0x3f,4);
-  f8 = (float)f3;
+  frame.f8 = (float)f3;
   f3 = orig::GetAnalogKey(0x3f,5);
-  f11 = (float)f3;
-  f9 = 0.0f;
+  frame.f11 = (float)f3;
+  frame.f9 = 0.0f;
   u3 = orig::NetCellFont_TestCommand36CF60(0x3f,0xf,4,-1,xi_eax);
   u1 = (char)u3 != '\0';
   f3 = orig::GetAnalogKey(0x3f,0x83);
   if ((f3 > 0.00999999977648258209228515625f) ||
      (u2 = ((f3) != (f3)) || (((-0.00999999977648258209228515625f)) != ((-0.00999999977648258209228515625f))), (u2 || f3 < (-0.00999999977648258209228515625f)) != u2)) {
-    f8 = (float)f3;
+    frame.f8 = (float)f3;
     u1 = true;
   }
-  f1 = f8;
-  f3 = x87_fsqrt(f8 * f8 + f11 * f11);
-  f10 = (float)(1.0f / f3);
+  f1 = frame.f8;
+  f3 = x87_fsqrt(frame.f8 * frame.f8 + frame.f11 * frame.f11);
+  frame.f10 = (float)(1.0f / f3);
   if (!(f3 > 0.89999997615814208984375f)) {
     i3 = 3;
     if (!(f3 > 0.0500000007450580596923828125f)) {
@@ -1130,8 +1146,8 @@ XI_API void __cdecl StAvatar_UpdateSteer(int arg1, int arg2)
   }
   f3 = *(float *)(((char *)&g_10389438) + (i3 + *(int *)(arg1 + 8) * 4) * 4);
   if (u1) {
-    f8 = 0.0f;
-    f9 = f1;
+    frame.f8 = 0.0f;
+    frame.f9 = f1;
   }
   f4 = 0.0f;
   u1 = ((f3) != (f3)) || ((f4) != (f4));
@@ -1140,7 +1156,7 @@ XI_API void __cdecl StAvatar_UpdateSteer(int arg1, int arg2)
     f4 = orig::Camera_GetFrameScale_v1
                        (((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)(arg1 + 8) >> 0x10)) << 16) | (uint16_t)((uint16_t)(u1 || f3 < f4) << 8 | (uint16_t)u1 << 10 |
                                  (uint16_t)u2 << 0xe))));
-    f4 = *(float *)(arg1 + 0x9c) - f4 * 0.01745329238474369049072265625f * f8
+    f4 = *(float *)(arg1 + 0x9c) - f4 * 0.01745329238474369049072265625f * frame.f8
     ;
     *(float *)(arg1 + 0x9c) = (float)f4;
     if (f4 > 3.141592502593994140625f) {
@@ -1152,25 +1168,25 @@ XI_API void __cdecl StAvatar_UpdateSteer(int arg1, int arg2)
     }
     p1 = (float *)(arg1 + 0x88);
     *(uint32_t *)(arg1 + 0x8c) = *(uint32_t *)(arg1 + 0x8c);
-    f3 = arg2 * (float)f3 * xi_k4(0x387BA883ull) * f10;
-    f4 = f11 * f3;
-    f9 = (float)(f3 * f9);
+    f3 = arg2 * (float)f3 * xi_k4(0x387BA883ull) * frame.f10;
+    f4 = frame.f11 * f3;
+    frame.f9 = (float)(f3 * frame.f9);
     f3 = *(float *)(arg1 + 0x9c) + 4.7123889923095703125f;
     f5 = *(float *)(arg1 + 0x9c) + 3.1415927410125732421875f;
     f6 = bit_cast<long double>(x87_fsin(f5));
     f7 = bit_cast<long double>(x87_fsin(f3));
-    f12 = (float)(f7 * f9 + f6 * f4);
+    frame.f12 = (float)(f7 * frame.f9 + f6 * f4);
     f5 = bit_cast<long double>(x87_fcos(f5));
     f3 = bit_cast<long double>(x87_fcos(f3));
-    f1 = (float)(f12 + *p1);
-    *p1 = (float)(f12 + *p1);
-    f3 = f3 * f9 + f5 * f4 + *(float *)(arg1 + 0x90);
+    f1 = (float)(frame.f12 + *p1);
+    *p1 = (float)(frame.f12 + *p1);
+    f3 = f3 * frame.f9 + f5 * f4 + *(float *)(arg1 + 0x90);
     *(float *)(arg1 + 0x90) = (float)f3;
     f4 = x87_fsqrt(f1 * f1 + f3 * f3);
     if (f4 > 4e+02f) {
-      f10 = (float)(4e+02f / f4);
-      *p1 = (float)(f1 * f10);
-      *(float *)(arg1 + 0x90) = (float)(f3 * f10);
+      frame.f10 = (float)(4e+02f / f4);
+      *p1 = (float)(f1 * frame.f10);
+      *(float *)(arg1 + 0x90) = (float)(f3 * frame.f10);
     }
     orig::StAvatar_SetFlagsBoth(arg1,p1,arg1 + 0x98);
   }
@@ -1192,8 +1208,8 @@ XI_API void __cdecl StAvatar_UpdateSteer(int arg1, int arg2)
       f1 = *(float *)(i1 + 0x20);
       f2 = *(float *)(i1 + 0x24);
       i1 = orig::Chn_GetSubIndex(*(int *)(i2 + 0x14));
-      i2 = orig::game_1027D110((float)((f3 - f1) / f2),i1,&u4,
-                           &f10);
+      i2 = orig::game_1027D110((float)((f3 - f1) / f2),i1,&frame.u4,
+                           &frame.f10);
       if ((-1 < i2) && (i2 < i1)) {
         orig::StTrigger_FindIndexAtLeast((uint32_t *)(arg1 + 0x240),i3 + 2,i2);
       }
@@ -1214,71 +1230,73 @@ XI_API void __cdecl StAvatar_SetViewFromDancerCamera(int arg1)
   double f4;
   char *ViewMatrixPtr;
   int i2;
-  alignas(16) unsigned char xi_frame[0x52C];  // address-taken locals at their original offsets
-  float * &p2 = *reinterpret_cast<float * *>(xi_frame + 0xC);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x50);
-  float (&f13)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x54);
-  int (&i12)[16] = *reinterpret_cast<int (*)[16]>(xi_frame + 0x60);
-  float (&f14)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0xA0);
-  float (&f15)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xAC);
-  float (&f16)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xEC);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x52C];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; float * p2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; int i4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; float f5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; float f6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; int i5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; int i6; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; float f7; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x2C]; float f8; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_10[0x30]; int i7; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_11[0x34]; int i8; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_12[0x38]; float f9; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_13[0x3C]; float f10; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_14[0x40]; int i9; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_15[0x44]; int i10; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_16[0x48]; float f11; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_17[0x4C]; float f12; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_18[0x50]; int i11; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_19[0x54]; float f13[3]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_20[0x60]; int i12[16]; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_21[0xA0]; float f14[3]; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_22[0xAC]; float f15[16]; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_23[0xEC]; float f16[16]; };   // at 0xEC
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)i12);
-  orig::scnGetFlags(&i3);
-  if ( (i3 & 0x100) != 0 )
+  orig::fn_10027990((Iostream_init *)frame.i12);
+  orig::scnGetFlags(&frame.i3);
+  if ( (frame.i3 & 0x100) != 0 )
     i2 = 6;
   else
     i2 = *(uint32_t *)(arg1 + 28);
-  orig::scnCameraGetInfo(i2, nullptr, (int *)&p2);
-  if ( p2 != nullptr )
+  orig::scnCameraGetInfo(i2, nullptr, (int *)&frame.p2);
+  if ( frame.p2 != nullptr )
   {
-    memcpy(i12, orig::Camera_GetMatrix154Ptr(), sizeof(i12));
-    i12[0] = g_pSqgxContext[187];
-    i12[5] = g_pSqgxContext[192];
+    memcpy(frame.i12, orig::Camera_GetMatrix154Ptr(), sizeof(frame.i12));
+    frame.i12[0] = g_pSqgxContext[187];
+    frame.i12[5] = g_pSqgxContext[192];
     orig::Camera_SetMatrix154(
-      i12[0],
-      i12[1],
-      i12[2],
-      i12[3],
-      i12[4],
-      i12[5],
-      i12[6],
-      i12[7],
-      i12[8],
-      i12[9],
-      i12[10],
-      i12[11],
-      i12[12],
-      i12[13],
-      i12[14],
-      i12[15]);
-    orig::M4fSet(&i4, p2 + 7);
-    i5 = 0;
-    i7 = 0;
-    i9 = 0;
-    orig::M4fTranspose(f16, &i4);
-    orig::sqMatrix4_10280140(f15, f16, (float *)&i4);
-    f1 = 1.0 / f15[0];
-    p1 = &f5;
+      frame.i12[0],
+      frame.i12[1],
+      frame.i12[2],
+      frame.i12[3],
+      frame.i12[4],
+      frame.i12[5],
+      frame.i12[6],
+      frame.i12[7],
+      frame.i12[8],
+      frame.i12[9],
+      frame.i12[10],
+      frame.i12[11],
+      frame.i12[12],
+      frame.i12[13],
+      frame.i12[14],
+      frame.i12[15]);
+    orig::M4fSet(&frame.i4, frame.p2 + 7);
+    frame.i5 = 0;
+    frame.i7 = 0;
+    frame.i9 = 0;
+    orig::M4fTranspose(frame.f16, &frame.i4);
+    orig::sqMatrix4_10280140(frame.f15, frame.f16, (float *)&frame.i4);
+    f1 = 1.0 / frame.f15[0];
+    p1 = &frame.f5;
     i1 = 3;
-    f2 = 1.0 / f15[5];
-    f3 = 1.0 / f15[10];
+    f2 = 1.0 / frame.f15[5];
+    f3 = 1.0 / frame.f15[10];
     do
     {
       f4 = f1 * *(p1 - 1);
@@ -1289,51 +1307,51 @@ XI_API void __cdecl StAvatar_SetViewFromDancerCamera(int arg1)
       *(p1 - 3) = f3 * *(p1 - 3);
     }
     while ( i1 != 0 );
-    f13[0] = p2[10];
-    f13[1] = p2[14];
-    f13[2] = p2[18];
-    orig::M4fTranspose(f16, &i4);
-    orig::M4fTransform(f14, f16, f13);
-    i12[0] = i4;
-    *(float *)&i10 = -(c_flt_0_1 * f14[0]);
-    i12[3] = i5;
-    i12[11] = i9;
-    f11 = c_flt_0_1 * f14[1];
-    i12[7] = i7;
-    i12[15] = i11;
-    f12 = c_flt_0_1 * f14[2];
-    f5 = -f5;
-    f6 = -f6;
-    *(float *)&i6 = -*(float *)&i6;
-    *(float *)&i8 = -*(float *)&i8;
-    *(float *)&i12[1] = -f5;
-    *(float *)&i12[2] = -f6;
-    i12[4] = i6;
-    *(float *)&i12[5] = -f7;
-    *(float *)&i12[6] = -f8;
-    i12[8] = i8;
-    *(float *)&i12[9] = -f9;
-    *(float *)&i12[10] = -f10;
-    i12[12] = i10;
-    *(float *)&i12[13] = -f11;
-    *(float *)&i12[14] = -f12;
+    frame.f13[0] = frame.p2[10];
+    frame.f13[1] = frame.p2[14];
+    frame.f13[2] = frame.p2[18];
+    orig::M4fTranspose(frame.f16, &frame.i4);
+    orig::M4fTransform(frame.f14, frame.f16, frame.f13);
+    frame.i12[0] = frame.i4;
+    *(float *)&frame.i10 = -(c_flt_0_1 * frame.f14[0]);
+    frame.i12[3] = frame.i5;
+    frame.i12[11] = frame.i9;
+    frame.f11 = c_flt_0_1 * frame.f14[1];
+    frame.i12[7] = frame.i7;
+    frame.i12[15] = frame.i11;
+    frame.f12 = c_flt_0_1 * frame.f14[2];
+    frame.f5 = -frame.f5;
+    frame.f6 = -frame.f6;
+    *(float *)&frame.i6 = -*(float *)&frame.i6;
+    *(float *)&frame.i8 = -*(float *)&frame.i8;
+    *(float *)&frame.i12[1] = -frame.f5;
+    *(float *)&frame.i12[2] = -frame.f6;
+    frame.i12[4] = frame.i6;
+    *(float *)&frame.i12[5] = -frame.f7;
+    *(float *)&frame.i12[6] = -frame.f8;
+    frame.i12[8] = frame.i8;
+    *(float *)&frame.i12[9] = -frame.f9;
+    *(float *)&frame.i12[10] = -frame.f10;
+    frame.i12[12] = frame.i10;
+    *(float *)&frame.i12[13] = -frame.f11;
+    *(float *)&frame.i12[14] = -frame.f12;
     orig::Camera_SetViewMatrix(
-      i4,
-      i12[1],
-      i12[2],
-      i5,
-      i6,
-      i12[5],
-      i12[6],
-      i7,
-      i8,
-      i12[9],
-      i12[10],
-      i9,
-      i10,
-      i12[13],
-      i12[14],
-      i11);
+      frame.i4,
+      frame.i12[1],
+      frame.i12[2],
+      frame.i5,
+      frame.i6,
+      frame.i12[5],
+      frame.i12[6],
+      frame.i7,
+      frame.i8,
+      frame.i12[9],
+      frame.i12[10],
+      frame.i9,
+      frame.i10,
+      frame.i12[13],
+      frame.i12[14],
+      frame.i11);
     ViewMatrixPtr = orig::Camera_GetViewMatrixPtr();
     orig::CDx_SetTransform(g_pCDx, 2, ViewMatrixPtr);
   }
@@ -1443,8 +1461,10 @@ XI_API void __cdecl StAvatar_ProcessTriggers(int arg1)
   int i2;
   uint8_t *p1;
   int i3;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
   i1 = arg1;
   i3 = 0;
@@ -1457,9 +1477,9 @@ XI_API void __cdecl StAvatar_ProcessTriggers(int arg1)
           orig::sqopSystemActivate((uint32_t *)(i1 + 0x240));
         }
         *(int *)(i1 + 0x3c) = arg1;
-        orig::StAvatar_GetOffset((uint8_t *)i1,f1);
+        orig::StAvatar_GetOffset((uint8_t *)i1,frame.f1);
         orig::StTrigger_ProcessOpcodesUpToTime
-                  ((uint32_t *)(i1 + 0x240),(uint32_t)(i3 != 0),arg1,f1);
+                  ((uint32_t *)(i1 + 0x240),(uint32_t)(i3 != 0),arg1,frame.f1);
       }
     }
     i3 = i3 + 1;
@@ -1582,70 +1602,72 @@ XI_API void __cdecl StAvatar_UpdateNodes(uint8_t * arg1)
   float *p3;
   int i1;
   long double f2;
-  char xi_frame[40] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  (&f7)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[40];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f7[4]; };   // at 0x18
+  } frame;
   
   i1 = 0;
   if ((*arg1 & 0x20) == 0) {
     do {
       p1 = (&g_1038930C)[i1];
-      f4 = (float)(*(float *)(p1 + 0x14) * 1.5f);
-      f5 = (float)(*(float *)(p1 + 0x18) * 1.5f);
-      f6 = (float)(*(float *)(p1 + 0x1c) * 1.5f);
-      u1 = *(uint32_t *)(p1 + 0x20);
-      orig::StAvatar_SetEntryColor(i1,&f4);
+      frame.f4 = (float)(*(float *)(p1 + 0x14) * 1.5f);
+      frame.f5 = (float)(*(float *)(p1 + 0x18) * 1.5f);
+      frame.f6 = (float)(*(float *)(p1 + 0x1c) * 1.5f);
+      frame.u1 = *(uint32_t *)(p1 + 0x20);
+      orig::StAvatar_SetEntryColor(i1,&frame.f4);
       i1 = i1 + 1;
     } while (i1 < 5);
-    f3 = 4.0f;
+    frame.f3 = 4.0f;
     arg1 = (uint8_t *)0x3fa0d97c;
   }
   else {
     do {
       p1 = (&g_1038930C)[i1];
-      f4 = *(float *)(p1 + 0x14);
-      f5 = *(float *)(p1 + 0x18);
-      f6 = *(float *)(p1 + 0x1c);
-      u1 = *(uint32_t *)(p1 + 0x20);
-      orig::StAvatar_SetEntryColor(i1,&f4);
+      frame.f4 = *(float *)(p1 + 0x14);
+      frame.f5 = *(float *)(p1 + 0x18);
+      frame.f6 = *(float *)(p1 + 0x1c);
+      frame.u1 = *(uint32_t *)(p1 + 0x20);
+      orig::StAvatar_SetEntryColor(i1,&frame.f4);
       p1 = g_10389314;
       i1 = i1 + 1;
     } while (i1 < 5);
-    orig::StAvatar_GetField20(arg1,&i2);
-    if (-1 < i2) {
-      if ((((bit_cast<float>((&g_103890F0)[i2 * 9])) != (bit_cast<float>((&g_103890F0)[i2 * 9]))) || ((3e+01f) != (3e+01f))) ||
-          bit_cast<float>((&g_103890F0)[i2 * 9]) <= 3e+01f) {
-        f2 = (3e+01 - bit_cast<float>((&g_103890F0)[i2 * 9])) * xi_k8(0x3FA999999999999Aull);
+    orig::StAvatar_GetField20(arg1,&frame.i2);
+    if (-1 < frame.i2) {
+      if ((((bit_cast<float>((&g_103890F0)[frame.i2 * 9])) != (bit_cast<float>((&g_103890F0)[frame.i2 * 9]))) || ((3e+01f) != (3e+01f))) ||
+          bit_cast<float>((&g_103890F0)[frame.i2 * 9]) <= 3e+01f) {
+        f2 = (3e+01 - bit_cast<float>((&g_103890F0)[frame.i2 * 9])) * xi_k8(0x3FA999999999999Aull);
       }
       else {
         f2 = 0.0f;
       }
-      i2 = i2 * 0xc;
-      f4 = (float)(f2 * *(float *)(((char *)&g_103895E8) + i2) *
+      frame.i2 = frame.i2 * 0xc;
+      frame.f4 = (float)(f2 * *(float *)(((char *)&g_103895E8) + frame.i2) *
                         xi_k8(0x3F70101010101010ull));
-      f5 = (float)(f2 * *(float *)(((char *)&g_103895EC) + i2) *
+      frame.f5 = (float)(f2 * *(float *)(((char *)&g_103895EC) + frame.i2) *
                         xi_k8(0x3F70101010101010ull));
-      f6 = (float)(f2 * *(float *)(((char *)&g_103895F0) + i2) *
+      frame.f6 = (float)(f2 * *(float *)(((char *)&g_103895F0) + frame.i2) *
                         xi_k8(0x3F70101010101010ull));
-      u1 = *(uint32_t *)(p1 + 0x20);
-      orig::StAvatar_SetEntryColor(2,&f4);
+      frame.u1 = *(uint32_t *)(p1 + 0x20);
+      orig::StAvatar_SetEntryColor(2,&frame.f4);
     }
-    f3 = 2.5f;
+    frame.f3 = 2.5f;
     arg1 = (uint8_t *)0x3fc90fdb;
   }
-  orig::SqQuat_QuatFromEuler(f7,0.0f,1.57079637050628662109375f,bit_cast<float>(arg1));
+  orig::SqQuat_QuatFromEuler(frame.f7,0.0f,1.57079637050628662109375f,bit_cast<float>(arg1));
   p2 = g_10389330;
   p1 = g_1038931C;
-  orig::SqQuat_Copy_v1((uint32_t *)(g_10389330 + 0x68),f7);
+  orig::SqQuat_Copy_v1((uint32_t *)(g_10389330 + 0x68),frame.f7);
   orig::sqxfXformTD_Update((int)p2);
   p3 = (float *)orig::ZoneMap_GetAddr0E4(g_pXiZone);
-  f1 = (float)(1.0f / f3);
-  *(float *)(p1 + 0x14) = (float)((1.0f / f3) * *p3);
+  f1 = (float)(1.0f / frame.f3);
+  *(float *)(p1 + 0x14) = (float)((1.0f / frame.f3) * *p3);
   i1 = orig::ZoneMap_GetAddr0E4(g_pXiZone);
   *(float *)(p1 + 0x18) = (float)(f1 * *(float *)(i1 + 4));
   i1 = orig::ZoneMap_GetAddr0E4(g_pXiZone);
@@ -1825,14 +1847,16 @@ XI_API bits32 __cdecl StAvatar_Start(uint8_t * arg1, bits32 arg2)
   int i2;
   int i3;
   uint8_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t * &p2 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t * p2; };   // at 0x0
+  } frame;
   
   p1 = arg1;
   if ((*arg1 & 1) != 0) {
-    orig::SceneCamera_SetVtable1099B138(&p2);
+    orig::SceneCamera_SetVtable1099B138(&frame.p2);
     i3 = arg2;
-    *p2 = 0;
+    *frame.p2 = 0;
     if ((*p1 & 0x20) == 0) {
       orig::SceneCamera_SelectCamera(arg2);
       orig::StAvatar_ResetChannels(p1,0);
@@ -1977,10 +2001,12 @@ XI_API bits32 __cdecl StAvatar_SetLock(uint32_t * arg1, uint32_t arg2, int arg3)
 {
   uint32_t u1;
   uint32_t u2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u5; };   // at 0x8
+  } frame;
   
   u2 = 0xffffffff;
   if (arg3 == -1) {
@@ -2002,17 +2028,17 @@ XI_API bits32 __cdecl StAvatar_SetLock(uint32_t * arg1, uint32_t arg2, int arg3)
 code_10250B71:
   if ((*arg1 & 0x1000) == 0) {
     if (-1 < (int)arg1[0x35]) {
-      u3 = 0;
-      u4 = 0;
-      u5 = 0;
-      orig::Mdl_SetSlotLock(arg1[0x35],2,&u3,0,0);
+      frame.u3 = 0;
+      frame.u4 = 0;
+      frame.u5 = 0;
+      orig::Mdl_SetSlotLock(arg1[0x35],2,&frame.u3,0,0);
     }
   }
   else if (-1 < (int)arg1[0x35]) {
-    u4 = 0x41200000;
-    u3 = (&g_103890F4)[arg1[9] * 9];
-    u5 = (&g_103890F8)[arg1[9] * 9];
-    orig::Mdl_SetSlotLock(arg1[0x35],2,&u3,0x3f91361e,1);
+    frame.u4 = 0x41200000;
+    frame.u3 = (&g_103890F4)[arg1[9] * 9];
+    frame.u5 = (&g_103890F8)[arg1[9] * 9];
+    orig::Mdl_SetSlotLock(arg1[0x35],2,&frame.u3,0x3f91361e,1);
     return 0;
   }
   return 0;

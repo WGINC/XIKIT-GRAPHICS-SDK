@@ -16,26 +16,28 @@ XI_API void __cdecl SqBoneTransform_TransformOrigin(bits32 arg1, bits32 arg2, bi
 XI_API void __cdecl SqBoneTransform_ComputeTransform(int arg1, int arg2, float * arg3, float * arg4)
 {
   int i1;
-  char xi_frame[140] __attribute__((aligned(4)));
-  float  (&f1)[19] = *reinterpret_cast<float  (*)[19]>(xi_frame + 0);
-  float  (&f2)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 76);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[140];
+    struct __attribute__((packed)) { float f1[19]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4C]; float f2[16]; };   // at 0x4C
+  } frame;
   
   i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
   i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
-  orig::SqMatrixConnect_Forward1027EBD0(f1 + 3);
+  orig::SqMatrixConnect_Forward1027EBD0(frame.f1 + 3);
   while( true ) {
-    orig::sqMatrix4_10280140_v1(f2,(float *)(i1 + 0x1c),f1 + 3);
-    orig::M4fSet_v1(f1 + 3,f2);
+    orig::sqMatrix4_10280140_v1(frame.f2,(float *)(i1 + 0x1c),frame.f1 + 3);
+    orig::M4fSet_v1(frame.f1 + 3,frame.f2);
     arg2 = *(int *)(arg2 + 0x68);
     if (arg2 == 0) break;
     i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
     i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
   }
-  f1[0] = 0.0f;
-  f1[1] = 0.0f;
-  f1[2] = 0.0f;
-  orig::M4fTransform_v1(arg3,f1 + 3,f1);
-  orig::game_1027A8A0(arg4,f1 + 3);
+  frame.f1[0] = 0.0f;
+  frame.f1[1] = 0.0f;
+  frame.f1[2] = 0.0f;
+  orig::M4fTransform_v1(arg3,frame.f1 + 3,frame.f1);
+  orig::game_1027A8A0(arg4,frame.f1 + 3);
   return;
 }
 
@@ -44,21 +46,23 @@ XI_API void __cdecl SqBoneTransform_ComputeTransform(int arg1, int arg2, float *
 XI_API void __cdecl SqBoneTransform_TransformPoint(int arg1, int arg2, float * arg3, float * arg4)
 {
   int i1;
-  char xi_frame[128] __attribute__((aligned(4)));
-  float  (&f1)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
-  float  (&f2)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 64);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[128];
+    struct __attribute__((packed)) { float f1[16]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; float f2[16]; };   // at 0x40
+  } frame;
   
   i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
   i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
-  orig::SqMatrixConnect_Forward1027EBD0(f1);
+  orig::SqMatrixConnect_Forward1027EBD0(frame.f1);
   while( true ) {
-    orig::sqMatrix4_10280140_v1(f2,(float *)(i1 + 0x1c),f1);
-    orig::M4fSet_v1(f1,f2);
+    orig::sqMatrix4_10280140_v1(frame.f2,(float *)(i1 + 0x1c),frame.f1);
+    orig::M4fSet_v1(frame.f1,frame.f2);
     arg2 = *(int *)(arg2 + 0x68);
     if (arg2 == 0) break;
     i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
     i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
   }
-  orig::M4fTransform_v1(arg4,f1,arg3);
+  orig::M4fTransform_v1(arg4,frame.f1,arg3);
   return;
 }

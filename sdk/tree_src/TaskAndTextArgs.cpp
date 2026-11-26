@@ -32,12 +32,14 @@ XI_API int __cdecl Gfx_InitCubeMapTextures(void)
   int i4;
   int i5;
   void *p2;
-  int i6;
-  alignas(16) unsigned char xi_frame[0x4A0];  // address-taken locals at their original offsets
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x7C);
-  uint32_t (&u1)[8] = *reinterpret_cast<uint32_t (*)[8]>(xi_frame + 0x80);
+  int stride;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4A0];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4C]; int i7; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_2[0x78]; int i8; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_3[0x7C]; int i9; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_4[0x80]; uint32_t u1[8]; };   // at 0x80
+  } frame;
 
   g_pCubeMapTarget = 0;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -47,7 +49,7 @@ XI_API int __cdecl Gfx_InitCubeMapTextures(void)
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
   (*(void (__stdcall **)(uint32_t, uint32_t *))(**(uint32_t **)(*(uint32_t *)(g_pResourceMng + 3528) + 144) + 32))(
     *(uint32_t *)(*(uint32_t *)(g_pResourceMng + 3528) + 144),
-    u1);
+    frame.u1);
   g_cubeMapCount = 3;
   i1 = 0;
   do
@@ -60,14 +62,14 @@ XI_API int __cdecl Gfx_InitCubeMapTextures(void)
     if ( result == 0 )
       break;
     i2 = **(uint32_t **)(g_pResourceMng + 3772);
-    i7 = *(uint32_t *)(g_pResourceMng + 3772);
-    i9 = 32 << i1;
+    frame.i7 = *(uint32_t *)(g_pResourceMng + 3772);
+    frame.i9 = 32 << i1;
     (*(void (__stdcall **)(int, int, int, int, uint32_t, uint32_t, int))(i2 + 88))(
-      i7,
+      frame.i7,
       32 << i1,
       1,
       1,
-      u1[0],
+      frame.u1[0],
       0,
       4 * i1 + (int)XI_GAME(0x1047D15Cu));
     if ( g_cubeMapTexObjs[i1] == 0 )
@@ -86,20 +88,20 @@ XI_API int __cdecl Gfx_InitCubeMapTextures(void)
       if ( i3 != 5 )
       {
         i4 = g_cubeMapTexObjs[i1];
-        i8 = 0;
-        (*(void (__stdcall **)(int, int, uint32_t, int *))(*(uint32_t *)i4 + 60))(i4, i3, 0, &i8);
-        orig::game_1006A070(g_pResourceMng, i8, 0, g_cubeMapTextures[i1]);
+        frame.i8 = 0;
+        (*(void (__stdcall **)(int, int, uint32_t, int *))(*(uint32_t *)i4 + 60))(i4, i3, 0, &frame.i8);
+        orig::game_1006A070(g_pResourceMng, frame.i8, 0, g_cubeMapTextures[i1]);
         i5 = g_pResourceMng;
-        Gfx_InitCubeMapTextures_quadVerts_v3_y = (float)i9;
+        Gfx_InitCubeMapTextures_quadVerts_v3_y = (float)frame.i9;
         Gfx_InitCubeMapTextures_quadVerts_v3_x = Gfx_InitCubeMapTextures_quadVerts_v3_y;
         Gfx_InitCubeMapTextures_quadVerts_v2_y = Gfx_InitCubeMapTextures_quadVerts_v3_y;
         Gfx_InitCubeMapTextures_quadVerts_v1_x = Gfx_InitCubeMapTextures_quadVerts_v3_y;
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
         p2 = *(void **)(i5 + 3528);
-        i6 = orig::Gfx_CalcFVFStride(0x44u);
-        orig::CDx_DrawPrimitiveUP(p2, 5, 2, (int)&Gfx_InitCubeMapTextures_quadVerts, i6);
+        stride = orig::Gfx_CalcFVFStride(0x44u);
+        orig::CDx_DrawPrimitiveUP(p2, 5, 2, (int)&Gfx_InitCubeMapTextures_quadVerts, stride);
         orig::game_1006A0E0_as_v0(g_pResourceMng, g_cubeMapTexObjs[i1], i);
-        (*(void (__stdcall **)(int))(*(uint32_t *)i8 + 8))(i8);
+        (*(void (__stdcall **)(int))(*(uint32_t *)frame.i8 + 8))(frame.i8);
       }
     }
     result = g_cubeMapCount;
@@ -157,7 +159,7 @@ XI_API void __thiscall TexRef_EnsureRenderTarget(int *self_)
 {
   int i1;
   uint32_t *p1;
-  unsigned short u1;
+  unsigned short width;
   int i2;
   if ( g_pCubeMapTarget != 0 )
   {
@@ -178,11 +180,11 @@ XI_API void __thiscall TexRef_EnsureRenderTarget(int *self_)
       g_pCubeMapTarget = (int)orig::CAcc_Constructor(p1);
     else
       g_pCubeMapTarget = 0;
-    u1 = *(uint16_t *)(*self_ + 36);
-    g_cubeMapTargetWidth = u1;
+    width = *(uint16_t *)(*self_ + 36);
+    g_cubeMapTargetWidth = width;
     g_cubeMapTargetHeight = *(unsigned short *)(*self_ + 38);
     i2 = 0;
-    *(uint32_t *)(g_pCubeMapTarget + 4) = orig::CMoDX_CreateTexture((uint32_t ***)g_pResourceMng, u1, g_cubeMapTargetHeight, &i2);
+    *(uint32_t *)(g_pCubeMapTarget + 4) = orig::CMoDX_CreateTexture((uint32_t ***)g_pResourceMng, width, g_cubeMapTargetHeight, &i2);
     *(uint32_t *)(g_pCubeMapTarget + 8) = i2;
     *(uint32_t *)(g_pCubeMapTarget + 12) = orig::CDx_CreateDepthSurfaceLikeMain(
                                            g_pCDx,
@@ -193,7 +195,7 @@ XI_API void __thiscall TexRef_EnsureRenderTarget(int *self_)
 
 // FUNCTION: FFXIMAIN 0x10075700
 // GATE: PASS -- 100 trials, 64 returned normally, 238 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 64
-XI_API int __thiscall TextureHolder_BindWarped(int *self_, int arg2, float arg3, float arg4, float arg5)
+XI_API int __thiscall TextureHolder_BindWarped(int *self_, int Stage, float arg3, float arg4, float arg5)
 {
   int i1;
   int i2;
@@ -212,13 +214,13 @@ XI_API int __thiscall TextureHolder_BindWarped(int *self_, int arg2, float arg3,
   int i6;
   i1 = *self_;
   if ( i1 == 0 )
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(0));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(0));
   if ( arg4 == 0.0 )
   {
     i2 = *(uint32_t *)(i1 + 64);
     if ( i2 == 0 )
       i2 = *(uint32_t *)(i1 + 68);
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(i2));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(i2));
   }
   else
   {
@@ -281,29 +283,29 @@ XI_API int __thiscall TextureHolder_BindWarped(int *self_, int arg2, float arg3,
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     orig::game_1006A0E0_as_v0(g_pResourceMng, 0, 0);
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(*(uint32_t *)(g_pCubeMapTarget + 4)));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(*(uint32_t *)(g_pCubeMapTarget + 4)));
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10075960
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TexRef_SetTexture(int *self_, int arg2)
+XI_API int __thiscall TexRef_SetTexture(int *self_, int Stage)
 {
   int i1;
   int i2;
   i1 = *self_;
   if ( *self_ == 0 )
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(0));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(0));
   if ( *(uint32_t *)(i1 + 64) != 0 )
     i2 = *(uint32_t *)(i1 + 64);
   else
     i2 = *(uint32_t *)(i1 + 68);
-  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(i2));
+  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(i2));
 }
 
 // FUNCTION: FFXIMAIN 0x100759C0
 // GATE: PASS -- 100 trials, 100 returned normally, 382 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextureHolder_BindTinted(int *self_, int arg2, int arg3)
+XI_API int __thiscall TextureHolder_BindTinted(int *self_, int Stage, int Value)
 {
   int i1;
   int i2;
@@ -313,15 +315,15 @@ XI_API int __thiscall TextureHolder_BindTinted(int *self_, int arg2, int arg3)
   double f3;
   int i3;
   int i4;
-  if ( arg3 == -2139062144 )
+  if ( Value == -2139062144 )
   {
     i1 = *self_;
     if ( *self_ == 0 )
-      return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(0));
+      return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(0));
     goto L1;
   }
   if ( *self_ == 0 )
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(0));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(0));
   orig::TexRef_EnsureRenderTarget(self_);
   i2 = *(uint32_t *)(g_pCubeMapTarget + 4);
   if ( i2 == 0 || *(uint32_t *)(g_pCubeMapTarget + 12) == 0 )
@@ -331,7 +333,7 @@ L1:
     i4 = *(uint32_t *)(i1 + 64);
     if ( i4 == 0 )
       i4 = *(uint32_t *)(i1 + 68);
-    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(i4));
+    return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(i4));
   }
   orig::game_1006A060((void **)g_pResourceMng, i2, *(uint32_t *)(g_pCubeMapTarget + 8), *(uint32_t *)(g_pCubeMapTarget + 12));
   if ( (Fn100759C0_staticGuards & 1) == 0 )
@@ -341,7 +343,7 @@ L1:
     orig::_atexit(XI_CODE(unknown_libname_64));
   }
   orig::StateBlock_ApplyRSTSS(Fn100759C0_stateBlock, (int)Fn100759C0_renderStates, (int)Fn100759C0_textureStageStates);
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, arg3);
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, Value);
   orig::DynVB_Reserve((void *)g_pDynVB_FVF144, 4);
   p1 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
   *p1 = 0.0;
@@ -382,7 +384,7 @@ L1:
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
   orig::game_1006A0E0_as_v0(g_pResourceMng, 0, 0);
-  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(arg2, (IDirect3DBaseTexture8 *)(*(uint32_t *)(g_pCubeMapTarget + 4)));
+  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(Stage, (IDirect3DBaseTexture8 *)(*(uint32_t *)(g_pCubeMapTarget + 4)));
 }
 
 // FUNCTION: FFXIMAIN 0x10076830
@@ -908,8 +910,10 @@ XI_API bits32 __cdecl Arg_LookupWord(bits32 arg1, char * arg2)
   uint8_t u1;
   uint8_t *p1;
   int i1;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&u2)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u2[32]; };   // at 0x0
+  } frame;
   
   u1 = *arg2;
   while (u1 == 0x20) {
@@ -920,12 +924,12 @@ XI_API bits32 __cdecl Arg_LookupWord(bits32 arg1, char * arg2)
   u1 = *arg2;
   if (u1 != 0) {
     for (i1 = 0; ((u1 != 0x20 && (u1 != 0)) && (i1 < 0x1f)); i1 = i1 + 1) {
-      u2[i1] = u1;
+      frame.u2[i1] = u1;
       u1 = arg2[1];
       arg2 = arg2 + 1;
     }
-    u2[i1] = 0;
-    p1 = orig::Arg_FindInSortedTable(&g_10355408,u2);
+    frame.u2[i1] = 0;
+    p1 = orig::Arg_FindInSortedTable(&g_10355408,frame.u2);
     return p1;
   }
   return 0;
@@ -1033,14 +1037,16 @@ XI_API bits32 __cdecl Acter_FindMatchingActor(void)
   int i2;
   int i3;
   int i4;
-  char xi_frame[24] __attribute__((aligned(4)));
-  int  (&i5)[6] = *reinterpret_cast<int  (*)[6]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { int i5[6]; };   // at 0x0
+  } frame;
   
   if ((g_10485F7A != 0) && ((&ActerBuffPtr_as_v0)[g_10485F7A] != 0)) {
     i4 = 0;
     i2 = orig::NetCellFont_SetByte9800AndGetEntry(0);
     while (i2 != 0) {
-      i5[i4] = *(int *)(i2 + 0x14);
+      frame.i5[i4] = *(int *)(i2 + 0x14);
       i2 = orig::NetCellFont_SelectNext();
       i4 = i4 + 1;
     }
@@ -1051,7 +1057,7 @@ XI_API bits32 __cdecl Acter_FindMatchingActor(void)
         i3 = 0;
         if (0 < i4) {
           do {
-            if ((((*(int *)(i1 + 0x188) == i5[i3]) && (i1 != 0)) &&
+            if ((((*(int *)(i1 + 0x188) == frame.i5[i3]) && (i1 != 0)) &&
                 (*(int *)(i1 + 0x170) != 2)) && (*(int *)(i1 + 0x170) != 3)) {
               return (&ActerBuffPtr_as_v0)[i2];
             }
@@ -1070,15 +1076,17 @@ XI_API bits32 __cdecl Acter_FindMatchingActor(void)
 XI_API bits32 __cdecl ChatLog_AddFormattedMessage(bits32 arg1, bits32 xi_s2)
 {
   uint32_t u1;
-  char xi_frame[1028] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  char  (&val1)[1024] = *reinterpret_cast<char  (*)[1024]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1028];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char val1[1024]; };   // at 0x4
+  } frame;
   
-  u2[0] = 0x9d;
-  u2[1] = 0;
-  u2[2] = 0;
-  u1 = orig::game_10314942(val1,arg1,&xi_s2);
-  orig::ChatLog_AddMessage_v1(g_pTkMsgWinData_as_v1,val1,u2,0,1,0);
+  frame.u2[0] = 0x9d;
+  frame.u2[1] = 0;
+  frame.u2[2] = 0;
+  u1 = orig::game_10314942(frame.val1,arg1,&xi_s2);
+  orig::ChatLog_AddMessage_v1(g_pTkMsgWinData_as_v1,frame.val1,frame.u2,0,1,0);
   return u1;
 }
 

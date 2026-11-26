@@ -26,8 +26,10 @@ XI_API long double __cdecl sqMatrix4_1027FCC0(float * arg1)
   long double f18;
   long double f19;
   long double f20;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float  (&f21)[9] = *reinterpret_cast<float  (*)[9]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float f21[9]; };   // at 0x0
+  } frame;
   
   f1 = arg1[1];
   f2 = *arg1;
@@ -45,14 +47,14 @@ XI_API long double __cdecl sqMatrix4_1027FCC0(float * arg1)
   f14 = arg1[0xc];
   f15 = arg1[0xf];
   f16 = arg1[0xe];
-  orig::SqMatrixSet_Set(f21,f5,f8,f7,f9,f12,f11,f13,f16,f15);
-  f17 = orig::SqMatrix3_Determinant(f21);
-  orig::SqMatrixSet_Set(f21,f1,f4,f3,f9,f12,f11,f13,f16,f15);
-  f18 = orig::SqMatrix3_Determinant(f21);
-  orig::SqMatrixSet_Set(f21,f1,f4,f3,f5,f8,f7,f13,f16,f15);
-  f19 = orig::SqMatrix3_Determinant(f21);
-  orig::SqMatrixSet_Set(f21,f1,f4,f3,f5,f8,f7,f9,f12,f11);
-  f20 = orig::SqMatrix3_Determinant(f21);
+  orig::SqMatrixSet_Set(frame.f21,f5,f8,f7,f9,f12,f11,f13,f16,f15);
+  f17 = orig::SqMatrix3_Determinant(frame.f21);
+  orig::SqMatrixSet_Set(frame.f21,f1,f4,f3,f9,f12,f11,f13,f16,f15);
+  f18 = orig::SqMatrix3_Determinant(frame.f21);
+  orig::SqMatrixSet_Set(frame.f21,f1,f4,f3,f5,f8,f7,f13,f16,f15);
+  f19 = orig::SqMatrix3_Determinant(frame.f21);
+  orig::SqMatrixSet_Set(frame.f21,f1,f4,f3,f5,f8,f7,f9,f12,f11);
+  f20 = orig::SqMatrix3_Determinant(frame.f21);
   return (float)(f19 * f10 +
                          (float)((float)(f17 * f2) -
                                          f18 * f6)) - f20 * f14;

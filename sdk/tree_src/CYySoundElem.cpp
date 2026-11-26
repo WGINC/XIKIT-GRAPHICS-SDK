@@ -159,13 +159,15 @@ bits32 __thiscall CYySoundElem::UpdateTimerAndPosition(void * self)
   uint32_t u2;
   uint8_t u3;
   int64_t i4;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 4);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint32_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f1[3]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; uint32_t u5; };   // at 0x1C
+  } frame;
   
   if ((g_10463908 != '\0') &&
      (*(float *)((int)self + 0x1e4) > 0.0f)) {
@@ -177,56 +179,56 @@ bits32 __thiscall CYySoundElem::UpdateTimerAndPosition(void * self)
     }
     if (((*(int **)((int)self + 0xfc) == (int *)0x0) || (**(int **)((int)self + 0xfc) == 0)) ||
        (i2 = orig::CMoElem_GetActiveField0A4_v1(self), i2 == 0)) {
-      orig::Vec3_Copy_v1(f1,(uint32_t *)((int)self + 0x54));
+      orig::Vec3_Copy_v1(frame.f1,(uint32_t *)((int)self + 0x54));
     }
     else {
       i2 = (int)self + 0x54;
       i1 = *g_pProcessor_as_v1;
       i3 = orig::CMoElem_GetActiveField0A4_v1(self);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x50))))(f1,i3,i2);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x50))))(frame.f1,i3,i2);
     }
-    f2 = *(float *)((int)self + 0x1d0);
-    f3 = *(float *)((int)self + 0x1d4);
-    f4 = *(float *)((int)self + 0x1d8);
-    u5 = *(uint32_t *)((int)self + 0x1dc);
-    u4 = (uint32_t)*(short *)((int)self + 0x1be);
+    frame.f2 = *(float *)((int)self + 0x1d0);
+    frame.f3 = *(float *)((int)self + 0x1d4);
+    frame.f4 = *(float *)((int)self + 0x1d8);
+    frame.u5 = *(uint32_t *)((int)self + 0x1dc);
+    frame.u4 = (uint32_t)*(short *)((int)self + 0x1be);
     if ((*(int **)((int)self + 0x104) == (int *)0x0) || (**(int **)((int)self + 0x104) == 0))
     goto code_10036741;
-    u1 = orig::SoundVolume_ComputeDistanceVolumeAndPan(&f2,&u4,f1,*(float *)((int)self + 0x1b0),
+    u1 = orig::SoundVolume_ComputeDistanceVolumeAndPan(&frame.f2,&frame.u4,frame.f1,*(float *)((int)self + 0x1b0),
                          *(float *)((int)self + 0x1b4),*(float *)((int)self + 0x1b8),
-                         ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u5 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self + 0x1e8)))),
+                         ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)frame.u5 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self + 0x1e8)))),
                          *(int *)((int)self + 0x1e9));
     if (u1 == 0) {
       u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x40))))((void *)(self));
       c1 = (char)u2;
     }
     else {
-      i4 = XI_CALL_ST0(0x10311C2Cu)((int)u4 * g_10351704);
-      u4 = (uint32_t)i4;
+      i4 = XI_CALL_ST0(0x10311C2Cu)((int)frame.u4 * g_10351704);
+      frame.u4 = (uint32_t)i4;
       if (*(int *)((int)self + 0x1e0) == 0) {
-        orig::game_100363B0(self,&f2,u4);
+        orig::game_100363B0(self,&frame.f2,frame.u4);
       }
       if (*(int *)((int)self + 0x1e0) < 0) goto code_10036741;
       u2 = orig::CYySoundElem_IsTimerPositive(self);
       if ((char)u2 != '\0') {
-        u3 = ((*(float *)((int)self + 0x1c0)) != (*(float *)((int)self + 0x1c0))) || ((f2) != (f2));
-        if (((u3 == (u3 || *(float *)((int)self + 0x1c0) == f2)) ||
-            (u3 = ((*(float *)((int)self + 0x1c4)) != (*(float *)((int)self + 0x1c4))) || ((f3) != (f3)),
-            u3 == (u3 || *(float *)((int)self + 0x1c4) == f3))) ||
-           (u3 = ((*(float *)((int)self + 0x1c8)) != (*(float *)((int)self + 0x1c8))) || ((f4) != (f4)),
-           u3 == (u3 || *(float *)((int)self + 0x1c8) == f4))) {
-          *(float *)((int)self + 0x1c0) = f2;
-          *(float *)((int)self + 0x1c4) = f3;
-          *(float *)((int)self + 0x1c8) = f4;
-          *(uint32_t *)((int)self + 0x1cc) = u5;
+        u3 = ((*(float *)((int)self + 0x1c0)) != (*(float *)((int)self + 0x1c0))) || ((frame.f2) != (frame.f2));
+        if (((u3 == (u3 || *(float *)((int)self + 0x1c0) == frame.f2)) ||
+            (u3 = ((*(float *)((int)self + 0x1c4)) != (*(float *)((int)self + 0x1c4))) || ((frame.f3) != (frame.f3)),
+            u3 == (u3 || *(float *)((int)self + 0x1c4) == frame.f3))) ||
+           (u3 = ((*(float *)((int)self + 0x1c8)) != (*(float *)((int)self + 0x1c8))) || ((frame.f4) != (frame.f4)),
+           u3 == (u3 || *(float *)((int)self + 0x1c8) == frame.f4))) {
+          *(float *)((int)self + 0x1c0) = frame.f2;
+          *(float *)((int)self + 0x1c4) = frame.f3;
+          *(float *)((int)self + 0x1c8) = frame.f4;
+          *(uint32_t *)((int)self + 0x1cc) = frame.u5;
           if (g_104638F5 != '\0') {
-            orig::LobbyThread_SendCmd3FromFloat(*(uint32_t *)((int)self + 0x1e0),&f2,0,
+            orig::LobbyThread_SendCmd3FromFloat(*(uint32_t *)((int)self + 0x1e0),&frame.f2,0,
                          *(uint32_t *)((int)self + 0x1e0));
           }
         }
-        if (((int)*(short *)((int)self + 0x1bc) != u4) &&
-           (*(short *)((int)self + 0x1bc) = (short)u4, g_104638F5 != '\0')) {
-          u1 = orig::Music_SetTrackVolume(*(int *)((int)self + 0x1e0),u4,0,u4);
+        if (((int)*(short *)((int)self + 0x1bc) != frame.u4) &&
+           (*(short *)((int)self + 0x1bc) = (short)frame.u4, g_104638F5 != '\0')) {
+          u1 = orig::Music_SetTrackVolume(*(int *)((int)self + 0x1e0),frame.u4,0,frame.u4);
           return u1 & 0xffffff00;
         }
         goto code_1003673A;
@@ -235,9 +237,9 @@ bits32 __thiscall CYySoundElem::UpdateTimerAndPosition(void * self)
       c1 = (char)u2;
     }
     if (c1 != '\0') {
-      u4 = orig::CYySoundElem_ClearHandle(self);
+      frame.u4 = orig::CYySoundElem_ClearHandle(self);
 code_1003673A:
-      return u4 & 0xffffff00;
+      return frame.u4 & 0xffffff00;
     }
   }
 code_10036741:
@@ -347,10 +349,12 @@ bits32 __thiscall CYySoundElem::UpdateFromCamera(void * self)
   uint32_t u2;
   uint8_t u3;
   long double f2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+  } frame;
   
   f2 = orig::Camera_GetFrameScale_v2();
   f2 = *(float *)((int)self + 0x110) - f2;
@@ -369,16 +373,16 @@ bits32 __thiscall CYySoundElem::UpdateFromCamera(void * self)
   u2 = 0;
   if (*(int *)((int)self + 0x198) != 0) {
     i1 = orig::Camera_GetField50_v1();
-    orig::RabRes_MinOf10055F60OverIndexPairs((void *)(*(int *)((int)self + 0x198) + 0x30),&f3,i1 + 0x60);
+    orig::RabRes_MinOf10055F60OverIndexPairs((void *)(*(int *)((int)self + 0x198) + 0x30),&frame.f3,i1 + 0x60);
     i1 = orig::Camera_GetField50_v1();
-    f3 = (float)(f3 + *(float *)(i1 + 0x60));
+    frame.f3 = (float)(frame.f3 + *(float *)(i1 + 0x60));
     i1 = orig::Camera_GetField50_v1();
-    f4 = (float)(f4 + *(float *)(i1 + 100));
+    frame.f4 = (float)(frame.f4 + *(float *)(i1 + 100));
     u2 = orig::Camera_GetField50_v1();
     f1 = *(float *)(u2 + 0x68);
-    *(float *)((int)self + 0x54) = f3;
-    *(float *)((int)self + 0x58) = f4;
-    *(float *)((int)self + 0x5c) = (float)(f5 + f1);
+    *(float *)((int)self + 0x54) = frame.f3;
+    *(float *)((int)self + 0x58) = frame.f4;
+    *(float *)((int)self + 0x5c) = (float)(frame.f5 + f1);
   }
   return u2 & 0xffffff00;
 }

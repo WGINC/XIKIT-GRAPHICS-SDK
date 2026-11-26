@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x10043E50
 // GATE: PASS -- 100 trials, 56 returned normally, 26 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-XI_API int __thiscall DynVB_Create(uint32_t *self_, int arg2, unsigned int arg3, int arg4)
+XI_API int __thiscall DynVB_Create(uint32_t *self_, int arg2, unsigned int FVF, int arg4)
 {
   uint32_t *p1;
   uint32_t *p2;
@@ -19,9 +19,9 @@ XI_API int __thiscall DynVB_Create(uint32_t *self_, int arg2, unsigned int arg3,
   do
   {
     p2[1] = 0;
-    p2[5] = arg3;
+    p2[5] = FVF;
     p2[6] = arg2;
-    p2[7] = orig::Gfx_CalcFVFStride(arg3);
+    p2[7] = orig::Gfx_CalcFVFStride(FVF);
     p3 = (const void *)orig::VBPool_FindMatch((char *)g_pVbPool, (int)p2);
     if ( p3 != nullptr )
     {
@@ -30,7 +30,7 @@ XI_API int __thiscall DynVB_Create(uint32_t *self_, int arg2, unsigned int arg3,
     }
     else
     {
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * p2[7], 520, arg3, D3DPOOL_DEFAULT, (IDirect3DVertexBuffer8 **)(p2));
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * p2[7], 520, FVF, D3DPOOL_DEFAULT, (IDirect3DVertexBuffer8 **)(p2));
     }
     p2 += 8;
     result = ++i1;
@@ -65,7 +65,7 @@ XI_API void __thiscall DynVB_ReturnBuffersToPool(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10043F40
 // GATE: PASS -- 100 trials, 99 returned normally, 138 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __thiscall CMoVuElem_Draw(int *self_, int arg2, int arg3, int arg4, unsigned int arg5, int arg6)
+XI_API int __thiscall CMoVuElem_Draw(int *self_, int arg2, int PrimitiveCount, int arg4, unsigned int Handle, int arg6)
 {
   int i1;
   int *p1;
@@ -78,12 +78,12 @@ XI_API int __thiscall CMoVuElem_Draw(int *self_, int arg2, int arg3, int arg4, u
   result = p1[1];
   if ( result != 0 )
   {
-    if ( arg5 != 0 )
+    if ( Handle != 0 )
     {
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(arg5);
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(Handle);
       p2 = *(int **)(g_pResourceMng + 3772);
       i2 = *p2;
-      i3 = orig::Gfx_CalcFVFStride(arg5);
+      i3 = orig::Gfx_CalcFVFStride(Handle);
       (*(void (__stdcall **)(int *, uint32_t, int, int))(i2 + 332))(p2, 0, p1[1], i3);
     }
     else
@@ -91,7 +91,7 @@ XI_API int __thiscall CMoVuElem_Draw(int *self_, int arg2, int arg3, int arg4, u
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(p1[6]);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetStreamSource(0, (IDirect3DVertexBuffer8 *)(p1[1]), *(self_ + 8 * i1 + 8));
     }
-    return orig::CDx_DrawPrimitive(*(void **)(g_pResourceMng + 3528), arg4, arg2 + p1[3], arg3);
+    return orig::CDx_DrawPrimitive(*(void **)(g_pResourceMng + 3528), arg4, arg2 + p1[3], PrimitiveCount);
   }
   return result;
 }
@@ -125,10 +125,12 @@ XI_API uint8_t * __thiscall DynVB_Lock(void * self_)
   int i1;
   int i2;
   int i3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t * p2; };   // at 0x0
+  } frame;
   
-  p2 = self_;
+  frame.p2 = self_;
   i2 = orig::DynVBCtor_ReturnZero_v1();
   p1 = *(int **)((int)self_ + i2 * 0x20 + 4);
   if (p1 == (int *)0x0) {
@@ -139,13 +141,13 @@ XI_API uint8_t * __thiscall DynVB_Lock(void * self_)
   if (i1 != 0) {
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x2c))
               ))(p1,*(int *)(i3 + (int)self_) * *(int *)((int)self_ + i2 * 0x20 + 0xc),
-               *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&p2,i1);
-    return p2;
+               *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&frame.p2,i1);
+    return frame.p2;
   }
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x2c))
             ))(p1,*(int *)(i3 + (int)self_) * *(int *)((int)self_ + i2 * 0x20 + 0xc),
-             *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&p2,0x1000);
-  return p2;
+             *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&frame.p2,0x1000);
+  return frame.p2;
 }
 
 // FUNCTION: FFXIMAIN 0x100441A0
@@ -303,26 +305,28 @@ XI_API void __cdecl DynVB_ReleaseResourcesOf(int arg1)
   void *p1;
   void *self_;
   int i1;
-  char xi_frame[56] __attribute__((aligned(4)));
-  uint8_t  (&u1)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 20);
-  uint8_t  (&u2)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { uint8_t u1[20]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i2; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; uint8_t u2[28]; };   // at 0x1C
+  } frame;
   
   if (arg1 != 0) {
-    orig::game_100742A0(u1);
-    orig::ResourceIter_FindFirst_v1(u1,arg1,5,0,0xffffffff);
-    p1 = (void *)orig::ResourceIter_FindNext_v1(u1,0);
+    orig::game_100742A0(frame.u1);
+    orig::ResourceIter_FindFirst_v1(frame.u1,arg1,5,0,0xffffffff);
+    p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u1,0);
     if (p1 != (void *)0x0) {
 code_100446E6:
       do {
-        orig::ResourceIter_Start(u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+        orig::ResourceIter_Start(frame.u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
         do {
           do {
-            self_ = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+            self_ = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
             if (self_ == (void *)0x0) {
               orig::YmGenerater_Stop_v2(p1,(uint32_t *)0x0);
               orig::Generator_ClearSubobjectOrSetFlag_v2(p1,1);
-              p1 = (void *)orig::ResourceIter_FindNext_v1(u1,0);
+              p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u1,0);
               if (p1 == (void *)0x0) goto code_10044784;
               goto code_100446E6;
             }
@@ -336,14 +340,14 @@ code_100446E6:
       } while( true );
     }
 code_10044784:
-    orig::ResourceIter_FindFirst_v1(u1,arg1,7,0,0xffffffff);
+    orig::ResourceIter_FindFirst_v1(frame.u1,arg1,7,0,0xffffffff);
 L1:
-    if (i2 != 0) {
+    if (frame.i2 != 0) {
 code_100447A1:
       p1 = *(void **)(g_1047D140 + 0xd50);
       do {
         if (p1 == (void *)0x0) {
-          orig::ResourceIter_FindNext_v1(u1,0);
+          orig::ResourceIter_FindNext_v1(frame.u1,0);
           goto L1;
         }
         if (*(int *)((int)p1 + 0x1c) == 0x4d730000) {
@@ -353,7 +357,7 @@ code_100447A1:
           else {
             i1 = **(int **)((int)p1 + 0x80);
           }
-          if (i1 == i2) goto code_100447CE;
+          if (i1 == frame.i2) goto code_100447CE;
         }
         p1 = *(void **)((int)p1 + 0xc);
       } while( true );

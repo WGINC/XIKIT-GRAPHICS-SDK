@@ -141,11 +141,13 @@ XI_API void __cdecl SqinSkin_BuildPartShapes(int arg1)
   int i5;
   int i6;
   int i7;
-  char xi_frame[156] __attribute__((aligned(4)));
-  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  bits32 * &p4 = *reinterpret_cast<bits32 * *>(xi_frame + 4);
-  float  (&f1)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 28);
-  float  (&f2)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 92);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[156];
+    struct __attribute__((packed)) { int i8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; bits32 * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; float f1[16]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_4[0x5C]; float f2[16]; };   // at 0x5C
+  } frame;
   
   if (arg1 != 0) {
     i2 = orig::SqTimer_GetMicroseconds_v1();
@@ -158,10 +160,10 @@ XI_API void __cdecl SqinSkin_BuildPartShapes(int arg1)
     orig::sqMatrix4_1027F0E0_v1(p2,*(bits32 **)(*(int *)(arg1 + 0x24) + 0x14));
     i4 = orig::SqTimer_GetMicroseconds_v1();
     g_109A2830 = g_109A2830 + (i4 - i3);
-    i8 = 0;
+    frame.i8 = 0;
     if (0 < i6) {
       do {
-        i3 = *(int *)(*(int *)(arg1 + 0x38) + i8 * 4);
+        i3 = *(int *)(*(int *)(arg1 + 0x38) + frame.i8 * 4);
         i4 = *(int *)(i3 + 0x30);
         i5 = *(int *)(i3 + 0x50);
         p3 = orig::SqdfShape_Create();
@@ -175,29 +177,29 @@ XI_API void __cdecl SqinSkin_BuildPartShapes(int arg1)
              *(bits32 *)(*(int *)(arg1 + 0x24) + 0x20);
         if (*(int *)(*(int *)(i3 + 0x54) + 0x20) != 0) {
           i1 = *(int *)(*(int *)(arg1 + 0x24) + 0x20);
-          p4 = orig::game_10275D80(1,i5 * 0xc,str_C__dev_dancer_modules_sqSkin_src_103BC310,0x22e);
+          frame.p4 = orig::game_10275D80(1,i5 * 0xc,str_C__dev_dancer_modules_sqSkin_src_103BC310,0x22e);
           i7 = 0;
-          *(bits32 **)(i3 + 0x40) = p4;
+          *(bits32 **)(i3 + 0x40) = frame.p4;
           if (0 < i5) {
             do {
-              orig::SqVec_CopyVec3(p4,(bits32 *)(i1 + *(int *)(i4 + i7 * 4) * 0xc));
+              orig::SqVec_CopyVec3(frame.p4,(bits32 *)(i1 + *(int *)(i4 + i7 * 4) * 0xc));
               i7 = i7 + 1;
-              p4 = p4 + 3;
+              frame.p4 = frame.p4 + 3;
             } while (i7 < i5);
           }
         }
         p1 = (uint32_t *)(*(int *)(i3 + 0x54) + 0x34);
         *p1 = *p1 & 0xfffffffa;
         i4 = orig::SqTimer_GetMicroseconds_v1();
-        orig::sqMatrix4_1027F0E0_v1(f1,(bits32 *)(*(int *)(i3 + 0x9c) + 0x24));
+        orig::sqMatrix4_1027F0E0_v1(frame.f1,(bits32 *)(*(int *)(i3 + 0x9c) + 0x24));
         i5 = orig::SqTimer_GetMicroseconds_v1();
         g_109A2830 = g_109A2830 + (i5 - i4);
         i4 = orig::SqTimer_GetMicroseconds_v1();
-        orig::sqMatrix4_10280140_v1(f2,f1,*(float **)(*(int *)(arg1 + 0x24) + 0x14));
+        orig::sqMatrix4_10280140_v1(frame.f2,frame.f1,*(float **)(*(int *)(arg1 + 0x24) + 0x14));
         i5 = orig::SqTimer_GetMicroseconds_v1();
         g_109A2834 = g_109A2834 + (i5 - i4);
         i4 = orig::SqTimer_GetMicroseconds_v1();
-        orig::M4fSet_v1((bits32 *)(i3 + 0x5c),f2);
+        orig::M4fSet_v1((bits32 *)(i3 + 0x5c),frame.f2);
         i5 = orig::SqTimer_GetMicroseconds_v1();
         g_109A2838 = g_109A2838 + (i5 - i4);
         i4 = orig::SqTimer_GetMicroseconds_v1();
@@ -207,8 +209,8 @@ XI_API void __cdecl SqinSkin_BuildPartShapes(int arg1)
           orig::sqFree_v1(*(int *)(i3 + 0x3c),str_C__dev_dancer_modules_sqSkin_src_103BC310,0x249);
           *(bits32 *)(i3 + 0x3c) = 0;
         }
-        i8 = i8 + 1;
-      } while (i8 < i6);
+        frame.i8 = frame.i8 + 1;
+      } while (frame.i8 < i6);
     }
     if (((*(uint8_t *)(*(int *)(arg1 + 0x24) + 0x34) & 4) != 0) &&
        (i6 = *(int *)(*(int *)(arg1 + 0x24) + 0x14), i6 != 0)) {

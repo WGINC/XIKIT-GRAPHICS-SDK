@@ -11,23 +11,23 @@ XI_API IDirect3DDevice8 * __cdecl FontGlyphCache_GetDevice(void)
 
 // FUNCTION: FFXIMAIN 0x1025D760
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl FontGlyphCache_CreateTexture(unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, D3DFORMAT arg5, D3DPOOL arg6)
+XI_API int __cdecl FontGlyphCache_CreateTexture(unsigned int Width, unsigned int Height, unsigned int Levels, unsigned int Usage, D3DFORMAT Format, D3DPOOL Pool)
 {
   int i1;
   int i2;
   i2 = 0;
-  i1 = (g_pCDx->pDevice)->lpVtbl->CreateTexture((g_pCDx->pDevice), arg1, arg2, arg3, arg4, arg5, arg6, (IDirect3DTexture8 **)&i2);
+  i1 = (g_pCDx->pDevice)->lpVtbl->CreateTexture((g_pCDx->pDevice), Width, Height, Levels, Usage, Format, Pool, (IDirect3DTexture8 **)&i2);
   return i1 < 0 ? 0 : i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1025D7B0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl FontGlyphCache_CreateVertexBuffer(unsigned int arg1, unsigned int arg2, unsigned int arg3, D3DPOOL arg4)
+XI_API int __cdecl FontGlyphCache_CreateVertexBuffer(unsigned int Length, unsigned int Usage, unsigned int FVF, D3DPOOL Pool)
 {
   int i1;
   int i2;
   i2 = 0;
-  i1 = (g_pCDx->pDevice)->lpVtbl->CreateVertexBuffer((g_pCDx->pDevice), arg1, arg2, arg3, arg4, (IDirect3DVertexBuffer8 **)&i2);
+  i1 = (g_pCDx->pDevice)->lpVtbl->CreateVertexBuffer((g_pCDx->pDevice), Length, Usage, FVF, Pool, (IDirect3DVertexBuffer8 **)&i2);
   return i1 < 0 ? 0 : i2;
 }
 
@@ -112,22 +112,24 @@ XI_API void __cdecl FontGlyphCache_DecayCounter(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FitFont_BaseCtor(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 xi_s4)
 {
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
-  u1 = 0xffffffff;
-  p2 =(uint8_t*)(&code_1032752E);
-  p1 = ExceptionList;
-  ExceptionList = &p1;
+  frame.u1 = 0xffffffff;
+  frame.p2 =(uint8_t*)(&code_1032752E);
+  frame.p1 = ExceptionList;
+  ExceptionList = &frame.p1;
   orig::FitFont_InnerCtor(self_,arg3,arg4,(LPCRITICAL_SECTION)((int)self_ + 0x7c),arg2);
-  u1 = 0;
+  frame.u1 = 0;
   *(uint32_t *)((int)self_ + 0x50) = 0;
   orig::FitFont_CreateEvent((void *)((int)self_ + 0x54),0);
-  XI_PIECE(u1, 0, 1) = 1;
+  XI_PIECE(frame.u1, 0, 1) = 1;
   orig::FitFont_CreateEvent((void *)((int)self_ + 0x58),1);
-  u1 = ((uint32_t)(((uint32_t)(XI_PIECE(u1, 1, 3)) << 8) | (uint8_t)(2)));
+  frame.u1 = ((uint32_t)(((uint32_t)(XI_PIECE(frame.u1, 1, 3)) << 8) | (uint8_t)(2)));
   orig::FitFont_CreateEvent((uint32_t *)((int)self_ + 0x5c),1);
   *(uint32_t *)((int)self_ + 0x60) = 0;
   *(uint32_t *)((int)self_ + 100) = 0;
@@ -149,7 +151,7 @@ XI_API void * __thiscall FitFont_BaseCtor(void * self_, bits32 * arg2, bits32 ar
   *(uint8_t ***)((int)self_ + 0xc) = &g_1034043C;
   *(uint8_t ***)((int)self_ + 0x10) = &g_10340428;
   SetEvent(*(HANDLE *)((int)self_ + 0x5c));
-  ExceptionList = p1;
+  ExceptionList = frame.p1;
   return self_;
 }
 
@@ -158,18 +160,20 @@ XI_API void * __thiscall FitFont_BaseCtor(void * self_, bits32 * arg2, bits32 ar
 XI_API void __thiscall FitFont_BaseDtor(void * self_)
 {
   int *p1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i1; };   // at 0x8
+  } frame;
   
-  p3 =(uint8_t*)(&code_10327590);
-  p2 = ExceptionList;
-  ExceptionList = &p2;
+  frame.p3 =(uint8_t*)(&code_10327590);
+  frame.p2 = ExceptionList;
+  ExceptionList = &frame.p2;
   *(uint8_t ***)self_ = &g_10340478;
   *(uint8_t ***)((int)self_ + 0xc) = &g_1034043C;
   *(uint8_t ***)((int)self_ + 0x10) = &g_10340428;
-  i1 = 6;
+  frame.i1 = 6;
   orig::FitFont_EndTimerPeriodIfActive(self_);
   orig::FitFont_ReleaseField6C(self_);
   if (*(int *)((int)self_ + 0x50) != 0) {
@@ -185,15 +189,15 @@ XI_API void __thiscall FitFont_BaseDtor(void * self_)
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0xc4));
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x7c));
-  XI_PIECE(i1, 0, 1) = 2;
+  XI_PIECE(frame.i1, 0, 1) = 2;
   orig::game_10265B90((void *)((int)self_ + 0x5c));
-  XI_PIECE(i1, 0, 1) = 1;
+  XI_PIECE(frame.i1, 0, 1) = 1;
   orig::game_10265B90((void *)((int)self_ + 0x58));
-  i1 = (uint32_t)XI_PIECE(i1, 1, 3) << 8;
+  frame.i1 = (uint32_t)XI_PIECE(frame.i1, 1, 3) << 8;
   orig::game_10265B90((void *)((int)self_ + 0x54));
-  i1 = 0xffffffff;
+  frame.i1 = 0xffffffff;
   orig::FitFont_InnerDtor(self_);
-  ExceptionList = p2;
+  ExceptionList = frame.p2;
   return;
 }
 
@@ -202,24 +206,26 @@ XI_API void __thiscall FitFont_BaseDtor(void * self_)
 XI_API bits32 __thiscall FitFont_ReleaseField6C(void * self_)
 {
   int *p1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
-  u1 = 0xffffffff;
-  p3 =(uint8_t*)(&code_103276B8);
-  p2 = ExceptionList;
-  ExceptionList = &p2;
+  frame.u1 = 0xffffffff;
+  frame.p3 =(uint8_t*)(&code_103276B8);
+  frame.p2 = ExceptionList;
+  ExceptionList = &frame.p2;
   EnterCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
   p1 = *(int **)((int)self_ + 0x6c);
-  u1 = 0;
+  frame.u1 = 0;
   if (p1 != (int *)0x0) {
     ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
     *(uint32_t *)((int)self_ + 0x6c) = 0;
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  ExceptionList = p2;
+  ExceptionList = frame.p2;
   return 0;
 }
 
@@ -227,17 +233,19 @@ XI_API bits32 __thiscall FitFont_ReleaseField6C(void * self_)
 // NOT VERIFIED -- FAIL
 XI_API bits32 __thiscall FitFont_EndTimerPeriodIfActive(void * self_)
 {
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
-  u1 = 0xffffffff;
-  p2 =(uint8_t*)(&code_10327738);
-  p1 = ExceptionList;
-  ExceptionList = &p1;
+  frame.u1 = 0xffffffff;
+  frame.p2 =(uint8_t*)(&code_10327738);
+  frame.p1 = ExceptionList;
+  ExceptionList = &frame.p1;
   EnterCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  u1 = 0;
+  frame.u1 = 0;
   *(uint32_t *)((int)self_ + 0x74) = 0;
   if (*(int *)((int)self_ + 100) == 1) {
     *(uint32_t *)((int)self_ + 100) = 0;
@@ -245,7 +253,7 @@ XI_API bits32 __thiscall FitFont_EndTimerPeriodIfActive(void * self_)
     timeEndPeriod(1);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  ExceptionList = p1;
+  ExceptionList = frame.p1;
   return 0;
 }
 
@@ -253,18 +261,20 @@ XI_API bits32 __thiscall FitFont_EndTimerPeriodIfActive(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FitFont_DerivedCtor(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
-  u1 = 0xffffffff;
-  p2 =(uint8_t*)(&code_10327818);
-  p1 = ExceptionList;
-  ExceptionList = &p1;
+  frame.u1 = 0xffffffff;
+  frame.p2 =(uint8_t*)(&code_10327818);
+  frame.p1 = ExceptionList;
+  ExceptionList = &frame.p1;
   orig::FitFont_BaseCtor(self_,arg2,arg3,arg4,arg5);
   *(uint8_t ***)((int)self_ + 0xe0) = &g_1034073C;
-  u1 = 0;
+  frame.u1 = 0;
   *(uint32_t *)((int)self_ + 0xec) = 0;
   *(uint32_t *)((int)self_ + 0x120) = 0;
   *(uint32_t *)((int)self_ + 0x124) = 0;
@@ -274,7 +284,7 @@ XI_API void * __thiscall FitFont_DerivedCtor(void * self_, bits32 arg2, bits32 a
   *(uint8_t ***)((int)self_ + 0xe0) = &g_10340600;
   *(uint8_t ***)((int)self_ + 0xe4) = &g_103405EC;
   orig::FitFont_ResetState(self_);
-  ExceptionList = p1;
+  ExceptionList = frame.p1;
   return self_;
 }
 
@@ -362,25 +372,27 @@ XI_API void * __thiscall FitFont_InnerCtor(void * self_, bits32 arg2, void * arg
 XI_API void __thiscall FitFont_InnerDtor(void * self_)
 {
   int *p1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+  } frame;
   
-  p3 =(uint8_t*)(&code_103278D8);
-  p2 = ExceptionList;
-  u1 = 0;
-  ExceptionList = &p2;
+  frame.p3 =(uint8_t*)(&code_103278D8);
+  frame.p2 = ExceptionList;
+  frame.u1 = 0;
+  ExceptionList = &frame.p2;
   orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0x3c));
   p1 = *(int **)((int)self_ + 0x18);
   if (p1 != (int *)0x0) {
     ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
     *(uint32_t *)((int)self_ + 0x18) = 0;
   }
-  u1 = 0xffffffff;
+  frame.u1 = 0xffffffff;
   orig::FitFont_ReleaseLibraryRef
             ();
-  ExceptionList = p2;
+  ExceptionList = frame.p2;
   return;
 }
 

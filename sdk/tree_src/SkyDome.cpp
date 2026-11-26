@@ -12,11 +12,13 @@ XI_API int __cdecl Sky_DrawDome(void)
   unsigned char *p2;
   uint8_t *p3;
   int i;
-  alignas(16) unsigned char xi_frame[0x43C];  // address-taken locals at their original offsets
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &Float2E0 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  unsigned char (&u1)[12] = *reinterpret_cast<unsigned char (*)[12]>(xi_frame + 0x30);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x43C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; float Float2E0; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; unsigned char u1[12]; };   // at 0x30
+  } frame;
 
   result = (int)g_pXiZone;
   i1 = *((uint32_t *)g_pXiZone + 6);
@@ -41,7 +43,7 @@ XI_API int __cdecl Sky_DrawDome(void)
           (int)Sky_DrawDome_textureStageStates);
         orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
         orig::Gfx_SetViewMatrixFromField90(g_pMoCamera);
-        p2 = u1;
+        p2 = frame.u1;
         p3 = p1 + 32;
         for ( i = 8; i != 0; --i )
         {
@@ -49,11 +51,11 @@ XI_API int __cdecl Sky_DrawDome(void)
           p3 += 4;
           p2 += 4;
         }
-        i2 = p1[18];
-        Float2E0 = orig::Camera_GetFloat2E0();
-        f1 = Float2E0 - orig::Camera_GetFloat2DC() - 1.0;
-        orig::Sky_DrawGradientDome(f1, bit_copy<float>((uint32_t)(8)), i2, u1, bit_copy<float>((uint32_t)(p1 + 64)));
-        orig::Camera_SetClearColorRGB(u1[2], u1[1], u1[0]);
+        frame.i2 = p1[18];
+        frame.Float2E0 = orig::Camera_GetFloat2E0();
+        frame.f1 = frame.Float2E0 - orig::Camera_GetFloat2DC() - 1.0;
+        orig::Sky_DrawGradientDome(frame.f1, bit_copy<float>((uint32_t)(8)), frame.i2, frame.u1, bit_copy<float>((uint32_t)(p1 + 64)));
+        orig::Camera_SetClearColorRGB(frame.u1[2], frame.u1[1], frame.u1[0]);
         *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x178)) = 1124073472;
         orig::Gfx_SetViewMatrixFromField10(g_pMoCamera);
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -83,14 +85,16 @@ XI_API int __cdecl Sky_DrawDomeViewCentered(void)
   CMoProcessor *p5;
   int i3;
   int i4;
-  alignas(16) unsigned char xi_frame[0x440];  // address-taken locals at their original offsets
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  unsigned char * &p6 = *reinterpret_cast<unsigned char * *>(xi_frame + 0x2C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  float &Float2E0 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  unsigned char (&u1)[12] = *reinterpret_cast<unsigned char (*)[12]>(xi_frame + 0x34);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x440];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; unsigned char * p6; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; int i6; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_5[0x30]; int i7; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_6[0x30]; float Float2E0; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_7[0x34]; unsigned char u1[12]; };   // at 0x34
+  } frame;
 
   result = g_pResourceMng;
   if ( g_pResourceMng != 0 )
@@ -99,7 +103,7 @@ XI_API int __cdecl Sky_DrawDomeViewCentered(void)
     if ( result != 0 )
     {
       p1 = (unsigned char *)(result + 76);
-      i6 = result + 76;
+      frame.i6 = result + 76;
       if ( result != -76 )
       {
         result = orig::Camera_SetClearColorRGB(*p1, *(uint8_t *)(result + 77), *(uint8_t *)(result + 78));
@@ -132,23 +136,23 @@ XI_API int __cdecl Sky_DrawDomeViewCentered(void)
           p2[13] = 0.0;
           p2[14] = 0.0;
           orig::CMoDX_SetViewMatrix((uint32_t ***)g_pResourceMng, p2);
-          i2 = i6;
-          p6 = u1;
-          i7 = 8;
+          i2 = frame.i6;
+          frame.p6 = frame.u1;
+          frame.i7 = 8;
           p4 = (unsigned int *)(i2 + 32);
           do
           {
-            orig::Color_SetFromU32SwapRB(p6, *p4++);
-            b1 = i7 == 1;
-            p6 += 4;
-            --i7;
+            orig::Color_SetFromU32SwapRB(frame.p6, *p4++);
+            b1 = frame.i7 == 1;
+            frame.p6 += 4;
+            --frame.i7;
           }
           while ( !b1 );
-          i5 = *(unsigned char *)(i2 + 18);
-          Float2E0 = orig::Camera_GetFloat2E0();
-          f1 = (Float2E0 - orig::Camera_GetFloat2DC()) * 0x1.99999a0000000p-1;
-          orig::Sky_DrawGradientDome(f1, bit_copy<float>((uint32_t)(8)), i5, u1, bit_copy<float>((uint32_t)(i2 + 64)));
-          orig::Camera_SetClearColorRGB(u1[2], u1[1], u1[0]);
+          frame.i5 = *(unsigned char *)(i2 + 18);
+          frame.Float2E0 = orig::Camera_GetFloat2E0();
+          frame.f1 = (frame.Float2E0 - orig::Camera_GetFloat2DC()) * 0x1.99999a0000000p-1;
+          orig::Sky_DrawGradientDome(frame.f1, bit_copy<float>((uint32_t)(8)), frame.i5, frame.u1, bit_copy<float>((uint32_t)(i2 + 64)));
+          orig::Camera_SetClearColorRGB(frame.u1[2], frame.u1[1], frame.u1[0]);
           *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x178)) = 1124073472;
           orig::CMoDX_PopViewMatrix(g_pResourceMng);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);

@@ -178,18 +178,20 @@ XI_API void __cdecl Vec3_CopyThen100274B0(float * arg1, bits32 * arg2)
 XI_API bits32 __cdecl Vec3_Cross(bits32 * arg1, float * arg2, float * arg3)
 {
   uint32_t u1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3; };   // at 0x8
+  } frame;
   
-  f1 = (float)(arg3[2] * arg2[1] -
+  frame.f1 = (float)(arg3[2] * arg2[1] -
                    arg2[2] * arg3[1]);
-  f2 = (float)(arg2[2] * *arg3 -
+  frame.f2 = (float)(arg2[2] * *arg3 -
                    arg3[2] * *arg2);
-  f3 = (float)(*arg2 * arg3[1] -
+  frame.f3 = (float)(*arg2 * arg3[1] -
                    *arg3 * arg2[1]);
-  u1 = orig::Vec3_Copy_v1(arg1,&f1);
+  u1 = orig::Vec3_Copy_v1(arg1,&frame.f1);
   return u1;
 }
 
@@ -198,11 +200,13 @@ XI_API bits32 __cdecl Vec3_Cross(bits32 * arg1, float * arg2, float * arg3)
 XI_API long double __cdecl MathVector_Distance3(float * arg1, float * arg2)
 {
   long double f1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f2)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f2[4]; };   // at 0x0
+  } frame;
   
-  orig::Vec3_Sub_v1(f2,arg1,arg2);
-  f1 = orig::game_10027530(f2,f2);
+  orig::Vec3_Sub_v1(frame.f2,arg1,arg2);
+  f1 = orig::game_10027530(frame.f2,frame.f2);
   return x87_fsqrt(f1);
 }
 
@@ -230,21 +234,23 @@ XI_API long double __cdecl Vec3_Call100275D0(float * arg1, float * arg2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Gfx_ProjectWorldToClip(float *arg1, uint32_t *arg2)
 {
-  alignas(16) unsigned char xi_frame[0x4C4];  // address-taken locals at their original offsets
-  float (&f1)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x4);
-  uint8_t (&u1)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x44);
-  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x84);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4C4];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f1[16]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x44]; uint8_t u1[64]; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_3[0x84]; uint8_t u2[64]; };   // at 0x84
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)f1);
-  orig::fn_10027990((Iostream_init *)u2);
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::CDx_GetTransformCached(g_pCDx, 256, f1);
-  orig::CDx_GetTransformCached(g_pCDx, 2, u2);
-  orig::CDx_GetTransformCached(g_pCDx, 3, u1);
-  orig::Mat4_PostMultiply((int)f1, (int)u2);
-  orig::Mat4_PostMultiply((int)f1, (int)u1);
+  orig::fn_10027990((Iostream_init *)frame.f1);
+  orig::fn_10027990((Iostream_init *)frame.u2);
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.f1);
+  orig::CDx_GetTransformCached(g_pCDx, 2, frame.u2);
+  orig::CDx_GetTransformCached(g_pCDx, 3, frame.u1);
+  orig::Mat4_PostMultiply((int)frame.f1, (int)frame.u2);
+  orig::Mat4_PostMultiply((int)frame.f1, (int)frame.u1);
   orig::Vec4_Copy(arg1, arg2);
-  orig::Mat4_TransformCoordInPlace(f1, arg1);
+  orig::Mat4_TransformCoordInPlace(frame.f1, arg1);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -254,17 +260,19 @@ XI_API void __cdecl Gfx_ProjectWorldToClip(float *arg1, uint32_t *arg2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Gfx_TransformWorldToView(float *arg1, uint32_t *arg2)
 {
-  alignas(16) unsigned char xi_frame[0x484];  // address-taken locals at their original offsets
-  float (&f1)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x4);
-  uint8_t (&u1)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x44);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x484];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f1[16]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x44]; uint8_t u1[64]; };   // at 0x44
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)f1);
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::CDx_GetTransformCached(g_pCDx, 256, f1);
-  orig::CDx_GetTransformCached(g_pCDx, 2, u1);
-  orig::Mat4_PostMultiply((int)f1, (int)u1);
+  orig::fn_10027990((Iostream_init *)frame.f1);
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.f1);
+  orig::CDx_GetTransformCached(g_pCDx, 2, frame.u1);
+  orig::Mat4_PostMultiply((int)frame.f1, (int)frame.u1);
   orig::Vec4_Copy(arg1, arg2);
-  orig::Mat4_TransformVec4InPlace(f1, arg1);
+  orig::Mat4_TransformVec4InPlace(frame.f1, arg1);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
 }
@@ -302,12 +310,12 @@ XI_API float * __cdecl Gfx_ScreenDeltaToNdc(float *arg1, float *arg2)
 {
   float *result;
   double f1;
-  uint32_t buf1[6];
+  uint32_t pViewport[6];
   int i1;
-  (g_pCDx->pDevice)->lpVtbl->GetViewport((g_pCDx->pDevice), buf1);
+  (g_pCDx->pDevice)->lpVtbl->GetViewport((g_pCDx->pDevice), pViewport);
   result = arg2;
-  f1 = *arg2 / (double)(buf1[2] >> 1);
-  i1 = buf1[3] >> 1;
+  f1 = *arg2 / (double)(pViewport[2] >> 1);
+  i1 = pViewport[3] >> 1;
   *arg1 = f1;
   arg1[1] = -1.0 / (double)i1 * result[1];
   return result;
@@ -380,18 +388,20 @@ XI_API bits32 __thiscall Mat4_Copy(void * self_, bits32 * arg2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Mat4_PostScale(void * self_, bits32 * arg2)
 {
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  (&u1)[5] = *reinterpret_cast<uint32_t  (*)[5]>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint32_t u1[5]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint32_t u2; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x28]; uint32_t u3; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_4[0x3C]; uint32_t u4; };   // at 0x3C
+  } frame;
   
-  orig::Mat4_SetIdentity_v1(u1);
-  u1[0] = *arg2;
-  u2 = arg2[1];
-  u3 = arg2[2];
-  u4 = arg2[3];
-  orig::Mat4_PostMultiply_v1(self_,(int)u1);
+  orig::Mat4_SetIdentity_v1(frame.u1);
+  frame.u1[0] = *arg2;
+  frame.u2 = arg2[1];
+  frame.u3 = arg2[2];
+  frame.u4 = arg2[3];
+  orig::Mat4_PostMultiply_v1(self_,(int)frame.u1);
   return;
 }
 
@@ -447,21 +457,23 @@ XI_API void __thiscall Mat4_PostRotateX(void * self_, float arg2)
 {
   long double f1;
   long double f2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  (&u1)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 40);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u1[20]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; float f5; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; float f6; };   // at 0x28
+  } frame;
   
   f1 = bit_cast<long double>(x87_fsin(arg2));
   f2 = bit_cast<long double>(x87_fcos(arg2));
-  orig::Mat4_SetIdentity_v1(u1);
-  f3 = (float)f2;
-  f4 = (float)f1;
-  f5 = (float)-f1;
-  f6 = (float)f2;
-  orig::Mat4_PostMultiply_v1(self_,(int)u1);
+  orig::Mat4_SetIdentity_v1(frame.u1);
+  frame.f3 = (float)f2;
+  frame.f4 = (float)f1;
+  frame.f5 = (float)-f1;
+  frame.f6 = (float)f2;
+  orig::Mat4_PostMultiply_v1(self_,(int)frame.u1);
   return;
 }
 
@@ -471,20 +483,22 @@ XI_API void __thiscall Mat4_PostRotateY(void * self_, float arg2)
 {
   long double f1;
   long double f2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&f3)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 40);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f3[2]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; float f5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x28]; float f6; };   // at 0x28
+  } frame;
   
   f1 = bit_cast<long double>(x87_fsin(arg2));
   f2 = bit_cast<long double>(x87_fcos(arg2));
-  orig::Mat4_SetIdentity_v1(f3);
-  f3[0] = (float)f2;
-  f4 = (float)-f1;
-  f5 = (float)f1;
-  f6 = (float)f2;
-  orig::Mat4_PostMultiply_v1(self_,(int)f3);
+  orig::Mat4_SetIdentity_v1(frame.f3);
+  frame.f3[0] = (float)f2;
+  frame.f4 = (float)-f1;
+  frame.f5 = (float)f1;
+  frame.f6 = (float)f2;
+  orig::Mat4_PostMultiply_v1(self_,(int)frame.f3);
   return;
 }
 
@@ -494,20 +508,22 @@ XI_API void __thiscall Mat4_PostRotateZ(void * self_, float arg2)
 {
   long double f1;
   long double f2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f6; };   // at 0x14
+  } frame;
   
   f1 = bit_cast<long double>(x87_fsin(arg2));
   f2 = bit_cast<long double>(x87_fcos(arg2));
-  orig::Mat4_SetIdentity_v1(&f3);
-  f3 = (float)f2;
-  f4 = (float)f1;
-  f5 = (float)-f1;
-  f6 = (float)f2;
-  orig::Mat4_PostMultiply_v1(self_,(int)&f3);
+  orig::Mat4_SetIdentity_v1(&frame.f3);
+  frame.f3 = (float)f2;
+  frame.f4 = (float)f1;
+  frame.f5 = (float)-f1;
+  frame.f6 = (float)f2;
+  orig::Mat4_PostMultiply_v1(self_,(int)&frame.f3);
   return;
 }
 
@@ -543,31 +559,33 @@ XI_API void __thiscall Mat4_PostMultiply(void * self_, int arg2)
   float *p2;
   int i1;
   int i2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
-  float  (&f2)[12] = *reinterpret_cast<float  (*)[12]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; float f2[12]; };   // at 0x10
+  } frame;
   
   p1 = (float *)(arg2 + 0x20);
   i1 = 0;
   do {
     i2 = i1 + 1;
     p2 = p1 + 1;
-    f1[i1] =
+    frame.f1[i1] =
          (float)(p1[4] * *(float *)((int)self_ + 0xc) +
                 *(float *)self_ * p1[-8] +
                 *(float *)((int)self_ + 4) * p1[-4] +
                 *p1 * *(float *)((int)self_ + 8));
-    f1[i1 + 4] =
+    frame.f1[i1 + 4] =
          (float)(p1[4] * *(float *)((int)self_ + 0x1c) +
                 *(float *)((int)self_ + 0x10) * p1[-8] +
                 *p1 * *(float *)((int)self_ + 0x18) +
                 *(float *)((int)self_ + 0x14) * p1[-4]);
-    *(float *)((int)f1 + (-4 - arg2) + (int)p2) =
+    *(float *)((int)frame.f1 + (-4 - arg2) + (int)p2) =
          (float)(p1[-4] * *(float *)((int)self_ + 0x24) +
                 *(float *)((int)self_ + 0x2c) * p1[4] +
                 *(float *)((int)self_ + 0x20) * p1[-8] +
                 *p1 * *(float *)((int)self_ + 0x28));
-    *(float *)((int)f1 + (0xc - arg2) + (int)p2) =
+    *(float *)((int)frame.f1 + (0xc - arg2) + (int)p2) =
          (float)(*(float *)((int)self_ + 0x34) * p1[-4] +
                 *p1 * *(float *)((int)self_ + 0x38) +
                 *(float *)((int)self_ + 0x3c) * p1[4] +
@@ -575,7 +593,7 @@ XI_API void __thiscall Mat4_PostMultiply(void * self_, int arg2)
     p1 = p2;
     i1 = i2;
   } while (i2 < 4);
-  orig::Mat4_Copy_v1(self_,f1);
+  orig::Mat4_Copy_v1(self_,frame.f1);
   return;
 }
 
@@ -587,29 +605,31 @@ XI_API void __thiscall Mat4_PreMultiply(void * self_, float * arg2)
   float *p2;
   int i1;
   int i2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
-  float  (&f2)[12] = *reinterpret_cast<float  (*)[12]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; float f2[12]; };   // at 0x10
+  } frame;
   
   p1 = (float *)((int)self_ + 0x20);
   i1 = 0;
   do {
     i2 = i1 + 1;
     p2 = p1 + 1;
-    f1[i1] =
+    frame.f1[i1] =
          (float)(*arg2 * p1[-8] +
                 arg2[3] * p1[4] +
                 arg2[1] * p1[-4] + *p1 * arg2[2]);
-    f1[i1 + 4] =
+    frame.f1[i1 + 4] =
          (float)(p1[-4] * arg2[5] +
                 p1[4] * arg2[7] +
                 *p1 * arg2[6] + arg2[4] * p1[-8]);
-    *(float *)((int)f1 + (-4 - (int)self_) + (int)p2) =
+    *(float *)((int)frame.f1 + (-4 - (int)self_) + (int)p2) =
          (float)(arg2[8] * p1[-8] +
                 arg2[9] * p1[-4] +
                 *p1 * arg2[10] + arg2[0xb] * p1[4]
                 );
-    *(float *)((int)f1 + (0xc - (int)self_) + (int)p2) =
+    *(float *)((int)frame.f1 + (0xc - (int)self_) + (int)p2) =
          (float)(arg2[0xc] * p1[-8] +
                 *p1 * arg2[0xe] +
                 arg2[0xd] * p1[-4] +
@@ -617,7 +637,7 @@ XI_API void __thiscall Mat4_PreMultiply(void * self_, float * arg2)
     p1 = p2;
     i1 = i2;
   } while (i2 < 4);
-  orig::Mat4_Copy_v1(self_,f1);
+  orig::Mat4_Copy_v1(self_,frame.f1);
   return;
 }
 
@@ -626,11 +646,13 @@ XI_API void __thiscall Mat4_PreMultiply(void * self_, float * arg2)
 XI_API bits32 __thiscall Mat4_TransformVec4InPlace(void * self_, bits32 * arg2)
 {
   uint32_t u1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
-  orig::Vec4_Copy_v1(f1,arg2);
-  u1 = orig::Mat4_TransformVec4(self_,(float *)arg2,f1);
+  orig::Vec4_Copy_v1(frame.f1,arg2);
+  u1 = orig::Mat4_TransformVec4(self_,(float *)arg2,frame.f1);
   return u1;
 }
 
@@ -662,11 +684,13 @@ XI_API bits32 __thiscall Mat4_TransformVec4(void * self_, float * arg2, float * 
 XI_API bits32 __thiscall Mat4_TransformPointInPlace(void * self_, float * arg2)
 {
   uint64_t u1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1[3]; };   // at 0x0
+  } frame;
   
-  orig::Vec3_Copy_v1(f1,arg2);
-  u1 = orig::Mat4_TransformPoint(self_,arg2,f1);
+  orig::Vec3_Copy_v1(frame.f1,arg2);
+  u1 = orig::Mat4_TransformPoint(self_,arg2,frame.f1);
   return (int)u1;
 }
 
@@ -694,11 +718,13 @@ XI_API uint64_t __thiscall Mat4_TransformPoint(void * self_, float * arg2, float
 XI_API bits32 __thiscall Mat4_TransformNormalInPlace(void * self_, bits32 * arg2)
 {
   uint32_t u1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1[3]; };   // at 0x0
+  } frame;
   
-  orig::Vec3_Copy_v1(f1,arg2);
-  u1 = orig::Mat4_TransformNormal_v1(self_,(float *)arg2,f1);
+  orig::Vec3_Copy_v1(frame.f1,arg2);
+  u1 = orig::Mat4_TransformNormal_v1(self_,(float *)arg2,frame.f1);
   return u1;
 }
 
@@ -756,22 +782,24 @@ XI_API bits32 __thiscall Mat4_InvertOrthonormal(void * self_)
   int i1;
   int i2;
   uint32_t *p3;
-  char xi_frame[80] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  (&u2)[12] = *reinterpret_cast<uint32_t  (*)[12]>(xi_frame + 16);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 72);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[80];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; uint32_t u2[12]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x40]; float f4; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_6[0x44]; float f5; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_7[0x48]; float f6; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_8[0x4C]; uint32_t u3; };   // at 0x4C
+  } frame;
   
-  orig::Vec4_Copy_v1(&f1,(uint32_t *)((int)self_ + 0x30));
+  orig::Vec4_Copy_v1(&frame.f1,(uint32_t *)((int)self_ + 0x30));
   *(uint32_t *)((int)self_ + 0x3c) = 0;
   *(uint32_t *)((int)self_ + 0x38) = 0;
   *(uint32_t *)((int)self_ + 0x34) = 0;
   *(uint32_t *)((int)self_ + 0x30) = 0;
-  p1 = u2;
+  p1 = frame.u2;
   i2 = 4;
   p3 = self_;
   do {
@@ -787,12 +815,12 @@ XI_API bits32 __thiscall Mat4_InvertOrthonormal(void * self_)
     p3 = p3 + 1;
     i2 = i2 + -1;
   } while (i2 != 0);
-  orig::Mat4_TransformVec4InPlace_v1(u2,&f1);
-  f4 = (float)-f1;
-  f5 = (float)-f2;
-  f6 = (float)-f3;
-  u3 = 0x3f800000;
-  u1 = orig::Mat4_Copy_v1(self_,u2);
+  orig::Mat4_TransformVec4InPlace_v1(frame.u2,&frame.f1);
+  frame.f4 = (float)-frame.f1;
+  frame.f5 = (float)-frame.f2;
+  frame.f6 = (float)-frame.f3;
+  frame.u3 = 0x3f800000;
+  u1 = orig::Mat4_Copy_v1(self_,frame.u2);
   return u1;
 }
 

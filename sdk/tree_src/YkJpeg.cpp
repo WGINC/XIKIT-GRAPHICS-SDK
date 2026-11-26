@@ -305,9 +305,11 @@ bits32 __thiscall YkJpeg::Encode(void * self, uint32_t arg2, uint32_t arg3, int 
   int *p4;
   uint8_t u2;
   uint64_t u3;
-  char xi_frame[1028] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  (&i4)[256] = *reinterpret_cast<int  (*)[256]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1028];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4[256]; };   // at 0x4
+  } frame;
   
   if (*(int *)((int)self + 4) != 0) {
     orig::JpegTables_Free(self);
@@ -353,19 +355,19 @@ bits32 __thiscall YkJpeg::Encode(void * self, uint32_t arg2, uint32_t arg3, int 
   orig::JpegTables_BuildTables(self,arg5);
   orig::YkJpeg_InitTables(self);
   orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E31Cu),0xe);
-  i3 = 0;
+  frame.i3 = 0;
   if (0 < (int)arg3) {
     do {
       i2 = 0;
       if (0 < (int)arg2) {
         do {
           if (u2) {
-            orig::YkJpeg_UnpackBlock565(self,arg2,arg3,arg4,i2,i3,i4);
+            orig::YkJpeg_UnpackBlock565(self,arg2,arg3,arg4,i2,frame.i3,frame.i4);
           }
           else {
-            orig::YkJpeg_CopyBlock(arg2,arg3,arg4,i2,i3,(int)i4);
+            orig::YkJpeg_CopyBlock(arg2,arg3,arg4,i2,frame.i3,(int)frame.i4);
           }
-          orig::YkJpeg_CutColor(self,i4);
+          orig::YkJpeg_CutColor(self,frame.i4);
           p4 = (int *)((int)self + 0x1c);
           i1 = 4;
           do {
@@ -386,8 +388,8 @@ bits32 __thiscall YkJpeg::Encode(void * self, uint32_t arg2, uint32_t arg3, int 
           i2 = i2 + 0x10;
         } while (i2 < (int)arg2);
       }
-      i3 = i3 + 0x10;
-    } while (i3 < (int)arg3);
+      frame.i3 = frame.i3 + 0x10;
+    } while (frame.i3 < (int)arg3);
   }
   orig::YkJpeg_FlushBits(*(void **)((int)self + 8));
   orig::YkJpeg_PutBytes(*(void **)((int)self + 8),(int)XI_GAME(0x1037E32Au),2);

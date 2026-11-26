@@ -11,17 +11,19 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * arg1, int * arg2)
   int i1;
   int i2;
   uint32_t u2;
-  char xi_frame[56] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 52);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f2; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f3; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; float f4; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; float f5; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; float f6; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; float f7; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f8; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x34]; float f9; };   // at 0x34
+  } frame;
   
   u2 = 0;
   if ((arg1[0x14] == 0) || ((u1 = arg1[0x13], (u1 & 2) != 0 && ((u1 & 4) != 0)))) {
@@ -68,23 +70,23 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * arg1, int * arg2)
   orig::sqgxTextureDecal_v1(0);
   orig::SqgxContext_SetMultiplyAdd(arg1[0xf]);
   if (arg1[0x19] == 0) {
-    f7 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xd]));
-    f8 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xd]));
-    f9 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xd]));
-    f4 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xe]));
-    f5 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xe]));
-    f6 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xe]));
+    frame.f7 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xd]));
+    frame.f8 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xd]));
+    frame.f9 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xd]));
+    frame.f4 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xe]));
+    frame.f5 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xe]));
+    frame.f6 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xe]));
     if ((char)arg1[0x12] == '\0') {
-      f1 = bit_cast<float>(arg1[0xf]);
-      f2 = f1;
-      f3 = f1;
+      frame.f1 = bit_cast<float>(arg1[0xf]);
+      frame.f2 = frame.f1;
+      frame.f3 = frame.f1;
     }
     else {
-      f1 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xf]));
-      f2 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xf]));
-      f3 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xf]));
+      frame.f1 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xf]));
+      frame.f2 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xf]));
+      frame.f3 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xf]));
     }
-    i2 = orig::Texture_CreateEntry(0x80,arg1[0x10],&f7,&f4,&f1);
+    i2 = orig::Texture_CreateEntry(0x80,arg1[0x10],&frame.f7,&frame.f4,&frame.f1);
     arg1[0x19] = i2;
   }
   orig::sqgxShader_v2(u2 | 0x100000,0);
@@ -93,16 +95,16 @@ XI_API void __cdecl SqsdAniso_DrawPasses(int * arg1, int * arg2)
   i2 = arg1[0x16];
   if (i2 == 0) {
 code_102995BF:
-    u3 = 1;
+    frame.u3 = 1;
   }
   else {
     if (i2 != 1) {
       if (i2 != 2) goto code_102995C9;
       goto code_102995BF;
     }
-    u3 = 0;
+    frame.u3 = 0;
   }
-  orig::Sqgx_SetContextFieldE24(u3);
+  orig::Sqgx_SetContextFieldE24(frame.u3);
 code_102995C9:
   orig::sqDrawableDraw_v1(*arg2);
   if (arg1[0x15] != 0) {

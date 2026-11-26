@@ -23,13 +23,15 @@ char CMoFloatingNumberTask::Slot8Update()
   float *p1;
   CMoProcessor *p2;
   int i6;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i7; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; float f5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; float f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; int i8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; float f7; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; int i9; };   // at 0x2C
+  } frame;
   bool xi_fpu_unord = false;
 
   f1 = *(float *)(g_pResourceMng + 3760) + at<float>(this, 0xAC);
@@ -37,27 +39,27 @@ char CMoFloatingNumberTask::Slot8Update()
   at<float>(this, 0xAC) = f1;
   if ( i1 != 0 && (i3 = at<uint32_t>(this, 0xB4)) != 0 && ((xi_fpu_unord = __builtin_isunordered(f1, 150.0), b1 = f1 < 150.0), c1 = 0, b2 = f1 == 150.0, ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0) )
   {
-    (*(void (__thiscall **)(int, uint32_t, int *))(*(uint32_t *)i3 + 452))(i3, 0, &i8);
-    f2 = f7 - 0x1.99999a0000000p-3;
-    i4 = i9;
-    at<uint32_t>(this, 0x94) = i8;
+    (*(void (__thiscall **)(int, uint32_t, int *))(*(uint32_t *)i3 + 452))(i3, 0, &frame.i8);
+    f2 = frame.f7 - 0x1.99999a0000000p-3;
+    i4 = frame.i9;
+    at<uint32_t>(this, 0x94) = frame.i8;
     at<uint32_t>(this, 0x9C) = i4;
-    f7 = f2;
+    frame.f7 = f2;
     at<float>(this, 0x98) = f2;
     f3 = at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8;
     i5 = at<uint32_t>(this, 0x94);
     f4 = at<float>(this, 0x9C);
-    f5 = at<float>(this, 0x98);
-    i7 = i5;
-    f6 = f4;
+    frame.f5 = at<float>(this, 0x98);
+    frame.i7 = i5;
+    frame.f6 = f4;
     at<float>(this, 0xB0) = f3;
-    f5 = f5 - at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8 * 0.5;
+    frame.f5 = frame.f5 - at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8 * 0.5;
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
     p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
     orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 3, p1);
     (*((void (__thiscall **)(void *, int *, int, int, int, float *, float, float))(*(void * *)&g_pProcessor->vftable) + 32))(g_pProcessor, 
-      &i7,
+      &frame.i7,
       self + 160,
       1,
       g_pResourceMng + 2896,

@@ -13,11 +13,13 @@ XI_API void __thiscall ResourceLoadTask_Step(void * self_)
   int i1;
   void *xi_s2;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p3 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p3; };   // at 0x0
+  } frame;
   
   i1 = *(int *)((int)self_ + 0x41);
-  p3 = self_;
+  frame.p3 = self_;
   if (i1 == 0) {
     if (*(char *)((int)self_ + 0x3c) == '\0') {
       if (0x10 < g_1047D138_as_s32) {
@@ -77,7 +79,7 @@ code_10072C0C:
       if (*(int *)((int)self_ + 0x38) != 0) {
         orig::ResourceIter_SetCurrentGlobal(*(uint32_t *)((int)self_ + 0x34));
         p2 = (int *)orig::MeshResourceMng_ResolveTree
-                                  (g_pMeshResourceMng_as_v1,(int *)&p3,*(void **)((int)self_ + 0x38)
+                                  (g_pMeshResourceMng_as_v1,(int *)&frame.p3,*(void **)((int)self_ + 0x38)
                                    ,*(uint32_t **)((int)self_ + 0x3d));
         if (((int *)*p2 != (int *)0x0) && (i1 = *(int *)*p2, i1 != 0)) {
           *(uint8_t *)(i1 + 0x1a) = *(uint8_t *)(i1 + 0x1a) | 1;

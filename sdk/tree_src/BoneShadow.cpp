@@ -56,10 +56,12 @@ XI_API bits32 __thiscall Quat_Multiply(void * self_, float * arg2, float * arg3)
   float f22;
   float f23;
   float f24;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&u1)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u1[16]; };   // at 0x0
+  } frame;
   
-  orig::Quat_SetIdentityChained(u1);
+  orig::Quat_SetIdentityChained(frame.u1);
   f1 = *arg3;
   f2 = *(float *)((int)self_ + 8);
   f3 = *(float *)self_;
@@ -187,12 +189,14 @@ XI_API bits32 __thiscall Quat_NLerp(void * self_, float * arg2, float * arg3, fl
   float f4;
   uint8_t u1;
   long double f5;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 12);
-  uint8_t  (&u2)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float f6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f8; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f9; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint8_t u2[16]; };   // at 0x10
+  } frame;
   
   u1 = ((arg4) != (arg4)) || ((1.0f) != (1.0f));
   if (u1 != (u1 || arg4 == 1.0f)) {
@@ -208,27 +212,27 @@ XI_API bits32 __thiscall Quat_NLerp(void * self_, float * arg2, float * arg3, fl
           *(float *)((int)self_ + 0xc) * arg3[3];
   u1 = ((f5) != (f5)) || ((0.0f) != (0.0f));
   if ((u1 || f5 < 0.0f) == u1) {
-    f6 = *arg3;
-    f7 = arg3[1];
-    f8 = arg3[2];
-    f9 = arg3[3];
+    frame.f6 = *arg3;
+    frame.f7 = arg3[1];
+    frame.f8 = arg3[2];
+    frame.f9 = arg3[3];
   }
   else {
-    f6 = (float)-*arg3;
-    f7 = (float)-arg3[1];
-    f8 = (float)-arg3[2];
-    f9 = (float)-arg3[3];
+    frame.f6 = (float)-*arg3;
+    frame.f7 = (float)-arg3[1];
+    frame.f8 = (float)-arg3[2];
+    frame.f9 = (float)-arg3[3];
   }
   f1 = (float)(1.0f - arg4);
-  orig::Quat_SetIdentityChained(u2);
+  orig::Quat_SetIdentityChained(frame.u2);
   f2 = *(float *)((int)self_ + 4);
   f3 = *(float *)((int)self_ + 8);
   f4 = *(float *)((int)self_ + 0xc);
-  *arg2 = (float)(f6 * arg4 + f1 * *(float *)self_
+  *arg2 = (float)(frame.f6 * arg4 + f1 * *(float *)self_
                     );
-  arg2[1] = (float)(f7 * arg4 + f1 * f2);
-  arg2[2] = (float)(f8 * arg4 + f1 * f3);
-  arg2[3] = (float)(f9 * arg4 + f1 * f4);
+  arg2[1] = (float)(frame.f7 * arg4 + f1 * f2);
+  arg2[2] = (float)(frame.f8 * arg4 + f1 * f3);
+  arg2[3] = (float)(frame.f9 * arg4 + f1 * f4);
   return arg2;
 }
 
@@ -298,12 +302,14 @@ XI_API uint32_t * __thiscall BoneShadow_Construct(uint32_t *self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 36 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *arg2, int arg3)
 {
-  alignas(16) unsigned char xi_frame[0x528];  // address-taken locals at their original offsets
-  int (&i1)[16] = *reinterpret_cast<int (*)[16]>(xi_frame + 0xA8);
-  uint8_t (&u1)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0xE8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x528];
+    struct __attribute__((packed)) { unsigned char pad_1[0xA8]; int i1[16]; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_2[0xE8]; uint8_t u1[64]; };   // at 0xE8
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::fn_10027990((Iostream_init *)i1);
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::fn_10027990((Iostream_init *)frame.i1);
   if ( g_actorShadowMode == 1 && g_shadowCasterDistance < 4.0 && *(uint32_t *)(self_ + 8) != 0 )
   {
     g_offscreenPrevTex0 = *arg2;
@@ -331,8 +337,8 @@ XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *arg2, int arg3)
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_FLAT);
-    orig::D3DXMatrixPerspectiveFovLH_static((int)i1, 0.19634955, 1.0, 0.1, 65535.0);
-    orig::CDx_SetTransform(g_pCDx, 3, i1);
+    orig::D3DXMatrixPerspectiveFovLH_static((int)frame.i1, 0.19634955, 1.0, 0.1, 65535.0);
+    orig::CDx_SetTransform(g_pCDx, 3, frame.i1);
     orig::CDx_SetTransform(g_pCDx, 2, g_lightViewMatrix);
     orig::CDx_SetTransform(g_pCDx, 256, g_offscreenWorldMatrix);
     orig::MathVector_Nop();
@@ -482,10 +488,12 @@ XI_API void __thiscall Shadow_SmoothLightDirection(void * self_, float * arg2)
   long double f1;
   long double f2;
   long double f3;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f6; };   // at 0x8
+  } frame;
   
   p2 = arg2;
   f1 = arg2[1];
@@ -508,13 +516,13 @@ XI_API void __thiscall Shadow_SmoothLightDirection(void * self_, float * arg2)
   orig::Vec3_SubInPlace(p2,p1);
   orig::Vec3_ScaleInPlace(p2,bit_cast<float>(arg2));
   orig::Vec3_AddInPlace_v1(p1,p2);
-  orig::Vec3_CopyThen100274B0(&f4,p1);
-  f2 = x87_fsqrt(f4 * f4 + f6 * f6);
+  orig::Vec3_CopyThen100274B0(&frame.f4,p1);
+  f2 = x87_fsqrt(frame.f4 * frame.f4 + frame.f6 * frame.f6);
   if ((((f2) != (f2)) || ((xi_k4(0x38D1B717ull)) != (xi_k4(0x38D1B717ull)))) || f2 <= xi_k4(0x38D1B717ull)) {
-    u2 = orig::Vec3_Set(&f4,0.0f,(-1.0f),0.0f);
+    u2 = orig::Vec3_Set(&frame.f4,0.0f,(-1.0f),0.0f);
     goto code_10033FAB;
   }
-  f3 = f5;
+  f3 = frame.f5;
   f1 = 0.0f;
   u5 = ((f3) != (f3)) || ((f1) != (f1));
   u4 = u5 || f3 < f1;
@@ -523,10 +531,10 @@ XI_API void __thiscall Shadow_SmoothLightDirection(void * self_, float * arg2)
   if (u4 == u5) {
 code_10033F74:
     f1 = bit_cast<long double>(x87_fsin(1.0471975803375244140625));
-    f5 = (float)-(f1 * (float)f2);
+    frame.f5 = (float)-(f1 * (float)f2);
   }
   else {
-    f3 = bit_cast<long double>(x87_fpatan(f5,(float)f2));
+    f3 = bit_cast<long double>(x87_fpatan(frame.f5,(float)f2));
     f3 = -f3;
     f1 = 1.0471975803375244140625f;
     u5 = ((f3) != (f3)) || ((f1) != (f1));
@@ -535,7 +543,7 @@ code_10033F74:
                            (uint16_t)(u5 || f3 == f1) << 0xe);
     if (u4 != u5) goto code_10033F74;
   }
-  u2 = orig::game_100274B0(&f4,xi_eax);
+  u2 = orig::game_100274B0(&frame.f4,xi_eax);
 code_10033FAB:
   f2 = orig::Camera_GetFrameScale_v1(u2);
   f2 = f2 * 0.039999999105930328369140625f;
@@ -544,9 +552,9 @@ code_10033FAB:
     arg2 = (float *)&g_3F800000;
   }
   p2 = (float *)((int)self_ + 0x14);
-  orig::Vec3_SubInPlace(&f4,p2);
-  orig::Vec3_ScaleInPlace(&f4,bit_cast<float>(arg2));
-  u2 = orig::Vec3_AddInPlace_v1(p2,&f4);
+  orig::Vec3_SubInPlace(&frame.f4,p2);
+  orig::Vec3_ScaleInPlace(&frame.f4,bit_cast<float>(arg2));
+  u2 = orig::Vec3_AddInPlace_v1(p2,&frame.f4);
   u4 = ((*p2) != (*p2)) || ((0.0f) != (0.0f));
   f2 = *p2;
   u3 = (uint16_t)((uint32_t)u2 >> 0x10);

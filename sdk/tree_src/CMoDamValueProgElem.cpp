@@ -8,44 +8,46 @@
 void CMoDamValueProgElem::Slot18DrawTextAtTarget()
 {
   int ** self = reinterpret_cast<int **>(this);  // byte-exact view for the rest
-  int *p1;
+  int *listAResourceHandle;
   int i1;
   uint32_t *p2;
   int *p3;
   unsigned int u1;
-  alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  uint8_t (&u2)[4] = *reinterpret_cast<uint8_t (*)[4]>(xi_frame + 0x10);
-  int (&i3)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x14);
-  int (&i4)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x20);
-  float (&f2)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x2C);
-  uint8_t (&u3)[16] = *reinterpret_cast<uint8_t (*)[16]>(xi_frame + 0x38);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x448];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; int i2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint8_t u2[4]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; int i3[3]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i4[3]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; float f2[3]; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x38]; uint8_t u3[16]; };   // at 0x38
+  } frame;
 
-  p1 = this->listAResourceHandle;
-  if ( p1 != nullptr )
-    i1 = *p1;
+  listAResourceHandle = this->listAResourceHandle;
+  if ( listAResourceHandle != nullptr )
+    i1 = *listAResourceHandle;
   else
     i1 = 0;
   p2 = (uint32_t *)orig::CMoAttachments_GetTarget((uint32_t *)(i1 + 48));
   if ( p2 != nullptr )
   {
-    f1 = 1.0;
-    p3 = (int *)orig::ElemFog_ComputeWorldPos((int)self, f2);
-    i3[0] = *p3;
-    i3[1] = p3[1];
-    i3[2] = p3[2];
-    if ( orig::CXiActor_NameCalc(p2, i3, (int)u3, &f1, (int)u2) != 0 )
+    frame.f1 = 1.0;
+    p3 = (int *)orig::ElemFog_ComputeWorldPos((int)self, frame.f2);
+    frame.i3[0] = *p3;
+    frame.i3[1] = p3[1];
+    frame.i3[2] = p3[2];
+    if ( orig::CXiActor_NameCalc(p2, frame.i3, (int)frame.u3, &frame.f1, (int)frame.u2) != 0 )
     {
-      i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
-      *(float *)i4 = (double)i2 * f1 * 0x1.3333340000000p-9;
-      i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
+      frame.i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
+      *(float *)frame.i4 = (double)frame.i2 * frame.f1 * 0x1.3333340000000p-9;
+      frame.i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
       u1 = g_scratchValue;
-      *(float *)&i4[1] = (double)i2 * f1 * 0x1.3333340000000p-9;
+      *(float *)&frame.i4[1] = (double)frame.i2 * frame.f1 * 0x1.3333340000000p-9;
       if ( (g_scratchValue & 0xFFFFFF) == 0x808080 )
         u1 = (unsigned int)at<int *>(this, 0x194) | g_scratchValue & 0xFF000000;
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, g_scratchValue);
-      orig::Font_DrawProjectedText3D((int)i3, (int)(self + 102), u1, (int)i4, 1036831949);
+      orig::Font_DrawProjectedText3D((int)frame.i3, (int)(self + 102), u1, (int)frame.i4, 1036831949);
     }
   }
 }

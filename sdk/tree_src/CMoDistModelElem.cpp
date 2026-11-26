@@ -69,11 +69,11 @@ bits32 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * arg2, in
   int i2;
   uint8_t *obj2;
   int i3;
-  int i4;
+  int PrimitiveCount;
   uint8_t u2;
   int xi_s1;
   bits32 u3;
-  bits32 u4;
+  bits32 Handle;
   bits32 u5;
   bits32 xi_s5;
   bits32 *p1;
@@ -114,10 +114,10 @@ bits32 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * arg2, in
       xi_s5 = 0xffffffff;
       u1 = (uint32_t)*(uint16_t *)((int)self + 0x36);
       u5 = 0;
-      u4 = 4;
+      Handle = 4;
       u3 = 0;
       i1 = orig::CMoDistModelElem_GetDataEnd_v1(self);
-      u3 = orig::VertexBatch_BindAndDraw_v2(*(void **)(i1 + 4),u3,u1,u4,u5,xi_s5);
+      u3 = orig::VertexBatch_BindAndDraw_v2(*(void **)(i1 + 4),u3,u1,Handle,u5,xi_s5);
       return u3;
     }
     if ((*(uint32_t *)(arg3 + 0x10c) >> 0x1c & 1) == 0) {
@@ -171,22 +171,22 @@ bits32 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * arg2, in
     }
     u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x34))));
     i3 = 0;
-    i4 = 0;
+    PrimitiveCount = 0;
     if (*(char *)((int)self + 0x34) != '\0') {
       do {
         orig::TexRef_SetTexture_v1(obj1,0);
         u5 = 0xffffffff;
-        u4 = 0;
-        u1 = (uint32_t)*(uint16_t *)(i1 + i4 * 2);
+        Handle = 0;
+        u1 = (uint32_t)*(uint16_t *)(i1 + PrimitiveCount * 2);
         u3 = 4;
         xi_s1 = i3;
         i2 = orig::CMoDistModelElem_GetDataEnd_v1(self);
-        orig::VertexBatch_BindAndDraw_v2(*(void **)(i2 + 4),xi_s1,u1,u3,u4,u5);
+        orig::VertexBatch_BindAndDraw_v2(*(void **)(i2 + 4),xi_s1,u1,u3,Handle,u5);
         obj1 = (void *)((int)obj1 + 0x10);
-        u1 = (uint32_t)*(uint16_t *)(i1 + i4 * 2);
-        i4 = i4 + 1;
+        u1 = (uint32_t)*(uint16_t *)(i1 + PrimitiveCount * 2);
+        PrimitiveCount = PrimitiveCount + 1;
         i3 = u1 * 3 + i3;
-      } while (i4 < (int)(uint32_t)*(uint8_t *)((int)self + 0x34));
+      } while (PrimitiveCount < (int)(uint32_t)*(uint8_t *)((int)self + 0x34));
     }
     i1 = ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x35))));
     if (*(char *)((int)self + 0x35) != '\0') {
@@ -197,11 +197,11 @@ bits32 __thiscall CMoDistModelElem::DrawBatches(void * self, uint32_t * arg2, in
       }
       orig::StateBlock_ApplyTSS_v1(&Fn10040220_stateBlock4,(bits32 *)&Fn10040220_textureStageStates4);
       u5 = 0xffffffff;
-      u4 = 0;
+      Handle = 0;
       u3 = 4;
-      i4 = (uint32_t)*(uint16_t *)((int)self + 0x36) - i3 / 3;
+      PrimitiveCount = (uint32_t)*(uint16_t *)((int)self + 0x36) - i3 / 3;
       i1 = orig::CMoDistModelElem_GetDataEnd_v1(self);
-      i1 = orig::VertexBatch_BindAndDraw_v2(*(void **)(i1 + 4),i3,i4,u3,u4,u5);
+      i1 = orig::VertexBatch_BindAndDraw_v2(*(void **)(i1 + 4),i3,PrimitiveCount,u3,Handle,u5);
     }
     if ((*(uint8_t *)(arg3 + 0x17b) & 3) != 0) {
       orig::CDx_SetTransform_v1(*(void **)(g_pResourceMng + 0xdc8),0x10,(bits32 *)(g_pProcessor_as_s32 + 0x810));
@@ -219,7 +219,7 @@ int CMoDistModelElem::DrawMesh(int arg1, int arg2, int arg3, int arg4)
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int result;
   int i1;
-  int i2;
+  int Value;
   char *p1;
   int ScratchMatrixStackTop;
   float *p2;
@@ -231,7 +231,7 @@ int CMoDistModelElem::DrawMesh(int arg1, int arg2, int arg3, int arg4)
   int *p5;
   unsigned short u1;
   char c1;
-  int i6;
+  int PrimitiveCount;
   unsigned short u2;
   char *p6;
   char *p7;
@@ -258,13 +258,13 @@ int CMoDistModelElem::DrawMesh(int arg1, int arg2, int arg3, int arg4)
     i10 = *(uint32_t *)arg2;
     if ( (*((uint8_t *)&(*(uint32_t *)arg2) + sizeof(*(uint32_t *)arg2) - 1)) >= 0x7Fu )
       i10 = (int)(((uint32_t)(i10) & 0xFFFFFFu) | ((uint32_t)(uint8_t)(-1) << 24));
-    i2 = i10;
+    Value = i10;
   }
   else
   {
-    i2 = *(uint32_t *)arg2;
+    Value = *(uint32_t *)arg2;
   }
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, i2);
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, Value);
   if ( this->batchCount == 0 && (uint8_t)arg4 != 0 )
   {
     if ( (CMoDistModelElem_DrawMesh_staticGuards & 1) == 0 )
@@ -365,9 +365,9 @@ int CMoDistModelElem::DrawMesh(int arg1, int arg2, int arg3, int arg4)
       }
       else
       {
-        i6 = this->triangleCount - i4 / 3 - 1;
-        if ( i6 > 0 )
-          orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, i4 + 3, i6, 4, 0, -1);
+        PrimitiveCount = this->triangleCount - i4 / 3 - 1;
+        if ( PrimitiveCount > 0 )
+          orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, i4 + 3, PrimitiveCount, 4, 0, -1);
       }
     }
     else

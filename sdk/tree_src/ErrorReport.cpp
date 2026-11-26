@@ -23,35 +23,37 @@ XI_API int __thiscall ErrorReport_Begin(int *self_, int arg2, int arg3, int arg4
   unsigned short ViewportHeight;
   int i1;
   int result;
-  alignas(16) unsigned char xi_frame[0x434];  // address-taken locals at their original offsets
-  uint32_t * &p1 = *reinterpret_cast<uint32_t * *>(xi_frame + 0x10);
-  uint32_t (&u1)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0x14);
-  int (&i2)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x434];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t * p1; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint32_t u1[4]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x24]; int i2[4]; };   // at 0x24
+  } frame;
 
-  p1 = nullptr;
+  frame.p1 = nullptr;
   *(self_ + 3) = arg2;
   *(self_ + 4) = arg3;
   *(self_ + 5) = arg4;
   *(self_ + 1) = 1;
-  i2[0] = 0;
-  i2[1] = 0;
-  i2[2] = (unsigned short)orig::Camera_GetViewportWidth();
+  frame.i2[0] = 0;
+  frame.i2[1] = 0;
+  frame.i2[2] = (unsigned short)orig::Camera_GetViewportWidth();
   ViewportHeight = orig::Camera_GetViewportHeight();
   i1 = *(self_ + 5);
-  u1[0] = 0;
-  i2[3] = ViewportHeight;
-  u1[2] = *(self_ + 4);
-  u1[1] = 0;
-  u1[3] = i1;
+  frame.u1[0] = 0;
+  frame.i2[3] = ViewportHeight;
+  frame.u1[2] = *(self_ + 4);
+  frame.u1[1] = 0;
+  frame.u1[3] = i1;
   if ( (*(int (__stdcall **)(uint32_t, uint32_t, uint32_t **))(**(uint32_t **)&(*(unsigned char *)((char *)g_pCDx + 0x194)) + 60))(
          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
          0,
-         &p1) >= 0 )
-    orig::ErrorReport_Step((int)self_, p1, i2, (int)u1);
-  if ( p1 != nullptr )
+         &frame.p1) >= 0 )
+    orig::ErrorReport_Step((int)self_, frame.p1, frame.i2, (int)frame.u1);
+  if ( frame.p1 != nullptr )
   {
-    (*(void (__stdcall **)(uint32_t *))(*p1 + 8))(p1);
-    p1 = nullptr;
+    (*(void (__stdcall **)(uint32_t *))(*frame.p1 + 8))(frame.p1);
+    frame.p1 = nullptr;
   }
   result = *(self_ + 2);
   if ( result != 0 )
@@ -123,7 +125,7 @@ XI_API uint8_t * __cdecl XiErrMsgGetErrCode(int ErrCode)
 
 // FUNCTION: FFXIMAIN 0x100180D0
 // NOT VERIFIED -- FAIL
-XI_API void __cdecl ErrorReport_DispatchErrorCode(int arg1)
+XI_API void __cdecl ErrorReport_DispatchErrorCode(int ErrCode)
 {
   int i1;
   uint8_t *p1;
@@ -135,12 +137,12 @@ XI_API void __cdecl ErrorReport_DispatchErrorCode(int arg1)
     p2 =(uint32_t*)(&g_10350988);
     i1 = g_10350988;
     do {
-      if (i1 == arg1) {
-        p1 = orig::XiErrMsgGetErrCode(arg1);
+      if (i1 == ErrCode) {
+        p1 = orig::XiErrMsgGetErrCode(ErrCode);
         if (p1 == (uint8_t *)0x0) {
           p1 = &Read_as_v0;
         }
-        (**(untyped_fn **)(((char *)&g_1035097C) + *(int *)(i2 * 0x10 + (int)XI_GAME(0x1035098Cu)) * 4))(arg1,p1);
+        (**(untyped_fn **)(((char *)&g_1035097C) + *(int *)(i2 * 0x10 + (int)XI_GAME(0x1035098Cu)) * 4))(ErrCode,p1);
         return;
       }
       i1 = p2[4];
@@ -148,7 +150,7 @@ XI_API void __cdecl ErrorReport_DispatchErrorCode(int arg1)
       i2 = i2 + 1;
     } while (i1 != 9999);
   }
-  orig::ErrorReport_SendMessage7_1To10668FF8(arg1);
+  orig::ErrorReport_SendMessage7_1To10668FF8(ErrCode);
   return;
 }
 
@@ -157,13 +159,15 @@ XI_API void __cdecl ErrorReport_DispatchErrorCode(int arg1)
 XI_API void __cdecl ErrorReport_SendMessage7_1To10668FF8(bits32 arg1)
 {
   uint32_t u1;
-  char xi_frame[1024] __attribute__((aligned(4)));
-  char  (&val1)[1024] = *reinterpret_cast<char  (*)[1024]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1024];
+    struct __attribute__((packed)) { char val1[1024]; };   // at 0x0
+  } frame;
   
   u1 = orig::TargetMenu_GetMessageFwd_v1(7,1,arg1);
-  orig::_sprintf_v1(val1,u1);
+  orig::_sprintf_v1(frame.val1,u1);
   if (g_10668FF8_as_v1 != (void *)0x0) {
-    orig::LobbyUi_StoreTextIfIdle(g_10668FF8_as_v1,val1);
+    orig::LobbyUi_StoreTextIfIdle(g_10668FF8_as_v1,frame.val1);
   }
   return;
 }
@@ -199,14 +203,16 @@ XI_API void __cdecl ErrorReport_SendMessage7_0To10668FF8(uint32_t arg1, char * a
   char *p1;
   char *p2;
   char *p3;
-  char xi_frame[512] __attribute__((aligned(4)));
-  char  (&val1)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[512];
+    struct __attribute__((packed)) { char val1[512]; };   // at 0x0
+  } frame;
   
   u1 = orig::TargetMenu_GetMessageFwd_v1(7,0,(arg1 ^ (int)arg1 >> 0x1f) - ((int)arg1 >> 0x1f));
-  orig::_sprintf_v1(val1,u1);
+  orig::_sprintf_v1(frame.val1,u1);
   if (arg2 != (char *)0x0) {
     i1 = -1;
-    p1 = val1;
+    p1 = frame.val1;
     do {
       p3 = p1;
       if (i1 == 0) break;
@@ -227,7 +233,7 @@ XI_API void __cdecl ErrorReport_SendMessage7_0To10668FF8(uint32_t arg1, char * a
     } while (c1 != '\0');
     u2 = ~u2;
     i1 = -1;
-    p3 = val1;
+    p3 = frame.val1;
     do {
       p2 = p3;
       if (i1 == 0) break;
@@ -250,7 +256,7 @@ XI_API void __cdecl ErrorReport_SendMessage7_0To10668FF8(uint32_t arg1, char * a
     }
   }
   if (g_10668FF8_as_v1 != (void *)0x0) {
-    orig::LobbyUi_StoreTextIfIdle(g_10668FF8_as_v1,val1);
+    orig::LobbyUi_StoreTextIfIdle(g_10668FF8_as_v1,frame.val1);
   }
   return;
 }
@@ -292,18 +298,18 @@ XI_API void __cdecl ErrorReport_Thunk10114F10(uint32_t arg1, bits32 * arg2, uint
 
 // FUNCTION: FFXIMAIN 0x10018310
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API bits32 __attribute__((cdecl, regparm(1))) ErrorReport_ReportAndHandleError(bits32 xi_eax, int arg2, bits32 * arg3, bits32 arg4)
+XI_API bits32 __attribute__((cdecl, regparm(1))) ErrorReport_ReportAndHandleError(bits32 xi_eax, int ErrCode, bits32 * arg3, bits32 arg4)
 {
   uint32_t u1;
   
   u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_10350E38)));
   if (g_10350E38 != '\0') {
-    orig::NetCellFont_ReportError(arg2,arg3,arg4);
-    if (arg2 < 0) {
-      u1 = orig::ErrorReport_RegisterCallback(arg2);
+    orig::NetCellFont_ReportError(ErrCode,arg3,arg4);
+    if (ErrCode < 0) {
+      u1 = orig::ErrorReport_RegisterCallback(ErrCode);
       return u1;
     }
-    u1 = orig::ErrorReport_DispatchErrorCode(arg2);
+    u1 = orig::ErrorReport_DispatchErrorCode(ErrCode);
   }
   return u1;
 }

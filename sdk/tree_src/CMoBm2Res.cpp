@@ -8,11 +8,13 @@
 bits32 __thiscall CMoBm2Res::ReleaseTexture(void * self)
 {
   void *obj1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&u1)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u1[16]; };   // at 0x0
+  } frame;
   
-  orig::Util_Copy16Bytes_v1(u1,(int)self + 0x31);
-  obj1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)u1,(int)self,0);
+  orig::Util_Copy16Bytes_v1(frame.u1,(int)self + 0x31);
+  obj1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)frame.u1,(int)self,0);
   if (obj1 != (void *)0x0) {
     if (*(int *)((int)obj1 + 4) != 0) {
       *(int *)((int)obj1 + 4) = *(int *)((int)obj1 + 4) + -1;

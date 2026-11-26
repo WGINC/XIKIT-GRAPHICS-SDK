@@ -35,11 +35,13 @@ XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, ui
   long double f2;
   long double f3;
   int64_t i2;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float * &p1 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f6; };   // at 0x1C
+  } frame;
   
   i1 = orig::Camera_GetField50_v1();
   if (i1 == 0) {
@@ -63,20 +65,20 @@ XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, ui
     arg6 = g_103516F0;
   }
   i1 = orig::Camera_GetField50_v1();
-  f4 = (float)(*(float *)(i1 + 0x60) - *arg3);
+  frame.f4 = (float)(*(float *)(i1 + 0x60) - *arg3);
   i1 = orig::Camera_GetField50_v1();
-  f5 = (float)(*(float *)(i1 + 100) - arg3[1]);
+  frame.f5 = (float)(*(float *)(i1 + 100) - arg3[1]);
   i1 = orig::Camera_GetField50_v1();
-  f6 = (float)(*(float *)(i1 + 0x68) - arg3[2]);
+  frame.f6 = (float)(*(float *)(i1 + 0x68) - arg3[2]);
   if (arg8 != 1) {
     if (arg8 == 2) {
-      f5 = 0.0f;
+      frame.f5 = 0.0f;
     }
     else {
-      f5 = (float)(f5 * 3.0f);
+      frame.f5 = (float)(frame.f5 * 3.0f);
     }
   }
-  f2 = orig::game_10027530(&f4,&f4);
+  f2 = orig::game_10027530(&frame.f4,&frame.f4);
   f2 = x87_fsqrt(f2);
   f1 = (float)f2;
   u2 = ((f2) != (f2)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
@@ -96,10 +98,10 @@ XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, ui
       }
       *arg2 = 1;
     }
-    p1 = &f4;
+    frame.p1 = &frame.f4;
     self_ = (void *)orig::Camera_GetViewMatrixPtr_v1();
-    orig::Mat4_TransformPoint_v1(self_,p1,arg3);
-    f3 = f6;
+    orig::Mat4_TransformPoint_v1(self_,frame.p1,arg3);
+    f3 = frame.f6;
     f2 = 0.100000001490116119384765625f;
     if (!(f3 <= f2)) {
       i2 = XI_CALL_ST0(0x10311C2Cu)((int)*arg2 * g_103516E4);
@@ -123,7 +125,7 @@ XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, ui
       arg4 = 1.0f;
     }
     f2 = orig::Camera_GetField2F4();
-    f2 = ((f2 / arg4) * f4) / arg6;
+    f2 = ((f2 / arg4) * frame.f4) / arg6;
     if (!(f2 > 1.0f)) {
       u2 = ((f2) != (f2)) || (((-1.0f)) != ((-1.0f)));
       if ((u2 || f2 < (-1.0f)) != u2) {
@@ -158,14 +160,16 @@ XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, ui
 XI_API uint64_t __thiscall SoundVolume_SetVolumeScalar(void * self_, bits32 arg2, bits32 arg3)
 {
   uint64_t u1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
-  f1[2] = 0.0f;
-  f1[0] = (float)(int)(short)arg2;
-  f1[1] = 0.0f;
-  f1[3] = 0.0f;
-  u1 = orig::SoundVolume_SetVolumeVector(self_,f1,arg3);
+  frame.f1[2] = 0.0f;
+  frame.f1[0] = (float)(int)(short)arg2;
+  frame.f1[1] = 0.0f;
+  frame.f1[3] = 0.0f;
+  u1 = orig::SoundVolume_SetVolumeVector(self_,frame.f1,arg3);
   return u1;
 }
 

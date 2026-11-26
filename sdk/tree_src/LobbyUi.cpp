@@ -113,18 +113,20 @@ XI_API void * __thiscall KeyPrompt_Construct(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall LobbyUi_ResetAndPlaceWindow(void * self_)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
   *(uint8_t *)(*(int *)((int)self_ + 8) + 0x85) = 0;
   *(uint8_t *)(*(int *)((int)self_ + 8) + 0x86) = 0;
   *(uint8_t *)(*(int *)((int)self_ + 8) + 0x84) = 0;
   *(uint32_t *)((int)self_ + 0x28) = 0;
-  u1 = g_103879D8;
-  u2 = g_103879DC;
-  orig::CTkMenuMng_IsDrawWindow(&g_menuMng_as_v0,&u1,0,1);
-  orig::game_10119110(*(void **)((int)self_ + 8),u1,u2);
+  frame.u1 = g_103879D8;
+  frame.u2 = g_103879DC;
+  orig::CTkMenuMng_IsDrawWindow(&g_menuMng_as_v0,&frame.u1,0,1);
+  orig::game_10119110(*(void **)((int)self_ + 8),frame.u1,frame.u2);
   return;
 }
 
@@ -135,8 +137,10 @@ XI_API bits32 __thiscall LobbyUi_StepScreenSwitch(void * self_, bits32 xi_s1)
   int i1;
   uint32_t *p1;
   uint32_t xi_eax;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
   i1 = *(int *)((int)self_ + 0x18);
   if (i1 == 0) {
@@ -158,7 +162,7 @@ XI_API bits32 __thiscall LobbyUi_StepScreenSwitch(void * self_, bits32 xi_s1)
   }
 code_10239280:
   i1 = *(int *)((int)self_ + 0x2c);
-  p2 = self_;
+  frame.p2 = self_;
   if (i1 != 0) {
     if (i1 != 1) {
       return i1;
@@ -225,7 +229,7 @@ L3:
       *(uint32_t *)((int)self_ + 0x34) = 0;
     }
     p1 = (uint32_t *)
-             orig::game_100731B0(g_pMeshResourceMng_as_v1,(int *)&p2,*(int *)((int)self_ + 0x20) + 0x9acf);
+             orig::game_100731B0(g_pMeshResourceMng_as_v1,(int *)&frame.p2,*(int *)((int)self_ + 0x20) + 0x9acf);
     p1 = (uint32_t *)*p1;
     *(uint32_t **)((int)self_ + 0x30) = p1;
     orig::CMoResource_AddRefChain_v3((void *)*p1);
@@ -288,10 +292,12 @@ XI_API char * __thiscall Ui_DrawKeyPrompt(Vt_1033C8F0 *self_)
   int i2;
   int i3;
   double f1;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  long long &i5 = *reinterpret_cast<long long *>(xi_frame + 0x28);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x20]; float f2; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_2[0x24]; int i4; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_3[0x28]; long long i5; };   // at 0x28
+  } frame;
 
   result = (char *)self_->field_2C;
   if ( result != nullptr )
@@ -302,23 +308,23 @@ XI_API char * __thiscall Ui_DrawKeyPrompt(Vt_1033C8F0 *self_)
       self_->field_28 = u1;
       if ( u1 >= 4 )
       {
-        f2 = 1.0;
+        frame.f2 = 1.0;
       }
       else
       {
-        i5 = u1;
-        f2 = (double)u1 * 0.25;
+        frame.i5 = u1;
+        frame.f2 = (double)u1 * 0.25;
       }
       i2 = 2 * u1;
       if ( (int)(2 * u1) > 8 )
         i2 = 8;
       i3 = *(uint32_t *)(*(uint32_t *)orig::ShapeMng_FindShape(g_shapeMng, aMenuKeytops3) + 4 * ((self_->field_28 >> 2) % 5) + 660);
-      *(float *)&i5 = orig::MenuMng_GetOffsetX((float *)g_menuMng, 1) * 0.5;
+      *(float *)&frame.i5 = orig::MenuMng_GetOffsetX((float *)g_menuMng, 1) * 0.5;
       f1 = orig::MenuMng_GetOffsetY((float *)g_menuMng, 1) * 0.5;
       return (char *)orig::Shape_DrawScaled(
                        i3,
                        (long long)((double)(short)(g_screenRectBottomRight - g_screenRectTopLeft)
-                               * (1.0 - *(float *)&i5)
+                               * (1.0 - *(float *)&frame.i5)
                                - 234.0),
                        (long long)((double)(short)((*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) - (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1)))
                                * (1.0 - f1)
@@ -326,7 +332,7 @@ XI_API char * __thiscall Ui_DrawKeyPrompt(Vt_1033C8F0 *self_)
                      - i2
                      + 8,
                        1065353216,
-                       (*(int32_t *)&(f2)),
+                       (*(int32_t *)&(frame.f2)),
                        -2139062144,
                        0,
                        0,
@@ -338,22 +344,22 @@ XI_API char * __thiscall Ui_DrawKeyPrompt(Vt_1033C8F0 *self_)
     result = (char *)self_->field_34;
     if ( result != nullptr )
     {
-      result = (char *)*orig::CMoResource_FindByTypeAndId(*(uint32_t **)result, &i5, 49, 0);
+      result = (char *)*orig::CMoResource_FindByTypeAndId(*(uint32_t **)result, &frame.i5, 49, 0);
       if ( result != nullptr )
       {
         result = orig::ShapeMng_FindShape(g_shapeMng, (char *)(*(uint32_t *)result + 48));
         i1 = **(uint32_t **)result;
         if ( i1 != 0 )
         {
-          orig::MenuMng_GetUiScale(g_menuMng, (float *)&i4, &f2);
+          orig::MenuMng_GetUiScale(g_menuMng, (float *)&frame.i4, &frame.f2);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
           orig::Shape_DrawScaled(
             i1,
             0,
             0,
-            i4,
-            (*(int32_t *)&(f2)),
+            frame.i4,
+            (*(int32_t *)&(frame.f2)),
             self_->field_24 | ((self_->field_24 | ((self_->field_24 | (self_->field_24 << 8)) << 8)) << 8),
             0,
             0,
@@ -401,11 +407,13 @@ XI_API void __attribute__((stdcall, regparm(3))) LobbyUi_UpdateSlotNameAndDate(b
   int i2;
   char *p2;
   uint8_t u2;
-  char xi_frame[532] __attribute__((aligned(4)));
-  size_t  &_Count = *reinterpret_cast<size_t  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 16);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 20);
-  uint8_t  (&u3)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 276);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[532];
+    struct __attribute__((packed)) { size_t _Count; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; char val1[256]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x114]; uint8_t u3[256]; };   // at 0x114
+  } frame;
   
   if (*(char *)((int)self_ + 0xa5e0) != '\x01') {
     return;
@@ -457,26 +465,26 @@ XI_API void __attribute__((stdcall, regparm(3))) LobbyUi_UpdateSlotNameAndDate(b
       return;
     }
   }
-  i3 = 0;
+  frame.i3 = 0;
   if (i2 == 0) {
     p1 = (char *)((int)self_ + 0xa754);
     i2 = -(int)p1;
     do {
       c1 = *p1;
-      p1[(int)(val1 + i2)] = c1;
+      p1[(int)(frame.val1 + i2)] = c1;
       p1 = p1 + 1;
     } while (c1 != '\0');
   }
   else {
-    orig::_sprintf(u3,str_FFXI_d_DAT_10388378,i2 + -1);
-    orig::TextInputFiles_FileMngReadText(g_pFileMng_as_v0,u3,(int)val1,0,0);
+    orig::_sprintf(frame.u3,str_FFXI_d_DAT_10388378,i2 + -1);
+    orig::TextInputFiles_FileMngReadText(g_pFileMng_as_v0,frame.u3,(int)frame.val1,0,0);
   }
   i2 = 0;
-  while ((val1[0] != '-' && (val1[0] != '\0'))) {
-    *(char *)(i2 + 0xa5e8 + (int)self_) = val1[0];
+  while ((frame.val1[0] != '-' && (frame.val1[0] != '\0'))) {
+    *(char *)(i2 + 0xa5e8 + (int)self_) = frame.val1[0];
     i1 = i2 + 1;
     i2 = i2 + 1;
-    val1[0] = val1[i1];
+    frame.val1[0] = frame.val1[i1];
   }
   *(uint8_t *)(i2 + 0xa5e8 + (int)self_) = 0;
   if (*(char *)((int)self_ + 0xa5e8) != '*') {
@@ -500,12 +508,12 @@ XI_API void __attribute__((stdcall, regparm(3))) LobbyUi_UpdateSlotNameAndDate(b
     p1 = p1 + 1;
   } while (c1 != '\0');
 code_1023C6CB:
-  if (val1[i2] == '-') {
-    i3 = orig::game_10312872(val1 + i2 + 1);
+  if (frame.val1[i2] == '-') {
+    frame.i3 = orig::game_10312872(frame.val1 + i2 + 1);
   }
-  _Count = 0x40;
-  p1 = orig::YkCommon_FormatDateTime(i3,1);
-  orig::_strncpy_v1((char *)((int)self_ + 0xa600),p1,_Count);
+  frame._Count = 0x40;
+  p1 = orig::YkCommon_FormatDateTime(frame.i3,1);
+  orig::_strncpy_v1((char *)((int)self_ + 0xa600),p1,frame._Count);
   *(uint8_t *)((int)self_ + 0xa63f) = 0;
   *(uint32_t *)((int)self_ + 0xa5e4) = *(uint32_t *)((int)self_ + 0xa5d8);
   return;
@@ -631,9 +639,11 @@ XI_API void * __thiscall LobbyUi_ConstructTable3(void * self_)
 XI_API bits32 __attribute__((stdcall, regparm(3))) LobbyUi_HandleSelectInput(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
   uint32_t xi_eax_00;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
   xi_eax_00 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_10669090)));
   if (g_10669090 != '\0') {
@@ -656,15 +666,15 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) LobbyUi_HandleSelectInput(bit
     }
     if (((char)arg4 != '\0') &&
        (xi_eax_00 = orig::NetCellFont_IsCursorMode2NoEvent(g_pCursor_as_v2,xi_eax_00), (char)xi_eax_00 != '\0')) {
-      u1 = 0;
-      u2 = 0;
+      frame.u1 = 0;
+      frame.u2 = 0;
       if (g_pCursor_as_v2 != (void *)0x0) {
-        u1 = *(uint32_t *)((int)g_pCursor_as_v2 + 4);
-        u2 = *(uint32_t *)((int)g_pCursor_as_v2 + 8);
+        frame.u1 = *(uint32_t *)((int)g_pCursor_as_v2 + 4);
+        frame.u2 = *(uint32_t *)((int)g_pCursor_as_v2 + 8);
       }
       xi_eax_00 = g_10669084;
       if ((*(void **)(g_10669084 + 8) != (void *)0x0) &&
-         (xi_eax_00 = orig::NetCellFont_HitTest(*(void **)(g_10669084 + 8),&u1),
+         (xi_eax_00 = orig::NetCellFont_HitTest(*(void **)(g_10669084 + 8),&frame.u1),
          (char)xi_eax_00 != '\0')) {
         g_1066908C = *(short *)(*(int *)((int)self_ + 8) + 0x4c) + -1;
         xi_eax_00 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),8,0);

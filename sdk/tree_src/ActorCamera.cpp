@@ -21,11 +21,13 @@ XI_API bits32 __thiscall Camera_SetTargetIfMoved(void * self_, float * arg2)
   uint32_t u2;
   uint8_t u3;
   long double f2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f3)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f3[4]; };   // at 0x0
+  } frame;
   
-  orig::Vec3_Sub_v1(f3,arg2,(float *)((int)self_ + 0x44));
-  f2 = orig::MathVector_Length3(f3);
+  orig::Vec3_Sub_v1(frame.f3,arg2,(float *)((int)self_ + 0x44));
+  f2 = orig::MathVector_Length3(frame.f3);
   f1 = 0.0f;
   u3 = ((f2) != (f2)) || ((f1) != (f1));
   u1 = (uint16_t)(u3 || f2 == f1);
@@ -45,14 +47,16 @@ XI_API bits32 __thiscall Camera_PlaceRelativeToActor(void * self_, float * arg2,
   uint32_t *p2;
   uint8_t u1;
   long double f1;
-  char xi_frame[88] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint8_t  (&u2)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[88];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; uint8_t u2[64]; };   // at 0x18
+  } frame;
   
-  orig::MathVector_ReturnThis(u2);
+  orig::MathVector_ReturnThis(frame.u2);
   if (XiControlActor_isFirstPersonView == '\0') {
     u1 = ((*arg2) != (*arg2)) || ((0.0f) != (0.0f));
     if (((u1 != (u1 || *arg2 == 0.0f)) &&
@@ -63,47 +67,47 @@ XI_API bits32 __thiscall Camera_PlaceRelativeToActor(void * self_, float * arg2,
       arg2[1] = (-2.0f);
       *arg2 = (-4.0f);
     }
-    orig::Mat4_SetIdentity_v2(u2);
+    orig::Mat4_SetIdentity_v2(frame.u2);
     p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateX_v1(u2,*p1);
+    orig::Mat4_PostRotateX_v1(frame.u2,*p1);
     i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateY_v1(u2,*(float *)(i1 + 4));
+    orig::Mat4_PostRotateY_v1(frame.u2,*(float *)(i1 + 4));
     i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateZ_v1(u2,*(float *)(i1 + 8));
+    orig::Mat4_PostRotateZ_v1(frame.u2,*(float *)(i1 + 8));
     p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
-    orig::Mat4_SetTranslation_v2(u2,p2);
-    orig::Mat4_TransformPoint_v1(u2,&f4,arg2);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&f4);
+    orig::Mat4_SetTranslation_v2(frame.u2,p2);
+    orig::Mat4_TransformPoint_v1(frame.u2,&frame.f4,arg2);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&frame.f4);
     *(uint8_t *)((int)self_ + 0x88) = 1;
-    orig::Camera_SetPosition_v1(self_,&f4);
+    orig::Camera_SetPosition_v1(self_,&frame.f4);
     p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
-    orig::Vec3_Copy_v2(&f2,p2);
-    f3 = (float)(f3 - 0.5f);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&f2);
+    orig::Vec3_Copy_v2(&frame.f2,p2);
+    frame.f3 = (float)(frame.f3 - 0.5f);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&frame.f2);
     *(uint8_t *)((int)self_ + 0x89) = 1;
-    orig::Camera_SetTargetIfMoved_v1(self_,&f2);
+    orig::Camera_SetTargetIfMoved_v1(self_,&frame.f2);
     *(uint8_t *)((int)self_ + 0xf0) = 0;
   }
   else {
-    orig::Mat4_SetIdentity_v2(u2);
+    orig::Mat4_SetIdentity_v2(frame.u2);
     p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateX_v1(u2,*p1);
+    orig::Mat4_PostRotateX_v1(frame.u2,*p1);
     i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateY_v1(u2,*(float *)(i1 + 4));
+    orig::Mat4_PostRotateY_v1(frame.u2,*(float *)(i1 + 4));
     i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
-    orig::Mat4_PostRotateZ_v1(u2,*(float *)(i1 + 8));
+    orig::Mat4_PostRotateZ_v1(frame.u2,*(float *)(i1 + 8));
     p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
-    orig::Mat4_SetRow3_v1(u2,p2);
-    orig::Vec3_Copy_v2(&f2,(uint32_t *)&g_1035126C);
-    orig::Mat4_TransformPointInPlace_v1(u2,&f2);
-    orig::Camera_SetTargetIfMoved_v1(self_,&f2);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&f2);
+    orig::Mat4_SetRow3_v1(frame.u2,p2);
+    orig::Vec3_Copy_v2(&frame.f2,(uint32_t *)&g_1035126C);
+    orig::Mat4_TransformPointInPlace_v1(frame.u2,&frame.f2);
+    orig::Camera_SetTargetIfMoved_v1(self_,&frame.f2);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&frame.f2);
     *(uint8_t *)((int)self_ + 0x89) = 1;
     p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
-    orig::Vec3_Copy_v2(&f4,p2);
-    f5 = f3;
-    orig::Camera_SetPosition_v1(self_,&f4);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&f4);
+    orig::Vec3_Copy_v2(&frame.f4,p2);
+    frame.f5 = frame.f3;
+    orig::Camera_SetPosition_v1(self_,&frame.f4);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&frame.f4);
     *(uint8_t *)((int)self_ + 0x88) = 1;
   }
   f1 = *(float *)((int)self_ + 0x48) - *(float *)((int)self_ + 0x54);
@@ -218,42 +222,44 @@ XI_API int __thiscall Camera_BuildLookAtView(void * self_)
   uint32_t u1;
   uint8_t u2;
   long double f1;
-  char xi_frame[192] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  (&f7)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 32);
-  float  (&f8)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 48);
-  uint8_t  (&u3)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 64);
-  float  (&f9)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 128);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[192];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f7[4]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x30]; float f8[4]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_8[0x40]; uint8_t u3[64]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_9[0x80]; float f9[16]; };   // at 0x80
+  } frame;
   
-  orig::Vec3_Copy_v1(f8,(float *)((int)self_ + 0x50));
+  orig::Vec3_Copy_v1(frame.f8,(float *)((int)self_ + 0x50));
   p1 = (float *)((int)self_ + 0x44);
-  orig::Vec3_Sub_v1(&f2,(float *)((int)self_ + 0x50),p1);
-  orig::MathVector_ReturnThis_v1(u3);
-  orig::Mat4_SetIdentity_v1(u3);
-  f1 = bit_cast<long double>(x87_fpatan(-f2,-f4));
-  f6 = *(float *)((int)self_ + 0x5c);
-  f5 = (float)f1;
-  orig::Mat4_PostRotateZ_v1(u3,f6);
-  orig::Mat4_PostRotateY_v1(u3,f5);
-  orig::Mat4_PostRotateX_v1(u3,0.0f);
-  orig::Vec3_Copy_v1(f7,(uint32_t *)((int)self_ + 0xa8));
-  u1 = orig::Mat4_TransformNormalInPlace_v1(u3,f7);
-  orig::game_100274B0(&f2,u1);
+  orig::Vec3_Sub_v1(&frame.f2,(float *)((int)self_ + 0x50),p1);
+  orig::MathVector_ReturnThis_v1(frame.u3);
+  orig::Mat4_SetIdentity_v1(frame.u3);
+  f1 = bit_cast<long double>(x87_fpatan(-frame.f2,-frame.f4));
+  frame.f6 = *(float *)((int)self_ + 0x5c);
+  frame.f5 = (float)f1;
+  orig::Mat4_PostRotateZ_v1(frame.u3,frame.f6);
+  orig::Mat4_PostRotateY_v1(frame.u3,frame.f5);
+  orig::Mat4_PostRotateX_v1(frame.u3,0.0f);
+  orig::Vec3_Copy_v1(frame.f7,(uint32_t *)((int)self_ + 0xa8));
+  u1 = orig::Mat4_TransformNormalInPlace_v1(frame.u3,frame.f7);
+  orig::game_100274B0(&frame.f2,u1);
   u2 = ((*(float *)((int)self_ + 0x7c)) != (*(float *)((int)self_ + 0x7c))) || ((0.0f) != (0.0f));
   if (u2 == (u2 || *(float *)((int)self_ + 0x7c) == 0.0f)) {
-    f3 = (float)(*(float *)((int)self_ + 0x84) * *(float *)((int)self_ + 0x7c)
-                      + f3);
-    orig::game_100274B0(&f2,&f2);
+    frame.f3 = (float)(*(float *)((int)self_ + 0x84) * *(float *)((int)self_ + 0x7c)
+                      + frame.f3);
+    orig::game_100274B0(&frame.f2,&frame.f2);
   }
-  orig::Vec3_Add_10026FA0_v1(f8,p1,&f2);
-  orig::game_102D7FF9(f9,p1,f8,f7);
-  u1 = orig::Occlusion_AreAll16FloatsAccepted(f9);
+  orig::Vec3_Add_10026FA0_v1(frame.f8,p1,&frame.f2);
+  orig::game_102D7FF9(frame.f9,p1,frame.f8,frame.f7);
+  u1 = orig::Occlusion_AreAll16FloatsAccepted(frame.f9);
   if ((char)u1 != '\0') {
-    orig::Mat4_Copy_v1((void *)((int)self_ + 4),f9);
+    orig::Mat4_Copy_v1((void *)((int)self_ + 4),frame.f9);
   }
   orig::MathVector_Nop();
   return (int)self_ + 4;

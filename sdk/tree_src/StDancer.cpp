@@ -64,25 +64,27 @@ XI_API bits32 __cdecl StAvatar_ComputeRatioValue(uint8_t * arg1, bits32 * arg2)
   bits32 *p1;
   uint8_t *p2;
   int i1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  bits32 ** &p3 = *reinterpret_cast<bits32 ** *>(xi_frame + 0);
-  float * &p4 = *reinterpret_cast<float * *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { bits32 ** p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f4; };   // at 0x14
+  } frame;
   
   p1 = arg2;
   p2 = arg1;
   *arg2 = 0;
   if ((arg1 != (uint8_t *)0x0) && ((*arg1 & 0x10) != 0)) {
     orig::Mdl_GetEntryTable((int *)&arg1,(int *)0x0);
-    p3 = &arg2;
+    frame.p3 = &arg2;
     p2 = arg1 + *(int *)(p2 + 0xc) * 0xc0;
     f1 = *(float *)(p2 + 0xac);
     f2 = *(float *)(*(int *)(p2 + 0xb8) + 0x20);
     f3 = *(float *)(*(int *)(p2 + 0xb8) + 0x24);
-    p4 = &f4;
+    frame.p4 = &frame.f4;
     i1 = orig::Chn_GetSubIndex((int)p2);
     i1 = orig::game_1027D110((float)((f1 - f2) / f3),i1,
-                         (uint8_t *)p3,p4);
+                         (uint8_t *)frame.p3,frame.p4);
     *p1 = i1;
     return 0;
   }
@@ -285,10 +287,12 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
   unsigned int u1;
   int i1;
   IDirect3DDevice8 *pDevice;
-  alignas(16) unsigned char xi_frame[0x85C];  // address-taken locals at their original offsets
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int (&i4)[272] = *reinterpret_cast<int (*)[272]>(xi_frame + 0x1C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x85C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; int i4[272]; };   // at 0x1C
+  } frame;
 
   *self_ = 11534336;
   p1 = orig::Mem_AllocObject(11534352, 0);
@@ -296,9 +300,9 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
   g_dancerMemBlock = (int)p1;
   if ( u1 != 0 )
   {
-    i2 = *self_;
+    frame.i2 = *self_;
     i1 = *self_ - 0x200000;
-    orig::ErrorReport_NoOpVarargsB(aMemtotal0x08xB, i2);
+    orig::ErrorReport_NoOpVarargsB(aMemtotal0x08xB, frame.i2);
     orig::ErrorReport_NoOpVarargsB(aWorkpool0x08xB, 0x200000, u1);
     orig::ErrorReport_NoOpVarargsB(aMainpool0x08xB, i1);
     g_This_10669418 = g_pD3DHolder->pD3D;
@@ -314,8 +318,8 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
     g_pSqgxContext = orig::sqgxContext_Create();
     g_pDancerDevice->GetRenderTarget((IDirect3DSurface8 **)g_pSqgxContext + 575);
     g_pDancerDevice->GetDepthStencilSurface((IDirect3DSurface8 **)(g_pSqgxContext + 576));
-    (*(void (__stdcall **)(int, int *))(*(uint32_t *)g_pSqgxContext[575] + 32))(g_pSqgxContext[575], &i3);
-    if ( i4[3] > 0x200u )
+    (*(void (__stdcall **)(int, int *))(*(uint32_t *)g_pSqgxContext[575] + 32))(g_pSqgxContext[575], &frame.i3);
+    if ( frame.i4[3] > 0x200u )
     {
       orig::sqgxTextureAdd(2, 2, (IDirect3DTexture8 *)4, nullptr);
       orig::sqgxTextureAdd(2, 2, (IDirect3DTexture8 *)4, nullptr);
@@ -323,12 +327,12 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
     }
     else
     {
-      orig::sqgxTextureAdd(i4[3], i4[4], (IDirect3DTexture8 *)4, nullptr);
+      orig::sqgxTextureAdd(frame.i4[3], frame.i4[4], (IDirect3DTexture8 *)4, nullptr);
       orig::sqgxTextureAdd(xRight, yBottom, (IDirect3DTexture8 *)4, nullptr);
-      orig::sqgxTextureAddZ(i4[3], i4[4], 3);
+      orig::sqgxTextureAddZ(frame.i4[3], frame.i4[4], 3);
     }
-    g_This_10669418->GetAdapterIdentifier(0, 2u, &i4[5]);
-    g_pSqgxContext[180] = i4[263] == 4098 || (*(unsigned char *)((char *)g_pCDx + 0x912)) == 0;
+    g_This_10669418->GetAdapterIdentifier(0, 2u, &frame.i4[5]);
+    g_pSqgxContext[180] = frame.i4[263] == 4098 || (*(unsigned char *)((char *)g_pCDx + 0x912)) == 0;
     g_pSqgxContext[553] = 1;
     g_pSqgxContext[554] = 0;
     g_pSqgxContext[555] = 2;

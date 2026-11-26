@@ -110,31 +110,33 @@ XI_API bits32 __thiscall Generator_StopGenerators(void * self_, int arg2, int ar
   uint8_t u5;
   long double f2;
   uint64_t u6;
-  char xi_frame[33] __attribute__((aligned(4)));
-  uint8_t  &u7 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  void * &p3 = *reinterpret_cast<void * *>(xi_frame + 1);
-  uint8_t  (&u8)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 5);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[33];
+    struct __attribute__((packed)) { uint8_t u7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; void * p3; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x5]; uint8_t u8[28]; };   // at 0x5
+  } frame;
   
-  u7 = 0;
+  frame.u7 = 0;
   u6 = orig::CYyObject_IsKindOf(self_,(int)XI_GAME(0x1032B108u));
-  p3 = self_;
+  frame.p3 = self_;
   if ((char)u6 != '\0') {
     if (*(uint32_t **)((int)self_ + 0x28) == (uint32_t *)0x0) {
-      p3 = (void *)0x0;
+      frame.p3 = (void *)0x0;
     }
     else {
-      p3 = (void *)**(uint32_t **)((int)self_ + 0x28);
+      frame.p3 = (void *)**(uint32_t **)((int)self_ + 0x28);
     }
   }
   p2 = (void *)arg2;
   if (arg2 == 0) {
 code_10053B91:
     do {
-      orig::ResourceIter_Start(u8,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+      orig::ResourceIter_Start(frame.u8,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
       do {
         do {
           do {
-            p1 = (void *)orig::ResourceIter_FindNext_v1(u8,0);
+            p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u8,0);
             p2 = (void *)0x0;
             if (p1 == (void *)0x0) goto code_10053C65;
           } while ((*(uint8_t *)((int)p1 + 0x1a) >> 2 & 1) == 0);
@@ -144,12 +146,12 @@ code_10053B91:
           else {
             p2 = (void *)**(uint32_t **)((int)p1 + 0xf4);
           }
-        } while (p2 != p3);
+        } while (p2 != frame.p3);
         if ((char)arg4 == '\0') {
           u6 = orig::CMoResource_AddRefChain_v1(p1,p2);
           orig::YmGenerater_Stop_v1(p1,arg5,(int)u6);
           orig::CMoResource_ReleaseChain_v1(p1);
-          u7 = 1;
+          frame.u7 = 1;
           orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)p1 + 0x14));
           goto code_10053B91;
         }
@@ -167,7 +169,7 @@ code_10053B91:
 code_10053A50:
     if (obj1 == (int *)0x0) {
 code_10053C65:
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(u7)));
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(frame.u7)));
     }
     p1 = (void *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1));
     p2 = (void *)0x0;
@@ -182,7 +184,7 @@ code_10053B50:
     if (p1 == self_) {
       u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u6 >> 8))) << 8) | (uint8_t)((char)arg4)));
       if ((char)arg4 == '\0') {
-        u7 = 1;
+        frame.u7 = 1;
         p2 = (void *)orig::YmGenerater_Stop_v1(self_,arg5,u3);
         obj1 = (int *)obj1[0xb];
       }
@@ -206,7 +208,7 @@ code_10053B50:
     else {
       p2 = (void *)**(uint32_t **)((int)p1 + 0x28);
     }
-    if (p2 != p3) goto code_10053B50;
+    if (p2 != frame.p3) goto code_10053B50;
     u6 = orig::CMoAttachments_GetTarget_v1((void *)((int)p1 + 0x30));
     p2 = (void *)0x0;
     if ((int)u6 != 0) {
@@ -237,7 +239,7 @@ code_10053B50:
     orig::CMoResource_AddRefChain_v1(p1,u3);
     orig::YmGenerater_Stop_v1(p1,arg5,arg5);
     orig::CMoResource_ReleaseChain_v1(p1);
-    u7 = 1;
+    frame.u7 = 1;
 code_10053B75:
     p2 = (void *)orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)p1 + 0x14));
   } while( true );
@@ -255,41 +257,43 @@ XI_API bits32 __thiscall YmGenerater_UpdateAttach(void * self_, int arg2, float 
   int i3;
   uint8_t u2;
   long double f1;
-  char xi_frame[52] __attribute__((aligned(4)));
-  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
-  uint32_t * &p4 = *reinterpret_cast<uint32_t * *>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[52];
+    struct __attribute__((packed)) { uint32_t * p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint32_t u4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; uint32_t u5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; uint32_t u6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; uint32_t u7; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; uint32_t u8; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x2C]; uint32_t u9; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_10[0x30]; uint32_t u10; };   // at 0x30
+  } frame;
   
-  u4 = 0;
-  u3 = *(uint32_t *)(arg2 + 4) >> 2 & 0xff;
-  u1 = (uint64_t)u3;
+  frame.u4 = 0;
+  frame.u3 = *(uint32_t *)(arg2 + 4) >> 2 & 0xff;
+  u1 = (uint64_t)frame.u3;
   p1 = *(uint32_t **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
   *(int *)(g_pProcessor_as_s32 + 0xa90) = *(int *)(g_pProcessor_as_s32 + 0xa90) + 1;
   i2 = *(int *)((int)self_ + 0x98);
   if (i2 == 0) {
-    p4 = (uint32_t *)0x0;
-    p3 = (uint32_t *)0x0;
+    frame.p4 = (uint32_t *)0x0;
+    frame.p3 = (uint32_t *)0x0;
   }
   else {
-    u7 = *(uint32_t *)(i2 + 4);
-    u8 = *(uint32_t *)(i2 + 8);
-    u9 = *(uint32_t *)(i2 + 0xc);
-    u10 = 0x3f800000;
-    u3 = *(uint32_t *)(i2 + 0x10);
-    u4 = *(uint32_t *)(i2 + 0x14);
-    u5 = *(uint32_t *)(i2 + 0x18);
-    p4 = &u3;
-    p3 = &u7;
-    u6 = 0x3f800000;
+    frame.u7 = *(uint32_t *)(i2 + 4);
+    frame.u8 = *(uint32_t *)(i2 + 8);
+    frame.u9 = *(uint32_t *)(i2 + 0xc);
+    frame.u10 = 0x3f800000;
+    frame.u3 = *(uint32_t *)(i2 + 0x10);
+    frame.u4 = *(uint32_t *)(i2 + 0x14);
+    frame.u5 = *(uint32_t *)(i2 + 0x18);
+    frame.p4 = &frame.u3;
+    frame.p3 = &frame.u7;
+    frame.u6 = 0x3f800000;
   }
-  f1 = orig::YmGenerater_BuildAttachMatrix((void *)((int)self_ + 0x30),p1,bit_cast<float>(p3),bit_cast<float>(p4));
+  f1 = orig::YmGenerater_BuildAttachMatrix((void *)((int)self_ + 0x30),p1,bit_cast<float>(frame.p3),bit_cast<float>(frame.p4));
   *(float *)((int)self_ + 0x90) = (float)f1;
   u2 = ((*(float *)((int)self_ + 0x90)) != (*(float *)((int)self_ + 0x90))) || ((0.0f) != (0.0f));
   if (u2 == (u2 || *(float *)((int)self_ + 0x90) == 0.0f)) {

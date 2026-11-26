@@ -10,8 +10,10 @@ XI_API bits32 __cdecl SqshBuild_BuildSQO(char * arg1, bits32 arg2)
   bits32 *p2;
   int i1;
   uint32_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+  } frame;
   
   p1 = arg1;
   if ((((*arg1 != 'S') || (arg1[1] != 'Q')) || (arg1[2] != 'L')) || (arg1[3] != 'E')) {
@@ -21,14 +23,14 @@ XI_API bits32 __cdecl SqshBuild_BuildSQO(char * arg1, bits32 arg2)
   }
   p2 = orig::SqScriptRead_ReadBlock(&arg1,4,1,(bits32 *)(arg1 + 4),0);
   u1 = (uint32_t)(((uint32_t)arg1 & 1) != 0);
-  p2 = orig::SqScriptRead_ReadBlock(&i2,4,1,p2,0);
-  if (i2 == 0xa0002) {
+  p2 = orig::SqScriptRead_ReadBlock(&frame.i2,4,1,p2,0);
+  if (frame.i2 == 0xa0002) {
     i1 = orig::SqshBuild_BuildCurves(p2,u1);
     return i1;
   }
-  if (i2 != 0xa0005) {
-    if (i2 != 0xa0009) {
-      orig::sqDebugPrintf_v1(str_____Error__Unsupported_shape_typ_103BC148,i2);
+  if (frame.i2 != 0xa0005) {
+    if (frame.i2 != 0xa0009) {
+      orig::sqDebugPrintf_v1(str_____Error__Unsupported_shape_typ_103BC148,frame.i2);
       orig::sqDebugPrintf_v1(str_sqshBuildSQO_0x_08X___d__103BC128,p2,arg2);
       return 0;
     }

@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x1002F130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Gfx_SetStreamSourceCached(int arg1, bits32 arg2, bits32 arg3)
+XI_API void __cdecl Gfx_SetStreamSourceCached(int StreamNumber, bits32 arg2, bits32 arg3)
 {
-  *(uint32_t *)(((char *)&g_streamSourceVB_as_v0) + arg1 * 4) = arg2;
-  *(uint32_t *)(((char *)&g_streamSourceStride_as_v0) + arg1 * 4) = arg3;
-  orig::Gfx_ApplyCachedStreamSource(arg1);
+  *(uint32_t *)(((char *)&g_streamSourceVB_as_v0) + StreamNumber * 4) = arg2;
+  *(uint32_t *)(((char *)&g_streamSourceStride_as_v0) + StreamNumber * 4) = arg3;
+  orig::Gfx_ApplyCachedStreamSource(StreamNumber);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002F160
 // GATE: PASS -- 100 trials, 100 returned normally, 36 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_ApplyCachedStreamSource(unsigned int arg1)
+XI_API int __cdecl Gfx_ApplyCachedStreamSource(unsigned int StreamNumber)
 {
-  IDirect3DVertexBuffer8 *p1;
-  p1 = (IDirect3DVertexBuffer8 *)g_streamSourceVB[arg1];
-  if ( p1 != nullptr )
-    return (g_pCDx->pDevice)->lpVtbl->SetStreamSource((g_pCDx->pDevice), arg1, p1, g_streamSourceStride[arg1]);
+  IDirect3DVertexBuffer8 *pStreamData;
+  pStreamData = (IDirect3DVertexBuffer8 *)g_streamSourceVB[StreamNumber];
+  if ( pStreamData != nullptr )
+    return (g_pCDx->pDevice)->lpVtbl->SetStreamSource((g_pCDx->pDevice), StreamNumber, pStreamData, g_streamSourceStride[StreamNumber]);
   else
     return 0;
 }

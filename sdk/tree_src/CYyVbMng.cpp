@@ -5,12 +5,12 @@
 
 // FUNCTION: FFXIMAIN 0x1003B210
 // GATE: PASS -- 100 trials, 100 returned normally, 105 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyVbMng::AcquireVertexBuffer(int arg1, int arg2, int arg3, int arg4, int *arg5, char arg6)
+int CYyVbMng::AcquireVertexBuffer(int arg1, int Usage, int FVF, int arg4, int *arg5, char arg6)
 {
   uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
   uint32_t *p1;
   uint32_t *p2;
-  unsigned int u1;
+  unsigned int Length;
   uint32_t *p3;
   uint32_t *p4;
   int i1;
@@ -26,7 +26,7 @@ int CYyVbMng::AcquireVertexBuffer(int arg1, int arg2, int arg3, int arg4, int *a
   p1 = self;
   p2 = nullptr;
   i5 = -1;
-  u1 = 2000 * ((unsigned int)(((unsigned int)(arg1 + 1999) * (unsigned long long)(unsigned int)&c_div2000Magic) >> 32) >> 7);
+  Length = 2000 * ((unsigned int)(((unsigned int)(arg1 + 1999) * (unsigned long long)(unsigned int)&c_div2000Magic) >> 32) >> 7);
   if ( arg6 != 0 )
     goto L1;
   p3 = *(uint32_t **)(g_pVertexBufferListHead + 8);
@@ -36,7 +36,7 @@ int CYyVbMng::AcquireVertexBuffer(int arg1, int arg2, int arg3, int arg4, int *a
   while ( 1 )
   {
     i1 = p4[2];
-    if ( p4[4] == arg2 && p4[6] == arg4 && p4[5] == arg3 && p4[1] == 0 )
+    if ( p4[4] == Usage && p4[6] == arg4 && p4[5] == FVF && p4[1] == 0 )
       break;
 L3:
     p4 = (uint32_t *)p4[2];
@@ -44,9 +44,9 @@ L3:
       goto L2;
   }
   u2 = p4[3];
-  if ( u2 != u1 )
+  if ( u2 != Length )
   {
-    if ( u2 >= u1 && (p2 == nullptr || p2[3] > u2) )
+    if ( u2 >= Length && (p2 == nullptr || p2[3] > u2) )
       p2 = p4;
     goto L3;
   }
@@ -87,13 +87,13 @@ L1:
   pDevice = (g_pCDx->pDevice);
   if ( pDevice == nullptr )
     return i5;
-  i5 = pDevice->CreateVertexBuffer(u1, arg2, arg3, (D3DPOOL)arg4, (IDirect3DVertexBuffer8 **)arg5);
+  i5 = pDevice->CreateVertexBuffer(Length, Usage, FVF, (D3DPOOL)arg4, (IDirect3DVertexBuffer8 **)arg5);
   if ( i5 < 0 )
     return i5;
   p6 = orig::Mem_AllocDefault(32);
   if ( p6 == nullptr )
     return -1;
-  p7 = orig::CYyVb_Constructor(p6, u1, arg2, arg3, arg4, *arg5);
+  p7 = orig::CYyVb_Constructor(p6, Length, Usage, FVF, arg4, *arg5);
   if ( p7 == nullptr )
     return -1;
   if ( arg6 != 0 )
@@ -104,7 +104,7 @@ L1:
   {
     i4 = p1[2];
     ++p1[1];
-    p1[2] = u1 + i4;
+    p1[2] = Length + i4;
   }
   return i5;
 }

@@ -145,13 +145,15 @@ bits32 __thiscall CMoResource::ReleaseChain(void * self)
 bits32 __thiscall CMoResource::RegisterInTypeList(void * self)
 {
   uint32_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
   u1 = *(uint32_t *)((int)self + 0x24) >> 0x1b;
   if ((u1 & 1) == 0) {
-    p1 = self;
-    orig::MeshResourceMng_AllocHandle_v1(g_pMeshResourceMng_as_v1,(int *)&p1,(int)self);
+    frame.p1 = self;
+    orig::MeshResourceMng_AllocHandle_v1(g_pMeshResourceMng_as_v1,(int *)&frame.p1,(int)self);
     u1 = *(uint32_t *)((int)self + 0x24) & 0x7f;
     if (0x60 < u1) {
       u1 = 4;

@@ -10,7 +10,7 @@ int CYyIcon::Draw(int arg1, int arg2, int arg3, int arg4)
   char c1;
   int result;
   IDirect3DBaseTexture8 *p1;
-  int i1;
+  int pIconTexture;
   unsigned short u1;
   double f1;
   double f2;
@@ -34,9 +34,9 @@ int CYyIcon::Draw(int arg1, int arg2, int arg3, int arg4)
     this->quad1_color = arg3;
     this->quad2_color = arg3;
     this->quad3_color = arg3;
-    i1 = this->pIconTexture;
-    u1 = *(uint16_t *)(i1 + 38);
-    a3a = (float)*(unsigned short *)(i1 + 36);
+    pIconTexture = this->pIconTexture;
+    u1 = *(uint16_t *)(pIconTexture + 38);
+    a3a = (float)*(unsigned short *)(pIconTexture + 36);
     f1 = (double)arg1 - 0.5;
     a4a = (double)arg2 - 0.5;
     this->quad0_x = f1;
@@ -68,7 +68,7 @@ int CYyIcon::DrawSubRect(int arg1, int arg2, int arg3, int arg4, int arg5, int a
   double f2;
   double f3;
   double f4;
-  int i1;
+  int pIconTexture;
   double f5; // rt1
   int i2;
   int i3;
@@ -98,16 +98,16 @@ int CYyIcon::DrawSubRect(int arg1, int arg2, int arg3, int arg4, int arg5, int a
     this->quad2_y = a9b;
     this->quad1_x = f3;
     this->quad2_x = f4;
-    i1 = this->pIconTexture;
+    pIconTexture = this->pIconTexture;
     this->quad3_y = a9b;
     f5 = f2 - 0.5;
     this->quad3_x = f3;
     this->quad0_y = f5;
     this->quad1_y = f5;
-    this->quad0_u = (double)arg5 / (double)*(unsigned short *)(i1 + 36);
-    this->quad0_v = (double)arg6 / (double)*(unsigned short *)(i1 + 38);
-    this->quad3_u = (double)(arg7 + arg5) / (double)*(unsigned short *)(i1 + 36);
-    a5a = *(unsigned short *)(i1 + 38);
+    this->quad0_u = (double)arg5 / (double)*(unsigned short *)(pIconTexture + 36);
+    this->quad0_v = (double)arg6 / (double)*(unsigned short *)(pIconTexture + 38);
+    this->quad3_u = (double)(arg7 + arg5) / (double)*(unsigned short *)(pIconTexture + 36);
+    a5a = *(unsigned short *)(pIconTexture + 38);
     i2 = at<uint32_t>(this, 0x24);
     i3 = at<uint32_t>(this, 0x20);
     this->quad1_u = at<uint32_t>(this, 0x74);

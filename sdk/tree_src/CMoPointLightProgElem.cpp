@@ -53,17 +53,19 @@ void __thiscall CMoPointLightProgElem::Update(void * self)
   int i1;
   uint8_t u1;
   long double f1;
-  char xi_frame[20] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[20];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u3; };   // at 0xC
+  } frame;
   
-  i2 = *(int *)((int)self + 0x54);
-  u2 = *(uint32_t *)((int)self + 0x58);
-  u3 = *(uint32_t *)((int)self + 0x5c);
+  frame.i2 = *(int *)((int)self + 0x54);
+  frame.u2 = *(uint32_t *)((int)self + 0x58);
+  frame.u3 = *(uint32_t *)((int)self + 0x5c);
   if (*(char *)((int)self + 0x1b0) == '\0') {
-    i1 = orig::game_10178610(*(int *)((int)self + 0x194),&i2,*(uint32_t *)((int)self + 0xf8),0.0f,
+    i1 = orig::game_10178610(*(int *)((int)self + 0x194),&frame.i2,*(uint32_t *)((int)self + 0xf8),0.0f,
                          bit_cast<int>((float)(*(float *)((int)self + 0x1a8) *
                                      *(float *)((int)self + 0x19c))));
     *(int *)((int)self + 0x1ac) = i1;
@@ -78,12 +80,12 @@ void __thiscall CMoPointLightProgElem::Update(void * self)
     f1 = 0.0f;
   }
   f1 = f1 * *(float *)((int)self + 0x1a4) * *(float *)((int)self + 0x138);
-  f2 = (float)f1;
+  frame.f2 = (float)f1;
   u1 = ((f1) != (f1)) || ((0.0f) != (0.0f));
   if ((u1 || f1 < 0.0f) != u1) {
-    f2 = 0.0f;
+    frame.f2 = 0.0f;
   }
-  orig::game_10178530(*(int *)((int)self + 0x1ac),&i2,*(uint32_t *)((int)self + 0xf8),f2,
+  orig::game_10178530(*(int *)((int)self + 0x1ac),&frame.i2,*(uint32_t *)((int)self + 0xf8),frame.f2,
                (float)(*(float *)((int)self + 0x1a8) *
                       *(float *)((int)self + 0x19c)));
   return;

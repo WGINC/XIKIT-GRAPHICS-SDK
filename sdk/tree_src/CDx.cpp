@@ -38,16 +38,18 @@ char CDx::Initialize()
   const char *p5;
   int i4;
   CHAR c3;
-  alignas(16) unsigned char xi_frame[0x24D8];  // address-taken locals at their original offsets
-  unsigned char * &p6 = *reinterpret_cast<unsigned char * *>(xi_frame + 0xB0);
-  unsigned char * &p7 = *reinterpret_cast<unsigned char * *>(xi_frame + 0xB0);
-  uint8_t (&u1)[12] = *reinterpret_cast<uint8_t (*)[12]>(xi_frame + 0xB8);
-  D3DFORMAT &val1 = *reinterpret_cast<D3DFORMAT *>(xi_frame + 0xC4);
-  uint8_t (&u2)[12] = *reinterpret_cast<uint8_t (*)[12]>(xi_frame + 0xC8);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xD4);
-  CHAR (&FileName)[512] = *reinterpret_cast<CHAR (*)[512]>(xi_frame + 0xD8);
-  uint8_t (&u3)[1032] = *reinterpret_cast<uint8_t (*)[1032]>(xi_frame + 0x2D8);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x6E0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x24D8];
+    struct __attribute__((packed)) { unsigned char pad_1[0xB0]; unsigned char * p6; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_2[0xB0]; unsigned char * p7; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_3[0xB8]; uint8_t pMode[12]; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC4]; D3DFORMAT val1; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_5[0xC8]; uint8_t u2[12]; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_6[0xD4]; int i5; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_7[0xD8]; CHAR FileName[512]; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_8[0x2D8]; uint8_t pIdentifier[1032]; };   // at 0x2D8
+    struct __attribute__((packed)) { unsigned char pad_9[0x6E0]; int i6; };   // at 0x6E0
+  } frame;
 
   p1 = &at<uint8_t>(this, 0x834);
   (this->pDevice)->lpVtbl->GetDeviceCaps((this->pDevice), &at<uint8_t>(this, 0x834));
@@ -100,8 +102,8 @@ char CDx::Initialize()
   *(uint32_t *)&at<uint8_t>(this, 0x934) = *((uint32_t *)p1 + 22);
   pDevice = (this->pDevice);
   *(uint32_t *)&at<uint8_t>(this, 0x938) = *((uint32_t *)p1 + 23);
-  pDevice->GetDisplayMode(u2);
-  i2 = i5;
+  pDevice->GetDisplayMode(frame.u2);
+  i2 = frame.i5;
   *(uint32_t *)&this->displayBitDepth = 32;
   switch ( i2 )
   {
@@ -117,12 +119,12 @@ char CDx::Initialize()
     default:
       break;
   }
-  (this->pD3D)->lpVtbl->GetAdapterDisplayMode((this->pD3D), 0, u1);
+  (this->pD3D)->lpVtbl->GetAdapterDisplayMode((this->pD3D), 0, frame.pMode);
   this->supportsDxt1 = (this->pD3D)->lpVtbl->CheckDeviceFormat(
                               (this->pD3D),
                               0,
                               D3DDEVTYPE_HAL,
-                              val1,
+                              frame.val1,
                               0,
                               D3DRTYPE_TEXTURE,
                               D3DFMT_DXT1) >= 0;
@@ -130,7 +132,7 @@ char CDx::Initialize()
                               (this->pD3D),
                               0,
                               D3DDEVTYPE_HAL,
-                              val1,
+                              frame.val1,
                               0,
                               D3DRTYPE_TEXTURE,
                               D3DFMT_DXT3) >= 0;
@@ -138,13 +140,13 @@ char CDx::Initialize()
                               (this->pD3D),
                               0,
                               D3DDEVTYPE_HAL,
-                              val1,
+                              frame.val1,
                               0,
                               D3DRTYPE_TEXTURE,
                               D3DFMT_P8) >= 0;
-  if ( (this->pD3D)->lpVtbl->CheckDeviceMultiSampleType((this->pD3D), 0, D3DDEVTYPE_HAL, val1, 0, D3DMULTISAMPLE_2_SAMPLES) >= 0 )
+  if ( (this->pD3D)->lpVtbl->CheckDeviceMultiSampleType((this->pD3D), 0, D3DDEVTYPE_HAL, frame.val1, 0, D3DMULTISAMPLE_2_SAMPLES) >= 0 )
     *(uint32_t *)&this->maxMultiSampleType = 2;
-  if ( (this->pD3D)->lpVtbl->CheckDeviceMultiSampleType((this->pD3D), 0, D3DDEVTYPE_HAL, val1, 0, D3DMULTISAMPLE_4_SAMPLES) >= 0 )
+  if ( (this->pD3D)->lpVtbl->CheckDeviceMultiSampleType((this->pD3D), 0, D3DDEVTYPE_HAL, frame.val1, 0, D3DMULTISAMPLE_4_SAMPLES) >= 0 )
     *(uint32_t *)&this->maxMultiSampleType = 4;
   if ( (*((uint32_t *)p1 + 9) & 0x100) != 0 )
     this->supportsTableFog = 1;
@@ -154,28 +156,28 @@ char CDx::Initialize()
     this->supportsRangeFog = 1;
   pD3D = (this->pD3D);
   this->isAtiAdapter = 0;
-  pD3D->GetAdapterIdentifier(0, 2u, u3);
-  if ( i6 == 4098 )
+  pD3D->GetAdapterIdentifier(0, 2u, frame.pIdentifier);
+  if ( frame.i6 == 4098 )
     this->isAtiAdapter = 1;
   *(uint32_t *)&this->field_A00 = -1;
   c1 = 0;
   if ( GetCurrentDirectoryA(0x104u, g_currentDirectory) == 0 )
   {
     p5 = aMousenorAni;
-    p7 = &this->hardwareCursors;
+    frame.p7 = &this->hardwareCursors;
     do
     {
       i4 = 0;
       do
       {
         c3 = g_currentDirectory[i4];
-        FileName[i4++] = c3;
+        frame.FileName[i4++] = c3;
       }
       while ( c3 != 0 );
-      strcat(FileName, p5);
+      strcat(frame.FileName, p5);
       p5 += 32;
-      *(uint32_t *)p7 = LoadCursorA(nullptr, (LPCSTR)0x7F00);
-      p7 += 4;
+      *(uint32_t *)frame.p7 = LoadCursorA(nullptr, (LPCSTR)0x7F00);
+      frame.p7 += 4;
     }
     while ( (int)p5 < (int)&g_fadeQuadVerts );
 L1:
@@ -194,20 +196,20 @@ L1:
         *(uint16_t *)(p3 - 1) = c_strBackslash;
     }
     p4 = aMousenorAni;
-    p6 = &this->hardwareCursors;
+    frame.p6 = &this->hardwareCursors;
     do
     {
       i3 = 0;
       do
       {
         c2 = g_currentDirectory[i3];
-        FileName[i3++] = c2;
+        frame.FileName[i3++] = c2;
       }
       while ( c2 != 0 );
-      strcat(FileName, p4);
+      strcat(frame.FileName, p4);
       p4 += 32;
-      *(uint32_t *)p6 = LoadCursorFromFileA(FileName);
-      p6 += 4;
+      *(uint32_t *)frame.p6 = LoadCursorFromFileA(frame.FileName);
+      frame.p6 += 4;
     }
     while ( (int)p4 < (int)&g_fadeQuadVerts );
     goto L1;
@@ -499,11 +501,13 @@ int CDx::PushRenderTarget(int arg1, int arg2, int arg3)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CDx::PushRenderTargetTexture_Flag1(void * self, int * arg2, bits32 xi_s2, bits32 xi_s3)
 {
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+  } frame;
   
-  u1 = 0;
-  orig::CDx_PushRenderTargetTexture_v1(self,arg2,xi_s2,xi_s3,&u1,&u1,1,0);
+  frame.u1 = 0;
+  orig::CDx_PushRenderTargetTexture_v1(self,arg2,xi_s2,xi_s3,&frame.u1,&frame.u1,1,0);
   return;
 }
 
@@ -511,11 +515,13 @@ void __thiscall CDx::PushRenderTargetTexture_Flag1(void * self, int * arg2, bits
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CDx::PushRenderTargetTexture_Flag0(void * self, int * arg2, bits32 xi_s2, bits32 xi_s3)
 {
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+  } frame;
   
-  u1 = 0;
-  orig::CDx_PushRenderTargetTexture_v1(self,arg2,xi_s2,xi_s3,&u1,&u1,0,0);
+  frame.u1 = 0;
+  orig::CDx_PushRenderTargetTexture_v1(self,arg2,xi_s2,xi_s3,&frame.u1,&frame.u1,0,0);
   return;
 }
 
@@ -529,10 +535,12 @@ int CDx::PushRenderTargetTexture(int arg1, int arg2, int arg3, short *arg4, shor
   short *p2;
   int i3;
   int result;
-  alignas(16) unsigned char xi_frame[0x43C];  // address-taken locals at their original offsets
-  uint8_t (&u1)[24] = *reinterpret_cast<uint8_t (*)[24]>(xi_frame + 0x1C);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x38);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x43C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x1C]; uint8_t u1[24]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_2[0x34]; int i4; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_3[0x38]; int i5; };   // at 0x38
+  } frame;
 
   i1 = arg1;
   ++this->renderTargetDepth;
@@ -540,13 +548,13 @@ int CDx::PushRenderTargetTexture(int arg1, int arg2, int arg3, short *arg4, shor
   i2 = arg3;
   (this->pDevice)->lpVtbl->SetRenderTarget((this->pDevice), (IDirect3DSurface8 *)arg1, (IDirect3DSurface8 *)arg3);
   (*(void (__stdcall **)(int))(*(uint32_t *)arg1 + 8))(arg1);
-  (*(void (__stdcall **)(int, uint8_t *))(*(uint32_t *)arg1 + 32))(arg1, u1);
+  (*(void (__stdcall **)(int, uint8_t *))(*(uint32_t *)arg1 + 32))(arg1, frame.u1);
   p1 = arg4;
   *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 136] = *arg4;
   *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 140] = p1[1];
   p2 = arg5;
-  *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 144] = i4 + *arg5;
-  *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 148] = i5 + p2[1];
+  *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 144] = frame.i4 + *arg5;
+  *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 148] = frame.i5 + p2[1];
   *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 152] = 0;
   *(uint32_t *)&((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 156] = 1065353216;
   (this->pDevice)->lpVtbl->SetViewport((this->pDevice), &((unsigned char *)((char *)this + 0x10))[24 * this->renderTargetDepth + 136]);
@@ -563,11 +571,13 @@ int CDx::PushRenderTargetTexture(int arg1, int arg2, int arg3, short *arg4, shor
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CDx::Call1000A0A0Zeroed(void * self, int * arg2, bits32 arg3, bits32 arg4)
 {
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+  } frame;
   
-  u1 = 0;
-  orig::game_1000A0A0(self,arg2,arg3,arg4,&u1,&u1);
+  frame.u1 = 0;
+  orig::game_1000A0A0(self,arg2,arg3,arg4,&frame.u1,&frame.u1);
   return;
 }
 
@@ -620,66 +630,68 @@ int CDx::DrawScreenQuadAtDepth(int arg1, int arg2)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int i1;
-  alignas(16) unsigned char xi_frame[0x49C];  // address-taken locals at their original offsets
-  int (&i2)[7] = *reinterpret_cast<int (*)[7]>(xi_frame + 0x14);
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x54);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x58);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x5C);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x60);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x68);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x70);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x74);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x7C);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x80);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x8C);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x98);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x49C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x14]; int i2[7]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_2[0x30]; float f1; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_3[0x34]; int i3; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_4[0x38]; int i4; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_5[0x3C]; int i5; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_6[0x40]; int i6; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_7[0x44]; int i7; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_8[0x48]; int i8; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_9[0x4C]; int i9; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_10[0x50]; float f2; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_11[0x54]; int i10; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_12[0x58]; int i11; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_13[0x5C]; int i12; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_14[0x60]; int i13; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_15[0x64]; int i14; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_16[0x68]; float f3; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_17[0x6C]; float f4; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_18[0x70]; int i15; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_19[0x74]; int i16; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_20[0x78]; int i17; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_21[0x7C]; int i18; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_22[0x80]; int i19; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_23[0x8C]; int i20; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_24[0x98]; int i21; };   // at 0x98
+  } frame;
 
-  i20 = *((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)self) + 2);
-  i21 = *((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)self) + 3);
-  f1 = (float)i20;
-  i2[4] = -2139062144;
-  i4 = arg2;
-  i6 = -2139062144;
-  f2 = (float)i21;
-  f3 = f1;
-  i12 = -2139062144;
-  i15 = arg2;
-  i17 = -2139062144;
+  frame.i20 = *((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)self) + 2);
+  frame.i21 = *((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)self) + 3);
+  frame.f1 = (float)frame.i20;
+  frame.i2[4] = -2139062144;
+  frame.i4 = arg2;
+  frame.i6 = -2139062144;
+  frame.f2 = (float)frame.i21;
+  frame.f3 = frame.f1;
+  frame.i12 = -2139062144;
+  frame.i15 = arg2;
+  frame.i17 = -2139062144;
   i1 = at<uint32_t>(this, 0xC);
-  i2[0] = 0;
-  f4 = f2;
-  i2[1] = 0;
-  i2[2] = arg2;
-  i2[3] = 1065353216;
-  i2[5] = 0;
-  i2[6] = 0;
-  i3 = 0;
-  i5 = 1065353216;
-  i7 = 1065353216;
-  i8 = 0;
-  i9 = 0;
-  i10 = arg2;
-  i11 = 1065353216;
-  i13 = 0;
-  i14 = 1065353216;
-  i16 = 1065353216;
-  i18 = 1065353216;
-  i19 = 1065353216;
+  frame.i2[0] = 0;
+  frame.f4 = frame.f2;
+  frame.i2[1] = 0;
+  frame.i2[2] = arg2;
+  frame.i2[3] = 1065353216;
+  frame.i2[5] = 0;
+  frame.i2[6] = 0;
+  frame.i3 = 0;
+  frame.i5 = 1065353216;
+  frame.i7 = 1065353216;
+  frame.i8 = 0;
+  frame.i9 = 0;
+  frame.i10 = arg2;
+  frame.i11 = 1065353216;
+  frame.i13 = 0;
+  frame.i14 = 1065353216;
+  frame.i16 = 1065353216;
+  frame.i18 = 1065353216;
+  frame.i19 = 1065353216;
   (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)i1 + 244))(i1, 0, arg1);
   ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetVertexShader(324);
-  return orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)i2, 28);
+  return orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)frame.i2, 28);
 }
 
 // FUNCTION: FFXIMAIN 0x1000A4F0
@@ -687,18 +699,20 @@ int CDx::DrawScreenQuadAtDepth(int arg1, int arg2)
 void __thiscall CDx::DrawTextureToViewport(void * self, bits32 arg2, bits32 arg3, bits32 xi_s3)
 {
   uint32_t u1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u5; };   // at 0xC
+  } frame;
   
   u1 = (uint32_t)*(uint8_t *)((int)self + 0x158);
-  u3 = *(uint32_t *)((int)self + u1 * 0x18 + 0x9c);
-  u5 = *(uint32_t *)((int)self + u1 * 0x18 + 0xa4);
-  u2 = *(uint32_t *)((int)self + u1 * 0x18 + 0x98);
-  u4 = *(uint32_t *)((int)self + u1 * 0x18 + 0xa0);
-  orig::CDx_DrawTexturedScreenQuadUnit(self,arg2,arg3,&u2,0xffffffff);
+  frame.u3 = *(uint32_t *)((int)self + u1 * 0x18 + 0x9c);
+  frame.u5 = *(uint32_t *)((int)self + u1 * 0x18 + 0xa4);
+  frame.u2 = *(uint32_t *)((int)self + u1 * 0x18 + 0x98);
+  frame.u4 = *(uint32_t *)((int)self + u1 * 0x18 + 0xa0);
+  orig::CDx_DrawTexturedScreenQuadUnit(self,arg2,arg3,&frame.u2,0xffffffff);
   return;
 }
 
@@ -706,17 +720,19 @@ void __thiscall CDx::DrawTextureToViewport(void * self, bits32 arg2, bits32 arg3
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CDx::DrawTexturedScreenQuadUnit(void * self, bits32 arg2, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+  } frame;
   
-  u1 = 0;
-  u2 = 0x3f800000;
-  u3 = 0;
-  u4 = 0x3f800000;
-  orig::CDx_DrawTexturedScreenQuad_v1(self,arg2,xi_s2,xi_s3,&u1,0xffffffff);
+  frame.u1 = 0;
+  frame.u2 = 0x3f800000;
+  frame.u3 = 0;
+  frame.u4 = 0x3f800000;
+  orig::CDx_DrawTexturedScreenQuad_v1(self,arg2,xi_s2,xi_s3,&frame.u1,0xffffffff);
   return;
 }
 
@@ -733,77 +749,79 @@ int CDx::DrawTexturedScreenQuad(int arg1, int arg2, int arg3, int arg4, int arg5
   double f3;
   double f4;
   int i4;
-  alignas(16) unsigned char xi_frame[0x484];  // address-taken locals at their original offsets
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x1C);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x54);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x58);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x5C);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x60);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x68);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x70);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x74);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x7C);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x80);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x484];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; int i6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; int i8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; int i9; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; int i10; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f7; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x34]; float f8; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_11[0x38]; int i11; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_12[0x3C]; int i12; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_13[0x40]; int i13; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_14[0x44]; int i14; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_15[0x48]; int i15; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_16[0x4C]; int i16; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_17[0x50]; float f9; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_18[0x54]; int i17; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_19[0x58]; int i18; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_20[0x5C]; int i19; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_21[0x60]; int i20; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_22[0x64]; int i21; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_23[0x68]; float f10; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_24[0x6C]; float f11; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_25[0x70]; int i22; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_26[0x74]; int i23; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_27[0x78]; int i24; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_28[0x7C]; int i25; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_29[0x80]; int i26; };   // at 0x80
+  } frame;
 
   f1 = (double)*(int *)arg3;
   i1 = *(uint32_t *)arg4;
-  i8 = arg2;
-  i9 = i1;
-  i10 = *(uint32_t *)(arg4 + 8);
+  frame.i8 = arg2;
+  frame.i9 = i1;
+  frame.i10 = *(uint32_t *)(arg4 + 8);
   i2 = *(uint32_t *)(arg4 + 4);
-  i13 = arg2;
-  i14 = i2;
+  frame.i13 = arg2;
+  frame.i14 = i2;
   i3 = *(uint32_t *)(arg4 + 8);
-  i19 = arg2;
-  *(float *)&i5 = f1 - 0.5;
+  frame.i19 = arg2;
+  *(float *)&frame.i5 = f1 - 0.5;
   f2 = (double)*(int *)(arg3 + 4);
-  i24 = arg2;
-  i25 = *(uint32_t *)(arg4 + 4);
-  i6 = 0;
-  i7 = 1065353216;
-  i11 = 0;
-  i12 = 1065353216;
-  i15 = i3;
-  i17 = 0;
-  f6 = f2 - 0.5;
+  frame.i24 = arg2;
+  frame.i25 = *(uint32_t *)(arg4 + 4);
+  frame.i6 = 0;
+  frame.i7 = 1065353216;
+  frame.i11 = 0;
+  frame.i12 = 1065353216;
+  frame.i15 = i3;
+  frame.i17 = 0;
+  frame.f6 = f2 - 0.5;
   f3 = (double)*(int *)(arg3 + 8);
-  i18 = 1065353216;
-  i22 = 0;
-  i23 = 1065353216;
-  f5 = f3 - 0.5;
-  f7 = f5;
-  f8 = f6;
-  i16 = i5;
+  frame.i18 = 1065353216;
+  frame.i22 = 0;
+  frame.i23 = 1065353216;
+  frame.f5 = f3 - 0.5;
+  frame.f7 = frame.f5;
+  frame.f8 = frame.f6;
+  frame.i16 = frame.i5;
   f4 = (double)*(int *)(arg3 + 12);
-  i20 = *(uint32_t *)arg4;
-  i21 = *(uint32_t *)(arg4 + 12);
-  i26 = i21;
+  frame.i20 = *(uint32_t *)arg4;
+  frame.i21 = *(uint32_t *)(arg4 + 12);
+  frame.i26 = frame.i21;
   i4 = at<uint32_t>(this, 0xC);
-  f10 = f5;
-  f9 = f4 - 0.5;
-  f11 = f9;
+  frame.f10 = frame.f5;
+  frame.f9 = f4 - 0.5;
+  frame.f11 = frame.f9;
   (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)i4 + 244))(i4, 0, arg1);
   ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetVertexShader(324);
-  return orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)&i5, 28);
+  return orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)&frame.i5, 28);
 }
 
 // FUNCTION: FFXIMAIN 0x1000A6E0
@@ -1153,14 +1171,16 @@ XI_API bits32 __thiscall Light_ApplyTimeOfDayTint(void * self_, int arg2)
   long double f1;
   long double f2;
   long double f3;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f6; };   // at 0x8
+  } frame;
   
   u1 = 0;
   if (g_windowMode != 0) {
-    u1 = orig::GammaRamp_GetChannelSamples_v1((void *)((int)self_ + 500),&f4,&f5,&f6);
+    u1 = orig::GammaRamp_GetChannelSamples_v1((void *)((int)self_ + 500),&frame.f4,&frame.f5,&frame.f6);
     f1 = *(float *)(arg2 + 4);
     f2 = 0.800000011920928955078125f;
     u4 = ((f1) != (f1)) || ((f2) != (f2));
@@ -1183,11 +1203,11 @@ XI_API bits32 __thiscall Light_ApplyTimeOfDayTint(void * self_, int arg2)
         u1 = ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((uint16_t)u3 << 8 | (uint16_t)u4 << 10 |
                                (uint16_t)(u4 || f1 == f2) << 0xe)));
         if (u3 != u4) {
-          f2 = f4 * *(float *)(arg2 + 4);
+          f2 = frame.f4 * *(float *)(arg2 + 4);
           *(float *)(arg2 + 4) = (float)f2;
-          f1 = f5 * *(float *)(arg2 + 8);
+          f1 = frame.f5 * *(float *)(arg2 + 8);
           *(float *)(arg2 + 8) = (float)f1;
-          f3 = f6 * *(float *)(arg2 + 0xc);
+          f3 = frame.f6 * *(float *)(arg2 + 0xc);
           *(float *)(arg2 + 0xc) = (float)f3;
           f2 = (float)f2;
           if (f2 >= 1.0f) {
@@ -1211,28 +1231,28 @@ XI_API bits32 __thiscall Light_ApplyTimeOfDayTint(void * self_, int arg2)
 
 // FUNCTION: FFXIMAIN 0x1000BF30
 // GATE: PASS -- 100 trials, 100 returned normally, 3 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CDx::SetLight(int arg1, float *arg2)
+int CDx::SetLight(int index, float *light)
 {
   float buf1[26];
-  if ( *(uint32_t *)arg2 == 1 )
+  if ( *(uint32_t *)light == 1 )
   {
-    if ( arg2[19] < 0.0 )
+    if ( light[19] < 0.0 )
       return -2005530516;
-    if ( arg2[23] < 0.0 )
+    if ( light[23] < 0.0 )
       return -2005530516;
   }
   else
   {
-    if ( *(uint32_t *)arg2 != 3 )
+    if ( *(uint32_t *)light != 3 )
       return -2005530516;
-    if ( arg2[16] == 0.0 && arg2[17] == 0.0 && arg2[18] == 0.0 )
+    if ( light[16] == 0.0 && light[17] == 0.0 && light[18] == 0.0 )
       return -2005530516;
   }
-  memcpy(buf1, arg2, sizeof(buf1));
+  memcpy(buf1, light, sizeof(buf1));
   if ( orig::Light_ApplyTimeOfDayTint((unsigned short *)this, buf1) == 1 )
-    return (this->pDevice)->lpVtbl->SetLight((this->pDevice), arg1, buf1);
+    return (this->pDevice)->lpVtbl->SetLight((this->pDevice), index, buf1);
   else
-    return (this->pDevice)->lpVtbl->SetLight((this->pDevice), arg1, arg2);
+    return (this->pDevice)->lpVtbl->SetLight((this->pDevice), index, light);
 }
 
 // FUNCTION: FFXIMAIN 0x1000C0B0
@@ -1248,52 +1268,54 @@ int CDx::CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4)
   int i3;
   double f4;
   int result;
-  alignas(16) unsigned char xi_frame[0x6B4];  // address-taken locals at their original offsets
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x210);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x214);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x214);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x218);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x21C);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x21C);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x230);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x234);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x238);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x23C);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x240);
-  int (&i14)[7] = *reinterpret_cast<int (*)[7]>(xi_frame + 0x244);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x260);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x264);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x268);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x26C);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x270);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x274);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x278);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x27C);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x280);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x284);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x288);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x28C);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x290);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x294);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x298);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x29C);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x2A0);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x2A4);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x2A8);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x2AC);
-  int &i29 = *reinterpret_cast<int *>(xi_frame + 0x2B0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x6B4];
+    struct __attribute__((packed)) { unsigned char pad_1[0x210]; int i4; };   // at 0x210
+    struct __attribute__((packed)) { unsigned char pad_2[0x214]; int i5; };   // at 0x214
+    struct __attribute__((packed)) { unsigned char pad_3[0x214]; int i6; };   // at 0x214
+    struct __attribute__((packed)) { unsigned char pad_4[0x218]; int i7; };   // at 0x218
+    struct __attribute__((packed)) { unsigned char pad_5[0x21C]; int i8; };   // at 0x21C
+    struct __attribute__((packed)) { unsigned char pad_6[0x21C]; int i9; };   // at 0x21C
+    struct __attribute__((packed)) { unsigned char pad_7[0x230]; int i10; };   // at 0x230
+    struct __attribute__((packed)) { unsigned char pad_8[0x234]; int i11; };   // at 0x234
+    struct __attribute__((packed)) { unsigned char pad_9[0x238]; int i12; };   // at 0x238
+    struct __attribute__((packed)) { unsigned char pad_10[0x23C]; int i13; };   // at 0x23C
+    struct __attribute__((packed)) { unsigned char pad_11[0x240]; float f5; };   // at 0x240
+    struct __attribute__((packed)) { unsigned char pad_12[0x244]; int i14[7]; };   // at 0x244
+    struct __attribute__((packed)) { unsigned char pad_13[0x260]; float f6; };   // at 0x260
+    struct __attribute__((packed)) { unsigned char pad_14[0x264]; float f7; };   // at 0x264
+    struct __attribute__((packed)) { unsigned char pad_15[0x268]; int i15; };   // at 0x268
+    struct __attribute__((packed)) { unsigned char pad_16[0x26C]; int i16; };   // at 0x26C
+    struct __attribute__((packed)) { unsigned char pad_17[0x270]; int i17; };   // at 0x270
+    struct __attribute__((packed)) { unsigned char pad_18[0x274]; int i18; };   // at 0x274
+    struct __attribute__((packed)) { unsigned char pad_19[0x278]; int i19; };   // at 0x278
+    struct __attribute__((packed)) { unsigned char pad_20[0x27C]; float f8; };   // at 0x27C
+    struct __attribute__((packed)) { unsigned char pad_21[0x280]; float f9; };   // at 0x280
+    struct __attribute__((packed)) { unsigned char pad_22[0x284]; int i20; };   // at 0x284
+    struct __attribute__((packed)) { unsigned char pad_23[0x288]; int i21; };   // at 0x288
+    struct __attribute__((packed)) { unsigned char pad_24[0x28C]; int i22; };   // at 0x28C
+    struct __attribute__((packed)) { unsigned char pad_25[0x290]; int i23; };   // at 0x290
+    struct __attribute__((packed)) { unsigned char pad_26[0x294]; int i24; };   // at 0x294
+    struct __attribute__((packed)) { unsigned char pad_27[0x298]; float f10; };   // at 0x298
+    struct __attribute__((packed)) { unsigned char pad_28[0x29C]; float f11; };   // at 0x29C
+    struct __attribute__((packed)) { unsigned char pad_29[0x2A0]; int i25; };   // at 0x2A0
+    struct __attribute__((packed)) { unsigned char pad_30[0x2A4]; int i26; };   // at 0x2A4
+    struct __attribute__((packed)) { unsigned char pad_31[0x2A8]; int i27; };   // at 0x2A8
+    struct __attribute__((packed)) { unsigned char pad_32[0x2AC]; int i28; };   // at 0x2AC
+    struct __attribute__((packed)) { unsigned char pad_33[0x2B0]; int i29; };   // at 0x2B0
+  } frame;
 
   if ( orig::CEnv_IsStereoMode(g_pEnv) == 1 )
   {
     i1 = at<uint32_t>(this, 0x824);
     orig::CDx_PushRenderTarget((CDx *)self, i1, 0, 0);
     i2 = *at<uint32_t *>(this, 0xC);
-    i4 = at<uint32_t>(this, 0xC);
-    i10 = 0;
-    i11 = 1065353216;
-    i12 = 0;
-    i13 = 1065353216;
-    (*(void (__stdcall **)(int, uint32_t, int, uint32_t))(i2 + 252))(i4, 0, 11, 0);
+    frame.i4 = at<uint32_t>(this, 0xC);
+    frame.i10 = 0;
+    frame.i11 = 1065353216;
+    frame.i12 = 0;
+    frame.i13 = 1065353216;
+    (*(void (__stdcall **)(int, uint32_t, int, uint32_t))(i2 + 252))(frame.i4, 0, 11, 0);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
@@ -1310,57 +1332,57 @@ int CDx::CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4)
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ALPHAREF, 127);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_COLORWRITEENABLE, 15);
-    i14[2] = 0;
-    i14[3] = 1065353216;
+    frame.i14[2] = 0;
+    frame.i14[3] = 1065353216;
     f1 = (double)*(int *)arg3;
-    i14[4] = arg2;
-    i14[5] = 0;
-    i14[6] = 0;
-    i15 = 0;
-    *(float *)i14 = f1;
+    frame.i14[4] = arg2;
+    frame.i14[5] = 0;
+    frame.i14[6] = 0;
+    frame.i15 = 0;
+    *(float *)frame.i14 = f1;
     f2 = (double)*(int *)(arg3 + 4);
-    i16 = 1065353216;
-    i17 = arg2;
-    i18 = 1065353216;
-    i19 = 0;
-    *(float *)&i14[1] = f2;
+    frame.i16 = 1065353216;
+    frame.i17 = arg2;
+    frame.i18 = 1065353216;
+    frame.i19 = 0;
+    *(float *)&frame.i14[1] = f2;
     f3 = (double)*(int *)(arg3 + 8);
-    i20 = 0;
-    i21 = 1065353216;
-    i22 = arg2;
-    i23 = 0;
-    i24 = 1065353216;
-    i25 = 0;
-    i26 = 1065353216;
-    i27 = arg2;
-    i28 = 1065353216;
-    f5 = f3 * 0.5;
-    f6 = f5;
-    f7 = f2;
-    f10 = f5;
-    f8 = f1;
-    f9 = (float)*(int *)(arg3 + 12);
-    f11 = f9;
+    frame.i20 = 0;
+    frame.i21 = 1065353216;
+    frame.i22 = arg2;
+    frame.i23 = 0;
+    frame.i24 = 1065353216;
+    frame.i25 = 0;
+    frame.i26 = 1065353216;
+    frame.i27 = arg2;
+    frame.i28 = 1065353216;
+    frame.f5 = f3 * 0.5;
+    frame.f6 = frame.f5;
+    frame.f7 = f2;
+    frame.f10 = frame.f5;
+    frame.f8 = f1;
+    frame.f9 = (float)*(int *)(arg3 + 12);
+    frame.f11 = frame.f9;
     i3 = at<uint32_t>(this, 0xC);
-    i29 = 1065353216;
+    frame.i29 = 1065353216;
     (*(void (__stdcall **)(int, int))(*(uint32_t *)i3 + 304))(i3, 324);
-    i8 = *(uint32_t *)(arg1 + 4);
-    *(float *)i14 = (float)*(int *)arg4;
-    i5 = at<uint32_t>(this, 0xC);
-    f6 = (double)*(int *)(arg4 + 8) * 0.5;
-    f8 = *(float *)i14;
-    f10 = f6;
-    (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)i5 + 244))(i5, 0, i8);
-    orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)i14, 28);
+    frame.i8 = *(uint32_t *)(arg1 + 4);
+    *(float *)frame.i14 = (float)*(int *)arg4;
+    frame.i5 = at<uint32_t>(this, 0xC);
+    frame.f6 = (double)*(int *)(arg4 + 8) * 0.5;
+    frame.f8 = *(float *)frame.i14;
+    frame.f10 = frame.f6;
+    (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)frame.i5 + 244))(frame.i5, 0, frame.i8);
+    orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)frame.i14, 28);
     f4 = (double)*(int *)(arg4 + 8);
-    i9 = *(uint32_t *)(arg1 + 8);
-    i6 = at<uint32_t>(this, 0xC);
-    *(float *)i14 = 0.5 * f4;
-    f6 = f4;
-    f8 = *(float *)i14;
-    f10 = f4;
-    (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)i6 + 244))(i6, 0, i9);
-    orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)i14, 28);
+    frame.i9 = *(uint32_t *)(arg1 + 8);
+    frame.i6 = at<uint32_t>(this, 0xC);
+    *(float *)frame.i14 = 0.5 * f4;
+    frame.f6 = f4;
+    frame.f8 = *(float *)frame.i14;
+    frame.f10 = f4;
+    (*(void (__stdcall **)(int, uint32_t, int))(*(uint32_t *)frame.i6 + 244))(frame.i6, 0, frame.i9);
+    orig::CDx_DrawPrimitiveUP(self, 5, 2, (int)frame.i14, 28);
     orig::CDx_SetTexture((uint32_t **)self, 0, 0);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(0, D3DTSS_TEXCOORDINDEX, 0);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
@@ -1381,7 +1403,7 @@ int CDx::CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4)
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-    orig::CDx_DrawTexturedScreenQuad(self, i1, arg2, arg3, (int)&i10, -1);
+    orig::CDx_DrawTexturedScreenQuad(self, i1, arg2, arg3, (int)&frame.i10, -1);
   }
   else
   {
@@ -1400,12 +1422,12 @@ int CDx::CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4)
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-    i7 = *(uint32_t *)(arg1 + 4);
-    i10 = 0;
-    i11 = 1065353216;
-    i12 = 0;
-    i13 = 1065353216;
-    orig::CDx_DrawTexturedScreenQuad(self, i7, arg2, arg3, (int)&i10, -1);
+    frame.i7 = *(uint32_t *)(arg1 + 4);
+    frame.i10 = 0;
+    frame.i11 = 1065353216;
+    frame.i12 = 0;
+    frame.i13 = 1065353216;
+    orig::CDx_DrawTexturedScreenQuad(self, frame.i7, arg2, arg3, (int)&frame.i10, -1);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
     ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
   }
@@ -1418,34 +1440,36 @@ int CDx::CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4)
 
 // FUNCTION: FFXIMAIN 0x1000C6E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CDx::CreateStereoResources(unsigned short arg1, unsigned short arg2)
+int CDx::CreateStereoResources(unsigned short width, unsigned short height)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int result;
-  alignas(16) unsigned char xi_frame[0x410];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x8);
-  char &c1 = *reinterpret_cast<char *>(xi_frame + 0xC);
-  char &c2 = *reinterpret_cast<char *>(xi_frame + 0xD);
-  char &c3 = *reinterpret_cast<char *>(xi_frame + 0xE);
-  char &c4 = *reinterpret_cast<char *>(xi_frame + 0xF);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x410];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; int i1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; char c1; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0xD]; char c2; };   // at 0xD
+    struct __attribute__((packed)) { unsigned char pad_4[0xE]; char c3; };   // at 0xE
+    struct __attribute__((packed)) { unsigned char pad_5[0xF]; char c4; };   // at 0xF
+  } frame;
 
   result = (int)g_pEnv;
   if ( g_pEnv[6] != 0 )
   {
-    i1 = -2139094912;
-    c4 = 0x80;
-    c3 = 0;
-    c2 = 0x80;
-    c1 = 0;
-    if ( orig::CDx_CreateRampTextures1024x2((CDx *)self, (IDirect3DTexture8 **)self + 517, (int)&i1) == 0
-      || (i1 = -2147450880,
-          c4 = 0x80,
-          c3 = 0x80,
-          c2 = 0,
-          c1 = 0x80,
-          orig::CDx_CreateRampTextures1024x2((CDx *)self, (IDirect3DTexture8 **)self + 519, (int)&i1) == 0)
+    frame.i1 = -2139094912;
+    frame.c4 = 0x80;
+    frame.c3 = 0;
+    frame.c2 = 0x80;
+    frame.c1 = 0;
+    if ( orig::CDx_CreateRampTextures1024x2((CDx *)self, (IDirect3DTexture8 **)self + 517, (int)&frame.i1) == 0
+      || (frame.i1 = -2147450880,
+          frame.c4 = 0x80,
+          frame.c3 = 0x80,
+          frame.c2 = 0,
+          frame.c1 = 0x80,
+          orig::CDx_CreateRampTextures1024x2((CDx *)self, (IDirect3DTexture8 **)self + 519, (int)&frame.i1) == 0)
       || (unsigned char)orig::CDx_CreateRampTexture1x16(self, (int)self + 2092) == 0
-      || (result = (int)orig::CDx_CreateTexture((uint32_t **)self, arg1, arg2, nullptr, 1, 0),
+      || (result = (int)orig::CDx_CreateTexture((uint32_t **)self, width, height, nullptr, 1, 0),
           at<uint32_t>(this, 0x824) = result,
           result == 0) )
     {
@@ -1515,9 +1539,11 @@ int CDx::CreateRampTexture1x16(int arg1)
   char c1;
   int i1;
   uint8_t *p2;
-  alignas(16) unsigned char xi_frame[0x41C];  // address-taken locals at their original offsets
-  char (&val1)[4] = *reinterpret_cast<char (*)[4]>(xi_frame + 0x14);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x41C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x14]; char val1[4]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; int i2; };   // at 0x18
+  } frame;
 
   result = (int)g_pEnv;
   if ( g_pEnv[6] != 0 )
@@ -1537,7 +1563,7 @@ int CDx::CreateRampTexture1x16(int arg1)
       result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(0) << 0));
       return result;
     }
-    (*(void (__stdcall **)(uint32_t, uint32_t, char *, uint32_t, uint32_t))(**(uint32_t **)arg1 + 64))(*(uint32_t *)arg1, 0, val1, 0, 0);
+    (*(void (__stdcall **)(uint32_t, uint32_t, char *, uint32_t, uint32_t))(**(uint32_t **)arg1 + 64))(*(uint32_t *)arg1, 0, frame.val1, 0, 0);
     c1 = arg1;
     i1 = 0;
     while ( i1 != 0 )
@@ -1549,7 +1575,7 @@ L1:
         c1 = 0;
         arg1 = (int)(((uint32_t)(arg1) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)(0) << 8));
       }
-      p2 = (uint8_t *)(i2 + i1 * *(uint32_t *)val1);
+      p2 = (uint8_t *)(frame.i2 + i1 * *(uint32_t *)frame.val1);
       ++i1;
       p2[1] = (uint8_t)((uint32_t)(arg1) >> 8);
       *p2 = c1;
@@ -1623,85 +1649,91 @@ char CDx::CreateRampTextures1024x2(IDirect3DTexture8 **arg1, int arg2)
 
 // FUNCTION: FFXIMAIN 0x1000CB20
 // GATE: PASS -- 100 trials, 100 returned normally, 168 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CDx::DrawPrimitive(int arg1, int arg2, int arg3)
+int CDx::DrawPrimitive(int arg1, int StartVertex, int PrimitiveCount)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  int i1;
+  int stereoEye;
   int i2;
-  alignas(16) unsigned char xi_frame[0x418];  // address-taken locals at their original offsets
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x14);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x418];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i4; };   // at 0x14
+  } frame;
 
-  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&i4, (int)&i3) == 0 )
-    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3);
-  i1 = this->stereoEye;
+  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&frame.i4, (int)&frame.i3) == 0 )
+    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), StartVertex, PrimitiveCount);
+  stereoEye = this->stereoEye;
   this->stereoEye = 0;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3);
+  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), StartVertex, PrimitiveCount);
   orig::CDx_RestoreProjection((uint32_t **)self);
   this->stereoEye = 1;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  orig::CDx_PushRenderTarget((CDx *)self, i4, 0, i3);
-  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3);
+  orig::CDx_PushRenderTarget((CDx *)self, frame.i4, 0, frame.i3);
+  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitive((D3DPRIMITIVETYPE)(arg1), StartVertex, PrimitiveCount);
   orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((uint32_t **)self);
-  this->stereoEye = i1;
+  this->stereoEye = stereoEye;
   return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1000CC00
 // GATE: PASS -- 100 trials, 100 returned normally, 169 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CDx::DrawIndexedPrimitive(int arg1, int arg2, int arg3, int arg4, int arg5)
+int CDx::DrawIndexedPrimitive(int arg1, int minIndex, int NumVertices, int startIndex, int primCount)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  int i1;
+  int stereoEye;
   int i2;
-  alignas(16) unsigned char xi_frame[0x420];  // address-taken locals at their original offsets
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x1C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x420];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; int i4; };   // at 0x1C
+  } frame;
 
-  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&i4, (int)&i3) == 0 )
-    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3, arg4, arg5);
-  i1 = this->stereoEye;
+  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&frame.i4, (int)&frame.i3) == 0 )
+    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), minIndex, NumVertices, startIndex, primCount);
+  stereoEye = this->stereoEye;
   this->stereoEye = 0;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3, arg4, arg5);
+  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), minIndex, NumVertices, startIndex, primCount);
   orig::CDx_RestoreProjection((uint32_t **)self);
   this->stereoEye = 1;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  orig::CDx_PushRenderTarget((CDx *)self, i4, 0, i3);
-  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), arg2, arg3, arg4, arg5);
+  orig::CDx_PushRenderTarget((CDx *)self, frame.i4, 0, frame.i3);
+  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawIndexedPrimitive((D3DPRIMITIVETYPE)(arg1), minIndex, NumVertices, startIndex, primCount);
   orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((uint32_t **)self);
-  this->stereoEye = i1;
+  this->stereoEye = stereoEye;
   return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1000CD00
 // GATE: PASS -- 100 trials, 100 returned normally, 168 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CDx::DrawPrimitiveUP(int arg1, int arg2, int arg3, int arg4)
+int CDx::DrawPrimitiveUP(int arg1, int primitive_count, int arg3, int stride)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  int i1;
+  int stereoEye;
   int i2;
-  alignas(16) unsigned char xi_frame[0x41C];  // address-taken locals at their original offsets
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x41C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x14]; int i3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; int i4; };   // at 0x18
+  } frame;
 
-  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&i4, (int)&i3) == 0 )
-    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), arg2, (void *)(arg3), arg4);
-  i1 = this->stereoEye;
+  if ( orig::CDx_GetStereoSecondEyeTarget(self, (int)&frame.i4, (int)&frame.i3) == 0 )
+    return ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), primitive_count, (void *)(arg3), stride);
+  stereoEye = this->stereoEye;
   this->stereoEye = 0;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), arg2, (void *)(arg3), arg4);
+  ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), primitive_count, (void *)(arg3), stride);
   orig::CDx_RestoreProjection((uint32_t **)self);
   this->stereoEye = 1;
   orig::CDx_ApplyStereoEyeProjection((CDx *)self);
-  orig::CDx_PushRenderTarget((CDx *)self, i4, 0, i3);
-  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), arg2, (void *)(arg3), arg4);
+  orig::CDx_PushRenderTarget((CDx *)self, frame.i4, 0, frame.i3);
+  i2 = ((IDirect3DDevice8 *)at<uint32_t>(this, 0xC))->DrawPrimitiveUP((D3DPRIMITIVETYPE)(arg1), primitive_count, (void *)(arg3), stride);
   orig::CDx_PopRenderTargetDefault(self, 0, 0);
   orig::CDx_RestoreProjection((uint32_t **)self);
-  this->stereoEye = i1;
+  this->stereoEye = stereoEye;
   return i2;
 }
 
@@ -1710,24 +1742,26 @@ int CDx::DrawPrimitiveUP(int arg1, int arg2, int arg3, int arg4)
 void CDx::ApplyStereoEyeProjection()
 {
   int i1;
-  alignas(16) unsigned char xi_frame[0x440];  // address-taken locals at their original offsets
-  float (&f1)[12] = *reinterpret_cast<float (*)[12]>(xi_frame + 0xC);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x440];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; float matrix[12]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x3C]; float f2; };   // at 0x3C
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)f1);
-  orig::Mat4_SetIdentity(f1);
+  orig::fn_10027990((Iostream_init *)frame.matrix);
+  orig::Mat4_SetIdentity(frame.matrix);
   i1 = *(uint32_t *)&at<uint8_t>(this, 0x810);
   if ( i1 != 0 )
   {
     if ( i1 == 1 )
-      f2 = *(float *)&g_stereoEyeOffset;
+      frame.f2 = *(float *)&g_stereoEyeOffset;
   }
   else
   {
-    f2 = -*(float *)&g_stereoEyeOffset;
+    frame.f2 = -*(float *)&g_stereoEyeOffset;
   }
-  orig::Mat4_PreMultiply(f1, (float *)&at<uint8_t>(this, 0x9BC));
-  (this->pDevice)->lpVtbl->SetTransform((this->pDevice), D3DTS_PROJECTION, f1);
+  orig::Mat4_PreMultiply(frame.matrix, (float *)&at<uint8_t>(this, 0x9BC));
+  (this->pDevice)->lpVtbl->SetTransform((this->pDevice), D3DTS_PROJECTION, frame.matrix);
   orig::MathVector_Nop();
 }
 

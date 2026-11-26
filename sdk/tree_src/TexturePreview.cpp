@@ -32,58 +32,60 @@ XI_API int __thiscall Tex_DrawNamedTexturePreview(void *self_, int arg2, int arg
 // GATE: PASS -- 100 trials, 100 returned normally, 1500 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __stdcall Gfx_DrawScreenQuad256(int arg1, int arg2)
 {
-  alignas(16) unsigned char xi_frame[0x530];  // address-taken locals at their original offsets
-  int (&i1)[7] = *reinterpret_cast<int (*)[7]>(xi_frame + 0xC0);
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0xDC);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xEC);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0xF0);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0xF4);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0xFC);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x10C);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x110);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x114);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x118);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x120);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x124);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x128);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x12C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x530];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC0]; int i1[7]; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_2[0xDC]; float f1; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_3[0xE0]; int i2; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_4[0xE4]; int i3; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_5[0xE8]; int i4; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_6[0xEC]; int i5; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_7[0xF0]; int i6; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_8[0xF4]; int i7; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_9[0xF8]; int i8; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_10[0xFC]; float f2; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_11[0x100]; int i9; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_12[0x104]; int i10; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_13[0x108]; int i11; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_14[0x10C]; int i12; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_15[0x110]; int i13; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_16[0x114]; float f3; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_17[0x118]; float f4; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_18[0x11C]; int i14; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_19[0x120]; int i15; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_20[0x124]; int i16; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_21[0x128]; int i17; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_22[0x12C]; int i18; };   // at 0x12C
+  } frame;
 
-  i1[0] = arg1;
-  i1[1] = arg2;
-  f1 = *(float *)&arg1 + 256.0;
-  i2 = arg2;
-  i1[2] = 1065353216;
-  i1[3] = 1065353216;
-  i1[4] = -2139062144;
-  f2 = *(float *)&arg2 + 256.0;
-  f3 = f1;
-  i1[5] = 0;
-  i1[6] = 0;
-  f4 = f2;
-  i3 = 1065353216;
-  i4 = 1065353216;
-  i5 = -2139062144;
-  i6 = 1065353216;
-  i7 = 0;
-  i8 = arg1;
-  i9 = 1065353216;
-  i10 = 1065353216;
-  i11 = -2139062144;
-  i12 = 0;
-  i13 = 1065353216;
-  i14 = 1065353216;
-  i15 = 1065353216;
-  i16 = -2139062144;
-  i17 = 1065353216;
-  i18 = 1065353216;
+  frame.i1[0] = arg1;
+  frame.i1[1] = arg2;
+  frame.f1 = *(float *)&arg1 + 256.0;
+  frame.i2 = arg2;
+  frame.i1[2] = 1065353216;
+  frame.i1[3] = 1065353216;
+  frame.i1[4] = -2139062144;
+  frame.f2 = *(float *)&arg2 + 256.0;
+  frame.f3 = frame.f1;
+  frame.i1[5] = 0;
+  frame.i1[6] = 0;
+  frame.f4 = frame.f2;
+  frame.i3 = 1065353216;
+  frame.i4 = 1065353216;
+  frame.i5 = -2139062144;
+  frame.i6 = 1065353216;
+  frame.i7 = 0;
+  frame.i8 = arg1;
+  frame.i9 = 1065353216;
+  frame.i10 = 1065353216;
+  frame.i11 = -2139062144;
+  frame.i12 = 0;
+  frame.i13 = 1065353216;
+  frame.i14 = 1065353216;
+  frame.i15 = 1065353216;
+  frame.i16 = -2139062144;
+  frame.i17 = 1065353216;
+  frame.i18 = 1065353216;
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, 0);
@@ -97,7 +99,7 @@ XI_API int __stdcall Gfx_DrawScreenQuad256(int arg1, int arg2)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i1, 28);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.i1, 28);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, TRUE);
   return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
 }

@@ -21,7 +21,7 @@ XI_API void __thiscall OcclusionQuery_Init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1006C280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Occlusion_QueryScreenRect(short *self_, float *arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, char arg9, int arg10)
+XI_API int __thiscall Occlusion_QueryScreenRect(short *self_, float *arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int _60, char arg9, int arg10)
 {
   unsigned char c1;
   int ScreenRectImpl;
@@ -29,7 +29,7 @@ XI_API int __thiscall Occlusion_QueryScreenRect(short *self_, float *arg2, int a
   (*(unsigned char *)((char *)g_pCDx + 0x828)) = 0;
   orig::OcclusionMng_Prepare(self_);
   orig::CDx_NopB();
-  ScreenRectImpl = orig::Occlusion_QueryScreenRectImpl(self_, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  ScreenRectImpl = orig::Occlusion_QueryScreenRectImpl(self_, arg2, arg3, arg4, arg5, arg6, arg7, _60, arg9, arg10);
   orig::CDx_NopA();
   (*(unsigned char *)((char *)g_pCDx + 0x828)) = c1;
   return ScreenRectImpl;
@@ -46,13 +46,15 @@ XI_API int __thiscall Occlusion_QueryScreenRectImpl(short *self_, float *arg0, i
   int i5;
   int i6;
   int i7;
-  alignas(16) unsigned char xi_frame[0x444];  // address-taken locals at their original offsets
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x40);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x444];
+    struct __attribute__((packed)) { int i8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i9; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x34]; int i10; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_4[0x38]; int i11; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_5[0x3C]; int i12; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_6[0x40]; int i13; };   // at 0x40
+  } frame;
 
   i1 = (long long)*arg0;
   i2 = (long long)arg0[1];
@@ -68,18 +70,18 @@ XI_API int __thiscall Occlusion_QueryScreenRectImpl(short *self_, float *arg0, i
     i2 = (long long)arg0[3];
     i4 = (long long)arg0[1];
   }
-  i10 = i1;
-  i11 = i2;
-  i12 = i3;
-  i13 = i4;
+  frame.i10 = i1;
+  frame.i11 = i2;
+  frame.i12 = i3;
+  frame.i13 = i4;
   if ( i1 < -256 )
-    i10 = -256;
+    frame.i10 = -256;
   if ( i2 < -256 )
-    i11 = -256;
-  if ( i12 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256 )
-    i12 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256;
-  if ( i13 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256 )
-    i13 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256;
+    frame.i11 = -256;
+  if ( frame.i12 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256 )
+    frame.i12 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256;
+  if ( frame.i13 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256 )
+    frame.i13 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256;
   if ( i1 < 0 )
     i1 = 0;
   if ( i2 < 0 )
@@ -94,9 +96,9 @@ XI_API int __thiscall Occlusion_QueryScreenRectImpl(short *self_, float *arg0, i
     return 0;
   if ( arg9 == 0 )
     arg3 = 1065353214;
-  *(float *)&i9 = (float)(16 * i6 / (i13 - i11));
-  *(float *)&i8 = (float)(16 * i5 / (i12 - i10));
-  orig::DrawScreenProbe((int)&i10, arg3, i8, i9, arg4, arg5, arg6, arg7, 0);
+  *(float *)&frame.i9 = (float)(16 * i6 / (frame.i13 - frame.i11));
+  *(float *)&frame.i8 = (float)(16 * i5 / (frame.i12 - frame.i10));
+  orig::DrawScreenProbe((int)&frame.i10, arg3, frame.i8, frame.i9, arg4, arg5, arg6, arg7, 0);
   i7 = orig::Occlusion_ReadbackCount_as_v0(self_, 0);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -115,7 +117,7 @@ XI_API int __stdcall Occlusion_DrawQuery(int arg1, int arg2, int arg3, int arg4,
   double f6;
   int i1;
   void *p1;
-  int i2;
+  int stride;
   int i3;
   void *p2;
   int i4;
@@ -171,8 +173,8 @@ XI_API int __stdcall Occlusion_DrawQuery(int arg1, int arg2, int arg3, int arg4,
   i1 = g_pResourceMng;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
   p1 = *(void **)(i1 + 3528);
-  i2 = orig::Gfx_CalcFVFStride(0x44u);
-  orig::CDx_DrawPrimitiveUP(p1, 5, 2, (int)&Fn1006C530_quadVerts, i2);
+  stride = orig::Gfx_CalcFVFStride(0x44u);
+  orig::CDx_DrawPrimitiveUP(p1, 5, 2, (int)&Fn1006C530_quadVerts, stride);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
   i3 = g_pResourceMng;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
@@ -214,27 +216,29 @@ XI_API int __thiscall Occlusion_ReadbackCount(short *self_, char arg2)
   int i4;
   int i5;
   short i6;
-  alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  uint32_t (&u1)[2] = *reinterpret_cast<uint32_t (*)[2]>(xi_frame + 0x40);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x448];
+    struct __attribute__((packed)) { unsigned char pad_1[0x38]; int i7; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_2[0x3C]; int i8; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_3[0x40]; uint32_t u1[2]; };   // at 0x40
+  } frame;
 
   i1 = 0;
   i2 = 0;
   (*(void (__stdcall **)(uint32_t, uint32_t, int *))(**(uint32_t **)(g_pOcclusionMng + 12) + 60))(
     *(uint32_t *)(g_pOcclusionMng + 12),
     0,
-    &i7);
+    &frame.i7);
   if ( arg2 != 0 )
     i1 = *self_;
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CopyRects((IDirect3DSurface8 *)(i7), (void *)(&g_1032C18C), 1, (IDirect3DSurface8 *)(*((uint32_t *)self_ + i1 + 1)), (void *)(0));
-  (*(void (__stdcall **)(int))(*(uint32_t *)i7 + 8))(i7);
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CopyRects((IDirect3DSurface8 *)(frame.i7), (void *)(&g_1032C18C), 1, (IDirect3DSurface8 *)(*((uint32_t *)self_ + i1 + 1)), (void *)(0));
+  (*(void (__stdcall **)(int))(*(uint32_t *)frame.i7 + 8))(frame.i7);
   i3 = *((uint32_t *)self_ + 1);
-  if ( (*(int (__stdcall **)(int, uint32_t *, void *, int))(*(uint32_t *)i3 + 36))(i3, u1, &g_1032C17C, 16) == 0 )
+  if ( (*(int (__stdcall **)(int, uint32_t *, void *, int))(*(uint32_t *)i3 + 36))(i3, frame.u1, &g_1032C17C, 16) == 0 )
   {
-    i7 = 8;
-    i8 = 2 * u1[0];
-    p1 = (int *)u1[1];
+    frame.i7 = 8;
+    frame.i8 = 2 * frame.u1[0];
+    p1 = (int *)frame.u1[1];
     do
     {
       for ( i = p1; i < p1 + 16; i2 += i4 & 0x80 )
@@ -242,10 +246,10 @@ XI_API int __thiscall Occlusion_ReadbackCount(short *self_, char arg2)
         i4 = *i;
         i += 2;
       }
-      p1 = (int *)((char *)p1 + i8);
-      --i7;
+      p1 = (int *)((char *)p1 + frame.i8);
+      --frame.i7;
     }
-    while ( i7 != 0 );
+    while ( frame.i7 != 0 );
     (*(void (__stdcall **)(int))(*(uint32_t *)i3 + 40))(i3);
   }
   i5 = i2 >> 5;
@@ -269,9 +273,11 @@ XI_API int __thiscall Occlusion_ReadbackCount(short *self_, char arg2)
 XI_API int __thiscall OcclusionMng_Prepare(uint32_t *self_)
 {
   int result;
-  alignas(16) unsigned char xi_frame[0x438];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  uint8_t (&u1)[32] = *reinterpret_cast<uint8_t (*)[32]>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x438];
+    struct __attribute__((packed)) { unsigned char pad_1[0x14]; int i1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; uint8_t u1[32]; };   // at 0x18
+  } frame;
 
   if ( *(uint32_t *)(g_pOcclusionMng + 12) == 0 )
     orig::OcclusionMng_CreateTarget((uint32_t *)g_pOcclusionMng);
@@ -281,9 +287,9 @@ XI_API int __thiscall OcclusionMng_Prepare(uint32_t *self_)
     (*(void (__stdcall **)(uint32_t, uint32_t, int *))(**(uint32_t **)&(*(unsigned char *)((char *)g_pCDx + 0x194)) + 60))(
       *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
       0,
-      &i1);
-    (*(void (__stdcall **)(int, uint8_t *))(*(uint32_t *)i1 + 32))(i1, u1);
-    (*(void (__stdcall **)(int))(*(uint32_t *)i1 + 8))(i1);
+      &frame.i1);
+    (*(void (__stdcall **)(int, uint8_t *))(*(uint32_t *)frame.i1 + 32))(frame.i1, frame.u1);
+    (*(void (__stdcall **)(int))(*(uint32_t *)frame.i1 + 8))(frame.i1);
     result = *(uint32_t *)(g_pOcclusionMng + 24);
     *(self_ + 1) = result;
     if ( result != 0 )

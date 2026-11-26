@@ -265,16 +265,16 @@ XI_API int __cdecl MenuPanels_FindForIds(short * arg1, int * arg2, int arg3)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl ShapeMng_FindShapes(int * arg1, bits32 * arg2)
 {
-  int i1;
+  int id;
   uint64_t u1;
   
-  i1 = *arg1;
-  while (i1 != 0) {
-    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,i1);
+  id = *arg1;
+  while (id != 0) {
+    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,id);
     arg1 = arg1 + 1;
     *arg2 = (int)u1;
     arg2 = arg2 + 1;
-    i1 = *arg1;
+    id = *arg1;
   }
   return;
 }
@@ -1531,7 +1531,7 @@ XI_API long double __cdecl Camera_GetWrappedYaw(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl ShapeMng_FillMenuShapes(void)
 {
-  uint8_t *p1;
+  uint8_t *id;
   short *p2;
   bits32 *p3;
   uint64_t u1;
@@ -1539,8 +1539,8 @@ XI_API void __cdecl ShapeMng_FillMenuShapes(void)
   p3 = &g_10666E88;
   p2 = &g_10385F6C;
   do {
-    p1 = orig::Scene_GetMenuFrameName((int)*p2);
-    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,p1);
+    id = orig::Scene_GetMenuFrameName((int)*p2);
+    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,id);
     *p3 = (int)u1;
     p2 = p2 + 1;
     p3 = p3 + 1;

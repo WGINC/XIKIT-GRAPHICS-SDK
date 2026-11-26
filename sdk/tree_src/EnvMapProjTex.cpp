@@ -6,8 +6,8 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 1778 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __thiscall ProjTex_BeginPass(uint32_t *self_, int *arg2, int arg3, uint32_t *arg4)
 {
-  uint32_t buf1[16];
-  orig::fn_10027990((Iostream_init *)buf1);
+  uint32_t matrix[16];
+  orig::fn_10027990((Iostream_init *)matrix);
   if ( *(self_ + 1) != 0 )
   {
     g_projTexPrevTex0 = *arg2;
@@ -19,14 +19,14 @@ XI_API char __thiscall ProjTex_BeginPass(uint32_t *self_, int *arg2, int arg3, u
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_FLAT);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-    orig::Mat4_Copy(buf1, arg4);
+    orig::Mat4_Copy(matrix, arg4);
     if ( (g_projTexFactor & 0xFF000000) != 0x80000000 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
     }
-    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, buf1);
+    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, matrix);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT4 | D3DTTFF_PROJECTED);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
@@ -128,33 +128,35 @@ XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int arg2, int arg3, i
 {
   long long i1; // rcx
   int result;
-  alignas(16) unsigned char xi_frame[0x528];  // address-taken locals at their original offsets
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x98);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x9C);
-  long long &i4 = *reinterpret_cast<long long *>(xi_frame + 0xB0);
-  int (&i5)[5] = *reinterpret_cast<int (*)[5]>(xi_frame + 0xB8);
-  long long &i6 = *reinterpret_cast<long long *>(xi_frame + 0xCC);
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0xD8);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0xEC);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0xF0);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0xF4);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x10C);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x110);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x118);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x120);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x124);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x528];
+    struct __attribute__((packed)) { unsigned char pad_1[0x98]; int i2; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_2[0x9C]; int i3; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_3[0xB0]; long long i4; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_4[0xB8]; int i5[5]; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_5[0xCC]; long long i6; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_6[0xD4]; float f1; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_7[0xD8]; int i7; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_8[0xDC]; int i8; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_9[0xE0]; int i9; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_10[0xE4]; int i10; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_11[0xE8]; int i11; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_12[0xEC]; int i12; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_13[0xF0]; int i13; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_14[0xF4]; float f2; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_15[0xF8]; int i14; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_16[0xFC]; int i15; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_17[0x100]; int i16; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_18[0x104]; int i17; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_19[0x108]; int i18; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_20[0x10C]; float f3; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_21[0x110]; float f4; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_22[0x114]; int i19; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_23[0x118]; int i20; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_24[0x11C]; int i21; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_25[0x120]; int i22; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_26[0x124]; int i23; };   // at 0x124
+  } frame;
 
   g_projTexFactor = arg2;
   g_10456E60 = arg4;
@@ -164,37 +166,37 @@ XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int arg2, int arg3, i
   result = *((uint32_t *)self_ + 1);
   if ( result != 0 )
   {
-    memset(i5, 0, 12);
-    i5[3] = 1065353216;
-    i5[4] = -2139062144;
-    i6 = 0;
+    memset(frame.i5, 0, 12);
+    frame.i5[3] = 1065353216;
+    frame.i5[4] = -2139062144;
+    frame.i6 = 0;
     i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2)) << 0));
-    i7 = 0;
-    i8 = 0;
-    i9 = 1065353216;
-    i10 = -2139062144;
-    f1 = (float)i1;
-    i11 = 1065353216;
-    i12 = 0;
-    i13 = 0;
-    i4 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3);
-    i14 = 0;
-    i15 = 1065353216;
-    i16 = -2139062144;
-    i17 = 0;
-    f2 = (float)i4;
-    i18 = 1065353216;
-    f3 = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2);
+    frame.i7 = 0;
+    frame.i8 = 0;
+    frame.i9 = 1065353216;
+    frame.i10 = -2139062144;
+    frame.f1 = (float)i1;
+    frame.i11 = 1065353216;
+    frame.i12 = 0;
+    frame.i13 = 0;
+    frame.i4 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3);
+    frame.i14 = 0;
+    frame.i15 = 1065353216;
+    frame.i16 = -2139062144;
+    frame.i17 = 0;
+    frame.f2 = (float)frame.i4;
+    frame.i18 = 1065353216;
+    frame.f3 = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2);
     i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3)) << 0));
-    i3 = *((uint32_t *)self_ + 2);
-    i2 = *((uint32_t *)self_ + 1);
-    i19 = 0;
-    f4 = (float)i1;
-    i20 = 1065353216;
-    i21 = -2139062144;
-    i22 = 1065353216;
-    i23 = 1065353216;
-    orig::CDx_PushRenderTarget(g_pCDx, i2, i3, 0);
+    frame.i3 = *((uint32_t *)self_ + 2);
+    frame.i2 = *((uint32_t *)self_ + 1);
+    frame.i19 = 0;
+    frame.f4 = (float)i1;
+    frame.i20 = 1065353216;
+    frame.i21 = -2139062144;
+    frame.i22 = 1065353216;
+    frame.i23 = 1065353216;
+    orig::CDx_PushRenderTarget(g_pCDx, frame.i2, frame.i3, 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
@@ -208,7 +210,7 @@ XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int arg2, int arg3, i
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
     (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, (IDirect3DBaseTexture8 *)g_projTexTarget);
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i5, 28);
+    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.i5, 28);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
@@ -246,8 +248,8 @@ XI_API void __thiscall EnvMapProjTex_ClearCounter(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 2471 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __stdcall EnvMap_BeginPass(int *arg1, int arg2, float *arg3)
 {
-  float buf1[16];
-  orig::fn_10027990((Iostream_init *)buf1);
+  float matrix[16];
+  orig::fn_10027990((Iostream_init *)matrix);
   if ( g_pEnvMapTexObj != 0 )
   {
     g_envMapPrevTex0 = *arg1;
@@ -261,15 +263,15 @@ XI_API char __stdcall EnvMap_BeginPass(int *arg1, int arg2, float *arg3)
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
     if ( *(uint32_t *)(g_pAppSettings + 92) == 0 && g_cfgGraphicsStabilization == 0 )
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_WRAP0, 7u);
-    orig::Mat4_SetIdentity(buf1);
-    (*(uint32_t *)&(buf1[12])) = g_envMapTexOffsetU;
-    (*(uint32_t *)&(buf1[13])) = g_envMapTexOffsetV;
-    orig::Mat4_PreMultiply(buf1, arg3);
+    orig::Mat4_SetIdentity(matrix);
+    (*(uint32_t *)&(matrix[12])) = g_envMapTexOffsetU;
+    (*(uint32_t *)&(matrix[13])) = g_envMapTexOffsetV;
+    orig::Mat4_PreMultiply(matrix, arg3);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
-    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, buf1);
+    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, matrix);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACENORMAL);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
@@ -374,18 +376,20 @@ XI_API int __stdcall EnvMap_EndPass(int arg1)
 // GATE: PASS -- 100 trials, 100 returned normally, 1100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
 {
-  alignas(16) unsigned char xi_frame[0x588];  // address-taken locals at their original offsets
-  int (&i1)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x90);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x9C);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xA0);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0xA4);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xA8);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0xAC);
-  float (&f1)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0xB0);
-  uint32_t (&u1)[3] = *reinterpret_cast<uint32_t (*)[3]>(xi_frame + 0xBC);
-  float (&f2)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xC8);
-  uint32_t (&u2)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x108);
-  uint8_t (&u3)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x148);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x588];
+    struct __attribute__((packed)) { unsigned char pad_1[0x90]; int i1[3]; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_2[0x9C]; int i2; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_3[0xA0]; int i3; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_4[0xA4]; int i4; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_5[0xA8]; int i5; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_6[0xAC]; int i6; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_7[0xB0]; float f1[3]; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_8[0xBC]; uint32_t u1[3]; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_9[0xC8]; float f2[16]; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_10[0x108]; uint32_t u2[16]; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_11[0x148]; uint8_t u3[64]; };   // at 0x148
+  } frame;
 
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
@@ -395,45 +399,45 @@ XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-  orig::fn_10027990((Iostream_init *)u2);
-  orig::fn_10027990((Iostream_init *)u3);
-  orig::fn_10027990((Iostream_init *)f2);
-  u1[0] = 1065353216;
-  u1[1] = 1065353216;
-  u1[2] = 1065353216;
-  orig::CDx_GetTransformCached(g_pCDx, 256, u3);
-  orig::CDx_GetTransformCached(g_pCDx, 2, f2);
-  orig::Mat4_InvertOrthonormal((int *)f2);
-  f1[0] = 0.0;
-  f1[1] = 0.0;
-  f1[2] = -4.0;
-  orig::Mat4_TransformPointInPlace(f2, f1);
-  orig::Mat4_SetScale(u2, u1);
-  orig::Mat4_SetTranslation(u2, f1);
-  orig::CDx_SetTransform(g_pCDx, 256, u2);
-  memset(i1, 0, sizeof(i1));
-  i3 = 1065353216;
-  i4 = 0;
-  i5 = 0;
-  i2 = -2139095040;
-  i6 = -2139095040;
+  orig::fn_10027990((Iostream_init *)frame.u2);
+  orig::fn_10027990((Iostream_init *)frame.u3);
+  orig::fn_10027990((Iostream_init *)frame.f2);
+  frame.u1[0] = 1065353216;
+  frame.u1[1] = 1065353216;
+  frame.u1[2] = 1065353216;
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.u3);
+  orig::CDx_GetTransformCached(g_pCDx, 2, frame.f2);
+  orig::Mat4_InvertOrthonormal((int *)frame.f2);
+  frame.f1[0] = 0.0;
+  frame.f1[1] = 0.0;
+  frame.f1[2] = -4.0;
+  orig::Mat4_TransformPointInPlace(frame.f2, frame.f1);
+  orig::Mat4_SetScale(frame.u2, frame.u1);
+  orig::Mat4_SetTranslation(frame.u2, frame.f1);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u2);
+  memset(frame.i1, 0, sizeof(frame.i1));
+  frame.i3 = 1065353216;
+  frame.i4 = 0;
+  frame.i5 = 0;
+  frame.i2 = -2139095040;
+  frame.i6 = -2139095040;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  i3 = 0;
-  i2 = -2147450880;
-  i6 = -2147450880;
-  i4 = 1065353216;
-  i5 = 0;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  frame.i3 = 0;
+  frame.i2 = -2147450880;
+  frame.i6 = -2147450880;
+  frame.i4 = 1065353216;
+  frame.i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  i3 = 0;
-  i2 = -2147483520;
-  i6 = -2147483520;
-  i4 = 0;
-  i5 = 1065353216;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  frame.i3 = 0;
+  frame.i2 = -2147483520;
+  frame.i6 = -2147483520;
+  frame.i4 = 0;
+  frame.i5 = 1065353216;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  orig::CDx_SetTransform(g_pCDx, 256, u3);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u3);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -443,47 +447,49 @@ XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 300 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __stdcall Dbg_DrawAxesAt(int arg1)
 {
-  alignas(16) unsigned char xi_frame[0x4F8];  // address-taken locals at their original offsets
-  int (&i1)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x18);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  uint32_t (&u1)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x38);
-  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x78);
-  uint8_t (&u3)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0xB8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4F8];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i1[3]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x24]; int i2; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_3[0x28]; int i3; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; int i4; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_5[0x30]; int i5; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_6[0x34]; int i6; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_7[0x38]; uint32_t u1[16]; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_8[0x78]; uint8_t u2[64]; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_9[0xB8]; uint8_t u3[64]; };   // at 0xB8
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::fn_10027990((Iostream_init *)u2);
-  orig::fn_10027990((Iostream_init *)u3);
-  orig::CDx_GetTransformCached(g_pCDx, 256, u2);
-  orig::Mat4_SetIdentity(u1);
-  orig::Mat4_SetTranslation(u1, (uint32_t *)arg1);
-  orig::CDx_SetTransform(g_pCDx, 256, u1);
-  memset(i1, 0, sizeof(i1));
-  i2 = -2139095040;
-  i6 = -2139095040;
-  i3 = 1065353216;
-  i4 = 0;
-  i5 = 0;
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::fn_10027990((Iostream_init *)frame.u2);
+  orig::fn_10027990((Iostream_init *)frame.u3);
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.u2);
+  orig::Mat4_SetIdentity(frame.u1);
+  orig::Mat4_SetTranslation(frame.u1, (uint32_t *)arg1);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u1);
+  memset(frame.i1, 0, sizeof(frame.i1));
+  frame.i2 = -2139095040;
+  frame.i6 = -2139095040;
+  frame.i3 = 1065353216;
+  frame.i4 = 0;
+  frame.i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  i3 = 0;
-  i2 = -2147450880;
-  i6 = -2147450880;
-  i4 = 1065353216;
-  i5 = 0;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  frame.i3 = 0;
+  frame.i2 = -2147450880;
+  frame.i6 = -2147450880;
+  frame.i4 = 1065353216;
+  frame.i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  i3 = 0;
-  i2 = -2147483520;
-  i6 = -2147483520;
-  i4 = 0;
-  i5 = 1065353216;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  frame.i3 = 0;
+  frame.i2 = -2147483520;
+  frame.i6 = -2147483520;
+  frame.i4 = 0;
+  frame.i5 = 1065353216;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
-  orig::CDx_SetTransform(g_pCDx, 256, u2);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i1, 16);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u2);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();

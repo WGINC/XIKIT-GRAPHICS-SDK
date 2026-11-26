@@ -103,35 +103,37 @@ XI_API void __cdecl SqPlanarShadow_RenderShadowTexture(int arg1, int arg2)
   int i3;
   int *p1;
   int i4;
-  char xi_frame[32] __attribute__((aligned(4)));
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { int i5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; int i8; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; uint32_t u5; };   // at 0x1C
+  } frame;
   
   p1 = (int *)(arg2 * 0x30 + *(int *)(arg1 + 0x40));
   i1 = *p1;
-  i5 = p1[7];
+  frame.i5 = p1[7];
   i3 = *(int *)(i1 * 0xc + *(int *)(arg1 + 0x24));
-  i6 = p1[7];
-  i7 = p1[7];
-  i8 = p1[7];
-  u2 = 0x3f800000;
-  u3 = 0x3f800000;
-  u4 = 0x3f800000;
-  u5 = 0x3f800000;
+  frame.i6 = p1[7];
+  frame.i7 = p1[7];
+  frame.i8 = p1[7];
+  frame.u2 = 0x3f800000;
+  frame.u3 = 0x3f800000;
+  frame.u4 = 0x3f800000;
+  frame.u5 = 0x3f800000;
   i2 = *(int *)(g_pSqgxContext_as_s32 + 0x89c);
   if (g_103BD524 == -1) {
     g_103BD524 = orig::sqgxTextureAdd_v1(*(int *)(arg1 + 0x30),*(int *)(arg1 + 0x30),4,0);
   }
   p1[3] = g_103BD524;
-  orig::sqgxColor_v1(&i5);
+  orig::sqgxColor_v1(&frame.i5);
   orig::sqgxTextureDraw_v1(p1[3],0);
-  orig::sqgxTextureClear_v1(&u2,0);
+  orig::sqgxTextureClear_v1(&frame.u2,0);
   i4 = *(int *)(*(int *)(arg1 + 0x18) + *(int *)(arg1 + 0x1c) * 0xc);
   orig::SqgxContext_SetPerspective(*(float *)(i3 + 0x24),*(float *)(i4 + 0x18),*(float *)(i4 + 0x1c));
   orig::sqgxMatrixCamera_v1(*(uint32_t **)(i1 * 0xc + 4 + *(int *)(arg1 + 0x24)));
@@ -147,7 +149,7 @@ XI_API void __cdecl SqPlanarShadow_RenderShadowTexture(int arg1, int arg2)
       i1 = *(int *)(*(int *)(arg1 + 0x48) + 0x28 + i4);
       if (*(char *)(i1 + 0x1d + i3) != '\0') {
         orig::sqgxMatrixShape_v1(*(uint32_t **)(i1 + i3 + 4));
-        orig::sqgxColor_v1(&i5);
+        orig::sqgxColor_v1(&frame.i5);
         orig::sqgxColorUpdate_v1();
         orig::sqDrawableDraw_v1(*(int *)(*(int *)(*(int *)(arg1 + 0x48) + 0x28 + i4) + i3));
       }

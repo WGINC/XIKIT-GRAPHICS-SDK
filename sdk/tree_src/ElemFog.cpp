@@ -9,30 +9,32 @@ XI_API bits32 __thiscall ElemFog_ComputeWorldPos(void * self_, float * arg2)
   int i1;
   float *p1;
   int i2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3; };   // at 0x8
+  } frame;
   
-  f1 = *(float *)((int)self_ + 0x54);
-  f2 = *(float *)((int)self_ + 0x58);
-  f3 = *(float *)((int)self_ + 0x5c);
+  frame.f1 = *(float *)((int)self_ + 0x54);
+  frame.f2 = *(float *)((int)self_ + 0x58);
+  frame.f3 = *(float *)((int)self_ + 0x5c);
   i1 = orig::CMoElem_GetActiveField0A4_v1(self_);
   if ((i1 != 0) && (*(int *)((int)self_ + 0xfc) != 0)) {
     p1 = (float *)orig::CMoElem_GetAddr78(self_);
-    f1 = (float)(f1 * *p1);
+    frame.f1 = (float)(frame.f1 * *p1);
     i1 = orig::CMoElem_GetAddr78(self_);
-    f2 = (float)(f2 * *(float *)(i1 + 4));
+    frame.f2 = (float)(frame.f2 * *(float *)(i1 + 4));
     i1 = orig::CMoElem_GetAddr78(self_);
-    p1 = &f1;
-    f3 = (float)(f3 * *(float *)(i1 + 8));
+    p1 = &frame.f1;
+    frame.f3 = (float)(frame.f3 * *(float *)(i1 + 8));
     i1 = *g_pProcessor_as_v1;
     i2 = orig::CMoElem_GetActiveField0A4_v1(self_);
-    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x50))))(&f1,i2,p1);
+    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x50))))(&frame.f1,i2,p1);
   }
-  *arg2 = f1;
-  arg2[1] = f2;
-  arg2[2] = f3;
+  *arg2 = frame.f1;
+  arg2[1] = frame.f2;
+  arg2[2] = frame.f3;
   return arg2;
 }
 
@@ -160,37 +162,39 @@ XI_API bits32 __thiscall YmElem_ComputeViewDepthKey(void * self_)
   uint8_t u5;
   long double f1;
   long double f2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u7; };   // at 0x8
+  } frame;
   
   u1 = *(uint32_t *)((int)self_ + 0x10c);
   if ((u1 >> 2 & 1) == 0) {
     if ((u1 >> 0x11 & 1) == 0) {
       i1 = *g_pProcessor_as_v1;
       i2 = g_pResourceMng + 0xb50;
-      u3 = orig::ElemFog_ComputeWorldPos_v1(self_,&f3);
+      u3 = orig::ElemFog_ComputeWorldPos_v1(self_,&frame.f3);
       p2 = (int *)((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x50))))((int)self_ + 0x188,i2,u3);
     }
     else {
       if ((*(int **)((int)self_ + 0xfc) == (int *)0x0) || (**(int **)((int)self_ + 0xfc) == 0)) {
 code_1004500D:
-        f3 = 0.0f;
-        u6 = 0;
-        u7 = 0;
+        frame.f3 = 0.0f;
+        frame.u6 = 0;
+        frame.u7 = 0;
       }
       else {
         i2 = orig::CMoElem_GetActiveField0A4_v1(self_);
         if (i2 == 0) goto code_1004500D;
         i2 = orig::CMoElem_GetActiveField0A4_v1(self_);
-        f3 = *(float *)(i2 + 0x30);
-        u6 = *(uint32_t *)(i2 + 0x34);
-        u7 = *(uint32_t *)(i2 + 0x38);
+        frame.f3 = *(float *)(i2 + 0x30);
+        frame.u6 = *(uint32_t *)(i2 + 0x34);
+        frame.u7 = *(uint32_t *)(i2 + 0x38);
       }
       p1 = (float *)((int)self_ + 0x188);
       p2 = (int *)((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x50))
-                                ))((void *)(g_pProcessor_as_v1),p1,g_pResourceMng + 0xb50,&f3);
+                                ))((void *)(g_pProcessor_as_v1),p1,g_pResourceMng + 0xb50,&frame.f3);
       if (((*(uint8_t *)((int)self_ + 0x10c) & 1) == 0) || ((*(uint32_t *)((int)self_ + 0x10c) & 0x1c0) != 0)
          ) {
         *p1 = (float)(*(float *)((int)self_ + 0x54) + *p1);
@@ -479,14 +483,16 @@ XI_API bits32 __thiscall YmElem_DrawWithOwnProjection(void * self_)
   uint8_t u4;
   uint8_t u5;
   long double f2;
-  char xi_frame[76] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  (&u6)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u6[16]; };   // at 0xC
+  } frame;
   
   p2 = orig::SkyDome_ScaleAlpha
-                     ((void *)((int)self_ + 0xf8),(uint32_t *)&f5,
+                     ((void *)((int)self_ + 0xf8),(uint32_t *)&frame.f5,
                       (float)((long double)*(float *)((int)self_ + 0x138) *
                              (long double)*(float *)((int)self_ + 0x134)));
   g_scratchValue_as_v0 = *p2;
@@ -507,7 +513,7 @@ XI_API bits32 __thiscall YmElem_DrawWithOwnProjection(void * self_)
   u2 = orig::YmElem_SetupDevice(self_,0xffff);
   if ((char)u2 != '\0') goto code_10046358;
   if (u4) {
-    orig::CDx_GetTransformCached_v2(*(void **)(g_pResourceMng + 0xdc8),3,u6);
+    orig::CDx_GetTransformCached_v2(*(void **)(g_pResourceMng + 0xdc8),3,frame.u6);
     u1 = true;
     orig::RegisterWithProcessor_v1(self_);
     p3 = (float *)((int)self_ + 0xa0);
@@ -522,46 +528,46 @@ XI_API bits32 __thiscall YmElem_DrawWithOwnProjection(void * self_)
       f2 = (long double)1.0f - f2 * (long double)0.03125f;
       f2 = f2 * f2 * f2 * (long double)c_flt_0_03 *
                (long double)*(float *)((int)self_ + 0x128);
-      f4 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2dc) - f2);
-      f3 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2e0) - f2);
+      frame.f4 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2dc) - f2);
+      frame.f3 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2e0) - f2);
       f2 = bit_cast<long double>(x87_fpatan((long double)192.0,(long double)*(float *)(g_pCamera_as_s32 + 0x2f4)));
       f1 = (float)(f2 + f2);
       if (*(char *)(g_pZoneMap_as_s32 + 0x39598) != '\0') {
-        f4 = (float)((long double)f4 + (long double)*(float *)(g_pZoneMap_as_s32 + 0x39594));
-        f3 = (float)((long double)*(float *)(g_pZoneMap_as_s32 + 0x39594) + (long double)f3);
+        frame.f4 = (float)((long double)frame.f4 + (long double)*(float *)(g_pZoneMap_as_s32 + 0x39594));
+        frame.f3 = (float)((long double)*(float *)(g_pZoneMap_as_s32 + 0x39594) + (long double)frame.f3);
       }
       p4 = *(int **)(g_pResourceMng + 0xebc);
       f2 = (long double)*(float *)(g_pCamera_as_s32 + 0x2f0) * (long double)*(float *)(g_pCamera_as_s32 + 0x2e8)
       ;
-      f5 = f1;
+      frame.f5 = f1;
 code_100462FF:
       u1 = true;
       i1 = *p4;
-      u3 = orig::D3DXMatrixPerspectiveFovLH_static_v1(p1,f1,(float)((long double)1.0f / f2),f4,f3);
+      u3 = orig::D3DXMatrixPerspectiveFovLH_static_v1(p1,f1,(float)((long double)1.0f / f2),frame.f4,frame.f3);
       ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x94))))(p4,3,u3);
     }
   }
   else if (((((*(uint8_t *)((int)self_ + 0x10c) & 1) != 0) &&
             (u2 = *(uint32_t *)((int)self_ + 0x10c), (u2 & 0x1c0) == 0)) && ((u2 & 4) != 0)) &&
           ((u2 & 8) != 0)) {
-    orig::CDx_GetTransformCached_v2(*(void **)(g_pResourceMng + 0xdc8),3,u6);
+    orig::CDx_GetTransformCached_v2(*(void **)(g_pResourceMng + 0xdc8),3,frame.u6);
     f2 = bit_cast<long double>(x87_fpatan((long double)192.0,(long double)3.5e+02));
     f1 = (float)(f2 + f2);
     f2 = (long double)0.0f;
     if (*(char *)(g_pZoneMap_as_s32 + 0x39598) != '\0') {
       f2 = (long double)*(float *)(g_pZoneMap_as_s32 + 0x39594);
     }
-    f5 = *(float *)(g_pCamera_as_s32 + 0x2dc);
+    frame.f5 = *(float *)(g_pCamera_as_s32 + 0x2dc);
     p4 = *(int **)(g_pResourceMng + 0xebc);
-    f3 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2e0) + f2);
-    f4 = (float)((long double)f5 + f2);
+    frame.f3 = (float)((long double)*(float *)(g_pCamera_as_s32 + 0x2e0) + f2);
+    frame.f4 = (float)((long double)frame.f5 + f2);
     f2 = (long double)*(float *)(g_pCamera_as_s32 + 0x2f0) * (long double)*(float *)(g_pCamera_as_s32 + 0x2e8);
     goto code_100462FF;
   }
   ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x48))))((void *)(self_));
   if (u1) {
     ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pResourceMng + 0xebc) + 0x94))
-              ))(*(int **)(g_pResourceMng + 0xebc),3,u6);
+              ))(*(int **)(g_pResourceMng + 0xebc),3,frame.u6);
   }
   orig::YmElem_RestoreDevice(self_,0xffff);
 code_10046358:

@@ -17,23 +17,25 @@ char CXiSkeletonActor::DrawModel(uint32_t *arg1, short *arg2, int arg3, uint32_t
   IDirect3DDevice8 *pDevice;
   IDirect3DDevice8 *p5;
   IDirect3DDevice8 val1;
-  alignas(16) unsigned char xi_frame[0x824];  // address-taken locals at their original offsets
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x3A8);
-  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x3AC);
-  long long &i3 = *reinterpret_cast<long long *>(xi_frame + 0x3B0);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x3B8);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x3BC);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x3C0);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x3C4);
-  uint32_t (&u1)[3] = *reinterpret_cast<uint32_t (*)[3]>(xi_frame + 0x3C8);
-  float (&f1)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x3D4);
-  uint32_t (&u2)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x3E4);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x824];
+    struct __attribute__((packed)) { unsigned char pad_1[0x3A8]; int i2; };   // at 0x3A8
+    struct __attribute__((packed)) { unsigned char pad_2[0x3AC]; char c1; };   // at 0x3AC
+    struct __attribute__((packed)) { unsigned char pad_3[0x3B0]; long long i3; };   // at 0x3B0
+    struct __attribute__((packed)) { unsigned char pad_4[0x3B8]; int i4; };   // at 0x3B8
+    struct __attribute__((packed)) { unsigned char pad_5[0x3BC]; int i5; };   // at 0x3BC
+    struct __attribute__((packed)) { unsigned char pad_6[0x3C0]; int i6; };   // at 0x3C0
+    struct __attribute__((packed)) { unsigned char pad_7[0x3C4]; int i7; };   // at 0x3C4
+    struct __attribute__((packed)) { unsigned char pad_8[0x3C8]; uint32_t u1[3]; };   // at 0x3C8
+    struct __attribute__((packed)) { unsigned char pad_9[0x3D4]; float f1[4]; };   // at 0x3D4
+    struct __attribute__((packed)) { unsigned char pad_10[0x3E4]; uint32_t u2[16]; };   // at 0x3E4
+  } frame;
 
-  orig::Vec4_Copy(f1, arg4);
+  orig::Vec4_Copy(frame.f1, arg4);
   g_modelPrimitiveCount = 0;
   orig::CDx_SetVertexShaderCached((int)g_pCDx, 0);
   this->field_30 |= 1u;
-  i2 = arg1[47];
+  frame.i2 = arg1[47];
   orig::CDx_GetTransformCached(g_pCDx, 256, g_matrix_7270);
   orig::CDx_GetTransformCached(g_pCDx, 2, &g_matrix_7228);
   orig::CDx_GetTransformCached(g_pCDx, 3, g_matrix_7468);
@@ -41,7 +43,7 @@ char CXiSkeletonActor::DrawModel(uint32_t *arg1, short *arg2, int arg3, uint32_t
     goto L1;
   if ( *(uint32_t *)(arg6 + 12) != -1082130432 && *(float *)(arg6 + 12) != 0.0 )
   {
-    if ( orig::CXiSkeletonActor_AnimateModels(self, arg1, arg2, i2, (float *)arg6) == 0 )
+    if ( orig::CXiSkeletonActor_AnimateModels(self, arg1, arg2, frame.i2, (float *)arg6) == 0 )
     {
       result = g_modelPrimitiveCount;
       this->field_B4 = g_modelPrimitiveCount;
@@ -60,9 +62,9 @@ L1:
     *(float *)&g_modelMaterial[4] = (double)(unsigned char)arg7 * 0.0078125;
     g_10457140 = -1082130432;
     *(float *)&g_modelMaterial[5] = (double)(uint8_t)((uint32_t)(arg7) >> 8) * 0.0078125;
-    i3 = (uint8_t)((uint32_t)(arg7) >> 24);
+    frame.i3 = (uint8_t)((uint32_t)(arg7) >> 24);
     *(float *)&g_modelMaterial[6] = (double)(uint8_t)((uint32_t)(arg7) >> 16) * 0.0078125;
-    *(float *)&g_modelMaterial[7] = (double)i3 * 0.0078125;
+    *(float *)&g_modelMaterial[7] = (double)frame.i3 * 0.0078125;
     result = (g_pCDx->pDevice)->lpVtbl->SetMaterial((g_pCDx->pDevice), g_modelMaterial);
     g_modelColor = arg7;
     if ( (arg7 & 0xFF000000) == 0 )
@@ -72,48 +74,48 @@ L2:
       return result;
     }
     g_modelColor = arg7 & 0xFF000000 | 0x808080;
-    c1 = 0;
-    p2 = (uint32_t *)*orig::game_10039410((uint32_t *)(self + 156), &i3);
+    frame.c1 = 0;
+    p2 = (uint32_t *)*orig::game_10039410((uint32_t *)(self + 156), &frame.i3);
     if ( p2 != nullptr )
-      c1 = *p2 != 0;
-    orig::ModelTranslucent_SetColorForce(g_modelColor, c1);
+      frame.c1 = *p2 != 0;
+    orig::ModelTranslucent_SetColorForce(g_modelColor, frame.c1);
     orig::Model_BeginTranslucentPass(self + 116);
     if ( g_envMapEnabled != 0 )
     {
       orig::Mat4_SetIdentity(g_envMapTexMatrix);
       p3 = orig::game_10015240();
       orig::game_10027F60((float *)g_envMapTexMatrix, (int)p3);
-      i3 = 0x3F0000003F000000LL;
-      i4 = 1056964608;
-      i5 = 1056964608;
-      i6 = 1056964608;
-      i7 = 1056964608;
-      orig::fn_10027990((Iostream_init *)u2);
-      orig::Mat4_SetIdentity(u2);
-      orig::Mat4_SetScale(u2, &i3);
-      orig::Mat4_SetTranslation(u2, &i5);
-      orig::Mat4_PostMultiply((int)g_envMapTexMatrix, (int)u2);
+      frame.i3 = 0x3F0000003F000000LL;
+      frame.i4 = 1056964608;
+      frame.i5 = 1056964608;
+      frame.i6 = 1056964608;
+      frame.i7 = 1056964608;
+      orig::fn_10027990((Iostream_init *)frame.u2);
+      orig::Mat4_SetIdentity(frame.u2);
+      orig::Mat4_SetScale(frame.u2, &frame.i3);
+      orig::Mat4_SetTranslation(frame.u2, &frame.i5);
+      orig::Mat4_PostMultiply((int)g_envMapTexMatrix, (int)frame.u2);
       orig::game_10026210(g_104574B0, g_10457268, g_10457100, g_104570F8);
       orig::MathVector_Nop();
     }
     if ( g_projTexEnabled != 0 )
     {
       orig::Mat4_Copy(g_projTexMatrix, g_matrix_7468);
-      i3 = (((uint64_t)(uint32_t)(g_1045726C) << 32) | (uint32_t)(g_lightTable_End));
-      i4 = 0;
-      orig::Mat4_TransformPointInPlace((float *)g_projTexMatrix, (float *)&i3);
-      i5 = 1056964608;
-      i6 = -1090519040;
-      i7 = 1056964608;
-      u1[0] = 1056964608;
-      u1[1] = 1056964608;
-      u1[2] = 1056964608;
-      orig::fn_10027990((Iostream_init *)u2);
-      orig::Mat4_SetIdentity(u2);
-      orig::Mat4_SetScale(u2, &i5);
-      orig::Mat4_SetTranslation(u2, u1);
-      orig::Mat4_PostMultiply((int)g_projTexMatrix, (int)u2);
-      orig::game_10026F50(g_10457528, (float *)&i3);
+      frame.i3 = (((uint64_t)(uint32_t)(g_1045726C) << 32) | (uint32_t)(g_lightTable_End));
+      frame.i4 = 0;
+      orig::Mat4_TransformPointInPlace((float *)g_projTexMatrix, (float *)&frame.i3);
+      frame.i5 = 1056964608;
+      frame.i6 = -1090519040;
+      frame.i7 = 1056964608;
+      frame.u1[0] = 1056964608;
+      frame.u1[1] = 1056964608;
+      frame.u1[2] = 1056964608;
+      orig::fn_10027990((Iostream_init *)frame.u2);
+      orig::Mat4_SetIdentity(frame.u2);
+      orig::Mat4_SetScale(frame.u2, &frame.i5);
+      orig::Mat4_SetTranslation(frame.u2, frame.u1);
+      orig::Mat4_PostMultiply((int)g_projTexMatrix, (int)frame.u2);
+      orig::game_10026F50(g_10457528, (float *)&frame.i3);
       i1 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194));
       if ( i1 != 0 )
         orig::ProjTex_CaptureToTarget((void *)(self + 144), g_104574B4, i1, g_lightTable_End, g_1045726C);
@@ -196,7 +198,7 @@ L3:
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_MIPFILTER, D3DTEXF_NONE);
     }
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 69u);
-    orig::CXiSkeletonActor_PrepareModelsOnce(self, (int)arg1, i2);
+    orig::CXiSkeletonActor_PrepareModelsOnce(self, (int)arg1, frame.i2);
     ++g_modelsDrawnThisFrame;
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_NONE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
@@ -230,12 +232,12 @@ L3:
     orig::Model_CompositeTranslucentPass((void *)(self + 116));
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-    orig::Shadow_DrawByMode(self + 72, f1);
+    orig::Shadow_DrawByMode(self + 72, frame.f1);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
     result = (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
     goto L2;
   }
-  result = orig::CXiSkeletonActor_AnimateModels(self, arg1, arg2, i2, nullptr);
+  result = orig::CXiSkeletonActor_AnimateModels(self, arg1, arg2, frame.i2, nullptr);
   if ( result != 0 )
     goto L1;
   this->field_B4 = g_modelPrimitiveCount;
@@ -558,10 +560,10 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_IsReadComple
 
 // FUNCTION: FFXIMAIN 0x100A47F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-uint32_t * CXiSkeletonActor::GetPartSlot9Resource(uint32_t *arg1)
+uint32_t * CXiSkeletonActor::GetPartSlot9Resource(uint32_t *partSlot9Resource)
 {
-  *arg1 = this->partSlot9Resource;
-  return arg1;
+  *partSlot9Resource = this->partSlot9Resource;
+  return partSlot9Resource;
 }
 
 // FUNCTION: FFXIMAIN 0x100A4800
@@ -1093,7 +1095,7 @@ int CXiSkeletonActor::Constructor_3Arg(uint32_t *arg1, int arg2, int arg3)
 
 // FUNCTION: FFXIMAIN 0x100C5880
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CXiSkeletonActor::Constructor_4Arg(uint32_t *arg1, int arg2, int arg3, int arg4)
+int CXiSkeletonActor::Constructor_4Arg(uint32_t *arg1, int arg2, int dvdno1, int arg4)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
   orig::CXiCollisionActor_Constructor((uint32_t *)self);
@@ -1120,7 +1122,7 @@ int CXiSkeletonActor::Constructor_4Arg(uint32_t *arg1, int arg2, int arg3, int a
   this->field_9E4 = 1065353216;
   orig::Vec4_Copy((uint32_t *)(self + 1656), (uint32_t *)(self + 1532));
   this->pModelInfo = arg2;
-  orig::CXiSkeletonActor_LoadSkeletonResource((uint32_t *)self, arg3);
+  orig::CXiSkeletonActor_LoadSkeletonResource((uint32_t *)self, dvdno1);
   orig::Actor_SetSlotTableEntry(1u, (int)XI_CODE(TargetActor_SlotHandler1));
   orig::Actor_SetSlotTableEntry(0, (int)XI_CODE(TargetActor_SlotHandler0));
   orig::Actor_SetSlotTableEntry(4u, (int)XI_CODE(TargetActor_SlotHandler4));
@@ -1257,11 +1259,11 @@ char CXiSkeletonActor::DestructorBody()
   int i3;
   int i4;
   int *p3;
-  int i5;
+  int bucketA;
   int i6;
-  int i7;
+  int bucketB;
   int i8;
-  int i9;
+  int pSkeletonRes;
   at<uint32_t>(this, 0x0) = &CXiSkeletonActor_vtbl_ambiguous0;
   p1 = *(int **)(self + 1892);
   if ( p1 != nullptr && *p1 != 0 )
@@ -1289,18 +1291,18 @@ char CXiSkeletonActor::DestructorBody()
   }
   if ( orig::ActorHandle_Resolve(g_targetActorHandle) == self && this->field_F9 == 0 )
     orig::TargetMenu_SetTargetMode((int)g_pTargetMng, 0);
-  i5 = this->bucketA;
-  i6 = g_actorUpdateBucketCountA[i5];
+  bucketA = this->bucketA;
+  i6 = g_actorUpdateBucketCountA[bucketA];
   if ( i6 != 0 )
-    g_actorUpdateBucketCountA[i5] = i6 - 1;
-  i7 = this->bucketB;
-  i8 = g_actorUpdateBucketCountB[i7];
+    g_actorUpdateBucketCountA[bucketA] = i6 - 1;
+  bucketB = this->bucketB;
+  i8 = g_actorUpdateBucketCountB[bucketB];
   if ( i8 != 0 )
-    g_actorUpdateBucketCountB[i7] = i8 - 1;
-  i9 = this->pSkeletonRes;
-  if ( i9 != 0 )
+    g_actorUpdateBucketCountB[bucketB] = i8 - 1;
+  pSkeletonRes = this->pSkeletonRes;
+  if ( pSkeletonRes != 0 )
   {
-    (*(void (__thiscall **)(int, int))(*(uint32_t *)i9 + 24))(i9, 1);
+    (*(void (__thiscall **)(int, int))(*(uint32_t *)pSkeletonRes + 24))(pSkeletonRes, 1);
     this->pSkeletonRes = 0;
   }
   orig::MathVector_Nop();
@@ -1353,8 +1355,8 @@ int CXiSkeletonActor::Init()
   unsigned int u1;
   float f7;
   float f8;
-  int i10;
-  int i11;
+  int lockFlags;
+  int posHandle;
   char c7;
   int i12;
   int i13;
@@ -1518,8 +1520,8 @@ int CXiSkeletonActor::Init()
   this->field_8AA = 0;
   this->field_8AB = 0;
   orig::CXiSkeletonActor_FindPartValue((char *)self, 0);
-  i10 = this->lockFlags;
-  i11 = this->posHandle;
+  lockFlags = this->lockFlags;
+  posHandle = this->posHandle;
   this->field_8AC &= 0xF8u;
   c7 = at<uint8_t>(this, 0xB2) | 1;
   this->field_8BC = 0;
@@ -1532,9 +1534,9 @@ int CXiSkeletonActor::Init()
   this->field_860 = 0;
   this->field_868 = 0;
   at<int32_t>(this, 0x864) = 0;
-  this->lockFlags = i10 & 0xF9F00003 | 0x7FF00;
+  this->lockFlags = lockFlags & 0xF9F00003 | 0x7FF00;
   this->field_844 = 0;
-  this->posHandle = i11 & 0xFFFFF9FF;
+  this->posHandle = posHandle & 0xFFFFF9FF;
   at<uint8_t>(this, 0xB2) = c7;
   this->hiddenFlagByte = 1;
   this->field_7A4 = -1;
@@ -1606,20 +1608,22 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
   long double xi_st0ret;
   long double xi_st0ret_00;
   int64_t i2;
-  char xi_frame[84] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 24);
-  float  (&f5)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 28);
-  float  (&f6)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 40);
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 52);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 56);
-  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 60);
-  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 64);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 68);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 76);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 80);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[84];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; int i4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f5[3]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; float f6[3]; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_6[0x34]; int i6; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_7[0x38]; float f7; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_8[0x3C]; int i7; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_9[0x40]; int i8; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_10[0x44]; float f8; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_11[0x48]; uint32_t u4; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_12[0x4C]; float f9; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_13[0x50]; uint32_t u5; };   // at 0x50
+  } frame;
   
   u2 = false;
   i1 = 0;
@@ -1643,31 +1647,31 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
     if (!(f2 <= f3)) {
       f3 = orig::game_100877F0();
       f2 = orig::game_10087770();
-      f6[0] = (float)f2;
-      f6[1] = 0.0f;
+      frame.f6[0] = (float)f2;
+      frame.f6[1] = 0.0f;
       f2 = orig::game_10087790();
-      f6[2] = (float)f2;
+      frame.f6[2] = (float)f2;
       i1 = orig::Camera_GetField50_v1();
       p2 = (float *)(i1 + 0x44);
       p3 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-      orig::Vec3_Sub_v1(f5,p3,p2);
-      f5[1] = 0.0f;
-      f2 = orig::Vec3_Call100275D0(f5,f5);
-      orig::game_100274B0(f5,f5);
-      orig::Vec3_ScaleInPlace(f5,(float)(f2 + (float)f3));
+      orig::Vec3_Sub_v1(frame.f5,p3,p2);
+      frame.f5[1] = 0.0f;
+      f2 = orig::Vec3_Call100275D0(frame.f5,frame.f5);
+      orig::game_100274B0(frame.f5,frame.f5);
+      orig::Vec3_ScaleInPlace(frame.f5,(float)(f2 + (float)f3));
       i1 = orig::Camera_GetField50_v1();
-      orig::Vec3_AddInPlace_v2(f5,(float *)(i1 + 0x44));
-      u1 = orig::Vec3_Sub_v1(f5,f5,f6);
-      f5[1] = 0.0f;
-      orig::game_100274B0(f5,u1);
-      f2 = bit_cast<long double>(x87_fpatan(f5[0],f5[2]));
+      orig::Vec3_AddInPlace_v2(frame.f5,(float *)(i1 + 0x44));
+      u1 = orig::Vec3_Sub_v1(frame.f5,frame.f5,frame.f6);
+      frame.f5[1] = 0.0f;
+      orig::game_100274B0(frame.f5,u1);
+      f2 = bit_cast<long double>(x87_fpatan(frame.f5[0],frame.f5[2]));
       i2 = XI_CALL_ST0(0x10311C2Cu)(f2 * (-57.2957763671875f));
-      p2 = f6;
-      i4 = (-4 - (int)i2 / 0xf) * 0xf;
+      p2 = frame.f6;
+      frame.i4 = (-4 - (int)i2 / 0xf) * 0xf;
       p3 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-      orig::Vec3_Sub_v1(f5,p3,p2);
-      f5[1] = 0.0f;
-      f2 = orig::MathVector_Length3(f5);
+      orig::Vec3_Sub_v1(frame.f5,p3,p2);
+      frame.f5[1] = 0.0f;
+      f2 = orig::MathVector_Length3(frame.f5);
       f2 = f1 - f2;
       u2 = ((f2) != (f2)) || ((0.0f) != (0.0f));
       if ((u2 || f2 < 0.0f) != u2) {
@@ -1675,44 +1679,44 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
       }
       f3 = (float)f3;
       u2 = ((f2) != (f2)) || ((f3) != (f3));
-      f8 = 0.0f;
-      u4 = 0;
-      f9 = 0.0f;
-      u5 = 0x3f800000;
-      i6 = 0;
-      f7 = 0.0f;
-      i7 = 0;
-      i8 = 0x3f800000;
+      frame.f8 = 0.0f;
+      frame.u4 = 0;
+      frame.f9 = 0.0f;
+      frame.u5 = 0x3f800000;
+      frame.i6 = 0;
+      frame.f7 = 0.0f;
+      frame.i7 = 0;
+      frame.i8 = 0x3f800000;
       i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-      u4 = *(uint32_t *)(i1 + 4);
+      frame.u4 = *(uint32_t *)(i1 + 4);
       p4 = (uint32_t *)((int)self + 0x770);
-      i5 = 8;
+      frame.i5 = 8;
       do {
         p1 = (int *)*p4;
         if (p1 != (int *)0x0) {
-          f4 = i4 * 0.01745329238474369049072265625f;
-          f7 = (float)f4;
+          f4 = frame.i4 * 0.01745329238474369049072265625f;
+          frame.f7 = (float)f4;
           if (f4 > 3.141499996185302734375f) {
-            f7 = (float)(f7 - 6.28299999237060546875f);
+            frame.f7 = (float)(frame.f7 - 6.28299999237060546875f);
           }
-          u3 = ((f7) != (f7)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
-          if ((u3 || f7 < (-3.141499996185302734375f)) != u3) {
-            f7 = (float)(f7 + 6.28299999237060546875f);
+          u3 = ((frame.f7) != (frame.f7)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+          if ((u3 || frame.f7 < (-3.141499996185302734375f)) != u3) {
+            frame.f7 = (float)(frame.f7 + 6.28299999237060546875f);
           }
-          f4 = bit_cast<long double>(x87_fsin(f7));
-          f8 = (float)(f4 * f1 + f6[0]);
-          f4 = bit_cast<long double>(x87_fcos(f7));
-          f9 = (float)(f4 * f1 + f6[2]);
-          orig::Vec4_Copy_v1(p1 + 0xd,&f8);
-          orig::Vec4_Copy_v1(p1 + 0x31,&f8);
-          orig::CXiControlActor_SetVec4(p1,&f8);
-          orig::Vec4_Copy_v1(p1 + 0x171,&f8);
-          orig::Vec4_Copy_v1(p1 + 0x17f,&f8);
+          f4 = bit_cast<long double>(x87_fsin(frame.f7));
+          frame.f8 = (float)(f4 * f1 + frame.f6[0]);
+          f4 = bit_cast<long double>(x87_fcos(frame.f7));
+          frame.f9 = (float)(f4 * f1 + frame.f6[2]);
+          orig::Vec4_Copy_v1(p1 + 0xd,&frame.f8);
+          orig::Vec4_Copy_v1(p1 + 0x31,&frame.f8);
+          orig::CXiControlActor_SetVec4(p1,&frame.f8);
+          orig::Vec4_Copy_v1(p1 + 0x171,&frame.f8);
+          orig::Vec4_Copy_v1(p1 + 0x17f,&frame.f8);
           p1[0x182] = 0x3f800000;
-          orig::Vec4_Copy_v1(p1 + 0x276,&f8);
+          orig::Vec4_Copy_v1(p1 + 0x276,&frame.f8);
           p1[0x279] = 0x3f800000;
           p2 = (float *)(p1 + 0x11);
-          orig::Vec4_Copy_v1(p2,&i6);
+          orig::Vec4_Copy_v1(p2,&frame.i6);
           if (*p2 > 3.141499996185302734375f) {
             *p2 = (float)(*p2 - 6.28299999237060546875f);
           }
@@ -1736,7 +1740,7 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
           if ((u3 || bit_cast<float>(p1[0x13]) < (-3.141499996185302734375f)) != u3) {
             p1[0x13] = bit_cast<int>((float)(bit_cast<float>(p1[0x13]) + 6.28299999237060546875f));
           }
-          orig::Vec4_Copy_v1(p2,&i6);
+          orig::Vec4_Copy_v1(p2,&frame.i6);
           if (*p2 > 3.141499996185302734375f) {
             *p2 = (float)(*p2 - 6.28299999237060546875f);
           }
@@ -1760,18 +1764,18 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
           if ((u3 || bit_cast<float>(p1[0x13]) < (-3.141499996185302734375f)) != u3) {
             p1[0x13] = bit_cast<int>((float)(bit_cast<float>(p1[0x13]) + 6.28299999237060546875f));
           }
-          p1[0x39] = i6;
-          p1[0x3a] = bit_cast<int>(f7);
-          p1[0x3b] = i7;
-          p1[0x3c] = i8;
-          p1[0x39] = i6;
-          p1[0x3a] = bit_cast<int>(f7);
-          p1[0x3b] = i7;
-          p1[0x3c] = i8;
+          p1[0x39] = frame.i6;
+          p1[0x3a] = bit_cast<int>(frame.f7);
+          p1[0x3b] = frame.i7;
+          p1[0x3c] = frame.i8;
+          p1[0x39] = frame.i6;
+          p1[0x3a] = bit_cast<int>(frame.f7);
+          p1[0x3b] = frame.i7;
+          p1[0x3c] = frame.i8;
           i1 = (**(untyped_fn **)(*p1 + 0x318))();
           if (i1 == 0) {
             p2 = (float *)(p1 + 0x187);
-            orig::Vec4_Copy_v1(p2,&i6);
+            orig::Vec4_Copy_v1(p2,&frame.i6);
             if (*p2 > 3.141499996185302734375f) {
               *p2 = (float)(*p2 - 6.28299999237060546875f);
             }
@@ -1805,7 +1809,7 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
           i1 = *p1;
           u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x188))))((void *)(self));
           (**(untyped_fn **)(i1 + 0x184))(u1);
-          i3 = 5;
+          frame.i3 = 5;
           p5 = p1 + 0xe2;
           do {
             p6 = (int *)(((int)self - (int)p1) + (int)p5);
@@ -1815,9 +1819,9 @@ void __thiscall CXiSkeletonActor::PlaceAttachedInRing(void * self, bits32 xi_s1)
               p6 = p6 + 1;
               p7 = p7 + 1;
             }
-            i3 = i3 + -1;
+            frame.i3 = frame.i3 + -1;
             p5 = p5 + 0x1a;
-          } while (i3 != 0);
+          } while (frame.i3 != 0);
           i1 = *(int *)((int)self + 0x590);
           p1[0x164] = i1;
           orig::game_100AAEE0(p1,(uint32_t)*(uint8_t *)((int)self + 0x17c),i1);
@@ -1849,9 +1853,9 @@ code_100CA2B2:
           }
         }
         p4 = p4 + 1;
-        i4 = i4 + 0xf;
-        i5 = i5 + -1;
-      } while (i5 != 0);
+        frame.i4 = frame.i4 + 0xf;
+        frame.i5 = frame.i5 + -1;
+      } while (frame.i5 != 0);
     }
   }
   return;
@@ -1912,7 +1916,7 @@ void CXiSkeletonActor::RunStaggeredUpdates()
 void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  int i1;
+  int pModelInfo;
   int i2;
   char c1;
   int i3;
@@ -1932,7 +1936,7 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
   int i7;
   int i8;
   int i9;
-  int i10;
+  int linkedActor0;
   float *p2;
   uint32_t *p3;
   float *p4;
@@ -1951,10 +1955,10 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
   bool b9; // c0
   char c6; // c2
   bool b10; // c3
-  int i14;
+  int bucketA;
   bool b11;
   short i15; // fps
-  double f6;
+  double boundRadius;
   bool b12; // c0
   char c7; // c2
   bool b13; // c3
@@ -1972,7 +1976,7 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
   float *p7;
   int i18;
   int ModelField170;
-  int i19;
+  int bucketB;
   double f14;
   int i20;
   int i21;
@@ -1985,60 +1989,62 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
   float *p10;
   int i23;
   int i24;
-  int i25;
+  int linkedActor1;
   uint32_t *p11;
   uint32_t *p12;
-  alignas(16) unsigned char xi_frame[0x4E9];  // address-taken locals at their original offsets
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  IDirect3DTexture8 * &p13 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x8);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  int &i29 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &i30 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float * &p14 = *reinterpret_cast<float * *>(xi_frame + 0x18);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  unsigned int &u1 = *reinterpret_cast<unsigned int *>(xi_frame + 0x18);
-  char &c9 = *reinterpret_cast<char *>(xi_frame + 0x2F);
-  BOOL &i31 = *reinterpret_cast<BOOL *>(xi_frame + 0x30);
-  int &i32 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  int &i33 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  char &c10 = *reinterpret_cast<char *>(xi_frame + 0x37);
-  int &i34 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i35 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &i36 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0x3C);
-  unsigned int &u3 = *reinterpret_cast<unsigned int *>(xi_frame + 0x3C);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  int &ViewportHeight = *reinterpret_cast<int *>(xi_frame + 0x50);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0x58);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  int &i37 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  int &i38 = *reinterpret_cast<int *>(xi_frame + 0x68);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  float &f26 = *reinterpret_cast<float *>(xi_frame + 0x70);
-  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x78);
-  float &f29 = *reinterpret_cast<float *>(xi_frame + 0x7C);
-  int (&i39)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x88);
-  uint8_t (&u4)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x98);
-  float (&f30)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xD8);
-  char &c11 = *reinterpret_cast<char *>(xi_frame + 0xE8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4E9];
+    struct __attribute__((packed)) { int i26; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i27; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; IDirect3DTexture8 * p13; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; int i28; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; int i29; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x10]; int i30; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float * p14; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x18]; float f17; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_9[0x18]; unsigned int u1; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_10[0x2F]; char c9; };   // at 0x2F
+    struct __attribute__((packed)) { unsigned char pad_11[0x30]; BOOL i31; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_12[0x30]; int i32; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_13[0x30]; float f18; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_14[0x30]; int i33; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_15[0x37]; char c10; };   // at 0x37
+    struct __attribute__((packed)) { unsigned char pad_16[0x38]; int i34; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_17[0x38]; int i35; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_18[0x38]; int i36; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_19[0x3C]; unsigned int u2; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_20[0x3C]; unsigned int u3; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_21[0x40]; float f19; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_22[0x44]; float f20; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_23[0x48]; float f21; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_24[0x4C]; float f22; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_25[0x50]; int ViewportHeight; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_26[0x58]; float f23; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_27[0x5C]; float f24; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_28[0x64]; int i37; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_29[0x68]; int i38; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_30[0x6C]; float f25; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_31[0x70]; float f26; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_32[0x74]; float f27; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_33[0x78]; float f28; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_34[0x7C]; float f29; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_35[0x88]; int i39[4]; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_36[0x98]; uint8_t u4[64]; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_37[0xD8]; float f30[4]; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_38[0xE8]; char c11; };   // at 0xE8
+  } frame;
   bool xi_fpu_unord = false;
 
-  i1 = this->pModelInfo;
-  i31 = false;
-  i34 = 0;
-  if ( i1 != 0 )
+  pModelInfo = this->pModelInfo;
+  frame.i31 = false;
+  frame.i34 = 0;
+  if ( pModelInfo != 0 )
   {
-    i31 = (*(uint32_t *)(i1 + 300) & 0x20000) != 0;
-    i34 = *(uint8_t *)(i1 + 304) & 1;
+    frame.i31 = (*(uint32_t *)(pModelInfo + 300) & 0x20000) != 0;
+    frame.i34 = *(uint8_t *)(pModelInfo + 304) & 1;
   }
   i2 = *(uint32_t *)orig::CYyModel_GetField44Addr((char *)self + 1652);
-  i38 = i2;
+  frame.i38 = i2;
   if ( i2 == 0 )
   {
     c1 = at<uint8_t>(this, 0xB2) | 1;
@@ -2048,16 +2054,16 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
     return;
   }
   i3 = this->pModelInfo;
-  c9 = 0;
-  c10 = 0;
+  frame.c9 = 0;
+  frame.c10 = 0;
   if ( i3 != 0 )
   {
     if ( (*(uint32_t *)(i3 + 288) & 0x80) != 0 || (*(uint32_t *)(i3 + 288) & 0x100) != 0 )
-      c9 = 1;
+      frame.c9 = 1;
     if ( (*(uint32_t *)(i3 + 300) & 0x8000000) != 0
       && (orig::CXiActor_TestModelFlag128_8(self) || orig::CXiActor_IsModelMissingOrSuppressed((int)self)) )
     {
-      c10 = 1;
+      frame.c10 = 1;
     }
   }
   g_skinningCapabilityFlag = 1;
@@ -2081,7 +2087,7 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
   b4 = f3 == 1.0;
   if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
     f3 = 1.0;
-  u2 = ((unsigned int)(long long)(128.0 * f3) << 24) | this->color & 0xFFFFFF;
+  frame.u2 = ((unsigned int)(long long)(128.0 * f3) << 24) | this->color & 0xFFFFFF;
   if ( f3 < 0x1.a36e2e0000000p-14 )
     goto L1;
   g_1045B814 = (*(int (__thiscall **)(void *))(*(uint32_t *)self + 992))(self);
@@ -2095,10 +2101,10 @@ void CXiSkeletonActor::PerActor_FourBucketStaggeredUpdate()
     goto L2;
   if ( g_shadowSetting == 1 )
     goto L2;
-  p14 = (float *)(orig::Camera_GetField50() + 68);
+  frame.p14 = (float *)(orig::Camera_GetField50() + 68);
   p1 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
-  orig::Vec3_Sub(&f25, p1, p14);
-  if ( f26 < -2.0 )
+  orig::Vec3_Sub(&frame.f25, p1, frame.p14);
+  if ( frame.f26 < -2.0 )
     goto L2;
   if ( g_shadowSetting == 2 && g_shadowCasterDistance < 40.0 )
     goto L3;
@@ -2145,12 +2151,12 @@ L5:
     }
     else
     {
-      i10 = this->linkedActor0;
-      if ( i10 == 0 )
+      linkedActor0 = this->linkedActor0;
+      if ( linkedActor0 == 0 )
         goto L4;
-      if ( (*(int (__thiscall **)(uint32_t))(*(uint32_t *)i10 + 844))(this->linkedActor0) != 0 )
+      if ( (*(int (__thiscall **)(uint32_t))(*(uint32_t *)linkedActor0 + 844))(this->linkedActor0) != 0 )
         goto L2;
-      i8 = (*(int (__thiscall **)(int))(*(uint32_t *)i10 + 856))(i10);
+      i8 = (*(int (__thiscall **)(int))(*(uint32_t *)linkedActor0 + 856))(linkedActor0);
     }
     if ( i8 != 0 )
       goto L2;
@@ -2210,20 +2216,20 @@ L6:
   }
   if ( (*(unsigned char (__thiscall **)(void *))(*(uint32_t *)self + 1028))(self) != 0 )
   {
-    orig::Vec3_Copy(&f25, &PerActor_FourBucketStaggeredUpdate_static_A32C);
+    orig::Vec3_Copy(&frame.f25, &PerActor_FourBucketStaggeredUpdate_static_A32C);
   }
   else if ( *(uint32_t *)g_nearestLight == 1 )
   {
     p2 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
-    orig::Vec3_Sub(&f25, (float *)(g_nearestLight + 52), p2);
+    orig::Vec3_Sub(&frame.f25, (float *)(g_nearestLight + 52), p2);
   }
   else
   {
-    f25 = -*(float *)(g_nearestLight + 64);
-    f26 = -*(float *)(g_nearestLight + 68);
-    f27 = -*(float *)(g_nearestLight + 72);
+    frame.f25 = -*(float *)(g_nearestLight + 64);
+    frame.f26 = -*(float *)(g_nearestLight + 68);
+    frame.f27 = -*(float *)(g_nearestLight + 72);
   }
-  orig::Shadow_SmoothLightDirection((float *)self + 431, &f25);
+  orig::Shadow_SmoothLightDirection((float *)self + 431, &frame.f25);
   p3 = (uint32_t *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
   orig::Vec3_Copy(&g_lightLookAtTarget, p3);
   orig::Vec3_Sub((float *)&g_lightLookAtEye, (float *)&g_lightLookAtTarget, (float *)self + 436);
@@ -2232,62 +2238,62 @@ L6:
     (float *)&g_lightLookAtEye,
     (float *)&g_lightLookAtTarget,
     (float *)&g_lightLookAtUp);
-  orig::fn_10027990((Iostream_init *)u4);
-  orig::Mat4_TransformNormal(g_lightViewMatrix, f30, (float *)self + 582);
-  orig::Vec4_Copy(&f19, f30);
-  orig::Vec4_Copy(&f23, f30);
-  p4 = (float *)&c11;
+  orig::fn_10027990((Iostream_init *)frame.u4);
+  orig::Mat4_TransformNormal(g_lightViewMatrix, frame.f30, (float *)self + 582);
+  orig::Vec4_Copy(&frame.f19, frame.f30);
+  orig::Vec4_Copy(&frame.f23, frame.f30);
+  p4 = (float *)&frame.c11;
   p5 = (float *)((char *)self + 2344);
-  ViewportHeight = 7;
+  frame.ViewportHeight = 7;
   do
   {
     orig::Mat4_TransformNormal(g_lightViewMatrix, p4, p5);
-    orig::Vec3_Copy(&f28, p4);
-    if ( !(f19 < (double)f28) )
-      f19 = f28;
-    if ( !(f20 < (double)f29) )
-      f20 = f29;
-    (xi_fpu_unord = __builtin_isunordered(f23, (double)f28), b5 = f23 < (double)f28);
+    orig::Vec3_Copy(&frame.f28, p4);
+    if ( !(frame.f19 < (double)frame.f28) )
+      frame.f19 = frame.f28;
+    if ( !(frame.f20 < (double)frame.f29) )
+      frame.f20 = frame.f29;
+    (xi_fpu_unord = __builtin_isunordered(frame.f23, (double)frame.f28), b5 = frame.f23 < (double)frame.f28);
     c4 = 0;
-    b6 = f23 == f28;
+    b6 = frame.f23 == frame.f28;
     if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
-      f23 = f28;
-    (xi_fpu_unord = __builtin_isunordered(f24, (double)f29), b7 = f24 < (double)f29);
+      frame.f23 = frame.f28;
+    (xi_fpu_unord = __builtin_isunordered(frame.f24, (double)frame.f29), b7 = frame.f24 < (double)frame.f29);
     c5 = 0;
-    b8 = f24 == f29;
+    b8 = frame.f24 == frame.f29;
     if ( ((short)(((b7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
-      f24 = f29;
+      frame.f24 = frame.f29;
     p5 += 4;
     p4 += 4;
-    --ViewportHeight;
+    --frame.ViewportHeight;
   }
-  while ( *(float *)&ViewportHeight != 0.0 );
-  f4 = f23 - f19;
+  while ( *(float *)&frame.ViewportHeight != 0.0 );
+  f4 = frame.f23 - frame.f19;
   if ( f4 < 0.0 )
     f4 = -f4;
-  *(float *)&ViewportHeight = f4;
-  f5 = f24 - f20;
+  *(float *)&frame.ViewportHeight = f4;
+  f5 = frame.f24 - frame.f20;
   if ( f5 < 0.0 )
     f5 = -f5;
-  (xi_fpu_unord = __builtin_isunordered(*(float *)&ViewportHeight, f5), b9 = *(float *)&ViewportHeight < f5);
+  (xi_fpu_unord = __builtin_isunordered(*(float *)&frame.ViewportHeight, f5), b9 = *(float *)&frame.ViewportHeight < f5);
   c6 = 0;
-  b10 = *(float *)&ViewportHeight == f5;
+  b10 = *(float *)&frame.ViewportHeight == f5;
   if ( g_actorShadowMode == 1 )
   {
     if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-      f5 = *(float *)&ViewportHeight;
+      f5 = *(float *)&frame.ViewportHeight;
   }
   else
   {
     if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-      f5 = *(float *)&ViewportHeight;
+      f5 = *(float *)&frame.ViewportHeight;
     f5 = f5 * 0x1.1c71c80000000p-1;
   }
   if ( f5 < 0x1.47ae140000000p-7 )
     f5 = 0x1.47ae140000000p-7;
   *(float *)&g_1045B810 = f5;
-  f17 = *(float *)&g_1045B810 * -12.0;
-  orig::Vec3_Scale((float *)&g_lightLookAtEye, (float *)self + 436, f17);
+  frame.f17 = *(float *)&g_1045B810 * -12.0;
+  orig::Vec3_Scale((float *)&g_lightLookAtEye, (float *)self + 436, frame.f17);
   orig::Vec3_AddInPlace((float *)&g_lightLookAtEye, (float *)&g_lightLookAtTarget);
   orig::fn_102D7FF9(
     g_lightViewMatrix,
@@ -2297,12 +2303,12 @@ L6:
   orig::MathVector_Nop();
   if ( (*(unsigned char (__thiscall **)(void *))(*(uint32_t *)self + 772))(self) != 0 )
     goto L7;
-  if ( i31 || i34 != 0 )
+  if ( frame.i31 || frame.i34 != 0 )
     goto L8;
-  if ( this->forceUpdateFlag == 0 && c9 == 0 && *(uint32_t *)(g_pAppSettings + 76) == 0 )
+  if ( this->forceUpdateFlag == 0 && frame.c9 == 0 && *(uint32_t *)(g_pAppSettings + 76) == 0 )
   {
-    i14 = this->bucketA;
-    if ( orig::GetFrameCounter() % 4 != i14 )
+    bucketA = this->bucketA;
+    if ( orig::GetFrameCounter() % 4 != bucketA )
     {
       if ( this->visibleSampleCount != 0 )
         goto L8;
@@ -2311,34 +2317,34 @@ L6:
   }
   if ( (*(int (__thiscall **)(void *))(*(uint32_t *)self + 856))(self) != 0 )
     goto L8;
-  f6 = this->boundRadius;
-  (xi_fpu_unord = __builtin_isunordered(f6, 0.0), b12 = f6 < 0.0);
+  boundRadius = this->boundRadius;
+  (xi_fpu_unord = __builtin_isunordered(boundRadius, 0.0), b12 = boundRadius < 0.0);
   c7 = 0;
-  b13 = f6 == 0.0;
+  b13 = boundRadius == 0.0;
   this->forceUpdateFlag = 0;
   if ( ((short)(((b12 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b13 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
     goto L8;
   f7 = this->field_910 - this->boundRadius;
   f8 = at<float>(this, 0x8F8);
   f9 = at<float>(this, 0x8FC);
-  f22 = at<float>(this, 0x90C);
-  f19 = f8;
-  f20 = f9;
+  frame.f22 = at<float>(this, 0x90C);
+  frame.f19 = f8;
+  frame.f20 = f9;
   f10 = f7 * 0.25 + this->boundRadius;
-  i28 = g_translucentTarget;
-  p13 = pTexture;
-  f21 = at<float>(this, 0x908);
-  *(float *)&i32 = f10;
-  ViewportHeight = (unsigned short)orig::Camera_GetViewportHeight();
-  *(float *)&i27 = (float)ViewportHeight;
-  ViewportHeight = (unsigned short)orig::Camera_GetViewportWidth();
-  *(float *)&i26 = (float)ViewportHeight;
-  i16 = orig::Occlusion_QueryScreenRect((short *)self + 1144, &f19, i32, i26, i27, (int)p13, i28, 1, 1, 0);
+  frame.i28 = g_translucentTarget;
+  frame.p13 = pTexture;
+  frame.f21 = at<float>(this, 0x908);
+  *(float *)&frame.i32 = f10;
+  frame.ViewportHeight = (unsigned short)orig::Camera_GetViewportHeight();
+  *(float *)&frame.i27 = (float)frame.ViewportHeight;
+  frame.ViewportHeight = (unsigned short)orig::Camera_GetViewportWidth();
+  *(float *)&frame.i26 = (float)frame.ViewportHeight;
+  i16 = orig::Occlusion_QueryScreenRect((short *)self + 1144, &frame.f19, frame.i32, frame.i26, frame.i27, (int)frame.p13, frame.i28, 1, 1, 0);
   this->visibleSampleCount = i16;
   if ( i16 != 0 )
   {
 L8:
-    b11 = at<uint8_t>(this, 0xA04) == 0 && c9 == 0;
+    b11 = at<uint8_t>(this, 0xA04) == 0 && frame.c9 == 0;
     if ( (*(int (__thiscall **)(void *))(*(uint32_t *)self + 844))(self) != 0 )
     {
       i18 = this->linkedActor0;
@@ -2363,8 +2369,8 @@ L8:
           goto L7;
         break;
       case 3:
-        i19 = this->bucketB;
-        if ( orig::GetFrameCounter() % 4 == i19 )
+        bucketB = this->bucketB;
+        if ( orig::GetFrameCounter() % 4 == bucketB )
           goto L7;
         break;
       default:
@@ -2385,7 +2391,7 @@ L10:
       {
         if ( !(this->widthScale < 0.0) )
         {
-          i33 = at<int32_t>(this, 0x760);
+          frame.i33 = at<int32_t>(this, 0x760);
           goto L11;
         }
         f14 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
@@ -2394,7 +2400,7 @@ L10:
         else
           f14 = this->baseScale;
       }
-      *(float *)&i33 = f14;
+      *(float *)&frame.i33 = f14;
 L11:
       if ( !(((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self) < 0.0) )
       {
@@ -2404,7 +2410,7 @@ L11:
       {
         if ( !(this->heightScale < 0.0) )
         {
-          i36 = at<int32_t>(this, 0x75C);
+          frame.i36 = at<int32_t>(this, 0x75C);
           goto L12;
         }
         f15 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
@@ -2413,7 +2419,7 @@ L11:
         else
           f15 = this->baseScale;
       }
-      *(float *)&i36 = f15;
+      *(float *)&frame.i36 = f15;
 L12:
       if ( !(((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self) < 0.0) )
       {
@@ -2423,7 +2429,7 @@ L12:
       {
         if ( !(this->depthScale < 0.0) )
         {
-          ViewportHeight = at<int32_t>(this, 0x758);
+          frame.ViewportHeight = at<int32_t>(this, 0x758);
           goto L13;
         }
         f16 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
@@ -2432,10 +2438,10 @@ L12:
         else
           f16 = this->baseScale;
       }
-      *(float *)&ViewportHeight = f16;
+      *(float *)&frame.ViewportHeight = f16;
 L13:
-      orig::Vec4_Set((int)i39, *(float *)&ViewportHeight, i36, i33, 1065353216);
-      orig::Mat4_BuildScale((uint32_t *)self + 614, i39);
+      orig::Vec4_Set((int)frame.i39, *(float *)&frame.ViewportHeight, frame.i36, frame.i33, 1065353216);
+      orig::Mat4_BuildScale((uint32_t *)self + 614, frame.i39);
       if ( this->worldMatrixOverride != 0 )
       {
         orig::Mat4_Copy((uint32_t *)self + 614, at<uint32_t *>(this, 0x5F8));
@@ -2448,20 +2454,20 @@ L13:
           && orig::CXiActor_GetModelField170(self) != 3 )
         {
           p8 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
-          orig::Vec3_Add_10026FA0(&f19, p8, (float *)self + 395);
+          orig::Vec3_Add_10026FA0(&frame.f19, p8, (float *)self + 395);
           HasNonzeroField150or158 = orig::CXiActor_HasNonzeroField150or158(self);
           p9 = (char *)self + 2456;
           if ( HasNonzeroField150or158 )
           {
-            orig::Mat4_PostRotateZ(p9, f21);
-            orig::Mat4_PostRotateY((char *)self + 2456, f20);
-            orig::Mat4_PostRotateX((char *)self + 2456, f19);
+            orig::Mat4_PostRotateZ(p9, frame.f21);
+            orig::Mat4_PostRotateY((char *)self + 2456, frame.f20);
+            orig::Mat4_PostRotateX((char *)self + 2456, frame.f19);
           }
           else
           {
-            orig::Mat4_PostRotateX(p9, f19);
-            orig::Mat4_PostRotateY((char *)self + 2456, f20);
-            orig::Mat4_PostRotateZ((char *)self + 2456, f21);
+            orig::Mat4_PostRotateX(p9, frame.f19);
+            orig::Mat4_PostRotateY((char *)self + 2456, frame.f20);
+            orig::Mat4_PostRotateZ((char *)self + 2456, frame.f21);
           }
         }
         else
@@ -2469,50 +2475,50 @@ L13:
           orig::CXiSkeletonActor_CalcGroundTiltMatrix((float *)self, (float *)self + 614, 0.1875);
         }
         p10 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
-        orig::Vec3_Add_10026FA0(&f23, p10, (float *)self + 387);
-        i37 = 1065353216;
-        orig::Mat4_SetRow3((uint32_t *)self + 614, &f23);
+        orig::Vec3_Add_10026FA0(&frame.f23, p10, (float *)self + 387);
+        frame.i37 = 1065353216;
+        orig::Mat4_SetRow3((uint32_t *)self + 614, &frame.f23);
       }
       g_10457538 = 0;
-      orig::Vec3_Copy(&f19, (uint32_t *)self + 530);
+      orig::Vec3_Copy(&frame.f19, (uint32_t *)self + 530);
       i23 = at<uint32_t>(this, 0x0);
-      f22 = *(float *)(i38 + 188);
-      if ( (*(unsigned char (__thiscall **)(void *))(i23 + 772))(self) != 0 || c9 == 1 )
+      frame.f22 = *(float *)(frame.i38 + 188);
+      if ( (*(unsigned char (__thiscall **)(void *))(i23 + 772))(self) != 0 || frame.c9 == 1 )
       {
-        i30 = (*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
+        frame.i30 = (*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
         p12 = (uint32_t *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
-        orig::CXiSkeletonActor_DrawModel((int)self + 1652, self, (short *)self + 1228, (int)i39, p12, i30, (int)&f19, u2);
+        orig::CXiSkeletonActor_DrawModel((int)self + 1652, self, (short *)self + 1228, (int)frame.i39, p12, frame.i30, (int)&frame.f19, frame.u2);
         ++g_actorUpdateCounter;
         goto L14;
       }
-      if ( ++g_actorUpdateCounter >= g_actorUpdateInterval && c10 == 0 )
+      if ( ++g_actorUpdateCounter >= g_actorUpdateInterval && frame.c10 == 0 )
       {
         i24 = this->linkedActor0;
         if ( i24 != 0 && *(uint32_t *)(i24 + 1700) == 4 )
         {
-          u1 = u2;
+          frame.u1 = frame.u2;
 L15:
-          i29 = (*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
+          frame.i29 = (*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
           p11 = (uint32_t *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
           orig::CXiSkeletonActor_DrawModel(
             (int)self + 1652,
             self,
             (short *)self + 1228,
-            (int)i39,
+            (int)frame.i39,
             p11,
-            i29,
-            (int)&f19,
-            u1);
+            frame.i29,
+            (int)&frame.f19,
+            frame.u1);
 L14:
           this->hiddenFlagByte = 0;
           orig::Actor_SetCameraFromModelPoints(self);
           return;
         }
-        i25 = this->linkedActor1;
-        if ( (i25 == 0 || *(uint32_t *)(i25 + 1700) != 4) && this->field_728 > 1 )
+        linkedActor1 = this->linkedActor1;
+        if ( (linkedActor1 == 0 || *(uint32_t *)(linkedActor1 + 1700) != 4) && this->field_728 > 1 )
           goto L14;
       }
-      u1 = u2;
+      frame.u1 = frame.u2;
       goto L15;
     }
 L7:
@@ -2522,7 +2528,7 @@ L7:
     goto L10;
   }
 L9:
-  i2 = i38;
+  i2 = frame.i38;
   c8 = at<uint8_t>(this, 0xB2) | 1;
   this->hiddenFlagByte = 1;
   at<uint8_t>(this, 0xB2) = c8;
@@ -2531,7 +2537,7 @@ L1:
     goto L16;
   if ( !(this->widthScale < 0.0) )
   {
-    u3 = at<uint32_t>(this, 0x760);
+    frame.u3 = at<uint32_t>(this, 0x760);
     goto L17;
   }
   if ( !(((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self) < 0.0) )
@@ -2539,7 +2545,7 @@ L16:
     f11 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
   else
     f11 = this->baseScale;
-  *(float *)&u3 = f11;
+  *(float *)&frame.u3 = f11;
 L17:
   if ( !(((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self) < 0.0) )
   {
@@ -2549,7 +2555,7 @@ L17:
   {
     if ( !(this->heightScale < 0.0) )
     {
-      i35 = at<int32_t>(this, 0x75C);
+      frame.i35 = at<int32_t>(this, 0x75C);
       goto L18;
     }
     f12 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
@@ -2558,14 +2564,14 @@ L17:
     else
       f12 = this->baseScale;
   }
-  *(float *)&i35 = f12;
+  *(float *)&frame.i35 = f12;
 L18:
   if ( !(((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self) < 0.0) )
   {
     f13 = ((double (__thiscall *)(void *))*(uint32_t *)(*(uint32_t *)self + 272))(self);
 L19:
-    f18 = f13;
-    orig::Vec4_Set((int)i39, f18, i35, u3, 1065353216);
+    frame.f18 = f13;
+    orig::Vec4_Set((int)frame.i39, frame.f18, frame.i35, frame.u3, 1065353216);
     goto L20;
   }
   if ( this->depthScale < 0.0 )
@@ -2577,9 +2583,9 @@ L19:
       f13 = this->baseScale;
     goto L19;
   }
-  orig::Vec4_Set((int)i39, this->depthScale, i35, u3, 1065353216);
+  orig::Vec4_Set((int)frame.i39, this->depthScale, frame.i35, frame.u3, 1065353216);
 L20:
-  orig::Mat4_BuildScale((uint32_t *)self + 614, i39);
+  orig::Mat4_BuildScale((uint32_t *)self + 614, frame.i39);
   if ( this->worldMatrixOverride != 0 )
   {
     orig::Mat4_Copy((uint32_t *)self + 614, at<uint32_t *>(this, 0x5F8));
@@ -2592,23 +2598,23 @@ L20:
       && orig::CXiActor_GetModelField170(self) != 3 )
     {
       p6 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 448))(self);
-      orig::Vec3_Add_10026FA0(&f19, p6, (float *)self + 395);
-      orig::Mat4_PostRotateX((char *)self + 2456, f19);
-      orig::Mat4_PostRotateY((char *)self + 2456, f20);
-      orig::Mat4_PostRotateZ((char *)self + 2456, f21);
+      orig::Vec3_Add_10026FA0(&frame.f19, p6, (float *)self + 395);
+      orig::Mat4_PostRotateX((char *)self + 2456, frame.f19);
+      orig::Mat4_PostRotateY((char *)self + 2456, frame.f20);
+      orig::Mat4_PostRotateZ((char *)self + 2456, frame.f21);
     }
     else
     {
       orig::CXiSkeletonActor_CalcGroundTiltMatrix((float *)self, (float *)self + 614, 0.1875);
     }
     p7 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self + 444))(self);
-    orig::Vec3_Add_10026FA0(&f23, p7, (float *)self + 387);
-    i37 = 1065353216;
-    orig::Mat4_SetRow3((uint32_t *)self + 614, &f23);
+    orig::Vec3_Add_10026FA0(&frame.f23, p7, (float *)self + 387);
+    frame.i37 = 1065353216;
+    orig::Mat4_SetRow3((uint32_t *)self + 614, &frame.f23);
   }
-  orig::Vec3_Copy(&f19, (uint32_t *)self + 530);
-  f22 = *(float *)(i2 + 188);
-  if ( f22 == -1.0 || f22 == 0.0 )
+  orig::Vec3_Copy(&frame.f19, (uint32_t *)self + 530);
+  frame.f22 = *(float *)(i2 + 188);
+  if ( frame.f22 == -1.0 || frame.f22 == 0.0 )
     orig::CXiSkeletonActor_AnimateModels(
       (int)self + 1652,
       self,
@@ -2621,7 +2627,7 @@ L20:
       self,
       (short *)self + 1228,
       bit_copy<int32_t>(this->distanceToCamera),
-      &f19);
+      &frame.f19);
   orig::Actor_SetCameraFromModelPoints(self);
 }
 
@@ -2642,63 +2648,65 @@ XI_API long double __thiscall CXiSkeletonActor_ComputeCameraFade(void * self_)
   uint8_t u4;
   long double f2;
   uint64_t u5;
-  char xi_frame[60] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  (&f5)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 12);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[60];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f5[4]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; float f7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; float f8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x2C]; float f9; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_8[0x30]; float f10; };   // at 0x30
+  } frame;
   
   u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x44))))((void *)(self_));
-  f5[1] = 0.0f;
+  frame.f5[1] = 0.0f;
   p1 = *(void **)((int)self_ + 0x70);
-  f4 = 0.5f;
-  f5[0] = 0.20000000298023223876953125f;
-  f3 = (float)(u1 * 0.0078125f);
+  frame.f4 = 0.5f;
+  frame.f5[0] = 0.20000000298023223876953125f;
+  frame.f3 = (float)(u1 * 0.0078125f);
   f2 = orig::CXiControlActor_GetSpeed(self_);
   f2 = f2 * 1.2000000476837158203125f;
   if ((f2 > 0.5f) &&
      (*(int *)((int)self_ + 0x85c) != 0)) {
-    f5[0] = (float)((float)f2 - 0.4000000059604644775390625f);
-    f4 = (float)f2;
+    frame.f5[0] = (float)((float)f2 - 0.4000000059604644775390625f);
+    frame.f4 = (float)f2;
   }
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x1c4))))((void *)(self_),0xc,&f9);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x1c4))))((void *)(self_),0xc,&frame.f9);
   i1 = orig::Camera_GetField50_v1();
-  orig::Vec3_Sub_v1(&f6,&f9,(float *)(i1 + 0x44));
-  orig::Vec3_MulComponents_v2(&f6,&f6,&f6);
+  orig::Vec3_Sub_v1(&frame.f6,&frame.f9,(float *)(i1 + 0x44));
+  orig::Vec3_MulComponents_v2(&frame.f6,&frame.f6,&frame.f6);
   i1 = orig::Camera_GetField50_v1();
-  u4 = ((f10) != (f10)) || ((*(float *)(i1 + 0x48)) != (*(float *)(i1 + 0x48)));
-  if ((u4 || f10 < *(float *)(i1 + 0x48)) != u4) {
-    f7 = 0.0f;
+  u4 = ((frame.f10) != (frame.f10)) || ((*(float *)(i1 + 0x48)) != (*(float *)(i1 + 0x48)));
+  if ((u4 || frame.f10 < *(float *)(i1 + 0x48)) != u4) {
+    frame.f7 = 0.0f;
   }
-  f2 = x87_fsqrt(f8 + f6);
+  f2 = x87_fsqrt(frame.f8 + frame.f6);
   f1 = (float)f2;
-  u4 = ((f2) != (f2)) || ((f4) != (f4));
-  if ((u4 || f2 < f4) != u4) {
-    if ((!((x87_fsqrt(f7)) != (x87_fsqrt(f7))) && !((f4) != (f4))) &&
-        f4 < x87_fsqrt(f7)) {
-      return f3;
+  u4 = ((f2) != (f2)) || ((frame.f4) != (frame.f4));
+  if ((u4 || f2 < frame.f4) != u4) {
+    if ((!((x87_fsqrt(frame.f7)) != (x87_fsqrt(frame.f7))) && !((frame.f4) != (frame.f4))) &&
+        frame.f4 < x87_fsqrt(frame.f7)) {
+      return frame.f3;
     }
-    u4 = ((f1) != (f1)) || ((f5[0]) != (f5[0]));
-    if ((u4 || f1 < f5[0]) == u4) {
+    u4 = ((f1) != (f1)) || ((frame.f5[0]) != (frame.f5[0]));
+    if ((u4 || f1 < frame.f5[0]) == u4) {
       f2 = f1;
       u4 = ((f1) != (f1)) || ((0.0f) != (0.0f));
       if ((u4 || f1 < 0.0f) != u4) {
         f2 = 0.0f;
       }
-      f3 = (float)(((f2 - f5[0]) /
-                          (f4 - f5[0])) * f3);
+      frame.f3 = (float)(((f2 - frame.f5[0]) /
+                          (frame.f4 - frame.f5[0])) * frame.f3);
     }
     else {
-      f3 = 0.0f;
+      frame.f3 = 0.0f;
     }
   }
   u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x260))))((void *)(self_));
   if ((char)u2 != '\0') {
-    f3 = 0.0f;
+    frame.f3 = 0.0f;
   }
   if (XiControlActor_isFirstPersonView == '\0') {
 code_100CD1F2:
@@ -2712,31 +2720,31 @@ code_100CD1F2:
               (*(void **)((int)p2 + 0xa4) != self_)))) {
             p3 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1bc))))((void *)(obj1));
             p4 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x1bc))))((void *)(self_));
-            orig::Vec3_Sub_v1(f5,p4,p3);
-            orig::Vec3_MulComponents_v2(f5,f5,f5);
-            f2 = x87_fsqrt(f5[2] + f5[0]);
-            f5[0] = (float)f2;
+            orig::Vec3_Sub_v1(frame.f5,p4,p3);
+            orig::Vec3_MulComponents_v2(frame.f5,frame.f5,frame.f5);
+            f2 = x87_fsqrt(frame.f5[2] + frame.f5[0]);
+            frame.f5[0] = (float)f2;
             u4 = ((f2) != (f2)) || ((2.5f) != (2.5f));
             if ((u4 || f2 < 2.5f) != u4) {
-              u4 = ((f5[0]) != (f5[0])) || ((1.0f) != (1.0f));
-              if ((u4 || f5[0] < 1.0f) == u4) {
-                f2 = f5[0];
-                u4 = ((f5[0]) != (f5[0])) || ((0.0f) != (0.0f));
-                if ((u4 || f5[0] < 0.0f) != u4) {
+              u4 = ((frame.f5[0]) != (frame.f5[0])) || ((1.0f) != (1.0f));
+              if ((u4 || frame.f5[0] < 1.0f) == u4) {
+                f2 = frame.f5[0];
+                u4 = ((frame.f5[0]) != (frame.f5[0])) || ((0.0f) != (0.0f));
+                if ((u4 || frame.f5[0] < 0.0f) != u4) {
                   f2 = 0.0f;
                 }
-                f3 = (float)((f2 - 1.0f) * 0.666666686534881591796875f *
-                                   f3);
+                frame.f3 = (float)((f2 - 1.0f) * 0.666666686534881591796875f *
+                                   frame.f3);
               }
               else {
-                f3 = 0.0f;
+                frame.f3 = 0.0f;
               }
             }
           }
         }
       }
       if ((*(uint32_t *)((int)p1 + 0x130) >> 0x12 & 1) != 0) {
-        f3 = 0.5f;
+        frame.f3 = 0.5f;
       }
     }
   }
@@ -2746,7 +2754,7 @@ code_100CD1F2:
       if (((int)u5 != 0) && (p2 = *(void **)((int)u5 + 0x70), p2 != (void *)0x0)) {
         p2 = (void *)orig::Entity_GetIndexedPtr(p2);
         if (p1 == p2) {
-          f3 = 0.0f;
+          frame.f3 = 0.0f;
         }
       }
     }
@@ -2787,7 +2795,7 @@ code_100CD1F2:
     }
   }
 code_100CD39A:
-  f2 = f3;
+  f2 = frame.f3;
   if (f2 > 1.0f) {
     f2 = 1.0f;
   }
@@ -2850,21 +2858,23 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
   int i2;
   int *p3;
   uint8_t u2;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
-  uint8_t  &u5 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint8_t  (&u6)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 8);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 28);
-  uint8_t  (&u7)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 36);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 56);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; uint8_t u4; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x3]; uint8_t u5; };   // at 0x3
+    struct __attribute__((packed)) { unsigned char pad_4[0x4]; int i3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_5[0x8]; uint8_t u6[20]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; int i4; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; uint8_t u7[20]; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x38]; int i5; };   // at 0x38
+  } frame;
   
   u2 = resid == 0x2a706d6a;
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  i3 = layno;
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.i3 = layno;
   i1 = layno;
   while( true ) {
     if (rf == (int *)0x0) {
@@ -2873,13 +2883,13 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
     else {
       i2 = *rf;
     }
-    orig::ResourceIter_FindFirst_v1(u6,i2,0x2b,resid & 0xffffff,0xffffff);
-    while (i4 != 0) {
-      p1 = *(int **)(i4 + 0x14);
-      u4 = *(uint8_t *)(*p1 + 0x23);
+    orig::ResourceIter_FindFirst_v1(frame.u6,i2,0x2b,resid & 0xffffff,0xffffff);
+    while (frame.i4 != 0) {
+      p1 = *(int **)(frame.i4 + 0x14);
+      frame.u4 = *(uint8_t *)(*p1 + 0x23);
       i1 = layno;
       if (layno < 5) {
-        i1 = orig::game_10312872(&u4);
+        i1 = orig::game_10312872(&frame.u4);
       }
       if (i1 < 7) {
         if (((((i1 != 2) || (*(char *)((int)self + 0x881) != '\0')) ||
@@ -2907,14 +2917,14 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
             }
           }
           g_1048A38C = g_1048A38C | u1;
-          u3 = 1;
-          layno = i3;
+          frame.u3 = 1;
+          layno = frame.i3;
         }
       }
       else {
         orig::ErrorReport_NoOpVarargsA_v1(&g_1035F850,*(uint32_t *)(*p1 + 0x20));
       }
-      orig::ResourceIter_FindNext_v1(u6,0);
+      orig::ResourceIter_FindNext_v1(frame.u6,0);
     }
     p2 = orig::CMoResource_GetParent_v1((void *)*rf);
     if ((p2 == (void *)0x0) || (p2 == (void *)*rf)) break;
@@ -2930,13 +2940,13 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
       else {
         i2 = *rf;
       }
-      orig::ResourceIter_FindFirst_v1(u7,i2,0x2b,0x316e7572,0xffffffff);
-      while (i5 != 0) {
-        p1 = *(int **)(i5 + 0x14);
-        u4 = *(uint8_t *)(*p1 + 0x23);
+      orig::ResourceIter_FindFirst_v1(frame.u7,i2,0x2b,0x316e7572,0xffffffff);
+      while (frame.i5 != 0) {
+        p1 = *(int **)(frame.i5 + 0x14);
+        frame.u4 = *(uint8_t *)(*p1 + 0x23);
         i2 = i1;
         if (i1 < 5) {
-          i2 = orig::game_10312872(&u4);
+          i2 = orig::game_10312872(&frame.u4);
         }
         if (i2 < 7) {
           if (i2 == 2) {
@@ -2968,13 +2978,13 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
               }
             }
             g_1048A38C = g_1048A38C | 2;
-            u3 = 1;
+            frame.u3 = 1;
           }
         }
         else {
           orig::ErrorReport_NoOpVarargsA_v1(&g_1035F850,*(uint32_t *)(*p1 + 0x20));
         }
-        orig::ResourceIter_FindNext_v1(u7,0);
+        orig::ResourceIter_FindNext_v1(frame.u7,0);
       }
       p2 = orig::CMoResource_GetParent_v1((void *)*rf);
       if ((p2 == (void *)0x0) || (p2 == (void *)*rf)) break;
@@ -2982,16 +2992,16 @@ bits32 __thiscall CXiSkeletonActor::SetMotion(void * self, int * rf, uint32_t re
       g_resourceFindDepth = g_resourceFindDepth + -1;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(u3)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(frame.u3)));
 }
 
 // FUNCTION: FFXIMAIN 0x100CD920
 // GATE: PASS -- 100 trials, 71 returned normally, 54 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 71
-bits32 __thiscall CXiSkeletonActor::SetMotionFromSources(void * self, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9, bits32 arg10, int * arg11, int arg12)
+bits32 __thiscall CXiSkeletonActor::SetMotionFromSources(void * self, uint32_t resid, bits32 wt, bits32 sp, bits32 lp, bits32 in, bits32 out, bits32 layno, bits32 sync, bits32 sframe, int * rf, int arg12)
 {
   uint8_t u1;
   uint8_t u2;
-  int *p1;
+  int *eframe;
   bits32 u3;
   bits32 u4;
   int *p2;
@@ -3010,9 +3020,9 @@ bits32 __thiscall CXiSkeletonActor::SetMotionFromSources(void * self, uint32_t a
   u2 = false;
   g_1048A38C = 0;
   u7 = 0;
-  p1 = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
-  if (*p1 != 0) {
-    p4 = (void *)(*p1 + 0x24);
+  eframe = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
+  if (*eframe != 0) {
+    p4 = (void *)(*eframe + 0x24);
     do {
       u3 = orig::game_1001B360(p4);
       if ((char)u3 != '\0') {
@@ -3027,17 +3037,17 @@ bits32 __thiscall CXiSkeletonActor::SetMotionFromSources(void * self, uint32_t a
   if ((i1 == 6) || (i1 = orig::CXiActor_GetModelByteEE_v1(self), i1 == 7)) {
     u1 = true;
   }
-  p1 = arg11;
-  u3 = arg10;
-  if ((*(char *)((int)self + 0x88) < '\0') || (((arg2 & 0xff000000) == 0x3f000000 && (u1)))) {
+  eframe = rf;
+  u3 = sframe;
+  if ((*(char *)((int)self + 0x88) < '\0') || (((resid & 0xff000000) == 0x3f000000 && (u1)))) {
     p2 = (int *)arg12;
     if (arg12 == 0) {
-      p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg11);
+      p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&rf);
       if (*p2 != 0) {
-        p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg11);
+        p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&rf);
         u4 = orig::ResourceHandle_IsResident_v1(p4);
         if ((char)u4 != '\0') {
-          p3 = (bits32 *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg11);
+          p3 = (bits32 *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&rf);
           p2 = (int *)*p3;
           goto code_100CDA6E;
         }
@@ -3046,31 +3056,31 @@ bits32 __thiscall CXiSkeletonActor::SetMotionFromSources(void * self, uint32_t a
     else {
 code_100CDA6E:
       u4 = orig::CXiSkeletonActor_SetMotion
-                        (self,p2,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9
-                         ,u3,p1);
+                        (self,p2,resid,wt,sp,lp,in,out,layno,sync
+                         ,u3,eframe);
       if ((char)u4 != '\0') goto L1;
     }
   }
   for (p4 = orig::List_GetTail_v1(*(void **)((int)self + 0x7e4)); p4 != (void *)0x0;
       p4 = *(void **)((int)p4 + 8)) {
-    arg11 = *(int **)((int)p4 + 0x1c);
-    u4 = orig::ResourceHandle_IsResident_v1(&arg11);
-    u3 = arg10;
+    rf = *(int **)((int)p4 + 0x1c);
+    u4 = orig::ResourceHandle_IsResident_v1(&rf);
+    u3 = sframe;
     if ((char)u4 == '\0') {
       u2 = true;
       goto L1;
     }
     orig::CXiSkeletonActor_SetMotion
-              (self,arg11,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10
-               ,p1);
+              (self,rf,resid,wt,sp,lp,in,out,layno,sync,sframe
+               ,eframe);
   }
   if (*(int *)((int)self + 0x70) == 0) {
-    p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1dc))))((void *)(self),&arg10);
+    p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1dc))))((void *)(self),&sframe);
     if (*p2 == 0) goto L1;
-    p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1dc))))((void *)(self),&arg10);
+    p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1dc))))((void *)(self),&sframe);
     u4 = orig::ResourceHandle_IsResident_v1(p4);
     if ((char)u4 == '\0') goto L1;
-    p3 = &arg10;
+    p3 = &sframe;
   }
   else {
     i1 = orig::CXiActor_GetModelByteEE_v1(self);
@@ -3097,15 +3107,15 @@ code_100CDA6E:
     default:
       goto L1;
     }
-    p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg10);
+    p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&sframe);
     if (*p2 != 0) {
-      p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg11);
+      p4 = (void *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&rf);
       u4 = orig::ResourceHandle_IsResident_v1(p4);
       if ((char)u4 != '\0') {
         p3 = (bits32 *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x400))))((void *)(self),&arg12);
         u4 = orig::CXiSkeletonActor_SetMotion
-                          (self,(int *)*p3,arg2,arg3,arg4,arg5,arg6,arg7,
-                           arg8,arg9,u3,p1);
+                          (self,(int *)*p3,resid,wt,sp,lp,in,out,
+                           layno,sync,u3,eframe);
         if ((char)u4 != '\0') goto L1;
       }
     }
@@ -3118,11 +3128,11 @@ code_100CDA6E:
   }
   p3 = (bits32 *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1dc))))((void *)(self),p3);
   orig::CXiSkeletonActor_SetMotion
-            (self,(int *)*p3,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,
-             u3,p1);
+            (self,(int *)*p3,resid,wt,sp,lp,in,out,layno,sync,
+             u3,eframe);
 L1:
-  p1 = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
-  if ((*p1 == 0) || ((g_1048A38C & 1) == 0)) {
+  eframe = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
+  if ((*eframe == 0) || ((g_1048A38C & 1) == 0)) {
     if (u2) {
       return 1;
     }
@@ -3133,7 +3143,7 @@ L1:
     }
     u6 = g_1048A38C ^ u7;
     i1 = 0;
-    p4 = (void *)(*p1 + 0x24);
+    p4 = (void *)(*eframe + 0x24);
     do {
       u5 = 1 << ((uint8_t)i1 & 0x1f);
       if (((u6 & u5) != 0) && ((u7 & u5) != 0)) {
@@ -3158,9 +3168,11 @@ void __thiscall CXiSkeletonActor::UpdateRandomTimer(void * self)
   uint32_t u1;
   uint8_t u2;
   long double f1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int * &p1 = *reinterpret_cast<int * *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
   f1 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
   f1 = (long double)*(float *)((int)self + 0x8b8) - f1;
@@ -3168,28 +3180,28 @@ void __thiscall CXiSkeletonActor::UpdateRandomTimer(void * self)
   u2 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
   if ((u2 || f1 < (long double)0.0f) != u2) {
     i1 = orig::_rand();
-    p1 = (int *)(i1 % 0x1e0);
-    *(float *)((int)self + 0x8b8) = (float)(long double)(int)p1;
+    frame.p1 = (int *)(i1 % 0x1e0);
+    *(float *)((int)self + 0x8b8) = (float)(long double)(int)frame.p1;
     if (*(char *)((int)self + 0x8aa) == '\0') {
       u1 = orig::CXiSkeletonActor_IsReadCompleteBody
                         (self,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)(i1 / 0x1e0) >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x8aa)))));
       if ((char)u1 != '\0') {
         g_1048A38C_as_v0 = 0;
-        p1 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1e0))))((void *)(self),&u3);
-        p1 = (int *)*p1;
-        if (p1 != (int *)0x0) {
-          u1 = orig::ResourceHandle_IsResident_v1(&p1);
+        frame.p1 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1e0))))((void *)(self),&frame.u3);
+        frame.p1 = (int *)*frame.p1;
+        if (frame.p1 != (int *)0x0) {
+          u1 = orig::ResourceHandle_IsResident_v1(&frame.p1);
           if ((char)u1 != '\0') {
-            if (p1 == (int *)0x0) {
+            if (frame.p1 == (int *)0x0) {
               i1 = 0;
             }
             else {
-              i1 = *p1;
+              i1 = *frame.p1;
             }
-            p1 = (int *)orig::CMoResource_FindInScope(&u3,i1,0x2b,0x33657965,p1);
-            p1 = (int *)*p1;
-            if (p1 != (int *)0x0) {
-              orig::CXiSkeletonActor_SetSlotMotion(self,p1,0x3f800000,0x3f800000,1,0x3f800000,0x3f800000,3);
+            frame.p1 = (int *)orig::CMoResource_FindInScope(&frame.u3,i1,0x2b,0x33657965,frame.p1);
+            frame.p1 = (int *)*frame.p1;
+            if (frame.p1 != (int *)0x0) {
+              orig::CXiSkeletonActor_SetSlotMotion(self,frame.p1,0x3f800000,0x3f800000,1,0x3f800000,0x3f800000,3);
             }
           }
         }
@@ -3237,23 +3249,25 @@ uint32_t * CXiSkeletonActor::ReverseFindRes(uint32_t *arg1, int arg2, int arg3, 
   int *p10;
   int i5;
   uint32_t *p11;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  uint32_t ** &p12 = *reinterpret_cast<uint32_t ** *>(xi_frame + 0x10);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  uint32_t (&u1)[5] = *reinterpret_cast<uint32_t (*)[5]>(xi_frame + 0x18);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t ** p12; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u1[5]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; int i7; };   // at 0x2C
+  } frame;
 
   p1 = (uint32_t *)at<uint32_t>(this, 0x7E4);
-  i6 = 0;
+  frame.i6 = 0;
   Tail = orig::List_GetTail(p1);
   i1 = arg2;
   for ( i = Tail; i != nullptr; i = (uint32_t *)i[2] )
   {
-    p12 = (uint32_t **)i[7];
-    if ( p12 != nullptr && orig::ResourceHandle_IsResident(&p12) )
+    frame.p12 = (uint32_t **)i[7];
+    if ( frame.p12 != nullptr && orig::ResourceHandle_IsResident(&frame.p12) )
     {
-      if ( p12 != nullptr )
-        p2 = *p12;
+      if ( frame.p12 != nullptr )
+        p2 = *frame.p12;
       else
         p2 = nullptr;
       p3 = (int *)p2[5];
@@ -3263,10 +3277,10 @@ uint32_t * CXiSkeletonActor::ReverseFindRes(uint32_t *arg1, int arg2, int arg3, 
           i2 = *p3;
         else
           i2 = 0;
-        orig::ResourceIter_FindFirst(u1, i2, i1, arg3, arg4);
-        for ( j = i7; i7 != 0; j = i7 )
+        orig::ResourceIter_FindFirst(frame.u1, i2, i1, arg3, arg4);
+        for ( j = frame.i7; frame.i7 != 0; j = frame.i7 )
         {
-          if ( i6 == arg5 )
+          if ( frame.i6 == arg5 )
           {
             if ( i1 != 7 )
             {
@@ -3283,17 +3297,17 @@ L2:
           }
           else
           {
-            ++i6;
+            ++frame.i6;
           }
-          orig::ResourceIter_FindNext(u1, 0);
+          orig::ResourceIter_FindNext(frame.u1, 0);
         }
-        Parent = orig::CMoResource_GetParent(*p12);
+        Parent = orig::CMoResource_GetParent(*frame.p12);
         if ( Parent == nullptr )
           break;
-        p4 = p12 != nullptr ? *p12 : nullptr;
+        p4 = frame.p12 != nullptr ? *frame.p12 : nullptr;
         if ( Parent == p4 )
           break;
-        p12 = (uint32_t **)Parent[5];
+        frame.p12 = (uint32_t **)Parent[5];
         --g_resourceFindDepth;
       }
     }
@@ -3305,11 +3319,11 @@ L2:
     if ( p5 != nullptr && *p5 != 0 )
       i3 = 812215913;
   }
-  p12 = *(uint32_t ***)(*(int (__thiscall **)(uint32_t *, int *))(*self + 1024))(self, &arg2);
-  if ( p12 != nullptr && orig::ResourceHandle_IsResident(&p12) )
+  frame.p12 = *(uint32_t ***)(*(int (__thiscall **)(uint32_t *, int *))(*self + 1024))(self, &arg2);
+  if ( frame.p12 != nullptr && orig::ResourceHandle_IsResident(&frame.p12) )
   {
-    if ( p12 != nullptr )
-      p6 = *p12;
+    if ( frame.p12 != nullptr )
+      p6 = *frame.p12;
     else
       p6 = nullptr;
     p7 = (int *)p6[5];
@@ -3319,10 +3333,10 @@ L2:
         i4 = *p7;
       else
         i4 = 0;
-      orig::ResourceIter_FindFirst(u1, i4, i1, i3, arg4);
-      for ( j = i7; i7 != 0; j = i7 )
+      orig::ResourceIter_FindFirst(frame.u1, i4, i1, i3, arg4);
+      for ( j = frame.i7; frame.i7 != 0; j = frame.i7 )
       {
-        if ( i6 == arg5 )
+        if ( frame.i6 == arg5 )
         {
           if ( i1 != 7 )
             goto L2;
@@ -3331,9 +3345,9 @@ L2:
         }
         else
         {
-          ++i6;
+          ++frame.i6;
         }
-        orig::ResourceIter_FindNext(u1, 0);
+        orig::ResourceIter_FindNext(frame.u1, 0);
       }
       p8 = orig::CMoResource_GetParent((uint32_t *)*p7);
       if ( p8 == nullptr || p8 == (uint32_t *)*p7 )
@@ -3342,11 +3356,11 @@ L2:
       --g_resourceFindDepth;
     }
   }
-  p12 = *(uint32_t ***)(*(int (__thiscall **)(uint32_t *, int *))(*self + 476))(self, &arg2);
-  if ( p12 != nullptr && orig::ResourceHandle_IsResident(&p12) )
+  frame.p12 = *(uint32_t ***)(*(int (__thiscall **)(uint32_t *, int *))(*self + 476))(self, &arg2);
+  if ( frame.p12 != nullptr && orig::ResourceHandle_IsResident(&frame.p12) )
   {
-    if ( p12 != nullptr )
-      p9 = *p12;
+    if ( frame.p12 != nullptr )
+      p9 = *frame.p12;
     else
       p9 = nullptr;
     p10 = (int *)p9[5];
@@ -3356,10 +3370,10 @@ L2:
         i5 = *p10;
       else
         i5 = 0;
-      orig::ResourceIter_FindFirst(u1, i5, i1, arg3, arg4);
-      for ( j = i7; i7 != 0; j = i7 )
+      orig::ResourceIter_FindFirst(frame.u1, i5, i1, arg3, arg4);
+      for ( j = frame.i7; frame.i7 != 0; j = frame.i7 )
       {
-        if ( i6 == arg5 )
+        if ( frame.i6 == arg5 )
         {
           if ( i1 != 7 )
             goto L1;
@@ -3368,9 +3382,9 @@ L2:
         }
         else
         {
-          ++i6;
+          ++frame.i6;
         }
-        orig::ResourceIter_FindNext(u1, 0);
+        orig::ResourceIter_FindNext(frame.u1, 0);
       }
       p11 = orig::CMoResource_GetParent((uint32_t *)*p10);
       if ( p11 == nullptr || p11 == (uint32_t *)*p10 )
@@ -3402,14 +3416,16 @@ uint32_t * CXiSkeletonActor::ActorFindResource(uint32_t *arg1, int arg2, int arg
   int i3;
   uint32_t *Parent;
   uint32_t *p8;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  uint32_t ** &p9 = *reinterpret_cast<uint32_t ** *>(xi_frame + 0x10);
-  char * &p10 = *reinterpret_cast<char * *>(xi_frame + 0x14);
-  uint32_t (&u1)[5] = *reinterpret_cast<uint32_t (*)[5]>(xi_frame + 0x18);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t ** p9; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; char * p10; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u1[5]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; int i4; };   // at 0x2C
+  } frame;
 
   p1 = self;
-  p10 = self;
+  frame.p10 = self;
   Field44Addr = orig::CYyModel_GetField44Addr(self + 1652);
   i1 = arg3;
   p2 = Field44Addr;
@@ -3430,14 +3446,14 @@ L1:
       p3 = *(char **)p2;
       if ( *(uint32_t *)p2 == 0 )
       {
-        p1 = p10;
+        p1 = frame.p10;
         goto L2;
       }
     }
     while ( 1 )
     {
       p5 = *(uint32_t ***)(i2 + 8);
-      p9 = p5;
+      frame.p9 = p5;
       if ( p5 != nullptr )
       {
         p6 = *p5;
@@ -3453,30 +3469,30 @@ L3:
     p7 = (uint32_t **)p6[10];
     while ( 1 )
     {
-      p9 = p7;
+      frame.p9 = p7;
       i3 = p7 != nullptr ? (int)*p7 : 0;
-      orig::ResourceIter_FindFirst(u1, i3, arg2, i1, -1);
-      if ( i4 != 0 )
+      orig::ResourceIter_FindFirst(frame.u1, i3, arg2, i1, -1);
+      if ( frame.i4 != 0 )
         break;
-      Parent = orig::CMoResource_GetParent(*p9);
+      Parent = orig::CMoResource_GetParent(*frame.p9);
       if ( Parent == nullptr )
         goto L3;
-      p8 = p9 != nullptr ? *p9 : nullptr;
+      p8 = frame.p9 != nullptr ? *frame.p9 : nullptr;
       if ( Parent == p8 )
         goto L3;
       p7 = (uint32_t **)Parent[5];
       --g_resourceFindDepth;
     }
-    *arg1 = *(uint32_t *)(i4 + 20);
+    *arg1 = *(uint32_t *)(frame.i4 + 20);
     return arg1;
   }
   else
   {
 L2:
-    p9 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg3);
-    if ( p9 != nullptr && orig::ResourceHandle_IsResident(&p9) )
+    frame.p9 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg3);
+    if ( frame.p9 != nullptr && orig::ResourceHandle_IsResident(&frame.p9) )
     {
-      orig::YmResourceFile_FindResourceUnder((int)*p9, arg1, arg2, i1);
+      orig::YmResourceFile_FindResourceUnder((int)*frame.p9, arg1, arg2, i1);
       return arg1;
     }
     else
@@ -3508,15 +3524,17 @@ uint32_t * CXiSkeletonActor::ActorFindResourceNth(uint32_t *arg1, int arg2, int 
   int i5;
   uint32_t *Parent;
   uint32_t *p8;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  uint32_t ** &p9 = *reinterpret_cast<uint32_t ** *>(xi_frame + 0x10);
-  char * &p10 = *reinterpret_cast<char * *>(xi_frame + 0x14);
-  uint32_t (&u1)[5] = *reinterpret_cast<uint32_t (*)[5]>(xi_frame + 0x18);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t ** p9; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; char * p10; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u1[5]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; int i6; };   // at 0x2C
+  } frame;
 
   p1 = self;
   i1 = 0;
-  p10 = self;
+  frame.p10 = self;
   Field44Addr = orig::CYyModel_GetField44Addr(self + 1652);
   i2 = arg2;
   p2 = Field44Addr;
@@ -3537,14 +3555,14 @@ L1:
       p3 = *(char **)p2;
       if ( *(uint32_t *)p2 == 0 )
       {
-        p1 = p10;
+        p1 = frame.p10;
         goto L2;
       }
     }
     while ( 1 )
     {
       p5 = *(uint32_t ***)(i3 + 8);
-      p9 = p5;
+      frame.p9 = p5;
       if ( p5 != nullptr )
       {
         p6 = *p5;
@@ -3560,17 +3578,17 @@ L3:
     p7 = (uint32_t **)p6[10];
     while ( 1 )
     {
-      p9 = p7;
+      frame.p9 = p7;
       i4 = p7 != nullptr ? (int)*p7 : 0;
-      orig::ResourceIter_FindFirst(u1, i4, i2, 0, -1);
-      i5 = i6;
-      if ( i6 != 0 )
+      orig::ResourceIter_FindFirst(frame.u1, i4, i2, 0, -1);
+      i5 = frame.i6;
+      if ( frame.i6 != 0 )
         break;
 L4:
-      Parent = orig::CMoResource_GetParent(*p9);
+      Parent = orig::CMoResource_GetParent(*frame.p9);
       if ( Parent == nullptr )
         goto L3;
-      p8 = p9 != nullptr ? *p9 : nullptr;
+      p8 = frame.p9 != nullptr ? *frame.p9 : nullptr;
       if ( Parent == p8 )
         goto L3;
       p7 = (uint32_t **)Parent[5];
@@ -3579,21 +3597,21 @@ L4:
     while ( arg4 != i1 )
     {
       ++i1;
-      orig::ResourceIter_FindNext(u1, 0);
-      i5 = i6;
-      if ( i6 == 0 )
+      orig::ResourceIter_FindNext(frame.u1, 0);
+      i5 = frame.i6;
+      if ( frame.i6 == 0 )
         goto L4;
     }
   }
   else
   {
 L2:
-    p9 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg2);
-    if ( p9 == nullptr
-      || !orig::ResourceHandle_IsResident(&p9)
-      || p9 == nullptr
-      || *p9 == nullptr
-      || (orig::ResourceIter_FindFirst(u1, (int)*p9, i2, 0, -1), i5 = i6, i6 == 0) )
+    frame.p9 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg2);
+    if ( frame.p9 == nullptr
+      || !orig::ResourceHandle_IsResident(&frame.p9)
+      || frame.p9 == nullptr
+      || *frame.p9 == nullptr
+      || (orig::ResourceIter_FindFirst(frame.u1, (int)*frame.p9, i2, 0, -1), i5 = frame.i6, frame.i6 == 0) )
     {
 L5:
       *arg1 = 0;
@@ -3602,9 +3620,9 @@ L5:
     while ( arg4 != i1 )
     {
       ++i1;
-      orig::ResourceIter_FindNext(u1, 0);
-      i5 = i6;
-      if ( i6 == 0 )
+      orig::ResourceIter_FindNext(frame.u1, 0);
+      i5 = frame.i6;
+      if ( frame.i6 == 0 )
         goto L5;
     }
   }
@@ -3632,14 +3650,16 @@ int CXiSkeletonActor::ActorGetResourceCount(int arg1, int arg2)
   uint32_t *p8;
   uint32_t *Parent;
   uint32_t *p9;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  uint32_t ** &p10 = *reinterpret_cast<uint32_t ** *>(xi_frame + 0x10);
-  char * &p11 = *reinterpret_cast<char * *>(xi_frame + 0x14);
-  uint32_t (&u1)[5] = *reinterpret_cast<uint32_t (*)[5]>(xi_frame + 0x18);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t ** p10; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; char * p11; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u1[5]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; int i3; };   // at 0x2C
+  } frame;
 
   p1 = self;
-  p11 = self;
+  frame.p11 = self;
   i1 = 0;
   Field44Addr = orig::CYyModel_GetField44Addr(self + 1652);
   i2 = arg1;
@@ -3658,7 +3678,7 @@ int CXiSkeletonActor::ActorGetResourceCount(int arg1, int arg2)
           for ( i = *(uint32_t *)PartList; *(uint32_t *)p4 != 0; i = *(uint32_t *)p4 )
           {
             p5 = *(uint32_t ***)(i + 8);
-            p10 = p5;
+            frame.p10 = p5;
             if ( p5 != nullptr )
             {
               p6 = *p5;
@@ -3667,21 +3687,21 @@ int CXiSkeletonActor::ActorGetResourceCount(int arg1, int arg2)
                 p7 = (uint32_t **)p6[10];
                 while ( 1 )
                 {
-                  p10 = p7;
+                  frame.p10 = p7;
                   if ( p7 != nullptr )
                     p8 = *p7;
                   else
                     p8 = nullptr;
-                  orig::ResourceIter_FindFirst(u1, (int)p8, i2, 0, -1);
-                  while ( i3 != 0 )
+                  orig::ResourceIter_FindFirst(frame.u1, (int)p8, i2, 0, -1);
+                  while ( frame.i3 != 0 )
                   {
                     ++i1;
-                    orig::ResourceIter_FindNext(u1, 0);
+                    orig::ResourceIter_FindNext(frame.u1, 0);
                   }
-                  Parent = orig::CMoResource_GetParent(*p10);
+                  Parent = orig::CMoResource_GetParent(*frame.p10);
                   if ( Parent == nullptr )
                     break;
-                  p9 = p10 != nullptr ? *p10 : nullptr;
+                  p9 = frame.p10 != nullptr ? *frame.p10 : nullptr;
                   if ( Parent == p9 )
                     break;
                   p7 = (uint32_t **)Parent[5];
@@ -3696,17 +3716,17 @@ int CXiSkeletonActor::ActorGetResourceCount(int arg1, int arg2)
         p3 = *(char **)p2;
       }
       while ( *(uint32_t *)p2 != 0 );
-      p1 = p11;
+      p1 = frame.p11;
     }
   }
-  p10 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg1);
-  if ( p10 != nullptr && orig::ResourceHandle_IsResident(&p10) && p10 != nullptr && *p10 != nullptr )
+  frame.p10 = *(uint32_t ***)(*(int (__thiscall **)(char *, int *))(*(uint32_t *)p1 + 480))(p1, &arg1);
+  if ( frame.p10 != nullptr && orig::ResourceHandle_IsResident(&frame.p10) && frame.p10 != nullptr && *frame.p10 != nullptr )
   {
-    orig::ResourceIter_FindFirst(u1, (int)*p10, i2, 0, -1);
-    while ( i3 != 0 )
+    orig::ResourceIter_FindFirst(frame.u1, (int)*frame.p10, i2, 0, -1);
+    while ( frame.i3 != 0 )
     {
       ++i1;
-      orig::ResourceIter_FindNext(u1, 0);
+      orig::ResourceIter_FindNext(frame.u1, 0);
     }
   }
   return i1;
@@ -3836,30 +3856,32 @@ void CXiSkeletonActor::ForwardToModelField24(int arg1)
 
 // FUNCTION: FFXIMAIN 0x100CFA50
 // NOT VERIFIED -- INCONCLUSIVE
-void __thiscall CXiSkeletonActor::AddResourceParts(void * self, int * arg2, void * arg3)
+void __thiscall CXiSkeletonActor::AddResourceParts(void * self, int * file, void * arg3)
 {
   bits32 *p1;
   int i1;
   bits32 *xi_eax;
-  char xi_frame[28] __attribute__((aligned(4)));
-  uint8_t  (&u1)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { uint8_t u1[20]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i2; };   // at 0x14
+  } frame;
   
-  if (arg2 == (int *)0x0) {
+  if (file == (int *)0x0) {
     i1 = 0;
   }
   else {
-    i1 = *arg2;
+    i1 = *file;
   }
-  orig::ResourceIter_FindFirst_v1(u1,i1,0x2a,0,0xffffffff);
-  while (i2 != 0) {
-    p1 = *(bits32 **)(i2 + 0x14);
+  orig::ResourceIter_FindFirst_v1(frame.u1,i1,0x2a,0,0xffffffff);
+  while (frame.i2 != 0) {
+    p1 = *(bits32 **)(frame.i2 + 0x14);
     xi_eax = orig::CYyModelBase_AddPartFromResource(arg3,p1);
     orig::CMoResource_AddRefChain_v1((void *)*p1,xi_eax);
-    orig::ResourceIter_FindNext_v1(u1,0);
+    orig::ResourceIter_FindNext_v1(frame.u1,0);
   }
-  if (((uint8_t)*(bits32 *)(*arg2 + 0x24) & 0x7f) == 1) {
-    orig::CXiActor_SpawnResourceGenerators_v1(self,arg2);
+  if (((uint8_t)*(bits32 *)(*file + 0x24) & 0x7f) == 1) {
+    orig::CXiActor_SpawnResourceGenerators_v1(self,file);
   }
   return;
 }
@@ -3956,40 +3978,42 @@ bits32 __thiscall CXiSkeletonActor::Slot244_Unknown(void * self, float * arg2, f
   long double f5;
   long double f6;
   long double f7;
-  char xi_frame[216] __attribute__((aligned(4)));
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  (&f9)[10] = *reinterpret_cast<float  (*)[10]>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 52);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 56);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 72);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 80);
-  float  &f17 = *reinterpret_cast<float  *>(xi_frame + 84);
-  float  &f18 = *reinterpret_cast<float  *>(xi_frame + 88);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  float  &f19 = *reinterpret_cast<float  *>(xi_frame + 96);
-  float  &f20 = *reinterpret_cast<float  *>(xi_frame + 100);
-  float  &f21 = *reinterpret_cast<float  *>(xi_frame + 104);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 108);
-  float  &f22 = *reinterpret_cast<float  *>(xi_frame + 112);
-  float  &f23 = *reinterpret_cast<float  *>(xi_frame + 116);
-  float  &f24 = *reinterpret_cast<float  *>(xi_frame + 120);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 124);
-  uint8_t  (&u9)[80] = *reinterpret_cast<uint8_t  (*)[80]>(xi_frame + 128);
-  float  &f25 = *reinterpret_cast<float  *>(xi_frame + 208);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[216];
+    struct __attribute__((packed)) { float f8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f9[10]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; uint32_t u3; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; float f10; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_5[0x34]; float f11; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_6[0x38]; float f12; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_7[0x3C]; uint32_t u4; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_8[0x40]; float f13; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_9[0x44]; float f14; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_10[0x48]; float f15; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_11[0x4C]; uint32_t u5; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_12[0x50]; float f16; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_13[0x54]; float f17; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_14[0x58]; float f18; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_15[0x5C]; uint32_t u6; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_16[0x60]; float f19; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_17[0x64]; float f20; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_18[0x68]; float f21; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_19[0x6C]; uint32_t u7; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_20[0x70]; float f22; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_21[0x74]; float f23; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_22[0x78]; float f24; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_23[0x7C]; uint32_t u8; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_24[0x80]; uint8_t u9[80]; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_25[0xD0]; float f25; };   // at 0xD0
+  } frame;
   
-  orig::MathVector_ReturnThis(u9);
-  orig::Mat4_SetIdentity_v1(u9);
+  orig::MathVector_ReturnThis(frame.u9);
+  orig::Mat4_SetIdentity_v1(frame.u9);
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Mat4_PostRotateY_v1(u9,*(float *)(i1 + 4));
+  orig::Mat4_PostRotateY_v1(frame.u9,*(float *)(i1 + 4));
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-  orig::Mat4_SetTranslation_v2(u9,p1);
-  orig::Mat4_PostMultiply_v1(u9,arg4);
+  orig::Mat4_SetTranslation_v2(frame.u9,p1);
+  orig::Mat4_PostMultiply_v1(frame.u9,arg4);
   p2 = (float *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x3c8))))((void *)(self),0);
   if (p2 == (float *)0x0) {
     orig::MathVector_Nop();
@@ -4000,7 +4024,7 @@ bits32 __thiscall CXiSkeletonActor::Slot244_Unknown(void * self, float * arg2, f
   f4 = p2[2];
   f5 = p2[3];
   f6 = p2[4];
-  f24 = (float)f6;
+  frame.f24 = (float)f6;
   f7 = p2[5];
   u2 = ((f2 - f3) != (f2 - f3)) || ((0.0f) != (0.0f));
   if (u2 != (u2 || f2 - f3 == 0.0f)) {
@@ -4012,54 +4036,54 @@ bits32 __thiscall CXiSkeletonActor::Slot244_Unknown(void * self, float * arg2, f
     f4 = f4 - 1.0f;
     f5 = f5 + 1.0f;
   }
-  f8 = (float)f4;
-  f9[2] = 1.0f;
-  f9[0] = (float)f3;
-  f9[6] = 1.0f;
-  u3 = 0x3f800000;
-  f9[1] = (float)f7;
-  u4 = 0x3f800000;
-  u5 = 0x3f800000;
-  f9[3] = (float)f5;
-  u6 = 0x3f800000;
-  u7 = 0x3f800000;
-  f9[4] = (float)f3;
-  u8 = 0x3f800000;
-  p2 = f9;
-  f9[5] = (float)f7;
+  frame.f8 = (float)f4;
+  frame.f9[2] = 1.0f;
+  frame.f9[0] = (float)f3;
+  frame.f9[6] = 1.0f;
+  frame.u3 = 0x3f800000;
+  frame.f9[1] = (float)f7;
+  frame.u4 = 0x3f800000;
+  frame.u5 = 0x3f800000;
+  frame.f9[3] = (float)f5;
+  frame.u6 = 0x3f800000;
+  frame.u7 = 0x3f800000;
+  frame.f9[4] = (float)f3;
+  frame.u8 = 0x3f800000;
+  p2 = frame.f9;
+  frame.f9[5] = (float)f7;
   i1 = 8;
-  f9[7] = (float)f4;
-  f9[8] = (float)f3;
-  f9[9] = (float)f6;
-  f10 = (float)f5;
-  f11 = (float)f3;
-  f12 = (float)f6;
-  f13 = (float)f4;
-  f14 = (float)f2;
-  f15 = (float)f7;
-  f16 = (float)f5;
-  f17 = (float)f2;
-  f18 = (float)f7;
-  f19 = (float)f4;
-  f20 = (float)f2;
-  f21 = (float)f6;
-  f22 = (float)f5;
-  f23 = (float)f2;
-  f25 = f24;
+  frame.f9[7] = (float)f4;
+  frame.f9[8] = (float)f3;
+  frame.f9[9] = (float)f6;
+  frame.f10 = (float)f5;
+  frame.f11 = (float)f3;
+  frame.f12 = (float)f6;
+  frame.f13 = (float)f4;
+  frame.f14 = (float)f2;
+  frame.f15 = (float)f7;
+  frame.f16 = (float)f5;
+  frame.f17 = (float)f2;
+  frame.f18 = (float)f7;
+  frame.f19 = (float)f4;
+  frame.f20 = (float)f2;
+  frame.f21 = (float)f6;
+  frame.f22 = (float)f5;
+  frame.f23 = (float)f2;
+  frame.f25 = frame.f24;
   do {
-    orig::Mat4_TransformCoordInPlace_v2(u9,p2 + -1);
+    orig::Mat4_TransformCoordInPlace_v2(frame.u9,p2 + -1);
     *p2 = (float)-*p2;
     p2 = p2 + 4;
     i1 = i1 + -1;
   } while (i1 != 0);
-  if (f9[1] > 1.0f)
+  if (frame.f9[1] > 1.0f)
   {
-    f8 = (-1e+05f);
-    f9[0] = (-1e+05f);
+    frame.f8 = (-1e+05f);
+    frame.f9[0] = (-1e+05f);
   }
-  orig::Vec4_Copy_v1(arg2,&f8);
-  orig::Vec4_Copy_v1(arg3,&f8);
-  p2 = f9;
+  orig::Vec4_Copy_v1(arg2,&frame.f8);
+  orig::Vec4_Copy_v1(arg3,&frame.f8);
+  p2 = frame.f9;
   i1 = 7;
   do {
     p2 = p2 + 4;
@@ -4168,11 +4192,13 @@ bits32 __thiscall CXiSkeletonActor::OnDrawName(void * self)
   uint32_t u2;
   int i2;
   uint8_t u3;
-  char xi_frame[280] __attribute__((aligned(4)));
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u6)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 8);
-  uint8_t  (&u7)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[280];
+    struct __attribute__((packed)) { uint32_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u6[4]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint8_t u7[256]; };   // at 0x18
+  } frame;
   
   obj1 = *(void **)((int)self + 0x70);
   if ((((XiControlActor_isFirstPersonView != '\0') && (obj1 != (void *)0x0)) &&
@@ -4227,21 +4253,21 @@ code_100D0609:
       }
     }
   }
-  orig::Quat_SetIdentity(u6);
-  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x278))))((void *)(self),u6,&u4,&u5);
+  orig::Quat_SetIdentity(frame.u6);
+  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x278))))((void *)(self),frame.u6,&frame.u4,&frame.u5);
   if ((char)u1 != '\0') {
     if ((*(uint32_t *)((int)self + 0x88) & 0x400) != 0) {
-      u4 = 0x3f800000;
+      frame.u4 = 0x3f800000;
       *(uint32_t *)((int)self + 0x88) = *(uint32_t *)((int)self + 0x88) & 0xfffffbff;
     }
     u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0xcc))))((void *)(self));
-    orig::_sprintf_v1(u7,&aS,u1);
+    orig::_sprintf_v1(frame.u7,&aS,u1);
     orig::CXiSkeletonActor_DrawNameIfVisible
-              (self,u6,u7,u4,u5,*(uint32_t *)((int)self + 0x7c))
+              (self,frame.u6,frame.u7,frame.u4,frame.u5,*(uint32_t *)((int)self + 0x7c))
     ;
     u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0xd0))))((void *)(self));
-    orig::_sprintf_v1(u7,&aS,u1);
-    u1 = orig::CXiSkeletonActor_DrawName2IfVisible(self,u6,u7,u4,u7)
+    orig::_sprintf_v1(frame.u7,&aS,u1);
+    u1 = orig::CXiSkeletonActor_DrawName2IfVisible(self,frame.u6,frame.u7,frame.u4,frame.u7)
     ;
     return u1;
   }
@@ -4275,26 +4301,28 @@ bits32 __stdcall CXiSkeletonActor::ProjectToScreen(float * arg1, bits32 xi_s2, b
   uint8_t u3;
   uint8_t u4;
   long double f2;
-  char xi_frame[192] __attribute__((aligned(4)));
-  uint32_t  (&u5)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
-  uint32_t  (&u6)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 64);
-  uint32_t  (&u7)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 128);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[192];
+    struct __attribute__((packed)) { uint32_t u5[16]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; uint32_t u6[16]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_3[0x80]; uint32_t u7[16]; };   // at 0x80
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(u7);
-  orig::MathVector_ReturnThis_v1(u6);
-  orig::MathVector_ReturnThis_v1(u5);
-  orig::CDx_GetTransformCached_v1(g_pCDx_as_v1,2,u6);
-  orig::CDx_GetTransformCached_v1(g_pCDx_as_v1,0x100,u7);
-  orig::Mat4_SetIdentity_v1(u5);
-  orig::Mat4_SetTranslation_v1(u5,arg1);
+  orig::MathVector_ReturnThis_v1(frame.u7);
+  orig::MathVector_ReturnThis_v1(frame.u6);
+  orig::MathVector_ReturnThis_v1(frame.u5);
+  orig::CDx_GetTransformCached_v1(g_pCDx_as_v1,2,frame.u6);
+  orig::CDx_GetTransformCached_v1(g_pCDx_as_v1,0x100,frame.u7);
+  orig::Mat4_SetIdentity_v1(frame.u5);
+  orig::Mat4_SetTranslation_v1(frame.u5,arg1);
   p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
   orig::CDx_SetTransform_v1(g_pCDx_as_v1,2,p1);
-  orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,u5);
+  orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,frame.u5);
   orig::Vec4_Set_v1(arg1,0.0f,0.0f,0.0f,1.0f);
   orig::Gfx_ProjectWorldToClip_v1(arg1,arg1);
   orig::Gfx_NdcToScreen_v1(arg1);
-  orig::CDx_SetTransform_v1(g_pCDx_as_v1,2,u6);
-  u1 = orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,u7);
+  orig::CDx_SetTransform_v1(g_pCDx_as_v1,2,frame.u6);
+  u1 = orig::CDx_SetTransform_v1(g_pCDx_as_v1,0x100,frame.u7);
   f2 = arg1[3];
   f1 = 0.0f;
   u4 = ((f2) != (f2)) || ((f1) != (f1));
@@ -4413,7 +4441,7 @@ double CXiSkeletonActor::GetDepthScale()
 
 // FUNCTION: FFXIMAIN 0x100D0B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-bits32 __thiscall CXiSkeletonActor::AddPartAndMarkSlot(void * self, int * arg2, int arg3, int arg4, bits32 arg5)
+bits32 __thiscall CXiSkeletonActor::AddPartAndMarkSlot(void * self, int * file, int arg3, int arg4, bits32 arg5)
 {
   uint8_t u1;
   int i1;
@@ -4430,7 +4458,7 @@ bits32 __thiscall CXiSkeletonActor::AddPartAndMarkSlot(void * self, int * arg2, 
   if (arg4 != *(int *)((int)self + 0x9ec)) {
     return arg4;
   }
-  if (arg2 == (int *)0x0) {
+  if (file == (int *)0x0) {
     return arg4;
   }
   i1 = orig::CXiActor_GetModelByteEE_v1(self);
@@ -4438,7 +4466,7 @@ bits32 __thiscall CXiSkeletonActor::AddPartAndMarkSlot(void * self, int * arg2, 
     if (u3 != 9) goto code_100D0BED;
     i1 = orig::CXiActor_GetModelByteEF(self);
     if (i1 == 0) {
-      orig::CXiActor_SetField0B4(self,arg2);
+      orig::CXiActor_SetField0B4(self,file);
       goto code_100D0BED;
     }
   }
@@ -4446,20 +4474,20 @@ bits32 __thiscall CXiSkeletonActor::AddPartAndMarkSlot(void * self, int * arg2, 
     if ((i1 != 7) || (u3 != 9)) goto code_100D0BED;
     u2 = orig::CXiActor_GetModelPartWord(self,0);
     if (u2 == 0) {
-      orig::CXiActor_SetField0B4(self,arg2);
+      orig::CXiActor_SetField0B4(self,file);
       goto code_100D0BED;
     }
   }
-  orig::GeneratorClone_SetDwordAndCopyOut((void *)((int)self + 0x864),&arg5,arg2);
-  orig::CMoResource_AddRefChain_v2((void *)*arg2);
+  orig::GeneratorClone_SetDwordAndCopyOut((void *)((int)self + 0x864),&arg5,file);
+  orig::CMoResource_AddRefChain_v2((void *)*file);
 code_100D0BED:
   p1 = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
   i1 = *p1;
   if ((i1 == 0) && (i1 = orig::CYyModel_CreateModelBase((void *)((int)self + 0x674)), i1 == 0)) {
     return 0;
   }
-  orig::CXiSkeletonActor_AddResourceParts(self,arg2,i1);
-  p1 = (int *)orig::CMoResource_FindInScope_v1(&arg5,*arg2,0x45,0);
+  orig::CXiSkeletonActor_AddResourceParts(self,file,i1);
+  p1 = (int *)orig::CMoResource_FindInScope_v1(&arg5,*file,0x45,0);
   if ((int *)*p1 != (int *)0x0) {
     i1 = *(int *)*p1;
     switch(xi_sw(u3)) {
@@ -4513,7 +4541,7 @@ bits32 __thiscall CXiSkeletonActor::SetField0B4IfField9EC(void * self, int * arg
 
 // FUNCTION: FFXIMAIN 0x100D0D70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_AttachPartResource(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4, int * arg5)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_AttachPartResource(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4, int * file)
 {
   int *xi_s2;
   uint32_t u1;
@@ -4522,8 +4550,8 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_AttachPartRe
   uint32_t *p1;
   uint64_t u3;
   
-  xi_s2 = arg5;
-  if (arg5 == *(int **)((int)self_ + 0x9ec)) {
+  xi_s2 = file;
+  if (file == *(int **)((int)self_ + 0x9ec)) {
     if (arg4 != 0) {
       orig::CXiActor_SetField0B4(self_,arg4);
       ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x290))))((void *)(self_),arg4);
@@ -4535,10 +4563,10 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_AttachPartRe
       xi_eax = 0;
       if ((u1 & 0xfff) != 0) {
         i1 = orig::ModelCodeIndex_MapCodeIndex(0,u1 & 0xfff);
-        orig::CMoResource_FindOrCreateTask(&arg5,i1);
-        u2 = orig::ResourceHandle_IsResident_v1(&arg5);
+        orig::CMoResource_FindOrCreateTask(&file,i1);
+        u2 = orig::ResourceHandle_IsResident_v1(&file);
         if ((char)u2 != '\0') {
-          u2 = orig::CXiSkeletonActor_AddPartAndMarkSlot(self_,arg5,u1 | 0x9000,*(int *)((int)self_ + 0x9ec),1);
+          u2 = orig::CXiSkeletonActor_AddPartAndMarkSlot(self_,file,u1 | 0x9000,*(int *)((int)self_ + 0x9ec),1);
           return u2;
         }
         u3 = orig::Allocator_Generic_v1(0x20);
@@ -4552,7 +4580,7 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_AttachPartRe
           p1[4] = 0;
           p1[6] = u1 | 0x9000;
           p1[7] = i1;
-          xi_eax = orig::MeshResourceCreate_Create(&arg5,XI_CODE(game_100D0E80),p1,(int)self_,0);
+          xi_eax = orig::MeshResourceCreate_Create(&file,XI_CODE(game_100D0E80),p1,(int)self_,0);
         }
       }
     }
@@ -4733,31 +4761,33 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) CXiSkeletonActor_IsReadComple
   uint32_t u2;
   int *p2;
   int i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+  } frame;
   
   if (*(char *)((int)self_ + 0x8a4) != '\0') {
     return xi_eax & 0xffffff00;
   }
   for (p1 = orig::List_GetTail_v1(*(void **)((int)self_ + 0x7e4)); p1 != (void *)0x0;
       p1 = *(void **)((int)p1 + 8)) {
-    i3 = *(int *)((int)p1 + 0x1c);
+    frame.i3 = *(int *)((int)p1 + 0x1c);
     u1 = 0;
-    if ((i3 == 0) || (u1 = orig::ResourceHandle_IsResident_v1(&i3), (char)u1 == '\0'))
+    if ((frame.i3 == 0) || (u1 = orig::ResourceHandle_IsResident_v1(&frame.i3), (char)u1 == '\0'))
     goto code_100D1394;
   }
-  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x1dc))))((void *)(self_),&i2);
-  if (i2 == 0) {
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x1dc))))((void *)(self_),&frame.i2);
+  if (frame.i2 == 0) {
     return 0;
   }
-  u2 = orig::ResourceHandle_IsResident_v1(&i2);
+  u2 = orig::ResourceHandle_IsResident_v1(&frame.i2);
   if ((char)u2 == '\0') {
     return u2;
   }
-  p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x400))))((void *)(self_),&i3);
-  i2 = *p2;
-  if (i2 == 0) {
+  p2 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x400))))((void *)(self_),&frame.i3);
+  frame.i2 = *p2;
+  if (frame.i2 == 0) {
     i1 = orig::CXiActor_GetModelByteEE_v1(self_);
     if (i1 == 7) {
       u1 = orig::CXiActor_GetModelPartWord(self_,0);
@@ -4769,7 +4799,7 @@ code_100D1394:
     }
   }
   else {
-    i1 = orig::ResourceHandle_IsResident_v1(&i2);
+    i1 = orig::ResourceHandle_IsResident_v1(&frame.i2);
     if ((char)i1 == '\0') {
       return i1;
     }
@@ -4800,7 +4830,7 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonSync(void * self, uint32_t dvdno
   int i3;
   char xi_frame[104] __attribute__((aligned(4)));
   untyped_fn * &p4 = *reinterpret_cast<untyped_fn * *>(xi_frame + 0);
-  int * &p5 = *reinterpret_cast<int * *>(xi_frame + 32);
+  int * &file = *reinterpret_cast<int * *>(xi_frame + 32);
   int  &i4 = *reinterpret_cast<int  *>(xi_frame + 36);
   int  &i5 = *reinterpret_cast<int  *>(xi_frame + 40);
   uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
@@ -4832,8 +4862,8 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonSync(void * self, uint32_t dvdno
     }
     p2 = orig::CMoResource_FindOrCreateTask(&dvdno1,(uint32_t)*(uint16_t *)(((char *)&c_resourceIdByModelByte) + i4 * 2))
     ;
-    p5 = (int *)*p2;
-    u2 = orig::ResourceHandle_IsResident_v1(&p5);
+    file = (int *)*p2;
+    u2 = orig::ResourceHandle_IsResident_v1(&file);
     if ((char)u2 == '\0') {
       if (i1 != 0) {
         p2 = orig::Allocator_Generic_v3(0x18);
@@ -4847,12 +4877,12 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonSync(void * self, uint32_t dvdno
         p2[5] = u2;
         orig::game_100814F0(p2 + 1,i1);
         p2[4] = self;
-        orig::MeshResourceCreate_Create(&p5,&code_100D4100,p2,(int)self,0);
+        orig::MeshResourceCreate_Create(&file,&code_100D4100,p2,(int)self,0);
       }
       i5 = 0;
     }
     else {
-      orig::CXiSkeletonActor_SetField0B4IfField9EC(self,p5,*(int *)((int)self + 0x9ec));
+      orig::CXiSkeletonActor_SetField0B4IfField9EC(self,file,*(int *)((int)self + 0x9ec));
       i5 = 0;
     }
     do {
@@ -4905,8 +4935,8 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonSync(void * self, uint32_t dvdno
             }
           }
           p2 = orig::CMoResource_FindOrCreateTask(&u6,i1 + u3);
-          p5 = (int *)*p2;
-          u2 = orig::ResourceHandle_IsResident_v1(&p5);
+          file = (int *)*p2;
+          u2 = orig::ResourceHandle_IsResident_v1(&file);
           if ((char)u2 == '\0') {
             if ((i7 != 0) && (p2 = orig::Allocator_Generic_v3(0x20), p2 != (bits32 *)0x0)) {
               orig::ActorHandle_Constructor_v1(p2 + 1);
@@ -4920,11 +4950,11 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonSync(void * self, uint32_t dvdno
               p2[4] = self;
               p2[6] = u4;
               p2[7] = i1 + u3;
-              orig::MeshResourceCreate_Create(&p5,XI_CODE(game_100D0E80),p2,(int)self,0);
+              orig::MeshResourceCreate_Create(&file,XI_CODE(game_100D0E80),p2,(int)self,0);
             }
           }
           else {
-            orig::CXiSkeletonActor_AddPartAndMarkSlot(self,p5,u4,*(int *)((int)self + 0x9ec),1);
+            orig::CXiSkeletonActor_AddPartAndMarkSlot(self,file,u4,*(int *)((int)self + 0x9ec),1);
           }
         }
       }
@@ -4950,8 +4980,8 @@ code_100D32AB:
       }
       i3 = orig::ModelCodeIndex_MapCodeIndex(4,i3);
       p2 = orig::CMoResource_FindOrCreateTask(&dvdno1,i3);
-      p5 = (int *)*p2;
-      i3 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      i3 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)i3 != '\0') goto code_100D36F9;
       if (i1 == 0) goto L1;
       p2 = orig::Allocator_Generic_v3(0x18);
@@ -4978,11 +5008,11 @@ code_100D32AB:
       }
       p2 = orig::CMoResource_FindOrCreateTask
                          (&dvdno1,(uint32_t)*(uint16_t *)(((char *)&g_1035F598) + i2 * 2) + i3 + -5);
-      p5 = (int *)*p2;
-      i3 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      i3 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)i3 != '\0') {
         u2 = orig::CXiSkeletonActor_AttachPartResource
-                          (self,(int)p5,*(int **)((int)self + 0x9ec),
+                          (self,(int)file,*(int **)((int)self + 0x9ec),
                            *(int **)((int)self + 0x9ec));
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
       }
@@ -5010,8 +5040,8 @@ code_100D32AB:
       }
       i3 = orig::ModelCodeIndex_MapCodeIndex(3,i3 + -0x3d);
       p2 = orig::CMoResource_FindOrCreateTask(&dvdno1,i3);
-      p5 = (int *)*p2;
-      i3 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      i3 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)i3 != '\0') goto code_100D36F9;
       if (i1 == 0) goto L1;
       p2 = orig::Allocator_Generic_v3(0x18);
@@ -5034,12 +5064,12 @@ code_100D32AB:
       i3 = 0xce07;
 code_100D36D6:
       p2 = orig::CMoResource_FindOrCreateTask(&dvdno1,i3);
-      p5 = (int *)*p2;
-      i3 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      i3 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)i3 != '\0') {
 code_100D36F9:
         u2 = orig::CXiSkeletonActor_AttachPartResource
-                          (self,(int)p5,*(int **)((int)self + 0x9ec),i3);
+                          (self,(int)file,*(int **)((int)self + 0x9ec),i3);
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
       }
       if (i1 == 0) goto L1;
@@ -5098,8 +5128,8 @@ L2:
       }
       i1 = orig::ModelCodeIndex_MapCodeIndex(u2,u4);
       p2 = orig::CMoResource_FindOrCreateTask(&u11,i1);
-      p5 = (int *)*p2;
-      i3 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      i3 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)i3 != '\0') goto code_100D36F9;
       p2 = orig::Allocator_Generic_v3(0x18);
       if (p2 == (bits32 *)0x0) goto code_100D4080;
@@ -5114,14 +5144,14 @@ L2:
     case 6:
       u4 = orig::CXiActor_GetModelPartWord(self,9);
       if ((u4 & 0xfff) == 0) {
-        p5 = (int *)0x0;
+        file = (int *)0x0;
       }
       else {
         i7 = orig::ModelCodeIndex_MapCodeIndex(0,u4 & 0xfff);
         p2 = orig::CMoResource_FindOrCreateTask(&u6,i7);
-        p5 = (int *)*p2;
+        file = (int *)*p2;
       }
-      u2 = orig::ResourceHandle_IsResident_v1(&p5);
+      u2 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)u2 == '\0') {
         p2 = orig::Allocator_Generic_v3(0x20);
         if (p2 == (bits32 *)0x0) goto code_100D4080;
@@ -5132,10 +5162,10 @@ L2:
         p2[7] = i7;
         p2[4] = 0;
         p2[6] = u4 | 0x9000;
-        orig::MeshResourceCreate_Create(&p5,XI_CODE(game_100D0E80),p2,(int)self,0);
+        orig::MeshResourceCreate_Create(&file,XI_CODE(game_100D0E80),p2,(int)self,0);
       }
       else {
-        orig::CXiSkeletonActor_AddPartAndMarkSlot(self,p5,u4 | 0x9000,*(int *)((int)self + 0x9ec),1);
+        orig::CXiSkeletonActor_AddPartAndMarkSlot(self,file,u4 | 0x9000,*(int *)((int)self + 0x9ec),1);
       }
       i1 = orig::CXiActor_GetModelByteEF(self);
       i3 = 0;
@@ -5150,8 +5180,8 @@ L2:
       p2 = (bits32 *)
                orig::game_100731B0(g_pMeshResourceMng_as_v1,&i8,(uint32_t)*(uint16_t *)(((char *)&c_resourceIdByModelByte) + i4 * 2)
                            );
-      p5 = (int *)*p2;
-      u2 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      u2 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)u2 == '\0') {
         p2 = orig::Allocator_Generic_v3(0x18);
         if (p2 == (bits32 *)0x0) {
@@ -5159,7 +5189,7 @@ code_100D4080:
           i1 = orig::ModelCodeIndex_MapCodeIndex(0,0);
           p3 = (uint32_t *)orig::game_10072FD0_as_v0(g_pMeshResourceMng_as_v1,(int *)&dvdno1,i1);
           p1 = (int *)*p3;
-          p5 = p1;
+          file = p1;
           if ((p1 != (int *)0x0) && (*p1 != 0)) {
             u4 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x290))))((void *)(self),p1);
             return u4 & 0xffffff00;
@@ -5172,10 +5202,10 @@ code_100D4080:
         p2[5] = 0;
         orig::game_100814F0(p2 + 1,(int)self);
         p2[4] = 0;
-        i3 = orig::MeshResourceCreate_Create(&p5,&code_100D4100,p2,(int)self,0);
+        i3 = orig::MeshResourceCreate_Create(&file,&code_100D4100,p2,(int)self,0);
       }
       else {
-        i3 = orig::CXiSkeletonActor_SetField0B4IfField9EC(self,p5,*(int *)((int)self + 0x9ec))
+        i3 = orig::CXiSkeletonActor_SetField0B4IfField9EC(self,file,*(int *)((int)self + 0x9ec))
         ;
       }
       i5 = 0;
@@ -5252,8 +5282,8 @@ code_100D4080:
               }
             }
             p2 = orig::CMoResource_FindOrCreateTask(&u9,i1 + u3);
-            p5 = (int *)*p2;
-            u2 = orig::ResourceHandle_IsResident_v1(&p5);
+            file = (int *)*p2;
+            u2 = orig::ResourceHandle_IsResident_v1(&file);
             if ((char)u2 == '\0') {
               p2 = orig::Allocator_Generic_v3(0x20);
               if (p2 != (bits32 *)0x0) {
@@ -5264,11 +5294,11 @@ code_100D4080:
                 p2[4] = 0;
                 p2[6] = u4;
                 p2[7] = i1 + u3;
-                orig::MeshResourceCreate_Create(&p5,XI_CODE(game_100D0E80),p2,(int)self,0);
+                orig::MeshResourceCreate_Create(&file,XI_CODE(game_100D0E80),p2,(int)self,0);
               }
             }
             else {
-              orig::CXiSkeletonActor_AddPartAndMarkSlot(self,p5,u4,*(int *)((int)self + 0x9ec),1);
+              orig::CXiSkeletonActor_AddPartAndMarkSlot(self,file,u4,*(int *)((int)self + 0x9ec),1);
             }
           }
         }
@@ -5291,16 +5321,16 @@ code_100D3E98:
       if (u4 != 0) goto L2;
       u4 = orig::CXiActor_GetModelPartWord(self,9);
       if ((u4 & 0xfff) == 0) {
-        p5 = (int *)0x0;
+        file = (int *)0x0;
       }
       else {
         i7 = orig::ModelCodeIndex_MapCodeIndex(0,u4 & 0xfff);
         p2 = orig::CMoResource_FindOrCreateTask(&u10,i7);
-        p5 = (int *)*p2;
+        file = (int *)*p2;
       }
-      u2 = orig::ResourceHandle_IsResident_v1(&p5);
+      u2 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)u2 != '\0') {
-        u2 = orig::CXiSkeletonActor_AddPartAndMarkSlot(self,p5,u4 | 0x9000,*(int *)((int)self + 0x9ec),1);
+        u2 = orig::CXiSkeletonActor_AddPartAndMarkSlot(self,file,u4 | 0x9000,*(int *)((int)self + 0x9ec),1);
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
       }
       p2 = orig::Allocator_Generic_v3(0x20);
@@ -5322,8 +5352,8 @@ code_100D3E98:
       }
       p2 = orig::CMoResource_FindOrCreateTask
                          (&u7,(uint32_t)*(uint16_t *)(((char *)&c_resourceIdByModelByte) + i4 * 2));
-      p5 = (int *)*p2;
-      u2 = orig::ResourceHandle_IsResident_v1(&p5);
+      file = (int *)*p2;
+      u2 = orig::ResourceHandle_IsResident_v1(&file);
       if ((char)u2 == '\0') {
         p2 = orig::Allocator_Generic_v3(0x18);
         if (p2 == (bits32 *)0x0) goto code_100D4080;
@@ -5332,10 +5362,10 @@ code_100D3E98:
         p2[5] = 0;
         orig::game_100814F0(p2 + 1,(int)self);
         p2[4] = 0;
-        orig::MeshResourceCreate_Create(&p5,&code_100D4100,p2,(int)self,0);
+        orig::MeshResourceCreate_Create(&file,&code_100D4100,p2,(int)self,0);
       }
       else {
-        orig::CXiSkeletonActor_SetField0B4IfField9EC(self,p5,*(int *)((int)self + 0x9ec));
+        orig::CXiSkeletonActor_SetField0B4IfField9EC(self,file,*(int *)((int)self + 0x9ec));
       }
       i5 = 0;
       do {
@@ -5388,8 +5418,8 @@ code_100D3E98:
               }
             }
             p2 = orig::CMoResource_FindOrCreateTask(&u8,i1 + u3);
-            p5 = (int *)*p2;
-            u2 = orig::ResourceHandle_IsResident_v1(&p5);
+            file = (int *)*p2;
+            u2 = orig::ResourceHandle_IsResident_v1(&file);
             if ((char)u2 == '\0') {
               p2 = orig::Allocator_Generic_v3(0x20);
               if (p2 != (bits32 *)0x0) {
@@ -5400,11 +5430,11 @@ code_100D3E98:
                 p2[4] = 0;
                 p2[6] = u4;
                 p2[7] = i1 + u3;
-                orig::MeshResourceCreate_Create(&p5,XI_CODE(game_100D0E80),p2,(int)self,0);
+                orig::MeshResourceCreate_Create(&file,XI_CODE(game_100D0E80),p2,(int)self,0);
               }
             }
             else {
-              orig::CXiSkeletonActor_AddPartAndMarkSlot(self,p5,u4,*(int *)((int)self + 0x9ec),1);
+              orig::CXiSkeletonActor_AddPartAndMarkSlot(self,file,u4,*(int *)((int)self + 0x9ec),1);
             }
           }
         }
@@ -5426,11 +5456,11 @@ code_100D3B96:
     }
     i3 = orig::ModelCodeIndex_MapCodeIndex(1,i3);
     p2 = orig::CMoResource_FindOrCreateTask(&dvdno1,i3);
-    p5 = (int *)*p2;
-    i3 = orig::ResourceHandle_IsResident_v1(&p5);
+    file = (int *)*p2;
+    i3 = orig::ResourceHandle_IsResident_v1(&file);
     if ((char)i3 != '\0') {
       u2 = orig::CXiSkeletonActor_AttachPartResource
-                        (self,(int)p5,*(int **)((int)self + 0x9ec),p5);
+                        (self,(int)file,*(int **)((int)self + 0x9ec),file);
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
     if (i1 == 0) goto L1;
@@ -5448,7 +5478,7 @@ code_100D3B96:
 code_100D4064:
     p4 = XI_CODE(game_100D4220);
 code_100D406B:
-    i3 = orig::MeshResourceCreate_Create(&p5,p4,p2,(int)self,0);
+    i3 = orig::MeshResourceCreate_Create(&file,p4,p2,(int)self,0);
   }
 L1:
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(1)));
@@ -5456,7 +5486,7 @@ L1:
 
 // FUNCTION: FFXIMAIN 0x100D4330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-bits32 __thiscall CXiSkeletonActor::LoadSkeletonResource(void * self, bits32 arg2)
+bits32 __thiscall CXiSkeletonActor::LoadSkeletonResource(void * self, bits32 dvdno1)
 {
   uint32_t u1;
   uint8_t u2;
@@ -5483,13 +5513,13 @@ bits32 __thiscall CXiSkeletonActor::LoadSkeletonResource(void * self, bits32 arg
     }
     *(void **)((int)self + 0xa08) = p1;
     if (p1 == (void *)0x0) {
-      u3 = orig::CXiSkeletonActor_LoadSkeletonSync_v1(self,arg2);
+      u3 = orig::CXiSkeletonActor_LoadSkeletonSync_v1(self,dvdno1);
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
     }
-    *(uint32_t *)((int)p1 + 0x44) = arg2;
+    *(uint32_t *)((int)p1 + 0x44) = dvdno1;
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  u3 = orig::CXiSkeletonActor_LoadSkeletonSync_v1(self,arg2);
+  u3 = orig::CXiSkeletonActor_LoadSkeletonSync_v1(self,dvdno1);
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
 }
 
@@ -5601,55 +5631,57 @@ void __thiscall CXiSkeletonActor::BuildBasisFromVf210(void * self, float * arg2)
 {
   uint32_t *p1;
   uint32_t u1;
-  char xi_frame[112] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 44);
-  uint8_t  (&u2)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[112];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f7; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; float f8; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_9[0x20]; float f9; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_10[0x24]; float f10; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_11[0x28]; float f11; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_12[0x2C]; float f12; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_13[0x30]; uint8_t u2[64]; };   // at 0x30
+  } frame;
   
-  orig::MathVector_ReturnThis(u2);
-  f1 = 0.0f;
-  f2 = 0.0f;
-  f3 = 1.0f;
+  orig::MathVector_ReturnThis(frame.u2);
+  frame.f1 = 0.0f;
+  frame.f2 = 0.0f;
+  frame.f3 = 1.0f;
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x210))))((void *)(self));
-  orig::Vec3_Copy_v1(&f4,p1);
-  orig::Vec3_Scale_v1(&f4,&f4,(-1.0f));
-  orig::Mat4_SetIdentity_v1(u2);
+  orig::Vec3_Copy_v1(&frame.f4,p1);
+  orig::Vec3_Scale_v1(&frame.f4,&frame.f4,(-1.0f));
+  orig::Mat4_SetIdentity_v1(frame.u2);
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Vec4_Copy_v1(&f10,p1);
-  orig::Mat4_PostRotateX_v1(u2,f10);
-  orig::Mat4_PostRotateY_v1(u2,f11);
-  orig::Mat4_PostRotateZ_v1(u2,f12);
-  u1 = orig::Mat4_TransformPointInPlace_v2(u2,&f1);
-  orig::game_100274B0(&f1,u1);
-  orig::Vec3_Cross(&f7,&f4,&f1);
-  orig::game_100274B0(&f7,&f7);
-  u1 = orig::Vec3_Cross(&f1,&f7,&f4);
-  orig::game_100274B0(&f1,u1);
-  *arg2 = (float)f7;
-  arg2[2] = f9;
-  arg2[1] = f8;
+  orig::Vec4_Copy_v1(&frame.f10,p1);
+  orig::Mat4_PostRotateX_v1(frame.u2,frame.f10);
+  orig::Mat4_PostRotateY_v1(frame.u2,frame.f11);
+  orig::Mat4_PostRotateZ_v1(frame.u2,frame.f12);
+  u1 = orig::Mat4_TransformPointInPlace_v2(frame.u2,&frame.f1);
+  orig::game_100274B0(&frame.f1,u1);
+  orig::Vec3_Cross(&frame.f7,&frame.f4,&frame.f1);
+  orig::game_100274B0(&frame.f7,&frame.f7);
+  u1 = orig::Vec3_Cross(&frame.f1,&frame.f7,&frame.f4);
+  orig::game_100274B0(&frame.f1,u1);
+  *arg2 = (float)frame.f7;
+  arg2[2] = frame.f9;
+  arg2[1] = frame.f8;
   arg2[3] = 0.0f;
-  arg2[4] = f4;
-  arg2[5] = f5;
-  arg2[6] = f6;
-  arg2[8] = f1;
-  arg2[9] = f2;
+  arg2[4] = frame.f4;
+  arg2[5] = frame.f5;
+  arg2[6] = frame.f6;
+  arg2[8] = frame.f1;
+  arg2[9] = frame.f2;
   arg2[7] = 0.0f;
   arg2[0xb] = 0.0f;
   arg2[0xc] = 0.0f;
   arg2[0xd] = 0.0f;
   arg2[0xe] = 0.0f;
-  arg2[10] = f3;
+  arg2[10] = frame.f3;
   arg2[0xf] = 1.0f;
   orig::MathVector_Nop();
   return;
@@ -5668,14 +5700,16 @@ void __thiscall CXiSkeletonActor::UpdateHeadLook(void * self)
   uint32_t *p3;
   uint8_t u3;
   long double f1;
-  char xi_frame[100] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 12);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  (&f6)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 20);
-  uint8_t  (&u5)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 36);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[100];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f6[4]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; uint8_t u5[64]; };   // at 0x24
+  } frame;
   
   p1 = (int *)orig::CYyModel_GetField44Addr_v1((void *)((int)self + 0x674));
   i1 = *p1;
@@ -5724,69 +5758,69 @@ void __thiscall CXiSkeletonActor::UpdateHeadLook(void * self)
           }
         }
       }
-      ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x1c4))))((void *)(p1),3,&f3);
-      f1 = f4;
+      ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x1c4))))((void *)(p1),3,&frame.f3);
+      f1 = frame.f4;
       if (*(short *)((int)p1 + 0xb2) != 0) {
         f1 = f1 - 1.2000000476837158203125f;
       }
       *(float *)((int)self + 0x84c) = (float)f1;
-      *(float *)((int)self + 0x848) = f3;
-      *(float *)((int)self + 0x850) = f5;
+      *(float *)((int)self + 0x848) = frame.f3;
+      *(float *)((int)self + 0x850) = frame.f5;
       *(uint32_t *)((int)self + 0x854) = 0;
     }
   }
 code_100D5CAE:
-  f3 = *(float *)((int)self + 0x848);
-  f4 = *(float *)((int)self + 0x84c);
-  f5 = *(float *)((int)self + 0x850);
-  u4 = *(uint32_t *)((int)self + 0x854);
+  frame.f3 = *(float *)((int)self + 0x848);
+  frame.f4 = *(float *)((int)self + 0x84c);
+  frame.f5 = *(float *)((int)self + 0x850);
+  frame.u4 = *(uint32_t *)((int)self + 0x854);
   p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-  orig::Vec3_SubInPlace(&f3,p2);
-  orig::MathVector_ReturnThis(u5);
-  orig::Mat4_SetIdentity_v1(u5);
+  orig::Vec3_SubInPlace(&frame.f3,p2);
+  orig::MathVector_ReturnThis(frame.u5);
+  orig::Mat4_SetIdentity_v1(frame.u5);
   i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Mat4_PostRotateY_v1(u5,(float)-*(float *)(i2 + 4));
-  u2 = orig::Mat4_TransformPointInPlace_v2(u5,&f3);
+  orig::Mat4_PostRotateY_v1(frame.u5,(float)-*(float *)(i2 + 4));
+  u2 = orig::Mat4_TransformPointInPlace_v2(frame.u5,&frame.f3);
   orig::MathVector_Nop();
-  f2 = 0.039999999105930328369140625f;
+  frame.f2 = 0.039999999105930328369140625f;
   u2 = orig::Acter_IsEvent(u2);
   if (((char)u2 != '\0') && (i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x144))))((void *)(self)), i2 != 0)) {
     i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x144))))((void *)(self));
-    f2 = (float)(i2 * 0.00999999977648258209228515625f * 0.039999999105930328369140625f);
+    frame.f2 = (float)(i2 * 0.00999999977648258209228515625f * 0.039999999105930328369140625f);
   }
-  f6[0] = 1.0f;
-  f6[1] = 0.0f;
-  f6[2] = 0.0f;
-  f6[3] = 1.0f;
-  f1 = orig::game_10027530(&f3,f6);
+  frame.f6[0] = 1.0f;
+  frame.f6[1] = 0.0f;
+  frame.f6[2] = 0.0f;
+  frame.f6[3] = 1.0f;
+  f1 = orig::game_10027530(&frame.f3,frame.f6);
   u3 = ((*(float *)((int)self + 0x854)) != (*(float *)((int)self + 0x854))) || ((0.0f) != (0.0f));
   if (((((u3 || *(float *)((int)self + 0x854) < 0.0f) == u3) &&
-       (u3 = ((f3) != (f3)) || (((-0.5f)) != ((-0.5f))),
-       (u3 || f3 < (-0.5f)) == u3)) &&
+       (u3 = ((frame.f3) != (frame.f3)) || (((-0.5f)) != ((-0.5f))),
+       (u3 || frame.f3 < (-0.5f)) == u3)) &&
       (u3 = ((f1) != (f1)) || (((-0.100000001490116119384765625f)) != ((-0.100000001490116119384765625f))), (u3 || f1 < (-0.100000001490116119384765625f)) == u3)) &&
-     (f1 = x87_fsqrt(f3 * f3 + f5 * f5),
+     (f1 = x87_fsqrt(frame.f3 * frame.f3 + frame.f5 * frame.f5),
      u3 = ((f1) != (f1)) || ((0.300000011920928955078125f) != (0.300000011920928955078125f)), (u3 || f1 < 0.300000011920928955078125f) == u3)) {
-    *(float *)(i1 + 0xbc) = (float)(f2 + *(float *)(i1 + 0xbc));
+    *(float *)(i1 + 0xbc) = (float)(frame.f2 + *(float *)(i1 + 0xbc));
     if (*(float *)(i1 + 0xbc) > 1.0f) {
       *(uint32_t *)(i1 + 0xbc) = 0x3f800000;
       return;
     }
   }
   else {
-    *(float *)(i1 + 0xbc) = (float)(*(float *)(i1 + 0xbc) - f2);
+    *(float *)(i1 + 0xbc) = (float)(*(float *)(i1 + 0xbc) - frame.f2);
     u3 = ((*(float *)(i1 + 0xbc)) != (*(float *)(i1 + 0xbc))) || ((0.0f) != (0.0f));
     if ((u3 || *(float *)(i1 + 0xbc) < 0.0f) != u3) {
       *(uint32_t *)(i1 + 0xb0) = g_1035F5FC;
       *(uint32_t *)(i1 + 0xb4) = g_1035F600;
       *(uint32_t *)(i1 + 0xb8) = g_1035F604;
       *(uint32_t *)(i1 + 0xbc) = g_1035F608;
-      orig::MathVector_ReturnThis(u5);
-      orig::Mat4_SetIdentity_v1(u5);
+      orig::MathVector_ReturnThis(frame.u5);
+      orig::Mat4_SetIdentity_v1(frame.u5);
       i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
-      orig::Mat4_PostRotateY_v1(u5,*(float *)(i2 + 4));
+      orig::Mat4_PostRotateY_v1(frame.u5,*(float *)(i2 + 4));
       p3 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
-      orig::Mat4_SetTranslation_v2(u5,p3);
-      orig::Mat4_TransformPointInPlace_v2(u5,(uint32_t *)(i1 + 0xb0));
+      orig::Mat4_SetTranslation_v2(frame.u5,p3);
+      orig::Mat4_TransformPointInPlace_v2(frame.u5,(uint32_t *)(i1 + 0xb0));
       *(uint32_t *)(i1 + 0xbc) = 0;
       orig::MathVector_Nop();
     }

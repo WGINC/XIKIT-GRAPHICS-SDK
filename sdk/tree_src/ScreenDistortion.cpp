@@ -62,29 +62,31 @@ XI_API uint32_t * __thiscall YmElem_DrawScreenDistortion(float *self_)
   float *p6;
   float *p7;
   int i14;
-  alignas(16) unsigned char xi_frame[0x4E0];  // address-taken locals at their original offsets
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float (&f26)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x50);
-  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x60);
-  float (&f29)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
-  float * &p8 = *reinterpret_cast<float * *>(xi_frame + 0x74);
-  const void * &p9 = *reinterpret_cast<const void * *>(xi_frame + 0x78);
-  uint32_t (&u1)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0x7C);
-  uint32_t (&u2)[6] = *reinterpret_cast<uint32_t (*)[6]>(xi_frame + 0x8C);
-  char (&val1)[60] = *reinterpret_cast<char (*)[60]>(xi_frame + 0xA4);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4E0];
+    struct __attribute__((packed)) { unsigned char pad_1[0x3C]; int i15; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_2[0x3C]; float f18; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_3[0x3C]; float f19; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_4[0x40]; int i16; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_5[0x40]; float f20; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_6[0x40]; float f21; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_7[0x40]; float f22; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_8[0x44]; float f23; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_9[0x48]; float f24; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_10[0x4C]; float f25; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_11[0x50]; float f26[3]; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_12[0x5C]; float f27; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_13[0x60]; float f28; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_14[0x64]; float f29[4]; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_15[0x74]; float * p8; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_16[0x78]; const void * p9; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_17[0x7C]; uint32_t u1[4]; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_18[0x8C]; uint32_t u2[6]; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_19[0xA4]; char val1[60]; };   // at 0xA4
+  } frame;
   bool xi_fpu_unord = false;
 
-  p8 = self_;
+  frame.p8 = self_;
   if ( (CMoDist_vf18_staticGuards & 1) == 0 )
   {
     CMoDist_vf18_static_BB04 = 0;
@@ -105,106 +107,106 @@ XI_API uint32_t * __thiscall YmElem_DrawScreenDistortion(float *self_)
     CMoDist_vf18_static_BB3C = 0;
     orig::_atexit(XI_CODE(nullsub_136));
   }
-  i16 = *(uint32_t *)(g_pResourceMng + 3524);
-  i15 = *(uint32_t *)(g_pResourceMng + 3520);
+  frame.i16 = *(uint32_t *)(g_pResourceMng + 3524);
+  frame.i15 = *(uint32_t *)(g_pResourceMng + 3520);
   orig::RegisterWithProcessor((int)self_);
   vftable = (void (__thiscall **)(CMoProcessor *, int *, char *, int, float *, int, int, int))(*(void * *)&g_pProcessor->vftable);
-  p9 = self_ + 40;
-  vftable[32](g_pProcessor, &CMoDist_vf18_static_BB04, val1, 5, self_ + 40, g_pResourceMng + 2832, i15, i16);
-  f20 = (float)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
+  frame.p9 = self_ + 40;
+  vftable[32](g_pProcessor, &CMoDist_vf18_static_BB04, frame.val1, 5, self_ + 40, g_pResourceMng + 2832, frame.i15, frame.i16);
+  frame.f20 = (float)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
   f1 = (double)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
-  p1 = &val1[4];
+  p1 = &frame.val1[4];
   i1 = 0;
-  f21 = 1.0 / f20;
+  frame.f21 = 1.0 / frame.f20;
   f2 = 1.0 / f1;
   do
   {
-    f3 = f21 * *((float *)p1 - 1);
+    f3 = frame.f21 * *((float *)p1 - 1);
     f4 = *((float *)p1 - 1);
     p1 += 12;
-    f29[i1 - 1] = f4;
-    f26[i1 - 1] = *((float *)p1 - 3);
-    *(float *)&u1[i1++] = f3;
-    *(float *)&u2[i1] = f2 * *((float *)p1 - 3);
+    frame.f29[i1 - 1] = f4;
+    frame.f26[i1 - 1] = *((float *)p1 - 3);
+    *(float *)&frame.u1[i1++] = f3;
+    *(float *)&frame.u2[i1] = f2 * *((float *)p1 - 3);
   }
   while ( i1 < 5 );
   result =(uint32_t*)(&(*(void * *)&g_pCDx->vftable));
   i2 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194));
   if ( i2 != 0 )
   {
-    f5 = f25;
-    f24 = f28;
-    f18 = f28;
-    f23 = f25;
+    f5 = frame.f25;
+    frame.f24 = frame.f28;
+    frame.f18 = frame.f28;
+    frame.f23 = frame.f25;
     for ( i = 0; i < 4; ++i )
     {
-      if ( f18 < (double)f29[i] )
-        f18 = f29[i];
-      if ( f5 < f26[i] )
-        f5 = f26[i];
-      (xi_fpu_unord = __builtin_isunordered(f24, (double)f29[i]), b1 = f24 < (double)f29[i]);
+      if ( frame.f18 < (double)frame.f29[i] )
+        frame.f18 = frame.f29[i];
+      if ( f5 < frame.f26[i] )
+        f5 = frame.f26[i];
+      (xi_fpu_unord = __builtin_isunordered(frame.f24, (double)frame.f29[i]), b1 = frame.f24 < (double)frame.f29[i]);
       c1 = 0;
-      b2 = f24 == f29[i];
+      b2 = frame.f24 == frame.f29[i];
       if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        f24 = f29[i];
-      (xi_fpu_unord = __builtin_isunordered(f23, (double)f26[i]), b3 = f23 < (double)f26[i]);
+        frame.f24 = frame.f29[i];
+      (xi_fpu_unord = __builtin_isunordered(frame.f23, (double)frame.f26[i]), b3 = frame.f23 < (double)frame.f26[i]);
       c2 = 0;
-      b4 = f23 == f26[i];
+      b4 = frame.f23 == frame.f26[i];
       if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        f23 = f26[i];
+        frame.f23 = frame.f26[i];
     }
-    f19 = f18 - f24;
-    f22 = f5 - f23;
-    (xi_fpu_unord = __builtin_isunordered(f19, 256.0), b5 = f19 < 256.0);
+    frame.f19 = frame.f18 - frame.f24;
+    frame.f22 = f5 - frame.f23;
+    (xi_fpu_unord = __builtin_isunordered(frame.f19, 256.0), b5 = frame.f19 < 256.0);
     c3 = 0;
-    b6 = f19 == 256.0;
+    b6 = frame.f19 == 256.0;
     if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
       f6 = 1.0;
     else
-      f6 = 255.0 / f19;
-    (xi_fpu_unord = __builtin_isunordered(f22, 256.0), b7 = f22 < 256.0);
+      f6 = 255.0 / frame.f19;
+    (xi_fpu_unord = __builtin_isunordered(frame.f22, 256.0), b7 = frame.f22 < 256.0);
     c4 = 0;
-    b8 = f22 == 256.0;
+    b8 = frame.f22 == 256.0;
     if ( ((short)(((b7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
       f7 = 1.0;
     else
-      f7 = 255.0 / f22;
-    for ( j = 0; j < 5; *(float *)((char *)&f24 + j * 4) = (*(float *)((char *)&f24 + j * 4) - f23) * f7 )
+      f7 = 255.0 / frame.f22;
+    for ( j = 0; j < 5; *(float *)((char *)&frame.f24 + j * 4) = (*(float *)((char *)&frame.f24 + j * 4) - frame.f23) * f7 )
     {
-      f8 = f29[j++ - 1];
-      *(float *)((char *)&f27 + j * 4) = (f8 - f24) * f6;
+      f8 = frame.f29[j++ - 1];
+      *(float *)((char *)&frame.f27 + j * 4) = (f8 - frame.f24) * f6;
     }
     orig::DynVB_Reserve((void *)g_pDynVB_FVF144, 4);
     p2 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
-    i7 = u2[2];
-    p2[5] = *(float *)&u1[1];
-    i8 = u1[2];
+    i7 = frame.u2[2];
+    p2[5] = *(float *)&frame.u1[1];
+    i8 = frame.u1[2];
     *((uint32_t *)p2 + 6) = i7;
-    i9 = u2[3];
+    i9 = frame.u2[3];
     *((uint32_t *)p2 + 12) = i8;
-    i10 = u2[0];
+    i10 = frame.u2[0];
     *((uint32_t *)p2 + 13) = i9;
-    i11 = u2[5];
+    i11 = frame.u2[5];
     *((uint32_t *)p2 + 19) = i10;
-    i12 = u1[3];
+    i12 = frame.u1[3];
     *((uint32_t *)p2 + 20) = i11;
-    i13 = u2[4];
+    i13 = frame.u2[4];
     *((uint32_t *)p2 + 26) = i12;
-    f9 = f29[0];
+    f9 = frame.f29[0];
     *((uint32_t *)p2 + 27) = i13;
-    f10 = f26[0];
+    f10 = frame.f26[0];
     *p2 = f9;
-    f11 = f29[1];
+    f11 = frame.f29[1];
     p2[1] = f10;
-    f12 = f26[1];
+    f12 = frame.f26[1];
     p2[7] = f11;
-    f13 = f29[3];
+    f13 = frame.f29[3];
     p2[8] = f12;
-    f14 = f27;
+    f14 = frame.f27;
     p2[14] = f13;
-    f15 = f29[2];
+    f15 = frame.f29[2];
     p2[15] = f14;
-    f16 = f26[2];
+    f16 = frame.f26[2];
     p2[2] = 0.0;
     p2[3] = 1.0;
     p2[9] = 0.0;
@@ -261,21 +263,21 @@ XI_API uint32_t * __thiscall YmElem_DrawScreenDistortion(float *self_)
     p3[24] = 0;
     p3[25] = 1065353216;
     p5 = (float *)(p3 + 5);
-    for ( m = 0; m < 5; *(p5 - 6) = *(float *)((char *)&f24 + m * 4) * 0x1.0101020000000p-8 )
+    for ( m = 0; m < 5; *(p5 - 6) = *(float *)((char *)&frame.f24 + m * 4) * 0x1.0101020000000p-8 )
     {
-      f17 = f29[m++ - 1] * 0x1.0101020000000p-8;
+      f17 = frame.f29[m++ - 1] * 0x1.0101020000000p-8;
       p5 += 6;
       *(p5 - 7) = f17;
     }
-    *((float *)p3 + 34) = f29[0] * 0x1.0101020000000p-8;
-    *((float *)p3 + 35) = f26[0] * 0x1.0101020000000p-8;
+    *((float *)p3 + 34) = frame.f29[0] * 0x1.0101020000000p-8;
+    *((float *)p3 + 35) = frame.f26[0] * 0x1.0101020000000p-8;
     orig::DynVB_Unlock((void *)g_pDynVB_FVF142);
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
     p6 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
     orig::RegisterWithProcessor((int)self_);
-    p7 = p8;
-    memcpy(p6, p9, 0x40u);
+    p7 = frame.p8;
+    memcpy(p6, frame.p9, 0x40u);
     p6[12] = p7[101] + p6[12];
     p6[13] = p7[101] + p6[13];
     orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, p6);

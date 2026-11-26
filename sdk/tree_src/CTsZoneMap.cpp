@@ -40,9 +40,9 @@ XI_API bits32 * __cdecl ZoneMap_GetMatrixGlobal(void)
 
 // FUNCTION: FFXIMAIN 0x10177400
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_SetZBias(unsigned int arg1)
+XI_API int __cdecl Gfx_SetZBias(unsigned int Value)
 {
-  return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZBIAS, arg1);
+  return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZBIAS, Value);
 }
 
 // FUNCTION: FFXIMAIN 0x10177420
@@ -54,8 +54,10 @@ XI_API void __thiscall ZoneMap_SetOverlayProjection(void * self_)
   float f3;
   float f4;
   long double f5;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&f6)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f6[16]; };   // at 0x0
+  } frame;
   
   f1 = *(float *)(g_pCamera_as_s32 + 0x2f4);
   f2 = *(float *)(g_pCamera_as_s32 + 0x2e8);
@@ -64,11 +66,11 @@ XI_API void __thiscall ZoneMap_SetOverlayProjection(void * self_)
   ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pCDx_as_s32 + 0xc) + 200))))(*(int **)(g_pCDx_as_s32 + 0xc),0x2f,0);
   f5 = bit_cast<long double>(x87_fpatan(192.0,f1));
   orig::D3DXMatrixPerspectiveFovLH_static_v1
-            (f6,(float)(f5 + f5),
+            (frame.f6,(float)(f5 + f5),
              (float)(1.0f / (f2 * *(float *)(g_pCamera_as_s32 + 0x2f0))),
              (float)(f3 + *(float *)((int)self_ + 0x39590)),
              (float)(f4 + *(float *)((int)self_ + 0x39590)));
-  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pCDx_as_s32 + 0xc) + 0x94))))(*(int **)(g_pCDx_as_s32 + 0xc),3,f6);
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pCDx_as_s32 + 0xc) + 0x94))))(*(int **)(g_pCDx_as_s32 + 0xc),3,frame.f6);
   return;
 }
 
@@ -135,49 +137,51 @@ XI_API int __cdecl Gfx_DrawQuadOutline(float *arg1, char arg2, unsigned char arg
   int i8;
   int i9;
   int result;
-  alignas(16) unsigned char xi_frame[0x47C];  // address-taken locals at their original offsets
-  int (&i10)[24] = *reinterpret_cast<int (*)[24]>(xi_frame + 0xC);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x70);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x78);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x47C];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; int i10[24]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x6C]; float f3; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_3[0x70]; float f4; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_4[0x74]; float f5; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_5[0x78]; int i11; };   // at 0x78
+  } frame;
 
   i1 = *((uint32_t *)arg1 + 4);
   i2 = *((uint32_t *)arg1 + 5);
-  f3 = *arg1;
-  *(float *)i10 = f3;
+  frame.f3 = *arg1;
+  *(float *)frame.i10 = frame.f3;
   f1 = arg1[1];
-  i10[6] = i1;
+  frame.i10[6] = i1;
   i3 = *((uint32_t *)arg1 + 6);
-  f4 = f1;
-  *(float *)&i10[1] = f1;
+  frame.f4 = f1;
+  *(float *)&frame.i10[1] = f1;
   f2 = arg1[2];
-  i10[7] = i2;
+  frame.i10[7] = i2;
   i4 = *((uint32_t *)arg1 + 8);
-  i10[8] = i3;
+  frame.i10[8] = i3;
   i5 = *((uint32_t *)arg1 + 9);
-  i10[12] = i4;
+  frame.i10[12] = i4;
   i6 = *((uint32_t *)arg1 + 10);
-  i10[13] = i5;
+  frame.i10[13] = i5;
   i7 = *((uint32_t *)arg1 + 12);
-  i10[14] = i6;
+  frame.i10[14] = i6;
   i8 = *((uint32_t *)arg1 + 13);
   i9 = *((uint32_t *)arg1 + 14);
-  i10[18] = i7;
-  i10[20] = i9;
+  frame.i10[18] = i7;
+  frame.i10[20] = i9;
   i9 = (int)(((uint32_t)(i9) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)(arg5) << 8));
-  i10[19] = i8;
+  frame.i10[19] = i8;
   i9 = (int)(((uint32_t)(i9) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(arg2) << 0));
-  f5 = f2;
-  *(float *)&i10[2] = f2;
-  i11 = arg4 | ((arg8 | ((unsigned short)i9 << 8)) << 8);
-  i10[21] = i11;
-  i10[15] = i11;
-  i10[9] = i11;
-  i10[3] = i11;
+  frame.f5 = f2;
+  *(float *)&frame.i10[2] = f2;
+  frame.i11 = arg4 | ((arg8 | ((unsigned short)i9 << 8)) << 8);
+  frame.i10[21] = frame.i11;
+  frame.i10[15] = frame.i11;
+  frame.i10[9] = frame.i11;
+  frame.i10[3] = frame.i11;
   if ( arg6 == 0 )
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
-  result = orig::CDx_DrawPrimitiveUP(g_pCDx, 3, 4, (int)i10, 24);
+  result = orig::CDx_DrawPrimitiveUP(g_pCDx, 3, 4, (int)frame.i10, 24);
   if ( arg6 == 0 )
     return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
   return result;
@@ -191,25 +195,27 @@ XI_API int __cdecl Gfx_DrawLine3D(int arg1, int arg2, int arg3, int arg4, int ar
   int i2;
   int i3;
   int i4;
-  alignas(16) unsigned char xi_frame[0x428];  // address-taken locals at their original offsets
-  int (&i5)[9] = *reinterpret_cast<int (*)[9]>(xi_frame + 0x0);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x428];
+    struct __attribute__((packed)) { int i5[9]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x24]; int i6; };   // at 0x24
+  } frame;
 
   i1 = *(uint32_t *)(arg1 + 4);
   i2 = *(uint32_t *)(arg1 + 8);
-  i5[0] = *(uint32_t *)arg1;
-  i5[2] = i2;
-  i5[1] = i1;
+  frame.i5[0] = *(uint32_t *)arg1;
+  frame.i5[2] = i2;
+  frame.i5[1] = i1;
   i3 = *(uint32_t *)(arg2 + 4);
   i4 = *(uint32_t *)(arg2 + 8);
-  i5[6] = *(uint32_t *)arg2;
-  i5[8] = i4;
+  frame.i5[6] = *(uint32_t *)arg2;
+  frame.i5[8] = i4;
   i4 = (int)(((uint32_t)(i4) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)(arg6) << 8));
-  i5[7] = i3;
+  frame.i5[7] = i3;
   i4 = (int)(((uint32_t)(i4) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(arg3) << 0));
-  i6 = (unsigned char)arg5 | (((unsigned char)arg4 | ((unsigned short)i4 << 8)) << 8);
-  i5[3] = i6;
-  return orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i5, 24);
+  frame.i6 = (unsigned char)arg5 | (((unsigned char)arg4 | ((unsigned short)i4 << 8)) << 8);
+  frame.i5[3] = frame.i6;
+  return orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)frame.i5, 24);
 }
 
 // FUNCTION: FFXIMAIN 0x10177D00
@@ -453,12 +459,12 @@ XI_API void __cdecl ZoneMap_ResetGlobalTables(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall ZoneMap_ReleaseStateBlock(CTsZoneMap *self_)
 {
-  unsigned int u1;
+  unsigned int Token;
   int result;
-  u1 = (*(unsigned int *)((char *)self_ + 0x38D94));
-  if ( u1 != -1 && u1 != 0 )
+  Token = (*(unsigned int *)((char *)self_ + 0x38D94));
+  if ( Token != -1 && Token != 0 )
   {
-    result = (g_pCDx->pDevice)->lpVtbl->DeleteStateBlock((g_pCDx->pDevice), u1);
+    result = (g_pCDx->pDevice)->lpVtbl->DeleteStateBlock((g_pCDx->pDevice), Token);
     (*(unsigned int *)((char *)self_ + 0x38D94)) = 0;
   }
   return result;
@@ -564,20 +570,22 @@ void __thiscall CTsZoneMap::UpdateViewerPosition(void * self)
 {
   uint32_t u1;
   int i1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+  } frame;
   
   u1 = orig::ZoneMap_GetHitCount((void *)((int)self + 0x178));
   *(uint32_t *)((int)self + 0x3912c) = u1;
   i1 = orig::Camera_GetField50_v1();
   if (i1 != 0) {
     i1 = orig::Camera_GetField50_v1();
-    orig::Vec3_Copy_v1(&u2,(uint32_t *)(i1 + 0x44));
-    *(uint32_t *)((int)self + 0x38d4c) = u2;
-    *(uint32_t *)((int)self + 0x38d50) = u3;
-    *(uint32_t *)((int)self + 0x38d54) = u4;
+    orig::Vec3_Copy_v1(&frame.u2,(uint32_t *)(i1 + 0x44));
+    *(uint32_t *)((int)self + 0x38d4c) = frame.u2;
+    *(uint32_t *)((int)self + 0x38d50) = frame.u3;
+    *(uint32_t *)((int)self + 0x38d54) = frame.u4;
     *(uint32_t *)((int)self + 0x38d58) = *(uint32_t *)((int)self + 0x3912c);
     return;
   }
@@ -639,47 +647,49 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTex
   float *p16;
   double f9;
   double f10;
-  int i17;
+  int primitive_count;
   bool b3; // cc
   bool b4; // zf
-  alignas(16) unsigned char xi_frame[0x504];  // address-taken locals at their original offsets
-  float * &p17 = *reinterpret_cast<float * *>(xi_frame + 0x34);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x54);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x58);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x60);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x64);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x68);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x70);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  float * &p18 = *reinterpret_cast<float * *>(xi_frame + 0x7C);
-  uint32_t * &p19 = *reinterpret_cast<uint32_t * *>(xi_frame + 0x80);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x84);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x88);
-  int &j = *reinterpret_cast<int *>(xi_frame + 0x8C);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x90);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x94);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x98);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x9C);
-  float * &p20 = *reinterpret_cast<float * *>(xi_frame + 0xA0);
-  float * &p21 = *reinterpret_cast<float * *>(xi_frame + 0xA4);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0xA8);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0xAC);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0xB0);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0xB4);
-  int &i29 = *reinterpret_cast<int *>(xi_frame + 0xB8);
-  int &k = *reinterpret_cast<int *>(xi_frame + 0xBC);
-  short * &p22 = *reinterpret_cast<short * *>(xi_frame + 0xC0);
-  float (&f26)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xC4);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x504];
+    struct __attribute__((packed)) { unsigned char pad_1[0x34]; float * p17; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_2[0x38]; int i18; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_3[0x3C]; float f11; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_4[0x40]; float f12; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_5[0x44]; float f13; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_6[0x48]; int i19; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_7[0x4C]; float f14; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_8[0x50]; float f15; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_9[0x54]; float f16; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_10[0x58]; int i20; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_11[0x5C]; float f17; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_12[0x60]; float f18; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_13[0x64]; float f19; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_14[0x68]; int i21; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_15[0x6C]; float f20; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_16[0x70]; int i22; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_17[0x74]; float f21; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_18[0x78]; int i23; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_19[0x7C]; float * p18; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_20[0x80]; uint32_t * p19; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_21[0x84]; int i24; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_22[0x88]; int i25; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_23[0x8C]; int j; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_24[0x90]; int i26; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_25[0x94]; int i; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_26[0x98]; int i27; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_27[0x9C]; int i28; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_28[0xA0]; float * p20; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_29[0xA4]; float * p21; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_30[0xA8]; float f22; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_31[0xAC]; float f23; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_32[0xB0]; float f24; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_33[0xB4]; float f25; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_34[0xB8]; int i29; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_35[0xBC]; int k; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_36[0xC0]; short * p22; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_37[0xC4]; float f26[16]; };   // at 0xC4
+  } frame;
   bool xi_fpu_unord = false;
 
   if ( arg4 == 0.0 )
@@ -693,100 +703,100 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTex
     CTsZoneMap_DrawProjectedTexture_m00 = CTsZoneMap_DrawProjectedTexture_m22;
   }
   (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, arg3);
-  f23 = -*arg0;
+  frame.f23 = -*arg0;
   pDevice = (g_pCDx->pDevice);
-  f24 = -arg0[1];
+  frame.f24 = -arg0[1];
   lpVtbl = pDevice->lpVtbl;
-  f25 = -arg0[2];
+  frame.f25 = -arg0[2];
   lpVtbl->SetTextureStageState(pDevice, 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 322u);
-  f20 = f23;
-  i22 = (*(uint32_t *)&(f24));
-  f21 = f25;
-  f26[0] = 1.0;
-  memset(&f26[1], 0, 16);
-  f26[5] = 1.0;
-  memset(&f26[6], 0, 16);
-  f26[10] = 1.0;
-  memset(&f26[11], 0, 16);
-  f26[15] = 1.0;
-  f11 = 1.0;
-  f12 = 0.0;
-  f13 = 0.0;
-  i19 = 0;
-  f14 = 0.0;
-  f15 = 1.0;
-  f16 = 0.0;
-  i20 = 0;
-  f17 = 0.0;
-  f18 = 0.0;
-  f19 = 1.0;
-  i21 = 0;
-  i23 = 1065353216;
-  orig::Mat44_Multiply(f26, (int)f26, &f11);
-  f11 = CTsZoneMap_DrawProjectedTexture_m00;
-  f15 = *(float *)&CTsZoneMap_DrawProjectedTexture_m11;
-  f19 = CTsZoneMap_DrawProjectedTexture_m22;
-  f12 = 0.0;
-  f13 = 0.0;
-  i19 = 0;
-  f14 = 0.0;
-  f16 = 0.0;
-  i20 = 0;
-  f17 = 0.0;
-  f18 = 0.0;
-  i21 = 0;
-  f20 = 0.0;
-  i22 = 0;
-  f21 = 0.0;
-  i23 = 1065353216;
-  orig::Mat44_Multiply(f26, (int)f26, &f11);
-  f20 = *(float *)&CTsZoneMap_DrawProjectedTexture_m30;
-  i22 = CTsZoneMap_DrawProjectedTexture_m31;
-  f21 = *(float *)&CTsZoneMap_DrawProjectedTexture_m32;
-  f11 = 1.0;
-  f12 = 0.0;
-  f13 = 0.0;
-  i19 = 0;
-  f14 = 0.0;
-  f15 = 1.0;
-  f16 = 0.0;
-  i20 = 0;
-  f17 = 0.0;
-  f18 = 0.0;
-  f19 = 1.0;
-  i21 = 0;
-  i23 = 1065353216;
-  orig::Mat44_Multiply(f26, (int)f26, &f11);
+  frame.f20 = frame.f23;
+  frame.i22 = (*(uint32_t *)&(frame.f24));
+  frame.f21 = frame.f25;
+  frame.f26[0] = 1.0;
+  memset(&frame.f26[1], 0, 16);
+  frame.f26[5] = 1.0;
+  memset(&frame.f26[6], 0, 16);
+  frame.f26[10] = 1.0;
+  memset(&frame.f26[11], 0, 16);
+  frame.f26[15] = 1.0;
+  frame.f11 = 1.0;
+  frame.f12 = 0.0;
+  frame.f13 = 0.0;
+  frame.i19 = 0;
+  frame.f14 = 0.0;
+  frame.f15 = 1.0;
+  frame.f16 = 0.0;
+  frame.i20 = 0;
+  frame.f17 = 0.0;
+  frame.f18 = 0.0;
+  frame.f19 = 1.0;
+  frame.i21 = 0;
+  frame.i23 = 1065353216;
+  orig::Mat44_Multiply(frame.f26, (int)frame.f26, &frame.f11);
+  frame.f11 = CTsZoneMap_DrawProjectedTexture_m00;
+  frame.f15 = *(float *)&CTsZoneMap_DrawProjectedTexture_m11;
+  frame.f19 = CTsZoneMap_DrawProjectedTexture_m22;
+  frame.f12 = 0.0;
+  frame.f13 = 0.0;
+  frame.i19 = 0;
+  frame.f14 = 0.0;
+  frame.f16 = 0.0;
+  frame.i20 = 0;
+  frame.f17 = 0.0;
+  frame.f18 = 0.0;
+  frame.i21 = 0;
+  frame.f20 = 0.0;
+  frame.i22 = 0;
+  frame.f21 = 0.0;
+  frame.i23 = 1065353216;
+  orig::Mat44_Multiply(frame.f26, (int)frame.f26, &frame.f11);
+  frame.f20 = *(float *)&CTsZoneMap_DrawProjectedTexture_m30;
+  frame.i22 = CTsZoneMap_DrawProjectedTexture_m31;
+  frame.f21 = *(float *)&CTsZoneMap_DrawProjectedTexture_m32;
+  frame.f11 = 1.0;
+  frame.f12 = 0.0;
+  frame.f13 = 0.0;
+  frame.i19 = 0;
+  frame.f14 = 0.0;
+  frame.f15 = 1.0;
+  frame.f16 = 0.0;
+  frame.i20 = 0;
+  frame.f17 = 0.0;
+  frame.f18 = 0.0;
+  frame.f19 = 1.0;
+  frame.i21 = 0;
+  frame.i23 = 1065353216;
+  orig::Mat44_Multiply(frame.f26, (int)frame.f26, &frame.f11);
   result = (float *)orig::GetPtr8IfField60Set((uint32_t *)(self + 376));
   f1 = *(float *)&result;
-  p21 = result;
+  frame.p21 = result;
   if ( result != nullptr )
   {
     f2 = result[14] + *arg0;
-    f22 = this->field_17C;
+    frame.f22 = this->field_17C;
     i1 = (long long)(f2 * 0.25);
     i2 = (long long)((result[15] + arg0[2]) * 0.25);
     if ( i1 - 1 >= 0 )
     {
-      i25 = *(uint32_t *)((*(uint32_t *)&(f1)) + 64) - 1;
-      if ( i1 - 1 <= i25 )
-        i25 = i1 - 1;
+      frame.i25 = *(uint32_t *)((*(uint32_t *)&(f1)) + 64) - 1;
+      if ( i1 - 1 <= frame.i25 )
+        frame.i25 = i1 - 1;
     }
     else
     {
-      i25 = 0;
+      frame.i25 = 0;
     }
     if ( i1 + 1 >= 0 )
     {
-      i18 = *(uint32_t *)((*(uint32_t *)&(f1)) + 64) - 1;
-      if ( i1 + 1 <= i18 )
-        i18 = i1 + 1;
+      frame.i18 = *(uint32_t *)((*(uint32_t *)&(f1)) + 64) - 1;
+      if ( i1 + 1 <= frame.i18 )
+        frame.i18 = i1 + 1;
     }
     else
     {
-      i18 = 0;
+      frame.i18 = 0;
     }
     i3 = i2 - 1;
     if ( (int)i2 - 1 >= 0 )
@@ -801,20 +811,20 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTex
     i4 = i2 + 1;
     if ( i4 >= 0 )
     {
-      p17 = (float *)(*(uint32_t *)((*(uint32_t *)&(f1)) + 68) - 1);
-      if ( i4 <= (int)p17 )
-        p17 = (float *)i4;
+      frame.p17 = (float *)(*(uint32_t *)((*(uint32_t *)&(f1)) + 68) - 1);
+      if ( i4 <= (int)frame.p17 )
+        frame.p17 = (float *)i4;
     }
     else
     {
-      p17 = nullptr;
+      frame.p17 = nullptr;
     }
-    result = p17;
+    result = frame.p17;
     i5 = i3;
-    for ( i = i3; i5 <= (int)p17; i = i5 )
+    for ( frame.i = i3; i5 <= (int)frame.p17; frame.i = i5 )
     {
-      i6 = i25;
-      for ( j = i25; i6 <= i18; j = i6 )
+      i6 = frame.i25;
+      for ( frame.j = frame.i25; i6 <= frame.i18; frame.j = i6 )
       {
         p1 = *(int **)(*(uint32_t *)((*(uint32_t *)&(f1)) + 88) + 4 * (i6 + i5 * *(uint32_t *)((*(uint32_t *)&(f1)) + 64)));
         if ( p1 != nullptr )
@@ -824,38 +834,38 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTex
             i7 = *p1;
             p2 = p1 + 1;
             i8 = i7 & 0x7FF;
-            p19 = p2;
+            frame.p19 = p2;
             if ( i8 != 0 )
             {
-              i28 = i8;
+              frame.i28 = i8;
               do
               {
                 p3 = (const void *)*p2;
                 p4 = (short *)p2[1];
                 i9 = *(uint32_t *)(*p2 + 188);
-                p22 = p4;
-                if ( (*(uint32_t *)&(f22)) != i9 && p4[7] == 0 )
+                frame.p22 = p4;
+                if ( (*(uint32_t *)&(frame.f22)) != i9 && p4[7] == 0 )
                 {
                   p5 = *((uint16_t **)p4 + 2);
                   i10 = *(uint32_t *)p4;
-                  i29 = *((uint32_t *)p4 + 1);
+                  frame.i29 = *((uint32_t *)p4 + 1);
                   p6 =(uint32_t*)(&g_zoneProjVerts);
-                  i24 = 0;
+                  frame.i24 = 0;
                   orig::CDx_SetTransform(g_pCDx, 256, p3);
-                  p7 = &f11;
-                  i11 = (uint8_t *)p3 - (uint8_t *)&f11;
-                  i27 = 4;
-                  for ( k = i11; ; i11 = k )
+                  p7 = &frame.f11;
+                  i11 = (uint8_t *)p3 - (uint8_t *)&frame.f11;
+                  frame.i27 = 4;
+                  for ( frame.k = i11; ; i11 = frame.k )
                   {
-                    p20 = (float *)((char *)p7 + i11);
-                    p18 = f26;
+                    frame.p20 = (float *)((char *)p7 + i11);
+                    frame.p18 = frame.f26;
                     p8 = p7;
-                    i26 = 4;
+                    frame.i26 = 4;
                     do
                     {
                       f3 = 0.0;
-                      p9 = p20;
-                      p10 = p18;
+                      p9 = frame.p20;
+                      p10 = frame.p18;
                       *p8 = 0.0;
                       for ( m = 4; m != 0; --m )
                       {
@@ -864,95 +874,95 @@ float * CTsZoneMap::DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTex
                         ++p9;
                         f3 = f3 + f4;
                       }
-                      p11 = p18;
-                      i12 = i26;
+                      p11 = frame.p18;
+                      i12 = frame.i26;
                       *p8++ = f3;
-                      p18 = p11 + 1;
-                      i26 = i12 - 1;
+                      frame.p18 = p11 + 1;
+                      frame.i26 = i12 - 1;
                     }
                     while ( i12 != 1 );
                     p7 = p8;
-                    if ( --i27 == 0 )
+                    if ( --frame.i27 == 0 )
                       break;
                   }
-                  p12 = (int *)p22;
+                  p12 = (int *)frame.p22;
                   i13 = 0;
-                  if ( p22[6] > 0 )
+                  if ( frame.p22[6] > 0 )
                   {
                     do
                     {
-                      f5 = f18 * *(float *)(i29 + 12 * (p5[3] & 0x7FFF) + 8)
-                          + f15 * *(float *)(i29 + 12 * (p5[3] & 0x7FFF) + 4)
-                          + f12 * *(float *)(i29 + 12 * (p5[3] & 0x7FFF));
+                      f5 = frame.f18 * *(float *)(frame.i29 + 12 * (p5[3] & 0x7FFF) + 8)
+                          + frame.f15 * *(float *)(frame.i29 + 12 * (p5[3] & 0x7FFF) + 4)
+                          + frame.f12 * *(float *)(frame.i29 + 12 * (p5[3] & 0x7FFF));
                       (xi_fpu_unord = __builtin_isunordered(f5, 0.0), b1 = f5 < 0.0);
                       c1 = 0;
                       b2 = f5 == 0.0;
                       if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
                       {
                         p13 = (char *)(p6 + 6);
-                        f6 = f11;
+                        f6 = frame.f11;
                         *((uint32_t *)p13 - 6) = *(uint32_t *)(i10 + 12 * (*p5 & 0x7FFF));
                         *((uint32_t *)p13 - 5) = *(uint32_t *)(i10 + 12 * (*p5 & 0x7FFF) + 4);
                         *((uint32_t *)p13 - 4) = *(uint32_t *)(i10 + 12 * (*p5 & 0x7FFF) + 8);
                         *((uint32_t *)p13 - 3) = -8355712;
                         p14 = (float *)(i10 + 12 * (*p5 & 0x7FFF));
-                        *((float *)p13 - 2) = f6 * *p14 + f17 * p14[2] + f14 * p14[1] + f20;
-                        *((float *)p13 - 1) = f13 * *p14 + f19 * p14[2] + f16 * p14[1] + f21;
-                        f7 = f17;
+                        *((float *)p13 - 2) = f6 * *p14 + frame.f17 * p14[2] + frame.f14 * p14[1] + frame.f20;
+                        *((float *)p13 - 1) = frame.f13 * *p14 + frame.f19 * p14[2] + frame.f16 * p14[1] + frame.f21;
+                        f7 = frame.f17;
                         *(uint32_t *)p13 = *(uint32_t *)(i10 + 12 * (p5[1] & 0x3FFF));
                         *((uint32_t *)p13 + 1) = *(uint32_t *)(i10 + 12 * (p5[1] & 0x3FFF) + 4);
                         i15 = *(uint32_t *)(i10 + 12 * (p5[1] & 0x3FFF) + 8);
                         *((uint32_t *)p13 + 3) = -8355712;
                         *((uint32_t *)p13 + 2) = i15;
                         p15 = (float *)(i10 + 12 * (p5[1] & 0x3FFF));
-                        *((float *)p13 + 4) = f7 * p15[2] + f14 * p15[1] + f11 * *p15 + f20;
-                        *((float *)p13 + 5) = f19 * p15[2] + f16 * p15[1] + f13 * *p15 + f21;
+                        *((float *)p13 + 4) = f7 * p15[2] + frame.f14 * p15[1] + frame.f11 * *p15 + frame.f20;
+                        *((float *)p13 + 5) = frame.f19 * p15[2] + frame.f16 * p15[1] + frame.f13 * *p15 + frame.f21;
                         p6 =(uint32_t*)(p13 + 48);
-                        f8 = f17;
+                        f8 = frame.f17;
                         *(p6 - 6) = *(uint32_t *)(i10 + 12 * (p5[2] & 0x3FFF));
                         *(p6 - 5) = *(uint32_t *)(i10 + 12 * (p5[2] & 0x3FFF) + 4);
                         i16 = *(uint32_t *)(i10 + 12 * (p5[2] & 0x3FFF) + 8);
                         *(p6 - 3) = -8355712;
                         *(p6 - 4) = i16;
                         p16 = (float *)(i10 + 12 * (p5[2] & 0x3FFF));
-                        *((float *)p6 - 2) = f8 * p16[2] + f14 * p16[1] + f11 * *p16 + f20;
-                        f9 = f19 * p16[2] + f16 * p16[1];
-                        f10 = f13 * *p16;
-                        i17 = i24;
-                        b3 = i24 <= 1500;
-                        *((float *)p6 - 1) = f9 + f10 + f21;
+                        *((float *)p6 - 2) = f8 * p16[2] + frame.f14 * p16[1] + frame.f11 * *p16 + frame.f20;
+                        f9 = frame.f19 * p16[2] + frame.f16 * p16[1];
+                        f10 = frame.f13 * *p16;
+                        primitive_count = frame.i24;
+                        b3 = frame.i24 <= 1500;
+                        *((float *)p6 - 1) = f9 + f10 + frame.f21;
                         if ( !b3 )
                           goto L1;
-                        i24 = i17 + 1;
+                        frame.i24 = primitive_count + 1;
                       }
                       ++i13;
                       p5 += 4;
                     }
                     while ( i13 < *((short *)p12 + 6) );
-                    i17 = i24;
+                    primitive_count = frame.i24;
 L1:
-                    if ( i17 != 0 )
-                      orig::CDx_DrawPrimitiveUP(g_pCDx, 4, i17, (int)&g_zoneProjVerts, 24);
+                    if ( primitive_count != 0 )
+                      orig::CDx_DrawPrimitiveUP(g_pCDx, 4, primitive_count, (int)&g_zoneProjVerts, 24);
                   }
-                  p2 = p19;
+                  p2 = frame.p19;
                 }
                 p2 += 2;
-                b4 = i28 == 1;
-                p19 = p2;
-                --i28;
+                b4 = frame.i28 == 1;
+                frame.p19 = p2;
+                --frame.i28;
               }
               while ( !b4 );
-              f1 = *(float *)&p21;
+              f1 = *(float *)&frame.p21;
             }
             p1 = (int *)*p2;
           }
           while ( p1 != nullptr );
-          i5 = i;
-          i6 = j;
+          i5 = frame.i;
+          i6 = frame.j;
         }
         ++i6;
       }
-      result = p17;
+      result = frame.p17;
       ++i5;
     }
   }
@@ -1020,65 +1030,67 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
   int i16;
   int i17;
   bool b3; // zf
-  alignas(16) unsigned char xi_frame[0x580];  // address-taken locals at their original offsets
-  float * &p21 = *reinterpret_cast<float * *>(xi_frame + 0x94);
-  float * &p22 = *reinterpret_cast<float * *>(xi_frame + 0x94);
-  float * &p23 = *reinterpret_cast<float * *>(xi_frame + 0x98);
-  float * &p24 = *reinterpret_cast<float * *>(xi_frame + 0x98);
-  float * &p25 = *reinterpret_cast<float * *>(xi_frame + 0x9C);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0xA0);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0xA4);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0xA8);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0xB0);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0xB4);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0xB8);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0xC0);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0xC4);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0xC8);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0xD0);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0xD8);
-  int &n = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &k = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &i18 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  int ** &p26 = *reinterpret_cast<int ** *>(xi_frame + 0xEC);
-  short * &p27 = *reinterpret_cast<short * *>(xi_frame + 0xF0);
-  int &i19 = *reinterpret_cast<int *>(xi_frame + 0xF4);
-  int &i20 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &i21 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &j = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x108);
-  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x10C);
-  float * &p28 = *reinterpret_cast<float * *>(xi_frame + 0x110);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  float * &Ptr8IfField60Set = *reinterpret_cast<float * *>(xi_frame + 0x118);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x11C);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x124);
-  float &f26 = *reinterpret_cast<float *>(xi_frame + 0x128);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x12C);
-  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x130);
-  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x134);
-  float &f29 = *reinterpret_cast<float *>(xi_frame + 0x138);
-  float (&f30)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x13C);
-  float &f31 = *reinterpret_cast<float *>(xi_frame + 0x17C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x580];
+    struct __attribute__((packed)) { unsigned char pad_1[0x94]; float * p21; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_2[0x94]; float * p22; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_3[0x98]; float * p23; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_4[0x98]; float * p24; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_5[0x9C]; float * p25; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_6[0xA0]; float f12; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_7[0xA4]; float f13; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_8[0xA8]; float f14; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_9[0xB0]; float f15; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_10[0xB4]; float f16; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_11[0xB8]; float f17; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_12[0xC0]; float f18; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_13[0xC4]; float f19; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_14[0xC8]; float f20; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_15[0xD0]; float f21; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_16[0xD4]; float f22; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_17[0xD8]; float f23; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_18[0xE0]; int n; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_19[0xE4]; int k; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_20[0xE8]; int primitive_count; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_21[0xEC]; int ** p26; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_22[0xF0]; short * p27; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_23[0xF4]; int i19; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_24[0xF8]; int i20; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_25[0xFC]; int i21; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_26[0x100]; int j; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_27[0x104]; int i22; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_28[0x108]; int i; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_29[0x10C]; int i23; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_30[0x110]; float * p28; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_31[0x114]; int i24; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_32[0x118]; float * Ptr8IfField60Set; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_33[0x11C]; float f24; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_34[0x124]; float f25; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_35[0x128]; float f26; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_36[0x12C]; int i25; };   // at 0x12C
+    struct __attribute__((packed)) { unsigned char pad_37[0x130]; float f27; };   // at 0x130
+    struct __attribute__((packed)) { unsigned char pad_38[0x134]; float f28; };   // at 0x134
+    struct __attribute__((packed)) { unsigned char pad_39[0x138]; float f29; };   // at 0x138
+    struct __attribute__((packed)) { unsigned char pad_40[0x13C]; float f30[16]; };   // at 0x13C
+    struct __attribute__((packed)) { unsigned char pad_41[0x17C]; float matrix; };   // at 0x17C
+  } frame;
   bool xi_fpu_unord = false;
 
-  p28 = (float *)self;
+  frame.p28 = (float *)self;
   if ( *(float *)&arg2 == 0.0 )
   {
-    f25 = 1.0;
-    f24 = 1.0;
+    frame.f25 = 1.0;
+    frame.f24 = 1.0;
   }
   else
   {
-    f25 = 1.0 / *(float *)&arg2;
-    f24 = f25;
+    frame.f25 = 1.0 / *(float *)&arg2;
+    frame.f24 = frame.f25;
   }
   result = this->overlayTex;
-  f27 = -*(float *)arg1;
-  f28 = -*(float *)(arg1 + 4);
-  f29 = -*(float *)(arg1 + 8);
+  frame.f27 = -*(float *)arg1;
+  frame.f28 = -*(float *)(arg1 + 4);
+  frame.f29 = -*(float *)(arg1 + 8);
   if ( result != 0 )
   {
     p1 = *(IDirect3DBaseTexture8 **)(result + 64);
@@ -1093,11 +1105,11 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_POINT);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_CCW);
-    i24 = 0;
+    frame.i24 = 0;
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     if ( this->overlayUseProjection != 0 )
     {
-      (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &f31);
+      (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &frame.matrix);
       orig::ZoneMap_SetOverlayProjection((float *)self);
     }
     else
@@ -1105,48 +1117,48 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
       orig::Gfx_SetZBias(g_zbiasOverlay);
     }
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 0x142u);
-    f30[10] = f25;
-    f30[0] = f24;
-    memset(&f30[1], 0, 16);
-    f30[5] = 1.0;
-    f30[12] = f27 * f24 + c_projectedShadowBiasX;
-    memset(&f30[6], 0, 16);
-    f30[11] = 0.0;
-    f30[15] = 1.0;
-    f30[13] = c_projectedShadowBiasY + f28;
-    f30[14] = f29 * f25 + c_projectedShadowBiasZ;
-    Ptr8IfField60Set = (float *)orig::GetPtr8IfField60Set((uint32_t *)self + 94);
-    if ( Ptr8IfField60Set != nullptr )
+    frame.f30[10] = frame.f25;
+    frame.f30[0] = frame.f24;
+    memset(&frame.f30[1], 0, 16);
+    frame.f30[5] = 1.0;
+    frame.f30[12] = frame.f27 * frame.f24 + c_projectedShadowBiasX;
+    memset(&frame.f30[6], 0, 16);
+    frame.f30[11] = 0.0;
+    frame.f30[15] = 1.0;
+    frame.f30[13] = c_projectedShadowBiasY + frame.f28;
+    frame.f30[14] = frame.f29 * frame.f25 + c_projectedShadowBiasZ;
+    frame.Ptr8IfField60Set = (float *)orig::GetPtr8IfField60Set((uint32_t *)self + 94);
+    if ( frame.Ptr8IfField60Set != nullptr )
     {
-      f1 = Ptr8IfField60Set[14] + *(float *)arg1;
-      f26 = p28[95];
+      f1 = frame.Ptr8IfField60Set[14] + *(float *)arg1;
+      frame.f26 = frame.p28[95];
       i1 = (long long)(f1 * 0.25);
-      i2 = (long long)((Ptr8IfField60Set[15] + *(float *)(arg1 + 8)) * 0.25);
+      i2 = (long long)((frame.Ptr8IfField60Set[15] + *(float *)(arg1 + 8)) * 0.25);
       if ( i1 - 1 >= 0 )
       {
-        i22 = *((uint32_t *)Ptr8IfField60Set + 16) - 1;
-        if ( i1 - 1 <= i22 )
-          i22 = i1 - 1;
+        frame.i22 = *((uint32_t *)frame.Ptr8IfField60Set + 16) - 1;
+        if ( i1 - 1 <= frame.i22 )
+          frame.i22 = i1 - 1;
       }
       else
       {
-        i22 = 0;
+        frame.i22 = 0;
       }
       if ( i1 + 1 >= 0 )
       {
-        i19 = *((uint32_t *)Ptr8IfField60Set + 16) - 1;
-        if ( i1 + 1 <= i19 )
-          i19 = i1 + 1;
+        frame.i19 = *((uint32_t *)frame.Ptr8IfField60Set + 16) - 1;
+        if ( i1 + 1 <= frame.i19 )
+          frame.i19 = i1 + 1;
       }
       else
       {
-        i19 = 0;
+        frame.i19 = 0;
       }
       i3 = i2 - 1;
       if ( (int)i2 - 1 >= 0 )
       {
-        if ( i3 > *((uint32_t *)Ptr8IfField60Set + 17) - 1 )
-          i3 = *((uint32_t *)Ptr8IfField60Set + 17) - 1;
+        if ( i3 > *((uint32_t *)frame.Ptr8IfField60Set + 17) - 1 )
+          i3 = *((uint32_t *)frame.Ptr8IfField60Set + 17) - 1;
       }
       else
       {
@@ -1155,7 +1167,7 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
       i4 = i2 + 1;
       if ( i4 >= 0 )
       {
-        i5 = *((uint32_t *)Ptr8IfField60Set + 17);
+        i5 = *((uint32_t *)frame.Ptr8IfField60Set + 17);
         if ( i4 > i5 - 1 )
           i4 = i5 - 1;
       }
@@ -1163,12 +1175,12 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
       {
         i4 = 0;
       }
-      i21 = i4;
-      for ( i = i3; i <= i21; ++i )
+      frame.i21 = i4;
+      for ( frame.i = i3; frame.i <= frame.i21; ++frame.i )
       {
-        for ( j = i22; j <= i19; ++j )
+        for ( frame.j = frame.i22; frame.j <= frame.i19; ++frame.j )
         {
-          p2 = *(int **)(*((uint32_t *)Ptr8IfField60Set + 22) + 4 * (j + i * *((uint32_t *)Ptr8IfField60Set + 16)));
+          p2 = *(int **)(*((uint32_t *)frame.Ptr8IfField60Set + 22) + 4 * (frame.j + frame.i * *((uint32_t *)frame.Ptr8IfField60Set + 16)));
           if ( p2 != nullptr )
           {
             do
@@ -1176,50 +1188,50 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
               i6 = *p2;
               p3 = (int **)(p2 + 1);
               i7 = *p2;
-              p26 = p3;
+              frame.p26 = p3;
               i8 = i7 & 0x7FF;
               if ( (i6 & 0x2000) != 0 )
               {
-                p26 = &p3[2 * i8];
+                frame.p26 = &p3[2 * i8];
               }
               else if ( i8 > 0 )
               {
-                i23 = i8;
+                frame.i23 = i8;
                 do
                 {
-                  p4 = *p26;
-                  p5 = (short *)p26[1];
-                  p27 = p5;
-                  if ( (*(uint32_t *)&(f26)) != p4[47] && p5[7] == 0 )
+                  p4 = *frame.p26;
+                  p5 = (short *)frame.p26[1];
+                  frame.p27 = p5;
+                  if ( (*(uint32_t *)&(frame.f26)) != p4[47] && p5[7] == 0 )
                   {
                     i9 = p4[41] & 1;
-                    if ( i24 != i9 )
+                    if ( frame.i24 != i9 )
                     {
-                      i24 = p4[41] & 1;
+                      frame.i24 = p4[41] & 1;
                       if ( i9 != 0 )
                         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_CW);
                       else
                         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_CCW);
                     }
-                    p6 = *((uint16_t **)p27 + 2);
-                    i10 = *(uint32_t *)p27;
-                    i25 = *((uint32_t *)p27 + 1);
+                    p6 = *((uint16_t **)frame.p27 + 2);
+                    i10 = *(uint32_t *)frame.p27;
+                    frame.i25 = *((uint32_t *)frame.p27 + 1);
                     orig::CDx_SetTransform(g_pCDx, 256, p4);
                     p7 = (char *)&g_zoneProjVerts;
-                    i18 = 0;
-                    p8 = &f12;
-                    i20 = (char *)p4 - (char *)&f12;
-                    for ( k = 4; k != 0; --k )
+                    frame.primitive_count = 0;
+                    p8 = &frame.f12;
+                    frame.i20 = (char *)p4 - (char *)&frame.f12;
+                    for ( frame.k = 4; frame.k != 0; --frame.k )
                     {
-                      p21 = f30;
-                      p23 = (float *)((char *)p8 + i20);
+                      frame.p21 = frame.f30;
+                      frame.p23 = (float *)((char *)p8 + frame.i20);
                       p9 = p8;
-                      n = 4;
+                      frame.n = 4;
                       do
                       {
                         f2 = 0.0;
-                        p10 = p23;
-                        p11 = p21;
+                        p10 = frame.p23;
+                        p11 = frame.p21;
                         *p9 = 0.0;
                         for ( m = 4; m != 0; --m )
                         {
@@ -1228,91 +1240,91 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
                           ++p10;
                           f2 = f2 + f3;
                         }
-                        i11 = n;
+                        i11 = frame.n;
                         *p9++ = f2;
-                        ++p21;
-                        n = i11 - 1;
+                        ++frame.p21;
+                        frame.n = i11 - 1;
                       }
                       while ( i11 != 1 );
                       p8 = p9;
                     }
-                    i20 = 0;
-                    if ( p27[6] > 0 )
+                    frame.i20 = 0;
+                    if ( frame.p27[6] > 0 )
                     {
                       p12 = (float *)&g_106390B4;
                       p13 = (float *)&g_106390B0;
-                      p24 = (float *)&g_106390CC;
-                      p25 = (float *)&g_106390C8;
-                      p22 = (float *)&g_106390B4;
-                      for ( n = (int)&g_106390B0; ; p13 = (float *)n )
+                      frame.p24 = (float *)&g_106390CC;
+                      frame.p25 = (float *)&g_106390C8;
+                      frame.p22 = (float *)&g_106390B4;
+                      for ( frame.n = (int)&g_106390B0; ; p13 = (float *)frame.n )
                       {
-                        f4 = f19 * *(float *)(i25 + 12 * (p6[3] & 0x7FFF) + 8)
-                            + f16 * *(float *)(i25 + 12 * (p6[3] & 0x7FFF) + 4)
-                            + f13 * *(float *)(i25 + 12 * (p6[3] & 0x7FFF));
+                        f4 = frame.f19 * *(float *)(frame.i25 + 12 * (p6[3] & 0x7FFF) + 8)
+                            + frame.f16 * *(float *)(frame.i25 + 12 * (p6[3] & 0x7FFF) + 4)
+                            + frame.f13 * *(float *)(frame.i25 + 12 * (p6[3] & 0x7FFF));
                         (xi_fpu_unord = __builtin_isunordered(f4, 0.0), b1 = f4 < 0.0);
                         c1 = 0;
                         b2 = f4 == 0.0;
                         if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
                         {
                           p14 = (float *)(i10 + 12 * (*p6 & 0x7FFF));
-                          *((float *)p7 + 4) = f12 * *p14 + f18 * p14[2] + f15 * p14[1] + f21;
-                          f5 = f13 * *p14 + f19 * p14[2] + f16 * p14[1] + f22;
-                          *((float *)p7 + 5) = f14 * *p14 + f20 * p14[2] + f17 * p14[1] + f23;
+                          *((float *)p7 + 4) = frame.f12 * *p14 + frame.f18 * p14[2] + frame.f15 * p14[1] + frame.f21;
+                          f5 = frame.f13 * *p14 + frame.f19 * p14[2] + frame.f16 * p14[1] + frame.f22;
+                          *((float *)p7 + 5) = frame.f14 * *p14 + frame.f20 * p14[2] + frame.f17 * p14[1] + frame.f23;
                           p15 = (float *)(i10 + 12 * (*p6 & 0x7FFF));
                           if ( f5 >= 0.0 )
                           {
-                            *((float *)p7 + 4) = f12 * *(float *)(i10 + 12 * (*p6 & 0x7FFF))
-                                                + f18 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 8)
-                                                + f15 * p15[1]
-                                                + f21;
-                            f7 = f13 * *p15 + f19 * p15[2] + f16 * p15[1] + f22;
-                            *((float *)p7 + 5) = f14 * *p15 + f20 * p15[2] + f17 * p15[1] + f23;
+                            *((float *)p7 + 4) = frame.f12 * *(float *)(i10 + 12 * (*p6 & 0x7FFF))
+                                                + frame.f18 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 8)
+                                                + frame.f15 * p15[1]
+                                                + frame.f21;
+                            f7 = frame.f13 * *p15 + frame.f19 * p15[2] + frame.f16 * p15[1] + frame.f22;
+                            *((float *)p7 + 5) = frame.f14 * *p15 + frame.f20 * p15[2] + frame.f17 * p15[1] + frame.f23;
                           }
                           else
                           {
-                            *((float *)p7 + 4) = f18 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 8)
-                                                + f15 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 4)
-                                                + f12 * *p15
-                                                + f21;
-                            f6 = f19 * p15[2] + f16 * p15[1] + f13 * *p15 + f22;
-                            *((float *)p7 + 5) = f20 * p15[2] + f17 * p15[1] + f14 * *p15 + f23;
+                            *((float *)p7 + 4) = frame.f18 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 8)
+                                                + frame.f15 * *(float *)(i10 + 12 * (*p6 & 0x7FFF) + 4)
+                                                + frame.f12 * *p15
+                                                + frame.f21;
+                            f6 = frame.f19 * p15[2] + frame.f16 * p15[1] + frame.f13 * *p15 + frame.f22;
+                            *((float *)p7 + 5) = frame.f20 * p15[2] + frame.f17 * p15[1] + frame.f14 * *p15 + frame.f23;
                             f7 = -f6;
                           }
                           p16 = (float *)(i10 + 12 * (p6[1] & 0x3FFF));
-                          *p13 = f18 * p16[2] + f15 * p16[1] + f12 * *p16 + f21;
-                          *p12 = f20 * p16[2] + f17 * p16[1] + f14 * *p16 + f23;
+                          *p13 = frame.f18 * p16[2] + frame.f15 * p16[1] + frame.f12 * *p16 + frame.f21;
+                          *p12 = frame.f20 * p16[2] + frame.f17 * p16[1] + frame.f14 * *p16 + frame.f23;
                           p17 = (float *)(i10 + 12 * (p6[1] & 0x3FFF));
-                          *p13 = f12 * *p17 + f18 * p17[2] + f15 * p17[1] + f21;
-                          f8 = f13 * *p17 + f19 * p17[2] + f16 * p17[1] + f22;
-                          *p12 = f14 * *p17 + f20 * p17[2] + f17 * p17[1] + f23;
+                          *p13 = frame.f12 * *p17 + frame.f18 * p17[2] + frame.f15 * p17[1] + frame.f21;
+                          f8 = frame.f13 * *p17 + frame.f19 * p17[2] + frame.f16 * p17[1] + frame.f22;
+                          *p12 = frame.f14 * *p17 + frame.f20 * p17[2] + frame.f17 * p17[1] + frame.f23;
                           if ( f8 < 0.0 )
                             f8 = -f8;
                           p18 = (float *)(i10 + 12 * (p6[2] & 0x3FFF));
-                          *p25 = f12 * *p18 + f18 * p18[2] + f15 * p18[1] + f21;
-                          f9 = f13 * *p18 + f19 * p18[2] + f16 * p18[1] + f22;
-                          *p24 = f14 * *p18 + f20 * p18[2] + f17 * p18[1] + f23;
+                          *frame.p25 = frame.f12 * *p18 + frame.f18 * p18[2] + frame.f15 * p18[1] + frame.f21;
+                          f9 = frame.f13 * *p18 + frame.f19 * p18[2] + frame.f16 * p18[1] + frame.f22;
+                          *frame.p24 = frame.f14 * *p18 + frame.f20 * p18[2] + frame.f17 * p18[1] + frame.f23;
                           p19 = (float *)(i10 + 12 * (p6[2] & 0x3FFF));
                           if ( f9 >= 0.0 )
                           {
-                            *p25 = f12 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF))
-                                 + f18 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 8)
-                                 + f15 * p19[1]
-                                 + f21;
-                            f11 = f13 * *p19 + f19 * p19[2] + f16 * p19[1] + f22;
-                            *p24 = f14 * *p19 + f20 * p19[2] + f17 * p19[1] + f23;
+                            *frame.p25 = frame.f12 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF))
+                                 + frame.f18 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 8)
+                                 + frame.f15 * p19[1]
+                                 + frame.f21;
+                            f11 = frame.f13 * *p19 + frame.f19 * p19[2] + frame.f16 * p19[1] + frame.f22;
+                            *frame.p24 = frame.f14 * *p19 + frame.f20 * p19[2] + frame.f17 * p19[1] + frame.f23;
                           }
                           else
                           {
-                            *p25 = f18 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 8)
-                                 + f15 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 4)
-                                 + f12 * *p19
-                                 + f21;
-                            f10 = f19 * p19[2] + f16 * p19[1] + f13 * *p19 + f22;
-                            *p24 = f20 * p19[2] + f17 * p19[1] + f14 * *p19 + f23;
+                            *frame.p25 = frame.f18 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 8)
+                                 + frame.f15 * *(float *)(i10 + 12 * (p6[2] & 0x3FFF) + 4)
+                                 + frame.f12 * *p19
+                                 + frame.f21;
+                            f10 = frame.f19 * p19[2] + frame.f16 * p19[1] + frame.f13 * *p19 + frame.f22;
+                            *frame.p24 = frame.f20 * p19[2] + frame.f17 * p19[1] + frame.f14 * *p19 + frame.f23;
                             f11 = -f10;
                           }
                           i13 = 96 - (long long)(f7 * 48.0);
-                          k = 96 - (long long)(f8 * 48.0);
+                          frame.k = 96 - (long long)(f8 * 48.0);
                           i14 = 96 - (long long)(f11 * 48.0);
                           i15 = 0;
                           if ( i13 < 0 )
@@ -1320,9 +1332,9 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
                             i13 = 0;
                             i15 = 1;
                           }
-                          if ( k < 0 )
+                          if ( frame.k < 0 )
                           {
-                            k = 0;
+                            frame.k = 0;
                             ++i15;
                           }
                           if ( i14 < 0 )
@@ -1337,44 +1349,44 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
                             *((uint32_t *)p7 + 2) = *(uint32_t *)(i10 + 12 * (*p6 & 0x7FFF) + 8);
                             *((uint32_t *)p7 + 3) = i13 | ((i13 | ((i13 | 0xFFFF8000) << 8)) << 8);
                             p20 =(uint32_t*)(p7 + 48);
-                            i16 = n + 48;
+                            i16 = frame.n + 48;
                             *(p20 - 6) = *(uint32_t *)(i10 + 12 * (p6[1] & 0x3FFF));
                             *(p20 - 5) = *(uint32_t *)(i10 + 12 * (p6[1] & 0x3FFF) + 4);
                             *(p20 - 4) = *(uint32_t *)(i10 + 12 * (p6[1] & 0x3FFF) + 8);
-                            *(p20 - 3) = k | ((k | ((k | 0xFFFF8000) << 8)) << 8);
+                            *(p20 - 3) = frame.k | ((frame.k | ((frame.k | 0xFFFF8000) << 8)) << 8);
                             *p20 = *(uint32_t *)(i10 + 12 * (p6[2] & 0x3FFF));
                             p20[1] = *(uint32_t *)(i10 + 12 * (p6[2] & 0x3FFF) + 4);
                             p20[2] = *(uint32_t *)(i10 + 12 * (p6[2] & 0x3FFF) + 8);
                             p20[3] = i14 | ((i14 | ((i14 | 0xFFFF8000) << 8)) << 8);
                             p7 = (char *)(p20 + 6);
-                            n = i16 + 24;
-                            p22 += 18;
-                            p25 += 18;
-                            p24 += 18;
-                            if ( (unsigned int)i18 > 0x5DC )
+                            frame.n = i16 + 24;
+                            frame.p22 += 18;
+                            frame.p25 += 18;
+                            frame.p24 += 18;
+                            if ( (unsigned int)frame.primitive_count > 0x5DC )
                               break;
-                            ++i18;
+                            ++frame.primitive_count;
                           }
                         }
                         p6 += 4;
-                        i17 = p27[6];
-                        if ( ++i20 >= i17 )
+                        i17 = frame.p27[6];
+                        if ( ++frame.i20 >= i17 )
                           break;
-                        p12 = p22;
+                        p12 = frame.p22;
                       }
-                      if ( i18 != 0 )
-                        orig::CDx_DrawPrimitiveUP(g_pCDx, 4, i18, (int)&g_zoneProjVerts, 24);
+                      if ( frame.primitive_count != 0 )
+                        orig::CDx_DrawPrimitiveUP(g_pCDx, 4, frame.primitive_count, (int)&g_zoneProjVerts, 24);
                     }
                   }
-                  b3 = i23 == 1;
-                  p26 += 2;
-                  --i23;
+                  b3 = frame.i23 == 1;
+                  frame.p26 += 2;
+                  --frame.i23;
                 }
                 while ( !b3 );
               }
-              p2 = *p26;
+              p2 = *frame.p26;
             }
-            while ( *p26 != nullptr );
+            while ( *frame.p26 != nullptr );
           }
         }
       }
@@ -1384,8 +1396,8 @@ int CTsZoneMap::DrawProjectedShadow(int arg1, int arg2)
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_NONE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
-    if ( *((uint8_t *)p28 + 234904) != 0 )
-      return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &f31);
+    if ( *((uint8_t *)frame.p28 + 234904) != 0 )
+      return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &frame.matrix);
     else
       return orig::Gfx_SetZBias(g_zbiasRestore);
   }

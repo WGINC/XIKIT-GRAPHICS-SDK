@@ -159,38 +159,40 @@ XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
   long double f3;
   uint64_t u6;
   int64_t i3;
-  char xi_frame[164] __attribute__((aligned(4)));
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 12);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 52);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 56);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  uint32_t  &u12 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 80);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 84);
-  uint32_t  &u13 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
-  uint32_t  &u14 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  uint32_t  &u15 = *reinterpret_cast<uint32_t  *>(xi_frame + 96);
-  uint32_t  &u16 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
-  uint32_t  &u17 = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 108);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 112);
-  uint32_t  &u18 = *reinterpret_cast<uint32_t  *>(xi_frame + 116);
-  uint32_t  &u19 = *reinterpret_cast<uint32_t  *>(xi_frame + 120);
-  uint32_t  &u20 = *reinterpret_cast<uint32_t  *>(xi_frame + 124);
-  uint32_t  &u21 = *reinterpret_cast<uint32_t  *>(xi_frame + 128);
-  uint32_t  &u22 = *reinterpret_cast<uint32_t  *>(xi_frame + 132);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 136);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 140);
-  uint32_t  &u23 = *reinterpret_cast<uint32_t  *>(xi_frame + 144);
-  uint32_t  &u24 = *reinterpret_cast<uint32_t  *>(xi_frame + 148);
-  uint32_t  &u25 = *reinterpret_cast<uint32_t  *>(xi_frame + 152);
-  uint32_t  &u26 = *reinterpret_cast<uint32_t  *>(xi_frame + 156);
-  uint32_t  &u27 = *reinterpret_cast<uint32_t  *>(xi_frame + 160);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[164];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; int i4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x34]; float f5; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_5[0x38]; float f6; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_6[0x3C]; uint32_t u8; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_7[0x40]; uint32_t u9; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_8[0x44]; uint32_t u10; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_9[0x48]; uint32_t u11; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_10[0x4C]; uint32_t u12; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_11[0x50]; float f7; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_12[0x54]; float f8; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_13[0x58]; uint32_t u13; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_14[0x5C]; uint32_t u14; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_15[0x60]; uint32_t u15; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_16[0x64]; uint32_t u16; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_17[0x68]; uint32_t u17; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_18[0x6C]; float f9; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_19[0x70]; float f10; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_20[0x74]; uint32_t u18; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_21[0x78]; uint32_t u19; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_22[0x7C]; uint32_t u20; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_23[0x80]; uint32_t u21; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_24[0x84]; uint32_t u22; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_25[0x88]; float f11; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_26[0x8C]; float f12; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_27[0x90]; uint32_t u23; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_28[0x94]; uint32_t u24; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_29[0x98]; uint32_t u25; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_30[0x9C]; uint32_t u26; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_31[0xA0]; uint32_t u27; };   // at 0xA0
+  } frame;
   
   u6 = orig::Settings_GetValue_v1(200);
   if (((int)u6 != 0) && (p1 = *(int **)((int)self_ + 4), p1 != (int *)0x0)) {
@@ -220,7 +222,7 @@ XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
       i2 = 0;
       u4 = (uint32_t)*(uint8_t *)(i1 + 0x31);
       if (u4 != 0) {
-        i4 = 0;
+        frame.i4 = 0;
         p2 = (uint32_t *)(i1 + 0x40);
         do {
           if (i2 == u4 - 1) {
@@ -232,12 +234,12 @@ XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
             ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,1,3);
             ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,4,3);
             f2 = 0.0f;
-            f4 = 0.0f;
+            frame.f4 = 0.0f;
           }
           else {
             ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0x130))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x144)
             ;
-            f2 = (i4 / (int)u4 + *(int *)((int)self_ + 8)) *
+            f2 = (frame.i4 / (int)u4 + *(int *)((int)self_ + 8)) *
                      0.01745277829468250274658203125f;
             if (f2 > 3.141499996185302734375f) {
               f2 = f2 - 6.28299999237060546875f;
@@ -248,47 +250,47 @@ XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
             }
             f3 = bit_cast<long double>(x87_fsin(f2));
             u2 = *p2 & 0xffffff;
-            u7 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)p2 + 3)) << 8) | (uint8_t)((char)u2))) << 0x10 |
+            frame.u7 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)p2 + 3)) << 8) | (uint8_t)((char)u2))) << 0x10 |
                         u2 >> 0x10 | *p2 & 0xff00;
-            f4 = (float)(f3 * bit_cast<float>(p2[-1]) * 0.0625f);
+            frame.f4 = (float)(f3 * bit_cast<float>(p2[-1]) * 0.0625f);
             f2 = bit_cast<long double>(x87_fcos(f2));
             f2 = f2 * bit_cast<float>(p2[-1]) * 0.0625f;
           }
           f1 = (float)f2;
-          f6 = (float)f2;
-          f5 = f4;
-          u8 = 0;
-          u9 = 0x3f800000;
-          u11 = 0;
-          u12 = 0;
-          u10 = u7;
+          frame.f6 = (float)f2;
+          frame.f5 = frame.f4;
+          frame.u8 = 0;
+          frame.u9 = 0x3f800000;
+          frame.u11 = 0;
+          frame.u12 = 0;
+          frame.u10 = frame.u7;
           i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          u13 = 0;
-          u14 = 0x3f800000;
-          u16 = 0x3f800000;
-          u17 = 0;
-          f9 = f4;
-          f7 = (float)(*(uint32_t *)(i1 + 8) + f4);
-          f8 = f1;
-          u15 = u7;
+          frame.u13 = 0;
+          frame.u14 = 0x3f800000;
+          frame.u16 = 0x3f800000;
+          frame.u17 = 0;
+          frame.f9 = frame.f4;
+          frame.f7 = (float)(*(uint32_t *)(i1 + 8) + frame.f4);
+          frame.f8 = f1;
+          frame.u15 = frame.u7;
           i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          u18 = 0;
-          u19 = 0x3f800000;
-          u21 = 0;
-          u22 = 0x3f800000;
-          f10 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
-          u20 = u7;
+          frame.u18 = 0;
+          frame.u19 = 0x3f800000;
+          frame.u21 = 0;
+          frame.u22 = 0x3f800000;
+          frame.f10 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
+          frame.u20 = frame.u7;
           i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          f11 = (float)(*(uint32_t *)(i1 + 8) + f4);
+          frame.f11 = (float)(*(uint32_t *)(i1 + 8) + frame.f4);
           i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          u23 = 0;
-          u24 = 0x3f800000;
-          u26 = 0x3f800000;
-          u27 = 0x3f800000;
-          f12 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
+          frame.u23 = 0;
+          frame.u24 = 0x3f800000;
+          frame.u26 = 0x3f800000;
+          frame.u27 = 0x3f800000;
+          frame.f12 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
           u1 = *(uint8_t *)((int)g_pCDx_as_v1 + 0x828);
           *(uint8_t *)((int)g_pCDx_as_v1 + 0x828) = 0;
-          u25 = u7;
+          frame.u25 = frame.u7;
           u3 = orig::CEnv_IsStereoMode_v1(g_pEnv_as_v0);
           if (((((char)u3 != '\0') && (g_sceneCaptureTexEye2 != 0)) &&
               (*(int *)((int)g_pCDx_as_v1 + 0x198) != 0)) && (*(int *)((int)g_pCDx_as_v1 + 0x1a8) != 0)) {
@@ -297,15 +299,15 @@ XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
             orig::CDx_PushRenderTarget_v1
                       (g_pCDx_as_v1,*(uint32_t *)((int)g_pCDx_as_v1 + 0x198),
                        *(uint32_t *)((int)g_pCDx_as_v1 + 0x1a0),*(uint32_t *)((int)g_pCDx_as_v1 + 0x1a8));
-            orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&f5,0x1c);
+            orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&frame.f5,0x1c);
             orig::CDx_SetTexture_v1(g_pCDx_as_v1,0,0);
           }
           ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xf4))
                     ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,g_sceneCaptureTex);
-          orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&f5,0x1c);
+          orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&frame.f5,0x1c);
           xi_eax = g_pCDx_as_v1;
           i2 = i2 + 1;
-          i4 = i4 + 0x168;
+          frame.i4 = frame.i4 + 0x168;
           p2 = p2 + 2;
           *(uint8_t *)((int)g_pCDx_as_v1 + 0x828) = u1;
         } while (i2 < (int)u4);

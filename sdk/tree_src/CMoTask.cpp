@@ -486,23 +486,25 @@ int CMoTask::DrawQuadStates(float *arg1, char arg4)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   double f1;
-  alignas(16) unsigned char xi_frame[0x5D4];  // address-taken locals at their original offsets
-  int (&i1)[6] = *reinterpret_cast<int (*)[6]>(xi_frame + 0x170);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x188);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x18C);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x190);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x194);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x198);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x19C);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x1A0);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x1A4);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x1A8);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x1AC);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x1B0);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x1B4);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x1B8);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x1BC);
-  uint8_t (&u1)[20] = *reinterpret_cast<uint8_t (*)[20]>(xi_frame + 0x1C0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x5D4];
+    struct __attribute__((packed)) { unsigned char pad_1[0x170]; int i1[6]; };   // at 0x170
+    struct __attribute__((packed)) { unsigned char pad_2[0x188]; int i2; };   // at 0x188
+    struct __attribute__((packed)) { unsigned char pad_3[0x18C]; int i3; };   // at 0x18C
+    struct __attribute__((packed)) { unsigned char pad_4[0x190]; int i4; };   // at 0x190
+    struct __attribute__((packed)) { unsigned char pad_5[0x194]; int i5; };   // at 0x194
+    struct __attribute__((packed)) { unsigned char pad_6[0x198]; int i6; };   // at 0x198
+    struct __attribute__((packed)) { unsigned char pad_7[0x19C]; float f2; };   // at 0x19C
+    struct __attribute__((packed)) { unsigned char pad_8[0x1A0]; int i7; };   // at 0x1A0
+    struct __attribute__((packed)) { unsigned char pad_9[0x1A4]; int i8; };   // at 0x1A4
+    struct __attribute__((packed)) { unsigned char pad_10[0x1A8]; int i9; };   // at 0x1A8
+    struct __attribute__((packed)) { unsigned char pad_11[0x1AC]; float f3; };   // at 0x1AC
+    struct __attribute__((packed)) { unsigned char pad_12[0x1B0]; float f4; };   // at 0x1B0
+    struct __attribute__((packed)) { unsigned char pad_13[0x1B4]; int i10; };   // at 0x1B4
+    struct __attribute__((packed)) { unsigned char pad_14[0x1B8]; int i11; };   // at 0x1B8
+    struct __attribute__((packed)) { unsigned char pad_15[0x1BC]; int i12; };   // at 0x1BC
+    struct __attribute__((packed)) { unsigned char pad_16[0x1C0]; uint8_t u1[20]; };   // at 0x1C0
+  } frame;
 
   Fn10076030_static_D1DC = 0;
   Fn10076030_static_D1C0 = 0;
@@ -555,27 +557,27 @@ int CMoTask::DrawQuadStates(float *arg1, char arg4)
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(324);
   orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 5, 2, (int)&Fn10076030_static_D180, 28);
-  i10 = 0;
-  i7 = 0;
-  i3 = 0;
-  i1[2] = 0;
-  i11 = 1065353216;
-  i8 = 1065353216;
-  i4 = 1065353216;
-  i1[3] = 1065353216;
-  i12 = -2130771968;
-  i9 = -2130771968;
-  i5 = -2130771968;
-  i1[4] = -2130771968;
-  f3 = *arg1;
-  *(float *)i1 = f3;
-  *(float *)&i6 = arg1[2] + *arg1;
-  i1[5] = i6;
-  i2 = *((int *)arg1 + 1);
-  i1[1] = i2;
-  f4 = arg1[1] + arg1[3];
-  f2 = f4;
-  memcpy(u1, i1, sizeof(u1));
+  frame.i10 = 0;
+  frame.i7 = 0;
+  frame.i3 = 0;
+  frame.i1[2] = 0;
+  frame.i11 = 1065353216;
+  frame.i8 = 1065353216;
+  frame.i4 = 1065353216;
+  frame.i1[3] = 1065353216;
+  frame.i12 = -2130771968;
+  frame.i9 = -2130771968;
+  frame.i5 = -2130771968;
+  frame.i1[4] = -2130771968;
+  frame.f3 = *arg1;
+  *(float *)frame.i1 = frame.f3;
+  *(float *)&frame.i6 = arg1[2] + *arg1;
+  frame.i1[5] = frame.i6;
+  frame.i2 = *((int *)arg1 + 1);
+  frame.i1[1] = frame.i2;
+  frame.f4 = arg1[1] + arg1[3];
+  frame.f2 = frame.f4;
+  memcpy(frame.u1, frame.i1, sizeof(frame.u1));
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
@@ -583,7 +585,7 @@ int CMoTask::DrawQuadStates(float *arg1, char arg4)
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
-  orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 3, 4, (int)i1, 20);
+  orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 3, 4, (int)frame.i1, 20);
   return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 }
 

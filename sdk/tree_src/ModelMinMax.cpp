@@ -13,8 +13,10 @@ XI_API bits32 __cdecl ModelMinMax_ComputeMinMax(float * arg1)
   int i2;
   uint8_t u2;
   long double f1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  float  (&f2)[6] = *reinterpret_cast<float  (*)[6]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { float f2[6]; };   // at 0x0
+  } frame;
   
   p1 = arg1;
   orig::SqBounds_Reset(arg1);
@@ -22,17 +24,17 @@ XI_API bits32 __cdecl ModelMinMax_ComputeMinMax(float * arg1)
   arg1 = (float *)0x0;
   if (0 < g_1099AECC) {
     do {
-      i1 = orig::Mdl_ComputeSlotBounds((int)arg1,f2);
+      i1 = orig::Mdl_ComputeSlotBounds((int)arg1,frame.f2);
       if (i1 == 0) {
         u1 = true;
-        i2 = (int)f2 + (0xc - (int)p1);
+        i2 = (int)frame.f2 + (0xc - (int)p1);
         i1 = 3;
         p2 = p1;
         do {
-          f1 = *(float *)(((int)f2 - (int)p1) + (int)p2);
+          f1 = *(float *)(((int)frame.f2 - (int)p1) + (int)p2);
           u2 = ((f1) != (f1)) || ((*p2) != (*p2));
           if ((u2 || f1 < *p2) != u2) {
-            *p2 = *(float *)(((int)f2 - (int)p1) + (int)p2);
+            *p2 = *(float *)(((int)frame.f2 - (int)p1) + (int)p2);
           }
           f1 = *(float *)(i2 + (int)p2);
           if (f1 > p2[3]) {

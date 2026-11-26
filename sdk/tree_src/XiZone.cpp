@@ -31,10 +31,12 @@ int XiZone::DrawGroundShadowQuad(int arg1, int arg2, int arg3)
   IDirect3DBaseTexture8 *p1;
   float f1;
   float f2;
-  alignas(16) unsigned char xi_frame[0x53C];  // address-taken locals at their original offsets
-  float (&f3)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x7C);
-  float (&f4)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xBC);
-  uint8_t (&u1)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0xFC);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x53C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x7C]; float f3[16]; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_2[0xBC]; float f4[16]; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_3[0xFC]; uint8_t u1[64]; };   // at 0xFC
+  } frame;
 
   result = at<uint32_t>(this, 0x343E4);
   if ( result != 0 )
@@ -54,7 +56,7 @@ int XiZone::DrawGroundShadowQuad(int arg1, int arg2, int arg3)
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 322u);
     if ( at<uint8_t>(this, 0x39598) != 0 )
     {
-      (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, u1);
+      (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, frame.u1);
       orig::ZoneMap_SetOverlayProjection((float *)self);
     }
     else
@@ -71,33 +73,33 @@ int XiZone::DrawGroundShadowQuad(int arg1, int arg2, int arg3)
       g_overlayScaleZ = arg2;
       g_overlayScaleX = arg2;
     }
-    f3[0] = 1.0;
-    memset(&f3[1], 0, 16);
-    f3[5] = 1.0;
-    memset(&f3[6], 0, 16);
-    f3[10] = 1.0;
-    memset(&f3[11], 0, 16);
-    f3[15] = 1.0;
-    orig::Mat4_SetIdentity_2(f4);
-    (*(uint32_t *)&(f4[0])) = g_overlayScaleX;
-    (*(uint32_t *)&(f4[5])) = g_overlayScaleY;
-    (*(uint32_t *)&(f4[10])) = g_overlayScaleZ;
-    orig::Mat44_Multiply(f3, (int)f3, f4);
-    orig::Mat4_SetIdentity_2(f4);
+    frame.f3[0] = 1.0;
+    memset(&frame.f3[1], 0, 16);
+    frame.f3[5] = 1.0;
+    memset(&frame.f3[6], 0, 16);
+    frame.f3[10] = 1.0;
+    memset(&frame.f3[11], 0, 16);
+    frame.f3[15] = 1.0;
+    orig::Mat4_SetIdentity_2(frame.f4);
+    (*(uint32_t *)&(frame.f4[0])) = g_overlayScaleX;
+    (*(uint32_t *)&(frame.f4[5])) = g_overlayScaleY;
+    (*(uint32_t *)&(frame.f4[10])) = g_overlayScaleZ;
+    orig::Mat44_Multiply(frame.f3, (int)frame.f3, frame.f4);
+    orig::Mat4_SetIdentity_2(frame.f4);
     f1 = *(float *)(arg1 + 4);
-    f4[12] = *(float *)arg1;
+    frame.f4[12] = *(float *)arg1;
     f2 = *(float *)(arg1 + 8);
-    f4[13] = f1;
-    f4[14] = f2;
-    orig::Mat44_Multiply(f3, (int)f3, f4);
-    orig::CDx_SetTransform(g_pCDx, 256, f3);
+    frame.f4[13] = f1;
+    frame.f4[14] = f2;
+    orig::Mat44_Multiply(frame.f3, (int)frame.f3, frame.f4);
+    orig::CDx_SetTransform(g_pCDx, 256, frame.f3);
     orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&g_overlayQuadVerts, 24);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     if ( at<uint8_t>(this, 0x39598) != 0 )
-      return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, u1);
+      return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, frame.u1);
     else
       return orig::Gfx_SetZBias(g_zbiasRestore);
   }
@@ -180,53 +182,55 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
   int i21;
   unsigned int u2;
   float *p26;
-  int i22;
+  int primitive_count;
   int i23;
   bool b1; // zf
-  alignas(16) unsigned char xi_frame[0x57C];  // address-taken locals at their original offsets
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0xA0);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0xA4);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0xA8);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0xAC);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0xB0);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0xB4);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0xB8);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0xBC);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0xC0);
-  float &f26 = *reinterpret_cast<float *>(xi_frame + 0xC4);
-  float &f27 = *reinterpret_cast<float *>(xi_frame + 0xC8);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0xCC);
-  float &f28 = *reinterpret_cast<float *>(xi_frame + 0xD0);
-  float &f29 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  float &f30 = *reinterpret_cast<float *>(xi_frame + 0xD8);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  float * &p27 = *reinterpret_cast<float * *>(xi_frame + 0xE0);
-  float * &p28 = *reinterpret_cast<float * *>(xi_frame + 0xE4);
-  float * &p29 = *reinterpret_cast<float * *>(xi_frame + 0xE8);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0xEC);
-  int &i29 = *reinterpret_cast<int *>(xi_frame + 0xF0);
-  int &i30 = *reinterpret_cast<int *>(xi_frame + 0xF4);
-  int &k = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &i31 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &a2a = *reinterpret_cast<int *>(xi_frame + 0x100);
-  uint32_t ** &p30 = *reinterpret_cast<uint32_t ** *>(xi_frame + 0x104);
-  int &i32 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x10C);
-  int &j = *reinterpret_cast<int *>(xi_frame + 0x110);
-  int &i33 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  short * &p31 = *reinterpret_cast<short * *>(xi_frame + 0x118);
-  int &i34 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  uint32_t * &p32 = *reinterpret_cast<uint32_t * *>(xi_frame + 0x120);
-  int &i35 = *reinterpret_cast<int *>(xi_frame + 0x124);
-  float * &p33 = *reinterpret_cast<float * *>(xi_frame + 0x128);
-  float &f31 = *reinterpret_cast<float *>(xi_frame + 0x12C);
-  float &f32 = *reinterpret_cast<float *>(xi_frame + 0x130);
-  float &f33 = *reinterpret_cast<float *>(xi_frame + 0x134);
-  float (&f34)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x138);
-  int &i36 = *reinterpret_cast<int *>(xi_frame + 0x178);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x57C];
+    struct __attribute__((packed)) { unsigned char pad_1[0xA0]; float f19; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_2[0xA4]; float f20; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_3[0xA8]; float f21; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_4[0xAC]; int i24; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_5[0xB0]; float f22; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_6[0xB4]; float f23; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_7[0xB8]; float f24; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_8[0xBC]; int i25; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_9[0xC0]; float f25; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_10[0xC4]; float f26; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_11[0xC8]; float f27; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_12[0xCC]; int i26; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_13[0xD0]; float f28; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_14[0xD4]; float f29; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_15[0xD8]; float f30; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_16[0xDC]; int i27; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_17[0xE0]; float * p27; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_18[0xE4]; float * p28; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_19[0xE8]; float * p29; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_20[0xEC]; int i28; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_21[0xF0]; int i29; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_22[0xF4]; int i30; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_23[0xF8]; int k; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_24[0xFC]; int i31; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_25[0x100]; int a2a; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_26[0x104]; uint32_t ** p30; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_27[0x108]; int i32; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_28[0x10C]; int i; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_29[0x110]; int j; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_30[0x114]; int i33; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_31[0x118]; short * p31; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_32[0x11C]; int i34; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_33[0x120]; uint32_t * p32; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_34[0x124]; int i35; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_35[0x128]; float * p33; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_36[0x12C]; float f31; };   // at 0x12C
+    struct __attribute__((packed)) { unsigned char pad_37[0x130]; float f32; };   // at 0x130
+    struct __attribute__((packed)) { unsigned char pad_38[0x134]; float f33; };   // at 0x134
+    struct __attribute__((packed)) { unsigned char pad_39[0x138]; float f34[16]; };   // at 0x138
+    struct __attribute__((packed)) { unsigned char pad_40[0x178]; int matrix; };   // at 0x178
+  } frame;
 
   p1 = (float *)self;
-  p33 = (float *)self;
+  frame.p33 = (float *)self;
   if ( arg4 == 0.0 )
   {
     Fn10185CA0_m22 = 1.0;
@@ -237,11 +241,11 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
     Fn10185CA0_m22 = 1.0 / arg4;
     Fn10185CA0_m00 = Fn10185CA0_m22;
   }
-  f31 = -*arg1;
+  frame.f31 = -*arg1;
   pDevice = (g_pCDx->pDevice);
-  f32 = -arg1[1];
+  frame.f32 = -arg1[1];
   val1.lpVtbl = pDevice->lpVtbl;
-  f33 = -arg1[2];
+  frame.f33 = -arg1[2];
   val1.lpVtbl->SetRenderState(pDevice, D3DRS_LIGHTING, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_ZERO);
@@ -249,11 +253,11 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_CCW);
-  i33 = 0;
+  frame.i33 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
   if ( *((uint8_t *)p1 + 234904) != 0 )
   {
-    (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &i36);
+    (g_pCDx->pDevice)->lpVtbl->GetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &frame.matrix);
     orig::ZoneMap_SetOverlayProjection(p1);
   }
   else
@@ -264,112 +268,112 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
   (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, arg3);
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 322u);
-  f28 = f31;
+  frame.f28 = frame.f31;
   f1 = atan2(-*arg2, arg2[2]);
-  f29 = f32;
-  f30 = f33;
-  f34[0] = 1.0;
-  memset(&f34[1], 0, 16);
-  f34[5] = 1.0;
-  memset(&f34[6], 0, 16);
-  f34[10] = 1.0;
-  memset(&f34[11], 0, 16);
-  f34[15] = 1.0;
-  f19 = 1.0;
-  f20 = 0.0;
-  f21 = 0.0;
-  i24 = 0;
-  f22 = 0.0;
-  f23 = 1.0;
-  f24 = 0.0;
-  i25 = 0;
-  f25 = 0.0;
-  f26 = 0.0;
-  f27 = 1.0;
-  i26 = 0;
-  i27 = 1065353216;
-  *(float *)&i29 = f1;
-  orig::Mat44_Multiply(f34, (int)f34, &f19);
-  f19 = cos(*(float *)&i29);
-  f2 = sin(*(float *)&i29);
-  f20 = 0.0;
-  i24 = 0;
-  f22 = 0.0;
-  f23 = 1.0;
-  f24 = 0.0;
-  i25 = 0;
-  f26 = 0.0;
-  i26 = 0;
-  f28 = 0.0;
-  f29 = 0.0;
-  f30 = 0.0;
-  i27 = 1065353216;
-  f21 = -f2;
-  f25 = f2;
-  f27 = f19;
-  orig::Mat44_Multiply(f34, (int)f34, &f19);
-  f19 = Fn10185CA0_m00;
-  f23 = *(float *)&Fn10185CA0_m11;
-  f27 = Fn10185CA0_m22;
-  f20 = 0.0;
-  f21 = 0.0;
-  i24 = 0;
-  f22 = 0.0;
-  f24 = 0.0;
-  i25 = 0;
-  f25 = 0.0;
-  f26 = 0.0;
-  i26 = 0;
-  f28 = 0.0;
-  f29 = 0.0;
-  f30 = 0.0;
-  i27 = 1065353216;
-  orig::Mat44_Multiply(f34, (int)f34, &f19);
-  f28 = *(float *)&Fn10185CA0_m30;
-  f29 = *(float *)&Fn10185CA0_m31;
-  f30 = *(float *)&Fn10185CA0_m32;
-  f19 = 1.0;
-  f20 = 0.0;
-  f21 = 0.0;
-  i24 = 0;
-  f22 = 0.0;
-  f23 = 1.0;
-  f24 = 0.0;
-  i25 = 0;
-  f25 = 0.0;
-  f26 = 0.0;
-  f27 = 1.0;
-  i26 = 0;
-  i27 = 1065353216;
-  orig::Mat44_Multiply(f34, (int)f34, &f19);
+  frame.f29 = frame.f32;
+  frame.f30 = frame.f33;
+  frame.f34[0] = 1.0;
+  memset(&frame.f34[1], 0, 16);
+  frame.f34[5] = 1.0;
+  memset(&frame.f34[6], 0, 16);
+  frame.f34[10] = 1.0;
+  memset(&frame.f34[11], 0, 16);
+  frame.f34[15] = 1.0;
+  frame.f19 = 1.0;
+  frame.f20 = 0.0;
+  frame.f21 = 0.0;
+  frame.i24 = 0;
+  frame.f22 = 0.0;
+  frame.f23 = 1.0;
+  frame.f24 = 0.0;
+  frame.i25 = 0;
+  frame.f25 = 0.0;
+  frame.f26 = 0.0;
+  frame.f27 = 1.0;
+  frame.i26 = 0;
+  frame.i27 = 1065353216;
+  *(float *)&frame.i29 = f1;
+  orig::Mat44_Multiply(frame.f34, (int)frame.f34, &frame.f19);
+  frame.f19 = cos(*(float *)&frame.i29);
+  f2 = sin(*(float *)&frame.i29);
+  frame.f20 = 0.0;
+  frame.i24 = 0;
+  frame.f22 = 0.0;
+  frame.f23 = 1.0;
+  frame.f24 = 0.0;
+  frame.i25 = 0;
+  frame.f26 = 0.0;
+  frame.i26 = 0;
+  frame.f28 = 0.0;
+  frame.f29 = 0.0;
+  frame.f30 = 0.0;
+  frame.i27 = 1065353216;
+  frame.f21 = -f2;
+  frame.f25 = f2;
+  frame.f27 = frame.f19;
+  orig::Mat44_Multiply(frame.f34, (int)frame.f34, &frame.f19);
+  frame.f19 = Fn10185CA0_m00;
+  frame.f23 = *(float *)&Fn10185CA0_m11;
+  frame.f27 = Fn10185CA0_m22;
+  frame.f20 = 0.0;
+  frame.f21 = 0.0;
+  frame.i24 = 0;
+  frame.f22 = 0.0;
+  frame.f24 = 0.0;
+  frame.i25 = 0;
+  frame.f25 = 0.0;
+  frame.f26 = 0.0;
+  frame.i26 = 0;
+  frame.f28 = 0.0;
+  frame.f29 = 0.0;
+  frame.f30 = 0.0;
+  frame.i27 = 1065353216;
+  orig::Mat44_Multiply(frame.f34, (int)frame.f34, &frame.f19);
+  frame.f28 = *(float *)&Fn10185CA0_m30;
+  frame.f29 = *(float *)&Fn10185CA0_m31;
+  frame.f30 = *(float *)&Fn10185CA0_m32;
+  frame.f19 = 1.0;
+  frame.f20 = 0.0;
+  frame.f21 = 0.0;
+  frame.i24 = 0;
+  frame.f22 = 0.0;
+  frame.f23 = 1.0;
+  frame.f24 = 0.0;
+  frame.i25 = 0;
+  frame.f25 = 0.0;
+  frame.f26 = 0.0;
+  frame.f27 = 1.0;
+  frame.i26 = 0;
+  frame.i27 = 1065353216;
+  orig::Mat44_Multiply(frame.f34, (int)frame.f34, &frame.f19);
   Ptr8IfField60Set = orig::GetPtr8IfField60Set((uint32_t *)p1 + 94);
   p2 = Ptr8IfField60Set;
-  p32 = Ptr8IfField60Set;
+  frame.p32 = Ptr8IfField60Set;
   if ( Ptr8IfField60Set != nullptr )
   {
     f3 = *((float *)Ptr8IfField60Set + 14) + *arg1;
-    i35 = *((uint32_t *)p1 + 95);
+    frame.i35 = *((uint32_t *)p1 + 95);
     i1 = (long long)(f3 * 0.25);
     i2 = (long long)((*((float *)Ptr8IfField60Set + 15) + arg1[2]) * 0.25);
     if ( i1 - 1 >= 0 )
     {
-      i32 = p2[16] - 1;
-      if ( i1 - 1 <= i32 )
-        i32 = i1 - 1;
+      frame.i32 = p2[16] - 1;
+      if ( i1 - 1 <= frame.i32 )
+        frame.i32 = i1 - 1;
     }
     else
     {
-      i32 = 0;
+      frame.i32 = 0;
     }
     if ( i1 + 1 >= 0 )
     {
-      a2a = p2[16] - 1;
-      if ( i1 + 1 <= a2a )
-        a2a = i1 + 1;
+      frame.a2a = p2[16] - 1;
+      if ( i1 + 1 <= frame.a2a )
+        frame.a2a = i1 + 1;
     }
     else
     {
-      a2a = 0;
+      frame.a2a = 0;
     }
     i3 = i2 - 1;
     if ( (int)i2 - 1 >= 0 )
@@ -384,19 +388,19 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
     i4 = i2 + 1;
     if ( i4 >= 0 )
     {
-      i31 = p2[17] - 1;
-      if ( i4 <= i31 )
-        i31 = i4;
+      frame.i31 = p2[17] - 1;
+      if ( i4 <= frame.i31 )
+        frame.i31 = i4;
     }
     else
     {
-      i31 = 0;
+      frame.i31 = 0;
     }
     i5 = i3;
-    for ( i = i3; i5 <= i31; i = i5 )
+    for ( frame.i = i3; i5 <= frame.i31; frame.i = i5 )
     {
-      i6 = i32;
-      for ( j = i32; i6 <= a2a; j = i6 )
+      i6 = frame.i32;
+      for ( frame.j = frame.i32; i6 <= frame.a2a; frame.j = i6 )
       {
         p3 = *(int **)(p2[22] + 4 * (i6 + i5 * p2[16]));
         if ( p3 != nullptr )
@@ -406,26 +410,26 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
             i7 = *p3;
             p4 = p3 + 1;
             i8 = *p3;
-            p30 = (uint32_t **)p4;
+            frame.p30 = (uint32_t **)p4;
             i9 = i8 & 0x7FF;
             if ( (i7 & 0x2000) != 0 )
             {
-              p30 = (uint32_t **)&p4[2 * i9];
+              frame.p30 = (uint32_t **)&p4[2 * i9];
             }
             else if ( i9 > 0 )
             {
-              i34 = i9;
+              frame.i34 = i9;
               do
               {
                 p5 = (uint32_t *)*p4;
                 p6 = (short *)p4[1];
-                p31 = p6;
-                if ( i35 != p5[47] && p6[7] == 0 )
+                frame.p31 = p6;
+                if ( frame.i35 != p5[47] && p6[7] == 0 )
                 {
                   i10 = p5[41] & 1;
-                  if ( i33 != i10 )
+                  if ( frame.i33 != i10 )
                   {
-                    i33 = p5[41] & 1;
+                    frame.i33 = p5[41] & 1;
                     if ( i10 != 0 )
                       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_CW);
                     else
@@ -434,22 +438,22 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
                   p7 = *((uint16_t **)p6 + 2);
                   i11 = *(uint32_t *)p6;
                   p8 = (char *)&g_zoneProjVerts;
-                  *(float *)&i29 = 0.0;
+                  *(float *)&frame.i29 = 0.0;
                   orig::CDx_SetTransform(g_pCDx, 256, p5);
-                  p9 = &f19;
-                  i12 = (char *)p5 - (char *)&f19;
-                  i28 = 4;
-                  for ( k = i12; ; i12 = k )
+                  p9 = &frame.f19;
+                  i12 = (char *)p5 - (char *)&frame.f19;
+                  frame.i28 = 4;
+                  for ( frame.k = i12; ; i12 = frame.k )
                   {
-                    p27 = (float *)((char *)p9 + i12);
-                    p28 = f34;
+                    frame.p27 = (float *)((char *)p9 + i12);
+                    frame.p28 = frame.f34;
                     p10 = p9;
-                    i30 = 4;
+                    frame.i30 = 4;
                     do
                     {
                       f4 = 0.0;
-                      p11 = p27;
-                      p12 = p28;
+                      p11 = frame.p27;
+                      p12 = frame.p28;
                       *p10 = 0.0;
                       for ( m = 4; m != 0; --m )
                       {
@@ -458,106 +462,106 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
                         ++p11;
                         f4 = f4 + f5;
                       }
-                      p13 = p28;
-                      i13 = i30;
+                      p13 = frame.p28;
+                      i13 = frame.i30;
                       *p10++ = f4;
-                      p28 = p13 + 1;
-                      i30 = i13 - 1;
+                      frame.p28 = p13 + 1;
+                      frame.i30 = i13 - 1;
                     }
                     while ( i13 != 1 );
                     p9 = p10;
-                    if ( --i28 == 0 )
+                    if ( --frame.i28 == 0 )
                       break;
                   }
-                  k = 0;
-                  if ( p31[6] > 0 )
+                  frame.k = 0;
+                  if ( frame.p31[6] > 0 )
                   {
                     p14 = (float *)&g_106390C8;
                     p15 = (float *)&g_106390B4;
                     p16 = (float *)&g_106390B0;
-                    p27 = (float *)&g_106390CC;
-                    p29 = (float *)&g_106390C8;
-                    p28 = (float *)&g_106390B4;
-                    i30 = (int)&g_106390B0;
+                    frame.p27 = (float *)&g_106390CC;
+                    frame.p29 = (float *)&g_106390C8;
+                    frame.p28 = (float *)&g_106390B4;
+                    frame.i30 = (int)&g_106390B0;
                     while ( 1 )
                     {
                       p17 = (float *)(i11 + 12 * (*p7 & 0x7FFF));
-                      *((float *)p8 + 4) = f25 * p17[2] + f22 * p17[1] + f19 * *p17 + f28;
-                      f6 = f26 * p17[2] + f23 * p17[1] + f20 * *p17 + f29;
-                      *((float *)p8 + 5) = f27 * p17[2] + f24 * p17[1] + f21 * *p17 + f30;
+                      *((float *)p8 + 4) = frame.f25 * p17[2] + frame.f22 * p17[1] + frame.f19 * *p17 + frame.f28;
+                      f6 = frame.f26 * p17[2] + frame.f23 * p17[1] + frame.f20 * *p17 + frame.f29;
+                      *((float *)p8 + 5) = frame.f27 * p17[2] + frame.f24 * p17[1] + frame.f21 * *p17 + frame.f30;
                       p18 = (float *)(i11 + 12 * (*p7 & 0x7FFF));
                       if ( f6 >= 0.0 )
                       {
-                        *((float *)p8 + 4) = f19 * *(float *)(i11 + 12 * (*p7 & 0x7FFF))
-                                            + f25 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 8)
-                                            + f22 * p18[1]
-                                            + f28;
-                        f8 = f20 * *p18 + f26 * p18[2] + f23 * p18[1] + f29;
-                        *((float *)p8 + 5) = f21 * *p18 + f27 * p18[2] + f24 * p18[1] + f30;
+                        *((float *)p8 + 4) = frame.f19 * *(float *)(i11 + 12 * (*p7 & 0x7FFF))
+                                            + frame.f25 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 8)
+                                            + frame.f22 * p18[1]
+                                            + frame.f28;
+                        f8 = frame.f20 * *p18 + frame.f26 * p18[2] + frame.f23 * p18[1] + frame.f29;
+                        *((float *)p8 + 5) = frame.f21 * *p18 + frame.f27 * p18[2] + frame.f24 * p18[1] + frame.f30;
                       }
                       else
                       {
-                        *((float *)p8 + 4) = f25 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 8)
-                                            + f22 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 4)
-                                            + f19 * *p18
-                                            + f28;
-                        f7 = f26 * p18[2] + f23 * p18[1] + f20 * *p18 + f29;
-                        *((float *)p8 + 5) = f27 * p18[2] + f24 * p18[1] + f21 * *p18 + f30;
+                        *((float *)p8 + 4) = frame.f25 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 8)
+                                            + frame.f22 * *(float *)(i11 + 12 * (*p7 & 0x7FFF) + 4)
+                                            + frame.f19 * *p18
+                                            + frame.f28;
+                        f7 = frame.f26 * p18[2] + frame.f23 * p18[1] + frame.f20 * *p18 + frame.f29;
+                        *((float *)p8 + 5) = frame.f27 * p18[2] + frame.f24 * p18[1] + frame.f21 * *p18 + frame.f30;
                         f8 = -f7;
                       }
                       p19 = (float *)(i11 + 12 * (p7[1] & 0x3FFF));
-                      *p16 = f25 * p19[2] + f22 * p19[1] + f19 * *p19 + f28;
-                      f9 = f26 * p19[2] + f23 * p19[1] + f20 * *p19 + f29;
-                      *p15 = f27 * p19[2] + f24 * p19[1] + f21 * *p19 + f30;
+                      *p16 = frame.f25 * p19[2] + frame.f22 * p19[1] + frame.f19 * *p19 + frame.f28;
+                      f9 = frame.f26 * p19[2] + frame.f23 * p19[1] + frame.f20 * *p19 + frame.f29;
+                      *p15 = frame.f27 * p19[2] + frame.f24 * p19[1] + frame.f21 * *p19 + frame.f30;
                       p20 = (float *)(i11 + 12 * (p7[1] & 0x3FFF));
                       if ( f9 >= 0.0 )
                       {
-                        *p16 = f25 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 8)
-                             + f22 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 4)
-                             + f19 * *p20
-                             + f28;
-                        f11 = f26 * p20[2] + f23 * p20[1] + f20 * *p20 + f29;
-                        *p15 = f27 * p20[2] + f24 * p20[1] + f21 * *p20 + f30;
+                        *p16 = frame.f25 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 8)
+                             + frame.f22 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 4)
+                             + frame.f19 * *p20
+                             + frame.f28;
+                        f11 = frame.f26 * p20[2] + frame.f23 * p20[1] + frame.f20 * *p20 + frame.f29;
+                        *p15 = frame.f27 * p20[2] + frame.f24 * p20[1] + frame.f21 * *p20 + frame.f30;
                       }
                       else
                       {
-                        *p16 = f19 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF))
-                             + f25 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 8)
-                             + f22 * p20[1]
-                             + f28;
-                        f10 = f20 * *p20 + f26 * p20[2] + f23 * p20[1] + f29;
-                        *p15 = f21 * *p20 + f27 * p20[2] + f24 * p20[1] + f30;
+                        *p16 = frame.f19 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF))
+                             + frame.f25 * *(float *)(i11 + 12 * (p7[1] & 0x3FFF) + 8)
+                             + frame.f22 * p20[1]
+                             + frame.f28;
+                        f10 = frame.f20 * *p20 + frame.f26 * p20[2] + frame.f23 * p20[1] + frame.f29;
+                        *p15 = frame.f21 * *p20 + frame.f27 * p20[2] + frame.f24 * p20[1] + frame.f30;
                         f11 = -f10;
                       }
                       p21 = (float *)(i11 + 12 * (p7[2] & 0x3FFF));
-                      p22 = p27;
-                      *p14 = f25 * p21[2] + f22 * p21[1] + f19 * *p21 + f28;
-                      f12 = f26 * p21[2] + f23 * p21[1] + f20 * *p21 + f29;
-                      *p22 = f27 * p21[2] + f24 * p21[1] + f21 * *p21 + f30;
+                      p22 = frame.p27;
+                      *p14 = frame.f25 * p21[2] + frame.f22 * p21[1] + frame.f19 * *p21 + frame.f28;
+                      f12 = frame.f26 * p21[2] + frame.f23 * p21[1] + frame.f20 * *p21 + frame.f29;
+                      *p22 = frame.f27 * p21[2] + frame.f24 * p21[1] + frame.f21 * *p21 + frame.f30;
                       i14 = p7[2];
                       if ( f12 >= 0.0 )
                       {
                         i16 = 3 * (i14 & 0x3FFF);
-                        f17 = f25 * *(float *)(i11 + 4 * i16 + 8);
-                        f18 = f22 * *(float *)(i11 + 4 * i16 + 4);
+                        f17 = frame.f25 * *(float *)(i11 + 4 * i16 + 8);
+                        f18 = frame.f22 * *(float *)(i11 + 4 * i16 + 4);
                         p24 = (float *)(i11 + 4 * i16);
-                        *p14 = f17 + f18 + f19 * *p24 + f28;
-                        f16 = f26 * p24[2] + f23 * p24[1] + f20 * *p24 + f29;
-                        *p22 = f27 * p24[2] + f24 * p24[1] + f21 * *p24 + f30;
+                        *p14 = f17 + f18 + frame.f19 * *p24 + frame.f28;
+                        f16 = frame.f26 * p24[2] + frame.f23 * p24[1] + frame.f20 * *p24 + frame.f29;
+                        *p22 = frame.f27 * p24[2] + frame.f24 * p24[1] + frame.f21 * *p24 + frame.f30;
                       }
                       else
                       {
                         i15 = i14 & 0x3FFF;
-                        f13 = f19 * *(float *)(i11 + 12 * i15);
-                        f14 = f25 * *(float *)(i11 + 12 * i15 + 8);
+                        f13 = frame.f19 * *(float *)(i11 + 12 * i15);
+                        f14 = frame.f25 * *(float *)(i11 + 12 * i15 + 8);
                         p23 = (float *)(i11 + 12 * i15);
-                        *p14 = f13 + f14 + f22 * p23[1] + f28;
-                        f15 = f20 * *p23 + f26 * p23[2] + f23 * p23[1] + f29;
-                        *p22 = f21 * *p23 + f27 * p23[2] + f24 * p23[1] + f30;
+                        *p14 = f13 + f14 + frame.f22 * p23[1] + frame.f28;
+                        f15 = frame.f20 * *p23 + frame.f26 * p23[2] + frame.f23 * p23[1] + frame.f29;
+                        *p22 = frame.f21 * *p23 + frame.f27 * p23[2] + frame.f24 * p23[1] + frame.f30;
                         f16 = -f15;
                       }
                       i17 = 64 - (long long)(f8 * 32.0);
-                      i28 = 64 - (long long)(f11 * 32.0);
+                      frame.i28 = 64 - (long long)(f11 * 32.0);
                       i18 = 64 - (long long)(f16 * 32.0);
                       i19 = 0;
                       if ( i17 < 0 )
@@ -565,10 +569,10 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
                         i17 = 0;
                         i19 = 1;
                       }
-                      i20 = i28;
-                      if ( i28 < 0 )
+                      i20 = frame.i28;
+                      if ( frame.i28 < 0 )
                       {
-                        i28 = 0;
+                        frame.i28 = 0;
                         ++i19;
                         i20 = 0;
                       }
@@ -584,61 +588,61 @@ int XiZone::DrawDecalOnTriangles(float *arg1, float *arg2, IDirect3DBaseTexture8
                         *(p25 - 11) = *(uint32_t *)(i11 + 12 * (*p7 & 0x7FFF) + 4);
                         *(p25 - 10) = *(uint32_t *)(i11 + 12 * (*p7 & 0x7FFF) + 8);
                         u1 = i17 | ((i17 | ((i17 | 0xFFFF8000) << 8)) << 8);
-                        i21 = i30;
+                        i21 = frame.i30;
                         *(p25 - 9) = u1;
-                        p28 += 6;
-                        p29 += 6;
-                        p27 += 6;
+                        frame.p28 += 6;
+                        frame.p29 += 6;
+                        frame.p27 += 6;
                         *(p25 - 6) = *(uint32_t *)(i11 + 12 * (p7[1] & 0x3FFF));
                         *(p25 - 5) = *(uint32_t *)(i11 + 12 * (p7[1] & 0x3FFF) + 4);
                         *(p25 - 4) = *(uint32_t *)(i11 + 12 * (p7[1] & 0x3FFF) + 8);
                         u2 = i20 | ((i20 | ((i20 | 0xFFFF8000) << 8)) << 8);
-                        p26 = p28;
+                        p26 = frame.p28;
                         *(p25 - 3) = u2;
-                        p29 += 6;
-                        p27 += 6;
+                        frame.p29 += 6;
+                        frame.p27 += 6;
                         *p25 = *(uint32_t *)(i11 + 12 * (p7[2] & 0x3FFF));
                         p25[1] = *(uint32_t *)(i11 + 12 * (p7[2] & 0x3FFF) + 4);
                         p25[2] = *(uint32_t *)(i11 + 12 * (p7[2] & 0x3FFF) + 8);
                         p25[3] = i18 | ((i18 | ((i18 | 0xFFFF8000) << 8)) << 8);
-                        i30 = i21 + 72;
-                        p29 += 6;
-                        i22 = i29;
+                        frame.i30 = i21 + 72;
+                        frame.p29 += 6;
+                        primitive_count = frame.i29;
                         p8 = (char *)(p25 + 6);
-                        p28 = p26 + 12;
-                        p27 += 6;
-                        if ( i29 > 1500 )
+                        frame.p28 = p26 + 12;
+                        frame.p27 += 6;
+                        if ( frame.i29 > 1500 )
                           goto L1;
-                        ++i29;
+                        ++frame.i29;
                       }
                       p7 += 4;
-                      i23 = p31[6];
-                      if ( ++k >= i23 )
+                      i23 = frame.p31[6];
+                      if ( ++frame.k >= i23 )
                         break;
-                      p16 = (float *)i30;
-                      p14 = p29;
-                      p15 = p28;
+                      p16 = (float *)frame.i30;
+                      p14 = frame.p29;
+                      p15 = frame.p28;
                     }
-                    i22 = i29;
+                    primitive_count = frame.i29;
 L1:
-                    if ( i22 != 0 )
-                      orig::CDx_DrawPrimitiveUP(g_pCDx, 4, i22, (int)&g_zoneProjVerts, 24);
+                    if ( primitive_count != 0 )
+                      orig::CDx_DrawPrimitiveUP(g_pCDx, 4, primitive_count, (int)&g_zoneProjVerts, 24);
                   }
                 }
-                p4 =(uint32_t*)(p30 + 2);
-                b1 = i34 == 1;
-                p30 += 2;
-                --i34;
+                p4 =(uint32_t*)(frame.p30 + 2);
+                b1 = frame.i34 == 1;
+                frame.p30 += 2;
+                --frame.i34;
               }
               while ( !b1 );
-              p2 = p32;
+              p2 = frame.p32;
             }
-            p3 = *p30;
+            p3 = *frame.p30;
           }
-          while ( *p30 != nullptr );
-          p1 = p33;
-          i6 = j;
-          i5 = i;
+          while ( *frame.p30 != nullptr );
+          p1 = frame.p33;
+          i6 = frame.j;
+          i5 = frame.i;
         }
         ++i6;
       }
@@ -652,7 +656,7 @@ L1:
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_CULLMODE, D3DCULL_NONE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   if ( *((uint8_t *)p1 + 234904) != 0 )
-    return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &i36);
+    return (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_PROJECTION, &frame.matrix);
   else
     return orig::Gfx_SetZBias(g_zbiasRestore);
 }
@@ -784,17 +788,19 @@ uint32_t __thiscall XiZone::TestHeadFlag(void * self)
 void __thiscall XiZone::GetDirLights(void * self, bits32 * arg2, bits32 * arg3)
 {
   long double f1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+  } frame;
   
   f1 = orig::ZoneMap_GetFloatRef18Plus44(self);
-  orig::Vec3_Scale_v1(&f2,(float *)((int)self + 0xe4),(float)f1);
-  arg2[1] = f2;
+  orig::Vec3_Scale_v1(&frame.f2,(float *)((int)self + 0xe4),(float)f1);
+  arg2[1] = frame.f2;
   *arg2 = 3;
-  arg2[2] = u1;
-  arg2[3] = u2;
+  arg2[2] = frame.u1;
+  arg2[3] = frame.u2;
   arg2[4] = 0;
   arg2[9] = 0;
   arg2[10] = 0;
@@ -815,11 +821,11 @@ void __thiscall XiZone::GetDirLights(void * self, bits32 * arg2, bits32 * arg3)
   arg2[0x14] = 0x3f800000;
   arg2[0x13] = 0x3f800000;
   f1 = orig::ZoneMap_GetFloatRef18Plus44(self);
-  orig::Vec3_Scale_v1(&f2,(float *)((int)self + 0xf4),(float)f1);
-  arg3[1] = f2;
+  orig::Vec3_Scale_v1(&frame.f2,(float *)((int)self + 0xf4),(float)f1);
+  arg3[1] = frame.f2;
   *arg3 = 3;
-  arg3[2] = u1;
-  arg3[3] = u2;
+  arg3[2] = frame.u1;
+  arg3[3] = frame.u2;
   arg3[4] = 0;
   arg3[9] = 0;
   arg3[10] = 0;

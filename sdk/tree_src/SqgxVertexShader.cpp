@@ -3,7 +3,7 @@
 
 // FUNCTION: FFXIMAIN 0x10284950
 // GATE: PASS -- 100 trials, 99 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *arg1)
+XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *shader)
 {
   int i1;
   int i2;
@@ -15,23 +15,23 @@ XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *arg1)
   int i6;
   int i7;
   int result;
-  uint32_t buf1[16];
+  uint32_t declaration[16];
   i1 = 0;
   i2 = 0;
   p1 = g_pSqgxContext;
   if ( (g_pSqgxContext[652] & 1) != 0 )
   {
-    buf1[0] = 0x20000000;
+    declaration[0] = 0x20000000;
     i2 = 1;
-    buf1[1] = 1073872896;
+    declaration[1] = 1073872896;
     i1 = 2;
   }
   if ( (g_pSqgxContext[652] & 2) != 0 )
   {
-    buf1[i1] = i2 | 0x20000000;
+    declaration[i1] = i2 | 0x20000000;
     i3 = i1 + 1;
     ++i2;
-    buf1[i3] = 1073872899;
+    declaration[i3] = 1073872899;
     i1 = i3 + 1;
   }
   i4 = 0;
@@ -42,10 +42,10 @@ XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *arg1)
     {
       if ( (*p2 & 4) != 0 )
       {
-        buf1[i1] = i2 | 0x20000000;
+        declaration[i1] = i2 | 0x20000000;
         i5 = i1 + 1;
         ++i2;
-        buf1[i5] = (i4 + 7) | 0x40010000;
+        declaration[i5] = (i4 + 7) | 0x40010000;
         i1 = i5 + 1;
       }
       ++i4;
@@ -55,22 +55,22 @@ XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *arg1)
   }
   if ( (p1[652] & 0x10) != 0 )
   {
-    buf1[i1] = i2 | 0x20000000;
+    declaration[i1] = i2 | 0x20000000;
     i6 = i1 + 1;
     ++i2;
-    buf1[i6] = 1073872911;
+    declaration[i6] = 1073872911;
     i1 = i6 + 1;
   }
   if ( (p1[653] & 8) != 0 || (p1[654] & 8) != 0 && p1[710] > 0 )
   {
-    buf1[i1] = i2 | 0x20000000;
+    declaration[i1] = i2 | 0x20000000;
     i7 = i1 + 1;
-    buf1[i7] = 1074003973;
+    declaration[i7] = 1074003973;
     i1 = i7 + 1;
   }
-  buf1[i1] = -1;
-  g_pDancerDevice->CreateVertexShader(buf1, nullptr, arg1, 0);
-  result = g_pDancerDevice->SetVertexShader(*arg1);
+  declaration[i1] = -1;
+  g_pDancerDevice->CreateVertexShader(declaration, nullptr, shader, 0);
+  result = g_pDancerDevice->SetVertexShader(*shader);
   g_sqgxShaderDirty = 1;
   return result;
 }

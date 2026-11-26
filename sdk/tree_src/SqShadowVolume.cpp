@@ -114,31 +114,33 @@ XI_API void __cdecl sqgxShadowPlaneMatrix(float * arg1)
 {
   float f1;
   long double f2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+  } frame;
   
-  f3 = *(float *)(g_pSqgxContext_as_s32 + 0x34c);
-  f4 = *(float *)(g_pSqgxContext_as_s32 + 0x350);
-  f5 = *(float *)(g_pSqgxContext_as_s32 + 0x354);
-  orig::SqVec_ScaleVec3ByInverseOf102746C0(&f3);
-  f2 = orig::game_10274870((float *)(g_pSqgxContext_as_s32 + 300),&f3);
-  *arg1 = (float)(f2 - f3 * *(float *)(g_pSqgxContext_as_s32 + 300));
-  arg1[4] = (float)-(f3 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
-  arg1[8] = (float)-(f3 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
-  arg1[0xc] = (float)-(f3 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
-  arg1[1] = (float)-(f4 * *(float *)(g_pSqgxContext_as_s32 + 300));
-  arg1[5] = (float)(f2 - f4 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
-  arg1[9] = (float)-(f4 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
-  arg1[0xd] = (float)-(f4 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
-  arg1[2] = (float)-(f5 * *(float *)(g_pSqgxContext_as_s32 + 300));
-  arg1[6] = (float)-(f5 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
-  arg1[10] = (float)(f2 - f5 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  frame.f3 = *(float *)(g_pSqgxContext_as_s32 + 0x34c);
+  frame.f4 = *(float *)(g_pSqgxContext_as_s32 + 0x350);
+  frame.f5 = *(float *)(g_pSqgxContext_as_s32 + 0x354);
+  orig::SqVec_ScaleVec3ByInverseOf102746C0(&frame.f3);
+  f2 = orig::game_10274870((float *)(g_pSqgxContext_as_s32 + 300),&frame.f3);
+  *arg1 = (float)(f2 - frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[4] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[8] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  arg1[0xc] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
+  arg1[1] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[5] = (float)(f2 - frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[9] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  arg1[0xd] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
+  arg1[2] = (float)-(frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[6] = (float)-(frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[10] = (float)(f2 - frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
   f1 = *(float *)(g_pSqgxContext_as_s32 + 0x138);
   arg1[3] = 0.0f;
   arg1[7] = 0.0f;
-  arg1[0xe] = (float)-(f5 * f1);
+  arg1[0xe] = (float)-(frame.f5 * f1);
   arg1[0xb] = 0.0f;
   arg1[0xf] = (float)f2;
   return;

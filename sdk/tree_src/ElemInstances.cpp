@@ -29,33 +29,35 @@ XI_API int __thiscall YmElem_ForEachInstance(short *self_, void (__cdecl *arg2)(
   int i4;
   CMoProcessor *p7;
   int i5;
-  alignas(16) unsigned char xi_frame[0xE68];  // address-taken locals at their original offsets
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x24);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x28);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float &f23 = *reinterpret_cast<float *>(xi_frame + 0x54);
-  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x58);
-  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &f26 = *reinterpret_cast<float *>(xi_frame + 0x60);
-  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x64);
-  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x68);
-  float &f29 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  float &f30 = *reinterpret_cast<float *>(xi_frame + 0x78);
-  float &f31 = *reinterpret_cast<float *>(xi_frame + 0x84);
-  float (&f32)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x90);
-  float &f33 = *reinterpret_cast<float *>(xi_frame + 0x9C);
-  uint32_t (&u2)[626] = *reinterpret_cast<uint32_t (*)[626]>(xi_frame + 0xA0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0xE68];
+    struct __attribute__((packed)) { unsigned char pad_1[0x1C]; float f11; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_2[0x20]; float f12; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_3[0x24]; float f13; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_4[0x28]; int i; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_5[0x2C]; float f14; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_6[0x30]; int i6; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_7[0x34]; float f15; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_8[0x38]; float f16; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_9[0x3C]; float f17; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_10[0x40]; float f18; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_11[0x44]; float f19; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_12[0x48]; float f20; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_13[0x4C]; float f21; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_14[0x50]; float f22; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_15[0x54]; float f23; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_16[0x58]; float f24; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_17[0x5C]; float f25; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_18[0x60]; float f26; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_19[0x64]; float f27; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_20[0x68]; float f28; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_21[0x74]; float f29; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_22[0x78]; float f30; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_23[0x84]; float f31; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_24[0x90]; float f32[3]; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_25[0x9C]; float f33; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_26[0xA0]; uint32_t u2[626]; };   // at 0xA0
+  } frame;
 
   i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFFFFFF0000ull) | ((uint64_t)(uint16_t)(*(self_ + 34)) << 0));
   if ( (short)i1 >= 20 )
@@ -63,13 +65,13 @@ XI_API int __thiscall YmElem_ForEachInstance(short *self_, void (__cdecl *arg2)(
     f1 = orig::AppMainLoop_GetFloat10456A68Or1();
     if ( (*(uint8_t *)(self_ + 35) & 1) != 0 )
     {
-      i = *(self_ + 34);
-      f2 = f1 * (double)i * 0.5;
+      frame.i = *(self_ + 34);
+      f2 = f1 * (double)frame.i * 0.5;
     }
     else
     {
-      i = *(self_ + 34);
-      f2 = (double)i;
+      frame.i = *(self_ + 34);
+      f2 = (double)frame.i;
     }
     i1 = (long long)f2;
   }
@@ -77,10 +79,10 @@ XI_API int __thiscall YmElem_ForEachInstance(short *self_, void (__cdecl *arg2)(
   {
     i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)((short)i1) << 0));
   }
-  i6 = i1;
+  frame.i6 = i1;
   if ( (uint32_t)i1 == 0 )
     return 0;
-  u2[624] = 625;
+  frame.u2[624] = 625;
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
   p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
@@ -101,85 +103,85 @@ XI_API int __thiscall YmElem_ForEachInstance(short *self_, void (__cdecl *arg2)(
   orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, p2);
   f3 = p2[13];
   f4 = p2[14];
-  f24 = p2[12];
+  frame.f24 = p2[12];
   p2[12] = 0.0;
   p2[13] = 0.0;
   p2[14] = 0.0;
   p2[15] = 1.0;
   p3 = *(float **)self_;
-  f25 = f3;
-  f26 = f4;
+  frame.f25 = f3;
+  frame.f26 = f4;
   if ( p3 != nullptr )
   {
-    f17 = *p3;
-    f15 = *(float *)((*(uint32_t *)&(f17)) + 48);
+    frame.f17 = *p3;
+    frame.f15 = *(float *)((*(uint32_t *)&(frame.f17)) + 48);
   }
   else
   {
-    f15 = 0.0;
+    frame.f15 = 0.0;
   }
-  f14 = *((float *)self_ + 1) * *((float *)self_ + 1) * 0.5;
-  f18 = f14 * *((float *)self_ + 10);
-  f19 = f14 * *((float *)self_ + 11);
-  f20 = f14 * *((float *)self_ + 12);
-  if ( (*(uint32_t *)&(f15)) != 0 && *((int *)self_ + 5) < 0 )
-    orig::game_1006BC10(u2, *((uint32_t *)self_ + 4));
-  i3 = i6;
+  frame.f14 = *((float *)self_ + 1) * *((float *)self_ + 1) * 0.5;
+  frame.f18 = frame.f14 * *((float *)self_ + 10);
+  frame.f19 = frame.f14 * *((float *)self_ + 11);
+  frame.f20 = frame.f14 * *((float *)self_ + 12);
+  if ( (*(uint32_t *)&(frame.f15)) != 0 && *((int *)self_ + 5) < 0 )
+    orig::game_1006BC10(frame.u2, *((uint32_t *)self_ + 4));
+  i3 = frame.i6;
   p4 = *((float **)self_ + 16);
-  if ( i6 > 0 )
+  if ( frame.i6 > 0 )
   {
-    for ( i = i6; i != 0; --i )
+    for ( frame.i = frame.i6; frame.i != 0; --frame.i )
     {
-      f11 = *p4;
+      frame.f11 = *p4;
       f5 = p4[1];
-      f16 = *((float *)self_ + 6);
-      f12 = f5;
+      frame.f16 = *((float *)self_ + 6);
+      frame.f12 = f5;
       f6 = p4[2];
       p4 += 9;
-      f13 = f6;
-      f7 = f14 * *(p4 - 6);
-      f8 = f14 * *(p4 - 5);
-      f33 = f14 * *(p4 - 4);
-      f27 = f7 * f16;
-      f28 = f8 * f16;
+      frame.f13 = f6;
+      f7 = frame.f14 * *(p4 - 6);
+      f8 = frame.f14 * *(p4 - 5);
+      frame.f33 = frame.f14 * *(p4 - 4);
+      frame.f27 = f7 * frame.f16;
+      frame.f28 = f8 * frame.f16;
       f9 = *((float *)self_ + 1);
       f10 = f9 * *(p4 - 3);
-      f29 = f9 * *(p4 - 2);
-      f30 = f9 * *(p4 - 1);
-      f31 = f30 + f20;
-      f21 = f10 + f18 + f11;
-      f22 = f5 + f29 + f19;
-      f23 = f6 + f31;
-      f32[0] = f23 + f33 * f16;
-      f11 = f21 + f27;
-      f13 = f32[0];
-      f12 = f22 + f28;
-      if ( (*(uint32_t *)&(f15)) != 0 )
+      frame.f29 = f9 * *(p4 - 2);
+      frame.f30 = f9 * *(p4 - 1);
+      frame.f31 = frame.f30 + frame.f20;
+      frame.f21 = f10 + frame.f18 + frame.f11;
+      frame.f22 = f5 + frame.f29 + frame.f19;
+      frame.f23 = f6 + frame.f31;
+      frame.f32[0] = frame.f23 + frame.f33 * frame.f16;
+      frame.f11 = frame.f21 + frame.f27;
+      frame.f13 = frame.f32[0];
+      frame.f12 = frame.f22 + frame.f28;
+      if ( (*(uint32_t *)&(frame.f15)) != 0 )
       {
         if ( *((int *)self_ + 5) < 0 )
         {
-          u1 = orig::game_1006BC80(u2);
-          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(f17)) + 48), u1 % (*(uint32_t *)&(f15)));
+          u1 = orig::game_1006BC80(frame.u2);
+          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(frame.f17)) + 48), u1 % (*(uint32_t *)&(frame.f15)));
         }
         else
         {
-          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(f17)) + 48), *((uint32_t *)self_ + 5));
+          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(frame.f17)) + 48), *((uint32_t *)self_ + 5));
         }
-        f11 = f11 + *p5;
-        f12 = f12 + p5[1];
-        f13 = f13 + p5[2];
+        frame.f11 = frame.f11 + *p5;
+        frame.f12 = frame.f12 + p5[1];
+        frame.f13 = frame.f13 + p5[2];
       }
       (*((void (__thiscall **)(CMoProcessor *, float *, float *, float *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
-        &f11,
+        &frame.f11,
         p1,
-        &f11);
-      f11 = f11 + f24;
-      f12 = f12 + f25;
-      f13 = f13 + f26;
-      arg2((int)p2, &f11, arg3);
+        &frame.f11);
+      frame.f11 = frame.f11 + frame.f24;
+      frame.f12 = frame.f12 + frame.f25;
+      frame.f13 = frame.f13 + frame.f26;
+      arg2((int)p2, &frame.f11, arg3);
     }
-    i3 = i6;
+    i3 = frame.i6;
   }
   *((float *)self_ + 1) = *(float *)(g_pResourceMng + 3760) + *((float *)self_ + 1);
   p6 = g_pProcessor;

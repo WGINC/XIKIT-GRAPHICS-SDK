@@ -77,9 +77,11 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
   uint32_t u3;
   float *p2;
   bits32 *p3;
-  char xi_frame[72] __attribute__((aligned(4)));
-  uint8_t * &p4 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  float  (&f1)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[72];
+    struct __attribute__((packed)) { uint8_t * p4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f1[16]; };   // at 0x8
+  } frame;
   
   i2 = 0;
   if (*(int *)((int)self_ + 4) != 0) {
@@ -87,7 +89,7 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
     if (arg3 == 0) {
       arg3 = u3 - 1;
     }
-    p4 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34);
+    frame.p4 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34);
     if (arg4 == 0) {
       if (arg5 != 0) {
         p1 = (char *)(arg5 + 2);
@@ -103,7 +105,7 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
       i3 = 0;
       if (-1 < arg3) {
         do {
-          u2 = (uint32_t)*p4;
+          u2 = (uint32_t)*frame.p4;
           if (i3 == 0) {
             orig::Vec3_Copy_v1((bits32 *)&g_1045F058,(bits32 *)&g_poseScale_as_v0);
             orig::BoneShadow_FromQuat(&g_poseScratch_as_v0,g_boneWeightMatrixTable_as_v0);
@@ -124,7 +126,7 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
             orig::Mat4_PostMultiply_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10,
                               (int)(g_boneWeightMatrixTable_as_v0 + u2 * 0x10));
           }
-          p4 = p4 + 0x1e;
+          frame.p4 = frame.p4 + 0x1e;
           i3 = i3 + 1;
         } while (i3 <= arg3);
       }
@@ -156,7 +158,7 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
         i2 = 0;
         p2 = (float *)&g_1045F058;
         do {
-          u1 = *p4;
+          u1 = *frame.p4;
           if ((p2 != (float *)&g_1045F058) && ((&g_boneTouched_as_v0)[arg5] == 0)) {
             orig::Vec3_MulComponents_v1(p2,(float *)(((char *)&g_1045F058) + (uint32_t)u1 * 0x34),p2 + -3);
             orig::BoneShadow_FromQuat(p2 + -10,(float *)((int)g_boneWeightMatrixTable_as_v0 + i2));
@@ -166,7 +168,7 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
                               (int)(g_boneWeightMatrixTable_as_v0 + (uint32_t)u1 * 0x10));
             (&g_boneTouched_as_v0)[arg5] = 1;
           }
-          p4 = p4 + 0x1e;
+          frame.p4 = frame.p4 + 0x1e;
           arg5 = arg5 + 1;
           p2 = p2 + 0xd;
           i2 = i2 + 0x40;
@@ -186,13 +188,13 @@ XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int 
             }
             else {
               orig::Vec3_MulComponents_v1((float *)(((char *)&g_1045F058) + i3 * 0x34),
-                           (float *)(((char *)&g_1045F058) + (uint32_t)*p4 * 0x34),
+                           (float *)(((char *)&g_1045F058) + (uint32_t)*frame.p4 * 0x34),
                            (float *)(((char *)&g_poseScale_as_v0) + i3 * 0x34));
             }
-            orig::MathVector_ReturnThis_v1(f1);
-            orig::Mat4_SetScale_v1(f1,(bits32 *)(((char *)&g_1045F058) + i3 * 0x34));
-            orig::Mat4_PreMultiply_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10,f1);
-            p4 = p4 + 0x1e;
+            orig::MathVector_ReturnThis_v1(frame.f1);
+            orig::Mat4_SetScale_v1(frame.f1,(bits32 *)(((char *)&g_1045F058) + i3 * 0x34));
+            orig::Mat4_PreMultiply_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10,frame.f1);
+            frame.p4 = frame.p4 + 0x1e;
             orig::MathVector_Nop();
             i3 = i3 + 1;
           } while (i3 <= arg3);

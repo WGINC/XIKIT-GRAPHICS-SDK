@@ -71,19 +71,21 @@ XI_API int __cdecl TextInputFiles_GetGameTimeValue(void)
 {
   uint32_t u1;
   int i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+  } frame;
   
   if ((*(char *)(g_pCamera_as_s32 + 9) != '\0') && (g_1065CB20 == '\0')) {
     u1 = orig::ntGameTimeGet();
     u1 = orig::game_10103B60(u1);
     return u1;
   }
-  orig::game_1018C180(&i2);
-  orig::Time_SetNormalized(&i3,0x278d00);
-  orig::Time_Normalize_as_v0(&i2,i3 + i2,i3 + i2);
-  i1 = orig::Time_GetDiv5184000(&i2);
+  orig::game_1018C180(&frame.i2);
+  orig::Time_SetNormalized(&frame.i3,0x278d00);
+  orig::Time_Normalize_as_v0(&frame.i2,frame.i3 + frame.i2,frame.i3 + frame.i2);
+  i1 = orig::Time_GetDiv5184000(&frame.i2);
   return (i1 / 7) % 0xc;
 }
 
@@ -154,13 +156,15 @@ XI_API void __thiscall Time_SetDiv155520000(void * self_, int arg2)
 XI_API void __cdecl Time_GetDiv5184000Mul5184000(bits32 * arg1)
 {
   int i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+  } frame;
   
-  orig::unknown_libname_158(&u1);
+  orig::unknown_libname_158(&frame.u1);
   i1 = orig::Time_GetDiv5184000(&g_1065CB1C);
-  orig::Time_SetModulo155520000Div5184000(&u1,i1);
-  *arg1 = u1;
+  orig::Time_SetModulo155520000Div5184000(&frame.u1,i1);
+  *arg1 = frame.u1;
   return;
 }
 
@@ -843,8 +847,10 @@ XI_API void __thiscall FsLogPage_ClearAndVisitFiles(void * self_)
   int i1;
   int i2;
   int i3;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u2[256]; };   // at 0x0
+  } frame;
   
   orig::FsLogPage_ClearBuffer(self_);
   if (*(int *)((int)self_ + 0xd0) == 0) {
@@ -860,8 +866,8 @@ XI_API void __thiscall FsLogPage_ClearAndVisitFiles(void * self_)
         *(uint32_t *)((int)self_ + 0xd0) = 0;
         return;
       }
-      orig::FsLogPage_FormatFileName(u2,*(int *)((int)self_ + 0xdc),i3 % 0x14);
-      u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,u2);
+      orig::FsLogPage_FormatFileName(frame.u2,*(int *)((int)self_ + 0xdc),i3 % 0x14);
+      u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,frame.u2);
       i1 = i2;
       if (((char)u1 != '\0') && (i1 = i2 + 1, i2 < 0x14)) break;
       i3 = i3 + 1;
@@ -907,11 +913,13 @@ XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
   uint32_t *p1;
   uint32_t *p2;
   uint64_t u4;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t * p3; };   // at 0x0
+  } frame;
   
   i1 = 0;
-  p3 = self_;
+  frame.p3 = self_;
   while( true ) {
     u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
     if ((char)u1 == '\0') break;
@@ -921,7 +929,7 @@ XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
   }
   u2 = orig::TextInputFiles_FileMngFwd101C1EC0(g_pFileMng_as_v0,fileNameString);
   if (-1 < (int)u2) {
-    orig::TextInputFiles_AllocZeroed(&p3,u2);
+    orig::TextInputFiles_AllocZeroed(&frame.p3,u2);
     i1 = 0;
     while( true ) {
       u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
@@ -930,13 +938,13 @@ XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
       if (0x14 < i1) break;
       i1 = i1 + 1;
     }
-    u3 = orig::TextInputFiles_FileMngSubmitPath2F4Kind1(g_pFileMng_as_v0,fileNameString,p3,u2,0);
+    u3 = orig::TextInputFiles_FileMngSubmitPath2F4Kind1(g_pFileMng_as_v0,fileNameString,frame.p3,u2,0);
     if ((u3 == u2) && (99 < u2)) {
       orig::FsLogPage_ClearBuffer(self_);
       *(uint32_t *)((int)self_ + 0xd4) = u2 - 100;
       u4 = orig::Allocator_Generic_v1(u2 - 100);
       *(uint32_t **)((int)self_ + 0xcc) = (uint32_t *)u4;
-      p1 = p3;
+      p1 = frame.p3;
       p2 = self_;
       for (i1 = 0x19; i1 != 0; i1 = i1 + -1) {
         *p2 = *p1;
@@ -945,7 +953,7 @@ XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
       }
       u2 = *(uint32_t *)((int)self_ + 0xd4);
       *(uint8_t *)((int)self_ + 200) = 0;
-      p1 = p3 + 0x19;
+      p1 = frame.p3 + 0x19;
       p2 = (uint32_t *)u4;
       for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
         *p2 = *p1;
@@ -958,11 +966,11 @@ XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
         p2 = (uint32_t *)((int)p2 + 1);
       }
       *(uint16_t *)((int)self_ + 0xd8) = *(uint16_t *)((int)self_ + 0xd4);
-      orig::TextInputFiles_FreeBlock(p3);
+      orig::TextInputFiles_FreeBlock(frame.p3);
       orig::FsLogPage_PruneOffsets(self_);
       return 1;
     }
-    orig::TextInputFiles_FreeBlock(p3);
+    orig::TextInputFiles_FreeBlock(frame.p3);
   }
   return 0xffffffff;
 }
@@ -978,9 +986,11 @@ XI_API bits32 __thiscall FsLogPage_WriteFile(void * self_, bits32 arg2)
   uint32_t *p1;
   uint32_t *p2;
   uint64_t u4;
-  char xi_frame[260] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t  (&u5)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[260];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t u5[256]; };   // at 0x4
+  } frame;
   
   orig::FsLogPage_PruneOffsets(self_);
   i1 = 0;
@@ -991,7 +1001,7 @@ XI_API bits32 __thiscall FsLogPage_WriteFile(void * self_, bits32 arg2)
     if (0x14 < i1) break;
     i1 = i1 + 1;
   }
-  i2 = 0;
+  frame.i2 = 0;
   do {
     i1 = 0;
     while( true ) {
@@ -1000,16 +1010,16 @@ XI_API bits32 __thiscall FsLogPage_WriteFile(void * self_, bits32 arg2)
         i1 = 0;
         goto code_1018E3C7;
       }
-      orig::FsLogPage_FormatFileName(u5,*(int *)((int)self_ + 0xdc),i1 % 0x14);
-      u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,u5);
+      orig::FsLogPage_FormatFileName(frame.u5,*(int *)((int)self_ + 0xdc),i1 % 0x14);
+      u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,frame.u5);
       if ((char)u2 != '\0') break;
       i1 = i1 + 1;
     }
-    if (0x13 < i2) {
+    if (0x13 < frame.i2) {
       return 0xffffffff;
     }
     Sleep(100);
-    i2 = i2 + 1;
+    frame.i2 = frame.i2 + 1;
   } while( true );
 code_1018E3C7:
   u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,arg2);
@@ -1265,11 +1275,13 @@ XI_API int __thiscall FsLogPage_EnsurePage(void * self_, int arg2)
   void *obj1;
   int i1;
   uint64_t u1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t fileNameString[256]; };   // at 0x0
+  } frame;
   
   if (*(int *)((int)self_ + arg2 * 4 + 4) == 0) {
-    orig::FsLogPage_FormatFileName(u2,*(int *)((int)self_ + 0x5c),
+    orig::FsLogPage_FormatFileName(frame.fileNameString,*(int *)((int)self_ + 0x5c),
                  (uint32_t)(*(int *)((int)self_ + 0x58) + arg2) % 0x14);
     u1 = orig::Allocator_Generic_v1(0xe0);
     if ((void *)u1 == (void *)0x0) {
@@ -1279,7 +1291,7 @@ XI_API int __thiscall FsLogPage_EnsurePage(void * self_, int arg2)
       obj1 = (void *)orig::FsLogPage_InitPage((void *)u1,*(uint32_t *)((int)self_ + 0x5c));
     }
     *(void **)((int)self_ + arg2 * 4 + 4) = obj1;
-    i1 = orig::FsLogPage_load(obj1,u2);
+    i1 = orig::FsLogPage_load(obj1,frame.fileNameString);
     return (uint32_t)(-1 < i1) * 2 + -1;
   }
   return 1;
@@ -1306,13 +1318,15 @@ XI_API bits32 __thiscall FsLogPage_Rotate(void * self_, void * arg2)
 {
   void *obj1;
   int i1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u1)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u1[256]; };   // at 0x0
+  } frame;
   
   if (*(uint8_t *)((int)self_ + 0x54) < 0x14) {
-    orig::FsLogPage_FormatFileName(u1,*(int *)((int)self_ + 0x5c),
+    orig::FsLogPage_FormatFileName(frame.u1,*(int *)((int)self_ + 0x5c),
                  (*(int *)((int)self_ + 0x58) + (uint32_t)*(uint8_t *)((int)self_ + 0x54)) % 0x14);
-    orig::FsLogPage_WriteFile(arg2,u1);
+    orig::FsLogPage_WriteFile(arg2,frame.u1);
     *(char *)((int)self_ + 0x54) = *(char *)((int)self_ + 0x54) + '\x01';
     return 0;
   }
@@ -1325,8 +1339,8 @@ XI_API bits32 __thiscall FsLogPage_Rotate(void * self_, void * arg2)
   i1 = *(int *)((int)self_ + 0x58);
   *(uint32_t *)((int)self_ + 0x50) = 0;
   *(int *)((int)self_ + 0x58) = i1 + 1;
-  orig::FsLogPage_FormatFileName(u1,*(int *)((int)self_ + 0x5c),(i1 + 0x14U) % 0x14);
-  orig::FsLogPage_WriteFile(arg2,u1);
+  orig::FsLogPage_FormatFileName(frame.u1,*(int *)((int)self_ + 0x5c),(i1 + 0x14U) % 0x14);
+  orig::FsLogPage_WriteFile(arg2,frame.u1);
   return 0x32;
 }
 
@@ -2138,12 +2152,14 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
   uint32_t u2;
   int i1;
   uint64_t u3;
-  char xi_frame[52] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[52];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x2C]; uint32_t u6; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_5[0x30]; uint32_t u7; };   // at 0x30
+  } frame;
   
   orig::TextInputFiles_ConstructVt10336A0C((void *)((int)self_ + 0xc));
   *(uint8_t ***)self_ = &g_10336A08;
@@ -2294,11 +2310,11 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
     orig::TextInputFiles_DefineEntry(self_,99,0x15,4,(uint32_t *)0x0,0,0xff,0x15,0);
     orig::TextInputFiles_DefineEntry(self_,0x62,0xf3,4,(uint32_t *)0x0,0,0xff,0xf3,0);
     orig::TextInputFiles_DefineEntry(self_,100,0x1a,4,(uint32_t *)0x0,0,0xff,0x1a,0);
-    u5 = 0x1b;
-    u4 = 0x1b;
-    i2 = 0x65;
+    frame.u5 = 0x1b;
+    frame.u4 = 0x1b;
+    frame.i2 = 0x65;
 code_101947E2:
-    orig::TextInputFiles_DefineEntry(self_,i2,u4,4,(uint32_t *)0x0,0,0xff,u5,0);
+    orig::TextInputFiles_DefineEntry(self_,frame.i2,frame.u4,4,(uint32_t *)0x0,0,0xff,frame.u5,0);
   }
   else if (i1 == 3) {
     orig::TextInputFiles_DefineEntry(self_,0x4a,0x2c,4,(uint32_t *)0x0,0,0xff,0x2c,0);
@@ -2309,9 +2325,9 @@ code_101947E2:
     orig::TextInputFiles_DefineEntry(self_,0x65,0xfa,4,(uint32_t *)0x0,0,0xff,0xfa,0);
     orig::TextInputFiles_DefineEntry(self_,0x56,0x27,4,(uint32_t *)0x0,0,0xff,0x27,0);
     orig::TextInputFiles_DefineEntry(self_,0x57,0x33,4,(uint32_t *)0x0,0,0xff,0x33,0);
-    u5 = 0x1e;
-    u4 = 0x1e;
-    i2 = 0x67;
+    frame.u5 = 0x1e;
+    frame.u4 = 0x1e;
+    frame.i2 = 0x67;
     goto code_101947E2;
   }
   orig::TextInputFiles_DefineEntry(self_,0x6a,0x1e,4,(uint32_t *)0x0,0,0xff,0x1e,0);
@@ -2354,8 +2370,8 @@ code_101947E2:
     orig::TextInputFiles_DefineEntry(self_,0x76,0x15,4,(uint32_t *)0x0,0,0xff,0x15,0);
     orig::TextInputFiles_DefineEntry(self_,0x72,0xf3,4,(uint32_t *)0x0,0,0xff,0xf3,0);
     orig::TextInputFiles_DefineEntry(self_,0x74,0x1a,4,(uint32_t *)0x0,0,0xff,0x1a,0);
-    u5 = 0x1b;
-    u4 = 0x1b;
+    frame.u5 = 0x1b;
+    frame.u4 = 0x1b;
     i1 = 0x75;
   }
   else {
@@ -2364,11 +2380,11 @@ code_101947E2:
     orig::TextInputFiles_DefineEntry(self_,0x74,0xf9,4,(uint32_t *)0x0,0,0xff,0xf9,0);
     orig::TextInputFiles_DefineEntry(self_,0x75,0xfa,4,(uint32_t *)0x0,0,0xff,0xfa,0);
     orig::TextInputFiles_DefineEntry(self_,0x77,0x27,4,(uint32_t *)0x0,0,0xff,0x27,0);
-    u5 = 0x33;
-    u4 = 0x33;
+    frame.u5 = 0x33;
+    frame.u4 = 0x33;
     i1 = 0x78;
   }
-  orig::TextInputFiles_DefineEntry(self_,i1,u4,4,(uint32_t *)0x0,0,0xff,u5,0);
+  orig::TextInputFiles_DefineEntry(self_,i1,frame.u4,4,(uint32_t *)0x0,0,0xff,frame.u5,0);
 code_10194C25:
   orig::TextInputFiles_DefineEntry(self_,0x8a,2000,4,(uint32_t *)0x0,1000,4000,2000,0);
   orig::TextInputFiles_DefineEntry(self_,0x8c,1,4,(uint32_t *)0x0,0,1,1,0);
@@ -2397,8 +2413,8 @@ code_10194C25:
   orig::TextInputFiles_DefineEntry(self_,0xa6,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0xa7,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0xa8,100,6,(uint32_t *)0x0,0,100,100,1);
-  p1 = &u6;
-  p2 = &u7;
+  p1 = &frame.u6;
+  p2 = &frame.u7;
   u1 = orig::Camera_GetWord12();
   u1 = u1 & 0xffff;
   u2 = orig::Camera_GetWord10();
@@ -2610,23 +2626,25 @@ XI_API bits32 __thiscall TextInputFiles_WriteTigDat(void * self_)
   uint32_t *p1;
   int i1;
   int i2;
-  char xi_frame[3312] __attribute__((aligned(4)));
-  uint32_t  (&u1)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[3312];
+    struct __attribute__((packed)) { uint32_t u1[828]; };   // at 0x0
+  } frame;
   
-  u1[0] = 1;
+  frame.u1[0] = 1;
   i2 = 1;
   p1 = (uint32_t *)(*(int *)((int)self_ + 4) + 8);
   i1 = 0xcf;
   do {
     if (p1[1] == 6) {
-      u1[i2] = *p1;
+      frame.u1[i2] = *p1;
       i2 = i2 + 1;
     }
     p1 = p1 + 0xb;
     i1 = i1 + -1;
   } while (i1 != 0);
   if (0 < i2) {
-    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_tig_dat_10379A00,u1,i2 * 4,0,0);
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_tig_dat_10379A00,frame.u1,i2 * 4,0,0);
     if (i1 < 0) {
       return 0xffffffff;
     }
@@ -2644,14 +2662,16 @@ XI_API bits32 __thiscall TextInputFiles_ReadTigDat(void * self_)
   int *p1;
   int i3;
   uint64_t u2;
-  char xi_frame[3312] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  (&i5)[827] = *reinterpret_cast<int  (*)[827]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[3312];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i5[827]; };   // at 0x4
+  } frame;
   
   i3 = 0;
-  i2 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_tig_dat_10379A00,&i4,0x33c,0,0);
-  if ((0 < i2) && (i4 == 1)) {
-    p1 = i5;
+  i2 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_tig_dat_10379A00,&frame.i4,0x33c,0,0);
+  if ((0 < i2) && (frame.i4 == 1)) {
+    p1 = frame.i5;
     do {
       i2 = *(int *)((int)self_ + 4);
       if (*(int *)(i2 + 0xc + i3 * 0x2c) == 6) {
@@ -2908,25 +2928,27 @@ XI_API bits32 __thiscall TextInputFiles_SaveCnfDat(void * self_)
   int i1;
   int i2;
   int i3;
-  char xi_frame[3312] __attribute__((aligned(4)));
-  uint32_t  (&u1)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[3312];
+    struct __attribute__((packed)) { uint32_t u1[828]; };   // at 0x0
+  } frame;
   
   orig::SetConfig(0xa2,0);
   orig::SetConfig(0xa2,2);
-  u1[0] = 5;
+  frame.u1[0] = 5;
   i3 = 1;
   i1 = 0;
   do {
     if (0x33b < i3) break;
     i2 = *(int *)((int)self_ + 4) + i1;
     if (*(int *)(i2 + 0xc) == 4) {
-      u1[i3] = *(uint32_t *)(i2 + 8);
+      frame.u1[i3] = *(uint32_t *)(i2 + 8);
       i3 = i3 + 1;
     }
     i1 = i1 + 0x2c;
   } while (i1 < 0x2394);
   if (0 < i3) {
-    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_cnf_dat_10379A08,u1,i3 << 2,0,0);
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_cnf_dat_10379A08,frame.u1,i3 << 2,0,0);
     if (i1 < 0) {
       return 0xffffffff;
     }
@@ -2944,16 +2966,18 @@ XI_API bits32 __thiscall TextInputFiles_LoadCnfDat(void * self_)
   int i2;
   int i3;
   int i4;
-  char xi_frame[3316] __attribute__((aligned(4)));
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  (&i6)[145] = *reinterpret_cast<int  (*)[145]>(xi_frame + 4);
-  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 584);
-  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 588);
-  int  &i9 = *reinterpret_cast<int  *>(xi_frame + 592);
-  int  (&i10)[680] = *reinterpret_cast<int  (*)[680]>(xi_frame + 596);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[3316];
+    struct __attribute__((packed)) { int i5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i6[145]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x248]; int i7; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_4[0x24C]; int i8; };   // at 0x24C
+    struct __attribute__((packed)) { unsigned char pad_5[0x250]; int i9; };   // at 0x250
+    struct __attribute__((packed)) { unsigned char pad_6[0x254]; int i10[680]; };   // at 0x254
+  } frame;
   
-  i1 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_cnf_dat_10379A08,i6,0x33c,0,0);
-  if ((i1 < 1) || ((i6[0] != 5 && (i6[0] != 0x5000000)))) {
+  i1 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_cnf_dat_10379A08,frame.i6,0x33c,0,0);
+  if ((i1 < 1) || ((frame.i6[0] != 5 && (frame.i6[0] != 0x5000000)))) {
 L1:
     return 0xffffffff;
   }
@@ -2983,13 +3007,13 @@ L3:
       do {
         if (i1 <= i4) break;
         if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i3) == 4) {
-          p1 = i6 + i4;
+          p1 = frame.i6 + i4;
           i4 = i4 + 1;
           orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i3,*p1);
         }
         i3 = i3 + 0x2c;
       } while (i3 < 0x1b54);
-      if (i6[0] != 5) {
+      if (frame.i6[0] != 5) {
         i3 = 0xcb8;
         do {
           i4 = *(int *)((int)self_ + 4) + i3;
@@ -3087,21 +3111,21 @@ L3:
       goto code_10195EF2;
     }
   }
-  if (i7 == 0x6b617473) {
-    if (i9 != 0x7368696e) {
+  if (frame.i7 == 0x6b617473) {
+    if (frame.i9 != 0x7368696e) {
       return 0xffffffff;
     }
   }
   else {
-    if (i7 != 0x1234567) {
+    if (frame.i7 != 0x1234567) {
       return 0xffffffff;
     }
-    if (i9 != -0x76543211) {
+    if (frame.i9 != -0x76543211) {
       return 0xffffffff;
     }
   }
-  if (i8 != 1) {
-    if ((i8 != 2) && (i8 != 3)) {
+  if (frame.i8 != 1) {
+    if ((frame.i8 != 2) && (frame.i8 != 3)) {
       return 0xffffffff;
     }
     goto L3;
@@ -3113,7 +3137,7 @@ L2:
     if (i1 <= i3) break;
     i2 = *(int *)((int)self_ + 4) + i4;
     if (*(int *)(i2 + 0xc) == 4) {
-      p1 = i6 + i3;
+      p1 = frame.i6 + i3;
       i3 = i3 + 1;
       orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
@@ -3136,7 +3160,7 @@ L2:
     }
     i4 = i4 + 0x2c;
   } while (i4 < 0xa51);
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa7c,i6[i3]);
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa7c,frame.i6[i3]);
   i4 = *(int *)((int)self_ + 4);
   if (*(int *)(i4 + 0xaac) == 0x43) {
     u1 = orig::Settings_GetValue_v2(0xab);
@@ -3175,7 +3199,7 @@ L2:
                *(uint32_t *)(i4 + 0xb08));
   }
   i4 = i3 + 2;
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xb58,i6[i3 + 1]);
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xb58,frame.i6[i3 + 1]);
   i3 = *(int *)((int)self_ + 4);
   if (*(int *)(i3 + 0xb88) == 0x43) {
     u1 = orig::Settings_GetValue_v2(0xab);
@@ -3194,7 +3218,7 @@ L2:
     if (i1 <= i4) break;
     i2 = *(int *)((int)self_ + 4) + i3;
     if (*(int *)(i2 + 0xc) == 4) {
-      p1 = i6 + i4;
+      p1 = frame.i6 + i4;
       i4 = i4 + 1;
       orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
@@ -3222,20 +3246,20 @@ L2:
   do {
     if (i1 <= i4) break;
     if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i3) == 4) {
-      p1 = i6 + i4;
+      p1 = frame.i6 + i4;
       i4 = i4 + 1;
       orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i3,*p1);
     }
     i3 = i3 + 0x2c;
   } while (i3 < 0x1971);
   i3 = i4 + 1;
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa50,i6[i4]);
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa50,frame.i6[i4]);
   i4 = 0x199c;
   do {
     if (i1 <= i3) break;
     i2 = *(int *)((int)self_ + 4) + i4;
     if (*(int *)(i2 + 0xc) == 4) {
-      p1 = i6 + i3;
+      p1 = frame.i6 + i3;
       i3 = i3 + 1;
       orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
@@ -3243,19 +3267,19 @@ L2:
   } while (i4 < 0x1b54);
 code_10195EF2:
   i3 = 0x94;
-  i5 = 0xa4;
+  frame.i5 = 0xa4;
   i4 = 0x1c30;
   do {
     if (i1 <= i3) break;
     if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i4) == 4) {
-      p1 = i6 + i3;
+      p1 = frame.i6 + i3;
       i3 = i3 + 1;
       orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i4,*p1);
     }
     i4 = i4 + 0x2c;
-    i5 = i5 + 1;
+    frame.i5 = frame.i5 + 1;
   } while (i4 < 0x2394);
-  if (i5 < 0xb1) {
+  if (frame.i5 < 0xb1) {
     i1 = *(int *)((int)self_ + 4);
     if (*(int *)(i1 + 0x16b4) == 0x43) {
       u1 = orig::Settings_GetValue_v2(0xab);
@@ -3270,7 +3294,7 @@ code_10195EF2:
                  *(uint32_t *)(i1 + 0x16b8));
     }
   }
-  if (i5 < 0xbd) {
+  if (frame.i5 < 0xbd) {
     i1 = *(int *)((int)self_ + 4);
     if (*(int *)(i1 + 0x16e0) == 0x43) {
       u1 = orig::Settings_GetValue_v2(0xab);
@@ -3283,7 +3307,7 @@ code_10195EF2:
       orig::TextInputFiles_ForEach(*(void **)(i1 + 0x1700),*(uint32_t *)(i1 + 0x16e0),u1);
     }
   }
-  if (i5 < 0xcd) {
+  if (frame.i5 < 0xcd) {
     i1 = *(int *)((int)self_ + 4);
     if (*(int *)(i1 + 0x170c) == 0x43) {
       u1 = orig::Settings_GetValue_v2(0xab);
@@ -3875,7 +3899,7 @@ XI_API void * __thiscall TextInputFiles_ByteTableDefaultCtor(void * self_)
 XI_API void __thiscall Config_LoadDefaultTable(void * self_)
 {
   uint32_t xi_eax;
-  int i1;
+  int configKey;
   
   *(uint8_t *)((int)self_ + 0x29) = 0x1e;
   *(uint8_t *)((int)self_ + 0x2a) = 0x17;
@@ -3923,11 +3947,11 @@ XI_API void __thiscall Config_LoadDefaultTable(void * self_)
     *(uint8_t *)((int)self_ + 0x36) = 0x27;
     *(uint8_t *)((int)self_ + 0x37) = 0x33;
   }
-  i1 = 0x6a;
+  configKey = 0x6a;
   do {
-    xi_eax = orig::SetConfig(i1,(uint32_t)*(uint8_t *)((int)self_ + i1 + -0x41));
-    i1 = i1 + 1;
-  } while (i1 < 0x8a);
+    xi_eax = orig::SetConfig(configKey,(uint32_t)*(uint8_t *)((int)self_ + configKey + -0x41));
+    configKey = configKey + 1;
+  } while (configKey < 0x8a);
   orig::game_1019CFA0(self_,xi_eax);
   return;
 }
@@ -3982,7 +4006,7 @@ XI_API void * __thiscall TextInputFiles_ByteTableAltCtor(void * self_)
 XI_API void __thiscall Config_LoadAltTable(void * self_)
 {
   uint32_t xi_eax;
-  int i1;
+  int configKey;
   
   *(uint8_t *)((int)self_ + 0x29) = 0x11;
   *(uint8_t *)((int)self_ + 0x2a) = 0x1f;
@@ -4034,11 +4058,11 @@ XI_API void __thiscall Config_LoadAltTable(void * self_)
     *(uint8_t *)((int)self_ + 0x36) = 0x33;
     *(uint8_t *)((int)self_ + 0x46) = 0x1e;
   }
-  i1 = 0x4a;
+  configKey = 0x4a;
   do {
-    xi_eax = orig::SetConfig(i1,(uint32_t)*(uint8_t *)((int)self_ + i1 + -0x21));
-    i1 = i1 + 1;
-  } while (i1 < 0x6a);
+    xi_eax = orig::SetConfig(configKey,(uint32_t)*(uint8_t *)((int)self_ + configKey + -0x21));
+    configKey = configKey + 1;
+  } while (configKey < 0x6a);
   orig::game_1019D350(self_,xi_eax);
   orig::game_1019D320(self_);
   return;
@@ -4180,88 +4204,90 @@ XI_API int __thiscall TextInputFiles_DrawTextLines(void * self_, uint32_t arg2, 
   int i1;
   int xi_s1;
   int64_t i2;
-  char xi_frame[100] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
-  char * &p1 = *reinterpret_cast<char * *>(xi_frame + 8);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  char * &p2 = *reinterpret_cast<char * *>(xi_frame + 32);
-  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 36);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[100];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; char * p1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u1; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; char * p2; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; char val1[64]; };   // at 0x24
+  } frame;
   
-  p2 = arg4;
+  frame.p2 = arg4;
   xi_s1 = 0;
   i1 = 0;
   c1 = *arg4;
   arg4 = (char *)0x0;
   do {
     if ((c1 == '\0') || (arg6 <= (int)arg4)) {
-      return (uint32_t)(p2 != (char *)0x0) * 2 + -1;
+      return (uint32_t)(frame.p2 != (char *)0x0) * 2 + -1;
     }
-    c1 = *p2;
-    u1 = arg5;
+    c1 = *frame.p2;
+    frame.u1 = arg5;
     if (c1 == '\r') {
-      c1 = p2[1];
-      val1[i1] = '\0';
-      f1 = *(float *)((int)self_ + 0x4c);
+      c1 = frame.p2[1];
+      frame.val1[i1] = '\0';
+      frame.f1 = *(float *)((int)self_ + 0x4c);
       if (c1 == '\n') {
-        f2 = *(float *)((int)self_ + 0x50);
-        if (val1[0] == '\t') {
-          p1 = val1 + 1;
+        frame.f2 = *(float *)((int)self_ + 0x50);
+        if (frame.val1[0] == '\t') {
+          frame.p1 = frame.val1 + 1;
           i2 = orig::game_1019ED50(self_,xi_s1);
           i1 = (int)i2 + arg3;
           i2 = orig::TextInputFiles_GetScaleTimes180(self_);
-          orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,f1,f2,p1,u1);
+          orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,frame.f1,frame.f2,frame.p1,frame.u1);
         }
         else {
-          p1 = val1;
+          frame.p1 = frame.val1;
           i2 = orig::game_1019ED50(self_,xi_s1);
-          orig::game_1019E290((void *)((int)self_ + 4),arg2,(int)i2 + arg3,f1,f2,p1,u1
+          orig::game_1019E290((void *)((int)self_ + 4),arg2,(int)i2 + arg3,frame.f1,frame.f2,frame.p1,frame.u1
                       );
         }
         i1 = 0;
         arg4 = arg4 + 1;
         xi_s1 = xi_s1 + 0xe;
-        p2 = p2 + 1;
+        frame.p2 = frame.p2 + 1;
       }
       else {
-        f2 = *(float *)((int)self_ + 0x50);
-        if (val1[0] == '\t') goto code_1019EEDA;
-        p1 = val1;
+        frame.f2 = *(float *)((int)self_ + 0x50);
+        if (frame.val1[0] == '\t') goto code_1019EEDA;
+        frame.p1 = frame.val1;
         i2 = orig::game_1019ED50(self_,xi_s1);
         i1 = (int)i2;
 code_1019EEA2:
-        orig::game_1019E290((void *)((int)self_ + 4),arg2,i1 + arg3,f1,f2,p1,u1);
+        orig::game_1019E290((void *)((int)self_ + 4),arg2,i1 + arg3,frame.f1,frame.f2,frame.p1,frame.u1);
         i1 = 0;
         arg4 = arg4 + 1;
         xi_s1 = xi_s1 + 0xe;
       }
     }
     else if (c1 == '\n') {
-      f1 = *(float *)((int)self_ + 0x4c);
-      f2 = *(float *)((int)self_ + 0x50);
-      val1[i1] = '\0';
-      if (val1[0] != '\t') {
-        p1 = val1;
+      frame.f1 = *(float *)((int)self_ + 0x4c);
+      frame.f2 = *(float *)((int)self_ + 0x50);
+      frame.val1[i1] = '\0';
+      if (frame.val1[0] != '\t') {
+        frame.p1 = frame.val1;
         i2 = orig::game_1019ED50(self_,xi_s1);
         i1 = (int)i2;
         goto code_1019EEA2;
       }
 code_1019EEDA:
-      p1 = val1 + 1;
+      frame.p1 = frame.val1 + 1;
       i2 = orig::game_1019ED50(self_,xi_s1);
       i1 = (int)i2 + arg3;
       i2 = orig::TextInputFiles_GetScaleTimes180(self_);
-      orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,f1,f2,p1,u1);
+      orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,frame.f1,frame.f2,frame.p1,frame.u1);
       i1 = 0;
       arg4 = arg4 + 1;
       xi_s1 = xi_s1 + 0xe;
     }
     else {
-      val1[i1] = c1;
+      frame.val1[i1] = c1;
       i1 = i1 + 1;
     }
-    p2 = p2 + 1;
-    c1 = *p2;
+    frame.p2 = frame.p2 + 1;
+    c1 = *frame.p2;
   } while( true );
 }
 
@@ -4338,43 +4364,45 @@ XI_API uint64_t __thiscall TextInputFiles_WaitThenHandleFileEvent(void * self_, 
   uint32_t *p1;
   uint32_t *p2;
   uint64_t u2;
-  char xi_frame[296] __attribute__((aligned(4)));
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 256);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 260);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[296];
+    struct __attribute__((packed)) { uint32_t u3[64]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x100]; uint32_t u4; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_3[0x104]; uint32_t u5; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u6; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u7; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u8; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u9; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u10; };   // at 0x118
+  } frame;
   
-  u10 = (int)XI_GAME(0x1019F96Du);
+  frame.u10 = (int)XI_GAME(0x1019F96Du);
   u2 = orig::TextInputFiles_WaitEvent18(*(void **)((int)self_ + 8));
   if ((int)u2 < 0) {
     return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
   u1 = *(uint32_t *)(arg2 + 4);
   p1 = (uint32_t *)(arg2 + 8);
-  p2 = u3;
+  p2 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p2 = *p1;
     p1 = p1 + 1;
     p2 = p2 + 1;
   }
-  u4 = *(uint32_t *)(arg2 + 0x108);
-  u5 = *(uint32_t *)(arg2 + 0x10c);
-  u6 = *(uint32_t *)(arg2 + 0x110);
-  u7 = *(uint32_t *)(arg2 + 0x114);
-  u8 = *(uint32_t *)(arg2 + 0x118);
-  u9 = *(uint32_t *)(arg2 + 0x11c);
-  u10 = *(uint32_t *)(arg2 + 0x120);
+  frame.u4 = *(uint32_t *)(arg2 + 0x108);
+  frame.u5 = *(uint32_t *)(arg2 + 0x10c);
+  frame.u6 = *(uint32_t *)(arg2 + 0x110);
+  frame.u7 = *(uint32_t *)(arg2 + 0x114);
+  frame.u8 = *(uint32_t *)(arg2 + 0x118);
+  frame.u9 = *(uint32_t *)(arg2 + 0x11c);
+  frame.u10 = *(uint32_t *)(arg2 + 0x120);
   i1 = orig::FsFileThreadManager_handleFileEvent(&g_10337200,u1);
   if (i1 < 0) {
-    u10 = (int)XI_GAME(0x1019FA0Cu);
+    frame.u10 = (int)XI_GAME(0x1019FA0Cu);
     u2 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
     return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
-  u10 = (int)XI_GAME(0x1019FA1Au);
+  frame.u10 = (int)XI_GAME(0x1019FA1Au);
   u2 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
   u1 = (uint32_t)((uint64_t)u2 >> 0x20);
   if ((int)u2 < 0) {
@@ -5073,8 +5101,10 @@ XI_API bits32 __thiscall TextInputFiles_StepScript(void * self_)
   char *p2;
   int i1;
   uint32_t u1;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  (&u2)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint32_t u2[16]; };   // at 0x0
+  } frame;
   
   if (*(int *)((int)self_ + 0x21c4) != -1) {
     if (*g_pSceneState_as_v0 != 0x60) {
@@ -5091,7 +5121,7 @@ XI_API bits32 __thiscall TextInputFiles_StepScript(void * self_)
         *(int *)((int)self_ + 0x21c4) = i1 + 1;
         return 1;
       }
-      i1 = (int)u2 - (int)p2;
+      i1 = (int)frame.u2 - (int)p2;
       do {
         c1 = *p2;
         p2[i1] = c1;
@@ -5099,13 +5129,13 @@ XI_API bits32 __thiscall TextInputFiles_StepScript(void * self_)
       } while (c1 != '\0');
       p1 = (uint32_t *)((int)self_ + 0x21c8);
       if (*(int *)((int)self_ + 0x21c8) == 0) {
-        i1 = orig::TextInputFiles_ParseWaitCommand(u2,(uint32_t *)((int)self_ + 0x21cc),(int *)p1);
+        i1 = orig::TextInputFiles_ParseWaitCommand(frame.u2,(uint32_t *)((int)self_ + 0x21cc),(int *)p1);
         if (i1 != 0) {
           *(int *)((int)self_ + 0x21c4) = *(int *)((int)self_ + 0x21c4) + 1;
           return 1;
         }
         *(int *)((int)self_ + 0x21c4) = *(int *)((int)self_ + 0x21c4) + 1;
-        orig::Command_RunLine(u2,2);
+        orig::Command_RunLine(frame.u2,2);
         return 1;
       }
       i1 = orig::NetCellFont_AdvanceAndGetMs();
@@ -5133,15 +5163,17 @@ XI_API bits32 __cdecl TextInputFiles_OnMacroFileLoaded(int arg1, bits32 * arg2, 
   void *p1;
   bits32 *p2;
   bits32 *p3;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u3)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u3[256]; };   // at 0x0
+  } frame;
   
   if (arg1 == 2) {
     i1 = *(int *)(arg4 + 0x1db8) / 2 + 1;
     i2 = *(int *)(arg4 + 0x1dc0) + 1;
     u1 = orig::TargetMenu_GetMessageFwd(7,200);
-    orig::_sprintf(u3,u1,i2,i1);
-    orig::ChatLog_AddTextCode37B(g_pTkMsgWinData_as_v1,u3);
+    orig::_sprintf(frame.u3,u1,i2,i1);
+    orig::ChatLog_AddTextCode37B(g_pTkMsgWinData_as_v1,frame.u3);
   }
   else if (arg1 != 1) {
     if (arg3 != 0x1ea0) {
@@ -5266,10 +5298,12 @@ XI_API bits32 __stdcall TextInputFiles_ParseWaitCommand(char * arg1, bits32 * ar
   char *p3;
   char *p4;
   uint8_t u3;
-  char xi_frame[580] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 4);
-  char  (&val2)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 68);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[580];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char val1[64]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x44]; char val2[512]; };   // at 0x44
+  } frame;
   
   p1 = orig::game_10311EB0((uint32_t *)arg1,g_1037AA5C);
   if (p1 == (uint32_t *)0x0) {
@@ -5281,11 +5315,11 @@ XI_API bits32 __stdcall TextInputFiles_ParseWaitCommand(char * arg1, bits32 * ar
       c1 = *p3;
       p3 = p3 + 1;
     } while (c1 != '\0');
-    orig::TextInputFiles_InputCall101AC990Swapped(g_10662D40,arg1,~u2 - 1,val2,0x200,0,0);
-    i1 = orig::game_10313643(val2,str__s__d_1036FF70,val1);
+    orig::TextInputFiles_InputCall101AC990Swapped(g_10662D40,arg1,~u2 - 1,frame.val2,0x200,0,0);
+    i1 = orig::game_10313643(frame.val2,str__s__d_1036FF70,frame.val1);
     i2 = 6;
     u3 = true;
-    p3 = val1;
+    p3 = frame.val1;
     p4 = &g_1037AA48;
     do {
       if (i2 == 0) break;
@@ -5294,13 +5328,13 @@ XI_API bits32 __stdcall TextInputFiles_ParseWaitCommand(char * arg1, bits32 * ar
       p3 = p3 + 1;
       p4 = p4 + 1;
     } while (u3);
-    if (((u3) && (0 < i3)) && (i3 < 0x3d)) {
+    if (((u3) && (0 < frame.i3)) && (frame.i3 < 0x3d)) {
       if (i1 == 1) {
-        i3 = 1;
+        frame.i3 = 1;
       }
       u1 = orig::NetCellFont_AdvanceAndGetMs();
       *arg2 = u1;
-      *arg3 = i3 * 1000;
+      *arg3 = frame.i3 * 1000;
       return 1;
     }
   }
@@ -5308,22 +5342,22 @@ XI_API bits32 __stdcall TextInputFiles_ParseWaitCommand(char * arg1, bits32 * ar
     p2 = orig::game_10311EB0(p1,&g_10353DF4);
     if (p2 != (uint32_t *)0x0) {
       *(uint8_t *)((int)p2 + 1) = 0;
-      i1 = orig::game_10313643((char *)p1,g_1037AA50,&i3);
+      i1 = orig::game_10313643((char *)p1,g_1037AA50,&frame.i3);
       *(uint8_t *)p1 = 0;
       if (i1 == 1) {
-        if (i3 < 0) {
+        if (frame.i3 < 0) {
           return 0;
         }
-        if (0x3c < i3) {
+        if (0x3c < frame.i3) {
           return 0;
         }
       }
       else {
-        i3 = 1;
+        frame.i3 = 1;
       }
       u1 = orig::NetCellFont_AdvanceAndGetMs();
       *arg2 = u1;
-      *arg3 = i3 * 1000;
+      *arg3 = frame.i3 * 1000;
     }
   }
   return 0;
@@ -5346,14 +5380,16 @@ XI_API void __stdcall TextInputFiles_FormatNumberedDatName(uint8_t * arg1, int a
 XI_API bits32 __thiscall TextInputFiles_LoadNumberedDatIntoBuffer(void * self_, bits32 arg2, bits32 arg3)
 {
   uint32_t u1;
-  char xi_frame[352] __attribute__((aligned(4)));
-  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
-  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[352];
+    struct __attribute__((packed)) { char val1[64]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; uint8_t u2[288]; };   // at 0x40
+  } frame;
   
-  orig::TextInputFiles_FormatNumberedDatName(val1,arg2,arg3);
-  orig::TextInputFiles_DatEntryCtor(u2,1,val1,(int)self_ + 4,0x1db0,0,0,1);
-  u1 = orig::XI_CRYPT_101B9A10(u2);
-  orig::TextInputFiles_ClearVtable(u2);
+  orig::TextInputFiles_FormatNumberedDatName(frame.val1,arg2,arg3);
+  orig::TextInputFiles_DatEntryCtor(frame.u2,1,frame.val1,(int)self_ + 4,0x1db0,0,0,1);
+  u1 = orig::XI_CRYPT_101B9A10(frame.u2);
+  orig::TextInputFiles_ClearVtable(frame.u2);
   return u1;
 }
 
@@ -5363,12 +5399,14 @@ XI_API void __thiscall TextInputFiles_LoadMacroDat(void * self_, int arg2, bits3
 {
   untyped_fn *p1;
   uint8_t *p2;
-  char xi_frame[640] __attribute__((aligned(4)));
-  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
-  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
-  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 352);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[640];
+    struct __attribute__((packed)) { char val1[64]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; uint8_t u1[288]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_3[0x160]; uint8_t u2[288]; };   // at 0x160
+  } frame;
   
-  orig::TextInputFiles_FormatNumberedDatName(val1,arg2,xi_s2);
+  orig::TextInputFiles_FormatNumberedDatName(frame.val1,arg2,xi_s2);
   if (arg2 == 0) {
     p2 =(uint8_t*)(&code_101A23B0);
     p1 = XI_CODE(FsMacroContainer_loadCallback);
@@ -5377,13 +5415,13 @@ XI_API void __thiscall TextInputFiles_LoadMacroDat(void * self_, int arg2, bits3
     p2 =(uint8_t*)(&code_101A1FB0);
     p1 = XI_CODE(TextInputFiles_OnMacroFileLoaded);
   }
-  orig::TextInputFiles_InitWithCallback(u2,1,val1,p1,self_,1);
-  orig::XI_CRYPT_101B9BC0(u2,0);
-  orig::TextInputFiles_DatEntryCtor(u1,1,val1,(int)self_ + 4,0x1db0,p2,self_,1);
+  orig::TextInputFiles_InitWithCallback(frame.u2,1,frame.val1,p1,self_,1);
+  orig::XI_CRYPT_101B9BC0(frame.u2,0);
+  orig::TextInputFiles_DatEntryCtor(frame.u1,1,frame.val1,(int)self_ + 4,0x1db0,p2,self_,1);
   orig::TextInputFiles_RemoveById(g_10662DB0,(int)self_ + 4);
-  orig::TextInputFiles_AppendToList(g_10662DB0,u1);
-  orig::TextInputFiles_ClearVtable(u1);
-  orig::TextInputFiles_ClearVtable(u2);
+  orig::TextInputFiles_AppendToList(g_10662DB0,frame.u1);
+  orig::TextInputFiles_ClearVtable(frame.u1);
+  orig::TextInputFiles_ClearVtable(frame.u2);
   return;
 }
 
@@ -6898,7 +6936,7 @@ XI_API bits32 __cdecl TextInputFiles_ApplyConfigSetting(bits32 arg1, uint32_t ar
 XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
 {
   int i1;
-  uint32_t u1;
+  uint32_t configValue;
   
   i1 = arg2;
   switch(xi_sw(arg1)) {
@@ -6912,24 +6950,24 @@ XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
   case 0xe:
     if (arg2 == 0) {
       orig::TargetMenu_SetFlag58AndResetScroll(g_1062193C,1);
-      u1 = orig::Settings_GetValue_v2(0xf);
-      orig::TargetMenu_SetLineCount(g_1062193C,u1);
-      u1 = orig::Settings_GetValue_v2(0x10);
-      orig::TargetMenu_SetShownLines(g_1062193C,u1);
+      configValue = orig::Settings_GetValue_v2(0xf);
+      orig::TargetMenu_SetLineCount(g_1062193C,configValue);
+      configValue = orig::Settings_GetValue_v2(0x10);
+      orig::TargetMenu_SetShownLines(g_1062193C,configValue);
       i1 = *g_1062193C;
-      u1 = orig::Settings_GetValue_v2(0x9c);
-      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+      configValue = orig::Settings_GetValue_v2(0x9c);
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(configValue);
       orig::game_10162D90(g_1062193C);
       return 1;
     }
     orig::TargetMenu_SetFlag58AndResetScroll(g_1062193C,0);
-    u1 = orig::Settings_GetValue_v2(0xf);
-    orig::TargetMenu_SetLineCount(g_1062193C,u1);
-    u1 = orig::Settings_GetValue_v2(0x10);
-    orig::TargetMenu_SetShownLines(g_1062193C,u1);
+    configValue = orig::Settings_GetValue_v2(0xf);
+    orig::TargetMenu_SetLineCount(g_1062193C,configValue);
+    configValue = orig::Settings_GetValue_v2(0x10);
+    orig::TargetMenu_SetShownLines(g_1062193C,configValue);
     i1 = *g_1062193C;
-    u1 = orig::Settings_GetValue_v2(0x9c);
-    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+    configValue = orig::Settings_GetValue_v2(0x9c);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(configValue);
     orig::game_10162D90(g_1062193C);
     return 1;
   case 0xf:
@@ -6945,10 +6983,10 @@ XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
     orig::Menu_ReloadResource_v1(&g_menuMng_as_v0,&arg1,arg2);
     break;
   case 0x9c:
-    u1 = orig::Settings_GetValue_v2(0xf);
-    orig::TargetMenu_SetLineCount(g_1062193C,u1);
-    u1 = orig::Settings_GetValue_v2(0x10);
-    orig::TargetMenu_SetShownLines(g_1062193C,u1);
+    configValue = orig::Settings_GetValue_v2(0xf);
+    orig::TargetMenu_SetLineCount(g_1062193C,configValue);
+    configValue = orig::Settings_GetValue_v2(0x10);
+    orig::TargetMenu_SetShownLines(g_1062193C,configValue);
     ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1062193C + 0x5c))))((void *)(g_1062193C),arg2);
     orig::game_10162D90(g_1062193C);
     return 1;
@@ -6971,24 +7009,24 @@ XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
   case 0xb6:
     if (arg2 == 0) {
       orig::TargetMenu_SetFlag58AndResetScroll(g_10621940_as_v0,1);
-      u1 = orig::Settings_GetValue_v2(0xb7);
-      orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
-      u1 = orig::Settings_GetValue_v2(0xb8);
-      orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+      configValue = orig::Settings_GetValue_v2(0xb7);
+      orig::TargetMenu_SetLineCount(g_10621940_as_v0,configValue);
+      configValue = orig::Settings_GetValue_v2(0xb8);
+      orig::TargetMenu_SetShownLines(g_10621940_as_v0,configValue);
       i1 = *g_10621940_as_v0;
-      u1 = orig::Settings_GetValue_v2(0xc5);
-      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+      configValue = orig::Settings_GetValue_v2(0xc5);
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(configValue);
       orig::game_10162D90(g_10621940_as_v0);
       return 1;
     }
     orig::TargetMenu_SetFlag58AndResetScroll(g_10621940_as_v0,0);
-    u1 = orig::Settings_GetValue_v2(0xb7);
-    orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
-    u1 = orig::Settings_GetValue_v2(0xb8);
-    orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+    configValue = orig::Settings_GetValue_v2(0xb7);
+    orig::TargetMenu_SetLineCount(g_10621940_as_v0,configValue);
+    configValue = orig::Settings_GetValue_v2(0xb8);
+    orig::TargetMenu_SetShownLines(g_10621940_as_v0,configValue);
     i1 = *g_10621940_as_v0;
-    u1 = orig::Settings_GetValue_v2(0xc5);
-    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+    configValue = orig::Settings_GetValue_v2(0xc5);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(configValue);
     orig::game_10162D90(g_10621940_as_v0);
     return 1;
   case 0xb7:
@@ -6999,21 +7037,21 @@ XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
     return 1;
   case 0xc5:
     if (arg2 == -1) {
-      u1 = orig::Settings_GetValue_v2(0x9c);
-      orig::SetConfig(0xc5,u1);
+      configValue = orig::Settings_GetValue_v2(0x9c);
+      orig::SetConfig(0xc5,configValue);
       return 1;
     }
-    u1 = orig::Settings_GetValue_v2(0xb7);
-    orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
-    u1 = orig::Settings_GetValue_v2(0xb8);
-    orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+    configValue = orig::Settings_GetValue_v2(0xb7);
+    orig::TargetMenu_SetLineCount(g_10621940_as_v0,configValue);
+    configValue = orig::Settings_GetValue_v2(0xb8);
+    orig::TargetMenu_SetShownLines(g_10621940_as_v0,configValue);
     ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10621940_as_v0 + 0x5c))))((void *)(g_10621940_as_v0),i1);
     orig::game_10162D90(g_10621940_as_v0);
     return 1;
   case 0xc6:
     if (arg2 == -1) {
-      u1 = orig::Settings_GetValue_v2(0x11);
-      orig::SetConfig(0xc6,u1);
+      configValue = orig::Settings_GetValue_v2(0x11);
+      orig::SetConfig(0xc6,configValue);
       return 1;
     }
     orig::game_10162EA0(g_10621940_as_v0,(float)arg2);
@@ -7555,26 +7593,28 @@ XI_API bits32 __thiscall FsTextInput_SetText(void * self_, int arg2, int arg3)
   int i1;
   char *p1;
   char *p2;
-  char xi_frame[456] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[456];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char val1[452]; };   // at 0x4
+  } frame;
   
   u1 = 0;
   if (((arg2 != 0) && (u1 = arg3, 0 < arg3)) && (arg3 < 0x1c3)) {
     i1 = 0;
-    i2 = 0;
+    frame.i2 = 0;
     if (0 < arg3) {
       while( true ) {
-        if (*(char *)(i2 + arg2) == '\0') break;
-        u1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(*(char *)(i2 + arg2)))),0);
-        if ((*(char *)(i2 + arg2) == -0x7f) && (*(char *)(i2 + 1 + arg2) == '@')
+        if (*(char *)(frame.i2 + arg2) == '\0') break;
+        u1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(*(char *)(frame.i2 + arg2)))),0);
+        if ((*(char *)(frame.i2 + arg2) == -0x7f) && (*(char *)(frame.i2 + 1 + arg2) == '@')
            ) {
-          val1[i1] = ' ';
+          frame.val1[i1] = ' ';
           i1 = i1 + 1;
         }
         else if (0 < (int)u1) {
-          p1 = (char *)(i2 + arg2);
-          p2 = val1 + i1;
+          p1 = (char *)(frame.i2 + arg2);
+          p2 = frame.val1 + i1;
           for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
             *(uint32_t *)p2 = *(uint32_t *)p1;
             p1 = p1 + 4;
@@ -7587,12 +7627,12 @@ XI_API bits32 __thiscall FsTextInput_SetText(void * self_, int arg2, int arg3)
             p2 = p2 + 1;
           }
         }
-        if ((0x1c1 < i1) || (i2 = i2 + u1, arg3 <= i2)) break;
+        if ((0x1c1 < i1) || (frame.i2 = frame.i2 + u1, arg3 <= frame.i2)) break;
       }
     }
     u2 = 0xffffffff;
-    val1[i1] = '\0';
-    p1 = val1;
+    frame.val1[i1] = '\0';
+    p1 = frame.val1;
     do {
       if (u2 == 0) break;
       u2 = u2 - 1;
@@ -7607,7 +7647,7 @@ XI_API bits32 __thiscall FsTextInput_SetText(void * self_, int arg2, int arg3)
     {
       u4 = *(uint32_t *)((int)self_ + 0xa58);
       if (u4 == u1) {
-        p1 = val1;
+        p1 = frame.val1;
         p2 = (char *)(u1 + 0x6c4 + (int)self_);
         for (u4 = u2 >> 2; u4 != 0; u4 = u4 - 1) {
           *(uint32_t *)p2 = *(uint32_t *)p1;
@@ -7625,7 +7665,7 @@ XI_API bits32 __thiscall FsTextInput_SetText(void * self_, int arg2, int arg3)
       else {
         orig::game_103149D0((uint32_t *)(u4 + u3 + 0x6c4 + (int)self_),
                      (uint32_t *)(u4 + 0x6c4 + (int)self_),u1 - u4);
-        p1 = val1;
+        p1 = frame.val1;
         p2 = (char *)(*(int *)((int)self_ + 0xa58) + 0x6c4 + (int)self_);
         for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
           *(uint32_t *)p2 = *(uint32_t *)p1;
@@ -7713,14 +7753,16 @@ XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, bits32 arg2)
   uint32_t u4;
   uint32_t *p1;
   uint32_t *p2;
-  char xi_frame[1372] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 21);
-  uint32_t  (&u7)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 468);
-  uint32_t  (&u8)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 920);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1372];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; int i3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; int i4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; uint32_t u5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x15]; uint32_t u6; };   // at 0x15
+    struct __attribute__((packed)) { unsigned char pad_6[0x1D4]; uint32_t u7[113]; };   // at 0x1D4
+    struct __attribute__((packed)) { unsigned char pad_7[0x398]; uint32_t u8[113]; };   // at 0x398
+  } frame;
   
   u3 = *(uint32_t *)((int)self_ + 0xa58);
   if ((int)u3 < 0) {
@@ -7731,7 +7773,7 @@ XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, bits32 arg2)
   }
   i1 = *(int *)((int)self_ + 0x888);
   p1 = (uint32_t *)((int)self_ + 0x6c4);
-  p2 = u8;
+  p2 = frame.u8;
   for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
     *p2 = *p1;
     p1 = p1 + 1;
@@ -7743,11 +7785,11 @@ XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, bits32 arg2)
     p1 = (uint32_t *)((int)p1 + 1);
     p2 = (uint32_t *)((int)p2 + 1);
   }
-  *(uint8_t *)((int)u8 + u3) = 0;
+  *(uint8_t *)((int)frame.u8 + u3) = 0;
   if (u4 != 0) {
     u2 = *(int *)((int)self_ + 0x888) - u3;
     p1 = (uint32_t *)(u3 + 0x6c4 + (int)self_);
-    p2 = &u5;
+    p2 = &frame.u5;
     for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
       *p2 = *p1;
       p1 = p1 + 1;
@@ -7759,24 +7801,24 @@ XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, bits32 arg2)
       p2 = (uint32_t *)((int)p2 + 1);
     }
   }
-  *(uint8_t *)((int)&u5 + u4) = 0;
-  i1 = orig::Text_ClassifyChar(u5,0);
-  if ((i1 != 4) || (i1 = orig::Text_ClassifyChar(u6,0), i1 != 4)) {
-    i2 = orig::Text_GetCharLength(u5,0);
+  *(uint8_t *)((int)&frame.u5 + u4) = 0;
+  i1 = orig::Text_ClassifyChar(frame.u5,0);
+  if ((i1 != 4) || (i1 = orig::Text_ClassifyChar(frame.u6,0), i1 != 4)) {
+    frame.i2 = orig::Text_GetCharLength(frame.u5,0);
     goto code_101AC0FA;
   }
-  i1 = orig::FsTextInput_BuildDisplayTextTrimmed(self_,(char *)&u5,u4,(int)u7,0x1c3,&i3);
-  i2 = 0;
-  i4 = i1;
+  i1 = orig::FsTextInput_BuildDisplayTextTrimmed(self_,(char *)&frame.u5,u4,(int)frame.u7,0x1c3,&frame.i3);
+  frame.i2 = 0;
+  frame.i4 = i1;
   if (i1 < 0) goto code_101AC0FA;
-  i2 = 1;
-  if (i3 < 2) {
+  frame.i2 = 1;
+  if (frame.i3 < 2) {
 code_101AC05F:
     if ((char)arg2 == '\0') goto code_101AC07D;
-    u1 = i3 - i2;
+    u1 = frame.i3 - frame.i2;
     if (0 < (int)u1) {
-      p1 = u7;
-      p2 = (uint32_t *)((int)u8 + u3);
+      p1 = frame.u7;
+      p2 = (uint32_t *)((int)frame.u8 + u3);
       for (u4 = u1 >> 2; u4 != 0; u4 = u4 - 1) {
         *p2 = *p1;
         p1 = p1 + 1;
@@ -7788,22 +7830,22 @@ code_101AC05F:
         p1 = (uint32_t *)((int)p1 + 1);
         p2 = (uint32_t *)((int)p2 + 1);
       }
-      *(uint8_t *)((int)u8 + u3) = 0;
-      i1 = i4;
+      *(uint8_t *)((int)frame.u8 + u3) = 0;
+      i1 = frame.i4;
     }
   }
   else {
     if ((char)arg2 != '\0') {
-      i2 = orig::Text_CountChars((int)u7,i1,i3);
+      frame.i2 = orig::Text_CountChars((int)frame.u7,i1,frame.i3);
       goto code_101AC05F;
     }
-    i2 = orig::Text_GetCharLength(u7[0],0);
+    frame.i2 = orig::Text_GetCharLength(frame.u7[0],0);
 code_101AC07D:
     u1 = 0;
   }
   u4 = i1 - u1;
-  p1 = (uint32_t *)((int)u7 + u1);
-  p2 = &u5;
+  p1 = (uint32_t *)((int)frame.u7 + u1);
+  p2 = &frame.u5;
   for (u2 = u4 >> 2; u2 != 0; u2 = u2 - 1) {
     *p2 = *p1;
     p1 = p1 + 1;
@@ -7814,9 +7856,9 @@ code_101AC07D:
     p1 = (uint32_t *)((int)p1 + 1);
     p2 = (uint32_t *)((int)p2 + 1);
   }
-  *(uint8_t *)((int)&u5 + u4) = 0;
+  *(uint8_t *)((int)&frame.u5 + u4) = 0;
 code_101AC0FA:
-  p1 = u8;
+  p1 = frame.u8;
   p2 = (uint32_t *)((int)self_ + 0x6c4);
   for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
     *p2 = *p1;
@@ -7829,20 +7871,20 @@ code_101AC0FA:
     p2 = (uint32_t *)((int)p2 + 1);
   }
   if (u4 != 0) {
-    p1 = (uint32_t *)((int)&u5 + i2);
+    p1 = (uint32_t *)((int)&frame.u5 + frame.i2);
     p2 = (uint32_t *)(u3 + 0x6c4 + (int)self_);
-    for (u1 = u4 - i2 >> 2; u1 != 0; u1 = u1 - 1) {
+    for (u1 = u4 - frame.i2 >> 2; u1 != 0; u1 = u1 - 1) {
       *p2 = *p1;
       p1 = p1 + 1;
       p2 = p2 + 1;
     }
-    for (u1 = u4 - i2 & 3; u1 != 0; u1 = u1 - 1) {
+    for (u1 = u4 - frame.i2 & 3; u1 != 0; u1 = u1 - 1) {
       *(uint8_t *)p2 = *(uint8_t *)p1;
       p1 = (uint32_t *)((int)p1 + 1);
       p2 = (uint32_t *)((int)p2 + 1);
     }
   }
-  i1 = (u4 - i2) + u3;
+  i1 = (u4 - frame.i2) + u3;
   *(int *)((int)self_ + 0x888) = i1;
   *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
   *(uint32_t *)((int)self_ + 0xa58) = u3;
@@ -8100,13 +8142,15 @@ XI_API uint32_t __thiscall FsTextInput_ExpandMarkedPhrase(void * self_, int arg2
   char *p1;
   int i1;
   char *p2;
-  char xi_frame[924] __attribute__((aligned(4)));
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 16);
-  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 20);
-  char  (&val2)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 472);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[924];
+    struct __attribute__((packed)) { uint32_t u6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; char val1[452]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x1D8]; char val2[452]; };   // at 0x1D8
+  } frame;
   
   if ((arg3 == 0) || (u3 = orig::FsTextInput_IsMarkerAt(arg2,0), (char)u3 == '\0')) {
     return 0;
@@ -8115,23 +8159,23 @@ XI_API uint32_t __thiscall FsTextInput_ExpandMarkedPhrase(void * self_, int arg2
     return 0xffffffff;
   }
   u1 = *(uint8_t *)(arg2 + 1);
-  i3 = 0;
+  frame.i3 = 0;
   u2 = true;
-  u7 = ((uint32_t)(((uint32_t)(uint16_t)(*(uint16_t *)(arg2 + 3)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)*(void **)((int)self_ + 0x3c) + 4)) << 8) | (uint8_t)(u1))))));
+  frame.u7 = ((uint32_t)(((uint32_t)(uint16_t)(*(uint16_t *)(arg2 + 3)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)*(void **)((int)self_ + 0x3c) + 4)) << 8) | (uint8_t)(u1))))));
   if ((u1 < 7) && (u1 == 6)) {
-    u7 = (uint32_t)*(char *)(arg2 + 5);
-    if ((-1 < (int)u7) && ((int)u7 < 0x1c3)) {
+    frame.u7 = (uint32_t)*(char *)(arg2 + 5);
+    if ((-1 < (int)frame.u7) && ((int)frame.u7 < 0x1c3)) {
       u2 = false;
-      *arg6 = *arg6 + u7 + 7;
-      i2 = u7 + 7;
+      *arg6 = *arg6 + frame.u7 + 7;
+      frame.i2 = frame.u7 + 7;
       p1 = (char *)(arg2 + 6);
-      p2 = val2;
-      for (u5 = u7 >> 2; u5 != 0; u5 = u5 - 1) {
+      p2 = frame.val2;
+      for (u5 = frame.u7 >> 2; u5 != 0; u5 = u5 - 1) {
         *(uint32_t *)p2 = *(uint32_t *)p1;
         p1 = p1 + 4;
         p2 = p2 + 4;
       }
-      for (u5 = u7 & 3; u5 != 0; u5 = u5 - 1) {
+      for (u5 = frame.u7 & 3; u5 != 0; u5 = u5 - 1) {
         *p2 = *p1;
         p1 = p1 + 1;
         p2 = p2 + 1;
@@ -8141,57 +8185,57 @@ code_101AC6FE:
       u5 = 0;
       if (u2) {
         if ((char)arg7 != '\0') {
-          val1[0] = -0x11;
-          val1[1] = 0x27;
+          frame.val1[0] = -0x11;
+          frame.val1[1] = 0x27;
           u5 = 2;
         }
         if ((char)arg8 != '\0') {
-          val1[u5] = '\x7f';
-          val1[u5 + 1] = 'i';
+          frame.val1[u5] = '\x7f';
+          frame.val1[u5 + 1] = 'i';
           u5 = u5 + 2;
         }
       }
-      if (0 < (int)u7) {
+      if (0 < (int)frame.u7) {
         do {
-          u3 = orig::FsTextInput_IsMarkerAt((int)val2,i1);
+          u3 = orig::FsTextInput_IsMarkerAt((int)frame.val2,i1);
           if ((char)u3 == '\0') {
-            val1[u5] = val2[i1];
+            frame.val1[u5] = frame.val2[i1];
             u5 = u5 + 1;
             i1 = i1 + 1;
           }
           else {
-            u4 = orig::FsTextInput_ExpandMarkedPhrase_as_v0(self_,i2 + arg2,arg3 - i2,
-                                 (uint32_t *)(val1 + u5),0x1c2 - u5,&i3,0,0);
+            u4 = orig::FsTextInput_ExpandMarkedPhrase_as_v0(self_,frame.i2 + arg2,arg3 - frame.i2,
+                                 (uint32_t *)(frame.val1 + u5),0x1c2 - u5,&frame.i3,0,0);
             if (u4 == 0) {
-              XI_PIECE(u6, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(val2[i1 + 2]) << 8) | (uint8_t)(val2[i1 + 1])));
-              u6 = ((uint32_t)(((uint32_t)(uint8_t)(val2[i1 + 4]) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(val2[i1 + 3]) << 16) | (uint16_t)((uint16_t)u6)))) & 0xFFFFFFu)));
-              u4 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),u6,val1 + u5,
-                                   0x1c2 - u5,u6);
+              XI_PIECE(frame.u6, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(frame.val2[i1 + 2]) << 8) | (uint8_t)(frame.val2[i1 + 1])));
+              frame.u6 = ((uint32_t)(((uint32_t)(uint8_t)(frame.val2[i1 + 4]) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(frame.val2[i1 + 3]) << 16) | (uint16_t)((uint16_t)frame.u6)))) & 0xFFFFFFu)));
+              u4 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),frame.u6,frame.val1 + u5,
+                                   0x1c2 - u5,frame.u6);
             }
             else if ((int)u4 < 1) {
               return 0xffffffff;
             }
             u5 = u5 + u4;
             i1 = i1 + 6;
-            i2 = i2 + i3;
-            *arg6 = *arg6 + i3;
-            i3 = 0;
+            frame.i2 = frame.i2 + frame.i3;
+            *arg6 = *arg6 + frame.i3;
+            frame.i3 = 0;
           }
-        } while (i1 < (int)u7);
+        } while (i1 < (int)frame.u7);
       }
       if (u2) {
         if ((char)arg8 != '\0') {
-          val1[u5] = '\x7f';
-          val1[u5 + 1] = 'd';
+          frame.val1[u5] = '\x7f';
+          frame.val1[u5 + 1] = 'd';
           u5 = u5 + 2;
         }
         if ((char)arg7 != '\0') {
-          val1[u5] = -0x11;
-          val1[u5 + 1] = '(';
+          frame.val1[u5] = -0x11;
+          frame.val1[u5 + 1] = '(';
           u5 = u5 + 2;
         }
       }
-      p1 = val1;
+      p1 = frame.val1;
       p2 = (char *)arg4;
       for (u4 = u5 >> 2; u4 != 0; u4 = u4 - 1) {
         *(uint32_t *)p2 = *(uint32_t *)p1;
@@ -8208,9 +8252,9 @@ code_101AC6FE:
     }
   }
   else {
-    i2 = 6;
-    u7 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),u7,val2,0x1c2,val2);
-    if (-1 < (int)u7) {
+    frame.i2 = 6;
+    frame.u7 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),frame.u7,frame.val2,0x1c2,frame.val2);
+    if (-1 < (int)frame.u7) {
       *arg6 = *arg6 + 6;
       goto code_101AC6FE;
     }
@@ -8228,37 +8272,39 @@ XI_API int __thiscall FsTextInput_BuildDisplayText(void * self_, int arg2, int a
   uint32_t _Count_00;
   int i2;
   int i3;
-  char xi_frame[460] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 4);
-  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[460];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; void * p1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; char val1[452]; };   // at 0x8
+  } frame;
   
   if (arg4 == (char *)0x0) {
     return -1;
   }
-  i4 = 0;
+  frame.i4 = 0;
   i2 = 0;
-  p1 = self_;
+  frame.p1 = self_;
   if (*arg4 != '\0') {
-    while (i1 = i4, i4 < arg5) {
-      u1 = orig::FsTextInput_IsMarkerAt((int)arg4,i4);
+    while (i1 = frame.i4, frame.i4 < arg5) {
+      u1 = orig::FsTextInput_IsMarkerAt((int)arg4,frame.i4);
       if ((char)u1 == '\0') {
         _Count = orig::Sjis_GetCharByteLen_v1(arg4 + i1);
-        i4 = _Count + i2;
-        if (arg3 <= i4) break;
+        frame.i4 = _Count + i2;
+        if (arg3 <= frame.i4) break;
         orig::_strncpy_v2((char *)(i2 + arg2),arg4 + i1,_Count);
-        *(uint8_t *)(i4 + arg2) = 0;
-        i3 = i4;
-        i4 = i1 + _Count;
+        *(uint8_t *)(frame.i4 + arg2) = 0;
+        i3 = frame.i4;
+        frame.i4 = i1 + _Count;
       }
       else {
-        _Count_00 = orig::FsTextInput_ExpandMarkedPhrase(p1,(int)(arg4 + i1),arg3 - i2,
-                                 (uint32_t *)val1,0x1c2,&i4,arg6,arg7);
+        _Count_00 = orig::FsTextInput_ExpandMarkedPhrase(frame.p1,(int)(arg4 + i1),arg3 - i2,
+                                 (uint32_t *)frame.val1,0x1c2,&frame.i4,arg6,arg7);
         if (((int)_Count_00 < 0) || (i3 = _Count_00 + i2, arg3 <= i3)) break;
-        orig::_strncpy_v2((char *)(i2 + arg2),val1,_Count_00);
+        orig::_strncpy_v2((char *)(i2 + arg2),frame.val1,_Count_00);
       }
       i2 = i3;
-      if (arg4[i4] == '\0') break;
+      if (arg4[frame.i4] == '\0') break;
     }
   }
   *(uint8_t *)(i2 + arg2) = 0;
@@ -8276,8 +8322,10 @@ XI_API int __thiscall FsTextInput_BuildDisplayTextTrimmed(void * self_, char * a
   int i1;
   int i2;
   char *p2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+  } frame;
   
   u1 = true;
   if (arg3 < 2) {
@@ -8285,7 +8333,7 @@ XI_API int __thiscall FsTextInput_BuildDisplayTextTrimmed(void * self_, char * a
   }
   i2 = 0;
   i1 = 0;
-  i3 = 0;
+  frame.i3 = 0;
   if (*arg2 == ' ') {
     p1 = arg2;
     do {
@@ -8310,12 +8358,12 @@ XI_API int __thiscall FsTextInput_BuildDisplayTextTrimmed(void * self_, char * a
     i1 = i1 + 1;
   }
   u3 = orig::FsTextInput_ExpandMarkedPhrase(self_,(int)(arg2 + i2),arg3 - i2,(uint32_t *)(i1 + arg4),
-                       arg5 - i1,&i3,0,0);
+                       arg5 - i1,&frame.i3,0,0);
   if ((int)u3 < 0) {
     return -1;
   }
   i1 = i1 + u3;
-  i2 = i2 + i3;
+  i2 = i2 + frame.i3;
   if (arg6 != (int *)0x0) {
     *arg6 = i1;
   }
@@ -8382,14 +8430,16 @@ XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * arg2)
   int i2;
   int *p1;
   int i3;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  int  (&i5)[12] = *reinterpret_cast<int  (*)[12]>(xi_frame + 12);
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 60);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint32_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; int i5[12]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x3C]; int i6; };   // at 0x3C
+  } frame;
   
-  p1 = i5;
+  p1 = frame.i5;
   i2 = 0xc;
   do {
     orig::FsTextInput_SetCode4(p1,0,0,0,0);
@@ -8397,27 +8447,27 @@ XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * arg2)
     p1 = p1 + 1;
     i2 = i2 + -1;
   } while (i2 != 0);
-  i6 = 0;
+  frame.i6 = 0;
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x10))))((void *)(arg2));
-  i4 = orig::TextInputFiles_GetUsed(obj1);
-  u5 = (int *)obj1[5];
-  u4 = (int *)0x0;
-  u1 = orig::FsTextInput_MapCodeByte(&u4);
-  u2 = orig::FsTextInput_MapCodeByte(&u5);
-  i2 = i4;
+  frame.i4 = orig::TextInputFiles_GetUsed(obj1);
+  frame.u5 = (int *)obj1[5];
+  frame.u4 = (int *)0x0;
+  u1 = orig::FsTextInput_MapCodeByte(&frame.u4);
+  u2 = orig::FsTextInput_MapCodeByte(&frame.u5);
+  i2 = frame.i4;
   if ((char)u2 == (char)u1) {
-    if (((XI_PIECE(u5, 1, 1) == XI_PIECE(u4, 1, 1)) &&
-        ((char)((uint32_t)u5 >> 0x10) == (char)((uint32_t)u4 >> 0x10))) &&
-       ((char)((uint32_t)u5 >> 0x18) == (char)((uint32_t)u4 >> 0x18))) {
-      u3 = orig::FsTextInput_SetText(self_,i1,i4);
+    if (((XI_PIECE(frame.u5, 1, 1) == XI_PIECE(frame.u4, 1, 1)) &&
+        ((char)((uint32_t)frame.u5 >> 0x10) == (char)((uint32_t)frame.u4 >> 0x10))) &&
+       ((char)((uint32_t)frame.u5 >> 0x18) == (char)((uint32_t)frame.u4 >> 0x18))) {
+      u3 = orig::FsTextInput_SetText(self_,i1,frame.i4);
       return u3 & 0xff;
     }
   }
   p1 = (int *)arg2[5];
-  XI_PIECE_S(u5, 3, 1) = (char)((uint32_t)p1 >> 0x18);
-  if (XI_PIECE(u5, 3, 1) == '\0') {
+  XI_PIECE_S(frame.u5, 3, 1) = (char)((uint32_t)p1 >> 0x18);
+  if (XI_PIECE(frame.u5, 3, 1) == '\0') {
     arg2 = p1;
-    u5 = p1;
+    frame.u5 = p1;
     if (*(int *)((int)self_ + 0x38) < 0xc) {
       orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x38) * 4 + 8),(uint8_t *)&arg2);
       *(int *)((int)self_ + 0x38) = *(int *)((int)self_ + 0x38) + 1;
@@ -8425,15 +8475,15 @@ XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * arg2)
   }
   else {
     if ((*(int *)((int)self_ + 0xa54) <
-         *(int *)((int)self_ + 0xa50) + *(int *)((int)self_ + 0xc74) + i4) ||
+         *(int *)((int)self_ + 0xa50) + *(int *)((int)self_ + 0xc74) + frame.i4) ||
        (*(int *)((int)self_ + 0xa54) < *(int *)((int)self_ + 0x888) + 6 + *(int *)((int)self_ + 0xc70))
        ) {
       return 0xffffffff;
     }
-    u5 = *(int **)((int)self_ + 1);
+    frame.u5 = *(int **)((int)self_ + 1);
     if (*(int *)((int)self_ + 0xa4) < 0xc) {
       orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0xa4) * 4 + 0x74),
-                   (uint8_t *)&u5);
+                   (uint8_t *)&frame.u5);
       *(int *)((int)self_ + 0xa4) = *(int *)((int)self_ + 0xa4) + 1;
     }
     i3 = 0;
@@ -8444,30 +8494,30 @@ XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * arg2)
           i3 = i3 + 1;
         }
         else {
-          u4 = (int *)((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 4 + i1)) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 3 + i1)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(i3 + 2 + i1)) << 8) | (uint8_t)(*(uint8_t *)(i3 + 1 + i1)))))))) & 0xFFFFFFu)));
-          u5 = u4;
-          if (i6 < 0xc) {
-            orig::FsTextInput_CopyCode4(i5 + i6,(uint8_t *)&u5);
-            i6 = i6 + 1;
+          frame.u4 = (int *)((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 4 + i1)) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 3 + i1)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(i3 + 2 + i1)) << 8) | (uint8_t)(*(uint8_t *)(i3 + 1 + i1)))))))) & 0xFFFFFFu)));
+          frame.u5 = frame.u4;
+          if (frame.i6 < 0xc) {
+            orig::FsTextInput_CopyCode4(frame.i5 + frame.i6,(uint8_t *)&frame.u5);
+            frame.i6 = frame.i6 + 1;
           }
           i3 = i3 + 6;
         }
-        i2 = i4;
-      } while (i3 < i4);
+        i2 = frame.i4;
+      } while (i3 < frame.i4);
     }
-    while (i6 != 0) {
-      i6 = i6 + -1;
-      p1 = (int *)i5[i6];
+    while (frame.i6 != 0) {
+      frame.i6 = frame.i6 + -1;
+      p1 = (int *)frame.i5[frame.i6];
       if (*(int *)((int)self_ + 0x38) < 0xc) {
-        u5 = p1;
+        frame.u5 = p1;
         orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x38) * 4 + 8),
-                     (uint8_t *)&u5);
+                     (uint8_t *)&frame.u5);
         *(int *)((int)self_ + 0x38) = *(int *)((int)self_ + 0x38) + 1;
       }
-      u5 = p1;
+      frame.u5 = p1;
       if (*(int *)((int)self_ + 0x70) < 0xc) {
         orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x70) * 4 + 0x40),
-                     (uint8_t *)&u5);
+                     (uint8_t *)&frame.u5);
         *(int *)((int)self_ + 0x70) = *(int *)((int)self_ + 0x70) + 1;
       }
     }
@@ -8571,10 +8621,12 @@ XI_API bits32 __thiscall FsTextInput_InsertAtCursor(void * self_)
   uint32_t u2;
   uint32_t *p2;
   uint32_t *p3;
-  char xi_frame[52] __attribute__((aligned(4)));
-  uint8_t  (&u3)[52] = *reinterpret_cast<uint8_t  (*)[52]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[52];
+    struct __attribute__((packed)) { uint8_t u3[52]; };   // at 0x0
+  } frame;
   
-  p1 = u3 + 2;
+  p1 = frame.u3 + 2;
   i2 = 0xc;
   do {
     p1[-2] = 0;
@@ -8878,11 +8930,13 @@ XI_API void __thiscall TextInputFiles_ProcessInputLine(void * self_, char * arg2
   uint32_t u2;
   int i2;
   char *p2;
-  char xi_frame[516] __attribute__((aligned(4)));
-  size_t  &_Count = *reinterpret_cast<size_t  *>(xi_frame + 0);
-  char  (&val1)[247] = *reinterpret_cast<char  (*)[247]>(xi_frame + 20);
-  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 267);
-  char  (&val2)[248] = *reinterpret_cast<char  (*)[248]>(xi_frame + 268);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[516];
+    struct __attribute__((packed)) { size_t _Count; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; char val1[247]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x10B]; uint8_t u3; };   // at 0x10B
+    struct __attribute__((packed)) { unsigned char pad_4[0x10C]; char val2[248]; };   // at 0x10C
+  } frame;
   
   if ((arg2 != (char *)0x0) && (0 < (int)arg4)) {
     u2 = 0xffffffff;
@@ -8927,39 +8981,39 @@ XI_API void __thiscall TextInputFiles_ProcessInputLine(void * self_, char * arg2
       c1 = *p1;
       p1 = p1 + 1;
     } while (c1 != '\0');
-    i2 = orig::TextInputFiles_InputCall101ACAC0(*(void **)((int)self_ + 4),arg2,~u2 - 1,(int)val2,0xf8);
+    i2 = orig::TextInputFiles_InputCall101ACAC0(*(void **)((int)self_ + 4),arg2,~u2 - 1,(int)frame.val2,0xf8);
     if (i2 < 0) {
-      val2[0] = '\0';
+      frame.val2[0] = '\0';
     }
-    u1 = orig::TextInputFiles_IsSlashChar(val2);
+    u1 = orig::TextInputFiles_IsSlashChar(frame.val2);
     if ((char)u1 == '\0') {
-      _Count = 0x80;
+      frame._Count = 0x80;
       p1 = (char *)orig::FsTextInput_GetDataPtr8(self_);
-      orig::_strncpy_v2(val1,p1,_Count);
-      orig::_strncat(val1,arg2,0x78);
-      u3 = 0;
+      orig::_strncpy_v2(frame.val1,p1,frame._Count);
+      orig::_strncat(frame.val1,arg2,0x78);
+      frame.u3 = 0;
     }
     else {
-      orig::_strncpy_v2(val1,val2,0xf8);
+      orig::_strncpy_v2(frame.val1,frame.val2,0xf8);
     }
-    u1 = orig::TextInputFiles_Call101B72E0(self_,val1);
-    p1 = val1;
+    u1 = orig::TextInputFiles_Call101B72E0(self_,frame.val1);
+    p1 = frame.val1;
     if ((char)u1 != '\0') {
       u2 = 0xffffffff;
-      p2 = val1;
+      p2 = frame.val1;
       do {
         if (u2 == 0) break;
         u2 = u2 - 1;
         c1 = *p2;
         p2 = p2 + 1;
       } while (c1 != '\0');
-      orig::TextInputFiles_InputCall101AC990Swapped(*(void **)((int)self_ + 4),p1,~u2 - 1,val2,0xf8,0,0);
-      u1 = orig::TextInputFiles_IsKnownCommand(val2);
+      orig::TextInputFiles_InputCall101AC990Swapped(*(void **)((int)self_ + 4),p1,~u2 - 1,frame.val2,0xf8,0,0);
+      u1 = orig::TextInputFiles_IsKnownCommand(frame.val2);
       if ((char)u1 == '\0') {
-        p1 = val2;
+        p1 = frame.val2;
       }
       else {
-        p1 = val1;
+        p1 = frame.val1;
       }
     }
     orig::_strncpy_v2((char *)arg3,p1,arg4);
@@ -9331,15 +9385,15 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337940(void * self_)
 XI_API bits32 __thiscall TextInputFiles_InitKeyTopShape(void * self_, bits32 arg2)
 {
   uint64_t u1;
-  char *p1;
+  char *id;
   
   if (*(int *)(g_pSceneState + 8) == 0) {
-    p1 = str_menu_key1top_1037A808;
+    id = str_menu_key1top_1037A808;
   }
   else {
-    p1 = str_menu_key1topu_1037A81C;
+    id = str_menu_key1topu_1037A81C;
   }
-  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,p1);
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,id);
   *(int *)((int)self_ + 0x18) = (int)u1;
   if ((int)u1 == 0) {
     return 0xffffffff;
@@ -9396,28 +9450,30 @@ XI_API BOOL __stdcall TextInputFiles_ImmReleaseContext(HWND arg1, HIMC arg2)
 XI_API void __thiscall FsTextInput_InitWithImeOffscreen(void * self_)
 {
   HIMC val1;
-  char xi_frame[60] __attribute__((aligned(4)));
-  tagCOMPOSITIONFORM  &val2 = *reinterpret_cast<tagCOMPOSITIONFORM  *>(xi_frame + 0);
-  tagCANDIDATEFORM  &val3 = *reinterpret_cast<tagCANDIDATEFORM  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[60];
+    struct __attribute__((packed)) { tagCOMPOSITIONFORM val2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; tagCANDIDATEFORM val3; };   // at 0x1C
+  } frame;
   
-  val3.rcArea.bottom = 2000;
-  val3.rcArea.right = 2000;
+  frame.val3.rcArea.bottom = 2000;
+  frame.val3.rcArea.right = 2000;
   *(uint8_t *)((int)self_ + 0xf123) = 0;
   *(uint8_t *)((int)self_ + 0xf121) = 0;
   *(uint8_t *)((int)self_ + 0xf2f4) = 0;
-  val2.dwStyle = 0x20;
-  val2.ptCurrentPos.x = -600;
-  val2.ptCurrentPos.y = -600;
-  val3.dwIndex = 0;
-  val3.dwStyle = 0x40;
-  val3.rcArea.top = -100;
-  val3.ptCurrentPos.x = -600;
-  val3.ptCurrentPos.y = -600;
+  frame.val2.dwStyle = 0x20;
+  frame.val2.ptCurrentPos.x = -600;
+  frame.val2.ptCurrentPos.y = -600;
+  frame.val3.dwIndex = 0;
+  frame.val3.dwStyle = 0x40;
+  frame.val3.rcArea.top = -100;
+  frame.val3.ptCurrentPos.x = -600;
+  frame.val3.ptCurrentPos.y = -600;
   orig::FsTextInput_init(self_);
   *(uint8_t *)((int)self_ + 0xf120) = 0;
   val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  orig::ImmSetCompositionWindow_102BC844(val1,&val2);
-  orig::ImmSetCandidateWindow_102BC83E(val1,&val3);
+  orig::ImmSetCompositionWindow_102BC844(val1,&frame.val2);
+  orig::ImmSetCandidateWindow_102BC83E(val1,&frame.val3);
   orig::Imm_NotifyIMEJmp(val1,0x15,4,0);
   orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
   orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
@@ -9525,13 +9581,15 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
   LONG i3;
   int i4;
   uint8_t *p1;
-  char xi_frame[480] __attribute__((aligned(4)));
-  DWORD  &u4 = *reinterpret_cast<DWORD  *>(xi_frame + 0);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  ULONG_PTR  &val2 = *reinterpret_cast<ULONG_PTR  *>(xi_frame + 4);
-  HWND  &val3 = *reinterpret_cast<HWND  *>(xi_frame + 4);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint8_t  (&u7)[452] = *reinterpret_cast<uint8_t  (*)[452]>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[480];
+    struct __attribute__((packed)) { DWORD u4; };   // at 0x0
+    struct __attribute__((packed)) { uint32_t u5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; ULONG_PTR val2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x4]; HWND val3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; uint32_t u6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; uint8_t lpBuf[452]; };   // at 0x1C
+  } frame;
   
   if (*(char *)((int)self_ + 0xf100) == '\x01') {
     ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x34))))((void *)(self_));
@@ -9545,12 +9603,12 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
     return 0;
   }
   *(uint8_t *)((int)self_ + 0xf124) = 1;
-  u6 = 0;
+  frame.u6 = 0;
   u1 = orig::TextInputFiles_IsModeFourOrFive(self_);
   if ((char)u1 == '\0') {
     c1 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*((int *)self_) + 0x40)))((void *)(((int *)self_)));
     if (c1 == '\0') {
-      u6 = 0;
+      frame.u6 = 0;
       *(uint8_t *)((int)self_ + 0xf124) = 0;
       goto code_101B3599;
     }
@@ -9607,14 +9665,14 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
         val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
         i2 = orig::Imm_GetOpenStatusJmp(val1);
         if ((i2 != 0) && (i1 == 0)) {
-          val2 = 0;
-          u4 = 0;
+          frame.val2 = 0;
+          frame.u4 = 0;
           u3 = MapVirtualKeyA(arg2,0);
-          keybd_event((BYTE)arg2,(BYTE)u3,u4,val2);
-          val2 = 0;
-          u4 = 2;
+          keybd_event((BYTE)arg2,(BYTE)u3,frame.u4,frame.val2);
+          frame.val2 = 0;
+          frame.u4 = 2;
           u3 = MapVirtualKeyA(arg2,0);
-          keybd_event((BYTE)arg2,(BYTE)u3,u4,val2);
+          keybd_event((BYTE)arg2,(BYTE)u3,frame.u4,frame.val2);
         }
       }
     }
@@ -9625,7 +9683,7 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
     orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
     return 0;
   }
-  i3 = orig::Imm_GetCompositionStringAJmp(val1,8,u7,0x1c2);
+  i3 = orig::Imm_GetCompositionStringAJmp(val1,8,frame.lpBuf,0x1c2);
   i4 = arg2 - 8;
   switch(xi_sw(arg2)) {
   case 8:
@@ -9677,7 +9735,7 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
     if ((char)u1 == '\0') {
       orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
       i4 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
-      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
     else {
       i1 = orig::Imm_GetOpenStatusJmp(val1);
@@ -9689,9 +9747,9 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
       *(uint8_t *)((int)self_ + 0xf120) = 0;
       orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
       i4 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
-      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
-    val1 = orig::ImmGetContext_101AFF50(val3);
+    val1 = orig::ImmGetContext_101AFF50(frame.val3);
     if ((i4 == 1) && (orig::SetMusicTrackVolume_A_v1(), *(char *)((int)self_ + 0xf100) != '\0')) {
       if (*(int *)((int)self_ + 0xf0f4) == 0) {
         *(uint32_t *)(g_10662DAC_as_s32 + 0x14) = 0;
@@ -9739,9 +9797,9 @@ XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT 
     if ((char)u1 != '\0') {
       orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
       c1 = (**(untyped_fn **)(*(int *)self_ + 0x20))();
-      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
       if (c1 == '\0') goto code_101B358D;
-      val1 = orig::ImmGetContext_101AFF50(val3);
+      val1 = orig::ImmGetContext_101AFF50(frame.val3);
       i1 = orig::Imm_GetOpenStatusJmp(val1);
       if (i1 == 0) {
         (**(untyped_fn **)(*(int *)self_ + 0x70))();
@@ -9822,9 +9880,9 @@ code_101B3569:
 code_101B357C:
     orig::TextInputFiles_HandleEditKey(self_,arg2,0,0);
 code_101B3583:
-    val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+    frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
 code_101B358D:
-    val1 = orig::ImmGetContext_101AFF50(val3);
+    val1 = orig::ImmGetContext_101AFF50(frame.val3);
     break;
   case 0x25:
     orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
@@ -9841,17 +9899,17 @@ code_101B358D:
       if (*(int *)((int)self_ + 0xf128) == 0) {
         orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
         orig::TextInputFiles_HandleEditKey(self_,0x26,0,0);
-        val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+        frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
         goto code_101B358D;
       }
       break;
     }
     orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
-    u5 = 1;
+    frame.u5 = 1;
     u1 = 9;
 code_101B3266:
-    orig::TextInputFiles_HandleEditKey(self_,u1,u5,0);
-    val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+    orig::TextInputFiles_HandleEditKey(self_,u1,frame.u5,0);
+    frame.val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
     goto code_101B358D;
   case 0x27:
     orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
@@ -9871,7 +9929,7 @@ code_101B3266:
     }
     if (*(int *)((int)self_ + 0xf128) == 0) {
       orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
-      u5 = 0;
+      frame.u5 = 0;
       u1 = 0x28;
       goto code_101B3266;
     }
@@ -9921,10 +9979,10 @@ code_101B3266:
     }
   }
 code_101B3594:
-  u6 = 1;
+  frame.u6 = 1;
 code_101B3599:
   orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
-  return u6;
+  return frame.u6;
 }
 
 // FUNCTION: FFXIMAIN 0x101B36F0
@@ -9937,11 +9995,13 @@ XI_API void __thiscall TextInputFiles_OnChar(void * self_, uint32_t arg2)
   HIMC val1;
   BOOL i1;
   int i2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
   u1 = arg2;
-  p1 = self_;
+  frame.p1 = self_;
   u2 = orig::NetCellFont_IsNotControlChar(arg2);
   if ((char)u2 != '\0') {
     c1 = (char)u1;
@@ -9986,7 +10046,7 @@ XI_API void __thiscall TextInputFiles_OnChar(void * self_, uint32_t arg2)
         if ((char)u2 != '\0') {
           val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
           i1 = orig::Imm_GetOpenStatusJmp(val1);
-          orig::Imm_GetConversionStatusJmp(val1,&arg2,(LPDWORD)&p1);
+          orig::Imm_GetConversionStatusJmp(val1,&arg2,(LPDWORD)&frame.p1);
           if ((i1 == 0) || ((arg2 & 0x100) != 0)) {
             i2 = orig::FsTextInput_OnChar(self_,u1);
             if (i2 == -1) {
@@ -10041,11 +10101,13 @@ XI_API bits32 __thiscall TextInputFiles_HasCompositionOrPending(void * self_)
   HIMC val1;
   LONG i1;
   uint32_t u1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t lpBuf[256]; };   // at 0x0
+  } frame;
   
   val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,u2,0x100);
+  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,frame.lpBuf,0x100);
   orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
   if (i1 < 1) {
     u1 = orig::TextInputFiles_HasPendingInput(self_);
@@ -10062,11 +10124,13 @@ XI_API bits32 __cdecl TextInputFiles_HasComposition(void)
 {
   HIMC val1;
   LONG i1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u1)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t lpBuf[256]; };   // at 0x0
+  } frame;
   
   val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,u1,0x100);
+  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,frame.lpBuf,0x100);
   orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
   return (uint32_t)(0 < i1);
 }
@@ -10095,14 +10159,16 @@ XI_API void __thiscall TextInputFiles_CloseInlineMenusKeepIme(void * self_)
 {
   HIMC val1;
   BOOL i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  DWORD  &DStack_8 = *reinterpret_cast<DWORD  *>(xi_frame + 0);
-  DWORD  &DStack_4 = *reinterpret_cast<DWORD  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { DWORD DStack_8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; DWORD DStack_4; };   // at 0x4
+  } frame;
   
   val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
   i1 = orig::Imm_GetOpenStatusJmp(val1);
-  orig::Imm_GetConversionStatusJmp(val1,&DStack_4,&DStack_8);
-  if ((i1 == 0) || (DStack_8 == 0)) {
+  orig::Imm_GetConversionStatusJmp(val1,&frame.DStack_4,&frame.DStack_8);
+  if ((i1 == 0) || (frame.DStack_8 == 0)) {
     if (*(char *)((int)self_ + 0xf2f4) == '\0') {
       *(uint8_t *)((int)self_ + 0xf121) = 0;
     }
@@ -10870,10 +10936,12 @@ XI_API bits32 __thiscall TextInputFiles_HandleEditKey(void * self_, bits32 arg2,
   uint32_t u3;
   int i2;
   uint32_t u4;
-  char xi_frame[1072] __attribute__((aligned(4)));
-  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  char * &p4 = *reinterpret_cast<char * *>(xi_frame + 0);
-  char  (&val1)[1052] = *reinterpret_cast<char  (*)[1052]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1072];
+    struct __attribute__((packed)) { uint8_t * p3; };   // at 0x0
+    struct __attribute__((packed)) { char * p4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; char val1[1052]; };   // at 0x14
+  } frame;
   
   i1 = (arg2 & 0xff) - 8;
   *(uint8_t *)((int)self_ + 0xef22) = 0;
@@ -10907,8 +10975,8 @@ code_101B6044:
       u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
       if ((char)u3 == '\0') {
         *(uint8_t *)((int)self_ + 0x8c81) = 1;
-        p4 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
-        if (p4 == (char *)0x0) {
+        frame.p4 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
+        if (frame.p4 == (char *)0x0) {
           i1 = 0;
         }
         else {
@@ -10922,7 +10990,7 @@ code_101B6044:
           } while (c1 != '\0');
           i1 = ~u4 - 1;
         }
-        i1 = orig::TextInputFiles_SetWordForCompletion(self_,p4,i1);
+        i1 = orig::TextInputFiles_SetWordForCompletion(self_,frame.p4,i1);
         if (-1 < i1) {
           orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
           ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
@@ -10943,8 +11011,8 @@ code_101B6044:
     u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
     if ((char)u3 == '\0') {
       *(uint8_t *)((int)self_ + 0x8c81) = 1;
-      i1 = orig::TextInputFiles_GetLastWord(self_,(uint32_t *)val1);
-      p4 = val1;
+      i1 = orig::TextInputFiles_GetLastWord(self_,(uint32_t *)frame.val1);
+      frame.p4 = frame.val1;
       goto code_101B5E42;
     }
     if ((char)arg3 != '\0') {
@@ -10974,7 +11042,7 @@ code_101B6044:
         return 1;
       }
       i1 = *(int *)((int)self_ + 0x8c70);
-      p3 = (uint8_t *)((int)self_ + 0x8aac);
+      frame.p3 = (uint8_t *)((int)self_ + 0x8aac);
     }
     else {
       u3 = orig::TextInputFiles_GetFlag8C81(self_,((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(*(char *)((int)self_ + 0xf0ec)))));
@@ -10994,9 +11062,9 @@ code_101B6044:
       }
       orig::FsTextInput_DeleteLastWord((void *)((int)self_ + 0x7e30));
       i1 = 0;
-      p3 = (uint8_t *)0x0;
+      frame.p3 = (uint8_t *)0x0;
     }
-    i1 = orig::TextInputFiles_InputSubmit(self_,p3,i1);
+    i1 = orig::TextInputFiles_InputSubmit(self_,frame.p3,i1);
     if (i1 < 0) {
       return 0xffffffff;
     }
@@ -11057,9 +11125,9 @@ code_101B6044:
       return 1;
     }
     i1 = 0;
-    p4 = (char *)0x0;
+    frame.p4 = (char *)0x0;
 code_101B5E42:
-    i1 = orig::TextInputFiles_SetWordForCompletion(self_,p4,i1);
+    i1 = orig::TextInputFiles_SetWordForCompletion(self_,frame.p4,i1);
     if (-1 < i1) {
       orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
       return 1;
@@ -11233,8 +11301,8 @@ code_101B65DA:
           return 1;
         }
         i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x68))))((void *)(self_));
-        p3 = (uint8_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
-        orig::TextInputFiles_InputSubmit(self_,p3,i1);
+        frame.p3 = (uint8_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
+        orig::TextInputFiles_InputSubmit(self_,frame.p3,i1);
         return 1;
       }
       ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
@@ -11581,7 +11649,7 @@ XI_API void * __thiscall TextInputFiles_GetEntry(void * self_)
 XI_API bits32 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8_t * arg2, int arg3)
 {
   void *obj1;
-  int *p1;
+  int *listNum;
   char c1;
   uint8_t u1;
   uint8_t *p2;
@@ -11625,8 +11693,8 @@ XI_API bits32 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8
   else {
     g_10662D54 = *(int *)((int)self_ + 0x8c84);
   }
-  p1 = (int *)((int)self_ + 0xec28);
-  *p1 = 0x3fc;
+  listNum = (int *)((int)self_ + 0xec28);
+  *listNum = 0x3fc;
   p2 = p4;
   if (p4 == (uint8_t *)0x0) {
     p2 = &Read_as_v0;
@@ -11637,10 +11705,10 @@ XI_API bits32 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8
   if ((char)u3 == '\0') {
     orig::FsWordCompletion_Update(obj1);
   }
-  orig::FsWordCompletion_getEntryList(obj1,(uint32_t *)((int)self_ + 0x8c88),p1);
-  i1 = orig::TextInputFiles_FillCompletionWords(g_1066268C,(void *)((int)self_ + (*p1 * 3 + 0x1191) * 8),0x3fc - *p1
+  orig::FsWordCompletion_getEntryList(obj1,(uint32_t *)((int)self_ + 0x8c88),listNum);
+  i1 = orig::TextInputFiles_FillCompletionWords(g_1066268C,(void *)((int)self_ + (*listNum * 3 + 0x1191) * 8),0x3fc - *listNum
                        ,p4,u5);
-  *p1 = *p1 + i1;
+  *listNum = *listNum + i1;
   if (arg2 != (uint8_t *)0x0) {
     u1 = *(uint8_t *)((int)self_ + 0xec2c);
     if (6 < u1) {
@@ -11659,7 +11727,7 @@ XI_API bits32 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8
     }
     if (((u1 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
        ((*(char *)((int)self_ + 0xec2e) == '\0' &&
-        ((*(char *)((int)self_ + 0xec2f) == '\0' && (g_10662D54 < *p1)))))) {
+        ((*(char *)((int)self_ + 0xec2f) == '\0' && (g_10662D54 < *listNum)))))) {
       *(int *)((int)self_ + 0x8c84) = g_10662D54;
       return 1;
     }
@@ -12211,12 +12279,14 @@ XI_API bits32 __thiscall TextInputFiles_AppendToList(void * self_, bits32 arg2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_Register(void * self_, bits32 arg2, bits32 arg3, char * arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
-  char xi_frame[288] __attribute__((aligned(4)));
-  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[288];
+    struct __attribute__((packed)) { uint8_t u1[288]; };   // at 0x0
+  } frame;
   
-  orig::TextInputFiles_DatEntryCtor(u1,arg2,arg4,arg5,arg6,arg7,arg8,arg9);
-  orig::TextInputFiles_AppendToList(self_,u1);
-  orig::TextInputFiles_ClearVtable(u1);
+  orig::TextInputFiles_DatEntryCtor(frame.u1,arg2,arg4,arg5,arg6,arg7,arg8,arg9);
+  orig::TextInputFiles_AppendToList(self_,frame.u1);
+  orig::TextInputFiles_ClearVtable(frame.u1);
   return;
 }
 
@@ -12686,22 +12756,24 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind7Block(void * self_)
   bits32 u1;
   uint32_t u2;
   char *p4;
-  char xi_frame[76] __attribute__((aligned(4)));
-  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
-  uint8_t  &u5 = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
-  uint8_t  &u6 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
-  char  (&val1)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
-  char  (&val2)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 36);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 68);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { uint8_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; uint8_t u4; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x2]; uint8_t u5; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_4[0x3]; uint8_t u6; };   // at 0x3
+    struct __attribute__((packed)) { unsigned char pad_5[0x4]; char val1[32]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; char val2[32]; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x44]; int i2; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_8[0x48]; uint32_t u7; };   // at 0x48
+  } frame;
   
-  u4 = *(uint8_t *)((int)self_ + 4);
-  u3 = 7;
-  u5 = 0;
-  u6 = 0;
+  frame.u4 = *(uint8_t *)((int)self_ + 4);
+  frame.u3 = 7;
+  frame.u5 = 0;
+  frame.u6 = 0;
   p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x91);
-  p4 = val1;
+  p4 = frame.val1;
   do {
     c1 = *p1;
     p1 = p1 + 1;
@@ -12709,14 +12781,14 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind7Block(void * self_)
     p4 = p4 + 1;
   } while (c1 != '\0');
   p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x92);
-  p4 = val2;
+  p4 = frame.val2;
   do {
     c1 = *p1;
     p1 = p1 + 1;
     *p4 = c1;
     p4 = p4 + 1;
   } while (c1 != '\0');
-  orig::FsWordCompletion_CountEntries((int)&u3);
+  orig::FsWordCompletion_CountEntries((int)&frame.u3);
   if (*(void **)((int)self_ + 0x20c) == (void *)0x0) {
     p2 = orig::Allocator_Generic_v3(0xc);
     if (p2 == (void *)0x0) {
@@ -12730,18 +12802,18 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind7Block(void * self_)
   else {
     orig::TextInputFiles_Clear(*(void **)((int)self_ + 0x20c));
   }
-  if (0 < i2) {
-    p3 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x20c),(bits32 *)&u3,0x4c);
-    i1 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x20c),u7);
+  if (0 < frame.i2) {
+    p3 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x20c),(bits32 *)&frame.u3,0x4c);
+    i1 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x20c),frame.u7);
     if ((p3 != (bits32 *)0x0) && (i1 != 0)) {
-      orig::FsWordCompletion_PackEntries(self_,i1,u7);
+      orig::FsWordCompletion_PackEntries(self_,i1,frame.u7);
       if (*(int *)((int)self_ + 0x214) < 0) {
         *(int *)((int)self_ + 0x214) = *(int *)((int)self_ + 0x224);
         *(int *)((int)self_ + 0x224) = *(int *)((int)self_ + 0x224) + 1;
       }
       orig::TextInputFiles_ResetCounters((void *)(*(int *)((int)self_ + 0x214) * 0x1f0 + 0x22c + (int)self_));
       u1 = (**(untyped_fn **)(*(int *)(*(int *)((int)self_ + 0x214) * 0x1f0 + 0x22c + (int)self_) + 0x14)
-              )(p3,i1,u7,0);
+              )(p3,i1,frame.u7,0);
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
@@ -12889,20 +12961,22 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind13Block(void * self_)
   char *p1;
   void *p2;
   char *p3;
-  char xi_frame[76] __attribute__((aligned(4)));
-  uint8_t  &u1 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &u2 = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
-  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
-  char  (&val1)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
-  char  (&val2)[40] = *reinterpret_cast<char  (*)[40]>(xi_frame + 36);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { uint8_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; uint8_t u2; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x2]; uint8_t u3; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_4[0x3]; uint8_t u4; };   // at 0x3
+    struct __attribute__((packed)) { unsigned char pad_5[0x4]; char val1[32]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; char val2[40]; };   // at 0x24
+  } frame;
   
-  u2 = *(uint8_t *)((int)self_ + 4);
-  u1 = 0x13;
-  u3 = 0;
-  u4 = 0;
+  frame.u2 = *(uint8_t *)((int)self_ + 4);
+  frame.u1 = 0x13;
+  frame.u3 = 0;
+  frame.u4 = 0;
   p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x93);
-  p3 = val1;
+  p3 = frame.val1;
   do {
     c1 = *p1;
     p1 = p1 + 1;
@@ -12910,14 +12984,14 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind13Block(void * self_)
     p3 = p3 + 1;
   } while (c1 != '\0');
   p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x94);
-  p3 = val2;
+  p3 = frame.val2;
   do {
     c1 = *p1;
     p1 = p1 + 1;
     *p3 = c1;
     p3 = p3 + 1;
   } while (c1 != '\0');
-  orig::FsWordCompletion_CountSupported((int)&u1);
+  orig::FsWordCompletion_CountSupported((int)&frame.u1);
   if (*(void **)((int)self_ + 0x210) == (void *)0x0) {
     p2 = orig::Allocator_Generic_v3(0xc);
     if (p2 == (void *)0x0) {
@@ -12931,7 +13005,7 @@ XI_API bits32 __thiscall FsWordCompletion_BuildKind13Block(void * self_)
   else {
     orig::TextInputFiles_Clear(*(void **)((int)self_ + 0x210));
   }
-  orig::FsWordCompletion_AddItem(self_,(uint32_t *)&u1,(int *)((int)self_ + 0x218),0x13);
+  orig::FsWordCompletion_AddItem(self_,(uint32_t *)&frame.u1,(int *)((int)self_ + 0x218),0x13);
   i1 = *(int *)((int)self_ + 0x218);
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(-1 < i1)));
 }
@@ -12977,16 +13051,18 @@ XI_API bits32 __thiscall FsWordCompletion_LoadData(void * self_)
   uint8_t *p5;
   bits32 *p6;
   uint64_t u5;
-  char xi_frame[92] __attribute__((aligned(4)));
-  LPVOID  &val1 = *reinterpret_cast<LPVOID  *>(xi_frame + 0);
-  uint8_t  &u6 = *reinterpret_cast<uint8_t  *>(xi_frame + 16);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 17);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[92];
+    struct __attribute__((packed)) { LPVOID val1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; uint8_t u6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x11]; uint32_t u7; };   // at 0x11
+    struct __attribute__((packed)) { unsigned char pad_4[0x58]; uint32_t u8; };   // at 0x58
+  } frame;
   
   i2 = 0;
-  u6 = 0;
-  u7 = u7 & 0xff000000;
-  val1 = (LPVOID)0x0;
+  frame.u6 = 0;
+  frame.u7 = frame.u7 & 0xff000000;
+  frame.val1 = (LPVOID)0x0;
   if (*(char *)self_ == '\0') {
     u5 = orig::Allocator_Generic_v1(0xc);
     if ((void *)u5 == (void *)0x0) {
@@ -13004,40 +13080,40 @@ XI_API bits32 __thiscall FsWordCompletion_LoadData(void * self_)
   u1 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,i1);
   if (-1 < (int)u1) {
     u5 = orig::Allocator_Generic_v1(u1);
-    val1 = (LPVOID)u5;
-    if (((val1 != (LPVOID)0x0) &&
-        (u2 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,i1,val1,u1,0), -1 < (int)u2)) &&
+    frame.val1 = (LPVOID)u5;
+    if (((frame.val1 != (LPVOID)0x0) &&
+        (u2 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,i1,frame.val1,u1,0), -1 < (int)u2)) &&
        (u2 == u1)) {
       if (0 < (int)u2) {
         do {
-          p2 = (bits32 *)(i2 + (int)val1);
-          p5 = &u6;
+          p2 = (bits32 *)(i2 + (int)frame.val1);
+          p5 = &frame.u6;
           for (i1 = 0x13; i1 != 0; i1 = i1 + -1) {
             *(bits32 *)p5 = *p2;
             p2 = p2 + 1;
             p5 = p5 + 4;
           }
-          if (((u7 & 0xff) == *(uint32_t *)((int)self_ + 4)) ||
-             ((u1 = u8, u6 < 7 && (u6 == 1)))) {
-            p2 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x208),(bits32 *)&u6,0x4c);
-            p3 = (bits32 *)orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x208),u8);
-            u1 = u8;
+          if (((frame.u7 & 0xff) == *(uint32_t *)((int)self_ + 4)) ||
+             ((u1 = frame.u8, frame.u6 < 7 && (frame.u6 == 1)))) {
+            p2 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x208),(bits32 *)&frame.u6,0x4c);
+            p3 = (bits32 *)orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x208),frame.u8);
+            u1 = frame.u8;
             if ((p2 == (bits32 *)0x0) || (p3 == (bits32 *)0x0)) goto code_101BB9A2;
-            p4 = (bits32 *)(i2 + 0x4c + (int)val1);
+            p4 = (bits32 *)(i2 + 0x4c + (int)frame.val1);
             p6 = p3;
-            for (u4 = u8 >> 2; u4 != 0; u4 = u4 - 1) {
+            for (u4 = frame.u8 >> 2; u4 != 0; u4 = u4 - 1) {
               *p6 = *p4;
               p4 = p4 + 1;
               p6 = p6 + 1;
             }
-            for (u4 = u8 & 3; u4 != 0; u4 = u4 - 1) {
+            for (u4 = frame.u8 & 3; u4 != 0; u4 = u4 - 1) {
               *(uint8_t *)p6 = *(uint8_t *)p4;
               p4 = (bits32 *)((int)p4 + 1);
               p6 = (bits32 *)((int)p6 + 1);
             }
             orig::TextInputFiles_ResetCounters((void *)(*(int *)((int)self_ + 0x224) * 0x1f0 + 0x22c + (int)self_));
             obj1 = (int *)(*(int *)((int)self_ + 0x224) * 0x1f0 + 0x22c + (int)self_);
-            ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x14))))((void *)(obj1),p2,p3,u8,0);
+            ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x14))))((void *)(obj1),p2,p3,frame.u8,0);
             i1 = *(int *)((int)self_ + 0x224) + 1;
             *(int *)((int)self_ + 0x224) = i1;
             if (0x40 < i1) goto code_101BB9A2;
@@ -13048,14 +13124,14 @@ XI_API bits32 __thiscall FsWordCompletion_LoadData(void * self_)
       *(bits32 *)((int)self_ + 0x228) = *(bits32 *)((int)self_ + 0x224);
       u3 = orig::FsWordCompletion__prepareAllData(self_,*(bits32 *)((int)self_ + 4));
       if (((char)u3 != '\0') && (u3 = orig::TextInputFiles_Store101BB070At8(self_), (char)u3 != '\0')) {
-        u5 = orig::operator_delete_v1(val1);
+        u5 = orig::operator_delete_v1(frame.val1);
         *(uint8_t *)self_ = 1;
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u5 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
 code_101BB9A2:
-  u5 = orig::operator_delete_v1(val1);
+  u5 = orig::operator_delete_v1(frame.val1);
   u1 = (uint32_t)u5;
   *(uint8_t *)self_ = 0;
   p1 = *(void **)((int)self_ + 0x208);
@@ -14099,13 +14175,15 @@ XI_API bits32 __thiscall TextInputFiles_CtorVt10337C3C(void * self_)
 XI_API void __thiscall TextInputFiles_WatchConfigWindow(void * self_)
 {
   int i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  p1 = self_;
+  frame.p1 = self_;
   if (*(int *)((int)self_ + 0xc) != -1) {
-    i1 = GetExitCodeThread(*(int *)((int)self_ + 0xc),&p1);
-    if ((i1 != 0) && (p1 != (void *)0x103)) {
+    i1 = GetExitCodeThread(*(int *)((int)self_ + 0xc),&frame.p1);
+    if ((i1 != 0) && (frame.p1 != (void *)0x103)) {
       CloseHandle(*(uint32_t *)((int)self_ + 0xc));
       *(uint32_t *)((int)self_ + 0xc) = 0xffffffff;
     }
@@ -14409,14 +14487,16 @@ XI_API int __stdcall TextInputFiles_DeleteFile(LPCSTR arg1)
 XI_API bits32 __stdcall TextInputFiles_FillSizeAndThreeDates(bits32 arg1, bits32 * arg2)
 {
   int i1;
-  char xi_frame[36] __attribute__((aligned(4)));
-  int  (&i2)[5] = *reinterpret_cast<int  (*)[5]>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { int i2[5]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint32_t u1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; uint32_t u2; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; uint32_t u3; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; uint32_t u4; };   // at 0x20
+  } frame;
   
-  i1 = orig::game_10312487(arg1,i2);
+  i1 = orig::game_10312487(arg1,frame.i2);
   if (i1 != 0) {
     for (i1 = 8; i1 != 0; i1 = i1 + -1) {
       *arg2 = 0;
@@ -14424,10 +14504,10 @@ XI_API bits32 __stdcall TextInputFiles_FillSizeAndThreeDates(bits32 arg1, bits32
     }
     return 0xffffffff;
   }
-  orig::TextInputFiles_SetField4(arg2,u1);
-  orig::TextInputFiles_SetDateAt9(arg2,u4);
-  orig::TextInputFiles_SetDateAt11(arg2,u2);
-  orig::TextInputFiles_SetDateAt19(arg2,u3);
+  orig::TextInputFiles_SetField4(arg2,frame.u1);
+  orig::TextInputFiles_SetDateAt9(arg2,frame.u4);
+  orig::TextInputFiles_SetDateAt11(arg2,frame.u2);
+  orig::TextInputFiles_SetDateAt19(arg2,frame.u3);
   return 1;
 }
 
@@ -14437,18 +14517,20 @@ XI_API bits32 __stdcall File_CreateParentDirs(int arg1)
 {
   char *p1;
   int i1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { char val1[256]; };   // at 0x0
+  } frame;
   
   i1 = 0;
   do {
-    p1 = val1 + i1;
-    if (p1[arg1 - (int)val1] == '/') {
+    p1 = frame.val1 + i1;
+    if (p1[arg1 - (int)frame.val1] == '/') {
       *p1 = '\0';
-      CreateDirectoryA(val1,0);
+      CreateDirectoryA(frame.val1,0);
     }
     i1 = i1 + 1;
-    *p1 = p1[arg1 - (int)val1];
+    *p1 = p1[arg1 - (int)frame.val1];
   } while (i1 < 0x100);
   return 1;
 }
@@ -14459,45 +14541,47 @@ XI_API int __thiscall XiFileImpl_QueueLoad(void * self_, bits32 arg2, bits32 arg
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u1 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
-  u3 = arg5;
-  u5 = arg4;
-  u4 = arg3;
-  u8 = arg6;
-  u9 = arg7;
-  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u1 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u2,0x100,frame.val1);
+  frame.u3 = arg5;
+  frame.u5 = arg4;
+  frame.u4 = arg3;
+  frame.u8 = arg6;
+  frame.u9 = arg7;
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
@@ -14508,43 +14592,45 @@ XI_API int __thiscall TextInputFiles_SubmitFileNumKind1(void * self_, uint32_t a
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u4 = arg5;
-  u5 = arg3;
-  u6 = arg4;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u4 = arg5;
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -14555,43 +14641,45 @@ XI_API int __thiscall TextInputFiles_SubmitPathKind1(void * self_, bits32 arg2, 
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg6);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u4 = arg5;
-  u6 = arg4;
-  u5 = arg3;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u4 = arg5;
+  frame.u6 = arg4;
+  frame.u5 = arg3;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -14602,43 +14690,45 @@ XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind1(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u4 = arg5;
-  u5 = arg3;
-  u6 = arg4;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u4 = arg5;
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -14649,43 +14739,45 @@ XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind1(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[260]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return -1;
   }
-  u2 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u4 = arg5;
-  u5 = arg3;
-  u6 = arg4;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u4 = arg5;
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -14695,41 +14787,43 @@ XI_API bits32 __thiscall TextInputFiles_ReadFileByName(void * self_, bits32 arg2
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[292] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[292];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)u2,arg7);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)frame.u2,arg7);
   if (i1 < 0) {
     return 0xffffffff;
   }
-  u3 = arg6;
-  u1 = 1;
-  u4 = arg4;
-  u5 = arg5;
-  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u3 = arg6;
+  frame.u1 = 1;
+  frame.u4 = arg4;
+  frame.u5 = arg5;
+  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return i1;
 }
 
@@ -14781,44 +14875,46 @@ XI_API int __thiscall TextInputFiles_QueueFileNumKind2(void * self_, uint32_t ar
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 280);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 284);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; int i2; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; int i3; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u7; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
   if ((arg6 != 0) && (arg7 != 0)) {
-    p2 = &g_10337200;
-    u1 = 0;
-    p1 = u2;
+    frame.p2 = &g_10337200;
+    frame.u1 = 0;
+    p1 = frame.u2;
     for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
       *p1 = 0;
       p1 = p1 + 1;
     }
-    u3 = 0;
-    u4 = 0;
-    u5 = 0;
-    u6 = 0;
-    i2 = 0;
-    i3 = 0;
-    u7 = 0;
-    i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+    frame.u3 = 0;
+    frame.u4 = 0;
+    frame.u5 = 0;
+    frame.u6 = 0;
+    frame.i2 = 0;
+    frame.i3 = 0;
+    frame.u7 = 0;
+    i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
     if (-1 < i1) {
-      u1 = 2;
-      orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
-      u3 = arg3;
-      u5 = arg4;
-      i2 = arg7;
-      i3 = arg6;
-      u7 = arg5;
-      i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+      frame.u1 = 2;
+      orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u2,0x100,frame.val1);
+      frame.u3 = arg3;
+      frame.u5 = arg4;
+      frame.i2 = arg7;
+      frame.i3 = arg6;
+      frame.u7 = arg5;
+      i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&frame.p2);
       return (uint32_t)(-1 < i1) * 2 + -1;
     }
   }
@@ -14831,43 +14927,45 @@ XI_API int __thiscall TextInputFiles_QueuePathKind3(void * self_, bits32 arg2, b
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg6);
   if (i1 < 0) {
     return -1;
   }
-  u1 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
-  u4 = arg3;
-  u5 = arg4;
-  u6 = orig::TextInputFiles_MapCode012(arg5);
-  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u2,0x100,frame.val1);
+  frame.u4 = arg3;
+  frame.u5 = arg4;
+  frame.u6 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
@@ -14877,43 +14975,45 @@ XI_API int __thiscall TextInputFiles_QueuePath2F4Kind3(void * self_, bits32 arg2
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u1 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
-  u4 = arg3;
-  u5 = arg4;
-  u6 = orig::TextInputFiles_MapCode012(arg5);
-  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u2,0x100,frame.val1);
+  frame.u4 = arg3;
+  frame.u5 = arg4;
+  frame.u6 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
@@ -14924,43 +15024,45 @@ XI_API int __thiscall TextInputFiles_QueuePath3F4Kind3(void * self_, bits32 arg2
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return -1;
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u5 = arg3;
-  u6 = arg4;
-  u7 = orig::TextInputFiles_MapCode012(arg5);
-  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  frame.u7 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
@@ -14971,43 +15073,45 @@ XI_API int __thiscall TextInputFiles_SubmitPathKind3(void * self_, bits32 arg2, 
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg6);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u5 = arg3;
-  u6 = arg4;
-  u7 = orig::TextInputFiles_MapCode012(arg5);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  frame.u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15018,43 +15122,45 @@ XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind3(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u5 = arg3;
-  u6 = arg4;
-  u7 = orig::TextInputFiles_MapCode012(arg5);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u5 = arg3;
+  frame.u6 = arg4;
+  frame.u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15065,49 +15171,51 @@ XI_API uint64_t __thiscall TextInputFiles_SubmitPath3F4Kind3(void * self_, bits3
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  CHAR  (&c1)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; CHAR c1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
   if (*(char *)((int)self_ + 0x3f4) != '\0') {
-    i1 = orig::TextInputFiles_FormatPathByKind(self_,c1,0x100,(char *)((int)self_ + 0x3f4));
+    i1 = orig::TextInputFiles_FormatPathByKind(self_,frame.c1,0x100,(char *)((int)self_ + 0x3f4));
     if (0 < i1) {
-      orig::TextInputFiles_CreateDirectories(c1,i1);
+      orig::TextInputFiles_CreateDirectories(frame.c1,i1);
     }
   }
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,c1);
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.c1);
   if ((int)u1 < 0) {
     return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,c1);
-  u6 = arg4;
-  u5 = arg3;
-  u7 = orig::TextInputFiles_MapCode012(arg5);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.c1);
+  frame.u6 = arg4;
+  frame.u5 = arg3;
+  frame.u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return u1;
 }
 
@@ -15121,38 +15229,40 @@ XI_API int __thiscall TextInputFiles_SubmitPath4F4Kind3(void * self_, bits32 arg
   uint32_t *p1;
   char *p2;
   uint64_t u2;
-  char xi_frame[804] __attribute__((aligned(4)));
-  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
-  CHAR  (&c2)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 548);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[804];
+    struct __attribute__((packed)) { uint8_t ** p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u5; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u6; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u7; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u8; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u9; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u10; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u11; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_12[0x224]; CHAR c2[256]; };   // at 0x224
+  } frame;
   
-  p3 = &g_10337200;
-  u3 = 0;
-  p1 = u4;
+  frame.p3 = &g_10337200;
+  frame.u3 = 0;
+  p1 = frame.u4;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u11 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  frame.u11 = 0;
   if (*(char *)((int)self_ + 0x4f4) != '\0') {
-    orig::_sprintf(val1,str__s__s_1037CBA0,(int)self_ + 0x4f4,arg2);
+    orig::_sprintf(frame.val1,str__s__s_1037CBA0,(int)self_ + 0x4f4,arg2);
     u1 = 0xffffffff;
-    p2 = val1;
+    p2 = frame.val1;
     do {
       if (u1 == 0) break;
       u1 = u1 - 1;
@@ -15163,21 +15273,21 @@ XI_API int __thiscall TextInputFiles_SubmitPath4F4Kind3(void * self_, bits32 arg
     do {
       u1 = u1 - 1;
       if ((int)u1 < 1) goto code_101C0814;
-    } while (val1[u1] != '/');
-    val1[u1] = '\0';
+    } while (frame.val1[u1] != '/');
+    frame.val1[u1] = '\0';
 code_101C0814:
-    i1 = orig::TextInputFiles_CopyPathByMode(self_,c2,0x100,val1);
+    i1 = orig::TextInputFiles_CopyPathByMode(self_,frame.c2,0x100,frame.val1);
     if (0 < i1) {
-      orig::TextInputFiles_CreateDirectories(c2,c2);
+      orig::TextInputFiles_CreateDirectories(frame.c2,frame.c2);
     }
   }
-  i1 = orig::TextInputFiles_FormatStrAt4F4(self_,arg2,(uint8_t *)u4);
+  i1 = orig::TextInputFiles_FormatStrAt4F4(self_,arg2,(uint8_t *)frame.u4);
   if (-1 < i1) {
-    u3 = 3;
-    u6 = arg3;
-    u7 = arg4;
-    u8 = orig::TextInputFiles_MapCode012(arg5);
-    u2 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p3);
+    frame.u3 = 3;
+    frame.u6 = arg3;
+    frame.u7 = arg4;
+    frame.u8 = orig::TextInputFiles_MapCode012(arg5);
+    u2 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p3);
     return (int)u2;
   }
   return -1;
@@ -15188,11 +15298,13 @@ code_101C0814:
 XI_API int __thiscall TextInputFiles_CreateDirAndWait(void * self_)
 {
   int i1;
-  char xi_frame[512] __attribute__((aligned(4)));
-  CHAR  (&c1)[512] = *reinterpret_cast<CHAR  (*)[512]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[512];
+    struct __attribute__((packed)) { CHAR c1[512]; };   // at 0x0
+  } frame;
   
-  orig::game_1030FED0(0x21,c1,0x1ff,1);
-  CreateDirectoryA(c1,(LPSECURITY_ATTRIBUTES)0x0);
+  orig::game_1030FED0(0x21,frame.c1,0x1ff,1);
+  CreateDirectoryA(frame.c1,(LPSECURITY_ATTRIBUTES)0x0);
   orig::TextInputFiles_WaitEvent18At8(*(void **)((int)self_ + 0x1f0));
   i1 = orig::game_10311365();
   if (-1 < i1) {
@@ -15213,37 +15325,39 @@ XI_API bits32 __thiscall TextInputFiles_CreateDirAndHandleFile(void * self_, bit
   int i1;
   void *obj1;
   uint32_t *p1;
-  char xi_frame[804] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  CHAR  (&aCStack_200)[512] = *reinterpret_cast<CHAR  (*)[512]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[804];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; CHAR aCStack_200[512]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
   i1 = orig::game_10311370(arg2);
   if (i1 != 0) {
-    orig::game_1030FED0(0x21,aCStack_200,0x1ff,1);
-    CreateDirectoryA(aCStack_200,(LPSECURITY_ATTRIBUTES)0x0);
+    orig::game_1030FED0(0x21,frame.aCStack_200,0x1ff,1);
+    CreateDirectoryA(frame.aCStack_200,(LPSECURITY_ATTRIBUTES)0x0);
     orig::TextInputFiles_WaitEvent18At8(*(void **)((int)self_ + 0x1f0));
     i1 = orig::game_10311365();
     if (i1 < 0) {
@@ -15257,16 +15371,16 @@ XI_API bits32 __thiscall TextInputFiles_CreateDirAndHandleFile(void * self_, bit
       obj1 = *(void **)((int)self_ + 0x1f0);
       if (-1 < i1) {
         orig::TextInputFiles_SignalMember8(obj1);
-        i1 = orig::TextInputFiles_FormatWithBase(arg2,0x21,u2,1);
+        i1 = orig::TextInputFiles_FormatWithBase(arg2,0x21,frame.u2,1);
         if (i1 < 0) {
           return 0xffffffff;
         }
-        u1 = 3;
-        u4 = arg3;
-        u5 = arg4;
-        u6 = orig::TextInputFiles_MapCode012(arg5);
-        orig::game_101C0BC0(&aS,u2);
-        i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+        frame.u1 = 3;
+        frame.u4 = arg3;
+        frame.u5 = arg4;
+        frame.u6 = orig::TextInputFiles_MapCode012(arg5);
+        orig::game_101C0BC0(&aS,frame.u2);
+        i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
         return i1;
       }
     }
@@ -15282,40 +15396,42 @@ XI_API int __thiscall TextInputFiles_SubmitPathKind6(void * self_, bits32 arg2, 
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg3);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 6;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 6;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15326,40 +15442,42 @@ XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind6(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[260]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return -1;
   }
-  u2 = 6;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 6;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15370,42 +15488,44 @@ XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind1(void * self_, uint32_
   uint32_t u1;
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
   if ((int)u1 < 0) {
     return u1 & 0xffffff00;
   }
-  u5 = arg3;
-  u2 = 1;
-  u4 = arg4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u5 = arg3;
+  frame.u2 = 1;
+  frame.u4 = arg4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return u1;
 }
 
@@ -15416,40 +15536,42 @@ XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind2(void * self_, uint32_
   uint32_t u1;
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
   if ((int)u1 < 0) {
     return u1 & 0xffffff00;
   }
-  u2 = 2;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u2 = 2;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return u1;
 }
 
@@ -15460,40 +15582,42 @@ XI_API uint32_t __thiscall TextInputFiles_FindPathKind3(void * self_, bits32 arg
   uint32_t u1;
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg3);
   if ((int)u1 < 0) {
     return u1 & 0xffffff00;
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return u1;
 }
 
@@ -15504,40 +15628,42 @@ XI_API uint32_t __thiscall TextInputFiles_FindPath2F4Kind3(void * self_, bits32 
   uint32_t u1;
   int i1;
   uint32_t *p1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return u1 & 0xffffff00;
   }
-  u2 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return u1;
 }
 
@@ -15549,40 +15675,42 @@ XI_API uint32_t __thiscall TextInputFiles_FindPath3F4Kind3(void * self_, bits32 
   int i1;
   uint32_t *p1;
   uint64_t u2;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u5; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u6; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u7; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u8; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u9; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u10; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u11; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u3 = 0;
-  p1 = u4;
+  frame.p2 = &g_10337200;
+  frame.u3 = 0;
+  p1 = frame.u4;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u11 = 0;
-  u2 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  frame.u11 = 0;
+  u2 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u2 < 0) {
     return (uint32_t)xi_trunc24(((uint64_t)u2 >> 8)) << 8;
   }
-  u3 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u4,0x100,val1);
-  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  frame.u3 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u4,0x100,frame.val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&frame.p2);
   return u1;
 }
 
@@ -15593,40 +15721,42 @@ XI_API int __thiscall TextInputFiles_SubmitFileNumKind4(void * self_, uint32_t a
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15637,40 +15767,42 @@ XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind4(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return -1;
   }
-  u2 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15681,40 +15813,42 @@ XI_API int __thiscall TextInputFiles_SubmitPathKind4(void * self_, bits32 arg2, 
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,frame.val1,arg3);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15725,40 +15859,42 @@ XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind4(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[260]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,frame.val1);
   if (i1 < 0) {
     return -1;
   }
-  u2 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15768,38 +15904,40 @@ XI_API int __thiscall TextInputFiles_GetFileSizeByName(void * self_, bits32 arg2
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[292] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[292];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u3; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u4; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u5; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)u2,arg4);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)frame.u2,arg4);
   if (i1 < 0) {
     return -1;
   }
-  u1 = 4;
-  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u1 = 4;
+  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return i1;
 }
 
@@ -15820,41 +15958,43 @@ XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind5(void * self_, bits32 arg
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return -1;
   }
-  u2 = 5;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u5 = arg3;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 5;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  frame.u5 = arg3;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return (int)u1;
 }
 
@@ -15865,40 +16005,42 @@ XI_API bits32 __thiscall TextInputFiles_SubmitPath3F4Kind7(void * self_, bits32 
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[548];
+    struct __attribute__((packed)) { uint8_t ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3[64]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x108]; uint32_t u4; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t u6; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u7; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u8; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u9; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u10; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; char val1[256]; };   // at 0x124
+  } frame;
   
-  p2 = &g_10337200;
-  u2 = 0;
-  p1 = u3;
+  frame.p2 = &g_10337200;
+  frame.u2 = 0;
+  p1 = frame.u3;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,frame.val1);
   if ((int)u1 < 0) {
     return (uint32_t)xi_trunc24(((uint64_t)u1 >> 8)) << 8;
   }
-  u2 = 7;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u2 = 7;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u3,0x100,frame.val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 8))) << 8) | (uint8_t)((int)u1 == 1)));
 }
 
@@ -15915,17 +16057,19 @@ XI_API void __thiscall TextInputFiles_WriteTimestampFwd(void * self_, bits32 xi_
 XI_API int __thiscall TextInputFiles_OpenHexPath(void * self_, bits32 xi_s1)
 {
   int i1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  CHAR  (&c1)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { CHAR c1[256]; };   // at 0x0
+  } frame;
   
   if (*(char *)((int)self_ + 0xd0) == '\0') {
-    orig::_sprintf_v1(c1,str__s__x_1037CBC8,(int)self_ + 500,xi_s1);
+    orig::_sprintf_v1(frame.c1,str__s__x_1037CBC8,(int)self_ + 500,xi_s1);
   }
   else {
-    orig::_sprintf_v1(c1,str__s__s__x_1037CBD0,(int)self_ + 0xd0);
+    orig::_sprintf_v1(frame.c1,str__s__s__x_1037CBD0,(int)self_ + 0xd0);
   }
   orig::TextInputFiles_ReleaseAt1F0(self_);
-  i1 = orig::game_101C4080(c1);
+  i1 = orig::game_101C4080(frame.c1);
   orig::TextInputFiles_GetValueAt1F0(self_);
   if (i1 < 0) {
     return i1;
@@ -16001,11 +16145,13 @@ XI_API bits32 __thiscall TextInputFiles_FormatStrAt4F4(void * self_, bits32 arg2
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API bits32 __stdcall TextInputFiles_FormatWithBase(bits32 arg1, bits32 arg2, uint8_t * arg3, bits32 arg4)
 {
-  char xi_frame[512] __attribute__((aligned(4)));
-  uint8_t  (&u1)[512] = *reinterpret_cast<uint8_t  (*)[512]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[512];
+    struct __attribute__((packed)) { uint8_t u1[512]; };   // at 0x0
+  } frame;
   
-  orig::game_1030FED0(arg2,u1,0x1ff,arg4);
-  orig::_sprintf_v1(arg3,&g_10350FF8,u1,arg1);
+  orig::game_1030FED0(arg2,frame.u1,0x1ff,arg4);
+  orig::_sprintf_v1(arg3,&g_10350FF8,frame.u1,arg1);
   return 1;
 }
 
@@ -16103,22 +16249,24 @@ XI_API bits32 __attribute__((stdcall, regparm(1))) TextInputFiles_CreateDirector
   int i1;
   DWORD u1;
   char *p2;
-  char xi_frame[256] __attribute__((aligned(4)));
-  char  (&val1)[255] = *reinterpret_cast<char  (*)[255]>(xi_frame + 0);
-  uint8_t  &u2 = *reinterpret_cast<uint8_t  *>(xi_frame + 255);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { char val1[255]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xFF]; uint8_t u2; };   // at 0xFF
+  } frame;
   
   i1 = CreateDirectoryA(arg2,0);
   if (i1 == 0) {
     u1 = GetLastError();
     if (u1 != 0xb7) {
-      orig::_strncpy_v2(val1,arg2,0x100);
-      u2 = 0;
-      if (val1[0] != '\0') {
-        p2 = val1;
+      orig::_strncpy_v2(frame.val1,arg2,0x100);
+      frame.u2 = 0;
+      if (frame.val1[0] != '\0') {
+        p2 = frame.val1;
         do {
           if (*p2 == '/') {
             *p2 = '\0';
-            i1 = CreateDirectoryA(val1,0);
+            i1 = CreateDirectoryA(frame.val1,0);
             if (i1 == 0) {
               u1 = GetLastError();
               if (u1 != 0xb7) {
@@ -16142,42 +16290,44 @@ XI_API void __thiscall TextInputFiles_WriteTimestamp(void * self_, bits32 xi_s1)
 {
   int i1;
   uint32_t *p1;
-  char xi_frame[552] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 272);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t ** p2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u2[64]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u3; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; int * p3; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u4; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u5; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u6; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u7; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; uint32_t u8; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_12[0x128]; char val1[256]; };   // at 0x128
+  } frame;
   
-  p2 = &g_10337200;
-  u1 = 0;
-  p1 = u2;
+  frame.p2 = &g_10337200;
+  frame.u1 = 0;
+  p1 = frame.u2;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u3 = 0;
-  p3 = (int *)0x0;
-  u4 = 0;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  orig::_sprintf(val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
-  i2 = orig::ntGameTimeGet();
-  u1 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
-  p3 = &i2;
-  u4 = 4;
-  u5 = orig::TextInputFiles_MapCode012(0);
-  orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  frame.u3 = 0;
+  frame.p3 = (int *)0x0;
+  frame.u4 = 0;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  orig::_sprintf(frame.val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
+  frame.i2 = orig::ntGameTimeGet();
+  frame.u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u2,0x100,frame.val1);
+  frame.p3 = &frame.i2;
+  frame.u4 = 4;
+  frame.u5 = orig::TextInputFiles_MapCode012(0);
+  orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
   return;
 }
 
@@ -16188,41 +16338,43 @@ XI_API uint32_t __thiscall TextInputFiles_ReadTimestamp(void * self_, bits32 xi_
   int i1;
   uint32_t *p1;
   uint64_t u1;
-  char xi_frame[552] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 272);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t ** p2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4[64]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10C]; uint32_t u5; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_6[0x110]; uint32_t * p3; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_7[0x114]; uint32_t u6; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_8[0x118]; uint32_t u7; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_9[0x11C]; uint32_t u8; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_10[0x120]; uint32_t u9; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_11[0x124]; uint32_t u10; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_12[0x128]; char val1[256]; };   // at 0x128
+  } frame;
   
-  p2 = &g_10337200;
-  u3 = 0;
-  p1 = u4;
+  frame.p2 = &g_10337200;
+  frame.u3 = 0;
+  p1 = frame.u4;
   for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
-  u5 = 0;
-  p3 = (uint32_t *)0x0;
-  u6 = 0;
-  u7 = 0;
-  u8 = 0;
-  u9 = 0;
-  u10 = 0;
-  orig::_sprintf(val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
-  u3 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u4,0x100,val1);
-  p3 = &u2;
-  u6 = 4;
-  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
-  return u2 & ((int)u1 < 0) - 1;
+  frame.u5 = 0;
+  frame.p3 = (uint32_t *)0x0;
+  frame.u6 = 0;
+  frame.u7 = 0;
+  frame.u8 = 0;
+  frame.u9 = 0;
+  frame.u10 = 0;
+  orig::_sprintf(frame.val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
+  frame.u3 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)frame.u4,0x100,frame.val1);
+  frame.p3 = &frame.u2;
+  frame.u6 = 4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&frame.p2);
+  return frame.u2 & ((int)u1 < 0) - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C46E0

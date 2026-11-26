@@ -752,15 +752,17 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YkWindows_LoadDatListSync(bit
 XI_API bits32 __thiscall YkWindows_LoadDatSync(void * self_, bits32 arg2)
 {
   uint32_t u1;
-  char xi_frame[352] __attribute__((aligned(4)));
-  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
-  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[352];
+    struct __attribute__((packed)) { char val1[64]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; uint8_t u2[288]; };   // at 0x40
+  } frame;
   
   *(uint32_t *)((int)self_ + 0x1c) = 1;
-  orig::game_101E2880(val1,arg2);
-  orig::TextInputFiles_DatEntryCtor(u2,1,val1,self_,0x20,0,self_,1);
-  u1 = orig::XI_CRYPT_101B9A10(u2);
-  orig::TextInputFiles_ClearVtable(u2);
+  orig::game_101E2880(frame.val1,arg2);
+  orig::TextInputFiles_DatEntryCtor(frame.u2,1,frame.val1,self_,0x20,0,self_,1);
+  u1 = orig::XI_CRYPT_101B9A10(frame.u2);
+  orig::TextInputFiles_ClearVtable(frame.u2);
   return u1;
 }
 
@@ -2337,19 +2339,21 @@ XI_API void * __thiscall Yk_InitBase(void * self_, bits32 arg2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall YkWindows_ReadRectAndShowHelp(void * self_)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint16_t  &u1 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  uint16_t  &u2 = *reinterpret_cast<uint16_t  *>(xi_frame + 2);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint16_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; uint16_t u2; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u4; };   // at 0x6
+  } frame;
   
-  u1 = 0;
-  u2 = 0;
-  u3 = 0;
-  u4 = 0;
-  orig::NetCellFont_GetRect_v2(*(void **)((int)self_ + 8),(uint32_t *)&u1);
-  *(uint16_t *)((int)self_ + 0x28) = u1;
-  *(uint16_t *)((int)self_ + 0x2a) = u2;
+  frame.u1 = 0;
+  frame.u2 = 0;
+  frame.u3 = 0;
+  frame.u4 = 0;
+  orig::NetCellFont_GetRect_v2(*(void **)((int)self_ + 8),(uint32_t *)&frame.u1);
+  *(uint16_t *)((int)self_ + 0x28) = frame.u1;
+  *(uint16_t *)((int)self_ + 0x2a) = frame.u2;
   orig::YkWindows_ShowSelectedHelp(self_,0);
   return;
 }
@@ -2599,12 +2603,14 @@ XI_API uint8_t * __cdecl YkWindows_FormatTargetMapGrid(bits32 arg1)
   uint32_t u2;
   uint32_t u3;
   uint64_t u4;
-  char xi_frame[20] __attribute__((aligned(4)));
-  short  &i2 = *reinterpret_cast<short  *>(xi_frame + 0);
-  short  &i3 = *reinterpret_cast<short  *>(xi_frame + 2);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[20];
+    struct __attribute__((packed)) { short i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i3; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint32_t u5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_5[0xC]; float f2; };   // at 0xC
+  } frame;
   
   if ((g_104DFD98 == 0) || (u4 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0), (int)u4 == 0)) {
     return (uint8_t *)0x0;
@@ -2615,24 +2621,24 @@ XI_API uint8_t * __cdecl YkWindows_FormatTargetMapGrid(bits32 arg1)
   u4 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   self_ = (int *)u4;
   p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
-  u5 = *p1;
+  frame.u5 = *p1;
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
-  f1 = *(float *)(i1 + 4);
+  frame.f1 = *(float *)(i1 + 4);
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
-  f2 = *(float *)(i1 + 8);
+  frame.f2 = *(float *)(i1 + 8);
   ((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
-  xi_s6 = f2;
-  u1 = u5;
-  u2 = orig::ZoneMap_QueryBoxHeightBandThenGetCount34154(g_pZoneMap,u5,f1,f2);
-  u3 = orig::YkWindows_GetEntryPosition(*(uint32_t *)(g_104DFD98 + 0x3c350),u2,&i3,&i2,u1,
+  xi_s6 = frame.f2;
+  u1 = frame.u5;
+  u2 = orig::ZoneMap_QueryBoxHeightBandThenGetCount34154(g_pZoneMap,frame.u5,frame.f1,frame.f2);
+  u3 = orig::YkWindows_GetEntryPosition(*(uint32_t *)(g_104DFD98 + 0x3c350),u2,&frame.i3,&frame.i2,u1,
                       xi_s6);
   if ((char)u3 == '\0') {
     orig::_sprintf_v1(&g_10663798,str_______10384FE4);
     return(uint8_t*)(&g_10663798);
   }
   orig::_sprintf_v1(&g_10663798,str___c__d__10384FEC,
-               ((int)(i3 + -0x10 + (i3 + -0x10 >> 0x1f & 0x1fU)) >> 5) + 0x41,
-               ((int)(i2 + -0x10 + (i2 + -0x10 >> 0x1f & 0x1fU)) >> 5) + 1);
+               ((int)(frame.i3 + -0x10 + (frame.i3 + -0x10 >> 0x1f & 0x1fU)) >> 5) + 0x41,
+               ((int)(frame.i2 + -0x10 + (frame.i2 + -0x10 >> 0x1f & 0x1fU)) >> 5) + 1);
   return(uint8_t*)(&g_10663798);
 }
 
@@ -2876,27 +2882,29 @@ XI_API void __thiscall YkWindows_LoadMapMarkerFile(void * self_, bits32 xi_s1, b
   int i2;
   uint32_t *p4;
   uint64_t u3;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&u4)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u4[32]; };   // at 0x0
+  } frame;
   
   if (g_104DFD98 == 0) {
     return;
   }
-  orig::_sprintf(u4,str_M_03d_02d_MRK_1038501C,xi_s1,xi_s2);
-  xi_s3 = orig::TextInputFiles_FileMngFwd101C1DF0(g_pFileMng_as_v0,u4,0);
+  orig::_sprintf(frame.u4,str_M_03d_02d_MRK_1038501C,xi_s1,xi_s2);
+  xi_s3 = orig::TextInputFiles_FileMngFwd101C1DF0(g_pFileMng_as_v0,frame.u4,0);
   if ((int)xi_s3 < 0) {
-    orig::_sprintf(u4,str_M_03d_02d__08d_MRK_10385008,xi_s1,xi_s2,
+    orig::_sprintf(frame.u4,str_M_03d_02d__08d_MRK_10385008,xi_s1,xi_s2,
                  *(uint32_t *)(g_104DFD98 + 0x3c390));
-    xi_s3 = orig::TextInputFiles_FileMngFwd101C1DF0(g_pFileMng_as_v0,u4,0);
+    xi_s3 = orig::TextInputFiles_FileMngFwd101C1DF0(g_pFileMng_as_v0,frame.u4,0);
     if ((int)xi_s3 < 0) goto code_101F81C7;
   }
   if (xi_s3 == 0x1c0) {
-    xi_s3 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,u4,(int)self_ + 0x6cc,0x1c0,0,0);
+    xi_s3 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,frame.u4,(int)self_ + 0x6cc,0x1c0,0,0);
   }
   else {
     u3 = orig::Allocator_Generic_v1(xi_s3);
     xi_s2_00 = (uint32_t *)u3;
-    i1 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,u4,xi_s2_00,xi_s3,0,0);
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,frame.u4,xi_s2_00,xi_s3,0,0);
     if (i1 == 0x1c8) {
       *(uint32_t *)((int)self_ + 0x6cc) = *xi_s2_00;
       *(uint32_t *)((int)self_ + 0x6d0) = xi_s2_00[2];
@@ -2957,17 +2965,19 @@ code_101F81C7:
 XI_API void __thiscall YkWindows_SubmitMarkerFile(void * self_, bits32 xi_s1, bits32 xi_s2)
 {
   uint32_t u1;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&u2)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u2[32]; };   // at 0x0
+  } frame;
   
   if (g_104DFD98 != 0) {
     u1 = orig::YkCommon_Checksum((uint8_t *)((int)self_ + 0x6d4),0x1b8);
     *(uint32_t *)((int)self_ + 0x6d0) = u1;
-    orig::_sprintf_v1(u2,str_M_03d_02d__08d_MRK_10385008,xi_s1,xi_s2,
+    orig::_sprintf_v1(frame.u2,str_M_03d_02d__08d_MRK_10385008,xi_s1,xi_s2,
                  *(uint32_t *)(g_104DFD98 + 0x3c390));
-    orig::TextInputFiles_FileMngSubmitPathKind6(g_pFileMng_as_v0,u2,0);
-    orig::_sprintf_v1(u2,str_M_03d_02d_MRK_1038501C,xi_s1,xi_s2);
-    orig::TextInputFiles_FileMngSubmitPathKind3_v1(g_pFileMng_as_v0,u2,(int)self_ + 0x6cc,0x1c0,0,0);
+    orig::TextInputFiles_FileMngSubmitPathKind6(g_pFileMng_as_v0,frame.u2,0);
+    orig::_sprintf_v1(frame.u2,str_M_03d_02d_MRK_1038501C,xi_s1,xi_s2);
+    orig::TextInputFiles_FileMngSubmitPathKind3_v1(g_pFileMng_as_v0,frame.u2,(int)self_ + 0x6cc,0x1c0,0,0);
   }
   return;
 }
@@ -3098,15 +3108,17 @@ XI_API void __thiscall YkWindows_ReportMapChange(void * self_, int arg2)
 {
   uint32_t u1;
   uint32_t u2;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u3)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u3[256]; };   // at 0x0
+  } frame;
   
   if (*(short *)((int)self_ + 0x108) != arg2) {
     *(short *)((int)self_ + 0x108) = (short)arg2;
     u1 = orig::game_101CBC10(arg2,1);
     u2 = orig::TargetMenu_GetMessageFwd(10,7);
-    orig::_sprintf(u3,u2,u1);
-    orig::ChatLog_AddTextCode379(g_pTkMsgWinData_as_v1,u3);
+    orig::_sprintf(frame.u3,u2,u1);
+    orig::ChatLog_AddTextCode379(g_pTkMsgWinData_as_v1,frame.u3);
   }
   return;
 }
@@ -3822,29 +3834,31 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YkWindows_SortEntries(bits32 
   int i3;
   uint32_t u4;
   uint8_t u5;
-  char xi_frame[228] __attribute__((aligned(4)));
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  (&u7)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 12);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  uint32_t  (&u10)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 36);
-  uint8_t  (&u11)[178] = *reinterpret_cast<uint8_t  (*)[178]>(xi_frame + 50);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[228];
+    struct __attribute__((packed)) { uint32_t u6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; uint32_t u7[4]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; uint32_t u8; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; uint32_t u9; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; uint32_t u10[3]; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x32]; uint8_t u11[178]; };   // at 0x32
+  } frame;
   
   u1 = *(uint16_t *)((int)self_ + 0x30);
   if (u1 == 0) {
     return xi_eax & 0xffffff00;
   }
-  p1 = u7;
+  p1 = frame.u7;
   for (i1 = 6; i1 != 0; i1 = i1 + -1) {
     *p1 = 0;
     p1 = p1 + 1;
   }
   i3 = 0;
-  u7[0] = u7[0] ^ (u1 - 0x3f ^ u7[0]) & 0x7f;
+  frame.u7[0] = frame.u7[0] ^ (u1 - 0x3f ^ frame.u7[0]) & 0x7f;
   p1 = (uint32_t *)((int)self_ + 0x58);
   i1 = 0xc;
-  p2 = u10;
+  p2 = frame.u10;
   do {
     p3 = p2;
     if (p1[1] != 0xffff) {
@@ -3859,85 +3873,85 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YkWindows_SortEntries(bits32 
     i1 = i1 + -1;
     p2 = p3;
   } while (i1 != 0);
-  i4 = 0;
-  u6 = 0x1000000;
-  u4 = u7[1];
+  frame.i4 = 0;
+  frame.u6 = 0x1000000;
+  u4 = frame.u7[1];
   do {
     i1 = 0;
     if (0 < i3) {
-      p1 = u10;
+      p1 = frame.u10;
 code_101FD6B2:
-      if ((*p1 & u6) == 0) goto L1;
+      if ((*p1 & frame.u6) == 0) goto L1;
       i2 = i1 * 0x10;
-      u7[0] = u7[0] | u6 << 7;
-      u2 = u10[i1 * 4 + 1] - 0x707f;
-      switch(xi_sw(i4)) {
+      frame.u7[0] = frame.u7[0] | frame.u6 << 7;
+      u2 = frame.u10[i1 * 4 + 1] - 0x707f;
+      switch(xi_sw(frame.i4)) {
       case 0:
         u4 = u4 ^ (u4 ^ u2) & 0x1ff;
-        u7[1] = u4;
-        u8 = u8 & 0xffffcfff ^ (u11[i2] & 3) << 0xc;
+        frame.u7[1] = u4;
+        frame.u8 = frame.u8 & 0xffffcfff ^ (frame.u11[i2] & 3) << 0xc;
         break;
       case 1:
         u4 = u4 ^ (u2 * 0x200 ^ u4) & 0x3fe00;
-        u7[1] = u4;
-        u8 = u8 & 0xffff3fff ^ (u11[i2] & 3) << 0xe;
+        frame.u7[1] = u4;
+        frame.u8 = frame.u8 & 0xffff3fff ^ (frame.u11[i2] & 3) << 0xe;
         break;
       case 2:
         u4 = u4 ^ (u2 * 0x40000 ^ u4) & 0x7fc0000;
-        u7[1] = u4;
-        u8 = u8 & 0xfffcffff ^ (u11[i2] & 3) << 0x10;
+        frame.u7[1] = u4;
+        frame.u8 = frame.u8 & 0xfffcffff ^ (frame.u11[i2] & 3) << 0x10;
         break;
       case 3:
-        u7[2] = u7[2] & 0xfffffff0 | (int)u2 >> 5 & 0xfU;
-        u4 = u7[1] & 0x7ffffff ^ u2 * 0x8000000;
-        u7[1] = u4;
-        u8 = u8 & 0xfff3ffff ^ (u11[i2] & 3) << 0x12;
+        frame.u7[2] = frame.u7[2] & 0xfffffff0 | (int)u2 >> 5 & 0xfU;
+        u4 = frame.u7[1] & 0x7ffffff ^ u2 * 0x8000000;
+        frame.u7[1] = u4;
+        frame.u8 = frame.u8 & 0xfff3ffff ^ (frame.u11[i2] & 3) << 0x12;
         break;
       case 4:
-        u7[2] = u7[2] ^ (u2 * 0x10 ^ u7[2]) & 0x1ff0;
-        u8 = u8 & 0xffcfffff ^ (u11[i2] & 3) << 0x14;
+        frame.u7[2] = frame.u7[2] ^ (u2 * 0x10 ^ frame.u7[2]) & 0x1ff0;
+        frame.u8 = frame.u8 & 0xffcfffff ^ (frame.u11[i2] & 3) << 0x14;
         break;
       case 5:
-        u7[2] = u7[2] ^ (u2 * 0x2000 ^ u7[2]) & 0x3fe000;
-        u8 = u8 & 0xff3fffff ^ (u11[i2] & 3) << 0x16;
+        frame.u7[2] = frame.u7[2] ^ (u2 * 0x2000 ^ frame.u7[2]) & 0x3fe000;
+        frame.u8 = frame.u8 & 0xff3fffff ^ (frame.u11[i2] & 3) << 0x16;
         break;
       case 6:
-        u7[2] = u7[2] ^ (u2 * 0x400000 ^ u7[2]) & 0x7fc00000;
-        u8 = u8 & 0xfcffffff ^ (u11[i2] & 3) << 0x18;
+        frame.u7[2] = frame.u7[2] ^ (u2 * 0x400000 ^ frame.u7[2]) & 0x7fc00000;
+        frame.u8 = frame.u8 & 0xfcffffff ^ (frame.u11[i2] & 3) << 0x18;
         break;
       case 7:
-        u7[3] = u7[3] & 0xffffff00 | (int)u2 >> 1 & 0xffU;
-        u7[2] = u7[2] & 0x7fffffff ^ u2 * -0x80000000;
-        u8 = u8 & 0xf3ffffff ^ (u11[i2] & 3) << 0x1a;
+        frame.u7[3] = frame.u7[3] & 0xffffff00 | (int)u2 >> 1 & 0xffU;
+        frame.u7[2] = frame.u7[2] & 0x7fffffff ^ u2 * -0x80000000;
+        frame.u8 = frame.u8 & 0xf3ffffff ^ (frame.u11[i2] & 3) << 0x1a;
         break;
       case 8:
-        u7[3] = u7[3] ^ (u2 * 0x100 ^ u7[3]) & 0x1ff00;
-        u8 = u8 & 0xcfffffff ^ (u11[i2] & 3) << 0x1c;
+        frame.u7[3] = frame.u7[3] ^ (u2 * 0x100 ^ frame.u7[3]) & 0x1ff00;
+        frame.u8 = frame.u8 & 0xcfffffff ^ (frame.u11[i2] & 3) << 0x1c;
         break;
       case 9:
-        u7[3] = u7[3] ^ (u2 * 0x20000 ^ u7[3]) & 0x3fe0000;
-        u8 = u8 & 0x3fffffff ^ (int)(char)u11[i2] << 0x1e;
+        frame.u7[3] = frame.u7[3] ^ (u2 * 0x20000 ^ frame.u7[3]) & 0x3fe0000;
+        frame.u8 = frame.u8 & 0x3fffffff ^ (int)(char)frame.u11[i2] << 0x1e;
         break;
       case 10:
-        u8 = u8 & 0xfffffff8 | (int)u2 >> 6 & 7U;
-        u7[3] = u7[3] & 0x3ffffff ^ u2 * 0x4000000;
-        u9 = u11[i2] & 3 | u9 & 0xfffffffc;
+        frame.u8 = frame.u8 & 0xfffffff8 | (int)u2 >> 6 & 7U;
+        frame.u7[3] = frame.u7[3] & 0x3ffffff ^ u2 * 0x4000000;
+        frame.u9 = frame.u11[i2] & 3 | frame.u9 & 0xfffffffc;
         goto code_101FD8DA;
       case 0xb:
-        u8 = u8 ^ (u2 * 8 ^ u8) & 0xff8;
-        u9 = (u11[i2] & 3) << 2 ^ u9 & 0xfffffff3;
+        frame.u8 = frame.u8 ^ (u2 * 8 ^ frame.u8) & 0xff8;
+        frame.u9 = (frame.u11[i2] & 3) << 2 ^ frame.u9 & 0xfffffff3;
 code_101FD8DA:
       }
-      i4 = i4 + 1;
-      u10[i1 * 4] = 0;
+      frame.i4 = frame.i4 + 1;
+      frame.u10[i1 * 4] = 0;
     }
 code_101FD8F3:
-    u6 = u6 >> 1;
-  } while (u6 != 0);
+    frame.u6 = frame.u6 >> 1;
+  } while (frame.u6 != 0);
   i1 = 6;
   u5 = true;
   p1 = arg4;
-  p2 = u7;
+  p2 = frame.u7;
   do {
     if (i1 == 0) break;
     i1 = i1 + -1;
@@ -3947,7 +3961,7 @@ code_101FD8F3:
   } while (u5);
   u3 = xi_trunc24(((uint32_t)arg4 >> 8));
   if (!u5) {
-    p1 = u7;
+    p1 = frame.u7;
     for (i1 = 6; i1 != 0; i1 = i1 + -1) {
       *arg4 = *p1;
       p1 = p1 + 1;
@@ -4116,24 +4130,26 @@ XI_API bits32 __thiscall YkWindows_DrawCountersAndGauge(void * self_, int arg2, 
   int i1;
   int i2;
   int *p1;
-  char xi_frame[36] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t  (&u3)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; uint8_t u3[12]; };   // at 0x18
+  } frame;
   
   u1 = 0;
   if (g_104E0AF4 != 0) {
     u1 = orig::game_100FCB40((uint32_t *)(g_104DFD98 + 0x4638));
-    orig::_sprintf_v1(u3,&aD_4,u1);
-    u2 = 0x60808080;
+    orig::_sprintf_v1(frame.u3,&aD_4,u1);
+    frame.u2 = 0x60808080;
     u1 = orig::TargetMenu_GetMessageFwd(0xc,0x5d);
-    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x3a,arg3 + 0x10,u1,u2);
-    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x44,arg3 + 0x10,u3,0x60808080);
+    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x3a,arg3 + 0x10,u1,frame.u2);
+    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x44,arg3 + 0x10,frame.u3,0x60808080);
     u1 = orig::game_100FCB50(g_104DFD98 + 0x4638);
-    orig::_sprintf_v1(u3,&aD_4,u1);
-    u2 = 0x60808080;
+    orig::_sprintf_v1(frame.u3,&aD_4,u1);
+    frame.u2 = 0x60808080;
     u1 = orig::TargetMenu_GetMessageFwd(0xc,0x5c);
-    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x3a,arg3 + 4,u1,u2);
-    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x44,arg3 + 4,u3,0x60808080);
+    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x3a,arg3 + 4,u1,frame.u2);
+    orig::YkCommon_DrawUnscaled_v1(arg2 + 0x44,arg3 + 4,frame.u3,0x60808080);
     i1 = orig::game_100FCB60(g_104DFD98 + 0x4638);
     if (i1 == 0) {
       i2 = 0;
@@ -4150,12 +4166,12 @@ XI_API bits32 __thiscall YkWindows_DrawCountersAndGauge(void * self_, int arg2, 
     i2 = orig::game_102012D0(self_,i2,i1);
     orig::game_1011FB60_v1(*(void **)((int)self_ + i2 * 4),(int)(short)arg2,(int)(short)arg3,
                  0x80808080,0,0);
-    orig::_sprintf_v1(u3,&g_10385290,i1);
-    u2 = orig::YkCommon_DrawUnscaled_v1(arg2 + 0x14,arg3 + 10,u3,0x60808080);
+    orig::_sprintf_v1(frame.u3,&g_10385290,i1);
+    frame.u2 = orig::YkCommon_DrawUnscaled_v1(arg2 + 0x14,arg3 + 10,frame.u3,0x60808080);
     p1 = (int *)orig::YkCommon_GetIndexed(0);
     u1 = 0;
     if (p1 != (int *)0x0) {
-      u1 = orig::game_1011FB60_v1(*(void **)(*p1 + 0x14),(int)(short)u2,(short)arg3 + 10,
+      u1 = orig::game_1011FB60_v1(*(void **)(*p1 + 0x14),(int)(short)frame.u2,(short)arg3 + 10,
                            0x60808080,0,0);
     }
   }
@@ -4166,23 +4182,25 @@ XI_API bits32 __thiscall YkWindows_DrawCountersAndGauge(void * self_, int arg2, 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Yk_UpdateLayout(void * self_)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint16_t  &u1 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  uint16_t  &u2 = *reinterpret_cast<uint16_t  *>(xi_frame + 2);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint16_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; uint16_t u2; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u4; };   // at 0x6
+  } frame;
   
-  u1 = 0;
-  u2 = 0;
-  u3 = 0;
-  u4 = 0;
-  orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&u1);
+  frame.u1 = 0;
+  frame.u2 = 0;
+  frame.u3 = 0;
+  frame.u4 = 0;
+  orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&frame.u1);
   if (*(int *)((int)self_ + 0x14) == 0) {
-    orig::game_10201180((void *)((int)self_ + 0x1c),((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(u1))),((uint32_t)(((uint32_t)(uint16_t)(u3) << 16) | (uint16_t)(u2))))
+    orig::game_10201180((void *)((int)self_ + 0x1c),((uint32_t)(((uint32_t)(uint16_t)(frame.u2) << 16) | (uint16_t)(frame.u1))),((uint32_t)(((uint32_t)(uint16_t)(frame.u3) << 16) | (uint16_t)(frame.u2))))
     ;
   }
   else if (*(int *)((int)self_ + 0x14) == 1) {
-    orig::YkWindows_DrawCountersAndGauge((void *)((int)self_ + 0x44),((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(u1))),((uint32_t)(((uint32_t)(uint16_t)(u3) << 16) | (uint16_t)(u2))))
+    orig::YkWindows_DrawCountersAndGauge((void *)((int)self_ + 0x44),((uint32_t)(((uint32_t)(uint16_t)(frame.u2) << 16) | (uint16_t)(frame.u1))),((uint32_t)(((uint32_t)(uint16_t)(frame.u3) << 16) | (uint16_t)(frame.u2))))
     ;
     return;
   }
@@ -4456,11 +4474,13 @@ XI_API void __stdcall YkWindows_Call101CA180IfText(bits32 arg1, bits32 arg2, cha
 XI_API bits32 __attribute__((stdcall, regparm(3))) YkWindows_DrawLabelIfStateGroup06Or38(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4, int arg5)
 {
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
   if (-1 < *(short *)((int)self_ + 0x3a)) {
-    p1 = self_;
+    frame.p1 = self_;
     u1 = orig::IsEvent(3,xi_eax);
     xi_eax = (uint32_t)u1;
     if ((char)u1 == '\0') {
@@ -4469,8 +4489,8 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YkWindows_DrawLabelIfStateGro
       if ((void *)u1 != (void *)0x0) {
         xi_eax = orig::Acter_IsStateGroup06Or38((void *)u1,0xff);
         if ((char)xi_eax != '\0') {
-          p1 = (void *)((uint32_t)(((uint32_t)(XI_PIECE(p1, 1, 3)) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x3a))));
-          orig::game_101CB0D0(arg4 + -0x3a,arg5 + 7,p1,&p1);
+          frame.p1 = (void *)((uint32_t)(((uint32_t)(XI_PIECE(frame.p1, 1, 3)) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x3a))));
+          orig::game_101CB0D0(arg4 + -0x3a,arg5 + 7,frame.p1,&frame.p1);
           u1 = orig::YkCommon_DrawString
                             (0x66,arg4 + -0x3a,arg5,&g_1035BAEC,
                              (&g_104E1B98)[(0 < *(short *)((int)self_ + 0x3a)) - 1 & 9]);
@@ -4579,18 +4599,20 @@ code_10202E05:
 // GATE: PASS -- 100 trials, 84 returned normally, 84 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 84
 XI_API void __cdecl YkWindows_RunCallbackAndResetTarget(void)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
-  u1 = 0;
-  u2 = 0;
+  frame.u1 = 0;
+  frame.u2 = 0;
   if ((g_106643E8_as_s32 != 0) && (g_106643FC_as_s32 != 0)) {
-    (*g_106643E4_as_v0)(&u1,0);
+    (*g_106643E4_as_v0)(&frame.u1,0);
     return;
   }
   if (g_106643E4_as_v0 != (untyped_fn *)0x0) {
-    (*g_106643E4_as_v0)(&u1,0);
+    (*g_106643E4_as_v0)(&frame.u1,0);
     if (g_106643EC_as_s32 != 0) {
       orig::game_1015DB80_v1(&g_menuMng_as_v0,*(int *)(g_106643EC_as_s32 + 8),1);
       if (g_106643F0_as_s8 == '\0') {
@@ -4853,21 +4875,23 @@ XI_API void __stdcall Yk_SetStateFromFlag(bits32 arg1, bits32 xi_s2)
 XI_API bits32 __stdcall YkWindows_ReadOrLoadGstEntry(bits32 arg1)
 {
   uint32_t u1;
-  char xi_frame[288] __attribute__((aligned(4)));
-  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[288];
+    struct __attribute__((packed)) { uint8_t u2[288]; };   // at 0x0
+  } frame;
   
   u1 = 0;
   if (g_104DFD98 != 0) {
     orig::TextInputFiles_DatEntryCtor
-              (u2,1,&g_10385420,g_104DFD98 + 0x9534,700,&code_10203C60,
+              (frame.u2,1,&g_10385420,g_104DFD98 + 0x9534,700,&code_10203C60,
                g_104DFD98 + 0x9534,0);
     if ((char)arg1 != '\0') {
-      u1 = orig::XI_CRYPT_101B9BC0(u2,0);
-      orig::TextInputFiles_ClearVtable(u2);
+      u1 = orig::XI_CRYPT_101B9BC0(frame.u2,0);
+      orig::TextInputFiles_ClearVtable(frame.u2);
       return u1;
     }
-    u1 = orig::XI_CRYPT_101B9A10(u2);
-    orig::TextInputFiles_ClearVtable(u2);
+    u1 = orig::XI_CRYPT_101B9A10(frame.u2);
+    orig::TextInputFiles_ClearVtable(frame.u2);
   }
   return u1;
 }
@@ -5641,21 +5665,23 @@ XI_API void __thiscall YkWindows_Close(void * self_, bits32 arg2)
 XI_API bits32 __thiscall YkWindows_Call10156C30InRect(void * self_)
 {
   int i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  short  &i2 = *reinterpret_cast<short  *>(xi_frame + 0);
-  short  &i3 = *reinterpret_cast<short  *>(xi_frame + 2);
-  short  &i4 = *reinterpret_cast<short  *>(xi_frame + 4);
-  uint16_t  &u1 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { short i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i3; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; short i4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u1; };   // at 0x6
+  } frame;
   
-  i2 = 0;
-  i3 = 0;
-  i4 = 0;
-  u1 = 0;
-  orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&i2);
+  frame.i2 = 0;
+  frame.i3 = 0;
+  frame.i4 = 0;
+  frame.u1 = 0;
+  orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&frame.i2);
   i1 = 0;
   if (*(int *)((int)self_ + 0x1c) != 0) {
-    i1 = orig::game_10156C30((int)(short)(i2 + 4),(int)(short)(i3 + 4),
-                         ((int)i4 - (int)i2) + -8,*(int *)((int)self_ + 0x1c),0,
+    i1 = orig::game_10156C30((int)(short)(frame.i2 + 4),(int)(short)(frame.i3 + 4),
+                         ((int)frame.i4 - (int)frame.i2) + -8,*(int *)((int)self_ + 0x1c),0,
                          0x80808080);
   }
   return i1;

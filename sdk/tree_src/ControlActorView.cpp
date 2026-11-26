@@ -10,10 +10,12 @@ XI_API bits32 __cdecl XiControlActor_UpdateCamera(int * arg1)
   uint32_t u1;
   int i1;
   int *p2;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float * &p3 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
-  float  (&f2)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float * p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f1[3]; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f2[3]; };   // at 0x14
+  } frame;
   
   p2 = g_pSceneState_as_v0;
   if ((*g_pSceneState_as_v0 != 0x40) && (arg1 != (int *)0x0)) {
@@ -28,12 +30,12 @@ XI_API bits32 __cdecl XiControlActor_UpdateCamera(int * arg1)
     if ((char)u1 != '\0') {
       u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x330))))((void *)(arg1));
       if ((char)u1 != '\0') {
-        orig::game_1025E090(f1);
+        orig::game_1025E090(frame.f1);
         i1 = orig::Camera_GetField50_v1();
-        orig::Vec3_Add_10026FA0_v1(f2,f1,(float *)(i1 + 0x50));
-        p3 = f2;
+        orig::Vec3_Add_10026FA0_v1(frame.f2,frame.f1,(float *)(i1 + 0x50));
+        frame.p3 = frame.f2;
         p1 = (void *)orig::Camera_GetField50_v1();
-        orig::Camera_SetPosition(p1,p3);
+        orig::Camera_SetPosition(p1,frame.p3);
       }
     }
     p2 = arg1;

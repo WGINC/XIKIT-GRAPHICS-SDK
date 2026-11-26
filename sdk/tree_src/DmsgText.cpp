@@ -1316,23 +1316,25 @@ XI_API bits32 __thiscall DmsgText_ComposeTextA(void * self_, int arg2)
   uint8_t *p3;
   char *p4;
   int i3;
-  char xi_frame[64] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint8_t  (&u2)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 40);
-  uint8_t  (&u3)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 52);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; int i5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint32_t u1; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x28]; uint8_t u2[12]; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_5[0x34]; uint8_t u3[12]; };   // at 0x34
+  } frame;
   
   i1 = orig::DmsgText_IsEmpty(self_);
   if ((i1 == 0) || (arg2 == 0)) {
     return 0;
   }
-  orig::TextInputFiles_Init(u3);
+  orig::TextInputFiles_Init(frame.u3);
   orig::game_1018D3D0((void *)arg2);
   i1 = *(int *)((int)self_ + 4);
   do {
     if (i1 == 0) {
-      orig::TextInputFiles_Free(u3);
+      orig::TextInputFiles_Free(frame.u3);
       return 1;
     }
     switch(xi_sw(*(uint32_t *)(i1 + 8))) {
@@ -1368,12 +1370,12 @@ code_10259BEB:
         else if (*(int *)(i2 + 0x30) == 0) {
           if ((*(void **)(i2 + 0x2c) != (void *)0x0) &&
              (i2 = orig::DmsgText_GetDataPtr(*(void **)(i2 + 0x2c)), i2 != 0)) {
-            i4 = *(int *)(i1 + 0x10);
-            u1 = orig::DmsgText_FindFirstTypeByteInText(*(void **)(i4 + 0x2c));
-            i5 = *(int *)(i4 + 0x1c);
-            i2 = *(int *)(i4 + 0x10);
-            i3 = *(int *)(i4 + 0x34);
-            i4 = orig::DmsgText_GetDataPtr(*(void **)(i4 + 0x2c));
+            frame.i4 = *(int *)(i1 + 0x10);
+            frame.u1 = orig::DmsgText_FindFirstTypeByteInText(*(void **)(frame.i4 + 0x2c));
+            frame.i5 = *(int *)(frame.i4 + 0x1c);
+            i2 = *(int *)(frame.i4 + 0x10);
+            i3 = *(int *)(frame.i4 + 0x34);
+            frame.i4 = orig::DmsgText_GetDataPtr(*(void **)(frame.i4 + 0x2c));
             goto code_10259C80;
           }
           i2 = *(int *)(i1 + 0x10);
@@ -1388,12 +1390,12 @@ code_10259BEB:
             orig::TextInputFiles_Append((void *)arg2,p2);
           }
           else {
-            i5 = *(int *)(i2 + 0x1c);
+            frame.i5 = *(int *)(i2 + 0x1c);
             i2 = *(int *)(i2 + 0x10);
-            u1 = 0xffffffff;
-            i4 = 0;
+            frame.u1 = 0xffffffff;
+            frame.i4 = 0;
 code_10259C80:
-            p4 = orig::DmsgText_SelectQuantifierForm(i4,i2,i3,i5,u1);
+            p4 = orig::DmsgText_SelectQuantifierForm(frame.i4,i2,i3,frame.i5,frame.u1);
             orig::TextInputFiles_Append((void *)arg2,p4);
           }
         }
@@ -1447,7 +1449,7 @@ code_10259AE5:
       }
       break;
     case 5:
-      orig::game_1018D3D0(u3);
+      orig::game_1018D3D0(frame.u3);
       i2 = orig::DmsgText_FindNextTyped(i1);
       if ((((i2 != 0) && (*(int *)(i2 + 8) != 7)) && (i2 = orig::DmsgText_FindNextTyped(i2), i2 != 0)
           ) && ((*(int *)(i2 + 8) == 2 && (*(int *)(i2 + 0xc) == 0)))) {
@@ -1461,28 +1463,28 @@ code_10259AE5:
           p2 = orig::DmsgText_SelectGenderForm(*(int *)(i1 + 0xc),*(int *)(i2 + 0x34),*(int *)(i2 + 0x1c))
           ;
         }
-        orig::TextInputFiles_AssignWhole(u3,p2);
+        orig::TextInputFiles_AssignWhole(frame.u3,p2);
       }
 code_10259B89:
-      i2 = orig::TextInputFiles_GetLength(u3);
+      i2 = orig::TextInputFiles_GetLength(frame.u3);
       if (i2 == 0) {
         p3 = orig::DmsgText_GetQuantifierByIndex(*(int *)(i1 + 0xc));
         orig::TextInputFiles_Append((void *)arg2,p3);
       }
       else {
-        orig::TextInputFiles_AppendBuf((void *)arg2,u3);
+        orig::TextInputFiles_AppendBuf((void *)arg2,frame.u3);
       }
       break;
     case 6:
-      orig::TextInputFiles_Init(u2);
+      orig::TextInputFiles_Init(frame.u2);
       p1 = *(void **)(i1 + 0x2c);
       if (*(int *)(i1 + 0xc) == 2) {
         if (p1 == (void *)0x0) {
           p3 = (uint8_t *)(i1 + 0x20);
         }
         else {
-          orig::DmsgText_FormatTextAtC(p1,u2,-1,*(int *)(i1 + 0x10));
-          p3 = u2;
+          orig::DmsgText_FormatTextAtC(p1,frame.u2,-1,*(int *)(i1 + 0x10));
+          p3 = frame.u2;
         }
       }
       else if (p1 == (void *)0x0) {
@@ -1492,21 +1494,21 @@ code_10259B89:
         }
         else if (*(int *)(i1 + 0x34) == 0) {
           ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x10))
-                    ))((void *)(obj1),u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
-          p3 = u2;
+                    ))((void *)(obj1),frame.u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
+          p3 = frame.u2;
         }
         else {
           ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))
-                    ))((void *)(obj1),u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
-          p3 = u2;
+                    ))((void *)(obj1),frame.u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
+          p3 = frame.u2;
         }
       }
       else {
-        orig::DmsgText_FormatTextAtC(p1,u2,*(int *)(i1 + 0x14),*(int *)(i1 + 0x10));
-        p3 = u2;
+        orig::DmsgText_FormatTextAtC(p1,frame.u2,*(int *)(i1 + 0x14),*(int *)(i1 + 0x10));
+        p3 = frame.u2;
       }
       orig::TextInputFiles_AppendBuf((void *)arg2,p3);
-      orig::TextInputFiles_Free(u2);
+      orig::TextInputFiles_Free(frame.u2);
       break;
     case 7:
       orig::TextInputFiles_Append((void *)arg2,&c_strSpace_as_v0);
@@ -2673,15 +2675,17 @@ XI_API bits32 __cdecl DmsgText_IsWrapBreak(char * arg1)
 {
   int i1;
   uint8_t *p1;
-  char xi_frame[20] __attribute__((aligned(4)));
-  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  (&i2)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[20];
+    struct __attribute__((packed)) { uint8_t u1[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2[4]; };   // at 0x4
+  } frame;
   
-  p1 = u1;
-  i2[1] = 10;
-  i2[2] = 10;
-  i2[0] = 0xd;
-  i2[3] = 0;
+  p1 = frame.u1;
+  frame.i2[1] = 10;
+  frame.i2[2] = 10;
+  frame.i2[0] = 0xd;
+  frame.i2[3] = 0;
   i1 = 7;
   do {
     if (*arg1 == i1) {

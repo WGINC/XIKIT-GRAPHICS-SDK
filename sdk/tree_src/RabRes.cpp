@@ -9,13 +9,15 @@ XI_API long double __thiscall RabRes_MinOf10055F60OverIndexPairs(void * self_, b
   int i1;
   uint32_t *p1;
   long double f1;
-  char xi_frame[20] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[20];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u3; };   // at 0xC
+  } frame;
   
-  f2 = 1e+09f;
+  frame.f2 = 1e+09f;
   i1 = **(int **)((int)self_ + 0x14);
   p1 = (uint32_t *)(*(int **)((int)self_ + 0x14) + 4);
   if (i1 < 1) {
@@ -25,18 +27,18 @@ XI_API long double __thiscall RabRes_MinOf10055F60OverIndexPairs(void * self_, b
   do {
     f1 = orig::game_10055F60((float *)((*p1 & 0xffffff) * 0x20 + 0x10 + *(int *)((int)self_ + 0x10)),
                          (float *)((p1[1] & 0xffffff) * 0x20 + 0x10 + *(int *)((int)self_ + 0x10)
-                                  ),&u1,arg3);
-    if (f2 > f1) {
-      f2 = (float)f1;
-      *arg2 = u1;
-      arg2[1] = u2;
-      arg2[2] = u3;
+                                  ),&frame.u1,arg3);
+    if (frame.f2 > f1) {
+      frame.f2 = (float)f1;
+      *arg2 = frame.u1;
+      arg2[1] = frame.u2;
+      arg2[2] = frame.u3;
     }
     p1 = p1 + 2;
     i1 = i1 + -1;
   } while (i1 != 0);
   arg2[3] = 0x3f800000;
-  return f2;
+  return frame.f2;
 }
 
 // FUNCTION: FFXIMAIN 0x10056260

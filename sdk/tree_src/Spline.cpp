@@ -12,10 +12,12 @@ XI_API long double __attribute__((stdcall, regparm(3))) CMoSpline_EvalCubicSegme
   uint8_t u1;
   long double f1;
   long double f2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+  } frame;
   
   if (arg5 == 0) {
     return 0.0f;
@@ -54,11 +56,11 @@ XI_API long double __attribute__((stdcall, regparm(3))) CMoSpline_EvalCubicSegme
     f1 = 1.0f;
     i2 = *(int *)((int)self_ + 4) + -2;
   }
-  f5 = (float)f1;
-  f4 = (float)(f1 * f1);
-  f3 = (float)(f1 * f1 * f1);
+  frame.f5 = (float)f1;
+  frame.f4 = (float)(f1 * f1);
+  frame.f3 = (float)(f1 * f1 * f1);
   ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x40))
-            ))((void *)(g_pProcessor_as_v1),g_pProcessor_as_v1 + 0x248,i2 * 0x40 + *(int *)((int)self_ + 0x1c),&f3);
+            ))((void *)(g_pProcessor_as_v1),g_pProcessor_as_v1 + 0x248,i2 * 0x40 + *(int *)((int)self_ + 0x1c),&frame.f3);
   return bit_cast<float>(g_pProcessor_as_v1[0x248]) * *(float *)(arg5 + i2 * 4) +
          *(float *)(arg5 + 4 + i2 * 4) * bit_cast<float>(g_pProcessor_as_v1[0x249]) +
          *(float *)(arg5 + 8 + i2 * 4) * bit_cast<float>(g_pProcessor_as_v1[0x24a]) +

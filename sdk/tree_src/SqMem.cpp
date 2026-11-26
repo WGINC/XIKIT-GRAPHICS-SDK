@@ -64,11 +64,13 @@ XI_API uint64_t __cdecl SqMem_Check(void)
   uint32_t u2;
   int i3;
   uint64_t u3;
-  char xi_frame[152] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t * &p1 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint8_t  (&u5)[128] = *reinterpret_cast<uint8_t  (*)[128]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[152];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint8_t u5[128]; };   // at 0x18
+  } frame;
   
   i1 = g_1099D1F8_as_s32;
   u3 = orig::sqDebugPrintf_v1(str_sqMemCheck____________103B2978);
@@ -77,13 +79,13 @@ XI_API uint64_t __cdecl SqMem_Check(void)
   i3 = 0;
   if (u1 < (uint32_t)(&g_1099CF50)[i1 * 0x18]) {
     do {
-      i4 = u1 + 0x10;
-      i2 = orig::SqMem_ClassifyBlock(i4);
+      frame.i4 = u1 + 0x10;
+      i2 = orig::SqMem_ClassifyBlock(frame.i4);
       if ((i2 == 2) || (i2 == 3)) {
-        p1 = u5;
-        u4 = 0;
-        orig::game_102756A0(i4,u2);
-        u3 = orig::sqDebugPrintf_v1(&g_10361DC0,u5,i4,p1,u4);
+        frame.p1 = frame.u5;
+        frame.u4 = 0;
+        orig::game_102756A0(frame.i4,u2);
+        u3 = orig::sqDebugPrintf_v1(&g_10361DC0,frame.u5,frame.i4,frame.p1,frame.u4);
         u2 = (uint32_t)((uint64_t)u3 >> 0x20);
         i3 = i3 + 1;
       }
@@ -103,20 +105,22 @@ XI_API void __attribute__((cdecl, regparm(2))) SqMem_HexDump(bits32 xi_eax, bits
 {
   int i1;
   uint64_t u1;
-  char xi_frame[152] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t * &p1 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint8_t  (&u3)[128] = *reinterpret_cast<uint8_t  (*)[128]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[152];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint8_t u3[128]; };   // at 0x18
+  } frame;
   
   i1 = 0;
   if (0 < arg4) {
     do {
-      p1 = u3;
-      u2 = 1;
-      i2 = i1 + arg3;
-      orig::game_102756A0(i2,xi_edx);
-      u1 = orig::sqDebugPrintf_v1(&g_10361DC0,u3,i2,p1,u2);
+      frame.p1 = frame.u3;
+      frame.u2 = 1;
+      frame.i2 = i1 + arg3;
+      orig::game_102756A0(frame.i2,xi_edx);
+      u1 = orig::sqDebugPrintf_v1(&g_10361DC0,frame.u3,frame.i2,frame.p1,frame.u2);
       xi_edx = (uint32_t)((uint64_t)u1 >> 0x20);
       i1 = i1 + 0x10;
     } while (i1 < arg4);

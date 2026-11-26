@@ -153,11 +153,13 @@ bits32 __thiscall CYyModel::GetPartOffset(void * self, int arg2, int arg3, float
   uint32_t u1;
   int i1;
   int i2;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float  (&f1)[5] = *reinterpret_cast<float  (*)[5]>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float f1[5]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f2; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; uint32_t u2; };   // at 0x1C
+  } frame;
   
   i2 = 0;
   if (arg3 == 2) {
@@ -170,17 +172,17 @@ bits32 __thiscall CYyModel::GetPartOffset(void * self, int arg2, int arg3, float
         i1 = *(int *)(i1 + 4);
         i2 = i2 + 1;
       } while (i1 != 0);
-      f1[0] = 0.0f;
-      f1[1] = 0.0f;
-      f1[2] = 0.0f;
-      f1[3] = 1.0f;
-      orig::Part_AddTranslation((void *)*xi_entry_eax,2,f1);
-      f1[4] = (float)*(float *)((int)self + 0x24);
-      f2 = (float)*(float *)((int)self + 0x2c);
-      f3 = (float)*(float *)((int)self + 0x28);
-      u2 = 0x3f800000;
-      orig::Vec3_MulInPlace_v1(f1,f1 + 4);
-      u1 = orig::Vec3_AddInPlace_v1(arg4,f1);
+      frame.f1[0] = 0.0f;
+      frame.f1[1] = 0.0f;
+      frame.f1[2] = 0.0f;
+      frame.f1[3] = 1.0f;
+      orig::Part_AddTranslation((void *)*xi_entry_eax,2,frame.f1);
+      frame.f1[4] = (float)*(float *)((int)self + 0x24);
+      frame.f2 = (float)*(float *)((int)self + 0x2c);
+      frame.f3 = (float)*(float *)((int)self + 0x28);
+      frame.u2 = 0x3f800000;
+      orig::Vec3_MulInPlace_v1(frame.f1,frame.f1 + 4);
+      u1 = orig::Vec3_AddInPlace_v1(arg4,frame.f1);
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }

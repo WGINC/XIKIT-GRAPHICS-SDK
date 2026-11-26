@@ -16,11 +16,13 @@ XI_API int __cdecl StTrigger_ProcessOpcodesUpToTime(uint32_t * arg1, uint32_t ar
   char *p5;
   uint8_t u2;
   uint64_t u3;
-  char xi_frame[28] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  bits32  (&u5)[4] = *reinterpret_cast<bits32  (*)[4]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; bits32 u5[4]; };   // at 0xC
+  } frame;
   
   u1 = arg2;
   if (((int)arg2 < 0) || ((int)arg1[0xd] <= (int)arg2)) {
@@ -34,20 +36,20 @@ XI_API int __cdecl StTrigger_ProcessOpcodesUpToTime(uint32_t * arg1, uint32_t ar
       arg1[0xc] = u1;
     }
     p3 = (int *)(u1 * 0x10 + arg1[0xf]);
-    i1 = orig::sqopOpcodeGet(p3,&i2);
+    i1 = orig::sqopOpcodeGet(p3,&frame.i2);
     p2 = arg4;
     if (i1 != -1) {
-      while (i3 <= arg3) {
-        if (i2 == 0) {
+      while (frame.i3 <= arg3) {
+        if (frame.i2 == 0) {
           p1 = (int *)arg1[5];
           if ((p1 != (int *)0x0) && (*p1 != 0)) {
-            orig::_sprintf((uint8_t *)u5,&g_10350958,u4);
-            u3 = orig::CMoResource_FindByTypeAndId_v1((void *)*p1,&arg4,0x3d,u5[0]);
+            orig::_sprintf((uint8_t *)frame.u5,&g_10350958,frame.u4);
+            u3 = orig::CMoResource_FindByTypeAndId_v1((void *)*p1,&arg4,0x3d,frame.u5[0]);
             if (((bits32 *)*(int *)u3 != (bits32 *)0x0) &&
                (self_ = *(void **)*(int *)u3, self_ != (void *)0x0)) {
               i1 = 5;
               u2 = true;
-              p4 = (char *)u5;
+              p4 = (char *)frame.u5;
               p5 = &g_10389C64;
               do {
                 if (i1 == 0) break;
@@ -66,19 +68,19 @@ XI_API int __cdecl StTrigger_ProcessOpcodesUpToTime(uint32_t * arg1, uint32_t ar
           }
           arg2 = arg2 + 1;
         }
-        else if (i2 == 1) {
-          arg1[1] = u4;
+        else if (frame.i2 == 1) {
+          arg1[1] = frame.u4;
         }
-        else if (i2 == 2) {
-          arg1[2] = u4;
+        else if (frame.i2 == 2) {
+          arg1[2] = frame.u4;
         }
 code_10252E08:
         i1 = orig::sqopTrackAdvance(p3);
         if (i1 == -1) {
-          i3 = 0x7fffffff;
+          frame.i3 = 0x7fffffff;
         }
         else {
-          orig::sqopOpcodeGet(p3,&i2);
+          orig::sqopOpcodeGet(p3,&frame.i2);
         }
       }
     }

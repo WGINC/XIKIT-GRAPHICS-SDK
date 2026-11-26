@@ -7,18 +7,18 @@
 char ShapeMng::ShapeMng_BindFontTexture(int arg1, uint32_t *arg2, uint32_t *arg3)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  int i1;
+  int fontTexture;
   IDirect3DBaseTexture8 *p1;
   int i2;
   int *p2;
   int i3;
   IDirect3DBaseTexture8 *p3;
-  i1 = this->fontTexture;
-  if ( i1 == 0 )
+  fontTexture = this->fontTexture;
+  if ( fontTexture == 0 )
   {
     orig::ShapeMng_LoadFontTextures(self);
-    i1 = this->fontTexture;
-    if ( i1 == 0 )
+    fontTexture = this->fontTexture;
+    if ( fontTexture == 0 )
       return 0;
   }
   if ( arg1 >= 0 )
@@ -58,11 +58,11 @@ char ShapeMng::ShapeMng_BindFontTexture(int arg1, uint32_t *arg2, uint32_t *arg3
   }
   else
   {
-    p1 = *(IDirect3DBaseTexture8 **)(i1 + 64);
+    p1 = *(IDirect3DBaseTexture8 **)(fontTexture + 64);
     if ( p1 != nullptr )
       (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
     else
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(i1 + 68));
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(fontTexture + 68));
     return 1;
   }
 }
@@ -72,18 +72,18 @@ char ShapeMng::ShapeMng_BindFontTexture(int arg1, uint32_t *arg2, uint32_t *arg3
 char ShapeMng::ShapeMng_BindDmgNumTexture(int arg1, uint32_t *arg2, uint32_t *arg3)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  int i1;
+  int dmgNumTexture;
   IDirect3DBaseTexture8 *p1;
   int i2;
   int *p2;
   int i3;
   IDirect3DBaseTexture8 *p3;
-  i1 = this->dmgNumTexture;
-  if ( i1 == 0 )
+  dmgNumTexture = this->dmgNumTexture;
+  if ( dmgNumTexture == 0 )
   {
     orig::ShapeMng_LoadDmgNumTextures(self);
-    i1 = this->dmgNumTexture;
-    if ( i1 == 0 )
+    dmgNumTexture = this->dmgNumTexture;
+    if ( dmgNumTexture == 0 )
       return 0;
   }
   if ( arg1 >= 0 )
@@ -123,11 +123,11 @@ char ShapeMng::ShapeMng_BindDmgNumTexture(int arg1, uint32_t *arg2, uint32_t *ar
   }
   else
   {
-    p1 = *(IDirect3DBaseTexture8 **)(i1 + 64);
+    p1 = *(IDirect3DBaseTexture8 **)(dmgNumTexture + 64);
     if ( p1 != nullptr )
       (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
     else
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(i1 + 68));
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(dmgNumTexture + 68));
     return 1;
   }
 }

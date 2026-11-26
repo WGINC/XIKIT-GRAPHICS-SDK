@@ -372,27 +372,29 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
   int i25;
   int *p15;
   int *p16;
-  alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  float * &p17 = *reinterpret_cast<float * *>(xi_frame + 0x20);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &i29 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  float (&f4)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x30);
-  float (&f5)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x3C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x448];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; int i26; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; float * p17; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; int i27; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; int i28; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; int i29; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f4[3]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x3C]; float f5[3]; };   // at 0x3C
+  } frame;
 
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
   p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-  i26 = (int)p1;
-  f3 = 0.0;
+  frame.i26 = (int)p1;
+  frame.f3 = 0.0;
   i1 = (g_pProcessor->ScratchMatrixStackTop);
   p2 = ((float * *)((char *)g_pProcessor + 0xA10))[i1];
   (g_pProcessor->ScratchMatrixStackTop) = i1 + 1;
-  p17 = p2;
+  frame.p17 = p2;
   p3 = (float *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
   p4 = (int *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
   if ( p3 == nullptr || (i2 = orig::CXiActor_GetSubModelResult(p3)) == 0 )
@@ -403,7 +405,7 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
     case 1u:
       if ( p3 == nullptr )
         goto L1;
-      orig::game_1003BA20((float *)&i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
+      orig::game_1003BA20((float *)&frame.i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
       i3 = *(uint32_t *)p3;
       vftable = (*(void * *)&g_pProcessor->vftable);
       p5 = (int *)p3;
@@ -411,7 +413,7 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
     case 2u:
       if ( p4 == nullptr )
         goto L1;
-      orig::game_1003BA20((float *)&i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
+      orig::game_1003BA20((float *)&frame.i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
       i4 = *p4;
       p6 = p4;
       goto L3;
@@ -428,14 +430,14 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
         goto L1;
       memcpy(arg2, (const void *)(g_pResourceMng + 3088), 0x40u);
       orig::game_1003BA20(
-        (float *)&i27,
+        (float *)&frame.i27,
         ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6),
         p3,
         p4,
         0);
-      i11 = i28;
-      arg2[12] = i27;
-      i12 = i29;
+      i11 = frame.i28;
+      arg2[12] = frame.i27;
+      i12 = frame.i29;
       arg2[13] = i11;
       arg2[14] = i12;
       break;
@@ -443,10 +445,10 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
       if ( p4 == nullptr )
         goto L1;
       memcpy(arg2, (const void *)(g_pResourceMng + 3088), 0x40u);
-      orig::game_1003BA20((float *)&i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, 0);
-      i13 = i28;
-      arg2[12] = i27;
-      i14 = i29;
+      orig::game_1003BA20((float *)&frame.i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, 0);
+      i13 = frame.i28;
+      arg2[12] = frame.i27;
+      i14 = frame.i29;
       arg2[13] = i13;
       arg2[14] = i14;
       break;
@@ -468,19 +470,19 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
         goto L8;
       i18 = ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6);
       i19 = orig::CMoAttachments_GetCaster((uint32_t *)self_);
-      orig::CMoAttachments_SetMappedSlot(i26, i18, i19);
+      orig::CMoAttachments_SetMappedSlot(frame.i26, i18, i19);
       i20 = ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6);
       p15 = (int *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
       p9 = (float *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
-      orig::game_1003BA20((float *)&i27, i20, p9, p15, 0);
-      f1 = -atan2(*(float *)(i26 + 40), *(float *)(i26 + 32));
+      orig::game_1003BA20((float *)&frame.i27, i20, p9, p15, 0);
+      frame.f1 = -atan2(*(float *)(frame.i26 + 40), *(float *)(frame.i26 + 32));
       (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))(*(void * *)&g_pProcessor->vftable) + 25))(
         g_pProcessor,
         arg2,
-        (*(uint32_t *)&(f1)));
-      i21 = i28;
-      i22 = i29;
-      arg2[12] = i27;
+        (*(uint32_t *)&(frame.f1)));
+      i21 = frame.i28;
+      i22 = frame.i29;
+      arg2[12] = frame.i27;
       arg2[13] = i21;
       arg2[14] = i22;
       break;
@@ -488,16 +490,16 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
       if ( p4 == nullptr )
         goto L8;
       i23 = orig::CMoAttachments_GetTarget((uint32_t *)self_);
-      orig::CMoAttachments_SetMappedSlot(i26, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, i23);
+      orig::CMoAttachments_SetMappedSlot(frame.i26, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, i23);
       p16 = (int *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
       p10 = (float *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
-      orig::game_1003BA20((float *)&i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, p10, p16, 0);
+      orig::game_1003BA20((float *)&frame.i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, p10, p16, 0);
       p7 = arg2;
-      f2 = -atan2(*(float *)(i26 + 40), *(float *)(i26 + 32));
+      frame.f2 = -atan2(*(float *)(frame.i26 + 40), *(float *)(frame.i26 + 32));
       (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))(*(void * *)&g_pProcessor->vftable) + 25))(
         g_pProcessor,
         arg2,
-        (*(uint32_t *)&(f2)));
+        (*(uint32_t *)&(frame.f2)));
       goto L9;
     case 0xDu:
       goto L10;
@@ -521,23 +523,23 @@ XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2
       var1 = (void (__thiscall **)(CMoProcessor *, int *, uint32_t *, char *))(*(void * *)&g_pProcessor->vftable);
       p12 = orig::ZoneMap_GetAddr0D4((char *)g_pXiZone);
 L11:
-      var1[20](g_pProcessor, &i27, p11, p12);
+      var1[20](g_pProcessor, &frame.i27, p11, p12);
       orig::MoProcessor_CallVSlot49(p11);
-      orig::Attach_SetTranslation(p11, &i27);
+      orig::Attach_SetTranslation(p11, &frame.i27);
       break;
     case 0x10u:
       if ( p3 == nullptr )
         goto L8;
-      orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, (int *)p3, arg3);
-      orig::game_1003BA20(f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, p3, (int *)p3, arg4);
-      f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
+      orig::game_1003BA20(frame.f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, (int *)p3, arg3);
+      orig::game_1003BA20(frame.f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, p3, (int *)p3, arg4);
+      frame.f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, frame.f4, frame.f5);
       break;
     case 0x11u:
       if ( p4 != nullptr )
       {
-        orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), (float *)p4, p4, arg3);
-        orig::game_1003BA20(f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, p4, arg4);
-        f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
+        orig::game_1003BA20(frame.f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), (float *)p4, p4, arg3);
+        orig::game_1003BA20(frame.f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, p4, arg4);
+        frame.f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, frame.f4, frame.f5);
       }
       else
       {
@@ -551,10 +553,10 @@ L8:
       orig::MoProcessor_CallVSlot49(arg2);
       if ( p4 != nullptr )
       {
-        orig::game_1003BA20(f4, 2, (float *)p4, (int *)p3, 0);
-        *((float *)arg2 + 12) = f4[0] + *((float *)arg2 + 12);
-        *((float *)arg2 + 13) = f4[1] + *((float *)arg2 + 13) + 0x1.70a3d80000000p-3;
-        *((float *)arg2 + 14) = f4[2] + *((float *)arg2 + 14);
+        orig::game_1003BA20(frame.f4, 2, (float *)p4, (int *)p3, 0);
+        *((float *)arg2 + 12) = frame.f4[0] + *((float *)arg2 + 12);
+        *((float *)arg2 + 13) = frame.f4[1] + *((float *)arg2 + 13) + 0x1.70a3d80000000p-3;
+        *((float *)arg2 + 14) = frame.f4[2] + *((float *)arg2 + 14);
       }
       break;
     case 0x14u:
@@ -572,24 +574,24 @@ L8:
 L4:
       if ( p3 == nullptr || p4 == nullptr )
         goto L1;
-      orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
-      orig::game_1003BA20(f5, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, arg4);
+      orig::game_1003BA20(frame.f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(frame.f5, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, arg4);
       goto L13;
     case 0x17u:
       p4 = (int *)i2;
 L5:
       if ( p3 == nullptr || p4 == nullptr )
         goto L1;
-      orig::game_1003BA20((float *)&i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
+      orig::game_1003BA20((float *)&frame.i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
       i4 = *(uint32_t *)p3;
       p6 = (int *)p3;
 L3:
       p8 = (*(void * *)&g_pProcessor->vftable);
       i8 = (*(int (__thiscall **)(int *))(i4 + 448))(p6);
       (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))p8 + 25))(g_pProcessor, arg2, *(uint32_t *)(i8 + 4));
-      i9 = i28;
-      i10 = i29;
-      arg2[12] = i27;
+      i9 = frame.i28;
+      i10 = frame.i29;
+      arg2[12] = frame.i27;
       arg2[13] = i9;
       arg2[14] = i10;
       break;
@@ -598,7 +600,7 @@ L3:
 L6:
       if ( p3 == nullptr || p4 == nullptr )
         goto L1;
-      orig::game_1003BA20((float *)&i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
+      orig::game_1003BA20((float *)&frame.i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
       i3 = *p4;
       vftable = (*(void * *)&g_pProcessor->vftable);
       p5 = p4;
@@ -607,9 +609,9 @@ L2:
       p7 = arg2;
       (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))vftable + 25))(g_pProcessor, arg2, *(uint32_t *)(i5 + 4));
 L9:
-      i6 = i28;
-      i7 = i29;
-      p7[12] = i27;
+      i6 = frame.i28;
+      i7 = frame.i29;
+      p7[12] = frame.i27;
       p7[13] = i6;
       p7[14] = i7;
       break;
@@ -618,33 +620,33 @@ L9:
 L7:
       if ( p3 == nullptr || p4 == nullptr )
         goto L1;
-      orig::game_1003BA20(f4, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, arg4);
+      orig::game_1003BA20(frame.f4, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, arg4);
       orig::game_1003BA20(
-        f5,
+        frame.f5,
         ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6),
         p3,
         p4,
         arg3);
 L13:
-      f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
+      frame.f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, frame.f4, frame.f5);
       break;
     case 0x1Au:
       p4 = (int *)i2;
 L10:
       if ( p3 == nullptr && p4 == nullptr )
         goto L1;
-      orig::game_1003BA20(f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
-      orig::game_1003BA20(f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
-      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f5, f4);
+      orig::game_1003BA20(frame.f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(frame.f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
+      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, frame.f5, frame.f4);
       break;
     case 0x1Bu:
       p4 = (int *)i2;
 L12:
       if ( p3 == nullptr && p4 == nullptr )
         goto L1;
-      orig::game_1003BA20(f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
-      orig::game_1003BA20(f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
-      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
+      orig::game_1003BA20(frame.f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(frame.f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
+      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, frame.f4, frame.f5);
       break;
     default:
 L1:
@@ -654,12 +656,12 @@ L1:
   p13 = g_pProcessor;
   i24 = (g_pProcessor->ScratchMatrixStackTop) - 1;
   (g_pProcessor->ScratchMatrixStackTop) = i24;
-  ((float * *)((char *)p13 + 0xA10))[i24] = p17;
+  ((float * *)((char *)p13 + 0xA10))[i24] = frame.p17;
   p14 = g_pProcessor;
   i25 = (g_pProcessor->ScratchMatrixStackTop) - 1;
   (g_pProcessor->ScratchMatrixStackTop) = i25;
-  ((float * *)((char *)p14 + 0xA10))[i25] = (float *)i26;
-  return f3;
+  ((float * *)((char *)p14 + 0xA10))[i25] = (float *)frame.i26;
+  return frame.f3;
 }
 
 // FUNCTION: FFXIMAIN 0x1003C6E0

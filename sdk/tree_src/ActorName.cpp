@@ -14,28 +14,30 @@ XI_API bits32 __stdcall ActorName_ProjectThroughCamera(bits32 * arg1, bits32 * a
   uint8_t u3;
   long double f2;
   int64_t i2;
-  char xi_frame[80] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 12);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[80];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f6; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint8_t u4[64]; };   // at 0x10
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(u4);
-  orig::Vec3_Copy_v1(&f3,arg1);
-  f6 = 1.0f;
+  orig::MathVector_ReturnThis_v1(frame.u4);
+  orig::Vec3_Copy_v1(&frame.f3,arg1);
+  frame.f6 = 1.0f;
   p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-  orig::Mat4_Copy_v1(u4,p1);
-  orig::Mat4_TransformPointInPlace_v2(u4,&f3);
-  if (f5 >= 0.0f) {
+  orig::Mat4_Copy_v1(frame.u4,p1);
+  orig::Mat4_TransformPointInPlace_v2(frame.u4,&frame.f3);
+  if (frame.f5 >= 0.0f) {
     orig::MathVector_Nop();
     return 0;
   }
-  orig::Vec3_Copy_v1(&f3,arg1);
+  orig::Vec3_Copy_v1(&frame.f3,arg1);
   i1 = orig::Camera_GetMatrix154Ptr_v1();
-  orig::Mat4_PostMultiply_v1(u4,i1);
-  u1 = orig::Mat4_TransformCoordInPlace_v1(u4,&f3);
-  f2 = f6;
+  orig::Mat4_PostMultiply_v1(frame.u4,i1);
+  u1 = orig::Mat4_TransformCoordInPlace_v1(frame.u4,&frame.f3);
+  f2 = frame.f6;
   f1 = 1.0f;
   u3 = ((f2) != (f2)) || ((f1) != (f1));
   u2 = u3 || f2 < f1;
@@ -44,11 +46,11 @@ XI_API bits32 __stdcall ActorName_ProjectThroughCamera(bits32 * arg1, bits32 * a
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u1 >> 0x10)) << 16) | (uint16_t)((uint16_t)u2 << 8 | (uint16_t)u3 << 10 |
                     (uint16_t)(u3 || f2 == f1) << 0xe)));
   }
-  i2 = XI_CALL_ST0(0x10311C2Cu)(f3 * 4096.0f);
+  i2 = XI_CALL_ST0(0x10311C2Cu)(frame.f3 * 4096.0f);
   *arg2 = (int)i2;
-  i2 = XI_CALL_ST0(0x10311C2Cu)(f4 * 4096.0f);
+  i2 = XI_CALL_ST0(0x10311C2Cu)(frame.f4 * 4096.0f);
   arg2[1] = (int)i2;
-  i2 = XI_CALL_ST0(0x10311C2Cu)(f5 * 4096.0f);
+  i2 = XI_CALL_ST0(0x10311C2Cu)(frame.f5 * 4096.0f);
   arg2[2] = (int)i2;
   arg2[3] = 0;
   orig::MathVector_Nop();

@@ -138,14 +138,16 @@ XI_API bits32 __cdecl XiEvent_ResetActersAndGlobals(void)
   uint32_t u2;
   int *p2;
   long double f1;
-  char xi_frame[40] __attribute__((aligned(4)));
-  float * &p3 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 32);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[40];
+    struct __attribute__((packed)) { float * p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; float f2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; float f5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; uint32_t u3; };   // at 0x24
+  } frame;
   
   orig::TextInputFiles_FileMngCall101C1B10(g_pFileMng_as_v0);
   orig::Acter_TargetClearAndSetFlag53();
@@ -165,21 +167,21 @@ XI_API bits32 __cdecl XiEvent_ResetActersAndGlobals(void)
 code_100AE452:
         if ((short)(g_104808FC_as_v1 | g_1047FB40_as_v2) < 0) {
           i2 = *p2;
-          f6 = *(float *)(i2 + 0x4c);
-          f4 = *(float *)(i2 + 0x44);
+          frame.f6 = *(float *)(i2 + 0x4c);
+          frame.f4 = *(float *)(i2 + 0x44);
           f1 = *(float *)(i2 + 0x48);
-          f5 = (float)f1;
+          frame.f5 = (float)f1;
           u2 = *(uint32_t *)(i2 + 0x78) & 0xff000000;
           if (u2 == 0) {
             u1 = orig::ZoneMap_QueryBoxHeightBand
-                              (g_pZoneMap,(float)f4,(float)f1,
-                               (float)f6,0x42480000,&f2);
+                              (g_pZoneMap,(float)frame.f4,(float)f1,
+                               (float)frame.f6,0x42480000,&frame.f2);
             if ((char)u1 == '\x01') {
-              f1 = f2;
+              f1 = frame.f2;
             }
             else {
 code_100AE529:
-              f1 = f5;
+              f1 = frame.f5;
             }
           }
           else if ((((u2 == 0x1000000) &&
@@ -188,19 +190,19 @@ code_100AE529:
                       (uint8_t)(*(uint32_t *)(i2 + 0x120) >> 0x14)) & 1) == 0)) &&
                    (*(char *)(i2 + 0xee) != '\x03')) && (*(char *)(i2 + 0xee) != '\x04')) {
             u1 = orig::ZoneMap_QueryBoxHeightByRadius
-                              (g_pZoneMap,(float)f4,(float)f1,
-                               (float)f6,&f3);
+                              (g_pZoneMap,(float)frame.f4,(float)f1,
+                               (float)frame.f6,&frame.f3);
             if ((char)u1 != '\x01') goto code_100AE529;
-            f1 = f3;
+            f1 = frame.f3;
           }
           i2 = *p2;
           *(float *)(i2 + 0x28) = (float)f1;
-          *(float *)(i2 + 0x24) = f4;
-          *(float *)(i2 + 0x2c) = f6;
+          *(float *)(i2 + 0x24) = frame.f4;
+          *(float *)(i2 + 0x2c) = frame.f6;
           i2 = *p2;
-          *(float *)(i2 + 4) = f4;
+          *(float *)(i2 + 4) = frame.f4;
           *(float *)(i2 + 8) = (float)f1;
-          *(float *)(i2 + 0xc) = f6;
+          *(float *)(i2 + 0xc) = frame.f6;
         }
       }
       i2 = *p2;
@@ -248,17 +250,17 @@ code_100AE529:
           orig::Acter_CopyPosToCached((void *)(&ActerBuffPtr_as_v0)[g_10485F7A]);
           i2 = orig::Camera_GetField50_v1();
           if ((i2 != 0) && (*(int *)((&ActerBuffPtr_as_v0)[g_10485F7A] + 0xa0) != 0)) {
-            f4 = g_1035CFD0;
-            f5 = g_1035CFD4;
+            frame.f4 = g_1035CFD0;
+            frame.f5 = g_1035CFD4;
             i2 = (&ActerBuffPtr_as_v0)[g_10485F7A] + 4;
-            f6 = g_1035CFD8;
-            u3 = g_1035CFDC;
+            frame.f6 = g_1035CFD8;
+            frame.u3 = g_1035CFDC;
             p1 = (void *)orig::Camera_GetField50_v1();
             orig::Camera_SetTargetIfMoved_v1(p1,i2);
-            p3 = &f4;
+            frame.p3 = &frame.f4;
             p2 = *(int **)((&ActerBuffPtr_as_v0)[g_10485F7A] + 0xa0);
             p1 = (void *)orig::Camera_GetField50_v1();
-            orig::Camera_PlaceRelativeToActor_v1(p1,p3,p2);
+            orig::Camera_PlaceRelativeToActor_v1(p1,frame.p3,p2);
           }
         }
       }
@@ -665,9 +667,11 @@ XI_API bits32 __thiscall XiEvent_StepTimedMessage(void * self_)
   uint8_t u4;
   long double f1;
   int64_t i5;
-  char xi_frame[1588] __attribute__((aligned(4)));
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  char  (&val1)[1564] = *reinterpret_cast<char  (*)[1564]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[1588];
+    struct __attribute__((packed)) { uint32_t u5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; char val1[1564]; };   // at 0x18
+  } frame;
   
   g_104807FC = g_104807FC + 1;
   i2 = *(int *)((int)self_ + 0x54);
@@ -729,7 +733,7 @@ XI_API bits32 __thiscall XiEvent_StepTimedMessage(void * self_)
     return 0;
   }
   p3 = orig::game_100C30F0(self_);
-  p3 = orig::game_100C2D00(val1,p3);
+  p3 = orig::game_100C2D00(frame.val1,p3);
   p4 = (char *)orig::game_100C2FE0(p1);
   orig::game_100C2D00(p3,p4);
   u1 = 0xffffffff;
@@ -792,7 +796,7 @@ code_100C3793:
       p2 = *(int **)(i2 + 0xa0);
       i2 = *p2;
       i3 = orig::game_100C3100(self_);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i2 + 0x2c4))))(i4,p2,0x6e69616d,val1,i3);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i2 + 0x2c4))))(i4,p2,0x6e69616d,frame.val1,i3);
     }
     if (i4 != -1) {
       *(uint32_t *)((int)self_ + 0x54) = 0;
@@ -809,14 +813,14 @@ code_100C37DE:
       orig::game_10087DF0(p1,p3);
     }
     i2 = 0;
-    u5 = 1;
+    frame.u5 = 1;
     u3 = 0;
     p5 = (uint8_t *)orig::game_100C3100(self_);
-    orig::ChatLog_AddMessage_v1(g_pTkMsgWinData_as_v1,val1,p5,u3,u5,i2);
+    orig::ChatLog_AddMessage_v1(g_pTkMsgWinData_as_v1,frame.val1,p5,u3,frame.u5,i2);
     *(uint32_t *)((int)self_ + 0x54) = 0;
     return 1;
   }
-  orig::game_100C3170(val1);
+  orig::game_100C3170(frame.val1);
   *(uint32_t *)((int)self_ + 0x54) = 0;
   return 1;
 }

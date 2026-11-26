@@ -11,20 +11,22 @@ XI_API bits32 __thiscall SharedConditionalStateReset(void * self_)
   int i1;
   int i2;
   bits32 *obj1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  int * &p1 = *reinterpret_cast<int * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { int * p1; };   // at 0x0
+  } frame;
   
   if (((*(uint8_t *)((int)self_ + 0xdc) & 1) != 0) || ((*(uint32_t *)((int)self_ + 0xd8) & 0x800) != 0)) {
     u1 = orig::Generator_IsFlag400OrField22Zero_v1(self_);
     if ((char)u1 != '\0') {
-      orig::YmGenerater_Stop_v3(self_,(int *)0x0,&xi_frame[0]);
+      orig::YmGenerater_Stop_v3(self_,(int *)0x0,&frame.bytes[0]);
       u2 = (*(uint8_t *)((int)self_ + 0x36) & 1) * 0x10 + (*(uint32_t *)((int)self_ + 0x34) & 0xf);
       if ((u2 != 0x14) && (((u2 != 0 && (u2 < 0xe)) || (0xf < u2)))) {
         u1 = 0;
-        p1 = (int *)0x0;
+        frame.p1 = (int *)0x0;
         i1 = orig::CMoAttachments_GetTarget_v2((void *)((int)self_ + 0x30));
         i2 = orig::CMoAttachments_GetCaster_v2((void *)((int)self_ + 0x30));
-        orig::Generator_StopGenerators(self_,i2,i1,u1,p1);
+        orig::Generator_StopGenerators(self_,i2,i1,u1,frame.p1);
       }
     }
     *(bits32 *)((int)self_ + 0x9c) = 0;
@@ -42,9 +44,9 @@ XI_API bits32 __thiscall SharedConditionalStateReset(void * self_)
   }
   *(uint8_t *)((int)self_ + 0xdc) = *(uint8_t *)((int)self_ + 0xdc) & 0xfe;
   *(uint32_t *)((int)self_ + 0xd8) = *(uint32_t *)((int)self_ + 0xd8) | 0x800;
-  p1 = *(int **)((int)self_ + 0xa8);
-  if (p1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
+  frame.p1 = *(int **)((int)self_ + 0xa8);
+  if (frame.p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*frame.p1 + 0x18))))((void *)(frame.p1),1);
     *(bits32 *)((int)self_ + 0xa8) = 0;
   }
   obj1 = orig::Mem_AllocFromArea_v2(0x3d,4,0);

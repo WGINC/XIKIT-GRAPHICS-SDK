@@ -86,9 +86,11 @@ XI_API void __thiscall TargetMenu_UpdateActionMenu(void * self_, bits32 arg2)
   long double f2;
   uint64_t u5;
   int64_t i4;
-  char xi_frame[28] __attribute__((aligned(4)));
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  (&u7)[2] = *reinterpret_cast<uint32_t  (*)[2]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { uint32_t u6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint32_t u7[2]; };   // at 0x14
+  } frame;
   
   if (*(short *)((int)g_pTargetMng + 0x68) == 1) {
     orig::TargetMenu_MenuItemFade_v1(&g_menuMng_as_v0,*(int *)((int)self_ + 8),1,1,0,0,g_pTargetMng);
@@ -109,7 +111,7 @@ XI_API void __thiscall TargetMenu_UpdateActionMenu(void * self_, bits32 arg2)
   *(uint16_t *)((int)self_ + 0x50) = 3;
   i3 = 0;
   u5 = orig::Target_HasActor_v1(g_pTargetMng);
-  u6 = (uint32_t)((uint64_t)u5 >> 0x20);
+  frame.u6 = (uint32_t)((uint64_t)u5 >> 0x20);
   if (((char)u5 == '\0') ||
      (obj2 = (void *)orig::Target_GetActorPtr(g_pTargetMng), obj2 == (void *)0x0)) {
 code_1012B5AD:
@@ -131,7 +133,7 @@ code_1012B5AD:
   }
   else {
     u5 = orig::YkCommon_ActorPairTest1FF_v1((int)obj2,obj2);
-    u6 = (uint32_t)((uint64_t)u5 >> 0x20);
+    frame.u6 = (uint32_t)((uint64_t)u5 >> 0x20);
     if ((char)u5 != '\0') {
       i3 = 2;
       *(uint16_t *)((int)self_ + 0x50) = 2;
@@ -151,21 +153,21 @@ code_1012B5AD:
 code_1012B5FD:
     i2 = 0;
   }
-  orig::TargetMenu_FillEntriesFromTable1036F390((int)self_,u6,i2,i3);
+  orig::TargetMenu_FillEntriesFromTable1036F390((int)self_,frame.u6,i2,i3);
   if ((char)arg2 != '\0') {
     i1 = *(short *)((int)self_ + 0x50);
     if (i1 == 1) {
-      u6 = 7;
+      frame.u6 = 7;
     }
     else if (i1 == 2) {
-      u6 = 6;
+      frame.u6 = 6;
     }
     else {
       if (i1 != 3) goto code_1012B644;
-      u6 = 5;
+      frame.u6 = 5;
     }
     u1 = 0;
-    i3 = orig::TargetMenu_GetMessageFwd(0xd,u6);
+    i3 = orig::TargetMenu_GetMessageFwd(0xd,frame.u6);
     orig::TargetMenu_SetTextFwd(g_pTkTitle,i3,u1);
   }
 code_1012B644:
@@ -175,9 +177,9 @@ code_1012B644:
     if (i3 < 0) {
       i3 = 0;
     }
-    u6 = orig::game_1011A8F0(*(void **)((int)self_ + 8),str_menu_actionm1_1036F3F8 + i3 * 0x20);
-    u6 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u6 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)*(void **)((int)self_ + 8) + 0x4c))));
-    orig::NetCellFont_SelectEntryMoveCursor_v1(*(void **)((int)self_ + 8),u6,0,u6);
+    frame.u6 = orig::game_1011A8F0(*(void **)((int)self_ + 8),str_menu_actionm1_1036F3F8 + i3 * 0x20);
+    frame.u6 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)frame.u6 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)*(void **)((int)self_ + 8) + 0x4c))));
+    orig::NetCellFont_SelectEntryMoveCursor_v1(*(void **)((int)self_ + 8),frame.u6,0,frame.u6);
     orig::UI_DockReset_as_v0(&g_menuMng_as_v0,0,*(int *)((int)self_ + 8));
     *(uint8_t *)((int)self_ + 0x52) = 1;
   }
@@ -210,24 +212,24 @@ code_1012B644:
     else if ((((u2 == 0x1e) && (u5 = orig::Target_HasActor_v1(g_pTargetMng), (char)u5 != '\0')) &&
              (i3 = orig::Target_GetActorPtr(g_pTargetMng), i3 != 0)) &&
             ((((uint8_t)*(uint32_t *)(i3 + 0x13c) & 0x40) == 0x40 &&
-             (u6 = orig::TargetMenu_Is1FFDifferentFromActer(i3), (char)u6 == '\0')))) {
+             (frame.u6 = orig::TargetMenu_Is1FFDifferentFromActer(i3), (char)frame.u6 == '\0')))) {
       u2 = 0x327;
     }
     u1 = 0;
-    u6 = orig::TargetMenu_GetMessageFwd(0xe,u2);
-    orig::TargetMenu_ForwardToPanel_v1(g_pTkHelp,u6,u1);
+    frame.u6 = orig::TargetMenu_GetMessageFwd(0xe,u2);
+    orig::TargetMenu_ForwardToPanel_v1(g_pTkHelp,frame.u6,u1);
     *(uint8_t *)((int)self_ + 0x52) = 0;
   }
 code_1012B75C:
   i3 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
   if ((char)i3 != '\0') {
-    orig::TargetMenu_GetCursorPos(u7);
-    u6 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)((int)self_ + 8));
-    if (((char)u6 != '\0') &&
-       (u2 = orig::NetCellFont_HitTest(*(void **)((int)self_ + 8),u7), (char)u2 != '\0')) {
-      u6 = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 8),(int *)u7,0);
-      if (0 < (short)u6) {
-        u1 = orig::NetCellFont_TestCommand36CF60_v1(0x3e,0x8b,1,-1,u6);
+    orig::TargetMenu_GetCursorPos(frame.u7);
+    frame.u6 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)((int)self_ + 8));
+    if (((char)frame.u6 != '\0') &&
+       (u2 = orig::NetCellFont_HitTest(*(void **)((int)self_ + 8),frame.u7), (char)u2 != '\0')) {
+      frame.u6 = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 8),(int *)frame.u7,0);
+      if (0 < (short)frame.u6) {
+        u1 = orig::NetCellFont_TestCommand36CF60_v1(0x3e,0x8b,1,-1,frame.u6);
         if ((char)u1 == '\0') {
           u1 = orig::NetCellFont_TestCommand36CF60_v1(0x3e,0x8b,4,-1,u1);
           if ((char)u1 != '\0') {
@@ -255,9 +257,9 @@ code_1012B75C:
         if ((char)u1 != '\0') {
           return;
         }
-        if (*(untyped_fn **)(((char *)&g_1036F248) + *(short *)((int)self_ + (short)u6 * 2 + 0x1a) * 0xc) !=
+        if (*(untyped_fn **)(((char *)&g_1036F248) + *(short *)((int)self_ + (short)frame.u6 * 2 + 0x1a) * 0xc) !=
             (untyped_fn *)0x0) {
-          (**(untyped_fn **)(((char *)&g_1036F248) + *(short *)((int)self_ + (short)u6 * 2 + 0x1a) * 0xc))();
+          (**(untyped_fn **)(((char *)&g_1036F248) + *(short *)((int)self_ + (short)frame.u6 * 2 + 0x1a) * 0xc))();
           *(uint8_t *)((int)self_ + 0x52) = 1;
         }
         *(uint32_t *)((int)self_ + 0x60) = 0x42700000;
@@ -671,17 +673,19 @@ XI_API void __thiscall TargetMenu_UpdateLayout(void * self_)
   int i1;
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 2);
-  uint16_t  &u5 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  uint16_t  &u6 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint16_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; uint16_t u4; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u6; };   // at 0x6
+  } frame;
   
   if (*(void **)((int)self_ + 8) != (void *)0x0) {
-    u3 = 0;
-    u4 = 0;
-    u5 = 0;
-    u6 = 0;
+    frame.u3 = 0;
+    frame.u4 = 0;
+    frame.u5 = 0;
+    frame.u6 = 0;
     if (((*(int *)((int)self_ + 100) != 0) &&
         (i1 = *(int *)(*(int *)((int)self_ + 100) + 8), i1 != 0)) &&
        (*(char *)((int)self_ + 0x48) == '\0')) {
@@ -698,9 +702,9 @@ XI_API void __thiscall TargetMenu_UpdateLayout(void * self_)
         *(uint8_t *)(*(int *)((int)self_ + 8) + 0x69) = 1;
         *(uint8_t *)(*(int *)((int)self_ + 8) + 0x6a) = 1;
         u2 = orig::NetCellFont_GetRect
-                          (*(void **)(*(int *)((int)self_ + 100) + 8),(uint32_t *)&u3);
-        orig::NetCellFont_SetRectAndUpdateNodes(*(void **)((int)self_ + 8),((uint32_t)(((uint32_t)(uint16_t)(u4) << 16) | (uint16_t)(u3))),((uint32_t)(((uint32_t)(uint16_t)(u5) << 16) | (uint16_t)(u4)))
-                     ,((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(u5))) - ((uint32_t)(((uint32_t)(uint16_t)(u4) << 16) | (uint16_t)(u3))),
+                          (*(void **)(*(int *)((int)self_ + 100) + 8),(uint32_t *)&frame.u3);
+        orig::NetCellFont_SetRectAndUpdateNodes(*(void **)((int)self_ + 8),((uint32_t)(((uint32_t)(uint16_t)(frame.u4) << 16) | (uint16_t)(frame.u3))),((uint32_t)(((uint32_t)(uint16_t)(frame.u5) << 16) | (uint16_t)(frame.u4)))
+                     ,((uint32_t)(((uint32_t)(uint16_t)(frame.u6) << 16) | (uint16_t)(frame.u5))) - ((uint32_t)(((uint32_t)(uint16_t)(frame.u4) << 16) | (uint16_t)(frame.u3))),
                      ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u2 >> 0x30)) << 16) | (uint16_t)(*(short *)((int)self_ + 0x4e) << 4))) +
                      4,1,0,0);
       }
@@ -728,30 +732,32 @@ XI_API void __attribute__((stdcall, regparm(3))) TargetMenu_LayoutMessage(uint32
   uint32_t *p2;
   uint32_t *p3;
   uint64_t u3;
-  char xi_frame[624] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  (&u4)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 16);
-  uint16_t  &u5 = *reinterpret_cast<uint16_t  *>(xi_frame + 32);
-  uint32_t  (&u6)[9] = *reinterpret_cast<uint32_t  (*)[9]>(xi_frame + 76);
-  char  (&val1)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 112);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[624];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; uint32_t u4[4]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; uint16_t u5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x4C]; uint32_t u6[9]; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_5[0x70]; char val1[512]; };   // at 0x70
+  } frame;
   
-  p2 = u4;
+  p2 = frame.u4;
   for (i1 = 0xf; i1 != 0; i1 = i1 + -1) {
     *p2 = 0;
     p2 = p2 + 1;
   }
   *(uint16_t *)(arg3 + 0x4e) = 0;
   u1 = false;
-  u4[0] = ((uint32_t)(((uint32_t)(uint8_t)(XI_PIECE(u4[0], 3, 1)) << 24) | ((uint32_t)(0x10298) & 0xFFFFFFu)));
+  frame.u4[0] = ((uint32_t)(((uint32_t)(uint8_t)(XI_PIECE(frame.u4[0], 3, 1)) << 24) | ((uint32_t)(0x10298) & 0xFFFFFFu)));
   if ((char)arg5 != '\0') {
-    u4[0] = ((uint32_t)(((uint32_t)(XI_PIECE(u4[0], 1, 3)) << 8) | (uint8_t)(0xbe)));
+    frame.u4[0] = ((uint32_t)(((uint32_t)(XI_PIECE(frame.u4[0], 1, 3)) << 8) | (uint8_t)(0xbe)));
   }
-  orig::NetCellFont_InitTextLayout(u6,arg2);
-  i2 = 0;
+  orig::NetCellFont_InitTextLayout(frame.u6,arg2);
+  frame.i2 = 0;
   i1 = 0;
-  u2 = orig::NetCellFont_FindByKeyByte(u4[0]);
-  orig::NetCellFont_SetString(u6,arg4,u2,i1,i2);
-  i1 = orig::NetCellFont_GetField20(u6);
+  u2 = orig::NetCellFont_FindByKeyByte(frame.u4[0]);
+  orig::NetCellFont_SetString(frame.u6,arg4,u2,i1,frame.i2);
+  i1 = orig::NetCellFont_GetField20(frame.u6);
   while (i1 == 0) {
     p1 = orig::Allocator_Generic_v3(0x248);
     if (p1 == (void *)0x0) {
@@ -760,11 +766,11 @@ XI_API void __attribute__((stdcall, regparm(3))) TargetMenu_LayoutMessage(uint32
     else {
       p1 = orig::TargetMenu_ClearBlock(p1);
     }
-    orig::game_1012A4F0(u6,val1,0x200,(int)*(short *)(g_1062193C_as_s32 + 0x32));
-    u3 = orig::game_101284F0(val1,(short *)((int)p1 + 4),0x101,(char *)0x0,0);
+    orig::game_1012A4F0(frame.u6,frame.val1,0x200,(int)*(short *)(g_1062193C_as_s32 + 0x32));
+    u3 = orig::game_101284F0(frame.val1,(short *)((int)p1 + 4),0x101,(char *)0x0,0);
     *(short *)((int)p1 + 0x208) = (short)u3;
-    u5 = (short)u3;
-    p2 = u4;
+    frame.u5 = (short)u3;
+    p2 = frame.u4;
     p3 = (uint32_t *)((int)p1 + 0x20c);
     for (i1 = 0xf; i1 != 0; i1 = i1 + -1) {
       *p3 = *p2;
@@ -773,15 +779,15 @@ XI_API void __attribute__((stdcall, regparm(3))) TargetMenu_LayoutMessage(uint32
     }
     *(uint8_t *)(arg3 + 0x56) = (uint8_t)arg6;
     orig::NetCellFont_PushBack_v1((void *)(arg3 + 0x14),p1);
-    if ((!u1) && (u2 = orig::NetCellFont_FindByKeyByte(u4[0]), (char)u2 != '\0')) {
+    if ((!u1) && (u2 = orig::NetCellFont_FindByKeyByte(frame.u4[0]), (char)u2 != '\0')) {
       u1 = true;
     }
     *(short *)(arg3 + 0x4e) = *(short *)(arg3 + 0x4e) + 1;
-    i1 = orig::NetCellFont_GetField20(u6);
+    i1 = orig::NetCellFont_GetField20(frame.u6);
   }
-  orig::ChatLog_AddMessage_v2((void *)(*(int **)(arg3 + 100))[6],arg4,(uint8_t *)u4,0,1,
+  orig::ChatLog_AddMessage_v2((void *)(*(int **)(arg3 + 100))[6],arg4,(uint8_t *)frame.u4,0,1,
                      *(int **)(arg3 + 100));
-  *(uint32_t *)(arg3 + 0x50) = u4[3];
+  *(uint32_t *)(arg3 + 0x50) = frame.u4[3];
   orig::NetCellFont_CallClearBuffers();
   return;
 }
@@ -908,13 +914,15 @@ XI_API void __thiscall TargetMenu_CollectEntries(void * self_, int arg2)
   int i1;
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
-  p2 = self_;
-  p2 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-  while (p1 = p2, p2 = p1, p1 != (void *)0x0) {
-    u2 = orig::game_10126520((int *)&p2);
+  frame.p2 = self_;
+  frame.p2 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  while (p1 = frame.p2, frame.p2 = p1, p1 != (void *)0x0) {
+    u2 = orig::game_10126520((int *)&frame.p2);
     i1 = (int)u2;
     if (*(short *)(i1 + 0x14a) == 0) {
       if (arg2 < *(int *)(i1 + 0x110)) break;
@@ -1204,11 +1212,13 @@ XI_API void __thiscall TargetMenu_DrawPanel(void * self_)
 {
   void *p1;
   uint32_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint16_t  &u2 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  short  &i1 = *reinterpret_cast<short  *>(xi_frame + 2);
-  short  &i2 = *reinterpret_cast<short  *>(xi_frame + 4);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint16_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i1; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; short i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u3; };   // at 0x6
+  } frame;
   
   orig::Gfx_SetAdditiveBlend_v1();
   orig::Font_BindGlyphTexture_v1(g_pFontGlyphs);
@@ -1220,12 +1230,12 @@ XI_API void __thiscall TargetMenu_DrawPanel(void * self_)
   orig::MenuPanels_Draw((void *)((int)self_ + 0x20));
   u1 = orig::game_1011AE80(*(void **)((int)self_ + 8));
   if ((char)u1 != '\0') {
-    u2 = 0;
-    i1 = 0;
-    i2 = 0;
-    u3 = 0;
-    orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&u2);
-    orig::game_1011FB60(*(void **)((int)self_ + 0x1c),i2 + -0x50,(int)i1,0x80808080,0,0);
+    frame.u2 = 0;
+    frame.i1 = 0;
+    frame.i2 = 0;
+    frame.u3 = 0;
+    orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&frame.u2);
+    orig::game_1011FB60(*(void **)((int)self_ + 0x1c),frame.i2 + -0x50,(int)frame.i1,0x80808080,0,0);
   }
   return;
 }
@@ -1368,10 +1378,12 @@ XI_API void __thiscall TargetMenu_InitFromTables(void * self_)
   short *p3;
   uint32_t *p4;
   uint64_t u2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&i3)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i3[2]; };   // at 0x0
+  } frame;
   
-  orig::TargetMenu_GetWindowRect(self_,i3);
+  orig::TargetMenu_GetWindowRect(self_,frame.i3);
   p1 = (int *)orig::YkCommon_GetIndexed(1);
   if (p1 != (int *)0x0) {
     p3 = &g_1036FA1C;
@@ -1385,9 +1397,9 @@ XI_API void __thiscall TargetMenu_InitFromTables(void * self_)
   }
   orig::thunk_TargetMenu_PlaceByLayout_as_v0(self_);
   i2 = *(int *)((int)self_ + 8);
-  i3[0] = (uint32_t)*(uint16_t *)((int)self_ + 0x372) << 0x10;
-  i3[1] = 0;
-  *(int *)(i2 + 0xbc) = i3[0];
+  frame.i3[0] = (uint32_t)*(uint16_t *)((int)self_ + 0x372) << 0x10;
+  frame.i3[1] = 0;
+  *(int *)(i2 + 0xbc) = frame.i3[0];
   *(uint32_t *)(i2 + 0xc0) = 0;
   orig::TargetMenu_SetRowCount(self_,0);
   i2 = *(int *)(g_pSceneState + 8);
@@ -1430,10 +1442,12 @@ XI_API void __thiscall TargetMenu_InitFromTables(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TargetMenu_Call1013E560(void * self_)
 {
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  (&u1)[2] = *reinterpret_cast<uint32_t  (*)[2]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1[2]; };   // at 0x0
+  } frame;
   
-  orig::TargetMenu_GetWindowRect(self_,u1);
+  orig::TargetMenu_GetWindowRect(self_,frame.u1);
   return;
 }
 
@@ -1526,47 +1540,49 @@ XI_API bits32 __thiscall TargetMenu_GetWindowRect(void * self_, bits32 * arg2)
 XI_API bits32 __thiscall TargetMenu_PlaceByLayout(void * self_)
 {
   uint32_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
   switch(xi_sw(*(uint8_t *)((int)self_ + 0x27))) {
   case 1:
-    u2 = 0x82;
-    u3 = 0xf0;
+    frame.u2 = 0x82;
+    frame.u3 = 0xf0;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 10;
     break;
   case 2:
-    u2 = 0x10;
-    u3 = 0x30;
+    frame.u2 = 0x10;
+    frame.u3 = 0x30;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 0x50;
     break;
   case 3:
-    u2 = 0x82;
-    u3 = 0x104;
+    frame.u2 = 0x82;
+    frame.u3 = 0x104;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 10;
     break;
   case 4:
-    u2 = 0x10;
-    u3 = 0x10;
+    frame.u2 = 0x10;
+    frame.u3 = 0x10;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 0x50;
     break;
   case 5:
-    u2 = 0x82;
-    u3 = 0xf0;
+    frame.u2 = 0x82;
+    frame.u3 = 0xf0;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 0;
     break;
   default:
-    u2 = 0x10;
-    u3 = 0xf0;
+    frame.u2 = 0x10;
+    frame.u3 = 0xf0;
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 0xc;
   }
   if (*(char *)((int)self_ + 0x371) != '\0') {
     *(uint16_t *)(*(int *)((int)self_ + 8) + 0x38) = 0;
   }
-  orig::CTkMenuMng_IsDrawWindow(&g_menuMng_as_v0,&u2,0,0);
-  *(short *)((int)self_ + 0x372) = (short)u3;
-  u1 = orig::game_10119110(*(void **)((int)self_ + 8),u2,u3);
+  orig::CTkMenuMng_IsDrawWindow(&g_menuMng_as_v0,&frame.u2,0,0);
+  *(short *)((int)self_ + 0x372) = (short)frame.u3;
+  u1 = orig::game_10119110(*(void **)((int)self_ + 8),frame.u2,frame.u3);
   return u1;
 }
 
@@ -3033,18 +3049,20 @@ XI_API void __thiscall TargetMenu_SetTextFwd(void * self_, int arg2, int arg3)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TargetMenu_SetText(void * self_, int arg2, int arg3)
 {
-  char xi_frame[216] __attribute__((aligned(4)));
-  uint8_t * &p1 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  uint8_t  (&u1)[204] = *reinterpret_cast<uint8_t  (*)[204]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[216];
+    struct __attribute__((packed)) { uint8_t * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; uint8_t u1[204]; };   // at 0xC
+  } frame;
   
   if (arg2 == 0) {
-    p1 = (uint8_t *)0x0;
+    frame.p1 = (uint8_t *)0x0;
   }
   else {
-    orig::DmsgText_WrapSjisAt((int)u1,0xc9,(uint8_t *)arg2);
-    p1 = u1;
+    orig::DmsgText_WrapSjisAt((int)frame.u1,0xc9,(uint8_t *)arg2);
+    frame.p1 = frame.u1;
   }
-  orig::MenuPanels_SetEntryText((void *)((int)self_ + 0xa4),p1,arg3);
+  orig::MenuPanels_SetEntryText((void *)((int)self_ + 0xa4),frame.p1,arg3);
   return;
 }
 
@@ -3375,28 +3393,30 @@ XI_API int __cdecl TargetMenu_ExpandMessageCodes(int arg1, int arg2, bits32 arg3
   uint32_t u6;
   uint32_t *p5;
   char *p6;
-  char xi_frame[316] __attribute__((aligned(4)));
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t * &p7 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  size_t  &u8 = *reinterpret_cast<size_t  *>(xi_frame + 4);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 28);
-  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 32);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint8_t  (&u11)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 44);
-  uint8_t  (&u12)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 56);
-  uint32_t  &u13 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
-  uint32_t  &u14 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  uint32_t  &u15 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  uint32_t  &u16 = *reinterpret_cast<uint32_t  *>(xi_frame + 80);
-  uint32_t  &u17 = *reinterpret_cast<uint32_t  *>(xi_frame + 84);
-  uint8_t  (&u18)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 88);
-  uint32_t  &u19 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
-  uint32_t  &u20 = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
-  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 108);
-  uint8_t  (&u21)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 112);
-  char  (&val1)[128] = *reinterpret_cast<char  (*)[128]>(xi_frame + 124);
-  uint32_t  (&u22)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 252);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[316];
+    struct __attribute__((packed)) { uint32_t u7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t * p7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; size_t u8; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; int i5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; uint32_t u9; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; uint32_t u10; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; uint8_t u11[12]; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x38]; uint8_t u12[12]; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_10[0x44]; uint32_t u13; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_11[0x48]; uint32_t u14; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_12[0x4C]; uint32_t u15; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_13[0x50]; uint32_t u16; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_14[0x54]; uint32_t u17; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_15[0x58]; uint8_t u18[12]; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_16[0x64]; uint32_t u19; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_17[0x68]; uint32_t u20; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_18[0x6C]; int i7; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_19[0x70]; uint8_t u21[12]; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_20[0x7C]; char val1[128]; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_21[0xFC]; uint32_t u22[16]; };   // at 0xFC
+  } frame;
   
   u3 = false;
   u2 = false;
@@ -3404,35 +3424,35 @@ XI_API int __cdecl TargetMenu_ExpandMessageCodes(int arg1, int arg2, bits32 arg3
   p1 = (char *)orig::TargetMenu_GetMessageFwd(arg3,arg4);
   if (p1 != (char *)0x0) {
     c1 = *p1;
-    i5 = 0;
+    frame.i5 = 0;
     i3 = 0;
     i2 = 0;
     while (c1 != '\0') {
       p4 = p1 + i2;
       i1 = orig::TargetMenu_Call101532B0OnWordBE(p4);
       i4 = i2;
-      i6 = i3;
+      frame.i6 = i3;
       if (i1 == 0) {
-        if (i5 + 1 < arg2) {
-          *(char *)(i5 + arg1) = *p4;
+        if (frame.i5 + 1 < arg2) {
+          *(char *)(frame.i5 + arg1) = *p4;
           i4 = i2 + 1;
-          i5 = i5 + 1;
+          frame.i5 = frame.i5 + 1;
         }
         else {
-          i6 = -1;
+          frame.i6 = -1;
         }
         goto L1;
       }
       u5 = orig::TargetMenu_IsMinus6Word(p4);
       if ((char)u5 == '\0') {
-        if (i5 + 2 < arg2) {
-          *(char *)(i5 + arg1) = *p4;
-          *(char *)(i5 + 1 + arg1) = p1[i2 + 1];
-          i5 = i5 + 2;
+        if (frame.i5 + 2 < arg2) {
+          *(char *)(frame.i5 + arg1) = *p4;
+          *(char *)(frame.i5 + 1 + arg1) = p1[i2 + 1];
+          frame.i5 = frame.i5 + 2;
           i4 = i2 + 2;
         }
         else {
-          i6 = -1;
+          frame.i6 = -1;
         }
         goto L1;
       }
@@ -3441,11 +3461,11 @@ XI_API int __cdecl TargetMenu_ExpandMessageCodes(int arg1, int arg2, bits32 arg3
       switch(xi_sw(p1[i2 + 2])) {
       case -0x7f:
         i4 = i2 + 5;
-        u15 = (uint8_t)p1[i1] & 0x7f;
-        i2 = orig::TargetMenu_GetEntryWord3E(g_10578548_as_s32,u15);
+        frame.u15 = (uint8_t)p1[i1] & 0x7f;
+        i2 = orig::TargetMenu_GetEntryWord3E(g_10578548_as_s32,frame.u15);
         i2 = (int)(short)i2;
         if (0 < i2) {
-          p5 = u22;
+          p5 = frame.u22;
           do {
             i1 = orig::TargetMenu_ReadArgCode(p5,p1 + i4,arg6);
             i4 = i4 + i1;
@@ -3453,35 +3473,35 @@ XI_API int __cdecl TargetMenu_ExpandMessageCodes(int arg1, int arg2, bits32 arg3
             i2 = i2 + -1;
           } while (i2 != 0);
         }
-        i6 = orig::TargetMenu_ExpandMessageCodes_as_v0(i5 + arg1,arg2 - i5,0,u15,0,(int)u22)
+        frame.i6 = orig::TargetMenu_ExpandMessageCodes_as_v0(frame.i5 + arg1,arg2 - frame.i5,0,frame.u15,0,(int)frame.u22)
         ;
         goto L2;
       case -0x7e:
-        i3 = orig::TargetMenu_ReadArgCode(&u13,p1 + i1,arg6);
+        i3 = orig::TargetMenu_ReadArgCode(&frame.u13,p1 + i1,arg6);
         i2 = orig::TargetMenu_Read2Byte7Bit((uint8_t *)(p1 + i3 + i1));
         i4 = orig::TargetMenu_Read2Byte7Bit((uint8_t *)(p1 + i3 + 2 + i1));
         i4 = i4 + i1;
-        i7 = i4;
-        if ((-1 < (int)u13) && ((int)u13 < i2)) {
-          i4 = orig::TargetMenu_Read2Byte7Bit((uint8_t *)(p1 + i3 + 4 + u13 * 2 + i1));
+        frame.i7 = i4;
+        if ((-1 < (int)frame.u13) && ((int)frame.u13 < i2)) {
+          i4 = orig::TargetMenu_Read2Byte7Bit((uint8_t *)(p1 + i3 + 4 + frame.u13 * 2 + i1));
           i4 = i1 + i4;
         }
         break;
       case -0x7d:
-        i3 = orig::TargetMenu_ReadArgCode(&u14,p1 + i1,arg6);
-        i4 = orig::TargetMenu_ReadArgCode(&u16,p1 + i1 + i3,arg6);
+        i3 = orig::TargetMenu_ReadArgCode(&frame.u14,p1 + i1,arg6);
+        i4 = orig::TargetMenu_ReadArgCode(&frame.u16,p1 + i1 + i3,arg6);
         i4 = i1 + i3 + i4;
-        if (u14 == u16) {
+        if (frame.u14 == frame.u16) {
           u3 = true;
           u2 = false;
           u4 = false;
         }
-        else if ((int)u14 < (int)u16) {
+        else if ((int)frame.u14 < (int)frame.u16) {
           u3 = false;
           u2 = true;
           u4 = false;
         }
-        else if ((int)u16 < (int)u14) {
+        else if ((int)frame.u16 < (int)frame.u14) {
           u3 = false;
           u2 = false;
           u4 = true;
@@ -3526,19 +3546,19 @@ L3:
         i4 = i2 + 4 + (int)p1[i1];
         break;
       case -0x75:
-        i4 = orig::TargetMenu_ReadArgCode(&u17,p1 + i1,arg6);
+        i4 = orig::TargetMenu_ReadArgCode(&frame.u17,p1 + i1,arg6);
         i4 = i1 + i4;
-        i6 = orig::TargetMenu_FormatDecimal(i5 + arg1,arg2 - i5,u17);
+        frame.i6 = orig::TargetMenu_FormatDecimal(frame.i5 + arg1,arg2 - frame.i5,frame.u17);
 L2:
-        if (-1 < i6) {
-          i5 = i5 + i6;
-          i6 = i3;
+        if (-1 < frame.i6) {
+          frame.i5 = frame.i5 + frame.i6;
+          frame.i6 = i3;
         }
         break;
       case -0x74:
-        i4 = orig::TargetMenu_ReadArgCode(&u20,p1 + i1,arg6);
+        i4 = orig::TargetMenu_ReadArgCode(&frame.u20,p1 + i1,arg6);
         i4 = i1 + i4;
-        p4 = *(char **)(arg5 + u20 * 4);
+        p4 = *(char **)(arg5 + frame.u20 * 4);
         if (p4 != (char *)0x0) {
           u6 = 0xffffffff;
           p6 = p4;
@@ -3549,118 +3569,118 @@ L2:
             p6 = p6 + 1;
           } while (c1 != '\0');
           i3 = ~u6 - 1;
-          if (i3 < arg2 - i5) {
-            orig::_strncpy_v1((char *)(i5 + arg1),p4,arg2 - i5);
+          if (i3 < arg2 - frame.i5) {
+            orig::_strncpy_v1((char *)(frame.i5 + arg1),p4,arg2 - frame.i5);
             *(uint8_t *)(arg1 + -1 + arg2) = 0;
 code_101539AD:
-            i5 = i5 + i3;
+            frame.i5 = frame.i5 + i3;
           }
           else {
-            i6 = -1;
+            frame.i6 = -1;
           }
         }
         break;
       case -0x73:
-        if (i1 < i7) {
-          i4 = i7;
+        if (i1 < frame.i7) {
+          i4 = frame.i7;
         }
         break;
       case -0x72:
-        i3 = orig::TargetMenu_ReadArgCode(&u19,p1 + i1,arg6);
-        i4 = orig::TargetMenu_ReadArgCode(&u9,p1 + i1 + i3,arg6);
+        i3 = orig::TargetMenu_ReadArgCode(&frame.u19,p1 + i1,arg6);
+        i4 = orig::TargetMenu_ReadArgCode(&frame.u9,p1 + i1 + i3,arg6);
         i4 = i1 + i3 + i4;
-        i3 = orig::TargetMenu_ReadArgCode(&u10,p1 + i4,arg6);
+        i3 = orig::TargetMenu_ReadArgCode(&frame.u10,p1 + i4,arg6);
         i4 = i4 + i3;
-        p2 = (int *)orig::TargetMenu_LookupObjectPtr(u19);
+        p2 = (int *)orig::TargetMenu_LookupObjectPtr(frame.u19);
         if (p2 != (int *)0x0) {
           u6 = *(uint32_t *)(g_pSceneState + 8);
           if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((u6 == 2 || (u6 == 3)))) ||
              (u6 < 4)) {
             switch(xi_sw(u6)) {
             case 0:
-              u8 = 0x80;
+              frame.u8 = 0x80;
               p4 = (char *)(**(untyped_fn **)(*p2 + 4))();
-              orig::_strncpy_v1(val1,p4,u8);
+              orig::_strncpy_v1(frame.val1,p4,frame.u8);
               break;
             default:
               i3 = *p2;
               u5 = 0x80;
-              if (u9 == 1) {
-                p4 = val1;
-                if (u10 == 0) {
+              if (frame.u9 == 1) {
+                p4 = frame.val1;
+                if (frame.u10 == 0) {
                   (**(untyped_fn **)(i3 + 8))(p4);
-                  i3 = orig::DmsgText_IsInSjisSet(val1);
+                  i3 = orig::DmsgText_IsInSjisSet(frame.val1);
                   if (i3 == 0) {
                     i3 = 0;
                     do {
                       c1 = (&g_10371E88)[i3];
-                      val1[i3] = c1;
+                      frame.val1[i3] = c1;
                       i3 = i3 + 1;
                     } while (c1 != '\0');
-                    (**(untyped_fn **)(*p2 + 8))(val1 + 2,0x7e);
+                    (**(untyped_fn **)(*p2 + 8))(frame.val1 + 2,0x7e);
                     break;
                   }
                   i3 = 0;
                   do {
                     c1 = (&g_10371E8C)[i3];
-                    val1[i3] = c1;
+                    frame.val1[i3] = c1;
                     i3 = i3 + 1;
                   } while (c1 != '\0');
                   i3 = *p2;
-                  p4 = val1 + 3;
+                  p4 = frame.val1 + 3;
                   u5 = 0x7d;
                 }
                 (**(untyped_fn **)(i3 + 8))(p4,u5);
               }
               else {
-                (**(untyped_fn **)(i3 + 0x10))(val1,0x80);
+                (**(untyped_fn **)(i3 + 0x10))(frame.val1,0x80);
               }
               break;
             case 2:
-              orig::DmsgText_ClearListHeader(u18);
-              orig::DmsgText_AppendNodeType2(u18,0);
-              orig::DmsgText_AppendString(u18,(char *)&c_strSpace_as_v0);
-              orig::DmsgText_AppendValueNode(u18,u10,(uint32_t)(u9 != 1),p2);
-              orig::TextInputFiles_Init(u21);
-              orig::DmsgText_ComposeTextA(u18,(int)u21);
-              u8 = 0x80;
-              p4 = orig::TextInputFiles_GetCStr(u21);
-              orig::_strncpy_v1(val1,p4,u8);
-              orig::TextInputFiles_Free_v1(u21);
+              orig::DmsgText_ClearListHeader(frame.u18);
+              orig::DmsgText_AppendNodeType2(frame.u18,0);
+              orig::DmsgText_AppendString(frame.u18,(char *)&c_strSpace_as_v0);
+              orig::DmsgText_AppendValueNode(frame.u18,frame.u10,(uint32_t)(frame.u9 != 1),p2);
+              orig::TextInputFiles_Init(frame.u21);
+              orig::DmsgText_ComposeTextA(frame.u18,(int)frame.u21);
+              frame.u8 = 0x80;
+              p4 = orig::TextInputFiles_GetCStr(frame.u21);
+              orig::_strncpy_v1(frame.val1,p4,frame.u8);
+              orig::TextInputFiles_Free_v1(frame.u21);
               orig::DmsgText_DeleteNodesA();
               break;
             case 3:
-              orig::DmsgText_ClearHead(u12);
-              orig::DmsgText_AppendTypeTwo(u12,2);
-              orig::DmsgText_AppendStringNode(u12,(char *)&c_strSpace_as_v0);
-              orig::TextInputFiles_Init(u11);
-              if ((int)u9 < 2) {
-                p7 = u11;
+              orig::DmsgText_ClearHead(frame.u12);
+              orig::DmsgText_AppendTypeTwo(frame.u12,2);
+              orig::DmsgText_AppendStringNode(frame.u12,(char *)&c_strSpace_as_v0);
+              orig::TextInputFiles_Init(frame.u11);
+              if ((int)frame.u9 < 2) {
+                frame.p7 = frame.u11;
                 (**(untyped_fn **)(*p2 + 0xc))();
-                u7 = 0;
-                p3 = orig::TextInputFiles_GetCStr(&u10);
+                frame.u7 = 0;
+                p3 = orig::TextInputFiles_GetCStr(&frame.u10);
                 i3 = (**(untyped_fn **)(*p2 + 4))(p3);
                 u5 = 3;
               }
               else {
-                p7 = u11;
+                frame.p7 = frame.u11;
                 (**(untyped_fn **)(*p2 + 0x10))();
-                u7 = 0;
-                p3 = orig::TextInputFiles_GetCStr(&u10);
+                frame.u7 = 0;
+                p3 = orig::TextInputFiles_GetCStr(&frame.u10);
                 i3 = (**(untyped_fn **)(*p2 + 4))(p3);
                 u5 = 4;
               }
-              orig::DmsgText_AppendIdString(u12,u5,i3,u7,p7);
-              orig::DmsgText_ComposeTextB(u12,(int)u11);
-              u8 = 0x80;
-              p4 = orig::TextInputFiles_GetCStr(u11);
-              orig::_strncpy_v1(val1,p4,u8);
-              orig::TextInputFiles_Free_v1(u11);
+              orig::DmsgText_AppendIdString(frame.u12,u5,i3,frame.u7,frame.p7);
+              orig::DmsgText_ComposeTextB(frame.u12,(int)frame.u11);
+              frame.u8 = 0x80;
+              p4 = orig::TextInputFiles_GetCStr(frame.u11);
+              orig::_strncpy_v1(frame.val1,p4,frame.u8);
+              orig::TextInputFiles_Free_v1(frame.u11);
               orig::DmsgText_DeleteNodesB();
             }
           }
           u6 = 0xffffffff;
-          p4 = val1;
+          p4 = frame.val1;
           do {
             if (u6 == 0) break;
             u6 = u6 - 1;
@@ -3668,25 +3688,25 @@ code_101539AD:
             p4 = p4 + 1;
           } while (c1 != '\0');
           i3 = ~u6 - 1;
-          if (i3 < arg2 - i5) {
-            orig::_strncpy_v1((char *)(i5 + arg1),val1,arg2 - i5);
+          if (i3 < arg2 - frame.i5) {
+            orig::_strncpy_v1((char *)(frame.i5 + arg1),frame.val1,arg2 - frame.i5);
             *(uint8_t *)(arg1 + -1 + arg2) = 0;
             goto code_101539AD;
           }
-          i6 = -1;
+          frame.i6 = -1;
         }
       }
 L1:
-      i3 = i6;
+      i3 = frame.i6;
       i2 = i4;
       c1 = p1[i4];
     }
-    *(uint8_t *)(i5 + arg1) = 0;
+    *(uint8_t *)(frame.i5 + arg1) = 0;
     if (i3 < 0) {
       return i3;
     }
   }
-  return i5;
+  return frame.i5;
 }
 
 // FUNCTION: FFXIMAIN 0x10153A40
@@ -3698,9 +3718,11 @@ XI_API int __cdecl TargetMenu_FormatMessageWithArgs(int arg1, int arg2, int arg3
   int i1;
   int i2;
   bits32 *p2;
-  char xi_frame[128] __attribute__((aligned(4)));
-  bits32  (&u2)[16] = *reinterpret_cast<bits32  (*)[16]>(xi_frame + 0);
-  bits32  (&u3)[16] = *reinterpret_cast<bits32  (*)[16]>(xi_frame + 64);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[128];
+    struct __attribute__((packed)) { bits32 u2[16]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x40]; bits32 u3[16]; };   // at 0x40
+  } frame;
   
   i1 = orig::TargetMenu_GetMessageFwd(arg3,arg4);
   if (i1 != 0) {
@@ -3709,7 +3731,7 @@ XI_API int __cdecl TargetMenu_FormatMessageWithArgs(int arg1, int arg2, int arg3
       do {
         u1 = *arg6;
         arg6 = arg6 + 1;
-        u3[i1] = u1;
+        frame.u3[i1] = u1;
         i1 = i1 + 1;
       } while (i1 < arg5);
     }
@@ -3720,11 +3742,11 @@ XI_API int __cdecl TargetMenu_FormatMessageWithArgs(int arg1, int arg2, int arg3
       do {
         p1 = p2 + 1;
         p2 = p2 + 1;
-        u2[i2] = *p1;
+        frame.u2[i2] = *p1;
         i2 = i2 + 1;
       } while (i2 < (short)i1);
     }
-    i1 = orig::TargetMenu_ExpandMessageCodes(arg1,arg2,arg3,arg4,(int)u3,u2);
+    i1 = orig::TargetMenu_ExpandMessageCodes(arg1,arg2,arg3,arg4,(int)frame.u3,frame.u2);
     return i1;
   }
   return 0;
@@ -3976,11 +3998,13 @@ XI_API uint32_t __stdcall TargetMenu_LoadMessageSetByState(void * arg1, uint16_t
   uint32_t u2;
   int *p1;
   uint32_t u3;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  (&u4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  uint8_t  (&u5)[8] = *reinterpret_cast<uint8_t  (*)[8]>(xi_frame + 4);
-  uint8_t  (&u6)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 12);
-  uint8_t  (&u7)[48] = *reinterpret_cast<uint8_t  (*)[48]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u4[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t u5[8]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; uint8_t u6[4]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; uint8_t u7[48]; };   // at 0x10
+  } frame;
   
   u1 = *(uint32_t *)(g_pSceneState + 8);
   if (((-1 < *(char *)(g_pSceneState + 0x18)) || ((u1 != 2 && (u1 != 3)))) && (3 < u1)) {
@@ -3989,37 +4013,37 @@ XI_API uint32_t __stdcall TargetMenu_LoadMessageSetByState(void * arg1, uint16_t
   switch(xi_sw(u1)) {
   case 0:
     u2 = orig::DmsgText_GetDwordEntry(arg2,0);
-    orig::TargetMenu_CtorVt10335174(u4);
-    orig::game_101540A0(u4,arg2);
-    p1 = (int *)orig::TargetMenu_GetField8(u4);
+    orig::TargetMenu_CtorVt10335174(frame.u4);
+    orig::game_101540A0(frame.u4,arg2);
+    p1 = (int *)orig::TargetMenu_GetField8(frame.u4);
     u3 = (**(untyped_fn **)(*p1 + 4))();
     orig::TextInputFiles_AssignWhole(arg1,u3);
-    u3 = orig::game_10155500(u4);
+    u3 = orig::game_10155500(frame.u4);
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((short)u2)));
   default:
     u2 = orig::DmsgText_GetDwordEntry(arg2,0);
-    orig::TargetMenu_CtorVt1033515C(u7);
-    orig::game_101540A0(u7,arg2);
-    p1 = (int *)orig::TargetMenu_GetMember14(u7);
+    orig::TargetMenu_CtorVt1033515C(frame.u7);
+    orig::game_101540A0(frame.u7,arg2);
+    p1 = (int *)orig::TargetMenu_GetMember14(frame.u7);
     (**(untyped_fn **)(*p1 + 4))(arg1);
-    u3 = orig::TargetMenu_DtorVt1033515C(u6);
+    u3 = orig::TargetMenu_DtorVt1033515C(frame.u6);
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((short)u2)));
   case 2:
     u2 = orig::DmsgText_GetDwordEntry(arg2,0);
-    orig::TargetMenu_CtorVt1033512C(u7);
-    orig::game_101540A0(u7,arg2);
-    p1 = (int *)orig::TargetMenu_GetInnerPtr10(u7);
+    orig::TargetMenu_CtorVt1033512C(frame.u7);
+    orig::game_101540A0(frame.u7,arg2);
+    p1 = (int *)orig::TargetMenu_GetInnerPtr10(frame.u7);
     (**(untyped_fn **)(*p1 + 0x20))(arg1,0xffffffff,0);
-    u3 = orig::game_10154D70(u5);
+    u3 = orig::game_10154D70(frame.u5);
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((short)u2)));
   case 3:
     u2 = orig::DmsgText_GetDwordEntry(arg2,0);
-    orig::TargetMenu_CtorVt10335168(u7);
-    orig::game_101540A0(u7,arg2);
-    p1 = (int *)orig::TargetMenu_GetMemberC(u7);
+    orig::TargetMenu_CtorVt10335168(frame.u7);
+    orig::game_101540A0(frame.u7,arg2);
+    p1 = (int *)orig::TargetMenu_GetMemberC(frame.u7);
     u3 = (**(untyped_fn **)(*p1 + 0x1c))();
     orig::TextInputFiles_AssignWhole(arg1,u3);
-    u3 = orig::game_10155320(u7);
+    u3 = orig::game_10155320(frame.u7);
     return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((short)u2)));
   }
 }
@@ -4092,14 +4116,16 @@ XI_API char __thiscall TargetMenu_LoadMessageSet(void * self_)
   uint32_t *p7;
   uint8_t u5;
   uint64_t u6;
-  char xi_frame[32] __attribute__((aligned(4)));
-  int * &p8 = *reinterpret_cast<int * *>(xi_frame + 0);
-  char  &c1 = *reinterpret_cast<char  *>(xi_frame + 4);
-  uint8_t  (&u7)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { int * p8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char c1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint8_t u7[16]; };   // at 0x10
+  } frame;
   
-  c1 = '\0';
+  frame.c1 = '\0';
   i1 = orig::Scene_GetTableValue_v1(0x3f);
-  orig::game_10257860(u7);
+  orig::game_10257860(frame.u7);
   u2 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,i1);
   if (-1 < (int)u2) {
     u6 = orig::Allocator_Generic_v1(u2);
@@ -4137,24 +4163,24 @@ code_10154614:
           p5 = p5 + 4;
           p7 = p7 + 1;
         }
-        orig::DmsgText_Assign(u7,p1,u2);
-        i2 = orig::DmsgText_GetRowCount(u7);
+        orig::DmsgText_Assign(frame.u7,p1,u2);
+        i2 = orig::DmsgText_GetRowCount(frame.u7);
         if (i2 != 0) {
-          u3 = orig::DmsgText_GetRowCount(u7);
+          u3 = orig::DmsgText_GetRowCount(frame.u7);
           *(uint32_t *)self_ = u3;
-          i2 = orig::DmsgText_GetRowCount(u7);
+          i2 = orig::DmsgText_GetRowCount(frame.u7);
           u6 = orig::Allocator_Generic_v1(i2 * 2);
           *(int *)((int)self_ + 4) = (int)u6;
-          i2 = orig::DmsgText_GetRowCount(u7);
+          i2 = orig::DmsgText_GetRowCount(frame.u7);
           u6 = orig::Allocator_Generic_v1(i2 * 0xc + 4);
-          p8 = (int *)u6;
-          if (p8 == (int *)0x0) {
-            p8 = (int *)0x0;
+          frame.p8 = (int *)u6;
+          if (frame.p8 == (int *)0x0) {
+            frame.p8 = (int *)0x0;
           }
           else {
-            *p8 = i2;
-            p8 = p8 + 1;
-            p6 = p8;
+            *frame.p8 = i2;
+            frame.p8 = frame.p8 + 1;
+            p6 = frame.p8;
             if (-1 < i2 + -1) {
               do {
                 orig::TextInputFiles_Init(p6);
@@ -4164,37 +4190,37 @@ code_10154614:
             }
           }
           u2 = 0;
-          i2 = orig::DmsgText_GetRowCount(u7);
-          p6 = p8;
+          i2 = orig::DmsgText_GetRowCount(frame.u7);
+          p6 = frame.p8;
           if (i2 != 0) {
             do {
-              p3 = (uint16_t *)orig::DmsgText_GetRowBase(u7,u2);
+              p3 = (uint16_t *)orig::DmsgText_GetRowBase(frame.u7,u2);
               u4 = orig::TargetMenu_LoadMessageSetByState(p6,p3);
               *(short *)(*(int *)((int)self_ + 4) + u2 * 2) = (short)u4;
               i2 = orig::TextInputFiles_GetField4_1018D490(p6);
               i1 = i2 + 1 + i1;
               u2 = u2 + 1;
-              u4 = orig::DmsgText_GetRowCount(u7);
+              u4 = orig::DmsgText_GetRowCount(frame.u7);
               p6 = p6 + 3;
             } while (u2 < u4);
           }
-          i2 = orig::DmsgText_GetRowCount(u7);
+          i2 = orig::DmsgText_GetRowCount(frame.u7);
           orig::MenuPanels_Alloc((void *)((int)self_ + 8),i2,i1);
           u2 = 0;
-          i1 = orig::DmsgText_GetRowCount(u7);
-          p6 = p8;
+          i1 = orig::DmsgText_GetRowCount(frame.u7);
+          p6 = frame.p8;
           if (i1 != 0) {
             do {
               p4 = orig::TextInputFiles_GetCStr(p6);
               orig::MenuPanels_Append((void *)((int)self_ + 8),p4);
               u2 = u2 + 1;
-              u4 = orig::DmsgText_GetRowCount(u7);
+              u4 = orig::DmsgText_GetRowCount(frame.u7);
               p6 = p6 + 3;
             } while (u2 < u4);
           }
-          if (p8 != (int *)0x0) {
-            i1 = p8[-1];
-            p6 = p8 + i1 * 3;
+          if (frame.p8 != (int *)0x0) {
+            i1 = frame.p8[-1];
+            p6 = frame.p8 + i1 * 3;
             if (-1 < i1 + -1) {
               do {
                 p6 = p6 + -3;
@@ -4202,10 +4228,10 @@ code_10154614:
                 i1 = i1 + -1;
               } while (i1 != 0);
             }
-            orig::operator_delete_v1(p8 + -1);
+            orig::operator_delete_v1(frame.p8 + -1);
           }
         }
-        c1 = '\x01';
+        frame.c1 = '\x01';
       }
       else {
         orig::operator_delete_v1(p1);
@@ -4213,11 +4239,11 @@ code_10154614:
     }
   }
   *(uint32_t *)((int)self_ + 0x88) = 0;
-  if (c1 != '\0') {
+  if (frame.c1 != '\0') {
     orig::DmsgText_BindSource((void *)((int)self_ + 100),(int)self_ + 0x24,0x40);
   }
-  orig::DmsgText_CallFreeData(u7);
-  return c1;
+  orig::DmsgText_CallFreeData(frame.u7);
+  return frame.c1;
 }
 
 // FUNCTION: FFXIMAIN 0x10154840
@@ -5931,9 +5957,11 @@ XI_API bits32 __thiscall Target_Select(void * self_, int arg2, bits32 arg3, bits
   int i1;
   void *obj1;
   uint64_t u2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+  } frame;
   
   if (arg2 == 0) {
     u1 = orig::Target_ClearAndSetFlag53(self_);
@@ -5948,13 +5976,13 @@ XI_API bits32 __thiscall Target_Select(void * self_, int arg2, bits32 arg3, bits
   if (self_ != (void *)0x0) {
     p1 = (int *)orig::Entry_ValidateKey(self_);
     if (p1 != (int *)0x0) {
-      i2 = *p1;
-      i3 = p1[1];
+      frame.i2 = *p1;
+      frame.i3 = p1[1];
       goto code_10157BA3;
     }
   }
-  i2 = 0;
-  i3 = 0;
+  frame.i2 = 0;
+  frame.i3 = 0;
 code_10157BA3:
   obj1 = self_;
   if ((((char)arg3 != '\0') && (*(int *)((int)self_ + 0xc4) != 0)) &&
@@ -5976,7 +6004,7 @@ code_10157BA3:
     orig::Target_SetDisplayName(self_,(int *)arg2);
     i1 = orig::Target_GetActorPtr(obj1);
     orig::Yk_SetCurrentIndex(i1);
-    u1 = orig::Entry_MatchesPair(obj1,&i2);
+    u1 = orig::Entry_MatchesPair(obj1,&frame.i2);
     if ((char)u1 == '\0') {
       u1 = orig::TargetMenu_SetTargetMode_v1(self_,0);
     }
@@ -6196,8 +6224,10 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) Target_IssueStateCommand(bits
   long double f2;
   long double f3;
   uint64_t u5;
-  char xi_frame[128] __attribute__((aligned(4)));
-  uint8_t  (&u6)[128] = *reinterpret_cast<uint8_t  (*)[128]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[128];
+    struct __attribute__((packed)) { uint8_t u6[128]; };   // at 0x0
+  } frame;
   
   u1 = false;
   u5 = orig::NetCellFont_TestCommand36CF60(0x3f,0x44,1,-1,xi_eax);
@@ -6242,12 +6272,12 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) Target_IssueStateCommand(bits
         switch(xi_sw(i1)) {
         case 7:
         case 0x21:
-          orig::_sprintf(u6,str__s__s_10358098,str__heal_1036E3A4,&g_1034F488);
-          i1 = orig::Command_RunLine(u6,0);
+          orig::_sprintf(frame.u6,str__s__s_10358098,str__heal_1036E3A4,&g_1034F488);
+          i1 = orig::Command_RunLine(frame.u6,0);
           return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
         case 0x2f:
-          orig::_sprintf(u6,str__s__s_10358098,&g_10372138,&g_1034F488);
-          i1 = orig::Command_RunLine(u6,0);
+          orig::_sprintf(frame.u6,str__s__s_10358098,&g_10372138,&g_1034F488);
+          i1 = orig::Command_RunLine(frame.u6,0);
           return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
         case 0x3f:
         case 0x40:
@@ -6270,8 +6300,8 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) Target_IssueStateCommand(bits
         case 0x51:
         case 0x52:
         case 0x53:
-          orig::_sprintf(u6,str__s__s_10358098,str__sitchair_1037212C,&g_1034F488);
-          i1 = orig::Command_RunLine(u6,0);
+          orig::_sprintf(frame.u6,str__s__s_10358098,str__sitchair_1037212C,&g_1034F488);
+          i1 = orig::Command_RunLine(frame.u6,0);
           return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
         }
       }
@@ -7476,30 +7506,32 @@ XI_API uint32_t __thiscall Entry_MatchesPair(void * self_, int * arg2)
 XI_API bits32 __thiscall TargetMenu_MoveByDirection(void * self_, bits32 arg2)
 {
   uint32_t u1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
-  f1[0] = 0.0f;
-  f1[1] = 0.0f;
-  f1[2] = 0.0f;
-  f1[3] = 0.0f;
+  frame.f1[0] = 0.0f;
+  frame.f1[1] = 0.0f;
+  frame.f1[2] = 0.0f;
+  frame.f1[3] = 0.0f;
   switch(xi_sw(arg2)) {
   case 0:
-    f1[2] = 1.0f;
-    u1 = orig::TargetMenu_ApplyOffset(self_,f1);
+    frame.f1[2] = 1.0f;
+    u1 = orig::TargetMenu_ApplyOffset(self_,frame.f1);
     return u1;
   case 1:
-    f1[2] = (-1.0f);
-    u1 = orig::TargetMenu_ApplyOffset(self_,f1);
+    frame.f1[2] = (-1.0f);
+    u1 = orig::TargetMenu_ApplyOffset(self_,frame.f1);
     return u1;
   case 2:
-    f1[0] = 1.0f;
-    u1 = orig::TargetMenu_ApplyOffset(self_,f1);
+    frame.f1[0] = 1.0f;
+    u1 = orig::TargetMenu_ApplyOffset(self_,frame.f1);
     return u1;
   case 3:
-    f1[0] = (-1.0f);
+    frame.f1[0] = (-1.0f);
   }
-  u1 = orig::TargetMenu_ApplyOffset(self_,f1);
+  u1 = orig::TargetMenu_ApplyOffset(self_,frame.f1);
   return u1;
 }
 
@@ -7517,8 +7549,10 @@ XI_API bits32 __thiscall TargetMenu_ApplyOffset(void * self_, float * arg2)
   long double f1;
   int64_t i2;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+  } frame;
   
   xi_eax_00 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x22))));
   if (*(char *)((int)self_ + 0x22) == '\0') {
@@ -7549,10 +7583,10 @@ XI_API bits32 __thiscall TargetMenu_ApplyOffset(void * self_, float * arg2)
   xi_eax = (float)f1;
   *(float *)((int)self_ + 0x18) = (float)f1;
   u1 = orig::ZoneMap_QueryBoxHeightGlobal(*(uint32_t *)((int)self_ + 0x10),*(uint32_t *)((int)self_ + 0x14),xi_eax,
-                       &u3,xi_eax);
+                       &frame.u3,xi_eax);
   if ((char)u1 == '\x01') {
-    *(uint32_t *)((int)self_ + 0x14) = u3;
-    u1 = u3;
+    *(uint32_t *)((int)self_ + 0x14) = frame.u3;
+    u1 = frame.u3;
   }
   return u1;
 }
@@ -7568,8 +7602,10 @@ XI_API void __stdcall Camera_RotateVecYaw(float * arg1)
   int i1;
   int i2;
   long double f5;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  (&u1)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u1[64]; };   // at 0x0
+  } frame;
   
   i1 = orig::Camera_GetField50_v1();
   i2 = orig::Camera_GetField50_v1();
@@ -7581,12 +7617,12 @@ XI_API void __stdcall Camera_RotateVecYaw(float * arg1)
   i2 = orig::Camera_GetField50_v1();
   f3 = *(float *)(i1 + 0x58);
   f4 = *(float *)(i2 + 0x4c);
-  orig::MathVector_ReturnThis_v1(u1);
-  orig::Mat4_SetIdentity_v1(u1);
+  orig::MathVector_ReturnThis_v1(frame.u1);
+  orig::Mat4_SetIdentity_v1(frame.u1);
   f5 = bit_cast<long double>(x87_fpatan((float)(f1 - f2),
                           (float)(f3 - f4)));
-  orig::Mat4_PostRotateY_v1(u1,(float)f5);
-  orig::Mat4_TransformPointInPlace_v2(u1,arg1);
+  orig::Mat4_PostRotateY_v1(frame.u1,(float)f5);
+  orig::Mat4_TransformPointInPlace_v2(frame.u1,arg1);
   orig::MathVector_Nop();
   return;
 }
@@ -7650,28 +7686,30 @@ XI_API bits32 __thiscall Target_GetPosShorts(void * self_, uint16_t * arg2, uint
   int *obj1;
   uint32_t u1;
   int64_t i1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  uint8_t  (&u3)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 4);
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t u3[4]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f2; };   // at 0xC
+  } frame;
   
   obj1 = (int *)orig::Target_GetCachedIfValid(self_);
   if (obj1 != (int *)0x0) {
-    u1 = orig::TargetMenu_GetPositionIfValid(self_,&f1);
+    u1 = orig::TargetMenu_GetPositionIfValid(self_,&frame.f1);
     if ((char)u1 == '\0') {
-      u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x27c))))((void *)(obj1),&f1,u3,u2);
+      u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x27c))))((void *)(obj1),&frame.f1,frame.u3,frame.u2);
       c1 = (char)u1;
     }
     else {
-      f2 = (float)(f2 - 0.5f);
-      u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x280))))((void *)(obj1),&f1,u3,u2);
+      frame.f2 = (float)(frame.f2 - 0.5f);
+      u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x280))))((void *)(obj1),&frame.f1,frame.u3,frame.u2);
       c1 = (char)u1;
     }
     if (c1 != '\0') {
-      i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+      i1 = XI_CALL_ST0(0x10311C2Cu)(frame.f1);
       *arg2 = (short)i1;
-      i1 = XI_CALL_ST0(0x10311C2Cu)(f2);
+      i1 = XI_CALL_ST0(0x10311C2Cu)(frame.f2);
       *arg3 = (short)i1;
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)i1 >> 8))) << 8) | (uint8_t)(1)));
     }
@@ -7951,21 +7989,23 @@ XI_API void __thiscall TargetMenu_WrapTextLines(void * self_)
   int i3;
   uint32_t *p3;
   char *p4;
-  char xi_frame[300] __attribute__((aligned(4)));
-  untyped_fn * &p5 = *reinterpret_cast<untyped_fn * *>(xi_frame + 0);
-  uint32_t * &p6 = *reinterpret_cast<uint32_t * *>(xi_frame + 28);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  void * &p7 = *reinterpret_cast<void * *>(xi_frame + 36);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 40);
-  uint8_t  (&u4)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 44);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[300];
+    struct __attribute__((packed)) { untyped_fn * p5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; uint32_t * p6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; uint32_t u3; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; void * p7; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; int i4; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; uint8_t u4[256]; };   // at 0x2C
+  } frame;
   
-  p6 = (uint32_t *)((int)self_ + 8);
+  frame.p6 = (uint32_t *)((int)self_ + 8);
   p4 = (char *)((int)self_ + 4);
-  i4 = -4 - (int)self_;
+  frame.i4 = -4 - (int)self_;
   i2 = 4;
-  p7 = self_;
+  frame.p7 = self_;
   do {
-    p3 = (uint32_t *)*p6;
+    p3 = (uint32_t *)*frame.p6;
     *p4 = '\0';
     if (p3 == (uint32_t *)0x0) {
       return;
@@ -7978,15 +8018,15 @@ XI_API void __thiscall TargetMenu_WrapTextLines(void * self_)
       i1 = *(int *)(g_pSceneState + 8);
       if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) ||
          (i1 != 0)) {
-        p5 = XI_CODE(NetCellFont_MeasureTextWidthFwd);
+        frame.p5 = XI_CODE(NetCellFont_MeasureTextWidthFwd);
         i1 = 0x13c;
       }
       else {
-        p5 = (untyped_fn *)&code_1011D9E0;
+        frame.p5 = (untyped_fn *)&code_1011D9E0;
         i1 = ((1 < i3) - 1 & 0xffffffce) + 0x16e;
       }
       orig::DmsgText_WrapLine
-                ((int)u4,0xff,(char *)p3,&u3,i1,0,0x14,p5,XI_CODE(Font_MeasureText_1011D980)
+                ((int)frame.u4,0xff,(char *)p3,&frame.u3,i1,0,0x14,frame.p5,XI_CODE(Font_MeasureText_1011D980)
                 );
       if ((char)*p3 == '\0') break;
       *p4 = *p4 + '\x01';
@@ -8000,18 +8040,18 @@ XI_API void __thiscall TargetMenu_WrapTextLines(void * self_)
           u1 = *p2;
           p2 = (uint32_t *)((int)p2 + 1);
         } while ((char)u1 != '\0');
-        p2 = (uint32_t *)((int)p7 + (i2 + i3) * 4);
+        p2 = (uint32_t *)((int)frame.p7 + (i2 + i3) * 4);
         *p2 = ~u2 - 1;
-        if (~u2 - 1 <= u3) break;
-        *p2 = u3;
-        p3 = (uint32_t *)((int)p3 + u3);
+        if (~u2 - 1 <= frame.u3) break;
+        *p2 = frame.u3;
+        p3 = (uint32_t *)((int)p3 + frame.u3);
       }
       else {
-        p1 = (uint32_t *)((int)p7 + (i2 + i3) * 4);
+        p1 = (uint32_t *)((int)frame.p7 + (i2 + i3) * 4);
         *p1 = (int)p2 - (int)p3;
-        if (u3 < (uint32_t)((int)p2 - (int)p3)) {
-          *p1 = u3;
-          p3 = (uint32_t *)((int)p3 + u3);
+        if (frame.u3 < (uint32_t)((int)p2 - (int)p3)) {
+          *p1 = frame.u3;
+          p3 = (uint32_t *)((int)p3 + frame.u3);
         }
         else {
           p3 = (uint32_t *)((int)p2 + 1);
@@ -8019,10 +8059,10 @@ XI_API void __thiscall TargetMenu_WrapTextLines(void * self_)
       }
       i3 = i3 + 1;
     } while (i3 < 0x14);
-    p6 = p6 + 1;
+    frame.p6 = frame.p6 + 1;
     p4 = p4 + 1;
     i2 = i2 + 0x14;
-    if (1 < (int)(p4 + i4)) {
+    if (1 < (int)(p4 + frame.i4)) {
       return;
     }
   } while( true );
@@ -8083,18 +8123,20 @@ XI_API int __thiscall TargetMenu_FindCachedEntry(void * self_, int arg2, bits32 
   int *p1;
   int i1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int * &p2 = *reinterpret_cast<int * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int * p2; };   // at 0x0
+  } frame;
   
-  p2 = self_;
-  p2 = (int *)orig::NetCellFont_GetHead(self_);
+  frame.p2 = self_;
+  frame.p2 = (int *)orig::NetCellFont_GetHead(self_);
   do {
-    p1 = p2;
+    p1 = frame.p2;
     if (p1 == (int *)0x0) {
       return 0;
     }
-    p2 = p1;
-    u1 = orig::game_10126520((int *)&p2);
+    frame.p2 = p1;
+    u1 = orig::game_10126520((int *)&frame.p2);
     i1 = (int)u1;
   } while (arg2 != *(int *)(i1 + 0x14b0));
   if ((char)arg3 != '\0') {
@@ -8346,14 +8388,16 @@ XI_API void __thiscall NetCellFont_RemoveMatching(void * self_, int arg2)
 {
   int *p1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int * &p2 = *reinterpret_cast<int * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int * p2; };   // at 0x0
+  } frame;
   
-  p2 = self_;
-  p2 = (int *)orig::NetCellFont_GetHead(self_);
-  while (p1 = p2, p1 != (int *)0x0) {
-    p2 = p1;
-    u1 = orig::game_10126520((int *)&p2);
+  frame.p2 = self_;
+  frame.p2 = (int *)orig::NetCellFont_GetHead(self_);
+  while (p1 = frame.p2, p1 != (int *)0x0) {
+    frame.p2 = p1;
+    u1 = orig::game_10126520((int *)&frame.p2);
     if ((int)u1 == arg2) {
       orig::NetCellFont_Remove(self_,p1);
     }
@@ -8368,16 +8412,18 @@ XI_API int __thiscall Menu_FindItemByName(void * self_, char * arg2)
   int i1;
   uint64_t u1;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  p1 = self_;
-  p1 = (void *)orig::NetCellFont_GetHead(self_);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead(self_);
   do {
-    if (p1 == (void *)0x0) {
+    if (frame.p1 == (void *)0x0) {
       return 0;
     }
-    u1 = orig::game_10126520((int *)&p1);
+    u1 = orig::game_10126520((int *)&frame.p1);
     i1 = *(int *)((int)u1 + 4);
   } while ((i1 == 0) || (u2 = orig::_strncmp_v1(arg2,(char *)(i1 + 0x46),0x10), (int)u2 != 0))
   ;
@@ -8469,20 +8515,22 @@ XI_API bits32 __thiscall Menu_TrackCursor(void * self_)
   long double f1;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
   if (g_pCursor_as_v1 != 0) {
-    u2 = *(uint32_t *)(g_pCursor_as_v1 + 4);
-    u3 = *(uint32_t *)(g_pCursor_as_v1 + 8);
+    frame.u2 = *(uint32_t *)(g_pCursor_as_v1 + 4);
+    frame.u3 = *(uint32_t *)(g_pCursor_as_v1 + 8);
   }
   xi_eax = orig::Menu_HasFocusedItem(self_);
   if ((((char)xi_eax != '\0') && (xi_eax = g_pCursor_as_v1, *(char *)(g_pCursor_as_v1 + 0x4d) == '\x02')) &&
      (*(void **)((int)self_ + 0x54) != (void *)0x0)) {
-    xi_eax = orig::NetCellFont_HitTest(*(void **)((int)self_ + 0x54),&u2);
+    xi_eax = orig::NetCellFont_HitTest(*(void **)((int)self_ + 0x54),&frame.u2);
     if ((char)xi_eax != '\0') {
-      xi_eax = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 0x54),(int *)&u2,0);
+      xi_eax = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 0x54),(int *)&frame.u2,0);
       if (0 < (short)xi_eax) {
         if (*(short *)((int)*(void **)((int)self_ + 0x54) + 0x4c) != (short)xi_eax) {
           orig::NetCellFont_SelectEntryMoveCursor(*(void **)((int)self_ + 0x54),xi_eax,0,xi_eax);
@@ -8494,8 +8542,8 @@ XI_API bits32 __thiscall Menu_TrackCursor(void * self_)
           return (int)u1;
         }
         f1 = orig::Camera_GetFrameScale_v1(xi_eax);
-        u2 = (uint32_t)*(short *)((int)self_ + 0xb0);
-        i1 = XI_CALL_ST0(0x10311C2Cu)(f1 + (int)u2);
+        frame.u2 = (uint32_t)*(short *)((int)self_ + 0xb0);
+        i1 = XI_CALL_ST0(0x10311C2Cu)(f1 + (int)frame.u2);
         xi_eax = (uint32_t)i1;
         *(short *)((int)self_ + 0xb0) = (short)i1;
       }
@@ -8510,18 +8558,20 @@ XI_API bits32 __thiscall Menu_HandleCursorSelect(void * self_)
 {
   int i1;
   uint64_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
   if (g_pCursor_as_s32 != 0) {
-    i2 = *(int *)(g_pCursor_as_s32 + 4);
-    u2 = *(uint32_t *)(g_pCursor_as_s32 + 8);
+    frame.i2 = *(int *)(g_pCursor_as_s32 + 4);
+    frame.u2 = *(uint32_t *)(g_pCursor_as_s32 + 8);
   }
   i1 = g_pCursor_as_s32;
   if (((*(void **)((int)self_ + 0x54) != (void *)0x0) && (*(char *)(g_pCursor_as_s32 + 0x4d) == '\x02')) &&
      (*(char *)(g_pCursor_as_s32 + 0x86) == '\0')) {
-    i1 = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 0x54),&i2,0);
+    i1 = orig::NetCellFont_PickEntry(*(void **)((int)self_ + 0x54),&frame.i2,0);
     if ((short)i1 < 1) {
       if (*(char *)(g_pCursor_as_s32 + 0x87) == '\0') {
         u1 = orig::SetMusicTrackVolume_Tag0004_v1();
@@ -8604,16 +8654,18 @@ XI_API int __thiscall Menu_FindItemByNameAt1C(void * self_, char * arg2)
 {
   int i1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  p1 = self_;
-  p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x1c));
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x1c));
   do {
-    if (p1 == (void *)0x0) {
+    if (frame.p1 == (void *)0x0) {
       return 0;
     }
-    u1 = orig::game_10126520((int *)&p1);
+    u1 = orig::game_10126520((int *)&frame.p1);
     i1 = (int)u1;
   } while ((i1 == 0) || (u1 = orig::_strncmp_v1(arg2,(char *)(i1 + 0x46),0x10), (int)u1 != 0))
   ;
@@ -8634,11 +8686,13 @@ XI_API bits32 __thiscall MenuMng_TestNameForSceneState(void * self_, char * arg2
   uint8_t *p2;
   uint8_t u5;
   uint64_t u6;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u7; };   // at 0x4
+  } frame;
   
-  u7 = *g_pSceneState_as_v2;
+  frame.u7 = *g_pSceneState_as_v2;
   _Str1 = (char *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_pSceneState_as_v2 >> 8))) << 8) | (uint8_t)(str_menu_menuwind_103722D8[0])));
   u4 = 0;
   if (str_menu_menuwind_103722D8[0] != '\0') {
@@ -8646,7 +8700,7 @@ XI_API bits32 __thiscall MenuMng_TestNameForSceneState(void * self_, char * arg2
     p2 = &g_10372300;
     u4 = 0;
     do {
-      u1 = u7;
+      u1 = frame.u7;
       u6 = orig::_strncmp_v1(_Str1,arg2,0x10);
       if ((int)u6 != 0) goto L1;
       switch(xi_sw(u1)) {
@@ -8697,12 +8751,12 @@ code_1015E227:
               break;
             }
             if ((*(uint32_t *)(p2 + -4) & 0x40000) == 0) goto code_1015E229;
-            i2 = orig::NetCellFont_GetTail(self_);
+            frame.i2 = orig::NetCellFont_GetTail(self_);
             do {
-              if (i2 == 0) goto code_1015E229;
-              i1 = orig::NetCellFont_NextActiveValue_v1(&i2);
+              if (frame.i2 == 0) goto code_1015E229;
+              i1 = orig::NetCellFont_NextActiveValue_v1(&frame.i2);
             } while ((*(uint32_t *)(i1 + 0x34) & 0x20000) == 0);
-            u5 = i2 == 0;
+            u5 = frame.i2 == 0;
             goto code_1015E227;
           }
           goto code_1015E229;
@@ -8984,16 +9038,18 @@ XI_API int __thiscall Menu_FindFirstActiveItem(void * self_)
 {
   int i1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  p1 = self_;
-  p1 = (void *)orig::NetCellFont_GetTail(self_);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetTail(self_);
   do {
-    if (p1 == (void *)0x0) {
+    if (frame.p1 == (void *)0x0) {
       return 0;
     }
-    u1 = orig::NetCellFont_NextActiveValue((int *)&p1);
+    u1 = orig::NetCellFont_NextActiveValue((int *)&frame.p1);
     i1 = (int)u1;
   } while (((((*(uint8_t *)(i1 + 0x34) & 1) != 0) && (*(char *)(i1 + 0x98) == '\0')) ||
            (*(char *)(i1 + 0x6e) != '\0')) ||
@@ -9064,11 +9120,13 @@ XI_API bits32 __thiscall Menu_CloseEntry(void * self_, char * arg2)
   int xi_eax;
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[32] __attribute__((aligned(4)));
-  char  (&val1)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { char val1[32]; };   // at 0x0
+  } frame;
   
-  orig::MenuMng_BuildMenuName(self_,val1,arg2);
-  xi_eax = orig::Menu_FindItemByName(self_,val1);
+  orig::MenuMng_BuildMenuName(self_,frame.val1,arg2);
+  xi_eax = orig::Menu_FindItemByName(self_,frame.val1);
   u1 = 0;
   if (xi_eax != 0) {
     u2 = orig::TargetMenu_MenuInitAndFadeItem(self_,xi_eax,1,xi_eax);
@@ -9177,15 +9235,17 @@ XI_API bits32 __stdcall Menu_FindByName(char * arg1)
 {
   int i1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+  } frame;
   
-  i2 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+  frame.i2 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
   do {
-    if (i2 == 0) {
+    if (frame.i2 == 0) {
       return 0;
     }
-    u1 = orig::Menu_NextVisibleItem(&i2);
+    u1 = orig::Menu_NextVisibleItem(&frame.i2);
     i1 = (int)u1;
   } while ((((i1 == 0) || (*(int *)(i1 + 4) == 0)) ||
            (u1 = orig::_strncmp_v1(arg1,(char *)(*(int *)(i1 + 4) + 0x46),0x10), (int)u1 != 0))
@@ -9199,15 +9259,17 @@ XI_API bits32 __stdcall Menu_FindByFlags34(uint32_t arg1)
 {
   int i1;
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+  } frame;
   
-  i2 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+  frame.i2 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
   do {
-    if (i2 == 0) {
+    if (frame.i2 == 0) {
       return 0;
     }
-    u1 = orig::Menu_NextVisibleItem(&i2);
+    u1 = orig::Menu_NextVisibleItem(&frame.i2);
     i1 = (int)u1;
   } while (((i1 == 0) || ((*(uint32_t *)(i1 + 0x34) & arg1) == 0)) ||
           (*(int *)(i1 + 0x10) == 0xe));
@@ -9220,15 +9282,17 @@ XI_API bits32 __stdcall Menu_FindByFlags38(bits32 arg1, uint32_t arg2, bits32 ar
 {
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+  } frame;
   
-  i1 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+  frame.i1 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
   do {
-    if (i1 == 0) {
+    if (frame.i1 == 0) {
       return 0;
     }
-    u2 = orig::Menu_NextVisibleItem(&i1);
+    u2 = orig::Menu_NextVisibleItem(&frame.i1);
     u1 = (uint32_t)u2;
   } while ((((u1 == 0) || ((*(uint16_t *)(u1 + 0x38) & (uint16_t)arg1) == 0)) ||
            (((char)arg3 == '\0' && (*(int *)(u1 + 0x10) == 0xe)))) ||
@@ -9362,16 +9426,18 @@ XI_API void __cdecl Menu_CallSlot30ForEachEntry(void)
 XI_API void __thiscall Menu_CallChildSlot34ForEachItem(void * self_)
 {
   uint64_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  p1 = self_;
-  p1 = (void *)orig::NetCellFont_GetHead(self_);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead(self_);
   while( true ) {
-    if (p1 == (void *)0x0) {
+    if (frame.p1 == (void *)0x0) {
       return;
     }
-    u1 = orig::game_10126520((int *)&p1);
+    u1 = orig::game_10126520((int *)&frame.p1);
     if ((void *)u1 == (void *)0x0) break;
     orig::NetCellFont_InvokeChild34((void *)u1);
   }
@@ -9673,10 +9739,12 @@ XI_API void __thiscall Menu_DrawLayers(void * self_)
   uint32_t xi_edx;
   char c1;
   uint64_t u2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
-  p2 = self_;
+  frame.p2 = self_;
   orig::Gfx_SetDefault2DStates_v1();
   if (g_10621944 != (void *)0x0) {
     orig::EventTextBlock_Draw(g_10621944);
@@ -9693,12 +9761,12 @@ XI_API void __thiscall Menu_DrawLayers(void * self_)
     }
   }
   c1 = '\0';
-  p1 = p2;
+  p1 = frame.p2;
   do {
-    p2 = p1;
-    p2 = (void *)orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-    while (p2 != (void *)0x0) {
-      u2 = orig::Menu_NextVisibleItem((int *)&p2);
+    frame.p2 = p1;
+    frame.p2 = (void *)orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+    while (frame.p2 != (void *)0x0) {
+      u2 = orig::Menu_NextVisibleItem((int *)&frame.p2);
       xi_edx = (uint32_t)((uint64_t)u2 >> 0x20);
       p1 = (void *)u2;
       if (((p1 != (void *)0x0) && (*(char *)((int)p1 + 0x60) == c1)) &&
@@ -9739,16 +9807,18 @@ XI_API bits32 __stdcall Menu_PositionWindow(int * arg1, int arg2)
   int i1;
   int i2;
   uint64_t u1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  short  &i3 = *reinterpret_cast<short  *>(xi_frame + 0);
-  short  &i4 = *reinterpret_cast<short  *>(xi_frame + 2);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 8);
-  short  &i5 = *reinterpret_cast<short  *>(xi_frame + 10);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 12);
-  short  &i6 = *reinterpret_cast<short  *>(xi_frame + 14);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { short i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i4; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x8]; uint16_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_5[0xA]; short i5; };   // at 0xA
+    struct __attribute__((packed)) { unsigned char pad_6[0xC]; uint16_t u4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_7[0xE]; short i6; };   // at 0xE
+    struct __attribute__((packed)) { unsigned char pad_8[0x10]; uint32_t u5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_9[0x14]; uint32_t u6; };   // at 0x14
+  } frame;
   
   i2 = *arg1;
   if ((((i2 != 0) && (*(int *)(i2 + 8) != 0)) && (arg2 != 0)) &&
@@ -9760,28 +9830,28 @@ XI_API bits32 __stdcall Menu_PositionWindow(int * arg1, int arg2)
       if ((char)u1 != '\0') goto code_1015F8E3;
     }
     if (*(int *)(i2 + 8) != arg2) {
-      u3 = 0;
-      i5 = 0;
-      u4 = 0;
-      i6 = 0;
-      i3 = 0;
-      i4 = 0;
-      u2 = 0;
-      orig::NetCellFont_GetRect(*(void **)(i2 + 8),(uint32_t *)&u3);
-      orig::NetCellFont_GetRect((void *)arg2,(uint32_t *)&i3);
-      u6 = *(uint32_t *)(arg2 + 0xc0);
-      u5 = *(uint32_t *)(arg2 + 0xbc);
-      i1 = (int)i3;
+      frame.u3 = 0;
+      frame.i5 = 0;
+      frame.u4 = 0;
+      frame.i6 = 0;
+      frame.i3 = 0;
+      frame.i4 = 0;
+      frame.u2 = 0;
+      orig::NetCellFont_GetRect(*(void **)(i2 + 8),(uint32_t *)&frame.u3);
+      orig::NetCellFont_GetRect((void *)arg2,(uint32_t *)&frame.i3);
+      frame.u6 = *(uint32_t *)(arg2 + 0xc0);
+      frame.u5 = *(uint32_t *)(arg2 + 0xbc);
+      i1 = (int)frame.i3;
       p2 = orig::NetCellFont_FindFreeEntry(*(void **)(i2 + 8));
       if ((p2 == (short *)0x0) ||
          (((char)p2[0x22] != '\x02' && ((char)p2[0x22] != '\x01')))) {
-        i2 = ((int)i5 - (int)XI_PIECE_S(u2, 2, 2)) + -2 + (int)i4;
+        i2 = ((int)frame.i5 - (int)XI_PIECE_S(frame.u2, 2, 2)) + -2 + (int)frame.i4;
       }
       else {
-        i2 = ((int)i4 - (int)XI_PIECE_S(u2, 2, 2)) + (int)i6;
+        i2 = ((int)frame.i4 - (int)XI_PIECE_S(frame.u2, 2, 2)) + (int)frame.i6;
       }
-      if ((XI_PIECE_S(u5, 2, 2) != XI_PIECE_S(u6, 2, 2)) && (i2 < XI_PIECE_S(u5, 2, 2))) {
-        i2 = (int)XI_PIECE_S(u5, 2, 2);
+      if ((XI_PIECE_S(frame.u5, 2, 2) != XI_PIECE_S(frame.u6, 2, 2)) && (i2 < XI_PIECE_S(frame.u5, 2, 2))) {
+        i2 = (int)XI_PIECE_S(frame.u5, 2, 2);
       }
       if (i2 < 0x10) {
         i2 = 0x10;
@@ -9790,7 +9860,7 @@ XI_API bits32 __stdcall Menu_PositionWindow(int * arg1, int arg2)
       p1 = *(int **)(arg2 + 0x88);
       if (p1 != (int *)0x0) {
         i1 = (int)(short)i2;
-        *p1 = (int)(short)((short)u2 + -8);
+        *p1 = (int)(short)((short)frame.u2 + -8);
         p1[1] = i1;
       }
       return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
@@ -9805,25 +9875,27 @@ code_1015F8E3:
 XI_API bits32 __stdcall TargetMenu_MenuGetItemRect(int * arg1, short * arg2)
 {
   int i1;
-  char xi_frame[12] __attribute__((aligned(4)));
-  uint16_t  &u1 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  int * &p1 = *reinterpret_cast<int * *>(xi_frame + 2);
-  int * &p2 = *reinterpret_cast<int * *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { uint16_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; int * p1; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x6]; int * p2; };   // at 0x6
+  } frame;
   
   i1 = *arg1;
   if ((i1 != 0) && (*(int *)(i1 + 8) != 0)) {
-    u1 = 0;
-    p1 = (int *)0x0;
-    p2 = (int *)((uint32_t)p2 & 0xffff0000);
-    orig::NetCellFont_GetRect(*(void **)(i1 + 8),(uint32_t *)&u1);
+    frame.u1 = 0;
+    frame.p1 = (int *)0x0;
+    frame.p2 = (int *)((uint32_t)frame.p2 & 0xffff0000);
+    orig::NetCellFont_GetRect(*(void **)(i1 + 8),(uint32_t *)&frame.u1);
     if (*(char *)(*(int *)(i1 + 8) + 0x69) == '\0') {
-      p1 = p2;
+      frame.p1 = frame.p2;
     }
-    if ((short)p1 == *arg2) {
-      return (uint32_t)p1 & 0xffffff00;
+    if ((short)frame.p1 == *arg2) {
+      return (uint32_t)frame.p1 & 0xffffff00;
     }
-    *arg2 = (short)p1;
-    arg1 = p1;
+    *arg2 = (short)frame.p1;
+    arg1 = frame.p1;
   }
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg1 >> 8))) << 8) | (uint8_t)(1)));
 }
@@ -9896,10 +9968,12 @@ XI_API void __thiscall Menu_DrawAll(void * self_)
   long double st0;
   uint64_t u5;
   int64_t i3;
-  char xi_frame[40] __attribute__((aligned(4)));
-  void * &p4 = *reinterpret_cast<void * *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 20);
-  int  (&i5)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[40];
+    struct __attribute__((packed)) { void * p4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i5[4]; };   // at 0x18
+  } frame;
   
   u3 = orig::NetCellFont_TestCommand36CF60_v1(0x3e,0x8b,4,-1,xi_entry_eax);
   if ((char)u3 == '\x01') {
@@ -9930,9 +10004,9 @@ XI_API void __thiscall Menu_DrawAll(void * self_)
   }
   orig::Gfx_SetDefault2DStates_v1();
   orig::MenuMng_UpdateForSceneState(&g_menuMng_as_v0);
-  i4 = orig::NetCellFont_GetHead(self_);
-  while (i4 != 0) {
-    u5 = orig::game_10126520(&i4);
+  frame.i4 = orig::NetCellFont_GetHead(self_);
+  while (frame.i4 != 0) {
+    u5 = orig::game_10126520(&frame.i4);
     i2 = (int)u5;
     if (((i2 != 0) && (*(char *)(i2 + 0x70) != '\0')) && (i2 != *(int *)((int)self_ + 0x54))
        ) {
@@ -9944,23 +10018,23 @@ XI_API void __thiscall Menu_DrawAll(void * self_)
       orig::Menu_RemoveAndFreeItem(self_,i2,i2);
     }
   }
-  i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-  while (i4 != 0) {
-    u5 = orig::game_10126520(&i4);
+  frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+  while (frame.i4 != 0) {
+    u5 = orig::game_10126520(&frame.i4);
     i2 = (int)u5;
     if (((*(char *)(i2 + 0x6e) == '\0') && (*(char *)(i2 + 0x75) != '\0')) &&
        (*(char *)(i2 + 0x76) != '\0')) {
       orig::NetCellFont_RemoveMatching(self_,i2);
-      i4 = orig::NetCellFont_GetHead(self_);
-      if (i4 != 0) {
+      frame.i4 = orig::NetCellFont_GetHead(self_);
+      if (frame.i4 != 0) {
         do {
-          i1 = i4;
-          u5 = orig::game_10126520(&i4);
+          i1 = frame.i4;
+          u5 = orig::game_10126520(&frame.i4);
           if ((*(uint16_t *)(i2 + 0x38) & *(uint16_t *)((int)u5 + 0x38)) != 0) {
             orig::NetCellFont_InsertBefore(self_,i1,i2);
             goto code_1015FBAC;
           }
-        } while (i4 != 0);
+        } while (frame.i4 != 0);
         orig::NetCellFont_PushBack_v1(self_,i2);
       }
 code_1015FBAC:
@@ -9968,14 +10042,14 @@ code_1015FBAC:
     }
   }
   u4 = 1;
-  i4 = 0;
+  frame.i4 = 0;
   i2 = 0;
   if (1 < g_10621898_as_v0) {
     do {
-      i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+      frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
       do {
-        if (i4 == 0) goto code_1015FC69;
-        u5 = orig::game_10126520(&i4);
+        if (frame.i4 == 0) goto code_1015FC69;
+        u5 = orig::game_10126520(&frame.i4);
         p3 = (void *)u5;
       } while (((p3 == (void *)0x0) || (*(uint8_t *)((int)p3 + 0x71) != u4)) ||
               (*(char *)((int)p3 + 0x6e) != '\0'));
@@ -9985,22 +10059,22 @@ code_1015FBAC:
       *(uint8_t *)((int)p3 + 0x71) = 0;
       if (((u1 & 1) == 0) || (u1 = *(uint8_t *)((int)p3 + 0x98), u1 != 0)) {
         orig::Menu_SetItemAt54_v1(self_,(int)p3,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(u1))));
-        u3 = orig::NetCellFont_GetCenter(p3,i5 + 2);
+        u3 = orig::NetCellFont_GetCenter(p3,frame.i5 + 2);
         if ((char)u3 != '\0') {
-          orig::Cursor_SetPosition_v2(g_pCursor_as_v2,i5 + 2,0.0f,i5 + 2);
+          orig::Cursor_SetPosition_v2(g_pCursor_as_v2,frame.i5 + 2,0.0f,frame.i5 + 2);
         }
       }
 code_1015FC69:
       u4 = u4 + 1;
-      i2 = i4;
+      i2 = frame.i4;
     } while ((int)u4 < (int)(g_10621898_as_v0 & 0xff));
   }
-  i4 = i2;
+  frame.i4 = i2;
   g_10621898_as_v0 = ((uint32_t)(((uint32_t)(g_10621898_1) << 8) | (uint8_t)(1)));
   i2 = orig::Menu_FindFirstActiveItem(self_);
   orig::Menu_SetItemAt54_v1(self_,i2,i2);
-  i5[0] = *g_pSceneState_as_v0;
-  if (i5[0] == 0x60) {
+  frame.i5[0] = *g_pSceneState_as_v0;
+  if (frame.i5[0] == 0x60) {
     i2 = 0;
     do {
       p1 = (short *)orig::Menu_GetWordPtrAtA0(self_,i2);
@@ -10021,15 +10095,15 @@ code_1015FC69:
           u3 = orig::TargetMenu_MenuGetLayoutWord(self_,4);
           *(short *)(g_106643A8 + 0x3e) = (short)u3;
         }
-        i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-        while (i4 != 0) {
-          u5 = orig::Menu_NextVisibleItem(&i4);
+        frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+        while (frame.i4 != 0) {
+          u5 = orig::Menu_NextVisibleItem(&frame.i4);
           p3 = (void *)u5;
           if ((p3 != (void *)0x0) &&
              ((*(uint32_t *)((int)p3 + 0x34) & (&g_1037629C)[i2]) != 0)) {
-            p4 = p3;
+            frame.p4 = p3;
             p2 = (int *)orig::Menu_GetDwordAt8C(self_,i2);
-            u3 = orig::Menu_PositionWindow(p2,p4);
+            u3 = orig::Menu_PositionWindow(p2,frame.p4);
             if (((char)u3 == '\0') && (i2 == 2)) {
               p2 = (int *)orig::Menu_GetDwordAt8C(self_,1);
               orig::Menu_PositionWindow(p2,p3);
@@ -10041,9 +10115,9 @@ code_1015FC69:
     } while (i2 < 5);
   }
   orig::game_10125360(g_pCursor_as_v2);
-  i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-  while (i4 != 0) {
-    u5 = orig::Menu_NextVisibleItem(&i4);
+  frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+  while (frame.i4 != 0) {
+    u5 = orig::Menu_NextVisibleItem(&frame.i4);
     i2 = (int)u5;
     if ((((i2 != 0) && (*(char *)(i2 + 0x6e) == '\0')) && (*(char *)(i2 + 0x70) == '\0'))
        && ((p2 = *(int **)(i2 + 0xc), p2 != (int *)0x0 && (p2[2] != 0)))) {
@@ -10056,24 +10130,24 @@ code_1015FC69:
     }
   }
   u4 = 0;
-  i4 = orig::NetCellFont_GetTail(&g_menuMng_as_v0);
+  frame.i4 = orig::NetCellFont_GetTail(&g_menuMng_as_v0);
   i2 = g_pTkTitle_as_s32;
 L1:
   while( true ) {
     do {
       do {
         g_pTkTitle_as_s32 = i2;
-        if (i4 == 0) {
-          if (i5[0] == 0x60) {
+        if (frame.i4 == 0) {
+          if (frame.i5[0] == 0x60) {
             u4 = orig::MenuPanels_IsDone((void *)(i2 + 0xa4));
             if ((((char)u4 == '\0') || (*(short *)(i2 + 0x448) != 0)) ||
                ((u3 = orig::TargetMenu_IsField8Zero(g_10578480_as_v0), (char)u3 == '\0' ||
                 (u4 = orig::MenuPanels_IsDone((void *)(g_pTkHelp_as_s32 + 0x20)), (char)u4 == '\0'))))
             {
               if (*(int *)((int)self_ + 0x78) < 1) {
-                i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-                while (i4 != 0) {
-                  u5 = orig::Menu_NextVisibleItem(&i4);
+                frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+                while (frame.i4 != 0) {
+                  u5 = orig::Menu_NextVisibleItem(&frame.i4);
                   p3 = (void *)u5;
                   if (((p3 != (void *)0x0) && ((*(uint32_t *)((int)p3 + 0x34) & 0x8000) != 0))
                      && (p1 = orig::NetCellFont_FindFreeEntry(p3), p1 != (short *)0x0)) {
@@ -10083,7 +10157,7 @@ L1:
                   }
                 }
                 *(uint32_t *)((int)self_ + 0x78) = 0xb4;
-                i4 = 0;
+                frame.i4 = 0;
               }
             }
             else if (0 < *(int *)((int)self_ + 0x78)) {
@@ -10092,9 +10166,9 @@ L1:
               i2 = *(int *)((int)self_ + 0x78) - (int)(short)i3;
               *(int *)((int)self_ + 0x78) = i2;
               if (i2 < 1) {
-                i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
-                while (i4 != 0) {
-                  u5 = orig::Menu_NextVisibleItem(&i4);
+                frame.i4 = orig::NetCellFont_GetHead(&g_menuMng_as_v0);
+                while (frame.i4 != 0) {
+                  u5 = orig::Menu_NextVisibleItem(&frame.i4);
                   p3 = (void *)u5;
                   if (((p3 != (void *)0x0) && ((*(uint32_t *)((int)p3 + 0x34) & 0x8000) != 0))
                      && (p1 = orig::NetCellFont_FindFreeEntry(p3), p1 != (short *)0x0)) {
@@ -10104,7 +10178,7 @@ L1:
                   }
                 }
                 *(uint32_t *)((int)self_ + 0x78) = 0;
-                i4 = 0;
+                frame.i4 = 0;
               }
             }
           }
@@ -10168,10 +10242,10 @@ L1:
           if ((((i2 == 0) && (*g_pSceneState_as_v0 == 0x60)) &&
               (u4 = orig::IsEvent_v1(0,0), (char)u4 == '\0')) &&
              (u3 = orig::Menu_FindByFlags38(4,0,0), (char)u3 == '\0')) {
-            i5[0] = 0x58;
-            i5[1] = 0x2a;
-            orig::CTkMenuMng_IsDrawWindow(self_,i5,0,0);
-            u3 = orig::Menu_SetPanelWord28(i5[0]);
+            frame.i5[0] = 0x58;
+            frame.i5[1] = 0x2a;
+            orig::CTkMenuMng_IsDrawWindow(self_,frame.i5,0,0);
+            u3 = orig::Menu_SetPanelWord28(frame.i5[0]);
             orig::MenuPanels_CallPanel1021EF10(u3);
             orig::Gfx_DisableFogAndAlphaBlend_v1();
             return;
@@ -10185,7 +10259,7 @@ L1:
           orig::Gfx_DisableFogAndAlphaBlend_v1();
           return;
         }
-        p3 = (void *)orig::TargetMenu_GetNodeIfNotClosed(&i4);
+        p3 = (void *)orig::TargetMenu_GetNodeIfNotClosed(&frame.i4);
         i2 = g_pTkTitle_as_s32;
       } while (p3 == (void *)0x0);
       u2 = *(uint16_t *)((int)p3 + 0x38);
@@ -10694,23 +10768,25 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) TargetMenu_DrawImageAtRightOf
   int i5;
   long double f1;
   int64_t i6;
-  char xi_frame[8] __attribute__((aligned(4)));
-  short  &i7 = *reinterpret_cast<short  *>(xi_frame + 0);
-  short  &i8 = *reinterpret_cast<short  *>(xi_frame + 2);
-  uint16_t  &u2 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { short i7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i8; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u3; };   // at 0x6
+  } frame;
   
   u1 = orig::game_10162510(self_,xi_eax);
   u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x31))));
   if ('\0' < *(char *)((int)self_ + 0x31)) {
-    i7 = 0;
-    i8 = 0;
-    u2 = 0;
-    u3 = 0;
+    frame.i7 = 0;
+    frame.i8 = 0;
+    frame.u2 = 0;
+    frame.u3 = 0;
     i4 = orig::Settings_GetValue_v2(0xb4);
     i5 = orig::game_1014FF70();
     obj1 = *(void **)(g_10578474_as_s32 + 0x5c + (i5 + (uint32_t)(i4 != 0) * 9) * 4);
-    orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&i7);
+    orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&frame.i7);
     i1 = *(short *)((int)self_ + 0x32);
     i3 = (short)g_screenRectTopLeft_as_v1;
     i2 = (short)g_screenRectBottomRight_as_v1;
@@ -10718,11 +10794,11 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) TargetMenu_DrawImageAtRightOf
     i6 = XI_CALL_ST0(0x10311C2Cu)((((1.0f - f1) *
                      (int)(short)((short)g_screenRectBottomRight_as_v1 - (short)g_screenRectTopLeft_as_v1) -
                     512.0f) - (((int)(short)(i2 - i3) - (int)i1) + -0xa0))
-                   + (int)i7);
+                   + (int)frame.i7);
     u1 = (uint32_t)i6;
-    i7 = (short)i6;
+    frame.i7 = (short)i6;
     if (obj1 != (void *)0x0) {
-      u1 = orig::game_1011FB60_v1(obj1,(int)i7,(int)i8,0x80808080,0,0);
+      u1 = orig::game_1011FB60_v1(obj1,(int)frame.i7,(int)frame.i8,0x80808080,0,0);
     }
   }
   return u1;
@@ -10770,15 +10846,17 @@ XI_API void __thiscall Menu_PositionWindowBySetting(void * self_, bits32 xi_s1)
   uint32_t u1;
   int i2;
   uint64_t u2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 0);
-  short  &i3 = *reinterpret_cast<short  *>(xi_frame + 2);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  short  &i4 = *reinterpret_cast<short  *>(xi_frame + 6);
-  short  &i5 = *reinterpret_cast<short  *>(xi_frame + 8);
-  short  &i6 = *reinterpret_cast<short  *>(xi_frame + 10);
-  short  &i7 = *reinterpret_cast<short  *>(xi_frame + 12);
-  short  &i8 = *reinterpret_cast<short  *>(xi_frame + 14);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint16_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i3; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; short i4; };   // at 0x6
+    struct __attribute__((packed)) { unsigned char pad_5[0x8]; short i5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_6[0xA]; short i6; };   // at 0xA
+    struct __attribute__((packed)) { unsigned char pad_7[0xC]; short i7; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_8[0xE]; short i8; };   // at 0xE
+  } frame;
   short i9;
   
   if (*(int *)((int)self_ + 0x5c) != 0) {
@@ -10788,28 +10866,28 @@ XI_API void __thiscall Menu_PositionWindowBySetting(void * self_, bits32 xi_s1)
   u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*g_1062193C + 0x48))))((void *)(g_1062193C));
   xi_s1 = ((uint32_t)(((uint32_t)(XI_PIECE(xi_s1, 1, 3)) << 8) | (uint8_t)((char)u1)));
   ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x44))))((void *)(self_),xi_s1);
-  i5 = 0;
-  i6 = 0;
-  i7 = 0;
-  i8 = 0;
-  u3 = 0;
-  i3 = 0;
-  u4 = 0;
-  i4 = 0;
+  frame.i5 = 0;
+  frame.i6 = 0;
+  frame.i7 = 0;
+  frame.i8 = 0;
+  frame.u3 = 0;
+  frame.i3 = 0;
+  frame.u4 = 0;
+  frame.i4 = 0;
   if ((void *)g_1062193C[2] != (void *)0x0) {
-    orig::NetCellFont_GetRect((void *)g_1062193C[2],(uint32_t *)&i5);
-    orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&u3);
+    orig::NetCellFont_GetRect((void *)g_1062193C[2],(uint32_t *)&frame.i5);
+    orig::NetCellFont_GetRect(*(void **)((int)self_ + 8),(uint32_t *)&frame.u3);
     u2 = orig::Settings_GetValue_v1(0xb4);
     if ((int)u2 == 1) {
-      i2 = (int)i3 - (int)i4;
-      i1 = i5;
-      i9 = i6;
+      i2 = (int)frame.i3 - (int)frame.i4;
+      i1 = frame.i5;
+      i9 = frame.i6;
     }
     else {
       if ((int)u2 != 2) goto code_10161D45;
-      i2 = (int)i8 - (int)i4;
-      i1 = i7;
-      i9 = i3;
+      i2 = (int)frame.i8 - (int)frame.i4;
+      i1 = frame.i7;
+      i9 = frame.i3;
     }
     orig::game_10119110(*(void **)((int)self_ + 8),(int)i1,i2 + i9);
   }
@@ -10829,21 +10907,23 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) TargetMenu_DrawImageA4AtRight
   uint32_t u1;
   long double f1;
   int64_t i4;
-  char xi_frame[8] __attribute__((aligned(4)));
-  short  &i5 = *reinterpret_cast<short  *>(xi_frame + 0);
-  short  &i6 = *reinterpret_cast<short  *>(xi_frame + 2);
-  uint16_t  &u2 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  uint16_t  &u3 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { short i5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x2]; short i6; };   // at 0x2
+    struct __attribute__((packed)) { unsigned char pad_3[0x4]; uint16_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_4[0x6]; uint16_t u3; };   // at 0x6
+  } frame;
   
   u1 = orig::game_10162510(self_,xi_eax);
   u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x31))));
   if ('\0' < *(char *)((int)self_ + 0x31)) {
-    i5 = 0;
-    i6 = 0;
-    u2 = 0;
-    u3 = 0;
+    frame.i5 = 0;
+    frame.i6 = 0;
+    frame.u2 = 0;
+    frame.u3 = 0;
     obj1 = *(void **)(g_10578474_as_s32 + 0xa4);
-    orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&i5);
+    orig::NetCellFont_GetRect_v1(*(void **)((int)self_ + 8),(uint32_t *)&frame.i5);
     i1 = *(short *)((int)self_ + 0x32);
     i3 = (short)g_screenRectTopLeft_as_v1;
     i2 = (short)g_screenRectBottomRight_as_v1;
@@ -10851,11 +10931,11 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) TargetMenu_DrawImageA4AtRight
     i4 = XI_CALL_ST0(0x10311C2Cu)((((1.0f - f1) *
                      (int)(short)((short)g_screenRectBottomRight_as_v1 - (short)g_screenRectTopLeft_as_v1) -
                     512.0f) - (((int)(short)(i2 - i3) - (int)i1) + -0xa0))
-                   + (int)i5);
+                   + (int)frame.i5);
     u1 = (uint32_t)i4;
-    i5 = (short)i4;
+    frame.i5 = (short)i4;
     if (obj1 != (void *)0x0) {
-      u1 = orig::game_1011FB60_v1(obj1,(int)i5,(int)i6,0x80808080,0,0);
+      u1 = orig::game_1011FB60_v1(obj1,(int)frame.i5,(int)frame.i6,0x80808080,0,0);
     }
   }
   return u1;
@@ -11216,53 +11296,55 @@ XI_API int __stdcall Gfx_DrawSolidRect2D(int arg1, int arg2)
   int i2;
   double f1;
   int i3;
-  alignas(16) unsigned char xi_frame[0x508];  // address-taken locals at their original offsets
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0xB8);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0xBC);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xC0);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0xC4);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0xC8);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0xCC);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0xD0);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0xD4);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0xD8);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0xE4);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0xEC);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0xF0);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0xF4);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0xF8);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x104);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x508];
+    struct __attribute__((packed)) { unsigned char pad_1[0xB8]; int i4; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_2[0xBC]; float f2; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_3[0xC0]; int i5; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_4[0xC4]; int i6; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_5[0xC8]; int i7; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_6[0xCC]; float f3; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_7[0xD0]; float f4; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_8[0xD4]; int i8; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_9[0xD8]; int i9; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_10[0xDC]; int i10; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_11[0xE0]; int i11; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_12[0xE4]; float f5; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_13[0xE8]; int i12; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_14[0xEC]; int i13; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_15[0xF0]; int i14; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_16[0xF4]; float f6; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_17[0xF8]; float f7; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_18[0xFC]; int i15; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_19[0x100]; int i16; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_20[0x104]; int i17; };   // at 0x104
+  } frame;
   int a1a;
-  i5 = 0;
-  i8 = 0;
-  i12 = 0;
+  frame.i5 = 0;
+  frame.i8 = 0;
+  frame.i12 = 0;
   i1 = *(short *)(arg1 + 4);
   a1a = *(short *)arg1;
-  i15 = 0;
-  i6 = 1065353216;
+  frame.i15 = 0;
+  frame.i6 = 1065353216;
   i2 = *(short *)(arg1 + 2);
-  *(float *)&i4 = (float)a1a;
+  *(float *)&frame.i4 = (float)a1a;
   f1 = (double)i1;
   i3 = *(short *)(arg1 + 6);
-  f3 = f1;
-  i11 = i4;
-  f6 = f1;
-  i9 = 1065353216;
-  i13 = 1065353216;
-  f2 = (float)i2;
-  f4 = f2;
-  i16 = 1065353216;
-  i7 = arg2;
-  i10 = arg2;
-  i14 = arg2;
-  f5 = (float)i3;
-  f7 = f5;
-  i17 = arg2;
+  frame.f3 = f1;
+  frame.i11 = frame.i4;
+  frame.f6 = f1;
+  frame.i9 = 1065353216;
+  frame.i13 = 1065353216;
+  frame.f2 = (float)i2;
+  frame.f4 = frame.f2;
+  frame.i16 = 1065353216;
+  frame.i7 = arg2;
+  frame.i10 = arg2;
+  frame.i14 = arg2;
+  frame.f5 = (float)i3;
+  frame.f7 = frame.f5;
+  frame.i17 = arg2;
   orig::CDx_SetDefaultRenderState(g_pCDx);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
@@ -11277,7 +11359,7 @@ XI_API int __stdcall Gfx_DrawSolidRect2D(int arg1, int arg2)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 68u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&i4, 20);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&frame.i4, 20);
   orig::CDx_SetDefaultRenderState(g_pCDx);
   return orig::Gfx_SetDefault2DStates();
 }

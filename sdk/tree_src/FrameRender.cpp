@@ -95,23 +95,25 @@ XI_API unsigned char __thiscall Frame_Render(void * self_)
   unsigned int u5;
   unsigned int u6;
   char c9;
-  alignas(16) unsigned char xi_frame[0x888];  // address-taken locals at their original offsets
-  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x234);
-  int &i35 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &i36 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &i37 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x248);
-  int &i38 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &i39 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  char &c10 = *reinterpret_cast<char *>(xi_frame + 0x24F);
-  char &i = *reinterpret_cast<char *>(xi_frame + 0x24F);
-  int &i40 = *reinterpret_cast<int *>(xi_frame + 0x250);
-  int &i41 = *reinterpret_cast<int *>(xi_frame + 0x254);
-  int &i42 = *reinterpret_cast<int *>(xi_frame + 0x258);
-  int &i43 = *reinterpret_cast<int *>(xi_frame + 0x25C);
-  struct _SYSTEMTIME &SystemTime = *reinterpret_cast<struct _SYSTEMTIME *>(xi_frame + 0x260);
-  uint32_t (&u7)[6] = *reinterpret_cast<uint32_t (*)[6]>(xi_frame + 0x270);
-  char (&Buffer)[512] = *reinterpret_cast<char (*)[512]>(xi_frame + 0x288);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x888];
+    struct __attribute__((packed)) { unsigned char pad_1[0x234]; float f21; };   // at 0x234
+    struct __attribute__((packed)) { unsigned char pad_2[0x248]; int i35; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_3[0x248]; int i36; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_4[0x248]; int i37; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_5[0x248]; float f22; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_6[0x248]; int i38; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_7[0x248]; int i39; };   // at 0x248
+    struct __attribute__((packed)) { unsigned char pad_8[0x24F]; char c10; };   // at 0x24F
+    struct __attribute__((packed)) { unsigned char pad_9[0x24F]; char i; };   // at 0x24F
+    struct __attribute__((packed)) { unsigned char pad_10[0x250]; int i40; };   // at 0x250
+    struct __attribute__((packed)) { unsigned char pad_11[0x254]; int i41; };   // at 0x254
+    struct __attribute__((packed)) { unsigned char pad_12[0x258]; int i42; };   // at 0x258
+    struct __attribute__((packed)) { unsigned char pad_13[0x25C]; int i43; };   // at 0x25C
+    struct __attribute__((packed)) { unsigned char pad_14[0x260]; struct _SYSTEMTIME SystemTime; };   // at 0x260
+    struct __attribute__((packed)) { unsigned char pad_15[0x270]; uint32_t u7[6]; };   // at 0x270
+    struct __attribute__((packed)) { unsigned char pad_16[0x288]; char Buffer[512]; };   // at 0x288
+  } frame;
   bool xi_fpu_unord = false;
 
   g_modelsDrawnThisFrame = 0;
@@ -150,7 +152,7 @@ XI_API unsigned char __thiscall Frame_Render(void * self_)
     orig::CDx_EndAndClearBegin(g_pCDx, 3, *((uint32_t *)self_ + 194), 1065353216, 0);
     orig::CDx_SetTexture(g_pCDx, 0, 0);
   }
-  c10 = orig::CDx_PushRenderTargetRet1(
+  frame.c10 = orig::CDx_PushRenderTargetRet1(
           g_pCDx,
           *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
           *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x19C)),
@@ -179,7 +181,7 @@ L2:
           if ( *(uint32_t *)(g_pAppSettings + 96) != 0 )
           {
             i5 = orig::Scene_GetTableValue(1);
-            g_frameMeshRes = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &i40, i5);
+            g_frameMeshRes = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i40, i5);
             orig::CMoResource_AddRefChain(*(uint32_t *)g_frameMeshRes);
           }
           if ( *(uint32_t *)(g_pAppSettings + 40) != 0 )
@@ -232,8 +234,8 @@ L2:
             *((uint32_t *)self_ + 17) = 2;
           break;
         case 2:
-          orig::__snprintf(Buffer, 0x200u, aNet3Port54001);
-          orig::AppMainLoop_AppendWithSpace(Buffer);
+          orig::__snprintf(frame.Buffer, 0x200u, aNet3Port54001);
+          orig::AppMainLoop_AppendWithSpace(frame.Buffer);
           *(uint32_t *)(g_pAppSettings + 40) = 3;
           *((uint32_t *)self_ + 17) = 3;
           *((uint16_t *)self_ + 2) = 0;
@@ -428,7 +430,7 @@ L3:
     orig::DebugOverlay_Draw_as_v0((void *)g_pDebugOverlay);
   orig::CDx_SetDefaultRenderState(g_pCDx);
   if ( g_depthBlurEnabled_Dead != 0
-    && c10 == 1
+    && frame.c10 == 1
     && g_pMovie == 0
     && *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)) != 0
     && g_pXiZone != nullptr
@@ -456,25 +458,25 @@ L3:
     orig::CDx_SetTexture(g_pCDx, 0, 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
-    *(float *)&i40 = 0.0;
-    i41 = 0;
-    *(float *)&i42 = 0.0;
-    i43 = 1065353216;
-    *(float *)&i42 = -orig::ZoneMap_GetFloatRef1CPlus4(g_pXiZone);
-    orig::Mat4_TransformPointInPlace((float *)self_ + 165, (float *)&i40);
+    *(float *)&frame.i40 = 0.0;
+    frame.i41 = 0;
+    *(float *)&frame.i42 = 0.0;
+    frame.i43 = 1065353216;
+    *(float *)&frame.i42 = -orig::ZoneMap_GetFloatRef1CPlus4(g_pXiZone);
+    orig::Mat4_TransformPointInPlace((float *)self_ + 165, (float *)&frame.i40);
     orig::CDx_SetTransform(g_pCDx, 256, g_frameWorldMatrix);
     orig::CDx_SetTransform(g_pCDx, 2, (char *)self_ + 148);
-    orig::Gfx_ProjectWorldToClip((float *)&i40, &i40);
-    orig::Post_DepthBlurComposite(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)), i42);
+    orig::Gfx_ProjectWorldToClip((float *)&frame.i40, &frame.i40);
+    orig::Post_DepthBlurComposite(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)), frame.i42);
   }
   orig::Post_Afterimage();
   orig::Post_FlashAndZoomFeedback(self_);
   if ( (unsigned char)g_screenFadeLevel < 0x80u )
   {
-    (*((uint16_t *)&(i35) + sizeof(i35) / 2 - 1)) = (unsigned char)(g_screenFadeLevel + *((uint8_t *)self_ + 802) + 0x80);
-    (*((uint8_t *)&(i35) + 1)) = g_screenFadeLevel + *((uint8_t *)self_ + 801) + 0x80;
-    (*(uint8_t *)&(i35)) = g_screenFadeLevel + *((uint8_t *)self_ + 800) + 0x80;
-    *((uint32_t *)self_ + 206) = i35;
+    (*((uint16_t *)&(frame.i35) + sizeof(frame.i35) / 2 - 1)) = (unsigned char)(g_screenFadeLevel + *((uint8_t *)self_ + 802) + 0x80);
+    (*((uint8_t *)&(frame.i35) + 1)) = g_screenFadeLevel + *((uint8_t *)self_ + 801) + 0x80;
+    (*(uint8_t *)&(frame.i35)) = g_screenFadeLevel + *((uint8_t *)self_ + 800) + 0x80;
+    *((uint32_t *)self_ + 206) = frame.i35;
   }
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, 0);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
@@ -494,43 +496,43 @@ L3:
   i11 = *((uint16_t *)self_ + 12);
   i12 = g_screenRectBottomRight;
   i13 = (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1));
-  (*(uint16_t *)&(i40)) = g_screenRectTopLeft;
+  (*(uint16_t *)&(frame.i40)) = g_screenRectTopLeft;
   (*(uint16_t *)&(g_screenRectBottomRight)) = i11;
   i14 = *((uint16_t *)self_ + 13);
-  (*(uint16_t *)&(i41)) = i12;
+  (*(uint16_t *)&(frame.i41)) = i12;
   (*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) = i14;
   orig::CopyrightText_Draw_as_v0();
-  (*(uint16_t *)&(g_screenRectTopLeft)) = i40;
+  (*(uint16_t *)&(g_screenRectTopLeft)) = frame.i40;
   (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1)) = i13;
-  (*(uint16_t *)&(g_screenRectBottomRight)) = i41;
+  (*(uint16_t *)&(g_screenRectBottomRight)) = frame.i41;
   (*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) = (uint16_t)((uint32_t)(i12) >> 16);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   orig::CDx_SetTexture(g_pCDx, 0, 0);
   u1 = *((uint16_t *)self_ + 8);
   i15 = *((unsigned short *)self_ + 9);
-  u7[0] = 0;
-  u7[1] = 0;
-  u7[2] = u1;
-  u7[3] = i15;
-  u7[4] = 0;
-  u7[5] = 1065353216;
-  orig::CDx_SetViewport(g_pCDx, u7);
+  frame.u7[0] = 0;
+  frame.u7[1] = 0;
+  frame.u7[2] = u1;
+  frame.u7[3] = i15;
+  frame.u7[4] = 0;
+  frame.u7[5] = 1065353216;
+  orig::CDx_SetViewport(g_pCDx, frame.u7);
   u2 = *((uint16_t *)self_ + 12);
-  *(uint32_t *)&SystemTime.wHour = *((unsigned short *)self_ + 8);
+  *(uint32_t *)&frame.SystemTime.wHour = *((unsigned short *)self_ + 8);
   u3 = *((uint16_t *)self_ + 9);
   u4 = *((uint16_t *)self_ + 13);
-  i42 = u2;
-  *(uint32_t *)&SystemTime.wSecond = u3;
+  frame.i42 = u2;
+  *(uint32_t *)&frame.SystemTime.wSecond = u3;
   i16 = *((uint32_t *)self_ + 200);
-  i43 = u4;
-  i36 = i16;
-  (*((uint8_t *)&(i36) + sizeof(i36) - 1)) = 0x80;
-  *(uint32_t *)&SystemTime.wYear = 0;
-  *(uint32_t *)&SystemTime.wDayOfWeek = 0;
-  *(float *)&i40 = 0.0;
-  i41 = 0;
-  orig::CDx_CompositeSceneToBackBuffer(g_pCDx, (int)&(*(unsigned char *)((char *)g_pCDx + 0x190)), i36, (int)&SystemTime, (int)&i40);
+  frame.i43 = u4;
+  frame.i36 = i16;
+  (*((uint8_t *)&(frame.i36) + sizeof(frame.i36) - 1)) = 0x80;
+  *(uint32_t *)&frame.SystemTime.wYear = 0;
+  *(uint32_t *)&frame.SystemTime.wDayOfWeek = 0;
+  *(float *)&frame.i40 = 0.0;
+  frame.i41 = 0;
+  orig::CDx_CompositeSceneToBackBuffer(g_pCDx, (int)&(*(unsigned char *)((char *)g_pCDx + 0x190)), frame.i36, (int)&frame.SystemTime, (int)&frame.i40);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
   orig::CDx_NopB();
@@ -551,9 +553,9 @@ L3:
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     orig::CDx_PushRenderTarget(g_pCDx, i18, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E4)), i19);
-    i37 = *((uint32_t *)self_ + 200);
-    (*((uint8_t *)&(i37) + sizeof(i37) - 1)) = 0;
-    orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)), i37, -1);
+    frame.i37 = *((uint32_t *)self_ + 200);
+    (*((uint8_t *)&(frame.i37) + sizeof(frame.i37) - 1)) = 0;
+    orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)), frame.i37, -1);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_COLORWRITEENABLE, 15u);
@@ -608,44 +610,44 @@ L3:
   }
   orig::CDx_DrawFadeQuad(p2, 0, *((uint32_t *)self_ + 199));
   c1 = *(uint8_t *)(g_pSceneState + 24);
-  i40 = *((unsigned short *)self_ + 9);
+  frame.i40 = *((unsigned short *)self_ + 9);
   i20 = *(uint32_t *)(g_pSceneState + 8);
-  f2 = (double)i40 * 0x1.1931940000000p-9;
+  f2 = (double)frame.i40 * 0x1.1931940000000p-9;
   if ( c1 < 0 && (i20 == 2 || i20 == 3) || i20 == 1 )
     f3 = -110.0;
   else
     f3 = -160.0;
-  i40 = *((unsigned short *)self_ + 8);
-  *(uint32_t *)&SystemTime.wYear = 0;
-  *(float *)&SystemTime.wDayOfWeek = (double)i40 * 0x1.99999a0000000p-10;
-  *(float *)&SystemTime.wHour = f3;
-  *(float *)&SystemTime.wSecond = f2;
-  orig::CXiMovie_DrawFrame(0, 0, 640, 512, (float *)&SystemTime);
+  frame.i40 = *((unsigned short *)self_ + 8);
+  *(uint32_t *)&frame.SystemTime.wYear = 0;
+  *(float *)&frame.SystemTime.wDayOfWeek = (double)frame.i40 * 0x1.99999a0000000p-10;
+  *(float *)&frame.SystemTime.wHour = f3;
+  *(float *)&frame.SystemTime.wSecond = f2;
+  orig::CXiMovie_DrawFrame(0, 0, 640, 512, (float *)&frame.SystemTime);
   orig::game_101D0C70();
   orig::Font_QueueText(c_strSpace, 1134886912, 1111490560, 0);
   orig::Font_DrawPass();
   if ( g_pEnv != nullptr && (g_pEnv[7] & 1) != 0 )
   {
-    *(uint32_t *)&SystemTime.wYear = 0;
+    *(uint32_t *)&frame.SystemTime.wYear = 0;
     i21 = *((unsigned short *)self_ + 9);
-    i40 = i21;
-    *(uint32_t *)&SystemTime.wDayOfWeek = (long long)((double)i21 - 10.0);
-    *(uint32_t *)&SystemTime.wHour = *((unsigned short *)self_ + 8);
-    *(uint32_t *)&SystemTime.wSecond = i21;
-    orig::CDx_DrawStereoOddFrameOverlay(g_pCDx, (int)&SystemTime);
+    frame.i40 = i21;
+    *(uint32_t *)&frame.SystemTime.wDayOfWeek = (long long)((double)i21 - 10.0);
+    *(uint32_t *)&frame.SystemTime.wHour = *((unsigned short *)self_ + 8);
+    *(uint32_t *)&frame.SystemTime.wSecond = i21;
+    orig::CDx_DrawStereoOddFrameOverlay(g_pCDx, (int)&frame.SystemTime);
   }
   orig::CDx_EndScene(g_pCDx);
   orig::CDx_Present();
   *((uint32_t *)self_ + 10) = 0;
-  for ( i = 0; ; i = 1 )
+  for ( frame.i = 0; ; frame.i = 1 )
   {
-    i40 = *((int *)self_ + 7);
-    p3 = (int *)i40;
-    f4 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)i40 + 48))(p3);
+    frame.i40 = *((int *)self_ + 7);
+    p3 = (int *)frame.i40;
+    f4 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)frame.i40 + 48))(p3);
     i22 = *p3;
-    *(float *)&i40 = f4;
+    *(float *)&frame.i40 = f4;
     f5 = ((double (__thiscall *)(int *))*(uint32_t *)(i22 + 36))(p3);
-    g_frameStepFps = f5 * *(float *)&i40;
+    g_frameStepFps = f5 * *(float *)&frame.i40;
     f6 = 60.0 / g_frameStepFps;
     *((float *)self_ + 11) = f6;
     *((float *)self_ + 10) = f6;
@@ -658,17 +660,17 @@ L3:
     Sleep(1u);
     _mm_pause();
   }
-  if ( i != 1 && f6 < (double)*((int *)self_ + 12) )
+  if ( frame.i != 1 && f6 < (double)*((int *)self_ + 12) )
   {
     do
     {
-      i40 = *((int *)self_ + 7);
-      p4 = (int *)i40;
-      f8 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)i40 + 48))(p4);
+      frame.i40 = *((int *)self_ + 7);
+      p4 = (int *)frame.i40;
+      f8 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)frame.i40 + 48))(p4);
       i24 = *p4;
-      *(float *)&i40 = f8;
+      *(float *)&frame.i40 = f8;
       f9 = ((double (__thiscall *)(int *))*(uint32_t *)(i24 + 36))(p4);
-      g_frameStepFps = f9 * *(float *)&i40;
+      g_frameStepFps = f9 * *(float *)&frame.i40;
       f10 = 60.0 / g_frameStepFps;
       *((float *)self_ + 11) = f10;
       *((float *)self_ + 10) = f10;
@@ -683,8 +685,8 @@ L3:
   f12 = 60.0 / ((double (__thiscall *)(uint32_t))*(uint32_t *)(**((uint32_t **)self_ + 7) + 36))(*((uint32_t *)self_ + 7))
       + *((float *)self_ + 15);
   i26 = *((uint32_t *)self_ + 7);
-  i40 = (long long)f12;
-  *((float *)self_ + 14) = *(float *)&i40;
+  frame.i40 = (long long)f12;
+  *((float *)self_ + 14) = *(float *)&frame.i40;
   *((float *)self_ + 15) = f12 - (double)(int)(long long)f12;
   (*(void (__fastcall **)(int, uint32_t))(*(uint32_t *)i26 + 32))(i26, (unsigned long long)(long long)f12 >> 32);
   f13 = *((float *)self_ + 10);
@@ -700,12 +702,12 @@ L3:
   while ( (int)p5 < (int)&g_frameStepRingIndex );
   f15 = *((float *)self_ + 11) * 0.25;
   *((float *)self_ + 11) = f15;
-  i40 = (long long)f15;
-  f16 = (double)i40;
+  frame.i40 = (long long)f15;
+  f16 = (double)frame.i40;
   *((float *)self_ + 10) = f16;
-  f22 = (float)*((int *)self_ + 12);
-  if ( f16 < f22 )
-    *((float *)self_ + 10) = f22;
+  frame.f22 = (float)*((int *)self_ + 12);
+  if ( f16 < frame.f22 )
+    *((float *)self_ + 10) = frame.f22;
   f17 = *((float *)self_ + 10);
   (xi_fpu_unord = __builtin_isunordered(f17, 20.0), b5 = f17 < 20.0);
   c4 = 0;
@@ -727,22 +729,22 @@ L3:
   if ( i29 != 0 )
   {
     f18 = ((double (__thiscall *)(int))*(uint32_t *)(*(uint32_t *)i29 + 40))(i29);
-    *(float *)&i38 = f18;
+    *(float *)&frame.i38 = f18;
     (xi_fpu_unord = __builtin_isunordered(f18, 4000.0), b9 = f18 < 4000.0);
     c6 = 0;
     b10 = f18 == 4000.0;
     if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
     {
-      GetLocalTime(&SystemTime);
-      if ( SystemTime.wSecond != (uint16_t)g_frameCounterLastSecond )
+      GetLocalTime(&frame.SystemTime);
+      if ( frame.SystemTime.wSecond != (uint16_t)g_frameCounterLastSecond )
       {
         (*(void (__thiscall **)(uint32_t))(**((uint32_t **)self_ + 8) + 32))(*((uint32_t *)self_ + 8));
-        i40 = SystemTime.wSecond - (unsigned short)g_frameCounterLastSecond;
-        f19 = (double)i40;
+        frame.i40 = frame.SystemTime.wSecond - (unsigned short)g_frameCounterLastSecond;
+        f19 = (double)frame.i40;
         if ( f19 < 0.0 )
           f19 = f19 + 60.0;
-        *(float *)&i40 = f19 * 1000.0;
-        f20 = *(float *)&i38 - *(float *)&i40;
+        *(float *)&frame.i40 = f19 * 1000.0;
+        f20 = *(float *)&frame.i38 - *(float *)&frame.i40;
         if ( f20 < 0.0 )
           f20 = -f20;
         if ( g_1045695C != 0 )
@@ -773,10 +775,10 @@ L3:
             else
             {
               g_10456958 = 0;
-              f21 = *(float *)&i38 / *(float *)&i40;
+              frame.f21 = *(float *)&frame.i38 / *(float *)&frame.i40;
               (*(void (__thiscall **)(uint32_t, uint32_t))(**((uint32_t **)self_ + 7) + 52))(
                 *((uint32_t *)self_ + 7),
-                (*(uint32_t *)&(f21)));
+                (*(uint32_t *)&(frame.f21)));
               if ( ++g_10456954 > 45 )
               {
                 g_10456954 = 0;
@@ -789,7 +791,7 @@ L3:
         {
           g_1045695C = 1;
         }
-        (*(uint16_t *)&(g_frameCounterLastSecond)) = SystemTime.wSecond;
+        (*(uint16_t *)&(g_frameCounterLastSecond)) = frame.SystemTime.wSecond;
       }
     }
   }
@@ -802,21 +804,21 @@ L3:
   if ( (unsigned char)g_screenFadeLevel > 0x80u )
   {
     i34 = *((unsigned char *)self_ + 806);
-    i40 = *((unsigned char *)self_ + 805) + (unsigned char)g_screenFadeLevel - 128;
+    frame.i40 = *((unsigned char *)self_ + 805) + (unsigned char)g_screenFadeLevel - 128;
     u5 = i34 + (unsigned char)g_screenFadeLevel - 128;
     u6 = *((unsigned char *)self_ + 804) + (unsigned char)g_screenFadeLevel - 128;
     if ( u5 > 0xFF )
       u5 = (unsigned int)(((uint32_t)(u5) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
-    if ( (unsigned int)i40 <= 0xFF )
-      c9 = i40;
+    if ( (unsigned int)frame.i40 <= 0xFF )
+      c9 = frame.i40;
     else
       c9 = -1;
     if ( u6 > 0xFF )
       u6 = (unsigned int)(((uint32_t)(u6) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
-    (*((uint16_t *)&(i39) + sizeof(i39) / 2 - 1)) = (unsigned char)u5;
-    (*((uint8_t *)&(i39) + 1)) = c9;
-    (*(uint8_t *)&(i39)) = u6;
-    *((uint32_t *)self_ + 201) = i39;
+    (*((uint16_t *)&(frame.i39) + sizeof(frame.i39) / 2 - 1)) = (unsigned char)u5;
+    (*((uint8_t *)&(frame.i39) + 1)) = c9;
+    (*(uint8_t *)&(frame.i39)) = u6;
+    *((uint32_t *)self_ + 201) = frame.i39;
   }
   result = (int)g_pCDx;
   if ( (*(unsigned char *)((char *)g_pCDx + 0x915)) != 0 )
@@ -946,33 +948,35 @@ XI_API int __thiscall Post_FlashAndZoomFeedback(void *self_)
   int i5;
   unsigned int u2;
   int i6;
-  alignas(16) unsigned char xi_frame[0x628];  // address-taken locals at their original offsets
-  int (&i7)[2] = *reinterpret_cast<int (*)[2]>(xi_frame + 0x208);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x210);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x214);
-  int (&i10)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x218);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x628];
+    struct __attribute__((packed)) { unsigned char pad_1[0x208]; int i7[2]; };   // at 0x208
+    struct __attribute__((packed)) { unsigned char pad_2[0x210]; int i8; };   // at 0x210
+    struct __attribute__((packed)) { unsigned char pad_3[0x214]; int i9; };   // at 0x214
+    struct __attribute__((packed)) { unsigned char pad_4[0x218]; int i10[4]; };   // at 0x218
+  } frame;
 
   i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFFull) | ((uint64_t)(uint32_t)(0) << 32));
   if ( *((uint8_t *)self_ + 806) != 0 || *((uint8_t *)self_ + 805) != 0 || *((uint8_t *)self_ + 804) != 0 )
   {
     RenderTargetTop = orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx);
     i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*(uint32_t *)RenderTargetTop) << 0));
-    *(uint64_t *)i7 = i1;
+    *(uint64_t *)frame.i7 = i1;
     g_feedbackQuad = (float)i1;
-    i7[0] = *((uint32_t *)RenderTargetTop + 1);
-    g_flashQuadVerts_v0_y = (float)*(long long *)i7;
-    i7[0] = *((uint32_t *)RenderTargetTop + 2);
-    g_flashQuadVerts_v1_x = (float)*(long long *)i7;
-    i7[0] = *((uint32_t *)RenderTargetTop + 1);
-    g_flashQuadVerts_v1_y = (float)*(long long *)i7;
-    i7[0] = *(uint32_t *)RenderTargetTop;
-    g_flashQuadVerts_v2_x = (float)*(long long *)i7;
-    i7[0] = *((uint32_t *)RenderTargetTop + 3);
-    g_flashQuadVerts_v2_y = (float)*(long long *)i7;
-    i7[0] = *((uint32_t *)RenderTargetTop + 2);
-    g_flashQuadVerts_v3_x = (float)*(long long *)i7;
-    i7[0] = *((uint32_t *)RenderTargetTop + 3);
-    g_flashQuadVerts_v3_y = (float)*(long long *)i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 1);
+    g_flashQuadVerts_v0_y = (float)*(long long *)frame.i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 2);
+    g_flashQuadVerts_v1_x = (float)*(long long *)frame.i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 1);
+    g_flashQuadVerts_v1_y = (float)*(long long *)frame.i7;
+    frame.i7[0] = *(uint32_t *)RenderTargetTop;
+    g_flashQuadVerts_v2_x = (float)*(long long *)frame.i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 3);
+    g_flashQuadVerts_v2_y = (float)*(long long *)frame.i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 2);
+    g_flashQuadVerts_v3_x = (float)*(long long *)frame.i7;
+    frame.i7[0] = *((uint32_t *)RenderTargetTop + 3);
+    g_flashQuadVerts_v3_y = (float)*(long long *)frame.i7;
     u1 = 2 * *((unsigned char *)self_ + 807);
     if ( u1 > 0xFF )
       u1 = (unsigned int)(((uint32_t)(u1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
@@ -1065,16 +1069,16 @@ L2:
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
           p2 = (int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx);
           f1 = 1.0 - *((float *)self_ + 204);
-          i10[0] = *p2;
-          i10[1] = p2[1];
-          i10[2] = p2[2];
+          frame.i10[0] = *p2;
+          frame.i10[1] = p2[1];
+          frame.i10[2] = p2[2];
           i5 = p2[3];
-          *(float *)i7 = f1;
-          i10[3] = i5;
+          *(float *)frame.i7 = f1;
+          frame.i10[3] = i5;
           u2 = 2 * *((unsigned char *)self_ + 815);
-          *(float *)&i7[1] = 1.0 - f1;
-          *(float *)&i8 = f1;
-          i9 = i7[1];
+          *(float *)&frame.i7[1] = 1.0 - f1;
+          *(float *)&frame.i8 = f1;
+          frame.i9 = frame.i7[1];
           if ( u2 > 0xFF )
             u2 = 255;
           i6 = (u2 << 24) | *((uint32_t *)self_ + 203) & 0xFFFFFF;
@@ -1085,12 +1089,12 @@ L2:
               *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388],
               *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 396],
               0);
-            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[i3], i6, (int)i10, (int)i7, -1);
+            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[i3], i6, (int)frame.i10, (int)frame.i7, -1);
             orig::CDx_SetTexture(g_pCDx, 0, 0);
           }
           else
           {
-            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[0], i6, (int)i10, (int)i7, -1);
+            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[0], i6, (int)frame.i10, (int)frame.i7, -1);
           }
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
           orig::CDx_PushRenderTarget(g_pCDx, g_feedbackTexHalfRes[i3], g_feedbackDepth[i3], 0);

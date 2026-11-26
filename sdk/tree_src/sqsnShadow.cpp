@@ -19,13 +19,15 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
   int i7;
   int i8;
   int i9;
-  alignas(16) unsigned char xi_frame[0x468];  // address-taken locals at their original offsets
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  int (&i11)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x1C);
-  float (&f5)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x28);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x468];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; int i10; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; float f2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; int i11[3]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x28]; float f5[16]; };   // at 0x28
+  } frame;
   int i12;
   int i13;
   i1 = 3 * arg3;
@@ -51,8 +53,8 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
     }
   }
   p3 = (int *)p2[18];
-  i10 = *p3;
-  orig::sqMatrix4_1027F0E0(f5, *(uint32_t *)(arg2 + 4));
+  frame.i10 = *p3;
+  orig::sqMatrix4_1027F0E0(frame.f5, *(uint32_t *)(arg2 + 4));
   i3 = *(uint32_t *)(*p1 + 48);
   i4 = i3 == 0;
   b1 = i3 == 0;
@@ -60,21 +62,21 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
   i12 = i4;
   if ( b1 )
   {
-    f2 = *(float *)(i5 + 12);
-    f3 = *(float *)(p1[1] + 28);
-    f4 = *(float *)(p1[1] + 44);
+    frame.f2 = *(float *)(i5 + 12);
+    frame.f3 = *(float *)(p1[1] + 28);
+    frame.f4 = *(float *)(p1[1] + 44);
   }
   else
   {
-    f2 = *(float *)(i5 + 8) * -1.0;
-    f3 = *(float *)(p1[1] + 24) * -1.0;
+    frame.f2 = *(float *)(i5 + 8) * -1.0;
+    frame.f3 = *(float *)(p1[1] + 24) * -1.0;
     f1 = *(float *)(p1[1] + 40) * -1.0;
-    f5[3] = 0.0;
-    f5[7] = 0.0;
-    f5[11] = 0.0;
-    f4 = f1;
+    frame.f5[3] = 0.0;
+    frame.f5[7] = 0.0;
+    frame.f5[11] = 0.0;
+    frame.f4 = f1;
   }
-  orig::M4fTransform((float *)i11, f5, &f2);
+  orig::M4fTransform((float *)frame.i11, frame.f5, &frame.f2);
   i6 = p2[13];
   if ( i6 != 0 )
     i6 = *(uint32_t *)(i6 + 84);
@@ -85,9 +87,9 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
     i6,
     (int *)p2[18],
     *(uint32_t *)(*p1 + 48) == 0,
-    (float *)i11);
+    (float *)frame.i11);
   orig::sqsnShadowVolumeBeginVB();
-  if ( i10 != 0 )
+  if ( frame.i10 != 0 )
   {
     do
     {
@@ -106,7 +108,7 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
           p2[22],
           *(uint32_t *)(arg2 + 20),
           i12,
-          (float *)i11,
+          (float *)frame.i11,
           1000.0,
           1);
       }
@@ -123,7 +125,7 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
           p2[22],
           *(uint32_t *)(arg2 + 20),
           i12,
-          (float *)i11,
+          (float *)frame.i11,
           1000.0,
           1);
       }
@@ -137,9 +139,9 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
         i9 = i7 / 3 + i13;
       }
       i13 = i9;
-      b1 = i10 == 1;
+      b1 = frame.i10 == 1;
       i2 += i7 + 1;
-      --i10;
+      --frame.i10;
     }
     while ( !b1 );
   }

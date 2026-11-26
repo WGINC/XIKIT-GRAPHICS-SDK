@@ -8,22 +8,24 @@ XI_API bits32 __thiscall ModelBaseDraw_ApplyToVec4(void * self_, bits32 arg2, bi
 {
   short *p1;
   uint32_t u1;
-  char xi_frame[76] __attribute__((aligned(4)));
-  uint32_t  (&u2)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 0);
-  uint8_t  (&u3)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { uint32_t u2[3]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; uint8_t u3[64]; };   // at 0xC
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(u3);
+  orig::MathVector_ReturnThis_v1(frame.u3);
   p1 = (short *)orig::Skel_GetRecordAt((void *)((int)self_ + 8),arg2);
   u1 = 0;
   if (p1 != (short *)0x0) {
-    orig::Mat4_SetIdentity_v1(u3);
-    orig::Mat4_PostRotateX_v1(u3,*(float *)(p1 + 1));
-    orig::Mat4_PostRotateY_v1(u3,*(float *)(p1 + 3));
-    orig::Mat4_PostRotateZ_v1(u3,*(float *)(p1 + 5));
-    orig::Part_CopyTranslation((int)p1,u2);
-    orig::Mat4_SetTranslation_v1(u3,u2);
-    orig::Mat4_PostMultiply_v1(u3,*p1 * 0x40 + *(int *)((int)self_ + 0x14));
-    u1 = orig::Mat4_TransformVec4InPlace_v1(u3,arg3);
+    orig::Mat4_SetIdentity_v1(frame.u3);
+    orig::Mat4_PostRotateX_v1(frame.u3,*(float *)(p1 + 1));
+    orig::Mat4_PostRotateY_v1(frame.u3,*(float *)(p1 + 3));
+    orig::Mat4_PostRotateZ_v1(frame.u3,*(float *)(p1 + 5));
+    orig::Part_CopyTranslation((int)p1,frame.u2);
+    orig::Mat4_SetTranslation_v1(frame.u3,frame.u2);
+    orig::Mat4_PostMultiply_v1(frame.u3,*p1 * 0x40 + *(int *)((int)self_ + 0x14));
+    u1 = orig::Mat4_TransformVec4InPlace_v1(frame.u3,arg3);
   }
   orig::MathVector_Nop();
   return u1;
@@ -42,10 +44,12 @@ XI_API void __stdcall Part_CopyTranslation(int arg1, bits32 * arg2)
 XI_API void __thiscall Part_AddTranslation(void * self_, int arg2, float * arg3)
 {
   int i1;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  (&u1)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u1[64]; };   // at 0x0
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(u1);
+  orig::MathVector_ReturnThis_v1(frame.u1);
   i1 = orig::Skel_GetRecordAt((void *)((int)self_ + 8),arg2);
   if (i1 != 0) {
     orig::Vec3_AddInPlace_v1(arg3,(float *)(i1 + 0xe));
@@ -68,56 +72,58 @@ XI_API bits32 __stdcall ModelBaseDraw_ClampPointToLocalEllipse(float * arg1, flo
   long double f5;
   long double f6;
   long double f7;
-  char xi_frame[128] __attribute__((aligned(4)));
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  (&f13)[24] = *reinterpret_cast<float  (*)[24]>(xi_frame + 32);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[128];
+    struct __attribute__((packed)) { float f8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f9; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f10; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f11; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f12; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f13[24]; };   // at 0x20
+  } frame;
   
-  orig::MathVector_ReturnThis(f13 + 8);
-  f13[4] = 0.0f;
-  f13[5] = 0.0f;
-  f13[6] = 0.0f;
-  f13[7] = 1.0f;
-  f13[0] = 0.0f;
-  f13[1] = 1.0f;
-  f13[2] = 0.0f;
-  f13[3] = 1.0f;
-  orig::game_102D8141(f13 + 8,f13 + 4,arg2,f13);
-  orig::Mat4_TransformNormal_v2(f13 + 8,&f10,(float *)arg3);
-  orig::Vec3_ScaleInPlace(&f10,2.0f);
+  orig::MathVector_ReturnThis(frame.f13 + 8);
+  frame.f13[4] = 0.0f;
+  frame.f13[5] = 0.0f;
+  frame.f13[6] = 0.0f;
+  frame.f13[7] = 1.0f;
+  frame.f13[0] = 0.0f;
+  frame.f13[1] = 1.0f;
+  frame.f13[2] = 0.0f;
+  frame.f13[3] = 1.0f;
+  orig::game_102D8141(frame.f13 + 8,frame.f13 + 4,arg2,frame.f13);
+  orig::Mat4_TransformNormal_v2(frame.f13 + 8,&frame.f10,(float *)arg3);
+  orig::Vec3_ScaleInPlace(&frame.f10,2.0f);
   f2 = *arg4;
   u3 = ((f2) != (f2)) || ((0.0f) != (0.0f));
-  f8 = arg4[1];
+  frame.f8 = arg4[1];
   if (u3 != (u3 || f2 == 0.0f)) {
     f2 = 0.001000000047497451305389404296875f;
   }
-  u3 = ((f8) != (f8)) || ((0.0f) != (0.0f));
-  if (u3 != (u3 || f8 == 0.0f)) {
-    f8 = 0.001000000047497451305389404296875f;
+  u3 = ((frame.f8) != (frame.f8)) || ((0.0f) != (0.0f));
+  if (u3 != (u3 || frame.f8 == 0.0f)) {
+    frame.f8 = 0.001000000047497451305389404296875f;
   }
-  if (!(f2 > f8)) {
-    f3 = f8;
-    f9 = (float)(f8 / f2);
-    f10 = (float)(f10 * f9);
+  if (!(f2 > frame.f8)) {
+    f3 = frame.f8;
+    frame.f9 = (float)(frame.f8 / f2);
+    frame.f10 = (float)(frame.f10 * frame.f9);
   }
   else {
-    f9 = (float)(f2 / f8);
-    f11 = (float)(f11 * f9);
+    frame.f9 = (float)(f2 / frame.f8);
+    frame.f11 = (float)(frame.f11 * frame.f9);
     f3 = f2;
   }
-  f4 = f12;
+  f4 = frame.f12;
   f5 = 0.0f;
   if (!(f4 <= f5)) {
-    f5 = (1.0f / f12) * arg4[2] * f10;
-    f4 = (float)(1.0f / f12) * arg4[2] *
-            f11;
+    f5 = (1.0f / frame.f12) * arg4[2] * frame.f10;
+    f4 = (float)(1.0f / frame.f12) * arg4[2] *
+            frame.f11;
   }
   else {
-    f5 = f10 * arg4[2] * 1e+02f;
-    f4 = f11 * arg4[2] * 1e+02f;
+    f5 = frame.f10 * arg4[2] * 1e+02f;
+    f4 = frame.f11 * arg4[2] * 1e+02f;
   }
   f6 = x87_fsqrt(f5 * f5 + f4 * f4);
   if (f6 > f3) {
@@ -129,14 +135,14 @@ XI_API bits32 __stdcall ModelBaseDraw_ClampPointToLocalEllipse(float * arg1, flo
     f1 = arg4[2];
     arg1[3] = 1.0f;
     arg1[2] = f1;
-    if (!(f2 > f8)) {
-      *arg1 = (float)((float)(f5 * f3) / f9);
+    if (!(f2 > frame.f8)) {
+      *arg1 = (float)((float)(f5 * f3) / frame.f9);
     }
     else {
-      arg1[1] = (float)((float)(f4 * f3) / f9);
+      arg1[1] = (float)((float)(f4 * f3) / frame.f9);
     }
-    orig::Mat4_InvertOrthonormal_v2(f13 + 8);
-    u1 = orig::Mat4_TransformNormalInPlace_v1(f13 + 8,arg1);
+    orig::Mat4_InvertOrthonormal_v2(frame.f13 + 8);
+    u1 = orig::Mat4_TransformNormalInPlace_v1(frame.f13 + 8,arg1);
     u1 = orig::game_100274B0(arg1,u1);
     orig::MathVector_Nop();
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));

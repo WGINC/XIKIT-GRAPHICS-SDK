@@ -23,39 +23,41 @@ XI_API void __cdecl sqxfXformTD_Init(bits32 * arg1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API bits32 __cdecl sqxfXformTD_Update(int arg1)
 {
-  char xi_frame[36] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 32);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; uint32_t u5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_9[0x20]; float f4; };   // at 0x20
+  } frame;
   
-  orig::SqQuat_ToMatrix3(&f1,(float *)(arg1 + 0x68));
-  *(uint32_t *)(arg1 + 0x20) = u1;
-  *(float *)(arg1 + 0x1c) = f1;
-  *(float *)(arg1 + 0x24) = f2;
-  *(uint32_t *)(arg1 + 0x30) = u3;
+  orig::SqQuat_ToMatrix3(&frame.f1,(float *)(arg1 + 0x68));
+  *(uint32_t *)(arg1 + 0x20) = frame.u1;
+  *(float *)(arg1 + 0x1c) = frame.f1;
+  *(float *)(arg1 + 0x24) = frame.f2;
+  *(uint32_t *)(arg1 + 0x30) = frame.u3;
   *(float *)(arg1 + 0x28) =
-       (float)(f2 * *(float *)(arg1 + 0x78) +
+       (float)(frame.f2 * *(float *)(arg1 + 0x78) +
               *(float *)(arg1 + 0x5c));
-  *(uint32_t *)(arg1 + 0x2c) = u2;
-  *(float *)(arg1 + 0x34) = f3;
-  *(uint32_t *)(arg1 + 0x40) = u5;
-  *(uint32_t *)(arg1 + 0x3c) = u4;
-  *(float *)(arg1 + 0x44) = f4;
+  *(uint32_t *)(arg1 + 0x2c) = frame.u2;
+  *(float *)(arg1 + 0x34) = frame.f3;
+  *(uint32_t *)(arg1 + 0x40) = frame.u5;
+  *(uint32_t *)(arg1 + 0x3c) = frame.u4;
+  *(float *)(arg1 + 0x44) = frame.f4;
   *(float *)(arg1 + 0x38) =
-       (float)(f3 * *(float *)(arg1 + 0x78) +
+       (float)(frame.f3 * *(float *)(arg1 + 0x78) +
               *(float *)(arg1 + 0x60));
   *(uint32_t *)(arg1 + 0x54) = 0;
   *(uint32_t *)(arg1 + 0x50) = 0;
   *(uint32_t *)(arg1 + 0x4c) = 0;
   *(uint32_t *)(arg1 + 0x58) = 0x3f800000;
   *(float *)(arg1 + 0x48) =
-       (float)(f4 * *(float *)(arg1 + 0x78) +
+       (float)(frame.f4 * *(float *)(arg1 + 0x78) +
               *(float *)(arg1 + 100));
   return 0;
 }

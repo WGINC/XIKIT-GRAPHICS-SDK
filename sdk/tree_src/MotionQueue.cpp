@@ -67,22 +67,24 @@ XI_API bits32 __thiscall SampleAnimationTrack_ToBuffer(void * self_, int arg2, i
   uint32_t u1;
   uint32_t u2;
   uint64_t u3;
-  char xi_frame[73] __attribute__((aligned(4)));
-  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint32_t * &p6 = *reinterpret_cast<uint32_t * *>(xi_frame + 5);
-  float  (&f3)[7] = *reinterpret_cast<float  (*)[7]>(xi_frame + 29);
-  float  (&f4)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 57);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[73];
+    struct __attribute__((packed)) { uint8_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x5]; uint32_t * p6; };   // at 0x5
+    struct __attribute__((packed)) { unsigned char pad_3[0x1D]; float f3[7]; };   // at 0x1D
+    struct __attribute__((packed)) { unsigned char pad_4[0x39]; float f4[4]; };   // at 0x39
+  } frame;
   
-  u4 = 1;
+  frame.u4 = 1;
   u3 = XI_CALL_ST0(0x10311C2Cu)(arg5);
   i3 = (int)u3;
   f1 = (float)(arg5 - (u3 & 0xffffffff));
-  orig::Quat_SetIdentityChained(f4);
+  orig::Quat_SetIdentityChained(frame.f4);
   p2 = (bits32 *)0x0;
   i2 = (int)arg3 * 0x15;
-  p6 = (uint32_t *)((int)self_ + (int)arg3 * 0x54 + 0x3e);
+  frame.p6 = (uint32_t *)((int)self_ + (int)arg3 * 0x54 + 0x3e);
   do {
-    u1 = *p6;
+    u1 = *frame.p6;
     if (u1 == 0) {
 code_10019BE3:
       p5 = (float *)((int)self_ + (i2 + (int)p2) * 4 + 0x4e);
@@ -92,12 +94,12 @@ code_10019BE3:
     else {
       if (((int)u1 < 0) && (arg2 != 0)) {
         if (arg2 < 5) {
-          orig::Quat_SetIdentityChained(f3 + 3);
+          orig::Quat_SetIdentityChained(frame.f3 + 3);
           p2 = (bits32 *)(arg6 + arg4 * 0x34);
-          *p2 = f3[3];
-          p2[1] = f3[4];
-          p2[2] = f3[5];
-          p2[3] = f3[6];
+          *p2 = frame.f3[3];
+          p2[1] = frame.f3[4];
+          p2[2] = frame.f3[5];
+          p2[3] = frame.f3[6];
           p2[4] = 0;
           p2[5] = 0;
           p2[6] = 0;
@@ -115,12 +117,12 @@ code_10019BE3:
            *(bits32 *)((int)self_ + (u1 + i3) * 4 + 0x3a);
       f2 = *(float *)((int)self_ + (u1 + 1 + i3) * 4 + 0x3a);
     }
-    f4[(int)p2] = f2;
+    frame.f4[(int)p2] = f2;
     p2 = (bits32 *)((int)p2 + 1);
-    p6 = p6 + 1;
+    frame.p6 = frame.p6 + 1;
     if ((bits32 *)0x3 < p2) {
       p2 = (bits32 *)(arg6 + arg4 * 0x34);
-      p3 = (bits32 *)orig::Quat_NLerp(p2,f3 + 3,f4,f1);
+      p3 = (bits32 *)orig::Quat_NLerp(p2,frame.f3 + 3,frame.f4,f1);
       *p2 = *p3;
       p2[1] = p3[1];
       p2[2] = p3[2];
@@ -134,13 +136,13 @@ code_10019BE3:
           p5[-3] = 0.0f;
           i1 = *arg3;
           if (i1 == 0) {
-            f3[u1] = 0.0f;
+            frame.f3[u1] = 0.0f;
             *p5 = *(float *)((int)self_ + (i2 + u1) * 4 + 0x82);
           }
           else {
             p4 = (float *)((int)self_ + (i1 + i3) * 4 + 0x3a);
             *p5 = *p4;
-            f3[u1] =
+            frame.f3[u1] =
                  (float)(*(float *)((int)self_ + (i1 + 1 + i3) * 4 + 0x3a) -
                         *p4);
           }
@@ -151,12 +153,12 @@ code_10019BE3:
         p4 = (float *)0x0;
         p5 = (float *)(p2 + 7);
         do {
-          p1 = f3 + (int)p4;
+          p1 = frame.f3 + (int)p4;
           p4 = (float *)((int)p4 + 1);
           *p5 = (float)(f1 * *p1 + *p5);
           p5 = p5 + 1;
         } while (p4 < (float *)0x3);
-        u4 = 0;
+        frame.u4 = 0;
       }
       else {
         u1 = 0;
@@ -165,23 +167,23 @@ code_10019BE3:
         do {
           u2 = arg3[-6] & 0x7fffffff;
           if (u2 == 0) {
-            f3[u1 + 3] = 0.0f;
+            frame.f3[u1 + 3] = 0.0f;
             p5[-3] = *(float *)((int)self_ + (i2 + u1) * 4 + 0x6a);
           }
           else {
             p5[-3] = *(float *)((int)self_ + (i3 + u2) * 4 + 0x3a);
-            f3[u1 + 3] =
+            frame.f3[u1 + 3] =
                  (float)(*(float *)((int)self_ + (u2 + 1 + i3) * 4 + 0x3a) -
                         *(float *)((int)self_ + (i3 + u2) * 4 + 0x3a));
           }
           i1 = *arg3;
           if (i1 == 0) {
-            f3[u1] = 0.0f;
+            frame.f3[u1] = 0.0f;
             *p5 = *(float *)((int)self_ + (i2 + u1) * 4 + 0x82);
           }
           else {
             *p5 = *(float *)((int)self_ + (i1 + i3) * 4 + 0x3a);
-            f3[u1] =
+            frame.f3[u1] =
                  (float)(*(float *)((int)self_ + (i3 + 1 + i1) * 4 + 0x3a) -
                         *(float *)((int)self_ + (i1 + i3) * 4 + 0x3a));
           }
@@ -194,9 +196,9 @@ code_10019BE3:
         do {
           u2 = u1 + 4;
           p4 = p5 + 1;
-          p5[-3] = (float)(f1 * *(float *)((int)f3 + u1 + 0xc)
+          p5[-3] = (float)(f1 * *(float *)((int)frame.f3 + u1 + 0xc)
                               + p5[-3]);
-          *p5 = (float)(f1 * *(float *)((int)f3 + u1) +
+          *p5 = (float)(f1 * *(float *)((int)frame.f3 + u1) +
                            *p5);
           p5 = p4;
           u1 = u2;
@@ -209,7 +211,7 @@ code_10019BE3:
         p4 = (float *)arg6;
       }
       orig::BoneShadow_Nop();
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p4 >> 8))) << 8) | (uint8_t)(u4)));
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p4 >> 8))) << 8) | (uint8_t)(frame.u4)));
     }
   } while( true );
 }
@@ -233,16 +235,18 @@ XI_API bits32 __thiscall SampleAnimationTrack_Live(void * self_, int arg2, int *
   long double f4;
   long double f5;
   int64_t i4;
-  char xi_frame[84] __attribute__((aligned(4)));
-  float  (&f6)[13] = *reinterpret_cast<float  (*)[13]>(xi_frame + 0);
-  float  (&f7)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 52);
-  float  (&f8)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 68);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[84];
+    struct __attribute__((packed)) { float f6[13]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x34]; float f7[4]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_3[0x44]; float f8[4]; };   // at 0x44
+  } frame;
   
   i4 = XI_CALL_ST0(0x10311C2Cu)(arg5);
   i3 = (int)i4;
   f1 = (float)(arg5 - i3);
-  orig::Quat_SetIdentityChained(f8);
-  orig::Quat_SetIdentityChained(f7);
+  orig::Quat_SetIdentityChained(frame.f8);
+  orig::Quat_SetIdentityChained(frame.f7);
   u1 = 0;
   i2 = (int)arg3 * 0x15;
   p4 = (uint32_t *)((int)self_ + (int)arg3 * 0x54 + 0x3e);
@@ -251,13 +255,13 @@ XI_API bits32 __thiscall SampleAnimationTrack_Live(void * self_, int arg2, int *
     if (u2 == 0) {
 code_10019F63:
       f3 = *(float *)((int)self_ + (i2 + u1) * 4 + 0x4e);
-      f7[u1] = f3;
+      frame.f7[u1] = f3;
     }
     else {
       if (((int)u2 < 0) && (arg2 != 0)) {
         if (arg2 < 5) {
           p1 = (bits32 *)(arg7 + arg4 * 0x34);
-          p3 = (bits32 *)orig::Quat_NLerp(p1,f6 + 9,f7,arg6);
+          p3 = (bits32 *)orig::Quat_NLerp(p1,frame.f6 + 9,frame.f7,arg6);
           *p1 = *p3;
           p1[1] = p3[1];
           p1[2] = p3[2];
@@ -286,21 +290,21 @@ code_10019F63:
       }
       u2 = u2 & 0x7fffffff;
       if (u2 == 0) goto code_10019F63;
-      f7[u1] = *(float *)((int)self_ + (u2 + i3) * 4 + 0x3a);
+      frame.f7[u1] = *(float *)((int)self_ + (u2 + i3) * 4 + 0x3a);
       f3 = *(float *)((int)self_ + (u2 + 1 + i3) * 4 + 0x3a);
     }
-    f8[u1] = f3;
+    frame.f8[u1] = f3;
     u1 = u1 + 1;
     p4 = p4 + 1;
     if (3 < u1) {
-      p2 = (float *)orig::Quat_NLerp(f7,f6 + 9,f8,f1);
-      f7[0] = *p2;
-      f7[1] = p2[1];
-      f7[2] = p2[2];
-      f7[3] = p2[3];
+      p2 = (float *)orig::Quat_NLerp(frame.f7,frame.f6 + 9,frame.f8,f1);
+      frame.f7[0] = *p2;
+      frame.f7[1] = p2[1];
+      frame.f7[2] = p2[2];
+      frame.f7[3] = p2[3];
       orig::BoneShadow_Nop();
       p1 = (bits32 *)(arg7 + arg4 * 0x34);
-      p3 = (bits32 *)orig::Quat_NLerp(p1,f6 + 9,f7,arg6);
+      p3 = (bits32 *)orig::Quat_NLerp(p1,frame.f6 + 9,frame.f7,arg6);
       *p1 = *p3;
       p1[1] = p3[1];
       p1[2] = p3[2];
@@ -311,25 +315,25 @@ code_10019F63:
       do {
         u2 = arg3[-6] & 0x7fffffff;
         if (u2 == 0) {
-          f6[u1 + 6] = 0.0f;
-          f6[u1] = *(float *)((int)self_ + (i2 + u1) * 4 + 0x6a);
+          frame.f6[u1 + 6] = 0.0f;
+          frame.f6[u1] = *(float *)((int)self_ + (i2 + u1) * 4 + 0x6a);
         }
         else {
           f3 = *(float *)((int)self_ + (u2 + 1 + i3) * 4 + 0x3a);
           f2 = *(float *)((int)self_ + (u2 + i3) * 4 + 0x3a);
-          f6[u1] = f2;
-          f6[u1 + 6] = (float)(f3 - f2);
+          frame.f6[u1] = f2;
+          frame.f6[u1 + 6] = (float)(f3 - f2);
         }
         i1 = *arg3;
         if (i1 == 0) {
-          f6[u1 + 9] = 0.0f;
-          f6[u1 + 3] = *(float *)((int)self_ + (i2 + u1) * 4 + 0x82);
+          frame.f6[u1 + 9] = 0.0f;
+          frame.f6[u1 + 3] = *(float *)((int)self_ + (i2 + u1) * 4 + 0x82);
         }
         else {
           f3 = *(float *)((int)self_ + (i1 + 1 + i3) * 4 + 0x3a);
           f2 = *(float *)((int)self_ + (i1 + i3) * 4 + 0x3a);
-          f6[u1 + 3] = f2;
-          f6[u1 + 9] = (float)(f3 - f2);
+          frame.f6[u1 + 3] = f2;
+          frame.f6[u1 + 9] = (float)(f3 - f2);
         }
         u1 = u1 + 1;
         arg3 = arg3 + 1;
@@ -337,20 +341,20 @@ code_10019F63:
       u1 = 0;
       do {
         u2 = u1 + 4;
-        *(float *)((int)f6 + u1) =
-             (float)(f1 * *(float *)((int)f6 + u1 + 0x18) +
-                    *(float *)((int)f6 + u1));
-        *(float *)((int)f6 + u1 + 0xc) =
-             (float)(f1 * *(float *)((int)f6 + u1 + 0x24) +
-                    *(float *)((int)f6 + u1 + 0xc));
+        *(float *)((int)frame.f6 + u1) =
+             (float)(f1 * *(float *)((int)frame.f6 + u1 + 0x18) +
+                    *(float *)((int)frame.f6 + u1));
+        *(float *)((int)frame.f6 + u1 + 0xc) =
+             (float)(f1 * *(float *)((int)frame.f6 + u1 + 0x24) +
+                    *(float *)((int)frame.f6 + u1 + 0xc));
         u1 = u2;
       } while (u2 < 0xc);
       f5 = 1.0f - arg6;
-      p1[4] = (float)(f6[0] * arg6 +
+      p1[4] = (float)(frame.f6[0] * arg6 +
                          f5 * bit_cast<float>(p1[4]));
-      p1[5] = (float)(f6[1] * arg6 +
+      p1[5] = (float)(frame.f6[1] * arg6 +
                          f5 * bit_cast<float>(p1[5]));
-      p1[6] = (float)(f6[2] * arg6 +
+      p1[6] = (float)(frame.f6[2] * arg6 +
                          f5 * bit_cast<float>(p1[6]));
       if (arg4 == 0) {
         *(bits32 *)(arg7 + 0x1c) = 0x3f800000;
@@ -358,11 +362,11 @@ code_10019F63:
         *(bits32 *)(arg7 + 0x24) = 0x3f800000;
       }
       else {
-        p1[7] = (float)(f6[3] * arg6 +
+        p1[7] = (float)(frame.f6[3] * arg6 +
                            f5 * bit_cast<float>(p1[7]));
-        p1[8] = (float)(f6[4] * arg6 +
+        p1[8] = (float)(frame.f6[4] * arg6 +
                            f5 * bit_cast<float>(p1[8]));
-        p1[9] = (float)(f6[5] * arg6 +
+        p1[9] = (float)(frame.f6[5] * arg6 +
                            f5 * bit_cast<float>(p1[9]));
         arg7 = arg4;
       }
@@ -408,9 +412,11 @@ XI_API bits32 __thiscall MotionQueue_UpdateAllChannels(void * self_, bits32 xi_s
   uint32_t u5;
   int i2;
   float *p2;
-  char xi_frame[28] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  (&f2)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; float f2[4]; };   // at 0xC
+  } frame;
   
   if ((g_10456D28 & 1) == 0) {
     g_10456D28 = g_10456D28 | 1;
@@ -465,7 +471,7 @@ XI_API bits32 __thiscall MotionQueue_UpdateAllChannels(void * self_, bits32 xi_s
       i1 = i1 + -1;
       obj1 = (void *)((int)obj1 + -0x14);
     } while (-1 < i1);
-    i3 = 5;
+    frame.i3 = 5;
     p2 = (float *)((int)self_ + 0x70);
     do {
       u3 = 0;
@@ -477,7 +483,7 @@ XI_API bits32 __thiscall MotionQueue_UpdateAllChannels(void * self_, bits32 xi_s
             u4 = u4 + 1;
           } while (u4 < g_10462430);
         }
-        u3 = orig::CYyMotionQue_SampleInto(p2 + -3,i3,&g_1045B820);
+        u3 = orig::CYyMotionQue_SampleInto(p2 + -3,frame.i3,&g_1045B820);
         f1 = *p2;
         u4 = 0;
         u5 = g_10462430;
@@ -488,7 +494,7 @@ XI_API bits32 __thiscall MotionQueue_UpdateAllChannels(void * self_, bits32 xi_s
             u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_1045F028_as_s32 >> 8))) << 8) | (uint8_t)(u1)));
             if (((char)u1 < '\0') && ((u1 & 0x3f) != 0)) {
               p1 = (bits32 *)
-                       orig::Quat_NLerp((bits32 *)((int)&g_poseScratch_as_v0 + i1),f2,
+                       orig::Quat_NLerp((bits32 *)((int)&g_poseScratch_as_v0 + i1),frame.f2,
                                   (float *)(((char *)&g_1045B820) + i1),f1);
               *(bits32 *)((int)&g_poseScratch_as_v0 + i1) = *p1;
               *(bits32 *)((int)&g_1045F034 + i1) = p1[1];
@@ -506,9 +512,9 @@ XI_API bits32 __thiscall MotionQueue_UpdateAllChannels(void * self_, bits32 xi_s
           } while (u4 < u5);
         }
       }
-      i3 = i3 + 1;
+      frame.i3 = frame.i3 + 1;
       p2 = p2 + 5;
-    } while (i3 < 7);
+    } while (frame.i3 < 7);
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
   }
   return u5 & 0xffffff00;

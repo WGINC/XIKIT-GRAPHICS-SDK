@@ -24,23 +24,25 @@ bits32 __thiscall CMoPathDriveActorTask::Update(void * self)
   long double f1;
   long double f2;
   uint64_t u5;
-  char xi_frame[84] __attribute__((aligned(4)));
-  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t * &p4 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 52);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 56);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
-  float  (&f11)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 68);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[84];
+    struct __attribute__((packed)) { uint8_t ** p3; };   // at 0x0
+    struct __attribute__((packed)) { uint32_t * p4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; uint32_t u6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; uint32_t u7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x24]; float f6; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_9[0x28]; float f7; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_10[0x2C]; float f8; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_11[0x30]; float f9; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_12[0x34]; float f10; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_13[0x38]; uint32_t u8; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_14[0x3C]; uint32_t u9; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_15[0x40]; uint32_t u10; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_16[0x44]; float f11[4]; };   // at 0x44
+  } frame;
   
   f1 = *(float *)((int)self + 0x78) - *(float *)(g_pResourceMng + 0xeb0);
   u3 = ((f1) != (f1)) || ((0.0f) != (0.0f));
@@ -50,32 +52,32 @@ bits32 __thiscall CMoPathDriveActorTask::Update(void * self)
     if (*(char *)((int)self + 0xa2) != '\0') {
       f1 = 1.0f - f1;
     }
-    f3 = (float)f1;
+    frame.f3 = (float)f1;
     if (*(int *)((int)self + 0xa8) < 5) {
-      f1 = orig::game_10055AD0(f3,*(int *)((int)self + 0xa8));
+      f1 = orig::game_10055AD0(frame.f3,*(int *)((int)self + 0xa8));
     }
     else {
       if (*(int *)((int)self + 0xa4) == 0) goto code_1005ED09;
-      p4 = *(uint32_t **)((int)self + 0xa4);
+      frame.p4 = *(uint32_t **)((int)self + 0xa4);
       if (*(char *)((int)self + 0xac) == '\0') {
-        if (p4 == (uint32_t *)0x0) {
+        if (frame.p4 == (uint32_t *)0x0) {
           p2 = (void *)0x0;
         }
         else {
-          p2 = (void *)*p4;
+          p2 = (void *)*frame.p4;
         }
-        f1 = orig::ElemCurve_Evaluate(p2,f3);
+        f1 = orig::ElemCurve_Evaluate(p2,frame.f3);
       }
-      else if (p4 == (uint32_t *)0x0) {
-        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)0x0,f3);
+      else if (frame.p4 == (uint32_t *)0x0) {
+        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)0x0,frame.f3);
       }
       else {
-        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)*p4,f3);
+        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)*frame.p4,frame.f3);
       }
     }
-    f3 = (float)f1;
+    frame.f3 = (float)f1;
 code_1005ED09:
-    u2 = orig::CMoPathDriveActorTask_ApplyFraction(self,f3);
+    u2 = orig::CMoPathDriveActorTask_ApplyFraction(self,frame.f3);
     *(uint8_t *)((int)self + 0xa0) = 1;
     return u2 & 0xffffff00;
   }
@@ -86,32 +88,32 @@ code_1005ED09:
   else {
     i1 = **(int **)((int)self + 0x74);
   }
-  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&f10,0x3f800000);
+  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&frame.f10,0x3f800000);
   u3 = true;
   if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
-    p1 = (float *)orig::game_1005ED30(&f10,f11,(float *)((int)self + 0x80));
-    f6 = *p1;
-    f7 = p1[1];
-    f8 = p1[2];
-    f9 = p1[3];
-    u6 = 0;
-    f1 = x87_fsqrt(f8 * f8 + f6 * f6);
-    f2 = bit_cast<long double>(x87_fpatan(f8,f6));
+    p1 = (float *)orig::game_1005ED30(&frame.f10,frame.f11,(float *)((int)self + 0x80));
+    frame.f6 = *p1;
+    frame.f7 = p1[1];
+    frame.f8 = p1[2];
+    frame.f9 = p1[3];
+    frame.u6 = 0;
+    f1 = x87_fsqrt(frame.f8 * frame.f8 + frame.f6 * frame.f6);
+    f2 = bit_cast<long double>(x87_fpatan(frame.f8,frame.f6));
     f2 = *(float *)((int)self + 0x94) - f2;
-    f4 = (float)f2;
+    frame.f4 = (float)f2;
     if (f2 > 3.141499996185302734375f) {
-      f4 = (float)(f4 - 6.28299999237060546875f);
+      frame.f4 = (float)(frame.f4 - 6.28299999237060546875f);
     }
-    u4 = ((f4) != (f4)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
-    if ((u4 || f4 < (-3.141499996185302734375f)) != u4) {
-      f4 = (float)(f4 + 6.28299999237060546875f);
+    u4 = ((frame.f4) != (frame.f4)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u4 || frame.f4 < (-3.141499996185302734375f)) != u4) {
+      frame.f4 = (float)(frame.f4 + 6.28299999237060546875f);
     }
     if ((*(uint8_t *)((int)self + 0x9c) & 2) == 0) {
-      f2 = bit_cast<long double>(x87_fpatan(f7,f1));
-      f5 = (float)f2;
+      f2 = bit_cast<long double>(x87_fpatan(frame.f7,f1));
+      frame.f5 = (float)f2;
     }
     u4 = ((f1) != (f1)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
-    u7 = 0x3f800000;
+    frame.u7 = 0x3f800000;
     if ((u4 || f1 < 0.100000001490116119384765625f) != u4) {
       u3 = false;
     }
@@ -119,60 +121,60 @@ code_1005ED09:
   p2 = (void *)((int)self + 0x34);
   u5 = orig::CMoAttachments_GetCaster_v1(p2);
   if ((int)u5 != 0) {
-    p3 = &g_1032DF68;
+    frame.p3 = &g_1032DF68;
     u5 = orig::CMoAttachments_GetCaster_v1(p2);
-    u5 = orig::CYyObject_IsKindOf((void *)u5,(int)p3);
+    u5 = orig::CYyObject_IsKindOf((void *)u5,(int)frame.p3);
     if ((char)u5 != '\0') {
       if (*(char *)((int)self + 0xa1) == '\0') {
         if (*(char *)((int)self + 0xa0) != '\0') {
-          p1 = (float *)orig::game_1005ED30(&f10,f11,(float *)((int)self + 0x80));
-          f6 = *p1;
-          f7 = p1[1];
-          f8 = p1[2];
-          f9 = p1[3];
+          p1 = (float *)orig::game_1005ED30(&frame.f10,frame.f11,(float *)((int)self + 0x80));
+          frame.f6 = *p1;
+          frame.f7 = p1[1];
+          frame.f8 = p1[2];
+          frame.f9 = p1[3];
           u5 = orig::CMoAttachments_GetCaster_v1(p2);
           p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u5 + 0x1bc))))((void *)((int *)u5));
-          orig::game_1005ED90(&f6,p1);
-          p1 = &f6;
+          orig::game_1005ED90(&frame.f6,p1);
+          p1 = &frame.f6;
           goto code_1005EB95;
         }
       }
       else {
-        p1 = &f10;
+        p1 = &frame.f10;
 code_1005EB95:
         u5 = orig::CMoAttachments_GetCaster_v1(p2);
         orig::CXiControlActor_SetVec4((void *)u5,p1);
       }
       if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
         if (*(char *)((int)self + 0xa3) == '\0') {
-          p3 = &XiModelActor_classdesc;
+          frame.p3 = &XiModelActor_classdesc;
           u5 = orig::CMoAttachments_GetCaster_v1(p2);
-          u5 = orig::CYyObject_IsKindOf((void *)u5,(int)p3);
+          u5 = orig::CYyObject_IsKindOf((void *)u5,(int)frame.p3);
           if ((char)u5 != '\0') {
-            p4 = &u6;
+            frame.p4 = &frame.u6;
             u5 = orig::CMoAttachments_GetCaster_v1(p2);
-            orig::game_1005EEC0((void *)u5,p4);
+            orig::game_1005EEC0((void *)u5,frame.p4);
           }
-          p4 = &u6;
+          frame.p4 = &frame.u6;
           u5 = orig::CMoAttachments_GetCaster_v1(p2);
-          orig::game_1005EE90((void *)u5,p4);
-          p4 = &u6;
+          orig::game_1005EE90((void *)u5,frame.p4);
+          frame.p4 = &frame.u6;
           u5 = orig::CMoAttachments_GetCaster_v1(p2);
-          orig::game_1005EDC0((void *)u5,p4);
+          orig::game_1005EDC0((void *)u5,frame.p4);
           *(uint8_t *)((int)self + 0xa3) = 1;
         }
         else if (u3) {
-          p4 = &u6;
+          frame.p4 = &frame.u6;
           u5 = orig::CMoAttachments_GetCaster_v1(p2);
-          orig::game_1005EE90((void *)u5,p4);
+          orig::game_1005EE90((void *)u5,frame.p4);
         }
       }
     }
   }
-  *(float *)((int)self + 0x80) = f10;
-  *(uint32_t *)((int)self + 0x84) = u8;
-  *(uint32_t *)((int)self + 0x88) = u9;
-  *(uint32_t *)((int)self + 0x8c) = u10;
+  *(float *)((int)self + 0x80) = frame.f10;
+  *(uint32_t *)((int)self + 0x84) = frame.u8;
+  *(uint32_t *)((int)self + 0x88) = frame.u9;
+  *(uint32_t *)((int)self + 0x8c) = frame.u10;
 code_1005EC5A:
   if (*(int **)((int)self + 0x74) == (int *)0x0) {
     i1 = 0;
@@ -198,24 +200,26 @@ bits32 __thiscall CMoPathDriveActorTask::ApplyFraction(void * self, bits32 arg2)
   long double f1;
   long double f2;
   uint64_t u3;
-  char xi_frame[80] __attribute__((aligned(4)));
-  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 52);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 56);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 60);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 72);
-  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 76);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[80];
+    struct __attribute__((packed)) { uint8_t ** p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; uint32_t u4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; float f4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; uint32_t u5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; float f6; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; float f7; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x2C]; float f8; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_10[0x30]; float f9; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_11[0x34]; float f10; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_12[0x38]; float f11; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_13[0x3C]; float f12; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_14[0x40]; float f13; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_15[0x44]; float f14; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_16[0x48]; float f15; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_17[0x4C]; float f16; };   // at 0x4C
+  } frame;
   
   if (*(int **)((int)self + 0x74) == (int *)0x0) {
     i1 = 0;
@@ -223,30 +227,30 @@ bits32 __thiscall CMoPathDriveActorTask::ApplyFraction(void * self, bits32 arg2)
   else {
     i1 = **(int **)((int)self + 0x74);
   }
-  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&f9,arg2);
+  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&frame.f9,arg2);
   u2 = true;
   if ((*(uint32_t *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
-    u4 = 0;
-    f5 = (float)(f9 - *(float *)((int)self + 0x80));
-    f6 = (float)(f10 - *(float *)((int)self + 0x84));
-    f7 = (float)(f11 - *(float *)((int)self + 0x88));
-    f1 = x87_fsqrt(f7 * f7 + f5 * f5);
-    f2 = bit_cast<long double>(x87_fpatan(f7,f5));
+    frame.u4 = 0;
+    frame.f5 = (float)(frame.f9 - *(float *)((int)self + 0x80));
+    frame.f6 = (float)(frame.f10 - *(float *)((int)self + 0x84));
+    frame.f7 = (float)(frame.f11 - *(float *)((int)self + 0x88));
+    f1 = x87_fsqrt(frame.f7 * frame.f7 + frame.f5 * frame.f5);
+    f2 = bit_cast<long double>(x87_fpatan(frame.f7,frame.f5));
     f2 = *(float *)((int)self + 0x94) - f2;
-    f3 = (float)f2;
+    frame.f3 = (float)f2;
     if (f2 > 3.141499996185302734375f) {
-      f3 = (float)(f3 - 6.28299999237060546875f);
+      frame.f3 = (float)(frame.f3 - 6.28299999237060546875f);
     }
-    u1 = ((f3) != (f3)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
-    if ((u1 || f3 < (-3.141499996185302734375f)) != u1) {
-      f3 = (float)(f3 + 6.28299999237060546875f);
+    u1 = ((frame.f3) != (frame.f3)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u1 || frame.f3 < (-3.141499996185302734375f)) != u1) {
+      frame.f3 = (float)(frame.f3 + 6.28299999237060546875f);
     }
     if ((*(uint32_t *)((int)self + 0x9c) & 2) == 0) {
-      f2 = bit_cast<long double>(x87_fpatan(f6,f1));
-      f4 = (float)f2;
+      f2 = bit_cast<long double>(x87_fpatan(frame.f6,f1));
+      frame.f4 = (float)f2;
     }
     u1 = ((f1) != (f1)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
-    u5 = 0x3f800000;
+    frame.u5 = 0x3f800000;
     if ((u1 || f1 < 0.100000001490116119384765625f) != u1) {
       u2 = false;
     }
@@ -254,59 +258,59 @@ bits32 __thiscall CMoPathDriveActorTask::ApplyFraction(void * self, bits32 arg2)
   obj1 = (void *)((int)self + 0x34);
   u3 = orig::CMoAttachments_GetCaster_v1(obj1);
   if ((int)u3 == 0) goto code_1005F289;
-  p3 = &g_1032DF68;
+  frame.p3 = &g_1032DF68;
   u3 = orig::CMoAttachments_GetCaster_v1(obj1);
-  u3 = orig::CYyObject_IsKindOf((void *)u3,(int)p3);
+  u3 = orig::CYyObject_IsKindOf((void *)u3,(int)frame.p3);
   if ((char)u3 == '\0') goto code_1005F289;
   if (*(char *)((int)self + 0xa1) == '\0') {
     if (*(char *)((int)self + 0xa0) != '\0') {
-      f5 = (float)(f9 - *(float *)((int)self + 0x80));
-      f6 = (float)(f10 - *(float *)((int)self + 0x84));
-      f7 = (float)(f11 - *(float *)((int)self + 0x88));
-      f8 = (float)(f12 - *(float *)((int)self + 0x8c));
-      f13 = f5;
-      f14 = f6;
-      f15 = f7;
-      f16 = f8;
+      frame.f5 = (float)(frame.f9 - *(float *)((int)self + 0x80));
+      frame.f6 = (float)(frame.f10 - *(float *)((int)self + 0x84));
+      frame.f7 = (float)(frame.f11 - *(float *)((int)self + 0x88));
+      frame.f8 = (float)(frame.f12 - *(float *)((int)self + 0x8c));
+      frame.f13 = frame.f5;
+      frame.f14 = frame.f6;
+      frame.f15 = frame.f7;
+      frame.f16 = frame.f8;
       u3 = orig::CMoAttachments_GetCaster_v1(obj1);
       p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1bc))))((void *)((int *)u3));
-      f5 = (float)(f5 + *p1);
-      f6 = (float)(f6 + p1[1]);
-      f7 = (float)(f7 + p1[2]);
-      p2 = &f5;
-      f8 = (float)(f8 + p1[3]);
+      frame.f5 = (float)(frame.f5 + *p1);
+      frame.f6 = (float)(frame.f6 + p1[1]);
+      frame.f7 = (float)(frame.f7 + p1[2]);
+      p2 = &frame.f5;
+      frame.f8 = (float)(frame.f8 + p1[3]);
       goto code_1005F0D9;
     }
   }
   else {
-    p2 = &f9;
+    p2 = &frame.f9;
 code_1005F0D9:
     u3 = orig::CMoAttachments_GetCaster_v1(obj1);
     orig::CXiControlActor_SetVec4((void *)u3,p2);
   }
   if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
     if (*(char *)((int)self + 0xa3) == '\0') {
-      p3 = &XiModelActor_classdesc;
+      frame.p3 = &XiModelActor_classdesc;
       u3 = orig::CMoAttachments_GetCaster_v1(obj1);
-      u3 = orig::CYyObject_IsKindOf((void *)u3,(int)p3);
+      u3 = orig::CYyObject_IsKindOf((void *)u3,(int)frame.p3);
       if ((char)u3 != '\0') {
         u3 = orig::CMoAttachments_GetCaster_v1(obj1);
         i1 = (int)u3;
-        *(uint32_t *)(i1 + 0x744) = u4;
-        *(float *)(i1 + 0x748) = f3;
-        *(float *)(i1 + 0x74c) = f4;
-        *(uint32_t *)(i1 + 0x750) = u5;
+        *(uint32_t *)(i1 + 0x744) = frame.u4;
+        *(float *)(i1 + 0x748) = frame.f3;
+        *(float *)(i1 + 0x74c) = frame.f4;
+        *(uint32_t *)(i1 + 0x750) = frame.u5;
       }
       u3 = orig::CMoAttachments_GetCaster_v1(obj1);
       i1 = (int)u3;
-      *(uint32_t *)(i1 + 0xe4) = u4;
-      *(float *)(i1 + 0xe8) = f3;
-      *(float *)(i1 + 0xec) = f4;
-      *(uint32_t *)(i1 + 0xf0) = u5;
+      *(uint32_t *)(i1 + 0xe4) = frame.u4;
+      *(float *)(i1 + 0xe8) = frame.f3;
+      *(float *)(i1 + 0xec) = frame.f4;
+      *(uint32_t *)(i1 + 0xf0) = frame.u5;
       u3 = orig::CMoAttachments_GetCaster_v1(obj1);
       i1 = (int)u3;
       p2 = (float *)(i1 + 0x44);
-      orig::Vec4_Copy_v1(p2,&u4);
+      orig::Vec4_Copy_v1(p2,&frame.u4);
       if (*p2 > 3.141499996185302734375f) {
         *p2 = (float)(*p2 - 6.28299999237060546875f);
       }
@@ -333,18 +337,18 @@ code_1005F0D9:
     else if (u2) {
       u3 = orig::CMoAttachments_GetCaster_v1(obj1);
       i1 = (int)u3;
-      *(uint32_t *)(i1 + 0xe4) = u4;
-      *(float *)(i1 + 0xe8) = f3;
-      *(float *)(i1 + 0xec) = f4;
-      *(uint32_t *)(i1 + 0xf0) = u5;
+      *(uint32_t *)(i1 + 0xe4) = frame.u4;
+      *(float *)(i1 + 0xe8) = frame.f3;
+      *(float *)(i1 + 0xec) = frame.f4;
+      *(uint32_t *)(i1 + 0xf0) = frame.u5;
     }
   }
 code_1005F289:
-  *(float *)((int)self + 0x80) = f9;
-  *(float *)((int)self + 0x84) = f10;
-  *(float *)((int)self + 0x88) = f11;
-  *(float *)((int)self + 0x8c) = f12;
-  return f11;
+  *(float *)((int)self + 0x80) = frame.f9;
+  *(float *)((int)self + 0x84) = frame.f10;
+  *(float *)((int)self + 0x88) = frame.f11;
+  *(float *)((int)self + 0x8c) = frame.f12;
+  return frame.f11;
 }
 
 // FUNCTION: FFXIMAIN 0x100630A0

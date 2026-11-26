@@ -213,12 +213,14 @@ XI_API void __cdecl CXiControlActor_CallTargetSlot207With1(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 long double __stdcall CXiControlActor::GetSpeed(int * arg1)
 {
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&f1)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[2]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f2; };   // at 0x8
+  } frame;
   
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*arg1 + 0x1c8))))((void *)(arg1),0x2c,f1);
-  return x87_fsqrt(f1[0] * f1[0] + f2 * f2) *
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*arg1 + 0x1c8))))((void *)(arg1),0x2c,frame.f1);
+  return x87_fsqrt(frame.f1[0] * frame.f1[0] + frame.f2 * frame.f2) *
          0.800000011920928955078125f;
 }
 

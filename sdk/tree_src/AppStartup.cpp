@@ -267,23 +267,25 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
   int i8;
   uint32_t *p33;
   int DepthSurfaceLikeMain;
-  unsigned short u1;
-  unsigned short u2;
+  unsigned short width;
+  unsigned short height;
   CDx *p34;
   short i9;
   uint32_t *Texture;
   int i10;
   unsigned short u3;
   unsigned short u4;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x1C);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int * &p35 = *reinterpret_cast<int * *>(xi_frame + 0x24);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; int i; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i11; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; int i12; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i13; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; int * p35; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; int i14; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; int i15; };   // at 0x2C
+  } frame;
 
   orig::CDx_BeginScene(g_pCDx);
   orig::CDx_NopA();
@@ -300,13 +302,13 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
     *(uint16_t *)(self_ + 18) = *(uint16_t *)&(*(unsigned char *)((char *)g_pCDx + 0x160));
     *(uint16_t *)(self_ + 20) = g_cfgMenuResX;
     *(uint16_t *)(self_ + 22) = g_cfgMenuResY;
-    orig::App_GetGlobalPair(&i, &f1);
-    i7 = (*(uint16_t *)&(f1));
-    *(uint16_t *)(self_ + 24) = i;
+    orig::App_GetGlobalPair(&frame.i, &frame.f1);
+    i7 = (*(uint16_t *)&(frame.f1));
+    *(uint16_t *)(self_ + 24) = frame.i;
     *(uint16_t *)(self_ + 26) = i7;
     orig::Camera_SetField2E4(0);
-    i8 = orig::Camera_PickNearestAspect(*(unsigned short *)(self_ + 16), *(unsigned short *)(self_ + 18), &i, &f1);
-    orig::Camera_SetField2F0(*(float *)&i, f1);
+    i8 = orig::Camera_PickNearestAspect(*(unsigned short *)(self_ + 16), *(unsigned short *)(self_ + 18), &frame.i, &frame.f1);
+    orig::Camera_SetField2F0(*(float *)&frame.i, frame.f1);
     orig::Gfx_SetAspectIndex(i8);
     orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
     orig::CDx_AppendStateRecord((int)g_pCDx);
@@ -337,12 +339,12 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
                                          g_feedbackDepth,
                                          1,
                                          0);
-        u1 = *(uint16_t *)(self_ + 20);
-        if ( u1 == 0
-          || (u2 = *(uint16_t *)(self_ + 22)) == 0
-          || u1 == *(uint16_t *)(self_ + 16) && u2 == *(uint16_t *)(self_ + 18)
+        width = *(uint16_t *)(self_ + 20);
+        if ( width == 0
+          || (height = *(uint16_t *)(self_ + 22)) == 0
+          || width == *(uint16_t *)(self_ + 16) && height == *(uint16_t *)(self_ + 18)
           || (arg2 = 0,
-              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)) = orig::CDx_CreateTexture(g_pCDx, u1, u2, &arg2, 1, 0),
+              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)) = orig::CDx_CreateTexture(g_pCDx, width, height, &arg2, 1, 0),
               *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E4)) = arg2,
               *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E8)) = orig::CDx_CreateDepthSurfaceLikeMain(
                                                    g_pCDx,
@@ -437,7 +439,7 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
           }
           *p4 = (int)&CYyObject_vtbl_ambiguous0;
           p6 = p4 + 1;
-          for ( i = 64; i != 0; --i )
+          for ( frame.i = 64; frame.i != 0; --frame.i )
           {
             orig::CMoTask_Constructor(p6);
             p6 += 13;
@@ -495,16 +497,16 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
             {
               g_1045B774 = 0;
               i2 = orig::Scene_GetTableValue(90);
-              g_appMeshResA = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &i11, i2);
+              g_appMeshResA = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i11, i2);
               i3 = orig::Scene_GetTableValue(91);
-              g_appMeshResB = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &i12, i3);
+              g_appMeshResB = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i12, i3);
               i4 = *(uint32_t *)(g_pSceneState + 8);
               if ( *(char *)(g_pSceneState + 24) < 0 && (i4 == 2 || i4 == 3) || i4 != 0 )
                 orig::TargetMenu_Nop(1);
               else
                 orig::TargetMenu_Nop(0);
               i5 = orig::Scene_GetTableValue(0);
-              p12 = (int *)*orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &i13, i5);
+              p12 = (int *)*orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i13, i5);
               g_appMeshResC = (int)p12;
               if ( p12 != nullptr )
                 orig::CMoResource_AddRefChain(*p12);
@@ -512,12 +514,12 @@ XI_API char __thiscall App_InitScene(int self_, int arg2)
                 orig::CMoResource_AddRefChain(*(uint32_t *)g_appMeshResA);
               if ( g_appMeshResB != 0 )
                 orig::CMoResource_AddRefChain(*(uint32_t *)g_appMeshResB);
-              orig::Menu_ReloadResource((int)g_menuMng, i6, &p35, 0);
-              p13 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &i14, 39551);
+              orig::Menu_ReloadResource((int)g_menuMng, i6, &frame.p35, 0);
+              p13 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &frame.i14, 39551);
               g_appMeshRes_39551 = (int)p13;
               if ( p13 != nullptr )
                 orig::CMoResource_AddRefChain(*p13);
-              p14 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &i15, 39560);
+              p14 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &frame.i15, 39560);
               g_appMeshRes_39560 = (int)p14;
               if ( p14 != nullptr )
                 orig::CMoResource_AddRefChain(*p14);

@@ -30,8 +30,10 @@ XI_API void __thiscall DebugOverlay_Update(void * self_)
   uint32_t u1;
   uint32_t *p1;
   uint64_t u2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  (&u3)[2] = *reinterpret_cast<uint32_t  (*)[2]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u3[2]; };   // at 0x0
+  } frame;
   
   if (*(char *)((int)self_ + 4) != '\0') {
     if (*(int *)((int)self_ + 8) == 0) {
@@ -50,9 +52,9 @@ XI_API void __thiscall DebugOverlay_Update(void * self_)
       }
       u1 = 0;
       do {
-        u3[1] = 0xffffffff;
-        u3[0] = u1;
-        orig::DebugOverlay_SetEntry(self_,u3,0.0f,0.0f,0.0f,0.0f,&g_1034F6BC,0x80808080,u3);
+        frame.u3[1] = 0xffffffff;
+        frame.u3[0] = u1;
+        orig::DebugOverlay_SetEntry(self_,frame.u3,0.0f,0.0f,0.0f,0.0f,&g_1034F6BC,0x80808080,frame.u3);
         u1 = u1 + 1;
       } while ((int)u1 < 0x900);
       *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + 1;
@@ -160,46 +162,48 @@ XI_API void __stdcall Debug_DrawWorldText(uint32_t *arg1, const char *arg2, int 
   float *p5;
   int i10;
   int i11;
-  alignas(16) unsigned char xi_frame[0x94EC];  // address-taken locals at their original offsets
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  int &i14 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  uint8_t * &p6 = *reinterpret_cast<uint8_t * *>(xi_frame + 0x1C);
-  float (&f1)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x20);
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  int (&i16)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x30);
-  int (&i17)[16] = *reinterpret_cast<int (*)[16]>(xi_frame + 0x3C);
-  int (&i18)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x7C);
-  char &c2 = *reinterpret_cast<char *>(xi_frame + 0x88);
-  uint16_t (&u1)[2048] = *reinterpret_cast<uint16_t (*)[2048]>(xi_frame + 0xEC);
-  char &c3 = *reinterpret_cast<char *>(xi_frame + 0x10EC);
-  uint8_t (&u2)[32764] = *reinterpret_cast<uint8_t (*)[32764]>(xi_frame + 0x10F0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x94EC];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; int i12; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i13; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i14; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; uint8_t * p6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; float f1[3]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; int i15; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x30]; int i16[3]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_8[0x3C]; int i17[16]; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_9[0x7C]; int i18[3]; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_10[0x88]; char c2; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_11[0xEC]; uint16_t u1[2048]; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_12[0x10EC]; char c3; };   // at 0x10EC
+    struct __attribute__((packed)) { unsigned char pad_13[0x10F0]; uint8_t u2[32764]; };   // at 0x10F0
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)i17);
-  memset(f1, 0, sizeof(f1));
-  i15 = 1065353216;
+  orig::fn_10027990((Iostream_init *)frame.i17);
+  memset(frame.f1, 0, sizeof(frame.f1));
+  frame.i15 = 1065353216;
   if ( orig::ShapeMng_BindFontTexture(g_shapeMng, 0xFFFFFFFF, nullptr, nullptr) != 0 )
   {
-    orig::Mat4_SetIdentity(i17);
-    orig::Mat4_SetTranslation(i17, arg1);
-    orig::CDx_SetTransform(g_pCDx, 256, i17);
-    orig::Gfx_ProjectWorldToClip(f1, f1);
-    orig::Gfx_NdcToScreen(f1);
+    orig::Mat4_SetIdentity(frame.i17);
+    orig::Mat4_SetTranslation(frame.i17, arg1);
+    orig::CDx_SetTransform(g_pCDx, 256, frame.i17);
+    orig::Gfx_ProjectWorldToClip(frame.f1, frame.f1);
+    orig::Gfx_NdcToScreen(frame.f1);
     i1 = strlen(arg2);
-    i15 = 1065353216;
-    i13 = i1;
+    frame.i15 = 1065353216;
+    frame.i13 = i1;
     if ( i1 > 1024 )
     {
-      i13 = 1024;
+      frame.i13 = 1024;
       i1 = 1024;
     }
     i2 = -8;
     i3 = 0;
-    i14 = -8;
+    frame.i14 = -8;
     if ( i1 > 0 )
     {
-      p1 = u1;
-      p2 = &c3;
+      p1 = frame.u1;
+      p2 = &frame.c3;
       do
       {
         c1 = arg2[i3];
@@ -211,7 +215,7 @@ XI_API void __stdcall Debug_DrawWorldText(uint32_t *arg1, const char *arg2, int 
         else
         {
           orig::ShapeMng_GetFontGlyph(g_shapeMng, c1, (int)p2, p1, nullptr, nullptr);
-          i1 = i13;
+          i1 = frame.i13;
         }
         ++i3;
         p2 += 32;
@@ -220,26 +224,26 @@ XI_API void __stdcall Debug_DrawWorldText(uint32_t *arg1, const char *arg2, int 
       while ( i3 < i1 );
     }
     i4 = 0;
-    i12 = 0;
+    frame.i12 = 0;
     if ( i1 > 0 )
     {
-      p3 = (int *)u2;
-      p6 = u2;
+      p3 = (int *)frame.u2;
+      frame.p6 = frame.u2;
       do
       {
         if ( arg2[i4] == 10 )
         {
           i2 -= 8;
-          i12 = 0;
-          i14 = i2;
+          frame.i12 = 0;
+          frame.i14 = i2;
         }
         else
         {
-          i5 = (short)u1[2 * i4];
-          p4 = (float *)&c2;
-          i6 = (short)u1[2 * i4 + 1];
-          g_debugTextQuad_p0_x = (float)i12;
-          i7 = i12 + i5;
+          i5 = (short)frame.u1[2 * i4];
+          p4 = (float *)&frame.c2;
+          i6 = (short)frame.u1[2 * i4 + 1];
+          g_debugTextQuad_p0_x = (float)frame.i12;
+          i7 = frame.i12 + i5;
           g_debugTextQuad_p1_x = (float)i7;
           g_debugTextQuad_p2_x = g_debugTextQuad_p0_x;
           i6 /= 2;
@@ -249,13 +253,13 @@ XI_API void __stdcall Debug_DrawWorldText(uint32_t *arg1, const char *arg2, int 
           p5 = &g_debugTextQuad_p0_x;
           g_debugTextQuad_p0_y = (float)i8;
           g_debugTextQuad_p1_y = g_debugTextQuad_p0_y;
-          i12 = i7;
+          frame.i12 = i7;
           g_debugTextQuad_p2_y = (float)i9;
           g_debugTextQuad_p3_y = g_debugTextQuad_p2_y;
           do
           {
-            orig::Vec3_Scale((float *)i16, p5, 1.0);
-            orig::Vec3_Add_10026FA0(p4 - 3, f1, (float *)i16);
+            orig::Vec3_Scale((float *)frame.i16, p5, 1.0);
+            orig::Vec3_Add_10026FA0(p4 - 3, frame.f1, (float *)frame.i16);
             i10 = *(p3 - 1);
             i11 = *p3;
             *p4 = 1.0;
@@ -268,13 +272,13 @@ XI_API void __stdcall Debug_DrawWorldText(uint32_t *arg1, const char *arg2, int 
           }
           while ( (int)p5 < (int)aErrorSSD );
           (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-          orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i18, 28);
-          i2 = i14;
-          i1 = i13;
+          orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.i18, 28);
+          i2 = frame.i14;
+          i1 = frame.i13;
         }
         ++i4;
-        p3 = (int *)(p6 + 32);
-        p6 += 32;
+        p3 = (int *)(frame.p6 + 32);
+        frame.p6 += 32;
       }
       while ( i4 < i1 );
     }

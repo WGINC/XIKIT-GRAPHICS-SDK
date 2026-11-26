@@ -12,10 +12,12 @@ XI_API void __cdecl sqinSkinBuildBinary(bits32 arg1, int arg2, int arg3, int arg
   bits32 *p3;
   int i2;
   bits32 *p4;
-  char xi_frame[12] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i5; };   // at 0x8
+  } frame;
   
   i1 = arg4;
   if (arg3 != 2) {
@@ -27,33 +29,33 @@ XI_API void __cdecl sqinSkinBuildBinary(bits32 arg1, int arg2, int arg3, int arg
     orig::sqDebugPrintf_v1(str_____Error__invalid_clusterCount__103BC514,arg4);
     return;
   }
-  p1 = orig::SqScriptRead_ReadBlock(&i3,4,1,p1,i1);
-  if (i3 < 1) {
-    orig::sqDebugPrintf_v1(str_____Error__invalid_idMax__d__in_s_103BC4DC,i3);
+  p1 = orig::SqScriptRead_ReadBlock(&frame.i3,4,1,p1,i1);
+  if (frame.i3 < 1) {
+    orig::sqDebugPrintf_v1(str_____Error__invalid_idMax__d__in_s_103BC4DC,frame.i3);
     return;
   }
   orig::SqinSkin_ResizeItemArray(arg1,arg4);
   arg3 = 0;
   if (0 < arg4) {
-    while ((p1 = orig::SqScriptRead_ReadBlock(&i4,4,2,p1,i1), -1 < i4 &&
-           (0 < i5))) {
-      p2 = orig::game_10275D80(1,i5 << 2,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x5b);
+    while ((p1 = orig::SqScriptRead_ReadBlock(&frame.i4,4,2,p1,i1), -1 < frame.i4 &&
+           (0 < frame.i5))) {
+      p2 = orig::game_10275D80(1,frame.i5 << 2,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x5b);
       if (p2 == (bits32 *)0x0) {
-        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_ids_cause_103BC478,arg3,i5);
+        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_ids_cause_103BC478,arg3,frame.i5);
         return;
       }
-      p1 = orig::SqScriptRead_ReadBlock(p2,4,i5,p1,i1);
-      p3 = orig::game_10275D80(1,i5 * 4,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x69);
+      p1 = orig::SqScriptRead_ReadBlock(p2,4,frame.i5,p1,i1);
+      p3 = orig::game_10275D80(1,frame.i5 * 4,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x69);
       if (p3 == (bits32 *)0x0) {
-        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_weights_c_103BC440,arg3,i5);
+        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_weights_c_103BC440,arg3,frame.i5);
         return;
       }
-      p1 = orig::SqScriptRead_ReadBlock(p3,4,i5,p1,i1);
-      i2 = orig::sqskSkeleton_GetNodeByIndex(arg1,i4);
+      p1 = orig::SqScriptRead_ReadBlock(p3,4,frame.i5,p1,i1);
+      i2 = orig::sqskSkeleton_GetNodeByIndex(arg1,frame.i4);
       if (i2 != 0) {
         p4 = orig::sqinCluster_Create();
         p4[0x27] = i2;
-        p4[0x14] = i5;
+        p4[0x14] = frame.i5;
         p4[0xc] = p2;
         p4[0xe] = p3;
         p4[0xf] = 0;
@@ -65,7 +67,7 @@ XI_API void __cdecl sqinSkinBuildBinary(bits32 arg1, int arg2, int arg3, int arg
         return;
       }
     }
-    orig::sqDebugPrintf_v1(str_____Error__cluster__d___bad_vals_103BC414,arg3,i4,i5);
+    orig::sqDebugPrintf_v1(str_____Error__cluster__d___bad_vals_103BC414,arg3,frame.i4,frame.i5);
   }
   return;
 }

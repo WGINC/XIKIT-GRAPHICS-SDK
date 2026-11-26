@@ -100,7 +100,7 @@ XI_API int __cdecl sqgxTextureClutAdd(int arg1, int arg2, int arg3)
   signed int i;
   int i1;
   uint8_t *p1;
-  uint8_t buf1[1024];
+  uint8_t entries[1024];
   for ( i = 1; i < 256; ++i )
   {
     if ( g_sqgxPaletteUsed[i] == 0 )
@@ -111,18 +111,18 @@ XI_API int __cdecl sqgxTextureClutAdd(int arg1, int arg2, int arg3)
   p1 = (uint8_t *)(arg3 + 2);
   do
   {
-    buf1[4 * i1] = *(p1 - 2);
-    buf1[4 * i1 + 1] = *(p1 - 1);
-    buf1[4 * i1 + 2] = *p1;
+    entries[4 * i1] = *(p1 - 2);
+    entries[4 * i1 + 1] = *(p1 - 1);
+    entries[4 * i1 + 2] = *p1;
     if ( arg2 == 3 )
-      buf1[4 * i1 + 3] = 0;
+      entries[4 * i1 + 3] = 0;
     else
-      buf1[4 * i1 + 3] = p1[1];
+      entries[4 * i1 + 3] = p1[1];
     ++i1;
     p1 += arg2;
   }
   while ( i1 < 256 );
-  g_pDancerDevice->SetPaletteEntries(i, buf1);
+  g_pDancerDevice->SetPaletteEntries(i, entries);
   return i;
 }
 
@@ -203,13 +203,13 @@ XI_API void __cdecl sqgxTextureClamp(bits32 arg1)
 
 // FUNCTION: FFXIMAIN 0x10281D60
 // GATE: PASS -- 100 trials, 100 returned normally, 79 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqgxTextureClut(int arg1)
+XI_API int __cdecl sqgxTextureClut(int PaletteNumber)
 {
   int result;
-  result = arg1;
-  if ( arg1 >= 0 )
-    return g_pDancerDevice->SetCurrentTexturePalette(arg1);
-  if ( arg1 == -1 )
+  result = PaletteNumber;
+  if ( PaletteNumber >= 0 )
+    return g_pDancerDevice->SetCurrentTexturePalette(PaletteNumber);
+  if ( PaletteNumber == -1 )
   {
     result = g_pSqgxContext[g_pSqgxContext[710] + 556];
     if ( g_sqgxTex_kind[10 * result] == 1 )
@@ -224,30 +224,30 @@ XI_API int __cdecl sqgxTextureUpdate(void)
 {
   int result;
   int *p1;
-  unsigned int u1;
+  unsigned int Stage;
   int i1;
   int i2;
   result = g_sqgxRenderStateDirty;
   if ( g_sqgxRenderStateDirty != 0 )
   {
     p1 = g_pSqgxContext;
-    u1 = 0;
+    Stage = 0;
     if ( g_pSqgxContext[710] + 1 > 0 )
     {
       while ( 1 )
       {
-        i1 = p1[u1 + 556];
+        i1 = p1[Stage + 556];
         if ( i1 >= 0 && (p1[652] & 4) != 0 )
           break;
-        g_pDancerDevice->SetTexture(u1, nullptr);
-        g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+        g_pDancerDevice->SetTexture(Stage, nullptr);
+        g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_DISABLE);
 L1:
         p1 = g_pSqgxContext;
-        if ( (int)++u1 >= g_pSqgxContext[710] + 1 )
+        if ( (int)++Stage >= g_pSqgxContext[710] + 1 )
           goto L2;
       }
-      g_pDancerDevice->SetTexture(u1, (IDirect3DBaseTexture8 *)(&g_sqgxTex_texture)[10 * i1]);
-      if ( u1 == 0 )
+      g_pDancerDevice->SetTexture(Stage, (IDirect3DBaseTexture8 *)(&g_sqgxTex_texture)[10 * i1]);
+      if ( Stage == 0 )
       {
         i2 = g_pSqgxContext[560];
         if ( i2 != 1 )
@@ -278,16 +278,16 @@ L1:
         g_pDancerDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
       }
 L3:
-      if ( g_pSqgxContext[u1 + 562] != 0 )
-        g_pDancerDevice->SetTextureStageState(u1, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
+      if ( g_pSqgxContext[Stage + 562] != 0 )
+        g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
       else
-        g_pDancerDevice->SetTextureStageState(u1, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-      if ( g_pSqgxContext[u1 + 564] != 0 )
-        g_pDancerDevice->SetTextureStageState(u1, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
+        g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
+      if ( g_pSqgxContext[Stage + 564] != 0 )
+        g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
       else
-        g_pDancerDevice->SetTextureStageState(u1, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-      g_pDancerDevice->SetTextureStageState(u1, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-      g_pDancerDevice->SetTextureStageState(u1, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+        g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
+      g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+      g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
       goto L1;
     }
 L2:
@@ -347,7 +347,7 @@ XI_API int * __cdecl sqgxTextureDrawZ(IDirect3DSurface8 *arg1)
   IDirect3DSurface8 *p1;
   int *p2;
   int i1;
-  IDirect3DSurface8 *p3;
+  IDirect3DSurface8 *pRenderTarget;
   int *result;
   p1 = arg1;
   g_pSqgxContext[552] = (int)arg1;
@@ -355,21 +355,21 @@ XI_API int * __cdecl sqgxTextureDrawZ(IDirect3DSurface8 *arg1)
   i1 = g_pSqgxContext[551];
   if ( i1 == g_pSqgxContext[554] )
   {
-    p3 = (IDirect3DSurface8 *)g_pSqgxContext[575];
-    arg1 = p3;
+    pRenderTarget = (IDirect3DSurface8 *)g_pSqgxContext[575];
+    arg1 = pRenderTarget;
   }
   else
   {
     (&g_sqgxTex_texture)[10 * i1]->lpVtbl->GetSurfaceLevel((&g_sqgxTex_texture)[10 * i1], 0, &arg1);
-    p3 = arg1;
+    pRenderTarget = arg1;
     p2 = g_pSqgxContext;
   }
   if ( p1 != (IDirect3DSurface8 *)p2[555] )
     return (int *)g_pDancerDevice->lpVtbl->SetRenderTarget(
                     g_pDancerDevice,
-                    p3,
+                    pRenderTarget,
                     (IDirect3DSurface8 *)g_sqgxTex_surface[10 * (uint32_t)p1]);
-  g_pDancerDevice->SetRenderTarget(p3, (IDirect3DSurface8 *)p2[576]);
+  g_pDancerDevice->SetRenderTarget(pRenderTarget, (IDirect3DSurface8 *)p2[576]);
   result = g_pSqgxContext;
   if ( g_pSqgxContext[551] != g_pSqgxContext[554] )
     return (int *)arg1->Release();
@@ -381,7 +381,7 @@ XI_API int * __cdecl sqgxTextureDrawZ(IDirect3DSurface8 *arg1)
 XI_API int * __cdecl sqgxTextureDraw(int arg1, char arg2)
 {
   int i1;
-  IDirect3DSurface8 *p1;
+  IDirect3DSurface8 *pNewZStencil;
   float f1;
   float f2;
   float f3;
@@ -389,9 +389,9 @@ XI_API int * __cdecl sqgxTextureDraw(int arg1, char arg2)
   g_pSqgxContext[551] = arg1;
   i1 = g_pSqgxContext[552];
   if ( i1 == g_pSqgxContext[555] )
-    p1 = (IDirect3DSurface8 *)g_pSqgxContext[576];
+    pNewZStencil = (IDirect3DSurface8 *)g_pSqgxContext[576];
   else
-    p1 = (IDirect3DSurface8 *)g_sqgxTex_surface[10 * i1];
+    pNewZStencil = (IDirect3DSurface8 *)g_sqgxTex_surface[10 * i1];
   if ( arg2 != 0 )
   {
     f3 = (double)g_pSqgxContext[182] / (double)g_sqgxTex_height[10 * arg1];
@@ -404,7 +404,7 @@ XI_API int * __cdecl sqgxTextureDraw(int arg1, char arg2)
   }
   if ( arg1 == g_pSqgxContext[554] )
   {
-    g_pDancerDevice->SetRenderTarget((IDirect3DSurface8 *)g_pSqgxContext[575], p1);
+    g_pDancerDevice->SetRenderTarget((IDirect3DSurface8 *)g_pSqgxContext[575], pNewZStencil);
   }
   else
   {
@@ -413,7 +413,7 @@ XI_API int * __cdecl sqgxTextureDraw(int arg1, char arg2)
         (&g_sqgxTex_texture)[10 * arg1],
         0,
         (IDirect3DSurface8 **)&g_sqgxTex_surface[10 * arg1]);
-    g_pDancerDevice->SetRenderTarget((IDirect3DSurface8 *)g_sqgxTex_surface[10 * arg1], p1);
+    g_pDancerDevice->SetRenderTarget((IDirect3DSurface8 *)g_sqgxTex_surface[10 * arg1], pNewZStencil);
   }
   f4 = (float)g_sqgxTex_height[10 * arg1];
   f2 = (float)g_sqgxTex_width[10 * arg1];

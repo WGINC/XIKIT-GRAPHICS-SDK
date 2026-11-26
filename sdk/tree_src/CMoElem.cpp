@@ -154,18 +154,18 @@ char CMoElem::CMoElemFamily_SharedCleanup()
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   int i1;
-  int *p1;
+  int *listAResourceHandle;
   int i2;
   uint32_t **p2;
   uint32_t *p3;
   int i3;
-  int *p4;
+  int *backrefResourceHandle;
   int i4;
   *self = (int)&CMoElem_vtbl_ambiguous3;
   i1 = --g_countdown_1047BC6C;
-  p1 = (int *)this->listAResourceHandle;
-  if ( p1 != nullptr )
-    i2 = *p1;
+  listAResourceHandle = (int *)this->listAResourceHandle;
+  if ( listAResourceHandle != nullptr )
+    i2 = *listAResourceHandle;
   else
     i2 = 0;
   p2 = (uint32_t **)this->listBResourceHandle;
@@ -184,11 +184,11 @@ char CMoElem::CMoElemFamily_SharedCleanup()
     orig::CMoGeneratorClone_UnlinkElemListA((uint32_t *)i2, (int)self);
     orig::CMoResource_ReleaseChain(i2, i3);
   }
-  p4 = (int *)this->backrefResourceHandle;
-  if ( p4 != nullptr )
+  backrefResourceHandle = (int *)this->backrefResourceHandle;
+  if ( backrefResourceHandle != nullptr )
   {
-    i4 = *p4;
-    orig::CMoResource_ReleaseChain(*p4, i1);
+    i4 = *backrefResourceHandle;
+    orig::CMoResource_ReleaseChain(*backrefResourceHandle, i1);
     *(uint32_t *)(i4 + 248) = 0;
     this->backrefResourceHandle = 0;
     if ( (*(uint16_t *)(i4 + 24) & 0x7FFF) == 0 )
@@ -416,8 +416,10 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YmElem_BuildDrawMatrixAndTest
   uint32_t u1;
   uint32_t u2;
   int *p1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&u3)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u3[16]; };   // at 0x0
+  } frame;
   
   p1 = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x179))));
   if (((*(char *)((int)self_ + 0x179) == '\0') &&
@@ -443,7 +445,7 @@ XI_API bits32 __attribute__((stdcall, regparm(3))) YmElem_BuildDrawMatrixAndTest
         u2 = *(uint32_t *)(g_pResourceMng + 0xdc0);
         orig::RegisterWithProcessor_v1(self_);
         ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x8c))
-                  ))((void *)(g_pProcessor_as_v1),u3,&Fn10045920_static_BC10,1,(int)self_ + 0xa0,g_pResourceMng + 0xb10,u2,
+                  ))((void *)(g_pProcessor_as_v1),frame.u3,&Fn10045920_static_BC10,1,(int)self_ + 0xa0,g_pResourceMng + 0xb10,u2,
                    u1);
         p1 = g_pProcessor_as_v1;
         if (g_pProcessor_as_v1[0x2a5] == 0) {
@@ -527,20 +529,22 @@ XI_API int __thiscall YmElem_SetupDevice(void *self_, int arg2)
   int *p12;
   int i10;
   int result;
-  alignas(16) unsigned char xi_frame[0x588];  // address-taken locals at their original offsets
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0xB4);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0xB8);
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0xBC);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0xC0);
-  char &c2 = *reinterpret_cast<char *>(xi_frame + 0xD7);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0xD8);
-  int &i12 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  uint8_t (&u1)[24] = *reinterpret_cast<uint8_t (*)[24]>(xi_frame + 0x11C);
-  float (&f7)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x144);
-  int &i13 = *reinterpret_cast<int *>(xi_frame + 0x184);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x588];
+    struct __attribute__((packed)) { unsigned char pad_1[0xB4]; float f3; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_2[0xB8]; float f4; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_3[0xBC]; float f5; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_4[0xC0]; float f6; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_5[0xD7]; char c2; };   // at 0xD7
+    struct __attribute__((packed)) { unsigned char pad_6[0xD8]; int Value; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_7[0xDC]; int i12; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_8[0x11C]; uint8_t u1[24]; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_9[0x144]; float light[16]; };   // at 0x144
+    struct __attribute__((packed)) { unsigned char pad_10[0x184]; int i13; };   // at 0x184
+  } frame;
 
   p1 = (int **)self_;
-  i11 = (int)self_;
+  frame.Value = (int)self_;
   if ( (uint16_t)arg2 == 0xFFFF )
     arg2 = (int)(((uint32_t)(arg2) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(*((uint16_t *)self_ + 182)) << 0));
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
@@ -548,7 +552,7 @@ XI_API int __thiscall YmElem_SetupDevice(void *self_, int arg2)
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
   orig::CMoDX_SetViewMatrix((uint32_t ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-  c2 = 0;
+  frame.c2 = 0;
   switch ( (char)arg2 )
   {
     case 0:
@@ -578,7 +582,7 @@ L1:
     case 72:
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-      c2 = 1;
+      frame.c2 = 1;
       break;
     case 73:
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -627,7 +631,7 @@ L3:
       i2 = (g_pProcessor->ScratchMatrixStackTop);
       p4 = ((float * *)((char *)g_pProcessor + 0xA10))[i2];
       (g_pProcessor->ScratchMatrixStackTop) = i2 + 1;
-      memcpy(p4, (const void *)orig::CMoElem_GetActiveField0A4((int **)i11), 0x40u);
+      memcpy(p4, (const void *)orig::CMoElem_GetActiveField0A4((int **)frame.Value), 0x40u);
       (*((void (__thiscall **)(CMoProcessor *, float *, float *, int))(*(void * *)&g_pProcessor->vftable) + 30))(
         g_pProcessor,
         p2,
@@ -643,7 +647,7 @@ L3:
       i3 = (g_pProcessor->ScratchMatrixStackTop) - 1;
       (g_pProcessor->ScratchMatrixStackTop) = i3;
       ((float * *)((char *)p5 + 0xA10))[i3] = p4;
-      p1 = (int **)i11;
+      p1 = (int **)frame.Value;
     }
     if ( (((unsigned int)p1[67] >> 6) & 7) != 0 && (((unsigned int)p1[67] >> 6) & 7) <= 2 && ((uint8_t)p1[67] & 1) != 0 )
     {
@@ -670,21 +674,21 @@ L3:
       i5 = (g_pProcessor->ScratchMatrixStackTop) - 1;
       (g_pProcessor->ScratchMatrixStackTop) = i5;
       ((float * *)((char *)p7 + 0xA10))[i5] = p6;
-      p1 = (int **)i11;
+      p1 = (int **)frame.Value;
     }
     p8 = p1[63];
     if ( *((uint32_t *)g_pZoneMap + 58663) != 0 )
     {
       if ( p8 != nullptr && *p8 != 0 )
-        orig::XiZone_GetDirLight(g_pXiZone, &i12, 0, *(uint32_t *)(*p8 + 196));
+        orig::XiZone_GetDirLight(g_pXiZone, &frame.i12, 0, *(uint32_t *)(*p8 + 196));
       else
-        orig::XiZone_GetDirLight(g_pXiZone, &i12, 0, 0);
+        orig::XiZone_GetDirLight(g_pXiZone, &frame.i12, 0, 0);
       (*((void (__thiscall **)(CMoProcessor *, uint8_t *, float *, uint8_t *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
-        u1,
+        frame.u1,
         p2,
-        u1);
-      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 0, (float *)&i12);
+        frame.u1);
+      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 0, (float *)&frame.i12);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->LightEnable(0, 1);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->LightEnable(1, 0);
     }
@@ -697,25 +701,25 @@ L3:
           i6 = *p9;
         else
           i6 = 0;
-        orig::XiZone_GetDirLightsForArea(g_pXiZone, &i12, f7, *(uint32_t *)(i6 + 196));
+        orig::XiZone_GetDirLightsForArea(g_pXiZone, &frame.i12, frame.light, *(uint32_t *)(i6 + 196));
       }
       else
       {
-        orig::XiZone_GetDirLights((int)g_pXiZone, &i12, f7);
+        orig::XiZone_GetDirLights((int)g_pXiZone, &frame.i12, frame.light);
       }
       (*((void (__thiscall **)(CMoProcessor *, uint8_t *, float *, uint8_t *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
-        u1,
+        frame.u1,
         p2,
-        u1);
+        frame.u1);
       (*((void (__thiscall **)(CMoProcessor *, int *, float *, int *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
-        &i13,
+        &frame.i13,
         p2,
-        &i13);
-      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 0, (float *)&i12);
+        &frame.i13);
+      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 0, (float *)&frame.i12);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->LightEnable(0, 1);
-      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 1, f7);
+      orig::CDx_SetLight(*(CDx **)(g_pResourceMng + 3528), 1, frame.light);
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->LightEnable(1, 1);
     }
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->LightEnable(2, 0);
@@ -736,16 +740,16 @@ L3:
   i7 = *p10;
   if ( *((uint8_t *)g_pZoneMap + 234904) != 0 )
   {
-    (*(void (__stdcall **)(int *, int, float *))(i7 + 152))(p10, 3, f7);
-    memcpy((char *)g_pZoneMap + 234832, f7, 64);
+    (*(void (__stdcall **)(int *, int, float *))(i7 + 152))(p10, 3, frame.light);
+    memcpy((char *)g_pZoneMap + 234832, frame.light, 64);
     f1 = *((float *)g_pZoneMap + 58725);
-    f6 = *((float *)g_pCamera + 184) + f1;
-    f5 = *((float *)g_pCamera + 183) + f1;
-    f4 = 1.0 / (*((float *)g_pCamera + 186) * *((float *)g_pCamera + 188));
+    frame.f6 = *((float *)g_pCamera + 184) + f1;
+    frame.f5 = *((float *)g_pCamera + 183) + f1;
+    frame.f4 = 1.0 / (*((float *)g_pCamera + 186) * *((float *)g_pCamera + 188));
     f2 = atan2(192.0, *((float *)g_pCamera + 189));
-    f3 = f2 + f2;
-    orig::D3DXMatrixPerspectiveFovLH_static((int)&i12, f3, f4, f5, f6);
-    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTransform(D3DTS_PROJECTION, (void *)(&i12));
+    frame.f3 = f2 + f2;
+    orig::D3DXMatrixPerspectiveFovLH_static((int)&frame.i12, frame.f3, frame.f4, frame.f5, frame.f6);
+    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTransform(D3DTS_PROJECTION, (void *)(&frame.i12));
   }
   else
   {
@@ -790,17 +794,17 @@ L3:
       else
         (*(void (__stdcall **)(int, int, uint32_t))(*(uint32_t *)i9 + 200))(i9, 48, 0);
     }
-    if ( c2 != 0 )
+    if ( frame.c2 != 0 )
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_FOGCOLOR, 0);
   }
   if ( ((unsigned int)p1[67] & 0x2000000) == 0 || (*((uint8_t *)p1 + 270) & 1) != 0 )
   {
     p12 = p1[63];
     if ( p12 != nullptr && *p12 != 0 )
-      orig::XiZone_GetAmbient((char *)g_pXiZone, &i11, 0, *(uint32_t *)(*p12 + 196));
+      orig::XiZone_GetAmbient((char *)g_pXiZone, &frame.Value, 0, *(uint32_t *)(*p12 + 196));
     else
-      orig::XiZone_GetAmbient((char *)g_pXiZone, &i11, 0, 0);
-    (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, i11);
+      orig::XiZone_GetAmbient((char *)g_pXiZone, &frame.Value, 0, 0);
+    (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, frame.Value);
     (g_pCDx->pDevice)->lpVtbl->SetMaterial((g_pCDx->pDevice), &Fn100467E0_material);
   }
   if ( (Fn100467E0_staticGuards & 1) == 0 )

@@ -178,19 +178,21 @@ XI_API void __thiscall MyRoom_Draw(void * self_, int * arg2)
   char c2;
   long double st0;
   int64_t i1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  void ** &p2 = *reinterpret_cast<void ** *>(xi_frame + 0);
-  int ** &p3 = *reinterpret_cast<int ** *>(xi_frame + 4);
-  void * &p4 = *reinterpret_cast<void * *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { void ** p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int ** p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; void * p4; };   // at 0xC
+  } frame;
   
-  p2 = &p4;
+  frame.p2 = &frame.p4;
   if (arg2 != (int *)0x0) {
-    p3 = &arg2;
-    p4 = self_;
+    frame.p3 = &arg2;
+    frame.p4 = self_;
     p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x1bc))))((void *)(arg2));
-    orig::Gfx_ProjectWorldToScreen(p1,(uint16_t *)p2,(uint16_t *)p3);
-    if ((short)p4 < 0) {
-      p4 = (void *)0x64;
+    orig::Gfx_ProjectWorldToScreen(p1,(uint16_t *)frame.p2,(uint16_t *)frame.p3);
+    if ((short)frame.p4 < 0) {
+      frame.p4 = (void *)0x64;
     }
     if ((short)arg2 < 0) {
       arg2 = (int *)0x64;
@@ -212,7 +214,7 @@ XI_API void __thiscall MyRoom_Draw(void * self_, int * arg2)
       *(char *)((int)self_ + 0x859) = c1;
     }
     orig::game_1011FB60(*(void **)((int)self_ + *(char *)((int)self_ + 0x859) * 4 + 0x818),
-                 (int)(short)p4,(int)(short)arg2,0x80808080,0,0);
+                 (int)(short)frame.p4,(int)(short)arg2,0x80808080,0,0);
   }
   return;
 }

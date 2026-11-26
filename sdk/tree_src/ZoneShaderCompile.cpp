@@ -9,20 +9,22 @@ XI_API int __stdcall Gfx_CompileVertexShader(int arg1, int arg2)
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
   int i2;
-  alignas(16) unsigned char xi_frame[0x61C];  // address-taken locals at their original offsets
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  char (&Buffer)[512] = *reinterpret_cast<char (*)[512]>(xi_frame + 0x1C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x61C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; char Buffer[512]; };   // at 0x1C
+  } frame;
 
-  i1 = orig::fn_102DA79B(aCTestVsh, 0, nullptr, (struct ID3DXBuffer **)&i3, nullptr);
-  orig::fn_102DAA71(i1, Buffer, 0x200u);
+  i1 = orig::fn_102DA79B(aCTestVsh, 0, nullptr, (struct ID3DXBuffer **)&frame.i3, nullptr);
+  orig::fn_102DAA71(i1, frame.Buffer, 0x200u);
   if ( i1 >= 0 )
   {
     pDevice = (g_pCDx->pDevice);
     lpVtbl = pDevice->lpVtbl;
-    i2 = (*(int (__stdcall **)(int))(*(uint32_t *)i3 + 12))(i3);
+    i2 = (*(int (__stdcall **)(int))(*(uint32_t *)frame.i3 + 12))(frame.i3);
     i1 = lpVtbl->CreateVertexShader(pDevice, (void *)arg1, (void *)i2, (void *)arg2, 0);
-    orig::fn_102DAA71(i1, Buffer, 0x200u);
-    (*(void (__stdcall **)(int))(*(uint32_t *)i3 + 8))(i3);
+    orig::fn_102DAA71(i1, frame.Buffer, 0x200u);
+    (*(void (__stdcall **)(int))(*(uint32_t *)frame.i3 + 8))(frame.i3);
   }
   return i1;
 }

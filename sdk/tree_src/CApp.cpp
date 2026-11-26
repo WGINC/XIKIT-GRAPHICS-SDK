@@ -10,9 +10,11 @@ char CApp::RunMainLoop()
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   char *p1;
   char *p2;
-  alignas(16) unsigned char xi_frame[0x424];  // address-taken locals at their original offsets
-  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x13);
-  struct tagMSG &Msg = *reinterpret_cast<struct tagMSG *>(xi_frame + 0x14);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x424];
+    struct __attribute__((packed)) { unsigned char pad_1[0x13]; char c1; };   // at 0x13
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; struct tagMSG Msg; };   // at 0x14
+  } frame;
 
   orig::App_ForceForegroundWindow(*((HWND *)self + 6));
   if ( orig::CDx_Initialize(g_pCDx) != 0 && orig::App_CreateInputSystem(*((HINSTANCE *)self + 5)) != 0 )
@@ -28,11 +30,11 @@ char CApp::RunMainLoop()
         orig::App_SetSeqStep(p2, 0);
         do
         {
-          c1 = 0;
-          if ( orig::App_InitScene((int)g_pCamera, (int)&c1) == 0 )
+          frame.c1 = 0;
+          if ( orig::App_InitScene((int)g_pCamera, (int)&frame.c1) == 0 )
             goto L1;
         }
-        while ( c1 != 1 );
+        while ( frame.c1 != 1 );
         this->mainLoopActive = 1;
 L2:
         orig::App_ForceForegroundWindow(*((HWND *)self + 6));
@@ -42,28 +44,28 @@ L2:
         {
           do
           {
-            if ( !PeekMessageA(&Msg, nullptr, 0, 0, 1u) || Msg.message == 1025 )
+            if ( !PeekMessageA(&frame.Msg, nullptr, 0, 0, 1u) || frame.Msg.message == 1025 )
             {
-              if ( Msg.message == 18 )
+              if ( frame.Msg.message == 18 )
                 goto L1;
               goto L2;
             }
-            if ( Msg.message == 18 )
+            if ( frame.Msg.message == 18 )
               goto L1;
           }
-          while ( Msg.message == 641 || Msg.message == 28 );
-          if ( Msg.message == 261 )
+          while ( frame.Msg.message == 641 || frame.Msg.message == 28 );
+          if ( frame.Msg.message == 261 )
           {
-            if ( Msg.wParam == 44 )
+            if ( frame.Msg.wParam == 44 )
               goto L3;
 L4:
-            orig::App_PreTranslateInputMessage((int)Msg.hwnd, Msg.message, Msg.wParam, Msg.lParam);
-            TranslateMessage(&Msg);
-            DispatchMessageA(&Msg);
+            orig::App_PreTranslateInputMessage((int)frame.Msg.hwnd, frame.Msg.message, frame.Msg.wParam, frame.Msg.lParam);
+            TranslateMessage(&frame.Msg);
+            DispatchMessageA(&frame.Msg);
           }
           else
           {
-            if ( Msg.message != 257 || Msg.wParam != 44 )
+            if ( frame.Msg.message != 257 || frame.Msg.wParam != 44 )
               goto L4;
 L3:
             orig::CApp_CopyTextToClipboard((HWND *)self, &Read);

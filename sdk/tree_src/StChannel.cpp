@@ -122,15 +122,17 @@ XI_API bits32 __cdecl StChannel_SetValue9C(uint8_t * arg1, float arg2)
 {
   int i1;
   uint8_t *p1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+  } frame;
   
   p1 = arg1;
   if ((*arg1 & 1) != 0) {
-    orig::Mdl_GetEntryTable(&i2,(int *)&arg1);
+    orig::Mdl_GetEntryTable(&frame.i2,(int *)&arg1);
     i1 = *(int *)(p1 + 0xc);
     if ((-1 < i1) && (i1 < (int)arg1)) {
-      *(float *)(i1 * 0xc0 + 0x9c + i2) = (float)arg2;
+      *(float *)(i1 * 0xc0 + 0x9c + frame.i2) = (float)arg2;
     }
   }
   return 0;

@@ -20,39 +20,41 @@ XI_API bits32 __stdcall MemHeapDebug_ApplyFourTables(bits32 arg1)
 XI_API int __stdcall Mem_DrawHeapUsageBar(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
   uint32_t *p1;
-  alignas(16) unsigned char xi_frame[0x4F4];  // address-taken locals at their original offsets
-  int (&i1)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0xA4);
-  unsigned int &u1 = *reinterpret_cast<unsigned int *>(xi_frame + 0xB4);
-  float (&f1)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xB8);
-  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0xC8);
-  uint32_t (&u3)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0xCC);
-  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0xDC);
-  float (&f2)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xE0);
-  unsigned int &u5 = *reinterpret_cast<unsigned int *>(xi_frame + 0xF0);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4F4];
+    struct __attribute__((packed)) { unsigned char pad_1[0xA4]; int i1[4]; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_2[0xB4]; unsigned int u1; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_3[0xB8]; float f1[4]; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC8]; unsigned int u2; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_5[0xCC]; uint32_t u3[4]; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_6[0xDC]; unsigned int u4; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_7[0xE0]; float f2[4]; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_8[0xF0]; unsigned int u5; };   // at 0xF0
+  } frame;
   float a2a;
   float a4a;
   float a5a;
-  u1 = 0x80000000;
-  u2 = 0x80000000;
-  u4 = 0x80000000;
-  u5 = 0x80000000;
+  frame.u1 = 0x80000000;
+  frame.u2 = 0x80000000;
+  frame.u4 = 0x80000000;
+  frame.u5 = 0x80000000;
   p1 = (uint32_t *)arg1;
-  i1[1] = arg4;
-  (*(uint32_t *)&(f1[1])) = arg4;
-  (*(uint32_t *)&(f2[1])) = arg5;
-  i1[0] = 0;
-  i1[2] = 0;
-  i1[3] = 1065353216;
-  f1[0] = 0.0;
-  f1[2] = 0.0;
-  f1[3] = 1.0;
-  u3[0] = 0;
-  u3[2] = 0;
-  u3[3] = 1065353216;
-  f2[0] = 0.0;
-  f2[2] = 0.0;
-  f2[3] = 1.0;
-  u3[1] = arg5;
+  frame.i1[1] = arg4;
+  (*(uint32_t *)&(frame.f1[1])) = arg4;
+  (*(uint32_t *)&(frame.f2[1])) = arg5;
+  frame.i1[0] = 0;
+  frame.i1[2] = 0;
+  frame.i1[3] = 1065353216;
+  frame.f1[0] = 0.0;
+  frame.f1[2] = 0.0;
+  frame.f1[3] = 1.0;
+  frame.u3[0] = 0;
+  frame.u3[2] = 0;
+  frame.u3[3] = 1065353216;
+  frame.f2[0] = 0.0;
+  frame.f2[2] = 0.0;
+  frame.f2[3] = 1.0;
+  frame.u3[1] = arg5;
   a5a = (float)(unsigned int)(arg2 - arg1);
   a4a = 0.0;
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
@@ -70,28 +72,28 @@ XI_API int __stdcall Mem_DrawHeapUsageBar(int arg1, int arg2, int arg3, int arg4
   {
     do
     {
-      orig::Vec4_Copy(i1, f1);
-      orig::Vec4_Copy(u3, f2);
+      orig::Vec4_Copy(frame.i1, frame.f1);
+      orig::Vec4_Copy(frame.u3, frame.f2);
       if ( p1[1] == 1 )
       {
-        u1 = 1082130432;
-        u2 = 1082130432;
-        u4 = 1082130432;
-        u5 = 1082130432;
+        frame.u1 = 1082130432;
+        frame.u2 = 1082130432;
+        frame.u4 = 1082130432;
+        frame.u5 = 1082130432;
       }
       else
       {
-        u1 = 1073741952;
-        u2 = 1073741952;
-        u4 = 1073741952;
-        u5 = 1073741952;
+        frame.u1 = 1073741952;
+        frame.u2 = 1073741952;
+        frame.u4 = 1073741952;
+        frame.u5 = 1073741952;
       }
       a2a = 1.0 / a5a;
       a4a = (double)orig::MemBlock_GetSize(p1) * a2a * 512.0 + a4a;
-      f2[0] = a4a;
-      f1[0] = a4a;
+      frame.f2[0] = a4a;
+      frame.f1[0] = a4a;
       (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 68u);
-      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i1, 20);
+      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.i1, 20);
       p1 = (uint32_t *)p1[2];
     }
     while ( p1 != nullptr );

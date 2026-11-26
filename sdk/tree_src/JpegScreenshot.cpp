@@ -121,16 +121,18 @@ XI_API bits32 __cdecl JpegScreenshot_TakeScreenshot(int arg1)
   uint32_t u1;
   uint32_t *p1;
   uint32_t u2;
-  char xi_frame[512] __attribute__((aligned(4)));
-  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 0);
-  uint8_t  (&u3)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 256);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[512];
+    struct __attribute__((packed)) { char val1[256]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x100]; uint8_t u3[256]; };   // at 0x100
+  } frame;
   
-  val1[0] = '\0';
+  frame.val1[0] = '\0';
   u1 = orig::game_100DBE10();
   p1 = (uint32_t *)orig::YkCommon_TimeToTmWrap28Years(u1);
   u1 = 0;
   if (p1 != (uint32_t *)0x0) {
-    orig::_sprintf_v1(val1,str__c_c_c_02d_02d_02d_02d_02d_02d_c_1037E8B8,
+    orig::_sprintf_v1(frame.val1,str__c_c_c_02d_02d_02d_02d_02d_02d_c_1037E8B8,
                  (uint32_t)*(uint8_t *)(g_104DFD98 + 0x3c3a4),(uint32_t)*(uint8_t *)(g_104DFD98 + 0x3c3a5),
                  (uint32_t)*(uint8_t *)(g_104DFD98 + 0x3c3a6),(p1[5] + 0x76c) % 100,p1[4] + 1,
                  p1[3],p1[2],p1[1],*p1,(int)g_1066317A % 10 + 0x61);
@@ -146,16 +148,16 @@ XI_API bits32 __cdecl JpegScreenshot_TakeScreenshot(int arg1)
     u1 = orig::Time_ModMul3CDiv90(u1);
     g_1037E862 = (char)u1;
   }
-  if (val1[0] != '\0') {
-    orig::_sprintf_v1(u3,str__s_jpg_1037E8B0,val1);
+  if (frame.val1[0] != '\0') {
+    orig::_sprintf_v1(frame.u3,str__s_jpg_1037E8B0,frame.val1);
     if (arg1 == 0) {
-      u2 = orig::JpegScreenshot_SaveJpeg512x382(u3);
+      u2 = orig::JpegScreenshot_SaveJpeg512x382(frame.u3);
       return u2;
     }
     u1 = arg1;
     if (((arg1 == 1) && (g_10456AE0 != '\0')) && (g_10456A84 != 0)) {
-      orig::_sprintf_v1(u3,str_screenshots__s_jpg_1037E89C,val1);
-      u2 = orig::JpegScreenshot_SaveJpegScreenSize(u3);
+      orig::_sprintf_v1(frame.u3,str_screenshots__s_jpg_1037E89C,frame.val1);
+      u2 = orig::JpegScreenshot_SaveJpegScreenSize(frame.u3);
       return u2;
     }
   }

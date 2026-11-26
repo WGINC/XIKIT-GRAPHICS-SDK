@@ -9,12 +9,14 @@ XI_API void __cdecl SetMusicTrackVolume_C(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_104637E8 == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,
                        0x31303030);
     g_104637E8 = (bits32 *)*(int *)u1;
     if (g_104637E8 == (bits32 *)0x0) {
@@ -36,12 +38,14 @@ XI_API void __cdecl SetMusicTrackVolume_A(void)
   void *self_;
   int *p1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u1[4]; };   // at 0x0
+  } frame;
   
   if (g_104637D8 == (bits32 *)0x0) {
     p1 = (int *)orig::CMoResource_FindByTypeAndId_v2
-                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u1,0x3d,
+                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u1,0x3d,
                                0x32303030);
     g_104637D8 = (bits32 *)*p1;
     if (g_104637D8 == (bits32 *)0x0) {
@@ -64,12 +68,14 @@ XI_API bits32 __cdecl SetMusicTrackVolume_B(void)
   bits32 *p1;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_104627D0 == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x33303030);
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,0x33303030);
     g_104627D0 = (bits32 *)*(int *)u1;
     if (g_104627D0 == (bits32 *)0x0) {
       return (bits32 *)0;
@@ -92,12 +98,14 @@ XI_API void __cdecl SetMusicTrackVolume_Tag0004(void)
   void *self_;
   int *p1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u1[4]; };   // at 0x0
+  } frame;
   
   if (g_10462588 == (bits32 *)0x0) {
     p1 = (int *)orig::CMoResource_FindByTypeAndId_v2
-                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u1,0x3d,
+                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u1,0x3d,
                                0x34303030);
     g_10462588 = (bits32 *)*p1;
     if (g_10462588 == (bits32 *)0x0) {
@@ -119,12 +127,14 @@ XI_API void __cdecl MusicTrack_SetVolumeId0009(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_1046279C == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,
                        0x39303030);
     g_1046279C = (bits32 *)*(int *)u1;
     if (g_1046279C == (bits32 *)0x0) {
@@ -146,12 +156,14 @@ XI_API void __cdecl MusicTrack_SetVolumeId0010(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_104637E0 == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x30313030);
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,0x30313030);
     g_104637E0 = (bits32 *)*(int *)u1;
     if (g_104637E0 == (bits32 *)0x0) {
       return;
@@ -172,12 +184,14 @@ XI_API void __cdecl MusicTrack_SetVolumeId0011(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_104627CC == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,
                        0x31313030);
     g_104627CC = (bits32 *)*(int *)u1;
     if (g_104627CC == (bits32 *)0x0) {
@@ -199,12 +213,14 @@ XI_API void __cdecl MusicTrack_SetVolumeId0013(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_10462690 == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,
                        0x33313030);
     g_10462690 = (bits32 *)*(int *)u1;
     if (g_10462690 == (bits32 *)0x0) {
@@ -226,12 +242,14 @@ XI_API void __cdecl MusicTrack_SetVolumeId0016(void)
   void *self_;
   uint64_t u1;
   int64_t i1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+  } frame;
   
   if (g_104627C8 == (bits32 *)0x0) {
     u1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x36313030);
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),frame.u2,0x3d,0x36313030);
     g_104627C8 = (bits32 *)*(int *)u1;
     if (g_104627C8 == (bits32 *)0x0) {
       return;
@@ -465,53 +483,55 @@ XI_API unsigned char * __cdecl Font_DrawString(unsigned char *arg1, float arg2, 
   double f2;
   double f3;
   double f4;
-  alignas(16) unsigned char xi_frame[0x490];  // address-taken locals at their original offsets
-  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  unsigned char * &p3 = *reinterpret_cast<unsigned char * *>(xi_frame + 0x8);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  uint32_t (&u1)[2] = *reinterpret_cast<uint32_t (*)[2]>(xi_frame + 0x18);
-  int (&i5)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x20);
-  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x2C);
-  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x54);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x58);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x70);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x78);
-  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x88);
-  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x8C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x490];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; unsigned char * p3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; int i3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; int i4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; uint32_t u1[2]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; int i5[3]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; char c1; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x34]; float f7; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_10[0x38]; float f8; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_11[0x3C]; float f9; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_12[0x40]; int i6; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_13[0x50]; float f10; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_14[0x54]; float f11; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_15[0x58]; float f12; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_16[0x5C]; float f13; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_17[0x6C]; float f14; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_18[0x70]; float f15; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_19[0x74]; float f16; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_20[0x78]; float f17; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_21[0x88]; float f18; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_22[0x8C]; float f19; };   // at 0x8C
+  } frame;
 
-  i3 = (long long)arg2;
+  frame.i3 = (long long)arg2;
   p1 = arg1;
-  i4 = (long long)arg8;
-  p3 = arg1;
+  frame.i4 = (long long)arg8;
+  frame.p3 = arg1;
   b1 = *arg1 == 0;
-  f6 = arg4 * 16.0;
+  frame.f6 = arg4 * 16.0;
   if ( !b1 )
   {
     do
     {
       if ( *p1 == 10 )
       {
-        i3 = (long long)arg2;
+        frame.i3 = (long long)arg2;
         ++p1;
-        i4 = (long long)((double)i4 + 16.0);
-        p3 = p1;
+        frame.i4 = (long long)((double)frame.i4 + 16.0);
+        frame.p3 = p1;
       }
       else
       {
-        i1 = orig::Font_DecodeNextChar(&p3);
+        i1 = orig::Font_DecodeNextChar(&frame.p3);
         f1 = (double)(i1 % 64);
         i2 = 4;
-        p2 = &c1;
+        p2 = &frame.c1;
         f2 = (double)(i1 / 64);
         do
         {
@@ -522,32 +542,32 @@ XI_API unsigned char * __cdecl Font_DrawString(unsigned char *arg1, float arg2, 
           --i2;
         }
         while ( i2 != 0 );
-        f3 = (double)i3;
-        u1[0] = 0;
-        f5 = f3;
-        u1[1] = 0;
-        f12 = f3 - 0.5;
-        *(float *)i5 = f12;
-        f16 = f5 + f6 - 0.5;
-        f9 = f16;
-        f4 = (double)i4;
-        *(float *)&i6 = f4 - 0.5;
-        i5[1] = i6;
-        f17 = f4 + f6 - 0.5;
-        f13 = f17;
-        f14 = f1 * 0.015625;
-        f7 = f14;
-        f18 = (f1 + 1.0) * 0.015625;
-        f10 = f18;
-        f11 = 0.0078125 * f2;
-        f8 = f11;
-        f19 = (f2 + 1.0) * 0.0078125;
-        f15 = f19;
-        orig::Font_AddGlyphAdvance(i1, u1);
-        i3 = (long long)((double)u1[0] * arg4 + f5);
+        f3 = (double)frame.i3;
+        frame.u1[0] = 0;
+        frame.f5 = f3;
+        frame.u1[1] = 0;
+        frame.f12 = f3 - 0.5;
+        *(float *)frame.i5 = frame.f12;
+        frame.f16 = frame.f5 + frame.f6 - 0.5;
+        frame.f9 = frame.f16;
+        f4 = (double)frame.i4;
+        *(float *)&frame.i6 = f4 - 0.5;
+        frame.i5[1] = frame.i6;
+        frame.f17 = f4 + frame.f6 - 0.5;
+        frame.f13 = frame.f17;
+        frame.f14 = f1 * 0.015625;
+        frame.f7 = frame.f14;
+        frame.f18 = (f1 + 1.0) * 0.015625;
+        frame.f10 = frame.f18;
+        frame.f11 = 0.0078125 * f2;
+        frame.f8 = frame.f11;
+        frame.f19 = (f2 + 1.0) * 0.0078125;
+        frame.f15 = frame.f19;
+        orig::Font_AddGlyphAdvance(i1, frame.u1);
+        frame.i3 = (long long)((double)frame.u1[0] * arg4 + frame.f5);
         (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i5, 28);
-        p1 = p3;
+        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.i5, 28);
+        p1 = frame.p3;
       }
     }
     while ( *p1 != 0 );

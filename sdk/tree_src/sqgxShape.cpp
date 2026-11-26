@@ -67,9 +67,11 @@ XI_API int __cdecl SqgxShape_FillBuffers(void)
   int i12;
   int i13;
   int i14;
-  alignas(16) unsigned char xi_frame[0x47C];  // address-taken locals at their original offsets
-  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x74);
-  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0x78);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x47C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x74]; int i15; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_2[0x78]; unsigned int u2; };   // at 0x78
+  } frame;
 
   p1 = g_pSqgxContext;
   i1 = g_pSqgxContext[614];
@@ -95,7 +97,7 @@ L1:
         u1 = i1 - 2;
         break;
       default:
-        u1 = u2;
+        u1 = frame.u2;
         break;
     }
     if ( g_pSqgxContext[180] != 0 )
@@ -106,7 +108,7 @@ L1:
           g_pSqgxContext[598],
           0,
           12 * g_pSqgxContext[614],
-          &i15,
+          &frame.i15,
           0x2000);
         p2 = g_pSqgxContext;
         i2 = 0;
@@ -118,9 +120,9 @@ L1:
             i3 += 12;
             i4 = *(short *)(p2[615] + 2 * i2++);
             i4 *= 3;
-            *(uint32_t *)(i3 + i15 - 20) = *(uint32_t *)(p2[582] + 4 * i4);
-            *(uint32_t *)(i3 + i15 - 16) = *(uint32_t *)(g_pSqgxContext[582] + 4 * i4 + 4);
-            *(uint32_t *)(i3 + i15 - 12) = *(uint32_t *)(g_pSqgxContext[582] + 4 * i4 + 8);
+            *(uint32_t *)(i3 + frame.i15 - 20) = *(uint32_t *)(p2[582] + 4 * i4);
+            *(uint32_t *)(i3 + frame.i15 - 16) = *(uint32_t *)(g_pSqgxContext[582] + 4 * i4 + 4);
+            *(uint32_t *)(i3 + frame.i15 - 12) = *(uint32_t *)(g_pSqgxContext[582] + 4 * i4 + 8);
             p2 = g_pSqgxContext;
           }
           while ( i2 < g_pSqgxContext[614] );
@@ -134,7 +136,7 @@ L1:
           p1[600],
           0,
           12 * p1[614],
-          &i15,
+          &frame.i15,
           0x2000);
         p3 = g_pSqgxContext;
         i5 = 0;
@@ -146,9 +148,9 @@ L1:
             i6 += 12;
             i7 = *(short *)(p3[615] + 2 * i5++);
             i7 *= 3;
-            *(uint32_t *)(i6 + i15 - 20) = *(uint32_t *)(p3[583] + 4 * i7);
-            *(uint32_t *)(i6 + i15 - 16) = *(uint32_t *)(g_pSqgxContext[583] + 4 * i7 + 4);
-            *(uint32_t *)(i6 + i15 - 12) = *(uint32_t *)(g_pSqgxContext[583] + 4 * i7 + 8);
+            *(uint32_t *)(i6 + frame.i15 - 20) = *(uint32_t *)(p3[583] + 4 * i7);
+            *(uint32_t *)(i6 + frame.i15 - 16) = *(uint32_t *)(g_pSqgxContext[583] + 4 * i7 + 4);
+            *(uint32_t *)(i6 + frame.i15 - 12) = *(uint32_t *)(g_pSqgxContext[583] + 4 * i7 + 8);
             p3 = g_pSqgxContext;
           }
           while ( i5 < g_pSqgxContext[614] );
@@ -162,16 +164,16 @@ L1:
           p1[610],
           0,
           4 * p1[614],
-          &u2,
+          &frame.u2,
           0x2000);
         p4 = g_pSqgxContext;
         for ( i = 0; i < g_pSqgxContext[614]; p4 = g_pSqgxContext )
         {
           i8 = 16 * *(short *)(p4[615] + 2 * i);
-          *(uint8_t *)(u2 + 4 * i + 2) = (long long)(*(float *)(p4[588] + i8) * 255.0);
-          *(uint8_t *)(u2 + 4 * i + 1) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 4) * 255.0);
-          *(uint8_t *)(u2 + 4 * i++) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 8) * 255.0);
-          *(uint8_t *)(u2 + 4 * i - 1) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 12) * 255.0);
+          *(uint8_t *)(frame.u2 + 4 * i + 2) = (long long)(*(float *)(p4[588] + i8) * 255.0);
+          *(uint8_t *)(frame.u2 + 4 * i + 1) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 4) * 255.0);
+          *(uint8_t *)(frame.u2 + 4 * i++) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 8) * 255.0);
+          *(uint8_t *)(frame.u2 + 4 * i - 1) = (long long)(*(float *)(g_pSqgxContext[588] + i8 + 12) * 255.0);
         }
         (*(void (__stdcall **)(int))(*(uint32_t *)p4[610] + 48))(p4[610]);
         p1 = g_pSqgxContext;
@@ -182,7 +184,7 @@ L1:
           p1[602],
           0,
           8 * p1[614],
-          &i15,
+          &frame.i15,
           0x2000);
         p5 = g_pSqgxContext;
         i9 = 0;
@@ -194,8 +196,8 @@ L1:
             i11 = 2 * *(short *)(p5[615] + i10);
             ++i9;
             i10 += 2;
-            *(uint32_t *)(i15 + 4 * i10 - 8) = *(uint32_t *)(p5[584] + 4 * i11);
-            *(uint32_t *)(i15 + 4 * i10 - 4) = *(uint32_t *)(g_pSqgxContext[584] + 4 * i11 + 4);
+            *(uint32_t *)(frame.i15 + 4 * i10 - 8) = *(uint32_t *)(p5[584] + 4 * i11);
+            *(uint32_t *)(frame.i15 + 4 * i10 - 4) = *(uint32_t *)(g_pSqgxContext[584] + 4 * i11 + 4);
             p5 = g_pSqgxContext;
           }
           while ( i9 < g_pSqgxContext[614] );
@@ -209,7 +211,7 @@ L1:
           p1[603],
           0,
           8 * p1[614],
-          &i15,
+          &frame.i15,
           0x2000);
         p6 = g_pSqgxContext;
         i12 = 0;
@@ -221,8 +223,8 @@ L1:
             i14 = 2 * *(short *)(p6[615] + i13);
             ++i12;
             i13 += 2;
-            *(uint32_t *)(i15 + 4 * i13 - 8) = *(uint32_t *)(p6[585] + 4 * i14);
-            *(uint32_t *)(i15 + 4 * i13 - 4) = *(uint32_t *)(g_pSqgxContext[585] + 4 * i14 + 4);
+            *(uint32_t *)(frame.i15 + 4 * i13 - 8) = *(uint32_t *)(p6[585] + 4 * i14);
+            *(uint32_t *)(frame.i15 + 4 * i13 - 4) = *(uint32_t *)(g_pSqgxContext[585] + 4 * i14 + 4);
             p6 = g_pSqgxContext;
           }
           while ( i12 < g_pSqgxContext[614] );
@@ -258,7 +260,7 @@ XI_API int * __cdecl sqgxShapeBegin(void)
   float *p2;
   int *result;
   int i2;
-  unsigned int u1;
+  unsigned int StreamNumber;
   int i3;
   int i4;
   int k;
@@ -275,16 +277,18 @@ XI_API int * __cdecl sqgxShapeBegin(void)
   unsigned int u2;
   int j;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  alignas(16) unsigned char xi_frame[0x54C];  // address-taken locals at their original offsets
-  unsigned int &u3 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  unsigned int &u5 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  unsigned int &u6 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  unsigned int &u7 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  unsigned int &u8 = *reinterpret_cast<unsigned int *>(xi_frame + 0x124);
-  void * &p8 = *reinterpret_cast<void * *>(xi_frame + 0x140);
-  int &i10 = *reinterpret_cast<int *>(xi_frame + 0x144);
-  int &i11 = *reinterpret_cast<int *>(xi_frame + 0x148);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x54C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x124]; unsigned int u3; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_2[0x124]; unsigned int u4; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_3[0x124]; unsigned int u5; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_4[0x124]; unsigned int u6; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_5[0x124]; unsigned int u7; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_6[0x124]; unsigned int u8; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_7[0x140]; void * p8; };   // at 0x140
+    struct __attribute__((packed)) { unsigned char pad_8[0x144]; int i10; };   // at 0x144
+    struct __attribute__((packed)) { unsigned char pad_9[0x148]; int i11; };   // at 0x148
+  } frame;
 
   p1 = g_pSqgxContext;
   for ( i = 0; i < g_pSqgxContext[710] + 1; ++i )
@@ -292,7 +296,7 @@ XI_API int * __cdecl sqgxShapeBegin(void)
     if ( (p1[2 * i + 648] & 0x10) != 0 )
     {
       orig::game_1028BB10(i);
-      if ( i == 1 && ((i1 = g_pSqgxContext[648], i11 = g_pSqgxContext[649], (i1 & 0x40000) != 0) || (i1 & 1) != 0) )
+      if ( i == 1 && ((i1 = g_pSqgxContext[648], frame.i11 = g_pSqgxContext[649], (i1 & 0x40000) != 0) || (i1 & 1) != 0) )
       {
         orig::game_1029C950(
           g_pSqgxContext[592],
@@ -406,8 +410,8 @@ XI_API int * __cdecl sqgxShapeBegin(void)
             (IDirect3DVertexBuffer8 **)(g_pSqgxContext + 600));
           result = g_pSqgxContext;
         }
-        u6 = u2++;
-        g_pDancerDevice->SetStreamSource(u6, (IDirect3DVertexBuffer8 *)result[600], 12u);
+        frame.u6 = u2++;
+        g_pDancerDevice->SetStreamSource(frame.u6, (IDirect3DVertexBuffer8 *)result[600], 12u);
         result = g_pSqgxContext;
       }
       for ( j = 0; j < result[710] + 1; ++j )
@@ -436,8 +440,8 @@ XI_API int * __cdecl sqgxShapeBegin(void)
                 (IDirect3DVertexBuffer8 **)g_pSqgxContext + 602);
             result = g_pSqgxContext;
           }
-          u7 = u2++;
-          g_pDancerDevice->SetStreamSource(u7, (IDirect3DVertexBuffer8 *)result[j + 602], 8u);
+          frame.u7 = u2++;
+          g_pDancerDevice->SetStreamSource(frame.u7, (IDirect3DVertexBuffer8 *)result[j + 602], 8u);
           result = g_pSqgxContext;
         }
       }
@@ -455,8 +459,8 @@ XI_API int * __cdecl sqgxShapeBegin(void)
             (IDirect3DVertexBuffer8 **)(g_pSqgxContext + 606));
           result = g_pSqgxContext;
         }
-        u8 = u2++;
-        g_pDancerDevice->SetStreamSource(u8, (IDirect3DVertexBuffer8 *)result[606], 12u);
+        frame.u8 = u2++;
+        g_pDancerDevice->SetStreamSource(frame.u8, (IDirect3DVertexBuffer8 *)result[606], 12u);
         result = g_pSqgxContext;
       }
       if ( (result[652] & 8) != 0 )
@@ -483,7 +487,7 @@ XI_API int * __cdecl sqgxShapeBegin(void)
   }
   else if ( i2 != 0 )
   {
-    u1 = 0;
+    StreamNumber = 0;
     if ( (g_pSqgxContext[652] & 1) != 0 )
     {
       if ( g_pSqgxContext[599] < g_pSqgxContext[592] )
@@ -508,11 +512,11 @@ XI_API int * __cdecl sqgxShapeBegin(void)
         result[598],
         0,
         12 * result[592],
-        &p8,
+        &frame.p8,
         0x2000);
-      memcpy(p8, (const void *)g_pSqgxContext[582], 12 * g_pSqgxContext[592]);
+      memcpy(frame.p8, (const void *)g_pSqgxContext[582], 12 * g_pSqgxContext[592]);
       (*(void (__stdcall **)(int))(*(uint32_t *)g_pSqgxContext[598] + 48))(g_pSqgxContext[598]);
-      u1 = 1;
+      StreamNumber = 1;
       g_pDancerDevice->SetStreamSource(0, (IDirect3DVertexBuffer8 *)g_pSqgxContext[598], 12u);
       result = g_pSqgxContext;
     }
@@ -540,12 +544,12 @@ XI_API int * __cdecl sqgxShapeBegin(void)
         result[600],
         0,
         12 * result[592],
-        &p8,
+        &frame.p8,
         0x2000);
-      memcpy(p8, (const void *)g_pSqgxContext[583], 12 * g_pSqgxContext[592]);
+      memcpy(frame.p8, (const void *)g_pSqgxContext[583], 12 * g_pSqgxContext[592]);
       (*(void (__stdcall **)(int))(*(uint32_t *)g_pSqgxContext[600] + 48))(g_pSqgxContext[600]);
-      u3 = u1++;
-      g_pDancerDevice->SetStreamSource(u3, (IDirect3DVertexBuffer8 *)g_pSqgxContext[600], 12u);
+      frame.u3 = StreamNumber++;
+      g_pDancerDevice->SetStreamSource(frame.u3, (IDirect3DVertexBuffer8 *)g_pSqgxContext[600], 12u);
       result = g_pSqgxContext;
     }
     for ( k = 0; k < result[710] + 1; ++k )
@@ -584,14 +588,14 @@ XI_API int * __cdecl sqgxShapeBegin(void)
           result[k + 602],
           0,
           8 * result[592],
-          &p8,
+          &frame.p8,
           0x2000);
-        memcpy(p8, (const void *)g_pSqgxContext[k + 584], 8 * g_pSqgxContext[592]);
+        memcpy(frame.p8, (const void *)g_pSqgxContext[k + 584], 8 * g_pSqgxContext[592]);
         (*(void (__stdcall **)(int))(*(uint32_t *)g_pSqgxContext[k + 602] + 48))(g_pSqgxContext[k + 602]);
-        u4 = u1++;
+        frame.u4 = StreamNumber++;
         g_pDancerDevice->lpVtbl->SetStreamSource(
           g_pDancerDevice,
-          u4,
+          frame.u4,
           (IDirect3DVertexBuffer8 *)g_pSqgxContext[k + 602],
           8u);
         result = g_pSqgxContext;
@@ -621,12 +625,12 @@ XI_API int * __cdecl sqgxShapeBegin(void)
         result[606],
         0,
         12 * result[592],
-        &p8,
+        &frame.p8,
         0x2000);
-      memcpy(p8, (const void *)g_pSqgxContext[586], 12 * g_pSqgxContext[592]);
+      memcpy(frame.p8, (const void *)g_pSqgxContext[586], 12 * g_pSqgxContext[592]);
       (*(void (__stdcall **)(int))(*(uint32_t *)g_pSqgxContext[606] + 48))(g_pSqgxContext[606]);
-      u5 = u1++;
-      g_pDancerDevice->SetStreamSource(u5, (IDirect3DVertexBuffer8 *)g_pSqgxContext[606], 12u);
+      frame.u5 = StreamNumber++;
+      g_pDancerDevice->SetStreamSource(frame.u5, (IDirect3DVertexBuffer8 *)g_pSqgxContext[606], 12u);
       result = g_pSqgxContext;
     }
     if ( (result[652] & 8) != 0 )
@@ -653,11 +657,11 @@ XI_API int * __cdecl sqgxShapeBegin(void)
         result[610],
         0,
         4 * result[592],
-        &p8,
+        &frame.p8,
         0x2000);
       p4 = g_pSqgxContext;
-      p5 = p8;
-      i10 = 0;
+      p5 = frame.p8;
+      frame.i10 = 0;
       p6 = (float *)g_pSqgxContext[588];
       if ( g_pSqgxContext[592] > 0 )
       {
@@ -667,20 +671,20 @@ XI_API int * __cdecl sqgxShapeBegin(void)
           p7 = p5 + 1;
           *p7++ = (long long)(p6[1] * 255.0);
           *p7++ = (long long)(*p6 * 255.0);
-          i8 = i10;
+          i8 = frame.i10;
           *p7 = (long long)(p6[3] * 255.0);
           p4 = g_pSqgxContext;
           p5 = p7 + 1;
           p6 += 4;
           i9 = g_pSqgxContext[592];
-          i10 = i8 + 1;
+          frame.i10 = i8 + 1;
         }
         while ( i8 + 1 < i9 );
       }
       (*(void (__stdcall **)(int))(*(uint32_t *)p4[610] + 48))(p4[610]);
       return (int *)g_pDancerDevice->lpVtbl->SetStreamSource(
                       g_pDancerDevice,
-                      u1,
+                      StreamNumber,
                       (IDirect3DVertexBuffer8 *)g_pSqgxContext[610],
                       4u);
     }

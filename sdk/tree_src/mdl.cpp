@@ -501,9 +501,11 @@ XI_API bits32 __cdecl Mdl_ComputeSlotBounds(int arg1, float * arg2)
   int i3;
   uint8_t u1;
   long double f1;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float  (&f2)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
-  float  (&f3)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float f2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; float f3[4]; };   // at 0x10
+  } frame;
   
   orig::SqBounds_Reset(arg2);
   i1 = *(int *)(g_1099AED0 + 0xa8 + arg1 * 0xac);
@@ -513,19 +515,19 @@ XI_API bits32 __cdecl Mdl_ComputeSlotBounds(int arg1, float * arg2)
       do {
         i3 = *(int *)(*(int *)(i1 + 0x4c) + i2 * 4);
         p1 = *(float **)(*(int *)(i1 + 0x50) + i2 * 4);
-        orig::M4fTransform_v1(f2,p1,(float *)(i3 + 0x14));
-        orig::M4fTransform_v1(f3,p1,(float *)(i3 + 0x20));
+        orig::M4fTransform_v1(frame.f2,p1,(float *)(i3 + 0x14));
+        orig::M4fTransform_v1(frame.f3,p1,(float *)(i3 + 0x20));
         i3 = 3;
         p1 = arg2;
         do {
-          f1 = *(float *)(((int)f2 - (int)arg2) + (int)p1);
+          f1 = *(float *)(((int)frame.f2 - (int)arg2) + (int)p1);
           u1 = ((f1) != (f1)) || ((*p1) != (*p1));
           if ((u1 || f1 < *p1) != u1) {
-            *p1 = *(float *)(((int)f2 - (int)arg2) + (int)p1);
+            *p1 = *(float *)(((int)frame.f2 - (int)arg2) + (int)p1);
           }
-          f1 = *(float *)(((int)f3 - (int)arg2) + (int)p1);
+          f1 = *(float *)(((int)frame.f3 - (int)arg2) + (int)p1);
           if (f1 > p1[3]) {
-            p1[3] = *(float *)(((int)f3 - (int)arg2) + (int)p1);
+            p1[3] = *(float *)(((int)frame.f3 - (int)arg2) + (int)p1);
           }
           p1 = p1 + 1;
           i3 = i3 + -1;

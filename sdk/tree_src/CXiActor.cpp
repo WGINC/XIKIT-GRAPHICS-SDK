@@ -436,57 +436,59 @@ int * __cdecl CXiActor::FindNearestToPoint(float * arg1, uint32_t arg2, uint32_t
   uint32_t u1;
   long double f2;
   uint64_t u2;
-  char xi_frame[124] __attribute__((aligned(4)));
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &p2 = *reinterpret_cast<int * *>(xi_frame + 8);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  (&u3)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 16);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 60);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[124];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int * p2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; int i2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u3[3]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; float f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; float f7; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x2C]; float f8; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_10[0x30]; float f9; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_11[0x3C]; uint8_t u4[64]; };   // at 0x3C
+  } frame;
   
   i1 = orig::Camera_GetField50_v1();
   if (i1 != 0) {
     i1 = orig::Camera_GetField50_v1();
-    orig::Vec3_Copy_v1(u3,(uint32_t *)(i1 + 0x44));
-    orig::MathVector_ReturnThis_v1(u4);
+    orig::Vec3_Copy_v1(frame.u3,(uint32_t *)(i1 + 0x44));
+    orig::MathVector_ReturnThis_v1(frame.u4);
     p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-    orig::Mat4_Copy_v1(u4,p1);
+    orig::Mat4_Copy_v1(frame.u4,p1);
     i1 = orig::Camera_GetMatrix154Ptr_v1();
-    orig::Mat4_PostMultiply_v1(u4,i1);
-    p2 = (int *)0x0;
-    f3 = 1e+09f;
-    i2 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+    orig::Mat4_PostMultiply_v1(frame.u4,i1);
+    frame.p2 = (int *)0x0;
+    frame.f3 = 1e+09f;
+    frame.i2 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
     u2 = orig::game_10085240();
     self = (int *)u2;
     if (self != (int *)0x0) {
       do {
-        u1 = orig::CXiActor_ComputeDrawState(self,i2,arg2,arg3,
+        u1 = orig::CXiActor_ComputeDrawState(self,frame.i2,arg2,arg3,
                              ((uint32_t)(((uint32_t)(xi_trunc24((arg2 >> 0x11))) << 8) | (uint8_t)(~(uint8_t)(arg2 >> 9)))) & 0xffffff01);
         if (((char)u1 != '\0') &&
-           (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d0))))((void *)(self),&f5,&f8,u4),
+           (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d0))))((void *)(self),&frame.f5,&frame.f8,frame.u4),
            (char)u1 != '\0')) {
-          f2 = f5;
+          f2 = frame.f5;
           f1 = *arg1;
-          arg1[3] = f7;
+          arg1[3] = frame.f7;
           if ((f2 <= f1) &&
-             (f8 >= *arg1)) {
-            f2 = f6;
+             (frame.f8 >= *arg1)) {
+            f2 = frame.f6;
             f1 = arg1[1];
             if ((((f2 <= f1) &&
-                 (f9 >= arg1[1])) &&
-                (f3 > f7)) &&
-               ((((!((f7) != (f7)) && !((0.0f) != (0.0f))) &&
-                  0.0f < f7 &&
-                 (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d4))))((void *)(self),arg1,&f4),
+                 (frame.f9 >= arg1[1])) &&
+                (frame.f3 > frame.f7)) &&
+               ((((!((frame.f7) != (frame.f7)) && !((0.0f) != (0.0f))) &&
+                  0.0f < frame.f7 &&
+                 (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d4))))((void *)(self),arg1,&frame.f4),
                  (char)u1 == '\x01')) &&
-                (f3 > f4)))) {
-              f3 = f4;
-              p2 = self;
+                (frame.f3 > frame.f4)))) {
+              frame.f3 = frame.f4;
+              frame.p2 = self;
             }
           }
         }
@@ -495,7 +497,7 @@ int * __cdecl CXiActor::FindNearestToPoint(float * arg1, uint32_t arg2, uint32_t
       } while (self != (int *)0x0);
     }
     orig::MathVector_Nop();
-    return p2;
+    return frame.p2;
   }
   return (int *)0x0;
 }
@@ -515,36 +517,38 @@ int * __cdecl CXiActor::FindNearestLowerInView(int * arg1, uint32_t arg2, float 
   long double f3;
   long double f4;
   uint64_t u3;
-  char xi_frame[108] __attribute__((aligned(4)));
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 8);
-  float  (&f7)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  (&f9)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 36);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[108];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int * p3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f7[2]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f8; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f9[2]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; float f10; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; uint8_t u4[64]; };   // at 0x2C
+  } frame;
   
   f2 = arg3;
-  orig::MathVector_ReturnThis_v1(u4);
+  orig::MathVector_ReturnThis_v1(frame.u4);
   p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-  orig::Mat4_Copy_v1(u4,p1);
+  orig::Mat4_Copy_v1(frame.u4,p1);
   p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x1bc))))((void *)(arg1));
-  orig::Mat4_TransformPoint(u4,f9,p2);
-  u2 = ((f10) != (f10)) || ((0.0f) != (0.0f));
-  f3 = f10;
-  if ((u2 || f10 < 0.0f) != u2) {
+  orig::Mat4_TransformPoint(frame.u4,frame.f9,p2);
+  u2 = ((frame.f10) != (frame.f10)) || ((0.0f) != (0.0f));
+  f3 = frame.f10;
+  if ((u2 || frame.f10 < 0.0f) != u2) {
     f3 = -f3;
   }
-  f5 = (float)f3;
+  frame.f5 = (float)f3;
   u2 = ((f3) != (f3)) || ((1.0f) != (1.0f));
   if ((u2 || f3 < 1.0f) != u2) {
-    f5 = 1.0f;
+    frame.f5 = 1.0f;
   }
   f3 = orig::Camera_GetField2F4();
-  p3 = (int *)0x0;
-  f6 = 3.6e+03f;
-  f1 = (float)((f9[0] / f5) * f3);
+  frame.p3 = (int *)0x0;
+  frame.f6 = 3.6e+03f;
+  f1 = (float)((frame.f9[0] / frame.f5) * f3);
   i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
   u3 = orig::game_10085240();
   self = (int *)u3;
@@ -552,30 +556,30 @@ int * __cdecl CXiActor::FindNearestLowerInView(int * arg1, uint32_t arg2, float 
     if ((self != arg1) &&
        (u1 = orig::CXiActor_ComputeDrawState(self,i1,arg2,bit_cast<uint32_t>(f2),1), (char)u1 != '\0')) {
       p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self + 0x1bc))))((void *)(self));
-      orig::Mat4_TransformPoint(u4,f7,p2);
-      f3 = orig::MathVector_Length3(f7);
+      orig::Mat4_TransformPoint(frame.u4,frame.f7,p2);
+      f3 = orig::MathVector_Length3(frame.f7);
       u2 = ((f3) != (f3)) || ((5e+01f) != (5e+01f));
       if ((u2 || f3 < 5e+01f) != u2) {
-        u2 = ((f8) != (f8)) || ((0.0f) != (0.0f));
-        if ((u2 || f8 < 0.0f) == u2) {
-          arg3 = f8;
+        u2 = ((frame.f8) != (frame.f8)) || ((0.0f) != (0.0f));
+        if ((u2 || frame.f8 < 0.0f) == u2) {
+          arg3 = frame.f8;
         }
         else {
-          arg3 = (float)-f8;
+          arg3 = (float)-frame.f8;
         }
         u2 = ((arg3) != (arg3)) || ((1.0f) != (1.0f));
         if ((u2 || arg3 < 1.0f) != u2) {
           arg3 = 1.0f;
         }
         f4 = orig::Camera_GetField2F4();
-        f4 = (f7[0] / arg3) * f4;
+        f4 = (frame.f7[0] / arg3) * f4;
         f3 = f1;
         u2 = ((f4) != (f4)) || ((f3) != (f3));
         if (((u2 || f4 < f3) != u2) &&
-           (f4 = f1 - f4, u2 = ((f4) != (f4)) || ((f6) != (f6)),
-           (u2 || f4 < f6) != u2)) {
-          f6 = (float)f4;
-          p3 = self;
+           (f4 = f1 - f4, u2 = ((f4) != (f4)) || ((frame.f6) != (frame.f6)),
+           (u2 || f4 < frame.f6) != u2)) {
+          frame.f6 = (float)f4;
+          frame.p3 = self;
         }
       }
     }
@@ -583,7 +587,7 @@ int * __cdecl CXiActor::FindNearestLowerInView(int * arg1, uint32_t arg2, float 
     self = (int *)u3;
   }
   orig::MathVector_Nop();
-  return p3;
+  return frame.p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10083D00
@@ -601,36 +605,38 @@ int * __cdecl CXiActor::FindNearestHigherInView(int * arg1, uint32_t arg2, float
   long double f3;
   long double f4;
   uint64_t u3;
-  char xi_frame[108] __attribute__((aligned(4)));
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 8);
-  float  (&f7)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  (&f9)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 36);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[108];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int * p3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f7[2]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f8; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f9[2]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; float f10; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; uint8_t u4[64]; };   // at 0x2C
+  } frame;
   
   f2 = arg3;
-  orig::MathVector_ReturnThis_v1(u4);
+  orig::MathVector_ReturnThis_v1(frame.u4);
   p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-  orig::Mat4_Copy_v1(u4,p1);
+  orig::Mat4_Copy_v1(frame.u4,p1);
   p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x1bc))))((void *)(arg1));
-  orig::Mat4_TransformPoint(u4,f9,p2);
-  u2 = ((f10) != (f10)) || ((0.0f) != (0.0f));
-  f3 = f10;
-  if ((u2 || f10 < 0.0f) != u2) {
+  orig::Mat4_TransformPoint(frame.u4,frame.f9,p2);
+  u2 = ((frame.f10) != (frame.f10)) || ((0.0f) != (0.0f));
+  f3 = frame.f10;
+  if ((u2 || frame.f10 < 0.0f) != u2) {
     f3 = -f3;
   }
-  f5 = (float)f3;
+  frame.f5 = (float)f3;
   u2 = ((f3) != (f3)) || ((1.0f) != (1.0f));
   if ((u2 || f3 < 1.0f) != u2) {
-    f5 = 1.0f;
+    frame.f5 = 1.0f;
   }
   f3 = orig::Camera_GetField2F4();
-  p3 = (int *)0x0;
-  f6 = 3.6e+03f;
-  f1 = (float)((f9[0] / f5) * f3);
+  frame.p3 = (int *)0x0;
+  frame.f6 = 3.6e+03f;
+  f1 = (float)((frame.f9[0] / frame.f5) * f3);
   i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
   u3 = orig::game_10085240();
   self = (int *)u3;
@@ -638,29 +644,29 @@ int * __cdecl CXiActor::FindNearestHigherInView(int * arg1, uint32_t arg2, float
     if ((self != arg1) &&
        (u1 = orig::CXiActor_ComputeDrawState(self,i1,arg2,bit_cast<uint32_t>(f2),1), (char)u1 != '\0')) {
       p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self + 0x1bc))))((void *)(self));
-      orig::Mat4_TransformPoint(u4,f7,p2);
-      f3 = orig::MathVector_Length3(f7);
+      orig::Mat4_TransformPoint(frame.u4,frame.f7,p2);
+      f3 = orig::MathVector_Length3(frame.f7);
       u2 = ((f3) != (f3)) || ((5e+01f) != (5e+01f));
       if ((u2 || f3 < 5e+01f) != u2) {
-        u2 = ((f8) != (f8)) || ((0.0f) != (0.0f));
-        if ((u2 || f8 < 0.0f) == u2) {
-          arg3 = f8;
+        u2 = ((frame.f8) != (frame.f8)) || ((0.0f) != (0.0f));
+        if ((u2 || frame.f8 < 0.0f) == u2) {
+          arg3 = frame.f8;
         }
         else {
-          arg3 = (float)-f8;
+          arg3 = (float)-frame.f8;
         }
         u2 = ((arg3) != (arg3)) || ((1.0f) != (1.0f));
         if ((u2 || arg3 < 1.0f) != u2) {
           arg3 = 1.0f;
         }
         f4 = orig::Camera_GetField2F4();
-        f4 = (f7[0] / arg3) * f4;
+        f4 = (frame.f7[0] / arg3) * f4;
         f3 = f1;
         if ((f4 > f3) &&
-           (f4 = f4 - f1, u2 = ((f4) != (f4)) || ((f6) != (f6)),
-           (u2 || f4 < f6) != u2)) {
-          f6 = (float)f4;
-          p3 = self;
+           (f4 = f4 - f1, u2 = ((f4) != (f4)) || ((frame.f6) != (frame.f6)),
+           (u2 || f4 < frame.f6) != u2)) {
+          frame.f6 = (float)f4;
+          frame.p3 = self;
         }
       }
     }
@@ -668,7 +674,7 @@ int * __cdecl CXiActor::FindNearestHigherInView(int * arg1, uint32_t arg2, float
     self = (int *)u3;
   }
   orig::MathVector_Nop();
-  return p3;
+  return frame.p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10083EC0
@@ -720,26 +726,28 @@ int * __cdecl CXiActor::FindNearestToTarget(uint32_t arg1, uint32_t arg2, int ar
   uint8_t u5;
   long double f1;
   uint64_t u6;
-  char xi_frame[88] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int * &p4 = *reinterpret_cast<int * *>(xi_frame + 4);
-  float  (&f3)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
-  uint8_t  (&u7)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[88];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f3[3]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint8_t u7[64]; };   // at 0x18
+  } frame;
   
   u6 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
   p1 = (int *)u6;
   if (p1 == (int *)0x0) {
     return (int *)0x0;
   }
-  orig::MathVector_ReturnThis_v1(u7);
-  orig::Mat4_SetIdentity_v1(u7);
+  orig::MathVector_ReturnThis_v1(frame.u7);
+  orig::Mat4_SetIdentity_v1(frame.u7);
   i2 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*p1 + 0x1c0)))((void *)(p1));
-  orig::Mat4_PostRotateY_v1(u7,*(float *)(i2 + 4));
+  orig::Mat4_PostRotateY_v1(frame.u7,*(float *)(i2 + 4));
   p2 = (uint32_t *)((int (__thiscall *)(void *))(*(untyped_fn **)(*p1 + 0x1bc)))((void *)(p1));
-  orig::Mat4_SetRow3_v1(u7,p2);
-  orig::Mat4_InvertOrthonormal_v1(u7);
-  p4 = (int *)0x0;
-  f2 = 2.5e+03f;
+  orig::Mat4_SetRow3_v1(frame.u7,p2);
+  orig::Mat4_InvertOrthonormal_v1(frame.u7);
+  frame.p4 = (int *)0x0;
+  frame.f2 = 2.5e+03f;
   i2 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
   self = (void *)p1[0x1c];
   u6 = orig::game_10085240();
@@ -747,7 +755,7 @@ int * __cdecl CXiActor::FindNearestToTarget(uint32_t arg1, uint32_t arg2, int ar
   do {
     if (p1 == (int *)0x0) {
       orig::MathVector_Nop();
-      return p4;
+      return frame.p4;
     }
     i1 = p1[0x1c];
     u2 = orig::CXiActor_GetField78Of70(p1);
@@ -786,14 +794,14 @@ code_10084048:
          (c2 = c1, arg3 != 2)) || (c2 != '\0')) &&
        (u4 = orig::CXiActor_ComputeDrawState(p1,i2,arg1,arg2,1), (char)u4 != '\0')) {
       p3 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*p1 + 0x1bc))))((void *)(p1));
-      orig::Mat4_TransformPoint(u7,f3,p3);
-      u5 = ((f3[0]) != (f3[0])) || ((0.0f) != (0.0f));
-      if (((u5 || f3[0] < 0.0f) == u5) &&
-         (f1 = orig::game_10027530(f3,f3),
-         u5 = ((f1) != (f1)) || ((f2) != (f2)),
-         (u5 || f1 < f2) != u5)) {
-        f2 = (float)f1;
-        p4 = p1;
+      orig::Mat4_TransformPoint(frame.u7,frame.f3,p3);
+      u5 = ((frame.f3[0]) != (frame.f3[0])) || ((0.0f) != (0.0f));
+      if (((u5 || frame.f3[0] < 0.0f) == u5) &&
+         (f1 = orig::game_10027530(frame.f3,frame.f3),
+         u5 = ((f1) != (f1)) || ((frame.f2) != (frame.f2)),
+         (u5 || f1 < frame.f2) != u5)) {
+        frame.f2 = (float)f1;
+        frame.p4 = p1;
       }
     }
     u6 = orig::game_10085270(p1);
@@ -1103,10 +1111,12 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
   int i1;
   void *obj1;
   int i2;
-  char xi_frame[568] __attribute__((aligned(4)));
-  uint8_t  (&u1)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
-  uint8_t  (&u2)[24] = *reinterpret_cast<uint8_t  (*)[24]>(xi_frame + 28);
-  int  (&i3)[129] = *reinterpret_cast<int  (*)[129]>(xi_frame + 52);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[568];
+    struct __attribute__((packed)) { uint8_t u1[28]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; uint8_t u2[24]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x34]; int i3[129]; };   // at 0x34
+  } frame;
   
   i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x124))))((void *)(self));
   if ((i1 == 0) && ((*(uint8_t *)((int)self + 0xb2) & 2) == 0)) {
@@ -1116,8 +1126,8 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
     else {
       i1 = *file;
     }
-    orig::ResourceIter_FindFirst_v1(u2,i1,5,0,0xffffffff);
-    obj1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+    orig::ResourceIter_FindFirst_v1(frame.u2,i1,5,0,0xffffffff);
+    obj1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
     while (obj1 != (void *)0x0) {
       if ((*(uint8_t *)((int)obj1 + 0x1a) >> 2 & 1) == 0) {
         switch(xi_sw((*(uint8_t *)((int)obj1 + 0x36) & 1) * 0x10 + -1 +
@@ -1141,7 +1151,7 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
           }
         }
       }
-      obj1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+      obj1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
     }
     i1 = 0;
     if (file == (bits32 *)0x0) {
@@ -1150,8 +1160,8 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
     else {
       i2 = *file;
     }
-    orig::ResourceIter_FindFirst_v1(u1,i2,5,0,0xffffffff);
-    i2 = orig::ResourceIter_FindNext_v1(u1,0);
+    orig::ResourceIter_FindFirst_v1(frame.u1,i2,5,0,0xffffffff);
+    i2 = orig::ResourceIter_FindNext_v1(frame.u1,0);
     if (i2 != 0) {
       do {
         if ((*(uint8_t *)(i2 + 0x1a) >> 2 & 1) == 0) {
@@ -1171,7 +1181,7 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
           case 0x11:
           case 0x12:
             if ((*(uint32_t *)(i2 + 0xd8) >> 0xc & 1) != 0) {
-              i3[i1 + 1] = i2;
+              frame.i3[i1 + 1] = i2;
               i1 = i1 + 1;
               if (0x7f < i1) {
                 orig::ErrorReport_NoOpVarargsA_v1(&g_10358288);
@@ -1180,11 +1190,11 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
             }
           }
         }
-        i2 = orig::ResourceIter_FindNext_v1(u1,0);
+        i2 = orig::ResourceIter_FindNext_v1(frame.u1,0);
       } while (i2 != 0);
 L1:
       for (; i1 != 0; i1 = i1 + -1) {
-        orig::CMoGeneratorClone_CreateInstance((void *)i3[i1],(int)self,0,1);
+        orig::CMoGeneratorClone_CreateInstance((void *)frame.i3[i1],(int)self,0,1);
       }
     }
   }
@@ -1604,10 +1614,12 @@ uint32_t __thiscall CXiActor::CorrectOnZoneMap(void * self)
   int i1;
   uint32_t u1;
   uint32_t u2;
-  char xi_frame[112] __attribute__((aligned(4)));
-  float  (&f1)[10] = *reinterpret_cast<float  (*)[10]>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 40);
-  uint8_t  (&u3)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[112];
+    struct __attribute__((packed)) { float f1[10]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x28]; float f2; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_3[0x30]; uint8_t u3[64]; };   // at 0x30
+  } frame;
   
   i1 = orig::CXiActor_GetModelField170_v1(self);
   u1 = orig::CXiActor_ModelTest95680(self,i1,i1);
@@ -1616,28 +1628,28 @@ uint32_t __thiscall CXiActor::CorrectOnZoneMap(void * self)
     u2 = orig::CXiActor_ModelTest956A0_v1(self,i1,i1);
     if ((char)u2 == '\0') goto code_100C83B3;
   }
-  f1[0] = 1.10000002384185791015625f;
-  f1[1] = (-1.0f);
-  f1[2] = 0.0f;
-  f1[3] = 1.0f;
-  f1[4] = 0.800000011920928955078125f;
-  f1[5] = (-1.0f);
-  f1[6] = 0.0f;
-  f1[7] = 1.0f;
-  orig::MathVector_ReturnThis_v1(u3);
-  orig::Mat4_SetIdentity_v1(u3);
-  orig::Mat4_PostRotateX_v1(u3,*(float *)((int)self + 0x61c));
-  orig::Mat4_PostRotateY_v1(u3,*(float *)((int)self + 0x620));
-  orig::Mat4_PostRotateZ_v1(u3,*(float *)((int)self + 0x624));
+  frame.f1[0] = 1.10000002384185791015625f;
+  frame.f1[1] = (-1.0f);
+  frame.f1[2] = 0.0f;
+  frame.f1[3] = 1.0f;
+  frame.f1[4] = 0.800000011920928955078125f;
+  frame.f1[5] = (-1.0f);
+  frame.f1[6] = 0.0f;
+  frame.f1[7] = 1.0f;
+  orig::MathVector_ReturnThis_v1(frame.u3);
+  orig::Mat4_SetIdentity_v1(frame.u3);
+  orig::Mat4_PostRotateX_v1(frame.u3,*(float *)((int)self + 0x61c));
+  orig::Mat4_PostRotateY_v1(frame.u3,*(float *)((int)self + 0x620));
+  orig::Mat4_PostRotateZ_v1(frame.u3,*(float *)((int)self + 0x624));
   p1 = (float *)((int)self + 0x5fc);
-  orig::Mat4_SetTranslation_v1(u3,p1);
-  orig::Mat4_TransformPointInPlace_v2(u3,f1);
-  orig::Mat4_TransformPointInPlace_v2(u3,f1 + 4);
-  u2 = orig::ZoneMap_Query1693B0(g_pZoneMap,f1,f1 + 4,f1 + 8);
+  orig::Mat4_SetTranslation_v1(frame.u3,p1);
+  orig::Mat4_TransformPointInPlace_v2(frame.u3,frame.f1);
+  orig::Mat4_TransformPointInPlace_v2(frame.u3,frame.f1 + 4);
+  u2 = orig::ZoneMap_Query1693B0(g_pZoneMap,frame.f1,frame.f1 + 4,frame.f1 + 8);
   if ((char)u2 != '\0') {
-    *p1 = (float)((f1[8] - f1[0]) + *p1);
+    *p1 = (float)((frame.f1[8] - frame.f1[0]) + *p1);
     *(float *)((int)self + 0x604) =
-         (float)((f2 - f1[2]) + *(float *)((int)self + 0x604)
+         (float)((frame.f2 - frame.f1[2]) + *(float *)((int)self + 0x604)
                 );
     orig::MathVector_Nop();
     return u2 & 0xffffff00;
@@ -1658,9 +1670,11 @@ void __thiscall CXiActor::RequestModelParts(void * self)
   uint32_t u1;
   uint32_t *p2;
   uint64_t u2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int * file; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
   i1 = orig::CXiActor_GetModelByteEE_v1(self);
   if (i1 != 2) {
@@ -1670,11 +1684,11 @@ void __thiscall CXiActor::RequestModelParts(void * self)
     }
     i2 = orig::game_100D2D70(self,i1,0,0);
     if ((0 < i2) && (i3 = orig::game_100D4520(self,i2), i3 == 0)) {
-      p3 =(int*)(orig::CMoResource_FindOrCreateTask(&u3,i2));
-      p3 = (int *)*p3;
-      if (p3 != (int *)0x0) {
-        orig::CXiSkeletonActor_AddListEntry(self,p3,2,i2,5);
-        u1 = orig::ResourceHandle_IsResident_v1(&p3);
+      frame.file =(int*)(orig::CMoResource_FindOrCreateTask(&frame.u3,i2));
+      frame.file = (int *)*frame.file;
+      if (frame.file != (int *)0x0) {
+        orig::CXiSkeletonActor_AddListEntry(self,frame.file,2,i2,5);
+        u1 = orig::ResourceHandle_IsResident_v1(&frame.file);
         if ((char)u1 == '\0') {
           u2 = orig::Allocator_Generic_v1(0x14);
           p2 = (uint32_t *)u2;
@@ -1695,20 +1709,20 @@ void __thiscall CXiActor::RequestModelParts(void * self)
               p2[4] = 2;
             }
           }
-          orig::MeshResourceCreate_Create(&p3,&code_100D1400,p2,(int)self,0);
+          orig::MeshResourceCreate_Create(&frame.file,&code_100D1400,p2,(int)self,0);
         }
         else {
-          orig::ActorModelParts_ProcessResidentListEntries(self,p3,*(int *)((int)self + 0x9ec));
+          orig::ActorModelParts_ProcessResidentListEntries(self,frame.file,*(int *)((int)self + 0x9ec));
         }
       }
     }
     i1 = orig::game_100D2E30(self,i1,0);
     if (-1 < i1) {
-      p3 =(int*)(orig::CMoResource_FindOrCreateTask(&u3,i1));
-      p3 = (int *)*p3;
-      if (p3 != (int *)0x0) {
-        orig::CXiSkeletonActor_AddListEntry(self,p3,1,i1,0);
-        u1 = orig::ResourceHandle_IsResident_v1(&p3);
+      frame.file =(int*)(orig::CMoResource_FindOrCreateTask(&frame.u3,i1));
+      frame.file = (int *)*frame.file;
+      if (frame.file != (int *)0x0) {
+        orig::CXiSkeletonActor_AddListEntry(self,frame.file,1,i1,0);
+        u1 = orig::ResourceHandle_IsResident_v1(&frame.file);
         if ((char)u1 == '\0') {
           u2 = orig::Allocator_Generic_v1(0x14);
           p2 = (uint32_t *)u2;
@@ -1729,10 +1743,10 @@ void __thiscall CXiActor::RequestModelParts(void * self)
               p2[4] = 1;
             }
           }
-          orig::MeshResourceCreate_Create(&p3,&code_100D1400,p2,(int)self,0);
+          orig::MeshResourceCreate_Create(&frame.file,&code_100D1400,p2,(int)self,0);
         }
         else {
-          orig::ActorModelParts_ProcessResidentListEntries(self,p3,*(int *)((int)self + 0x9ec));
+          orig::ActorModelParts_ProcessResidentListEntries(self,frame.file,*(int *)((int)self + 0x9ec));
         }
       }
     }

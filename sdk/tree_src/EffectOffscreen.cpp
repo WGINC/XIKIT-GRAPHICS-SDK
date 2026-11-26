@@ -16,13 +16,15 @@ XI_API char __cdecl BeginEffectOffscreenPass(void)
   int i3;
   CMoProcessor *p4;
   int i4;
-  alignas(16) unsigned char xi_frame[0x494];  // address-taken locals at their original offsets
-  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  float (&f5)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x34);
-  uint32_t (&u1)[6] = *reinterpret_cast<uint32_t (*)[6]>(xi_frame + 0x40);
-  float (&f6)[15] = *reinterpret_cast<float (*)[15]>(xi_frame + 0x58);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x494];
+    struct __attribute__((packed)) { unsigned char pad_1[0x28]; float f2; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_2[0x2C]; float f3; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_3[0x30]; float f4; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_4[0x34]; float f5[3]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_5[0x40]; uint32_t u1[6]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_6[0x58]; float f6[15]; };   // at 0x58
+  } frame;
 
   i1 = *(uint32_t *)(g_pMoAccumTarget + 4);
   if ( i1 == 0 )
@@ -38,13 +40,13 @@ XI_API char __cdecl BeginEffectOffscreenPass(void)
     0);
   orig::game_1006A420((int *)g_pResourceMng);
   orig::CMoDX_PushViewMatrix((int *)g_pResourceMng);
-  u1[1] = 0;
-  u1[2] = 256;
-  u1[3] = 256;
-  u1[0] = 0;
-  u1[4] = 0;
-  u1[5] = 1065353216;
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetViewport((void *)(u1));
+  frame.u1[1] = 0;
+  frame.u1[2] = 256;
+  frame.u1[3] = 256;
+  frame.u1[0] = 0;
+  frame.u1[4] = 0;
+  frame.u1[5] = 1065353216;
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetViewport((void *)(frame.u1));
   if ( (Fn10054D70_staticGuards & 1) == 0 )
   {
     Fn10054D70_lookAtUp = 0;
@@ -57,15 +59,15 @@ XI_API char __cdecl BeginEffectOffscreenPass(void)
   p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
   orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, p1);
-  f2 = p1[12];
-  f3 = p1[13];
+  frame.f2 = p1[12];
+  frame.f3 = p1[13];
   f1 = p1[14];
-  f5[0] = f2;
-  f4 = f1;
-  f5[2] = f1;
-  f5[1] = f3 - 2.0;
-  orig::fn_102D7FF9(f6, f5, &f2, (float *)&Fn10054D70_lookAtUp);
-  orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 2, f6);
+  frame.f5[0] = frame.f2;
+  frame.f4 = f1;
+  frame.f5[2] = f1;
+  frame.f5[1] = frame.f3 - 2.0;
+  orig::fn_102D7FF9(frame.f6, frame.f5, &frame.f2, (float *)&Fn10054D70_lookAtUp);
+  orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 2, frame.f6);
   i2 = (g_pProcessor->ScratchMatrixStackTop);
   p2 = ((float * *)((char *)g_pProcessor + 0xA10))[i2];
   (g_pProcessor->ScratchMatrixStackTop) = i2 + 1;

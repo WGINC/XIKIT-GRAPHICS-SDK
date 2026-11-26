@@ -11,12 +11,14 @@ XI_API void __thiscall InputDevices_DrawActorAxes(uint32_t *self_)
   int i3;
   int i4;
   uint32_t *p1;
-  alignas(16) unsigned char xi_frame[0x558];  // address-taken locals at their original offsets
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x84);
-  float (&f1)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x88);
-  uint32_t (&self_v)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x98);
-  uint32_t (&u1)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0xD8);
-  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x118);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x558];
+    struct __attribute__((packed)) { unsigned char pad_1[0x84]; int i5; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_2[0x88]; float f1[4]; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_3[0x98]; uint32_t self_v[16]; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_4[0xD8]; uint32_t u1[16]; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_5[0x118]; uint8_t u2[64]; };   // at 0x118
+  } frame;
 
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
@@ -26,22 +28,22 @@ XI_API void __thiscall InputDevices_DrawActorAxes(uint32_t *self_)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-  orig::fn_10027990((Iostream_init *)self_v);
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::fn_10027990((Iostream_init *)u2);
-  orig::Mat4_SetIdentity(u1);
-  orig::CDx_GetTransformCached(g_pCDx, 256, u2);
+  orig::fn_10027990((Iostream_init *)frame.self_v);
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::fn_10027990((Iostream_init *)frame.u2);
+  orig::Mat4_SetIdentity(frame.u1);
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.u2);
   i1 = 0;
   i2 = 0;
-  i5 = 0;
+  frame.i5 = 0;
   do
   {
     if ( *(uint32_t *)(*(self_ + 3) + i2 + 4) != -1 )
     {
-      orig::Mat4_SetIdentity(self_v);
-      orig::Mat4_PostRotateY(self_v, *(float *)(i1 + *(self_ + 4) + 12));
-      orig::Mat4_SetTranslation(self_v, (uint32_t *)(i1 + *(self_ + 4)));
-      orig::CDx_SetTransform(g_pCDx, 256, self_v);
+      orig::Mat4_SetIdentity(frame.self_v);
+      orig::Mat4_PostRotateY(frame.self_v, *(float *)(i1 + *(self_ + 4) + 12));
+      orig::Mat4_SetTranslation(frame.self_v, (uint32_t *)(i1 + *(self_ + 4)));
+      orig::CDx_SetTransform(g_pCDx, 256, frame.self_v);
       (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
       orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 3, (int)&g_debugAxisLineVerts, 16);
       i3 = ActerBuffPtr[*(uint32_t *)(*(self_ + 3) + i2)];
@@ -54,23 +56,23 @@ XI_API void __thiscall InputDevices_DrawActorAxes(uint32_t *self_)
                                     ? -2147418113
                                     : -2130706433;
           p1 = (uint32_t *)(*(int (__thiscall **)(int))(*(uint32_t *)i4 + 444))(i4);
-          orig::Vec4_Copy(f1, p1);
-          orig::Vec3_Sub(g_debugLineVerts_v1, f1, (float *)(i1 + *(self_ + 4)));
-          orig::Mat4_SetTranslation(u1, (uint32_t *)(i1 + *(self_ + 4)));
-          orig::CDx_SetTransform(g_pCDx, 256, u1);
+          orig::Vec4_Copy(frame.f1, p1);
+          orig::Vec3_Sub(g_debugLineVerts_v1, frame.f1, (float *)(i1 + *(self_ + 4)));
+          orig::Mat4_SetTranslation(frame.u1, (uint32_t *)(i1 + *(self_ + 4)));
+          orig::CDx_SetTransform(g_pCDx, 256, frame.u1);
           orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)&g_debugLineVerts, 16);
-          i2 = i5;
+          i2 = frame.i5;
         }
       }
     }
     i2 += 8;
     i1 += 16;
-    i5 = i2;
+    frame.i5 = i2;
   }
   while ( i2 < 18432 );
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
-  orig::CDx_SetTransform(g_pCDx, 256, u2);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u2);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -393,12 +395,14 @@ XI_API bits32 __thiscall DirectInput_InstallKeyboard(void * self_)
   uint32_t *p1;
   uint32_t u1;
   uint32_t u2;
-  char xi_frame[20] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[20];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u5; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u6; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u7; };   // at 0x10
+  } frame;
   
   p1 = (uint32_t *)((int)self_ + 0x88);
   u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x84) + 0xc))
@@ -407,12 +411,12 @@ XI_API bits32 __thiscall DirectInput_InstallKeyboard(void * self_)
     *p1 = 0;
     return u1 & 0xffffff00;
   }
-  u3 = 0x14;
-  u4 = 0x10;
-  u5 = 0;
-  u6 = 0;
-  u7 = 0x140;
-  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x18))))((int *)*p1,1,&u3);
+  frame.u3 = 0x14;
+  frame.u4 = 0x10;
+  frame.u5 = 0;
+  frame.u6 = 0;
+  frame.u7 = 0x140;
+  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x18))))((int *)*p1,1,&frame.u3);
   if ((int)u1 < 0) {
     return u1 & 0xffffff00;
   }
@@ -437,12 +441,14 @@ XI_API char __thiscall DirectInput_InstallMouse(uint32_t **self_)
   uint32_t *p1;
   int i1;
   int i2;
-  alignas(16) unsigned char xi_frame[0x438];  // address-taken locals at their original offsets
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x34);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x438];
+    struct __attribute__((packed)) { unsigned char pad_1[0x24]; int i3; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_2[0x28]; int i4; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; int i5; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; int i6; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_5[0x34]; int i7; };   // at 0x34
+  } frame;
 
   if ( g_windowMode != 0 )
   {
@@ -476,19 +482,19 @@ XI_API char __thiscall DirectInput_InstallMouse(uint32_t **self_)
         }
         else
         {
-          i3 = 20;
-          i4 = 16;
-          i5 = 0;
-          i6 = 0;
-          i7 = 0;
-          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i1 + 24))(i1, 2, &i3);
+          frame.i3 = 20;
+          frame.i4 = 16;
+          frame.i5 = 0;
+          frame.i6 = 0;
+          frame.i7 = 0;
+          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i1 + 24))(i1, 2, &frame.i3);
           i2 = *p1;
-          i3 = 20;
-          i4 = 16;
-          i5 = 0;
-          i6 = 0;
-          i7 = 320;
-          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i2 + 24))(i2, 1, &i3);
+          frame.i3 = 20;
+          frame.i4 = 16;
+          frame.i5 = 0;
+          frame.i6 = 0;
+          frame.i7 = 320;
+          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i2 + 24))(i2, 1, &frame.i3);
           if ( (*(int (__stdcall **)(uint32_t, uint32_t, int))(*(uint32_t *)*p1 + 52))(*p1, *((uint32_t *)g_pApp + 6), 6) >= 0 )
           {
             (*(void (__stdcall **)(uint32_t))(*(uint32_t *)*p1 + 28))(*p1);
@@ -588,7 +594,7 @@ XI_API void __thiscall InputDevices_JmpGetKeyboardLayout(void * self_)
   uint32_t  &u56 = *reinterpret_cast<uint32_t  *>(xi_frame + 500);
   uint8_t  &u57 = *reinterpret_cast<uint8_t  *>(xi_frame + 504);
   uint32_t  &u58 = *reinterpret_cast<uint32_t  *>(xi_frame + 505);
-  CHAR  (&c2)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 536);
+  CHAR  (&lpszDescription)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 536);
   
   i2 = 0;
   p3 = i3;
@@ -729,7 +735,7 @@ XI_API void __thiscall InputDevices_JmpGetKeyboardLayout(void * self_)
   *(uint16_t *)p4 = 0;
   *(uint8_t *)((int)p4 + 2) = 0;
   val1 = GetKeyboardLayout(0);
-  orig::ImmGetDescriptionA_102BC826(val1,c2,0x100);
+  orig::ImmGetDescriptionA_102BC826(val1,lpszDescription,0x100);
   p2 = &xi_frame[0];
   i1 = i3[0];
   do {
@@ -746,7 +752,7 @@ XI_API void __thiscall InputDevices_JmpGetKeyboardLayout(void * self_)
       c1 = *p5;
       p5 = p5 + 1;
     } while (c1 != '\0');
-    u2 = orig::_strncmp_v1(_Str1,c2,~u1 - 1);
+    u2 = orig::_strncmp_v1(_Str1,lpszDescription,~u1 - 1);
     if ((int)u2 == 0) {
       *(int *)((int)self_ + 0xda8) = i3[i2 * 9];
       return;
@@ -767,17 +773,19 @@ XI_API bits32 __thiscall DirectInput_InstallJoystick(void * self_)
   int i1;
   uint32_t *p2;
   uint8_t **p3;
-  char xi_frame[241] __attribute__((aligned(4)));
-  char  &c1 = *reinterpret_cast<char  *>(xi_frame + 0);
-  int * &p4 = *reinterpret_cast<int * *>(xi_frame + 57);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 61);
-  uint8_t * &p5 = *reinterpret_cast<uint8_t * *>(xi_frame + 65);
-  uint8_t  (&u4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 129);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 133);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 137);
-  uint32_t  (&u7)[10] = *reinterpret_cast<uint32_t  (*)[10]>(xi_frame + 141);
-  uint8_t  &u8 = *reinterpret_cast<uint8_t  *>(xi_frame + 181);
-  uint32_t  (&u9)[14] = *reinterpret_cast<uint32_t  (*)[14]>(xi_frame + 185);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[241];
+    struct __attribute__((packed)) { char c1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x39]; int * p4; };   // at 0x39
+    struct __attribute__((packed)) { unsigned char pad_3[0x3D]; uint32_t u3; };   // at 0x3D
+    struct __attribute__((packed)) { unsigned char pad_4[0x41]; uint8_t * p5; };   // at 0x41
+    struct __attribute__((packed)) { unsigned char pad_5[0x81]; uint8_t u4[4]; };   // at 0x81
+    struct __attribute__((packed)) { unsigned char pad_6[0x85]; uint32_t u5; };   // at 0x85
+    struct __attribute__((packed)) { unsigned char pad_7[0x89]; uint32_t u6; };   // at 0x89
+    struct __attribute__((packed)) { unsigned char pad_8[0x8D]; uint32_t u7[10]; };   // at 0x8D
+    struct __attribute__((packed)) { unsigned char pad_9[0xB5]; uint8_t u8; };   // at 0xB5
+    struct __attribute__((packed)) { unsigned char pad_10[0xB9]; uint32_t u9[14]; };   // at 0xB9
+  } frame;
   
   if (g_10455C38 != '\0') {
     u1 = orig::XInput_ProbeDll(self_);
@@ -807,21 +815,21 @@ code_10008440:
   p1 = *(int **)((int)self_ + 0x90);
   *(uint8_t *)((int)self_ + 0xc98) = 0;
   if (p1 != (int *)0x0) {
-    p2 = u9;
+    p2 = frame.u9;
     for (i1 = 0xb; i1 != 0; i1 = i1 + -1) {
       *p2 = 0;
       p2 = p2 + 1;
     }
-    u9[0] = 0x2c;
+    frame.u9[0] = 0x2c;
     (**(untyped_fn **)(*p1 + 0xc))();
-    if ((u8 & 10) != 0) {
+    if ((frame.u8 & 10) != 0) {
       *(uint8_t *)((int)self_ + 0xc98) = 1;
     }
-    u5 = 0x14;
-    u6 = 0x10;
-    u7[0] = 0;
-    u7[1] = 0;
-    u7[2] = 0x140;
+    frame.u5 = 0x14;
+    frame.u6 = 0x10;
+    frame.u7[0] = 0;
+    frame.u7[1] = 0;
+    frame.u7[2] = 0x140;
     i1 = (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
     if (i1 < 0) {
       u2 = orig::DirectInput_ReleaseDevice(self_,i1);
@@ -833,7 +841,7 @@ code_10008440:
       u2 = orig::DirectInput_ReleaseDevice(self_,i1);
       return u2;
     }
-    p5 = (uint8_t *)(int)XI_GAME(0x1000854Bu);
+    frame.p5 = (uint8_t *)(int)XI_GAME(0x1000854Bu);
     i1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x34))
                       ))(*(int **)((int)self_ + 0x90),*(uint32_t *)(g_pApp_as_s32 + 0x18),
                        (uint32_t)(g_10455C37 != '\0') * 4 + 4 | 1);
@@ -841,35 +849,35 @@ code_10008440:
       u2 = orig::DirectInput_ReleaseDevice(self_,i1);
       return u2;
     }
-    p2 = u7;
+    p2 = frame.u7;
     for (i1 = 6; i1 != 0; i1 = i1 + -1) {
       *p2 = 0;
       p2 = p2 + 1;
     }
-    u7[0] = 0x18;
-    u7[1] = 0x10;
-    u7[3] = 1;
-    u7[4] = 0xffffff81;
-    u7[5] = 0x7f;
-    u7[2] = 0;
-    p5 = (uint8_t *)(int)XI_GAME(0x100085A8u);
+    frame.u7[0] = 0x18;
+    frame.u7[1] = 0x10;
+    frame.u7[3] = 1;
+    frame.u7[4] = 0xffffff81;
+    frame.u7[5] = 0x7f;
+    frame.u7[2] = 0;
+    frame.p5 = (uint8_t *)(int)XI_GAME(0x100085A8u);
     (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    p4 = *(int **)((int)self_ + 0x90);
-    p5 = u4;
-    u6 = 4;
-    u3 = 4;
-    (**(untyped_fn **)(*p4 + 0x18))();
+    frame.p4 = *(int **)((int)self_ + 0x90);
+    frame.p5 = frame.u4;
+    frame.u6 = 4;
+    frame.u3 = 4;
+    (**(untyped_fn **)(*frame.p4 + 0x18))();
     (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
     (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
     (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
     (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
     p1 = *(int **)((int)self_ + 0x90);
     (**(untyped_fn **)(*p1 + 0x18))();
-    p5 = (uint8_t *)0x1c;
-    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))(*(int **)((int)self_ + 0x90),4,&p4);
+    frame.p5 = (uint8_t *)0x1c;
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))(*(int **)((int)self_ + 0x90),4,&frame.p4);
     u1 = (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x1c))(*(int **)((int)self_ + 0x90));
-    c1 = (char)((uint32_t)p1 >> 0x18);
-    if ((c1 != '\0') && (g_10455C39 != '\0')) {
+    frame.c1 = (char)((uint32_t)p1 >> 0x18);
+    if ((frame.c1 != '\0') && (g_10455C39 != '\0')) {
       u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x10))
                         ))(*(int **)((int)self_ + 0x90),&code_100083B0,&g_10455C24,3);
       if (-1 < (int)u1) {
@@ -877,13 +885,13 @@ code_10008440:
           g_10455C24 = 2;
         }
         p1 = *(int **)((int)self_ + 0x90);
-        p3 = &p5;
+        p3 = &frame.p5;
         for (i1 = 0xe; i1 != 0; i1 = i1 + -1) {
           *p3 = (uint8_t *)0x0;
           p3 = p3 + 1;
         }
-        p5 = (uint8_t *)0x38;
-        u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x48))))(p1,&g_10341D4C,&p5,&g_10455C28,0);
+        frame.p5 = (uint8_t *)0x38;
+        u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x48))))(p1,&g_10341D4C,&frame.p5,&g_10455C28,0);
       }
     }
   }

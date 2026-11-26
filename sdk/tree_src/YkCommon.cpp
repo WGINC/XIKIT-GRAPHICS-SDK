@@ -263,7 +263,7 @@ XI_API int __cdecl YkCommon_CompareMapped(uint32_t arg1, int arg2, int arg3, bit
 XI_API void __cdecl YkCommonInit(void)
 {
   uint8_t *p1;
-  uint8_t *p2;
+  uint8_t *id;
   int i1;
   bits32 *p3;
   
@@ -288,8 +288,8 @@ XI_API void __cdecl YkCommonInit(void)
   g_10662E54 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,str_menu_windowps_1036FFB4);
   g_10662E58 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,aMenuKeytops3);
   g_10662E5C = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,str_menu_pname_1037D4A8);
-  p2 = orig::Scene_GetMenuFrameName(0);
-  g_10662E60 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,p2);
+  id = orig::Scene_GetMenuFrameName(0);
+  g_10662E60 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,id);
   g_10662E64 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,str_menu_contents_1037D494);
   g_10662E68 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,str_anc_anc_l_1037D480);
   g_10662E6C = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,str_anc_anc_s_1037D46C);
@@ -376,29 +376,31 @@ XI_API void __cdecl Gfx_ProjectWorldToScreen(uint32_t *arg1, uint16_t *arg2, uin
 {
   char *ViewMatrixPtr;
   double f1;
-  alignas(16) unsigned char xi_frame[0x4D0];  // address-taken locals at their original offsets
-  int (&i1)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x0);
-  uint32_t (&u1)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x10);
-  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x50);
-  uint8_t (&u3)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x90);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4D0];
+    struct __attribute__((packed)) { int i1[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; uint32_t u1[16]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x50]; uint8_t u2[64]; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_4[0x90]; uint8_t u3[64]; };   // at 0x90
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)u3);
-  orig::fn_10027990((Iostream_init *)u2);
-  orig::fn_10027990((Iostream_init *)u1);
-  orig::CDx_GetTransformCached(g_pCDx, 2, u2);
-  orig::CDx_GetTransformCached(g_pCDx, 256, u3);
-  orig::Mat4_SetIdentity(u1);
-  orig::Mat4_SetTranslation(u1, arg1);
+  orig::fn_10027990((Iostream_init *)frame.u3);
+  orig::fn_10027990((Iostream_init *)frame.u2);
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::CDx_GetTransformCached(g_pCDx, 2, frame.u2);
+  orig::CDx_GetTransformCached(g_pCDx, 256, frame.u3);
+  orig::Mat4_SetIdentity(frame.u1);
+  orig::Mat4_SetTranslation(frame.u1, arg1);
   ViewMatrixPtr = orig::Camera_GetViewMatrixPtr();
   orig::CDx_SetTransform(g_pCDx, 2, ViewMatrixPtr);
-  orig::CDx_SetTransform(g_pCDx, 256, u1);
-  orig::Vec4_Set((int)i1, 0.0, 0, 0, 1065353216);
-  orig::Gfx_ProjectWorldToClip((float *)i1, i1);
-  orig::Gfx_NdcToScreen((float *)i1);
-  orig::CDx_SetTransform(g_pCDx, 2, u2);
-  orig::CDx_SetTransform(g_pCDx, 256, u3);
-  f1 = *(float *)&i1[1] + 0.5;
-  *arg2 = (long long)(*(float *)i1 + 0.5);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u1);
+  orig::Vec4_Set((int)frame.i1, 0.0, 0, 0, 1065353216);
+  orig::Gfx_ProjectWorldToClip((float *)frame.i1, frame.i1);
+  orig::Gfx_NdcToScreen((float *)frame.i1);
+  orig::CDx_SetTransform(g_pCDx, 2, frame.u2);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u3);
+  f1 = *(float *)&frame.i1[1] + 0.5;
+  *arg2 = (long long)(*(float *)frame.i1 + 0.5);
   *arg3 = (long long)f1;
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -414,13 +416,15 @@ XI_API uint8_t * __cdecl YkCommon_FormatDateTime(uint32_t arg1, bits32 arg2)
   short *p2;
   uint32_t u1;
   int i2;
-  char xi_frame[152] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char * &p3 = *reinterpret_cast<char * *>(xi_frame + 4);
-  uint8_t * &p4 = *reinterpret_cast<uint8_t * *>(xi_frame + 20);
-  uint8_t  (&u2)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 24);
-  uint8_t  (&u3)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 56);
-  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 88);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[152];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; char * p3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; uint8_t * p4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint8_t u2[32]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x38]; uint8_t u3[32]; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_6[0x58]; uint8_t u4[64]; };   // at 0x58
+  } frame;
   
   i2 = 0;
   if (arg1 != 0) {
@@ -432,12 +436,12 @@ XI_API uint8_t * __cdecl YkCommon_FormatDateTime(uint32_t arg1, bits32 arg2)
   ;
   if ((p1 == (short *)0x0) || (p2 == (short *)0x0)) {
     if ((arg2 & 1) == 0) {
-      p3 = str__________1037D4C8;
+      frame.p3 = str__________1037D4C8;
     }
     else {
-      p3 = str____________1037D4D4;
+      frame.p3 = str____________1037D4D4;
     }
-    orig::_sprintf_v1(u4,p3);
+    orig::_sprintf_v1(frame.u4,frame.p3);
     orig::_sprintf_v1(&g_10662E98,str__________1037D4BC);
   }
   else if (i2 == 0) {
@@ -447,45 +451,45 @@ XI_API uint8_t * __cdecl YkCommon_FormatDateTime(uint32_t arg1, bits32 arg2)
     else {
       u1 = orig::TargetMenu_GetMessageFwd(10,(int)p1[3]);
     }
-    orig::_sprintf_v1(u4,u1);
+    orig::_sprintf_v1(frame.u4,u1);
     u1 = orig::TargetMenu_GetMessageFwd(10,(int)p2[3]);
-    orig::_sprintf_v1(u3,u1);
+    orig::_sprintf_v1(frame.u3,u1);
   }
   else {
     if ((arg2 & 1) == 0) {
-      orig::_sprintf_v1(u2,&aD_4,*(int *)(i2 + 0x10) + 1);
-      orig::TargetMenu_FormatMessage5(u4,0x40,10,(int)p1[2],1,u2);
+      orig::_sprintf_v1(frame.u2,&aD_4,*(int *)(i2 + 0x10) + 1);
+      orig::TargetMenu_FormatMessage5(frame.u4,0x40,10,(int)p1[2],1,frame.u2);
     }
     else {
       if ((arg2 & 4) == 0) {
         i1 = *(int *)(i2 + 0x10);
-        i3 = 0x60;
+        frame.i3 = 0x60;
       }
       else {
         i1 = *(int *)(i2 + 0x10);
-        i3 = 0x61;
+        frame.i3 = 0x61;
       }
-      orig::TargetMenu_FormatMessage4((int)u2,0x20,10,i3,i1 + 1);
-      orig::TargetMenu_FormatMessage5(u4,0x40,10,(int)p1[1],1,u2);
+      orig::TargetMenu_FormatMessage4((int)frame.u2,0x20,10,frame.i3,i1 + 1);
+      orig::TargetMenu_FormatMessage5(frame.u4,0x40,10,(int)p1[1],1,frame.u2);
     }
     if ((arg2 & 8) == 0) {
-      orig::TargetMenu_FormatMessage4((int)u3,0x20,10,(int)p2[1],*(uint32_t *)(i2 + 8));
+      orig::TargetMenu_FormatMessage4((int)frame.u3,0x20,10,(int)p2[1],*(uint32_t *)(i2 + 8));
     }
     else {
-      orig::TargetMenu_FormatMessage4((int)u3,0x20,10,(int)p2[5],*(uint32_t *)(i2 + 8));
+      orig::TargetMenu_FormatMessage4((int)frame.u3,0x20,10,(int)p2[5],*(uint32_t *)(i2 + 8));
     }
   }
   if ((arg2 & 2) == 0) {
     if ((arg2 & 0x18) == 0) {
-      orig::_sprintf_v1(&g_10662E98,str__s__s_10358098,u4,u3);
+      orig::_sprintf_v1(&g_10662E98,str__s__s_10358098,frame.u4,frame.u3);
       return(uint8_t*)(&g_10662E98);
     }
-    p4 = u3;
+    frame.p4 = frame.u3;
   }
   else {
-    p4 = u4;
+    frame.p4 = frame.u4;
   }
-  orig::_sprintf_v1(&g_10662E98,&aS,p4);
+  orig::_sprintf_v1(&g_10662E98,&aS,frame.p4);
   return(uint8_t*)(&g_10662E98);
 }
 
@@ -873,11 +877,13 @@ XI_API int __cdecl YkCommon_DrawTruncated(bits32 arg1, bits32 arg2, char * arg3,
   uint32_t u1;
   char *p2;
   uint64_t u2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint16_t  &u4 = *reinterpret_cast<uint16_t  *>(xi_frame + 4);
-  char  &c2 = *reinterpret_cast<char  *>(xi_frame + 6);
-  uint8_t  &u5 = *reinterpret_cast<uint8_t  *>(xi_frame + 7);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint16_t u4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x6]; char c2; };   // at 0x6
+    struct __attribute__((packed)) { unsigned char pad_4[0x7]; uint8_t u5; };   // at 0x7
+  } frame;
   
   p1 = (int *)orig::YkCommon_GetIndexed(0);
   u1 = 0xffffffff;
@@ -889,11 +895,11 @@ XI_API int __cdecl YkCommon_DrawTruncated(bits32 arg1, bits32 arg2, char * arg3,
     p2 = p2 + 1;
   } while (c1 != '\0');
   if (8 < ~u1 - 1) {
-    u3 = *(uint32_t *)arg3;
-    u4 = *(uint16_t *)(arg3 + 4);
-    c2 = arg3[6];
-    u5 = 0;
-    u2 = orig::YkCommon_DrawUnscaled(arg1,arg2,&u3,arg4);
+    frame.u3 = *(uint32_t *)arg3;
+    frame.u4 = *(uint16_t *)(arg3 + 4);
+    frame.c2 = arg3[6];
+    frame.u5 = 0;
+    u2 = orig::YkCommon_DrawUnscaled(arg1,arg2,&frame.u3,arg4);
     self_ = *(void **)(*p1 + 0x1b0);
     orig::Shape_DrawScaled_v1(self_,(int)(short)u2,(int)(short)arg2,1.0f,1.0f,arg4,0,0,0);
     return (int)(short)((short)u2 + -1 +

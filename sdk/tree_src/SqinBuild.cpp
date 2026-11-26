@@ -10,9 +10,11 @@ XI_API int __cdecl SqinBuild_BuildSQO(bits32 arg1, char * arg2, bits32 arg3)
   bits32 *p2;
   bits32 *p3;
   uint32_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i1; };   // at 0x4
+  } frame;
   
   p1 = arg2;
   if ((((*arg2 != 'S') || (arg2[1] != 'Q')) || (arg2[2] != 'L')) || (arg2[3] != 'E')) {
@@ -20,11 +22,11 @@ XI_API int __cdecl SqinBuild_BuildSQO(bits32 arg1, char * arg2, bits32 arg3)
     orig::sqDebugPrintf_v1(str_sqinBuildSQO_0x_08X__0x_08X___d__103BC3C0,arg1,p1,arg3);
     return 0;
   }
-  p2 = orig::SqScriptRead_ReadBlock((bits32 *)u2,4,1,(bits32 *)(arg2 + 4),0);
-  u1 = (uint32_t)((u2[0] & 1) != 0);
-  p2 = orig::SqScriptRead_ReadBlock(&i1,4,1,p2,0);
-  if (i1 != 0x150001) {
-    orig::sqDebugPrintf_v1(str_____Error__Unknown_skin_type_0x0_103BC398,i1);
+  p2 = orig::SqScriptRead_ReadBlock((bits32 *)frame.u2,4,1,(bits32 *)(arg2 + 4),0);
+  u1 = (uint32_t)((frame.u2[0] & 1) != 0);
+  p2 = orig::SqScriptRead_ReadBlock(&frame.i1,4,1,p2,0);
+  if (frame.i1 != 0x150001) {
+    orig::sqDebugPrintf_v1(str_____Error__Unknown_skin_type_0x0_103BC398,frame.i1);
     orig::sqDebugPrintf_v1(str_sqinBuildSQO_0x_08X__0x_08X___d__103BC3C0,arg1,p2,arg3);
     return 0;
   }

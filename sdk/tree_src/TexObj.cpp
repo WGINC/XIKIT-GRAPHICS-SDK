@@ -117,26 +117,28 @@ XI_API int __thiscall TexObj_Upload(void *self_)
   struct IDirect3DSurface8 *p12;
   int i;
   int i30;
-  alignas(16) unsigned char xi_frame[0x4B8];  // address-taken locals at their original offsets
-  char &c6 = *reinterpret_cast<char *>(xi_frame + 0x8B);
-  struct IDirect3DSurface8 * &p13 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x8C);
-  struct IDirect3DSurface8 * &p14 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x90);
-  IDirect3DTexture8 * &p15 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x94);
-  IDirect3DTexture8 * &p16 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x98);
-  struct IDirect3DSurface8 * &p17 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x9C);
-  int &i31 = *reinterpret_cast<int *>(xi_frame + 0xA0);
-  int &i32 = *reinterpret_cast<int *>(xi_frame + 0xA4);
-  uint32_t (&u5)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0xA8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x4B8];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8B]; char c6; };   // at 0x8B
+    struct __attribute__((packed)) { unsigned char pad_2[0x8C]; struct IDirect3DSurface8 * p13; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_3[0x90]; struct IDirect3DSurface8 * p14; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_4[0x94]; IDirect3DTexture8 * p15; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_5[0x98]; IDirect3DTexture8 * p16; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_6[0x9C]; struct IDirect3DSurface8 * p17; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_7[0xA0]; int i31; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_8[0xA4]; int i32; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_9[0xA8]; uint32_t u5[4]; };   // at 0xA8
+  } frame;
 
   i2 = 0;
   c1 = *((uint8_t *)self_ + 41);
-  p16 = nullptr;
-  p14 = nullptr;
-  p13 = nullptr;
-  c6 = 0;
+  frame.p16 = nullptr;
+  frame.p14 = nullptr;
+  frame.p13 = nullptr;
+  frame.c6 = 0;
   if ( c1 < 0 && **((uint32_t **)self_ + 8) != 0 )
   {
-    c6 = 1;
+    frame.c6 = 1;
     goto L1;
   }
   switch ( c1 )
@@ -150,7 +152,7 @@ XI_API int __thiscall TexObj_Upload(void *self_)
              0,
              D3DFMT_A1R5G5B5,
              1,
-             &p16);
+             &frame.p16);
 L2:
       if ( i3 < 0 )
         goto L3;
@@ -164,7 +166,7 @@ L2:
              0,
              D3DFMT_R8G8B8,
              1,
-             &p16);
+             &frame.p16);
       goto L2;
     case 32:
       i3 = orig::fn_102D2FB9(
@@ -175,14 +177,14 @@ L2:
              0,
              D3DFMT_A8R8G8B8,
              1,
-             &p16);
+             &frame.p16);
       goto L2;
     default:
       break;
   }
-  p16->LockRect(0, (D3DLOCKED_RECT *)&i31, nullptr, 0);
+  frame.p16->LockRect(0, (D3DLOCKED_RECT *)&frame.i31, nullptr, 0);
   c2 = *((uint8_t *)self_ + 41);
-  p17 = *((struct IDirect3DSurface8 **)self_ + 7);
+  frame.p17 = *((struct IDirect3DSurface8 **)self_ + 7);
   switch ( c2 )
   {
     case 16:
@@ -190,7 +192,7 @@ L2:
       {
         do
         {
-          p8 = (uint16_t *)(i32 + i2 * i31);
+          p8 = (uint16_t *)(frame.i32 + i2 * frame.i31);
           i13 = *((unsigned short *)self_ + 18);
           i14 = 0;
           if ( (uint16_t)i13 != 0 )
@@ -203,8 +205,8 @@ L2:
               {
                 case 4:
                   p8 += 2;
-                  i1 = (int)p17;
-                  *(p8 - 2) = *((uint16_t *)&p17->lpVtbl
+                  i1 = (int)frame.p17;
+                  *(p8 - 2) = *((uint16_t *)&frame.p17->lpVtbl
                                + (*(unsigned char *)((i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)) / 2
                                                      + *((uint32_t *)self_ + 8)) >> 4));
                   i16 = *(uint8_t *)((i14 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i2 - 1))
@@ -215,7 +217,7 @@ L2:
                   *(p8 - 1) = *(uint16_t *)(i1 + 2 * i16);
                   break;
                 case 8:
-                  *p8 = *((uint16_t *)&p17->lpVtbl
+                  *p8 = *((uint16_t *)&frame.p17->lpVtbl
                          + *(unsigned char *)(*((uint32_t *)self_ + 8)
                                               + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)
                                               + i14));
@@ -225,19 +227,19 @@ L2:
                                                           * (i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)));
                   goto L4;
                 case 0x18:
-                  p15 = *(IDirect3DTexture8 **)(3 * (i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1))
+                  frame.p15 = *(IDirect3DTexture8 **)(3 * (i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1))
                                               + *((uint32_t *)self_ + 8));
-                  i17 = (short)(((uint16_t)(i17) & 0xFF00u) | ((uint16_t)(uint8_t)((*((uint8_t *)&(p15) + 2)) & 0xF8) << 0));
+                  i17 = (short)(((uint16_t)(i17) & 0xFF00u) | ((uint16_t)(uint8_t)((*((uint8_t *)&(frame.p15) + 2)) & 0xF8) << 0));
                   i17 = (short)(((uint16_t)(i17) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
-                  i1 = (int)(((uint32_t)(i1) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(p15) + 1)) & 0xF8) << 0));
-                  *p8 = ((unsigned char)p15 >> 3) | (4 * (i1 | (32 * i17)));
+                  i1 = (int)(((uint32_t)(i1) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(frame.p15) + 1)) & 0xF8) << 0));
+                  *p8 = ((unsigned char)frame.p15 >> 3) | (4 * (i1 | (32 * i17)));
                   goto L4;
                 case 0x20:
                   i18 = (short)(((uint16_t)(i18) & 0xFFu) | ((uint16_t)(uint8_t)(0) << 8));
                   i19 = i13 * (*((unsigned short *)self_ + 19) - i2 - 1);
                   i20 = *((uint32_t *)self_ + 8);
                   p9 = *(IDirect3DTexture8 **)(i20 + 4 * (i14 + i19));
-                  p15 = p9;
+                  frame.p15 = p9;
                   i18 = (short)(((uint16_t)(i18) & 0xFF00u) | ((uint16_t)(uint8_t)((*((uint8_t *)&(p9) + sizeof(p9) - 1))) << 0));
                   i20 = (int)(((uint32_t)(i20) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(p9) + 2)) & 0xF8) << 0));
                   i21 = i20 | (2 * (i18 & 0xFF80));
@@ -267,7 +269,7 @@ L4:
       {
         do
         {
-          p4 = (uint8_t *)(i32 + i2 * i31);
+          p4 = (uint8_t *)(frame.i32 + i2 * frame.i31);
           i9 = *((unsigned short *)self_ + 18);
           i10 = 0;
           if ( (uint16_t)i9 != 0 )
@@ -283,16 +285,16 @@ L4:
                   i1 = *(unsigned char *)((i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)) / 2
                                           + *((uint32_t *)self_ + 8)) >> 4;
                   p5 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7) + 4 * i1);
-                  p15 = p5;
+                  frame.p15 = p5;
                   *((uint16_t *)p4 - 3) = (uint16_t)p5;
                   *(p4 - 4) = (*((uint8_t *)&(p5) + 2));
                   i12 = i10 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i2 - 1);
                   ++i10;
                   p6 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
                                               + 4 * (*(uint8_t *)(i12 / 2 + *((uint32_t *)self_ + 8)) & 0xF));
-                  p15 = p6;
+                  frame.p15 = p6;
                   *(p4 - 3) = (uint8_t)p6;
-                  (*(uint8_t *)&(p6)) = (*((uint8_t *)&(p15) + 2));
+                  (*(uint8_t *)&(p6)) = (*((uint8_t *)&(frame.p15) + 2));
                   *(p4 - 2) = (*((uint8_t *)&(p6) + 1));
                   *(p4 - 1) = (uint8_t)p6;
                   break;
@@ -302,7 +304,7 @@ L4:
                                               * *(unsigned char *)(*((uint32_t *)self_ + 8)
                                                                    + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)
                                                                    + i10));
-                  p15 = p7;
+                  frame.p15 = p7;
                   *p4 = (uint8_t)p7;
                   p4[2] = (*((uint8_t *)&(p7) + 2));
                   goto L5;
@@ -321,9 +323,9 @@ L4:
                   p7 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 8)
                                               + 4 * (i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)));
 L7:
-                  p15 = p7;
+                  frame.p15 = p7;
                   *p4 = (uint8_t)p7;
-                  p4[2] = (*((uint8_t *)&(p15) + 2));
+                  p4[2] = (*((uint8_t *)&(frame.p15) + 2));
 L5:
                   p4[1] = (*((uint8_t *)&(p7) + 1));
 L6:
@@ -346,7 +348,7 @@ L6:
     case 32:
       if ( (*((uint32_t *)self_ + 11) & 8) != 0 )
       {
-        orig::Tex_HeightToNormalMap(*((short **)self_ + 2), (int)self_, (int)&i31);
+        orig::Tex_HeightToNormalMap(*((short **)self_ + 2), (int)self_, (int)&frame.i31);
       }
       else
       {
@@ -355,7 +357,7 @@ L6:
         {
           do
           {
-            p1 = (uint8_t *)(i32 + i4 * i31);
+            p1 = (uint8_t *)(frame.i32 + i4 * frame.i31);
             i5 = *((unsigned short *)self_ + 18);
             i6 = 0;
             if ( (uint16_t)i5 != 0 )
@@ -370,13 +372,13 @@ L6:
                     p1 += 8;
                     i1 = *(unsigned char *)((i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)) / 2
                                             + *((uint32_t *)self_ + 8)) >> 4;
-                    p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7) + 4 * i1);
-                    *((uint32_t *)p1 - 2) = p15;
+                    frame.p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7) + 4 * i1);
+                    *((uint32_t *)p1 - 2) = frame.p15;
                     i8 = i6 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i4 - 1);
                     ++i6;
-                    p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
+                    frame.p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
                                                 + 4 * (*(uint8_t *)(i8 / 2 + *((uint32_t *)self_ + 8)) & 0xF));
-                    *((uint32_t *)p1 - 1) = p15;
+                    *((uint32_t *)p1 - 1) = frame.p15;
                     break;
                   case 8:
                     p2 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
@@ -396,9 +398,9 @@ L6:
                     p3 = *(IDirect3DTexture8 **)(3 * (i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1))
                                                 + *((uint32_t *)self_ + 8));
                     p1[3] = 0x80;
-                    p15 = p3;
+                    frame.p15 = p3;
                     *p1 = (uint8_t)p3;
-                    c3 = (*((uint8_t *)&(p15) + 2));
+                    c3 = (*((uint8_t *)&(frame.p15) + 2));
                     p1[1] = (*((uint8_t *)&(p3) + 1));
                     goto L10;
                   case 0x20:
@@ -406,10 +408,10 @@ L6:
                                                 + 4 * (i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)));
 L8:
                     p1[1] = (*((uint8_t *)&(p2) + 1));
-                    p15 = p2;
+                    frame.p15 = p2;
                     *p1 = (uint8_t)p2;
-                    c3 = (*((uint8_t *)&(p15) + 2));
-                    p1[3] = (*((uint8_t *)&(p15) + sizeof(p15) - 1));
+                    c3 = (*((uint8_t *)&(frame.p15) + 2));
+                    p1[3] = (*((uint8_t *)&(frame.p15) + sizeof(frame.p15) - 1));
 L10:
                     p1[2] = c3;
 L9:
@@ -433,15 +435,15 @@ L9:
     default:
       break;
   }
-  p16->UnlockRect(0);
+  frame.p16->UnlockRect(0);
 L1:
   c4 = *((uint8_t *)self_ + 44);
   u3 = *((unsigned short *)self_ + 19);
   u4 = *((unsigned short *)self_ + 18);
-  u5[1] = 0;
-  u5[3] = (unsigned short)u3;
-  u5[0] = 0;
-  u5[2] = (unsigned short)u4;
+  frame.u5[1] = 0;
+  frame.u5[3] = (unsigned short)u3;
+  frame.u5[0] = 0;
+  frame.u5[2] = (unsigned short)u4;
   if ( (c4 & 7) == 0 )
   {
     i30 = 0;
@@ -454,65 +456,65 @@ L1:
         (*(void (__stdcall **)(uint32_t, int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
           *((uint32_t *)self_ + 16),
           i30 - 1,
-          &p14);
+          &frame.p14);
         (*(void (__stdcall **)(uint32_t, int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
           *((uint32_t *)self_ + 16),
           i30,
-          &p13);
-        orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 5, 0);
-        if ( p14 != nullptr )
+          &frame.p13);
+        orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p14, nullptr, nullptr, 5, 0);
+        if ( frame.p14 != nullptr )
         {
-          p14->Release();
-          p14 = nullptr;
+          frame.p14->Release();
+          frame.p14 = nullptr;
         }
       }
       else
       {
-        if ( c6 == 0 )
+        if ( frame.c6 == 0 )
         {
-          p16->GetSurfaceLevel(0, &p14);
+          frame.p16->GetSurfaceLevel(0, &frame.p14);
           (*(void (__stdcall **)(uint32_t, uint32_t, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
             *((uint32_t *)self_ + 16),
             0,
-            &p13);
-          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
-          if ( p14 != nullptr )
+            &frame.p13);
+          orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p14, nullptr, nullptr, 1, 0);
+          if ( frame.p14 != nullptr )
           {
-            p14->Release();
-            p14 = nullptr;
+            frame.p14->Release();
+            frame.p14 = nullptr;
           }
-          if ( p13 == nullptr )
+          if ( frame.p13 == nullptr )
             goto L12;
 L13:
-          p13->Release();
-          p13 = nullptr;
+          frame.p13->Release();
+          frame.p13 = nullptr;
           goto L12;
         }
         (*(void (__stdcall **)(uint32_t, uint32_t, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
           *((uint32_t *)self_ + 16),
           0,
-          &p13);
+          &frame.p13);
         orig::fn_102D2868(
-          p13,
+          frame.p13,
           nullptr,
           nullptr,
           *((uint32_t *)self_ + 8) + 8,
           g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
           *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
           0,
-          u5,
+          frame.u5,
           1,
           0);
       }
-      if ( p13 != nullptr )
+      if ( frame.p13 != nullptr )
         goto L13;
 L12:
       if ( ++i30 >= (unsigned int)(*(int (__stdcall **)(uint32_t))(**((uint32_t **)self_ + 16) + 52))(*((uint32_t *)self_ + 16)) )
         goto L11;
     }
   }
-  p15 = nullptr;
-  if ( c6 == 0 )
+  frame.p15 = nullptr;
+  if ( frame.c6 == 0 )
   {
     c5 = *((uint8_t *)self_ + 41);
     if ( c5 != 16 )
@@ -536,21 +538,21 @@ L16:
     goto L14;
   }
 L15:
-  i22 = (int)p17;
-  if ( p17 != (struct IDirect3DSurface8 *)16 )
+  i22 = (int)frame.p17;
+  if ( frame.p17 != (struct IDirect3DSurface8 *)16 )
   {
-    if ( p17 != (struct IDirect3DSurface8 *)24 && p17 != (struct IDirect3DSurface8 *)32 )
+    if ( frame.p17 != (struct IDirect3DSurface8 *)24 && frame.p17 != (struct IDirect3DSurface8 *)32 )
       goto L18;
 L14:
-    if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A8R8G8B8, 1, &p15) >= 0 )
+    if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A8R8G8B8, 1, &frame.p15) >= 0 )
       goto L18;
     goto L3;
   }
 L17:
-  if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A1R5G5B5, 1, &p15) >= 0 )
+  if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A1R5G5B5, 1, &frame.p15) >= 0 )
   {
 L18:
-    p15->LockRect(0, (D3DLOCKED_RECT *)&i31, nullptr, 0);
+    frame.p15->LockRect(0, (D3DLOCKED_RECT *)&frame.i31, nullptr, 0);
     if ( i22 == 16 )
     {
       i26 = 0;
@@ -559,7 +561,7 @@ L18:
         i27 = *((unsigned short *)self_ + 18);
         do
         {
-          p11 = (uint16_t *)(i32 + i26 * i31);
+          p11 = (uint16_t *)(frame.i32 + i26 * frame.i31);
           i28 = 0;
           if ( i27 > 0 )
           {
@@ -585,7 +587,7 @@ L18:
         i24 = *((unsigned short *)self_ + 18);
         do
         {
-          p10 = (uint32_t *)(i32 + i23 * i31);
+          p10 = (uint32_t *)(frame.i32 + i23 * frame.i31);
           i25 = 0;
           if ( i24 > 0 )
           {
@@ -603,7 +605,7 @@ L18:
         while ( (int)(i23) < (int)(*((unsigned short *)self_ + 19)) );
       }
     }
-    p15->UnlockRect(0);
+    frame.p15->UnlockRect(0);
     if ( (*((uint8_t *)self_ + 44) & 7u) >= 6 )
     {
       for ( i = 0; i < 6; ++i )
@@ -612,37 +614,37 @@ L18:
           *((uint32_t *)self_ + 17),
           i,
           0,
-          &p13);
-        if ( c6 != 0 )
+          &frame.p13);
+        if ( frame.c6 != 0 )
         {
           orig::fn_102D2868(
-            p13,
+            frame.p13,
             nullptr,
             nullptr,
             *((uint32_t *)self_ + 8) + 8,
             g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
             *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
             0,
-            u5,
+            frame.u5,
             1,
             0);
         }
         else
         {
-          p16->GetSurfaceLevel(0, &p14);
-          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
-          if ( p14 != nullptr )
+          frame.p16->GetSurfaceLevel(0, &frame.p14);
+          orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p14, nullptr, nullptr, 1, 0);
+          if ( frame.p14 != nullptr )
           {
-            p14->Release();
-            p14 = nullptr;
+            frame.p14->Release();
+            frame.p14 = nullptr;
           }
         }
-        p12 = p13;
-        if ( p13 != nullptr )
+        p12 = frame.p13;
+        if ( frame.p13 != nullptr )
         {
-          p13->Release();
+          frame.p13->Release();
           p12 = nullptr;
-          p13 = nullptr;
+          frame.p13 = nullptr;
         }
       }
     }
@@ -656,19 +658,19 @@ L18:
             *((uint32_t *)self_ + 17),
             k,
             j,
-            &p13);
-          p17 = nullptr;
-          p15->GetSurfaceLevel(0, &p17);
-          orig::fn_102D4515(p13, nullptr, nullptr, p17, nullptr, nullptr, 1, 0);
-          if ( p17 != nullptr )
+            &frame.p13);
+          frame.p17 = nullptr;
+          frame.p15->GetSurfaceLevel(0, &frame.p17);
+          orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p17, nullptr, nullptr, 1, 0);
+          if ( frame.p17 != nullptr )
           {
-            p17->Release();
-            p17 = nullptr;
+            frame.p17->Release();
+            frame.p17 = nullptr;
           }
-          if ( p13 != nullptr )
+          if ( frame.p13 != nullptr )
           {
-            p13->Release();
-            p13 = nullptr;
+            frame.p13->Release();
+            frame.p13 = nullptr;
           }
         }
         i29 = *((uint32_t *)self_ + 17);
@@ -678,19 +680,19 @@ L18:
             i29,
             *((uint32_t *)self_ + 11) & 7,
             j - 1,
-            &p14);
+            &frame.p14);
           (*(void (__stdcall **)(uint32_t, int, unsigned int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 17) + 60))(
             *((uint32_t *)self_ + 17),
             *((uint32_t *)self_ + 11) & 7,
             j,
-            &p13);
-          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 5, 0);
-          if ( p14 != nullptr )
+            &frame.p13);
+          orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p14, nullptr, nullptr, 5, 0);
+          if ( frame.p14 != nullptr )
           {
-            p14->Release();
-            p14 = nullptr;
+            frame.p14->Release();
+            frame.p14 = nullptr;
           }
-          if ( p13 == nullptr )
+          if ( frame.p13 == nullptr )
             continue;
         }
         else
@@ -699,76 +701,76 @@ L18:
             i29,
             *((uint32_t *)self_ + 11) & 7,
             0,
-            &p13);
-          if ( c6 != 0 )
+            &frame.p13);
+          if ( frame.c6 != 0 )
           {
             orig::fn_102D2868(
-              p13,
+              frame.p13,
               nullptr,
               nullptr,
               *((uint32_t *)self_ + 8) + 8,
               g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
               *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
               0,
-              u5,
+              frame.u5,
               1,
               0);
           }
           else
           {
-            p16->GetSurfaceLevel(0, &p14);
-            orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
-            if ( p14 != nullptr )
+            frame.p16->GetSurfaceLevel(0, &frame.p14);
+            orig::fn_102D4515(frame.p13, nullptr, nullptr, frame.p14, nullptr, nullptr, 1, 0);
+            if ( frame.p14 != nullptr )
             {
-              p14->Release();
-              p14 = nullptr;
+              frame.p14->Release();
+              frame.p14 = nullptr;
             }
           }
-          if ( p13 == nullptr )
+          if ( frame.p13 == nullptr )
             continue;
         }
-        p13->Release();
-        p13 = nullptr;
+        frame.p13->Release();
+        frame.p13 = nullptr;
       }
-      p12 = p13;
+      p12 = frame.p13;
     }
-    if ( p15 != nullptr )
+    if ( frame.p15 != nullptr )
     {
-      p15->Release();
+      frame.p15->Release();
 L11:
-      p12 = p13;
+      p12 = frame.p13;
     }
-    if ( p14 != nullptr )
+    if ( frame.p14 != nullptr )
     {
-      p14->Release();
-      p12 = p13;
-      p14 = nullptr;
+      frame.p14->Release();
+      p12 = frame.p13;
+      frame.p14 = nullptr;
     }
     if ( p12 != nullptr )
     {
       p12->Release();
-      p13 = nullptr;
+      frame.p13 = nullptr;
     }
-    result = (int)p16;
-    if ( p16 != nullptr )
-      result = p16->Release();
+    result = (int)frame.p16;
+    if ( frame.p16 != nullptr )
+      result = frame.p16->Release();
     result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(1) << 0));
     return result;
   }
 L3:
-  if ( p14 != nullptr )
+  if ( frame.p14 != nullptr )
   {
-    p14->Release();
-    p14 = nullptr;
+    frame.p14->Release();
+    frame.p14 = nullptr;
   }
-  if ( p13 != nullptr )
+  if ( frame.p13 != nullptr )
   {
-    p13->Release();
-    p13 = nullptr;
+    frame.p13->Release();
+    frame.p13 = nullptr;
   }
-  result = (int)p16;
-  if ( p16 != nullptr )
-    result = p16->Release();
+  result = (int)frame.p16;
+  if ( frame.p16 != nullptr )
+    result = frame.p16->Release();
   result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(0) << 0));
   return result;
 }

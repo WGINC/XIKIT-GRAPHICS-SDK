@@ -63,11 +63,13 @@ XI_API void __thiscall PlantMenu_SetQuarterTurn(void * self_, int arg2)
   int i1;
   uint32_t *p3;
   uint8_t u2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f1; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u5; };   // at 0xC
+  } frame;
   
   if (arg2 < 0) {
     return;
@@ -86,26 +88,26 @@ XI_API void __thiscall PlantMenu_SetQuarterTurn(void * self_, int arg2)
       p3 = p3 + 1;
     } while (i1 < *(int *)((int)self_ + 0x6c));
   }
-  u3 = 0;
-  u4 = 0;
-  u5 = 0x3f800000;
-  f1 = (float)(arg2 * 1.57079601287841796875f);
+  frame.u3 = 0;
+  frame.u4 = 0;
+  frame.u5 = 0x3f800000;
+  frame.f1 = (float)(arg2 * 1.57079601287841796875f);
   i1 = orig::PlantMenu_GetValueAt5A(self_);
   if (i1 == 0) {
     i1 = orig::PlantMenu_GetValueAt54(self_);
     if (i1 != 0) {
-      p3 = &u3;
+      p3 = &frame.u3;
       p2 = (void *)orig::PlantMenu_GetValueAt54(self_);
       orig::ModelActorPosition_SetAnglesWrapped(p2,p3);
       goto code_101CE013;
     }
     i1 = orig::PlantMenu_GetValueAt56(self_);
     if (i1 == 0) goto code_101CE013;
-    p3 = &u3;
+    p3 = &frame.u3;
     p2 = (void *)orig::PlantMenu_GetValueAt56(self_);
   }
   else {
-    p3 = &u3;
+    p3 = &frame.u3;
     p2 = (void *)orig::PlantMenu_GetValueAt5A(self_);
   }
   orig::CXiDancerActor_SetAnglesWrapped(p2,p3,p2);
@@ -113,7 +115,7 @@ code_101CE013:
   i1 = *(int *)((int)self_ + 100);
   if (i1 != 0) {
     p1 = (float *)(i1 + 0x44);
-    orig::Vec4_Copy_v3(p1,&u3);
+    orig::Vec4_Copy_v3(p1,&frame.u3);
     if (*p1 > 3.141592502593994140625f) {
       *p1 = (float)(*p1 - 6.28318500518798828125f);
     }
@@ -148,11 +150,13 @@ XI_API void __thiscall PlantMenu_SetState(void * self_, int arg2, bits32 xi_s2)
   uint32_t u1;
   uint8_t u2;
   int *p1;
-  char xi_frame[28] __attribute__((aligned(4)));
-  uint32_t * &p2 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { uint32_t * p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; uint32_t u3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint32_t u4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; uint32_t u5; };   // at 0x14
+  } frame;
   
   if (arg2 < 0) {
     return;
@@ -164,15 +168,15 @@ XI_API void __thiscall PlantMenu_SetState(void * self_, int arg2, bits32 xi_s2)
       (i1 = orig::PlantMenu_GetValueAt5A(self_), i1 != 0)) &&
      (i1 = orig::PlantMenu_GetValueAt58(self_), i1 != 0)) {
     i1 = orig::PlantMenu_GetValueAt58(self_);
-    u3 = *(uint32_t *)(i1 + 0x34);
+    frame.u3 = *(uint32_t *)(i1 + 0x34);
     i1 = orig::PlantMenu_GetValueAt58(self_);
-    u4 = *(uint32_t *)(i1 + 0x38);
+    frame.u4 = *(uint32_t *)(i1 + 0x38);
     i1 = orig::PlantMenu_GetValueAt58(self_);
-    u5 = *(uint32_t *)(i1 + 0x3c);
-    p2 = &u3;
-    u4 = 0xba83126f;
+    frame.u5 = *(uint32_t *)(i1 + 0x3c);
+    frame.p2 = &frame.u3;
+    frame.u4 = 0xba83126f;
     obj1 = (void *)orig::PlantMenu_GetValueAt5A(self_);
-    orig::CXiDancerActor_SetPosition(obj1,p2);
+    orig::CXiDancerActor_SetPosition(obj1,frame.p2);
     orig::PlantMenu_SetQuarterTurn(self_,*(int *)((int)self_ + 0x20));
   }
   u2 = (uint8_t)arg2;

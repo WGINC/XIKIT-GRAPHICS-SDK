@@ -8,17 +8,19 @@ XI_API bits32 __cdecl SqsdPassTest_TestSeparationHalf(int arg1)
 {
   uint32_t u1;
   long double f1;
-  char xi_frame[24] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  (&f5)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f5[3]; };   // at 0xC
+  } frame;
   
-  f2 = (float)(*(float *)(arg1 + 0x14) - *(float *)(arg1 + 0x20));
-  f3 = (float)(*(float *)(arg1 + 0x18) - *(float *)(arg1 + 0x24));
-  f4 = (float)(*(float *)(arg1 + 0x1c) - *(float *)(arg1 + 0x28));
-  f1 = orig::SqVec_Length(&f2);
-  orig::SqBounds_GetCenter((float *)(arg1 + 0x14),f5);
-  u1 = orig::SqgxContext_TestClipBounds(f5,(float)(f1 * 0.5f));
+  frame.f2 = (float)(*(float *)(arg1 + 0x14) - *(float *)(arg1 + 0x20));
+  frame.f3 = (float)(*(float *)(arg1 + 0x18) - *(float *)(arg1 + 0x24));
+  frame.f4 = (float)(*(float *)(arg1 + 0x1c) - *(float *)(arg1 + 0x28));
+  f1 = orig::SqVec_Length(&frame.f2);
+  orig::SqBounds_GetCenter((float *)(arg1 + 0x14),frame.f5);
+  u1 = orig::SqgxContext_TestClipBounds(frame.f5,(float)(f1 * 0.5f));
   return u1;
 }

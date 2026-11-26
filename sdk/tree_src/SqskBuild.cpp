@@ -10,9 +10,11 @@ XI_API bits32 __cdecl SqskSkeleton_BuildSQO(char * arg1, bits32 arg2)
   bits32 *p2;
   int i1;
   uint32_t u1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+  } frame;
   
   p1 = arg1;
   if ((((*arg1 != 'S') || (arg1[1] != 'Q')) || (arg1[2] != 'L')) || (arg1[3] != 'E')) {
@@ -20,11 +22,11 @@ XI_API bits32 __cdecl SqskSkeleton_BuildSQO(char * arg1, bits32 arg2)
     orig::sqDebugPrintf_v1(str_sqskBuildSQO_0x_08X___d__103BC5B0,p1,arg2);
     return 0;
   }
-  p2 = orig::SqScriptRead_ReadBlock((bits32 *)u2,4,1,(bits32 *)(arg1 + 4),0);
-  u1 = (uint32_t)((u2[0] & 1) != 0);
-  p2 = orig::SqScriptRead_ReadBlock(&i2,4,1,p2,0);
-  if (i2 != 0xb0001) {
-    orig::sqDebugPrintf_v1(str_____Error__Unknown_skeleton_type_103BC5D0,i2);
+  p2 = orig::SqScriptRead_ReadBlock((bits32 *)frame.u2,4,1,(bits32 *)(arg1 + 4),0);
+  u1 = (uint32_t)((frame.u2[0] & 1) != 0);
+  p2 = orig::SqScriptRead_ReadBlock(&frame.i2,4,1,p2,0);
+  if (frame.i2 != 0xb0001) {
+    orig::sqDebugPrintf_v1(str_____Error__Unknown_skeleton_type_103BC5D0,frame.i2);
     orig::sqDebugPrintf_v1(str_sqskBuildSQO_0x_08X___d__103BC5B0,p2,arg2);
     return 0;
   }
@@ -48,11 +50,13 @@ XI_API int __cdecl SqskSkeleton_BuildBinary(int arg1, int arg2, int arg3)
   int i1;
   int i2;
   int i3;
-  char xi_frame[44] __attribute__((aligned(4)));
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 4);
-  float  (&f2)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 16);
-  float  (&f3)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 28);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[44];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f1[3]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f2[3]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f3[4]; };   // at 0x1C
+  } frame;
   
   i1 = arg3;
   if (arg2 != 4) {
@@ -75,18 +79,18 @@ XI_API int __cdecl SqskSkeleton_BuildBinary(int arg1, int arg2, int arg3)
     orig::SqIO_SwapBytes((uint8_t *)p1,4,i2,i1);
   }
   i1 = 0;
-  i4 = 0;
+  frame.i4 = 0;
   if (0 < arg2) {
     arg3 = 0;
     do {
       i2 = p2[8];
       i3 = p2[9] + arg3;
-      orig::SqVec_SetXyz(f1,*p1,p1[1],p1[2]);
-      orig::SqSkelNode_CopyVec3At5C(i3,f1);
-      orig::SqQuat_Set(f3,p1[3],p1[4],p1[5],p1[6]);
-      orig::SqSkelNode_CopyQuatAt68(i3,f3);
-      orig::SqVec_SetXyz(f2,p1[7],p1[8],p1[9]);
-      orig::SqSkelNode_CopyVec3At78(i3,f2);
+      orig::SqVec_SetXyz(frame.f1,*p1,p1[1],p1[2]);
+      orig::SqSkelNode_CopyVec3At5C(i3,frame.f1);
+      orig::SqQuat_Set(frame.f3,p1[3],p1[4],p1[5],p1[6]);
+      orig::SqSkelNode_CopyQuatAt68(i3,frame.f3);
+      orig::SqVec_SetXyz(frame.f2,p1[7],p1[8],p1[9]);
+      orig::SqSkelNode_CopyVec3At78(i3,frame.f2);
       orig::SqSkelNode_SetTripleAt84(i3,(int *)(p1 + 10));
       orig::SqSkelNode_SetFloatAt94(i3,(float)bit_cast<int>(p1[0xd]));
       orig::SqSkelNode_SetFloatAt98(i3,(float)bit_cast<int>(p1[0xe]));
@@ -94,10 +98,10 @@ XI_API int __cdecl SqskSkeleton_BuildBinary(int arg1, int arg2, int arg3)
         orig::SqhiNode_AppendChild(p2[8] + bit_cast<int>(p1[0xf]) * 0xf8,i2 + i1);
       }
       p1 = p1 + 0x10;
-      i4 = i4 + 1;
+      frame.i4 = frame.i4 + 1;
       i1 = i1 + 0xf8;
       arg3 = arg3 + 0x9c;
-    } while (i4 < arg2);
+    } while (frame.i4 < arg2);
   }
   return (int)p2;
 }

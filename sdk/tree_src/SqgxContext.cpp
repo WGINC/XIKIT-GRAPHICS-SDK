@@ -35,17 +35,17 @@ XI_API void __cdecl sqgxAlphaDstTest(int arg1, int arg2)
 
 // FUNCTION: FFXIMAIN 0x102823F0
 // GATE: PASS -- 100 trials, 100 returned normally, 279 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqgxAlphaTest(unsigned int arg1, unsigned int arg2)
+XI_API int __cdecl sqgxAlphaTest(unsigned int Value, unsigned int arg2)
 {
   int result;
   result = arg2;
-  if ( arg1 != g_pSqgxContext[571] || arg2 != g_pSqgxContext[574] )
+  if ( Value != g_pSqgxContext[571] || arg2 != g_pSqgxContext[574] )
   {
-    g_pSqgxContext[571] = arg1;
+    g_pSqgxContext[571] = Value;
     g_pSqgxContext[574] = arg2;
     g_sqgxRenderStateDirty = 1;
     g_pDancerDevice->SetRenderState(D3DRS_ALPHAREF, arg2);
-    g_pDancerDevice->SetRenderState(D3DRS_ALPHATESTENABLE, arg1);
+    g_pDancerDevice->SetRenderState(D3DRS_ALPHATESTENABLE, Value);
     return g_pDancerDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
   }
   return result;
@@ -80,20 +80,20 @@ XI_API int * __cdecl sqgxZMask(int arg1)
 XI_API int * __cdecl sqgxFBMask(int arg1, int arg2, int arg3, int arg4)
 {
   int *result;
-  unsigned int u1;
+  unsigned int Value;
   result = g_pSqgxContext;
-  u1 = 0;
+  Value = 0;
   if ( arg4 != g_pSqgxContext[580] || arg1 != g_pSqgxContext[577] || arg3 != g_pSqgxContext[579] || arg2 != g_pSqgxContext[578] )
   {
     if ( arg1 == 0 )
-      u1 = 1;
+      Value = 1;
     if ( arg3 == 0 )
-      u1 |= 4u;
+      Value |= 4u;
     if ( arg2 == 0 )
-      u1 |= 2u;
+      Value |= 2u;
     if ( arg4 == 0 )
-      u1 |= 8u;
-    g_pDancerDevice->SetRenderState(D3DRS_COLORWRITEENABLE, u1);
+      Value |= 8u;
+    g_pDancerDevice->SetRenderState(D3DRS_COLORWRITEENABLE, Value);
     g_pSqgxContext[577] = arg1;
     g_pSqgxContext[578] = arg2;
     g_pSqgxContext[579] = arg3;
@@ -140,12 +140,12 @@ XI_API void __cdecl SqgxContext_Nop(void)
 XI_API int __cdecl SqgxContext_SetSelectArg1(void)
 {
   int result;
-  unsigned int u1;
+  unsigned int Stage;
   result = (int)g_pSqgxContext;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
     return g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
@@ -157,11 +157,11 @@ XI_API int __cdecl SqgxContext_SetSelectArg1(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendAdd(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_ADD);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_ADD);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
@@ -181,11 +181,11 @@ XI_API int __cdecl sqgxBlendAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl SqgxContext_SetMultiplyAdd(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MULTIPLYADD);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_MULTIPLYADD);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG0, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_DIFFUSE | D3DTA_ALPHAREPLICATE);
@@ -206,11 +206,11 @@ XI_API int __cdecl SqgxContext_SetMultiplyAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendSub(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_SUBTRACT);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_SUBTRACT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -231,14 +231,14 @@ XI_API int __cdecl sqgxBlendSub(void)
 XI_API void __cdecl sqgxBlendLin(float arg1)
 {
   int i1;
-  unsigned int u1;
+  unsigned int Stage;
   i1 = (long long)(arg1 * 255.0 + 0.5);
   if ( i1 > 255 )
     i1 = 255;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDFACTORALPHA);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_BLENDFACTORALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -262,11 +262,11 @@ XI_API void __cdecl sqgxBlendLin(float arg1)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendTrsp(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -286,11 +286,11 @@ XI_API int __cdecl sqgxBlendTrsp(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendTrspInv(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -310,11 +310,11 @@ XI_API int __cdecl sqgxBlendTrspInv(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendAddDestAlpha(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -334,11 +334,11 @@ XI_API int __cdecl sqgxBlendAddDestAlpha(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl SqgxContext_SetModulateAlphaAdd(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TFACTOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -359,11 +359,11 @@ XI_API int __cdecl SqgxContext_SetModulateAlphaAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendMultAlpha(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TFACTOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -384,11 +384,11 @@ XI_API int __cdecl sqgxBlendMultAlpha(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendMul(void)
 {
-  unsigned int u1;
-  u1 = g_pSqgxContext[710];
-  if ( u1 != 0 )
+  unsigned int Stage;
+  Stage = g_pSqgxContext[710];
+  if ( Stage != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    g_pDancerDevice->SetTextureStageState(Stage, D3DTSS_COLOROP, D3DTOP_MODULATE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -520,39 +520,41 @@ XI_API int __cdecl sqgxColorUpdate(void)
   signed int i;
   int *p1;
   int result;
-  alignas(16) unsigned char xi_frame[0x480];  // address-taken locals at their original offsets
-  float (&f2)[17] = *reinterpret_cast<float (*)[17]>(xi_frame + 0xC);
-  float (&f3)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x50);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x68);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x6C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x70);
-  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x74);
-  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x7C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x480];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; float material[17]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x50]; float f3[4]; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_3[0x64]; int i3; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_4[0x68]; int i4; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_5[0x6C]; int i5; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_6[0x70]; int i6; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_7[0x74]; int i7; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_8[0x78]; int i8; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_9[0x7C]; int i9; };   // at 0x7C
+  } frame;
   bool xi_fpu_unord = false;
 
-  memset(f2, 0, sizeof(f2));
-  f2[12] = *((float *)g_pSqgxContext + 470) * *((float *)g_pSqgxContext + 474);
-  f2[13] = *((float *)g_pSqgxContext + 471) * *((float *)g_pSqgxContext + 474);
-  f2[14] = *((float *)g_pSqgxContext + 472) * *((float *)g_pSqgxContext + 474);
-  f2[15] = *((float *)g_pSqgxContext + 473) * *((float *)g_pSqgxContext + 474);
-  f2[0] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 470);
-  f2[1] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 471);
-  f2[2] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 472);
-  (*(uint32_t *)&(f2[3])) = g_pSqgxContext[473];
+  memset(frame.material, 0, sizeof(frame.material));
+  frame.material[12] = *((float *)g_pSqgxContext + 470) * *((float *)g_pSqgxContext + 474);
+  frame.material[13] = *((float *)g_pSqgxContext + 471) * *((float *)g_pSqgxContext + 474);
+  frame.material[14] = *((float *)g_pSqgxContext + 472) * *((float *)g_pSqgxContext + 474);
+  frame.material[15] = *((float *)g_pSqgxContext + 473) * *((float *)g_pSqgxContext + 474);
+  frame.material[0] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 470);
+  frame.material[1] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 471);
+  frame.material[2] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 472);
+  (*(uint32_t *)&(frame.material[3])) = g_pSqgxContext[473];
   if ( !(*((float *)g_pSqgxContext + 5) < 0.001)
     && (f1 = *((float *)g_pSqgxContext + 5), (xi_fpu_unord = __builtin_isunordered(f1, 0.999), b1 = f1 < 0.999), c1 = 0, b2 = f1 == 0.999, ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0) )
   {
-    (*(uint32_t *)&(f2[16])) = g_pSqgxContext[5];
+    (*(uint32_t *)&(frame.material[16])) = g_pSqgxContext[5];
   }
   else
   {
-    f2[16] = 0.0;
+    frame.material[16] = 0.0;
   }
-  memset(&f2[8], 0, 16);
+  memset(&frame.material[8], 0, 16);
   g_pDancerDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
-  g_pDancerDevice->SetMaterial(f2);
+  g_pDancerDevice->SetMaterial(frame.material);
   i2 = g_pSqgxContext[652];
   if ( (i2 & 8) == 0 || (i2 & 2) != 0 )
   {
@@ -580,28 +582,28 @@ XI_API int __cdecl sqgxColorUpdate(void)
     else
     {
       g_pDancerDevice->LightEnable(i, 1u);
-      g_pDancerDevice->GetLight(i, f3);
-      i7 = 0;
-      i8 = 0;
+      g_pDancerDevice->GetLight(i, frame.f3);
+      frame.i7 = 0;
+      frame.i8 = 0;
       p1 = &g_pSqgxContext[3 * i];
-      i9 = 0;
-      (*(uint32_t *)&(f3[1])) = p1[485];
-      f3[2] = *(float *)&g_pSqgxContext[3 * i + 486];
-      (*(uint32_t *)&(f3[3])) = p1[487];
+      frame.i9 = 0;
+      (*(uint32_t *)&(frame.f3[1])) = p1[485];
+      frame.f3[2] = *(float *)&g_pSqgxContext[3 * i + 486];
+      (*(uint32_t *)&(frame.f3[3])) = p1[487];
       if ( i != 0 )
       {
-        i3 = 0;
-        i4 = 0;
-        i5 = 0;
+        frame.i3 = 0;
+        frame.i4 = 0;
+        frame.i5 = 0;
       }
       else
       {
-        i3 = g_pSqgxContext[485];
-        i4 = g_pSqgxContext[486];
-        i5 = g_pSqgxContext[487];
+        frame.i3 = g_pSqgxContext[485];
+        frame.i4 = g_pSqgxContext[486];
+        frame.i5 = g_pSqgxContext[487];
       }
-      i6 = 0;
-      result = g_pDancerDevice->SetLight(i, f3);
+      frame.i6 = 0;
+      result = g_pDancerDevice->SetLight(i, frame.f3);
     }
   }
   g_109A2720 = 0;
@@ -647,16 +649,16 @@ XI_API void __cdecl SqgxContext_SetViewportVec4(bits32 * arg1)
 XI_API int * __cdecl sqgxViewport(float arg1, float arg2, float arg3, float arg4)
 {
   int *result;
-  uint32_t buf1[6];
+  uint32_t viewport[6];
   *((float *)g_pSqgxContext + 172) = arg3;
   *((float *)g_pSqgxContext + 173) = arg4;
-  buf1[0] = (long long)arg1;
-  buf1[1] = (long long)arg2;
-  buf1[2] = (long long)arg3;
-  buf1[3] = (long long)arg4;
-  buf1[4] = 0;
-  buf1[5] = 1065353216;
-  g_pDancerDevice->SetViewport(buf1);
+  viewport[0] = (long long)arg1;
+  viewport[1] = (long long)arg2;
+  viewport[2] = (long long)arg3;
+  viewport[3] = (long long)arg4;
+  viewport[4] = 0;
+  viewport[5] = 1065353216;
+  g_pDancerDevice->SetViewport(viewport);
   *((float *)g_pSqgxContext + 467) = arg4 / arg3 / *((float *)g_pSqgxContext + 183);
   *((float *)g_pSqgxContext + 187) = *((float *)g_pSqgxContext + 467) * *((float *)g_pSqgxContext + 192);
   *((float *)g_pSqgxContext + 176) = *((float *)g_pSqgxContext + 177) / *((float *)g_pSqgxContext + 467);
@@ -795,81 +797,83 @@ XI_API bits32 __cdecl SqgxContext_TestClipBounds(float * arg1, float arg2)
   long double f4;
   long double f5;
   long double f6;
-  char xi_frame[180] __attribute__((aligned(4)));
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  (&f16)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 52);
-  float  (&f17)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 116);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[180];
+    struct __attribute__((packed)) { float f7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f8; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f9; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f10; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f11; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f12; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; float f13; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; float f14; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f15; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x34]; float f16[16]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_11[0x74]; float f17[16]; };   // at 0x74
+  } frame;
   
-  orig::sqMatrix4_10280140_v1(f17,(float *)(g_pSqgxContext_as_s32 + 0x1c8),(float *)(g_pSqgxContext_as_s32 + 0x208));
-  orig::M4fTranspose_v1(f16,f17);
-  orig::M4fTransform_v1(&f10,f16,arg1);
-  f13 = arg2;
-  f14 = arg2;
-  f15 = arg2;
-  f12 = (float)-f12;
-  orig::SqMatrixConnect_TransformVec3(&f7,f16,&f13);
-  u1 = ((f7) != (f7)) || ((0.0) != (0.0));
-  if ((u1 || f7 < 0.0) != u1) {
-    f7 = (float)-f7;
+  orig::sqMatrix4_10280140_v1(frame.f17,(float *)(g_pSqgxContext_as_s32 + 0x1c8),(float *)(g_pSqgxContext_as_s32 + 0x208));
+  orig::M4fTranspose_v1(frame.f16,frame.f17);
+  orig::M4fTransform_v1(&frame.f10,frame.f16,arg1);
+  frame.f13 = arg2;
+  frame.f14 = arg2;
+  frame.f15 = arg2;
+  frame.f12 = (float)-frame.f12;
+  orig::SqMatrixConnect_TransformVec3(&frame.f7,frame.f16,&frame.f13);
+  u1 = ((frame.f7) != (frame.f7)) || ((0.0) != (0.0));
+  if ((u1 || frame.f7 < 0.0) != u1) {
+    frame.f7 = (float)-frame.f7;
   }
-  u1 = ((f8) != (f8)) || ((0.0) != (0.0));
-  if ((u1 || f8 < 0.0) != u1) {
-    f8 = (float)-f8;
+  u1 = ((frame.f8) != (frame.f8)) || ((0.0) != (0.0));
+  if ((u1 || frame.f8 < 0.0) != u1) {
+    frame.f8 = (float)-frame.f8;
   }
-  u1 = ((f9) != (f9)) || ((0.0) != (0.0));
-  if ((u1 || f9 < 0.0) != u1) {
-    f9 = (float)-f9;
+  u1 = ((frame.f9) != (frame.f9)) || ((0.0) != (0.0));
+  if ((u1 || frame.f9 < 0.0) != u1) {
+    frame.f9 = (float)-frame.f9;
   }
-  if (!(f7 > f8))
+  if (!(frame.f7 > frame.f8))
   {
-    if (f8 > f9) {
-      f3 = f8;
+    if (frame.f8 > frame.f9) {
+      f3 = frame.f8;
       goto code_10284117;
     }
   }
-  else if (f7 > f9) {
-    f3 = f7;
+  else if (frame.f7 > frame.f9) {
+    f3 = frame.f7;
     goto code_10284117;
   }
-  f3 = f9;
+  f3 = frame.f9;
 code_10284117:
-  f1 = (float)(f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c4));
+  f1 = (float)(frame.f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c4));
   f4 = f3 * *(float *)(g_pSqgxContext_as_s32 + 0x2cc);
   f5 = f4 + f1;
-  if ((!(f11 > f5)) &&
-     (!(-f5 > f11))) {
-    f2 = (float)(f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c0));
+  if ((!(frame.f11 > f5)) &&
+     (!(-f5 > frame.f11))) {
+    f2 = (float)(frame.f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c0));
     f5 = f3 * *(float *)(g_pSqgxContext_as_s32 + 0x2c8);
     f6 = f5 + f2;
-    if ((!(f10 > f6)) &&
-       ((((((-f6) != (-f6)) || ((f10) != (f10))) || -f6 <= f10 &&
+    if ((!(frame.f10 > f6)) &&
+       ((((((-f6) != (-f6)) || ((frame.f10) != (frame.f10))) || -f6 <= frame.f10 &&
          (f6 = f3 + *(float *)(g_pSqgxContext_as_s32 + 0x2b8),
-         u1 = ((f6) != (f6)) || ((f12) != (f12)), (u1 || f6 < f12) == u1
+         u1 = ((f6) != (f6)) || ((frame.f12) != (frame.f12)), (u1 || f6 < frame.f12) == u1
          )) && (f6 = *(float *)(g_pSqgxContext_as_s32 + 700) - f3,
-               (((f6) != (f6)) || ((f12) != (f12))) || f6 <= f12)))) {
+               (((f6) != (f6)) || ((frame.f12) != (frame.f12))) || f6 <= frame.f12)))) {
       f1 = (float)(f1 - (float)f4);
       f2 = (float)(f2 - (float)f5);
       f4 = *(float *)(g_pSqgxContext_as_s32 + 0x2b8) - f3;
-      if (((((f4 > f12) &&
+      if (((((f4 > frame.f12) &&
             (f3 = f3 + *(float *)(g_pSqgxContext_as_s32 + 700),
-            u1 = ((f3) != (f3)) || ((f12) != (f12)),
-            (u1 || f3 < f12) != u1)) &&
-           (f3 = f1, u1 = ((f11) != (f11)) || ((f3) != (f3)),
-           (u1 || f11 < f3) != u1)) &&
-          ((f3 = -f1, u1 = ((f3) != (f3)) || ((f11) != (f11)),
-           (u1 || f3 < f11) != u1 &&
-           (f3 = f2, u1 = ((f10) != (f10)) || ((f3) != (f3)),
-           (u1 || f10 < f3) != u1)))) &&
-         (f3 = -f2, u1 = ((f3) != (f3)) || ((f10) != (f10)),
-         (u1 || f3 < f10) != u1)) {
+            u1 = ((f3) != (f3)) || ((frame.f12) != (frame.f12)),
+            (u1 || f3 < frame.f12) != u1)) &&
+           (f3 = f1, u1 = ((frame.f11) != (frame.f11)) || ((f3) != (f3)),
+           (u1 || frame.f11 < f3) != u1)) &&
+          ((f3 = -f1, u1 = ((f3) != (f3)) || ((frame.f11) != (frame.f11)),
+           (u1 || f3 < frame.f11) != u1 &&
+           (f3 = f2, u1 = ((frame.f10) != (frame.f10)) || ((f3) != (f3)),
+           (u1 || frame.f10 < f3) != u1)))) &&
+         (f3 = -f2, u1 = ((f3) != (f3)) || ((frame.f10) != (frame.f10)),
+         (u1 || f3 < frame.f10) != u1)) {
         return 1;
       }
       return 3;
@@ -897,19 +901,21 @@ XI_API int __cdecl sqgxMatrixUpdate(void)
   double f1;
   double f2;
   int result;
-  alignas(16) unsigned char xi_frame[0x5F8];  // address-taken locals at their original offsets
-  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x48);
-  float (&f3)[26] = *reinterpret_cast<float (*)[26]>(xi_frame + 0x50);
-  float (&f4)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xB8);
-  float (&f5)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xF8);
-  float (&f6)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x138);
-  float (&f7)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x178);
-  float (&f8)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x1B8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x5F8];
+    struct __attribute__((packed)) { unsigned char pad_1[0x48]; char c1; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_2[0x50]; float light[26]; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_3[0xB8]; float f4[16]; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_4[0xF8]; float matrix[16]; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_5[0x138]; float f6[16]; };   // at 0x138
+    struct __attribute__((packed)) { unsigned char pad_6[0x178]; float f7[16]; };   // at 0x178
+    struct __attribute__((packed)) { unsigned char pad_7[0x1B8]; float f8[16]; };   // at 0x1B8
+  } frame;
 
   i1 = 0;
   i2 = 0;
   i3 = g_pSqgxContext[710] + 1;
-  c1 = 0;
+  frame.c1 = 0;
   if ( i3 > 0 )
   {
     p1 = g_pSqgxContext + 648;
@@ -922,26 +928,26 @@ XI_API int __cdecl sqgxMatrixUpdate(void)
       --i3;
     }
     while ( i3 != 0 );
-    c1 = i1;
+    frame.c1 = i1;
   }
   if ( i1 >= 0 )
   {
-    orig::M4fSet(f5, g_pSqgxContext + 114);
+    orig::M4fSet(frame.matrix, g_pSqgxContext + 114);
   }
   else
   {
-    orig::sqgxShadowPlaneMatrix((int)f8);
-    orig::sqMatrix4_10280140(f5, (float *)g_pSqgxContext + 114, f8);
+    orig::sqgxShadowPlaneMatrix((int)frame.f8);
+    orig::sqMatrix4_10280140(frame.matrix, (float *)g_pSqgxContext + 114, frame.f8);
   }
   g_pDancerDevice->SetTransform(D3DTS_PROJECTION, g_pSqgxContext + 187);
   g_pDancerDevice->SetTransform(D3DTS_VIEW, g_pSqgxContext + 130);
-  g_pDancerDevice->SetTransform((D3DTRANSFORMSTATETYPE)256, f5);
-  orig::sqMatrix4_10280140(f7, f5, (float *)g_pSqgxContext + 130);
-  orig::sqMatrix4_1027F0E0(f6, (int)(g_pSqgxContext + 114));
+  g_pDancerDevice->SetTransform((D3DTRANSFORMSTATETYPE)256, frame.matrix);
+  orig::sqMatrix4_10280140(frame.f7, frame.matrix, (float *)g_pSqgxContext + 130);
+  orig::sqMatrix4_1027F0E0(frame.f6, (int)(g_pSqgxContext + 114));
   p2 = g_pSqgxContext;
   if ( *((uint8_t *)g_pSqgxContext + 1876) != 0 )
   {
-    orig::sqMatrix4_1027FCC0((int)f7);
+    orig::sqMatrix4_1027FCC0((int)frame.f7);
     p2 = g_pSqgxContext;
   }
   u1 = 0;
@@ -955,15 +961,15 @@ XI_API int __cdecl sqgxMatrixUpdate(void)
     }
     else
     {
-      memset(f3, 0, sizeof(f3));
-      (*(uint32_t *)&(f3[0])) = 3;
-      f3[19] = 1000.0;
-      f3[16] = -*(float *)&p2[i5 + 211];
-      f3[17] = -*(float *)&p2[i5 + 212];
-      f3[18] = -*(float *)&p2[i5 + 213];
+      memset(frame.light, 0, sizeof(frame.light));
+      (*(uint32_t *)&(frame.light[0])) = 3;
+      frame.light[19] = 1000.0;
+      frame.light[16] = -*(float *)&p2[i5 + 211];
+      frame.light[17] = -*(float *)&p2[i5 + 212];
+      frame.light[18] = -*(float *)&p2[i5 + 213];
       g_pDancerDevice->LightEnable(u1, 1u);
-      g_pDancerDevice->SetLight(u1, f3);
-      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(c1) << 0));
+      g_pDancerDevice->SetLight(u1, frame.light);
+      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(frame.c1) << 0));
     }
     ++i6;
     ++u1;
@@ -983,36 +989,36 @@ XI_API int __cdecl sqgxMatrixUpdate(void)
     }
     else
     {
-      memset(f3, 0, sizeof(f3));
-      (*(uint32_t *)&(f3[0])) = 1;
-      f3[19] = 1000.0;
-      f3[16] = *(float *)&g_pSqgxContext[i7 + 339];
-      f3[17] = *(float *)&g_pSqgxContext[i7 + 340];
-      f3[18] = *(float *)&g_pSqgxContext[i7 + 341];
-      f3[13] = *(float *)&g_pSqgxContext[i7 + 343];
-      f3[14] = *(float *)&g_pSqgxContext[i7 + 344];
-      f3[15] = *(float *)&g_pSqgxContext[i7 + 345];
+      memset(frame.light, 0, sizeof(frame.light));
+      (*(uint32_t *)&(frame.light[0])) = 1;
+      frame.light[19] = 1000.0;
+      frame.light[16] = *(float *)&g_pSqgxContext[i7 + 339];
+      frame.light[17] = *(float *)&g_pSqgxContext[i7 + 340];
+      frame.light[18] = *(float *)&g_pSqgxContext[i7 + 341];
+      frame.light[13] = *(float *)&g_pSqgxContext[i7 + 343];
+      frame.light[14] = *(float *)&g_pSqgxContext[i7 + 344];
+      frame.light[15] = *(float *)&g_pSqgxContext[i7 + 345];
       g_pDancerDevice->LightEnable(u2, 1u);
-      g_pDancerDevice->SetLight(u2, f3);
-      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(c1) << 0));
+      g_pDancerDevice->SetLight(u2, frame.light);
+      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(frame.c1) << 0));
     }
     ++i8;
     i7 += 16;
     ++u2;
   }
   while ( (int)(u2 - 4) < 4 );
-  orig::sqMatrix4_1027F0E0(f6, (int)(g_pSqgxContext + 114));
-  orig::sqMatrix4_10280140(f4, (float *)g_pSqgxContext + 98, f6);
-  f1 = f4[13];
-  f2 = f4[14];
-  g_pSqgxContext[162] = (*(int32_t *)&(f4[12]));
+  orig::sqMatrix4_1027F0E0(frame.f6, (int)(g_pSqgxContext + 114));
+  orig::sqMatrix4_10280140(frame.f4, (float *)g_pSqgxContext + 98, frame.f6);
+  f1 = frame.f4[13];
+  f2 = frame.f4[14];
+  g_pSqgxContext[162] = (*(int32_t *)&(frame.f4[12]));
   *((float *)g_pSqgxContext + 163) = f1;
   *((float *)g_pSqgxContext + 164) = f2;
   if ( (i1 & 0x10) != 0 || (result = i1 & 8, (i1 & 8) != 0) )
   {
-    orig::sqMatrix4_1027F0E0(f4, (int)(g_pSqgxContext + 203));
-    orig::sqMatrix4_10280140((float *)g_pSqgxContext + 146, (float *)g_pSqgxContext + 114, f4);
-    result = orig::M4fTranspose(f4, g_pSqgxContext + 146);
+    orig::sqMatrix4_1027F0E0(frame.f4, (int)(g_pSqgxContext + 203));
+    orig::sqMatrix4_10280140((float *)g_pSqgxContext + 146, (float *)g_pSqgxContext + 114, frame.f4);
+    result = orig::M4fTranspose(frame.f4, g_pSqgxContext + 146);
   }
   g_sqgxViewportDirty = 0;
   return result;

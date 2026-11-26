@@ -9,20 +9,22 @@ XI_API void __cdecl App_ForceForegroundWindow(HWND arg1)
   HWND hWnd;
   DWORD idAttachTo;
   DWORD idAttach;
-  char xi_frame[24] __attribute__((aligned(4)));
-  LPDWORD  &lpdwProcessId = *reinterpret_cast<LPDWORD  *>(xi_frame + 0);
-  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { LPDWORD lpdwProcessId; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint8_t u1[4]; };   // at 0x14
+  } frame;
   
   if (g_windowMode == 0) {
-    lpdwProcessId = (LPDWORD)0x0;
+    frame.lpdwProcessId = (LPDWORD)0x0;
     hWnd = GetForegroundWindow();
-    idAttachTo = GetWindowThreadProcessId(hWnd,lpdwProcessId);
+    idAttachTo = GetWindowThreadProcessId(hWnd,frame.lpdwProcessId);
     idAttach = GetWindowThreadProcessId(arg1,(LPDWORD)0x0);
     AttachThreadInput(idAttach,idAttachTo,1);
-    SystemParametersInfoA(0x2000,0,u1,0);
+    SystemParametersInfoA(0x2000,0,frame.u1,0);
     SystemParametersInfoA(0x2001,0,(PVOID)0x0,0);
     SetForegroundWindow(arg1);
-    SystemParametersInfoA(0x2001,0,u1,0);
+    SystemParametersInfoA(0x2001,0,frame.u1,0);
     AttachThreadInput(idAttach,idAttachTo,0);
   }
   return;
@@ -79,14 +81,16 @@ XI_API bits32 __stdcall App_CreateInputSystem(bits32 arg1)
 XI_API void __cdecl AppMainLoop_ForwardMouseMove(bits32 arg1)
 {
   int i1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&i2)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2[2]; };   // at 0x0
+  } frame;
   
   i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
   if ((char)i1 != '\0') {
-    i2[0] = 0;
-    i2[1] = 0;
-    orig::CTkMouse_OnMouseMove(g_pCursor_as_v2,i2,(int)(short)arg1 / 0x78);
+    frame.i2[0] = 0;
+    frame.i2[1] = 0;
+    orig::CTkMouse_OnMouseMove(g_pCursor_as_v2,frame.i2,(int)(short)arg1 / 0x78);
     return;
   }
   orig::FontGlyphCache_AddToCounter((int)(short)arg1 / 0x78);
@@ -278,14 +282,14 @@ code_10002023:
 // GATE: PASS -- 100 trials, 100 returned normally, 263 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __cdecl Gfx_CopySurfaceRectToTexture(struct IDirect3DSurface8 *arg1, const struct tagRECT *arg2, unsigned int *arg3, int arg4)
 {
-  unsigned short u1;
-  unsigned short u2;
+  unsigned short height;
+  unsigned short width;
   uint32_t *Texture;
   struct IDirect3DSurface8 *p1;
-  u1 = *(uint16_t *)(arg4 + 12) - *(uint16_t *)(arg4 + 4);
-  u2 = *(uint16_t *)(arg4 + 8) - *(uint16_t *)arg4;
+  height = *(uint16_t *)(arg4 + 12) - *(uint16_t *)(arg4 + 4);
+  width = *(uint16_t *)(arg4 + 8) - *(uint16_t *)arg4;
   p1 = nullptr;
-  Texture = orig::CDx_CreateTexture(g_pCDx, u2, u1, nullptr, 0, 1);
+  Texture = orig::CDx_CreateTexture(g_pCDx, width, height, nullptr, 0, 1);
   if ( (Texture != nullptr || (Texture = orig::CDx_CreateTexture(g_pCDx, 0x200u, 0x200u, nullptr, 0, 1)) != nullptr)
     && (*(int (__stdcall **)(uint32_t *, uint32_t, struct IDirect3DSurface8 **))(*Texture + 60))(Texture, 0, &p1) >= 0
     && orig::fn_102D4515(p1, nullptr, (const struct tagRECT *)arg4, arg1, nullptr, arg2, 3, 0) >= 0
@@ -331,29 +335,31 @@ XI_API char __cdecl Gfx_ProbeDeviceCaps(int arg1, unsigned int *arg2, int *arg3)
   unsigned int jj;
   int *p3;
   int kk;
-  alignas(16) unsigned char xi_frame[0x444];  // address-taken locals at their original offsets
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x1C);
-  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int (&i7)[8] = *reinterpret_cast<int (*)[8]>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x444];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; int i5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; int i6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; int i7[8]; };   // at 0x24
+  } frame;
   unsigned int u1;
   i1 = 0;
   i2 = *arg3;
   u1 = arg3[3] - arg3[1];
-  i4 = arg3[2] - i2;
-  if ( (*(int (__stdcall **)(int, int *, uint32_t, int))(*(uint32_t *)arg1 + 36))(arg1, &i5, 0, 16) < 0 )
+  frame.i4 = arg3[2] - i2;
+  if ( (*(int (__stdcall **)(int, int *, uint32_t, int))(*(uint32_t *)arg1 + 36))(arg1, &frame.i5, 0, 16) < 0 )
     return 0;
-  (*(void (__stdcall **)(int, int *))(*(uint32_t *)arg1 + 32))(arg1, i7);
-  if ( i7[0] <= 62 )
+  (*(void (__stdcall **)(int, int *))(*(uint32_t *)arg1 + 32))(arg1, frame.i7);
+  if ( frame.i7[0] <= 62 )
   {
-    if ( i7[0] == 62 )
+    if ( frame.i7[0] == 62 )
     {
 L1:
       i1 = 4;
     }
     else
     {
-      switch ( i7[0] )
+      switch ( frame.i7[0] )
       {
         case 0:
           goto L2;
@@ -387,11 +393,11 @@ L1:
     }
     goto L4;
   }
-  if ( i7[0] <= 100 )
+  if ( frame.i7[0] <= 100 )
   {
-    if ( i7[0] != 100 )
+    if ( frame.i7[0] != 100 )
     {
-      switch ( i7[0] )
+      switch ( frame.i7[0] )
       {
         case '?':
         case '@':
@@ -411,34 +417,34 @@ L1:
     }
     goto L2;
   }
-  if ( i7[0] > 861165636 )
+  if ( frame.i7[0] > 861165636 )
   {
-    if ( i7[0] == 877942852 || i7[0] == 894720068 )
+    if ( frame.i7[0] == 877942852 || frame.i7[0] == 894720068 )
       goto L2;
-    b1 = i7[0] == 1498831189;
+    b1 = frame.i7[0] == 1498831189;
   }
   else
   {
-    if ( i7[0] == 861165636 )
+    if ( frame.i7[0] == 861165636 )
       goto L2;
-    if ( i7[0] > 844388420 )
+    if ( frame.i7[0] > 844388420 )
     {
-      b1 = i7[0] == 844715353;
+      b1 = frame.i7[0] == 844715353;
       goto L5;
     }
-    if ( i7[0] == 844388420 )
+    if ( frame.i7[0] == 844388420 )
     {
 L2:
       i1 = 0;
       goto L4;
     }
-    if ( i7[0] == 101 )
+    if ( frame.i7[0] == 101 )
     {
 L3:
       i1 = 2;
       goto L4;
     }
-    b1 = i7[0] == 827611204;
+    b1 = frame.i7[0] == 827611204;
   }
 L5:
   if ( b1 )
@@ -449,18 +455,18 @@ L4:
     case 1:
       for ( i = 0; i < u1; ++i )
       {
-        i3 = i4;
-        for ( j = (char *)(i6 + i * i5); i3 != 0; --i3 )
+        i3 = frame.i4;
+        for ( j = (char *)(frame.i6 + i * frame.i5); i3 != 0; --i3 )
           *arg2++ = orig::AppMainLoop_SwapRedBlue(*j++);
       }
       break;
     case 2:
       for ( k = 0; k < u1; ++k )
       {
-        p1 = (uint16_t *)(i6 + k * i5);
-        if ( i4 != 0 )
+        p1 = (uint16_t *)(frame.i6 + k * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( m = i4; m != 0; --m )
+          for ( m = frame.i4; m != 0; --m )
           {
             *arg2++ = orig::AppMainLoop_SwapRedBlue(8 * (*p1 & 0x1F | (8 * (*p1 & 0x3E0 | (8 * (*p1 & 0x7C00))))));
             ++p1;
@@ -471,10 +477,10 @@ L4:
     case 3:
       for ( n = 0; n < u1; ++n )
       {
-        p2 = (uint32_t *)(i6 + n * i5);
-        if ( i4 != 0 )
+        p2 = (uint32_t *)(frame.i6 + n * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( ii = i4; ii != 0; --ii )
+          for ( ii = frame.i4; ii != 0; --ii )
           {
             *arg2++ = orig::AppMainLoop_SwapRedBlue(*p2 & 0xFFFFFF);
             p2 = (uint32_t *)((char *)p2 + 3);
@@ -485,10 +491,10 @@ L4:
     case 4:
       for ( jj = 0; jj < u1; ++jj )
       {
-        p3 = (int *)(i6 + jj * i5);
-        if ( i4 != 0 )
+        p3 = (int *)(frame.i6 + jj * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( kk = i4; kk != 0; --kk )
+          for ( kk = frame.i4; kk != 0; --kk )
             *arg2++ = orig::AppMainLoop_SwapRedBlue(*p3++);
         }
       }
@@ -533,17 +539,19 @@ XI_API CDx * __cdecl Gfx_SetGammaRGB(int arg1, int arg2, int arg3)
 XI_API CDx * __cdecl Gfx_SetGammaR(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &i1, &i3, &i2);
-    i1 = arg1;
-    return orig::Gfx_SetGammaRGB(arg1, i3, i2);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i1, &frame.i3, &frame.i2);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(arg1, frame.i3, frame.i2);
   }
   return result;
 }
@@ -553,17 +561,19 @@ XI_API CDx * __cdecl Gfx_SetGammaR(int arg1)
 XI_API CDx * __cdecl Gfx_SetGammaG(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &i3, &i1, &i2);
-    i1 = arg1;
-    return orig::Gfx_SetGammaRGB(i3, arg1, i2);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i3, &frame.i1, &frame.i2);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(frame.i3, arg1, frame.i2);
   }
   return result;
 }
@@ -573,17 +583,19 @@ XI_API CDx * __cdecl Gfx_SetGammaG(int arg1)
 XI_API CDx * __cdecl Gfx_SetGammaB(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &i1 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &i3, &i2, &i1);
-    i1 = arg1;
-    return orig::Gfx_SetGammaRGB(i3, i2, arg1);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i3, &frame.i2, &frame.i1);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(frame.i3, frame.i2, arg1);
   }
   return result;
 }
@@ -804,11 +816,13 @@ XI_API char __thiscall Gfx_D3DBootstrap(int self_, int arg2, int arg3, int arg4,
   unsigned int u2;
   uint32_t *p3;
   int i3;
-  alignas(16) unsigned char xi_frame[0x428];  // address-taken locals at their original offsets
-  unsigned int &u3 = *reinterpret_cast<unsigned int *>(xi_frame + 0x18);
-  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0x1C);
-  unsigned int &u5 = *reinterpret_cast<unsigned int *>(xi_frame + 0x20);
-  unsigned int &u6 = *reinterpret_cast<unsigned int *>(xi_frame + 0x24);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x428];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; unsigned int u3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; unsigned int u4; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; unsigned int u5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; unsigned int u6; };   // at 0x24
+  } frame;
 
   i1 = orig::Direct3DCreate8(220);
   *(uint32_t *)(self_ + 4) = i1;
@@ -829,8 +843,8 @@ XI_API char __thiscall Gfx_D3DBootstrap(int self_, int arg2, int arg3, int arg4,
             *(uint32_t *)(self_ + 4),
             0,
             i,
-            &u3);
-          if ( u3 >= 0x280 && u4 >= 0x1E0 && u3 <= 0x800 && u4 <= 0x800 && (u6 == 22 || u6 == 21) )
+            &frame.u3);
+          if ( frame.u3 >= 0x280 && frame.u4 >= 0x1E0 && frame.u3 <= 0x800 && frame.u4 <= 0x800 && (frame.u6 == 22 || frame.u6 == 21) )
           {
             if ( u1 != 0 )
             {
@@ -838,7 +852,7 @@ XI_API char __thiscall Gfx_D3DBootstrap(int self_, int arg2, int arg3, int arg4,
               p3 = *(uint32_t **)(self_ + 68);
               do
               {
-                if ( *p3 == u3 && p3[1] == u4 )
+                if ( *p3 == frame.u3 && p3[1] == frame.u4 )
                   break;
                 ++u2;
                 p3 += 4;
@@ -853,10 +867,10 @@ XI_API char __thiscall Gfx_D3DBootstrap(int self_, int arg2, int arg3, int arg4,
               p2 = *(unsigned int **)(self_ + 68);
               u1 = 1;
             }
-            *p2 = u3;
-            p2[1] = u4;
-            p2[2] = u5;
-            p2[3] = u6;
+            *p2 = frame.u3;
+            p2[1] = frame.u4;
+            p2[2] = frame.u5;
+            p2[3] = frame.u6;
           }
         }
         *(uint32_t *)(self_ + 64) = u1;
@@ -892,11 +906,13 @@ XI_API char __thiscall Gfx_TryCreateDeviceForMode(uint32_t **self_, int arg2, in
   int *i;
   int i1;
   int i2;
-  alignas(16) unsigned char xi_frame[0x41C];  // address-taken locals at their original offsets
-  uint32_t (&u1)[3] = *reinterpret_cast<uint32_t (*)[3]>(xi_frame + 0xC);
-  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x41C];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; uint32_t u1[3]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; int i3; };   // at 0x18
+  } frame;
   int *p1;
-  if ( (*(int (__stdcall **)(uint32_t, uint32_t, uint32_t *))(**(self_ + 1) + 32))(*(self_ + 1), 0, u1) < 0 )
+  if ( (*(int (__stdcall **)(uint32_t, uint32_t, uint32_t *))(**(self_ + 1) + 32))(*(self_ + 1), 0, frame.u1) < 0 )
     return 0;
   for ( i = (int *)*(&g_deviceFormatPairsByDepth + arg8); ; i = p1 + 2 )
   {
@@ -907,9 +923,9 @@ XI_API char __thiscall Gfx_TryCreateDeviceForMode(uint32_t **self_, int arg2, in
     {
       if ( i2 == 0 )
         return 0;
-      i1 = i3;
+      i1 = frame.i3;
     }
-    if ( orig::D3DHolder_CheckDepthFormat(self_, i3, i1, i2)
+    if ( orig::D3DHolder_CheckDepthFormat(self_, frame.i3, i1, i2)
       && orig::Gfx_CreateDevice(self_, arg2, i1, i2, arg3, arg4, arg5, arg6, arg7) != 0 )
     {
       break;

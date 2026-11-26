@@ -195,11 +195,11 @@ void __thiscall CYyModelBase::RefreshParts(void * self)
 int CYyModelBase::DrawLit(int arg1, int arg2, int arg3)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  int i1;
+  int cubemapSpecTexture;
   int *p1;
   int i2;
   unsigned int u1;
-  float *p2;
+  float *light;
   char *PartList;
   int *p3;
   int i3;
@@ -217,9 +217,9 @@ int CYyModelBase::DrawLit(int arg1, int arg2, int arg3)
   char *p8;
   char *p9;
   int i7;
-  i1 = this->cubemapSpecTexture;
+  cubemapSpecTexture = this->cubemapSpecTexture;
   i7 = self;
-  if ( i1 == -1 )
+  if ( cubemapSpecTexture == -1 )
   {
     p1 = *(int **)(g_pMeshResourceMng + 262152);
     if ( p1 != nullptr )
@@ -230,22 +230,22 @@ int CYyModelBase::DrawLit(int arg1, int arg2, int arg3)
   }
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, g_ambientColor);
   u1 = 0;
-  p2 = &g_lightTable_Start;
+  light = &g_lightTable_Start;
   do
   {
-    if ( *(uint32_t *)p2 != 0 )
+    if ( *(uint32_t *)light != 0 )
     {
-      orig::CDx_SetLight(g_pCDx, u1, p2);
+      orig::CDx_SetLight(g_pCDx, u1, light);
       (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), u1, 1u);
     }
     else
     {
       (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), u1, 0);
     }
-    p2 += 26;
+    light += 26;
     ++u1;
   }
-  while ( (int)p2 < (int)g_10457388 );
+  while ( (int)light < (int)g_10457388 );
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, TRUE);
   PartList = orig::CYyModelBase_GetPartList((char *)self);
   p3 = *(int **)PartList;
@@ -374,17 +374,19 @@ bits32 __thiscall CYyModelBase::CallPartsSlot20(void * self, bits32 arg2, bits32
   int *obj1;
   int *p1;
   int *p2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+  } frame;
   
-  u2 = 0;
-  u1 = 0;
+  frame.u2 = 0;
+  frame.u1 = 0;
   p1 = (int *)orig::CYyModelBase_GetPartList_v1(self);
   obj1 = (int *)*p1;
   p2 = p1;
   while (obj1 != (int *)0x0) {
-    p2 = (int *)((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x20))))((void *)(obj1),arg2,self,arg3,&u2,&u1);
+    p2 = (int *)((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x20))))((void *)(obj1),arg2,self,arg3,&frame.u2,&frame.u1);
     p1 = (int *)(*p1 + 4);
     obj1 = (int *)*p1;
   }

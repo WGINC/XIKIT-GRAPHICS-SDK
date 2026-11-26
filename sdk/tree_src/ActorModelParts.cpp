@@ -4,18 +4,18 @@
 
 // FUNCTION: FFXIMAIN 0x100D1450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API bits32 __thiscall ActorModelParts_ProcessResidentListEntries(void * self_, int * arg2, int arg3)
+XI_API bits32 __thiscall ActorModelParts_ProcessResidentListEntries(void * self_, int * file, int arg3)
 {
   void *p1;
   void *obj1;
   int *xi_eax;
   
   if (arg3 == *(int *)((int)self_ + 0x9ec)) {
-    if (((uint8_t)*(uint32_t *)(*arg2 + 0x24) & 0x7f) == 1) {
-      arg2 = (int *)orig::CXiActor_SpawnResourceGenerators_v2(self_,arg2);
+    if (((uint8_t)*(uint32_t *)(*file + 0x24) & 0x7f) == 1) {
+      file = (int *)orig::CXiActor_SpawnResourceGenerators_v2(self_,file);
     }
     p1 = *(void **)((int)self_ + 0x7e4);
-    xi_eax = arg2;
+    xi_eax = file;
     while (arg3 = (int)xi_eax, obj1 = p1, obj1 != (void *)0x0) {
       arg3 = *(int *)((int)obj1 + 0x1c);
       p1 = *(void **)((int)obj1 + 4);

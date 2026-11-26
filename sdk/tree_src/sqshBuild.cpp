@@ -58,26 +58,28 @@ XI_API int __cdecl SqshBuild_Read(bits32 * arg1, bits32 * arg2, int arg3)
   bits32 *p1;
   bits32 *p2;
   int i2;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4; };   // at 0x4
+  } frame;
   
   i1 = arg3;
   p1 = orig::SqScriptRead_ReadBlock(&arg3,4,1,arg1,arg3);
   if (0 < arg3) {
     p2 = orig::SqVtx_Create();
     p2[5] = arg3;
-    p1 = orig::SqScriptRead_ReadBlock(&i4,4,1,p1,i1);
+    p1 = orig::SqScriptRead_ReadBlock(&frame.i4,4,1,p1,i1);
     i2 = 0;
-    if (0 < i4) {
+    if (0 < frame.i4) {
       do {
         p1 = orig::SqScriptRead_ReadBlock(&arg1,4,1,p1,i1);
-        p1 = orig::SqScriptRead_ReadBlock(&i3,4,1,p1,i1);
-        orig::SqVtx_AllocateField((int)p2,(int)arg1,i3);
-        p1 = orig::SqScriptRead_ReadBlock((bits32 *)p2[(int)arg1 + 0x15],4,i3 * arg3,p1,
+        p1 = orig::SqScriptRead_ReadBlock(&frame.i3,4,1,p1,i1);
+        orig::SqVtx_AllocateField((int)p2,(int)arg1,frame.i3);
+        p1 = orig::SqScriptRead_ReadBlock((bits32 *)p2[(int)arg1 + 0x15],4,frame.i3 * arg3,p1,
                               i1);
         i2 = i2 + 1;
-      } while (i2 < i4);
+      } while (i2 < frame.i4);
     }
     *arg2 = p1;
     return (int)p2;

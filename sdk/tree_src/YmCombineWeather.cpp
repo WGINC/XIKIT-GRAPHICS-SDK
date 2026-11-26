@@ -122,30 +122,32 @@ void __thiscall YmCombineWeather::Release(void * self)
   uint8_t u1;
   int i1;
   void *p1;
-  char xi_frame[28] __attribute__((aligned(4)));
-  uint8_t  (&u2)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { uint8_t u2[28]; };   // at 0x0
+  } frame;
   
   *(uint8_t ***)self = &ptr_to_YmCombineWeather_GetRuntimeClass_10336814;
-  orig::game_100742A0(u2);
+  orig::game_100742A0(frame.u2);
   if (*(int *)(*(int *)((int)self + 4) + 0x20) == *(int *)((int)self + 0x2c)) {
     i1 = orig::EnvBlend_GetField4(self);
     *(uint32_t *)(i1 + 0x20) = 0;
   }
   u1 = false;
-  orig::ResourceIter_FindFirst_v1(u2,*(int *)(*(int *)((int)self + 4) + 0x14),1,0,0xffffffff);
-  i1 = orig::ResourceIter_FindNext_v1(u2,0);
+  orig::ResourceIter_FindFirst_v1(frame.u2,*(int *)(*(int *)((int)self + 4) + 0x14),1,0,0xffffffff);
+  i1 = orig::ResourceIter_FindNext_v1(frame.u2,0);
   do {
     if (i1 == 0) {
 code_1018AC60:
       do {
-        orig::ResourceIter_Start(u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+        orig::ResourceIter_Start(frame.u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
         do {
-          p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+          p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
           if (p1 == (void *)0x0) {
             do {
-              orig::ResourceIter_FindFirst_v1(u2,*(int *)((int)self + 0xc),5,0,0xffffffff);
+              orig::ResourceIter_FindFirst_v1(frame.u2,*(int *)((int)self + 0xc),5,0,0xffffffff);
               do {
-                p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+                p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
                 if (p1 == (void *)0x0) {
                   if (*(int *)((int)*(void **)((int)self + 4) + 0x18) == *(int *)((int)self + 0x20))
                   {
@@ -159,11 +161,11 @@ code_1018AC60:
                   else {
                     *(uint32_t *)((int)p1 + 8) = *(uint32_t *)((int)self + 8);
                   }
-                  orig::ResourceIter_FindFirst_v1(u2,*(int *)((int)self + 0xc),7,0,0xffffffff);
-                  p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+                  orig::ResourceIter_FindFirst_v1(frame.u2,*(int *)((int)self + 0xc),7,0,0xffffffff);
+                  p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
                   while (p1 != (void *)0x0) {
                     orig::Scheduler_RemoveTasksFor(p1);
-                    p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+                    p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
                   }
                   return;
                 }
@@ -181,6 +183,6 @@ code_1018AC60:
       u1 = true;
       goto code_1018AC60;
     }
-    i1 = orig::ResourceIter_FindNext_v1(u2,0);
+    i1 = orig::ResourceIter_FindNext_v1(frame.u2,0);
   } while( true );
 }

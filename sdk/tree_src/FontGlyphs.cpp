@@ -11,8 +11,10 @@ int FontGlyphs::FontGlyphs_DrawString(int arg1, int arg2, int arg3, int arg4, in
   int i2;
   short Char;
   int i3;
-  alignas(16) unsigned char xi_frame[0x414];  // address-taken locals at their original offsets
-  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x10);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x414];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; int i4; };   // at 0x10
+  } frame;
 
   i1 = arg6;
   orig::Gfx_SetCellBlendMode(1, arg6 & 3, (arg6 >> 2) & 3, (arg6 >> 6) & 3);
@@ -33,9 +35,9 @@ int FontGlyphs::FontGlyphs_DrawString(int arg1, int arg2, int arg3, int arg4, in
         g_textCursorX -= 8;
     }
     orig::Font_DrawChar(Char, arg5, i1, *(float *)&arg7, *(float *)&arg8);
-    i4 = 0;
-    orig::Font_AddGlyphAdvance(Char, &i4);
-    g_textCursorX += (long long)((double)i4 * *(float *)&arg7 + 0.5);
+    frame.i4 = 0;
+    orig::Font_AddGlyphAdvance(Char, &frame.i4);
+    g_textCursorX += (long long)((double)frame.i4 * *(float *)&arg7 + 0.5);
   }
   this->quad3_color = -2139062144;
   this->quad2_color = -2139062144;

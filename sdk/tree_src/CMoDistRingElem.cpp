@@ -15,7 +15,7 @@ char ** __cdecl CMoDistRingElem::GetRuntimeClass()
 void CMoDistRingElem::AllocRingGeometry()
 {
   float *p1;
-  int i1;
+  int ringLevelCount;
   int i2;
   unsigned char *p2;
   int i3;
@@ -37,7 +37,7 @@ void CMoDistRingElem::AllocRingGeometry()
   int i11;
   int i12;
   void *p6;
-  int i13;
+  int stride;
   int i14;
   float *p7;
   int i15;
@@ -54,10 +54,10 @@ void CMoDistRingElem::AllocRingGeometry()
   i22 = 2 * (char)this->segmentCount + 2;
   i21 = i22 * (char)this->ringLevelCount;
   p1 = (float *)orig::Allocator_Generic(36 * i21);
-  i1 = (char)this->ringLevelCount;
+  ringLevelCount = (char)this->ringLevelCount;
   i2 = 0;
   i19 = (int)p1;
-  if ( i1 > 0 )
+  if ( ringLevelCount > 0 )
   {
     i17 = (*((uint8_t *)&(g_scratchValue) + 2));
     i14 = (unsigned char)g_scratchValue;
@@ -73,14 +73,14 @@ void CMoDistRingElem::AllocRingGeometry()
       buf1[4 * i2] = (i14 * (unsigned int)*(p2 - 3)) >> 7;
       buf1[4 * i2++ + 3] = (i20 * (unsigned int)*(p2 - 2)) >> 7;
     }
-    while ( i2 < i1 );
+    while ( i2 < ringLevelCount );
   }
-  i4 = i1 - 1;
+  i4 = ringLevelCount - 1;
   i5 = 0;
-  i18 = i1 - 1;
+  i18 = ringLevelCount - 1;
   i16 = 0;
   f6 = 0x1.921fb00000000p+2 / (double)(char)this->segmentCount;
-  if ( i1 - 1 > 0 )
+  if ( ringLevelCount - 1 > 0 )
   {
     p3 = (float *)&this->field_198;
     do
@@ -146,8 +146,8 @@ void CMoDistRingElem::AllocRingGeometry()
         i12 = g_pResourceMng;
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(338);
         p6 = *(void **)(i12 + 3528);
-        i13 = orig::Gfx_CalcFVFStride(0x152u);
-        orig::CDx_DrawPrimitiveUP(p6, 5, a2a, (int)p5, i13);
+        stride = orig::Gfx_CalcFVFStride(0x152u);
+        orig::CDx_DrawPrimitiveUP(p6, 5, a2a, (int)p5, stride);
         p5 += i11;
         --i9;
       }

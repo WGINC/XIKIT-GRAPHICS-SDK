@@ -9,35 +9,37 @@ XI_API bits32 __cdecl SqsdGlow_ApplyShader(int arg1, int arg2)
   int i1;
   uint32_t u1;
   long double f1;
-  char xi_frame[48] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  (&f5)[7] = *reinterpret_cast<float  (*)[7]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[48];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f5[7]; };   // at 0x14
+  } frame;
   
-  f5[1] = 4.0f;
-  f5[2] = 16.0f;
-  f5[3] = 256.0f;
-  f5[4] = 65536.0f;
-  f5[5] = 4294969856.0f;
-  f5[6] = 18446700093244440576.0f;
+  frame.f5[1] = 4.0f;
+  frame.f5[2] = 16.0f;
+  frame.f5[3] = 256.0f;
+  frame.f5[4] = 65536.0f;
+  frame.f5[5] = 4294969856.0f;
+  frame.f5[6] = 18446700093244440576.0f;
   if ((*(int *)(arg1 + 0x60) != 0) && (i1 = orig::SqsdPassTest_TestSeparationHalf(arg2), i1 == 2)) {
     return 0;
   }
-  u2 = *(uint32_t *)(arg1 + 0x5c);
+  frame.u2 = *(uint32_t *)(arg1 + 0x5c);
   f1 = (long double)*(float *)(arg1 + 0x58);
-  if (u2 != 0) {
-    if (((int)u2 < 0) || (5 < u2)) {
-      u2 = 6;
+  if (frame.u2 != 0) {
+    if (((int)frame.u2 < 0) || (5 < frame.u2)) {
+      frame.u2 = 6;
     }
-    f1 = f1 * (long double)f5[u2];
+    f1 = f1 * (long double)frame.f5[frame.u2];
   }
-  f2 = (float)(f1 * (long double)*(float *)(arg1 + 0x4c));
-  f3 = (float)(f1 * (long double)*(float *)(arg1 + 0x50));
-  f4 = (float)(f1 * (long double)*(float *)(arg1 + 0x54));
-  f5[0] = (float)(long double)(int)u2;
-  orig::SqgxContext_SetViewportVec4(&f2);
+  frame.f2 = (float)(f1 * (long double)*(float *)(arg1 + 0x4c));
+  frame.f3 = (float)(f1 * (long double)*(float *)(arg1 + 0x50));
+  frame.f4 = (float)(f1 * (long double)*(float *)(arg1 + 0x54));
+  frame.f5[0] = (float)(long double)(int)frame.u2;
+  orig::SqgxContext_SetViewportVec4(&frame.f2);
   u1 = orig::sqgxShader_v1(0x400000,0);
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(0xff)));
 }

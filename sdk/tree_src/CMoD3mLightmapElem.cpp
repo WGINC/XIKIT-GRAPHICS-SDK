@@ -14,14 +14,16 @@ bits32 __thiscall CMoD3mLightmapElem::DrawLightmapPass(void * self)
   int i1;
   int i2;
   uint32_t *p3;
-  char xi_frame[36] __attribute__((aligned(4)));
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u7; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f1[3]; };   // at 0x18
+  } frame;
   
   i1 = 0;
   if (*(int *)((int)self + 0x104) != 0) {
@@ -48,20 +50,20 @@ bits32 __thiscall CMoD3mLightmapElem::DrawLightmapPass(void * self)
     else {
       orig::CMoElemFamily_SharedEarlyExit(self);
     }
-    p2 = (uint32_t *)orig::ElemFog_ComputeWorldPos_v1(self,f1);
-    u5 = *p2;
-    u6 = p2[1];
-    u7 = p2[2];
-    u4 = 0;
-    u3 = 0;
-    u2 = 0;
+    p2 = (uint32_t *)orig::ElemFog_ComputeWorldPos_v1(self,frame.f1);
+    frame.u5 = *p2;
+    frame.u6 = p2[1];
+    frame.u7 = p2[2];
+    frame.u4 = 0;
+    frame.u3 = 0;
+    frame.u2 = 0;
     orig::YmElem_RestoreDevice(self,0xffff);
     orig::game_1006A450(g_pResourceMng_as_v0);
     orig::CMoDX_PopViewMatrix_v1(g_pResourceMng_as_v0);
     orig::game_1006A0E0(g_pResourceMng_as_v0,0,0);
     u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3c))))((void *)(self));
     orig::YmElem_SetupDevice(self,u1);
-    orig::EndEffectOffscreenPass(&u5,&u2);
+    orig::EndEffectOffscreenPass(&frame.u5,&frame.u2);
     u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3c))))((void *)(self));
     orig::YmElem_RestoreDevice(self,u1);
     i1 = g_pProcessor_as_s32;

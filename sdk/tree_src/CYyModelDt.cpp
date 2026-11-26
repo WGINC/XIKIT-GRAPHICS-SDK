@@ -30,9 +30,9 @@ void * __thiscall CYyModelDt::Construct(void * self)
 char CYyModelDt::PrepareRenderStateEntry(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  uint8_t *p1;
-  p1 = (uint8_t *)orig::ResourceHandle_Deref(this->modelResourceHandle);
-  return orig::CYyModelDt_PrepareRenderState(p1, arg1, arg2, arg3, arg4, (int)self);
+  uint8_t *modelResourceHandle;
+  modelResourceHandle = (uint8_t *)orig::ResourceHandle_Deref(this->modelResourceHandle);
+  return orig::CYyModelDt_PrepareRenderState(modelResourceHandle, arg1, arg2, arg3, arg4, (int)self);
 }
 
 // FUNCTION: FFXIMAIN 0x10025060
@@ -40,23 +40,23 @@ char CYyModelDt::PrepareRenderStateEntry(int arg1, int arg2, int arg3, int arg4,
 unsigned short CYyModelDt::PrepareRenderStateSimpleEntry(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  void *p1;
-  p1 = (void *)orig::ResourceHandle_Deref(this->modelResourceHandle);
-  return orig::CYyModelDt_PrepareRenderStateSimple(p1, arg1, arg2, arg3, (int)self);
+  void *modelResourceHandle;
+  modelResourceHandle = (void *)orig::ResourceHandle_Deref(this->modelResourceHandle);
+  return orig::CYyModelDt_PrepareRenderStateSimple(modelResourceHandle, arg1, arg2, arg3, (int)self);
 }
 
 // FUNCTION: FFXIMAIN 0x100251A0
 // GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
 int CYyModelDt::MarkReferencedBones(int arg1)
 {
-  int i1;
+  int modelResourceHandle;
   int i2;
   int i;
   int i3;
-  i1 = this->modelResourceHandle;
-  if ( i1 == 0 )
+  modelResourceHandle = this->modelResourceHandle;
+  if ( modelResourceHandle == 0 )
     return 0;
-  i2 = orig::ResourceHandle_Deref(i1);
+  i2 = orig::ResourceHandle_Deref(modelResourceHandle);
   if ( i2 == 0 )
     return 0;
   for ( i = 0;
@@ -118,12 +118,12 @@ uint32_t * CYyModelDt::ScalarDeletingDtor(char arg1)
 
 // FUNCTION: FFXIMAIN 0x1002A000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModelDt::PrepareRenderStateV2Entry(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 * arg6, bits32 * arg7)
+void __thiscall CYyModelDt::PrepareRenderStateV2Entry(void * self, bits32 arg2, bits32 arg3, bits32 _180, bits32 arg5, bits32 * arg6, bits32 * arg7)
 {
   void *obj1;
   
   obj1 = (void *)orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
-  orig::CYyModelDt_SkinAndDrawV2(obj1,arg2,arg3,arg4,arg5,arg6,arg7);
+  orig::CYyModelDt_SkinAndDrawV2(obj1,arg2,arg3,_180,arg5,arg6,arg7);
   return;
 }
 
@@ -154,10 +154,10 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
   unsigned char c1;
-  int i1;
+  int startIndex;
   int i2;
   int i3;
-  unsigned int u1;
+  unsigned int Value;
   uint8_t *p1;
   int i4;
   int i5;
@@ -171,7 +171,7 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
   int i10;
   int i11;
   IDirect3DBaseTexture8 *p4;
-  int i12;
+  int primCount;
   int i13;
   bool b1;
   unsigned char c3;
@@ -191,7 +191,7 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
   *arg6 = 0;
   p5 = *(uint16_t **)(self + 54);
   g_1045B618 = **(uint32_t **)(self + 66);
-  i1 = 0;
+  startIndex = 0;
   b1 = false;
   i2 = at<uint32_t>(this, 0x5E);
   g_1045B620 = at<uint32_t>(this, 0x48);
@@ -272,10 +272,10 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
     }
   }
   i15 = 0;
-  u1 = (unsigned char)((unsigned int)(g_modelColor * c_ps2White) >> 7)
+  Value = (unsigned char)((unsigned int)(g_modelColor * c_ps2White) >> 7)
       | ((((*((uint16_t *)&(g_modelColor) + sizeof(g_modelColor) / 2 - 1)) * (*((uint16_t *)&(c_ps2White) + sizeof(c_ps2White) / 2 - 1))) & 0x7F80 | 0xFFC00000) << 9)
       | ((unsigned short)((unsigned int)g_modelColor >> 8) * (((unsigned int)c_ps2White >> 7) & 0xFFFE)) & 0xFF00;
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, u1);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
   (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
   CYyModelDt_SkinAndDrawV2_passToken = 0;
   g_1045B64C = 0;
@@ -332,7 +332,7 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
   {
     if ( (i3 & 0x8000) == 0 )
     {
-      i12 = (unsigned short)p5[1];
+      primCount = (unsigned short)p5[1];
       if ( (unsigned short)i3 > 0x4353u )
       {
         if ( (unsigned short)i3 == 21587 )
@@ -352,10 +352,10 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
                 5,
                 0,
                 *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
-                i1,
-                i12);
+                startIndex,
+                primCount);
               ++g_modelDrawCallCount;
-              g_modelPrimitiveCount += i12;
+              g_modelPrimitiveCount += primCount;
               if ( (this->extraStreamFlags & 1) != 0 )
               {
                 orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
@@ -365,14 +365,14 @@ short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t
                   5,
                   0,
                   *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
-                  i1,
-                  i12);
-                g_modelPrimitiveCount += i12;
+                  startIndex,
+                  primCount);
+                g_modelPrimitiveCount += primCount;
                 ++g_modelDrawCallCount;
               }
 L1:
               if ( g_envMapEnabled != 0
-                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, u1, (float *)g_envMapTexMatrix) != 0 )
+                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, Value, (float *)g_envMapTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -388,7 +388,7 @@ L1:
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -400,14 +400,14 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 orig::EnvMap_EndPass(i15);
               }
               if ( g_projTexEnabled != 0
-                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, u1, g_projTexMatrix) != 0 )
+                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, Value, g_projTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -423,7 +423,7 @@ L1:
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -435,13 +435,13 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 orig::ProjTex_EndPass((void *)(arg2 + 144), i15);
               }
-              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, u1) != 0 )
+              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, Value) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -451,14 +451,14 @@ L1:
                   orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
                   (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
-                  i1 = i14;
+                  startIndex = i14;
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     5,
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -470,19 +470,19 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 else
                 {
-                  i1 = i14;
+                  startIndex = i14;
                 }
                 orig::Model_EndOffscreenPassBindTextures((uint32_t *)(arg2 + 72), i15);
               }
               else
               {
-                i1 = i14;
+                startIndex = i14;
               }
             }
           }
@@ -490,9 +490,9 @@ L1:
           {
             goto L1;
           }
-          i13 = i12 + 2;
-          *arg6 += i12 + 2;
-          p5 += 5 * i12 + 12;
+          i13 = primCount + 2;
+          *arg6 += primCount + 2;
+          p5 += 5 * primCount + 12;
           goto L2;
         }
       }
@@ -501,13 +501,13 @@ L1:
         switch ( (unsigned short)i3 )
         {
           case 0x4353u:
-            p5 += i12 + 6;
+            p5 += primCount + 6;
             break;
           case 0x43u:
-            p5 += 5 * i12 + 2;
+            p5 += 5 * primCount + 2;
             break;
           case 0x54u:
-            i16 = 3 * i12;
+            i16 = 3 * primCount;
             if ( *(uint8_t *)(i2 + 104) != 0 )
             {
               if ( !b1 )
@@ -523,9 +523,9 @@ L1:
                   4,
                   0,
                   *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
-                  i1,
-                  i12);
-                g_modelPrimitiveCount += i12;
+                  startIndex,
+                  primCount);
+                g_modelPrimitiveCount += primCount;
                 ++g_modelDrawCallCount;
                 if ( (this->extraStreamFlags & 1) != 0 )
                 {
@@ -536,18 +536,18 @@ L1:
                     4,
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
-                    i1,
-                    i12);
-                  g_modelPrimitiveCount += i12;
+                    startIndex,
+                    primCount);
+                  g_modelPrimitiveCount += primCount;
                   ++g_modelDrawCallCount;
                 }
               }
-              p5 += 15 * i12 + 2;
+              p5 += 15 * primCount + 2;
             }
             if ( !b1 )
             {
               if ( g_envMapEnabled != 0
-                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, u1, (float *)g_envMapTexMatrix) != 0 )
+                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, Value, (float *)g_envMapTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -563,7 +563,7 @@ L1:
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -575,14 +575,14 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 orig::EnvMap_EndPass(i15);
               }
               if ( g_projTexEnabled != 0
-                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, u1, g_projTexMatrix) != 0 )
+                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, Value, g_projTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -598,7 +598,7 @@ L1:
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -610,13 +610,13 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 orig::ProjTex_EndPass((void *)(arg2 + 144), i15);
               }
-              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, u1) != 0 )
+              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, Value) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
                 if ( *(uint8_t *)(i2 + 104) != 0 )
@@ -626,14 +626,14 @@ L1:
                   orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
                   (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
-                  i1 = i14;
+                  startIndex = i14;
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     4,
                     0,
                     *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                     i14,
-                    i12);
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
@@ -645,26 +645,26 @@ L1:
                       0,
                       *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
                       i14,
-                      i12);
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 else
                 {
-                  i1 = i14;
+                  startIndex = i14;
                 }
                 orig::Model_EndOffscreenPassBindTextures((uint32_t *)(arg2 + 72), i15);
-                i13 = 3 * i12;
+                i13 = 3 * primCount;
                 *arg5 += i16;
                 goto L2;
               }
-              i1 = i14;
+              startIndex = i14;
             }
-            i13 = 3 * i12;
+            i13 = 3 * primCount;
             *arg5 += i16;
 L2:
-            i1 += i13;
-            i14 = i1;
+            startIndex += i13;
+            i14 = startIndex;
             break;
           default:
             break;
@@ -741,8 +741,8 @@ L2:
         if ( (*((uint16_t *)&(buf1[3]) + sizeof(buf1[3]) / 2 - 1)) != 0 && g_1045745C != 0 && *(uint32_t *)g_1045745C != 0 && c3 == 1 )
         {
           i15 = 2;
-          u1 = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | u1 & 0xFFFFFF;
-          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, u1);
+          Value = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | Value & 0xFFFFFF;
+          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG2, D3DTA_TEXTURE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_ADD);
@@ -775,19 +775,19 @@ L2:
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXCOORDINDEX, 0);
-            u1 = (unsigned char)((unsigned int)(g_modelColor * (*(uint32_t *)&(buf1[0]))) >> 7)
+            Value = (unsigned char)((unsigned int)(g_modelColor * (*(uint32_t *)&(buf1[0]))) >> 7)
                 | ((*((uint16_t *)&(g_modelColor) + sizeof(g_modelColor) / 2 - 1)) * (((*(uint32_t *)&(buf1[0])) >> 7) & 0x1FFFE00)) & 0xFF0000
                 | ((unsigned short)((unsigned int)g_modelColor >> 8) * (((*(uint32_t *)&(buf1[0])) >> 7) & 0xFFFE)) & 0xFF00
                 | 0x80000000;
-            (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, u1);
+            (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
 L4:
-            i1 = i14;
+            startIndex = i14;
             p5 += 23;
             goto L3;
           }
           i15 = 1;
-          u1 = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | u1 & 0xFFFFFF;
-          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, u1);
+          Value = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | Value & 0xFFFFFF;
+          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG2, D3DTA_TEXTURE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_ADD);
@@ -802,7 +802,7 @@ L4:
             p3 = *(IDirect3DBaseTexture8 **)(g_104570F4 + 68);
         }
         (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 1u, p3);
-        i1 = i14;
+        startIndex = i14;
         p5 += 23;
       }
     }

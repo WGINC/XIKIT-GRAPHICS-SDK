@@ -428,19 +428,21 @@ XI_API void __thiscall Acter_UpdateModelPoint848(void * self_)
   long double f1;
   long double xi_st0ret_00;
   uint64_t u4;
-  char xi_frame[112] __attribute__((aligned(4)));
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 20);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 32);
-  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint8_t  (&u11)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 48);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[112];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; uint32_t u5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; uint32_t u6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_7[0x1C]; uint32_t u7; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_8[0x20]; float f6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_9[0x24]; uint32_t u8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_10[0x28]; uint32_t u9; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_11[0x2C]; uint32_t u10; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_12[0x30]; uint8_t u11[64]; };   // at 0x30
+  } frame;
   
   if (((*(uint32_t *)((int)self_ + 0x120) & 0x200) == 0) ||
      (u4 = orig::CYyObject_IsKindOf(*(void **)((int)self_ + 0xa0),(int)XI_GAME(0x10330EBCu)), (char)u4 == '\0')) {
@@ -452,11 +454,11 @@ XI_API void __thiscall Acter_UpdateModelPoint848(void * self_)
     if ((((i3 != 0) && ((*(uint32_t *)(i3 + 0x120) >> 9 & 1) != 0)) &&
         (obj1 = *(int **)(i3 + 0xa0), obj1 != (int *)0x0)) &&
        (u4 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x10330EBCu)), (char)u4 != '\0')) {
-      u2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x1c4))))((void *)(obj1),(int)*(short *)((int)self_ + 0x148),&u5);
+      u2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x1c4))))((void *)(obj1),(int)*(short *)((int)self_ + 0x148),&frame.u5);
       if ((char)u2 == '\0') {
         u1 = *(uint32_t *)((&ActerBuffPtr_as_v0)[*(uint16_t *)((int)self_ + 0x146)] + 0x120);
         if ((((uint8_t)(u1 >> 0xf) | (uint8_t)(u1 >> 0xe) | (uint8_t)(u1 >> 0x11)) & 1) != 0) {
-          f5 = (float)(f5 - 1.2000000476837158203125f);
+          frame.f5 = (float)(frame.f5 - 1.2000000476837158203125f);
         }
         xi_st0ret = ((long double (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x110))))((void *)(obj1));
         u3 = ((xi_st0ret) != (xi_st0ret)) || ((0.0f) != (0.0f));
@@ -467,13 +469,13 @@ XI_API void __thiscall Acter_UpdateModelPoint848(void * self_)
         else {
           f1 = bit_cast<float>(obj1[0x1d5]);
         }
-        f5 = (float)(f5 - f1 * 1.2000000476837158203125f);
+        frame.f5 = (float)(frame.f5 - f1 * 1.2000000476837158203125f);
       }
       i3 = *(int *)((int)self_ + 0xa0);
-      *(uint32_t *)(i3 + 0x848) = u5;
-      *(float *)(i3 + 0x84c) = f5;
-      *(uint32_t *)(i3 + 0x850) = u6;
-      *(uint32_t *)(i3 + 0x854) = u7;
+      *(uint32_t *)(i3 + 0x848) = frame.u5;
+      *(float *)(i3 + 0x84c) = frame.f5;
+      *(uint32_t *)(i3 + 0x850) = frame.u6;
+      *(uint32_t *)(i3 + 0x854) = frame.u7;
       *(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x840) =
            *(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x840) | 1;
       return;
@@ -485,38 +487,38 @@ XI_API void __thiscall Acter_UpdateModelPoint848(void * self_)
       i2 = *(short *)((int)self_ + 0x14a);
       if ((*(char *)((int)self_ + 0x120) < '\0') && (g_104807F5 != '\0')) {
         i3 = *(int *)((int)self_ + 0xd4);
-        u5 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x140);
-        f5 = *(float *)(*(int *)(i3 + 0x260) + 0x144);
-        u6 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x148);
-        u7 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x14c);
+        frame.u5 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x140);
+        frame.f5 = *(float *)(*(int *)(i3 + 0x260) + 0x144);
+        frame.u6 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x148);
+        frame.u7 = *(uint32_t *)(*(int *)(i3 + 0x260) + 0x14c);
         i3 = *(int *)(i3 + 0x260);
-        f2 = *(float *)(i3 + 0x150);
-        f3 = *(float *)(i3 + 0x154);
-        f4 = *(float *)(i3 + 0x158);
+        frame.f2 = *(float *)(i3 + 0x150);
+        frame.f3 = *(float *)(i3 + 0x154);
+        frame.f4 = *(float *)(i3 + 0x158);
       }
       else {
-        u5 = *(uint32_t *)((int)self_ + 4);
-        f5 = *(float *)((int)self_ + 8);
-        u6 = *(uint32_t *)((int)self_ + 0xc);
-        u7 = *(uint32_t *)((int)self_ + 0x10);
-        f2 = *(float *)((int)self_ + 0x14);
-        f3 = *(float *)((int)self_ + 0x18);
-        f4 = *(float *)((int)self_ + 0x1c);
+        frame.u5 = *(uint32_t *)((int)self_ + 4);
+        frame.f5 = *(float *)((int)self_ + 8);
+        frame.u6 = *(uint32_t *)((int)self_ + 0xc);
+        frame.u7 = *(uint32_t *)((int)self_ + 0x10);
+        frame.f2 = *(float *)((int)self_ + 0x14);
+        frame.f3 = *(float *)((int)self_ + 0x18);
+        frame.f4 = *(float *)((int)self_ + 0x1c);
       }
-      orig::MathVector_ReturnThis(u11);
-      orig::Mat4_SetIdentity_v1(u11);
-      orig::Mat4_PostRotateZ_v1(u11,(float)(f4 +
+      orig::MathVector_ReturnThis(frame.u11);
+      orig::Mat4_SetIdentity_v1(frame.u11);
+      orig::Mat4_PostRotateZ_v1(frame.u11,(float)(frame.f4 +
                                    (float)((int)i2 * (-0.00153393554501235485076904296875f))));
-      orig::Mat4_PostRotateY_v1(u11,(float)(f3 +
+      orig::Mat4_PostRotateY_v1(frame.u11,(float)(frame.f3 +
                                    (float)((int)i1 * 0.00153393554501235485076904296875f)));
-      orig::Mat4_PostRotateX_v1(u11,f2);
-      orig::Mat4_SetTranslation_v2(u11,&u5);
-      orig::Mat4_TransformPoint_v1(u11,&f6,(float *)&g_1035B54C);
+      orig::Mat4_PostRotateX_v1(frame.u11,frame.f2);
+      orig::Mat4_SetTranslation_v2(frame.u11,&frame.u5);
+      orig::Mat4_TransformPoint_v1(frame.u11,&frame.f6,(float *)&g_1035B54C);
       i3 = *(int *)((int)self_ + 0xa0);
-      *(float *)(i3 + 0x848) = f6;
-      *(uint32_t *)(i3 + 0x84c) = u8;
-      *(uint32_t *)(i3 + 0x850) = u9;
-      *(uint32_t *)(i3 + 0x854) = u10;
+      *(float *)(i3 + 0x848) = frame.f6;
+      *(uint32_t *)(i3 + 0x84c) = frame.u8;
+      *(uint32_t *)(i3 + 0x850) = frame.u9;
+      *(uint32_t *)(i3 + 0x854) = frame.u10;
       *(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x840) =
            *(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x840) | 1;
       orig::MathVector_Nop();
@@ -1093,13 +1095,15 @@ XI_API void __cdecl Call1008A0E0With2(void)
 XI_API bits32 __cdecl Camera_SetField30(int arg1)
 {
   uint64_t u1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u2[256]; };   // at 0x0
+  } frame;
   
   if (arg1 != g_1035B5E8) {
     g_1035B5E8 = arg1;
     *(int *)(g_pCamera_as_s32 + 0x30) = arg1;
-    u1 = orig::_sprintf(u2,&g_1035BAF4,arg1);
+    u1 = orig::_sprintf(frame.u2,&g_1035BAF4,arg1);
     arg1 = (int)u1;
   }
   return arg1;
@@ -1202,11 +1206,13 @@ XI_API uint32_t __cdecl Actor_CompareNames(uint8_t * arg1, uint8_t * arg2, bits3
   uint32_t u2;
   uint8_t *p2;
   uint8_t u3;
-  char xi_frame[56] __attribute__((aligned(4)));
-  uint8_t  (&u4)[23] = *reinterpret_cast<uint8_t  (*)[23]>(xi_frame + 0);
-  uint8_t  &u5 = *reinterpret_cast<uint8_t  *>(xi_frame + 23);
-  uint8_t  (&u6)[23] = *reinterpret_cast<uint8_t  (*)[23]>(xi_frame + 28);
-  uint8_t  &u7 = *reinterpret_cast<uint8_t  *>(xi_frame + 51);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { uint8_t u4[23]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x17]; uint8_t u5; };   // at 0x17
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; uint8_t u6[23]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_4[0x33]; uint8_t u7; };   // at 0x33
+  } frame;
   
   p1 = arg1;
   p2 = arg2;
@@ -1232,24 +1238,24 @@ code_1008B2EB:
   }
   u2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)((char)arg3)));
   if ((char)arg3 != '\0') {
-    p1 = u6;
+    p1 = frame.u6;
     for (i1 = 6; i1 != 0; i1 = i1 + -1) {
       *(uint32_t *)p1 = *(uint32_t *)arg1;
       arg1 = arg1 + 4;
       p1 = p1 + 4;
     }
-    p1 = u4;
+    p1 = frame.u4;
     for (i1 = 6; i1 != 0; i1 = i1 + -1) {
       *(uint32_t *)p1 = *(uint32_t *)arg2;
       arg2 = arg2 + 4;
       p1 = p1 + 4;
     }
-    u7 = 0;
-    u5 = 0;
-    orig::TaskAndTextArgs_MapNameLetters(u6);
-    orig::TaskAndTextArgs_MapNameLetters(u4);
-    p1 = u4;
-    p2 = u6;
+    frame.u7 = 0;
+    frame.u5 = 0;
+    orig::TaskAndTextArgs_MapNameLetters(frame.u6);
+    orig::TaskAndTextArgs_MapNameLetters(frame.u4);
+    p1 = frame.u4;
+    p2 = frame.u6;
     do {
       u1 = *p2;
       u3 = u1 < *p1;
@@ -1305,15 +1311,17 @@ XI_API void __thiscall Acter_UpdateOnePart1008CD90(void * self_)
   long double f4;
   uint64_t u4;
   int64_t i4;
-  char xi_frame[48] __attribute__((aligned(4)));
-  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 36);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[48];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f8; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f9; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; float f10; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; uint32_t u5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x24]; float f11; };   // at 0x24
+  } frame;
   
   *(uint32_t *)((int)self_ + 300) = *(uint32_t *)((int)self_ + 300) & 0xfffffffd;
   if ((*(uint32_t *)((int)self_ + 0x120) & 0x200) != 0) {
@@ -1371,9 +1379,9 @@ code_1008CEA2:
   }
   if (((g_10480AED_as_s8 != '\0') && (*(int *)((int)self_ + 0x78) != 0)) &&
      (p2 = orig::NetCellFont_GetIdPair(), *(int *)(p2 + 4) != *(int *)((int)self_ + 0x78))) {
-    orig::Vec4_Copy_v1(&u5,(uint32_t *)((int)self_ + 0x24));
-    f11 = (float)(f11 - 0.5f);
-    orig::XiZone_DrawMarkerForward(g_pZoneMap,&u5,0x80808080,0x3f000000);
+    orig::Vec4_Copy_v1(&frame.u5,(uint32_t *)((int)self_ + 0x24));
+    frame.f11 = (float)(frame.f11 - 0.5f);
+    orig::XiZone_DrawMarkerForward(g_pZoneMap,&frame.u5,0x80808080,0x3f000000);
   }
   if (-1 < (char)*(uint32_t *)((int)self_ + 0x120)) {
     *(uint32_t *)((int)self_ + 0x120) = *(uint32_t *)((int)self_ + 0x120) & 0xffdfffff;
@@ -1382,34 +1390,34 @@ code_1008CEA2:
     if (((*(uint32_t *)((int)self_ + 0x120) & 0x200) != 0) &&
        (u4 = orig::CYyObject_IsKindOf(*(void **)((int)self_ + 0xa0),(int)XI_GAME(0x1032FD4Cu)), (char)u4 != '\0'))
     {
-      orig::Vec3_Copy_v1(&f5,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x624));
+      orig::Vec3_Copy_v1(&frame.f5,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x624));
     }
     f4 = g_10485A18_as_f32;
-    g_10485A18_as_f32 = f5;
-    g_10485A08_as_f32 = (float)(f5 - f4);
+    g_10485A18_as_f32 = frame.f5;
+    g_10485A08_as_f32 = (float)(frame.f5 - f4);
     f4 = g_10485A1C_as_f32;
-    g_10485A1C_as_f32 = f6;
-    g_10485A0C_as_f32 = (float)(f6 - f4);
+    g_10485A1C_as_f32 = frame.f6;
+    g_10485A0C_as_f32 = (float)(frame.f6 - f4);
     f4 = g_10485A20_as_f32;
-    g_10485A20_as_f32 = f7;
-    g_10485A10_as_f32 = (float)(f7 - f4);
+    g_10485A20_as_f32 = frame.f7;
+    g_10485A10_as_f32 = (float)(frame.f7 - f4);
     *(uint32_t *)((int)self_ + 0x120) = *(uint32_t *)((int)self_ + 0x120) | 0x200000;
   }
   if ((*(int *)((int)self_ + 0x170) == 0x1d) || (*(int *)((int)self_ + 0x170) == 0x1e)) {
     if (((*(uint32_t *)((int)self_ + 0x120) & 0x200) != 0) &&
        (u4 = orig::CYyObject_IsKindOf(*(void **)((int)self_ + 0xa0),(int)XI_GAME(0x1032FD4Cu)), (char)u4 != '\0'))
     {
-      orig::Vec3_Copy_v1(&f5,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x624));
+      orig::Vec3_Copy_v1(&frame.f5,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x624));
     }
     f4 = g_104859F8_as_f32;
-    g_104859F8_as_f32 = f5;
-    g_104859E8_as_f32 = (float)(f5 - f4);
+    g_104859F8_as_f32 = frame.f5;
+    g_104859E8_as_f32 = (float)(frame.f5 - f4);
     f4 = g_104859FC_as_f32;
-    g_104859FC_as_f32 = f6;
-    g_104859EC_as_f32 = (float)(f6 - f4);
+    g_104859FC_as_f32 = frame.f6;
+    g_104859EC_as_f32 = (float)(frame.f6 - f4);
     f4 = g_10485A00_as_f32;
-    g_10485A00_as_f32 = f7;
-    g_104859F0_as_f32 = (float)(f7 - f4);
+    g_10485A00_as_f32 = frame.f7;
+    g_104859F0_as_f32 = (float)(frame.f7 - f4);
     *(uint32_t *)((int)self_ + 0x120) = *(uint32_t *)((int)self_ + 0x120) | 0x200000;
   }
   u1 = *(uint32_t *)((int)self_ + 0x120);
@@ -1471,11 +1479,11 @@ code_1008CEA2:
   }
   if (g_104808FA_as_s8 == '\0') {
     if ((*(uint32_t *)((int)self_ + 0x120) & 0x200) == 0) {
-      orig::Vec4_Copy_v1(&f8,(uint32_t *)((int)self_ + 4));
+      orig::Vec4_Copy_v1(&frame.f8,(uint32_t *)((int)self_ + 4));
     }
     else {
-      orig::Vec4_Copy_v1(&f8,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x34));
-      orig::Vec4_Copy_v1((uint32_t *)((int)self_ + 4),&f8);
+      orig::Vec4_Copy_v1(&frame.f8,(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x34));
+      orig::Vec4_Copy_v1((uint32_t *)((int)self_ + 4),&frame.f8);
     }
     p3 = (float *)((int)self_ + 4);
     if ((*(uint8_t *)((int)self_ + 0x126) & 1) != 0) {
@@ -1499,11 +1507,11 @@ code_1008CEA2:
       if ((int)i4 < (int)i1) {
         f4 = (int)i1;
         *(float *)((int)self_ + 0x54) =
-             (float)((*(float *)((int)self_ + 0x24) - f8) / f4);
+             (float)((*(float *)((int)self_ + 0x24) - frame.f8) / f4);
         *(float *)((int)self_ + 0x58) =
-             (float)((*(float *)((int)self_ + 0x28) - f9) / f4);
+             (float)((*(float *)((int)self_ + 0x28) - frame.f9) / f4);
         *(float *)((int)self_ + 0x5c) =
-             (float)((*(float *)((int)self_ + 0x2c) - f10) / f4);
+             (float)((*(float *)((int)self_ + 0x2c) - frame.f10) / f4);
         f4 = orig::Camera_GetFrameScale_v2();
         *p3 = (float)(f4 * *(float *)((int)self_ + 0x54) + *p3);
         f4 = orig::Camera_GetFrameScale_v2();
@@ -1547,9 +1555,9 @@ code_1008CEA2:
     }
     else {
       if (*(int *)((int)self_ + 0x170) != 0x1f) {
-        f3 = (float)(*(float *)((int)self_ + 0x24) - f8);
-        f1 = (float)(*(float *)((int)self_ + 0x28) - f9);
-        f2 = (float)(*(float *)((int)self_ + 0x2c) - f10);
+        f3 = (float)(*(float *)((int)self_ + 0x24) - frame.f8);
+        f1 = (float)(*(float *)((int)self_ + 0x28) - frame.f9);
+        f2 = (float)(*(float *)((int)self_ + 0x2c) - frame.f10);
         if ((((*(uint32_t *)((int)self_ + 0x120) & 0x200) != 0) &&
             ((((c1 = *(char *)((int)self_ + 0xee), c1 == '\0' || (c1 == '\x01')) ||
               (c1 == '\x02')) || ((c1 == '\x06' || (c1 == '\b')))))) &&
@@ -2604,34 +2612,36 @@ XI_API void __thiscall Acter_SnapHeightToZoneMap(void * self_)
   int i1;
   uint32_t u1;
   uint64_t u2;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+  } frame;
   
   if (((*(uint32_t *)((int)self_ + 0x120) & 0x200) != 0) &&
      ((((c1 = *(char *)((int)self_ + 0xee), c1 == '\0' || (c1 == '\x01')) ||
        (c1 == '\x02')) || (((c1 == '\x06' || (c1 == '\a')) || (c1 == '\b')))))) {
-    f1 = 0.0f;
+    frame.f1 = 0.0f;
     if ((*(uint32_t *)((int)self_ + 0x120) & 0x100000) == 0) {
       u2 = orig::Acter_GetActerAt10485F7A();
       if ((void *)u2 == self_) {
-        u3 = *(uint32_t *)((int)self_ + 0xc);
-        f2 = *(float *)((int)self_ + 8);
-        u4 = *(uint32_t *)((int)self_ + 4);
-        u1 = orig::ZoneMap_QueryBoxHeightBand(g_pZoneMap,u4,f2,u3,5e+01f,&f1);
+        frame.u3 = *(uint32_t *)((int)self_ + 0xc);
+        frame.f2 = *(float *)((int)self_ + 8);
+        frame.u4 = *(uint32_t *)((int)self_ + 4);
+        u1 = orig::ZoneMap_QueryBoxHeightBand(g_pZoneMap,frame.u4,frame.f2,frame.u3,5e+01f,&frame.f1);
         if ((char)u1 == '\x01') {
-          *(float *)((int)self_ + 8) = f1;
+          *(float *)((int)self_ + 8) = frame.f1;
         }
       }
       else {
-        u4 = *(uint32_t *)((int)self_ + 0xc);
-        f2 = *(float *)((int)self_ + 8);
-        u3 = *(uint32_t *)((int)self_ + 4);
-        u1 = orig::ZoneMap_QueryBoxHeightByRadius(g_pZoneMap,u3,f2,u4,&f1);
+        frame.u4 = *(uint32_t *)((int)self_ + 0xc);
+        frame.f2 = *(float *)((int)self_ + 8);
+        frame.u3 = *(uint32_t *)((int)self_ + 4);
+        u1 = orig::ZoneMap_QueryBoxHeightByRadius(g_pZoneMap,frame.u3,frame.f2,frame.u4,&frame.f1);
         if ((char)u1 == '\x01') {
-          *(float *)((int)self_ + 8) = f1;
+          *(float *)((int)self_ + 8) = frame.f1;
         }
       }
     }
@@ -4093,27 +4103,29 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
   int i1;
   char *p1;
   uint64_t u5;
-  char xi_frame[8] __attribute__((aligned(4)));
-  char  (&val1)[4] = *reinterpret_cast<char  (*)[4]>(xi_frame + 0);
-  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { char val1[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u6; };   // at 0x4
+  } frame;
   
-  val1[0] = '\0';
-  val1[1] = 0;
-  val1[2] = 0;
-  val1[3] = 0;
+  frame.val1[0] = '\0';
+  frame.val1[1] = 0;
+  frame.val1[2] = 0;
+  frame.val1[3] = 0;
   g_104855B0 = '\0';
   u5 = orig::Acter_TestFlagsAndUpdateParts(self_);
   if ((char)u5 != '\0') {
     if (((*(uint32_t *)((int)self_ + 0x78) & 0xff000000) == 0) &&
        ((*(uint32_t *)((int)self_ + 0x124) & 0x8000000) != 0)) {
-      val1[0] = -0x6e;
+      frame.val1[0] = -0x6e;
     }
-    u6 = 0;
+    frame.u6 = 0;
     u4 = 0;
-    p1 = val1;
+    p1 = frame.val1;
     do {
       u5 = orig::game_10097500((int)self_,(int)((uint64_t)u5 >> 0x20),u4,
-                           ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u5 >> 8))) << 8) | (uint8_t)(val1[u4]))));
+                           ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u5 >> 8))) << 8) | (uint8_t)(frame.val1[u4]))));
       *p1 = (char)u5;
       if ((char)u5 != '\0') {
         p1 = p1 + 1;
@@ -4121,10 +4133,10 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
       u4 = u4 + 1;
     } while (u4 < 2);
     u3 = 0;
-    u4 = u6;
+    u4 = frame.u6;
     do {
       u2 = orig::game_10097730(self_,u3);
-      val1[u4 + 2] = (char)u2;
+      frame.val1[u4 + 2] = (char)u2;
       if ((char)u2 != '\0') {
         u4 = u4 + 1;
       }
@@ -4133,8 +4145,8 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
     i1 = 0;
     u5 = orig::game_100977A0(self_);
     if ((char)u5 != '\0') {
-      if (val1[0] != -0x55) {
-        val1[0] = '\0';
+      if (frame.val1[0] != -0x55) {
+        frame.val1[0] = '\0';
       }
       i1 = 1;
       g_104855B0 = (char)u5;
@@ -4142,8 +4154,8 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
     u1 = false;
     u3 = 0;
     do {
-      if (val1[u3] != '\0') {
-        (&g_104855B0)[i1] = val1[u3];
+      if (frame.val1[u3] != '\0') {
+        (&g_104855B0)[i1] = frame.val1[u3];
         i1 = i1 + 1;
         u1 = true;
       }
@@ -4153,8 +4165,8 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
       u3 = 0;
       if (u4 != 0) {
         do {
-          if (val1[u3 + 2] != '\0') {
-            (&g_104855B0)[i1] = val1[u3 + 2];
+          if (frame.val1[u3 + 2] != '\0') {
+            (&g_104855B0)[i1] = frame.val1[u3 + 2];
             i1 = i1 + 1;
           }
           u3 = u3 + 1;
@@ -4169,7 +4181,7 @@ XI_API uint8_t * __thiscall Entity_BuildDisplayName(void * self_)
       p1 = (char *)((int)self_ + 0x7c);
     }
     orig::_strncat(&g_104855B0,p1,0x80);
-    if (val1[0] == -0x6e) {
+    if (frame.val1[0] == -0x6e) {
       *(uint32_t *)(*(int *)((int)self_ + 0xa0) + 0x7c) = *(uint32_t *)((int)self_ + 0x1d4);
       g_1048562F = 0;
       return &g_104855B0;
@@ -4781,16 +4793,18 @@ XI_API bits32 __cdecl Acter_SetFlag8000OfFound(bits32 arg1)
 XI_API bits32 __cdecl Acter_CheckIdAgainstBlockBits(bits32 arg1)
 {
   uint32_t u1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 0);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+  } frame;
   
-  u1 = orig::NetCellFont_GetBlock2CFD8(&i1);
+  u1 = orig::NetCellFont_GetBlock2CFD8(&frame.i1);
   if ((char)u1 == '\0') {
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
   if (((uint16_t)arg1 < 0x146) &&
      (arg1 = arg1 & 0xffff,
-     (char)((uint8_t *)((&g_1035B950)))[arg1] < (char)((*(uint8_t *)(i1 + 1) & 0x18) >> 3))) {
+     (char)((uint8_t *)((&g_1035B950)))[arg1] < (char)((*(uint8_t *)(frame.i1 + 1) & 0x18) >> 3))) {
     return ((uint32_t)(((uint32_t)(xi_strunc24((arg1 >> 8))) << 8) | (uint8_t)(1)));
   }
   return arg1 & 0xffffff00;

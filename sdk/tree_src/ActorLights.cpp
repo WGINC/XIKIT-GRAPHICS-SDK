@@ -84,44 +84,46 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
   unsigned int u1;
   int i23;
   int result;
-  alignas(16) unsigned char xi_frame[0x474];  // address-taken locals at their original offsets
-  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x24);
-  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0x28);
-  unsigned int &u3 = *reinterpret_cast<unsigned int *>(xi_frame + 0x2C);
-  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0x30);
-  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x50);
-  float (&f18)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x54);
-  float (&f19)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x474];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f11; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f12; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f13; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; float f14; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_5[0x28]; unsigned int Value; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; unsigned int u3; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x30]; unsigned int u4; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_8[0x34]; int i24; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_9[0x38]; float f15; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_10[0x3C]; float f16; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_11[0x40]; int i25; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_12[0x44]; float f17; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_13[0x48]; int i26; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_14[0x4C]; int i27; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_15[0x50]; int i28; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_16[0x54]; float f18[4]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_17[0x64]; float f19[4]; };   // at 0x64
+  } frame;
   bool xi_fpu_unord = false;
 
   p1 = self_;
   f1 = orig::Camera_GetFrameScale() * 0x1.99999a0000000p-2;
-  f13 = f1;
+  frame.f13 = f1;
   (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b1 = f1 < 1.0);
   c1 = 0;
   b2 = f1 == 1.0;
   if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-    f13 = 1.0;
+    frame.f13 = 1.0;
   i2 = 0;
-  f17 = 10000.0;
-  *(float *)&i24 = 0.0;
-  f15 = 0.0;
-  f16 = 0.0;
-  i25 = 0;
-  i26 = 1176256512;
-  i27 = 1176256512;
-  i28 = 1176256512;
-  f14 = 0.0;
+  frame.f17 = 10000.0;
+  *(float *)&frame.i24 = 0.0;
+  frame.f15 = 0.0;
+  frame.f16 = 0.0;
+  frame.i25 = 0;
+  frame.i26 = 1176256512;
+  frame.i27 = 1176256512;
+  frame.i28 = 1176256512;
+  frame.f14 = 0.0;
   i3 = 0;
   p2 = p1 + 388;
   do
@@ -141,9 +143,9 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
       *((uint32_t *)p2 + 18) = *((uint32_t *)p2 + 148);
       *((uint32_t *)p2 + 22) = *((uint32_t *)p2 + 152);
       p3 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 444))(self_);
-      orig::Vec3_Sub(f19, (float *)p2 + 12, p3);
-      orig::Vec3_MulComponents(f18, f19, f19);
-      f2 = f18[2] + f18[1] + f18[0];
+      orig::Vec3_Sub(frame.f19, (float *)p2 + 12, p3);
+      orig::Vec3_MulComponents(frame.f18, frame.f19, frame.f19);
+      f2 = frame.f18[2] + frame.f18[1] + frame.f18[0];
       f3 = sqrt(f2);
       (xi_fpu_unord = __builtin_isunordered(f3, *((float *)p2 + 18)), b3 = f3 < *((float *)p2 + 18));
       c2 = 0;
@@ -156,11 +158,11 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
         f5 = 1.0 / f4;
         for ( i = 0; i < 4; ++i )
         {
-          if ( *(&i24 + i) == 0 )
+          if ( *(&frame.i24 + i) == 0 )
             break;
-          (xi_fpu_unord = __builtin_isunordered(f5, *(&f17 + i)), b5 = f5 < *(&f17 + i));
+          (xi_fpu_unord = __builtin_isunordered(f5, *(&frame.f17 + i)), b5 = f5 < *(&frame.f17 + i));
           c3 = 0;
-          b6 = f5 == *(&f17 + i);
+          b6 = f5 == *(&frame.f17 + i);
           if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
             break;
         }
@@ -168,17 +170,17 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
         {
           for ( j = 2; j >= i; --j )
           {
-            *((uint32_t *)&f15 + j) = *(&i24 + j);
-            *(&i26 + j) = *((uint32_t *)&f17 + j);
+            *((uint32_t *)&frame.f15 + j) = *(&frame.i24 + j);
+            *(&frame.i26 + j) = *((uint32_t *)&frame.f17 + j);
           }
-          f6 = f14;
-          *(&i24 + i) = (int)(p2 - 4);
-          *(&f17 + i) = f5;
-          (*(uint32_t *)&(f14)) = (*(uint32_t *)&(f6)) + 1;
+          f6 = frame.f14;
+          *(&frame.i24 + i) = (int)(p2 - 4);
+          *(&frame.f17 + i) = f5;
+          (*(uint32_t *)&(frame.f14)) = (*(uint32_t *)&(f6)) + 1;
         }
       }
     }
-    i2 = (*(uint32_t *)&(f14));
+    i2 = (*(uint32_t *)&(frame.f14));
     p1 = self_;
     ++i3;
     p2 += 104;
@@ -186,12 +188,12 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
   while ( i3 < 5 );
   if ( i2 > 1 )
   {
-    i26 = 0;
-    f15 = 0.0;
-    i27 = 0;
-    f16 = 0.0;
-    i28 = 0;
-    i25 = 0;
+    frame.i26 = 0;
+    frame.f15 = 0.0;
+    frame.i27 = 0;
+    frame.f16 = 0.0;
+    frame.i28 = 0;
+    frame.i25 = 0;
     i2 = 1;
   }
   i6 = 0;
@@ -205,13 +207,13 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
     {
       if ( p1[176] == 0 || *((uint16_t *)p1 + 89) != 0 )
       {
-        *(float *)p4 = (*((float *)p4 + 130) - *(float *)p4) * f13 + *(float *)p4;
-        *((float *)p4 + 1) = (*((float *)p4 + 131) - *((float *)p4 + 1)) * f13 + *((float *)p4 + 1);
-        *((float *)p4 + 2) = (*((float *)p4 + 132) - *((float *)p4 + 2)) * f13 + *((float *)p4 + 2);
-        *((float *)p4 + 3) = (*((float *)p4 + 133) - *((float *)p4 + 3)) * f13 + *((float *)p4 + 3);
-        *((float *)p4 + 15) = (*((float *)p4 + 145) - *((float *)p4 + 15)) * f13 + *((float *)p4 + 15);
-        *((float *)p4 + 16) = (*((float *)p4 + 146) - *((float *)p4 + 16)) * f13 + *((float *)p4 + 16);
-        *((float *)p4 + 17) = (*((float *)p4 + 147) - *((float *)p4 + 17)) * f13 + *((float *)p4 + 17);
+        *(float *)p4 = (*((float *)p4 + 130) - *(float *)p4) * frame.f13 + *(float *)p4;
+        *((float *)p4 + 1) = (*((float *)p4 + 131) - *((float *)p4 + 1)) * frame.f13 + *((float *)p4 + 1);
+        *((float *)p4 + 2) = (*((float *)p4 + 132) - *((float *)p4 + 2)) * frame.f13 + *((float *)p4 + 2);
+        *((float *)p4 + 3) = (*((float *)p4 + 133) - *((float *)p4 + 3)) * frame.f13 + *((float *)p4 + 3);
+        *((float *)p4 + 15) = (*((float *)p4 + 145) - *((float *)p4 + 15)) * frame.f13 + *((float *)p4 + 15);
+        *((float *)p4 + 16) = (*((float *)p4 + 146) - *((float *)p4 + 16)) * frame.f13 + *((float *)p4 + 16);
+        *((float *)p4 + 17) = (*((float *)p4 + 147) - *((float *)p4 + 17)) * frame.f13 + *((float *)p4 + 17);
       }
       else
       {
@@ -225,9 +227,9 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
       }
       for ( k = 0; k < 4; ++k )
       {
-        if ( *(&i24 + k) == 0 )
+        if ( *(&frame.i24 + k) == 0 )
           break;
-        if ( *(&f17 + k) < 0x1.0624de0000000p-10 )
+        if ( *(&frame.f17 + k) < 0x1.0624de0000000p-10 )
           break;
       }
       if ( k != 4 )
@@ -237,15 +239,15 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
         {
           do
           {
-            *((uint32_t *)&f15 + i7) = *(&i24 + i7);
-            *(&i26 + i7) = *((uint32_t *)&f17 + i7);
+            *((uint32_t *)&frame.f15 + i7) = *(&frame.i24 + i7);
+            *(&frame.i26 + i7) = *((uint32_t *)&frame.f17 + i7);
             --i7;
           }
           while ( i7 >= k );
           p1 = self_;
         }
-        *(&i24 + k) = (int)(p4 - 4);
-        *(&f17 + k) = 0x1.0624de0000000p-10;
+        *(&frame.i24 + k) = (int)(p4 - 4);
+        *(&frame.f17 + k) = 0x1.0624de0000000p-10;
         ++i2;
       }
     }
@@ -257,7 +259,7 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
   i8 = 0;
   do
   {
-    p6 = *(const void **)((char *)&i24 + i8);
+    p6 = *(const void **)((char *)&frame.i24 + i8);
     if ( p6 != nullptr )
     {
       memcpy(p5, p6, 0x68u);
@@ -267,7 +269,7 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
         p7 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 444))(self_);
         orig::Vec3_Sub(p5 + 16, p7, p5 + 13);
         orig::game_100274B0_as_v0(p5 + 16);
-        orig::fn_100272B0((int)(p5 + 1), *(float *)((char *)&f17 + i8));
+        orig::fn_100272B0((int)(p5 + 1), *(float *)((char *)&frame.f17 + i8));
       }
     }
     else
@@ -282,7 +284,7 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
   p8 = (char *)self_ + 384;
   do
   {
-    if ( p8 == (char *)i24 )
+    if ( p8 == (char *)frame.i24 )
       break;
     ++i9;
     p8 += 104;
@@ -292,7 +294,7 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
     i9 = 0;
   g_nearestLight = (int)self_ + 104 * i9 + 904;
   i10 = (*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 560))(self_) == 0;
-  p9 = (int *)*orig::game_10039410((uint32_t *)self_ + 452, &f14);
+  p9 = (int *)*orig::game_10039410((uint32_t *)self_ + 452, &frame.f14);
   if ( p9 != nullptr && (i11 = *p9) != 0 )
   {
     if ( (*(uint8_t *)(i11 + 48) & 2) == 0 )
@@ -313,7 +315,7 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
     orig::XiZone_GetAmbient((char *)g_pXiZone, &g_ambientColor, i10, i12);
   }
   i13 = (*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 392))(self_);
-  orig::XiZone_GetFog(g_pXiZone, &u2, (float *)&u4, (float *)&u3, i10, i13);
+  orig::XiZone_GetFog(g_pXiZone, &frame.Value, (float *)&frame.u4, (float *)&frame.u3, i10, i13);
   p11 = (void *)orig::TargetMenu_GetCachedUnlessFlag21_as_v0(g_pTargetMng);
   if ( p11 == nullptr )
     p11 = (void *)orig::ActorHandle_ResolveObject((int)XiControlActor_userControlTarget);
@@ -335,63 +337,63 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
         f8 = *((float *)self_ + 529);
       else
         f8 = 40.0 - *((float *)self_ + 529);
-      f14 = f8 * 0x1.99999a0000000p-5;
-      *(float *)&i24 = (float)(unsigned char)g_ambientColor;
-      f15 = (float)(unsigned char)g_ambientColorG;
-      f16 = (float)(unsigned char)g_ambientColorR;
-      f11 = 1.0 - f14;
-      orig::fn_100272B0((int)&i24, f11);
-      f12 = f14 * 220.0;
-      orig::game_10027020((float *)&i24, f12);
-      if ( *(float *)&i24 < 0.0 )
-        *(float *)&i24 = 0.0;
-      if ( f15 < 0.0 )
-        f15 = 0.0;
-      f9 = f16;
-      if ( f16 < 0.0 )
+      frame.f14 = f8 * 0x1.99999a0000000p-5;
+      *(float *)&frame.i24 = (float)(unsigned char)g_ambientColor;
+      frame.f15 = (float)(unsigned char)g_ambientColorG;
+      frame.f16 = (float)(unsigned char)g_ambientColorR;
+      frame.f11 = 1.0 - frame.f14;
+      orig::fn_100272B0((int)&frame.i24, frame.f11);
+      frame.f12 = frame.f14 * 220.0;
+      orig::game_10027020((float *)&frame.i24, frame.f12);
+      if ( *(float *)&frame.i24 < 0.0 )
+        *(float *)&frame.i24 = 0.0;
+      if ( frame.f15 < 0.0 )
+        frame.f15 = 0.0;
+      f9 = frame.f16;
+      if ( frame.f16 < 0.0 )
         f9 = 0.0;
-      (xi_fpu_unord = __builtin_isunordered(*(float *)&i24, 255.0), b9 = *(float *)&i24 < 255.0);
+      (xi_fpu_unord = __builtin_isunordered(*(float *)&frame.i24, 255.0), b9 = *(float *)&frame.i24 < 255.0);
       c5 = 0;
-      b10 = *(float *)&i24 == 255.0;
+      b10 = *(float *)&frame.i24 == 255.0;
       if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        *(float *)&i24 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(f15, 255.0), b11 = f15 < 255.0);
+        *(float *)&frame.i24 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(frame.f15, 255.0), b11 = frame.f15 < 255.0);
       c6 = 0;
-      b12 = f15 == 255.0;
+      b12 = frame.f15 == 255.0;
       if ( ((short)(((b11 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b12 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        f15 = 255.0;
+        frame.f15 = 255.0;
       (xi_fpu_unord = __builtin_isunordered(f9, 255.0), b13 = f9 < 255.0);
       c7 = 0;
       b14 = f9 == 255.0;
       if ( ((short)(((b13 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b14 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
         f9 = 255.0;
-      g_ambientColor = (long long)*(float *)&i24 | (((long long)f15 | ((unsigned int)(long long)f9 << 8)) << 8);
-      *(float *)&i24 = (float)(unsigned char)u2;
-      f15 = (float)(*((uint8_t *)&(u2) + 1));
-      f16 = (float)(*((uint8_t *)&(u2) + 2));
-      orig::fn_100272B0((int)&i24, f14);
-      if ( *(float *)&i24 < 0.0 )
-        *(float *)&i24 = 0.0;
-      if ( f15 < 0.0 )
-        f15 = 0.0;
-      if ( f16 < 0.0 )
-        f16 = 0.0;
-      (xi_fpu_unord = __builtin_isunordered(*(float *)&i24, 255.0), b15 = *(float *)&i24 < 255.0);
+      g_ambientColor = (long long)*(float *)&frame.i24 | (((long long)frame.f15 | ((unsigned int)(long long)f9 << 8)) << 8);
+      *(float *)&frame.i24 = (float)(unsigned char)frame.Value;
+      frame.f15 = (float)(*((uint8_t *)&(frame.Value) + 1));
+      frame.f16 = (float)(*((uint8_t *)&(frame.Value) + 2));
+      orig::fn_100272B0((int)&frame.i24, frame.f14);
+      if ( *(float *)&frame.i24 < 0.0 )
+        *(float *)&frame.i24 = 0.0;
+      if ( frame.f15 < 0.0 )
+        frame.f15 = 0.0;
+      if ( frame.f16 < 0.0 )
+        frame.f16 = 0.0;
+      (xi_fpu_unord = __builtin_isunordered(*(float *)&frame.i24, 255.0), b15 = *(float *)&frame.i24 < 255.0);
       c8 = 0;
-      b16 = *(float *)&i24 == 255.0;
+      b16 = *(float *)&frame.i24 == 255.0;
       if ( ((short)(((b15 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b16 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        *(float *)&i24 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(f15, 255.0), b17 = f15 < 255.0);
+        *(float *)&frame.i24 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(frame.f15, 255.0), b17 = frame.f15 < 255.0);
       c9 = 0;
-      b18 = f15 == 255.0;
+      b18 = frame.f15 == 255.0;
       if ( ((short)(((b17 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b18 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        f15 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(f16, 255.0), b19 = f16 < 255.0);
+        frame.f15 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(frame.f16, 255.0), b19 = frame.f16 < 255.0);
       c10 = 0;
-      b20 = f16 == 255.0;
+      b20 = frame.f16 == 255.0;
       if ( ((short)(((b19 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b20 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        f16 = 255.0;
-      u2 = (long long)*(float *)&i24 | (((long long)f15 | ((unsigned int)(long long)f16 << 8)) << 8);
+        frame.f16 = 255.0;
+      frame.Value = (long long)*(float *)&frame.i24 | (((long long)frame.f15 | ((unsigned int)(long long)frame.f16 << 8)) << 8);
       f10 = *((float *)self_ + 529) - orig::Camera_GetFrameScale();
       *((float *)self_ + 529) = f10;
       if ( f10 < 0.0 )
@@ -417,10 +419,10 @@ XI_API int __thiscall Actor_SelectNearestLights(void *self_)
     i14 = (int)(((uint32_t)(i14) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i14 & 0xFB) << 0));
   }
   *((uint32_t *)self_ + 528) = i14;
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGCOLOR, u2);
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGSTART, u3);
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGEND, u4);
-  result = *orig::game_10039410((uint32_t *)self_ + 452, &f14);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGCOLOR, frame.Value);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGSTART, frame.u3);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGEND, frame.u4);
+  result = *orig::game_10039410((uint32_t *)self_ + 452, &frame.f14);
   if ( result != 0 )
   {
     result = *(uint32_t *)result;

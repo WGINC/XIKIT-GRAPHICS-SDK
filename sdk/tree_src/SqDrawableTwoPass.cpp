@@ -7,24 +7,26 @@
 XI_API void __cdecl Drawable_DrawTwoPass(int arg1, int * arg2)
 {
   int i1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+  } frame;
   
   if ((*(int *)(arg1 + 0x4c) != 0) &&
      (i1 = orig::SqsdPassTest_TestSeparationHalf(*arg2), i1 == 2)) {
     return;
   }
-  u1 = 0x3f800000;
-  u2 = 0x3f800000;
-  u3 = 0x3f800000;
-  u4 = 0x3f800000;
+  frame.u1 = 0x3f800000;
+  frame.u2 = 0x3f800000;
+  frame.u3 = 0x3f800000;
+  frame.u4 = 0x3f800000;
   *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa48) = *(uint32_t *)(arg1 + 0x54);
   *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x1044) = *(uint32_t *)(arg1 + 0x3c);
   *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x103c) = *(uint32_t *)(arg1 + 0x40);
-  orig::sqgxColor_v1(&u1);
+  orig::sqgxColor_v1(&frame.u1);
   orig::sqgxAmbient_v1(*(float *)(arg1 + 0x34));
   orig::SqgxContext_SetFloat76C(*(float *)(arg1 + 0x38));
   orig::SqgxContext_SetDword774AndFactor(0,0.0f,0);

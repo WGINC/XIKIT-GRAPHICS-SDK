@@ -441,10 +441,12 @@ XI_API void __cdecl SqmdModel_LinkShape(int arg1, int arg2, int arg3, bits32 arg
   int i1;
   bits32 u4;
   int i2;
-  char xi_frame[264] __attribute__((aligned(4)));
-  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint8_t  (&u5)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 8);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[264];
+    struct __attribute__((packed)) { int i3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint8_t u5[256]; };   // at 0x8
+  } frame;
   
   if ((*(uint8_t *)(arg1 + 0xa8) & 1) == 0) {
     orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x2bf)
@@ -452,9 +454,9 @@ XI_API void __cdecl SqmdModel_LinkShape(int arg1, int arg2, int arg3, bits32 arg
     orig::sqDebugPrintf_v1(str_model_is_not_loaded__aborting____103B3B14,&g_103B3B44);
     return;
   }
-  i4 = *(int *)(arg1 + 0xa4);
-  if (*(int *)(arg1 + 0x5c) <= i4) {
-    u1 = i4 * 4 + 4;
+  frame.i4 = *(int *)(arg1 + 0xa4);
+  if (*(int *)(arg1 + 0x5c) <= frame.i4) {
+    u1 = frame.i4 * 4 + 4;
     p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0x9c),u1,
                           str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x2c8);
     *(bits32 **)(arg1 + 0x9c) = p1;
@@ -468,23 +470,23 @@ XI_API void __cdecl SqmdModel_LinkShape(int arg1, int arg2, int arg3, bits32 arg
   i1 = orig::SqsnScene_LayerAddItem(arg3,u3,u4,u2,arg4);
   if ((char)arg5 != '\0') {
     if ((*(uint8_t *)(*(int *)(arg1 + 0x54) + arg2 * 4) & 0x40) != 0) {
-      i3 = 0;
+      frame.i3 = 0;
       if (0 < *(int *)(arg3 + 0x34)) {
         do {
-          orig::SqsnScene_ShadowAddMember(arg3,i3,i1);
-          i3 = i3 + 1;
-        } while (i3 < *(int *)(arg3 + 0x34));
+          orig::SqsnScene_ShadowAddMember(arg3,frame.i3,i1);
+          frame.i3 = frame.i3 + 1;
+        } while (frame.i3 < *(int *)(arg3 + 0x34));
       }
     }
     if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + arg2 * 4) & 0x4000) != 0) {
       u4 = orig::SqmdModel_GetItemNameKind3(arg1,arg2);
-      orig::_sprintf_v1(u5,str__s_sort_103B3B4C,u4);
-      i2 = orig::SqmdModel_LookupKind2(arg1,u5,&i3);
+      orig::_sprintf_v1(frame.u5,str__s_sort_103B3B4C,u4);
+      i2 = orig::SqmdModel_LookupKind2(arg1,frame.u5,&frame.i3);
       *(int *)(i2 + 0x2c) = arg3;
     }
   }
-  *(int *)(*(int *)(arg1 + 0x9c) + i4 * 4) = i1;
-  *(int *)(*(int *)(arg1 + 0xa0) + i4 * 4) = arg2;
+  *(int *)(*(int *)(arg1 + 0x9c) + frame.i4 * 4) = i1;
+  *(int *)(*(int *)(arg1 + 0xa0) + frame.i4 * 4) = arg2;
   *(int *)(arg1 + 0xa4) = *(int *)(arg1 + 0xa4) + 1;
   *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) | 2;
   return;
