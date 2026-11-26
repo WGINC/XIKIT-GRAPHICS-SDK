@@ -4,38 +4,38 @@
 
 // FUNCTION: FFXIMAIN 0x1011C080
 // GATE: PASS -- 100 trials, 47 returned normally, 94 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 47
-int FontGlyphs::FontGlyphs_DrawString(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+int FontGlyphs::FontGlyphs_DrawString(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  int v9;
-  int v11;
-  __int16 Char;
-  int v13;
+  int i1;
+  int i2;
+  short Char;
+  int i3;
   alignas(16) unsigned char xi_frame[0x414];  // address-taken locals at their original offsets
-  int &v15 = *reinterpret_cast<int *>(xi_frame + 0x10);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x10);
 
-  v9 = a6;
-  orig::Gfx_SetCellBlendMode(1, a6 & 3, (a6 >> 2) & 3, (a6 >> 6) & 3);
-  g_textCursorX = a1;
-  a6 = a3;
-  g_textCursorY = a2;
+  i1 = arg6;
+  orig::Gfx_SetCellBlendMode(1, arg6 & 3, (arg6 >> 2) & 3, (arg6 >> 6) & 3);
+  g_textCursorX = arg1;
+  arg6 = arg3;
+  g_textCursorY = arg2;
   orig::Gfx_SetAdditiveBlend();
   orig::Font_BindGlyphTexture((int)self);
-  v11 = 0;
-  while ( (a4 == 0 || v11 < a4) && *(_BYTE *)(v11 + a3) != 0 && *(_BYTE *)a6 != 0 )
+  i2 = 0;
+  while ( (arg4 == 0 || i2 < arg4) && *(uint8_t *)(i2 + arg3) != 0 && *(uint8_t *)arg6 != 0 )
   {
-    v11 += orig::Sjis_GetCharByteLen((unsigned __int8 *)(v11 + a3));
-    Char = orig::Font_DecodeNextChar((unsigned __int8 **)&a6);
+    i2 += orig::Sjis_GetCharByteLen((unsigned char *)(i2 + arg3));
+    Char = orig::Font_DecodeNextChar((unsigned char **)&arg6);
     if ( Char == 135 )
     {
-      v13 = *(_DWORD *)(g_pSceneState + 8);
-      if ( (*(char *)(g_pSceneState + 24) >= 0 || v13 != 2 && v13 != 3) && v13 == 2 && g_textCursorX >= 8 )
+      i3 = *(uint32_t *)(g_pSceneState + 8);
+      if ( (*(char *)(g_pSceneState + 24) >= 0 || i3 != 2 && i3 != 3) && i3 == 2 && g_textCursorX >= 8 )
         g_textCursorX -= 8;
     }
-    orig::Font_DrawChar(Char, a5, v9, *(float *)&a7, *(float *)&a8);
-    v15 = 0;
-    orig::Font_AddGlyphAdvance(Char, &v15);
-    g_textCursorX += (__int64)((double)v15 * *(float *)&a7 + 0.5);
+    orig::Font_DrawChar(Char, arg5, i1, *(float *)&arg7, *(float *)&arg8);
+    i4 = 0;
+    orig::Font_AddGlyphAdvance(Char, &i4);
+    g_textCursorX += (long long)((double)i4 * *(float *)&arg7 + 0.5);
   }
   this->quad3_color = -2139062144;
   this->quad2_color = -2139062144;

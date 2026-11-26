@@ -4,23 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x10071E00
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-XI_API undefined4 __thiscall CMoResource_CopyBodyTo20(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall CMoResource_CopyBodyTo20(void * self_, bits32 * arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  uint32_t u1;
+  int i1;
+  bits32 *p1;
   
-  uVar1 = (uint32_t)param_1[1] >> 7 & 0x7ffff;
-  puVar3 = (undefined4 *)((int)self_ + 0x20);
-  for (iVar2 = uVar1 << 2; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = *param_1;
-    param_1 = param_1 + 1;
-    puVar3 = puVar3 + 1;
+  u1 = (uint32_t)arg2[1] >> 7 & 0x7ffff;
+  p1 = (bits32 *)((int)self_ + 0x20);
+  for (i1 = u1 << 2; i1 != 0; i1 = i1 + -1) {
+    *p1 = *arg2;
+    arg2 = arg2 + 1;
+    p1 = p1 + 1;
   }
-  for (iVar2 = 0; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *(uint8_t *)puVar3 = *(uint8_t *)param_1;
-    param_1 = (undefined4 *)((int)param_1 + 1);
-    puVar3 = (undefined4 *)((int)puVar3 + 1);
+  for (i1 = 0; i1 != 0; i1 = i1 + -1) {
+    *(uint8_t *)p1 = *(uint8_t *)arg2;
+    arg2 = (bits32 *)((int)arg2 + 1);
+    p1 = (bits32 *)((int)p1 + 1);
   }
-  return uVar1 << 4;
+  return u1 << 4;
 }

@@ -4,50 +4,50 @@
 
 // FUNCTION: FFXIMAIN 0x102524E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StModelItemClear(uint32_t * param_1)
+XI_API bits32 __cdecl StModelItemClear(uint32_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if ((param_1 == (uint32_t *)0x0) || ((*param_1 & 4) == 0)) {
-    uVar1 = param_1[6];
-    if ((uVar1 != 0) || ((param_1[7] != 0 || (param_1[8] != 0)))) {
-      param_1[2] = 0xffffffff;
-      *param_1 = *param_1 & 0xfffffffd;
-      param_1[3] = 0;
-      param_1[4] = 0;
-      param_1[5] = 0;
-      if (uVar1 != 0) {
-        uVar1 = orig::sqFree_v1(uVar1,s_D__build0001_FFXi_Win_Main_dance_10389a74,0xc1);
-        param_1[6] = uVar1;
+  if ((arg1 == (uint32_t *)0x0) || ((*arg1 & 4) == 0)) {
+    u1 = arg1[6];
+    if ((u1 != 0) || ((arg1[7] != 0 || (arg1[8] != 0)))) {
+      arg1[2] = 0xffffffff;
+      *arg1 = *arg1 & 0xfffffffd;
+      arg1[3] = 0;
+      arg1[4] = 0;
+      arg1[5] = 0;
+      if (u1 != 0) {
+        u1 = orig::sqFree_v1(u1,str_D__build0001_FFXi_Win_Main_dance_10389A74,0xc1);
+        arg1[6] = u1;
       }
-      if (param_1[7] != 0) {
-        uVar1 = orig::sqFree_v1(param_1[7],s_D__build0001_FFXi_Win_Main_dance_10389a74,0xc5);
-        param_1[7] = uVar1;
+      if (arg1[7] != 0) {
+        u1 = orig::sqFree_v1(arg1[7],str_D__build0001_FFXi_Win_Main_dance_10389A74,0xc5);
+        arg1[7] = u1;
       }
-      if (param_1[8] != 0) {
-        uVar1 = orig::sqFree_v1(param_1[8],s_D__build0001_FFXi_Win_Main_dance_10389a74,0xc9);
-        param_1[8] = uVar1;
+      if (arg1[8] != 0) {
+        u1 = orig::sqFree_v1(arg1[8],str_D__build0001_FFXi_Win_Main_dance_10389A74,0xc9);
+        arg1[8] = u1;
       }
     }
   }
   else {
-    param_1[2] = 0xffffffff;
-    *param_1 = *param_1 & 0xfffffff1;
-    param_1[3] = 0;
-    param_1[4] = 0;
-    param_1[5] = 0;
-    if (param_1[6] != 0) {
-      orig::ErrorReport_NoOpVarargsA_v1(s_StModelItemClear_A___called_with_10389aa4,param_1[6]);
-      uVar1 = orig::sqFree_v1(param_1[6],s_D__build0001_FFXi_Win_Main_dance_10389a74,0xa9);
-      param_1[6] = uVar1;
+    arg1[2] = 0xffffffff;
+    *arg1 = *arg1 & 0xfffffff1;
+    arg1[3] = 0;
+    arg1[4] = 0;
+    arg1[5] = 0;
+    if (arg1[6] != 0) {
+      orig::ErrorReport_NoOpVarargsA_v1(str_StModelItemClear_A___called_with_10389AA4,arg1[6]);
+      u1 = orig::sqFree_v1(arg1[6],str_D__build0001_FFXi_Win_Main_dance_10389A74,0xa9);
+      arg1[6] = u1;
     }
-    if (param_1[7] != 0) {
-      orig::ErrorReport_NoOpVarargsA_v1(s_StModelItemClear_A___called_with_10389a3c,param_1[7]);
-      uVar1 = orig::sqFree_v1(param_1[7],s_D__build0001_FFXi_Win_Main_dance_10389a74,0xae);
-      param_1[7] = uVar1;
+    if (arg1[7] != 0) {
+      orig::ErrorReport_NoOpVarargsA_v1(str_StModelItemClear_A___called_with_10389A3C,arg1[7]);
+      u1 = orig::sqFree_v1(arg1[7],str_D__build0001_FFXi_Win_Main_dance_10389A74,0xae);
+      arg1[7] = u1;
     }
-    if (param_1[8] != 0) {
-      orig::SqmdModel_Free((int *)(param_1 + 8));
+    if (arg1[8] != 0) {
+      orig::SqmdModel_Free((int *)(arg1 + 8));
       return 0;
     }
   }
@@ -56,27 +56,27 @@ XI_API undefined4 __cdecl StModelItemClear(uint32_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x10252610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StModelItem_ReadStart(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl StModelItem_ReadStart(int arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  if (((*(int *)(param_1 + 0x18) != 0) || (*(int *)(param_1 + 0x1c) != 0)) ||
-     (*(int *)(param_1 + 0x20) != 0)) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____Error__StModelItemReadStart__10389b28);
-    orig::ErrorReport_NoOpVarargsA_v1(g_10389B0C,*(uint32_t *)(param_1 + 0x18));
-    orig::ErrorReport_NoOpVarargsA_v1(g_10389AF4,*(uint32_t *)(param_1 + 0x1c));
-    orig::ErrorReport_NoOpVarargsA_v1(g_10389ADC,*(uint32_t *)(param_1 + 0x20));
+  if (((*(int *)(arg1 + 0x18) != 0) || (*(int *)(arg1 + 0x1c) != 0)) ||
+     (*(int *)(arg1 + 0x20) != 0)) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____Error__StModelItemReadStart__10389B28);
+    orig::ErrorReport_NoOpVarargsA_v1(g_10389B0C,*(uint32_t *)(arg1 + 0x18));
+    orig::ErrorReport_NoOpVarargsA_v1(g_10389AF4,*(uint32_t *)(arg1 + 0x1c));
+    orig::ErrorReport_NoOpVarargsA_v1(g_10389ADC,*(uint32_t *)(arg1 + 0x20));
     return 0xffffffff;
   }
-  *(int *)(param_1 + 4) = param_2;
-  iVar1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,param_2,0,0,param_1,&LAB_10252840,XI_CODE(FUN_102526f0));
-  if (iVar1 < 0) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____Error__DMB_file_not_found____10389b8c,param_2);
+  *(int *)(arg1 + 4) = arg2;
+  i1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,arg2,0,0,arg1,&code_10252840,XI_CODE(game_102526F0));
+  if (i1 < 0) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____Error__DMB_file_not_found____10389B8C,arg2);
     return 0xffffffff;
   }
-  iVar1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,param_2 + 1,0,0,param_1,&LAB_10252880,XI_CODE(FUN_10252790));
-  if (iVar1 < 0) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____Error__DMP_file_not_found____10389b68,param_2 + 1);
+  i1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,arg2 + 1,0,0,arg1,&code_10252880,XI_CODE(game_10252790));
+  if (i1 < 0) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____Error__DMP_file_not_found____10389B68,arg2 + 1);
     return 0xffffffff;
   }
   return 0;
@@ -84,42 +84,42 @@ XI_API undefined4 __cdecl StModelItem_ReadStart(int param_1, undefined4 param_2)
 
 // FUNCTION: FFXIMAIN 0x102528D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StModelItem_Resolve(uint32_t * param_1)
+XI_API bits32 __cdecl StModelItem_Resolve(uint32_t * arg1)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  if ((param_1 != (uint32_t *)0x0) && ((*param_1 & 4) != 0)) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____StModelItemResolve____called_10389c28);
+  if ((arg1 != (uint32_t *)0x0) && ((*arg1 & 4) != 0)) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____StModelItemResolve____called_10389C28);
     return 0xffffffff;
   }
-  if ((param_1[6] != 0) && (param_1[7] != 0)) {
-    uVar1 = orig::SqTimer_GetMicroseconds_v1();
-    param_1[5] = uVar1;
+  if ((arg1[6] != 0) && (arg1[7] != 0)) {
+    u1 = orig::SqTimer_GetMicroseconds_v1();
+    arg1[5] = u1;
     orig::TextInputFiles_FileMngReleaseAt1F0(g_pFileMng_as_v0);
-    uVar1 = orig::SqmdDMB_Resolve((char *)param_1[6],param_1[7]);
-    param_1[8] = uVar1;
+    u1 = orig::SqmdDMB_Resolve((char *)arg1[6],arg1[7]);
+    arg1[8] = u1;
     orig::TextInputFiles_FileMngGetValueAt1F0(g_pFileMng_as_v0);
-    iVar2 = orig::SqTimer_GetMicroseconds_v1();
-    param_1[5] = iVar2 - param_1[5];
-    if (param_1[8] == 0) {
-      orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolve__p___p_10389bfc,param_1[6],param_1[7]);
-      param_1[3] = 0;
-      param_1[4] = 0;
-      uVar1 = orig::sqFree_v1(param_1[6],s_D__build0001_FFXi_Win_Main_dance_10389a74,0x152);
-      param_1[6] = uVar1;
-      uVar1 = orig::sqFree_v1(param_1[7],s_D__build0001_FFXi_Win_Main_dance_10389a74,0x153);
-      param_1[7] = uVar1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    arg1[5] = i1 - arg1[5];
+    if (arg1[8] == 0) {
+      orig::sqDebugPrintf_v1(str_____Error__sqmdDMBResolve__p___p_10389BFC,arg1[6],arg1[7]);
+      arg1[3] = 0;
+      arg1[4] = 0;
+      u1 = orig::sqFree_v1(arg1[6],str_D__build0001_FFXi_Win_Main_dance_10389A74,0x152);
+      arg1[6] = u1;
+      u1 = orig::sqFree_v1(arg1[7],str_D__build0001_FFXi_Win_Main_dance_10389A74,0x153);
+      arg1[7] = u1;
       return 0xffffffff;
     }
-    param_1[6] = 0;
-    uVar1 = orig::sqFree_v1(param_1[7],s_D__build0001_FFXi_Win_Main_dance_10389a74,0x159);
-    param_1[7] = uVar1;
-    *param_1 = *param_1 & 0xfffffffd | 4;
+    arg1[6] = 0;
+    u1 = orig::sqFree_v1(arg1[7],str_D__build0001_FFXi_Win_Main_dance_10389A74,0x159);
+    arg1[7] = u1;
+    *arg1 = *arg1 & 0xfffffffd | 4;
     return 0;
   }
-  orig::ErrorReport_NoOpVarargsA_v1(s_____StModelItemResolve____called_10389bc8);
-  orig::ErrorReport_NoOpVarargsA_v1(g_10389B0C,param_1[6]);
-  orig::ErrorReport_NoOpVarargsA_v1(g_10389AF4,param_1[7]);
+  orig::ErrorReport_NoOpVarargsA_v1(str_____StModelItemResolve____called_10389BC8);
+  orig::ErrorReport_NoOpVarargsA_v1(g_10389B0C,arg1[6]);
+  orig::ErrorReport_NoOpVarargsA_v1(g_10389AF4,arg1[7]);
   return 0xffffffff;
 }

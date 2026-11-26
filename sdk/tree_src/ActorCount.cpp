@@ -7,16 +7,16 @@
 XI_API int __cdecl Actor_CountAll(void)
 {
   void *self_;
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  iVar1 = 0;
-  uVar2 = orig::FUN_10085240();
-  self_ = (void *)uVar2;
+  i1 = 0;
+  u1 = orig::game_10085240();
+  self_ = (void *)u1;
   while (self_ != (void *)0x0) {
-    iVar1 = iVar1 + 1;
-    uVar2 = orig::FUN_10085270(self_);
-    self_ = (void *)uVar2;
+    i1 = i1 + 1;
+    u1 = orig::game_10085270(self_);
+    self_ = (void *)u1;
   }
-  return iVar1;
+  return i1;
 }

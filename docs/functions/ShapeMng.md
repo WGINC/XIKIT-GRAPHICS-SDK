@@ -14,4 +14,4 @@ Group: `Shape` (by the file name only). Source: `sdk/tree_src/ShapeMng.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `ShapeMng::ShapeMng_BindFontTexture` calls `ShapeMng_LoadFontTextures`
-- `ShapeMng::ShapeMng_BindDmgNumTexture` calls `sub_10120880`
+- `ShapeMng::ShapeMng_BindDmgNumTexture` calls `game_10120880`

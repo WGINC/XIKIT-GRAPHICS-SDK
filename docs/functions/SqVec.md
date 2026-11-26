@@ -29,7 +29,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqVec_ZeroDwords` calls nothing directly
 - `SqVec_CopyVec3` calls nothing directly
 - `SqVec_SetXyz` calls nothing directly
-- `SqVec_Length` calls `sub_10274690`
+- `SqVec_Length` calls `game_10274690`
 - `SqVec_CrossProduct` calls nothing directly
 - `SqVec_ScaleVec3ByInverseOf102746C0` calls `SqVec_Length`
 - `SqVec_Sub` calls nothing directly

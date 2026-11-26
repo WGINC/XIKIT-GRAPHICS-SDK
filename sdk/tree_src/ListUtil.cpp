@@ -6,42 +6,42 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall List_GetTail(void * self_)
 {
-  void *pvVar1;
+  void *p1;
   
   do {
-    pvVar1 = self_;
-    if (pvVar1 == (void *)0x0) {
+    p1 = self_;
+    if (p1 == (void *)0x0) {
       return (void *)0x0;
     }
-    self_ = *(void **)((int)pvVar1 + 4);
-  } while (*(void **)((int)pvVar1 + 4) != (void *)0x0);
-  return pvVar1;
+    self_ = *(void **)((int)p1 + 4);
+  } while (*(void **)((int)p1 + 4) != (void *)0x0);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ListUtil_PopHead(void * self_, int * param_1)
+XI_API void __thiscall ListUtil_PopHead(void * self_, int * arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = *(int *)((int)self_ + 8);
-  if (iVar1 == 0) {
+  i1 = *(int *)((int)self_ + 8);
+  if (i1 == 0) {
     if (*(int *)((int)self_ + 4) != 0) {
-      iVar1 = *(int *)((int)self_ + 4);
-      *param_1 = iVar1;
-      *(uint32_t *)(iVar1 + 8) = 0;
+      i1 = *(int *)((int)self_ + 4);
+      *arg2 = i1;
+      *(uint32_t *)(i1 + 8) = 0;
       return;
     }
-    *param_1 = 0;
+    *arg2 = 0;
     return;
   }
-  iVar2 = *(int *)((int)self_ + 4);
-  if (iVar2 != 0) {
-    *(int *)(iVar1 + 4) = iVar2;
-    *(uint32_t *)(iVar2 + 8) = *(uint32_t *)((int)self_ + 8);
+  i2 = *(int *)((int)self_ + 4);
+  if (i2 != 0) {
+    *(int *)(i1 + 4) = i2;
+    *(uint32_t *)(i2 + 8) = *(uint32_t *)((int)self_ + 8);
     return;
   }
-  *(uint32_t *)(iVar1 + 4) = 0;
+  *(uint32_t *)(i1 + 4) = 0;
   return;
 }

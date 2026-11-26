@@ -5,16 +5,16 @@
 #pragma pack(push, 1)
 class XI_API CMoProcessorX87 {
 public:
-    float * Vec3AddScaled(float *a1, float *a2, float a3);  // 0x1006D3B0
-    double Vec3Dot(float *a1, float *a2);  // 0x1006D4D0
-    float * Vec3Add(float *a1, float *a2, float *a3);  // 0x1006D680
-    float * Vec3MulComponents(float *a1, float *a2, float *a3);  // 0x1006D6B0
-    static undefined4 __stdcall TransformPoint(float * param_1, float * param_2, float * param_3);  // 0x1006D720
-    float * Vec3Lerp(float *a1, float *a2, float *a3, float a4);  // 0x1006D980
-    static undefined4 __thiscall RotationFromAnglesZYX(void * self, undefined4 param_1, float param_2, float param_3, float param_4);  // 0x1006DCF0
-    static undefined4 __stdcall RotationY(undefined4 * param_1, float param_2);  // 0x1006E140
-    static undefined4 __stdcall RotationZ(undefined4 * param_1, float param_2);  // 0x1006E260
-    static undefined4 __thiscall RotationFromAnglesXYZ(void * self, undefined4 param_1, float param_2, float param_3, float param_4);  // 0x1006E380
+    float * Vec3AddScaled(float *arg1, float *arg2, float arg3);  // 0x1006D3B0
+    double Vec3Dot(float *arg1, float *arg2);  // 0x1006D4D0
+    float * Vec3Add(float *arg1, float *arg2, float *arg3);  // 0x1006D680
+    float * Vec3MulComponents(float *arg1, float *arg2, float *arg3);  // 0x1006D6B0
+    static bits32 __stdcall TransformPoint(float * arg1, float * arg2, float * arg3);  // 0x1006D720
+    float * Vec3Lerp(float *arg1, float *arg2, float *arg3, float arg4);  // 0x1006D980
+    static bits32 __thiscall RotationFromAnglesZYX(void * self, bits32 arg2, float arg3, float arg4, float arg5);  // 0x1006DCF0
+    static bits32 __stdcall RotationY(bits32 * arg1, float arg2);  // 0x1006E140
+    static bits32 __stdcall RotationZ(bits32 * arg1, float arg2);  // 0x1006E260
+    static bits32 __thiscall RotationFromAnglesXYZ(void * self, bits32 arg2, float arg3, float arg4, float arg5);  // 0x1006E380
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xC];

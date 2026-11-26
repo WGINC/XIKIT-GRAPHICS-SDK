@@ -5,20 +5,20 @@
 
 // FUNCTION: FFXIMAIN 0x100250F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModelBase::AllocParts(void * self, int param_1)
+bits32 __thiscall CYyModelBase::AllocParts(void * self, int arg2)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  puVar2 = orig::Mem_AllocObject_v1(((*(uint16_t **)(param_1 + 0x42))[1] + 1 +
-                           (uint32_t)**(uint16_t **)(param_1 + 0x42)) * 0x3c,4);
-  *(undefined4 **)((int)self + 0x40) = puVar2;
-  if (puVar2 == (undefined4 *)0x0) {
+  p1 = orig::Mem_AllocObject_v1(((*(uint16_t **)(arg2 + 0x42))[1] + 1 +
+                           (uint32_t)**(uint16_t **)(arg2 + 0x42)) * 0x3c,4);
+  *(bits32 **)((int)self + 0x40) = p1;
+  if (p1 == (bits32 *)0x0) {
     return 0;
   }
-  iVar1 = (*(uint16_t **)(param_1 + 0x42))[1] + 1 + (uint32_t)**(uint16_t **)(param_1 + 0x42);
-  *(int *)((int)self + 0x44) = iVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+  i1 = (*(uint16_t **)(arg2 + 0x42))[1] + 1 + (uint32_t)**(uint16_t **)(arg2 + 0x42);
+  *(int *)((int)self + 0x44) = i1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100298A0
@@ -32,25 +32,25 @@ char ** __cdecl CYyModelBase::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CYyModelBase::Construct(void * self)
 {
-  int iVar1;
-  void *this_00;
+  int i1;
+  void *obj1;
   
   *(uint8_t ***)self = &CYyObject_vtbl_ambiguous0_as_v0;
   orig::CYySkl_Construct((void *)((int)self + 8));
-  this_00 = (void *)((int)self + 0x24);
-  iVar1 = 7;
+  obj1 = (void *)((int)self + 0x24);
+  i1 = 7;
   do {
-    orig::CYyMotionQueList_Init(this_00);
-    this_00 = (void *)((int)this_00 + 0x14);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
-  *(uint8_t ***)self = &PTR_CYyModelBase_GetRuntimeClass_1032a710;
+    orig::CYyMotionQueList_Init(obj1);
+    obj1 = (void *)((int)obj1 + 0x14);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  *(uint8_t ***)self = &ptr_to_CYyModelBase_GetRuntimeClass_1032A710;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 0x20) = 0;
   *(uint32_t *)((int)self + 0xc0) = 0;
-  *(uint32_t *)((int)self + 0xb0) = DAT_103514f4;
-  *(uint32_t *)((int)self + 0xb4) = DAT_103514f8;
-  *(uint32_t *)((int)self + 0xb8) = DAT_103514fc;
+  *(uint32_t *)((int)self + 0xb0) = g_103514F4;
+  *(uint32_t *)((int)self + 0xb4) = g_103514F8;
+  *(uint32_t *)((int)self + 0xb8) = g_103514FC;
   *(uint32_t *)((int)self + 0xbc) = 0xbf800000;
   *(uint32_t *)((int)self + 0xc4) = 0xffffffff;
   return self;
@@ -58,12 +58,12 @@ void * __thiscall CYyModelBase::Construct(void * self)
 
 // FUNCTION: FFXIMAIN 0x10029DB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CYyModelBase::ScalarDeletingDtor(char a1)
+int * CYyModelBase::ScalarDeletingDtor(char arg1)
 {
-  int v2;
-  orig::CYyModelBase_Destructor((int *)this, v2);
-  if ( (a1 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  int i1;
+  orig::CYyModelBase_Destructor((int *)this, i1);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }
 
@@ -71,47 +71,47 @@ int * CYyModelBase::ScalarDeletingDtor(char a1)
 // GATE: PASS -- 100 trials, 99 returned normally, 152 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 void __thiscall CYyModelBase::Destructor(void * self)
 {
-  int *piVar1;
-  int iVar2;
-  void *pvVar3;
+  int *p1;
+  int i1;
+  void *p2;
   
-  *(uint8_t ***)self = &PTR_CYyModelBase_GetRuntimeClass_1032a710;
+  *(uint8_t ***)self = &ptr_to_CYyModelBase_GetRuntimeClass_1032A710;
   if (*(uint32_t **)((int)self + 0xc) != (uint32_t *)0x0) {
     orig::CMoResource_ReleaseChain_v1((void *)**(uint32_t **)((int)self + 0xc));
   }
-  piVar1 = *(int **)((int)self + 4);
-  if (piVar1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0x18))))((void *)(piVar1),1);
+  p1 = *(int **)((int)self + 4);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
     *(uint32_t *)((int)self + 4) = 0;
   }
-  piVar1 = *(int **)((int)self + 0x20);
-  if (piVar1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0x18))))((void *)(piVar1),1);
+  p1 = *(int **)((int)self + 0x20);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
     *(uint32_t *)((int)self + 0x20) = 0;
   }
-  pvVar3 = (void *)((int)self + 0x24);
-  iVar2 = 7;
+  p2 = (void *)((int)self + 0x24);
+  i1 = 7;
   do {
-    orig::FUN_1001b140(pvVar3);
-    pvVar3 = (void *)((int)pvVar3 + 0x14);
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  pvVar3 = (void *)((int)self + 0xb0);
-  iVar2 = 7;
+    orig::game_1001B140(p2);
+    p2 = (void *)((int)p2 + 0x14);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p2 = (void *)((int)self + 0xb0);
+  i1 = 7;
   do {
-    pvVar3 = (void *)((int)pvVar3 + -0x14);
-    orig::FUN_1001ac30(pvVar3);
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  orig::FUN_10034270((void *)((int)self + 8));
+    p2 = (void *)((int)p2 + -0x14);
+    orig::game_1001AC30(p2);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  orig::game_10034270((void *)((int)self + 8));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10029E50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModelBase::SetResourceAndRebuild(void * self, undefined4 param_1)
+void __thiscall CYyModelBase::SetResourceAndRebuild(void * self, bits32 arg2)
 {
-  *(uint32_t *)((int)self + 0xc) = param_1;
+  *(uint32_t *)((int)self + 0xc) = arg2;
   orig::CYyModelBase_AllocMatrixBuffers((void *)((int)self + 8));
   orig::CYyModelBase_RefreshParts(self);
   return;
@@ -126,65 +126,65 @@ int __thiscall CYyModelBase::GetPartList(void * self)
 
 // FUNCTION: FFXIMAIN 0x10029F70
 // GATE: PASS -- 100 trials, 56 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-undefined4 * __thiscall CYyModelBase::AddPartFromResource(void * self, undefined4 * param_1)
+bits32 * __thiscall CYyModelBase::AddPartFromResource(void * self, bits32 * arg2)
 {
-  int iVar1;
-  void *this_00;
-  undefined4 *this_01;
+  int i1;
+  void *obj1;
+  bits32 *obj2;
   
-  this_01 = (undefined4 *)0x0;
-  iVar1 = orig::ResourceHandle_Deref_v1(param_1);
-  if ((*(uint8_t *)(iVar1 + 0x32) & 0x7f) == 0) {
-    this_01 = (undefined4 *)orig::Mem_AllocDefault_v1(0x3c);
-    if (this_01 == (undefined4 *)0x0) {
-      return (undefined4 *)0x0;
+  obj2 = (bits32 *)0x0;
+  i1 = orig::ResourceHandle_Deref_v1(arg2);
+  if ((*(uint8_t *)(i1 + 0x32) & 0x7f) == 0) {
+    obj2 = (bits32 *)orig::Mem_AllocDefault_v1(0x3c);
+    if (obj2 == (bits32 *)0x0) {
+      return (bits32 *)0x0;
     }
-    orig::CYyModelDt_Init(this_01);
-    *this_01 = &PTR_CYyModelDt_GetRuntimeClass_1032a72c;
+    orig::CYyModelDt_Init(obj2);
+    *obj2 = &ptr_to_CYyModelDt_GetRuntimeClass_1032A72C;
   }
-  else if ((*(uint8_t *)(iVar1 + 0x32) & 0x7f) == 1) {
-    this_00 = (void *)orig::Mem_AllocDefault_v1(0x1c8);
-    if ((this_00 == (void *)0x0) || (this_01 = orig::CYyModelDt_Construct(this_00), this_01 == (undefined4 *)0x0))
+  else if ((*(uint8_t *)(i1 + 0x32) & 0x7f) == 1) {
+    obj1 = (void *)orig::Mem_AllocDefault_v1(0x1c8);
+    if ((obj1 == (void *)0x0) || (obj2 = orig::CYyModelDt_Construct(obj1), obj2 == (bits32 *)0x0))
     {
-      return (undefined4 *)0x0;
+      return (bits32 *)0x0;
     }
-    orig::CYyModelBase_AllocParts(this_01,iVar1);
+    orig::CYyModelBase_AllocParts(obj2,i1);
   }
-  this_01[2] = param_1;
-  orig::ModelBaseParts_AppendAtTail(self,this_01);
+  obj2[2] = arg2;
+  orig::ModelBaseParts_AppendAtTail(self,obj2);
   orig::CYyModelBase_RefreshParts(self);
-  return this_01;
+  return obj2;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A0C0
 // GATE: PASS -- 100 trials, 93 returned normally, 128 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
 void __thiscall CYyModelBase::RefreshParts(void * self)
 {
-  int a1;
-  int *this_00;
-  uint32_t uVar1;
-  int *piVar2;
-  int iVar3;
+  int i1;
+  int *obj1;
+  uint32_t u1;
+  int *p1;
+  int i2;
   
-  uVar1 = orig::Skel_ClearMarks((void *)((int)self + 8));
-  if ((char)uVar1 == '\0') {
+  u1 = orig::Skel_ClearMarks((void *)((int)self + 8));
+  if ((char)u1 == '\0') {
     return;
   }
-  a1 = *(int *)((int)self + 0x1c);
-  piVar2 = (int *)orig::CYyModelBase_GetPartList_v1(self);
-  this_00 = (int *)*piVar2;
-  while (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x28))))((void *)(this_00),a1);
-    piVar2 = (int *)(*piVar2 + 4);
-    this_00 = (int *)*piVar2;
+  i1 = *(int *)((int)self + 0x1c);
+  p1 = (int *)orig::CYyModelBase_GetPartList_v1(self);
+  obj1 = (int *)*p1;
+  while (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x28))))((void *)(obj1),i1);
+    p1 = (int *)(*p1 + 4);
+    obj1 = (int *)*p1;
   }
-  iVar3 = orig::CYyModelBase_FindPartIndex(self,0x7f);
-  if (iVar3 != 0) {
-    *(uint8_t *)(iVar3 + a1) = 0x80;
+  i2 = orig::CYyModelBase_FindPartIndex(self,0x7f);
+  if (i2 != 0) {
+    *(uint8_t *)(i2 + i1) = 0x80;
   }
-  iVar3 = orig::CYyModelBase_FindPartIndex(self,0x7e);
-  if (iVar3 != 0) {
-    *(uint8_t *)(iVar3 + a1) = 0x80;
+  i2 = orig::CYyModelBase_FindPartIndex(self,0x7e);
+  if (i2 != 0) {
+    *(uint8_t *)(i2 + i1) = 0x80;
   }
   orig::Skel_MarkMarkedChains((void *)((int)self + 8));
   return;
@@ -192,175 +192,175 @@ void __thiscall CYyModelBase::RefreshParts(void * self)
 
 // FUNCTION: FFXIMAIN 0x1002A3B0
 // GATE: PASS -- 100 trials, 79 returned normally, 984 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-int CYyModelBase::DrawLit(int a2, int a3, int a4)
+int CYyModelBase::DrawLit(int arg1, int arg2, int arg3)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  int v5;
-  int *v6;
-  int v7;
-  unsigned int v8;
-  float *v9;
+  int i1;
+  int *p1;
+  int i2;
+  unsigned int u1;
+  float *p2;
   char *PartList;
-  int *v11;
-  int v12;
-  int v13;
-  int v14;
-  int *v15;
-  int v16;
-  _DWORD *v17;
-  char *v18;
+  int *p3;
+  int i3;
+  int i4;
+  int i5;
+  int *p4;
+  int i6;
+  uint32_t *p5;
+  char *p6;
   int *j;
-  _DWORD *v20;
+  uint32_t *p7;
   signed int k;
   int result;
   int i;
-  char *v24;
-  char *v25;
-  int v26;
-  v5 = this->cubemapSpecTexture;
-  v26 = self;
-  if ( v5 == -1 )
+  char *p8;
+  char *p9;
+  int i7;
+  i1 = this->cubemapSpecTexture;
+  i7 = self;
+  if ( i1 == -1 )
   {
-    v6 = *(int **)(g_pMeshResourceMng + 262152);
-    if ( v6 != nullptr )
-      v7 = *v6;
+    p1 = *(int **)(g_pMeshResourceMng + 262152);
+    if ( p1 != nullptr )
+      i2 = *p1;
     else
-      v7 = 0;
-    this->cubemapSpecTexture = orig::CYyTexMng_FindByNameInResource(g_pTextureMng, c_texNameCubemapSpec, v7);
+      i2 = 0;
+    this->cubemapSpecTexture = orig::CYyTexMng_FindByNameInResource(g_pTextureMng, c_texNameCubemapSpec, i2);
   }
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, g_ambientColor);
-  v8 = 0;
-  v9 = &g_lightTable_Start;
+  u1 = 0;
+  p2 = &g_lightTable_Start;
   do
   {
-    if ( *(_DWORD *)v9 != 0 )
+    if ( *(uint32_t *)p2 != 0 )
     {
-      orig::CDx_SetLight(g_pCDx, v8, v9);
-      (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), v8, 1u);
+      orig::CDx_SetLight(g_pCDx, u1, p2);
+      (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), u1, 1u);
     }
     else
     {
-      (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), v8, 0);
+      (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), u1, 0);
     }
-    v9 += 26;
-    ++v8;
+    p2 += 26;
+    ++u1;
   }
-  while ( (int)v9 < (int)flt_10457388 );
+  while ( (int)p2 < (int)g_10457388 );
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, TRUE);
   PartList = orig::CYyModelBase_GetPartList((char *)self);
-  v11 = *(int **)PartList;
-  v25 = PartList;
-  v24 = PartList;
-  if ( v11 != nullptr )
+  p3 = *(int **)PartList;
+  p9 = PartList;
+  p8 = PartList;
+  if ( p3 != nullptr )
   {
     do
     {
-      v12 = (*(int (__thiscall **)(int *))(*v11 + 44))(v11);
-      v13 = v12;
-      if ( v12 != 0 )
+      i3 = (*(int (__thiscall **)(int *))(*p3 + 44))(p3);
+      i4 = i3;
+      if ( i3 != 0 )
       {
-        v14 = *(_DWORD *)(v12 + 88);
-        if ( v14 != 0 && v11[5] == 0 )
+        i5 = *(uint32_t *)(i3 + 88);
+        if ( i5 != 0 && p3[5] == 0 )
         {
-          if ( v11[7] == 0
+          if ( p3[7] == 0
             && orig::CYyVbMng_AcquireVertexBuffer(
-                 (_DWORD *)g_pVbMng,
-                 12 * v14 + 4,
+                 (uint32_t *)g_pVbMng,
+                 12 * i5 + 4,
                  0x208u,
                  0,
                  (D3DPOOL)g_vertexBuffer_7540,
-                 v11 + 7,
+                 p3 + 7,
                  0) < 0
-            || v11[9] == 0
+            || p3[9] == 0
             && orig::CYyVbMng_AcquireVertexBuffer(
-                 (_DWORD *)g_pVbMng,
-                 12 * v14 + 4,
+                 (uint32_t *)g_pVbMng,
+                 12 * i5 + 4,
                  0x208u,
                  0,
                  (D3DPOOL)g_vertexBuffer_7540,
-                 v11 + 9,
+                 p3 + 9,
                  0) < 0
-            || ((v15 = *(int **)(v13 + 52)) == nullptr ? (v16 = 0) : (v16 = *v15),
-                (*(_BYTE *)(v16 + 52) & 1) != 0
-             && (v11[11] == 0
+            || ((p4 = *(int **)(i4 + 52)) == nullptr ? (i6 = 0) : (i6 = *p4),
+                (*(uint8_t *)(i6 + 52) & 1) != 0
+             && (p3[11] == 0
               && orig::CYyVbMng_AcquireVertexBuffer(
-                   (_DWORD *)g_pVbMng,
-                   12 * v14 + 4,
+                   (uint32_t *)g_pVbMng,
+                   12 * i5 + 4,
                    0x208u,
                    0,
                    (D3DPOOL)g_vertexBuffer_7540,
-                   v11 + 11,
+                   p3 + 11,
                    0) < 0
-              || v11[13] == 0
+              || p3[13] == 0
               && orig::CYyVbMng_AcquireVertexBuffer(
-                   (_DWORD *)g_pVbMng,
-                   12 * v14 + 4,
+                   (uint32_t *)g_pVbMng,
+                   12 * i5 + 4,
                    0x208u,
                    0,
                    (D3DPOOL)g_vertexBuffer_7540,
-                   v11 + 13,
+                   p3 + 13,
                    0) < 0)) )
           {
-            v17 = v11 + 9;
+            p5 = p3 + 9;
             for ( i = 2; i != 0; --i )
             {
-              if ( *(v17 - 2) != 0 )
+              if ( *(p5 - 2) != 0 )
               {
-                orig::CYyVbMng_ReleaseVertexBuffer(v17 - 2);
-                *(v17 - 2) = 0;
+                orig::CYyVbMng_ReleaseVertexBuffer(p5 - 2);
+                *(p5 - 2) = 0;
               }
-              if ( *v17 != 0 )
+              if ( *p5 != 0 )
               {
-                orig::CYyVbMng_ReleaseVertexBuffer(v17);
-                *v17 = 0;
+                orig::CYyVbMng_ReleaseVertexBuffer(p5);
+                *p5 = 0;
               }
-              if ( v17[2] != 0 )
+              if ( p5[2] != 0 )
               {
-                orig::CYyVbMng_ReleaseVertexBuffer(v17 + 2);
-                v17[2] = 0;
+                orig::CYyVbMng_ReleaseVertexBuffer(p5 + 2);
+                p5[2] = 0;
               }
-              if ( v17[4] != 0 )
+              if ( p5[4] != 0 )
               {
-                orig::CYyVbMng_ReleaseVertexBuffer(v17 + 4);
-                v17[4] = 0;
+                orig::CYyVbMng_ReleaseVertexBuffer(p5 + 4);
+                p5[4] = 0;
               }
-              ++v17;
+              ++p5;
             }
           }
-          v11[5] = v14;
+          p3[5] = i5;
         }
       }
-      v24 = (char *)(*(_DWORD *)v24 + 4);
-      v11 = *(int **)v24;
+      p8 = (char *)(*(uint32_t *)p8 + 4);
+      p3 = *(int **)p8;
     }
-    while ( *(_DWORD *)v24 != 0 );
-    PartList = v25;
+    while ( *(uint32_t *)p8 != 0 );
+    PartList = p9;
   }
-  v18 = PartList;
-  v24 = nullptr;
-  v25 = nullptr;
-  for ( j = *(int **)PartList; *(_DWORD *)v18 != 0; j = *(int **)v18 )
+  p6 = PartList;
+  p8 = nullptr;
+  p9 = nullptr;
+  for ( j = *(int **)PartList; *(uint32_t *)p6 != 0; j = *(int **)p6 )
   {
     if ( j[3] == 0 )
     {
-      v20 = (_DWORD *)(*(int (__thiscall **)(int *))(*j + 44))(j);
-      if ( v20 != nullptr )
+      p7 = (uint32_t *)(*(int (__thiscall **)(int *))(*j + 44))(j);
+      if ( p7 != nullptr )
       {
-        v20[17] = j[j[6] + 7];
-        v20[18] = j[j[6] + 9];
-        v20[20] = j[j[6] + 11];
-        v20[21] = j[j[6] + 13];
+        p7[17] = j[j[6] + 7];
+        p7[18] = j[j[6] + 9];
+        p7[20] = j[j[6] + 11];
+        p7[21] = j[j[6] + 13];
       }
-      (*(void (__thiscall **)(_DWORD, int, int, int, int, char **, char **))(**(_DWORD **)v18 + 28))(
-        *(_DWORD *)v18,
-        a2,
-        a3,
-        v26,
-        a4,
-        &v24,
-        &v25);
+      (*(void (__thiscall **)(uint32_t, int, int, int, int, char **, char **))(**(uint32_t **)p6 + 28))(
+        *(uint32_t *)p6,
+        arg1,
+        arg2,
+        i7,
+        arg3,
+        &p8,
+        &p9);
     }
-    v18 = (char *)(*(_DWORD *)v18 + 4);
+    p6 = (char *)(*(uint32_t *)p6 + 4);
   }
   for ( k = 0; k < 4; ++k )
     result = (g_pCDx->pDevice)->lpVtbl->LightEnable((g_pCDx->pDevice), k, 0);
@@ -369,83 +369,83 @@ int CYyModelBase::DrawLit(int a2, int a3, int a4)
 
 // FUNCTION: FFXIMAIN 0x1002A700
 // GATE: PASS -- 100 trials, 87 returned normally, 282 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-undefined4 __thiscall CYyModelBase::CallPartsSlot20(void * self, undefined4 param_1, undefined4 param_2)
+bits32 __thiscall CYyModelBase::CallPartsSlot20(void * self, bits32 arg2, bits32 arg3)
 {
-  int *this_00;
-  int *piVar1;
-  int *piVar2;
+  int *obj1;
+  int *p1;
+  int *p2;
   char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
   
-  local_4 = 0;
-  local_8 = 0;
-  piVar1 = (int *)orig::CYyModelBase_GetPartList_v1(self);
-  this_00 = (int *)*piVar1;
-  piVar2 = piVar1;
-  while (this_00 != (int *)0x0) {
-    piVar2 = (int *)((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x20))))((void *)(this_00),param_1,self,param_2,&local_4,&local_8);
-    piVar1 = (int *)(*piVar1 + 4);
-    this_00 = (int *)*piVar1;
+  u2 = 0;
+  u1 = 0;
+  p1 = (int *)orig::CYyModelBase_GetPartList_v1(self);
+  obj1 = (int *)*p1;
+  p2 = p1;
+  while (obj1 != (int *)0x0) {
+    p2 = (int *)((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x20))))((void *)(obj1),arg2,self,arg3,&u2,&u1);
+    p1 = (int *)(*p1 + 4);
+    obj1 = (int *)*p1;
   }
-  return piVar2;
+  return p2;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModelBase::TransformVec4ByPart(void * self, undefined4 param_1, undefined4 * param_2)
+bits32 __thiscall CYyModelBase::TransformVec4ByPart(void * self, bits32 arg2, bits32 * arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  orig::Quat_SetIdentity(param_2);
-  uVar1 = orig::ModelBaseDraw_ApplyToVec4(self,param_1,param_2);
-  return uVar1;
+  orig::Quat_SetIdentity(arg3);
+  u1 = orig::ModelBaseDraw_ApplyToVec4(self,arg2,arg3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A9B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int __thiscall CYyModelBase::FindPartIndex(void * self, uint32_t param_1)
+int __thiscall CYyModelBase::FindPartIndex(void * self, uint32_t arg2)
 {
-  short *psVar1;
+  short *p1;
   
-  psVar1 = (short *)orig::Skel_GetRecordAt((void *)((int)self + 8),param_1);
-  if (psVar1 == (short *)0x0) {
+  p1 = (short *)orig::Skel_GetRecordAt((void *)((int)self + 8),arg2);
+  if (p1 == (short *)0x0) {
     return 0;
   }
-  if (0x7f < param_1) {
+  if (0x7f < arg2) {
     return 0;
   }
-  return (int)*psVar1;
+  return (int)*p1;
 }
 
 // FUNCTION: FFXIMAIN 0x100342A0
 // GATE: PASS -- 100 trials, 64 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 64
 void __thiscall CYyModelBase::AllocMatrixBuffers(void * self)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  int i1;
+  bits32 *p1;
+  uint32_t u1;
+  uint32_t u2;
   
-  if (*(undefined4 **)((int)self + 4) != (undefined4 *)0x0) {
-    iVar1 = orig::ResourceHandle_Deref_v1(*(undefined4 **)((int)self + 4));
-    uVar4 = (uint32_t)*(uint16_t *)(iVar1 + 0x32);
-    puVar2 = orig::Mem_AllocObject_v1((uVar4 + 1) * 0x40,2);
-    *(undefined4 **)((int)self + 8) = puVar2;
-    if (puVar2 != (undefined4 *)0x0) {
-      *(uint32_t *)((int)self + 0xc) = (int)puVar2 + 0xfU & 0xfffffff0;
-      if (uVar4 != 0) {
-        iVar1 = 0;
-        uVar3 = uVar4;
+  if (*(bits32 **)((int)self + 4) != (bits32 *)0x0) {
+    i1 = orig::ResourceHandle_Deref_v1(*(bits32 **)((int)self + 4));
+    u2 = (uint32_t)*(uint16_t *)(i1 + 0x32);
+    p1 = orig::Mem_AllocObject_v1((u2 + 1) * 0x40,2);
+    *(bits32 **)((int)self + 8) = p1;
+    if (p1 != (bits32 *)0x0) {
+      *(uint32_t *)((int)self + 0xc) = (int)p1 + 0xfU & 0xfffffff0;
+      if (u2 != 0) {
+        i1 = 0;
+        u1 = u2;
         do {
-          orig::Mat4_SetIdentity_v1((void *)(*(int *)((int)self + 0xc) + iVar1));
-          iVar1 = iVar1 + 0x40;
-          uVar3 = uVar3 - 1;
-        } while (uVar3 != 0);
+          orig::Mat4_SetIdentity_v1((void *)(*(int *)((int)self + 0xc) + i1));
+          i1 = i1 + 0x40;
+          u1 = u1 - 1;
+        } while (u1 != 0);
       }
-      puVar2 = orig::Mem_AllocObject_v1(uVar4,2);
-      *(undefined4 **)((int)self + 0x14) = puVar2;
-      if (puVar2 != (undefined4 *)0x0) {
+      p1 = orig::Mem_AllocObject_v1(u2,2);
+      *(bits32 **)((int)self + 0x14) = p1;
+      if (p1 != (bits32 *)0x0) {
         return;
       }
     }

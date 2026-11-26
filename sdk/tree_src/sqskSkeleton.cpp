@@ -4,129 +4,129 @@
 
 // FUNCTION: FFXIMAIN 0x1027B580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqskSkeleton_Create(void)
+XI_API bits32 * __cdecl SqskSkeleton_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x30,s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x1d);
-  orig::SqskSkeleton_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x30,str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x1d);
+  orig::SqskSkeleton_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027B5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqskSkeleton_Init(undefined4 * param_1)
+XI_API void __cdecl SqskSkeleton_Init(bits32 * arg1)
 {
-  *param_1 = 0xb0001;
-  param_1[2] = &LAB_1027b5e0;
-  param_1[3] = XI_CODE(FUN_1027b610);
-  param_1[4] = &LAB_1027b650;
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = XI_CODE(SqskSkeleton_Release);
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
+  *arg1 = 0xb0001;
+  arg1[2] = &code_1027B5E0;
+  arg1[3] = XI_CODE(game_1027B610);
+  arg1[4] = &sqskSkeleton_Dump;
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = XI_CODE(SqskSkeleton_Release);
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 0;
+  arg1[10] = 0;
+  arg1[0xb] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027C4C0
 // GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
-XI_API void __cdecl SqskSkeleton_SetNodeCount(int param_1, int param_2)
+XI_API void __cdecl SqskSkeleton_SetNodeCount(int arg1, int arg2)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  bits32 *p1;
+  int i1;
+  int i2;
+  int i3;
   
-  iVar2 = *(int *)(param_1 + 0x28);
-  if (iVar2 != 0) {
-    if (-1 < iVar2 + -1) {
+  i1 = *(int *)(arg1 + 0x28);
+  if (i1 != 0) {
+    if (-1 < i1 + -1) {
       do {
         orig::SqhiNode_Nop();
         orig::SqskJoint_Nop();
-        iVar2 = iVar2 + -1;
-      } while (iVar2 != 0);
+        i1 = i1 + -1;
+      } while (i1 != 0);
     }
-    orig::sqFree_v1(*(int *)(param_1 + 0x20),s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x266);
-    orig::sqFree_v1(*(int *)(param_1 + 0x24),s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x267);
-    *(undefined4 *)(param_1 + 0x28) = 0;
+    orig::sqFree_v1(*(int *)(arg1 + 0x20),str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x266);
+    orig::sqFree_v1(*(int *)(arg1 + 0x24),str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x267);
+    *(bits32 *)(arg1 + 0x28) = 0;
   }
-  if (0 < param_2) {
-    *(int *)(param_1 + 0x28) = param_2;
-    puVar1 = orig::SqMem_AllocZeroed(param_2,0xf8,s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x270);
-    *(undefined4 **)(param_1 + 0x20) = puVar1;
-    puVar1 = orig::SqMem_AllocZeroed(*(int *)(param_1 + 0x28),0x9c,s_C__dev_dancer_modules_sqSkeleton_103b40ec,
+  if (0 < arg2) {
+    *(int *)(arg1 + 0x28) = arg2;
+    p1 = orig::SqMem_AllocZeroed(arg2,0xf8,str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x270);
+    *(bits32 **)(arg1 + 0x20) = p1;
+    p1 = orig::SqMem_AllocZeroed(*(int *)(arg1 + 0x28),0x9c,str_C__dev_dancer_modules_sqSkeleton_103B40EC,
                           0x271);
-    *(undefined4 **)(param_1 + 0x24) = puVar1;
-    iVar2 = 0;
-    if (0 < *(int *)(param_1 + 0x28)) {
-      iVar4 = 0;
-      iVar3 = 0;
+    *(bits32 **)(arg1 + 0x24) = p1;
+    i1 = 0;
+    if (0 < *(int *)(arg1 + 0x28)) {
+      i3 = 0;
+      i2 = 0;
       do {
-        orig::SqhiNode_Init((undefined4 *)(*(int *)(param_1 + 0x20) + iVar4));
-        orig::SqskJoint_Init((undefined4 *)(*(int *)(param_1 + 0x24) + iVar3));
-        *(int *)(*(int *)(param_1 + 0x20) + 100 + iVar4) = *(int *)(param_1 + 0x24) + iVar3;
-        iVar2 = iVar2 + 1;
-        iVar3 = iVar3 + 0x9c;
-        *(uint8_t *)(*(int *)(param_1 + 0x20) + 0x74 + iVar4) = 0;
-        iVar4 = iVar4 + 0xf8;
-      } while (iVar2 < *(int *)(param_1 + 0x28));
+        orig::SqhiNode_Init((bits32 *)(*(int *)(arg1 + 0x20) + i3));
+        orig::SqskJoint_Init((bits32 *)(*(int *)(arg1 + 0x24) + i2));
+        *(int *)(*(int *)(arg1 + 0x20) + 100 + i3) = *(int *)(arg1 + 0x24) + i2;
+        i1 = i1 + 1;
+        i2 = i2 + 0x9c;
+        *(uint8_t *)(*(int *)(arg1 + 0x20) + 0x74 + i3) = 0;
+        i3 = i3 + 0xf8;
+      } while (i1 < *(int *)(arg1 + 0x28));
     }
-    *(undefined4 *)(param_1 + 0x2c) = 0;
-    *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0x20);
+    *(bits32 *)(arg1 + 0x2c) = 0;
+    *(bits32 *)(arg1 + 0x1c) = *(bits32 *)(arg1 + 0x20);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027C900
 // GATE: PASS -- 100 trials, 77 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 77
-XI_API int __cdecl SqskSkeleton_FindBoneIndex(int param_1, int param_2)
+XI_API int __cdecl SqskSkeleton_FindBoneIndex(int arg1, int arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (*(int *)(param_2 + 0x68) != 0) {
-    iVar1 = 0;
-    if (0 < *(int *)(param_1 + 0x28)) {
-      iVar2 = *(int *)(param_1 + 0x20);
+  if (*(int *)(arg2 + 0x68) != 0) {
+    i1 = 0;
+    if (0 < *(int *)(arg1 + 0x28)) {
+      i2 = *(int *)(arg1 + 0x20);
       do {
-        if (iVar2 == param_2) {
-          return iVar1;
+        if (i2 == arg2) {
+          return i1;
         }
-        iVar1 = iVar1 + 1;
-        iVar2 = iVar2 + 0xf8;
-      } while (iVar1 < *(int *)(param_1 + 0x28));
+        i1 = i1 + 1;
+        i2 = i2 + 0xf8;
+      } while (i1 < *(int *)(arg1 + 0x28));
     }
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x381)
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x381)
     ;
-    orig::sqDebugPrintf_v1(s_bone_is_not_found_in_a_skeleton_103b44fc);
+    orig::sqDebugPrintf_v1(str_bone_is_not_found_in_a_skeleton_103B44FC);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1027C980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqskSkeleton_GetNode(int param_1, int param_2)
+XI_API int __cdecl SqskSkeleton_GetNode(int arg1, int arg2)
 {
-  if ((-1 < param_2) && (param_2 < *(int *)(param_1 + 0x28))) {
-    return *(int *)(param_1 + 0x20) + param_2 * 0xf8;
+  if ((-1 < arg2) && (arg2 < *(int *)(arg1 + 0x28))) {
+    return *(int *)(arg1 + 0x20) + arg2 * 0xf8;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqSkeleton_103b40ec,0x3b4);
-  orig::sqDebugPrintf_v1(s_node_index__d_is_out_of_range__0_103b4520,param_2,*(uint32_t *)(param_1 + 0x28))
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqSkeleton_103B40EC,0x3b4);
+  orig::sqDebugPrintf_v1(str_node_index__d_is_out_of_range__0_103B4520,arg2,*(uint32_t *)(arg1 + 0x28))
   ;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1027C9D0
 // GATE: PASS -- 100 trials, 28 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
-XI_API void __cdecl SqskSkeleton_Release(int param_1)
+XI_API void __cdecl SqskSkeleton_Release(int arg1)
 {
-  if (*(int *)(param_1 + 0x1c) != 0) {
+  if (*(int *)(arg1 + 0x1c) != 0) {
                     /* WARNING: Could not recover jumptable at 0x1027c9df. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(*(int *)(param_1 + 0x1c) + 0x18))();
+    (**(untyped_fn **)(*(int *)(arg1 + 0x1c) + 0x18))();
     return;
   }
   return;
@@ -134,13 +134,13 @@ XI_API void __cdecl SqskSkeleton_Release(int param_1)
 
 // FUNCTION: FFXIMAIN 0x1029A420
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqskSkeleton_GetNodeByIndex(int param_1, int param_2)
+XI_API int __cdecl sqskSkeleton_GetNodeByIndex(int arg1, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((((param_1 != 0) && (iVar1 = *(int *)(param_1 + 0x1c), iVar1 != 0)) && (-1 < param_2)) &&
-     (param_2 < *(int *)(iVar1 + 0x28))) {
-    return *(int *)(iVar1 + 0x20) + param_2 * 0xf8;
+  if ((((arg1 != 0) && (i1 = *(int *)(arg1 + 0x1c), i1 != 0)) && (-1 < arg2)) &&
+     (arg2 < *(int *)(i1 + 0x28))) {
+    return *(int *)(i1 + 0x20) + arg2 * 0xf8;
   }
   return 0;
 }

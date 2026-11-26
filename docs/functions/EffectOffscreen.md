@@ -18,8 +18,8 @@ Why the file has this name (data/unit_names.json): BeginEffectOffscreenPass / En
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `BeginEffectOffscreenPass` calls `sub_1006A060`, `sub_1006A420`, `CMoDX::PushViewMatrix`, `sub_10313486`, `sub_1006A4A0`, `sub_102D7FF9`, `CDx::SetTransform`, `MoProcessor_CallVSlot49`, `CMoDX::SetWorldMatrix`
+- `BeginEffectOffscreenPass` calls `game_1006A060`, `game_1006A420`, `CMoDX::PushViewMatrix`, `game_10313486`, `game_1006A4A0`, `game_102D7FF9`, `CDx::SetTransform`, `MoProcessor_CallVSlot49`, `CMoDX::SetWorldMatrix`
 - `EndEffectOffscreenPass` calls `CMoDX::SetViewMatrix`, `CTsZoneMap::DrawProjectedTexture`
 - `EffectOffscreen_Init` calls nothing directly
-- `EffectOffscreen_FreeSplineSet` calls `CMoSpline::Destructor`, `thunk_sub_10028AA0`
+- `EffectOffscreen_FreeSplineSet` calls `CMoSpline::Destructor`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `LinkNode_Init` calls nothing directly

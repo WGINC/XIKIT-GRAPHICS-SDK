@@ -14,6 +14,6 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqgxShape.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `sqgxShapeIndexBufferBegin` calls `sub_10312F96`
-- `SqgxShape_FillBuffers` calls `sub_10311C2C`
-- `sqgxShapeBegin` calls `sub_1028BB10`, `sub_1029C950`, `sub_1028A770`, `sub_1028BB70`, `sub_1028A790`, `sub_1029C610`, `sub_1029C480`, `sub_1029BF50`, `sub_10297320`, `sub_1029BD50`, `sub_10284EC0`, `SqgxContext_NoOpA`, `sqgxMatrixUpdate`, `sqgxColorUpdate`, `sqgxTextureUpdate`, `sub_10311C2C`
+- `sqgxShapeIndexBufferBegin` calls `game_10312F96`
+- `SqgxShape_FillBuffers` calls `game_10311C2C`
+- `sqgxShapeBegin` calls `game_1028BB10`, `game_1029C950`, `game_1028A770`, `game_1028BB70`, `game_1028A790`, `game_1029C610`, `game_1029C480`, `game_1029BF50`, `game_10297320`, `game_1029BD50`, `game_10284EC0`, `SqgxContext_NoOpA`, `sqgxMatrixUpdate`, `sqgxColorUpdate`, `sqgxTextureUpdate`, `game_10311C2C`

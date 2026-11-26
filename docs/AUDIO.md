@@ -144,8 +144,10 @@ decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it 
 - **Format 0** decodes through 0x10246AB0 (0x10246F31, 0x10247413) and nothing else.
 - **Format 3** decodes frames (0x10246F47..0x1024716B, the same in 0x10247230):
   - Before each frame is decoded, 0x10246A70 combines it with a table of 4-byte words that 0x10246A20 makes when the
-    stream starts. The table is made from a header value (the steps are in the development history, not published:
-    this is the music data's protection).
+    stream starts. 0x10246A20 makes 100 words (0x190 bytes): the seed is the header's +0x24 (stream
+    object +0x2C, the second half of the sample-rate pair) rotated left by 11; each word is stored, then the next
+    is that word plus itself rotated left by 3. 0x10246A70 XORs the frame's 4-byte words with the table in order,
+    from the table's first word on every call (0x10246A73; the length is the caller's object +0x74, 0x10246F4D; that it never passes the table's 0x190 bytes is not checked in the code).
   - Then 0x102CA1F0 decodes the frame. 0x102CA240 copies the frame and calls the frame decoder 0x102CEBF0 (which goes
     on through a function pointer at its context + 0x36D0, not read). It turns the decoder's two float outputs into
     1,024 stereo 16-bit frames: each value is clamped to -32767..32767 and rounded by adding 12,582,912.0

@@ -5,41 +5,41 @@
 
 // FUNCTION: FFXIMAIN 0x1001E2F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) CYyCamMng2_SetGlobalFlags(undefined4 xi_eax, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) CYyCamMng2_SetGlobalFlags(bits32 xi_eax, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  if (((DAT_10456db0 == '\0') && ((char)param_1 != '\0')) || ((char)param_2 != '\0')) {
-    DAT_10456db1 = 0;
+  if (((g_10456DB0 == '\0') && ((char)arg2 != '\0')) || ((char)arg3 != '\0')) {
+    g_10456DB1 = 0;
   }
-  DAT_10456db0 = (char)param_1;
-  _DAT_10456db4 = param_3;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)param_1)));
+  g_10456DB0 = (char)arg2;
+  g_10456DB4 = arg4;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)arg2)));
 }
 
 // FUNCTION: FFXIMAIN 0x1001E470
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CYyCamMng2::CreateGlobal()
+bits32 __cdecl CYyCamMng2::CreateGlobal()
 {
   void *self;
-  uint32_t uVar1;
+  uint32_t u1;
   
   self = (void *)orig::Mem_AllocDefault_v1(0x118);
   if (self == (void *)0x0) {
-    DAT_10456d6c = (void *)0x0;
+    g_10456D6C = (void *)0x0;
   }
   else {
-    DAT_10456d6c = orig::CYyCamMng2_Construct(self);
+    g_10456D6C = orig::CYyCamMng2_Construct(self);
   }
-  orig::CYyCamMng2_SetDefaultDistances(DAT_10456d6c);
-  uVar1 = orig::Camera_Call100151A0OnGlobal(DAT_10456d6c);
-  return uVar1;
+  orig::CYyCamMng2_SetDefaultDistances(g_10456D6C);
+  u1 = orig::Camera_Call100151A0OnGlobal(g_10456D6C);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001E4B0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) CYyCamMng2_CallGlobalVfunc1(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) CYyCamMng2_CallGlobalVfunc1(bits32 xi_eax)
 {
-  if (DAT_10456d6c_as_v0 != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10456d6c_as_v0 + 4))))((void *)(DAT_10456d6c_as_v0),&DAT_10351224);
+  if (g_10456D6C_as_v0 != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10456D6C_as_v0 + 4))))((void *)(g_10456D6C_as_v0),&g_10351224);
   }
   return xi_eax;
 }
@@ -48,31 +48,31 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) CYyCamMng2_CallGlobalVfunc1
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 long double __cdecl CYyCamMng2::GetYaw()
 {
-  int iVar1;
-  int iVar2;
-  long double fVar3;
+  int i1;
+  int i2;
+  long double f1;
   
-  iVar1 = orig::Camera_GetField50_v1();
-  iVar2 = orig::Camera_GetField50_v1();
-  fVar3 = xi_castbits<long double>(fpatan(-(long double)*(float *)(iVar2 + 0x2c),(long double)*(float *)(iVar1 + 0x24)));
-  return fVar3;
+  i1 = orig::Camera_GetField50_v1();
+  i2 = orig::Camera_GetField50_v1();
+  f1 = bit_cast<long double>(x87_fpatan(-*(float *)(i2 + 0x2c),*(float *)(i1 + 0x24)));
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001E4F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyCamMng2::Reset(void * self)
+bits32 __thiscall CYyCamMng2::Reset(void * self)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = (uint32_t *)((int)self + 0x44);
-  orig::Vec3_Copy_v1(puVar1,(uint32_t *)&DAT_1035122c);
+  p1 = (uint32_t *)((int)self + 0x44);
+  orig::Vec3_Copy_v1(p1,(uint32_t *)&g_1035122C);
   orig::Camera_SetField2F8OnGlobal(0x43af0000);
-  orig::Vec3_Copy_v1((uint32_t *)((int)self + 0x50),puVar1);
-  *(float *)((int)self + 0x58) = (float)((long double)*(float *)((int)self + 0x58) + (long double)1.0f);
+  orig::Vec3_Copy_v1((uint32_t *)((int)self + 0x50),p1);
+  *(float *)((int)self + 0x58) = (float)(*(float *)((int)self + 0x58) + 1.0f);
   *(uint32_t *)((int)self + 0x5c) = 0;
   orig::Vec3_Set((float *)((int)self + 0xa8),0.0f,(-1.0f),0.0f);
   orig::Vec3_Copy_v1((uint32_t *)((int)self + 0x6c),(uint32_t *)((int)self + 0x50));
-  orig::Vec3_Copy_v1((uint32_t *)((int)self + 0x60),puVar1);
+  orig::Vec3_Copy_v1((uint32_t *)((int)self + 0x60),p1);
   *(uint32_t *)((int)self + 0x78) = *(uint32_t *)((int)self + 0x5c);
   *(uint32_t *)((int)self + 0x84) = 0;
   *(uint32_t *)((int)self + 0x80) = 0;
@@ -86,14 +86,14 @@ undefined4 __thiscall CYyCamMng2::Reset(void * self)
 
 // FUNCTION: FFXIMAIN 0x1001E590
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyCamMng2::SetDefaultDistances(void * self)
+bits32 __thiscall CYyCamMng2::SetDefaultDistances(void * self)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::CYyCamMng2_Reset(self);
+  u1 = orig::CYyCamMng2_Reset(self);
   *(uint32_t *)((int)self + 0xb4) = 0x40400000;
   *(uint32_t *)((int)self + 0xb8) = 0x40c00000;
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001E600
@@ -105,23 +105,23 @@ void * __thiscall CYyCamMng2::Construct(void * self)
   *(uint8_t ***)self = &CYyObject_vtbl_ambiguous0_as_v0;
   orig::MathVector_ReturnThis_v1((void *)((int)self + 4));
   *(uint8_t *)((int)self + 0xf0) = 0;
-  *(uint8_t ***)self = &PTR_CYyCamMng2_GetRuntimeClass_1032a37c;
+  *(uint8_t ***)self = &ptr_to_CYyCamMng2_GetRuntimeClass_1032A37C;
   xi_eax = orig::CYyCamMng2_SetDefaultDistances(self);
-  DAT_10456d70 = 0;
-  DAT_10456d74 = 0;
-  _DAT_10456d78 = 0;
-  _DAT_10456d7c = 0;
-  DAT_10456d80 = 0;
-  DAT_10456d84 = 0;
-  DAT_10456d88 = 0;
-  DAT_10456d8c = 0;
-  _DAT_10456d9c = 0;
-  _DAT_10456da0 = 0;
-  _DAT_10456da4 = 0;
-  _DAT_10456d90 = 0;
-  _DAT_10456d94 = 0;
-  _DAT_10456d98 = 0;
-  _DAT_10456da8 = 0;
+  g_10456D70 = 0;
+  g_10456D74 = 0;
+  g_10456D78 = 0;
+  g_10456D7C = 0;
+  g_10456D80 = 0;
+  g_10456D84 = 0;
+  g_10456D88 = 0;
+  g_10456D8C = 0;
+  g_10456D9C = 0;
+  g_10456DA0 = 0;
+  g_10456DA4 = 0;
+  g_10456D90 = 0;
+  g_10456D94 = 0;
+  g_10456D98 = 0;
+  g_10456DA8 = 0;
   orig::CYyCamMng2_SetGlobalFlags(0,1,0,xi_eax);
   return self;
 }

@@ -4,20 +4,20 @@
 
 // FUNCTION: FFXIMAIN 0x10047F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) CMoGeneratorRes_Constructor(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
+XI_API bits32 * __attribute__((stdcall, regparm(3))) CMoGeneratorRes_Constructor(uint32_t xi_eax_unused, bits32 xi_edx, bits32 * arg3)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  orig::CMoResource_ConstructBase(param_1,xi_edx);
-  orig::CMoAttachments_Construct(param_1 + 0xc);
-  param_1[0xc] = &PTR_CMoAttachments_GetRuntimeClass_1032b140;
-  *param_1 = &PTR_CMoResource_GetRuntimeClass_variant3_1032b114;
-  puVar2 = param_1 + 0x1c;
-  for (iVar1 = 0x14; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  orig::CMoResource_ConstructBase(arg3,xi_edx);
+  orig::CMoAttachments_Construct(arg3 + 0xc);
+  arg3[0xc] = &ptr_to_CMoAttachments_GetRuntimeClass_1032B140;
+  *arg3 = &ptr_to_CMoResource_GetRuntimeClass_variant3_1032B114;
+  p1 = arg3 + 0x1c;
+  for (i1 = 0x14; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  param_1[0x2c] = 0;
-  return param_1;
+  arg3[0x2c] = 0;
+  return arg3;
 }

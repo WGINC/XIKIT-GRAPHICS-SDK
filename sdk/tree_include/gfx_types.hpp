@@ -246,7 +246,7 @@ typedef char CHAR;
 
 /* 19 */
 #ifndef __cplusplus   /* C++ has wchar_t built in: g++ ignored this typedef (-fpermissive), clang refuses it */
-typedef unsigned __int16 wchar_t;
+typedef unsigned short wchar_t;
 #endif
 
 /* 18 */
@@ -287,7 +287,7 @@ struct _RTL_CRITICAL_SECTION
 #pragma pack(pop)
 
 /* 38 */
-typedef unsigned __int16 WORD;
+typedef unsigned short WORD;
 
 /* 40 */
 struct _LIST_ENTRY
@@ -314,7 +314,7 @@ struct _RTL_CRITICAL_SECTION_DEBUG
 };
 
 /* 62 */
-typedef unsigned __int8 BYTE;
+typedef unsigned char BYTE;
 
 /* 64 */
 struct tagRECT
@@ -482,11 +482,11 @@ struct CMoTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoTask_ScalarDeletingDtor)(CMoTask *C, char);
+  uint32_t *(__thiscall *vf6_CMoTask_ScalarDeletingDtor)(CMoTask *C, char);
   void *vf7_CMoTask_vf007;
   void *vf8_CMoTask_vf008;
   void *vf9_CMoTask_vf009;
@@ -498,8 +498,8 @@ struct CDx_vtbl
 {
   void *vf0_CDx_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   void *(__thiscall *vf6_CDx_ScalarDeletingDtor)(CDx *C, char);
@@ -509,9 +509,9 @@ struct CDx_vtbl
 struct CMoAttachments_vtbl
 {
   void *vf0_CMoAttachments_GetRuntimeClass;
-  _DWORD *(__thiscall *vf1_CMoAttachments_ScalarDeletingDtor)(CMoAttachments *self, char);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
+  uint32_t *(__thiscall *vf1_CMoAttachments_ScalarDeletingDtor)(CMoAttachments *self, char);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
   void *vf4_CMoAttachments_vf004;
   void *vf5_CMoAttachments_vf005;
   void *vf6_CMoAttachments_vf006;
@@ -522,11 +522,11 @@ struct CMoCelestial_vtbl
 {
   void *vf0_CMoCelestial_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoCelestial_ScalarDeletingDtor)(CMoCelestial *C, char);
+  uint32_t *(__thiscall *vf6_CMoCelestial_ScalarDeletingDtor)(CMoCelestial *C, char);
 };
 
 /* 587 */
@@ -534,11 +534,11 @@ struct CMoDX_vtbl
 {
   void *vf0_CMoDX_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _BYTE *(__thiscall *vf6_CMoDX_ScalarDeletingDtor)(CMoDX *C, char);
+  uint8_t *(__thiscall *vf6_CMoDX_ScalarDeletingDtor)(CMoDX *C, char);
 };
 
 /* 593 */
@@ -546,8 +546,8 @@ struct CMoDxStatusMng_vtbl
 {
   void *vf0_CMoDxStatusMng_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CMoDxStatusMng_ScalarDeletingDtor)(CMoDxStatusMng *C, char);
@@ -557,15 +557,15 @@ struct CMoDxStatusMng_vtbl
 struct CMoResource_vtbl
 {
   void *vf0_CMoResource_GetRuntimeClass_variant3;
-  __int16 (__thiscall *vf1_CMoCamera_GetLinkedObject)(_DWORD *self, _DWORD *);
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
-  int (__thiscall *vf4_CMoCamera_SetLinkedObject)(_DWORD **self, int);
+  short (__thiscall *vf1_CMoCamera_GetLinkedObject)(uint32_t *self, uint32_t *);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
+  int (__thiscall *vf4_CMoCamera_SetLinkedObject)(uint32_t **self, int);
   void (__stdcall *vf5_CMoResource_vf005)(int);
   unsigned int **(__thiscall *vf6_CMoResource_ScalarDeletingDtor)(CMoResource *C, char);
-  unsigned int (__thiscall *vf7_sub_10071E00)(int self, _DWORD *);
+  unsigned int (__thiscall *vf7_CMoResource_CopyBodyTo20_as_v0)(int self, uint32_t *);
   void *vf8_CMoResource_vf008;
-  __int16 (__thiscall *vf9_CMoResource_Destroy)(int self);
+  short (__thiscall *vf9_CMoResource_Destroy)(int self);
   void *vf10_CMoCamera_GetSharedInstance;
 };
 
@@ -574,8 +574,8 @@ struct CMoOT_vtbl
 {
   void *vf0_CMoOT_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CMoOT_ScalarDeletingDtor)(CMoOT *C, char);
@@ -586,8 +586,8 @@ struct CMoOcclusionMng_vtbl
 {
   void *vf0_CMoOcclusionMng_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CMoOcclusionMng_ScalarDeletingDtor)(CMoOcclusionMng *C, char);
@@ -598,11 +598,11 @@ struct CMoResourceMng_vtbl
 {
   void *vf0_CMoResourceMng_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6____G__basic_ios_DU__char_traits_D_std___std__UAEPAXI_Z_0_0)(CMoResourceMng *self, char);
+  uint32_t *(__thiscall *vf6____G__basic_ios_DU__char_traits_D_std___std__UAEPAXI_Z_0_0)(CMoResourceMng *self, char);
 };
 
 /* 631 */
@@ -610,8 +610,8 @@ struct CMoSpline_vtbl
 {
   void *vf0_CMoSpline_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CMoSpline_ScalarDeletingDtor)(CMoSpline *C, char);
@@ -622,11 +622,11 @@ struct CMoTaskMng_vtbl
 {
   void *vf0_CMoTaskMng_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoTaskMng_ScalarDeletingDtor)(CMoTaskMng *C, char);
+  uint32_t *(__thiscall *vf6_CMoTaskMng_ScalarDeletingDtor)(CMoTaskMng *C, char);
 };
 
 /* 643 */
@@ -634,8 +634,8 @@ struct CShader_vtbl
 {
   void *vf0_CShader_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   unsigned int *(__thiscall *vf6_CShader_ScalarDeletingDtor)(CShader *C, char);
@@ -646,8 +646,8 @@ struct CXiOpening_vtbl
 {
   void *vf0_CXiOpening_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CXiOpening_ScalarDeletingDtor)(CXiOpening *C, char);
@@ -658,8 +658,8 @@ struct CYyModel_vtbl
 {
   void *vf0_CYyModel_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   int *(__thiscall *vf6_CYyModel_ScalarDeletingDtor)(CYyModel *C, char);
@@ -670,11 +670,11 @@ struct CYyModelBase_vtbl
 {
   void *vf0_CYyModelBase_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  int *(__thiscall *vf6_CYyModelBase_ScalarDeletingDtor)(CYyModelBase *C, char a1);
+  int *(__thiscall *vf6_CYyModelBase_ScalarDeletingDtor)(CYyModelBase *C, char arg2);
 };
 
 /* 651 */
@@ -682,11 +682,11 @@ struct CYyModelDt_vtbl
 {
   void *vf0_CYyModelDt_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CYyModelDt_ScalarDeletingDtor)(CYyModelDt *C, char a1);
+  uint32_t *(__thiscall *vf6_CYyModelDt_ScalarDeletingDtor)(CYyModelDt *C, char arg2);
   void *vf7___purecall;
   void *vf8___purecall;
   void *vf9___purecall;
@@ -699,11 +699,11 @@ struct CYyTexBase_vtbl
 {
   void *vf0_CYyTexBase_GetRuntimeClass_variant0;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CYyTexBase_ScalarDeletingDtor)(CYyTexBase *C, char);
+  uint32_t *(__thiscall *vf6_CYyTexBase_ScalarDeletingDtor)(CYyTexBase *C, char);
 };
 
 /* 657 */
@@ -711,11 +711,11 @@ struct CYyTexMng_vtbl
 {
   void *vf0_CYyTexMng_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CYyTexMng_ScalarDeletingDtor)(CYyTexMng *C, char);
+  uint32_t *(__thiscall *vf6_CYyTexMng_ScalarDeletingDtor)(CYyTexMng *C, char);
 };
 
 /* 513 */
@@ -724,7 +724,7 @@ struct D3DHolder
   void *vftable;
   IDirect3D8 *pD3D;
   IDirect3DDevice8 *pDevice;
-  unsigned __int8 _rest[1132];
+  unsigned char _rest[1132];
 };
 
 /* 514 */
@@ -755,7 +755,7 @@ struct _D3DVIEWPORT9
 /* 525 */
 struct /*VFT*/ Vt_1032A460_vtbl
 {
-  int (__thiscall *vf0_CYyModelDtStreamed_ScalarDeletingDtor_2)(CYyModelDtStreamed *self, int a1);
+  int (__thiscall *vf0_CYyModelDtStreamed_ScalarDeletingDtor_2)(CYyModelDtStreamed *self, int arg2);
 };
 
 /* 526 */
@@ -767,7 +767,7 @@ struct Vt_1032A460
 /* 527 */
 struct /*VFT*/ Vt_1032AFD4_vtbl
 {
-  int (__thiscall *vf0_CMoSchOp0CTask_ScalarDeletingDtor_2)(CMoSchOp0CTask *self, int a1);
+  int (__thiscall *vf0_CMoSchOp0CTask_ScalarDeletingDtor_2)(CMoSchOp0CTask *self, int arg2);
 };
 
 /* 528 */
@@ -780,12 +780,12 @@ struct Vt_1032AFD4
 struct /*VFT*/ Vt_1032B680_vtbl
 {
   int (__thiscall *vf0_CMoGeneratorTask_vf011)(CMoGeneratorTask *self);
-  int (__thiscall *vf1_CMoGeneratorTask_vf012)(CMoGeneratorTask *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  char (__thiscall *vf4_sub_10054380)(void *self);
-  char (__thiscall *vf5_sub_10054390)(void *self);
-  char *(__thiscall *vf6_sub_10053830)(char *self);
+  int (__thiscall *vf1_CMoGeneratorTask_vf012)(CMoGeneratorTask *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  char (__thiscall *vf4_game_10054380)(void *self);
+  char (__thiscall *vf5_game_10054390)(void *self);
+  char *(__thiscall *vf6_game_10053830)(char *self);
 };
 
 /* 530 */
@@ -798,12 +798,12 @@ struct Vt_1032B680
 struct /*VFT*/ Vt_1032B988_vtbl
 {
   int (__thiscall *vf0_CMoSchOp1DTask_vf011)(CMoSchOp1DTask *self);
-  int (__thiscall *vf1_CMoSchOp1DTask_vf012)(CMoSchOp1DTask *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  bool (__thiscall *vf4_sub_1005E980)(char *self);
-  bool (__thiscall *vf5_sub_1005E9A0)(char *self);
-  char *(__thiscall *vf6_sub_1005E970)(char *self);
+  int (__thiscall *vf1_CMoSchOp1DTask_vf012)(CMoSchOp1DTask *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  bool (__thiscall *vf4_game_1005E980)(char *self);
+  bool (__thiscall *vf5_game_1005E9A0)(char *self);
+  char *(__thiscall *vf6_game_1005E970)(char *self);
 };
 
 /* 532 */
@@ -816,12 +816,12 @@ struct Vt_1032B988
 struct /*VFT*/ Vt_1032B9D0_vtbl
 {
   int (__thiscall *vf0_CMoPathDriveActorTask_vf011)(CMoPathDriveActorTask *self);
-  int (__thiscall *vf1_CMoPathDriveActorTask_vf012)(CMoPathDriveActorTask *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  bool (__thiscall *vf4_sub_1005F380)(char *self);
-  bool (__thiscall *vf5_sub_1005F3A0)(char *self);
-  char *(__thiscall *vf6_sub_1005F370)(char *self);
+  int (__thiscall *vf1_CMoPathDriveActorTask_vf012)(CMoPathDriveActorTask *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  bool (__thiscall *vf4_game_1005F380)(char *self);
+  bool (__thiscall *vf5_game_1005F3A0)(char *self);
+  char *(__thiscall *vf6_game_1005F370)(char *self);
 };
 
 /* 534 */
@@ -834,12 +834,12 @@ struct Vt_1032B9D0
 struct /*VFT*/ Vt_1032BA18_vtbl
 {
   int (__thiscall *vf0_CMoLockColorDriveTask_vf011)(CMoLockColorDriveTask *self);
-  int (__thiscall *vf1_CMoLockColorDriveTask_vf012)(CMoLockColorDriveTask *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  bool (__thiscall *vf4_sub_1005F500)(char *self);
-  bool (__thiscall *vf5_sub_1005F520)(char *self);
-  char *(__thiscall *vf6_sub_1005F4F0)(char *self);
+  int (__thiscall *vf1_CMoLockColorDriveTask_vf012)(CMoLockColorDriveTask *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  bool (__thiscall *vf4_game_1005F500)(char *self);
+  bool (__thiscall *vf5_game_1005F520)(char *self);
+  char *(__thiscall *vf6_game_1005F4F0)(char *self);
 };
 
 /* 536 */
@@ -852,12 +852,12 @@ struct Vt_1032BA18
 struct /*VFT*/ Vt_1032BA60_vtbl
 {
   int (__thiscall *vf0_CMoLockLookAtDriveTask_vf011)(CMoLockLookAtDriveTask *self);
-  int (__thiscall *vf1_CMoLockLookAtDriveTask_vf012)(CMoLockLookAtDriveTask *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  bool (__thiscall *vf4_sub_1005F7E0)(char *self);
-  bool (__thiscall *vf5_sub_1005F800)(char *self);
-  char *(__thiscall *vf6_sub_1005F7D0)(char *self);
+  int (__thiscall *vf1_CMoLockLookAtDriveTask_vf012)(CMoLockLookAtDriveTask *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  bool (__thiscall *vf4_game_1005F7E0)(char *self);
+  bool (__thiscall *vf5_game_1005F800)(char *self);
+  char *(__thiscall *vf6_game_1005F7D0)(char *self);
 };
 
 /* 538 */
@@ -870,12 +870,12 @@ struct Vt_1032BA60
 struct /*VFT*/ Vt_1032BAA8_vtbl
 {
   int (__thiscall *vf0_CMoActorColorDriveTask_vf011)(CMoActorColorDriveTask *self);
-  tagRECT *(__thiscall *vf1_CMoActorColorDriveTask_vf012)(_DWORD *self, char);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
-  bool (__thiscall *vf4_sub_1005FAF0)(char *self);
-  bool (__thiscall *vf5_sub_1005FB10)(char *self);
-  char *(__thiscall *vf6_sub_1005FAE0)(char *self);
+  tagRECT *(__thiscall *vf1_CMoActorColorDriveTask_vf012)(uint32_t *self, char);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
+  bool (__thiscall *vf4_game_1005FAF0)(char *self);
+  bool (__thiscall *vf5_game_1005FB10)(char *self);
+  char *(__thiscall *vf6_game_1005FAE0)(char *self);
 };
 
 /* 540 */
@@ -888,9 +888,9 @@ struct Vt_1032BAA8
 struct Vt_1032C5B4_vtbl
 {
   int (__thiscall *vf0_CMoRmpRes_vf011)(CMoRmpRes *self);
-  int (__thiscall *vf1_CMoRmpRes_vf012)(CMoRmpRes *self, int a1);
-  int (__thiscall *vf2_sub_1003C720)(_DWORD *self);
-  int (__thiscall *vf3_sub_1003C730)(_DWORD *self);
+  int (__thiscall *vf1_CMoRmpRes_vf012)(CMoRmpRes *self, int arg2);
+  int (__thiscall *vf2_game_1003C720)(uint32_t *self);
+  int (__thiscall *vf3_game_1003C730)(uint32_t *self);
   void *vf4_CMoAttachments_vf004;
   void *vf5_CMoAttachments_vf005;
   void *vf6_CMoAttachments_vf006;
@@ -911,68 +911,68 @@ typedef PRTL_CRITICAL_SECTION LPCRITICAL_SECTION;
 /* 543 */
 struct Vt_1033BE90_vtbl
 {
-  int (__stdcall *vf0_sub_10260B30)(int a1, int a2, int a3);
-  unsigned int (__stdcall *vf1_sub_10265A80)(int);
-  int (__stdcall *vf2_sub_10265AA0)(volatile LONG *);
-  _DWORD *(__thiscall *vf3_sub_1021DF70)(_DWORD *self, char);
-  int (__thiscall *vf4_sub_10261710)(unsigned int *self, unsigned int *);
-  int (__thiscall *vf5_sub_10261AA0)(_DWORD *self);
-  void *vf6_sub_1025EAB0;
-  int (__thiscall *vf7_sub_1025EAC0)(int self, int);
-  void *vf8_sub_1021DF10;
-  int (__fastcall *vf9_sub_1025E460)(int, int, int, int);
-  int (__thiscall *vf10_sub_1025E5E0)(HANDLE *self, int);
-  int (__thiscall *vf11_sub_1025E610)(HANDLE *self);
-  int (__thiscall *vf12_sub_1025E750)(HANDLE *self, int);
+  int (__stdcall *vf0_game_10260B30)(int arg1, int arg2, int arg3);
+  unsigned int (__stdcall *vf1_game_10265A80)(int);
+  int (__stdcall *vf2_game_10265AA0)(volatile LONG *);
+  uint32_t *(__thiscall *vf3_game_1021DF70)(uint32_t *self, char);
+  int (__thiscall *vf4_game_10261710)(unsigned int *self, unsigned int *);
+  int (__thiscall *vf5_game_10261AA0)(uint32_t *self);
+  void *vf6_game_1025EAB0;
+  int (__thiscall *vf7_game_1025EAC0)(int self, int);
+  void *vf8_game_1021DF10;
+  int (__fastcall *vf9_game_1025E460)(int, int, int, int);
+  int (__thiscall *vf10_game_1025E5E0)(HANDLE *self, int);
+  int (__thiscall *vf11_game_1025E610)(HANDLE *self);
+  int (__thiscall *vf12_game_1025E750)(HANDLE *self, int);
   void *vf13_nullsub_469;
-  DWORD (__thiscall *vf14_sub_10260100)(_DWORD *self, int);
-  void (__thiscall *vf15_sub_10260130)(int *self, int);
-  int (__thiscall *vf16_sub_1025FF00)(void *self);
-  int (__thiscall *vf17_sub_1025FF10)(_DWORD *self);
+  DWORD (__thiscall *vf14_game_10260100)(uint32_t *self, int);
+  void (__thiscall *vf15_game_10260130)(int *self, int);
+  int (__thiscall *vf16_game_1025FF00)(void *self);
+  int (__thiscall *vf17_FontGlyphCache_StoreElapsed158_as_v0)(uint32_t *self);
   void *vf18_nullsub_527;
   void *vf19_nullsub_528;
   void *vf20_nullsub_470;
-  int (__thiscall *vf21_sub_102607F0)(_DWORD *self, BOOL);
-  int (__thiscall *vf22_sub_1025EDE0)(_DWORD *self, int, _QWORD *, _QWORD *);
-  int (__thiscall *vf23_sub_10260390)(int self, int, _DWORD *, _QWORD *);
-  int (__thiscall *vf24_sub_1025F3D0)(DWORD_PTR dwUser);
-  int (__thiscall *vf25_sub_1025F530)(int self);
-  int (__thiscall *vf26_sub_1025EC40)(void *self);
-  BOOL (__thiscall *vf27_sub_1025EE60)(int self);
-  int (__thiscall *vf28_sub_1025F2F0)(int self);
-  void *vf29_sub_1025ED20;
-  int (__thiscall *vf30_sub_1025ED30)(int *self);
-  int (__thiscall *vf31_sub_1025F590)(char *self);
-  int (__thiscall *vf32_sub_1025F640)(char *self);
-  int (__thiscall *vf33_sub_1025EC80)(_DWORD *self);
-  int (__thiscall *vf34_sub_1025ECC0)(int *self);
-  int (__thiscall *vf35_sub_1025ED60)(_DWORD *self);
+  int (__thiscall *vf21_game_102607F0)(uint32_t *self, BOOL);
+  int (__thiscall *vf22_game_1025EDE0)(uint32_t *self, int, uint64_t *, uint64_t *);
+  int (__thiscall *vf23_game_10260390)(int self, int, uint32_t *, uint64_t *);
+  int (__thiscall *vf24_game_1025F3D0)(DWORD_PTR dwUser);
+  int (__thiscall *vf25_game_1025F530)(int self);
+  int (__thiscall *vf26_game_1025EC40)(void *self);
+  BOOL (__thiscall *vf27_game_1025EE60)(int self);
+  int (__thiscall *vf28_FitFont_ReleaseField6C_as_v0)(int self);
+  void *vf29_game_1025ED20;
+  int (__thiscall *vf30_game_1025ED30)(int *self);
+  int (__thiscall *vf31_game_1025F590)(char *self);
+  int (__thiscall *vf32_FitFont_EndTimerPeriodIfActive_as_v0)(char *self);
+  int (__thiscall *vf33_game_1025EC80)(uint32_t *self);
+  int (__thiscall *vf34_game_1025ECC0)(int *self);
+  int (__thiscall *vf35_game_1025ED60)(uint32_t *self);
   int (__thiscall *vf36_Movie_CreateFrameTextures)(int self, int);
-  int (__thiscall *vf37_sub_1025ECE0)(_DWORD *self, int);
-  int (__thiscall *vf38_sub_1025F000)(char *self, int *);
-  int (__thiscall *vf39_sub_1025F190)(char *self, LPCRITICAL_SECTION);
-  BOOL (__thiscall *vf40_sub_1025EF70)(int self);
-  int (__thiscall *vf41_sub_1025EFA0)(int self);
-  int (__thiscall *vf42_sub_1025EF20)(_DWORD *self, int);
-  int (__thiscall *vf43_sub_1021E120)(_DWORD *self, _BYTE *);
-  int (__stdcall *vf44_sub_1021E000)(int);
-  unsigned int (__thiscall *vf45_sub_1025FF70)(int self, int, int);
-  void (__thiscall *vf46_sub_102600C0)(int *self, int);
-  int (__thiscall *vf47_sub_1025FE40)(_DWORD *self);
-  int (__thiscall *vf48_sub_102601E0)(int *self, __int64, __int64);
+  int (__thiscall *vf37_game_1025ECE0)(uint32_t *self, int);
+  int (__thiscall *vf38_game_1025F000)(char *self, int *);
+  int (__thiscall *vf39_game_1025F190)(char *self, LPCRITICAL_SECTION);
+  BOOL (__thiscall *vf40_game_1025EF70)(int self);
+  int (__thiscall *vf41_game_1025EFA0)(int self);
+  int (__thiscall *vf42_game_1025EF20)(uint32_t *self, int);
+  int (__thiscall *vf43_game_1021E120)(uint32_t *self, uint8_t *);
+  int (__stdcall *vf44_game_1021E000)(int);
+  unsigned int (__thiscall *vf45_game_1025FF70)(int self, int, int);
+  void (__thiscall *vf46_game_102600C0)(int *self, int);
+  int (__thiscall *vf47_FitFont_ResetState_as_v0)(uint32_t *self);
+  int (__thiscall *vf48_game_102601E0)(int *self, long long, long long);
 };
 
 /* 544 */
 struct Vt_1033BE90
 {
   struct Vt_1033BE90_vtbl *vftable;
-  unsigned __int8 gap_4[8];
+  unsigned char gap_4[8];
   unsigned int field_C;
   unsigned int field_10;
-  unsigned __int8 gap_14[204];
+  unsigned char gap_14[204];
   unsigned int field_E0;
   unsigned int field_E4;
-  unsigned __int8 gap_E8[120];
+  unsigned char gap_E8[120];
   unsigned int field_160;
   unsigned int field_164;
   unsigned int field_168;
@@ -983,8 +983,8 @@ struct Vt_1033BE90
 /* 545 */
 struct Vt_1033C8F0_vtbl
 {
-  int (__thiscall *vf0_sub_102391A0)(void *self, int a1);
-  int (__thiscall *vf1_sub_102391D0)(int *self);
+  int (__thiscall *vf0_game_102391A0)(void *self, int arg2);
+  int (__thiscall *vf1_LobbyUi_ResetAndPlaceWindow_as_v0)(int *self);
   void *vf2_YkZip_vf008;
   void *vf3_YkZip_vf009;
   char *(__thiscall *vf4_Ui_DrawKeyPrompt)(char **self);
@@ -993,7 +993,7 @@ struct Vt_1033C8F0_vtbl
   void *vf7_YkZip_vf013;
   void *vf8_YkZip_vf014;
   void *vf9_YkZip_vf015;
-  char (__fastcall *vf10_sub_10239240)(int, int, int);
+  char (__fastcall *vf10_LobbyUi_StepScreenSwitch_as_v0)(int, int, int);
   void *vf11_YkZip_vf017;
   void *vf12_YkZip_vf018;
   void *vf13_YkZip_vf019;
@@ -1006,9 +1006,9 @@ struct Vt_1033C8F0_vtbl
 struct Vt_1033C8F0
 {
   struct Vt_1033C8F0_vtbl *vftable;
-  unsigned __int8 gap_4[4];
+  unsigned char gap_4[4];
   unsigned int field_8;
-  unsigned __int8 gap_C[12];
+  unsigned char gap_C[12];
   unsigned int field_18;
   unsigned int field_1C;
   unsigned int field_20;
@@ -1023,42 +1023,42 @@ struct Vt_1033C8F0
 struct CMoD3mSpecularElem_vtbl
 {
   void *vf0_CMoD3mSpecularElem_GetRuntimeClass;
-  int (__thiscall *vf1_sub_10047520)(void *self, _DWORD *);
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  int (__thiscall *vf1_game_10047520)(void *self, uint32_t *);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoD3mSpecularElem_ScalarDeletingDtor)(CMoD3mSpecularElem *C, char);
+  uint32_t *(__thiscall *vf6_CMoD3mSpecularElem_ScalarDeletingDtor)(CMoD3mSpecularElem *C, char);
   void *vf7_CMoTask_vf007;
-  void *vf8_sub_10045A40;
+  void *vf8_CMoElem_PrepareDraw;
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
-  void *vf11_sub_10046070;
+  void *vf11_YmElem_DrawWithOwnProjection_as_v0;
   BOOL (__stdcall *vf12_CMoD3mSpecularElem_vf012)(int);
   void (__stdcall *vf13_CMoElem_vf013)(int);
   void (__stdcall *vf14_CMoElem_vf014)(int);
   void *vf15_CMoElem_vf015;
-  bool (__thiscall *vf16_sub_10044AC0)(_DWORD *self);
-  double (__thiscall *vf17_sub_10041A40)(int self);
-  void *vf18_sub_100412B0;
-  char (__thiscall *vf19_sub_10041160)(CMoD3mSpecularElem *self);
+  bool (__thiscall *vf16_CMoElem_IsSourceAt0FCTest)(uint32_t *self);
+  double (__thiscall *vf17_game_10041A40)(int self);
+  void *vf18_YmElem_DrawSpecular;
+  char (__thiscall *vf19_CMoD3mSpecularElem_BindTintedTexture)(CMoD3mSpecularElem *self);
   int *(__thiscall *vf20_CMoD3mElem_SubmitVertices)(int **self);
-  void *vf21_sub_10045AE0;
-  void *vf22_sub_10045BB0;
+  void *vf21_game_10045AE0;
+  void *vf22_game_10045BB0;
 };
 
 /* 634 */
 struct CMoCameraSetupTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
-  int (__stdcall *vf1_sub_1006B4C0)(_DWORD *);
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  int (__stdcall *vf1_CMoCameraSetupTask_Slot1NopOnMessage6)(uint32_t *);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoCameraSetupTask_ScalarDeletingDtor)(CMoCameraSetupTask *C, char);
+  uint32_t *(__thiscall *vf6_CMoCameraSetupTask_ScalarDeletingDtor)(CMoCameraSetupTask *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_sub_1006B480)(CMoCameraSetupTask *self);
+  char (__thiscall *vf8_CMoCameraSetupTask_Slot8SetupCameraAfterOneTick)(CMoCameraSetupTask *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
@@ -1067,14 +1067,14 @@ struct CMoCameraSetupTask_vtbl
 struct CTsZoneMap_vtbl
 {
   void *vf0_CTsZoneMap_GetRuntimeClass;
-  int (__thiscall *vf1_sub_10178D40)(CTsZoneMap *self, int *);
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  int (__thiscall *vf1_game_10178D40)(CTsZoneMap *self, int *);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   void *(__thiscall *vf6_CTsZoneMap_ScalarDeletingDtor)(CTsZoneMap *C, char);
   void *vf7_CMoTask_vf007;
-  void *vf8_sub_10178B30;
+  void *vf8_CTsZoneMap_Render;
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
@@ -1084,13 +1084,13 @@ struct CYyOs2VtxBuffer_vtbl
 {
   void *vf0_CYyOs2VtxBuffer_GetRuntimeClass;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
   void *(__thiscall *vf6_CYyOs2VtxBuffer_ScalarDeletingDtor)(CYyOs2VtxBuffer *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_sub_1002C990)(CYyOs2VtxBuffer *self);
+  char (__thiscall *vf8_game_1002C990)(CYyOs2VtxBuffer *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
@@ -1100,11 +1100,11 @@ struct CMoSchOp82Task_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  int (__thiscall *vf6_sub_10060590)(int C, char);
+  int (__thiscall *vf6_game_10060590)(int C, char);
   void *vf7_CMoTask_vf007;
   char (__thiscall *vf8_CMoSchOp82Task_vf8)(void *self);
   void *vf9_CMoTask_vf009;
@@ -1116,13 +1116,13 @@ struct CMoSchOp0FTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  int *(__thiscall *vf6_sub_10060750)(int *C, char);
+  int *(__thiscall *vf6_game_10060750)(int *C, char);
   void *vf7_CMoTask_vf007;
-  char (__thiscall *vf8_CMoSchOp0FTask_vf8)(__int16 *self);
+  char (__thiscall *vf8_CMoSchOp0FTask_vf8)(short *self);
   void *vf9_CMoTask_vf009;
   void (__stdcall *vf10_CMoTask_vf010)(int);
 };
@@ -1132,11 +1132,11 @@ struct CMoSchOp0ETask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  int (__thiscall *vf6_sub_10060450)(int C, char);
+  int (__thiscall *vf6_game_10060450)(int C, char);
   void *vf7_CMoTask_vf007;
   char (__thiscall *vf8_CMoSchOp0ETask_vf8)(float *self);
   void *vf9_CMoTask_vf009;
@@ -1148,11 +1148,11 @@ struct CMoSchOp10Task_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_AfterimageTask_Destructor)(_DWORD *C, char);
+  uint32_t *(__thiscall *vf6_AfterimageTask_Destructor)(uint32_t *C, char);
   void *vf7_CMoTask_vf007;
   char (__thiscall *vf8_AfterimageTask_OnMove)(float *self);
   void *vf9_CMoTask_vf009;
@@ -1164,11 +1164,11 @@ struct CMoSchOp1DTask_vtbl
 {
   void *vf0_CMoTask_GetRuntimeClass_variant12;
   void *vf1_CApp_vf001;
-  unsigned int (__thiscall *vf2_sub_1002C930)(_DWORD *self, char);
-  int (__thiscall *vf3_sub_1002C920)(_DWORD *self);
+  unsigned int (__thiscall *vf2_game_1002C930)(uint32_t *self, char);
+  int (__thiscall *vf3_game_1002C920)(uint32_t *self);
   void *vf4_CApp_vf004;
   void *vf5_CApp_vf005;
-  _DWORD *(__thiscall *vf6_CMoSchOp1DAttachments_ScalarDeletingDtor)(_DWORD *C, char);
+  uint32_t *(__thiscall *vf6_CMoSchOp1DAttachments_ScalarDeletingDtor)(uint32_t *C, char);
   void *vf7_CMoTask_vf007;
   char (__thiscall *vf8_CMoSchOp1DTask_vf8)(void *self);
   void *vf9_CMoTask_vf009;

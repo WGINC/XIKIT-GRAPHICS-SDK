@@ -16,4 +16,4 @@ Why the file has this name (data/unit_names.json): Texture_BindFromObject, Textu
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `Texture_BindFromObject` calls `sqgxTextureSet`, `sqgxTextureClut`
-- `Texture_CreateEntry` calls `SqimImage_Create`, `SqrdTexture_Create`, `sub_1029C260`, `sqgxTextureAdd`
+- `Texture_CreateEntry` calls `SqimImage_Create`, `SqrdTexture_Create`, `game_1029C260`, `sqgxTextureAdd`

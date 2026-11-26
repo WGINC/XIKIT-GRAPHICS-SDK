@@ -6,8 +6,8 @@
 class XI_API CEnv {
 public:
     static void __cdecl Nop();  // 0x1000D620
-    static void __thiscall UpdateStereoMode(void * self, undefined4 xi_s1);  // 0x1000D630
-    static undefined4 __thiscall IsStereoMode(void * self);  // 0x1000D660
+    static void __thiscall UpdateStereoMode(void * self, bits32 xi_s1);  // 0x1000D630
+    static bits32 __thiscall IsStereoMode(void * self);  // 0x1000D660
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x20];

@@ -4,56 +4,56 @@
 
 // FUNCTION: FFXIMAIN 0x10083620
 // GATE: PASS -- 100 trials, 93 returned normally, 227 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API int * __cdecl Target_FindNearestOnLocalPositiveX(undefined4 param_1, undefined4 param_2)
+XI_API int * __cdecl Target_FindNearestOnLocalPositiveX(bits32 arg1, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   int *self_;
-  uint32_t uVar3;
-  float *pfVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  uint64_t uVar7;
+  uint32_t u1;
+  float *p2;
+  uint8_t u2;
+  long double f1;
+  uint64_t u3;
   char xi_frame[84] __attribute__((aligned(4)));
-  float  &fStack_54 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int * &piStack_50 = *reinterpret_cast<int * *>(xi_frame + 4);
-  float  (&afStack_4c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 20);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
+  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 4);
+  float  (&f3)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
+  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 20);
   
-  uVar7 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  if ((int)uVar7 == 0) {
+  u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  if ((int)u3 == 0) {
     return (int *)0x0;
   }
-  orig::MathVector_ReturnThis(local_40);
-  orig::Mat4_SetIdentity_v1(local_40);
-  uVar7 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar7 + 0x1c0))))((void *)((int *)uVar7));
-  orig::Mat4_PostRotateY_v1(local_40,*(float *)(iVar1 + 4));
-  uVar7 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)uVar7 + 0x1bc))))((void *)((int *)uVar7));
-  orig::Mat4_SetRow3_v1(local_40,puVar2);
-  orig::Mat4_InvertOrthonormal_v2(local_40);
-  piStack_50 = (int *)0x0;
-  fStack_54 = 2.5e+03f;
-  iVar1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
-  uVar7 = orig::FUN_10085240();
-  self_ = (int *)uVar7;
+  orig::MathVector_ReturnThis(u4);
+  orig::Mat4_SetIdentity_v1(u4);
+  u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1c0))))((void *)((int *)u3));
+  orig::Mat4_PostRotateY_v1(u4,*(float *)(i1 + 4));
+  u3 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1bc))))((void *)((int *)u3));
+  orig::Mat4_SetRow3_v1(u4,p1);
+  orig::Mat4_InvertOrthonormal_v2(u4);
+  p3 = (int *)0x0;
+  f2 = 2.5e+03f;
+  i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+  u3 = orig::game_10085240();
+  self_ = (int *)u3;
   while (self_ != (int *)0x0) {
-    uVar3 = orig::CXiActor_ComputeDrawState(self_,iVar1,param_1,param_2,1);
-    if ((char)uVar3 != '\0') {
-      pfVar4 = (float *)((int (__thiscall *)(void *))((**(code **)(*self_ + 0x1bc))))((void *)(self_));
-      orig::Mat4_TransformPoint_v2(local_40,afStack_4c,pfVar4);
-      bVar5 = NAN((long double)afStack_4c[0]) || NAN((long double)0.0f);
-      if (((bVar5 || (long double)afStack_4c[0] < (long double)0.0f) == bVar5) &&
-         (fVar6 = orig::FUN_10027530(afStack_4c,afStack_4c), bVar5 = NAN(fVar6) || NAN((long double)fStack_54)
-         , (bVar5 || fVar6 < (long double)fStack_54) != bVar5)) {
-        fStack_54 = (float)fVar6;
-        piStack_50 = self_;
+    u1 = orig::CXiActor_ComputeDrawState(self_,i1,arg1,arg2,1);
+    if ((char)u1 != '\0') {
+      p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self_ + 0x1bc))))((void *)(self_));
+      orig::Mat4_TransformPoint_v2(u4,f3,p2);
+      u2 = ((f3[0]) != (f3[0])) || ((0.0f) != (0.0f));
+      if (((u2 || f3[0] < 0.0f) == u2) &&
+         (f1 = orig::game_10027530(f3,f3), u2 = ((f1) != (f1)) || ((f2) != (f2))
+         , (u2 || f1 < f2) != u2)) {
+        f2 = (float)f1;
+        p3 = self_;
       }
     }
-    uVar7 = orig::FUN_10085270(self_);
-    self_ = (int *)uVar7;
+    u3 = orig::game_10085270(self_);
+    self_ = (int *)u3;
   }
   orig::MathVector_Nop();
-  return piStack_50;
+  return p3;
 }

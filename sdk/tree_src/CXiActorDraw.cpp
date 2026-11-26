@@ -5,97 +5,97 @@
 
 // FUNCTION: FFXIMAIN 0x100817E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActorDraw::Update()
+bits32 __cdecl CXiActorDraw::Update()
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::CXiActorDraw_UpdateDrawList();
-  return uVar1 & 0xffffff00;
+  u1 = orig::CXiActorDraw_UpdateDrawList();
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10082D70
 // GATE: PASS -- 100 trials, 95 returned normally, 174 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-undefined4 __cdecl CXiActorDraw::UpdateDrawList()
+bits32 __cdecl CXiActorDraw::UpdateDrawList()
 {
   int *self;
-  int *this_00;
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int *piVar3;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  long double fVar7;
+  int *obj1;
+  uint32_t u1;
+  uint32_t u2;
+  int *p1;
+  uint8_t u3;
+  uint8_t u4;
+  long double f1;
+  long double f2;
   
   g_actorUpdateCounter_as_v0 = 0;
-  uVar2 = orig::Settings_GetValue_v2(0x3c);
-  _DAT_1048a324 = 0;
-  g_actorUpdateInterval_as_v1 = uVar2;
-  this_00 = g_pActorDrawListHead_as_v1;
+  u2 = orig::Settings_GetValue_v2(0x3c);
+  g_1048A324 = 0;
+  g_actorUpdateInterval_as_v1 = u2;
+  obj1 = g_pActorDrawListHead_as_v1;
   do {
-    if (this_00 == (int *)0x0) {
-      return uVar2;
+    if (obj1 == (int *)0x0) {
+      return u2;
     }
-    self = (int *)this_00[0x15];
-    piVar3 = this_00 + 0x15;
+    self = (int *)obj1[0x15];
+    p1 = obj1 + 0x15;
     if (self == (int *)0x0) {
-      if (*(short *)((int)this_00 + 0xb2) == 0) {
-        uVar1 = xi_trunc24(((NAN((long double)xi_castbits<float>(this_00[0x23])) || NAN((long double)0.0f)) ||
-                       (long double)xi_castbits<float>(this_00[0x23]) < (long double)0.0f));
-        if (uVar1 == 0) {
-          uVar2 = ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x288))))((void *)(this_00));
+      if (*(short *)((int)obj1 + 0xb2) == 0) {
+        u1 = xi_trunc24(((((bit_cast<float>(obj1[0x23])) != (bit_cast<float>(obj1[0x23]))) || ((0.0f) != (0.0f))) ||
+                       bit_cast<float>(obj1[0x23]) < 0.0f));
+        if (u1 == 0) {
+          u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x288))))((void *)(obj1));
         }
         else {
-LAB_10082e90:
-          *(uint8_t *)(this_00 + 0x2c) = 1;
-          uVar2 = ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)this_00 + 0xb2)))) | 1;
-          *(char *)((int)this_00 + 0xb2) = (char)uVar2;
+code_10082E90:
+          *(uint8_t *)(obj1 + 0x2c) = 1;
+          u2 = ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)obj1 + 0xb2)))) | 1;
+          *(char *)((int)obj1 + 0xb2) = (char)u2;
         }
       }
     }
     else {
-      fVar6 = (long double)xi_castbits<float>(this_00[0x23]);
-      fVar7 = (long double)xi_castbits<float>(self[0x23]);
-      bVar5 = NAN(fVar7) || NAN(fVar6);
-      bVar4 = bVar5 || fVar7 < fVar6;
-      uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)(uVar2 >> 0x10)) << 16) | (uint16_t)((uint16_t)bVar4 << 8 | (uint16_t)bVar5 << 10 |
-                       (uint16_t)(bVar5 || fVar7 == fVar6) << 0xe)));
-      if (bVar4 == bVar5) {
-        if (*(short *)((int)this_00 + 0xb2) == 0) {
-          uVar1 = xi_trunc24(((NAN((long double)xi_castbits<float>(this_00[0x23])) || NAN((long double)0.0f)) ||
-                         (long double)xi_castbits<float>(this_00[0x23]) < (long double)0.0f));
-          if (uVar1 != 0) goto LAB_10082e90;
-          uVar2 = ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x288))))((void *)(this_00));
+      f1 = bit_cast<float>(obj1[0x23]);
+      f2 = bit_cast<float>(self[0x23]);
+      u4 = ((f2) != (f2)) || ((f1) != (f1));
+      u3 = u4 || f2 < f1;
+      u2 = ((uint32_t)(((uint32_t)(uint16_t)((short)(u2 >> 0x10)) << 16) | (uint16_t)((uint16_t)u3 << 8 | (uint16_t)u4 << 10 |
+                       (uint16_t)(u4 || f2 == f1) << 0xe)));
+      if (u3 == u4) {
+        if (*(short *)((int)obj1 + 0xb2) == 0) {
+          u1 = xi_trunc24(((((bit_cast<float>(obj1[0x23])) != (bit_cast<float>(obj1[0x23]))) || ((0.0f) != (0.0f))) ||
+                         bit_cast<float>(obj1[0x23]) < 0.0f));
+          if (u1 != 0) goto code_10082E90;
+          u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x288))))((void *)(obj1));
         }
       }
       else {
         if (*(short *)((int)self + 0xb2) == 0) {
-          if ((NAN((long double)xi_castbits<float>(self[0x23])) || NAN((long double)0.0f)) ||
-              (long double)xi_castbits<float>(self[0x23]) < (long double)0.0f) {
+          if ((((bit_cast<float>(self[0x23])) != (bit_cast<float>(self[0x23]))) || ((0.0f) != (0.0f))) ||
+              bit_cast<float>(self[0x23]) < 0.0f) {
             *(uint8_t *)(self + 0x2c) = 1;
             *(uint8_t *)((int)self + 0xb2) = *(uint8_t *)((int)self + 0xb2) | 1;
           }
           else {
-            ((int (__thiscall *)(void *))((**(code **)(*self + 0x288))))((void *)(self));
+            ((int (__thiscall *)(void *))((**(untyped_fn **)(*self + 0x288))))((void *)(self));
           }
         }
-        piVar3 = self;
-        if (this_00[0x16] != 0) {
-          *(int **)(this_00[0x16] + 0x54) = self;
-          piVar3 = g_pActorDrawListHead_as_v1;
+        p1 = self;
+        if (obj1[0x16] != 0) {
+          *(int **)(obj1[0x16] + 0x54) = self;
+          p1 = g_pActorDrawListHead_as_v1;
         }
-        g_pActorDrawListHead_as_v1 = piVar3;
-        uVar2 = self[0x15];
-        piVar3 = self + 0x15;
-        if (uVar2 != 0) {
-          *(int **)(uVar2 + 0x58) = this_00;
+        g_pActorDrawListHead_as_v1 = p1;
+        u2 = self[0x15];
+        p1 = self + 0x15;
+        if (u2 != 0) {
+          *(int **)(u2 + 0x58) = obj1;
         }
-        this_00[0x15] = *piVar3;
-        self[0x16] = this_00[0x16];
-        this_00[0x16] = (int)self;
-        *piVar3 = (int)this_00;
+        obj1[0x15] = *p1;
+        self[0x16] = obj1[0x16];
+        obj1[0x16] = (int)self;
+        *p1 = (int)obj1;
       }
     }
-    this_00 = (int *)*piVar3;
+    obj1 = (int *)*p1;
   } while( true );
 }

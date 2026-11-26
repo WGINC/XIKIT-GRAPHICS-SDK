@@ -1801,7 +1801,7 @@
     - `LobbyThread_Start` (0x10245600)
     - `LobbyThread_SetGlobal106690AC` (0x10245B50)
     - `Lobby_DestroyThreadPool` (0x10245B60)
-    - `thunk_sub_10245BB0` (0x10245BA0)
+    - `thunk_LobbyThread_ResetZone_as_v0` (0x10245BA0)
     - `LobbyThread_ResetZone` (0x10245BB0)
     - `LobbyThread_IsSystemState1` (0x10245BE0)
     - `LobbyThread_NextSequence` (0x10245F30)
@@ -1900,7 +1900,7 @@
 - **Mem**
   - [MemAllocDefault](functions/MemAllocDefault.md)
     - `Mem_AllocDefault` (0x1002C890)
-    - `thunk_sub_10028AA0` (0x1002C8B0)
+    - `thunk_Mem_FreeBlockMergeNeighbours_as_v0` (0x1002C8B0)
   - [MemArea](functions/MemArea.md)
     - `Mem_AllocFromArea` (0x10028FD0)
     - `MemArea_CallListByKind` (0x10029150)
@@ -5155,15 +5155,15 @@ From the game's direct calls (call/jmp rel32 to a function start), 4 levels deep
 CApp::RunMainLoop
   App_ForceForegroundWindow
   CDx::Initialize
-    sub_103127C0
+    game_103127C0
   App_CreateInputSystem
     Allocator_Generic
-      sub_10312FA8
-        sub_10312FD4
-        sub_1031D16E
+      game_10312FA8
+        game_10312FD4
+        game_1031D16E
     Input_InitState
-    sub_100058F0
-      sub_1030DF32
+    game_100058F0
+      game_1030DF32
       DirectInput_InstallKeyboard
       DirectInput_InstallMouse
         CDx::ShowCursor
@@ -5173,7 +5173,7 @@ CApp::RunMainLoop
         DirectInput_ReleaseDevice
       InputDevices_JmpGetKeyboardLayout
         LinkedLibraries_JmpImmGetDescriptionA
-        sub_10312940
+        game_10312940
   Allocator_Generic  (above)
   App_Constructor
     MathVector_ReturnThis
@@ -5190,7 +5190,7 @@ CApp::RunMainLoop
         CXiTimerLow::AccumulateElapsed
     TargetMenu_Clear32
     TargetMenu_LoadAllMessageTables
-      sub_10153B70
+      game_10153B70
         TargetMenu_LoadStringTable
       TargetMenu_LoadMessageBlocksSetA
         TargetMenu_LoadMessageBlock
@@ -5215,15 +5215,15 @@ CApp::RunMainLoop
       Mem_AllocDefault  (above)
       VectorCtorIterator_CallForEachElement
       CMoProcessor::InitRotationMatrices
-        sub_10313486
+        game_10313486
       Processor_InitIdentityMatrices
-        sub_10313486  (above)
+        game_10313486  (above)
       ProcessorInit_InitMatrices
-        sub_10313486  (above)
+        game_10313486  (above)
     Mem_AllocDefault  (above)
     CMoTask::Constructor
       CMoTask::ResetFields
-      sub_100749F0
+      game_100749F0
         CMoTaskMng::EnqueueTask
     CMoTaskMng::InitPool
       CMoTask::ResetFields  (above)
@@ -5231,15 +5231,15 @@ CApp::RunMainLoop
         CMoTask::ResetFields  (above)
     Resource_ResetGlobals
       Resource_ClearGlobal1047D138
-    sub_10072DB0
+    game_10072DB0
     CDx::EndScene
     Mem_AllocFromArea  (above)
     CMoTask::ResetFields  (above)
-    sub_100749B0
+    game_100749B0
       CMoTaskMng::InsertIntoBucket
         CMoTaskMng::UnlinkTask
     CYyTexMng_Init
-    sub_1003B080
+    game_1003B080
       Mem_AllocDefault  (above)
       CYyVb::Init
       CYyVbMng::AcquireVertexBuffer
@@ -5247,7 +5247,7 @@ CApp::RunMainLoop
         CYyVb::Constructor
       CYyVbMng::ReleaseVertexBuffer
     Scene_GetTableValue  (above)
-    sub_100731B0
+    game_100731B0
       ResourceIter_SetCurrentGlobal
       CMoResource::GetParent
       FileMng_ResolveOrExit
@@ -5264,7 +5264,7 @@ CApp::RunMainLoop
         MeshResourceMng_CreateResourceByKind
         NodePool_ReleaseNode
         CMoResource::RegisterInTypeList
-        sub_10071F70
+        game_10071F70
         MeshResourceMng_AllocHandle
         MeshResourceCreate_CopyField14At4
         MeshResourceCreate_CopyField14At0
@@ -5272,28 +5272,28 @@ CApp::RunMainLoop
         CMoResource_ConstructBase
         CMoTask::SetRect30
         CMoResource::RegisterAndMark
-        sub_10071E50
+        game_10071E50
       GeneratorClone_SetDwordAndCopyOut
       ResourceHandle_Deref
       operator_delete
-        sub_10312EAD
+        game_10312EAD
     TargetMenu_Nop
-    sub_10071E90
+    game_10071E90
     Menu_ReloadResource
       CMoResource::ReleaseChain
         ResourceIter_InPoolRange
       ResHandle_FreeIfUnreferenced
         MoRes_FreeIfUnreferenced
-      sub_101CC620
-        sub_100731B0  (above)
-        sub_10071E90  (above)
+      game_101CC620
+        game_100731B0  (above)
+        game_10071E90  (above)
         CMoResource::FindByTypeAndId
         ShapeMng_FindShape
       Cell_ResolveAllSubCells
         NetCellFont_GetHead
-        sub_10126520
+        game_10126520
         Cell_ResolveSubCells
-    sub_10072FD0
+    game_10072FD0
       ResourceIter_SetCurrentGlobal  (above)
       CMoResource::GetParent  (above)
       FileMng_ResolveOrExit  (above)
@@ -5310,11 +5310,11 @@ CApp::RunMainLoop
       Cell_FindEntryByName
         NetCellFont_GetTail
         NetCellFont_NextActiveValue
-        sub_10325D00
+        game_10325D00
         Cell_GetField20Ptr
       NetCellFont_GetNthEntryBytePair
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
     NetCellFont_MsgWinDataCtor
       NetCellFont_MsgWinDataReset
         NetCellFont_ResetEntryRing
@@ -5342,7 +5342,7 @@ CApp::RunMainLoop
       MenuPanels_RotateBytesByBitCount
       MenuPanels_GetSingleton
         MenuPanels_SingletonCtor
-        sub_10313486  (above)
+        game_10313486  (above)
       MenuPanels_LoadMessageTable
         Scene_GetTableValue  (above)
         FileMng_ResolveOrExit  (above)
@@ -5355,7 +5355,7 @@ CApp::RunMainLoop
         YkCommon_Load
       MenuPanels_GetObjectOnce
         MenuPanels_Ctor102239A0
-        sub_10313486  (above)
+        game_10313486  (above)
       MenuPanels_LoadFromFile
         Scene_GetTableValue  (above)
         FileMng_ResolveOrExit  (above)
@@ -5368,7 +5368,7 @@ CApp::RunMainLoop
         YkCommon_Load  (above)
       MenuPanels_GetObject106670C8Once
         MenuPanels_Ctor102261F0
-        sub_10313486  (above)
+        game_10313486  (above)
       MenuPanels_LoadDMsgTable
         Scene_GetTableValue  (above)
         FileMng_ResolveOrExit  (above)
@@ -5407,7 +5407,7 @@ CApp::RunMainLoop
       TextInputFiles_CtorVt10337C5C
         TextInputFiles_ClearTwoBuffers
       TextInputFiles_CtorVt10337C3C
-    sub_101B8E70
+    game_101B8E70
       Allocator_Generic  (above)
       FsWordCompletion_Construct
         TextInputFiles_InitVt10337BA0
@@ -5510,10 +5510,10 @@ CApp::RunMainLoop
     ZoneMapLoad_CreateUiObjects
       TargetMenu_GetInstance
         TargetMenu_MessageSetCtor
-        sub_10313486  (above)
+        game_10313486  (above)
       TargetMenu_LoadMessageSet
         Scene_GetTableValue  (above)
-        sub_10257860
+        game_10257860
         FileMng_ResolveOrExit  (above)
         Allocator_Generic  (above)
         TextInputFiles_ForwardOrExit  (above)
@@ -5684,7 +5684,7 @@ CApp::RunMainLoop
         TextInputFiles_EntriesCtorEmpty
         Scene_GetTableValue  (above)
       ZoneMapLoad_Call10257860ReturnSelf
-        sub_10257860  (above)
+        game_10257860  (above)
       TargetMenu_LoadTable
         TextInputFiles_AllocEntries
         Scene_GetTableValue  (above)
@@ -5767,13 +5767,13 @@ CApp::RunMainLoop
         Shape_GetValueAt  (above)
       TextInputFiles_ByteTableAltCtor
         TextInputFiles_ByteTableCtor
-        sub_1019D2B0
-        sub_1019D350
+        game_1019D2B0
+        game_1019D350
         Config_LoadAltTable
       TextInputFiles_ByteTableDefaultCtor
         TextInputFiles_ByteTableCtor  (above)
         TextInputFiles_FillTableBytes
-        sub_1019CFA0
+        game_1019CFA0
         Config_LoadDefaultTable
       TextInputFiles_CtorVt103370F8
         NetCellFont_ClearWords  (above)
@@ -5790,7 +5790,7 @@ CApp::RunMainLoop
         TextInputFiles_AddPairAndCall
       TextInputFiles_RegisterMenuHandlers
         TextInputFiles_AddPairChecked  (above)
-      sub_1019D320
+      game_1019D320
         FontGlyphCache_IsStateTwo
         NetCellFont_SetTable1036D6B0Word
     YkInit
@@ -5798,7 +5798,7 @@ CApp::RunMainLoop
         TargetMenu_GetMessageFwd
         ShapeMng_FindShape  (above)
         Scene_GetMenuFrameName
-        sub_101CC620  (above)
+        game_101CC620  (above)
       Allocator_Generic  (above)
       YkWindows_CtorVt1033A8B8
         YkWindows_CtorVt1033A000
@@ -5956,13 +5956,13 @@ CApp::RunMainLoop
         Scene_GetMenuFrameName  (above)
         ShapeMng_FindShape  (above)
         ShapeMng_FindShapes
-      sub_102224C0
+      game_102224C0
         Scene_GetTableValue  (above)
-        sub_100731B0  (above)
-        sub_10071E90  (above)
+        game_100731B0  (above)
+        game_10071E90  (above)
         MenuPanels_ReadChunkDirectory
         MenuPanels_CreateMessagePanels
-        sub_1022D7A0
+        game_1022D7A0
         MenuPanels_InitGlobals
         CMoResource::ReleaseChain  (above)
         ResHandle_FreeIfUnreferenced  (above)
@@ -5983,30 +5983,30 @@ CApp::RunMainLoop
       ErrorReport_CtorVt10329F90
         TextInputFiles_SetVtable10337C64  (above)
     ErrorReport_LoadChecksum
-      sub_101BE510
-        sub_10312487
+      game_101BE510
+        game_10312487
       Allocator_Generic  (above)
       File_FindByKind
-        sub_10311FDE
+        game_10311FDE
         File_CreateParentDirs
       File_WriteChunked
-        sub_1031217F
+        game_1031217F
       operator_delete  (above)
       TextInputFiles_Call10311F30
-        sub_10311F30
+        game_10311F30
     StAvatarInfo_Ctor
       StAvatarInfo_NoOp
     CMoDX::CreateAndInitSystem
       Mem_AllocDefault  (above)
-      sub_10069DD0
+      game_10069DD0
         MoDX_Nop
         MoDX_ClearByteTables
       VBPool_Constructor
       MeshResourceMng_LoadSystemResources
-        sub_10072FD0  (above)
-        sub_10071E90  (above)
-        sub_10071E50  (above)
-        sub_100731B0  (above)
+        game_10072FD0  (above)
+        game_10071E90  (above)
+        game_10071E50  (above)
+        game_100731B0  (above)
         CMoResource::FindByTypeAndId  (above)
       CMoResource::FindByTypeAndId  (above)
       Mo_InitSharedRenderResources
@@ -6015,31 +6015,31 @@ CApp::RunMainLoop
         Mem_AllocDefault  (above)
         CAcc::Constructor
         CMoDX::CreateTexture
-        sub_1000AD70
+        game_1000AD70
         Allocator_Generic  (above)
         DynVB_Constructor
         DynVB_Create
       CMoDxStatusMng::Constructor
         MoDX_SetInvalid
       Gfx_InitCubeMapTextures
-        sub_1000AD70  (above)
-        sub_1006A070
+        game_1000AD70  (above)
+        game_1006A070
         Gfx_CalcFVFStride
         CDx::DrawPrimitiveUP
-        sub_1006A0E0
+        game_1006A0E0
       CMoOt_InitSystem
         Mem_AllocDefault  (above)
         CMoOT::Constructor
         OtLink_Init
-        sub_10074CC0
-      sub_1006C140
+        game_10074CC0
+      game_1006C140
         CAcc::Constructor  (above)
       j_OcclusionMng_CreateTarget
         CMoOcclusionMng::OcclusionMng_CreateTarget
     App_SetSeqStep  (above)
     GammaRamp_ApplyIfChanged
       GammaRamp_BuildRamps
-        sub_100171B0
+        game_100171B0
     App_GetGlobalPair
     Camera_SetField2E4
       Camera_BuildPerspectiveFov
@@ -6056,7 +6056,7 @@ CApp::RunMainLoop
     CDx::SetClearParams
     CDx::AppendStateRecord
     CDx::CreateTexture  (above)
-    sub_1000AD70  (above)
+    game_1000AD70  (above)
     CDx::PushRenderTarget
       CDx::PushRenderTargetTexture
     CDx::EndAndClearBegin
@@ -6064,23 +6064,23 @@ CApp::RunMainLoop
         CDx::EndScene  (above)
         CDx::BeginScene  (above)
     CDx::SetTexture
-      sub_1000A2B0
+      game_1000A2B0
     CDx::CreateStereoResources
       CDx::CreateRampTextures1024x2
-        sub_102D2FB9
+        game_102D2FB9
       CDx::CreateRampTexture1x16
-        sub_102D2FB9  (above)
+        game_102D2FB9  (above)
       CDx::CreateTexture  (above)
       CEnv::Nop
       CDx::ReleaseStereoResources
     CEnv::Nop  (above)
     App_AdvanceSeqStep
   App_RenderFrameMaskedFPU
-    sub_10311C7A
-      sub_10311CF0
-      sub_10311D82
+    game_10311C7A
+      game_10311CF0
+      game_10311D82
     Frame_Render
-      sub_10311C2C
+      game_10311C2C
       j_CEnv_UpdateDualTargetMode
         CEnv::UpdateStereoMode
       CDx::TestCooperativeLevel
@@ -6095,7 +6095,7 @@ CApp::RunMainLoop
       Input_IsCursorActive
         Cursor_GetFlagBit2
       TextInputFiles_Call103113C8
-        sub_103113C8
+        game_103113C8
       CEnv::IsStereoMode
       CDx::PushRenderTarget  (above)
       CDx::EndAndClearBegin  (above)
@@ -6107,7 +6107,7 @@ CApp::RunMainLoop
       XiZone::GetInstance
         Mem_AllocDefault  (above)
         XiZone::Constructor
-      sub_1018C2B0
+      game_1018C2B0
         Game_HasInitCount
         ntGameTimeGet
         Time_ModDiv12FC00Div19500
@@ -6118,7 +6118,7 @@ CApp::RunMainLoop
         Time_FromHours
         NetCellFont_GetMilliseconds
         Time_SetModulo216000Div3600
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         Time_SetModulo3600Div60
         Time_SetModulo60
         Time_AddFrameScale
@@ -6156,7 +6156,7 @@ CApp::RunMainLoop
         GameMode_PollPendingState  (above)
         TextInputFiles_LoadAllAndTimestamp
         YkMyroom::Destructor
-        thunk_sub_10028AA0
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0
         Menu_CloseEntry
         AppStartup_IncrementShort6
         TargetMenu_SetPosition
@@ -6164,8 +6164,8 @@ CApp::RunMainLoop
         LobbyUi_ForwardFlag1
         MenuMng_OpenByName
       Scene_GetTableValue  (above)
-      sub_100731B0  (above)
-      sub_10071E90  (above)
+      game_100731B0  (above)
+      game_10071E90  (above)
       NetCellFont_InitTimer
         NetCellFont_ReturnTrue100DBDE0
         NetCellFont_GetTimeNow
@@ -6175,18 +6175,18 @@ CApp::RunMainLoop
       LobbyThread_SetGlobal106690AC
       App_SetGlobal_104569C8
       TextInputFiles_RunPairA
-        sub_103113D3
-        sub_10311386
+        game_103113D3
+        game_10311386
       App_RunOpening
         OpeningSubtitle_IsStateFour
-        sub_10313520
-        sub_10312050
+        game_10313520
+        game_10312050
         Mem_AllocDefault  (above)
         CXiOpening::Constructor
         App_AdvanceSeqStep  (above)
-      sub_103134C7
-        sub_10318C5E
-        sub_10318B46
+      game_103134C7
+        game_10318C5E
+        game_10318B46
       AppMainLoop_AppendWithSpace
         Allocator_Generic  (above)
         operator_delete  (above)
@@ -6198,7 +6198,7 @@ CApp::RunMainLoop
       WinMain_ReturnTrue
       FrameRender_ReturnTrue
       ErrorReport_LoadChecksum  (above)
-      sub_10013AD0
+      game_10013AD0
         Call1008A0E0With2
         TextInputFiles_SaveAll
         GameMode_GetField98
@@ -6214,20 +6214,20 @@ CApp::RunMainLoop
         ZoneMap_CopyField342C8ToField39450
         Lobby_DestroyThreadPool
         TextInputFiles_Call101953D0
-        thunk_sub_10245BB0
+        thunk_LobbyThread_ResetZone_as_v0
         GameMode_OpenTacticsUrl
         App_SetGlobal_104569C8  (above)
         CYyCamMng2_CallGlobalVfunc1
-        sub_10164B80
+        game_10164B80
       StAvatarInfo_SendBytePairKind2  (above)
       NetCellFont_GetRecordDwordFwd
         NetCellFont_GetRecordDword
       TextInputFiles_FileMngFwd101C2B60
-        sub_101C2B60
+        game_101C2B60
       TextInputFiles_FileMngFwd101C2C80
-        sub_101C2C80
+        game_101C2C80
       TextInputFiles_FileMngFwd101C2E70
-        sub_101C2E70
+        game_101C2E70
       TextInputFiles_FileMngFwd101C4170
         TextInputFiles_WriteTimestampFwd
       App_StepGameState6
@@ -6313,7 +6313,7 @@ CApp::RunMainLoop
         CDx::PushRenderTarget  (above)
         CDx::DrawTextureToViewport  (above)
         CDx::SetTexture  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       Post_FlashAndZoomFeedback
         CDx::GetRenderTargetTop
         CDx::DrawPrimitiveUP  (above)
@@ -6326,8 +6326,8 @@ CApp::RunMainLoop
         Menu_IsStateB4Eq1
         CDx::GetRenderTargetTop  (above)
         CopyrightText_Format
-        sub_10311C2C  (above)
-        sub_101C9B50
+        game_10311C2C  (above)
+        game_101C9B50
       CDx::SetViewport
       CDx::CompositeSceneToBackBuffer
         CEnv::IsStereoMode  (above)
@@ -6339,9 +6339,9 @@ CApp::RunMainLoop
       App_SetGlobal_104569C6
       TextInputFiles_WatchConfigWindow
         Input_SetFlagToggle
-      sub_10005A40
+      game_10005A40
         Camera_GetFrameScale
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         DirectInput_InstallKeyboard  (above)
         InputDevices_FindMapValue
         Cursor_GetFlagBit2  (above)
@@ -6363,7 +6363,7 @@ CApp::RunMainLoop
         InputDevices_CallPtr10456558IfEnabled
         InputDevices_CallPtr10456550IfEnabled
         NetCellFont_Query123700UnlessBlocked
-        sub_10312A20
+        game_10312A20
       Cell_ClearFlag104E1C3C
       Input_DispatchButtons
         Cursor_EnterMode4
@@ -6405,7 +6405,7 @@ CApp::RunMainLoop
         ntGameTimeGet  (above)
         TextInputFiles_HandleReadPosKeys
         TextInputFiles_ApplyKeyAction
-      sub_101C46A0
+      game_101C46A0
         TextInputFiles_IsField84PositiveAfterWait
         TextInputFiles_Pop
         _exit_0  (above)
@@ -6427,11 +6427,11 @@ CApp::RunMainLoop
         Menu_DispatchEvent6
         Menu_DispatchEvent7
         TargetMenu_ResolveEntries
-        sub_101630C0
+        game_101630C0
         Gfx_SetDefault2DStates  (above)
         MenuMng_UpdateForSceneState
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
         Menu_RemoveAndFreeItem
         NetCellFont_RemoveMatching
         NetCellFont_PushBack
@@ -6448,7 +6448,7 @@ CApp::RunMainLoop
         Menu_SetPanelWord2A
         Menu_NextVisibleItem
         Menu_PositionWindow
-        sub_10125360
+        game_10125360
         NetCellFont_GetTail  (above)
         TargetMenu_GetNodeIfNotClosed
         TargetMenu_MenuItemFade
@@ -6456,17 +6456,17 @@ CApp::RunMainLoop
         MenuPanels_IsDone
         TargetMenu_IsField8Zero
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         NetCellFont_FindFreeEntry
         MenuPanels_CallPanel1021F240And102203B0
         FaqHelp_Update
         MenuPanels_TickCounters
-        sub_10222DF0
-        sub_10226540
+        game_10222DF0
+        game_10226540
         Menu_GetPanelByte0D
         IsEvent  (above)
         Menu_FindByFlags38
-        sub_101602F0
+        game_101602F0
         Menu_SetPanelWord28
         MenuPanels_CallPanel1021EF10
         Gfx_DisableFogAndAlphaBlend
@@ -6481,7 +6481,7 @@ CApp::RunMainLoop
         Menu_NextVisibleItem  (above)
         Menu_IsStateB4Eq1  (above)
         Menu_DrawWindowItems
-        sub_10124EB0
+        game_10124EB0
         Gfx_DisableFogAndAlphaBlend  (above)
       Gfx_DisableFogAndAlphaBlend  (above)
       FontGlyphCache_GetCounterBlock  (above)
@@ -6492,11 +6492,11 @@ CApp::RunMainLoop
       MyRoom_Update
         MyRoom_GetObjectAtIndex
         MyRoom_Draw
-      sub_10018850
-        sub_103134C7  (above)
+      game_10018850
+        game_103134C7  (above)
         CXiMovie::Create
-        sub_10311FDE  (above)
-        sub_10311F30  (above)
+        game_10311FDE  (above)
+        game_10311F30  (above)
         LobbyThread_QueueStreamFile
         CXiMovie::UpdateIfPresent
         LobbyThread_SendCmd9
@@ -6507,11 +6507,11 @@ CApp::RunMainLoop
         OpeningSubtitle_Reset
         Input_IsCursorActive  (above)
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       Cursor_UpdateTimer
         Menu_GetStateB4
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       CDx_CompositeUITarget
         CDx_SetDefaultRenderState  (above)
         CDx::DrawScreenQuadAtDepth  (above)
@@ -6522,17 +6522,17 @@ CApp::RunMainLoop
       CXiMovie::DrawFrame
         Movie_Update
         Movie_GetCurrentTexture
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         CDx_SetDefaultRenderState  (above)
         CDx::DrawPrimitiveUP  (above)
-      sub_101D0C70
+      game_101D0C70
         NetCellFont_TestCommand36CF60  (above)
         JpegScreenshot_TriggerOnSceneState60
         Menu_IsStateB4Eq1  (above)
         TextInputFiles_FileMngCall101C09B0
         JpegScreenshot_TakeScreenshot
         TargetMenu_GetMessageFwd  (above)
-        sub_10311FF1
+        game_10311FF1
         ChatLog_AddTextCode379
         SetMusicTrackVolume_Tag0004
         ChatLog_AddTextCode37B
@@ -6553,7 +6553,7 @@ CApp::RunMainLoop
         Camera_DiffersFromSaved
         Camera_SnapshotState
         CDx::SetTransform  (above)
-        sub_100150D0
+        game_100150D0
         Camera_BuildProjection
         Camera_GetMatrix154Ptr
         MoDX_Update
@@ -6561,8 +6561,8 @@ CApp::RunMainLoop
         CameraCache_CacheViewProjection
         Camera_SetupMatrices
       GammaRamp_ApplyIfChanged  (above)
-    sub_100DAF30
-      sub_100DA750
+    game_100DAF30
+      game_100DA750
         NetCellFont_StatusText80IfFlags44
         GameMode_RequestState  (above)
         NetCellFont_StatusText80IfFlag4Only
@@ -6589,7 +6589,7 @@ CApp::RunMainLoop
         NetCellFont_DispatchByKindAndUpdate
         XI_NETWORK_100EF680 (left out)
         XI_NETWORK_100EF780 (left out)
-      sub_10310B7D
+      game_10310B7D
       NetCellFont_GetFlags
       XI_PACKET_1008ABE0 (left out)
       NetCellFont_UpdateActive  (above)
@@ -6600,16 +6600,16 @@ CApp::RunMainLoop
         Camera_ClearByte0A
       App_GetGlobal_104569C8  (above)
       NetCellFont_ApplyStatusText
-        sub_10311FF1  (above)
+        game_10311FF1  (above)
         NetCellFont_SetByte15114
       NetCellFont_StoreQueries2Into104DF90C
-        sub_100F1940
-        sub_100F1930
+        game_100F1940
+        game_100F1930
         NetCellFont_InitEntryAt104DF90C
         NetCellFont_Query10310030
       NetCellFont_GetFieldCOf104DF90C
       XI_PACKET_100E46A0 (left out)
-      sub_10310D98
+      game_10310D98
       NetCellFont_Sync
         NetCellFont_AdvanceClock
         NetCellFont_DiffWrapped
@@ -6618,7 +6618,7 @@ CApp::RunMainLoop
       NetCellFont_IsInitialized
       XI_NETWORK_100F9D70 (left out)
   CApp::CopyTextToClipboard
-  sub_100016C0
+  game_100016C0
     Imm_GetVirtualKeyJmp
     TextInputFiles_HandleKeyDownWithIme  (above)
     Input_SetActive
@@ -6634,22 +6634,22 @@ CApp::RunMainLoop
         TextInputFiles_ImmReleaseContext  (above)
         TextInputFiles_IsModeThree
         Imm_SetCompositionStringAJmp
-      sub_10312BDB
-        sub_1031A120
-      sub_1015DD70
+      game_10312BDB
+        game_1031A120
+      game_1015DD70
       Command_RunLine  (above)
-      sub_10312AD3
-        sub_10312B1C
-      sub_1015DD50
+      game_10312AD3
+        game_10312B1C
+      game_1015DD50
     TextInputFiles_NoOp2ArgsB
     WinMain_GetSceneStateByte68
-    sub_101B20E0
+    game_101B20E0
       TextInputFiles_GetFlag8C81
       TextInputFiles_IsModeFourOrFive  (above)
       TextInputFiles_ImmGetContext  (above)
       Imm_GetCompositionStringAJmp
       TextInputFiles_ImmReleaseContext  (above)
-      sub_101243B0
+      game_101243B0
         NetCellFont_IsHalfWidthKana
         NetCellFont_HalfKanaToFullWidth
       Imm_GetConversionStatusJmp  (above)
@@ -6669,18 +6669,18 @@ CApp::RunMainLoop
       Menu_CloseEntry  (above)
       WinMain_GetSceneStateByte68  (above)
       FsSjisToAscii
-      sub_10313B74
-        sub_1031CFD6
-        sub_10313BE3
-        sub_1031D037
-      sub_10017010
+      game_10313B74
+        game_1031CFD6
+        game_10313BE3
+        game_1031D037
+      game_10017010
       Imm_SetCompositionStringAJmp  (above)
       LinkedLibraries_JmpImmSetConversionStatus
       TextInputFiles_IsModeThree  (above)
       TextInputFiles_SetWordForCompletion  (above)
       MenuMng_OpenByName  (above)
       Imm_SetOpenStatusJmp
-      sub_10315C14
+      game_10315C14
       TextInputFiles_AcceptsChar  (above)
       FsTextInput_OnChar  (above)
       Imm_GetOpenStatusJmp  (above)
@@ -6699,9 +6699,9 @@ CApp::RunMainLoop
         Menu_GetStateB4  (above)
         CDx::ShowCursor  (above)
         Cursor_SetVisible
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       FontGlyphCache_AddToCounter
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
     Cursor_HandleMouseMove  (above)
     Cursor_SetVisible  (above)
     Cursor_EnterMode1  (above)
@@ -6712,8 +6712,8 @@ CApp::RunMainLoop
     Cursor_ToggleFlag4  (above)
   Camera_ReleaseAll
     TextInputFiles_RunPairB
-      sub_10311386  (above)
-      sub_103113D3  (above)
+      game_10311386  (above)
+      game_103113D3  (above)
     StAvatar_SetActive
       StAvatar_ResetOrSetFlag2
       StAvatarFini
@@ -6738,16 +6738,16 @@ CApp::RunMainLoop
         LobbyThread_PushCmd
       Target_Reset  (above)
       YkMyroom::Destructor  (above)
-      thunk_sub_10028AA0  (above)
+      thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
       operator_delete  (above)
       XiEvent_GetSingleton_100C3190
-        sub_100C31F0
-        sub_10313486  (above)
+        game_100C31F0
+        game_10313486  (above)
       XiEvent_Clear
         XiEvent_FreeData
         operator_delete  (above)
       XiEvent_ResetActersAndGlobals
-        sub_101C4AE0
+        game_101C4AE0
         Acter_TargetClearAndSetFlag53
         XiEvent_ResetPending
         ZoneMap_QueryBoxHeightBand
@@ -6772,11 +6772,11 @@ CApp::RunMainLoop
         TargetMenu_MenuInitAndFadeItem
         TargetMenu_InitFields1CTo3A7
         MenuPanels_ClearMenu
-        sub_101FCFB0
+        game_101FCFB0
         CallMotd
         NetCellFont_SetWord40DAA
       XI_PACKET_1008ABE0 (left out)  (above)
-      sub_1015EEA0
+      game_1015EEA0
       CXiActor::Destroy
         Acter_ReleaseEventRecord  (above)
         Acter_ReleaseAllSlots
@@ -6788,14 +6788,14 @@ CApp::RunMainLoop
         MemBlock_CallEnabledList0
     TargetMenu_ReleaseAll32
       TargetMenu_ReleaseOne
-        sub_10312EAD  (above)
+        game_10312EAD  (above)
 ```
 
 ### Frame_Render
 
 ```
 Frame_Render
-  sub_10311C2C
+  game_10311C2C
   j_CEnv_UpdateDualTargetMode
     CEnv::UpdateStereoMode
       CEnv::IsStereoMode
@@ -6811,13 +6811,13 @@ Frame_Render
       TexMgr_GetField8
       TexObj_CreateAndUpload
         TexObj_Create
-        sub_10071F60
+        game_10071F60
       TexObj_Reupload
         TexObj_Upload
   Input_IsCursorActive
     Cursor_GetFlagBit2
   TextInputFiles_Call103113C8
-    sub_103113C8
+    game_103113C8
   CEnv::IsStereoMode  (above)
   CDx::PushRenderTarget
     CDx::PushRenderTargetTexture
@@ -6826,20 +6826,20 @@ Frame_Render
       CDx::EndScene
       CDx::BeginScene  (above)
   CDx::SetTexture
-    sub_1000A2B0
+    game_1000A2B0
   CDx::PushRenderTargetRet1
     CDx::PushRenderTarget  (above)
   GameMode_PollPendingState
   _exit_0
     ErrorReport_ReportAndHandleError
       NetCellFont_ReportError
-        sub_100DBE10
+        game_100DBE10
         NetCellFont_ForwardToGlobal1708
         Allocator_Generic
-        sub_10312F96
+        game_10312F96
         operator_delete
         NetCellFont_PushRingEntryLocked
-        sub_10312EAD
+        game_10312EAD
       ErrorReport_RegisterCallback
         NetCellFont_StartRequestSlot24WithCallback
         ErrorReport_SendMessage7_0To10668FF8
@@ -6858,7 +6858,7 @@ Frame_Render
       unknown_libname_158
       Time_Normalize
       ZoneMap_SetRecord
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         Camera_SetField304BytesOnGlobal
         Camera_SetField300
         Camera_SetField2FC
@@ -6868,7 +6868,7 @@ Frame_Render
         Camera_SetField318
         ZoneMap_ApplyColors
       XiZone::SetPtr1D8FromTable
-  sub_1018C2B0
+  game_1018C2B0
     Game_HasInitCount
     ntGameTimeGet
       NetCellFont_AdvanceAndGetSeconds
@@ -6886,14 +6886,14 @@ Frame_Render
     NetCellFont_GetMilliseconds
     Time_SetModulo216000Div3600
       Time_Normalize  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
     Time_SetModulo3600Div60
       Time_Normalize  (above)
     Time_SetModulo60
       Time_Normalize  (above)
     Time_AddFrameScale
       Camera_GetFrameScale
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
     Time_GetModulo5184000Div216000
     Time_GetModulo216000Div3600
     Time_GetModulo3600Div60
@@ -6903,13 +6903,13 @@ Frame_Render
     StAvatar_Update
       SqTimer_GetMicroseconds
         sqDebugPrintf
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       StAvatar_ResolveItemsAndStart
         StChannelItemResolve
         StModelItem_Resolve
         StAvatar_ApplyChannels
         LobbyThread_SendCmd6IfRunning
-        sub_1024DA10
+        game_1024DA10
         StAvatar_SetField10
         StAvatar_SetField14
         StAvatar_StoreMode
@@ -6934,7 +6934,7 @@ Frame_Render
       StAvatar_AdvanceTimers
         StModelItem_SetVec78
         StChannel_SetValue9C
-      sub_1024FDF0
+      game_1024FDF0
         StAvatar_Unload
         SqsnScene_SetItemFloat14
       StChannel_ApplyItem
@@ -6946,7 +6946,7 @@ Frame_Render
       StAvatar_ComputeRatioValue
         Mdl_GetEntryTable  (above)
         Chn_GetSubIndex
-        sub_1027D110
+        game_1027D110
       StAvatarScene_UpdateScene
         StAvatar_ApplyModes
         StAvatar_ApplyEffectFlags
@@ -6955,7 +6955,7 @@ Frame_Render
         SqQuatMul_Mul
         sqxfXformTD_Update
         SqMatrix4_ScaleAxes
-      sub_10250030
+      game_10250030
         StAvatar_GetValue2B
         CYyMusicLoadTask::StartTrack  (above)
         StAvatar_GetValue2A
@@ -6966,20 +6966,20 @@ Frame_Render
         scnGetFlags
         scnCameraGetInfo
         Camera_GetMatrix154Ptr
-        sub_100151F0
-        sub_1027EB10
+        game_100151F0
+        game_1027EB10
         M4fTranspose
         sqMatrix4_10280140
         M4fTransform
-        sub_100150D0
+        game_100150D0
         Camera_GetViewMatrixPtr
         CDx::SetTransform
         MathVector_Nop
       StAvatar_UpdateInput
         NetCellFont_TestCommand36CF60  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         StAvatar_SetOffsets
-        sub_10123970
+        game_10123970
         StAvatar_UpdateSteer
         StAvatar_UpdateCameraFollow
         StAvatar_UpdateCameraYaw
@@ -6991,7 +6991,7 @@ Frame_Render
         StTrigger_ProcessOpcodesUpToTime
     Dancer_InitDevice
       Mem_AllocObject
-        sub_10313486
+        game_10313486
         Mem_AllocFromArea  (above)
       ErrorReport_NoOpVarargsA
       ErrorReport_NoOpVarargsB
@@ -6999,9 +6999,9 @@ Frame_Render
         SqMem_InitBlock
       sqMemPoolRegister
         sqDebugPrintf  (above)
-        sub_10311FF1
+        game_10311FF1
       sqgxContext_Create
-        sub_10275D80
+        game_10275D80
         sqgxContext_Init
       sqgxTextureAdd
         sqDebugPrintf  (above)
@@ -7011,7 +7011,7 @@ Frame_Render
         sqDebugPrintf  (above)
         sqgxCeilLog2  (above)
       sqgxTextureClear
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       sqgxTextureDraw
         sqgxPixelSize
         sqgxViewport
@@ -7060,7 +7060,7 @@ Frame_Render
         SqObject_Release
         SqsnScene_Free
       StAvatar_AllocArrays
-        sub_10275D80  (above)
+        game_10275D80  (above)
         SqChannelDefaults_InitDefaults
         StAvatar_InitModel
     StAvatar_SetStateTeardown
@@ -7094,13 +7094,13 @@ Frame_Render
       ZoneMap_SetRecord  (above)
       Env_RampWindStrength
         Camera_GetFrameScale  (above)
-        sub_103149A0
+        game_103149A0
     Sky_DrawDomeViewCentered
       Camera_SetClearColorRGB
         Camera_SetClearColorPacked
       MoDX_SetInvalid
-      sub_10313486  (above)
-      sub_1006AE30
+      game_10313486  (above)
+      game_1006AE30
         MoDX_Insert
       CMoDX::SetWorldMatrix
         CDx::SetTransform  (above)
@@ -7111,8 +7111,8 @@ Frame_Render
       Color_SetFromU32SwapRB
       Camera_GetFloat2E0
       Camera_GetFloat2DC
-      sub_1003D640
-        sub_10311C2C  (above)
+      game_1003D640
+        game_10311C2C  (above)
         SkyDome_ScaleColorBytes
         SkyDome_AddBytes
         DynVB_Reserve
@@ -7124,7 +7124,7 @@ Frame_Render
     XiZone::Call10036170
       SoundElem_SetCurrent10463914
         SoundVolume_SendStopToLobby
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar
   CMoTaskMng::DrawAll
   Dancer_WorldEnd
@@ -7132,7 +7132,7 @@ Frame_Render
       SqTimer_GetMicroseconds  (above)
       StAvatarRender
         StAvatar_UpdateNodes
-        sub_10281500
+        game_10281500
         ___setargv_24
         ___setargv_9
         SqgxContext_Nop
@@ -7143,7 +7143,7 @@ Frame_Render
         sqgxColor
         sqgxBlendLin
         sqgxZTest
-        sub_10280DE0
+        game_10280DE0
   CYySoundElem::UpdateQueue
     LobbyThread_QueryChannels
     CYySoundElem::UpdateOne
@@ -7151,8 +7151,8 @@ Frame_Render
         Vec3_Copy
         CMoElem::GetActiveField0A4
         SoundVolume_ComputeDistanceVolumeAndPan
-        sub_10311C2C  (above)
-        sub_100363B0
+        game_10311C2C  (above)
+        game_100363B0
         CYySoundElem::IsTimerPositive
         LobbyThread_SendCmd3FromFloat
         Music_SetTrackVolume
@@ -7174,14 +7174,14 @@ Frame_Render
       TextInputFiles_UpdateIfFlag9
         TextInputFiles_StoreExternalConfig
         TextInputFiles_SaveCnfDat
-      sub_101C4CF0
+      game_101C4CF0
         NetCellFont_GetRecordDwordFwd
         TextInputFiles_WriteTimestamp
       TextInputFiles_NoOpD
     YkMyroom::Destructor
       MyRoom_ReleaseTable
         YkFurniture::Destructor
-        thunk_sub_10028AA0
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0
       YkMyroom::ReleaseObject38
       Target_SetHandlerCc
       Menu_RemoveAndFreeItem
@@ -7200,14 +7200,14 @@ Frame_Render
         TargetMenu_SetText
       TargetMenu_ForwardToPanel
         MenuPanels_SetEntryText
-    thunk_sub_10028AA0  (above)
+    thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
     Menu_CloseEntry
       MenuMng_BuildMenuName
-        sub_10312050
+        game_10312050
       Menu_FindItemByName
         NetCellFont_GetHead
-        sub_10126520
-        sub_10312940
+        game_10126520
+        game_10312940
       TargetMenu_MenuInitAndFadeItem
         NetCellFont_CallMember0CSlot2
         TargetMenu_MenuItemFade
@@ -7215,34 +7215,34 @@ Frame_Render
     TargetMenu_SetPosition
     TextInputFiles_AssignWhole
       TextInputFiles_AssignN
-        sub_1018D3D0
+        game_1018D3D0
         operator_delete  (above)
         TextInputFiles_GrowCapacity
         Allocator_Generic  (above)
-        sub_10312050  (above)
+        game_10312050  (above)
     LobbyUi_ForwardFlag1
-      sub_1023BE10
+      game_1023BE10
         _exit_0  (above)
         NetCellFont_GetField0xA4
         NetCellFont_UpdateGlobalRequests
         ErrorReport_IsRegistered
         LobbyUi_WaitForState1
         TargetMenu_GetMessageFwd
-        sub_10311FF1  (above)
+        game_10311FF1  (above)
         LobbyUi_StoreTextIfIdle
     MenuMng_OpenByName
       MenuMng_BuildMenuName  (above)
       Menu_LookupWindowByName
-        sub_10312940  (above)
+        game_10312940  (above)
       MenuMng_TestNameForSceneState
-        sub_10312940  (above)
+        game_10312940  (above)
         IsEvent
         NetCellFont_GetTail  (above)
         NetCellFont_NextActiveValue  (above)
       Menu_FindItemByNameAt1C
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
-        sub_10312940  (above)
+        game_10126520  (above)
+        game_10312940  (above)
       Menu_FindItemByName  (above)
       Menu_FindWindowDefByName
       NetCellFont_SelectFirstVisible
@@ -7299,15 +7299,15 @@ Frame_Render
         NetCellFont_GetTail  (above)
         NetCellFont_NextActiveValue  (above)
         TargetMenu_MenuInitAndFadeItem  (above)
-      sub_1015DB80
+      game_1015DB80
   Scene_GetTableValue
     DmsgText_SelectTableByLanguage
-  sub_100731B0
+  game_100731B0
     ResourceIter_SetCurrentGlobal
     CMoResource::GetParent
     FileMng_ResolveOrExit
       TextInputFiles_SubmitFileNumKind4
-        sub_101C3A90
+        game_101C3A90
         TextInputFiles_FormatPathByKind
         TextInputFiles_WaitThenHandleFileEvent
       StAvatarInfo_SendBytePairKind2
@@ -7316,7 +7316,7 @@ Frame_Render
     Allocator_Generic  (above)
     TextInputFiles_ForwardOrExit
       TextInputFiles_SubmitFileNumKind1
-        sub_101C3A90  (above)
+        game_101C3A90  (above)
         TextInputFiles_FormatPathByKind  (above)
         TextInputFiles_WaitThenHandleFileEvent  (above)
       StAvatarInfo_SendBytePairKind2  (above)
@@ -7340,7 +7340,7 @@ Frame_Render
       CMoResource::RegisterInTypeList
         MeshResourceMng_AllocHandle
         MeshResourceCreate_CopyField14At8
-      sub_10071F70
+      game_10071F70
         Resource_FindSelfLinkedNode
       MeshResourceMng_AllocHandle  (above)
       MeshResourceCreate_CopyField14At4
@@ -7350,19 +7350,19 @@ Frame_Render
       CMoTask::SetRect30
       CMoResource::RegisterAndMark
         CMoResource::RegisterInTypeList  (above)
-      sub_10071E50
+      game_10071E50
         ResourceIter_FindFirst
         ResourceIter_FindNext
         CMoGeneratorClone::ResolveCmdTargets
     GeneratorClone_SetDwordAndCopyOut
     ResourceHandle_Deref
     operator_delete  (above)
-  sub_10071E90
+  game_10071E90
   NetCellFont_InitTimer
     NetCellFont_ReturnTrue100DBDE0
     NetCellFont_GetTimeNow
-      sub_10314EF1
-        sub_10319C5B
+      game_10314EF1
+        game_10319C5B
     Time_GetMilliseconds
     NetCellFont_Reset
       Time_GetMilliseconds  (above)
@@ -7370,21 +7370,21 @@ Frame_Render
   LobbyThread_SetGlobal106690AC
   App_SetGlobal_104569C8
   TextInputFiles_RunPairA
-    sub_103113D3
-    sub_10311386
+    game_103113D3
+    game_10311386
   App_RunOpening
     OpeningSubtitle_IsStateFour
-    sub_10313520
-    sub_10312050  (above)
+    game_10313520
+    game_10312050  (above)
     Mem_AllocDefault  (above)
     CXiOpening::Constructor
       GammaRamp_GetRGB
       GammaRamp_SetRGB
-      sub_10312050  (above)
+      game_10312050  (above)
       Allocator_Generic  (above)
       OpeningSubtitle_Constructor
-        sub_100731B0  (above)
-        sub_10071E90  (above)
+        game_100731B0  (above)
+        game_10071E90  (above)
         ShapeMng_FindShape
         OpeningSubtitle_Reset
       OpeningSubtitle_Reset  (above)
@@ -7392,27 +7392,27 @@ Frame_Render
         Vt10329FE0_Reset
       Vt10329FE0_Reset  (above)
     App_AdvanceSeqStep
-  sub_103134C7
-    sub_10318C5E
-      sub_1031949A
-      sub_103193FC
-        sub_10318B46
-      sub_103194B7
-      sub_10323BB7
-        sub_1031CFD6
-        sub_10323C10
-        sub_1031D037
-      sub_10312F96  (above)
-      sub_10317440
-      sub_103194A7
-      sub_103168B0
-      sub_10316930
-      sub_10319431
-        sub_103193FC  (above)
-      sub_10319462
-        sub_103193FC  (above)
-      sub_10312EAD  (above)
-    sub_10318B46  (above)
+  game_103134C7
+    game_10318C5E
+      game_1031949A
+      game_103193FC
+        game_10318B46
+      game_103194B7
+      game_10323BB7
+        game_1031CFD6
+        game_10323C10
+        game_1031D037
+      game_10312F96  (above)
+      game_10317440
+      game_103194A7
+      game_103168B0
+      game_10316930
+      game_10319431
+        game_103193FC  (above)
+      game_10319462
+        game_103193FC  (above)
+      game_10312EAD  (above)
+    game_10318B46  (above)
   AppMainLoop_AppendWithSpace
     Allocator_Generic  (above)
     operator_delete  (above)
@@ -7424,39 +7424,39 @@ Frame_Render
   WinMain_ReturnTrue
   FrameRender_ReturnTrue
   ErrorReport_LoadChecksum
-    sub_101BE510
-      sub_10312487
-        sub_10319EF3
-        sub_10319C49
-        sub_10319C52
-        sub_10319E78
-        sub_10319DC2
-        sub_10319D1D
-        sub_10317440  (above)
-        sub_10312742
-        sub_10319C5B  (above)
-        sub_103123CF
-        sub_10319BD6
+    game_101BE510
+      game_10312487
+        game_10319EF3
+        game_10319C49
+        game_10319C52
+        game_10319E78
+        game_10319DC2
+        game_10319D1D
+        game_10317440  (above)
+        game_10312742
+        game_10319C5B  (above)
+        game_103123CF
+        game_10319BD6
     Allocator_Generic  (above)
     File_FindByKind
-      sub_10311FDE
-        sub_10311FAD
+      game_10311FDE
+        game_10311FAD
       File_CreateParentDirs
     File_WriteChunked
-      sub_1031217F
-        sub_1031716D
-        sub_103121AE
-        sub_103171BF
+      game_1031217F
+        game_1031716D
+        game_103121AE
+        game_103171BF
     operator_delete  (above)
     TextInputFiles_Call10311F30
-      sub_10311F30
-        sub_1031716D  (above)
-        sub_10311F61
-        sub_103171BF  (above)
-  sub_10013AD0
+      game_10311F30
+        game_1031716D  (above)
+        game_10311F61
+        game_103171BF  (above)
+  game_10013AD0
     Call1008A0E0With2
       Camera_SetField30
-        sub_10311FF1  (above)
+        game_10311FF1  (above)
     TextInputFiles_SaveAll
       TextInputFiles_RecreateMembers
         FsLogPage_ClearAndVisitFiles
@@ -7482,14 +7482,14 @@ Frame_Render
         CYyCamMng2_SetGlobalFlags
       CYyCamMng2::SetDefaultDistances  (above)
       Camera_Call100151A0OnGlobal
-        sub_100151A0
+        game_100151A0
     Actor_ResetDrawLists
-      sub_100814F0
+      game_100814F0
     CDx::SetClearColor  (above)
     GameSystems_InitializeAll
       Scene_GetTableValue  (above)
-      sub_100731B0  (above)
-      sub_10071E90  (above)
+      game_100731B0  (above)
+      game_10071E90  (above)
       Allocator_Generic  (above)
       TargetMenu_Construct
         NetCellFont_ClearWords  (above)
@@ -7510,7 +7510,7 @@ Frame_Render
       ZoneMapLoad_ResetFieldsA
       ZoneMapLoad_ResetFieldsC
       ZoneMapLoad_InitA640AndCopyStar
-        sub_103108DE
+        game_103108DE
       LobbyUi_ConstructBase
         Yk_InitBase
       CIwHnList_Constructor
@@ -7545,7 +7545,7 @@ Frame_Render
     Vec3_Copy  (above)
     ZoneMap_FindGroundHeight
       ZoneMapLoad_SegmentTest34139
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         ZoneMap_IsPointInTriangle
     CTsZoneMap::UpdateViewerPosition
       ZoneMap_GetHitCount
@@ -7558,7 +7558,7 @@ Frame_Render
     TextInputFiles_Call101953D0
       TextInputFiles_WriteTigDat
         TextInputFiles_FileMngSubmitPathKind3
-    thunk_sub_10245BB0
+    thunk_LobbyThread_ResetZone_as_v0
       LobbyThread_ResetZone
         XiZone::ResetState
         WinMain_ApplyTables10350210
@@ -7569,43 +7569,43 @@ Frame_Render
       GameMode_PollPendingState  (above)
       NetCellFont_LookupNameIfKind3
         Name_LookupByKey
-      sub_10311FF1  (above)
+      game_10311FF1  (above)
       setPolUrl
-        sub_1031111E
+        game_1031111E
     App_SetGlobal_104569C8  (above)
     CYyCamMng2_CallGlobalVfunc1
-    sub_10164B80
+    game_10164B80
       CMoResource::ReleaseChain  (above)
       ResHandle_FreeIfUnreferenced  (above)
   StAvatarInfo_SendBytePairKind2  (above)
   NetCellFont_GetRecordDwordFwd  (above)
   TextInputFiles_FileMngFwd101C2B60
-    sub_101C2B60
-      sub_10311FF1  (above)
+    game_101C2B60
+      game_10311FF1  (above)
       TextInputFiles_ReleaseAt1F0
         TextInputFiles_WaitEvent18At8
       TextInputFiles_GetValueAt1F0
         TextInputFiles_SignalMember8
   TextInputFiles_FileMngFwd101C2C80
-    sub_101C2C80
-      sub_10311FF1  (above)
+    game_101C2C80
+      game_10311FF1  (above)
       TextInputFiles_ReleaseAt1F0  (above)
       TextInputFiles_GetValueAt1F0  (above)
   TextInputFiles_FileMngFwd101C2E70
-    sub_101C2E70
-      sub_10311FF1  (above)
+    game_101C2E70
+      game_10311FF1  (above)
       TextInputFiles_ReleaseAt1F0  (above)
       TextInputFiles_GetValueAt1F0  (above)
-      sub_10313939
-        sub_10313950
+      game_10313939
+        game_10313950
       TextInputFiles_ReadTimestamp
-        sub_10311FF1  (above)
+        game_10311FF1  (above)
         TextInputFiles_FormatPathByKind  (above)
         TextInputFiles_WaitThenHandleFileEvent  (above)
       TextInputFiles_OpenHexPath
-        sub_10311FF1  (above)
+        game_10311FF1  (above)
         TextInputFiles_ReleaseAt1F0  (above)
-        sub_101C4080
+        game_101C4080
         TextInputFiles_GetValueAt1F0  (above)
         TextInputFiles_CreateDirectories
   TextInputFiles_FileMngFwd101C4170
@@ -7614,19 +7614,19 @@ Frame_Render
   App_StepGameState6
     App_RegisterSystemDats
       FaqHelp_Construct
-        sub_1021BE50
+        game_1021BE50
         FaqHelp_LoadFromDat
     Ui_KeyPrompt_Init
     MenuMng_OpenByName  (above)
     CDx::SetClearParams
     Acter_ResetGlobals
       XiEvent_GetSingleton_100C3190
-        sub_100C31F0
-        sub_10313486  (above)
+        game_100C31F0
+        game_10313486  (above)
       XiEvent_SetFlag8
       MenuMng_ReinitState
         MenuMng_ResetFields
-        sub_1015EEA0
+        game_1015EEA0
       Acter_ClearGlobalBlocks
       Acter_ResetGlobalSentinels
       Acter_ClearGlobalBlock182
@@ -7646,10 +7646,10 @@ Frame_Render
         Allocator_Generic  (above)
     GameMode_RequestState
       NetCellFont_StoreQueriesInto104DF90C
-        sub_100F1920
-        sub_100F1910
-        sub_100F1940
-        sub_100F1930
+        game_100F1920
+        game_100F1910
+        game_100F1940
+        game_100F1930
         NetCellFont_GetLow16
         NetCellFont_Query10310030
     App_AdvanceSeqStep  (above)
@@ -7700,15 +7700,15 @@ Frame_Render
       CMoTask::ResetFields
       CMoTask::Constructor
         CMoTask::ResetFields  (above)
-        sub_100749F0
-      sub_100749B0
+        game_100749F0
+      game_100749B0
         CMoTaskMng::InsertIntoBucket
       App_AdvanceSeqStep  (above)
     WinMain_RunStepThenLoadAll
-      sub_10014390
+      game_10014390
         GameMode_PollPendingState  (above)
         YkMyroom::Destructor  (above)
-        thunk_sub_10028AA0  (above)
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
         Vec3_Copy  (above)
         ZoneMap_FindGroundHeight  (above)
         CTsZoneMap::UpdateViewerPosition  (above)
@@ -7716,7 +7716,7 @@ Frame_Render
         XiZone::SetTreeState1BC
         ZoneMap_CopyField342C8ToField39450  (above)
         ActorHandle_Resolve
-        sub_10181540
+        game_10181540
         ZoneMap_SetArea
         Mem_AllocDefault  (above)
         CXiActor::Construct
@@ -7726,15 +7726,15 @@ Frame_Render
         CXiDancerActor::Construct
         Vec4_Copy
         CXiControlActor_SetVec4
-        sub_100749B0  (above)
-        sub_100814F0  (above)
+        game_100749B0  (above)
+        game_100814F0  (above)
       TextInputFiles_LoadAllAndTimestamp  (above)
   App_SetGlobal_104569C5
   App_SaveAllSlotData
     Game_ClearFlagsBits
     FaqHelp_SaveAndRelease
-      sub_1021BCC0
-        sub_10312150
+      game_1021BCC0
+        game_10312150
         TextInputFiles_DatEntryCtor
         XI_CRYPT_101B9A10 (left out)
         TextInputFiles_ClearVtable
@@ -7755,13 +7755,13 @@ Frame_Render
         LobbyThread_SendCmd11
         Target_Reset
         YkMyroom::Destructor  (above)
-        thunk_sub_10028AA0  (above)
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
         operator_delete  (above)
         XiEvent_GetSingleton_100C3190  (above)
         XiEvent_Clear
         XiEvent_ResetActersAndGlobals
         XI_PACKET_1008ABE0 (left out)
-        sub_1015EEA0  (above)
+        game_1015EEA0  (above)
         CXiActor::Destroy
       WinMain_ApplyTables10350210  (above)
   WinMain_TryShutdownActors
@@ -7803,7 +7803,7 @@ Frame_Render
       Allocator_Generic  (above)
       DebugOverlay_SetEntry
         ErrorReport_NoOpVarargsA  (above)
-        sub_10312050  (above)
+        game_10312050  (above)
   ZoneMap_GetByteRef1CPlus10
   CDx::DrawTextureToViewport
     CDx::DrawTexturedScreenQuadUnit
@@ -7836,7 +7836,7 @@ Frame_Render
     CDx::PushRenderTarget  (above)
     CDx::DrawTextureToViewport  (above)
     CDx::SetTexture  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
   Post_FlashAndZoomFeedback
     CDx::GetRenderTargetTop  (above)
     CDx::DrawPrimitiveUP  (above)
@@ -7850,22 +7850,22 @@ Frame_Render
     CDx::GetRenderTargetTop  (above)
     CopyrightText_Format
       YkCommon_GetOffset
-        sub_100DBE10  (above)
+        game_100DBE10  (above)
         YkCommon_TimeToTmWrap28Years
-      sub_10311FF1  (above)
-    sub_10311C2C  (above)
-    sub_101C9B50
+      game_10311FF1  (above)
+    game_10311C2C  (above)
+    game_101C9B50
       YkCommon_GetIndexed
-      sub_1011FB60
+      game_1011FB60
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
         Cell_DrawTexturedQuad
-      sub_10311C2C  (above)
-      sub_1011FC80
+      game_10311C2C  (above)
+      game_1011FC80
         NetCellFont_GetHead  (above)
-        sub_1011FB60  (above)
-        sub_10311C2C  (above)
-        sub_10126520  (above)
+        game_1011FB60  (above)
+        game_10311C2C  (above)
+        game_10126520  (above)
         Cell_DrawTexturedQuad  (above)
   CDx::SetViewport
   CDx::CompositeSceneToBackBuffer
@@ -7878,9 +7878,9 @@ Frame_Render
   App_SetGlobal_104569C6
   TextInputFiles_WatchConfigWindow
     Input_SetFlagToggle
-  sub_10005A40
+  game_10005A40
     Camera_GetFrameScale  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
     DirectInput_InstallKeyboard
     InputDevices_FindMapValue
     Cursor_GetFlagBit2  (above)
@@ -7905,7 +7905,7 @@ Frame_Render
       Imm_SetOpenStatusJmp
       FsTextInput_OnChar
         TextInputFiles_GetFlag8C81
-        sub_10311344
+        game_10311344
         TextInputFiles_InputSubmit
         FsTextInput_GetMaxLength
         TextInputFiles_AppendByte
@@ -7957,11 +7957,11 @@ Frame_Render
       MenuMng_OpenByName  (above)
       SetMusicTrackVolume_A
         CMoResource::FindByTypeAndId
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
       SetMusicTrackVolume_C
         CMoResource::FindByTypeAndId  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
       TextInputFiles_ResetCursor
       Cursor_SetVisible
@@ -7982,7 +7982,7 @@ Frame_Render
         Menu_FindByName
       SetMusicTrackVolume_B
         CMoResource::FindByTypeAndId  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
     Cell_SetFlagBit10
     Cursor_HandleMouseMove
@@ -7992,7 +7992,7 @@ Frame_Render
         Menu_GetStateB4
         CDx::ShowCursor  (above)
         Cursor_SetVisible  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       FontGlyphCache_AddToCounter
     DirectInput_PollMouse
       DirectInput_InstallMouse
@@ -8003,15 +8003,15 @@ Frame_Render
       DirectInput_ReleaseDevice
     DirectInput_ApplyRumble
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
-      sub_10008ED0
+      game_10311C2C  (above)
+      game_10008ED0
     Input_MapAxisLow
     Input_MapAxisHigh
     InputDevices_CallPtr10456558IfEnabled
     InputDevices_CallPtr10456550IfEnabled
     NetCellFont_Query123700UnlessBlocked
       TextInputFiles_IsModeFourOrFive  (above)
-      sub_1011BA40
+      game_1011BA40
         NetCellFont_GetHead  (above)
         Menu_NextVisibleItem  (above)
       Menu_HasFocusedItem  (above)
@@ -8022,7 +8022,7 @@ Frame_Render
       TextInputFiles_HasTable1037A290CellByte
         Cell_GetWord1036D6B0
       Cursor_GetFlagBit2  (above)
-    sub_10312A20
+    game_10312A20
   Cell_ClearFlag104E1C3C
   Input_DispatchButtons
     Cursor_EnterMode4
@@ -8073,7 +8073,7 @@ Frame_Render
         TextInputFiles_Call10311386
       Menu_CallChildSlot34ForEachItem
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
         NetCellFont_InvokeChild34
       TargetMenu_SetTargetMode  (above)
       Target_SendAttackOff
@@ -8093,8 +8093,8 @@ Frame_Render
       NetCellFont_TestCommand36CF60  (above)
       ActorHandle_Resolve  (above)
       Settings_GetValue  (above)
-      sub_10123970  (above)
-      sub_10311FF1  (above)
+      game_10123970  (above)
+      game_10311FF1  (above)
       Command_RunLine  (above)
       SetMusicTrackVolume_A  (above)
     Target_InvokeFieldCallback
@@ -8127,16 +8127,16 @@ Frame_Render
       IsEvent  (above)
       MusicTrack_SetVolumeId0013
         CMoResource::FindByTypeAndId  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
       Menu_SetItemAt54
         NetCellFont_SetActive
         Cursor_ResetPositionToMenu  (above)
       TargetMenu_MenuForwardItem8
-        sub_1015DB80  (above)
-      sub_1015E830
+        game_1015DB80  (above)
+      game_1015E830
         Menu_FindFirstActiveItem
-        sub_1015DB80  (above)
+        game_1015DB80  (above)
       Cell_SetFlag104E1C3C  (above)
     Target_RefreshActor
       Entry_ResolveValid  (above)
@@ -8147,16 +8147,16 @@ Frame_Render
       TextInputFiles_IsModeFourOrFive  (above)
       FontGlyphCache_IsStateTwo  (above)
       Target_ActOrTrySubSelect
-        sub_101587F0
+        game_101587F0
         Target_TrySubSelect
       Target_HasActor
         Target_GetActor
-      sub_101587F0  (above)
+      game_101587F0  (above)
       Acter_IsFlag40DB6OrState17  (above)
       MenuMng_OpenByName  (above)
       MusicTrack_SetVolumeId0011
         CMoResource::FindByTypeAndId  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
       Target_GetCachedIfValid  (above)
       Target_ApplyAction
@@ -8196,7 +8196,7 @@ Frame_Render
       Menu_HasFocusedItem  (above)
       Menu_IsStateB4Eq1  (above)
       NetCellFont_MenuMoveSelection
-        sub_101181D0
+        game_101181D0
         NetCellFont_GetFieldByIndex
         NetCellFont_SelectEntry  (above)
         SetMusicTrackVolume_C  (above)
@@ -8224,14 +8224,14 @@ Frame_Render
         Menu_FindByFlags34  (above)
   TextInputFiles_UpdateMenuState
     TextInputFiles_StepScript
-      sub_101A1CB0
+      game_101A1CB0
       TextInputFiles_GetMcrEntryLine
       NetCellFont_AdvanceAndGetMs
         NetCellFont_AdvanceClock  (above)
         NetCellFont_GetTotalMilliseconds
       TextInputFiles_ParseWaitCommand
-        sub_10311EB0
-        sub_10313643
+        game_10311EB0
+        game_10313643
         NetCellFont_AdvanceAndGetMs  (above)
         TextInputFiles_InputCall101AC990Swapped
       Command_RunLine  (above)
@@ -8263,7 +8263,7 @@ Frame_Render
       NetCellFont_TestCommand36CF60  (above)
       TextInputFiles_SetSlot
         TextInputFiles_QueueEntry
-  sub_101C46A0
+  game_101C46A0
     TextInputFiles_IsField84PositiveAfterWait
       Event_Wait
       TextInputFiles_ReleaseSemaphoreAt4
@@ -8279,12 +8279,12 @@ Frame_Render
     TargetMenu_MessageSetCtor
       MenuPanels_Clear
       DmsgText_Clear
-    sub_10313486  (above)
+    game_10313486  (above)
   TargetMenu_UpdatePendingRead
     Scene_GetTableValue  (above)
     TextInputFiles_FileMngFindFileNumKind1
       TextInputFiles_FindFileNumKind1
-        sub_101C3A90  (above)
+        game_101C3A90  (above)
         TextInputFiles_FormatPathByKind  (above)
         TextInputFiles_FindMatchAt8
     TargetMenu_ReleaseField7C
@@ -8297,9 +8297,9 @@ Frame_Render
       NetCellFont_HitTest
       NetCellFont_PickEntry
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
       NetCellFont_SelectEntryMoveCursor
-        sub_101181D0  (above)
+        game_101181D0  (above)
         NetCellFont_SetState  (above)
         NetCellFont_AttachSelection
         NetCellFont_MenuMoveSelection  (above)
@@ -8308,7 +8308,7 @@ Frame_Render
         NetCellFont_MenuUpdateFocusedHelp
       Menu_HandleEvent  (above)
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
     Menu_HandleCursorSelect
       NetCellFont_PickEntry  (above)
       Menu_HandleEvent  (above)
@@ -8323,21 +8323,21 @@ Frame_Render
       Menu_HandleEvent  (above)
     TargetMenu_ResolveEntries
       NetCellFont_GetSlotPtr
-      sub_1015BC40
-        sub_10312150  (above)
+      game_1015BC40
+        game_10312150  (above)
         TargetMenu_FindByFirstDword
         TargetMenu_FindCachedEntry
         TargetMenu_IsCachedPtrMatch
-        sub_10159FF0
+        game_10159FF0
         TargetMenu_FindRange
         TargetMenu_Init
         TextInputFiles_ForwardOrExit  (above)
         TargetMenu_RotateBufferOnce
         TargetMenu_CallMember14CCSlot0
-    sub_101630C0
+    game_101630C0
       TargetMenu_NoOpE
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
       TextInputFiles_NextLine
     Gfx_SetDefault2DStates  (above)
     MenuMng_UpdateForSceneState
@@ -8346,8 +8346,8 @@ Frame_Render
       NetCellFont_ClearGlobalLists2150And2154
         NetCellFont_ClearAllAndNotifyOwner
       TextInputFiles_RunPairB
-        sub_10311386  (above)
-        sub_103113D3  (above)
+        game_10311386  (above)
+        game_103113D3  (above)
       TextInputFiles_RunPairA  (above)
       Menu_CallSlot30ForEachEntry
       ActorHandle_Resolve  (above)
@@ -8380,7 +8380,7 @@ Frame_Render
       YkWindows_CloseIfAt14
         YkWindows_Close
     NetCellFont_GetHead  (above)
-    sub_10126520  (above)
+    game_10126520  (above)
     Menu_RemoveAndFreeItem  (above)
     NetCellFont_RemoveMatching  (above)
     NetCellFont_PushBack  (above)
@@ -8401,51 +8401,51 @@ Frame_Render
     TargetMenu_MenuGetItemRect
       NetCellFont_GetRect
         Menu_GetNormalizedPos
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
     TargetMenu_MenuGetLayoutWord
       TargetMenu_ResolveLayoutIndex  (above)
       Menu_GetWordPtrAtA0  (above)
     Menu_SetPanelWord2A
     Menu_NextVisibleItem  (above)
     Menu_PositionWindow  (above)
-    sub_10125360
+    game_10125360
       Menu_GetStateB4  (above)
       Cursor_SetVisible  (above)
       NetCellFont_UpdateHoldState5
         NetCellFont_TestCommand36CF60  (above)
         FontGlyphCache_IsStateTwo  (above)
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         LobbyUi_GetGlobalDword
       NetCellFont_UpdateHoldState4
         FontGlyphCache_IsStateTwo  (above)
         NetCellFont_TestCommand36CF60  (above)
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       TargetMenu_MenuTest48OrStateB4  (above)
       Cursor_SetModeFromMenuActive
         Menu_HasFocusedItem  (above)
       Menu_GetFocusedItem  (above)
       TargetMenu_SetNormalizedPos
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
       NetCellFont_TestCommand36CF60  (above)
       unknown_libname_89
         Menu_HasFocusedItem  (above)
       NetCellFont_HitTest  (above)
-      sub_102347D0
-        sub_10311C2C  (above)
+      game_102347D0
+        game_10311C2C  (above)
       Target_GetCachedIfValid  (above)
       ActorHandle_Resolve  (above)
       XiControlActor_SetAutoRunning
         ActorHandle_Resolve  (above)
         ChatLog_AddMessage9Code379
-        sub_100814F0  (above)
+        game_100814F0  (above)
       FontGlyphCache_IsStateTwo  (above)
       Cursor_GetField98
       Cursor_GetField94
       Cursor_GetNormalizedDeltaY
-      sub_10125FE0
+      game_10125FE0
         FontGlyphCache_IsStateTwo  (above)
         Cursor_GetNormalizedDeltaY  (above)
       Menu_HandleEvent  (above)
@@ -8458,7 +8458,7 @@ Frame_Render
         NetCellFont_NextActiveValue  (above)
       NetCellFont_NoOpB
       MenuPanels_ComputeClampedIndex
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       Cursor_HasTargetHover
         Target_PickNearestToPoint
       CDx::SetHardwareCursor
@@ -8469,15 +8469,15 @@ Frame_Render
     MenuPanels_IsDone
     TargetMenu_IsField8Zero
     Camera_GetFrameScale  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
     NetCellFont_FindFreeEntry  (above)
     MenuPanels_CallPanel1021F240And102203B0
-      sub_1021F240
+      game_1021F240
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         MenuPanels_SetPanelMetricsByKind
       TargetMenu_MenuTest48OrStateB4  (above)
-      sub_102203B0
+      game_102203B0
         MenuPanels_DrawPanelForActor
         ActerBuff_DrawNearby
         MenuPanels_DrawStrongholdPanel
@@ -8489,10 +8489,10 @@ Frame_Render
         Mat4_PostRotateZ
         Mat4_PostRotateX
         Menu_GetTableEntry
-        sub_1011FF70
+        game_1011FF70
         Mat4_TransformVec4  (above)
-        sub_10311C2C  (above)
-        sub_1011FB60  (above)
+        game_10311C2C  (above)
+        game_1011FB60  (above)
         ActorHandle_Resolve  (above)
         Acter_ActerTestEE120
         NetCellFont_GetActiveBlock3AE98
@@ -8529,17 +8529,17 @@ Frame_Render
       Camera_GetField38
       NetCellFont_FindTimerKind10
       MenuPanels_SetTimerSeconds
-    sub_10222DF0
+    game_10222DF0
       Camera_GetField38  (above)
-    sub_10226540
+    game_10226540
       Camera_GetField38  (above)
     Menu_GetPanelByte0D
     IsEvent  (above)
     Menu_FindByFlags38  (above)
-    sub_101602F0
+    game_101602F0
       MenuMng_GetOffsetX
       MenuMng_GetOffsetY
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
     Menu_SetPanelWord28
     MenuPanels_CallPanel1021EF10
       MenuPanels_SetFlagDAndField1C
@@ -8551,12 +8551,12 @@ Frame_Render
       EventTextBlock_DrawBgRect
         Gfx_DrawSolidRect2D
       TextInputFiles_DrawTextBlockOnce
-        sub_1019ED50
+        game_1019ED50
         TextInputFiles_GetScaleTimes0
         TextInputFiles_GetScaleTimes310
         TextInputFiles_DrawTextLines
     NetCellFont_CursorUpdateEdgeAxes
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
       Settings_GetValue  (above)
       FontGlyphCache_IsStateTwo  (above)
       Camera_GetFrameScale  (above)
@@ -8569,46 +8569,46 @@ Frame_Render
     Menu_NextVisibleItem  (above)
     Menu_IsStateB4Eq1  (above)
     Menu_DrawWindowItems
-      sub_10117520
+      game_10117520
         NetCellFont_GetHead  (above)
-        sub_10126520  (above)
+        game_10126520  (above)
         NetCellFont_AttachTo  (above)
         NetCellFont_StepFrameCycle  (above)
         NetCellFont_ComputeOffsets  (above)
         NetCellFont_UpdateState  (above)
         NetCellFont_UpdateLayout  (above)
         Camera_GetFrameScale  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
       NetCellFont_GetHead  (above)
       NetCellFont_SetViewport
         CDx::GetRenderTargetTop  (above)
         CDx::SetViewport  (above)
-      sub_10126520  (above)
+      game_10126520  (above)
       Menu_IsFocusedItem  (above)
       NetCellFont_DrawUnscaled
-        sub_10119FB0
-      sub_1011FC80  (above)
+        game_10119FB0
+      game_1011FC80  (above)
       TargetMenu_MenuTestItem34Or6B
-      sub_10311C2C  (above)
-      sub_10234A90
-        sub_10311C2C  (above)
+      game_10311C2C  (above)
+      game_10234A90
+        game_10311C2C  (above)
         Menu_GetGlobalTableEntry
         Cell_DrawFirstStretched
-      sub_1011A250
+      game_1011A250
         Menu_GetNormalizedPos  (above)
-        sub_10234A90  (above)
-        sub_10311C2C  (above)
-      sub_1011A150
-        sub_1011FC80  (above)
-        sub_10311C2C  (above)
+        game_10234A90  (above)
+        game_10311C2C  (above)
+      game_1011A150
+        game_1011FC80  (above)
+        game_10311C2C  (above)
       Gfx_ApplyViewport1B70
         CDx::SetViewport  (above)
       TargetMenu_GetScaledPos80
       MenuPanels_DrawProgressBar
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         Menu_GetTableEntry  (above)
         Cell_DrawFirstStretched  (above)
-    sub_10124EB0
+    game_10124EB0
       CDx::SetCursorShape  (above)
       CDx::ShowCursor  (above)
       MathVector_ReturnThis  (above)
@@ -8617,9 +8617,9 @@ Frame_Render
       Mat4_PostScale
         Mat4_SetIdentity  (above)
         Mat4_PostMultiply  (above)
-      sub_1011FF70  (above)
+      game_1011FF70  (above)
       MathVector_Nop  (above)
-      sub_1011FC80  (above)
+      game_1011FC80  (above)
     Gfx_DisableFogAndAlphaBlend  (above)
   Gfx_DisableFogAndAlphaBlend  (above)
   FontGlyphCache_GetCounterBlock
@@ -8640,29 +8640,29 @@ Frame_Render
         Vec4_Set
         Gfx_ProjectWorldToClip  (above)
         Gfx_NdcToScreen
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         MathVector_Nop  (above)
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
-      sub_1011FB60  (above)
-  sub_10018850
-    sub_103134C7  (above)
+      game_10311C2C  (above)
+      game_1011FB60  (above)
+  game_10018850
+    game_103134C7  (above)
     CXiMovie::Create
-      sub_10311FDE  (above)
-      sub_10311F30  (above)
+      game_10311FDE  (above)
+      game_10311F30  (above)
       Mem_AllocDefault  (above)
       CXiMovie::Construct
       MenuPanels_InitAndMarkReady
-        sub_1021D9B0
+        game_1021D9B0
       CXiMovie_DestroyGlobal
         MenuPanels_ReleaseReturnTrue
-    sub_10311FDE  (above)
-    sub_10311F30  (above)
+    game_10311FDE  (above)
+    game_10311F30  (above)
     LobbyThread_QueueStreamFile
       Allocator_Generic  (above)
-      sub_10311FDE  (above)
-      sub_1031217F  (above)
-      sub_10311F30  (above)
+      game_10311FDE  (above)
+      game_1031217F  (above)
+      game_10311F30  (above)
       LobbyThread_PushCmd
       operator_delete  (above)
     CXiMovie::UpdateIfPresent
@@ -8670,18 +8670,18 @@ Frame_Render
       LobbyThread_PushCmd  (above)
     CXiMovie::GetDoubleField8
     OpeningSubtitle_UpdateRangeEntries
-      sub_10311C2C  (above)
-      sub_1011FB60  (above)
+      game_10311C2C  (above)
+      game_1011FB60  (above)
     CXiMovie::GetField4
     CXiMovie_DestroyGlobal  (above)
     OpeningSubtitle_Reset  (above)
     Input_IsCursorActive  (above)
     Camera_GetFrameScale  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
   Cursor_UpdateTimer
     Menu_GetStateB4  (above)
     Camera_GetFrameScale  (above)
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
   CDx_CompositeUITarget
     CDx_SetDefaultRenderState  (above)
     CDx::DrawScreenQuadAtDepth  (above)
@@ -8691,31 +8691,31 @@ Frame_Render
     CDx::DrawPrimitiveUP  (above)
   CXiMovie::DrawFrame
     Movie_Update
-      sub_1021DD50
+      game_1021DD50
     Movie_GetCurrentTexture
-    sub_10311C2C  (above)
+    game_10311C2C  (above)
     CDx_SetDefaultRenderState  (above)
     CDx::DrawPrimitiveUP  (above)
-  sub_101D0C70
+  game_101D0C70
     NetCellFont_TestCommand36CF60  (above)
     JpegScreenshot_TriggerOnSceneState60
       Menu_IsStateB4Eq1  (above)
       MusicTrack_SetVolumeId0016
         CMoResource::FindByTypeAndId  (above)
-        sub_10311C2C  (above)
+        game_10311C2C  (above)
         SoundVolume_SetVolumeScalar  (above)
     Menu_IsStateB4Eq1  (above)
     TextInputFiles_FileMngCall101C09B0
       TextInputFiles_CreateDirAndWait
-        sub_1030FED0
+        game_1030FED0
         TextInputFiles_WaitEvent18At8  (above)
-        sub_10311365
+        game_10311365
         TextInputFiles_SignalMember8  (above)
-        sub_1031135A
+        game_1031135A
     JpegScreenshot_TakeScreenshot
-      sub_100DBE10  (above)
+      game_100DBE10  (above)
       YkCommon_TimeToTmWrap28Years  (above)
-      sub_10311FF1  (above)
+      game_10311FF1  (above)
       ntGameTimeGet  (above)
       Time_ModMul3CDiv90
       JpegScreenshot_SaveJpeg512x382
@@ -8724,7 +8724,7 @@ Frame_Render
         YkJpeg::CaptureAndEncode
         JpegScreenshot_WriteWithFileMngA
         YkJpeg::Release
-        thunk_sub_10028AA0  (above)
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
       JpegScreenshot_SaveJpegScreenSize
         Camera_GetWord10
         Camera_GetWord12
@@ -8733,9 +8733,9 @@ Frame_Render
         YkJpeg::CaptureAndEncode  (above)
         JpegScreenshot_WriteWithFileMngB
         YkJpeg::Release  (above)
-        thunk_sub_10028AA0  (above)
+        thunk_Mem_FreeBlockMergeNeighbours_as_v0  (above)
     TargetMenu_GetMessageFwd  (above)
-    sub_10311FF1  (above)
+    game_10311FF1  (above)
     ChatLog_AddTextCode379
       ChatLog_AddMessage  (above)
     SetMusicTrackVolume_Tag0004  (above)
@@ -8751,13 +8751,13 @@ Frame_Render
         FileMng_ResolveOrExit  (above)
         Font_AllocHighResImage
         Mem_AllocDefault  (above)
-        sub_10026890
+        game_10026890
         TexObj_CreateAndUpload  (above)
         Tex_LoadSurfaceFromDatFile
         Font_ReleaseHighResTexture
       Font_IsHighResTextureLoaded
     Font_DrawString
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
       Font_DecodeNextChar
         Font_IsSingleByte
         Sjis_ToJisIndex
@@ -8780,7 +8780,7 @@ Frame_Render
         MathVector_Length3
         Vec3_Copy  (above)
       Camera_GetFrameScale  (above)
-      sub_10311C2C  (above)
+      game_10311C2C  (above)
       Rand_SignedUniformTimes
         RandAndHeader_Next
     Camera_DiffersFromSaved
@@ -8794,15 +8794,15 @@ Frame_Render
         Mat4_PostRotateY  (above)
         Mat4_PostRotateX  (above)
         Mat4_TransformNormalInPlace
-        sub_100274B0
+        game_100274B0
         Vec3_Add_10026FA0
-        sub_102D7FF9
+        game_102D7FF9
         Occlusion_AreAll16FloatsAccepted
         Mat4_Copy  (above)
         MathVector_Nop  (above)
       Vec3_Copy  (above)
     CDx::SetTransform  (above)
-    sub_100150D0  (above)
+    game_100150D0  (above)
     Camera_BuildProjection
       Camera_BuildPerspectiveFov
         D3DXMatrixPerspectiveFovLH_static
@@ -8820,8 +8820,8 @@ Frame_Render
       CDx::GetRenderTargetTop  (above)
   GammaRamp_ApplyIfChanged
     GammaRamp_BuildRamps
-      sub_100171B0
-        sub_10312C90
-        sub_10311C2C  (above)
+      game_100171B0
+        game_10312C90
+        game_10311C2C  (above)
 ```
 

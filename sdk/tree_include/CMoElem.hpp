@@ -6,27 +6,27 @@
 class XI_API CMoElem {
 public:
     static char ** __cdecl GetRuntimeClass_variant0();  // 0x100353C0
-    void Slot13DoNothing(int a1);  // 0x10036A80
-    void Slot14DoNothing(int a1);  // 0x10036A90
+    void Slot13DoNothing(int arg1);  // 0x10036A80
+    void Slot14DoNothing(int arg1);  // 0x10036A90
     int Slot15ReturnZero();  // 0x10036AA0
     void Slot19DoNothing();  // 0x10036AB0
     static char ** __cdecl GetRuntimeClass_variant1();  // 0x1003E690
     static char ** __cdecl GetRuntimeClass_variant2();  // 0x10041000
-    BOOL CMoElemFamily_IsKind0(int a1);  // 0x10041120
+    BOOL CMoElemFamily_IsKind0(int arg1);  // 0x10041120
     static char ** __cdecl GetRuntimeClass_variant3();  // 0x100426A0
     static char ** __cdecl GetRuntimeClass_variant4();  // 0x100426D0
     static char ** __cdecl GetRuntimeClass_variant5();  // 0x10043190
     static char ** __cdecl GetRuntimeClass_variant6();  // 0x10043570
     static char ** __cdecl GetRuntimeClass_variant7();  // 0x10043700
     static char ** __cdecl GetRuntimeClass_variant8();  // 0x10044880
-    static undefined8 __thiscall Constructor(void * self);  // 0x10044890
-    int * ScalarDeletingDtor(char a2);  // 0x10044950
+    static uint64_t __thiscall Constructor(void * self);  // 0x10044890
+    int * ScalarDeletingDtor(char arg1);  // 0x10044950
     char CMoElemFamily_SharedCleanup();  // 0x10044970
     static unsigned char __thiscall IsSourceAt0FCTest(void * self);  // 0x10044AC0
-    static undefined4 __thiscall AdvanceTimer(void * self);  // 0x10044AE0
-    static int __cdecl InvertInPlace(float * param_1);  // 0x10045800
-    static undefined4 __thiscall CheckAt138ThenCall(void * self);  // 0x100458F0
-    static undefined4 __thiscall PrepareDraw(void * self);  // 0x10045A40
+    static bits32 __thiscall AdvanceTimer(void * self);  // 0x10044AE0
+    static int __cdecl InvertInPlace(float * arg1);  // 0x10045800
+    static bits32 __thiscall CheckAt138ThenCall(void * self);  // 0x100458F0
+    static bits32 __thiscall PrepareDraw(void * self);  // 0x10045A40
     void Slot18DoNothing();  // 0x100472E0
     static int __thiscall GetActiveField0A4(void * self);  // 0x100473F0
     static int __thiscall GetAddr78(void * self);  // 0x10047450

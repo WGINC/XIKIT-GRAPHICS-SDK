@@ -7,24 +7,24 @@
 XI_API void __cdecl SetMusicTrackVolume_C(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104637e8 == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_104637E8 == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
                        0x31303030);
-    DAT_104637e8 = (undefined4 *)*(int *)uVar1;
-    if (DAT_104637e8 == (undefined4 *)0x0) {
+    g_104637E8 = (bits32 *)*(int *)u1;
+    if (g_104637E8 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_104637e8;
+  self_ = (void *)*g_104637E8;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
@@ -34,55 +34,55 @@ XI_API void __cdecl SetMusicTrackVolume_C(void)
 XI_API void __cdecl SetMusicTrackVolume_A(void)
 {
   void *self_;
-  int *piVar1;
-  int64_t lVar2;
+  int *p1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104637d8 == (undefined4 *)0x0) {
-    piVar1 = (int *)orig::CMoResource_FindByTypeAndId_v2
-                              ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_104637D8 == (bits32 *)0x0) {
+    p1 = (int *)orig::CMoResource_FindByTypeAndId_v2
+                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u1,0x3d,
                                0x32303030);
-    DAT_104637d8 = (undefined4 *)*piVar1;
-    if (DAT_104637d8 == (undefined4 *)0x0) {
+    g_104637D8 = (bits32 *)*p1;
+    if (g_104637D8 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_104637d8;
+  self_ = (void *)*g_104637D8;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar_v1(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar_v1(self_,0x40,(int)i1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10037BF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SetMusicTrackVolume_B(void)
+XI_API bits32 __cdecl SetMusicTrackVolume_B(void)
 {
   void *self_;
-  undefined4 *puVar1;
-  uint64_t uVar2;
-  int64_t lVar3;
+  bits32 *p1;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104627d0 == (undefined4 *)0x0) {
-    uVar2 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,0x33303030);
-    DAT_104627d0 = (undefined4 *)*(int *)uVar2;
-    if (DAT_104627d0 == (undefined4 *)0x0) {
-      return (undefined4 *)0;
+  if (g_104627D0 == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x33303030);
+    g_104627D0 = (bits32 *)*(int *)u1;
+    if (g_104627D0 == (bits32 *)0x0) {
+      return (bits32 *)0;
     }
   }
-  self_ = (void *)*DAT_104627d0;
-  puVar1 = DAT_104627d0;
+  self_ = (void *)*g_104627D0;
+  p1 = g_104627D0;
   if (self_ != (void *)0x0) {
-    lVar3 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    uVar2 = orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar3);
-    puVar1 = (undefined4 *)uVar2;
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    u1 = orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
+    p1 = (bits32 *)u1;
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10037C50
@@ -90,24 +90,24 @@ XI_API undefined4 __cdecl SetMusicTrackVolume_B(void)
 XI_API void __cdecl SetMusicTrackVolume_Tag0004(void)
 {
   void *self_;
-  int *piVar1;
-  int64_t lVar2;
+  int *p1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_10462588 == (undefined4 *)0x0) {
-    piVar1 = (int *)orig::CMoResource_FindByTypeAndId_v2
-                              ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_10462588 == (bits32 *)0x0) {
+    p1 = (int *)orig::CMoResource_FindByTypeAndId_v2
+                              ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u1,0x3d,
                                0x34303030);
-    DAT_10462588 = (undefined4 *)*piVar1;
-    if (DAT_10462588 == (undefined4 *)0x0) {
+    g_10462588 = (bits32 *)*p1;
+    if (g_10462588 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_10462588;
+  self_ = (void *)*g_10462588;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar_v1(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar_v1(self_,0x40,(int)i1);
   }
   return;
 }
@@ -117,24 +117,24 @@ XI_API void __cdecl SetMusicTrackVolume_Tag0004(void)
 XI_API void __cdecl MusicTrack_SetVolumeId0009(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_1046279c == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_1046279C == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
                        0x39303030);
-    DAT_1046279c = (undefined4 *)*(int *)uVar1;
-    if (DAT_1046279c == (undefined4 *)0x0) {
+    g_1046279C = (bits32 *)*(int *)u1;
+    if (g_1046279C == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_1046279c;
+  self_ = (void *)*g_1046279C;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
@@ -144,23 +144,23 @@ XI_API void __cdecl MusicTrack_SetVolumeId0009(void)
 XI_API void __cdecl MusicTrack_SetVolumeId0010(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104637e0 == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,0x30313030);
-    DAT_104637e0 = (undefined4 *)*(int *)uVar1;
-    if (DAT_104637e0 == (undefined4 *)0x0) {
+  if (g_104637E0 == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x30313030);
+    g_104637E0 = (bits32 *)*(int *)u1;
+    if (g_104637E0 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_104637e0;
+  self_ = (void *)*g_104637E0;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
@@ -170,24 +170,24 @@ XI_API void __cdecl MusicTrack_SetVolumeId0010(void)
 XI_API void __cdecl MusicTrack_SetVolumeId0011(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104627cc == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_104627CC == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
                        0x31313030);
-    DAT_104627cc = (undefined4 *)*(int *)uVar1;
-    if (DAT_104627cc == (undefined4 *)0x0) {
+    g_104627CC = (bits32 *)*(int *)u1;
+    if (g_104627CC == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_104627cc;
+  self_ = (void *)*g_104627CC;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
@@ -197,24 +197,24 @@ XI_API void __cdecl MusicTrack_SetVolumeId0011(void)
 XI_API void __cdecl MusicTrack_SetVolumeId0013(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_10462690 == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,
+  if (g_10462690 == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,
                        0x33313030);
-    DAT_10462690 = (undefined4 *)*(int *)uVar1;
-    if (DAT_10462690 == (undefined4 *)0x0) {
+    g_10462690 = (bits32 *)*(int *)u1;
+    if (g_10462690 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_10462690;
+  self_ = (void *)*g_10462690;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
@@ -224,60 +224,60 @@ XI_API void __cdecl MusicTrack_SetVolumeId0013(void)
 XI_API void __cdecl MusicTrack_SetVolumeId0016(void)
 {
   void *self_;
-  uint64_t uVar1;
-  int64_t lVar2;
+  uint64_t u1;
+  int64_t i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  uint8_t  (&u2)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
   
-  if (DAT_104627c8 == (undefined4 *)0x0) {
-    uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                      ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),local_4,0x3d,0x36313030);
-    DAT_104627c8 = (undefined4 *)*(int *)uVar1;
-    if (DAT_104627c8 == (undefined4 *)0x0) {
+  if (g_104627C8 == (bits32 *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1
+                      ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),u2,0x3d,0x36313030);
+    g_104627C8 = (bits32 *)*(int *)u1;
+    if (g_104627C8 == (bits32 *)0x0) {
       return;
     }
   }
-  self_ = (void *)*DAT_104627c8;
+  self_ = (void *)*g_104627C8;
   if (self_ != (void *)0x0) {
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351700 * (long double)127.0f);
-    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351700 * 127.0f);
+    orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100380F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl MusicFont_Create(uint32_t param_1, undefined4 param_2, undefined4 param_3)
+XI_API void __cdecl MusicFont_Create(uint32_t arg1, bits32 arg2, bits32 arg3)
 {
   void *self_;
-  undefined4 *this_00;
-  uint64_t uVar1;
-  int64_t lVar2;
+  bits32 *obj1;
+  uint64_t u1;
+  int64_t i1;
   
-  if (DAT_10463938 == (undefined4 *)0x0) {
-    uVar1 = orig::Mem_AllocFromArea_v1(0x40,4);
-    this_00 = (undefined4 *)uVar1;
-    orig::CMoTask_ResetFields_v1(this_00);
+  if (g_10463938 == (bits32 *)0x0) {
+    u1 = orig::Mem_AllocFromArea_v1(0x40,4);
+    obj1 = (bits32 *)u1;
+    orig::CMoTask_ResetFields_v1(obj1);
     g_resourcesDirty_as_v0 = 1;
-    if (this_00 != (undefined4 *)0x0) {
-      orig::CMoTask_Constructor_v1(this_00);
-      *this_00 = &PTR_CMoTask_GetRuntimeClass_variant12_1032a9bc;
-      DAT_10463938 = this_00;
-      uVar1 = orig::CMoResource_FindByTypeAndId_v1
-                        ((void *)**(undefined4 **)(g_pMeshResourceMng + 0x40008),&param_1,0x3d,
-                         (param_1 & 0xff00 | param_1 << 0x10 | param_1 >> 0x10 & 0xff) << 8 |
-                         param_1 >> 0x18);
-      if (((undefined4 *)*(int *)uVar1 != (undefined4 *)0x0) &&
-         (self_ = *(void **)*(int *)uVar1, self_ != (void *)0x0)) {
-        lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351710 * (long double)param_2 * (long double)127.0f);
-        uVar1 = orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)lVar2);
-        this_00[0xe] = (int)uVar1;
-        this_00[0xd] = 0x42f00000;
-        *(uint8_t *)(this_00 + 0xf) = (uint8_t)param_3;
+    if (obj1 != (bits32 *)0x0) {
+      orig::CMoTask_Constructor_v1(obj1);
+      *obj1 = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032A9BC;
+      g_10463938 = obj1;
+      u1 = orig::CMoResource_FindByTypeAndId_v1
+                        ((void *)**(bits32 **)(g_pMeshResourceMng + 0x40008),&arg1,0x3d,
+                         (arg1 & 0xff00 | arg1 << 0x10 | arg1 >> 0x10 & 0xff) << 8 |
+                         arg1 >> 0x18);
+      if (((bits32 *)*(int *)u1 != (bits32 *)0x0) &&
+         (self_ = *(void **)*(int *)u1, self_ != (void *)0x0)) {
+        i1 = XI_CALL_ST0(0x10311C2Cu)((long double)g_10351710 * (long double)arg2 * (long double)127.0f);
+        u1 = orig::SoundVolume_SetVolumeScalar(self_,0x40,(int)i1);
+        obj1[0xe] = (int)u1;
+        obj1[0xd] = 0x42f00000;
+        *(uint8_t *)(obj1 + 0xf) = (uint8_t)arg3;
         return;
       }
-      this_00[0xd] = 0;
-      *(uint8_t *)(this_00 + 0xf) = (uint8_t)param_3;
+      obj1[0xd] = 0;
+      *(uint8_t *)(obj1 + 0xf) = (uint8_t)arg3;
     }
   }
   return;
@@ -285,46 +285,46 @@ XI_API void __cdecl MusicFont_Create(uint32_t param_1, undefined4 param_2, undef
 
 // FUNCTION: FFXIMAIN 0x100382A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((cdecl, regparm(1))) Music_LoadTrackIfRunning(undefined4 xi_eax, undefined4 param_1, undefined4 param_2)
+XI_API void __attribute__((cdecl, regparm(1))) Music_LoadTrackIfRunning(bits32 xi_eax, bits32 arg2, bits32 arg3)
 {
-  if (DAT_1046393c != 0) {
-    orig::LobbyThread_QueueMusicFile(param_1,param_2,0);
+  if (g_1046393C != 0) {
+    orig::LobbyThread_QueueMusicFile(arg2,arg3,0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10038330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl MusicFont_QueueSoundCmdIfChannelsBelowLimit(int param_1, float * param_2, int param_3)
+XI_API bits32 __cdecl MusicFont_QueueSoundCmdIfChannelsBelowLimit(int arg1, float * arg2, int arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
-  int iVar3;
-  int64_t lVar4;
+  uint32_t u1;
+  int i1;
+  int i2;
+  int64_t i3;
   
-  iVar3 = DAT_10456a94;
-  if (DAT_1046393c_as_v0 != (void *)0x0) {
-    if (param_3 < 0) {
-      param_3 = 0;
+  i2 = g_10456A94;
+  if (g_1046393C_as_v0 != (void *)0x0) {
+    if (arg3 < 0) {
+      arg3 = 0;
     }
-    else if (0x7f < param_3) {
-      param_3 = 0x7f;
+    else if (0x7f < arg3) {
+      arg3 = 0x7f;
     }
-    uVar1 = orig::Acter_IsEvent(DAT_1046393c_as_v0);
-    if (((char)uVar1 != '\0') && (DAT_10463924 != '\0')) {
-      iVar3 = 0x14;
+    u1 = orig::Acter_IsEvent(g_1046393C_as_v0);
+    if (((char)u1 != '\0') && (g_10463924 != '\0')) {
+      i2 = 0x14;
     }
-    iVar2 = orig::LobbyThread_QueryChannels_v1(5,-1,-1);
-    if (iVar2 < iVar3) {
-      if ((*(int *)(param_1 + 8) == 0x8bf) || (*(int *)(param_1 + 8) == 0x80f)) {
-        if (DAT_104638f4_as_s8 != '\0') {
+    i1 = orig::LobbyThread_QueryChannels_v1(5,-1,-1);
+    if (i1 < i2) {
+      if ((*(int *)(arg1 + 8) == 0x8bf) || (*(int *)(arg1 + 8) == 0x80f)) {
+        if (g_104638F4_as_s8 != '\0') {
           return 0;
         }
-        DAT_104638f4_as_s8 = '\x01';
+        g_104638F4_as_s8 = '\x01';
       }
-      lVar4 = XI_CALL_ST0(0x10311C2Cu)((long double)*param_2);
-      uVar1 = orig::LobbyThread_QueueSoundCmd(DAT_1046393c_as_v0,(char *)param_1,(uint32_t)lVar4,param_3);
-      return uVar1;
+      i3 = XI_CALL_ST0(0x10311C2Cu)(*arg2);
+      u1 = orig::LobbyThread_QueueSoundCmd(g_1046393C_as_v0,(char *)arg1,(uint32_t)i3,arg3);
+      return u1;
     }
   }
   return 0xffffffff;
@@ -332,33 +332,33 @@ XI_API undefined4 __cdecl MusicFont_QueueSoundCmdIfChannelsBelowLimit(int param_
 
 // FUNCTION: FFXIMAIN 0x10038440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) LobbyThread_SendCmd3FromFloat(undefined4 xi_eax, undefined4 param_1, float * param_2, undefined4 param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) LobbyThread_SendCmd3FromFloat(bits32 xi_eax, bits32 arg2, float * arg3, bits32 arg4)
 {
-  int64_t lVar1;
+  int64_t i1;
   
-  if (DAT_1046393c != 0) {
-    lVar1 = XI_CALL_ST0(0x10311C2Cu)((long double)*param_2);
-    xi_eax = orig::LobbyThread_SendCmd3(param_1,(uint32_t)lVar1,param_3);
+  if (g_1046393C != 0) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(*arg3);
+    xi_eax = orig::LobbyThread_SendCmd3(arg2,(uint32_t)i1,arg4);
   }
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x10038470
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) Music_SetTrackVolume(undefined4 xi_eax, int param_1, int param_2, undefined4 param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) Music_SetTrackVolume(bits32 xi_eax, int arg2, int arg3, bits32 arg4)
 {
-  if (-1 < param_1) {
-    if (param_2 < 0) {
+  if (-1 < arg2) {
+    if (arg3 < 0) {
       xi_eax = 0;
     }
     else {
-      xi_eax = param_2;
-      if (0x7f < param_2) {
+      xi_eax = arg3;
+      if (0x7f < arg3) {
         xi_eax = 0x7f;
       }
     }
-    if (DAT_1046393c != 0) {
-      xi_eax = orig::LobbyThread_SendCmd4(param_1,xi_eax,param_3);
+    if (g_1046393C != 0) {
+      xi_eax = orig::LobbyThread_SendCmd4(arg2,xi_eax,arg4);
     }
   }
   return xi_eax;
@@ -366,49 +366,49 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) Music_SetTrackVolume(undefi
 
 // FUNCTION: FFXIMAIN 0x100384B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Font_QueueText(char * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __cdecl Font_QueueText(char * arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  uint32_t uVar4;
+  char c1;
+  char *p1;
+  int i1;
+  uint32_t u1;
   
-  if ((char)param_4 != '\0') {
-    (&dword_10463950_as_v0)[dword_1047B950] = 3;
-    (&DAT_10463951)[dword_1047B950] = (char)param_4;
-    dword_1047B950 = dword_1047B950 + 2;
+  if ((char)arg4 != '\0') {
+    (&g_10463950_as_v0)[g_1047B950] = 3;
+    (&g_10463951)[g_1047B950] = (char)arg4;
+    g_1047B950 = g_1047B950 + 2;
   }
-  *(uint32_t *)(&dword_10463950_as_v0 + dword_1047B950) = param_2;
-  *(uint32_t *)((int)&DAT_10463952 + dword_1047B950 + 2) = param_3;
-  pcVar2 = param_1;
+  *(uint32_t *)(&g_10463950_as_v0 + g_1047B950) = arg2;
+  *(uint32_t *)((int)&g_10463952 + g_1047B950 + 2) = arg3;
+  p1 = arg1;
   do {
-    cVar1 = *pcVar2;
-    pcVar2[(dword_1047B950 + (int)XI_GAME(0x10463958u)) - (int)param_1] = cVar1;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  uVar4 = 0xffffffff;
+    c1 = *p1;
+    p1[(g_1047B950 + (int)XI_GAME(0x10463958u)) - (int)arg1] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  u1 = 0xffffffff;
   do {
-    if (uVar4 == 0) break;
-    uVar4 = uVar4 - 1;
-    cVar1 = *param_1;
-    param_1 = param_1 + 1;
-  } while (cVar1 != '\0');
-  dword_1047B950 = dword_1047B950 + ~uVar4 + 9;
-  iVar3 = dword_1047B950;
-  ((uint8_t *)((&DAT_1046394f)))[dword_1047B950] = 1;
-  return iVar3;
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *arg1;
+    arg1 = arg1 + 1;
+  } while (c1 != '\0');
+  g_1047B950 = g_1047B950 + ~u1 + 9;
+  i1 = g_1047B950;
+  ((uint8_t *)((&g_1046394F)))[g_1047B950] = 1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10038520
 // GATE: PASS -- 100 trials, 12 returned normally, 1336 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 12
 XI_API int __cdecl Font_DrawPass(void)
 {
-  int *v0;
-  unsigned __int8 i;
-  int v2;
-  unsigned __int8 *v3;
-  char v4;
-  float v6;
+  int *p1;
+  unsigned char i;
+  int i1;
+  unsigned char *p2;
+  char c1;
+  float f1;
   orig::Font_BindGlyphTexture((int)g_pFontGlyphs);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
@@ -423,30 +423,30 @@ XI_API int __cdecl Font_DrawPass(void)
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
-  v0 = &dword_10463950;
-  *((_BYTE *)&dword_10463950 + dword_1047B950) = 2;
-  if ( (_BYTE)dword_10463950 != 2 )
+  p1 = &g_10463950;
+  *((uint8_t *)&g_10463950 + g_1047B950) = 2;
+  if ( (uint8_t)g_10463950 != 2 )
   {
     do
     {
-      for ( i = *(_BYTE *)v0; i != 1; v0 = (int *)(v3 + 1) )
+      for ( i = *(uint8_t *)p1; i != 1; p1 = (int *)(p2 + 1) )
       {
-        v6 = 1.0;
+        f1 = 1.0;
         if ( i == 3 )
         {
-          v2 = *((char *)v0 + 1);
-          v0 = (int *)((char *)v0 + 2);
-          v6 = (double)v2 * 0.25;
+          i1 = *((char *)p1 + 1);
+          p1 = (int *)((char *)p1 + 2);
+          f1 = (double)i1 * 0.25;
         }
-        v3 = orig::Font_DrawString((unsigned __int8 *)v0 + 8, *(float *)v0, *((float *)v0 + 1), v6);
-        i = v3[1];
+        p2 = orig::Font_DrawString((unsigned char *)p1 + 8, *(float *)p1, *((float *)p1 + 1), f1);
+        i = p2[1];
       }
-      v4 = *((_BYTE *)v0 + 1);
-      v0 = (int *)((char *)v0 + 1);
+      c1 = *((uint8_t *)p1 + 1);
+      p1 = (int *)((char *)p1 + 1);
     }
-    while ( v4 != 2 );
+    while ( c1 != 2 );
   }
-  dword_1047B950 = 0;
+  g_1047B950 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
   return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
@@ -454,103 +454,103 @@ XI_API int __cdecl Font_DrawPass(void)
 
 // FUNCTION: FFXIMAIN 0x10038720
 // GATE: PASS -- 100 trials, 24 returned normally, 174795 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 24
-XI_API unsigned __int8 * __cdecl Font_DrawString(unsigned __int8 *a1, float a2, float arg8, float a4)
+XI_API unsigned char * __cdecl Font_DrawString(unsigned char *arg1, float arg2, float arg8, float arg4)
 {
-  unsigned __int8 *v4;
-  bool v5; // zf
-  signed __int16 v6;
-  double v7;
-  int v8;
-  char *v9;
-  double v10;
-  double v11;
-  double v12;
+  unsigned char *p1;
+  bool b1; // zf
+  short i1;
+  double f1;
+  int i2;
+  char *p2;
+  double f2;
+  double f3;
+  double f4;
   alignas(16) unsigned char xi_frame[0x490];  // address-taken locals at their original offsets
-  float &v14 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  unsigned __int8 * &v15 = *reinterpret_cast<unsigned __int8 * *>(xi_frame + 0x8);
-  int &v16 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &v18 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  _DWORD (&v19)[2] = *reinterpret_cast<_DWORD (*)[2]>(xi_frame + 0x18);
-  int (&a3)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x20);
-  char &v21 = *reinterpret_cast<char *>(xi_frame + 0x2C);
-  float &v22 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &v23 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &v24 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &v25 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &v26 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float &v27 = *reinterpret_cast<float *>(xi_frame + 0x54);
-  float &v28 = *reinterpret_cast<float *>(xi_frame + 0x58);
-  float &v29 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &v30 = *reinterpret_cast<float *>(xi_frame + 0x6C);
-  float &v31 = *reinterpret_cast<float *>(xi_frame + 0x70);
-  float &v32 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  float &v33 = *reinterpret_cast<float *>(xi_frame + 0x78);
-  float &v34 = *reinterpret_cast<float *>(xi_frame + 0x88);
-  float &v35 = *reinterpret_cast<float *>(xi_frame + 0x8C);
+  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x4);
+  unsigned char * &p3 = *reinterpret_cast<unsigned char * *>(xi_frame + 0x8);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xC);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x10);
+  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x14);
+  uint32_t (&u1)[2] = *reinterpret_cast<uint32_t (*)[2]>(xi_frame + 0x18);
+  int (&i5)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x20);
+  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x2C);
+  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x34);
+  float &f8 = *reinterpret_cast<float *>(xi_frame + 0x38);
+  float &f9 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x40);
+  float &f10 = *reinterpret_cast<float *>(xi_frame + 0x50);
+  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x54);
+  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x58);
+  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x5C);
+  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x6C);
+  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x70);
+  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x74);
+  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x78);
+  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x88);
+  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x8C);
 
-  v16 = (__int64)a2;
-  v4 = a1;
-  v17 = (__int64)arg8;
-  v15 = a1;
-  v5 = *a1 == 0;
-  v18 = a4 * 16.0;
-  if ( !v5 )
+  i3 = (long long)arg2;
+  p1 = arg1;
+  i4 = (long long)arg8;
+  p3 = arg1;
+  b1 = *arg1 == 0;
+  f6 = arg4 * 16.0;
+  if ( !b1 )
   {
     do
     {
-      if ( *v4 == 10 )
+      if ( *p1 == 10 )
       {
-        v16 = (__int64)a2;
-        ++v4;
-        v17 = (__int64)((double)v17 + 16.0);
-        v15 = v4;
+        i3 = (long long)arg2;
+        ++p1;
+        i4 = (long long)((double)i4 + 16.0);
+        p3 = p1;
       }
       else
       {
-        v6 = orig::Font_DecodeNextChar(&v15);
-        v7 = (double)(v6 % 64);
-        v8 = 4;
-        v9 = &v21;
-        v10 = (double)(v6 / 64);
+        i1 = orig::Font_DecodeNextChar(&p3);
+        f1 = (double)(i1 % 64);
+        i2 = 4;
+        p2 = &c1;
+        f2 = (double)(i1 / 64);
         do
         {
-          *((_DWORD *)v9 - 1) = 0;
-          *(_DWORD *)v9 = 1065353216;
-          *((_DWORD *)v9 + 1) = -2139062144;
-          v9 += 28;
-          --v8;
+          *((uint32_t *)p2 - 1) = 0;
+          *(uint32_t *)p2 = 1065353216;
+          *((uint32_t *)p2 + 1) = -2139062144;
+          p2 += 28;
+          --i2;
         }
-        while ( v8 != 0 );
-        v11 = (double)v16;
-        v19[0] = 0;
-        v14 = v11;
-        v19[1] = 0;
-        v28 = v11 - 0.5;
-        *(float *)a3 = v28;
-        v32 = v14 + v18 - 0.5;
-        v24 = v32;
-        v12 = (double)v17;
-        *(float *)&v25 = v12 - 0.5;
-        a3[1] = v25;
-        v33 = v12 + v18 - 0.5;
-        v29 = v33;
-        v30 = v7 * 0.015625;
-        v22 = v30;
-        v34 = (v7 + 1.0) * 0.015625;
-        v26 = v34;
-        v27 = 0.0078125 * v10;
-        v23 = v27;
-        v35 = (v10 + 1.0) * 0.0078125;
-        v31 = v35;
-        orig::Font_AddGlyphAdvance(v6, v19);
-        v16 = (__int64)((double)v19[0] * a4 + v14);
+        while ( i2 != 0 );
+        f3 = (double)i3;
+        u1[0] = 0;
+        f5 = f3;
+        u1[1] = 0;
+        f12 = f3 - 0.5;
+        *(float *)i5 = f12;
+        f16 = f5 + f6 - 0.5;
+        f9 = f16;
+        f4 = (double)i4;
+        *(float *)&i6 = f4 - 0.5;
+        i5[1] = i6;
+        f17 = f4 + f6 - 0.5;
+        f13 = f17;
+        f14 = f1 * 0.015625;
+        f7 = f14;
+        f18 = (f1 + 1.0) * 0.015625;
+        f10 = f18;
+        f11 = 0.0078125 * f2;
+        f8 = f11;
+        f19 = (f2 + 1.0) * 0.0078125;
+        f15 = f19;
+        orig::Font_AddGlyphAdvance(i1, u1);
+        i3 = (long long)((double)u1[0] * arg4 + f5);
         (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)a3, 28);
-        v4 = v15;
+        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i5, 28);
+        p1 = p3;
       }
     }
-    while ( *v4 != 0 );
+    while ( *p1 != 0 );
   }
-  return v4;
+  return p1;
 }

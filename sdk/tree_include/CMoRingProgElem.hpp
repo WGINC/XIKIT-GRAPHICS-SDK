@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoRingProgElem {
 public:
-    static undefined8 __thiscall Ctor(void * self);  // 0x10052F80
+    static uint64_t __thiscall Ctor(void * self);  // 0x10052F80
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x190];

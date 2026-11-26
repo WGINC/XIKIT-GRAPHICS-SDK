@@ -4,15 +4,15 @@
 
 // FUNCTION: FFXIMAIN 0x10284F50
 // GATE: PASS -- 100 trials, 21 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 21
-XI_API undefined4 __cdecl SqmoChannel_Evaluate(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqmoChannel_Evaluate(int arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (*(code **)(param_1 + 0x14) == (code *)0x0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqMotion_s_103b79a8,0x48);
-    orig::sqDebugPrintf_v1(g_103B7974,param_1,*(uint32_t *)param_1);
+  if (*(untyped_fn **)(arg1 + 0x14) == (untyped_fn *)0x0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqMotion_s_103B79A8,0x48);
+    orig::sqDebugPrintf_v1(g_103B7974,arg1,*(uint32_t *)arg1);
     return 0;
   }
-  uVar1 = (**(code **)(param_1 + 0x14))(param_1,param_2);
-  return uVar1;
+  u1 = (**(untyped_fn **)(arg1 + 0x14))(arg1,arg2);
+  return u1;
 }

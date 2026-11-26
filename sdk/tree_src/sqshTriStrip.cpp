@@ -4,111 +4,111 @@
 
 // FUNCTION: FFXIMAIN 0x102AA2D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqshTriStrip_Create(void)
+XI_API bits32 * __cdecl SqshTriStrip_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x60,s_C__dev_dancer_modules_sqShape_sr_103be980,0x28);
-  orig::SqshTriStrip_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x60,str_C__dev_dancer_modules_sqShape_sr_103BE980,0x28);
+  orig::SqshTriStrip_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102AA2F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqshTriStrip_Init(undefined4 * param_1)
+XI_API void __cdecl SqshTriStrip_Init(bits32 * arg1)
 {
-  *param_1 = 0xa0009;
-  param_1[2] = &LAB_102aa360;
-  param_1[3] = XI_CODE(FUN_102aa370);
-  param_1[4] = XI_CODE(FUN_102aa420);
-  param_1[0xb] = &LAB_10291260;
-  param_1[0xc] = &LAB_102b3090;
-  orig::SqBounds_Reset(param_1 + 5);
-  param_1[0xd] = 0;
-  param_1[0xe] = XI_CODE(FUN_102aa580);
-  param_1[0xf] = &LAB_102aaa60;
-  param_1[0x10] = &LAB_102aade0;
-  param_1[0x11] = 0;
-  param_1[0x12] = 0;
-  param_1[0x13] = 0;
-  param_1[0x14] = 0;
-  param_1[0x15] = 0;
-  param_1[0x16] = 0;
-  param_1[0x17] = 0;
+  *arg1 = 0xa0009;
+  arg1[2] = &code_102AA360;
+  arg1[3] = XI_CODE(game_102AA370);
+  arg1[4] = XI_CODE(game_102AA420);
+  arg1[0xb] = &code_10291260;
+  arg1[0xc] = &code_102B3090;
+  orig::SqBounds_Reset(arg1 + 5);
+  arg1[0xd] = 0;
+  arg1[0xe] = XI_CODE(game_102AA580);
+  arg1[0xf] = &code_102AAA60;
+  arg1[0x10] = &code_102AADE0;
+  arg1[0x11] = 0;
+  arg1[0x12] = 0;
+  arg1[0x13] = 0;
+  arg1[0x14] = 0;
+  arg1[0x15] = 0;
+  arg1[0x16] = 0;
+  arg1[0x17] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102ABEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqshTriStrip_GetGlobal(void)
+XI_API bits32 __cdecl SqshTriStrip_GetGlobal(void)
 {
-  return DAT_109aaac0;
+  return g_109AAAC0;
 }
 
 // FUNCTION: FFXIMAIN 0x102ABEC0
 // GATE: PASS -- 100 trials, 22 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 22
-XI_API undefined4 __cdecl SqshTriStrip_ForEachTriangle(int param_1, uint8_t * param_2, undefined4 param_3)
+XI_API bits32 __cdecl SqshTriStrip_ForEachTriangle(int arg1, uint8_t * arg2, bits32 arg3)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
-  int iVar7;
-  int iStack_8;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int *p1;
+  int i6;
+  int i7;
   
-  iVar7 = 0;
-  iVar2 = **(int **)(param_1 + 0x48);
-  iVar3 = 0;
-  iVar5 = 0;
-  piVar6 = *(int **)(param_1 + 0x48) + 1;
-  DAT_109aaac0_as_s32 = 0;
-  for (; iVar2 != 0; iVar2 = iVar2 + -1) {
-    iVar1 = *piVar6;
-    piVar6 = piVar6 + 1;
-    if (iVar1 < 1) {
-      iVar1 = -iVar1;
-      iStack_8 = 0;
-      while (iVar1 != 0) {
-        if (iStack_8 == 0) {
-          iVar5 = *piVar6;
-          iVar4 = piVar6[1];
-          iStack_8 = 1;
-          piVar6 = piVar6 + 2;
-          iVar3 = -3;
+  i6 = 0;
+  i2 = **(int **)(arg1 + 0x48);
+  i3 = 0;
+  i5 = 0;
+  p1 = *(int **)(arg1 + 0x48) + 1;
+  g_109AAAC0_as_s32 = 0;
+  for (; i2 != 0; i2 = i2 + -1) {
+    i1 = *p1;
+    p1 = p1 + 1;
+    if (i1 < 1) {
+      i1 = -i1;
+      i7 = 0;
+      while (i1 != 0) {
+        if (i7 == 0) {
+          i5 = *p1;
+          i4 = p1[1];
+          i7 = 1;
+          p1 = p1 + 2;
+          i3 = -3;
         }
         else {
-          iVar4 = iVar7;
-          if (iStack_8 == 1) {
-            iVar4 = iVar3;
-            iVar5 = iVar7;
+          i4 = i6;
+          if (i7 == 1) {
+            i4 = i3;
+            i5 = i6;
           }
-          iVar3 = -1;
-          iStack_8 = -iStack_8;
+          i3 = -1;
+          i7 = -i7;
         }
-        iVar1 = iVar1 + iVar3;
-        iVar7 = *piVar6;
-        piVar6 = piVar6 + 1;
-        if (param_2 != (uint8_t *)0x0) {
-          (*(code *)param_2)(iVar5,iVar4,iVar7,param_3);
+        i1 = i1 + i3;
+        i6 = *p1;
+        p1 = p1 + 1;
+        if (arg2 != (uint8_t *)0x0) {
+          (*(untyped_fn *)arg2)(i5,i4,i6,arg3);
         }
-        DAT_109aaac0_as_s32 = DAT_109aaac0_as_s32 + 1;
-        iVar3 = iVar4;
+        g_109AAAC0_as_s32 = g_109AAAC0_as_s32 + 1;
+        i3 = i4;
       }
     }
     else {
       do {
-        iVar5 = *piVar6;
-        iVar3 = piVar6[1];
-        iVar1 = iVar1 + -3;
-        iVar7 = piVar6[2];
-        piVar6 = piVar6 + 3;
-        if (param_2 != (uint8_t *)0x0) {
-          (*(code *)param_2)(iVar5,iVar3,iVar7,param_3);
+        i5 = *p1;
+        i3 = p1[1];
+        i1 = i1 + -3;
+        i6 = p1[2];
+        p1 = p1 + 3;
+        if (arg2 != (uint8_t *)0x0) {
+          (*(untyped_fn *)arg2)(i5,i3,i6,arg3);
         }
-        DAT_109aaac0_as_s32 = DAT_109aaac0_as_s32 + 1;
-      } while (iVar1 != 0);
+        g_109AAAC0_as_s32 = g_109AAAC0_as_s32 + 1;
+      } while (i1 != 0);
     }
   }
   return 0;

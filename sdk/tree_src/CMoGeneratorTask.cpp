@@ -5,72 +5,72 @@
 
 // FUNCTION: FFXIMAIN 0x10053350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoGeneratorTask::ScalarDeletingDtor(char a2)
+uint32_t * CMoGeneratorTask::ScalarDeletingDtor(char arg1)
 {
   orig::CMoGeneratorTask_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
-  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+  return(uint32_t*)(&(*(CMoTask_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x10054220
 // GATE: PASS -- 100 trials, 94 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-undefined4 __thiscall CMoGeneratorTask::RunGeneratorAndFinish(void * self)
+bits32 __thiscall CMoGeneratorTask::RunGeneratorAndFinish(void * self)
 {
-  int *piVar1;
-  int iVar2;
-  void *this_00;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  int *p1;
+  int i1;
+  void *obj1;
+  uint32_t u1;
+  uint32_t u2;
   
-  piVar1 = *(int **)((int)self + 0x38);
-  if ((piVar1 != (int *)0x0) && (*piVar1 != 0)) {
-    if (piVar1 == (int *)0x0) {
-      iVar2 = 0;
+  p1 = *(int **)((int)self + 0x38);
+  if ((p1 != (int *)0x0) && (*p1 != 0)) {
+    if (p1 == (int *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar2 = *piVar1;
+      i1 = *p1;
     }
-    if ((*(uint8_t *)(iVar2 + 0xdc) & 1) != 0) {
-      return iVar2;
+    if ((*(uint8_t *)(i1 + 0xdc) & 1) != 0) {
+      return i1;
     }
   }
-  uVar3 = *(uint32_t *)((int)self + 0x14);
-  if (uVar3 == 0) {
+  u1 = *(uint32_t *)((int)self + 0x14);
+  if (u1 == 0) {
     if (*(uint32_t **)((int)self + 0x38) == (uint32_t *)0x0) {
-      this_00 = (void *)0x0;
+      obj1 = (void *)0x0;
     }
     else {
-      this_00 = (void *)**(uint32_t **)((int)self + 0x38);
+      obj1 = (void *)**(uint32_t **)((int)self + 0x38);
     }
-    uVar3 = orig::FUN_100496f0(this_00,0,this_00);
-    if ((char)uVar3 != '\0') {
+    u1 = orig::game_100496F0_as_v0(obj1,0,obj1);
+    if ((char)u1 != '\0') {
       *(uint8_t *)((int)self + 0x3c) = 1;
       if (*(uint32_t **)((int)self + 0x38) == (uint32_t *)0x0) {
-        uVar3 = 0;
+        u1 = 0;
       }
       else {
-        uVar3 = **(uint32_t **)((int)self + 0x38);
+        u1 = **(uint32_t **)((int)self + 0x38);
       }
-      if ((*(uint16_t *)(uVar3 + 0x18) & 0x7fff) == 0) {
-        ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
+      if ((*(uint16_t *)(u1 + 0x18) & 0x7fff) == 0) {
+        ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
         if (*(uint32_t **)((int)self + 0x38) == (uint32_t *)0x0) {
-          uVar3 = 0;
+          u1 = 0;
         }
         else {
-          uVar3 = **(uint32_t **)((int)self + 0x38);
+          u1 = **(uint32_t **)((int)self + 0x38);
         }
-        if ((*(uint8_t *)(uVar3 + 0x1a) >> 2 & 1) != 0) {
+        if ((*(uint8_t *)(u1 + 0x1a) >> 2 & 1) != 0) {
           if (*(int **)((int)self + 0x38) != (int *)0x0) {
-            uVar4 = orig::MoRes_FreeIfUnreferenced_v1(*(int **)(**(int **)((int)self + 0x38) + 0x14));
-            return uVar4;
+            u2 = orig::MoRes_FreeIfUnreferenced_v1(*(int **)(**(int **)((int)self + 0x38) + 0x14));
+            return u2;
           }
-          uVar3 = orig::MoRes_FreeIfUnreferenced_v1(unk_14);
+          u1 = orig::MoRes_FreeIfUnreferenced_v1(unk_14);
         }
       }
     }
   }
-  return uVar3;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10054460
@@ -82,8 +82,8 @@ int CMoGeneratorTask::Slot11GetCloneRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10054470
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoGeneratorTask::Slot12DeleteClone(int a1)
+int CMoGeneratorTask::Slot12DeleteClone(int arg1)
 {
   Vt_1032B680 * self = reinterpret_cast<Vt_1032B680 *>(this);  // byte-exact view for the rest
-  return (int)orig::CMoGeneratorClone_ScalarDeletingDtor((char *)self - 48, a1);
+  return (int)orig::CMoGeneratorClone_ScalarDeletingDtor((char *)self - 48, arg1);
 }

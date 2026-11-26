@@ -4,29 +4,29 @@
 
 // FUNCTION: FFXIMAIN 0x10025330
 // GATE: PASS -- 100 trials, 100 returned normally, 1778 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall ProjTex_BeginPass(_DWORD *self_, int *a2, int a3, _DWORD *a4)
+XI_API char __thiscall ProjTex_BeginPass(uint32_t *self_, int *arg2, int arg3, uint32_t *arg4)
 {
-  _DWORD v6[16];
-  orig::fn_10027990((Iostream_init *)v6);
+  uint32_t buf1[16];
+  orig::fn_10027990((Iostream_init *)buf1);
   if ( *(self_ + 1) != 0 )
   {
-    g_projTexPrevTex0 = *a2;
-    g_projTexPrevTex1 = a2[1];
-    g_projTexPrevFactor = a3;
+    g_projTexPrevTex0 = *arg2;
+    g_projTexPrevTex1 = arg2[1];
+    g_projTexPrevFactor = arg3;
     (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, (IDirect3DBaseTexture8 *)*(self_ + 1));
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_FLAT);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-    orig::Mat4_Copy(v6, a4);
+    orig::Mat4_Copy(buf1, arg4);
     if ( (g_projTexFactor & 0xFF000000) != 0x80000000 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
     }
-    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, v6);
+    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, buf1);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT4 | D3DTTFF_PROJECTED);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
@@ -51,24 +51,24 @@ XI_API char __thiscall ProjTex_BeginPass(_DWORD *self_, int *a2, int a3, _DWORD 
 
 // FUNCTION: FFXIMAIN 0x100255C0
 // GATE: PASS -- 100 trials, 53 returned normally, 498 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 53
-XI_API int __thiscall ProjTex_EndPass(void *self_, int a1)
+XI_API int __thiscall ProjTex_EndPass(void *self_, int arg2)
 {
   int result;
   IDirect3DDevice8 *pDevice;
-  IDirect3DDevice8 v4;
+  IDirect3DDevice8 val1;
   IDirect3DBaseTexture8 *D3DTexture;
-  IDirect3DDevice8 *v6;
+  IDirect3DDevice8 *p1;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  int v8;
-  result = *((_DWORD *)self_ + 1);
+  int i1;
+  result = *((uint32_t *)self_ + 1);
   if ( result != 0 )
   {
     if ( g_projTexPrevTex0 != 0 )
     {
       pDevice = (g_pCDx->pDevice);
-      v4.lpVtbl = pDevice->lpVtbl;
-      D3DTexture = (IDirect3DBaseTexture8 *)orig::TexObj_GetD3DTexture((_DWORD *)g_projTexPrevTex0);
-      v4.lpVtbl->SetTexture(pDevice, 0, D3DTexture);
+      val1.lpVtbl = pDevice->lpVtbl;
+      D3DTexture = (IDirect3DBaseTexture8 *)orig::TexObj_GetD3DTexture((uint32_t *)g_projTexPrevTex0);
+      val1.lpVtbl->SetTexture(pDevice, 0, D3DTexture);
     }
     else
     {
@@ -76,10 +76,10 @@ XI_API int __thiscall ProjTex_EndPass(void *self_, int a1)
     }
     if ( g_projTexPrevTex1 != 0 )
     {
-      v6 = (g_pCDx->pDevice);
-      lpVtbl = v6->lpVtbl;
-      v8 = orig::TexObj_GetD3DTexture((_DWORD *)g_projTexPrevTex1);
-      lpVtbl->SetTexture(v6, 1u, (IDirect3DBaseTexture8 *)v8);
+      p1 = (g_pCDx->pDevice);
+      lpVtbl = p1->lpVtbl;
+      i1 = orig::TexObj_GetD3DTexture((uint32_t *)g_projTexPrevTex1);
+      lpVtbl->SetTexture(p1, 1u, (IDirect3DBaseTexture8 *)i1);
     }
     else
     {
@@ -94,7 +94,7 @@ XI_API int __thiscall ProjTex_EndPass(void *self_, int a1)
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, 0);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
-    if ( a1 <= 0 || a1 > 2 )
+    if ( arg2 <= 0 || arg2 > 2 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG1, D3DTA_CURRENT);
@@ -124,77 +124,77 @@ XI_API int __thiscall ProjTex_EndPass(void *self_, int a1)
 
 // FUNCTION: FFXIMAIN 0x10025870
 // GATE: PASS -- 100 trials, 100 returned normally, 1278 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int a1, int a2, int a3, int a4)
+XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int arg2, int arg3, int arg4, int arg5)
 {
-  __int64 v6; // rcx
+  long long i1; // rcx
   int result;
   alignas(16) unsigned char xi_frame[0x528];  // address-taken locals at their original offsets
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0x98);
-  int &v9 = *reinterpret_cast<int *>(xi_frame + 0x9C);
-  __int64 &v10 = *reinterpret_cast<__int64 *>(xi_frame + 0xB0);
-  int (&v11)[5] = *reinterpret_cast<int (*)[5]>(xi_frame + 0xB8);
-  __int64 &v12 = *reinterpret_cast<__int64 *>(xi_frame + 0xCC);
-  float &v13 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  int &v14 = *reinterpret_cast<int *>(xi_frame + 0xD8);
-  int &v15 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  int &v16 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &v18 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  int &v19 = *reinterpret_cast<int *>(xi_frame + 0xEC);
-  int &v20 = *reinterpret_cast<int *>(xi_frame + 0xF0);
-  float &v21 = *reinterpret_cast<float *>(xi_frame + 0xF4);
-  int &v22 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &v23 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &v24 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &v25 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &v26 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  float &v27 = *reinterpret_cast<float *>(xi_frame + 0x10C);
-  float &v28 = *reinterpret_cast<float *>(xi_frame + 0x110);
-  int &v29 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  int &v30 = *reinterpret_cast<int *>(xi_frame + 0x118);
-  int &v31 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  int &v32 = *reinterpret_cast<int *>(xi_frame + 0x120);
-  int &v33 = *reinterpret_cast<int *>(xi_frame + 0x124);
+  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x98);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x9C);
+  long long &i4 = *reinterpret_cast<long long *>(xi_frame + 0xB0);
+  int (&i5)[5] = *reinterpret_cast<int (*)[5]>(xi_frame + 0xB8);
+  long long &i6 = *reinterpret_cast<long long *>(xi_frame + 0xCC);
+  float &f1 = *reinterpret_cast<float *>(xi_frame + 0xD4);
+  int &i7 = *reinterpret_cast<int *>(xi_frame + 0xD8);
+  int &i8 = *reinterpret_cast<int *>(xi_frame + 0xDC);
+  int &i9 = *reinterpret_cast<int *>(xi_frame + 0xE0);
+  int &i10 = *reinterpret_cast<int *>(xi_frame + 0xE4);
+  int &i11 = *reinterpret_cast<int *>(xi_frame + 0xE8);
+  int &i12 = *reinterpret_cast<int *>(xi_frame + 0xEC);
+  int &i13 = *reinterpret_cast<int *>(xi_frame + 0xF0);
+  float &f2 = *reinterpret_cast<float *>(xi_frame + 0xF4);
+  int &i14 = *reinterpret_cast<int *>(xi_frame + 0xF8);
+  int &i15 = *reinterpret_cast<int *>(xi_frame + 0xFC);
+  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x100);
+  int &i17 = *reinterpret_cast<int *>(xi_frame + 0x104);
+  int &i18 = *reinterpret_cast<int *>(xi_frame + 0x108);
+  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x10C);
+  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x110);
+  int &i19 = *reinterpret_cast<int *>(xi_frame + 0x114);
+  int &i20 = *reinterpret_cast<int *>(xi_frame + 0x118);
+  int &i21 = *reinterpret_cast<int *>(xi_frame + 0x11C);
+  int &i22 = *reinterpret_cast<int *>(xi_frame + 0x120);
+  int &i23 = *reinterpret_cast<int *>(xi_frame + 0x124);
 
-  g_projTexFactor = a1;
-  dword_10456E60 = a3;
-  v6 = (unsigned int)a2;
-  g_projTexTarget = a2;
-  dword_10456E54 = a4;
-  result = *((_DWORD *)self_ + 1);
+  g_projTexFactor = arg2;
+  g_10456E60 = arg4;
+  i1 = (unsigned int)arg3;
+  g_projTexTarget = arg3;
+  g_10456E54 = arg5;
+  result = *((uint32_t *)self_ + 1);
   if ( result != 0 )
   {
-    memset(v11, 0, 12);
-    v11[3] = 1065353216;
-    v11[4] = -2139062144;
-    v12 = 0;
-    v6 = (__int64)(((uint64_t)(v6) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((_DWORD *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 2)) << 0));
-    v14 = 0;
-    v15 = 0;
-    v16 = 1065353216;
-    v17 = -2139062144;
-    v13 = (float)v6;
-    v18 = 1065353216;
-    v19 = 0;
-    v20 = 0;
-    v10 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 3);
-    v22 = 0;
-    v23 = 1065353216;
-    v24 = -2139062144;
-    v25 = 0;
-    v21 = (float)v10;
-    v26 = 1065353216;
-    v27 = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 2);
-    v6 = (__int64)(((uint64_t)(v6) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((_DWORD *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 3)) << 0));
-    v9 = *((_DWORD *)self_ + 2);
-    v8 = *((_DWORD *)self_ + 1);
-    v29 = 0;
-    v28 = (float)v6;
-    v30 = 1065353216;
-    v31 = -2139062144;
-    v32 = 1065353216;
-    v33 = 1065353216;
-    orig::CDx_PushRenderTarget(g_pCDx, v8, v9, 0);
+    memset(i5, 0, 12);
+    i5[3] = 1065353216;
+    i5[4] = -2139062144;
+    i6 = 0;
+    i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2)) << 0));
+    i7 = 0;
+    i8 = 0;
+    i9 = 1065353216;
+    i10 = -2139062144;
+    f1 = (float)i1;
+    i11 = 1065353216;
+    i12 = 0;
+    i13 = 0;
+    i4 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3);
+    i14 = 0;
+    i15 = 1065353216;
+    i16 = -2139062144;
+    i17 = 0;
+    f2 = (float)i4;
+    i18 = 1065353216;
+    f3 = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2);
+    i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((uint32_t *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3)) << 0));
+    i3 = *((uint32_t *)self_ + 2);
+    i2 = *((uint32_t *)self_ + 1);
+    i19 = 0;
+    f4 = (float)i1;
+    i20 = 1065353216;
+    i21 = -2139062144;
+    i22 = 1065353216;
+    i23 = 1065353216;
+    orig::CDx_PushRenderTarget(g_pCDx, i2, i3, 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
@@ -208,7 +208,7 @@ XI_API int __thiscall ProjTex_CaptureToTarget(void *self_, int a1, int a2, int a
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
     (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, (IDirect3DBaseTexture8 *)g_projTexTarget);
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)v11, 28);
+    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i5, 28);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHATESTENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
@@ -237,39 +237,39 @@ XI_API void __cdecl EnvMapProjTex_Nop_10025BE0(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall EnvMapProjTex_ClearCounter(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_1032a480;
+  *(uint8_t ***)self_ = &g_1032A480;
   g_pEnvMapTexObj_as_v0 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10025C40
 // GATE: PASS -- 100 trials, 100 returned normally, 2471 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __stdcall EnvMap_BeginPass(int *a1, int a2, float *a3)
+XI_API char __stdcall EnvMap_BeginPass(int *arg1, int arg2, float *arg3)
 {
-  float v4[16];
-  orig::fn_10027990((Iostream_init *)v4);
+  float buf1[16];
+  orig::fn_10027990((Iostream_init *)buf1);
   if ( g_pEnvMapTexObj != 0 )
   {
-    g_envMapPrevTex0 = *a1;
-    g_envMapPrevTex1 = a1[1];
-    g_envMapPrevFactor = a2;
-    if ( *(_DWORD *)g_pEnvMapTexObj != 0 )
-      orig::TexRef_SetTexture((int *)(*(_DWORD *)g_pEnvMapTexObj + 48), 0);
+    g_envMapPrevTex0 = *arg1;
+    g_envMapPrevTex1 = arg1[1];
+    g_envMapPrevFactor = arg2;
+    if ( *(uint32_t *)g_pEnvMapTexObj != 0 )
+      orig::TexRef_SetTexture((int *)(*(uint32_t *)g_pEnvMapTexObj + 48), 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-    if ( *(_DWORD *)(g_pAppSettings + 92) == 0 && g_cfgGraphicsStabilization == 0 )
+    if ( *(uint32_t *)(g_pAppSettings + 92) == 0 && g_cfgGraphicsStabilization == 0 )
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_WRAP0, 7u);
-    orig::Mat4_SetIdentity(v4);
-    LODWORD(v4[12]) = g_envMapTexOffsetU;
-    LODWORD(v4[13]) = g_envMapTexOffsetV;
-    orig::Mat4_PreMultiply(v4, a3);
+    orig::Mat4_SetIdentity(buf1);
+    (*(uint32_t *)&(buf1[12])) = g_envMapTexOffsetU;
+    (*(uint32_t *)&(buf1[13])) = g_envMapTexOffsetV;
+    orig::Mat4_PreMultiply(buf1, arg3);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
-    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, v4);
+    (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE0, buf1);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACENORMAL);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
@@ -299,24 +299,24 @@ XI_API char __stdcall EnvMap_BeginPass(int *a1, int a2, float *a3)
 
 // FUNCTION: FFXIMAIN 0x10025F70
 // GATE: PASS -- 100 trials, 41 returned normally, 671 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 41
-XI_API int __stdcall EnvMap_EndPass(int a1)
+XI_API int __stdcall EnvMap_EndPass(int arg1)
 {
   int result;
   IDirect3DDevice8 *pDevice;
-  IDirect3DDevice8 v3;
+  IDirect3DDevice8 val1;
   IDirect3DBaseTexture8 *D3DTexture;
-  IDirect3DDevice8 *v5;
+  IDirect3DDevice8 *p1;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  int v7;
+  int i1;
   result = g_pEnvMapTexObj;
   if ( g_pEnvMapTexObj != 0 )
   {
     if ( g_envMapPrevTex0 != 0 )
     {
       pDevice = (g_pCDx->pDevice);
-      v3.lpVtbl = pDevice->lpVtbl;
-      D3DTexture = (IDirect3DBaseTexture8 *)orig::TexObj_GetD3DTexture((_DWORD *)g_envMapPrevTex0);
-      v3.lpVtbl->SetTexture(pDevice, 0, D3DTexture);
+      val1.lpVtbl = pDevice->lpVtbl;
+      D3DTexture = (IDirect3DBaseTexture8 *)orig::TexObj_GetD3DTexture((uint32_t *)g_envMapPrevTex0);
+      val1.lpVtbl->SetTexture(pDevice, 0, D3DTexture);
     }
     else
     {
@@ -324,10 +324,10 @@ XI_API int __stdcall EnvMap_EndPass(int a1)
     }
     if ( g_envMapPrevTex1 != 0 )
     {
-      v5 = (g_pCDx->pDevice);
-      lpVtbl = v5->lpVtbl;
-      v7 = orig::TexObj_GetD3DTexture((_DWORD *)g_envMapPrevTex1);
-      lpVtbl->SetTexture(v5, 1u, (IDirect3DBaseTexture8 *)v7);
+      p1 = (g_pCDx->pDevice);
+      lpVtbl = p1->lpVtbl;
+      i1 = orig::TexObj_GetD3DTexture((uint32_t *)g_envMapPrevTex1);
+      lpVtbl->SetTexture(p1, 1u, (IDirect3DBaseTexture8 *)i1);
     }
     else
     {
@@ -342,7 +342,7 @@ XI_API int __stdcall EnvMap_EndPass(int a1)
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, 0);
-    if ( a1 <= 0 || a1 > 2 )
+    if ( arg1 <= 0 || arg1 > 2 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG1, D3DTA_CURRENT);
@@ -375,17 +375,17 @@ XI_API int __stdcall EnvMap_EndPass(int a1)
 XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
 {
   alignas(16) unsigned char xi_frame[0x588];  // address-taken locals at their original offsets
-  int (&a3)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x90);
-  int &v1 = *reinterpret_cast<int *>(xi_frame + 0x9C);
-  int &v2 = *reinterpret_cast<int *>(xi_frame + 0xA0);
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0xA4);
-  int &v4 = *reinterpret_cast<int *>(xi_frame + 0xA8);
-  int &v5 = *reinterpret_cast<int *>(xi_frame + 0xAC);
-  float (&v6)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0xB0);
-  _DWORD (&v7)[3] = *reinterpret_cast<_DWORD (*)[3]>(xi_frame + 0xBC);
-  float (&v8)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xC8);
-  _DWORD (&v9)[16] = *reinterpret_cast<_DWORD (*)[16]>(xi_frame + 0x108);
-  _BYTE (&v10)[64] = *reinterpret_cast<_BYTE (*)[64]>(xi_frame + 0x148);
+  int (&i1)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x90);
+  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x9C);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0xA0);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0xA4);
+  int &i5 = *reinterpret_cast<int *>(xi_frame + 0xA8);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0xAC);
+  float (&f1)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0xB0);
+  uint32_t (&u1)[3] = *reinterpret_cast<uint32_t (*)[3]>(xi_frame + 0xBC);
+  float (&f2)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xC8);
+  uint32_t (&u2)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x108);
+  uint8_t (&u3)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x148);
 
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
@@ -395,45 +395,45 @@ XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-  orig::fn_10027990((Iostream_init *)v9);
-  orig::fn_10027990((Iostream_init *)v10);
-  orig::fn_10027990((Iostream_init *)v8);
-  v7[0] = 1065353216;
-  v7[1] = 1065353216;
-  v7[2] = 1065353216;
-  orig::CDx_GetTransformCached(g_pCDx, 256, v10);
-  orig::CDx_GetTransformCached(g_pCDx, 2, v8);
-  orig::Mat4_InvertOrthonormal((int *)v8);
-  v6[0] = 0.0;
-  v6[1] = 0.0;
-  v6[2] = -4.0;
-  orig::Mat4_TransformPointInPlace(v8, v6);
-  orig::Mat4_SetScale(v9, v7);
-  orig::Mat4_SetTranslation(v9, v6);
-  orig::CDx_SetTransform(g_pCDx, 256, v9);
-  memset(a3, 0, sizeof(a3));
-  v2 = 1065353216;
-  v3 = 0;
-  v4 = 0;
-  v1 = -2139095040;
-  v5 = -2139095040;
+  orig::fn_10027990((Iostream_init *)u2);
+  orig::fn_10027990((Iostream_init *)u3);
+  orig::fn_10027990((Iostream_init *)f2);
+  u1[0] = 1065353216;
+  u1[1] = 1065353216;
+  u1[2] = 1065353216;
+  orig::CDx_GetTransformCached(g_pCDx, 256, u3);
+  orig::CDx_GetTransformCached(g_pCDx, 2, f2);
+  orig::Mat4_InvertOrthonormal((int *)f2);
+  f1[0] = 0.0;
+  f1[1] = 0.0;
+  f1[2] = -4.0;
+  orig::Mat4_TransformPointInPlace(f2, f1);
+  orig::Mat4_SetScale(u2, u1);
+  orig::Mat4_SetTranslation(u2, f1);
+  orig::CDx_SetTransform(g_pCDx, 256, u2);
+  memset(i1, 0, sizeof(i1));
+  i3 = 1065353216;
+  i4 = 0;
+  i5 = 0;
+  i2 = -2139095040;
+  i6 = -2139095040;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  v2 = 0;
-  v1 = -2147450880;
-  v5 = -2147450880;
-  v3 = 1065353216;
-  v4 = 0;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  i3 = 0;
+  i2 = -2147450880;
+  i6 = -2147450880;
+  i4 = 1065353216;
+  i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  v2 = 0;
-  v1 = -2147483520;
-  v5 = -2147483520;
-  v3 = 0;
-  v4 = 1065353216;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  i3 = 0;
+  i2 = -2147483520;
+  i6 = -2147483520;
+  i4 = 0;
+  i5 = 1065353216;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  orig::CDx_SetTransform(g_pCDx, 256, v10);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  orig::CDx_SetTransform(g_pCDx, 256, u3);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -441,49 +441,49 @@ XI_API void __cdecl Dbg_DrawViewAxisGizmo(void)
 
 // FUNCTION: FFXIMAIN 0x100266C0
 // GATE: PASS -- 100 trials, 100 returned normally, 300 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall Dbg_DrawAxesAt(int a1)
+XI_API void __stdcall Dbg_DrawAxesAt(int arg1)
 {
   alignas(16) unsigned char xi_frame[0x4F8];  // address-taken locals at their original offsets
-  int (&a3)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x18);
-  int &v2 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &v4 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  int &v5 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &v6 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  _DWORD (&v7)[16] = *reinterpret_cast<_DWORD (*)[16]>(xi_frame + 0x38);
-  _BYTE (&v8)[64] = *reinterpret_cast<_BYTE (*)[64]>(xi_frame + 0x78);
-  _BYTE (&v9)[64] = *reinterpret_cast<_BYTE (*)[64]>(xi_frame + 0xB8);
+  int (&i1)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x18);
+  int &i2 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x28);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x30);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x34);
+  uint32_t (&u1)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x38);
+  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x78);
+  uint8_t (&u3)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0xB8);
 
-  orig::fn_10027990((Iostream_init *)v7);
-  orig::fn_10027990((Iostream_init *)v8);
-  orig::fn_10027990((Iostream_init *)v9);
-  orig::CDx_GetTransformCached(g_pCDx, 256, v8);
-  orig::Mat4_SetIdentity(v7);
-  orig::Mat4_SetTranslation(v7, (_DWORD *)a1);
-  orig::CDx_SetTransform(g_pCDx, 256, v7);
-  memset(a3, 0, sizeof(a3));
-  v2 = -2139095040;
-  v6 = -2139095040;
-  v3 = 1065353216;
-  v4 = 0;
-  v5 = 0;
+  orig::fn_10027990((Iostream_init *)u1);
+  orig::fn_10027990((Iostream_init *)u2);
+  orig::fn_10027990((Iostream_init *)u3);
+  orig::CDx_GetTransformCached(g_pCDx, 256, u2);
+  orig::Mat4_SetIdentity(u1);
+  orig::Mat4_SetTranslation(u1, (uint32_t *)arg1);
+  orig::CDx_SetTransform(g_pCDx, 256, u1);
+  memset(i1, 0, sizeof(i1));
+  i2 = -2139095040;
+  i6 = -2139095040;
+  i3 = 1065353216;
+  i4 = 0;
+  i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  v3 = 0;
-  v2 = -2147450880;
-  v6 = -2147450880;
-  v4 = 1065353216;
-  v5 = 0;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  i3 = 0;
+  i2 = -2147450880;
+  i6 = -2147450880;
+  i4 = 1065353216;
+  i5 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  v3 = 0;
-  v2 = -2147483520;
-  v6 = -2147483520;
-  v4 = 0;
-  v5 = 1065353216;
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  i3 = 0;
+  i2 = -2147483520;
+  i6 = -2147483520;
+  i4 = 0;
+  i5 = 1065353216;
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)a3, 16);
-  orig::CDx_SetTransform(g_pCDx, 256, v8);
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)i1, 16);
+  orig::CDx_SetTransform(g_pCDx, 256, u2);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();

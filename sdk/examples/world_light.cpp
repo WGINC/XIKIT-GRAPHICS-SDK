@@ -37,8 +37,8 @@ static void __thiscall my_Fog(void *env, uint32_t *colour, float *end, float *st
   }
 }
 static xikit::fn<decltype(&Env_ComputeAmbient)> prev_Amb;
-static _DWORD *__thiscall my_Amb(char *env, _DWORD *out, int kind) {
-  _DWORD *r = prev_Amb(env, out, kind);
+static uint32_t *__thiscall my_Amb(char *env, uint32_t *out, int kind) {
+  uint32_t *r = prev_Amb(env, out, kind);
   int p = kind == 1 ? pc("light") : pc("ambient");
   if (out && *out != 0xFFFFFFFFu && p != 100) {
     unsigned c = *out;

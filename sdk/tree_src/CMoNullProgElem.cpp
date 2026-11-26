@@ -14,19 +14,19 @@ char ** __cdecl CMoNullProgElem::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoNullProgElem::Construct(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoNullProgElem_GetRuntimeClass_1032b5f8;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoNullProgElem_GetRuntimeClass_1032B5F8;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x100531B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoNullProgElem::Destructor(char a2)
+int * CMoNullProgElem::Destructor(char arg1)
 {
   orig::CMoElemFamily_SharedCleanup((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

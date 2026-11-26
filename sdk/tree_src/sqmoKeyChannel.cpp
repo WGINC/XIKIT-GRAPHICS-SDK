@@ -4,31 +4,31 @@
 
 // FUNCTION: FFXIMAIN 0x102957B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqmoKeyChannel_Create(void)
+XI_API bits32 * __cdecl SqmoKeyChannel_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x38,s_C__dev_dancer_modules_sqMotion_s_103bb964,0x1b);
-  orig::SqmoKeyChannel_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x38,str_C__dev_dancer_modules_sqMotion_s_103BB964,0x1b);
+  orig::SqmoKeyChannel_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102957D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmoKeyChannel_Init(undefined4 * param_1)
+XI_API void __cdecl SqmoKeyChannel_Init(bits32 * arg1)
 {
-  *param_1 = 0x50002;
-  param_1[2] = &LAB_10295820;
-  param_1[3] = XI_CODE(FUN_10295830);
-  param_1[4] = XI_CODE(sqmoKeyChannel_Dump);
-  param_1[5] = XI_CODE(FUN_10295a20);
-  param_1[6] = &LAB_10295b40;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 1;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
+  *arg1 = 0x50002;
+  arg1[2] = &code_10295820;
+  arg1[3] = XI_CODE(game_10295830);
+  arg1[4] = XI_CODE(sqmoKeyChannel_Dump);
+  arg1[5] = XI_CODE(game_10295A20);
+  arg1[6] = &code_10295B40;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 1;
+  arg1[10] = 0;
+  arg1[0xb] = 0;
+  arg1[0xc] = 0;
+  arg1[0xd] = 0;
   return;
 }

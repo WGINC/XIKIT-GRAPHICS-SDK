@@ -20,7 +20,7 @@ void __thiscall CYyModel::Constructor(void * self)
   orig::EnvMapProjTex_ClearCounter((void *)((int)self + 0x8c));
   orig::ProjTexTarget_Init((void *)((int)self + 0x90));
   orig::PostCapture_Init((void *)((int)self + 0x9c));
-  *(uint8_t ***)self = &PTR_CYyModel_GetRuntimeClass_1032a75c;
+  *(uint8_t ***)self = &ptr_to_CYyModel_GetRuntimeClass_1032A75C;
   *(uint32_t *)((int)self + 0x30) = 0;
   *(uint32_t *)((int)self + 0x40) = 0x40000000;
   *(uint32_t *)((int)self + 0x44) = 0;
@@ -34,11 +34,11 @@ void __thiscall CYyModel::Constructor(void * self)
 
 // FUNCTION: FFXIMAIN 0x1002B530
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CYyModel::ScalarDeletingDtor(char a2)
+int * CYyModel::ScalarDeletingDtor(char arg1)
 {
   orig::CYyModel_Destructor((int *)this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }
 
@@ -46,19 +46,19 @@ int * CYyModel::ScalarDeletingDtor(char a2)
 // GATE: PASS -- 100 trials, 100 returned normally, 77 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CYyModel::Destructor(void * self)
 {
-  int *this_00;
+  int *obj1;
   
-  this_00 = *(int **)((int)self + 0x44);
-  *(uint8_t ***)self = &PTR_CYyModel_GetRuntimeClass_1032a75c;
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  obj1 = *(int **)((int)self + 0x44);
+  *(uint8_t ***)self = &ptr_to_CYyModel_GetRuntimeClass_1032A75C;
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self + 0x44) = 0;
   }
-  orig::FUN_10038a60((void *)((int)self + 0x9c));
+  orig::game_10038A60((void *)((int)self + 0x9c));
   orig::ProjTex_Destructor_v1((void *)((int)self + 0x90));
-  orig::FUN_10025c30((void *)((int)self + 0x8c));
-  orig::FUN_1001d1f0((void *)((int)self + 0x74));
-  orig::FUN_100337c0((void *)((int)self + 0x48));
+  orig::game_10025C30((void *)((int)self + 0x8c));
+  orig::game_1001D1F0((void *)((int)self + 0x74));
+  orig::game_100337C0((void *)((int)self + 0x48));
   return;
 }
 
@@ -73,39 +73,39 @@ int __thiscall CYyModel::GetField44Addr(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int __thiscall CYyModel::TailLink(void * self)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = (int)self + 0x44;
-  for (iVar2 = *(int *)((int)self + 0x44); iVar2 != 0; iVar2 = *(int *)(iVar2 + 4)) {
-    iVar1 = iVar2 + 4;
+  i1 = (int)self + 0x44;
+  for (i2 = *(int *)((int)self + 0x44); i2 != 0; i2 = *(int *)(i2 + 4)) {
+    i1 = i2 + 4;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002B630
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModel::AppendBase(void * self, undefined4 param_1)
+void __thiscall CYyModel::AppendBase(void * self, bits32 arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = (uint32_t *)orig::CYyModel_TailLink(self);
-  *puVar1 = param_1;
+  p1 = (uint32_t *)orig::CYyModel_TailLink(self);
+  *p1 = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002B6A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModel::CreateModelBase(void * self)
+bits32 __thiscall CYyModel::CreateModelBase(void * self)
 {
-  void *pvVar1;
+  void *p1;
   
-  pvVar1 = (void *)orig::Mem_AllocDefault_v1(200);
-  if (pvVar1 != (void *)0x0) {
-    pvVar1 = orig::CYyModelBase_Construct(pvVar1);
-    if (pvVar1 != (void *)0x0) {
-      orig::CYyModel_AppendBase(self,pvVar1);
-      return pvVar1;
+  p1 = (void *)orig::Mem_AllocDefault_v1(200);
+  if (p1 != (void *)0x0) {
+    p1 = orig::CYyModelBase_Construct(p1);
+    if (p1 != (void *)0x0) {
+      orig::CYyModel_AppendBase(self,p1);
+      return p1;
     }
   }
   return 0;
@@ -113,89 +113,89 @@ undefined4 __thiscall CYyModel::CreateModelBase(void * self)
 
 // FUNCTION: FFXIMAIN 0x1002C270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModel::ApplyToParts(void * self, undefined4 xi_s1)
+void __thiscall CYyModel::ApplyToParts(void * self, bits32 xi_s1)
 {
-  void *this_00;
-  int *piVar1;
+  void *obj1;
+  int *p1;
   
-  piVar1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
-  this_00 = (void *)*piVar1;
-  while (this_00 != (void *)0x0) {
-    orig::CYyModelBase_CallPartsSlot20(this_00,self,0);
-    piVar1 = (int *)(*piVar1 + 4);
-    this_00 = (void *)*piVar1;
+  p1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
+  obj1 = (void *)*p1;
+  while (obj1 != (void *)0x0) {
+    orig::CYyModelBase_CallPartsSlot20(obj1,self,0);
+    p1 = (int *)(*p1 + 4);
+    obj1 = (void *)*p1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C2A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModel::ForEachPart130(void * self, undefined4 param_1)
+void __thiscall CYyModel::ForEachPart130(void * self, bits32 arg2)
 {
-  void *this_00;
-  int *piVar1;
+  void *obj1;
+  int *p1;
   
-  piVar1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
-  this_00 = (void *)*piVar1;
-  while (this_00 != (void *)0x0) {
-    orig::FUN_1002a130(this_00,param_1);
-    piVar1 = (int *)(*piVar1 + 4);
-    this_00 = (void *)*piVar1;
+  p1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
+  obj1 = (void *)*p1;
+  while (obj1 != (void *)0x0) {
+    orig::game_1002A130(obj1,arg2);
+    p1 = (int *)(*p1 + 4);
+    obj1 = (void *)*p1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C400
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModel::GetPartOffset(void * self, int param_1, int param_2, float * param_3)
+bits32 __thiscall CYyModel::GetPartOffset(void * self, int arg2, int arg3, float * arg4)
 {
   int *xi_entry_eax = 0;
-  uint32_t uVar1;
-  int iVar2;
-  int iVar3;
+  uint32_t u1;
+  int i1;
+  int i2;
   char xi_frame[32] __attribute__((aligned(4)));
-  float  (&local_20)[5] = *reinterpret_cast<float  (*)[5]>(xi_frame + 0);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  float  (&f1)[5] = *reinterpret_cast<float  (*)[5]>(xi_frame + 0);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 24);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
   
-  iVar3 = 0;
-  if (param_2 == 2) {
+  i2 = 0;
+  if (arg3 == 2) {
     xi_entry_eax = (int *)orig::CYyModel_GetField44Addr_v1(self);
-    iVar2 = *xi_entry_eax;
-    if (iVar2 != 0) {
+    i1 = *xi_entry_eax;
+    if (i1 != 0) {
       do {
-        if (iVar3 == param_1) break;
-        xi_entry_eax = (int *)(iVar2 + 4);
-        iVar2 = *(int *)(iVar2 + 4);
-        iVar3 = iVar3 + 1;
-      } while (iVar2 != 0);
-      local_20[0] = 0.0f;
-      local_20[1] = 0.0f;
-      local_20[2] = 0.0f;
-      local_20[3] = 1.0f;
-      orig::Part_AddTranslation((void *)*xi_entry_eax,2,local_20);
-      local_20[4] = (float)(long double)*(float *)((int)self + 0x24);
-      local_c = (float)(long double)*(float *)((int)self + 0x2c);
-      local_8 = (float)(long double)*(float *)((int)self + 0x28);
-      local_4 = 0x3f800000;
-      orig::Vec3_MulInPlace_v1(local_20,local_20 + 4);
-      uVar1 = orig::Vec3_AddInPlace_v1(param_3,local_20);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+        if (i2 == arg2) break;
+        xi_entry_eax = (int *)(i1 + 4);
+        i1 = *(int *)(i1 + 4);
+        i2 = i2 + 1;
+      } while (i1 != 0);
+      f1[0] = 0.0f;
+      f1[1] = 0.0f;
+      f1[2] = 0.0f;
+      f1[3] = 1.0f;
+      orig::Part_AddTranslation((void *)*xi_entry_eax,2,f1);
+      f1[4] = (float)*(float *)((int)self + 0x24);
+      f2 = (float)*(float *)((int)self + 0x2c);
+      f3 = (float)*(float *)((int)self + 0x28);
+      u2 = 0x3f800000;
+      orig::Vec3_MulInPlace_v1(f1,f1 + 4);
+      u1 = orig::Vec3_AddInPlace_v1(arg4,f1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
   else if ((*(uint8_t *)((int)self + 0x30) & 0x10) != 0) {
     xi_entry_eax = (int *)orig::CYyModel_GetField44Addr_v1(self);
-    iVar2 = *xi_entry_eax;
-    if (iVar2 != 0) {
+    i1 = *xi_entry_eax;
+    if (i1 != 0) {
       do {
-        if (iVar3 == param_1) break;
-        xi_entry_eax = (int *)(iVar2 + 4);
-        iVar2 = *(int *)(iVar2 + 4);
-        iVar3 = iVar3 + 1;
-      } while (iVar2 != 0);
-      uVar1 = orig::CYyModelBase_TransformVec4ByPart((void *)*xi_entry_eax,param_2,param_3);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+        if (i2 == arg2) break;
+        xi_entry_eax = (int *)(i1 + 4);
+        i1 = *(int *)(i1 + 4);
+        i2 = i2 + 1;
+      } while (i1 != 0);
+      u1 = orig::CYyModelBase_TransformVec4ByPart((void *)*xi_entry_eax,arg3,arg4);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
   return (uint32_t)xi_entry_eax & 0xffffff00;
@@ -203,54 +203,54 @@ undefined4 __thiscall CYyModel::GetPartOffset(void * self, int param_1, int para
 
 // FUNCTION: FFXIMAIN 0x1002C600
 // GATE: PASS -- 100 trials, 40 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 40
-undefined4 __thiscall CYyModel::CallPartIndex(void * self, undefined4 param_1, int param_2)
+bits32 __thiscall CYyModel::CallPartIndex(void * self, bits32 arg2, int arg3)
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
+  int *p1;
+  int i1;
+  int i2;
   
-  iVar3 = 0;
-  piVar1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
-  iVar2 = *piVar1;
-  if (iVar2 == 0) {
+  i2 = 0;
+  p1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
+  i1 = *p1;
+  if (i1 == 0) {
     return 0;
   }
   do {
-    if (iVar3 == param_2) break;
-    piVar1 = (int *)(iVar2 + 4);
-    iVar2 = *(int *)(iVar2 + 4);
-    iVar3 = iVar3 + 1;
-  } while (iVar2 != 0);
-  iVar2 = orig::FUN_1002a9e0((void *)*piVar1,param_1);
-  return iVar2;
+    if (i2 == arg3) break;
+    p1 = (int *)(i1 + 4);
+    i1 = *(int *)(i1 + 4);
+    i2 = i2 + 1;
+  } while (i1 != 0);
+  i1 = orig::game_1002A9E0((void *)*p1,arg2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModel::QueryPartsA(void * self, undefined4 xi_s1)
+bits32 __thiscall CYyModel::QueryPartsA(void * self, bits32 xi_s1)
 {
-  int *piVar1;
-  uint32_t uVar2;
+  int *p1;
+  uint32_t u1;
   
-  piVar1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
-  if (*piVar1 == 0) {
+  p1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
+  if (*p1 == 0) {
     return 0;
   }
-  uVar2 = orig::FUN_1002b3f0(xi_s1);
-  return uVar2;
+  u1 = orig::game_1002B3F0(xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-uint32_t __thiscall CYyModel::QueryPartsB(void * self, undefined4 xi_s1)
+uint32_t __thiscall CYyModel::QueryPartsB(void * self, bits32 xi_s1)
 {
-  int *piVar1;
-  uint32_t uVar2;
+  int *p1;
+  uint32_t u1;
   
-  piVar1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
-  if (*piVar1 == 0) {
-    return (uint32_t)piVar1 & 0xffffff00;
+  p1 = (int *)orig::CYyModel_GetField44Addr_v1(self);
+  if (*p1 == 0) {
+    return (uint32_t)p1 & 0xffffff00;
   }
-  uVar2 = orig::FUN_1002b470(xi_s1);
-  return uVar2;
+  u1 = orig::game_1002B470(xi_s1);
+  return u1;
 }

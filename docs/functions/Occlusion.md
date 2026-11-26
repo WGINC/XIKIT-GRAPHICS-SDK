@@ -26,10 +26,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `j_OcclusionMng_CreateTarget` calls `CMoOcclusionMng::OcclusionMng_CreateTarget`
 - `OcclusionQuery_Init` calls nothing directly
 - `Occlusion_QueryScreenRect` calls `OcclusionMng_Prepare`, `CDx::NopB`, `Occlusion_QueryScreenRectImpl`, `CDx::NopA`
-- `Occlusion_QueryScreenRectImpl` calls `sub_10311C2C`, `CDx::GetRenderTargetTop`, `Occlusion_DrawQuery`, `Occlusion_ReadbackCount`
-- `Occlusion_DrawQuery` calls `MoDX_SetInvalid`, `sub_10313486`, `sub_1006AE30`, `CDx::PushRenderTargetTexture_Flag1`, `Gfx_CalcFVFStride`, `CDx::DrawPrimitiveUP`, `CDx::PopRenderTargetA`, `CDx::PushRenderTargetTexture_Flag0`, `CDx::EndAndClearBegin`, `CDx::PopRenderTargetB`
+- `Occlusion_QueryScreenRectImpl` calls `game_10311C2C`, `CDx::GetRenderTargetTop`, `Occlusion_DrawQuery`, `Occlusion_ReadbackCount`
+- `Occlusion_DrawQuery` calls `MoDX_SetInvalid`, `game_10313486`, `game_1006AE30`, `CDx::PushRenderTargetTexture_Flag1`, `Gfx_CalcFVFStride`, `CDx::DrawPrimitiveUP`, `CDx::PopRenderTargetA`, `CDx::PushRenderTargetTexture_Flag0`, `CDx::EndAndClearBegin`, `CDx::PopRenderTargetB`
 - `Occlusion_ReadbackCount` calls nothing directly
 - `OcclusionMng_Prepare` calls `CMoOcclusionMng::OcclusionMng_CreateTarget`
-- `Occlusion_IsFloatClassAccepted` calls `sub_1031450A`
+- `Occlusion_IsFloatClassAccepted` calls `game_1031450A`
 - `Occlusion_AreAll16FloatsAccepted` calls `Occlusion_IsFloatClassAccepted`
 - `CreateProcessorInstance` calls `CMoProcessor_DetectCpu`, `Mem_AllocDefault`, `VectorCtorIterator_CallForEachElement`, `CMoProcessor::InitRotationMatrices`, `Processor_InitIdentityMatrices`, `ProcessorInit_InitMatrices`

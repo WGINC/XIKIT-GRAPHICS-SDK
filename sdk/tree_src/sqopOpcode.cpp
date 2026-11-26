@@ -4,24 +4,24 @@
 
 // FUNCTION: FFXIMAIN 0x10289EA0
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API int __cdecl sqopOpcodeGet(int * param_1, undefined4 * param_2)
+XI_API int __cdecl sqopOpcodeGet(int * arg1, bits32 * arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (-1 < *param_1) {
-    if (param_2 != (undefined4 *)0x0) {
-      iVar1 = *param_1 * 0xc;
-      *param_2 = *(undefined4 *)(iVar1 + param_1[3]);
-      iVar2 = 2;
+  if (-1 < *arg1) {
+    if (arg2 != (bits32 *)0x0) {
+      i1 = *arg1 * 0xc;
+      *arg2 = *(bits32 *)(i1 + arg1[3]);
+      i2 = 2;
       do {
-        param_2 = param_2 + 1;
-        iVar1 = iVar1 + 4;
-        iVar2 = iVar2 + -1;
-        *param_2 = *(undefined4 *)(iVar1 + param_1[3]);
-      } while (iVar2 != 0);
+        arg2 = arg2 + 1;
+        i1 = i1 + 4;
+        i2 = i2 + -1;
+        *arg2 = *(bits32 *)(i1 + arg1[3]);
+      } while (i2 != 0);
     }
-    return *param_1;
+    return *arg1;
   }
   return -1;
 }

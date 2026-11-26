@@ -4,103 +4,103 @@
 
 // FUNCTION: FFXIMAIN 0x1001B520
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall QueTimeStep_StepStateByTime(void * self_, float param_1)
+XI_API bits32 __thiscall QueTimeStep_StepStateByTime(void * self_, float arg2)
 {
-  long double fVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
+  long double f1;
+  uint32_t u1;
+  uint8_t u2;
+  long double f2;
   
-  uVar2 = (uint32_t)*(uint8_t *)((int)self_ + 8);
-  switch(xi_sw(uVar2)) {
+  u1 = (uint32_t)*(uint8_t *)((int)self_ + 8);
+  switch(xi_sw(u1)) {
   case 0:
     *(uint8_t *)((int)self_ + 8) = 2;
-    *(float *)((int)self_ + 0xc) = param_1;
-    return xi_castbits<uint32_t>(param_1);
+    *(float *)((int)self_ + 0xc) = arg2;
+    return bit_cast<uint32_t>(arg2);
   case 1:
     *(uint8_t *)((int)self_ + 8) = 3;
-    *(float *)((int)self_ + 0x14) = param_1;
-    *(float *)((int)self_ + 0xc) = param_1;
-    return xi_castbits<uint32_t>(param_1);
+    *(float *)((int)self_ + 0x14) = arg2;
+    *(float *)((int)self_ + 0xc) = arg2;
+    return bit_cast<uint32_t>(arg2);
   case 2:
   case 3:
-    fVar4 = (long double)param_1;
-    fVar1 = (long double)1.0f;
-    bVar3 = NAN(fVar4) || NAN(fVar1);
-    uVar2 = (uint32_t)(uint16_t)((uint16_t)(bVar3 || fVar4 < fVar1) << 8 | (uint16_t)bVar3 << 10 |
-                          (uint16_t)(bVar3 || fVar4 == fVar1) << 0xe);
-    if (fVar4 <= fVar1) {
+    f2 = arg2;
+    f1 = 1.0f;
+    u2 = ((f2) != (f2)) || ((f1) != (f1));
+    u1 = (uint32_t)(uint16_t)((uint16_t)(u2 || f2 < f1) << 8 | (uint16_t)u2 << 10 |
+                          (uint16_t)(u2 || f2 == f1) << 0xe);
+    if (f2 <= f1) {
       *(uint32_t *)((int)self_ + 0xc) = 0;
       *(uint8_t *)((int)self_ + 8) = 2;
     }
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001B5D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall QueTimeStep_Update(void * self_)
+XI_API bits32 __thiscall QueTimeStep_Update(void * self_)
 {
-  long double fVar1;
-  char cVar2;
+  long double f1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  uint8_t bVar3;
-  long double fVar4;
-  long double fVar5;
-  long double fVar6;
-  long double fVar7;
+  uint8_t u1;
+  long double f2;
+  long double f3;
+  long double f4;
+  long double f5;
   
-  fVar4 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
-  fVar1 = (float)fVar4;
-  cVar2 = *(char *)((int)self_ + 8);
-  if (cVar2 == '\x01') {
-    fVar5 = (long double)fVar1 * (long double)*(float *)((int)self_ + 0x18) +
-            (long double)*(float *)((int)self_ + 0x10);
-    *(float *)((int)self_ + 0x10) = (float)fVar5;
-    fVar6 = (long double)*(float *)((int)self_ + 0x14) - (long double)fVar1;
-    *(float *)((int)self_ + 0x14) = (float)fVar6;
-    fVar4 = (long double)0.0f;
-    if (!(fVar6 <= fVar4)) goto LAB_1001b6b8;
+  f2 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
+  f1 = (float)f2;
+  c1 = *(char *)((int)self_ + 8);
+  if (c1 == '\x01') {
+    f3 = f1 * *(float *)((int)self_ + 0x18) +
+            *(float *)((int)self_ + 0x10);
+    *(float *)((int)self_ + 0x10) = (float)f3;
+    f4 = *(float *)((int)self_ + 0x14) - f1;
+    *(float *)((int)self_ + 0x14) = (float)f4;
+    f2 = 0.0f;
+    if (!(f4 <= f2)) goto code_1001B6B8;
     *(uint8_t *)((int)self_ + 8) = 0;
   }
   else {
-    if (cVar2 == '\x02') {
-      fVar6 = (long double)*(float *)((int)self_ + 0xc) - (long double)fVar1;
-      *(float *)((int)self_ + 0xc) = (float)fVar6;
-      fVar4 = (long double)0.0f;
-      if (fVar6 <= fVar4) {
+    if (c1 == '\x02') {
+      f4 = *(float *)((int)self_ + 0xc) - f1;
+      *(float *)((int)self_ + 0xc) = (float)f4;
+      f2 = 0.0f;
+      if (f4 <= f2) {
         *(uint8_t *)((int)self_ + 8) = 2;
         return 0;
       }
-      goto LAB_1001b6b8;
+      goto code_1001B6B8;
     }
-    if (cVar2 != '\x03') goto LAB_1001b6b8;
-    fVar5 = (long double)fVar1 * (long double)*(float *)((int)self_ + 0x18) +
-            (long double)*(float *)((int)self_ + 0x10);
-    *(float *)((int)self_ + 0x10) = (float)fVar5;
-    fVar6 = (long double)*(float *)((int)self_ + 0x14) - (long double)fVar1;
-    *(float *)((int)self_ + 0x14) = (float)fVar6;
-    fVar7 = (long double)*(float *)((int)self_ + 0xc) - (long double)fVar1;
-    *(float *)((int)self_ + 0xc) = (float)fVar7;
-    fVar4 = (long double)0.0f;
-    if (fVar7 <= fVar4) {
+    if (c1 != '\x03') goto code_1001B6B8;
+    f3 = f1 * *(float *)((int)self_ + 0x18) +
+            *(float *)((int)self_ + 0x10);
+    *(float *)((int)self_ + 0x10) = (float)f3;
+    f4 = *(float *)((int)self_ + 0x14) - f1;
+    *(float *)((int)self_ + 0x14) = (float)f4;
+    f5 = *(float *)((int)self_ + 0xc) - f1;
+    *(float *)((int)self_ + 0xc) = (float)f5;
+    f2 = 0.0f;
+    if (f5 <= f2) {
       *(uint8_t *)((int)self_ + 8) = 2;
-      if (fVar5 > (long double)1.0f) {
+      if (f3 > 1.0f) {
         *(uint32_t *)((int)self_ + 0x10) = 0x3f800000;
       }
       return 0;
     }
-    fVar4 = (long double)0.0f;
-    if (!(fVar6 <= fVar4)) goto LAB_1001b6b8;
+    f2 = 0.0f;
+    if (!(f4 <= f2)) goto code_1001B6B8;
     *(uint8_t *)((int)self_ + 8) = 2;
   }
-  if (fVar5 > (long double)1.0f) {
+  if (f3 > 1.0f) {
     *(uint32_t *)((int)self_ + 0x10) = 0x3f800000;
   }
-LAB_1001b6b8:
-  if (!((long double)*(float *)((int)self_ + 0x10) > (long double)1.0f)) {
-    bVar3 = NAN((long double)*(float *)((int)self_ + 0x10)) || NAN((long double)0.0f);
-    if ((bVar3 || (long double)*(float *)((int)self_ + 0x10) < (long double)0.0f) != bVar3) {
+code_1001B6B8:
+  if (!(*(float *)((int)self_ + 0x10) > 1.0f)) {
+    u1 = ((*(float *)((int)self_ + 0x10)) != (*(float *)((int)self_ + 0x10))) || ((0.0f) != (0.0f));
+    if ((u1 || *(float *)((int)self_ + 0x10) < 0.0f) != u1) {
       *(uint32_t *)((int)self_ + 0x10) = 0;
     }
     return 1;

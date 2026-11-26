@@ -63,32 +63,32 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `StAvatar_Unload` calls `StAvatar_GetValue2B`, `StAvatar_Reset`, `StAvatar_ReleaseResources`, `TextInputFiles_FileMngReleaseAt1F0`, `StAvatar_ApplyChannels`, `TextInputFiles_FileMngGetValueAt1F0`, `StAvatar_SetChannel`, `StModelItem_ReadStart`
 - `StAvatar_ApplyChannels` calls `StModelItem_Activate`, `StChannel_RegisterItem`, `Mdl_SetChannelFlag80`
 - `StAvatar_SetTransition` calls nothing directly
-- `StAvatar_StopAndFreeBuffers` calls `sub_101C4C20`, `sub_101C4AC0`, `StAvatar_ResolveItemsAndStart`, `StAvatar_CheckBuffersReady`, `StModelItem_CheckFileRefs`, `StChannel_MarkIfLoaded`
-- `StAvatar_ResolveItemsAndStart` calls `StChannelItemResolve`, `StModelItem_Resolve`, `StAvatar_ApplyChannels`, `LobbyThread_SendCmd6IfRunning`, `sub_1024DA10`, `StAvatar_SetField10`, `StAvatar_SetField14`, `StAvatar_StoreMode`, `StAvatar_Start`, `StAvatar_FormatNames`, `StAvatar_ResetChannels`, `StAvatar_SetStopped`, `CYyMusicLoadTask::StartTrack`, `StAvatar_SetTransition`
-- `StAvatar_FormatNames` calls `sub_10311FF1`
-- `StAvatar_Update` calls `SqTimer_GetMicroseconds`, `StAvatar_ResolveItemsAndStart`, `NetCellFont_TestCommand36CF60`, `StAvatar_Start`, `StAvatar_AdvanceTimers`, `sub_1024FDF0`, `StChannel_ApplyItem`, `StAvatar_ComputeRatioValue`, `StAvatarScene_UpdateScene`, `sub_10250030`, `StAvatar_SetViewFromDancerCamera`, `StAvatar_UpdateInput`, `StAvatar_ProcessTriggers`
-- `StAvatar_UpdateInput` calls `NetCellFont_TestCommand36CF60`, `sub_10311C2C`, `StAvatar_SetOffsets`, `sub_10123970`, `StAvatar_UpdateSteer`, `StAvatar_UpdateCameraFollow`, `StAvatar_UpdateCameraYaw`, `StAvatarCore_MoveByAnalogStick`
-- `StAvatar_UpdateCameraYaw` calls `scnGetFlags`, `scnCameraGetInfo`, `sub_10123970`, `Camera_GetFrameScale`, `SqQuat_FromRotationY`, `SqQuatMul_Mul`, `SqQuat_Copy`, `SqQuat_FromRotationX`, `sqxfXformTD_Update`
-- `StAvatar_UpdateCameraFollow` calls `scnCameraGetInfo`, `SqQuat_Copy`, `SqmdModel_GetItemKind2`, `SqBoneTransform_TransformOrigin`, `SqQuatMul_RotateVec`, `SqQuat_SetIdentity`, `SqQuat_FromRotationY`, `SqQuatMul_Mul`, `sub_1027AEC0`, `SqQuat_Negate`, `sqxfXformTD_Update`
-- `StAvatarCore_MoveByAnalogStick` calls `sub_10123970`, `StAvatar_UpdateHeading`, `Chasm_ApplyAtCurrentIndex`, `sub_1024E760`, `StAvatar_GetCameraMatrix`, `StAvatar_SetFlagsBoth`, `StAvatar_ProjectNodes`, `SqVec_Relink`, `Chn_GetSubIndex`, `sub_1027D110`, `StTrigger_FindIndexAtLeast`
+- `StAvatar_StopAndFreeBuffers` calls `game_101C4C20`, `game_101C4AC0`, `StAvatar_ResolveItemsAndStart`, `StAvatar_CheckBuffersReady`, `StModelItem_CheckFileRefs`, `StChannel_MarkIfLoaded`
+- `StAvatar_ResolveItemsAndStart` calls `StChannelItemResolve`, `StModelItem_Resolve`, `StAvatar_ApplyChannels`, `LobbyThread_SendCmd6IfRunning`, `game_1024DA10`, `StAvatar_SetField10`, `StAvatar_SetField14`, `StAvatar_StoreMode`, `StAvatar_Start`, `StAvatar_FormatNames`, `StAvatar_ResetChannels`, `StAvatar_SetStopped`, `CYyMusicLoadTask::StartTrack`, `StAvatar_SetTransition`
+- `StAvatar_FormatNames` calls `game_10311FF1`
+- `StAvatar_Update` calls `SqTimer_GetMicroseconds`, `StAvatar_ResolveItemsAndStart`, `NetCellFont_TestCommand36CF60`, `StAvatar_Start`, `StAvatar_AdvanceTimers`, `game_1024FDF0`, `StChannel_ApplyItem`, `StAvatar_ComputeRatioValue`, `StAvatarScene_UpdateScene`, `game_10250030`, `StAvatar_SetViewFromDancerCamera`, `StAvatar_UpdateInput`, `StAvatar_ProcessTriggers`
+- `StAvatar_UpdateInput` calls `NetCellFont_TestCommand36CF60`, `game_10311C2C`, `StAvatar_SetOffsets`, `game_10123970`, `StAvatar_UpdateSteer`, `StAvatar_UpdateCameraFollow`, `StAvatar_UpdateCameraYaw`, `StAvatarCore_MoveByAnalogStick`
+- `StAvatar_UpdateCameraYaw` calls `scnGetFlags`, `scnCameraGetInfo`, `game_10123970`, `Camera_GetFrameScale`, `SqQuat_FromRotationY`, `SqQuatMul_Mul`, `SqQuat_Copy`, `SqQuat_FromRotationX`, `sqxfXformTD_Update`
+- `StAvatar_UpdateCameraFollow` calls `scnCameraGetInfo`, `SqQuat_Copy`, `SqmdModel_GetItemKind2`, `SqBoneTransform_TransformOrigin`, `SqQuatMul_RotateVec`, `SqQuat_SetIdentity`, `SqQuat_FromRotationY`, `SqQuatMul_Mul`, `game_1027AEC0`, `SqQuat_Negate`, `sqxfXformTD_Update`
+- `StAvatarCore_MoveByAnalogStick` calls `game_10123970`, `StAvatar_UpdateHeading`, `Chasm_ApplyAtCurrentIndex`, `game_1024E760`, `StAvatar_GetCameraMatrix`, `StAvatar_SetFlagsBoth`, `StAvatar_ProjectNodes`, `SqVec_Relink`, `Chn_GetSubIndex`, `game_1027D110`, `StTrigger_FindIndexAtLeast`
 - `StAvatar_SetFlagsBoth` calls `StModelItem_SetPositionAndScale`
 - `StAvatar_GetCameraMatrix` calls `scnGetFlags`, `scnCameraGetInfo`, `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_TransformVec3`
-- `StAvatar_UpdateHeading` calls `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_TransformVec3`, `SqVec_CopyVec3`, `SqVec_ScaleVec3ByInverseOf102746C0`, `sub_10027530`, `sub_10123970`, `StAvatar_SetFlagsBoth`, `StAvatar_SetLock`
+- `StAvatar_UpdateHeading` calls `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_TransformVec3`, `SqVec_CopyVec3`, `SqVec_ScaleVec3ByInverseOf102746C0`, `game_10027530`, `game_10123970`, `StAvatar_SetFlagsBoth`, `StAvatar_SetLock`
 - `StAvatar_ProjectNodes` calls `scnGetFlags`, `scnCameraGetInfo`, `M4fTranspose`, `Mat4x4_TransformVec4`
-- `StAvatar_UpdateSteer` calls `sub_10123970`, `NetCellFont_TestCommand36CF60`, `Camera_GetFrameScale`, `StAvatar_SetFlagsBoth`, `StAvatar_ProjectNodes`, `SqVec_Relink`, `Chn_GetSubIndex`, `sub_1027D110`, `StTrigger_FindIndexAtLeast`
-- `StAvatar_SetViewFromDancerCamera` calls `MathVector_ReturnThis`, `scnGetFlags`, `scnCameraGetInfo`, `Camera_GetMatrix154Ptr`, `sub_100151F0`, `sub_1027EB10`, `M4fTranspose`, `sqMatrix4_10280140`, `M4fTransform`, `sub_100150D0`, `Camera_GetViewMatrixPtr`, `CDx::SetTransform`, `MathVector_Nop`
+- `StAvatar_UpdateSteer` calls `game_10123970`, `NetCellFont_TestCommand36CF60`, `Camera_GetFrameScale`, `StAvatar_SetFlagsBoth`, `StAvatar_ProjectNodes`, `SqVec_Relink`, `Chn_GetSubIndex`, `game_1027D110`, `StTrigger_FindIndexAtLeast`
+- `StAvatar_SetViewFromDancerCamera` calls `MathVector_ReturnThis`, `scnGetFlags`, `scnCameraGetInfo`, `Camera_GetMatrix154Ptr`, `game_100151F0`, `game_1027EB10`, `M4fTranspose`, `sqMatrix4_10280140`, `M4fTransform`, `game_100150D0`, `Camera_GetViewMatrixPtr`, `CDx::SetTransform`, `MathVector_Nop`
 - `StAvatar_AdvanceTimers` calls `StModelItem_SetVec78`, `StChannel_SetValue9C`
 - `StAvatar_ProcessTriggers` calls `StAvatar_ComputeRatioValue`, `sqopSystemActivate`, `StAvatar_GetOffset`, `StTrigger_ProcessOpcodesUpToTime`
 - `StAvatar_GetOffset` calls `SqmdModel_GetItemKind2`, `SqBoneTransform_TransformOrigin`
 - `StAvatar_RenderIfEnabled` calls `SqTimer_GetMicroseconds`, `StAvatarRender`
-- `StAvatarRender` calls `StAvatar_UpdateNodes`, `sub_10281500`, `___setargv_24`, `___setargv_9`, `SqgxContext_Nop`, `___setargv_16`, `StAvatar_DrawScene`, `StAvatar_IsFlag20`, `sqgxTextureSet`, `sqgxColor`, `sqgxBlendLin`, `sqgxZTest`, `sub_10280DE0`
+- `StAvatarRender` calls `StAvatar_UpdateNodes`, `game_10281500`, `___setargv_24`, `___setargv_9`, `SqgxContext_Nop`, `___setargv_16`, `StAvatar_DrawScene`, `StAvatar_IsFlag20`, `sqgxTextureSet`, `sqgxColor`, `sqgxBlendLin`, `sqgxZTest`, `game_10280DE0`
 - `StAvatar_UpdateNodes` calls `StAvatar_SetEntryColor`, `StAvatar_GetField20`, `SqQuat_QuatFromEuler`, `SqQuat_Copy`, `sqxfXformTD_Update`, `ZoneMap_GetAddr0E4`, `StAvatar_SetEntryTransform`
 - `StAvatarFini` calls `StAvatar_StopAndFreeBuffers`, `chasm_10273920`, `mdl_1026E900`, `StAvatar_ReleaseResources`, `scnFini`, `MoTask_KillAllGlobalSlots`, `MoTask_KillGlobalSlot1`
 - `StAvatar_ResetChannels` calls `StAvatar_UpdateFlag2`
 - `StAvatar_SetFlagBit` calls nothing directly
 - `StAvatar_SetStopped` calls `MoTask_KillAllGlobalSlots`, `AfterimageTask_Execute`, `StAvatar_AdvanceTimers`, `StModelItem_Refresh`
-- `StAvatar_SetField10` calls `sub_10270840`
-- `StAvatar_SetField14` calls `sub_102709E0`
+- `StAvatar_SetField10` calls `game_10270840`
+- `StAvatar_SetField14` calls `game_102709E0`
 - `StAvatar_StoreMode` calls nothing directly
 - `StAvatar_Start` calls `SceneCamera_SetVtable1099B138`, `SceneCamera_SelectCamera`, `StAvatar_ResetChannels`, `StAvatar_UpdateFlagBits`, `StAvatar_SetModelFlags`, `StAvatar_SelectEntry`, `StAvatar_ComputeRatioValue`
 - `StAvatar_SetModelFlags` calls `StAvatar_SetModelItemFlags`

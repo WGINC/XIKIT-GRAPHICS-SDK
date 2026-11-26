@@ -14,6 +14,6 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqdfShape.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqdfShape_Create` calls `sub_10275D80`, `SqdfShape_Init`
+- `SqdfShape_Create` calls `game_10275D80`, `SqdfShape_Init`
 - `SqdfShape_Init` calls nothing directly
 - `SqdfShape_InitCallbacks` calls `SqVec_ZeroDwords`

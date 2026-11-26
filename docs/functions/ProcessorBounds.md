@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): CMoProcessor::CalcScreenBound
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Processor_InitIdentityMatrices` calls `sub_10313486`
+- `Processor_InitIdentityMatrices` calls `game_10313486`
 - `Mat4x4_SafeTranspose` calls `CMoProcessor::TransposeInPlace`

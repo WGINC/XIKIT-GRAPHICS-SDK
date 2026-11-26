@@ -47,74 +47,74 @@ uint64_t __thiscall CMoD3mSpecularElem::Ctor(void * self)
 
 // FUNCTION: FFXIMAIN 0x100410E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoD3mSpecularElem::IsKind7(int a1)
+BOOL CMoD3mSpecularElem::IsKind7(int arg1)
 {
-  return a1 == 7;
+  return arg1 == 7;
 }
 
 // FUNCTION: FFXIMAIN 0x100410F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoD3mSpecularElem::ScalarDeletingDtor(char a2)
+uint32_t * CMoD3mSpecularElem::ScalarDeletingDtor(char arg1)
 {
   orig::CMoD3mElem_Dtor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
-  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+  return(uint32_t*)(&(*(CMoTask_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x10041160
 // GATE: PASS -- 100 trials, 91 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 91
-undefined4 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
+bits32 __thiscall CMoD3mSpecularElem::BindTintedTexture(void * self)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  int64_t lVar5;
-  int64_t lVar6;
-  int64_t lVar7;
-  uint8_t uStack_7;
-  uint8_t uStack_5;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t u3;
+  int64_t i2;
+  int64_t i3;
+  int64_t i4;
+  uint8_t u4;
+  uint8_t u5;
   
-  uVar2 = *(uint32_t *)((int)self + 0x10c) & 0xfffeffff | 0x2000000;
-  *(uint32_t *)((int)self + 0x10c) = uVar2;
-  uVar4 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x179))));
+  u2 = *(uint32_t *)((int)self + 0x10c) & 0xfffeffff | 0x2000000;
+  *(uint32_t *)((int)self + 0x10c) = u2;
+  u3 = ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x179))));
   if (*(char *)((int)self + 0x179) == '\0') {
     if (*(int **)((int)self + 0x104) == (int *)0x0) {
-      iVar3 = 0;
+      i1 = 0;
     }
     else {
-      iVar3 = **(int **)((int)self + 0x104);
+      i1 = **(int **)((int)self + 0x104);
     }
-    if (*(char *)(iVar3 + 0x34) == '\0') {
+    if (*(char *)(i1 + 0x34) == '\0') {
       *(uint8_t *)((int)self + 0x1bc) = 0;
       *(uint8_t *)((int)self + 0x1bd) = 1;
     }
-    uVar2 = *(uint32_t *)((int)self + 0x1ac);
-    uStack_7 = (uint8_t)(uVar2 >> 8);
-    uStack_5 = (uint8_t)(uVar2 >> 0x18);
+    u2 = *(uint32_t *)((int)self + 0x1ac);
+    u4 = (uint8_t)(u2 >> 8);
+    u5 = (uint8_t)(u2 >> 0x18);
     if ((*(uint8_t *)((int)self + 0x198) & 1) == 0) {
-      lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 0x10 & 0xff) *
-                     (long double)((uint16_t)(uVar2 >> 0x10) & 0xff) * (long double)0.0078125f);
-      uVar1 = g_scratchValue_as_v0;
-      lVar6 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 8 & 0xff) *
-                     (long double)(((uint16_t)(((uint16_t)(uint8_t)((char)lVar5) << 8) | (uint8_t)(uStack_7))) & 0xff) * (long double)0.0078125f);
-      lVar7 = XI_CALL_ST0(0x10311C2Cu)((long double)(uVar1 & 0xff) * (long double)(uVar2 & 0xff) * (long double)0.0078125f);
-      uVar2 = CONCAT13(uStack_5,((uint32_t)(((uint32_t)(uint8_t)((char)lVar5) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)lVar6) << 8) | (uint8_t)((char)lVar7)))))));
+      i2 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 0x10 & 0xff) *
+                     (long double)((uint16_t)(u2 >> 0x10) & 0xff) * (long double)0.0078125f);
+      u1 = g_scratchValue_as_v0;
+      i3 = XI_CALL_ST0(0x10311C2Cu)((long double)(g_scratchValue_as_v0 >> 8 & 0xff) *
+                     (long double)(((uint16_t)(((uint16_t)(uint8_t)((char)i2) << 8) | (uint8_t)(u4))) & 0xff) * (long double)0.0078125f);
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)(u1 & 0xff) * (long double)(u2 & 0xff) * (long double)0.0078125f);
+      u2 = ((uint32_t)(((uint32_t)(uint8_t)(u5) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)((char)i2) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)i3) << 8) | (uint8_t)((char)i4))))))) & 0xFFFFFFu)));
     }
     if ((*(int **)((int)self + 0x1a8) != (int *)0x0) &&
        (*(int *)(**(int **)((int)self + 0x1a8) + 0x30) != 0)) {
       if (*(int **)((int)self + 0x1a8) == (int *)0x0) {
-        iVar3 = 0;
+        i1 = 0;
       }
       else {
-        iVar3 = **(int **)((int)self + 0x1a8);
+        i1 = **(int **)((int)self + 0x1a8);
       }
-      uVar4 = orig::TextureHolder_BindTinted
-                        ((void *)(iVar3 + 0x30),(int)*(char *)((int)self + 0x1bd),uVar2);
-      return uVar4;
+      u3 = orig::TextureHolder_BindTinted
+                        ((void *)(i1 + 0x30),(int)*(char *)((int)self + 0x1bd),u2);
+      return u3;
     }
-    uVar4 = orig::FUN_10044250((int)*(char *)((int)self + 0x1bd),uVar2);
+    u3 = orig::game_10044250((int)*(char *)((int)self + 0x1bd),u2);
   }
-  return uVar4;
+  return u3;
 }

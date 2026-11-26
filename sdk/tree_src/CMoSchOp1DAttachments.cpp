@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x100630E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoSchOp1DAttachments::Slot1DeleteOwner(char a2)
+uint32_t * CMoSchOp1DAttachments::Slot1DeleteOwner(char arg1)
 {
-  return orig::CMoSchOp1DAttachments_ScalarDeletingDtor((_DWORD *)this - 13, a2);
+  return orig::CMoSchOp1DAttachments_ScalarDeletingDtor((uint32_t *)this - 13, arg1);
 }

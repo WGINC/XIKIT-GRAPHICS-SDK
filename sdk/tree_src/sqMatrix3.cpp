@@ -4,12 +4,12 @@
 
 // FUNCTION: FFXIMAIN 0x102967E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl SqMatrix3_Determinant(float * param_1)
+XI_API long double __cdecl SqMatrix3_Determinant(float * arg1)
 {
-  return ((((long double)param_1[8] * (long double)*param_1 * (long double)param_1[4] +
-           (long double)param_1[2] * (long double)param_1[3] * (long double)param_1[7] +
-           (long double)param_1[6] * (long double)param_1[1] * (long double)param_1[5]) -
-          (long double)*param_1 * (long double)param_1[7] * (long double)param_1[5]) -
-         (long double)param_1[8] * (long double)param_1[1] * (long double)param_1[3]) -
-         (long double)param_1[6] * (long double)param_1[2] * (long double)param_1[4];
+  return (((arg1[8] * *arg1 * arg1[4] +
+           arg1[2] * arg1[3] * arg1[7] +
+           arg1[6] * arg1[1] * arg1[5]) -
+          *arg1 * arg1[7] * arg1[5]) -
+         arg1[8] * arg1[1] * arg1[3]) -
+         arg1[6] * arg1[2] * arg1[4];
 }

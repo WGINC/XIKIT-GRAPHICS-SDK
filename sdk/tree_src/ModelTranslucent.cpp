@@ -11,22 +11,22 @@ XI_API void * __thiscall ModelTranslucent_ReturnSelf(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1001D0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API _DWORD * __cdecl Model_CreateTranslucentTargets(void)
+XI_API uint32_t * __cdecl Model_CreateTranslucentTargets(void)
 {
-  unsigned __int16 ViewportWidth;
-  _DWORD *result;
-  unsigned __int16 v2;
-  unsigned __int16 ViewportHeight;
-  unsigned __int16 v4;
+  unsigned short ViewportWidth;
+  uint32_t *result;
+  unsigned short u1;
+  unsigned short ViewportHeight;
+  unsigned short u2;
   ViewportHeight = orig::Camera_GetViewportHeight();
   ViewportWidth = orig::Camera_GetViewportWidth();
   pTexture = (IDirect3DTexture8 *)orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &g_translucentTarget, 1, 0);
   result = g_pEnv;
   if ( g_pEnv[6] != 0 )
   {
-    v4 = orig::Camera_GetViewportHeight();
-    v2 = orig::Camera_GetViewportWidth();
-    result = orig::CDx_CreateTexture(g_pCDx, v2, v4, &g_translucentDepth, 1, 0);
+    u2 = orig::Camera_GetViewportHeight();
+    u1 = orig::Camera_GetViewportWidth();
+    result = orig::CDx_CreateTexture(g_pCDx, u1, u2, &g_translucentDepth, 1, 0);
     g_translucentTargetEye2 = (int)result;
   }
   else
@@ -41,27 +41,27 @@ XI_API _DWORD * __cdecl Model_CreateTranslucentTargets(void)
 // GATE: PASS -- 100 trials, 98 returned normally, 187 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
 XI_API void __thiscall ModelTranslucent_Construct(void * self_)
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar3;
+  int *p1;
+  int i1;
+  int *p2;
   
-  *(uint8_t ***)self_ = &PTR_FUN_1032a340;
-  piVar3 = (int *)((int)self_ + 0x10);
-  iVar2 = 0;
+  *(uint8_t ***)self_ = &g_1032A340;
+  p2 = (int *)((int)self_ + 0x10);
+  i1 = 0;
   do {
-    piVar1 = *(int **)((int)&pTexture_as_v1 + iVar2);
-    piVar3[-2] = (int)piVar1;
-    if (piVar1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 4))))(piVar1);
+    p1 = *(int **)((int)&pTexture_as_v1 + i1);
+    p2[-2] = (int)p1;
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 4))))(p1);
     }
-    piVar1 = *(int **)((int)&g_translucentTarget_as_v1 + iVar2);
-    *piVar3 = (int)piVar1;
-    if (piVar1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 4))))(piVar1);
+    p1 = *(int **)((int)&g_translucentTarget_as_v1 + i1);
+    *p2 = (int)p1;
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 4))))(p1);
     }
-    iVar2 = iVar2 + 4;
-    piVar3 = piVar3 + 1;
-  } while (iVar2 < 8);
+    i1 = i1 + 4;
+    p2 = p2 + 1;
+  } while (i1 < 8);
   *(uint8_t *)((int)self_ + 4) = 0;
   g_translucentForce_as_v0 = 0;
   return;
@@ -71,45 +71,45 @@ XI_API void __thiscall ModelTranslucent_Construct(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __thiscall Model_BeginTranslucentPass(int self_)
 {
-  int v2;
-  int v4;
-  v2 = *(_DWORD *)(self_ + 8);
-  if ( v2 == 0 || g_translucentForce == 0 && (g_translucentColor & 0xFF000000) == 0x80000000 )
+  int i1;
+  int i2;
+  i1 = *(uint32_t *)(self_ + 8);
+  if ( i1 == 0 || g_translucentForce == 0 && (g_translucentColor & 0xFF000000) == 0x80000000 )
     return 0;
-  if ( *(_BYTE *)(self_ + 4) != 0 )
+  if ( *(uint8_t *)(self_ + 4) != 0 )
   {
-    if ( (*(unsigned __int8 *)&g_pCDx->renderTargetDepth) != 0 )
+    if ( (*(unsigned char *)&g_pCDx->renderTargetDepth) != 0 )
       orig::CDx_PushRenderTarget(
         g_pCDx,
-        v2,
-        *(_DWORD *)(self_ + 16),
-        *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * (*(unsigned __int8 *)&g_pCDx->renderTargetDepth) + 96]);
+        i1,
+        *(uint32_t *)(self_ + 16),
+        *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * (*(unsigned char *)&g_pCDx->renderTargetDepth) + 96]);
     else
-      orig::CDx_PushRenderTarget(g_pCDx, v2, *(_DWORD *)(self_ + 16), *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x94)));
+      orig::CDx_PushRenderTarget(g_pCDx, i1, *(uint32_t *)(self_ + 16), *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x94)));
     return 1;
   }
   else
   {
     if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 )
     {
-      orig::CDx_PushRenderTarget(g_pCDx, *(_DWORD *)(self_ + 12), *(_DWORD *)(self_ + 20), 0);
+      orig::CDx_PushRenderTarget(g_pCDx, *(uint32_t *)(self_ + 12), *(uint32_t *)(self_ + 20), 0);
       orig::CDx_EndClearBegin(g_pCDx, 0, 0, 1, 0, 1065353216, 0);
       orig::CDx_SetTexture(g_pCDx, 0, 0);
     }
-    if ( (*(unsigned __int8 *)&g_pCDx->renderTargetDepth) != 0 )
-      v4 = *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * (*(unsigned __int8 *)&g_pCDx->renderTargetDepth) + 96];
+    if ( (*(unsigned char *)&g_pCDx->renderTargetDepth) != 0 )
+      i2 = *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * (*(unsigned char *)&g_pCDx->renderTargetDepth) + 96];
     else
-      v4 = *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x94));
-    orig::CDx_PushRenderTarget(g_pCDx, *(_DWORD *)(self_ + 8), *(_DWORD *)(self_ + 16), v4);
+      i2 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x94));
+    orig::CDx_PushRenderTarget(g_pCDx, *(uint32_t *)(self_ + 8), *(uint32_t *)(self_ + 16), i2);
     orig::CDx_EndClearBegin(g_pCDx, 0, 0, 1, 0, 1065353216, 0);
-    *(_BYTE *)(self_ + 4) = 1;
+    *(uint8_t *)(self_ + 4) = 1;
     return 1;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x1001D350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Model_TranslucentUnbindTexture(_DWORD *self_)
+XI_API char __thiscall Model_TranslucentUnbindTexture(uint32_t *self_)
 {
   if ( *(self_ + 2) == 0 || g_translucentForce == 0 && (g_translucentColor & 0xFF000000) == 0x80000000 )
     return 0;
@@ -119,10 +119,10 @@ XI_API char __thiscall Model_TranslucentUnbindTexture(_DWORD *self_)
 
 // FUNCTION: FFXIMAIN 0x1001D390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall ModelTranslucent_SetColorForce(undefined4 param_1, undefined4 param_2)
+XI_API void __stdcall ModelTranslucent_SetColorForce(bits32 arg1, bits32 arg2)
 {
-  g_translucentColor_as_v0 = param_1;
-  g_translucentForce_as_v0 = (uint8_t)param_2;
+  g_translucentColor_as_v0 = arg1;
+  g_translucentForce_as_v0 = (uint8_t)arg2;
   return;
 }
 
@@ -131,47 +131,47 @@ XI_API void __stdcall ModelTranslucent_SetColorForce(undefined4 param_1, undefin
 XI_API int __thiscall Model_CompositeTranslucentPass(void *self_)
 {
   int result;
-  unsigned __int8 v3;
-  CDx *v4;
-  unsigned __int8 v5;
-  __int64 v6;
-  __int64 v7;
-  __int64 v8;
-  int a3[28];
-  if ( *((_DWORD *)self_ + 2) != 0 )
+  unsigned char c1;
+  CDx *p1;
+  unsigned char c2;
+  long long i1;
+  long long i2;
+  long long i3;
+  int buf1[28];
+  if ( *((uint32_t *)self_ + 2) != 0 )
   {
     result = g_translucentColor;
-    if ( (g_translucentForce != 0 || (g_translucentColor & 0xFF000000) != 0x80000000) && *((_BYTE *)self_ + 4) != 0 )
+    if ( (g_translucentForce != 0 || (g_translucentColor & 0xFF000000) != 0x80000000) && *((uint8_t *)self_ + 4) != 0 )
     {
-      memset(a3, 0, 12);
-      a3[3] = 1065353216;
-      a3[4] = g_translucentColor;
-      a3[5] = 0;
-      a3[6] = 0;
-      v6 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 2);
-      a3[8] = 0;
-      a3[9] = 0;
-      a3[10] = 1065353216;
-      a3[11] = g_translucentColor;
-      a3[12] = 1065353216;
-      *(float *)&a3[7] = (float)v6;
-      a3[13] = 0;
-      a3[14] = 0;
-      v7 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 3);
-      a3[16] = 0;
-      a3[17] = 1065353216;
-      a3[18] = g_translucentColor;
-      a3[19] = 0;
-      a3[20] = 1065353216;
-      *(float *)&a3[15] = (float)v7;
-      *(float *)&a3[21] = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 2);
-      v8 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx) + 3);
-      a3[23] = 0;
-      a3[24] = 1065353216;
-      a3[25] = g_translucentColor;
-      a3[26] = 1065353216;
-      a3[27] = 1065353216;
-      *(float *)&a3[22] = (float)v8;
+      memset(buf1, 0, 12);
+      buf1[3] = 1065353216;
+      buf1[4] = g_translucentColor;
+      buf1[5] = 0;
+      buf1[6] = 0;
+      i1 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2);
+      buf1[8] = 0;
+      buf1[9] = 0;
+      buf1[10] = 1065353216;
+      buf1[11] = g_translucentColor;
+      buf1[12] = 1065353216;
+      *(float *)&buf1[7] = (float)i1;
+      buf1[13] = 0;
+      buf1[14] = 0;
+      i2 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3);
+      buf1[16] = 0;
+      buf1[17] = 1065353216;
+      buf1[18] = g_translucentColor;
+      buf1[19] = 0;
+      buf1[20] = 1065353216;
+      *(float *)&buf1[15] = (float)i2;
+      *(float *)&buf1[21] = (float)*((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 2);
+      i3 = *((unsigned int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx) + 3);
+      buf1[23] = 0;
+      buf1[24] = 1065353216;
+      buf1[25] = g_translucentColor;
+      buf1[26] = 1065353216;
+      buf1[27] = 1065353216;
+      *(float *)&buf1[22] = (float)i3;
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_GREATER);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 0);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
@@ -188,39 +188,39 @@ XI_API int __thiscall Model_CompositeTranslucentPass(void *self_)
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
       (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-      v3 = (*(unsigned __int8 *)((char *)g_pCDx + 0x828));
-      (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = 0;
-      v5 = v3;
+      c1 = (*(unsigned char *)((char *)g_pCDx + 0x828));
+      (*(unsigned char *)((char *)g_pCDx + 0x828)) = 0;
+      c2 = c1;
       if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 )
       {
         (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *((IDirect3DBaseTexture8 **)self_ + 2));
-        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)a3, 28);
-        if ( *((_DWORD *)self_ + 3) != 0 )
+        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)buf1, 28);
+        if ( *((uint32_t *)self_ + 3) != 0 )
         {
-          v4 = g_pCDx;
-          if ( *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)) == 0 || *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A8)) == 0 )
-            goto LABEL_11;
+          p1 = g_pCDx;
+          if ( *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)) == 0 || *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A8)) == 0 )
+            goto L1;
           (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *((IDirect3DBaseTexture8 **)self_ + 3));
           orig::CDx_PushRenderTarget(
             g_pCDx,
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)),
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A0)),
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A8)));
-          orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)a3, 28);
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)),
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A0)),
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A8)));
+          orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)buf1, 28);
           orig::CDx_SetTexture(g_pCDx, 0, 0);
         }
       }
-      v4 = g_pCDx;
-LABEL_11:
-      (*(IDirect3DDevice8 * *)((char *)v4 + 0xC))->lpVtbl->SetTexture((*(IDirect3DDevice8 * *)((char *)v4 + 0xC)), 0, *((IDirect3DBaseTexture8 **)self_ + 2));
-      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)a3, 28);
-      (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = v5;
+      p1 = g_pCDx;
+L1:
+      (*(IDirect3DDevice8 * *)((char *)p1 + 0xC))->lpVtbl->SetTexture((*(IDirect3DDevice8 * *)((char *)p1 + 0xC)), 0, *((IDirect3DBaseTexture8 **)self_ + 2));
+      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)buf1, 28);
+      (*(unsigned char *)((char *)g_pCDx + 0x828)) = c2;
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 96u);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
       result = (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
-      *((_BYTE *)self_ + 4) = 0;
+      *((uint8_t *)self_ + 4) = 0;
     }
   }
   return result;
@@ -230,45 +230,45 @@ LABEL_11:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TexRes_LoadBm2(void * self_)
 {
-  uint8_t bVar1;
-  void *pvVar2;
+  uint8_t u1;
+  void *p1;
   char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&auStack_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  uint8_t  (&u2)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
   
-  pvVar2 = self_;
+  p1 = self_;
   switch(xi_sw((*(uint8_t *)((int)self_ + 0x30) & 0x70) >> 4)) {
   case 0:
     orig::nullsub_90_v1();
-    bVar1 = *(uint8_t *)((int)self_ + 0x30);
+    u1 = *(uint8_t *)((int)self_ + 0x30);
     break;
   case 1:
   case 2:
   case 3:
-    goto switchD_1001d818_caseD_1;
+    goto L1;
   default:
     orig::nullsub_90_v1();
-    bVar1 = *(uint8_t *)((int)self_ + 0x30);
+    u1 = *(uint8_t *)((int)self_ + 0x30);
   }
-  orig::ErrorReport_NoOpVarargsA_v1(c_dxtFourCCs + 0x28,(bVar1 & 0x70) >> 4,pvVar2);
-switchD_1001d818_caseD_1:
-  orig::Util_Copy16Bytes_v1(auStack_10,(int)self_ + 0x31);
-  pvVar2 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)auStack_10,(int)self_,0);
-  if (pvVar2 == (void *)0x0) {
-    pvVar2 = (void *)orig::Mem_AllocDefault_v1(0x48);
-    if (pvVar2 == (void *)0x0) {
+  orig::ErrorReport_NoOpVarargsA_v1(c_dxtFourCCs + 0x28,(u1 & 0x70) >> 4,p1);
+L1:
+  orig::Util_Copy16Bytes_v1(u2,(int)self_ + 0x31);
+  p1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)u2,(int)self_,0);
+  if (p1 == (void *)0x0) {
+    p1 = (void *)orig::Mem_AllocDefault_v1(0x48);
+    if (p1 == (void *)0x0) {
       return;
     }
-    pvVar2 = orig::TexObj_Constructor(pvVar2);
-    if (pvVar2 == (void *)0x0) {
+    p1 = orig::TexObj_Constructor(p1);
+    if (p1 == (void *)0x0) {
       return;
     }
-    orig::FUN_1001d8e0(self_,(int)pvVar2);
-    orig::TexMgr_Enqueue(g_pTextureMng_as_v2,(int)pvVar2);
-    orig::FUN_10071f50(self_);
+    orig::game_1001D8E0(self_,(int)p1);
+    orig::TexMgr_Enqueue(g_pTextureMng_as_v2,(int)p1);
+    orig::game_10071F50_as_v0(self_);
     if (*(char *)((int)g_pTextureMng_as_v2 + 0x10) == '\x01') {
-      orig::TexObj_CreateAndUpload_v1(pvVar2);
+      orig::TexObj_CreateAndUpload_v1(p1);
     }
   }
-  *(int *)((int)pvVar2 + 4) = *(int *)((int)pvVar2 + 4) + 1;
+  *(int *)((int)p1 + 4) = *(int *)((int)p1 + 4) + 1;
   return;
 }

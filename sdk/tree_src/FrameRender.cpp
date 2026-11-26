@@ -4,113 +4,113 @@
 
 // FUNCTION: FFXIMAIN 0x10011A00
 // GATE: PASS -- 100 trials, 68 returned normally, 560 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 68
-XI_API unsigned __int8 __thiscall Frame_Render(void * self_)
+XI_API unsigned char __thiscall Frame_Render(void * self_)
 {
-  double v2;
+  double f1;
   int result;
-  int v4;
-  int v5;
-  int v6;
-  int v7;
-  int v8;
-  int v9;
-  int v10;
-  int v11;
-  int v12;
-  int v13;
-  __int16 v14;
-  int v15; // kr00_4
-  __int16 v16;
-  __int16 v17;
-  unsigned __int16 v18;
-  int v19;
-  unsigned __int16 v20;
-  unsigned __int16 v21;
-  unsigned __int16 v22;
-  int v23;
-  int v24;
-  int v25;
-  int v26;
-  int *v27;
-  CDx *v28;
-  char v29;
-  int v30;
-  double v31;
-  double v32;
-  int v33;
-  int *v34;
-  double v35;
-  int v36;
-  double v37;
-  double v38;
-  double v39;
-  __int16 v40; // fps
-  bool v41; // c0
-  char v42; // c2
-  bool v43; // c3
-  int *v44;
-  double v45;
-  int v46;
-  double v47;
-  double v48;
-  __int16 v49; // fps
-  double v50;
-  bool v51; // c0
-  char v52; // c2
-  bool v53; // c3
-  double v54;
-  int v55;
-  double v56;
-  float *v57;
-  double v58;
-  double v59;
-  double v60;
-  __int16 v61; // fps
-  double v62;
-  bool v63; // c0
-  char v64; // c2
-  bool v65; // c3
-  bool v66; // c0
-  char v67; // c2
-  bool v68; // c3
-  int v69;
-  int v70;
-  double v71;
-  __int16 v72; // fps
-  bool v73; // c0
-  char v74; // c2
-  bool v75; // c3
-  double v76;
-  __int16 v77; // fps
-  double v78;
-  bool v79; // c0
-  char v80; // c2
-  bool v81; // c3
-  bool v83; // c0
-  char v84; // c2
-  bool v85; // c3
-  int v86;
-  int v87;
-  int v88;
-  unsigned int v89;
-  unsigned int v90;
-  char v91;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  int i8;
+  int i9;
+  int i10;
+  short i11;
+  int i12; // kr00_4
+  short i13;
+  short i14;
+  unsigned short u1;
+  int i15;
+  unsigned short u2;
+  unsigned short u3;
+  unsigned short u4;
+  int i16;
+  int i17;
+  int i18;
+  int i19;
+  int *p1;
+  CDx *p2;
+  char c1;
+  int i20;
+  double f2;
+  double f3;
+  int i21;
+  int *p3;
+  double f4;
+  int i22;
+  double f5;
+  double f6;
+  double f7;
+  short i23; // fps
+  bool b1; // c0
+  char c2; // c2
+  bool b2; // c3
+  int *p4;
+  double f8;
+  int i24;
+  double f9;
+  double f10;
+  short i25; // fps
+  double f11;
+  bool b3; // c0
+  char c3; // c2
+  bool b4; // c3
+  double f12;
+  int i26;
+  double f13;
+  float *p5;
+  double f14;
+  double f15;
+  double f16;
+  short i27; // fps
+  double f17;
+  bool b5; // c0
+  char c4; // c2
+  bool b6; // c3
+  bool b7; // c0
+  char c5; // c2
+  bool b8; // c3
+  int i28;
+  int i29;
+  double f18;
+  short i30; // fps
+  bool b9; // c0
+  char c6; // c2
+  bool b10; // c3
+  double f19;
+  short i31; // fps
+  double f20;
+  bool b11; // c0
+  char c7; // c2
+  bool b12; // c3
+  bool b13; // c0
+  char c8; // c2
+  bool b14; // c3
+  int i32;
+  int i33;
+  int i34;
+  unsigned int u5;
+  unsigned int u6;
+  char c9;
   alignas(16) unsigned char xi_frame[0x888];  // address-taken locals at their original offsets
-  float &v92 = *reinterpret_cast<float *>(xi_frame + 0x234);
-  int &v93 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &v94 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &v95 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  float &v96 = *reinterpret_cast<float *>(xi_frame + 0x248);
-  int &v97 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  int &v98 = *reinterpret_cast<int *>(xi_frame + 0x248);
-  char &v99 = *reinterpret_cast<char *>(xi_frame + 0x24F);
+  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x234);
+  int &i35 = *reinterpret_cast<int *>(xi_frame + 0x248);
+  int &i36 = *reinterpret_cast<int *>(xi_frame + 0x248);
+  int &i37 = *reinterpret_cast<int *>(xi_frame + 0x248);
+  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x248);
+  int &i38 = *reinterpret_cast<int *>(xi_frame + 0x248);
+  int &i39 = *reinterpret_cast<int *>(xi_frame + 0x248);
+  char &c10 = *reinterpret_cast<char *>(xi_frame + 0x24F);
   char &i = *reinterpret_cast<char *>(xi_frame + 0x24F);
-  int &a4 = *reinterpret_cast<int *>(xi_frame + 0x250);
-  int &v102 = *reinterpret_cast<int *>(xi_frame + 0x254);
-  int &a2 = *reinterpret_cast<int *>(xi_frame + 0x258);
-  int &v104 = *reinterpret_cast<int *>(xi_frame + 0x25C);
+  int &i40 = *reinterpret_cast<int *>(xi_frame + 0x250);
+  int &i41 = *reinterpret_cast<int *>(xi_frame + 0x254);
+  int &i42 = *reinterpret_cast<int *>(xi_frame + 0x258);
+  int &i43 = *reinterpret_cast<int *>(xi_frame + 0x25C);
   struct _SYSTEMTIME &SystemTime = *reinterpret_cast<struct _SYSTEMTIME *>(xi_frame + 0x260);
-  _DWORD (&v106)[6] = *reinterpret_cast<_DWORD (*)[6]>(xi_frame + 0x270);
+  uint32_t (&u7)[6] = *reinterpret_cast<uint32_t (*)[6]>(xi_frame + 0x270);
   char (&Buffer)[512] = *reinterpret_cast<char (*)[512]>(xi_frame + 0x288);
   bool xi_fpu_unord = false;
 
@@ -119,14 +119,14 @@ XI_API unsigned __int8 __thiscall Frame_Render(void * self_)
   if ( g_pEnv != nullptr )
   {
     if ( !(*((float *)self_ + 10) < 1.0) )
-      v2 = *((float *)self_ + 10);
+      f1 = *((float *)self_ + 10);
     else
-      v2 = 1.0;
-    orig::j_CEnv_UpdateDualTargetMode((int)g_pEnv, (__int64)v2);
+      f1 = 1.0;
+    orig::j_CEnv_UpdateDualTargetMode((int)g_pEnv, (long long)f1);
   }
   if ( !orig::CDx_TestCooperativeLevel(g_pCDx) )
   {
-    *((_BYTE *)g_pApp + 28) = 0;
+    *((uint8_t *)g_pApp + 28) = 0;
     if ( g_windowMode != 0 )
       result = orig::App_SetErrorCode(10);
     else
@@ -138,299 +138,299 @@ XI_API unsigned __int8 __thiscall Frame_Render(void * self_)
   orig::CDx_SetDefaultRenderState(g_pCDx);
   orig::CDx_NopA();
   orig::TexMgr_UploadPumpEntry(g_pTextureMng);
-  if ( g_pAppInputState != 0 && orig::Input_IsCursorActive((_DWORD *)g_pAppInputState, 0) != 0 )
+  if ( g_pAppInputState != 0 && orig::Input_IsCursorActive((uint32_t *)g_pAppInputState, 0) != 0 )
     orig::TextInputFiles_Call103113C8();
   if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 )
   {
     orig::CDx_PushRenderTarget(
       g_pCDx,
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)),
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A0)),
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A8)));
-    orig::CDx_EndAndClearBegin(g_pCDx, 3, *((_DWORD *)self_ + 194), 1065353216, 0);
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)),
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A0)),
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A8)));
+    orig::CDx_EndAndClearBegin(g_pCDx, 3, *((uint32_t *)self_ + 194), 1065353216, 0);
     orig::CDx_SetTexture(g_pCDx, 0, 0);
   }
-  v99 = orig::CDx_PushRenderTargetRet1(
+  c10 = orig::CDx_PushRenderTargetRet1(
           g_pCDx,
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)),
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x19C)),
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A4)));
-  orig::CDx_EndAndClearBegin(g_pCDx, 3, *((_DWORD *)self_ + 194), 1065353216, 0);
-  v4 = g_pSceneState;
-  if ( *(_DWORD *)g_pSceneState == 160 )
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x19C)),
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A4)));
+  orig::CDx_EndAndClearBegin(g_pCDx, 3, *((uint32_t *)self_ + 194), 1065353216, 0);
+  i1 = g_pSceneState;
+  if ( *(uint32_t *)g_pSceneState == 160 )
   {
-    *((_DWORD *)self_ + 17) = 13;
-LABEL_39:
+    *((uint32_t *)self_ + 17) = 13;
+L1:
     while ( 2 )
     {
-      v4 = g_pSceneState;
-LABEL_40:
-      v7 = *((_DWORD *)self_ + 17);
-      if ( v7 != *((_DWORD *)self_ + 16) )
+      i1 = g_pSceneState;
+L2:
+      i4 = *((uint32_t *)self_ + 17);
+      if ( i4 != *((uint32_t *)self_ + 16) )
       {
-        *((_DWORD *)self_ + 16) = v7;
+        *((uint32_t *)self_ + 16) = i4;
         orig::App_SetSeqStep(self_, 0);
-        *((_DWORD *)self_ + 18) = 0;
-        v4 = g_pSceneState;
+        *((uint32_t *)self_ + 18) = 0;
+        i1 = g_pSceneState;
       }
-      switch ( *((_DWORD *)self_ + 17) )
+      switch ( *((uint32_t *)self_ + 17) )
       {
         case 0:
-          if ( *(_DWORD *)(g_pAppSettings + 96) != 0 )
+          if ( *(uint32_t *)(g_pAppSettings + 96) != 0 )
           {
-            v8 = orig::Scene_GetTableValue(1);
-            g_frameMeshRes = *orig::sub_100731B0((_DWORD *)g_pMeshResourceMng, &a4, v8);
-            orig::CMoResource_AddRefChain(*(_DWORD *)g_frameMeshRes);
+            i5 = orig::Scene_GetTableValue(1);
+            g_frameMeshRes = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &i40, i5);
+            orig::CMoResource_AddRefChain(*(uint32_t *)g_frameMeshRes);
           }
-          if ( *(_DWORD *)(g_pAppSettings + 40) != 0 )
+          if ( *(uint32_t *)(g_pAppSettings + 40) != 0 )
           {
-            dword_10669014 = 0;
-            v9 = orig::App_GetGlobal_104569C8();
-            if ( v9 != 0 )
+            g_10669014 = 0;
+            i6 = orig::App_GetGlobal_104569C8();
+            if ( i6 != 0 )
             {
-              v10 = v9 - 1;
-              if ( v10 != 0 )
+              i7 = i6 - 1;
+              if ( i7 != 0 )
               {
-                if ( v10 == 1 )
+                if ( i7 == 1 )
                 {
-                  dword_1045694C = 0;
-                  dword_10669014 = 1;
-                  if ( byte_10669420 == 1 )
-                    dword_10456950 = 1;
+                  g_1045694C = 0;
+                  g_10669014 = 1;
+                  if ( g_10669420 == 1 )
+                    g_10456950 = 1;
                   orig::LobbyThread_SetGlobal106690AC(1);
                   orig::App_SetGlobal_104569C8(0);
-                  *((_BYTE *)g_pCamera + 9) = 1;
-                  *((_DWORD *)self_ + 205) = 0x80000000;
-                  *((_DWORD *)self_ + 17) = 2;
+                  *((uint8_t *)g_pCamera + 9) = 1;
+                  *((uint32_t *)self_ + 205) = 0x80000000;
+                  *((uint32_t *)self_ + 17) = 2;
                   orig::TextInputFiles_RunPairA();
                 }
               }
               else
               {
                 orig::App_SetGlobal_104569C8(0);
-                *((_DWORD *)self_ + 17) = 8;
-                *((_BYTE *)g_pCamera + 9) = 1;
-                if ( byte_10669420 == 1 )
-                  dword_10456950 = 1;
+                *((uint32_t *)self_ + 17) = 8;
+                *((uint8_t *)g_pCamera + 9) = 1;
+                if ( g_10669420 == 1 )
+                  g_10456950 = 1;
                 orig::TextInputFiles_RunPairA();
               }
             }
             else
             {
-              *((_DWORD *)self_ + 17) = 1;
+              *((uint32_t *)self_ + 17) = 1;
             }
           }
           else
           {
-            *((_BYTE *)g_pCamera + 9) = 0;
-            *((_DWORD *)self_ + 17) = 10;
+            *((uint8_t *)g_pCamera + 9) = 0;
+            *((uint32_t *)self_ + 17) = 10;
             orig::NetCellFont_InitTimer();
           }
           break;
         case 1:
           if ( g_cfg0022 == 0 || orig::App_RunOpening(self_) != 0 )
-            *((_DWORD *)self_ + 17) = 2;
+            *((uint32_t *)self_ + 17) = 2;
           break;
         case 2:
           orig::__snprintf(Buffer, 0x200u, aNet3Port54001);
           orig::AppMainLoop_AppendWithSpace(Buffer);
-          *(_DWORD *)(g_pAppSettings + 40) = 3;
-          *((_DWORD *)self_ + 17) = 3;
-          *((_WORD *)self_ + 2) = 0;
-          if ( *(_DWORD *)(g_pAppSettings + 40) != 0 )
+          *(uint32_t *)(g_pAppSettings + 40) = 3;
+          *((uint32_t *)self_ + 17) = 3;
+          *((uint16_t *)self_ + 2) = 0;
+          if ( *(uint32_t *)(g_pAppSettings + 40) != 0 )
           {
             if ( orig::Game_InitSceneState((int)g_pGameMode) != 0 )
             {
-              *((_BYTE *)g_pCamera + 9) = 1;
+              *((uint8_t *)g_pCamera + 9) = 1;
               orig::TextInputFiles_RunPairA();
             }
             else
             {
               orig::App_SetErrorCode(5);
-              *((_BYTE *)self_ + 10) = 0;
+              *((uint8_t *)self_ + 10) = 0;
             }
           }
           break;
         case 3:
-          if ( *(_DWORD *)(g_pAppSettings + 36) == 0 || (*(_DWORD *)v4 = 32, orig::fn_10015740()) )
-            *((_DWORD *)self_ + 17) = 4;
+          if ( *(uint32_t *)(g_pAppSettings + 36) == 0 || (*(uint32_t *)i1 = 32, orig::fn_10015740()) )
+            *((uint32_t *)self_ + 17) = 4;
           break;
         case 4:
           if ( orig::fn_10015740() )
           {
-            if ( dword_10456950 != 0 || *(_DWORD *)(g_pAppSettings + 88) != 0 )
+            if ( g_10456950 != 0 || *(uint32_t *)(g_pAppSettings + 88) != 0 )
               g_cfg0023 = 1;
             if ( g_pObj_Vtbl10329F8C != 0 )
             {
-              orig::ErrorReport_LoadChecksum((_DWORD *)(g_pObj_Vtbl10329F8C + 388), (FILE *)&Stream._file, 7u);
-              *(_DWORD *)(g_pSceneState + 28) = *(_DWORD *)(g_pObj_Vtbl10329F8C + 396);
+              orig::ErrorReport_LoadChecksum((uint32_t *)(g_pObj_Vtbl10329F8C + 388), (FILE *)&Stream._file, 7u);
+              *(uint32_t *)(g_pSceneState + 28) = *(uint32_t *)(g_pObj_Vtbl10329F8C + 396);
             }
-            *((_DWORD *)self_ + 17) = 5;
+            *((uint32_t *)self_ + 17) = 5;
           }
           break;
         case 5:
-          *(_DWORD *)v4 = 64;
+          *(uint32_t *)i1 = 64;
           if ( orig::App_StepGameState5Connect((int)self_, (int)self_ + 72) != 0 )
           {
-            v11 = *((_DWORD *)self_ + 18);
-            if ( v11 != 0 )
+            i8 = *((uint32_t *)self_ + 18);
+            if ( i8 != 0 )
             {
-              if ( v11 == 1 )
-                *((_DWORD *)self_ + 17) = 13;
+              if ( i8 == 1 )
+                *((uint32_t *)self_ + 17) = 13;
             }
             else
             {
-              *((_DWORD *)g_pGameMode + 4) = 1;
+              *((uint32_t *)g_pGameMode + 4) = 1;
               XiControlActor_isFirstPersonView = 0;
               XiControlActor_isAutoRunning = 0;
-              byte_1047D694 = 0;
+              g_1047D694 = 0;
               orig::StAvatarInfo_SendBytePairKind2(0, 1);
-              v12 = orig::NetCellFont_GetRecordDwordFwd(*((_DWORD *)g_pGameMode + 32));
-              if ( orig::TextInputFiles_FileMngFwd101C2B60((int *)g_pFileMng, v12) == 0 )
+              i9 = orig::NetCellFont_GetRecordDwordFwd(*((uint32_t *)g_pGameMode + 32));
+              if ( orig::TextInputFiles_FileMngFwd101C2B60((int *)g_pFileMng, i9) == 0 )
               {
                 if ( !orig::TextInputFiles_FileMngFwd101C2C80((int *)g_pFileMng) )
                   orig::TextInputFiles_FileMngFwd101C2E70((int *)g_pFileMng);
-                v13 = orig::NetCellFont_GetRecordDwordFwd(*((_DWORD *)g_pGameMode + 32));
-                orig::TextInputFiles_FileMngFwd101C4170((void *)g_pFileMng, v13);
+                i10 = orig::NetCellFont_GetRecordDwordFwd(*((uint32_t *)g_pGameMode + 32));
+                orig::TextInputFiles_FileMngFwd101C4170((void *)g_pFileMng, i10);
               }
               orig::StAvatarInfo_SendBytePairKind2(1, 1);
-              *((_DWORD *)self_ + 17) = 6;
+              *((uint32_t *)self_ + 17) = 6;
             }
           }
           break;
         case 6:
-          *(_DWORD *)v4 = 112;
+          *(uint32_t *)i1 = 112;
           if ( orig::App_StepGameState6(self_) != 0 )
-            *((_DWORD *)self_ + 17) = 10;
+            *((uint32_t *)self_ + 17) = 10;
           break;
         case 7:
-          *(_DWORD *)v4 = 112;
+          *(uint32_t *)i1 = 112;
           if ( orig::App_StepGameState7(self_) != 0 )
-            *((_DWORD *)self_ + 17) = 10;
+            *((uint32_t *)self_ + 17) = 10;
           break;
         case 8:
-          *(_DWORD *)v4 = 112;
+          *(uint32_t *)i1 = 112;
           if ( orig::App_StepGameState8(self_) != 0 )
-            *((_DWORD *)self_ + 17) = 10;
+            *((uint32_t *)self_ + 17) = 10;
           break;
         case 9:
-          *(_DWORD *)v4 = 112;
+          *(uint32_t *)i1 = 112;
           if ( orig::App_StepGameState9() )
-            *((_DWORD *)self_ + 17) = 10;
+            *((uint32_t *)self_ + 17) = 10;
           break;
         case 0xA:
           orig::App_DispatchSubState(self_);
           break;
         case 0xB:
-          if ( (*(_BYTE *)(v4 + 24) & 8) != 0 )
+          if ( (*(uint8_t *)(i1 + 24) & 8) != 0 )
           {
-            *((_DWORD *)self_ + 17) = 13;
+            *((uint32_t *)self_ + 17) = 13;
             orig::App_SetGlobal_104569C5(1);
           }
           else
           {
             orig::App_SaveAllSlotData();
-            *((_DWORD *)g_pGameMode + 4) = 0;
-            *(_DWORD *)g_pSceneState = 112;
+            *((uint32_t *)g_pGameMode + 4) = 0;
+            *(uint32_t *)g_pSceneState = 112;
             orig::WinMain_EnterState4AfterShutdown(self_);
           }
           break;
         case 0xC:
-          *((_DWORD *)g_pGameMode + 4) = 0;
-          *(_DWORD *)g_pSceneState = 112;
+          *((uint32_t *)g_pGameMode + 4) = 0;
+          *(uint32_t *)g_pSceneState = 112;
           if ( orig::WinMain_TryShutdownActors(self_) )
           {
             orig::SoundElem_ResetGlobals();
-            orig::Ui_KeyPrompt_Init((_DWORD *)g_pKeyPrompt, 2);
+            orig::Ui_KeyPrompt_Init((uint32_t *)g_pKeyPrompt, 2);
             orig::MenuMng_OpenByName(g_menuMng, aMenuChdummy, 1, 0);
-            *((_DWORD *)self_ + 17) = 7;
+            *((uint32_t *)self_ + 17) = 7;
           }
           break;
         case 0xD:
           orig::App_SaveAllSlotData();
-          *((_DWORD *)g_pGameMode + 4) = 0;
-          *(_DWORD *)g_pSceneState = 160;
+          *((uint32_t *)g_pGameMode + 4) = 0;
+          *(uint32_t *)g_pSceneState = 160;
           orig::WinMain_StepStagedRelease((int)self_);
           break;
         case 0x11:
           orig::CDx_StepFadeCounter((float *)g_pCDx, 0.0, 0.0, 1);
           orig::CDx_SetClearColor(g_pCDx, 0x80000000);
-          *((_DWORD *)self_ + 206) = 0x80000000;
-          *((_DWORD *)self_ + 205) = -2139062144;
+          *((uint32_t *)self_ + 206) = 0x80000000;
+          *((uint32_t *)self_ + 205) = -2139062144;
           if ( orig::WinMain_StepMenuOkThenRelease(self_) != 0 )
           {
-            if ( dword_10456948 != 12 )
+            if ( g_10456948 != 12 )
             {
-              *((_DWORD *)self_ + 17) = 13;
+              *((uint32_t *)self_ + 17) = 13;
               continue;
             }
-            *((_DWORD *)self_ + 17) = 11;
+            *((uint32_t *)self_ + 17) = 11;
           }
           break;
         default:
-          goto LABEL_102;
+          goto L3;
       }
-      goto LABEL_102;
+      goto L3;
     }
   }
-  v5 = *((_DWORD *)self_ + 17);
-  if ( v5 == 17 || *(_DWORD *)g_pSceneState == 144 )
-    goto LABEL_40;
-  if ( v5 == 13 )
+  i2 = *((uint32_t *)self_ + 17);
+  if ( i2 == 17 || *(uint32_t *)g_pSceneState == 144 )
+    goto L2;
+  if ( i2 == 13 )
   {
-LABEL_38:
-    (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = 1;
-    orig::sub_1018B130();
-    orig::sub_1018C2B0();
+L4:
+    (*(unsigned char *)((char *)g_pCDx + 0x828)) = 1;
+    orig::XiZone_GetInstance();
+    orig::game_1018C2B0();
     orig::StDancer_Update(g_pStDancer);
-    orig::sub_1018B860(g_pXiZone);
-    orig::sub_10074C30((_DWORD *)dword_1047D140);
-    orig::sub_102515F0(g_pStDancer, 1);
+    orig::XiZone_DrawScene(g_pXiZone);
+    orig::CMoTaskMng_DrawAll((uint32_t *)g_1047D140);
+    orig::Dancer_WorldEnd_as_v0(g_pStDancer, 1);
     orig::CYySoundElem_UpdateQueue();
-    goto LABEL_39;
+    goto L1;
   }
   if ( g_pGameMode == nullptr )
   {
-LABEL_34:
-    if ( *((int *)self_ + 17) >= 5 && *(_DWORD *)v4 != 64 && Code < 0 )
-      { orig::_exit_0(2001); goto LABEL_102; }
-    goto LABEL_38;
+L5:
+    if ( *((int *)self_ + 17) >= 5 && *(uint32_t *)i1 != 64 && Code < 0 )
+      { orig::_exit_0(2001); goto L3; }
+    goto L4;
   }
-  v6 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-  if ( v6 != 12 )
+  i3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+  if ( i3 != 12 )
   {
-    switch ( v6 )
+    switch ( i3 )
     {
       case 21:
-        *((_DWORD *)self_ + 17) = 17;
-        dword_10456948 = 21;
-        goto LABEL_102;
+        *((uint32_t *)self_ + 17) = 17;
+        g_10456948 = 21;
+        goto L3;
       case 202:
-        orig::_exit_0(4003); goto LABEL_102;
+        orig::_exit_0(4003); goto L3;
       case 203:
-        v4 = g_pSceneState;
-        if ( *(_DWORD *)g_pSceneState != 64 )
-          { orig::_exit_0(4004); goto LABEL_102; }
+        i1 = g_pSceneState;
+        if ( *(uint32_t *)g_pSceneState != 64 )
+          { orig::_exit_0(4004); goto L3; }
         break;
       case 201:
-        orig::_exit_0(4005); goto LABEL_102;
+        orig::_exit_0(4005); goto L3;
       default:
-        v4 = g_pSceneState;
+        i1 = g_pSceneState;
         break;
     }
-    goto LABEL_34;
+    goto L5;
   }
-  *((_DWORD *)self_ + 17) = 17;
-  dword_10456948 = 12;
-LABEL_102:
-  (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = 0;
+  *((uint32_t *)self_ + 17) = 17;
+  g_10456948 = 12;
+L3:
+  (*(unsigned char *)((char *)g_pCDx + 0x828)) = 0;
   if ( g_pDebugOverlay != 0 )
-    orig::sub_10003650((void *)g_pDebugOverlay);
+    orig::DebugOverlay_Draw_as_v0((void *)g_pDebugOverlay);
   orig::CDx_SetDefaultRenderState(g_pCDx);
   if ( g_depthBlurEnabled_Dead != 0
-    && v99 == 1
+    && c10 == 1
     && g_pMovie == 0
-    && *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C0)) != 0
+    && *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)) != 0
     && g_pXiZone != nullptr
     && orig::ZoneMap_GetByteRef1CPlus10(g_pXiZone) != 0 )
   {
@@ -449,32 +449,32 @@ LABEL_102:
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     orig::CDx_PushRenderTarget(
       g_pCDx,
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C0)),
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C4)),
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C8)));
-    orig::CDx_DrawTextureToViewport(g_pCDx, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)), -2139062144, -1);
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)),
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C4)),
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C8)));
+    orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)), -2139062144, -1);
     orig::CDx_SetTexture(g_pCDx, 0, 0);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
-    *(float *)&a4 = 0.0;
-    v102 = 0;
-    *(float *)&a2 = 0.0;
-    v104 = 1065353216;
-    *(float *)&a2 = -orig::ZoneMap_GetFloatRef1CPlus4(g_pXiZone);
-    orig::Mat4_TransformPointInPlace((float *)self_ + 165, (float *)&a4);
+    *(float *)&i40 = 0.0;
+    i41 = 0;
+    *(float *)&i42 = 0.0;
+    i43 = 1065353216;
+    *(float *)&i42 = -orig::ZoneMap_GetFloatRef1CPlus4(g_pXiZone);
+    orig::Mat4_TransformPointInPlace((float *)self_ + 165, (float *)&i40);
     orig::CDx_SetTransform(g_pCDx, 256, g_frameWorldMatrix);
     orig::CDx_SetTransform(g_pCDx, 2, (char *)self_ + 148);
-    orig::Gfx_ProjectWorldToClip((float *)&a4, &a4);
-    orig::Post_DepthBlurComposite(g_pCDx, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C0)), a2);
+    orig::Gfx_ProjectWorldToClip((float *)&i40, &i40);
+    orig::Post_DepthBlurComposite(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)), i42);
   }
   orig::Post_Afterimage();
   orig::Post_FlashAndZoomFeedback(self_);
-  if ( (unsigned __int8)g_screenFadeLevel < 0x80u )
+  if ( (unsigned char)g_screenFadeLevel < 0x80u )
   {
-    HIWORD(v93) = (unsigned __int8)(g_screenFadeLevel + *((_BYTE *)self_ + 802) + 0x80);
-    BYTE1(v93) = g_screenFadeLevel + *((_BYTE *)self_ + 801) + 0x80;
-    LOBYTE(v93) = g_screenFadeLevel + *((_BYTE *)self_ + 800) + 0x80;
-    *((_DWORD *)self_ + 206) = v93;
+    (*((uint16_t *)&(i35) + sizeof(i35) / 2 - 1)) = (unsigned char)(g_screenFadeLevel + *((uint8_t *)self_ + 802) + 0x80);
+    (*((uint8_t *)&(i35) + 1)) = g_screenFadeLevel + *((uint8_t *)self_ + 801) + 0x80;
+    (*(uint8_t *)&(i35)) = g_screenFadeLevel + *((uint8_t *)self_ + 800) + 0x80;
+    *((uint32_t *)self_ + 206) = i35;
   }
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_TEXCOORDINDEX, 0);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
@@ -491,101 +491,101 @@ LABEL_102:
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
-  v14 = *((_WORD *)self_ + 12);
-  v15 = g_screenRectBottomRight;
-  v16 = HIWORD(g_screenRectTopLeft);
-  LOWORD(a4) = g_screenRectTopLeft;
-  LOWORD(g_screenRectBottomRight) = v14;
-  v17 = *((_WORD *)self_ + 13);
-  LOWORD(v102) = v15;
-  HIWORD(g_screenRectBottomRight) = v17;
-  orig::sub_101D0B00();
-  LOWORD(g_screenRectTopLeft) = a4;
-  HIWORD(g_screenRectTopLeft) = v16;
-  LOWORD(g_screenRectBottomRight) = v102;
-  HIWORD(g_screenRectBottomRight) = (_WORD)((uint32_t)(v15) >> 16);
+  i11 = *((uint16_t *)self_ + 12);
+  i12 = g_screenRectBottomRight;
+  i13 = (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1));
+  (*(uint16_t *)&(i40)) = g_screenRectTopLeft;
+  (*(uint16_t *)&(g_screenRectBottomRight)) = i11;
+  i14 = *((uint16_t *)self_ + 13);
+  (*(uint16_t *)&(i41)) = i12;
+  (*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) = i14;
+  orig::CopyrightText_Draw_as_v0();
+  (*(uint16_t *)&(g_screenRectTopLeft)) = i40;
+  (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1)) = i13;
+  (*(uint16_t *)&(g_screenRectBottomRight)) = i41;
+  (*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) = (uint16_t)((uint32_t)(i12) >> 16);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   orig::CDx_SetTexture(g_pCDx, 0, 0);
-  v18 = *((_WORD *)self_ + 8);
-  v19 = *((unsigned __int16 *)self_ + 9);
-  v106[0] = 0;
-  v106[1] = 0;
-  v106[2] = v18;
-  v106[3] = v19;
-  v106[4] = 0;
-  v106[5] = 1065353216;
-  orig::CDx_SetViewport(g_pCDx, v106);
-  v20 = *((_WORD *)self_ + 12);
-  *(_DWORD *)&SystemTime.wHour = *((unsigned __int16 *)self_ + 8);
-  v21 = *((_WORD *)self_ + 9);
-  v22 = *((_WORD *)self_ + 13);
-  a2 = v20;
-  *(_DWORD *)&SystemTime.wSecond = v21;
-  v23 = *((_DWORD *)self_ + 200);
-  v104 = v22;
-  v94 = v23;
-  HIBYTE(v94) = 0x80;
-  *(_DWORD *)&SystemTime.wYear = 0;
-  *(_DWORD *)&SystemTime.wDayOfWeek = 0;
-  *(float *)&a4 = 0.0;
-  v102 = 0;
-  orig::CDx_CompositeSceneToBackBuffer(g_pCDx, (int)&(*(unsigned __int8 *)((char *)g_pCDx + 0x190)), v94, (int)&SystemTime, (int)&a4);
+  u1 = *((uint16_t *)self_ + 8);
+  i15 = *((unsigned short *)self_ + 9);
+  u7[0] = 0;
+  u7[1] = 0;
+  u7[2] = u1;
+  u7[3] = i15;
+  u7[4] = 0;
+  u7[5] = 1065353216;
+  orig::CDx_SetViewport(g_pCDx, u7);
+  u2 = *((uint16_t *)self_ + 12);
+  *(uint32_t *)&SystemTime.wHour = *((unsigned short *)self_ + 8);
+  u3 = *((uint16_t *)self_ + 9);
+  u4 = *((uint16_t *)self_ + 13);
+  i42 = u2;
+  *(uint32_t *)&SystemTime.wSecond = u3;
+  i16 = *((uint32_t *)self_ + 200);
+  i43 = u4;
+  i36 = i16;
+  (*((uint8_t *)&(i36) + sizeof(i36) - 1)) = 0x80;
+  *(uint32_t *)&SystemTime.wYear = 0;
+  *(uint32_t *)&SystemTime.wDayOfWeek = 0;
+  *(float *)&i40 = 0.0;
+  i41 = 0;
+  orig::CDx_CompositeSceneToBackBuffer(g_pCDx, (int)&(*(unsigned char *)((char *)g_pCDx + 0x190)), i36, (int)&SystemTime, (int)&i40);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
   orig::CDx_NopB();
   if ( g_pGameMode != nullptr )
   {
-    v24 = *((_DWORD *)g_pGameMode + 46);
-    if ( v24 < 0 )
+    i17 = *((uint32_t *)g_pGameMode + 46);
+    if ( i17 < 0 )
     {
-      Code = *((_DWORD *)g_pGameMode + 46);
-      if ( v24 == -1056 )
+      Code = *((uint32_t *)g_pGameMode + 46);
+      if ( i17 == -1056 )
         orig::App_SetGlobal_104569C6(1);
     }
   }
-  v25 = *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E0));
-  v26 = *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E8));
-  if ( v25 != 0 && v26 != 0 )
+  i18 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0));
+  i19 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E8));
+  if ( i18 != 0 && i19 != 0 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
-    orig::CDx_PushRenderTarget(g_pCDx, v25, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E4)), v26);
-    v95 = *((_DWORD *)self_ + 200);
-    HIBYTE(v95) = 0;
-    orig::CDx_DrawTextureToViewport(g_pCDx, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)), v95, -1);
+    orig::CDx_PushRenderTarget(g_pCDx, i18, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E4)), i19);
+    i37 = *((uint32_t *)self_ + 200);
+    (*((uint8_t *)&(i37) + sizeof(i37) - 1)) = 0;
+    orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)), i37, -1);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_COLORWRITEENABLE, 15u);
   }
   orig::TextInputFiles_WatchConfigWindow((int)ArgList);
-  orig::sub_10005A40(g_pAppInputState);
+  orig::game_10005A40(g_pAppInputState);
   orig::Cell_ClearFlag104E1C3C();
-  orig::Input_DispatchButtons((_DWORD *)g_pAppInputState);
+  orig::Input_DispatchButtons((uint32_t *)g_pAppInputState);
   if ( g_pTargetMng != nullptr )
     orig::Target_Update(g_pTargetMng);
-  if ( *((_BYTE *)g_pCamera + 8) != 0 )
+  if ( *((uint8_t *)g_pCamera + 8) != 0 )
   {
-    if ( dword_106627EC != 0 )
-      orig::TextInputFiles_HandleMenuKeys((_BYTE *)dword_106627EC);
-    if ( dword_10662DA8 != 0 )
-      orig::TextInputFiles_UpdateShortcuts((void *)dword_10662DA8);
-    if ( dword_1066279C != 0 )
-      orig::TextInputFiles_UpdateMenuState(dword_1066279C);
+    if ( g_106627EC != 0 )
+      orig::TextInputFiles_HandleMenuKeys((uint8_t *)g_106627EC);
+    if ( g_10662DA8 != 0 )
+      orig::TextInputFiles_UpdateShortcuts((void *)g_10662DA8);
+    if ( g_1066279C != 0 )
+      orig::TextInputFiles_UpdateMenuState(g_1066279C);
   }
-  if ( *((_BYTE *)g_pCamera + 8) != 0 && g_pFileMng != 0 )
-    orig::TextInputFiles_FileMngCall101BEB90((_DWORD *)g_pFileMng);
-  if ( *((_BYTE *)g_pCamera + 8) != 0 )
+  if ( *((uint8_t *)g_pCamera + 8) != 0 && g_pFileMng != 0 )
+    orig::TextInputFiles_FileMngCall101BEB90((uint32_t *)g_pFileMng);
+  if ( *((uint8_t *)g_pCamera + 8) != 0 )
     orig::TextInputFiles_HandleJumpMapKeys();
-  v27 = orig::TargetMenu_GetInstance();
-  orig::TargetMenu_UpdatePendingRead(v27);
-  if ( *((_BYTE *)g_pCamera + 8) != 0 )
+  p1 = orig::TargetMenu_GetInstance();
+  orig::TargetMenu_UpdatePendingRead(p1);
+  if ( *((uint8_t *)g_pCamera + 8) != 0 )
   {
-    if ( dword_106627EC != 0 )
+    if ( g_106627EC != 0 )
     {
       orig::Gfx_SetDefault2DStates();
-      *(_BYTE *)dword_106627EC = 1;
-      orig::sub_1015FA00((int *)g_menuMng);
+      *(uint8_t *)g_106627EC = 1;
+      orig::Menu_DrawAll_as_v0((int *)g_menuMng);
       orig::Menu_DrawLayers(g_menuMng);
       orig::Gfx_DisableFogAndAlphaBlend();
     }
@@ -593,193 +593,193 @@ LABEL_102:
     orig::FontGlyphCache_StepCounter();
     orig::FontGlyphCache_GetCounterBlock();
     orig::FitFont_ReturnFalseFwd();
-    if ( *((_DWORD *)self_ + 17) != 17 && *(_DWORD *)g_pSceneState != 144 && g_C_106631D4 != 0 )
-      orig::MyRoom_Update((_WORD *)g_C_106631D4);
+    if ( *((uint32_t *)self_ + 17) != 17 && *(uint32_t *)g_pSceneState != 144 && g_C_106631D4 != 0 )
+      orig::MyRoom_Update((uint16_t *)g_C_106631D4);
     if ( g_pXiOpening != 0 )
-      orig::sub_10018850(g_pXiOpening);
+      orig::game_10018850(g_pXiOpening);
   }
   orig::Cursor_UpdateTimer((float *)g_pCursor);
-  v28 = g_pCDx;
-  if ( *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E0)) != 0 && *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E8)) != 0 )
+  p2 = g_pCDx;
+  if ( *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)) != 0 && *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E8)) != 0 )
   {
     orig::CDx_SetTexture(g_pCDx, 0, 0);
-    orig::sub_1000ABE0(g_pCDx, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E0)), 1065353216);
-    v28 = g_pCDx;
+    orig::CDx_CompositeUITarget(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)), 1065353216);
+    p2 = g_pCDx;
   }
-  orig::CDx_DrawFadeQuad(v28, 0, *((_DWORD *)self_ + 199));
-  v29 = *(_BYTE *)(g_pSceneState + 24);
-  a4 = *((unsigned __int16 *)self_ + 9);
-  v30 = *(_DWORD *)(g_pSceneState + 8);
-  v31 = (double)a4 * 0x1.1931940000000p-9;
-  if ( v29 < 0 && (v30 == 2 || v30 == 3) || v30 == 1 )
-    v32 = -110.0;
+  orig::CDx_DrawFadeQuad(p2, 0, *((uint32_t *)self_ + 199));
+  c1 = *(uint8_t *)(g_pSceneState + 24);
+  i40 = *((unsigned short *)self_ + 9);
+  i20 = *(uint32_t *)(g_pSceneState + 8);
+  f2 = (double)i40 * 0x1.1931940000000p-9;
+  if ( c1 < 0 && (i20 == 2 || i20 == 3) || i20 == 1 )
+    f3 = -110.0;
   else
-    v32 = -160.0;
-  a4 = *((unsigned __int16 *)self_ + 8);
-  *(_DWORD *)&SystemTime.wYear = 0;
-  *(float *)&SystemTime.wDayOfWeek = (double)a4 * 0x1.99999a0000000p-10;
-  *(float *)&SystemTime.wHour = v32;
-  *(float *)&SystemTime.wSecond = v31;
+    f3 = -160.0;
+  i40 = *((unsigned short *)self_ + 8);
+  *(uint32_t *)&SystemTime.wYear = 0;
+  *(float *)&SystemTime.wDayOfWeek = (double)i40 * 0x1.99999a0000000p-10;
+  *(float *)&SystemTime.wHour = f3;
+  *(float *)&SystemTime.wSecond = f2;
   orig::CXiMovie_DrawFrame(0, 0, 640, 512, (float *)&SystemTime);
-  orig::sub_101D0C70();
+  orig::game_101D0C70();
   orig::Font_QueueText(c_strSpace, 1134886912, 1111490560, 0);
   orig::Font_DrawPass();
   if ( g_pEnv != nullptr && (g_pEnv[7] & 1) != 0 )
   {
-    *(_DWORD *)&SystemTime.wYear = 0;
-    v33 = *((unsigned __int16 *)self_ + 9);
-    a4 = v33;
-    *(_DWORD *)&SystemTime.wDayOfWeek = (__int64)((double)v33 - 10.0);
-    *(_DWORD *)&SystemTime.wHour = *((unsigned __int16 *)self_ + 8);
-    *(_DWORD *)&SystemTime.wSecond = v33;
+    *(uint32_t *)&SystemTime.wYear = 0;
+    i21 = *((unsigned short *)self_ + 9);
+    i40 = i21;
+    *(uint32_t *)&SystemTime.wDayOfWeek = (long long)((double)i21 - 10.0);
+    *(uint32_t *)&SystemTime.wHour = *((unsigned short *)self_ + 8);
+    *(uint32_t *)&SystemTime.wSecond = i21;
     orig::CDx_DrawStereoOddFrameOverlay(g_pCDx, (int)&SystemTime);
   }
   orig::CDx_EndScene(g_pCDx);
   orig::CDx_Present();
-  *((_DWORD *)self_ + 10) = 0;
+  *((uint32_t *)self_ + 10) = 0;
   for ( i = 0; ; i = 1 )
   {
-    a4 = *((int *)self_ + 7);
-    v34 = (int *)a4;
-    v35 = ((double (__thiscall *)(int *))*(_DWORD *)(*(_DWORD *)a4 + 48))(v34);
-    v36 = *v34;
-    *(float *)&a4 = v35;
-    v37 = ((double (__thiscall *)(int *))*(_DWORD *)(v36 + 36))(v34);
-    g_frameStepFps = v37 * *(float *)&a4;
-    v38 = 60.0 / g_frameStepFps;
-    *((float *)self_ + 11) = v38;
-    *((float *)self_ + 10) = v38;
-    v39 = (double)*((int *)self_ + 12);
-    (xi_fpu_unord = __builtin_isunordered(v38, v39), v41 = v38 < v39);
-    v42 = 0;
-    v43 = v38 == v39;
-    if ( ((__int16)(((v41 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v43 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+    i40 = *((int *)self_ + 7);
+    p3 = (int *)i40;
+    f4 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)i40 + 48))(p3);
+    i22 = *p3;
+    *(float *)&i40 = f4;
+    f5 = ((double (__thiscall *)(int *))*(uint32_t *)(i22 + 36))(p3);
+    g_frameStepFps = f5 * *(float *)&i40;
+    f6 = 60.0 / g_frameStepFps;
+    *((float *)self_ + 11) = f6;
+    *((float *)self_ + 10) = f6;
+    f7 = (double)*((int *)self_ + 12);
+    (xi_fpu_unord = __builtin_isunordered(f6, f7), b1 = f6 < f7);
+    c2 = 0;
+    b2 = f6 == f7;
+    if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
       break;
     Sleep(1u);
     _mm_pause();
   }
-  if ( i != 1 && v38 < (double)*((int *)self_ + 12) )
+  if ( i != 1 && f6 < (double)*((int *)self_ + 12) )
   {
     do
     {
-      a4 = *((int *)self_ + 7);
-      v44 = (int *)a4;
-      v45 = ((double (__thiscall *)(int *))*(_DWORD *)(*(_DWORD *)a4 + 48))(v44);
-      v46 = *v44;
-      *(float *)&a4 = v45;
-      v47 = ((double (__thiscall *)(int *))*(_DWORD *)(v46 + 36))(v44);
-      g_frameStepFps = v47 * *(float *)&a4;
-      v48 = 60.0 / g_frameStepFps;
-      *((float *)self_ + 11) = v48;
-      *((float *)self_ + 10) = v48;
+      i40 = *((int *)self_ + 7);
+      p4 = (int *)i40;
+      f8 = ((double (__thiscall *)(int *))*(uint32_t *)(*(uint32_t *)i40 + 48))(p4);
+      i24 = *p4;
+      *(float *)&i40 = f8;
+      f9 = ((double (__thiscall *)(int *))*(uint32_t *)(i24 + 36))(p4);
+      g_frameStepFps = f9 * *(float *)&i40;
+      f10 = 60.0 / g_frameStepFps;
+      *((float *)self_ + 11) = f10;
+      *((float *)self_ + 10) = f10;
       Sleep(0);
-      v50 = (double)*((int *)self_ + 12);
-      (xi_fpu_unord = __builtin_isunordered(v50, *((float *)self_ + 10)), v51 = v50 < *((float *)self_ + 10));
-      v52 = 0;
-      v53 = v50 == *((float *)self_ + 10);
+      f11 = (double)*((int *)self_ + 12);
+      (xi_fpu_unord = __builtin_isunordered(f11, *((float *)self_ + 10)), b3 = f11 < *((float *)self_ + 10));
+      c3 = 0;
+      b4 = f11 == *((float *)self_ + 10);
     }
-    while ( ((__int16)(((v51 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v53 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 );
+    while ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 );
   }
-  v54 = 60.0 / ((double (__thiscall *)(_DWORD))*(_DWORD *)(**((_DWORD **)self_ + 7) + 36))(*((_DWORD *)self_ + 7))
+  f12 = 60.0 / ((double (__thiscall *)(uint32_t))*(uint32_t *)(**((uint32_t **)self_ + 7) + 36))(*((uint32_t *)self_ + 7))
       + *((float *)self_ + 15);
-  v55 = *((_DWORD *)self_ + 7);
-  a4 = (__int64)v54;
-  *((float *)self_ + 14) = *(float *)&a4;
-  *((float *)self_ + 15) = v54 - (double)(int)(__int64)v54;
-  (*(void (__fastcall **)(int, _DWORD))(*(_DWORD *)v55 + 32))(v55, (unsigned __int64)(__int64)v54 >> 32);
-  v56 = *((float *)self_ + 10);
-  g_frameStepRingIndex = ((_BYTE)g_frameStepRingIndex + 1) & 3;
-  g_frameStepRing[g_frameStepRingIndex] = *((_DWORD *)self_ + 10);
-  *((_DWORD *)self_ + 11) = 0;
-  v57 = (float *)g_frameStepRing;
+  i26 = *((uint32_t *)self_ + 7);
+  i40 = (long long)f12;
+  *((float *)self_ + 14) = *(float *)&i40;
+  *((float *)self_ + 15) = f12 - (double)(int)(long long)f12;
+  (*(void (__fastcall **)(int, uint32_t))(*(uint32_t *)i26 + 32))(i26, (unsigned long long)(long long)f12 >> 32);
+  f13 = *((float *)self_ + 10);
+  g_frameStepRingIndex = ((uint8_t)g_frameStepRingIndex + 1) & 3;
+  g_frameStepRing[g_frameStepRingIndex] = *((uint32_t *)self_ + 10);
+  *((uint32_t *)self_ + 11) = 0;
+  p5 = (float *)g_frameStepRing;
   do
   {
-    v58 = *v57++ + *((float *)self_ + 11);
-    *((float *)self_ + 11) = v58;
+    f14 = *p5++ + *((float *)self_ + 11);
+    *((float *)self_ + 11) = f14;
   }
-  while ( (int)v57 < (int)&g_frameStepRingIndex );
-  v59 = *((float *)self_ + 11) * 0.25;
-  *((float *)self_ + 11) = v59;
-  a4 = (__int64)v59;
-  v60 = (double)a4;
-  *((float *)self_ + 10) = v60;
-  v96 = (float)*((int *)self_ + 12);
-  if ( v60 < v96 )
-    *((float *)self_ + 10) = v96;
-  v62 = *((float *)self_ + 10);
-  (xi_fpu_unord = __builtin_isunordered(v62, 20.0), v63 = v62 < 20.0);
-  v64 = 0;
-  v65 = v62 == 20.0;
-  if ( ((__int16)(((v63 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v65 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-    *((_DWORD *)self_ + 10) = 1101004800;
-  (xi_fpu_unord = __builtin_isunordered(v56, 20.0), v66 = v56 < 20.0);
-  v67 = 0;
-  v68 = v56 == 20.0;
-  if ( ((__int16)(((v66 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v68 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-    v56 = 20.0;
-  *((float *)self_ + 11) = v56;
+  while ( (int)p5 < (int)&g_frameStepRingIndex );
+  f15 = *((float *)self_ + 11) * 0.25;
+  *((float *)self_ + 11) = f15;
+  i40 = (long long)f15;
+  f16 = (double)i40;
+  *((float *)self_ + 10) = f16;
+  f22 = (float)*((int *)self_ + 12);
+  if ( f16 < f22 )
+    *((float *)self_ + 10) = f22;
+  f17 = *((float *)self_ + 10);
+  (xi_fpu_unord = __builtin_isunordered(f17, 20.0), b5 = f17 < 20.0);
+  c4 = 0;
+  b6 = f17 == 20.0;
+  if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+    *((uint32_t *)self_ + 10) = 1101004800;
+  (xi_fpu_unord = __builtin_isunordered(f13, 20.0), b7 = f13 < 20.0);
+  c5 = 0;
+  b8 = f13 == 20.0;
+  if ( ((short)(((b7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+    f13 = 20.0;
+  *((float *)self_ + 11) = f13;
   g_frameStepFps = 60.0 / *((float *)self_ + 10);
-  v69 = *((_DWORD *)self_ + 13) + 1;
-  *((_DWORD *)self_ + 13) = v69;
-  if ( v69 == 0 )
-    *((_DWORD *)self_ + 13) = 1;
-  v70 = *((_DWORD *)self_ + 8);
-  if ( v70 != 0 )
+  i28 = *((uint32_t *)self_ + 13) + 1;
+  *((uint32_t *)self_ + 13) = i28;
+  if ( i28 == 0 )
+    *((uint32_t *)self_ + 13) = 1;
+  i29 = *((uint32_t *)self_ + 8);
+  if ( i29 != 0 )
   {
-    v71 = ((double (__thiscall *)(int))*(_DWORD *)(*(_DWORD *)v70 + 40))(v70);
-    *(float *)&v97 = v71;
-    (xi_fpu_unord = __builtin_isunordered(v71, 4000.0), v73 = v71 < 4000.0);
-    v74 = 0;
-    v75 = v71 == 4000.0;
-    if ( ((__int16)(((v73 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v75 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+    f18 = ((double (__thiscall *)(int))*(uint32_t *)(*(uint32_t *)i29 + 40))(i29);
+    *(float *)&i38 = f18;
+    (xi_fpu_unord = __builtin_isunordered(f18, 4000.0), b9 = f18 < 4000.0);
+    c6 = 0;
+    b10 = f18 == 4000.0;
+    if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
     {
       GetLocalTime(&SystemTime);
-      if ( SystemTime.wSecond != (_WORD)g_frameCounterLastSecond )
+      if ( SystemTime.wSecond != (uint16_t)g_frameCounterLastSecond )
       {
-        (*(void (__thiscall **)(_DWORD))(**((_DWORD **)self_ + 8) + 32))(*((_DWORD *)self_ + 8));
-        a4 = SystemTime.wSecond - (unsigned __int16)g_frameCounterLastSecond;
-        v76 = (double)a4;
-        if ( v76 < 0.0 )
-          v76 = v76 + 60.0;
-        *(float *)&a4 = v76 * 1000.0;
-        v78 = *(float *)&v97 - *(float *)&a4;
-        if ( v78 < 0.0 )
-          v78 = -v78;
-        if ( dword_1045695C != 0 )
+        (*(void (__thiscall **)(uint32_t))(**((uint32_t **)self_ + 8) + 32))(*((uint32_t *)self_ + 8));
+        i40 = SystemTime.wSecond - (unsigned short)g_frameCounterLastSecond;
+        f19 = (double)i40;
+        if ( f19 < 0.0 )
+          f19 = f19 + 60.0;
+        *(float *)&i40 = f19 * 1000.0;
+        f20 = *(float *)&i38 - *(float *)&i40;
+        if ( f20 < 0.0 )
+          f20 = -f20;
+        if ( g_1045695C != 0 )
         {
-          if ( dword_1045695C == 1 )
+          if ( g_1045695C == 1 )
           {
-            (xi_fpu_unord = __builtin_isunordered(v78, 1500.0), v83 = v78 < 1500.0);
-            v84 = 0;
-            v85 = v78 == 1500.0;
-            if ( ((__int16)(((v83 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v85 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-              dword_1045695C = 2;
+            (xi_fpu_unord = __builtin_isunordered(f20, 1500.0), b13 = f20 < 1500.0);
+            c8 = 0;
+            b14 = f20 == 1500.0;
+            if ( ((short)(((b13 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b14 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+              g_1045695C = 2;
           }
-          else if ( dword_1045695C == 2 )
+          else if ( g_1045695C == 2 )
           {
-            (xi_fpu_unord = __builtin_isunordered(v78, 1500.0), v79 = v78 < 1500.0);
-            v80 = 0;
-            v81 = v78 == 1500.0;
-            if ( ((__int16)(((v79 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v81 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
+            (xi_fpu_unord = __builtin_isunordered(f20, 1500.0), b11 = f20 < 1500.0);
+            c7 = 0;
+            b12 = f20 == 1500.0;
+            if ( ((short)(((b11 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b12 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
             {
-              if ( dword_10456958++ > 2 )
+              if ( g_10456958++ > 2 )
               {
-                (*(void (__thiscall **)(_DWORD, int))(**((_DWORD **)self_ + 7) + 52))(*((_DWORD *)self_ + 7), 1065353216);
-                dword_1045695C = 1;
-                dword_10456954 = 0;
-                dword_10456958 = 0;
+                (*(void (__thiscall **)(uint32_t, int))(**((uint32_t **)self_ + 7) + 52))(*((uint32_t *)self_ + 7), 1065353216);
+                g_1045695C = 1;
+                g_10456954 = 0;
+                g_10456958 = 0;
               }
             }
             else
             {
-              dword_10456958 = 0;
-              v92 = *(float *)&v97 / *(float *)&a4;
-              (*(void (__thiscall **)(_DWORD, _DWORD))(**((_DWORD **)self_ + 7) + 52))(
-                *((_DWORD *)self_ + 7),
-                LODWORD(v92));
-              if ( ++dword_10456954 > 45 )
+              g_10456958 = 0;
+              f21 = *(float *)&i38 / *(float *)&i40;
+              (*(void (__thiscall **)(uint32_t, uint32_t))(**((uint32_t **)self_ + 7) + 52))(
+                *((uint32_t *)self_ + 7),
+                (*(uint32_t *)&(f21)));
+              if ( ++g_10456954 > 45 )
               {
-                dword_10456954 = 0;
+                g_10456954 = 0;
                 orig::Game_SetSlot44C(0, 1);
               }
             }
@@ -787,41 +787,41 @@ LABEL_102:
         }
         else
         {
-          dword_1045695C = 1;
+          g_1045695C = 1;
         }
-        LOWORD(g_frameCounterLastSecond) = SystemTime.wSecond;
+        (*(uint16_t *)&(g_frameCounterLastSecond)) = SystemTime.wSecond;
       }
     }
   }
   orig::Camera_ApplyViewProjection();
-  v86 = *((_DWORD *)self_ + 206);
-  v87 = *((_DWORD *)self_ + 202);
-  *((_DWORD *)self_ + 199) = *((_DWORD *)self_ + 205);
-  *((_DWORD *)self_ + 200) = v86;
-  *((_DWORD *)self_ + 201) = v87;
-  if ( (unsigned __int8)g_screenFadeLevel > 0x80u )
+  i32 = *((uint32_t *)self_ + 206);
+  i33 = *((uint32_t *)self_ + 202);
+  *((uint32_t *)self_ + 199) = *((uint32_t *)self_ + 205);
+  *((uint32_t *)self_ + 200) = i32;
+  *((uint32_t *)self_ + 201) = i33;
+  if ( (unsigned char)g_screenFadeLevel > 0x80u )
   {
-    v88 = *((unsigned __int8 *)self_ + 806);
-    a4 = *((unsigned __int8 *)self_ + 805) + (unsigned __int8)g_screenFadeLevel - 128;
-    v89 = v88 + (unsigned __int8)g_screenFadeLevel - 128;
-    v90 = *((unsigned __int8 *)self_ + 804) + (unsigned __int8)g_screenFadeLevel - 128;
-    if ( v89 > 0xFF )
-      v89 = (unsigned int)(((uint32_t)(v89) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
-    if ( (unsigned int)a4 <= 0xFF )
-      v91 = a4;
+    i34 = *((unsigned char *)self_ + 806);
+    i40 = *((unsigned char *)self_ + 805) + (unsigned char)g_screenFadeLevel - 128;
+    u5 = i34 + (unsigned char)g_screenFadeLevel - 128;
+    u6 = *((unsigned char *)self_ + 804) + (unsigned char)g_screenFadeLevel - 128;
+    if ( u5 > 0xFF )
+      u5 = (unsigned int)(((uint32_t)(u5) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
+    if ( (unsigned int)i40 <= 0xFF )
+      c9 = i40;
     else
-      v91 = -1;
-    if ( v90 > 0xFF )
-      v90 = (unsigned int)(((uint32_t)(v90) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
-    HIWORD(v98) = (unsigned __int8)v89;
-    BYTE1(v98) = v91;
-    LOBYTE(v98) = v90;
-    *((_DWORD *)self_ + 201) = v98;
+      c9 = -1;
+    if ( u6 > 0xFF )
+      u6 = (unsigned int)(((uint32_t)(u6) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
+    (*((uint16_t *)&(i39) + sizeof(i39) / 2 - 1)) = (unsigned char)u5;
+    (*((uint8_t *)&(i39) + 1)) = c9;
+    (*(uint8_t *)&(i39)) = u6;
+    *((uint32_t *)self_ + 201) = i39;
   }
   result = (int)g_pCDx;
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x915)) != 0 )
-    orig::GammaRamp_ApplyIfChanged((int)((unsigned __int8 *)((char *)g_pCDx + 0x1F4)));
-  result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(*((_BYTE *)self_ + 10)) << 0));
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x915)) != 0 )
+    orig::GammaRamp_ApplyIfChanged((int)((unsigned char *)((char *)g_pCDx + 0x1F4)));
+  result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(*((uint8_t *)self_ + 10)) << 0));
   return result;
 }
 
@@ -830,23 +830,23 @@ LABEL_102:
 XI_API int __cdecl Post_Afterimage(void)
 {
   int result;
-  __int16 v1; // fps
-  bool v2; // c0
-  char v3; // c2
-  bool v4; // c3
-  int v5;
-  int v6;
-  __int64 v7; // rax
-  int v8;
+  short i1; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  int i2;
+  int i3;
+  long long i4; // rax
+  int i5;
   bool xi_fpu_unord = false;
 
   result = g_afterimageTex[0];
   if ( g_afterimageTex[0] != 0 )
   {
-    (xi_fpu_unord = __builtin_isunordered(g_afterimageStrength, 0.0), v2 = g_afterimageStrength < 0.0);
-    v3 = 0;
-    v4 = g_afterimageStrength == 0.0;
-    result = (int)(((uint32_t)(result) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((__int16)(((v2 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v4 || xi_fpu_unord) ? 0x4000 : 0))) << 0));
+    (xi_fpu_unord = __builtin_isunordered(g_afterimageStrength, 0.0), b1 = g_afterimageStrength < 0.0);
+    c1 = 0;
+    b2 = g_afterimageStrength == 0.0;
+    result = (int)(((uint32_t)(result) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0))) << 0));
     if ( !(g_afterimageStrength <= 0.0) )
     {
       if ( g_afterimageState == 1 )
@@ -861,7 +861,7 @@ XI_API int __cdecl Post_Afterimage(void)
         if ( g_afterimagePhase == 1 )
           g_afterimagePhase = 2;
       }
-      v5 = 0;
+      i2 = 0;
       while ( 1 )
       {
         orig::CDx_SetDefaultRenderState(g_pCDx);
@@ -879,51 +879,51 @@ XI_API int __cdecl Post_Afterimage(void)
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
-        if ( g_afterimageBufferState[v5] == 1 )
+        if ( g_afterimageBufferState[i2] == 1 )
           break;
-        if ( g_afterimageBufferState[v5] == 2 )
-          goto LABEL_17;
-LABEL_23:
-        if ( ++v5 >= 2 )
+        if ( g_afterimageBufferState[i2] == 2 )
+          goto L1;
+L2:
+        if ( ++i2 >= 2 )
         {
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
           return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
         }
       }
-      v6 = g_afterimageTex[v5];
-      if ( v6 != 0 && *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v5 + 388] != 0 )
+      i3 = g_afterimageTex[i2];
+      if ( i3 != 0 && *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i2 + 388] != 0 )
       {
-        orig::CDx_PushRenderTarget(g_pCDx, v6, g_afterimageDepth[v5], 0);
-        orig::CDx_DrawTextureToViewport(g_pCDx, *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v5 + 388], -2139062144, -1);
+        orig::CDx_PushRenderTarget(g_pCDx, i3, g_afterimageDepth[i2], 0);
+        orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i2 + 388], -2139062144, -1);
         orig::CDx_SetTexture(g_pCDx, 0, 0);
       }
       g_afterimageState = 2;
-LABEL_17:
-      if ( g_afterimageTex[v5] != 0 && *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v5 + 388] != 0 )
+L1:
+      if ( g_afterimageTex[i2] != 0 && *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i2 + 388] != 0 )
       {
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-        v7 = (__int64)(g_afterimageStrength * 255.0);
-        v8 = ((_DWORD)v7 << 24) | 0x808080;
-        if ( v5 != 0 )
+        i4 = (long long)(g_afterimageStrength * 255.0);
+        i5 = ((uint32_t)i4 << 24) | 0x808080;
+        if ( i2 != 0 )
         {
           orig::CDx_PushRenderTarget(
             g_pCDx,
-            *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v5 + 388],
-            *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v5 + 396],
+            *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i2 + 388],
+            *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i2 + 396],
             0);
-          orig::CDx_DrawTextureToViewport(g_pCDx, g_afterimageTex[v5], v8, -1);
+          orig::CDx_DrawTextureToViewport(g_pCDx, g_afterimageTex[i2], i5, -1);
           orig::CDx_SetTexture(g_pCDx, 0, 0);
         }
         else
         {
-          orig::CDx_DrawTextureToViewport(g_pCDx, g_afterimageTex[0], ((_DWORD)v7 << 24) | 0x808080, -1);
+          orig::CDx_DrawTextureToViewport(g_pCDx, g_afterimageTex[0], ((uint32_t)i4 << 24) | 0x808080, -1);
         }
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
       }
-      goto LABEL_23;
+      goto L2;
     }
   }
   return result;
@@ -934,56 +934,56 @@ LABEL_17:
 XI_API int __thiscall Post_FlashAndZoomFeedback(void *self_)
 {
   int result;
-  __int64 v3; // rcx
-  unsigned __int8 *RenderTargetTop;
-  unsigned int v5;
-  _DWORD *v6;
-  int v7;
-  int v8;
-  int v9;
-  int *v10;
-  double v11;
-  int v12;
-  unsigned int v13;
-  int v14;
+  long long i1; // rcx
+  unsigned char *RenderTargetTop;
+  unsigned int u1;
+  uint32_t *p1;
+  int i2;
+  int i3;
+  int i4;
+  int *p2;
+  double f1;
+  int i5;
+  unsigned int u2;
+  int i6;
   alignas(16) unsigned char xi_frame[0x628];  // address-taken locals at their original offsets
-  int (&v15)[2] = *reinterpret_cast<int (*)[2]>(xi_frame + 0x208);
-  int &a4 = *reinterpret_cast<int *>(xi_frame + 0x210);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0x214);
-  int (&v18)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x218);
+  int (&i7)[2] = *reinterpret_cast<int (*)[2]>(xi_frame + 0x208);
+  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x210);
+  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x214);
+  int (&i10)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0x218);
 
-  v3 = (__int64)(((uint64_t)(v3) & 0xFFFFFFFFull) | ((uint64_t)(uint32_t)(0) << 32));
-  if ( *((_BYTE *)self_ + 806) != 0 || *((_BYTE *)self_ + 805) != 0 || *((_BYTE *)self_ + 804) != 0 )
+  i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFFull) | ((uint64_t)(uint32_t)(0) << 32));
+  if ( *((uint8_t *)self_ + 806) != 0 || *((uint8_t *)self_ + 805) != 0 || *((uint8_t *)self_ + 804) != 0 )
   {
-    RenderTargetTop = orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx);
-    v3 = (__int64)(((uint64_t)(v3) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*(_DWORD *)RenderTargetTop) << 0));
-    *(_QWORD *)v15 = v3;
-    g_feedbackQuad = (float)v3;
-    v15[0] = *((_DWORD *)RenderTargetTop + 1);
-    g_flashQuadVerts_v0_y = (float)*(__int64 *)v15;
-    v15[0] = *((_DWORD *)RenderTargetTop + 2);
-    g_flashQuadVerts_v1_x = (float)*(__int64 *)v15;
-    v15[0] = *((_DWORD *)RenderTargetTop + 1);
-    g_flashQuadVerts_v1_y = (float)*(__int64 *)v15;
-    v15[0] = *(_DWORD *)RenderTargetTop;
-    g_flashQuadVerts_v2_x = (float)*(__int64 *)v15;
-    v15[0] = *((_DWORD *)RenderTargetTop + 3);
-    g_flashQuadVerts_v2_y = (float)*(__int64 *)v15;
-    v15[0] = *((_DWORD *)RenderTargetTop + 2);
-    g_flashQuadVerts_v3_x = (float)*(__int64 *)v15;
-    v15[0] = *((_DWORD *)RenderTargetTop + 3);
-    g_flashQuadVerts_v3_y = (float)*(__int64 *)v15;
-    v5 = 2 * *((unsigned __int8 *)self_ + 807);
-    if ( v5 > 0xFF )
-      v5 = (unsigned int)(((uint32_t)(v5) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
-    *((_BYTE *)self_ + 807) = v5;
-    v6 =(_DWORD*)(&g_flashQuadVerts_v0_color);
+    RenderTargetTop = orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx);
+    i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*(uint32_t *)RenderTargetTop) << 0));
+    *(uint64_t *)i7 = i1;
+    g_feedbackQuad = (float)i1;
+    i7[0] = *((uint32_t *)RenderTargetTop + 1);
+    g_flashQuadVerts_v0_y = (float)*(long long *)i7;
+    i7[0] = *((uint32_t *)RenderTargetTop + 2);
+    g_flashQuadVerts_v1_x = (float)*(long long *)i7;
+    i7[0] = *((uint32_t *)RenderTargetTop + 1);
+    g_flashQuadVerts_v1_y = (float)*(long long *)i7;
+    i7[0] = *(uint32_t *)RenderTargetTop;
+    g_flashQuadVerts_v2_x = (float)*(long long *)i7;
+    i7[0] = *((uint32_t *)RenderTargetTop + 3);
+    g_flashQuadVerts_v2_y = (float)*(long long *)i7;
+    i7[0] = *((uint32_t *)RenderTargetTop + 2);
+    g_flashQuadVerts_v3_x = (float)*(long long *)i7;
+    i7[0] = *((uint32_t *)RenderTargetTop + 3);
+    g_flashQuadVerts_v3_y = (float)*(long long *)i7;
+    u1 = 2 * *((unsigned char *)self_ + 807);
+    if ( u1 > 0xFF )
+      u1 = (unsigned int)(((uint32_t)(u1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(-1) << 0));
+    *((uint8_t *)self_ + 807) = u1;
+    p1 =(uint32_t*)(&g_flashQuadVerts_v0_color);
     do
     {
-      *v6 = *((_DWORD *)self_ + 201);
-      v6 += 5;
+      *p1 = *((uint32_t *)self_ + 201);
+      p1 += 5;
     }
-    while ( (int)v6 < (int)dword_10350208 );
+    while ( (int)p1 < (int)g_10350208 );
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_FLAT);
@@ -1002,7 +1002,7 @@ XI_API int __thiscall Post_FlashAndZoomFeedback(void *self_)
     orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&g_feedbackQuad, 20);
     if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 )
     {
-      orig::CDx_PushRenderTarget(g_pCDx, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)), *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A0)), 0);
+      orig::CDx_PushRenderTarget(g_pCDx, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)), *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A0)), 0);
       orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&g_feedbackQuad, 20);
       orig::CDx_SetTexture(g_pCDx, 0, 0);
     }
@@ -1011,15 +1011,15 @@ XI_API int __thiscall Post_FlashAndZoomFeedback(void *self_)
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
     result = (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
   }
-  if ( g_feedbackTexHalfRes[0] != 0 && *((_BYTE *)self_ + 815) != 0 )
+  if ( g_feedbackTexHalfRes[0] != 0 && *((uint8_t *)self_ + 815) != 0 )
   {
-    v7 = g_feedbackBufferIndex;
+    i2 = g_feedbackBufferIndex;
     if ( g_feedbackBufferIndex != 0 )
     {
       if ( g_feedbackBufferIndex != 1 )
       {
-LABEL_20:
-        v8 = 0;
+L1:
+        i3 = 0;
         while ( 1 )
         {
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
@@ -1037,130 +1037,130 @@ LABEL_20:
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
-          if ( g_feedbackBufferState[v8] == 1 )
+          if ( g_feedbackBufferState[i3] == 1 )
             break;
-          if ( g_feedbackBufferState[v8] == 2 )
-            goto LABEL_28;
-LABEL_36:
-          if ( ++v8 >= 2 )
+          if ( g_feedbackBufferState[i3] == 2 )
+            goto L2;
+L3:
+          if ( ++i3 >= 2 )
           {
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
             return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
           }
         }
-        v9 = g_feedbackTexHalfRes[v8];
-        if ( v9 != 0 && *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 388] != 0 )
+        i4 = g_feedbackTexHalfRes[i3];
+        if ( i4 != 0 && *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388] != 0 )
         {
-          orig::CDx_PushRenderTarget(g_pCDx, v9, g_feedbackDepth[v8], 0);
-          orig::CDx_DrawTextureToViewport(g_pCDx, *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 388], -2139062144, -1);
+          orig::CDx_PushRenderTarget(g_pCDx, i4, g_feedbackDepth[i3], 0);
+          orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388], -2139062144, -1);
           orig::CDx_SetTexture(g_pCDx, 0, 0);
         }
-        g_feedbackBufferState[v8] = 2;
-LABEL_28:
-        if ( g_feedbackTexHalfRes[v8] != 0 && *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 388] != 0 )
+        g_feedbackBufferState[i3] = 2;
+L2:
+        if ( g_feedbackTexHalfRes[i3] != 0 && *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388] != 0 )
         {
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-          v10 = (int *)orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx);
-          v11 = 1.0 - *((float *)self_ + 204);
-          v18[0] = *v10;
-          v18[1] = v10[1];
-          v18[2] = v10[2];
-          v12 = v10[3];
-          *(float *)v15 = v11;
-          v18[3] = v12;
-          v13 = 2 * *((unsigned __int8 *)self_ + 815);
-          *(float *)&v15[1] = 1.0 - v11;
-          *(float *)&a4 = v11;
-          v17 = v15[1];
-          if ( v13 > 0xFF )
-            v13 = 255;
-          v14 = (v13 << 24) | *((_DWORD *)self_ + 203) & 0xFFFFFF;
-          if ( v8 != 0 )
+          p2 = (int *)orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx);
+          f1 = 1.0 - *((float *)self_ + 204);
+          i10[0] = *p2;
+          i10[1] = p2[1];
+          i10[2] = p2[2];
+          i5 = p2[3];
+          *(float *)i7 = f1;
+          i10[3] = i5;
+          u2 = 2 * *((unsigned char *)self_ + 815);
+          *(float *)&i7[1] = 1.0 - f1;
+          *(float *)&i8 = f1;
+          i9 = i7[1];
+          if ( u2 > 0xFF )
+            u2 = 255;
+          i6 = (u2 << 24) | *((uint32_t *)self_ + 203) & 0xFFFFFF;
+          if ( i3 != 0 )
           {
             orig::CDx_PushRenderTarget(
               g_pCDx,
-              *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 388],
-              *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 396],
+              *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388],
+              *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 396],
               0);
-            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[v8], v14, (int)v18, (int)v15, -1);
+            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[i3], i6, (int)i10, (int)i7, -1);
             orig::CDx_SetTexture(g_pCDx, 0, 0);
           }
           else
           {
-            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[0], v14, (int)v18, (int)v15, -1);
+            orig::CDx_DrawTexturedScreenQuad(g_pCDx, g_feedbackTexHalfRes[0], i6, (int)i10, (int)i7, -1);
           }
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
-          orig::CDx_PushRenderTarget(g_pCDx, g_feedbackTexHalfRes[v8], g_feedbackDepth[v8], 0);
-          orig::CDx_DrawTextureToViewport(g_pCDx, *(_DWORD *)&((unsigned __int8 *)((char *)g_pCDx + 0x10))[4 * v8 + 388], -2139062144, -1);
+          orig::CDx_PushRenderTarget(g_pCDx, g_feedbackTexHalfRes[i3], g_feedbackDepth[i3], 0);
+          orig::CDx_DrawTextureToViewport(g_pCDx, *(uint32_t *)&((unsigned char *)((char *)g_pCDx + 0x10))[4 * i3 + 388], -2139062144, -1);
           orig::CDx_SetTexture(g_pCDx, 0, 0);
         }
-        goto LABEL_36;
+        goto L3;
       }
     }
     else
     {
-      v7 = 1;
+      i2 = 1;
       g_feedbackActive = 0;
       g_feedbackBufferIndex = 1;
     }
-    g_feedbackBufferState[0] = v7;
+    g_feedbackBufferState[0] = i2;
     if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 )
       g_feedbackActive = 1;
     ++g_feedbackBufferIndex;
-    goto LABEL_20;
+    goto L1;
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x100139E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall App_RunOpening(void * self_)
+XI_API bits32 __thiscall App_RunOpening(void * self_)
 {
-  int *piVar1;
-  void *this_00;
+  int *p1;
+  void *obj1;
   
   if (*(short *)((int)self_ + 4) == 0) {
     if ((*(int *)(g_pAppSettings + 0x20) < 1) || (2 < *(int *)(g_pAppSettings + 0x20))) {
-      orig::_strncpy_v2(&DAT_10456798,s_c__image_ffxi_mov_10350310,0x103);
+      orig::_strncpy_v2(&g_10456798,str_c__image_ffxi_mov_10350310,0x103);
     }
     else {
-      GetCurrentDirectoryA(0x104,(LPSTR)(&DAT_10456798));
-      orig::_strncat(&DAT_10456798,&DAT_10350324,0x103);
+      GetCurrentDirectoryA(0x104,(LPSTR)(&g_10456798));
+      orig::_strncat(&g_10456798,&g_10350324,0x103);
     }
-    this_00 = (void *)orig::Mem_AllocDefault_v1(0x128);
-    if (this_00 == (void *)0x0) {
+    obj1 = (void *)orig::Mem_AllocDefault_v1(0x128);
+    if (obj1 == (void *)0x0) {
       g_pXiOpening_as_v0 = (int *)0x0;
       return 1;
     }
-    piVar1 = orig::CXiOpening_Constructor(this_00,&DAT_10456798);
-    g_pXiOpening_as_v0 = piVar1;
-    if (piVar1 == (int *)0x0) {
+    p1 = orig::CXiOpening_Constructor(obj1,&g_10456798);
+    g_pXiOpening_as_v0 = p1;
+    if (p1 == (int *)0x0) {
       return 1;
     }
     orig::App_AdvanceSeqStep_v1(self_);
   }
   else {
-    piVar1 = (int *)(*(short *)((int)self_ + 4) + -1);
-    if (piVar1 == (int *)0x0) {
-      piVar1 = (int *)orig::OpeningSubtitle_IsStateFour(g_pXiOpening_as_v0);
-      if ((char)piVar1 == '\x01') {
+    p1 = (int *)(*(short *)((int)self_ + 4) + -1);
+    if (p1 == (int *)0x0) {
+      p1 = (int *)orig::OpeningSubtitle_IsStateFour(g_pXiOpening_as_v0);
+      if ((char)p1 == '\x01') {
         if (g_pXiOpening_as_v0 != (int *)0x0) {
-          piVar1 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pXiOpening_as_v0 + 0x18))))((void *)(g_pXiOpening_as_v0),1);
+          p1 = (int *)((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pXiOpening_as_v0 + 0x18))))((void *)(g_pXiOpening_as_v0),1);
           g_pXiOpening_as_v0 = (int *)0x0;
         }
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar1 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-  return (uint32_t)piVar1 & 0xffffff00;
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10013AC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FrameRender_ReturnTrue(void)
+XI_API bits32 __cdecl FrameRender_ReturnTrue(void)
 {
   uint32_t xi_entry_eax = 0;
   
@@ -1169,49 +1169,49 @@ XI_API undefined4 __cdecl FrameRender_ReturnTrue(void)
 
 // FUNCTION: FFXIMAIN 0x10013DF0
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API char __thiscall App_StepGameState6(_WORD *self_)
+XI_API char __thiscall App_StepGameState6(uint16_t *self_)
 {
   char result;
-  int v3;
+  int i1;
   switch ( *(self_ + 2) )
   {
     case 0:
       orig::App_RegisterSystemDats();
-      orig::Ui_KeyPrompt_Init((_DWORD *)g_pKeyPrompt, 2);
+      orig::Ui_KeyPrompt_Init((uint32_t *)g_pKeyPrompt, 2);
       orig::MenuMng_OpenByName(g_menuMng, aMenuChdummy, 1, 0);
       orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
       result = orig::Acter_ResetGlobals();
       if ( result != 0 )
-        goto LABEL_6;
+        goto L1;
       return result;
     case 1:
       orig::GameMode_RequestState(g_pGameMode, 6, 0);
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 2:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 != 6 )
-        return v3 > 200;
-      goto LABEL_6;
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 != 6 )
+        return i1 > 200;
+      goto L1;
     case 3:
       orig::GameMode_RequestState(g_pGameMode, 7, 0);
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 4:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 7 )
-        goto LABEL_6;
-      return v3 > 200;
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 7 )
+        goto L1;
+      return i1 > 200;
     case 5:
       orig::GameMode_RequestState(g_pGameMode, 9, 0);
-LABEL_6:
+L1:
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 6:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 9 )
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 9 )
         return 1;
-      return v3 > 200;
+      return i1 > 200;
     default:
       return 1;
   }
@@ -1219,48 +1219,48 @@ LABEL_6:
 
 // FUNCTION: FFXIMAIN 0x10013F10
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API char __thiscall App_StepGameState7(_WORD *self_)
+XI_API char __thiscall App_StepGameState7(uint16_t *self_)
 {
   char result;
-  int v3;
+  int i1;
   switch ( *(self_ + 2) )
   {
     case 0:
-      orig::Ui_KeyPrompt_Init((_DWORD *)g_pKeyPrompt, 2);
+      orig::Ui_KeyPrompt_Init((uint32_t *)g_pKeyPrompt, 2);
       orig::MenuMng_OpenByName(g_menuMng, aMenuChdummy, 1, 0);
       orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
       result = orig::Acter_ResetGlobals();
       if ( result != 0 )
-        goto LABEL_6;
+        goto L1;
       return result;
     case 1:
       orig::GameMode_RequestState(g_pGameMode, 6, 0);
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 2:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 != 6 )
-        return v3 > 200;
-      goto LABEL_6;
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 != 6 )
+        return i1 > 200;
+      goto L1;
     case 3:
       orig::GameMode_RequestState(g_pGameMode, 8, 0);
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 4:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 8 )
-        goto LABEL_6;
-      return v3 > 200;
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 8 )
+        goto L1;
+      return i1 > 200;
     case 5:
       orig::GameMode_RequestState(g_pGameMode, 9, 0);
-LABEL_6:
+L1:
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 6:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 9 )
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 9 )
         return 1;
-      return v3 > 200;
+      return i1 > 200;
     default:
       return 1;
   }
@@ -1268,43 +1268,43 @@ LABEL_6:
 
 // FUNCTION: FFXIMAIN 0x10014030
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API char __thiscall App_StepGameState8(_WORD *self_)
+XI_API char __thiscall App_StepGameState8(uint16_t *self_)
 {
   char result;
-  int v3;
+  int i1;
   switch ( *(self_ + 2) )
   {
     case 0:
       orig::App_RegisterSystemDats();
-      orig::Ui_KeyPrompt_Init((_DWORD *)g_pKeyPrompt, 2);
+      orig::Ui_KeyPrompt_Init((uint32_t *)g_pKeyPrompt, 2);
       orig::MenuMng_OpenByName(g_menuMng, aMenuChdummy, 1, 0);
       orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
       result = orig::Acter_ResetGlobals();
       if ( result != 0 )
-        goto LABEL_6;
+        goto L1;
       return result;
     case 1:
     case 2:
-      goto LABEL_6;
+      goto L1;
     case 3:
       orig::GameMode_RequestState(g_pGameMode, 8, 0);
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 4:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 8 )
-        goto LABEL_6;
-      return v3 > 200;
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 8 )
+        goto L1;
+      return i1 > 200;
     case 5:
       orig::GameMode_RequestState(g_pGameMode, 9, 0);
-LABEL_6:
+L1:
       orig::App_AdvanceSeqStep(self_);
       return 0;
     case 6:
-      v3 = orig::GameMode_PollPendingState((int *)g_pGameMode);
-      if ( v3 == 9 )
+      i1 = orig::GameMode_PollPendingState((int *)g_pGameMode);
+      if ( i1 == 9 )
         return 1;
-      return v3 > 200;
+      return i1 > 200;
     default:
       return 1;
   }
@@ -1315,7 +1315,7 @@ LABEL_6:
 XI_API bool __cdecl App_StepGameState9(void)
 {
   orig::App_RegisterSystemDats();
-  orig::Ui_KeyPrompt_Init((_DWORD *)g_pKeyPrompt, 2);
+  orig::Ui_KeyPrompt_Init((uint32_t *)g_pKeyPrompt, 2);
   orig::MenuMng_OpenByName(g_menuMng, aMenuChdummy, 1, 0);
   orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
   return orig::Acter_ResetGlobals() != 0;
@@ -1323,39 +1323,39 @@ XI_API bool __cdecl App_StepGameState9(void)
 
 // FUNCTION: FFXIMAIN 0x10014170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall App_DispatchSubState(void * self_)
+XI_API bits32 __thiscall App_DispatchSubState(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)*(short *)((int)self_ + 4);
-  switch(xi_sw(uVar1)) {
+  u1 = (uint32_t)*(short *)((int)self_ + 4);
+  switch(xi_sw(u1)) {
   case 0:
-    uVar1 = orig::Game_InGameSubState0(self_);
+    u1 = orig::Game_InGameSubState0(self_);
     break;
   case 1:
-    uVar1 = orig::App_SubStateInitCamera(self_,uVar1);
-    return uVar1 & 0xffffff00;
+    u1 = orig::App_SubStateInitCamera(self_,u1);
+    return u1 & 0xffffff00;
   case 2:
-    uVar1 = orig::App_SubStateAdvance(self_);
-    return uVar1 & 0xffffff00;
+    u1 = orig::App_SubStateAdvance(self_);
+    return u1 & 0xffffff00;
   case 3:
-    uVar1 = orig::CAtelIdleTask_Create();
-    return uVar1 & 0xffffff00;
+    u1 = orig::CAtelIdleTask_Create();
+    return u1 & 0xffffff00;
   case 4:
-    uVar1 = orig::WinMain_RunStepThenLoadAll(self_);
-    if ((char)uVar1 != '\0') {
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = orig::WinMain_RunStepThenLoadAll(self_);
+    if ((char)u1 != '\0') {
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100141C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Game_InGameSubState0(_WORD *self_)
+XI_API char __thiscall Game_InGameSubState0(uint16_t *self_)
 {
-  if ( *(_DWORD *)(g_pAppSettings + 8) != 0 )
-    word_104568F8 = *(_WORD *)(g_pAppSettings + 8) + 1;
+  if ( *(uint32_t *)(g_pAppSettings + 8) != 0 )
+    g_104568F8 = *(uint16_t *)(g_pAppSettings + 8) + 1;
   orig::CDx_StepFadeCounter((float *)g_pCDx, 0.0, 0.0, 1);
   orig::App_AdvanceSeqStep(self_);
   return 1;
@@ -1363,51 +1363,51 @@ XI_API char __thiscall Game_InGameSubState0(_WORD *self_)
 
 // FUNCTION: FFXIMAIN 0x10014200
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) App_SubStateInitCamera(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) App_SubStateInitCamera(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::App_InitCamera(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(word_104568F8_as_v0))));
-  if ((char)uVar1 == '\0') {
-    return uVar1;
+  u1 = orig::App_InitCamera(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(g_104568F8_as_v0))));
+  if ((char)u1 == '\0') {
+    return u1;
   }
   orig::App_AdvanceSeqStep_v1(self_);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10014220
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall App_InitCamera(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall App_InitCamera(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::NetCellFont_GetFlags();
-  if ((uVar1 & 0x100) == 0) {
-    if ((short)param_1 == 0) {
-      uVar2 = orig::NetCellFont_GetWord40D7C();
-      DAT_104570e0 = (int)(short)uVar2;
-      *(int *)((int)self_ + 0x4c) = DAT_104570e0;
-      uVar2 = orig::CYyCamMng2_CreateGlobal();
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = orig::NetCellFont_GetFlags();
+  if ((u1 & 0x100) == 0) {
+    if ((short)arg2 == 0) {
+      u2 = orig::NetCellFont_GetWord40D7C();
+      g_104570E0 = (int)(short)u2;
+      *(int *)((int)self_ + 0x4c) = g_104570E0;
+      u2 = orig::CYyCamMng2_CreateGlobal();
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
-    DAT_104570e0 = (int)(short)((short)param_1 + -1);
-    *(int *)((int)self_ + 0x4c) = DAT_104570e0;
-    uVar2 = orig::CYyCamMng2_CreateGlobal();
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+    g_104570E0 = (int)(short)((short)arg2 + -1);
+    *(int *)((int)self_ + 0x4c) = g_104570E0;
+    u2 = orig::CYyCamMng2_CreateGlobal();
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
   }
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  DAT_104570e0 = (int)*(short *)(DAT_104dfd98 + 0x40d80);
-  *(int *)((int)self_ + 0x4c) = DAT_104570e0;
-  uVar2 = orig::CYyCamMng2_CreateGlobal();
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  g_104570E0 = (int)*(short *)(g_104DFD98 + 0x40d80);
+  *(int *)((int)self_ + 0x4c) = g_104570E0;
+  u2 = orig::CYyCamMng2_CreateGlobal();
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100142A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall App_SubStateAdvance(void * self_)
+XI_API bits32 __thiscall App_SubStateAdvance(void * self_)
 {
   uint32_t xi_entry_eax = 0;
   

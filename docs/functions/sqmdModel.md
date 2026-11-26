@@ -19,7 +19,7 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqmdModel.cpp`.
 | `SqmdModel_LookAt` | 0x10278E90 | 546 | yes | - | Aims a model item at a target, clamping the angle to the given limit. | medium |
 | `SqmdModel_AppendPair44` | 0x10279530 | 104 | yes | - | Appends a pair of values to the model's item arrays at offsets 0x3C and 0x40. | low |
 | `SqmdModel_AppendPair68` | 0x102796A0 | 104 | yes | - | Appends a pair of values to the model's item arrays at offsets 0x60 and 0x64. | low |
-| `SqmdModel_GetItem` | 0x10279710 | 262 | yes | - | Returns item param_3 of kind param_2 (texture, shader, updater, shape, ...) of a model, or 0 when out of range. | high |
+| `SqmdModel_GetItem` | 0x10279710 | 262 | yes | - | Returns item arg3 of kind arg2 (texture, shader, updater, shape, ...) of a model, or 0 when out of range. | high |
 | `SqmdModel_GetItemKind0` | 0x10279830 | 21 | yes | - | Returns the item of kind 0 for the given id. | low |
 | `SqmdModel_GetItemKind1` | 0x10279850 | 21 | yes | - | Returns the item of kind 1 for the given id. | low |
 | `SqmdModel_GetItemKind2` | 0x10279870 | 21 | yes | - | Returns the item of kind 2 for the given id. | low |
@@ -42,8 +42,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqmdModel_Free` calls `SqmdModel_FreeBuffers`, `sqFree`, `sqDebugPrintf`, `SqMem_HexDump`
 - `SqmdModel_FreeBuffers` calls `SqmdModel_FreeItems`, `SqgxTexture_FreeSlot`, `SqgxTexture_ClearPaletteUsed`, `sqFree`
 - `SqmdModel_Update` calls `SqmdModel_Validate`, `sqDebugPrintf`, `SqTimer_GetMicroseconds`, `SqmdModel_GetItemKind2`, `SqDebug_GetFlagByte14`, `SqDebug_InvokeCallback18`, `SqmdModel_GetItemKind3`, `SqIOHooks_CallHook2C`, `SqIOHooks_CallHook3C`
-- `SqmdModel_Link` calls `sqDebugPrintf`, `SqmdModel_GetItemNameKind3`, `sub_10312940`, `SqmdModel_LinkShape`
-- `SqmdModel_LinkShape` calls `sqDebugPrintf`, `SqMem_Realloc`, `SqmdModel_GetItemKind1`, `SqmdModel_GetItemKind3`, `SqsnScene_LayerAddItem`, `SqsnScene_ShadowAddMember`, `SqmdModel_GetItemNameKind3`, `sub_10311FF1`, `SqmdModel_LookupKind2`
+- `SqmdModel_Link` calls `sqDebugPrintf`, `SqmdModel_GetItemNameKind3`, `game_10312940`, `SqmdModel_LinkShape`
+- `SqmdModel_LinkShape` calls `sqDebugPrintf`, `SqMem_Realloc`, `SqmdModel_GetItemKind1`, `SqmdModel_GetItemKind3`, `SqsnScene_LayerAddItem`, `SqsnScene_ShadowAddMember`, `SqmdModel_GetItemNameKind3`, `game_10311FF1`, `SqmdModel_LookupKind2`
 - `SqmdModel_AddIllumLight` calls `SqmdModel_Validate`, `sqDebugPrintf`, `SqsnScene_ItemAddLight`
 - `SqmdModel_AddShadowLightInLayer` calls `SqmdModel_Validate`, `sqDebugPrintf`, `SqsnScene_ItemAddShadowLight`
 - `SqmdModel_Show` calls `SqmdModel_Validate`, `sqDebugPrintf`, `SqsnScene_GetEntryAddr`

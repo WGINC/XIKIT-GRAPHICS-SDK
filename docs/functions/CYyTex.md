@@ -16,4 +16,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `CYyTex::GetRuntimeClass` calls nothing directly
 - `TexObj_Constructor` calls `CYyTexBase::Constructor`
-- `CYyTex::ScalarDeletingDtor` calls `sub_10039970`, `thunk_sub_10028AA0`
+- `CYyTex::ScalarDeletingDtor` calls `game_10039970`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`

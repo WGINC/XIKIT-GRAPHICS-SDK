@@ -8,15 +8,15 @@ int __cdecl CXiActorNameDraw::SetRenderState()
 {
   int result;
   int i;
-  __int16 v2; // fps
-  double v3;
-  bool v4; // c0
-  char v5; // c2
-  bool v6; // c3
+  short i1; // fps
+  double f1;
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
   bool xi_fpu_unord = false;
 
   result = g_pSceneState;
-  if ( *(_DWORD *)g_pSceneState == 96 )
+  if ( *(uint32_t *)g_pSceneState == 96 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
@@ -36,14 +36,14 @@ int __cdecl CXiActorNameDraw::SetRenderState()
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-    for ( i = g_pActorDrawListHead; i != 0; i = *(_DWORD *)(i + 84) )
+    for ( i = g_pActorDrawListHead; i != 0; i = *(uint32_t *)(i + 84) )
     {
-      v3 = *(float *)(i + 140);
-      (xi_fpu_unord = __builtin_isunordered(v3, 0.0), v4 = v3 < 0.0);
-      v5 = 0;
-      v6 = v3 == 0.0;
-      if ( ((__int16)(((v4 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-        (*(void (__thiscall **)(int))(*(_DWORD *)i + 644))(i);
+      f1 = *(float *)(i + 140);
+      (xi_fpu_unord = __builtin_isunordered(f1, 0.0), b1 = f1 < 0.0);
+      c1 = 0;
+      b2 = f1 == 0.0;
+      if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+        (*(void (__thiscall **)(int))(*(uint32_t *)i + 644))(i);
     }
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);

@@ -5,9 +5,9 @@
 
 // FUNCTION: FFXIMAIN 0x1000D3F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall j_CEnv_UpdateDualTargetMode(void * self_, undefined4 xi_s1)
+XI_API void __thiscall j_CEnv_UpdateDualTargetMode(void * self_, bits32 xi_s1)
 {
-  orig::FUN_1000d630(self_, xi_s1);
+  orig::CEnv_UpdateStereoMode(self_, xi_s1);
   return;
 }
 
@@ -20,26 +20,26 @@ void __cdecl CEnv::Nop()
 
 // FUNCTION: FFXIMAIN 0x1000D630
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CEnv::UpdateStereoMode(void * self, undefined4 xi_s1)
+void __thiscall CEnv::UpdateStereoMode(void * self, bits32 xi_s1)
 {
-  short sVar1;
-  uint32_t uVar2;
+  short i1;
+  uint32_t u1;
   
-  *(uint32_t *)((int)self + 0x18) = DAT_10456abc;
-  uVar2 = orig::CEnv_IsStereoMode_v1(self);
-  if ((char)uVar2 != '\0') {
-    sVar1 = *(short *)((int)self + 0x1c) + 1;
-    if (3 < sVar1) {
-      sVar1 = 0;
+  *(uint32_t *)((int)self + 0x18) = g_10456ABC;
+  u1 = orig::CEnv_IsStereoMode_v1(self);
+  if ((char)u1 != '\0') {
+    i1 = *(short *)((int)self + 0x1c) + 1;
+    if (3 < i1) {
+      i1 = 0;
     }
-    *(short *)((int)self + 0x1c) = sVar1;
+    *(short *)((int)self + 0x1c) = i1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1000D660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CEnv::IsStereoMode(void * self)
+bits32 __thiscall CEnv::IsStereoMode(void * self)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)*(int *)((int)self + 0x18) >> 8))) << 8) | (uint8_t)(*(int *)((int)self + 0x18) != 0)));
 }

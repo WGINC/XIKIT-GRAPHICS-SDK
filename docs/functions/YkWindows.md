@@ -29,7 +29,7 @@ Why the file has this name (data/unit_names.json): Yk_* (the window lists), YkWn
 | `YkWindows_ClearField74` | 0x101E15F0 | 8 | yes | - | Clears the field at +0x74. | low |
 | `Yk_ClearEntries` | 0x101E1A00 | 74 | yes | - | Clears a table of ten entries. | low |
 | `YkWindows_LoadDatListSync` | 0x101E1AE0 | 44 | yes | - | Walks the list of dat entries from this and loads each pending one synchronously, marking a loaded one 2. | medium |
-| `YkWindows_LoadDatSync` | 0x101E24F0 | 91 | yes | - | Loads the .dat file chosen by param_1 into this object synchronously through a temporary dat entry. | medium |
+| `YkWindows_LoadDatSync` | 0x101E24F0 | 91 | yes | - | Loads the .dat file chosen by arg2 into this object synchronously through a temporary dat entry. | medium |
 | `YkWindows_CtorVt10339298` | 0x101E2B10 | 18 | yes | - | Constructs an object with vtable 0x10339298 on the 0x101EBE00 base. | low |
 | `YkWindows_CtorVt103394C0` | 0x101E3F50 | 491 | yes | - | Constructs the Yk object 0x10663520 and its eight helpers. | low |
 | `YkWindows_CtorVt10339530` | 0x101E48F0 | 38 | yes | - | Constructs the helper 0x10663554. | low |
@@ -188,12 +188,12 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_ClearFields14To3F` calls nothing directly
 - `YkWindows_ClearFields40To48` calls nothing directly
 - `YkWindows_CtorVt10339250` calls `NetCellFont_ClearWords`, `Allocator_Generic`, `YkWindows_ClearFields14To3F`, `YkWindows_ClearFields40To48`, `Yk_ClearEntries`, `YkWindows_ClearField74`
-- `YkWindows_LoadDatListOrRun101E1A70` calls `YkWindows_LoadDatListSync`, `YkWindows_ClearField74`, `sub_101E1A70`
+- `YkWindows_LoadDatListOrRun101E1A70` calls `YkWindows_LoadDatListSync`, `YkWindows_ClearField74`, `game_101E1A70`
 - `YkWindows_IsWithin23Seconds` calls `NetCellFont_AdvanceAndGetSeconds`
 - `YkWindows_ClearField74` calls nothing directly
 - `Yk_ClearEntries` calls nothing directly
 - `YkWindows_LoadDatListSync` calls `YkWindows_LoadDatSync`
-- `YkWindows_LoadDatSync` calls `sub_101E2880`, `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9A10 (left out)`, `TextInputFiles_ClearVtable`
+- `YkWindows_LoadDatSync` calls `game_101E2880`, `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9A10 (left out)`, `TextInputFiles_ClearVtable`
 - `YkWindows_CtorVt10339298` calls `YkWindows_CtorVt10339E48`
 - `YkWindows_CtorVt103394C0` calls `Yk_InitBase`, `Allocator_Generic`, `YkWindows_CtorVt10339770`, `YkWindows_CtorVt10339728`, `NetCellFont_ClearWords`, `YkWindows_CtorVt103397B8`, `YkWindows_CtorVt10339530`
 - `YkWindows_CtorVt10339530` calls `NetCellFont_ClearWords`
@@ -210,7 +210,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_InitFields1CTo3C` calls nothing directly
 - `YkWindows_CtorVt10339FA0` calls `NetCellFont_ClearWords`, `Allocator_Generic`
 - `YkWindows_UpdateScreenTransform` calls nothing directly
-- `YkWindows_CtorVt1033A000` calls `NetCellFont_ClearWords`, `sub_10311C2C`, `Yk_ResetFields`
+- `YkWindows_CtorVt1033A000` calls `NetCellFont_ClearWords`, `game_10311C2C`, `Yk_ResetFields`
 - `YkWindows_SetFlag20AndValues` calls nothing directly
 - `YkWindows_SetFlag20Default` calls `YkWindows_SetFlag20AndValues`
 - `Yk_ResetFields` calls nothing directly
@@ -218,8 +218,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_Return8` calls nothing directly
 - `YkWindows_GetTable103820B0` calls nothing directly
 - `YkWindows_CtorVt1033A5D8` calls `Yk_InitBase`, `Allocator_Generic`, `NetCellFont_ClearWords`, `TargetMenu_Construct`, `YkWindows_CtorVt10339298`, `YkWindows_ClearSixFlags`
-- `YkWndItem_Open` calls `IsEvent`, `TargetMenu_OpenWithOptions`, `TargetMenu_DockWindowLeft`, `YkWindows_SetField18AndRemainder`, `MenuMng_OpenByName`, `TargetMenu_MenuItemFade`, `sub_101F1230`, `sub_101F11E0`, `YkWindows_SelectListIndex`
-- `YkWindows_GetItemEntryState` calls `Acter_IsFlag40DB6OrState17`, `sub_1015BC40`, `MenuPanels_ComputeEntryFlags`, `MenuPanels_ComputeEntryMode`, `MenuPanels_DecodeEntryState`
+- `YkWndItem_Open` calls `IsEvent`, `TargetMenu_OpenWithOptions`, `TargetMenu_DockWindowLeft`, `YkWindows_SetField18AndRemainder`, `MenuMng_OpenByName`, `TargetMenu_MenuItemFade`, `game_101F1230`, `game_101F11E0`, `YkWindows_SelectListIndex`
+- `YkWindows_GetItemEntryState` calls `Acter_IsFlag40DB6OrState17`, `game_1015BC40`, `MenuPanels_ComputeEntryFlags`, `MenuPanels_ComputeEntryMode`, `MenuPanels_DecodeEntryState`
 - `YkWindows_CtorVt1033A6D0` calls `NetCellFont_ClearWords`, `Allocator_Generic`
 - `YkWindows_InitEightSlots80808080` calls nothing directly
 - `YkWindows_SetSlot` calls nothing directly
@@ -239,38 +239,38 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Yk_FindEntryIndex` calls nothing directly
 - `YkWindows_GetEntryCode` calls nothing directly
 - `YkWindows_TestFlagBitFwd` calls `YkCommon_Forward10097E80`
-- `YkWindows_GetEntryPosition` calls `Yk_FindEntryIndex`, `YkWindows_GetEntryCode`, `sub_101F7570`
+- `YkWindows_GetEntryPosition` calls `Yk_FindEntryIndex`, `YkWindows_GetEntryCode`, `game_101F7570`
 - `YkWindows_GetEntryRate` calls nothing directly
-- `YkWindows_FormatTargetMapGrid` calls `ActorHandle_Resolve`, `YkCommon_TestFlags100Or40DAC`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `YkWindows_GetEntryPosition`, `sub_10311FF1`
-- `YkWindows_MapEntryForTargetOrArea` calls `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `Yk_FindEntryIndex`, `sub_101F9A50`
+- `YkWindows_FormatTargetMapGrid` calls `ActorHandle_Resolve`, `YkCommon_TestFlags100Or40DAC`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `YkWindows_GetEntryPosition`, `game_10311FF1`
+- `YkWindows_MapEntryForTargetOrArea` calls `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `Yk_FindEntryIndex`, `game_101F9A50`
 - `YkWindows_SetMapWindowState` calls `NetCellFont_SetStateByIndex`, `YkCommon_CC4F0ActorTest400`
 - `YkWindows_PlaceListedActerMarkers` calls `YkWindows_ClearMapMarkers`, `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `YkWindows_PlaceActerMarker`
-- `YkWindows_PlaceActerMarker` calls `KaHelpMes_ResetLoadMes`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Yk_FindEntryIndex`, `sub_101F7570`, `YkWindows_AddMarkerRecord`
+- `YkWindows_PlaceActerMarker` calls `KaHelpMes_ResetLoadMes`, `ZoneMap_QueryBoxHeightBandThenGetCount34154`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Yk_FindEntryIndex`, `game_101F7570`, `YkWindows_AddMarkerRecord`
 - `YkWindows_TerminateMarkerNames` calls nothing directly
 - `YkWindows_InitMapMarkers` calls nothing directly
-- `YkWindows_LoadMapMarkerFile` calls `sub_10311FF1`, `TextInputFiles_FileMngFwd101C1DF0`, `TextInputFiles_FileMngSubmitPathKind1`, `Allocator_Generic`, `operator_delete`, `YkCommon_Checksum`, `YkWindows_TerminateMarkerNames`, `YkWindows_ClearMapMarkers`, `YkWindows_InitMapMarkers`
-- `YkWindows_SubmitMarkerFile` calls `YkCommon_Checksum`, `sub_10311FF1`, `TextInputFiles_FileMngSubmitPathKind6`, `TextInputFiles_FileMngSubmitPathKind3`
-- `YkWindows_SetMapView` calls `YkWindows_ReportMapChange`, `YkWindows_GetMapResourceId`, `sub_101CC620`, `Settings_GetValue`, `YkWindows_UpdateScreenTransform`, `YkCommon_GetIndexed`, `sub_101CBC10`
+- `YkWindows_LoadMapMarkerFile` calls `game_10311FF1`, `TextInputFiles_FileMngFwd101C1DF0`, `TextInputFiles_FileMngSubmitPathKind1`, `Allocator_Generic`, `operator_delete`, `YkCommon_Checksum`, `YkWindows_TerminateMarkerNames`, `YkWindows_ClearMapMarkers`, `YkWindows_InitMapMarkers`
+- `YkWindows_SubmitMarkerFile` calls `YkCommon_Checksum`, `game_10311FF1`, `TextInputFiles_FileMngSubmitPathKind6`, `TextInputFiles_FileMngSubmitPathKind3`
+- `YkWindows_SetMapView` calls `YkWindows_ReportMapChange`, `YkWindows_GetMapResourceId`, `game_101CC620`, `Settings_GetValue`, `YkWindows_UpdateScreenTransform`, `YkCommon_GetIndexed`, `game_101CBC10`
 - `YkWindows_GetMapResourceId` calls nothing directly
-- `YkWindows_ReportMapChange` calls `sub_101CBC10`, `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `ChatLog_AddTextCode379`
+- `YkWindows_ReportMapChange` calls `game_101CBC10`, `TargetMenu_GetMessageFwd`, `game_10311FF1`, `ChatLog_AddTextCode379`
 - `YkWindows_AddMessage32` calls `ChatLog_AddTableMessage7`
 - `YkWindows_CtorVt1033A8B8` calls `YkWindows_CtorVt1033A000`, `Yk_ResetSlots`, `Allocator_Generic`, `NetCellFont_ClearWords`, `YkWindows_CtorVt1033A988`, `YkWindows_CtorVt1033A918`, `YkWindows_CtorVt1033A9D0`
-- `YkWindows_UpdateTargetMarker` calls `ActorHandle_Resolve`, `YkWindows_GetTargetMapCoords`, `NetCellFont_GetActiveBlock3AE98`, `sub_101F7570`
-- `YkWindows_GetTargetMapCoords` calls `ActorHandle_Resolve`, `sub_101F7570`
+- `YkWindows_UpdateTargetMarker` calls `ActorHandle_Resolve`, `YkWindows_GetTargetMapCoords`, `NetCellFont_GetActiveBlock3AE98`, `game_101F7570`
+- `YkWindows_GetTargetMapCoords` calls `ActorHandle_Resolve`, `game_101F7570`
 - `YkWindows_ClearMapMarkers` calls nothing directly
 - `YkWindows_AddMarkerRecord` calls `YkWindows_GetRecord10664390`, `YkWindows_StepMarkerGroup`
 - `Yk_ResetSlots` calls nothing directly
 - `YkWindows_ResetMapBuffers` calls `operator_delete`, `Allocator_Generic`
 - `Yk_FreeBuffers` calls `operator_delete`
 - `YkWindows_IsMarkerAllowed` calls `Acter_IsWord104802BASet`
-- `YkWindows_CloseMapMenus` calls `Yk_FreeBuffers`, `YkWindows_SubmitMarkerFile`, `sub_10311C2C`, `SetConfig`, `Menu_CloseEntry`
+- `YkWindows_CloseMapMenus` calls `Yk_FreeBuffers`, `YkWindows_SubmitMarkerFile`, `game_10311C2C`, `SetConfig`, `Menu_CloseEntry`
 - `YkWindows_CanShowMapTitle` calls nothing directly
 - `YkWindows_ShowMapTitleIfAllowed` calls `YkWindows_CanShowMapTitle`, `XI_PACKET_101FA680 (left out)`
 - `YkWindows_MarkGroupMarkers` calls `YkWindows_ClearMarkerFlags`
 - `YkWindows_ClearMarkerFlags` calls nothing directly
 - `YkWindows_StepMarkerGroup` calls `YkWindows_ClearMarkerFlags`, `YkWindows_MarkGroupMarkers`
 - `YkWindows_OnMapClick` calls `YkWindows_MapEntryForTargetOrArea`, `MenuMng_AttachWindowAndPosition`
-- `YkWindows_SetupMapImage` calls `sub_101CC620`, `Settings_GetValue`, `YkWindows_UpdateScreenTransform`
+- `YkWindows_SetupMapImage` calls `game_101CC620`, `Settings_GetValue`, `YkWindows_UpdateScreenTransform`
 - `YkWindows_CtorVt1033A918` calls `Yk_InitBase`
 - `YkWindows_CtorVt1033A988` calls `NetCellFont_ClearWords`
 - `YkWindows_CtorVt1033A9D0` calls `Yk_InitBase`
@@ -281,20 +281,20 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_CtorVt1033AC28` calls `Yk_InitBase`
 - `YkWindows_InitFromTablesA` calls `YkCommon_GetIndexed`
 - `YkWindows_InitFromTablesB` calls `YkCommon_GetIndexed`
-- `YkWindows_DrawCountersAndGauge` calls `sub_100FCB40`, `sub_10311FF1`, `TargetMenu_GetMessageFwd`, `YkCommon_DrawUnscaled`, `sub_100FCB50`, `sub_100FCB60`, `sub_102012D0`, `sub_1011FB60`, `YkCommon_GetIndexed`
-- `Yk_UpdateLayout` calls `NetCellFont_GetRect`, `YkWindows_DrawCountersAndGauge`, `sub_10201180`
+- `YkWindows_DrawCountersAndGauge` calls `game_100FCB40`, `game_10311FF1`, `TargetMenu_GetMessageFwd`, `YkCommon_DrawUnscaled`, `game_100FCB50`, `game_100FCB60`, `game_102012D0`, `game_1011FB60`, `YkCommon_GetIndexed`
+- `Yk_UpdateLayout` calls `NetCellFont_GetRect`, `YkWindows_DrawCountersAndGauge`, `game_10201180`
 - `YkWindows_GetState10664390` calls `YkWindows_GetRecord10664390`, `YkWindows_IsSingleUncheckedEntry`
 - `YkWindows_CreateMenuObjects` calls `Allocator_Generic`, `TargetMenu_Construct`, `Yk_InitBase`, `YkWindows_CtorVt1033B110`, `YkWindows_CtorVt1033B0C8`
 - `YkWindows_CtorVt1033B0C8` calls `NetCellFont_ClearWords`
 - `Yk_CheckFlagAndWord1C` calls nothing directly
 - `YkWindows_IsSingleUncheckedEntry` calls `Yk_CheckFlagAndWord1C`
 - `YkWindows_Call101CA180IfText` calls `YkCommon_DrawTruncated`
-- `YkWindows_DrawLabelIfStateGroup06Or38` calls `IsEvent`, `Acter_GetActerAt10485F7A`, `Acter_IsStateGroup06Or38`, `sub_101CB0D0`, `YkCommon_DrawString`
+- `YkWindows_DrawLabelIfStateGroup06Or38` calls `IsEvent`, `Acter_GetActerAt10485F7A`, `Acter_IsStateGroup06Or38`, `game_101CB0D0`, `YkCommon_DrawString`
 - `Yk_GetActiveEntry` calls nothing directly
 - `YkWindows_ResetMode` calls `YkWindows_SetModeFwd`
 - `YkWindows_SetModeFwd` calls `Yk_SetMode`
-- `Yk_SetMode` calls `Entry_ValidateKey`, `Yk_FindIndexById`, `YkCommon_GetCC4F0ActorAt2A0`, `sub_1015DB80`, `sub_1015E830`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
-- `YkWindows_RunCallbackAndResetTarget` calls `sub_1015DB80`, `MenuMng_AttachWindowAndPosition`, `TargetMenu_MenuInitAndFadeItem`, `YkWindows_ResetMode`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
+- `Yk_SetMode` calls `Entry_ValidateKey`, `Yk_FindIndexById`, `YkCommon_GetCC4F0ActorAt2A0`, `game_1015DB80`, `game_1015E830`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
+- `YkWindows_RunCallbackAndResetTarget` calls `game_1015DB80`, `MenuMng_AttachWindowAndPosition`, `TargetMenu_MenuInitAndFadeItem`, `YkWindows_ResetMode`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
 - `YkWindows_GetRecord10664390` calls nothing directly
 - `YkWindows_FindActiveEntryById` calls `Yk_CheckFlagAndWord1C`
 - `Yk_GetActerIfValid` calls nothing directly
@@ -311,7 +311,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_ReadOrLoadGstEntry` calls `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9BC0 (left out)`, `TextInputFiles_ClearVtable`, `XI_CRYPT_101B9A10 (left out)`
 - `YkWindows_CtorVt1033B110` calls `NetCellFont_ClearWords`
 - `YkWindows_ClearFields14To24` calls nothing directly
-- `YkWindows_HasKind0CFlag40Entry` calls `NetCellFont_GetEntryCount`, `NetCellFont_GetSlotPtr`, `sub_1015BC40`
+- `YkWindows_HasKind0CFlag40Entry` calls `NetCellFont_GetEntryCount`, `NetCellFont_GetSlotPtr`, `game_1015BC40`
 - `YkWindows_CtorVt1033B248` calls `NetCellFont_ClearWords`, `Allocator_Generic`, `YkWindows_CtorVt1033B28C`
 - `YkWindows_CtorVt1033B28C` calls nothing directly
 - `YkWindows_CtorVt1033B340` calls `NetCellFont_ClearWords`, `Allocator_Generic`
@@ -327,7 +327,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkWindows_Init` calls `NetCellFont_ClearWords`, `YkWindows_ResetState`
 - `YkWindows_Open` calls `TargetMenu_SetTextFwd`, `MenuMng_OpenByName`, `NetCellFont_SelectEntry`, `YkWindows_HandleChoice`
 - `YkWindows_Close` calls `TargetMenu_MenuInitAndFadeItem`, `Menu_CloseEntry`
-- `YkWindows_Call10156C30InRect` calls `NetCellFont_GetRect`, `sub_10156C30`
-- `YkWindows_HandleChoice` calls `sub_1011BA40`, `Menu_CloseEntry`, `YkWindows_ApplyMusicVolume`, `MenuMng_OpenByName`
-- `YkWindows_ApplyMusicVolume` calls `sub_1011BA40`, `SetMusicTrackVolume_B`
+- `YkWindows_Call10156C30InRect` calls `NetCellFont_GetRect`, `game_10156C30`
+- `YkWindows_HandleChoice` calls `game_1011BA40`, `Menu_CloseEntry`, `YkWindows_ApplyMusicVolume`, `MenuMng_OpenByName`
+- `YkWindows_ApplyMusicVolume` calls `game_1011BA40`, `SetMusicTrackVolume_B`
 - `YkWindows_Refresh` calls `SetMusicTrackVolume_A`, `TargetMenu_MenuInitAndFadeItem`, `Menu_CloseEntry`, `MenuMng_OpenByName`, `NetCellFont_SelectEntry`

@@ -14,119 +14,119 @@ char ** __cdecl CMoDistRingElem::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 77 returned normally, 1220 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 77
 void CMoDistRingElem::AllocRingGeometry()
 {
-  float *v2;
-  int v3;
-  int v4;
-  unsigned __int8 *v5;
-  int v6;
-  int v7;
-  int v8;
-  float *v9;
-  long double v10;
-  int v11;
-  int v12;
-  int v13;
-  long double v14;
-  long double v15;
-  long double v16;
-  long double v17;
-  float *v18;
-  char *v19;
-  int v20;
-  int v21;
-  int v22;
-  int v23;
-  void *v24;
-  int v25;
-  int v26;
-  float *v27;
-  int v28;
-  int v29;
-  int v30;
-  int v31;
-  int a3;
-  int v33;
-  float v34;
-  int v35;
-  int a2;
+  float *p1;
+  int i1;
+  int i2;
+  unsigned char *p2;
+  int i3;
+  int i4;
+  int i5;
+  float *p3;
+  long double f1;
+  int i6;
+  int i7;
+  int i8;
+  long double f2;
+  long double f3;
+  long double f4;
+  long double f5;
+  float *p4;
+  char *p5;
+  int i9;
+  int i10;
+  int i11;
+  int i12;
+  void *p6;
+  int i13;
+  int i14;
+  float *p7;
+  int i15;
+  int i16;
+  int i17;
+  int i18;
+  int i19;
+  int i20;
+  float f6;
+  int i21;
+  int i22;
   int a2a;
-  _BYTE v38[16];
-  a2 = 2 * (char)this->segmentCount + 2;
-  v35 = a2 * (char)this->ringLevelCount;
-  v2 = (float *)orig::Allocator_Generic(36 * v35);
-  v3 = (char)this->ringLevelCount;
-  v4 = 0;
-  a3 = (int)v2;
-  if ( v3 > 0 )
+  uint8_t buf1[16];
+  i22 = 2 * (char)this->segmentCount + 2;
+  i21 = i22 * (char)this->ringLevelCount;
+  p1 = (float *)orig::Allocator_Generic(36 * i21);
+  i1 = (char)this->ringLevelCount;
+  i2 = 0;
+  i19 = (int)p1;
+  if ( i1 > 0 )
   {
-    v30 = BYTE2(g_scratchValue);
-    v26 = (unsigned __int8)g_scratchValue;
-    v28 = BYTE1(g_scratchValue);
-    v33 = HIBYTE(g_scratchValue);
-    v5 = &this->field_1A5;
+    i17 = (*((uint8_t *)&(g_scratchValue) + 2));
+    i14 = (unsigned char)g_scratchValue;
+    i15 = (*((uint8_t *)&(g_scratchValue) + 1));
+    i20 = (*((uint8_t *)&(g_scratchValue) + sizeof(g_scratchValue) - 1));
+    p2 = &this->field_1A5;
     do
     {
-      v6 = *(_DWORD *)(v5 - 1);
-      v5 += 4;
-      v38[4 * v4 + 2] = (v30 * (unsigned int)(unsigned __int8)v6) >> 7;
-      v38[4 * v4 + 1] = (v28 * (unsigned int)*(v5 - 4)) >> 7;
-      v38[4 * v4] = (v26 * (unsigned int)*(v5 - 3)) >> 7;
-      v38[4 * v4++ + 3] = (v33 * (unsigned int)*(v5 - 2)) >> 7;
+      i3 = *(uint32_t *)(p2 - 1);
+      p2 += 4;
+      buf1[4 * i2 + 2] = (i17 * (unsigned int)(unsigned char)i3) >> 7;
+      buf1[4 * i2 + 1] = (i15 * (unsigned int)*(p2 - 4)) >> 7;
+      buf1[4 * i2] = (i14 * (unsigned int)*(p2 - 3)) >> 7;
+      buf1[4 * i2++ + 3] = (i20 * (unsigned int)*(p2 - 2)) >> 7;
     }
-    while ( v4 < v3 );
+    while ( i2 < i1 );
   }
-  v7 = v3 - 1;
-  v8 = 0;
-  v31 = v3 - 1;
-  v29 = 0;
-  v34 = 0x1.921fb00000000p+2 / (double)(char)this->segmentCount;
-  if ( v3 - 1 > 0 )
+  i4 = i1 - 1;
+  i5 = 0;
+  i18 = i1 - 1;
+  i16 = 0;
+  f6 = 0x1.921fb00000000p+2 / (double)(char)this->segmentCount;
+  if ( i1 - 1 > 0 )
   {
-    v9 = (float *)&this->field_198;
+    p3 = (float *)&this->field_198;
     do
     {
-      v10 = 0.0;
-      v11 = 0;
-      v27 = v2;
+      f1 = 0.0;
+      i6 = 0;
+      p7 = p1;
       if ( (char)this->segmentCount > 0 )
       {
-        v12 = *(_DWORD *)&v38[4 * v8];
-        v13 = *(_DWORD *)&v38[4 * v8 + 4];
+        i7 = *(uint32_t *)&buf1[4 * i5];
+        i8 = *(uint32_t *)&buf1[4 * i5 + 4];
         do
         {
-          v14 = sin(v10);
-          v2 += 18;
-          ++v11;
-          *(v2 - 18) = v14 * *(v9 - 1);
-          v15 = cos(v10);
-          v16 = v15 * *(v9 - 1);
-          *(v2 - 16) = 0.0;
-          *((_DWORD *)v2 - 12) = v12;
-          *(v2 - 17) = v16;
-          *(v2 - 9) = v14 * *v9;
-          v17 = v15 * *v9;
-          *(v2 - 7) = 0.0;
-          *((_DWORD *)v2 - 3) = v13;
-          *(v2 - 8) = v17;
-          v10 = v10 + v34;
+          f2 = sin(f1);
+          p1 += 18;
+          ++i6;
+          *(p1 - 18) = f2 * *(p3 - 1);
+          f3 = cos(f1);
+          f4 = f3 * *(p3 - 1);
+          *(p1 - 16) = 0.0;
+          *((uint32_t *)p1 - 12) = i7;
+          *(p1 - 17) = f4;
+          *(p1 - 9) = f2 * *p3;
+          f5 = f3 * *p3;
+          *(p1 - 7) = 0.0;
+          *((uint32_t *)p1 - 3) = i8;
+          *(p1 - 8) = f5;
+          f1 = f1 + f6;
         }
-        while ( v11 < (char)this->segmentCount );
-        v8 = v29;
+        while ( i6 < (char)this->segmentCount );
+        i5 = i16;
       }
-      qmemcpy(v2, v27, 0x24u);
-      v18 = v2 + 9;
-      v2 += 18;
-      ++v8;
-      qmemcpy(v18, v27 + 9, 0x24u);
-      ++v9;
-      v29 = v8;
+      memcpy(p1, p7, 0x24u);
+      p4 = p1 + 9;
+      p1 += 18;
+      ++i5;
+      memcpy(p4, p7 + 9, 0x24u);
+      ++p3;
+      i16 = i5;
     }
-    while ( v8 < v31 );
-    v7 = v31;
+    while ( i5 < i18 );
+    i4 = i18;
   }
   orig::RegisterWithProcessor((int)this);
-  v19 = (char *)a3;
-  if ( orig::CMoDistMorphElem_ValidateMorphData(a3, v35, (int)&this->field_A0, 0) != 0 )
+  p5 = (char *)i19;
+  if ( orig::CMoDistMorphElem_ValidateMorphData(i19, i21, (int)&this->field_A0, 0) != 0 )
   {
     if ( (CMoDistRingElem_AllocRingGeometry_staticGuard & 1) == 0 )
     {
@@ -135,26 +135,26 @@ void CMoDistRingElem::AllocRingGeometry()
       orig::_atexit(XI_CODE(StaticDtor_StateBlock_1047BB7C));
     }
     orig::StateBlock_ApplyTSS(CMoDistRingElem_stateBlock, (int)CMoDistRingElem_textureStageStates);
-    if ( v7 > 0 )
+    if ( i4 > 0 )
     {
-      v20 = v7;
-      v21 = 9 * a2;
-      a2a = a2 - 2;
-      v22 = 4 * v21;
+      i9 = i4;
+      i10 = 9 * i22;
+      a2a = i22 - 2;
+      i11 = 4 * i10;
       do
       {
-        v23 = g_pResourceMng;
+        i12 = g_pResourceMng;
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(338);
-        v24 = *(void **)(v23 + 3528);
-        v25 = orig::Gfx_CalcFVFStride(0x152u);
-        orig::CDx_DrawPrimitiveUP(v24, 5, a2a, (int)v19, v25);
-        v19 += v22;
-        --v20;
+        p6 = *(void **)(i12 + 3528);
+        i13 = orig::Gfx_CalcFVFStride(0x152u);
+        orig::CDx_DrawPrimitiveUP(p6, 5, a2a, (int)p5, i13);
+        p5 += i11;
+        --i9;
       }
-      while ( v20 != 0 );
-      v19 = (char *)a3;
+      while ( i9 != 0 );
+      p5 = (char *)i19;
     }
-    orig::operator_delete(v19);
+    orig::operator_delete(p5);
   }
 }
 
@@ -162,36 +162,36 @@ void CMoDistRingElem::AllocRingGeometry()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoDistRingElem::Construct(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoDistRingElem_GetRuntimeClass_1032b4d8;
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoDistRingElem_GetRuntimeClass_1032B4D8;
   *(uint16_t *)((int)self + 0x176) = 0x1ba;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10052FF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoDistRingElem::IsKind5(int a1)
+BOOL CMoDistRingElem::IsKind5(int arg1)
 {
-  return a1 == 5;
+  return arg1 == 5;
 }
 
 // FUNCTION: FFXIMAIN 0x10053000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoDistRingElem::set_field_1B6(int a2)
+int CMoDistRingElem::set_field_1B6(int arg1)
 {
-  (*(unsigned __int32 *)((char *)this + 0x1B6)) = a2;
-  return a2;
+  (*(unsigned int *)((char *)this + 0x1B6)) = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10053010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDistRingElem::ScalarDeletingDtor(char a2)
+int * CMoDistRingElem::ScalarDeletingDtor(char arg1)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   orig::CMoElemFamily_SharedCleanup(self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

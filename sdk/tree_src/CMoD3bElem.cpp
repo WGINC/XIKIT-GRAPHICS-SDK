@@ -7,20 +7,20 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoD3bElem::Ctor(void * self)
 {
-  uint32_t *puVar1;
-  int iVar2;
+  uint32_t *p1;
+  int i1;
   
   orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoElem_GetRuntimeClass_variant8_1032ac90;
+  *(uint8_t ***)self = &ptr_to_CMoElem_GetRuntimeClass_variant8_1032AC90;
   *(uint16_t *)((int)self + 0x176) = 0x1c0;
-  puVar1 = (uint32_t *)((int)self + 0x1a8);
-  iVar2 = 5;
+  p1 = (uint32_t *)((int)self + 0x1a8);
+  i1 = 5;
   do {
-    puVar1[-5] = 0;
-    *puVar1 = 0;
-    puVar1 = puVar1 + 1;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p1[-5] = 0;
+    *p1 = 0;
+    p1 = p1 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self + 0x1bc) = 0;
   return ((uint64_t)(uint32_t)(self));
 }

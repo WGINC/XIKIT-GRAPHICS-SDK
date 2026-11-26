@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x1018BBB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall unknown_libname_158(void * self_)
+XI_API bits32 __thiscall unknown_libname_158(void * self_)
 {
   *(uint32_t *)self_ = 0;
   return self_;
@@ -12,21 +12,21 @@ XI_API undefined4 __thiscall unknown_libname_158(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018BBC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall Time_SetNormalized(void * self_, undefined4 param_1)
+XI_API void * __thiscall Time_SetNormalized(void * self_, bits32 arg2)
 {
-  orig::FUN_1018bc40(self_,param_1,param_1);
+  orig::Time_Normalize_as_v0(self_,arg2,arg2);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BC40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) Time_Normalize(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) Time_Normalize(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  if (0x6f3c9000 < param_2) {
-    xi_eax = (-1 - (param_2 + 0x90c36fffU) / 0x6f3c9000) * 0x6f3c9000;
-    param_2 = param_2 + xi_eax;
+  if (0x6f3c9000 < arg4) {
+    xi_eax = (-1 - (arg4 + 0x90c36fffU) / 0x6f3c9000) * 0x6f3c9000;
+    arg4 = arg4 + xi_eax;
   }
-  *(int *)self_ = param_2;
+  *(int *)self_ = arg4;
   return xi_eax;
 }
 
@@ -69,98 +69,98 @@ XI_API int __thiscall Time_GetDiv5184000(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl TextInputFiles_GetGameTimeValue(void)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   char xi_frame[8] __attribute__((aligned(4)));
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 4);
   
-  if ((*(char *)(g_pCamera_as_s32 + 9) != '\0') && (DAT_1065cb20 == '\0')) {
-    uVar1 = orig::ntGameTimeGet();
-    uVar1 = orig::FUN_10103b60(uVar1);
-    return uVar1;
+  if ((*(char *)(g_pCamera_as_s32 + 9) != '\0') && (g_1065CB20 == '\0')) {
+    u1 = orig::ntGameTimeGet();
+    u1 = orig::game_10103B60(u1);
+    return u1;
   }
-  orig::FUN_1018c180(&local_8);
-  orig::Time_SetNormalized(&local_4,0x278d00);
-  orig::FUN_1018bc40(&local_8,local_4 + local_8,local_4 + local_8);
-  iVar2 = orig::Time_GetDiv5184000(&local_8);
-  return (iVar2 / 7) % 0xc;
+  orig::game_1018C180(&i2);
+  orig::Time_SetNormalized(&i3,0x278d00);
+  orig::Time_Normalize_as_v0(&i2,i3 + i2,i3 + i2);
+  i1 = orig::Time_GetDiv5184000(&i2);
+  return (i1 / 7) % 0xc;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BE80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_SetModulo60(void * self_, int param_1)
+XI_API void __thiscall Time_SetModulo60(void * self_, int arg2)
 {
-  orig::FUN_1018bc40(self_,param_1 + (*(int *)self_ / 0x3c) * 0x3c,param_1);
+  orig::Time_Normalize_as_v0(self_,arg2 + (*(int *)self_ / 0x3c) * 0x3c,arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_SetModulo3600Div60(void * self_, int param_1)
+XI_API void __thiscall Time_SetModulo3600Div60(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)self_;
-  orig::FUN_1018bc40(self_,iVar1 % 0x3c + (param_1 + (iVar1 / 0xe10) * 0x3c) * 0x3c,iVar1 / 0x3c);
+  i1 = *(int *)self_;
+  orig::Time_Normalize_as_v0(self_,i1 % 0x3c + (arg2 + (i1 / 0xe10) * 0x3c) * 0x3c,i1 / 0x3c);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BF00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_SetModulo216000Div3600(void * self_, int param_1)
+XI_API void __thiscall Time_SetModulo216000Div3600(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)self_;
-  orig::FUN_1018bc40(self_,(param_1 + (iVar1 / 0x34bc0) * 0x3c) * 0xe10 + iVar1 % 0xe10,iVar1 / 0xe10);
+  i1 = *(int *)self_;
+  orig::Time_Normalize_as_v0(self_,(arg2 + (i1 / 0x34bc0) * 0x3c) * 0xe10 + i1 % 0xe10,i1 / 0xe10);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BF50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_FromHours(void * self_, int param_1)
+XI_API void __thiscall Time_FromHours(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)self_;
-  orig::FUN_1018bc40(self_,(param_1 + (iVar1 / 0x4f1a00) * 0x18) * 0x34bc0 + iVar1 % 0x34bc0,
-               iVar1 / 0x34bc0);
+  i1 = *(int *)self_;
+  orig::Time_Normalize_as_v0(self_,(arg2 + (i1 / 0x4f1a00) * 0x18) * 0x34bc0 + i1 % 0x34bc0,
+               i1 / 0x34bc0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018BFA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_SetModulo155520000Div5184000(void * self_, int param_1)
+XI_API void __thiscall Time_SetModulo155520000Div5184000(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)self_;
-  orig::FUN_1018bc40(self_,(param_1 + (iVar1 / 0x9450c00) * 0x1e) * 0x4f1a00 + iVar1 % 0x4f1a00,
-               iVar1 / 0x4f1a00);
+  i1 = *(int *)self_;
+  orig::Time_Normalize_as_v0(self_,(arg2 + (i1 / 0x9450c00) * 0x1e) * 0x4f1a00 + i1 % 0x4f1a00,
+               i1 / 0x4f1a00);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018C020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Time_SetDiv155520000(void * self_, int param_1)
+XI_API void __thiscall Time_SetDiv155520000(void * self_, int arg2)
 {
-  orig::FUN_1018bc40(self_,*(int *)self_ % 0x9450c00 + param_1 * 0x9450c00,param_1 * 0x9450c00);
+  orig::Time_Normalize_as_v0(self_,*(int *)self_ % 0x9450c00 + arg2 * 0x9450c00,arg2 * 0x9450c00);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018C1B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Time_GetDiv5184000Mul5184000(undefined4 * param_1)
+XI_API void __cdecl Time_GetDiv5184000Mul5184000(bits32 * arg1)
 {
-  int iVar1;
+  int i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
   
-  orig::unknown_libname_158(&local_4);
-  iVar1 = orig::Time_GetDiv5184000(&DAT_1065cb1c);
-  orig::Time_SetModulo155520000Div5184000(&local_4,iVar1);
-  *param_1 = local_4;
+  orig::unknown_libname_158(&u1);
+  i1 = orig::Time_GetDiv5184000(&g_1065CB1C);
+  orig::Time_SetModulo155520000Div5184000(&u1,i1);
+  *arg1 = u1;
   return;
 }
 
@@ -169,70 +169,70 @@ XI_API void __cdecl Time_GetDiv5184000Mul5184000(undefined4 * param_1)
 XI_API void __thiscall Time_AddFrameScale(void * self_)
 {
   uint32_t xi_entry_eax = 0;
-  long double fVar1;
-  int64_t lVar2;
+  long double f1;
+  int64_t i1;
   
-  fVar1 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
-  lVar2 = XI_CALL_ST0(0x10311C2Cu)(fVar1 * (long double)25.0f);
-  *(int *)self_ = *(int *)self_ + (int)lVar2;
+  f1 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
+  i1 = XI_CALL_ST0(0x10311C2Cu)(f1 * 25.0f);
+  *(int *)self_ = *(int *)self_ + (int)i1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018C290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Time_SubtractFrameScale(void * self_)
+XI_API bits32 __thiscall Time_SubtractFrameScale(void * self_)
 {
   uint32_t xi_entry_eax = 0;
-  int iVar1;
-  long double fVar2;
-  int64_t lVar3;
+  int i1;
+  long double f1;
+  int64_t i2;
   
-  fVar2 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
-  lVar3 = XI_CALL_ST0(0x10311C2Cu)(fVar2 * (long double)(-25.0f));
-  iVar1 = *(int *)self_ + (int)lVar3;
-  *(int *)self_ = iVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)lVar3 >> 8))) << 8) | (uint8_t)(iVar1 < 0)));
+  f1 = orig::Camera_GetFrameScale_v1(xi_entry_eax);
+  i2 = XI_CALL_ST0(0x10311C2Cu)(f1 * (-25.0f));
+  i1 = *(int *)self_ + (int)i2;
+  *(int *)self_ = i1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)i2 >> 8))) << 8) | (uint8_t)(i1 < 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x1018D230
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl TextInputFiles_GrowCapacity(undefined4 param_1, uint32_t param_2)
+XI_API uint32_t __cdecl TextInputFiles_GrowCapacity(bits32 arg1, uint32_t arg2)
 {
-  if (param_2 < 0x40) {
+  if (arg2 < 0x40) {
     return 0x40;
   }
-  return param_2 * 3 >> 1;
+  return arg2 * 3 >> 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D250
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Free(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Free(void * self_)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar1 = 0;
+  u1 = 0;
   if (*(LPVOID *)self_ != (LPVOID)0x0) {
     *(uint32_t *)((int)self_ + 8) = 0;
     *(uint32_t *)((int)self_ + 4) = 0;
-    uVar2 = orig::operator_delete_v1(*(LPVOID *)self_);
-    uVar1 = (uint32_t)uVar2;
+    u2 = orig::operator_delete_v1(*(LPVOID *)self_);
+    u1 = (uint32_t)u2;
     *(uint32_t *)self_ = 0;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_InitEmpty(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   *(uint32_t *)((int)self_ + 8) = 0x40;
-  uVar1 = orig::Allocator_Generic_v1(0x40);
-  *(uint8_t **)self_ = (uint8_t *)uVar1;
+  u1 = orig::Allocator_Generic_v1(0x40);
+  *(uint8_t **)self_ = (uint8_t *)u1;
   *(uint32_t *)((int)self_ + 4) = 0;
-  *(uint8_t *)uVar1 = 0;
+  *(uint8_t *)u1 = 0;
   return;
 }
 
@@ -248,66 +248,66 @@ XI_API void * __thiscall TextInputFiles_Init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018D2D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_AssignCStr(void * self_, char * param_1)
+XI_API void * __thiscall TextInputFiles_AssignCStr(void * self_, char * arg2)
 {
-  char cVar1;
-  uint32_t uVar2;
-  char *pcVar3;
-  uint64_t uVar4;
+  char c1;
+  uint32_t u1;
+  char *p1;
+  uint64_t u2;
   
-  if (param_1 == (char *)0x0) {
+  if (arg2 == (char *)0x0) {
     orig::TextInputFiles_InitEmpty(self_);
     return self_;
   }
-  uVar2 = 0xffffffff;
-  pcVar3 = param_1;
+  u1 = 0xffffffff;
+  p1 = arg2;
   do {
-    if (uVar2 == 0) break;
-    uVar2 = uVar2 - 1;
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar1 != '\0');
-  *(uint32_t *)((int)self_ + 4) = ~uVar2 - 1;
-  uVar2 = orig::TextInputFiles_GrowCapacity(*(uint32_t *)((int)self_ + 8),~uVar2);
-  *(uint32_t *)((int)self_ + 8) = uVar2;
-  uVar4 = orig::Allocator_Generic_v1(uVar2);
-  pcVar3 = (char *)uVar4;
-  *(char **)self_ = pcVar3;
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint32_t *)((int)self_ + 4) = ~u1 - 1;
+  u1 = orig::TextInputFiles_GrowCapacity(*(uint32_t *)((int)self_ + 8),~u1);
+  *(uint32_t *)((int)self_ + 8) = u1;
+  u2 = orig::Allocator_Generic_v1(u1);
+  p1 = (char *)u2;
+  *(char **)self_ = p1;
   do {
-    cVar1 = *param_1;
-    param_1 = param_1 + 1;
-    *pcVar3 = cVar1;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar1 != '\0');
+    c1 = *arg2;
+    arg2 = arg2 + 1;
+    *p1 = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_AssignWhole(void * self_, char * param_1)
+XI_API void __thiscall TextInputFiles_AssignWhole(void * self_, char * arg2)
 {
-  orig::TextInputFiles_AssignN(self_,param_1,-1);
+  orig::TextInputFiles_AssignN(self_,arg2,-1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_Append(void * self_, char * param_1)
+XI_API void __thiscall TextInputFiles_Append(void * self_, char * arg2)
 {
-  orig::TextInputFiles_AppendN(self_,param_1,0xffffffff);
+  orig::TextInputFiles_AppendN(self_,arg2,0xffffffff);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_AppendBuf(void * self_, void * param_1)
+XI_API void __thiscall TextInputFiles_AppendBuf(void * self_, void * arg2)
 {
-  char *pcVar1;
-  size_t sVar2;
+  char *p1;
+  size_t u1;
   
-  sVar2 = *(size_t *)((int)param_1 + 4);
-  pcVar1 = orig::TextInputFiles_GetCStr(param_1);
-  orig::TextInputFiles_AppendN(self_,pcVar1,sVar2);
+  u1 = *(size_t *)((int)arg2 + 4);
+  p1 = orig::TextInputFiles_GetCStr(arg2);
+  orig::TextInputFiles_AppendN(self_,p1,u1);
   return;
 }
 
@@ -315,86 +315,86 @@ XI_API void __thiscall TextInputFiles_AppendBuf(void * self_, void * param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __thiscall TextInputFiles_GetCStr(void * self_)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  puVar1 = &Read_as_v0;
+  p1 = &Read_as_v0;
   if (*(int *)((int)self_ + 4) != 0) {
-    puVar1 = *(uint8_t **)self_;
+    p1 = *(uint8_t **)self_;
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D480
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_GetLength(void * self_)
+XI_API bits32 __thiscall TextInputFiles_GetLength(void * self_)
 {
   return *(uint32_t *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x1018D490
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_GetField4_1018D490(void * self_)
+XI_API bits32 __thiscall TextInputFiles_GetField4_1018D490(void * self_)
 {
   return *(uint32_t *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x1018D4A0
 // GATE: PASS -- 100 trials, 86 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 86
-XI_API void * __thiscall TextInputFiles_AssignN(void * self_, char * param_1, int param_2)
+XI_API void * __thiscall TextInputFiles_AssignN(void * self_, char * arg2, int arg3)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  uint32_t uVar4;
-  char *pcVar5;
-  uint64_t uVar6;
+  char c1;
+  char *p1;
+  int i1;
+  uint32_t u1;
+  char *p2;
+  uint64_t u2;
   
-  pcVar2 = *(char **)self_;
-  if (pcVar2 != param_1) {
-    if (param_1 == (char *)0x0) {
-      orig::FUN_1018d3d0(self_);
+  p1 = *(char **)self_;
+  if (p1 != arg2) {
+    if (arg2 == (char *)0x0) {
+      orig::game_1018D3D0(self_);
       return self_;
     }
-    if (*param_1 == '\0') {
-      orig::FUN_1018d3d0(self_);
+    if (*arg2 == '\0') {
+      orig::game_1018D3D0(self_);
       return self_;
     }
-    if (param_2 == -1) {
-      uVar4 = 0xffffffff;
-      pcVar5 = param_1;
+    if (arg3 == -1) {
+      u1 = 0xffffffff;
+      p2 = arg2;
       do {
-        if (uVar4 == 0) break;
-        uVar4 = uVar4 - 1;
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar1 != '\0');
-      param_2 = ~uVar4 - 1;
+        if (u1 == 0) break;
+        u1 = u1 - 1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      arg3 = ~u1 - 1;
     }
-    if ((pcVar2 < param_1) && (param_1 <= pcVar2 + *(int *)((int)self_ + 4))) {
-      iVar3 = 0;
-      if (0 < param_2 + 1) {
+    if ((p1 < arg2) && (arg2 <= p1 + *(int *)((int)self_ + 4))) {
+      i1 = 0;
+      if (0 < arg3 + 1) {
         do {
-          *(char *)(iVar3 + *(int *)self_) = param_1[iVar3];
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < param_2 + 1);
+          *(char *)(i1 + *(int *)self_) = arg2[i1];
+          i1 = i1 + 1;
+        } while (i1 < arg3 + 1);
       }
-      *(int *)((int)self_ + 4) = param_2;
+      *(int *)((int)self_ + 4) = arg3;
       return self_;
     }
-    if (param_2 < *(int *)((int)self_ + 8)) {
-      *(int *)((int)self_ + 4) = param_2;
+    if (arg3 < *(int *)((int)self_ + 8)) {
+      *(int *)((int)self_ + 4) = arg3;
     }
     else {
-      if (pcVar2 != (char *)0x0) {
-        orig::operator_delete_v1(pcVar2);
+      if (p1 != (char *)0x0) {
+        orig::operator_delete_v1(p1);
       }
-      *(int *)((int)self_ + 4) = param_2;
-      uVar4 = orig::TextInputFiles_GrowCapacity(*(uint32_t *)((int)self_ + 8),param_2 + 1);
-      *(uint32_t *)((int)self_ + 8) = uVar4;
-      uVar6 = orig::Allocator_Generic_v1(uVar4);
-      *(int *)self_ = (int)uVar6;
+      *(int *)((int)self_ + 4) = arg3;
+      u1 = orig::TextInputFiles_GrowCapacity(*(uint32_t *)((int)self_ + 8),arg3 + 1);
+      *(uint32_t *)((int)self_ + 8) = u1;
+      u2 = orig::Allocator_Generic_v1(u1);
+      *(int *)self_ = (int)u2;
     }
-    orig::_strncpy_v2(*(char **)self_,param_1,*(size_t *)((int)self_ + 4));
+    orig::_strncpy_v2(*(char **)self_,arg2,*(size_t *)((int)self_ + 4));
     *(uint8_t *)(*(int *)((int)self_ + 4) + *(int *)self_) = 0;
   }
   return self_;
@@ -402,56 +402,56 @@ XI_API void * __thiscall TextInputFiles_AssignN(void * self_, char * param_1, in
 
 // FUNCTION: FFXIMAIN 0x1018D580
 // GATE: PASS -- 100 trials, 96 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-XI_API void * __thiscall TextInputFiles_AppendN(void * self_, char * param_1, size_t param_2)
+XI_API void * __thiscall TextInputFiles_AppendN(void * self_, char * arg2, size_t arg3)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   char *_Dest;
-  uint32_t uVar3;
-  char *pcVar4;
-  char *pcVar5;
-  uint64_t uVar6;
+  uint32_t u1;
+  char *p1;
+  char *p2;
+  uint64_t u2;
   
-  if ((param_1 != (char *)0x0) && (*param_1 != '\0')) {
-    if (param_2 == 0xffffffff) {
-      uVar3 = 0xffffffff;
-      pcVar4 = param_1;
+  if ((arg2 != (char *)0x0) && (*arg2 != '\0')) {
+    if (arg3 == 0xffffffff) {
+      u1 = 0xffffffff;
+      p1 = arg2;
       do {
-        if (uVar3 == 0) break;
-        uVar3 = uVar3 - 1;
-        cVar1 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar1 != '\0');
-      param_2 = ~uVar3 - 1;
+        if (u1 == 0) break;
+        u1 = u1 - 1;
+        c1 = *p1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
+      arg3 = ~u1 - 1;
     }
-    iVar2 = *(int *)((int)self_ + 4) + param_2;
-    if (iVar2 < *(int *)((int)self_ + 8)) {
-      orig::_strncpy_v2((char *)(*(int *)self_ + *(int *)((int)self_ + 4)),param_1,param_2);
-      iVar2 = *(int *)((int)self_ + 4) + param_2;
-      *(int *)((int)self_ + 4) = iVar2;
-      *(uint8_t *)(iVar2 + *(int *)self_) = 0;
+    i1 = *(int *)((int)self_ + 4) + arg3;
+    if (i1 < *(int *)((int)self_ + 8)) {
+      orig::_strncpy_v2((char *)(*(int *)self_ + *(int *)((int)self_ + 4)),arg2,arg3);
+      i1 = *(int *)((int)self_ + 4) + arg3;
+      *(int *)((int)self_ + 4) = i1;
+      *(uint8_t *)(i1 + *(int *)self_) = 0;
       return self_;
     }
-    uVar3 = orig::TextInputFiles_GrowCapacity(*(int *)((int)self_ + 8),iVar2 + 1);
-    *(uint32_t *)((int)self_ + 8) = uVar3;
-    uVar6 = orig::Allocator_Generic_v1(uVar3);
-    _Dest = (char *)uVar6;
-    pcVar4 = *(char **)self_;
-    pcVar5 = _Dest;
-    if (pcVar4 != (char *)0x0) {
+    u1 = orig::TextInputFiles_GrowCapacity(*(int *)((int)self_ + 8),i1 + 1);
+    *(uint32_t *)((int)self_ + 8) = u1;
+    u2 = orig::Allocator_Generic_v1(u1);
+    _Dest = (char *)u2;
+    p1 = *(char **)self_;
+    p2 = _Dest;
+    if (p1 != (char *)0x0) {
       do {
-        cVar1 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-        *pcVar5 = cVar1;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar1 != '\0');
+        c1 = *p1;
+        p1 = p1 + 1;
+        *p2 = c1;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
       orig::operator_delete_v1(*(LPVOID *)self_);
     }
-    orig::_strncat(_Dest,param_1,param_2);
-    iVar2 = *(int *)((int)self_ + 4) + param_2;
+    orig::_strncat(_Dest,arg2,arg3);
+    i1 = *(int *)((int)self_ + 4) + arg3;
     *(char **)self_ = _Dest;
-    *(int *)((int)self_ + 4) = iVar2;
-    _Dest[iVar2] = '\0';
+    *(int *)((int)self_ + 4) = i1;
+    _Dest[i1] = '\0';
   }
   return self_;
 }
@@ -460,25 +460,25 @@ XI_API void * __thiscall TextInputFiles_AppendN(void * self_, char * param_1, si
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_InitAcqDat(void * self_)
 {
-  uint8_t *puVar1;
-  int iVar2;
+  uint8_t *p1;
+  int i1;
   
-  iVar2 = 8;
-  *(uint8_t ***)self_ = &PTR_LAB_103368a0;
+  i1 = 8;
+  *(uint8_t ***)self_ = &g_103368A0;
   *(uint8_t *)((int)self_ + 0x10c) = 0;
   *(uint8_t *)((int)self_ + 0x10d) = 0;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 0x88) = 0;
-  puVar1 = (uint8_t *)((int)self_ + 0x8c);
+  p1 = (uint8_t *)((int)self_ + 0x8c);
   do {
-    puVar1[-0x84] = 0;
-    *puVar1 = 0;
-    puVar1 = puVar1 + 0x10;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p1[-0x84] = 0;
+    *p1 = 0;
+    p1 = p1 + 0x10;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint8_t *)((int)self_ + 0x10e) = 0;
-  if (DAT_10662db0 != (void *)0x0) {
-    orig::TextInputFiles_Register(DAT_10662db0,1,0,s_acq_dat_10377c78,(int)self_ + 8,0x80,&LAB_1018da20,self_,1);
+  if (g_10662DB0 != (void *)0x0) {
+    orig::TextInputFiles_Register(g_10662DB0,1,0,str_acq_dat_10377C78,(int)self_ + 8,0x80,&TextInputFiles_Validate8NamesOrClear_as_v0,self_,1);
   }
   orig::TextInputFiles_ClearEntries(self_);
   return self_;
@@ -486,86 +486,86 @@ XI_API void * __thiscall TextInputFiles_InitAcqDat(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018D7F0
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __thiscall TextInputFiles_FillCompletionWords(void * self_, int * param_1, int param_2, uint8_t * param_3, int param_4)
+XI_API int __thiscall TextInputFiles_FillCompletionWords(void * self_, int * arg2, int arg3, uint8_t * arg4, int arg5)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
-  uint64_t uVar5;
+  int i1;
+  int i2;
+  int i3;
+  char *p1;
+  uint64_t u1;
   
-  if ((0xf < param_4) || (param_4 == 0)) {
+  if ((0xf < arg5) || (arg5 == 0)) {
     return 0;
   }
-  iVar3 = 0;
-  iVar2 = 0;
+  i3 = 0;
+  i2 = 0;
   if (0 < *(int *)((int)self_ + 0x88)) {
-    pcVar4 = (char *)((int)self_ + 0x8c);
+    p1 = (char *)((int)self_ + 0x8c);
     do {
-      if (param_2 <= iVar3) {
-        return iVar3;
+      if (arg3 <= i3) {
+        return i3;
       }
-      uVar5 = orig::FUN_10325d00(param_3,pcVar4,param_4);
-      if ((int)uVar5 == 0) {
-        iVar1 = orig::TextInputFiles_AppendCompletionWord(param_1,iVar3,param_2,pcVar4);
-        iVar3 = iVar3 + iVar1;
+      u1 = orig::game_10325D00(arg4,p1,arg5);
+      if ((int)u1 == 0) {
+        i1 = orig::TextInputFiles_AppendCompletionWord(arg2,i3,arg3,p1);
+        i3 = i3 + i1;
       }
-      iVar2 = iVar2 + 1;
-      pcVar4 = pcVar4 + 0x10;
-    } while (iVar2 < *(int *)((int)self_ + 0x88));
+      i2 = i2 + 1;
+      p1 = p1 + 0x10;
+    } while (i2 < *(int *)((int)self_ + 0x88));
   }
-  if (iVar3 < param_2) {
-    if ((g_pTargetMng != (void *)0x0) && (iVar2 = orig::Target_GetActorPtr(g_pTargetMng), iVar2 != 0)) {
-      iVar2 = orig::Target_GetActorPtr(g_pTargetMng);
-      pcVar4 = (char *)(iVar2 + 0x214);
-      if (*(short *)(iVar2 + 0x210) == 0) {
-        pcVar4 = (char *)(iVar2 + 0x7c);
+  if (i3 < arg3) {
+    if ((g_pTargetMng != (void *)0x0) && (i2 = orig::Target_GetActorPtr(g_pTargetMng), i2 != 0)) {
+      i2 = orig::Target_GetActorPtr(g_pTargetMng);
+      p1 = (char *)(i2 + 0x214);
+      if (*(short *)(i2 + 0x210) == 0) {
+        p1 = (char *)(i2 + 0x7c);
       }
-      if ((pcVar4 != (char *)0x0) && (uVar5 = orig::FUN_10325d00(param_3,pcVar4,param_4), (int)uVar5 == 0)
+      if ((p1 != (char *)0x0) && (u1 = orig::game_10325D00(arg4,p1,arg5), (int)u1 == 0)
          ) {
-        iVar2 = orig::TextInputFiles_AppendCompletionWord(param_1,iVar3,param_2,pcVar4);
-        iVar3 = iVar3 + iVar2;
+        i2 = orig::TextInputFiles_AppendCompletionWord(arg2,i3,arg3,p1);
+        i3 = i3 + i2;
       }
     }
-    if (iVar3 < param_2) {
-      if (DAT_106643a8 != 0) {
-        iVar2 = 0;
+    if (i3 < arg3) {
+      if (g_106643A8 != 0) {
+        i2 = 0;
         do {
-          if (param_2 <= iVar3) {
-            return iVar3;
+          if (arg3 <= i3) {
+            return i3;
           }
-          pcVar4 = orig::Yk_GetActiveEntry(iVar2);
-          if ((pcVar4 != (char *)0x0) &&
-             (uVar5 = orig::FUN_10325d00(param_3,pcVar4,param_4), (int)uVar5 == 0)) {
-            iVar1 = orig::TextInputFiles_AppendCompletionWord(param_1,iVar3,param_2,pcVar4);
-            iVar3 = iVar3 + iVar1;
+          p1 = orig::Yk_GetActiveEntry(i2);
+          if ((p1 != (char *)0x0) &&
+             (u1 = orig::game_10325D00(arg4,p1,arg5), (int)u1 == 0)) {
+            i1 = orig::TextInputFiles_AppendCompletionWord(arg2,i3,arg3,p1);
+            i3 = i3 + i1;
           }
-          iVar2 = iVar2 + 1;
-        } while (iVar2 < 0x12);
+          i2 = i2 + 1;
+        } while (i2 < 0x12);
       }
-      return iVar3;
+      return i3;
     }
-    return iVar3;
+    return i3;
   }
-  return iVar3;
+  return i3;
 }
 
 // FUNCTION: FFXIMAIN 0x1018D980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CommitPending8C(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CommitPending8C(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
   
   if ((*(char *)((int)self_ + 0x10d) != '\x01') && (*(char *)((int)self_ + 0x10c) == '\x01')) {
     *(uint8_t *)((int)self_ + 0x10c) = 0;
-    puVar2 = (uint32_t *)((int)self_ + 8);
-    puVar3 = (uint32_t *)((int)self_ + 0x8c);
-    for (iVar1 = 0x20; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar3 = *puVar2;
-      puVar2 = puVar2 + 1;
-      puVar3 = puVar3 + 1;
+    p1 = (uint32_t *)((int)self_ + 8);
+    p2 = (uint32_t *)((int)self_ + 0x8c);
+    for (i1 = 0x20; i1 != 0; i1 = i1 + -1) {
+      *p2 = *p1;
+      p1 = p1 + 1;
+      p2 = p2 + 1;
     }
     *(uint32_t *)((int)self_ + 0x88) = *(uint32_t *)((int)self_ + 4);
   }
@@ -582,111 +582,111 @@ XI_API void __thiscall TextInputFiles_ClearByte10E(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018DA20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_Validate8NamesOrClear(int param_1, void * param_2)
+XI_API bits32 __cdecl TextInputFiles_Validate8NamesOrClear(int arg1, void * arg2)
 {
-  char cVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint8_t *puVar4;
-  int iVar5;
-  char *pcVar6;
-  uint32_t *puVar7;
-  char *pcVar8;
+  char c1;
+  uint32_t u1;
+  int i1;
+  uint8_t *p1;
+  int i2;
+  char *p2;
+  uint32_t *p3;
+  char *p4;
   
-  if (param_1 != 0) {
-LAB_1018dae7:
-    puVar7 = (uint32_t *)((int)param_2 + 8);
-    for (iVar5 = 0x20; iVar5 != 0; iVar5 = iVar5 + -1) {
-      *puVar7 = 0;
-      puVar7 = puVar7 + 1;
+  if (arg1 != 0) {
+code_1018DAE7:
+    p3 = (uint32_t *)((int)arg2 + 8);
+    for (i2 = 0x20; i2 != 0; i2 = i2 + -1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    *(uint32_t *)((int)param_2 + 4) = 0;
-    *(uint8_t *)((int)param_2 + 0x10c) = 1;
-    orig::TextInputFiles_ClearByte10E(param_2);
+    *(uint32_t *)((int)arg2 + 4) = 0;
+    *(uint8_t *)((int)arg2 + 0x10c) = 1;
+    orig::TextInputFiles_ClearByte10E(arg2);
     return 0;
   }
-  param_1 = 0;
-  puVar4 = (uint8_t *)((int)param_2 + 0x17);
-LAB_1018da4a:
-  while (param_1 < 8) {
-    iVar5 = 0;
-    while (puVar4[iVar5 + -0xf] != '\0') {
-      uVar2 = orig::FUN_103146de((int)(char)puVar4[iVar5 + -0xf]);
-      if (uVar2 == 0) goto LAB_1018dae7;
-      iVar5 = iVar5 + 1;
-      if (0xe < iVar5) goto code_r0x1018da71;
+  arg1 = 0;
+  p1 = (uint8_t *)((int)arg2 + 0x17);
+code_1018DA4A:
+  while (arg1 < 8) {
+    i2 = 0;
+    while (p1[i2 + -0xf] != '\0') {
+      u1 = orig::game_103146DE((int)(char)p1[i2 + -0xf]);
+      if (u1 == 0) goto code_1018DAE7;
+      i2 = i2 + 1;
+      if (0xe < i2) goto L1;
     }
-    puVar7 = (uint32_t *)(puVar4 + iVar5 + -0xf);
-    for (uVar2 = 0xfU - iVar5 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar7 = 0;
-      puVar7 = puVar7 + 1;
+    p3 = (uint32_t *)(p1 + i2 + -0xf);
+    for (u1 = 0xfU - i2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    for (uVar2 = 0xfU - iVar5 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint8_t *)puVar7 = 0;
-      puVar7 = (uint32_t *)((int)puVar7 + 1);
+    for (u1 = 0xfU - i2 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p3 = 0;
+      p3 = (uint32_t *)((int)p3 + 1);
     }
-    param_1 = param_1 + 1;
-    *puVar4 = 0;
-    puVar4 = puVar4 + 0x10;
+    arg1 = arg1 + 1;
+    *p1 = 0;
+    p1 = p1 + 0x10;
   }
-  iVar5 = 0;
-  pcVar6 = (char *)((int)param_2 + 8);
+  i2 = 0;
+  p2 = (char *)((int)arg2 + 8);
   do {
-    iVar3 = -1;
-    pcVar8 = pcVar6;
+    i1 = -1;
+    p4 = p2;
     do {
-      if (iVar3 == 0) break;
-      iVar3 = iVar3 + -1;
-      cVar1 = *pcVar8;
-      pcVar8 = pcVar8 + 1;
-    } while (cVar1 != '\0');
-    if (iVar3 == -2) break;
-    iVar5 = iVar5 + 1;
-    pcVar6 = pcVar6 + 0x10;
-  } while (iVar5 < 8);
-  *(int *)((int)param_2 + 4) = iVar5;
-  *(uint8_t *)((int)param_2 + 0x10c) = 1;
-  orig::TextInputFiles_ClearByte10E(param_2);
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      c1 = *p4;
+      p4 = p4 + 1;
+    } while (c1 != '\0');
+    if (i1 == -2) break;
+    i2 = i2 + 1;
+    p2 = p2 + 0x10;
+  } while (i2 < 8);
+  *(int *)((int)arg2 + 4) = i2;
+  *(uint8_t *)((int)arg2 + 0x10c) = 1;
+  orig::TextInputFiles_ClearByte10E(arg2);
   return 0;
-code_r0x1018da71:
-  *puVar4 = 0;
-  param_1 = param_1 + 1;
-  puVar4 = puVar4 + 0x10;
-  goto LAB_1018da4a;
+L1:
+  *p1 = 0;
+  arg1 = arg1 + 1;
+  p1 = p1 + 0x10;
+  goto code_1018DA4A;
 }
 
 // FUNCTION: FFXIMAIN 0x1018DB10
 // GATE: PASS -- 100 trials, 100 returned normally, 52 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_AppendCompletionWord(int * param_1, int param_2, int param_3, char * param_4)
+XI_API bits32 __stdcall TextInputFiles_AppendCompletionWord(int * arg1, int arg2, int arg3, char * arg4)
 {
-  char cVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
-  char *pcVar5;
+  char c1;
+  int i1;
+  uint32_t u1;
+  int i2;
+  char *p1;
   int *self_;
   
-  if (param_2 + 1 < param_3) {
-    uVar3 = 0xffffffff;
-    iVar4 = 0;
-    pcVar5 = param_4;
+  if (arg2 + 1 < arg3) {
+    u1 = 0xffffffff;
+    i2 = 0;
+    p1 = arg4;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    self_ = param_1;
-    if (0 < param_2) {
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    self_ = arg1;
+    if (0 < arg2) {
       do {
-        iVar2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*self_ + 8))))((void *)(self_),param_4,~uVar3 - 1);
-        if (iVar2 == 0) break;
-        iVar4 = iVar4 + 1;
+        i1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*self_ + 8))))((void *)(self_),arg4,~u1 - 1);
+        if (i1 == 0) break;
+        i2 = i2 + 1;
         self_ = self_ + 6;
-      } while (iVar4 < param_2);
+      } while (i2 < arg2);
     }
-    if (iVar4 == param_2) {
-      orig::TextInputFiles_Set(param_1 + iVar4 * 6,param_4,~uVar3 - 1,0);
+    if (i2 == arg2) {
+      orig::TextInputFiles_Set(arg1 + i2 * 6,arg4,~u1 - 1,0);
       return 1;
     }
   }
@@ -695,36 +695,36 @@ XI_API undefined4 __stdcall TextInputFiles_AppendCompletionWord(int * param_1, i
 
 // FUNCTION: FFXIMAIN 0x1018DC70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetEntryMod(void * self_, uint32_t param_1)
+XI_API int __thiscall TextInputFiles_GetEntryMod(void * self_, uint32_t arg2)
 {
-  char cVar1;
-  uint32_t uVar2;
+  char c1;
+  uint32_t u1;
   
-  cVar1 = *(char *)((int)self_ + 0x19e);
-  uVar2 = 0;
-  if ((cVar1 != '\0') && (uVar2 = param_1 % (uint32_t)(int)cVar1, (int)uVar2 < 0)) {
+  c1 = *(char *)((int)self_ + 0x19e);
+  u1 = 0;
+  if ((c1 != '\0') && (u1 = arg2 % (uint32_t)(int)c1, (int)u1 < 0)) {
     return 0;
   }
-  if ((int)cVar1 <= (int)uVar2) {
+  if ((int)c1 <= (int)u1) {
     return 0;
   }
-  return uVar2 * 0x10 + 0x11e + (int)self_;
+  return u1 * 0x10 + 0x11e + (int)self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1018DCB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ClearEntries(void * self_)
 {
-  uint8_t *puVar1;
-  int iVar2;
+  uint8_t *p1;
+  int i1;
   
-  puVar1 = (uint8_t *)((int)self_ + 0x11e);
-  iVar2 = 8;
+  p1 = (uint8_t *)((int)self_ + 0x11e);
+  i1 = 8;
   do {
-    *puVar1 = 0;
-    puVar1 = puVar1 + 0x10;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    *p1 = 0;
+    p1 = p1 + 0x10;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint8_t *)((int)self_ + 0x19e) = 0;
   return;
 }
@@ -733,99 +733,99 @@ XI_API void __thiscall TextInputFiles_ClearEntries(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_InitPecDat(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_LAB_103368a4;
+  *(uint8_t ***)self_ = &g_103368A4;
   *(uint32_t *)((int)self_ + 4) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 8);
-  for (iVar1 = 0x140; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 8);
+  for (i1 = 0x140; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  if (DAT_10662db0 != (void *)0x0) {
-    orig::TextInputFiles_Register(DAT_10662db0,2,0,s_pec_dat_10377c80,(uint32_t *)((int)self_ + 8),0x500,
-                 &LAB_1018dfd0,self_,1);
+  if (g_10662DB0 != (void *)0x0) {
+    orig::TextInputFiles_Register(g_10662DB0,2,0,str_pec_dat_10377C80,(uint32_t *)((int)self_ + 8),0x500,
+                 &TextInputFiles_Validate64NamesOrClear_as_v0,self_,1);
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1018DFD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_Validate64NamesOrClear(int param_1, int param_2)
+XI_API bits32 __cdecl TextInputFiles_Validate64NamesOrClear(int arg1, int arg2)
 {
-  char cVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint8_t *puVar4;
-  int iVar5;
-  char *pcVar6;
-  uint32_t *puVar7;
-  char *pcVar8;
+  char c1;
+  uint32_t u1;
+  int i1;
+  uint8_t *p1;
+  int i2;
+  char *p2;
+  uint32_t *p3;
+  char *p4;
   
-  if (param_1 != 0) {
-LAB_1018e08a:
-    puVar7 = (uint32_t *)(param_2 + 8);
-    for (iVar5 = 0x140; iVar5 != 0; iVar5 = iVar5 + -1) {
-      *puVar7 = 0;
-      puVar7 = puVar7 + 1;
+  if (arg1 != 0) {
+code_1018E08A:
+    p3 = (uint32_t *)(arg2 + 8);
+    for (i2 = 0x140; i2 != 0; i2 = i2 + -1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    *(uint32_t *)(param_2 + 4) = 0;
+    *(uint32_t *)(arg2 + 4) = 0;
     return 0;
   }
-  param_1 = 0;
-  puVar4 = (uint8_t *)(param_2 + 0x17);
-LAB_1018dffa:
-  while (param_1 < 0x40) {
-    iVar5 = 0;
-    while (puVar4[iVar5 + -0xf] != '\0') {
-      uVar2 = orig::FUN_103146de((int)(char)puVar4[iVar5 + -0xf]);
-      if (uVar2 == 0) goto LAB_1018e08a;
-      iVar5 = iVar5 + 1;
-      if (0xe < iVar5) goto code_r0x1018e021;
+  arg1 = 0;
+  p1 = (uint8_t *)(arg2 + 0x17);
+code_1018DFFA:
+  while (arg1 < 0x40) {
+    i2 = 0;
+    while (p1[i2 + -0xf] != '\0') {
+      u1 = orig::game_103146DE((int)(char)p1[i2 + -0xf]);
+      if (u1 == 0) goto code_1018E08A;
+      i2 = i2 + 1;
+      if (0xe < i2) goto L1;
     }
-    puVar7 = (uint32_t *)(puVar4 + iVar5 + -0xf);
-    for (uVar2 = 0xfU - iVar5 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar7 = 0;
-      puVar7 = puVar7 + 1;
+    p3 = (uint32_t *)(p1 + i2 + -0xf);
+    for (u1 = 0xfU - i2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    for (uVar2 = 0xfU - iVar5 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint8_t *)puVar7 = 0;
-      puVar7 = (uint32_t *)((int)puVar7 + 1);
+    for (u1 = 0xfU - i2 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p3 = 0;
+      p3 = (uint32_t *)((int)p3 + 1);
     }
-    param_1 = param_1 + 1;
-    *puVar4 = 0;
-    puVar4 = puVar4 + 0x14;
+    arg1 = arg1 + 1;
+    *p1 = 0;
+    p1 = p1 + 0x14;
   }
-  iVar5 = 0;
-  pcVar6 = (char *)(param_2 + 8);
+  i2 = 0;
+  p2 = (char *)(arg2 + 8);
   do {
-    iVar3 = -1;
-    pcVar8 = pcVar6;
+    i1 = -1;
+    p4 = p2;
     do {
-      if (iVar3 == 0) break;
-      iVar3 = iVar3 + -1;
-      cVar1 = *pcVar8;
-      pcVar8 = pcVar8 + 1;
-    } while (cVar1 != '\0');
-    if (iVar3 == -2) break;
-    iVar5 = iVar5 + 1;
-    pcVar6 = pcVar6 + 0x14;
-  } while (iVar5 < 0x40);
-  *(int *)(param_2 + 4) = iVar5;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      c1 = *p4;
+      p4 = p4 + 1;
+    } while (c1 != '\0');
+    if (i1 == -2) break;
+    i2 = i2 + 1;
+    p2 = p2 + 0x14;
+  } while (i2 < 0x40);
+  *(int *)(arg2 + 4) = i2;
   return 0;
-code_r0x1018e021:
-  *puVar4 = 0;
-  param_1 = param_1 + 1;
-  puVar4 = puVar4 + 0x14;
-  goto LAB_1018dffa;
+L1:
+  *p1 = 0;
+  arg1 = arg1 + 1;
+  p1 = p1 + 0x14;
+  goto code_1018DFFA;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_InitPage(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall FsLogPage_InitPage(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0xdc) = param_1;
+  *(uint32_t *)((int)self_ + 0xdc) = arg2;
   *(uint32_t *)((int)self_ + 0xcc) = 0;
   *(uint32_t *)((int)self_ + 0xd0) = 0;
   *(uint32_t *)((int)self_ + 0xd4) = 0;
@@ -839,33 +839,33 @@ XI_API undefined4 __thiscall FsLogPage_InitPage(void * self_, undefined4 param_1
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsLogPage_ClearAndVisitFiles(void * self_)
 {
-  uint32_t uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  uint32_t u1;
+  int i1;
+  int i2;
+  int i3;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
   orig::FsLogPage_ClearBuffer(self_);
   if (*(int *)((int)self_ + 0xd0) == 0) {
     return;
   }
-  iVar2 = 0;
+  i1 = 0;
   do {
-    iVar4 = 0;
-    iVar3 = iVar2;
+    i3 = 0;
+    i2 = i1;
     while( true ) {
-      if (0x13 < iVar4) {
+      if (0x13 < i3) {
         orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0xd0));
         *(uint32_t *)((int)self_ + 0xd0) = 0;
         return;
       }
-      orig::FsLogPage_FormatFileName(local_100,*(int *)((int)self_ + 0xdc),iVar4 % 0x14);
-      uVar1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,local_100);
-      iVar2 = iVar3;
-      if (((char)uVar1 != '\0') && (iVar2 = iVar3 + 1, iVar3 < 0x14)) break;
-      iVar4 = iVar4 + 1;
-      iVar3 = iVar2;
+      orig::FsLogPage_FormatFileName(u2,*(int *)((int)self_ + 0xdc),i3 % 0x14);
+      u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,u2);
+      i1 = i2;
+      if (((char)u1 != '\0') && (i1 = i2 + 1, i2 < 0x14)) break;
+      i3 = i3 + 1;
+      i2 = i1;
     }
     Sleep(100);
   } while( true );
@@ -873,268 +873,268 @@ XI_API void __thiscall FsLogPage_ClearAndVisitFiles(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018E170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl FsLogPage_FormatFileName(uint8_t * param_1, int param_2, undefined4 xi_s3)
+XI_API void __cdecl FsLogPage_FormatFileName(uint8_t * arg1, int arg2, bits32 xi_s3)
 {
-  if (param_2 == 0) {
-    orig::_sprintf_v1(param_1,s__d_log_10377c98);
+  if (arg2 == 0) {
+    orig::_sprintf_v1(arg1,str__d_log_10377C98);
     return;
   }
-  orig::_sprintf_v1(param_1,s__d__d_log_10377c8c,param_2,xi_s3);
+  orig::_sprintf_v1(arg1,str__d__d_log_10377C8C,arg2,xi_s3);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E1A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_AllocBuffer(void * self_)
+XI_API bits32 __thiscall FsLogPage_AllocBuffer(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::FsLogPage_ClearBuffer(self_);
-  uVar1 = orig::Allocator_Generic_v1(0xc80);
-  *(int *)((int)self_ + 0xcc) = (int)uVar1;
+  u1 = orig::Allocator_Generic_v1(0xc80);
+  *(int *)((int)self_ + 0xcc) = (int)u1;
   *(uint32_t *)((int)self_ + 0xd4) = 0xc80;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E1D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_load(void * self_, undefined4 fileNameString)
+XI_API bits32 __thiscall FsLogPage_load(void * self_, bits32 fileNameString)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint32_t *puVar6;
-  uint64_t uVar7;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint64_t u4;
   char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t * &local_4 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
+  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
   
-  iVar4 = 0;
-  local_4 = self_;
+  i1 = 0;
+  p3 = self_;
   while( true ) {
-    uVar1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
-    if ((char)uVar1 == '\0') break;
+    u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
+    if ((char)u1 == '\0') break;
     Sleep(100);
-    if (0x14 < iVar4) break;
-    iVar4 = iVar4 + 1;
+    if (0x14 < i1) break;
+    i1 = i1 + 1;
   }
-  uVar2 = orig::TextInputFiles_FileMngFwd101C1EC0(g_pFileMng_as_v0,fileNameString);
-  if (-1 < (int)uVar2) {
-    orig::TextInputFiles_AllocZeroed(&local_4,uVar2);
-    iVar4 = 0;
+  u2 = orig::TextInputFiles_FileMngFwd101C1EC0(g_pFileMng_as_v0,fileNameString);
+  if (-1 < (int)u2) {
+    orig::TextInputFiles_AllocZeroed(&p3,u2);
+    i1 = 0;
     while( true ) {
-      uVar1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
-      if ((char)uVar1 == '\0') break;
+      u1 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,fileNameString);
+      if ((char)u1 == '\0') break;
       Sleep(100);
-      if (0x14 < iVar4) break;
-      iVar4 = iVar4 + 1;
+      if (0x14 < i1) break;
+      i1 = i1 + 1;
     }
-    uVar3 = orig::TextInputFiles_FileMngSubmitPath2F4Kind1(g_pFileMng_as_v0,fileNameString,local_4,uVar2,0);
-    if ((uVar3 == uVar2) && (99 < uVar2)) {
+    u3 = orig::TextInputFiles_FileMngSubmitPath2F4Kind1(g_pFileMng_as_v0,fileNameString,p3,u2,0);
+    if ((u3 == u2) && (99 < u2)) {
       orig::FsLogPage_ClearBuffer(self_);
-      *(uint32_t *)((int)self_ + 0xd4) = uVar2 - 100;
-      uVar7 = orig::Allocator_Generic_v1(uVar2 - 100);
-      *(uint32_t **)((int)self_ + 0xcc) = (uint32_t *)uVar7;
-      puVar5 = local_4;
-      puVar6 = self_;
-      for (iVar4 = 0x19; iVar4 != 0; iVar4 = iVar4 + -1) {
-        *puVar6 = *puVar5;
-        puVar5 = puVar5 + 1;
-        puVar6 = puVar6 + 1;
+      *(uint32_t *)((int)self_ + 0xd4) = u2 - 100;
+      u4 = orig::Allocator_Generic_v1(u2 - 100);
+      *(uint32_t **)((int)self_ + 0xcc) = (uint32_t *)u4;
+      p1 = p3;
+      p2 = self_;
+      for (i1 = 0x19; i1 != 0; i1 = i1 + -1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      uVar2 = *(uint32_t *)((int)self_ + 0xd4);
+      u2 = *(uint32_t *)((int)self_ + 0xd4);
       *(uint8_t *)((int)self_ + 200) = 0;
-      puVar5 = local_4 + 0x19;
-      puVar6 = (uint32_t *)uVar7;
-      for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-        *puVar6 = *puVar5;
-        puVar5 = puVar5 + 1;
-        puVar6 = puVar6 + 1;
+      p1 = p3 + 0x19;
+      p2 = (uint32_t *)u4;
+      for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *(uint8_t *)puVar6 = *(uint8_t *)puVar5;
-        puVar5 = (uint32_t *)((int)puVar5 + 1);
-        puVar6 = (uint32_t *)((int)puVar6 + 1);
+      for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+        *(uint8_t *)p2 = *(uint8_t *)p1;
+        p1 = (uint32_t *)((int)p1 + 1);
+        p2 = (uint32_t *)((int)p2 + 1);
       }
       *(uint16_t *)((int)self_ + 0xd8) = *(uint16_t *)((int)self_ + 0xd4);
-      orig::TextInputFiles_FreeBlock(local_4);
+      orig::TextInputFiles_FreeBlock(p3);
       orig::FsLogPage_PruneOffsets(self_);
       return 1;
     }
-    orig::TextInputFiles_FreeBlock(local_4);
+    orig::TextInputFiles_FreeBlock(p3);
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E310
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_WriteFile(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall FsLogPage_WriteFile(void * self_, bits32 arg2)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint32_t *puVar6;
-  uint64_t uVar7;
+  uint16_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint64_t u4;
   char xi_frame[260] __attribute__((aligned(4)));
-  int  &local_104 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 4);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  uint8_t  (&u5)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 4);
   
   orig::FsLogPage_PruneOffsets(self_);
-  iVar4 = 0;
+  i1 = 0;
   while( true ) {
-    uVar2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,param_1);
-    if ((char)uVar2 == '\0') break;
+    u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,arg2);
+    if ((char)u2 == '\0') break;
     Sleep(100);
-    if (0x14 < iVar4) break;
-    iVar4 = iVar4 + 1;
+    if (0x14 < i1) break;
+    i1 = i1 + 1;
   }
-  local_104 = 0;
+  i2 = 0;
   do {
-    iVar4 = 0;
+    i1 = 0;
     while( true ) {
-      if (0x13 < iVar4) {
-        if (*(char *)((int)self_ + 0xda) != '\0') goto LAB_1018e48a;
-        iVar4 = 0;
-        goto LAB_1018e3c7;
+      if (0x13 < i1) {
+        if (*(char *)((int)self_ + 0xda) != '\0') goto code_1018E48A;
+        i1 = 0;
+        goto code_1018E3C7;
       }
-      orig::FsLogPage_FormatFileName(local_100,*(int *)((int)self_ + 0xdc),iVar4 % 0x14);
-      uVar2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,local_100);
-      if ((char)uVar2 != '\0') break;
-      iVar4 = iVar4 + 1;
+      orig::FsLogPage_FormatFileName(u5,*(int *)((int)self_ + 0xdc),i1 % 0x14);
+      u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,u5);
+      if ((char)u2 != '\0') break;
+      i1 = i1 + 1;
     }
-    if (0x13 < local_104) {
+    if (0x13 < i2) {
       return 0xffffffff;
     }
     Sleep(100);
-    local_104 = local_104 + 1;
+    i2 = i2 + 1;
   } while( true );
-LAB_1018e3c7:
-  uVar2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,param_1);
-  if ((char)uVar2 == '\0') {
-LAB_1018e3e7:
+code_1018E3C7:
+  u2 = orig::TextInputFiles_FileMngFwd101C1820(g_pFileMng_as_v0,arg2);
+  if ((char)u2 == '\0') {
+code_1018E3E7:
     if (*(LPVOID *)((int)self_ + 0xd0) != (LPVOID)0x0) {
       orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0xd0));
     }
-    uVar7 = orig::Allocator_Generic_v1((uint32_t)*(uint16_t *)((int)self_ + 0xd8));
-    *(int *)((int)self_ + 0xd0) = (int)uVar7;
-    if ((int)uVar7 != 0) {
-      puVar5 = self_;
-      puVar6 = (uint32_t *)((int)self_ + 100);
-      for (iVar4 = 0x19; iVar4 != 0; iVar4 = iVar4 + -1) {
-        *puVar6 = *puVar5;
-        puVar5 = puVar5 + 1;
-        puVar6 = puVar6 + 1;
+    u4 = orig::Allocator_Generic_v1((uint32_t)*(uint16_t *)((int)self_ + 0xd8));
+    *(int *)((int)self_ + 0xd0) = (int)u4;
+    if ((int)u4 != 0) {
+      p1 = self_;
+      p2 = (uint32_t *)((int)self_ + 100);
+      for (i1 = 0x19; i1 != 0; i1 = i1 + -1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      orig::TextInputFiles_FileMngQueuePath2F4Kind3(g_pFileMng_as_v0,param_1,(uint32_t *)((int)self_ + 100),100,0);
-      uVar1 = *(uint16_t *)((int)self_ + 0xd8);
-      puVar5 = *(uint32_t **)((int)self_ + 0xcc);
-      puVar6 = *(uint32_t **)((int)self_ + 0xd0);
-      for (uVar3 = (uint32_t)(uVar1 >> 2); uVar3 != 0; uVar3 = uVar3 - 1) {
-        *puVar6 = *puVar5;
-        puVar5 = puVar5 + 1;
-        puVar6 = puVar6 + 1;
+      orig::TextInputFiles_FileMngQueuePath2F4Kind3(g_pFileMng_as_v0,arg2,(uint32_t *)((int)self_ + 100),100,0);
+      u1 = *(uint16_t *)((int)self_ + 0xd8);
+      p1 = *(uint32_t **)((int)self_ + 0xcc);
+      p2 = *(uint32_t **)((int)self_ + 0xd0);
+      for (u3 = (uint32_t)(u1 >> 2); u3 != 0; u3 = u3 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      for (uVar3 = uVar1 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-        *(uint8_t *)puVar6 = *(uint8_t *)puVar5;
-        puVar5 = (uint32_t *)((int)puVar5 + 1);
-        puVar6 = (uint32_t *)((int)puVar6 + 1);
+      for (u3 = u1 & 3; u3 != 0; u3 = u3 - 1) {
+        *(uint8_t *)p2 = *(uint8_t *)p1;
+        p1 = (uint32_t *)((int)p1 + 1);
+        p2 = (uint32_t *)((int)p2 + 1);
       }
-      orig::TextInputFiles_FileMngQueuePath2F4Kind3(g_pFileMng_as_v0,param_1,*(uint32_t *)((int)self_ + 0xd0),
+      orig::TextInputFiles_FileMngQueuePath2F4Kind3(g_pFileMng_as_v0,arg2,*(uint32_t *)((int)self_ + 0xd0),
                    (uint32_t)*(uint16_t *)((int)self_ + 0xd8),1);
       return 1;
     }
-LAB_1018e48a:
-    orig::TextInputFiles_FileMngSubmitPath2F4Kind3(g_pFileMng_as_v0,param_1,self_,100,0);
-    orig::TextInputFiles_FileMngSubmitPath2F4Kind3(g_pFileMng_as_v0,param_1,*(uint32_t *)((int)self_ + 0xcc),
+code_1018E48A:
+    orig::TextInputFiles_FileMngSubmitPath2F4Kind3(g_pFileMng_as_v0,arg2,self_,100,0);
+    orig::TextInputFiles_FileMngSubmitPath2F4Kind3(g_pFileMng_as_v0,arg2,*(uint32_t *)((int)self_ + 0xcc),
                  (uint32_t)*(uint16_t *)((int)self_ + 0xd8),1);
     return 1;
   }
   Sleep(100);
-  if (0x14 < iVar4) goto LAB_1018e3e7;
-  iVar4 = iVar4 + 1;
-  goto LAB_1018e3c7;
+  if (0x14 < i1) goto code_1018E3E7;
+  i1 = i1 + 1;
+  goto code_1018E3C7;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E4D0
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API undefined4 __thiscall FsLogPage_AddString(void * self_, char * param_1)
+XI_API bits32 __thiscall FsLogPage_AddString(void * self_, char * arg2)
 {
-  char cVar1;
-  uint16_t uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  int iVar5;
-  uint32_t uVar6;
-  uint32_t *puVar7;
-  uint32_t *puVar8;
-  char *pcVar9;
-  uint64_t uVar10;
+  char c1;
+  uint16_t u1;
+  int i1;
+  uint32_t u2;
+  int i2;
+  uint32_t u3;
+  uint32_t *p1;
+  uint32_t *p2;
+  char *p3;
+  uint64_t u4;
   
-  if (param_1 != (char *)0x0) {
-    uVar4 = 0xffffffff;
-    pcVar9 = param_1;
+  if (arg2 != (char *)0x0) {
+    u2 = 0xffffffff;
+    p3 = arg2;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
-    } while (cVar1 != '\0');
-    uVar4 = ~uVar4;
-    iVar5 = uVar4 - 1;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p3;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    u2 = ~u2;
+    i2 = u2 - 1;
     if (0x31 < *(uint8_t *)((int)self_ + 200)) {
       return 0xffffffff;
     }
-    iVar3 = *(int *)((int)self_ + 0xd4);
-    if ((int)(*(uint16_t *)((int)self_ + 0xd8) + 1 + iVar5) < iVar3) {
+    i1 = *(int *)((int)self_ + 0xd4);
+    if ((int)(*(uint16_t *)((int)self_ + 0xd8) + 1 + i2) < i1) {
       *(uint16_t *)((int)self_ + (uint32_t)*(uint8_t *)((int)self_ + 200) * 2) = *(uint16_t *)((int)self_ + 0xd8);
-      pcVar9 = (char *)((uint32_t)*(uint16_t *)((int)self_ + 0xd8) + *(int *)((int)self_ + 0xcc));
-      for (uVar6 = uVar4 >> 2; uVar6 != 0; uVar6 = uVar6 - 1) {
-        *(uint32_t *)pcVar9 = *(uint32_t *)param_1;
-        param_1 = param_1 + 4;
-        pcVar9 = pcVar9 + 4;
+      p3 = (char *)((uint32_t)*(uint16_t *)((int)self_ + 0xd8) + *(int *)((int)self_ + 0xcc));
+      for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+        *(uint32_t *)p3 = *(uint32_t *)arg2;
+        arg2 = arg2 + 4;
+        p3 = p3 + 4;
       }
     }
     else {
-      if ((int)uVar4 < 0xc80) {
-        *(int *)((int)self_ + 0xd4) = iVar3 + 0xc80;
+      if ((int)u2 < 0xc80) {
+        *(int *)((int)self_ + 0xd4) = i1 + 0xc80;
       }
       else {
-        *(int *)((int)self_ + 0xd4) = iVar3 + 1 + iVar5;
+        *(int *)((int)self_ + 0xd4) = i1 + 1 + i2;
       }
-      uVar10 = orig::Allocator_Generic_v1(*(uint32_t *)((int)self_ + 0xd4));
-      uVar2 = *(uint16_t *)((int)self_ + 0xd8);
-      puVar7 = *(uint32_t **)((int)self_ + 0xcc);
-      puVar8 = (uint32_t *)uVar10;
-      for (uVar6 = (uint32_t)(uVar2 >> 2); uVar6 != 0; uVar6 = uVar6 - 1) {
-        *puVar8 = *puVar7;
-        puVar7 = puVar7 + 1;
-        puVar8 = puVar8 + 1;
+      u4 = orig::Allocator_Generic_v1(*(uint32_t *)((int)self_ + 0xd4));
+      u1 = *(uint16_t *)((int)self_ + 0xd8);
+      p1 = *(uint32_t **)((int)self_ + 0xcc);
+      p2 = (uint32_t *)u4;
+      for (u3 = (uint32_t)(u1 >> 2); u3 != 0; u3 = u3 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      for (uVar6 = uVar2 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-        *(uint8_t *)puVar8 = *(uint8_t *)puVar7;
-        puVar7 = (uint32_t *)((int)puVar7 + 1);
-        puVar8 = (uint32_t *)((int)puVar8 + 1);
+      for (u3 = u1 & 3; u3 != 0; u3 = u3 - 1) {
+        *(uint8_t *)p2 = *(uint8_t *)p1;
+        p1 = (uint32_t *)((int)p1 + 1);
+        p2 = (uint32_t *)((int)p2 + 1);
       }
       orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0xcc));
-      *(uint32_t **)((int)self_ + 0xcc) = (uint32_t *)uVar10;
+      *(uint32_t **)((int)self_ + 0xcc) = (uint32_t *)u4;
       *(uint16_t *)((int)self_ + (uint32_t)*(uint8_t *)((int)self_ + 200) * 2) =
            *(uint16_t *)((int)self_ + 0xd8);
-      pcVar9 = (char *)((uint32_t)*(uint16_t *)((int)self_ + 0xd8) + *(int *)((int)self_ + 0xcc));
-      for (uVar6 = uVar4 >> 2; uVar6 != 0; uVar6 = uVar6 - 1) {
-        *(uint32_t *)pcVar9 = *(uint32_t *)param_1;
-        param_1 = param_1 + 4;
-        pcVar9 = pcVar9 + 4;
+      p3 = (char *)((uint32_t)*(uint16_t *)((int)self_ + 0xd8) + *(int *)((int)self_ + 0xcc));
+      for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+        *(uint32_t *)p3 = *(uint32_t *)arg2;
+        arg2 = arg2 + 4;
+        p3 = p3 + 4;
       }
     }
-    for (uVar4 = uVar4 & 3; uVar4 != 0; uVar4 = uVar4 - 1) {
-      *pcVar9 = *param_1;
-      param_1 = param_1 + 1;
-      pcVar9 = pcVar9 + 1;
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *p3 = *arg2;
+      arg2 = arg2 + 1;
+      p3 = p3 + 1;
     }
-    *(short *)((int)self_ + 0xd8) = *(short *)((int)self_ + 0xd8) + (short)iVar5 + 1;
+    *(short *)((int)self_ + 0xd8) = *(short *)((int)self_ + 0xd8) + (short)i2 + 1;
     *(char *)((int)self_ + 200) = *(char *)((int)self_ + 200) + '\x01';
   }
   return 1;
@@ -1142,14 +1142,14 @@ XI_API undefined4 __thiscall FsLogPage_AddString(void * self_, char * param_1)
 
 // FUNCTION: FFXIMAIN 0x1018E620
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetPageLine(void * self_, int param_1)
+XI_API int __thiscall TextInputFiles_GetPageLine(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((((-1 < param_1) && (param_1 < (int)(uint32_t)*(uint8_t *)((int)self_ + 200))) &&
-      (iVar1 = (int)*(short *)((int)self_ + param_1 * 2), -1 < iVar1)) &&
-     (iVar1 < (int)(uint32_t)*(uint16_t *)((int)self_ + 0xd8))) {
-    return *(int *)((int)self_ + 0xcc) + iVar1;
+  if ((((-1 < arg2) && (arg2 < (int)(uint32_t)*(uint8_t *)((int)self_ + 200))) &&
+      (i1 = (int)*(short *)((int)self_ + arg2 * 2), -1 < i1)) &&
+     (i1 < (int)(uint32_t)*(uint16_t *)((int)self_ + 0xd8))) {
+    return *(int *)((int)self_ + 0xcc) + i1;
   }
   return 0;
 }
@@ -1172,39 +1172,39 @@ XI_API void __thiscall FsLogPage_ClearBuffer(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsLogPage_PruneOffsets(void * self_)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
   *(uint8_t *)((int)self_ + 200) = 0;
-  iVar2 = 0;
+  i2 = 0;
   do {
-    iVar1 = (int)*(short *)((int)self_ + iVar2 * 2);
-    if (((iVar1 < 0) || ((int)(uint32_t)*(uint16_t *)((int)self_ + 0xd8) <= iVar1)) ||
-       ((0 < iVar1 && (*(char *)(*(int *)((int)self_ + 0xcc) + -1 + iVar1) != '\0')))) {
-      *(uint16_t *)((int)self_ + iVar2 * 2) = 0xffff;
+    i1 = (int)*(short *)((int)self_ + i2 * 2);
+    if (((i1 < 0) || ((int)(uint32_t)*(uint16_t *)((int)self_ + 0xd8) <= i1)) ||
+       ((0 < i1 && (*(char *)(*(int *)((int)self_ + 0xcc) + -1 + i1) != '\0')))) {
+      *(uint16_t *)((int)self_ + i2 * 2) = 0xffff;
     }
     else {
       *(char *)((int)self_ + 200) = *(char *)((int)self_ + 200) + '\x01';
     }
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 0x32);
+    i2 = i2 + 1;
+  } while (i2 < 0x32);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E6F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FsLogPage_Init(void * self_, undefined4 param_1)
+XI_API void * __thiscall FsLogPage_Init(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint32_t *)((int)self_ + 0x5c) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_103368c4;
+  *(uint32_t *)((int)self_ + 0x5c) = arg2;
+  *(uint8_t ***)self_ = &g_103368C4;
   *(uint32_t *)((int)self_ + 0x58) = 0;
   *(uint8_t *)((int)self_ + 0x60) = 0;
-  puVar2 = self_;
-  for (iVar1 = 0x14; puVar2 = puVar2 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
+  p1 = self_;
+  for (i1 = 0x14; p1 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
   }
   *(uint8_t *)((int)self_ + 0x54) = 0;
   return self_;
@@ -1212,25 +1212,25 @@ XI_API void * __thiscall FsLogPage_Init(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x1018E780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FreeAllLogPages(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FreeAllLogPages(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  uint32_t *puVar2;
+  void *obj1;
+  int i1;
+  uint32_t *p1;
   
-  iVar1 = 0;
-  puVar2 = self_;
+  i1 = 0;
+  p1 = self_;
   if (*(char *)((int)self_ + 0x54) != '\0') {
     do {
-      puVar2 = puVar2 + 1;
-      this_00 = (void *)*puVar2;
-      if (this_00 != (void *)0x0) {
-        orig::FsLogPage_ClearAndVisitFiles(this_00);
-        orig::operator_delete_v1(this_00);
-        *puVar2 = 0;
+      p1 = p1 + 1;
+      obj1 = (void *)*p1;
+      if (obj1 != (void *)0x0) {
+        orig::FsLogPage_ClearAndVisitFiles(obj1);
+        orig::operator_delete_v1(obj1);
+        *p1 = 0;
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < (int)(uint32_t)*(uint8_t *)((int)self_ + 0x54));
+      i1 = i1 + 1;
+    } while (i1 < (int)(uint32_t)*(uint8_t *)((int)self_ + 0x54));
   }
   *(uint8_t *)((int)self_ + 0x60) = 0;
   return 1;
@@ -1238,95 +1238,95 @@ XI_API undefined4 __thiscall TextInputFiles_FreeAllLogPages(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018E7D0
 // GATE: PASS -- 100 trials, 84 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 84
-XI_API int __thiscall TextInputFiles_GetLineOfPage(void * self_, int param_1, int param_2)
+XI_API int __thiscall TextInputFiles_GetLineOfPage(void * self_, int arg2, int arg3)
 {
-  void *this_00;
-  int iVar1;
+  void *obj1;
+  int i1;
   
-  this_00 = *(void **)((int)self_ + param_1 * 4 + 4);
-  if (this_00 != (void *)0x0) {
-    iVar1 = orig::TextInputFiles_GetPageLine(this_00,param_2);
-    return iVar1;
+  obj1 = *(void **)((int)self_ + arg2 * 4 + 4);
+  if (obj1 != (void *)0x0) {
+    i1 = orig::TextInputFiles_GetPageLine(obj1,arg3);
+    return i1;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E7F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_HasPage(void * self_, int param_1)
+XI_API bits32 __thiscall FsLogPage_HasPage(void * self_, int arg2)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(*(int *)((int)self_ + param_1 * 4 + 4) != 0)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(*(int *)((int)self_ + arg2 * 4 + 4) != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x1018E800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall FsLogPage_EnsurePage(void * self_, int param_1)
+XI_API int __thiscall FsLogPage_EnsurePage(void * self_, int arg2)
 {
-  void *this_00;
-  int iVar1;
-  uint64_t uVar2;
+  void *obj1;
+  int i1;
+  uint64_t u1;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
-  if (*(int *)((int)self_ + param_1 * 4 + 4) == 0) {
-    orig::FsLogPage_FormatFileName(local_100,*(int *)((int)self_ + 0x5c),
-                 (uint32_t)(*(int *)((int)self_ + 0x58) + param_1) % 0x14);
-    uVar2 = orig::Allocator_Generic_v1(0xe0);
-    if ((void *)uVar2 == (void *)0x0) {
-      this_00 = (void *)0x0;
+  if (*(int *)((int)self_ + arg2 * 4 + 4) == 0) {
+    orig::FsLogPage_FormatFileName(u2,*(int *)((int)self_ + 0x5c),
+                 (uint32_t)(*(int *)((int)self_ + 0x58) + arg2) % 0x14);
+    u1 = orig::Allocator_Generic_v1(0xe0);
+    if ((void *)u1 == (void *)0x0) {
+      obj1 = (void *)0x0;
     }
     else {
-      this_00 = (void *)orig::FsLogPage_InitPage((void *)uVar2,*(uint32_t *)((int)self_ + 0x5c));
+      obj1 = (void *)orig::FsLogPage_InitPage((void *)u1,*(uint32_t *)((int)self_ + 0x5c));
     }
-    *(void **)((int)self_ + param_1 * 4 + 4) = this_00;
-    iVar1 = orig::FsLogPage_load(this_00,local_100);
-    return (uint32_t)(-1 < iVar1) * 2 + -1;
+    *(void **)((int)self_ + arg2 * 4 + 4) = obj1;
+    i1 = orig::FsLogPage_load(obj1,u2);
+    return (uint32_t)(-1 < i1) * 2 + -1;
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FreeLogPage(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_FreeLogPage(void * self_, int arg2)
 {
-  void *this_00;
+  void *obj1;
   
-  this_00 = *(void **)((int)self_ + param_1 * 4 + 4);
-  if (this_00 != (void *)0x0) {
-    orig::FsLogPage_ClearAndVisitFiles(this_00);
-    orig::operator_delete_v1(this_00);
-    *(uint32_t *)((int)self_ + param_1 * 4 + 4) = 0;
+  obj1 = *(void **)((int)self_ + arg2 * 4 + 4);
+  if (obj1 != (void *)0x0) {
+    orig::FsLogPage_ClearAndVisitFiles(obj1);
+    orig::operator_delete_v1(obj1);
+    *(uint32_t *)((int)self_ + arg2 * 4 + 4) = 0;
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018E8D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsLogPage_Rotate(void * self_, void * param_1)
+XI_API bits32 __thiscall FsLogPage_Rotate(void * self_, void * arg2)
 {
-  void *this_00;
-  int iVar1;
+  void *obj1;
+  int i1;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u1)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
   if (*(uint8_t *)((int)self_ + 0x54) < 0x14) {
-    orig::FsLogPage_FormatFileName(local_100,*(int *)((int)self_ + 0x5c),
+    orig::FsLogPage_FormatFileName(u1,*(int *)((int)self_ + 0x5c),
                  (*(int *)((int)self_ + 0x58) + (uint32_t)*(uint8_t *)((int)self_ + 0x54)) % 0x14);
-    orig::FsLogPage_WriteFile(param_1,local_100);
+    orig::FsLogPage_WriteFile(arg2,u1);
     *(char *)((int)self_ + 0x54) = *(char *)((int)self_ + 0x54) + '\x01';
     return 0;
   }
-  this_00 = *(void **)((int)self_ + 4);
-  if (this_00 != (void *)0x0) {
-    orig::FsLogPage_ClearAndVisitFiles(this_00);
-    orig::operator_delete_v1(this_00);
+  obj1 = *(void **)((int)self_ + 4);
+  if (obj1 != (void *)0x0) {
+    orig::FsLogPage_ClearAndVisitFiles(obj1);
+    orig::operator_delete_v1(obj1);
   }
-  orig::FUN_103149d0((uint32_t *)((int)self_ + 4),(uint32_t *)((int)self_ + 8),0x4c);
-  iVar1 = *(int *)((int)self_ + 0x58);
+  orig::game_103149D0((uint32_t *)((int)self_ + 4),(uint32_t *)((int)self_ + 8),0x4c);
+  i1 = *(int *)((int)self_ + 0x58);
   *(uint32_t *)((int)self_ + 0x50) = 0;
-  *(int *)((int)self_ + 0x58) = iVar1 + 1;
-  orig::FsLogPage_FormatFileName(local_100,*(int *)((int)self_ + 0x5c),(iVar1 + 0x14U) % 0x14);
-  orig::FsLogPage_WriteFile(param_1,local_100);
+  *(int *)((int)self_ + 0x58) = i1 + 1;
+  orig::FsLogPage_FormatFileName(u1,*(int *)((int)self_ + 0x5c),(i1 + 0x14U) % 0x14);
+  orig::FsLogPage_WriteFile(arg2,u1);
   return 0x32;
 }
 
@@ -1335,7 +1335,7 @@ XI_API undefined4 __thiscall FsLogPage_Rotate(void * self_, void * param_1)
 XI_API void * __thiscall TextInputFiles_ConstructKind1(void * self_)
 {
   orig::TextInputFiles_InitFields(self_,1);
-  *(uint8_t ***)self_ = &PTR_FUN_103368c8;
+  *(uint8_t ***)self_ = &g_103368C8;
   return self_;
 }
 
@@ -1344,16 +1344,16 @@ XI_API void * __thiscall TextInputFiles_ConstructKind1(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructKind2(void * self_)
 {
   orig::TextInputFiles_InitFields(self_,2);
-  *(uint8_t ***)self_ = &PTR_FUN_103368cc;
+  *(uint8_t ***)self_ = &g_103368CC;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1018EA50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_InitFields(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_InitFields(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_103368d0;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
+  *(uint8_t ***)self_ = &g_103368D0;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
@@ -1365,196 +1365,196 @@ XI_API void __thiscall TextInputFiles_InitFields(void * self_, undefined4 param_
 
 // FUNCTION: FFXIMAIN 0x1018EB00
 // GATE: PASS -- 100 trials, 100 returned normally, 79 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_RecreateMembers(void * self_)
+XI_API bits32 __thiscall TextInputFiles_RecreateMembers(void * self_)
 {
-  uint32_t *this_00;
-  void *pvVar1;
-  uint64_t uVar2;
+  uint32_t *obj1;
+  void *p1;
+  uint64_t u1;
   
-  pvVar1 = *(void **)((int)self_ + 4);
+  p1 = *(void **)((int)self_ + 4);
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0x10) = 0;
   *(uint32_t *)((int)self_ + 0x1c) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 0;
-  if (pvVar1 != (void *)0x0) {
-    orig::FsLogPage_ClearAndVisitFiles(pvVar1);
-    orig::operator_delete_v1(pvVar1);
+  if (p1 != (void *)0x0) {
+    orig::FsLogPage_ClearAndVisitFiles(p1);
+    orig::operator_delete_v1(p1);
     *(uint32_t *)((int)self_ + 4) = 0;
   }
-  uVar2 = orig::Allocator_Generic_v1(0xe0);
-  if ((void *)uVar2 == (void *)0x0) {
-    pvVar1 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0xe0);
+  if ((void *)u1 == (void *)0x0) {
+    p1 = (void *)0x0;
   }
   else {
-    pvVar1 = (void *)orig::FsLogPage_InitPage((void *)uVar2,*(uint32_t *)((int)self_ + 0x14));
+    p1 = (void *)orig::FsLogPage_InitPage((void *)u1,*(uint32_t *)((int)self_ + 0x14));
   }
-  *(void **)((int)self_ + 4) = pvVar1;
-  orig::FsLogPage_AllocBuffer(pvVar1);
-  this_00 = *(uint32_t **)((int)self_ + 0xc);
-  if (this_00 != (uint32_t *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*this_00)))((void *)(this_00),1);
+  *(void **)((int)self_ + 4) = p1;
+  orig::FsLogPage_AllocBuffer(p1);
+  obj1 = *(uint32_t **)((int)self_ + 0xc);
+  if (obj1 != (uint32_t *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*obj1)))((void *)(obj1),1);
     *(uint32_t *)((int)self_ + 0xc) = 0;
   }
-  uVar2 = orig::Allocator_Generic_v1(100);
-  if ((void *)uVar2 == (void *)0x0) {
-    pvVar1 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(100);
+  if ((void *)u1 == (void *)0x0) {
+    p1 = (void *)0x0;
   }
   else {
-    pvVar1 = orig::FsLogPage_Init((void *)uVar2,*(uint32_t *)((int)self_ + 0x14));
+    p1 = orig::FsLogPage_Init((void *)u1,*(uint32_t *)((int)self_ + 0x14));
   }
-  *(void **)((int)self_ + 0xc) = pvVar1;
+  *(void **)((int)self_ + 0xc) = p1;
   if (g_pTkMsgWinData_as_v1 != (void *)0x0) {
     orig::NetCellFont_MsgWinDataReset(g_pTkMsgWinData_as_v1);
   }
-  if (dword_1057815C_as_v1 != (void *)0x0) {
-    orig::NetCellFont_MsgWinDataReset(dword_1057815C_as_v1);
+  if (g_1057815C_as_v1 != (void *)0x0) {
+    orig::NetCellFont_MsgWinDataReset(g_1057815C_as_v1);
   }
-  if (dword_10578160_as_v1 != (void *)0x0) {
-    orig::NetCellFont_ResetAll(dword_10578160_as_v1);
+  if (g_10578160_as_v1 != (void *)0x0) {
+    orig::NetCellFont_ResetAll(g_10578160_as_v1);
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018EBF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FreeLogPagesIfLoaded(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FreeLogPagesIfLoaded(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(char *)((int)*(void **)((int)self_ + 0xc) + 0x60) == '\0') {
     return 1;
   }
-  uVar1 = orig::TextInputFiles_FreeAllLogPages(*(void **)((int)self_ + 0xc));
-  return uVar1;
+  u1 = orig::TextInputFiles_FreeAllLogPages(*(void **)((int)self_ + 0xc));
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018EC10
 // GATE: PASS -- 100 trials, 86 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 86
-XI_API undefined4 __thiscall TextInputFiles_GetCurrentLogLine(void * self_)
+XI_API bits32 __thiscall TextInputFiles_GetCurrentLogLine(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  int iVar2;
+  void *obj1;
+  int i1;
+  int i2;
   
-  this_00 = *(void **)((int)self_ + 0xc);
-  if (*(char *)((int)this_00 + 0x60) == '\0') {
+  obj1 = *(void **)((int)self_ + 0xc);
+  if (*(char *)((int)obj1 + 0x60) == '\0') {
     return 0;
   }
-  iVar1 = *(int *)((int)self_ + 0x10) / 0x32;
-  iVar2 = *(int *)((int)self_ + 0x10) % 0x32;
-  if (iVar1 < (int)(uint32_t)*(uint8_t *)((int)this_00 + 0x54)) {
-    iVar1 = orig::TextInputFiles_GetLineOfPage(this_00,iVar1,iVar2);
-    return iVar1;
+  i1 = *(int *)((int)self_ + 0x10) / 0x32;
+  i2 = *(int *)((int)self_ + 0x10) % 0x32;
+  if (i1 < (int)(uint32_t)*(uint8_t *)((int)obj1 + 0x54)) {
+    i1 = orig::TextInputFiles_GetLineOfPage(obj1,i1,i2);
+    return i1;
   }
-  iVar1 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),iVar2);
-  return iVar1;
+  i1 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),i2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018EC50
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API undefined4 __thiscall TextInputFiles_LogLineBack(void * self_)
+XI_API bits32 __thiscall TextInputFiles_LogLineBack(void * self_)
 {
-  uint8_t bVar1;
-  void *this_00;
-  int iVar2;
-  int iVar3;
-  uint32_t uVar4;
+  uint8_t u1;
+  void *obj1;
+  int i1;
+  int i2;
+  uint32_t u2;
   
-  this_00 = *(void **)((int)self_ + 0xc);
-  if (*(char *)((int)this_00 + 0x60) == '\0') {
+  obj1 = *(void **)((int)self_ + 0xc);
+  if (*(char *)((int)obj1 + 0x60) == '\0') {
     return 0;
   }
   if (*(int *)((int)self_ + 0x10) < 1) {
     *(uint32_t *)((int)self_ + 0x10) = 0;
     return 0;
   }
-  iVar2 = *(int *)((int)self_ + 0x10) + -1;
-  *(int *)((int)self_ + 0x10) = iVar2;
-  iVar3 = iVar2 / 0x32;
-  bVar1 = *(uint8_t *)((int)this_00 + 0x54);
-  if (iVar3 < (int)(uint32_t)bVar1) {
-    uVar4 = orig::FsLogPage_HasPage(this_00,iVar3);
-    if ((char)uVar4 == '\0') {
-      if (iVar3 < (int)(bVar1 - 2)) {
-        orig::TextInputFiles_FreeLogPage(this_00,iVar3 + 2);
+  i1 = *(int *)((int)self_ + 0x10) + -1;
+  *(int *)((int)self_ + 0x10) = i1;
+  i2 = i1 / 0x32;
+  u1 = *(uint8_t *)((int)obj1 + 0x54);
+  if (i2 < (int)(uint32_t)u1) {
+    u2 = orig::FsLogPage_HasPage(obj1,i2);
+    if ((char)u2 == '\0') {
+      if (i2 < (int)(u1 - 2)) {
+        orig::TextInputFiles_FreeLogPage(obj1,i2 + 2);
       }
-      orig::FsLogPage_EnsurePage(*(void **)((int)self_ + 0xc),iVar3);
+      orig::FsLogPage_EnsurePage(*(void **)((int)self_ + 0xc),i2);
     }
-    iVar2 = orig::TextInputFiles_GetLineOfPage(*(void **)((int)self_ + 0xc),iVar3,*(int *)((int)self_ + 0x10) % 0x32);
-    return iVar2;
+    i1 = orig::TextInputFiles_GetLineOfPage(*(void **)((int)self_ + 0xc),i2,*(int *)((int)self_ + 0x10) % 0x32);
+    return i1;
   }
-  iVar2 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),iVar2 % 0x32);
-  return iVar2;
+  i1 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),i1 % 0x32);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018ECE0
 // GATE: PASS -- 100 trials, 83 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 83
-XI_API undefined4 __thiscall TextInputFiles_LogLineForward(void * self_)
+XI_API bits32 __thiscall TextInputFiles_LogLineForward(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
+  void *obj1;
+  int i1;
+  int i2;
+  uint32_t u1;
   
-  this_00 = *(void **)((int)self_ + 0xc);
-  if (*(char *)((int)this_00 + 0x60) == '\0') {
+  obj1 = *(void **)((int)self_ + 0xc);
+  if (*(char *)((int)obj1 + 0x60) == '\0') {
     return 0;
   }
   if (*(int *)((int)self_ + 0x10) == *(int *)((int)self_ + 8) + -1) {
     return 0;
   }
-  iVar1 = *(int *)((int)self_ + 0x10) + 1;
-  *(int *)((int)self_ + 0x10) = iVar1;
-  iVar2 = iVar1 / 0x32;
-  if (iVar2 < (int)(uint32_t)*(uint8_t *)((int)this_00 + 0x54)) {
-    uVar3 = orig::FsLogPage_HasPage(this_00,iVar2);
-    if ((char)uVar3 == '\0') {
-      if (1 < iVar2) {
-        orig::TextInputFiles_FreeLogPage(this_00,iVar2 + -2);
+  i1 = *(int *)((int)self_ + 0x10) + 1;
+  *(int *)((int)self_ + 0x10) = i1;
+  i2 = i1 / 0x32;
+  if (i2 < (int)(uint32_t)*(uint8_t *)((int)obj1 + 0x54)) {
+    u1 = orig::FsLogPage_HasPage(obj1,i2);
+    if ((char)u1 == '\0') {
+      if (1 < i2) {
+        orig::TextInputFiles_FreeLogPage(obj1,i2 + -2);
       }
-      orig::FsLogPage_EnsurePage(*(void **)((int)self_ + 0xc),iVar2);
+      orig::FsLogPage_EnsurePage(*(void **)((int)self_ + 0xc),i2);
     }
-    iVar1 = orig::TextInputFiles_GetLineOfPage(*(void **)((int)self_ + 0xc),iVar2,*(int *)((int)self_ + 0x10) % 0x32);
-    return iVar1;
+    i1 = orig::TextInputFiles_GetLineOfPage(*(void **)((int)self_ + 0xc),i2,*(int *)((int)self_ + 0x10) % 0x32);
+    return i1;
   }
-  iVar1 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),iVar1 % 0x32);
-  return iVar1;
+  i1 = orig::TextInputFiles_GetPageLine(*(void **)((int)self_ + 4),i1 % 0x32);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018ED80
 // GATE: PASS -- 100 trials, 97 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API void __thiscall FsLogPage_AddEntry(void * self_, char * param_1)
+XI_API void __thiscall FsLogPage_AddEntry(void * self_, char * arg2)
 {
-  void *this_00;
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
+  void *obj1;
+  int i1;
+  uint32_t u1;
+  int i2;
   
-  iVar1 = orig::FsLogPage_AddString(*(void **)((int)self_ + 4),param_1);
-  if (iVar1 < 0) {
-    iVar1 = orig::FsLogPage_Rotate(*(void **)((int)self_ + 0xc),*(void **)((int)self_ + 4));
+  i1 = orig::FsLogPage_AddString(*(void **)((int)self_ + 4),arg2);
+  if (i1 < 0) {
+    i1 = orig::FsLogPage_Rotate(*(void **)((int)self_ + 0xc),*(void **)((int)self_ + 4));
     if ((*(char *)(*(int *)((int)self_ + 0xc) + 0x60) == '\0') ||
-       (iVar1 <= *(int *)((int)self_ + 0x10))) {
-      iVar3 = *(int *)((int)self_ + 0x10) - iVar1;
-      *(int *)((int)self_ + 0x10) = iVar3;
-      if (iVar3 < 0) {
+       (i1 <= *(int *)((int)self_ + 0x10))) {
+      i2 = *(int *)((int)self_ + 0x10) - i1;
+      *(int *)((int)self_ + 0x10) = i2;
+      if (i2 < 0) {
         *(uint32_t *)((int)self_ + 0x10) = 0;
       }
     }
     else {
-      if (*(code **)((int)self_ + 0x18) != (code *)0x0) {
-        (**(code **)((int)self_ + 0x18))(0,self_,*(uint32_t *)((int)self_ + 0x1c));
+      if (*(untyped_fn **)((int)self_ + 0x18) != (untyped_fn *)0x0) {
+        (**(untyped_fn **)((int)self_ + 0x18))(0,self_,*(uint32_t *)((int)self_ + 0x1c));
       }
-      this_00 = *(void **)((int)self_ + 0xc);
+      obj1 = *(void **)((int)self_ + 0xc);
       *(uint32_t *)((int)self_ + 0x10) = 0;
-      uVar2 = orig::FsLogPage_HasPage(this_00,0);
-      if ((char)uVar2 == '\0') {
-        orig::FsLogPage_EnsurePage(this_00,0);
+      u1 = orig::FsLogPage_HasPage(obj1,0);
+      if ((char)u1 == '\0') {
+        orig::FsLogPage_EnsurePage(obj1,0);
       }
     }
-    *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) - iVar1;
+    *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) - i1;
     orig::FsLogPage_AllocBuffer(*(void **)((int)self_ + 4));
-    orig::FsLogPage_AddString(*(void **)((int)self_ + 4),param_1);
+    orig::FsLogPage_AddString(*(void **)((int)self_ + 4),arg2);
   }
   *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + 1;
   return;
@@ -1562,20 +1562,20 @@ XI_API void __thiscall FsLogPage_AddEntry(void * self_, char * param_1)
 
 // FUNCTION: FFXIMAIN 0x1018EE40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_ConstructLarge(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_ConstructLarge(void * self_, bits32 arg2, bits32 arg3)
 {
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
   orig::TextInputFiles_CtorVt103379C4((void *)((int)self_ + 0x18));
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_103368f0;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
+  *(uint8_t ***)self_ = &g_103368F0;
   *(uint32_t *)((int)self_ + 0x2208) = 0xf;
   *(uint32_t *)((int)self_ + 0x220c) = 0x114;
   *(uint32_t *)((int)self_ + 0x2214) = 0;
-  *(uint32_t *)((int)self_ + 0x221c) = param_2;
+  *(uint32_t *)((int)self_ + 0x221c) = arg3;
   *(uint16_t *)((int)self_ + 0x2220) = 0x46;
   *(uint32_t *)((int)self_ + 0x21fc) = 0;
   *(uint8_t *)((int)self_ + 0x2200) = 0;
@@ -1589,26 +1589,26 @@ XI_API void * __thiscall TextInputFiles_ConstructLarge(void * self_, undefined4 
 
 // FUNCTION: FFXIMAIN 0x1018FA20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Text_ClassifyChar(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl Text_ClassifyChar(bits32 arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((uint8_t)param_1 == 0xfd) {
+  if ((uint8_t)arg1 == 0xfd) {
     return 4;
   }
-  if ((uint8_t)param_1 == 0x7f) {
-    if ((0xfa < (uint8_t)param_2) && ((uint8_t)param_2 < 0xfd)) {
+  if ((uint8_t)arg1 == 0x7f) {
+    if ((0xfa < (uint8_t)arg2) && ((uint8_t)arg2 < 0xfd)) {
       return 0;
     }
   }
-  else if (((uint8_t)param_1 != 0x1e) && ((uint8_t)param_1 != 0x1f)) {
-    if ((uint8_t)param_1 == 0xef) {
+  else if (((uint8_t)arg1 != 0x1e) && ((uint8_t)arg1 != 0x1f)) {
+    if ((uint8_t)arg1 == 0xef) {
       return 3;
     }
-    if (((((uint8_t)param_1 == 0) || (0x1f < (uint8_t)param_1)) || ((uint8_t)param_1 == 10)) ||
-       ((uint8_t)param_1 == 0xd)) {
-      iVar1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)param_1);
-      return (uint32_t)(iVar1 != 0);
+    if (((((uint8_t)arg1 == 0) || (0x1f < (uint8_t)arg1)) || ((uint8_t)arg1 == 10)) ||
+       ((uint8_t)arg1 == 0xd)) {
+      i1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)arg1);
+      return (uint32_t)(i1 != 0);
     }
   }
   return 2;
@@ -1616,178 +1616,178 @@ XI_API undefined4 __cdecl Text_ClassifyChar(undefined4 param_1, undefined4 param
 
 // FUNCTION: FFXIMAIN 0x1018FA80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Text_GetCharLength(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl Text_GetCharLength(bits32 arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((uint8_t)param_1 == 0xfd) {
+  if ((uint8_t)arg1 == 0xfd) {
     return 6;
   }
-  if ((uint8_t)param_1 == 0x7f) {
-    if (0x33 < (uint8_t)param_2) {
-      if ((uint8_t)param_2 < 0x37) {
+  if ((uint8_t)arg1 == 0x7f) {
+    if (0x33 < (uint8_t)arg2) {
+      if ((uint8_t)arg2 < 0x37) {
         return 3;
       }
-      if ((uint8_t)param_2 == 0x38) {
+      if ((uint8_t)arg2 == 0x38) {
         return 4;
       }
     }
   }
-  else if ((((uint8_t)param_1 != 0x1e) && ((uint8_t)param_1 != 0x1f)) && ((uint8_t)param_1 != 0xef)) {
-    if ((uint8_t)param_1 == 0) {
+  else if ((((uint8_t)arg1 != 0x1e) && ((uint8_t)arg1 != 0x1f)) && ((uint8_t)arg1 != 0xef)) {
+    if ((uint8_t)arg1 == 0) {
       return 0;
     }
-    if ((((uint8_t)param_1 < 0x20) && ((uint8_t)param_1 != 10)) && ((uint8_t)param_1 != 0xd)) {
+    if ((((uint8_t)arg1 < 0x20) && ((uint8_t)arg1 != 10)) && ((uint8_t)arg1 != 0xd)) {
       return 1;
     }
-    iVar1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)param_1);
-    return (iVar1 != 0) + 1;
+    i1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)arg1);
+    return (i1 != 0) + 1;
   }
   return 2;
 }
 
 // FUNCTION: FFXIMAIN 0x1018FB00
 // GATE: PASS -- 100 trials, 75 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 75
-XI_API int __cdecl Text_CountChars(int param_1, undefined4 param_2, int param_3)
+XI_API int __cdecl Text_CountChars(int arg1, bits32 arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = 0;
-  iVar2 = 0;
-  if (0 < param_3) {
+  i1 = 0;
+  i2 = 0;
+  if (0 < arg3) {
     do {
-      iVar1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(iVar2 + param_1)))),0);
-      iVar2 = iVar2 + iVar1;
-    } while (iVar2 < param_3);
+      i1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(i2 + arg1)))),0);
+      i2 = i2 + i1;
+    } while (i2 < arg3);
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018FD90
 // GATE: PASS -- 100 trials, 76 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 76
-XI_API undefined4 __attribute__((cdecl, regparm(1))) Sjis_Remap82To83(undefined4 xi_eax, int param_1, int param_2)
+XI_API bits32 __attribute__((cdecl, regparm(1))) Sjis_Remap82To83(bits32 xi_eax, int arg2, int arg3)
 {
-  uint8_t bVar1;
-  char cVar2;
-  int iVar3;
+  uint8_t u1;
+  char c1;
+  int i1;
   
-  iVar3 = 0;
-  if (0 < param_2) {
+  i1 = 0;
+  if (0 < arg3) {
     do {
-      xi_eax = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(uint8_t *)(iVar3 + param_1)))),0);
-      if ((xi_eax == 2) && (*(char *)(iVar3 + param_1) == -0x7e)) {
-        bVar1 = *(uint8_t *)(iVar3 + 1 + param_1);
-        if ((bVar1 < 0x9f) || (0xdd < bVar1)) {
-          if ((bVar1 < 0xde) || (0xf1 < bVar1)) goto LAB_1018fde2;
-          cVar2 = -0x5e;
+      xi_eax = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(uint8_t *)(i1 + arg2)))),0);
+      if ((xi_eax == 2) && (*(char *)(i1 + arg2) == -0x7e)) {
+        u1 = *(uint8_t *)(i1 + 1 + arg2);
+        if ((u1 < 0x9f) || (0xdd < u1)) {
+          if ((u1 < 0xde) || (0xf1 < u1)) goto code_1018FDE2;
+          c1 = -0x5e;
         }
         else {
-          cVar2 = -0x5f;
+          c1 = -0x5f;
         }
-        *(uint8_t *)(iVar3 + param_1) = 0x83;
-        *(uint8_t *)(iVar3 + 1 + param_1) = bVar1 + cVar2;
+        *(uint8_t *)(i1 + arg2) = 0x83;
+        *(uint8_t *)(i1 + 1 + arg2) = u1 + c1;
       }
-LAB_1018fde2:
-      iVar3 = iVar3 + xi_eax;
-    } while (iVar3 < param_2);
+code_1018FDE2:
+      i1 = i1 + xi_eax;
+    } while (i1 < arg3);
   }
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10190140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Text_EncodeQuotes(char * param_1, int param_2, int param_3)
+XI_API int __cdecl Text_EncodeQuotes(char * arg1, int arg2, int arg3)
 {
-  char cVar1;
-  uint8_t bVar2;
+  char c1;
+  uint8_t u1;
   char *_Source;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t uVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
-  uint64_t uVar9;
-  uint32_t local_c;
-  int local_8;
+  uint32_t u2;
+  int i1;
+  uint32_t u3;
+  int i2;
+  char *p1;
+  char *p2;
+  uint64_t u4;
+  uint32_t u5;
+  int i3;
   
-  iVar6 = *(int *)(g_pSceneState + 8);
-  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((iVar6 == 2 || (iVar6 == 3)))) || (iVar6 != 2))
+  i2 = *(int *)(g_pSceneState + 8);
+  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((i2 == 2 || (i2 == 3)))) || (i2 != 2))
   {
-    return param_2;
+    return arg2;
   }
-  if (param_3 / 2 <= param_2) {
-    return param_2;
+  if (arg3 / 2 <= arg2) {
+    return arg2;
   }
-  bVar2 = false;
-  uVar9 = orig::Allocator_Generic_v1(param_2 * 2 + 1);
-  _Source = (char *)uVar9;
-  iVar6 = 0;
-  local_8 = 0;
-  uVar3 = 1;
-  if (0 < param_2) {
+  u1 = false;
+  u4 = orig::Allocator_Generic_v1(arg2 * 2 + 1);
+  _Source = (char *)u4;
+  i2 = 0;
+  i3 = 0;
+  u2 = 1;
+  if (0 < arg2) {
     do {
-      if (uVar3 == 0) break;
-      cVar1 = param_1[local_8];
-      local_c = ((uint32_t)(((uint32_t)(XI_PIECE(local_c, 1, 3)) << 8) | (uint8_t)(cVar1)));
-      uVar3 = orig::Text_GetCharLength(local_c,0);
-      iVar4 = orig::Text_ClassifyChar(local_c,0);
-      if ((iVar4 == 0) && (cVar1 == '\"')) {
-        _Source[iVar6] = -0x7b;
-        iVar6 = iVar6 + 1;
-        if (bVar2) {
-          bVar2 = false;
-          _Source[iVar6] = 'S';
+      if (u2 == 0) break;
+      c1 = arg1[i3];
+      u5 = ((uint32_t)(((uint32_t)(XI_PIECE(u5, 1, 3)) << 8) | (uint8_t)(c1)));
+      u2 = orig::Text_GetCharLength(u5,0);
+      i1 = orig::Text_ClassifyChar(u5,0);
+      if ((i1 == 0) && (c1 == '\"')) {
+        _Source[i2] = -0x7b;
+        i2 = i2 + 1;
+        if (u1) {
+          u1 = false;
+          _Source[i2] = 'S';
         }
         else {
-          bVar2 = true;
-          _Source[iVar6] = 'D';
+          u1 = true;
+          _Source[i2] = 'D';
         }
       }
       else {
-        pcVar7 = param_1 + local_8;
-        pcVar8 = _Source + iVar6;
-        for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-          *(uint32_t *)pcVar8 = *(uint32_t *)pcVar7;
-          pcVar7 = pcVar7 + 4;
-          pcVar8 = pcVar8 + 4;
+        p1 = arg1 + i3;
+        p2 = _Source + i2;
+        for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+          *(uint32_t *)p2 = *(uint32_t *)p1;
+          p1 = p1 + 4;
+          p2 = p2 + 4;
         }
-        for (uVar5 = uVar3 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-          *pcVar8 = *pcVar7;
-          pcVar7 = pcVar7 + 1;
-          pcVar8 = pcVar8 + 1;
+        for (u3 = u2 & 3; u3 != 0; u3 = u3 - 1) {
+          *p2 = *p1;
+          p1 = p1 + 1;
+          p2 = p2 + 1;
         }
       }
-      local_8 = local_8 + uVar3;
-      iVar6 = iVar6 + uVar3;
-    } while (local_8 < param_2);
+      i3 = i3 + u2;
+      i2 = i2 + u2;
+    } while (i3 < arg2);
   }
-  _Source[iVar6] = '\0';
-  orig::_strncpy_v2(param_1,_Source,iVar6 + 1);
+  _Source[i2] = '\0';
+  orig::_strncpy_v2(arg1,_Source,i2 + 1);
   orig::operator_delete_v1(_Source);
-  return iVar6;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101907A0
 // GATE: PASS -- 100 trials, 47 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 47
-XI_API void __cdecl TextInputFiles_AllocZeroed(undefined4 * param_1, uint32_t param_2)
+XI_API void __cdecl TextInputFiles_AllocZeroed(bits32 * arg1, uint32_t arg2)
 {
-  uint32_t *puVar1;
-  uint32_t uVar2;
-  uint64_t uVar3;
+  uint32_t *p1;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar3 = orig::Allocator_Generic_v1(param_2);
-  puVar1 = (uint32_t *)uVar3;
-  *param_1 = puVar1;
-  if (puVar1 != (uint32_t *)0x0) {
-    for (uVar2 = param_2 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar1 = 0;
-      puVar1 = puVar1 + 1;
+  u2 = orig::Allocator_Generic_v1(arg2);
+  p1 = (uint32_t *)u2;
+  *arg1 = p1;
+  if (p1 != (uint32_t *)0x0) {
+    for (u1 = arg2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p1 = 0;
+      p1 = p1 + 1;
     }
-    for (uVar2 = param_2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint8_t *)puVar1 = 0;
-      puVar1 = (uint32_t *)((int)puVar1 + 1);
+    for (u1 = arg2 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p1 = 0;
+      p1 = (uint32_t *)((int)p1 + 1);
     }
   }
   return;
@@ -1795,9 +1795,9 @@ XI_API void __cdecl TextInputFiles_AllocZeroed(undefined4 * param_1, uint32_t pa
 
 // FUNCTION: FFXIMAIN 0x101907D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl TextInputFiles_FreeBlock(LPVOID param_1)
+XI_API uint64_t __cdecl TextInputFiles_FreeBlock(LPVOID arg1)
 {
-  return orig::operator_delete_v1(param_1);
+  return orig::operator_delete_v1(arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x101908D0
@@ -1809,9 +1809,9 @@ XI_API void __cdecl TextInputFiles_Nop(void)
 
 // FUNCTION: FFXIMAIN 0x10190900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10336950(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10336950(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_LAB_10336950;
+  *(uint8_t ***)self_ = &g_10336950;
   *(uint32_t *)((int)self_ + 4) = 0xe;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
@@ -1826,10 +1826,10 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt10336950(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10190950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Reset10336950(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_Reset10336950(void * self_, bits32 arg2)
 {
   *(uint32_t *)((int)self_ + 4) = 0xe;
-  *(uint32_t *)((int)self_ + 0x18) = param_1;
+  *(uint32_t *)((int)self_ + 0x18) = arg2;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   orig::TextInputFiles_Update10336950(self_);
@@ -1840,16 +1840,16 @@ XI_API undefined4 __thiscall TextInputFiles_Reset10336950(void * self_, undefine
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsCSKLogic_closeCSK(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_keypad3_10379908);
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_keypad2_103798f4);
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_keyselec_103798a4);
-  uVar1 = orig::Menu_FindByName(s_menu_inline_103798cc);
-  if ((char)uVar1 == '\0') {
-    orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_feppalle_103798e0);
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_keypad3_10379908);
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_keypad2_103798F4);
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_keyselec_103798A4);
+  u1 = orig::Menu_FindByName(str_menu_inline_103798CC);
+  if ((char)u1 == '\0') {
+    orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_feppalle_103798E0);
   }
   return;
 }
@@ -1858,11 +1858,11 @@ XI_API void __thiscall FsCSKLogic_closeCSK(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_Update10336950(void * self_)
 {
-  int iVar1;
-  uint8_t bVar2;
+  int i1;
+  uint8_t u1;
   
-  iVar1 = *(int *)(*(int *)((int)self_ + 0x18) + 0xf10c);
-  if (iVar1 == 0) {
+  i1 = *(int *)(*(int *)((int)self_ + 0x18) + 0xf10c);
+  if (i1 == 0) {
     if ((*(int *)((int)self_ + 4) != 0x20) && (*(int *)((int)self_ + 4) != 0x21)) {
       return;
     }
@@ -1870,7 +1870,7 @@ XI_API void __thiscall TextInputFiles_Update10336950(void * self_)
     *(uint32_t *)((int)self_ + 0xc) = 0;
     return;
   }
-  if (iVar1 != 1) {
+  if (i1 != 1) {
     return;
   }
   switch(xi_sw(*(uint32_t *)(*(int *)((int)self_ + 0x18) + 0xf110))) {
@@ -1885,9 +1885,9 @@ XI_API void __thiscall TextInputFiles_Update10336950(void * self_)
   case 2:
   case 4:
     if (*(int *)((int)self_ + 4) != 0xf) {
-      bVar2 = *(int *)((int)self_ + 4) == 0x21;
-LAB_10190c0e:
-      if (!bVar2) {
+      u1 = *(int *)((int)self_ + 4) == 0x21;
+code_10190C0E:
+      if (!u1) {
         *(uint32_t *)((int)self_ + 0xc) = 1;
         *(uint32_t *)((int)self_ + 4) = 0xf;
         return;
@@ -1900,18 +1900,18 @@ LAB_10190c0e:
     return;
   case 5:
     if (*(int *)((int)self_ + 4) != 0xf) {
-      bVar2 = *(int *)((int)self_ + 4) == 0x10;
-      goto LAB_10190c0e;
+      u1 = *(int *)((int)self_ + 4) == 0x10;
+      goto code_10190C0E;
     }
     break;
   default:
-    goto switchD_10190bef_default;
+    goto L1;
   }
   if (*(int *)((int)self_ + 0xc) == 0) {
     *(uint32_t *)((int)self_ + 0xc) = 1;
     return;
   }
-switchD_10190bef_default:
+L1:
   return;
 }
 
@@ -1919,19 +1919,19 @@ switchD_10190bef_default:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __thiscall TextInputFiles_UpdateFromMenu(void * self_)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::Menu_FindByName(s_menu_keypad3_10379908);
-  if ((char)uVar1 != '\0') {
+  u1 = orig::Menu_FindByName(str_menu_keypad3_10379908);
+  if ((char)u1 != '\0') {
     *(uint32_t *)((int)self_ + 8) = 0;
     *(uint32_t *)((int)self_ + 0x20) = 2;
-    return uVar1;
+    return u1;
   }
-  uVar2 = (uint32_t)(*(char *)((int)self_ + 0x1c) != '\x01');
-  *(uint32_t *)((int)self_ + 8) = uVar2;
-  *(uint32_t *)((int)self_ + 0x20) = uVar2;
-  return uVar2;
+  u2 = (uint32_t)(*(char *)((int)self_ + 0x1c) != '\x01');
+  *(uint32_t *)((int)self_ + 8) = u2;
+  *(uint32_t *)((int)self_ + 0x20) = u2;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10191AB0
@@ -1945,61 +1945,61 @@ XI_API void * __thiscall TextInputFiles_CtorVt10336958(void * self_)
   *(uint8_t *)((int)self_ + 0x20) = 0;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336958;
+  *(uint8_t ***)self_ = &g_10336958;
   *(uint32_t *)((int)self_ + 0x1c) = 1;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10191B20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_FindTopShape(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_FindTopShape(void * self_, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  *(uint32_t *)((int)self_ + 0x18) = param_1;
+  *(uint32_t *)((int)self_ + 0x18) = arg2;
   *(uint8_t *)((int)self_ + 0x20) = 0;
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_menu_key2top_10379958);
-  *(int *)((int)self_ + 0x14) = (int)uVar1;
-  return (uint32_t)((int)uVar1 != 0) * 2 + -1;
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_menu_key2top_10379958);
+  *(int *)((int)self_ + 0x14) = (int)u1;
+  return (uint32_t)((int)u1 != 0) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x10192380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_FindShapeKey2Top(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_FindShapeKey2Top(void * self_, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  *(uint32_t *)((int)self_ + 0x18) = param_1;
+  *(uint32_t *)((int)self_ + 0x18) = arg2;
   *(uint8_t *)((int)self_ + 0x1e) = 0;
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_menu_key2top_10379958);
-  *(int *)((int)self_ + 0x14) = (int)uVar1;
-  return (uint32_t)((int)uVar1 != 0) * 2 + -1;
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_menu_key2top_10379958);
+  *(int *)((int)self_ + 0x14) = (int)u1;
+  return (uint32_t)((int)u1 != 0) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x10192E50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorVt103369A0(void * self_, undefined4 param_1)
+XI_API void * __thiscall TextInputFiles_CtorVt103369A0(void * self_, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint32_t *)((int)self_ + 0x18) = param_1;
+  *(uint32_t *)((int)self_ + 0x18) = arg2;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_103369a0;
+  *(uint8_t ***)self_ = &g_103369A0;
   *(uint8_t *)((int)self_ + 0x1c) = 0;
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_menu_key2top_10379958);
-  *(int *)((int)self_ + 0x14) = (int)uVar1;
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_menu_key2top_10379958);
+  *(int *)((int)self_ + 0x14) = (int)u1;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10193800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_AddPairChecked(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __cdecl TextInputFiles_AddPairChecked(bits32 arg1, bits32 arg2, bits32 arg3)
 {
-  if (DAT_106626cc != (void *)0x0) {
-    orig::TextInputFiles_AddPairAndCall(DAT_106626cc,param_1,param_2,param_3);
+  if (g_106626CC != (void *)0x0) {
+    orig::TextInputFiles_AddPairAndCall(g_106626CC,arg1,arg2,arg3);
     return 1;
   }
   return 0xffffffff;
@@ -2007,109 +2007,109 @@ XI_API undefined4 __cdecl TextInputFiles_AddPairChecked(undefined4 param_1, unde
 
 // FUNCTION: FFXIMAIN 0x10193830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SetConfig(undefined4 configKey, undefined4 configValue)
+XI_API bits32 __cdecl SetConfig(bits32 configKey, bits32 configValue)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_106626cc != (void *)0x0) {
-    uVar1 = orig::TextInputFiles_SetEntryValue(DAT_106626cc,configKey,configValue);
-    return uVar1;
+  if (g_106626CC != (void *)0x0) {
+    u1 = orig::TextInputFiles_SetEntryValue(g_106626CC,configKey,configValue);
+    return u1;
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x10193850
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Settings_GetValue(undefined4 param_1)
+XI_API bits32 __cdecl Settings_GetValue(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_106626cc != (void *)0x0) {
-    uVar1 = orig::TextInputFiles_GetEntryValue(DAT_106626cc,param_1);
-    return uVar1;
+  if (g_106626CC != (void *)0x0) {
+    u1 = orig::TextInputFiles_GetEntryValue(g_106626CC,arg1);
+    return u1;
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x10193890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_GetSetting99(undefined4 param_1)
+XI_API bits32 __cdecl TextInputFiles_GetSetting99(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_GetSettingMapped(0x99,param_1);
-  return uVar1;
+  u1 = orig::TextInputFiles_GetSettingMapped(0x99,arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101938B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_GetSettingMapped(undefined4 param_1, undefined4 xi_s2)
+XI_API bits32 __cdecl TextInputFiles_GetSettingMapped(bits32 arg1, bits32 xi_s2)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::Settings_GetValue_v1(param_1);
-  uVar1 = orig::TextInputFiles_TestBit((uint32_t)uVar2,xi_s2);
-  return uVar1;
+  u2 = orig::Settings_GetValue_v1(arg1);
+  u1 = orig::TextInputFiles_TestBit((uint32_t)u2,xi_s2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101938D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_TestBit(uint32_t param_1, undefined4 param_2)
+XI_API bits32 __cdecl TextInputFiles_TestBit(uint32_t arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = 1 << ((uint8_t)param_2 & 0x1f);
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)((param_1 & uVar1) != 0)));
+  u1 = 1 << ((uint8_t)arg2 & 0x1f);
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)((arg1 & u1) != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10193A10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl TextInputFiles_TestBit64(int param_1, int param_2)
+XI_API uint64_t __cdecl TextInputFiles_TestBit64(int arg1, int arg2)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
+  uint8_t u1;
+  uint32_t u2;
   
-  bVar1 = 0x1f < param_1;
-  if (bVar1) {
-    param_1 = param_1 + -0x20;
+  u1 = 0x1f < arg1;
+  if (u1) {
+    arg1 = arg1 + -0x20;
   }
-  uVar2 = 1 << ((uint8_t)param_1 & 0x1f);
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar2) << 32) | (uint32_t)((uint32_t)((*(uint32_t *)(param_2 + (uint32_t)bVar1 * 4) & uVar2) != 0))));
+  u2 = 1 << ((uint8_t)arg1 & 0x1f);
+  return ((uint64_t)(((uint64_t)(uint32_t)(u2) << 32) | (uint32_t)((uint32_t)((*(uint32_t *)(arg2 + (uint32_t)u1 * 4) & u2) != 0))));
 }
 
 // FUNCTION: FFXIMAIN 0x10193B00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_InitPairNode(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall TextInputFiles_InitPairNode(void * self_, bits32 arg2, bits32 arg3)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10336a00;
+  *(uint8_t ***)self_ = &g_10336A00;
   *(uint32_t *)((int)self_ + 4) = 0;
-  *(uint32_t *)((int)self_ + 8) = param_1;
-  *(uint32_t *)((int)self_ + 0xc) = param_2;
+  *(uint32_t *)((int)self_ + 8) = arg2;
+  *(uint32_t *)((int)self_ + 0xc) = arg3;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10193B60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FindOrAdd(void * self_, int param_1, int param_2)
+XI_API void __thiscall TextInputFiles_FindOrAdd(void * self_, int arg2, int arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint64_t u2;
   
-  if ((*(int *)((int)self_ + 8) != param_1) || (*(int *)((int)self_ + 0xc) != param_2)) {
-    iVar1 = *(int *)((int)self_ + 4);
-    while (iVar1 != 0) {
+  if ((*(int *)((int)self_ + 8) != arg2) || (*(int *)((int)self_ + 0xc) != arg3)) {
+    i1 = *(int *)((int)self_ + 4);
+    while (i1 != 0) {
       self_ = *(void **)((int)self_ + 4);
-      if ((*(int *)((int)self_ + 8) == param_1) && (*(int *)((int)self_ + 0xc) == param_2)) {
+      if ((*(int *)((int)self_ + 8) == arg2) && (*(int *)((int)self_ + 0xc) == arg3)) {
         return;
       }
-      iVar1 = *(int *)((int)self_ + 4);
+      i1 = *(int *)((int)self_ + 4);
     }
-    uVar3 = orig::Allocator_Generic_v1(0x10);
-    if ((void *)uVar3 != (void *)0x0) {
-      uVar2 = orig::TextInputFiles_InitPairNode((void *)uVar3,param_1,param_2);
-      *(uint32_t *)((int)self_ + 4) = uVar2;
+    u2 = orig::Allocator_Generic_v1(0x10);
+    if ((void *)u2 != (void *)0x0) {
+      u1 = orig::TextInputFiles_InitPairNode((void *)u2,arg2,arg3);
+      *(uint32_t *)((int)self_ + 4) = u1;
       return;
     }
     *(uint32_t *)((int)self_ + 4) = 0;
@@ -2119,10 +2119,10 @@ XI_API void __thiscall TextInputFiles_FindOrAdd(void * self_, int param_1, int p
 
 // FUNCTION: FFXIMAIN 0x10193BC0
 // GATE: PASS -- 100 trials, 94 returned normally, 424 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API void __thiscall TextInputFiles_ForEach(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall TextInputFiles_ForEach(void * self_, bits32 arg2, bits32 arg3)
 {
   do {
-    (**(code **)((int)self_ + 8))(param_1,param_2,*(uint32_t *)((int)self_ + 0xc));
+    (**(untyped_fn **)((int)self_ + 8))(arg2,arg3,*(uint32_t *)((int)self_ + 0xc));
     self_ = *(void **)((int)self_ + 4);
   } while (self_ != (void *)0x0);
   return;
@@ -2132,54 +2132,54 @@ XI_API void __thiscall TextInputFiles_ForEach(void * self_, undefined4 param_1, 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FsConfig_Constructor(void * self_)
 {
-  uint32_t *puVar1;
-  uint32_t *puVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int iVar5;
-  uint64_t uVar6;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint64_t u3;
   char xi_frame[52] __attribute__((aligned(4)));
-  int  &iVar7 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &uVar8 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &uVar9 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
   
   orig::TextInputFiles_ConstructVt10336A0C((void *)((int)self_ + 0xc));
-  *(uint8_t ***)self_ = &PTR_FUN_10336a08;
-  uVar6 = orig::Allocator_Generic_v1(0x23c4);
-  puVar1 = (uint32_t *)uVar6;
-  if (puVar1 == (uint32_t *)0x0) {
-    puVar2 = (uint32_t *)0x0;
+  *(uint8_t ***)self_ = &g_10336A08;
+  u3 = orig::Allocator_Generic_v1(0x23c4);
+  p1 = (uint32_t *)u3;
+  if (p1 == (uint32_t *)0x0) {
+    p2 = (uint32_t *)0x0;
   }
   else {
-    puVar2 = puVar1 + 1;
-    *puVar1 = 0xd0;
-    iVar5 = 0xd0;
-    puVar1 = puVar2;
+    p2 = p1 + 1;
+    *p1 = 0xd0;
+    i1 = 0xd0;
+    p1 = p2;
     do {
-      *puVar1 = &PTR_LAB_10336a04;
-      puVar1[1] = 1;
-      puVar1[2] = 0;
-      puVar1[3] = 4;
-      puVar1[10] = 0;
-      *(uint8_t *)(puVar1 + 4) = 0;
-      puVar1[9] = 0;
-      puVar1[6] = 0;
-      puVar1[7] = 0;
-      puVar1[8] = 0;
-      puVar1 = puVar1 + 0xb;
-      iVar5 = iVar5 + -1;
-    } while (iVar5 != 0);
+      *p1 = &g_10336A04;
+      p1[1] = 1;
+      p1[2] = 0;
+      p1[3] = 4;
+      p1[10] = 0;
+      *(uint8_t *)(p1 + 4) = 0;
+      p1[9] = 0;
+      p1[6] = 0;
+      p1[7] = 0;
+      p1[8] = 0;
+      p1 = p1 + 0xb;
+      i1 = i1 + -1;
+    } while (i1 != 0);
   }
-  *(uint32_t **)((int)self_ + 4) = puVar2;
-  orig::TextInputFiles_DefineEntry(self_,2,0,1,(uint32_t *)s_LSKF1JHT_103799f4,0,1,0,0);
-  orig::TextInputFiles_DefineEntry(self_,3,0,1,(uint32_t *)s_LSKF1JRK_103799e8,0,1,0,0);
+  *(uint32_t **)((int)self_ + 4) = p2;
+  orig::TextInputFiles_DefineEntry(self_,2,0,1,(uint32_t *)str_LSKF1JHT_103799F4,0,1,0,0);
+  orig::TextInputFiles_DefineEntry(self_,3,0,1,(uint32_t *)str_LSKF1JRK_103799E8,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,4,0,4,(uint32_t *)0x0,0,0,0,0);
-  orig::TextInputFiles_DefineEntry(self_,5,1,1,(uint32_t *)s_LSKF1PST_103799dc,0,1,1,1);
-  orig::TextInputFiles_DefineEntry(self_,6,0,1,(uint32_t *)s_LSKF1PKD_103799d0,0,1,0,0);
+  orig::TextInputFiles_DefineEntry(self_,5,1,1,(uint32_t *)str_LSKF1PST_103799DC,0,1,1,1);
+  orig::TextInputFiles_DefineEntry(self_,6,0,1,(uint32_t *)str_LSKF1PKD_103799D0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,7,0,4,(uint32_t *)0x0,0,1,0,1);
-  orig::TextInputFiles_DefineEntry(self_,8,0,1,(uint32_t *)s_LPOL1_SS_103799c4,0,1,0,0);
+  orig::TextInputFiles_DefineEntry(self_,8,0,1,(uint32_t *)str_LPOL1_SS_103799C4,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,9,100,4,(uint32_t *)0x0,0,100,100,1);
   orig::TextInputFiles_DefineEntry(self_,10,100,4,(uint32_t *)0x0,0,100,100,1);
   orig::TextInputFiles_DefineEntry(self_,0xb,0x3c,4,(uint32_t *)0x0,0,0x7f,0x3c,0);
@@ -2200,7 +2200,7 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
   orig::TextInputFiles_DefineEntry(self_,0x15,1,4,(uint32_t *)0x0,0,1,1,0);
   orig::TextInputFiles_DefineEntry(self_,0x16,100,4,(uint32_t *)0x0,0,100,100,0);
   orig::TextInputFiles_DefineEntry(self_,0x17,0,4,(uint32_t *)0x0,0,1,0,1);
-  orig::TextInputFiles_DefineEntry(self_,0x18,0,1,(uint32_t *)s_GOPN1_HF_103799b8,0,1,0,0);
+  orig::TextInputFiles_DefineEntry(self_,0x18,0,1,(uint32_t *)str_GOPN1_HF_103799B8,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x19,0,5,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x1b,0x80808080,4,(uint32_t *)0x0,0,0xffffffff,0x80808080,0);
   orig::TextInputFiles_DefineEntry(self_,0x1c,0x80a05040,4,(uint32_t *)0x0,0,0xffffffff,0x80a05040,0);
@@ -2235,9 +2235,9 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
   orig::TextInputFiles_DefineEntry(self_,0x33,0x1800,5,(uint32_t *)0x0,0,0xffffffff,0x1800,1);
   orig::TextInputFiles_DefineEntry(self_,0x34,0,4,(uint32_t *)0x0,0,0xffffffff,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x35,0,5,(uint32_t *)0x0,0,3,0,1);
-  orig::TextInputFiles_DefineEntry(self_,0x36,0,1,(uint32_t *)s_LSKF1JTK_103799ac,0,1,0,1);
+  orig::TextInputFiles_DefineEntry(self_,0x36,0,1,(uint32_t *)str_LSKF1JTK_103799AC,0,1,0,1);
   orig::TextInputFiles_DefineEntry(self_,0x3d,0x80,4,(uint32_t *)0x0,0,0xff,0x80,0);
-  orig::TextInputFiles_DefineEntry(self_,0x41,0xffffffff,1,(uint32_t *)s_GOPN1_AO_103799a0,0xffffffff,0x3c,0xffffffff,0
+  orig::TextInputFiles_DefineEntry(self_,0x41,0xffffffff,1,(uint32_t *)str_GOPN1_AO_103799A0,0xffffffff,0x3c,0xffffffff,0
               );
   orig::TextInputFiles_DefineEntry(self_,0x42,2,4,(uint32_t *)0x0,0,2,2,0);
   orig::TextInputFiles_DefineEntry(self_,0x37,0x32,4,(uint32_t *)0x0,0,100,0x32,0);
@@ -2256,7 +2256,7 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
   orig::TextInputFiles_DefineEntry(self_,0x47,1,4,(uint32_t *)0x0,0,1,1,0);
   orig::TextInputFiles_DefineEntry(self_,0x48,1,4,(uint32_t *)0x0,0,1,1,0);
   orig::TextInputFiles_DefineEntry(self_,0x49,0x15e,4,(uint32_t *)0x0,0xf2,0x386,0x15e,0);
-  iVar5 = *(int *)(g_pSceneState + 8);
+  i1 = *(int *)(g_pSceneState + 8);
   orig::TextInputFiles_DefineEntry(self_,0x4a,0x11,4,(uint32_t *)0x0,0,0xff,0x11,0);
   orig::TextInputFiles_DefineEntry(self_,0x4b,0x1f,4,(uint32_t *)0x0,0,0xff,0x1f,0);
   orig::TextInputFiles_DefineEntry(self_,0x4c,0x1e,4,(uint32_t *)0x0,0,0xff,0x1e,0);
@@ -2289,18 +2289,18 @@ XI_API void * __thiscall FsConfig_Constructor(void * self_)
   orig::TextInputFiles_DefineEntry(self_,0x67,0x10,4,(uint32_t *)0x0,0,0xff,0x10,0);
   orig::TextInputFiles_DefineEntry(self_,0x68,0,4,(uint32_t *)0x0,0,0xff,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x69,0,4,(uint32_t *)0x0,0,0xff,0,0);
-  if (iVar5 == 2) {
+  if (i1 == 2) {
     orig::TextInputFiles_DefineEntry(self_,0x5c,0x2c,4,(uint32_t *)0x0,0,0xff,0x2c,0);
     orig::TextInputFiles_DefineEntry(self_,99,0x15,4,(uint32_t *)0x0,0,0xff,0x15,0);
     orig::TextInputFiles_DefineEntry(self_,0x62,0xf3,4,(uint32_t *)0x0,0,0xff,0xf3,0);
     orig::TextInputFiles_DefineEntry(self_,100,0x1a,4,(uint32_t *)0x0,0,0xff,0x1a,0);
-    uVar9 = 0x1b;
-    uVar8 = 0x1b;
-    iVar7 = 0x65;
-LAB_101947e2:
-    orig::TextInputFiles_DefineEntry(self_,iVar7,uVar8,4,(uint32_t *)0x0,0,0xff,uVar9,0);
+    u5 = 0x1b;
+    u4 = 0x1b;
+    i2 = 0x65;
+code_101947E2:
+    orig::TextInputFiles_DefineEntry(self_,i2,u4,4,(uint32_t *)0x0,0,0xff,u5,0);
   }
-  else if (iVar5 == 3) {
+  else if (i1 == 3) {
     orig::TextInputFiles_DefineEntry(self_,0x4a,0x2c,4,(uint32_t *)0x0,0,0xff,0x2c,0);
     orig::TextInputFiles_DefineEntry(self_,0x4c,0x10,4,(uint32_t *)0x0,0,0xff,0x10,0);
     orig::TextInputFiles_DefineEntry(self_,0x62,0xfc,4,(uint32_t *)0x0,0,0xff,0xfc,0);
@@ -2309,10 +2309,10 @@ LAB_101947e2:
     orig::TextInputFiles_DefineEntry(self_,0x65,0xfa,4,(uint32_t *)0x0,0,0xff,0xfa,0);
     orig::TextInputFiles_DefineEntry(self_,0x56,0x27,4,(uint32_t *)0x0,0,0xff,0x27,0);
     orig::TextInputFiles_DefineEntry(self_,0x57,0x33,4,(uint32_t *)0x0,0,0xff,0x33,0);
-    uVar9 = 0x1e;
-    uVar8 = 0x1e;
-    iVar7 = 0x67;
-    goto LAB_101947e2;
+    u5 = 0x1e;
+    u4 = 0x1e;
+    i2 = 0x67;
+    goto code_101947E2;
   }
   orig::TextInputFiles_DefineEntry(self_,0x6a,0x1e,4,(uint32_t *)0x0,0,0xff,0x1e,0);
   orig::TextInputFiles_DefineEntry(self_,0x6b,0x17,4,(uint32_t *)0x0,0,0xff,0x17,0);
@@ -2349,27 +2349,27 @@ LAB_101947e2:
   orig::TextInputFiles_DefineEntry(self_,0x75,0x1a,4,(uint32_t *)0x0,0,0xff,0x1a,0);
   orig::TextInputFiles_DefineEntry(self_,0x77,0x34,4,(uint32_t *)0x0,0,0xff,0x34,0);
   orig::TextInputFiles_DefineEntry(self_,0x78,0x33,4,(uint32_t *)0x0,0,0xff,0x33,0);
-  if (iVar5 == 2) {
+  if (i1 == 2) {
     orig::TextInputFiles_DefineEntry(self_,0x70,0x2c,4,(uint32_t *)0x0,0,0xff,0x2c,0);
     orig::TextInputFiles_DefineEntry(self_,0x76,0x15,4,(uint32_t *)0x0,0,0xff,0x15,0);
     orig::TextInputFiles_DefineEntry(self_,0x72,0xf3,4,(uint32_t *)0x0,0,0xff,0xf3,0);
     orig::TextInputFiles_DefineEntry(self_,0x74,0x1a,4,(uint32_t *)0x0,0,0xff,0x1a,0);
-    uVar9 = 0x1b;
-    uVar8 = 0x1b;
-    iVar5 = 0x75;
+    u5 = 0x1b;
+    u4 = 0x1b;
+    i1 = 0x75;
   }
   else {
-    if (iVar5 != 3) goto LAB_10194c25;
+    if (i1 != 3) goto code_10194C25;
     orig::TextInputFiles_DefineEntry(self_,0x72,0xfc,4,(uint32_t *)0x0,0,0xff,0xfc,0);
     orig::TextInputFiles_DefineEntry(self_,0x74,0xf9,4,(uint32_t *)0x0,0,0xff,0xf9,0);
     orig::TextInputFiles_DefineEntry(self_,0x75,0xfa,4,(uint32_t *)0x0,0,0xff,0xfa,0);
     orig::TextInputFiles_DefineEntry(self_,0x77,0x27,4,(uint32_t *)0x0,0,0xff,0x27,0);
-    uVar9 = 0x33;
-    uVar8 = 0x33;
-    iVar5 = 0x78;
+    u5 = 0x33;
+    u4 = 0x33;
+    i1 = 0x78;
   }
-  orig::TextInputFiles_DefineEntry(self_,iVar5,uVar8,4,(uint32_t *)0x0,0,0xff,uVar9,0);
-LAB_10194c25:
+  orig::TextInputFiles_DefineEntry(self_,i1,u4,4,(uint32_t *)0x0,0,0xff,u5,0);
+code_10194C25:
   orig::TextInputFiles_DefineEntry(self_,0x8a,2000,4,(uint32_t *)0x0,1000,4000,2000,0);
   orig::TextInputFiles_DefineEntry(self_,0x8c,1,4,(uint32_t *)0x0,0,1,1,0);
   orig::TextInputFiles_DefineEntry(self_,0x8b,1,4,(uint32_t *)0x0,0,1,1,0);
@@ -2379,10 +2379,10 @@ LAB_10194c25:
   orig::TextInputFiles_DefineEntry(self_,0x90,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x91,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x92,0,4,(uint32_t *)0x0,0,0xffffffff,0,0);
-  orig::TextInputFiles_DefineEntry(self_,0x93,0,1,(uint32_t *)s_LPOL1PDX_10379994,0xffffff01,0xff,0,0);
-  orig::TextInputFiles_DefineEntry(self_,0x94,0,1,(uint32_t *)s_LPOL1PDY_10379988,0xffffff01,0xff,0,0);
-  orig::TextInputFiles_DefineEntry(self_,0x95,0,2,(uint32_t *)&DAT_1037997c,0,0xff,0,1);
-  orig::TextInputFiles_DefineEntry(self_,0x96,0,2,(uint32_t *)&DAT_10379970,0,0xff,0,1);
+  orig::TextInputFiles_DefineEntry(self_,0x93,0,1,(uint32_t *)str_LPOL1PDX_10379994,0xffffff01,0xff,0,0);
+  orig::TextInputFiles_DefineEntry(self_,0x94,0,1,(uint32_t *)str_LPOL1PDY_10379988,0xffffff01,0xff,0,0);
+  orig::TextInputFiles_DefineEntry(self_,0x95,0,2,(uint32_t *)&g_1037997C,0,0xff,0,1);
+  orig::TextInputFiles_DefineEntry(self_,0x96,0,2,(uint32_t *)&g_10379970,0,0xff,0,1);
   orig::TextInputFiles_DefineEntry(self_,0x97,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0x98,0,4,(uint32_t *)0x0,0,0xffff,0,0);
   orig::TextInputFiles_DefineEntry(self_,199,0,4,(uint32_t *)0x0,0,0xffff,0,0);
@@ -2397,13 +2397,13 @@ LAB_10194c25:
   orig::TextInputFiles_DefineEntry(self_,0xa6,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0xa7,0,4,(uint32_t *)0x0,0,1,0,0);
   orig::TextInputFiles_DefineEntry(self_,0xa8,100,6,(uint32_t *)0x0,0,100,100,1);
-  puVar1 = &local_8;
-  puVar2 = &local_4;
-  uVar3 = orig::Camera_GetWord12();
-  uVar3 = uVar3 & 0xffff;
-  uVar4 = orig::Camera_GetWord10();
-  iVar5 = orig::Camera_PickNearestAspect_v1(uVar4 & 0xffff,uVar3,puVar2,puVar1);
-  orig::TextInputFiles_DefineEntry(self_,0xab,iVar5,6,(uint32_t *)0x0,0,5,iVar5,1);
+  p1 = &u6;
+  p2 = &u7;
+  u1 = orig::Camera_GetWord12();
+  u1 = u1 & 0xffff;
+  u2 = orig::Camera_GetWord10();
+  i1 = orig::Camera_PickNearestAspect_v1(u2 & 0xffff,u1,p2,p1);
+  orig::TextInputFiles_DefineEntry(self_,0xab,i1,6,(uint32_t *)0x0,0,5,i1,1);
   orig::TextInputFiles_DefineEntry(self_,0xac,0,6,(uint32_t *)0x0,0,1,0,1);
   orig::TextInputFiles_DefineEntry(self_,0xad,0,6,(uint32_t *)0x0,0,1,0,1);
   orig::TextInputFiles_DefineEntry(self_,0xaf,0,6,(uint32_t *)0x0,0,8,0,1);
@@ -2436,7 +2436,7 @@ LAB_10194c25:
 
 // FUNCTION: FFXIMAIN 0x10195220
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ResetConfigReturn1(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ResetConfigReturn1(void * self_)
 {
   orig::TextInputFiles_ResetConfigToDefaults(self_,0);
   *(uint8_t *)((int)self_ + 9) = 0;
@@ -2446,31 +2446,31 @@ XI_API undefined4 __thiscall TextInputFiles_ResetConfigReturn1(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10195240
 // GATE: PASS -- 100 trials, 97 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API undefined4 __thiscall TextInputFiles_AddPairAndCall(void * self_, undefined4 param_1, int param_2, undefined4 param_3)
+XI_API bits32 __thiscall TextInputFiles_AddPairAndCall(void * self_, bits32 arg2, int arg3, bits32 arg4)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar3 = orig::TextInputFiles_GetEntry2C(self_,param_1);
-  iVar1 = (int)uVar3;
-  if (iVar1 != 0) {
-    if (param_2 != 0) {
-      if (*(void **)(iVar1 + 0x24) == (void *)0x0) {
-        uVar3 = orig::Allocator_Generic_v1(0x10);
-        if ((void *)uVar3 == (void *)0x0) {
-          *(uint32_t *)(iVar1 + 0x24) = 0;
+  u2 = orig::TextInputFiles_GetEntry2C(self_,arg2);
+  i1 = (int)u2;
+  if (i1 != 0) {
+    if (arg3 != 0) {
+      if (*(void **)(i1 + 0x24) == (void *)0x0) {
+        u2 = orig::Allocator_Generic_v1(0x10);
+        if ((void *)u2 == (void *)0x0) {
+          *(uint32_t *)(i1 + 0x24) = 0;
         }
         else {
-          uVar2 = orig::TextInputFiles_InitPairNode((void *)uVar3,param_2,param_3);
-          *(uint32_t *)(iVar1 + 0x24) = uVar2;
+          u1 = orig::TextInputFiles_InitPairNode((void *)u2,arg3,arg4);
+          *(uint32_t *)(i1 + 0x24) = u1;
         }
       }
       else {
-        orig::TextInputFiles_FindOrAdd(*(void **)(iVar1 + 0x24),param_2,param_3);
+        orig::TextInputFiles_FindOrAdd(*(void **)(i1 + 0x24),arg3,arg4);
       }
-      if (*(void **)(iVar1 + 0x24) != (void *)0x0) {
-        orig::TextInputFiles_ForEach(*(void **)(iVar1 + 0x24),*(uint32_t *)(iVar1 + 4),*(uint32_t *)(iVar1 + 8))
+      if (*(void **)(i1 + 0x24) != (void *)0x0) {
+        orig::TextInputFiles_ForEach(*(void **)(i1 + 0x24),*(uint32_t *)(i1 + 4),*(uint32_t *)(i1 + 8))
         ;
       }
     }
@@ -2481,28 +2481,28 @@ XI_API undefined4 __thiscall TextInputFiles_AddPairAndCall(void * self_, undefin
 
 // FUNCTION: FFXIMAIN 0x101952C0
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API undefined4 __thiscall TextInputFiles_SetEntryValue(void * self_, int param_1, int param_2)
+XI_API bits32 __thiscall TextInputFiles_SetEntryValue(void * self_, int arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
-  uint64_t uVar3;
+  int i1;
+  int i2;
+  uint64_t u1;
   
-  uVar3 = orig::TextInputFiles_GetEntry2C(self_,param_1);
-  iVar1 = (int)uVar3;
-  if (iVar1 == 0) {
+  u1 = orig::TextInputFiles_GetEntry2C(self_,arg2);
+  i1 = (int)u1;
+  if (i1 == 0) {
     return 0xffffffff;
   }
-  if ((param_1 != 0xce) && (*(int *)(iVar1 + 8) == param_2)) {
+  if ((arg2 != 0xce) && (*(int *)(i1 + 8) == arg3)) {
     return 0xffffffff;
   }
-  iVar2 = orig::TextInputFiles_SetConfigEntryValue(iVar1,param_2);
-  if (iVar2 < 0) {
+  i2 = orig::TextInputFiles_SetConfigEntryValue(i1,arg3);
+  if (i2 < 0) {
     return 0xffffffff;
   }
-  if (*(int *)(iVar1 + 0xc) == 1) {
+  if (*(int *)(i1 + 0xc) == 1) {
     *(uint8_t *)((int)self_ + 8) = 1;
   }
-  if (*(int *)(iVar1 + 0xc) == 2) {
+  if (*(int *)(i1 + 0xc) == 2) {
     *(uint8_t *)((int)self_ + 8) = 1;
   }
   return 1;
@@ -2510,30 +2510,30 @@ XI_API undefined4 __thiscall TextInputFiles_SetEntryValue(void * self_, int para
 
 // FUNCTION: FFXIMAIN 0x10195330
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API uint64_t __thiscall TextInputFiles_GetEntryValue(void * self_, undefined4 param_1)
+XI_API uint64_t __thiscall TextInputFiles_GetEntryValue(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::TextInputFiles_GetEntry2C(self_,param_1);
-  uVar1 = (uint32_t)((uint64_t)uVar2 >> 0x20);
-  if ((int)uVar2 == 0) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar1) << 32) | (uint32_t)(0xffffffff)));
+  u2 = orig::TextInputFiles_GetEntry2C(self_,arg2);
+  u1 = (uint32_t)((uint64_t)u2 >> 0x20);
+  if ((int)u2 == 0) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(0xffffffff)));
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar1) << 32) | (uint32_t)(*(uint32_t *)((int)uVar2 + 8))));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(*(uint32_t *)((int)u2 + 8))));
 }
 
 // FUNCTION: FFXIMAIN 0x10195350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ReloadConfig(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ReloadConfig(void * self_)
 {
   uint32_t xi_entry_eax = 0;
-  int iVar1;
+  int i1;
   uint32_t xi_eax;
   
   orig::StAvatarInfo_SendBytePairKind0(8,0,xi_entry_eax);
-  iVar1 = orig::TextInputFiles_LoadCnfDat(self_);
-  if (iVar1 < 0) {
+  i1 = orig::TextInputFiles_LoadCnfDat(self_);
+  if (i1 < 0) {
     orig::TextInputFiles_ResetConfigToDefaults(self_,1);
   }
   xi_eax = orig::TextInputFiles_LoadExternalConfig(self_);
@@ -2553,7 +2553,7 @@ XI_API void __thiscall TextInputFiles_ReadTigDatSetFlag(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101953C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FlushThenTrue(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FlushThenTrue(void * self_)
 {
   orig::TextInputFiles_LoadExternalConfig(self_);
   return 1;
@@ -2561,7 +2561,7 @@ XI_API undefined4 __thiscall TextInputFiles_FlushThenTrue(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101953F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_UpdateIfFlag9(void * self_)
+XI_API bits32 __thiscall TextInputFiles_UpdateIfFlag9(void * self_)
 {
   if (*(char *)((int)self_ + 9) == '\x01') {
     orig::TextInputFiles_StoreExternalConfig(self_);
@@ -2572,62 +2572,62 @@ XI_API undefined4 __thiscall TextInputFiles_UpdateIfFlag9(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10195460
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API void __thiscall TextInputFiles_DefineEntry(void * self_, int param_1, undefined4 param_2, int param_3, undefined4 * param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+XI_API void __thiscall TextInputFiles_DefineEntry(void * self_, int arg2, bits32 arg3, int arg4, bits32 * arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
-  int iVar1;
+  int i1;
   
   if (*(int *)((int)self_ + 4) != 0) {
-    iVar1 = *(int *)((int)self_ + 4) + param_1 * 0x2c;
-    *(int *)(iVar1 + 4) = param_1;
-    *(undefined4 *)(iVar1 + 8) = param_2;
-    *(int *)(iVar1 + 0xc) = param_3;
-    if ((param_4 != (undefined4 *)0x0) && ((param_3 == 1 || (param_3 == 2)))) {
-      *(undefined4 *)(iVar1 + 0x10) = *param_4;
-      *(undefined4 *)(iVar1 + 0x14) = param_4[1];
+    i1 = *(int *)((int)self_ + 4) + arg2 * 0x2c;
+    *(int *)(i1 + 4) = arg2;
+    *(bits32 *)(i1 + 8) = arg3;
+    *(int *)(i1 + 0xc) = arg4;
+    if ((arg5 != (bits32 *)0x0) && ((arg4 == 1 || (arg4 == 2)))) {
+      *(bits32 *)(i1 + 0x10) = *arg5;
+      *(bits32 *)(i1 + 0x14) = arg5[1];
     }
-    *(undefined4 *)(iVar1 + 0x18) = param_5;
-    *(undefined4 *)(iVar1 + 0x1c) = param_6;
-    *(undefined4 *)(iVar1 + 0x20) = param_7;
-    *(undefined4 *)(iVar1 + 0x28) = param_8;
+    *(bits32 *)(i1 + 0x18) = arg6;
+    *(bits32 *)(i1 + 0x1c) = arg7;
+    *(bits32 *)(i1 + 0x20) = arg8;
+    *(bits32 *)(i1 + 0x28) = arg9;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101954D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetEntry2C(void * self_, int param_1)
+XI_API int __thiscall TextInputFiles_GetEntry2C(void * self_, int arg2)
 {
   if (*(int *)((int)self_ + 4) != 0) {
-    return *(int *)((int)self_ + 4) + param_1 * 0x2c;
+    return *(int *)((int)self_ + 4) + arg2 * 0x2c;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101954F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_WriteTigDat(void * self_)
+XI_API bits32 __thiscall TextInputFiles_WriteTigDat(void * self_)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  int iVar3;
+  uint32_t *p1;
+  int i1;
+  int i2;
   char xi_frame[3312] __attribute__((aligned(4)));
-  uint32_t  (&local_cf0)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
+  uint32_t  (&u1)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
   
-  local_cf0[0] = 1;
-  iVar3 = 1;
-  puVar1 = (uint32_t *)(*(int *)((int)self_ + 4) + 8);
-  iVar2 = 0xcf;
+  u1[0] = 1;
+  i2 = 1;
+  p1 = (uint32_t *)(*(int *)((int)self_ + 4) + 8);
+  i1 = 0xcf;
   do {
-    if (puVar1[1] == 6) {
-      local_cf0[iVar3] = *puVar1;
-      iVar3 = iVar3 + 1;
+    if (p1[1] == 6) {
+      u1[i2] = *p1;
+      i2 = i2 + 1;
     }
-    puVar1 = puVar1 + 0xb;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  if (0 < iVar3) {
-    iVar2 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,s_tig_dat_10379a00,local_cf0,iVar3 * 4,0,0);
-    if (iVar2 < 0) {
+    p1 = p1 + 0xb;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  if (0 < i2) {
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_tig_dat_10379A00,u1,i2 * 4,0,0);
+    if (i1 < 0) {
       return 0xffffffff;
     }
   }
@@ -2636,47 +2636,47 @@ XI_API undefined4 __thiscall TextInputFiles_WriteTigDat(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10195570
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ReadTigDat(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ReadTigDat(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int *piVar4;
-  int iVar5;
-  uint64_t uVar6;
+  int i1;
+  int i2;
+  uint32_t u1;
+  int *p1;
+  int i3;
+  uint64_t u2;
   char xi_frame[3312] __attribute__((aligned(4)));
-  int  &local_cf0 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  (&local_cec)[827] = *reinterpret_cast<int  (*)[827]>(xi_frame + 4);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  (&i5)[827] = *reinterpret_cast<int  (*)[827]>(xi_frame + 4);
   
-  iVar5 = 0;
-  iVar2 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,s_tig_dat_10379a00,&local_cf0,0x33c,0,0);
-  if ((0 < iVar2) && (local_cf0 == 1)) {
-    piVar4 = local_cec;
+  i3 = 0;
+  i2 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_tig_dat_10379A00,&i4,0x33c,0,0);
+  if ((0 < i2) && (i4 == 1)) {
+    p1 = i5;
     do {
-      iVar2 = *(int *)((int)self_ + 4);
-      if (*(int *)(iVar2 + 0xc + iVar5 * 0x2c) == 6) {
-        if (iVar5 == 0xab) {
-          if (*(int *)(iVar2 + 0x1d68) == 0x43) {
-            uVar6 = orig::Settings_GetValue_v1(0xab);
-            uVar3 = (uint32_t)uVar6;
+      i2 = *(int *)((int)self_ + 4);
+      if (*(int *)(i2 + 0xc + i3 * 0x2c) == 6) {
+        if (i3 == 0xab) {
+          if (*(int *)(i2 + 0x1d68) == 0x43) {
+            u2 = orig::Settings_GetValue_v1(0xab);
+            u1 = (uint32_t)u2;
           }
           else {
-            uVar3 = *(uint32_t *)(iVar2 + 0x1d84);
+            u1 = *(uint32_t *)(i2 + 0x1d84);
           }
-          *(uint32_t *)(iVar2 + 0x1d6c) = uVar3;
-          if (*(void **)(iVar2 + 0x1d88) != (void *)0x0) {
-            orig::TextInputFiles_ForEach(*(void **)(iVar2 + 0x1d88),*(uint32_t *)(iVar2 + 0x1d68),uVar3);
+          *(uint32_t *)(i2 + 0x1d6c) = u1;
+          if (*(void **)(i2 + 0x1d88) != (void *)0x0) {
+            orig::TextInputFiles_ForEach(*(void **)(i2 + 0x1d88),*(uint32_t *)(i2 + 0x1d68),u1);
           }
-          piVar4 = piVar4 + 1;
+          p1 = p1 + 1;
         }
         else {
-          iVar1 = *piVar4;
-          piVar4 = piVar4 + 1;
-          orig::TextInputFiles_SetConfigEntryValue(iVar2 + iVar5 * 0x2c,iVar1);
+          i1 = *p1;
+          p1 = p1 + 1;
+          orig::TextInputFiles_SetConfigEntryValue(i2 + i3 * 0x2c,i1);
         }
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < 0xcf);
+      i3 = i3 + 1;
+    } while (i3 < 0xcf);
     return 1;
   }
   return 0xffffffff;
@@ -2684,121 +2684,121 @@ XI_API undefined4 __thiscall TextInputFiles_ReadTigDat(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10195640
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API undefined4 __thiscall TextInputFiles_StoreExternalConfig(void * self_)
+XI_API bits32 __thiscall TextInputFiles_StoreExternalConfig(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
+  int i1;
+  int i2;
+  uint32_t u1;
   
-  uVar3 = 0xffffffff;
+  u1 = 0xffffffff;
   if (*(char *)((int)self_ + 8) == '\0') {
     return 1;
   }
-  iVar1 = orig::FUN_10310df0();
-  if (iVar1 != 0) {
+  i1 = orig::game_10310DF0();
+  if (i1 != 0) {
     while( true ) {
-      iVar1 = orig::FUN_10310dfb();
-      if (iVar1 < 0) goto LAB_101956d7;
-      if (0 < iVar1) break;
+      i1 = orig::game_10310DFB();
+      if (i1 < 0) goto code_101956D7;
+      if (0 < i1) break;
       Sleep(0);
     }
-    iVar1 = 0;
+    i1 = 0;
     do {
-      iVar2 = *(int *)((int)self_ + 4) + iVar1;
-      if (*(int *)(iVar2 + 0xc) == 1) {
-        orig::TextInputFiles_WriteExternalKind1((uint32_t *)(iVar2 + 0x10),*(uint32_t *)(iVar2 + 8));
+      i2 = *(int *)((int)self_ + 4) + i1;
+      if (*(int *)(i2 + 0xc) == 1) {
+        orig::TextInputFiles_WriteExternalKind1((uint32_t *)(i2 + 0x10),*(uint32_t *)(i2 + 8));
       }
-      else if (*(int *)(iVar2 + 0xc) == 2) {
-        orig::TextInputFiles_IsExternalKind2Key((char *)(iVar2 + 0x10),*(uint32_t *)(iVar2 + 8));
+      else if (*(int *)(i2 + 0xc) == 2) {
+        orig::TextInputFiles_IsExternalKind2Key((char *)(i2 + 0x10),*(uint32_t *)(i2 + 8));
       }
-      iVar1 = iVar1 + 0x2c;
-    } while (iVar1 < 0x2394);
-    iVar1 = orig::FUN_10310e06();
-    if (iVar1 == 0) goto LAB_101956d7;
-    while (iVar1 = orig::FUN_10310e11(), -1 < iVar1) {
-      if (0 < iVar1) {
-        uVar3 = 1;
+      i1 = i1 + 0x2c;
+    } while (i1 < 0x2394);
+    i1 = orig::game_10310E06();
+    if (i1 == 0) goto code_101956D7;
+    while (i1 = orig::game_10310E11(), -1 < i1) {
+      if (0 < i1) {
+        u1 = 1;
         break;
       }
       Sleep(0);
     }
   }
-LAB_101956d7:
+code_101956D7:
   *(uint8_t *)((int)self_ + 8) = 0;
-  orig::FUN_10310e1c();
-  return uVar3;
+  orig::game_10310E1C();
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101956F0
 // GATE: PASS -- 100 trials, 69 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 69
-XI_API undefined4 __thiscall TextInputFiles_LoadExternalConfig(void * self_)
+XI_API bits32 __thiscall TextInputFiles_LoadExternalConfig(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  uint8_t *puVar3;
-  uint32_t uVar4;
-  int iVar5;
+  int i1;
+  int i2;
+  uint8_t *p1;
+  uint32_t u1;
+  int i3;
   
-  uVar4 = 0xffffffff;
-  iVar1 = orig::FUN_10310df0();
-  if (iVar1 != 0) {
-    while (iVar1 = orig::FUN_10310dfb(), -1 < iVar1) {
-      if (0 < iVar1) {
-        iVar1 = 0;
-        goto LAB_1019571a;
+  u1 = 0xffffffff;
+  i1 = orig::game_10310DF0();
+  if (i1 != 0) {
+    while (i1 = orig::game_10310DFB(), -1 < i1) {
+      if (0 < i1) {
+        i1 = 0;
+        goto code_1019571A;
       }
       Sleep(0);
     }
   }
-  goto LAB_1019576c;
-LAB_1019571a:
+  goto code_1019576C;
+code_1019571A:
   do {
-    iVar5 = *(int *)((int)self_ + 4) + iVar1;
-    if (*(int *)(iVar5 + 0xc) == 1) {
-      iVar2 = orig::TextInputFiles_ReadExternalKind1((uint32_t *)(iVar5 + 0x10));
-      if (iVar2 != 0) {
-        iVar2 = *(int *)(iVar2 + 0x18);
-LAB_10195754:
-        orig::TextInputFiles_SetConfigEntryValue(iVar5,iVar2);
+    i3 = *(int *)((int)self_ + 4) + i1;
+    if (*(int *)(i3 + 0xc) == 1) {
+      i2 = orig::TextInputFiles_ReadExternalKind1((uint32_t *)(i3 + 0x10));
+      if (i2 != 0) {
+        i2 = *(int *)(i2 + 0x18);
+code_10195754:
+        orig::TextInputFiles_SetConfigEntryValue(i3,i2);
       }
     }
-    else if ((*(int *)(iVar5 + 0xc) == 2) &&
-            (puVar3 = orig::TextInputFiles_ReadExternalKind2((char *)(iVar5 + 0x10)), puVar3 != (uint8_t *)0x0)) {
-      iVar2 = *(int *)(puVar3 + 0x18);
-      goto LAB_10195754;
+    else if ((*(int *)(i3 + 0xc) == 2) &&
+            (p1 = orig::TextInputFiles_ReadExternalKind2((char *)(i3 + 0x10)), p1 != (uint8_t *)0x0)) {
+      i2 = *(int *)(p1 + 0x18);
+      goto code_10195754;
     }
-    iVar1 = iVar1 + 0x2c;
-  } while (iVar1 < 0x2394);
-  uVar4 = 1;
-LAB_1019576c:
+    i1 = i1 + 0x2c;
+  } while (i1 < 0x2394);
+  u1 = 1;
+code_1019576C:
   *(uint8_t *)((int)self_ + 8) = 0;
-  orig::FUN_10310e1c();
-  return uVar4;
+  orig::game_10310E1C();
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10195780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_ReadExternalKind1(undefined4 * param_1)
+XI_API bits32 __stdcall TextInputFiles_ReadExternalKind1(bits32 * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_10310e27();
-  return uVar1;
+  u1 = orig::game_10310E27();
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101957B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_WriteExternalKind1(undefined4 * param_1, undefined4 xi_s2)
+XI_API bits32 __stdcall TextInputFiles_WriteExternalKind1(bits32 * arg1, bits32 xi_s2)
 {
   int xi_s1;
-  int iVar1;
+  int i1;
   
-  xi_s1 = orig::FUN_10310e27();
+  xi_s1 = orig::game_10310E27();
   if (xi_s1 != 0) {
     while( true ) {
-      iVar1 = orig::FUN_10310e32(xi_s1,&xi_s2);
-      if (iVar1 < 0) break;
-      if (0 < iVar1) {
+      i1 = orig::game_10310E32(xi_s1,&xi_s2);
+      if (i1 < 0) break;
+      if (0 < i1) {
         return 1;
       }
     }
@@ -2808,126 +2808,126 @@ XI_API undefined4 __stdcall TextInputFiles_WriteExternalKind1(undefined4 * param
 
 // FUNCTION: FFXIMAIN 0x10195810
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __stdcall TextInputFiles_ReadExternalKind2(char * param_1)
+XI_API uint8_t * __stdcall TextInputFiles_ReadExternalKind2(char * arg1)
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  uint8_t bVar4;
+  int i1;
+  char *p1;
+  char *p2;
+  uint8_t u1;
   
-  iVar1 = 9;
-  bVar4 = true;
-  pcVar2 = param_1;
-  pcVar3 = &DAT_1037997c;
+  i1 = 9;
+  u1 = true;
+  p1 = arg1;
+  p2 = &g_1037997C;
   do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    bVar4 = *pcVar2 == *pcVar3;
-    pcVar2 = pcVar2 + 1;
-    pcVar3 = pcVar3 + 1;
-  } while (bVar4);
-  if (bVar4) {
-    iVar1 = orig::FUN_10310b30();
-    if (iVar1 == 0) {
-      _DAT_106626c4 = 0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *p1 == *p2;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
+  } while (u1);
+  if (u1) {
+    i1 = orig::game_10310B30();
+    if (i1 == 0) {
+      g_106626C4 = 0;
     }
-    else if (iVar1 == 1) {
-      _DAT_106626c4 = 1;
+    else if (i1 == 1) {
+      g_106626C4 = 1;
     }
     else {
-      if (iVar1 != 2) {
+      if (i1 != 2) {
         return (uint8_t *)0x0;
       }
-      _DAT_106626c4 = 2;
+      g_106626C4 = 2;
     }
   }
-  iVar1 = 9;
-  bVar4 = true;
-  pcVar2 = &DAT_10379970;
+  i1 = 9;
+  u1 = true;
+  p1 = &g_10379970;
   do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    bVar4 = *param_1 == *pcVar2;
-    param_1 = param_1 + 1;
-    pcVar2 = pcVar2 + 1;
-  } while (bVar4);
-  if (bVar4) {
-    iVar1 = orig::FUN_10310b3b();
-    if (iVar1 != 0) {
-      if (iVar1 != 1) {
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *arg1 == *p1;
+    arg1 = arg1 + 1;
+    p1 = p1 + 1;
+  } while (u1);
+  if (u1) {
+    i1 = orig::game_10310B3B();
+    if (i1 != 0) {
+      if (i1 != 1) {
         return (uint8_t *)0x0;
       }
-      _DAT_106626c4 = 1;
-      return(uint8_t*)(&DAT_106626ac);
+      g_106626C4 = 1;
+      return(uint8_t*)(&g_106626AC);
     }
-    _DAT_106626c4 = 0;
+    g_106626C4 = 0;
   }
-  return(uint8_t*)(&DAT_106626ac);
+  return(uint8_t*)(&g_106626AC);
 }
 
 // FUNCTION: FFXIMAIN 0x101958C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall TextInputFiles_IsExternalKind2Key(char * param_1, undefined4 xi_s2)
+XI_API int __stdcall TextInputFiles_IsExternalKind2Key(char * arg1, bits32 xi_s2)
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  uint8_t bVar4;
+  int i1;
+  char *p1;
+  char *p2;
+  uint8_t u1;
   
-  iVar1 = 9;
-  bVar4 = true;
-  pcVar2 = param_1;
-  pcVar3 = &DAT_1037997c;
+  i1 = 9;
+  u1 = true;
+  p1 = arg1;
+  p2 = &g_1037997C;
   do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    bVar4 = *pcVar2 == *pcVar3;
-    pcVar2 = pcVar2 + 1;
-    pcVar3 = pcVar3 + 1;
-  } while (bVar4);
-  if (bVar4) {
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *p1 == *p2;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
+  } while (u1);
+  if (u1) {
     return 1;
   }
-  iVar1 = 9;
-  bVar4 = true;
-  pcVar2 = &DAT_10379970;
+  i1 = 9;
+  u1 = true;
+  p1 = &g_10379970;
   do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    bVar4 = *param_1 == *pcVar2;
-    param_1 = param_1 + 1;
-    pcVar2 = pcVar2 + 1;
-  } while (bVar4);
-  return (uint32_t)bVar4 * 2 + -1;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *arg1 == *p1;
+    arg1 = arg1 + 1;
+    p1 = p1 + 1;
+  } while (u1);
+  return (uint32_t)u1 * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x10195900
 // GATE: PASS -- 100 trials, 51 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 51
-XI_API undefined4 __thiscall TextInputFiles_SaveCnfDat(void * self_)
+XI_API bits32 __thiscall TextInputFiles_SaveCnfDat(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   char xi_frame[3312] __attribute__((aligned(4)));
-  uint32_t  (&local_cf0)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
+  uint32_t  (&u1)[828] = *reinterpret_cast<uint32_t  (*)[828]>(xi_frame + 0);
   
   orig::SetConfig(0xa2,0);
   orig::SetConfig(0xa2,2);
-  local_cf0[0] = 5;
-  iVar3 = 1;
-  iVar1 = 0;
+  u1[0] = 5;
+  i3 = 1;
+  i1 = 0;
   do {
-    if (0x33b < iVar3) break;
-    iVar2 = *(int *)((int)self_ + 4) + iVar1;
-    if (*(int *)(iVar2 + 0xc) == 4) {
-      local_cf0[iVar3] = *(uint32_t *)(iVar2 + 8);
-      iVar3 = iVar3 + 1;
+    if (0x33b < i3) break;
+    i2 = *(int *)((int)self_ + 4) + i1;
+    if (*(int *)(i2 + 0xc) == 4) {
+      u1[i3] = *(uint32_t *)(i2 + 8);
+      i3 = i3 + 1;
     }
-    iVar1 = iVar1 + 0x2c;
-  } while (iVar1 < 0x2394);
-  if (0 < iVar3) {
-    iVar1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,s_cnf_dat_10379a08,local_cf0,iVar3 << 2,0,0);
-    if (iVar1 < 0) {
+    i1 = i1 + 0x2c;
+  } while (i1 < 0x2394);
+  if (0 < i3) {
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_cnf_dat_10379A08,u1,i3 << 2,0,0);
+    if (i1 < 0) {
       return 0xffffffff;
     }
   }
@@ -2936,30 +2936,30 @@ XI_API undefined4 __thiscall TextInputFiles_SaveCnfDat(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101959A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_LoadCnfDat(void * self_)
+XI_API bits32 __thiscall TextInputFiles_LoadCnfDat(void * self_)
 {
-  int *piVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
+  int *p1;
+  int i1;
+  uint32_t u1;
+  int i2;
+  int i3;
+  int i4;
   char xi_frame[3316] __attribute__((aligned(4)));
-  int  &local_cf4 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  (&local_cf0)[145] = *reinterpret_cast<int  (*)[145]>(xi_frame + 4);
-  int  &local_aac = *reinterpret_cast<int  *>(xi_frame + 584);
-  int  &local_aa8 = *reinterpret_cast<int  *>(xi_frame + 588);
-  int  &local_aa4 = *reinterpret_cast<int  *>(xi_frame + 592);
-  int  (&aiStack_aa0)[680] = *reinterpret_cast<int  (*)[680]>(xi_frame + 596);
+  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  (&i6)[145] = *reinterpret_cast<int  (*)[145]>(xi_frame + 4);
+  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 584);
+  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 588);
+  int  &i9 = *reinterpret_cast<int  *>(xi_frame + 592);
+  int  (&i10)[680] = *reinterpret_cast<int  (*)[680]>(xi_frame + 596);
   
-  iVar2 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,s_cnf_dat_10379a08,local_cf0,0x33c,0,0);
-  if ((iVar2 < 1) || ((local_cf0[0] != 5 && (local_cf0[0] != 0x5000000)))) {
-switchD_10195ac4_caseD_87:
+  i1 = orig::TextInputFiles_FileMngSubmitPathKind1(g_pFileMng_as_v0,str_cnf_dat_10379A08,i6,0x33c,0,0);
+  if ((i1 < 1) || ((i6[0] != 5 && (i6[0] != 0x5000000)))) {
+L1:
     return 0xffffffff;
   }
-  iVar2 = iVar2 >> 2;
-  if (iVar2 < 0x92) {
-    switch(xi_sw(iVar2)) {
+  i1 = i1 >> 2;
+  if (i1 < 0x92) {
+    switch(xi_sw(i1)) {
     case 0x80:
     case 0x81:
     case 0x82:
@@ -2967,9 +2967,9 @@ switchD_10195ac4_caseD_87:
     case 0x84:
     case 0x85:
     case 0x86:
-      goto switchD_10195ac4_caseD_80;
+      goto L2;
     default:
-      goto switchD_10195ac4_caseD_87;
+      goto L1;
     case 0x89:
     case 0x8a:
     case 0x8b:
@@ -2977,325 +2977,325 @@ switchD_10195ac4_caseD_87:
     case 0x8d:
     case 0x8e:
     case 0x8f:
-switchD_10195ac4_caseD_89:
-      iVar6 = 1;
-      iVar5 = 0;
+L3:
+      i4 = 1;
+      i3 = 0;
       do {
-        if (iVar2 <= iVar6) break;
-        if (*(int *)(*(int *)((int)self_ + 4) + 0xc + iVar5) == 4) {
-          piVar1 = local_cf0 + iVar6;
-          iVar6 = iVar6 + 1;
-          orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + iVar5,*piVar1);
+        if (i1 <= i4) break;
+        if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i3) == 4) {
+          p1 = i6 + i4;
+          i4 = i4 + 1;
+          orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i3,*p1);
         }
-        iVar5 = iVar5 + 0x2c;
-      } while (iVar5 < 0x1b54);
-      if (local_cf0[0] != 5) {
-        iVar5 = 0xcb8;
+        i3 = i3 + 0x2c;
+      } while (i3 < 0x1b54);
+      if (i6[0] != 5) {
+        i3 = 0xcb8;
         do {
-          iVar6 = *(int *)((int)self_ + 4) + iVar5;
-          if (*(int *)(iVar6 + 4) == 0x43) {
-            uVar3 = orig::Settings_GetValue_v2(0xab);
+          i4 = *(int *)((int)self_ + 4) + i3;
+          if (*(int *)(i4 + 4) == 0x43) {
+            u1 = orig::Settings_GetValue_v2(0xab);
           }
           else {
-            uVar3 = *(uint32_t *)(iVar6 + 0x20);
+            u1 = *(uint32_t *)(i4 + 0x20);
           }
-          *(uint32_t *)(iVar6 + 8) = uVar3;
-          if (*(void **)(iVar6 + 0x24) != (void *)0x0) {
-            orig::TextInputFiles_ForEach(*(void **)(iVar6 + 0x24),*(uint32_t *)(iVar6 + 4),uVar3);
+          *(uint32_t *)(i4 + 8) = u1;
+          if (*(void **)(i4 + 0x24) != (void *)0x0) {
+            orig::TextInputFiles_ForEach(*(void **)(i4 + 0x24),*(uint32_t *)(i4 + 4),u1);
           }
-          iVar5 = iVar5 + 0x2c;
-        } while (iVar5 < 0x178d);
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0x9fc) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xa00) = uVar3;
+          i3 = i3 + 0x2c;
+        } while (i3 < 0x178d);
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0x9fc) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xa00) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xa00) = *(uint32_t *)(iVar5 + 0xa18);
+          *(uint32_t *)(i3 + 0xa00) = *(uint32_t *)(i3 + 0xa18);
         }
-        if (*(void **)(iVar5 + 0xa1c) != (void *)0x0) {
+        if (*(void **)(i3 + 0xa1c) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xa1c),*(uint32_t *)(iVar5 + 0x9fc),
-                     *(uint32_t *)(iVar5 + 0xa00));
+                    (*(void **)(i3 + 0xa1c),*(uint32_t *)(i3 + 0x9fc),
+                     *(uint32_t *)(i3 + 0xa00));
         }
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0xa28) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xa2c) = uVar3;
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0xa28) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xa2c) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xa2c) = *(uint32_t *)(iVar5 + 0xa44);
+          *(uint32_t *)(i3 + 0xa2c) = *(uint32_t *)(i3 + 0xa44);
         }
-        if (*(void **)(iVar5 + 0xa48) != (void *)0x0) {
+        if (*(void **)(i3 + 0xa48) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xa48),*(uint32_t *)(iVar5 + 0xa28),
-                     *(uint32_t *)(iVar5 + 0xa2c));
+                    (*(void **)(i3 + 0xa48),*(uint32_t *)(i3 + 0xa28),
+                     *(uint32_t *)(i3 + 0xa2c));
         }
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0xb04) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xb08) = uVar3;
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0xb04) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xb08) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xb08) = *(uint32_t *)(iVar5 + 0xb20);
+          *(uint32_t *)(i3 + 0xb08) = *(uint32_t *)(i3 + 0xb20);
         }
-        if (*(void **)(iVar5 + 0xb24) != (void *)0x0) {
+        if (*(void **)(i3 + 0xb24) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xb24),*(uint32_t *)(iVar5 + 0xb04),
-                     *(uint32_t *)(iVar5 + 0xb08));
+                    (*(void **)(i3 + 0xb24),*(uint32_t *)(i3 + 0xb04),
+                     *(uint32_t *)(i3 + 0xb08));
         }
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0xaac) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xab0) = uVar3;
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0xaac) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xab0) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xab0) = *(uint32_t *)(iVar5 + 0xac8);
+          *(uint32_t *)(i3 + 0xab0) = *(uint32_t *)(i3 + 0xac8);
         }
-        if (*(void **)(iVar5 + 0xacc) != (void *)0x0) {
+        if (*(void **)(i3 + 0xacc) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xacc),*(uint32_t *)(iVar5 + 0xaac),
-                     *(uint32_t *)(iVar5 + 0xab0));
+                    (*(void **)(i3 + 0xacc),*(uint32_t *)(i3 + 0xaac),
+                     *(uint32_t *)(i3 + 0xab0));
         }
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0xad8) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xadc) = uVar3;
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0xad8) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xadc) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xadc) = *(uint32_t *)(iVar5 + 0xaf4);
+          *(uint32_t *)(i3 + 0xadc) = *(uint32_t *)(i3 + 0xaf4);
         }
-        if (*(void **)(iVar5 + 0xaf8) != (void *)0x0) {
+        if (*(void **)(i3 + 0xaf8) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xaf8),*(uint32_t *)(iVar5 + 0xad8),
-                     *(uint32_t *)(iVar5 + 0xadc));
+                    (*(void **)(i3 + 0xaf8),*(uint32_t *)(i3 + 0xad8),
+                     *(uint32_t *)(i3 + 0xadc));
         }
-        iVar5 = *(int *)((int)self_ + 4);
-        if (*(int *)(iVar5 + 0xb88) == 0x43) {
-          uVar3 = orig::Settings_GetValue_v2(0xab);
-          *(uint32_t *)(iVar5 + 0xb8c) = uVar3;
+        i3 = *(int *)((int)self_ + 4);
+        if (*(int *)(i3 + 0xb88) == 0x43) {
+          u1 = orig::Settings_GetValue_v2(0xab);
+          *(uint32_t *)(i3 + 0xb8c) = u1;
         }
         else {
-          *(uint32_t *)(iVar5 + 0xb8c) = *(uint32_t *)(iVar5 + 0xba4);
+          *(uint32_t *)(i3 + 0xb8c) = *(uint32_t *)(i3 + 0xba4);
         }
-        if (*(void **)(iVar5 + 0xba8) != (void *)0x0) {
+        if (*(void **)(i3 + 0xba8) != (void *)0x0) {
           orig::TextInputFiles_ForEach
-                    (*(void **)(iVar5 + 0xba8),*(uint32_t *)(iVar5 + 0xb88),
-                     *(uint32_t *)(iVar5 + 0xb8c));
+                    (*(void **)(i3 + 0xba8),*(uint32_t *)(i3 + 0xb88),
+                     *(uint32_t *)(i3 + 0xb8c));
         }
       }
-      goto LAB_10195ef2;
+      goto code_10195EF2;
     }
   }
-  if (local_aac == 0x6b617473) {
-    if (local_aa4 != 0x7368696e) {
+  if (i7 == 0x6b617473) {
+    if (i9 != 0x7368696e) {
       return 0xffffffff;
     }
   }
   else {
-    if (local_aac != 0x1234567) {
+    if (i7 != 0x1234567) {
       return 0xffffffff;
     }
-    if (local_aa4 != -0x76543211) {
+    if (i9 != -0x76543211) {
       return 0xffffffff;
     }
   }
-  if (local_aa8 != 1) {
-    if ((local_aa8 != 2) && (local_aa8 != 3)) {
+  if (i8 != 1) {
+    if ((i8 != 2) && (i8 != 3)) {
       return 0xffffffff;
     }
-    goto switchD_10195ac4_caseD_89;
+    goto L3;
   }
-switchD_10195ac4_caseD_80:
-  iVar5 = 1;
-  iVar6 = 0;
+L2:
+  i3 = 1;
+  i4 = 0;
   do {
-    if (iVar2 <= iVar5) break;
-    iVar4 = *(int *)((int)self_ + 4) + iVar6;
-    if (*(int *)(iVar4 + 0xc) == 4) {
-      piVar1 = local_cf0 + iVar5;
-      iVar5 = iVar5 + 1;
-      orig::TextInputFiles_SetConfigEntryValue(iVar4,*piVar1);
+    if (i1 <= i3) break;
+    i2 = *(int *)((int)self_ + 4) + i4;
+    if (*(int *)(i2 + 0xc) == 4) {
+      p1 = i6 + i3;
+      i3 = i3 + 1;
+      orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
-    iVar6 = iVar6 + 0x2c;
-  } while (iVar6 < 0x949);
-  iVar6 = 0x974;
+    i4 = i4 + 0x2c;
+  } while (i4 < 0x949);
+  i4 = 0x974;
   do {
-    if (iVar2 <= iVar5) break;
-    iVar4 = *(int *)((int)self_ + 4) + iVar6;
-    if (*(int *)(iVar4 + 4) == 0x43) {
-      uVar3 = orig::Settings_GetValue_v2(0xab);
-      *(uint32_t *)(iVar4 + 8) = uVar3;
+    if (i1 <= i3) break;
+    i2 = *(int *)((int)self_ + 4) + i4;
+    if (*(int *)(i2 + 4) == 0x43) {
+      u1 = orig::Settings_GetValue_v2(0xab);
+      *(uint32_t *)(i2 + 8) = u1;
     }
     else {
-      *(uint32_t *)(iVar4 + 8) = *(uint32_t *)(iVar4 + 0x20);
+      *(uint32_t *)(i2 + 8) = *(uint32_t *)(i2 + 0x20);
     }
-    if (*(void **)(iVar4 + 0x24) != (void *)0x0) {
+    if (*(void **)(i2 + 0x24) != (void *)0x0) {
       orig::TextInputFiles_ForEach
-                (*(void **)(iVar4 + 0x24),*(uint32_t *)(iVar4 + 4),*(uint32_t *)(iVar4 + 8));
+                (*(void **)(i2 + 0x24),*(uint32_t *)(i2 + 4),*(uint32_t *)(i2 + 8));
     }
-    iVar6 = iVar6 + 0x2c;
-  } while (iVar6 < 0xa51);
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa7c,local_cf0[iVar5]);
-  iVar6 = *(int *)((int)self_ + 4);
-  if (*(int *)(iVar6 + 0xaac) == 0x43) {
-    uVar3 = orig::Settings_GetValue_v2(0xab);
-    *(uint32_t *)(iVar6 + 0xab0) = uVar3;
+    i4 = i4 + 0x2c;
+  } while (i4 < 0xa51);
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa7c,i6[i3]);
+  i4 = *(int *)((int)self_ + 4);
+  if (*(int *)(i4 + 0xaac) == 0x43) {
+    u1 = orig::Settings_GetValue_v2(0xab);
+    *(uint32_t *)(i4 + 0xab0) = u1;
   }
   else {
-    *(uint32_t *)(iVar6 + 0xab0) = *(uint32_t *)(iVar6 + 0xac8);
+    *(uint32_t *)(i4 + 0xab0) = *(uint32_t *)(i4 + 0xac8);
   }
-  if (*(void **)(iVar6 + 0xacc) != (void *)0x0) {
+  if (*(void **)(i4 + 0xacc) != (void *)0x0) {
     orig::TextInputFiles_ForEach
-              (*(void **)(iVar6 + 0xacc),*(uint32_t *)(iVar6 + 0xaac),
-               *(uint32_t *)(iVar6 + 0xab0));
+              (*(void **)(i4 + 0xacc),*(uint32_t *)(i4 + 0xaac),
+               *(uint32_t *)(i4 + 0xab0));
   }
-  iVar6 = *(int *)((int)self_ + 4);
-  if (*(int *)(iVar6 + 0xad8) == 0x43) {
-    uVar3 = orig::Settings_GetValue_v2(0xab);
-  }
-  else {
-    uVar3 = *(uint32_t *)(iVar6 + 0xaf4);
-  }
-  *(uint32_t *)(iVar6 + 0xadc) = uVar3;
-  if (*(void **)(iVar6 + 0xaf8) != (void *)0x0) {
-    orig::TextInputFiles_ForEach(*(void **)(iVar6 + 0xaf8),*(uint32_t *)(iVar6 + 0xad8),uVar3);
-  }
-  iVar6 = *(int *)((int)self_ + 4);
-  if (*(int *)(iVar6 + 0xb04) == 0x43) {
-    uVar3 = orig::Settings_GetValue_v2(0xab);
-    *(uint32_t *)(iVar6 + 0xb08) = uVar3;
+  i4 = *(int *)((int)self_ + 4);
+  if (*(int *)(i4 + 0xad8) == 0x43) {
+    u1 = orig::Settings_GetValue_v2(0xab);
   }
   else {
-    *(uint32_t *)(iVar6 + 0xb08) = *(uint32_t *)(iVar6 + 0xb20);
+    u1 = *(uint32_t *)(i4 + 0xaf4);
   }
-  if (*(void **)(iVar6 + 0xb24) != (void *)0x0) {
+  *(uint32_t *)(i4 + 0xadc) = u1;
+  if (*(void **)(i4 + 0xaf8) != (void *)0x0) {
+    orig::TextInputFiles_ForEach(*(void **)(i4 + 0xaf8),*(uint32_t *)(i4 + 0xad8),u1);
+  }
+  i4 = *(int *)((int)self_ + 4);
+  if (*(int *)(i4 + 0xb04) == 0x43) {
+    u1 = orig::Settings_GetValue_v2(0xab);
+    *(uint32_t *)(i4 + 0xb08) = u1;
+  }
+  else {
+    *(uint32_t *)(i4 + 0xb08) = *(uint32_t *)(i4 + 0xb20);
+  }
+  if (*(void **)(i4 + 0xb24) != (void *)0x0) {
     orig::TextInputFiles_ForEach
-              (*(void **)(iVar6 + 0xb24),*(uint32_t *)(iVar6 + 0xb04),
-               *(uint32_t *)(iVar6 + 0xb08));
+              (*(void **)(i4 + 0xb24),*(uint32_t *)(i4 + 0xb04),
+               *(uint32_t *)(i4 + 0xb08));
   }
-  iVar6 = iVar5 + 2;
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xb58,local_cf0[iVar5 + 1]);
-  iVar5 = *(int *)((int)self_ + 4);
-  if (*(int *)(iVar5 + 0xb88) == 0x43) {
-    uVar3 = orig::Settings_GetValue_v2(0xab);
-    *(uint32_t *)(iVar5 + 0xb8c) = uVar3;
+  i4 = i3 + 2;
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xb58,i6[i3 + 1]);
+  i3 = *(int *)((int)self_ + 4);
+  if (*(int *)(i3 + 0xb88) == 0x43) {
+    u1 = orig::Settings_GetValue_v2(0xab);
+    *(uint32_t *)(i3 + 0xb8c) = u1;
   }
   else {
-    *(uint32_t *)(iVar5 + 0xb8c) = *(uint32_t *)(iVar5 + 0xba4);
+    *(uint32_t *)(i3 + 0xb8c) = *(uint32_t *)(i3 + 0xba4);
   }
-  if (*(void **)(iVar5 + 0xba8) != (void *)0x0) {
+  if (*(void **)(i3 + 0xba8) != (void *)0x0) {
     orig::TextInputFiles_ForEach
-              (*(void **)(iVar5 + 0xba8),*(uint32_t *)(iVar5 + 0xb88),
-               *(uint32_t *)(iVar5 + 0xb8c));
+              (*(void **)(i3 + 0xba8),*(uint32_t *)(i3 + 0xb88),
+               *(uint32_t *)(i3 + 0xb8c));
   }
-  iVar5 = 0xbb0;
+  i3 = 0xbb0;
   do {
-    if (iVar2 <= iVar6) break;
-    iVar4 = *(int *)((int)self_ + 4) + iVar5;
-    if (*(int *)(iVar4 + 0xc) == 4) {
-      piVar1 = local_cf0 + iVar6;
-      iVar6 = iVar6 + 1;
-      orig::TextInputFiles_SetConfigEntryValue(iVar4,*piVar1);
+    if (i1 <= i4) break;
+    i2 = *(int *)((int)self_ + 4) + i3;
+    if (*(int *)(i2 + 0xc) == 4) {
+      p1 = i6 + i4;
+      i4 = i4 + 1;
+      orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
-    iVar5 = iVar5 + 0x2c;
-  } while (iVar5 < 0xc8d);
-  iVar5 = 0xcb8;
+    i3 = i3 + 0x2c;
+  } while (i3 < 0xc8d);
+  i3 = 0xcb8;
   do {
-    if (iVar2 <= iVar6) break;
-    iVar4 = *(int *)((int)self_ + 4) + iVar5;
-    if (*(int *)(iVar4 + 4) == 0x43) {
-      uVar3 = orig::Settings_GetValue_v2(0xab);
-      *(uint32_t *)(iVar4 + 8) = uVar3;
+    if (i1 <= i4) break;
+    i2 = *(int *)((int)self_ + 4) + i3;
+    if (*(int *)(i2 + 4) == 0x43) {
+      u1 = orig::Settings_GetValue_v2(0xab);
+      *(uint32_t *)(i2 + 8) = u1;
     }
     else {
-      *(uint32_t *)(iVar4 + 8) = *(uint32_t *)(iVar4 + 0x20);
+      *(uint32_t *)(i2 + 8) = *(uint32_t *)(i2 + 0x20);
     }
-    if (*(void **)(iVar4 + 0x24) != (void *)0x0) {
+    if (*(void **)(i2 + 0x24) != (void *)0x0) {
       orig::TextInputFiles_ForEach
-                (*(void **)(iVar4 + 0x24),*(uint32_t *)(iVar4 + 4),*(uint32_t *)(iVar4 + 8));
+                (*(void **)(i2 + 0x24),*(uint32_t *)(i2 + 4),*(uint32_t *)(i2 + 8));
     }
-    iVar5 = iVar5 + 0x2c;
-    iVar6 = iVar6 + 1;
-  } while (iVar5 < 0x178d);
-  iVar5 = 0x17b8;
+    i3 = i3 + 0x2c;
+    i4 = i4 + 1;
+  } while (i3 < 0x178d);
+  i3 = 0x17b8;
   do {
-    if (iVar2 <= iVar6) break;
-    if (*(int *)(*(int *)((int)self_ + 4) + 0xc + iVar5) == 4) {
-      piVar1 = local_cf0 + iVar6;
-      iVar6 = iVar6 + 1;
-      orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + iVar5,*piVar1);
+    if (i1 <= i4) break;
+    if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i3) == 4) {
+      p1 = i6 + i4;
+      i4 = i4 + 1;
+      orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i3,*p1);
     }
-    iVar5 = iVar5 + 0x2c;
-  } while (iVar5 < 0x1971);
-  iVar5 = iVar6 + 1;
-  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa50,local_cf0[iVar6]);
-  iVar6 = 0x199c;
+    i3 = i3 + 0x2c;
+  } while (i3 < 0x1971);
+  i3 = i4 + 1;
+  orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + 0xa50,i6[i4]);
+  i4 = 0x199c;
   do {
-    if (iVar2 <= iVar5) break;
-    iVar4 = *(int *)((int)self_ + 4) + iVar6;
-    if (*(int *)(iVar4 + 0xc) == 4) {
-      piVar1 = local_cf0 + iVar5;
-      iVar5 = iVar5 + 1;
-      orig::TextInputFiles_SetConfigEntryValue(iVar4,*piVar1);
+    if (i1 <= i3) break;
+    i2 = *(int *)((int)self_ + 4) + i4;
+    if (*(int *)(i2 + 0xc) == 4) {
+      p1 = i6 + i3;
+      i3 = i3 + 1;
+      orig::TextInputFiles_SetConfigEntryValue(i2,*p1);
     }
-    iVar6 = iVar6 + 0x2c;
-  } while (iVar6 < 0x1b54);
-LAB_10195ef2:
-  iVar5 = 0x94;
-  local_cf4 = 0xa4;
-  iVar6 = 0x1c30;
+    i4 = i4 + 0x2c;
+  } while (i4 < 0x1b54);
+code_10195EF2:
+  i3 = 0x94;
+  i5 = 0xa4;
+  i4 = 0x1c30;
   do {
-    if (iVar2 <= iVar5) break;
-    if (*(int *)(*(int *)((int)self_ + 4) + 0xc + iVar6) == 4) {
-      piVar1 = local_cf0 + iVar5;
-      iVar5 = iVar5 + 1;
-      orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + iVar6,*piVar1);
+    if (i1 <= i3) break;
+    if (*(int *)(*(int *)((int)self_ + 4) + 0xc + i4) == 4) {
+      p1 = i6 + i3;
+      i3 = i3 + 1;
+      orig::TextInputFiles_SetConfigEntryValue(*(int *)((int)self_ + 4) + i4,*p1);
     }
-    iVar6 = iVar6 + 0x2c;
-    local_cf4 = local_cf4 + 1;
-  } while (iVar6 < 0x2394);
-  if (local_cf4 < 0xb1) {
-    iVar2 = *(int *)((int)self_ + 4);
-    if (*(int *)(iVar2 + 0x16b4) == 0x43) {
-      uVar3 = orig::Settings_GetValue_v2(0xab);
-      *(uint32_t *)(iVar2 + 0x16b8) = uVar3;
+    i4 = i4 + 0x2c;
+    i5 = i5 + 1;
+  } while (i4 < 0x2394);
+  if (i5 < 0xb1) {
+    i1 = *(int *)((int)self_ + 4);
+    if (*(int *)(i1 + 0x16b4) == 0x43) {
+      u1 = orig::Settings_GetValue_v2(0xab);
+      *(uint32_t *)(i1 + 0x16b8) = u1;
     }
     else {
-      *(uint32_t *)(iVar2 + 0x16b8) = *(uint32_t *)(iVar2 + 0x16d0);
+      *(uint32_t *)(i1 + 0x16b8) = *(uint32_t *)(i1 + 0x16d0);
     }
-    if (*(void **)(iVar2 + 0x16d4) != (void *)0x0) {
+    if (*(void **)(i1 + 0x16d4) != (void *)0x0) {
       orig::TextInputFiles_ForEach
-                (*(void **)(iVar2 + 0x16d4),*(uint32_t *)(iVar2 + 0x16b4),
-                 *(uint32_t *)(iVar2 + 0x16b8));
-    }
-  }
-  if (local_cf4 < 0xbd) {
-    iVar2 = *(int *)((int)self_ + 4);
-    if (*(int *)(iVar2 + 0x16e0) == 0x43) {
-      uVar3 = orig::Settings_GetValue_v2(0xab);
-    }
-    else {
-      uVar3 = *(uint32_t *)(iVar2 + 0x16fc);
-    }
-    *(uint32_t *)(iVar2 + 0x16e4) = uVar3;
-    if (*(void **)(iVar2 + 0x1700) != (void *)0x0) {
-      orig::TextInputFiles_ForEach(*(void **)(iVar2 + 0x1700),*(uint32_t *)(iVar2 + 0x16e0),uVar3);
+                (*(void **)(i1 + 0x16d4),*(uint32_t *)(i1 + 0x16b4),
+                 *(uint32_t *)(i1 + 0x16b8));
     }
   }
-  if (local_cf4 < 0xcd) {
-    iVar2 = *(int *)((int)self_ + 4);
-    if (*(int *)(iVar2 + 0x170c) == 0x43) {
-      uVar3 = orig::Settings_GetValue_v2(0xab);
-      *(uint32_t *)(iVar2 + 0x1710) = uVar3;
+  if (i5 < 0xbd) {
+    i1 = *(int *)((int)self_ + 4);
+    if (*(int *)(i1 + 0x16e0) == 0x43) {
+      u1 = orig::Settings_GetValue_v2(0xab);
     }
     else {
-      *(uint32_t *)(iVar2 + 0x1710) = *(uint32_t *)(iVar2 + 0x1728);
+      u1 = *(uint32_t *)(i1 + 0x16fc);
     }
-    if (*(void **)(iVar2 + 0x172c) != (void *)0x0) {
+    *(uint32_t *)(i1 + 0x16e4) = u1;
+    if (*(void **)(i1 + 0x1700) != (void *)0x0) {
+      orig::TextInputFiles_ForEach(*(void **)(i1 + 0x1700),*(uint32_t *)(i1 + 0x16e0),u1);
+    }
+  }
+  if (i5 < 0xcd) {
+    i1 = *(int *)((int)self_ + 4);
+    if (*(int *)(i1 + 0x170c) == 0x43) {
+      u1 = orig::Settings_GetValue_v2(0xab);
+      *(uint32_t *)(i1 + 0x1710) = u1;
+    }
+    else {
+      *(uint32_t *)(i1 + 0x1710) = *(uint32_t *)(i1 + 0x1728);
+    }
+    if (*(void **)(i1 + 0x172c) != (void *)0x0) {
       orig::TextInputFiles_ForEach
-                (*(void **)(iVar2 + 0x172c),*(uint32_t *)(iVar2 + 0x170c),
-                 *(uint32_t *)(iVar2 + 0x1710));
+                (*(void **)(i1 + 0x172c),*(uint32_t *)(i1 + 0x170c),
+                 *(uint32_t *)(i1 + 0x1710));
     }
   }
   return 1;
@@ -3303,49 +3303,49 @@ LAB_10195ef2:
 
 // FUNCTION: FFXIMAIN 0x10196040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_SetConfigEntryValue(int param_1, int param_2)
+XI_API bits32 __stdcall TextInputFiles_SetConfigEntryValue(int arg1, int arg2)
 {
-  if ((*(int *)(param_1 + 8) == param_2) && ((*(uint8_t *)(param_1 + 0x28) & 1) == 0)) {
+  if ((*(int *)(arg1 + 8) == arg2) && ((*(uint8_t *)(arg1 + 0x28) & 1) == 0)) {
     return 0xffffffff;
   }
-  if ((*(int *)(param_1 + 0x1c) != -1) &&
-     ((param_2 < *(int *)(param_1 + 0x18) || (*(int *)(param_1 + 0x1c) < param_2)))) {
-    param_2 = *(int *)(param_1 + 0x20);
+  if ((*(int *)(arg1 + 0x1c) != -1) &&
+     ((arg2 < *(int *)(arg1 + 0x18) || (*(int *)(arg1 + 0x1c) < arg2)))) {
+    arg2 = *(int *)(arg1 + 0x20);
   }
-  *(int *)(param_1 + 8) = param_2;
-  if (*(void **)(param_1 + 0x24) != (void *)0x0) {
-    orig::TextInputFiles_ForEach(*(void **)(param_1 + 0x24),*(uint32_t *)(param_1 + 4),
-                 *(uint32_t *)(param_1 + 8));
+  *(int *)(arg1 + 8) = arg2;
+  if (*(void **)(arg1 + 0x24) != (void *)0x0) {
+    orig::TextInputFiles_ForEach(*(void **)(arg1 + 0x24),*(uint32_t *)(arg1 + 4),
+                 *(uint32_t *)(arg1 + 8));
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10196260
 // GATE: PASS -- 100 trials, 90 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-XI_API void __thiscall TextInputFiles_ResetConfigToDefaults(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_ResetConfigToDefaults(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint64_t uVar3;
+  int i1;
+  int i2;
+  uint64_t u1;
   
-  iVar2 = 0;
+  i2 = 0;
   do {
-    if (((char)param_1 == '\0') || (*(int *)(*(int *)((int)self_ + 4) + 0xc + iVar2) != 6)) {
-      iVar1 = *(int *)((int)self_ + 4) + iVar2;
-      if (*(int *)(iVar1 + 4) == 0x43) {
-        uVar3 = orig::Settings_GetValue_v1(0xab);
-        *(int *)(iVar1 + 8) = (int)uVar3;
+    if (((char)arg2 == '\0') || (*(int *)(*(int *)((int)self_ + 4) + 0xc + i2) != 6)) {
+      i1 = *(int *)((int)self_ + 4) + i2;
+      if (*(int *)(i1 + 4) == 0x43) {
+        u1 = orig::Settings_GetValue_v1(0xab);
+        *(int *)(i1 + 8) = (int)u1;
       }
       else {
-        *(uint32_t *)(iVar1 + 8) = *(uint32_t *)(iVar1 + 0x20);
+        *(uint32_t *)(i1 + 8) = *(uint32_t *)(i1 + 0x20);
       }
-      if (*(void **)(iVar1 + 0x24) != (void *)0x0) {
-        orig::TextInputFiles_ForEach(*(void **)(iVar1 + 0x24),*(uint32_t *)(iVar1 + 4),*(uint32_t *)(iVar1 + 8))
+      if (*(void **)(i1 + 0x24) != (void *)0x0) {
+        orig::TextInputFiles_ForEach(*(void **)(i1 + 0x24),*(uint32_t *)(i1 + 4),*(uint32_t *)(i1 + 8))
         ;
       }
     }
-    iVar2 = iVar2 + 0x2c;
-  } while (iVar2 < 0x2394);
+    i2 = i2 + 0x2c;
+  } while (i2 < 0x2394);
   return;
 }
 
@@ -3353,7 +3353,7 @@ XI_API void __thiscall TextInputFiles_ResetConfigToDefaults(void * self_, undefi
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ConstructVt10336A0C(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10336a0c;
+  *(uint8_t ***)self_ = &g_10336A0C;
   *(uint8_t *)((int)self_ + 4) = 0;
   return;
 }
@@ -3362,29 +3362,29 @@ XI_API void __thiscall TextInputFiles_ConstructVt10336A0C(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_WindowItemCtor(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336a38;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x183);
-  *(uint32_t *)((int)self_ + 0x14) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x19c);
-  *(uint32_t *)((int)self_ + 0x18) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x180);
-  *(uint32_t *)((int)self_ + 0x1c) = uVar1;
+  *(uint8_t ***)self_ = &g_10336A38;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x183);
+  *(uint32_t *)((int)self_ + 0x14) = u1;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x19c);
+  *(uint32_t *)((int)self_ + 0x18) = u1;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x180);
+  *(uint32_t *)((int)self_ + 0x1c) = u1;
   if (*(int *)((int)self_ + 0x14) == 0) {
-    uVar1 = orig::TextInputFiles_ReturnZero();
-    *(uint32_t *)((int)self_ + 0x14) = uVar1;
+    u1 = orig::TextInputFiles_ReturnZero();
+    *(uint32_t *)((int)self_ + 0x14) = u1;
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10196BE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_ReturnZero(void)
+XI_API bits32 __cdecl TextInputFiles_ReturnZero(void)
 {
   return 0;
 }
@@ -3398,35 +3398,35 @@ XI_API void * __thiscall TextInputFiles_ClearWords3C(void * self_)
   *(uint16_t *)((int)self_ + 0x3e) = 0;
   *(uint16_t *)((int)self_ + 0x40) = 0;
   *(uint16_t *)((int)self_ + 0x42) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10336a80;
+  *(uint8_t ***)self_ = &g_10336A80;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10196F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetFieldById(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall TextInputFiles_SetFieldById(void * self_, bits32 arg2, bits32 arg3)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg2)) {
   case 2:
-    *(uint32_t *)((int)self_ + 0x20) = param_2;
+    *(uint32_t *)((int)self_ + 0x20) = arg3;
     return;
   case 3:
-    *(uint32_t *)((int)self_ + 0x24) = param_2;
+    *(uint32_t *)((int)self_ + 0x24) = arg3;
     return;
   case 4:
-    *(uint32_t *)((int)self_ + 0x28) = param_2;
+    *(uint32_t *)((int)self_ + 0x28) = arg3;
     return;
   case 0x42:
-    *(uint32_t *)((int)self_ + 0x34) = param_2;
+    *(uint32_t *)((int)self_ + 0x34) = arg3;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10197030
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_SetFieldCallback(undefined4 param_1, undefined4 param_2, void * param_3)
+XI_API bits32 __cdecl TextInputFiles_SetFieldCallback(bits32 arg1, bits32 arg2, void * arg3)
 {
-  orig::TextInputFiles_SetFieldById(param_3,param_1,param_2);
+  orig::TextInputFiles_SetFieldById(arg3,arg1,arg2);
   return 1;
 }
 
@@ -3441,7 +3441,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336AC8(void * self_)
   *(uint32_t *)((int)self_ + 0x3c) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x40) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x44) = 0xffffffff;
-  *(uint8_t ***)self_ = &PTR_FUN_10336ac8;
+  *(uint8_t ***)self_ = &g_10336AC8;
   *(uint32_t *)((int)self_ + 0x4c) = 0x32;
   *(uint32_t *)((int)self_ + 0x50) = 0x32;
   *(uint32_t *)((int)self_ + 0x54) = 0x32;
@@ -3454,46 +3454,46 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336AC8(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101978E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetFieldById2(void * self_, undefined4 param_1, int param_2)
+XI_API void __thiscall TextInputFiles_SetFieldById2(void * self_, bits32 arg2, int arg3)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg2)) {
   case 7:
-    *(int *)((int)self_ + 0x2c) = param_2;
+    *(int *)((int)self_ + 0x2c) = arg3;
     return;
   case 8:
-    *(int *)((int)self_ + 0x3c) = param_2;
+    *(int *)((int)self_ + 0x3c) = arg3;
     return;
   case 9:
-    *(int *)((int)self_ + 0x40) = param_2;
+    *(int *)((int)self_ + 0x40) = arg3;
     return;
   case 10:
-    *(int *)((int)self_ + 0x44) = param_2;
+    *(int *)((int)self_ + 0x44) = arg3;
     return;
   case 0x37:
-    *(int *)((int)self_ + 0x4c) = param_2;
+    *(int *)((int)self_ + 0x4c) = arg3;
     return;
   case 0x38:
-    *(int *)((int)self_ + 0x50) = param_2;
+    *(int *)((int)self_ + 0x50) = arg3;
     return;
   case 0x39:
-    *(int *)((int)self_ + 0x54) = param_2;
+    *(int *)((int)self_ + 0x54) = arg3;
     return;
   case 0x9a:
-    *(uint32_t *)((int)self_ + 0x34) = (uint32_t)(param_2 == 0);
-    *(uint8_t *)(DAT_10666e2c_as_s32 + 5) = param_2 != 0;
+    *(uint32_t *)((int)self_ + 0x34) = (uint32_t)(arg3 == 0);
+    *(uint8_t *)(g_10666E2C_as_s32 + 5) = arg3 != 0;
     return;
   case 0xca:
-    DAT_10666e74 = param_2 == 1;
-    *(int *)((int)self_ + 0x38) = param_2;
+    g_10666E74 = arg3 == 1;
+    *(int *)((int)self_ + 0x38) = arg3;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10197A70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_SetFieldCallback2(undefined4 param_1, int param_2, void * param_3)
+XI_API bits32 __cdecl TextInputFiles_SetFieldCallback2(bits32 arg1, int arg2, void * arg3)
 {
-  orig::TextInputFiles_SetFieldById2(param_3,param_1,param_2);
+  orig::TextInputFiles_SetFieldById2(arg3,arg1,arg2);
   return 1;
 }
 
@@ -3501,25 +3501,25 @@ XI_API undefined4 __cdecl TextInputFiles_SetFieldCallback2(undefined4 param_1, i
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_FrameItemCtor(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336b10;
+  *(uint8_t ***)self_ = &g_10336B10;
   *(uint32_t *)((int)self_ + 0x14) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 0;
-  uVar1 = orig::Shape_GetValueAt(0x6d617266,0x58);
-  *(uint32_t *)((int)self_ + 0x20) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x6d617266,0x59);
-  *(uint32_t *)((int)self_ + 0x1c) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x6d617266,0x53);
-  *(uint32_t *)((int)self_ + 0x24) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x6d617266,0x88);
-  *(uint32_t *)((int)self_ + 0x28) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x6d617266,0x89);
-  *(uint32_t *)((int)self_ + 0x2c) = uVar1;
+  u1 = orig::Shape_GetValueAt(0x6d617266,0x58);
+  *(uint32_t *)((int)self_ + 0x20) = u1;
+  u1 = orig::Shape_GetValueAt(0x6d617266,0x59);
+  *(uint32_t *)((int)self_ + 0x1c) = u1;
+  u1 = orig::Shape_GetValueAt(0x6d617266,0x53);
+  *(uint32_t *)((int)self_ + 0x24) = u1;
+  u1 = orig::Shape_GetValueAt(0x6d617266,0x88);
+  *(uint32_t *)((int)self_ + 0x28) = u1;
+  u1 = orig::Shape_GetValueAt(0x6d617266,0x89);
+  *(uint32_t *)((int)self_ + 0x2c) = u1;
   return self_;
 }
 
@@ -3528,7 +3528,7 @@ XI_API void * __thiscall TextInputFiles_FrameItemCtor(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336B60(void * self_)
 {
   orig::TextInputFiles_FrameItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336b60;
+  *(uint8_t ***)self_ = &g_10336B60;
   *(uint32_t *)((int)self_ + 0x30) = 0;
   *(uint32_t *)((int)self_ + 0x34) = 0;
   return self_;
@@ -3539,7 +3539,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336B60(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336BB0(void * self_)
 {
   orig::TextInputFiles_FrameItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336bb0;
+  *(uint8_t ***)self_ = &g_10336BB0;
   *(uint32_t *)((int)self_ + 0x30) = 0;
   return self_;
 }
@@ -3548,7 +3548,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336BB0(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10336C00(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
@@ -3558,10 +3558,10 @@ XI_API void * __thiscall TextInputFiles_CtorVt10336C00(void * self_)
   *(uint16_t *)((int)self_ + 0x42) = 0;
   *(uint16_t *)((int)self_ + 0x44) = 0;
   *(uint16_t *)((int)self_ + 0x46) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10336c00;
+  *(uint8_t ***)self_ = &g_10336C00;
   *(uint32_t *)((int)self_ + 0x14) = 0;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x62);
-  *(uint32_t *)((int)self_ + 0x24) = uVar1;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x62);
+  *(uint32_t *)((int)self_ + 0x24) = u1;
   *(uint8_t *)((int)self_ + 0x3c) = 0x80;
   *(uint8_t *)((int)self_ + 0x3d) = 0x80;
   *(uint8_t *)((int)self_ + 0x3e) = 0x80;
@@ -3580,7 +3580,7 @@ XI_API void * __thiscall TextInputFiles_CtorVt10336C48(void * self_)
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0x14) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336c48;
+  *(uint8_t ***)self_ = &g_10336C48;
   return self_;
 }
 
@@ -3592,7 +3592,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336C90(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336c90;
+  *(uint8_t ***)self_ = &g_10336C90;
   return self_;
 }
 
@@ -3601,7 +3601,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336C90(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336CD8(void * self_)
 {
   orig::TextInputFiles_WindowItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336cd8;
+  *(uint8_t ***)self_ = &g_10336CD8;
   *(uint32_t *)((int)self_ + 0x2c) = 0;
   *(uint32_t *)((int)self_ + 0x30) = 0;
   *(uint32_t *)((int)self_ + 0x34) = 0;
@@ -3614,7 +3614,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336CD8(void * self_)
 XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336D20(void * self_)
 {
   orig::TextInputFiles_WindowItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336d20;
+  *(uint8_t ***)self_ = &g_10336D20;
   *(uint8_t *)((int)self_ + 0x20) = 0;
   *(uint8_t *)((int)self_ + 0x21) = 0;
   *(uint8_t *)((int)self_ + 0x22) = 0;
@@ -3632,7 +3632,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336D20(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336D70(void * self_)
 {
   orig::TextInputFiles_WindowItemCtorVt10336D20(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336d70;
+  *(uint8_t ***)self_ = &g_10336D70;
   return self_;
 }
 
@@ -3641,7 +3641,7 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336D70(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336DC0(void * self_)
 {
   orig::TextInputFiles_WindowItemCtorVt10336D20(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336dc0;
+  *(uint8_t ***)self_ = &g_10336DC0;
   return self_;
 }
 
@@ -3656,7 +3656,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336E10(void * self_)
   *(uint32_t *)((int)self_ + 0x40) = 0;
   *(uint32_t *)((int)self_ + 0x44) = 0;
   *(uint32_t *)((int)self_ + 0x4c) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10336e10;
+  *(uint8_t ***)self_ = &g_10336E10;
   *(uint32_t *)((int)self_ + 0x34) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x38) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x48) = 0x32;
@@ -3681,7 +3681,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336E58(void * self_)
   *(uint32_t *)((int)self_ + 0x3c) = 0;
   *(uint32_t *)((int)self_ + 0x44) = 0;
   *(uint32_t *)((int)self_ + 0x2c) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10336e58;
+  *(uint8_t ***)self_ = &g_10336E58;
   *(uint32_t *)((int)self_ + 0x30) = 0x19;
   *(uint32_t *)((int)self_ + 0x28) = 3;
   return self_;
@@ -3699,7 +3699,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336EA0(void * self_)
   *(uint32_t *)((int)self_ + 0x28) = 1;
   *(uint32_t *)((int)self_ + 0x30) = 1;
   *(uint32_t *)((int)self_ + 0x34) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336ea0;
+  *(uint8_t ***)self_ = &g_10336EA0;
   return self_;
 }
 
@@ -3708,7 +3708,7 @@ XI_API void * __thiscall TextInputFiles_WindowItemCtorVt10336EA0(void * self_)
 XI_API void * __thiscall TextInputFiles_ConstructVt10336EE8(void * self_)
 {
   orig::TextInputFiles_WindowItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10336ee8;
+  *(uint8_t ***)self_ = &g_10336EE8;
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint32_t *)((int)self_ + 0x24) = 0;
   *(uint32_t *)((int)self_ + 0x28) = 0;
@@ -3719,19 +3719,19 @@ XI_API void * __thiscall TextInputFiles_ConstructVt10336EE8(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10336F30(void * self_)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336f30;
-  iVar1 = orig::Shape_GetValueAt(0x646e6977,0x183);
-  *(int *)((int)self_ + 0x14) = iVar1;
-  if (iVar1 == 0) {
-    uVar2 = orig::TextInputFiles_ReturnZero();
-    *(uint32_t *)((int)self_ + 0x14) = uVar2;
+  *(uint8_t ***)self_ = &g_10336F30;
+  i1 = orig::Shape_GetValueAt(0x646e6977,0x183);
+  *(int *)((int)self_ + 0x14) = i1;
+  if (i1 == 0) {
+    u1 = orig::TextInputFiles_ReturnZero();
+    *(uint32_t *)((int)self_ + 0x14) = u1;
   }
   return self_;
 }
@@ -3740,17 +3740,17 @@ XI_API void * __thiscall TextInputFiles_CtorVt10336F30(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10336F78(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336f78;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x183);
-  *(uint32_t *)((int)self_ + 0x14) = uVar1;
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x1e3);
-  *(uint32_t *)((int)self_ + 0x18) = uVar1;
+  *(uint8_t ***)self_ = &g_10336F78;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x183);
+  *(uint32_t *)((int)self_ + 0x14) = u1;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x1e3);
+  *(uint32_t *)((int)self_ + 0x18) = u1;
   return self_;
 }
 
@@ -3758,8 +3758,8 @@ XI_API void * __thiscall TextInputFiles_CtorVt10336F78(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_RunPairA(void)
 {
-  orig::FUN_103113d3();
-  orig::FUN_10311386(1);
+  orig::game_103113D3();
+  orig::game_10311386(1);
   return;
 }
 
@@ -3767,8 +3767,8 @@ XI_API void __cdecl TextInputFiles_RunPairA(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_RunPairB(void)
 {
-  orig::FUN_10311386(0);
-  orig::FUN_103113d3();
+  orig::game_10311386(0);
+  orig::game_103113D3();
   return;
 }
 
@@ -3776,7 +3776,7 @@ XI_API void __cdecl TextInputFiles_RunPairB(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_Call10311386(void)
 {
-  orig::FUN_10311386(0);
+  orig::game_10311386(0);
   return;
 }
 
@@ -3784,11 +3784,11 @@ XI_API void __cdecl TextInputFiles_Call10311386(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_GetSetting41(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Settings_GetValue_v2(0x41);
-  if (-1 < iVar1) {
-    orig::FUN_10311386(1);
+  i1 = orig::Settings_GetValue_v2(0x41);
+  if (-1 < i1) {
+    orig::game_10311386(1);
   }
   return;
 }
@@ -3797,7 +3797,7 @@ XI_API void __cdecl TextInputFiles_GetSetting41(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_Call103113C8(void)
 {
-  orig::FUN_103113c8(0);
+  orig::game_103113C8(0);
   return;
 }
 
@@ -3805,39 +3805,39 @@ XI_API void __cdecl TextInputFiles_Call103113C8(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_ByteTableCtor(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10336fc0;
+  *(uint8_t ***)self_ = &g_10336FC0;
   *(uint32_t *)((int)self_ + 0x14) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 8;
   *(uint32_t *)((int)self_ + 0x70) = 0;
   *(uint32_t *)((int)self_ + 0x74) = 0;
   *(uint32_t *)((int)self_ + 0x78) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x29);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x29);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1019CDC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) TextInputFiles_HasTable1037A290CellByte(short * xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) TextInputFiles_HasTable1037A290CellByte(short * xi_eax, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_1037a290_as_v0 != 0) {
-    xi_eax = &DAT_1037a290_as_v0;
+  if (g_1037A290_as_v0 != 0) {
+    xi_eax = &g_1037A290_as_v0;
     do {
-      uVar1 = orig::Cell_GetWord1036D6B0(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*xi_eax))));
-      if ((char)uVar1 == (char)param_1) {
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = orig::Cell_GetWord1036D6B0(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*xi_eax))));
+      if ((char)u1 == (char)arg2) {
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
       xi_eax = xi_eax + 5;
     } while (*xi_eax != 0);
@@ -3851,21 +3851,21 @@ XI_API void * __thiscall TextInputFiles_ByteTableDefaultCtor(void * self_)
 {
   void *xi_eax;
   uint32_t xi_eax_00;
-  int iVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
   
   xi_eax = orig::TextInputFiles_ByteTableCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10337028;
+  *(uint8_t ***)self_ = &g_10337028;
   xi_eax_00 = orig::TextInputFiles_FillTableBytes(self_,xi_eax);
-  puVar2 = (uint32_t *)((int)self_ + 0x29);
-  puVar3 = (uint32_t *)((int)self_ + 0x49);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x29);
+  p2 = (uint32_t *)((int)self_ + 0x49);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  orig::FUN_1019cfa0(self_,xi_eax_00);
+  orig::game_1019CFA0(self_,xi_eax_00);
   orig::Config_LoadDefaultTable(self_);
   return self_;
 }
@@ -3875,7 +3875,7 @@ XI_API void * __thiscall TextInputFiles_ByteTableDefaultCtor(void * self_)
 XI_API void __thiscall Config_LoadDefaultTable(void * self_)
 {
   uint32_t xi_eax;
-  int iVar1;
+  int i1;
   
   *(uint8_t *)((int)self_ + 0x29) = 0x1e;
   *(uint8_t *)((int)self_ + 0x2a) = 0x17;
@@ -3923,33 +3923,33 @@ XI_API void __thiscall Config_LoadDefaultTable(void * self_)
     *(uint8_t *)((int)self_ + 0x36) = 0x27;
     *(uint8_t *)((int)self_ + 0x37) = 0x33;
   }
-  iVar1 = 0x6a;
+  i1 = 0x6a;
   do {
-    xi_eax = orig::SetConfig(iVar1,(uint32_t)*(uint8_t *)((int)self_ + iVar1 + -0x41));
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x8a);
-  orig::FUN_1019cfa0(self_,xi_eax);
+    xi_eax = orig::SetConfig(i1,(uint32_t)*(uint8_t *)((int)self_ + i1 + -0x41));
+    i1 = i1 + 1;
+  } while (i1 < 0x8a);
+  orig::game_1019CFA0(self_,xi_eax);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1019CF60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) TextInputFiles_FillTableBytes(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) TextInputFiles_FillTableBytes(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t uVar1;
-  uint16_t *puVar2;
-  uint8_t *puVar3;
+  uint32_t u1;
+  uint16_t *p1;
+  uint8_t *p2;
   
-  puVar3 = (uint8_t *)((int)self_ + 0x29);
-  puVar2 = &DAT_1037a290;
+  p2 = (uint8_t *)((int)self_ + 0x29);
+  p1 = &g_1037A290;
   do {
-    xi_eax = orig::Cell_GetWord1036D6B0(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*puVar2))));
-    *puVar3 = (char)xi_eax;
-    puVar2 = puVar2 + 5;
-    puVar3 = puVar3 + 1;
-  } while ((int)puVar2 < (int)XI_GAME(0x1037A3B2u));
-  uVar1 = orig::FUN_1019d2b0(DAT_10662770,xi_eax);
-  return uVar1;
+    xi_eax = orig::Cell_GetWord1036D6B0(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*p1))));
+    *p2 = (char)xi_eax;
+    p1 = p1 + 5;
+    p2 = p2 + 1;
+  } while ((int)p1 < (int)XI_GAME(0x1037A3B2u));
+  u1 = orig::game_1019D2B0(g_10662770,xi_eax);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019D150
@@ -3958,21 +3958,21 @@ XI_API void * __thiscall TextInputFiles_ByteTableAltCtor(void * self_)
 {
   void *xi_eax;
   uint32_t xi_eax_00;
-  int iVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
   
   xi_eax = orig::TextInputFiles_ByteTableCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10337090;
-  xi_eax_00 = orig::FUN_1019d2b0(self_,xi_eax);
-  puVar2 = (uint32_t *)((int)self_ + 0x29);
-  puVar3 = (uint32_t *)((int)self_ + 0x49);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  *(uint8_t ***)self_ = &g_10337090;
+  xi_eax_00 = orig::game_1019D2B0(self_,xi_eax);
+  p1 = (uint32_t *)((int)self_ + 0x29);
+  p2 = (uint32_t *)((int)self_ + 0x49);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  orig::FUN_1019d350(self_,xi_eax_00);
+  orig::game_1019D350(self_,xi_eax_00);
   orig::Config_LoadAltTable(self_);
   return self_;
 }
@@ -3982,7 +3982,7 @@ XI_API void * __thiscall TextInputFiles_ByteTableAltCtor(void * self_)
 XI_API void __thiscall Config_LoadAltTable(void * self_)
 {
   uint32_t xi_eax;
-  int iVar1;
+  int i1;
   
   *(uint8_t *)((int)self_ + 0x29) = 0x11;
   *(uint8_t *)((int)self_ + 0x2a) = 0x1f;
@@ -4034,13 +4034,13 @@ XI_API void __thiscall Config_LoadAltTable(void * self_)
     *(uint8_t *)((int)self_ + 0x36) = 0x33;
     *(uint8_t *)((int)self_ + 0x46) = 0x1e;
   }
-  iVar1 = 0x4a;
+  i1 = 0x4a;
   do {
-    xi_eax = orig::SetConfig(iVar1,(uint32_t)*(uint8_t *)((int)self_ + iVar1 + -0x21));
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x6a);
-  orig::FUN_1019d350(self_,xi_eax);
-  orig::FUN_1019d320(self_);
+    xi_eax = orig::SetConfig(i1,(uint32_t)*(uint8_t *)((int)self_ + i1 + -0x21));
+    i1 = i1 + 1;
+  } while (i1 < 0x6a);
+  orig::game_1019D350(self_,xi_eax);
+  orig::game_1019D320(self_);
   return;
 }
 
@@ -4052,7 +4052,7 @@ XI_API void * __thiscall TextInputFiles_CtorVt103370F8(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_103370f8;
+  *(uint8_t ***)self_ = &g_103370F8;
   return self_;
 }
 
@@ -4061,7 +4061,7 @@ XI_API void * __thiscall TextInputFiles_CtorVt103370F8(void * self_)
 XI_API void * __thiscall TextInputFiles_CtorCachingSettings(void * self_)
 {
   orig::TextInputFiles_WindowItemCtor(self_);
-  *(uint8_t ***)self_ = &PTR_FUN_10337140;
+  *(uint8_t ***)self_ = &g_10337140;
   orig::Settings_CacheValues(self_);
   return self_;
 }
@@ -4070,23 +4070,23 @@ XI_API void * __thiscall TextInputFiles_CtorCachingSettings(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Settings_CacheValues(void * self_)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar1 = orig::Shape_GetValueAt(0x646e6977,0x19b);
-  *(uint32_t *)((int)self_ + 0x48) = uVar1;
+  u1 = orig::Shape_GetValueAt(0x646e6977,0x19b);
+  *(uint32_t *)((int)self_ + 0x48) = u1;
   *(uint8_t *)((int)self_ + 0x24) = 0;
-  uVar2 = orig::Settings_GetValue_v1(0xa8);
-  *(int *)((int)self_ + 0x28) = (int)uVar2;
+  u2 = orig::Settings_GetValue_v1(0xa8);
+  *(int *)((int)self_ + 0x28) = (int)u2;
   *(uint8_t *)((int)self_ + 0x2c) = 0;
-  uVar2 = orig::Settings_GetValue_v1(0xab);
-  *(int *)((int)self_ + 0x30) = (int)uVar2;
-  uVar2 = orig::Settings_GetValue_v1(0xac);
-  *(int *)((int)self_ + 0x34) = (int)uVar2;
-  uVar2 = orig::Settings_GetValue_v1(0xad);
-  *(int *)((int)self_ + 0x38) = (int)uVar2;
-  uVar2 = orig::Settings_GetValue_v1(0xaf);
-  *(int *)((int)self_ + 0x3c) = (int)uVar2;
+  u2 = orig::Settings_GetValue_v1(0xab);
+  *(int *)((int)self_ + 0x30) = (int)u2;
+  u2 = orig::Settings_GetValue_v1(0xac);
+  *(int *)((int)self_ + 0x34) = (int)u2;
+  u2 = orig::Settings_GetValue_v1(0xad);
+  *(int *)((int)self_ + 0x38) = (int)u2;
+  u2 = orig::Settings_GetValue_v1(0xaf);
+  *(int *)((int)self_ + 0x3c) = (int)u2;
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint32_t *)((int)self_ + 0x40) = *(uint32_t *)((int)self_ + 0x28);
   return;
@@ -4094,25 +4094,25 @@ XI_API void __thiscall Settings_CacheValues(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1019EBB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_DrawTextBlockOnce(void * self_)
+XI_API bits32 __thiscall TextInputFiles_DrawTextBlockOnce(void * self_)
 {
-  int iVar1;
-  int64_t lVar2;
-  int64_t lVar3;
-  char *pcVar4;
-  uint32_t uVar5;
-  int iVar6;
+  int i1;
+  int64_t i2;
+  int64_t i3;
+  char *p1;
+  uint32_t u1;
+  int i4;
   
   if (*(char *)((int)self_ + 0x54) == '\0') {
-    pcVar4 = *(char **)((int)self_ + 0x3c);
-    iVar6 = 0x25;
-    uVar5 = 0x80808080;
-    lVar2 = orig::FUN_1019ed50(self_,*(uint32_t *)((int)self_ + 0x40));
-    lVar3 = orig::TextInputFiles_GetScaleTimes0(self_);
-    iVar1 = (int)lVar3 - (int)lVar2;
-    lVar2 = orig::TextInputFiles_GetScaleTimes310(self_);
-    iVar1 = orig::TextInputFiles_DrawTextLines(self_,(uint32_t)lVar2,iVar1,pcVar4,uVar5,iVar6);
-    if (iVar1 < 0) {
+    p1 = *(char **)((int)self_ + 0x3c);
+    i4 = 0x25;
+    u1 = 0x80808080;
+    i2 = orig::game_1019ED50(self_,*(uint32_t *)((int)self_ + 0x40));
+    i3 = orig::TextInputFiles_GetScaleTimes0(self_);
+    i1 = (int)i3 - (int)i2;
+    i2 = orig::TextInputFiles_GetScaleTimes310(self_);
+    i1 = orig::TextInputFiles_DrawTextLines(self_,(uint32_t)i2,i1,p1,u1,i4);
+    if (i1 < 0) {
       *(uint8_t *)((int)self_ + 0x54) = 1;
     }
   }
@@ -4123,340 +4123,340 @@ XI_API undefined4 __thiscall TextInputFiles_DrawTextBlockOnce(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int64_t __thiscall TextInputFiles_GetScaleTimes310(void * self_)
 {
-  int64_t lVar1;
+  int64_t i1;
   
-  lVar1 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)((int)self_ + 0x4c) * (long double)3.1e+02f);
-  return lVar1;
+  i1 = XI_CALL_ST0(0x10311C2Cu)(*(float *)((int)self_ + 0x4c) * 3.1e+02f);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019ED20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int64_t __thiscall TextInputFiles_GetScaleTimes0(void * self_)
 {
-  int64_t lVar1;
+  int64_t i1;
   
-  lVar1 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)((int)self_ + 0x4c) * (long double)0.0f);
-  return lVar1;
+  i1 = XI_CALL_ST0(0x10311C2Cu)(*(float *)((int)self_ + 0x4c) * 0.0f);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019ED30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int64_t __thiscall TextInputFiles_GetScaleTimes180(void * self_)
 {
-  int64_t lVar1;
+  int64_t i1;
   
-  lVar1 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)((int)self_ + 0x4c) * (long double)1.8e+02f);
-  return lVar1;
+  i1 = XI_CALL_ST0(0x10311C2Cu)(*(float *)((int)self_ + 0x4c) * 1.8e+02f);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019ED70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __stdcall TextInputFiles_NextLine(char * param_1)
+XI_API char * __stdcall TextInputFiles_NextLine(char * arg1)
 {
-  char cVar1;
+  char c1;
   
-  cVar1 = *param_1;
+  c1 = *arg1;
   while( true ) {
-    if (cVar1 == '\0') {
+    if (c1 == '\0') {
       return (char *)0x0;
     }
-    if (cVar1 == '\r') break;
-    if (cVar1 == '\n') goto LAB_1019ed9b;
-    cVar1 = param_1[1];
-    param_1 = param_1 + 1;
+    if (c1 == '\r') break;
+    if (c1 == '\n') goto code_1019ED9B;
+    c1 = arg1[1];
+    arg1 = arg1 + 1;
   }
-  if (param_1[1] == '\n') {
-    return param_1 + 2;
+  if (arg1[1] == '\n') {
+    return arg1 + 2;
   }
-LAB_1019ed9b:
-  return param_1 + 1;
+code_1019ED9B:
+  return arg1 + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019EDB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_DrawTextLines(void * self_, uint32_t param_1, int param_2, char * param_3, undefined4 param_4, int param_5)
+XI_API int __thiscall TextInputFiles_DrawTextLines(void * self_, uint32_t arg2, int arg3, char * arg4, bits32 arg5, int arg6)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   int xi_s1;
-  int64_t lVar3;
+  int64_t i2;
   char xi_frame[100] __attribute__((aligned(4)));
-  float  &fVar4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &fVar5 = *reinterpret_cast<float  *>(xi_frame + 4);
-  char * &pcVar6 = *reinterpret_cast<char * *>(xi_frame + 8);
-  uint32_t  &uVar7 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  char * &local_44 = *reinterpret_cast<char * *>(xi_frame + 32);
-  char  (&local_40)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 36);
+  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
+  char * &p1 = *reinterpret_cast<char * *>(xi_frame + 8);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  char * &p2 = *reinterpret_cast<char * *>(xi_frame + 32);
+  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 36);
   
-  local_44 = param_3;
+  p2 = arg4;
   xi_s1 = 0;
-  iVar2 = 0;
-  cVar1 = *param_3;
-  param_3 = (char *)0x0;
+  i1 = 0;
+  c1 = *arg4;
+  arg4 = (char *)0x0;
   do {
-    if ((cVar1 == '\0') || (param_5 <= (int)param_3)) {
-      return (uint32_t)(local_44 != (char *)0x0) * 2 + -1;
+    if ((c1 == '\0') || (arg6 <= (int)arg4)) {
+      return (uint32_t)(p2 != (char *)0x0) * 2 + -1;
     }
-    cVar1 = *local_44;
-    uVar7 = param_4;
-    if (cVar1 == '\r') {
-      cVar1 = local_44[1];
-      local_40[iVar2] = '\0';
-      fVar4 = *(float *)((int)self_ + 0x4c);
-      if (cVar1 == '\n') {
-        fVar5 = *(float *)((int)self_ + 0x50);
-        if (local_40[0] == '\t') {
-          pcVar6 = local_40 + 1;
-          lVar3 = orig::FUN_1019ed50(self_,xi_s1);
-          iVar2 = (int)lVar3 + param_2;
-          lVar3 = orig::TextInputFiles_GetScaleTimes180(self_);
-          orig::FUN_1019e550((void *)((int)self_ + 4),(int)lVar3 + param_1,iVar2,fVar4,fVar5,pcVar6,uVar7);
+    c1 = *p2;
+    u1 = arg5;
+    if (c1 == '\r') {
+      c1 = p2[1];
+      val1[i1] = '\0';
+      f1 = *(float *)((int)self_ + 0x4c);
+      if (c1 == '\n') {
+        f2 = *(float *)((int)self_ + 0x50);
+        if (val1[0] == '\t') {
+          p1 = val1 + 1;
+          i2 = orig::game_1019ED50(self_,xi_s1);
+          i1 = (int)i2 + arg3;
+          i2 = orig::TextInputFiles_GetScaleTimes180(self_);
+          orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,f1,f2,p1,u1);
         }
         else {
-          pcVar6 = local_40;
-          lVar3 = orig::FUN_1019ed50(self_,xi_s1);
-          orig::FUN_1019e290((void *)((int)self_ + 4),param_1,(int)lVar3 + param_2,fVar4,fVar5,pcVar6,uVar7
+          p1 = val1;
+          i2 = orig::game_1019ED50(self_,xi_s1);
+          orig::game_1019E290((void *)((int)self_ + 4),arg2,(int)i2 + arg3,f1,f2,p1,u1
                       );
         }
-        iVar2 = 0;
-        param_3 = param_3 + 1;
+        i1 = 0;
+        arg4 = arg4 + 1;
         xi_s1 = xi_s1 + 0xe;
-        local_44 = local_44 + 1;
+        p2 = p2 + 1;
       }
       else {
-        fVar5 = *(float *)((int)self_ + 0x50);
-        if (local_40[0] == '\t') goto LAB_1019eeda;
-        pcVar6 = local_40;
-        lVar3 = orig::FUN_1019ed50(self_,xi_s1);
-        iVar2 = (int)lVar3;
-LAB_1019eea2:
-        orig::FUN_1019e290((void *)((int)self_ + 4),param_1,iVar2 + param_2,fVar4,fVar5,pcVar6,uVar7);
-        iVar2 = 0;
-        param_3 = param_3 + 1;
+        f2 = *(float *)((int)self_ + 0x50);
+        if (val1[0] == '\t') goto code_1019EEDA;
+        p1 = val1;
+        i2 = orig::game_1019ED50(self_,xi_s1);
+        i1 = (int)i2;
+code_1019EEA2:
+        orig::game_1019E290((void *)((int)self_ + 4),arg2,i1 + arg3,f1,f2,p1,u1);
+        i1 = 0;
+        arg4 = arg4 + 1;
         xi_s1 = xi_s1 + 0xe;
       }
     }
-    else if (cVar1 == '\n') {
-      fVar4 = *(float *)((int)self_ + 0x4c);
-      fVar5 = *(float *)((int)self_ + 0x50);
-      local_40[iVar2] = '\0';
-      if (local_40[0] != '\t') {
-        pcVar6 = local_40;
-        lVar3 = orig::FUN_1019ed50(self_,xi_s1);
-        iVar2 = (int)lVar3;
-        goto LAB_1019eea2;
+    else if (c1 == '\n') {
+      f1 = *(float *)((int)self_ + 0x4c);
+      f2 = *(float *)((int)self_ + 0x50);
+      val1[i1] = '\0';
+      if (val1[0] != '\t') {
+        p1 = val1;
+        i2 = orig::game_1019ED50(self_,xi_s1);
+        i1 = (int)i2;
+        goto code_1019EEA2;
       }
-LAB_1019eeda:
-      pcVar6 = local_40 + 1;
-      lVar3 = orig::FUN_1019ed50(self_,xi_s1);
-      iVar2 = (int)lVar3 + param_2;
-      lVar3 = orig::TextInputFiles_GetScaleTimes180(self_);
-      orig::FUN_1019e550((void *)((int)self_ + 4),(int)lVar3 + param_1,iVar2,fVar4,fVar5,pcVar6,uVar7);
-      iVar2 = 0;
-      param_3 = param_3 + 1;
+code_1019EEDA:
+      p1 = val1 + 1;
+      i2 = orig::game_1019ED50(self_,xi_s1);
+      i1 = (int)i2 + arg3;
+      i2 = orig::TextInputFiles_GetScaleTimes180(self_);
+      orig::game_1019E550((void *)((int)self_ + 4),(int)i2 + arg2,i1,f1,f2,p1,u1);
+      i1 = 0;
+      arg4 = arg4 + 1;
       xi_s1 = xi_s1 + 0xe;
     }
     else {
-      local_40[iVar2] = cVar1;
-      iVar2 = iVar2 + 1;
+      val1[i1] = c1;
+      i1 = i1 + 1;
     }
-    local_44 = local_44 + 1;
-    cVar1 = *local_44;
+    p2 = p2 + 1;
+    c1 = *p2;
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x1019F160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorWithMenuFepShape(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API void * __thiscall TextInputFiles_CtorWithMenuFepShape(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint32_t *)((int)self_ + 0x28) = param_2;
+  *(uint32_t *)((int)self_ + 0x28) = arg3;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0x20) = 0;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_103371b8;
+  *(uint8_t ***)self_ = &g_103371B8;
   *(uint32_t *)((int)self_ + 0x18) = 0x128;
   *(uint32_t *)((int)self_ + 0x1c) = 0x19c;
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
-  *(uint32_t *)((int)self_ + 0x2c) = param_3;
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_menu_fep_10377cbc);
-  *(int *)((int)self_ + 0x24) = (int)uVar1;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
+  *(uint32_t *)((int)self_ + 0x2c) = arg4;
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_menu_fep_10377CBC);
+  *(int *)((int)self_ + 0x24) = (int)u1;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1019F8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_PushWithRetry(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_PushWithRetry(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar2 = 0;
-  iVar1 = orig::TextInputFiles_Push(*(void **)(*(int *)((int)self_ + 8) + 4),param_1);
+  i2 = 0;
+  i1 = orig::TextInputFiles_Push(*(void **)(*(int *)((int)self_ + 8) + 4),arg2);
   while( true ) {
-    if (-1 < iVar1) {
-      iVar2 = orig::TextInputFiles_SignalEvent10(*(void **)((int)self_ + 8));
-      if (iVar2 < 0) {
+    if (-1 < i1) {
+      i2 = orig::TextInputFiles_SignalEvent10(*(void **)((int)self_ + 8));
+      if (i2 < 0) {
         return -1;
       }
-      return iVar1;
+      return i1;
     }
-    iVar1 = orig::TextInputFiles_SignalEvent10(*(void **)((int)self_ + 8));
-    if (iVar1 < 0) {
+    i1 = orig::TextInputFiles_SignalEvent10(*(void **)((int)self_ + 8));
+    if (i1 < 0) {
       return -1;
     }
-    iVar1 = orig::TextInputFiles_ResetAndWaitEvent14(*(void **)((int)self_ + 8),1000);
-    if (iVar1 < 0) break;
-    iVar2 = iVar2 + 1000;
-    if (99999 < iVar2) {
+    i1 = orig::TextInputFiles_ResetAndWaitEvent14(*(void **)((int)self_ + 8),1000);
+    if (i1 < 0) break;
+    i2 = i2 + 1000;
+    if (99999 < i2) {
       return -1;
     }
-    iVar1 = orig::TextInputFiles_Push(*(void **)(*(int *)((int)self_ + 8) + 4),param_1);
+    i1 = orig::TextInputFiles_Push(*(void **)(*(int *)((int)self_ + 8) + 4),arg2);
   }
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019F930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FindMatchAt8(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FindMatchAt8(void * self_, bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindMatch(*(void **)(*(int *)((int)self_ + 8) + 4),xi_s1);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindMatch(*(void **)(*(int *)((int)self_ + 8) + 4),xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019F960
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall TextInputFiles_WaitThenHandleFileEvent(void * self_, int param_1)
+XI_API uint64_t __thiscall TextInputFiles_WaitThenHandleFileEvent(void * self_, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t *puVar3;
-  uint32_t *puVar4;
-  uint64_t uVar5;
+  int i1;
+  uint32_t u1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint64_t u2;
   char xi_frame[296] __attribute__((aligned(4)));
-  uint32_t  (&local_128)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 0);
-  uint32_t  &local_28 = *reinterpret_cast<uint32_t  *>(xi_frame + 256);
-  uint32_t  &local_24 = *reinterpret_cast<uint32_t  *>(xi_frame + 260);
-  uint32_t  &local_20 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 0);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 256);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 260);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
   
-  local_10 = (int)XI_GAME(0x1019F96Du);
-  uVar5 = orig::TextInputFiles_WaitEvent18(*(void **)((int)self_ + 8));
-  if ((int)uVar5 < 0) {
-    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar5 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
+  u10 = (int)XI_GAME(0x1019F96Du);
+  u2 = orig::TextInputFiles_WaitEvent18(*(void **)((int)self_ + 8));
+  if ((int)u2 < 0) {
+    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
-  uVar2 = *(uint32_t *)(param_1 + 4);
-  puVar3 = (uint32_t *)(param_1 + 8);
-  puVar4 = local_128;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar4 = *puVar3;
-    puVar3 = puVar3 + 1;
-    puVar4 = puVar4 + 1;
+  u1 = *(uint32_t *)(arg2 + 4);
+  p1 = (uint32_t *)(arg2 + 8);
+  p2 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  local_28 = *(uint32_t *)(param_1 + 0x108);
-  local_24 = *(uint32_t *)(param_1 + 0x10c);
-  local_20 = *(uint32_t *)(param_1 + 0x110);
-  local_1c = *(uint32_t *)(param_1 + 0x114);
-  local_18 = *(uint32_t *)(param_1 + 0x118);
-  local_14 = *(uint32_t *)(param_1 + 0x11c);
-  local_10 = *(uint32_t *)(param_1 + 0x120);
-  iVar1 = orig::FsFileThreadManager_handleFileEvent(&PTR_LAB_10337200,uVar2);
-  if (iVar1 < 0) {
-    local_10 = (int)XI_GAME(0x1019FA0Cu);
-    uVar5 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
-    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar5 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
+  u4 = *(uint32_t *)(arg2 + 0x108);
+  u5 = *(uint32_t *)(arg2 + 0x10c);
+  u6 = *(uint32_t *)(arg2 + 0x110);
+  u7 = *(uint32_t *)(arg2 + 0x114);
+  u8 = *(uint32_t *)(arg2 + 0x118);
+  u9 = *(uint32_t *)(arg2 + 0x11c);
+  u10 = *(uint32_t *)(arg2 + 0x120);
+  i1 = orig::FsFileThreadManager_handleFileEvent(&g_10337200,u1);
+  if (i1 < 0) {
+    u10 = (int)XI_GAME(0x1019FA0Cu);
+    u2 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
+    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
-  local_10 = (int)XI_GAME(0x1019FA1Au);
-  uVar5 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
-  uVar2 = (uint32_t)((uint64_t)uVar5 >> 0x20);
-  if ((int)uVar5 < 0) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar2) << 32) | (uint32_t)(0xffffffff)));
+  u10 = (int)XI_GAME(0x1019FA1Au);
+  u2 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
+  u1 = (uint32_t)((uint64_t)u2 >> 0x20);
+  if ((int)u2 < 0) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(0xffffffff)));
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar2) << 32) | (uint32_t)(iVar1)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(i1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1019FA90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall TextInputFiles_WaitEvent18At8(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::TextInputFiles_WaitEvent18(*(void **)((int)self_ + 8));
-  return (uint32_t)(-1 < (int)uVar1) * 2 + -1;
+  u1 = orig::TextInputFiles_WaitEvent18(*(void **)((int)self_ + 8));
+  return (uint32_t)(-1 < (int)u1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x1019FAB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall TextInputFiles_SignalMember8(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
-  return (uint32_t)(-1 < (int)uVar1) * 2 + -1;
+  u1 = orig::TextInputFiles_SignalMember18(*(void **)((int)self_ + 8));
+  return (uint32_t)(-1 < (int)u1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_Call101BE510IfSize4(undefined4 param_1, int param_2, undefined4 xi_s3)
+XI_API bits32 __cdecl TextInputFiles_Call101BE510IfSize4(bits32 arg1, int arg2, bits32 xi_s3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (param_2 != 4) {
+  if (arg2 != 4) {
     return 0xffffffff;
   }
-  uVar1 = orig::FUN_101be510(&xi_s3);
-  return uVar1;
+  u1 = orig::game_101BE510(&xi_s3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0730
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_FillSizeAndDatesFwd(undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6, undefined4 xi_s7, undefined4 xi_s8, undefined4 xi_s9, undefined4 xi_s10, undefined4 xi_s11, undefined4 xi_s12, undefined4 xi_s13, undefined4 xi_s14, undefined4 xi_s15, undefined4 xi_s16, undefined4 xi_s17, undefined4 xi_s18, undefined4 xi_s19, undefined4 xi_s20, undefined4 xi_s21, undefined4 xi_s22, undefined4 xi_s23, undefined4 xi_s24, undefined4 xi_s25, undefined4 xi_s26, undefined4 xi_s27, undefined4 xi_s28, undefined4 xi_s29, undefined4 xi_s30, undefined4 xi_s31, undefined4 xi_s32, undefined4 xi_s33, undefined4 xi_s34, undefined4 xi_s35, undefined4 xi_s36, undefined4 xi_s37, undefined4 xi_s38, undefined4 xi_s39, undefined4 xi_s40, undefined4 xi_s41, undefined4 xi_s42, undefined4 xi_s43, undefined4 xi_s44, undefined4 xi_s45, undefined4 xi_s46, undefined4 xi_s47, undefined4 xi_s48, undefined4 xi_s49, undefined4 xi_s50, undefined4 xi_s51, undefined4 xi_s52, undefined4 xi_s53, undefined4 xi_s54, undefined4 xi_s55, undefined4 xi_s56, undefined4 xi_s57, undefined4 xi_s58, undefined4 xi_s59, undefined4 xi_s60, undefined4 xi_s61, undefined4 xi_s62, undefined4 xi_s63, undefined4 xi_s64, undefined4 xi_s65, undefined4 xi_s66, undefined4 xi_s67, undefined4 * xi_s68)
+XI_API bits32 __cdecl TextInputFiles_FillSizeAndDatesFwd(bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6, bits32 xi_s7, bits32 xi_s8, bits32 xi_s9, bits32 xi_s10, bits32 xi_s11, bits32 xi_s12, bits32 xi_s13, bits32 xi_s14, bits32 xi_s15, bits32 xi_s16, bits32 xi_s17, bits32 xi_s18, bits32 xi_s19, bits32 xi_s20, bits32 xi_s21, bits32 xi_s22, bits32 xi_s23, bits32 xi_s24, bits32 xi_s25, bits32 xi_s26, bits32 xi_s27, bits32 xi_s28, bits32 xi_s29, bits32 xi_s30, bits32 xi_s31, bits32 xi_s32, bits32 xi_s33, bits32 xi_s34, bits32 xi_s35, bits32 xi_s36, bits32 xi_s37, bits32 xi_s38, bits32 xi_s39, bits32 xi_s40, bits32 xi_s41, bits32 xi_s42, bits32 xi_s43, bits32 xi_s44, bits32 xi_s45, bits32 xi_s46, bits32 xi_s47, bits32 xi_s48, bits32 xi_s49, bits32 xi_s50, bits32 xi_s51, bits32 xi_s52, bits32 xi_s53, bits32 xi_s54, bits32 xi_s55, bits32 xi_s56, bits32 xi_s57, bits32 xi_s58, bits32 xi_s59, bits32 xi_s60, bits32 xi_s61, bits32 xi_s62, bits32 xi_s63, bits32 xi_s64, bits32 xi_s65, bits32 xi_s66, bits32 xi_s67, bits32 * xi_s68)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FillSizeAndThreeDates(&xi_s3,xi_s68);
-  return uVar1;
+  u1 = orig::TextInputFiles_FillSizeAndThreeDates(&xi_s3,xi_s68);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_Call101BE670(undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3)
+XI_API bits32 __cdecl TextInputFiles_Call101BE670(bits32 xi_s1, bits32 xi_s2, bits32 xi_s3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_DeleteFile((LPCSTR)&xi_s3);
-  return iVar1;
+  i1 = orig::TextInputFiles_DeleteFile((LPCSTR)&xi_s3);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0760
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_Call101BE690(undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3)
+XI_API bits32 __cdecl TextInputFiles_Call101BE690(bits32 xi_s1, bits32 xi_s2, bits32 xi_s3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_101be690(&xi_s3);
-  return uVar1;
+  u1 = orig::game_101BE690(&xi_s3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0770
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API int __cdecl TextInputFiles_RunKind8WithCallback(undefined4 param_1, int param_2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6, undefined4 xi_s7, undefined4 xi_s8, undefined4 xi_s9, undefined4 xi_s10, undefined4 xi_s11, undefined4 xi_s12, undefined4 xi_s13, undefined4 xi_s14, undefined4 xi_s15, undefined4 xi_s16, undefined4 xi_s17, undefined4 xi_s18, undefined4 xi_s19, undefined4 xi_s20, undefined4 xi_s21, undefined4 xi_s22, undefined4 xi_s23, undefined4 xi_s24, undefined4 xi_s25, undefined4 xi_s26, undefined4 xi_s27, undefined4 xi_s28, undefined4 xi_s29, undefined4 xi_s30, undefined4 xi_s31, undefined4 xi_s32, undefined4 xi_s33, undefined4 xi_s34, undefined4 xi_s35, undefined4 xi_s36, undefined4 xi_s37, undefined4 xi_s38, undefined4 xi_s39, undefined4 xi_s40, undefined4 xi_s41, undefined4 xi_s42, undefined4 xi_s43, undefined4 xi_s44, undefined4 xi_s45, undefined4 xi_s46, undefined4 xi_s47, undefined4 xi_s48, undefined4 xi_s49, undefined4 xi_s50, undefined4 xi_s51, undefined4 xi_s52, undefined4 xi_s53, undefined4 xi_s54, undefined4 xi_s55, undefined4 xi_s56, undefined4 xi_s57, undefined4 xi_s58, undefined4 xi_s59, undefined4 xi_s60, undefined4 xi_s61, undefined4 xi_s62, undefined4 xi_s63, undefined4 xi_s64, undefined4 xi_s65, undefined4 xi_s66, undefined4 xi_s67, undefined4 xi_s68, undefined4 xi_s69, undefined4 xi_s70, undefined4 xi_s71, xi_codefn * xi_s72, undefined4 xi_s73)
+XI_API int __cdecl TextInputFiles_RunKind8WithCallback(bits32 arg1, int arg2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6, bits32 xi_s7, bits32 xi_s8, bits32 xi_s9, bits32 xi_s10, bits32 xi_s11, bits32 xi_s12, bits32 xi_s13, bits32 xi_s14, bits32 xi_s15, bits32 xi_s16, bits32 xi_s17, bits32 xi_s18, bits32 xi_s19, bits32 xi_s20, bits32 xi_s21, bits32 xi_s22, bits32 xi_s23, bits32 xi_s24, bits32 xi_s25, bits32 xi_s26, bits32 xi_s27, bits32 xi_s28, bits32 xi_s29, bits32 xi_s30, bits32 xi_s31, bits32 xi_s32, bits32 xi_s33, bits32 xi_s34, bits32 xi_s35, bits32 xi_s36, bits32 xi_s37, bits32 xi_s38, bits32 xi_s39, bits32 xi_s40, bits32 xi_s41, bits32 xi_s42, bits32 xi_s43, bits32 xi_s44, bits32 xi_s45, bits32 xi_s46, bits32 xi_s47, bits32 xi_s48, bits32 xi_s49, bits32 xi_s50, bits32 xi_s51, bits32 xi_s52, bits32 xi_s53, bits32 xi_s54, bits32 xi_s55, bits32 xi_s56, bits32 xi_s57, bits32 xi_s58, bits32 xi_s59, bits32 xi_s60, bits32 xi_s61, bits32 xi_s62, bits32 xi_s63, bits32 xi_s64, bits32 xi_s65, bits32 xi_s66, bits32 xi_s67, bits32 xi_s68, bits32 xi_s69, bits32 xi_s70, bits32 xi_s71, untyped_fn * xi_s72, bits32 xi_s73)
 {
-  int iVar1;
+  int i1;
   
-  if ((param_2 == 8) && (xi_s72 != (code *)0x0)) {
-    iVar1 = orig::FUN_101be690(&xi_s3);
-    if (-1 < iVar1) {
-      (*xi_s72)(0,iVar1,xi_s73);
-      return iVar1;
+  if ((arg2 == 8) && (xi_s72 != (untyped_fn *)0x0)) {
+    i1 = orig::game_101BE690(&xi_s3);
+    if (-1 < i1) {
+      (*xi_s72)(0,i1,xi_s73);
+      return i1;
     }
     (*xi_s72)(0,0xffffffff,xi_s73);
   }
@@ -4467,72 +4467,72 @@ XI_API int __cdecl TextInputFiles_RunKind8WithCallback(undefined4 param_1, int p
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall TextInputFiles_SignalEvent10(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Event_Signal(*(void **)((int)self_ + 0x10));
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  i1 = orig::Event_Signal(*(void **)((int)self_ + 0x10));
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_ResetAndWaitEvent14(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_ResetAndWaitEvent14(void * self_, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Event_ResetAndWait(*(void **)((int)self_ + 0x14),param_1);
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  i1 = orig::Event_ResetAndWait(*(void **)((int)self_ + 0x14),arg2);
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall TextInputFiles_WaitEvent18(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::Event_Wait(*(void **)((int)self_ + 0x18),0xffffffff);
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)((uint32_t)(-1 < (int)uVar1) * 2 + -1)));
+  u1 = orig::Event_Wait(*(void **)((int)self_ + 0x18),0xffffffff);
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)((uint32_t)(-1 < (int)u1) * 2 + -1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101A0970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall TextInputFiles_SignalMember18(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x18));
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)((uint32_t)(-1 < (int)uVar1) * 2 + -1)));
+  u1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x18));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)((uint32_t)(-1 < (int)u1) * 2 + -1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101A0BE0
 // GATE: PASS -- 100 trials, 91 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 91
-XI_API undefined4 __thiscall TextInputFiles_Push(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_Push(void * self_, int arg2)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  int iVar4;
+  char c1;
+  char *p1;
+  int i1;
+  int i2;
   
   orig::Event_Wait(*(void **)((int)self_ + 0x1c),0xffffffff);
   if (*(int *)((int)self_ + 0xc) + 1 < *(int *)((int)self_ + 8)) {
-    iVar3 = *(int *)((int)self_ + 4) + *(int *)((int)self_ + 0x14) * 0x124;
-    *(uint32_t *)(iVar3 + 4) = *(uint32_t *)(param_1 + 4);
-    pcVar2 = (char *)(param_1 + 8);
-    iVar4 = (iVar3 + 8) - (int)pcVar2;
+    i1 = *(int *)((int)self_ + 4) + *(int *)((int)self_ + 0x14) * 0x124;
+    *(uint32_t *)(i1 + 4) = *(uint32_t *)(arg2 + 4);
+    p1 = (char *)(arg2 + 8);
+    i2 = (i1 + 8) - (int)p1;
     do {
-      cVar1 = *pcVar2;
-      pcVar2[iVar4] = cVar1;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    *(uint32_t *)(iVar3 + 0x108) = *(uint32_t *)(param_1 + 0x108);
-    *(uint32_t *)(iVar3 + 0x10c) = *(uint32_t *)(param_1 + 0x10c);
-    *(uint32_t *)(iVar3 + 0x110) = *(uint32_t *)(param_1 + 0x110);
-    *(uint32_t *)(iVar3 + 0x114) = *(uint32_t *)(param_1 + 0x114);
-    *(uint32_t *)(iVar3 + 0x118) = *(uint32_t *)(param_1 + 0x118);
-    *(uint32_t *)(iVar3 + 0x11c) = *(uint32_t *)(param_1 + 0x11c);
-    *(uint32_t *)(iVar3 + 0x120) = *(uint32_t *)(param_1 + 0x120);
-    iVar3 = *(int *)((int)self_ + 0x14) + 1;
-    *(int *)((int)self_ + 0x14) = iVar3;
-    if (*(int *)((int)self_ + 8) <= iVar3) {
+      c1 = *p1;
+      p1[i2] = c1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    *(uint32_t *)(i1 + 0x108) = *(uint32_t *)(arg2 + 0x108);
+    *(uint32_t *)(i1 + 0x10c) = *(uint32_t *)(arg2 + 0x10c);
+    *(uint32_t *)(i1 + 0x110) = *(uint32_t *)(arg2 + 0x110);
+    *(uint32_t *)(i1 + 0x114) = *(uint32_t *)(arg2 + 0x114);
+    *(uint32_t *)(i1 + 0x118) = *(uint32_t *)(arg2 + 0x118);
+    *(uint32_t *)(i1 + 0x11c) = *(uint32_t *)(arg2 + 0x11c);
+    *(uint32_t *)(i1 + 0x120) = *(uint32_t *)(arg2 + 0x120);
+    i1 = *(int *)((int)self_ + 0x14) + 1;
+    *(int *)((int)self_ + 0x14) = i1;
+    if (*(int *)((int)self_ + 8) <= i1) {
       *(uint32_t *)((int)self_ + 0x14) = 0;
     }
     *(int *)((int)self_ + 0xc) = *(int *)((int)self_ + 0xc) + 1;
@@ -4545,114 +4545,114 @@ XI_API undefined4 __thiscall TextInputFiles_Push(void * self_, int param_1)
 
 // FUNCTION: FFXIMAIN 0x101A0D30
 // GATE: PASS -- 100 trials, 30 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 30
-XI_API undefined4 __thiscall TextInputFiles_FindMatch(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_FindMatch(void * self_, int arg2)
 {
-  int iVar1;
-  uint8_t bVar2;
-  int iVar3;
-  uint8_t *pbVar4;
-  int iVar5;
-  uint8_t *pbVar6;
-  int iVar7;
-  uint8_t bVar8;
-  uint64_t uVar9;
+  int i1;
+  uint8_t u1;
+  int i2;
+  uint8_t *p1;
+  int i3;
+  uint8_t *p2;
+  int i4;
+  uint8_t u2;
+  uint64_t u3;
   
   if (*(int *)((int)self_ + 0xc) == 0) {
     return 0;
   }
   orig::Event_Wait(*(void **)((int)self_ + 0x1c),0xffffffff);
-  iVar7 = *(int *)((int)self_ + 0x10);
-  iVar3 = *(int *)((int)self_ + 0x14);
-  bVar8 = iVar7 == iVar3;
-  if (!bVar8) {
+  i4 = *(int *)((int)self_ + 0x10);
+  i2 = *(int *)((int)self_ + 0x14);
+  u2 = i4 == i2;
+  if (!u2) {
     do {
-      iVar1 = *(int *)((int)self_ + 4) + iVar7 * 0x124;
-      if (*(int *)(param_1 + 4) == *(int *)(iVar1 + 4)) {
-        pbVar6 = (uint8_t *)(iVar1 + 8);
-        pbVar4 = (uint8_t *)(param_1 + 8);
+      i1 = *(int *)((int)self_ + 4) + i4 * 0x124;
+      if (*(int *)(arg2 + 4) == *(int *)(i1 + 4)) {
+        p2 = (uint8_t *)(i1 + 8);
+        p1 = (uint8_t *)(arg2 + 8);
         do {
-          bVar2 = *pbVar4;
-          bVar8 = bVar2 < *pbVar6;
-          if (bVar2 != *pbVar6) {
-LAB_101a0db3:
-            iVar5 = (1 - (uint32_t)bVar8) - (uint32_t)(bVar8 != 0);
-            goto LAB_101a0db8;
+          u1 = *p1;
+          u2 = u1 < *p2;
+          if (u1 != *p2) {
+code_101A0DB3:
+            i3 = (1 - (uint32_t)u2) - (uint32_t)(u2 != 0);
+            goto code_101A0DB8;
           }
-          if (bVar2 == 0) break;
-          bVar2 = pbVar4[1];
-          bVar8 = bVar2 < pbVar6[1];
-          if (bVar2 != pbVar6[1]) goto LAB_101a0db3;
-          pbVar4 = pbVar4 + 2;
-          pbVar6 = pbVar6 + 2;
-        } while (bVar2 != 0);
-        iVar5 = 0;
-LAB_101a0db8:
-        if ((iVar5 == 0) &&
-           ((((*(int *)(param_1 + 0x10c) == 0 ||
-              (*(int *)(param_1 + 0x10c) == *(int *)(iVar1 + 0x10c))) ||
-             (*(int *)(param_1 + 0x108) == 0)) ||
-            (*(int *)(param_1 + 0x108) == *(int *)(iVar1 + 0x108))))) break;
+          if (u1 == 0) break;
+          u1 = p1[1];
+          u2 = u1 < p2[1];
+          if (u1 != p2[1]) goto code_101A0DB3;
+          p1 = p1 + 2;
+          p2 = p2 + 2;
+        } while (u1 != 0);
+        i3 = 0;
+code_101A0DB8:
+        if ((i3 == 0) &&
+           ((((*(int *)(arg2 + 0x10c) == 0 ||
+              (*(int *)(arg2 + 0x10c) == *(int *)(i1 + 0x10c))) ||
+             (*(int *)(arg2 + 0x108) == 0)) ||
+            (*(int *)(arg2 + 0x108) == *(int *)(i1 + 0x108))))) break;
       }
-      iVar7 = iVar7 + 1;
-      if (*(int *)((int)self_ + 8) <= iVar7) {
-        iVar7 = 0;
+      i4 = i4 + 1;
+      if (*(int *)((int)self_ + 8) <= i4) {
+        i4 = 0;
       }
-    } while (iVar7 != iVar3);
-    bVar8 = iVar7 == iVar3;
+    } while (i4 != i2);
+    u2 = i4 == i2;
   }
-  if (!bVar8) {
-    uVar9 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar9 >> 8))) << 8) | (uint8_t)(1)));
+  if (!u2) {
+    u3 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u3 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar9 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
-  return (uint32_t)xi_trunc24(((uint64_t)uVar9 >> 8)) << 8;
+  u3 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
+  return (uint32_t)xi_trunc24(((uint64_t)u3 >> 8)) << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x101A0F30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_HasRecords(void * self_)
+XI_API bits32 __thiscall TextInputFiles_HasRecords(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::Event_Wait(*(void **)((int)self_ + 0x1c),0xffffffff);
   if (0 < *(int *)((int)self_ + 0xc)) {
-    uVar1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
-  return (uint32_t)xi_trunc24(((uint64_t)uVar1 >> 8)) << 8;
+  u1 = orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x1c));
+  return (uint32_t)xi_trunc24(((uint64_t)u1 >> 8)) << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x101A1360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API unsigned char __thiscall TextInputFiles_IsField84PositiveAfterWait(void * self_)
 {
-  int iVar1;
+  int i1;
   
   orig::Event_Wait(*(void **)((int)self_ + 0x90),0xffffffff);
-  iVar1 = *(int *)((int)self_ + 0x84);
+  i1 = *(int *)((int)self_ + 0x84);
   orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x90));
-  return 0 < iVar1;
+  return 0 < i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A1390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Pop(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Pop(void * self_)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   orig::Event_Wait(*(void **)((int)self_ + 0x90),0xffffffff);
   if (0 < *(int *)((int)self_ + 0x84)) {
-    iVar2 = *(int *)((int)self_ + 0x88) + 1;
-    uVar1 = *(uint32_t *)((int)self_ + iVar2 * 4);
-    *(int *)((int)self_ + 0x88) = iVar2;
-    if (iVar2 == 0x20) {
+    i1 = *(int *)((int)self_ + 0x88) + 1;
+    u1 = *(uint32_t *)((int)self_ + i1 * 4);
+    *(int *)((int)self_ + 0x88) = i1;
+    if (i1 == 0x20) {
       *(uint32_t *)((int)self_ + 0x88) = 0;
     }
     *(int *)((int)self_ + 0x84) = *(int *)((int)self_ + 0x84) + -1;
     orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x90));
-    return uVar1;
+    return u1;
   }
   orig::TextInputFiles_ReleaseSemaphoreAt4(*(void **)((int)self_ + 0x90));
   return 0;
@@ -4662,17 +4662,17 @@ XI_API undefined4 __thiscall TextInputFiles_Pop(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_StringListCtor(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10337210;
+  *(uint8_t ***)self_ = &g_10337210;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint16_t *)((int)self_ + 0xc) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x5ec);
-  for (iVar1 = 10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x5ec);
+  for (i1 = 10; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self_ + 0x614) = 0;
   *(uint32_t *)((int)self_ + 0x618) = 0;
@@ -4683,33 +4683,33 @@ XI_API void * __thiscall TextInputFiles_StringListCtor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_SetVtable10337210(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337210;
+  *(uint8_t ***)self_ = &g_10337210;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A1470
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API undefined4 __thiscall TextInputFiles_PushFrontString(void * self_, undefined4 * param_1, uint32_t param_2)
+XI_API bits32 __thiscall TextInputFiles_PushFrontString(void * self_, bits32 * arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
-  undefined4 *puVar2;
+  uint32_t u1;
+  bits32 *p1;
   
-  orig::FUN_103149d0((undefined4 *)((int)self_ + 0x9b),(undefined4 *)((int)self_ + 4),0x54f);
-  orig::FUN_103149d0((undefined4 *)((int)self_ + 0x5f0),(uint32_t *)((int)self_ + 0x5ec),0x24);
-  if ((int)param_2 < 0x97) {
-    puVar2 = (undefined4 *)((int)self_ + 4);
-    for (uVar1 = param_2 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-      *puVar2 = *param_1;
-      param_1 = param_1 + 1;
-      puVar2 = puVar2 + 1;
+  orig::game_103149D0((bits32 *)((int)self_ + 0x9b),(bits32 *)((int)self_ + 4),0x54f);
+  orig::game_103149D0((bits32 *)((int)self_ + 0x5f0),(uint32_t *)((int)self_ + 0x5ec),0x24);
+  if ((int)arg3 < 0x97) {
+    p1 = (bits32 *)((int)self_ + 4);
+    for (u1 = arg3 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p1 = *arg2;
+      arg2 = arg2 + 1;
+      p1 = p1 + 1;
     }
-    for (uVar1 = param_2 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-      *(uint8_t *)puVar2 = *(uint8_t *)param_1;
-      param_1 = (undefined4 *)((int)param_1 + 1);
-      puVar2 = (undefined4 *)((int)puVar2 + 1);
+    for (u1 = arg3 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p1 = *(uint8_t *)arg2;
+      arg2 = (bits32 *)((int)arg2 + 1);
+      p1 = (bits32 *)((int)p1 + 1);
     }
-    *(uint8_t *)(param_2 + 4 + (int)self_) = 0;
-    *(uint32_t *)((int)self_ + 0x5ec) = param_2;
+    *(uint8_t *)(arg3 + 4 + (int)self_) = 0;
+    *(uint32_t *)((int)self_ + 0x5ec) = arg3;
     if (*(int *)((int)self_ + 0x614) < 9) {
       *(int *)((int)self_ + 0x614) = *(int *)((int)self_ + 0x614) + 1;
     }
@@ -4720,72 +4720,72 @@ XI_API undefined4 __thiscall TextInputFiles_PushFrontString(void * self_, undefi
 
 // FUNCTION: FFXIMAIN 0x101A1500
 // GATE: PASS -- 100 trials, 73 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 73
-XI_API int __thiscall TextInputFiles_CopyCurrent(void * self_, undefined4 * param_1, int param_2)
+XI_API int __thiscall TextInputFiles_CopyCurrent(void * self_, bits32 * arg2, int arg3)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  bits32 *p1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
   
-  iVar2 = *(int *)((int)self_ + 0x618);
-  uVar4 = *(uint32_t *)((int)self_ + iVar2 * 4 + 0x5ec);
-  if (uVar4 == 0) {
+  i1 = *(int *)((int)self_ + 0x618);
+  u2 = *(uint32_t *)((int)self_ + i1 * 4 + 0x5ec);
+  if (u2 == 0) {
     return 0;
   }
-  if ((int)uVar4 <= param_2) {
-    puVar1 = (undefined4 *)(iVar2 * 0x97 + (int)self_);
-    for (uVar3 = uVar4 >> 2; puVar1 = puVar1 + 1, uVar3 != 0; uVar3 = uVar3 - 1) {
-      *param_1 = *puVar1;
-      param_1 = param_1 + 1;
+  if ((int)u2 <= arg3) {
+    p1 = (bits32 *)(i1 * 0x97 + (int)self_);
+    for (u1 = u2 >> 2; p1 = p1 + 1, u1 != 0; u1 = u1 - 1) {
+      *arg2 = *p1;
+      arg2 = arg2 + 1;
     }
-    for (uVar4 = uVar4 & 3; uVar4 != 0; uVar4 = uVar4 - 1) {
-      *(uint8_t *)param_1 = *(uint8_t *)puVar1;
-      puVar1 = (undefined4 *)((int)puVar1 + 1);
-      param_1 = (undefined4 *)((int)param_1 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)arg2 = *(uint8_t *)p1;
+      p1 = (bits32 *)((int)p1 + 1);
+      arg2 = (bits32 *)((int)arg2 + 1);
     }
     return *(int *)((int)self_ + *(int *)((int)self_ + 0x618) * 4 + 0x5ec) + -1;
   }
-  iVar2 = orig::FUN_1018fdf0((int)self_ + iVar2 * 0x97 + 4,(int)param_1,param_2 + -1);
-  *(uint8_t *)(iVar2 + (int)param_1) = 0;
-  return iVar2;
+  i1 = orig::game_1018FDF0((int)self_ + i1 * 0x97 + 4,(int)arg2,arg3 + -1);
+  *(uint8_t *)(i1 + (int)arg2) = 0;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A1580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SetCurrent(void * self_, char * param_1, int param_2)
+XI_API bits32 __thiscall TextInputFiles_SetCurrent(void * self_, char * arg2, int arg3)
 {
-  char cVar1;
-  char *pcVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
+  char c1;
+  char *p1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
   
-  if (param_1 != (char *)0x0) {
-    uVar3 = 0xffffffff;
-    pcVar2 = param_1;
+  if (arg2 != (char *)0x0) {
+    u1 = 0xffffffff;
+    p1 = arg2;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    uVar4 = ~uVar3 - 1;
-    if (param_2 < 0x97) {
-      pcVar2 = (char *)(*(int *)((int)self_ + 0x618) * 0x97 + (int)self_);
-      for (uVar5 = uVar4 >> 2; pcVar2 = pcVar2 + 4, uVar5 != 0; uVar5 = uVar5 - 1) {
-        *(uint32_t *)pcVar2 = *(uint32_t *)param_1;
-        param_1 = param_1 + 4;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    u2 = ~u1 - 1;
+    if (arg3 < 0x97) {
+      p1 = (char *)(*(int *)((int)self_ + 0x618) * 0x97 + (int)self_);
+      for (u3 = u2 >> 2; p1 = p1 + 4, u3 != 0; u3 = u3 - 1) {
+        *(uint32_t *)p1 = *(uint32_t *)arg2;
+        arg2 = arg2 + 4;
       }
-      for (uVar5 = uVar4 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *pcVar2 = *param_1;
-        param_1 = param_1 + 1;
-        pcVar2 = pcVar2 + 1;
+      for (u3 = u2 & 3; u3 != 0; u3 = u3 - 1) {
+        *p1 = *arg2;
+        arg2 = arg2 + 1;
+        p1 = p1 + 1;
       }
-      *(uint8_t *)(*(int *)((int)self_ + 0x618) * 0x97 + uVar4 + 4 + (int)self_) = 0;
-      *(uint32_t *)((int)self_ + *(int *)((int)self_ + 0x618) * 4 + 0x5ec) = ~uVar3;
+      *(uint8_t *)(*(int *)((int)self_ + 0x618) * 0x97 + u2 + 4 + (int)self_) = 0;
+      *(uint32_t *)((int)self_ + *(int *)((int)self_ + 0x618) * 4 + 0x5ec) = ~u1;
       return 1;
     }
-    orig::FUN_1018fdf0((int)param_1,(int)self_ + *(int *)((int)self_ + 0x618) * 0x97 + 4,0x96);
+    orig::game_1018FDF0((int)arg2,(int)self_ + *(int *)((int)self_ + 0x618) * 0x97 + 4,0x96);
     *(uint8_t *)((int)self_ + *(int *)((int)self_ + 0x618) * 0x97 + 0x9a) = 0;
     *(uint32_t *)((int)self_ + *(int *)((int)self_ + 0x618) * 4 + 0x5ec) = 0x97;
   }
@@ -4794,7 +4794,7 @@ XI_API undefined4 __thiscall TextInputFiles_SetCurrent(void * self_, char * para
 
 // FUNCTION: FFXIMAIN 0x101A1660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Advance(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Advance(void * self_)
 {
   if (*(int *)((int)self_ + 0x618) < *(int *)((int)self_ + 0x614)) {
     *(int *)((int)self_ + 0x618) = *(int *)((int)self_ + 0x618) + 1;
@@ -4805,7 +4805,7 @@ XI_API undefined4 __thiscall TextInputFiles_Advance(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A1690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Retreat(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Retreat(void * self_)
 {
   if (0 < *(int *)((int)self_ + 0x618)) {
     *(int *)((int)self_ + 0x618) = *(int *)((int)self_ + 0x618) + -1;
@@ -4816,20 +4816,20 @@ XI_API undefined4 __thiscall TextInputFiles_Retreat(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A16B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ClearFirstString(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ClearFirstString(void * self_)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t *p2;
   
   *(uint32_t *)((int)self_ + 0x618) = 0;
-  puVar1 = self_;
-  for (iVar2 = 0x25; puVar3 = puVar1 + 1, iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar1 = puVar3;
+  p1 = self_;
+  for (i1 = 0x25; p2 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p2 = 0;
+    p1 = p2;
   }
-  *(uint16_t *)puVar3 = 0;
-  *(uint8_t *)((int)puVar1 + 6) = 0;
+  *(uint16_t *)p2 = 0;
+  *(uint8_t *)((int)p1 + 6) = 0;
   *(uint32_t *)((int)self_ + 0x5ec) = 0;
   return 1;
 }
@@ -4838,15 +4838,15 @@ XI_API undefined4 __thiscall TextInputFiles_ClearFirstString(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_McrEntryCtor(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_103372f0;
-  puVar2 = self_;
-  for (iVar1 = 0x5b; puVar2 = puVar2 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
+  *(uint8_t ***)self_ = &g_103372F0;
+  p1 = self_;
+  for (i1 = 0x5b; p1 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
   }
-  *(uint16_t *)puVar2 = 0;
+  *(uint16_t *)p1 = 0;
   *(uint32_t *)((int)self_ + 0x172) = 0;
   *(uint32_t *)((int)self_ + 0x176) = 0;
   *(uint8_t *)((int)self_ + 0x17a) = 0;
@@ -4855,83 +4855,83 @@ XI_API void * __thiscall TextInputFiles_McrEntryCtor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A1740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_CopyMcrEntry(void * self_, int param_1)
+XI_API void __thiscall TextInputFiles_CopyMcrEntry(void * self_, int arg2)
 {
-  char cVar1;
-  char *pcVar2;
-  char *pcVar3;
-  int iVar4;
+  char c1;
+  char *p1;
+  char *p2;
+  int i1;
   
-  pcVar2 = (char *)(param_1 + 0x172);
-  iVar4 = 0x172 - (int)pcVar2;
+  p1 = (char *)(arg2 + 0x172);
+  i1 = 0x172 - (int)p1;
   do {
-    cVar1 = *pcVar2;
-    pcVar2[(int)self_ + iVar4] = cVar1;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  pcVar2 = (char *)(param_1 + 4);
-  iVar4 = 6;
-  pcVar3 = pcVar2;
+    c1 = *p1;
+    p1[(int)self_ + i1] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  p1 = (char *)(arg2 + 4);
+  i1 = 6;
+  p2 = p1;
   do {
     do {
-      cVar1 = *pcVar2;
-      pcVar2[(int)self_ - param_1] = cVar1;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    pcVar2 = pcVar3 + 0x3d;
-    iVar4 = iVar4 + -1;
-    pcVar3 = pcVar2;
-  } while (iVar4 != 0);
+      c1 = *p1;
+      p1[(int)self_ - arg2] = c1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    p1 = p2 + 0x3d;
+    i1 = i1 + -1;
+    p2 = p1;
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A1790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CopyRecord6x3D(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall TextInputFiles_CopyRecord6x3D(void * self_, bits32 * arg2)
 {
-  uint8_t uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
+  uint8_t u1;
+  bits32 *p1;
+  int i1;
+  bits32 *p2;
+  int i2;
+  bits32 *p3;
+  bits32 *p4;
   
-  puVar4 = (undefined4 *)((int)self_ + 4);
-  iVar5 = 6;
+  p2 = (bits32 *)((int)self_ + 4);
+  i2 = 6;
   do {
-    puVar2 = param_1;
-    param_1 = (undefined4 *)((int)puVar2 + 0x3d);
-    puVar6 = puVar2;
-    puVar7 = puVar4;
-    for (iVar3 = 0xf; iVar3 != 0; iVar3 = iVar3 + -1) {
-      *puVar7 = *puVar6;
-      puVar6 = puVar6 + 1;
-      puVar7 = puVar7 + 1;
+    p1 = arg2;
+    arg2 = (bits32 *)((int)p1 + 0x3d);
+    p3 = p1;
+    p4 = p2;
+    for (i1 = 0xf; i1 != 0; i1 = i1 + -1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    puVar4 = (undefined4 *)((int)puVar4 + 0x3d);
-    iVar5 = iVar5 + -1;
-    *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-  } while (iVar5 != 0);
-  *(undefined4 *)((int)self_ + 0x172) = *param_1;
-  *(undefined4 *)((int)self_ + 0x176) = *(undefined4 *)((int)puVar2 + 0x41);
-  uVar1 = *(uint8_t *)((int)puVar2 + 0x45);
-  *(uint8_t *)((int)self_ + 0x17a) = uVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(uVar1)));
+    p2 = (bits32 *)((int)p2 + 0x3d);
+    i2 = i2 + -1;
+    *(uint8_t *)p4 = *(uint8_t *)p3;
+  } while (i2 != 0);
+  *(bits32 *)((int)self_ + 0x172) = *arg2;
+  *(bits32 *)((int)self_ + 0x176) = *(bits32 *)((int)p1 + 0x41);
+  u1 = *(uint8_t *)((int)p1 + 0x45);
+  *(uint8_t *)((int)self_ + 0x17a) = u1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(u1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101A17E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ClearRecord6x3D(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ClearRecord6x3D(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  puVar2 = self_;
-  for (iVar1 = 0x5b; puVar2 = puVar2 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
+  p1 = self_;
+  for (i1 = 0x5b; p1 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
   }
-  *(uint16_t *)puVar2 = 0;
+  *(uint16_t *)p1 = 0;
   *(uint32_t *)((int)self_ + 0x172) = 0;
   *(uint32_t *)((int)self_ + 0x176) = 0;
   *(uint8_t *)((int)self_ + 0x17a) = 0;
@@ -4942,46 +4942,46 @@ XI_API undefined4 __thiscall TextInputFiles_ClearRecord6x3D(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __thiscall TextInputFiles_ValidateRecord6x3D(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  uint32_t uVar4;
+  int i1;
+  int i2;
+  int i3;
+  uint32_t u1;
   
-  iVar1 = 0;
+  i1 = 0;
   do {
-    if (*(char *)((int)self_ + iVar1 + 0x172) == '\0') break;
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 9);
-  uVar4 = (uint32_t)(iVar1 == 9);
-  iVar1 = (int)self_ + 4;
-  iVar3 = 6;
+    if (*(char *)((int)self_ + i1 + 0x172) == '\0') break;
+    i1 = i1 + 1;
+  } while (i1 < 9);
+  u1 = (uint32_t)(i1 == 9);
+  i1 = (int)self_ + 4;
+  i3 = 6;
   do {
-    iVar2 = 0;
+    i2 = 0;
     do {
-      if (*(char *)(iVar1 + iVar2) == '\0') break;
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < 0x3d);
-    if (iVar2 == 0x3d) {
-      uVar4 = uVar4 + 1;
+      if (*(char *)(i1 + i2) == '\0') break;
+      i2 = i2 + 1;
+    } while (i2 < 0x3d);
+    if (i2 == 0x3d) {
+      u1 = u1 + 1;
     }
-    iVar1 = iVar1 + 0x3d;
-    iVar3 = iVar3 + -1;
-    if (iVar3 == 0) {
-      if (uVar4 != 0) {
-        uVar4 = orig::TextInputFiles_ClearRecord6x3D(self_);
-        return uVar4 & 0xffffff00;
+    i1 = i1 + 0x3d;
+    i3 = i3 + -1;
+    if (i3 == 0) {
+      if (u1 != 0) {
+        u1 = orig::TextInputFiles_ClearRecord6x3D(self_);
+        return u1 & 0xffffff00;
       }
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(1)));
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i2 >> 8))) << 8) | (uint8_t)(1)));
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x101A1910
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetMcrEntryLine(void * self_, int param_1)
+XI_API int __thiscall TextInputFiles_GetMcrEntryLine(void * self_, int arg2)
 {
-  if ((-1 < param_1) && (param_1 < 6)) {
-    return (int)self_ + param_1 * 0x3d + 4;
+  if ((-1 < arg2) && (arg2 < 6)) {
+    return (int)self_ + arg2 * 0x3d + 4;
   }
   return 0;
 }
@@ -4990,17 +4990,17 @@ XI_API int __thiscall TextInputFiles_GetMcrEntryLine(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl TextInputFiles_Create(void)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if (DAT_10662798 != (void *)0x0) {
+  if (g_10662798 != (void *)0x0) {
     return 0;
   }
-  uVar1 = orig::Allocator_Generic_v1(0x2360);
-  if ((void *)uVar1 != (void *)0x0) {
-    DAT_10662798 = orig::TextInputFiles_McrManagerCtor((void *)uVar1);
-    return (int)DAT_10662798;
+  u1 = orig::Allocator_Generic_v1(0x2360);
+  if ((void *)u1 != (void *)0x0) {
+    g_10662798 = orig::TextInputFiles_McrManagerCtor((void *)u1);
+    return (int)g_10662798;
   }
-  DAT_10662798 = (void *)0x0;
+  g_10662798 = (void *)0x0;
   return 0;
 }
 
@@ -5008,20 +5008,20 @@ XI_API int __cdecl TextInputFiles_Create(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_McrManagerCtor(void * self_)
 {
-  uint8_t *puVar1;
-  int iVar2;
-  void *this_00;
+  uint8_t *p1;
+  int i1;
+  void *obj1;
   
-  iVar2 = 0x14;
-  this_00 = (void *)((int)self_ + 4);
+  i1 = 0x14;
+  obj1 = (void *)((int)self_ + 4);
   do {
-    orig::TextInputFiles_McrEntryCtor(this_00);
-    this_00 = (void *)((int)this_00 + 0x17c);
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    orig::TextInputFiles_McrEntryCtor(obj1);
+    obj1 = (void *)((int)obj1 + 0x17c);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   orig::TextInputFiles_McrEntryCtor((void *)((int)self_ + 0x2048));
   orig::TextInputFiles_McrEntryCtor((void *)((int)self_ + 0x21d0));
-  *(uint8_t ***)self_ = &PTR_FUN_103372f4;
+  *(uint8_t ***)self_ = &g_103372F4;
   *(uint32_t *)((int)self_ + 0x1db4) = 0;
   *(uint32_t *)((int)self_ + 0x1db8) = 0;
   *(uint32_t *)((int)self_ + 0x1dbc) = 0;
@@ -5032,19 +5032,19 @@ XI_API void * __thiscall TextInputFiles_McrManagerCtor(void * self_)
   *(uint8_t *)((int)self_ + 0x235d) = 0;
   *(uint8_t *)((int)self_ + 0x235e) = 0;
   *(uint8_t *)((int)self_ + 0x235f) = 0;
-  iVar2 = 0x28;
-  puVar1 = (uint8_t *)((int)self_ + 0x1dc6);
+  i1 = 0x28;
+  p1 = (uint8_t *)((int)self_ + 0x1dc6);
   do {
-    *puVar1 = 0;
-    puVar1 = puVar1 + 0x10;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  if (DAT_10662db0 != (void *)0x0) {
-    orig::TextInputFiles_Register(DAT_10662db0,1,0,s_mcr_sys_1037aa40,(uint32_t *)((int)self_ + 0x1dbc),4,
+    *p1 = 0;
+    p1 = p1 + 0x10;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  if (g_10662DB0 != (void *)0x0) {
+    orig::TextInputFiles_Register(g_10662DB0,1,0,str_mcr_sys_1037AA40,(uint32_t *)((int)self_ + 0x1dbc),4,
                  XI_CODE(TextInputFiles_LoadCurrentMacroDat),self_,1);
-    orig::TextInputFiles_Register(DAT_10662db0,1,0,s_mcr_ttl_1037aa38,(uint8_t *)((int)self_ + 0x1dc6),0x140,
-                 &LAB_101a2410,self_,1);
-    orig::TextInputFiles_Register(DAT_10662db0,1,0,s_mcr_2_ttl_1037aa2c,(int)self_ + 0x1f06,0x140,&LAB_101a2440,self_,1
+    orig::TextInputFiles_Register(g_10662DB0,1,0,str_mcr_ttl_1037AA38,(uint8_t *)((int)self_ + 0x1dc6),0x140,
+                 &TextInputFiles_ResetNames0To19_as_v0,self_,1);
+    orig::TextInputFiles_Register(g_10662DB0,1,0,str_mcr_2_ttl_1037AA2C,(int)self_ + 0x1f06,0x140,&TextInputFiles_ResetNames20To39_as_v0,self_,1
                 );
   }
   *(uint32_t *)((int)self_ + 0x21c4) = 0xffffffff;
@@ -5053,10 +5053,10 @@ XI_API void * __thiscall TextInputFiles_McrManagerCtor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A1C60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_QueueEntry(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_QueueEntry(void * self_, int arg2)
 {
-  if ((-1 < param_1) && (param_1 < 0x14)) {
-    orig::TextInputFiles_CopyMcrEntry((void *)((int)self_ + 0x2048),(int)self_ + param_1 * 0x17c + 4);
+  if ((-1 < arg2) && (arg2 < 0x14)) {
+    orig::TextInputFiles_CopyMcrEntry((void *)((int)self_ + 0x2048),(int)self_ + arg2 * 0x17c + 4);
     *(uint32_t *)((int)self_ + 0x21c4) = 0;
     *(uint32_t *)((int)self_ + 0x21c8) = 0;
     return 1;
@@ -5066,57 +5066,57 @@ XI_API undefined4 __thiscall TextInputFiles_QueueEntry(void * self_, int param_1
 
 // FUNCTION: FFXIMAIN 0x101A1CC0
 // GATE: PASS -- 100 trials, 94 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API undefined4 __thiscall TextInputFiles_StepScript(void * self_)
+XI_API bits32 __thiscall TextInputFiles_StepScript(void * self_)
 {
-  uint32_t *puVar1;
-  char cVar2;
-  char *pcVar3;
-  int iVar4;
-  uint32_t uVar5;
+  uint32_t *p1;
+  char c1;
+  char *p2;
+  int i1;
+  uint32_t u1;
   char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  (&local_40)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
+  uint32_t  (&u2)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
   
   if (*(int *)((int)self_ + 0x21c4) != -1) {
     if (*g_pSceneState_as_v0 != 0x60) {
-      orig::FUN_101a1cb0(self_);
+      orig::game_101A1CB0(self_);
     }
     if ((*(char *)(g_pTargetMng_as_s32 + 0x59) == '\0') && (*(int *)(g_pTargetMng_as_s32 + 0xc4) == 0)) {
-      iVar4 = *(int *)((int)self_ + 0x21c4);
-      pcVar3 = (char *)orig::TextInputFiles_GetMcrEntryLine((void *)((int)self_ + 0x2048),iVar4);
-      if ((pcVar3 == (char *)0x0) || (*pcVar3 == '\0')) {
+      i1 = *(int *)((int)self_ + 0x21c4);
+      p2 = (char *)orig::TextInputFiles_GetMcrEntryLine((void *)((int)self_ + 0x2048),i1);
+      if ((p2 == (char *)0x0) || (*p2 == '\0')) {
         *(uint32_t *)((int)self_ + 0x21c4) = 0xffffffff;
         return 0;
       }
-      if ((*pcVar3 == '/') && (pcVar3[1] == '/')) {
-        *(int *)((int)self_ + 0x21c4) = iVar4 + 1;
+      if ((*p2 == '/') && (p2[1] == '/')) {
+        *(int *)((int)self_ + 0x21c4) = i1 + 1;
         return 1;
       }
-      iVar4 = (int)local_40 - (int)pcVar3;
+      i1 = (int)u2 - (int)p2;
       do {
-        cVar2 = *pcVar3;
-        pcVar3[iVar4] = cVar2;
-        pcVar3 = pcVar3 + 1;
-      } while (cVar2 != '\0');
-      puVar1 = (uint32_t *)((int)self_ + 0x21c8);
+        c1 = *p2;
+        p2[i1] = c1;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      p1 = (uint32_t *)((int)self_ + 0x21c8);
       if (*(int *)((int)self_ + 0x21c8) == 0) {
-        iVar4 = orig::TextInputFiles_ParseWaitCommand(local_40,(uint32_t *)((int)self_ + 0x21cc),(int *)puVar1);
-        if (iVar4 != 0) {
+        i1 = orig::TextInputFiles_ParseWaitCommand(u2,(uint32_t *)((int)self_ + 0x21cc),(int *)p1);
+        if (i1 != 0) {
           *(int *)((int)self_ + 0x21c4) = *(int *)((int)self_ + 0x21c4) + 1;
           return 1;
         }
         *(int *)((int)self_ + 0x21c4) = *(int *)((int)self_ + 0x21c4) + 1;
-        orig::Command_RunLine(local_40,2);
+        orig::Command_RunLine(u2,2);
         return 1;
       }
-      iVar4 = orig::NetCellFont_AdvanceAndGetMs();
-      if (*puVar1 <= (uint32_t)(iVar4 - *(int *)((int)self_ + 0x21cc))) {
-        *puVar1 = 0;
+      i1 = orig::NetCellFont_AdvanceAndGetMs();
+      if (*p1 <= (uint32_t)(i1 - *(int *)((int)self_ + 0x21cc))) {
+        *p1 = 0;
         return 1;
       }
     }
     else {
-      uVar5 = orig::NetCellFont_AdvanceAndGetMs();
-      *(uint32_t *)((int)self_ + 0x21cc) = uVar5;
+      u1 = orig::NetCellFont_AdvanceAndGetMs();
+      *(uint32_t *)((int)self_ + 0x21cc) = u1;
     }
   }
   return 1;
@@ -5124,206 +5124,206 @@ XI_API undefined4 __thiscall TextInputFiles_StepScript(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A1E20
 // GATE: PASS -- 100 trials, 56 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-XI_API undefined4 __cdecl TextInputFiles_OnMacroFileLoaded(int param_1, undefined4 * param_2, int param_3, int param_4)
+XI_API bits32 __cdecl TextInputFiles_OnMacroFileLoaded(int arg1, bits32 * arg2, int arg3, int arg4)
 {
-  int iVar1;
-  undefined4 uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  void *pvVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
+  int i1;
+  bits32 u1;
+  uint32_t u2;
+  int i2;
+  void *p1;
+  bits32 *p2;
+  bits32 *p3;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u3)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
-  if (param_1 == 2) {
-    iVar1 = *(int *)(param_4 + 0x1db8) / 2 + 1;
-    iVar4 = *(int *)(param_4 + 0x1dc0) + 1;
-    uVar2 = orig::TargetMenu_GetMessageFwd(7,200);
-    orig::_sprintf(local_100,uVar2,iVar4,iVar1);
-    orig::ChatLog_AddTextCode37B(g_pTkMsgWinData_as_v1,local_100);
+  if (arg1 == 2) {
+    i1 = *(int *)(arg4 + 0x1db8) / 2 + 1;
+    i2 = *(int *)(arg4 + 0x1dc0) + 1;
+    u1 = orig::TargetMenu_GetMessageFwd(7,200);
+    orig::_sprintf(u3,u1,i2,i1);
+    orig::ChatLog_AddTextCode37B(g_pTkMsgWinData_as_v1,u3);
   }
-  else if (param_1 != 1) {
-    if (param_3 != 0x1ea0) {
-      if (param_3 == 0x1db0) {
-        puVar6 = (undefined4 *)(param_4 + 4);
-        puVar7 = puVar6;
-        for (iVar1 = 0x76c; iVar1 != 0; iVar1 = iVar1 + -1) {
-          *puVar7 = *param_2;
-          param_2 = param_2 + 1;
-          puVar7 = puVar7 + 1;
+  else if (arg1 != 1) {
+    if (arg3 != 0x1ea0) {
+      if (arg3 == 0x1db0) {
+        p2 = (bits32 *)(arg4 + 4);
+        p3 = p2;
+        for (i1 = 0x76c; i1 != 0; i1 = i1 + -1) {
+          *p3 = *arg2;
+          arg2 = arg2 + 1;
+          p3 = p3 + 1;
         }
-        iVar1 = 0x14;
+        i1 = 0x14;
         do {
-          uVar3 = orig::TextInputFiles_ValidateRecord6x3D(puVar6);
-          puVar6 = puVar6 + 0x5f;
-          iVar1 = iVar1 + -1;
-        } while (iVar1 != 0);
-        return uVar3;
+          u2 = orig::TextInputFiles_ValidateRecord6x3D(p2);
+          p2 = p2 + 0x5f;
+          i1 = i1 + -1;
+        } while (i1 != 0);
+        return u2;
       }
-      iVar1 = 0x14;
-      pvVar5 = (void *)(param_4 + 4);
+      i1 = 0x14;
+      p1 = (void *)(arg4 + 4);
       do {
-        uVar2 = orig::TextInputFiles_ClearRecord6x3D(pvVar5);
-        pvVar5 = (void *)((int)pvVar5 + 0x17c);
-        iVar1 = iVar1 + -1;
-      } while (iVar1 != 0);
-      return uVar2;
+        u1 = orig::TextInputFiles_ClearRecord6x3D(p1);
+        p1 = (void *)((int)p1 + 0x17c);
+        i1 = i1 + -1;
+      } while (i1 != 0);
+      return u1;
     }
-    iVar1 = 0x14;
-    puVar6 = param_2 + 4;
-    pvVar5 = (void *)(param_4 + 4);
+    i1 = 0x14;
+    p2 = arg2 + 4;
+    p1 = (void *)(arg4 + 4);
     do {
-      uVar2 = orig::TextInputFiles_CopyRecord6x3D(pvVar5,puVar6);
-      puVar6 = puVar6 + 0x62;
-      pvVar5 = (void *)((int)pvVar5 + 0x17c);
-      iVar1 = iVar1 + -1;
-    } while (iVar1 != 0);
-    if (*(char *)(param_4 + 0x235f) != '\0') {
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(*(char *)(param_4 + 0x235f))));
+      u1 = orig::TextInputFiles_CopyRecord6x3D(p1,p2);
+      p2 = p2 + 0x62;
+      p1 = (void *)((int)p1 + 0x17c);
+      i1 = i1 + -1;
+    } while (i1 != 0);
+    if (*(char *)(arg4 + 0x235f) != '\0') {
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)(arg4 + 0x235f))));
     }
-    uVar2 = orig::TextInputFiles_LoadNumberedDatIntoBuffer_v1((void *)param_4,*(int *)(param_4 + 0x1dbc) / 2,&Read_as_v0);
-    return uVar2;
+    u1 = orig::TextInputFiles_LoadNumberedDatIntoBuffer_v1((void *)arg4,*(int *)(arg4 + 0x1dbc) / 2,&Read_as_v0);
+    return u1;
   }
-  pvVar5 = (void *)(param_4 + 4);
-  iVar1 = 0x14;
+  p1 = (void *)(arg4 + 4);
+  i1 = 0x14;
   do {
-    uVar2 = orig::TextInputFiles_ClearRecord6x3D(pvVar5);
-    pvVar5 = (void *)((int)pvVar5 + 0x17c);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
-  if (*(char *)(param_4 + 0x235f) != '\0') {
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(*(char *)(param_4 + 0x235f))));
+    u1 = orig::TextInputFiles_ClearRecord6x3D(p1);
+    p1 = (void *)((int)p1 + 0x17c);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  if (*(char *)(arg4 + 0x235f) != '\0') {
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)(arg4 + 0x235f))));
   }
-  uVar2 = orig::TextInputFiles_LoadNumberedDatIntoBuffer_v1((void *)param_4,*(int *)(param_4 + 0x1dbc) / 2,&Read_as_v0);
-  return uVar2;
+  u1 = orig::TextInputFiles_LoadNumberedDatIntoBuffer_v1((void *)arg4,*(int *)(arg4 + 0x1dbc) / 2,&Read_as_v0);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A23D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl TextInputFiles_LoadCurrentMacroDat(undefined4 param_1, int param_2)
+XI_API void __cdecl TextInputFiles_LoadCurrentMacroDat(bits32 arg1, int arg2)
 {
   int xi_s1;
-  int iVar1;
+  int i1;
   
-  xi_s1 = *(int *)(param_2 + 0x1dbc);
-  iVar1 = 0;
-  orig::TextInputFiles_SplitIndexBy20((void *)param_2,xi_s1);
+  xi_s1 = *(int *)(arg2 + 0x1dbc);
+  i1 = 0;
+  orig::TextInputFiles_SplitIndexBy20((void *)arg2,xi_s1);
   if ((-1 < xi_s1) && (xi_s1 < 800)) {
-    iVar1 = xi_s1 / 2;
+    i1 = xi_s1 / 2;
   }
-  orig::TextInputFiles_LoadMacroDat((void *)param_2,iVar1,&Read_as_v0);
+  orig::TextInputFiles_LoadMacroDat((void *)arg2,i1,&Read_as_v0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2410
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl TextInputFiles_ResetNames0To19(int param_1, void * param_2)
+XI_API void __cdecl TextInputFiles_ResetNames0To19(int arg1, void * arg2)
 {
-  int iVar1;
+  int i1;
   
-  if (param_1 == 0) {
-    orig::TextInputFiles_FillDefaultNames(param_2,0);
+  if (arg1 == 0) {
+    orig::TextInputFiles_FillDefaultNames(arg2,0);
     return;
   }
-  iVar1 = 0;
+  i1 = 0;
   do {
-    orig::TextInputFiles_SetName(param_2,iVar1,&Read_as_v0);
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x14);
+    orig::TextInputFiles_SetName(arg2,i1,&Read_as_v0);
+    i1 = i1 + 1;
+  } while (i1 < 0x14);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl TextInputFiles_ResetNames20To39(int param_1, void * param_2)
+XI_API void __cdecl TextInputFiles_ResetNames20To39(int arg1, void * arg2)
 {
-  int iVar1;
+  int i1;
   
-  if (param_1 == 0) {
-    orig::TextInputFiles_FillDefaultNames(param_2,0);
+  if (arg1 == 0) {
+    orig::TextInputFiles_FillDefaultNames(arg2,0);
     return;
   }
-  iVar1 = 0x14;
+  i1 = 0x14;
   do {
-    orig::TextInputFiles_SetName(param_2,iVar1,&Read_as_v0);
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x28);
+    orig::TextInputFiles_SetName(arg2,i1,&Read_as_v0);
+    i1 = i1 + 1;
+  } while (i1 < 0x28);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2480
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_ParseWaitCommand(char * param_1, undefined4 * param_2, int * param_3)
+XI_API bits32 __stdcall TextInputFiles_ParseWaitCommand(char * arg1, bits32 * arg2, int * arg3)
 {
-  char cVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
-  int iVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  int iVar7;
-  char *pcVar8;
-  char *pcVar9;
-  uint8_t bVar10;
+  char c1;
+  uint32_t *p1;
+  uint32_t *p2;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  int i2;
+  char *p3;
+  char *p4;
+  uint8_t u3;
   char xi_frame[580] __attribute__((aligned(4)));
-  int  &local_244 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char  (&local_240)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 4);
-  char  (&local_200)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 68);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 4);
+  char  (&val2)[512] = *reinterpret_cast<char  (*)[512]>(xi_frame + 68);
   
-  puVar2 = orig::FUN_10311eb0((uint32_t *)param_1,g_1037AA5C);
-  if (puVar2 == (uint32_t *)0x0) {
-    uVar6 = 0xffffffff;
-    pcVar8 = param_1;
+  p1 = orig::game_10311EB0((uint32_t *)arg1,g_1037AA5C);
+  if (p1 == (uint32_t *)0x0) {
+    u2 = 0xffffffff;
+    p3 = arg1;
     do {
-      if (uVar6 == 0) break;
-      uVar6 = uVar6 - 1;
-      cVar1 = *pcVar8;
-      pcVar8 = pcVar8 + 1;
-    } while (cVar1 != '\0');
-    orig::TextInputFiles_InputCall101AC990Swapped(DAT_10662d40,param_1,~uVar6 - 1,local_200,0x200,0,0);
-    iVar4 = orig::FUN_10313643(local_200,s__s__d_1036ff70,local_240);
-    iVar7 = 6;
-    bVar10 = true;
-    pcVar8 = local_240;
-    pcVar9 = &DAT_1037aa48;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p3;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    orig::TextInputFiles_InputCall101AC990Swapped(g_10662D40,arg1,~u2 - 1,val2,0x200,0,0);
+    i1 = orig::game_10313643(val2,str__s__d_1036FF70,val1);
+    i2 = 6;
+    u3 = true;
+    p3 = val1;
+    p4 = &g_1037AA48;
     do {
-      if (iVar7 == 0) break;
-      iVar7 = iVar7 + -1;
-      bVar10 = *pcVar8 == *pcVar9;
-      pcVar8 = pcVar8 + 1;
-      pcVar9 = pcVar9 + 1;
-    } while (bVar10);
-    if (((bVar10) && (0 < local_244)) && (local_244 < 0x3d)) {
-      if (iVar4 == 1) {
-        local_244 = 1;
+      if (i2 == 0) break;
+      i2 = i2 + -1;
+      u3 = *p3 == *p4;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
+    } while (u3);
+    if (((u3) && (0 < i3)) && (i3 < 0x3d)) {
+      if (i1 == 1) {
+        i3 = 1;
       }
-      uVar5 = orig::NetCellFont_AdvanceAndGetMs();
-      *param_2 = uVar5;
-      *param_3 = local_244 * 1000;
+      u1 = orig::NetCellFont_AdvanceAndGetMs();
+      *arg2 = u1;
+      *arg3 = i3 * 1000;
       return 1;
     }
   }
   else {
-    puVar3 = orig::FUN_10311eb0(puVar2,&DAT_10353df4);
-    if (puVar3 != (uint32_t *)0x0) {
-      *(uint8_t *)((int)puVar3 + 1) = 0;
-      iVar4 = orig::FUN_10313643((char *)puVar2,g_1037AA50,&local_244);
-      *(uint8_t *)puVar2 = 0;
-      if (iVar4 == 1) {
-        if (local_244 < 0) {
+    p2 = orig::game_10311EB0(p1,&g_10353DF4);
+    if (p2 != (uint32_t *)0x0) {
+      *(uint8_t *)((int)p2 + 1) = 0;
+      i1 = orig::game_10313643((char *)p1,g_1037AA50,&i3);
+      *(uint8_t *)p1 = 0;
+      if (i1 == 1) {
+        if (i3 < 0) {
           return 0;
         }
-        if (0x3c < local_244) {
+        if (0x3c < i3) {
           return 0;
         }
       }
       else {
-        local_244 = 1;
+        i3 = 1;
       }
-      uVar5 = orig::NetCellFont_AdvanceAndGetMs();
-      *param_2 = uVar5;
-      *param_3 = local_244 * 1000;
+      u1 = orig::NetCellFont_AdvanceAndGetMs();
+      *arg2 = u1;
+      *arg3 = i3 * 1000;
     }
   }
   return 0;
@@ -5331,65 +5331,65 @@ XI_API undefined4 __stdcall TextInputFiles_ParseWaitCommand(char * param_1, unde
 
 // FUNCTION: FFXIMAIN 0x101A2610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall TextInputFiles_FormatNumberedDatName(uint8_t * param_1, int param_2, undefined4 xi_s3)
+XI_API void __stdcall TextInputFiles_FormatNumberedDatName(uint8_t * arg1, int arg2, bits32 xi_s3)
 {
-  if (param_2 == 0) {
-    orig::_sprintf_v1(param_1,s__s_s_s_10360244,xi_s3,&DAT_1037aa70);
+  if (arg2 == 0) {
+    orig::_sprintf_v1(arg1,str__s_s_s_10360244,xi_s3,&g_1037AA70);
     return;
   }
-  orig::_sprintf_v1(param_1,s__s_s_d_s_1037aa64,xi_s3,&DAT_1037aa70,param_2,&DAT_1037aa74);
+  orig::_sprintf_v1(arg1,str__s_s_d_s_1037AA64,xi_s3,&g_1037AA70,arg2,&g_1037AA74);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_LoadNumberedDatIntoBuffer(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall TextInputFiles_LoadNumberedDatIntoBuffer(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   char xi_frame[352] __attribute__((aligned(4)));
-  char  (&local_160)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
-  uint8_t  (&local_120)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
+  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
+  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
   
-  orig::TextInputFiles_FormatNumberedDatName(local_160,param_1,param_2);
-  orig::TextInputFiles_DatEntryCtor(local_120,1,local_160,(int)self_ + 4,0x1db0,0,0,1);
-  uVar1 = orig::XI_CRYPT_101B9A10(local_120);
-  orig::TextInputFiles_ClearVtable(local_120);
-  return uVar1;
+  orig::TextInputFiles_FormatNumberedDatName(val1,arg2,arg3);
+  orig::TextInputFiles_DatEntryCtor(u2,1,val1,(int)self_ + 4,0x1db0,0,0,1);
+  u1 = orig::XI_CRYPT_101B9A10(u2);
+  orig::TextInputFiles_ClearVtable(u2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A26C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_LoadMacroDat(void * self_, int param_1, undefined4 xi_s2)
+XI_API void __thiscall TextInputFiles_LoadMacroDat(void * self_, int arg2, bits32 xi_s2)
 {
-  code *pcVar1;
-  uint8_t *puVar2;
+  untyped_fn *p1;
+  uint8_t *p2;
   char xi_frame[640] __attribute__((aligned(4)));
-  char  (&local_280)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
-  uint8_t  (&local_240)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
-  uint8_t  (&local_120)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 352);
+  char  (&val1)[64] = *reinterpret_cast<char  (*)[64]>(xi_frame + 0);
+  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 64);
+  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 352);
   
-  orig::TextInputFiles_FormatNumberedDatName(local_280,param_1,xi_s2);
-  if (param_1 == 0) {
-    puVar2 =(uint8_t*)(&LAB_101a23b0);
-    pcVar1 = XI_CODE(FsMacroContainer_loadCallback);
+  orig::TextInputFiles_FormatNumberedDatName(val1,arg2,xi_s2);
+  if (arg2 == 0) {
+    p2 =(uint8_t*)(&code_101A23B0);
+    p1 = XI_CODE(FsMacroContainer_loadCallback);
   }
   else {
-    puVar2 =(uint8_t*)(&LAB_101a1fb0);
-    pcVar1 = XI_CODE(TextInputFiles_OnMacroFileLoaded);
+    p2 =(uint8_t*)(&code_101A1FB0);
+    p1 = XI_CODE(TextInputFiles_OnMacroFileLoaded);
   }
-  orig::TextInputFiles_InitWithCallback(local_120,1,local_280,pcVar1,self_,1);
-  orig::XI_CRYPT_101B9BC0(local_120,0);
-  orig::TextInputFiles_DatEntryCtor(local_240,1,local_280,(int)self_ + 4,0x1db0,puVar2,self_,1);
-  orig::TextInputFiles_RemoveById(DAT_10662db0,(int)self_ + 4);
-  orig::TextInputFiles_AppendToList(DAT_10662db0,local_240);
-  orig::TextInputFiles_ClearVtable(local_240);
-  orig::TextInputFiles_ClearVtable(local_120);
+  orig::TextInputFiles_InitWithCallback(u2,1,val1,p1,self_,1);
+  orig::XI_CRYPT_101B9BC0(u2,0);
+  orig::TextInputFiles_DatEntryCtor(u1,1,val1,(int)self_ + 4,0x1db0,p2,self_,1);
+  orig::TextInputFiles_RemoveById(g_10662DB0,(int)self_ + 4);
+  orig::TextInputFiles_AppendToList(g_10662DB0,u1);
+  orig::TextInputFiles_ClearVtable(u1);
+  orig::TextInputFiles_ClearVtable(u2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SplitIndexBy20(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_SplitIndexBy20(void * self_, bits32 xi_s1)
 {
   *(int *)((int)self_ + 0x1db8) = *(int *)((int)self_ + 0x1dbc) % 0x14;
   *(int *)((int)self_ + 0x1dc0) = *(int *)((int)self_ + 0x1dbc) / 0x14;
@@ -5398,97 +5398,97 @@ XI_API void __thiscall TextInputFiles_SplitIndexBy20(void * self_, undefined4 xi
 
 // FUNCTION: FFXIMAIN 0x101A2890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SetReadPos(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_SetReadPos(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  if (*(int *)((int)self_ + 0x1dbc) == param_1 + *(int *)((int)self_ + 0x1dc0) * 0x14)
-  goto LAB_101a290c;
-  if (param_1 < 0x14) {
-    if (param_1 < 0) {
-      param_1 = param_1 + 0x14;
-      goto LAB_101a28bf;
+  if (*(int *)((int)self_ + 0x1dbc) == arg2 + *(int *)((int)self_ + 0x1dc0) * 0x14)
+  goto code_101A290C;
+  if (arg2 < 0x14) {
+    if (arg2 < 0) {
+      arg2 = arg2 + 0x14;
+      goto code_101A28BF;
     }
-LAB_101a28c3:
-    if (0x13 < param_1) goto LAB_101a28c8;
+code_101A28C3:
+    if (0x13 < arg2) goto code_101A28C8;
   }
   else {
-    param_1 = param_1 + -0x14;
-LAB_101a28bf:
-    if (-1 < param_1) goto LAB_101a28c3;
-LAB_101a28c8:
-    param_1 = 0;
+    arg2 = arg2 + -0x14;
+code_101A28BF:
+    if (-1 < arg2) goto code_101A28C3;
+code_101A28C8:
+    arg2 = 0;
   }
   orig::TextInputFiles_LoadNumberedDatIntoBuffer(self_,*(int *)((int)self_ + 0x1dbc) / 2,&Read_as_v0);
-  *(int *)((int)self_ + 0x1db8) = param_1;
-  iVar1 = param_1 + *(int *)((int)self_ + 0x1dc0) * 0x14;
-  *(int *)((int)self_ + 0x1dbc) = iVar1;
-  orig::TextInputFiles_LoadMacroDat(self_,iVar1 / 2,&Read_as_v0);
-LAB_101a290c:
+  *(int *)((int)self_ + 0x1db8) = arg2;
+  i1 = arg2 + *(int *)((int)self_ + 0x1dc0) * 0x14;
+  *(int *)((int)self_ + 0x1dbc) = i1;
+  orig::TextInputFiles_LoadMacroDat(self_,i1 / 2,&Read_as_v0);
+code_101A290C:
   return *(uint32_t *)((int)self_ + 0x1db8);
 }
 
 // FUNCTION: FFXIMAIN 0x101A2980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SetName(void * self_, int param_1, char * param_2)
+XI_API bits32 __thiscall TextInputFiles_SetName(void * self_, int arg2, char * arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
-  char *pcVar3;
-  uint64_t uVar4;
+  int i1;
+  uint32_t u1;
+  char *p1;
+  uint64_t u2;
   
-  pcVar3 = (char *)param_1;
-  if ((-1 < param_1) && (param_1 < 0x28)) {
-    if (*param_2 == '\0') {
-      iVar1 = param_1 + 1;
-      uVar2 = orig::TargetMenu_GetMessageFwd(10,0x6c);
-      uVar4 = orig::_sprintf((uint8_t *)((int)self_ + param_1 * 0x10 + 0x1dc6),uVar2,iVar1);
-      *(uint8_t *)((int)self_ + param_1 * 0x10 + 0x1dd5) = 0;
-      return (int)uVar4;
+  p1 = (char *)arg2;
+  if ((-1 < arg2) && (arg2 < 0x28)) {
+    if (*arg3 == '\0') {
+      i1 = arg2 + 1;
+      u1 = orig::TargetMenu_GetMessageFwd(10,0x6c);
+      u2 = orig::_sprintf((uint8_t *)((int)self_ + arg2 * 0x10 + 0x1dc6),u1,i1);
+      *(uint8_t *)((int)self_ + arg2 * 0x10 + 0x1dd5) = 0;
+      return (int)u2;
     }
-    pcVar3 = orig::_strncpy_v1((char *)((int)self_ + param_1 * 0x10 + 0x1dc6),param_2,0xf);
-    *(uint8_t *)((int)self_ + param_1 * 0x10 + 0x1dd5) = 0;
+    p1 = orig::_strncpy_v1((char *)((int)self_ + arg2 * 0x10 + 0x1dc6),arg3,0xf);
+    *(uint8_t *)((int)self_ + arg2 * 0x10 + 0x1dd5) = 0;
   }
-  return pcVar3;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A29F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetEntryPtr(void * self_, int param_1)
+XI_API int __thiscall TextInputFiles_GetEntryPtr(void * self_, int arg2)
 {
-  if ((param_1 < 0) || (0x27 < param_1)) {
-    param_1 = *(int *)((int)self_ + 0x1dc0);
+  if ((arg2 < 0) || (0x27 < arg2)) {
+    arg2 = *(int *)((int)self_ + 0x1dc0);
   }
-  return param_1 * 0x10 + 0x1dc6 + (int)self_;
+  return arg2 * 0x10 + 0x1dc6 + (int)self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2A10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) TextInputFiles_FillDefaultNames(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) TextInputFiles_FillDefaultNames(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  int iVar1;
-  uint8_t *puVar2;
+  int i1;
+  uint8_t *p1;
   
-  iVar1 = 0;
-  puVar2 = (uint8_t *)((int)self_ + 0x1dd5);
+  i1 = 0;
+  p1 = (uint8_t *)((int)self_ + 0x1dd5);
   do {
-    xi_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(puVar2[-0xf])));
-    if (puVar2[-0xf] == '\0') {
-      xi_eax = orig::TextInputFiles_SetName(self_,iVar1,&Read_as_v0);
+    xi_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(p1[-0xf])));
+    if (p1[-0xf] == '\0') {
+      xi_eax = orig::TextInputFiles_SetName(self_,i1,&Read_as_v0);
     }
-    *puVar2 = 0;
-    iVar1 = iVar1 + 1;
-    puVar2 = puVar2 + 0x10;
-  } while (iVar1 < 0x28);
+    *p1 = 0;
+    i1 = i1 + 1;
+    p1 = p1 + 0x10;
+  } while (i1 < 0x28);
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x101A2E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10337314(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10337314(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337314;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint8_t ***)self_ = &g_10337314;
   *(uint8_t *)((int)self_ + 0xc) = 0;
   *(uint8_t *)((int)self_ + 0xd) = 0;
   *(uint8_t *)((int)self_ + 0xe) = 0;
@@ -5502,10 +5502,10 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt10337314(void * self_, undefin
 
 // FUNCTION: FFXIMAIN 0x101A2E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetFields1C20(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall TextInputFiles_SetFields1C20(void * self_, bits32 arg2, bits32 arg3)
 {
-  *(uint32_t *)((int)self_ + 0x1c) = param_1;
-  *(uint32_t *)((int)self_ + 0x20) = param_2;
+  *(uint32_t *)((int)self_ + 0x1c) = arg2;
+  *(uint32_t *)((int)self_ + 0x20) = arg3;
   return;
 }
 
@@ -5513,93 +5513,93 @@ XI_API void __thiscall TextInputFiles_SetFields1C20(void * self_, undefined4 par
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_UpdateMenuState(void * self_)
 {
-  char cVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int iVar4;
-  uint64_t uVar5;
+  char c1;
+  uint32_t u1;
+  int i1;
+  int i2;
+  uint64_t u2;
   
-  uVar2 = orig::TextInputFiles_StepScript(*(void **)((int)self_ + 4));
-  uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x89,1,-1,uVar2);
-  uVar2 = (uint32_t)uVar5;
-  if (((char)uVar5 == '\0') || (uVar2 = orig::TextInputFiles_CanOpenMenuShortcut(uVar2), (char)uVar2 == '\0')) {
-    uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8a,1,-1,uVar2);
-    uVar2 = (uint32_t)uVar5;
-    if (((char)uVar5 != '\0') && (uVar2 = orig::TextInputFiles_CanOpenMenuShortcut(uVar2), (char)uVar2 != '\0')) {
+  u1 = orig::TextInputFiles_StepScript(*(void **)((int)self_ + 4));
+  u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x89,1,-1,u1);
+  u1 = (uint32_t)u2;
+  if (((char)u2 == '\0') || (u1 = orig::TextInputFiles_CanOpenMenuShortcut(u1), (char)u1 == '\0')) {
+    u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8a,1,-1,u1);
+    u1 = (uint32_t)u2;
+    if (((char)u2 != '\0') && (u1 = orig::TextInputFiles_CanOpenMenuShortcut(u1), (char)u1 != '\0')) {
       if (*(char *)((int)self_ + 0xc) != '\x02') {
-        iVar3 = orig::TextInputFiles_CanOpenMenuShortcut(uVar2);
-        if ((char)iVar3 != '\0') {
+        i1 = orig::TextInputFiles_CanOpenMenuShortcut(u1);
+        if ((char)i1 != '\0') {
           *(uint8_t *)((int)self_ + 0x18) = 1;
-          orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr1pall_10376364);
-          goto LAB_101a2f40;
+          orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr1pall_10376364);
+          goto code_101A2F40;
         }
-        if (*(char *)((int)self_ + 0xc) != '\x02') goto LAB_101a3024;
+        if (*(char *)((int)self_ + 0xc) != '\x02') goto code_101A3024;
       }
       *(uint8_t *)((int)self_ + 0xc) = 0;
       *(uint8_t *)((int)self_ + 0x18) = 0;
-      iVar3 = orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c);
-      goto LAB_101a3024;
+      i1 = orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C);
+      goto code_101A3024;
     }
-    uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x89,4,-1,uVar2);
-    uVar2 = (uint32_t)uVar5;
-    if (((char)uVar5 == '\0') || (uVar2 = orig::TextInputFiles_CanOpenMenuShortcut(uVar2), (char)uVar2 == '\0')) {
-      uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8a,4,-1,uVar2);
-      iVar3 = (int)uVar5;
-      if (((char)uVar5 == '\0') || (iVar3 = orig::TextInputFiles_CanOpenMenuShortcut(iVar3), (char)iVar3 == '\0')) {
+    u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x89,4,-1,u1);
+    u1 = (uint32_t)u2;
+    if (((char)u2 == '\0') || (u1 = orig::TextInputFiles_CanOpenMenuShortcut(u1), (char)u1 == '\0')) {
+      u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8a,4,-1,u1);
+      i1 = (int)u2;
+      if (((char)u2 == '\0') || (i1 = orig::TextInputFiles_CanOpenMenuShortcut(i1), (char)i1 == '\0')) {
         *(uint32_t *)((int)self_ + 0x14) = 0;
-        goto LAB_101a3024;
+        goto code_101A3024;
       }
-      iVar3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc))));
-      if (*(char *)((int)self_ + 0xc) != '\0') goto LAB_101a3024;
+      i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc))));
+      if (*(char *)((int)self_ + 0xc) != '\0') goto code_101A3024;
       if (*(int *)((int)self_ + 0x14) == 0) {
-        iVar3 = orig::ntGameTimeGet();
-        *(int *)((int)self_ + 0x14) = iVar3;
-        goto LAB_101a3024;
+        i1 = orig::ntGameTimeGet();
+        *(int *)((int)self_ + 0x14) = i1;
+        goto code_101A3024;
       }
-      iVar4 = orig::ntGameTimeGet();
-      iVar3 = 0;
-      if (iVar4 == *(int *)((int)self_ + 0x14)) goto LAB_101a3024;
+      i2 = orig::ntGameTimeGet();
+      i1 = 0;
+      if (i2 == *(int *)((int)self_ + 0x14)) goto code_101A3024;
       *(uint8_t *)((int)self_ + 0x18) = 1;
-LAB_101a2f40:
-      uVar5 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c,1,0);
-      iVar3 = (int)uVar5;
+code_101A2F40:
+      u2 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C,1,0);
+      i1 = (int)u2;
       *(uint8_t *)((int)self_ + 0xc) = 2;
-      goto LAB_101a3024;
+      goto code_101A3024;
     }
-    iVar3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc))));
-    if (*(char *)((int)self_ + 0xc) != '\0') goto LAB_101a3024;
+    i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc))));
+    if (*(char *)((int)self_ + 0xc) != '\0') goto code_101A3024;
     if (*(int *)((int)self_ + 0x14) == 0) {
-      iVar3 = orig::ntGameTimeGet();
-      *(int *)((int)self_ + 0x14) = iVar3;
-      goto LAB_101a3024;
+      i1 = orig::ntGameTimeGet();
+      *(int *)((int)self_ + 0x14) = i1;
+      goto code_101A3024;
     }
-    iVar4 = orig::ntGameTimeGet();
-    iVar3 = 0;
-    if (iVar4 == *(int *)((int)self_ + 0x14)) goto LAB_101a3024;
+    i2 = orig::ntGameTimeGet();
+    i1 = 0;
+    if (i2 == *(int *)((int)self_ + 0x14)) goto code_101A3024;
     *(uint8_t *)((int)self_ + 0x18) = 1;
   }
   else {
     if (*(char *)((int)self_ + 0xc) == '\x01') {
       *(uint8_t *)((int)self_ + 0xc) = 0;
       *(uint8_t *)((int)self_ + 0x18) = 0;
-      iVar3 = orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr1pall_10376364);
-      goto LAB_101a3024;
+      i1 = orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr1pall_10376364);
+      goto code_101A3024;
     }
     *(uint8_t *)((int)self_ + 0x18) = 1;
-    orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c);
+    orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C);
   }
-  uVar5 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_mcr1pall_10376364,1,0);
-  iVar3 = (int)uVar5;
+  u2 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_mcr1pall_10376364,1,0);
+  i1 = (int)u2;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-LAB_101a3024:
-  uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x76,4,-1,iVar3);
-  if ((char)uVar5 == '\0') {
-    uVar5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x77,4,-1,(int)uVar5);
-    if ((char)uVar5 == '\0') {
-      cVar1 = '\0';
+code_101A3024:
+  u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x76,4,-1,i1);
+  if ((char)u2 == '\0') {
+    u2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x77,4,-1,(int)u2);
+    if ((char)u2 == '\0') {
+      c1 = '\0';
       if ((*(char *)((int)self_ + 0xc) == '\0') ||
-         (cVar1 = *(char *)((int)self_ + 0x18), cVar1 != '\0')) {
-        iVar3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar5 >> 8))) << 8) | (uint8_t)(cVar1)));
+         (c1 = *(char *)((int)self_ + 0x18), c1 != '\0')) {
+        i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u2 >> 8))) << 8) | (uint8_t)(c1)));
         *(uint8_t *)((int)self_ + 0xd) = 0;
         *(uint32_t *)((int)self_ + 0x10) = 0;
       }
@@ -5607,61 +5607,61 @@ LAB_101a3024:
         *(uint8_t *)((int)self_ + 0xc) = 0;
         *(uint8_t *)((int)self_ + 0xd) = 0;
         *(uint32_t *)((int)self_ + 0x10) = 0;
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr1pall_10376364);
-        iVar3 = orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr1pall_10376364);
+        i1 = orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C);
       }
     }
     else {
-      iVar3 = orig::TextInputFiles_CanOpenMenuShortcut((int)uVar5);
-      if ((char)iVar3 == '\0') {
+      i1 = orig::TextInputFiles_CanOpenMenuShortcut((int)u2);
+      if ((char)i1 == '\0') {
         return;
       }
       if (*(char *)((int)self_ + 0xc) != '\x02') {
         if (*(int *)((int)self_ + 0x10) == 0) {
-          iVar3 = orig::ntGameTimeGet();
-          *(int *)((int)self_ + 0x10) = iVar3;
+          i1 = orig::ntGameTimeGet();
+          *(int *)((int)self_ + 0x10) = i1;
           *(uint8_t *)((int)self_ + 0xd) = 2;
         }
         else {
-          iVar4 = orig::ntGameTimeGet();
-          iVar3 = 0;
-          if (iVar4 != *(int *)((int)self_ + 0x10)) {
+          i2 = orig::ntGameTimeGet();
+          i1 = 0;
+          if (i2 != *(int *)((int)self_ + 0x10)) {
             *(uint8_t *)((int)self_ + 0x18) = 0;
             *(uint8_t *)((int)self_ + 0xc) = 2;
-            orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr1pall_10376364);
-            uVar5 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c,1,0);
-            iVar3 = (int)uVar5;
+            orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr1pall_10376364);
+            u2 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C,1,0);
+            i1 = (int)u2;
           }
         }
       }
     }
   }
   else {
-    iVar3 = orig::TextInputFiles_CanOpenMenuShortcut((int)uVar5);
-    if ((char)iVar3 == '\0') {
+    i1 = orig::TextInputFiles_CanOpenMenuShortcut((int)u2);
+    if ((char)i1 == '\0') {
       return;
     }
     if (*(char *)((int)self_ + 0xc) != '\x01') {
       if (*(int *)((int)self_ + 0x10) == 0) {
-        iVar3 = orig::ntGameTimeGet();
-        *(int *)((int)self_ + 0x10) = iVar3;
+        i1 = orig::ntGameTimeGet();
+        *(int *)((int)self_ + 0x10) = i1;
         *(uint8_t *)((int)self_ + 0xd) = 1;
       }
       else {
-        iVar4 = orig::ntGameTimeGet();
-        iVar3 = 0;
-        if (iVar4 != *(int *)((int)self_ + 0x10)) {
+        i2 = orig::ntGameTimeGet();
+        i1 = 0;
+        if (i2 != *(int *)((int)self_ + 0x10)) {
           *(uint8_t *)((int)self_ + 0x18) = 0;
           *(uint8_t *)((int)self_ + 0xc) = 1;
-          orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mcr2pall_1037633c);
-          uVar5 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_mcr1pall_10376364,1,0);
-          iVar3 = (int)uVar5;
+          orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mcr2pall_1037633C);
+          u2 = orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_mcr1pall_10376364,1,0);
+          i1 = (int)u2;
         }
       }
     }
   }
-  uVar2 = orig::TextInputFiles_CanOpenMenuShortcut(iVar3);
-  if (((char)uVar2 != '\0') && (uVar2 = orig::TextInputFiles_HandleReadPosKeys(self_,uVar2), (char)uVar2 == '\0')) {
+  u1 = orig::TextInputFiles_CanOpenMenuShortcut(i1);
+  if (((char)u1 != '\0') && (u1 = orig::TextInputFiles_HandleReadPosKeys(self_,u1), (char)u1 == '\0')) {
     if ((*(char *)((int)self_ + 0xc) == '\x01') || (*(char *)((int)self_ + 0xd) == '\x01')) {
       orig::TextInputFiles_ApplyKeyAction(self_,0x6c,9,10);
       orig::TextInputFiles_ApplyKeyAction(self_,0x6d,0,1);
@@ -5692,205 +5692,205 @@ LAB_101a3024:
 
 // FUNCTION: FFXIMAIN 0x101A3300
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SetSlot(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall TextInputFiles_SetSlot(void * self_, bits32 arg2, bits32 arg3)
 {
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)((char)param_1)));
-  if ((char)param_1 == '\x01') {
-    uVar1 = orig::TextInputFiles_QueueEntry(*(void **)((int)self_ + 4),(int)(char)param_2);
-    *(char *)((int)self_ + 0xe) = (char)param_2;
-    return uVar1;
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)((char)arg2)));
+  if ((char)arg2 == '\x01') {
+    u1 = orig::TextInputFiles_QueueEntry(*(void **)((int)self_ + 4),(int)(char)arg3);
+    *(char *)((int)self_ + 0xe) = (char)arg3;
+    return u1;
   }
-  if ((char)param_1 == '\x02') {
-    uVar1 = orig::TextInputFiles_QueueEntry(*(void **)((int)self_ + 4),(char)param_2 + 10);
-    *(char *)((int)self_ + 0xf) = (char)param_2;
+  if ((char)arg2 == '\x02') {
+    u1 = orig::TextInputFiles_QueueEntry(*(void **)((int)self_ + 4),(char)arg3 + 10);
+    *(char *)((int)self_ + 0xf) = (char)arg3;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101A33E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) TextInputFiles_CanOpenMenuShortcut(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) TextInputFiles_CanOpenMenuShortcut(bits32 xi_eax)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint64_t uVar3;
+  uint32_t u1;
+  int i1;
+  uint64_t u2;
   
-  uVar1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(DAT_10485f7a)));
-  iVar2 = 0;
-  if (DAT_10485f7a != 0) {
-    uVar1 = (uint32_t)DAT_10485f7a;
-    iVar2 = (&ActerBuffPtr_as_v0)[uVar1];
+  u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(g_10485F7A)));
+  i1 = 0;
+  if (g_10485F7A != 0) {
+    u1 = (uint32_t)g_10485F7A;
+    i1 = (&ActerBuffPtr_as_v0)[u1];
   }
   if (*g_pSceneState_as_v0 == 0x60) {
-    uVar3 = orig::TargetMenu_MenuTest48OrStateB4(&g_menuMng_as_v0);
-    uVar1 = (uint32_t)uVar3;
-    if (((((char)uVar3 == '\0') && (uVar1 = g_pTargetMng_as_v1, *(char *)(g_pTargetMng_as_v1 + 0x59) == '\0'))
+    u2 = orig::TargetMenu_MenuTest48OrStateB4(&g_menuMng_as_v0);
+    u1 = (uint32_t)u2;
+    if (((((char)u2 == '\0') && (u1 = g_pTargetMng_as_v1, *(char *)(g_pTargetMng_as_v1 + 0x59) == '\0'))
         && (*(int *)(g_pTargetMng_as_v1 + 0xc4) == 0)) &&
-       ((g_C_106631D4_as_v0 == 0 || (uVar1 = g_C_106631D4_as_v0, *(short *)(g_C_106631D4_as_v0 + 0x1c) == 0)))) {
-      uVar3 = orig::IsEvent(0,g_C_106631D4_as_v0);
-      uVar1 = (uint32_t)uVar3;
-      if (((char)uVar3 == '\0') &&
-         ((iVar2 == 0 || ((uVar1 = *(uint32_t *)(iVar2 + 0x170), uVar1 != 2 && (uVar1 != 3)))))) {
-        uVar1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-        if (((char)uVar1 != '\0') || (*(short *)(g_pTargetMng_as_v1 + 0x68) != 0)) {
-          uVar1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(DAT_10578170 + 8));
-          if ((char)uVar1 == '\0') {
-            uVar1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(DAT_106627a0_as_s32 + 8));
-            if ((char)uVar1 == '\0') {
-              uVar1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(DAT_106627a4_as_s32 + 8));
-              if ((char)uVar1 == '\0') {
-                uVar1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(DAT_10578250 + 8));
-                if ((char)uVar1 == '\0') goto LAB_101a34f2;
+       ((g_C_106631D4_as_v0 == 0 || (u1 = g_C_106631D4_as_v0, *(short *)(g_C_106631D4_as_v0 + 0x1c) == 0)))) {
+      u2 = orig::IsEvent(0,g_C_106631D4_as_v0);
+      u1 = (uint32_t)u2;
+      if (((char)u2 == '\0') &&
+         ((i1 == 0 || ((u1 = *(uint32_t *)(i1 + 0x170), u1 != 2 && (u1 != 3)))))) {
+        u1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+        if (((char)u1 != '\0') || (*(short *)(g_pTargetMng_as_v1 + 0x68) != 0)) {
+          u1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(g_10578170 + 8));
+          if ((char)u1 == '\0') {
+            u1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(g_106627A0_as_s32 + 8));
+            if ((char)u1 == '\0') {
+              u1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(g_106627A4_as_s32 + 8));
+              if ((char)u1 == '\0') {
+                u1 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,*(int *)(g_10578250 + 8));
+                if ((char)u1 == '\0') goto code_101A34F2;
               }
             }
           }
         }
-        return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-LAB_101a34f2:
-  return uVar1 & 0xffffff00;
+code_101A34F2:
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101A3500
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ApplyKeyAction(void * self_, int param_1, undefined4 param_2, undefined4 xi_s3)
+XI_API bits32 __thiscall TextInputFiles_ApplyKeyAction(void * self_, int arg2, bits32 arg3, bits32 xi_s3)
 {
-  uint32_t uVar2;
-  uint32_t uVar1;
-  uint64_t uVar3;
+  uint32_t u1;
+  uint32_t u2;
+  uint64_t u3;
   
-  uVar3 = orig::NetCellFont_TestCommand36CF60(0x3e,param_1,1,-1,param_1);
-  uVar2 = xi_trunc24(((uint64_t)uVar3 >> 8));
-  if ((char)uVar3 == '\0') {
-    return (uint32_t)uVar2 << 8;
+  u3 = orig::NetCellFont_TestCommand36CF60(0x3e,arg2,1,-1,arg2);
+  u1 = xi_trunc24(((uint64_t)u3 >> 8));
+  if ((char)u3 == '\0') {
+    return (uint32_t)u1 << 8;
   }
   if (*(char *)((int)self_ + 0xc) == '\0') {
-    uVar1 = orig::TextInputFiles_SetSlot(self_,((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar3 >> 0x28))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0xd)))),param_2);
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    u2 = orig::TextInputFiles_SetSlot(self_,((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u3 >> 0x28))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0xd)))),arg3);
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar1 = orig::TextInputFiles_SetSlot(self_,((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc)))),param_2);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u2 = orig::TextInputFiles_SetSlot(self_,((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(char *)((int)self_ + 0xc)))),arg3);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101A3550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) TextInputFiles_HandleReadPosKeys(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) TextInputFiles_HandleReadPosKeys(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint64_t uVar4;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint64_t u4;
   
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x59,1,-1,xi_eax);
-  uVar1 = (uint32_t)uVar4;
-  uVar3 = 0xffffffff;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x59,1,-1,xi_eax);
+  u1 = (uint32_t)u4;
+  u3 = 0xffffffff;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5a,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),2);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5a,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),2);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5b,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),4);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5b,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),4);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5c,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),6);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5c,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),6);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5d,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),8);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5d,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),8);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5e,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),10);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5e,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),10);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5f,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0xc);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x5f,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0xc);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x60,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0xe);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x60,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0xe);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x61,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0x10);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x61,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0x10);
+    u3 = u1;
   }
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x58,1,-1,uVar1);
-  uVar1 = (uint32_t)uVar4;
-  if ((char)uVar4 != '\0') {
-    uVar1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0x12);
-    uVar3 = uVar1;
+  u4 = orig::NetCellFont_TestCommand36CF60(0x3e,0x58,1,-1,u1);
+  u1 = (uint32_t)u4;
+  if ((char)u4 != '\0') {
+    u1 = orig::TextInputFiles_SetReadPos(*(void **)((int)self_ + 4),0x12);
+    u3 = u1;
   }
-  if (-1 < (int)uVar3) {
-    if (*(int *)((int)DAT_106627a0 + 8) != 0) {
-      uVar2 = orig::TextInputFiles_AddMsg10_27IfChangedA(DAT_106627a0,1);
-      orig::TextInputFiles_SetFlag29A(DAT_106627a0);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  if (-1 < (int)u3) {
+    if (*(int *)((int)g_106627A0 + 8) != 0) {
+      u2 = orig::TextInputFiles_AddMsg10_27IfChangedA(g_106627A0,1);
+      orig::TextInputFiles_SetFlag29A(g_106627A0);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
-    uVar2 = 0;
-    if (*(int *)((int)DAT_106627a4 + 8) != 0) {
-      uVar2 = orig::TextInputFiles_AddMsg10_27IfChangedB(DAT_106627a4,1);
-      orig::TextInputFiles_SetFlag29B(DAT_106627a4);
+    u2 = 0;
+    if (*(int *)((int)g_106627A4 + 8) != 0) {
+      u2 = orig::TextInputFiles_AddMsg10_27IfChangedB(g_106627A4,1);
+      orig::TextInputFiles_SetFlag29B(g_106627A4);
     }
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101A36F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_PanelCtorVt10337320(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_PanelCtorVt10337320(void * self_, bits32 arg2, bits32 arg3)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_FUN_10337368;
-  uVar1 = orig::Allocator_Generic_v1(8);
-  if ((void *)uVar1 == (void *)0x0) {
-    this_00 = (void *)0x0;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337368;
+  u1 = orig::Allocator_Generic_v1(8);
+  if ((void *)u1 == (void *)0x0) {
+    obj1 = (void *)0x0;
   }
   else {
-    this_00 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)uVar1);
+    obj1 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)u1);
   }
-  *(void **)((int)self_ + 0x18) = this_00;
-  orig::FsTinyString_init(this_00);
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_10337364;
-  *(uint32_t *)((int)self_ + 0x20) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337320;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_LAB_1033731c;
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_10337318;
-  *(uint32_t *)((int)self_ + 0x24) = param_2;
+  *(void **)((int)self_ + 0x18) = obj1;
+  orig::FsTinyString_init(obj1);
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_10337364;
+  *(uint32_t *)((int)self_ + 0x20) = arg2;
+  *(uint8_t ***)self_ = &g_10337320;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_1033731C;
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_10337318;
+  *(uint32_t *)((int)self_ + 0x24) = arg3;
   *(uint8_t *)((int)self_ + 0x28) = 0;
   *(uint8_t *)((int)self_ + 0x2a) = 0;
   return self_;
@@ -5906,62 +5906,62 @@ XI_API void __thiscall TextInputFiles_SetFlag29A(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A3D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_AddMsg10_27IfChangedA(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_AddMsg10_27IfChangedA(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (((char)param_1 != '\0') ||
-     (iVar2 = *(int *)((int)self_ + 0x20), *(int *)((int)self_ + 0x4c) != *(int *)(iVar2 + 0x1dbc))) {
-    iVar2 = *(int *)((int)*(void **)((int)self_ + 0x20) + 0x1db8);
-    iVar1 = orig::TextInputFiles_GetEntryPtr(*(void **)((int)self_ + 0x20),-1);
-    orig::TextInputFiles_FormatMessage10_27((uint8_t *)((int)self_ + 0x2a),iVar2 / 2,iVar1);
+  if (((char)arg2 != '\0') ||
+     (i2 = *(int *)((int)self_ + 0x20), *(int *)((int)self_ + 0x4c) != *(int *)(i2 + 0x1dbc))) {
+    i2 = *(int *)((int)*(void **)((int)self_ + 0x20) + 0x1db8);
+    i1 = orig::TextInputFiles_GetEntryPtr(*(void **)((int)self_ + 0x20),-1);
+    orig::TextInputFiles_FormatMessage10_27((uint8_t *)((int)self_ + 0x2a),i2 / 2,i1);
     orig::NetCellFont_AddEntry(*(void **)((int)self_ + 8),(uint8_t *)((int)self_ + 0x2a));
-    iVar2 = *(int *)(*(int *)((int)self_ + 0x20) + 0x1dbc);
-    *(int *)((int)self_ + 0x4c) = iVar2;
+    i2 = *(int *)(*(int *)((int)self_ + 0x20) + 0x1dbc);
+    *(int *)((int)self_ + 0x4c) = i2;
   }
-  return iVar2;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101A3D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl TextInputFiles_FormatMessage10_27(uint8_t * param_1, int param_2, undefined4 param_3)
+XI_API void __cdecl TextInputFiles_FormatMessage10_27(uint8_t * arg1, int arg2, bits32 arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TargetMenu_GetMessageFwd_v2(10,0x27,param_3,param_2 % 10 + 1);
-  orig::_sprintf_v1(param_1,uVar1);
+  u1 = orig::TargetMenu_GetMessageFwd_v2(10,0x27,arg3,arg2 % 10 + 1);
+  orig::_sprintf_v1(arg1,u1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A3DC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_PanelCtorVt10337378(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_PanelCtorVt10337378(void * self_, bits32 arg2, bits32 arg3)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_FUN_10337368;
-  uVar1 = orig::Allocator_Generic_v1(8);
-  if ((void *)uVar1 == (void *)0x0) {
-    this_00 = (void *)0x0;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337368;
+  u1 = orig::Allocator_Generic_v1(8);
+  if ((void *)u1 == (void *)0x0) {
+    obj1 = (void *)0x0;
   }
   else {
-    this_00 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)uVar1);
+    obj1 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)u1);
   }
-  *(void **)((int)self_ + 0x18) = this_00;
-  orig::FsTinyString_init(this_00);
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_10337364;
-  *(uint32_t *)((int)self_ + 0x20) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337378;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_LAB_10337370;
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_1033736c;
-  *(uint32_t *)((int)self_ + 0x24) = param_2;
+  *(void **)((int)self_ + 0x18) = obj1;
+  orig::FsTinyString_init(obj1);
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_10337364;
+  *(uint32_t *)((int)self_ + 0x20) = arg2;
+  *(uint8_t ***)self_ = &g_10337378;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337370;
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_1033736C;
+  *(uint32_t *)((int)self_ + 0x24) = arg3;
   *(uint8_t *)((int)self_ + 0x28) = 0;
   *(uint8_t *)((int)self_ + 0x2a) = 0;
   return self_;
@@ -5977,29 +5977,29 @@ XI_API void __thiscall TextInputFiles_SetFlag29B(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101A43B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_AddMsg10_27IfChangedB(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_AddMsg10_27IfChangedB(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (((char)param_1 != '\0') ||
-     (iVar2 = *(int *)((int)self_ + 0x20), *(int *)((int)self_ + 0x4c) != *(int *)(iVar2 + 0x1dbc))) {
-    iVar2 = *(int *)((int)*(void **)((int)self_ + 0x20) + 0x1db8);
-    iVar1 = orig::TextInputFiles_GetEntryPtr(*(void **)((int)self_ + 0x20),-1);
-    orig::TextInputFiles_FormatMessage10_27((uint8_t *)((int)self_ + 0x2a),iVar2 / 2,iVar1);
+  if (((char)arg2 != '\0') ||
+     (i2 = *(int *)((int)self_ + 0x20), *(int *)((int)self_ + 0x4c) != *(int *)(i2 + 0x1dbc))) {
+    i2 = *(int *)((int)*(void **)((int)self_ + 0x20) + 0x1db8);
+    i1 = orig::TextInputFiles_GetEntryPtr(*(void **)((int)self_ + 0x20),-1);
+    orig::TextInputFiles_FormatMessage10_27((uint8_t *)((int)self_ + 0x2a),i2 / 2,i1);
     orig::NetCellFont_AddEntry(*(void **)((int)self_ + 8),(uint8_t *)((int)self_ + 0x2a));
-    iVar2 = *(int *)(*(int *)((int)self_ + 0x20) + 0x1dbc);
-    *(int *)((int)self_ + 0x4c) = iVar2;
+    i2 = *(int *)(*(int *)((int)self_ + 0x20) + 0x1dbc);
+    *(int *)((int)self_ + 0x4c) = i2;
   }
-  return iVar2;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101A4440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt103373BC(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_CtorVt103373BC(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint8_t ***)self_ = &PTR_LAB_103373bc;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint8_t ***)self_ = &g_103373BC;
   *(uint8_t *)((int)self_ + 0xc) = 1;
   *(uint8_t *)((int)self_ + 0xd) = 0;
   *(uint8_t *)((int)self_ + 0xe) = 0;
@@ -6008,32 +6008,32 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt103373BC(void * self_, undefin
 
 // FUNCTION: FFXIMAIN 0x101A46C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_PanelCtorVt103373C8(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_PanelCtorVt103373C8(void * self_, bits32 arg2, bits32 arg3)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_FUN_10337368;
-  uVar1 = orig::Allocator_Generic_v1(8);
-  if ((void *)uVar1 == (void *)0x0) {
-    this_00 = (void *)0x0;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337368;
+  u1 = orig::Allocator_Generic_v1(8);
+  if ((void *)u1 == (void *)0x0) {
+    obj1 = (void *)0x0;
   }
   else {
-    this_00 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)uVar1);
+    obj1 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)u1);
   }
-  *(void **)((int)self_ + 0x18) = this_00;
-  orig::FsTinyString_init(this_00);
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_10337364;
-  *(uint32_t *)((int)self_ + 0x20) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_103373c8;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_LAB_103373c4;
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_103373c0;
-  *(uint32_t *)((int)self_ + 0x24) = param_2;
+  *(void **)((int)self_ + 0x18) = obj1;
+  orig::FsTinyString_init(obj1);
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_10337364;
+  *(uint32_t *)((int)self_ + 0x20) = arg2;
+  *(uint8_t ***)self_ = &g_103373C8;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_103373C4;
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_103373C0;
+  *(uint32_t *)((int)self_ + 0x24) = arg3;
   *(uint8_t *)((int)self_ + 0x48) = 0;
   *(uint8_t *)((int)self_ + 0x28) = 0;
   return self_;
@@ -6041,32 +6041,32 @@ XI_API void * __thiscall TextInputFiles_PanelCtorVt103373C8(void * self_, undefi
 
 // FUNCTION: FFXIMAIN 0x101A4D70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_PanelCtorVt10337418(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_PanelCtorVt10337418(void * self_, bits32 arg2, bits32 arg3)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_FUN_10337368;
-  uVar1 = orig::Allocator_Generic_v1(8);
-  if ((void *)uVar1 == (void *)0x0) {
-    this_00 = (void *)0x0;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337368;
+  u1 = orig::Allocator_Generic_v1(8);
+  if ((void *)u1 == (void *)0x0) {
+    obj1 = (void *)0x0;
   }
   else {
-    this_00 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)uVar1);
+    obj1 = (void *)orig::TextInputFiles_CtorVt10337B1C((void *)u1);
   }
-  *(void **)((int)self_ + 0x18) = this_00;
-  orig::FsTinyString_init(this_00);
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_10337364;
-  *(uint32_t *)((int)self_ + 0x20) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337418;
-  *(uint8_t ***)((int)self_ + 0x14) = &PTR_LAB_10337410;
-  *(uint8_t ***)((int)self_ + 0x1c) = &PTR_LAB_1033740c;
-  *(uint32_t *)((int)self_ + 0x24) = param_2;
+  *(void **)((int)self_ + 0x18) = obj1;
+  orig::FsTinyString_init(obj1);
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_10337364;
+  *(uint32_t *)((int)self_ + 0x20) = arg2;
+  *(uint8_t ***)self_ = &g_10337418;
+  *(uint8_t ***)((int)self_ + 0x14) = &g_10337410;
+  *(uint8_t ***)((int)self_ + 0x1c) = &g_1033740C;
+  *(uint32_t *)((int)self_ + 0x24) = arg3;
   *(uint8_t *)((int)self_ + 0x48) = 0;
   *(uint8_t *)((int)self_ + 0x28) = 0;
   return self_;
@@ -6074,58 +6074,58 @@ XI_API void * __thiscall TextInputFiles_PanelCtorVt10337418(void * self_, undefi
 
 // FUNCTION: FFXIMAIN 0x101A54F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorVt10337460(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall TextInputFiles_CtorVt10337460(void * self_, bits32 arg2, bits32 arg3)
 {
-  void *pvVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  uint64_t uVar4;
+  void *p1;
+  uint32_t *p2;
+  int i1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337460;
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
-  *(uint32_t *)((int)self_ + 0x18) = param_2;
+  *(uint8_t ***)self_ = &g_10337460;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
+  *(uint32_t *)((int)self_ + 0x18) = arg3;
   *(uint8_t *)((int)self_ + 0x1c) = 0;
   *(uint32_t *)((int)self_ + 0x20) = 1;
-  uVar4 = orig::Allocator_Generic_v1(0x6b4);
-  if ((void *)uVar4 == (void *)0x0) {
-    pvVar1 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x6b4);
+  if ((void *)u1 == (void *)0x0) {
+    p1 = (void *)0x0;
   }
   else {
-    pvVar1 = orig::TextInputFiles_CtorVt10337C90((void *)uVar4,8,8,self_,&LAB_101a5450,&Read_as_v0,0x14a,0xf,0x114);
+    p1 = orig::TextInputFiles_CtorVt10337C90((void *)u1,8,8,self_,&code_101A5450,&Read_as_v0,0x14a,0xf,0x114);
   }
-  *(void **)((int)self_ + 0x44) = pvVar1;
-  iVar3 = 0x92;
-  puVar2 = (uint32_t *)((int)self_ + 0x2c);
+  *(void **)((int)self_ + 0x44) = p1;
+  i1 = 0x92;
+  p2 = (uint32_t *)((int)self_ + 0x2c);
   do {
-    uVar4 = orig::Allocator_Generic_v1(0x6b4);
-    if ((void *)uVar4 == (void *)0x0) {
-      pvVar1 = (void *)0x0;
+    u1 = orig::Allocator_Generic_v1(0x6b4);
+    if ((void *)u1 == (void *)0x0) {
+      p1 = (void *)0x0;
     }
     else {
-      pvVar1 = orig::TextInputFiles_CtorVt10337C90((void *)uVar4,9,0x3c,self_,&LAB_101a5450,&Read_as_v0,0x145,0x29,iVar3);
+      p1 = orig::TextInputFiles_CtorVt10337C90((void *)u1,9,0x3c,self_,&code_101A5450,&Read_as_v0,0x145,0x29,i1);
     }
-    *puVar2 = pvVar1;
-    iVar3 = iVar3 + 0x1e;
-    puVar2 = puVar2 + 1;
-  } while (iVar3 < 0xec);
-  iVar3 = 0x44;
-  puVar2 = (uint32_t *)((int)self_ + 0x38);
+    *p2 = p1;
+    i1 = i1 + 0x1e;
+    p2 = p2 + 1;
+  } while (i1 < 0xec);
+  i1 = 0x44;
+  p2 = (uint32_t *)((int)self_ + 0x38);
   do {
-    uVar4 = orig::Allocator_Generic_v1(0x6b4);
-    if ((void *)uVar4 == (void *)0x0) {
-      pvVar1 = (void *)0x0;
+    u1 = orig::Allocator_Generic_v1(0x6b4);
+    if ((void *)u1 == (void *)0x0) {
+      p1 = (void *)0x0;
     }
     else {
-      pvVar1 = orig::TextInputFiles_CtorVt10337C90((void *)uVar4,9,0x3c,self_,&LAB_101a5450,&Read_as_v0,0x145,0x29,iVar3);
+      p1 = orig::TextInputFiles_CtorVt10337C90((void *)u1,9,0x3c,self_,&code_101A5450,&Read_as_v0,0x145,0x29,i1);
     }
-    *puVar2 = pvVar1;
-    iVar3 = iVar3 + 0x1e;
-    puVar2 = puVar2 + 1;
-  } while (iVar3 < 0x9e);
+    *p2 = p1;
+    i1 = i1 + 0x1e;
+    p2 = p2 + 1;
+  } while (i1 < 0x9e);
   return self_;
 }
 
@@ -6137,19 +6137,19 @@ XI_API void * __thiscall TextInputFiles_CtorVt103374A8(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_103374a8;
+  *(uint8_t ***)self_ = &g_103374A8;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101A6C10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorVt103374F0(void * self_, undefined4 param_1)
+XI_API void * __thiscall TextInputFiles_CtorVt103374F0(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
@@ -6157,25 +6157,25 @@ XI_API void * __thiscall TextInputFiles_CtorVt103374F0(void * self_, undefined4 
   *(uint32_t *)((int)self_ + 0x1c) = 0;
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint8_t *)((int)self_ + 0x24) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_103374f0;
-  puVar2 = (uint32_t *)((int)self_ + 0x25);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  *(uint8_t ***)self_ = &g_103374F0;
+  p1 = (uint32_t *)((int)self_ + 0x25);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101A7280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorVt10337538(void * self_, undefined4 param_1)
+XI_API void * __thiscall TextInputFiles_CtorVt10337538(void * self_, bits32 arg2)
 {
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337538;
+  *(uint8_t ***)self_ = &g_10337538;
   return self_;
 }
 
@@ -6184,55 +6184,55 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337538(void * self_, undefined4 
 XI_API void * __thiscall TextInputFiles_CtorVt1033757C(void * self_)
 {
   *(uint8_t *)((int)self_ + 0x66c) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_1033757c;
+  *(uint8_t ***)self_ = &g_1033757C;
   orig::TextInputFiles_BuildSlotLinks(self_,-1);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101A8410
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_BuildSlotLinks(void * self_, int param_1)
+XI_API void __thiscall TextInputFiles_BuildSlotLinks(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t *puVar3;
-  char *pcVar4;
-  uint32_t *puVar5;
+  int i1;
+  int i2;
+  uint32_t *p1;
+  char *p2;
+  uint32_t *p3;
   
-  iVar2 = 0;
-  pcVar4 = (char *)((int)self_ + 0x645);
-  puVar3 = (uint32_t *)((int)self_ + 4);
+  i2 = 0;
+  p2 = (char *)((int)self_ + 0x645);
+  p1 = (uint32_t *)((int)self_ + 4);
   do {
-    puVar5 = puVar3;
-    for (iVar1 = 0x14; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+    p3 = p1;
+    for (i1 = 0x14; i1 != 0; i1 = i1 + -1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    if (param_1 < 0) {
-      pcVar4[-1] = -1;
-    }
-    else {
-      pcVar4[-1] = (char)iVar2 + (char)param_1;
-    }
-    if (iVar2 < 0x13) {
-      *pcVar4 = (char)iVar2 + '\x01';
+    if (arg2 < 0) {
+      p2[-1] = -1;
     }
     else {
-      *pcVar4 = -1;
+      p2[-1] = (char)i2 + (char)arg2;
     }
-    iVar2 = iVar2 + 1;
-    puVar3 = puVar3 + 0x14;
-    pcVar4 = pcVar4 + 2;
-  } while (iVar2 < 0x14);
+    if (i2 < 0x13) {
+      *p2 = (char)i2 + '\x01';
+    }
+    else {
+      *p2 = -1;
+    }
+    i2 = i2 + 1;
+    p1 = p1 + 0x14;
+    p2 = p2 + 2;
+  } while (i2 < 0x14);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101A8750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10337580(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10337580(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337580;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint8_t ***)self_ = &g_10337580;
   return self_;
 }
 
@@ -6240,57 +6240,57 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt10337580(void * self_, undefin
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_CreateAll(void)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::Allocator_Generic_v1(0x20);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_10662db8 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x20);
+  if ((void *)u1 == (void *)0x0) {
+    g_10662DB8 = (void *)0x0;
   }
   else {
-    DAT_10662db8 = orig::TextInputFiles_CtorVt10337B2C((void *)uVar1);
+    g_10662DB8 = orig::TextInputFiles_CtorVt10337B2C((void *)u1);
   }
-  uVar1 = orig::Allocator_Generic_v1(0x1a0);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_1066268c = (void *)0x0;
-  }
-  else {
-    DAT_1066268c = orig::TextInputFiles_InitAcqDat((void *)uVar1);
-  }
-  uVar1 = orig::Allocator_Generic_v1(0x508);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_10662690 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x1a0);
+  if ((void *)u1 == (void *)0x0) {
+    g_1066268C = (void *)0x0;
   }
   else {
-    DAT_10662690 = orig::TextInputFiles_InitPecDat((void *)uVar1);
+    g_1066268C = orig::TextInputFiles_InitAcqDat((void *)u1);
   }
-  uVar1 = orig::Allocator_Generic_v1(0x20);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_10662694 = (void *)0x0;
-  }
-  else {
-    DAT_10662694 = orig::TextInputFiles_ConstructKind1((void *)uVar1);
-  }
-  orig::TextInputFiles_RecreateMembers(DAT_10662694);
-  *(void **)(g_pTkMsgWinData + 0x64044) = DAT_10662694;
-  uVar1 = orig::Allocator_Generic_v1(0x20);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_10662698 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x508);
+  if ((void *)u1 == (void *)0x0) {
+    g_10662690 = (void *)0x0;
   }
   else {
-    DAT_10662698 = orig::TextInputFiles_ConstructKind2((void *)uVar1);
+    g_10662690 = orig::TextInputFiles_InitPecDat((void *)u1);
   }
-  orig::TextInputFiles_RecreateMembers(DAT_10662698);
-  *(void **)(dword_1057815C + 0x64044) = DAT_10662698;
-  uVar1 = orig::Allocator_Generic_v1(0x4e34);
-  if ((void *)uVar1 == (void *)0x0) {
-    DAT_10662dc0 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x20);
+  if ((void *)u1 == (void *)0x0) {
+    g_10662694 = (void *)0x0;
   }
   else {
-    DAT_10662dc0 = orig::TextInputFiles_CtorVt10337C5C((void *)uVar1);
+    g_10662694 = orig::TextInputFiles_ConstructKind1((void *)u1);
   }
-  uVar1 = orig::Allocator_Generic_v1(0x10);
-  if ((void *)uVar1 != (void *)0x0) {
-    ArgList_as_v0 = orig::TextInputFiles_CtorVt10337C3C((void *)uVar1);
+  orig::TextInputFiles_RecreateMembers(g_10662694);
+  *(void **)(g_pTkMsgWinData + 0x64044) = g_10662694;
+  u1 = orig::Allocator_Generic_v1(0x20);
+  if ((void *)u1 == (void *)0x0) {
+    g_10662698 = (void *)0x0;
+  }
+  else {
+    g_10662698 = orig::TextInputFiles_ConstructKind2((void *)u1);
+  }
+  orig::TextInputFiles_RecreateMembers(g_10662698);
+  *(void **)(g_1057815C + 0x64044) = g_10662698;
+  u1 = orig::Allocator_Generic_v1(0x4e34);
+  if ((void *)u1 == (void *)0x0) {
+    g_10662DC0 = (void *)0x0;
+  }
+  else {
+    g_10662DC0 = orig::TextInputFiles_CtorVt10337C5C((void *)u1);
+  }
+  u1 = orig::Allocator_Generic_v1(0x10);
+  if ((void *)u1 != (void *)0x0) {
+    ArgList_as_v0 = orig::TextInputFiles_CtorVt10337C3C((void *)u1);
     return;
   }
   ArgList_as_v0 = 0;
@@ -6301,7 +6301,7 @@ XI_API void __cdecl TextInputFiles_CreateAll(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_CreateDatManager(void)
 {
-  DAT_10662db0_as_s32 = orig::TextInputFiles_CreateGlobal10662DB4();
+  g_10662DB0_as_s32 = orig::TextInputFiles_CreateGlobal10662DB4();
   return;
 }
 
@@ -6309,437 +6309,437 @@ XI_API void __cdecl TextInputFiles_CreateDatManager(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_CreateConfigObjects(void)
 {
-  int iVar1;
-  void *pvVar2;
-  undefined4 *puVar3;
+  int i1;
+  void *p1;
+  bits32 *p2;
   
-  pvVar2 = orig::Allocator_Generic_v3(0x20);
-  if (pvVar2 == (void *)0x0) {
-    DAT_106626cc = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x20);
+  if (p1 == (void *)0x0) {
+    g_106626CC = (void *)0x0;
   }
   else {
-    DAT_106626cc = orig::FsConfig_Constructor(pvVar2);
+    g_106626CC = orig::FsConfig_Constructor(p1);
   }
-  puVar3 = orig::Allocator_Generic_v3(0x14);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662718 = (undefined4 *)0x0;
-  }
-  else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *puVar3 = &PTR_FUN_10337798;
-    DAT_10662718 = puVar3;
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x44);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066271c = (undefined4 *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x14);
+  if (p2 == (bits32 *)0x0) {
+    g_10662718 = (bits32 *)0x0;
   }
   else {
-    DAT_1066271c = orig::TextInputFiles_ClearWords3C(pvVar2);
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *p2 = &g_10337798;
+    g_10662718 = p2;
   }
-  puVar3 = orig::Allocator_Generic_v3(0x44);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662720 = (undefined4 *)0x0;
-  }
-  else {
-    orig::TextInputFiles_ClearWords3C(puVar3);
-    *puVar3 = &PTR_FUN_10337750;
-    DAT_10662720 = puVar3;
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x58);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662724 = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x44);
+  if (p1 == (void *)0x0) {
+    g_1066271C = (bits32 *)0x0;
   }
   else {
-    DAT_10662724 = orig::TextInputFiles_WindowItemCtorVt10336AC8(pvVar2);
+    g_1066271C = orig::TextInputFiles_ClearWords3C(p1);
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x44);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662728 = (void *)0x0;
-  }
-  else {
-    DAT_10662728 = orig::TextInputFiles_ConstructVt10336B60(pvVar2);
-  }
-  puVar3 = orig::Allocator_Generic_v3(0x14);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_1066272c = (undefined4 *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x44);
+  if (p2 == (bits32 *)0x0) {
+    g_10662720 = (bits32 *)0x0;
   }
   else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *puVar3 = &PTR_FUN_10337708;
-    DAT_1066272c = puVar3;
+    orig::TextInputFiles_ClearWords3C(p2);
+    *p2 = &g_10337750;
+    g_10662720 = p2;
   }
-  puVar3 = orig::Allocator_Generic_v3(0x30);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662730 = (undefined4 *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x58);
+  if (p1 == (void *)0x0) {
+    g_10662724 = (void *)0x0;
   }
   else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *(uint16_t *)(puVar3 + 8) = 0;
-    *(uint16_t *)((int)puVar3 + 0x22) = 0;
-    *(uint16_t *)(puVar3 + 9) = 0;
-    *(uint16_t *)((int)puVar3 + 0x26) = 0;
-    *puVar3 = &PTR_FUN_103376c0;
-    DAT_10662730 = puVar3;
+    g_10662724 = orig::TextInputFiles_WindowItemCtorVt10336AC8(p1);
   }
-  puVar3 = orig::Allocator_Generic_v3(0x28);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662734 = (undefined4 *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x44);
+  if (p1 == (void *)0x0) {
+    g_10662728 = (void *)0x0;
   }
   else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *(uint16_t *)(puVar3 + 5) = 0;
-    *(uint16_t *)((int)puVar3 + 0x16) = 0;
-    *(uint16_t *)(puVar3 + 6) = 0;
-    *(uint16_t *)((int)puVar3 + 0x1a) = 0;
-    *puVar3 = &PTR_FUN_10337678;
-    DAT_10662734 = puVar3;
+    g_10662728 = orig::TextInputFiles_ConstructVt10336B60(p1);
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x48);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662738 = (void *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x14);
+  if (p2 == (bits32 *)0x0) {
+    g_1066272C = (bits32 *)0x0;
   }
   else {
-    DAT_10662738 = orig::TextInputFiles_CtorVt10336C00(pvVar2);
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *p2 = &g_10337708;
+    g_1066272C = p2;
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x18);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066273c = (void *)0x0;
-  }
-  else {
-    DAT_1066273c = orig::TextInputFiles_CtorVt10336C48(pvVar2);
-  }
-  puVar3 = orig::Allocator_Generic_v3(0x14);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662740 = (undefined4 *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x30);
+  if (p2 == (bits32 *)0x0) {
+    g_10662730 = (bits32 *)0x0;
   }
   else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *puVar3 = &PTR_FUN_10337630;
-    DAT_10662740 = puVar3;
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *(uint16_t *)(p2 + 8) = 0;
+    *(uint16_t *)((int)p2 + 0x22) = 0;
+    *(uint16_t *)(p2 + 9) = 0;
+    *(uint16_t *)((int)p2 + 0x26) = 0;
+    *p2 = &g_103376C0;
+    g_10662730 = p2;
   }
-  puVar3 = orig::Allocator_Generic_v3(0x18);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662744 = (undefined4 *)0x0;
-  }
-  else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *puVar3 = &PTR_FUN_103375e8;
-    DAT_10662744 = puVar3;
-  }
-  puVar3 = orig::Allocator_Generic_v3(0x50);
-  if (puVar3 == (undefined4 *)0x0) {
-    DAT_10662748 = (undefined4 *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x28);
+  if (p2 == (bits32 *)0x0) {
+    g_10662734 = (bits32 *)0x0;
   }
   else {
-    orig::NetCellFont_ClearWords_v1(puVar3 + 1);
-    *(uint16_t *)((int)puVar3 + 0xe) = 0xffff;
-    puVar3[2] = 0;
-    *(uint8_t *)(puVar3 + 3) = 1;
-    *(uint16_t *)(puVar3 + 0x11) = 0;
-    *(uint16_t *)((int)puVar3 + 0x46) = 0;
-    *(uint16_t *)(puVar3 + 0x12) = 0;
-    *(uint16_t *)((int)puVar3 + 0x4a) = 0;
-    *puVar3 = &PTR_FUN_103375a0;
-    DAT_10662748 = puVar3;
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *(uint16_t *)(p2 + 5) = 0;
+    *(uint16_t *)((int)p2 + 0x16) = 0;
+    *(uint16_t *)(p2 + 6) = 0;
+    *(uint16_t *)((int)p2 + 0x1a) = 0;
+    *p2 = &g_10337678;
+    g_10662734 = p2;
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x14);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066274c = (void *)0x0;
-  }
-  else {
-    DAT_1066274c = orig::TextInputFiles_ConstructVt10336C90(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x3c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662750 = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x48);
+  if (p1 == (void *)0x0) {
+    g_10662738 = (void *)0x0;
   }
   else {
-    DAT_10662750 = orig::TextInputFiles_ConstructVt10336CD8(pvVar2);
+    g_10662738 = orig::TextInputFiles_CtorVt10336C00(p1);
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x44);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662754 = (void *)0x0;
-  }
-  else {
-    DAT_10662754 = orig::TextInputFiles_ConstructVt10336D70(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x44);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662758 = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x18);
+  if (p1 == (void *)0x0) {
+    g_1066273C = (void *)0x0;
   }
   else {
-    DAT_10662758 = orig::TextInputFiles_ConstructVt10336DC0(pvVar2);
+    g_1066273C = orig::TextInputFiles_CtorVt10336C48(p1);
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x58);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066275c = (void *)0x0;
-  }
-  else {
-    DAT_1066275c = orig::TextInputFiles_WindowItemCtorVt10336E10(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x20);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662760 = (void *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x14);
+  if (p2 == (bits32 *)0x0) {
+    g_10662740 = (bits32 *)0x0;
   }
   else {
-    DAT_10662760 = orig::TextInputFiles_CtorVt10336F30(pvVar2);
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *p2 = &g_10337630;
+    g_10662740 = p2;
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x34);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662764 = (void *)0x0;
-  }
-  else {
-    DAT_10662764 = orig::TextInputFiles_ConstructVt10336BB0(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x24);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662768 = (void *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x18);
+  if (p2 == (bits32 *)0x0) {
+    g_10662744 = (bits32 *)0x0;
   }
   else {
-    DAT_10662768 = orig::TextInputFiles_CtorVt10336F78(pvVar2);
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *p2 = &g_103375E8;
+    g_10662744 = p2;
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x9c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662770 = (void *)0x0;
-  }
-  else {
-    DAT_10662770 = orig::TextInputFiles_ByteTableAltCtor(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x9c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662774 = (void *)0x0;
+  p2 = orig::Allocator_Generic_v3(0x50);
+  if (p2 == (bits32 *)0x0) {
+    g_10662748 = (bits32 *)0x0;
   }
   else {
-    DAT_10662774 = orig::TextInputFiles_ByteTableDefaultCtor(pvVar2);
+    orig::NetCellFont_ClearWords_v1(p2 + 1);
+    *(uint16_t *)((int)p2 + 0xe) = 0xffff;
+    p2[2] = 0;
+    *(uint8_t *)(p2 + 3) = 1;
+    *(uint16_t *)(p2 + 0x11) = 0;
+    *(uint16_t *)((int)p2 + 0x46) = 0;
+    *(uint16_t *)(p2 + 0x12) = 0;
+    *(uint16_t *)((int)p2 + 0x4a) = 0;
+    *p2 = &g_103375A0;
+    g_10662748 = p2;
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x58);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662778 = (void *)0x0;
-  }
-  else {
-    DAT_10662778 = orig::TextInputFiles_CtorVt103370F8(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x54);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066276c_as_v0 = (void *)0x0;
-  }
-  else {
-    DAT_1066276c_as_v0 = orig::TextInputFiles_WindowItemCtorVt10336E58(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x3c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_1066277c = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x14);
+  if (p1 == (void *)0x0) {
+    g_1066274C = (void *)0x0;
   }
   else {
-    DAT_1066277c = orig::TextInputFiles_WindowItemCtorVt10336EA0(pvVar2);
+    g_1066274C = orig::TextInputFiles_ConstructVt10336C90(p1);
   }
-  pvVar2 = orig::Allocator_Generic_v3(0x2c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662780 = (void *)0x0;
-  }
-  else {
-    DAT_10662780 = orig::TextInputFiles_ConstructVt10336EE8(pvVar2);
-  }
-  pvVar2 = orig::Allocator_Generic_v3(0x4c);
-  if (pvVar2 == (void *)0x0) {
-    DAT_10662784 = (void *)0x0;
+  p1 = orig::Allocator_Generic_v3(0x3c);
+  if (p1 == (void *)0x0) {
+    g_10662750 = (void *)0x0;
   }
   else {
-    DAT_10662784 = orig::TextInputFiles_CtorCachingSettings(pvVar2);
+    g_10662750 = orig::TextInputFiles_ConstructVt10336CD8(p1);
   }
-  iVar1 = *(int *)(g_pSceneState + 8);
-  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((iVar1 == 2 || (iVar1 == 3)))) || (iVar1 != 0)) {
-    orig::TextInputFiles_AddPairChecked(2,&LAB_10197030,DAT_10662720);
-    orig::TextInputFiles_AddPairChecked(3,&LAB_10197030,DAT_10662720);
-    orig::TextInputFiles_AddPairChecked(5,&LAB_10197030,DAT_10662720);
-    puVar3 = DAT_10662720;
+  p1 = orig::Allocator_Generic_v3(0x44);
+  if (p1 == (void *)0x0) {
+    g_10662754 = (void *)0x0;
   }
   else {
-    orig::TextInputFiles_AddPairChecked(2,&LAB_10197030,DAT_1066271c);
-    orig::TextInputFiles_AddPairChecked(3,&LAB_10197030,DAT_1066271c);
-    orig::TextInputFiles_AddPairChecked(5,&LAB_10197030,DAT_1066271c);
-    puVar3 = DAT_1066271c;
+    g_10662754 = orig::TextInputFiles_ConstructVt10336D70(p1);
   }
-  orig::TextInputFiles_AddPairChecked(0x44,&LAB_10197030,puVar3);
+  p1 = orig::Allocator_Generic_v3(0x44);
+  if (p1 == (void *)0x0) {
+    g_10662758 = (void *)0x0;
+  }
+  else {
+    g_10662758 = orig::TextInputFiles_ConstructVt10336DC0(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x58);
+  if (p1 == (void *)0x0) {
+    g_1066275C = (void *)0x0;
+  }
+  else {
+    g_1066275C = orig::TextInputFiles_WindowItemCtorVt10336E10(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x20);
+  if (p1 == (void *)0x0) {
+    g_10662760 = (void *)0x0;
+  }
+  else {
+    g_10662760 = orig::TextInputFiles_CtorVt10336F30(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x34);
+  if (p1 == (void *)0x0) {
+    g_10662764 = (void *)0x0;
+  }
+  else {
+    g_10662764 = orig::TextInputFiles_ConstructVt10336BB0(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x24);
+  if (p1 == (void *)0x0) {
+    g_10662768 = (void *)0x0;
+  }
+  else {
+    g_10662768 = orig::TextInputFiles_CtorVt10336F78(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x9c);
+  if (p1 == (void *)0x0) {
+    g_10662770 = (void *)0x0;
+  }
+  else {
+    g_10662770 = orig::TextInputFiles_ByteTableAltCtor(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x9c);
+  if (p1 == (void *)0x0) {
+    g_10662774 = (void *)0x0;
+  }
+  else {
+    g_10662774 = orig::TextInputFiles_ByteTableDefaultCtor(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x58);
+  if (p1 == (void *)0x0) {
+    g_10662778 = (void *)0x0;
+  }
+  else {
+    g_10662778 = orig::TextInputFiles_CtorVt103370F8(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x54);
+  if (p1 == (void *)0x0) {
+    g_1066276C_as_v0 = (void *)0x0;
+  }
+  else {
+    g_1066276C_as_v0 = orig::TextInputFiles_WindowItemCtorVt10336E58(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x3c);
+  if (p1 == (void *)0x0) {
+    g_1066277C = (void *)0x0;
+  }
+  else {
+    g_1066277C = orig::TextInputFiles_WindowItemCtorVt10336EA0(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x2c);
+  if (p1 == (void *)0x0) {
+    g_10662780 = (void *)0x0;
+  }
+  else {
+    g_10662780 = orig::TextInputFiles_ConstructVt10336EE8(p1);
+  }
+  p1 = orig::Allocator_Generic_v3(0x4c);
+  if (p1 == (void *)0x0) {
+    g_10662784 = (void *)0x0;
+  }
+  else {
+    g_10662784 = orig::TextInputFiles_CtorCachingSettings(p1);
+  }
+  i1 = *(int *)(g_pSceneState + 8);
+  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) || (i1 != 0)) {
+    orig::TextInputFiles_AddPairChecked(2,&TextInputFiles_SetFieldCallback_as_v0,g_10662720);
+    orig::TextInputFiles_AddPairChecked(3,&TextInputFiles_SetFieldCallback_as_v0,g_10662720);
+    orig::TextInputFiles_AddPairChecked(5,&TextInputFiles_SetFieldCallback_as_v0,g_10662720);
+    p2 = g_10662720;
+  }
+  else {
+    orig::TextInputFiles_AddPairChecked(2,&TextInputFiles_SetFieldCallback_as_v0,g_1066271C);
+    orig::TextInputFiles_AddPairChecked(3,&TextInputFiles_SetFieldCallback_as_v0,g_1066271C);
+    orig::TextInputFiles_AddPairChecked(5,&TextInputFiles_SetFieldCallback_as_v0,g_1066271C);
+    p2 = g_1066271C;
+  }
+  orig::TextInputFiles_AddPairChecked(0x44,&TextInputFiles_SetFieldCallback_as_v0,p2);
   orig::TextInputFiles_RegisterMenuHandlers();
-  orig::TextInputFiles_AddPairChecked(7,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(8,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(9,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(10,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0x37,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0x38,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0x39,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0x9a,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0xca,&LAB_10197a70,DAT_10662724);
-  orig::TextInputFiles_AddPairChecked(0x34,&LAB_101aaa30,0);
-  orig::TextInputFiles_AddPairChecked(0xb4,&LAB_10199610,DAT_10662750);
-  orig::TextInputFiles_AddPairChecked(0xb5,&LAB_10199610,DAT_10662750);
-  orig::TextInputFiles_AddPairChecked(0x12,&LAB_10199610,DAT_10662750);
-  orig::TextInputFiles_AddPairChecked(0xa4,&LAB_10199610,DAT_10662750);
-  orig::TextInputFiles_AddPairChecked(0xe,&LAB_10199de0,DAT_10662754);
-  orig::TextInputFiles_AddPairChecked(0xf,&LAB_10199de0,DAT_10662754);
-  orig::TextInputFiles_AddPairChecked(0x10,&LAB_10199de0,DAT_10662754);
-  orig::TextInputFiles_AddPairChecked(0x9c,&LAB_10199de0,DAT_10662754);
-  orig::TextInputFiles_AddPairChecked(0x11,&LAB_10199de0,DAT_10662754);
-  orig::TextInputFiles_AddPairChecked(0xb6,&LAB_10199de0,DAT_10662758);
-  orig::TextInputFiles_AddPairChecked(0xb7,&LAB_10199de0,DAT_10662758);
-  orig::TextInputFiles_AddPairChecked(0xb8,&LAB_10199de0,DAT_10662758);
-  orig::TextInputFiles_AddPairChecked(0xc5,&LAB_10199de0,DAT_10662758);
-  orig::TextInputFiles_AddPairChecked(0xc6,&LAB_10199de0,DAT_10662758);
-  orig::TextInputFiles_AddPairChecked(0x13,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0x3a,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0x3b,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0x3c,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0x99,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0xa5,&LAB_1019ae60,DAT_1066275c);
-  orig::TextInputFiles_AddPairChecked(0x3e,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x3f,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x40,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x43,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x9d,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x9e,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0xbe,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0xbf,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0xc0,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0xc2,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0xc3,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0x99,&LAB_1019bc10,DAT_1066277c);
-  orig::TextInputFiles_AddPairChecked(0xc9,&LAB_1019bf20,DAT_10662780);
-  orig::TextInputFiles_AddPairChecked(0xce,&LAB_1019bf20,DAT_10662780);
-  orig::TextInputFiles_AddPairChecked(0x18,&LAB_1019c3c0,DAT_10662768);
-  orig::TextInputFiles_AddPairChecked(3,&LAB_101b5080,DAT_10662d40_as_v2);
-  orig::TextInputFiles_AddPairChecked(0xc9,&LAB_101b5080,DAT_10662d40_as_v2);
-  orig::TextInputFiles_AddPairChecked(0x44,&LAB_101b5080,DAT_10662d40_as_v2);
-  orig::TextInputFiles_AddPairChecked(0x36,&LAB_101b5080,DAT_10662d40_as_v2);
-  orig::TextInputFiles_AddPairChecked(0xb4,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xb5,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(7,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0x12,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xe,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xf,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0x10,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0x9c,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0x11,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xb6,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xb7,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xb8,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xc5,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0xc6,&LAB_101aaa90,0);
-  orig::TextInputFiles_AddPairChecked(0x32,&LAB_101aa980,0);
-  orig::TextInputFiles_AddPairChecked(0x33,&LAB_101aa980,0);
-  orig::TextInputFiles_AddPairChecked(0x35,&LAB_101aa980,0);
-  orig::TextInputFiles_AddPairChecked(0xb9,&LAB_1019a220,0);
-  orig::TextInputFiles_AddPairChecked(0xba,&LAB_1019a220,0);
-  orig::TextInputFiles_AddPairChecked(0xbb,&LAB_1019a220,0);
-  orig::TextInputFiles_AddPairChecked(0xbc,&LAB_1019a220,0);
-  orig::TextInputFiles_AddPairChecked(9,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(10,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(8,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x95,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x96,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x3a,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x3b,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x3c,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x37,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x38,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x39,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x3e,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x3f,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x40,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x43,&LAB_101aa650,0);
-  orig::TextInputFiles_AddPairChecked(0x18,&LAB_101ba460,DAT_10662db8_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x42,&LAB_1019b7e0,DAT_1066276c_as_v0);
-  orig::TextInputFiles_AddPairChecked(0x4a,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x4b,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x4c,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x4d,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x4e,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x4f,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x50,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x51,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x52,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x53,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x54,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x55,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x56,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x57,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x58,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x59,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5b,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5a,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5c,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5d,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5e,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x5f,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x60,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x61,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x62,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(99,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(100,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x65,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x67,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x66,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x68,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x69,&LAB_1019d4d0,DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0x6a,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x6b,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x6c,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x6d,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x6e,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x6f,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x70,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x71,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x72,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x73,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x74,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x75,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x76,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x77,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x78,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x79,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7a,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7b,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7c,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7d,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7e,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x7f,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x80,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x81,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x82,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x83,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x84,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0xb1,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x85,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0xbd,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x86,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0xcd,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x87,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x88,&LAB_1019d540,DAT_10662774);
-  orig::TextInputFiles_AddPairChecked(0x89,&LAB_1019d540,DAT_10662774);
-  orig::FUN_1019d320(DAT_10662770);
-  orig::TextInputFiles_AddPairChecked(0xa8,&LAB_1019df20,DAT_10662784);
-  orig::TextInputFiles_AddPairChecked(0xab,&LAB_1019df20,DAT_10662784);
-  orig::TextInputFiles_AddPairChecked(0xac,&LAB_1019df20,DAT_10662784);
-  orig::TextInputFiles_AddPairChecked(0xad,&LAB_1019df20,DAT_10662784);
-  orig::TextInputFiles_AddPairChecked(0xaf,&LAB_1019df20,DAT_10662784);
+  orig::TextInputFiles_AddPairChecked(7,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(8,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(9,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(10,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0x37,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0x38,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0x39,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0x9a,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0xca,&TextInputFiles_SetFieldCallback2_as_v0,g_10662724);
+  orig::TextInputFiles_AddPairChecked(0x34,&code_101AAA30,0);
+  orig::TextInputFiles_AddPairChecked(0xb4,&code_10199610,g_10662750);
+  orig::TextInputFiles_AddPairChecked(0xb5,&code_10199610,g_10662750);
+  orig::TextInputFiles_AddPairChecked(0x12,&code_10199610,g_10662750);
+  orig::TextInputFiles_AddPairChecked(0xa4,&code_10199610,g_10662750);
+  orig::TextInputFiles_AddPairChecked(0xe,&code_10199DE0,g_10662754);
+  orig::TextInputFiles_AddPairChecked(0xf,&code_10199DE0,g_10662754);
+  orig::TextInputFiles_AddPairChecked(0x10,&code_10199DE0,g_10662754);
+  orig::TextInputFiles_AddPairChecked(0x9c,&code_10199DE0,g_10662754);
+  orig::TextInputFiles_AddPairChecked(0x11,&code_10199DE0,g_10662754);
+  orig::TextInputFiles_AddPairChecked(0xb6,&code_10199DE0,g_10662758);
+  orig::TextInputFiles_AddPairChecked(0xb7,&code_10199DE0,g_10662758);
+  orig::TextInputFiles_AddPairChecked(0xb8,&code_10199DE0,g_10662758);
+  orig::TextInputFiles_AddPairChecked(0xc5,&code_10199DE0,g_10662758);
+  orig::TextInputFiles_AddPairChecked(0xc6,&code_10199DE0,g_10662758);
+  orig::TextInputFiles_AddPairChecked(0x13,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0x3a,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0x3b,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0x3c,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0x99,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0xa5,&code_1019AE60,g_1066275C);
+  orig::TextInputFiles_AddPairChecked(0x3e,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x3f,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x40,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x43,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x9d,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x9e,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0xbe,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0xbf,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0xc0,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0xc2,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0xc3,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0x99,&code_1019BC10,g_1066277C);
+  orig::TextInputFiles_AddPairChecked(0xc9,&code_1019BF20,g_10662780);
+  orig::TextInputFiles_AddPairChecked(0xce,&code_1019BF20,g_10662780);
+  orig::TextInputFiles_AddPairChecked(0x18,&code_1019C3C0,g_10662768);
+  orig::TextInputFiles_AddPairChecked(3,&TextInputFiles_ApplySetting_as_v0,g_10662D40_as_v2);
+  orig::TextInputFiles_AddPairChecked(0xc9,&TextInputFiles_ApplySetting_as_v0,g_10662D40_as_v2);
+  orig::TextInputFiles_AddPairChecked(0x44,&TextInputFiles_ApplySetting_as_v0,g_10662D40_as_v2);
+  orig::TextInputFiles_AddPairChecked(0x36,&TextInputFiles_ApplySetting_as_v0,g_10662D40_as_v2);
+  orig::TextInputFiles_AddPairChecked(0xb4,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xb5,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(7,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x12,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xe,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xf,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x10,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x9c,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x11,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xb6,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xb7,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xb8,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xc5,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0xc6,&TextInputFiles_ApplyUiSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x32,&code_101AA980,0);
+  orig::TextInputFiles_AddPairChecked(0x33,&code_101AA980,0);
+  orig::TextInputFiles_AddPairChecked(0x35,&code_101AA980,0);
+  orig::TextInputFiles_AddPairChecked(0xb9,&code_1019A220,0);
+  orig::TextInputFiles_AddPairChecked(0xba,&code_1019A220,0);
+  orig::TextInputFiles_AddPairChecked(0xbb,&code_1019A220,0);
+  orig::TextInputFiles_AddPairChecked(0xbc,&code_1019A220,0);
+  orig::TextInputFiles_AddPairChecked(9,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(10,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(8,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x95,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x96,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x3a,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x3b,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x3c,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x37,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x38,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x39,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x3e,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x3f,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x40,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x43,&TextInputFiles_ApplyConfigSetting_as_v0,0);
+  orig::TextInputFiles_AddPairChecked(0x18,&code_101BA460,g_10662DB8_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x42,&code_1019B7E0,g_1066276C_as_v0);
+  orig::TextInputFiles_AddPairChecked(0x4a,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x4b,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x4c,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x4d,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x4e,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x4f,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x50,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x51,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x52,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x53,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x54,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x55,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x56,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x57,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x58,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x59,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5b,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5a,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5c,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5d,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5e,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x5f,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x60,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x61,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x62,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(99,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(100,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x65,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x67,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x66,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x68,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x69,&code_1019D4D0,g_10662770);
+  orig::TextInputFiles_AddPairChecked(0x6a,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x6b,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x6c,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x6d,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x6e,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x6f,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x70,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x71,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x72,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x73,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x74,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x75,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x76,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x77,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x78,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x79,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7a,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7b,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7c,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7d,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7e,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x7f,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x80,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x81,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x82,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x83,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x84,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0xb1,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x85,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0xbd,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x86,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0xcd,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x87,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x88,&code_1019D540,g_10662774);
+  orig::TextInputFiles_AddPairChecked(0x89,&code_1019D540,g_10662774);
+  orig::game_1019D320(g_10662770);
+  orig::TextInputFiles_AddPairChecked(0xa8,&code_1019DF20,g_10662784);
+  orig::TextInputFiles_AddPairChecked(0xab,&code_1019DF20,g_10662784);
+  orig::TextInputFiles_AddPairChecked(0xac,&code_1019DF20,g_10662784);
+  orig::TextInputFiles_AddPairChecked(0xad,&code_1019DF20,g_10662784);
+  orig::TextInputFiles_AddPairChecked(0xaf,&code_1019DF20,g_10662784);
   return;
 }
 
@@ -6747,276 +6747,276 @@ XI_API void __cdecl TextInputFiles_CreateConfigObjects(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_RegisterMenuHandlers(void)
 {
-  orig::TextInputFiles_AddPairChecked(0x1b,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x1d,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x1e,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x1f,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0xb3,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0xb0,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0xcb,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0xcc,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x20,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x21,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x22,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x1c,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x9b,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x23,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x24,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x25,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x26,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x27,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x28,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x29,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2a,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2b,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2c,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2d,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2e,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x2f,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x30,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x31,&LAB_101965d0,0);
-  orig::TextInputFiles_AddPairChecked(0x1b,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x1d,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0xb0,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x1e,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x1f,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0xb3,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0xcb,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0xcc,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x20,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x21,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x22,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x1c,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x9b,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x23,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x24,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x25,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x26,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x27,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x28,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x29,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2a,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2b,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2c,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2d,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2e,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x2f,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x30,&LAB_1012a260,0);
-  orig::TextInputFiles_AddPairChecked(0x31,&LAB_1012a260,0);
+  orig::TextInputFiles_AddPairChecked(0x1b,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x1d,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x1e,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x1f,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0xb3,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0xb0,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0xcb,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0xcc,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x20,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x21,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x22,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x1c,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x9b,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x23,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x24,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x25,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x26,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x27,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x28,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x29,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2a,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2b,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2c,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2d,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2e,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x2f,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x30,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x31,&code_101965D0,0);
+  orig::TextInputFiles_AddPairChecked(0x1b,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x1d,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0xb0,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x1e,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x1f,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0xb3,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0xcb,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0xcc,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x20,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x21,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x22,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x1c,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x9b,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x23,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x24,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x25,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x26,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x27,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x28,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x29,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2a,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2b,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2c,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2d,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2e,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x2f,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x30,&code_1012A260,0);
+  orig::TextInputFiles_AddPairChecked(0x31,&code_1012A260,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101AA650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_ApplyConfigSetting(undefined4 param_1, uint32_t param_2)
+XI_API bits32 __cdecl TextInputFiles_ApplyConfigSetting(bits32 arg1, uint32_t arg2)
 {
-  long double fVar1;
-  long double fVar2;
-  uint32_t uVar3;
-  float fVar4;
+  long double f1;
+  long double f2;
+  uint32_t u1;
+  float f3;
   
-  fVar1 = (float)(long double)(int)param_2;
-  fVar4 = (float)((long double)(int)param_2 * (long double)0.00999999977648258209228515625f);
-  switch(xi_sw(param_1)) {
+  f1 = (float)(long double)(int)arg2;
+  f3 = (float)((long double)(int)arg2 * (long double)0.00999999977648258209228515625f);
+  switch(xi_sw(arg1)) {
   case 9:
-    if ((int)param_2 < 1) {
-      fVar4 = 0.0f;
+    if ((int)arg2 < 1) {
+      f3 = 0.0f;
     }
-    orig::SoundElem_SetFactor103516F8(fVar4);
+    orig::SoundElem_SetFactor103516F8(f3);
     orig::SoundElem_SetFactor103516FC(0x3f800000);
     return 1;
   case 10:
-    if ((int)param_2 < 1) {
-      fVar4 = 0.0f;
+    if ((int)arg2 < 1) {
+      f3 = 0.0f;
     }
-    orig::FUN_100372a0(fVar4);
-    orig::FUN_100372e0(0x3f800000);
+    orig::game_100372A0(f3);
+    orig::game_100372E0(0x3f800000);
     return 1;
   case 0x37:
-    uVar3 = orig::FUN_10002be0();
-    if ((char)uVar3 == '\x01') {
-      orig::Gfx_SetGammaR((float)(((long double)fVar4 - (long double)0.5f) + (long double)1.5f));
+    u1 = orig::Gfx_IsGammaSupported_as_v0();
+    if ((char)u1 == '\x01') {
+      orig::Gfx_SetGammaR((float)(((long double)f3 - (long double)0.5f) + (long double)1.5f));
       return 1;
     }
     break;
   case 0x38:
-    uVar3 = orig::FUN_10002be0();
-    if ((char)uVar3 == '\x01') {
-      orig::Gfx_SetGammaG((float)(((long double)fVar4 - (long double)0.5f) + (long double)1.5f));
+    u1 = orig::Gfx_IsGammaSupported_as_v0();
+    if ((char)u1 == '\x01') {
+      orig::Gfx_SetGammaG((float)(((long double)f3 - (long double)0.5f) + (long double)1.5f));
       return 1;
     }
     break;
   case 0x39:
-    uVar3 = orig::FUN_10002be0();
-    if ((char)uVar3 == '\x01') {
-      orig::Gfx_SetGammaB((float)(((long double)fVar4 - (long double)0.5f) + (long double)1.5f));
+    u1 = orig::Gfx_IsGammaSupported_as_v0();
+    if ((char)u1 == '\x01') {
+      orig::Gfx_SetGammaB((float)(((long double)f3 - (long double)0.5f) + (long double)1.5f));
       return 1;
     }
     break;
   case 0x3a:
-    orig::AppMainLoop_SetShadowSetting(param_2);
+    orig::AppMainLoop_SetShadowSetting(arg2);
     return 1;
   case 0x3b:
-    orig::AppMainLoop_SetFloat10456A68(fVar1);
+    orig::AppMainLoop_SetFloat10456A68(f1);
     return 1;
   case 0x3e:
-    fVar2 = ((long double)fVar1 + (long double)25.0f) * (long double)0.0199999995529651641845703125f;
-    if (!(fVar2 >= (long double)0.9900000095367431640625f)) {
+    f2 = ((long double)f1 + (long double)25.0f) * (long double)0.0199999995529651641845703125f;
+    if (!(f2 >= (long double)0.9900000095367431640625f)) {
       orig::AppMainLoop_SetGlobal10456A5C(0x3f000000);
-      uVar3 = 0x3f000000;
+      u1 = 0x3f000000;
     }
     else {
       orig::AppMainLoop_SetGlobal10456A5C(0x3f800000);
-      uVar3 = 0x3f800000;
+      u1 = 0x3f800000;
     }
-    orig::AppMainLoop_SetGlobal10456A6C(uVar3);
-    orig::AppMainLoop_SetFloat10456AB8((float)fVar2);
-    orig::AppMainLoop_SetFloat10456AA8((float)fVar2);
+    orig::AppMainLoop_SetGlobal10456A6C(u1);
+    orig::AppMainLoop_SetFloat10456AB8((float)f2);
+    orig::AppMainLoop_SetFloat10456AA8((float)f2);
     return 1;
   case 0x3f:
-    orig::AppMainLoop_SetGlobal10456A70(1 - param_2);
+    orig::AppMainLoop_SetGlobal10456A70(1 - arg2);
     return 1;
   case 0x40:
-    orig::AppMainLoop_SetCfg0020(3 - param_2);
+    orig::AppMainLoop_SetCfg0020(3 - arg2);
     return 1;
   case 0x43:
-    orig::Gfx_SetAspectIndex_v1(param_2);
+    orig::Gfx_SetAspectIndex_v1(arg2);
     return 1;
   case 0x95:
     *(uint32_t *)(g_pSceneState + 0x18) =
-         (param_2 * 2 ^ *(uint32_t *)(g_pSceneState + 0x18)) & 6 ^ *(uint32_t *)(g_pSceneState + 0x18);
+         (arg2 * 2 ^ *(uint32_t *)(g_pSceneState + 0x18)) & 6 ^ *(uint32_t *)(g_pSceneState + 0x18);
     return 1;
   case 0x96:
     *(uint32_t *)(g_pSceneState + 0x18) =
-         (*(uint32_t *)(g_pSceneState + 0x18) ^ param_2) & 1 ^ *(uint32_t *)(g_pSceneState + 0x18);
+         (*(uint32_t *)(g_pSceneState + 0x18) ^ arg2) & 1 ^ *(uint32_t *)(g_pSceneState + 0x18);
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101AAA90
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __cdecl TextInputFiles_ApplyUiSetting(undefined4 param_1, int param_2)
+XI_API bits32 __cdecl TextInputFiles_ApplyUiSetting(bits32 arg1, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = param_2;
-  switch(xi_sw(param_1)) {
+  i1 = arg2;
+  switch(xi_sw(arg1)) {
   case 7:
-    if (param_2 == 0) {
+    if (arg2 == 0) {
       *(uint8_t *)(g_pTargetMng_as_s32 + 0x51) = 1;
       return 1;
     }
     *(uint8_t *)(g_pTargetMng_as_s32 + 0x51) = 0;
     return 1;
   case 0xe:
-    if (param_2 == 0) {
-      orig::TargetMenu_SetFlag58AndResetScroll(DAT_1062193c,1);
-      uVar2 = orig::Settings_GetValue_v2(0xf);
-      orig::TargetMenu_SetLineCount(DAT_1062193c,uVar2);
-      uVar2 = orig::Settings_GetValue_v2(0x10);
-      orig::TargetMenu_SetShownLines(DAT_1062193c,uVar2);
-      iVar1 = *DAT_1062193c;
-      uVar2 = orig::Settings_GetValue_v2(0x9c);
-      ((int (__stdcall *)(XI_ANY))((**(code **)(iVar1 + 0x5c))))(uVar2);
-      orig::FUN_10162d90(DAT_1062193c);
+    if (arg2 == 0) {
+      orig::TargetMenu_SetFlag58AndResetScroll(g_1062193C,1);
+      u1 = orig::Settings_GetValue_v2(0xf);
+      orig::TargetMenu_SetLineCount(g_1062193C,u1);
+      u1 = orig::Settings_GetValue_v2(0x10);
+      orig::TargetMenu_SetShownLines(g_1062193C,u1);
+      i1 = *g_1062193C;
+      u1 = orig::Settings_GetValue_v2(0x9c);
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+      orig::game_10162D90(g_1062193C);
       return 1;
     }
-    orig::TargetMenu_SetFlag58AndResetScroll(DAT_1062193c,0);
-    uVar2 = orig::Settings_GetValue_v2(0xf);
-    orig::TargetMenu_SetLineCount(DAT_1062193c,uVar2);
-    uVar2 = orig::Settings_GetValue_v2(0x10);
-    orig::TargetMenu_SetShownLines(DAT_1062193c,uVar2);
-    iVar1 = *DAT_1062193c;
-    uVar2 = orig::Settings_GetValue_v2(0x9c);
-    ((int (__stdcall *)(XI_ANY))((**(code **)(iVar1 + 0x5c))))(uVar2);
-    orig::FUN_10162d90(DAT_1062193c);
+    orig::TargetMenu_SetFlag58AndResetScroll(g_1062193C,0);
+    u1 = orig::Settings_GetValue_v2(0xf);
+    orig::TargetMenu_SetLineCount(g_1062193C,u1);
+    u1 = orig::Settings_GetValue_v2(0x10);
+    orig::TargetMenu_SetShownLines(g_1062193C,u1);
+    i1 = *g_1062193C;
+    u1 = orig::Settings_GetValue_v2(0x9c);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+    orig::game_10162D90(g_1062193C);
     return 1;
   case 0xf:
-    orig::TargetMenu_SetLineCount(DAT_1062193c,param_2);
+    orig::TargetMenu_SetLineCount(g_1062193C,arg2);
     return 1;
   case 0x10:
-    orig::TargetMenu_SetShownLines(DAT_1062193c,param_2);
+    orig::TargetMenu_SetShownLines(g_1062193C,arg2);
     return 1;
   case 0x11:
-    orig::FUN_10162ea0(DAT_1062193c,(float)(long double)param_2);
+    orig::game_10162EA0(g_1062193C,(float)arg2);
     return 1;
   case 0x12:
-    orig::Menu_ReloadResource_v1(&g_menuMng_as_v0,&param_1,param_2);
+    orig::Menu_ReloadResource_v1(&g_menuMng_as_v0,&arg1,arg2);
     break;
   case 0x9c:
-    uVar2 = orig::Settings_GetValue_v2(0xf);
-    orig::TargetMenu_SetLineCount(DAT_1062193c,uVar2);
-    uVar2 = orig::Settings_GetValue_v2(0x10);
-    orig::TargetMenu_SetShownLines(DAT_1062193c,uVar2);
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_1062193c + 0x5c))))((void *)(DAT_1062193c),param_2);
-    orig::FUN_10162d90(DAT_1062193c);
+    u1 = orig::Settings_GetValue_v2(0xf);
+    orig::TargetMenu_SetLineCount(g_1062193C,u1);
+    u1 = orig::Settings_GetValue_v2(0x10);
+    orig::TargetMenu_SetShownLines(g_1062193C,u1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1062193C + 0x5c))))((void *)(g_1062193C),arg2);
+    orig::game_10162D90(g_1062193C);
     return 1;
   case 0xb4:
-    if (DAT_10621940_as_v0 != (int *)0x0) {
-      *(uint8_t *)((int)DAT_10621940_as_v0 + 0x4d) = param_2 != 0;
-      orig::thunk_FUN_10162ef0(DAT_10621940_as_v0);
+    if (g_10621940_as_v0 != (int *)0x0) {
+      *(uint8_t *)((int)g_10621940_as_v0 + 0x4d) = arg2 != 0;
+      orig::thunk_TargetMenu_ResetScrollToLines_as_v0(g_10621940_as_v0);
       return 1;
     }
     break;
   case 0xb5:
-    if (DAT_1062193c != (int *)0x0) {
-      orig::TargetMenu_SetWord56(DAT_1062193c,param_2);
+    if (g_1062193C != (int *)0x0) {
+      orig::TargetMenu_SetWord56(g_1062193C,arg2);
     }
-    if (DAT_10621940_as_v0 != (int *)0x0) {
-      orig::TargetMenu_SetWord56(DAT_10621940_as_v0,iVar1);
+    if (g_10621940_as_v0 != (int *)0x0) {
+      orig::TargetMenu_SetWord56(g_10621940_as_v0,i1);
       return 1;
     }
     break;
   case 0xb6:
-    if (param_2 == 0) {
-      orig::TargetMenu_SetFlag58AndResetScroll(DAT_10621940_as_v0,1);
-      uVar2 = orig::Settings_GetValue_v2(0xb7);
-      orig::TargetMenu_SetLineCount(DAT_10621940_as_v0,uVar2);
-      uVar2 = orig::Settings_GetValue_v2(0xb8);
-      orig::TargetMenu_SetShownLines(DAT_10621940_as_v0,uVar2);
-      iVar1 = *DAT_10621940_as_v0;
-      uVar2 = orig::Settings_GetValue_v2(0xc5);
-      ((int (__stdcall *)(XI_ANY))((**(code **)(iVar1 + 0x5c))))(uVar2);
-      orig::FUN_10162d90(DAT_10621940_as_v0);
+    if (arg2 == 0) {
+      orig::TargetMenu_SetFlag58AndResetScroll(g_10621940_as_v0,1);
+      u1 = orig::Settings_GetValue_v2(0xb7);
+      orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
+      u1 = orig::Settings_GetValue_v2(0xb8);
+      orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+      i1 = *g_10621940_as_v0;
+      u1 = orig::Settings_GetValue_v2(0xc5);
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+      orig::game_10162D90(g_10621940_as_v0);
       return 1;
     }
-    orig::TargetMenu_SetFlag58AndResetScroll(DAT_10621940_as_v0,0);
-    uVar2 = orig::Settings_GetValue_v2(0xb7);
-    orig::TargetMenu_SetLineCount(DAT_10621940_as_v0,uVar2);
-    uVar2 = orig::Settings_GetValue_v2(0xb8);
-    orig::TargetMenu_SetShownLines(DAT_10621940_as_v0,uVar2);
-    iVar1 = *DAT_10621940_as_v0;
-    uVar2 = orig::Settings_GetValue_v2(0xc5);
-    ((int (__stdcall *)(XI_ANY))((**(code **)(iVar1 + 0x5c))))(uVar2);
-    orig::FUN_10162d90(DAT_10621940_as_v0);
+    orig::TargetMenu_SetFlag58AndResetScroll(g_10621940_as_v0,0);
+    u1 = orig::Settings_GetValue_v2(0xb7);
+    orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
+    u1 = orig::Settings_GetValue_v2(0xb8);
+    orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+    i1 = *g_10621940_as_v0;
+    u1 = orig::Settings_GetValue_v2(0xc5);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(i1 + 0x5c))))(u1);
+    orig::game_10162D90(g_10621940_as_v0);
     return 1;
   case 0xb7:
-    orig::TargetMenu_SetLineCount(DAT_10621940_as_v0,param_2);
+    orig::TargetMenu_SetLineCount(g_10621940_as_v0,arg2);
     return 1;
   case 0xb8:
-    orig::TargetMenu_SetShownLines(DAT_10621940_as_v0,param_2);
+    orig::TargetMenu_SetShownLines(g_10621940_as_v0,arg2);
     return 1;
   case 0xc5:
-    if (param_2 == -1) {
-      uVar2 = orig::Settings_GetValue_v2(0x9c);
-      orig::SetConfig(0xc5,uVar2);
+    if (arg2 == -1) {
+      u1 = orig::Settings_GetValue_v2(0x9c);
+      orig::SetConfig(0xc5,u1);
       return 1;
     }
-    uVar2 = orig::Settings_GetValue_v2(0xb7);
-    orig::TargetMenu_SetLineCount(DAT_10621940_as_v0,uVar2);
-    uVar2 = orig::Settings_GetValue_v2(0xb8);
-    orig::TargetMenu_SetShownLines(DAT_10621940_as_v0,uVar2);
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10621940_as_v0 + 0x5c))))((void *)(DAT_10621940_as_v0),iVar1);
-    orig::FUN_10162d90(DAT_10621940_as_v0);
+    u1 = orig::Settings_GetValue_v2(0xb7);
+    orig::TargetMenu_SetLineCount(g_10621940_as_v0,u1);
+    u1 = orig::Settings_GetValue_v2(0xb8);
+    orig::TargetMenu_SetShownLines(g_10621940_as_v0,u1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10621940_as_v0 + 0x5c))))((void *)(g_10621940_as_v0),i1);
+    orig::game_10162D90(g_10621940_as_v0);
     return 1;
   case 0xc6:
-    if (param_2 == -1) {
-      uVar2 = orig::Settings_GetValue_v2(0x11);
-      orig::SetConfig(0xc6,uVar2);
+    if (arg2 == -1) {
+      u1 = orig::Settings_GetValue_v2(0x11);
+      orig::SetConfig(0xc6,u1);
       return 1;
     }
-    orig::FUN_10162ea0(DAT_10621940_as_v0,(float)(long double)param_2);
+    orig::game_10162EA0(g_10621940_as_v0,(float)arg2);
     return 1;
   }
   return 1;
@@ -7026,14 +7026,14 @@ XI_API undefined4 __cdecl TextInputFiles_ApplyUiSetting(undefined4 param_1, int 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_CreateEmptyObject(void)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::Allocator_Generic_v1(1);
-  if ((void *)uVar1 != (void *)0x0) {
-    dword_106627EC_as_v0 = orig::TextInputFiles_ReturnThis((void *)uVar1);
+  u1 = orig::Allocator_Generic_v1(1);
+  if ((void *)u1 != (void *)0x0) {
+    g_106627EC_as_v0 = orig::TextInputFiles_ReturnThis((void *)u1);
     return;
   }
-  dword_106627EC_as_v0 = (void *)0x0;
+  g_106627EC_as_v0 = (void *)0x0;
   return;
 }
 
@@ -7041,176 +7041,176 @@ XI_API void __cdecl TextInputFiles_CreateEmptyObject(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_CreateMenuSystem(void)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  uint64_t uVar3;
+  int i1;
+  bits32 *p1;
+  uint64_t u1;
   
-  DAT_10662794 = orig::TextInputFiles_Create();
-  uVar3 = orig::Allocator_Generic_v1(0x24);
-  if ((void *)uVar3 == (void *)0x0) {
-    dword_1066279C_as_v0 = (void *)0x0;
+  g_10662794 = orig::TextInputFiles_Create();
+  u1 = orig::Allocator_Generic_v1(0x24);
+  if ((void *)u1 == (void *)0x0) {
+    g_1066279C_as_v0 = (void *)0x0;
   }
   else {
-    dword_1066279C_as_v0 = (void *)orig::TextInputFiles_CtorVt10337314((void *)uVar3,DAT_10662794);
+    g_1066279C_as_v0 = (void *)orig::TextInputFiles_CtorVt10337314((void *)u1,g_10662794);
   }
-  uVar3 = orig::Allocator_Generic_v1(0x50);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627a0 = (void *)0x0;
-  }
-  else {
-    DAT_106627a0 = orig::TextInputFiles_PanelCtorVt10337320((void *)uVar3,DAT_10662794,dword_1066279C_as_v0);
-  }
-  uVar3 = orig::Allocator_Generic_v1(0x50);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627a4 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x50);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627A0 = (void *)0x0;
   }
   else {
-    DAT_106627a4 = orig::TextInputFiles_PanelCtorVt10337378((void *)uVar3,DAT_10662794,dword_1066279C_as_v0);
+    g_106627A0 = orig::TextInputFiles_PanelCtorVt10337320((void *)u1,g_10662794,g_1066279C_as_v0);
   }
-  orig::TextInputFiles_SetFields1C20(dword_1066279C_as_v0,DAT_106627a0,DAT_106627a4);
-  uVar3 = orig::Allocator_Generic_v1(0x10);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627a8 = 0;
-  }
-  else {
-    DAT_106627a8 = orig::TextInputFiles_CtorVt103373BC((void *)uVar3,DAT_10662794);
-  }
-  uVar3 = orig::Allocator_Generic_v1(0x4c);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627ac = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x50);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627A4 = (void *)0x0;
   }
   else {
-    DAT_106627ac = orig::TextInputFiles_PanelCtorVt103373C8((void *)uVar3,DAT_10662794,DAT_106627a8);
+    g_106627A4 = orig::TextInputFiles_PanelCtorVt10337378((void *)u1,g_10662794,g_1066279C_as_v0);
   }
-  uVar3 = orig::Allocator_Generic_v1(0x4c);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627b0 = (void *)0x0;
-  }
-  else {
-    DAT_106627b0 = orig::TextInputFiles_PanelCtorVt10337418((void *)uVar3,DAT_10662794,DAT_106627a8);
-  }
-  uVar3 = orig::Allocator_Generic_v1(0x48);
-  if ((void *)uVar3 == (void *)0x0) {
-    DAT_106627b4 = (void *)0x0;
+  orig::TextInputFiles_SetFields1C20(g_1066279C_as_v0,g_106627A0,g_106627A4);
+  u1 = orig::Allocator_Generic_v1(0x10);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627A8 = 0;
   }
   else {
-    DAT_106627b4 = orig::TextInputFiles_CtorVt10337460((void *)uVar3,DAT_10662794,DAT_106627a8);
+    g_106627A8 = orig::TextInputFiles_CtorVt103373BC((void *)u1,g_10662794);
   }
-  if (DAT_106627b8 == (undefined4 *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x20);
-    iVar1 = DAT_10662794;
-    puVar2 = (undefined4 *)uVar3;
-    if (puVar2 == (undefined4 *)0x0) {
-      DAT_106627b8 = (undefined4 *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x4c);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627AC = (void *)0x0;
+  }
+  else {
+    g_106627AC = orig::TextInputFiles_PanelCtorVt103373C8((void *)u1,g_10662794,g_106627A8);
+  }
+  u1 = orig::Allocator_Generic_v1(0x4c);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627B0 = (void *)0x0;
+  }
+  else {
+    g_106627B0 = orig::TextInputFiles_PanelCtorVt10337418((void *)u1,g_10662794,g_106627A8);
+  }
+  u1 = orig::Allocator_Generic_v1(0x48);
+  if ((void *)u1 == (void *)0x0) {
+    g_106627B4 = (void *)0x0;
+  }
+  else {
+    g_106627B4 = orig::TextInputFiles_CtorVt10337460((void *)u1,g_10662794,g_106627A8);
+  }
+  if (g_106627B8 == (bits32 *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x20);
+    i1 = g_10662794;
+    p1 = (bits32 *)u1;
+    if (p1 == (bits32 *)0x0) {
+      g_106627B8 = (bits32 *)0x0;
     }
     else {
-      orig::NetCellFont_ClearWords(puVar2 + 1);
-      *(uint16_t *)((int)puVar2 + 0xe) = 0xffff;
-      puVar2[2] = 0;
-      *(uint8_t *)(puVar2 + 3) = 1;
-      puVar2[5] = iVar1;
-      *puVar2 = &PTR_FUN_103378b8;
-      DAT_106627b8 = puVar2;
+      orig::NetCellFont_ClearWords(p1 + 1);
+      *(uint16_t *)((int)p1 + 0xe) = 0xffff;
+      p1[2] = 0;
+      *(uint8_t *)(p1 + 3) = 1;
+      p1[5] = i1;
+      *p1 = &g_103378B8;
+      g_106627B8 = p1;
     }
   }
-  if (DAT_106627bc == (undefined4 *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x58);
-    puVar2 = (undefined4 *)uVar3;
-    if (puVar2 == (undefined4 *)0x0) {
-      DAT_106627bc = (undefined4 *)0x0;
+  if (g_106627BC == (bits32 *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x58);
+    p1 = (bits32 *)u1;
+    if (p1 == (bits32 *)0x0) {
+      g_106627BC = (bits32 *)0x0;
     }
     else {
-      orig::NetCellFont_ClearWords(puVar2 + 1);
-      *(uint16_t *)((int)puVar2 + 0xe) = 0xffff;
-      puVar2[2] = 0;
-      *(uint8_t *)(puVar2 + 3) = 1;
-      *puVar2 = &PTR_FUN_10337870;
-      *(uint8_t *)((int)puVar2 + 0x51) = 0;
-      puVar2[0x15] = 0;
-      DAT_106627bc = puVar2;
+      orig::NetCellFont_ClearWords(p1 + 1);
+      *(uint16_t *)((int)p1 + 0xe) = 0xffff;
+      p1[2] = 0;
+      *(uint8_t *)(p1 + 3) = 1;
+      *p1 = &g_10337870;
+      *(uint8_t *)((int)p1 + 0x51) = 0;
+      p1[0x15] = 0;
+      g_106627BC = p1;
     }
   }
-  if (DAT_106627c0 == (void *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x14);
-    if ((void *)uVar3 == (void *)0x0) {
-      DAT_106627c0 = (void *)0x0;
+  if (g_106627C0 == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x14);
+    if ((void *)u1 == (void *)0x0) {
+      g_106627C0 = (void *)0x0;
     }
     else {
-      DAT_106627c0 = orig::TextInputFiles_CtorVt103374A8((void *)uVar3);
+      g_106627C0 = orig::TextInputFiles_CtorVt103374A8((void *)u1);
     }
   }
-  if (DAT_106627c4 == (undefined4 *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x70);
-    iVar1 = DAT_10662794;
-    puVar2 = (undefined4 *)uVar3;
-    if (puVar2 == (undefined4 *)0x0) {
-      DAT_106627c4 = (undefined4 *)0x0;
+  if (g_106627C4 == (bits32 *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x70);
+    i1 = g_10662794;
+    p1 = (bits32 *)u1;
+    if (p1 == (bits32 *)0x0) {
+      g_106627C4 = (bits32 *)0x0;
     }
     else {
-      orig::NetCellFont_ClearWords(puVar2 + 1);
-      *(uint16_t *)((int)puVar2 + 0xe) = 0xffff;
-      puVar2[2] = 0;
-      *(uint8_t *)(puVar2 + 3) = 1;
-      puVar2[5] = iVar1;
-      puVar2[6] = 0;
-      puVar2[8] = 0;
-      puVar2[0x1a] = 0;
-      *(uint8_t *)(puVar2 + 0x1b) = 0;
-      *puVar2 = &PTR_FUN_10337828;
-      DAT_106627c4 = puVar2;
+      orig::NetCellFont_ClearWords(p1 + 1);
+      *(uint16_t *)((int)p1 + 0xe) = 0xffff;
+      p1[2] = 0;
+      *(uint8_t *)(p1 + 3) = 1;
+      p1[5] = i1;
+      p1[6] = 0;
+      p1[8] = 0;
+      p1[0x1a] = 0;
+      *(uint8_t *)(p1 + 0x1b) = 0;
+      *p1 = &g_10337828;
+      g_106627C4 = p1;
     }
   }
-  if (DAT_106627c8 == (undefined4 *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x18);
-    iVar1 = DAT_10662794;
-    puVar2 = (undefined4 *)uVar3;
-    if (puVar2 == (undefined4 *)0x0) {
-      DAT_106627c8 = (undefined4 *)0x0;
+  if (g_106627C8 == (bits32 *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x18);
+    i1 = g_10662794;
+    p1 = (bits32 *)u1;
+    if (p1 == (bits32 *)0x0) {
+      g_106627C8 = (bits32 *)0x0;
     }
     else {
-      orig::NetCellFont_ClearWords(puVar2 + 1);
-      *(uint16_t *)((int)puVar2 + 0xe) = 0xffff;
-      puVar2[2] = 0;
-      *(uint8_t *)(puVar2 + 3) = 1;
-      puVar2[5] = iVar1;
-      *puVar2 = &PTR_FUN_103377e0;
-      DAT_106627c8 = puVar2;
+      orig::NetCellFont_ClearWords(p1 + 1);
+      *(uint16_t *)((int)p1 + 0xe) = 0xffff;
+      p1[2] = 0;
+      *(uint8_t *)(p1 + 3) = 1;
+      p1[5] = i1;
+      *p1 = &g_103377E0;
+      g_106627C8 = p1;
     }
   }
-  if (DAT_106627d8 == (void *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x670);
-    if ((void *)uVar3 == (void *)0x0) {
-      DAT_106627d8 = (void *)0x0;
+  if (g_106627D8 == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x670);
+    if ((void *)u1 == (void *)0x0) {
+      g_106627D8 = (void *)0x0;
     }
     else {
-      DAT_106627d8 = orig::TextInputFiles_CtorVt1033757C((void *)uVar3);
+      g_106627D8 = orig::TextInputFiles_CtorVt1033757C((void *)u1);
     }
   }
-  if (DAT_106627d4 == 0) {
-    uVar3 = orig::Allocator_Generic_v1(8);
-    if ((void *)uVar3 == (void *)0x0) {
-      DAT_106627d4 = 0;
+  if (g_106627D4 == 0) {
+    u1 = orig::Allocator_Generic_v1(8);
+    if ((void *)u1 == (void *)0x0) {
+      g_106627D4 = 0;
     }
     else {
-      DAT_106627d4 = orig::TextInputFiles_CtorVt10337580((void *)uVar3,DAT_106627d8);
+      g_106627D4 = orig::TextInputFiles_CtorVt10337580((void *)u1,g_106627D8);
     }
   }
-  if (DAT_106627cc == (void *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x48);
-    if ((void *)uVar3 == (void *)0x0) {
-      DAT_106627cc = (void *)0x0;
+  if (g_106627CC == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x48);
+    if ((void *)u1 == (void *)0x0) {
+      g_106627CC = (void *)0x0;
     }
     else {
-      DAT_106627cc = orig::TextInputFiles_CtorVt103374F0((void *)uVar3,DAT_106627d4);
+      g_106627CC = orig::TextInputFiles_CtorVt103374F0((void *)u1,g_106627D4);
     }
   }
-  if (DAT_106627d0 == (void *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x18);
-    if ((void *)uVar3 != (void *)0x0) {
-      DAT_106627d0 = orig::TextInputFiles_CtorVt10337538((void *)uVar3,DAT_106627d4);
+  if (g_106627D0 == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x18);
+    if ((void *)u1 != (void *)0x0) {
+      g_106627D0 = orig::TextInputFiles_CtorVt10337538((void *)u1,g_106627D4);
       return;
     }
-    DAT_106627d0 = (void *)0x0;
+    g_106627D0 = (void *)0x0;
   }
   return;
 }
@@ -7220,12 +7220,12 @@ XI_API void __cdecl TextInputFiles_CreateMenuSystem(void)
 XI_API void __cdecl TextInputFiles_SaveAll(void)
 {
   orig::TextInputFiles_RecreateMembers(*(void **)(g_pTkMsgWinData + 0x64044));
-  orig::TextInputFiles_RecreateMembers(*(void **)(dword_1057815C + 0x64044));
-  orig::TextInputFiles_ResetConfigReturn1(DAT_106626cc);
-  orig::TextInputFiles_FlushThenTrue(DAT_106626cc);
-  orig::TextInputFiles_ReadTigDatSetFlag(DAT_106626cc);
-  if (DAT_10662db0_as_s32 != 0) {
-    *(uint8_t *)(DAT_10662db0_as_s32 + 8) = 0;
+  orig::TextInputFiles_RecreateMembers(*(void **)(g_1057815C + 0x64044));
+  orig::TextInputFiles_ResetConfigReturn1(g_106626CC);
+  orig::TextInputFiles_FlushThenTrue(g_106626CC);
+  orig::TextInputFiles_ReadTigDatSetFlag(g_106626CC);
+  if (g_10662DB0_as_s32 != 0) {
+    *(uint8_t *)(g_10662DB0_as_s32 + 8) = 0;
   }
   return;
 }
@@ -7234,7 +7234,7 @@ XI_API void __cdecl TextInputFiles_SaveAll(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_Call101953D0(void)
 {
-  orig::FUN_101953d0(*(void **)(unsigned int)XI_GAME(0x106626CCu));
+  orig::game_101953D0(*(void **)(unsigned int)XI_GAME(0x106626CCu));
   return;
 }
 
@@ -7243,49 +7243,49 @@ XI_API void __cdecl TextInputFiles_Call101953D0(void)
 XI_API void __cdecl TextInputFiles_ReloadAll(void)
 {
   orig::TextInputFiles_NoOpC();
-  if (DAT_10662db0 != (void *)0x0) {
-    orig::XI_CRYPT_101BA030(DAT_10662db0);
+  if (g_10662DB0 != (void *)0x0) {
+    orig::XI_CRYPT_101BA030(g_10662DB0);
   }
-  if (DAT_106626cc != (void *)0x0) {
-    orig::TextInputFiles_ReloadConfig(DAT_106626cc);
+  if (g_106626CC != (void *)0x0) {
+    orig::TextInputFiles_ReloadConfig(g_106626CC);
   }
-  if (DAT_106627d8 != (void *)0x0) {
-    orig::TextInputFiles_BuildSlotLinks(DAT_106627d8,-1);
+  if (g_106627D8 != (void *)0x0) {
+    orig::TextInputFiles_BuildSlotLinks(g_106627D8,-1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101AB770
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((cdecl, regparm(1))) TextInputFiles_HandleJumpMapKeys(undefined4 xi_eax)
+XI_API void __attribute__((cdecl, regparm(1))) TextInputFiles_HandleJumpMapKeys(bits32 xi_eax)
 {
   int xi_eax_00;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if (DAT_1066268c != (void *)0x0) {
-    xi_eax = orig::TextInputFiles_CommitPending8C(DAT_1066268c);
+  if (g_1066268C != (void *)0x0) {
+    xi_eax = orig::TextInputFiles_CommitPending8C(g_1066268C);
   }
-  uVar1 = orig::NetCellFont_TestCommand36CF60(0x3f,0xb9,1,-1,xi_eax);
-  xi_eax_00 = (int)uVar1;
-  if ((char)uVar1 != '\0') {
-    xi_eax_00 = orig::Command_RunLine(s__jump_1037ab7c,1);
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3f,0xb9,1,-1,xi_eax);
+  xi_eax_00 = (int)u1;
+  if ((char)u1 != '\0') {
+    xi_eax_00 = orig::Command_RunLine(str__jump_1037AB7C,1);
   }
-  uVar1 = orig::NetCellFont_TestCommand36CF60(0x3f,0xba,1,-1,xi_eax_00);
-  if ((char)uVar1 != '\0') {
-    orig::Command_RunLine(&DAT_1037ab74,1);
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3f,0xba,1,-1,xi_eax_00);
+  if ((char)u1 != '\0') {
+    orig::Command_RunLine(&g_1037AB74,1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101AB7D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) TextInputFiles_LoadAllAndTimestamp(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) TextInputFiles_LoadAllAndTimestamp(bits32 xi_eax)
 {
-  if (DAT_10662db0 != (void *)0x0) {
-    xi_eax = orig::XI_CRYPT_101B9FF0(DAT_10662db0);
+  if (g_10662DB0 != (void *)0x0) {
+    xi_eax = orig::XI_CRYPT_101B9FF0(g_10662DB0);
   }
-  if (DAT_106626cc != (void *)0x0) {
-    xi_eax = orig::TextInputFiles_UpdateIfFlag9(DAT_106626cc);
+  if (g_106626CC != (void *)0x0) {
+    xi_eax = orig::TextInputFiles_UpdateIfFlag9(g_106626CC);
   }
   if (g_pFileMng_as_v0 != (void *)0x0) {
     xi_eax = orig::TextInputFiles_FileMngCall101C2D90(g_pFileMng_as_v0);
@@ -7304,162 +7304,162 @@ XI_API void * __thiscall TextInputFiles_ReturnThis(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_HandleMenuKeys(void * self_)
 {
-  int iVar1;
-  uint64_t uVar2;
-  uint32_t uVar3;
+  int i1;
+  uint64_t u1;
+  uint32_t u2;
   
   if (*(char *)self_ == '\0') {
     return;
   }
-  iVar1 = g_pTargetMng_as_s32;
+  i1 = g_pTargetMng_as_s32;
   if (*(int *)(g_pTargetMng_as_s32 + 0xc4) != 0) {
-    if (DAT_10662d40 == (void *)0x0) {
+    if (g_10662D40 == (void *)0x0) {
       return;
     }
-    iVar1 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40);
-    if ((char)iVar1 == '\0') {
+    i1 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40);
+    if ((char)i1 == '\0') {
       return;
     }
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2b,0,-1,iVar1);
-  if ((char)uVar2 == '\0') {
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2c,0,-1,(int)uVar2);
-    if ((char)uVar2 != '\0') {
-      uVar3 = 1;
-      goto LAB_101ab8b1;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2b,0,-1,i1);
+  if ((char)u1 == '\0') {
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2c,0,-1,(int)u1);
+    if ((char)u1 != '\0') {
+      u2 = 1;
+      goto code_101AB8B1;
     }
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2e,0,-1,(int)uVar2);
-    if ((char)uVar2 != '\0') {
-      uVar3 = 4;
-      goto LAB_101ab8b1;
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2e,0,-1,(int)u1);
+    if ((char)u1 != '\0') {
+      u2 = 4;
+      goto code_101AB8B1;
     }
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2d,0,-1,(int)uVar2);
-    uVar3 = (uint32_t)uVar2;
-    if ((char)uVar2 != '\0') {
-      uVar3 = 3;
-      goto LAB_101ab8b1;
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2d,0,-1,(int)u1);
+    u2 = (uint32_t)u1;
+    if ((char)u1 != '\0') {
+      u2 = 3;
+      goto code_101AB8B1;
     }
   }
   else {
-    uVar3 = 2;
-LAB_101ab8b1:
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,uVar3);
-    uVar3 = (uint32_t)uVar2;
+    u2 = 2;
+code_101AB8B1:
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,u2);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,5);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,5);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,0,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1d);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,0,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1d);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,5,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x20);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x93,5,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x20);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,6);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,6);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,1,0,uVar3);
-  if ((char)uVar2 == '\0') {
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8c,1,-1,(int)uVar2);
-    uVar3 = (uint32_t)uVar2;
-    if ((char)uVar2 == '\0') goto LAB_101ab981;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,1,0,u2);
+  if ((char)u1 == '\0') {
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8c,1,-1,(int)u1);
+    u2 = (uint32_t)u1;
+    if ((char)u1 == '\0') goto code_101AB981;
   }
-  uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1e);
-  uVar3 = (uint32_t)uVar2;
-LAB_101ab981:
-  uVar3 = orig::FitFont_ReturnFalse_v1(uVar3);
-  if ((char)uVar3 == '\0') {
-    iVar1 = 1;
+  u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1e);
+  u2 = (uint32_t)u1;
+code_101AB981:
+  u2 = orig::FitFont_ReturnFalse_v1(u2);
+  if ((char)u2 == '\0') {
+    i1 = 1;
   }
   else {
-    iVar1 = 5;
+    i1 = 5;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,iVar1,1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1f);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x94,i1,1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x1f);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x18,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,7);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x18,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,7);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x11,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,8);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x11,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,8);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x1e,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x11);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x1e,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x11);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x1f,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x15);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x1f,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x15);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x14,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x12);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x14,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x12);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x86,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,10);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x86,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,10);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x85,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xb);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x85,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xb);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x22,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xc);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x22,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xc);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x24,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xe);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x24,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xe);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x25,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xf);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x25,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0xf);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x26,1,-1,uVar3);
-  uVar3 = (uint32_t)uVar2;
-  if ((char)uVar2 != '\0') {
-    uVar2 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x10);
-    uVar3 = (uint32_t)uVar2;
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x26,1,-1,u2);
+  u2 = (uint32_t)u1;
+  if ((char)u1 != '\0') {
+    u1 = orig::Menu_HandleEvent(&g_menuMng_as_v0,0x10);
+    u2 = (uint32_t)u1;
   }
-  uVar2 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2f,1,-1,uVar3);
-  if ((char)uVar2 != '\0') {
+  u1 = orig::NetCellFont_TestCommand36CF60(0x3e,0x2f,1,-1,u2);
+  if ((char)u1 != '\0') {
     orig::Menu_HandleEvent(&g_menuMng_as_v0,0x13);
   }
   return;
@@ -7467,28 +7467,28 @@ LAB_101ab981:
 
 // FUNCTION: FFXIMAIN 0x101ABB40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsTextInput_Init(void * self_, undefined4 param_1)
+XI_API void __thiscall FsTextInput_Init(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint32_t *)((int)self_ + 0x3c) = param_1;
+  *(uint32_t *)((int)self_ + 0x3c) = arg2;
   *(uint8_t *)self_ = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x6c4);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x6c4);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0x888) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x88c);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x88c);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0xa50) = 0;
   *(uint32_t *)((int)self_ + 0xa58) = 0;
   *(uint32_t *)((int)self_ + 0xc28) = 0;
@@ -7503,9 +7503,9 @@ XI_API void __thiscall FsTextInput_Init(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x101ABBD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetModeAndReset(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_SetModeAndReset(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0xa54) = param_1;
+  *(uint32_t *)((int)self_ + 0xa54) = arg2;
   orig::TextInputFiles_ResetLineState(self_);
   return;
 }
@@ -7514,29 +7514,29 @@ XI_API void __thiscall TextInputFiles_SetModeAndReset(void * self_, undefined4 p
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ResetLineState(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::TextInputFiles_ClearFirstString((void *)((int)self_ + 0xa8));
   *(uint8_t *)self_ = 0;
   *(uint32_t *)((int)self_ + 0x38) = 0;
   *(uint32_t *)((int)self_ + 0xa4) = 0;
   *(uint32_t *)((int)self_ + 0x70) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x6c4);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x6c4);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0x888) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x88c);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x88c);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0xa50) = 0;
   *(uint32_t *)((int)self_ + 0xa58) = 0;
   *(uint8_t *)((int)self_ + 0xc24) = 1;
@@ -7545,117 +7545,117 @@ XI_API void __thiscall TextInputFiles_ResetLineState(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ABC50
 // GATE: PASS -- 100 trials, 90 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-XI_API undefined4 __thiscall FsTextInput_SetText(void * self_, int param_1, int param_2)
+XI_API bits32 __thiscall FsTextInput_SetText(void * self_, int arg2, int arg3)
 {
-  char cVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
+  char c1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
+  int i1;
+  char *p1;
+  char *p2;
   char xi_frame[456] __attribute__((aligned(4)));
-  int  &local_1c8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  char  (&local_1c4)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 4);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 4);
   
-  uVar2 = 0;
-  if (((param_1 != 0) && (uVar2 = param_2, 0 < param_2)) && (param_2 < 0x1c3)) {
-    iVar6 = 0;
-    local_1c8 = 0;
-    if (0 < param_2) {
+  u1 = 0;
+  if (((arg2 != 0) && (u1 = arg3, 0 < arg3)) && (arg3 < 0x1c3)) {
+    i1 = 0;
+    i2 = 0;
+    if (0 < arg3) {
       while( true ) {
-        if (*(char *)(local_1c8 + param_1) == '\0') break;
-        uVar2 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(*(char *)(local_1c8 + param_1)))),0);
-        if ((*(char *)(local_1c8 + param_1) == -0x7f) && (*(char *)(local_1c8 + 1 + param_1) == '@')
+        if (*(char *)(i2 + arg2) == '\0') break;
+        u1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(*(char *)(i2 + arg2)))),0);
+        if ((*(char *)(i2 + arg2) == -0x7f) && (*(char *)(i2 + 1 + arg2) == '@')
            ) {
-          local_1c4[iVar6] = ' ';
-          iVar6 = iVar6 + 1;
+          val1[i1] = ' ';
+          i1 = i1 + 1;
         }
-        else if (0 < (int)uVar2) {
-          pcVar7 = (char *)(local_1c8 + param_1);
-          pcVar8 = local_1c4 + iVar6;
-          for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-            *(uint32_t *)pcVar8 = *(uint32_t *)pcVar7;
-            pcVar7 = pcVar7 + 4;
-            pcVar8 = pcVar8 + 4;
+        else if (0 < (int)u1) {
+          p1 = (char *)(i2 + arg2);
+          p2 = val1 + i1;
+          for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+            *(uint32_t *)p2 = *(uint32_t *)p1;
+            p1 = p1 + 4;
+            p2 = p2 + 4;
           }
-          iVar6 = iVar6 + uVar2;
-          for (uVar3 = uVar2 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-            *pcVar8 = *pcVar7;
-            pcVar7 = pcVar7 + 1;
-            pcVar8 = pcVar8 + 1;
+          i1 = i1 + u1;
+          for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+            *p2 = *p1;
+            p1 = p1 + 1;
+            p2 = p2 + 1;
           }
         }
-        if ((0x1c1 < iVar6) || (local_1c8 = local_1c8 + uVar2, param_2 <= local_1c8)) break;
+        if ((0x1c1 < i1) || (i2 = i2 + u1, arg3 <= i2)) break;
       }
     }
-    uVar3 = 0xffffffff;
-    local_1c4[iVar6] = '\0';
-    pcVar7 = local_1c4;
+    u2 = 0xffffffff;
+    val1[i1] = '\0';
+    p1 = val1;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 != '\0');
-    uVar3 = ~uVar3;
-    uVar4 = uVar3 - 1;
-    uVar2 = *(int *)((int)self_ + 0xa50) + uVar4;
-    if (((int)uVar2 <= *(int *)((int)self_ + 0xa54)) &&
-       (uVar2 = *(uint32_t *)((int)self_ + 0x888), (int)(uVar2 + uVar4) <= *(int *)((int)self_ + 0xa54)))
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    u2 = ~u2;
+    u3 = u2 - 1;
+    u1 = *(int *)((int)self_ + 0xa50) + u3;
+    if (((int)u1 <= *(int *)((int)self_ + 0xa54)) &&
+       (u1 = *(uint32_t *)((int)self_ + 0x888), (int)(u1 + u3) <= *(int *)((int)self_ + 0xa54)))
     {
-      uVar5 = *(uint32_t *)((int)self_ + 0xa58);
-      if (uVar5 == uVar2) {
-        pcVar7 = local_1c4;
-        pcVar8 = (char *)(uVar2 + 0x6c4 + (int)self_);
-        for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-          *(uint32_t *)pcVar8 = *(uint32_t *)pcVar7;
-          pcVar7 = pcVar7 + 4;
-          pcVar8 = pcVar8 + 4;
+      u4 = *(uint32_t *)((int)self_ + 0xa58);
+      if (u4 == u1) {
+        p1 = val1;
+        p2 = (char *)(u1 + 0x6c4 + (int)self_);
+        for (u4 = u2 >> 2; u4 != 0; u4 = u4 - 1) {
+          *(uint32_t *)p2 = *(uint32_t *)p1;
+          p1 = p1 + 4;
+          p2 = p2 + 4;
         }
-        for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-          *pcVar8 = *pcVar7;
-          pcVar7 = pcVar7 + 1;
-          pcVar8 = pcVar8 + 1;
+        for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+          *p2 = *p1;
+          p1 = p1 + 1;
+          p2 = p2 + 1;
         }
-        iVar6 = *(int *)((int)self_ + 0xa58);
-        *(uint32_t *)((int)self_ + 0x888) = *(int *)((int)self_ + 0x888) + uVar4;
+        i1 = *(int *)((int)self_ + 0xa58);
+        *(uint32_t *)((int)self_ + 0x888) = *(int *)((int)self_ + 0x888) + u3;
       }
       else {
-        orig::FUN_103149d0((uint32_t *)(uVar5 + uVar4 + 0x6c4 + (int)self_),
-                     (uint32_t *)(uVar5 + 0x6c4 + (int)self_),uVar2 - uVar5);
-        pcVar7 = local_1c4;
-        pcVar8 = (char *)(*(int *)((int)self_ + 0xa58) + 0x6c4 + (int)self_);
-        for (uVar2 = uVar4 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-          *(uint32_t *)pcVar8 = *(uint32_t *)pcVar7;
-          pcVar7 = pcVar7 + 4;
-          pcVar8 = pcVar8 + 4;
+        orig::game_103149D0((uint32_t *)(u4 + u3 + 0x6c4 + (int)self_),
+                     (uint32_t *)(u4 + 0x6c4 + (int)self_),u1 - u4);
+        p1 = val1;
+        p2 = (char *)(*(int *)((int)self_ + 0xa58) + 0x6c4 + (int)self_);
+        for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
+          *(uint32_t *)p2 = *(uint32_t *)p1;
+          p1 = p1 + 4;
+          p2 = p2 + 4;
         }
-        for (uVar2 = uVar4 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-          *pcVar8 = *pcVar7;
-          pcVar7 = pcVar7 + 1;
-          pcVar8 = pcVar8 + 1;
+        for (u1 = u3 & 3; u1 != 0; u1 = u1 - 1) {
+          *p2 = *p1;
+          p1 = p1 + 1;
+          p2 = p2 + 1;
         }
-        iVar6 = *(int *)((int)self_ + 0xa58);
-        *(uint32_t *)((int)self_ + 0x888) = *(int *)((int)self_ + 0x888) + uVar4;
+        i1 = *(int *)((int)self_ + 0xa58);
+        *(uint32_t *)((int)self_ + 0x888) = *(int *)((int)self_ + 0x888) + u3;
       }
-      *(uint32_t *)((int)self_ + 0xa58) = iVar6 + uVar4;
+      *(uint32_t *)((int)self_ + 0xa58) = i1 + u3;
       *(uint8_t *)(*(int *)((int)self_ + 0x888) + 0x6c4 + (int)self_) = 0;
-      iVar6 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
+      i1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
                            (char *)((int)self_ + 0x6c4),*(int *)((int)self_ + 0x888),0,0);
-      *(int *)((int)self_ + 0xa50) = iVar6;
+      *(int *)((int)self_ + 0xa50) = i1;
       *(uint8_t *)((int)self_ + 0xc24) = 1;
       *(uint8_t *)((int)self_ + 0xc78) = 1;
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar6 >> 8))) << 8) | (uint8_t)(1)));
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar2 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101ABE40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) FsTextInput_GetFlag(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) FsTextInput_GetFlag(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(uint8_t *)self_)));
 }
@@ -7676,24 +7676,24 @@ XI_API void __thiscall FsTextInput_ClearState(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ABE80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_GetCode(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall FsTextInput_GetCode(void * self_, bits32 * arg2)
 {
-  *param_1 = *(uint32_t *)((int)self_ + 1);
-  return param_1;
+  *arg2 = *(uint32_t *)((int)self_ + 1);
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x101ABEF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsTextInput_CursorLeft(void * self_)
 {
-  int iVar1;
+  int i1;
   
   if (*(int *)((int)self_ + 0xa58) != 0) {
-    iVar1 = orig::Text_CountChars((int)self_ + 0x6c4,*(uint32_t *)((int)self_ + 0x888),
+    i1 = orig::Text_CountChars((int)self_ + 0x6c4,*(uint32_t *)((int)self_ + 0x888),
                          *(int *)((int)self_ + 0xa58));
-    iVar1 = *(int *)((int)self_ + 0xa58) - iVar1;
-    *(int *)((int)self_ + 0xa58) = iVar1;
-    if (iVar1 < 0) {
+    i1 = *(int *)((int)self_ + 0xa58) - i1;
+    *(int *)((int)self_ + 0xa58) = i1;
+    if (i1 < 0) {
       *(uint32_t *)((int)self_ + 0xa58) = 0;
       return;
     }
@@ -7704,151 +7704,151 @@ XI_API void __thiscall FsTextInput_CursorLeft(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ABF40
 // GATE: PASS -- 100 trials, 69 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 69
-XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, undefined4 param_1)
+XI_API void __thiscall FsTextInput_RebuildAtCursor(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  uint32_t *puVar6;
-  uint32_t *puVar7;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
+  uint32_t *p1;
+  uint32_t *p2;
   char xi_frame[1372] __attribute__((aligned(4)));
-  int  &local_55c = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_554 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &local_550 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &local_54c = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &local_547 = *reinterpret_cast<uint32_t  *>(xi_frame + 21);
-  uint32_t  (&local_388)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 468);
-  uint32_t  (&local_1c4)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 920);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 8);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 12);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 21);
+  uint32_t  (&u7)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 468);
+  uint32_t  (&u8)[113] = *reinterpret_cast<uint32_t  (*)[113]>(xi_frame + 920);
   
-  uVar4 = *(uint32_t *)((int)self_ + 0xa58);
-  if ((int)uVar4 < 0) {
+  u3 = *(uint32_t *)((int)self_ + 0xa58);
+  if ((int)u3 < 0) {
     return;
   }
-  if (*(int *)((int)self_ + 0x888) < (int)uVar4) {
+  if (*(int *)((int)self_ + 0x888) < (int)u3) {
     return;
   }
-  iVar1 = *(int *)((int)self_ + 0x888);
-  puVar6 = (uint32_t *)((int)self_ + 0x6c4);
-  puVar7 = local_1c4;
-  for (uVar2 = uVar4 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  i1 = *(int *)((int)self_ + 0x888);
+  p1 = (uint32_t *)((int)self_ + 0x6c4);
+  p2 = u8;
+  for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  uVar5 = iVar1 - uVar4;
-  for (uVar2 = uVar4 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-    puVar6 = (uint32_t *)((int)puVar6 + 1);
-    puVar7 = (uint32_t *)((int)puVar7 + 1);
+  u4 = i1 - u3;
+  for (u1 = u3 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p2 = *(uint8_t *)p1;
+    p1 = (uint32_t *)((int)p1 + 1);
+    p2 = (uint32_t *)((int)p2 + 1);
   }
-  *(uint8_t *)((int)local_1c4 + uVar4) = 0;
-  if (uVar5 != 0) {
-    uVar3 = *(int *)((int)self_ + 0x888) - uVar4;
-    puVar6 = (uint32_t *)(uVar4 + 0x6c4 + (int)self_);
-    puVar7 = &local_54c;
-    for (uVar2 = uVar3 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar7 = *puVar6;
-      puVar6 = puVar6 + 1;
-      puVar7 = puVar7 + 1;
+  *(uint8_t *)((int)u8 + u3) = 0;
+  if (u4 != 0) {
+    u2 = *(int *)((int)self_ + 0x888) - u3;
+    p1 = (uint32_t *)(u3 + 0x6c4 + (int)self_);
+    p2 = &u5;
+    for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p2 = *p1;
+      p1 = p1 + 1;
+      p2 = p2 + 1;
     }
-    for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-      *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-      puVar6 = (uint32_t *)((int)puVar6 + 1);
-      puVar7 = (uint32_t *)((int)puVar7 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p2 = *(uint8_t *)p1;
+      p1 = (uint32_t *)((int)p1 + 1);
+      p2 = (uint32_t *)((int)p2 + 1);
     }
   }
-  *(uint8_t *)((int)&local_54c + uVar5) = 0;
-  iVar1 = orig::Text_ClassifyChar(local_54c,0);
-  if ((iVar1 != 4) || (iVar1 = orig::Text_ClassifyChar(local_547,0), iVar1 != 4)) {
-    local_55c = orig::Text_GetCharLength(local_54c,0);
-    goto LAB_101ac0fa;
+  *(uint8_t *)((int)&u5 + u4) = 0;
+  i1 = orig::Text_ClassifyChar(u5,0);
+  if ((i1 != 4) || (i1 = orig::Text_ClassifyChar(u6,0), i1 != 4)) {
+    i2 = orig::Text_GetCharLength(u5,0);
+    goto code_101AC0FA;
   }
-  iVar1 = orig::FsTextInput_BuildDisplayTextTrimmed(self_,(char *)&local_54c,uVar5,(int)local_388,0x1c3,&local_554);
-  local_55c = 0;
-  local_550 = iVar1;
-  if (iVar1 < 0) goto LAB_101ac0fa;
-  local_55c = 1;
-  if (local_554 < 2) {
-LAB_101ac05f:
-    if ((char)param_1 == '\0') goto LAB_101ac07d;
-    uVar2 = local_554 - local_55c;
-    if (0 < (int)uVar2) {
-      puVar6 = local_388;
-      puVar7 = (uint32_t *)((int)local_1c4 + uVar4);
-      for (uVar5 = uVar2 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *puVar7 = *puVar6;
-        puVar6 = puVar6 + 1;
-        puVar7 = puVar7 + 1;
+  i1 = orig::FsTextInput_BuildDisplayTextTrimmed(self_,(char *)&u5,u4,(int)u7,0x1c3,&i3);
+  i2 = 0;
+  i4 = i1;
+  if (i1 < 0) goto code_101AC0FA;
+  i2 = 1;
+  if (i3 < 2) {
+code_101AC05F:
+    if ((char)arg2 == '\0') goto code_101AC07D;
+    u1 = i3 - i2;
+    if (0 < (int)u1) {
+      p1 = u7;
+      p2 = (uint32_t *)((int)u8 + u3);
+      for (u4 = u1 >> 2; u4 != 0; u4 = u4 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      uVar4 = uVar4 + uVar2;
-      for (uVar5 = uVar2 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-        puVar6 = (uint32_t *)((int)puVar6 + 1);
-        puVar7 = (uint32_t *)((int)puVar7 + 1);
+      u3 = u3 + u1;
+      for (u4 = u1 & 3; u4 != 0; u4 = u4 - 1) {
+        *(uint8_t *)p2 = *(uint8_t *)p1;
+        p1 = (uint32_t *)((int)p1 + 1);
+        p2 = (uint32_t *)((int)p2 + 1);
       }
-      *(uint8_t *)((int)local_1c4 + uVar4) = 0;
-      iVar1 = local_550;
+      *(uint8_t *)((int)u8 + u3) = 0;
+      i1 = i4;
     }
   }
   else {
-    if ((char)param_1 != '\0') {
-      local_55c = orig::Text_CountChars((int)local_388,iVar1,local_554);
-      goto LAB_101ac05f;
+    if ((char)arg2 != '\0') {
+      i2 = orig::Text_CountChars((int)u7,i1,i3);
+      goto code_101AC05F;
     }
-    local_55c = orig::Text_GetCharLength(local_388[0],0);
-LAB_101ac07d:
-    uVar2 = 0;
+    i2 = orig::Text_GetCharLength(u7[0],0);
+code_101AC07D:
+    u1 = 0;
   }
-  uVar5 = iVar1 - uVar2;
-  puVar6 = (uint32_t *)((int)local_388 + uVar2);
-  puVar7 = &local_54c;
-  for (uVar3 = uVar5 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  u4 = i1 - u1;
+  p1 = (uint32_t *)((int)u7 + u1);
+  p2 = &u5;
+  for (u2 = u4 >> 2; u2 != 0; u2 = u2 - 1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  for (uVar2 = uVar5 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-    puVar6 = (uint32_t *)((int)puVar6 + 1);
-    puVar7 = (uint32_t *)((int)puVar7 + 1);
+  for (u1 = u4 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p2 = *(uint8_t *)p1;
+    p1 = (uint32_t *)((int)p1 + 1);
+    p2 = (uint32_t *)((int)p2 + 1);
   }
-  *(uint8_t *)((int)&local_54c + uVar5) = 0;
-LAB_101ac0fa:
-  puVar6 = local_1c4;
-  puVar7 = (uint32_t *)((int)self_ + 0x6c4);
-  for (uVar2 = uVar4 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  *(uint8_t *)((int)&u5 + u4) = 0;
+code_101AC0FA:
+  p1 = u8;
+  p2 = (uint32_t *)((int)self_ + 0x6c4);
+  for (u1 = u3 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  for (uVar2 = uVar4 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-    puVar6 = (uint32_t *)((int)puVar6 + 1);
-    puVar7 = (uint32_t *)((int)puVar7 + 1);
+  for (u1 = u3 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p2 = *(uint8_t *)p1;
+    p1 = (uint32_t *)((int)p1 + 1);
+    p2 = (uint32_t *)((int)p2 + 1);
   }
-  if (uVar5 != 0) {
-    puVar6 = (uint32_t *)((int)&local_54c + local_55c);
-    puVar7 = (uint32_t *)(uVar4 + 0x6c4 + (int)self_);
-    for (uVar2 = uVar5 - local_55c >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar7 = *puVar6;
-      puVar6 = puVar6 + 1;
-      puVar7 = puVar7 + 1;
+  if (u4 != 0) {
+    p1 = (uint32_t *)((int)&u5 + i2);
+    p2 = (uint32_t *)(u3 + 0x6c4 + (int)self_);
+    for (u1 = u4 - i2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p2 = *p1;
+      p1 = p1 + 1;
+      p2 = p2 + 1;
     }
-    for (uVar2 = uVar5 - local_55c & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-      puVar6 = (uint32_t *)((int)puVar6 + 1);
-      puVar7 = (uint32_t *)((int)puVar7 + 1);
+    for (u1 = u4 - i2 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p2 = *(uint8_t *)p1;
+      p1 = (uint32_t *)((int)p1 + 1);
+      p2 = (uint32_t *)((int)p2 + 1);
     }
   }
-  iVar1 = (uVar5 - local_55c) + uVar4;
-  *(int *)((int)self_ + 0x888) = iVar1;
-  *(uint8_t *)(iVar1 + 0x6c4 + (int)self_) = 0;
-  *(uint32_t *)((int)self_ + 0xa58) = uVar4;
-  iVar1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
+  i1 = (u4 - i2) + u3;
+  *(int *)((int)self_ + 0x888) = i1;
+  *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
+  *(uint32_t *)((int)self_ + 0xa58) = u3;
+  i1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
                        (char *)((int)self_ + 0x6c4),*(int *)((int)self_ + 0x888),0,0);
-  *(int *)((int)self_ + 0xa50) = iVar1;
+  *(int *)((int)self_ + 0xa50) = i1;
   *(uint8_t *)((int)self_ + 0xc24) = 1;
   *(uint8_t *)((int)self_ + 0xc78) = 1;
   return;
@@ -7868,28 +7868,28 @@ XI_API int __thiscall FsTextInput_GetActiveBuffer(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall FsTextInput_GetPendingBuffer(void * self_)
 {
-  int iVar1;
+  int i1;
   
   if (*(int *)((int)self_ + 0x888) == 0) {
     return 0;
   }
-  iVar1 = (int)self_ + 0xa5c;
+  i1 = (int)self_ + 0xa5c;
   if (*(char *)((int)self_ + 0xc24) != '\0') {
-    iVar1 = (int)self_ + 0x6c4;
+    i1 = (int)self_ + 0x6c4;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101AC200
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_GetLength(void * self_)
+XI_API bits32 __thiscall FsTextInput_GetLength(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x888);
 }
 
 // FUNCTION: FFXIMAIN 0x101AC210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_GetCursorOrLength(void * self_)
+XI_API bits32 __thiscall FsTextInput_GetCursorOrLength(void * self_)
 {
   if (*(char *)((int)self_ + 0xc24) == '\0') {
     return *(uint32_t *)((int)self_ + 0xc20);
@@ -7901,42 +7901,42 @@ XI_API undefined4 __thiscall FsTextInput_GetCursorOrLength(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall FsTextInput_GetMaxLength(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self_ + 0x888);
+  i1 = *(int *)((int)self_ + 0x888);
   if (*(int *)((int)self_ + 0x888) <= *(int *)((int)self_ + 0xa50)) {
-    iVar1 = *(int *)((int)self_ + 0xa50);
+    i1 = *(int *)((int)self_ + 0xa50);
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101AC250
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsTextInput_Reset(void * self_, undefined4 xi_s1)
+XI_API void __thiscall FsTextInput_Reset(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::TextInputFiles_ClearFirstString((void *)((int)self_ + 0xa8));
   *(uint8_t *)self_ = 0;
   *(uint32_t *)((int)self_ + 0x38) = 0;
   *(uint32_t *)((int)self_ + 0xa4) = 0;
   *(uint32_t *)((int)self_ + 0x70) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x6c4);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x6c4);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0x888) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x88c);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x88c);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0xa50) = 0;
   *(uint32_t *)((int)self_ + 0xa58) = 0;
   *(uint8_t *)((int)self_ + 0xc24) = 1;
@@ -7945,37 +7945,37 @@ XI_API void __thiscall FsTextInput_Reset(void * self_, undefined4 xi_s1)
 
 // FUNCTION: FFXIMAIN 0x101AC2C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_HistoryNext(void * self_)
+XI_API bits32 __thiscall FsTextInput_HistoryNext(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  char *pcVar2;
+  void *obj1;
+  int i1;
+  char *p1;
   
-  this_00 = (void *)((int)self_ + 0xa8);
+  obj1 = (void *)((int)self_ + 0xa8);
   if (*(int *)((int)self_ + 0x6c0) < *(int *)((int)self_ + 0x6bc)) {
     if (*(char *)((int)self_ + 0xc78) == '\x01') {
       if (*(int *)((int)self_ + 0xa54) < *(int *)((int)self_ + 0xa50)) {
-        iVar1 = *(int *)((int)self_ + 0x888);
-        pcVar2 = (char *)((int)self_ + 0x88c);
+        i1 = *(int *)((int)self_ + 0x888);
+        p1 = (char *)((int)self_ + 0x88c);
       }
       else {
-        iVar1 = *(int *)((int)self_ + 0x888);
-        pcVar2 = (char *)((int)self_ + 0x6c4);
+        i1 = *(int *)((int)self_ + 0x888);
+        p1 = (char *)((int)self_ + 0x6c4);
       }
-      orig::TextInputFiles_SetCurrent(this_00,pcVar2,iVar1);
+      orig::TextInputFiles_SetCurrent(obj1,p1,i1);
     }
-    orig::TextInputFiles_Advance(this_00);
-    pcVar2 = (char *)((int)self_ + 0x6c4);
-    iVar1 = orig::TextInputFiles_CopyCurrent(this_00,(uint32_t *)pcVar2,*(int *)((int)self_ + 0xa54) + 1);
-    *(int *)((int)self_ + 0x888) = iVar1;
-    *(uint8_t *)(iVar1 + 0x6c4 + (int)self_) = 0;
-    iVar1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,0x1c3,pcVar2,*(int *)((int)self_ + 0x888),0,0);
-    *(int *)((int)self_ + 0xa50) = iVar1;
-    if (*(int *)((int)self_ + 0xa54) < iVar1) {
-      iVar1 = orig::FUN_1018fdf0((int)self_ + 0x88c,(int)pcVar2,*(int *)((int)self_ + 0xa54));
-      *(int *)((int)self_ + 0x888) = iVar1;
-      *(int *)((int)self_ + 0xa50) = iVar1;
-      *(uint8_t *)(iVar1 + 0x6c4 + (int)self_) = 0;
+    orig::TextInputFiles_Advance(obj1);
+    p1 = (char *)((int)self_ + 0x6c4);
+    i1 = orig::TextInputFiles_CopyCurrent(obj1,(uint32_t *)p1,*(int *)((int)self_ + 0xa54) + 1);
+    *(int *)((int)self_ + 0x888) = i1;
+    *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
+    i1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,0x1c3,p1,*(int *)((int)self_ + 0x888),0,0);
+    *(int *)((int)self_ + 0xa50) = i1;
+    if (*(int *)((int)self_ + 0xa54) < i1) {
+      i1 = orig::game_1018FDF0((int)self_ + 0x88c,(int)p1,*(int *)((int)self_ + 0xa54));
+      *(int *)((int)self_ + 0x888) = i1;
+      *(int *)((int)self_ + 0xa50) = i1;
+      *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
       *(uint8_t *)(*(int *)((int)self_ + 0x888) + 0x88c + (int)self_) = 0;
     }
     *(uint32_t *)((int)self_ + 0xa58) = *(uint32_t *)((int)self_ + 0x888);
@@ -7987,36 +7987,36 @@ XI_API undefined4 __thiscall FsTextInput_HistoryNext(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101AC3D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_HistoryPrev(void * self_)
+XI_API bits32 __thiscall FsTextInput_HistoryPrev(void * self_)
 {
-  int iVar1;
-  char *pcVar2;
+  int i1;
+  char *p1;
   
   if (0 < *(int *)((int)self_ + 0x6c0)) {
     if (*(char *)((int)self_ + 0xc78) == '\x01') {
       if (*(int *)((int)self_ + 0xa54) < *(int *)((int)self_ + 0xa50)) {
-        iVar1 = *(int *)((int)self_ + 0x888);
-        pcVar2 = (char *)((int)self_ + 0x88c);
+        i1 = *(int *)((int)self_ + 0x888);
+        p1 = (char *)((int)self_ + 0x88c);
       }
       else {
-        iVar1 = *(int *)((int)self_ + 0x888);
-        pcVar2 = (char *)((int)self_ + 0x6c4);
+        i1 = *(int *)((int)self_ + 0x888);
+        p1 = (char *)((int)self_ + 0x6c4);
       }
-      orig::TextInputFiles_SetCurrent((void *)((int)self_ + 0xa8),pcVar2,iVar1);
+      orig::TextInputFiles_SetCurrent((void *)((int)self_ + 0xa8),p1,i1);
     }
     orig::TextInputFiles_Retreat((void *)((int)self_ + 0xa8));
-    pcVar2 = (char *)((int)self_ + 0x6c4);
-    iVar1 = orig::TextInputFiles_CopyCurrent((void *)((int)self_ + 0xa8),(uint32_t *)pcVar2,
+    p1 = (char *)((int)self_ + 0x6c4);
+    i1 = orig::TextInputFiles_CopyCurrent((void *)((int)self_ + 0xa8),(uint32_t *)p1,
                          *(int *)((int)self_ + 0xa54) + 1);
-    *(int *)((int)self_ + 0x888) = iVar1;
-    *(uint8_t *)(iVar1 + 0x6c4 + (int)self_) = 0;
-    iVar1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,0x1c3,pcVar2,*(int *)((int)self_ + 0x888),0,0);
-    *(int *)((int)self_ + 0xa50) = iVar1;
-    if (*(int *)((int)self_ + 0xa54) < iVar1) {
-      iVar1 = orig::FUN_1018fdf0((int)self_ + 0x88c,(int)pcVar2,*(int *)((int)self_ + 0xa54));
-      *(int *)((int)self_ + 0x888) = iVar1;
-      *(int *)((int)self_ + 0xa50) = iVar1;
-      *(uint8_t *)(iVar1 + 0x6c4 + (int)self_) = 0;
+    *(int *)((int)self_ + 0x888) = i1;
+    *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
+    i1 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,0x1c3,p1,*(int *)((int)self_ + 0x888),0,0);
+    *(int *)((int)self_ + 0xa50) = i1;
+    if (*(int *)((int)self_ + 0xa54) < i1) {
+      i1 = orig::game_1018FDF0((int)self_ + 0x88c,(int)p1,*(int *)((int)self_ + 0xa54));
+      *(int *)((int)self_ + 0x888) = i1;
+      *(int *)((int)self_ + 0xa50) = i1;
+      *(uint8_t *)(i1 + 0x6c4 + (int)self_) = 0;
       *(uint8_t *)(*(int *)((int)self_ + 0x888) + 0x88c + (int)self_) = 0;
     }
     *(uint32_t *)((int)self_ + 0xa58) = *(uint32_t *)((int)self_ + 0x888);
@@ -8028,7 +8028,7 @@ XI_API undefined4 __thiscall FsTextInput_HistoryPrev(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101AC4D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_HasText(void * self_)
+XI_API bits32 __thiscall FsTextInput_HasText(void * self_)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)*(int *)((int)self_ + 0x888) >> 8))) << 8) | (uint8_t)(0 < *(int *)((int)self_ + 0x888))));
 }
@@ -8037,13 +8037,13 @@ XI_API undefined4 __thiscall FsTextInput_HasText(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsTextInput_MoveCursorLeft(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Text_CountChars((int)self_ + 0x6c4,*(uint32_t *)((int)self_ + 0x888),
+  i1 = orig::Text_CountChars((int)self_ + 0x6c4,*(uint32_t *)((int)self_ + 0x888),
                        *(int *)((int)self_ + 0xa58));
-  iVar1 = *(int *)((int)self_ + 0xa58) - iVar1;
-  *(int *)((int)self_ + 0xa58) = iVar1;
-  if (iVar1 < 0) {
+  i1 = *(int *)((int)self_ + 0xa58) - i1;
+  *(int *)((int)self_ + 0xa58) = i1;
+  if (i1 < 0) {
     *(uint32_t *)((int)self_ + 0xa58) = 0;
   }
   return;
@@ -8053,13 +8053,13 @@ XI_API void __thiscall FsTextInput_MoveCursorLeft(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsTextInput_MoveCursorRight(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)self_ >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + *(int *)((int)self_ + 0xa58) + 0x6c4)))),0)
+  i1 = orig::Text_GetCharLength(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)self_ >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + *(int *)((int)self_ + 0xa58) + 0x6c4)))),0)
   ;
-  iVar1 = *(int *)((int)self_ + 0xa58) + iVar1;
-  *(int *)((int)self_ + 0xa58) = iVar1;
-  if (*(int *)((int)self_ + 0x888) < iVar1) {
+  i1 = *(int *)((int)self_ + 0xa58) + i1;
+  *(int *)((int)self_ + 0xa58) = i1;
+  if (*(int *)((int)self_ + 0x888) < i1) {
     *(int *)((int)self_ + 0xa58) = *(int *)((int)self_ + 0x888);
   }
   return;
@@ -8067,153 +8067,152 @@ XI_API void __thiscall FsTextInput_MoveCursorRight(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101AC580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_ResetBuffer(void * self_)
+XI_API bits32 __thiscall FsTextInput_ResetBuffer(void * self_)
 {
-  void *this_00;
-  char *pcVar1;
-  int iVar2;
+  void *obj1;
+  char *p1;
+  int i1;
   
-  this_00 = (void *)((int)self_ + 0xa8);
-  orig::TextInputFiles_ClearFirstString(this_00);
+  obj1 = (void *)((int)self_ + 0xa8);
+  orig::TextInputFiles_ClearFirstString(obj1);
   if (*(int *)((int)self_ + 0xa54) < *(int *)((int)self_ + 0xa50)) {
-    iVar2 = *(int *)((int)self_ + 0x888);
-    pcVar1 = (char *)((int)self_ + 0x88c);
+    i1 = *(int *)((int)self_ + 0x888);
+    p1 = (char *)((int)self_ + 0x88c);
   }
   else {
-    iVar2 = *(int *)((int)self_ + 0x888);
-    pcVar1 = (char *)((int)self_ + 0x6c4);
+    i1 = *(int *)((int)self_ + 0x888);
+    p1 = (char *)((int)self_ + 0x6c4);
   }
-  orig::TextInputFiles_SetCurrent(this_00,pcVar1,iVar2);
-  orig::TextInputFiles_PushFrontString(this_00,(uint32_t *)&Read_as_v0,0);
+  orig::TextInputFiles_SetCurrent(obj1,p1,i1);
+  orig::TextInputFiles_PushFrontString(obj1,(uint32_t *)&Read_as_v0,0);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101AC5E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall FsTextInput_ExpandMarkedPhrase(void * self_, int param_1, int param_2, undefined4 * param_3, undefined4 param_4, int * param_5, undefined4 param_6, undefined4 param_7)
+XI_API uint32_t __thiscall FsTextInput_ExpandMarkedPhrase(void * self_, int arg2, int arg3, bits32 * arg4, bits32 arg5, int * arg6, bits32 arg7, bits32 arg8)
 {
-  uint8_t bVar1;
-  uint8_t bVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  char *pcVar6;
-  int iVar7;
-  char *pcVar8;
+  uint8_t u1;
+  uint8_t u2;
+  uint32_t u3;
+  uint32_t u4;
+  uint32_t u5;
+  char *p1;
+  int i1;
+  char *p2;
   char xi_frame[924] __attribute__((aligned(4)));
-  uint32_t  &local_39c = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_398 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int  &local_394 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &local_38c = *reinterpret_cast<int  *>(xi_frame + 16);
-  char  (&local_388)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 20);
-  char  (&local_1c4)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 472);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 8);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 16);
+  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 20);
+  char  (&val2)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 472);
   
-  if ((param_2 == 0) || (uVar3 = orig::FsTextInput_IsMarkerAt(param_1,0), (char)uVar3 == '\0')) {
+  if ((arg3 == 0) || (u3 = orig::FsTextInput_IsMarkerAt(arg2,0), (char)u3 == '\0')) {
     return 0;
   }
-  if (param_2 < 2) {
+  if (arg3 < 2) {
     return 0xffffffff;
   }
-  bVar1 = *(uint8_t *)(param_1 + 1);
-  local_38c = 0;
-  bVar2 = true;
-  local_398 = ((uint32_t)(((uint32_t)(uint16_t)(*(uint16_t *)(param_1 + 3)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)*(void **)((int)self_ + 0x3c) + 4)) << 8) | (uint8_t)(bVar1))))));
-  if ((bVar1 < 7) && (bVar1 == 6)) {
-    local_398 = (uint32_t)*(char *)(param_1 + 5);
-    if ((-1 < (int)local_398) && ((int)local_398 < 0x1c3)) {
-      bVar2 = false;
-      *param_5 = *param_5 + local_398 + 7;
-      local_394 = local_398 + 7;
-      pcVar6 = (char *)(param_1 + 6);
-      pcVar8 = local_1c4;
-      for (uVar5 = local_398 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *(uint32_t *)pcVar8 = *(uint32_t *)pcVar6;
-        pcVar6 = pcVar6 + 4;
-        pcVar8 = pcVar8 + 4;
+  u1 = *(uint8_t *)(arg2 + 1);
+  i3 = 0;
+  u2 = true;
+  u7 = ((uint32_t)(((uint32_t)(uint16_t)(*(uint16_t *)(arg2 + 3)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)*(void **)((int)self_ + 0x3c) + 4)) << 8) | (uint8_t)(u1))))));
+  if ((u1 < 7) && (u1 == 6)) {
+    u7 = (uint32_t)*(char *)(arg2 + 5);
+    if ((-1 < (int)u7) && ((int)u7 < 0x1c3)) {
+      u2 = false;
+      *arg6 = *arg6 + u7 + 7;
+      i2 = u7 + 7;
+      p1 = (char *)(arg2 + 6);
+      p2 = val2;
+      for (u5 = u7 >> 2; u5 != 0; u5 = u5 - 1) {
+        *(uint32_t *)p2 = *(uint32_t *)p1;
+        p1 = p1 + 4;
+        p2 = p2 + 4;
       }
-      for (uVar5 = local_398 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *pcVar8 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
-        pcVar8 = pcVar8 + 1;
+      for (u5 = u7 & 3; u5 != 0; u5 = u5 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-LAB_101ac6fe:
-      iVar7 = 0;
-      uVar5 = 0;
-      if (bVar2) {
-        if ((char)param_6 != '\0') {
-          local_388[0] = -0x11;
-          local_388[1] = 0x27;
-          uVar5 = 2;
+code_101AC6FE:
+      i1 = 0;
+      u5 = 0;
+      if (u2) {
+        if ((char)arg7 != '\0') {
+          val1[0] = -0x11;
+          val1[1] = 0x27;
+          u5 = 2;
         }
-        if ((char)param_7 != '\0') {
-          local_388[uVar5] = '\x7f';
-          local_388[uVar5 + 1] = 'i';
-          uVar5 = uVar5 + 2;
+        if ((char)arg8 != '\0') {
+          val1[u5] = '\x7f';
+          val1[u5 + 1] = 'i';
+          u5 = u5 + 2;
         }
       }
-      if (0 < (int)local_398) {
+      if (0 < (int)u7) {
         do {
-          uVar3 = orig::FsTextInput_IsMarkerAt((int)local_1c4,iVar7);
-          if ((char)uVar3 == '\0') {
-            local_388[uVar5] = local_1c4[iVar7];
-            uVar5 = uVar5 + 1;
-            iVar7 = iVar7 + 1;
+          u3 = orig::FsTextInput_IsMarkerAt((int)val2,i1);
+          if ((char)u3 == '\0') {
+            val1[u5] = val2[i1];
+            u5 = u5 + 1;
+            i1 = i1 + 1;
           }
           else {
-            uVar4 = orig::FUN_101ac5e0(self_,local_394 + param_1,param_2 - local_394,
-                                 (uint32_t *)(local_388 + uVar5),0x1c2 - uVar5,&local_38c,0,0);
-            if (uVar4 == 0) {
-              XI_PIECE(local_39c, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(local_1c4[iVar7 + 2]) << 8) | (uint8_t)(local_1c4[iVar7 + 1])));
-              local_39c = CONCAT13(local_1c4[iVar7 + 4],
-                                   ((uint32_t)(((uint32_t)(uint8_t)(local_1c4[iVar7 + 3]) << 16) | (uint16_t)((uint16_t)local_39c))));
-              uVar4 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),local_39c,local_388 + uVar5,
-                                   0x1c2 - uVar5,local_39c);
+            u4 = orig::FsTextInput_ExpandMarkedPhrase_as_v0(self_,i2 + arg2,arg3 - i2,
+                                 (uint32_t *)(val1 + u5),0x1c2 - u5,&i3,0,0);
+            if (u4 == 0) {
+              XI_PIECE(u6, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(val2[i1 + 2]) << 8) | (uint8_t)(val2[i1 + 1])));
+              u6 = ((uint32_t)(((uint32_t)(uint8_t)(val2[i1 + 4]) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(val2[i1 + 3]) << 16) | (uint16_t)((uint16_t)u6)))) & 0xFFFFFFu)));
+              u4 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),u6,val1 + u5,
+                                   0x1c2 - u5,u6);
             }
-            else if ((int)uVar4 < 1) {
+            else if ((int)u4 < 1) {
               return 0xffffffff;
             }
-            uVar5 = uVar5 + uVar4;
-            iVar7 = iVar7 + 6;
-            local_394 = local_394 + local_38c;
-            *param_5 = *param_5 + local_38c;
-            local_38c = 0;
+            u5 = u5 + u4;
+            i1 = i1 + 6;
+            i2 = i2 + i3;
+            *arg6 = *arg6 + i3;
+            i3 = 0;
           }
-        } while (iVar7 < (int)local_398);
+        } while (i1 < (int)u7);
       }
-      if (bVar2) {
-        if ((char)param_7 != '\0') {
-          local_388[uVar5] = '\x7f';
-          local_388[uVar5 + 1] = 'd';
-          uVar5 = uVar5 + 2;
+      if (u2) {
+        if ((char)arg8 != '\0') {
+          val1[u5] = '\x7f';
+          val1[u5 + 1] = 'd';
+          u5 = u5 + 2;
         }
-        if ((char)param_6 != '\0') {
-          local_388[uVar5] = -0x11;
-          local_388[uVar5 + 1] = '(';
-          uVar5 = uVar5 + 2;
+        if ((char)arg7 != '\0') {
+          val1[u5] = -0x11;
+          val1[u5 + 1] = '(';
+          u5 = u5 + 2;
         }
       }
-      pcVar6 = local_388;
-      pcVar8 = (char *)param_3;
-      for (uVar4 = uVar5 >> 2; uVar4 != 0; uVar4 = uVar4 - 1) {
-        *(uint32_t *)pcVar8 = *(uint32_t *)pcVar6;
-        pcVar6 = pcVar6 + 4;
-        pcVar8 = pcVar8 + 4;
+      p1 = val1;
+      p2 = (char *)arg4;
+      for (u4 = u5 >> 2; u4 != 0; u4 = u4 - 1) {
+        *(uint32_t *)p2 = *(uint32_t *)p1;
+        p1 = p1 + 4;
+        p2 = p2 + 4;
       }
-      for (uVar4 = uVar5 & 3; uVar4 != 0; uVar4 = uVar4 - 1) {
-        *pcVar8 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
-        pcVar8 = pcVar8 + 1;
+      for (u4 = u5 & 3; u4 != 0; u4 = u4 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      *(uint8_t *)((int)param_3 + uVar5) = 0;
-      return uVar5;
+      *(uint8_t *)((int)arg4 + u5) = 0;
+      return u5;
     }
   }
   else {
-    local_394 = 6;
-    local_398 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),local_398,local_1c4,0x1c2,local_1c4);
-    if (-1 < (int)local_398) {
-      *param_5 = *param_5 + 6;
-      goto LAB_101ac6fe;
+    i2 = 6;
+    u7 = orig::FsWordCompletion_lookUp(*(void **)((int)self_ + 0x3c),u7,val2,0x1c2,val2);
+    if (-1 < (int)u7) {
+      *arg6 = *arg6 + 6;
+      goto code_101AC6FE;
     }
   }
   return 0xffffffff;
@@ -8221,151 +8220,151 @@ LAB_101ac6fe:
 
 // FUNCTION: FFXIMAIN 0x101AC990
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API int __thiscall FsTextInput_BuildDisplayText(void * self_, int param_1, int param_2, char * param_3, int param_4, undefined4 param_5, undefined4 param_6)
+XI_API int __thiscall FsTextInput_BuildDisplayText(void * self_, int arg2, int arg3, char * arg4, int arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   size_t _Count;
   uint32_t _Count_00;
-  int iVar3;
-  int iVar4;
+  int i2;
+  int i3;
   char xi_frame[460] __attribute__((aligned(4)));
-  int  &local_1cc = *reinterpret_cast<int  *>(xi_frame + 0);
-  void * &local_1c8 = *reinterpret_cast<void * *>(xi_frame + 4);
-  char  (&local_1c4)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 8);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 4);
+  char  (&val1)[452] = *reinterpret_cast<char  (*)[452]>(xi_frame + 8);
   
-  if (param_3 == (char *)0x0) {
+  if (arg4 == (char *)0x0) {
     return -1;
   }
-  local_1cc = 0;
-  iVar3 = 0;
-  local_1c8 = self_;
-  if (*param_3 != '\0') {
-    while (iVar1 = local_1cc, local_1cc < param_4) {
-      uVar2 = orig::FsTextInput_IsMarkerAt((int)param_3,local_1cc);
-      if ((char)uVar2 == '\0') {
-        _Count = orig::Sjis_GetCharByteLen_v1(param_3 + iVar1);
-        local_1cc = _Count + iVar3;
-        if (param_2 <= local_1cc) break;
-        orig::_strncpy_v2((char *)(iVar3 + param_1),param_3 + iVar1,_Count);
-        *(uint8_t *)(local_1cc + param_1) = 0;
-        iVar4 = local_1cc;
-        local_1cc = iVar1 + _Count;
+  i4 = 0;
+  i2 = 0;
+  p1 = self_;
+  if (*arg4 != '\0') {
+    while (i1 = i4, i4 < arg5) {
+      u1 = orig::FsTextInput_IsMarkerAt((int)arg4,i4);
+      if ((char)u1 == '\0') {
+        _Count = orig::Sjis_GetCharByteLen_v1(arg4 + i1);
+        i4 = _Count + i2;
+        if (arg3 <= i4) break;
+        orig::_strncpy_v2((char *)(i2 + arg2),arg4 + i1,_Count);
+        *(uint8_t *)(i4 + arg2) = 0;
+        i3 = i4;
+        i4 = i1 + _Count;
       }
       else {
-        _Count_00 = orig::FsTextInput_ExpandMarkedPhrase(local_1c8,(int)(param_3 + iVar1),param_2 - iVar3,
-                                 (uint32_t *)local_1c4,0x1c2,&local_1cc,param_5,param_6);
-        if (((int)_Count_00 < 0) || (iVar4 = _Count_00 + iVar3, param_2 <= iVar4)) break;
-        orig::_strncpy_v2((char *)(iVar3 + param_1),local_1c4,_Count_00);
+        _Count_00 = orig::FsTextInput_ExpandMarkedPhrase(p1,(int)(arg4 + i1),arg3 - i2,
+                                 (uint32_t *)val1,0x1c2,&i4,arg6,arg7);
+        if (((int)_Count_00 < 0) || (i3 = _Count_00 + i2, arg3 <= i3)) break;
+        orig::_strncpy_v2((char *)(i2 + arg2),val1,_Count_00);
       }
-      iVar3 = iVar4;
-      if (param_3[local_1cc] == '\0') break;
+      i2 = i3;
+      if (arg4[i4] == '\0') break;
     }
   }
-  *(uint8_t *)(iVar3 + param_1) = 0;
-  return iVar3;
+  *(uint8_t *)(i2 + arg2) = 0;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101ACAC0
 // GATE: PASS -- 100 trials, 52 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 52
-XI_API int __thiscall FsTextInput_BuildDisplayTextTrimmed(void * self_, char * param_1, int param_2, int param_3, int param_4, int * param_5)
+XI_API int __thiscall FsTextInput_BuildDisplayTextTrimmed(void * self_, char * arg2, int arg3, int arg4, int arg5, int * arg6)
 {
-  uint8_t bVar1;
-  char *pcVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
+  uint8_t u1;
+  char *p1;
+  uint32_t u2;
+  uint32_t u3;
+  int i1;
+  int i2;
+  char *p2;
   char xi_frame[4] __attribute__((aligned(4)));
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
   
-  bVar1 = true;
-  if (param_2 < 2) {
+  u1 = true;
+  if (arg3 < 2) {
     return -1;
   }
-  iVar6 = 0;
-  iVar5 = 0;
-  local_4 = 0;
-  if (*param_1 == ' ') {
-    pcVar2 = param_1;
+  i2 = 0;
+  i1 = 0;
+  i3 = 0;
+  if (*arg2 == ' ') {
+    p1 = arg2;
     do {
-      iVar5 = iVar5 + 1;
-      pcVar2[param_3 - (int)param_1] = ' ';
-      iVar6 = iVar6 + 1;
-      pcVar2 = pcVar2 + 1;
-    } while (*pcVar2 == ' ');
+      i1 = i1 + 1;
+      p1[arg4 - (int)arg2] = ' ';
+      i2 = i2 + 1;
+      p1 = p1 + 1;
+    } while (*p1 == ' ');
   }
   while( true ) {
-    if (param_2 <= iVar6) {
-      *(uint8_t *)(iVar5 + param_3) = 0;
-      return iVar5;
+    if (arg3 <= i2) {
+      *(uint8_t *)(i1 + arg4) = 0;
+      return i1;
     }
-    if ((bVar1) && (uVar3 = orig::FsTextInput_IsMarkerAt((int)(param_1 + iVar6),0), (char)uVar3 != '\0')) break;
-    pcVar2 = param_1 + iVar6;
-    if (*pcVar2 == ' ') {
-      bVar1 = false;
+    if ((u1) && (u2 = orig::FsTextInput_IsMarkerAt((int)(arg2 + i2),0), (char)u2 != '\0')) break;
+    p1 = arg2 + i2;
+    if (*p1 == ' ') {
+      u1 = false;
     }
-    iVar6 = iVar6 + 1;
-    *(char *)(iVar5 + param_3) = *pcVar2;
-    iVar5 = iVar5 + 1;
+    i2 = i2 + 1;
+    *(char *)(i1 + arg4) = *p1;
+    i1 = i1 + 1;
   }
-  uVar4 = orig::FsTextInput_ExpandMarkedPhrase(self_,(int)(param_1 + iVar6),param_2 - iVar6,(uint32_t *)(iVar5 + param_3),
-                       param_4 - iVar5,&local_4,0,0);
-  if ((int)uVar4 < 0) {
+  u3 = orig::FsTextInput_ExpandMarkedPhrase(self_,(int)(arg2 + i2),arg3 - i2,(uint32_t *)(i1 + arg4),
+                       arg5 - i1,&i3,0,0);
+  if ((int)u3 < 0) {
     return -1;
   }
-  iVar5 = iVar5 + uVar4;
-  iVar6 = iVar6 + local_4;
-  if (param_5 != (int *)0x0) {
-    *param_5 = iVar5;
+  i1 = i1 + u3;
+  i2 = i2 + i3;
+  if (arg6 != (int *)0x0) {
+    *arg6 = i1;
   }
-  pcVar2 = param_1 + iVar6;
-  pcVar7 = (char *)(param_3 + iVar5);
-  for (uVar4 = (uint32_t)(param_2 - iVar6) >> 2; uVar4 != 0; uVar4 = uVar4 - 1) {
-    *(uint32_t *)pcVar7 = *(uint32_t *)pcVar2;
-    pcVar2 = pcVar2 + 4;
-    pcVar7 = pcVar7 + 4;
+  p1 = arg2 + i2;
+  p2 = (char *)(arg4 + i1);
+  for (u3 = (uint32_t)(arg3 - i2) >> 2; u3 != 0; u3 = u3 - 1) {
+    *(uint32_t *)p2 = *(uint32_t *)p1;
+    p1 = p1 + 4;
+    p2 = p2 + 4;
   }
-  iVar5 = iVar5 + (param_2 - iVar6);
-  for (uVar4 = param_2 - iVar6 & 3; uVar4 != 0; uVar4 = uVar4 - 1) {
-    *pcVar7 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-    pcVar7 = pcVar7 + 1;
+  i1 = i1 + (arg3 - i2);
+  for (u3 = arg3 - i2 & 3; u3 != 0; u3 = u3 - 1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  *(uint8_t *)(iVar5 + param_3) = 0;
-  return iVar5;
+  *(uint8_t *)(i1 + arg4) = 0;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101ACBE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_HasMarkedPhrase(void * self_, char * param_1)
+XI_API bits32 __thiscall FsTextInput_HasMarkedPhrase(void * self_, char * arg2)
 {
-  char cVar1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  int iVar3;
-  char *pcVar4;
+  uint32_t u1;
+  int i1;
+  char *p1;
   
-  if (param_1 != (char *)0x0) {
-    uVar2 = 0xffffffff;
+  if (arg2 != (char *)0x0) {
+    u1 = 0xffffffff;
     xi_entry_eax = 0;
-    iVar3 = 0;
-    pcVar4 = param_1;
+    i1 = 0;
+    p1 = arg2;
     do {
-      if (uVar2 == 0) break;
-      uVar2 = uVar2 - 1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar1 != '\0');
-    if (0 < (int)(~uVar2 - 2)) {
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    if (0 < (int)(~u1 - 2)) {
       do {
-        xi_entry_eax = orig::FsTextInput_IsMarkerAt((int)param_1,iVar3);
+        xi_entry_eax = orig::FsTextInput_IsMarkerAt((int)arg2,i1);
         if ((char)xi_entry_eax != '\0') {
           return ((uint32_t)(((uint32_t)(xi_strunc24((xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < (int)(~uVar2 - 2));
+        i1 = i1 + 1;
+      } while (i1 < (int)(~u1 - 2));
     }
   }
   return xi_entry_eax & 0xffffff00;
@@ -8373,135 +8372,134 @@ XI_API undefined4 __thiscall FsTextInput_HasMarkedPhrase(void * self_, char * pa
 
 // FUNCTION: FFXIMAIN 0x101ACC30
 // GATE: PASS -- 100 trials, 94 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * param_1)
+XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * arg2)
 {
-  int *this_00;
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int iVar5;
-  int *piVar6;
-  int iVar7;
+  int *obj1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  int i2;
+  int *p1;
+  int i3;
   char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  &uStack_40 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  int  &iStack_3c = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  &uStack_38 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  int  (&local_34)[12] = *reinterpret_cast<int  (*)[12]>(xi_frame + 12);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 60);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  int  (&i5)[12] = *reinterpret_cast<int  (*)[12]>(xi_frame + 12);
+  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 60);
   
-  piVar6 = local_34;
-  iVar5 = 0xc;
+  p1 = i5;
+  i2 = 0xc;
   do {
-    orig::FsTextInput_SetCode4(piVar6,0,0,0,0);
-    this_00 = param_1;
-    piVar6 = piVar6 + 1;
-    iVar5 = iVar5 + -1;
-  } while (iVar5 != 0);
-  local_4 = 0;
-  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x10))))((void *)(param_1));
-  iStack_3c = orig::TextInputFiles_GetUsed(this_00);
-  uStack_38 = (int *)this_00[5];
-  uStack_40 = (int *)0x0;
-  uVar2 = orig::FsTextInput_MapCodeByte(&uStack_40);
-  uVar3 = orig::FsTextInput_MapCodeByte(&uStack_38);
-  iVar5 = iStack_3c;
-  if ((char)uVar3 == (char)uVar2) {
-    if (((XI_PIECE(uStack_38, 1, 1) == XI_PIECE(uStack_40, 1, 1)) &&
-        ((char)((uint32_t)uStack_38 >> 0x10) == (char)((uint32_t)uStack_40 >> 0x10))) &&
-       ((char)((uint32_t)uStack_38 >> 0x18) == (char)((uint32_t)uStack_40 >> 0x18))) {
-      uVar4 = orig::FsTextInput_SetText(self_,iVar1,iStack_3c);
-      return uVar4 & 0xff;
+    orig::FsTextInput_SetCode4(p1,0,0,0,0);
+    obj1 = arg2;
+    p1 = p1 + 1;
+    i2 = i2 + -1;
+  } while (i2 != 0);
+  i6 = 0;
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x10))))((void *)(arg2));
+  i4 = orig::TextInputFiles_GetUsed(obj1);
+  u5 = (int *)obj1[5];
+  u4 = (int *)0x0;
+  u1 = orig::FsTextInput_MapCodeByte(&u4);
+  u2 = orig::FsTextInput_MapCodeByte(&u5);
+  i2 = i4;
+  if ((char)u2 == (char)u1) {
+    if (((XI_PIECE(u5, 1, 1) == XI_PIECE(u4, 1, 1)) &&
+        ((char)((uint32_t)u5 >> 0x10) == (char)((uint32_t)u4 >> 0x10))) &&
+       ((char)((uint32_t)u5 >> 0x18) == (char)((uint32_t)u4 >> 0x18))) {
+      u3 = orig::FsTextInput_SetText(self_,i1,i4);
+      return u3 & 0xff;
     }
   }
-  piVar6 = (int *)param_1[5];
-  XI_PIECE_S(uStack_38, 3, 1) = (char)((uint32_t)piVar6 >> 0x18);
-  if (XI_PIECE(uStack_38, 3, 1) == '\0') {
-    param_1 = piVar6;
-    uStack_38 = piVar6;
+  p1 = (int *)arg2[5];
+  XI_PIECE_S(u5, 3, 1) = (char)((uint32_t)p1 >> 0x18);
+  if (XI_PIECE(u5, 3, 1) == '\0') {
+    arg2 = p1;
+    u5 = p1;
     if (*(int *)((int)self_ + 0x38) < 0xc) {
-      orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x38) * 4 + 8),(uint8_t *)&param_1);
+      orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x38) * 4 + 8),(uint8_t *)&arg2);
       *(int *)((int)self_ + 0x38) = *(int *)((int)self_ + 0x38) + 1;
     }
   }
   else {
     if ((*(int *)((int)self_ + 0xa54) <
-         *(int *)((int)self_ + 0xa50) + *(int *)((int)self_ + 0xc74) + iStack_3c) ||
+         *(int *)((int)self_ + 0xa50) + *(int *)((int)self_ + 0xc74) + i4) ||
        (*(int *)((int)self_ + 0xa54) < *(int *)((int)self_ + 0x888) + 6 + *(int *)((int)self_ + 0xc70))
        ) {
       return 0xffffffff;
     }
-    uStack_38 = *(int **)((int)self_ + 1);
+    u5 = *(int **)((int)self_ + 1);
     if (*(int *)((int)self_ + 0xa4) < 0xc) {
       orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0xa4) * 4 + 0x74),
-                   (uint8_t *)&uStack_38);
+                   (uint8_t *)&u5);
       *(int *)((int)self_ + 0xa4) = *(int *)((int)self_ + 0xa4) + 1;
     }
-    iVar7 = 0;
-    if (0 < iVar5) {
+    i3 = 0;
+    if (0 < i2) {
       do {
-        uVar2 = orig::FsTextInput_IsMarkerAt(iVar1,iVar7);
-        if ((char)uVar2 == '\0') {
-          iVar7 = iVar7 + 1;
+        u1 = orig::FsTextInput_IsMarkerAt(i1,i3);
+        if ((char)u1 == '\0') {
+          i3 = i3 + 1;
         }
         else {
-          uStack_40 = (int *)CONCAT13(*(uint8_t *)(iVar7 + 4 + iVar1),
-                                      ((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(iVar7 + 3 + iVar1)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(iVar7 + 2 + iVar1)) << 8) | (uint8_t)(*(uint8_t *)(iVar7 + 1 + iVar1))))))));
-          uStack_38 = uStack_40;
-          if (local_4 < 0xc) {
-            orig::FsTextInput_CopyCode4(local_34 + local_4,(uint8_t *)&uStack_38);
-            local_4 = local_4 + 1;
+          u4 = (int *)((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 4 + i1)) << 24) | ((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(*(uint8_t *)(i3 + 3 + i1)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(i3 + 2 + i1)) << 8) | (uint8_t)(*(uint8_t *)(i3 + 1 + i1)))))))) & 0xFFFFFFu)));
+          u5 = u4;
+          if (i6 < 0xc) {
+            orig::FsTextInput_CopyCode4(i5 + i6,(uint8_t *)&u5);
+            i6 = i6 + 1;
           }
-          iVar7 = iVar7 + 6;
+          i3 = i3 + 6;
         }
-        iVar5 = iStack_3c;
-      } while (iVar7 < iStack_3c);
+        i2 = i4;
+      } while (i3 < i4);
     }
-    while (local_4 != 0) {
-      local_4 = local_4 + -1;
-      piVar6 = (int *)local_34[local_4];
+    while (i6 != 0) {
+      i6 = i6 + -1;
+      p1 = (int *)i5[i6];
       if (*(int *)((int)self_ + 0x38) < 0xc) {
-        uStack_38 = piVar6;
+        u5 = p1;
         orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x38) * 4 + 8),
-                     (uint8_t *)&uStack_38);
+                     (uint8_t *)&u5);
         *(int *)((int)self_ + 0x38) = *(int *)((int)self_ + 0x38) + 1;
       }
-      uStack_38 = piVar6;
+      u5 = p1;
       if (*(int *)((int)self_ + 0x70) < 0xc) {
         orig::FsTextInput_CopyCode4((void *)((int)self_ + *(int *)((int)self_ + 0x70) * 4 + 0x40),
-                     (uint8_t *)&uStack_38);
+                     (uint8_t *)&u5);
         *(int *)((int)self_ + 0x70) = *(int *)((int)self_ + 0x70) + 1;
       }
     }
     *(uint8_t *)(*(int *)((int)self_ + 0xc70) + 0xc2c + (int)self_) = 0xfd;
-    *(int *)(*(int *)((int)self_ + 0xc70) + 0xc2d + (int)self_) = param_1[5];
+    *(int *)(*(int *)((int)self_ + 0xc70) + 0xc2d + (int)self_) = arg2[5];
     *(uint8_t *)(*(int *)((int)self_ + 0xc70) + 0xc31 + (int)self_) = 0xfd;
-    iVar1 = *(int *)((int)self_ + 0xc70);
-    *(int *)((int)self_ + 0xc70) = iVar1 + 6;
-    *(uint8_t *)(iVar1 + 0xc32 + (int)self_) = 0;
-    *(int *)((int)self_ + 0xc74) = *(int *)((int)self_ + 0xc74) + iVar5;
+    i1 = *(int *)((int)self_ + 0xc70);
+    *(int *)((int)self_ + 0xc70) = i1 + 6;
+    *(uint8_t *)(i1 + 0xc32 + (int)self_) = 0;
+    *(int *)((int)self_ + 0xc74) = *(int *)((int)self_ + 0xc74) + i2;
   }
   if (*(int *)((int)self_ + 0x38) != 0) {
     *(uint8_t *)self_ = 1;
     if (*(int *)((int)self_ + 0x38) == 0) {
-      XI_PIECE(param_1, 0, 1) = 0;
-      XI_PIECE(param_1, 1, 1) = 0;
-      XI_PIECE(param_1, 2, 1) = 0;
-      XI_PIECE(param_1, 3, 1) = 0;
+      XI_PIECE(arg2, 0, 1) = 0;
+      XI_PIECE(arg2, 1, 1) = 0;
+      XI_PIECE(arg2, 2, 1) = 0;
+      XI_PIECE(arg2, 3, 1) = 0;
     }
     else {
-      iVar5 = *(int *)((int)self_ + 0x38) + -1;
-      *(int *)((int)self_ + 0x38) = iVar5;
-      uVar2 = *(uint32_t *)((int)self_ + iVar5 * 4 + 8);
-      XI_PIECE(param_1, 3, 1) = (uint8_t)((uint32_t)uVar2 >> 0x18);
-      XI_PIECE(param_1, 2, 1) = (uint8_t)((uint32_t)uVar2 >> 0x10);
-      XI_PIECE(param_1, 1, 1) = (uint8_t)((uint32_t)uVar2 >> 8);
-      XI_PIECE(param_1, 0, 1) = (uint8_t)uVar2;
+      i2 = *(int *)((int)self_ + 0x38) + -1;
+      *(int *)((int)self_ + 0x38) = i2;
+      u1 = *(uint32_t *)((int)self_ + i2 * 4 + 8);
+      XI_PIECE(arg2, 3, 1) = (uint8_t)((uint32_t)u1 >> 0x18);
+      XI_PIECE(arg2, 2, 1) = (uint8_t)((uint32_t)u1 >> 0x10);
+      XI_PIECE(arg2, 1, 1) = (uint8_t)((uint32_t)u1 >> 8);
+      XI_PIECE(arg2, 0, 1) = (uint8_t)u1;
     }
-    *(uint8_t *)((int)self_ + 1) = XI_PIECE(param_1, 0, 1);
-    *(uint8_t *)((int)self_ + 2) = XI_PIECE(param_1, 1, 1);
-    *(uint8_t *)((int)self_ + 3) = XI_PIECE(param_1, 2, 1);
-    *(uint8_t *)((int)self_ + 4) = XI_PIECE(param_1, 3, 1);
+    *(uint8_t *)((int)self_ + 1) = XI_PIECE(arg2, 0, 1);
+    *(uint8_t *)((int)self_ + 2) = XI_PIECE(arg2, 1, 1);
+    *(uint8_t *)((int)self_ + 3) = XI_PIECE(arg2, 2, 1);
+    *(uint8_t *)((int)self_ + 4) = XI_PIECE(arg2, 3, 1);
     return 1;
   }
   *(uint8_t *)self_ = 0;
@@ -8513,49 +8511,49 @@ XI_API uint32_t __thiscall FsTextInput_CommitEntry(void * self_, int * param_1)
 
 // FUNCTION: FFXIMAIN 0x101ACF40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsTextInput_SetCode4(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __thiscall FsTextInput_SetCode4(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  *(uint8_t *)self_ = (uint8_t)param_1;
-  *(uint8_t *)((int)self_ + 1) = (uint8_t)param_2;
-  *(uint8_t *)((int)self_ + 2) = (uint8_t)param_3;
-  *(uint8_t *)((int)self_ + 3) = (uint8_t)param_4;
+  *(uint8_t *)self_ = (uint8_t)arg2;
+  *(uint8_t *)((int)self_ + 1) = (uint8_t)arg3;
+  *(uint8_t *)((int)self_ + 2) = (uint8_t)arg4;
+  *(uint8_t *)((int)self_ + 3) = (uint8_t)arg5;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101ACF60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_MapCodeByte(void * self_)
+XI_API bits32 __thiscall FsTextInput_MapCodeByte(void * self_)
 {
-  uint8_t bVar1;
+  uint8_t u1;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
   
-  bVar1 = *(uint8_t *)self_;
-  uVar4 = (uint32_t)((uint32_t)xi_entry_eax >> 8);
-  uVar2 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(bVar1)));
-  if (6 < bVar1) {
-    uVar3 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(-(bVar1 < 0x13)))) & 0xfffffff4;
-    uVar2 = CONCAT31(xi_strunc24((uVar3 >> 8)),(char)uVar3 + '\x13');
+  u1 = *(uint8_t *)self_;
+  u4 = (uint32_t)((uint32_t)xi_entry_eax >> 8);
+  u2 = ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(u1)));
+  if (6 < u1) {
+    u3 = ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(-(u1 < 0x13)))) & 0xfffffff4;
+    u2 = ((uint32_t)(((uint32_t)(xi_strunc24((u3 >> 8))) << 8) | (uint8_t)((char)u3 + '\x13')));
   }
-  return uVar2;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x101ACF70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsTextInput_CopyCode4(void * self_, uint8_t * param_1)
+XI_API void __thiscall FsTextInput_CopyCode4(void * self_, uint8_t * arg2)
 {
-  *(uint8_t *)self_ = *param_1;
-  *(uint8_t *)((int)self_ + 1) = param_1[1];
-  *(uint8_t *)((int)self_ + 2) = param_1[2];
-  *(uint8_t *)((int)self_ + 3) = param_1[3];
+  *(uint8_t *)self_ = *arg2;
+  *(uint8_t *)((int)self_ + 1) = arg2[1];
+  *(uint8_t *)((int)self_ + 2) = arg2[2];
+  *(uint8_t *)((int)self_ + 3) = arg2[3];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101ACF90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_ClearPair(void * self_)
+XI_API bits32 __thiscall FsTextInput_ClearPair(void * self_)
 {
   *(uint32_t *)((int)self_ + 0xc70) = 0;
   *(uint32_t *)((int)self_ + 0xc74) = 0;
@@ -8564,58 +8562,58 @@ XI_API undefined4 __thiscall FsTextInput_ClearPair(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ACFB0
 // GATE: PASS -- 100 trials, 52 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 52
-XI_API undefined4 __thiscall FsTextInput_InsertAtCursor(void * self_)
+XI_API bits32 __thiscall FsTextInput_InsertAtCursor(void * self_)
 {
-  int iVar1;
-  uint8_t *puVar2;
-  int iVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  uint32_t *puVar6;
-  uint32_t *puVar7;
+  int i1;
+  uint8_t *p1;
+  int i2;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t *p2;
+  uint32_t *p3;
   char xi_frame[52] __attribute__((aligned(4)));
-  uint8_t  (&local_34)[52] = *reinterpret_cast<uint8_t  (*)[52]>(xi_frame + 0);
+  uint8_t  (&u3)[52] = *reinterpret_cast<uint8_t  (*)[52]>(xi_frame + 0);
   
-  puVar2 = local_34 + 2;
-  iVar3 = 0xc;
+  p1 = u3 + 2;
+  i2 = 0xc;
   do {
-    puVar2[-2] = 0;
-    puVar2[-1] = 0;
-    *puVar2 = 0;
-    puVar2[1] = 0;
-    puVar2 = puVar2 + 4;
-    iVar3 = iVar3 + -1;
-  } while (iVar3 != 0);
-  iVar3 = *(int *)((int)self_ + 0xa58);
-  iVar1 = *(int *)((int)self_ + 0x888);
-  if (iVar3 != iVar1) {
+    p1[-2] = 0;
+    p1[-1] = 0;
+    *p1 = 0;
+    p1[1] = 0;
+    p1 = p1 + 4;
+    i2 = i2 + -1;
+  } while (i2 != 0);
+  i2 = *(int *)((int)self_ + 0xa58);
+  i1 = *(int *)((int)self_ + 0x888);
+  if (i2 != i1) {
     *(uint8_t *)((int)self_ + 0xc24) = 1;
-    orig::FUN_103149d0((uint32_t *)((int)self_ + *(int *)((int)self_ + 0xc70) + iVar3 + 0x6c4),
-                 (uint32_t *)(iVar3 + 0x6c4 + (int)self_),iVar1 - iVar3);
-    iVar1 = *(int *)((int)self_ + 0xa58);
+    orig::game_103149D0((uint32_t *)((int)self_ + *(int *)((int)self_ + 0xc70) + i2 + 0x6c4),
+                 (uint32_t *)(i2 + 0x6c4 + (int)self_),i1 - i2);
+    i1 = *(int *)((int)self_ + 0xa58);
   }
-  uVar5 = *(uint32_t *)((int)self_ + 0xc70);
-  puVar6 = (uint32_t *)((int)self_ + 0xc2c);
-  puVar7 = (uint32_t *)(iVar1 + 0x6c4 + (int)self_);
-  for (uVar4 = uVar5 >> 2; uVar4 != 0; uVar4 = uVar4 - 1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  u2 = *(uint32_t *)((int)self_ + 0xc70);
+  p2 = (uint32_t *)((int)self_ + 0xc2c);
+  p3 = (uint32_t *)(i1 + 0x6c4 + (int)self_);
+  for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p3 = *p2;
+    p2 = p2 + 1;
+    p3 = p3 + 1;
   }
-  for (uVar5 = uVar5 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-    *(uint8_t *)puVar7 = *(uint8_t *)puVar6;
-    puVar6 = (uint32_t *)((int)puVar6 + 1);
-    puVar7 = (uint32_t *)((int)puVar7 + 1);
+  for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+    *(uint8_t *)p3 = *(uint8_t *)p2;
+    p2 = (uint32_t *)((int)p2 + 1);
+    p3 = (uint32_t *)((int)p3 + 1);
   }
-  iVar3 = *(int *)((int)self_ + 0x888) + *(int *)((int)self_ + 0xc70);
-  *(int *)((int)self_ + 0x888) = iVar3;
+  i2 = *(int *)((int)self_ + 0x888) + *(int *)((int)self_ + 0xc70);
+  *(int *)((int)self_ + 0x888) = i2;
   *(int *)((int)self_ + 0xa58) = *(int *)((int)self_ + 0xa58) + *(int *)((int)self_ + 0xc70);
-  *(uint8_t *)(iVar3 + 0x6c4 + (int)self_) = 0;
+  *(uint8_t *)(i2 + 0x6c4 + (int)self_) = 0;
   *(uint32_t *)((int)self_ + 0xc70) = 0;
   *(uint32_t *)((int)self_ + 0xc74) = 0;
-  iVar3 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
+  i2 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,
                        (char *)((int)self_ + 0x6c4),*(int *)((int)self_ + 0x888),0,0);
-  *(int *)((int)self_ + 0xa50) = iVar3;
+  *(int *)((int)self_ + 0xa50) = i2;
   *(uint8_t *)((int)self_ + 0xc78) = 1;
   return 1;
 }
@@ -8624,347 +8622,347 @@ XI_API undefined4 __thiscall FsTextInput_InsertAtCursor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall FsTextInput_DeleteLastWord(void * self_)
 {
-  char *pcVar1;
-  int iVar2;
-  int iVar3;
+  char *p1;
+  int i1;
+  int i2;
   
   if (*(char *)(*(int *)((int)self_ + 0x888) + 0x6c3 + (int)self_) == ' ') {
     return *(int *)((int)self_ + 0xa50);
   }
-  iVar3 = *(int *)((int)self_ + 0x888) + -1;
-  pcVar1 = (char *)((int)self_ + 0x6c4);
-  iVar2 = orig::Text_CountChars((int)pcVar1,*(uint32_t *)((int)self_ + 0x888),iVar3);
-  iVar3 = iVar3 - iVar2;
+  i2 = *(int *)((int)self_ + 0x888) + -1;
+  p1 = (char *)((int)self_ + 0x6c4);
+  i1 = orig::Text_CountChars((int)p1,*(uint32_t *)((int)self_ + 0x888),i2);
+  i2 = i2 - i1;
   do {
-    if (iVar3 < 1) {
-LAB_101ad13d:
-      if (iVar3 < 0) {
-        iVar3 = 0;
+    if (i2 < 1) {
+code_101AD13D:
+      if (i2 < 0) {
+        i2 = 0;
       }
-      *(uint8_t *)(iVar3 + 0x6c4 + (int)self_) = 0;
-      *(int *)((int)self_ + 0x888) = iVar3;
-      iVar3 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,pcVar1,iVar3,0,0);
-      *(int *)((int)self_ + 0xa50) = iVar3;
+      *(uint8_t *)(i2 + 0x6c4 + (int)self_) = 0;
+      *(int *)((int)self_ + 0x888) = i2;
+      i2 = orig::FsTextInput_BuildDisplayText(self_,(int)self_ + 0x88c,*(int *)((int)self_ + 0xa54) + 1,p1,i2,0,0);
+      *(int *)((int)self_ + 0xa50) = i2;
       *(uint32_t *)((int)self_ + 0xa58) = *(uint32_t *)((int)self_ + 0x888);
-      return iVar3;
+      return i2;
     }
-    if ((pcVar1[iVar3] == ' ') || ((0 < iVar3 && (*(char *)(iVar3 + 0x6c3 + (int)self_) == '\x7f'))))
+    if ((p1[i2] == ' ') || ((0 < i2 && (*(char *)(i2 + 0x6c3 + (int)self_) == '\x7f'))))
     {
-      iVar3 = iVar3 + 1;
-      goto LAB_101ad13d;
+      i2 = i2 + 1;
+      goto code_101AD13D;
     }
-    iVar2 = orig::Text_CountChars((int)pcVar1,*(uint32_t *)((int)self_ + 0x888),iVar3);
-    iVar3 = iVar3 - iVar2;
+    i1 = orig::Text_CountChars((int)p1,*(uint32_t *)((int)self_ + 0x888),i2);
+    i2 = i2 - i1;
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x101AD1B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall FsTextInput_IsMarkerAt(int param_1, int param_2)
+XI_API bits32 __stdcall FsTextInput_IsMarkerAt(int arg1, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = xi_trunc24(((uint32_t)param_2 >> 8));
-  if (*(char *)(param_1 + param_2) != -3) {
-    return (uint32_t)uVar1 << 8;
+  u1 = xi_trunc24(((uint32_t)arg2 >> 8));
+  if (*(char *)(arg1 + arg2) != -3) {
+    return (uint32_t)u1 << 8;
   }
-  return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101AD290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FsPreParser_Constructor(void * self_, undefined4 textInput)
+XI_API void * __thiscall FsPreParser_Constructor(void * self_, bits32 textInput)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
+  char c1;
+  char *p1;
+  int i1;
   
-  pcVar2 = &DAT_1037ad24;
-  *(uint8_t ***)self_ = &PTR_FUN_103378fc;
+  p1 = &g_1037AD24;
+  *(uint8_t ***)self_ = &g_103378FC;
   do {
-    cVar1 = *pcVar2;
-    pcVar2[(int)self_ + -(int)XI_GAME(0x1037AD1Cu)] = cVar1;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  pcVar2 = &DAT_1037ad24;
+    c1 = *p1;
+    p1[(int)self_ + -(int)XI_GAME(0x1037AD1Cu)] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  p1 = &g_1037AD24;
   do {
-    cVar1 = *pcVar2;
-    pcVar2[(int)self_ + -0x1037ac9c] = cVar1;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  iVar3 = -1;
+    c1 = *p1;
+    p1[(int)self_ + -0x1037ac9c] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  i1 = -1;
   *(uint32_t *)((int)self_ + 0x108) = 2;
   *(uint32_t *)((int)self_ + 0x10c) = 2;
   *(uint32_t *)((int)self_ + 4) = textInput;
-  pcVar2 = &DAT_1037ad1c;
+  p1 = &g_1037AD1C;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x110) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037ad18;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x110) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037AD18;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x111) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__shout_1037ad10;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x111) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__shout_1037AD10;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x112) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037ad0c;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x112) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037AD0C;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x113) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__tell_1036f9b0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x113) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__tell_1036F9B0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x114) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037ad08;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x114) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037AD08;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x115) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__party_1037ad00;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x115) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__party_1037AD00;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x116) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acfc;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x116) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACFC;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x117) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__linkshell_1037acf0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x117) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__linkshell_1037ACF0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x118) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acec;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x118) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACEC;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x119) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__linkshell2_1037ace0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x119) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__linkshell2_1037ACE0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11a) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acdc;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11a) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACDC;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11b) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__unity_1037acd4;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11b) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__unity_1037ACD4;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11c) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acd0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11c) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACD0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11d) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__assistj_1037acc4;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11d) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__assistj_1037ACC4;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11e) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acc0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11e) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACC0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x11f) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = s__assiste_1037acb4;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x11f) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = str__assiste_1037ACB4;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x120) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &DAT_1037acb0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x120) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &g_1037ACB0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x121) = ~(uint8_t)iVar3;
-  iVar3 = -1;
-  pcVar2 = &c_strSlash_as_v0;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x121) = ~(uint8_t)i1;
+  i1 = -1;
+  p1 = &c_strSlash_as_v0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
-  *(uint8_t *)((int)self_ + 0x122) = ~(uint8_t)iVar3 - 1;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint8_t *)((int)self_ + 0x122) = ~(uint8_t)i1 - 1;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101AD4B0
 // GATE: PASS -- 100 trials, 89 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 89
-XI_API void __thiscall TextInputFiles_ProcessInputLine(void * self_, char * param_1, int param_2, size_t param_3)
+XI_API void __thiscall TextInputFiles_ProcessInputLine(void * self_, char * arg2, int arg3, size_t arg4)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  int iVar6;
-  char *pcVar7;
+  char c1;
+  char *p1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  int i2;
+  char *p2;
   char xi_frame[516] __attribute__((aligned(4)));
   size_t  &_Count = *reinterpret_cast<size_t  *>(xi_frame + 0);
-  char  (&local_1f0)[247] = *reinterpret_cast<char  (*)[247]>(xi_frame + 20);
-  uint8_t  &local_f9 = *reinterpret_cast<uint8_t  *>(xi_frame + 267);
-  char  (&local_f8)[248] = *reinterpret_cast<char  (*)[248]>(xi_frame + 268);
+  char  (&val1)[247] = *reinterpret_cast<char  (*)[247]>(xi_frame + 20);
+  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 267);
+  char  (&val2)[248] = *reinterpret_cast<char  (*)[248]>(xi_frame + 268);
   
-  if ((param_1 != (char *)0x0) && (0 < (int)param_3)) {
-    uVar5 = 0xffffffff;
-    pcVar2 = param_1;
+  if ((arg2 != (char *)0x0) && (0 < (int)arg4)) {
+    u2 = 0xffffffff;
+    p1 = arg2;
     do {
-      if (uVar5 == 0) break;
-      uVar5 = uVar5 - 1;
-      cVar1 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    iVar6 = ~uVar5 - 1;
-    if (~uVar5 == 1) {
-      pcVar2 = &Read_as_v0;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    i2 = ~u2 - 1;
+    if (~u2 == 1) {
+      p1 = &Read_as_v0;
       do {
-        cVar1 = *pcVar2;
-        pcVar2[param_2 + -(int)XI_GAME(0x103D3C84u)] = cVar1;
-        pcVar2 = pcVar2 + 1;
-      } while (cVar1 != '\0');
+        c1 = *p1;
+        p1[arg3 + -(int)XI_GAME(0x103D3C84u)] = c1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
       return;
     }
-    iVar3 = 0;
-    if (0 < iVar6) {
+    i1 = 0;
+    if (0 < i2) {
       do {
-        if (param_1[iVar3] != ' ') break;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar6);
+        if (arg2[i1] != ' ') break;
+        i1 = i1 + 1;
+      } while (i1 < i2);
     }
-    if (iVar3 == iVar6) {
-      pcVar2 = &Read_as_v0;
+    if (i1 == i2) {
+      p1 = &Read_as_v0;
       do {
-        cVar1 = *pcVar2;
-        pcVar2[param_2 + -(int)XI_GAME(0x103D3C84u)] = cVar1;
-        pcVar2 = pcVar2 + 1;
-      } while (cVar1 != '\0');
+        c1 = *p1;
+        p1[arg3 + -(int)XI_GAME(0x103D3C84u)] = c1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
       return;
     }
-    uVar5 = 0xffffffff;
-    pcVar2 = param_1;
+    u2 = 0xffffffff;
+    p1 = arg2;
     do {
-      if (uVar5 == 0) break;
-      uVar5 = uVar5 - 1;
-      cVar1 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    iVar6 = orig::TextInputFiles_InputCall101ACAC0(*(void **)((int)self_ + 4),param_1,~uVar5 - 1,(int)local_f8,0xf8);
-    if (iVar6 < 0) {
-      local_f8[0] = '\0';
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    i2 = orig::TextInputFiles_InputCall101ACAC0(*(void **)((int)self_ + 4),arg2,~u2 - 1,(int)val2,0xf8);
+    if (i2 < 0) {
+      val2[0] = '\0';
     }
-    uVar4 = orig::TextInputFiles_IsSlashChar(local_f8);
-    if ((char)uVar4 == '\0') {
+    u1 = orig::TextInputFiles_IsSlashChar(val2);
+    if ((char)u1 == '\0') {
       _Count = 0x80;
-      pcVar2 = (char *)orig::FsTextInput_GetDataPtr8(self_);
-      orig::_strncpy_v2(local_1f0,pcVar2,_Count);
-      orig::_strncat(local_1f0,param_1,0x78);
-      local_f9 = 0;
+      p1 = (char *)orig::FsTextInput_GetDataPtr8(self_);
+      orig::_strncpy_v2(val1,p1,_Count);
+      orig::_strncat(val1,arg2,0x78);
+      u3 = 0;
     }
     else {
-      orig::_strncpy_v2(local_1f0,local_f8,0xf8);
+      orig::_strncpy_v2(val1,val2,0xf8);
     }
-    uVar4 = orig::TextInputFiles_Call101B72E0(self_,local_1f0);
-    pcVar2 = local_1f0;
-    if ((char)uVar4 != '\0') {
-      uVar5 = 0xffffffff;
-      pcVar7 = local_1f0;
+    u1 = orig::TextInputFiles_Call101B72E0(self_,val1);
+    p1 = val1;
+    if ((char)u1 != '\0') {
+      u2 = 0xffffffff;
+      p2 = val1;
       do {
-        if (uVar5 == 0) break;
-        uVar5 = uVar5 - 1;
-        cVar1 = *pcVar7;
-        pcVar7 = pcVar7 + 1;
-      } while (cVar1 != '\0');
-      orig::TextInputFiles_InputCall101AC990Swapped(*(void **)((int)self_ + 4),pcVar2,~uVar5 - 1,local_f8,0xf8,0,0);
-      uVar4 = orig::TextInputFiles_IsKnownCommand(local_f8);
-      if ((char)uVar4 == '\0') {
-        pcVar2 = local_f8;
+        if (u2 == 0) break;
+        u2 = u2 - 1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      orig::TextInputFiles_InputCall101AC990Swapped(*(void **)((int)self_ + 4),p1,~u2 - 1,val2,0xf8,0,0);
+      u1 = orig::TextInputFiles_IsKnownCommand(val2);
+      if ((char)u1 == '\0') {
+        p1 = val2;
       }
       else {
-        pcVar2 = local_1f0;
+        p1 = val1;
       }
     }
-    orig::_strncpy_v2((char *)param_2,pcVar2,param_3);
+    orig::_strncpy_v2((char *)arg3,p1,arg4);
   }
   return;
 }
@@ -8978,56 +8976,56 @@ XI_API int __thiscall FsTextInput_GetDataPtr8(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ADBC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_IsSlashChar(char * param_1)
+XI_API bits32 __stdcall TextInputFiles_IsSlashChar(char * arg1)
 {
-  return CONCAT31(xi_strunc24(((uint32_t)param_1 >> 8)),*param_1 == '/');
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg1 >> 8))) << 8) | (uint8_t)(*arg1 == '/')));
 }
 
 // FUNCTION: FFXIMAIN 0x101ADBE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_IsKnownCommand(char * param_1)
+XI_API bits32 __stdcall TextInputFiles_IsKnownCommand(char * arg1)
 {
-  char cVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  char *pcVar5;
-  uint64_t uVar6;
+  char c1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  char *p1;
+  uint64_t u4;
   
-  uVar4 = 0;
+  u3 = 0;
   do {
-    uVar3 = 0xffffffff;
-    pcVar5 = *(char **)((int)&PTR_DAT_1037ab98 + uVar4);
+    u2 = 0xffffffff;
+    p1 = *(char **)((int)&g_1037AB98 + u3);
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    uVar6 = orig::_strncmp_v1(*(char **)((int)&PTR_DAT_1037ab98 + uVar4),param_1,~uVar3 - 1);
-    uVar2 = xi_trunc24(((uint64_t)uVar6 >> 8));
-    if (((int)uVar6 == 0) && (param_1[~uVar3 - 1] == ' ')) {
-      return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    u4 = orig::_strncmp_v1(*(char **)((int)&g_1037AB98 + u3),arg1,~u2 - 1);
+    u1 = xi_trunc24(((uint64_t)u4 >> 8));
+    if (((int)u4 == 0) && (arg1[~u2 - 1] == ' ')) {
+      return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
     }
-    uVar4 = uVar4 + 4;
-    if (0x87 < uVar4) {
-      return (uint32_t)uVar2 << 8;
+    u3 = u3 + 4;
+    if (0x87 < u3) {
+      return (uint32_t)u1 << 8;
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x101ADDC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Shape_GetValueAt(int param_1, int param_2)
+XI_API bits32 __cdecl Shape_GetValueAt(int arg1, int arg2)
 {
-  int iVar1;
-  int *piVar2;
-  uint64_t uVar3;
+  int i1;
+  int *p1;
+  uint64_t u1;
   
-  piVar2 = (int *)orig::ResourceIter_FindById(&param_1,0x31,param_1);
-  if (((int *)*piVar2 != (int *)0x0) && (iVar1 = *(int *)*piVar2, iVar1 != 0)) {
-    uVar3 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,iVar1 + 0x30);
-    return *(uint32_t *)(*(int *)uVar3 + param_2 * 4);
+  p1 = (int *)orig::ResourceIter_FindById(&arg1,0x31,arg1);
+  if (((int *)*p1 != (int *)0x0) && (i1 = *(int *)*p1, i1 != 0)) {
+    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,i1 + 0x30);
+    return *(uint32_t *)(*(int *)u1 + arg2 * 4);
   }
   return 0;
 }
@@ -9036,26 +9034,26 @@ XI_API undefined4 __cdecl Shape_GetValueAt(int param_1, int param_2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ShortcutCtor(void * self_)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  int iVar4;
+  char c1;
+  char *p1;
+  int i1;
+  int i2;
   
-  *(uint8_t ***)self_ = &PTR_FUN_1033791c;
+  *(uint8_t ***)self_ = &g_1033791C;
   *(uint32_t *)((int)self_ + 4) = 0xffffffff;
   *(uint32_t *)((int)self_ + 8) = 0;
-  iVar3 = (int)self_ + -0x103d3c78;
-  iVar4 = 2;
+  i1 = (int)self_ + -0x103d3c78;
+  i2 = 2;
   do {
-    pcVar2 = &Read_as_v0;
+    p1 = &Read_as_v0;
     do {
-      cVar1 = *pcVar2;
-      pcVar2[iVar3] = cVar1;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    iVar3 = iVar3 + 0x79;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
+      c1 = *p1;
+      p1[i1] = c1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    i1 = i1 + 0x79;
+    i2 = i2 + -1;
+  } while (i2 != 0);
   *(uint8_t *)((int)self_ + 0x104) = 0;
   *(uint8_t *)((int)self_ + 0x105) = 1;
   return;
@@ -9063,136 +9061,136 @@ XI_API void __thiscall TextInputFiles_ShortcutCtor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101ADE80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsTextInput_SetName(void * self_, undefined4 param_1, undefined4 param_2, char * param_3, undefined4 param_4)
+XI_API void __thiscall FsTextInput_SetName(void * self_, bits32 arg2, bits32 arg3, char * arg4, bits32 arg5)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint32_t *)((int)self_ + 8) = param_2;
-  iVar2 = 0xc - (int)param_3;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint32_t *)((int)self_ + 8) = arg3;
+  i1 = 0xc - (int)arg4;
   do {
-    cVar1 = *param_3;
-    param_3[(int)self_ + iVar2] = cVar1;
-    param_3 = param_3 + 1;
-  } while (cVar1 != '\0');
+    c1 = *arg4;
+    arg4[(int)self_ + i1] = c1;
+    arg4 = arg4 + 1;
+  } while (c1 != '\0');
   *(uint8_t *)((int)self_ + 0x104) = 0;
-  *(uint32_t *)((int)self_ + 0x100) = param_4;
+  *(uint32_t *)((int)self_ + 0x100) = arg5;
   *(uint8_t *)((int)self_ + 0x105) = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101ADEC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_ShortcutSet(void * self_, undefined4 param_1, undefined4 param_2, char * param_3, char * param_4, undefined4 param_5)
+XI_API void __thiscall TextInputFiles_ShortcutSet(void * self_, bits32 arg2, bits32 arg3, char * arg4, char * arg5, bits32 arg6)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint32_t *)((int)self_ + 8) = param_2;
-  iVar2 = 0xc - (int)param_3;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint32_t *)((int)self_ + 8) = arg3;
+  i1 = 0xc - (int)arg4;
   do {
-    cVar1 = *param_3;
-    param_3[(int)self_ + iVar2] = cVar1;
-    param_3 = param_3 + 1;
-  } while (cVar1 != '\0');
-  iVar2 = 0x85 - (int)param_4;
+    c1 = *arg4;
+    arg4[(int)self_ + i1] = c1;
+    arg4 = arg4 + 1;
+  } while (c1 != '\0');
+  i1 = 0x85 - (int)arg5;
   do {
-    cVar1 = *param_4;
-    param_4[(int)self_ + iVar2] = cVar1;
-    param_4 = param_4 + 1;
-  } while (cVar1 != '\0');
+    c1 = *arg5;
+    arg5[(int)self_ + i1] = c1;
+    arg5 = arg5 + 1;
+  } while (c1 != '\0');
   *(uint8_t *)((int)self_ + 0x104) = 0;
-  *(uint32_t *)((int)self_ + 0x100) = param_5;
+  *(uint32_t *)((int)self_ + 0x100) = arg6;
   *(uint8_t *)((int)self_ + 0x105) = 2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101ADF20
 // GATE: PASS -- 100 trials, 52 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 52
-XI_API undefined4 __thiscall TextInputFiles_ShortcutCheck(void * self_, uint8_t * param_1)
+XI_API bits32 __thiscall TextInputFiles_ShortcutCheck(void * self_, uint8_t * arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  char cVar3;
-  uint64_t uVar4;
+  uint32_t u1;
+  int i1;
+  char c1;
+  uint64_t u2;
   
-  uVar4 = orig::NetCellFont_TestCommand36CF60(0x3f,*(int *)((int)self_ + 4),1,-1,*(int *)((int)self_ + 4));
-  if ((char)uVar4 == '\0') {
+  u2 = orig::NetCellFont_TestCommand36CF60(0x3f,*(int *)((int)self_ + 4),1,-1,*(int *)((int)self_ + 4));
+  if ((char)u2 == '\0') {
     return 0;
   }
-  uVar1 = orig::FsShortcut_CanUseShortcut(*(uint32_t *)((int)self_ + 0x100));
-  if ((char)uVar1 == '\0') {
+  u1 = orig::FsShortcut_CanUseShortcut(*(uint32_t *)((int)self_ + 0x100));
+  if ((char)u1 == '\0') {
     return 0;
   }
-  if (param_1 == (uint8_t *)0x0) goto LAB_101adf89;
-  iVar2 = (*(code *)param_1)(self_);
-  if (iVar2 != -1) {
-    if (iVar2 != 1) goto LAB_101adf89;
-    cVar3 = *(char *)((int)self_ + 0x104) + '\x01';
-    *(char *)((int)self_ + 0x104) = cVar3;
-    if ((cVar3 < *(char *)((int)self_ + 0x105)) && (cVar3 < '\x02')) goto LAB_101adf89;
+  if (arg2 == (uint8_t *)0x0) goto code_101ADF89;
+  i1 = (*(untyped_fn *)arg2)(self_);
+  if (i1 != -1) {
+    if (i1 != 1) goto code_101ADF89;
+    c1 = *(char *)((int)self_ + 0x104) + '\x01';
+    *(char *)((int)self_ + 0x104) = c1;
+    if ((c1 < *(char *)((int)self_ + 0x105)) && (c1 < '\x02')) goto code_101ADF89;
   }
   *(uint8_t *)((int)self_ + 0x104) = 0;
-LAB_101adf89:
-  uVar1 = (**(code **)((int)self_ + 8))((int)self_ + *(char *)((int)self_ + 0x104) * 0x79 + 0xc);
-  return uVar1;
+code_101ADF89:
+  u1 = (**(untyped_fn **)((int)self_ + 8))((int)self_ + *(char *)((int)self_ + 0x104) * 0x79 + 0xc);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101AE010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FsShortcut_CanUseShortcut(undefined4 param_1)
+XI_API bits32 __cdecl FsShortcut_CanUseShortcut(bits32 arg1)
 {
   uint32_t xi_eax;
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  iVar1 = 0;
-  uVar2 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  if ((int)uVar2 != 0) {
-    iVar1 = *(int *)((int)uVar2 + 0x70);
+  i1 = 0;
+  u1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  if ((int)u1 != 0) {
+    i1 = *(int *)((int)u1 + 0x70);
   }
-  xi_eax = param_1 - 1;
+  xi_eax = arg1 - 1;
   switch(xi_sw(xi_eax)) {
   case 0:
-    uVar2 = orig::IsEvent(0,xi_eax);
-    xi_eax = (uint32_t)uVar2;
+    u1 = orig::IsEvent(0,xi_eax);
+    xi_eax = (uint32_t)u1;
     break;
   case 1:
-    goto switchD_101ae032_caseD_1;
+    goto L1;
   case 2:
-    uVar2 = orig::IsEvent(0,xi_eax);
-    xi_eax = (uint32_t)uVar2;
-    if ((((char)uVar2 == '\0') && (xi_eax = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0), (char)xi_eax == '\0')) &&
+    u1 = orig::IsEvent(0,xi_eax);
+    xi_eax = (uint32_t)u1;
+    if ((((char)u1 == '\0') && (xi_eax = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0), (char)xi_eax == '\0')) &&
        ((xi_eax = orig::Menu_HasFocusedItem(&g_menuMng_as_v0), (char)xi_eax == '\0' ||
-        (((xi_eax = orig::Menu_FindByName(s_menu_mcr1pall_10376364), (char)xi_eax != '\0' ||
-          (xi_eax = orig::Menu_FindByName(s_menu_mcr2pall_1037633c), (char)xi_eax != '\0')) ||
-         (xi_eax = orig::Menu_FindByName(s_menu_playermo_1036f5b4), (char)xi_eax != '\0')))))) {
+        (((xi_eax = orig::Menu_FindByName(str_menu_mcr1pall_10376364), (char)xi_eax != '\0' ||
+          (xi_eax = orig::Menu_FindByName(str_menu_mcr2pall_1037633C), (char)xi_eax != '\0')) ||
+         (xi_eax = orig::Menu_FindByName(str_menu_playermo_1036F5B4), (char)xi_eax != '\0')))))) {
       return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(1)));
     }
-    goto switchD_101ae032_default;
+    goto L2;
   case 3:
-    uVar2 = orig::IsEvent(0,xi_eax);
-    xi_eax = (uint32_t)uVar2;
-    if (((char)uVar2 != '\0') || (xi_eax = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0), (char)xi_eax != '\0'))
-    goto switchD_101ae032_default;
+    u1 = orig::IsEvent(0,xi_eax);
+    xi_eax = (uint32_t)u1;
+    if (((char)u1 != '\0') || (xi_eax = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0), (char)xi_eax != '\0'))
+    goto L2;
     xi_eax = orig::Menu_FindByFlags34(0x20000);
     break;
   default:
-    goto switchD_101ae032_default;
+    goto L2;
   }
   if ((((char)xi_eax == '\0') &&
       (xi_eax = ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(*(char *)(g_pTargetMng_as_s32 + 0x59)))),
       *(char *)(g_pTargetMng_as_s32 + 0x59) == '\0')) &&
      ((((xi_eax = *(uint32_t *)(g_pTargetMng_as_s32 + 0xc4), xi_eax == 0 &&
-        ((iVar1 != 0 && (xi_eax = *(uint32_t *)(iVar1 + 0x170), xi_eax != 2)))) && (xi_eax != 3)) &&
+        ((i1 != 0 && (xi_eax = *(uint32_t *)(i1 + 0x170), xi_eax != 2)))) && (xi_eax != 3)) &&
       ((*(short *)(g_pTargetMng_as_s32 + 0x68) == 0 &&
        ((xi_eax = g_C_106631D4_as_v0, g_C_106631D4_as_v0 == 0 || (*(short *)(g_C_106631D4_as_v0 + 0x1c) == 0)))))))) {
-switchD_101ae032_caseD_1:
+L1:
     return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(1)));
   }
-switchD_101ae032_default:
+L2:
   return xi_eax & 0xffffff00;
 }
 
@@ -9200,49 +9198,49 @@ switchD_101ae032_default:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FsShortcutManager_Constructor(void * self_)
 {
-  uint32_t uVar1;
-  char *pcVar2;
-  char *pcVar3;
-  void *this_00;
-  int iVar4;
+  uint32_t u1;
+  char *p1;
+  char *p2;
+  void *obj1;
+  int i1;
   
-  iVar4 = 0x20;
-  this_00 = (void *)((int)self_ + 4);
+  i1 = 0x20;
+  obj1 = (void *)((int)self_ + 4);
   do {
-    orig::TextInputFiles_ShortcutCtor(this_00);
-    this_00 = (void *)((int)this_00 + 0x108);
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  *(uint8_t ***)self_ = &PTR_FUN_10337920;
-  orig::FsTextInput_SetName((void *)((int)self_ + 4),0x36,&LAB_101ae800,&Read_as_v0,4);
+    orig::TextInputFiles_ShortcutCtor(obj1);
+    obj1 = (void *)((int)obj1 + 0x108);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  *(uint8_t ***)self_ = &g_10337920;
+  orig::FsTextInput_SetName((void *)((int)self_ + 4),0x36,&code_101AE800,&Read_as_v0,4);
   orig::FsTextInput_SetName((void *)((int)self_ + 0x10c),0x37,&FsShortcutManager_DoReply,&Read_as_v0,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0xd6c),0x3f,&LAB_101ae820,&Read_as_v0,4);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x214),0x38,&LAB_101ae570,s__tell_1037ad2c,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x424),0x3a,&LAB_101ae570,s__party_1037ada4,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x52c),0x3b,&LAB_101ae7b0,s__attack_1037ae40,1);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x634),0x3c,&LAB_101ae570,&DAT_1037ad24,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x73c),0x82,&LAB_101ae7b0,s__help_1036f5e0,3);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x844),0x3d,&LAB_101ae7d0,s__heal_1036e3a4,1);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x94c),0x7f,&LAB_101ae9b0,&Read_as_v0,4);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0xa54),0x80,&LAB_101ae9d0,&Read_as_v0,4);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x1084),0x9f,&LAB_101aea00,&Read_as_v0,4);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0xb5c),0x81,&LAB_101ae7b0,g_1037AE34,1);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x31c),0x39,&LAB_101ae840,&Read_as_v0,4);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0xc64),0x3e,&LAB_101ae570,s__linkshell_1037ad84,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x1dec),0xad,&LAB_101ae570,s__unity_1037ad60,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0x1ef4),0xae,&LAB_101ae570,s__linkshell2_1037ad70,2);
-  iVar4 = *(int *)(g_pSceneState + 8);
-  uVar1 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
-  if (((uVar1 != 0) && ((iVar4 == 2 || (iVar4 == 3)))) || (pcVar3 = s__assiste_1037ad3c, iVar4 != 0)
+  orig::FsTextInput_SetName((void *)((int)self_ + 0xd6c),0x3f,&code_101AE820,&Read_as_v0,4);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x214),0x38,&code_101AE570,str__tell_1037AD2C,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x424),0x3a,&code_101AE570,str__party_1037ADA4,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x52c),0x3b,&code_101AE7B0,str__attack_1037AE40,1);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x634),0x3c,&code_101AE570,&g_1037AD24,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x73c),0x82,&code_101AE7B0,str__help_1036F5E0,3);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x844),0x3d,&code_101AE7D0,str__heal_1036E3A4,1);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x94c),0x7f,&code_101AE9B0,&Read_as_v0,4);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0xa54),0x80,&code_101AE9D0,&Read_as_v0,4);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x1084),0x9f,&code_101AEA00,&Read_as_v0,4);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0xb5c),0x81,&code_101AE7B0,g_1037AE34,1);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x31c),0x39,&code_101AE840,&Read_as_v0,4);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0xc64),0x3e,&code_101AE570,str__linkshell_1037AD84,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x1dec),0xad,&code_101AE570,str__unity_1037AD60,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0x1ef4),0xae,&code_101AE570,str__linkshell2_1037AD70,2);
+  i1 = *(int *)(g_pSceneState + 8);
+  u1 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
+  if (((u1 != 0) && ((i1 == 2 || (i1 == 3)))) || (p2 = str__assiste_1037AD3C, i1 != 0)
      ) {
-    pcVar3 = s__assistj_1037ad50;
+    p2 = str__assistj_1037AD50;
   }
-  if (((uVar1 != 0) && ((iVar4 == 2 || (iVar4 == 3)))) || (pcVar2 = s__assistj_1037ad50, iVar4 != 0)
+  if (((u1 != 0) && ((i1 == 2 || (i1 == 3)))) || (p1 = str__assistj_1037AD50, i1 != 0)
      ) {
-    pcVar2 = s__assiste_1037ad3c;
+    p1 = str__assiste_1037AD3C;
   }
-  orig::TextInputFiles_ShortcutSet((void *)((int)self_ + 0x1ffc),0xb4,&LAB_101ae570,pcVar2,pcVar3,2);
-  orig::FsTextInput_SetName((void *)((int)self_ + 0xf7c),0x41,&LAB_101aea20,&Read_as_v0,4);
+  orig::TextInputFiles_ShortcutSet((void *)((int)self_ + 0x1ffc),0xb4,&code_101AE570,p1,p2,2);
+  orig::FsTextInput_SetName((void *)((int)self_ + 0xf7c),0x41,&code_101AEA20,&Read_as_v0,4);
   return self_;
 }
 
@@ -9250,12 +9248,12 @@ XI_API void * __thiscall FsShortcutManager_Constructor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_UpdateShortcuts(void * self_)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   if (*g_pSceneState_as_v0 == 0x60) {
-    uVar1 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40);
-    if ((char)uVar1 == '\0') {
+    u1 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40);
+    if ((char)u1 == '\0') {
       orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0xd6c),(uint8_t *)0x0);
       orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 4),(uint8_t *)0x0);
       orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x52c),(uint8_t *)0x0);
@@ -9268,37 +9266,37 @@ XI_API void __thiscall TextInputFiles_UpdateShortcuts(void * self_)
       orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x31c),(uint8_t *)0x0);
       orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0xf7c),(uint8_t *)0x0);
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x10c),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 1;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x10c),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 1;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x634),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 6;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x634),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 6;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0xc64),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 0xc;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0xc64),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 0xc;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x214),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 2;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x214),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 2;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x424),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 4;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x424),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 4;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1dec),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 0x1d;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1dec),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 0x1d;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1ef4),(uint8_t *)0x0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 0x1e;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1ef4),(uint8_t *)0x0);
+    if (i1 != 0) {
+      g_1037ADE4 = 0x1e;
     }
-    iVar2 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1ffc),&LAB_101adfe0);
-    if (iVar2 != 0) {
-      DAT_1037ade4 = 0x1f;
+    i1 = orig::TextInputFiles_ShortcutCheck((void *)((int)self_ + 0x1ffc),&code_101ADFE0);
+    if (i1 != 0) {
+      g_1037ADE4 = 0x1f;
     }
   }
   return;
@@ -9312,7 +9310,7 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337940(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_10337940;
+  *(uint8_t ***)self_ = &g_10337940;
   if (*(int *)(g_pSceneState + 8) == 0) {
     *(uint32_t *)((int)self_ + 0x2c) = 0;
   }
@@ -9330,24 +9328,24 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337940(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101AEAC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_InitKeyTopShape(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_InitKeyTopShape(void * self_, bits32 arg2)
 {
-  uint64_t uVar1;
-  char *pcVar2;
+  uint64_t u1;
+  char *p1;
   
   if (*(int *)(g_pSceneState + 8) == 0) {
-    pcVar2 = s_menu_key1top_1037a808;
+    p1 = str_menu_key1top_1037A808;
   }
   else {
-    pcVar2 = s_menu_key1topu_1037a81c;
+    p1 = str_menu_key1topu_1037A81C;
   }
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,pcVar2);
-  *(int *)((int)self_ + 0x18) = (int)uVar1;
-  if ((int)uVar1 == 0) {
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,p1);
+  *(int *)((int)self_ + 0x18) = (int)u1;
+  if ((int)u1 == 0) {
     return 0xffffffff;
   }
   *(uint32_t *)((int)self_ + 0x14) = 0;
-  *(uint32_t *)((int)self_ + 0x1c) = param_1;
+  *(uint32_t *)((int)self_ + 0x1c) = arg2;
   *(uint32_t *)((int)self_ + 0x24) = 0;
   *(uint8_t *)((int)self_ + 0x28) = 0;
   return 1;
@@ -9358,10 +9356,10 @@ XI_API undefined4 __thiscall TextInputFiles_InitKeyTopShape(void * self_, undefi
 XI_API void __cdecl TextInputFiles_CloseKeypadMenu(void)
 {
   if (*(int *)(g_pSceneState + 8) == 0) {
-    orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_keypad_1037a898);
+    orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_keypad_1037A898);
     return;
   }
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_keypadus_1037c3c4);
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_keypadus_1037C3C4);
   return;
 }
 
@@ -9381,396 +9379,396 @@ XI_API void __cdecl TextInputFiles_NoOpD(void)
 
 // FUNCTION: FFXIMAIN 0x101AFF50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API HIMC __stdcall TextInputFiles_ImmGetContext(HWND param_1)
+XI_API HIMC __stdcall TextInputFiles_ImmGetContext(HWND arg1)
 {
-  return orig::LinkedLibraries_JmpImmGetContext(param_1);
+  return orig::LinkedLibraries_JmpImmGetContext(arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x101AFF60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall TextInputFiles_ImmReleaseContext(HWND param_1, HIMC param_2)
+XI_API BOOL __stdcall TextInputFiles_ImmReleaseContext(HWND arg1, HIMC arg2)
 {
-  return orig::LinkedLibraries_JmpImmReleaseContext(param_1, param_2);
+  return orig::LinkedLibraries_JmpImmReleaseContext(arg1, arg2);
 }
 
 // FUNCTION: FFXIMAIN 0x101AFF70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsTextInput_InitWithImeOffscreen(void * self_)
 {
-  HIMC pHVar1;
+  HIMC val1;
   char xi_frame[60] __attribute__((aligned(4)));
-  tagCOMPOSITIONFORM  &local_3c = *reinterpret_cast<tagCOMPOSITIONFORM  *>(xi_frame + 0);
-  tagCANDIDATEFORM  &local_20 = *reinterpret_cast<tagCANDIDATEFORM  *>(xi_frame + 28);
+  tagCOMPOSITIONFORM  &val2 = *reinterpret_cast<tagCOMPOSITIONFORM  *>(xi_frame + 0);
+  tagCANDIDATEFORM  &val3 = *reinterpret_cast<tagCANDIDATEFORM  *>(xi_frame + 28);
   
-  local_20.rcArea.bottom = 2000;
-  local_20.rcArea.right = 2000;
+  val3.rcArea.bottom = 2000;
+  val3.rcArea.right = 2000;
   *(uint8_t *)((int)self_ + 0xf123) = 0;
   *(uint8_t *)((int)self_ + 0xf121) = 0;
   *(uint8_t *)((int)self_ + 0xf2f4) = 0;
-  local_3c.dwStyle = 0x20;
-  local_3c.ptCurrentPos.x = -600;
-  local_3c.ptCurrentPos.y = -600;
-  local_20.dwIndex = 0;
-  local_20.dwStyle = 0x40;
-  local_20.rcArea.top = -100;
-  local_20.ptCurrentPos.x = -600;
-  local_20.ptCurrentPos.y = -600;
+  val2.dwStyle = 0x20;
+  val2.ptCurrentPos.x = -600;
+  val2.ptCurrentPos.y = -600;
+  val3.dwIndex = 0;
+  val3.dwStyle = 0x40;
+  val3.rcArea.top = -100;
+  val3.ptCurrentPos.x = -600;
+  val3.ptCurrentPos.y = -600;
   orig::FsTextInput_init(self_);
   *(uint8_t *)((int)self_ + 0xf120) = 0;
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  orig::ImmSetCompositionWindow_102BC844(pHVar1,&local_3c);
-  orig::ImmSetCandidateWindow_102BC83E(pHVar1,&local_20);
-  orig::Imm_NotifyIMEJmp(pHVar1,0x15,4,0);
-  orig::Imm_NotifyIMEJmp(pHVar1,0x17,0,0);
-  orig::Imm_NotifyIMEJmp(pHVar1,0x16,0,0);
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar1);
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  orig::ImmSetCompositionWindow_102BC844(val1,&val2);
+  orig::ImmSetCandidateWindow_102BC83E(val1,&val3);
+  orig::Imm_NotifyIMEJmp(val1,0x15,4,0);
+  orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
+  orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
   *(uint32_t *)((int)self_ + 0xf128) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B0060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_CanOpenInput(void)
+XI_API bits32 __cdecl TextInputFiles_CanOpenInput(void)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::TargetMenu_GetByteAE(&g_menuMng_as_v0,uVar1);
-    if (((char)uVar1 == '\0') && (*g_pSceneState_as_v1 == 0x60)) {
-      uVar2 = orig::Acter_GetGlobalFlag();
-      if ((char)uVar2 != '\0') goto LAB_101b00a3;
+  u1 = orig::TargetMenu_MenuTest48OrStateB4_v1(&g_menuMng_as_v0);
+  if ((char)u1 == '\0') {
+    u1 = orig::TargetMenu_GetByteAE(&g_menuMng_as_v0,u1);
+    if (((char)u1 == '\0') && (*g_pSceneState_as_v1 == 0x60)) {
+      u2 = orig::Acter_GetGlobalFlag();
+      if ((char)u2 != '\0') goto code_101B00A3;
     }
   }
-  uVar2 = *g_pSceneState_as_v1;
-  if ((uVar2 != 0x40) && (uVar2 != 0)) {
-    return uVar2 & 0xffffff00;
+  u2 = *g_pSceneState_as_v1;
+  if ((u2 != 0x40) && (u2 != 0)) {
+    return u2 & 0xffffff00;
   }
-LAB_101b00a3:
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+code_101B00A3:
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101B2710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_OnMessage(void * self_, int param_1, undefined4 xi_s2)
+XI_API void __thiscall TextInputFiles_OnMessage(void * self_, int arg2, bits32 xi_s2)
 {
   int *xi_entry_eax = 0;
-  HIMC pHVar1;
-  uint32_t uVar2;
-  HWND pHVar3;
+  HIMC val1;
+  uint32_t u1;
+  HWND val2;
   
   *(uint8_t *)((int)self_ + 0xef22) = 0;
-  if (param_1 == 8) {
+  if (arg2 == 8) {
     return;
   }
-  if (param_1 == 5) {
+  if (arg2 == 5) {
     xi_entry_eax = g_pSceneState_as_v0;
     if (*g_pSceneState_as_v0 != 0x40) {
-      pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      orig::Imm_NotifyIMEJmp(pHVar1,0x17,0,0);
-      orig::Imm_NotifyIMEJmp(pHVar1,0x16,0,0);
-      pHVar3 = *(HWND *)(g_pApp_as_s32 + 0x18);
-      goto LAB_101b27bd;
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
+      orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
+      val2 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      goto code_101B27BD;
     }
   }
-  else if (param_1 == 9) {
+  else if (arg2 == 9) {
     return;
   }
-  uVar2 = orig::WinMain_GetSceneStateByte68(xi_entry_eax);
-  if ((char)uVar2 != '\x01') {
+  u1 = orig::WinMain_GetSceneStateByte68(xi_entry_eax);
+  if ((char)u1 != '\x01') {
     return;
   }
-  if (param_1 != 3) {
+  if (arg2 != 3) {
     return;
   }
   if (*g_pSceneState_as_v0 == 0x40) {
     return;
   }
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  orig::Imm_NotifyIMEJmp(pHVar1,0x17,0,0);
-  orig::Imm_NotifyIMEJmp(pHVar1,0x16,0,0);
-  pHVar3 = *(HWND *)(g_pApp_as_s32 + 0x18);
-LAB_101b27bd:
-  orig::ImmReleaseContext_101AFF60(pHVar3,pHVar1);
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
+  orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
+  val2 = *(HWND *)(g_pApp_as_s32 + 0x18);
+code_101B27BD:
+  orig::ImmReleaseContext_101AFF60(val2,val1);
   *(int *)((int)self_ + 0xf128) = *(int *)((int)self_ + 0xf128) + 1;
-  orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
+  orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
   *(uint8_t *)((int)self_ + 0xf123) = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B27F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall TextInputFiles_NoOp2ArgsA(undefined4 xi_s1, undefined4 xi_s2)
+XI_API void __stdcall TextInputFiles_NoOp2ArgsA(bits32 xi_s1, bits32 xi_s2)
 {
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B2800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall TextInputFiles_NoOp2ArgsB(undefined4 xi_s1, undefined4 xi_s2)
+XI_API void __stdcall TextInputFiles_NoOp2ArgsB(bits32 xi_s1, bits32 xi_s2)
 {
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B29F0
 // GATE: PASS -- 100 trials, 91 returned normally, 161 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 91
-XI_API undefined4 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT param_1, undefined4 xi_s2)
+XI_API bits32 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, UINT arg2, bits32 xi_s2)
 {
-  char cVar1;
-  HIMC pHVar2;
-  uint32_t uVar3;
-  BOOL BVar4;
-  BOOL BVar5;
-  uint32_t uVar6;
-  UINT UVar7;
-  LONG LVar8;
-  int iVar9;
-  uint8_t *puVar10;
+  char c1;
+  HIMC val1;
+  uint32_t u1;
+  BOOL i1;
+  BOOL i2;
+  uint32_t u2;
+  UINT u3;
+  LONG i3;
+  int i4;
+  uint8_t *p1;
   char xi_frame[480] __attribute__((aligned(4)));
-  DWORD  &DVar11 = *reinterpret_cast<DWORD  *>(xi_frame + 0);
-  uint32_t  &uVar12 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  ULONG_PTR  &UVar13 = *reinterpret_cast<ULONG_PTR  *>(xi_frame + 4);
-  HWND  &pHVar14 = *reinterpret_cast<HWND  *>(xi_frame + 4);
-  uint32_t  &local_1c8 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint8_t  (&local_1c4)[452] = *reinterpret_cast<uint8_t  (*)[452]>(xi_frame + 28);
+  DWORD  &u4 = *reinterpret_cast<DWORD  *>(xi_frame + 0);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  ULONG_PTR  &val2 = *reinterpret_cast<ULONG_PTR  *>(xi_frame + 4);
+  HWND  &val3 = *reinterpret_cast<HWND  *>(xi_frame + 4);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
+  uint8_t  (&u7)[452] = *reinterpret_cast<uint8_t  (*)[452]>(xi_frame + 28);
   
   if (*(char *)((int)self_ + 0xf100) == '\x01') {
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x34))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x34))))((void *)(self_));
     return 0;
   }
   *(uint8_t *)((int)self_ + 0xef22) = 0;
-  pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  if ((param_1 == 0xe5) &&
-     (param_1 = orig::Imm_GetVirtualKeyJmp(*(HWND *)(g_pApp_as_s32 + 0x18)), param_1 == 0xff)) {
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  if ((arg2 == 0xe5) &&
+     (arg2 = orig::Imm_GetVirtualKeyJmp(*(HWND *)(g_pApp_as_s32 + 0x18)), arg2 == 0xff)) {
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
     return 0;
   }
   *(uint8_t *)((int)self_ + 0xf124) = 1;
-  local_1c8 = 0;
-  uVar3 = orig::TextInputFiles_IsModeFourOrFive(self_);
-  if ((char)uVar3 == '\0') {
-    cVar1 = ((int (__thiscall *)(void *))(*(code **)(*((int *)self_) + 0x40)))((void *)(((int *)self_)));
-    if (cVar1 == '\0') {
-      local_1c8 = 0;
+  u6 = 0;
+  u1 = orig::TextInputFiles_IsModeFourOrFive(self_);
+  if ((char)u1 == '\0') {
+    c1 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*((int *)self_) + 0x40)))((void *)(((int *)self_)));
+    if (c1 == '\0') {
+      u6 = 0;
       *(uint8_t *)((int)self_ + 0xf124) = 0;
-      goto LAB_101b3599;
+      goto code_101B3599;
     }
-    uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x38);
-    if (((((char)uVar3 != '\0') ||
-         (uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0xb8), (char)uVar3 != '\0')) ||
-        (uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x1d), (char)uVar3 != '\0')) ||
-       (uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x9d), (char)uVar3 != '\0')) {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x38);
+    if (((((char)u1 != '\0') ||
+         (u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0xb8), (char)u1 != '\0')) ||
+        (u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x1d), (char)u1 != '\0')) ||
+       (u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x9d), (char)u1 != '\0')) {
       *(uint8_t *)((int)self_ + 0xf124) = 0;
-      goto LAB_101b3599;
+      goto code_101B3599;
     }
-    uVar3 = orig::TextInputFiles_IsOemSlash(param_1);
-    if ((char)uVar3 == '\x01') {
-      uVar3 = orig::TextInputFiles_IsModeThree(self_);
-      if (((char)uVar3 != '\0') &&
-         (uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x40))))((void *)(self_)), (char)uVar3 != '\0')) {
-        BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-        (**(code **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-        BVar5 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        if (BVar5 != 0) {
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-          (**(code **)(*(int *)self_ + 0x60))(0);
-          pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+    u1 = orig::TextInputFiles_IsOemSlash(arg2);
+    if ((char)u1 == '\x01') {
+      u1 = orig::TextInputFiles_IsModeThree(self_);
+      if (((char)u1 != '\0') &&
+         (u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x40))))((void *)(self_)), (char)u1 != '\0')) {
+        i1 = orig::Imm_GetOpenStatusJmp(val1);
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+        (**(untyped_fn **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+        i2 = orig::Imm_GetOpenStatusJmp(val1);
+        if (i2 != 0) {
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+          (**(untyped_fn **)(*(int *)self_ + 0x60))(0);
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
           if (*(char *)((int)self_ + 0xf121) != '\0') {
             *(uint8_t *)((int)self_ + 0xf2f4) = 1;
           }
-          orig::Imm_SetOpenStatusJmp(pHVar2,0);
+          orig::Imm_SetOpenStatusJmp(val1,0);
         }
-        if (BVar4 != 0) {
+        if (i1 != 0) {
           orig::FsTextInput_OnChar(self_,0x2f);
         }
       }
     }
     else {
-      uVar6 = orig::TextInputFiles_IsState1Or3();
-      if (((char)uVar6 != '\0') ||
-         (uVar3 = orig::TextInputFiles_ClassifyVirtualKey(param_1), (char)uVar3 != '\x01')) {
-        ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
-        goto LAB_101b3599;
+      u2 = orig::TextInputFiles_IsState1Or3();
+      if (((char)u2 != '\0') ||
+         (u1 = orig::TextInputFiles_ClassifyVirtualKey(arg2), (char)u1 != '\x01')) {
+        ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
+        goto code_101B3599;
       }
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      (**(code **)(*(int *)self_ + 0x58))();
-      (**(code **)(*(int *)self_ + 0x60))(1);
-      (**(code **)(*(int *)self_ + 0x70))();
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      uVar3 = orig::TextInputFiles_IsModeThree(self_);
-      if (((char)uVar3 != '\0') &&
-         (uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x40))))((void *)(self_)), (char)uVar3 != '\0')) {
-        BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-        (**(code **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-        BVar5 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        if ((BVar5 != 0) && (BVar4 == 0)) {
-          UVar13 = 0;
-          DVar11 = 0;
-          UVar7 = MapVirtualKeyA(param_1,0);
-          keybd_event((BYTE)param_1,(BYTE)UVar7,DVar11,UVar13);
-          UVar13 = 0;
-          DVar11 = 2;
-          UVar7 = MapVirtualKeyA(param_1,0);
-          keybd_event((BYTE)param_1,(BYTE)UVar7,DVar11,UVar13);
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      (**(untyped_fn **)(*(int *)self_ + 0x58))();
+      (**(untyped_fn **)(*(int *)self_ + 0x60))(1);
+      (**(untyped_fn **)(*(int *)self_ + 0x70))();
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      u1 = orig::TextInputFiles_IsModeThree(self_);
+      if (((char)u1 != '\0') &&
+         (u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x40))))((void *)(self_)), (char)u1 != '\0')) {
+        i1 = orig::Imm_GetOpenStatusJmp(val1);
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+        (**(untyped_fn **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+        i2 = orig::Imm_GetOpenStatusJmp(val1);
+        if ((i2 != 0) && (i1 == 0)) {
+          val2 = 0;
+          u4 = 0;
+          u3 = MapVirtualKeyA(arg2,0);
+          keybd_event((BYTE)arg2,(BYTE)u3,u4,val2);
+          val2 = 0;
+          u4 = 2;
+          u3 = MapVirtualKeyA(arg2,0);
+          keybd_event((BYTE)arg2,(BYTE)u3,u4,val2);
         }
       }
     }
-    goto LAB_101b3594;
+    goto code_101B3594;
   }
-  uVar3 = orig::Scene_IsState70();
-  if ((char)uVar3 != '\0') {
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+  u1 = orig::Scene_IsState70();
+  if ((char)u1 != '\0') {
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
     return 0;
   }
-  LVar8 = orig::Imm_GetCompositionStringAJmp(pHVar2,8,local_1c4,0x1c2);
-  iVar9 = param_1 - 8;
-  switch(xi_sw(param_1)) {
+  i3 = orig::Imm_GetCompositionStringAJmp(val1,8,u7,0x1c2);
+  i4 = arg2 - 8;
+  switch(xi_sw(arg2)) {
   case 8:
-    (**(code **)(*(int *)self_ + 0x70))();
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-    param_1 = 8;
-    goto LAB_101b357c;
+    (**(untyped_fn **)(*(int *)self_ + 0x70))();
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+    arg2 = 8;
+    goto code_101B357C;
   case 9:
   case 0x13:
-    BVar4 = orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,BVar4);
-    if ((((char)uVar3 == '\0') &&
-        (uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_)), (char)uVar3 != '\0')) &&
-       (uVar3 = orig::TextInputFiles_IsModeTwo(self_), (char)uVar3 == '\0')) {
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      orig::Imm_NotifyIMEJmp(pHVar2,0x15,3,0);
-      (**(code **)(*(int *)self_ + 0x70))();
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+    i1 = orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((((char)u1 == '\0') &&
+        (u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_)), (char)u1 != '\0')) &&
+       (u1 = orig::TextInputFiles_IsModeTwo(self_), (char)u1 == '\0')) {
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      orig::Imm_NotifyIMEJmp(val1,0x15,3,0);
+      (**(untyped_fn **)(*(int *)self_ + 0x70))();
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
       orig::TextInputFiles_HandleEditKey(self_,9,0,0);
-      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
+      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
       *(uint8_t *)((int)self_ + 0xf123) = 0;
       orig::SetMusicTrackVolume_A_v1();
     }
     else {
-      uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x2a);
-      if (((char)uVar3 == '\0') &&
-         (uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x36), (char)uVar3 == '\0')) {
-        uVar3 = 0;
+      u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x2a);
+      if (((char)u1 == '\0') &&
+         (u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x36), (char)u1 == '\0')) {
+        u1 = 0;
       }
       else {
-        uVar3 = 1;
+        u1 = 1;
       }
-      iVar9 = orig::TextInputFiles_HandleEditKey(self_,9,uVar3,0);
-      if (iVar9 == 1) {
+      i4 = orig::TextInputFiles_HandleEditKey(self_,9,u1,0);
+      if (i4 == 1) {
         orig::SetMusicTrackVolume_C();
       }
     }
-    goto LAB_101b3583;
+    goto code_101B3583;
   default:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if ((char)uVar3 != '\0') goto LAB_101b3569;
-    BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-    if ((((BVar4 == 0) || (param_1 == 0x2e)) || (param_1 == 0x22)) ||
-       ((param_1 == 0x21 || (param_1 == 0x10)))) goto switchD_101b2d31_caseD_23;
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if ((char)u1 != '\0') goto code_101B3569;
+    i1 = orig::Imm_GetOpenStatusJmp(val1);
+    if ((((i1 == 0) || (arg2 == 0x2e)) || (arg2 == 0x22)) ||
+       ((arg2 == 0x21 || (arg2 == 0x10)))) goto L1;
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
     break;
   case 0xd:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if ((char)uVar3 == '\0') {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      iVar9 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
-      pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if ((char)u1 == '\0') {
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      i4 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
+      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
     else {
-      BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-      if (BVar4 != 0) {
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (i1 != 0) {
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
         orig::TextInputFiles_ResetComposition(self_,0);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       }
       *(uint8_t *)((int)self_ + 0xf120) = 0;
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      iVar9 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
-      pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      i4 = orig::TextInputFiles_HandleEditKey(self_,0xd,0,0);
+      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
-    pHVar2 = orig::ImmGetContext_101AFF50(pHVar14);
-    if ((iVar9 == 1) && (orig::SetMusicTrackVolume_A_v1(), *(char *)((int)self_ + 0xf100) != '\0')) {
+    val1 = orig::ImmGetContext_101AFF50(val3);
+    if ((i4 == 1) && (orig::SetMusicTrackVolume_A_v1(), *(char *)((int)self_ + 0xf100) != '\0')) {
       if (*(int *)((int)self_ + 0xf0f4) == 0) {
-        *(uint32_t *)(DAT_10662dac_as_s32 + 0x14) = 0;
+        *(uint32_t *)(g_10662DAC_as_s32 + 0x14) = 0;
       }
       else {
-        orig::TextInputFiles_UpdateFromMenu(DAT_1066269c_as_v0);
+        orig::TextInputFiles_UpdateFromMenu(g_1066269C_as_v0);
       }
     }
     break;
   case 0x1b:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if ((char)uVar3 == '\0') {
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if ((char)u1 == '\0') {
       if (*(char *)((int)self_ + 0xf123) == '\0') {
-        BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        if ((BVar4 == 0) || (LVar8 < 1)) {
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+        i1 = orig::Imm_GetOpenStatusJmp(val1);
+        if ((i1 == 0) || (i3 < 1)) {
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
           orig::TextInputFiles_HandleEditKey(self_,0x1b,0,0);
-          pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
           orig::SetMusicTrackVolume_B_v2();
         }
         else {
           *(uint8_t *)((int)self_ + 0xf123) = 0;
-          (**(code **)(*(int *)self_ + 0x70))();
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+          (**(untyped_fn **)(*(int *)self_ + 0x70))();
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
           orig::TextInputFiles_HandleEditKey(self_,0x1b,0,0);
-          pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
           orig::SetMusicTrackVolume_B_v2();
         }
       }
       else {
         *(uint8_t *)((int)self_ + 0xf123) = 0;
-        ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+        ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
         orig::SetMusicTrackVolume_B_v2();
       }
     }
     else {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
       orig::TextInputFiles_HandleEditKey(self_,0x1b,0,0);
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       orig::SetMusicTrackVolume_B_v2();
     }
     break;
   case 0x1c:
-    uVar3 = orig::TextInputFiles_IsModeFourOrFive(self_);
-    if ((char)uVar3 != '\0') {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      cVar1 = (**(code **)(*(int *)self_ + 0x20))();
-      pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
-      if (cVar1 == '\0') goto LAB_101b358d;
-      pHVar2 = orig::ImmGetContext_101AFF50(pHVar14);
-      BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-      if (BVar4 == 0) {
-        (**(code **)(*(int *)self_ + 0x70))();
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-        iVar9 = (**(code **)(*(int *)self_ + 0x68))();
-        puVar10 = (uint8_t *)(**(code **)(*(int *)self_ + 100))();
-        orig::TextInputFiles_InputSubmit(self_,puVar10,iVar9);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+    u1 = orig::TextInputFiles_IsModeFourOrFive(self_);
+    if ((char)u1 != '\0') {
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      c1 = (**(untyped_fn **)(*(int *)self_ + 0x20))();
+      val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      if (c1 == '\0') goto code_101B358D;
+      val1 = orig::ImmGetContext_101AFF50(val3);
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (i1 == 0) {
+        (**(untyped_fn **)(*(int *)self_ + 0x70))();
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+        i4 = (**(untyped_fn **)(*(int *)self_ + 0x68))();
+        p1 = (uint8_t *)(**(untyped_fn **)(*(int *)self_ + 100))();
+        orig::TextInputFiles_InputSubmit(self_,p1,i4);
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
         *(uint8_t *)((int)self_ + 0xf120) = 0;
       }
       else {
-        uVar3 = orig::TextInputFiles_GetFlag8C81(self_,BVar4);
-        if ((char)uVar3 == '\0') {
+        u1 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+        if ((char)u1 == '\0') {
           *(int *)((int)self_ + 0xf128) = *(int *)((int)self_ + 0xf128) + 1;
         }
         else {
           orig::TextInputFiles_ResetCursor(self_);
-          (**(code **)(*(int *)self_ + 0x70))();
-          orig::Imm_NotifyIMEJmp(pHVar2,0x15,3,0);
-          orig::Imm_NotifyIMEJmp(pHVar2,0x15,2,0);
-          orig::Imm_NotifyIMEJmp(pHVar2,0x15,2,0);
-          orig::Imm_NotifyIMEJmp(pHVar2,0x17,0,0);
-          orig::Imm_NotifyIMEJmp(pHVar2,0x16,0,0);
+          (**(untyped_fn **)(*(int *)self_ + 0x70))();
+          orig::Imm_NotifyIMEJmp(val1,0x15,3,0);
+          orig::Imm_NotifyIMEJmp(val1,0x15,2,0);
+          orig::Imm_NotifyIMEJmp(val1,0x15,2,0);
+          orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
+          orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
           *(int *)((int)self_ + 0xf128) = *(int *)((int)self_ + 0xf128) + 1;
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-          orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
-          pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+          orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
           *(uint8_t *)((int)self_ + 0xf123) = 1;
         }
       }
@@ -9778,104 +9776,104 @@ XI_API undefined4 __thiscall TextInputFiles_HandleKeyDownWithIme(void * self_, U
     break;
   case 0x20:
     orig::Cursor_SetVisible_v2(g_pCursor_as_v2,0);
-    BVar4 = orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,BVar4);
-    if (((char)uVar3 == '\0') || (uVar3 = orig::TextInputFiles_HasComposition(), (char)uVar3 == '\0')) {
-      uVar3 = orig::TextInputFiles_GetFlag8C81(self_,uVar3);
-      if ((char)uVar3 == '\0') goto LAB_101b3583;
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x2a);
-      if (((char)uVar3 == '\0') &&
-         (uVar3 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x36), (char)uVar3 == '\0')) {
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+    i1 = orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if (((char)u1 == '\0') || (u1 = orig::TextInputFiles_HasComposition(), (char)u1 == '\0')) {
+      u1 = orig::TextInputFiles_GetFlag8C81(self_,u1);
+      if ((char)u1 == '\0') goto code_101B3583;
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x2a);
+      if (((char)u1 == '\0') &&
+         (u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x36), (char)u1 == '\0')) {
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
         orig::TextInputFiles_HandleEditKey(self_,9,0,0);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
         orig::SetMusicTrackVolume_C();
       }
       else {
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
         orig::TextInputFiles_HandleEditKey(self_,9,1,0);
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
         orig::SetMusicTrackVolume_C();
       }
     }
     else {
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       orig::TextInputFiles_ResetCursor(self_);
-      (**(code **)(*(int *)self_ + 0x70))();
-      orig::Imm_NotifyIMEJmp(pHVar2,0x15,3,0);
-      orig::Imm_NotifyIMEJmp(pHVar2,0x15,2,0);
-      orig::Imm_NotifyIMEJmp(pHVar2,0x15,2,0);
-      orig::Imm_NotifyIMEJmp(pHVar2,0x17,0,0);
-      orig::Imm_NotifyIMEJmp(pHVar2,0x16,0,0);
+      (**(untyped_fn **)(*(int *)self_ + 0x70))();
+      orig::Imm_NotifyIMEJmp(val1,0x15,3,0);
+      orig::Imm_NotifyIMEJmp(val1,0x15,2,0);
+      orig::Imm_NotifyIMEJmp(val1,0x15,2,0);
+      orig::Imm_NotifyIMEJmp(val1,0x17,0,0);
+      orig::Imm_NotifyIMEJmp(val1,0x16,0,0);
       *(int *)((int)self_ + 0xf128) = *(int *)((int)self_ + 0xf128) + 1;
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       *(uint8_t *)((int)self_ + 0xf123) = 1;
       orig::SetMusicTrackVolume_C();
     }
     break;
   case 0x23:
   case 0x24:
-switchD_101b2d31_caseD_23:
-LAB_101b3569:
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-LAB_101b357c:
-    orig::TextInputFiles_HandleEditKey(self_,param_1,0,0);
-LAB_101b3583:
-    pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
-LAB_101b358d:
-    pHVar2 = orig::ImmGetContext_101AFF50(pHVar14);
+L1:
+code_101B3569:
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+code_101B357C:
+    orig::TextInputFiles_HandleEditKey(self_,arg2,0,0);
+code_101B3583:
+    val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+code_101B358D:
+    val1 = orig::ImmGetContext_101AFF50(val3);
     break;
   case 0x25:
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
     orig::TextInputFiles_HandleEditKey(self_,0x25,0,0);
-    pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-    BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-    if ((BVar4 != 0) && (0 < *(int *)((int)self_ + 0xf128))) {
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+    val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+    i1 = orig::Imm_GetOpenStatusJmp(val1);
+    if ((i1 != 0) && (0 < *(int *)((int)self_ + 0xf128))) {
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
     }
     break;
   case 0x26:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if ((char)uVar3 == '\0') {
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if ((char)u1 == '\0') {
       if (*(int *)((int)self_ + 0xf128) == 0) {
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
         orig::TextInputFiles_HandleEditKey(self_,0x26,0,0);
-        pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
-        goto LAB_101b358d;
+        val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+        goto code_101B358D;
       }
       break;
     }
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-    uVar12 = 1;
-    uVar3 = 9;
-LAB_101b3266:
-    orig::TextInputFiles_HandleEditKey(self_,uVar3,uVar12,0);
-    pHVar14 = *(HWND *)(g_pApp_as_s32 + 0x18);
-    goto LAB_101b358d;
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+    u5 = 1;
+    u1 = 9;
+code_101B3266:
+    orig::TextInputFiles_HandleEditKey(self_,u1,u5,0);
+    val3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+    goto code_101B358D;
   case 0x27:
-    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
+    orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
     orig::TextInputFiles_HandleEditKey(self_,0x27,0,0);
-    pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-    BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-    if ((BVar4 != 0) && (0 < *(int *)((int)self_ + 0xf128))) {
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+    val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+    i1 = orig::Imm_GetOpenStatusJmp(val1);
+    if ((i1 != 0) && (0 < *(int *)((int)self_ + 0xf128))) {
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
     }
     break;
   case 0x28:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if ((char)uVar3 != '\0') {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      param_1 = 9;
-      goto LAB_101b357c;
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if ((char)u1 != '\0') {
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      arg2 = 9;
+      goto code_101B357C;
     }
     if (*(int *)((int)self_ + 0xf128) == 0) {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      uVar12 = 0;
-      uVar3 = 0x28;
-      goto LAB_101b3266;
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      u5 = 0;
+      u1 = 0x28;
+      goto code_101B3266;
     }
     break;
   case 0x75:
@@ -9883,119 +9881,119 @@ LAB_101b3266:
   case 0x77:
   case 0x78:
   case 0x79:
-    uVar3 = orig::TextInputFiles_GetFlag8C81(self_,iVar9);
-    if (((char)uVar3 == '\0') && (BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2), BVar4 != 0)) {
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+    u1 = orig::TextInputFiles_GetFlag8C81(self_,i4);
+    if (((char)u1 == '\0') && (i1 = orig::Imm_GetOpenStatusJmp(val1), i1 != 0)) {
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
     }
     break;
   case 0xf3:
   case 0xf4:
-    (**(code **)(*(int *)self_ + 0x70))();
+    (**(untyped_fn **)(*(int *)self_ + 0x70))();
     if ((*(char *)((int)self_ + 0xf0ec) == '\0') && (*(int *)((int)self_ + 0xf10c) == 0)) {
-      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-      iVar9 = (**(code **)(*(int *)self_ + 0x68))();
-      puVar10 = (uint8_t *)(**(code **)(*(int *)self_ + 100))();
-      orig::TextInputFiles_InputSubmit(self_,puVar10,iVar9);
-      pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+      i4 = (**(untyped_fn **)(*(int *)self_ + 0x68))();
+      p1 = (uint8_t *)(**(untyped_fn **)(*(int *)self_ + 100))();
+      orig::TextInputFiles_InputSubmit(self_,p1,i4);
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       *(uint8_t *)((int)self_ + 0xf120) = 0;
-      BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-      if (BVar4 == 0) {
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (i1 == 0) {
         *(uint8_t *)((int)self_ + 0xf2f4) = 0;
-        BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        orig::Imm_SetOpenStatusJmp(pHVar2,BVar4);
+        i1 = orig::Imm_GetOpenStatusJmp(val1);
+        orig::Imm_SetOpenStatusJmp(val1,i1);
       }
       else {
         *(uint8_t *)((int)self_ + 0xf121) = 0;
-        BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-        orig::Imm_SetOpenStatusJmp(pHVar2,BVar4);
+        i1 = orig::Imm_GetOpenStatusJmp(val1);
+        orig::Imm_SetOpenStatusJmp(val1,i1);
       }
     }
     else {
-      BVar4 = orig::Imm_GetOpenStatusJmp(pHVar2);
-      if (BVar4 != 0) {
-        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-        (**(code **)(*(int *)self_ + 0x5c))();
-        pHVar2 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (i1 != 0) {
+        orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+        (**(untyped_fn **)(*(int *)self_ + 0x5c))();
+        val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
       }
       *(uint8_t *)((int)self_ + 0xf120) = 0;
       *(uint8_t *)((int)self_ + 0xf2f4) = 0;
-      orig::Imm_SetOpenStatusJmp(pHVar2,0);
+      orig::Imm_SetOpenStatusJmp(val1,0);
     }
   }
-LAB_101b3594:
-  local_1c8 = 1;
-LAB_101b3599:
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar2);
-  return local_1c8;
+code_101B3594:
+  u6 = 1;
+code_101B3599:
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+  return u6;
 }
 
 // FUNCTION: FFXIMAIN 0x101B36F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_OnChar(void * self_, uint32_t param_1)
+XI_API void __thiscall TextInputFiles_OnChar(void * self_, uint32_t arg2)
 {
-  uint32_t uVar1;
-  char cVar2;
-  uint32_t uVar3;
-  HIMC pHVar4;
-  BOOL BVar5;
-  int iVar6;
+  uint32_t u1;
+  char c1;
+  uint32_t u2;
+  HIMC val1;
+  BOOL i1;
+  int i2;
   char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
   
-  uVar1 = param_1;
-  local_4 = self_;
-  uVar3 = orig::NetCellFont_IsNotControlChar(param_1);
-  if ((char)uVar3 != '\0') {
-    cVar2 = (char)uVar1;
+  u1 = arg2;
+  p1 = self_;
+  u2 = orig::NetCellFont_IsNotControlChar(arg2);
+  if ((char)u2 != '\0') {
+    c1 = (char)u1;
     *(uint8_t *)((int)self_ + 0xef22) = 0;
-    if (cVar2 != '\b') {
-      if (cVar2 == ' ') {
+    if (c1 != '\b') {
+      if (c1 == ' ') {
         if (*g_pSceneState_as_v0 == 0x60) {
-          pHVar4 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-          BVar5 = orig::Imm_GetOpenStatusJmp(pHVar4);
-          uVar3 = orig::TextInputFiles_IsModeThree(self_);
-          if ((char)uVar3 != '\0') {
-            cVar2 = ((int (__thiscall *)(void *))(*(code **)(*((int *)self_) + 0x40)))((void *)(((int *)self_)));
-            if (cVar2 != '\0') {
-              if (BVar5 != 0) {
-                orig::Imm_SetCompositionStringAJmp(pHVar4,9,&Read_as_v0,0,(LPVOID)0x0,0);
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+          i1 = orig::Imm_GetOpenStatusJmp(val1);
+          u2 = orig::TextInputFiles_IsModeThree(self_);
+          if ((char)u2 != '\0') {
+            c1 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*((int *)self_) + 0x40)))((void *)(((int *)self_)));
+            if (c1 != '\0') {
+              if (i1 != 0) {
+                orig::Imm_SetCompositionStringAJmp(val1,9,&Read_as_v0,0,(LPVOID)0x0,0);
               }
-              orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar4);
-              (**(code **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
+              orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+              (**(untyped_fn **)(*(int *)self_ + 0x28))(4,0,5,0x78,0,0,0,10);
               return;
             }
           }
-          uVar3 = orig::TextInputFiles_IsModeFourOrFive(self_);
-          if ((char)uVar3 == '\0') {
-            orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar4);
+          u2 = orig::TextInputFiles_IsModeFourOrFive(self_);
+          if ((char)u2 == '\0') {
+            orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
             return;
           }
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar4);
-          if (BVar5 == 0) {
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+          if (i1 == 0) {
             orig::FsTextInput_OnChar(self_,0x20);
             return;
           }
         }
         else {
-          uVar3 = orig::TextInputFiles_IsModeFourOrFive(self_);
-          if ((char)uVar3 != '\0') {
+          u2 = orig::TextInputFiles_IsModeFourOrFive(self_);
+          if ((char)u2 != '\0') {
             orig::FsTextInput_OnChar(self_,0x20);
           }
         }
       }
       else {
-        uVar3 = orig::TextInputFiles_IsModeFourOrFive(self_);
-        if ((char)uVar3 != '\0') {
-          pHVar4 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-          BVar5 = orig::Imm_GetOpenStatusJmp(pHVar4);
-          orig::Imm_GetConversionStatusJmp(pHVar4,&param_1,(LPDWORD)&local_4);
-          if ((BVar5 == 0) || ((param_1 & 0x100) != 0)) {
-            iVar6 = orig::FsTextInput_OnChar(self_,uVar1);
-            if (iVar6 == -1) {
+        u2 = orig::TextInputFiles_IsModeFourOrFive(self_);
+        if ((char)u2 != '\0') {
+          val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+          i1 = orig::Imm_GetOpenStatusJmp(val1);
+          orig::Imm_GetConversionStatusJmp(val1,&arg2,(LPDWORD)&p1);
+          if ((i1 == 0) || ((arg2 & 0x100) != 0)) {
+            i2 = orig::FsTextInput_OnChar(self_,u1);
+            if (i2 == -1) {
               orig::SetMusicTrackVolume_Tag0004_v1();
             }
           }
-          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar4);
+          orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
           return;
         }
       }
@@ -10006,26 +10004,26 @@ XI_API void __thiscall TextInputFiles_OnChar(void * self_, uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x101B3B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_ResetComposition(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_ResetComposition(void * self_, bits32 arg2)
 {
   HIMC xi_eax;
-  uint32_t uVar1;
-  BOOL BVar2;
+  uint32_t u1;
+  BOOL i1;
   
   xi_eax = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
   if (xi_eax != (HIMC)0x0) {
-    uVar1 = orig::WinMain_GetSceneStateByte68(xi_eax);
-    if ((char)uVar1 == '\x01') {
-      if ((char)param_1 == '\0') {
+    u1 = orig::WinMain_GetSceneStateByte68(xi_eax);
+    if ((char)u1 == '\x01') {
+      if ((char)arg2 == '\0') {
         orig::Imm_NotifyIMEJmp(xi_eax,0x15,4,0);
-        BVar2 = orig::Imm_SetCompositionStringAJmp(xi_eax,0x3f,&DAT_10662d46,0,&DAT_10662d47,0);
-        if (BVar2 == 0) {
+        i1 = orig::Imm_SetCompositionStringAJmp(xi_eax,0x3f,&g_10662D46,0,&g_10662D47,0);
+        if (i1 == 0) {
           orig::Imm_SetCompositionStringAJmp(xi_eax,9,&Read_as_v0,1,&Read_as_v0,1);
         }
       }
     }
     else {
-      orig::Imm_SetCompositionStringAJmp(xi_eax,0x3f,&DAT_10662d48,0,&DAT_10662d49,0);
+      orig::Imm_SetCompositionStringAJmp(xi_eax,0x3f,&g_10662D48,0,&g_10662D49,0);
       orig::Imm_NotifyIMEJmp(xi_eax,0x15,4,0);
     }
     orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),xi_eax);
@@ -10038,20 +10036,20 @@ XI_API void __thiscall TextInputFiles_ResetComposition(void * self_, undefined4 
 
 // FUNCTION: FFXIMAIN 0x101B3F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_HasCompositionOrPending(void * self_)
+XI_API bits32 __thiscall TextInputFiles_HasCompositionOrPending(void * self_)
 {
-  HIMC pHVar1;
-  LONG LVar2;
-  uint32_t uVar3;
+  HIMC val1;
+  LONG i1;
+  uint32_t u1;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&auStack_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u2)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  LVar2 = orig::Imm_GetCompositionStringAJmp(pHVar1,8,auStack_100,0x100);
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar1);
-  if (LVar2 < 1) {
-    uVar3 = orig::TextInputFiles_HasPendingInput(self_);
-    if ((char)uVar3 == '\0') {
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,u2,0x100);
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+  if (i1 < 1) {
+    u1 = orig::TextInputFiles_HasPendingInput(self_);
+    if ((char)u1 == '\0') {
       return 0;
     }
   }
@@ -10060,34 +10058,34 @@ XI_API undefined4 __thiscall TextInputFiles_HasCompositionOrPending(void * self_
 
 // FUNCTION: FFXIMAIN 0x101B3F70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_HasComposition(void)
+XI_API bits32 __cdecl TextInputFiles_HasComposition(void)
 {
-  HIMC pHVar1;
-  LONG LVar2;
+  HIMC val1;
+  LONG i1;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  uint8_t  (&u1)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
   
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  LVar2 = orig::Imm_GetCompositionStringAJmp(pHVar1,8,local_100,0x100);
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar1);
-  return (uint32_t)(0 < LVar2);
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  i1 = orig::Imm_GetCompositionStringAJmp(val1,8,u1,0x100);
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+  return (uint32_t)(0 < i1);
 }
 
 // FUNCTION: FFXIMAIN 0x101B3FC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl TextInputFiles_OpenInlineMenus(void)
 {
-  HIMC pHVar1;
-  BOOL BVar2;
+  HIMC val1;
+  BOOL i1;
   
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  BVar2 = orig::Imm_GetOpenStatusJmp(pHVar1);
-  if (BVar2 != 0) {
-    orig::Imm_SetCompositionStringAJmp(pHVar1,0x3f,&DAT_10662d4a,0,&DAT_10662d4b,0);
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  i1 = orig::Imm_GetOpenStatusJmp(val1);
+  if (i1 != 0) {
+    orig::Imm_SetCompositionStringAJmp(val1,0x3f,&g_10662D4A,0,&g_10662D4B,0);
   }
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar1);
-  orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_inline_103798cc,1,0);
-  orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_feppalle_103798e0,1,0);
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+  orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_inline_103798CC,1,0);
+  orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_feppalle_103798E0,1,0);
   return;
 }
 
@@ -10095,26 +10093,26 @@ XI_API void __cdecl TextInputFiles_OpenInlineMenus(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 70 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_CloseInlineMenusKeepIme(void * self_)
 {
-  HIMC pHVar1;
-  BOOL BVar2;
+  HIMC val1;
+  BOOL i1;
   char xi_frame[8] __attribute__((aligned(4)));
   DWORD  &DStack_8 = *reinterpret_cast<DWORD  *>(xi_frame + 0);
   DWORD  &DStack_4 = *reinterpret_cast<DWORD  *>(xi_frame + 4);
   
-  pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-  BVar2 = orig::Imm_GetOpenStatusJmp(pHVar1);
-  orig::Imm_GetConversionStatusJmp(pHVar1,&DStack_4,&DStack_8);
-  if ((BVar2 == 0) || (DStack_8 == 0)) {
+  val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+  i1 = orig::Imm_GetOpenStatusJmp(val1);
+  orig::Imm_GetConversionStatusJmp(val1,&DStack_4,&DStack_8);
+  if ((i1 == 0) || (DStack_8 == 0)) {
     if (*(char *)((int)self_ + 0xf2f4) == '\0') {
       *(uint8_t *)((int)self_ + 0xf121) = 0;
     }
   }
   else {
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
     *(uint8_t *)((int)self_ + 0xf121) = 1;
   }
-  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),pHVar1);
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_feppalle_103798e0);
+  orig::ImmReleaseContext_101AFF60(*(HWND *)(g_pApp_as_s32 + 0x18),val1);
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_feppalle_103798E0);
   orig::TextInputFiles_CloseInlineMenu(self_);
   *(uint8_t *)((int)self_ + 0xf124) = 0;
   return;
@@ -10125,27 +10123,27 @@ XI_API void __thiscall TextInputFiles_CloseInlineMenusKeepIme(void * self_)
 XI_API void __thiscall TextInputFiles_ClearF128AndClose(void * self_)
 {
   *(uint32_t *)((int)self_ + 0xf128) = 0;
-  orig::FUN_101b7eb0(self_);
+  orig::game_101B7EB0(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B4260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_IsOemSlash(int param_1)
+XI_API bits32 __stdcall TextInputFiles_IsOemSlash(int arg1)
 {
   uint32_t xi_entry_eax = 0;
   
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(param_1 == 0xbf)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(arg1 == 0xbf)));
 }
 
 // FUNCTION: FFXIMAIN 0x101B4270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_ClassifyVirtualKey(uint32_t param_1)
+XI_API bits32 __stdcall TextInputFiles_ClassifyVirtualKey(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (((param_1 < 0x41) || (0x5a < param_1)) && ((param_1 < 0x30 || (0x39 < param_1)))) {
-    switch(xi_sw(param_1)) {
+  if (((arg1 < 0x41) || (0x5a < arg1)) && ((arg1 < 0x30 || (0x39 < arg1)))) {
+    switch(xi_sw(arg1)) {
     case 0xba:
     case 0xbb:
     case 0xbc:
@@ -10160,143 +10158,143 @@ XI_API undefined4 __stdcall TextInputFiles_ClassifyVirtualKey(uint32_t param_1)
     case 0xe2:
       break;
     default:
-      return param_1 - 0xba & 0xffffff00;
+      return arg1 - 0xba & 0xffffff00;
     }
   }
-  uVar1 = orig::FontGlyphCache_IsStateTwo();
-  return CONCAT31(xi_strunc24(((uint32_t)uVar1 >> 8)),(char)uVar1 == '\0');
+  u1 = orig::FontGlyphCache_IsStateTwo();
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)((char)u1 == '\0')));
 }
 
 // FUNCTION: FFXIMAIN 0x101B4340
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall TextInputFiles_DoNothing1Arg(undefined4 xi_s1)
+XI_API void __stdcall TextInputFiles_DoNothing1Arg(bits32 xi_s1)
 {
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B4350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Scene_IsState70(void)
+XI_API bits32 __cdecl Scene_IsState70(void)
 {
   return (uint32_t)(*g_pSceneState_as_v0 == 0x70);
 }
 
 // FUNCTION: FFXIMAIN 0x101B4360
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API void __thiscall TextInputFiles_BeginInputWithIme(void * self_, undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+XI_API void __thiscall TextInputFiles_BeginInputWithIme(void * self_, bits32 arg2, int arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
-  HIMC pHVar1;
-  BOOL BVar2;
-  HWND pHVar3;
+  HIMC val1;
+  BOOL i1;
+  HWND val2;
   
   if (*g_pSceneState_as_v0 != 0x40) {
-    if ((*(char *)((int)self_ + 0xf0ec) == '\0') && (param_2 == 0)) {
-      pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      BVar2 = orig::Imm_GetOpenStatusJmp(pHVar1);
-      if (((BVar2 == 0) && (*(char *)((int)self_ + 0xf121) != '\0')) &&
-         (orig::Imm_SetOpenStatusJmp(pHVar1,1), *(char *)((int)self_ + 0xf2f4) == '\0')) {
+    if ((*(char *)((int)self_ + 0xf0ec) == '\0') && (arg3 == 0)) {
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (((i1 == 0) && (*(char *)((int)self_ + 0xf121) != '\0')) &&
+         (orig::Imm_SetOpenStatusJmp(val1,1), *(char *)((int)self_ + 0xf2f4) == '\0')) {
         *(uint8_t *)((int)self_ + 0xf121) = 0;
       }
-      pHVar3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      val2 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
     else {
-      if ((param_2 < 1) || (2 < param_2)) goto LAB_101b4419;
-      (**(code **)(*(int *)self_ + 0x5c))();
-      pHVar1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
-      BVar2 = orig::Imm_GetOpenStatusJmp(pHVar1);
-      if (BVar2 != 0) {
-        orig::Imm_SetOpenStatusJmp(pHVar1,0);
+      if ((arg3 < 1) || (2 < arg3)) goto code_101B4419;
+      (**(untyped_fn **)(*(int *)self_ + 0x5c))();
+      val1 = orig::ImmGetContext_101AFF50(*(HWND *)(g_pApp_as_s32 + 0x18));
+      i1 = orig::Imm_GetOpenStatusJmp(val1);
+      if (i1 != 0) {
+        orig::Imm_SetOpenStatusJmp(val1,0);
         *(uint8_t *)((int)self_ + 0xf121) = 1;
       }
-      pHVar3 = *(HWND *)(g_pApp_as_s32 + 0x18);
+      val2 = *(HWND *)(g_pApp_as_s32 + 0x18);
     }
-    orig::ImmReleaseContext_101AFF60(pHVar3,pHVar1);
+    orig::ImmReleaseContext_101AFF60(val2,val1);
   }
-LAB_101b4419:
-  orig::TextInputFiles_BeginInput(self_,param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+code_101B4419:
+  orig::TextInputFiles_BeginInput(self_,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B4450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl FsSjisToAscii(int param_1, uint8_t * param_2)
+XI_API uint32_t __cdecl FsSjisToAscii(int arg1, uint8_t * arg2)
 {
-  uint8_t *puVar1;
-  char cVar2;
+  uint8_t *p1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  int32_t iVar5;
-  int iVar4;
-  uint32_t uVar6;
-  int iVar7;
-  uint8_t *pbVar8;
-  uint32_t uVar3;
+  int32_t i1;
+  int i2;
+  uint32_t u1;
+  int i3;
+  uint8_t *p2;
+  uint32_t u2;
   
-  puVar1 = param_2;
-  if (param_2 != (uint8_t *)0x0) {
-    *param_2 = 0;
+  p1 = arg2;
+  if (arg2 != (uint8_t *)0x0) {
+    *arg2 = 0;
   }
-  XI_PIECE_S(param_2, 0, 1) = '\0';
-  if (param_1 == 0x8f81) {
+  XI_PIECE_S(arg2, 0, 1) = '\0';
+  if (arg1 == 0x8f81) {
     return xi_entry_eax & 0xffffff00;
   }
-  if ((char)param_1 == -0x7b) {
-    cVar2 = (char)((uint32_t)param_1 >> 8);
-    iVar5 = xi_strunc24((short)((uint32_t)param_1 >> 0x10));
-    if (param_1 >> 8 < 0x7f) {
-      cVar2 = cVar2 + '@';
-      uVar3 = ((uint32_t)(((uint32_t)(iVar5) << 8) | (uint8_t)(cVar2)));
-      if (cVar2 == -0x40) {
-        uVar3 = ((uint32_t)(((uint32_t)(iVar5) << 8) | (uint8_t)(0xbf)));
+  if ((char)arg1 == -0x7b) {
+    c1 = (char)((uint32_t)arg1 >> 8);
+    i1 = xi_strunc24((short)((uint32_t)arg1 >> 0x10));
+    if (arg1 >> 8 < 0x7f) {
+      c1 = c1 + '@';
+      u2 = ((uint32_t)(((uint32_t)(i1) << 8) | (uint8_t)(c1)));
+      if (c1 == -0x40) {
+        u2 = ((uint32_t)(((uint32_t)(i1) << 8) | (uint8_t)(0xbf)));
       }
     }
     else {
-      uVar3 = CONCAT31(iVar5,cVar2 + 'A');
+      u2 = ((uint32_t)(((uint32_t)(i1) << 8) | (uint8_t)(c1 + 'A')));
     }
-    if (puVar1 != (uint8_t *)0x0) {
-      *puVar1 = 1;
-      return uVar3;
+    if (p1 != (uint8_t *)0x0) {
+      *p1 = 1;
+      return u2;
     }
   }
   else {
-    pbVar8 = &DAT_1037c4a0;
-    iVar7 = 0;
+    p2 = &g_1037C4A0;
+    i3 = 0;
     do {
-      iVar4 = (uint32_t)pbVar8[1] * 0x100 + (uint32_t)*pbVar8;
-      if (iVar4 == param_1) {
-        XI_PIECE_S(param_2, 0, 1) = (char)iVar7 + ' ';
-        if ((char)param_2 != '\0') {
-          return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar4 >> 8))) << 8) | (uint8_t)((char)param_2)));
+      i2 = (uint32_t)p2[1] * 0x100 + (uint32_t)*p2;
+      if (i2 == arg1) {
+        XI_PIECE_S(arg2, 0, 1) = (char)i3 + ' ';
+        if ((char)arg2 != '\0') {
+          return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i2 >> 8))) << 8) | (uint8_t)((char)arg2)));
         }
         break;
       }
-      pbVar8 = pbVar8 + 2;
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < 0xe0);
-    pbVar8 = &DAT_1037c668;
-    iVar7 = 0x80;
-    while (iVar4 = (uint32_t)pbVar8[1] * 0x100 + (uint32_t)*pbVar8, uVar6 = (uint32_t)((uint32_t)iVar4 >> 8),
-          iVar4 != param_1) {
-      pbVar8 = pbVar8 + 2;
-      iVar7 = iVar7 + 1;
-      if (0xdf < iVar7) {
-        return ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)((char)param_2)));
+      p2 = p2 + 2;
+      i3 = i3 + 1;
+    } while (i3 < 0xe0);
+    p2 = &g_1037C668;
+    i3 = 0x80;
+    while (i2 = (uint32_t)p2[1] * 0x100 + (uint32_t)*p2, u1 = (uint32_t)((uint32_t)i2 >> 8),
+          i2 != arg1) {
+      p2 = p2 + 2;
+      i3 = i3 + 1;
+      if (0xdf < i3) {
+        return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)((char)arg2)));
       }
     }
-    uVar3 = CONCAT31(uVar6,(char)iVar7 + ' ');
+    u2 = ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)((char)i3 + ' ')));
   }
-  return uVar3;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x101B4570
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_CtorVt103379BCWithLang(void * self_)
 {
-  uint8_t uVar1;
+  uint8_t u1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_103379bc;
-  uVar1 = *(uint8_t *)(g_pSceneState + 8);
+  *(uint8_t ***)self_ = &g_103379BC;
+  u1 = *(uint8_t *)(g_pSceneState + 8);
   *(uint32_t *)((int)self_ + 0xc) = 0;
-  *(uint8_t *)((int)self_ + 4) = uVar1;
+  *(uint8_t *)((int)self_ + 4) = u1;
   return;
 }
 
@@ -10304,7 +10302,7 @@ XI_API void __thiscall TextInputFiles_CtorVt103379BCWithLang(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_DtorVt103379BC(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_103379bc;
+  *(uint8_t ***)self_ = &g_103379BC;
   return;
 }
 
@@ -10316,7 +10314,7 @@ XI_API void __thiscall TextInputFiles_CtorVt103379C0(void * self_)
   *(uint8_t *)((int)self_ + 0xd) = 0;
   *(uint8_t *)((int)self_ + 0xe) = 0;
   *(uint8_t *)((int)self_ + 0xf) = 0;
-  *(uint8_t ***)self_ = &PTR_LAB_103379c0;
+  *(uint8_t ***)self_ = &g_103379C0;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 0;
@@ -10330,25 +10328,25 @@ XI_API void __thiscall TextInputFiles_CtorVt103379C0(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt103379C4(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  uint32_t *puVar2;
+  void *obj1;
+  int i1;
+  uint32_t *p1;
   
-  iVar1 = 0x3c;
-  this_00 = (void *)((int)self_ + 8);
+  i1 = 0x3c;
+  obj1 = (void *)((int)self_ + 8);
   do {
-    orig::TextInputFiles_CtorVt103379C0(this_00);
-    this_00 = (void *)((int)this_00 + 0x10);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
-  *(uint8_t ***)self_ = &PTR_FUN_103379c4;
+    orig::TextInputFiles_CtorVt103379C0(obj1);
+    obj1 = (void *)((int)obj1 + 0x10);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  *(uint8_t ***)self_ = &g_103379C4;
   *(uint32_t *)((int)self_ + 4) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x3c8);
-  for (iVar1 = 0x780; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x3c8);
+  for (i1 = 0x780; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint8_t *)puVar2 = 0;
+  *(uint8_t *)p1 = 0;
   *(uint32_t *)((int)self_ + 0x21cc) = 0;
   *(uint8_t *)((int)self_ + 0x21e0) = 0;
   return self_;
@@ -10358,16 +10356,16 @@ XI_API void * __thiscall TextInputFiles_CtorVt103379C4(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_Reset(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  puVar2 = self_;
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = self_;
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0x1c4) = 0;
   *(uint32_t *)((int)self_ + 0x1c8) = 0;
   return self_;
@@ -10375,26 +10373,26 @@ XI_API void * __thiscall TextInputFiles_Reset(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B4C20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_AppendByte(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_AppendByte(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = *(int *)((int)self_ + 0x1c8);
-  iVar2 = *(int *)((int)self_ + 0x1c4);
-  if (iVar1 == iVar2) {
-    if (0x1c1 < iVar2 + 1) {
+  i1 = *(int *)((int)self_ + 0x1c8);
+  i2 = *(int *)((int)self_ + 0x1c4);
+  if (i1 == i2) {
+    if (0x1c1 < i2 + 1) {
       return 0xffffffff;
     }
-    *(uint8_t *)(iVar2 + (int)self_) = (uint8_t)param_1;
+    *(uint8_t *)(i2 + (int)self_) = (uint8_t)arg2;
   }
   else {
-    if (0x1c1 < iVar2 + 1) {
+    if (0x1c1 < i2 + 1) {
       return 0xffffffff;
     }
-    orig::FUN_103149d0((uint32_t *)(iVar1 + (int)self_ + 1),(uint32_t *)(iVar1 + (int)self_),
-                 iVar2 - iVar1);
-    *(uint8_t *)((int)self_ + *(int *)((int)self_ + 0x1c8)) = (uint8_t)param_1;
+    orig::game_103149D0((uint32_t *)(i1 + (int)self_ + 1),(uint32_t *)(i1 + (int)self_),
+                 i2 - i1);
+    *(uint8_t *)((int)self_ + *(int *)((int)self_ + 0x1c8)) = (uint8_t)arg2;
   }
   *(int *)((int)self_ + 0x1c8) = *(int *)((int)self_ + 0x1c8) + 1;
   *(int *)((int)self_ + 0x1c4) = *(int *)((int)self_ + 0x1c4) + 1;
@@ -10403,102 +10401,102 @@ XI_API undefined4 __thiscall TextInputFiles_AppendByte(void * self_, undefined4 
 
 // FUNCTION: FFXIMAIN 0x101B4D30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_DeleteLast(void * self_)
+XI_API bits32 __thiscall TextInputFiles_DeleteLast(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  int i1;
+  int i2;
+  uint32_t u1;
+  uint32_t u2;
   
-  iVar2 = *(int *)((int)self_ + 0x1c8);
-  if (((iVar2 < 2) || (*(char *)(iVar2 + -1 + (int)self_) != 'e')) ||
-     (*(char *)(iVar2 + -2 + (int)self_) != -0x7b)) {
-    if (iVar2 == *(int *)((int)self_ + 0x1c4)) {
+  i2 = *(int *)((int)self_ + 0x1c8);
+  if (((i2 < 2) || (*(char *)(i2 + -1 + (int)self_) != 'e')) ||
+     (*(char *)(i2 + -2 + (int)self_) != -0x7b)) {
+    if (i2 == *(int *)((int)self_ + 0x1c4)) {
       if (*(int *)((int)self_ + 0x1c4) < 1) {
         return 1;
       }
-      if ((1 < iVar2) &&
-         (uVar3 = orig::Font_IsSingleByte((uint8_t *)(iVar2 + -2 + (int)self_)), (char)uVar3 == '\0')) {
-        iVar2 = *(int *)((int)self_ + 0x1c4) + -2;
+      if ((1 < i2) &&
+         (u1 = orig::Font_IsSingleByte((uint8_t *)(i2 + -2 + (int)self_)), (char)u1 == '\0')) {
+        i2 = *(int *)((int)self_ + 0x1c4) + -2;
         *(int *)((int)self_ + 0x1c8) = *(int *)((int)self_ + 0x1c8) + -2;
-        goto LAB_101b4e57;
+        goto code_101B4E57;
       }
       *(int *)((int)self_ + 0x1c8) = *(int *)((int)self_ + 0x1c8) + -1;
     }
     else {
-      if (iVar2 < 1) {
+      if (i2 < 1) {
         return 1;
       }
-      if ((1 < iVar2) &&
-         (uVar3 = orig::Font_IsSingleByte((uint8_t *)(iVar2 + -2 + (int)self_)), (char)uVar3 == '\0')) {
-        iVar2 = *(int *)((int)self_ + 0x1c8) + -2;
-        *(int *)((int)self_ + 0x1c8) = iVar2;
-        uVar4 = *(int *)((int)self_ + 0x1c4) - iVar2;
-        goto LAB_101b4e17;
+      if ((1 < i2) &&
+         (u1 = orig::Font_IsSingleByte((uint8_t *)(i2 + -2 + (int)self_)), (char)u1 == '\0')) {
+        i2 = *(int *)((int)self_ + 0x1c8) + -2;
+        *(int *)((int)self_ + 0x1c8) = i2;
+        u2 = *(int *)((int)self_ + 0x1c4) - i2;
+        goto code_101B4E17;
       }
-      iVar2 = *(int *)((int)self_ + 0x1c8) + -1;
-      *(int *)((int)self_ + 0x1c8) = iVar2;
-      orig::FUN_103149d0((uint32_t *)(iVar2 + (int)self_),(uint32_t *)(iVar2 + (int)self_ + 1),
-                   *(int *)((int)self_ + 0x1c4) - iVar2);
+      i2 = *(int *)((int)self_ + 0x1c8) + -1;
+      *(int *)((int)self_ + 0x1c8) = i2;
+      orig::game_103149D0((uint32_t *)(i2 + (int)self_),(uint32_t *)(i2 + (int)self_ + 1),
+                   *(int *)((int)self_ + 0x1c4) - i2);
     }
-    iVar2 = *(int *)((int)self_ + 0x1c4) + -1;
+    i2 = *(int *)((int)self_ + 0x1c4) + -1;
   }
   else {
-    iVar1 = *(int *)((int)self_ + 0x1c4);
-    if (iVar2 == iVar1) {
-      *(int *)((int)self_ + 0x1c8) = iVar2 + -2;
-      *(int *)((int)self_ + 0x1c4) = iVar1 + -2;
-      *(uint8_t *)(iVar1 + -2 + (int)self_) = 0;
+    i1 = *(int *)((int)self_ + 0x1c4);
+    if (i2 == i1) {
+      *(int *)((int)self_ + 0x1c8) = i2 + -2;
+      *(int *)((int)self_ + 0x1c4) = i1 + -2;
+      *(uint8_t *)(i1 + -2 + (int)self_) = 0;
       return 1;
     }
-    iVar2 = iVar2 + -2;
-    *(int *)((int)self_ + 0x1c8) = iVar2;
-    uVar4 = iVar1 - iVar2;
-LAB_101b4e17:
-    orig::FUN_103149d0((uint32_t *)(iVar2 + (int)self_),(uint32_t *)(iVar2 + (int)self_ + 2),uVar4);
-    iVar2 = *(int *)((int)self_ + 0x1c4) + -2;
+    i2 = i2 + -2;
+    *(int *)((int)self_ + 0x1c8) = i2;
+    u2 = i1 - i2;
+code_101B4E17:
+    orig::game_103149D0((uint32_t *)(i2 + (int)self_),(uint32_t *)(i2 + (int)self_ + 2),u2);
+    i2 = *(int *)((int)self_ + 0x1c4) + -2;
   }
-LAB_101b4e57:
-  *(int *)((int)self_ + 0x1c4) = iVar2;
-  *(uint8_t *)(iVar2 + (int)self_) = 0;
+code_101B4E57:
+  *(int *)((int)self_ + 0x1c4) = i2;
+  *(uint8_t *)(i2 + (int)self_) = 0;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B4E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_DeleteForward(void * self_)
+XI_API bits32 __thiscall TextInputFiles_DeleteForward(void * self_)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t *puVar4;
+  int i1;
+  uint32_t u1;
+  int i2;
+  uint32_t *p1;
   
-  iVar3 = *(int *)((int)self_ + 0x1c8);
-  if (*(int *)((int)self_ + 0x1c4) <= iVar3) {
+  i2 = *(int *)((int)self_ + 0x1c8);
+  if (*(int *)((int)self_ + 0x1c4) <= i2) {
     return 0;
   }
-  iVar1 = *(int *)((int)self_ + 0x1c4) - iVar3;
-  if (iVar1 < 2) {
-LAB_101b4ee7:
-    puVar4 = (uint32_t *)(*(int *)((int)self_ + 0x1c8) + (int)self_);
-    orig::FUN_103149d0(puVar4,(uint32_t *)((int)puVar4 + 1),
+  i1 = *(int *)((int)self_ + 0x1c4) - i2;
+  if (i1 < 2) {
+code_101B4EE7:
+    p1 = (uint32_t *)(*(int *)((int)self_ + 0x1c8) + (int)self_);
+    orig::game_103149D0(p1,(uint32_t *)((int)p1 + 1),
                  (*(int *)((int)self_ + 0x1c4) - *(int *)((int)self_ + 0x1c8)) - 1);
-    iVar3 = *(int *)((int)self_ + 0x1c4) + -1;
+    i2 = *(int *)((int)self_ + 0x1c4) + -1;
   }
   else {
-    puVar4 = (uint32_t *)(iVar3 + (int)self_);
-    if ((*(char *)(iVar3 + (int)self_) != -0x7b) || (*(char *)((int)puVar4 + 1) != 'e')) {
-      if ((iVar1 < 2) ||
-         (uVar2 = orig::Font_IsSingleByte((uint8_t *)(iVar3 + (int)self_)), (char)uVar2 != '\0'))
-      goto LAB_101b4ee7;
-      iVar1 = *(int *)((int)self_ + 0x1c4) - *(int *)((int)self_ + 0x1c8);
-      puVar4 = (uint32_t *)(*(int *)((int)self_ + 0x1c8) + (int)self_);
+    p1 = (uint32_t *)(i2 + (int)self_);
+    if ((*(char *)(i2 + (int)self_) != -0x7b) || (*(char *)((int)p1 + 1) != 'e')) {
+      if ((i1 < 2) ||
+         (u1 = orig::Font_IsSingleByte((uint8_t *)(i2 + (int)self_)), (char)u1 != '\0'))
+      goto code_101B4EE7;
+      i1 = *(int *)((int)self_ + 0x1c4) - *(int *)((int)self_ + 0x1c8);
+      p1 = (uint32_t *)(*(int *)((int)self_ + 0x1c8) + (int)self_);
     }
-    orig::FUN_103149d0(puVar4,(uint32_t *)((int)puVar4 + 2),iVar1 - 2);
-    iVar3 = *(int *)((int)self_ + 0x1c4) + -2;
+    orig::game_103149D0(p1,(uint32_t *)((int)p1 + 2),i1 - 2);
+    i2 = *(int *)((int)self_ + 0x1c4) + -2;
   }
-  *(int *)((int)self_ + 0x1c4) = iVar3;
-  *(uint8_t *)(iVar3 + (int)self_) = 0;
+  *(int *)((int)self_ + 0x1c4) = i2;
+  *(uint8_t *)(i2 + (int)self_) = 0;
   return 0;
 }
 
@@ -10506,16 +10504,16 @@ LAB_101b4ee7:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ClearAll(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  puVar2 = self_;
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = self_;
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
-  *(uint8_t *)((int)puVar2 + 2) = 0;
+  *(uint16_t *)p1 = 0;
+  *(uint8_t *)((int)p1 + 2) = 0;
   *(uint32_t *)((int)self_ + 0x1c4) = 0;
   *(uint32_t *)((int)self_ + 0x1c8) = 0;
   return;
@@ -10525,20 +10523,20 @@ XI_API void __thiscall TextInputFiles_ClearAll(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_MoveBack(void * self_)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = *(int *)((int)self_ + 0x1c8);
-  if (0 < iVar1) {
-    if (1 < iVar1) {
-      if ((*(char *)(iVar1 + -1 + (int)self_) == 'e') && (*(char *)(iVar1 + -2 + (int)self_) == -0x7b)
+  i1 = *(int *)((int)self_ + 0x1c8);
+  if (0 < i1) {
+    if (1 < i1) {
+      if ((*(char *)(i1 + -1 + (int)self_) == 'e') && (*(char *)(i1 + -2 + (int)self_) == -0x7b)
          ) {
-        *(int *)((int)self_ + 0x1c8) = iVar1 + -2;
+        *(int *)((int)self_ + 0x1c8) = i1 + -2;
         return;
       }
-      if (1 < iVar1) {
-        uVar2 = orig::Font_IsSingleByte((uint8_t *)(iVar1 + -2 + (int)self_));
-        if ((char)uVar2 == '\0') {
+      if (1 < i1) {
+        u1 = orig::Font_IsSingleByte((uint8_t *)(i1 + -2 + (int)self_));
+        if ((char)u1 == '\0') {
           *(int *)((int)self_ + 0x1c8) = *(int *)((int)self_ + 0x1c8) + -2;
           return;
         }
@@ -10551,89 +10549,89 @@ XI_API void __thiscall TextInputFiles_MoveBack(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B5020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_MoveForward(void * self_)
+XI_API bits32 __thiscall TextInputFiles_MoveForward(void * self_)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = *(int *)((int)self_ + 0x1c8);
-  if (iVar1 < *(int *)((int)self_ + 0x1c4)) {
-    iVar2 = *(int *)((int)self_ + 0x1c4) - iVar1;
-    if (1 < iVar2) {
-      if ((*(char *)(iVar1 + (int)self_) == -0x7b) && (*(char *)(iVar1 + 1 + (int)self_) == 'e')) {
-        *(int *)((int)self_ + 0x1c8) = iVar1 + 2;
-        return iVar1 + 2;
+  i1 = *(int *)((int)self_ + 0x1c8);
+  if (i1 < *(int *)((int)self_ + 0x1c4)) {
+    i2 = *(int *)((int)self_ + 0x1c4) - i1;
+    if (1 < i2) {
+      if ((*(char *)(i1 + (int)self_) == -0x7b) && (*(char *)(i1 + 1 + (int)self_) == 'e')) {
+        *(int *)((int)self_ + 0x1c8) = i1 + 2;
+        return i1 + 2;
       }
-      if (1 < iVar2) {
-        iVar1 = orig::Font_IsSingleByte((uint8_t *)(iVar1 + (int)self_));
-        if ((char)iVar1 == '\0') {
-          iVar1 = *(int *)((int)self_ + 0x1c8) + 2;
-          *(int *)((int)self_ + 0x1c8) = iVar1;
-          return iVar1;
+      if (1 < i2) {
+        i1 = orig::Font_IsSingleByte((uint8_t *)(i1 + (int)self_));
+        if ((char)i1 == '\0') {
+          i1 = *(int *)((int)self_ + 0x1c8) + 2;
+          *(int *)((int)self_ + 0x1c8) = i1;
+          return i1;
         }
       }
     }
     *(int *)((int)self_ + 0x1c8) = *(int *)((int)self_ + 0x1c8) + 1;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B5080
 // GATE: PASS -- 100 trials, 100 returned normally, 3 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_ApplySetting(undefined4 param_1, int param_2, int * param_3)
+XI_API bits32 __cdecl TextInputFiles_ApplySetting(bits32 arg1, int arg2, int * arg3)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 3:
   case 0x42:
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*param_3 + 0x3c))))((void *)(param_3),param_2);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*arg3 + 0x3c))))((void *)(arg3),arg2);
     return 1;
   case 5:
-    param_3[0x3c3d] = param_2;
+    arg3[0x3c3d] = arg2;
     return 1;
   case 0x36:
-    param_3[0x3c3f] = param_2;
+    arg3[0x3c3f] = arg2;
     return 1;
   case 0x44:
-    param_3[0x3c3e] = param_2;
+    arg3[0x3c3e] = arg2;
     return 1;
   case 0xc9:
-    if (-1 < param_2) {
-      if (param_2 < 2) {
-        param_2 = 0;
+    if (-1 < arg2) {
+      if (arg2 < 2) {
+        arg2 = 0;
       }
-      else if (param_2 == 2) {
-        param_3[0x3c3d] = 1;
+      else if (arg2 == 2) {
+        arg3[0x3c3d] = 1;
         return 1;
       }
     }
-    param_3[0x3c3d] = param_2;
+    arg3[0x3c3d] = arg2;
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B5210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsTextInput_init(void * self_)
+XI_API bits32 __thiscall FsTextInput_init(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  uint32_t uVar2;
+  void *obj1;
+  int i1;
+  uint32_t u1;
   
-  *(uint8_t **)((int)self_ + 0x8c78) =(uint8_t*)(&LAB_101b7e90);
+  *(uint8_t **)((int)self_ + 0x8c78) =(uint8_t*)(&TextInputFiles_DefaultRunLine_as_v0);
   *(uint8_t *)((int)self_ + 0x8c80) = 0;
-  iVar1 = *(int *)(g_pSceneState + 8);
-  if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((iVar1 == 2 || (iVar1 == 3)))) {
-    iVar1 = 1;
+  i1 = *(int *)(g_pSceneState + 8);
+  if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) {
+    i1 = 1;
   }
-  this_00 = (void *)((int)self_ + 4);
-  orig::FsWordCompletion_Init(this_00,iVar1 + 1);
-  uVar2 = orig::FsWordCompletion_LoadData(this_00);
-  if ((char)uVar2 == '\0') {
+  obj1 = (void *)((int)self_ + 4);
+  orig::FsWordCompletion_Init(obj1,i1 + 1);
+  u1 = orig::FsWordCompletion_LoadData(obj1);
+  if ((char)u1 == '\0') {
     orig::TextInputFiles_Nop();
     *(uint32_t *)((int)self_ + 0xf108) = 1;
     return 0xffffffff;
   }
-  orig::FsTextInput_Init((void *)((int)self_ + 0x7e30),this_00);
+  orig::FsTextInput_Init((void *)((int)self_ + 0x7e30),obj1);
   *(uint32_t *)((int)self_ + 0xf108) = 2;
   *(uint32_t *)((int)self_ + 0xf10c) = 0;
   *(uint32_t *)((int)self_ + 0xf110) = 5;
@@ -10655,95 +10653,95 @@ XI_API undefined4 __thiscall FsTextInput_init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B5850
 // GATE: PASS -- 100 trials, 100 returned normally, 23 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_BeginInput(void * self_, undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4, int param_5, int param_6, int param_7, uint32_t param_8)
+XI_API bits32 __thiscall TextInputFiles_BeginInput(void * self_, bits32 arg2, int arg3, bits32 arg4, bits32 arg5, int arg6, int arg7, int arg8, uint32_t arg9)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   if (*(int *)((int)self_ + 0xf108) == 1) {
     return 0xffffffff;
   }
-  iVar2 = 0;
+  i1 = 0;
   *(uint8_t *)((int)self_ + 0xef22) = 0;
   *(uint8_t *)((int)self_ + 0x8c80) = 0;
-  switch(xi_sw(param_1 + -2)) {
+  switch(xi_sw(arg2 + -2)) {
   case 0:
     *(uint32_t *)((int)self_ + 0xf108) = 2;
     *(uint8_t *)((int)self_ + 0xf11c) = 1;
     *(uint8_t *)((int)self_ + 0xf100) = 0;
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x5c))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
     orig::FsTextInput_ClearState((void *)((int)self_ + 0x7e30));
     orig::FsTextInput_ClearPair((void *)((int)self_ + 0x7e30));
     orig::TextInputFiles_ResetCursor(self_);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x30))))((void *)(self_));
-    *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 0;
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x30))))((void *)(self_));
+    *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 0;
     break;
   case 1:
     *(uint32_t *)((int)self_ + 0xf108) = 3;
     *(uint8_t *)((int)self_ + 0xf11c) = 1;
     *(uint8_t *)((int)self_ + 0xf100) = 0;
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x30))))((void *)(self_));
-    *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 0;
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x30))))((void *)(self_));
+    *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 0;
     break;
   case 2:
-    uVar1 = orig::TargetMenu_GetByteAE(&g_menuMng_as_v0,param_1 + -2);
-    if ((char)uVar1 == '\0') {
+    u1 = orig::TargetMenu_GetByteAE(&g_menuMng_as_v0,arg2 + -2);
+    if ((char)u1 == '\0') {
       *(uint32_t *)((int)self_ + 0xf108) = 4;
       *(uint8_t *)((int)self_ + 0xf11c) = 1;
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x2c))))((void *)(self_));
-      *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 1;
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x2c))))((void *)(self_));
+      *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 1;
     }
     break;
   case 3:
     *(uint32_t *)((int)self_ + 0xf108) = 5;
-    if (param_2 == 0) {
+    if (arg3 == 0) {
       *(uint8_t *)((int)self_ + 0xf11c) = 1;
     }
     else {
       *(uint8_t *)((int)self_ + 0xf11c) = 0;
     }
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x5c))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
     orig::FsTextInput_ClearState((void *)((int)self_ + 0x7e30));
     orig::FsTextInput_ClearPair((void *)((int)self_ + 0x7e30));
     orig::TextInputFiles_ResetCursor(self_);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x58))))((void *)(self_));
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x30))))((void *)(self_));
-    *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 1;
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x58))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x30))))((void *)(self_));
+    *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 1;
     *(uint8_t *)((int)self_ + 0x8c80) = 1;
   }
-  if ((param_8 & 2) == 0) {
+  if ((arg9 & 2) == 0) {
     *(uint8_t *)((int)self_ + 0xf11c) = 0;
   }
   if (*(char *)((int)self_ + 0xf0ec) == '\0') {
-    *(int *)((int)self_ + 0xf10c) = param_2;
+    *(int *)((int)self_ + 0xf10c) = arg3;
   }
   else {
     *(uint32_t *)((int)self_ + 0xf10c) = 1;
   }
-  *(uint32_t *)((int)self_ + 0xf114) = param_8;
-  *(uint32_t *)((int)self_ + 0xf110) = param_3;
-  *(uint32_t *)((int)self_ + 0xf118) = param_4;
-  orig::TextInputFiles_SetModeAndReset((void *)((int)self_ + 0x7e30),param_4);
-  if (param_7 == 0) {
-    *(code **)((int)self_ + 0x8c78) = XI_CODE(TextInputFiles_DefaultRunLine);
+  *(uint32_t *)((int)self_ + 0xf114) = arg9;
+  *(uint32_t *)((int)self_ + 0xf110) = arg4;
+  *(uint32_t *)((int)self_ + 0xf118) = arg5;
+  orig::TextInputFiles_SetModeAndReset((void *)((int)self_ + 0x7e30),arg5);
+  if (arg8 == 0) {
+    *(untyped_fn **)((int)self_ + 0x8c78) = XI_CODE(TextInputFiles_DefaultRunLine);
   }
   else {
-    *(int *)((int)self_ + 0x8c78) = param_7;
+    *(int *)((int)self_ + 0x8c78) = arg8;
   }
-  if (param_6 == 0) {
+  if (arg7 == 0) {
     *(void **)((int)self_ + 0x8c7c) = self_;
   }
   else {
-    *(int *)((int)self_ + 0x8c7c) = param_6;
+    *(int *)((int)self_ + 0x8c7c) = arg7;
   }
-  if (param_5 == 0) {
-    if (DAT_10662d98_as_s32 != 0) {
-      iVar2 = DAT_10662d98_as_s32 + 0x18;
+  if (arg6 == 0) {
+    if (g_10662D98_as_s32 != 0) {
+      i1 = g_10662D98_as_s32 + 0x18;
     }
-    *(int *)((int)self_ + 0xf104) = iVar2;
+    *(int *)((int)self_ + 0xf104) = i1;
     return 1;
   }
-  *(int *)((int)self_ + 0xf104) = param_5;
+  *(int *)((int)self_ + 0xf104) = arg6;
   return 1;
 }
 
@@ -10751,8 +10749,8 @@ XI_API undefined4 __thiscall TextInputFiles_BeginInput(void * self_, undefined4 
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_CloseInlineMenu(void * self_)
 {
-  ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x34))))((void *)(self_));
-  orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_inline_103798cc);
+  ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x34))))((void *)(self_));
+  orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_inline_103798CC);
   return;
 }
 
@@ -10760,21 +10758,21 @@ XI_API void __thiscall TextInputFiles_CloseInlineMenu(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_CloseInputMenus(void * self_)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = *(int *)self_;
-  uVar2 = orig::Settings_GetValue_v2(3);
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(iVar1 + 0x3c))))((void *)(self_),uVar2);
+  i1 = *(int *)self_;
+  u1 = orig::Settings_GetValue_v2(3);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(i1 + 0x3c))))((void *)(self_),u1);
   if ((*(char *)((int)self_ + 0xf0ec) == '\0') && (*(int *)((int)self_ + 0xf0f4) == 1)) {
-    orig::FsCSKLogic_closeCSK(DAT_1066269c_as_v0);
+    orig::FsCSKLogic_closeCSK(g_1066269C_as_v0);
   }
   else {
     orig::TextInputFiles_CloseKeypadMenu();
   }
-  uVar2 = orig::Menu_FindByName(s_menu_inline_103798cc);
-  if ((char)uVar2 == '\0') {
-    orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_feppalle_103798e0);
+  u1 = orig::Menu_FindByName(str_menu_inline_103798CC);
+  if ((char)u1 == '\0') {
+    orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_feppalle_103798E0);
   }
   *(uint8_t *)((int)self_ + 0xf100) = 0;
   return;
@@ -10782,48 +10780,48 @@ XI_API void __thiscall TextInputFiles_CloseInputMenus(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B5BC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall FsTextInput_copyDecidedString(void * self_, undefined4 * param_1, undefined4 xi_s2)
+XI_API uint32_t __thiscall FsTextInput_copyDecidedString(void * self_, bits32 * arg2, bits32 xi_s2)
 {
-  undefined4 *puVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  undefined4 *puVar4;
+  bits32 *p1;
+  uint32_t u1;
+  uint32_t u2;
+  bits32 *p2;
   
   if (*(int *)((int)self_ + 0xf108) == 1) {
     orig::TextInputFiles_Nop();
     return 0xffffffff;
   }
-  puVar1 = (undefined4 *)orig::FsTextInput_GetActiveBuffer((void *)((int)self_ + 0x7e30));
-  uVar2 = orig::FsTextInput_GetLength((void *)((int)self_ + 0x7e30));
-  if ((uVar2 != 0) && (puVar1 != (undefined4 *)0x0)) {
-    puVar4 = param_1;
-    for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-      *puVar4 = *puVar1;
-      puVar1 = puVar1 + 1;
-      puVar4 = puVar4 + 1;
+  p1 = (bits32 *)orig::FsTextInput_GetActiveBuffer((void *)((int)self_ + 0x7e30));
+  u1 = orig::FsTextInput_GetLength((void *)((int)self_ + 0x7e30));
+  if ((u1 != 0) && (p1 != (bits32 *)0x0)) {
+    p2 = arg2;
+    for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+      *p2 = *p1;
+      p1 = p1 + 1;
+      p2 = p2 + 1;
     }
-    for (uVar3 = uVar2 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-      *(uint8_t *)puVar4 = *(uint8_t *)puVar1;
-      puVar1 = (undefined4 *)((int)puVar1 + 1);
-      puVar4 = (undefined4 *)((int)puVar4 + 1);
+    for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p2 = *(uint8_t *)p1;
+      p1 = (bits32 *)((int)p1 + 1);
+      p2 = (bits32 *)((int)p2 + 1);
     }
-    *(uint8_t *)(uVar2 + (int)param_1) = 0;
-    return uVar2;
+    *(uint8_t *)(u1 + (int)arg2) = 0;
+    return u1;
   }
-  *(uint8_t *)param_1 = 0;
+  *(uint8_t *)arg2 = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101B5C80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_IsModeTwo(void * self_)
+XI_API bits32 __thiscall TextInputFiles_IsModeTwo(void * self_)
 {
   return (uint32_t)(*(int *)((int)self_ + 0xf108) == 2);
 }
 
 // FUNCTION: FFXIMAIN 0x101B5C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_IsModeFourOrFive(void * self_)
+XI_API bits32 __thiscall TextInputFiles_IsModeFourOrFive(void * self_)
 {
   if ((*(int *)((int)self_ + 0xf108) != 4) && (*(int *)((int)self_ + 0xf108) != 5)) {
     return 0;
@@ -10833,68 +10831,68 @@ XI_API undefined4 __thiscall TextInputFiles_IsModeFourOrFive(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B5CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_IsModeThree(void * self_)
+XI_API bits32 __thiscall TextInputFiles_IsModeThree(void * self_)
 {
   return (uint32_t)(*(int *)((int)self_ + 0xf108) == 3);
 }
 
 // FUNCTION: FFXIMAIN 0x101B5CD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_EndMode4Or5(void * self_)
+XI_API bits32 __thiscall TextInputFiles_EndMode4Or5(void * self_)
 {
-  int iVar1;
+  int i1;
   
   if (*(int *)((int)self_ + 0xf108) != 4) {
-    iVar1 = *(int *)((int)self_ + 0xf108) + -5;
-    if (iVar1 == 0) {
-      iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x34))))((void *)(self_));
+    i1 = *(int *)((int)self_ + 0xf108) + -5;
+    if (i1 == 0) {
+      i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x34))))((void *)(self_));
     }
-    *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 0;
-    return iVar1;
+    *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 0;
+    return i1;
   }
   *(uint32_t *)((int)self_ + 0xf108) = 3;
-  ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x30))))((void *)(self_));
-  iVar1 = DAT_1066268c_as_s32;
-  *(uint8_t *)(DAT_1066268c_as_s32 + 0x10d) = 0;
-  return iVar1;
+  ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x30))))((void *)(self_));
+  i1 = g_1066268C_as_s32;
+  *(uint8_t *)(g_1066268C_as_s32 + 0x10d) = 0;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B5D10
 // GATE: PASS -- 100 trials, 100 returned normally, 17 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_HandleEditKey(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __thiscall TextInputFiles_HandleEditKey(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  void *pvVar1;
-  char cVar2;
-  uint8_t bVar3;
-  int iVar4;
-  uint32_t uVar8;
-  char *pcVar5;
-  uint32_t uVar6;
-  int iVar7;
-  uint32_t uVar9;
+  void *p1;
+  char c1;
+  uint8_t u1;
+  int i1;
+  uint32_t u2;
+  char *p2;
+  uint32_t u3;
+  int i2;
+  uint32_t u4;
   char xi_frame[1072] __attribute__((aligned(4)));
-  uint8_t * &puVar10 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  char * &pcVar11 = *reinterpret_cast<char * *>(xi_frame + 0);
-  char  (&local_41c)[1052] = *reinterpret_cast<char  (*)[1052]>(xi_frame + 20);
+  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
+  char * &p4 = *reinterpret_cast<char * *>(xi_frame + 0);
+  char  (&val1)[1052] = *reinterpret_cast<char  (*)[1052]>(xi_frame + 20);
   
-  iVar4 = (param_1 & 0xff) - 8;
+  i1 = (arg2 & 0xff) - 8;
   *(uint8_t *)((int)self_ + 0xef22) = 0;
-  uVar8 = (uint32_t)((uint32_t)iVar4 >> 8);
-  switch(xi_sw(param_1 & 0xff)) {
+  u2 = (uint32_t)((uint32_t)i1 >> 8);
+  switch(xi_sw(arg2 & 0xff)) {
   case 8:
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-    if ((char)uVar6 != '\0') {
-LAB_101b6044:
-      orig::FUN_101b5d10(self_,0x1b,param_2,param_3);
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((char)u3 != '\0') {
+code_101B6044:
+      orig::TextInputFiles_HandleEditKey_as_v0(self_,0x1b,arg3,arg4);
       return 1;
     }
-    uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-    if ((char)uVar6 != '\0') {
+    u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+    if ((char)u3 != '\0') {
       orig::TextInputFiles_DeleteLast((void *)((int)self_ + 0x8aac));
       return 1;
     }
-    uVar6 = orig::FsTextInput_HasText((void *)((int)self_ + 0x7e30));
-    if ((char)uVar6 != '\0') {
+    u3 = orig::FsTextInput_HasText((void *)((int)self_ + 0x7e30));
+    if ((char)u3 != '\0') {
       orig::FsTextInput_CursorLeft((void *)((int)self_ + 0x7e30));
       return 1;
     }
@@ -10904,147 +10902,147 @@ LAB_101b6044:
     if (*(char *)((int)self_ + 0xf11c) == '\0') {
       return 0xffffffff;
     }
-    uVar6 = ((uint32_t)(((uint32_t)(uVar8) << 8) | (uint8_t)(*(char *)((int)self_ + 0xf0ec))));
+    u3 = ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(*(char *)((int)self_ + 0xf0ec))));
     if (*(char *)((int)self_ + 0xf0ec) == '\0') {
-      uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-      if ((char)uVar6 == '\0') {
+      u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+      if ((char)u3 == '\0') {
         *(uint8_t *)((int)self_ + 0x8c81) = 1;
-        pcVar11 = (char *)((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 100))))((void *)(self_));
-        if (pcVar11 == (char *)0x0) {
-          iVar4 = 0;
+        p4 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
+        if (p4 == (char *)0x0) {
+          i1 = 0;
         }
         else {
-          pcVar5 = (char *)((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 100))))((void *)(self_));
-          uVar9 = 0xffffffff;
+          p2 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
+          u4 = 0xffffffff;
           do {
-            if (uVar9 == 0) break;
-            uVar9 = uVar9 - 1;
-            cVar2 = *pcVar5;
-            pcVar5 = pcVar5 + 1;
-          } while (cVar2 != '\0');
-          iVar4 = ~uVar9 - 1;
+            if (u4 == 0) break;
+            u4 = u4 - 1;
+            c1 = *p2;
+            p2 = p2 + 1;
+          } while (c1 != '\0');
+          i1 = ~u4 - 1;
         }
-        iVar4 = orig::TextInputFiles_SetWordForCompletion(self_,pcVar11,iVar4);
-        if (-1 < iVar4) {
-          orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
-          ((int (__thiscall *)(void *))((**(code **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
+        i1 = orig::TextInputFiles_SetWordForCompletion(self_,p4,i1);
+        if (-1 < i1) {
+          orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
+          ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
           return 1;
         }
       }
       else {
-        if ((char)param_2 != '\0') {
+        if ((char)arg3 != '\0') {
           orig::List_Retreat(self_);
-          ((int (__thiscall *)(void *))((**(code **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
+          ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
           return 1;
         }
         orig::List_Advance(self_);
       }
-      ((int (__thiscall *)(void *))((**(code **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
+      ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
       return 1;
     }
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-    if ((char)uVar6 == '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+    if ((char)u3 == '\0') {
       *(uint8_t *)((int)self_ + 0x8c81) = 1;
-      iVar4 = orig::TextInputFiles_GetLastWord(self_,(uint32_t *)local_41c);
-      pcVar11 = local_41c;
-      goto LAB_101b5e42;
+      i1 = orig::TextInputFiles_GetLastWord(self_,(uint32_t *)val1);
+      p4 = val1;
+      goto code_101B5E42;
     }
-    if ((char)param_2 != '\0') {
+    if ((char)arg3 != '\0') {
       orig::List_Retreat(self_);
       return 1;
     }
-    goto LAB_101b674c;
+    goto code_101B674C;
   case 0xd:
   case 0x6c:
     if (*(char *)((int)self_ + 0xf0ec) == '\0') {
-      uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-      if ((char)uVar6 == '\0') {
-        pvVar1 = (void *)((int)self_ + 0x7e30);
-        uVar6 = orig::FsTextInput_HasText(pvVar1);
-        if ((char)uVar6 == '\0') {
-          (**(code **)((int)self_ + 0x8c78))(0,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
-          ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x54))))((void *)(self_));
+      u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+      if ((char)u3 == '\0') {
+        p1 = (void *)((int)self_ + 0x7e30);
+        u3 = orig::FsTextInput_HasText(p1);
+        if ((char)u3 == '\0') {
+          (**(untyped_fn **)((int)self_ + 0x8c78))(0,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
+          ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x54))))((void *)(self_));
           return 0xffffffff;
         }
         if (*(char *)((int)self_ + 0xf11d) != '\0') {
           return 1;
         }
-        uVar6 = 1;
-        iVar4 = orig::FsTextInput_GetCursorOrLength(pvVar1);
-        iVar7 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-        orig::TextInputFiles_InputNotify(self_,iVar7,iVar4,uVar6,iVar7);
+        u3 = 1;
+        i1 = orig::FsTextInput_GetCursorOrLength(p1);
+        i2 = orig::FsTextInput_GetPendingBuffer(p1);
+        orig::TextInputFiles_InputNotify(self_,i2,i1,u3,i2);
         return 1;
       }
-      iVar4 = *(int *)((int)self_ + 0x8c70);
-      puVar10 = (uint8_t *)((int)self_ + 0x8aac);
+      i1 = *(int *)((int)self_ + 0x8c70);
+      p3 = (uint8_t *)((int)self_ + 0x8aac);
     }
     else {
-      uVar6 = orig::TextInputFiles_GetFlag8C81(self_,((uint32_t)(((uint32_t)(uVar8) << 8) | (uint8_t)(*(char *)((int)self_ + 0xf0ec)))));
-      if ((char)uVar6 == '\0') {
-        pvVar1 = (void *)((int)self_ + 0x7e30);
-        uVar6 = orig::FsTextInput_HasText(pvVar1);
-        if ((char)uVar6 == '\0') {
-          (**(code **)((int)self_ + 0x8c78))(0,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
-          ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x54))))((void *)(self_));
+      u3 = orig::TextInputFiles_GetFlag8C81(self_,((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(*(char *)((int)self_ + 0xf0ec)))));
+      if ((char)u3 == '\0') {
+        p1 = (void *)((int)self_ + 0x7e30);
+        u3 = orig::FsTextInput_HasText(p1);
+        if ((char)u3 == '\0') {
+          (**(untyped_fn **)((int)self_ + 0x8c78))(0,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
+          ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x54))))((void *)(self_));
           return 0xffffffff;
         }
-        uVar6 = 1;
-        iVar4 = orig::FsTextInput_GetCursorOrLength(pvVar1);
-        iVar7 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-        orig::TextInputFiles_InputNotify(self_,iVar7,iVar4,uVar6,iVar7);
+        u3 = 1;
+        i1 = orig::FsTextInput_GetCursorOrLength(p1);
+        i2 = orig::FsTextInput_GetPendingBuffer(p1);
+        orig::TextInputFiles_InputNotify(self_,i2,i1,u3,i2);
         return 1;
       }
       orig::FsTextInput_DeleteLastWord((void *)((int)self_ + 0x7e30));
-      iVar4 = 0;
-      puVar10 = (uint8_t *)0x0;
+      i1 = 0;
+      p3 = (uint8_t *)0x0;
     }
-    iVar4 = orig::TextInputFiles_InputSubmit(self_,puVar10,iVar4);
-    if (iVar4 < 0) {
+    i1 = orig::TextInputFiles_InputSubmit(self_,p3,i1);
+    if (i1 < 0) {
       return 0xffffffff;
     }
     break;
   case 0x1b:
-    uVar6 = orig::TextInputFiles_IsModeFourOrFive(self_);
-    if ((char)uVar6 == '\0') {
+    u3 = orig::TextInputFiles_IsModeFourOrFive(self_);
+    if ((char)u3 == '\0') {
       return 1;
     }
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-    if ((char)uVar6 == '\0') {
-      uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-      if ((char)uVar6 != '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+    if ((char)u3 == '\0') {
+      u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+      if ((char)u3 != '\0') {
         orig::TextInputFiles_ClearAll((void *)((int)self_ + 0x8aac));
         return 1;
       }
-      pvVar1 = (void *)((int)self_ + 0x7e30);
-      uVar6 = orig::FsTextInput_HasText(pvVar1);
-      if ((char)uVar6 == '\0') {
-        uVar6 = *(uint32_t *)((int)self_ + 0x8c7c);
-        iVar4 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-        (**(code **)((int)self_ + 0x8c78))(1,iVar4,uVar6);
-        ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x54))))((void *)(self_));
+      p1 = (void *)((int)self_ + 0x7e30);
+      u3 = orig::FsTextInput_HasText(p1);
+      if ((char)u3 == '\0') {
+        u3 = *(uint32_t *)((int)self_ + 0x8c7c);
+        i1 = orig::FsTextInput_GetPendingBuffer(p1);
+        (**(untyped_fn **)((int)self_ + 0x8c78))(1,i1,u3);
+        ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x54))))((void *)(self_));
         return 1;
       }
-      uVar6 = 0;
+      u3 = 0;
       if (*(char *)((int)self_ + 0x8c80) == '\0') {
-        orig::FsTextInput_Reset(pvVar1,0);
-        uVar6 = *(uint32_t *)((int)self_ + 0x8c7c);
-        iVar4 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-        (**(code **)((int)self_ + 0x8c78))(1,iVar4,uVar6);
+        orig::FsTextInput_Reset(p1,0);
+        u3 = *(uint32_t *)((int)self_ + 0x8c7c);
+        i1 = orig::FsTextInput_GetPendingBuffer(p1);
+        (**(untyped_fn **)((int)self_ + 0x8c78))(1,i1,u3);
         return 1;
       }
-      iVar4 = orig::FsTextInput_GetCursorOrLength(pvVar1);
-      iVar7 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-      orig::TextInputFiles_InputNotify(self_,iVar7,iVar4,uVar6,iVar7);
-      uVar6 = *(uint32_t *)((int)self_ + 0x8c7c);
-      iVar4 = orig::FsTextInput_GetPendingBuffer(pvVar1);
-      (**(code **)((int)self_ + 0x8c78))(2,iVar4,uVar6);
+      i1 = orig::FsTextInput_GetCursorOrLength(p1);
+      i2 = orig::FsTextInput_GetPendingBuffer(p1);
+      orig::TextInputFiles_InputNotify(self_,i2,i1,u3,i2);
+      u3 = *(uint32_t *)((int)self_ + 0x8c7c);
+      i1 = orig::FsTextInput_GetPendingBuffer(p1);
+      (**(untyped_fn **)((int)self_ + 0x8c78))(2,i1,u3);
       return 1;
     }
-    bVar3 = *(uint8_t *)((int)self_ + 0xec2c);
-    if (6 < bVar3) {
-      bVar3 = (-(bVar3 < 0x13) & 0xf4U) + 0x13;
+    u1 = *(uint8_t *)((int)self_ + 0xec2c);
+    if (6 < u1) {
+      u1 = (-(u1 < 0x13) & 0xf4U) + 0x13;
     }
-    if ((((bVar3 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
+    if ((((u1 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
         (*(char *)((int)self_ + 0xec2e) == '\0')) && (*(char *)((int)self_ + 0xec2f) == '\0')) {
       *(uint32_t *)((int)self_ + 0x8c84) = 0;
       *(uint8_t *)((int)self_ + 0x8c81) = 0;
@@ -11052,31 +11050,31 @@ LAB_101b6044:
       *(uint8_t *)((int)self_ + 0xec2d) = 0;
       *(uint8_t *)((int)self_ + 0xec2e) = 0;
       *(uint8_t *)((int)self_ + 0xec2f) = 0;
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
       orig::TextInputFiles_ClearAll((void *)((int)self_ + 0x8aac));
       orig::FsTextInput_ClearState((void *)((int)self_ + 0x7e30));
       orig::FsTextInput_ClearPair((void *)((int)self_ + 0x7e30));
       return 1;
     }
-    iVar4 = 0;
-    pcVar11 = (char *)0x0;
-LAB_101b5e42:
-    iVar4 = orig::TextInputFiles_SetWordForCompletion(self_,pcVar11,iVar4);
-    if (-1 < iVar4) {
-      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
+    i1 = 0;
+    p4 = (char *)0x0;
+code_101B5E42:
+    i1 = orig::TextInputFiles_SetWordForCompletion(self_,p4,i1);
+    if (-1 < i1) {
+      orig::MenuMng_OpenByName_v4(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
       return 1;
     }
     break;
   case 0x20:
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-    if ((char)uVar6 == '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((char)u3 == '\0') {
       return 1;
     }
-    if ((char)param_2 != '\0') {
+    if ((char)arg3 != '\0') {
       orig::List_Retreat(self_);
       return 1;
     }
-    goto LAB_101b674c;
+    goto code_101B674C;
   case 0x21:
     orig::List_PageUp(self_);
     return 1;
@@ -11085,17 +11083,17 @@ LAB_101b5e42:
     return 1;
   case 0x23:
     if (*(int *)((int)self_ + 0xf10c) == 0) {
-      uVar6 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
-      if ((char)uVar6 == '\0') {
-        uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-        if ((char)uVar6 != '\0') {
-LAB_101b6696:
+      u3 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
+      if ((char)u3 == '\0') {
+        u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+        if ((char)u3 != '\0') {
+code_101B6696:
           *(uint32_t *)((int)self_ + 0x8c74) = *(uint32_t *)((int)self_ + 0x8c70);
           return 1;
         }
         if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
-          uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-          if ((char)uVar6 != '\0') goto LAB_101b6696;
+          u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+          if ((char)u3 != '\0') goto code_101B6696;
           if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
             *(uint32_t *)((int)self_ + 0x8888) = *(uint32_t *)((int)self_ + 0x86b8);
             return 1;
@@ -11104,25 +11102,25 @@ LAB_101b6696:
       }
     }
     else if (((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) &&
-            (uVar6 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
-            (char)uVar6 == '\0')) {
+            (u3 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
+            (char)u3 == '\0')) {
       *(uint32_t *)((int)self_ + 0x8888) = *(uint32_t *)((int)self_ + 0x86b8);
       return 1;
     }
     break;
   case 0x24:
     if (*(int *)((int)self_ + 0xf10c) == 0) {
-      uVar6 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
-      if ((char)uVar6 == '\0') {
-        uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-        if ((char)uVar6 != '\0') {
-LAB_101b65da:
+      u3 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
+      if ((char)u3 == '\0') {
+        u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+        if ((char)u3 != '\0') {
+code_101B65DA:
           *(uint32_t *)((int)self_ + 0x8c74) = 0;
           return 1;
         }
         if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
-          uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-          if ((char)uVar6 != '\0') goto LAB_101b65da;
+          u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+          if ((char)u3 != '\0') goto code_101B65DA;
           if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
             *(uint32_t *)((int)self_ + 0x8888) = 0;
             return 1;
@@ -11131,24 +11129,24 @@ LAB_101b65da:
       }
     }
     else if (((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) &&
-            (uVar6 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
-            (char)uVar6 == '\0')) {
+            (u3 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
+            (char)u3 == '\0')) {
       *(uint32_t *)((int)self_ + 0x8888) = 0;
       return 1;
     }
     break;
   case 0x25:
     if (*(int *)((int)self_ + 0xf10c) == 0) {
-      uVar6 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
-      if ((char)uVar6 == '\0') {
-        uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-        if ((char)uVar6 != '\0') {
+      u3 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
+      if ((char)u3 == '\0') {
+        u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+        if ((char)u3 != '\0') {
           orig::TextInputFiles_MoveBack((void *)((int)self_ + 0x8aac));
           return 1;
         }
         if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
-          uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-          if ((char)uVar6 != '\0') {
+          u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+          if ((char)u3 != '\0') {
             orig::TextInputFiles_MoveBack((void *)((int)self_ + 0x8aac));
             return 1;
           }
@@ -11160,46 +11158,46 @@ LAB_101b65da:
       }
     }
     else if (((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) &&
-            (uVar6 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
-            (char)uVar6 == '\0')) {
+            (u3 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
+            (char)u3 == '\0')) {
       orig::FsTextInput_MoveCursorLeft((void *)((int)self_ + 0x7e30));
       return 1;
     }
     break;
   case 0x26:
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-    if ((char)uVar6 != '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((char)u3 != '\0') {
       orig::List_Retreat(self_);
       return 1;
     }
     if (*(int *)((int)self_ + 0xf108) == 4) {
-      iVar4 = orig::FsTextInput_HistoryNext((void *)((int)self_ + 0x7e30));
-      if (-1 < iVar4) {
-        ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x5c))))((void *)(self_));
-        ((int (__thiscall *)(void *))((**(code **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
+      i1 = orig::FsTextInput_HistoryNext((void *)((int)self_ + 0x7e30));
+      if (-1 < i1) {
+        ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
+        ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
         return 1;
       }
     }
     else {
-      uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-      if ((char)uVar6 == '\0') {
-        (**(code **)((int)self_ + 0x8c78))(3,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
+      u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+      if ((char)u3 == '\0') {
+        (**(untyped_fn **)((int)self_ + 0x8c78))(3,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
         return 1;
       }
     }
     break;
   case 0x27:
     if (*(int *)((int)self_ + 0xf10c) == 0) {
-      uVar6 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
-      if ((char)uVar6 == '\0') {
-        uVar6 = orig::TextInputFiles_GetFlag8C81(self_,uVar6);
-        if ((char)uVar6 != '\0') {
+      u3 = orig::FsTextInput_GetFlag((void *)((int)self_ + 0x7e30),0);
+      if ((char)u3 == '\0') {
+        u3 = orig::TextInputFiles_GetFlag8C81(self_,u3);
+        if ((char)u3 != '\0') {
           orig::TextInputFiles_MoveForward((void *)((int)self_ + 0x8aac));
           return 1;
         }
         if ((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) {
-          uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-          if ((char)uVar6 != '\0') {
+          u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+          if ((char)u3 != '\0') {
             orig::TextInputFiles_MoveForward((void *)((int)self_ + 0x8aac));
             return 1;
           }
@@ -11211,51 +11209,51 @@ LAB_101b65da:
       }
     }
     else if (((*(uint8_t *)((int)self_ + 0xf114) & 8) != 0) &&
-            (uVar6 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
-            (char)uVar6 == '\0')) {
+            (u3 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf10c)),
+            (char)u3 == '\0')) {
       orig::FsTextInput_MoveCursorRight((void *)((int)self_ + 0x7e30));
       return 1;
     }
     break;
   case 0x28:
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-    if ((char)uVar6 == '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((char)u3 == '\0') {
       if (*(int *)((int)self_ + 0xf108) != 4) {
-        uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-        if ((char)uVar6 != '\0') {
+        u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+        if ((char)u3 != '\0') {
           return 1;
         }
-        (**(code **)((int)self_ + 0x8c78))(4,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
+        (**(untyped_fn **)((int)self_ + 0x8c78))(4,&Read_as_v0,*(uint32_t *)((int)self_ + 0x8c7c));
         return 1;
       }
-      iVar4 = orig::FsTextInput_HistoryPrev((void *)((int)self_ + 0x7e30));
-      if (iVar4 < 0) {
-        uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-        if ((char)uVar6 != '\0') {
+      i1 = orig::FsTextInput_HistoryPrev((void *)((int)self_ + 0x7e30));
+      if (i1 < 0) {
+        u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+        if ((char)u3 != '\0') {
           return 1;
         }
-        iVar4 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x68))))((void *)(self_));
-        puVar10 = (uint8_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 100))))((void *)(self_));
-        orig::TextInputFiles_InputSubmit(self_,puVar10,iVar4);
+        i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x68))))((void *)(self_));
+        p3 = (uint8_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 100))))((void *)(self_));
+        orig::TextInputFiles_InputSubmit(self_,p3,i1);
         return 1;
       }
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x5c))))((void *)(self_));
-      ((int (__thiscall *)(void *))((**(code **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
+      ((int (__thiscall *)(void *))((**(untyped_fn **)**(uint32_t **)((int)self_ + 0xf104))))((void *)(*(uint32_t **)((int)self_ + 0xf104)));
       return 1;
     }
-LAB_101b674c:
+code_101B674C:
     orig::List_Advance(self_);
     break;
   case 0x2e:
-    uVar6 = orig::TextInputFiles_GetFlag8C81(self_,iVar4);
-    if ((char)uVar6 != '\0') goto LAB_101b6044;
-    uVar6 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-    if ((char)uVar6 != '\0') {
+    u3 = orig::TextInputFiles_GetFlag8C81(self_,i1);
+    if ((char)u3 != '\0') goto code_101B6044;
+    u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+    if ((char)u3 != '\0') {
       orig::TextInputFiles_DeleteForward((void *)((int)self_ + 0x8aac));
       return 1;
     }
-    uVar6 = orig::FsTextInput_HasText((void *)((int)self_ + 0x7e30));
-    if ((char)uVar6 != '\0') {
+    u3 = orig::FsTextInput_HasText((void *)((int)self_ + 0x7e30));
+    if ((char)u3 != '\0') {
       orig::FsTextInput_RebuildAtCursor((void *)((int)self_ + 0x7e30),0);
       return 1;
     }
@@ -11265,302 +11263,302 @@ LAB_101b674c:
 
 // FUNCTION: FFXIMAIN 0x101B6810
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall FsTextInput_OnChar(void * self_, undefined4 param_1)
+XI_API int __thiscall FsTextInput_OnChar(void * self_, bits32 arg2)
 {
-  char cVar1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  int iVar5;
-  int iVar6;
-  char cVar7;
-  char *pcVar8;
-  char *pcVar9;
-  uint64_t uVar10;
+  uint32_t u1;
+  int i1;
+  uint32_t u2;
+  int i2;
+  int i3;
+  char c2;
+  char *p1;
+  char *p2;
+  uint64_t u3;
   char xi_frame[32] __attribute__((aligned(4)));
-  char  (&local_20)[16] = *reinterpret_cast<char  (*)[16]>(xi_frame + 0);
-  char  &local_10 = *reinterpret_cast<char  *>(xi_frame + 16);
-  uint8_t  &local_f = *reinterpret_cast<uint8_t  *>(xi_frame + 17);
+  char  (&val1)[16] = *reinterpret_cast<char  (*)[16]>(xi_frame + 0);
+  char  &c3 = *reinterpret_cast<char  *>(xi_frame + 16);
+  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 17);
   
-  cVar7 = (char)param_1;
+  c2 = (char)arg2;
   *(uint8_t *)((int)self_ + 0xef22) = 0;
-  if ((cVar7 == ' ') && (uVar2 = orig::TextInputFiles_GetFlag8C81(self_,xi_entry_eax), (char)uVar2 != '\0')) {
+  if ((c2 == ' ') && (u1 = orig::TextInputFiles_GetFlag8C81(self_,xi_entry_eax), (char)u1 != '\0')) {
     return -1;
   }
-  local_f = 0;
-  local_20[0] = '\0';
-  local_10 = cVar7;
-  uVar10 = orig::FUN_10311344();
-  uVar4 = 0xffffffff;
-  pcVar8 = local_20;
+  u4 = 0;
+  val1[0] = '\0';
+  c3 = c2;
+  u3 = orig::game_10311344();
+  u2 = 0xffffffff;
+  p1 = val1;
   do {
-    if (uVar4 == 0) break;
-    uVar4 = uVar4 - 1;
-    cVar1 = *pcVar8;
-    pcVar8 = pcVar8 + 1;
-  } while (cVar1 != '\0');
-  iVar5 = ~uVar4 - 1;
-  if (iVar5 == 0) {
+    if (u2 == 0) break;
+    u2 = u2 - 1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  i2 = ~u2 - 1;
+  if (i2 == 0) {
     return -1;
   }
   if (*(uint8_t *)((int)self_ + 0xf0ec) == 0) {
     if (*(int *)((int)self_ + 0xf10c) == 0) {
-      switch(xi_sw(cVar7)) {
+      switch(xi_sw(c2)) {
       case '\b':
       case '\t':
       case '\r':
       case '\x1b':
         break;
       default:
-        pcVar8 = (char *)((int)self_ + 0x8aac);
-        if (pcVar8 != (char *)0x0) {
-          iVar6 = -1;
-          pcVar9 = pcVar8;
+        p1 = (char *)((int)self_ + 0x8aac);
+        if (p1 != (char *)0x0) {
+          i3 = -1;
+          p2 = p1;
           do {
-            if (iVar6 == 0) break;
-            iVar6 = iVar6 + -1;
-            cVar7 = *pcVar9;
-            pcVar9 = pcVar9 + 1;
-          } while (cVar7 != '\0');
-          if (iVar6 != -2) {
-            uVar4 = 0xffffffff;
-            pcVar9 = pcVar8;
+            if (i3 == 0) break;
+            i3 = i3 + -1;
+            c2 = *p2;
+            p2 = p2 + 1;
+          } while (c2 != '\0');
+          if (i3 != -2) {
+            u2 = 0xffffffff;
+            p2 = p1;
             do {
-              if (uVar4 == 0) break;
-              uVar4 = uVar4 - 1;
-              cVar7 = *pcVar9;
-              pcVar9 = pcVar9 + 1;
-            } while (cVar7 != '\0');
-            if ((pcVar8[~uVar4 - 2] == -0x7f) && (local_20[0] == '@')) {
-              uVar4 = 0xffffffff;
-              pcVar9 = pcVar8;
+              if (u2 == 0) break;
+              u2 = u2 - 1;
+              c2 = *p2;
+              p2 = p2 + 1;
+            } while (c2 != '\0');
+            if ((p1[~u2 - 2] == -0x7f) && (val1[0] == '@')) {
+              u2 = 0xffffffff;
+              p2 = p1;
               do {
-                if (uVar4 == 0) break;
-                uVar4 = uVar4 - 1;
-                cVar7 = *pcVar9;
-                pcVar9 = pcVar9 + 1;
-              } while (cVar7 != '\0');
-              pcVar8[~uVar4 - 2] = ' ';
+                if (u2 == 0) break;
+                u2 = u2 - 1;
+                c2 = *p2;
+                p2 = p2 + 1;
+              } while (c2 != '\0');
+              p1[~u2 - 2] = ' ';
               return -1;
             }
           }
         }
-        iVar6 = *(int *)((int)self_ + 0x8c70);
-        iVar3 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
-        iVar6 = iVar3 + iVar6 + iVar5;
-        if (*(int *)((int)self_ + 0xf118) < iVar6) {
+        i3 = *(int *)((int)self_ + 0x8c70);
+        i1 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
+        i3 = i1 + i3 + i2;
+        if (*(int *)((int)self_ + 0xf118) < i3) {
           return -1;
         }
-        iVar3 = 0;
-        if (0 < iVar5) {
+        i1 = 0;
+        if (0 < i2) {
           do {
-            iVar6 = orig::TextInputFiles_AppendByte
-                              (pcVar8,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar6 >> 8))) << 8) | (uint8_t)(local_20[iVar3]))));
-            iVar3 = iVar3 + 1;
-          } while (iVar3 < iVar5);
+            i3 = orig::TextInputFiles_AppendByte
+                              (p1,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(val1[i1]))));
+            i1 = i1 + 1;
+          } while (i1 < i2);
         }
-        uVar2 = orig::TextInputFiles_GetFlag8C81(self_,iVar6);
-        if (((char)uVar2 != '\0') &&
-           (iVar6 = orig::TextInputFiles_SetWordForCompletion(self_,pcVar8,*(int *)((int)self_ + 0x8c70)),
-           -1 < iVar6)) {
-          ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
-          orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
+        u1 = orig::TextInputFiles_GetFlag8C81(self_,i3);
+        if (((char)u1 != '\0') &&
+           (i3 = orig::TextInputFiles_SetWordForCompletion(self_,p1,*(int *)((int)self_ + 0x8c70)),
+           -1 < i3)) {
+          ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
+          orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
         }
         break;
       case ' ':
-        uVar2 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-        if ((char)uVar2 == '\0') {
-          iVar6 = orig::TextInputFiles_InputSubmit(self_,(uint8_t *)&c_strSpace_as_v0,1);
-          if (iVar6 < 0) {
+        u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+        if ((char)u1 == '\0') {
+          i3 = orig::TextInputFiles_InputSubmit(self_,(uint8_t *)&c_strSpace_as_v0,1);
+          if (i3 < 0) {
             return -1;
           }
         }
         else {
-          iVar6 = *(int *)((int)self_ + 0x8c70);
-          iVar3 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
-          if (*(int *)((int)self_ + 0xf118) < iVar3 + 1 + iVar6) {
+          i3 = *(int *)((int)self_ + 0x8c70);
+          i1 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
+          if (*(int *)((int)self_ + 0xf118) < i1 + 1 + i3) {
             return -1;
           }
-          if ((cVar7 == ' ') &&
-             (uVar2 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf118)),
-             (char)uVar2 != '\0')) {
+          if ((c2 == ' ') &&
+             (u1 = orig::TextInputFiles_GetFlag8C81(self_,*(int *)((int)self_ + 0xf118)),
+             (char)u1 != '\0')) {
             return -1;
           }
-          uVar2 = orig::TextInputFiles_AppendByte((char *)((int)self_ + 0x8aac),param_1);
-          uVar2 = orig::TextInputFiles_GetFlag8C81(self_,uVar2);
-          if (((char)uVar2 != '\0') &&
-             (iVar6 = orig::TextInputFiles_SetWordForCompletion
+          u1 = orig::TextInputFiles_AppendByte((char *)((int)self_ + 0x8aac),arg2);
+          u1 = orig::TextInputFiles_GetFlag8C81(self_,u1);
+          if (((char)u1 != '\0') &&
+             (i3 = orig::TextInputFiles_SetWordForCompletion
                                 (self_,(char *)((int)self_ + 0x8aac),*(int *)((int)self_ + 0x8c70)),
-             -1 < iVar6)) {
-            ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x70))))((void *)(self_));
-            orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
-            return iVar5;
+             -1 < i3)) {
+            ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x70))))((void *)(self_));
+            orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
+            return i2;
           }
         }
       }
     }
     else {
-      uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)((int)self_ + 0xf10c) >> 0x10)) << 16) | (uint16_t)((short)cVar7)));
-      uVar2 = orig::TextInputFiles_AcceptsChar(self_,uVar2,iVar5,uVar2);
-      if ((char)uVar2 != '\0') {
-        iVar6 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
-        if (iVar6 + iVar5 <= *(int *)((int)self_ + 0xf118)) {
-          orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)local_20,iVar5);
-          return iVar5;
+      u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)((int)self_ + 0xf10c) >> 0x10)) << 16) | (uint16_t)((short)c2)));
+      u1 = orig::TextInputFiles_AcceptsChar(self_,u1,i2,u1);
+      if ((char)u1 != '\0') {
+        i3 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
+        if (i3 + i2 <= *(int *)((int)self_ + 0xf118)) {
+          orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)val1,i2);
+          return i2;
         }
       }
     }
   }
   else {
-    uVar2 = orig::TextInputFiles_AcceptsChar
-                      (self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar10 >> 0x30)) << 16) | (uint16_t)((short)cVar7))),iVar5,
+    u1 = orig::TextInputFiles_AcceptsChar
+                      (self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u3 >> 0x30)) << 16) | (uint16_t)((short)c2))),i2,
                        (uint32_t)*(uint8_t *)((int)self_ + 0xf0ec));
-    if ((char)uVar2 != '\0') {
-      iVar6 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
-      if (*(int *)((int)self_ + 0xf118) < iVar6 + iVar5) {
+    if ((char)u1 != '\0') {
+      i3 = orig::FsTextInput_GetMaxLength((void *)((int)self_ + 0x7e30));
+      if (*(int *)((int)self_ + 0xf118) < i3 + i2) {
         orig::SetMusicTrackVolume_Tag0004();
         return -1;
       }
-      orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)local_20,iVar5);
-      return iVar5;
+      orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)val1,i2);
+      return i2;
     }
   }
-  return iVar5;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101B6C00
 // GATE: PASS -- 100 trials, 78 returned normally, 34 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API undefined4 __thiscall TextInputFiles_InputSubmit(void * self_, uint8_t * param_1, int param_2)
+XI_API bits32 __thiscall TextInputFiles_InputSubmit(void * self_, uint8_t * arg2, int arg3)
 {
-  void *this_00;
-  uint32_t uVar1;
-  int *piVar2;
+  void *obj1;
+  uint32_t u1;
+  int *p1;
   uint32_t xi_eax;
-  uint8_t *puVar3;
-  int iVar4;
+  uint8_t *p2;
+  int i1;
   
-  uVar1 = orig::Cell_ClearAllFlags(&DAT_104e1c40);
+  u1 = orig::Cell_ClearAllFlags(&g_104E1C40);
   *(uint32_t *)((int)self_ + 0xec30) = 0;
   *(uint8_t *)((int)self_ + 0xf11d) = 1;
-  uVar1 = orig::TextInputFiles_GetFlag8C81(self_,uVar1);
-  iVar4 = param_2;
-  puVar3 = param_1;
-  if ((char)uVar1 == '\0') {
-    if (param_1 == (uint8_t *)0x0) {
+  u1 = orig::TextInputFiles_GetFlag8C81(self_,u1);
+  i1 = arg3;
+  p2 = arg2;
+  if ((char)u1 == '\0') {
+    if (arg2 == (uint8_t *)0x0) {
       return 1;
     }
-    if (param_2 < 1) {
+    if (arg3 < 1) {
       return 1;
     }
     if (((*(char *)((int)self_ + 0xf0ec) == '\0') && (*(int *)((int)self_ + 0xf10c) != 0)) &&
-       (uVar1 = orig::TextInputFiles_AcceptsChar(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)self_ >> 0x10)) << 16) | (uint16_t)((uint16_t)(uint8_t)*param_1))),
-                             param_2,*(int *)((int)self_ + 0xf10c)), (char)uVar1 == '\0')) {
+       (u1 = orig::TextInputFiles_AcceptsChar(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)self_ >> 0x10)) << 16) | (uint16_t)((uint16_t)(uint8_t)*arg2))),
+                             arg3,*(int *)((int)self_ + 0xf10c)), (char)u1 == '\0')) {
       return 1;
     }
-    uVar1 = orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)puVar3,iVar4);
-    iVar4 = *(int *)self_;
-    if ((char)uVar1 == '\0') goto LAB_101b6c63;
+    u1 = orig::FsTextInput_SetText((void *)((int)self_ + 0x7e30),(int)p2,i1);
+    i1 = *(int *)self_;
+    if ((char)u1 == '\0') goto code_101B6C63;
   }
   else {
-    this_00 = (void *)((int)self_ + 0x7e30);
-    piVar2 = orig::TextInputFiles_GetEntry(self_);
-    xi_eax = orig::FsTextInput_CommitEntry(this_00,piVar2);
+    obj1 = (void *)((int)self_ + 0x7e30);
+    p1 = orig::TextInputFiles_GetEntry(self_);
+    xi_eax = orig::FsTextInput_CommitEntry(obj1,p1);
     if ((int)xi_eax < 0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x60))))((void *)(self_),0);
-      orig::FsTextInput_ClearState(this_00);
-      orig::FsTextInput_ClearPair(this_00);
-      iVar4 = *(int *)self_;
-LAB_101b6c63:
-      (**(code **)(iVar4 + 0x70))();
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x60))))((void *)(self_),0);
+      orig::FsTextInput_ClearState(obj1);
+      orig::FsTextInput_ClearPair(obj1);
+      i1 = *(int *)self_;
+code_101B6C63:
+      (**(untyped_fn **)(i1 + 0x70))();
       return 0xffffffff;
     }
-    uVar1 = orig::FsTextInput_GetFlag(this_00,xi_eax);
-    if ((char)uVar1 != '\0') {
-      puVar3 = (uint8_t *)orig::FsTextInput_GetCode(this_00,&param_1);
-      *(uint8_t *)((int)self_ + 0xec2c) = *puVar3;
-      *(uint8_t *)((int)self_ + 0xec2d) = puVar3[1];
-      *(uint8_t *)((int)self_ + 0xec2e) = puVar3[2];
-      *(uint8_t *)((int)self_ + 0xec2f) = puVar3[3];
-      ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x5c))))((void *)(self_));
-      iVar4 = orig::TextInputFiles_SetWordForCompletion(self_,&Read_as_v0,0);
-      if (iVar4 < 0) {
+    u1 = orig::FsTextInput_GetFlag(obj1,xi_eax);
+    if ((char)u1 != '\0') {
+      p2 = (uint8_t *)orig::FsTextInput_GetCode(obj1,&arg2);
+      *(uint8_t *)((int)self_ + 0xec2c) = *p2;
+      *(uint8_t *)((int)self_ + 0xec2d) = p2[1];
+      *(uint8_t *)((int)self_ + 0xec2e) = p2[2];
+      *(uint8_t *)((int)self_ + 0xec2f) = p2[3];
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x5c))))((void *)(self_));
+      i1 = orig::TextInputFiles_SetWordForCompletion(self_,&Read_as_v0,0);
+      if (i1 < 0) {
         return 1;
       }
-      orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,s_menu_fep_10377cbc,0,0);
+      orig::MenuMng_OpenByName_v2(&g_menuMng_as_v0,str_menu_fep_10377CBC,0,0);
       return 1;
     }
-    iVar4 = *(int *)self_;
+    i1 = *(int *)self_;
   }
-  (**(code **)(iVar4 + 0x60))(0);
-  (**(code **)(*(int *)self_ + 0x70))();
+  (**(untyped_fn **)(i1 + 0x60))(0);
+  (**(untyped_fn **)(*(int *)self_ + 0x70))();
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B6D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) TextInputFiles_AcceptsChar(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2, int param_3)
+XI_API bits32 __attribute__((stdcall, regparm(3))) TextInputFiles_AcceptsChar(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4, int arg5)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(int *)((int)self_ + 0xf110) == 5) {
-    if (param_3 == 2) goto LAB_101b6e27;
-    xi_eax = orig::Font_IsPrintableAscii((uint32_t)(uint16_t)param_2);
-    if ((char)xi_eax != '\0') goto LAB_101b6e27;
+    if (arg5 == 2) goto code_101B6E27;
+    xi_eax = orig::Font_IsPrintableAscii((uint32_t)(uint16_t)arg4);
+    if ((char)xi_eax != '\0') goto code_101B6E27;
   }
-  if (((*(int *)((int)self_ + 0xf110) == 4) && (param_3 == 1)) &&
-     (xi_eax = 0, 0x1f < (uint16_t)param_2)) {
-LAB_101b6e27:
+  if (((*(int *)((int)self_ + 0xf110) == 4) && (arg5 == 1)) &&
+     (xi_eax = 0, 0x1f < (uint16_t)arg4)) {
+code_101B6E27:
     return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(1)));
   }
-  if ((*(int *)((int)self_ + 0xf110) == 3) && (param_3 == 1)) {
-    xi_eax = orig::FUN_10314801((uint32_t)(uint16_t)param_2);
-    if (xi_eax != 0) goto LAB_101b6e27;
+  if ((*(int *)((int)self_ + 0xf110) == 3) && (arg5 == 1)) {
+    xi_eax = orig::game_10314801((uint32_t)(uint16_t)arg4);
+    if (xi_eax != 0) goto code_101B6E27;
   }
-  if ((*(int *)((int)self_ + 0xf110) == 2) && (param_3 == 1)) {
-    xi_eax = orig::FUN_10314801((uint32_t)(uint16_t)param_2);
-    if (xi_eax != 0) goto LAB_101b6e27;
+  if ((*(int *)((int)self_ + 0xf110) == 2) && (arg5 == 1)) {
+    xi_eax = orig::game_10314801((uint32_t)(uint16_t)arg4);
+    if (xi_eax != 0) goto code_101B6E27;
   }
-  uVar1 = *(uint32_t *)((int)self_ + 0xf110);
-  if ((uVar1 == 0) && (param_3 == 1)) {
-    xi_eax = orig::FUN_103146de((uint32_t)(uint16_t)param_2);
-    uVar1 = 0;
-    if (xi_eax != 0) goto LAB_101b6e27;
+  u1 = *(uint32_t *)((int)self_ + 0xf110);
+  if ((u1 == 0) && (arg5 == 1)) {
+    xi_eax = orig::game_103146DE((uint32_t)(uint16_t)arg4);
+    u1 = 0;
+    if (xi_eax != 0) goto code_101B6E27;
   }
-  if ((*(int *)((int)self_ + 0xf110) == 1) && (param_3 == 1)) {
-    xi_eax = orig::FUN_1031475c((uint32_t)(uint16_t)param_2);
-    uVar1 = 0;
-    if (xi_eax != 0) goto LAB_101b6e27;
+  if ((*(int *)((int)self_ + 0xf110) == 1) && (arg5 == 1)) {
+    xi_eax = orig::game_1031475C((uint32_t)(uint16_t)arg4);
+    u1 = 0;
+    if (xi_eax != 0) goto code_101B6E27;
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101B6E40
 // GATE: PASS -- 100 trials, 100 returned normally, 122 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) TextInputFiles_InputNotify(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2, int param_3, undefined4 param_4)
+XI_API void __attribute__((stdcall, regparm(3))) TextInputFiles_InputNotify(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4, int arg5, bits32 arg6)
 {
   if (*(int *)((int)self_ + 0xf108) == 4) {
     orig::FsTextInput_ResetBuffer((void *)((int)self_ + 0x7e30));
   }
-  if (param_3 < 0x1c3) {
-    if ((char)param_4 != '\0') {
-      (**(code **)((int)self_ + 0x8c78))(0,param_2,*(uint32_t *)((int)self_ + 0x8c7c));
+  if (arg5 < 0x1c3) {
+    if ((char)arg6 != '\0') {
+      (**(untyped_fn **)((int)self_ + 0x8c78))(0,arg4,*(uint32_t *)((int)self_ + 0x8c7c));
     }
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x54))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x54))))((void *)(self_));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B6E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) TextInputFiles_GetFlag8C81(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) TextInputFiles_GetFlag8C81(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x8c81))));
 }
 
 // FUNCTION: FFXIMAIN 0x101B6EA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ResetCursor(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ResetCursor(void * self_)
 {
   *(uint8_t *)((int)self_ + 0x8c81) = 0;
   *(uint32_t *)((int)self_ + 0xec30) = 0;
@@ -11580,89 +11578,89 @@ XI_API void * __thiscall TextInputFiles_GetEntry(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B6EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8_t * param_1, int param_2)
+XI_API bits32 __thiscall TextInputFiles_SetWordForCompletion(void * self_, uint8_t * arg2, int arg3)
 {
-  void *this_00;
-  int *piVar1;
-  char cVar2;
-  uint8_t bVar3;
-  uint8_t *pbVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  int iVar7;
-  uint32_t uVar8;
-  char *pcVar9;
-  uint32_t local_8;
-  uint8_t *local_4;
+  void *obj1;
+  int *p1;
+  char c1;
+  uint8_t u1;
+  uint8_t *p2;
+  uint32_t u2;
+  uint32_t u3;
+  int i1;
+  uint32_t u4;
+  char *p3;
+  uint32_t u5;
+  uint8_t *p4;
   
-  local_4 = param_1;
-  local_8 = param_2;
-  if (param_1 == (uint8_t *)0x0) {
+  p4 = arg2;
+  u5 = arg3;
+  if (arg2 == (uint8_t *)0x0) {
     *(uint8_t *)((int)self_ + 0xec2c) = 0;
     *(uint8_t *)((int)self_ + 0xec2d) = 0;
     *(uint8_t *)((int)self_ + 0xec2e) = 0;
     *(uint8_t *)((int)self_ + 0xec2f) = 0;
     orig::FsTextInput_ClearState((void *)((int)self_ + 0x7e30));
-    iVar7 = -1;
-    pcVar9 = &DAT_10662d58;
+    i1 = -1;
+    p3 = &g_10662D58;
     do {
-      if (iVar7 == 0) break;
-      iVar7 = iVar7 + -1;
-      cVar2 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
-    } while (cVar2 != '\0');
-    if (iVar7 != -2) {
-      uVar8 = 0xffffffff;
-      local_4 = &DAT_10662d58;
-      pcVar9 = &DAT_10662d58;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      c1 = *p3;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    if (i1 != -2) {
+      u4 = 0xffffffff;
+      p4 = &g_10662D58;
+      p3 = &g_10662D58;
       do {
-        if (uVar8 == 0) break;
-        uVar8 = uVar8 - 1;
-        cVar2 = *pcVar9;
-        pcVar9 = pcVar9 + 1;
-      } while (cVar2 != '\0');
-      local_8 = ~uVar8 - 1;
+        if (u4 == 0) break;
+        u4 = u4 - 1;
+        c1 = *p3;
+        p3 = p3 + 1;
+      } while (c1 != '\0');
+      u5 = ~u4 - 1;
     }
   }
   else {
-    DAT_10662d54 = *(int *)((int)self_ + 0x8c84);
+    g_10662D54 = *(int *)((int)self_ + 0x8c84);
   }
-  piVar1 = (int *)((int)self_ + 0xec28);
-  *piVar1 = 0x3fc;
-  pbVar4 = local_4;
-  if (local_4 == (uint8_t *)0x0) {
-    pbVar4 = &Read_as_v0;
+  p1 = (int *)((int)self_ + 0xec28);
+  *p1 = 0x3fc;
+  p2 = p4;
+  if (p4 == (uint8_t *)0x0) {
+    p2 = &Read_as_v0;
   }
-  this_00 = (void *)((int)self_ + 4);
-  uVar5 = orig::FsWordCompletion_SetWord(this_00,(char *)pbVar4,local_8,*(uint32_t *)((int)self_ + 0xec2c));
-  uVar6 = orig::TextInputFiles_IsState204Not1(this_00);
-  if ((char)uVar6 == '\0') {
-    orig::FsWordCompletion_Update(this_00);
+  obj1 = (void *)((int)self_ + 4);
+  u2 = orig::FsWordCompletion_SetWord(obj1,(char *)p2,u5,*(uint32_t *)((int)self_ + 0xec2c));
+  u3 = orig::TextInputFiles_IsState204Not1(obj1);
+  if ((char)u3 == '\0') {
+    orig::FsWordCompletion_Update(obj1);
   }
-  orig::FsWordCompletion_getEntryList(this_00,(uint32_t *)((int)self_ + 0x8c88),piVar1);
-  iVar7 = orig::TextInputFiles_FillCompletionWords(DAT_1066268c,(void *)((int)self_ + (*piVar1 * 3 + 0x1191) * 8),0x3fc - *piVar1
-                       ,local_4,local_8);
-  *piVar1 = *piVar1 + iVar7;
-  if (param_1 != (uint8_t *)0x0) {
-    bVar3 = *(uint8_t *)((int)self_ + 0xec2c);
-    if (6 < bVar3) {
-      bVar3 = (-(bVar3 < 0x13) & 0xf4U) + 0x13;
+  orig::FsWordCompletion_getEntryList(obj1,(uint32_t *)((int)self_ + 0x8c88),p1);
+  i1 = orig::TextInputFiles_FillCompletionWords(g_1066268C,(void *)((int)self_ + (*p1 * 3 + 0x1191) * 8),0x3fc - *p1
+                       ,p4,u5);
+  *p1 = *p1 + i1;
+  if (arg2 != (uint8_t *)0x0) {
+    u1 = *(uint8_t *)((int)self_ + 0xec2c);
+    if (6 < u1) {
+      u1 = (-(u1 < 0x13) & 0xf4U) + 0x13;
     }
-    if ((((bVar3 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
+    if ((((u1 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
         (*(char *)((int)self_ + 0xec2e) == '\0')) && (*(char *)((int)self_ + 0xec2f) == '\0')) {
-      orig::_strncpy_v2(&DAT_10662d58,(char *)param_1,0x40);
-      DAT_10662d97 = 0;
+      orig::_strncpy_v2(&g_10662D58,(char *)arg2,0x40);
+      g_10662D97 = 0;
     }
   }
-  if ((char)uVar5 != '\0') {
-    bVar3 = *(uint8_t *)((int)self_ + 0xec2c);
-    if (6 < bVar3) {
-      bVar3 = (-(bVar3 < 0x13) & 0xf4U) + 0x13;
+  if ((char)u2 != '\0') {
+    u1 = *(uint8_t *)((int)self_ + 0xec2c);
+    if (6 < u1) {
+      u1 = (-(u1 < 0x13) & 0xf4U) + 0x13;
     }
-    if (((bVar3 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
+    if (((u1 == 0) && (*(char *)((int)self_ + 0xec2d) == '\0')) &&
        ((*(char *)((int)self_ + 0xec2e) == '\0' &&
-        ((*(char *)((int)self_ + 0xec2f) == '\0' && (DAT_10662d54 < *piVar1)))))) {
-      *(int *)((int)self_ + 0x8c84) = DAT_10662d54;
+        ((*(char *)((int)self_ + 0xec2f) == '\0' && (g_10662D54 < *p1)))))) {
+      *(int *)((int)self_ + 0x8c84) = g_10662D54;
       return 1;
     }
     *(uint32_t *)((int)self_ + 0x8c84) = 0;
@@ -11674,11 +11672,11 @@ XI_API undefined4 __thiscall TextInputFiles_SetWordForCompletion(void * self_, u
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall List_Advance(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   *(int *)((int)self_ + 0xec30) = *(int *)((int)self_ + 0xec30) + 1;
-  uVar1 = *(int *)((int)self_ + 0x8c84) + 1;
-  *(uint32_t *)((int)self_ + 0x8c84) = -(uint32_t)(uVar1 != *(uint32_t *)((int)self_ + 0xec28)) & uVar1;
+  u1 = *(int *)((int)self_ + 0x8c84) + 1;
+  *(uint32_t *)((int)self_ + 0x8c84) = -(uint32_t)(u1 != *(uint32_t *)((int)self_ + 0xec28)) & u1;
   return;
 }
 
@@ -11686,14 +11684,14 @@ XI_API void __thiscall List_Advance(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall List_Retreat(void * self_)
 {
-  int iVar1;
+  int i1;
   
   *(int *)((int)self_ + 0xec30) = *(int *)((int)self_ + 0xec30) + 1;
-  iVar1 = *(int *)((int)self_ + 0x8c84);
-  if (iVar1 == 0) {
-    iVar1 = *(int *)((int)self_ + 0xec28);
+  i1 = *(int *)((int)self_ + 0x8c84);
+  if (i1 == 0) {
+    i1 = *(int *)((int)self_ + 0xec28);
   }
-  *(int *)((int)self_ + 0x8c84) = iVar1 + -1;
+  *(int *)((int)self_ + 0x8c84) = i1 + -1;
   return;
 }
 
@@ -11701,12 +11699,12 @@ XI_API void __thiscall List_Retreat(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall List_PageDown(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self_ + 0x8c84) + 7;
+  i1 = *(int *)((int)self_ + 0x8c84) + 7;
   *(int *)((int)self_ + 0xec30) = *(int *)((int)self_ + 0xec30) + 1;
-  *(int *)((int)self_ + 0x8c84) = iVar1;
-  if (*(int *)((int)self_ + 0xec28) <= iVar1) {
+  *(int *)((int)self_ + 0x8c84) = i1;
+  if (*(int *)((int)self_ + 0xec28) <= i1) {
     *(int *)((int)self_ + 0x8c84) = *(int *)((int)self_ + 0xec28) + -1;
   }
   return;
@@ -11716,12 +11714,12 @@ XI_API void __thiscall List_PageDown(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall List_PageUp(void * self_)
 {
-  int iVar1;
+  int i1;
   
   *(int *)((int)self_ + 0xec30) = *(int *)((int)self_ + 0xec30) + 1;
-  iVar1 = *(int *)((int)self_ + 0x8c84) + -7;
-  *(int *)((int)self_ + 0x8c84) = iVar1;
-  if (iVar1 < 0) {
+  i1 = *(int *)((int)self_ + 0x8c84) + -7;
+  *(int *)((int)self_ + 0x8c84) = i1;
+  if (i1 < 0) {
     *(uint32_t *)((int)self_ + 0x8c84) = 0;
   }
   return;
@@ -11729,7 +11727,7 @@ XI_API void __thiscall List_PageUp(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B7160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_HasPendingInput(void * self_)
+XI_API bits32 __thiscall TextInputFiles_HasPendingInput(void * self_)
 {
   uint32_t xi_entry_eax = 0;
   uint32_t xi_eax;
@@ -11754,7 +11752,7 @@ XI_API void __thiscall TextInputFiles_ResetBuffer(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B7260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_InputCall101AC990(void * self_, undefined4 xi_s1, undefined4 xi_s2, char * xi_s3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6)
+XI_API void __thiscall TextInputFiles_InputCall101AC990(void * self_, bits32 xi_s1, bits32 xi_s2, char * xi_s3, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6)
 {
   orig::FsTextInput_BuildDisplayText((void *)((int)self_ + 0x7e30),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5,xi_s6);
   return;
@@ -11762,23 +11760,23 @@ XI_API void __thiscall TextInputFiles_InputCall101AC990(void * self_, undefined4
 
 // FUNCTION: FFXIMAIN 0x101B7280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_InputCall101AC990Swapped(void * self_, char * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __thiscall TextInputFiles_InputCall101AC990Swapped(void * self_, char * arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::FsTextInput_BuildDisplayText((void *)((int)self_ + 0x7e30),param_3,param_4,param_1,param_2,param_5,param_6)
+  i1 = orig::FsTextInput_BuildDisplayText((void *)((int)self_ + 0x7e30),arg4,arg5,arg2,arg3,arg6,arg7)
   ;
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B72B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_InputCall101ACAC0(void * self_, char * param_1, int param_2, int param_3, int param_4)
+XI_API bits32 __thiscall TextInputFiles_InputCall101ACAC0(void * self_, char * arg2, int arg3, int arg4, int arg5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::FsTextInput_BuildDisplayTextTrimmed((void *)((int)self_ + 0x7e30),param_1,param_2,param_3,param_4,(int *)0x0);
-  return iVar1;
+  i1 = orig::FsTextInput_BuildDisplayTextTrimmed((void *)((int)self_ + 0x7e30),arg2,arg3,arg4,arg5,(int *)0x0);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B7890
@@ -11791,103 +11789,103 @@ XI_API void __thiscall TextInputFiles_Refresh101ABBF0(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B7C20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetLastWord(void * self_, undefined4 * param_1)
+XI_API int __thiscall TextInputFiles_GetLastWord(void * self_, bits32 * arg2)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  undefined4 *puVar7;
-  undefined4 *puVar8;
+  bits32 *p1;
+  int i1;
+  int i2;
+  int i3;
+  uint32_t u1;
+  uint32_t u2;
+  bits32 *p2;
+  bits32 *p3;
   
-  puVar1 = (undefined4 *)orig::FsTextInput_GetActiveBuffer((void *)((int)self_ + 0x7e30));
-  iVar2 = orig::FsTextInput_GetLength((void *)((int)self_ + 0x7e30));
-  if (puVar1 == (undefined4 *)0x0) {
-    *(uint8_t *)param_1 = 0;
+  p1 = (bits32 *)orig::FsTextInput_GetActiveBuffer((void *)((int)self_ + 0x7e30));
+  i1 = orig::FsTextInput_GetLength((void *)((int)self_ + 0x7e30));
+  if (p1 == (bits32 *)0x0) {
+    *(uint8_t *)arg2 = 0;
     return 0;
   }
-  iVar4 = 0;
-  if (*(char *)(iVar2 + -1 + (int)puVar1) != ' ') {
-    iVar3 = orig::Text_CountChars((int)puVar1,iVar2,iVar2 + -1);
-    iVar3 = (iVar2 + -1) - iVar3;
+  i3 = 0;
+  if (*(char *)(i1 + -1 + (int)p1) != ' ') {
+    i2 = orig::Text_CountChars((int)p1,i1,i1 + -1);
+    i2 = (i1 + -1) - i2;
     while( true ) {
-      if (iVar3 < 1) goto LAB_101b7cd8;
-      puVar8 = param_1;
-      if (*(char *)(iVar3 + (int)puVar1) == ' ') break;
-      if (*(char *)(iVar3 + (int)puVar1) == '\x7f') {
-        uVar6 = (iVar2 - iVar3) - 1;
-        puVar7 = (undefined4 *)(iVar3 + 2 + (int)puVar1);
-        for (uVar5 = uVar6 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-          *puVar8 = *puVar7;
-          puVar7 = puVar7 + 1;
-          puVar8 = puVar8 + 1;
+      if (i2 < 1) goto code_101B7CD8;
+      p3 = arg2;
+      if (*(char *)(i2 + (int)p1) == ' ') break;
+      if (*(char *)(i2 + (int)p1) == '\x7f') {
+        u2 = (i1 - i2) - 1;
+        p2 = (bits32 *)(i2 + 2 + (int)p1);
+        for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+          *p3 = *p2;
+          p2 = p2 + 1;
+          p3 = p3 + 1;
         }
-        iVar4 = (iVar2 - iVar3) + -2;
-        goto LAB_101b7cce;
+        i3 = (i1 - i2) + -2;
+        goto code_101B7CCE;
       }
-      iVar4 = orig::Text_CountChars((int)puVar1,iVar2,iVar3);
-      iVar3 = iVar3 - iVar4;
+      i3 = orig::Text_CountChars((int)p1,i1,i2);
+      i2 = i2 - i3;
     }
-    uVar6 = iVar2 - iVar3;
-    puVar7 = (undefined4 *)(iVar3 + 1 + (int)puVar1);
-    for (uVar5 = uVar6 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-      *puVar8 = *puVar7;
-      puVar7 = puVar7 + 1;
-      puVar8 = puVar8 + 1;
+    u2 = i1 - i2;
+    p2 = (bits32 *)(i2 + 1 + (int)p1);
+    for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p3 = *p2;
+      p2 = p2 + 1;
+      p3 = p3 + 1;
     }
-    iVar4 = uVar6 - 1;
-LAB_101b7cce:
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar8 = *(uint8_t *)puVar7;
-      puVar7 = (undefined4 *)((int)puVar7 + 1);
-      puVar8 = (undefined4 *)((int)puVar8 + 1);
+    i3 = u2 - 1;
+code_101B7CCE:
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p3 = *(uint8_t *)p2;
+      p2 = (bits32 *)((int)p2 + 1);
+      p3 = (bits32 *)((int)p3 + 1);
     }
-    if (iVar3 < 1) {
-LAB_101b7cd8:
-      for (uVar6 = iVar2 + 1U >> 2; uVar6 != 0; uVar6 = uVar6 - 1) {
-        *param_1 = *puVar1;
-        puVar1 = puVar1 + 1;
-        param_1 = param_1 + 1;
+    if (i2 < 1) {
+code_101B7CD8:
+      for (u2 = i1 + 1U >> 2; u2 != 0; u2 = u2 - 1) {
+        *arg2 = *p1;
+        p1 = p1 + 1;
+        arg2 = arg2 + 1;
       }
-      for (uVar6 = iVar2 + 1U & 3; iVar4 = iVar2, uVar6 != 0; uVar6 = uVar6 - 1) {
-        *(uint8_t *)param_1 = *(uint8_t *)puVar1;
-        puVar1 = (undefined4 *)((int)puVar1 + 1);
-        param_1 = (undefined4 *)((int)param_1 + 1);
+      for (u2 = i1 + 1U & 3; i3 = i1, u2 != 0; u2 = u2 - 1) {
+        *(uint8_t *)arg2 = *(uint8_t *)p1;
+        p1 = (bits32 *)((int)p1 + 1);
+        arg2 = (bits32 *)((int)arg2 + 1);
       }
     }
   }
-  return iVar4;
+  return i3;
 }
 
 // FUNCTION: FFXIMAIN 0x101B7E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl TextInputFiles_DefaultRunLine(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl TextInputFiles_DefaultRunLine(int arg1, bits32 arg2)
 {
-  if (param_1 == 0) {
-    param_1 = orig::Command_RunLine(param_2,1);
+  if (arg1 == 0) {
+    arg1 = orig::Command_RunLine(arg2,1);
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B7EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __cdecl TextInputFiles_IsState1Or3(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = 0;
-  if (((DAT_1066276c != 0) && (uVar1 = *(uint32_t *)(DAT_1066276c + 0x44), uVar1 != 0)) &&
-     ((uVar1 == 1 || (uVar1 = uVar1 - 2, uVar1 == 0)))) {
+  u1 = 0;
+  if (((g_1066276C != 0) && (u1 = *(uint32_t *)(g_1066276C + 0x44), u1 != 0)) &&
+     ((u1 == 1 || (u1 = u1 - 2, u1 == 0)))) {
     return 1;
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101B91B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ResetField10(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ResetField10(void * self_)
 {
   *(uint32_t *)((int)self_ + 0x10) = 0xffffffff;
   return 1;
@@ -11897,45 +11895,45 @@ XI_API undefined4 __thiscall TextInputFiles_ResetField10(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CandidatesCtor(void * self_)
 {
-  uint8_t *puVar1;
-  int iVar2;
+  uint8_t *p1;
+  int i1;
   
-  iVar2 = 0xc;
+  i1 = 0xc;
   *(uint8_t *)((int)self_ + 1) = 0;
   *(uint8_t *)((int)self_ + 2) = 0;
   *(uint8_t *)((int)self_ + 3) = 0;
   *(uint8_t *)((int)self_ + 4) = 0;
-  puVar1 = (uint8_t *)((int)self_ + 10);
+  p1 = (uint8_t *)((int)self_ + 10);
   do {
-    puVar1[-2] = 0;
-    puVar1[-1] = 0;
-    *puVar1 = 0;
-    puVar1[1] = 0;
-    puVar1 = puVar1 + 4;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p1[-2] = 0;
+    p1[-1] = 0;
+    *p1 = 0;
+    p1[1] = 0;
+    p1 = p1 + 4;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self_ + 0x38) = 0;
-  puVar1 = (uint8_t *)((int)self_ + 0x42);
-  iVar2 = 0xc;
+  p1 = (uint8_t *)((int)self_ + 0x42);
+  i1 = 0xc;
   do {
-    puVar1[-2] = 0;
-    puVar1[-1] = 0;
-    *puVar1 = 0;
-    puVar1[1] = 0;
-    puVar1 = puVar1 + 4;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p1[-2] = 0;
+    p1[-1] = 0;
+    *p1 = 0;
+    p1[1] = 0;
+    p1 = p1 + 4;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self_ + 0x70) = 0;
-  puVar1 = (uint8_t *)((int)self_ + 0x76);
-  iVar2 = 0xc;
+  p1 = (uint8_t *)((int)self_ + 0x76);
+  i1 = 0xc;
   do {
-    puVar1[-2] = 0;
-    puVar1[-1] = 0;
-    *puVar1 = 0;
-    puVar1[1] = 0;
-    puVar1 = puVar1 + 4;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p1[-2] = 0;
+    p1[-1] = 0;
+    *p1 = 0;
+    p1[1] = 0;
+    p1 = p1 + 4;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self_ + 0xa4) = 0;
   orig::TextInputFiles_StringListCtor((void *)((int)self_ + 0xa8));
   return self_;
@@ -11943,57 +11941,57 @@ XI_API void * __thiscall TextInputFiles_CandidatesCtor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101B92B0
 // GATE: PASS -- 100 trials, 19 returned normally, 847 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 19
-XI_API void __attribute__((cdecl, regparm(1))) TextInputFiles_DestroyInputGlobals(undefined4 xi_eax)
+XI_API void __attribute__((cdecl, regparm(1))) TextInputFiles_DestroyInputGlobals(bits32 xi_eax)
 {
-  LPVOID pvVar1;
+  LPVOID val1;
   
-  if (DAT_106626a0 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_106626a0)))((void *)(DAT_106626a0),1);
-    DAT_106626a0 = (undefined4 *)0x0;
+  if (g_106626A0 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_106626A0)))((void *)(g_106626A0),1);
+    g_106626A0 = (bits32 *)0x0;
   }
-  if (DAT_106626a4 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_106626a4)))((void *)(DAT_106626a4),1);
-    DAT_106626a4 = (undefined4 *)0x0;
+  if (g_106626A4 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_106626A4)))((void *)(g_106626A4),1);
+    g_106626A4 = (bits32 *)0x0;
   }
-  if (DAT_10662dac != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662dac)))((void *)(DAT_10662dac),1);
-    DAT_10662dac = (undefined4 *)0x0;
+  if (g_10662DAC != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662DAC)))((void *)(g_10662DAC),1);
+    g_10662DAC = (bits32 *)0x0;
   }
-  if (DAT_1066269c != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_1066269c)))((void *)(DAT_1066269c),1);
-    DAT_1066269c = (undefined4 *)0x0;
+  if (g_1066269C != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_1066269C)))((void *)(g_1066269C),1);
+    g_1066269C = (bits32 *)0x0;
   }
-  if (DAT_10662d9c != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662d9c)))((void *)(DAT_10662d9c),1);
-    DAT_10662d9c = (undefined4 *)0x0;
+  if (g_10662D9C != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662D9C)))((void *)(g_10662D9C),1);
+    g_10662D9C = (bits32 *)0x0;
   }
-  if (DAT_10662d98 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662d98)))((void *)(DAT_10662d98),1);
-    DAT_10662d98 = (undefined4 *)0x0;
+  if (g_10662D98 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662D98)))((void *)(g_10662D98),1);
+    g_10662D98 = (bits32 *)0x0;
   }
-  pvVar1 = DAT_10662d40_as_v0;
-  if (DAT_10662d40_as_v0 != (LPVOID)0x0) {
-    orig::TextInputFiles_DtorVt103379BC((void *)((int)DAT_10662d40_as_v0 + 0xf0e8));
-    orig::TextInputFiles_SetVtable10337210((void *)((int)pvVar1 + 0x7ed8));
-    orig::FsWordCompletion_ClearEntries((void *)((int)pvVar1 + 4));
-    orig::operator_delete_v1(pvVar1);
-    DAT_10662d40_as_v0 = (LPVOID)0x0;
+  val1 = g_10662D40_as_v0;
+  if (g_10662D40_as_v0 != (LPVOID)0x0) {
+    orig::TextInputFiles_DtorVt103379BC((void *)((int)g_10662D40_as_v0 + 0xf0e8));
+    orig::TextInputFiles_SetVtable10337210((void *)((int)val1 + 0x7ed8));
+    orig::FsWordCompletion_ClearEntries((void *)((int)val1 + 4));
+    orig::operator_delete_v1(val1);
+    g_10662D40_as_v0 = (LPVOID)0x0;
   }
-  if (DAT_10662da4 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662da4)))((void *)(DAT_10662da4),1);
-    DAT_10662da4 = (undefined4 *)0x0;
+  if (g_10662DA4 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662DA4)))((void *)(g_10662DA4),1);
+    g_10662DA4 = (bits32 *)0x0;
   }
-  if (dword_10662DA8_as_v0 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*dword_10662DA8_as_v0)))((void *)(dword_10662DA8_as_v0),1);
-    dword_10662DA8_as_v0 = (undefined4 *)0x0;
+  if (g_10662DA8_as_v0 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662DA8_as_v0)))((void *)(g_10662DA8_as_v0),1);
+    g_10662DA8_as_v0 = (bits32 *)0x0;
   }
-  if (DAT_10662788 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662788)))((void *)(DAT_10662788),1);
-    DAT_10662788 = (undefined4 *)0x0;
+  if (g_10662788 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662788)))((void *)(g_10662788),1);
+    g_10662788 = (bits32 *)0x0;
   }
-  if (DAT_10662da0 != (undefined4 *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_10662da0)))((void *)(DAT_10662da0),1);
-    DAT_10662da0 = (undefined4 *)0x0;
+  if (g_10662DA0 != (bits32 *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_10662DA0)))((void *)(g_10662DA0),1);
+    g_10662DA0 = (bits32 *)0x0;
   }
   return;
 }
@@ -12010,52 +12008,52 @@ XI_API void __stdcall TextInputFiles_ExitThread1234(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall TextInputFiles_ReleaseSemaphoreAt4(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = ReleaseSemaphore(*(uint32_t *)((int)self_ + 4),1,0);
-  return (-(uint32_t)(iVar1 != 0) & 2) - 1;
+  i1 = ReleaseSemaphore(*(uint32_t *)((int)self_ + 4),1,0);
+  return (-(uint32_t)(i1 != 0) & 2) - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall Event_Wait(void * self_, DWORD param_1)
+XI_API uint64_t __thiscall Event_Wait(void * self_, DWORD arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 4),param_1);
-  iVar1 = (uint32_t)(iVar1 != -1) * 2 + -1;
-  return ((uint64_t)(((uint64_t)(uint32_t)(iVar1) << 32) | (uint32_t)(iVar1)));
+  i1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 4),arg2);
+  i1 = (uint32_t)(i1 != -1) * 2 + -1;
+  return ((uint64_t)(((uint64_t)(uint32_t)(i1) << 32) | (uint32_t)(i1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101B95D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Event_ResetAndWait(void * self_, DWORD param_1)
+XI_API int __thiscall Event_ResetAndWait(void * self_, DWORD arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = ResetEvent(*(uint32_t *)((int)self_ + 4));
-  if (iVar1 == 0) {
+  i1 = ResetEvent(*(uint32_t *)((int)self_ + 4));
+  if (i1 == 0) {
     return -1;
   }
-  iVar1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 4),param_1);
-  return (uint32_t)(iVar1 != -1) * 2 + -1;
+  i1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 4),arg2);
+  return (uint32_t)(i1 != -1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Event_Signal(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = SetEvent(*(uint32_t *)((int)self_ + 4));
-  return (-(uint32_t)(iVar1 != 0) & 2) - 1;
+  i1 = SetEvent(*(uint32_t *)((int)self_ + 4));
+  return (-(uint32_t)(i1 != 0) & 2) - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10337B1C(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10337B1C(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337b1c;
+  *(uint8_t ***)self_ = &g_10337B1C;
   *(uint32_t *)((int)self_ + 4) = 0;
   return self_;
 }
@@ -12064,84 +12062,84 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt10337B1C(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall FsTinyString_init(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_menu_mcralpha_1037c914);
-  *(int *)((int)self_ + 4) = (int)uVar1;
-  return (uint32_t)((int)uVar1 != 0) * 2 + -1;
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_menu_mcralpha_1037C914);
+  *(int *)((int)self_ + 4) = (int)u1;
+  return (uint32_t)((int)u1 != 0) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9880
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_DatEntryCtor(void * self_, undefined4 param_1, char * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7)
+XI_API void __thiscall TextInputFiles_DatEntryCtor(void * self_, bits32 arg2, char * arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10337b20;
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  iVar2 = 8 - (int)param_2;
+  *(uint8_t ***)self_ = &g_10337B20;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  i1 = 8 - (int)arg3;
   do {
-    cVar1 = *param_2;
-    param_2[(int)self_ + iVar2] = cVar1;
-    param_2 = param_2 + 1;
-  } while (cVar1 != '\0');
-  *(uint32_t *)((int)self_ + 0x108) = param_3;
-  *(uint32_t *)((int)self_ + 0x10c) = param_4;
-  *(uint32_t *)((int)self_ + 0x110) = param_5;
+    c1 = *arg3;
+    arg3[(int)self_ + i1] = c1;
+    arg3 = arg3 + 1;
+  } while (c1 != '\0');
+  *(uint32_t *)((int)self_ + 0x108) = arg4;
+  *(uint32_t *)((int)self_ + 0x10c) = arg5;
+  *(uint32_t *)((int)self_ + 0x110) = arg6;
   *(uint32_t *)((int)self_ + 0x114) = 0;
-  *(uint32_t *)((int)self_ + 0x118) = param_6;
-  *(uint8_t *)((int)self_ + 0x11c) = (uint8_t)param_7;
+  *(uint32_t *)((int)self_ + 0x118) = arg7;
+  *(uint8_t *)((int)self_ + 0x11c) = (uint8_t)arg8;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9910
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_InitWithCallback(void * self_, undefined4 param_1, char * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API void __thiscall TextInputFiles_InitWithCallback(void * self_, bits32 arg2, char * arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10337b20;
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  iVar2 = 8 - (int)param_2;
+  *(uint8_t ***)self_ = &g_10337B20;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  i1 = 8 - (int)arg3;
   do {
-    cVar1 = *param_2;
-    param_2[(int)self_ + iVar2] = cVar1;
-    param_2 = param_2 + 1;
-  } while (cVar1 != '\0');
-  *(uint32_t *)((int)self_ + 0x114) = param_3;
+    c1 = *arg3;
+    arg3[(int)self_ + i1] = c1;
+    arg3 = arg3 + 1;
+  } while (c1 != '\0');
+  *(uint32_t *)((int)self_ + 0x114) = arg4;
   *(uint32_t *)((int)self_ + 0x108) = 0;
   *(uint32_t *)((int)self_ + 0x10c) = 0;
   *(uint32_t *)((int)self_ + 0x110) = 0;
-  *(uint32_t *)((int)self_ + 0x118) = param_4;
-  *(uint8_t *)((int)self_ + 0x11c) = (uint8_t)param_5;
+  *(uint32_t *)((int)self_ + 0x118) = arg5;
+  *(uint8_t *)((int)self_ + 0x11c) = (uint8_t)arg6;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_CopyFrom(void * self_, int param_1)
+XI_API void __thiscall TextInputFiles_CopyFrom(void * self_, int arg2)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
+  char c1;
+  int i1;
+  char *p1;
   
-  pcVar3 = (char *)(param_1 + 8);
-  *(uint8_t ***)self_ = &PTR_FUN_10337b20;
-  *(uint32_t *)((int)self_ + 4) = *(uint32_t *)(param_1 + 4);
-  iVar2 = 8 - (int)pcVar3;
+  p1 = (char *)(arg2 + 8);
+  *(uint8_t ***)self_ = &g_10337B20;
+  *(uint32_t *)((int)self_ + 4) = *(uint32_t *)(arg2 + 4);
+  i1 = 8 - (int)p1;
   do {
-    cVar1 = *pcVar3;
-    pcVar3[(int)self_ + iVar2] = cVar1;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar1 != '\0');
-  *(uint32_t *)((int)self_ + 0x108) = *(uint32_t *)(param_1 + 0x108);
-  *(uint32_t *)((int)self_ + 0x10c) = *(uint32_t *)(param_1 + 0x10c);
-  *(uint32_t *)((int)self_ + 0x110) = *(uint32_t *)(param_1 + 0x110);
-  *(uint32_t *)((int)self_ + 0x114) = *(uint32_t *)(param_1 + 0x114);
-  *(uint32_t *)((int)self_ + 0x118) = *(uint32_t *)(param_1 + 0x118);
-  *(uint8_t *)((int)self_ + 0x11c) = *(uint8_t *)(param_1 + 0x11c);
+    c1 = *p1;
+    p1[(int)self_ + i1] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  *(uint32_t *)((int)self_ + 0x108) = *(uint32_t *)(arg2 + 0x108);
+  *(uint32_t *)((int)self_ + 0x10c) = *(uint32_t *)(arg2 + 0x10c);
+  *(uint32_t *)((int)self_ + 0x110) = *(uint32_t *)(arg2 + 0x110);
+  *(uint32_t *)((int)self_ + 0x114) = *(uint32_t *)(arg2 + 0x114);
+  *(uint32_t *)((int)self_ + 0x118) = *(uint32_t *)(arg2 + 0x118);
+  *(uint8_t *)((int)self_ + 0x11c) = *(uint8_t *)(arg2 + 0x11c);
   return;
 }
 
@@ -12149,16 +12147,16 @@ XI_API void __thiscall TextInputFiles_CopyFrom(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ClearVtable(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337b20;
+  *(uint8_t ***)self_ = &g_10337B20;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_InitCopy(void * self_, int param_1)
+XI_API void * __thiscall TextInputFiles_InitCopy(void * self_, int arg2)
 {
-  orig::TextInputFiles_CopyFrom(self_,param_1);
-  *(uint8_t ***)self_ = &PTR_FUN_10337b24;
+  orig::TextInputFiles_CopyFrom(self_,arg2);
+  *(uint8_t ***)self_ = &g_10337B24;
   *(uint32_t *)((int)self_ + 0x120) = 0;
   return self_;
 }
@@ -12167,96 +12165,96 @@ XI_API void * __thiscall TextInputFiles_InitCopy(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl TextInputFiles_CreateGlobal10662DB4(void)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if (DAT_10662db4 != 0) {
+  if (g_10662DB4 != 0) {
     return 0;
   }
-  uVar1 = orig::Allocator_Generic_v1(0xc);
-  if ((void *)uVar1 != (void *)0x0) {
-    DAT_10662db4 = orig::TextInputFiles_Construct((void *)uVar1);
-    return DAT_10662db4;
+  u1 = orig::Allocator_Generic_v1(0xc);
+  if ((void *)u1 != (void *)0x0) {
+    g_10662DB4 = orig::TextInputFiles_Construct((void *)u1);
+    return g_10662DB4;
   }
-  DAT_10662db4 = 0;
+  g_10662DB4 = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_AppendToList(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_AppendToList(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  void *pvVar3;
-  uint64_t uVar4;
+  int i1;
+  int i2;
+  void *p1;
+  uint64_t u1;
   
-  uVar4 = orig::Allocator_Generic_v1(0x124);
-  if ((void *)uVar4 == (void *)0x0) {
-    pvVar3 = (void *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x124);
+  if ((void *)u1 == (void *)0x0) {
+    p1 = (void *)0x0;
   }
   else {
-    pvVar3 = orig::TextInputFiles_InitCopy((void *)uVar4,param_1);
+    p1 = orig::TextInputFiles_InitCopy((void *)u1,arg2);
   }
-  iVar1 = *(int *)((int)self_ + 4);
-  if (iVar1 != 0) {
-    for (iVar2 = *(int *)(iVar1 + 0x120); iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x120)) {
-      iVar1 = iVar2;
+  i1 = *(int *)((int)self_ + 4);
+  if (i1 != 0) {
+    for (i2 = *(int *)(i1 + 0x120); i2 != 0; i2 = *(int *)(i2 + 0x120)) {
+      i1 = i2;
     }
-    *(void **)(iVar1 + 0x120) = pvVar3;
+    *(void **)(i1 + 0x120) = p1;
     return 1;
   }
-  *(void **)((int)self_ + 4) = pvVar3;
+  *(void **)((int)self_ + 4) = p1;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_Register(void * self_, undefined4 param_1, undefined4 param_2, char * param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+XI_API void __thiscall TextInputFiles_Register(void * self_, bits32 arg2, bits32 arg3, char * arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
   char xi_frame[288] __attribute__((aligned(4)));
-  uint8_t  (&local_120)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
+  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
   
-  orig::TextInputFiles_DatEntryCtor(local_120,param_1,param_3,param_4,param_5,param_6,param_7,param_8);
-  orig::TextInputFiles_AppendToList(self_,local_120);
-  orig::TextInputFiles_ClearVtable(local_120);
+  orig::TextInputFiles_DatEntryCtor(u1,arg2,arg4,arg5,arg6,arg7,arg8,arg9);
+  orig::TextInputFiles_AppendToList(self_,u1);
+  orig::TextInputFiles_ClearVtable(u1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101B9F90
 // GATE: PASS -- 100 trials, 100 returned normally, 12 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_RemoveById(void * self_, int param_1)
+XI_API bits32 __thiscall TextInputFiles_RemoveById(void * self_, int arg2)
 {
-  uint32_t *this_00;
-  uint32_t *puVar1;
-  uint32_t *puVar2;
-  uint32_t uVar3;
+  uint32_t *obj1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint32_t u1;
   
-  puVar2 = *(uint32_t **)((int)self_ + 4);
-  puVar1 = (uint32_t *)0x0;
+  p2 = *(uint32_t **)((int)self_ + 4);
+  p1 = (uint32_t *)0x0;
   while( true ) {
-    this_00 = puVar2;
-    if (this_00 == (uint32_t *)0x0) {
+    obj1 = p2;
+    if (obj1 == (uint32_t *)0x0) {
       return 0;
     }
-    if (this_00[0x42] == param_1) break;
-    puVar2 = (uint32_t *)this_00[0x48];
-    puVar1 = this_00;
+    if (obj1[0x42] == arg2) break;
+    p2 = (uint32_t *)obj1[0x48];
+    p1 = obj1;
   }
-  if (puVar1 != (uint32_t *)0x0) {
-    puVar1[0x48] = this_00[0x48];
-    uVar3 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)*this_00)))((void *)(this_00),1);
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+  if (p1 != (uint32_t *)0x0) {
+    p1[0x48] = obj1[0x48];
+    u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*obj1)))((void *)(obj1),1);
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  *(uint32_t *)((int)self_ + 4) = this_00[0x48];
-  uVar3 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)*this_00)))((void *)(this_00),1);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+  *(uint32_t *)((int)self_ + 4) = obj1[0x48];
+  u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*obj1)))((void *)(obj1),1);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BA180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Construct(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Construct(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337b28;
+  *(uint8_t ***)self_ = &g_10337B28;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint8_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 9) = 0;
@@ -12267,7 +12265,7 @@ XI_API undefined4 __thiscall TextInputFiles_Construct(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10337B2C(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337b2c;
+  *(uint8_t ***)self_ = &g_10337B2C;
   *(uint32_t *)((int)self_ + 4) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 0;
@@ -12306,22 +12304,22 @@ XI_API void __thiscall TextInputFiles_ClearBufferB(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10337B4C(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::TextInputFiles_InitVt10337BA0(self_);
-  *(uint8_t ***)self_ = &PTR_LAB_10337b4c;
+  *(uint8_t ***)self_ = &g_10337B4C;
   *(uint32_t *)((int)self_ + 0x18) = 0;
   *(uint32_t *)((int)self_ + 0x1c) = 0;
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint32_t *)((int)self_ + 0x24) = 0;
   *(uint32_t *)((int)self_ + 0x28) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x2c);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x2c);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
+  *(uint16_t *)p1 = 0;
   return self_;
 }
 
@@ -12329,14 +12327,14 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337B4C(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_Destruct(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_LAB_10337b4c;
+  *(uint8_t ***)self_ = &g_10337B4C;
   orig::TextInputFiles_FreeBlocks18To24(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BA5C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ResetCounters(void * self_)
+XI_API bits32 __thiscall TextInputFiles_ResetCounters(void * self_)
 {
   *(uint32_t *)((int)self_ + 0x18) = 0;
   *(uint32_t *)((int)self_ + 0x20) = 0;
@@ -12345,10 +12343,10 @@ XI_API undefined4 __thiscall TextInputFiles_ResetCounters(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101BADD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FreeBlocks18To24(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FreeBlocks18To24(void * self_)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
   if (*(int *)((int)self_ + 0x18) != 0) {
     orig::TextInputFiles_FreeBlock(*(int *)((int)self_ + 0x18));
@@ -12360,73 +12358,73 @@ XI_API undefined4 __thiscall TextInputFiles_FreeBlocks18To24(void * self_)
     *(uint32_t *)((int)self_ + 0x20) = 0;
     *(uint32_t *)((int)self_ + 0x28) = 0;
   }
-  uVar1 = 0;
+  u1 = 0;
   if (*(int *)((int)self_ + 0x24) != 0) {
-    uVar2 = orig::operator_delete_v1(*(int *)((int)self_ + 0x24));
-    uVar1 = (uint32_t)uVar2;
+    u2 = orig::operator_delete_v1(*(int *)((int)self_ + 0x24));
+    u1 = (uint32_t)u2;
     *(uint32_t *)((int)self_ + 0x24) = 0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BAE20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsWordCompletion_GetCount18(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_GetCount18(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x18);
 }
 
 // FUNCTION: FFXIMAIN 0x101BAE30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsWordCompletion_GetCount1C(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_GetCount1C(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x1c);
 }
 
 // FUNCTION: FFXIMAIN 0x101BAE40
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __thiscall FsWordCompletion_FindNextByKey(void * self_, undefined4 param_1)
+XI_API int __thiscall FsWordCompletion_FindNextByKey(void * self_, bits32 arg2)
 {
-  int *piVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  int iVar4;
-  int *piVar5;
+  int *p1;
+  uint32_t u1;
+  uint8_t u2;
+  int i1;
+  int *p2;
   
-  bVar3 = XI_PIECE(param_1, 3, 1);
-  uVar2 = (uint32_t)XI_PIECE(param_1, 3, 1);
-  if ((int)uVar2 < *(int *)((int)self_ + 0x1c) + 1) {
+  u2 = XI_PIECE(arg2, 3, 1);
+  u1 = (uint32_t)XI_PIECE(arg2, 3, 1);
+  if ((int)u1 < *(int *)((int)self_ + 0x1c) + 1) {
     if ((*(char *)(g_pSceneState + 0x18) < '\0') || (*(int *)(g_pSceneState + 8) != 3)) {
-      return *(int *)(*(int *)((int)self_ + 0x18) + uVar2 * 4);
+      return *(int *)(*(int *)((int)self_ + 0x18) + u1 * 4);
     }
-    piVar5 = (int *)(*(int *)((int)self_ + 0x18) + uVar2 * 4);
-    iVar4 = *piVar5;
-    XI_PIECE(param_1, 3, 1) = (uint8_t)((uint32_t)*(uint32_t *)(iVar4 + 0x14) >> 0x18);
-    if (XI_PIECE(param_1, 3, 1) != bVar3) {
+    p2 = (int *)(*(int *)((int)self_ + 0x18) + u1 * 4);
+    i1 = *p2;
+    XI_PIECE(arg2, 3, 1) = (uint8_t)((uint32_t)*(uint32_t *)(i1 + 0x14) >> 0x18);
+    if (XI_PIECE(arg2, 3, 1) != u2) {
       do {
-        piVar1 = piVar5 + 1;
-        piVar5 = piVar5 + 1;
-        XI_PIECE(param_1, 3, 1) = (uint8_t)((uint32_t)*(uint32_t *)(*piVar1 + 0x14) >> 0x18);
-      } while (XI_PIECE(param_1, 3, 1) != bVar3);
-      return *piVar1;
+        p1 = p2 + 1;
+        p2 = p2 + 1;
+        XI_PIECE(arg2, 3, 1) = (uint8_t)((uint32_t)*(uint32_t *)(*p1 + 0x14) >> 0x18);
+      } while (XI_PIECE(arg2, 3, 1) != u2);
+      return *p1;
     }
   }
   else {
-    iVar4 = 0;
+    i1 = 0;
   }
-  return iVar4;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BAEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsWordCompletion_GetField20(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_GetField20(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x20);
 }
 
 // FUNCTION: FFXIMAIN 0x101BAEC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsWordCompletion_GetField28(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_GetField28(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x28);
 }
@@ -12435,22 +12433,22 @@ XI_API undefined4 __thiscall FsWordCompletion_GetField28(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FsWordCompletion_Construct(void * self_)
 {
-  int iVar1;
-  void *this_00;
-  uint32_t *puVar2;
+  int i1;
+  void *obj1;
+  uint32_t *p1;
   
   orig::TextInputFiles_InitVt10337BA0((void *)((int)self_ + 0x18));
-  this_00 = (void *)((int)self_ + 0x22c);
+  obj1 = (void *)((int)self_ + 0x22c);
   *(uint8_t *)((int)self_ + 0x1f8) = 0;
   *(uint8_t *)((int)self_ + 0x1f9) = 0;
   *(uint8_t *)((int)self_ + 0x1fa) = 0;
   *(uint8_t *)((int)self_ + 0x1fb) = 0;
-  iVar1 = 0x40;
+  i1 = 0x40;
   do {
-    orig::TextInputFiles_CtorVt10337B4C(this_00);
-    this_00 = (void *)((int)this_00 + 0x1f0);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
+    orig::TextInputFiles_CtorVt10337B4C(obj1);
+    obj1 = (void *)((int)obj1 + 0x1f0);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint32_t *)((int)self_ + 0x200) = 0;
@@ -12461,12 +12459,12 @@ XI_API void * __thiscall FsWordCompletion_Construct(void * self_)
   *(uint32_t *)((int)self_ + 4) = 1;
   *(uint32_t *)((int)self_ + 0x10) = 0;
   *(uint32_t *)((int)self_ + 0x14) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x30);
-  for (iVar1 = 0x70; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x30);
+  for (i1 = 0x70; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
+  *(uint16_t *)p1 = 0;
   *(uint32_t *)((int)self_ + 500) = 0;
   *(uint32_t *)((int)self_ + 0x214) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x218) = 0xffffffff;
@@ -12483,53 +12481,53 @@ XI_API void * __thiscall FsWordCompletion_Construct(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsWordCompletion_ClearEntries(void * self_)
 {
-  void *this_00;
-  int iVar1;
+  void *obj1;
+  int i1;
   
   if (*(char *)self_ != '\0') {
     orig::FsWordCompletion_Release(self_);
   }
-  this_00 = (void *)((int)self_ + 0x7e2c);
-  iVar1 = 0x40;
+  obj1 = (void *)((int)self_ + 0x7e2c);
+  i1 = 0x40;
   do {
-    this_00 = (void *)((int)this_00 + -0x1f0);
-    orig::TextInputFiles_Destruct(this_00);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
+    obj1 = (void *)((int)obj1 + -0x1f0);
+    orig::TextInputFiles_Destruct(obj1);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BAFC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsWordCompletion_Init(void * self_, undefined4 param_1)
+XI_API void __thiscall FsWordCompletion_Init(void * self_, bits32 arg2)
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  void *this_00;
+  char c1;
+  char *p1;
+  int i1;
+  void *obj1;
   
   orig::FsWordCompletion_Release(self_);
-  this_00 = (void *)((int)self_ + 0x22c);
+  obj1 = (void *)((int)self_ + 0x22c);
   *(uint32_t *)((int)self_ + 0x204) = 0;
-  iVar3 = 0x40;
+  i1 = 0x40;
   do {
-    orig::TextInputFiles_ResetCounters(this_00);
-    this_00 = (void *)((int)this_00 + 0x1f0);
-    iVar3 = iVar3 + -1;
-  } while (iVar3 != 0);
-  *(uint32_t *)((int)self_ + 4) = param_1;
+    orig::TextInputFiles_ResetCounters(obj1);
+    obj1 = (void *)((int)obj1 + 0x1f0);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  *(uint32_t *)((int)self_ + 4) = arg2;
   *(uint32_t *)((int)self_ + 0x214) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x218) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x21c) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x220) = 0xffffffff;
-  pcVar2 = &Read_as_v0;
+  p1 = &Read_as_v0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint8_t *)self_ = 0;
   do {
-    cVar1 = *pcVar2;
-    pcVar2[(int)self_ + -0x103d3c54] = cVar1;
-    pcVar2 = pcVar2 + 1;
-  } while (cVar1 != '\0');
+    c1 = *p1;
+    p1[(int)self_ + -0x103d3c54] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
   *(uint32_t *)((int)self_ + 0x208) = 0;
   *(uint32_t *)((int)self_ + 0x20c) = 0;
   *(uint32_t *)((int)self_ + 0x210) = 0;
@@ -12540,58 +12538,58 @@ XI_API void __thiscall FsWordCompletion_Init(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x101BB100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl FsWordCompletion_IsEntryValid(uint32_t * param_1)
+XI_API uint32_t __cdecl FsWordCompletion_IsEntryValid(uint32_t * arg1)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  if ((char)param_1[0x6d] == '.') {
-    return (uint32_t)param_1 & 0xffffff00;
+  if ((char)arg1[0x6d] == '.') {
+    return (uint32_t)arg1 & 0xffffff00;
   }
-  uVar1 = *param_1;
-  uVar2 = xi_trunc24((uVar1 >> 8));
-  if ((0x73ff < uVar1) && (uVar1 < 0xffff)) {
-    return (uint32_t)uVar2 << 8;
+  u1 = *arg1;
+  u2 = xi_trunc24((u1 >> 8));
+  if ((0x73ff < u1) && (u1 < 0xffff)) {
+    return (uint32_t)u2 << 8;
   }
-  return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BB130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall FsWordCompletion_CountEntries(int param_1)
+XI_API void __stdcall FsWordCompletion_CountEntries(int arg1)
 {
-  char cVar1;
-  uint32_t uVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
+  char c1;
+  uint32_t u1;
+  char *p1;
+  int i1;
+  int i2;
+  char *p2;
   
-  iVar5 = 0;
-  iVar4 = 0;
-  pcVar3 = &DAT_1060161b;
+  i2 = 0;
+  i1 = 0;
+  p1 = &g_1060161B;
   do {
-    cVar1 = *pcVar3;
-    *pcVar3 = cVar1 + '\x01';
-    if (*(int *)(pcVar3 + -0x1b3) != 0) {
-      uVar2 = orig::FsWordCompletion_IsEntryValid((uint32_t *)(pcVar3 + -0x1b3));
-      if ((char)uVar2 != '\0') {
-        uVar2 = 0xffffffff;
-        pcVar6 = pcVar3;
+    c1 = *p1;
+    *p1 = c1 + '\x01';
+    if (*(int *)(p1 + -0x1b3) != 0) {
+      u1 = orig::FsWordCompletion_IsEntryValid((uint32_t *)(p1 + -0x1b3));
+      if ((char)u1 != '\0') {
+        u1 = 0xffffffff;
+        p2 = p1;
         do {
-          pcVar6 = pcVar6 + 1;
-          if (uVar2 == 0) break;
-          uVar2 = uVar2 - 1;
-        } while (*pcVar6 != '\0');
-        iVar4 = iVar4 + 1;
-        iVar5 = iVar5 + ~uVar2 + 8;
+          p2 = p2 + 1;
+          if (u1 == 0) break;
+          u1 = u1 - 1;
+        } while (*p2 != '\0');
+        i1 = i1 + 1;
+        i2 = i2 + ~u1 + 8;
       }
     }
-    *pcVar3 = cVar1;
-    pcVar3 = pcVar3 + 0x294;
-    if ((int)(XI_GAME(0x106219BBu) - 1u) < (int)pcVar3) {
-      *(int *)(param_1 + 0x48) = iVar5;
-      *(int *)(param_1 + 0x44) = iVar4;
+    *p1 = c1;
+    p1 = p1 + 0x294;
+    if ((int)(XI_GAME(0x106219BBu) - 1u) < (int)p1) {
+      *(int *)(arg1 + 0x48) = i2;
+      *(int *)(arg1 + 0x44) = i1;
       return;
     }
   } while( true );
@@ -12599,78 +12597,78 @@ XI_API void __stdcall FsWordCompletion_CountEntries(int param_1)
 
 // FUNCTION: FFXIMAIN 0x101BB1A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall FsWordCompletion_PackEntries(void * self_, int param_1, undefined4 xi_s2)
+XI_API void __thiscall FsWordCompletion_PackEntries(void * self_, int arg2, bits32 xi_s2)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  uint8_t uVar3;
-  int iVar4;
-  int iVar5;
-  char cVar7;
-  short sVar6;
-  char *pcVar8;
-  char *pcVar9;
-  uint32_t local_c;
-  char *local_8;
+  uint8_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  int i1;
+  int i2;
+  char c1;
+  short i3;
+  char *p1;
+  char *p2;
+  uint32_t u4;
+  char *p3;
   
-  iVar5 = 0;
-  local_8 = &DAT_1060161b;
+  i2 = 0;
+  p3 = &g_1060161B;
   do {
-    *local_8 = *local_8 + '\x01';
-    if ((*(int *)(local_8 + -0x1b3) != 0) &&
-       (uVar2 = orig::FsWordCompletion_IsEntryValid((uint32_t *)(local_8 + -0x1b3)), (char)uVar2 != '\0')) {
-      sVar6 = (short)*(uint32_t *)(local_8 + -0x1b3);
-      if (sVar6 == 0) {
-        cVar7 = -1;
-        uVar3 = 8;
-        sVar6 = 0xff;
+    *p3 = *p3 + '\x01';
+    if ((*(int *)(p3 + -0x1b3) != 0) &&
+       (u2 = orig::FsWordCompletion_IsEntryValid((uint32_t *)(p3 + -0x1b3)), (char)u2 != '\0')) {
+      i3 = (short)*(uint32_t *)(p3 + -0x1b3);
+      if (i3 == 0) {
+        c1 = -1;
+        u3 = 8;
+        i3 = 0xff;
       }
       else {
-        cVar7 = (char)((uint16_t)sVar6 >> 8);
-        if (cVar7 == '\0') {
-          uVar3 = 9;
-          cVar7 = -1;
+        c1 = (char)((uint16_t)i3 >> 8);
+        if (c1 == '\0') {
+          u3 = 9;
+          c1 = -1;
         }
-        else if ((char)sVar6 == '\0') {
-          uVar3 = 10;
-          sVar6 = 0xff;
+        else if ((char)i3 == '\0') {
+          u3 = 10;
+          i3 = 0xff;
         }
         else {
-          uVar3 = 7;
+          u3 = 7;
         }
       }
-      local_c = ((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)sVar6) << 8) | (uint8_t)(cVar7)))) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)self_ + 4)) << 8) | (uint8_t)(uVar3))))))
+      u4 = ((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)i3) << 8) | (uint8_t)(c1)))) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)self_ + 4)) << 8) | (uint8_t)(u3))))))
       ;
-      *(uint32_t *)(iVar5 + param_1) = local_c;
-      iVar4 = -1;
-      pcVar8 = local_8 + 1;
+      *(uint32_t *)(i2 + arg2) = u4;
+      i1 = -1;
+      p1 = p3 + 1;
       do {
-        if (iVar4 == 0) break;
-        iVar4 = iVar4 + -1;
-        cVar7 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
-      } while (cVar7 != '\0');
-      bVar1 = ~(uint8_t)iVar4;
-      *(uint8_t *)(iVar5 + 4 + param_1) = bVar1;
-      iVar4 = iVar5 + 5;
-      iVar5 = iVar4 + (uint32_t)bVar1;
-      pcVar8 = local_8 + 1;
-      pcVar9 = (char *)(iVar4 + param_1);
-      for (uVar2 = (uint32_t)(bVar1 >> 2); uVar2 != 0; uVar2 = uVar2 - 1) {
-        *(uint32_t *)pcVar9 = *(uint32_t *)pcVar8;
-        pcVar8 = pcVar8 + 4;
-        pcVar9 = pcVar9 + 4;
+        if (i1 == 0) break;
+        i1 = i1 + -1;
+        c1 = *p1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
+      u1 = ~(uint8_t)i1;
+      *(uint8_t *)(i2 + 4 + arg2) = u1;
+      i1 = i2 + 5;
+      i2 = i1 + (uint32_t)u1;
+      p1 = p3 + 1;
+      p2 = (char *)(i1 + arg2);
+      for (u2 = (uint32_t)(u1 >> 2); u2 != 0; u2 = u2 - 1) {
+        *(uint32_t *)p2 = *(uint32_t *)p1;
+        p1 = p1 + 4;
+        p2 = p2 + 4;
       }
-      for (uVar2 = bVar1 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *pcVar9 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
-        pcVar9 = pcVar9 + 1;
+      for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
     }
-    pcVar8 = local_8 + 0x294;
-    *local_8 = *local_8 + -1;
-    local_8 = pcVar8;
-    if ((int)(XI_GAME(0x106219BBu) - 1u) < (int)pcVar8) {
+    p1 = p3 + 0x294;
+    *p3 = *p3 + -1;
+    p3 = p1;
+    if ((int)(XI_GAME(0x106219BBu) - 1u) < (int)p1) {
       return;
     }
   } while( true );
@@ -12678,408 +12676,408 @@ XI_API void __thiscall FsWordCompletion_PackEntries(void * self_, int param_1, u
 
 // FUNCTION: FFXIMAIN 0x101BB2B0
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 __thiscall FsWordCompletion_BuildKind7Block(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_BuildKind7Block(void * self_)
 {
-  char cVar1;
-  char *pcVar2;
-  void *pvVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined4 uVar6;
-  uint32_t uVar7;
-  char *pcVar8;
+  char c1;
+  char *p1;
+  void *p2;
+  bits32 *p3;
+  int i1;
+  bits32 u1;
+  uint32_t u2;
+  char *p4;
   char xi_frame[76] __attribute__((aligned(4)));
-  uint8_t  &local_4c = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &local_4b = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
-  uint8_t  &local_4a = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
-  uint8_t  &local_49 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
-  char  (&local_48)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
-  char  (&local_28)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 36);
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 68);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
+  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
+  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
+  uint8_t  &u5 = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
+  uint8_t  &u6 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
+  char  (&val1)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
+  char  (&val2)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 36);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 68);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
   
-  local_4b = *(uint8_t *)((int)self_ + 4);
-  local_4c = 7;
-  local_4a = 0;
-  local_49 = 0;
-  pcVar2 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x91);
-  pcVar8 = local_48;
+  u4 = *(uint8_t *)((int)self_ + 4);
+  u3 = 7;
+  u5 = 0;
+  u6 = 0;
+  p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x91);
+  p4 = val1;
   do {
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-    *pcVar8 = cVar1;
-    pcVar8 = pcVar8 + 1;
-  } while (cVar1 != '\0');
-  pcVar2 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x92);
-  pcVar8 = local_28;
+    c1 = *p1;
+    p1 = p1 + 1;
+    *p4 = c1;
+    p4 = p4 + 1;
+  } while (c1 != '\0');
+  p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x92);
+  p4 = val2;
   do {
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-    *pcVar8 = cVar1;
-    pcVar8 = pcVar8 + 1;
-  } while (cVar1 != '\0');
-  orig::FsWordCompletion_CountEntries((int)&local_4c);
+    c1 = *p1;
+    p1 = p1 + 1;
+    *p4 = c1;
+    p4 = p4 + 1;
+  } while (c1 != '\0');
+  orig::FsWordCompletion_CountEntries((int)&u3);
   if (*(void **)((int)self_ + 0x20c) == (void *)0x0) {
-    pvVar3 = orig::Allocator_Generic_v3(0xc);
-    if (pvVar3 == (void *)0x0) {
-      pvVar3 = (void *)0x0;
+    p2 = orig::Allocator_Generic_v3(0xc);
+    if (p2 == (void *)0x0) {
+      p2 = (void *)0x0;
     }
     else {
-      pvVar3 = orig::FsMemory_Constructor(pvVar3,0x4000);
+      p2 = orig::FsMemory_Constructor(p2,0x4000);
     }
-    *(void **)((int)self_ + 0x20c) = pvVar3;
+    *(void **)((int)self_ + 0x20c) = p2;
   }
   else {
     orig::TextInputFiles_Clear(*(void **)((int)self_ + 0x20c));
   }
-  if (0 < local_8) {
-    puVar4 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x20c),(undefined4 *)&local_4c,0x4c);
-    iVar5 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x20c),local_4);
-    if ((puVar4 != (undefined4 *)0x0) && (iVar5 != 0)) {
-      orig::FsWordCompletion_PackEntries(self_,iVar5,local_4);
+  if (0 < i2) {
+    p3 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x20c),(bits32 *)&u3,0x4c);
+    i1 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x20c),u7);
+    if ((p3 != (bits32 *)0x0) && (i1 != 0)) {
+      orig::FsWordCompletion_PackEntries(self_,i1,u7);
       if (*(int *)((int)self_ + 0x214) < 0) {
         *(int *)((int)self_ + 0x214) = *(int *)((int)self_ + 0x224);
         *(int *)((int)self_ + 0x224) = *(int *)((int)self_ + 0x224) + 1;
       }
       orig::TextInputFiles_ResetCounters((void *)(*(int *)((int)self_ + 0x214) * 0x1f0 + 0x22c + (int)self_));
-      uVar6 = (**(code **)(*(int *)(*(int *)((int)self_ + 0x214) * 0x1f0 + 0x22c + (int)self_) + 0x14)
-              )(puVar4,iVar5,local_4,0);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = (**(untyped_fn **)(*(int *)(*(int *)((int)self_ + 0x214) * 0x1f0 + 0x22c + (int)self_) + 0x14)
+              )(p3,i1,u7,0);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  uVar7 = *(uint32_t *)((int)self_ + 0x214);
-  if (-1 < (int)uVar7) {
-    *(undefined4 *)((int)self_ + 0x214) = 0xffffffff;
-    uVar7 = *(int *)((int)self_ + 0x224) - 1;
-    *(uint32_t *)((int)self_ + 0x224) = uVar7;
+  u2 = *(uint32_t *)((int)self_ + 0x214);
+  if (-1 < (int)u2) {
+    *(bits32 *)((int)self_ + 0x214) = 0xffffffff;
+    u2 = *(int *)((int)self_ + 0x224) - 1;
+    *(uint32_t *)((int)self_ + 0x224) = u2;
   }
-  return uVar7 & 0xffffff00;
+  return u2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101BB430
 // GATE: PASS -- 100 trials, 17 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 17
-XI_API void __stdcall FsWordCompletion_CountSupported(int param_1)
+XI_API void __stdcall FsWordCompletion_CountSupported(int arg1)
 {
   uint8_t *self_;
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int iVar5;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  int i2;
+  int i3;
   
   self_ = orig::TargetMenu_GetInstance_v1();
-  iVar1 = orig::TargetMenu_GetCount(self_);
-  iVar4 = 0;
-  iVar5 = 0;
-  if (0 < iVar1) {
+  i1 = orig::TargetMenu_GetCount(self_);
+  i2 = 0;
+  i3 = 0;
+  if (0 < i1) {
     do {
-      uVar2 = orig::MenuPanels_IsBitSetForId(iVar5);
-      if ((char)uVar2 != '\0') {
-        uVar3 = orig::TargetMenu_GetWordAt(self_,iVar5);
-        if ((0x180 < (uVar3 & 0xffff)) && ((uVar3 & 0xffff) < 0x184)) break;
-        iVar4 = iVar4 + 1;
+      u1 = orig::MenuPanels_IsBitSetForId(i3);
+      if ((char)u1 != '\0') {
+        u2 = orig::TargetMenu_GetWordAt(self_,i3);
+        if ((0x180 < (u2 & 0xffff)) && ((u2 & 0xffff) < 0x184)) break;
+        i2 = i2 + 1;
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < iVar1);
-    if (0xfd < iVar4) {
-      iVar4 = 0xfe;
+      i3 = i3 + 1;
+    } while (i3 < i1);
+    if (0xfd < i2) {
+      i2 = 0xfe;
     }
   }
-  *(int *)(param_1 + 0x44) = iVar4;
-  *(int *)(param_1 + 0x48) = iVar4 * 8;
+  *(int *)(arg1 + 0x44) = i2;
+  *(int *)(arg1 + 0x48) = i2 * 8;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BB4B0
 // GATE: PASS -- 100 trials, 19 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 19
-XI_API void __thiscall FsWordCompletion_BuildItems(void * self_, int param_1, int param_2, undefined4 param_3)
+XI_API void __thiscall FsWordCompletion_BuildItems(void * self_, int arg2, int arg3, bits32 arg4)
 {
-  uint16_t uVar1;
-  uint8_t *this_00;
-  int iVar2;
-  uint32_t uVar3;
-  char cVar5;
-  uint8_t *puVar4;
-  char cVar6;
-  int iVar7;
-  int iVar8;
-  uint32_t local_10;
+  uint16_t u1;
+  uint8_t *obj1;
+  int i1;
+  uint32_t u2;
+  char c1;
+  uint8_t *p1;
+  char c2;
+  int i2;
+  int i3;
+  uint32_t u3;
   
-  this_00 = orig::TargetMenu_GetInstance_v1();
-  iVar2 = orig::TargetMenu_GetCount(this_00);
-  iVar7 = 0;
-  iVar8 = 0;
-  if (0 < iVar2) {
+  obj1 = orig::TargetMenu_GetInstance_v1();
+  i1 = orig::TargetMenu_GetCount(obj1);
+  i2 = 0;
+  i3 = 0;
+  if (0 < i1) {
     do {
-      if (param_2 <= iVar7) {
+      if (arg3 <= i2) {
         return;
       }
-      uVar3 = orig::MenuPanels_IsBitSetForId(iVar8);
-      if ((char)uVar3 != '\0') {
-        uVar3 = orig::TargetMenu_GetWordAt(this_00,iVar8);
-        uVar1 = (uint16_t)uVar3;
-        if ((0x180 < uVar1) && (uVar1 < 0x184)) {
+      u2 = orig::MenuPanels_IsBitSetForId(i3);
+      if ((char)u2 != '\0') {
+        u2 = orig::TargetMenu_GetWordAt(obj1,i3);
+        u1 = (uint16_t)u2;
+        if ((0x180 < u1) && (u1 < 0x184)) {
           return;
         }
-        if (uVar1 == 0) {
-          cVar5 = -1;
-          uVar3 = 0xff;
-          cVar6 = (char)param_3 + '\x01';
+        if (u1 == 0) {
+          c1 = -1;
+          u2 = 0xff;
+          c2 = (char)arg4 + '\x01';
         }
         else {
-          cVar5 = (char)((uint32_t)uVar3 >> 8);
-          if (cVar5 == '\0') {
-            cVar5 = -1;
-            cVar6 = (char)param_3 + '\x02';
+          c1 = (char)((uint32_t)u2 >> 8);
+          if (c1 == '\0') {
+            c1 = -1;
+            c2 = (char)arg4 + '\x02';
           }
           else {
-            cVar6 = (char)param_3;
-            if ((char)uVar3 == '\0') {
-              uVar3 = 0xff;
-              cVar6 = (char)param_3 + '\x03';
+            c2 = (char)arg4;
+            if ((char)u2 == '\0') {
+              u2 = 0xff;
+              c2 = (char)arg4 + '\x03';
             }
           }
         }
-        local_10 = ((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)uVar3) << 8) | (uint8_t)(cVar5)))) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)self_ + 4)) << 8) | (uint8_t)(cVar6))))));
-        *(uint32_t *)(iVar7 + param_1) = local_10;
-        puVar4 = orig::TargetMenu_GetEntryOrEmpty(this_00,iVar8);
-        *(uint8_t **)(iVar7 + 4 + param_1) = puVar4;
-        iVar7 = iVar7 + 8;
+        u3 = ((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)u2) << 8) | (uint8_t)(c1)))) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)self_ + 4)) << 8) | (uint8_t)(c2))))));
+        *(uint32_t *)(i2 + arg2) = u3;
+        p1 = orig::TargetMenu_GetEntryOrEmpty(obj1,i3);
+        *(uint8_t **)(i2 + 4 + arg2) = p1;
+        i2 = i2 + 8;
       }
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < iVar2);
+      i3 = i3 + 1;
+    } while (i3 < i1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BB5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 33 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FsWordCompletion_AddItem(void * self_, undefined4 * param_1, int * param_2, undefined4 param_3)
+XI_API bits32 __thiscall FsWordCompletion_AddItem(void * self_, bits32 * arg2, int * arg3, bits32 arg4)
 {
-  undefined4 *a1;
-  int a2;
-  undefined4 uVar1;
+  bits32 *p1;
+  int i1;
+  bits32 u1;
   
-  if (0 < (int)param_1[0x11]) {
-    a1 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x210),param_1,0x4c);
-    a2 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x210),param_1[0x12]);
-    if ((a1 != (undefined4 *)0x0) && (a2 != 0)) {
-      orig::FsWordCompletion_BuildItems(self_,a2,param_1[0x12],param_3);
-      if (*param_2 < 0) {
-        *param_2 = *(int *)((int)self_ + 0x224);
+  if (0 < (int)arg2[0x11]) {
+    p1 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x210),arg2,0x4c);
+    i1 = orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x210),arg2[0x12]);
+    if ((p1 != (bits32 *)0x0) && (i1 != 0)) {
+      orig::FsWordCompletion_BuildItems(self_,i1,arg2[0x12],arg4);
+      if (*arg3 < 0) {
+        *arg3 = *(int *)((int)self_ + 0x224);
         *(int *)((int)self_ + 0x224) = *(int *)((int)self_ + 0x224) + 1;
       }
-      orig::TextInputFiles_ResetCounters((void *)(*param_2 * 0x1f0 + 0x22c + (int)self_));
-      uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*(int *)(*param_2 * 0x1f0 + 0x22c + (int)self_) + 0x14))
-                        ))(a1,a2,param_1[0x12],1);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+      orig::TextInputFiles_ResetCounters((void *)(*arg3 * 0x1f0 + 0x22c + (int)self_));
+      u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)(*arg3 * 0x1f0 + 0x22c + (int)self_) + 0x14))
+                        ))(p1,i1,arg2[0x12],1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  if (-1 < *param_2) {
+  if (-1 < *arg3) {
     *(int *)((int)self_ + 0x224) = *(int *)((int)self_ + 0x224) + -1;
-    *param_2 = -1;
+    *arg3 = -1;
   }
-  return (uint32_t)param_2 & 0xffffff00;
+  return (uint32_t)arg3 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101BB680
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 __thiscall FsWordCompletion_BuildKind13Block(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_BuildKind13Block(void * self_)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  void *pvVar4;
-  char *pcVar5;
+  char c1;
+  int i1;
+  char *p1;
+  void *p2;
+  char *p3;
   char xi_frame[76] __attribute__((aligned(4)));
-  uint8_t  &local_4c = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &local_4b = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
-  uint8_t  &local_4a = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
-  uint8_t  &local_49 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
-  char  (&local_48)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
-  char  (&local_28)[40] = *reinterpret_cast<char  (*)[40]>(xi_frame + 36);
+  uint8_t  &u1 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
+  uint8_t  &u2 = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
+  uint8_t  &u3 = *reinterpret_cast<uint8_t  *>(xi_frame + 2);
+  uint8_t  &u4 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
+  char  (&val1)[32] = *reinterpret_cast<char  (*)[32]>(xi_frame + 4);
+  char  (&val2)[40] = *reinterpret_cast<char  (*)[40]>(xi_frame + 36);
   
-  local_4b = *(uint8_t *)((int)self_ + 4);
-  local_4c = 0x13;
-  local_4a = 0;
-  local_49 = 0;
-  pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x93);
-  pcVar5 = local_48;
+  u2 = *(uint8_t *)((int)self_ + 4);
+  u1 = 0x13;
+  u3 = 0;
+  u4 = 0;
+  p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x93);
+  p3 = val1;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-    *pcVar5 = cVar1;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar1 != '\0');
-  pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x94);
-  pcVar5 = local_28;
+    c1 = *p1;
+    p1 = p1 + 1;
+    *p3 = c1;
+    p3 = p3 + 1;
+  } while (c1 != '\0');
+  p1 = (char *)orig::TargetMenu_GetMessageFwd(0xb,0x94);
+  p3 = val2;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-    *pcVar5 = cVar1;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar1 != '\0');
-  orig::FsWordCompletion_CountSupported((int)&local_4c);
+    c1 = *p1;
+    p1 = p1 + 1;
+    *p3 = c1;
+    p3 = p3 + 1;
+  } while (c1 != '\0');
+  orig::FsWordCompletion_CountSupported((int)&u1);
   if (*(void **)((int)self_ + 0x210) == (void *)0x0) {
-    pvVar4 = orig::Allocator_Generic_v3(0xc);
-    if (pvVar4 == (void *)0x0) {
-      pvVar4 = (void *)0x0;
+    p2 = orig::Allocator_Generic_v3(0xc);
+    if (p2 == (void *)0x0) {
+      p2 = (void *)0x0;
     }
     else {
-      pvVar4 = orig::FsMemory_Constructor(pvVar4,0x1200);
+      p2 = orig::FsMemory_Constructor(p2,0x1200);
     }
-    *(void **)((int)self_ + 0x210) = pvVar4;
+    *(void **)((int)self_ + 0x210) = p2;
   }
   else {
     orig::TextInputFiles_Clear(*(void **)((int)self_ + 0x210));
   }
-  orig::FsWordCompletion_AddItem(self_,(uint32_t *)&local_4c,(int *)((int)self_ + 0x218),0x13);
-  iVar2 = *(int *)((int)self_ + 0x218);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(-1 < iVar2)));
+  orig::FsWordCompletion_AddItem(self_,(uint32_t *)&u1,(int *)((int)self_ + 0x218),0x13);
+  i1 = *(int *)((int)self_ + 0x218);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(-1 < i1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BB740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __thiscall FsWordCompletion_Refresh(void * self_)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
   *(uint32_t *)((int)self_ + 0x214) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x218) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x224) = *(uint32_t *)((int)self_ + 0x228);
-  uVar1 = orig::FsWordCompletion_BuildKind13Block(self_);
-  uVar2 = orig::FsWordCompletion_BuildKind7Block(self_);
-  if (((char)uVar1 == '\0') && ((char)uVar2 == '\0')) {
-    return uVar2;
+  u1 = orig::FsWordCompletion_BuildKind13Block(self_);
+  u2 = orig::FsWordCompletion_BuildKind7Block(self_);
+  if (((char)u1 == '\0') && ((char)u2 == '\0')) {
+    return u2;
   }
-  uVar2 = orig::FsWordCompletion__prepareAllData(self_,*(uint32_t *)((int)self_ + 4));
-  if ((char)uVar2 == '\0') {
-    return uVar2;
+  u2 = orig::FsWordCompletion__prepareAllData(self_,*(uint32_t *)((int)self_ + 4));
+  if ((char)u2 == '\0') {
+    return u2;
   }
-  uVar1 = orig::TextInputFiles_Store101BB070At8(self_);
-  return CONCAT31(xi_strunc24(((uint32_t)uVar1 >> 8)),(char)uVar1 != '\0');
+  u1 = orig::TextInputFiles_Store101BB070At8(self_);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)((char)u1 != '\0')));
 }
 
 // FUNCTION: FFXIMAIN 0x101BB7A0
 // GATE: PASS -- 100 trials, 45 returned normally, 1 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 45
-XI_API undefined4 __thiscall FsWordCompletion_LoadData(void * self_)
+XI_API bits32 __thiscall FsWordCompletion_LoadData(void * self_)
 {
-  int *this_00;
-  void *pvVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  undefined4 *puVar5;
-  undefined4 *a2;
-  undefined4 uVar6;
-  uint32_t uVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  uint8_t *pbVar10;
-  undefined4 *puVar11;
-  uint64_t uVar12;
+  int *obj1;
+  void *p1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  bits32 *p2;
+  bits32 *p3;
+  bits32 u3;
+  uint32_t u4;
+  int i2;
+  bits32 *p4;
+  uint8_t *p5;
+  bits32 *p6;
+  uint64_t u5;
   char xi_frame[92] __attribute__((aligned(4)));
-  LPVOID  &local_5c = *reinterpret_cast<LPVOID  *>(xi_frame + 0);
-  uint8_t  &local_4c = *reinterpret_cast<uint8_t  *>(xi_frame + 16);
-  uint32_t  &local_4b = *reinterpret_cast<uint32_t  *>(xi_frame + 17);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
+  LPVOID  &val1 = *reinterpret_cast<LPVOID  *>(xi_frame + 0);
+  uint8_t  &u6 = *reinterpret_cast<uint8_t  *>(xi_frame + 16);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 17);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
   
-  iVar8 = 0;
-  local_4c = 0;
-  local_4b = local_4b & 0xff000000;
-  local_5c = (LPVOID)0x0;
+  i2 = 0;
+  u6 = 0;
+  u7 = u7 & 0xff000000;
+  val1 = (LPVOID)0x0;
   if (*(char *)self_ == '\0') {
-    uVar12 = orig::Allocator_Generic_v1(0xc);
-    if ((void *)uVar12 == (void *)0x0) {
-      pvVar1 = (void *)0x0;
+    u5 = orig::Allocator_Generic_v1(0xc);
+    if ((void *)u5 == (void *)0x0) {
+      p1 = (void *)0x0;
     }
     else {
-      pvVar1 = orig::FsMemory_Constructor((void *)uVar12,0x1b800);
+      p1 = orig::FsMemory_Constructor((void *)u5,0x1b800);
     }
-    *(void **)((int)self_ + 0x208) = pvVar1;
+    *(void **)((int)self_ + 0x208) = p1;
   }
   else {
     orig::TextInputFiles_Clear(*(void **)((int)self_ + 0x208));
   }
-  iVar2 = orig::Scene_GetTableValue_v1(0x18);
-  uVar3 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,iVar2);
-  if (-1 < (int)uVar3) {
-    uVar12 = orig::Allocator_Generic_v1(uVar3);
-    local_5c = (LPVOID)uVar12;
-    if (((local_5c != (LPVOID)0x0) &&
-        (uVar4 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,iVar2,local_5c,uVar3,0), -1 < (int)uVar4)) &&
-       (uVar4 == uVar3)) {
-      if (0 < (int)uVar4) {
+  i1 = orig::Scene_GetTableValue_v1(0x18);
+  u1 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,i1);
+  if (-1 < (int)u1) {
+    u5 = orig::Allocator_Generic_v1(u1);
+    val1 = (LPVOID)u5;
+    if (((val1 != (LPVOID)0x0) &&
+        (u2 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,i1,val1,u1,0), -1 < (int)u2)) &&
+       (u2 == u1)) {
+      if (0 < (int)u2) {
         do {
-          puVar5 = (undefined4 *)(iVar8 + (int)local_5c);
-          pbVar10 = &local_4c;
-          for (iVar2 = 0x13; iVar2 != 0; iVar2 = iVar2 + -1) {
-            *(undefined4 *)pbVar10 = *puVar5;
-            puVar5 = puVar5 + 1;
-            pbVar10 = pbVar10 + 4;
+          p2 = (bits32 *)(i2 + (int)val1);
+          p5 = &u6;
+          for (i1 = 0x13; i1 != 0; i1 = i1 + -1) {
+            *(bits32 *)p5 = *p2;
+            p2 = p2 + 1;
+            p5 = p5 + 4;
           }
-          if (((local_4b & 0xff) == *(uint32_t *)((int)self_ + 4)) ||
-             ((uVar3 = local_4, local_4c < 7 && (local_4c == 1)))) {
-            puVar5 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x208),(undefined4 *)&local_4c,0x4c);
-            a2 = (undefined4 *)orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x208),local_4);
-            uVar3 = local_4;
-            if ((puVar5 == (undefined4 *)0x0) || (a2 == (undefined4 *)0x0)) goto LAB_101bb9a2;
-            puVar9 = (undefined4 *)(iVar8 + 0x4c + (int)local_5c);
-            puVar11 = a2;
-            for (uVar7 = local_4 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-              *puVar11 = *puVar9;
-              puVar9 = puVar9 + 1;
-              puVar11 = puVar11 + 1;
+          if (((u7 & 0xff) == *(uint32_t *)((int)self_ + 4)) ||
+             ((u1 = u8, u6 < 7 && (u6 == 1)))) {
+            p2 = orig::TextInputFiles_AppendPadded(*(void **)((int)self_ + 0x208),(bits32 *)&u6,0x4c);
+            p3 = (bits32 *)orig::TextInputFiles_ReserveZeroed(*(void **)((int)self_ + 0x208),u8);
+            u1 = u8;
+            if ((p2 == (bits32 *)0x0) || (p3 == (bits32 *)0x0)) goto code_101BB9A2;
+            p4 = (bits32 *)(i2 + 0x4c + (int)val1);
+            p6 = p3;
+            for (u4 = u8 >> 2; u4 != 0; u4 = u4 - 1) {
+              *p6 = *p4;
+              p4 = p4 + 1;
+              p6 = p6 + 1;
             }
-            for (uVar7 = local_4 & 3; uVar7 != 0; uVar7 = uVar7 - 1) {
-              *(uint8_t *)puVar11 = *(uint8_t *)puVar9;
-              puVar9 = (undefined4 *)((int)puVar9 + 1);
-              puVar11 = (undefined4 *)((int)puVar11 + 1);
+            for (u4 = u8 & 3; u4 != 0; u4 = u4 - 1) {
+              *(uint8_t *)p6 = *(uint8_t *)p4;
+              p4 = (bits32 *)((int)p4 + 1);
+              p6 = (bits32 *)((int)p6 + 1);
             }
             orig::TextInputFiles_ResetCounters((void *)(*(int *)((int)self_ + 0x224) * 0x1f0 + 0x22c + (int)self_));
-            this_00 = (int *)(*(int *)((int)self_ + 0x224) * 0x1f0 + 0x22c + (int)self_);
-            ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x14))))((void *)(this_00),puVar5,a2,local_4,0);
-            iVar2 = *(int *)((int)self_ + 0x224) + 1;
-            *(int *)((int)self_ + 0x224) = iVar2;
-            if (0x40 < iVar2) goto LAB_101bb9a2;
+            obj1 = (int *)(*(int *)((int)self_ + 0x224) * 0x1f0 + 0x22c + (int)self_);
+            ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x14))))((void *)(obj1),p2,p3,u8,0);
+            i1 = *(int *)((int)self_ + 0x224) + 1;
+            *(int *)((int)self_ + 0x224) = i1;
+            if (0x40 < i1) goto code_101BB9A2;
           }
-          iVar8 = iVar8 + 0x4c + uVar3;
-        } while (iVar8 < (int)uVar4);
+          i2 = i2 + 0x4c + u1;
+        } while (i2 < (int)u2);
       }
-      *(undefined4 *)((int)self_ + 0x228) = *(undefined4 *)((int)self_ + 0x224);
-      uVar6 = orig::FsWordCompletion__prepareAllData(self_,*(undefined4 *)((int)self_ + 4));
-      if (((char)uVar6 != '\0') && (uVar6 = orig::TextInputFiles_Store101BB070At8(self_), (char)uVar6 != '\0')) {
-        uVar12 = orig::operator_delete_v1(local_5c);
+      *(bits32 *)((int)self_ + 0x228) = *(bits32 *)((int)self_ + 0x224);
+      u3 = orig::FsWordCompletion__prepareAllData(self_,*(bits32 *)((int)self_ + 4));
+      if (((char)u3 != '\0') && (u3 = orig::TextInputFiles_Store101BB070At8(self_), (char)u3 != '\0')) {
+        u5 = orig::operator_delete_v1(val1);
         *(uint8_t *)self_ = 1;
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar12 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u5 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-LAB_101bb9a2:
-  uVar12 = orig::operator_delete_v1(local_5c);
-  uVar3 = (uint32_t)uVar12;
+code_101BB9A2:
+  u5 = orig::operator_delete_v1(val1);
+  u1 = (uint32_t)u5;
   *(uint8_t *)self_ = 0;
-  pvVar1 = *(void **)((int)self_ + 0x208);
-  if (pvVar1 != (void *)0x0) {
-    orig::FUN_101bca30(pvVar1);
-    uVar12 = orig::operator_delete_v1(pvVar1);
-    uVar3 = (uint32_t)uVar12;
+  p1 = *(void **)((int)self_ + 0x208);
+  if (p1 != (void *)0x0) {
+    orig::game_101BCA30(p1);
+    u5 = orig::operator_delete_v1(p1);
+    u1 = (uint32_t)u5;
   }
-  return uVar3 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101BB9E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t __thiscall FsWordCompletion_Release(void * self_)
 {
-  void *pvVar1;
+  void *p1;
   
   if (*(char *)self_ != '\0') {
-    pvVar1 = *(void **)((int)self_ + 0x208);
-    if (pvVar1 != (void *)0x0) {
-      orig::FUN_101bca30(pvVar1);
-      orig::operator_delete_v1(pvVar1);
+    p1 = *(void **)((int)self_ + 0x208);
+    if (p1 != (void *)0x0) {
+      orig::game_101BCA30(p1);
+      orig::operator_delete_v1(p1);
     }
     *(uint32_t *)((int)self_ + 0x208) = 0;
     orig::TextInputFiles_FreeBuffer(self_);
@@ -13087,19 +13085,19 @@ XI_API uint8_t __thiscall FsWordCompletion_Release(void * self_)
     *(uint32_t *)((int)self_ + 0x224) = 0;
     *(uint32_t *)((int)self_ + 0x228) = 0;
   }
-  pvVar1 = *(void **)((int)self_ + 0x210);
-  if (pvVar1 != (void *)0x0) {
-    orig::FUN_101bca30(pvVar1);
-    orig::operator_delete_v1(pvVar1);
+  p1 = *(void **)((int)self_ + 0x210);
+  if (p1 != (void *)0x0) {
+    orig::game_101BCA30(p1);
+    orig::operator_delete_v1(p1);
     *(uint32_t *)((int)self_ + 0x210) = 0;
     *(uint32_t *)((int)self_ + 0x218) = 0xffffffff;
     *(uint32_t *)((int)self_ + 0x21c) = 0xffffffff;
     *(uint32_t *)((int)self_ + 0x220) = 0xffffffff;
   }
-  pvVar1 = *(void **)((int)self_ + 0x20c);
-  if (pvVar1 != (void *)0x0) {
-    orig::FUN_101bca30(pvVar1);
-    orig::operator_delete_v1(pvVar1);
+  p1 = *(void **)((int)self_ + 0x20c);
+  if (p1 != (void *)0x0) {
+    orig::game_101BCA30(p1);
+    orig::operator_delete_v1(p1);
     *(uint32_t *)((int)self_ + 0x20c) = 0;
     *(uint32_t *)((int)self_ + 0x214) = 0xffffffff;
   }
@@ -13108,232 +13106,232 @@ XI_API uint8_t __thiscall FsWordCompletion_Release(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101BBA90
 // GATE: PASS -- 100 trials, 51 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 51
-XI_API undefined4 __thiscall FsWordCompletion_SetWord(void * self_, char * param_1, uint32_t param_2, undefined4 param_3)
+XI_API bits32 __thiscall FsWordCompletion_SetWord(void * self_, char * arg2, uint32_t arg3, bits32 arg4)
 {
-  char cVar1;
-  char cVar4;
+  char c1;
+  char c2;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  void *this_00;
-  uint32_t uVar3;
-  uint8_t bVar5;
-  uint8_t bVar6;
-  uint8_t bVar7;
-  char cVar8;
-  char *pcVar9;
-  char *pcVar10;
-  uint8_t bVar11;
+  uint32_t u1;
+  void *obj1;
+  uint32_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  uint8_t u5;
+  char c3;
+  char *p1;
+  char *p2;
+  uint8_t u6;
   
-  if (param_1 == (char *)0x0) {
+  if (arg2 == (char *)0x0) {
     return xi_entry_eax & 0xffffff00;
   }
-  bVar6 = (uint8_t)param_3;
-  cVar8 = (char)((uint32_t)param_3 >> 8);
-  cVar1 = (char)((uint32_t)param_3 >> 0x10);
-  cVar4 = (char)((uint32_t)param_3 >> 0x18);
-  if (param_2 == 0) {
-    bVar7 = bVar6;
-    if (6 < bVar6) {
-      bVar7 = (-(bVar6 < 0x13) & 0xf4U) + 0x13;
+  u4 = (uint8_t)arg4;
+  c3 = (char)((uint32_t)arg4 >> 8);
+  c1 = (char)((uint32_t)arg4 >> 0x10);
+  c2 = (char)((uint32_t)arg4 >> 0x18);
+  if (arg3 == 0) {
+    u5 = u4;
+    if (6 < u4) {
+      u5 = (-(u4 < 0x13) & 0xf4U) + 0x13;
     }
-    if (((bVar7 == 0) && (cVar8 == '\0')) && ((cVar1 == '\0' && (cVar4 == '\0')))) {
+    if (((u5 == 0) && (c3 == '\0')) && ((c1 == '\0' && (c2 == '\0')))) {
       *(uint32_t *)((int)self_ + 0x204) = 0;
       *(uint32_t *)((int)self_ + 0x200) = 0;
       *(uint32_t *)((int)self_ + 0x1fc) = 0;
       *(uint8_t *)((int)self_ + 0x30) = 0;
       *(uint32_t *)((int)self_ + 500) = 0;
-      *(uint8_t *)((int)self_ + 0x1f8) = bVar6;
+      *(uint8_t *)((int)self_ + 0x1f8) = u4;
       *(uint8_t *)((int)self_ + 0x1f9) = 0;
       *(uint8_t *)((int)self_ + 0x1fa) = 0;
       *(uint8_t *)((int)self_ + 0x1fb) = 0;
-      uVar2 = orig::FsWordCompletion_Refresh(self_);
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = orig::FsWordCompletion_Refresh(self_);
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
     *(uint32_t *)((int)self_ + 0x204) = 0;
-    this_00 = (void *)orig::FUN_101bb070(self_,param_3);
-    if (this_00 == (void *)0x0) {
+    obj1 = (void *)orig::game_101BB070(self_,arg4);
+    if (obj1 == (void *)0x0) {
       *(uint32_t *)((int)self_ + 0x200) = 0;
       *(uint32_t *)((int)self_ + 0x1fc) = 0xffffffff;
-      uVar3 = 0;
+      u2 = 0;
     }
     else {
-      uVar3 = orig::FsWordCompletion_GetField20(this_00);
-      *(uint32_t *)((int)self_ + 0x200) = uVar3;
-      uVar3 = orig::FsWordCompletion_GetField28(this_00);
-      *(uint32_t *)((int)self_ + 0x1fc) = uVar3;
+      u2 = orig::FsWordCompletion_GetField20(obj1);
+      *(uint32_t *)((int)self_ + 0x200) = u2;
+      u2 = orig::FsWordCompletion_GetField28(obj1);
+      *(uint32_t *)((int)self_ + 0x1fc) = u2;
     }
     *(uint8_t *)((int)self_ + 0x30) = 0;
     *(uint32_t *)((int)self_ + 500) = 0;
-    *(uint8_t *)((int)self_ + 0x1f8) = bVar6;
-    *(char *)((int)self_ + 0x1f9) = cVar8;
+    *(uint8_t *)((int)self_ + 0x1f8) = u4;
+    *(char *)((int)self_ + 0x1f9) = c3;
   }
   else {
-    if (*(uint32_t *)((int)self_ + 500) == param_2) {
-      bVar11 = true;
-      uVar2 = param_2;
-      pcVar9 = (char *)((int)self_ + 0x30);
-      pcVar10 = param_1;
+    if (*(uint32_t *)((int)self_ + 500) == arg3) {
+      u6 = true;
+      u1 = arg3;
+      p1 = (char *)((int)self_ + 0x30);
+      p2 = arg2;
       do {
-        if (uVar2 == 0) break;
-        uVar2 = uVar2 - 1;
-        bVar11 = *pcVar9 == *pcVar10;
-        pcVar9 = pcVar9 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (bVar11);
-      if (bVar11) {
-        bVar7 = *(uint8_t *)((int)self_ + 0x1f8);
-        if (6 < bVar7) {
-          bVar7 = (-(bVar7 < 0x13) & 0xf4U) + 0x13;
+        if (u1 == 0) break;
+        u1 = u1 - 1;
+        u6 = *p1 == *p2;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
+      } while (u6);
+      if (u6) {
+        u5 = *(uint8_t *)((int)self_ + 0x1f8);
+        if (6 < u5) {
+          u5 = (-(u5 < 0x13) & 0xf4U) + 0x13;
         }
-        bVar5 = bVar6;
-        if (6 < bVar6) {
-          bVar5 = (-(bVar6 < 0x13) & 0xf4U) + 0x13;
+        u3 = u4;
+        if (6 < u4) {
+          u3 = (-(u4 < 0x13) & 0xf4U) + 0x13;
         }
-        if ((((bVar7 == bVar5) && (*(char *)((int)self_ + 0x1f9) == cVar8)) &&
-            (*(char *)((int)self_ + 0x1fa) == cVar1)) && (*(char *)((int)self_ + 0x1fb) == cVar4)) {
+        if ((((u5 == u3) && (*(char *)((int)self_ + 0x1f9) == c3)) &&
+            (*(char *)((int)self_ + 0x1fa) == c1)) && (*(char *)((int)self_ + 0x1fb) == c2)) {
           *(uint32_t *)((int)self_ + 0x204) = 0;
-          return param_2 & 0xffffff00;
+          return arg3 & 0xffffff00;
         }
       }
     }
     *(uint32_t *)((int)self_ + 0x204) = 1;
-    pcVar9 = (char *)((int)self_ + 0x30);
-    for (uVar2 = param_2 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint32_t *)pcVar9 = *(uint32_t *)param_1;
-      param_1 = param_1 + 4;
-      pcVar9 = pcVar9 + 4;
+    p1 = (char *)((int)self_ + 0x30);
+    for (u1 = arg3 >> 2; u1 != 0; u1 = u1 - 1) {
+      *(uint32_t *)p1 = *(uint32_t *)arg2;
+      arg2 = arg2 + 4;
+      p1 = p1 + 4;
     }
-    for (uVar2 = param_2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *pcVar9 = *param_1;
-      param_1 = param_1 + 1;
-      pcVar9 = pcVar9 + 1;
+    for (u1 = arg3 & 3; u1 != 0; u1 = u1 - 1) {
+      *p1 = *arg2;
+      arg2 = arg2 + 1;
+      p1 = p1 + 1;
     }
-    *(uint8_t *)(param_2 + 0x30 + (int)self_) = 0;
-    *(uint32_t *)((int)self_ + 500) = param_2;
-    orig::Sjis_Remap82To83((int)self_ + 0x30,param_2,param_2);
-    *(uint8_t *)((int)self_ + 0x1f8) = bVar6;
-    *(char *)((int)self_ + 0x1f9) = cVar8;
-    uVar3 = param_3;
+    *(uint8_t *)(arg3 + 0x30 + (int)self_) = 0;
+    *(uint32_t *)((int)self_ + 500) = arg3;
+    orig::Sjis_Remap82To83((int)self_ + 0x30,arg3,arg3);
+    *(uint8_t *)((int)self_ + 0x1f8) = u4;
+    *(char *)((int)self_ + 0x1f9) = c3;
+    u2 = arg4;
   }
-  *(char *)((int)self_ + 0x1fa) = cVar1;
-  *(char *)((int)self_ + 0x1fb) = cVar4;
-  return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar3 >> 0x10)) << 16) | (uint16_t)(XI_PIECE(param_3, 2, 2)))) >> 8))) << 8) | (uint8_t)(1)));
+  *(char *)((int)self_ + 0x1fa) = c1;
+  *(char *)((int)self_ + 0x1fb) = c2;
+  return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u2 >> 0x10)) << 16) | (uint16_t)(XI_PIECE(arg4, 2, 2)))) >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BBC60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FsWordCompletion_Update(void * self_)
 {
-  int *piVar1;
-  uint8_t bVar2;
-  void *this_00;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int local_8;
+  int *p1;
+  uint8_t u1;
+  void *obj1;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
   
   if (*(int *)((int)self_ + 0x204) != 1) {
     return;
   }
   if (*(char *)self_ == '\0') {
-LAB_101bbe37:
+code_101BBE37:
     *(uint32_t *)((int)self_ + 0x204) = 0;
     return;
   }
-  bVar2 = *(uint8_t *)((int)self_ + 0x1f8);
-  if (6 < bVar2) {
-    bVar2 = (-(bVar2 < 0x13) & 0xf4U) + 0x13;
+  u1 = *(uint8_t *)((int)self_ + 0x1f8);
+  if (6 < u1) {
+    u1 = (-(u1 < 0x13) & 0xf4U) + 0x13;
   }
-  if ((((bVar2 == 0) && (*(char *)((int)self_ + 0x1f9) == '\0')) &&
+  if ((((u1 == 0) && (*(char *)((int)self_ + 0x1f9) == '\0')) &&
       (*(char *)((int)self_ + 0x1fa) == '\0')) && (*(char *)((int)self_ + 0x1fb) == '\0')) {
-    iVar3 = *(int *)((int)self_ + 0xc);
-    iVar4 = *(int *)((int)self_ + 0x14);
+    i1 = *(int *)((int)self_ + 0xc);
+    i2 = *(int *)((int)self_ + 0x14);
   }
   else {
-    this_00 = (void *)orig::FUN_101bb070(self_,*(uint32_t *)((int)self_ + 0x1f8));
-    if (this_00 == (void *)0x0) goto LAB_101bbe37;
-    iVar3 = orig::FsWordCompletion_GetField20(this_00);
-    iVar4 = orig::FsWordCompletion_GetField28(this_00);
+    obj1 = (void *)orig::game_101BB070(self_,*(uint32_t *)((int)self_ + 0x1f8));
+    if (obj1 == (void *)0x0) goto code_101BBE37;
+    i1 = orig::FsWordCompletion_GetField20(obj1);
+    i2 = orig::FsWordCompletion_GetField28(obj1);
   }
-  iVar6 = 0;
-  local_8 = iVar4 + -1;
-  iVar7 = local_8 / 2;
-  iVar5 = iVar4;
-  if (0 < iVar7) {
+  i4 = 0;
+  i6 = i2 + -1;
+  i5 = i6 / 2;
+  i3 = i2;
+  if (0 < i5) {
     do {
-      if (local_8 <= iVar7) break;
-      piVar1 = *(int **)(iVar3 + iVar7 * 4);
-      iVar5 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 8))))((void *)(piVar1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
-      if (iVar5 < 0) {
-        local_8 = iVar7 + -1;
+      if (i6 <= i5) break;
+      p1 = *(int **)(i1 + i5 * 4);
+      i3 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 8))))((void *)(p1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
+      if (i3 < 0) {
+        i6 = i5 + -1;
       }
       else {
-        if (iVar5 < 1) break;
-        iVar6 = iVar7 + 1;
+        if (i3 < 1) break;
+        i4 = i5 + 1;
       }
-      iVar7 = (local_8 - iVar6) / 2 + iVar6;
-    } while (iVar6 < iVar7);
+      i5 = (i6 - i4) / 2 + i4;
+    } while (i4 < i5);
   }
-  if ((iVar5 != 0) &&
-     (piVar1 = *(int **)(iVar3 + iVar7 * 4),
-     iVar5 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 8))))((void *)(piVar1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500)),
-     iVar5 != 0)) {
-    if ((iVar7 == iVar6) && (iVar6 != local_8)) {
-      piVar1 = *(int **)(iVar3 + 4 + iVar7 * 4);
-      iVar7 = iVar7 + 1;
-      iVar5 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 8))))((void *)(piVar1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
+  if ((i3 != 0) &&
+     (p1 = *(int **)(i1 + i5 * 4),
+     i3 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 8))))((void *)(p1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500)),
+     i3 != 0)) {
+    if ((i5 == i4) && (i4 != i6)) {
+      p1 = *(int **)(i1 + 4 + i5 * 4);
+      i5 = i5 + 1;
+      i3 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 8))))((void *)(p1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
     }
-    if (iVar5 != 0) {
+    if (i3 != 0) {
       *(uint32_t *)((int)self_ + 0x200) = 0;
       *(uint32_t *)((int)self_ + 0x1fc) = 0;
-      goto LAB_101bbe37;
+      goto code_101BBE37;
     }
   }
-  iVar6 = iVar7 + -1;
-  iVar5 = 0;
-  if (-1 < iVar6) {
+  i4 = i5 + -1;
+  i3 = 0;
+  if (-1 < i4) {
     do {
-      if (iVar5 != 0) goto LAB_101bbdaf;
-      piVar1 = *(int **)(iVar3 + iVar6 * 4);
-      iVar5 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 8))))((void *)(piVar1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
-      iVar6 = iVar6 + -1;
-    } while (-1 < iVar6);
-    if (iVar5 != 0) {
-LAB_101bbdaf:
-      iVar6 = iVar6 + 2;
-      goto LAB_101bbdb2;
+      if (i3 != 0) goto code_101BBDAF;
+      p1 = *(int **)(i1 + i4 * 4);
+      i3 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 8))))((void *)(p1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
+      i4 = i4 + -1;
+    } while (-1 < i4);
+    if (i3 != 0) {
+code_101BBDAF:
+      i4 = i4 + 2;
+      goto code_101BBDB2;
     }
   }
-  iVar6 = iVar6 + 1;
-LAB_101bbdb2:
-  iVar7 = iVar7 + 1;
-  iVar5 = 0;
-  if (iVar7 < iVar4) {
+  i4 = i4 + 1;
+code_101BBDB2:
+  i5 = i5 + 1;
+  i3 = 0;
+  if (i5 < i2) {
     do {
-      if (iVar5 != 0) goto LAB_101bbe04;
-      piVar1 = *(int **)(iVar3 + iVar7 * 4);
-      iVar5 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 8))))((void *)(piVar1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < iVar4);
-    if (iVar5 != 0) {
-LAB_101bbe04:
-      *(int *)((int)self_ + 0x1fc) = (iVar7 - iVar6) + -1;
-      *(int *)((int)self_ + 0x200) = iVar3 + iVar6 * 4;
+      if (i3 != 0) goto code_101BBE04;
+      p1 = *(int **)(i1 + i5 * 4);
+      i3 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 8))))((void *)(p1),(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500));
+      i5 = i5 + 1;
+    } while (i5 < i2);
+    if (i3 != 0) {
+code_101BBE04:
+      *(int *)((int)self_ + 0x1fc) = (i5 - i4) + -1;
+      *(int *)((int)self_ + 0x200) = i1 + i4 * 4;
       *(uint32_t *)((int)self_ + 0x204) = 0;
       return;
     }
   }
-  *(int *)((int)self_ + 0x1fc) = iVar7 - iVar6;
-  *(int *)((int)self_ + 0x200) = iVar3 + iVar6 * 4;
+  *(int *)((int)self_ + 0x1fc) = i5 - i4;
+  *(int *)((int)self_ + 0x200) = i1 + i4 * 4;
   *(uint32_t *)((int)self_ + 0x204) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BBE50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_IsState204Not1(void * self_)
+XI_API bits32 __thiscall TextInputFiles_IsState204Not1(void * self_)
 {
   uint32_t xi_entry_eax = 0;
   
@@ -13342,549 +13340,549 @@ XI_API undefined4 __thiscall TextInputFiles_IsState204Not1(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101BBE60
 // GATE: PASS -- 100 trials, 68 returned normally, 112 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 68
-XI_API undefined4 __thiscall FsWordCompletion_getEntryList(void * self_, undefined4 * list, int * listNum)
+XI_API bits32 __thiscall FsWordCompletion_getEntryList(void * self_, bits32 * list, int * listNum)
 {
-  int *this_00;
-  uint32_t uVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  int iVar6;
-  void *this_01;
-  undefined4 *puVar7;
-  undefined4 *puVar8;
-  int local_10;
-  undefined4 *local_c;
-  int local_8;
-  int local_4;
+  int *obj1;
+  uint32_t u1;
+  char *p1;
+  int i1;
+  bits32 *p2;
+  int i2;
+  int i3;
+  void *obj2;
+  bits32 *p3;
+  bits32 *p4;
+  int i4;
+  bits32 *p5;
+  int i5;
+  int i6;
   
-  iVar6 = 0;
-  uVar1 = 0;
+  i3 = 0;
+  u1 = 0;
   if (*(int *)((int)self_ + 0x204) != 1) {
-    *(undefined4 *)((int)self_ + 0x204) = 0;
+    *(bits32 *)((int)self_ + 0x204) = 0;
     if (*(char *)self_ == '\0') {
-      uVar1 = orig::TextInputFiles_Set((undefined4 *)((int)self_ + 0x18),&DAT_1037c9bc,0xe,0);
-      puVar4 = (undefined4 *)((int)self_ + 0x18);
-      for (iVar6 = 6; iVar6 != 0; iVar6 = iVar6 + -1) {
-        *list = *puVar4;
-        puVar4 = puVar4 + 1;
+      u1 = orig::TextInputFiles_Set((bits32 *)((int)self_ + 0x18),&g_1037C9BC,0xe,0);
+      p2 = (bits32 *)((int)self_ + 0x18);
+      for (i3 = 6; i3 != 0; i3 = i3 + -1) {
+        *list = *p2;
+        p2 = p2 + 1;
         list = list + 1;
       }
       *listNum = 1;
-      return uVar1 & 0xffffff00;
+      return u1 & 0xffffff00;
     }
-    local_8 = *(int *)((int)self_ + 0x1fc);
-    if (0 < local_8) {
-      if (*listNum < local_8 + 1) {
-        local_8 = *listNum + -1;
+    i5 = *(int *)((int)self_ + 0x1fc);
+    if (0 < i5) {
+      if (*listNum < i5 + 1) {
+        i5 = *listNum + -1;
       }
-      local_10 = 0;
-      if (0 < local_8) {
-        local_c = list;
+      i4 = 0;
+      if (0 < i5) {
+        p5 = list;
         do {
-          this_00 = *(int **)(*(int *)((int)self_ + 0x200) + local_10 * 4);
-          pcVar2 = (char *)((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x10))))((void *)(this_00));
-          if (*pcVar2 != ' ') {
-            local_4 = 0;
-            puVar4 = list;
-            if (0 < iVar6) {
+          obj1 = *(int **)(*(int *)((int)self_ + 0x200) + i4 * 4);
+          p1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x10))))((void *)(obj1));
+          if (*p1 != ' ') {
+            i6 = 0;
+            p2 = list;
+            if (0 < i3) {
               do {
-                iVar3 = orig::Entry_CompareKey(puVar4,*(int **)(*(int *)((int)self_ + 0x200) + local_10 * 4));
-                if (iVar3 == 0) goto LAB_101bbf74;
-                local_4 = local_4 + 1;
-                puVar4 = puVar4 + 6;
-              } while (local_4 < iVar6);
+                i1 = orig::Entry_CompareKey(p2,*(int **)(*(int *)((int)self_ + 0x200) + i4 * 4));
+                if (i1 == 0) goto code_101BBF74;
+                i6 = i6 + 1;
+                p2 = p2 + 6;
+              } while (i6 < i3);
             }
-            iVar6 = iVar6 + 1;
-            puVar8 = local_c + 6;
-            puVar4 = *(undefined4 **)(*(int *)((int)self_ + 0x200) + local_10 * 4);
-            puVar7 = local_c;
-            for (iVar3 = 6; local_c = puVar8, iVar3 != 0; iVar3 = iVar3 + -1) {
-              *puVar7 = *puVar4;
-              puVar4 = puVar4 + 1;
-              puVar7 = puVar7 + 1;
+            i3 = i3 + 1;
+            p4 = p5 + 6;
+            p2 = *(bits32 **)(*(int *)((int)self_ + 0x200) + i4 * 4);
+            p3 = p5;
+            for (i1 = 6; p5 = p4, i1 != 0; i1 = i1 + -1) {
+              *p3 = *p2;
+              p2 = p2 + 1;
+              p3 = p3 + 1;
             }
           }
-LAB_101bbf74:
-          local_10 = local_10 + 1;
-        } while (local_10 < local_8);
+code_101BBF74:
+          i4 = i4 + 1;
+        } while (i4 < i5);
       }
-      puVar4 = *(undefined4 **)((int)self_ + 500);
-      iVar3 = iVar6;
-      if (0 < (int)puVar4) {
-        orig::TextInputFiles_Set((undefined4 *)((int)self_ + 0x18),(int)self_ + 0x30,(uint32_t)puVar4,0);
-        iVar3 = iVar6 + 1;
-        puVar7 = (undefined4 *)((int)self_ + 0x18);
-        puVar8 = list + iVar6 * 6;
-        for (iVar5 = 6; puVar4 = list, iVar5 != 0; iVar5 = iVar5 + -1) {
-          *puVar8 = *puVar7;
-          puVar7 = puVar7 + 1;
-          puVar8 = puVar8 + 1;
+      p2 = *(bits32 **)((int)self_ + 500);
+      i1 = i3;
+      if (0 < (int)p2) {
+        orig::TextInputFiles_Set((bits32 *)((int)self_ + 0x18),(int)self_ + 0x30,(uint32_t)p2,0);
+        i1 = i3 + 1;
+        p3 = (bits32 *)((int)self_ + 0x18);
+        p4 = list + i3 * 6;
+        for (i2 = 6; p2 = list, i2 != 0; i2 = i2 + -1) {
+          *p4 = *p3;
+          p3 = p3 + 1;
+          p4 = p4 + 1;
         }
       }
-      *listNum = iVar3;
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)puVar4 >> 8))) << 8) | (uint8_t)(1)));
+      *listNum = i1;
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(1)));
     }
-    if (local_8 == 0) {
-      iVar6 = 0;
-      local_10 = 0;
-      local_4 = 0;
+    if (i5 == 0) {
+      i3 = 0;
+      i4 = 0;
+      i6 = 0;
       if (0 < *(int *)((int)self_ + 0x224)) {
-        this_01 = (void *)((int)self_ + 0x22c);
+        obj2 = (void *)((int)self_ + 0x22c);
         do {
-          if ((this_01 != (void *)0x0) && (iVar6 < *listNum)) {
-            puVar4 = (undefined4 *)orig::FsWordCompletion_GetCount18(this_01);
-            puVar4 = (undefined4 *)*puVar4;
-            puVar7 = list;
-            for (iVar6 = 6; iVar6 != 0; iVar6 = iVar6 + -1) {
-              *puVar7 = *puVar4;
-              puVar4 = puVar4 + 1;
-              puVar7 = puVar7 + 1;
+          if ((obj2 != (void *)0x0) && (i3 < *listNum)) {
+            p2 = (bits32 *)orig::FsWordCompletion_GetCount18(obj2);
+            p2 = (bits32 *)*p2;
+            p3 = list;
+            for (i3 = 6; i3 != 0; i3 = i3 + -1) {
+              *p3 = *p2;
+              p2 = p2 + 1;
+              p3 = p3 + 1;
             }
-            iVar6 = local_10 + 1;
+            i3 = i4 + 1;
             list = list + 6;
-            local_10 = iVar6;
+            i4 = i3;
           }
-          local_4 = local_4 + 1;
-          this_01 = (void *)((int)this_01 + 0x1f0);
-        } while (local_4 < *(int *)((int)self_ + 0x224));
+          i6 = i6 + 1;
+          obj2 = (void *)((int)obj2 + 0x1f0);
+        } while (i6 < *(int *)((int)self_ + 0x224));
       }
-      *listNum = iVar6;
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar6 >> 8))) << 8) | (uint8_t)(1)));
+      *listNum = i3;
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(1)));
     }
-    puVar4 = (undefined4 *)((int)self_ + 0x18);
-    if (local_8 == -1) {
-      uVar1 = orig::TextInputFiles_Set(puVar4,&DAT_1037c9b4,6,0);
-      for (iVar6 = 6; iVar6 != 0; iVar6 = iVar6 + -1) {
-        *list = *puVar4;
-        puVar4 = puVar4 + 1;
+    p2 = (bits32 *)((int)self_ + 0x18);
+    if (i5 == -1) {
+      u1 = orig::TextInputFiles_Set(p2,&g_1037C9B4,6,0);
+      for (i3 = 6; i3 != 0; i3 = i3 + -1) {
+        *list = *p2;
+        p2 = p2 + 1;
         list = list + 1;
       }
       *listNum = 1;
-      return uVar1 & 0xffffff00;
+      return u1 & 0xffffff00;
     }
-    uVar1 = orig::TextInputFiles_Set(puVar4,(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500),0);
-    for (iVar6 = 6; iVar6 != 0; iVar6 = iVar6 + -1) {
-      *list = *puVar4;
-      puVar4 = puVar4 + 1;
+    u1 = orig::TextInputFiles_Set(p2,(int)self_ + 0x30,*(uint32_t *)((int)self_ + 500),0);
+    for (i3 = 6; i3 != 0; i3 = i3 + -1) {
+      *list = *p2;
+      p2 = p2 + 1;
       list = list + 1;
     }
     *listNum = 1;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BC100
 // GATE: PASS -- 100 trials, 54 returned normally, 59 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API uint32_t __thiscall FsWordCompletion_lookUp(void * self_, uint32_t param_1, char * param_2, int param_3)
+XI_API uint32_t __thiscall FsWordCompletion_lookUp(void * self_, uint32_t arg2, char * arg3, int arg4)
 {
-  char cVar1;
-  char cVar2;
-  uint8_t bVar3;
-  uint8_t bVar8;
-  char *pcVar4;
-  uint8_t *this_00;
-  char *pcVar5;
-  void *this_01;
-  int *piVar6;
-  int iVar7;
-  uint16_t uVar9;
-  uint32_t uVar10;
-  uint32_t uVar11;
-  uint32_t local_4;
+  char c1;
+  char c2;
+  uint8_t u1;
+  uint8_t u2;
+  char *p1;
+  uint8_t *obj1;
+  char *p2;
+  void *obj2;
+  int *p3;
+  int i1;
+  uint16_t u3;
+  uint32_t u4;
+  uint32_t u5;
+  uint32_t u6;
   
-  uVar10 = param_1;
-  if (param_2 == (char *)0x0) {
+  u4 = arg2;
+  if (arg3 == (char *)0x0) {
     return 0xffffffff;
   }
-  bVar3 = (uint8_t)(param_1 >> 0x10);
-  bVar8 = (uint8_t)(param_1 >> 0x18);
+  u1 = (uint8_t)(arg2 >> 0x10);
+  u2 = (uint8_t)(arg2 >> 0x18);
   if (*(char *)self_ == '\0') {
-    pcVar4 = &DAT_1037c9cc;
+    p1 = &g_1037C9CC;
     do {
-      cVar2 = *pcVar4;
-      (param_2 + -(int)XI_GAME(0x1037C9CCu))[(int)pcVar4] = cVar2;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar2 != '\0');
-    uVar10 = 0xffffffff;
+      c2 = *p1;
+      (arg3 + -(int)XI_GAME(0x1037C9CCu))[(int)p1] = c2;
+      p1 = p1 + 1;
+    } while (c2 != '\0');
+    u4 = 0xffffffff;
     do {
-      if (uVar10 == 0) break;
-      uVar10 = uVar10 - 1;
-      cVar2 = *param_2;
-      param_2 = param_2 + 1;
-    } while (cVar2 != '\0');
-    return ~uVar10 - 1;
+      if (u4 == 0) break;
+      u4 = u4 - 1;
+      c2 = *arg3;
+      arg3 = arg3 + 1;
+    } while (c2 != '\0');
+    return ~u4 - 1;
   }
-  if (6 < (uint8_t)param_1) {
-    param_1 = (uint32_t)(uint8_t)((-((uint8_t)param_1 < 0x13) & 0xf4U) + 0x13);
+  if (6 < (uint8_t)arg2) {
+    arg2 = (uint32_t)(uint8_t)((-((uint8_t)arg2 < 0x13) & 0xf4U) + 0x13);
   }
-  switch(xi_sw(param_1 & 0xff)) {
+  switch(xi_sw(arg2 & 0xff)) {
   case 7:
     break;
   default:
-    local_4 = uVar10 & 0xffffff;
-    this_01 = (void *)orig::FUN_101bb070(self_,local_4);
-    if (this_01 == (void *)0x0) {
+    u6 = u4 & 0xffffff;
+    obj2 = (void *)orig::game_101BB070(self_,u6);
+    if (obj2 == (void *)0x0) {
       return 0xffffffff;
     }
-    piVar6 = (int *)orig::FsWordCompletion_FindNextByKey(this_01,uVar10);
-    if (piVar6 == (int *)0x0) {
+    p3 = (int *)orig::FsWordCompletion_FindNextByKey(obj2,u4);
+    if (p3 == (int *)0x0) {
       return 0xffffffff;
     }
-    iVar7 = orig::TextInputFiles_GetUsed(piVar6);
-    if (param_3 < iVar7) {
+    i1 = orig::TextInputFiles_GetUsed(p3);
+    if (arg4 < i1) {
       return 0xffffffff;
     }
-    uVar10 = orig::TextInputFiles_GetUsed(piVar6);
-    pcVar4 = (char *)((int (__thiscall *)(void *))((**(code **)(*piVar6 + 0x10))))((void *)(piVar6));
-    for (uVar11 = uVar10 >> 2; uVar11 != 0; uVar11 = uVar11 - 1) {
-      *(uint32_t *)param_2 = *(uint32_t *)pcVar4;
-      pcVar4 = pcVar4 + 4;
-      param_2 = param_2 + 4;
+    u4 = orig::TextInputFiles_GetUsed(p3);
+    p1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*p3 + 0x10))))((void *)(p3));
+    for (u5 = u4 >> 2; u5 != 0; u5 = u5 - 1) {
+      *(uint32_t *)arg3 = *(uint32_t *)p1;
+      p1 = p1 + 4;
+      arg3 = arg3 + 4;
     }
-    for (uVar10 = uVar10 & 3; uVar10 != 0; uVar10 = uVar10 - 1) {
-      *param_2 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-      param_2 = param_2 + 1;
+    for (u4 = u4 & 3; u4 != 0; u4 = u4 - 1) {
+      *arg3 = *p1;
+      p1 = p1 + 1;
+      arg3 = arg3 + 1;
     }
-    uVar10 = orig::TextInputFiles_GetUsed(piVar6);
-    return uVar10;
+    u4 = orig::TextInputFiles_GetUsed(p3);
+    return u4;
   case 0xb:
-    switch(xi_sw(uVar10 & 0xff)) {
+    switch(xi_sw(u4 & 0xff)) {
     case 7:
     case 0xb:
     case 0xf:
     case 0x13:
-      uVar9 = ((uint16_t)(((uint16_t)(uint8_t)(bVar3) << 8) | (uint8_t)(bVar8)));
+      u3 = ((uint16_t)(((uint16_t)(uint8_t)(u1) << 8) | (uint8_t)(u2)));
       break;
     default:
-      goto switchD_101bc390_caseD_8;
+      goto L1;
     case 9:
     case 0xd:
     case 0x11:
     case 0x15:
-      uVar9 = (uint16_t)bVar8;
+      u3 = (uint16_t)u2;
       break;
     case 10:
     case 0xe:
     case 0x12:
     case 0x16:
-      uVar9 = (uint16_t)bVar3 << 8;
+      u3 = (uint16_t)u1 << 8;
     }
-    if (uVar9 != 0) {
+    if (u3 != 0) {
       return 0xffffffff;
     }
-switchD_101bc390_caseD_8:
-    iVar7 = *(int *)((int)self_ + 0x220);
-LAB_101bc3be:
-    if (iVar7 < 0) {
+L1:
+    i1 = *(int *)((int)self_ + 0x220);
+code_101BC3BE:
+    if (i1 < 0) {
       return 0xffffffff;
     }
-    piVar6 = (int *)(iVar7 * 0x1f0 + 0x22c + (int)self_);
-    uVar10 = orig::TextInputFiles_GetUsed(piVar6);
-    pcVar4 = (char *)((int (__thiscall *)(void *))((**(code **)(*piVar6 + 0x10))))((void *)(piVar6));
-    for (uVar11 = uVar10 >> 2; uVar11 != 0; uVar11 = uVar11 - 1) {
-      *(uint32_t *)param_2 = *(uint32_t *)pcVar4;
-      pcVar4 = pcVar4 + 4;
-      param_2 = param_2 + 4;
+    p3 = (int *)(i1 * 0x1f0 + 0x22c + (int)self_);
+    u4 = orig::TextInputFiles_GetUsed(p3);
+    p1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*p3 + 0x10))))((void *)(p3));
+    for (u5 = u4 >> 2; u5 != 0; u5 = u5 - 1) {
+      *(uint32_t *)arg3 = *(uint32_t *)p1;
+      p1 = p1 + 4;
+      arg3 = arg3 + 4;
     }
-    for (uVar11 = uVar10 & 3; uVar11 != 0; uVar11 = uVar11 - 1) {
-      *param_2 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-      param_2 = param_2 + 1;
+    for (u5 = u4 & 3; u5 != 0; u5 = u5 - 1) {
+      *arg3 = *p1;
+      p1 = p1 + 1;
+      arg3 = arg3 + 1;
     }
-    return uVar10;
+    return u4;
   case 0xf:
-    switch(xi_sw(uVar10 & 0xff)) {
+    switch(xi_sw(u4 & 0xff)) {
     case 7:
     case 0xb:
     case 0xf:
     case 0x13:
-      uVar9 = ((uint16_t)(((uint16_t)(uint8_t)(bVar3) << 8) | (uint8_t)(bVar8)));
+      u3 = ((uint16_t)(((uint16_t)(uint8_t)(u1) << 8) | (uint8_t)(u2)));
       break;
     default:
-      goto switchD_101bc34a_caseD_8;
+      goto L2;
     case 9:
     case 0xd:
     case 0x11:
     case 0x15:
-      uVar9 = (uint16_t)bVar8;
+      u3 = (uint16_t)u2;
       break;
     case 10:
     case 0xe:
     case 0x12:
     case 0x16:
-      uVar9 = (uint16_t)bVar3 << 8;
+      u3 = (uint16_t)u1 << 8;
     }
-    if (uVar9 != 0) {
+    if (u3 != 0) {
       return 0xffffffff;
     }
-switchD_101bc34a_caseD_8:
-    iVar7 = *(int *)((int)self_ + 0x21c);
-    goto LAB_101bc3be;
+L2:
+    i1 = *(int *)((int)self_ + 0x21c);
+    goto code_101BC3BE;
   case 0x13:
-    uVar11 = 0;
-    switch(xi_sw(uVar10 & 0xff)) {
+    u5 = 0;
+    switch(xi_sw(u4 & 0xff)) {
     case 7:
     case 0xb:
     case 0xf:
     case 0x13:
-      uVar11 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(bVar3) << 8) | (uint8_t)(bVar8)));
+      u5 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(u1) << 8) | (uint8_t)(u2)));
       break;
     default:
-      goto switchD_101bc2c7_caseD_8;
+      goto L3;
     case 9:
     case 0xd:
     case 0x11:
     case 0x15:
-      uVar11 = (uint32_t)bVar8;
+      u5 = (uint32_t)u2;
       break;
     case 10:
     case 0xe:
     case 0x12:
     case 0x16:
-      uVar11 = (uint32_t)bVar3 << 8;
+      u5 = (uint32_t)u1 << 8;
     }
-    if ((short)uVar11 != 0) {
-LAB_101bc2f8:
-      this_00 = orig::TargetMenu_GetInstance_v1();
-      pcVar5 = (char *)orig::TargetMenu_GetByValue(this_00,uVar11);
-      uVar10 = 0xffffffff;
-      pcVar4 = pcVar5;
+    if ((short)u5 != 0) {
+code_101BC2F8:
+      obj1 = orig::TargetMenu_GetInstance_v1();
+      p2 = (char *)orig::TargetMenu_GetByValue(obj1,u5);
+      u4 = 0xffffffff;
+      p1 = p2;
       do {
-        if (uVar10 == 0) break;
-        uVar10 = uVar10 - 1;
-        cVar2 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar2 != '\0');
-      if (param_3 < (int)(~uVar10 - 1)) {
+        if (u4 == 0) break;
+        u4 = u4 - 1;
+        c2 = *p1;
+        p1 = p1 + 1;
+      } while (c2 != '\0');
+      if (arg4 < (int)(~u4 - 1)) {
         return 0xffffffff;
       }
-      uVar10 = orig::DmsgText_WrapSjisAt((int)param_2,param_3,pcVar5);
-      return uVar10;
+      u4 = orig::DmsgText_WrapSjisAt((int)arg3,arg4,p2);
+      return u4;
     }
-switchD_101bc2c7_caseD_8:
-    iVar7 = *(int *)((int)self_ + 0x218);
-    if (iVar7 < 0) goto LAB_101bc2f8;
-    goto LAB_101bc1f3;
+L3:
+    i1 = *(int *)((int)self_ + 0x218);
+    if (i1 < 0) goto code_101BC2F8;
+    goto code_101BC1F3;
   }
-  uVar11 = 0;
-  switch(xi_sw(uVar10 & 0xff)) {
+  u5 = 0;
+  switch(xi_sw(u4 & 0xff)) {
   case 7:
   case 0xb:
   case 0xf:
   case 0x13:
-    uVar11 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(bVar3) << 8) | (uint8_t)(bVar8)));
+    u5 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(u1) << 8) | (uint8_t)(u2)));
     break;
   default:
-    goto switchD_101bc1c6_caseD_8;
+    goto L4;
   case 9:
   case 0xd:
   case 0x11:
   case 0x15:
-    uVar11 = (uint32_t)bVar8;
+    u5 = (uint32_t)u2;
     break;
   case 10:
   case 0xe:
   case 0x12:
   case 0x16:
-    uVar11 = (uint32_t)bVar3 << 8;
+    u5 = (uint32_t)u1 << 8;
   }
-  if ((short)uVar11 == 0) {
-switchD_101bc1c6_caseD_8:
-    iVar7 = *(int *)((int)self_ + 0x214);
-    if (-1 < iVar7) {
-LAB_101bc1f3:
-      piVar6 = (int *)(iVar7 * 0x1f0 + 0x22c + (int)self_);
-      uVar10 = orig::TextInputFiles_GetUsed(piVar6);
-      pcVar4 = (char *)((int (__thiscall *)(void *))((**(code **)(*piVar6 + 0x10))))((void *)(piVar6));
-      for (uVar11 = uVar10 >> 2; uVar11 != 0; uVar11 = uVar11 - 1) {
-        *(uint32_t *)param_2 = *(uint32_t *)pcVar4;
-        pcVar4 = pcVar4 + 4;
-        param_2 = param_2 + 4;
+  if ((short)u5 == 0) {
+L4:
+    i1 = *(int *)((int)self_ + 0x214);
+    if (-1 < i1) {
+code_101BC1F3:
+      p3 = (int *)(i1 * 0x1f0 + 0x22c + (int)self_);
+      u4 = orig::TextInputFiles_GetUsed(p3);
+      p1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*p3 + 0x10))))((void *)(p3));
+      for (u5 = u4 >> 2; u5 != 0; u5 = u5 - 1) {
+        *(uint32_t *)arg3 = *(uint32_t *)p1;
+        p1 = p1 + 4;
+        arg3 = arg3 + 4;
       }
-      for (uVar11 = uVar10 & 3; uVar11 != 0; uVar11 = uVar11 - 1) {
-        *param_2 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-        param_2 = param_2 + 1;
+      for (u5 = u4 & 3; u5 != 0; u5 = u5 - 1) {
+        *arg3 = *p1;
+        p1 = p1 + 1;
+        arg3 = arg3 + 1;
       }
-      return uVar10;
+      return u4;
     }
   }
-  iVar7 = orig::FUN_1015bc40(DAT_10621808,uVar11);
-  if (iVar7 == 0) {
+  i1 = orig::game_1015BC40(g_10621808,u5);
+  if (i1 == 0) {
     return 0xffffffff;
   }
-  cVar2 = *(char *)(iVar7 + 0x1b3);
-  *(char *)(iVar7 + 0x1b3) = cVar2 + '\x01';
-  uVar10 = 0xffffffff;
-  pcVar4 = (char *)(iVar7 + 0x1b4);
+  c2 = *(char *)(i1 + 0x1b3);
+  *(char *)(i1 + 0x1b3) = c2 + '\x01';
+  u4 = 0xffffffff;
+  p1 = (char *)(i1 + 0x1b4);
   do {
-    if (uVar10 == 0) break;
-    uVar10 = uVar10 - 1;
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
-  } while (cVar1 != '\0');
-  uVar10 = ~uVar10 - 1;
-  if (param_3 < (int)uVar10) {
-    *(char *)(iVar7 + 0x1b3) = cVar2;
+    if (u4 == 0) break;
+    u4 = u4 - 1;
+    c1 = *p1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
+  u4 = ~u4 - 1;
+  if (arg4 < (int)u4) {
+    *(char *)(i1 + 0x1b3) = c2;
     return 0xffffffff;
   }
-  pcVar4 = (char *)(iVar7 + 0x1b4);
-  for (uVar11 = uVar10 >> 2; uVar11 != 0; uVar11 = uVar11 - 1) {
-    *(uint32_t *)param_2 = *(uint32_t *)pcVar4;
-    pcVar4 = pcVar4 + 4;
-    param_2 = param_2 + 4;
+  p1 = (char *)(i1 + 0x1b4);
+  for (u5 = u4 >> 2; u5 != 0; u5 = u5 - 1) {
+    *(uint32_t *)arg3 = *(uint32_t *)p1;
+    p1 = p1 + 4;
+    arg3 = arg3 + 4;
   }
-  for (uVar11 = uVar10 & 3; uVar11 != 0; uVar11 = uVar11 - 1) {
-    *param_2 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
-    param_2 = param_2 + 1;
+  for (u5 = u4 & 3; u5 != 0; u5 = u5 - 1) {
+    *arg3 = *p1;
+    p1 = p1 + 1;
+    arg3 = arg3 + 1;
   }
-  *(char *)(iVar7 + 0x1b3) = *(char *)(iVar7 + 0x1b3) + -1;
-  return uVar10;
+  *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + -1;
+  return u4;
 }
 
 // FUNCTION: FFXIMAIN 0x101BC520
 // GATE: PASS -- 100 trials, 43 returned normally, 111 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 43
-XI_API undefined4 __thiscall FsWordCompletion__prepareAllData(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall FsWordCompletion__prepareAllData(void * self_, bits32 xi_s1)
 {
-  int *this_00;
-  uint32_t uVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  void *this_01;
-  uint32_t *puVar7;
-  int iVar8;
+  int *obj1;
+  uint32_t u1;
+  int i1;
+  char *p1;
+  int i2;
+  int i3;
+  int i4;
+  void *obj2;
+  uint32_t *p2;
+  int i5;
   char xi_frame[532] __attribute__((aligned(4)));
-  int  &local_214 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_210 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &iStack_208 = *reinterpret_cast<int  *>(xi_frame + 12);
-  int  (&aiStack_200)[64] = *reinterpret_cast<int  (*)[64]>(xi_frame + 20);
-  uint32_t  (&auStack_100)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 276);
+  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  &i8 = *reinterpret_cast<int  *>(xi_frame + 12);
+  int  (&i9)[64] = *reinterpret_cast<int  (*)[64]>(xi_frame + 20);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 276);
   
-  iVar5 = 0;
-  iVar6 = 0;
+  i3 = 0;
+  i4 = 0;
   if (0 < *(int *)((int)self_ + 0x224)) {
-    this_01 = (void *)((int)self_ + 0x22c);
+    obj2 = (void *)((int)self_ + 0x22c);
     do {
-      uVar1 = orig::FsWordCompletion_GetCount18(this_01);
-      auStack_100[iVar6] = uVar1;
-      iVar2 = orig::FsWordCompletion_GetCount1C(this_01);
-      aiStack_200[iVar6] = iVar2;
-      iVar5 = iVar5 + iVar2;
-      iVar6 = iVar6 + 1;
-      this_01 = (void *)((int)this_01 + 0x1f0);
-    } while (iVar6 < *(int *)((int)self_ + 0x224));
+      u1 = orig::FsWordCompletion_GetCount18(obj2);
+      u2[i4] = u1;
+      i1 = orig::FsWordCompletion_GetCount1C(obj2);
+      i9[i4] = i1;
+      i3 = i3 + i1;
+      i4 = i4 + 1;
+      obj2 = (void *)((int)obj2 + 0x1f0);
+    } while (i4 < *(int *)((int)self_ + 0x224));
   }
   if (*(char *)self_ == '\0') {
-    orig::TextInputFiles_AllocZeroed((uint32_t *)((int)self_ + 0xc),iVar5 * 4);
+    orig::TextInputFiles_AllocZeroed((uint32_t *)((int)self_ + 0xc),i3 * 4);
   }
-  else if (*(int *)((int)self_ + 0x10) != iVar5) {
+  else if (*(int *)((int)self_ + 0x10) != i3) {
     orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0xc));
-    orig::TextInputFiles_AllocZeroed((uint32_t *)((int)self_ + 0xc),iVar5 * 4);
+    orig::TextInputFiles_AllocZeroed((uint32_t *)((int)self_ + 0xc),i3 * 4);
   }
-  *(int *)((int)self_ + 0x10) = iVar5;
+  *(int *)((int)self_ + 0x10) = i3;
   if (*(int *)((int)self_ + 0xc) != 0) {
-    local_210 = 0;
-    local_214 = 0;
+    i7 = 0;
+    i6 = 0;
     if (0 < *(int *)((int)self_ + 0x224)) {
       do {
-        iVar5 = aiStack_200[local_214];
-        if (0 < iVar5) {
-          puVar7 = (uint32_t *)auStack_100[local_214];
+        i3 = i9[i6];
+        if (0 < i3) {
+          p2 = (uint32_t *)u2[i6];
           do {
-            this_00 = (int *)*puVar7;
-            pcVar3 = (char *)((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x10))))((void *)(this_00));
-            if ((pcVar3 != (char *)0x0) &&
-               (((*pcVar3 != -3 || (iVar6 = orig::TextInputFiles_GetUsed(this_00), iVar6 != 6)) &&
-                (iVar6 = orig::TextInputFiles_GetUsed(this_00), iVar6 != 0)))) {
-              *(int **)(*(int *)((int)self_ + 0xc) + local_210 * 4) = this_00;
-              local_210 = local_210 + 1;
+            obj1 = (int *)*p2;
+            p1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x10))))((void *)(obj1));
+            if ((p1 != (char *)0x0) &&
+               (((*p1 != -3 || (i4 = orig::TextInputFiles_GetUsed(obj1), i4 != 6)) &&
+                (i4 = orig::TextInputFiles_GetUsed(obj1), i4 != 0)))) {
+              *(int **)(*(int *)((int)self_ + 0xc) + i7 * 4) = obj1;
+              i7 = i7 + 1;
             }
-            puVar7 = puVar7 + 1;
-            iVar5 = iVar5 + -1;
-          } while (iVar5 != 0);
+            p2 = p2 + 1;
+            i3 = i3 + -1;
+          } while (i3 != 0);
         }
-        local_214 = local_214 + 1;
-      } while (local_214 < *(int *)((int)self_ + 0x224));
+        i6 = i6 + 1;
+      } while (i6 < *(int *)((int)self_ + 0x224));
     }
-    iVar5 = 0;
-    *(int *)((int)self_ + 0x14) = local_210;
-    local_214 = 0;
-    if (local_210 != 1 && -1 < local_210 + -1) {
+    i3 = 0;
+    *(int *)((int)self_ + 0x14) = i7;
+    i6 = 0;
+    if (i7 != 1 && -1 < i7 + -1) {
       do {
-        iVar6 = local_214 + 1;
-        if (iVar6 < local_210) {
-          iVar5 = local_214 * 4;
-          iVar2 = iVar5;
-          iVar8 = iVar6;
-          iStack_208 = local_214;
+        i4 = i6 + 1;
+        if (i4 < i7) {
+          i3 = i6 * 4;
+          i1 = i3;
+          i5 = i4;
+          i8 = i6;
           do {
-            puVar7 = *(uint32_t **)(*(int *)((int)self_ + 0xc) + iVar2);
-            iVar4 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)*puVar7)
-                              ))((void *)(puVar7),*(uint32_t *)(iVar8 * 4 + *(int *)((int)self_ + 0xc)));
-            if (iVar4 < 0) {
-              iVar2 = iVar8 * 4;
-              iStack_208 = iVar8;
+            p2 = *(uint32_t **)(*(int *)((int)self_ + 0xc) + i1);
+            i2 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*p2)
+                              ))((void *)(p2),*(uint32_t *)(i5 * 4 + *(int *)((int)self_ + 0xc)));
+            if (i2 < 0) {
+              i1 = i5 * 4;
+              i8 = i5;
             }
-            iVar8 = iVar8 + 1;
-          } while (iVar8 < local_210);
-          if (iStack_208 != local_214) {
-            iVar2 = *(int *)((int)self_ + 0xc);
-            uVar1 = *(uint32_t *)(iVar5 + iVar2);
-            *(uint32_t *)(iVar5 + iVar2) = *(uint32_t *)(iVar2 + iStack_208 * 4);
-            *(uint32_t *)(*(int *)((int)self_ + 0xc) + iStack_208 * 4) = uVar1;
+            i5 = i5 + 1;
+          } while (i5 < i7);
+          if (i8 != i6) {
+            i1 = *(int *)((int)self_ + 0xc);
+            u1 = *(uint32_t *)(i3 + i1);
+            *(uint32_t *)(i3 + i1) = *(uint32_t *)(i1 + i8 * 4);
+            *(uint32_t *)(*(int *)((int)self_ + 0xc) + i8 * 4) = u1;
           }
         }
-        iVar5 = local_210 + -1;
-        local_214 = iVar6;
-      } while (iVar6 < iVar5);
+        i3 = i7 + -1;
+        i6 = i4;
+      } while (i4 < i3);
     }
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar5 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(1)));
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101BC6F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_Store101BB070At8(void * self_)
+XI_API bits32 __thiscall TextInputFiles_Store101BB070At8(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::FUN_101bb070(self_,0x10203);
-  *(int *)((int)self_ + 8) = iVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+  i1 = orig::game_101BB070(self_,0x10203);
+  *(int *)((int)self_ + 8) = i1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BC720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FreeBuffer(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FreeBuffer(void * self_)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar1 = 0;
+  u1 = 0;
   if (*(LPVOID *)((int)self_ + 0xc) != (LPVOID)0x0) {
-    uVar2 = orig::TextInputFiles_FreeBlock(*(LPVOID *)((int)self_ + 0xc));
-    uVar1 = (uint32_t)uVar2;
+    u2 = orig::TextInputFiles_FreeBlock(*(LPVOID *)((int)self_ + 0xc));
+    u1 = (uint32_t)u2;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BC740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_InitVt10337BA0(void * self_)
+XI_API bits32 __thiscall TextInputFiles_InitVt10337BA0(void * self_)
 {
   *(uint8_t *)((int)self_ + 0x14) = 0;
   *(uint8_t *)((int)self_ + 0x15) = 0;
   *(uint8_t *)((int)self_ + 0x16) = 0;
   *(uint8_t *)((int)self_ + 0x17) = 0;
-  *(uint8_t ***)self_ = &PTR_LAB_10337ba0;
+  *(uint8_t ***)self_ = &g_10337BA0;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   return self_;
@@ -13892,64 +13890,64 @@ XI_API undefined4 __thiscall TextInputFiles_InitVt10337BA0(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101BC7B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_Set(void * self_, undefined4 param_1, uint32_t param_2, undefined4 param_3)
+XI_API uint32_t __thiscall TextInputFiles_Set(void * self_, bits32 arg2, uint32_t arg3, bits32 arg4)
 {
-  if ((int)param_2 < 0) {
-    return param_2 & 0xffffff00;
+  if ((int)arg3 < 0) {
+    return arg3 & 0xffffff00;
   }
-  *(uint32_t *)((int)self_ + 8) = param_2;
-  *(uint32_t *)((int)self_ + 0x10) = param_2;
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint32_t *)((int)self_ + 0xc) = param_1;
-  *(char *)((int)self_ + 0x14) = (char)param_3;
-  *(char *)((int)self_ + 0x15) = (char)((uint32_t)param_3 >> 8);
-  *(char *)((int)self_ + 0x16) = (char)((uint32_t)param_3 >> 0x10);
-  *(char *)((int)self_ + 0x17) = (char)((uint32_t)param_3 >> 0x18);
-  return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(param_3, 2, 2)) << 16) | (uint16_t)(XI_PIECE(param_3, 2, 2)))) >> 8))) << 8) | (uint8_t)(1)));
+  *(uint32_t *)((int)self_ + 8) = arg3;
+  *(uint32_t *)((int)self_ + 0x10) = arg3;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint32_t *)((int)self_ + 0xc) = arg2;
+  *(char *)((int)self_ + 0x14) = (char)arg4;
+  *(char *)((int)self_ + 0x15) = (char)((uint32_t)arg4 >> 8);
+  *(char *)((int)self_ + 0x16) = (char)((uint32_t)arg4 >> 0x10);
+  *(char *)((int)self_ + 0x17) = (char)((uint32_t)arg4 >> 0x18);
+  return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(arg4, 2, 2)) << 16) | (uint16_t)(XI_PIECE(arg4, 2, 2)))) >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101BC900
 // GATE: PASS -- 100 trials, 100 returned normally, 3 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Entry_CompareKey(void * self_, int * param_1)
+XI_API int __thiscall Entry_CompareKey(void * self_, int * arg2)
 {
-  size_t sVar1;
-  uint32_t uVar2;
-  int iVar3;
+  size_t u1;
+  uint32_t u2;
+  int i1;
   char *_Str1;
-  uint8_t *pbVar4;
-  uint64_t uVar5;
+  uint8_t *p1;
+  uint64_t u3;
   size_t _MaxCount;
-  char *pcVar6;
-  uint32_t uVar7;
+  char *p2;
+  uint32_t u4;
   
   _MaxCount = *(size_t *)((int)self_ + 8);
-  sVar1 = orig::TextInputFiles_GetUsed(param_1);
-  if (sVar1 != _MaxCount) {
+  u1 = orig::TextInputFiles_GetUsed(arg2);
+  if (u1 != _MaxCount) {
     return 1;
   }
-  iVar3 = *(int *)(g_pSceneState + 8);
-  if (((-1 < *(char *)(g_pSceneState + 0x18)) || ((iVar3 != 2 && (iVar3 != 3)))) && (iVar3 != 1)) {
-    if ((1 < iVar3) && (iVar3 < 4)) {
-      iVar3 = *(int *)((int)self_ + 4);
-      uVar7 = 1;
-      uVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x10))))((void *)(param_1));
-      iVar3 = orig::YkCommon_CompareMapped(uVar2,iVar3,_MaxCount,uVar7);
-      return iVar3;
+  i1 = *(int *)(g_pSceneState + 8);
+  if (((-1 < *(char *)(g_pSceneState + 0x18)) || ((i1 != 2 && (i1 != 3)))) && (i1 != 1)) {
+    if ((1 < i1) && (i1 < 4)) {
+      i1 = *(int *)((int)self_ + 4);
+      u4 = 1;
+      u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x10))))((void *)(arg2));
+      i1 = orig::YkCommon_CompareMapped(u2,i1,_MaxCount,u4);
+      return i1;
     }
-    pcVar6 = *(char **)((int)self_ + 4);
-    _Str1 = (char *)((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x10))))((void *)(param_1));
-    uVar5 = orig::_strncmp_v1(_Str1,pcVar6,_MaxCount);
-    return (int)uVar5;
+    p2 = *(char **)((int)self_ + 4);
+    _Str1 = (char *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x10))))((void *)(arg2));
+    u3 = orig::_strncmp_v1(_Str1,p2,_MaxCount);
+    return (int)u3;
   }
-  pcVar6 = *(char **)((int)self_ + 4);
-  pbVar4 = (uint8_t *)((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x10))))((void *)(param_1));
-  uVar5 = orig::FUN_10325d00(pbVar4,pcVar6,_MaxCount);
-  return (int)uVar5;
+  p2 = *(char **)((int)self_ + 4);
+  p1 = (uint8_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x10))))((void *)(arg2));
+  u3 = orig::game_10325D00(p1,p2,_MaxCount);
+  return (int)u3;
 }
 
 // FUNCTION: FFXIMAIN 0x101BC9B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_GetUsed(void * self_)
+XI_API bits32 __thiscall TextInputFiles_GetUsed(void * self_)
 {
   return *(uint32_t *)((int)self_ + 8);
 }
@@ -13958,8 +13956,8 @@ XI_API undefined4 __thiscall TextInputFiles_GetUsed(void * self_)
 // GATE: PASS -- 100 trials, 48 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 48
 XI_API void * __thiscall FsMemory_Constructor(void * self_, uint32_t size)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
+  uint32_t u1;
+  uint32_t *p1;
   
   orig::TextInputFiles_AllocZeroed(self_,size);
   if (*(uint32_t **)self_ == (uint32_t *)0x0) {
@@ -13967,16 +13965,16 @@ XI_API void * __thiscall FsMemory_Constructor(void * self_, uint32_t size)
     *(uint32_t *)((int)self_ + 8) = 0;
     return self_;
   }
-  uVar1 = size >> 2;
+  u1 = size >> 2;
   *(uint32_t *)((int)self_ + 4) = size;
-  puVar2 = *(uint32_t **)self_;
-  for (; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = *(uint32_t **)self_;
+  for (; u1 != 0; u1 = u1 - 1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  for (uVar1 = size & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *(uint8_t *)puVar2 = 0;
-    puVar2 = (uint32_t *)((int)puVar2 + 1);
+  for (u1 = size & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p1 = 0;
+    p1 = (uint32_t *)((int)p1 + 1);
   }
   *(uint32_t *)((int)self_ + 8) = 0;
   return self_;
@@ -13984,102 +13982,102 @@ XI_API void * __thiscall FsMemory_Constructor(void * self_, uint32_t size)
 
 // FUNCTION: FFXIMAIN 0x101BCA40
 // GATE: PASS -- 100 trials, 70 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-XI_API undefined4 * __thiscall TextInputFiles_AppendPadded(void * self_, undefined4 * param_1, uint32_t param_2)
+XI_API bits32 * __thiscall TextInputFiles_AppendPadded(void * self_, bits32 * arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
-  undefined4 *puVar2;
-  uint32_t uVar3;
-  undefined4 *puVar4;
+  uint32_t u1;
+  bits32 *p1;
+  uint32_t u2;
+  bits32 *p2;
   
-  uVar1 = param_2 & 0x8000001f;
-  if ((int)uVar1 < 0) {
-    uVar1 = (uVar1 - 1 | 0xffffffe0) + 1;
+  u1 = arg3 & 0x8000001f;
+  if ((int)u1 < 0) {
+    u1 = (u1 - 1 | 0xffffffe0) + 1;
   }
-  uVar3 = param_2;
-  if (uVar1 != 0) {
-    uVar3 = (param_2 - uVar1) + 0x20;
+  u2 = arg3;
+  if (u1 != 0) {
+    u2 = (arg3 - u1) + 0x20;
   }
-  if (*(int *)((int)self_ + 4) <= (int)(*(int *)((int)self_ + 8) + uVar3)) {
-    return (undefined4 *)0x0;
+  if (*(int *)((int)self_ + 4) <= (int)(*(int *)((int)self_ + 8) + u2)) {
+    return (bits32 *)0x0;
   }
-  puVar2 = (undefined4 *)(*(int *)self_ + *(int *)((int)self_ + 8));
-  puVar4 = puVar2;
-  for (uVar1 = param_2 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *puVar4 = *param_1;
-    param_1 = param_1 + 1;
-    puVar4 = puVar4 + 1;
+  p1 = (bits32 *)(*(int *)self_ + *(int *)((int)self_ + 8));
+  p2 = p1;
+  for (u1 = arg3 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p2 = *arg2;
+    arg2 = arg2 + 1;
+    p2 = p2 + 1;
   }
-  for (uVar1 = param_2 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *(uint8_t *)puVar4 = *(uint8_t *)param_1;
-    param_1 = (undefined4 *)((int)param_1 + 1);
-    puVar4 = (undefined4 *)((int)puVar4 + 1);
+  for (u1 = arg3 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p2 = *(uint8_t *)arg2;
+    arg2 = (bits32 *)((int)arg2 + 1);
+    p2 = (bits32 *)((int)p2 + 1);
   }
-  puVar4 = (undefined4 *)((int)puVar2 + param_2);
-  for (uVar1 = uVar3 - param_2 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  p2 = (bits32 *)((int)p1 + arg3);
+  for (u1 = u2 - arg3 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p2 = 0;
+    p2 = p2 + 1;
   }
-  for (uVar1 = uVar3 - param_2 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *(uint8_t *)puVar4 = 0;
-    puVar4 = (undefined4 *)((int)puVar4 + 1);
+  for (u1 = u2 - arg3 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p2 = 0;
+    p2 = (bits32 *)((int)p2 + 1);
   }
-  *(uint32_t *)((int)self_ + 8) = *(int *)((int)self_ + 8) + uVar3;
-  return puVar2;
+  *(uint32_t *)((int)self_ + 8) = *(int *)((int)self_ + 8) + u2;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BCAC0
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API int __thiscall TextInputFiles_ReserveZeroed(void * self_, uint32_t param_1)
+XI_API int __thiscall TextInputFiles_ReserveZeroed(void * self_, uint32_t arg2)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t *puVar4;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t *p1;
   
-  uVar1 = param_1 & 0x8000001f;
-  if ((int)uVar1 < 0) {
-    uVar1 = (uVar1 - 1 | 0xffffffe0) + 1;
+  u1 = arg2 & 0x8000001f;
+  if ((int)u1 < 0) {
+    u1 = (u1 - 1 | 0xffffffe0) + 1;
   }
-  uVar2 = param_1;
-  if (uVar1 != 0) {
-    uVar2 = (param_1 - uVar1) + 0x20;
+  u2 = arg2;
+  if (u1 != 0) {
+    u2 = (arg2 - u1) + 0x20;
   }
-  if (*(int *)((int)self_ + 4) <= (int)(*(int *)((int)self_ + 8) + uVar2)) {
+  if (*(int *)((int)self_ + 4) <= (int)(*(int *)((int)self_ + 8) + u2)) {
     return 0;
   }
-  iVar3 = *(int *)self_ + *(int *)((int)self_ + 8);
-  puVar4 = (uint32_t *)(param_1 + iVar3);
-  for (uVar1 = uVar2 - param_1 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  i1 = *(int *)self_ + *(int *)((int)self_ + 8);
+  p1 = (uint32_t *)(arg2 + i1);
+  for (u1 = u2 - arg2 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  for (uVar1 = uVar2 - param_1 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-    *(uint8_t *)puVar4 = 0;
-    puVar4 = (uint32_t *)((int)puVar4 + 1);
+  for (u1 = u2 - arg2 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p1 = 0;
+    p1 = (uint32_t *)((int)p1 + 1);
   }
-  *(uint32_t *)((int)self_ + 8) = *(int *)((int)self_ + 8) + uVar2;
-  return iVar3;
+  *(uint32_t *)((int)self_ + 8) = *(int *)((int)self_ + 8) + u2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BCB30
 // GATE: PASS -- 100 trials, 49 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 49
 XI_API void __thiscall TextInputFiles_Clear(void * self_)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t *p1;
   
   *(uint32_t *)((int)self_ + 8) = 0;
   if (*(uint32_t **)self_ != (uint32_t *)0x0) {
-    uVar2 = *(uint32_t *)((int)self_ + 4);
-    puVar3 = *(uint32_t **)self_;
-    for (uVar1 = uVar2 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-      *puVar3 = 0;
-      puVar3 = puVar3 + 1;
+    u2 = *(uint32_t *)((int)self_ + 4);
+    p1 = *(uint32_t **)self_;
+    for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p1 = 0;
+      p1 = p1 + 1;
     }
-    for (uVar2 = uVar2 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *(uint8_t *)puVar3 = 0;
-      puVar3 = (uint32_t *)((int)puVar3 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p1 = 0;
+      p1 = (uint32_t *)((int)p1 + 1);
     }
   }
   return;
@@ -14087,12 +14085,12 @@ XI_API void __thiscall TextInputFiles_Clear(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101BCBA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10337C3C(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10337C3C(void * self_)
 {
   *(uint8_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0xffffffff;
-  *(uint8_t ***)self_ = &PTR_FUN_10337c3c;
+  *(uint8_t ***)self_ = &g_10337C3C;
   return self_;
 }
 
@@ -14100,22 +14098,22 @@ XI_API undefined4 __thiscall TextInputFiles_CtorVt10337C3C(void * self_)
 // GATE: PASS -- 100 trials, 2 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 2
 XI_API void __thiscall TextInputFiles_WatchConfigWindow(void * self_)
 {
-  int iVar1;
+  int i1;
   char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
   
-  local_4 = self_;
+  p1 = self_;
   if (*(int *)((int)self_ + 0xc) != -1) {
-    iVar1 = GetExitCodeThread(*(int *)((int)self_ + 0xc),&local_4);
-    if ((iVar1 != 0) && (local_4 != (void *)0x103)) {
+    i1 = GetExitCodeThread(*(int *)((int)self_ + 0xc),&p1);
+    if ((i1 != 0) && (p1 != (void *)0x103)) {
       CloseHandle(*(uint32_t *)((int)self_ + 0xc));
       *(uint32_t *)((int)self_ + 0xc) = 0xffffffff;
     }
   }
   if (*(char *)((int)self_ + 4) != '\0') {
     if (0x5a < *(int *)((int)self_ + 8)) {
-      iVar1 = FindWindowA(0,s_FINAL_FANTASY_XI_GAMEPAD_Config_1037ca70);
-      if (iVar1 == 0) {
+      i1 = FindWindowA(0,str_FINAL_FANTASY_XI_GAMEPAD_Config_1037CA70);
+      if (i1 == 0) {
         orig::Input_SetFlagToggle(g_pAppInputState_as_v0,0);
         *(uint8_t *)((int)self_ + 4) = 0;
       }
@@ -14131,7 +14129,7 @@ XI_API void __thiscall TextInputFiles_WatchConfigWindow(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10337C5C(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337c5c;
+  *(uint8_t ***)self_ = &g_10337C5C;
   orig::TextInputFiles_ClearTwoBuffers(self_);
   return self_;
 }
@@ -14140,21 +14138,21 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337C5C(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_ClearTwoBuffers(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   *(uint8_t *)((int)self_ + 5) = 0;
   *(uint8_t *)((int)self_ + 0x271c) = 0;
   *(uint8_t *)((int)self_ + 4) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 8);
-  for (iVar1 = 0x9c4; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 8);
+  for (i1 = 0x9c4; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar2 = (uint32_t *)((int)self_ + 0x2720);
-  for (iVar1 = 0x9c4; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x2720);
+  for (i1 = 0x9c4; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self_ + 0x2718) = 0;
   *(uint32_t *)((int)self_ + 0x4e30) = 0;
@@ -14165,14 +14163,14 @@ XI_API void __thiscall TextInputFiles_ClearTwoBuffers(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall TextInputFiles_CtorVt10337C60(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10337c60;
-  puVar2 = self_;
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  *(uint8_t ***)self_ = &g_10337C60;
+  p1 = self_;
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return self_;
 }
@@ -14181,32 +14179,32 @@ XI_API void * __thiscall TextInputFiles_CtorVt10337C60(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_SetVtable10337C60(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337c60;
+  *(uint8_t ***)self_ = &g_10337C60;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE2B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetField4(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_SetField4(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 4) = param_1;
+  *(uint32_t *)((int)self_ + 4) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE2C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetDateAt9(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_SetDateAt9(void * self_, bits32 xi_s1)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::FUN_10314d91(&xi_s1);
-  if (piVar1 != (int *)0x0) {
-    *(char *)((int)self_ + 9) = (char)*piVar1;
-    *(char *)((int)self_ + 10) = (char)piVar1[1];
-    *(char *)((int)self_ + 0xb) = (char)piVar1[2];
-    *(char *)((int)self_ + 0xc) = (char)piVar1[3];
-    *(char *)((int)self_ + 0xd) = (char)piVar1[4] + '\x01';
-    *(short *)((int)self_ + 0xe) = (short)piVar1[5] + 0x76c;
+  p1 = orig::game_10314D91(&xi_s1);
+  if (p1 != (int *)0x0) {
+    *(char *)((int)self_ + 9) = (char)*p1;
+    *(char *)((int)self_ + 10) = (char)p1[1];
+    *(char *)((int)self_ + 0xb) = (char)p1[2];
+    *(char *)((int)self_ + 0xc) = (char)p1[3];
+    *(char *)((int)self_ + 0xd) = (char)p1[4] + '\x01';
+    *(short *)((int)self_ + 0xe) = (short)p1[5] + 0x76c;
     return;
   }
   *(uint8_t *)((int)self_ + 9) = 0;
@@ -14220,18 +14218,18 @@ XI_API void __thiscall TextInputFiles_SetDateAt9(void * self_, undefined4 xi_s1)
 
 // FUNCTION: FFXIMAIN 0x101BE330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetDateAt11(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_SetDateAt11(void * self_, bits32 xi_s1)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::FUN_10314d91(&xi_s1);
-  if (piVar1 != (int *)0x0) {
-    *(char *)((int)self_ + 0x11) = (char)*piVar1;
-    *(char *)((int)self_ + 0x12) = (char)piVar1[1];
-    *(char *)((int)self_ + 0x13) = (char)piVar1[2];
-    *(char *)((int)self_ + 0x14) = (char)piVar1[3];
-    *(char *)((int)self_ + 0x15) = (char)piVar1[4] + '\x01';
-    *(short *)((int)self_ + 0x16) = (short)piVar1[5] + 0x76c;
+  p1 = orig::game_10314D91(&xi_s1);
+  if (p1 != (int *)0x0) {
+    *(char *)((int)self_ + 0x11) = (char)*p1;
+    *(char *)((int)self_ + 0x12) = (char)p1[1];
+    *(char *)((int)self_ + 0x13) = (char)p1[2];
+    *(char *)((int)self_ + 0x14) = (char)p1[3];
+    *(char *)((int)self_ + 0x15) = (char)p1[4] + '\x01';
+    *(short *)((int)self_ + 0x16) = (short)p1[5] + 0x76c;
     return;
   }
   *(uint8_t *)((int)self_ + 0x11) = 0;
@@ -14245,18 +14243,18 @@ XI_API void __thiscall TextInputFiles_SetDateAt11(void * self_, undefined4 xi_s1
 
 // FUNCTION: FFXIMAIN 0x101BE3A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_SetDateAt19(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_SetDateAt19(void * self_, bits32 xi_s1)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::FUN_10314d91(&xi_s1);
-  if (piVar1 != (int *)0x0) {
-    *(char *)((int)self_ + 0x19) = (char)*piVar1;
-    *(char *)((int)self_ + 0x1a) = (char)piVar1[1];
-    *(char *)((int)self_ + 0x1b) = (char)piVar1[2];
-    *(char *)((int)self_ + 0x1c) = (char)piVar1[3];
-    *(char *)((int)self_ + 0x1d) = (char)piVar1[4] + '\x01';
-    *(short *)((int)self_ + 0x1e) = (short)piVar1[5] + 0x76c;
+  p1 = orig::game_10314D91(&xi_s1);
+  if (p1 != (int *)0x0) {
+    *(char *)((int)self_ + 0x19) = (char)*p1;
+    *(char *)((int)self_ + 0x1a) = (char)p1[1];
+    *(char *)((int)self_ + 0x1b) = (char)p1[2];
+    *(char *)((int)self_ + 0x1c) = (char)p1[3];
+    *(char *)((int)self_ + 0x1d) = (char)p1[4] + '\x01';
+    *(short *)((int)self_ + 0x1e) = (short)p1[5] + 0x76c;
     return;
   }
   *(uint8_t *)((int)self_ + 0x19) = 0;
@@ -14272,43 +14270,43 @@ XI_API void __thiscall TextInputFiles_SetDateAt19(void * self_, undefined4 xi_s1
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_SetVtable10337C64(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10337c64;
+  *(uint8_t ***)self_ = &g_10337C64;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE470
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall File_FindByKind(void * self_, int * param_1, int param_2, int param_3)
+XI_API bits32 __thiscall File_FindByKind(void * self_, int * arg2, int arg3, int arg4)
 {
-  int iVar1;
-  uint8_t *puVar2;
+  int i1;
+  uint8_t *p1;
   
-  if (param_2 == 0) {
+  if (arg3 == 0) {
     return 0xffffffff;
   }
-  if (param_3 == 0) {
-    puVar2 =(uint8_t*)(&DAT_1034f2d0);
+  if (arg4 == 0) {
+    p1 =(uint8_t*)(&g_1034F2D0);
   }
   else {
-    if (param_3 == 1) {
-      iVar1 = orig::FUN_10311fde(param_2,&DAT_1034f7fc);
-      *param_1 = iVar1;
-      if (iVar1 != 0) {
+    if (arg4 == 1) {
+      i1 = orig::game_10311FDE(arg3,&g_1034F7FC);
+      *arg2 = i1;
+      if (i1 != 0) {
         return 1;
       }
-      orig::File_CreateParentDirs(param_2);
-      iVar1 = orig::FUN_10311fde(param_2,&DAT_1034f7fc);
-      goto LAB_101be4e1;
+      orig::File_CreateParentDirs(arg3);
+      i1 = orig::game_10311FDE(arg3,&g_1034F7FC);
+      goto code_101BE4E1;
     }
-    if (param_3 != 2) {
+    if (arg4 != 2) {
       return 0xffffffff;
     }
-    puVar2 =(uint8_t*)(&DAT_1037cb34);
+    p1 =(uint8_t*)(&g_1037CB34);
   }
-  iVar1 = orig::FUN_10311fde(param_2,puVar2);
-LAB_101be4e1:
-  *param_1 = iVar1;
-  if (iVar1 != 0) {
+  i1 = orig::game_10311FDE(arg3,p1);
+code_101BE4E1:
+  *arg2 = i1;
+  if (i1 != 0) {
     return 1;
   }
   return 0xffffffff;
@@ -14316,512 +14314,512 @@ LAB_101be4e1:
 
 // FUNCTION: FFXIMAIN 0x101BE500
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_Call10311F30(undefined4 param_1)
+XI_API bits32 __stdcall TextInputFiles_Call10311F30(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_10311f30(param_1);
-  return uVar1;
+  u1 = orig::game_10311F30(arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE540
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall TextInputFiles_SeekWhence012(undefined4 param_1, undefined4 param_2, int param_3)
+XI_API int __stdcall TextInputFiles_SeekWhence012(bits32 arg1, bits32 arg2, int arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  if (param_3 == 0) {
-    uVar1 = 0;
+  if (arg3 == 0) {
+    u1 = 0;
   }
-  else if (param_3 == 1) {
-    uVar1 = 1;
+  else if (arg3 == 1) {
+    u1 = 1;
   }
   else {
-    if (param_3 != 2) {
+    if (arg3 != 2) {
       return -1;
     }
-    uVar1 = 2;
+    u1 = 2;
   }
-  iVar2 = orig::FUN_10313cf0(param_1,param_2,uVar1);
-  return (-(uint32_t)(iVar2 != 0) & 0xfffffffe) + 1;
+  i1 = orig::game_10313CF0(arg1,arg2,u1);
+  return (-(uint32_t)(i1 != 0) & 0xfffffffe) + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE590
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API int __stdcall File_WriteChunked(int param_1, int param_2, uint32_t param_3)
+XI_API int __stdcall File_WriteChunked(int arg1, int arg2, uint32_t arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int local_4;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  int i2;
   
-  uVar3 = 0;
-  uVar4 = (int)(param_3 + ((int)param_3 >> 0x1f & 0x3ffffU)) >> 0x12;
-  uVar2 = param_3 & 0x8003ffff;
-  local_4 = 0;
-  if ((int)uVar2 < 0) {
-    uVar2 = (uVar2 - 1 | 0xfffc0000) + 1;
+  u2 = 0;
+  u3 = (int)(arg3 + ((int)arg3 >> 0x1f & 0x3ffffU)) >> 0x12;
+  u1 = arg3 & 0x8003ffff;
+  i2 = 0;
+  if ((int)u1 < 0) {
+    u1 = (u1 - 1 | 0xfffc0000) + 1;
   }
-  if (uVar4 != 0) {
+  if (u3 != 0) {
     do {
-      iVar1 = orig::FUN_1031217f(param_2,1,0x40000,param_1);
-      local_4 = local_4 + iVar1;
-      if ((*(uint8_t *)(param_1 + 0xc) & 0x20) != 0) {
+      i1 = orig::game_1031217F(arg2,1,0x40000,arg1);
+      i2 = i2 + i1;
+      if ((*(uint8_t *)(arg1 + 0xc) & 0x20) != 0) {
         return -1;
       }
-      param_2 = param_2 + 0x40000;
+      arg2 = arg2 + 0x40000;
       Sleep(0);
-      uVar3 = uVar3 + 1;
-    } while (uVar3 < uVar4);
+      u2 = u2 + 1;
+    } while (u2 < u3);
   }
-  if (uVar2 != 0) {
-    iVar1 = orig::FUN_1031217f(param_2,1,uVar2,param_1);
-    local_4 = local_4 + iVar1;
-    if ((*(uint8_t *)(param_1 + 0xc) & 0x20) != 0) {
+  if (u1 != 0) {
+    i1 = orig::game_1031217F(arg2,1,u1,arg1);
+    i2 = i2 + i1;
+    if ((*(uint8_t *)(arg1 + 0xc) & 0x20) != 0) {
       return -1;
     }
   }
-  return local_4;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_Call10312296(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __stdcall TextInputFiles_Call10312296(bits32 arg1, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_10312296(param_2,1,param_3,param_1);
-  return uVar1;
+  u1 = orig::game_10312296(arg2,1,arg3,arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall TextInputFiles_DeleteFile(LPCSTR param_1)
+XI_API int __stdcall TextInputFiles_DeleteFile(LPCSTR arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = DeleteFileA(param_1);
-  return (-(uint32_t)(iVar1 != 0) & 2) - 1;
+  i1 = DeleteFileA(arg1);
+  return (-(uint32_t)(i1 != 0) & 2) - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE6C0
 // NOT VERIFIED -- FAIL
-XI_API undefined4 __stdcall TextInputFiles_FillSizeAndThreeDates(undefined4 param_1, undefined4 * param_2)
+XI_API bits32 __stdcall TextInputFiles_FillSizeAndThreeDates(bits32 arg1, bits32 * arg2)
 {
-  int iVar1;
+  int i1;
   char xi_frame[36] __attribute__((aligned(4)));
-  int  (&local_24)[5] = *reinterpret_cast<int  (*)[5]>(xi_frame + 0);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
+  int  (&i2)[5] = *reinterpret_cast<int  (*)[5]>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
   
-  iVar1 = orig::FUN_10312487(param_1,local_24);
-  if (iVar1 != 0) {
-    for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *param_2 = 0;
-      param_2 = param_2 + 1;
+  i1 = orig::game_10312487(arg1,i2);
+  if (i1 != 0) {
+    for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+      *arg2 = 0;
+      arg2 = arg2 + 1;
     }
     return 0xffffffff;
   }
-  orig::TextInputFiles_SetField4(param_2,local_10);
-  orig::TextInputFiles_SetDateAt9(param_2,local_4);
-  orig::TextInputFiles_SetDateAt11(param_2,local_c);
-  orig::TextInputFiles_SetDateAt19(param_2,local_8);
+  orig::TextInputFiles_SetField4(arg2,u1);
+  orig::TextInputFiles_SetDateAt9(arg2,u4);
+  orig::TextInputFiles_SetDateAt11(arg2,u2);
+  orig::TextInputFiles_SetDateAt19(arg2,u3);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BE730
 // GATE: PASS -- 100 trials, 58 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 58
-XI_API undefined4 __stdcall File_CreateParentDirs(int param_1)
+XI_API bits32 __stdcall File_CreateParentDirs(int arg1)
 {
-  char *pcVar1;
-  int iVar2;
+  char *p1;
+  int i1;
   char xi_frame[256] __attribute__((aligned(4)));
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 0);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 0);
   
-  iVar2 = 0;
+  i1 = 0;
   do {
-    pcVar1 = local_100 + iVar2;
-    if (pcVar1[param_1 - (int)local_100] == '/') {
-      *pcVar1 = '\0';
-      CreateDirectoryA(local_100,0);
+    p1 = val1 + i1;
+    if (p1[arg1 - (int)val1] == '/') {
+      *p1 = '\0';
+      CreateDirectoryA(val1,0);
     }
-    iVar2 = iVar2 + 1;
-    *pcVar1 = pcVar1[param_1 - (int)local_100];
-  } while (iVar2 < 0x100);
+    i1 = i1 + 1;
+    *p1 = p1[arg1 - (int)val1];
+  } while (i1 < 0x100);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BECC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall XiFileImpl_QueueLoad(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API int __thiscall XiFileImpl_QueueLoad(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-  if (iVar1 < 0) {
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_11c = param_4;
-  local_114 = param_3;
-  local_118 = param_2;
-  local_108 = param_5;
-  local_104 = param_6;
-  iVar1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&local_224);
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  u1 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
+  u3 = arg5;
+  u5 = arg4;
+  u4 = arg3;
+  u8 = arg6;
+  u9 = arg7;
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitFileNumKind1(void * self_, uint32_t param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall TextInputFiles_SubmitFileNumKind1(void * self_, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_11c = param_4;
-  local_118 = param_2;
-  local_114 = param_3;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u4 = arg5;
+  u5 = arg3;
+  u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF370
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPathKind1(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API int __thiscall TextInputFiles_SubmitPathKind1(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_5);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_11c = param_4;
-  local_114 = param_3;
-  local_118 = param_2;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u4 = arg5;
+  u6 = arg4;
+  u5 = arg3;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF460
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind1(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind1(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatStrAt2F4(self_,param_1,local_100);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_11c = param_4;
-  local_118 = param_2;
-  local_114 = param_3;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u4 = arg5;
+  u5 = arg3;
+  u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind1(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind1(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &local_228 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_224 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_220)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_120 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_104)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
   
-  local_228 = &PTR_LAB_10337200;
-  local_224 = 0;
-  puVar2 = local_220;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_120 = 0;
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_104);
-  if ((int)uVar3 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
     return -1;
   }
-  local_224 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_220,0x100,local_104);
-  local_120 = param_4;
-  local_11c = param_2;
-  local_118 = param_3;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_228);
-  return (int)uVar3;
+  u2 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u4 = arg5;
+  u5 = arg3;
+  u6 = arg4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_ReadFileByName(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __thiscall TextInputFiles_ReadFileByName(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[292] __attribute__((aligned(4)));
-  uint8_t ** &local_124 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_120 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_11c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
   
-  local_124 = &PTR_LAB_10337200;
-  local_120 = 0;
-  puVar2 = local_11c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_1c = 0;
-  local_18 = 0;
-  local_14 = 0;
-  local_10 = 0;
-  local_c = 0;
-  local_8 = 0;
-  local_4 = 0;
-  iVar1 = orig::TextInputFiles_FormatWithBase(param_1,param_2,(uint8_t *)local_11c,param_6);
-  if (iVar1 < 0) {
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)u2,arg7);
+  if (i1 < 0) {
     return 0xffffffff;
   }
-  local_1c = param_5;
-  local_120 = 1;
-  local_18 = param_3;
-  local_14 = param_4;
-  iVar1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&local_124);
-  return iVar1;
+  u3 = arg6;
+  u1 = 1;
+  u4 = arg4;
+  u5 = arg5;
+  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF7F0
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API int __thiscall TextInputFiles_ReadTextOrNoData(void * self_, undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall TextInputFiles_ReadTextOrNoData(void * self_, bits32 arg2, int arg3, bits32 arg4, bits32 arg5)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  uint64_t uVar6;
+  char c1;
+  int i1;
+  char *p1;
+  int i2;
+  int i3;
+  uint64_t u1;
   
-  iVar2 = orig::TextInputFiles_GetFileSize24(self_,param_1);
-  if (-1 < iVar2) {
-    uVar6 = orig::Allocator_Generic_v1(iVar2 + 0x400U);
-    iVar4 = (int)uVar6;
-    iVar5 = orig::TextInputFiles_ReadFileByName(self_,param_1,0x24,iVar4,iVar2 + 0x400U,0,1);
-    iVar2 = param_2;
-    if ((-1 < iVar5) && (iVar2 = orig::FUN_10311856(), iVar2 == 0)) {
-      iVar2 = iVar5 + -0x208;
+  i1 = orig::TextInputFiles_GetFileSize24(self_,arg2);
+  if (-1 < i1) {
+    u1 = orig::Allocator_Generic_v1(i1 + 0x400U);
+    i2 = (int)u1;
+    i3 = orig::TextInputFiles_ReadFileByName(self_,arg2,0x24,i2,i1 + 0x400U,0,1);
+    i1 = arg3;
+    if ((-1 < i3) && (i1 = orig::game_10311856(), i1 == 0)) {
+      i1 = i3 + -0x208;
     }
-    if (iVar2 < 0) {
-      pcVar3 = s_NO_DATA__0_1037cb94;
+    if (i1 < 0) {
+      p1 = str_NO_DATA__0_1037CB94;
       do {
-        cVar1 = *pcVar3;
-        pcVar3[param_2 + -(int)XI_GAME(0x1037CB94u)] = cVar1;
-        pcVar3 = pcVar3 + 1;
-      } while (cVar1 != '\0');
+        c1 = *p1;
+        p1[arg3 + -(int)XI_GAME(0x1037CB94u)] = c1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
     }
-    if (iVar4 != 0) {
-      orig::operator_delete_v1(iVar4);
+    if (i2 != 0) {
+      orig::operator_delete_v1(i2);
     }
-    return iVar2;
+    return i1;
   }
-  pcVar3 = s_NO_DATA__0_1037cb94;
+  p1 = str_NO_DATA__0_1037CB94;
   do {
-    cVar1 = *pcVar3;
-    pcVar3[param_2 + -(int)XI_GAME(0x1037CB94u)] = cVar1;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar1 != '\0');
+    c1 = *p1;
+    p1[arg3 + -(int)XI_GAME(0x1037CB94u)] = c1;
+    p1 = p1 + 1;
+  } while (c1 != '\0');
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101BF970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_QueueFileNumKind2(void * self_, uint32_t param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5, int param_6)
+XI_API int __thiscall TextInputFiles_QueueFileNumKind2(void * self_, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5, int arg6, int arg7)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  int  &local_10c = *reinterpret_cast<int  *>(xi_frame + 280);
-  int  &local_108 = *reinterpret_cast<int  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 280);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 284);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  if ((param_5 != 0) && (param_6 != 0)) {
-    local_224 = &PTR_LAB_10337200;
-    local_220 = 0;
-    puVar2 = local_21c;
-    for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar2 = 0;
-      puVar2 = puVar2 + 1;
+  if ((arg6 != 0) && (arg7 != 0)) {
+    p2 = &g_10337200;
+    u1 = 0;
+    p1 = u2;
+    for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+      *p1 = 0;
+      p1 = p1 + 1;
     }
-    local_11c = 0;
-    local_118 = 0;
-    local_114 = 0;
-    local_110 = 0;
-    local_10c = 0;
-    local_108 = 0;
-    local_104 = 0;
-    iVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-    if (-1 < iVar1) {
-      local_220 = 2;
-      orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-      local_11c = param_2;
-      local_114 = param_3;
-      local_10c = param_6;
-      local_108 = param_5;
-      local_104 = param_4;
-      iVar1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&local_224);
-      return (uint32_t)(-1 < iVar1) * 2 + -1;
+    u3 = 0;
+    u4 = 0;
+    u5 = 0;
+    u6 = 0;
+    i2 = 0;
+    i3 = 0;
+    u7 = 0;
+    i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+    if (-1 < i1) {
+      u1 = 2;
+      orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
+      u3 = arg3;
+      u5 = arg4;
+      i2 = arg7;
+      i3 = arg6;
+      u7 = arg5;
+      i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+      return (uint32_t)(-1 < i1) * 2 + -1;
     }
   }
   return -1;
@@ -14829,358 +14827,358 @@ XI_API int __thiscall TextInputFiles_QueueFileNumKind2(void * self_, uint32_t pa
 
 // FUNCTION: FFXIMAIN 0x101C0050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_QueuePathKind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5)
+XI_API int __thiscall TextInputFiles_QueuePathKind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, int arg6)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_5);
-  if (iVar1 < 0) {
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  local_114 = param_3;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  iVar1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&local_224);
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
+  u4 = arg3;
+  u5 = arg4;
+  u6 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_QueuePath2F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API int __thiscall TextInputFiles_QueuePath2F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatStrAt2F4(self_,param_1,local_100);
-  if (iVar1 < 0) {
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  local_114 = param_3;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  iVar1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&local_224);
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
+  u4 = arg3;
+  u5 = arg4;
+  u6 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_QueuePath3F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API int __thiscall TextInputFiles_QueuePath3F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar3 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
     return -1;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  local_114 = param_3;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  iVar1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&local_224);
-  return (uint32_t)(-1 < iVar1) * 2 + -1;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u5 = arg3;
+  u6 = arg4;
+  u7 = orig::TextInputFiles_MapCode012(arg5);
+  i1 = orig::TextInputFiles_PushWithRetry(*(void **)((int)self_ + 0x1f0),&p2);
+  return (uint32_t)(-1 < i1) * 2 + -1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPathKind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4, int param_5)
+XI_API int __thiscall TextInputFiles_SubmitPathKind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5, int arg6)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_5);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg6);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  local_114 = param_3;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u5 = arg3;
+  u6 = arg4;
+  u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0540
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatStrAt2F4(self_,param_1,local_100);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  local_114 = param_3;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u5 = arg3;
+  u6 = arg4;
+  u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0630
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall TextInputFiles_SubmitPath3F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API uint64_t __thiscall TextInputFiles_SubmitPath3F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  CHAR  (&local_100)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  CHAR  (&c1)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
   if (*(char *)((int)self_ + 0x3f4) != '\0') {
-    iVar1 = orig::TextInputFiles_FormatPathByKind(self_,local_100,0x100,(char *)((int)self_ + 0x3f4));
-    if (0 < iVar1) {
-      orig::TextInputFiles_CreateDirectories(local_100,iVar1);
+    i1 = orig::TextInputFiles_FormatPathByKind(self_,c1,0x100,(char *)((int)self_ + 0x3f4));
+    if (0 < i1) {
+      orig::TextInputFiles_CreateDirectories(c1,i1);
     }
   }
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar3 < 0) {
-    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar3 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,c1);
+  if ((int)u1 < 0) {
+    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(0xffffffff)));
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_114 = param_3;
-  local_118 = param_2;
-  local_110 = orig::TextInputFiles_MapCode012(param_4);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return uVar3;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,c1);
+  u6 = arg4;
+  u5 = arg3;
+  u7 = orig::TextInputFiles_MapCode012(arg5);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0760
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath4F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API int __thiscall TextInputFiles_SubmitPath4F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  char cVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t *puVar4;
-  char *pcVar5;
-  uint64_t uVar6;
+  char c1;
+  int i1;
+  uint32_t u1;
+  uint32_t *p1;
+  char *p2;
+  uint64_t u2;
   char xi_frame[804] __attribute__((aligned(4)));
-  uint8_t ** &local_324 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_320 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_31c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_21c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_218 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_214 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_210 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_20c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_208 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_204 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_200)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
-  CHAR  (&local_100)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 548);
+  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  CHAR  (&c2)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 548);
   
-  local_324 = &PTR_LAB_10337200;
-  local_320 = 0;
-  puVar4 = local_31c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  p3 = &g_10337200;
+  u3 = 0;
+  p1 = u4;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_21c = 0;
-  local_218 = 0;
-  local_214 = 0;
-  local_210 = 0;
-  local_20c = 0;
-  local_208 = 0;
-  local_204 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u11 = 0;
   if (*(char *)((int)self_ + 0x4f4) != '\0') {
-    orig::_sprintf(local_200,s__s__s_1037cba0,(int)self_ + 0x4f4,param_1);
-    uVar3 = 0xffffffff;
-    pcVar5 = local_200;
+    orig::_sprintf(val1,str__s__s_1037CBA0,(int)self_ + 0x4f4,arg2);
+    u1 = 0xffffffff;
+    p2 = val1;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    uVar3 = ~uVar3;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    u1 = ~u1;
     do {
-      uVar3 = uVar3 - 1;
-      if ((int)uVar3 < 1) goto LAB_101c0814;
-    } while (local_200[uVar3] != '/');
-    local_200[uVar3] = '\0';
-LAB_101c0814:
-    iVar2 = orig::TextInputFiles_CopyPathByMode(self_,local_100,0x100,local_200);
-    if (0 < iVar2) {
-      orig::TextInputFiles_CreateDirectories(local_100,local_100);
+      u1 = u1 - 1;
+      if ((int)u1 < 1) goto code_101C0814;
+    } while (val1[u1] != '/');
+    val1[u1] = '\0';
+code_101C0814:
+    i1 = orig::TextInputFiles_CopyPathByMode(self_,c2,0x100,val1);
+    if (0 < i1) {
+      orig::TextInputFiles_CreateDirectories(c2,c2);
     }
   }
-  iVar2 = orig::TextInputFiles_FormatStrAt4F4(self_,param_1,(uint8_t *)local_31c);
-  if (-1 < iVar2) {
-    local_320 = 3;
-    local_218 = param_2;
-    local_214 = param_3;
-    local_210 = orig::TextInputFiles_MapCode012(param_4);
-    uVar6 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_324);
-    return (int)uVar6;
+  i1 = orig::TextInputFiles_FormatStrAt4F4(self_,arg2,(uint8_t *)u4);
+  if (-1 < i1) {
+    u3 = 3;
+    u6 = arg3;
+    u7 = arg4;
+    u8 = orig::TextInputFiles_MapCode012(arg5);
+    u2 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p3);
+    return (int)u2;
   }
   return -1;
 }
@@ -15189,20 +15187,20 @@ LAB_101c0814:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall TextInputFiles_CreateDirAndWait(void * self_)
 {
-  int iVar1;
+  int i1;
   char xi_frame[512] __attribute__((aligned(4)));
-  CHAR  (&local_200)[512] = *reinterpret_cast<CHAR  (*)[512]>(xi_frame + 0);
+  CHAR  (&c1)[512] = *reinterpret_cast<CHAR  (*)[512]>(xi_frame + 0);
   
-  orig::FUN_1030fed0(0x21,local_200,0x1ff,1);
-  CreateDirectoryA(local_200,(LPSECURITY_ATTRIBUTES)0x0);
+  orig::game_1030FED0(0x21,c1,0x1ff,1);
+  CreateDirectoryA(c1,(LPSECURITY_ATTRIBUTES)0x0);
   orig::TextInputFiles_WaitEvent18At8(*(void **)((int)self_ + 0x1f0));
-  iVar1 = orig::FUN_10311365();
-  if (-1 < iVar1) {
+  i1 = orig::game_10311365();
+  if (-1 < i1) {
     do {
-      iVar1 = orig::FUN_1031135a();
-    } while (iVar1 == 0);
+      i1 = orig::game_1031135A();
+    } while (i1 == 0);
     orig::TextInputFiles_SignalMember8(*(void **)((int)self_ + 0x1f0));
-    return iVar1;
+    return i1;
   }
   orig::TextInputFiles_SignalMember8(*(void **)((int)self_ + 0x1f0));
   return -1;
@@ -15210,703 +15208,703 @@ XI_API int __thiscall TextInputFiles_CreateDirAndWait(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101C0A40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CreateDirAndHandleFile(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall TextInputFiles_CreateDirAndHandleFile(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
-  void *this_00;
-  uint32_t *puVar2;
+  int i1;
+  void *obj1;
+  uint32_t *p1;
   char xi_frame[804] __attribute__((aligned(4)));
-  uint8_t ** &local_324 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_320 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_31c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_21c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_218 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_214 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_210 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_20c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_208 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_204 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
   CHAR  (&aCStack_200)[512] = *reinterpret_cast<CHAR  (*)[512]>(xi_frame + 292);
   
-  local_324 = &PTR_LAB_10337200;
-  local_320 = 0;
-  puVar2 = local_31c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_21c = 0;
-  local_218 = 0;
-  local_214 = 0;
-  local_210 = 0;
-  local_20c = 0;
-  local_208 = 0;
-  local_204 = 0;
-  iVar1 = orig::FUN_10311370(param_1);
-  if (iVar1 != 0) {
-    orig::FUN_1030fed0(0x21,aCStack_200,0x1ff,1);
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::game_10311370(arg2);
+  if (i1 != 0) {
+    orig::game_1030FED0(0x21,aCStack_200,0x1ff,1);
     CreateDirectoryA(aCStack_200,(LPSECURITY_ATTRIBUTES)0x0);
     orig::TextInputFiles_WaitEvent18At8(*(void **)((int)self_ + 0x1f0));
-    iVar1 = orig::FUN_10311365();
-    if (iVar1 < 0) {
-      this_00 = *(void **)((int)self_ + 0x1f0);
+    i1 = orig::game_10311365();
+    if (i1 < 0) {
+      obj1 = *(void **)((int)self_ + 0x1f0);
     }
     else {
-      iVar1 = orig::FUN_1031135a();
-      while (iVar1 == 0) {
-        iVar1 = orig::FUN_1031135a();
+      i1 = orig::game_1031135A();
+      while (i1 == 0) {
+        i1 = orig::game_1031135A();
       }
-      this_00 = *(void **)((int)self_ + 0x1f0);
-      if (-1 < iVar1) {
-        orig::TextInputFiles_SignalMember8(this_00);
-        iVar1 = orig::TextInputFiles_FormatWithBase(param_1,0x21,local_31c,1);
-        if (iVar1 < 0) {
+      obj1 = *(void **)((int)self_ + 0x1f0);
+      if (-1 < i1) {
+        orig::TextInputFiles_SignalMember8(obj1);
+        i1 = orig::TextInputFiles_FormatWithBase(arg2,0x21,u2,1);
+        if (i1 < 0) {
           return 0xffffffff;
         }
-        local_320 = 3;
-        local_218 = param_2;
-        local_214 = param_3;
-        local_210 = orig::TextInputFiles_MapCode012(param_4);
-        orig::FUN_101c0bc0(&aS,local_31c);
-        iVar1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&local_324);
-        return iVar1;
+        u1 = 3;
+        u4 = arg3;
+        u5 = arg4;
+        u6 = orig::TextInputFiles_MapCode012(arg5);
+        orig::game_101C0BC0(&aS,u2);
+        i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+        return i1;
       }
     }
-    orig::TextInputFiles_SignalMember8(this_00);
+    orig::TextInputFiles_SignalMember8(obj1);
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x101C0FC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPathKind6(void * self_, undefined4 param_1, int param_2)
+XI_API int __thiscall TextInputFiles_SubmitPathKind6(void * self_, bits32 arg2, int arg3)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_2);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 6;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 6;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1090
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind6(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind6(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &local_228 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_224 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_220)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_120 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_104)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
   
-  local_228 = &PTR_LAB_10337200;
-  local_224 = 0;
-  puVar2 = local_220;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_120 = 0;
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_104);
-  if ((int)uVar3 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
     return -1;
   }
-  local_224 = 6;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_220,0x100,local_104);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_228);
-  return (int)uVar3;
+  u2 = 6;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C11F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind1(void * self_, uint32_t param_1, undefined4 param_2, undefined4 param_3)
+XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind1(void * self_, uint32_t arg2, bits32 arg3, bits32 arg4)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar3 = local_21c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  local_118 = param_2;
-  local_220 = 1;
-  local_11c = param_3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&local_224);
-  return uVar1;
+  u5 = arg3;
+  u2 = 1;
+  u4 = arg4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C13A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind2(void * self_, uint32_t param_1)
+XI_API uint32_t __thiscall TextInputFiles_FindFileNumKind2(void * self_, uint32_t arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar3 = local_21c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  local_220 = 2;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&local_224);
-  return uVar1;
+  u2 = 2;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_FindPathKind3(void * self_, undefined4 param_1, int param_2)
+XI_API uint32_t __thiscall TextInputFiles_FindPathKind3(void * self_, bits32 arg2, int arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar3 = local_21c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_2);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&local_224);
-  return uVar1;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1820
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_FindPath2F4Kind3(void * self_, undefined4 param_1)
+XI_API uint32_t __thiscall TextInputFiles_FindPath2F4Kind3(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar3 = local_21c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar1 = orig::TextInputFiles_FormatStrAt2F4(self_,param_1,local_100);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&local_224);
-  return uVar1;
+  u2 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C18E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_FindPath3F4Kind3(void * self_, undefined4 param_1)
+XI_API uint32_t __thiscall TextInputFiles_FindPath3F4Kind3(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
-  uint64_t uVar4;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
+  uint64_t u2;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u11 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar3 = local_21c;
-  for (iVar2 = 0x40; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p2 = &g_10337200;
+  u3 = 0;
+  p1 = u4;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar4 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar4 < 0) {
-    return (uint32_t)xi_trunc24(((uint64_t)uVar4 >> 8)) << 8;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u11 = 0;
+  u2 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u2 < 0) {
+    return (uint32_t)xi_trunc24(((uint64_t)u2 >> 8)) << 8;
   }
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&local_224);
-  return uVar1;
+  u3 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u4,0x100,val1);
+  u1 = orig::TextInputFiles_FindMatchAt8(*(void **)((int)self_ + 0x1f0),&p2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1B20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitFileNumKind4(void * self_, uint32_t param_1)
+XI_API int __thiscall TextInputFiles_SubmitFileNumKind4(void * self_, uint32_t arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::XiFileImpl_getFileName(self_,param_1,(int)local_100);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::XiFileImpl_getFileName(self_,arg2,(int)val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind4(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind4(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar3 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
     return -1;
   }
-  local_220 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1DF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPathKind4(void * self_, undefined4 param_1, int param_2)
+XI_API int __thiscall TextInputFiles_SubmitPathKind4(void * self_, bits32 arg2, int arg3)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  iVar1 = orig::TextInputFiles_FormatUserPath(self_,param_1,local_100,param_2);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatUserPath(self_,arg2,val1,arg3);
+  if (i1 < 0) {
     return -1;
   }
-  local_220 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind4(void * self_, undefined4 param_1)
+XI_API int __thiscall TextInputFiles_SubmitPath2F4Kind4(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[552] __attribute__((aligned(4)));
-  uint8_t ** &local_228 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_224 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_220)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_120 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_104)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[260] = *reinterpret_cast<char  (*)[260]>(xi_frame + 292);
   
-  local_228 = &PTR_LAB_10337200;
-  local_224 = 0;
-  puVar2 = local_220;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_120 = 0;
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  iVar1 = orig::TextInputFiles_FormatStrAt2F4(self_,param_1,local_104);
-  if (iVar1 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  i1 = orig::TextInputFiles_FormatStrAt2F4(self_,arg2,val1);
+  if (i1 < 0) {
     return -1;
   }
-  local_224 = 4;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_220,0x100,local_104);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_228);
-  return (int)uVar3;
+  u2 = 4;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C1F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_GetFileSizeByName(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API int __thiscall TextInputFiles_GetFileSizeByName(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[292] __attribute__((aligned(4)));
-  uint8_t ** &local_124 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_120 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_11c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
   
-  local_124 = &PTR_LAB_10337200;
-  local_120 = 0;
-  puVar2 = local_11c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_1c = 0;
-  local_18 = 0;
-  local_14 = 0;
-  local_10 = 0;
-  local_c = 0;
-  local_8 = 0;
-  local_4 = 0;
-  iVar1 = orig::TextInputFiles_FormatWithBase(param_1,param_2,(uint8_t *)local_11c,param_3);
-  if (iVar1 < 0) {
+  u3 = 0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  i1 = orig::TextInputFiles_FormatWithBase(arg2,arg3,(uint8_t *)u2,arg4);
+  if (i1 < 0) {
     return -1;
   }
-  local_120 = 4;
-  iVar1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&local_124);
-  return iVar1;
+  u1 = 4;
+  i1 = orig::TextInputFiles_WaitThenHandleFileEvent_v1(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C2030
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_GetFileSize24(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_GetFileSize24(void * self_, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_GetFileSizeByName(self_,param_1,0x24,1);
-  return iVar1;
+  i1 = orig::TextInputFiles_GetFileSizeByName(self_,arg2,0x24,1);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C2450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind5(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API int __thiscall TextInputFiles_SubmitPath3F4Kind5(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar3 < 0) {
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
     return -1;
   }
-  local_220 = 5;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = param_2;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return (int)uVar3;
+  u2 = 5;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u5 = arg3;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C2840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_SubmitPath3F4Kind7(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall TextInputFiles_SubmitPath3F4Kind7(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[548] __attribute__((aligned(4)));
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
-  uint32_t  &local_118 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  (&u3)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 8);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 264);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 272);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 292);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u2 = 0;
+  p1 = u3;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = 0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  uVar3 = orig::TextInputFiles_FormatStrAt3F4(self_,param_1,local_100);
-  if ((int)uVar3 < 0) {
-    return (uint32_t)xi_trunc24(((uint64_t)uVar3 >> 8)) << 8;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  u1 = orig::TextInputFiles_FormatStrAt3F4(self_,arg2,val1);
+  if ((int)u1 < 0) {
+    return (uint32_t)xi_trunc24(((uint64_t)u1 >> 8)) << 8;
   }
-  local_220 = 7;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar3 >> 8))) << 8) | (uint8_t)((int)uVar3 == 1)));
+  u2 = 7;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u3,0x100,val1);
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 8))) << 8) | (uint8_t)((int)u1 == 1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101C2D80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_WriteTimestampFwd(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_WriteTimestampFwd(void * self_, bits32 xi_s1)
 {
   orig::TextInputFiles_WriteTimestamp(self_, xi_s1);
   return;
@@ -15914,26 +15912,26 @@ XI_API void __thiscall TextInputFiles_WriteTimestampFwd(void * self_, undefined4
 
 // FUNCTION: FFXIMAIN 0x101C2DC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_OpenHexPath(void * self_, undefined4 xi_s1)
+XI_API int __thiscall TextInputFiles_OpenHexPath(void * self_, bits32 xi_s1)
 {
-  int iVar1;
+  int i1;
   char xi_frame[256] __attribute__((aligned(4)));
-  CHAR  (&local_100)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 0);
+  CHAR  (&c1)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 0);
   
   if (*(char *)((int)self_ + 0xd0) == '\0') {
-    orig::_sprintf_v1(local_100,s__s__x_1037cbc8,(int)self_ + 500,xi_s1);
+    orig::_sprintf_v1(c1,str__s__x_1037CBC8,(int)self_ + 500,xi_s1);
   }
   else {
-    orig::_sprintf_v1(local_100,s__s__s__x_1037cbd0,(int)self_ + 0xd0);
+    orig::_sprintf_v1(c1,str__s__s__x_1037CBD0,(int)self_ + 0xd0);
   }
   orig::TextInputFiles_ReleaseAt1F0(self_);
-  iVar1 = orig::FUN_101c4080(local_100);
+  i1 = orig::game_101C4080(c1);
   orig::TextInputFiles_GetValueAt1F0(self_);
-  if (iVar1 < 0) {
-    return iVar1;
+  if (i1 < 0) {
+    return i1;
   }
-  iVar1 = orig::FUN_101c4080((LPCSTR)((int)self_ + 0x2f4));
-  orig::TextInputFiles_CreateDirectories((LPCSTR)((int)self_ + 0x2f4),iVar1);
+  i1 = orig::game_101C4080((LPCSTR)((int)self_ + 0x2f4));
+  orig::TextInputFiles_CreateDirectories((LPCSTR)((int)self_ + 0x2f4),i1);
   return 1;
 }
 
@@ -15947,109 +15945,109 @@ XI_API void __thiscall TextInputFiles_ReleaseAt1F0(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101C33F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_GetValueAt1F0(void * self_)
+XI_API bits32 __thiscall TextInputFiles_GetValueAt1F0(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SignalMember8(*(void **)((int)self_ + 0x1f0));
-  return iVar1;
+  i1 = orig::TextInputFiles_SignalMember8(*(void **)((int)self_ + 0x1f0));
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C3D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FormatUserPath(void * self_, undefined4 param_1, uint8_t * param_2, int param_3)
+XI_API bits32 __thiscall TextInputFiles_FormatUserPath(void * self_, bits32 arg2, uint8_t * arg3, int arg4)
 {
   if ((*(int *)(g_pAppSettings + 0x28) == 0) || (*(char *)(g_pCamera_as_s32 + 9) == '\0')) {
     return 0xffffffff;
   }
-  if (param_3 == 0) {
+  if (arg4 == 0) {
     if ((*g_pSceneState_as_v0 == 0x40) || (*g_pSceneState_as_v0 == 0)) {
-      orig::_sprintf_v1(param_2,s__s__s_1037cba0,(int)self_ + 500,param_1);
+      orig::_sprintf_v1(arg3,str__s__s_1037CBA0,(int)self_ + 500,arg2);
       return 1;
     }
-    param_3 = orig::NetCellFont_GetRecordDwordFwd_v1(*(uint32_t *)(g_pGameMode_as_v0 + 0x80));
+    arg4 = orig::NetCellFont_GetRecordDwordFwd_v1(*(uint32_t *)(g_pGameMode_as_v0 + 0x80));
   }
-  orig::_sprintf_v1(param_2,s__s__x__s_1037cd24,(int)self_ + 500,param_3,param_1);
+  orig::_sprintf_v1(arg3,str__s__x__s_1037CD24,(int)self_ + 500,arg4,arg2);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C3DB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FormatStrAt2F4(void * self_, undefined4 param_1, uint8_t * param_2)
+XI_API bits32 __thiscall TextInputFiles_FormatStrAt2F4(void * self_, bits32 arg2, uint8_t * arg3)
 {
-  orig::_sprintf(param_2,s__s__s_1037cba0,(int)self_ + 0x2f4,param_1);
+  orig::_sprintf(arg3,str__s__s_1037CBA0,(int)self_ + 0x2f4,arg2);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C3DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall TextInputFiles_FormatStrAt3F4(void * self_, undefined4 param_1, uint8_t * param_2)
+XI_API uint64_t __thiscall TextInputFiles_FormatStrAt3F4(void * self_, bits32 arg2, uint8_t * arg3)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::_sprintf(param_2,s__s__s_1037cba0,(int)self_ + 0x3f4,param_1);
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(1)));
+  u1 = orig::_sprintf(arg3,str__s__s_1037CBA0,(int)self_ + 0x3f4,arg2);
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101C3E10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FormatStrAt4F4(void * self_, undefined4 param_1, uint8_t * param_2)
+XI_API bits32 __thiscall TextInputFiles_FormatStrAt4F4(void * self_, bits32 arg2, uint8_t * arg3)
 {
-  orig::_sprintf(param_2,s__s__s_1037cba0,(int)self_ + 0x4f4,param_1);
+  orig::_sprintf(arg3,str__s__s_1037CBA0,(int)self_ + 0x4f4,arg2);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C3E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_FormatWithBase(undefined4 param_1, undefined4 param_2, uint8_t * param_3, undefined4 param_4)
+XI_API bits32 __stdcall TextInputFiles_FormatWithBase(bits32 arg1, bits32 arg2, uint8_t * arg3, bits32 arg4)
 {
   char xi_frame[512] __attribute__((aligned(4)));
-  uint8_t  (&local_200)[512] = *reinterpret_cast<uint8_t  (*)[512]>(xi_frame + 0);
+  uint8_t  (&u1)[512] = *reinterpret_cast<uint8_t  (*)[512]>(xi_frame + 0);
   
-  orig::FUN_1030fed0(param_2,local_200,0x1ff,param_4);
-  orig::_sprintf_v1(param_3,&DAT_10350ff8,local_200,param_1);
+  orig::game_1030FED0(arg2,u1,0x1ff,arg4);
+  orig::_sprintf_v1(arg3,&g_10350FF8,u1,arg1);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C3E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FormatPathByKind(void * self_, uint8_t * param_1, uint32_t param_2, char * param_3)
+XI_API bits32 __thiscall TextInputFiles_FormatPathByKind(void * self_, uint8_t * arg2, uint32_t arg3, char * arg4)
 {
-  char *pcVar1;
-  char cVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  char *pcVar5;
+  char *p1;
+  char c1;
+  uint32_t u1;
+  uint32_t u2;
+  char *p2;
   
   if (*(int *)((int)self_ + 8) == 3) {
-    pcVar1 = (char *)((int)self_ + 0xd0);
-    uVar3 = 0xffffffff;
-    pcVar5 = pcVar1;
+    p1 = (char *)((int)self_ + 0xd0);
+    u1 = 0xffffffff;
+    p2 = p1;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar2 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar2 != '\0');
-    uVar4 = 0xffffffff;
-    pcVar5 = param_3;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    u2 = 0xffffffff;
+    p2 = arg4;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar2 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar2 != '\0');
-    if (param_2 <= ~uVar3 + (~uVar4 - 2)) {
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    if (arg3 <= ~u1 + (~u2 - 2)) {
       return 0xffffffff;
     }
-    if (*pcVar1 == '\0') {
-      orig::_sprintf_v1(param_1,&aS);
+    if (*p1 == '\0') {
+      orig::_sprintf_v1(arg2,&aS);
       return 1;
     }
-    orig::_sprintf_v1(param_1,s__s__s_1037cba0,pcVar1,param_3);
+    orig::_sprintf_v1(arg2,str__s__s_1037CBA0,p1,arg4);
   }
   else if (*(int *)((int)self_ + 8) == 4) {
-    orig::_sprintf_v1(param_1,&aS,param_3);
+    orig::_sprintf_v1(arg2,&aS,arg4);
     return 1;
   }
   return 1;
@@ -16057,28 +16055,28 @@ XI_API undefined4 __thiscall TextInputFiles_FormatPathByKind(void * self_, uint8
 
 // FUNCTION: FFXIMAIN 0x101C3F40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CopyPathByMode(void * self_, uint8_t * param_1, int param_2, char * param_3)
+XI_API bits32 __thiscall TextInputFiles_CopyPathByMode(void * self_, uint8_t * arg2, int arg3, char * arg4)
 {
-  char cVar1;
-  uint32_t uVar2;
-  char *pcVar3;
+  char c1;
+  uint32_t u1;
+  char *p1;
   
   if (*(int *)((int)self_ + 8) == 3) {
-    uVar2 = 0xffffffff;
-    pcVar3 = param_3;
+    u1 = 0xffffffff;
+    p1 = arg4;
     do {
-      if (uVar2 == 0) break;
-      uVar2 = uVar2 - 1;
-      cVar1 = *pcVar3;
-      pcVar3 = pcVar3 + 1;
-    } while (cVar1 != '\0');
-    if (param_2 <= (int)(~uVar2 - 1)) {
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    if (arg3 <= (int)(~u1 - 1)) {
       return 0xffffffff;
     }
-    orig::_sprintf(param_1,&aS,param_3);
+    orig::_sprintf(arg2,&aS,arg4);
   }
   else if (*(int *)((int)self_ + 8) == 4) {
-    orig::_sprintf(param_1,&aS,param_3);
+    orig::_sprintf(arg2,&aS,arg4);
     return 1;
   }
   return 1;
@@ -16086,12 +16084,12 @@ XI_API undefined4 __thiscall TextInputFiles_CopyPathByMode(void * self_, uint8_t
 
 // FUNCTION: FFXIMAIN 0x101C3FB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall TextInputFiles_MapCode012(int param_1)
+XI_API bits32 __stdcall TextInputFiles_MapCode012(int arg1)
 {
-  if (param_1 == 0) {
+  if (arg1 == 0) {
     return 1;
   }
-  if (param_1 != 1) {
+  if (arg1 != 1) {
     return 0;
   }
   return 2;
@@ -16099,39 +16097,39 @@ XI_API undefined4 __stdcall TextInputFiles_MapCode012(int param_1)
 
 // FUNCTION: FFXIMAIN 0x101C3FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(1))) TextInputFiles_CreateDirectories(undefined4 xi_eax, LPCSTR param_1)
+XI_API bits32 __attribute__((stdcall, regparm(1))) TextInputFiles_CreateDirectories(bits32 xi_eax, LPCSTR arg2)
 {
-  char *pcVar1;
-  int iVar2;
-  DWORD DVar3;
-  char *pcVar4;
+  char *p1;
+  int i1;
+  DWORD u1;
+  char *p2;
   char xi_frame[256] __attribute__((aligned(4)));
-  char  (&local_100)[255] = *reinterpret_cast<char  (*)[255]>(xi_frame + 0);
-  uint8_t  &local_1 = *reinterpret_cast<uint8_t  *>(xi_frame + 255);
+  char  (&val1)[255] = *reinterpret_cast<char  (*)[255]>(xi_frame + 0);
+  uint8_t  &u2 = *reinterpret_cast<uint8_t  *>(xi_frame + 255);
   
-  iVar2 = CreateDirectoryA(param_1,0);
-  if (iVar2 == 0) {
-    DVar3 = GetLastError();
-    if (DVar3 != 0xb7) {
-      orig::_strncpy_v2(local_100,param_1,0x100);
-      local_1 = 0;
-      if (local_100[0] != '\0') {
-        pcVar4 = local_100;
+  i1 = CreateDirectoryA(arg2,0);
+  if (i1 == 0) {
+    u1 = GetLastError();
+    if (u1 != 0xb7) {
+      orig::_strncpy_v2(val1,arg2,0x100);
+      u2 = 0;
+      if (val1[0] != '\0') {
+        p2 = val1;
         do {
-          if (*pcVar4 == '/') {
-            *pcVar4 = '\0';
-            iVar2 = CreateDirectoryA(local_100,0);
-            if (iVar2 == 0) {
-              DVar3 = GetLastError();
-              if (DVar3 != 0xb7) {
+          if (*p2 == '/') {
+            *p2 = '\0';
+            i1 = CreateDirectoryA(val1,0);
+            if (i1 == 0) {
+              u1 = GetLastError();
+              if (u1 != 0xb7) {
                 return 0xffffffff;
               }
             }
-            *pcVar4 = '/';
+            *p2 = '/';
           }
-          pcVar1 = pcVar4 + 1;
-          pcVar4 = pcVar4 + 1;
-        } while (*pcVar1 != '\0');
+          p1 = p2 + 1;
+          p2 = p2 + 1;
+        } while (*p1 != '\0');
       }
     }
   }
@@ -16140,183 +16138,183 @@ XI_API undefined4 __attribute__((stdcall, regparm(1))) TextInputFiles_CreateDire
 
 // FUNCTION: FFXIMAIN 0x101C4170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_WriteTimestamp(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_WriteTimestamp(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   char xi_frame[552] __attribute__((aligned(4)));
-  int  &local_228 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  int * &local_118 = *reinterpret_cast<int * *>(xi_frame + 272);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  uint32_t  (&u2)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 272);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u1 = 0;
+  p1 = u2;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = (int *)0x0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  orig::_sprintf(local_100,s__s__x__s_1037cd24,(int)self_ + 500,xi_s1,s_timestamp_dat_1037cbf4);
-  local_228 = orig::ntGameTimeGet();
-  local_220 = 3;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = &local_228;
-  local_114 = 4;
-  local_110 = orig::TextInputFiles_MapCode012(0);
-  orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
+  u3 = 0;
+  p3 = (int *)0x0;
+  u4 = 0;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  orig::_sprintf(val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
+  i2 = orig::ntGameTimeGet();
+  u1 = 3;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u2,0x100,val1);
+  p3 = &i2;
+  u4 = 4;
+  u5 = orig::TextInputFiles_MapCode012(0);
+  orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall TextInputFiles_ReadTimestamp(void * self_, undefined4 xi_s1)
+XI_API uint32_t __thiscall TextInputFiles_ReadTimestamp(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   char xi_frame[552] __attribute__((aligned(4)));
-  uint32_t  &local_228 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t ** &local_224 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  (&local_21c)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
-  uint32_t  &local_11c = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
-  uint32_t * &local_118 = *reinterpret_cast<uint32_t * *>(xi_frame + 272);
-  uint32_t  &local_114 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
-  uint32_t  &local_110 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
-  uint32_t  &local_10c = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_108 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  uint32_t  &local_104 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
-  char  (&local_100)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint8_t ** &p2 = *reinterpret_cast<uint8_t ** *>(xi_frame + 4);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  uint32_t  (&u4)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 12);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 268);
+  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 272);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 276);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 280);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 292);
+  char  (&val1)[256] = *reinterpret_cast<char  (*)[256]>(xi_frame + 296);
   
-  local_224 = &PTR_LAB_10337200;
-  local_220 = 0;
-  puVar2 = local_21c;
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p2 = &g_10337200;
+  u3 = 0;
+  p1 = u4;
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  local_11c = 0;
-  local_118 = (uint32_t *)0x0;
-  local_114 = 0;
-  local_110 = 0;
-  local_10c = 0;
-  local_108 = 0;
-  local_104 = 0;
-  orig::_sprintf(local_100,s__s__x__s_1037cd24,(int)self_ + 500,xi_s1,s_timestamp_dat_1037cbf4);
-  local_220 = 1;
-  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)local_21c,0x100,local_100);
-  local_118 = &local_228;
-  local_114 = 4;
-  uVar3 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&local_224);
-  return local_228 & ((int)uVar3 < 0) - 1;
+  u5 = 0;
+  p3 = (uint32_t *)0x0;
+  u6 = 0;
+  u7 = 0;
+  u8 = 0;
+  u9 = 0;
+  u10 = 0;
+  orig::_sprintf(val1,str__s__x__s_1037CD24,(int)self_ + 500,xi_s1,str_timestamp_dat_1037CBF4);
+  u3 = 1;
+  orig::TextInputFiles_FormatPathByKind(self_,(uint8_t *)u4,0x100,val1);
+  p3 = &u2;
+  u6 = 4;
+  u1 = orig::TextInputFiles_WaitThenHandleFileEvent(*(void **)((int)self_ + 0x1f0),(int)&p2);
+  return u2 & ((int)u1 < 0) - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C46E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngQueueLoad(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6)
+XI_API bits32 __thiscall TextInputFiles_FileMngQueueLoad(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::XiFileImpl_QueueLoad(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5,xi_s6);
-  return iVar1;
+  i1 = orig::XiFileImpl_QueueLoad(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5,xi_s6);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall TextInputFiles_ForwardOrExit(void * self_, int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall TextInputFiles_ForwardOrExit(void * self_, int arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitFileNumKind1(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4);
-  if (iVar1 < 0) {
-    orig::StAvatarInfo_SendBytePairKind2_v1(param_1,param_1 >> 8);
+  i1 = orig::TextInputFiles_SubmitFileNumKind1(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5);
+  if (i1 < 0) {
+    orig::StAvatarInfo_SendBytePairKind2_v1(arg2,arg2 >> 8);
     orig::_exit_0_v1(0x7d3);
-    iVar1 = -1;
+    i1 = -1;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngSubmitPathKind1(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5)
+XI_API bits32 __thiscall TextInputFiles_FileMngSubmitPathKind1(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPathKind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPathKind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C47A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngSubmitPath2F4Kind1(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API bits32 __thiscall TextInputFiles_FileMngSubmitPath2F4Kind1(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath2F4Kind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath2F4Kind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C47B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngSubmitPath3F4Kind1(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API bits32 __thiscall TextInputFiles_FileMngSubmitPath3F4Kind1(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath3F4Kind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath3F4Kind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngReadText(void * self_, undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __thiscall TextInputFiles_FileMngReadText(void * self_, bits32 arg2, int arg3, bits32 arg4, bits32 arg5)
 {
-  orig::TextInputFiles_ReadTextOrNoData(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4);
+  orig::TextInputFiles_ReadTextOrNoData(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4820
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngQueueFileNumKind2(void * self_, uint32_t param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, int param_5, uint8_t * param_6)
+XI_API bits32 __thiscall TextInputFiles_FileMngQueueFileNumKind2(void * self_, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5, int arg6, uint8_t * arg7)
 {
-  int iVar1;
+  int i1;
   
-  if (param_6 == (uint8_t *)0x0) {
-    param_6 =(uint8_t*)(&LAB_101c4d50);
+  if (arg7 == (uint8_t *)0x0) {
+    arg7 =(uint8_t*)(&TextInputFiles_AllocPlus300OrFree_as_v0);
   }
-  iVar1 = orig::TextInputFiles_QueueFileNumKind2(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4,param_5,
-                       (int)param_6);
-  return iVar1;
+  i1 = orig::TextInputFiles_QueueFileNumKind2(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5,arg6,
+                       (int)arg7);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C48E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngQueuePathKind3(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5)
+XI_API bits32 __thiscall TextInputFiles_FileMngQueuePathKind3(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_QueuePathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
-  return iVar1;
+  i1 = orig::TextInputFiles_QueuePathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C48F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngQueuePath2F4Kind3(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API void __thiscall TextInputFiles_FileMngQueuePath2F4Kind3(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
   orig::TextInputFiles_QueuePath2F4Kind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
   return;
@@ -16324,7 +16322,7 @@ XI_API void __thiscall TextInputFiles_FileMngQueuePath2F4Kind3(void * self_, und
 
 // FUNCTION: FFXIMAIN 0x101C4900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngQueuePath3F4Kind3(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API void __thiscall TextInputFiles_FileMngQueuePath3F4Kind3(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
   orig::TextInputFiles_QueuePath3F4Kind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
   return;
@@ -16332,17 +16330,17 @@ XI_API void __thiscall TextInputFiles_FileMngQueuePath3F4Kind3(void * self_, und
 
 // FUNCTION: FFXIMAIN 0x101C4920
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngSubmitPathKind3(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5)
+XI_API bits32 __thiscall TextInputFiles_FileMngSubmitPathKind3(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4,xi_s5);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngSubmitPath2F4Kind3(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API void __thiscall TextInputFiles_FileMngSubmitPath2F4Kind3(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
   orig::TextInputFiles_SubmitPath2F4Kind3(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3,xi_s4);
   return;
@@ -16350,198 +16348,198 @@ XI_API void __thiscall TextInputFiles_FileMngSubmitPath2F4Kind3(void * self_, un
 
 // FUNCTION: FFXIMAIN 0x101C4940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall TextInputFiles_FileMngSubmitPath3F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API uint64_t __thiscall TextInputFiles_FileMngSubmitPath3F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::TextInputFiles_SubmitPath3F4Kind3(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4);
-  return uVar1;
+  u1 = orig::TextInputFiles_SubmitPath3F4Kind3(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngSubmitPath4F4Kind3(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API bits32 __thiscall TextInputFiles_FileMngSubmitPath4F4Kind3(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath4F4Kind3(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath4F4Kind3(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngCall101C09B0(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FileMngCall101C09B0(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_CreateDirAndWait(*(void **)((int)self_ + 4));
-  return iVar1;
+  i1 = orig::TextInputFiles_CreateDirAndWait(*(void **)((int)self_ + 4));
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C49A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngCall101C0A40(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API bits32 __thiscall TextInputFiles_FileMngCall101C0A40(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_CreateDirAndHandleFile(*(void **)((int)self_ + 4),param_1,param_2,param_3,param_4);
-  return iVar1;
+  i1 = orig::TextInputFiles_CreateDirAndHandleFile(*(void **)((int)self_ + 4),arg2,arg3,arg4,arg5);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C49E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngSubmitPathKind6(void * self_, undefined4 param_1, int param_2)
+XI_API void __thiscall TextInputFiles_FileMngSubmitPathKind6(void * self_, bits32 arg2, int arg3)
 {
-  orig::TextInputFiles_SubmitPathKind6(*(void **)((int)self_ + 4),param_1,param_2);
+  orig::TextInputFiles_SubmitPathKind6(*(void **)((int)self_ + 4),arg2,arg3);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C49F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngSubmitPath3F4Kind6(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_FileMngSubmitPath3F4Kind6(void * self_, bits32 arg2)
 {
-  orig::TextInputFiles_SubmitPath3F4Kind6(*(void **)((int)self_ + 4),param_1);
+  orig::TextInputFiles_SubmitPath3F4Kind6(*(void **)((int)self_ + 4),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4A10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFindFileNumKind1(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3)
+XI_API bits32 __thiscall TextInputFiles_FileMngFindFileNumKind1(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindFileNumKind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindFileNumKind1(*(void **)((int)self_ + 4),xi_s1,xi_s2,xi_s3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4A30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFindFileNumKind2(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFindFileNumKind2(void * self_, uint32_t arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindFileNumKind2(*(void **)((int)self_ + 4),param_1);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindFileNumKind2(*(void **)((int)self_ + 4),arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4A80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C1750(void * self_, undefined4 xi_s1, undefined4 xi_s2)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C1750(void * self_, bits32 xi_s1, bits32 xi_s2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindPathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindPathKind3(*(void **)((int)self_ + 4),xi_s1,xi_s2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4A90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C1820(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C1820(void * self_, bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindPath2F4Kind3(*(void **)((int)self_ + 4),xi_s1);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindPath2F4Kind3(*(void **)((int)self_ + 4),xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4AA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C18E0(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C18E0(void * self_, bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_FindPath3F4Kind3(*(void **)((int)self_ + 4),xi_s1);
-  return uVar1;
+  u1 = orig::TextInputFiles_FindPath3F4Kind3(*(void **)((int)self_ + 4),xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4AF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall FileMng_ResolveOrExit(void * self_, int param_1)
+XI_API int __thiscall FileMng_ResolveOrExit(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitFileNumKind4(*(void **)((int)self_ + 4),param_1);
-  if (iVar1 < 0) {
-    orig::StAvatarInfo_SendBytePairKind2_v1(param_1,param_1 >> 8);
+  i1 = orig::TextInputFiles_SubmitFileNumKind4(*(void **)((int)self_ + 4),arg2);
+  if (i1 < 0) {
+    orig::StAvatarInfo_SendBytePairKind2_v1(arg2,arg2 >> 8);
     orig::_exit_0_v1(0x7d3);
-    iVar1 = -1;
+    i1 = -1;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4B40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C1C90(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C1C90(void * self_, bits32 xi_s1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath3F4Kind4(*(void **)((int)self_ + 4),xi_s1);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath3F4Kind4(*(void **)((int)self_ + 4),xi_s1);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4B60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C1DF0(void * self_, undefined4 xi_s1, undefined4 xi_s2)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C1DF0(void * self_, bits32 xi_s1, bits32 xi_s2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPathKind4(*(void **)((int)self_ + 4),xi_s1,xi_s2);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPathKind4(*(void **)((int)self_ + 4),xi_s1,xi_s2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C1EC0(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C1EC0(void * self_, bits32 xi_s1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath2F4Kind4(*(void **)((int)self_ + 4),xi_s1);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath2F4Kind4(*(void **)((int)self_ + 4),xi_s1);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4BF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C2450(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C2450(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_SubmitPath3F4Kind5(*(void **)((int)self_ + 4),param_1,param_2);
-  return iVar1;
+  i1 = orig::TextInputFiles_SubmitPath3F4Kind5(*(void **)((int)self_ + 4),arg2,arg3);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4C70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C2840(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C2840(void * self_, bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_SubmitPath3F4Kind7(*(void **)((int)self_ + 4),xi_s1);
-  return uVar1;
+  u1 = orig::TextInputFiles_SubmitPath3F4Kind7(*(void **)((int)self_ + 4),xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C2B60(void * self_, undefined4 xi_s1)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C2B60(void * self_, bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_101c2b60(*(void **)((int)self_ + 4),xi_s1);
-  return uVar1;
+  u1 = orig::game_101C2B60(*(void **)((int)self_ + 4),xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4CD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_FileMngFwd101C2C80(void * self_)
+XI_API bits32 __thiscall TextInputFiles_FileMngFwd101C2C80(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_101c2c80(*(void **)((int)self_ + 4));
-  return uVar1;
+  u1 = orig::game_101C2C80(*(void **)((int)self_ + 4));
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C4CE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_FileMngFwd101C4170(void * self_, undefined4 xi_s1)
+XI_API void __thiscall TextInputFiles_FileMngFwd101C4170(void * self_, bits32 xi_s1)
 {
   orig::TextInputFiles_WriteTimestampFwd(*(void **)((int)self_ + 4),xi_s1);
   return;
@@ -16551,7 +16549,7 @@ XI_API void __thiscall TextInputFiles_FileMngFwd101C4170(void * self_, undefined
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_FileMngFwd101C2E70(void * self_)
 {
-  orig::FUN_101c2e70(*(void **)((int)self_ + 4));
+  orig::game_101C2E70(*(void **)((int)self_ + 4));
   return;
 }
 
@@ -16573,16 +16571,16 @@ XI_API void __thiscall TextInputFiles_FileMngGetValueAt1F0(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101C4D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __cdecl TextInputFiles_AllocPlus300OrFree(int param_1, int param_2)
+XI_API void * __cdecl TextInputFiles_AllocPlus300OrFree(int arg1, int arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if ((param_1 == 0) && (param_2 != 0)) {
-    orig::operator_delete_v1(param_2);
+  if ((arg1 == 0) && (arg2 != 0)) {
+    orig::operator_delete_v1(arg2);
     return (void *)0x0;
   }
-  uVar1 = orig::Allocator_Generic_v1(param_1 + 0x300);
-  return (void *)uVar1;
+  u1 = orig::Allocator_Generic_v1(arg1 + 0x300);
+  return (void *)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C5920
@@ -16595,120 +16593,120 @@ XI_API void * __thiscall TextInputFiles_EntriesCtorEmpty(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101C5930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_EntriesCtor(void * self_, int param_1)
+XI_API void * __thiscall TextInputFiles_EntriesCtor(void * self_, int arg2)
 {
-  orig::TextInputFiles_AllocEntries(self_,param_1);
+  orig::TextInputFiles_AllocEntries(self_,arg2);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101C59B0
 // GATE: PASS -- 100 trials, 55 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 55
-XI_API void __thiscall TextInputFiles_AllocEntries(void * self_, int param_1)
+XI_API void __thiscall TextInputFiles_AllocEntries(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint64_t uVar3;
+  int i1;
+  int i2;
+  uint64_t u1;
   
-  *(int *)((int)self_ + 8) = param_1;
-  if (param_1 == 0) {
+  *(int *)((int)self_ + 8) = arg2;
+  if (arg2 == 0) {
     *(uint32_t *)self_ = 0;
   }
   else {
-    uVar3 = orig::Allocator_Generic_v1(param_1 << 4);
-    *(int *)self_ = (int)uVar3;
+    u1 = orig::Allocator_Generic_v1(arg2 << 4);
+    *(int *)self_ = (int)u1;
   }
-  iVar2 = 0;
+  i2 = 0;
   if (0 < *(int *)((int)self_ + 8)) {
-    iVar1 = 0;
+    i1 = 0;
     do {
-      iVar2 = iVar2 + 1;
-      *(uint32_t *)(iVar1 + *(int *)self_) = 0;
-      *(uint32_t *)(iVar1 + 4 + *(int *)self_) = 0;
-      *(uint32_t *)(iVar1 + 8 + *(int *)self_) = 0;
-      *(uint32_t *)(iVar1 + 0xc + *(int *)self_) = 0;
-      iVar1 = iVar1 + 0x10;
-    } while (iVar2 < *(int *)((int)self_ + 8));
+      i2 = i2 + 1;
+      *(uint32_t *)(i1 + *(int *)self_) = 0;
+      *(uint32_t *)(i1 + 4 + *(int *)self_) = 0;
+      *(uint32_t *)(i1 + 8 + *(int *)self_) = 0;
+      *(uint32_t *)(i1 + 0xc + *(int *)self_) = 0;
+      i1 = i1 + 0x10;
+    } while (i2 < *(int *)((int)self_ + 8));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C5A30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TextInputFiles_EntriesSetCount(void * self_, undefined4 param_1)
+XI_API void __thiscall TextInputFiles_EntriesSetCount(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 4) = param_1;
+  *(uint32_t *)((int)self_ + 4) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101C5A40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API unsigned char __thiscall TextInputFiles_SubmitFileOrExit(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API unsigned char __thiscall TextInputFiles_SubmitFileOrExit(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,*(int *)((int)self_ + 4),param_1,param_3,param_2);
-  return -1 < iVar1;
+  i1 = orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,*(int *)((int)self_ + 4),arg2,arg4,arg3);
+  return -1 < i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101C5BE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall TextInputFiles_CtorVt10337C90(void * self_, undefined4 param_1, int param_2, undefined4 param_3, undefined4 param_4, char * param_5, undefined4 param_6, undefined4 param_7, int param_8)
+XI_API void * __thiscall TextInputFiles_CtorVt10337C90(void * self_, bits32 arg2, int arg3, bits32 arg4, bits32 arg5, char * arg6, bits32 arg7, bits32 arg8, int arg9)
 {
-  char cVar1;
-  short sVar2;
-  int iVar3;
-  char *pcVar4;
-  char *pcVar5;
-  uint32_t uVar6;
+  char c1;
+  short i1;
+  int i2;
+  char *p1;
+  char *p2;
+  uint32_t u1;
   
-  *(uint8_t ***)((int)self_ + 4) = &PTR_LAB_10337a84;
-  *(uint32_t *)((int)self_ + 8) = param_1;
-  *(uint8_t ***)self_ = &PTR_LAB_10337c90;
-  *(uint8_t ***)((int)self_ + 4) = &PTR_LAB_10337c8c;
-  *(int *)((int)self_ + 0x398) = param_2;
-  if (param_5 == (char *)0x0) {
-LAB_101c5c7e:
+  *(uint8_t ***)((int)self_ + 4) = &g_10337A84;
+  *(uint32_t *)((int)self_ + 8) = arg2;
+  *(uint8_t ***)self_ = &g_10337C90;
+  *(uint8_t ***)((int)self_ + 4) = &g_10337C8C;
+  *(int *)((int)self_ + 0x398) = arg3;
+  if (arg6 == (char *)0x0) {
+code_101C5C7E:
     *(uint8_t *)((int)self_ + 0x12) = 0;
     *(uint32_t *)((int)self_ + 0x39c) = 0;
     *(uint8_t *)((int)self_ + 0x3a0) = 0;
     *(uint32_t *)((int)self_ + 0x690) = 0;
   }
   else {
-    uVar6 = 0xffffffff;
-    pcVar5 = param_5;
+    u1 = 0xffffffff;
+    p2 = arg6;
     do {
-      if (uVar6 == 0) break;
-      uVar6 = uVar6 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    iVar3 = orig::TextInputFiles_InputCall101AC990Swapped(DAT_10662d40,param_5,~uVar6 - 1,(int)self_ + 0x1d5,param_2 + 1,0,0);
-    *(int *)((int)self_ + 0x39c) = iVar3;
-    if (iVar3 < 1) goto LAB_101c5c7e;
-    pcVar5 = (char *)((int)self_ + 0x12);
-    pcVar4 = param_5;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    i2 = orig::TextInputFiles_InputCall101AC990Swapped(g_10662D40,arg6,~u1 - 1,(int)self_ + 0x1d5,arg3 + 1,0,0);
+    *(int *)((int)self_ + 0x39c) = i2;
+    if (i2 < 1) goto code_101C5C7E;
+    p2 = (char *)((int)self_ + 0x12);
+    p1 = arg6;
     do {
-      cVar1 = *pcVar4;
-      pcVar4[(int)pcVar5 - (int)param_5] = cVar1;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar1 != '\0');
-    iVar3 = 0x3a0 - (int)pcVar5;
+      c1 = *p1;
+      p1[(int)p2 - (int)arg6] = c1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    i2 = 0x3a0 - (int)p2;
     do {
-      cVar1 = *pcVar5;
-      pcVar5[(int)self_ + iVar3] = cVar1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    uVar6 = 0xffffffff;
+      c1 = *p2;
+      p2[(int)self_ + i2] = c1;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    u1 = 0xffffffff;
     do {
-      if (uVar6 == 0) break;
-      uVar6 = uVar6 - 1;
-      cVar1 = *param_5;
-      param_5 = param_5 + 1;
-    } while (cVar1 != '\0');
-    *(uint32_t *)((int)self_ + 0x690) = ~uVar6 - 1;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *arg6;
+      arg6 = arg6 + 1;
+    } while (c1 != '\0');
+    *(uint32_t *)((int)self_ + 0x690) = ~u1 - 1;
   }
-  *(uint32_t *)((int)self_ + 0x69c) = param_4;
-  *(uint32_t *)((int)self_ + 0x698) = param_3;
+  *(uint32_t *)((int)self_ + 0x69c) = arg5;
+  *(uint32_t *)((int)self_ + 0x698) = arg4;
   switch(xi_sw(*(uint32_t *)((int)self_ + 8))) {
   case 1:
   case 2:
@@ -16722,7 +16720,7 @@ LAB_101c5c7e:
     *(uint8_t *)((int)self_ + 0xc) = 0;
     *(uint8_t *)((int)self_ + 0xe) = 0;
     *(uint8_t *)((int)self_ + 0x11) = 0;
-    goto LAB_101c5d03;
+    goto code_101C5D03;
   case 4:
   case 10:
   case 0xb:
@@ -16737,64 +16735,64 @@ LAB_101c5c7e:
   case 7:
     *(uint8_t *)((int)self_ + 0xc) = 0;
     *(uint8_t *)((int)self_ + 0xe) = 0;
-    goto LAB_101c5d00;
+    goto code_101C5D00;
   case 8:
     *(uint8_t *)((int)self_ + 0xe) = 0;
-    goto LAB_101c5cfd;
+    goto code_101C5CFD;
   case 9:
     *(uint8_t *)((int)self_ + 0xe) = 1;
-LAB_101c5cfd:
+code_101C5CFD:
     *(uint8_t *)((int)self_ + 0xc) = 1;
-LAB_101c5d00:
+code_101C5D00:
     *(uint8_t *)((int)self_ + 0x11) = 1;
-LAB_101c5d03:
+code_101C5D03:
     *(uint8_t *)((int)self_ + 0xf) = 1;
     *(uint8_t *)((int)self_ + 0x10) = 1;
     break;
   default:
-    goto switchD_101c5cb0_default;
+    goto L1;
   }
   *(uint8_t *)((int)self_ + 0xd) = 0;
-switchD_101c5cb0_default:
+L1:
   *(uint8_t *)((int)self_ + 0x694) = 0;
   *(uint32_t *)((int)self_ + 0x6a4) = 0;
-  *(uint32_t *)((int)self_ + 0x6a8) = param_7;
-  *(uint32_t *)((int)self_ + 0x6b0) = param_6;
-  if (param_8 != 0x114) {
-    *(int *)((int)self_ + 0x6ac) = param_8;
+  *(uint32_t *)((int)self_ + 0x6a8) = arg8;
+  *(uint32_t *)((int)self_ + 0x6b0) = arg7;
+  if (arg9 != 0x114) {
+    *(int *)((int)self_ + 0x6ac) = arg9;
     *(uint32_t *)((int)self_ + 0x6a0) = 0;
     return self_;
   }
-  sVar2 = XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) - XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2);
+  i1 = XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) - XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2);
   *(uint32_t *)((int)self_ + 0x6a0) = 0;
-  *(int *)((int)self_ + 0x6ac) = sVar2 + -0xac;
+  *(int *)((int)self_ + 0x6ac) = i1 + -0xac;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101C5EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CommitTextInput(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CommitTextInput(void * self_)
 {
-  char *pcVar1;
-  char cVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  char *pcVar5;
+  char *p1;
+  char c1;
+  uint32_t u1;
+  uint32_t u2;
+  char *p2;
   
   if (*(char *)((int)self_ + 0x694) != '\0') {
-    pcVar1 = (char *)((int)self_ + 0x12);
-    orig::FUN_101c6960(*(void **)((int)self_ + 0x6a0),(int)pcVar1,*(int *)((int)self_ + 0x398) + 1);
-    uVar4 = 0xffffffff;
-    pcVar5 = pcVar1;
+    p1 = (char *)((int)self_ + 0x12);
+    orig::game_101C6960(*(void **)((int)self_ + 0x6a0),(int)p1,*(int *)((int)self_ + 0x398) + 1);
+    u2 = 0xffffffff;
+    p2 = p1;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar2 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar2 != '\0');
-    uVar3 = orig::TextInputFiles_InputCall101AC990Swapped(DAT_10662d40,pcVar1,~uVar4 - 1,(int)self_ + 0x1d5,
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    u1 = orig::TextInputFiles_InputCall101AC990Swapped(g_10662D40,p1,~u2 - 1,(int)self_ + 0x1d5,
                          *(int *)((int)self_ + 0x398) + 1,0,0);
-    *(uint32_t *)((int)self_ + 0x39c) = uVar3;
+    *(uint32_t *)((int)self_ + 0x39c) = u1;
   }
   return *(uint32_t *)((int)self_ + 0x39c);
 }
@@ -16803,10 +16801,10 @@ XI_API undefined4 __thiscall TextInputFiles_CommitTextInput(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TextInputFiles_EndTextInput(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TextInputFiles_CommitTextInput(self_);
-  *(uint32_t *)((int)self_ + 0x39c) = uVar1;
+  u1 = orig::TextInputFiles_CommitTextInput(self_);
+  *(uint32_t *)((int)self_ + 0x39c) = u1;
   *(uint8_t *)((int)self_ + 0x694) = 0;
   *(uint32_t *)((int)self_ + 0x6a0) = 0;
   return;
@@ -16814,26 +16812,26 @@ XI_API void __thiscall TextInputFiles_EndTextInput(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101C6810
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CtorVt10337CA0(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall TextInputFiles_CtorVt10337CA0(void * self_, bits32 arg2, bits32 arg3)
 {
   *(uint8_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 4) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10337ca0;
-  *(uint32_t *)((int)self_ + 0xc) = param_1;
-  *(uint32_t *)((int)self_ + 0x10) = param_2;
+  *(uint8_t ***)self_ = &g_10337CA0;
+  *(uint32_t *)((int)self_ + 0xc) = arg2;
+  *(uint32_t *)((int)self_ + 0x10) = arg3;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101C68A0
 // GATE: PASS -- 100 trials, 100 returned normally, 71 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TextInputFiles_CloseTextInput(void * self_)
+XI_API bits32 __thiscall TextInputFiles_CloseTextInput(void * self_)
 {
   if (*(char *)((int)self_ + 8) != '\0') {
     *(uint8_t *)((int)self_ + 8) = 0;
     if (*(void **)((int)self_ + 4) != (void *)0x0) {
       orig::TextInputFiles_EndTextInput(*(void **)((int)self_ + 4));
     }
-    ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0xc) + 0x28))
+    ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0xc) + 0x28))
               ))((void *)(*(int **)((int)self_ + 0xc)),2,0,5,0x78,0,0,0,10);
   }
   return 1;

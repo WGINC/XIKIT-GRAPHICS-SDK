@@ -4,18 +4,18 @@
 
 // FUNCTION: FFXIMAIN 0x1002C890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Mem_AllocDefault(undefined4 param_1)
+XI_API bits32 __cdecl Mem_AllocDefault(bits32 arg1)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::Mem_AllocFromArea_v2(param_1,4,0);
-  return puVar1;
+  p1 = orig::Mem_AllocFromArea_v2(arg1,4,0);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002C8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl thunk_sub_10028AA0(int param_1)
+XI_API void __cdecl thunk_Mem_FreeBlockMergeNeighbours_as_v0(int arg1)
 {
-  orig::Mem_FreeBlockMergeNeighbours(param_1);
+  orig::Mem_FreeBlockMergeNeighbours(arg1);
   return;
 }

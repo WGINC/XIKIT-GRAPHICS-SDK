@@ -4,27 +4,27 @@
 
 // FUNCTION: FFXIMAIN 0x10291110
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqrdCamera_Init(undefined4 * param_1)
+XI_API void __cdecl SqrdCamera_Init(bits32 * arg1)
 {
-  *param_1 = 0x70001;
-  param_1[2] = &LAB_102910d0;
-  param_1[3] = XI_CODE(FUN_102910e0);
-  param_1[4] = XI_CODE(FUN_10291170);
-  param_1[5] = 0x42340000;
-  param_1[6] = 0x3dcccccd;
-  param_1[7] = 0x447a0000;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0x3dcccccd;
-  param_1[0xc] = 0x3f800000;
+  *arg1 = 0x70001;
+  arg1[2] = &code_102910D0;
+  arg1[3] = XI_CODE(game_102910E0);
+  arg1[4] = XI_CODE(sqrdCameraPrint);
+  arg1[5] = 0x42340000;
+  arg1[6] = 0x3dcccccd;
+  arg1[7] = 0x447a0000;
+  arg1[8] = 0;
+  arg1[9] = 0;
+  arg1[10] = 0;
+  arg1[0xb] = 0x3dcccccd;
+  arg1[0xc] = 0x3f800000;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102911E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqrdCamera_Apply(int param_1)
+XI_API void __cdecl sqrdCamera_Apply(int arg1)
 {
-  orig::SqgxContext_SetPerspective(*(float *)(param_1 + 0x14),*(float *)(param_1 + 0x18),*(float *)(param_1 + 0x1c));
+  orig::SqgxContext_SetPerspective(*(float *)(arg1 + 0x14),*(float *)(arg1 + 0x18),*(float *)(arg1 + 0x1c));
   return;
 }

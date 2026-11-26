@@ -4,23 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x1027DAE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqChannelDefaults_InitDefaults(undefined4 * param_1)
+XI_API void __cdecl SqChannelDefaults_InitDefaults(bits32 * arg1)
 {
-  *param_1 = 1;
-  *(uint8_t *)(param_1 + 1) = 0;
-  param_1[0x21] = 0;
-  param_1[0x22] = 0;
-  param_1[0x24] = 0;
-  param_1[0x25] = 0;
-  param_1[0x26] = 0;
-  param_1[0x27] = 0x3f800000;
-  param_1[0x28] = 0x3f800000;
-  param_1[0x29] = 0;
-  param_1[0x2a] = 0;
-  param_1[0x2b] = 0;
-  param_1[0x2c] = 0;
-  param_1[0x2d] = 0;
-  param_1[0x2e] = 0;
-  param_1[0x2f] = 0;
+  *arg1 = 1;
+  *(uint8_t *)(arg1 + 1) = 0;
+  arg1[0x21] = 0;
+  arg1[0x22] = 0;
+  arg1[0x24] = 0;
+  arg1[0x25] = 0;
+  arg1[0x26] = 0;
+  arg1[0x27] = 0x3f800000;
+  arg1[0x28] = 0x3f800000;
+  arg1[0x29] = 0;
+  arg1[0x2a] = 0;
+  arg1[0x2b] = 0;
+  arg1[0x2c] = 0;
+  arg1[0x2d] = 0;
+  arg1[0x2e] = 0;
+  arg1[0x2f] = 0;
   return;
 }

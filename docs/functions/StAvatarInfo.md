@@ -10,7 +10,7 @@ Why the file has this name (data/unit_names.json): StAvatar_LoadInfo0 / LoadInfo
 |---|---|---|---|---|---|---|
 | `StAvatar_ClearResource` | 0x10253210 | 91 | yes | - | Releases the resource held by an avatar slot and clears its ids. | medium |
 | `StAvatarInfo_SubmitInfoBinIfObjSet` | 0x102532C0 | 31 | yes | - | Passes a slot, data and length to 0x102534F0 when the object at 0x10669424 exists. | low |
-| `StAvatarInfo_Ctor` | 0x102532E0 | 18 | yes | - | Constructs the object App_InitScene keeps in sub_10669424. | medium |
+| `StAvatarInfo_Ctor` | 0x102532E0 | 18 | yes | - | Constructs the object App_InitScene keeps in game_10669424. | medium |
 | `StAvatarInfo_NoOp` | 0x10253330 | 1 | yes | - | Does nothing. | medium |
 | `StAvatar_LoadInfoFile` | 0x10253360 | 246 | yes | - | Loads one of the avatar's info files into its slot. | medium |
 | `StAvatarInfo_SubmitInfoBinIfChanged` | 0x102534F0 | 187 | yes | - | Updates the cached bytes of one info*.bin slot and, when they changed, hands the file to the file manager as a kind-3 request. | medium |

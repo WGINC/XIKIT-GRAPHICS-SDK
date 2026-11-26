@@ -4,26 +4,26 @@
 
 // FUNCTION: FFXIMAIN 0x10298B30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqrdTexture_Create(void)
+XI_API bits32 * __cdecl SqrdTexture_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x24,s_C__dev_dancer_modules_sqRend_src_103bbde4,0x22);
-  orig::SqrdTexture_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x24,str_C__dev_dancer_modules_sqRend_src_103BBDE4,0x22);
+  orig::SqrdTexture_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10298B90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqrdTexture_Init(undefined4 * param_1)
+XI_API void __cdecl SqrdTexture_Init(bits32 * arg1)
 {
-  param_1[5] = 0xffffffff;
-  param_1[6] = 0xffffffff;
-  *param_1 = 0x70004;
-  param_1[2] = &LAB_10298b50;
-  param_1[3] = XI_CODE(FUN_10298b60);
-  param_1[4] = XI_CODE(sqrdTexturePrint);
-  param_1[7] = 0;
-  param_1[8] = 0;
+  arg1[5] = 0xffffffff;
+  arg1[6] = 0xffffffff;
+  *arg1 = 0x70004;
+  arg1[2] = &code_10298B50;
+  arg1[3] = XI_CODE(game_10298B60);
+  arg1[4] = XI_CODE(sqrdTexturePrint);
+  arg1[7] = 0;
+  arg1[8] = 0;
   return;
 }

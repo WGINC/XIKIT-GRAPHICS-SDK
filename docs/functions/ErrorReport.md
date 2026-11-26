@@ -35,11 +35,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ErrorReport_Begin` calls `Camera_GetViewportWidth`, `Camera_GetViewportHeight`, `ErrorReport_Step`
 - `ErrorReport_NoOpVarargsA` calls nothing directly
 - `ErrorReport_NoOpVarargsB` calls nothing directly
-- `XiErrMsgGetErrCode` calls `sub_10311877`, `TargetMenu_GetMessageFwd`
+- `XiErrMsgGetErrCode` calls `game_10311877`, `TargetMenu_GetMessageFwd`
 - `ErrorReport_DispatchErrorCode` calls `ErrorReport_SendMessage7_1To10668FF8`, `XiErrMsgGetErrCode`
-- `ErrorReport_SendMessage7_1To10668FF8` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `LobbyUi_StoreTextIfIdle`
+- `ErrorReport_SendMessage7_1To10668FF8` calls `TargetMenu_GetMessageFwd`, `game_10311FF1`, `LobbyUi_StoreTextIfIdle`
 - `ErrorReport_RegisterCallback` calls `NetCellFont_StartRequestSlot24WithCallback`, `ErrorReport_SendMessage7_0To10668FF8`
-- `ErrorReport_SendMessage7_0To10668FF8` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `LobbyUi_StoreTextIfIdle`
+- `ErrorReport_SendMessage7_0To10668FF8` calls `TargetMenu_GetMessageFwd`, `game_10311FF1`, `LobbyUi_StoreTextIfIdle`
 - `ErrorReport_IsRegistered` calls nothing directly
 - `ErrorReport_Call10114F10NoArgs` calls `ErrorReport_Thunk10114F10`
 - `_exit_0` calls `ErrorReport_ReportAndHandleError`
@@ -48,4 +48,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ErrorReport_CtorVt10329F88` calls `TextInputFiles_SetVtable10337C64`
 - `ErrorReport_CtorVt10329F8C` calls `ErrorReport_CtorVt10329F88`, `ErrorReport_CtorVt10329F90`
 - `ErrorReport_CtorVt10329F90` calls `TextInputFiles_SetVtable10337C64`
-- `ErrorReport_LoadChecksum` calls `sub_101BE510`, `Allocator_Generic`, `File_FindByKind`, `File_WriteChunked`, `operator_delete`, `TextInputFiles_Call10311F30`
+- `ErrorReport_LoadChecksum` calls `game_101BE510`, `Allocator_Generic`, `File_FindByKind`, `File_WriteChunked`, `operator_delete`, `TextInputFiles_Call10311F30`

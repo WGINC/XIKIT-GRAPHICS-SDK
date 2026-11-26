@@ -20,22 +20,22 @@ XI_API int __thiscall CXiDollActor_GetPtr414(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall CXiDollActor_GetFloat434(void * self_)
 {
-  return (long double)*(float *)((int)self_ + 0x434);
+  return *(float *)((int)self_ + 0x434);
 }
 
 // FUNCTION: FFXIMAIN 0x100ABE40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall CXiDollActor_GetFloat438(void * self_)
 {
-  return (long double)*(float *)((int)self_ + 0x438);
+  return *(float *)((int)self_ + 0x438);
 }
 
 // FUNCTION: FFXIMAIN 0x100ABFB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiDollActor_GetVec4At104(void * self_, int param_1, undefined4 * param_2)
+XI_API bits32 __thiscall CXiDollActor_GetVec4At104(void * self_, int arg2, bits32 * arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Vec4_Copy_v3(param_2,(uint32_t *)(param_1 * 0x10 + 0x104 + (int)self_));
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = orig::Vec4_Copy_v3(arg3,(uint32_t *)(arg2 * 0x10 + 0x104 + (int)self_));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }

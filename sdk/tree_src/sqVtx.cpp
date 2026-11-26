@@ -4,147 +4,147 @@
 
 // FUNCTION: FFXIMAIN 0x102A9520
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqVtx_Create(void)
+XI_API bits32 * __cdecl SqVtx_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x84,s_C__dev_dancer_modules_sqBase_src_103be750,0x37);
-  orig::SqVtx_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x84,str_C__dev_dancer_modules_sqBase_src_103BE750,0x37);
+  orig::SqVtx_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102A9550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVtx_Init(undefined4 * param_1)
+XI_API void __cdecl SqVtx_Init(bits32 * arg1)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  iVar1 = 0;
-  *param_1 = 0x10001;
-  param_1[2] = &LAB_102a9590;
-  param_1[3] = XI_CODE(FUN_102a95a0);
-  param_1[4] = XI_CODE(sqVtxPrint);
-  param_1[5] = 0;
-  puVar2 = param_1 + 0x15;
+  i1 = 0;
+  *arg1 = 0x10001;
+  arg1[2] = &code_102A9590;
+  arg1[3] = XI_CODE(game_102A95A0);
+  arg1[4] = XI_CODE(sqVtxPrint);
+  arg1[5] = 0;
+  p1 = arg1 + 0x15;
   do {
-    puVar2[-0xf] = 0;
-    *puVar2 = 0;
-    *(uint8_t *)((int)param_1 + iVar1 + 0x48) = 0;
-    iVar1 = iVar1 + 1;
-    puVar2 = puVar2 + 1;
-  } while (iVar1 < 0xc);
+    p1[-0xf] = 0;
+    *p1 = 0;
+    *(uint8_t *)((int)arg1 + i1 + 0x48) = 0;
+    i1 = i1 + 1;
+    p1 = p1 + 1;
+  } while (i1 < 0xc);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A9980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVtx_AllocateField(int param_1, int param_2, int param_3)
+XI_API void __cdecl SqVtx_AllocateField(int arg1, int arg2, int arg3)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  if (*(int *)(param_1 + 0x18 + param_2 * 4) != 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqBase_src_103be750,0x15a)
+  if (*(int *)(arg1 + 0x18 + arg2 * 4) != 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqBase_src_103BE750,0x15a)
     ;
-    orig::sqDebugPrintf_v1(s_sqVtxAllocateField__slot__d_is_a_103be8e8,param_2);
+    orig::sqDebugPrintf_v1(str_sqVtxAllocateField__slot__d_is_a_103BE8E8,arg2);
     return;
   }
-  *(int *)(param_1 + 0x18 + param_2 * 4) = param_3;
-  puVar1 = orig::SqMem_AllocZeroed(*(int *)(param_1 + 0x14) * param_3,4,
-                             s_C__dev_dancer_modules_sqBase_src_103be750,0x15f);
-  *(undefined4 **)(param_1 + 0x54 + param_2 * 4) = puVar1;
+  *(int *)(arg1 + 0x18 + arg2 * 4) = arg3;
+  p1 = orig::SqMem_AllocZeroed(*(int *)(arg1 + 0x14) * arg3,4,
+                             str_C__dev_dancer_modules_sqBase_src_103BE750,0x15f);
+  *(bits32 **)(arg1 + 0x54 + arg2 * 4) = p1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A9EF0
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API void __cdecl SqVtx_ClearEntries(int param_1)
+XI_API void __cdecl SqVtx_ClearEntries(int arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
+  uint32_t *p1;
+  int i1;
   
-  if (*(int *)(param_1 + 0x58) == 0) {
-    orig::SqVtx_AllocateField(param_1,1,3);
+  if (*(int *)(arg1 + 0x58) == 0) {
+    orig::SqVtx_AllocateField(arg1,1,3);
   }
-  iVar2 = 0;
-  if (0 < *(int *)(param_1 + 0x14)) {
-    puVar1 = (uint32_t *)(*(int *)(param_1 + 0x58) + 8);
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x14)) {
+    p1 = (uint32_t *)(*(int *)(arg1 + 0x58) + 8);
     do {
-      puVar1[-2] = 0;
-      puVar1[-1] = 0;
-      *puVar1 = 0;
-      iVar2 = iVar2 + 1;
-      puVar1 = puVar1 + 3;
-    } while (iVar2 < *(int *)(param_1 + 0x14));
+      p1[-2] = 0;
+      p1[-1] = 0;
+      *p1 = 0;
+      i1 = i1 + 1;
+      p1 = p1 + 3;
+    } while (i1 < *(int *)(arg1 + 0x14));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A9F30
 // GATE: PASS -- 100 trials, 59 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 59
-XI_API void __cdecl SqVtx_ClearEntriesAlt(int param_1)
+XI_API void __cdecl SqVtx_ClearEntriesAlt(int arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
+  uint32_t *p1;
+  int i1;
   
-  if (*(int *)(param_1 + 100) == 0) {
-    orig::SqVtx_AllocateField(param_1,4,3);
+  if (*(int *)(arg1 + 100) == 0) {
+    orig::SqVtx_AllocateField(arg1,4,3);
   }
-  iVar2 = 0;
-  if (0 < *(int *)(param_1 + 0x14)) {
-    puVar1 = (uint32_t *)(*(int *)(param_1 + 100) + 8);
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x14)) {
+    p1 = (uint32_t *)(*(int *)(arg1 + 100) + 8);
     do {
-      puVar1[-2] = 0;
-      puVar1[-1] = 0;
-      *puVar1 = 0;
-      iVar2 = iVar2 + 1;
-      puVar1 = puVar1 + 3;
-    } while (iVar2 < *(int *)(param_1 + 0x14));
+      p1[-2] = 0;
+      p1[-1] = 0;
+      *p1 = 0;
+      i1 = i1 + 1;
+      p1 = p1 + 3;
+    } while (i1 < *(int *)(arg1 + 0x14));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A9FB0
 // GATE: PASS -- 100 trials, 64 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 64
-XI_API void __cdecl SqVtx_PackFloatsToBytes(int param_1, int param_2)
+XI_API void __cdecl SqVtx_PackFloatsToBytes(int arg1, int arg2)
 {
-  int iVar1;
-  uint8_t bVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  float *pfVar5;
-  uint8_t bVar6;
-  int64_t lVar7;
-  uint32_t local_10;
-  int local_c;
+  int i1;
+  uint8_t u1;
+  bits32 *p1;
+  int i2;
+  float *p2;
+  uint8_t u2;
+  int64_t i3;
+  uint32_t u3;
+  int i4;
   
-  if ((param_1 != 0) && (iVar1 = *(int *)(param_1 + 0x54 + param_2 * 4), iVar1 != 0)) {
-    puVar3 = orig::FUN_10275d80(1,*(int *)(param_1 + 0x14) << 2,
-                          s_C__dev_dancer_modules_sqBase_src_103be750,0x29a);
-    local_c = 0;
-    if (0 < *(int *)(param_1 + 0x14)) {
+  if ((arg1 != 0) && (i1 = *(int *)(arg1 + 0x54 + arg2 * 4), i1 != 0)) {
+    p1 = orig::game_10275D80(1,*(int *)(arg1 + 0x14) << 2,
+                          str_C__dev_dancer_modules_sqBase_src_103BE750,0x29a);
+    i4 = 0;
+    if (0 < *(int *)(arg1 + 0x14)) {
       do {
-        iVar4 = *(int *)(param_1 + 0x18 + param_2 * 4);
-        local_10 = 0;
-        if (0 < iVar4) {
-          bVar6 = 0;
-          pfVar5 = (float *)(iVar1 + iVar4 * local_c * 4);
+        i2 = *(int *)(arg1 + 0x18 + arg2 * 4);
+        u3 = 0;
+        if (0 < i2) {
+          u2 = 0;
+          p2 = (float *)(i1 + i2 * i4 * 4);
           do {
-            lVar7 = XI_CALL_ST0(0x10311C2Cu)((long double)*pfVar5 * (long double)255.0f);
-            pfVar5 = pfVar5 + 1;
-            bVar2 = bVar6 & 0x1f;
-            bVar6 = bVar6 + 8;
-            local_10 = local_10 | (int)(char)lVar7 << bVar2;
-            iVar4 = iVar4 + -1;
-          } while (iVar4 != 0);
+            i3 = XI_CALL_ST0(0x10311C2Cu)(*p2 * 255.0f);
+            p2 = p2 + 1;
+            u1 = u2 & 0x1f;
+            u2 = u2 + 8;
+            u3 = u3 | (int)(char)i3 << u1;
+            i2 = i2 + -1;
+          } while (i2 != 0);
         }
-        puVar3[local_c] = local_10;
-        local_c = local_c + 1;
-      } while (local_c < *(int *)(param_1 + 0x14));
+        p1[i4] = u3;
+        i4 = i4 + 1;
+      } while (i4 < *(int *)(arg1 + 0x14));
     }
-    *(undefined4 **)(param_1 + 0x54 + param_2 * 4) = puVar3;
-    *(undefined4 *)(param_1 + 0x18 + param_2 * 4) = 1;
-    orig::sqFree_v1(iVar1,s_C__dev_dancer_modules_sqBase_src_103be750,0x2a4);
+    *(bits32 **)(arg1 + 0x54 + arg2 * 4) = p1;
+    *(bits32 *)(arg1 + 0x18 + arg2 * 4) = 1;
+    orig::sqFree_v1(i1,str_C__dev_dancer_modules_sqBase_src_103BE750,0x2a4);
   }
   return;
 }

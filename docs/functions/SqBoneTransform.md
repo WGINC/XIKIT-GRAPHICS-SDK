@@ -17,5 +17,5 @@ Why the file has this name (data/unit_names.json): ComputeTransform, TransformPo
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `SqBoneTransform_TransformOrigin` calls `SqBoneTransform_TransformPoint`
-- `SqBoneTransform_ComputeTransform` calls `SqskSkeleton_FindBoneIndex`, `SqMatrixConnect_Forward1027EBD0`, `sqMatrix4_10280140`, `sub_1027EB10`, `M4fTransform`, `sub_1027A8A0`
-- `SqBoneTransform_TransformPoint` calls `SqskSkeleton_FindBoneIndex`, `SqMatrixConnect_Forward1027EBD0`, `sqMatrix4_10280140`, `sub_1027EB10`, `M4fTransform`
+- `SqBoneTransform_ComputeTransform` calls `SqskSkeleton_FindBoneIndex`, `SqMatrixConnect_Forward1027EBD0`, `sqMatrix4_10280140`, `game_1027EB10`, `M4fTransform`, `game_1027A8A0`
+- `SqBoneTransform_TransformPoint` calls `SqskSkeleton_FindBoneIndex`, `SqMatrixConnect_Forward1027EBD0`, `sqMatrix4_10280140`, `game_1027EB10`, `M4fTransform`

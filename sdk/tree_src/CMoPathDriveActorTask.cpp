@@ -12,339 +12,339 @@ char ** __cdecl CMoPathDriveActorTask::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1005E9C0
 // GATE: PASS -- 100 trials, 89 returned normally, 41 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 89
-undefined4 __thiscall CMoPathDriveActorTask::Update(void * self)
+bits32 __thiscall CMoPathDriveActorTask::Update(void * self)
 {
-  float *pfVar1;
-  int iVar2;
-  uint32_t uVar3;
-  void *pvVar4;
-  uint32_t uVar5;
-  uint8_t bVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  uint64_t uVar10;
+  float *p1;
+  int i1;
+  uint32_t u1;
+  void *p2;
+  uint32_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  long double f1;
+  long double f2;
+  uint64_t u5;
   char xi_frame[84] __attribute__((aligned(4)));
-  uint8_t ** &ppuVar11 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t * &puVar12 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
-  float  &fStack_44 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &uStack_40 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  &fStack_3c = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &fStack_38 = *reinterpret_cast<float  *>(xi_frame + 28);
-  uint32_t  &uStack_34 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  float  &fStack_30 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &fStack_2c = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &fStack_28 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &fStack_24 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &fStack_20 = *reinterpret_cast<float  *>(xi_frame + 52);
-  uint32_t  &uStack_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 56);
-  uint32_t  &uStack_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  uint32_t  &uStack_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
-  float  (&afStack_10)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 68);
+  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t * &p4 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 16);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 36);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
+  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
+  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 52);
+  uint32_t  &u8 = *reinterpret_cast<uint32_t  *>(xi_frame + 56);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
+  float  (&f11)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 68);
   
-  fVar8 = (long double)*(float *)((int)self + 0x78) - (long double)*(float *)(g_pResourceMng + 0xeb0);
-  bVar6 = NAN(fVar8) || NAN((long double)0.0f);
-  *(float *)((int)self + 0x78) = (float)fVar8;
-  if ((bVar6 || fVar8 < (long double)0.0f) == bVar6) {
-    fVar8 = fVar8 / (long double)*(float *)((int)self + 0x7c);
+  f1 = *(float *)((int)self + 0x78) - *(float *)(g_pResourceMng + 0xeb0);
+  u3 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+  *(float *)((int)self + 0x78) = (float)f1;
+  if ((u3 || f1 < 0.0f) == u3) {
+    f1 = f1 / *(float *)((int)self + 0x7c);
     if (*(char *)((int)self + 0xa2) != '\0') {
-      fVar8 = (long double)1.0f - fVar8;
+      f1 = 1.0f - f1;
     }
-    fStack_44 = (float)fVar8;
+    f3 = (float)f1;
     if (*(int *)((int)self + 0xa8) < 5) {
-      fVar8 = orig::FUN_10055ad0(fStack_44,*(int *)((int)self + 0xa8));
+      f1 = orig::game_10055AD0(f3,*(int *)((int)self + 0xa8));
     }
     else {
-      if (*(int *)((int)self + 0xa4) == 0) goto LAB_1005ed09;
-      puVar12 = *(uint32_t **)((int)self + 0xa4);
+      if (*(int *)((int)self + 0xa4) == 0) goto code_1005ED09;
+      p4 = *(uint32_t **)((int)self + 0xa4);
       if (*(char *)((int)self + 0xac) == '\0') {
-        if (puVar12 == (uint32_t *)0x0) {
-          pvVar4 = (void *)0x0;
+        if (p4 == (uint32_t *)0x0) {
+          p2 = (void *)0x0;
         }
         else {
-          pvVar4 = (void *)*puVar12;
+          p2 = (void *)*p4;
         }
-        fVar8 = orig::ElemCurve_Evaluate(pvVar4,fStack_44);
+        f1 = orig::ElemCurve_Evaluate(p2,f3);
       }
-      else if (puVar12 == (uint32_t *)0x0) {
-        fVar8 = orig::ElemCurve_EvaluateEaseInOut((void *)0x0,fStack_44);
+      else if (p4 == (uint32_t *)0x0) {
+        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)0x0,f3);
       }
       else {
-        fVar8 = orig::ElemCurve_EvaluateEaseInOut((void *)*puVar12,fStack_44);
+        f1 = orig::ElemCurve_EvaluateEaseInOut((void *)*p4,f3);
       }
     }
-    fStack_44 = (float)fVar8;
-LAB_1005ed09:
-    uVar5 = orig::CMoPathDriveActorTask_ApplyFraction(self,fStack_44);
+    f3 = (float)f1;
+code_1005ED09:
+    u2 = orig::CMoPathDriveActorTask_ApplyFraction(self,f3);
     *(uint8_t *)((int)self + 0xa0) = 1;
-    return uVar5 & 0xffffff00;
+    return u2 & 0xffffff00;
   }
-  if (*(char *)((int)self + 0xa0) == '\0') goto LAB_1005ec5a;
+  if (*(char *)((int)self + 0xa0) == '\0') goto code_1005EC5A;
   if (*(int **)((int)self + 0x74) == (int *)0x0) {
-    iVar2 = 0;
+    i1 = 0;
   }
   else {
-    iVar2 = **(int **)((int)self + 0x74);
+    i1 = **(int **)((int)self + 0x74);
   }
-  orig::CMoSpline_SetValue((void *)(iVar2 + 0x30),&fStack_20,0x3f800000);
-  bVar6 = true;
+  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&f10,0x3f800000);
+  u3 = true;
   if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
-    pfVar1 = (float *)orig::FUN_1005ed30(&fStack_20,afStack_10,(float *)((int)self + 0x80));
-    fStack_30 = *pfVar1;
-    fStack_2c = pfVar1[1];
-    fStack_28 = pfVar1[2];
-    fStack_24 = pfVar1[3];
-    uStack_40 = 0;
-    fVar8 = SQRT((long double)fStack_28 * (long double)fStack_28 + (long double)fStack_30 * (long double)fStack_30);
-    fVar9 = xi_castbits<long double>(fpatan((long double)fStack_28,(long double)fStack_30));
-    fVar9 = (long double)*(float *)((int)self + 0x94) - fVar9;
-    fStack_3c = (float)fVar9;
-    if (fVar9 > (long double)3.141499996185302734375f) {
-      fStack_3c = (float)((long double)fStack_3c - (long double)6.28299999237060546875f);
+    p1 = (float *)orig::game_1005ED30(&f10,f11,(float *)((int)self + 0x80));
+    f6 = *p1;
+    f7 = p1[1];
+    f8 = p1[2];
+    f9 = p1[3];
+    u6 = 0;
+    f1 = x87_fsqrt(f8 * f8 + f6 * f6);
+    f2 = bit_cast<long double>(x87_fpatan(f8,f6));
+    f2 = *(float *)((int)self + 0x94) - f2;
+    f4 = (float)f2;
+    if (f2 > 3.141499996185302734375f) {
+      f4 = (float)(f4 - 6.28299999237060546875f);
     }
-    bVar7 = NAN((long double)fStack_3c) || NAN((long double)(-3.141499996185302734375f));
-    if ((bVar7 || (long double)fStack_3c < (long double)(-3.141499996185302734375f)) != bVar7) {
-      fStack_3c = (float)((long double)fStack_3c + (long double)6.28299999237060546875f);
+    u4 = ((f4) != (f4)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u4 || f4 < (-3.141499996185302734375f)) != u4) {
+      f4 = (float)(f4 + 6.28299999237060546875f);
     }
     if ((*(uint8_t *)((int)self + 0x9c) & 2) == 0) {
-      fVar9 = xi_castbits<long double>(fpatan((long double)fStack_2c,fVar8));
-      fStack_38 = (float)fVar9;
+      f2 = bit_cast<long double>(x87_fpatan(f7,f1));
+      f5 = (float)f2;
     }
-    bVar7 = NAN(fVar8) || NAN((long double)0.100000001490116119384765625f);
-    uStack_34 = 0x3f800000;
-    if ((bVar7 || fVar8 < (long double)0.100000001490116119384765625f) != bVar7) {
-      bVar6 = false;
+    u4 = ((f1) != (f1)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
+    u7 = 0x3f800000;
+    if ((u4 || f1 < 0.100000001490116119384765625f) != u4) {
+      u3 = false;
     }
   }
-  pvVar4 = (void *)((int)self + 0x34);
-  uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-  if ((int)uVar10 != 0) {
-    ppuVar11 = &PTR_s_CXiControlActor_1032df68;
-    uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-    uVar10 = orig::CYyObject_IsKindOf((void *)uVar10,(int)ppuVar11);
-    if ((char)uVar10 != '\0') {
+  p2 = (void *)((int)self + 0x34);
+  u5 = orig::CMoAttachments_GetCaster_v1(p2);
+  if ((int)u5 != 0) {
+    p3 = &g_1032DF68;
+    u5 = orig::CMoAttachments_GetCaster_v1(p2);
+    u5 = orig::CYyObject_IsKindOf((void *)u5,(int)p3);
+    if ((char)u5 != '\0') {
       if (*(char *)((int)self + 0xa1) == '\0') {
         if (*(char *)((int)self + 0xa0) != '\0') {
-          pfVar1 = (float *)orig::FUN_1005ed30(&fStack_20,afStack_10,(float *)((int)self + 0x80));
-          fStack_30 = *pfVar1;
-          fStack_2c = pfVar1[1];
-          fStack_28 = pfVar1[2];
-          fStack_24 = pfVar1[3];
-          uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-          pfVar1 = (float *)((int (__thiscall *)(void *))((**(code **)(*(int *)uVar10 + 0x1bc))))((void *)((int *)uVar10));
-          orig::FUN_1005ed90(&fStack_30,pfVar1);
-          pfVar1 = &fStack_30;
-          goto LAB_1005eb95;
+          p1 = (float *)orig::game_1005ED30(&f10,f11,(float *)((int)self + 0x80));
+          f6 = *p1;
+          f7 = p1[1];
+          f8 = p1[2];
+          f9 = p1[3];
+          u5 = orig::CMoAttachments_GetCaster_v1(p2);
+          p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u5 + 0x1bc))))((void *)((int *)u5));
+          orig::game_1005ED90(&f6,p1);
+          p1 = &f6;
+          goto code_1005EB95;
         }
       }
       else {
-        pfVar1 = &fStack_20;
-LAB_1005eb95:
-        uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-        orig::CXiControlActor_SetVec4((void *)uVar10,pfVar1);
+        p1 = &f10;
+code_1005EB95:
+        u5 = orig::CMoAttachments_GetCaster_v1(p2);
+        orig::CXiControlActor_SetVec4((void *)u5,p1);
       }
       if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
         if (*(char *)((int)self + 0xa3) == '\0') {
-          ppuVar11 = &XiModelActor_classdesc;
-          uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-          uVar10 = orig::CYyObject_IsKindOf((void *)uVar10,(int)ppuVar11);
-          if ((char)uVar10 != '\0') {
-            puVar12 = &uStack_40;
-            uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-            orig::FUN_1005eec0((void *)uVar10,puVar12);
+          p3 = &XiModelActor_classdesc;
+          u5 = orig::CMoAttachments_GetCaster_v1(p2);
+          u5 = orig::CYyObject_IsKindOf((void *)u5,(int)p3);
+          if ((char)u5 != '\0') {
+            p4 = &u6;
+            u5 = orig::CMoAttachments_GetCaster_v1(p2);
+            orig::game_1005EEC0((void *)u5,p4);
           }
-          puVar12 = &uStack_40;
-          uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-          orig::FUN_1005ee90((void *)uVar10,puVar12);
-          puVar12 = &uStack_40;
-          uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-          orig::FUN_1005edc0((void *)uVar10,puVar12);
+          p4 = &u6;
+          u5 = orig::CMoAttachments_GetCaster_v1(p2);
+          orig::game_1005EE90((void *)u5,p4);
+          p4 = &u6;
+          u5 = orig::CMoAttachments_GetCaster_v1(p2);
+          orig::game_1005EDC0((void *)u5,p4);
           *(uint8_t *)((int)self + 0xa3) = 1;
         }
-        else if (bVar6) {
-          puVar12 = &uStack_40;
-          uVar10 = orig::CMoAttachments_GetCaster_v1(pvVar4);
-          orig::FUN_1005ee90((void *)uVar10,puVar12);
+        else if (u3) {
+          p4 = &u6;
+          u5 = orig::CMoAttachments_GetCaster_v1(p2);
+          orig::game_1005EE90((void *)u5,p4);
         }
       }
     }
   }
-  *(float *)((int)self + 0x80) = fStack_20;
-  *(uint32_t *)((int)self + 0x84) = uStack_1c;
-  *(uint32_t *)((int)self + 0x88) = uStack_18;
-  *(uint32_t *)((int)self + 0x8c) = uStack_14;
-LAB_1005ec5a:
+  *(float *)((int)self + 0x80) = f10;
+  *(uint32_t *)((int)self + 0x84) = u8;
+  *(uint32_t *)((int)self + 0x88) = u9;
+  *(uint32_t *)((int)self + 0x8c) = u10;
+code_1005EC5A:
   if (*(int **)((int)self + 0x74) == (int *)0x0) {
-    iVar2 = 0;
+    i1 = 0;
   }
   else {
-    iVar2 = **(int **)((int)self + 0x74);
+    i1 = **(int **)((int)self + 0x74);
   }
-  orig::CMoSpline_ReleaseRef_v1((void *)(iVar2 + 0x30));
-  uVar3 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+  orig::CMoSpline_ReleaseRef_v1((void *)(i1 + 0x30));
+  u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1005EEF0
 // GATE: PASS -- 100 trials, 80 returned normally, 12 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 80
-undefined4 __thiscall CMoPathDriveActorTask::ApplyFraction(void * self, undefined4 param_1)
+bits32 __thiscall CMoPathDriveActorTask::ApplyFraction(void * self, bits32 arg2)
 {
-  void *this_00;
-  int iVar1;
-  float *pfVar2;
-  float *pfVar3;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  long double fVar7;
-  uint64_t uVar8;
+  void *obj1;
+  int i1;
+  float *p1;
+  float *p2;
+  uint8_t u1;
+  uint8_t u2;
+  long double f1;
+  long double f2;
+  uint64_t u3;
   char xi_frame[80] __attribute__((aligned(4)));
-  uint8_t ** &ppuVar9 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
-  uint32_t  &local_40 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  &local_3c = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_38 = *reinterpret_cast<float  *>(xi_frame + 24);
-  uint32_t  &local_34 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &local_30 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &local_2c = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &local_28 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &local_24 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 52);
-  float  &local_18 = *reinterpret_cast<float  *>(xi_frame + 56);
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 60);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 64);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 68);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 72);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 76);
+  uint8_t ** &p3 = *reinterpret_cast<uint8_t ** *>(xi_frame + 0);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 24);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 32);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 36);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
+  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
+  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 52);
+  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 56);
+  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 60);
+  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 64);
+  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 68);
+  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 72);
+  float  &f16 = *reinterpret_cast<float  *>(xi_frame + 76);
   
   if (*(int **)((int)self + 0x74) == (int *)0x0) {
-    iVar1 = 0;
+    i1 = 0;
   }
   else {
-    iVar1 = **(int **)((int)self + 0x74);
+    i1 = **(int **)((int)self + 0x74);
   }
-  orig::CMoSpline_SetValue((void *)(iVar1 + 0x30),&local_20,param_1);
-  bVar5 = true;
+  orig::CMoSpline_SetValue((void *)(i1 + 0x30),&f9,arg2);
+  u2 = true;
   if ((*(uint32_t *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
-    local_40 = 0;
-    local_30 = (float)((long double)local_20 - (long double)*(float *)((int)self + 0x80));
-    local_2c = (float)((long double)local_1c - (long double)*(float *)((int)self + 0x84));
-    local_28 = (float)((long double)local_18 - (long double)*(float *)((int)self + 0x88));
-    fVar6 = SQRT((long double)local_28 * (long double)local_28 + (long double)local_30 * (long double)local_30);
-    fVar7 = xi_castbits<long double>(fpatan((long double)local_28,(long double)local_30));
-    fVar7 = (long double)*(float *)((int)self + 0x94) - fVar7;
-    local_3c = (float)fVar7;
-    if (fVar7 > (long double)3.141499996185302734375f) {
-      local_3c = (float)((long double)local_3c - (long double)6.28299999237060546875f);
+    u4 = 0;
+    f5 = (float)(f9 - *(float *)((int)self + 0x80));
+    f6 = (float)(f10 - *(float *)((int)self + 0x84));
+    f7 = (float)(f11 - *(float *)((int)self + 0x88));
+    f1 = x87_fsqrt(f7 * f7 + f5 * f5);
+    f2 = bit_cast<long double>(x87_fpatan(f7,f5));
+    f2 = *(float *)((int)self + 0x94) - f2;
+    f3 = (float)f2;
+    if (f2 > 3.141499996185302734375f) {
+      f3 = (float)(f3 - 6.28299999237060546875f);
     }
-    bVar4 = NAN((long double)local_3c) || NAN((long double)(-3.141499996185302734375f));
-    if ((bVar4 || (long double)local_3c < (long double)(-3.141499996185302734375f)) != bVar4) {
-      local_3c = (float)((long double)local_3c + (long double)6.28299999237060546875f);
+    u1 = ((f3) != (f3)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u1 || f3 < (-3.141499996185302734375f)) != u1) {
+      f3 = (float)(f3 + 6.28299999237060546875f);
     }
     if ((*(uint32_t *)((int)self + 0x9c) & 2) == 0) {
-      fVar7 = xi_castbits<long double>(fpatan((long double)local_2c,fVar6));
-      local_38 = (float)fVar7;
+      f2 = bit_cast<long double>(x87_fpatan(f6,f1));
+      f4 = (float)f2;
     }
-    bVar4 = NAN(fVar6) || NAN((long double)0.100000001490116119384765625f);
-    local_34 = 0x3f800000;
-    if ((bVar4 || fVar6 < (long double)0.100000001490116119384765625f) != bVar4) {
-      bVar5 = false;
+    u1 = ((f1) != (f1)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
+    u5 = 0x3f800000;
+    if ((u1 || f1 < 0.100000001490116119384765625f) != u1) {
+      u2 = false;
     }
   }
-  this_00 = (void *)((int)self + 0x34);
-  uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-  if ((int)uVar8 == 0) goto LAB_1005f289;
-  ppuVar9 = &PTR_s_CXiControlActor_1032df68;
-  uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-  uVar8 = orig::CYyObject_IsKindOf((void *)uVar8,(int)ppuVar9);
-  if ((char)uVar8 == '\0') goto LAB_1005f289;
+  obj1 = (void *)((int)self + 0x34);
+  u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+  if ((int)u3 == 0) goto code_1005F289;
+  p3 = &g_1032DF68;
+  u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+  u3 = orig::CYyObject_IsKindOf((void *)u3,(int)p3);
+  if ((char)u3 == '\0') goto code_1005F289;
   if (*(char *)((int)self + 0xa1) == '\0') {
     if (*(char *)((int)self + 0xa0) != '\0') {
-      local_30 = (float)((long double)local_20 - (long double)*(float *)((int)self + 0x80));
-      local_2c = (float)((long double)local_1c - (long double)*(float *)((int)self + 0x84));
-      local_28 = (float)((long double)local_18 - (long double)*(float *)((int)self + 0x88));
-      local_24 = (float)((long double)local_14 - (long double)*(float *)((int)self + 0x8c));
-      local_10 = local_30;
-      local_c = local_2c;
-      local_8 = local_28;
-      local_4 = local_24;
-      uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-      pfVar2 = (float *)((int (__thiscall *)(void *))((**(code **)(*(int *)uVar8 + 0x1bc))))((void *)((int *)uVar8));
-      local_30 = (float)((long double)local_30 + (long double)*pfVar2);
-      local_2c = (float)((long double)local_2c + (long double)pfVar2[1]);
-      local_28 = (float)((long double)local_28 + (long double)pfVar2[2]);
-      pfVar3 = &local_30;
-      local_24 = (float)((long double)local_24 + (long double)pfVar2[3]);
-      goto LAB_1005f0d9;
+      f5 = (float)(f9 - *(float *)((int)self + 0x80));
+      f6 = (float)(f10 - *(float *)((int)self + 0x84));
+      f7 = (float)(f11 - *(float *)((int)self + 0x88));
+      f8 = (float)(f12 - *(float *)((int)self + 0x8c));
+      f13 = f5;
+      f14 = f6;
+      f15 = f7;
+      f16 = f8;
+      u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+      p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u3 + 0x1bc))))((void *)((int *)u3));
+      f5 = (float)(f5 + *p1);
+      f6 = (float)(f6 + p1[1]);
+      f7 = (float)(f7 + p1[2]);
+      p2 = &f5;
+      f8 = (float)(f8 + p1[3]);
+      goto code_1005F0D9;
     }
   }
   else {
-    pfVar3 = &local_20;
-LAB_1005f0d9:
-    uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-    orig::CXiControlActor_SetVec4((void *)uVar8,pfVar3);
+    p2 = &f9;
+code_1005F0D9:
+    u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+    orig::CXiControlActor_SetVec4((void *)u3,p2);
   }
   if ((*(int *)((int)self + 0x9c) != 0) && (*(char *)((int)self + 0xa0) != '\0')) {
     if (*(char *)((int)self + 0xa3) == '\0') {
-      ppuVar9 = &XiModelActor_classdesc;
-      uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-      uVar8 = orig::CYyObject_IsKindOf((void *)uVar8,(int)ppuVar9);
-      if ((char)uVar8 != '\0') {
-        uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-        iVar1 = (int)uVar8;
-        *(uint32_t *)(iVar1 + 0x744) = local_40;
-        *(float *)(iVar1 + 0x748) = local_3c;
-        *(float *)(iVar1 + 0x74c) = local_38;
-        *(uint32_t *)(iVar1 + 0x750) = local_34;
+      p3 = &XiModelActor_classdesc;
+      u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+      u3 = orig::CYyObject_IsKindOf((void *)u3,(int)p3);
+      if ((char)u3 != '\0') {
+        u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+        i1 = (int)u3;
+        *(uint32_t *)(i1 + 0x744) = u4;
+        *(float *)(i1 + 0x748) = f3;
+        *(float *)(i1 + 0x74c) = f4;
+        *(uint32_t *)(i1 + 0x750) = u5;
       }
-      uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-      iVar1 = (int)uVar8;
-      *(uint32_t *)(iVar1 + 0xe4) = local_40;
-      *(float *)(iVar1 + 0xe8) = local_3c;
-      *(float *)(iVar1 + 0xec) = local_38;
-      *(uint32_t *)(iVar1 + 0xf0) = local_34;
-      uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-      iVar1 = (int)uVar8;
-      pfVar3 = (float *)(iVar1 + 0x44);
-      orig::Vec4_Copy_v1(pfVar3,&local_40);
-      if ((long double)*pfVar3 > (long double)3.141499996185302734375f) {
-        *pfVar3 = (float)((long double)*pfVar3 - (long double)6.28299999237060546875f);
+      u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+      i1 = (int)u3;
+      *(uint32_t *)(i1 + 0xe4) = u4;
+      *(float *)(i1 + 0xe8) = f3;
+      *(float *)(i1 + 0xec) = f4;
+      *(uint32_t *)(i1 + 0xf0) = u5;
+      u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+      i1 = (int)u3;
+      p2 = (float *)(i1 + 0x44);
+      orig::Vec4_Copy_v1(p2,&u4);
+      if (*p2 > 3.141499996185302734375f) {
+        *p2 = (float)(*p2 - 6.28299999237060546875f);
       }
-      bVar5 = NAN((long double)*pfVar3) || NAN((long double)(-3.141499996185302734375f));
-      if ((bVar5 || (long double)*pfVar3 < (long double)(-3.141499996185302734375f)) != bVar5) {
-        *pfVar3 = (float)((long double)*pfVar3 + (long double)6.28299999237060546875f);
+      u2 = ((*p2) != (*p2)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+      if ((u2 || *p2 < (-3.141499996185302734375f)) != u2) {
+        *p2 = (float)(*p2 + 6.28299999237060546875f);
       }
-      if ((long double)*(float *)(iVar1 + 0x48) > (long double)3.141499996185302734375f) {
-        *(float *)(iVar1 + 0x48) = (float)((long double)*(float *)(iVar1 + 0x48) - (long double)6.28299999237060546875f);
+      if (*(float *)(i1 + 0x48) > 3.141499996185302734375f) {
+        *(float *)(i1 + 0x48) = (float)(*(float *)(i1 + 0x48) - 6.28299999237060546875f);
       }
-      bVar5 = NAN((long double)*(float *)(iVar1 + 0x48)) || NAN((long double)(-3.141499996185302734375f));
-      if ((bVar5 || (long double)*(float *)(iVar1 + 0x48) < (long double)(-3.141499996185302734375f)) != bVar5) {
-        *(float *)(iVar1 + 0x48) = (float)((long double)*(float *)(iVar1 + 0x48) + (long double)6.28299999237060546875f);
+      u2 = ((*(float *)(i1 + 0x48)) != (*(float *)(i1 + 0x48))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+      if ((u2 || *(float *)(i1 + 0x48) < (-3.141499996185302734375f)) != u2) {
+        *(float *)(i1 + 0x48) = (float)(*(float *)(i1 + 0x48) + 6.28299999237060546875f);
       }
-      if ((long double)*(float *)(iVar1 + 0x4c) > (long double)3.141499996185302734375f) {
-        *(float *)(iVar1 + 0x4c) = (float)((long double)*(float *)(iVar1 + 0x4c) - (long double)6.28299999237060546875f);
+      if (*(float *)(i1 + 0x4c) > 3.141499996185302734375f) {
+        *(float *)(i1 + 0x4c) = (float)(*(float *)(i1 + 0x4c) - 6.28299999237060546875f);
       }
-      bVar5 = NAN((long double)*(float *)(iVar1 + 0x4c)) || NAN((long double)(-3.141499996185302734375f));
-      if ((bVar5 || (long double)*(float *)(iVar1 + 0x4c) < (long double)(-3.141499996185302734375f)) != bVar5) {
-        *(float *)(iVar1 + 0x4c) = (float)((long double)*(float *)(iVar1 + 0x4c) + (long double)6.28299999237060546875f);
+      u2 = ((*(float *)(i1 + 0x4c)) != (*(float *)(i1 + 0x4c))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+      if ((u2 || *(float *)(i1 + 0x4c) < (-3.141499996185302734375f)) != u2) {
+        *(float *)(i1 + 0x4c) = (float)(*(float *)(i1 + 0x4c) + 6.28299999237060546875f);
       }
       *(uint8_t *)((int)self + 0xa3) = 1;
     }
-    else if (bVar5) {
-      uVar8 = orig::CMoAttachments_GetCaster_v1(this_00);
-      iVar1 = (int)uVar8;
-      *(uint32_t *)(iVar1 + 0xe4) = local_40;
-      *(float *)(iVar1 + 0xe8) = local_3c;
-      *(float *)(iVar1 + 0xec) = local_38;
-      *(uint32_t *)(iVar1 + 0xf0) = local_34;
+    else if (u2) {
+      u3 = orig::CMoAttachments_GetCaster_v1(obj1);
+      i1 = (int)u3;
+      *(uint32_t *)(i1 + 0xe4) = u4;
+      *(float *)(i1 + 0xe8) = f3;
+      *(float *)(i1 + 0xec) = f4;
+      *(uint32_t *)(i1 + 0xf0) = u5;
     }
   }
-LAB_1005f289:
-  *(float *)((int)self + 0x80) = local_20;
-  *(float *)((int)self + 0x84) = local_1c;
-  *(float *)((int)self + 0x88) = local_18;
-  *(float *)((int)self + 0x8c) = local_14;
-  return local_18;
+code_1005F289:
+  *(float *)((int)self + 0x80) = f9;
+  *(float *)((int)self + 0x84) = f10;
+  *(float *)((int)self + 0x88) = f11;
+  *(float *)((int)self + 0x8c) = f12;
+  return f11;
 }
 
 // FUNCTION: FFXIMAIN 0x100630A0
@@ -356,8 +356,8 @@ int CMoPathDriveActorTask::Slot11CallGetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x100630B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoPathDriveActorTask::Slot12ThunkDeletingDtor(int a1)
+int CMoPathDriveActorTask::Slot12ThunkDeletingDtor(int arg1)
 {
   Vt_1032B9D0 * self = reinterpret_cast<Vt_1032B9D0 *>(this);  // byte-exact view for the rest
-  return orig::CMoLockColorDriveTask_ScalarDeletingDtor((int)(self - 13), a1);
+  return orig::CMoLockColorDriveTask_ScalarDeletingDtor((int)(self - 13), arg1);
 }

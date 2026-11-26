@@ -4,27 +4,27 @@
 
 // FUNCTION: FFXIMAIN 0x1027D650
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API void __cdecl SqmoUtil_MarkSlot(int param_1, int param_2, int param_3, uint8_t * param_4)
+XI_API void __cdecl SqmoUtil_MarkSlot(int arg1, int arg2, int arg3, uint8_t * arg4)
 {
-  int iVar1;
+  int i1;
   
-  if ((param_3 < 0) || (param_2 <= param_3)) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqMotion_s_103b4584,0x21e
+  if ((arg3 < 0) || (arg2 <= arg3)) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqMotion_s_103B4584,0x21e
                  );
-    orig::sqDebugPrintf_v1(s_entry__d_out_of_range__d_103b45b4,param_3,param_2);
+    orig::sqDebugPrintf_v1(str_entry__d_out_of_range__d_103B45B4,arg3,arg2);
   }
   else {
-    iVar1 = 0;
-    *(uint8_t *)(param_1 + param_3) = 0xff;
-    *param_4 = 0;
-    if (0 < param_2) {
+    i1 = 0;
+    *(uint8_t *)(arg1 + arg3) = 0xff;
+    *arg4 = 0;
+    if (0 < arg2) {
       do {
-        if (*(char *)(iVar1 + param_1) == '\0') {
-          *param_4 = 0xff;
+        if (*(char *)(i1 + arg1) == '\0') {
+          *arg4 = 0xff;
           return;
         }
-        iVar1 = iVar1 + 1;
-      } while (iVar1 < param_2);
+        i1 = i1 + 1;
+      } while (i1 < arg2);
       return;
     }
   }

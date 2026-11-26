@@ -7,12 +7,12 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CXiTimerLow::Init(void * self)
 {
-  DWORD DVar1;
+  DWORD u1;
   
   orig::CXiTimer_Constructor(self);
-  *(uint8_t ***)self = &PTR_CXiTimerLow_GetRuntimeClass_1032a118;
-  DVar1 = timeGetTime();
-  *(DWORD *)((int)self + 0xc) = DVar1;
+  *(uint8_t ***)self = &ptr_to_CXiTimerLow_GetRuntimeClass_1032A118;
+  u1 = timeGetTime();
+  *(DWORD *)((int)self + 0xc) = u1;
   *(uint32_t *)((int)self + 0x14) = 0;
   *(uint32_t *)((int)self + 0x18) = 0;
   *(uint32_t *)((int)self + 0x1c) = 0;
@@ -22,16 +22,16 @@ void * __thiscall CXiTimerLow::Init(void * self)
 
 // FUNCTION: FFXIMAIN 0x100194F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiTimerLow::AccumulateElapsed(void * self)
+bits32 __thiscall CXiTimerLow::AccumulateElapsed(void * self)
 {
-  int iVar1;
-  DWORD DVar2;
+  int i1;
+  DWORD u1;
   
-  DVar2 = timeGetTime();
-  iVar1 = *(int *)((int)self + 0xc);
-  *(DWORD *)((int)self + 0xc) = DVar2;
+  u1 = timeGetTime();
+  i1 = *(int *)((int)self + 0xc);
+  *(DWORD *)((int)self + 0xc) = u1;
   *(DWORD *)((int)self + 0x14) =
-       *(int *)((int)self + 0x14) + ((DVar2 - iVar1) - *(int *)((int)self + 0x1c));
+       *(int *)((int)self + 0x14) + ((u1 - i1) - *(int *)((int)self + 0x1c));
   *(uint32_t *)((int)self + 0x18) = 0;
   *(uint32_t *)((int)self + 0x1c) = 0;
   return 0;
@@ -41,24 +41,24 @@ undefined4 __thiscall CXiTimerLow::AccumulateElapsed(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 long double __thiscall CXiTimerLow::GetFrameRate(void * self)
 {
-  DWORD DVar1;
-  uint32_t uVar2;
+  DWORD u1;
+  uint32_t u2;
   
-  DVar1 = timeGetTime();
-  uVar2 = (DVar1 - *(int *)((int)self + 0x1c)) - *(int *)((int)self + 0xc);
-  if (uVar2 == 0) {
-    uVar2 = 1;
+  u1 = timeGetTime();
+  u2 = (u1 - *(int *)((int)self + 0x1c)) - *(int *)((int)self + 0xc);
+  if (u2 == 0) {
+    u2 = 1;
   }
-  *(float *)((int)self + 4) = (float)((long double)1e+03f / (long double)uVar2);
-  return (long double)1e+03f / (long double)uVar2;
+  *(float *)((int)self + 4) = (float)(1e+03f / u2);
+  return 1e+03f / u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10019590
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 long double __thiscall CXiTimerLow::GetElapsed(void * self)
 {
-  DWORD DVar1;
+  DWORD u1;
   
-  DVar1 = timeGetTime();
-  return (long double)((DVar1 - *(int *)((int)self + 0x1c)) - *(int *)((int)self + 0xc));
+  u1 = timeGetTime();
+  return ((u1 - *(int *)((int)self + 0x1c)) - *(int *)((int)self + 0xc));
 }

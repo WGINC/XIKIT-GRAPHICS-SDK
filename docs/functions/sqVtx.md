@@ -22,4 +22,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqVtx_AllocateField` calls `sqDebugPrintf`, `SqMem_AllocZeroed`
 - `SqVtx_ClearEntries` calls `SqVtx_AllocateField`
 - `SqVtx_ClearEntriesAlt` calls `SqVtx_AllocateField`
-- `SqVtx_PackFloatsToBytes` calls `sub_10275D80`, `sub_10311C2C`, `sqFree`
+- `SqVtx_PackFloatsToBytes` calls `game_10275D80`, `game_10311C2C`, `sqFree`

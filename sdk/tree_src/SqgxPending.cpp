@@ -4,32 +4,32 @@
 
 // FUNCTION: FFXIMAIN 0x1029BCD0
 // GATE: PASS -- 100 trials, 50 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 50
-XI_API void __cdecl Sqgx_CopyBlockToContext(int param_1)
+XI_API void __cdecl Sqgx_CopyBlockToContext(int arg1)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  int iVar3;
+  int i1;
+  uint32_t *p1;
+  int i2;
   
-  iVar3 = 0x18 - param_1;
-  puVar2 = (uint32_t *)(param_1 + 8);
-  iVar1 = -param_1;
-  param_1 = 0x10;
+  i2 = 0x18 - arg1;
+  p1 = (uint32_t *)(arg1 + 8);
+  i1 = -arg1;
+  arg1 = 0x10;
   do {
-    *(uint32_t *)((int)puVar2 + g_pSqgxContext_as_s32 + iVar1 + 0x14) = puVar2[-2];
-    *(uint32_t *)((int)puVar2 + g_pSqgxContext_as_s32 + iVar3) = puVar2[-1];
-    *(uint32_t *)((int)puVar2 + g_pSqgxContext_as_s32 + iVar1 + 0x1c) = *puVar2;
-    *(uint32_t *)((int)puVar2 + g_pSqgxContext_as_s32 + iVar1 + 0x20) = puVar2[1];
-    param_1 = param_1 + -1;
-    puVar2 = puVar2 + 4;
-  } while (param_1 != 0);
+    *(uint32_t *)((int)p1 + g_pSqgxContext_as_s32 + i1 + 0x14) = p1[-2];
+    *(uint32_t *)((int)p1 + g_pSqgxContext_as_s32 + i2) = p1[-1];
+    *(uint32_t *)((int)p1 + g_pSqgxContext_as_s32 + i1 + 0x1c) = *p1;
+    *(uint32_t *)((int)p1 + g_pSqgxContext_as_s32 + i1 + 0x20) = p1[1];
+    arg1 = arg1 + -1;
+    p1 = p1 + 4;
+  } while (arg1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1029BD40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sqgx_SetFloat18(float param_1)
+XI_API void __cdecl Sqgx_SetFloat18(float arg1)
 {
-  *(float *)(g_pSqgxContext_as_s32 + 0x18) = (float)(long double)param_1;
+  *(float *)(g_pSqgxContext_as_s32 + 0x18) = (float)arg1;
   return;
 }
 
@@ -37,32 +37,32 @@ XI_API void __cdecl Sqgx_SetFloat18(float param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Sqgx_ResetPendingList(void)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
   *(uint32_t *)(g_pSqgxContext_as_s32 + 0xaec) = 0;
-  iVar1 = 0xaf0;
+  i1 = 0xaf0;
   do {
-    iVar2 = iVar1 + 4;
-    *(uint32_t *)(iVar1 + g_pSqgxContext_as_s32) = 0;
-    iVar1 = iVar2;
-  } while (iVar2 < 0xb18);
+    i2 = i1 + 4;
+    *(uint32_t *)(i1 + g_pSqgxContext_as_s32) = 0;
+    i1 = i2;
+  } while (i2 < 0xb18);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1029C1B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sqgx_AddPendingEntry(undefined4 param_1, undefined4 * param_2, float param_3)
+XI_API void __cdecl Sqgx_AddPendingEntry(bits32 arg1, bits32 * arg2, float arg3)
 {
   if (*(int *)(g_pSqgxContext_as_s32 + 0xaec) == 10) {
-    orig::sqDebugPrintf_v1(s_Error__cannot_allocate_more_than_103bc744,10);
+    orig::sqDebugPrintf_v1(str_Error__cannot_allocate_more_than_103BC744,10);
   }
   *(float *)(g_pSqgxContext_as_s32 + 0xa4c + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 4) =
-       (float)(long double)param_3;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + (*(int *)(g_pSqgxContext_as_s32 + 0xaec) + 0xdf) * 0xc) = *param_2;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa78 + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 0xc) = param_2[1];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa7c + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 0xc) = param_2[2];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xaf0 + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 4) = param_1;
+       (float)arg3;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + (*(int *)(g_pSqgxContext_as_s32 + 0xaec) + 0xdf) * 0xc) = *arg2;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa78 + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 0xc) = arg2[1];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa7c + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 0xc) = arg2[2];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xaf0 + *(int *)(g_pSqgxContext_as_s32 + 0xaec) * 4) = arg1;
   *(int *)(g_pSqgxContext_as_s32 + 0xaec) = *(int *)(g_pSqgxContext_as_s32 + 0xaec) + 1;
   return;
 }

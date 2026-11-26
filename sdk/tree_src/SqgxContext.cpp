@@ -4,13 +4,13 @@
 
 // FUNCTION: FFXIMAIN 0x10282350
 // GATE: PASS -- 100 trials, 100 returned normally, 73 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxZTest(int a1)
+XI_API int * __cdecl sqgxZTest(int arg1)
 {
   int *result;
   result = g_pSqgxContext;
-  if ( a1 != g_pSqgxContext[570] )
+  if ( arg1 != g_pSqgxContext[570] )
   {
-    g_pSqgxContext[570] = a1;
+    g_pSqgxContext[570] = arg1;
     g_sqgxRenderStateDirty = 1;
     if ( g_pSqgxContext[570] != 0 )
       return (int *)g_pDancerDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
@@ -22,12 +22,12 @@ XI_API int * __cdecl sqgxZTest(int a1)
 
 // FUNCTION: FFXIMAIN 0x102823B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxAlphaDstTest(int param_1, int param_2)
+XI_API void __cdecl sqgxAlphaDstTest(int arg1, int arg2)
 {
-  if ((param_1 != *(int *)(g_pSqgxContext_as_s32 + 0x8f0)) || (param_2 != *(int *)(g_pSqgxContext_as_s32 + 0x8f4))
+  if ((arg1 != *(int *)(g_pSqgxContext_as_s32 + 0x8f0)) || (arg2 != *(int *)(g_pSqgxContext_as_s32 + 0x8f4))
      ) {
-    *(int *)(g_pSqgxContext_as_s32 + 0x8f0) = param_1;
-    *(int *)(g_pSqgxContext_as_s32 + 0x8f4) = param_2;
+    *(int *)(g_pSqgxContext_as_s32 + 0x8f0) = arg1;
+    *(int *)(g_pSqgxContext_as_s32 + 0x8f4) = arg2;
     g_sqgxRenderStateDirty_as_v0 = 1;
   }
   return;
@@ -35,17 +35,17 @@ XI_API void __cdecl sqgxAlphaDstTest(int param_1, int param_2)
 
 // FUNCTION: FFXIMAIN 0x102823F0
 // GATE: PASS -- 100 trials, 100 returned normally, 279 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqgxAlphaTest(unsigned int a1, unsigned int a2)
+XI_API int __cdecl sqgxAlphaTest(unsigned int arg1, unsigned int arg2)
 {
   int result;
-  result = a2;
-  if ( a1 != g_pSqgxContext[571] || a2 != g_pSqgxContext[574] )
+  result = arg2;
+  if ( arg1 != g_pSqgxContext[571] || arg2 != g_pSqgxContext[574] )
   {
-    g_pSqgxContext[571] = a1;
-    g_pSqgxContext[574] = a2;
+    g_pSqgxContext[571] = arg1;
+    g_pSqgxContext[574] = arg2;
     g_sqgxRenderStateDirty = 1;
-    g_pDancerDevice->SetRenderState(D3DRS_ALPHAREF, a2);
-    g_pDancerDevice->SetRenderState(D3DRS_ALPHATESTENABLE, a1);
+    g_pDancerDevice->SetRenderState(D3DRS_ALPHAREF, arg2);
+    g_pDancerDevice->SetRenderState(D3DRS_ALPHATESTENABLE, arg1);
     return g_pDancerDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
   }
   return result;
@@ -53,17 +53,17 @@ XI_API int __cdecl sqgxAlphaTest(unsigned int a1, unsigned int a2)
 
 // FUNCTION: FFXIMAIN 0x10282470
 // GATE: PASS -- 100 trials, 100 returned normally, 96 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxZMask(int a1)
+XI_API int * __cdecl sqgxZMask(int arg1)
 {
   int *result;
   result = g_pSqgxContext;
-  if ( a1 != g_pSqgxContext[581] )
+  if ( arg1 != g_pSqgxContext[581] )
   {
-    if ( a1 != 0 )
+    if ( arg1 != 0 )
     {
       g_pDancerDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
       result = g_pSqgxContext;
-      g_pSqgxContext[581] = a1;
+      g_pSqgxContext[581] = arg1;
     }
     else
     {
@@ -77,28 +77,28 @@ XI_API int * __cdecl sqgxZMask(int a1)
 
 // FUNCTION: FFXIMAIN 0x102824C0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxFBMask(int a1, int a2, int a3, int a4)
+XI_API int * __cdecl sqgxFBMask(int arg1, int arg2, int arg3, int arg4)
 {
   int *result;
-  unsigned int v5;
+  unsigned int u1;
   result = g_pSqgxContext;
-  v5 = 0;
-  if ( a4 != g_pSqgxContext[580] || a1 != g_pSqgxContext[577] || a3 != g_pSqgxContext[579] || a2 != g_pSqgxContext[578] )
+  u1 = 0;
+  if ( arg4 != g_pSqgxContext[580] || arg1 != g_pSqgxContext[577] || arg3 != g_pSqgxContext[579] || arg2 != g_pSqgxContext[578] )
   {
-    if ( a1 == 0 )
-      v5 = 1;
-    if ( a3 == 0 )
-      v5 |= 4u;
-    if ( a2 == 0 )
-      v5 |= 2u;
-    if ( a4 == 0 )
-      v5 |= 8u;
-    g_pDancerDevice->SetRenderState(D3DRS_COLORWRITEENABLE, v5);
-    g_pSqgxContext[577] = a1;
-    g_pSqgxContext[578] = a2;
-    g_pSqgxContext[579] = a3;
+    if ( arg1 == 0 )
+      u1 = 1;
+    if ( arg3 == 0 )
+      u1 |= 4u;
+    if ( arg2 == 0 )
+      u1 |= 2u;
+    if ( arg4 == 0 )
+      u1 |= 8u;
+    g_pDancerDevice->SetRenderState(D3DRS_COLORWRITEENABLE, u1);
+    g_pSqgxContext[577] = arg1;
+    g_pSqgxContext[578] = arg2;
+    g_pSqgxContext[579] = arg3;
     result = g_pSqgxContext;
-    g_pSqgxContext[580] = a4;
+    g_pSqgxContext[580] = arg4;
   }
   return result;
 }
@@ -107,24 +107,24 @@ XI_API int * __cdecl sqgxFBMask(int a1, int a2, int a3, int a4)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl SqgxContext_ResetHandles(void)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
   orig::SqgxTexture_FreeSlot(*(int *)(g_pSqgxContext_as_s32 + 0x8a4));
   orig::SqgxTexture_FreeSlot(*(int *)(g_pSqgxContext_as_s32 + 0x8a8));
   orig::SqgxTexture_FreeSlot(*(int *)(g_pSqgxContext_as_s32 + 0x8ac));
-  _DAT_103b484c = 0xffffffff;
-  iVar1 = 0x8b0;
-  iVar3 = 0xa20;
+  g_103B484C = 0xffffffff;
+  i1 = 0x8b0;
+  i3 = 0xa20;
   do {
-    iVar2 = iVar1 + 4;
-    *(uint32_t *)(iVar1 + g_pSqgxContext_as_s32) = 0xffffffff;
-    *(uint32_t *)(iVar3 + g_pSqgxContext_as_s32) = 0xffffffff;
-    *(uint32_t *)(iVar3 + 4 + g_pSqgxContext_as_s32) = 0xffffffff;
-    iVar1 = iVar2;
-    iVar3 = iVar3 + 8;
-  } while (iVar2 < 0x8b8);
+    i2 = i1 + 4;
+    *(uint32_t *)(i1 + g_pSqgxContext_as_s32) = 0xffffffff;
+    *(uint32_t *)(i3 + g_pSqgxContext_as_s32) = 0xffffffff;
+    *(uint32_t *)(i3 + 4 + g_pSqgxContext_as_s32) = 0xffffffff;
+    i1 = i2;
+    i3 = i3 + 8;
+  } while (i2 < 0x8b8);
   return;
 }
 
@@ -140,12 +140,12 @@ XI_API void __cdecl SqgxContext_Nop(void)
 XI_API int __cdecl SqgxContext_SetSelectArg1(void)
 {
   int result;
-  unsigned int v1;
+  unsigned int u1;
   result = (int)g_pSqgxContext;
-  v1 = g_pSqgxContext[710];
-  if ( v1 != 0 )
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v1, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
     return g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
@@ -157,11 +157,11 @@ XI_API int __cdecl SqgxContext_SetSelectArg1(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendAdd(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_ADD);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_ADD);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
@@ -181,11 +181,11 @@ XI_API int __cdecl sqgxBlendAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl SqgxContext_SetMultiplyAdd(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_MULTIPLYADD);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MULTIPLYADD);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG0, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_DIFFUSE | D3DTA_ALPHAREPLICATE);
@@ -206,11 +206,11 @@ XI_API int __cdecl SqgxContext_SetMultiplyAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendSub(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_SUBTRACT);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_SUBTRACT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -228,17 +228,17 @@ XI_API int __cdecl sqgxBlendSub(void)
 
 // FUNCTION: FFXIMAIN 0x10282A30
 // GATE: PASS -- 100 trials, 100 returned normally, 568 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxBlendLin(float a1)
+XI_API void __cdecl sqgxBlendLin(float arg1)
 {
-  int v1;
-  unsigned int v2;
-  v1 = (__int64)(a1 * 255.0 + 0.5);
-  if ( v1 > 255 )
-    v1 = 255;
-  v2 = g_pSqgxContext[710];
-  if ( v2 != 0 )
+  int i1;
+  unsigned int u1;
+  i1 = (long long)(arg1 * 255.0 + 0.5);
+  if ( i1 > 255 )
+    i1 = 255;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v2, D3DTSS_COLOROP, D3DTOP_BLENDFACTORALPHA);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDFACTORALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -247,7 +247,7 @@ XI_API void __cdecl sqgxBlendLin(float a1)
     g_pDancerDevice->lpVtbl->SetRenderState(
       g_pDancerDevice,
       D3DRS_TEXTUREFACTOR,
-      (unsigned __int8)v1 | (((unsigned __int8)v1 | (((unsigned __int8)v1 | (v1 << 8)) << 8)) << 8));
+      (unsigned char)i1 | (((unsigned char)i1 | (((unsigned char)i1 | (i1 << 8)) << 8)) << 8));
   }
   else
   {
@@ -262,11 +262,11 @@ XI_API void __cdecl sqgxBlendLin(float a1)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendTrsp(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -286,11 +286,11 @@ XI_API int __cdecl sqgxBlendTrsp(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendTrspInv(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -310,11 +310,11 @@ XI_API int __cdecl sqgxBlendTrspInv(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendAddDestAlpha(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -334,11 +334,11 @@ XI_API int __cdecl sqgxBlendAddDestAlpha(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl SqgxContext_SetModulateAlphaAdd(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TFACTOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -359,11 +359,11 @@ XI_API int __cdecl SqgxContext_SetModulateAlphaAdd(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 586 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendMultAlpha(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TFACTOR);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -384,11 +384,11 @@ XI_API int __cdecl sqgxBlendMultAlpha(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 524 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxBlendMul(void)
 {
-  unsigned int v0;
-  v0 = g_pSqgxContext[710];
-  if ( v0 != 0 )
+  unsigned int u1;
+  u1 = g_pSqgxContext[710];
+  if ( u1 != 0 )
   {
-    g_pDancerDevice->SetTextureStageState(v0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    g_pDancerDevice->SetTextureStageState(u1, D3DTSS_COLOROP, D3DTOP_MODULATE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_COLORARG2, D3DTA_CURRENT);
     g_pDancerDevice->SetTextureStageState(g_pSqgxContext[710], D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -422,88 +422,88 @@ XI_API void __cdecl SqgxContext_NoOpA(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl ___setargv_9(void)
 {
-  dword_109A2720_as_v0 = 1;
+  g_109A2720_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetCurrentIndex(undefined4 param_1, undefined4 param_2)
+XI_API void __cdecl SqgxContext_SetCurrentIndex(bits32 arg1, bits32 arg2)
 {
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x78c) = param_1;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x790) = param_2;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x78c) = arg1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x790) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_StoreEntryVec(undefined4 * param_1)
+XI_API void __cdecl SqgxContext_StoreEntryVec(bits32 * arg1)
 {
   *(uint32_t *)
    (g_pSqgxContext_as_s32 + 0x794 +
-   (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0xc) = *param_1;
+   (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0xc) = *arg1;
   *(uint32_t *)
    (g_pSqgxContext_as_s32 +
    (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + 0xa2 + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0xc) =
-       param_1[1];
+       arg1[1];
   *(uint32_t *)
    (g_pSqgxContext_as_s32 + 0x79c +
-   (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0xc) = param_1[2];
-  dword_109A2720_as_v0 = 1;
+   (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0xc) = arg1[2];
+  g_109A2720_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283300
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqgxContext_SetContextSlot854(undefined4 param_1)
+XI_API bits32 __cdecl SqgxContext_SetContextSlot854(bits32 arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = g_pSqgxContext_as_s32;
+  i1 = g_pSqgxContext_as_s32;
   *(uint32_t *)
    (g_pSqgxContext_as_s32 + 0x854 + (*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 4
-   ) = param_1;
-  dword_109A2720_as_v0 = 1;
-  return iVar1;
+   ) = arg1;
+  g_109A2720_as_v0 = 1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10283330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxColor(undefined4 * param_1)
+XI_API void __cdecl sqgxColor(bits32 * arg1)
 {
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x758) = *param_1;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x75c) = param_1[1];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x760) = param_1[2];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x764) = param_1[3];
-  dword_109A2720_as_v0 = 1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x758) = *arg1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x75c) = arg1[1];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x760) = arg1[2];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x764) = arg1[3];
+  g_109A2720_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxAmbient(float param_1)
+XI_API void __cdecl sqgxAmbient(float arg1)
 {
-  *(float *)(g_pSqgxContext_as_s32 + 0x768) = (float)(long double)param_1;
-  dword_109A2720_as_v0 = 1;
+  *(float *)(g_pSqgxContext_as_s32 + 0x768) = (float)arg1;
+  g_109A2720_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102833A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetFloat76C(float param_1)
+XI_API void __cdecl SqgxContext_SetFloat76C(float arg1)
 {
-  *(float *)(g_pSqgxContext_as_s32 + 0x76c) = (float)(long double)param_1;
-  dword_109A2720_as_v0 = 1;
+  *(float *)(g_pSqgxContext_as_s32 + 0x76c) = (float)arg1;
+  g_109A2720_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102833C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetDword774AndFactor(undefined4 param_1, float param_2, undefined4 param_3)
+XI_API void __cdecl SqgxContext_SetDword774AndFactor(bits32 arg1, float arg2, bits32 arg3)
 {
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x774) = param_3;
-  orig::SqgxContext_SetInverseFactor(param_2);
-  dword_109A2720_as_v0 = 1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x774) = arg3;
+  orig::SqgxContext_SetInverseFactor(arg2);
+  g_109A2720_as_v0 = 1;
   return;
 }
 
@@ -511,50 +511,50 @@ XI_API void __cdecl SqgxContext_SetDword774AndFactor(undefined4 param_1, float p
 // GATE: PASS -- 100 trials, 100 returned normally, 1168 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxColorUpdate(void)
 {
-  __int16 v0; // fps
-  double v1;
-  bool v2; // c0
-  char v3; // c2
-  bool v4; // c3
-  int v5;
+  short i1; // fps
+  double f1;
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  int i2;
   signed int i;
-  int *v7;
+  int *p1;
   int result;
   alignas(16) unsigned char xi_frame[0x480];  // address-taken locals at their original offsets
-  float (&v9)[17] = *reinterpret_cast<float (*)[17]>(xi_frame + 0xC);
-  float (&v10)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x50);
-  int &v11 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  int &v12 = *reinterpret_cast<int *>(xi_frame + 0x68);
-  int &v13 = *reinterpret_cast<int *>(xi_frame + 0x6C);
-  int &v14 = *reinterpret_cast<int *>(xi_frame + 0x70);
-  int &v15 = *reinterpret_cast<int *>(xi_frame + 0x74);
-  int &v16 = *reinterpret_cast<int *>(xi_frame + 0x78);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0x7C);
+  float (&f2)[17] = *reinterpret_cast<float (*)[17]>(xi_frame + 0xC);
+  float (&f3)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x50);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x64);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x68);
+  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x6C);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x70);
+  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x74);
+  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x78);
+  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x7C);
   bool xi_fpu_unord = false;
 
-  memset(v9, 0, sizeof(v9));
-  v9[12] = *((float *)g_pSqgxContext + 470) * *((float *)g_pSqgxContext + 474);
-  v9[13] = *((float *)g_pSqgxContext + 471) * *((float *)g_pSqgxContext + 474);
-  v9[14] = *((float *)g_pSqgxContext + 472) * *((float *)g_pSqgxContext + 474);
-  v9[15] = *((float *)g_pSqgxContext + 473) * *((float *)g_pSqgxContext + 474);
-  v9[0] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 470);
-  v9[1] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 471);
-  v9[2] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 472);
-  LODWORD(v9[3]) = g_pSqgxContext[473];
+  memset(f2, 0, sizeof(f2));
+  f2[12] = *((float *)g_pSqgxContext + 470) * *((float *)g_pSqgxContext + 474);
+  f2[13] = *((float *)g_pSqgxContext + 471) * *((float *)g_pSqgxContext + 474);
+  f2[14] = *((float *)g_pSqgxContext + 472) * *((float *)g_pSqgxContext + 474);
+  f2[15] = *((float *)g_pSqgxContext + 473) * *((float *)g_pSqgxContext + 474);
+  f2[0] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 470);
+  f2[1] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 471);
+  f2[2] = *((float *)g_pSqgxContext + 475) * *((float *)g_pSqgxContext + 472);
+  (*(uint32_t *)&(f2[3])) = g_pSqgxContext[473];
   if ( !(*((float *)g_pSqgxContext + 5) < 0.001)
-    && (v1 = *((float *)g_pSqgxContext + 5), (xi_fpu_unord = __builtin_isunordered(v1, 0.999), v2 = v1 < 0.999), v3 = 0, v4 = v1 == 0.999, ((__int16)(((v2 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0) )
+    && (f1 = *((float *)g_pSqgxContext + 5), (xi_fpu_unord = __builtin_isunordered(f1, 0.999), b1 = f1 < 0.999), c1 = 0, b2 = f1 == 0.999, ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0) )
   {
-    LODWORD(v9[16]) = g_pSqgxContext[5];
+    (*(uint32_t *)&(f2[16])) = g_pSqgxContext[5];
   }
   else
   {
-    v9[16] = 0.0;
+    f2[16] = 0.0;
   }
-  memset(&v9[8], 0, 16);
+  memset(&f2[8], 0, 16);
   g_pDancerDevice->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
-  g_pDancerDevice->SetMaterial(v9);
-  v5 = g_pSqgxContext[652];
-  if ( (v5 & 8) == 0 || (v5 & 2) != 0 )
+  g_pDancerDevice->SetMaterial(f2);
+  i2 = g_pSqgxContext[652];
+  if ( (i2 & 8) == 0 || (i2 & 2) != 0 )
   {
     if ( (g_pSqgxContext[652] & 8) != 0 )
     {
@@ -562,7 +562,7 @@ XI_API int __cdecl sqgxColorUpdate(void)
     }
     else
     {
-      if ( (v5 & 2) == 0 )
+      if ( (i2 & 2) == 0 )
         g_pDancerDevice->SetRenderState(D3DRS_EMISSIVEMATERIALSOURCE, D3DMCS_MATERIAL);
       g_pDancerDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
     }
@@ -580,31 +580,31 @@ XI_API int __cdecl sqgxColorUpdate(void)
     else
     {
       g_pDancerDevice->LightEnable(i, 1u);
-      g_pDancerDevice->GetLight(i, v10);
-      v15 = 0;
-      v16 = 0;
-      v7 = &g_pSqgxContext[3 * i];
-      v17 = 0;
-      LODWORD(v10[1]) = v7[485];
-      v10[2] = *(float *)&g_pSqgxContext[3 * i + 486];
-      LODWORD(v10[3]) = v7[487];
+      g_pDancerDevice->GetLight(i, f3);
+      i7 = 0;
+      i8 = 0;
+      p1 = &g_pSqgxContext[3 * i];
+      i9 = 0;
+      (*(uint32_t *)&(f3[1])) = p1[485];
+      f3[2] = *(float *)&g_pSqgxContext[3 * i + 486];
+      (*(uint32_t *)&(f3[3])) = p1[487];
       if ( i != 0 )
       {
-        v11 = 0;
-        v12 = 0;
-        v13 = 0;
+        i3 = 0;
+        i4 = 0;
+        i5 = 0;
       }
       else
       {
-        v11 = g_pSqgxContext[485];
-        v12 = g_pSqgxContext[486];
-        v13 = g_pSqgxContext[487];
+        i3 = g_pSqgxContext[485];
+        i4 = g_pSqgxContext[486];
+        i5 = g_pSqgxContext[487];
       }
-      v14 = 0;
-      result = g_pDancerDevice->SetLight(i, v10);
+      i6 = 0;
+      result = g_pDancerDevice->SetLight(i, f3);
     }
   }
-  dword_109A2720 = 0;
+  g_109A2720 = 0;
   return result;
 }
 
@@ -618,46 +618,46 @@ XI_API void __cdecl ___setargv_16(void)
 
 // FUNCTION: FFXIMAIN 0x102838A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxPixelSize(float param_1, float param_2)
+XI_API void __cdecl sqgxPixelSize(float arg1, float arg2)
 {
   *(float *)(g_pSqgxContext_as_s32 + 0x74c) =
-       (float)((long double)*(float *)(g_pSqgxContext_as_s32 + 0x2dc) *
-              (long double)*(float *)(g_pSqgxContext_as_s32 + 0x74c));
-  *(float *)(g_pSqgxContext_as_s32 + 0x2dc) = (float)((long double)param_1 / (long double)param_2);
+       (float)(*(float *)(g_pSqgxContext_as_s32 + 0x2dc) *
+              *(float *)(g_pSqgxContext_as_s32 + 0x74c));
+  *(float *)(g_pSqgxContext_as_s32 + 0x2dc) = (float)(arg1 / arg2);
   *(float *)(g_pSqgxContext_as_s32 + 0x74c) =
-       (float)((long double)*(float *)(g_pSqgxContext_as_s32 + 0x74c) /
-              (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2dc));
+       (float)(*(float *)(g_pSqgxContext_as_s32 + 0x74c) /
+              *(float *)(g_pSqgxContext_as_s32 + 0x2dc));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetViewportVec4(undefined4 * param_1)
+XI_API void __cdecl SqgxContext_SetViewportVec4(bits32 * arg1)
 {
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9ac) = *param_1;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b0) = param_1[1];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b4) = param_1[2];
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b8) = param_1[3];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9ac) = *arg1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b0) = arg1[1];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b4) = arg1[2];
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0x9b8) = arg1[3];
   g_sqgxViewportDirty_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283A10
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxViewport(float a1, float a2, float a3, float a4)
+XI_API int * __cdecl sqgxViewport(float arg1, float arg2, float arg3, float arg4)
 {
   int *result;
-  _DWORD v5[6];
-  *((float *)g_pSqgxContext + 172) = a3;
-  *((float *)g_pSqgxContext + 173) = a4;
-  v5[0] = (__int64)a1;
-  v5[1] = (__int64)a2;
-  v5[2] = (__int64)a3;
-  v5[3] = (__int64)a4;
-  v5[4] = 0;
-  v5[5] = 1065353216;
-  g_pDancerDevice->SetViewport(v5);
-  *((float *)g_pSqgxContext + 467) = a4 / a3 / *((float *)g_pSqgxContext + 183);
+  uint32_t buf1[6];
+  *((float *)g_pSqgxContext + 172) = arg3;
+  *((float *)g_pSqgxContext + 173) = arg4;
+  buf1[0] = (long long)arg1;
+  buf1[1] = (long long)arg2;
+  buf1[2] = (long long)arg3;
+  buf1[3] = (long long)arg4;
+  buf1[4] = 0;
+  buf1[5] = 1065353216;
+  g_pDancerDevice->SetViewport(buf1);
+  *((float *)g_pSqgxContext + 467) = arg4 / arg3 / *((float *)g_pSqgxContext + 183);
   *((float *)g_pSqgxContext + 187) = *((float *)g_pSqgxContext + 467) * *((float *)g_pSqgxContext + 192);
   *((float *)g_pSqgxContext + 176) = *((float *)g_pSqgxContext + 177) / *((float *)g_pSqgxContext + 467);
   *((float *)g_pSqgxContext + 178) = sqrt(*((float *)g_pSqgxContext + 176) * *((float *)g_pSqgxContext + 176) + 1.0);
@@ -670,48 +670,48 @@ XI_API int * __cdecl sqgxViewport(float a1, float a2, float a3, float a4)
 
 // FUNCTION: FFXIMAIN 0x10283C10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqgxContext_SetPerspective(float param_1, float param_2, float param_3)
+XI_API bits32 __cdecl SqgxContext_SetPerspective(float arg1, float arg2, float arg3)
 {
-  int iVar1;
-  long double fVar2;
+  int i1;
+  long double f1;
   
-  *(float *)(g_pSqgxContext_as_s32 + 0x2ac) = (float)(long double)param_1;
-  fVar2 = xi_castbits<long double>(fptan((long double)param_1 * (long double)0.008726646192371845245361328125f));
-  *(float *)(g_pSqgxContext_as_s32 + 0x2c4) = (float)fVar2;
+  *(float *)(g_pSqgxContext_as_s32 + 0x2ac) = (float)arg1;
+  f1 = bit_cast<long double>(x87_fptan(arg1 * 0.008726646192371845245361328125f));
+  *(float *)(g_pSqgxContext_as_s32 + 0x2c4) = (float)f1;
   *(float *)(g_pSqgxContext_as_s32 + 0x2c0) =
-       (float)((long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c4) / (long double)*(float *)(g_pSqgxContext_as_s32 + 0x74c)
+       (float)(*(float *)(g_pSqgxContext_as_s32 + 0x2c4) / *(float *)(g_pSqgxContext_as_s32 + 0x74c)
               );
   *(float *)(g_pSqgxContext_as_s32 + 0x2cc) =
-       (float)SQRT((long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c4) *
-                   (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c4) + (long double)1.0f);
+       (float)x87_fsqrt(*(float *)(g_pSqgxContext_as_s32 + 0x2c4) *
+                   *(float *)(g_pSqgxContext_as_s32 + 0x2c4) + 1.0f);
   *(float *)(g_pSqgxContext_as_s32 + 0x2c8) =
-       (float)SQRT((long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c0) *
-                   (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c0) + (long double)1.0f);
-  fVar2 = (long double)*(float *)(g_pSqgxContext_as_s32 + 0x750) / (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c4);
-  *(float *)(g_pSqgxContext_as_s32 + 0x2ec) = (float)(fVar2 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x74c));
-  *(float *)(g_pSqgxContext_as_s32 + 0x300) = (float)fVar2;
-  *(float *)(g_pSqgxContext_as_s32 + 0x2b8) = (float)(long double)param_3;
-  *(float *)(g_pSqgxContext_as_s32 + 700) = (float)(long double)param_2;
-  fVar2 = (long double)1.0f / ((long double)param_3 - (long double)param_2);
-  *(float *)(g_pSqgxContext_as_s32 + 0x314) = (float)-(((long double)param_2 + (long double)param_3) * fVar2);
+       (float)x87_fsqrt(*(float *)(g_pSqgxContext_as_s32 + 0x2c0) *
+                   *(float *)(g_pSqgxContext_as_s32 + 0x2c0) + 1.0f);
+  f1 = *(float *)(g_pSqgxContext_as_s32 + 0x750) / *(float *)(g_pSqgxContext_as_s32 + 0x2c4);
+  *(float *)(g_pSqgxContext_as_s32 + 0x2ec) = (float)(f1 * *(float *)(g_pSqgxContext_as_s32 + 0x74c));
+  *(float *)(g_pSqgxContext_as_s32 + 0x300) = (float)f1;
+  *(float *)(g_pSqgxContext_as_s32 + 0x2b8) = (float)arg3;
+  *(float *)(g_pSqgxContext_as_s32 + 700) = (float)arg2;
+  f1 = 1.0f / (arg3 - arg2);
+  *(float *)(g_pSqgxContext_as_s32 + 0x314) = (float)-((arg2 + arg3) * f1);
   *(float *)(g_pSqgxContext_as_s32 + 0x324) =
-       (float)(fVar2 * (long double)param_2 * (long double)param_3 * (long double)(-2.0f));
+       (float)(f1 * arg2 * arg3 * (-2.0f));
   *(float *)(g_pSqgxContext_as_s32 + 0x30c) =
-       (float)(((long double)2.0f / (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2b0)) *
-              (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2e0));
-  iVar1 = g_pSqgxContext_as_s32;
+       (float)((2.0f / *(float *)(g_pSqgxContext_as_s32 + 0x2b0)) *
+              *(float *)(g_pSqgxContext_as_s32 + 0x2e0));
+  i1 = g_pSqgxContext_as_s32;
   *(float *)(g_pSqgxContext_as_s32 + 0x310) =
-       (float)(((long double)2.0f / (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2b4)) *
-              (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2e4));
+       (float)((2.0f / *(float *)(g_pSqgxContext_as_s32 + 0x2b4)) *
+              *(float *)(g_pSqgxContext_as_s32 + 0x2e4));
   g_sqgxViewportDirty_as_v0 = 1;
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10283D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxMatrixCamera(undefined4 * param_1)
+XI_API void __cdecl sqgxMatrixCamera(bits32 * arg1)
 {
-  orig::M4fTranspose_v1((uint32_t *)(g_pSqgxContext_as_s32 + 0x188),param_1);
+  orig::M4fTranspose_v1((uint32_t *)(g_pSqgxContext_as_s32 + 0x188),arg1);
   orig::sqMatrix4_1027F0E0_v1((float *)(g_pSqgxContext_as_s32 + 0x208),(uint32_t *)(g_pSqgxContext_as_s32 + 0x188));
   g_sqgxViewportDirty_as_v0 = 1;
   return;
@@ -719,50 +719,50 @@ XI_API void __cdecl sqgxMatrixCamera(undefined4 * param_1)
 
 // FUNCTION: FFXIMAIN 0x10283DA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetTransposedMatrix(undefined4 * param_1)
+XI_API void __cdecl SqgxContext_SetTransposedMatrix(bits32 * arg1)
 {
   orig::M4fTranspose_v1((uint32_t *)
                ((*(int *)(g_pSqgxContext_as_s32 + 0x78c) + *(int *)(g_pSqgxContext_as_s32 + 0x790) * 8) * 0x40 +
-                0x32c + g_pSqgxContext_as_s32),param_1);
+                0x32c + g_pSqgxContext_as_s32),arg1);
   g_sqgxViewportDirty_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetFloat72C(float param_1)
+XI_API void __cdecl SqgxContext_SetFloat72C(float arg1)
 {
   *(float *)(g_pSqgxContext_as_s32 + 0x72c + *(int *)(g_pSqgxContext_as_s32 + 0x78c) * 4) =
-       (float)(long double)param_1;
+       (float)arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxMatrixShape(undefined4 * param_1)
+XI_API void __cdecl sqgxMatrixShape(bits32 * arg1)
 {
-  orig::M4fTranspose_v1((uint32_t *)(g_pSqgxContext_as_s32 + 0x1c8),param_1);
+  orig::M4fTranspose_v1((uint32_t *)(g_pSqgxContext_as_s32 + 0x1c8),arg1);
   g_sqgxViewportDirty_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetInverseFactor(float param_1)
+XI_API void __cdecl SqgxContext_SetInverseFactor(float arg1)
 {
-  *(float *)(g_pSqgxContext_as_s32 + 0x14) = (float)((long double)1.0f - (long double)param_1);
+  *(float *)(g_pSqgxContext_as_s32 + 0x14) = (float)(1.0f - arg1);
   g_sqgxViewportDirty_as_v0 = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10283F70
 // GATE: PASS -- 100 trials, 100 returned normally, 73 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqgxPassAdd(int a1)
+XI_API int __cdecl sqgxPassAdd(int arg1)
 {
   int result;
-  if ( a1 != 0 )
+  if ( arg1 != 0 )
   {
-    g_pSqgxContext[186] += a1;
+    g_pSqgxContext[186] += arg1;
     result = g_pDancerDevice->SetRenderState(D3DRS_ZBIAS, g_pSqgxContext[186]);
     g_sqgxViewportDirty = 1;
   }
@@ -771,13 +771,13 @@ XI_API int __cdecl sqgxPassAdd(int a1)
 
 // FUNCTION: FFXIMAIN 0x10283FC0
 // GATE: PASS -- 100 trials, 100 returned normally, 95 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxPass(int a1)
+XI_API int * __cdecl sqgxPass(int arg1)
 {
   int *result;
   result = g_pSqgxContext;
-  if ( g_pSqgxContext[186] != a1 )
+  if ( g_pSqgxContext[186] != arg1 )
   {
-    g_pSqgxContext[186] = a1;
+    g_pSqgxContext[186] = arg1;
     result = (int *)g_pDancerDevice->SetRenderState(D3DRS_ZBIAS, g_pSqgxContext[186]);
     g_sqgxViewportDirty = 1;
   }
@@ -786,90 +786,90 @@ XI_API int * __cdecl sqgxPass(int a1)
 
 // FUNCTION: FFXIMAIN 0x10284000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqgxContext_TestClipBounds(float * param_1, float param_2)
+XI_API bits32 __cdecl SqgxContext_TestClipBounds(float * arg1, float arg2)
 {
-  long double fVar1;
-  long double fVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  long double fVar5;
-  long double fVar6;
-  long double fVar7;
+  long double f1;
+  long double f2;
+  uint8_t u1;
+  long double f3;
+  long double f4;
+  long double f5;
+  long double f6;
   char xi_frame[180] __attribute__((aligned(4)));
-  float  &local_b4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_b0 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_ac = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_a0 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_9c = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &local_98 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &local_8c = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &local_88 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &local_84 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  (&local_80)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 52);
-  float  (&local_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 116);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 4);
+  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 8);
+  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  &f11 = *reinterpret_cast<float  *>(xi_frame + 24);
+  float  &f12 = *reinterpret_cast<float  *>(xi_frame + 28);
+  float  &f13 = *reinterpret_cast<float  *>(xi_frame + 40);
+  float  &f14 = *reinterpret_cast<float  *>(xi_frame + 44);
+  float  &f15 = *reinterpret_cast<float  *>(xi_frame + 48);
+  float  (&f16)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 52);
+  float  (&f17)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 116);
   
-  orig::sqMatrix4_10280140_v1(local_40,(float *)(g_pSqgxContext_as_s32 + 0x1c8),(float *)(g_pSqgxContext_as_s32 + 0x208));
-  orig::M4fTranspose_v1(local_80,local_40);
-  orig::M4fTransform_v1(&local_a0,local_80,param_1);
-  local_8c = param_2;
-  local_88 = param_2;
-  local_84 = param_2;
-  local_98 = (float)-(long double)local_98;
-  orig::SqMatrixConnect_TransformVec3(&local_b4,local_80,&local_8c);
-  bVar3 = NAN((long double)local_b4) || NAN((long double)0.0);
-  if ((bVar3 || (long double)local_b4 < (long double)0.0) != bVar3) {
-    local_b4 = (float)-(long double)local_b4;
+  orig::sqMatrix4_10280140_v1(f17,(float *)(g_pSqgxContext_as_s32 + 0x1c8),(float *)(g_pSqgxContext_as_s32 + 0x208));
+  orig::M4fTranspose_v1(f16,f17);
+  orig::M4fTransform_v1(&f10,f16,arg1);
+  f13 = arg2;
+  f14 = arg2;
+  f15 = arg2;
+  f12 = (float)-f12;
+  orig::SqMatrixConnect_TransformVec3(&f7,f16,&f13);
+  u1 = ((f7) != (f7)) || ((0.0) != (0.0));
+  if ((u1 || f7 < 0.0) != u1) {
+    f7 = (float)-f7;
   }
-  bVar3 = NAN((long double)local_b0) || NAN((long double)0.0);
-  if ((bVar3 || (long double)local_b0 < (long double)0.0) != bVar3) {
-    local_b0 = (float)-(long double)local_b0;
+  u1 = ((f8) != (f8)) || ((0.0) != (0.0));
+  if ((u1 || f8 < 0.0) != u1) {
+    f8 = (float)-f8;
   }
-  bVar3 = NAN((long double)local_ac) || NAN((long double)0.0);
-  if ((bVar3 || (long double)local_ac < (long double)0.0) != bVar3) {
-    local_ac = (float)-(long double)local_ac;
+  u1 = ((f9) != (f9)) || ((0.0) != (0.0));
+  if ((u1 || f9 < 0.0) != u1) {
+    f9 = (float)-f9;
   }
-  if (!((long double)local_b4 > (long double)local_b0))
+  if (!(f7 > f8))
   {
-    if ((long double)local_b0 > (long double)local_ac) {
-      fVar4 = (long double)local_b0;
-      goto LAB_10284117;
+    if (f8 > f9) {
+      f3 = f8;
+      goto code_10284117;
     }
   }
-  else if ((long double)local_b4 > (long double)local_ac) {
-    fVar4 = (long double)local_b4;
-    goto LAB_10284117;
+  else if (f7 > f9) {
+    f3 = f7;
+    goto code_10284117;
   }
-  fVar4 = (long double)local_ac;
-LAB_10284117:
-  fVar1 = (float)((long double)local_98 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c4));
-  fVar5 = fVar4 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2cc);
-  fVar6 = fVar5 + (long double)fVar1;
-  if ((!((long double)local_9c > fVar6)) &&
-     (!(-fVar6 > (long double)local_9c))) {
-    fVar2 = (float)((long double)local_98 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c0));
-    fVar6 = fVar4 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2c8);
-    fVar7 = fVar6 + (long double)fVar2;
-    if ((!((long double)local_a0 > fVar7)) &&
-       ((((NAN(-fVar7) || NAN((long double)local_a0)) || -fVar7 <= (long double)local_a0 &&
-         (fVar7 = fVar4 + (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2b8),
-         bVar3 = NAN(fVar7) || NAN((long double)local_98), (bVar3 || fVar7 < (long double)local_98) == bVar3
-         )) && (fVar7 = (long double)*(float *)(g_pSqgxContext_as_s32 + 700) - fVar4,
-               (NAN(fVar7) || NAN((long double)local_98)) || fVar7 <= (long double)local_98)))) {
-      fVar1 = (float)((long double)fVar1 - (long double)(float)fVar5);
-      fVar2 = (float)((long double)fVar2 - (long double)(float)fVar6);
-      fVar5 = (long double)*(float *)(g_pSqgxContext_as_s32 + 0x2b8) - fVar4;
-      if (((((fVar5 > (long double)local_98) &&
-            (fVar4 = fVar4 + (long double)*(float *)(g_pSqgxContext_as_s32 + 700),
-            bVar3 = NAN(fVar4) || NAN((long double)local_98),
-            (bVar3 || fVar4 < (long double)local_98) != bVar3)) &&
-           (fVar4 = (long double)fVar1, bVar3 = NAN((long double)local_9c) || NAN(fVar4),
-           (bVar3 || (long double)local_9c < fVar4) != bVar3)) &&
-          ((fVar4 = -(long double)fVar1, bVar3 = NAN(fVar4) || NAN((long double)local_9c),
-           (bVar3 || fVar4 < (long double)local_9c) != bVar3 &&
-           (fVar4 = (long double)fVar2, bVar3 = NAN((long double)local_a0) || NAN(fVar4),
-           (bVar3 || (long double)local_a0 < fVar4) != bVar3)))) &&
-         (fVar4 = -(long double)fVar2, bVar3 = NAN(fVar4) || NAN((long double)local_a0),
-         (bVar3 || fVar4 < (long double)local_a0) != bVar3)) {
+  f3 = f9;
+code_10284117:
+  f1 = (float)(f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c4));
+  f4 = f3 * *(float *)(g_pSqgxContext_as_s32 + 0x2cc);
+  f5 = f4 + f1;
+  if ((!(f11 > f5)) &&
+     (!(-f5 > f11))) {
+    f2 = (float)(f12 * *(float *)(g_pSqgxContext_as_s32 + 0x2c0));
+    f5 = f3 * *(float *)(g_pSqgxContext_as_s32 + 0x2c8);
+    f6 = f5 + f2;
+    if ((!(f10 > f6)) &&
+       ((((((-f6) != (-f6)) || ((f10) != (f10))) || -f6 <= f10 &&
+         (f6 = f3 + *(float *)(g_pSqgxContext_as_s32 + 0x2b8),
+         u1 = ((f6) != (f6)) || ((f12) != (f12)), (u1 || f6 < f12) == u1
+         )) && (f6 = *(float *)(g_pSqgxContext_as_s32 + 700) - f3,
+               (((f6) != (f6)) || ((f12) != (f12))) || f6 <= f12)))) {
+      f1 = (float)(f1 - (float)f4);
+      f2 = (float)(f2 - (float)f5);
+      f4 = *(float *)(g_pSqgxContext_as_s32 + 0x2b8) - f3;
+      if (((((f4 > f12) &&
+            (f3 = f3 + *(float *)(g_pSqgxContext_as_s32 + 700),
+            u1 = ((f3) != (f3)) || ((f12) != (f12)),
+            (u1 || f3 < f12) != u1)) &&
+           (f3 = f1, u1 = ((f11) != (f11)) || ((f3) != (f3)),
+           (u1 || f11 < f3) != u1)) &&
+          ((f3 = -f1, u1 = ((f3) != (f3)) || ((f11) != (f11)),
+           (u1 || f3 < f11) != u1 &&
+           (f3 = f2, u1 = ((f10) != (f10)) || ((f3) != (f3)),
+           (u1 || f10 < f3) != u1)))) &&
+         (f3 = -f2, u1 = ((f3) != (f3)) || ((f10) != (f10)),
+         (u1 || f3 < f10) != u1)) {
         return 1;
       }
       return 3;
@@ -882,137 +882,137 @@ LAB_10284117:
 // GATE: PASS -- 100 trials, 100 returned normally, 1528 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxMatrixUpdate(void)
 {
-  int v0;
-  int v1;
-  int v2;
-  int *v3;
-  int v4;
-  int *v5;
-  unsigned int v6;
-  int v7;
-  int v8;
-  unsigned int v9;
-  int v10;
-  int v11;
-  double v12;
-  double v13;
+  int i1;
+  int i2;
+  int i3;
+  int *p1;
+  int i4;
+  int *p2;
+  unsigned int u1;
+  int i5;
+  int i6;
+  unsigned int u2;
+  int i7;
+  int i8;
+  double f1;
+  double f2;
   int result;
   alignas(16) unsigned char xi_frame[0x5F8];  // address-taken locals at their original offsets
-  char &v15 = *reinterpret_cast<char *>(xi_frame + 0x48);
-  float (&v16)[26] = *reinterpret_cast<float (*)[26]>(xi_frame + 0x50);
-  float (&v17)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xB8);
-  float (&v18)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xF8);
-  float (&v19)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x138);
-  float (&v20)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x178);
-  float (&v21)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x1B8);
+  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x48);
+  float (&f3)[26] = *reinterpret_cast<float (*)[26]>(xi_frame + 0x50);
+  float (&f4)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xB8);
+  float (&f5)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0xF8);
+  float (&f6)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x138);
+  float (&f7)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x178);
+  float (&f8)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x1B8);
 
-  v0 = 0;
-  v1 = 0;
-  v2 = g_pSqgxContext[710] + 1;
-  v15 = 0;
-  if ( v2 > 0 )
+  i1 = 0;
+  i2 = 0;
+  i3 = g_pSqgxContext[710] + 1;
+  c1 = 0;
+  if ( i3 > 0 )
   {
-    v3 = g_pSqgxContext + 648;
+    p1 = g_pSqgxContext + 648;
     do
     {
-      v4 = *v3;
-      v3 += 2;
-      v0 |= v4;
-      v1 |= *(v3 - 1);
-      --v2;
+      i4 = *p1;
+      p1 += 2;
+      i1 |= i4;
+      i2 |= *(p1 - 1);
+      --i3;
     }
-    while ( v2 != 0 );
-    v15 = v0;
+    while ( i3 != 0 );
+    c1 = i1;
   }
-  if ( v0 >= 0 )
+  if ( i1 >= 0 )
   {
-    orig::M4fSet(v18, g_pSqgxContext + 114);
+    orig::M4fSet(f5, g_pSqgxContext + 114);
   }
   else
   {
-    orig::sqgxShadowPlaneMatrix((int)v21);
-    orig::sqMatrix4_10280140(v18, (float *)g_pSqgxContext + 114, v21);
+    orig::sqgxShadowPlaneMatrix((int)f8);
+    orig::sqMatrix4_10280140(f5, (float *)g_pSqgxContext + 114, f8);
   }
   g_pDancerDevice->SetTransform(D3DTS_PROJECTION, g_pSqgxContext + 187);
   g_pDancerDevice->SetTransform(D3DTS_VIEW, g_pSqgxContext + 130);
-  g_pDancerDevice->SetTransform((D3DTRANSFORMSTATETYPE)256, v18);
-  orig::sqMatrix4_10280140(v20, v18, (float *)g_pSqgxContext + 130);
-  orig::sqMatrix4_1027F0E0(v19, (int)(g_pSqgxContext + 114));
-  v5 = g_pSqgxContext;
-  if ( *((_BYTE *)g_pSqgxContext + 1876) != 0 )
+  g_pDancerDevice->SetTransform((D3DTRANSFORMSTATETYPE)256, f5);
+  orig::sqMatrix4_10280140(f7, f5, (float *)g_pSqgxContext + 130);
+  orig::sqMatrix4_1027F0E0(f6, (int)(g_pSqgxContext + 114));
+  p2 = g_pSqgxContext;
+  if ( *((uint8_t *)g_pSqgxContext + 1876) != 0 )
   {
-    orig::sqMatrix4_1027FCC0((int)v20);
-    v5 = g_pSqgxContext;
+    orig::sqMatrix4_1027FCC0((int)f7);
+    p2 = g_pSqgxContext;
   }
-  v6 = 0;
-  v7 = 0;
-  v8 = 533;
+  u1 = 0;
+  i5 = 0;
+  i6 = 533;
   while ( 1 )
   {
-    if ( v5[v8] == 0 || (v5[648] & 0x40000) != 0 )
+    if ( p2[i6] == 0 || (p2[648] & 0x40000) != 0 )
     {
-      g_pDancerDevice->LightEnable(v6, 0);
+      g_pDancerDevice->LightEnable(u1, 0);
     }
     else
     {
-      memset(v16, 0, sizeof(v16));
-      LODWORD(v16[0]) = 3;
-      v16[19] = 1000.0;
-      v16[16] = -*(float *)&v5[v7 + 211];
-      v16[17] = -*(float *)&v5[v7 + 212];
-      v16[18] = -*(float *)&v5[v7 + 213];
-      g_pDancerDevice->LightEnable(v6, 1u);
-      g_pDancerDevice->SetLight(v6, v16);
-      v0 = (int)(((uint32_t)(v0) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v15) << 0));
+      memset(f3, 0, sizeof(f3));
+      (*(uint32_t *)&(f3[0])) = 3;
+      f3[19] = 1000.0;
+      f3[16] = -*(float *)&p2[i5 + 211];
+      f3[17] = -*(float *)&p2[i5 + 212];
+      f3[18] = -*(float *)&p2[i5 + 213];
+      g_pDancerDevice->LightEnable(u1, 1u);
+      g_pDancerDevice->SetLight(u1, f3);
+      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(c1) << 0));
     }
-    ++v8;
-    ++v6;
-    v7 += 16;
-    if ( v8 >= 537 )
+    ++i6;
+    ++u1;
+    i5 += 16;
+    if ( i6 >= 537 )
       break;
-    v5 = g_pSqgxContext;
+    p2 = g_pSqgxContext;
   }
-  v9 = 4;
-  v10 = 0;
-  v11 = 541;
+  u2 = 4;
+  i7 = 0;
+  i8 = 541;
   do
   {
-    if ( g_pSqgxContext[v11] == 0 || (g_pSqgxContext[648] & 0x40000) != 0 )
+    if ( g_pSqgxContext[i8] == 0 || (g_pSqgxContext[648] & 0x40000) != 0 )
     {
-      g_pDancerDevice->LightEnable(v9, 0);
+      g_pDancerDevice->LightEnable(u2, 0);
     }
     else
     {
-      memset(v16, 0, sizeof(v16));
-      LODWORD(v16[0]) = 1;
-      v16[19] = 1000.0;
-      v16[16] = *(float *)&g_pSqgxContext[v10 + 339];
-      v16[17] = *(float *)&g_pSqgxContext[v10 + 340];
-      v16[18] = *(float *)&g_pSqgxContext[v10 + 341];
-      v16[13] = *(float *)&g_pSqgxContext[v10 + 343];
-      v16[14] = *(float *)&g_pSqgxContext[v10 + 344];
-      v16[15] = *(float *)&g_pSqgxContext[v10 + 345];
-      g_pDancerDevice->LightEnable(v9, 1u);
-      g_pDancerDevice->SetLight(v9, v16);
-      v0 = (int)(((uint32_t)(v0) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v15) << 0));
+      memset(f3, 0, sizeof(f3));
+      (*(uint32_t *)&(f3[0])) = 1;
+      f3[19] = 1000.0;
+      f3[16] = *(float *)&g_pSqgxContext[i7 + 339];
+      f3[17] = *(float *)&g_pSqgxContext[i7 + 340];
+      f3[18] = *(float *)&g_pSqgxContext[i7 + 341];
+      f3[13] = *(float *)&g_pSqgxContext[i7 + 343];
+      f3[14] = *(float *)&g_pSqgxContext[i7 + 344];
+      f3[15] = *(float *)&g_pSqgxContext[i7 + 345];
+      g_pDancerDevice->LightEnable(u2, 1u);
+      g_pDancerDevice->SetLight(u2, f3);
+      i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(c1) << 0));
     }
-    ++v11;
-    v10 += 16;
-    ++v9;
+    ++i8;
+    i7 += 16;
+    ++u2;
   }
-  while ( (int)(v9 - 4) < 4 );
-  orig::sqMatrix4_1027F0E0(v19, (int)(g_pSqgxContext + 114));
-  orig::sqMatrix4_10280140(v17, (float *)g_pSqgxContext + 98, v19);
-  v12 = v17[13];
-  v13 = v17[14];
-  g_pSqgxContext[162] = SLODWORD(v17[12]);
-  *((float *)g_pSqgxContext + 163) = v12;
-  *((float *)g_pSqgxContext + 164) = v13;
-  if ( (v0 & 0x10) != 0 || (result = v0 & 8, (v0 & 8) != 0) )
+  while ( (int)(u2 - 4) < 4 );
+  orig::sqMatrix4_1027F0E0(f6, (int)(g_pSqgxContext + 114));
+  orig::sqMatrix4_10280140(f4, (float *)g_pSqgxContext + 98, f6);
+  f1 = f4[13];
+  f2 = f4[14];
+  g_pSqgxContext[162] = (*(int32_t *)&(f4[12]));
+  *((float *)g_pSqgxContext + 163) = f1;
+  *((float *)g_pSqgxContext + 164) = f2;
+  if ( (i1 & 0x10) != 0 || (result = i1 & 8, (i1 & 8) != 0) )
   {
-    orig::sqMatrix4_1027F0E0(v17, (int)(g_pSqgxContext + 203));
-    orig::sqMatrix4_10280140((float *)g_pSqgxContext + 146, (float *)g_pSqgxContext + 114, v17);
-    result = orig::M4fTranspose(v17, g_pSqgxContext + 146);
+    orig::sqMatrix4_1027F0E0(f4, (int)(g_pSqgxContext + 203));
+    orig::sqMatrix4_10280140((float *)g_pSqgxContext + 146, (float *)g_pSqgxContext + 114, f4);
+    result = orig::M4fTranspose(f4, g_pSqgxContext + 146);
   }
   g_sqgxViewportDirty = 0;
   return result;

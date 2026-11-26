@@ -4,42 +4,42 @@
 
 // FUNCTION: FFXIMAIN 0x102857D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqDebug_GetFlagByte14(int param_1)
+XI_API bits32 __cdecl SqDebug_GetFlagByte14(int arg1)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(param_1 + 0x14))));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(arg1 + 0x14))));
 }
 
 // FUNCTION: FFXIMAIN 0x102857E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) SqDebug_SetByte14(undefined4 xi_eax, int param_1, undefined4 param_2)
+XI_API bits32 __attribute__((cdecl, regparm(1))) SqDebug_SetByte14(bits32 xi_eax, int arg2, bits32 arg3)
 {
-  *(uint8_t *)(param_1 + 0x14) = (uint8_t)param_2;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)param_2)));
+  *(uint8_t *)(arg2 + 0x14) = (uint8_t)arg3;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)arg3)));
 }
 
 // FUNCTION: FFXIMAIN 0x102857F0
 // GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
-XI_API undefined4 __cdecl SqDebug_InvokeCallback18(int param_1)
+XI_API bits32 __cdecl SqDebug_InvokeCallback18(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (*(code **)(param_1 + 0x18) != (code *)0x0) {
+  if (*(untyped_fn **)(arg1 + 0x18) != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x102857ff. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    uVar1 = (**(code **)(param_1 + 0x18))();
-    return uVar1;
+    u1 = (**(untyped_fn **)(arg1 + 0x18))();
+    return u1;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10285850
 // GATE: PASS -- 100 trials, 15 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 15
-XI_API void __cdecl sqDrawableDraw(int param_1)
+XI_API void __cdecl sqDrawableDraw(int arg1)
 {
-  if (*(code **)(param_1 + 0x30) != (code *)0x0) {
+  if (*(untyped_fn **)(arg1 + 0x30) != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x1028585f. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(param_1 + 0x30))();
+    (**(untyped_fn **)(arg1 + 0x30))();
     return;
   }
   return;

@@ -4,153 +4,153 @@
 
 // FUNCTION: FFXIMAIN 0x10299C30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqshBuild_BuildTriStrip(undefined4 * param_1, int param_2)
+XI_API int __cdecl SqshBuild_BuildTriStrip(bits32 * arg1, int arg2)
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  undefined4 uVar6;
+  int *p1;
+  int i1;
+  int i2;
+  int i3;
+  bits32 *p2;
+  bits32 u1;
   
-  iVar2 = param_2;
-  param_1 = orig::SqScriptRead_ReadBlock(&param_2,4,1,param_1,param_2);
-  if (2 < param_2) {
-    orig::sqDebugPrintf_v1(s_____Error__TriStrip_version_mism_103bc1d8,param_2,2);
+  i1 = arg2;
+  arg1 = orig::SqScriptRead_ReadBlock(&arg2,4,1,arg1,arg2);
+  if (2 < arg2) {
+    orig::sqDebugPrintf_v1(str_____Error__TriStrip_version_mism_103BC1D8,arg2,2);
     return 0;
   }
-  param_1 = param_1 + 0x14;
-  iVar3 = orig::SqshTriStrip_Create();
-  if (iVar3 == 0) {
-    orig::sqDebugPrintf_v1(s_____Error__sqshTriStripNew___cau_103bc1a4);
+  arg1 = arg1 + 0x14;
+  i2 = orig::SqshTriStrip_Create();
+  if (i2 == 0) {
+    orig::sqDebugPrintf_v1(str_____Error__sqshTriStripNew___cau_103BC1A4);
     return 0;
   }
-  iVar4 = orig::SqshBuild_Read(param_1,&param_1,iVar2);
-  if (iVar4 == 0) {
+  i3 = orig::SqshBuild_Read(arg1,&arg1,i1);
+  if (i3 == 0) {
     return 0;
   }
-  piVar1 = (int *)(iVar3 + 0x4c);
-  param_1 = orig::SqScriptRead_ReadBlock(piVar1,4,1,param_1,iVar2);
-  puVar5 = orig::SqMem_AllocZeroed(*piVar1,4,s_C__dev_dancer_modules_sqShape_sr_103bc174,0x84);
-  *(undefined4 **)(iVar3 + 0x48) = puVar5;
-  param_1 = orig::SqScriptRead_ReadBlock(puVar5,4,*piVar1,param_1,iVar2);
-  orig::SqBounds_ComputeBounds((float *)(iVar3 + 0x14),*(float **)(iVar4 + 0x54),*(int *)(iVar4 + 0x14),
-               *(float **)(iVar4 + 0x54));
-  if (param_2 < 2) {
-    *(undefined4 *)(iVar3 + 0x50) = 0;
+  p1 = (int *)(i2 + 0x4c);
+  arg1 = orig::SqScriptRead_ReadBlock(p1,4,1,arg1,i1);
+  p2 = orig::SqMem_AllocZeroed(*p1,4,str_C__dev_dancer_modules_sqShape_sr_103BC174,0x84);
+  *(bits32 **)(i2 + 0x48) = p2;
+  arg1 = orig::SqScriptRead_ReadBlock(p2,4,*p1,arg1,i1);
+  orig::SqBounds_ComputeBounds((float *)(i2 + 0x14),*(float **)(i3 + 0x54),*(int *)(i3 + 0x14),
+               *(float **)(i3 + 0x54));
+  if (arg2 < 2) {
+    *(bits32 *)(i2 + 0x50) = 0;
   }
   else {
-    param_1 = orig::SqScriptRead_ReadBlock((undefined4 *)(iVar3 + 0x50),4,1,param_1,iVar2);
+    arg1 = orig::SqScriptRead_ReadBlock((bits32 *)(i2 + 0x50),4,1,arg1,i1);
   }
-  orig::SqshTriStrip_ForEachTriangle(iVar3,(uint8_t *)0x0,iVar4);
-  uVar6 = orig::SqshTriStrip_GetGlobal();
-  *(undefined4 *)(iVar3 + 0x44) = uVar6;
-  *(int *)(iVar3 + 0x34) = iVar4;
-  orig::SqVtx_PackFloatsToBytes(iVar4,3);
-  return iVar3;
+  orig::SqshTriStrip_ForEachTriangle(i2,(uint8_t *)0x0,i3);
+  u1 = orig::SqshTriStrip_GetGlobal();
+  *(bits32 *)(i2 + 0x44) = u1;
+  *(int *)(i2 + 0x34) = i3;
+  orig::SqVtx_PackFloatsToBytes(i3,3);
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10299D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqshBuild_Read(undefined4 * param_1, undefined4 * param_2, int param_3)
+XI_API int __cdecl SqshBuild_Read(bits32 * arg1, bits32 * arg2, int arg3)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
+  int i2;
   char xi_frame[8] __attribute__((aligned(4)));
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
   
-  iVar1 = param_3;
-  puVar2 = orig::SqScriptRead_ReadBlock(&param_3,4,1,param_1,param_3);
-  if (0 < param_3) {
-    puVar3 = orig::SqVtx_Create();
-    puVar3[5] = param_3;
-    puVar2 = orig::SqScriptRead_ReadBlock(&local_4,4,1,puVar2,iVar1);
-    iVar4 = 0;
-    if (0 < local_4) {
+  i1 = arg3;
+  p1 = orig::SqScriptRead_ReadBlock(&arg3,4,1,arg1,arg3);
+  if (0 < arg3) {
+    p2 = orig::SqVtx_Create();
+    p2[5] = arg3;
+    p1 = orig::SqScriptRead_ReadBlock(&i4,4,1,p1,i1);
+    i2 = 0;
+    if (0 < i4) {
       do {
-        puVar2 = orig::SqScriptRead_ReadBlock(&param_1,4,1,puVar2,iVar1);
-        puVar2 = orig::SqScriptRead_ReadBlock(&local_8,4,1,puVar2,iVar1);
-        orig::SqVtx_AllocateField((int)puVar3,(int)param_1,local_8);
-        puVar2 = orig::SqScriptRead_ReadBlock((undefined4 *)puVar3[(int)param_1 + 0x15],4,local_8 * param_3,puVar2,
-                              iVar1);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < local_4);
+        p1 = orig::SqScriptRead_ReadBlock(&arg1,4,1,p1,i1);
+        p1 = orig::SqScriptRead_ReadBlock(&i3,4,1,p1,i1);
+        orig::SqVtx_AllocateField((int)p2,(int)arg1,i3);
+        p1 = orig::SqScriptRead_ReadBlock((bits32 *)p2[(int)arg1 + 0x15],4,i3 * arg3,p1,
+                              i1);
+        i2 = i2 + 1;
+      } while (i2 < i4);
     }
-    *param_2 = puVar2;
-    return (int)puVar3;
+    *arg2 = p1;
+    return (int)p2;
   }
-  orig::sqDebugPrintf_v1(s_____Error__Invalid_vertex_number_103bc210,param_3);
-  *param_2 = puVar2;
+  orig::sqDebugPrintf_v1(str_____Error__Invalid_vertex_number_103BC210,arg3);
+  *arg2 = p1;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10299E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqshBuild_BuildPoints(undefined4 * param_1, int param_2)
+XI_API int __cdecl SqshBuild_BuildPoints(bits32 * arg1, int arg2)
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  int iVar3;
+  bits32 *p1;
+  bits32 *p2;
+  int i1;
   
-  iVar3 = param_2;
-  puVar1 = orig::SqScriptRead_ReadBlock(&param_2,4,1,param_1,param_2);
-  if (param_2 != 1) {
-    orig::sqDebugPrintf_v1(s_____Error__Points_version_mismat_103bc26c,param_2,1);
+  i1 = arg2;
+  p1 = orig::SqScriptRead_ReadBlock(&arg2,4,1,arg1,arg2);
+  if (arg2 != 1) {
+    orig::sqDebugPrintf_v1(str_____Error__Points_version_mismat_103BC26C,arg2,1);
     return 0;
   }
-  puVar2 = orig::SqshPoints_Create();
-  if (puVar2 == (undefined4 *)0x0) {
-    orig::sqDebugPrintf_v1(s_____Error__sqshPointsNew___cause_103bc238);
+  p2 = orig::SqshPoints_Create();
+  if (p2 == (bits32 *)0x0) {
+    orig::sqDebugPrintf_v1(str_____Error__sqshPointsNew___cause_103BC238);
     return 0;
   }
-  iVar3 = orig::SqshBuild_Read(puVar1 + 0x14,&param_1,iVar3);
-  if (iVar3 == 0) {
+  i1 = orig::SqshBuild_Read(p1 + 0x14,&arg1,i1);
+  if (i1 == 0) {
     return 0;
   }
-  puVar2[0xd] = iVar3;
-  orig::SqBounds_ComputeBounds((float *)(puVar2 + 5),*(float **)(iVar3 + 0x54),*(int *)(iVar3 + 0x14),
-               *(int *)(iVar3 + 0x14));
-  return (int)puVar2;
+  p2[0xd] = i1;
+  orig::SqBounds_ComputeBounds((float *)(p2 + 5),*(float **)(i1 + 0x54),*(int *)(i1 + 0x14),
+               *(int *)(i1 + 0x14));
+  return (int)p2;
 }
 
 // FUNCTION: FFXIMAIN 0x10299EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqshBuild_BuildCurves(undefined4 * param_1, int param_2)
+XI_API int __cdecl SqshBuild_BuildCurves(bits32 * arg1, int arg2)
 {
-  int *piVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  int iVar5;
+  int *p1;
+  int i1;
+  bits32 *p2;
+  bits32 *p3;
+  int i2;
   
-  iVar2 = param_2;
-  puVar3 = orig::SqScriptRead_ReadBlock(&param_2,4,1,param_1,param_2);
-  param_1 = puVar3;
-  if (param_2 != 1) {
-    orig::sqDebugPrintf_v1(s_____Error__Curves_version_mismat_103bc2d8,param_2,1);
+  i1 = arg2;
+  p2 = orig::SqScriptRead_ReadBlock(&arg2,4,1,arg1,arg2);
+  arg1 = p2;
+  if (arg2 != 1) {
+    orig::sqDebugPrintf_v1(str_____Error__Curves_version_mismat_103BC2D8,arg2,1);
     return 0;
   }
-  puVar4 = orig::SqshCurves_Create();
-  if (puVar4 == (undefined4 *)0x0) {
-    orig::sqDebugPrintf_v1(s_____Error__sqshCurvesNew___cause_103bc2a4);
+  p3 = orig::SqshCurves_Create();
+  if (p3 == (bits32 *)0x0) {
+    orig::sqDebugPrintf_v1(str_____Error__sqshCurvesNew___cause_103BC2A4);
     return 0;
   }
-  iVar5 = orig::SqshBuild_Read(puVar3,&param_1,iVar2);
-  if (iVar5 == 0) {
+  i2 = orig::SqshBuild_Read(p2,&arg1,i1);
+  if (i2 == 0) {
     return 0;
   }
-  puVar4[0xd] = iVar5;
-  orig::SqBounds_ComputeBounds((float *)(puVar4 + 5),*(float **)(iVar5 + 0x54),*(int *)(iVar5 + 0x14),
-               *(int *)(iVar5 + 0x14));
-  puVar3 = orig::SqScriptRead_ReadBlock(puVar4 + 0x13,4,1,param_1,iVar2);
-  piVar1 =(int*)(puVar4 + 0x11);
-  param_1 = orig::SqScriptRead_ReadBlock(piVar1,4,1,puVar3,iVar2);
-  puVar3 = orig::SqMem_AllocZeroed(*piVar1,4,s_C__dev_dancer_modules_sqShape_sr_103bc174,0xe1);
-  puVar4[0x12] = puVar3;
-  orig::SqScriptRead_ReadBlock(puVar4 + 0x12,4,*piVar1,param_1,iVar2);
-  orig::SqshCurves_RebuildIndex((int)puVar4);
-  return (int)puVar4;
+  p3[0xd] = i2;
+  orig::SqBounds_ComputeBounds((float *)(p3 + 5),*(float **)(i2 + 0x54),*(int *)(i2 + 0x14),
+               *(int *)(i2 + 0x14));
+  p2 = orig::SqScriptRead_ReadBlock(p3 + 0x13,4,1,arg1,i1);
+  p1 =(int*)(p3 + 0x11);
+  arg1 = orig::SqScriptRead_ReadBlock(p1,4,1,p2,i1);
+  p2 = orig::SqMem_AllocZeroed(*p1,4,str_C__dev_dancer_modules_sqShape_sr_103BC174,0xe1);
+  p3[0x12] = p2;
+  orig::SqScriptRead_ReadBlock(p3 + 0x12,4,*p1,arg1,i1);
+  orig::SqshCurves_RebuildIndex((int)p3);
+  return (int)p3;
 }

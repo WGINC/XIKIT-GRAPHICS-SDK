@@ -4,28 +4,28 @@
 
 // FUNCTION: FFXIMAIN 0x102AF540
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl sqinCluster_Create(void)
+XI_API bits32 * __cdecl sqinCluster_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0xa0,s__C__dev_dancer_modules_sqSkin_sr_103bf57f + 1,0x91);
-  orig::sqinCluster_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0xa0,str__C__dev_dancer_modules_sqSkin_sr_103BF57F + 1,0x91);
+  orig::sqinCluster_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102AF570
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqinCluster_Init(undefined4 * param_1)
+XI_API void __cdecl sqinCluster_Init(bits32 * arg1)
 {
-  *param_1 = 0x150002;
-  param_1[2] = &LAB_102af5d0;
-  param_1[3] = XI_CODE(FUN_102af5e0);
-  param_1[4] = XI_CODE(sqinCluster_Dump);
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = &LAB_102af900;
-  orig::SqdfShape_InitCallbacks(param_1 + 7);
-  param_1[0x16] = 0;
-  orig::SqMatrixConnect_SetIdentity(param_1 + 0x17);
-  param_1[0x27] = 0;
+  *arg1 = 0x150002;
+  arg1[2] = &code_102AF5D0;
+  arg1[3] = XI_CODE(game_102AF5E0);
+  arg1[4] = XI_CODE(sqinCluster_Dump);
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = &code_102AF900;
+  orig::SqdfShape_InitCallbacks(arg1 + 7);
+  arg1[0x16] = 0;
+  orig::SqMatrixConnect_SetIdentity(arg1 + 0x17);
+  arg1[0x27] = 0;
   return;
 }

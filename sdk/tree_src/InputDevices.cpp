@@ -4,19 +4,19 @@
 
 // FUNCTION: FFXIMAIN 0x10003890
 // GATE: PASS -- 100 trials, 3 returned normally, 9441 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz INCONCLUSIVE 0, town PASS 3, town2 PASS 3, combat PASS 3, zonetoinn PASS 3
-XI_API void __thiscall InputDevices_DrawActorAxes(_DWORD *self_)
+XI_API void __thiscall InputDevices_DrawActorAxes(uint32_t *self_)
 {
-  int v2;
-  int v3;
-  int v4;
-  int v5;
-  _DWORD *v6;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  uint32_t *p1;
   alignas(16) unsigned char xi_frame[0x558];  // address-taken locals at their original offsets
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x84);
-  float (&v8)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x88);
-  _DWORD (&self_v)[16] = *reinterpret_cast<_DWORD (*)[16]>(xi_frame + 0x98);
-  _DWORD (&v10)[16] = *reinterpret_cast<_DWORD (*)[16]>(xi_frame + 0xD8);
-  _BYTE (&v11)[64] = *reinterpret_cast<_BYTE (*)[64]>(xi_frame + 0x118);
+  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x84);
+  float (&f1)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x88);
+  uint32_t (&self_v)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0x98);
+  uint32_t (&u1)[16] = *reinterpret_cast<uint32_t (*)[16]>(xi_frame + 0xD8);
+  uint8_t (&u2)[64] = *reinterpret_cast<uint8_t (*)[64]>(xi_frame + 0x118);
 
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_LIGHTING, FALSE);
@@ -27,50 +27,50 @@ XI_API void __thiscall InputDevices_DrawActorAxes(_DWORD *self_)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
   orig::fn_10027990((Iostream_init *)self_v);
-  orig::fn_10027990((Iostream_init *)v10);
-  orig::fn_10027990((Iostream_init *)v11);
-  orig::Mat4_SetIdentity(v10);
-  orig::CDx_GetTransformCached(g_pCDx, 256, v11);
-  v2 = 0;
-  v3 = 0;
-  v7 = 0;
+  orig::fn_10027990((Iostream_init *)u1);
+  orig::fn_10027990((Iostream_init *)u2);
+  orig::Mat4_SetIdentity(u1);
+  orig::CDx_GetTransformCached(g_pCDx, 256, u2);
+  i1 = 0;
+  i2 = 0;
+  i5 = 0;
   do
   {
-    if ( *(_DWORD *)(*(self_ + 3) + v3 + 4) != -1 )
+    if ( *(uint32_t *)(*(self_ + 3) + i2 + 4) != -1 )
     {
       orig::Mat4_SetIdentity(self_v);
-      orig::Mat4_PostRotateY(self_v, *(float *)(v2 + *(self_ + 4) + 12));
-      orig::Mat4_SetTranslation(self_v, (_DWORD *)(v2 + *(self_ + 4)));
+      orig::Mat4_PostRotateY(self_v, *(float *)(i1 + *(self_ + 4) + 12));
+      orig::Mat4_SetTranslation(self_v, (uint32_t *)(i1 + *(self_ + 4)));
       orig::CDx_SetTransform(g_pCDx, 256, self_v);
       (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 66u);
       orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 3, (int)&g_debugAxisLineVerts, 16);
-      v4 = ActerBuffPtr[*(_DWORD *)(*(self_ + 3) + v3)];
-      if ( v4 != 0 && (*(_DWORD *)(v4 + 288) & 0x200) != 0 )
+      i3 = ActerBuffPtr[*(uint32_t *)(*(self_ + 3) + i2)];
+      if ( i3 != 0 && (*(uint32_t *)(i3 + 288) & 0x200) != 0 )
       {
-        v5 = *(_DWORD *)(v4 + 160);
-        if ( v5 != 0 )
+        i4 = *(uint32_t *)(i3 + 160);
+        if ( i4 != 0 )
         {
-          g_debugLineVerts_v0_color = (*(unsigned __int8 (__thiscall **)(_DWORD))(*(_DWORD *)v5 + 408))(*(_DWORD *)(v4 + 160)) != 0
+          g_debugLineVerts_v0_color = (*(unsigned char (__thiscall **)(uint32_t))(*(uint32_t *)i4 + 408))(*(uint32_t *)(i3 + 160)) != 0
                                     ? -2147418113
                                     : -2130706433;
-          v6 = (_DWORD *)(*(int (__thiscall **)(int))(*(_DWORD *)v5 + 444))(v5);
-          orig::Vec4_Copy(v8, v6);
-          orig::Vec3_Sub(g_debugLineVerts_v1, v8, (float *)(v2 + *(self_ + 4)));
-          orig::Mat4_SetTranslation(v10, (_DWORD *)(v2 + *(self_ + 4)));
-          orig::CDx_SetTransform(g_pCDx, 256, v10);
+          p1 = (uint32_t *)(*(int (__thiscall **)(int))(*(uint32_t *)i4 + 444))(i4);
+          orig::Vec4_Copy(f1, p1);
+          orig::Vec3_Sub(g_debugLineVerts_v1, f1, (float *)(i1 + *(self_ + 4)));
+          orig::Mat4_SetTranslation(u1, (uint32_t *)(i1 + *(self_ + 4)));
+          orig::CDx_SetTransform(g_pCDx, 256, u1);
           orig::CDx_DrawPrimitiveUP(g_pCDx, 2, 1, (int)&g_debugLineVerts, 16);
-          v3 = v7;
+          i2 = i5;
         }
       }
     }
-    v3 += 8;
-    v2 += 16;
-    v7 = v3;
+    i2 += 8;
+    i1 += 16;
+    i5 = i2;
   }
-  while ( v3 < 18432 );
+  while ( i2 < 18432 );
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
-  orig::CDx_SetTransform(g_pCDx, 256, v11);
+  orig::CDx_SetTransform(g_pCDx, 256, u2);
   orig::MathVector_Nop();
   orig::MathVector_Nop();
   orig::MathVector_Nop();
@@ -78,28 +78,28 @@ XI_API void __thiscall InputDevices_DrawActorAxes(_DWORD *self_)
 
 // FUNCTION: FFXIMAIN 0x10005600
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Input_SetFlagToggle(void * self_, undefined4 param_1)
+XI_API void __thiscall Input_SetFlagToggle(void * self_, bits32 arg2)
 {
-  char cVar1;
+  char c1;
   
-  cVar1 = DAT_10455c37;
-  if ((char)param_1 == '\0') {
-    if (DAT_10455c42 == '\0') {
+  c1 = g_10455C37;
+  if ((char)arg2 == '\0') {
+    if (g_10455C42 == '\0') {
       return;
     }
-    DAT_10455c42 = 0;
-    DAT_10455c37 = DAT_10455c41;
+    g_10455C42 = 0;
+    g_10455C37 = g_10455C41;
   }
   else {
-    if (DAT_10455c42 != '\0') {
+    if (g_10455C42 != '\0') {
       return;
     }
-    DAT_10455c37 = '\0';
-    DAT_10455c41 = cVar1;
-    DAT_10455c42 = 1;
+    g_10455C37 = '\0';
+    g_10455C41 = c1;
+    g_10455C42 = 1;
   }
-  if ((*(int *)((int)self_ + 0x90) != 0) && (DAT_10455c41 == '\x01')) {
-    DAT_10455c40 = 1;
+  if ((*(int *)((int)self_ + 0x90) != 0) && (g_10455C41 == '\x01')) {
+    g_10455C40 = 1;
   }
   return;
 }
@@ -108,31 +108,31 @@ XI_API void __thiscall Input_SetFlagToggle(void * self_, undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall Input_InitState(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   *(uint32_t *)((int)self_ + 0x90) = 0;
   *(uint8_t *)((int)self_ + 0xc99) = 0;
   *(uint32_t *)((int)self_ + 0x8c) = 0;
   *(uint32_t *)((int)self_ + 0x88) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x398);
-  for (iVar1 = 0x100; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x398);
+  for (i1 = 0x100; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self_ + 0x94) = 0x10;
   *(uint32_t *)((int)self_ + 0x8dc) = 0;
   *(uint32_t *)((int)self_ + 0xc94) = 0;
   *(uint32_t *)((int)self_ + 0xa30) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x98);
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x98);
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar2 = (uint32_t *)((int)self_ + 0x198);
-  for (iVar1 = 0x40; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x198);
+  for (i1 = 0x40; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self_ + 0xdb0) = 0;
   *(uint32_t *)((int)self_ + 0xdb4) = 0;
@@ -141,7 +141,7 @@ XI_API void * __thiscall Input_InitState(void * self_)
   *(uint32_t *)((int)self_ + 0xda4) = 0;
   *(uint8_t *)((int)self_ + 0xc9a) = 0;
   *(uint32_t *)((int)self_ + 0xdc0) = 0;
-  DAT_10455c3e = 0;
+  g_10455C3E = 0;
   *(uint32_t *)((int)self_ + 0xa34) = 0;
   *(uint32_t *)((int)self_ + 0xa38) = 0;
   *(uint32_t *)((int)self_ + 0xa3c) = 0;
@@ -152,297 +152,297 @@ XI_API void * __thiscall Input_InitState(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100059C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Input_MapAxisLow(uint32_t param_1)
+XI_API bits32 __cdecl Input_MapAxisLow(uint32_t arg1)
 {
-  uint16_t uVar1;
+  uint16_t u1;
   
-  uVar1 = (uint16_t)(param_1 >> 0x10);
-  if ((param_1 != 0xffffffff) && (DAT_10455c35 != '\0')) {
-    if ((0x8ca < param_1) && (param_1 < 0x3d86)) {
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar1) << 16) | (uint16_t)(0x7f)));
+  u1 = (uint16_t)(arg1 >> 0x10);
+  if ((arg1 != 0xffffffff) && (g_10455C35 != '\0')) {
+    if ((0x8ca < arg1) && (arg1 < 0x3d86)) {
+      return ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(0x7f)));
     }
-    if ((0x4f1a < param_1) && (param_1 < 0x83d6)) {
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar1) << 16) | (uint16_t)(0xff81)));
+    if ((0x4f1a < arg1) && (arg1 < 0x83d6)) {
+      return ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(0xff81)));
     }
   }
-  return (uint32_t)uVar1 << 0x10;
+  return (uint32_t)u1 << 0x10;
 }
 
 // FUNCTION: FFXIMAIN 0x10005A00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Input_MapAxisHigh(uint32_t param_1)
+XI_API bits32 __cdecl Input_MapAxisHigh(uint32_t arg1)
 {
-  uint16_t uVar1;
+  uint16_t u1;
   
-  if (param_1 != 0xffffffff) {
-    uVar1 = (uint16_t)(param_1 >> 0x10);
-    if ((param_1 < 0x1a5e) || (0x7242 < param_1)) {
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar1) << 16) | (uint16_t)(0xff81)));
+  if (arg1 != 0xffffffff) {
+    u1 = (uint16_t)(arg1 >> 0x10);
+    if ((arg1 < 0x1a5e) || (0x7242 < arg1)) {
+      return ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(0xff81)));
     }
-    if ((0x2bf2 < param_1) && (param_1 < 0x60ae)) {
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar1) << 16) | (uint16_t)(0x7f)));
+    if ((0x2bf2 < arg1) && (arg1 < 0x60ae)) {
+      return ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(0x7f)));
     }
   }
-  return param_1 & 0xffff0000;
+  return arg1 & 0xffff0000;
 }
 
 // FUNCTION: FFXIMAIN 0x10007830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl InputDevices_FindMapValue(char * param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __cdecl InputDevices_FindMapValue(char * arg1, bits32 arg2, bits32 arg3)
 {
-  char cVar1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  uint16_t uVar3;
-  int iVar4;
+  uint32_t u1;
+  uint16_t u2;
+  int i1;
   
-  iVar4 = 0;
-  cVar1 = *param_1;
-  uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(cVar1)));
+  i1 = 0;
+  c1 = *arg1;
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(c1)));
   while( true ) {
-    uVar3 = (uint16_t)((uint32_t)uVar2 >> 0x10);
-    if (cVar1 == '\0') {
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)param_2)));
+    u2 = (uint16_t)((uint32_t)u1 >> 0x10);
+    if (c1 == '\0') {
+      return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((uint16_t)arg2)));
     }
-    if ((char)uVar2 == (char)param_3) break;
-    cVar1 = param_1[iVar4 * 2 + 2];
-    uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(cVar1)));
-    iVar4 = iVar4 + 1;
+    if ((char)u1 == (char)arg3) break;
+    c1 = arg1[i1 * 2 + 2];
+    u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(c1)));
+    i1 = i1 + 1;
   }
-  return ((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(uint8_t)param_1[iVar4 * 2 + 1])));
+  return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((uint16_t)(uint8_t)arg1[i1 * 2 + 1])));
 }
 
 // FUNCTION: FFXIMAIN 0x10007860
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall Input_HandleChar(uint32_t param_1, undefined4 xi_s2)
+XI_API void __stdcall Input_HandleChar(uint32_t arg1, bits32 xi_s2)
 {
-  uint8_t bVar1;
-  int iVar2;
-  char cVar3;
-  uint8_t bVar4;
-  int iVar5;
-  uint32_t uVar6;
-  uint32_t uVar7;
-  uint32_t uVar8;
-  uint32_t *puVar9;
-  char *pcVar10;
-  uint32_t *puVar11;
+  uint8_t u1;
+  int i1;
+  char c1;
+  uint8_t u2;
+  int i2;
+  uint32_t u3;
+  uint32_t u4;
+  uint32_t u5;
+  uint32_t *p1;
+  char *p2;
+  uint32_t *p3;
   char xi_frame[256] __attribute__((aligned(4)));
-  uint32_t  (&local_100)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 0);
+  uint32_t  (&u6)[64] = *reinterpret_cast<uint32_t  (*)[64]>(xi_frame + 0);
   
-  orig::TextInputFiles_OnChar(DAT_10662d40,param_1);
-  if (DAT_10578490 == 0) {
+  orig::TextInputFiles_OnChar(g_10662D40,arg1);
+  if (g_10578490 == 0) {
     return;
   }
-  if (DAT_1062193c_as_s32 == 0) {
+  if (g_1062193C_as_s32 == 0) {
     return;
   }
-  iVar2 = orig::FUN_10312bdb(param_1);
-  iVar5 = DAT_10578490;
-  if (iVar2 != 0) {
-LAB_10007a18:
-    iVar2 = -1;
-    pcVar10 = (char *)(DAT_10578490 + 0x14);
+  i1 = orig::game_10312BDB(arg1);
+  i2 = g_10578490;
+  if (i1 != 0) {
+code_10007A18:
+    i1 = -1;
+    p2 = (char *)(g_10578490 + 0x14);
     do {
-      if (iVar2 == 0) break;
-      iVar2 = iVar2 + -1;
-      cVar3 = *pcVar10;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar3 != '\0');
-    cVar3 = ~(uint8_t)iVar2 - 1;
-    if (cVar3 != -1) {
-      bVar4 = cVar3 - *(uint8_t *)(DAT_10578490 + 0x114);
-      if (bVar4 != 0) {
-        iVar2 = (uint32_t)*(uint8_t *)(DAT_10578490 + 0x114) + DAT_10578490;
-        puVar9 = (uint32_t *)(iVar2 + 0x14);
-        puVar11 = local_100;
-        for (uVar7 = (uint32_t)(bVar4 >> 2); uVar7 != 0; uVar7 = uVar7 - 1) {
-          *puVar11 = *puVar9;
-          puVar9 = puVar9 + 1;
-          puVar11 = puVar11 + 1;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    c1 = ~(uint8_t)i1 - 1;
+    if (c1 != -1) {
+      u2 = c1 - *(uint8_t *)(g_10578490 + 0x114);
+      if (u2 != 0) {
+        i1 = (uint32_t)*(uint8_t *)(g_10578490 + 0x114) + g_10578490;
+        p1 = (uint32_t *)(i1 + 0x14);
+        p3 = u6;
+        for (u4 = (uint32_t)(u2 >> 2); u4 != 0; u4 = u4 - 1) {
+          *p3 = *p1;
+          p1 = p1 + 1;
+          p3 = p3 + 1;
         }
-        for (uVar7 = bVar4 & 3; uVar7 != 0; uVar7 = uVar7 - 1) {
-          *(uint8_t *)puVar11 = *(uint8_t *)puVar9;
-          puVar9 = (uint32_t *)((int)puVar9 + 1);
-          puVar11 = (uint32_t *)((int)puVar11 + 1);
+        for (u4 = u2 & 3; u4 != 0; u4 = u4 - 1) {
+          *(uint8_t *)p3 = *(uint8_t *)p1;
+          p1 = (uint32_t *)((int)p1 + 1);
+          p3 = (uint32_t *)((int)p3 + 1);
         }
-        puVar9 = local_100;
-        puVar11 = (uint32_t *)(iVar2 + 0x15);
-        for (uVar7 = (uint32_t)(bVar4 >> 2); uVar7 != 0; uVar7 = uVar7 - 1) {
-          *puVar11 = *puVar9;
-          puVar9 = puVar9 + 1;
-          puVar11 = puVar11 + 1;
+        p1 = u6;
+        p3 = (uint32_t *)(i1 + 0x15);
+        for (u4 = (uint32_t)(u2 >> 2); u4 != 0; u4 = u4 - 1) {
+          *p3 = *p1;
+          p1 = p1 + 1;
+          p3 = p3 + 1;
         }
-        for (uVar7 = bVar4 & 3; uVar7 != 0; uVar7 = uVar7 - 1) {
-          *(uint8_t *)puVar11 = *(uint8_t *)puVar9;
-          puVar9 = (uint32_t *)((int)puVar9 + 1);
-          puVar11 = (uint32_t *)((int)puVar11 + 1);
+        for (u4 = u2 & 3; u4 != 0; u4 = u4 - 1) {
+          *(uint8_t *)p3 = *(uint8_t *)p1;
+          p1 = (uint32_t *)((int)p1 + 1);
+          p3 = (uint32_t *)((int)p3 + 1);
         }
       }
-      *(uint8_t *)(*(uint8_t *)(iVar5 + 0x114) + 0x14 + iVar5) = (uint8_t)param_1;
-      bVar1 = *(char *)(iVar5 + 0x114) + 1;
-      *(uint8_t *)(iVar5 + 0x114) = bVar1;
-      *(uint8_t *)(bVar4 + 0x14 + iVar5 + (uint32_t)bVar1) = 0;
+      *(uint8_t *)(*(uint8_t *)(i2 + 0x114) + 0x14 + i2) = (uint8_t)arg1;
+      u1 = *(char *)(i2 + 0x114) + 1;
+      *(uint8_t *)(i2 + 0x114) = u1;
+      *(uint8_t *)(u2 + 0x14 + i2 + (uint32_t)u1) = 0;
     }
-    orig::FUN_1015dd50(&g_menuMng_as_v0,param_1);
+    orig::game_1015DD50(&g_menuMng_as_v0,arg1);
     return;
   }
-  if (param_1 != 8) {
-    if (param_1 == 0xd) {
-      orig::FUN_1015dd70(&g_menuMng_as_v0,0xd);
-      iVar5 = -1;
-      pcVar10 = (char *)(DAT_10578490 + 0x14);
+  if (arg1 != 8) {
+    if (arg1 == 0xd) {
+      orig::game_1015DD70(&g_menuMng_as_v0,0xd);
+      i2 = -1;
+      p2 = (char *)(g_10578490 + 0x14);
       do {
-        if (iVar5 == 0) break;
-        iVar5 = iVar5 + -1;
-        cVar3 = *pcVar10;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar3 != '\0');
-      if (iVar5 == -2) {
+        if (i2 == 0) break;
+        i2 = i2 + -1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      if (i2 == -2) {
         return;
       }
-      orig::Command_RunLine((char *)(DAT_10578490 + 0x14),0);
+      orig::Command_RunLine((char *)(g_10578490 + 0x14),0);
     }
-    else if (param_1 != 0x1b) {
-      if (param_1 < 0x80) {
+    else if (arg1 != 0x1b) {
+      if (arg1 < 0x80) {
         return;
       }
-      goto LAB_10007a18;
+      goto code_10007A18;
     }
-    puVar9 = (uint32_t *)(DAT_10578490 + 0x14);
-    for (iVar5 = 0x40; iVar5 != 0; iVar5 = iVar5 + -1) {
-      *puVar9 = 0;
-      puVar9 = puVar9 + 1;
+    p1 = (uint32_t *)(g_10578490 + 0x14);
+    for (i2 = 0x40; i2 != 0; i2 = i2 + -1) {
+      *p1 = 0;
+      p1 = p1 + 1;
     }
     return;
   }
-  if (*(uint8_t *)(DAT_10578490 + 0x114) != 0) {
-    iVar2 = orig::FUN_10312ad3((int)*(char *)(*(uint8_t *)(DAT_10578490 + 0x114) + 0x12 + DAT_10578490));
-    if (iVar2 == 0) {
-      iVar2 = -1;
-      uVar8 = 0;
-      *(uint8_t *)(*(uint8_t *)(iVar5 + 0x114) + 0x13 + iVar5) = 0;
-      uVar7 = (uint32_t)*(uint8_t *)(iVar5 + 0x114);
-      pcVar10 = (char *)(uVar7 + 0x14 + iVar5);
+  if (*(uint8_t *)(g_10578490 + 0x114) != 0) {
+    i1 = orig::game_10312AD3((int)*(char *)(*(uint8_t *)(g_10578490 + 0x114) + 0x12 + g_10578490));
+    if (i1 == 0) {
+      i1 = -1;
+      u5 = 0;
+      *(uint8_t *)(*(uint8_t *)(i2 + 0x114) + 0x13 + i2) = 0;
+      u4 = (uint32_t)*(uint8_t *)(i2 + 0x114);
+      p2 = (char *)(u4 + 0x14 + i2);
       do {
-        if (iVar2 == 0) break;
-        iVar2 = iVar2 + -1;
-        cVar3 = *pcVar10;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar3 != '\0');
-      if (iVar2 != -2) {
+        if (i1 == 0) break;
+        i1 = i1 + -1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      if (i1 != -2) {
         do {
-          iVar2 = uVar7 + uVar8;
-          uVar8 = uVar8 + 1;
-          *(uint8_t *)(iVar2 + iVar5 + 0x13) = *(uint8_t *)(iVar2 + 0x14 + iVar5);
-          uVar7 = (uint32_t)*(uint8_t *)(iVar5 + 0x114);
-          uVar6 = 0xffffffff;
-          pcVar10 = (char *)(uVar7 + 0x14 + iVar5);
+          i1 = u4 + u5;
+          u5 = u5 + 1;
+          *(uint8_t *)(i1 + i2 + 0x13) = *(uint8_t *)(i1 + 0x14 + i2);
+          u4 = (uint32_t)*(uint8_t *)(i2 + 0x114);
+          u3 = 0xffffffff;
+          p2 = (char *)(u4 + 0x14 + i2);
           do {
-            if (uVar6 == 0) break;
-            uVar6 = uVar6 - 1;
-            cVar3 = *pcVar10;
-            pcVar10 = pcVar10 + 1;
-          } while (cVar3 != '\0');
-        } while (uVar8 < ~uVar6 - 1);
+            if (u3 == 0) break;
+            u3 = u3 - 1;
+            c1 = *p2;
+            p2 = p2 + 1;
+          } while (c1 != '\0');
+        } while (u5 < ~u3 - 1);
       }
-      cVar3 = *(char *)(iVar5 + 0x114) + -1;
+      c1 = *(char *)(i2 + 0x114) + -1;
     }
     else {
-      if (*(uint8_t *)(iVar5 + 0x114) < 2) goto LAB_100079f4;
-      iVar2 = -1;
-      uVar8 = 0;
-      *(uint8_t *)(*(uint8_t *)(iVar5 + 0x114) + 0x12 + iVar5) = 0;
-      uVar7 = (uint32_t)*(uint8_t *)(iVar5 + 0x114);
-      pcVar10 = (char *)(uVar7 + 0x14 + iVar5);
+      if (*(uint8_t *)(i2 + 0x114) < 2) goto code_100079F4;
+      i1 = -1;
+      u5 = 0;
+      *(uint8_t *)(*(uint8_t *)(i2 + 0x114) + 0x12 + i2) = 0;
+      u4 = (uint32_t)*(uint8_t *)(i2 + 0x114);
+      p2 = (char *)(u4 + 0x14 + i2);
       do {
-        if (iVar2 == 0) break;
-        iVar2 = iVar2 + -1;
-        cVar3 = *pcVar10;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar3 != '\0');
-      if (iVar2 != -2) {
+        if (i1 == 0) break;
+        i1 = i1 + -1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      if (i1 != -2) {
         do {
-          iVar2 = uVar7 + uVar8;
-          uVar8 = uVar8 + 1;
-          *(uint8_t *)(iVar2 + iVar5 + 0x12) = *(uint8_t *)(iVar2 + 0x14 + iVar5);
-          uVar7 = (uint32_t)*(uint8_t *)(iVar5 + 0x114);
-          uVar6 = 0xffffffff;
-          pcVar10 = (char *)(uVar7 + 0x14 + iVar5);
+          i1 = u4 + u5;
+          u5 = u5 + 1;
+          *(uint8_t *)(i1 + i2 + 0x12) = *(uint8_t *)(i1 + 0x14 + i2);
+          u4 = (uint32_t)*(uint8_t *)(i2 + 0x114);
+          u3 = 0xffffffff;
+          p2 = (char *)(u4 + 0x14 + i2);
           do {
-            if (uVar6 == 0) break;
-            uVar6 = uVar6 - 1;
-            cVar3 = *pcVar10;
-            pcVar10 = pcVar10 + 1;
-          } while (cVar3 != '\0');
-        } while (uVar8 < ~uVar6 - 1);
+            if (u3 == 0) break;
+            u3 = u3 - 1;
+            c1 = *p2;
+            p2 = p2 + 1;
+          } while (c1 != '\0');
+        } while (u5 < ~u3 - 1);
       }
-      cVar3 = *(char *)(iVar5 + 0x114) + -2;
+      c1 = *(char *)(i2 + 0x114) + -2;
     }
-    *(char *)(iVar5 + 0x114) = cVar3;
+    *(char *)(i2 + 0x114) = c1;
   }
-LAB_100079f4:
-  orig::FUN_1015dd70(&g_menuMng_as_v0,8);
+code_100079F4:
+  orig::game_1015DD70(&g_menuMng_as_v0,8);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10007E20
 // GATE: PASS -- 100 trials, 100 returned normally, 370 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DirectInput_InstallKeyboard(void * self_)
+XI_API bits32 __thiscall DirectInput_InstallKeyboard(void * self_)
 {
-  uint32_t *a3;
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t *p1;
+  uint32_t u1;
+  uint32_t u2;
   char xi_frame[20] __attribute__((aligned(4)));
-  uint32_t  &uStack_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &uStack_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &uStack_c = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &uStack_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &uStack_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
   
-  a3 = (uint32_t *)((int)self_ + 0x88);
-  uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x84) + 0xc))
-                    ))(*(int **)((int)self_ + 0x84),&DAT_10341dac,a3,0);
-  if ((int)uVar1 < 0) {
-    *a3 = 0;
-    return uVar1 & 0xffffff00;
+  p1 = (uint32_t *)((int)self_ + 0x88);
+  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x84) + 0xc))
+                    ))(*(int **)((int)self_ + 0x84),&g_10341DAC,p1,0);
+  if ((int)u1 < 0) {
+    *p1 = 0;
+    return u1 & 0xffffff00;
   }
-  uStack_14 = 0x14;
-  uStack_10 = 0x10;
-  uStack_c = 0;
-  uStack_8 = 0;
-  uStack_4 = 0x140;
-  uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(*(int *)*a3 + 0x18))))((int *)*a3,1,&uStack_14);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u3 = 0x14;
+  u4 = 0x10;
+  u5 = 0;
+  u6 = 0;
+  u7 = 0x140;
+  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x18))))((int *)*p1,1,&u3);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(*(int *)*a3 + 0x2c))))((int *)*a3,&DAT_10349cec);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x2c))))((int *)*p1,&g_10349CEC);
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  uVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(*(int *)*a3 + 0x34))
-                    ))((int *)*a3,*(uint32_t *)(g_pApp_as_s32 + 0x18),
+  u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x34))
+                    ))((int *)*p1,*(uint32_t *)(g_pApp_as_s32 + 0x18),
                      (-(uint32_t)(g_windowMode != 0) & 0xfffffff0) + 0x16);
-  if ((int)uVar1 < 0) {
-    return uVar1 & 0xffffff00;
+  if ((int)u1 < 0) {
+    return u1 & 0xffffff00;
   }
-  uVar2 = ((int (__stdcall *)(XI_ANY))((**(code **)(*(int *)*a3 + 0x1c))))((int *)*a3);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  u2 = ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 0x1c))))((int *)*p1);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10007EF0
 // GATE: PASS -- 100 trials, 100 returned normally, 15 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall DirectInput_InstallMouse(_DWORD **self_)
+XI_API char __thiscall DirectInput_InstallMouse(uint32_t **self_)
 {
-  _DWORD *v2;
-  int v3;
-  int v4;
+  uint32_t *p1;
+  int i1;
+  int i2;
   alignas(16) unsigned char xi_frame[0x438];  // address-taken locals at their original offsets
-  int &v5 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &v6 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &v9 = *reinterpret_cast<int *>(xi_frame + 0x34);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  int &i4 = *reinterpret_cast<int *>(xi_frame + 0x28);
+  int &i5 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x30);
+  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x34);
 
   if ( g_windowMode != 0 )
   {
@@ -451,47 +451,47 @@ XI_API char __thiscall DirectInput_InstallMouse(_DWORD **self_)
   }
   else
   {
-    v2 =(_DWORD*)(self_ + 35);
-    if ( (*(int (__stdcall **)(_DWORD, void *, _DWORD **, _DWORD))(**(self_ + 33) + 12))(
+    p1 =(uint32_t*)(self_ + 35);
+    if ( (*(int (__stdcall **)(uint32_t, void *, uint32_t **, uint32_t))(**(self_ + 33) + 12))(
            *(self_ + 33),
            &GUID_SysMouse_ref,
            self_ + 35,
            0) >= 0 )
     {
-      if ( (*(int (__stdcall **)(_DWORD, void *))(*(_DWORD *)*v2 + 44))(*v2, &c_dfDIMouse_ref) >= 0 )
+      if ( (*(int (__stdcall **)(uint32_t, void *))(*(uint32_t *)*p1 + 44))(*p1, &c_dfDIMouse_ref) >= 0 )
       {
         if ( g_cfgHardwareMouse != 0 )
           orig::CDx_ShowCursor(g_pCDx, 1u);
         g_mouseAcquired = 1;
-        v3 = *v2;
+        i1 = *p1;
         if ( g_cfgHardwareMouse != 0 )
         {
-          if ( v3 != 0 )
+          if ( i1 != 0 )
           {
-            (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v3 + 8))(*v2);
-            *v2 = 0;
+            (*(void (__stdcall **)(uint32_t))(*(uint32_t *)i1 + 8))(*p1);
+            *p1 = 0;
           }
           g_mouseAcquired = 0;
           return 1;
         }
         else
         {
-          v5 = 20;
-          v6 = 16;
-          v7 = 0;
-          v8 = 0;
-          v9 = 0;
-          (*(void (__stdcall **)(int, int, int *))(*(_DWORD *)v3 + 24))(v3, 2, &v5);
-          v4 = *v2;
-          v5 = 20;
-          v6 = 16;
-          v7 = 0;
-          v8 = 0;
-          v9 = 320;
-          (*(void (__stdcall **)(int, int, int *))(*(_DWORD *)v4 + 24))(v4, 1, &v5);
-          if ( (*(int (__stdcall **)(_DWORD, _DWORD, int))(*(_DWORD *)*v2 + 52))(*v2, *((_DWORD *)g_pApp + 6), 6) >= 0 )
+          i3 = 20;
+          i4 = 16;
+          i5 = 0;
+          i6 = 0;
+          i7 = 0;
+          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i1 + 24))(i1, 2, &i3);
+          i2 = *p1;
+          i3 = 20;
+          i4 = 16;
+          i5 = 0;
+          i6 = 0;
+          i7 = 320;
+          (*(void (__stdcall **)(int, int, int *))(*(uint32_t *)i2 + 24))(i2, 1, &i3);
+          if ( (*(int (__stdcall **)(uint32_t, uint32_t, int))(*(uint32_t *)*p1 + 52))(*p1, *((uint32_t *)g_pApp + 6), 6) >= 0 )
           {
-            (*(void (__stdcall **)(_DWORD))(*(_DWORD *)*v2 + 28))(*v2);
+            (*(void (__stdcall **)(uint32_t))(*(uint32_t *)*p1 + 28))(*p1);
             return 1;
           }
           else
@@ -502,13 +502,13 @@ XI_API char __thiscall DirectInput_InstallMouse(_DWORD **self_)
       }
       else
       {
-        *v2 = 0;
+        *p1 = 0;
         return 1;
       }
     }
     else
     {
-      *v2 = 0;
+      *p1 = 0;
       return 1;
     }
   }
@@ -518,498 +518,498 @@ XI_API char __thiscall DirectInput_InstallMouse(_DWORD **self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall InputDevices_JmpGetKeyboardLayout(void * self_)
 {
-  char cVar1;
-  HKL pHVar2;
-  int iVar3;
-  uint32_t uVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
+  char c1;
+  HKL val1;
+  int i1;
+  uint32_t u1;
+  int i2;
+  int *p1;
+  char *p2;
   char *_Str1;
-  int *piVar8;
-  uint32_t *puVar9;
-  char *pcVar10;
-  uint64_t uVar11;
+  int *p3;
+  uint32_t *p4;
+  char *p5;
+  uint64_t u2;
   char xi_frame[792] __attribute__((aligned(4)));
-  int  (&local_2f8)[8] = *reinterpret_cast<int  (*)[8]>(xi_frame + 32);
-  uint32_t  &local_2d8 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
-  uint32_t  &local_2d4 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
-  uint32_t  (&local_2d0)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 72);
-  uint32_t  &local_2b4 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
-  uint32_t  &local_2b0 = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
-  uint32_t  (&local_2ac)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 108);
-  uint32_t  &local_290 = *reinterpret_cast<uint32_t  *>(xi_frame + 136);
-  uint32_t  &local_28c = *reinterpret_cast<uint32_t  *>(xi_frame + 140);
-  uint32_t  (&local_288)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 144);
-  uint16_t  &local_26a = *reinterpret_cast<uint16_t  *>(xi_frame + 174);
-  uint32_t  &local_268 = *reinterpret_cast<uint32_t  *>(xi_frame + 176);
-  uint32_t  &local_264 = *reinterpret_cast<uint32_t  *>(xi_frame + 180);
-  uint16_t  &local_260 = *reinterpret_cast<uint16_t  *>(xi_frame + 184);
-  uint8_t  &local_25e = *reinterpret_cast<uint8_t  *>(xi_frame + 186);
-  uint32_t  (&local_25d)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 187);
-  uint32_t  &local_244 = *reinterpret_cast<uint32_t  *>(xi_frame + 212);
-  uint32_t  &local_240 = *reinterpret_cast<uint32_t  *>(xi_frame + 216);
-  uint16_t  &local_23c = *reinterpret_cast<uint16_t  *>(xi_frame + 220);
-  uint8_t  &local_23a = *reinterpret_cast<uint8_t  *>(xi_frame + 222);
-  uint32_t  (&local_239)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 223);
-  uint32_t  &local_220 = *reinterpret_cast<uint32_t  *>(xi_frame + 248);
-  uint32_t  &local_21c = *reinterpret_cast<uint32_t  *>(xi_frame + 252);
-  uint16_t  &local_218 = *reinterpret_cast<uint16_t  *>(xi_frame + 256);
-  uint8_t  &local_216 = *reinterpret_cast<uint8_t  *>(xi_frame + 258);
-  uint32_t  (&local_215)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 259);
-  uint32_t  &local_1fc = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
-  uint32_t  &local_1f8 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
-  uint16_t  &local_1f4 = *reinterpret_cast<uint16_t  *>(xi_frame + 292);
-  uint8_t  &local_1f2 = *reinterpret_cast<uint8_t  *>(xi_frame + 294);
-  uint32_t  (&local_1f1)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 295);
-  uint32_t  &local_1d8 = *reinterpret_cast<uint32_t  *>(xi_frame + 320);
-  uint32_t  &local_1d4 = *reinterpret_cast<uint32_t  *>(xi_frame + 324);
-  uint16_t  &local_1d0 = *reinterpret_cast<uint16_t  *>(xi_frame + 328);
-  uint8_t  &local_1ce = *reinterpret_cast<uint8_t  *>(xi_frame + 330);
-  uint32_t  (&local_1cd)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 331);
-  uint32_t  &local_1b4 = *reinterpret_cast<uint32_t  *>(xi_frame + 356);
-  uint32_t  &local_1b0 = *reinterpret_cast<uint32_t  *>(xi_frame + 360);
-  uint16_t  &local_1ac = *reinterpret_cast<uint16_t  *>(xi_frame + 364);
-  uint8_t  &local_1aa = *reinterpret_cast<uint8_t  *>(xi_frame + 366);
-  uint32_t  (&local_1a9)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 367);
-  uint32_t  &local_190 = *reinterpret_cast<uint32_t  *>(xi_frame + 392);
-  uint32_t  &local_18c = *reinterpret_cast<uint32_t  *>(xi_frame + 396);
-  uint16_t  &local_188 = *reinterpret_cast<uint16_t  *>(xi_frame + 400);
-  uint8_t  &local_186 = *reinterpret_cast<uint8_t  *>(xi_frame + 402);
-  uint32_t  (&local_185)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 403);
-  uint32_t  &local_16c = *reinterpret_cast<uint32_t  *>(xi_frame + 428);
-  uint32_t  &local_168 = *reinterpret_cast<uint32_t  *>(xi_frame + 432);
-  uint32_t  &local_151 = *reinterpret_cast<uint32_t  *>(xi_frame + 455);
-  uint32_t  &local_14d = *reinterpret_cast<uint32_t  *>(xi_frame + 459);
-  uint8_t  &local_149 = *reinterpret_cast<uint8_t  *>(xi_frame + 463);
-  uint32_t  &local_148 = *reinterpret_cast<uint32_t  *>(xi_frame + 464);
-  uint8_t  &local_144 = *reinterpret_cast<uint8_t  *>(xi_frame + 468);
-  uint32_t  &local_143 = *reinterpret_cast<uint32_t  *>(xi_frame + 469);
-  uint32_t  &local_124 = *reinterpret_cast<uint32_t  *>(xi_frame + 500);
-  uint8_t  &local_120 = *reinterpret_cast<uint8_t  *>(xi_frame + 504);
-  uint32_t  &local_11f = *reinterpret_cast<uint32_t  *>(xi_frame + 505);
-  CHAR  (&local_100)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 536);
+  int  (&i3)[8] = *reinterpret_cast<int  (*)[8]>(xi_frame + 32);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
+  uint32_t  (&u5)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 72);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
+  uint32_t  (&u8)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 108);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 136);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 140);
+  uint32_t  (&u11)[7] = *reinterpret_cast<uint32_t  (*)[7]>(xi_frame + 144);
+  uint16_t  &u12 = *reinterpret_cast<uint16_t  *>(xi_frame + 174);
+  uint32_t  &u13 = *reinterpret_cast<uint32_t  *>(xi_frame + 176);
+  uint32_t  &u14 = *reinterpret_cast<uint32_t  *>(xi_frame + 180);
+  uint16_t  &u15 = *reinterpret_cast<uint16_t  *>(xi_frame + 184);
+  uint8_t  &u16 = *reinterpret_cast<uint8_t  *>(xi_frame + 186);
+  uint32_t  (&u17)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 187);
+  uint32_t  &u18 = *reinterpret_cast<uint32_t  *>(xi_frame + 212);
+  uint32_t  &u19 = *reinterpret_cast<uint32_t  *>(xi_frame + 216);
+  uint16_t  &u20 = *reinterpret_cast<uint16_t  *>(xi_frame + 220);
+  uint8_t  &u21 = *reinterpret_cast<uint8_t  *>(xi_frame + 222);
+  uint32_t  (&u22)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 223);
+  uint32_t  &u23 = *reinterpret_cast<uint32_t  *>(xi_frame + 248);
+  uint32_t  &u24 = *reinterpret_cast<uint32_t  *>(xi_frame + 252);
+  uint16_t  &u25 = *reinterpret_cast<uint16_t  *>(xi_frame + 256);
+  uint8_t  &u26 = *reinterpret_cast<uint8_t  *>(xi_frame + 258);
+  uint32_t  (&u27)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 259);
+  uint32_t  &u28 = *reinterpret_cast<uint32_t  *>(xi_frame + 284);
+  uint32_t  &u29 = *reinterpret_cast<uint32_t  *>(xi_frame + 288);
+  uint16_t  &u30 = *reinterpret_cast<uint16_t  *>(xi_frame + 292);
+  uint8_t  &u31 = *reinterpret_cast<uint8_t  *>(xi_frame + 294);
+  uint32_t  (&u32)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 295);
+  uint32_t  &u33 = *reinterpret_cast<uint32_t  *>(xi_frame + 320);
+  uint32_t  &u34 = *reinterpret_cast<uint32_t  *>(xi_frame + 324);
+  uint16_t  &u35 = *reinterpret_cast<uint16_t  *>(xi_frame + 328);
+  uint8_t  &u36 = *reinterpret_cast<uint8_t  *>(xi_frame + 330);
+  uint32_t  (&u37)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 331);
+  uint32_t  &u38 = *reinterpret_cast<uint32_t  *>(xi_frame + 356);
+  uint32_t  &u39 = *reinterpret_cast<uint32_t  *>(xi_frame + 360);
+  uint16_t  &u40 = *reinterpret_cast<uint16_t  *>(xi_frame + 364);
+  uint8_t  &u41 = *reinterpret_cast<uint8_t  *>(xi_frame + 366);
+  uint32_t  (&u42)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 367);
+  uint32_t  &u43 = *reinterpret_cast<uint32_t  *>(xi_frame + 392);
+  uint32_t  &u44 = *reinterpret_cast<uint32_t  *>(xi_frame + 396);
+  uint16_t  &u45 = *reinterpret_cast<uint16_t  *>(xi_frame + 400);
+  uint8_t  &u46 = *reinterpret_cast<uint8_t  *>(xi_frame + 402);
+  uint32_t  (&u47)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 403);
+  uint32_t  &u48 = *reinterpret_cast<uint32_t  *>(xi_frame + 428);
+  uint32_t  &u49 = *reinterpret_cast<uint32_t  *>(xi_frame + 432);
+  uint32_t  &u50 = *reinterpret_cast<uint32_t  *>(xi_frame + 455);
+  uint32_t  &u51 = *reinterpret_cast<uint32_t  *>(xi_frame + 459);
+  uint8_t  &u52 = *reinterpret_cast<uint8_t  *>(xi_frame + 463);
+  uint32_t  &u53 = *reinterpret_cast<uint32_t  *>(xi_frame + 464);
+  uint8_t  &u54 = *reinterpret_cast<uint8_t  *>(xi_frame + 468);
+  uint32_t  &u55 = *reinterpret_cast<uint32_t  *>(xi_frame + 469);
+  uint32_t  &u56 = *reinterpret_cast<uint32_t  *>(xi_frame + 500);
+  uint8_t  &u57 = *reinterpret_cast<uint8_t  *>(xi_frame + 504);
+  uint32_t  &u58 = *reinterpret_cast<uint32_t  *>(xi_frame + 505);
+  CHAR  (&c2)[256] = *reinterpret_cast<CHAR  (*)[256]>(xi_frame + 536);
   
-  iVar5 = 0;
-  piVar8 = local_2f8;
-  local_2f8[0] = 0;
-  piVar6 = (int *)s_Microsoft_IME_95__Japanese__1034fa98;
-  for (iVar3 = 7; piVar8 = piVar8 + 1, iVar3 != 0; iVar3 = iVar3 + -1) {
-    *piVar8 = *piVar6;
-    piVar6 = piVar6 + 1;
+  i2 = 0;
+  p3 = i3;
+  i3[0] = 0;
+  p1 = (int *)str_Microsoft_IME_95__Japanese__1034FA98;
+  for (i1 = 7; p3 = p3 + 1, i1 != 0; i1 = i1 + -1) {
+    *p3 = *p1;
+    p1 = p1 + 1;
   }
-  local_2d8 = 0;
-  local_2d4 = 1;
-  pcVar7 = s_Microsoft_IME_97__Japanese__1034fa7c;
-  puVar9 = local_2d0;
-  for (iVar3 = 7; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = *(uint32_t *)pcVar7;
-    pcVar7 = pcVar7 + 4;
-    puVar9 = puVar9 + 1;
+  u3 = 0;
+  u4 = 1;
+  p2 = str_Microsoft_IME_97__Japanese__1034FA7C;
+  p4 = u5;
+  for (i1 = 7; i1 != 0; i1 = i1 + -1) {
+    *p4 = *(uint32_t *)p2;
+    p2 = p2 + 4;
+    p4 = p4 + 1;
   }
-  local_2b4 = 0;
-  local_2b0 = 2;
-  pcVar7 = s_Microsoft_IME_98__Japanese__1034fa58;
-  puVar9 = local_2ac;
-  for (iVar3 = 7; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = *(uint32_t *)pcVar7;
-    pcVar7 = pcVar7 + 4;
-    puVar9 = puVar9 + 1;
+  u6 = 0;
+  u7 = 2;
+  p2 = str_Microsoft_IME_98__Japanese__1034FA58;
+  p4 = u8;
+  for (i1 = 7; i1 != 0; i1 = i1 + -1) {
+    *p4 = *(uint32_t *)p2;
+    p2 = p2 + 4;
+    p4 = p4 + 1;
   }
-  local_290 = 0;
-  local_28c = 3;
-  pcVar7 = s_Microsoft_IME_2000__Japanese__1034fa38;
-  puVar9 = local_288;
-  for (iVar3 = 7; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = *(uint32_t *)pcVar7;
-    pcVar7 = pcVar7 + 4;
-    puVar9 = puVar9 + 1;
+  u9 = 0;
+  u10 = 3;
+  p2 = str_Microsoft_IME_2000__Japanese__1034FA38;
+  p4 = u11;
+  for (i1 = 7; i1 != 0; i1 = i1 + -1) {
+    *p4 = *(uint32_t *)p2;
+    p2 = p2 + 4;
+    p4 = p4 + 1;
   }
-  *(uint16_t *)puVar9 = *(uint16_t *)pcVar7;
-  local_264 = DAT_1034fa74;
-  local_260 = DAT_1034fa78;
-  local_26a = 0;
-  local_268 = 4;
-  local_25e = DAT_1034fa7a;
-  puVar9 = local_25d;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint16_t *)p4 = *(uint16_t *)p2;
+  u14 = g_1034FA74;
+  u15 = g_1034FA78;
+  u12 = 0;
+  u13 = 4;
+  u16 = g_1034FA7A;
+  p4 = u17;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_23c = DAT_1034fa34;
-  local_240 = DAT_1034fa30;
-  local_244 = 5;
-  local_23a = DAT_1034fa36;
-  puVar9 = local_239;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u20 = g_1034FA34;
+  u19 = g_1034FA30;
+  u18 = 5;
+  u21 = g_1034FA36;
+  p4 = u22;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_218 = DAT_1034fa2c;
-  local_21c = DAT_1034fa28;
-  local_220 = 6;
-  local_216 = DAT_1034fa2e;
-  puVar9 = local_215;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u25 = g_1034FA2C;
+  u24 = g_1034FA28;
+  u23 = 6;
+  u26 = g_1034FA2E;
+  p4 = u27;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_1f4 = DAT_1034fa24;
-  local_1f8 = DAT_1034fa20;
-  local_1fc = 7;
-  local_1f2 = DAT_1034fa26;
-  puVar9 = local_1f1;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u30 = g_1034FA24;
+  u29 = g_1034FA20;
+  u28 = 7;
+  u31 = g_1034FA26;
+  p4 = u32;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_1d8 = 8;
-  local_1d4 = DAT_1034fa18;
-  local_1d0 = DAT_1034fa1c;
-  local_1ce = DAT_1034fa1e;
-  puVar9 = local_1cd;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u33 = 8;
+  u34 = g_1034FA18;
+  u35 = g_1034FA1C;
+  u36 = g_1034FA1E;
+  p4 = u37;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_1ac = DAT_1034fa14;
-  local_1b0 = DAT_1034fa10;
-  local_1b4 = 9;
-  local_1aa = DAT_1034fa16;
-  puVar9 = local_1a9;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u40 = g_1034FA14;
+  u39 = g_1034FA10;
+  u38 = 9;
+  u41 = g_1034FA16;
+  p4 = u42;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_188 = DAT_1034fa0c;
-  local_18c = DAT_1034fa08;
-  local_190 = 10;
-  local_186 = DAT_1034fa0e;
-  puVar9 = local_185;
-  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u45 = g_1034FA0C;
+  u44 = g_1034FA08;
+  u43 = 10;
+  u46 = g_1034FA0E;
+  p4 = u47;
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint8_t *)puVar9 = 0;
-  local_16c = 0xc;
-  pcVar7 = s_Microsoft_IME_Standard_1034f9f0;
-  puVar9 = &local_168;
-  for (iVar3 = 5; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = *(uint32_t *)pcVar7;
-    pcVar7 = pcVar7 + 4;
-    puVar9 = puVar9 + 1;
+  *(uint8_t *)p4 = 0;
+  u48 = 0xc;
+  p2 = str_Microsoft_IME_Standard_1034F9F0;
+  p4 = &u49;
+  for (i1 = 5; i1 != 0; i1 = i1 + -1) {
+    *p4 = *(uint32_t *)p2;
+    p2 = p2 + 4;
+    p4 = p4 + 1;
   }
-  *(uint16_t *)puVar9 = *(uint16_t *)pcVar7;
-  *(char *)((int)puVar9 + 2) = pcVar7[2];
-  local_151 = 0;
-  local_14d = 0;
-  local_149 = 0;
-  local_148 = 0xd;
-  local_144 = Read_as_v0;
-  puVar9 = &local_143;
-  for (iVar3 = 7; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint16_t *)p4 = *(uint16_t *)p2;
+  *(char *)((int)p4 + 2) = p2[2];
+  u50 = 0;
+  u51 = 0;
+  u52 = 0;
+  u53 = 0xd;
+  u54 = Read_as_v0;
+  p4 = &u55;
+  for (i1 = 7; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint16_t *)puVar9 = 0;
-  *(uint8_t *)((int)puVar9 + 2) = 0;
-  local_124 = 0xf;
-  local_120 = Read_as_v0;
-  puVar9 = &local_11f;
-  for (iVar3 = 7; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar9 = 0;
-    puVar9 = puVar9 + 1;
+  *(uint16_t *)p4 = 0;
+  *(uint8_t *)((int)p4 + 2) = 0;
+  u56 = 0xf;
+  u57 = Read_as_v0;
+  p4 = &u58;
+  for (i1 = 7; i1 != 0; i1 = i1 + -1) {
+    *p4 = 0;
+    p4 = p4 + 1;
   }
-  *(uint16_t *)puVar9 = 0;
-  *(uint8_t *)((int)puVar9 + 2) = 0;
-  pHVar2 = GetKeyboardLayout(0);
-  orig::ImmGetDescriptionA_102BC826(pHVar2,local_100,0x100);
-  pcVar7 = &xi_frame[0];
-  iVar3 = local_2f8[0];
+  *(uint16_t *)p4 = 0;
+  *(uint8_t *)((int)p4 + 2) = 0;
+  val1 = GetKeyboardLayout(0);
+  orig::ImmGetDescriptionA_102BC826(val1,c2,0x100);
+  p2 = &xi_frame[0];
+  i1 = i3[0];
   do {
-    if (0xe < iVar3) {
+    if (0xe < i1) {
       *(uint32_t *)((int)self_ + 0xda8) = 0xe;
       return;
     }
-    _Str1 = pcVar7 + 0x24;
-    uVar4 = 0xffffffff;
-    pcVar10 = _Str1;
+    _Str1 = p2 + 0x24;
+    u1 = 0xffffffff;
+    p5 = _Str1;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar10;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar1 != '\0');
-    uVar11 = orig::_strncmp_v1(_Str1,local_100,~uVar4 - 1);
-    if ((int)uVar11 == 0) {
-      *(int *)((int)self_ + 0xda8) = local_2f8[iVar5 * 9];
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p5;
+      p5 = p5 + 1;
+    } while (c1 != '\0');
+    u2 = orig::_strncmp_v1(_Str1,c2,~u1 - 1);
+    if ((int)u2 == 0) {
+      *(int *)((int)self_ + 0xda8) = i3[i2 * 9];
       return;
     }
-    iVar3 = *(int *)(pcVar7 + 0x44);
-    iVar5 = iVar5 + 1;
-    pcVar7 = _Str1;
+    i1 = *(int *)(p2 + 0x44);
+    i2 = i2 + 1;
+    p2 = _Str1;
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x100083D0
 // GATE: PASS -- 100 trials, 100 returned normally, 125 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DirectInput_InstallJoystick(void * self_)
+XI_API bits32 __thiscall DirectInput_InstallJoystick(void * self_)
 {
-  int *piVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint8_t **ppuVar6;
+  int *p1;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t *p2;
+  uint8_t **p3;
   char xi_frame[241] __attribute__((aligned(4)));
-  char  &cStack_f1 = *reinterpret_cast<char  *>(xi_frame + 0);
-  int * &piStack_b8 = *reinterpret_cast<int * *>(xi_frame + 57);
-  uint32_t  &uStack_b4 = *reinterpret_cast<uint32_t  *>(xi_frame + 61);
-  uint8_t * &puStack_b0 = *reinterpret_cast<uint8_t * *>(xi_frame + 65);
-  uint8_t  (&auStack_70)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 129);
-  uint32_t  &uStack_6c = *reinterpret_cast<uint32_t  *>(xi_frame + 133);
-  uint32_t  &uStack_68 = *reinterpret_cast<uint32_t  *>(xi_frame + 137);
-  uint32_t  (&auStack_64)[10] = *reinterpret_cast<uint32_t  (*)[10]>(xi_frame + 141);
-  uint8_t  &bStack_3c = *reinterpret_cast<uint8_t  *>(xi_frame + 181);
-  uint32_t  (&auStack_38)[14] = *reinterpret_cast<uint32_t  (*)[14]>(xi_frame + 185);
+  char  &c1 = *reinterpret_cast<char  *>(xi_frame + 0);
+  int * &p4 = *reinterpret_cast<int * *>(xi_frame + 57);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 61);
+  uint8_t * &p5 = *reinterpret_cast<uint8_t * *>(xi_frame + 65);
+  uint8_t  (&u4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 129);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 133);
+  uint32_t  &u6 = *reinterpret_cast<uint32_t  *>(xi_frame + 137);
+  uint32_t  (&u7)[10] = *reinterpret_cast<uint32_t  (*)[10]>(xi_frame + 141);
+  uint8_t  &u8 = *reinterpret_cast<uint8_t  *>(xi_frame + 181);
+  uint32_t  (&u9)[14] = *reinterpret_cast<uint32_t  (*)[14]>(xi_frame + 185);
   
-  if (DAT_10455c38 != '\0') {
-    uVar2 = orig::XInput_ProbeDll(self_);
-    *(char *)((int)self_ + 0xc9a) = (char)uVar2;
-    if ((char)uVar2 == '\0') goto LAB_10008752;
+  if (g_10455C38 != '\0') {
+    u1 = orig::XInput_ProbeDll(self_);
+    *(char *)((int)self_ + 0xc9a) = (char)u1;
+    if ((char)u1 == '\0') goto code_10008752;
     orig::XInput_LoadFunctions(self_);
   }
-  DAT_10455c28 = 0;
+  g_10455C28 = 0;
   *(uint32_t *)((int)self_ + 0x90) = 0;
-  uVar2 = 0;
-  if (DAT_10455c39 == '\0') {
-LAB_10008438:
-    if (*(int *)((int)self_ + 0x90) == 0) goto LAB_10008440;
+  u1 = 0;
+  if (g_10455C39 == '\0') {
+code_10008438:
+    if (*(int *)((int)self_ + 0x90) == 0) goto code_10008440;
   }
   else {
-    uVar2 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x84) + 0x10))
-                      ))(*(int **)((int)self_ + 0x84),4,XI_CODE(FUN_100057d0),0,0x101);
-    if (-1 < (int)uVar2) goto LAB_10008438;
-LAB_10008440:
-    uVar2 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x84) + 0x10))
-                      ))(*(int **)((int)self_ + 0x84),4,XI_CODE(FUN_100057d0),0,1);
+    u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x84) + 0x10))
+                      ))(*(int **)((int)self_ + 0x84),4,XI_CODE(game_100057D0),0,0x101);
+    if (-1 < (int)u1) goto code_10008438;
+code_10008440:
+    u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x84) + 0x10))
+                      ))(*(int **)((int)self_ + 0x84),4,XI_CODE(game_100057D0),0,1);
   }
-  if ((int)uVar2 < 0) {
+  if ((int)u1 < 0) {
     *(uint32_t *)((int)self_ + 0x90) = 0;
-    return uVar2 & 0xffffff00;
+    return u1 & 0xffffff00;
   }
-  piVar1 = *(int **)((int)self_ + 0x90);
+  p1 = *(int **)((int)self_ + 0x90);
   *(uint8_t *)((int)self_ + 0xc98) = 0;
-  if (piVar1 != (int *)0x0) {
-    puVar5 = auStack_38;
-    for (iVar4 = 0xb; iVar4 != 0; iVar4 = iVar4 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+  if (p1 != (int *)0x0) {
+    p2 = u9;
+    for (i1 = 0xb; i1 != 0; i1 = i1 + -1) {
+      *p2 = 0;
+      p2 = p2 + 1;
     }
-    auStack_38[0] = 0x2c;
-    (**(code **)(*piVar1 + 0xc))();
-    if ((bStack_3c & 10) != 0) {
+    u9[0] = 0x2c;
+    (**(untyped_fn **)(*p1 + 0xc))();
+    if ((u8 & 10) != 0) {
       *(uint8_t *)((int)self_ + 0xc98) = 1;
     }
-    uStack_6c = 0x14;
-    uStack_68 = 0x10;
-    auStack_64[0] = 0;
-    auStack_64[1] = 0;
-    auStack_64[2] = 0x140;
-    iVar4 = (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    if (iVar4 < 0) {
-      uVar3 = orig::DirectInput_ReleaseDevice(self_,iVar4);
-      return uVar3;
+    u5 = 0x14;
+    u6 = 0x10;
+    u7[0] = 0;
+    u7[1] = 0;
+    u7[2] = 0x140;
+    i1 = (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    if (i1 < 0) {
+      u2 = orig::DirectInput_ReleaseDevice(self_,i1);
+      return u2;
     }
-    iVar4 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x90) + 0x2c))
-                      ))(*(int **)((int)self_ + 0x90),&DAT_1034a0fc);
-    if (iVar4 < 0) {
-      uVar3 = orig::DirectInput_ReleaseDevice(self_,iVar4);
-      return uVar3;
+    i1 = ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x2c))
+                      ))(*(int **)((int)self_ + 0x90),&g_1034A0FC);
+    if (i1 < 0) {
+      u2 = orig::DirectInput_ReleaseDevice(self_,i1);
+      return u2;
     }
-    puStack_b0 = (uint8_t *)(int)XI_GAME(0x1000854Bu);
-    iVar4 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x90) + 0x34))
+    p5 = (uint8_t *)(int)XI_GAME(0x1000854Bu);
+    i1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x34))
                       ))(*(int **)((int)self_ + 0x90),*(uint32_t *)(g_pApp_as_s32 + 0x18),
-                       (uint32_t)(DAT_10455c37 != '\0') * 4 + 4 | 1);
-    if (iVar4 < 0) {
-      uVar3 = orig::DirectInput_ReleaseDevice(self_,iVar4);
-      return uVar3;
+                       (uint32_t)(g_10455C37 != '\0') * 4 + 4 | 1);
+    if (i1 < 0) {
+      u2 = orig::DirectInput_ReleaseDevice(self_,i1);
+      return u2;
     }
-    puVar5 = auStack_64;
-    for (iVar4 = 6; iVar4 != 0; iVar4 = iVar4 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+    p2 = u7;
+    for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+      *p2 = 0;
+      p2 = p2 + 1;
     }
-    auStack_64[0] = 0x18;
-    auStack_64[1] = 0x10;
-    auStack_64[3] = 1;
-    auStack_64[4] = 0xffffff81;
-    auStack_64[5] = 0x7f;
-    auStack_64[2] = 0;
-    puStack_b0 = (uint8_t *)(int)XI_GAME(0x100085A8u);
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    piStack_b8 = *(int **)((int)self_ + 0x90);
-    puStack_b0 = auStack_70;
-    uStack_68 = 4;
-    uStack_b4 = 4;
-    (**(code **)(*piStack_b8 + 0x18))();
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))();
-    piVar1 = *(int **)((int)self_ + 0x90);
-    (**(code **)(*piVar1 + 0x18))();
-    puStack_b0 = (uint8_t *)0x1c;
-    (**(code **)(**(int **)((int)self_ + 0x90) + 0x18))(*(int **)((int)self_ + 0x90),4,&piStack_b8);
-    uVar2 = (**(code **)(**(int **)((int)self_ + 0x90) + 0x1c))(*(int **)((int)self_ + 0x90));
-    cStack_f1 = (char)((uint32_t)piVar1 >> 0x18);
-    if ((cStack_f1 != '\0') && (DAT_10455c39 != '\0')) {
-      uVar2 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0x90) + 0x10))
-                        ))(*(int **)((int)self_ + 0x90),&LAB_100083b0,&DAT_10455c24,3);
-      if (-1 < (int)uVar2) {
-        if (2 < DAT_10455c24) {
-          DAT_10455c24 = 2;
+    u7[0] = 0x18;
+    u7[1] = 0x10;
+    u7[3] = 1;
+    u7[4] = 0xffffff81;
+    u7[5] = 0x7f;
+    u7[2] = 0;
+    p5 = (uint8_t *)(int)XI_GAME(0x100085A8u);
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    p4 = *(int **)((int)self_ + 0x90);
+    p5 = u4;
+    u6 = 4;
+    u3 = 4;
+    (**(untyped_fn **)(*p4 + 0x18))();
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))();
+    p1 = *(int **)((int)self_ + 0x90);
+    (**(untyped_fn **)(*p1 + 0x18))();
+    p5 = (uint8_t *)0x1c;
+    (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x18))(*(int **)((int)self_ + 0x90),4,&p4);
+    u1 = (**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x1c))(*(int **)((int)self_ + 0x90));
+    c1 = (char)((uint32_t)p1 >> 0x18);
+    if ((c1 != '\0') && (g_10455C39 != '\0')) {
+      u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 0x10))
+                        ))(*(int **)((int)self_ + 0x90),&code_100083B0,&g_10455C24,3);
+      if (-1 < (int)u1) {
+        if (2 < g_10455C24) {
+          g_10455C24 = 2;
         }
-        piVar1 = *(int **)((int)self_ + 0x90);
-        ppuVar6 = &puStack_b0;
-        for (iVar4 = 0xe; iVar4 != 0; iVar4 = iVar4 + -1) {
-          *ppuVar6 = (uint8_t *)0x0;
-          ppuVar6 = ppuVar6 + 1;
+        p1 = *(int **)((int)self_ + 0x90);
+        p3 = &p5;
+        for (i1 = 0xe; i1 != 0; i1 = i1 + -1) {
+          *p3 = (uint8_t *)0x0;
+          p3 = p3 + 1;
         }
-        puStack_b0 = (uint8_t *)0x38;
-        uVar2 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*piVar1 + 0x48))))(piVar1,&DAT_10341d4c,&puStack_b0,&DAT_10455c28,0);
+        p5 = (uint8_t *)0x38;
+        u1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x48))))(p1,&g_10341D4C,&p5,&g_10455C28,0);
       }
     }
   }
-LAB_10008752:
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+code_10008752:
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10008770
 // GATE: PASS -- 100 trials, 92 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 92
-XI_API undefined4 __thiscall DirectInput_ReleaseDevice(void * self_, int param_1)
+XI_API bits32 __thiscall DirectInput_ReleaseDevice(void * self_, int arg2)
 {
-  if (param_1 < 0) {
-    if (DAT_10455c28_as_v0 != (int *)0x0) {
-      (**(code **)(*DAT_10455c28_as_v0 + 0x2c))(DAT_10455c28_as_v0);
-      (**(code **)(*DAT_10455c28_as_v0 + 8))(DAT_10455c28_as_v0);
-      DAT_10455c28_as_v0 = (int *)0x0;
+  if (arg2 < 0) {
+    if (g_10455C28_as_v0 != (int *)0x0) {
+      (**(untyped_fn **)(*g_10455C28_as_v0 + 0x2c))(g_10455C28_as_v0);
+      (**(untyped_fn **)(*g_10455C28_as_v0 + 8))(g_10455C28_as_v0);
+      g_10455C28_as_v0 = (int *)0x0;
     }
-    param_1 = ((int (__stdcall *)(XI_ANY))((**(code **)(**(int **)((int)self_ + 0x90) + 8))))(*(int **)((int)self_ + 0x90));
+    arg2 = ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x90) + 8))))(*(int **)((int)self_ + 0x90));
     *(uint32_t *)((int)self_ + 0x90) = 0;
-    DAT_10455c28_as_v0 = (int *)0x0;
+    g_10455C28_as_v0 = (int *)0x0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100087D0
 // GATE: PASS -- 100 trials, 99 returned normally, 146 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API void __stdcall Input_SetActive(int param_1, int param_2, undefined4 xi_s3)
+XI_API void __stdcall Input_SetActive(int arg1, int arg2, bits32 xi_s3)
 {
-  int *piVar1;
-  uint8_t bVar2;
+  int *p1;
+  uint8_t u1;
   
-  if ((param_1 == 6) && (param_2 != 0)) {
-    bVar2 = true;
+  if ((arg1 == 6) && (arg2 != 0)) {
+    u1 = true;
   }
   else {
-    bVar2 = false;
+    u1 = false;
   }
-  piVar1 = *(int **)(g_pAppInputState + 0x88);
-  if (piVar1 != (int *)0x0) {
-    if (bVar2) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 0x1c))))(piVar1);
+  p1 = *(int **)(g_pAppInputState + 0x88);
+  if (p1 != (int *)0x0) {
+    if (u1) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 0x1c))))(p1);
     }
     else {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 0x20))))(piVar1);
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 0x20))))(p1);
     }
   }
-  piVar1 = *(int **)(g_pAppInputState + 0x90);
-  if (piVar1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 0x1c))))(piVar1);
+  p1 = *(int **)(g_pAppInputState + 0x90);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 0x1c))))(p1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10008830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Input_IsCursorActive(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Input_IsCursorActive(void * self_, uint32_t arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  if ((char)param_1 != '\0') {
-    uVar2 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,param_1);
-    return uVar2;
+  if ((char)arg2 != '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,arg2);
+    return u1;
   }
-  iVar1 = *(int *)((int)self_ + 0xc94);
-  if ((iVar1 == 0) && (iVar1 = *(int *)((int)self_ + 0x8dc), iVar1 == 0)) {
+  i1 = *(int *)((int)self_ + 0xc94);
+  if ((i1 == 0) && (i1 = *(int *)((int)self_ + 0x8dc), i1 == 0)) {
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_pCursor_as_s32 >> 8))) << 8) | (uint8_t)(*(int *)(g_pCursor_as_s32 + 0x60) != 0)));
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100088F0
 // GATE: PASS -- 100 trials, 53 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 53
 XI_API void __thiscall Input_DispatchButtons(void * self_)
 {
-  int iVar1;
-  int *piVar2;
-  uint32_t uVar3;
+  int i1;
+  int *p1;
+  uint32_t u1;
   
-  uVar3 = 0;
+  u1 = 0;
   if (*(int *)((int)self_ + 0xa30) != 0) {
-    piVar2 = (int *)((int)self_ + 0x8f0);
+    p1 = (int *)((int)self_ + 0x8f0);
     do {
-      if ((*(uint8_t *)(piVar2 + 1) & 0x80) == 0) {
-LAB_10008963:
-        iVar1 = *piVar2;
-        if (iVar1 == 0xc) {
-          if (DAT_10455c3a == '\0') {
+      if ((*(uint8_t *)(p1 + 1) & 0x80) == 0) {
+code_10008963:
+        i1 = *p1;
+        if (i1 == 0xc) {
+          if (g_10455C3A == '\0') {
             orig::Cursor_ToggleFlag1(g_pCursor_as_v2);
           }
           else {
-LAB_100089a9:
+code_100089A9:
             orig::Cursor_ToggleFlag2(g_pCursor_as_v2);
           }
         }
-        else if (iVar1 == 0xd) {
-          if (DAT_10455c3a == '\0') goto LAB_100089a9;
+        else if (i1 == 0xd) {
+          if (g_10455C3A == '\0') goto code_100089A9;
           orig::Cursor_ToggleFlag1(g_pCursor_as_v2);
         }
-        else if (iVar1 == 0xe) {
+        else if (i1 == 0xe) {
           orig::Cursor_ToggleFlag4(g_pCursor_as_v2);
         }
       }
       else {
-        iVar1 = *piVar2;
-        if (iVar1 == 0xc) {
-          if (DAT_10455c3a == '\0') {
+        i1 = *p1;
+        if (i1 == 0xc) {
+          if (g_10455C3A == '\0') {
             orig::Cursor_EnterMode1(g_pCursor_as_v2);
           }
           else {
-LAB_10008959:
+code_10008959:
             orig::Cursor_EnterMode2(g_pCursor_as_v2);
           }
         }
-        else if (iVar1 == 0xd) {
-          if (DAT_10455c3a == '\0') goto LAB_10008959;
+        else if (i1 == 0xd) {
+          if (g_10455C3A == '\0') goto code_10008959;
           orig::Cursor_EnterMode1(g_pCursor_as_v2);
         }
-        else if (iVar1 == 0xe) {
+        else if (i1 == 0xe) {
           orig::Cursor_EnterMode4(g_pCursor_as_v2);
         }
-        if ((*(uint8_t *)(piVar2 + 1) & 0x80) == 0) goto LAB_10008963;
+        if ((*(uint8_t *)(p1 + 1) & 0x80) == 0) goto code_10008963;
       }
-      uVar3 = uVar3 + 1;
-      piVar2 = piVar2 + 5;
-    } while (uVar3 < *(uint32_t *)((int)self_ + 0xa30));
+      u1 = u1 + 1;
+      p1 = p1 + 5;
+    } while (u1 < *(uint32_t *)((int)self_ + 0xa30));
   }
   return;
 }
@@ -1018,146 +1018,146 @@ LAB_10008959:
 // GATE: PASS -- 100 trials, 100 returned normally, 46 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall DirectInput_PollMouse(void * self_)
 {
-  uint32_t *a4;
-  int *a1;
-  int iVar1;
-  uint32_t *a3;
+  uint32_t *p1;
+  int *p2;
+  int i1;
+  uint32_t *p3;
   
-  a1 = *(int **)((int)self_ + 0x8c);
-  if ((a1 == (int *)0x0) || (g_mouseAcquired == '\0')) {
+  p2 = *(int **)((int)self_ + 0x8c);
+  if ((p2 == (int *)0x0) || (g_mouseAcquired == '\0')) {
     return;
   }
-  a4 = (uint32_t *)((int)self_ + 0xa30);
-  a3 = (uint32_t *)((int)self_ + 0x8f0);
-  *a4 = 0x10;
-  iVar1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*a1 + 0x28))))(a1,0x14,a3,a4,0);
-  if (iVar1 < -0x7ff8ff55) {
-    if (((iVar1 == -0x7ff8ff56) || (iVar1 == -0x7ff8fff4)) || (iVar1 == -0x7ff8ffe2)) {
-      if (DAT_10456549 != '\0') {
-        ((int (__stdcall *)(XI_ANY))((**(code **)(**(int **)((int)self_ + 0x8c) + 0x1c))))(*(int **)((int)self_ + 0x8c));
-        *a4 = 0;
-        for (iVar1 = 0x50; iVar1 != 0; iVar1 = iVar1 + -1) {
-          *a3 = 0;
-          a3 = a3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0xa30);
+  p3 = (uint32_t *)((int)self_ + 0x8f0);
+  *p1 = 0x10;
+  i1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p2 + 0x28))))(p2,0x14,p3,p1,0);
+  if (i1 < -0x7ff8ff55) {
+    if (((i1 == -0x7ff8ff56) || (i1 == -0x7ff8fff4)) || (i1 == -0x7ff8ffe2)) {
+      if (g_10456549 != '\0') {
+        ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x8c) + 0x1c))))(*(int **)((int)self_ + 0x8c));
+        *p1 = 0;
+        for (i1 = 0x50; i1 != 0; i1 = i1 + -1) {
+          *p3 = 0;
+          p3 = p3 + 1;
         }
         return;
       }
-      DAT_10456549 = 1;
-      ((int (__stdcall *)(XI_ANY))((**(code **)(**(int **)((int)self_ + 0x8c) + 8))))(*(int **)((int)self_ + 0x8c));
+      g_10456549 = 1;
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0x8c) + 8))))(*(int **)((int)self_ + 0x8c));
       orig::DirectInput_InstallMouse(self_);
-      *a4 = 0;
-      for (iVar1 = 0x50; iVar1 != 0; iVar1 = iVar1 + -1) {
-        *a3 = 0;
-        a3 = a3 + 1;
+      *p1 = 0;
+      for (i1 = 0x50; i1 != 0; i1 = i1 + -1) {
+        *p3 = 0;
+        p3 = p3 + 1;
       }
       return;
     }
   }
-  else if (iVar1 == 0) {
-    DAT_10456549 = 0;
+  else if (i1 == 0) {
+    g_10456549 = 0;
     return;
   }
-  *a4 = 0;
-  for (iVar1 = 0x50; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *a3 = 0;
-    a3 = a3 + 1;
+  *p1 = 0;
+  for (i1 = 0x50; i1 != 0; i1 = i1 + -1) {
+    *p3 = 0;
+    p3 = p3 + 1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10008D90
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 __thiscall XInput_ProbeDll(void * self_)
+XI_API bits32 __thiscall XInput_ProbeDll(void * self_)
 {
-  char *a1;
-  char cVar1;
+  char *p1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  char *pcVar4;
-  int iVar5;
-  char *pcVar6;
+  uint32_t u1;
+  uint32_t u2;
+  char *p2;
+  int i1;
+  char *p3;
   
-  uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(DAT_10455c38)));
-  if (DAT_10455c38 != '\0') {
-    a1 = (char *)((int)self_ + 0xca0);
-    *a1 = '\0';
-    pcVar4 = *(char **)(g_pApp_as_s32 + 0x10);
-    pcVar6 = a1;
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(g_10455C38)));
+  if (g_10455C38 != '\0') {
+    p1 = (char *)((int)self_ + 0xca0);
+    *p1 = '\0';
+    p2 = *(char **)(g_pApp_as_s32 + 0x10);
+    p3 = p1;
     do {
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-      *pcVar6 = cVar1;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar1 != '\0');
-    iVar5 = -1;
-    pcVar4 = a1;
+      c1 = *p2;
+      p2 = p2 + 1;
+      *p3 = c1;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    i1 = -1;
+    p2 = p1;
     do {
-      pcVar6 = pcVar4;
-      if (iVar5 == 0) break;
-      iVar5 = iVar5 + -1;
-      pcVar6 = pcVar4 + 1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar6;
-    } while (cVar1 != '\0');
-    *(uint32_t *)(pcVar6 + -1) = XI_PIECE(g_1034FB65, 3, 4);
-    *(uint32_t *)(pcVar6 + 3) = XI_PIECE(g_1034FB65, 7, 4);
-    *(uint32_t *)(pcVar6 + 7) = XI_PIECE(g_1034FB65, 11, 4);
-    *(uint16_t *)(pcVar6 + 0xb) = XI_PIECE(g_1034FB65, 15, 2);
-    pcVar6[0xd] = g_1034FB65[0x11];
-    iVar5 = LoadLibraryA(a1);
-    uVar2 = 0;
-    if (iVar5 != 0) {
-      uVar3 = FreeLibrary(iVar5);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+      p3 = p2;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      p3 = p2 + 1;
+      c1 = *p2;
+      p2 = p3;
+    } while (c1 != '\0');
+    *(uint32_t *)(p3 + -1) = XI_PIECE(g_1034FB65, 3, 4);
+    *(uint32_t *)(p3 + 3) = XI_PIECE(g_1034FB65, 7, 4);
+    *(uint32_t *)(p3 + 7) = XI_PIECE(g_1034FB65, 11, 4);
+    *(uint16_t *)(p3 + 0xb) = XI_PIECE(g_1034FB65, 15, 2);
+    p3[0xd] = g_1034FB65[0x11];
+    i1 = LoadLibraryA(p1);
+    u1 = 0;
+    if (i1 != 0) {
+      u2 = FreeLibrary(i1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar2 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10008E10
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 __thiscall XInput_LoadFunctions(void * self_)
+XI_API bits32 __thiscall XInput_LoadFunctions(void * self_)
 {
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(DAT_10455c38)));
-  if (DAT_10455c38 != '\0') {
-    DAT_1045654c = (HMODULE)LoadLibraryA((int)self_ + 0xca0);
-    uVar1 = 0;
-    if (DAT_1045654c != (HMODULE)0x0) {
-      DAT_10456550 = GetProcAddress(DAT_1045654c,s_XInputGetState__1034fb98);
-      DAT_10456554 = GetProcAddress(DAT_1045654c,s_XInputSetState__1034fb88);
-      DAT_10456558 = GetProcAddress(DAT_1045654c,s_XInputEnable__1034fb78);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_10456558 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(g_10455C38)));
+  if (g_10455C38 != '\0') {
+    g_1045654C = (HMODULE)LoadLibraryA((int)self_ + 0xca0);
+    u1 = 0;
+    if (g_1045654C != (HMODULE)0x0) {
+      g_10456550 = GetProcAddress(g_1045654C,str_XInputGetState__1034FB98);
+      g_10456554 = GetProcAddress(g_1045654C,str_XInputSetState__1034FB88);
+      g_10456558 = GetProcAddress(g_1045654C,str_XInputEnable__1034FB78);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_10456558 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10008EA0
 // GATE: PASS -- 100 trials, 6 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 6
-XI_API undefined4 __stdcall InputDevices_CallPtr10456550IfEnabled(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __stdcall InputDevices_CallPtr10456550IfEnabled(bits32 arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if ((DAT_1045654c_as_s32 != 0) && (DAT_10456550_as_v0 != (code *)0x0)) {
-    uVar1 = (*DAT_10456550_as_v0)(param_1,param_2);
-    return uVar1;
+  if ((g_1045654C_as_s32 != 0) && (g_10456550_as_v0 != (untyped_fn *)0x0)) {
+    u1 = (*g_10456550_as_v0)(arg1,arg2);
+    return u1;
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10008F00
 // GATE: PASS -- 100 trials, 6 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 6
-XI_API undefined4 __stdcall InputDevices_CallPtr10456558IfEnabled(undefined4 param_1)
+XI_API bits32 __stdcall InputDevices_CallPtr10456558IfEnabled(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if ((DAT_1045654c_as_s32 != 0) && (DAT_10456558_as_v0 != (code *)0x0)) {
-    uVar1 = (*DAT_10456558_as_v0)(param_1);
-    return uVar1;
+  if ((g_1045654C_as_s32 != 0) && (g_10456558_as_v0 != (untyped_fn *)0x0)) {
+    u1 = (*g_10456558_as_v0)(arg1);
+    return u1;
   }
   return 1;
 }

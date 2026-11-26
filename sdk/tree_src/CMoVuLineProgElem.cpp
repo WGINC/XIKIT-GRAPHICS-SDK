@@ -7,32 +7,32 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoVuLineProgElem::Constructor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
+  u1 = orig::CMoElem_Constructor(self);
   *(uint32_t *)((int)self + 0x198) = 0;
   *(uint32_t *)((int)self + 0x1d4) = 0;
   *(uint16_t *)((int)self + 0x1da) = 0;
-  *(uint8_t ***)self = &PTR_CMoVuLineProgElem_GetRuntimeClass_1032b178;
+  *(uint8_t ***)self = &ptr_to_CMoVuLineProgElem_GetRuntimeClass_1032B178;
   *(uint16_t *)((int)self + 0x176) = 0x1e8;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10052BF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoVuLineProgElem::IsKind9(int a1)
+BOOL CMoVuLineProgElem::IsKind9(int arg1)
 {
-  return a1 == 9;
+  return arg1 == 9;
 }
 
 // FUNCTION: FFXIMAIN 0x10052C00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoVuLineProgElem::ScalarDeletingDtor(char a2)
+int * CMoVuLineProgElem::ScalarDeletingDtor(char arg1)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   orig::MoProgElem_FreeBuffer40(self + 101);
   orig::CMoElemFamily_SharedCleanup(self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

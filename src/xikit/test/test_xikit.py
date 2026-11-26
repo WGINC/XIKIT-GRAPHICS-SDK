@@ -48,6 +48,10 @@ subprocess.run([os.path.join(SDK, 'build_mod.sh'), CMDDLL, os.path.join(H, 'mod_
 TOOL_MODES = tuple('toolhook_' + f for f in ('e9', 'e990', 'ff25', 'pushret', 'bad', 'pub_e9', 'pub_e990', 'pub_ff25', 'pub_pushret', 'pub_bad'))
 CHAINDLL = os.path.join(os.path.dirname(MODDLL), 'mod_chain.dll')          # the chain run's second mod (API 5)
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), CHAINDLL, os.path.join(H, 'mod_chain.cpp')], check=True)
+STATEDLL = os.path.join(os.path.dirname(MODDLL), 'mod_state.dll')            # the staterun's mod (xistate's record, player, zone readers)
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), STATEDLL, os.path.join(H, 'mod_state.cpp')], check=True)
+FAULTDLL = os.path.join(os.path.dirname(MODDLL), 'mod_fault.dll')          # the modfault run's mod (Prishe P4: a mod that faults stays alone)
+subprocess.run([os.path.join(SDK, 'build_mod.sh'), FAULTDLL, os.path.join(H, 'mod_fault.cpp')], check=True)
 FACTS = os.path.join(os.path.dirname(MODDLL), 'xikit_facts.txt')
 # a facts file is in the analysed build's numbering, with its bytes: made from the analysed DLL ($FFXI_DLL_6A995428
 # when the run is on another build). On a build where a site's code moved and its bytes hold a moved address (the
@@ -85,7 +89,7 @@ def run_host(cmd, d, env, mode, timeout=600):
     print('-- files: ' + ', '.join('%s %d' % (f, os.path.getsize(os.path.join(d, f))) for f in sorted(os.listdir(d)) if os.path.isfile(os.path.join(d, f))))
     print('-- kept for reading: %s' % d)
     return None
-ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'chain', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'ctmod', 'hbmod', 'igmod', 'xtmod', 'fx2mod', 'prishe', 'prishert', 'native', 'measure') + TOOL_MODES
+ALL_MODES = ('base', 'relocated', 'profile', 'traceblock', 'mod', 'modrel', 'reload', 'chain', 'modfault', 'staterun', 'capture', 'facts', 'ab', 'realdev', 'realdev_ours', 'texmod', 'fxmod', 'cammod', 'ovlmod', 'audmod', 'envmod', 'phomod', 'cfmod', 'uimod', 'ctmod', 'hbmod', 'igmod', 'xtmod', 'fx2mod', 'prishe', 'prishert', 'native', 'measure') + TOOL_MODES
 # texmod: sdk/examples/texture_replace through the kit with the game's TexObj_Create/TexObj_Upload on Wine's d3d8
 TEXMOD = os.path.join(os.path.dirname(MODDLL), 'texture_replace.dll')
 subprocess.run([os.path.join(SDK, 'build_mod.sh'), TEXMOD, os.path.join(SDK, 'examples', 'texture_replace.cpp'),
@@ -108,6 +112,8 @@ def prishert_files(d):                 # what host.c's prishert_run expects (its
         os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True); open(os.path.join(d, rel), 'w').write(s)
     for f, n in (('a_one', 'One'), ('b_two', 'Two'), ('c_off', 'Off')):
         open(os.path.join(d, 'prishe', 'packs', f, 'prishe.json'), 'w').write('{"prishe": 1, "name": "%s"}' % n)
+    os.makedirs(os.path.join(d, 'prishe', 'looks'), exist_ok=True)   # (Prishe C1) Alice's slot 2 (body) as 0x2077
+    open(os.path.join(d, 'prishe', 'looks', 'mine.json'), 'w').write('{"prishe_look": 1, "name": "Alice", "race": 2, "slots": {"2": 8311}}')
     open(os.path.join(d, 'prishe', 'profile.json'), 'w').write('{"prishe": 1, "packs": [{"folder": "a_one", "priority": 20}, {"folder": "b_two", "priority": 10}, {"folder": "c_off", "enabled": false}]}')
     import struct                          # textures: prtex01 in a_one (16x16, 0xFF112233) and b_two (0xFF445566): a_one wins
     for f, v in (('a_one', 0xFF112233), ('b_two', 0xFF445566)):
@@ -193,6 +199,8 @@ for mode in [m for m in ALL_MODES if m in os.environ.get('MODES', ' '.join(ALL_M
     if mode.startswith('mod') or mode in ('reload', 'chain'): shutil.copy(MODDLL, d)
     if mode in ('reload', 'chain'): shutil.copy(MODDLL2, d)
     if mode == 'chain': shutil.copy(CHAINDLL, d)
+    if mode == 'modfault': shutil.copy(MODDLL, d); shutil.copy(FAULTDLL, d)
+    if mode == 'staterun': shutil.copy(STATEDLL, d)
     if mode.startswith('toolhook_'):
         shutil.copy(CMDDLL, d)
         if '_pub_' in mode:                      # the public kit's manifests: fingerprints (H...) and J=, no bytes

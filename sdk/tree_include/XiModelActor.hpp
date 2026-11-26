@@ -5,9 +5,9 @@
 #pragma pack(push, 1)
 class XI_API XiModelActor {
 public:
-    static undefined4 __thiscall CopyRectFromSlot(void * self, undefined4 param_1, undefined4 * param_2);  // 0x100C4B00
-    static undefined4 __thiscall BuildWorldMatrix(void * self, undefined4 param_1, void * param_2);  // 0x100C4B50
-    static undefined4 __thiscall BuildMatrixAndDraw(void * self);  // 0x100C4C20
+    static bits32 __thiscall CopyRectFromSlot(void * self, bits32 arg2, bits32 * arg3);  // 0x100C4B00
+    static bits32 __thiscall BuildWorldMatrix(void * self, bits32 arg2, void * arg3);  // 0x100C4B50
+    static bits32 __thiscall BuildMatrixAndDraw(void * self);  // 0x100C4C20
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x790];

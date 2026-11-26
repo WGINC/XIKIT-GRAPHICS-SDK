@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): YmElem_ForEachInstance; calle
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `YmElem_ForEachInstance` calls `AppMainLoop_GetFloat10456A68Or1`, `sub_10311C2C`, `sub_1006A4A0`, `sub_1006BC10`, `sub_1006BC80`, `CMoSpline::GetWrapped`
+- `YmElem_ForEachInstance` calls `AppMainLoop_GetFloat10456A68Or1`, `game_10311C2C`, `game_1006A4A0`, `game_1006BC10`, `game_1006BC80`, `CMoSpline::GetWrapped`

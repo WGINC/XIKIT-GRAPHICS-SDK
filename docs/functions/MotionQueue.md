@@ -20,8 +20,8 @@ Why the file has this name (data/unit_names.json): MotionQueue_*, MotionQueList_
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `MotionQueue_ApplyPolicy` calls `SampleAnimationTrack_Live`, `SampleAnimationTrack_ToBuffer`
-- `SampleAnimationTrack_ToBuffer` calls `sub_10311C2C`, `Quat_SetIdentityChained`, `Quat_NLerp`, `BoneShadow_Nop`
-- `SampleAnimationTrack_Live` calls `sub_10311C2C`, `Quat_SetIdentityChained`, `Quat_NLerp`, `BoneShadow_Nop`
-- `MotionQueList_ProcessAll` calls `CYyMotionQue::Update`, `sub_1001AC40`, `KzMotionQueList_NotifyAll`
-- `MotionQueue_UpdateAllChannels` calls `Quat_SetIdentityChained`, `sub_10313486`, `Vec3_Copy`, `CYyMotionQue_IsActive`, `CYyMotionQue::SampleInto`, `Quat_NLerp`, `BoneShadow_Nop`, `Vec3_Lerp`
-- `MotionQueList_QueueMotion` calls `sub_10084620`, `sub_1001AD00`
+- `SampleAnimationTrack_ToBuffer` calls `game_10311C2C`, `Quat_SetIdentityChained`, `Quat_NLerp`, `BoneShadow_Nop`
+- `SampleAnimationTrack_Live` calls `game_10311C2C`, `Quat_SetIdentityChained`, `Quat_NLerp`, `BoneShadow_Nop`
+- `MotionQueList_ProcessAll` calls `CYyMotionQue::Update`, `game_1001AC40`, `KzMotionQueList_NotifyAll`
+- `MotionQueue_UpdateAllChannels` calls `Quat_SetIdentityChained`, `game_10313486`, `Vec3_Copy`, `CYyMotionQue_IsActive`, `CYyMotionQue::SampleInto`, `Quat_NLerp`, `BoneShadow_Nop`, `Vec3_Lerp`
+- `MotionQueList_QueueMotion` calls `game_10084620`, `game_1001AD00`

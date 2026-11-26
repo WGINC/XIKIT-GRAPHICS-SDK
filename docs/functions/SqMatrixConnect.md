@@ -32,7 +32,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqMatrixConnect_ReleaseConnection` calls `SqObject_Release`, `SqcoConnector_Init`, `SqMatrixConnect_UpdateMask`
 - `SqMatrixConnect_IsConnected` calls nothing directly
 - `SqMatrixConnect_UpdateRange` calls nothing directly
-- `SqMatrixConnect_Advance` calls `SqMatrixConnect_IsConnected`, `SqDebug_GetFlagByte14`, `SqDebug_SetByte14`, `sub_1027DD90`
+- `SqMatrixConnect_Advance` calls `SqMatrixConnect_IsConnected`, `SqDebug_GetFlagByte14`, `SqDebug_SetByte14`, `game_1027DD90`
 - `SqMatrixConnect_Forward1027EBD0` calls `SqMatrixConnect_SetIdentity`
 - `SqMatrixConnect_Zero` calls nothing directly
 - `SqMatrixConnect_Set` calls nothing directly

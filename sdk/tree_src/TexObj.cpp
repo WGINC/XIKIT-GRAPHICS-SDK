@@ -6,23 +6,23 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 165 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall TexObj_Release(void * self_)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::FUN_1003ab10(g_pTextureMng_as_v2,(int)self_);
-  if (piVar1 != (int *)0x0) {
-    *piVar1 = *(int *)(*piVar1 + 0x38);
-    piVar1 = *(int **)((int)self_ + 0x40);
-    if (piVar1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  p1 = orig::game_1003AB10(g_pTextureMng_as_v2,(int)self_);
+  if (p1 != (int *)0x0) {
+    *p1 = *(int *)(*p1 + 0x38);
+    p1 = *(int **)((int)self_ + 0x40);
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
       *(uint32_t *)((int)self_ + 0x40) = 0;
     }
-    piVar1 = *(int **)((int)self_ + 0x44);
-    if (piVar1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+    p1 = *(int **)((int)self_ + 0x44);
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
       *(uint32_t *)((int)self_ + 0x44) = 0;
     }
     *(uint32_t *)((int)self_ + 0x38) = 0;
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x18))))((void *)(self_),1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),1);
   }
   return;
 }
@@ -31,15 +31,15 @@ XI_API void __thiscall TexObj_Release(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t __thiscall TexObj_CreateAndUpload(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TexObj_Create(self_);
-  if ((char)uVar1 == '\0') {
+  u1 = orig::TexObj_Create(self_);
+  if ((char)u1 == '\0') {
     return 0;
   }
   *(uint32_t *)((int)self_ + 0x3c) = 3;
   if (*(void **)((int)self_ + 8) != (void *)0x0) {
-    orig::FUN_10071f60(*(void **)((int)self_ + 8));
+    orig::game_10071F60(*(void **)((int)self_ + 8));
   }
   return 1;
 }
@@ -48,10 +48,10 @@ XI_API uint8_t __thiscall TexObj_CreateAndUpload(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t __thiscall TexObj_Reupload(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::TexObj_Upload(self_);
-  if ((char)uVar1 == '\0') {
+  u1 = orig::TexObj_Upload(self_);
+  if ((char)u1 == '\0') {
     return 0;
   }
   *(uint32_t *)((int)self_ + 0x3c) = 3;
@@ -62,713 +62,713 @@ XI_API uint8_t __thiscall TexObj_Reupload(void * self_)
 // GATE: PASS -- 100 trials, 11 returned normally, 47 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 11
 XI_API int __thiscall TexObj_Upload(void *self_)
 {
-  int v1;
-  int v3;
-  char v4;
-  int v5;
-  char v6;
-  int v7;
-  _BYTE *v8;
-  int v9;
-  int v10;
-  int v11; // kr08_4
-  int v12; // kr20_4
-  IDirect3DTexture8 *v13;
-  unsigned int v14;
-  IDirect3DTexture8 *v15;
-  char v16;
-  _BYTE *v17;
-  int v18;
-  int v19;
-  int v20; // kr10_4
-  IDirect3DTexture8 *v21;
-  int v22; // kr28_4
-  IDirect3DTexture8 *v23;
-  IDirect3DTexture8 *v24;
-  unsigned int v25;
-  _WORD *v26;
-  int v27;
-  int v28;
-  int v29; // kr18_4
-  int v30;
-  __int16 v31;
-  __int16 v32;
-  int v33;
-  int v34;
-  IDirect3DTexture8 *v35;
-  int v36;
-  char v37;
-  unsigned int v38;
-  unsigned int v39;
-  int v40;
-  char v41;
+  int i1;
+  int i2;
+  char c1;
+  int i3;
+  char c2;
+  int i4;
+  uint8_t *p1;
+  int i5;
+  int i6;
+  int i7; // kr08_4
+  int i8; // kr20_4
+  IDirect3DTexture8 *p2;
+  unsigned int u1;
+  IDirect3DTexture8 *p3;
+  char c3;
+  uint8_t *p4;
+  int i9;
+  int i10;
+  int i11; // kr10_4
+  IDirect3DTexture8 *p5;
+  int i12; // kr28_4
+  IDirect3DTexture8 *p6;
+  IDirect3DTexture8 *p7;
+  unsigned int u2;
+  uint16_t *p8;
+  int i13;
+  int i14;
+  int i15; // kr18_4
+  int i16;
+  short i17;
+  short i18;
+  int i19;
+  int i20;
+  IDirect3DTexture8 *p9;
+  int i21;
+  char c4;
+  unsigned int u3;
+  unsigned int u4;
+  int i22;
+  char c5;
   int result;
-  int v43;
-  int v44;
-  _DWORD *v45;
-  int v46;
-  int v47;
-  int v48;
-  _WORD *v49;
-  int v50;
+  int i23;
+  int i24;
+  uint32_t *p10;
+  int i25;
+  int i26;
+  int i27;
+  uint16_t *p11;
+  int i28;
   unsigned int j;
   int k;
-  int v53;
-  struct IDirect3DSurface8 *v54;
+  int i29;
+  struct IDirect3DSurface8 *p12;
   int i;
-  int v56;
+  int i30;
   alignas(16) unsigned char xi_frame[0x4B8];  // address-taken locals at their original offsets
-  char &v57 = *reinterpret_cast<char *>(xi_frame + 0x8B);
-  struct IDirect3DSurface8 * &v58 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x8C);
-  struct IDirect3DSurface8 * &v59 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x90);
-  IDirect3DTexture8 * &v60 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x94);
-  IDirect3DTexture8 * &v61 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x98);
-  struct IDirect3DSurface8 * &v62 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x9C);
-  int &v63 = *reinterpret_cast<int *>(xi_frame + 0xA0);
-  int &v64 = *reinterpret_cast<int *>(xi_frame + 0xA4);
-  _DWORD (&v65)[4] = *reinterpret_cast<_DWORD (*)[4]>(xi_frame + 0xA8);
+  char &c6 = *reinterpret_cast<char *>(xi_frame + 0x8B);
+  struct IDirect3DSurface8 * &p13 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x8C);
+  struct IDirect3DSurface8 * &p14 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x90);
+  IDirect3DTexture8 * &p15 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x94);
+  IDirect3DTexture8 * &p16 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x98);
+  struct IDirect3DSurface8 * &p17 = *reinterpret_cast<struct IDirect3DSurface8 * *>(xi_frame + 0x9C);
+  int &i31 = *reinterpret_cast<int *>(xi_frame + 0xA0);
+  int &i32 = *reinterpret_cast<int *>(xi_frame + 0xA4);
+  uint32_t (&u5)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0xA8);
 
-  v3 = 0;
-  v4 = *((_BYTE *)self_ + 41);
-  v61 = nullptr;
-  v59 = nullptr;
-  v58 = nullptr;
-  v57 = 0;
-  if ( v4 < 0 && **((_DWORD **)self_ + 8) != 0 )
+  i2 = 0;
+  c1 = *((uint8_t *)self_ + 41);
+  p16 = nullptr;
+  p14 = nullptr;
+  p13 = nullptr;
+  c6 = 0;
+  if ( c1 < 0 && **((uint32_t **)self_ + 8) != 0 )
   {
-    v57 = 1;
-    goto LABEL_56;
+    c6 = 1;
+    goto L1;
   }
-  switch ( v4 )
+  switch ( c1 )
   {
     case 16:
-      v5 = orig::fn_102D2FB9(
+      i3 = orig::fn_102D2FB9(
              (g_pCDx->pDevice),
-             *((unsigned __int16 *)self_ + 18),
-             *((unsigned __int16 *)self_ + 19),
+             *((unsigned short *)self_ + 18),
+             *((unsigned short *)self_ + 19),
              0,
              0,
              D3DFMT_A1R5G5B5,
              1,
-             &v61);
-LABEL_10:
-      if ( v5 < 0 )
-        goto LABEL_67;
+             &p16);
+L2:
+      if ( i3 < 0 )
+        goto L3;
       break;
     case 24:
-      v5 = orig::fn_102D2FB9(
+      i3 = orig::fn_102D2FB9(
              (g_pCDx->pDevice),
-             *((unsigned __int16 *)self_ + 18),
-             *((unsigned __int16 *)self_ + 19),
+             *((unsigned short *)self_ + 18),
+             *((unsigned short *)self_ + 19),
              0,
              0,
              D3DFMT_R8G8B8,
              1,
-             &v61);
-      goto LABEL_10;
+             &p16);
+      goto L2;
     case 32:
-      v5 = orig::fn_102D2FB9(
+      i3 = orig::fn_102D2FB9(
              (g_pCDx->pDevice),
-             *((unsigned __int16 *)self_ + 18),
-             *((unsigned __int16 *)self_ + 19),
+             *((unsigned short *)self_ + 18),
+             *((unsigned short *)self_ + 19),
              0,
              0,
              D3DFMT_A8R8G8B8,
              1,
-             &v61);
-      goto LABEL_10;
+             &p16);
+      goto L2;
     default:
       break;
   }
-  v61->LockRect(0, (D3DLOCKED_RECT *)&v63, nullptr, 0);
-  v6 = *((_BYTE *)self_ + 41);
-  v62 = *((struct IDirect3DSurface8 **)self_ + 7);
-  switch ( v6 )
+  p16->LockRect(0, (D3DLOCKED_RECT *)&i31, nullptr, 0);
+  c2 = *((uint8_t *)self_ + 41);
+  p17 = *((struct IDirect3DSurface8 **)self_ + 7);
+  switch ( c2 )
   {
     case 16:
-      if ( *((_WORD *)self_ + 19) != 0 )
+      if ( *((uint16_t *)self_ + 19) != 0 )
       {
         do
         {
-          v26 = (_WORD *)(v64 + v3 * v63);
-          v27 = *((unsigned __int16 *)self_ + 18);
-          v28 = 0;
-          if ( (_WORD)v27 != 0 )
+          p8 = (uint16_t *)(i32 + i2 * i31);
+          i13 = *((unsigned short *)self_ + 18);
+          i14 = 0;
+          if ( (uint16_t)i13 != 0 )
           {
             do
             {
-              v29 = v1;
-              v1 = 0;
-              switch ( *((_BYTE *)self_ + 40) )
+              i15 = i1;
+              i1 = 0;
+              switch ( *((uint8_t *)self_ + 40) )
               {
                 case 4:
-                  v26 += 2;
-                  v1 = (int)v62;
-                  *(v26 - 2) = *((_WORD *)&v62->lpVtbl
-                               + (*(unsigned __int8 *)((v28 + v27 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)) / 2
-                                                     + *((_DWORD *)self_ + 8)) >> 4));
-                  v30 = *(_BYTE *)((v28 + *((unsigned __int16 *)self_ + 18) * (*((unsigned __int16 *)self_ + 19) - v3 - 1))
+                  p8 += 2;
+                  i1 = (int)p17;
+                  *(p8 - 2) = *((uint16_t *)&p17->lpVtbl
+                               + (*(unsigned char *)((i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)) / 2
+                                                     + *((uint32_t *)self_ + 8)) >> 4));
+                  i16 = *(uint8_t *)((i14 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i2 - 1))
                                  / 2
-                                 + *((_DWORD *)self_ + 8))
+                                 + *((uint32_t *)self_ + 8))
                       & 0xF;
-                  ++v28;
-                  *(v26 - 1) = *(_WORD *)(v1 + 2 * v30);
+                  ++i14;
+                  *(p8 - 1) = *(uint16_t *)(i1 + 2 * i16);
                   break;
                 case 8:
-                  *v26 = *((_WORD *)&v62->lpVtbl
-                         + *(unsigned __int8 *)(*((_DWORD *)self_ + 8)
-                                              + v27 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)
-                                              + v28));
-                  goto LABEL_52;
+                  *p8 = *((uint16_t *)&p17->lpVtbl
+                         + *(unsigned char *)(*((uint32_t *)self_ + 8)
+                                              + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)
+                                              + i14));
+                  goto L4;
                 case 0x10:
-                  *v26 = *(_WORD *)(*((_DWORD *)self_ + 8) + 2
-                                                          * (v28 + v27 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)));
-                  goto LABEL_52;
+                  *p8 = *(uint16_t *)(*((uint32_t *)self_ + 8) + 2
+                                                          * (i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1)));
+                  goto L4;
                 case 0x18:
-                  v60 = *(IDirect3DTexture8 **)(3 * (v28 + v27 * (*((unsigned __int16 *)self_ + 19) - v3 - 1))
-                                              + *((_DWORD *)self_ + 8));
-                  v31 = (__int16)(((uint16_t)(v31) & 0xFF00u) | ((uint16_t)(uint8_t)(BYTE2(v60) & 0xF8) << 0));
-                  v31 = (__int16)(((uint16_t)(v31) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
-                  v1 = (int)(((uint32_t)(v1) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(BYTE1(v60) & 0xF8) << 0));
-                  *v26 = ((unsigned __int8)v60 >> 3) | (4 * (v1 | (32 * v31)));
-                  goto LABEL_52;
+                  p15 = *(IDirect3DTexture8 **)(3 * (i14 + i13 * (*((unsigned short *)self_ + 19) - i2 - 1))
+                                              + *((uint32_t *)self_ + 8));
+                  i17 = (short)(((uint16_t)(i17) & 0xFF00u) | ((uint16_t)(uint8_t)((*((uint8_t *)&(p15) + 2)) & 0xF8) << 0));
+                  i17 = (short)(((uint16_t)(i17) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
+                  i1 = (int)(((uint32_t)(i1) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(p15) + 1)) & 0xF8) << 0));
+                  *p8 = ((unsigned char)p15 >> 3) | (4 * (i1 | (32 * i17)));
+                  goto L4;
                 case 0x20:
-                  v32 = (__int16)(((uint16_t)(v32) & 0xFFu) | ((uint16_t)(uint8_t)(0) << 8));
-                  v33 = v27 * (*((unsigned __int16 *)self_ + 19) - v3 - 1);
-                  v34 = *((_DWORD *)self_ + 8);
-                  v35 = *(IDirect3DTexture8 **)(v34 + 4 * (v28 + v33));
-                  v60 = v35;
-                  v32 = (__int16)(((uint16_t)(v32) & 0xFF00u) | ((uint16_t)(uint8_t)(HIBYTE(v35)) << 0));
-                  v34 = (int)(((uint32_t)(v34) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(BYTE2(v35) & 0xF8) << 0));
-                  v36 = v34 | (2 * (v32 & 0xFF80));
-                  v34 = (int)(((uint32_t)(v34) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(BYTE1(v35) & 0xF8) << 0));
-                  LOWORD(v35) = (unsigned __int8)v35 >> 3;
-                  v1 = (unsigned int)v35 | (4 * (v34 | (32 * v36)));
-                  *v26 = v1;
-LABEL_52:
-                  ++v26;
+                  i18 = (short)(((uint16_t)(i18) & 0xFFu) | ((uint16_t)(uint8_t)(0) << 8));
+                  i19 = i13 * (*((unsigned short *)self_ + 19) - i2 - 1);
+                  i20 = *((uint32_t *)self_ + 8);
+                  p9 = *(IDirect3DTexture8 **)(i20 + 4 * (i14 + i19));
+                  p15 = p9;
+                  i18 = (short)(((uint16_t)(i18) & 0xFF00u) | ((uint16_t)(uint8_t)((*((uint8_t *)&(p9) + sizeof(p9) - 1))) << 0));
+                  i20 = (int)(((uint32_t)(i20) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(p9) + 2)) & 0xF8) << 0));
+                  i21 = i20 | (2 * (i18 & 0xFF80));
+                  i20 = (int)(((uint32_t)(i20) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((*((uint8_t *)&(p9) + 1)) & 0xF8) << 0));
+                  (*(uint16_t *)&(p9)) = (unsigned char)p9 >> 3;
+                  i1 = (unsigned int)p9 | (4 * (i20 | (32 * i21)));
+                  *p8 = i1;
+L4:
+                  ++p8;
                   break;
                 default:
-                  v1 = v29;
+                  i1 = i15;
                   break;
               }
-              ++v28;
-              v27 = *((unsigned __int16 *)self_ + 18);
+              ++i14;
+              i13 = *((unsigned short *)self_ + 18);
             }
-            while ( (int)(v28) < (int)((unsigned __int16)v27) );
+            while ( (int)(i14) < (int)((unsigned short)i13) );
           }
-          ++v3;
+          ++i2;
         }
-        while ( (int)(v3) < (int)(*((unsigned __int16 *)self_ + 19)) );
+        while ( (int)(i2) < (int)(*((unsigned short *)self_ + 19)) );
       }
       break;
     case 24:
-      if ( *((_WORD *)self_ + 19) != 0 )
+      if ( *((uint16_t *)self_ + 19) != 0 )
       {
         do
         {
-          v17 = (_BYTE *)(v64 + v3 * v63);
-          v18 = *((unsigned __int16 *)self_ + 18);
-          v19 = 0;
-          if ( (_WORD)v18 != 0 )
+          p4 = (uint8_t *)(i32 + i2 * i31);
+          i9 = *((unsigned short *)self_ + 18);
+          i10 = 0;
+          if ( (uint16_t)i9 != 0 )
           {
             do
             {
-              v20 = v1;
-              v1 = 0;
-              switch ( *((_BYTE *)self_ + 40) )
+              i11 = i1;
+              i1 = 0;
+              switch ( *((uint8_t *)self_ + 40) )
               {
                 case 4:
-                  v17 += 6;
-                  v1 = *(unsigned __int8 *)((v19 + v18 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)) / 2
-                                          + *((_DWORD *)self_ + 8)) >> 4;
-                  v21 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7) + 4 * v1);
-                  v60 = v21;
-                  *((_WORD *)v17 - 3) = (_WORD)v21;
-                  *(v17 - 4) = BYTE2(v21);
-                  v22 = v19 + *((unsigned __int16 *)self_ + 18) * (*((unsigned __int16 *)self_ + 19) - v3 - 1);
-                  ++v19;
-                  v23 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7)
-                                              + 4 * (*(_BYTE *)(v22 / 2 + *((_DWORD *)self_ + 8)) & 0xF));
-                  v60 = v23;
-                  *(v17 - 3) = (_BYTE)v23;
-                  LOBYTE(v23) = BYTE2(v60);
-                  *(v17 - 2) = BYTE1(v23);
-                  *(v17 - 1) = (_BYTE)v23;
+                  p4 += 6;
+                  i1 = *(unsigned char *)((i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)) / 2
+                                          + *((uint32_t *)self_ + 8)) >> 4;
+                  p5 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7) + 4 * i1);
+                  p15 = p5;
+                  *((uint16_t *)p4 - 3) = (uint16_t)p5;
+                  *(p4 - 4) = (*((uint8_t *)&(p5) + 2));
+                  i12 = i10 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i2 - 1);
+                  ++i10;
+                  p6 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
+                                              + 4 * (*(uint8_t *)(i12 / 2 + *((uint32_t *)self_ + 8)) & 0xF));
+                  p15 = p6;
+                  *(p4 - 3) = (uint8_t)p6;
+                  (*(uint8_t *)&(p6)) = (*((uint8_t *)&(p15) + 2));
+                  *(p4 - 2) = (*((uint8_t *)&(p6) + 1));
+                  *(p4 - 1) = (uint8_t)p6;
                   break;
                 case 8:
-                  v24 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7)
+                  p7 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
                                               + 4
-                                              * *(unsigned __int8 *)(*((_DWORD *)self_ + 8)
-                                                                   + v18 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)
-                                                                   + v19));
-                  v60 = v24;
-                  *v17 = (_BYTE)v24;
-                  v17[2] = BYTE2(v24);
-                  goto LABEL_39;
+                                              * *(unsigned char *)(*((uint32_t *)self_ + 8)
+                                                                   + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)
+                                                                   + i10));
+                  p15 = p7;
+                  *p4 = (uint8_t)p7;
+                  p4[2] = (*((uint8_t *)&(p7) + 2));
+                  goto L5;
                 case 0x10:
-                  v25 = *(_DWORD *)(*((_DWORD *)self_ + 8) + 2
-                                                          * (v19 + v18 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)));
-                  *v17 = 8 * v25;
-                  v17[1] = (v25 >> 2) & 0xF8;
-                  v17[2] = (v25 >> 7) & 0xF8;
-                  goto LABEL_40;
+                  u2 = *(uint32_t *)(*((uint32_t *)self_ + 8) + 2
+                                                          * (i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)));
+                  *p4 = 8 * u2;
+                  p4[1] = (u2 >> 2) & 0xF8;
+                  p4[2] = (u2 >> 7) & 0xF8;
+                  goto L6;
                 case 0x18:
-                  v24 = *(IDirect3DTexture8 **)(3 * (v19 + v18 * (*((unsigned __int16 *)self_ + 19) - v3 - 1))
-                                              + *((_DWORD *)self_ + 8));
-                  goto LABEL_38;
+                  p7 = *(IDirect3DTexture8 **)(3 * (i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1))
+                                              + *((uint32_t *)self_ + 8));
+                  goto L7;
                 case 0x20:
-                  v24 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 8)
-                                              + 4 * (v19 + v18 * (*((unsigned __int16 *)self_ + 19) - v3 - 1)));
-LABEL_38:
-                  v60 = v24;
-                  *v17 = (_BYTE)v24;
-                  v17[2] = BYTE2(v60);
-LABEL_39:
-                  v17[1] = BYTE1(v24);
-LABEL_40:
-                  v17 += 3;
+                  p7 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 8)
+                                              + 4 * (i10 + i9 * (*((unsigned short *)self_ + 19) - i2 - 1)));
+L7:
+                  p15 = p7;
+                  *p4 = (uint8_t)p7;
+                  p4[2] = (*((uint8_t *)&(p15) + 2));
+L5:
+                  p4[1] = (*((uint8_t *)&(p7) + 1));
+L6:
+                  p4 += 3;
                   break;
                 default:
-                  v1 = v20;
+                  i1 = i11;
                   break;
               }
-              ++v19;
-              v18 = *((unsigned __int16 *)self_ + 18);
+              ++i10;
+              i9 = *((unsigned short *)self_ + 18);
             }
-            while ( (int)(v19) < (int)((unsigned __int16)v18) );
+            while ( (int)(i10) < (int)((unsigned short)i9) );
           }
-          ++v3;
+          ++i2;
         }
-        while ( (int)(v3) < (int)(*((unsigned __int16 *)self_ + 19)) );
+        while ( (int)(i2) < (int)(*((unsigned short *)self_ + 19)) );
       }
       break;
     case 32:
-      if ( (*((_DWORD *)self_ + 11) & 8) != 0 )
+      if ( (*((uint32_t *)self_ + 11) & 8) != 0 )
       {
-        orig::Tex_HeightToNormalMap(*((__int16 **)self_ + 2), (int)self_, (int)&v63);
+        orig::Tex_HeightToNormalMap(*((short **)self_ + 2), (int)self_, (int)&i31);
       }
       else
       {
-        v7 = 0;
-        if ( *((_WORD *)self_ + 19) != 0 )
+        i4 = 0;
+        if ( *((uint16_t *)self_ + 19) != 0 )
         {
           do
           {
-            v8 = (_BYTE *)(v64 + v7 * v63);
-            v9 = *((unsigned __int16 *)self_ + 18);
-            v10 = 0;
-            if ( (_WORD)v9 != 0 )
+            p1 = (uint8_t *)(i32 + i4 * i31);
+            i5 = *((unsigned short *)self_ + 18);
+            i6 = 0;
+            if ( (uint16_t)i5 != 0 )
             {
               do
               {
-                v11 = v1;
-                v1 = 0;
-                switch ( *((_BYTE *)self_ + 40) )
+                i7 = i1;
+                i1 = 0;
+                switch ( *((uint8_t *)self_ + 40) )
                 {
                   case 4:
-                    v8 += 8;
-                    v1 = *(unsigned __int8 *)((v10 + v9 * (*((unsigned __int16 *)self_ + 19) - v7 - 1)) / 2
-                                            + *((_DWORD *)self_ + 8)) >> 4;
-                    v60 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7) + 4 * v1);
-                    *((_DWORD *)v8 - 2) = v60;
-                    v12 = v10 + *((unsigned __int16 *)self_ + 18) * (*((unsigned __int16 *)self_ + 19) - v7 - 1);
-                    ++v10;
-                    v60 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7)
-                                                + 4 * (*(_BYTE *)(v12 / 2 + *((_DWORD *)self_ + 8)) & 0xF));
-                    *((_DWORD *)v8 - 1) = v60;
+                    p1 += 8;
+                    i1 = *(unsigned char *)((i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)) / 2
+                                            + *((uint32_t *)self_ + 8)) >> 4;
+                    p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7) + 4 * i1);
+                    *((uint32_t *)p1 - 2) = p15;
+                    i8 = i6 + *((unsigned short *)self_ + 18) * (*((unsigned short *)self_ + 19) - i4 - 1);
+                    ++i6;
+                    p15 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
+                                                + 4 * (*(uint8_t *)(i8 / 2 + *((uint32_t *)self_ + 8)) & 0xF));
+                    *((uint32_t *)p1 - 1) = p15;
                     break;
                   case 8:
-                    v13 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 7)
+                    p2 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 7)
                                                 + 4
-                                                * *(unsigned __int8 *)(*((_DWORD *)self_ + 8)
-                                                                     + v9 * (*((unsigned __int16 *)self_ + 19) - v7 - 1)
-                                                                     + v10));
-                    goto LABEL_24;
+                                                * *(unsigned char *)(*((uint32_t *)self_ + 8)
+                                                                     + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)
+                                                                     + i6));
+                    goto L8;
                   case 0x10:
-                    v14 = *(_DWORD *)(*((_DWORD *)self_ + 8)
-                                    + 2 * (v10 + v9 * (*((unsigned __int16 *)self_ + 19) - v7 - 1)));
-                    *v8 = 8 * v14;
-                    v8[1] = (v14 >> 2) & 0xF8;
-                    v8[2] = (_BYTE)((uint32_t)(v14) >> 8) & 0x80;
-                    goto LABEL_26;
+                    u1 = *(uint32_t *)(*((uint32_t *)self_ + 8)
+                                    + 2 * (i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)));
+                    *p1 = 8 * u1;
+                    p1[1] = (u1 >> 2) & 0xF8;
+                    p1[2] = (uint8_t)((uint32_t)(u1) >> 8) & 0x80;
+                    goto L9;
                   case 0x18:
-                    v15 = *(IDirect3DTexture8 **)(3 * (v10 + v9 * (*((unsigned __int16 *)self_ + 19) - v7 - 1))
-                                                + *((_DWORD *)self_ + 8));
-                    v8[3] = 0x80;
-                    v60 = v15;
-                    *v8 = (_BYTE)v15;
-                    v16 = BYTE2(v60);
-                    v8[1] = BYTE1(v15);
-                    goto LABEL_25;
+                    p3 = *(IDirect3DTexture8 **)(3 * (i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1))
+                                                + *((uint32_t *)self_ + 8));
+                    p1[3] = 0x80;
+                    p15 = p3;
+                    *p1 = (uint8_t)p3;
+                    c3 = (*((uint8_t *)&(p15) + 2));
+                    p1[1] = (*((uint8_t *)&(p3) + 1));
+                    goto L10;
                   case 0x20:
-                    v13 = *(IDirect3DTexture8 **)(*((_DWORD *)self_ + 8)
-                                                + 4 * (v10 + v9 * (*((unsigned __int16 *)self_ + 19) - v7 - 1)));
-LABEL_24:
-                    v8[1] = BYTE1(v13);
-                    v60 = v13;
-                    *v8 = (_BYTE)v13;
-                    v16 = BYTE2(v60);
-                    v8[3] = HIBYTE(v60);
-LABEL_25:
-                    v8[2] = v16;
-LABEL_26:
-                    v8 += 4;
+                    p2 = *(IDirect3DTexture8 **)(*((uint32_t *)self_ + 8)
+                                                + 4 * (i6 + i5 * (*((unsigned short *)self_ + 19) - i4 - 1)));
+L8:
+                    p1[1] = (*((uint8_t *)&(p2) + 1));
+                    p15 = p2;
+                    *p1 = (uint8_t)p2;
+                    c3 = (*((uint8_t *)&(p15) + 2));
+                    p1[3] = (*((uint8_t *)&(p15) + sizeof(p15) - 1));
+L10:
+                    p1[2] = c3;
+L9:
+                    p1 += 4;
                     break;
                   default:
-                    v1 = v11;
+                    i1 = i7;
                     break;
                 }
-                ++v10;
-                v9 = *((unsigned __int16 *)self_ + 18);
+                ++i6;
+                i5 = *((unsigned short *)self_ + 18);
               }
-              while ( (int)(v10) < (int)((unsigned __int16)v9) );
+              while ( (int)(i6) < (int)((unsigned short)i5) );
             }
-            ++v7;
+            ++i4;
           }
-          while ( (int)(v7) < (int)(*((unsigned __int16 *)self_ + 19)) );
+          while ( (int)(i4) < (int)(*((unsigned short *)self_ + 19)) );
         }
       }
       break;
     default:
       break;
   }
-  v61->UnlockRect(0);
-LABEL_56:
-  v37 = *((_BYTE *)self_ + 44);
-  v38 = *((unsigned __int16 *)self_ + 19);
-  v39 = *((unsigned __int16 *)self_ + 18);
-  v65[1] = 0;
-  v65[3] = (unsigned __int16)v38;
-  v65[0] = 0;
-  v65[2] = (unsigned __int16)v39;
-  if ( (v37 & 7) == 0 )
+  p16->UnlockRect(0);
+L1:
+  c4 = *((uint8_t *)self_ + 44);
+  u3 = *((unsigned short *)self_ + 19);
+  u4 = *((unsigned short *)self_ + 18);
+  u5[1] = 0;
+  u5[3] = (unsigned short)u3;
+  u5[0] = 0;
+  u5[2] = (unsigned short)u4;
+  if ( (c4 & 7) == 0 )
   {
-    v56 = 0;
-    if ( (*(int (__stdcall **)(_DWORD))(**((_DWORD **)self_ + 16) + 52))(*((_DWORD *)self_ + 16)) == 0 )
-      goto LABEL_136;
+    i30 = 0;
+    if ( (*(int (__stdcall **)(uint32_t))(**((uint32_t **)self_ + 16) + 52))(*((uint32_t *)self_ + 16)) == 0 )
+      goto L11;
     while ( 1 )
     {
-      if ( v56 != 0 )
+      if ( i30 != 0 )
       {
-        (*(void (__stdcall **)(_DWORD, int, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 16) + 60))(
-          *((_DWORD *)self_ + 16),
-          v56 - 1,
-          &v59);
-        (*(void (__stdcall **)(_DWORD, int, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 16) + 60))(
-          *((_DWORD *)self_ + 16),
-          v56,
-          &v58);
-        orig::fn_102D4515(v58, nullptr, nullptr, v59, nullptr, nullptr, 5, 0);
-        if ( v59 != nullptr )
+        (*(void (__stdcall **)(uint32_t, int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
+          *((uint32_t *)self_ + 16),
+          i30 - 1,
+          &p14);
+        (*(void (__stdcall **)(uint32_t, int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
+          *((uint32_t *)self_ + 16),
+          i30,
+          &p13);
+        orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 5, 0);
+        if ( p14 != nullptr )
         {
-          v59->Release();
-          v59 = nullptr;
+          p14->Release();
+          p14 = nullptr;
         }
       }
       else
       {
-        if ( v57 == 0 )
+        if ( c6 == 0 )
         {
-          v61->GetSurfaceLevel(0, &v59);
-          (*(void (__stdcall **)(_DWORD, _DWORD, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 16) + 60))(
-            *((_DWORD *)self_ + 16),
+          p16->GetSurfaceLevel(0, &p14);
+          (*(void (__stdcall **)(uint32_t, uint32_t, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
+            *((uint32_t *)self_ + 16),
             0,
-            &v58);
-          orig::fn_102D4515(v58, nullptr, nullptr, v59, nullptr, nullptr, 1, 0);
-          if ( v59 != nullptr )
+            &p13);
+          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
+          if ( p14 != nullptr )
           {
-            v59->Release();
-            v59 = nullptr;
+            p14->Release();
+            p14 = nullptr;
           }
-          if ( v58 == nullptr )
-            goto LABEL_135;
-LABEL_134:
-          v58->Release();
-          v58 = nullptr;
-          goto LABEL_135;
+          if ( p13 == nullptr )
+            goto L12;
+L13:
+          p13->Release();
+          p13 = nullptr;
+          goto L12;
         }
-        (*(void (__stdcall **)(_DWORD, _DWORD, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 16) + 60))(
-          *((_DWORD *)self_ + 16),
+        (*(void (__stdcall **)(uint32_t, uint32_t, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 16) + 60))(
+          *((uint32_t *)self_ + 16),
           0,
-          &v58);
+          &p13);
         orig::fn_102D2868(
-          v58,
+          p13,
           nullptr,
           nullptr,
-          *((_DWORD *)self_ + 8) + 8,
-          g_texFourccTable[*((_BYTE *)self_ + 41) & 0x7F],
-          *(_DWORD *)(*((_DWORD *)self_ + 8) + 4),
+          *((uint32_t *)self_ + 8) + 8,
+          g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
+          *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
           0,
-          v65,
+          u5,
           1,
           0);
       }
-      if ( v58 != nullptr )
-        goto LABEL_134;
-LABEL_135:
-      if ( ++v56 >= (unsigned int)(*(int (__stdcall **)(_DWORD))(**((_DWORD **)self_ + 16) + 52))(*((_DWORD *)self_ + 16)) )
-        goto LABEL_136;
+      if ( p13 != nullptr )
+        goto L13;
+L12:
+      if ( ++i30 >= (unsigned int)(*(int (__stdcall **)(uint32_t))(**((uint32_t **)self_ + 16) + 52))(*((uint32_t *)self_ + 16)) )
+        goto L11;
     }
   }
-  v60 = nullptr;
-  if ( v57 == 0 )
+  p15 = nullptr;
+  if ( c6 == 0 )
   {
-    v41 = *((_BYTE *)self_ + 41);
-    if ( v41 != 16 )
+    c5 = *((uint8_t *)self_ + 41);
+    if ( c5 != 16 )
     {
-      if ( v41 == 24 || v41 == 32 )
+      if ( c5 == 24 || c5 == 32 )
       {
-        v40 = 32;
-        goto LABEL_77;
+        i22 = 32;
+        goto L14;
       }
-      goto LABEL_74;
+      goto L15;
     }
-LABEL_65:
-    v40 = 16;
-    goto LABEL_66;
+L16:
+    i22 = 16;
+    goto L17;
   }
-  if ( (*((_BYTE *)self_ + 41) & 0x7F) == 0 )
-    goto LABEL_65;
-  if ( (*((_BYTE *)self_ + 41) & 0x7Fu) <= 4 )
+  if ( (*((uint8_t *)self_ + 41) & 0x7F) == 0 )
+    goto L16;
+  if ( (*((uint8_t *)self_ + 41) & 0x7Fu) <= 4 )
   {
-    v40 = 32;
-    goto LABEL_77;
+    i22 = 32;
+    goto L14;
   }
-LABEL_74:
-  v40 = (int)v62;
-  if ( v62 != (struct IDirect3DSurface8 *)16 )
+L15:
+  i22 = (int)p17;
+  if ( p17 != (struct IDirect3DSurface8 *)16 )
   {
-    if ( v62 != (struct IDirect3DSurface8 *)24 && v62 != (struct IDirect3DSurface8 *)32 )
-      goto LABEL_78;
-LABEL_77:
-    if ( orig::fn_102D2FB9((g_pCDx->pDevice), v39, v38, 0, 0, D3DFMT_A8R8G8B8, 1, &v60) >= 0 )
-      goto LABEL_78;
-    goto LABEL_67;
+    if ( p17 != (struct IDirect3DSurface8 *)24 && p17 != (struct IDirect3DSurface8 *)32 )
+      goto L18;
+L14:
+    if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A8R8G8B8, 1, &p15) >= 0 )
+      goto L18;
+    goto L3;
   }
-LABEL_66:
-  if ( orig::fn_102D2FB9((g_pCDx->pDevice), v39, v38, 0, 0, D3DFMT_A1R5G5B5, 1, &v60) >= 0 )
+L17:
+  if ( orig::fn_102D2FB9((g_pCDx->pDevice), u4, u3, 0, 0, D3DFMT_A1R5G5B5, 1, &p15) >= 0 )
   {
-LABEL_78:
-    v60->LockRect(0, (D3DLOCKED_RECT *)&v63, nullptr, 0);
-    if ( v40 == 16 )
+L18:
+    p15->LockRect(0, (D3DLOCKED_RECT *)&i31, nullptr, 0);
+    if ( i22 == 16 )
     {
-      v47 = 0;
-      if ( *((_WORD *)self_ + 19) != 0 )
+      i26 = 0;
+      if ( *((uint16_t *)self_ + 19) != 0 )
       {
-        v48 = *((unsigned __int16 *)self_ + 18);
+        i27 = *((unsigned short *)self_ + 18);
         do
         {
-          v49 = (_WORD *)(v64 + v47 * v63);
-          v50 = 0;
-          if ( v48 > 0 )
+          p11 = (uint16_t *)(i32 + i26 * i31);
+          i28 = 0;
+          if ( i27 > 0 )
           {
             do
             {
-              *v49 = 0x8000;
-              v48 = *((unsigned __int16 *)self_ + 18);
-              ++v49;
-              ++v50;
+              *p11 = 0x8000;
+              i27 = *((unsigned short *)self_ + 18);
+              ++p11;
+              ++i28;
             }
-            while ( (int)(v50) < (int)((unsigned __int16)v48) );
+            while ( (int)(i28) < (int)((unsigned short)i27) );
           }
-          ++v47;
+          ++i26;
         }
-        while ( (int)(v47) < (int)(*((unsigned __int16 *)self_ + 19)) );
+        while ( (int)(i26) < (int)(*((unsigned short *)self_ + 19)) );
       }
     }
-    else if ( v40 == 32 )
+    else if ( i22 == 32 )
     {
-      v43 = 0;
-      if ( *((_WORD *)self_ + 19) != 0 )
+      i23 = 0;
+      if ( *((uint16_t *)self_ + 19) != 0 )
       {
-        v44 = *((unsigned __int16 *)self_ + 18);
+        i24 = *((unsigned short *)self_ + 18);
         do
         {
-          v45 = (_DWORD *)(v64 + v43 * v63);
-          v46 = 0;
-          if ( v44 > 0 )
+          p10 = (uint32_t *)(i32 + i23 * i31);
+          i25 = 0;
+          if ( i24 > 0 )
           {
             do
             {
-              *v45 = 0x80000000;
-              v44 = *((unsigned __int16 *)self_ + 18);
-              ++v45;
-              ++v46;
+              *p10 = 0x80000000;
+              i24 = *((unsigned short *)self_ + 18);
+              ++p10;
+              ++i25;
             }
-            while ( (int)(v46) < (int)((unsigned __int16)v44) );
+            while ( (int)(i25) < (int)((unsigned short)i24) );
           }
-          ++v43;
+          ++i23;
         }
-        while ( (int)(v43) < (int)(*((unsigned __int16 *)self_ + 19)) );
+        while ( (int)(i23) < (int)(*((unsigned short *)self_ + 19)) );
       }
     }
-    v60->UnlockRect(0);
-    if ( (*((_BYTE *)self_ + 44) & 7u) >= 6 )
+    p15->UnlockRect(0);
+    if ( (*((uint8_t *)self_ + 44) & 7u) >= 6 )
     {
       for ( i = 0; i < 6; ++i )
       {
-        (*(void (__stdcall **)(_DWORD, int, _DWORD, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 17) + 60))(
-          *((_DWORD *)self_ + 17),
+        (*(void (__stdcall **)(uint32_t, int, uint32_t, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 17) + 60))(
+          *((uint32_t *)self_ + 17),
           i,
           0,
-          &v58);
-        if ( v57 != 0 )
+          &p13);
+        if ( c6 != 0 )
         {
           orig::fn_102D2868(
-            v58,
+            p13,
             nullptr,
             nullptr,
-            *((_DWORD *)self_ + 8) + 8,
-            g_texFourccTable[*((_BYTE *)self_ + 41) & 0x7F],
-            *(_DWORD *)(*((_DWORD *)self_ + 8) + 4),
+            *((uint32_t *)self_ + 8) + 8,
+            g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
+            *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
             0,
-            v65,
+            u5,
             1,
             0);
         }
         else
         {
-          v61->GetSurfaceLevel(0, &v59);
-          orig::fn_102D4515(v58, nullptr, nullptr, v59, nullptr, nullptr, 1, 0);
-          if ( v59 != nullptr )
+          p16->GetSurfaceLevel(0, &p14);
+          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
+          if ( p14 != nullptr )
           {
-            v59->Release();
-            v59 = nullptr;
+            p14->Release();
+            p14 = nullptr;
           }
         }
-        v54 = v58;
-        if ( v58 != nullptr )
+        p12 = p13;
+        if ( p13 != nullptr )
         {
-          v58->Release();
-          v54 = nullptr;
-          v58 = nullptr;
+          p13->Release();
+          p12 = nullptr;
+          p13 = nullptr;
         }
       }
     }
     else
     {
-      for ( j = 0; j < (*(int (__stdcall **)(_DWORD))(**((_DWORD **)self_ + 17) + 52))(*((_DWORD *)self_ + 17)); ++j )
+      for ( j = 0; j < (*(int (__stdcall **)(uint32_t))(**((uint32_t **)self_ + 17) + 52))(*((uint32_t *)self_ + 17)); ++j )
       {
         for ( k = 0; k < 6; ++k )
         {
-          (*(void (__stdcall **)(_DWORD, int, unsigned int, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 17) + 60))(
-            *((_DWORD *)self_ + 17),
+          (*(void (__stdcall **)(uint32_t, int, unsigned int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 17) + 60))(
+            *((uint32_t *)self_ + 17),
             k,
             j,
-            &v58);
-          v62 = nullptr;
-          v60->GetSurfaceLevel(0, &v62);
-          orig::fn_102D4515(v58, nullptr, nullptr, v62, nullptr, nullptr, 1, 0);
-          if ( v62 != nullptr )
+            &p13);
+          p17 = nullptr;
+          p15->GetSurfaceLevel(0, &p17);
+          orig::fn_102D4515(p13, nullptr, nullptr, p17, nullptr, nullptr, 1, 0);
+          if ( p17 != nullptr )
           {
-            v62->Release();
-            v62 = nullptr;
+            p17->Release();
+            p17 = nullptr;
           }
-          if ( v58 != nullptr )
+          if ( p13 != nullptr )
           {
-            v58->Release();
-            v58 = nullptr;
+            p13->Release();
+            p13 = nullptr;
           }
         }
-        v53 = *((_DWORD *)self_ + 17);
+        i29 = *((uint32_t *)self_ + 17);
         if ( j != 0 )
         {
-          (*(void (__stdcall **)(int, int, unsigned int, struct IDirect3DSurface8 **))(*(_DWORD *)v53 + 60))(
-            v53,
-            *((_DWORD *)self_ + 11) & 7,
+          (*(void (__stdcall **)(int, int, unsigned int, struct IDirect3DSurface8 **))(*(uint32_t *)i29 + 60))(
+            i29,
+            *((uint32_t *)self_ + 11) & 7,
             j - 1,
-            &v59);
-          (*(void (__stdcall **)(_DWORD, int, unsigned int, struct IDirect3DSurface8 **))(**((_DWORD **)self_ + 17) + 60))(
-            *((_DWORD *)self_ + 17),
-            *((_DWORD *)self_ + 11) & 7,
+            &p14);
+          (*(void (__stdcall **)(uint32_t, int, unsigned int, struct IDirect3DSurface8 **))(**((uint32_t **)self_ + 17) + 60))(
+            *((uint32_t *)self_ + 17),
+            *((uint32_t *)self_ + 11) & 7,
             j,
-            &v58);
-          orig::fn_102D4515(v58, nullptr, nullptr, v59, nullptr, nullptr, 5, 0);
-          if ( v59 != nullptr )
+            &p13);
+          orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 5, 0);
+          if ( p14 != nullptr )
           {
-            v59->Release();
-            v59 = nullptr;
+            p14->Release();
+            p14 = nullptr;
           }
-          if ( v58 == nullptr )
+          if ( p13 == nullptr )
             continue;
         }
         else
         {
-          (*(void (__stdcall **)(int, int, _DWORD, struct IDirect3DSurface8 **))(*(_DWORD *)v53 + 60))(
-            v53,
-            *((_DWORD *)self_ + 11) & 7,
+          (*(void (__stdcall **)(int, int, uint32_t, struct IDirect3DSurface8 **))(*(uint32_t *)i29 + 60))(
+            i29,
+            *((uint32_t *)self_ + 11) & 7,
             0,
-            &v58);
-          if ( v57 != 0 )
+            &p13);
+          if ( c6 != 0 )
           {
             orig::fn_102D2868(
-              v58,
+              p13,
               nullptr,
               nullptr,
-              *((_DWORD *)self_ + 8) + 8,
-              g_texFourccTable[*((_BYTE *)self_ + 41) & 0x7F],
-              *(_DWORD *)(*((_DWORD *)self_ + 8) + 4),
+              *((uint32_t *)self_ + 8) + 8,
+              g_texFourccTable[*((uint8_t *)self_ + 41) & 0x7F],
+              *(uint32_t *)(*((uint32_t *)self_ + 8) + 4),
               0,
-              v65,
+              u5,
               1,
               0);
           }
           else
           {
-            v61->GetSurfaceLevel(0, &v59);
-            orig::fn_102D4515(v58, nullptr, nullptr, v59, nullptr, nullptr, 1, 0);
-            if ( v59 != nullptr )
+            p16->GetSurfaceLevel(0, &p14);
+            orig::fn_102D4515(p13, nullptr, nullptr, p14, nullptr, nullptr, 1, 0);
+            if ( p14 != nullptr )
             {
-              v59->Release();
-              v59 = nullptr;
+              p14->Release();
+              p14 = nullptr;
             }
           }
-          if ( v58 == nullptr )
+          if ( p13 == nullptr )
             continue;
         }
-        v58->Release();
-        v58 = nullptr;
+        p13->Release();
+        p13 = nullptr;
       }
-      v54 = v58;
+      p12 = p13;
     }
-    if ( v60 != nullptr )
+    if ( p15 != nullptr )
     {
-      v60->Release();
-LABEL_136:
-      v54 = v58;
+      p15->Release();
+L11:
+      p12 = p13;
     }
-    if ( v59 != nullptr )
+    if ( p14 != nullptr )
     {
-      v59->Release();
-      v54 = v58;
-      v59 = nullptr;
+      p14->Release();
+      p12 = p13;
+      p14 = nullptr;
     }
-    if ( v54 != nullptr )
+    if ( p12 != nullptr )
     {
-      v54->Release();
-      v58 = nullptr;
+      p12->Release();
+      p13 = nullptr;
     }
-    result = (int)v61;
-    if ( v61 != nullptr )
-      result = v61->Release();
+    result = (int)p16;
+    if ( p16 != nullptr )
+      result = p16->Release();
     result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(1) << 0));
     return result;
   }
-LABEL_67:
-  if ( v59 != nullptr )
+L3:
+  if ( p14 != nullptr )
   {
-    v59->Release();
-    v59 = nullptr;
+    p14->Release();
+    p14 = nullptr;
   }
-  if ( v58 != nullptr )
+  if ( p13 != nullptr )
   {
-    v58->Release();
-    v58 = nullptr;
+    p13->Release();
+    p13 = nullptr;
   }
-  result = (int)v61;
-  if ( v61 != nullptr )
-    result = v61->Release();
+  result = (int)p16;
+  if ( p16 != nullptr )
+    result = p16->Release();
   result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(0) << 0));
   return result;
 }

@@ -11,38 +11,38 @@ XI_API IDirect3DDevice8 * __cdecl FontGlyphCache_GetDevice(void)
 
 // FUNCTION: FFXIMAIN 0x1025D760
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl FontGlyphCache_CreateTexture(unsigned int a1, unsigned int a2, unsigned int a3, unsigned int a4, D3DFORMAT a5, D3DPOOL a6)
+XI_API int __cdecl FontGlyphCache_CreateTexture(unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, D3DFORMAT arg5, D3DPOOL arg6)
 {
-  int v6;
-  int v8;
-  v8 = 0;
-  v6 = (g_pCDx->pDevice)->lpVtbl->CreateTexture((g_pCDx->pDevice), a1, a2, a3, a4, a5, a6, (IDirect3DTexture8 **)&v8);
-  return v6 < 0 ? 0 : v8;
+  int i1;
+  int i2;
+  i2 = 0;
+  i1 = (g_pCDx->pDevice)->lpVtbl->CreateTexture((g_pCDx->pDevice), arg1, arg2, arg3, arg4, arg5, arg6, (IDirect3DTexture8 **)&i2);
+  return i1 < 0 ? 0 : i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1025D7B0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl FontGlyphCache_CreateVertexBuffer(unsigned int a1, unsigned int a2, unsigned int a3, D3DPOOL a4)
+XI_API int __cdecl FontGlyphCache_CreateVertexBuffer(unsigned int arg1, unsigned int arg2, unsigned int arg3, D3DPOOL arg4)
 {
-  int v4;
-  int v6;
-  v6 = 0;
-  v4 = (g_pCDx->pDevice)->lpVtbl->CreateVertexBuffer((g_pCDx->pDevice), a1, a2, a3, a4, (IDirect3DVertexBuffer8 **)&v6);
-  return v4 < 0 ? 0 : v6;
+  int i1;
+  int i2;
+  i2 = 0;
+  i1 = (g_pCDx->pDevice)->lpVtbl->CreateVertexBuffer((g_pCDx->pDevice), arg1, arg2, arg3, arg4, (IDirect3DVertexBuffer8 **)&i2);
+  return i1 < 0 ? 0 : i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1025E020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) FitFont_ReturnFalse(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) FitFont_ReturnFalse(bits32 xi_eax)
 {
   return xi_eax & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1025E050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FontGlyphCache_IsStateTwo(void)
+XI_API bits32 __cdecl FontGlyphCache_IsStateTwo(void)
 {
-  if ((DAT_1066276c != 0) && (*(int *)(DAT_1066276c + 0x44) == 2)) {
+  if ((g_1066276C != 0) && (*(int *)(g_1066276C + 0x44) == 2)) {
     return 1;
   }
   return 0;
@@ -52,7 +52,7 @@ XI_API undefined4 __cdecl FontGlyphCache_IsStateTwo(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __cdecl FontGlyphCache_GetCounterBlock(void)
 {
-  return(uint8_t*)(&DAT_1067a294);
+  return(uint8_t*)(&g_1067A294);
 }
 
 // FUNCTION: FFXIMAIN 0x1025E0C0
@@ -73,16 +73,16 @@ XI_API void __cdecl FontGlyphCache_StepCounter(void)
 
 // FUNCTION: FFXIMAIN 0x1025E0F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) FitFont_ReturnFalseFwd(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) FitFont_ReturnFalseFwd(bits32 xi_eax)
 {
   return orig::FitFont_ReturnFalse(xi_eax);
 }
 
 // FUNCTION: FFXIMAIN 0x1025E210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl FontGlyphCache_AddToCounter(int param_1)
+XI_API void __cdecl FontGlyphCache_AddToCounter(int arg1)
 {
-  DAT_1067a298 = DAT_1067a298 + param_1 * 2;
+  g_1067A298 = g_1067A298 + arg1 * 2;
   return;
 }
 
@@ -90,7 +90,7 @@ XI_API void __cdecl FontGlyphCache_AddToCounter(int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl FontGlyphCache_ClearCounter(void)
 {
-  DAT_1067a298_as_v0 = 0;
+  g_1067A298_as_v0 = 0;
   return;
 }
 
@@ -98,36 +98,36 @@ XI_API void __cdecl FontGlyphCache_ClearCounter(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl FontGlyphCache_DecayCounter(void)
 {
-  if (DAT_1067a298 < 0) {
-    DAT_1067a298 = DAT_1067a298 + 1;
+  if (g_1067A298 < 0) {
+    g_1067A298 = g_1067A298 + 1;
     return;
   }
-  if (0 < DAT_1067a298) {
-    DAT_1067a298 = DAT_1067a298 + -1;
+  if (0 < g_1067A298) {
+    g_1067A298 = g_1067A298 + -1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1025E260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_BaseCtor(void * self_, undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 xi_s4)
+XI_API void * __thiscall FitFont_BaseCtor(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 xi_s4)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &local_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  local_4 = 0xffffffff;
-  puStack_8 =(uint8_t*)(&LAB_1032752e);
-  local_c = ExceptionList;
-  ExceptionList = &local_c;
-  orig::FitFont_InnerCtor(self_,param_2,param_3,(LPCRITICAL_SECTION)((int)self_ + 0x7c),param_1);
-  local_4 = 0;
+  u1 = 0xffffffff;
+  p2 =(uint8_t*)(&code_1032752E);
+  p1 = ExceptionList;
+  ExceptionList = &p1;
+  orig::FitFont_InnerCtor(self_,arg3,arg4,(LPCRITICAL_SECTION)((int)self_ + 0x7c),arg2);
+  u1 = 0;
   *(uint32_t *)((int)self_ + 0x50) = 0;
   orig::FitFont_CreateEvent((void *)((int)self_ + 0x54),0);
-  XI_PIECE(local_4, 0, 1) = 1;
+  XI_PIECE(u1, 0, 1) = 1;
   orig::FitFont_CreateEvent((void *)((int)self_ + 0x58),1);
-  local_4 = ((uint32_t)(((uint32_t)(XI_PIECE(local_4, 1, 3)) << 8) | (uint8_t)(2)));
+  u1 = ((uint32_t)(((uint32_t)(XI_PIECE(u1, 1, 3)) << 8) | (uint8_t)(2)));
   orig::FitFont_CreateEvent((uint32_t *)((int)self_ + 0x5c),1);
   *(uint32_t *)((int)self_ + 0x60) = 0;
   *(uint32_t *)((int)self_ + 100) = 0;
@@ -145,11 +145,11 @@ XI_API void * __thiscall FitFont_BaseCtor(void * self_, undefined4 * param_1, un
   *(uint32_t *)((int)self_ + 0xbc) = 0;
   *(uint32_t *)((int)self_ + 0xc0) = 0;
   InitializeCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0xc4));
-  *(uint8_t ***)self_ = &PTR_LAB_10340478;
-  *(uint8_t ***)((int)self_ + 0xc) = &PTR_FUN_1034043c;
-  *(uint8_t ***)((int)self_ + 0x10) = &PTR_LAB_10340428;
+  *(uint8_t ***)self_ = &g_10340478;
+  *(uint8_t ***)((int)self_ + 0xc) = &g_1034043C;
+  *(uint8_t ***)((int)self_ + 0x10) = &g_10340428;
   SetEvent(*(HANDLE *)((int)self_ + 0x5c));
-  ExceptionList = local_c;
+  ExceptionList = p1;
   return self_;
 }
 
@@ -157,124 +157,124 @@ XI_API void * __thiscall FitFont_BaseCtor(void * self_, undefined4 * param_1, un
 // GATE: PASS -- 100 trials, 100 returned normally, 154 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FitFont_BaseDtor(void * self_)
 {
-  int *piVar1;
+  int *p1;
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &pvStack_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 8);
+  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 8);
   
-  puStack_8 =(uint8_t*)(&LAB_10327590);
-  pvStack_c = ExceptionList;
-  ExceptionList = &pvStack_c;
-  *(uint8_t ***)self_ = &PTR_LAB_10340478;
-  *(uint8_t ***)((int)self_ + 0xc) = &PTR_FUN_1034043c;
-  *(uint8_t ***)((int)self_ + 0x10) = &PTR_LAB_10340428;
-  local_4 = 6;
+  p3 =(uint8_t*)(&code_10327590);
+  p2 = ExceptionList;
+  ExceptionList = &p2;
+  *(uint8_t ***)self_ = &g_10340478;
+  *(uint8_t ***)((int)self_ + 0xc) = &g_1034043C;
+  *(uint8_t ***)((int)self_ + 0x10) = &g_10340428;
+  i1 = 6;
   orig::FitFont_EndTimerPeriodIfActive(self_);
   orig::FitFont_ReleaseField6C(self_);
   if (*(int *)((int)self_ + 0x50) != 0) {
-    piVar1 = (int *)(*(int *)((int)self_ + 0x50) + 8);
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0xc))))((void *)(piVar1),1);
+    p1 = (int *)(*(int *)((int)self_ + 0x50) + 8);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0xc))))((void *)(p1),1);
     *(uint32_t *)((int)self_ + 0x50) = 0;
   }
-  piVar1 = *(int **)((int)self_ + 0x78);
-  if (piVar1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0xc))))((void *)(piVar1),1);
+  p1 = *(int **)((int)self_ + 0x78);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0xc))))((void *)(p1),1);
     *(uint32_t *)((int)self_ + 0x78) = 0;
   }
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0xc4));
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
   DeleteCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x7c));
-  XI_PIECE(local_4, 0, 1) = 2;
-  orig::FUN_10265b90((void *)((int)self_ + 0x5c));
-  XI_PIECE(local_4, 0, 1) = 1;
-  orig::FUN_10265b90((void *)((int)self_ + 0x58));
-  local_4 = (uint32_t)XI_PIECE(local_4, 1, 3) << 8;
-  orig::FUN_10265b90((void *)((int)self_ + 0x54));
-  local_4 = 0xffffffff;
+  XI_PIECE(i1, 0, 1) = 2;
+  orig::game_10265B90((void *)((int)self_ + 0x5c));
+  XI_PIECE(i1, 0, 1) = 1;
+  orig::game_10265B90((void *)((int)self_ + 0x58));
+  i1 = (uint32_t)XI_PIECE(i1, 1, 3) << 8;
+  orig::game_10265B90((void *)((int)self_ + 0x54));
+  i1 = 0xffffffff;
   orig::FitFont_InnerDtor(self_);
-  ExceptionList = pvStack_c;
+  ExceptionList = p2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1025F2F0
 // GATE: PASS -- 100 trials, 100 returned normally, 58 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FitFont_ReleaseField6C(void * self_)
+XI_API bits32 __thiscall FitFont_ReleaseField6C(void * self_)
 {
-  int *a1;
+  int *p1;
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &pvStack_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  local_4 = 0xffffffff;
-  puStack_8 =(uint8_t*)(&LAB_103276b8);
-  pvStack_c = ExceptionList;
-  ExceptionList = &pvStack_c;
+  u1 = 0xffffffff;
+  p3 =(uint8_t*)(&code_103276B8);
+  p2 = ExceptionList;
+  ExceptionList = &p2;
   EnterCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  a1 = *(int **)((int)self_ + 0x6c);
-  local_4 = 0;
-  if (a1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
+  p1 = *(int **)((int)self_ + 0x6c);
+  u1 = 0;
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
     *(uint32_t *)((int)self_ + 0x6c) = 0;
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  ExceptionList = pvStack_c;
+  ExceptionList = p2;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025F640
 // NOT VERIFIED -- FAIL
-XI_API undefined4 __thiscall FitFont_EndTimerPeriodIfActive(void * self_)
+XI_API bits32 __thiscall FitFont_EndTimerPeriodIfActive(void * self_)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &pvStack_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  local_4 = 0xffffffff;
-  puStack_8 =(uint8_t*)(&LAB_10327738);
-  pvStack_c = ExceptionList;
-  ExceptionList = &pvStack_c;
+  u1 = 0xffffffff;
+  p2 =(uint8_t*)(&code_10327738);
+  p1 = ExceptionList;
+  ExceptionList = &p1;
   EnterCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  local_4 = 0;
+  u1 = 0;
   *(uint32_t *)((int)self_ + 0x74) = 0;
   if (*(int *)((int)self_ + 100) == 1) {
     *(uint32_t *)((int)self_ + 100) = 0;
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x44))))((void *)(self_));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x44))))((void *)(self_));
     timeEndPeriod(1);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)((int)self_ + 0x94));
-  ExceptionList = pvStack_c;
+  ExceptionList = p1;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025FD50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_DerivedCtor(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void * __thiscall FitFont_DerivedCtor(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &local_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  void * &p1 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p2 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  local_4 = 0xffffffff;
-  puStack_8 =(uint8_t*)(&LAB_10327818);
-  local_c = ExceptionList;
-  ExceptionList = &local_c;
-  orig::FitFont_BaseCtor(self_,param_1,param_2,param_3,param_4);
-  *(uint8_t ***)((int)self_ + 0xe0) = &PTR_LAB_1034073c;
-  local_4 = 0;
+  u1 = 0xffffffff;
+  p2 =(uint8_t*)(&code_10327818);
+  p1 = ExceptionList;
+  ExceptionList = &p1;
+  orig::FitFont_BaseCtor(self_,arg2,arg3,arg4,arg5);
+  *(uint8_t ***)((int)self_ + 0xe0) = &g_1034073C;
+  u1 = 0;
   *(uint32_t *)((int)self_ + 0xec) = 0;
   *(uint32_t *)((int)self_ + 0x120) = 0;
   *(uint32_t *)((int)self_ + 0x124) = 0;
-  *(uint8_t ***)self_ = &PTR_LAB_10340678;
-  *(uint8_t ***)((int)self_ + 0xc) = &PTR_LAB_10340638;
-  *(uint8_t ***)((int)self_ + 0x10) = &PTR_LAB_10340624;
-  *(uint8_t ***)((int)self_ + 0xe0) = &PTR_LAB_10340600;
-  *(uint8_t ***)((int)self_ + 0xe4) = &PTR_LAB_103405ec;
+  *(uint8_t ***)self_ = &g_10340678;
+  *(uint8_t ***)((int)self_ + 0xc) = &g_10340638;
+  *(uint8_t ***)((int)self_ + 0x10) = &g_10340624;
+  *(uint8_t ***)((int)self_ + 0xe0) = &g_10340600;
+  *(uint8_t ***)((int)self_ + 0xe4) = &g_103405EC;
   orig::FitFont_ResetState(self_);
-  ExceptionList = local_c;
+  ExceptionList = p1;
   return self_;
 }
 
@@ -282,12 +282,12 @@ XI_API void * __thiscall FitFont_DerivedCtor(void * self_, undefined4 param_1, u
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FitFont_ResetState(void * self_)
 {
-  DWORD DVar1;
+  DWORD u1;
   
   *(uint32_t *)((int)self_ + 0x138) = 0xfffffc18;
   *(uint32_t *)((int)self_ + 0x13c) = 0xffffffff;
-  DVar1 = timeGetTime();
-  *(DWORD *)((int)self_ + 0x158) = DVar1;
+  u1 = timeGetTime();
+  *(DWORD *)((int)self_ + 0x158) = u1;
   *(uint32_t *)((int)self_ + 0xf4) = 0;
   *(uint32_t *)((int)self_ + 0x10c) = 0xffffffff;
   *(uint32_t *)((int)self_ + 0x110) = 0;
@@ -317,42 +317,42 @@ XI_API void __thiscall FitFont_ResetState(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1025FF10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FontGlyphCache_StoreElapsed158(void * self_)
+XI_API bits32 __thiscall FontGlyphCache_StoreElapsed158(void * self_)
 {
-  DWORD DVar1;
+  DWORD u1;
   
-  DVar1 = timeGetTime();
-  *(DWORD *)((int)self_ + 0x158) = DVar1 - *(int *)((int)self_ + 0x158);
+  u1 = timeGetTime();
+  *(DWORD *)((int)self_ + 0x158) = u1 - *(int *)((int)self_ + 0x158);
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10260360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FontGlyphCache_NoOpZero(void)
+XI_API bits32 __cdecl FontGlyphCache_NoOpZero(void)
 {
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10261210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_InnerCtor(void * self_, undefined4 param_1, void * param_2, undefined4 param_3, undefined4 * param_4)
+XI_API void * __thiscall FitFont_InnerCtor(void * self_, bits32 arg2, void * arg3, bits32 arg4, bits32 * arg5)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  orig::FitFont_RefObjCtor(self_,param_1,param_2);
+  orig::FitFont_RefObjCtor(self_,arg2,arg3);
   *(uint32_t *)((int)self_ + 0x14) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 0;
   *(uint32_t *)((int)self_ + 0x20) = 0;
   *(uint32_t *)((int)self_ + 0x24) = 0;
-  *(uint32_t *)((int)self_ + 0x28) = *param_4;
-  *(uint32_t *)((int)self_ + 0x2c) = param_4[1];
-  *(uint32_t *)((int)self_ + 0x30) = param_4[2];
-  uVar1 = param_4[3];
+  *(uint32_t *)((int)self_ + 0x28) = *arg5;
+  *(uint32_t *)((int)self_ + 0x2c) = arg5[1];
+  *(uint32_t *)((int)self_ + 0x30) = arg5[2];
+  u1 = arg5[3];
   *(uint32_t *)((int)self_ + 0x3c) = 0;
   *(uint32_t *)((int)self_ + 0x40) = 0;
-  *(uint32_t *)((int)self_ + 0x34) = uVar1;
+  *(uint32_t *)((int)self_ + 0x34) = u1;
   *(uint32_t *)((int)self_ + 0x44) = 0;
-  *(uint32_t *)((int)self_ + 0x38) = param_3;
+  *(uint32_t *)((int)self_ + 0x38) = arg4;
   *(uint32_t *)((int)self_ + 0x48) = 1;
   return self_;
 }
@@ -361,34 +361,34 @@ XI_API void * __thiscall FitFont_InnerCtor(void * self_, undefined4 param_1, voi
 // GATE: PASS -- 100 trials, 100 returned normally, 80 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FitFont_InnerDtor(void * self_)
 {
-  int *a1;
+  int *p1;
   char xi_frame[12] __attribute__((aligned(4)));
-  void * &pvStack_c = *reinterpret_cast<void * *>(xi_frame + 0);
-  uint8_t * &puStack_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  void * &p2 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  puStack_8 =(uint8_t*)(&LAB_103278d8);
-  pvStack_c = ExceptionList;
-  local_4 = 0;
-  ExceptionList = &pvStack_c;
+  p3 =(uint8_t*)(&code_103278D8);
+  p2 = ExceptionList;
+  u1 = 0;
+  ExceptionList = &p2;
   orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0x3c));
-  a1 = *(int **)((int)self_ + 0x18);
-  if (a1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
+  p1 = *(int **)((int)self_ + 0x18);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
     *(uint32_t *)((int)self_ + 0x18) = 0;
   }
-  local_4 = 0xffffffff;
+  u1 = 0xffffffff;
   orig::FitFont_ReleaseLibraryRef
             ();
-  ExceptionList = pvStack_c;
+  ExceptionList = p2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10265940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_AddLibraryRef(void * self_, undefined4 xi_s1)
+XI_API void * __thiscall FitFont_AddLibraryRef(void * self_, bits32 xi_s1)
 {
-  InterlockedIncrement(&DAT_1067a2a0);
+  InterlockedIncrement(&g_1067A2A0);
   return self_;
 }
 
@@ -396,48 +396,48 @@ XI_API void * __thiscall FitFont_AddLibraryRef(void * self_, undefined4 xi_s1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl FitFont_ReleaseLibraryRef(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = InterlockedDecrement(&DAT_1067a2a0);
-  if ((iVar1 == 0) && (DAT_1067a29c != 0)) {
-    FreeLibrary(DAT_1067a29c);
-    DAT_1067a29c = 0;
+  i1 = InterlockedDecrement(&g_1067A2A0);
+  if ((i1 == 0) && (g_1067A29C != 0)) {
+    FreeLibrary(g_1067A29C);
+    g_1067A29C = 0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102659B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_RefObjCtor(void * self_, undefined4 param_1, void * param_2)
+XI_API void * __thiscall FitFont_RefObjCtor(void * self_, bits32 arg2, void * arg3)
 {
-  *(uint8_t ***)self_ = &PTR_LAB_10340924;
-  orig::FitFont_AddLibraryRef((uint32_t *)((int)self_ + 4),param_1);
-  if (param_2 == (void *)0x0) {
-    param_2 = self_;
+  *(uint8_t ***)self_ = &g_10340924;
+  orig::FitFont_AddLibraryRef((uint32_t *)((int)self_ + 4),arg2);
+  if (arg3 == (void *)0x0) {
+    arg3 = self_;
   }
-  *(uint32_t *)((int)self_ + 4) = param_2;
+  *(uint32_t *)((int)self_ + 4) = arg3;
   *(uint32_t *)((int)self_ + 8) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10265B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall FitFont_CreateEvent(void * self_, BOOL param_1)
+XI_API void * __thiscall FitFont_CreateEvent(void * self_, BOOL arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = CreateEventA(0,param_1,0,0);
-  *(uint32_t *)self_ = uVar1;
+  u1 = CreateEventA(0,arg2,0,0);
+  *(uint32_t *)self_ = u1;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1026DB24
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API unsigned char __cdecl FontGlyphCache_MarkState3(int param_1)
+XI_API unsigned char __cdecl FontGlyphCache_MarkState3(int arg1)
 {
-  if (param_1 != 0) {
-    **(uint8_t **)(param_1 + 0xc) = 3;
+  if (arg1 != 0) {
+    **(uint8_t **)(arg1 + 0xc) = 3;
   }
-  return param_1 != 0;
+  return arg1 != 0;
 }
 

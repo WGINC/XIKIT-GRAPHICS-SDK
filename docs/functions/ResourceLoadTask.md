@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): Start and Step of the resourc
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ResourceLoadTask_Step` calls `TextInputFiles_FileMngFindFileNumKind1`, `ResourceIter_SetCurrentGlobal`, `MeshResourceMng_ResolveTree`, `ErrorReport_NoOpVarargsA`, `sub_101C4AD0`, `Allocator_Generic`, `sub_101C46D0`, `NodePool_ReleaseNode`, `TextInputFiles_CtorVt10337C60`, `sub_101C4BC0`
-- `ResourceLoadTask_Start` calls `sub_100749B0`, `ResourceIter_PopFreeNode`
+- `ResourceLoadTask_Step` calls `TextInputFiles_FileMngFindFileNumKind1`, `ResourceIter_SetCurrentGlobal`, `MeshResourceMng_ResolveTree`, `ErrorReport_NoOpVarargsA`, `game_101C4AD0`, `Allocator_Generic`, `game_101C46D0`, `NodePool_ReleaseNode`, `TextInputFiles_CtorVt10337C60`, `game_101C4BC0`
+- `ResourceLoadTask_Start` calls `game_100749B0`, `ResourceIter_PopFreeNode`

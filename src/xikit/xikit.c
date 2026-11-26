@@ -30,6 +30,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <setjmp.h>
 #include "../../sdk/include/xikit_mod.h"
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -1437,7 +1438,32 @@ static LONG caller_fault(EXCEPTION_POINTERS *e) {
   return EXCEPTION_CONTINUE_SEARCH;
 }
 
+/* (27 Nov, Prishe ROADMAP P4) a mod that faults stays alone: each mod callback (init, frame, settings, unload) runs
+   under a guard on its thread (TLS). A fault whose address is inside that mod's own module, during that callback,
+   does not go on to the game: the thread is sent to guard_escape, which longjmps back to the kit, and the mod is
+   turned off (mod_off: its function and device hooks taken off as a reload takes them off, no more callbacks), with
+   the reason in xikit.log. Faults anywhere else go on exactly as before. Not caught: a fault in a mod's hook that the
+   game calls outside its callbacks (that is the game's own call), and a stack overflow (no stack to escape on). */
+typedef struct { jmp_buf jb; HMODULE h; DWORD code; uint32_t eip; } ModGuard;
+static DWORD g_guard_tls = TLS_OUT_OF_INDEXES;
+static void mod_off(int i, const char *cb, ModGuard *g);   /* (below, with the mods) */
+static void guard_escape(void) { ModGuard *g = (ModGuard *)TlsGetValue(g_guard_tls); longjmp(g->jb, 1); }
+static int guard_catch(EXCEPTION_POINTERS *e) {
+  if (g_guard_tls == TLS_OUT_OF_INDEXES) return 0;
+  ModGuard *g = (ModGuard *)TlsGetValue(g_guard_tls);
+  DWORD code = e->ExceptionRecord->ExceptionCode;
+  if (!g || !(code == EXCEPTION_ACCESS_VIOLATION || code == EXCEPTION_ILLEGAL_INSTRUCTION || code == EXCEPTION_PRIV_INSTRUCTION ||
+              code == EXCEPTION_INT_DIVIDE_BY_ZERO || code == EXCEPTION_INT_OVERFLOW || code == EXCEPTION_ARRAY_BOUNDS_EXCEEDED ||
+              code == EXCEPTION_DATATYPE_MISALIGNMENT || code == EXCEPTION_IN_PAGE_ERROR)) return 0;
+  HMODULE from = NULL; uint32_t eip = e->ContextRecord->Eip;
+  if (!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)(uintptr_t)eip, &from) || from != g->h) return 0;
+  g->code = code; g->eip = eip;
+  e->ContextRecord->Eip = (DWORD)(uintptr_t)guard_escape;
+  return 1;
+}
+
 static LONG CALLBACK on_exception(EXCEPTION_POINTERS *e) {
+  if (guard_catch(e)) return EXCEPTION_CONTINUE_EXECUTION;   /* (P4: a fault in a guarded mod callback) */
   DWORD code = e->ExceptionRecord->ExceptionCode;
   if (code == EXCEPTION_BREAKPOINT || code == EXCEPTION_SINGLE_STEP || code == 0xE06D7363u || code == 0x406D1388u
       || code == DBG_PRINTEXCEPTION_C) return EXCEPTION_CONTINUE_SEARCH;
@@ -1480,8 +1506,17 @@ typedef struct {
   char name[64], path[MAX_PATH];     /* as listed in mods=, and the file in the kit's folder */
   HMODULE h; xikit_mod_frame_fn frame; xikit_mod_unload_fn unload; xikit_mod_settings_fn settings;
   FILETIME ft, seen; int gen, seen_change;   /* mod_reload: the file's time when loaded, the build count, a change seen (and its time) */
+  int off;                                   /* (P4) turned off after a fault in one of its callbacks */
 } Mod;
 static Mod g_mods[MAXMODS]; static int g_mod_cur = -1, g_mods_open, g_mod_reload;
+/* run one callback of mod i under the guard; 0 when it faulted (and the mod is now off) */
+#define MOD_GUARDED(i, cbname, call) do { \
+    if (g_guard_tls == TLS_OUT_OF_INDEXES) g_guard_tls = TlsAlloc(); \
+    ModGuard gd_; memset(&gd_, 0, sizeof gd_); gd_.h = g_mods[i].h; void *prev_ = TlsGetValue(g_guard_tls); \
+    TlsSetValue(g_guard_tls, &gd_); \
+    if (!setjmp(gd_.jb)) { call; TlsSetValue(g_guard_tls, prev_); } \
+    else { TlsSetValue(g_guard_tls, prev_); mod_off(i, cbname, &gd_); } \
+  } while (0)
 static uint8_t *g_tramps;                       /* MAXFN slots of 32 bytes: copied entry instructions + jmp back */
 static XikitHost g_host;
 
@@ -1795,7 +1830,7 @@ static void settings_watch(void) {
     char sec[64]; mod_section(g_set[i].mod, sec, sizeof sec); klog("settings: [%s] %s = %d", sec, g_set[i].key, v); } }
   if (!n) return;
   set_list();
-  for (int i = 0; i < g_nmods; i++) if (changed[i] && g_mods[i].settings) { g_mod_cur = i; g_mods[i].settings(); }
+  for (int i = 0; i < g_nmods; i++) if (changed[i] && g_mods[i].settings) { g_mod_cur = i; MOD_GUARDED(i, "settings callback (xikit_mod_settings)", g_mods[i].settings()); }
   g_mod_cur = -1;
 }
 
@@ -1820,6 +1855,7 @@ static int start_mod(int i, HMODULE h, const char *loaded) {
   Mod *m = &g_mods[i];
   xikit_mod_init_fn init = (xikit_mod_init_fn)GetProcAddress(h, "xikit_mod_init");
   if (!init) { klog("mod %s: %s exports no xikit_mod_init; not used", m->name, loaded); return 0; }
+  m->off = 0;                                /* (a rebuilt mod is given its chance again) */
   m->h = h; m->frame = (xikit_mod_frame_fn)GetProcAddress(h, "xikit_mod_frame"); m->unload = (xikit_mod_unload_fn)GetProcAddress(h, "xikit_mod_unload"); m->settings = (xikit_mod_settings_fn)GetProcAddress(h, "xikit_mod_settings");
   const XikitModInfo *mi = (const XikitModInfo *)GetProcAddress(h, "xikit_mod_info");
   if (mi && mi->size >= 8) {
@@ -1834,8 +1870,10 @@ static int start_mod(int i, HMODULE h, const char *loaded) {
   if (!ms && g_shift[0]) return 0;
   HMODULE pin; GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_PIN, loaded, &pin);
   g_mod_cur = i; g_mods_open = 1;
-  int r = init(&g_host);
+  int r = -1; m->h = h;
+  MOD_GUARDED(i, "init (xikit_mod_init)", r = init(&g_host));
   g_mods_open = 0;
+  if (m->off) { g_mod_cur = -1; return 1; }
   klog("mod %s: %s at %p, init returned %d%s", m->name, m->gen ? "reloaded" : "loaded", h, r, m->frame ? "; it draws each frame (xikit_mod_frame)" : "");
   if (r != 0) m->frame = NULL;              /* (its hooks stay: they were checked and the mod asked for them) */
   g_mod_cur = -1; g_dirty = 1;
@@ -1876,6 +1914,19 @@ static void load_mods(void *dev, HMODULE rec) {
   }
 }
 
+/* (P4) a mod turned off after a fault in its callback: its hooks taken off, no more callbacks; it stays loaded (its
+   code may still be on another thread's stack) until the game ends. xikit.log says which callback and where. */
+static void mod_off(int i, const char *cb, ModGuard *g) {
+  Mod *m = &g_mods[i]; int nf = 0, nd = 0;
+  for (int k = 0; k < g_nfn; k++) if (g_fn[k].nchain) nf += chain_drop_mod(&g_fn[k], i + 1);
+  for (int k = 0; k < g_ndh; k++) nd += g_dh[k].live && g_dh[k].mod == i + 1;
+  dh_remove_mod(i + 1);
+  m->frame = NULL; m->unload = NULL; m->settings = NULL; m->off = 1; g_dirty = 1;
+  klog("mod %s turned off: exception 0x%08lX at %p (+0x%lX in the mod) in its %s; %d function hooks and %d device hooks taken off. "
+       "The game goes on without it; it starts again at the next game start (fix it, or take it out of mods=)",
+       m->name, g->code, (void *)(uintptr_t)g->eip, (unsigned long)(g->eip - (uint32_t)(uintptr_t)m->h), cb, nf, nd);
+}
+
 /* a reload, on the render thread inside Present (kit_present calls apply() right after, which re-aims the entries):
    the new build is loaded first; if it cannot be, the old one stays as it was */
 static void reload_mod(int i) {
@@ -1884,7 +1935,7 @@ static void reload_mod(int i) {
   if (!h) { m->gen--; return; }
   if (!GetProcAddress(h, "xikit_mod_init")) { klog("mod %s: the new build exports no xikit_mod_init; the old one stays", m->name); m->gen--; FreeLibrary(h); return; }
   g_mod_cur = i;
-  if (m->unload) m->unload();
+  if (m->unload) MOD_GUARDED(i, "unload (xikit_mod_unload)", m->unload());
   g_mod_cur = -1;
   int nf = 0, nd = 0;
   for (int k = 0; k < g_nfn; k++) if (g_fn[k].nchain) nf += chain_drop_mod(&g_fn[k], i + 1);
@@ -1910,7 +1961,7 @@ static void mods_watch(void) {
 }
 
 static void mods_frame(void *dev) {
-  for (int i = 0; i < g_nmods; i++) if (g_mods[i].frame) { g_mod_cur = i; g_mods[i].frame(dev); }
+  for (int i = 0; i < g_nmods; i++) if (g_mods[i].frame) { g_mod_cur = i; MOD_GUARDED(i, "frame callback (xikit_mod_frame)", g_mods[i].frame(dev)); }
   g_mod_cur = -1;
 }
 

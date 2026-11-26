@@ -4,20 +4,20 @@
 
 // FUNCTION: FFXIMAIN 0x10253160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_CheckBuffersReady(uint32_t * param_1)
+XI_API bits32 __cdecl StAvatar_CheckBuffersReady(uint32_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (((*param_1 & 1) != 0) && (-1 < (int)param_1[4])) {
-    param_1[1] = 0;
-    param_1[2] = 0;
-    uVar1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,param_1[3]);
-    if ((char)uVar1 != '\0') {
-      *param_1 = *param_1 | 0x10;
+  if (((*arg1 & 1) != 0) && (-1 < (int)arg1[4])) {
+    arg1[1] = 0;
+    arg1[2] = 0;
+    u1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,arg1[3]);
+    if ((char)u1 != '\0') {
+      *arg1 = *arg1 | 0x10;
     }
-    uVar1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,param_1[4]);
-    if ((char)uVar1 != '\0') {
-      *param_1 = *param_1 | 0x10;
+    u1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,arg1[4]);
+    if ((char)u1 != '\0') {
+      *arg1 = *arg1 | 0x10;
     }
   }
   return 0;

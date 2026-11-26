@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): CMoProcessorX87::RotationFrom
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ProcessorRotation_MakeFromAngles` calls `sub_10313486`
+- `ProcessorRotation_MakeFromAngles` calls `game_10313486`

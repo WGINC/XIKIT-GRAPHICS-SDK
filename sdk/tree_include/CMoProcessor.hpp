@@ -6,15 +6,15 @@
 #pragma pack(push, 1)
 class XI_API CMoProcessor {
 public:
-    _DWORD * InitRotationMatrices();  // 0x1006CE70
-    static void __stdcall TransposeInPlace(int param_1);  // 0x1006D3E0
-    static long double __stdcall LengthSafe(float * param_1);  // 0x1006D580
-    int ScratchMatrixOp(int a2, int a3, int a4);  // 0x1006E6B0
-    static CMoProcessor * __stdcall CalcScreenBounds(float *a1, float *a2, int a3, int a4, const void *a5);  // 0x1006E970
-    static void __thiscall CalcScreenBoundsAndVisible(void * self, float * param_1, float * param_2, float param_3, float param_4, float param_5, undefined4 xi_s6, undefined4 xi_s7);  // 0x1006ED10
-    static float * __stdcall MulPointVec3(float * param_1, float * param_2, float * param_3);  // 0x1006F800
-    static undefined4 __thiscall BuildRotationXYZ(void * self, undefined4 param_1, float param_2, float param_3, float param_4);  // 0x1006FAE0
-    static undefined4 __thiscall SetRotationFromAngles(void * self, undefined4 param_1, float param_2, float param_3, float param_4);  // 0x1006FC40
+    uint32_t * InitRotationMatrices();  // 0x1006CE70
+    static void __stdcall TransposeInPlace(int arg1);  // 0x1006D3E0
+    static long double __stdcall LengthSafe(float * arg1);  // 0x1006D580
+    int ScratchMatrixOp(int arg1, int arg2, int arg3);  // 0x1006E6B0
+    static CMoProcessor * __stdcall CalcScreenBounds(float *arg1, float *arg2, int arg3, int arg4, const void *arg5);  // 0x1006E970
+    static void __thiscall CalcScreenBoundsAndVisible(void * self, float * arg2, float * arg3, float arg4, float arg5, float arg6, bits32 xi_s6, bits32 xi_s7);  // 0x1006ED10
+    static float * __stdcall MulPointVec3(float * arg1, float * arg2, float * arg3);  // 0x1006F800
+    static bits32 __thiscall BuildRotationXYZ(void * self, bits32 arg2, float arg3, float arg4, float arg5);  // 0x1006FAE0
+    static bits32 __thiscall SetRotationFromAngles(void * self, bits32 arg2, float arg3, float arg4, float arg5);  // 0x1006FC40
 
     void **vftable;  // +0x0
     float ScratchMatrices[512];  // +0x4

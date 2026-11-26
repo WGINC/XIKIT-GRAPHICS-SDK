@@ -7,47 +7,47 @@
 void * CXiOpening::Constructor(char *Source)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  _DWORD *v3;
-  int v4;
-  _DWORD *v5;
-  _DWORD *v6;
-  _DWORD *v7;
+  uint32_t *p1;
+  int i1;
+  uint32_t *p2;
+  uint32_t *p3;
+  uint32_t *p4;
   at<uint32_t>(this, 0x0) = &CXiOpening_vtbl;
   this->openingSubtitle = 0;
   this->field_124 = 0;
-  dword_10456D20 = 0;
+  g_10456D20 = 0;
   this->field_108 = 0;
   this->field_110 = 0;
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x915)) != 0 )
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x915)) != 0 )
   {
-    orig::GammaRamp_GetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), (_DWORD *)self + 69, (_DWORD *)self + 70, (_DWORD *)self + 71);
-    orig::GammaRamp_SetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), 1065353216, 1065353216, 1065353216);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), (uint32_t *)self + 69, (uint32_t *)self + 70, (uint32_t *)self + 71);
+    orig::GammaRamp_SetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), 1065353216, 1065353216, 1065353216);
   }
   orig::_strncpy((char *)self + 4, Source, 0x103u);
-  v3 = orig::Allocator_Generic(0x14u);
-  if ( v3 != nullptr )
+  p1 = orig::Allocator_Generic(0x14u);
+  if ( p1 != nullptr )
   {
-    v4 = *(_DWORD *)(g_pSceneState + 8);
-    if ( *(char *)(g_pSceneState + 24) < 0 && (v4 == 2 || v4 == 3) )
-      v4 = 1;
-    v5 = orig::OpeningSubtitle_Constructor(v3, v4);
+    i1 = *(uint32_t *)(g_pSceneState + 8);
+    if ( *(char *)(g_pSceneState + 24) < 0 && (i1 == 2 || i1 == 3) )
+      i1 = 1;
+    p2 = orig::OpeningSubtitle_Constructor(p1, i1);
   }
   else
   {
-    v5 = nullptr;
+    p2 = nullptr;
   }
-  this->openingSubtitle = v5;
-  if ( v5 != nullptr )
+  this->openingSubtitle = p2;
+  if ( p2 != nullptr )
   {
-    orig::OpeningSubtitle_Reset(v5);
-    v6 = orig::Allocator_Generic(0x3Cu);
-    if ( v6 != nullptr )
-      v7 = orig::Vt10329FE0_Constructor(v6);
+    orig::OpeningSubtitle_Reset(p2);
+    p3 = orig::Allocator_Generic(0x3Cu);
+    if ( p3 != nullptr )
+      p4 = orig::Vt10329FE0_Constructor(p3);
     else
-      v7 = nullptr;
-    this->field_124 = v7;
-    if ( v7 != nullptr )
-      orig::Vt10329FE0_Reset(v7);
+      p4 = nullptr;
+    this->field_124 = p4;
+    if ( p4 != nullptr )
+      orig::Vt10329FE0_Reset(p4);
   }
   return self;
 }
@@ -56,24 +56,24 @@ void * CXiOpening::Constructor(char *Source)
 // GATE: PASS -- 100 trials, 98 returned normally, 148 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
 CDx * CXiOpening::CXiOpening_Destructor()
 {
-  void (__thiscall ***v2)(_DWORD, int);
-  void (__thiscall ***v3)(_DWORD, int);
+  void (__thiscall ***var1)(uint32_t, int);
+  void (__thiscall ***var2)(uint32_t, int);
   CDx *result;
-  v2 = (void (__thiscall ***)(_DWORD, int))this->openingSubtitle;
+  var1 = (void (__thiscall ***)(uint32_t, int))this->openingSubtitle;
   (*(void * *)&this->vftable) = &CXiOpening_vtbl;
-  if ( v2 != nullptr )
+  if ( var1 != nullptr )
   {
-    (**v2)(v2, 1);
+    (**var1)(var1, 1);
     this->openingSubtitle = 0;
   }
-  v3 = (void (__thiscall ***)(_DWORD, int))this->field_124;
-  if ( v3 != nullptr )
+  var2 = (void (__thiscall ***)(uint32_t, int))this->field_124;
+  if ( var2 != nullptr )
   {
-    (**v3)(v3, 1);
+    (**var2)(var2, 1);
     this->field_124 = 0;
   }
   result = g_pCDx;
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x915)) != 0 )
-    return (CDx *)orig::GammaRamp_SetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), this->savedGammaR, this->savedGammaG, this->savedGammaB);
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x915)) != 0 )
+    return (CDx *)orig::GammaRamp_SetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), this->savedGammaR, this->savedGammaG, this->savedGammaB);
   return result;
 }

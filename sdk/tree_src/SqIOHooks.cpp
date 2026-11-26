@@ -4,12 +4,12 @@
 
 // FUNCTION: FFXIMAIN 0x10291290
 // GATE: PASS -- 100 trials, 21 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 21
-XI_API void __cdecl SqIOHooks_CallHook2C(int param_1)
+XI_API void __cdecl SqIOHooks_CallHook2C(int arg1)
 {
-  if (*(code **)(param_1 + 0x2c) != (code *)0x0) {
+  if (*(untyped_fn **)(arg1 + 0x2c) != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x1029129f. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(param_1 + 0x2c))();
+    (**(untyped_fn **)(arg1 + 0x2c))();
     return;
   }
   return;
@@ -17,12 +17,12 @@ XI_API void __cdecl SqIOHooks_CallHook2C(int param_1)
 
 // FUNCTION: FFXIMAIN 0x102912D0
 // GATE: PASS -- 100 trials, 28 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
-XI_API void __cdecl SqIOHooks_CallHook3C(int param_1)
+XI_API void __cdecl SqIOHooks_CallHook3C(int arg1)
 {
-  if (*(code **)(param_1 + 0x3c) != (code *)0x0) {
+  if (*(untyped_fn **)(arg1 + 0x3c) != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x102912df. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(param_1 + 0x3c))();
+    (**(untyped_fn **)(arg1 + 0x3c))();
     return;
   }
   return;
@@ -30,12 +30,12 @@ XI_API void __cdecl SqIOHooks_CallHook3C(int param_1)
 
 // FUNCTION: FFXIMAIN 0x102912F0
 // GATE: PASS -- 100 trials, 19 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 19
-XI_API void __cdecl SqIOHooks_CallHook40(int param_1)
+XI_API void __cdecl SqIOHooks_CallHook40(int arg1)
 {
-  if (*(code **)(param_1 + 0x40) != (code *)0x0) {
+  if (*(untyped_fn **)(arg1 + 0x40) != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x102912ff. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(param_1 + 0x40))();
+    (**(untyped_fn **)(arg1 + 0x40))();
     return;
   }
   return;

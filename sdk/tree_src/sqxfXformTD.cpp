@@ -4,58 +4,58 @@
 
 // FUNCTION: FFXIMAIN 0x1026DF00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqxfXformTD_Init(undefined4 * param_1)
+XI_API void __cdecl sqxfXformTD_Init(bits32 * arg1)
 {
-  orig::SqxfXformM_Init(param_1);
-  *param_1 = 0xc0003;
-  param_1[2] = &LAB_1026df80;
-  param_1[3] = XI_CODE(FUN_1026df90);
-  param_1[4] = &sqxfXformTD_Print;
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = XI_CODE(sqxfXformTD_Update_v1);
-  orig::SqVec_ZeroDwords(param_1 + 0x17);
-  orig::SqQuat_SetIdentityFwd(param_1 + 0x1a);
-  param_1[0x1e] = 0x3f800000;
+  orig::SqxfXformM_Init(arg1);
+  *arg1 = 0xc0003;
+  arg1[2] = &sqxfXformTD_Validate;
+  arg1[3] = XI_CODE(sqxfXformTD_Destroy);
+  arg1[4] = &sqxfXformTD_Print;
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = XI_CODE(sqxfXformTD_Update_v1);
+  orig::SqVec_ZeroDwords(arg1 + 0x17);
+  orig::SqQuat_SetIdentityFwd(arg1 + 0x1a);
+  arg1[0x1e] = 0x3f800000;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1026E1F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl sqxfXformTD_Update(int param_1)
+XI_API bits32 __cdecl sqxfXformTD_Update(int arg1)
 {
   char xi_frame[36] __attribute__((aligned(4)));
-  float  &local_24 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &local_20 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 8);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 20);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 32);
+  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 20);
+  uint32_t  &u4 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 32);
   
-  orig::SqQuat_ToMatrix3(&local_24,(float *)(param_1 + 0x68));
-  *(uint32_t *)(param_1 + 0x20) = local_20;
-  *(float *)(param_1 + 0x1c) = local_24;
-  *(float *)(param_1 + 0x24) = local_1c;
-  *(uint32_t *)(param_1 + 0x30) = local_14;
-  *(float *)(param_1 + 0x28) =
-       (float)((long double)local_1c * (long double)*(float *)(param_1 + 0x78) +
-              (long double)*(float *)(param_1 + 0x5c));
-  *(uint32_t *)(param_1 + 0x2c) = local_18;
-  *(float *)(param_1 + 0x34) = local_10;
-  *(uint32_t *)(param_1 + 0x40) = local_8;
-  *(uint32_t *)(param_1 + 0x3c) = local_c;
-  *(float *)(param_1 + 0x44) = local_4;
-  *(float *)(param_1 + 0x38) =
-       (float)((long double)local_10 * (long double)*(float *)(param_1 + 0x78) +
-              (long double)*(float *)(param_1 + 0x60));
-  *(uint32_t *)(param_1 + 0x54) = 0;
-  *(uint32_t *)(param_1 + 0x50) = 0;
-  *(uint32_t *)(param_1 + 0x4c) = 0;
-  *(uint32_t *)(param_1 + 0x58) = 0x3f800000;
-  *(float *)(param_1 + 0x48) =
-       (float)((long double)local_4 * (long double)*(float *)(param_1 + 0x78) +
-              (long double)*(float *)(param_1 + 100));
+  orig::SqQuat_ToMatrix3(&f1,(float *)(arg1 + 0x68));
+  *(uint32_t *)(arg1 + 0x20) = u1;
+  *(float *)(arg1 + 0x1c) = f1;
+  *(float *)(arg1 + 0x24) = f2;
+  *(uint32_t *)(arg1 + 0x30) = u3;
+  *(float *)(arg1 + 0x28) =
+       (float)(f2 * *(float *)(arg1 + 0x78) +
+              *(float *)(arg1 + 0x5c));
+  *(uint32_t *)(arg1 + 0x2c) = u2;
+  *(float *)(arg1 + 0x34) = f3;
+  *(uint32_t *)(arg1 + 0x40) = u5;
+  *(uint32_t *)(arg1 + 0x3c) = u4;
+  *(float *)(arg1 + 0x44) = f4;
+  *(float *)(arg1 + 0x38) =
+       (float)(f3 * *(float *)(arg1 + 0x78) +
+              *(float *)(arg1 + 0x60));
+  *(uint32_t *)(arg1 + 0x54) = 0;
+  *(uint32_t *)(arg1 + 0x50) = 0;
+  *(uint32_t *)(arg1 + 0x4c) = 0;
+  *(uint32_t *)(arg1 + 0x58) = 0x3f800000;
+  *(float *)(arg1 + 0x48) =
+       (float)(f4 * *(float *)(arg1 + 0x78) +
+              *(float *)(arg1 + 100));
   return 0;
 }

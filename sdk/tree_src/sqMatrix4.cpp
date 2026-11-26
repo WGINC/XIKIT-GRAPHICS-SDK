@@ -4,159 +4,159 @@
 
 // FUNCTION: FFXIMAIN 0x1027FCC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl sqMatrix4_1027FCC0(float * param_1)
+XI_API long double __cdecl sqMatrix4_1027FCC0(float * arg1)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float fVar13;
-  float fVar14;
-  float fVar15;
-  float fVar16;
-  long double fVar17;
-  long double fVar18;
-  long double fVar19;
-  long double fVar20;
+  float f1;
+  float f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
+  float f15;
+  float f16;
+  long double f17;
+  long double f18;
+  long double f19;
+  long double f20;
   char xi_frame[36] __attribute__((aligned(4)));
-  float  (&local_24)[9] = *reinterpret_cast<float  (*)[9]>(xi_frame + 0);
+  float  (&f21)[9] = *reinterpret_cast<float  (*)[9]>(xi_frame + 0);
   
-  fVar1 = param_1[1];
-  fVar2 = *param_1;
-  fVar3 = param_1[3];
-  fVar4 = param_1[2];
-  fVar5 = param_1[5];
-  fVar6 = param_1[4];
-  fVar7 = param_1[7];
-  fVar8 = param_1[6];
-  fVar9 = param_1[9];
-  fVar10 = param_1[8];
-  fVar11 = param_1[0xb];
-  fVar12 = param_1[10];
-  fVar13 = param_1[0xd];
-  fVar14 = param_1[0xc];
-  fVar15 = param_1[0xf];
-  fVar16 = param_1[0xe];
-  orig::SqMatrixSet_Set(local_24,fVar5,fVar8,fVar7,fVar9,fVar12,fVar11,fVar13,fVar16,fVar15);
-  fVar17 = orig::SqMatrix3_Determinant(local_24);
-  orig::SqMatrixSet_Set(local_24,fVar1,fVar4,fVar3,fVar9,fVar12,fVar11,fVar13,fVar16,fVar15);
-  fVar18 = orig::SqMatrix3_Determinant(local_24);
-  orig::SqMatrixSet_Set(local_24,fVar1,fVar4,fVar3,fVar5,fVar8,fVar7,fVar13,fVar16,fVar15);
-  fVar19 = orig::SqMatrix3_Determinant(local_24);
-  orig::SqMatrixSet_Set(local_24,fVar1,fVar4,fVar3,fVar5,fVar8,fVar7,fVar9,fVar12,fVar11);
-  fVar20 = orig::SqMatrix3_Determinant(local_24);
-  return (long double)(float)(fVar19 * (long double)fVar10 +
-                         (long double)(float)((long double)(float)(fVar17 * (long double)fVar2) -
-                                         fVar18 * (long double)fVar6)) - fVar20 * (long double)fVar14;
+  f1 = arg1[1];
+  f2 = *arg1;
+  f3 = arg1[3];
+  f4 = arg1[2];
+  f5 = arg1[5];
+  f6 = arg1[4];
+  f7 = arg1[7];
+  f8 = arg1[6];
+  f9 = arg1[9];
+  f10 = arg1[8];
+  f11 = arg1[0xb];
+  f12 = arg1[10];
+  f13 = arg1[0xd];
+  f14 = arg1[0xc];
+  f15 = arg1[0xf];
+  f16 = arg1[0xe];
+  orig::SqMatrixSet_Set(f21,f5,f8,f7,f9,f12,f11,f13,f16,f15);
+  f17 = orig::SqMatrix3_Determinant(f21);
+  orig::SqMatrixSet_Set(f21,f1,f4,f3,f9,f12,f11,f13,f16,f15);
+  f18 = orig::SqMatrix3_Determinant(f21);
+  orig::SqMatrixSet_Set(f21,f1,f4,f3,f5,f8,f7,f13,f16,f15);
+  f19 = orig::SqMatrix3_Determinant(f21);
+  orig::SqMatrixSet_Set(f21,f1,f4,f3,f5,f8,f7,f9,f12,f11);
+  f20 = orig::SqMatrix3_Determinant(f21);
+  return (float)(f19 * f10 +
+                         (float)((float)(f17 * f2) -
+                                         f18 * f6)) - f20 * f14;
 }
 
 // FUNCTION: FFXIMAIN 0x10280140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl sqMatrix4_10280140(float * param_1, float * param_2, float * param_3)
+XI_API bits32 __cdecl sqMatrix4_10280140(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)param_2[3] * (long double)param_3[0xc] +
-                    (long double)*param_2 * (long double)*param_3 +
-                    (long double)param_2[1] * (long double)param_3[4] +
-                    (long double)param_3[8] * (long double)param_2[2]);
-  param_1[1] = (float)((long double)param_3[0xd] * (long double)param_2[3] +
-                      (long double)*param_2 * (long double)param_3[1] +
-                      (long double)param_2[1] * (long double)param_3[5] +
-                      (long double)param_3[9] * (long double)param_2[2]);
-  param_1[2] = (float)((long double)param_3[0xe] * (long double)param_2[3] +
-                      (long double)param_3[2] * (long double)*param_2 +
-                      (long double)param_2[1] * (long double)param_3[6] +
-                      (long double)param_3[10] * (long double)param_2[2]);
-  param_1[3] = (float)((long double)param_3[3] * (long double)*param_2 +
-                      (long double)param_3[0xb] * (long double)param_2[2] +
-                      (long double)param_2[1] * (long double)param_3[7] +
-                      (long double)param_2[3] * (long double)param_3[0xf]);
-  param_1[4] = (float)((long double)param_2[4] * (long double)*param_3 +
-                      (long double)param_3[8] * (long double)param_2[6] +
-                      (long double)param_2[7] * (long double)param_3[0xc] +
-                      (long double)param_2[5] * (long double)param_3[4]);
-  param_1[5] = (float)((long double)param_3[9] * (long double)param_2[6] +
-                      (long double)param_3[0xd] * (long double)param_2[7] +
-                      (long double)param_2[4] * (long double)param_3[1] +
-                      (long double)param_3[5] * (long double)param_2[5]);
-  param_1[6] = (float)((long double)param_2[4] * (long double)param_3[2] +
-                      (long double)param_3[10] * (long double)param_2[6] +
-                      (long double)param_3[0xe] * (long double)param_2[7] +
-                      (long double)param_2[5] * (long double)param_3[6]);
-  param_1[7] = (float)((long double)param_2[5] * (long double)param_3[7] +
-                      (long double)param_2[6] * (long double)param_3[0xb] +
-                      (long double)param_2[7] * (long double)param_3[0xf] +
-                      (long double)param_2[4] * (long double)param_3[3]);
-  param_1[8] = (float)((long double)param_2[8] * (long double)*param_3 +
-                      (long double)param_3[8] * (long double)param_2[10] +
-                      (long double)param_2[0xb] * (long double)param_3[0xc] +
-                      (long double)param_2[9] * (long double)param_3[4]);
-  param_1[9] = (float)((long double)param_3[9] * (long double)param_2[10] +
-                      (long double)param_3[0xd] * (long double)param_2[0xb] +
-                      (long double)param_2[8] * (long double)param_3[1] +
-                      (long double)param_3[5] * (long double)param_2[9]);
-  param_1[10] = (float)((long double)param_2[8] * (long double)param_3[2] +
-                       (long double)param_3[10] * (long double)param_2[10] +
-                       (long double)param_3[0xe] * (long double)param_2[0xb] +
-                       (long double)param_2[9] * (long double)param_3[6]);
-  param_1[0xb] = (float)((long double)param_2[9] * (long double)param_3[7] +
-                        (long double)param_2[10] * (long double)param_3[0xb] +
-                        (long double)param_2[0xb] * (long double)param_3[0xf] +
-                        (long double)param_2[8] * (long double)param_3[3]);
-  param_1[0xc] = (float)((long double)param_2[0xc] * (long double)*param_3 +
-                        (long double)param_3[8] * (long double)param_2[0xe] +
-                        (long double)param_2[0xf] * (long double)param_3[0xc] +
-                        (long double)param_2[0xd] * (long double)param_3[4]);
-  param_1[0xd] = (float)((long double)param_3[9] * (long double)param_2[0xe] +
-                        (long double)param_3[0xd] * (long double)param_2[0xf] +
-                        (long double)param_2[0xc] * (long double)param_3[1] +
-                        (long double)param_3[5] * (long double)param_2[0xd]);
-  param_1[0xe] = (float)((long double)param_2[0xc] * (long double)param_3[2] +
-                        (long double)param_3[10] * (long double)param_2[0xe] +
-                        (long double)param_3[0xe] * (long double)param_2[0xf] +
-                        (long double)param_2[0xd] * (long double)param_3[6]);
-  param_1[0xf] = (float)((long double)param_2[0xd] * (long double)param_3[7] +
-                        (long double)param_2[0xe] * (long double)param_3[0xb] +
-                        (long double)param_2[0xf] * (long double)param_3[0xf] +
-                        (long double)param_2[0xc] * (long double)param_3[3]);
-  return param_3;
+  *arg1 = (float)(arg2[3] * arg3[0xc] +
+                    *arg2 * *arg3 +
+                    arg2[1] * arg3[4] +
+                    arg3[8] * arg2[2]);
+  arg1[1] = (float)(arg3[0xd] * arg2[3] +
+                      *arg2 * arg3[1] +
+                      arg2[1] * arg3[5] +
+                      arg3[9] * arg2[2]);
+  arg1[2] = (float)(arg3[0xe] * arg2[3] +
+                      arg3[2] * *arg2 +
+                      arg2[1] * arg3[6] +
+                      arg3[10] * arg2[2]);
+  arg1[3] = (float)(arg3[3] * *arg2 +
+                      arg3[0xb] * arg2[2] +
+                      arg2[1] * arg3[7] +
+                      arg2[3] * arg3[0xf]);
+  arg1[4] = (float)(arg2[4] * *arg3 +
+                      arg3[8] * arg2[6] +
+                      arg2[7] * arg3[0xc] +
+                      arg2[5] * arg3[4]);
+  arg1[5] = (float)(arg3[9] * arg2[6] +
+                      arg3[0xd] * arg2[7] +
+                      arg2[4] * arg3[1] +
+                      arg3[5] * arg2[5]);
+  arg1[6] = (float)(arg2[4] * arg3[2] +
+                      arg3[10] * arg2[6] +
+                      arg3[0xe] * arg2[7] +
+                      arg2[5] * arg3[6]);
+  arg1[7] = (float)(arg2[5] * arg3[7] +
+                      arg2[6] * arg3[0xb] +
+                      arg2[7] * arg3[0xf] +
+                      arg2[4] * arg3[3]);
+  arg1[8] = (float)(arg2[8] * *arg3 +
+                      arg3[8] * arg2[10] +
+                      arg2[0xb] * arg3[0xc] +
+                      arg2[9] * arg3[4]);
+  arg1[9] = (float)(arg3[9] * arg2[10] +
+                      arg3[0xd] * arg2[0xb] +
+                      arg2[8] * arg3[1] +
+                      arg3[5] * arg2[9]);
+  arg1[10] = (float)(arg2[8] * arg3[2] +
+                       arg3[10] * arg2[10] +
+                       arg3[0xe] * arg2[0xb] +
+                       arg2[9] * arg3[6]);
+  arg1[0xb] = (float)(arg2[9] * arg3[7] +
+                        arg2[10] * arg3[0xb] +
+                        arg2[0xb] * arg3[0xf] +
+                        arg2[8] * arg3[3]);
+  arg1[0xc] = (float)(arg2[0xc] * *arg3 +
+                        arg3[8] * arg2[0xe] +
+                        arg2[0xf] * arg3[0xc] +
+                        arg2[0xd] * arg3[4]);
+  arg1[0xd] = (float)(arg3[9] * arg2[0xe] +
+                        arg3[0xd] * arg2[0xf] +
+                        arg2[0xc] * arg3[1] +
+                        arg3[5] * arg2[0xd]);
+  arg1[0xe] = (float)(arg2[0xc] * arg3[2] +
+                        arg3[10] * arg2[0xe] +
+                        arg3[0xe] * arg2[0xf] +
+                        arg2[0xd] * arg3[6]);
+  arg1[0xf] = (float)(arg2[0xd] * arg3[7] +
+                        arg2[0xe] * arg3[0xb] +
+                        arg2[0xf] * arg3[0xf] +
+                        arg2[0xc] * arg3[3]);
+  return arg3;
 }
 
 // FUNCTION: FFXIMAIN 0x10280650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrix4_SetFields(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __cdecl SqMatrix4_SetFields(int arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  orig::SqMatrixConnect_SetIdentity(param_1);
-  *(uint32_t *)(param_1 + 0xc) = param_2;
-  *(uint32_t *)(param_1 + 0x1c) = param_3;
-  *(uint32_t *)(param_1 + 0x2c) = param_4;
+  orig::SqMatrixConnect_SetIdentity(arg1);
+  *(uint32_t *)(arg1 + 0xc) = arg2;
+  *(uint32_t *)(arg1 + 0x1c) = arg3;
+  *(uint32_t *)(arg1 + 0x2c) = arg4;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102806B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqMatrix4_ScaleAxes(int param_1, float param_2, float param_3, float param_4)
+XI_API bits32 __cdecl SqMatrix4_ScaleAxes(int arg1, float arg2, float arg3, float arg4)
 {
-  float *pfVar1;
-  float *pfVar2;
-  int iVar3;
+  float *p1;
+  float *p2;
+  int i1;
   
-  iVar3 = 3;
-  pfVar1 = (float *)(param_1 + 8);
+  i1 = 3;
+  p1 = (float *)(arg1 + 8);
   do {
-    pfVar2 = pfVar1 + 4;
-    iVar3 = iVar3 + -1;
-    pfVar1[-2] = (float)((long double)param_2 * (long double)pfVar1[-2]);
-    pfVar1[-1] = (float)((long double)param_3 * (long double)pfVar1[-1]);
-    *pfVar1 = (float)((long double)param_4 * (long double)*pfVar1);
-    pfVar1 = pfVar2;
-  } while (iVar3 != 0);
-  return pfVar2;
+    p2 = p1 + 4;
+    i1 = i1 + -1;
+    p1[-2] = (float)(arg2 * p1[-2]);
+    p1[-1] = (float)(arg3 * p1[-1]);
+    *p1 = (float)(arg4 * *p1);
+    p1 = p2;
+  } while (i1 != 0);
+  return p2;
 }

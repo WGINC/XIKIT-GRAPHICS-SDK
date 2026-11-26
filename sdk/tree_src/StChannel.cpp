@@ -4,89 +4,89 @@
 
 // FUNCTION: FFXIMAIN 0x10250F10
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API undefined4 __cdecl StChannelItemResolve(uint32_t * param_1)
+XI_API bits32 __cdecl StChannelItemResolve(uint32_t * arg1)
 {
-  char *pcVar1;
-  uint32_t uVar2;
-  int iVar3;
+  char *p1;
+  uint32_t u1;
+  int i1;
   
-  if ((param_1 != (uint32_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____StChannelItemResolve____call_103897f8);
+  if ((arg1 != (uint32_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____StChannelItemResolve____call_103897F8);
     return 0xffffffff;
   }
-  if (param_1[6] == 0) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____StChannelItemResolve____call_103897c0);
-    orig::ErrorReport_NoOpVarargsA_v1(g_103897A8,param_1[6]);
+  if (arg1[6] == 0) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____StChannelItemResolve____call_103897C0);
+    orig::ErrorReport_NoOpVarargsA_v1(g_103897A8,arg1[6]);
     return 0xffffffff;
   }
-  uVar2 = orig::SqTimer_GetMicroseconds_v1();
-  pcVar1 = (char *)param_1[6];
-  param_1[4] = uVar2;
+  u1 = orig::SqTimer_GetMicroseconds_v1();
+  p1 = (char *)arg1[6];
+  arg1[4] = u1;
   orig::TextInputFiles_FileMngReleaseAt1F0(g_pFileMng_as_v0);
-  uVar2 = orig::FUN_10285040(pcVar1,param_1[5]);
-  param_1[6] = uVar2;
+  u1 = orig::sqmoChannelBuildSQO(p1,arg1[5]);
+  arg1[6] = u1;
   orig::TextInputFiles_FileMngGetValueAt1F0(g_pFileMng_as_v0);
-  iVar3 = orig::SqTimer_GetMicroseconds_v1();
-  param_1[4] = iVar3 - param_1[4];
-  if (param_1[6] == 0) {
-    orig::FUN_10251020(s_____Error__sqmoChannelBuildSQO___10389778,0);
-    param_1[5] = 0;
-    uVar2 = orig::sqFree_v1((int)pcVar1,s_D__build0001_FFXi_Win_Main_dance_10389748,0xbf);
-    param_1[6] = uVar2;
+  i1 = orig::SqTimer_GetMicroseconds_v1();
+  arg1[4] = i1 - arg1[4];
+  if (arg1[6] == 0) {
+    orig::game_10251020(str_____Error__sqmoChannelBuildSQO___10389778,0);
+    arg1[5] = 0;
+    u1 = orig::sqFree_v1((int)p1,str_D__build0001_FFXi_Win_Main_dance_10389748,0xbf);
+    arg1[6] = u1;
     return 0xffffffff;
   }
-  orig::sqFree_v1((int)pcVar1,s_D__build0001_FFXi_Win_Main_dance_10389748,0xc4);
-  *param_1 = *param_1 & 0xfffffffb | 8;
-  orig::SqgxVertexShaderRelease_GetFloat20(param_1[6]);
-  if (*(int *)(param_1[6] + 0x20) == 0x40feeeef) {
-    *(uint32_t *)(param_1[6] + 0x20) = 0x40fdddec;
+  orig::sqFree_v1((int)p1,str_D__build0001_FFXi_Win_Main_dance_10389748,0xc4);
+  *arg1 = *arg1 & 0xfffffffb | 8;
+  orig::SqgxVertexShaderRelease_GetFloat20(arg1[6]);
+  if (*(int *)(arg1[6] + 0x20) == 0x40feeeef) {
+    *(uint32_t *)(arg1[6] + 0x20) = 0x40fdddec;
   }
-  orig::SqgxVertexShaderRelease_GetFloat20(param_1[6]);
+  orig::SqgxVertexShaderRelease_GetFloat20(arg1[6]);
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10251070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl StChannel_RegisterItem(uint32_t * param_1, int param_2, float param_3)
+XI_API uint32_t __cdecl StChannel_RegisterItem(uint32_t * arg1, int arg2, float arg3)
 {
-  long double fVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
-  uint32_t uVar4;
-  long double fVar5;
-  int64_t lVar6;
+  long double f1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint32_t u1;
+  long double f2;
+  int64_t i1;
   
-  puVar2 = param_1;
-  if (param_1[6] == 0) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____Error__StChannelItemRegister_10389830);
+  p1 = arg1;
+  if (arg1[6] == 0) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____Error__StChannelItemRegister_10389830);
   }
   else {
-    uVar4 = orig::Mdl_ChannelRegister(param_1[2],param_1[6]);
-    puVar2[3] = uVar4;
-    if (-1 < (int)uVar4) {
-      *puVar2 = *puVar2 | 0x10;
-      orig::Mdl_UpdateEntryFlags(uVar4,0x200,1);
-      if (param_2 < 0) {
-        orig::FUN_1026f080(puVar2[2],puVar2[3],0);
+    u1 = orig::Mdl_ChannelRegister(arg1[2],arg1[6]);
+    p1[3] = u1;
+    if (-1 < (int)u1) {
+      *p1 = *p1 | 0x10;
+      orig::Mdl_UpdateEntryFlags(u1,0x200,1);
+      if (arg2 < 0) {
+        orig::game_1026F080(p1[2],p1[3],0);
       }
       else {
-        orig::FUN_1026efb0(puVar2[3],param_2);
+        orig::game_1026EFB0(p1[3],arg2);
       }
-      orig::Mdl_GetEntryTable((int *)&param_1,(int *)0x0);
-      puVar3 = param_1;
-      uVar4 = puVar2[3];
-      param_1[uVar4 * 0x30 + 0x28] = 0x3f800000;
-      if ((!NAN((long double)param_3) && !NAN((long double)xi_castbits<float>(param_1[uVar4 * 0x30 + 0x29]))) &&
-          (long double)xi_castbits<float>(param_1[uVar4 * 0x30 + 0x29]) <= (long double)param_3) {
-        fVar5 = (long double)param_3;
-        fVar1 = (long double)xi_castbits<float>(param_1[uVar4 * 0x30 + 0x2a]);
-        if (fVar5 <= fVar1) {
-          param_1[uVar4 * 0x30 + 0x2b] = xi_castbits<uint32_t>(param_3);
-          lVar6 = XI_CALL_ST0(0x10311C2Cu)((long double)param_3 / (long double)xi_castbits<float>(param_1[uVar4 * 0x30 + 0x2c]));
-          puVar3[uVar4 * 0x30 + 0x26] = (int)lVar6 * 2;
+      orig::Mdl_GetEntryTable((int *)&arg1,(int *)0x0);
+      p2 = arg1;
+      u1 = p1[3];
+      arg1[u1 * 0x30 + 0x28] = 0x3f800000;
+      if ((!((arg3) != (arg3)) && !((bit_cast<float>(arg1[u1 * 0x30 + 0x29])) != (bit_cast<float>(arg1[u1 * 0x30 + 0x29])))) &&
+          bit_cast<float>(arg1[u1 * 0x30 + 0x29]) <= arg3) {
+        f2 = arg3;
+        f1 = bit_cast<float>(arg1[u1 * 0x30 + 0x2a]);
+        if (f2 <= f1) {
+          arg1[u1 * 0x30 + 0x2b] = bit_cast<uint32_t>(arg3);
+          i1 = XI_CALL_ST0(0x10311C2Cu)(arg3 / bit_cast<float>(arg1[u1 * 0x30 + 0x2c]));
+          p2[u1 * 0x30 + 0x26] = (int)i1 * 2;
         }
       }
-      return puVar2[3];
+      return p1[3];
     }
   }
   return 0xffffffff;
@@ -94,23 +94,23 @@ XI_API uint32_t __cdecl StChannel_RegisterItem(uint32_t * param_1, int param_2, 
 
 // FUNCTION: FFXIMAIN 0x10251160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StChannel_ClearFlags(uint32_t * param_1)
+XI_API bits32 __cdecl StChannel_ClearFlags(uint32_t * arg1)
 {
-  param_1[3] = 0xffffffff;
-  *param_1 = *param_1 & 0xffffffed;
+  arg1[3] = 0xffffffff;
+  *arg1 = *arg1 & 0xffffffed;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10251180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StChannel_MarkIfLoaded(uint32_t * param_1)
+XI_API bits32 __cdecl StChannel_MarkIfLoaded(uint32_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (((*param_1 & 1) != 0) && (-1 < (int)param_1[1])) {
-    uVar1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,param_1[1]);
-    if ((char)uVar1 != '\0') {
-      *param_1 = *param_1 | 0x20;
+  if (((*arg1 & 1) != 0) && (-1 < (int)arg1[1])) {
+    u1 = orig::TextInputFiles_FileMngFindFileNumKind2(g_pFileMng_as_v0,arg1[1]);
+    if ((char)u1 != '\0') {
+      *arg1 = *arg1 | 0x20;
     }
   }
   return 0;
@@ -118,19 +118,19 @@ XI_API undefined4 __cdecl StChannel_MarkIfLoaded(uint32_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x102511B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StChannel_SetValue9C(uint8_t * param_1, float param_2)
+XI_API bits32 __cdecl StChannel_SetValue9C(uint8_t * arg1, float arg2)
 {
-  int iVar1;
-  uint8_t *pbVar2;
+  int i1;
+  uint8_t *p1;
   char xi_frame[4] __attribute__((aligned(4)));
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
   
-  pbVar2 = param_1;
-  if ((*param_1 & 1) != 0) {
-    orig::Mdl_GetEntryTable(&local_4,(int *)&param_1);
-    iVar1 = *(int *)(pbVar2 + 0xc);
-    if ((-1 < iVar1) && (iVar1 < (int)param_1)) {
-      *(float *)(iVar1 * 0xc0 + 0x9c + local_4) = (float)(long double)param_2;
+  p1 = arg1;
+  if ((*arg1 & 1) != 0) {
+    orig::Mdl_GetEntryTable(&i2,(int *)&arg1);
+    i1 = *(int *)(p1 + 0xc);
+    if ((-1 < i1) && (i1 < (int)arg1)) {
+      *(float *)(i1 * 0xc0 + 0x9c + i2) = (float)arg2;
     }
   }
   return 0;
@@ -138,28 +138,28 @@ XI_API undefined4 __cdecl StChannel_SetValue9C(uint8_t * param_1, float param_2)
 
 // FUNCTION: FFXIMAIN 0x10251200
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StChannel_ApplyItem(uint8_t * param_1, undefined4 param_2, int param_3)
+XI_API bits32 __cdecl StChannel_ApplyItem(uint8_t * arg1, bits32 arg2, int arg3)
 {
-  uint8_t *pbVar1;
-  uint32_t uVar2;
-  uint32_t *puVar3;
+  uint8_t *p1;
+  uint32_t u1;
+  uint32_t *p2;
   
-  pbVar1 = param_1;
-  if ((param_1 != (uint8_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::Mdl_GetEntryTable((int *)&param_1,(int *)0x0);
-    puVar3 = (uint32_t *)(param_1 + *(int *)(pbVar1 + 0xc) * 0xc0);
-    if ((*puVar3 & 2) == 0) {
-      *puVar3 = *puVar3 | 2;
-      orig::Chn_ForwardIfFlag2((uint8_t *)puVar3,param_2);
-      if ((param_3 == 0) && (puVar3[0x2f] != 0)) {
-        uVar2 = orig::SqDebug_GetFlagByte14(puVar3[0x2f]);
-        if ((char)uVar2 == '\0') {
-          orig::SqDebug_SetByte14(puVar3[0x2f],1,uVar2);
-          uVar2 = orig::SqDebug_InvokeCallback18(puVar3[0x2f]);
-          orig::SqDebug_SetByte14(puVar3[0x2f],0,uVar2);
+  p1 = arg1;
+  if ((arg1 != (uint8_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::Mdl_GetEntryTable((int *)&arg1,(int *)0x0);
+    p2 = (uint32_t *)(arg1 + *(int *)(p1 + 0xc) * 0xc0);
+    if ((*p2 & 2) == 0) {
+      *p2 = *p2 | 2;
+      orig::Chn_ForwardIfFlag2((uint8_t *)p2,arg2);
+      if ((arg3 == 0) && (p2[0x2f] != 0)) {
+        u1 = orig::SqDebug_GetFlagByte14(p2[0x2f]);
+        if ((char)u1 == '\0') {
+          orig::SqDebug_SetByte14(p2[0x2f],1,u1);
+          u1 = orig::SqDebug_InvokeCallback18(p2[0x2f]);
+          orig::SqDebug_SetByte14(p2[0x2f],0,u1);
         }
       }
-      *puVar3 = *puVar3 & 0xfffffffd;
+      *p2 = *p2 & 0xfffffffd;
     }
     return 0;
   }
@@ -168,28 +168,28 @@ XI_API undefined4 __cdecl StChannel_ApplyItem(uint8_t * param_1, undefined4 para
 
 // FUNCTION: FFXIMAIN 0x102512B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StChannelItemClear(uint32_t * param_1)
+XI_API bits32 __cdecl StChannelItemClear(uint32_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = *param_1;
-  if ((uVar1 & 1) == 0) {
+  u1 = *arg1;
+  if ((u1 & 1) == 0) {
     return 0xffffffff;
   }
-  param_1[1] = 0xffffffff;
-  param_1[2] = 0xffffffff;
-  param_1[3] = 0xffffffff;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  if ((uVar1 & 8) != 0) {
-    orig::SqObject_Release((int *)(param_1 + 6));
-    *param_1 = *param_1 & 0xffffffe1;
+  arg1[1] = 0xffffffff;
+  arg1[2] = 0xffffffff;
+  arg1[3] = 0xffffffff;
+  arg1[4] = 0;
+  arg1[5] = 0;
+  if ((u1 & 8) != 0) {
+    orig::SqObject_Release((int *)(arg1 + 6));
+    *arg1 = *arg1 & 0xffffffe1;
     return 0;
   }
-  if ((uVar1 & 4) != 0) {
-    uVar1 = orig::sqFree_v1(param_1[6],s_D__build0001_FFXi_Win_Main_dance_10389748,0x16f);
-    param_1[6] = uVar1;
+  if ((u1 & 4) != 0) {
+    u1 = orig::sqFree_v1(arg1[6],str_D__build0001_FFXi_Win_Main_dance_10389748,0x16f);
+    arg1[6] = u1;
   }
-  *param_1 = *param_1 & 0xffffffe1;
+  *arg1 = *arg1 & 0xffffffe1;
   return 0;
 }

@@ -4,39 +4,39 @@
 
 // FUNCTION: FFXIMAIN 0x1006D380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorSSE::Vec3Scale(float *a1, float a2)
+float * CMoProcessorSSE::Vec3Scale(float *arg1, float arg2)
 {
-  *a1 = a2 * *a1;
-  a1[1] = a2 * a1[1];
-  a1[2] = a2 * a1[2];
-  return a1;
+  *arg1 = arg2 * *arg1;
+  arg1[1] = arg2 * arg1[1];
+  arg1[2] = arg2 * arg1[2];
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006F5B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); float result equal at its declared precision (the original returns ST0 unrounded); gates: fuzz PASS 100
-double CMoProcessorSSE::Vec3Dot(float *a1, float *a2)
+double CMoProcessorSSE::Vec3Dot(float *arg1, float *arg2)
 {
-  return a1[2] * a2[2] + a1[1] * a2[1] + *a1 * *a2;
+  return arg1[2] * arg2[2] + arg1[1] * arg2[1] + *arg1 * *arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006FA30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorSSE::Vec3Lerp(float *a1, float *a2, float *a3, float a4)
+float * CMoProcessorSSE::Vec3Lerp(float *arg1, float *arg2, float *arg3, float arg4)
 {
-  return orig::CMoProcessor_Lerp3(a1, a2, a3, a4);
+  return orig::CMoProcessor_Lerp3(arg1, arg2, arg3, arg4);
 }
 
 // FUNCTION: FFXIMAIN 0x10070020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-CMoProcessor * CMoProcessorSSE::CalcScreenBoundsAndVisible(float *a2, float *a3, int a4, int a5, int a6, float a7, float a8)
+CMoProcessor * CMoProcessorSSE::CalcScreenBoundsAndVisible(float *arg1, float *arg2, int arg3, int arg4, int arg5, float arg6, float arg7)
 {
   float * self = reinterpret_cast<float *>(this);  // byte-exact view for the rest
-  return orig::CMoProcessor_CalcScreenBoundsAndVisible(self, a2, a3, a4, a5, a6, a7, a8);
+  return orig::CMoProcessor_CalcScreenBoundsAndVisible(self, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
 // FUNCTION: FFXIMAIN 0x10070040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-CMoProcessor * CMoProcessorSSE::CalcScreenBounds(float *a1, float *a2, int a3, int a4, const void *a5)
+CMoProcessor * CMoProcessorSSE::CalcScreenBounds(float *arg1, float *arg2, int arg3, int arg4, const void *arg5)
 {
-  return orig::CMoProcessor_CalcScreenBounds(a1, a2, a3, a4, a5);
+  return orig::CMoProcessor_CalcScreenBounds(arg1, arg2, arg3, arg4, arg5);
 }

@@ -6,7 +6,7 @@
 class XI_API CMoSkeletonElem {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x10047580
-    int ScalarDeletingDtor(char a1);  // 0x10047940
+    int ScalarDeletingDtor(char arg1);  // 0x10047940
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x1D5];

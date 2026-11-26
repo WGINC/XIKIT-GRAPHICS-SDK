@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x1002F130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Gfx_SetStreamSourceCached(int param_1, undefined4 param_2, undefined4 param_3)
+XI_API void __cdecl Gfx_SetStreamSourceCached(int arg1, bits32 arg2, bits32 arg3)
 {
-  *(uint32_t *)(((char *)&g_streamSourceVB_as_v0) + param_1 * 4) = param_2;
-  *(uint32_t *)(((char *)&g_streamSourceStride_as_v0) + param_1 * 4) = param_3;
-  orig::Gfx_ApplyCachedStreamSource(param_1);
+  *(uint32_t *)(((char *)&g_streamSourceVB_as_v0) + arg1 * 4) = arg2;
+  *(uint32_t *)(((char *)&g_streamSourceStride_as_v0) + arg1 * 4) = arg3;
+  orig::Gfx_ApplyCachedStreamSource(arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002F160
 // GATE: PASS -- 100 trials, 100 returned normally, 36 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_ApplyCachedStreamSource(unsigned int a1)
+XI_API int __cdecl Gfx_ApplyCachedStreamSource(unsigned int arg1)
 {
-  IDirect3DVertexBuffer8 *v1;
-  v1 = (IDirect3DVertexBuffer8 *)g_streamSourceVB[a1];
-  if ( v1 != nullptr )
-    return (g_pCDx->pDevice)->lpVtbl->SetStreamSource((g_pCDx->pDevice), a1, v1, g_streamSourceStride[a1]);
+  IDirect3DVertexBuffer8 *p1;
+  p1 = (IDirect3DVertexBuffer8 *)g_streamSourceVB[arg1];
+  if ( p1 != nullptr )
+    return (g_pCDx->pDevice)->lpVtbl->SetStreamSource((g_pCDx->pDevice), arg1, p1, g_streamSourceStride[arg1]);
   else
     return 0;
 }
@@ -38,721 +38,721 @@ XI_API int __cdecl Gfx_ApplyCachedVertexShader(void)
 // GATE: PASS -- 100 trials, 37 returned normally, 18 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 37
 XI_API void __thiscall Model_SkinVerticesCpu(void * self_)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  uint16_t uVar4;
-  uint16_t uVar5;
-  uint32_t uVar6;
-  float *pfVar7;
-  uint32_t uVar8;
-  float *pfVar9;
-  uint32_t uVar10;
-  float *pfVar11;
-  int iVar12;
-  int iVar13;
-  float *pfVar14;
-  int iVar15;
-  uint32_t uVar16;
-  void *pvVar17;
-  int iVar18;
-  uint32_t uVar19;
-  uint32_t uVar20;
-  int iVar21;
-  float *pfVar22;
-  float *pfVar23;
-  long double fVar24;
-  long double fVar25;
-  long double fVar26;
+  long double f1;
+  long double f2;
+  long double f3;
+  uint16_t u1;
+  uint16_t u2;
+  uint32_t u3;
+  float *p1;
+  uint32_t u4;
+  float *p2;
+  uint32_t u5;
+  float *p3;
+  int i1;
+  int i2;
+  float *p4;
+  int i3;
+  uint32_t u6;
+  void *p5;
+  int i4;
+  uint32_t u7;
+  uint32_t u8;
+  int i5;
+  float *p6;
+  float *p7;
+  long double f4;
+  long double f5;
+  long double f6;
   char xi_frame[88] __attribute__((aligned(4)));
-  float * &pfVar27 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float * &pfVar28 = *reinterpret_cast<float * *>(xi_frame + 4);
-  float * &pfVar29 = *reinterpret_cast<float * *>(xi_frame + 8);
-  int  &iVar30 = *reinterpret_cast<int  *>(xi_frame + 28);
-  int  &iVar31 = *reinterpret_cast<int  *>(xi_frame + 32);
-  float * &local_18 = *reinterpret_cast<float * *>(xi_frame + 64);
-  uint8_t ** &local_14 = *reinterpret_cast<uint8_t ** *>(xi_frame + 68);
-  void * &local_10 = *reinterpret_cast<void * *>(xi_frame + 72);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 76);
-  float * &local_8 = *reinterpret_cast<float * *>(xi_frame + 80);
+  float * &p8 = *reinterpret_cast<float * *>(xi_frame + 0);
+  float * &p9 = *reinterpret_cast<float * *>(xi_frame + 4);
+  float * &p10 = *reinterpret_cast<float * *>(xi_frame + 8);
+  int  &i6 = *reinterpret_cast<int  *>(xi_frame + 28);
+  int  &i7 = *reinterpret_cast<int  *>(xi_frame + 32);
+  float * &p11 = *reinterpret_cast<float * *>(xi_frame + 64);
+  uint8_t ** &p12 = *reinterpret_cast<uint8_t ** *>(xi_frame + 68);
+  void * &p13 = *reinterpret_cast<void * *>(xi_frame + 72);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 76);
+  float * &p14 = *reinterpret_cast<float * *>(xi_frame + 80);
   
-  local_8 = (float *)(int)XI_GAME(0x1002F1D8u);
-  uVar6 = orig::FUN_1000d680();
-  if ((char)uVar6 == '\0') {
-    local_8 = (float *)(int)XI_GAME(0x1002F1E1u);
-    uVar6 = orig::FUN_1000d6b0();
-    if ((char)uVar6 == '\0') {
-      iVar15 = *(int *)((int)self_ + 0x48);
-      iVar18 = *(int *)((int)self_ + 0x5e);
-      iVar21 = iVar15 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
-      pfVar22 = *(float **)(iVar18 + 0x6e);
-      pfVar23 = pfVar22 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 6;
-      if (dword_1045B774_as_v0 == (int *)0x0) {
-        pfVar27 = *(float **)(iVar18 + 0x8e);
-        pfVar11 = *(float **)(iVar18 + 0x96);
-        pfVar9 = *(float **)(iVar18 + 0x92);
-        uVar20 = 0xffffffff;
-        uVar19 = 0xffffffff;
-        pfVar29 = *(float **)(iVar18 + 0x9a);
-        iVar30 = 0;
-        if ((short)dword_1045B618_as_v0 != 0) {
-          iVar31 = 0;
-          pfVar14 = pfVar22;
+  p14 = (float *)(int)XI_GAME(0x1002F1D8u);
+  u3 = orig::game_1000D680();
+  if ((char)u3 == '\0') {
+    p14 = (float *)(int)XI_GAME(0x1002F1E1u);
+    u3 = orig::game_1000D6B0();
+    if ((char)u3 == '\0') {
+      i3 = *(int *)((int)self_ + 0x48);
+      i4 = *(int *)((int)self_ + 0x5e);
+      i5 = i3 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
+      p6 = *(float **)(i4 + 0x6e);
+      p7 = p6 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 6;
+      if (g_1045B774_as_v0 == (int *)0x0) {
+        p8 = *(float **)(i4 + 0x8e);
+        p3 = *(float **)(i4 + 0x96);
+        p2 = *(float **)(i4 + 0x92);
+        u8 = 0xffffffff;
+        u7 = 0xffffffff;
+        p10 = *(float **)(i4 + 0x9a);
+        i6 = 0;
+        if ((short)g_1045B618_as_v0 != 0) {
+          i7 = 0;
+          p4 = p6;
           do {
-            uVar4 = *(uint16_t *)(iVar15 + iVar30 * 4);
+            u1 = *(uint16_t *)(i3 + i6 * 4);
             if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-              uVar10 = uVar4 & 0x7f;
+              u5 = u1 & 0x7f;
             }
             else {
-              uVar10 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 & 0x7f) * 2);
+              u5 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 & 0x7f) * 2);
             }
-            iVar13 = uVar10 << 4;
+            i2 = u5 << 4;
             if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
               if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                uVar20 = uVar4 >> 3 & 0x7f0;
+                u8 = u1 >> 3 & 0x7f0;
               }
               else {
-                uVar20 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 >> 7 & 0x7f) * 2) <<
+                u8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 >> 7 & 0x7f) * 2) <<
                          4;
               }
             }
-            orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + uVar10 * 0x40),pfVar27,pfVar14);
-            orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + iVar13 * 4),pfVar9,pfVar14 + 3);
-            pfVar27 = pfVar27 + 3;
-            pfVar9 = pfVar9 + 3;
+            orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + u5 * 0x40),p8,p4);
+            orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + i2 * 4),p2,p4 + 3);
+            p8 = p8 + 3;
+            p2 = p2 + 3;
             if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
-              pfVar7 = (float *)(*(int *)(iVar18 + 0x76) + iVar31);
-              orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + uVar20 * 4),pfVar11,pfVar7);
-              orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + uVar20 * 4),pfVar29,pfVar7 + 3);
-              pfVar11 = pfVar11 + 3;
-              pfVar29 = pfVar29 + 3;
+              p1 = (float *)(*(int *)(i4 + 0x76) + i7);
+              orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + u8 * 4),p3,p1);
+              orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + u8 * 4),p10,p1 + 3);
+              p3 = p3 + 3;
+              p10 = p10 + 3;
             }
-            iVar31 = iVar31 + 0x18;
-            pfVar14 = pfVar14 + 6;
-            iVar30 = iVar30 + 1;
-          } while (iVar30 < (int)(dword_1045B618_as_v0 & 0xffff));
+            i7 = i7 + 0x18;
+            p4 = p4 + 6;
+            i6 = i6 + 1;
+          } while (i6 < (int)(g_1045B618_as_v0 & 0xffff));
         }
-        iVar30 = 0;
-        if (XI_PIECE(dword_1045B618_as_v0, 2, 2) != 0) {
-          pfVar14 = pfVar23 + 5;
-          pfVar7 = pfVar9;
+        i6 = 0;
+        if (XI_PIECE(g_1045B618_as_v0, 2, 2) != 0) {
+          p4 = p7 + 5;
+          p1 = p2;
           do {
             if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-              uVar4 = *(uint16_t *)(iVar21 + iVar30 * 4);
-              uVar10 = uVar4 & 0x7f;
-              uVar16 = (uint32_t)*(uint16_t *)(iVar21 + 2 + iVar30 * 4);
-              uVar8 = uVar16 & 0x7f;
+              u1 = *(uint16_t *)(i5 + i6 * 4);
+              u5 = u1 & 0x7f;
+              u6 = (uint32_t)*(uint16_t *)(i5 + 2 + i6 * 4);
+              u4 = u6 & 0x7f;
             }
             else {
-              uVar4 = *(uint16_t *)(iVar21 + iVar30 * 4);
-              uVar10 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 & 0x7f) * 2);
-              uVar16 = (uint32_t)*(uint16_t *)(iVar21 + 2 + iVar30 * 4);
-              uVar8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar16 & 0x7f) * 2);
+              u1 = *(uint16_t *)(i5 + i6 * 4);
+              u5 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 & 0x7f) * 2);
+              u6 = (uint32_t)*(uint16_t *)(i5 + 2 + i6 * 4);
+              u4 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u6 & 0x7f) * 2);
             }
             if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
               if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                uVar20 = uVar4 >> 3 & 0x7f0;
-                uVar19 = uVar16 >> 3 & 0x7f0;
+                u8 = u1 >> 3 & 0x7f0;
+                u7 = u6 >> 3 & 0x7f0;
               }
               else {
-                uVar20 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 >> 7 & 0x7f) * 2) <<
+                u8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 >> 7 & 0x7f) * 2) <<
                          4;
-                uVar19 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar16 >> 7 & 0x7f) * 2) <<
+                u7 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u6 >> 7 & 0x7f) * 2) <<
                          4;
               }
             }
-            fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + uVar10 * 0x40);
-            fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar10 * 0x40);
-            fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar10 * 0x40);
-            fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + uVar8 * 0x40);
-            fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar8 * 0x40);
-            fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar8 * 0x40);
-            *pfVar27 = (float)(fVar24 * (long double)pfVar14[-5] +
-                               fVar25 * (long double)pfVar14[-3] +
-                               fVar26 * (long double)pfVar14[-1] +
-                               (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar10 * 0x40) *
-                               (long double)pfVar14[1] +
-                              (long double)fVar3 * (long double)*pfVar14 +
-                              (long double)fVar1 * (long double)pfVar14[-4] +
-                              (long double)fVar2 * (long double)pfVar14[-2] +
-                              (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar8 * 0x40) *
-                              (long double)pfVar14[2]);
-            *pfVar7 = (float)(fVar24 * (long double)pfVar14[3] +
-                              fVar25 * (long double)pfVar14[5] + fVar26 * (long double)pfVar14[7] +
-                             (long double)fVar1 * (long double)pfVar14[4] +
-                             (long double)fVar2 * (long double)pfVar14[6] +
-                             (long double)fVar3 * (long double)pfVar14[8]);
-            fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar10 * 0x40);
-            fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar10 * 0x40);
-            fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar10 * 0x40);
-            fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar8 * 0x40);
-            fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar8 * 0x40);
-            fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar8 * 0x40);
-            pfVar27[1] = (float)(fVar24 * (long double)pfVar14[-5] +
-                                 fVar25 * (long double)pfVar14[-3] +
-                                 fVar26 * (long double)pfVar14[-1] +
-                                 (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar10 * 0x40) *
-                                 (long double)pfVar14[1] +
-                                (long double)fVar3 * (long double)*pfVar14 +
-                                (long double)fVar1 * (long double)pfVar14[-4] +
-                                (long double)fVar2 * (long double)pfVar14[-2] +
-                                (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar8 * 0x40) *
-                                (long double)pfVar14[2]);
-            pfVar7[1] = (float)(fVar24 * (long double)pfVar14[3] +
-                                fVar25 * (long double)pfVar14[5] + fVar26 * (long double)pfVar14[7] +
-                               (long double)fVar1 * (long double)pfVar14[4] +
-                               (long double)fVar2 * (long double)pfVar14[6] +
-                               (long double)fVar3 * (long double)pfVar14[8]);
-            fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar10 * 0x40);
-            fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar10 * 0x40);
-            fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar10 * 0x40);
-            fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar8 * 0x40);
-            fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar8 * 0x40);
-            fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar8 * 0x40);
-            pfVar27[2] = (float)(fVar24 * (long double)pfVar14[-5] +
-                                 fVar25 * (long double)pfVar14[-3] +
-                                 fVar26 * (long double)pfVar14[-1] +
-                                 (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar10 * 0x40) *
-                                 (long double)pfVar14[1] +
-                                (long double)fVar3 * (long double)*pfVar14 +
-                                (long double)fVar1 * (long double)pfVar14[-4] +
-                                (long double)fVar2 * (long double)pfVar14[-2] +
-                                (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar8 * 0x40) *
-                                (long double)pfVar14[2]);
-            pfVar27 = pfVar27 + 3;
-            pfVar9 = pfVar7 + 3;
-            pfVar7[2] = (float)(fVar24 * (long double)pfVar14[3] +
-                                fVar25 * (long double)pfVar14[5] + fVar26 * (long double)pfVar14[7] +
-                               (long double)fVar1 * (long double)pfVar14[4] +
-                               (long double)fVar2 * (long double)pfVar14[6] +
-                               (long double)fVar3 * (long double)pfVar14[8]);
+            f4 = *(float *)(g_boneWeightMatrixTableCur + u5 * 0x40);
+            f5 = *(float *)(g_boneWeightMatrixTableCur + 0x10 + u5 * 0x40);
+            f6 = *(float *)(g_boneWeightMatrixTableCur + 0x20 + u5 * 0x40);
+            f1 = (float)*(float *)(g_boneWeightMatrixTableCur + u4 * 0x40);
+            f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x10 + u4 * 0x40);
+            f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x20 + u4 * 0x40);
+            *p8 = (float)(f4 * p4[-5] +
+                               f5 * p4[-3] +
+                               f6 * p4[-1] +
+                               *(float *)(g_boneWeightMatrixTableCur + 0x30 + u5 * 0x40) *
+                               p4[1] +
+                              f3 * *p4 +
+                              f1 * p4[-4] +
+                              f2 * p4[-2] +
+                              *(float *)(g_boneWeightMatrixTableCur + 0x30 + u4 * 0x40) *
+                              p4[2]);
+            *p1 = (float)(f4 * p4[3] +
+                              f5 * p4[5] + f6 * p4[7] +
+                             f1 * p4[4] +
+                             f2 * p4[6] +
+                             f3 * p4[8]);
+            f4 = *(float *)(g_boneWeightMatrixTableCur + 4 + u5 * 0x40);
+            f5 = *(float *)(g_boneWeightMatrixTableCur + 0x14 + u5 * 0x40);
+            f6 = *(float *)(g_boneWeightMatrixTableCur + 0x24 + u5 * 0x40);
+            f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 4 + u4 * 0x40);
+            f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x14 + u4 * 0x40);
+            f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x24 + u4 * 0x40);
+            p8[1] = (float)(f4 * p4[-5] +
+                                 f5 * p4[-3] +
+                                 f6 * p4[-1] +
+                                 *(float *)(g_boneWeightMatrixTableCur + 0x34 + u5 * 0x40) *
+                                 p4[1] +
+                                f3 * *p4 +
+                                f1 * p4[-4] +
+                                f2 * p4[-2] +
+                                *(float *)(g_boneWeightMatrixTableCur + 0x34 + u4 * 0x40) *
+                                p4[2]);
+            p1[1] = (float)(f4 * p4[3] +
+                                f5 * p4[5] + f6 * p4[7] +
+                               f1 * p4[4] +
+                               f2 * p4[6] +
+                               f3 * p4[8]);
+            f4 = *(float *)(g_boneWeightMatrixTableCur + 8 + u5 * 0x40);
+            f5 = *(float *)(g_boneWeightMatrixTableCur + 0x18 + u5 * 0x40);
+            f6 = *(float *)(g_boneWeightMatrixTableCur + 0x28 + u5 * 0x40);
+            f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 8 + u4 * 0x40);
+            f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x18 + u4 * 0x40);
+            f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x28 + u4 * 0x40);
+            p8[2] = (float)(f4 * p4[-5] +
+                                 f5 * p4[-3] +
+                                 f6 * p4[-1] +
+                                 *(float *)(g_boneWeightMatrixTableCur + 0x38 + u5 * 0x40) *
+                                 p4[1] +
+                                f3 * *p4 +
+                                f1 * p4[-4] +
+                                f2 * p4[-2] +
+                                *(float *)(g_boneWeightMatrixTableCur + 0x38 + u4 * 0x40) *
+                                p4[2]);
+            p8 = p8 + 3;
+            p2 = p1 + 3;
+            p1[2] = (float)(f4 * p4[3] +
+                                f5 * p4[5] + f6 * p4[7] +
+                               f1 * p4[4] +
+                               f2 * p4[6] +
+                               f3 * p4[8]);
             if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
-              pfVar7 = (float *)(*(int *)(iVar18 + 0x76) + (dword_1045B618_as_v0 & 0xffff) * 0x18 +
-                                 (-0x14 - (int)pfVar23) + (int)pfVar14);
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + uVar20 * 4);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar20 * 4);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar20 * 4);
-              fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + uVar19 * 4);
-              fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar19 * 4);
-              fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar19 * 4);
-              *pfVar11 = (float)((long double)fVar3 * (long double)pfVar7[5] +
-                                 (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar19 * 4) *
-                                 (long double)pfVar7[7] +
-                                 (long double)fVar2 * (long double)pfVar7[3] +
-                                 (long double)fVar1 * (long double)pfVar7[1] +
-                                fVar26 * (long double)pfVar7[4] +
-                                (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar20 * 4) *
-                                (long double)pfVar7[6] +
-                                fVar25 * (long double)pfVar7[2] + fVar24 * (long double)*pfVar7);
-              *pfVar29 = (float)(fVar25 * (long double)pfVar7[10] +
-                                 fVar26 * (long double)pfVar7[0xc] + fVar24 * (long double)pfVar7[8] +
-                                (long double)fVar2 * (long double)pfVar7[0xb] +
-                                (long double)fVar3 * (long double)pfVar7[0xd] +
-                                (long double)fVar1 * (long double)pfVar7[9]);
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar20 * 4);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar20 * 4);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar20 * 4);
-              fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar19 * 4);
-              fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar19 * 4);
-              fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar19 * 4);
-              pfVar11[1] = (float)((long double)fVar3 * (long double)pfVar7[5] +
-                                   (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar19 * 4) *
-                                   (long double)pfVar7[7] +
-                                   (long double)fVar2 * (long double)pfVar7[3] +
-                                   (long double)fVar1 * (long double)pfVar7[1] +
-                                  fVar26 * (long double)pfVar7[4] +
-                                  (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar20 * 4) *
-                                  (long double)pfVar7[6] +
-                                  fVar25 * (long double)pfVar7[2] + fVar24 * (long double)*pfVar7);
-              pfVar29[1] = (float)(fVar25 * (long double)pfVar7[10] +
-                                   fVar26 * (long double)pfVar7[0xc] + fVar24 * (long double)pfVar7[8] +
-                                  (long double)fVar2 * (long double)pfVar7[0xb] +
-                                  (long double)fVar3 * (long double)pfVar7[0xd] +
-                                  (long double)fVar1 * (long double)pfVar7[9]);
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar20 * 4);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar20 * 4);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar20 * 4);
-              local_14 = xi_castbits<uint8_t **>((float)(long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar19 * 4));
-              local_10 = xi_castbits<void *>((float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar19 * 4));
-              local_c = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar19 * 4);
-              pfVar11[2] = (float)((long double)local_c * (long double)pfVar7[5] +
-                                   (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar19 * 4) *
-                                   (long double)pfVar7[7] +
-                                   (long double)xi_castbits<float>(local_10) * (long double)pfVar7[3] +
-                                   (long double)xi_castbits<float>(local_14) * (long double)pfVar7[1] +
-                                  fVar26 * (long double)pfVar7[4] +
-                                  (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar20 * 4) *
-                                  (long double)pfVar7[6] +
-                                  fVar25 * (long double)pfVar7[2] + fVar24 * (long double)*pfVar7);
-              pfVar29[2] = (float)(fVar25 * (long double)pfVar7[10] +
-                                   fVar26 * (long double)pfVar7[0xc] + fVar24 * (long double)pfVar7[8] +
-                                  (long double)xi_castbits<float>(local_10) * (long double)pfVar7[0xb] +
-                                  (long double)local_c * (long double)pfVar7[0xd] +
-                                  (long double)xi_castbits<float>(local_14) * (long double)pfVar7[9]);
-              pfVar29 = pfVar29 + 3;
-              pfVar11 = pfVar11 + 3;
+              p1 = (float *)(*(int *)(i4 + 0x76) + (g_1045B618_as_v0 & 0xffff) * 0x18 +
+                                 (-0x14 - (int)p7) + (int)p4);
+              f4 = *(float *)(g_boneWeightMatrixTableCur + u8 * 4);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x10 + u8 * 4);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x20 + u8 * 4);
+              f1 = (float)*(float *)(g_boneWeightMatrixTableCur + u7 * 4);
+              f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x10 + u7 * 4);
+              f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x20 + u7 * 4);
+              *p3 = (float)(f3 * p1[5] +
+                                 *(float *)(g_boneWeightMatrixTableCur + 0x30 + u7 * 4) *
+                                 p1[7] +
+                                 f2 * p1[3] +
+                                 f1 * p1[1] +
+                                f6 * p1[4] +
+                                *(float *)(g_boneWeightMatrixTableCur + 0x30 + u8 * 4) *
+                                p1[6] +
+                                f5 * p1[2] + f4 * *p1);
+              *p10 = (float)(f5 * p1[10] +
+                                 f6 * p1[0xc] + f4 * p1[8] +
+                                f2 * p1[0xb] +
+                                f3 * p1[0xd] +
+                                f1 * p1[9]);
+              f4 = *(float *)(g_boneWeightMatrixTableCur + 4 + u8 * 4);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x14 + u8 * 4);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x24 + u8 * 4);
+              f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 4 + u7 * 4);
+              f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x14 + u7 * 4);
+              f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x24 + u7 * 4);
+              p3[1] = (float)(f3 * p1[5] +
+                                   *(float *)(g_boneWeightMatrixTableCur + 0x34 + u7 * 4) *
+                                   p1[7] +
+                                   f2 * p1[3] +
+                                   f1 * p1[1] +
+                                  f6 * p1[4] +
+                                  *(float *)(g_boneWeightMatrixTableCur + 0x34 + u8 * 4) *
+                                  p1[6] +
+                                  f5 * p1[2] + f4 * *p1);
+              p10[1] = (float)(f5 * p1[10] +
+                                   f6 * p1[0xc] + f4 * p1[8] +
+                                  f2 * p1[0xb] +
+                                  f3 * p1[0xd] +
+                                  f1 * p1[9]);
+              f4 = *(float *)(g_boneWeightMatrixTableCur + 8 + u8 * 4);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x18 + u8 * 4);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x28 + u8 * 4);
+              p12 = bit_cast<uint8_t **>((float)*(float *)(g_boneWeightMatrixTableCur + 8 + u7 * 4));
+              p13 = bit_cast<void *>((float)*(float *)(g_boneWeightMatrixTableCur + 0x18 + u7 * 4));
+              f7 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x28 + u7 * 4);
+              p3[2] = (float)(f7 * p1[5] +
+                                   *(float *)(g_boneWeightMatrixTableCur + 0x38 + u7 * 4) *
+                                   p1[7] +
+                                   bit_cast<float>(p13) * p1[3] +
+                                   bit_cast<float>(p12) * p1[1] +
+                                  f6 * p1[4] +
+                                  *(float *)(g_boneWeightMatrixTableCur + 0x38 + u8 * 4) *
+                                  p1[6] +
+                                  f5 * p1[2] + f4 * *p1);
+              p10[2] = (float)(f5 * p1[10] +
+                                   f6 * p1[0xc] + f4 * p1[8] +
+                                  bit_cast<float>(p13) * p1[0xb] +
+                                  f7 * p1[0xd] +
+                                  bit_cast<float>(p12) * p1[9]);
+              p10 = p10 + 3;
+              p3 = p3 + 3;
             }
-            iVar30 = iVar30 + 1;
-            pfVar14 = pfVar14 + 0xe;
-            pfVar7 = pfVar9;
-          } while (iVar30 < (int)(dword_1045B618_as_v0 >> 0x10));
+            i6 = i6 + 1;
+            p4 = p4 + 0xe;
+            p1 = p2;
+          } while (i6 < (int)(g_1045B618_as_v0 >> 0x10));
         }
-        iVar30 = 0;
-        pfVar14 = pfVar11;
-        if (0 < *(int *)(iVar18 + 0x60)) {
+        i6 = 0;
+        p4 = p3;
+        if (0 < *(int *)(i4 + 0x60)) {
           do {
-            uVar10 = (uint32_t)*(uint16_t *)(*(int *)(iVar18 + 0x5c) + iVar30 * 2);
-            if (uVar10 < (dword_1045B618_as_v0 & 0xffff)) {
-              uVar4 = *(uint16_t *)(iVar15 + uVar10 * 4);
+            u5 = (uint32_t)*(uint16_t *)(*(int *)(i4 + 0x5c) + i6 * 2);
+            if (u5 < (g_1045B618_as_v0 & 0xffff)) {
+              u1 = *(uint16_t *)(i3 + u5 * 4);
               if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                uVar16 = uVar4 & 0x7f;
+                u6 = u1 & 0x7f;
               }
               else {
-                uVar16 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 & 0x7f) * 2);
+                u6 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 & 0x7f) * 2);
               }
-              iVar31 = uVar16 << 4;
+              i7 = u6 << 4;
               if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
                 if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                  uVar20 = uVar4 >> 3 & 0x7f0;
+                  u8 = u1 >> 3 & 0x7f0;
                 }
                 else {
-                  uVar20 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 >> 7 & 0x7f) * 2)
+                  u8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 >> 7 & 0x7f) * 2)
                            << 4;
                 }
               }
-              iVar13 = uVar10 * 0x18;
-              orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + uVar16 * 0x40),pfVar27,pfVar22 + uVar10 * 6);
-              pfVar7 = pfVar14;
+              i2 = u5 * 0x18;
+              orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + u6 * 0x40),p8,p6 + u5 * 6);
+              p1 = p4;
               orig::Mat4_TransformNormal_v1
-                        ((void *)(g_boneWeightMatrixTableCur + iVar31 * 4),pfVar9,pfVar22 + uVar10 * 6 + 3);
-              pfVar27 = pfVar27 + 3;
-              pfVar28 = pfVar9 + 3;
-              pfVar14 = pfVar11;
+                        ((void *)(g_boneWeightMatrixTableCur + i7 * 4),p2,p6 + u5 * 6 + 3);
+              p8 = p8 + 3;
+              p9 = p2 + 3;
+              p4 = p3;
               if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
-                pfVar9 = (float *)(*(int *)(iVar18 + 0x76) + iVar13);
-                orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + uVar20 * 4),pfVar11,pfVar9);
-                orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + uVar20 * 4),pfVar29,pfVar9 + 3);
-                pfVar14 = pfVar11 + 3;
-                pfVar29 = pfVar29 + 3;
-                pfVar7 = pfVar11 + 3;
+                p2 = (float *)(*(int *)(i4 + 0x76) + i2);
+                orig::Mat4_TransformPoint((void *)(g_boneWeightMatrixTableCur + u8 * 4),p3,p2);
+                orig::Mat4_TransformNormal_v1((void *)(g_boneWeightMatrixTableCur + u8 * 4),p10,p2 + 3);
+                p4 = p3 + 3;
+                p10 = p10 + 3;
+                p1 = p3 + 3;
               }
             }
             else {
-              iVar13 = uVar10 - (dword_1045B618_as_v0 & 0xffff);
-              iVar31 = *(int *)((int)self_ + 0x3c);
+              i2 = u5 - (g_1045B618_as_v0 & 0xffff);
+              i7 = *(int *)((int)self_ + 0x3c);
               if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                uVar4 = *(uint16_t *)(iVar21 + iVar13 * 4);
-                uVar8 = (uint32_t)*(uint16_t *)(iVar21 + 2 + iVar13 * 4);
-                uVar10 = uVar4 & 0x7f;
-                uVar16 = uVar8 & 0x7f;
+                u1 = *(uint16_t *)(i5 + i2 * 4);
+                u4 = (uint32_t)*(uint16_t *)(i5 + 2 + i2 * 4);
+                u5 = u1 & 0x7f;
+                u6 = u4 & 0x7f;
               }
               else {
-                uVar4 = *(uint16_t *)(iVar21 + iVar13 * 4);
-                uVar10 = (uint32_t)*(uint16_t *)(iVar31 + (uVar4 & 0x7f) * 2);
-                uVar5 = *(uint16_t *)(iVar21 + 2 + iVar13 * 4);
-                uVar8 = (uint32_t)uVar5;
-                uVar16 = (uint32_t)*(uint16_t *)(iVar31 + (uVar5 & 0x7f) * 2);
+                u1 = *(uint16_t *)(i5 + i2 * 4);
+                u5 = (uint32_t)*(uint16_t *)(i7 + (u1 & 0x7f) * 2);
+                u2 = *(uint16_t *)(i5 + 2 + i2 * 4);
+                u4 = (uint32_t)u2;
+                u6 = (uint32_t)*(uint16_t *)(i7 + (u2 & 0x7f) * 2);
               }
               if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
                 if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-                  uVar20 = uVar4 >> 3 & 0x7f0;
-                  uVar19 = uVar8 >> 3 & 0x7f0;
+                  u8 = u1 >> 3 & 0x7f0;
+                  u7 = u4 >> 3 & 0x7f0;
                 }
                 else {
-                  uVar20 = (uint32_t)*(uint16_t *)(iVar31 + (uVar4 >> 7 & 0x7f) * 2) << 4;
-                  uVar19 = (uint32_t)*(uint16_t *)(iVar31 + (uVar8 >> 7 & 0x7f) * 2) << 4;
+                  u8 = (uint32_t)*(uint16_t *)(i7 + (u1 >> 7 & 0x7f) * 2) << 4;
+                  u7 = (uint32_t)*(uint16_t *)(i7 + (u4 >> 7 & 0x7f) * 2) << 4;
                 }
               }
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + uVar10 * 0x40);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar10 * 0x40);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar10 * 0x40);
-              fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + uVar16 * 0x40);
-              fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar16 * 0x40);
-              fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar16 * 0x40);
-              *pfVar27 = (float)(fVar25 * (long double)pfVar23[iVar13 * 0xe + 2] +
-                                 fVar26 * (long double)pfVar23[iVar13 * 0xe + 4] +
-                                 (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar10 * 0x40) *
-                                 (long double)pfVar23[iVar13 * 0xe + 6] +
-                                 fVar24 * (long double)pfVar23[iVar13 * 0xe] +
-                                (long double)fVar2 * (long double)pfVar23[iVar13 * 0xe + 3] +
-                                (long double)fVar3 * (long double)pfVar23[iVar13 * 0xe + 5] +
-                                (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar16 * 0x40) *
-                                (long double)pfVar23[iVar13 * 0xe + 7] +
-                                (long double)fVar1 * (long double)pfVar23[iVar13 * 0xe + 1]);
-              *pfVar9 = (float)((long double)fVar2 * (long double)pfVar23[iVar13 * 0xe + 0xb] +
-                                (long double)fVar3 * (long double)pfVar23[iVar13 * 0xe + 0xd] +
-                                (long double)fVar1 * (long double)pfVar23[iVar13 * 0xe + 9] +
-                               fVar24 * (long double)pfVar23[iVar13 * 0xe + 8] +
-                               fVar25 * (long double)pfVar23[iVar13 * 0xe + 10] +
-                               fVar26 * (long double)pfVar23[iVar13 * 0xe + 0xc]);
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar10 * 0x40);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar10 * 0x40);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar10 * 0x40);
-              fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar16 * 0x40);
-              fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar16 * 0x40);
-              fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar16 * 0x40);
-              pfVar27[1] = (float)(fVar25 * (long double)pfVar23[iVar13 * 0xe + 2] +
-                                   fVar26 * (long double)pfVar23[iVar13 * 0xe + 4] +
-                                   (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar10 * 0x40) *
-                                   (long double)pfVar23[iVar13 * 0xe + 6] +
-                                   fVar24 * (long double)pfVar23[iVar13 * 0xe] +
-                                  (long double)fVar2 * (long double)pfVar23[iVar13 * 0xe + 3] +
-                                  (long double)fVar3 * (long double)pfVar23[iVar13 * 0xe + 5] +
-                                  (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar16 * 0x40) *
-                                  (long double)pfVar23[iVar13 * 0xe + 7] +
-                                  (long double)fVar1 * (long double)pfVar23[iVar13 * 0xe + 1]);
-              pfVar9[1] = (float)((long double)fVar2 * (long double)pfVar23[iVar13 * 0xe + 0xb] +
-                                  (long double)fVar3 * (long double)pfVar23[iVar13 * 0xe + 0xd] +
-                                  (long double)fVar1 * (long double)pfVar23[iVar13 * 0xe + 9] +
-                                 fVar24 * (long double)pfVar23[iVar13 * 0xe + 8] +
-                                 fVar25 * (long double)pfVar23[iVar13 * 0xe + 10] +
-                                 fVar26 * (long double)pfVar23[iVar13 * 0xe + 0xc]);
-              fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar10 * 0x40);
-              fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar10 * 0x40);
-              fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar10 * 0x40);
-              local_14 = xi_castbits<uint8_t **>((float)(long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar16 * 0x40));
-              local_10 = xi_castbits<void *>((float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar16 * 0x40));
-              local_c = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar16 * 0x40);
-              pfVar28 = pfVar9 + 3;
-              pfVar27[2] = (float)(fVar25 * (long double)pfVar23[iVar13 * 0xe + 2] +
-                                   fVar26 * (long double)pfVar23[iVar13 * 0xe + 4] +
-                                   (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar10 * 0x40) *
-                                   (long double)pfVar23[iVar13 * 0xe + 6] +
-                                   fVar24 * (long double)pfVar23[iVar13 * 0xe] +
-                                  (long double)xi_castbits<float>(local_10) * (long double)pfVar23[iVar13 * 0xe + 3] +
-                                  (long double)local_c * (long double)pfVar23[iVar13 * 0xe + 5] +
-                                  (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar16 * 0x40) *
-                                  (long double)pfVar23[iVar13 * 0xe + 7] +
-                                  (long double)xi_castbits<float>(local_14) * (long double)pfVar23[iVar13 * 0xe + 1]);
-              pfVar27 = pfVar27 + 3;
-              pfVar9[2] = (float)((long double)xi_castbits<float>(local_10) * (long double)pfVar23[iVar13 * 0xe + 0xb] +
-                                  (long double)local_c * (long double)pfVar23[iVar13 * 0xe + 0xd] +
-                                  (long double)xi_castbits<float>(local_14) * (long double)pfVar23[iVar13 * 0xe + 9] +
-                                 fVar24 * (long double)pfVar23[iVar13 * 0xe + 8] +
-                                 fVar25 * (long double)pfVar23[iVar13 * 0xe + 10] +
-                                 fVar26 * (long double)pfVar23[iVar13 * 0xe + 0xc]);
-              pfVar7 = pfVar14;
+              f4 = *(float *)(g_boneWeightMatrixTableCur + u5 * 0x40);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x10 + u5 * 0x40);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x20 + u5 * 0x40);
+              f1 = (float)*(float *)(g_boneWeightMatrixTableCur + u6 * 0x40);
+              f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x10 + u6 * 0x40);
+              f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x20 + u6 * 0x40);
+              *p8 = (float)(f5 * p7[i2 * 0xe + 2] +
+                                 f6 * p7[i2 * 0xe + 4] +
+                                 *(float *)(g_boneWeightMatrixTableCur + 0x30 + u5 * 0x40) *
+                                 p7[i2 * 0xe + 6] +
+                                 f4 * p7[i2 * 0xe] +
+                                f2 * p7[i2 * 0xe + 3] +
+                                f3 * p7[i2 * 0xe + 5] +
+                                *(float *)(g_boneWeightMatrixTableCur + 0x30 + u6 * 0x40) *
+                                p7[i2 * 0xe + 7] +
+                                f1 * p7[i2 * 0xe + 1]);
+              *p2 = (float)(f2 * p7[i2 * 0xe + 0xb] +
+                                f3 * p7[i2 * 0xe + 0xd] +
+                                f1 * p7[i2 * 0xe + 9] +
+                               f4 * p7[i2 * 0xe + 8] +
+                               f5 * p7[i2 * 0xe + 10] +
+                               f6 * p7[i2 * 0xe + 0xc]);
+              f4 = *(float *)(g_boneWeightMatrixTableCur + 4 + u5 * 0x40);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x14 + u5 * 0x40);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x24 + u5 * 0x40);
+              f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 4 + u6 * 0x40);
+              f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x14 + u6 * 0x40);
+              f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x24 + u6 * 0x40);
+              p8[1] = (float)(f5 * p7[i2 * 0xe + 2] +
+                                   f6 * p7[i2 * 0xe + 4] +
+                                   *(float *)(g_boneWeightMatrixTableCur + 0x34 + u5 * 0x40) *
+                                   p7[i2 * 0xe + 6] +
+                                   f4 * p7[i2 * 0xe] +
+                                  f2 * p7[i2 * 0xe + 3] +
+                                  f3 * p7[i2 * 0xe + 5] +
+                                  *(float *)(g_boneWeightMatrixTableCur + 0x34 + u6 * 0x40) *
+                                  p7[i2 * 0xe + 7] +
+                                  f1 * p7[i2 * 0xe + 1]);
+              p2[1] = (float)(f2 * p7[i2 * 0xe + 0xb] +
+                                  f3 * p7[i2 * 0xe + 0xd] +
+                                  f1 * p7[i2 * 0xe + 9] +
+                                 f4 * p7[i2 * 0xe + 8] +
+                                 f5 * p7[i2 * 0xe + 10] +
+                                 f6 * p7[i2 * 0xe + 0xc]);
+              f4 = *(float *)(g_boneWeightMatrixTableCur + 8 + u5 * 0x40);
+              f5 = *(float *)(g_boneWeightMatrixTableCur + 0x18 + u5 * 0x40);
+              f6 = *(float *)(g_boneWeightMatrixTableCur + 0x28 + u5 * 0x40);
+              p12 = bit_cast<uint8_t **>((float)*(float *)(g_boneWeightMatrixTableCur + 8 + u6 * 0x40));
+              p13 = bit_cast<void *>((float)*(float *)(g_boneWeightMatrixTableCur + 0x18 + u6 * 0x40));
+              f7 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x28 + u6 * 0x40);
+              p9 = p2 + 3;
+              p8[2] = (float)(f5 * p7[i2 * 0xe + 2] +
+                                   f6 * p7[i2 * 0xe + 4] +
+                                   *(float *)(g_boneWeightMatrixTableCur + 0x38 + u5 * 0x40) *
+                                   p7[i2 * 0xe + 6] +
+                                   f4 * p7[i2 * 0xe] +
+                                  bit_cast<float>(p13) * p7[i2 * 0xe + 3] +
+                                  f7 * p7[i2 * 0xe + 5] +
+                                  *(float *)(g_boneWeightMatrixTableCur + 0x38 + u6 * 0x40) *
+                                  p7[i2 * 0xe + 7] +
+                                  bit_cast<float>(p12) * p7[i2 * 0xe + 1]);
+              p8 = p8 + 3;
+              p2[2] = (float)(bit_cast<float>(p13) * p7[i2 * 0xe + 0xb] +
+                                  f7 * p7[i2 * 0xe + 0xd] +
+                                  bit_cast<float>(p12) * p7[i2 * 0xe + 9] +
+                                 f4 * p7[i2 * 0xe + 8] +
+                                 f5 * p7[i2 * 0xe + 10] +
+                                 f6 * p7[i2 * 0xe + 0xc]);
+              p1 = p4;
               if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
-                pfVar11 = (float *)(*(int *)(iVar18 + 0x76) + (dword_1045B618_as_v0 & 0xffff) * 0x18 +
-                                   iVar13 * 0x38);
-                fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + uVar20 * 4);
-                fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar20 * 4);
-                fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar20 * 4);
-                fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + uVar19 * 4);
-                fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x10 + uVar19 * 4);
-                fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x20 + uVar19 * 4);
-                *pfVar14 = (float)(fVar26 * (long double)pfVar11[4] +
-                                   (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar20 * 4) *
-                                   (long double)pfVar11[6] +
-                                   fVar24 * (long double)*pfVar11 + fVar25 * (long double)pfVar11[2] +
-                                  (long double)fVar3 * (long double)pfVar11[5] +
-                                  (long double)*(float *)(g_boneWeightMatrixTableCur + 0x30 + uVar19 * 4) *
-                                  (long double)pfVar11[7] +
-                                  (long double)fVar1 * (long double)pfVar11[1] +
-                                  (long double)fVar2 * (long double)pfVar11[3]);
-                *pfVar29 = (float)((long double)fVar1 * (long double)pfVar11[9] +
-                                   (long double)fVar2 * (long double)pfVar11[0xb] +
-                                   (long double)fVar3 * (long double)pfVar11[0xd] +
-                                  fVar25 * (long double)pfVar11[10] +
-                                  fVar26 * (long double)pfVar11[0xc] + fVar24 * (long double)pfVar11[8]);
-                fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar20 * 4);
-                fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar20 * 4);
-                fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar20 * 4);
-                fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 4 + uVar19 * 4);
-                fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x14 + uVar19 * 4);
-                fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x24 + uVar19 * 4);
-                pfVar14[1] = (float)(fVar26 * (long double)pfVar11[4] +
-                                     (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar20 * 4) *
-                                     (long double)pfVar11[6] +
-                                     fVar24 * (long double)*pfVar11 + fVar25 * (long double)pfVar11[2] +
-                                    (long double)fVar3 * (long double)pfVar11[5] +
-                                    (long double)*(float *)(g_boneWeightMatrixTableCur + 0x34 + uVar19 * 4) *
-                                    (long double)pfVar11[7] +
-                                    (long double)fVar1 * (long double)pfVar11[1] +
-                                    (long double)fVar2 * (long double)pfVar11[3]);
-                pfVar29[1] = (float)((long double)fVar1 * (long double)pfVar11[9] +
-                                     (long double)fVar2 * (long double)pfVar11[0xb] +
-                                     (long double)fVar3 * (long double)pfVar11[0xd] +
-                                    fVar25 * (long double)pfVar11[10] +
-                                    fVar26 * (long double)pfVar11[0xc] + fVar24 * (long double)pfVar11[8]);
-                fVar24 = (long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar20 * 4);
-                fVar25 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar20 * 4);
-                fVar26 = (long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar20 * 4);
-                fVar1 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 8 + uVar19 * 4);
-                fVar2 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x18 + uVar19 * 4);
-                fVar3 = (float)(long double)*(float *)(g_boneWeightMatrixTableCur + 0x28 + uVar19 * 4);
-                pfVar7 = pfVar14 + 3;
-                pfVar14[2] = (float)(fVar26 * (long double)pfVar11[4] +
-                                     (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar20 * 4) *
-                                     (long double)pfVar11[6] +
-                                     fVar24 * (long double)*pfVar11 + fVar25 * (long double)pfVar11[2] +
-                                    (long double)fVar3 * (long double)pfVar11[5] +
-                                    (long double)*(float *)(g_boneWeightMatrixTableCur + 0x38 + uVar19 * 4) *
-                                    (long double)pfVar11[7] +
-                                    (long double)fVar1 * (long double)pfVar11[1] +
-                                    (long double)fVar2 * (long double)pfVar11[3]);
-                pfVar29[2] = (float)((long double)fVar1 * (long double)pfVar11[9] +
-                                     (long double)fVar2 * (long double)pfVar11[0xb] +
-                                     (long double)fVar3 * (long double)pfVar11[0xd] +
-                                    fVar25 * (long double)pfVar11[10] +
-                                    fVar26 * (long double)pfVar11[0xc] + fVar24 * (long double)pfVar11[8]);
-                pfVar14 = pfVar7;
-                pfVar29 = pfVar29 + 3;
+                p3 = (float *)(*(int *)(i4 + 0x76) + (g_1045B618_as_v0 & 0xffff) * 0x18 +
+                                   i2 * 0x38);
+                f4 = *(float *)(g_boneWeightMatrixTableCur + u8 * 4);
+                f5 = *(float *)(g_boneWeightMatrixTableCur + 0x10 + u8 * 4);
+                f6 = *(float *)(g_boneWeightMatrixTableCur + 0x20 + u8 * 4);
+                f1 = (float)*(float *)(g_boneWeightMatrixTableCur + u7 * 4);
+                f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x10 + u7 * 4);
+                f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x20 + u7 * 4);
+                *p4 = (float)(f6 * p3[4] +
+                                   *(float *)(g_boneWeightMatrixTableCur + 0x30 + u8 * 4) *
+                                   p3[6] +
+                                   f4 * *p3 + f5 * p3[2] +
+                                  f3 * p3[5] +
+                                  *(float *)(g_boneWeightMatrixTableCur + 0x30 + u7 * 4) *
+                                  p3[7] +
+                                  f1 * p3[1] +
+                                  f2 * p3[3]);
+                *p10 = (float)(f1 * p3[9] +
+                                   f2 * p3[0xb] +
+                                   f3 * p3[0xd] +
+                                  f5 * p3[10] +
+                                  f6 * p3[0xc] + f4 * p3[8]);
+                f4 = *(float *)(g_boneWeightMatrixTableCur + 4 + u8 * 4);
+                f5 = *(float *)(g_boneWeightMatrixTableCur + 0x14 + u8 * 4);
+                f6 = *(float *)(g_boneWeightMatrixTableCur + 0x24 + u8 * 4);
+                f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 4 + u7 * 4);
+                f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x14 + u7 * 4);
+                f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x24 + u7 * 4);
+                p4[1] = (float)(f6 * p3[4] +
+                                     *(float *)(g_boneWeightMatrixTableCur + 0x34 + u8 * 4) *
+                                     p3[6] +
+                                     f4 * *p3 + f5 * p3[2] +
+                                    f3 * p3[5] +
+                                    *(float *)(g_boneWeightMatrixTableCur + 0x34 + u7 * 4) *
+                                    p3[7] +
+                                    f1 * p3[1] +
+                                    f2 * p3[3]);
+                p10[1] = (float)(f1 * p3[9] +
+                                     f2 * p3[0xb] +
+                                     f3 * p3[0xd] +
+                                    f5 * p3[10] +
+                                    f6 * p3[0xc] + f4 * p3[8]);
+                f4 = *(float *)(g_boneWeightMatrixTableCur + 8 + u8 * 4);
+                f5 = *(float *)(g_boneWeightMatrixTableCur + 0x18 + u8 * 4);
+                f6 = *(float *)(g_boneWeightMatrixTableCur + 0x28 + u8 * 4);
+                f1 = (float)*(float *)(g_boneWeightMatrixTableCur + 8 + u7 * 4);
+                f2 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x18 + u7 * 4);
+                f3 = (float)*(float *)(g_boneWeightMatrixTableCur + 0x28 + u7 * 4);
+                p1 = p4 + 3;
+                p4[2] = (float)(f6 * p3[4] +
+                                     *(float *)(g_boneWeightMatrixTableCur + 0x38 + u8 * 4) *
+                                     p3[6] +
+                                     f4 * *p3 + f5 * p3[2] +
+                                    f3 * p3[5] +
+                                    *(float *)(g_boneWeightMatrixTableCur + 0x38 + u7 * 4) *
+                                    p3[7] +
+                                    f1 * p3[1] +
+                                    f2 * p3[3]);
+                p10[2] = (float)(f1 * p3[9] +
+                                     f2 * p3[0xb] +
+                                     f3 * p3[0xd] +
+                                    f5 * p3[10] +
+                                    f6 * p3[0xc] + f4 * p3[8]);
+                p4 = p1;
+                p10 = p10 + 3;
               }
             }
-            iVar30 = iVar30 + 1;
-            pfVar11 = pfVar14;
-            pfVar9 = pfVar28;
-            pfVar14 = pfVar7;
-          } while (iVar30 < *(int *)(iVar18 + 0x60));
+            i6 = i6 + 1;
+            p3 = p4;
+            p2 = p9;
+            p4 = p1;
+          } while (i6 < *(int *)(i4 + 0x60));
         }
         return;
       }
-      local_14 = &PTR_LAB_1032a7dc;
-      local_8 = (float *)(*(int *)(iVar18 + 0x60) + (dword_1045B618_as_v0 >> 0x10) +
-                         (dword_1045B618_as_v0 & 0xffff));
-      local_c = 0.0f;
-      local_10 = self_;
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*dword_1045B774_as_v0 + 0x1c))))((void *)(dword_1045B774_as_v0),&local_14);
-      orig::FUN_10030fb0(dword_1045B774_as_v0);
+      p12 = &g_1032A7DC;
+      p14 = (float *)(*(int *)(i4 + 0x60) + (g_1045B618_as_v0 >> 0x10) +
+                         (g_1045B618_as_v0 & 0xffff));
+      f7 = 0.0f;
+      p13 = self_;
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1045B774_as_v0 + 0x1c))))((void *)(g_1045B774_as_v0),&p12);
+      orig::game_10030FB0(g_1045B774_as_v0);
       return;
     }
   }
   if ((*(uint8_t *)((int)self_ + 0x34) & 1) != 0) {
-    iVar18 = 0;
-    local_10 = *(void **)((int)self_ + 0x48);
-    iVar15 = *(int *)(xi_castbits<int>(self_) + 0x5e);
-    pfVar23 = *(float **)(iVar15 + 0x8e);
-    iVar21 = (int)local_10 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
-    local_c = *(float *)(iVar15 + 0x6e);
-    local_18 = (float *)0x0;
-    local_8 = (float *)(xi_castbits<int>(local_c) + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 0x18);
-    if ((short)dword_1045B618_as_v0 != 0) {
-      iVar30 = *(int *)(iVar15 + 0x92) - (int)pfVar23;
-      iVar31 = *(int *)(iVar15 + 0x9a) - (int)pfVar23;
-      iVar13 = *(int *)(iVar15 + 0x96) - (int)pfVar23;
+    i4 = 0;
+    p13 = *(void **)((int)self_ + 0x48);
+    i3 = *(int *)(bit_cast<int>(self_) + 0x5e);
+    p7 = *(float **)(i3 + 0x8e);
+    i5 = (int)p13 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
+    f7 = *(float *)(i3 + 0x6e);
+    p11 = (float *)0x0;
+    p14 = (float *)(bit_cast<int>(f7) + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 0x18);
+    if ((short)g_1045B618_as_v0 != 0) {
+      i6 = *(int *)(i3 + 0x92) - (int)p7;
+      i7 = *(int *)(i3 + 0x9a) - (int)p7;
+      i2 = *(int *)(i3 + 0x96) - (int)p7;
       do {
-        uVar20 = (uint32_t)*(uint16_t *)((int)local_10 + (int)local_18 * 4);
-        local_14 = *(uint8_t ***)((int)self_ + 0x3c);
+        u8 = (uint32_t)*(uint16_t *)((int)p13 + (int)p11 * 4);
+        p12 = *(uint8_t ***)((int)self_ + 0x3c);
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar19 = uVar20 & 0x7f;
+          u7 = u8 & 0x7f;
         }
         else {
-          uVar19 = (uint32_t)*(uint16_t *)((int)local_14 + (uVar20 & 0x7f) * 2);
+          u7 = (uint32_t)*(uint16_t *)((int)p12 + (u8 & 0x7f) * 2);
         }
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar20 = (uVar20 & 0x3f80) >> 3;
+          u8 = (u8 & 0x3f80) >> 3;
         }
         else {
-          uVar20 = (uint32_t)*(uint16_t *)((int)local_14 + ((uVar20 & 0x3f80) >> 7) * 2) << 4;
+          u8 = (uint32_t)*(uint16_t *)((int)p12 + ((u8 & 0x3f80) >> 7) * 2) << 4;
         }
-        orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),(float *)(iVar18 + xi_castbits<int>(local_c)),
-                     pfVar23,(float *)(iVar30 + (int)pfVar23));
-        orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar20 * 4),
-                     (float *)(*(int *)(iVar15 + 0x76) + iVar18),(float *)(iVar13 + (int)pfVar23),
-                     (float *)(iVar31 + (int)pfVar23));
-        local_18 = (float *)((int)local_18 + 1);
-        pfVar23 = pfVar23 + 3;
-        iVar18 = iVar18 + 0x18;
-      } while ((int)local_18 < (int)(dword_1045B618_as_v0 & 0xffff));
+        orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u7 * 0x40),(float *)(i4 + bit_cast<int>(f7)),
+                     p7,(float *)(i6 + (int)p7));
+        orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u8 * 4),
+                     (float *)(*(int *)(i3 + 0x76) + i4),(float *)(i2 + (int)p7),
+                     (float *)(i7 + (int)p7));
+        p11 = (float *)((int)p11 + 1);
+        p7 = p7 + 3;
+        i4 = i4 + 0x18;
+      } while ((int)p11 < (int)(g_1045B618_as_v0 & 0xffff));
     }
-    iVar18 = (dword_1045B618_as_v0 & 0xffff) * 0xc;
-    pfVar23 = (float *)(*(int *)(iVar15 + 0x8e) + iVar18);
-    local_18 = (float *)0x0;
-    uVar4 = 0;
-    if (XI_PIECE(dword_1045B618_as_v0, 2, 2) != 0) {
-      iVar31 = (*(int *)(iVar15 + 0x92) + iVar18) - (int)pfVar23;
-      iVar30 = (*(int *)(iVar15 + 0x9a) + iVar18) - (int)pfVar23;
-      local_14 = (uint8_t **)0x0;
-      iVar18 = (*(int *)(iVar15 + 0x96) + iVar18) - (int)pfVar23;
+    i4 = (g_1045B618_as_v0 & 0xffff) * 0xc;
+    p7 = (float *)(*(int *)(i3 + 0x8e) + i4);
+    p11 = (float *)0x0;
+    u1 = 0;
+    if (XI_PIECE(g_1045B618_as_v0, 2, 2) != 0) {
+      i7 = (*(int *)(i3 + 0x92) + i4) - (int)p7;
+      i6 = (*(int *)(i3 + 0x9a) + i4) - (int)p7;
+      p12 = (uint8_t **)0x0;
+      i4 = (*(int *)(i3 + 0x96) + i4) - (int)p7;
       do {
-        pfVar22 = local_18;
-        iVar13 = *(int *)((int)self_ + 0x3c);
+        p6 = p11;
+        i2 = *(int *)((int)self_ + 0x3c);
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar19 = (uint32_t)*(uint16_t *)(iVar21 + (int)local_18 * 4);
-          uVar20 = uVar19 & 0x7f;
-          uVar10 = (uint32_t)*(uint16_t *)(iVar21 + 2 + (int)local_18 * 4);
-          uVar16 = uVar10 & 0x7f;
+          u7 = (uint32_t)*(uint16_t *)(i5 + (int)p11 * 4);
+          u8 = u7 & 0x7f;
+          u5 = (uint32_t)*(uint16_t *)(i5 + 2 + (int)p11 * 4);
+          u6 = u5 & 0x7f;
         }
         else {
-          uVar19 = (uint32_t)*(uint16_t *)(iVar21 + (int)local_18 * 4);
-          uVar20 = (uint32_t)*(uint16_t *)(iVar13 + (uVar19 & 0x7f) * 2);
-          uVar10 = (uint32_t)*(uint16_t *)(iVar21 + 2 + (int)local_18 * 4);
-          uVar16 = (uint32_t)*(uint16_t *)(iVar13 + (uVar10 & 0x7f) * 2);
+          u7 = (uint32_t)*(uint16_t *)(i5 + (int)p11 * 4);
+          u8 = (uint32_t)*(uint16_t *)(i2 + (u7 & 0x7f) * 2);
+          u5 = (uint32_t)*(uint16_t *)(i5 + 2 + (int)p11 * 4);
+          u6 = (uint32_t)*(uint16_t *)(i2 + (u5 & 0x7f) * 2);
         }
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar19 = uVar19 >> 3 & 0x7f0;
-          local_18 = (float *)(uVar10 >> 3 & 0x7f0);
+          u7 = u7 >> 3 & 0x7f0;
+          p11 = (float *)(u5 >> 3 & 0x7f0);
         }
         else {
-          uVar19 = (uint32_t)*(uint16_t *)(iVar13 + (uVar19 >> 7 & 0x7f) * 2) << 4;
-          local_18 = (float *)((uint32_t)*(uint16_t *)(iVar13 + (uVar10 >> 7 & 0x7f) * 2) << 4);
+          u7 = (uint32_t)*(uint16_t *)(i2 + (u7 >> 7 & 0x7f) * 2) << 4;
+          p11 = (float *)((uint32_t)*(uint16_t *)(i2 + (u5 >> 7 & 0x7f) * 2) << 4);
         }
-        orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar20 * 0x40),
-                     (float *)(g_boneWeightMatrixTableCur + uVar16 * 0x40),
-                     (float *)((int)local_14 + (int)local_8),pfVar23,
-                     (float *)((int)pfVar23 + iVar31));
-        orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar19 * 4),
-                     (float *)(g_boneWeightMatrixTableCur + (int)local_18 * 4),
-                     (float *)(*(int *)(iVar15 + 0x76) + (dword_1045B618_as_v0 & 0xffff) * 0x18 +
-                              (int)local_14),(float *)((int)pfVar23 + iVar18),
-                     (float *)((int)pfVar23 + iVar30));
-        local_18 = (float *)((int)pfVar22 + 1);
-        local_14 = local_14 + 0xe;
-        pfVar23 = pfVar23 + 3;
-        uVar4 = XI_PIECE(dword_1045B618_as_v0, 2, 2);
-      } while ((int)local_18 < (int)(uint32_t)XI_PIECE(dword_1045B618_as_v0, 2, 2));
+        orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u8 * 0x40),
+                     (float *)(g_boneWeightMatrixTableCur + u6 * 0x40),
+                     (float *)((int)p12 + (int)p14),p7,
+                     (float *)((int)p7 + i7));
+        orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u7 * 4),
+                     (float *)(g_boneWeightMatrixTableCur + (int)p11 * 4),
+                     (float *)(*(int *)(i3 + 0x76) + (g_1045B618_as_v0 & 0xffff) * 0x18 +
+                              (int)p12),(float *)((int)p7 + i4),
+                     (float *)((int)p7 + i6));
+        p11 = (float *)((int)p6 + 1);
+        p12 = p12 + 0xe;
+        p7 = p7 + 3;
+        u1 = XI_PIECE(g_1045B618_as_v0, 2, 2);
+      } while ((int)p11 < (int)(uint32_t)XI_PIECE(g_1045B618_as_v0, 2, 2));
     }
-    local_14 = (uint8_t **)0x0;
-    iVar18 = ((uint32_t)uVar4 + (dword_1045B618_as_v0 & 0xffff)) * 0xc;
-    pfVar23 = (float *)(*(int *)(iVar15 + 0x8e) + iVar18);
-    if (0 < *(int *)(iVar15 + 0x60)) {
-      iVar30 = (*(int *)(iVar15 + 0x92) + iVar18) - (int)pfVar23;
-      iVar31 = (*(int *)(iVar15 + 0x9a) + iVar18) - (int)pfVar23;
-      iVar18 = (*(int *)(iVar15 + 0x96) + iVar18) - (int)pfVar23;
+    p12 = (uint8_t **)0x0;
+    i4 = ((uint32_t)u1 + (g_1045B618_as_v0 & 0xffff)) * 0xc;
+    p7 = (float *)(*(int *)(i3 + 0x8e) + i4);
+    if (0 < *(int *)(i3 + 0x60)) {
+      i6 = (*(int *)(i3 + 0x92) + i4) - (int)p7;
+      i7 = (*(int *)(i3 + 0x9a) + i4) - (int)p7;
+      i4 = (*(int *)(i3 + 0x96) + i4) - (int)p7;
       do {
-        uVar20 = (uint32_t)*(uint16_t *)(*(int *)(iVar15 + 0x5c) + (int)local_14 * 2);
-        if (uVar20 < (dword_1045B618_as_v0 & 0xffff)) {
-          uVar4 = *(uint16_t *)((int)local_10 + uVar20 * 4);
+        u8 = (uint32_t)*(uint16_t *)(*(int *)(i3 + 0x5c) + (int)p12 * 2);
+        if (u8 < (g_1045B618_as_v0 & 0xffff)) {
+          u1 = *(uint16_t *)((int)p13 + u8 * 4);
           if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-            uVar19 = uVar4 & 0x7f;
-            uVar10 = (uVar4 & 0x3f80) >> 3;
+            u7 = u1 & 0x7f;
+            u5 = (u1 & 0x3f80) >> 3;
           }
           else {
-            uVar19 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar4 & 0x7f) * 2);
-            uVar10 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((uVar4 & 0x3f80) >> 7) * 2) <<
+            u7 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 & 0x7f) * 2);
+            u5 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((u1 & 0x3f80) >> 7) * 2) <<
                      4;
           }
-          orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),
-                       (float *)(uVar20 * 0x18 + xi_castbits<int>(local_c)),pfVar23,
-                       (float *)((int)pfVar23 + iVar30));
-          orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar10 * 4),
-                       (float *)(*(int *)(iVar15 + 0x76) + uVar20 * 0x18),
-                       (float *)((int)pfVar23 + iVar18),(float *)((int)pfVar23 + iVar31));
+          orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u7 * 0x40),
+                       (float *)(u8 * 0x18 + bit_cast<int>(f7)),p7,
+                       (float *)((int)p7 + i6));
+          orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u5 * 4),
+                       (float *)(*(int *)(i3 + 0x76) + u8 * 0x18),
+                       (float *)((int)p7 + i4),(float *)((int)p7 + i7));
         }
         else {
-          iVar13 = *(int *)((int)self_ + 0x3c);
-          iVar12 = uVar20 - (dword_1045B618_as_v0 & 0xffff);
+          i2 = *(int *)((int)self_ + 0x3c);
+          i1 = u8 - (g_1045B618_as_v0 & 0xffff);
           if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-            uVar4 = *(uint16_t *)(iVar21 + iVar12 * 4);
-            uVar19 = uVar4 & 0x7f;
-            uVar5 = *(uint16_t *)(iVar21 + 2 + iVar12 * 4);
-            uVar20 = uVar5 & 0x7f;
-            uVar10 = uVar4 >> 3 & 0x7f0;
-            local_18 = (float *)(uVar5 >> 3 & 0x7f0);
+            u1 = *(uint16_t *)(i5 + i1 * 4);
+            u7 = u1 & 0x7f;
+            u2 = *(uint16_t *)(i5 + 2 + i1 * 4);
+            u8 = u2 & 0x7f;
+            u5 = u1 >> 3 & 0x7f0;
+            p11 = (float *)(u2 >> 3 & 0x7f0);
           }
           else {
-            uVar4 = *(uint16_t *)(iVar21 + iVar12 * 4);
-            uVar19 = (uint32_t)*(uint16_t *)(iVar13 + (uVar4 & 0x7f) * 2);
-            uVar5 = *(uint16_t *)(iVar21 + 2 + iVar12 * 4);
-            uVar20 = (uint32_t)*(uint16_t *)(iVar13 + (uVar5 & 0x7f) * 2);
-            uVar10 = (uint32_t)*(uint16_t *)(iVar13 + (uVar4 >> 7 & 0x7f) * 2) << 4;
-            local_18 = (float *)((uint32_t)*(uint16_t *)(iVar13 + (uVar5 >> 7 & 0x7f) * 2) << 4);
+            u1 = *(uint16_t *)(i5 + i1 * 4);
+            u7 = (uint32_t)*(uint16_t *)(i2 + (u1 & 0x7f) * 2);
+            u2 = *(uint16_t *)(i5 + 2 + i1 * 4);
+            u8 = (uint32_t)*(uint16_t *)(i2 + (u2 & 0x7f) * 2);
+            u5 = (uint32_t)*(uint16_t *)(i2 + (u1 >> 7 & 0x7f) * 2) << 4;
+            p11 = (float *)((uint32_t)*(uint16_t *)(i2 + (u2 >> 7 & 0x7f) * 2) << 4);
           }
-          orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),
-                       (float *)(g_boneWeightMatrixTableCur + uVar20 * 0x40),
-                       (float *)(iVar12 * 0x38 + (int)local_8),pfVar23,
-                       (float *)((int)pfVar23 + iVar30));
-          orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar10 * 4),
-                       (float *)(g_boneWeightMatrixTableCur + (int)local_18 * 4),
-                       (float *)(iVar12 * 0x38 + (dword_1045B618_as_v0 & 0xffff) * 0x18 +
-                                *(int *)(iVar15 + 0x76)),(float *)((int)pfVar23 + iVar18),
-                       (float *)((int)pfVar23 + iVar31));
+          orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u7 * 0x40),
+                       (float *)(g_boneWeightMatrixTableCur + u8 * 0x40),
+                       (float *)(i1 * 0x38 + (int)p14),p7,
+                       (float *)((int)p7 + i6));
+          orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u5 * 4),
+                       (float *)(g_boneWeightMatrixTableCur + (int)p11 * 4),
+                       (float *)(i1 * 0x38 + (g_1045B618_as_v0 & 0xffff) * 0x18 +
+                                *(int *)(i3 + 0x76)),(float *)((int)p7 + i4),
+                       (float *)((int)p7 + i7));
         }
-        local_14 = (uint8_t **)((int)local_14 + 1);
-        pfVar23 = pfVar23 + 3;
-      } while ((int)local_14 < *(int *)(iVar15 + 0x60));
+        p12 = (uint8_t **)((int)p12 + 1);
+        p7 = p7 + 3;
+      } while ((int)p12 < *(int *)(i3 + 0x60));
     }
     return;
   }
-  local_c = *(float *)((int)self_ + 0x48);
-  local_14 = *(uint8_t ***)((int)self_ + 0x5e);
-  iVar21 = 0;
-  pfVar23 = *(float **)((int)local_14 + 0x6e);
-  pvVar17 = (void *)(xi_castbits<int>(local_c) + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4);
-  local_8 = pfVar23 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 6;
-  pfVar22 = *(float **)((int)local_14 + 0x8e);
-  local_10 = pvVar17;
-  if ((short)dword_1045B618_as_v0 != 0) {
-    iVar15 = *(int *)((int)local_14 + 0x92) - (int)pfVar22;
-    local_18 = pfVar23;
+  f7 = *(float *)((int)self_ + 0x48);
+  p12 = *(uint8_t ***)((int)self_ + 0x5e);
+  i5 = 0;
+  p7 = *(float **)((int)p12 + 0x6e);
+  p5 = (void *)(bit_cast<int>(f7) + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4);
+  p14 = p7 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 6;
+  p6 = *(float **)((int)p12 + 0x8e);
+  p13 = p5;
+  if ((short)g_1045B618_as_v0 != 0) {
+    i3 = *(int *)((int)p12 + 0x92) - (int)p6;
+    p11 = p7;
     do {
-      uVar20 = *(uint16_t *)(xi_castbits<int>(local_c) + iVar21 * 4) & 0x7f;
+      u8 = *(uint16_t *)(bit_cast<int>(f7) + i5 * 4) & 0x7f;
       if (*(char *)((int)self_ + 0x32) < '\0') {
-        uVar20 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + uVar20 * 2);
+        u8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + u8 * 2);
       }
-      orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar20 * 0x40),local_18,pfVar22,
-                   (float *)(iVar15 + (int)pfVar22));
-      local_18 = local_18 + 6;
-      iVar21 = iVar21 + 1;
-      pfVar22 = pfVar22 + 3;
-    } while (iVar21 < (int)(dword_1045B618_as_v0 & 0xffff));
+      orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u8 * 0x40),p11,p6,
+                   (float *)(i3 + (int)p6));
+      p11 = p11 + 6;
+      i5 = i5 + 1;
+      p6 = p6 + 3;
+    } while (i5 < (int)(g_1045B618_as_v0 & 0xffff));
   }
-  iVar21 = (dword_1045B618_as_v0 & 0xffff) * 0xc;
-  pfVar22 = (float *)(*(int *)((int)local_14 + 0x8e) + iVar21);
-  iVar15 = 0;
-  uVar4 = 0;
-  if (XI_PIECE(dword_1045B618_as_v0, 2, 2) != 0) {
-    iVar21 = (*(int *)((int)local_14 + 0x92) + iVar21) - (int)pfVar22;
-    local_18 = local_8;
+  i5 = (g_1045B618_as_v0 & 0xffff) * 0xc;
+  p6 = (float *)(*(int *)((int)p12 + 0x8e) + i5);
+  i3 = 0;
+  u1 = 0;
+  if (XI_PIECE(g_1045B618_as_v0, 2, 2) != 0) {
+    i5 = (*(int *)((int)p12 + 0x92) + i5) - (int)p6;
+    p11 = p14;
     do {
       if (*(char *)((int)self_ + 0x32) < '\0') {
-        uVar20 = (uint32_t)*(uint16_t *)
+        u8 = (uint32_t)*(uint16_t *)
                         (*(int *)((int)self_ + 0x3c) +
-                        (*(uint8_t *)((int)pvVar17 + iVar15 * 4) & 0x7f) * 2);
-        uVar19 = (uint32_t)*(uint16_t *)
+                        (*(uint8_t *)((int)p5 + i3 * 4) & 0x7f) * 2);
+        u7 = (uint32_t)*(uint16_t *)
                         (*(int *)((int)self_ + 0x3c) +
-                        (*(uint8_t *)((int)pvVar17 + 2 + iVar15 * 4) & 0x7f) * 2);
-        pvVar17 = local_10;
+                        (*(uint8_t *)((int)p5 + 2 + i3 * 4) & 0x7f) * 2);
+        p5 = p13;
       }
       else {
-        uVar20 = *(uint8_t *)((int)pvVar17 + iVar15 * 4) & 0x7f;
-        uVar19 = *(uint8_t *)((int)pvVar17 + 2 + iVar15 * 4) & 0x7f;
+        u8 = *(uint8_t *)((int)p5 + i3 * 4) & 0x7f;
+        u7 = *(uint8_t *)((int)p5 + 2 + i3 * 4) & 0x7f;
       }
-      orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar20 * 0x40),
-                   (float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),local_18,pfVar22,
-                   (float *)(iVar21 + (int)pfVar22));
-      local_18 = local_18 + 0xe;
-      iVar15 = iVar15 + 1;
-      pfVar22 = pfVar22 + 3;
-      uVar4 = XI_PIECE(dword_1045B618_as_v0, 2, 2);
-    } while (iVar15 < (int)(uint32_t)XI_PIECE(dword_1045B618_as_v0, 2, 2));
+      orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u8 * 0x40),
+                   (float *)(g_boneWeightMatrixTableCur + u7 * 0x40),p11,p6,
+                   (float *)(i5 + (int)p6));
+      p11 = p11 + 0xe;
+      i3 = i3 + 1;
+      p6 = p6 + 3;
+      u1 = XI_PIECE(g_1045B618_as_v0, 2, 2);
+    } while (i3 < (int)(uint32_t)XI_PIECE(g_1045B618_as_v0, 2, 2));
   }
-  local_10 = (void *)0x0;
-  iVar21 = ((uint32_t)uVar4 + (dword_1045B618_as_v0 & 0xffff)) * 0xc;
-  local_18 = (float *)(*(int *)((int)local_14 + 0x8e) + iVar21);
-  if (0 < (int)local_14[0x18]) {
-    iVar21 = (*(int *)((int)local_14 + 0x92) + iVar21) - (int)local_18;
+  p13 = (void *)0x0;
+  i5 = ((uint32_t)u1 + (g_1045B618_as_v0 & 0xffff)) * 0xc;
+  p11 = (float *)(*(int *)((int)p12 + 0x8e) + i5);
+  if (0 < (int)p12[0x18]) {
+    i5 = (*(int *)((int)p12 + 0x92) + i5) - (int)p11;
     do {
-      uVar20 = (uint32_t)*(uint16_t *)(local_14[0x17] + (int)local_10 * 2);
-      if (uVar20 < (dword_1045B618_as_v0 & 0xffff)) {
-        uVar19 = *(uint16_t *)(xi_castbits<int>(local_c) + uVar20 * 4) & 0x7f;
+      u8 = (uint32_t)*(uint16_t *)(p12[0x17] + (int)p13 * 2);
+      if (u8 < (g_1045B618_as_v0 & 0xffff)) {
+        u7 = *(uint16_t *)(bit_cast<int>(f7) + u8 * 4) & 0x7f;
         if (*(char *)((int)self_ + 0x32) < '\0') {
-          uVar19 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + uVar19 * 2);
+          u7 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + u7 * 2);
         }
-        orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),pfVar23 + uVar20 * 6,local_18,
-                     (float *)((int)local_18 + iVar21));
+        orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u7 * 0x40),p7 + u8 * 6,p11,
+                     (float *)((int)p11 + i5));
       }
       else {
-        iVar15 = uVar20 - (dword_1045B618_as_v0 & 0xffff);
-        uVar20 = (uint32_t)*(uint8_t *)((int)pvVar17 + iVar15 * 4);
+        i3 = u8 - (g_1045B618_as_v0 & 0xffff);
+        u8 = (uint32_t)*(uint8_t *)((int)p5 + i3 * 4);
         if (*(char *)((int)self_ + 0x32) < '\0') {
-          uVar20 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar20 & 0x7f) * 2);
-          uVar19 = (uint32_t)*(uint16_t *)
+          u8 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u8 & 0x7f) * 2);
+          u7 = (uint32_t)*(uint16_t *)
                           (*(int *)((int)self_ + 0x3c) +
-                          (*(uint8_t *)((int)pvVar17 + 2 + iVar15 * 4) & 0x7f) * 2);
+                          (*(uint8_t *)((int)p5 + 2 + i3 * 4) & 0x7f) * 2);
         }
         else {
-          uVar20 = uVar20 & 0x7f;
-          uVar19 = *(uint8_t *)((int)pvVar17 + 2 + iVar15 * 4) & 0x7f;
+          u8 = u8 & 0x7f;
+          u7 = *(uint8_t *)((int)p5 + 2 + i3 * 4) & 0x7f;
         }
-        orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar20 * 0x40),
-                     (float *)(g_boneWeightMatrixTableCur + uVar19 * 0x40),local_8 + iVar15 * 0xe,local_18,
-                     (float *)(iVar21 + (int)local_18));
+        orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u8 * 0x40),
+                     (float *)(g_boneWeightMatrixTableCur + u7 * 0x40),p14 + i3 * 0xe,p11,
+                     (float *)(i5 + (int)p11));
       }
-      local_10 = (void *)((int)local_10 + 1);
-      local_18 = local_18 + 3;
-    } while ((int)local_10 < (int)local_14[0x18]);
+      p13 = (void *)((int)p13 + 1);
+      p11 = p11 + 3;
+    } while ((int)p13 < (int)p12[0x18]);
   }
   return;
 }
@@ -761,163 +761,163 @@ XI_API void __thiscall Model_SkinVerticesCpu(void * self_)
 // GATE: PASS -- 100 trials, 24 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 24
 XI_API void __thiscall Skin_BlendWeightMatrices(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  uint16_t uVar3;
-  uint16_t uVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  uint32_t uVar11;
-  int iVar12;
-  uint32_t uVar13;
-  uint32_t uVar14;
-  uint32_t uVar15;
-  int iVar16;
-  uint32_t uVar17;
-  float *pfVar18;
-  uint32_t uStack_38;
-  uint32_t uStack_18;
-  int iStack_14;
+  int i1;
+  int i2;
+  uint16_t u1;
+  uint16_t u2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  int i8;
+  uint32_t u3;
+  int i9;
+  uint32_t u4;
+  uint32_t u5;
+  uint32_t u6;
+  int i10;
+  uint32_t u7;
+  float *p1;
+  uint32_t u8;
+  uint32_t u9;
+  int i11;
   
-  iVar16 = 0;
-  iVar5 = *(int *)((int)self_ + 0x48);
-  iVar6 = *(int *)((int)self_ + 0x5e);
-  pfVar18 = *(float **)(iVar6 + 0x8e);
-  iVar1 = iVar5 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
-  iVar7 = *(int *)(iVar6 + 0x6e);
-  uStack_18 = 0;
-  iVar2 = iVar7 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 0x18;
-  if ((short)dword_1045B618_as_v1 != 0) {
-    iVar8 = *(int *)(iVar6 + 0x92) - (int)pfVar18;
-    iVar9 = *(int *)(iVar6 + 0x9a) - (int)pfVar18;
-    iVar10 = *(int *)(iVar6 + 0x96) - (int)pfVar18;
+  i10 = 0;
+  i3 = *(int *)((int)self_ + 0x48);
+  i4 = *(int *)((int)self_ + 0x5e);
+  p1 = *(float **)(i4 + 0x8e);
+  i1 = i3 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 4;
+  i5 = *(int *)(i4 + 0x6e);
+  u9 = 0;
+  i2 = i5 + (uint32_t)**(uint16_t **)((int)self_ + 0x42) * 0x18;
+  if ((short)g_1045B618_as_v1 != 0) {
+    i6 = *(int *)(i4 + 0x92) - (int)p1;
+    i7 = *(int *)(i4 + 0x9a) - (int)p1;
+    i8 = *(int *)(i4 + 0x96) - (int)p1;
     do {
-      uVar11 = (uint32_t)*(uint16_t *)(iVar5 + uStack_18 * 4);
+      u3 = (uint32_t)*(uint16_t *)(i3 + u9 * 4);
       if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-        uVar15 = uVar11 & 0x7f;
+        u6 = u3 & 0x7f;
       }
       else {
-        uVar15 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar11 & 0x7f) * 2);
+        u6 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u3 & 0x7f) * 2);
       }
       if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-        uVar11 = (uVar11 & 0x3f80) >> 3;
+        u3 = (u3 & 0x3f80) >> 3;
       }
       else {
-        uVar11 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((uVar11 & 0x3f80) >> 7) * 2) << 4;
+        u3 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((u3 & 0x3f80) >> 7) * 2) << 4;
       }
-      orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar15 * 0x40),(float *)(iVar16 + iVar7),pfVar18,
-                   (float *)(iVar8 + (int)pfVar18));
-      orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar11 * 4),(float *)(*(int *)(iVar6 + 0x76) + iVar16)
-                   ,(float *)(iVar10 + (int)pfVar18),(float *)(iVar9 + (int)pfVar18));
-      uStack_18 = uStack_18 + 1;
-      pfVar18 = pfVar18 + 3;
-      iVar16 = iVar16 + 0x18;
-    } while ((int)uStack_18 < (int)(dword_1045B618_as_v1 & 0xffff));
+      orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u6 * 0x40),(float *)(i10 + i5),p1,
+                   (float *)(i6 + (int)p1));
+      orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u3 * 4),(float *)(*(int *)(i4 + 0x76) + i10)
+                   ,(float *)(i8 + (int)p1),(float *)(i7 + (int)p1));
+      u9 = u9 + 1;
+      p1 = p1 + 3;
+      i10 = i10 + 0x18;
+    } while ((int)u9 < (int)(g_1045B618_as_v1 & 0xffff));
   }
-  iVar16 = (dword_1045B618_as_v1 & 0xffff) * 0xc;
-  pfVar18 = (float *)(*(int *)(iVar6 + 0x8e) + iVar16);
-  uStack_18 = 0;
-  uVar3 = 0;
-  if (XI_PIECE(dword_1045B618_as_v1, 2, 2) != 0) {
-    iVar9 = (*(int *)(iVar6 + 0x92) + iVar16) - (int)pfVar18;
-    iVar8 = (*(int *)(iVar6 + 0x9a) + iVar16) - (int)pfVar18;
-    iStack_14 = 0;
-    iVar16 = (*(int *)(iVar6 + 0x96) + iVar16) - (int)pfVar18;
+  i10 = (g_1045B618_as_v1 & 0xffff) * 0xc;
+  p1 = (float *)(*(int *)(i4 + 0x8e) + i10);
+  u9 = 0;
+  u1 = 0;
+  if (XI_PIECE(g_1045B618_as_v1, 2, 2) != 0) {
+    i7 = (*(int *)(i4 + 0x92) + i10) - (int)p1;
+    i6 = (*(int *)(i4 + 0x9a) + i10) - (int)p1;
+    i11 = 0;
+    i10 = (*(int *)(i4 + 0x96) + i10) - (int)p1;
     do {
-      uVar11 = uStack_18;
-      iVar10 = *(int *)((int)self_ + 0x3c);
+      u3 = u9;
+      i8 = *(int *)((int)self_ + 0x3c);
       if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-        uVar17 = (uint32_t)*(uint16_t *)(iVar1 + uStack_18 * 4);
-        uVar15 = uVar17 & 0x7f;
-        uVar13 = (uint32_t)*(uint16_t *)(iVar1 + 2 + uStack_18 * 4);
-        uVar14 = uVar13 & 0x7f;
+        u7 = (uint32_t)*(uint16_t *)(i1 + u9 * 4);
+        u6 = u7 & 0x7f;
+        u4 = (uint32_t)*(uint16_t *)(i1 + 2 + u9 * 4);
+        u5 = u4 & 0x7f;
       }
       else {
-        uVar17 = (uint32_t)*(uint16_t *)(iVar1 + uStack_18 * 4);
-        uVar15 = (uint32_t)*(uint16_t *)(iVar10 + (uVar17 & 0x7f) * 2);
-        uVar13 = (uint32_t)*(uint16_t *)(iVar1 + 2 + uStack_18 * 4);
-        uVar14 = (uint32_t)*(uint16_t *)(iVar10 + (uVar13 & 0x7f) * 2);
+        u7 = (uint32_t)*(uint16_t *)(i1 + u9 * 4);
+        u6 = (uint32_t)*(uint16_t *)(i8 + (u7 & 0x7f) * 2);
+        u4 = (uint32_t)*(uint16_t *)(i1 + 2 + u9 * 4);
+        u5 = (uint32_t)*(uint16_t *)(i8 + (u4 & 0x7f) * 2);
       }
       if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-        uVar17 = uVar17 >> 3 & 0x7f0;
-        uStack_18 = uVar13 >> 3 & 0x7f0;
+        u7 = u7 >> 3 & 0x7f0;
+        u9 = u4 >> 3 & 0x7f0;
       }
       else {
-        uVar17 = (uint32_t)*(uint16_t *)(iVar10 + (uVar17 >> 7 & 0x7f) * 2) << 4;
-        uStack_18 = (uint32_t)*(uint16_t *)(iVar10 + (uVar13 >> 7 & 0x7f) * 2) << 4;
+        u7 = (uint32_t)*(uint16_t *)(i8 + (u7 >> 7 & 0x7f) * 2) << 4;
+        u9 = (uint32_t)*(uint16_t *)(i8 + (u4 >> 7 & 0x7f) * 2) << 4;
       }
-      orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar15 * 0x40),
-                   (float *)(g_boneWeightMatrixTableCur + uVar14 * 0x40),(float *)(iStack_14 + iVar2),pfVar18,
-                   (float *)((int)pfVar18 + iVar9));
-      orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar17 * 4),(float *)(g_boneWeightMatrixTableCur + uStack_18 * 4),
-                   (float *)(*(int *)(iVar6 + 0x76) + (dword_1045B618_as_v1 & 0xffff) * 0x18 + iStack_14),
-                   (float *)((int)pfVar18 + iVar16),(float *)((int)pfVar18 + iVar8));
-      uStack_18 = uVar11 + 1;
-      iStack_14 = iStack_14 + 0x38;
-      pfVar18 = pfVar18 + 3;
-      uVar3 = XI_PIECE(dword_1045B618_as_v1, 2, 2);
-    } while ((int)uStack_18 < (int)(uint32_t)XI_PIECE(dword_1045B618_as_v1, 2, 2));
+      orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u6 * 0x40),
+                   (float *)(g_boneWeightMatrixTableCur + u5 * 0x40),(float *)(i11 + i2),p1,
+                   (float *)((int)p1 + i7));
+      orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u7 * 4),(float *)(g_boneWeightMatrixTableCur + u9 * 4),
+                   (float *)(*(int *)(i4 + 0x76) + (g_1045B618_as_v1 & 0xffff) * 0x18 + i11),
+                   (float *)((int)p1 + i10),(float *)((int)p1 + i6));
+      u9 = u3 + 1;
+      i11 = i11 + 0x38;
+      p1 = p1 + 3;
+      u1 = XI_PIECE(g_1045B618_as_v1, 2, 2);
+    } while ((int)u9 < (int)(uint32_t)XI_PIECE(g_1045B618_as_v1, 2, 2));
   }
-  iStack_14 = 0;
-  iVar16 = ((uint32_t)uVar3 + (dword_1045B618_as_v1 & 0xffff)) * 0xc;
-  pfVar18 = (float *)(*(int *)(iVar6 + 0x8e) + iVar16);
-  if (0 < *(int *)(iVar6 + 0x60)) {
-    iVar8 = (*(int *)(iVar6 + 0x92) + iVar16) - (int)pfVar18;
-    iVar9 = (*(int *)(iVar6 + 0x9a) + iVar16) - (int)pfVar18;
-    iVar16 = (*(int *)(iVar6 + 0x96) + iVar16) - (int)pfVar18;
+  i11 = 0;
+  i10 = ((uint32_t)u1 + (g_1045B618_as_v1 & 0xffff)) * 0xc;
+  p1 = (float *)(*(int *)(i4 + 0x8e) + i10);
+  if (0 < *(int *)(i4 + 0x60)) {
+    i6 = (*(int *)(i4 + 0x92) + i10) - (int)p1;
+    i7 = (*(int *)(i4 + 0x9a) + i10) - (int)p1;
+    i10 = (*(int *)(i4 + 0x96) + i10) - (int)p1;
     do {
-      uVar11 = (uint32_t)*(uint16_t *)(*(int *)(iVar6 + 0x5c) + iStack_14 * 2);
-      if (uVar11 < (dword_1045B618_as_v1 & 0xffff)) {
-        uVar3 = *(uint16_t *)(iVar5 + uVar11 * 4);
+      u3 = (uint32_t)*(uint16_t *)(*(int *)(i4 + 0x5c) + i11 * 2);
+      if (u3 < (g_1045B618_as_v1 & 0xffff)) {
+        u1 = *(uint16_t *)(i3 + u3 * 4);
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar15 = uVar3 & 0x7f;
-          uVar17 = (uVar3 & 0x3f80) >> 3;
+          u6 = u1 & 0x7f;
+          u7 = (u1 & 0x3f80) >> 3;
         }
         else {
-          uVar15 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (uVar3 & 0x7f) * 2);
-          uVar17 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((uVar3 & 0x3f80) >> 7) * 2) << 4;
+          u6 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + (u1 & 0x7f) * 2);
+          u7 = (uint32_t)*(uint16_t *)(*(int *)((int)self_ + 0x3c) + ((u1 & 0x3f80) >> 7) * 2) << 4;
         }
-        orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar15 * 0x40),(float *)(uVar11 * 0x18 + iVar7),
-                     pfVar18,(float *)((int)pfVar18 + iVar8));
-        orig::FUN_100309b0((float *)(g_boneWeightMatrixTableCur + uVar17 * 4),
-                     (float *)(*(int *)(iVar6 + 0x76) + uVar11 * 0x18),
-                     (float *)((int)pfVar18 + iVar16),(float *)((int)pfVar18 + iVar9));
+        orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u6 * 0x40),(float *)(u3 * 0x18 + i5),
+                     p1,(float *)((int)p1 + i6));
+        orig::game_100309B0((float *)(g_boneWeightMatrixTableCur + u7 * 4),
+                     (float *)(*(int *)(i4 + 0x76) + u3 * 0x18),
+                     (float *)((int)p1 + i10),(float *)((int)p1 + i7));
       }
       else {
-        iVar10 = *(int *)((int)self_ + 0x3c);
-        iVar12 = uVar11 - (dword_1045B618_as_v1 & 0xffff);
+        i8 = *(int *)((int)self_ + 0x3c);
+        i9 = u3 - (g_1045B618_as_v1 & 0xffff);
         if ((*(uint16_t *)((int)self_ + 0x32) & 0x80) == 0) {
-          uVar3 = *(uint16_t *)(iVar1 + iVar12 * 4);
-          uVar15 = uVar3 & 0x7f;
-          uVar4 = *(uint16_t *)(iVar1 + 2 + iVar12 * 4);
-          uVar11 = uVar4 & 0x7f;
-          uStack_38 = uVar3 >> 3 & 0x7f0;
-          uStack_18 = uVar4 >> 3 & 0x7f0;
+          u1 = *(uint16_t *)(i1 + i9 * 4);
+          u6 = u1 & 0x7f;
+          u2 = *(uint16_t *)(i1 + 2 + i9 * 4);
+          u3 = u2 & 0x7f;
+          u8 = u1 >> 3 & 0x7f0;
+          u9 = u2 >> 3 & 0x7f0;
         }
         else {
-          uVar3 = *(uint16_t *)(iVar1 + iVar12 * 4);
-          uVar15 = (uint32_t)*(uint16_t *)(iVar10 + (uVar3 & 0x7f) * 2);
-          uVar4 = *(uint16_t *)(iVar1 + 2 + iVar12 * 4);
-          uVar11 = (uint32_t)*(uint16_t *)(iVar10 + (uVar4 & 0x7f) * 2);
-          uStack_38 = (uint32_t)*(uint16_t *)(iVar10 + (uVar3 >> 7 & 0x7f) * 2) << 4;
-          uStack_18 = (uint32_t)*(uint16_t *)(iVar10 + (uVar4 >> 7 & 0x7f) * 2) << 4;
+          u1 = *(uint16_t *)(i1 + i9 * 4);
+          u6 = (uint32_t)*(uint16_t *)(i8 + (u1 & 0x7f) * 2);
+          u2 = *(uint16_t *)(i1 + 2 + i9 * 4);
+          u3 = (uint32_t)*(uint16_t *)(i8 + (u2 & 0x7f) * 2);
+          u8 = (uint32_t)*(uint16_t *)(i8 + (u1 >> 7 & 0x7f) * 2) << 4;
+          u9 = (uint32_t)*(uint16_t *)(i8 + (u2 >> 7 & 0x7f) * 2) << 4;
         }
-        orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uVar15 * 0x40),
-                     (float *)(g_boneWeightMatrixTableCur + uVar11 * 0x40),(float *)(iVar12 * 0x38 + iVar2),
-                     pfVar18,(float *)((int)pfVar18 + iVar8));
-        orig::FUN_10030a40((float *)(g_boneWeightMatrixTableCur + uStack_38 * 4),
-                     (float *)(g_boneWeightMatrixTableCur + uStack_18 * 4),
-                     (float *)(iVar12 * 0x38 + (dword_1045B618_as_v1 & 0xffff) * 0x18 +
-                              *(int *)(iVar6 + 0x76)),(float *)((int)pfVar18 + iVar16),
-                     (float *)((int)pfVar18 + iVar9));
+        orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u6 * 0x40),
+                     (float *)(g_boneWeightMatrixTableCur + u3 * 0x40),(float *)(i9 * 0x38 + i2),
+                     p1,(float *)((int)p1 + i6));
+        orig::game_10030A40((float *)(g_boneWeightMatrixTableCur + u8 * 4),
+                     (float *)(g_boneWeightMatrixTableCur + u9 * 4),
+                     (float *)(i9 * 0x38 + (g_1045B618_as_v1 & 0xffff) * 0x18 +
+                              *(int *)(i4 + 0x76)),(float *)((int)p1 + i10),
+                     (float *)((int)p1 + i7));
       }
-      iStack_14 = iStack_14 + 1;
-      pfVar18 = pfVar18 + 3;
-    } while (iStack_14 < *(int *)(iVar6 + 0x60));
+      i11 = i11 + 1;
+      p1 = p1 + 3;
+    } while (i11 < *(int *)(i4 + 0x60));
   }
   return;
 }

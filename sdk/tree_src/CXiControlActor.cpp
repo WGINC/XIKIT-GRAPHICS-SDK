@@ -5,7 +5,7 @@
 
 // FUNCTION: FFXIMAIN 0x100A45D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiControlActor_GetGroundMaterial(void * self_)
+XI_API bits32 __thiscall CXiControlActor_GetGroundMaterial(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0x174);
 }
@@ -14,90 +14,90 @@ XI_API undefined4 __thiscall CXiControlActor_GetGroundMaterial(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 unsigned char __thiscall CXiControlActor::AmIControlActor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  return (void *)uVar1 == self;
+  u1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  return (void *)u1 == self;
 }
 
 // FUNCTION: FFXIMAIN 0x100A4670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsFreeRun(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsFreeRun(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return *(uint8_t *)((int)self_ + 0xf9);
 }
 
 // FUNCTION: FFXIMAIN 0x100A4690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsWalkLock(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsWalkLock(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return *(uint8_t *)((int)self_ + 0xfa);
 }
 
 // FUNCTION: FFXIMAIN 0x100A46B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsParallelMove(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API uint8_t __attribute__((stdcall, regparm(3))) CXiControlActor_IsParallelMove(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return *(uint8_t *)((int)self_ + 0xfb);
 }
 
 // FUNCTION: FFXIMAIN 0x100A46C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiControlActor_IsControlLock(void * self_)
+XI_API bits32 __thiscall CXiControlActor_IsControlLock(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0xfc);
 }
 
 // FUNCTION: FFXIMAIN 0x100A5770
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiControlActor::FillHistory(void * self, undefined4 * param_1)
+void __thiscall CXiControlActor::FillHistory(void * self, bits32 * arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  iVar2 = 4;
+  i1 = 4;
   *(uint32_t *)((int)self + 8) = 0;
   do {
-    uVar1 = *(uint32_t *)((int)self + 8) & 0x80000003;
-    if ((int)uVar1 < 0) {
-      uVar1 = (uVar1 - 1 | 0xfffffffc) + 1;
+    u1 = *(uint32_t *)((int)self + 8) & 0x80000003;
+    if ((int)u1 < 0) {
+      u1 = (u1 - 1 | 0xfffffffc) + 1;
     }
-    orig::Vec3_Copy_v1((uint32_t *)((int)self + (uVar1 + 1) * 0xc),param_1);
-    iVar2 = iVar2 + -1;
+    orig::Vec3_Copy_v1((uint32_t *)((int)self + (u1 + 1) * 0xc),arg2);
+    i1 = i1 + -1;
     *(int *)((int)self + 8) = *(int *)((int)self + 8) + 1;
-  } while (iVar2 != 0);
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100A57C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiControlActor_SetVec4(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall CXiControlActor_SetVec4(void * self_, bits32 * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  *(uint32_t *)((int)self_ + 0xd4) = *param_1;
-  *(uint32_t *)((int)self_ + 0xd8) = param_1[1];
-  *(uint32_t *)((int)self_ + 0xdc) = param_1[2];
-  uVar1 = param_1[3];
-  *(uint32_t *)((int)self_ + 0xe0) = uVar1;
-  return uVar1;
+  *(uint32_t *)((int)self_ + 0xd4) = *arg2;
+  *(uint32_t *)((int)self_ + 0xd8) = arg2[1];
+  *(uint32_t *)((int)self_ + 0xdc) = arg2[2];
+  u1 = arg2[3];
+  *(uint32_t *)((int)self_ + 0xe0) = u1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100A89E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CXiControlActor::Constructor(void * self)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint64_t uVar6;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  uint32_t *p2;
+  uint64_t u2;
   
   orig::CXiActor_ConstructBase(self);
-  *(uint8_t ***)self = &PTR_CXiAtelActor_GetRuntimeClass_variant0_1032e3c8;
+  *(uint8_t ***)self = &ptr_to_CXiAtelActor_GetRuntimeClass_variant0_1032E3C8;
   orig::ActorHandle_Constructor_v1((void *)((int)self + 0x5a0));
-  *(uint8_t ***)self = &PTR_CXiControlActor_GetRuntimeClass_variant1_1032dfc8;
+  *(uint8_t ***)self = &ptr_to_CXiControlActor_GetRuntimeClass_variant1_1032DFC8;
   *(uint32_t *)((int)self + 0xf4) = 0;
   *(uint32_t *)((int)self + 0xe0) = 0x3f800000;
   *(uint8_t *)((int)self + 0xf8) = 0;
@@ -118,8 +118,8 @@ void * __thiscall CXiControlActor::Constructor(void * self)
   *(uint32_t *)((int)self + 0x168) = 0;
   *(uint32_t *)((int)self + 0x16c) = 0x3f800000;
   if (g_pTargetMng_as_s32 != 0) {
-    orig::Actor_SetSlotTableEntry_v1(3,&LAB_100a8c20);
-    orig::Actor_SetSlotTableEntry_v1(2,&LAB_100a8c40);
+    orig::Actor_SetSlotTableEntry_v1(3,&CXiControlActor_CallTargetSlot207With0_as_v0);
+    orig::Actor_SetSlotTableEntry_v1(2,&CXiControlActor_CallTargetSlot207With1_as_v0);
     if (*(char *)(g_pTargetMng_as_s32 + 0x50) == '\x01') {
       *(uint8_t *)((int)self + 0xfa) = 1;
     }
@@ -127,7 +127,7 @@ void * __thiscall CXiControlActor::Constructor(void * self)
       *(uint8_t *)((int)self + 0xfa) = 0;
     }
   }
-  orig::FUN_100814f0((void *)((int)self + 0x5a0),0);
+  orig::game_100814F0((void *)((int)self + 0x5a0),0);
   *(uint16_t *)((int)self + 0x5ac) = 0;
   *(uint16_t *)((int)self + 0x5ae) = 0;
   *(uint8_t *)((int)self + 0x5b0) = 0;
@@ -135,46 +135,46 @@ void * __thiscall CXiControlActor::Constructor(void * self)
   *(uint32_t *)((int)self + 0x10c) = 0;
   *(uint32_t *)((int)self + 0x110) = 0;
   *(uint32_t *)((int)self + 0x114) = 0;
-  *(uint32_t *)((int)self + 0x130) = DAT_1035bc0c;
-  *(uint32_t *)((int)self + 0x134) = DAT_1035bc10;
-  *(uint32_t *)((int)self + 0x138) = DAT_1035bc14;
-  *(uint32_t *)((int)self + 0x13c) = DAT_1035bc18;
+  *(uint32_t *)((int)self + 0x130) = g_1035BC0C;
+  *(uint32_t *)((int)self + 0x134) = g_1035BC10;
+  *(uint32_t *)((int)self + 0x138) = g_1035BC14;
+  *(uint32_t *)((int)self + 0x13c) = g_1035BC18;
   *(uint32_t *)((int)self + 0x140) = 0x3e000000;
   *(uint32_t *)((int)self + 0x148) = 0;
   *(uint32_t *)((int)self + 0x144) = 0;
-  *(uint32_t *)((int)self + 0x150) = DAT_1035bc1c;
-  *(uint32_t *)((int)self + 0x154) = DAT_1035bc20;
-  *(uint32_t *)((int)self + 0x158) = DAT_1035bc24;
-  *(uint32_t *)((int)self + 0x15c) = DAT_1035bc28;
+  *(uint32_t *)((int)self + 0x150) = g_1035BC1C;
+  *(uint32_t *)((int)self + 0x154) = g_1035BC20;
+  *(uint32_t *)((int)self + 0x158) = g_1035BC24;
+  *(uint32_t *)((int)self + 0x15c) = g_1035BC28;
   *(uint32_t *)((int)self + 0x14c) = 0;
   *(uint8_t *)((int)self + 0x101) = 0;
   *(uint32_t *)((int)self + 0x118) = 0;
   *(uint32_t *)((int)self + 0x11c) = 0;
-  *(uint32_t *)((int)self + 0x120) = DAT_1035bc2c;
-  *(uint32_t *)((int)self + 0x124) = DAT_1035bc30;
-  *(uint32_t *)((int)self + 0x128) = DAT_1035bc34;
-  uVar1 = DAT_1035bc38;
+  *(uint32_t *)((int)self + 0x120) = g_1035BC2C;
+  *(uint32_t *)((int)self + 0x124) = g_1035BC30;
+  *(uint32_t *)((int)self + 0x128) = g_1035BC34;
+  u1 = g_1035BC38;
   *(uint8_t *)((int)self + 0x5b1) = 0;
-  *(uint32_t *)((int)self + 300) = uVar1;
-  iVar4 = 5;
-  puVar3 = (uint32_t *)((int)self + 0x388);
+  *(uint32_t *)((int)self + 300) = u1;
+  i2 = 5;
+  p1 = (uint32_t *)((int)self + 0x388);
   do {
-    puVar5 = puVar3 + -0x82;
-    for (iVar2 = 0x1a; iVar2 != 0; iVar2 = iVar2 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+    p2 = p1 + -0x82;
+    for (i1 = 0x1a; i1 != 0; i1 = i1 + -1) {
+      *p2 = 0;
+      p2 = p2 + 1;
     }
-    iVar4 = iVar4 + -1;
-    puVar5 = puVar3;
-    for (iVar2 = 0x1a; iVar2 != 0; iVar2 = iVar2 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+    i2 = i2 + -1;
+    p2 = p1;
+    for (i1 = 0x1a; i1 != 0; i1 = i1 + -1) {
+      *p2 = 0;
+      p2 = p2 + 1;
     }
-    puVar3 = puVar3 + 0x1a;
-  } while (iVar4 != 0);
-  uVar6 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  if ((void *)uVar6 == self) {
-    orig::CXiControlActor_FillHistory(&DAT_10487f1c,(uint32_t *)((int)self + 0xd4));
+    p1 = p1 + 0x1a;
+  } while (i2 != 0);
+  u2 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  if ((void *)u2 == self) {
+    orig::CXiControlActor_FillHistory(&g_10487F1C,(uint32_t *)((int)self + 0xd4));
   }
   return self;
 }
@@ -184,12 +184,12 @@ void * __thiscall CXiControlActor::Constructor(void * self)
 XI_API void __cdecl CXiControlActor_CallTargetSlot207With0(void)
 {
   int *self_;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  self_ = (int *)uVar1;
+  u1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  self_ = (int *)u1;
   if (self_ != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*self_ + 0x33c))))((void *)(self_),0);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*self_ + 0x33c))))((void *)(self_),0);
   }
   return;
 }
@@ -199,60 +199,60 @@ XI_API void __cdecl CXiControlActor_CallTargetSlot207With0(void)
 XI_API void __cdecl CXiControlActor_CallTargetSlot207With1(void)
 {
   int *self_;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  self_ = (int *)uVar1;
+  u1 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  self_ = (int *)u1;
   if (self_ != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*self_ + 0x33c))))((void *)(self_),1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*self_ + 0x33c))))((void *)(self_),1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100AAEF0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-long double __stdcall CXiControlActor::GetSpeed(int * param_1)
+long double __stdcall CXiControlActor::GetSpeed(int * arg1)
 {
   char xi_frame[16] __attribute__((aligned(4)));
-  float  (&local_10)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 0);
-  float  &fStack_8 = *reinterpret_cast<float  *>(xi_frame + 8);
+  float  (&f1)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 0);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 8);
   
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*param_1 + 0x1c8))))((void *)(param_1),0x2c,local_10);
-  return SQRT((long double)local_10[0] * (long double)local_10[0] + (long double)fStack_8 * (long double)fStack_8) *
-         (long double)0.800000011920928955078125f;
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*arg1 + 0x1c8))))((void *)(arg1),0x2c,f1);
+  return x87_fsqrt(f1[0] * f1[0] + f2 * f2) *
+         0.800000011920928955078125f;
 }
 
 // FUNCTION: FFXIMAIN 0x100AAF50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiControlActor::Slot137_Set388(void * self, int * param_1)
+void __thiscall CXiControlActor::Slot137_Set388(void * self, int * arg2)
 {
-  orig::FUN_100aafb0((uint32_t *)((int)self + 0x388),param_1);
+  orig::game_100AAFB0((uint32_t *)((int)self + 0x388),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100AAF70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiControlActor::Slot138_Scan3F0(void * self, undefined4 * param_1)
+void __thiscall CXiControlActor::Slot138_Scan3F0(void * self, bits32 * arg2)
 {
-  int *piVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  int *p1;
+  int i1;
+  bits32 *p2;
+  bits32 *p3;
   
-  puVar3 = (undefined4 *)((int)self + 0x3f0);
-  iVar2 = 4;
-  puVar4 = param_1;
+  p2 = (bits32 *)((int)self + 0x3f0);
+  i1 = 4;
+  p3 = arg2;
   do {
-    if (param_1 == (undefined4 *)0x0) {
-      piVar1 = (int *)0x0;
+    if (arg2 == (bits32 *)0x0) {
+      p1 = (int *)0x0;
     }
     else {
-      piVar1 = (int *)*puVar4;
+      p1 = (int *)*p3;
     }
-    orig::FUN_100aafb0(puVar3,piVar1);
-    puVar3 = puVar3 + 0x1a;
-    puVar4 = puVar4 + 1;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    orig::game_100AAFB0(p2,p1);
+    p2 = p2 + 0x1a;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }

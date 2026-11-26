@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): CopyFrom, CopyReturnZ: read f
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CopyPair_CopyFrom` calls `sub_10312050`
+- `CopyPair_CopyFrom` calls `game_10312050`
 - `CopyPair_CopyReturnZ` calls nothing directly

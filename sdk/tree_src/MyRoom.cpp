@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x101D30F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall MyRoom_GetObjectAtIndex(void * self_)
+XI_API bits32 __thiscall MyRoom_GetObjectAtIndex(void * self_)
 {
   if ((*(uint16_t *)((int)self_ + 0x7e6) != 0) &&
      ((&ActerBuffPtr_as_v0)[*(uint16_t *)((int)self_ + 0x7e6)] != 0)) {
@@ -15,63 +15,63 @@ XI_API undefined4 __thiscall MyRoom_GetObjectAtIndex(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101D3910
 // GATE: PASS -- 100 trials, 72 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 72
-XI_API undefined4 __thiscall MyRoom_SelectFurniture(void * self_, uint32_t param_1, int param_2)
+XI_API bits32 __thiscall MyRoom_SelectFurniture(void * self_, uint32_t arg2, int arg3)
 {
-  void *this_00;
+  void *obj1;
   uint32_t xi_eax;
-  int iVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  uint8_t bVar4;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  uint8_t u1;
   
-  bVar4 = param_2 == 9;
-  puVar2 = (uint32_t *)((int)self_ + 0x4c);
-  param_2 = 2;
+  u1 = arg3 == 9;
+  p1 = (uint32_t *)((int)self_ + 0x4c);
+  arg3 = 2;
   do {
-    iVar3 = 0x51;
+    i2 = 0x51;
     do {
-      if ((void *)*puVar2 != (void *)0x0) {
-        orig::PlantMenu_SetState((void *)*puVar2,0,5);
+      if ((void *)*p1 != (void *)0x0) {
+        orig::PlantMenu_SetState((void *)*p1,0,5);
       }
-      puVar2 = puVar2 + 1;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
-    param_2 = param_2 + -1;
-  } while (param_2 != 0);
-  iVar3 = (uint32_t)bVar4 * 9;
-  iVar1 = (uint32_t)bVar4 * 0x51 + (param_1 & 0xff);
-  puVar2 = (uint32_t *)((int)self_ + iVar1 * 4 + 0x4c);
-  this_00 = *(void **)((int)self_ + iVar1 * 4 + 0x4c);
-  if (this_00 != (void *)0x0) {
-    orig::PlantMenu_SetState(this_00,4,0);
-    xi_eax = orig::PlantMenu_SetWord28Recursive((void *)*puVar2,4);
-    iVar3 = orig::PlantMenu_GetWord58((void *)*puVar2,xi_eax);
-    *(short *)((int)self_ + 0x7e6) = (short)iVar3;
+      p1 = p1 + 1;
+      i2 = i2 + -1;
+    } while (i2 != 0);
+    arg3 = arg3 + -1;
+  } while (arg3 != 0);
+  i2 = (uint32_t)u1 * 9;
+  i1 = (uint32_t)u1 * 0x51 + (arg2 & 0xff);
+  p1 = (uint32_t *)((int)self_ + i1 * 4 + 0x4c);
+  obj1 = *(void **)((int)self_ + i1 * 4 + 0x4c);
+  if (obj1 != (void *)0x0) {
+    orig::PlantMenu_SetState(obj1,4,0);
+    xi_eax = orig::PlantMenu_SetWord28Recursive((void *)*p1,4);
+    i2 = orig::PlantMenu_GetWord58((void *)*p1,xi_eax);
+    *(short *)((int)self_ + 0x7e6) = (short)i2;
   }
-  return iVar3;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x101D39A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MyRoom_CallAllFurniture101CEA80(void * self_, undefined4 param_1)
+XI_API void __thiscall MyRoom_CallAllFurniture101CEA80(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  int iVar3;
+  int i1;
+  uint32_t *p1;
+  int i2;
   
-  puVar2 = (uint32_t *)((int)self_ + 0x4c);
-  iVar1 = 2;
+  p1 = (uint32_t *)((int)self_ + 0x4c);
+  i1 = 2;
   do {
-    iVar3 = 0x51;
+    i2 = 0x51;
     do {
-      if ((void *)*puVar2 != (void *)0x0) {
-        orig::PlantMenu_CallSlot12OnObjects((void *)*puVar2,param_1);
+      if ((void *)*p1 != (void *)0x0) {
+        orig::PlantMenu_CallSlot12OnObjects((void *)*p1,arg2);
       }
-      puVar2 = puVar2 + 1;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
+      p1 = p1 + 1;
+      i2 = i2 + -1;
+    } while (i2 != 0);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }
 
@@ -79,85 +79,85 @@ XI_API void __thiscall MyRoom_CallAllFurniture101CEA80(void * self_, undefined4 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MyRoom_ReleaseTable(void * self_)
 {
-  void *this_00;
-  int iVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  void *obj1;
+  int i1;
+  int i2;
+  uint32_t *p1;
   
   *(uint16_t *)((int)self_ + 0x7e6) = 0;
-  puVar3 = (uint32_t *)((int)self_ + 0x4c);
-  iVar2 = 2;
+  p1 = (uint32_t *)((int)self_ + 0x4c);
+  i2 = 2;
   do {
-    iVar1 = 0x51;
+    i1 = 0x51;
     do {
-      this_00 = (void *)*puVar3;
-      if (this_00 != (void *)0x0) {
-        orig::YkFurniture_Destructor(this_00);
-        orig::thunk_sub_10028AA0_v1((int)this_00);
-        *puVar3 = 0;
+      obj1 = (void *)*p1;
+      if (obj1 != (void *)0x0) {
+        orig::YkFurniture_Destructor(obj1);
+        orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1((int)obj1);
+        *p1 = 0;
       }
-      puVar3 = puVar3 + 1;
-      iVar1 = iVar1 + -1;
-    } while (iVar1 != 0);
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+      p1 = p1 + 1;
+      i1 = i1 + -1;
+    } while (i1 != 0);
+    i2 = i2 + -1;
+  } while (i2 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101D3E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall MyRoom_GetFirstFurnitureId(void * self_)
+XI_API bits32 __thiscall MyRoom_GetFirstFurnitureId(void * self_)
 {
   int xi_eax;
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int *piVar3;
-  int iVar4;
-  int *piVar5;
+  uint32_t u1;
+  uint32_t u2;
+  int *p1;
+  int i1;
+  int *p2;
   
-  iVar4 = 0;
-  piVar5 = (int *)((int)self_ + 0x4c);
+  i1 = 0;
+  p2 = (int *)((int)self_ + 0x4c);
   do {
-    uVar1 = 0;
-    piVar3 = piVar5;
+    u1 = 0;
+    p1 = p2;
     do {
-      if (*piVar3 != 0) {
-        xi_eax = uVar1 + iVar4 * 0x48;
-        uVar2 = orig::PlantMenu_GetWord58(*(void **)((int)self_ + (iVar4 * 9 + xi_eax) * 4 + 0x4c),xi_eax);
-        return uVar2;
+      if (*p1 != 0) {
+        xi_eax = u1 + i1 * 0x48;
+        u2 = orig::PlantMenu_GetWord58(*(void **)((int)self_ + (i1 * 9 + xi_eax) * 4 + 0x4c),xi_eax);
+        return u2;
       }
-      uVar1 = uVar1 + 1;
-      piVar3 = piVar3 + 1;
-    } while ((int)uVar1 < 0x51);
-    iVar4 = iVar4 + 1;
-    piVar5 = piVar5 + 0x51;
-  } while (iVar4 < 2);
-  return uVar1 & 0xffff0000;
+      u1 = u1 + 1;
+      p1 = p1 + 1;
+    } while ((int)u1 < 0x51);
+    i1 = i1 + 1;
+    p2 = p2 + 0x51;
+  } while (i1 < 2);
+  return u1 & 0xffff0000;
 }
 
 // FUNCTION: FFXIMAIN 0x101D3F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MyRoom_CopyList6To818(void * self_)
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
+  int *p1;
+  int i1;
+  int i2;
+  int *p2;
   
-  piVar1 = (int *)orig::YkCommon_GetIndexed(6);
-  iVar3 = 0;
-  iVar2 = *(int *)*piVar1;
-  if (iVar2 != 0) {
-    piVar4 = (int *)((int)self_ + 0x818);
+  p1 = (int *)orig::YkCommon_GetIndexed(6);
+  i2 = 0;
+  i1 = *(int *)*p1;
+  if (i1 != 0) {
+    p2 = (int *)((int)self_ + 0x818);
     do {
-      *piVar4 = iVar2;
-      iVar3 = iVar3 + 1;
-      piVar4 = piVar4 + 1;
-      iVar2 = *(int *)(*piVar1 + iVar3 * 4);
-    } while (iVar2 != 0);
+      *p2 = i1;
+      i2 = i2 + 1;
+      p2 = p2 + 1;
+      i1 = *(int *)(*p1 + i2 * 4);
+    } while (i1 != 0);
   }
-  *(uint32_t *)((int)self_ + iVar3 * 4 + 0x818) = 0;
-  *(char *)((int)self_ + 0x85a) = (char)iVar3;
+  *(uint32_t *)((int)self_ + i2 * 4 + 0x818) = 0;
+  *(char *)((int)self_ + 0x85a) = (char)i2;
   *(uint8_t *)((int)self_ + 0x859) = 0;
   return;
 }
@@ -171,135 +171,135 @@ XI_API void __cdecl MyRoom_DoNothing(void)
 
 // FUNCTION: FFXIMAIN 0x101D3FC0
 // GATE: PASS -- 100 trials, 93 returned normally, 93 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API void __thiscall MyRoom_Draw(void * self_, int * param_1)
+XI_API void __thiscall MyRoom_Draw(void * self_, int * arg2)
 {
-  char cVar1;
-  uint32_t *puVar2;
-  char cVar3;
+  char c1;
+  uint32_t *p1;
+  char c2;
   long double st0;
-  int64_t lVar4;
+  int64_t i1;
   char xi_frame[16] __attribute__((aligned(4)));
-  void ** &ppvVar5 = *reinterpret_cast<void ** *>(xi_frame + 0);
-  int ** &ppiVar6 = *reinterpret_cast<int ** *>(xi_frame + 4);
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 12);
+  void ** &p2 = *reinterpret_cast<void ** *>(xi_frame + 0);
+  int ** &p3 = *reinterpret_cast<int ** *>(xi_frame + 4);
+  void * &p4 = *reinterpret_cast<void * *>(xi_frame + 12);
   
-  ppvVar5 = &local_4;
-  if (param_1 != (int *)0x0) {
-    ppiVar6 = &param_1;
-    local_4 = self_;
-    puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x1bc))))((void *)(param_1));
-    orig::Gfx_ProjectWorldToScreen(puVar2,(uint16_t *)ppvVar5,(uint16_t *)ppiVar6);
-    if ((short)local_4 < 0) {
-      local_4 = (void *)0x64;
+  p2 = &p4;
+  if (arg2 != (int *)0x0) {
+    p3 = &arg2;
+    p4 = self_;
+    p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x1bc))))((void *)(arg2));
+    orig::Gfx_ProjectWorldToScreen(p1,(uint16_t *)p2,(uint16_t *)p3);
+    if ((short)p4 < 0) {
+      p4 = (void *)0x64;
     }
-    if ((short)param_1 < 0) {
-      param_1 = (int *)0x64;
+    if ((short)arg2 < 0) {
+      arg2 = (int *)0x64;
     }
     st0 = orig::Camera_GetFrameScale_v1(100);
-    lVar4 = XI_CALL_ST0(0x10311C2Cu)(st0);
-    cVar3 = *(char *)((int)self_ + 0x858) + (char)lVar4;
-    *(char *)((int)self_ + 0x858) = cVar3;
-    if ('\x02' < cVar3) {
-      cVar1 = *(char *)((int)self_ + 0x859);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(st0);
+    c2 = *(char *)((int)self_ + 0x858) + (char)i1;
+    *(char *)((int)self_ + 0x858) = c2;
+    if ('\x02' < c2) {
+      c1 = *(char *)((int)self_ + 0x859);
       do {
-        cVar3 = cVar3 + -3;
-        cVar1 = cVar1 + '\x01';
-        if (*(char *)((int)self_ + 0x85a) <= cVar1) {
-          cVar1 = '\0';
+        c2 = c2 + -3;
+        c1 = c1 + '\x01';
+        if (*(char *)((int)self_ + 0x85a) <= c1) {
+          c1 = '\0';
         }
-      } while ('\x02' < cVar3);
-      *(char *)((int)self_ + 0x858) = cVar3;
-      *(char *)((int)self_ + 0x859) = cVar1;
+      } while ('\x02' < c2);
+      *(char *)((int)self_ + 0x858) = c2;
+      *(char *)((int)self_ + 0x859) = c1;
     }
-    orig::FUN_1011fb60(*(void **)((int)self_ + *(char *)((int)self_ + 0x859) * 4 + 0x818),
-                 (int)(short)local_4,(int)(short)param_1,0x80808080,0,0);
+    orig::game_1011FB60(*(void **)((int)self_ + *(char *)((int)self_ + 0x859) * 4 + 0x818),
+                 (int)(short)p4,(int)(short)arg2,0x80808080,0,0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101D55D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall MyRoom_BeginMode(void * self_, int param_1)
+XI_API bits32 __thiscall MyRoom_BeginMode(void * self_, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar2 = orig::MyRoom_IsWord40D82Zero();
-  if (param_1 == 0) {
+  u1 = orig::MyRoom_IsWord40D82Zero();
+  if (arg2 == 0) {
     *(uint32_t *)((int)self_ + 0x3c) = 0xb4;
     *(uint32_t *)((int)self_ + 0x40) = 1;
-    if ((char)uVar2 != '\0') {
-      orig::FUN_100a1860(0x50);
+    if ((char)u1 != '\0') {
+      orig::game_100A1860(0x50);
     }
-    DAT_10482f18_as_v0 = 1;
-    uVar2 = orig::Acter_FindFirstMatchingKinds();
-    if ((short)uVar2 != 0) {
-      uVar2 = (&ActerBuffPtr_as_v0)[uVar2 & 0xffff];
-      iVar1 = *(int *)(uVar2 + 0xa0);
-      if (iVar1 != 0) {
-        uVar2 = orig::FUN_10062ed0_v1((uint32_t *)0xbf8,0x6e69616d,iVar1,iVar1);
-        if ((char)uVar2 == '\0') {
-          uVar2 = orig::AfterimageTask_Execute_v1(0xbf8,0x6e69616d,iVar1,iVar1,0);
+    g_10482F18_as_v0 = 1;
+    u1 = orig::Acter_FindFirstMatchingKinds();
+    if ((short)u1 != 0) {
+      u1 = (&ActerBuffPtr_as_v0)[u1 & 0xffff];
+      i1 = *(int *)(u1 + 0xa0);
+      if (i1 != 0) {
+        u1 = orig::AfterimageTask_IsResourceMoving_as_v0_v1((uint32_t *)0xbf8,0x6e69616d,i1,i1);
+        if ((char)u1 == '\0') {
+          u1 = orig::AfterimageTask_Execute_v1(0xbf8,0x6e69616d,i1,i1,0);
         }
       }
     }
   }
-  else if (param_1 == 1) {
+  else if (arg2 == 1) {
     *(uint32_t *)((int)self_ + 0x40) = 2;
     *(uint32_t *)((int)self_ + 0x3c) = 0xb4;
-    DAT_10482f18_as_v0 = 1;
-    uVar3 = orig::Acter_SetFlag8000OfFound(0);
-    return uVar3;
+    g_10482F18_as_v0 = 1;
+    u2 = orig::Acter_SetFlag8000OfFound(0);
+    return u2;
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101D5680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MyRoom_Update(void * self_)
 {
-  int *piVar1;
+  int *p1;
   
   if (*(short *)((int)self_ + 0x1c) == 1) {
-    piVar1 = (int *)orig::MyRoom_GetObjectAtIndex(self_);
-    orig::MyRoom_Draw(self_,piVar1);
+    p1 = (int *)orig::MyRoom_GetObjectAtIndex(self_);
+    orig::MyRoom_Draw(self_,p1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101D5E00
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API undefined4 __thiscall MyRoom_GetFurnitureAtCell(void * self_, int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall MyRoom_GetFurnitureAtCell(void * self_, int arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::PlantMenu_GetGridCellByte(*(void **)((int)self_ + 0x14),param_2,param_3,param_4);
-  return *(uint32_t *)((int)self_ + (iVar1 + (uint32_t)(param_1 == 9) * 0x51) * 4 + 0x4c);
+  i1 = orig::PlantMenu_GetGridCellByte(*(void **)((int)self_ + 0x14),arg3,arg4,arg5);
+  return *(uint32_t *)((int)self_ + (i1 + (uint32_t)(arg2 == 9) * 0x51) * 4 + 0x4c);
 }
 
 // FUNCTION: FFXIMAIN 0x101D5E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MyRoom_Refresh101CEC50(void * self_)
 {
-  orig::FUN_101cec50(*(void **)((int)self_ + 0x14));
+  orig::game_101CEC50(*(void **)((int)self_ + 0x14));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101D5EA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MyRoom_PlaceItemThenRefresh(void * self_, void * param_1)
+XI_API void __thiscall MyRoom_PlaceItemThenRefresh(void * self_, void * arg2)
 {
-  orig::PlantMenu_ClearItemFromGrid(*(void **)((int)self_ + 0x14),param_1);
+  orig::PlantMenu_ClearItemFromGrid(*(void **)((int)self_ + 0x14),arg2);
   orig::MyRoom_Refresh101CEC50(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101D5FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl MyRoom_Is104DFD98Bit40DB1x10Clear(void)
+XI_API bits32 __cdecl MyRoom_Is104DFD98Bit40DB1x10Clear(void)
 {
-  if ((DAT_104dfd98 != 0) && ((*(uint8_t *)(DAT_104dfd98 + 0x40db1) & 0x10) == 0)) {
+  if ((g_104DFD98 != 0) && ((*(uint8_t *)(g_104DFD98 + 0x40db1) & 0x10) == 0)) {
     return 1;
   }
   return 0;
@@ -307,25 +307,25 @@ XI_API undefined4 __cdecl MyRoom_Is104DFD98Bit40DB1x10Clear(void)
 
 // FUNCTION: FFXIMAIN 0x101D6020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl MyRoom_IsWord40D82Zero(void)
+XI_API bits32 __cdecl MyRoom_IsWord40D82Zero(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::NetCellFont_GetWord40D82();
-  return (uint32_t)(iVar1 == 0);
+  i1 = orig::NetCellFont_GetWord40D82();
+  return (uint32_t)(i1 == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x101D6C90
 // GATE: PASS -- 100 trials, 100 returned normally, 20 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall MyRoom_StartWithCallbackOnce(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall MyRoom_StartWithCallbackOnce(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(uint32_t *)((int)self_ + 0x14) != 0) {
     return *(uint32_t *)((int)self_ + 0x14) & 0xffffff00;
   }
-  orig::FUN_101d6cc0(self_);
-  *(uint32_t *)((int)self_ + 0x14) = param_1;
-  uVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x44))))((void *)(self_));
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  orig::game_101D6CC0(self_);
+  *(uint32_t *)((int)self_ + 0x14) = arg2;
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x44))))((void *)(self_));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }

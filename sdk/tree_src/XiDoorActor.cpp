@@ -12,14 +12,14 @@ XI_API void __cdecl XiDoorActor_NopSlot161(void)
 
 // FUNCTION: FFXIMAIN 0x100AC4E0
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-undefined4 __thiscall XiDoorActor::UpdateAndRunTimer(void * self)
+bits32 __thiscall XiDoorActor::UpdateAndRunTimer(void * self)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   int xi_eax;
   long double st0;
-  int64_t lVar2;
+  int64_t i1;
   
-  uVar1 = orig::FUN_100a57f0(self);
+  u1 = orig::game_100A57F0(self);
   *(uint32_t *)((int)self + 0x5c4) = *(uint32_t *)((int)self + 0xd4);
   *(uint32_t *)((int)self + 0x5c8) = *(uint32_t *)((int)self + 0xd8);
   *(uint32_t *)((int)self + 0x5cc) = *(uint32_t *)((int)self + 0xdc);
@@ -32,18 +32,18 @@ undefined4 __thiscall XiDoorActor::UpdateAndRunTimer(void * self)
   *(uint8_t *)((int)self + 0xb2) = *(uint8_t *)((int)self + 0xb2) & 0xfe;
   if (0 < xi_eax) {
     st0 = orig::Camera_GetFrameScale_v1(xi_eax);
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)(st0);
-    xi_eax = *(int *)((int)self + 0x87c) - (int)lVar2;
+    i1 = XI_CALL_ST0(0x10311C2Cu)(st0);
+    xi_eax = *(int *)((int)self + 0x87c) - (int)i1;
     *(int *)((int)self + 0x87c) = xi_eax;
     if (xi_eax < 1) {
       xi_eax = 0;
-      if (*(code **)((int)self + 0x880) != (code *)0x0) {
-        xi_eax = (**(code **)((int)self + 0x880))();
+      if (*(untyped_fn **)((int)self + 0x880) != (untyped_fn *)0x0) {
+        xi_eax = (**(untyped_fn **)((int)self + 0x880))();
       }
       *(uint32_t *)((int)self + 0x880) = 0;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)uVar1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)u1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100AC9C0

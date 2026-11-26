@@ -4,35 +4,35 @@
 
 // FUNCTION: FFXIMAIN 0x10291360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqskJoint_Create(void)
+XI_API bits32 * __cdecl SqskJoint_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x9c,s_C__dev_dancer_modules_sqSkeleton_103bae5c,0x1e);
-  orig::SqskJoint_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x9c,str_C__dev_dancer_modules_sqSkeleton_103BAE5C,0x1e);
+  orig::SqskJoint_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10291390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqskJoint_Init(undefined4 * param_1)
+XI_API void __cdecl SqskJoint_Init(bits32 * arg1)
 {
-  orig::SqxfXformM_Init(param_1);
-  *param_1 = 0xb0002;
-  param_1[2] = &LAB_10291420;
-  param_1[3] = XI_CODE(FUN_10291430);
-  param_1[4] = XI_CODE(FUN_10291470);
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = &LAB_10291ad0;
-  orig::SqVec_ZeroDwords(param_1 + 0x17);
-  orig::SqQuat_SetIdentityFwd(param_1 + 0x1a);
-  orig::SqVec_SetXyz((float *)(param_1 + 0x1e),1.0f,1.0f,1.0f);
-  param_1[0x21] = 0;
-  param_1[0x22] = 0;
-  param_1[0x23] = 0;
-  param_1[0x24] = 0;
-  param_1[0x25] = 0;
-  param_1[0x26] = 0;
+  orig::SqxfXformM_Init(arg1);
+  *arg1 = 0xb0002;
+  arg1[2] = &code_10291420;
+  arg1[3] = XI_CODE(game_10291430);
+  arg1[4] = XI_CODE(sqskJoint_Dump);
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = &code_10291AD0;
+  orig::SqVec_ZeroDwords(arg1 + 0x17);
+  orig::SqQuat_SetIdentityFwd(arg1 + 0x1a);
+  orig::SqVec_SetXyz((float *)(arg1 + 0x1e),1.0f,1.0f,1.0f);
+  arg1[0x21] = 0;
+  arg1[0x22] = 0;
+  arg1[0x23] = 0;
+  arg1[0x24] = 0;
+  arg1[0x25] = 0;
+  arg1[0x26] = 0;
   return;
 }
 

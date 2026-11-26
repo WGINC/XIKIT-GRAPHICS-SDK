@@ -6,170 +6,170 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall AfterimageTask_FindFirstKind(void * self_)
 {
-  char cVar1;
-  void *this_00;
-  uint64_t uVar2;
-  uint64_t uVar3;
+  char c1;
+  void *obj1;
+  uint64_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)self_ + 0x34));
-  this_00 = (void *)uVar2;
-  if (this_00 != (void *)0x0) {
-    uVar3 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-    uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar3 >> 0x20)) << 32) | (uint32_t)(this_00)));
-    cVar1 = (char)uVar3;
-    while (cVar1 != '\0') {
-      uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)this_00 + 0xc4));
-      this_00 = (void *)uVar2;
-      if (this_00 == (void *)0x0) {
-        uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)self_ + 0x34));
-        return uVar2;
+  u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)self_ + 0x34));
+  obj1 = (void *)u1;
+  if (obj1 != (void *)0x0) {
+    u2 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+    u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(obj1)));
+    c1 = (char)u2;
+    while (c1 != '\0') {
+      u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)obj1 + 0xc4));
+      obj1 = (void *)u1;
+      if (obj1 == (void *)0x0) {
+        u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)self_ + 0x34));
+        return u1;
       }
-      uVar3 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-      uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar3 >> 0x20)) << 32) | (uint32_t)(this_00)));
-      cVar1 = (char)uVar3;
+      u2 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+      u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(obj1)));
+      c1 = (char)u2;
     }
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100627D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall Scheduler_ResolveOwner(void * self_)
 {
-  char cVar1;
-  void *this_00;
-  uint64_t uVar2;
-  uint64_t uVar3;
+  char c1;
+  void *obj1;
+  uint64_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::CMoAttachments_GetTarget_v1((void *)((int)self_ + 0x34));
-  this_00 = (void *)uVar2;
-  if (this_00 != (void *)0x0) {
-    uVar3 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-    uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar3 >> 0x20)) << 32) | (uint32_t)(this_00)));
-    cVar1 = (char)uVar3;
-    while (cVar1 != '\0') {
-      uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)this_00 + 0xc4));
-      this_00 = (void *)uVar2;
-      if (this_00 == (void *)0x0) {
-        uVar2 = orig::CMoAttachments_GetTarget_v1((void *)((int)self_ + 0x34));
-        return uVar2;
+  u1 = orig::CMoAttachments_GetTarget_v1((void *)((int)self_ + 0x34));
+  obj1 = (void *)u1;
+  if (obj1 != (void *)0x0) {
+    u2 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+    u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(obj1)));
+    c1 = (char)u2;
+    while (c1 != '\0') {
+      u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)obj1 + 0xc4));
+      obj1 = (void *)u1;
+      if (obj1 == (void *)0x0) {
+        u1 = orig::CMoAttachments_GetTarget_v1((void *)((int)self_ + 0x34));
+        return u1;
       }
-      uVar3 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-      uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar3 >> 0x20)) << 32) | (uint32_t)(this_00)));
-      cVar1 = (char)uVar3;
+      u2 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+      u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(obj1)));
+      c1 = (char)u2;
     }
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10062830
 // GATE: PASS -- 100 trials, 97 returned normally, 126 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API void __thiscall AfterimageTask_SetCaster(void * self_, int param_1)
+XI_API void __thiscall AfterimageTask_SetCaster(void * self_, int arg2)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
-  this_00 = (void *)((int)self_ + 0x34);
-  uVar1 = orig::CMoAttachments_GetCaster_v1(this_00);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetCaster_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar1 + 0x16c))))((void *)((int *)uVar1));
+  obj1 = (void *)((int)self_ + 0x34);
+  u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x16c))))((void *)((int *)u1));
   }
-  orig::CMoAttachments_SetCaster_v1(this_00,param_1);
-  uVar1 = orig::CMoAttachments_GetCaster_v1(this_00);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetCaster_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar1 + 0x168))))((void *)((int *)uVar1));
+  orig::CMoAttachments_SetCaster_v1(obj1,arg2);
+  u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x168))))((void *)((int *)u1));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10062880
 // GATE: PASS -- 100 trials, 97 returned normally, 126 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API void __thiscall AfterimageTask_SetTarget(void * self_, int param_1)
+XI_API void __thiscall AfterimageTask_SetTarget(void * self_, int arg2)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
-  this_00 = (void *)((int)self_ + 0x34);
-  uVar1 = orig::CMoAttachments_GetTarget_v1(this_00);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetTarget_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar1 + 0x16c))))((void *)((int *)uVar1));
+  obj1 = (void *)((int)self_ + 0x34);
+  u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x16c))))((void *)((int *)u1));
   }
-  orig::CMoAttachments_SetTarget_v1(this_00,param_1);
-  uVar1 = orig::CMoAttachments_GetTarget_v1(this_00);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetTarget_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar1 + 0x168))))((void *)((int *)uVar1));
+  orig::CMoAttachments_SetTarget_v1(obj1,arg2);
+  u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x168))))((void *)((int *)u1));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10062E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl AfterimageTask_Execute(undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API uint64_t __cdecl AfterimageTask_Execute(bits32 * arg1, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  uint8_t *pbVar1;
-  int *piVar2;
-  uint32_t *puVar3;
-  uint64_t uVar4;
+  uint8_t *p1;
+  int *p2;
+  uint32_t *p3;
+  uint64_t u1;
   
-  puVar3 = (uint32_t *)orig::FUN_100731b0(g_pMeshResourceMng_as_v1,&param_1,param_1);
-  piVar2 = (int *)*puVar3;
-  pbVar1 = (uint8_t *)(*piVar2 + 0x1a);
-  *pbVar1 = *pbVar1 | 0x10;
-  uVar4 = orig::CMoResource_FindByTypeAndId_v1((void *)*piVar2,&param_1,7,param_2);
-  puVar3 = (uint32_t *)*(int *)uVar4;
-  uVar4 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar4 >> 0x20)) << 32) | (uint32_t)(puVar3)));
-  if (puVar3 != (uint32_t *)0x0) {
-    uVar4 = orig::Scheduler_Execute_v1((void *)*puVar3,param_3,param_4,param_5,0,(void *)*puVar3);
+  p3 = (uint32_t *)orig::game_100731B0(g_pMeshResourceMng_as_v1,&arg1,arg1);
+  p2 = (int *)*p3;
+  p1 = (uint8_t *)(*p2 + 0x1a);
+  *p1 = *p1 | 0x10;
+  u1 = orig::CMoResource_FindByTypeAndId_v1((void *)*p2,&arg1,7,arg2);
+  p3 = (uint32_t *)*(int *)u1;
+  u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(p3)));
+  if (p3 != (uint32_t *)0x0) {
+    u1 = orig::Scheduler_Execute_v1((void *)*p3,arg3,arg4,arg5,0,(void *)*p3);
   }
-  return uVar4;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10062E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl AfterimageTask_Kill(undefined4 param_1, undefined4 param_2, int param_3, int param_4)
+XI_API uint64_t __cdecl AfterimageTask_Kill(bits32 arg1, bits32 arg2, int arg3, int arg4)
 {
-  uint32_t *puVar1;
-  uint64_t uVar2;
+  uint32_t *p1;
+  uint64_t u1;
   
-  uVar2 = orig::ResourceIter_FindOrStartTask(&param_1,param_1,1);
-  puVar1 = (uint32_t *)*(int *)uVar2;
-  uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar2 >> 0x20)) << 32) | (uint32_t)(puVar1)));
-  if (puVar1 != (uint32_t *)0x0) {
-    uVar2 = orig::CMoResource_FindByTypeAndId_v1((void *)*puVar1,&param_1,7,param_2);
-    puVar1 = (uint32_t *)*(int *)uVar2;
-    uVar2 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar2 >> 0x20)) << 32) | (uint32_t)(puVar1)));
-    if (puVar1 != (uint32_t *)0x0) {
-      uVar2 = orig::Scheduler_Kill((void *)*puVar1,param_3,param_4);
+  u1 = orig::ResourceIter_FindOrStartTask(&arg1,arg1,1);
+  p1 = (uint32_t *)*(int *)u1;
+  u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(p1)));
+  if (p1 != (uint32_t *)0x0) {
+    u1 = orig::CMoResource_FindByTypeAndId_v1((void *)*p1,&arg1,7,arg2);
+    p1 = (uint32_t *)*(int *)u1;
+    u1 = ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(p1)));
+    if (p1 != (uint32_t *)0x0) {
+      u1 = orig::Scheduler_Kill((void *)*p1,arg3,arg4);
     }
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10062ED0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl AfterimageTask_IsResourceMoving(undefined4 * param_1, undefined4 param_2, int param_3, int param_4)
+XI_API bits32 __cdecl AfterimageTask_IsResourceMoving(bits32 * arg1, bits32 arg2, int arg3, int arg4)
 {
-  int *piVar1;
-  undefined4 uVar2;
+  int *p1;
+  bits32 u1;
   char xi_frame[4] __attribute__((aligned(4)));
-  undefined4  &local_4 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
   
-  piVar1 = (int *)orig::ResourceIter_FindOrStartTask_v1(&local_4,(int)param_1,1);
-  param_1 = (undefined4 *)*piVar1;
-  if (param_1 != (undefined4 *)0x0) {
-    uVar2 = orig::ResourceHandle_IsResident_v1(&param_1);
-    if ((char)uVar2 == '\0') {
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  p1 = (int *)orig::ResourceIter_FindOrStartTask_v1(&u2,(int)arg1,1);
+  arg1 = (bits32 *)*p1;
+  if (arg1 != (bits32 *)0x0) {
+    u1 = orig::ResourceHandle_IsResident_v1(&arg1);
+    if ((char)u1 == '\0') {
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    piVar1 = (int *)orig::CMoResource_FindByTypeAndId_v2((void *)*param_1,&param_2,7,param_2);
-    param_1 = (undefined4 *)*piVar1;
-    if (param_1 != (undefined4 *)0x0) {
-      uVar2 = orig::FUN_10057010((void *)*param_1,param_3,param_4);
-      return uVar2;
+    p1 = (int *)orig::CMoResource_FindByTypeAndId_v2((void *)*arg1,&arg2,7,arg2);
+    arg1 = (bits32 *)*p1;
+    if (arg1 != (bits32 *)0x0) {
+      u1 = orig::Scheduler_IsMoving_as_v0((void *)*arg1,arg3,arg4);
+      return u1;
     }
   }
   return 0;

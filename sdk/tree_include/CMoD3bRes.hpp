@@ -6,7 +6,7 @@
 class XI_API CMoD3bRes {
 public:
     void Slot9Nop();  // 0x1003F430
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071B90
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071B90
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2C];

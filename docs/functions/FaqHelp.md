@@ -52,11 +52,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FaqHelp_SaveToDat` calls `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9A10 (left out)`, `TextInputFiles_ClearVtable`
 - `FaqHelp_LoadFromDat` calls `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9BC0 (left out)`, `TextInputFiles_ClearVtable`
 - `FaqHelp_ResetEntries` calls `FaqHelp_ResetEntryCtor`
-- `FaqHelp_Construct` calls `sub_1021BE50`, `FaqHelp_LoadFromDat`
-- `FaqHelp_SaveAndRelease` calls `sub_1021BCC0`, `FaqHelp_SaveToDat`, `operator_delete`
+- `FaqHelp_Construct` calls `game_1021BE50`, `FaqHelp_LoadFromDat`
+- `FaqHelp_SaveAndRelease` calls `game_1021BCC0`, `FaqHelp_SaveToDat`, `operator_delete`
 - `FaqHelp_CanUpdate` calls `NetCellFont_GetFlags`, `FaqHelp_IsSpecialKey`, `NetCellFont_ApplyStatusText`
 - `FaqHelp_IsSpecialKey` calls nothing directly
-- `FaqHelp_AssignItem` calls `sub_1015BC40`, `FaqHelp_Reset`, `FaqHelp_RemoveByKey`, `FaqHelp_AppendEntry`, `FaqHelp_SetId`
+- `FaqHelp_AssignItem` calls `game_1015BC40`, `FaqHelp_Reset`, `FaqHelp_RemoveByKey`, `FaqHelp_AppendEntry`, `FaqHelp_SetId`
 - `FaqHelp_ClearAndAssign` calls `FaqHelp_Reset`, `FaqHelp_RemoveByKey`, `FaqHelp_AppendEntry`, `FaqHelp_SetId`
 - `FaqHelp_ResetSlot` calls `FaqHelp_Reset`, `FaqHelp_RemoveByKey`
 - `FaqHelp_SyncSlots` calls `NetCellFont_GetSlotPtr`, `NetCellFont_FindOrRemove`, `operator_delete`, `Allocator_Generic`, `FaqHelp_CopyRecordCtor`, `NetCellFont_RemoveRecord`, `FaqHelp_ClearAndAssign`, `FaqHelp_AssignItem`, `FaqHelp_ResetSlot`
@@ -64,10 +64,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FaqHelp_AppendEntry` calls nothing directly
 - `FaqHelp_RemoveByKey` calls nothing directly
 - `FaqHelp_RebuildWithGlobalFlag` calls `FaqHelp_Rebuild`
-- `FaqHelp_Rebuild` calls `sub_103156B3`, `XI_PACKET_100EBF40 (left out)`
+- `FaqHelp_Rebuild` calls `game_103156B3`, `XI_PACKET_100EBF40 (left out)`
 - `FaqHelp_GetSlotForEntry` calls `NetCellFont_GetSlotPtr`
 - `FaqHelp_Is14Not198C8` calls nothing directly
 - `FaqHelp_ResetEntryCtor` calls `FaqHelp_Reset`
 - `FaqHelp_Reset` calls nothing directly
-- `FaqHelp_LoadFromId` calls `FaqHelp_Reset`, `sub_1015BC40`
+- `FaqHelp_LoadFromId` calls `FaqHelp_Reset`, `game_1015BC40`
 - `FaqHelp_SetId` calls `FaqHelp_LoadFromId`

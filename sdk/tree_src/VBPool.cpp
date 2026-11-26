@@ -6,107 +6,107 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall VBPool_Constructor(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_CYyObject_GetRuntimeClass_variant18_1032c128;
+  *(uint8_t ***)self_ = &ptr_to_CYyObject_GetRuntimeClass_variant18_1032C128;
   *(uint32_t *)((int)self_ + 4) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 8);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 8);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1006B120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall VBPool_Insert(void * self_, undefined4 * param_1)
+XI_API uint32_t __thiscall VBPool_Insert(void * self_, bits32 * arg2)
 {
-  int *a1;
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t *puVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  uint32_t *puVar7;
+  int *p1;
+  int i1;
+  uint32_t u1;
+  int i2;
+  uint32_t *p2;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t *p3;
   
-  iVar1 = 0;
+  i1 = 0;
   do {
-    if (*(char *)((int)self_ + iVar1 + 8) == '\0') {
-      puVar7 = (uint32_t *)(iVar1 * 0x20 + 0x28 + (int)self_);
-      for (iVar3 = 8; iVar3 != 0; iVar3 = iVar3 + -1) {
-        *puVar7 = *param_1;
-        param_1 = param_1 + 1;
-        puVar7 = puVar7 + 1;
+    if (*(char *)((int)self_ + i1 + 8) == '\0') {
+      p3 = (uint32_t *)(i1 * 0x20 + 0x28 + (int)self_);
+      for (i2 = 8; i2 != 0; i2 = i2 + -1) {
+        *p3 = *arg2;
+        arg2 = arg2 + 1;
+        p3 = p3 + 1;
       }
-      iVar3 = *(int *)((int)self_ + 4) + 1;
-      *(int *)((int)self_ + 4) = iVar3;
-      *(int *)((int)self_ + iVar1 * 4 + 0x428) = iVar3;
-      *(uint8_t *)(iVar1 + 8 + (int)self_) = 1;
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+      i2 = *(int *)((int)self_ + 4) + 1;
+      *(int *)((int)self_ + 4) = i2;
+      *(int *)((int)self_ + i1 * 4 + 0x428) = i2;
+      *(uint8_t *)(i1 + 8 + (int)self_) = 1;
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 0x20);
-  uVar5 = 0xffffffff;
-  uVar6 = 0xffffffff;
-  uVar2 = 0;
-  puVar4 = (uint32_t *)((int)self_ + 0x428);
+    i1 = i1 + 1;
+  } while (i1 < 0x20);
+  u2 = 0xffffffff;
+  u3 = 0xffffffff;
+  u1 = 0;
+  p2 = (uint32_t *)((int)self_ + 0x428);
   do {
-    if (*puVar4 < uVar6) {
-      uVar5 = uVar2;
-      uVar6 = *puVar4;
+    if (*p2 < u3) {
+      u2 = u1;
+      u3 = *p2;
     }
-    uVar2 = uVar2 + 1;
-    puVar4 = puVar4 + 1;
-  } while ((int)uVar2 < 0x20);
-  if (uVar5 != 0xffffffff) {
-    a1 = *(int **)(uVar5 * 0x20 + 0x28 + (int)self_);
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
-    puVar7 = (uint32_t *)(uVar5 * 0x20 + 0x28 + (int)self_);
-    for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar7 = *param_1;
-      param_1 = param_1 + 1;
-      puVar7 = puVar7 + 1;
+    u1 = u1 + 1;
+    p2 = p2 + 1;
+  } while ((int)u1 < 0x20);
+  if (u2 != 0xffffffff) {
+    p1 = *(int **)(u2 * 0x20 + 0x28 + (int)self_);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
+    p3 = (uint32_t *)(u2 * 0x20 + 0x28 + (int)self_);
+    for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+      *p3 = *arg2;
+      arg2 = arg2 + 1;
+      p3 = p3 + 1;
     }
-    iVar1 = *(int *)((int)self_ + 4) + 1;
-    *(int *)((int)self_ + 4) = iVar1;
-    *(int *)((int)self_ + uVar5 * 4 + 0x428) = iVar1;
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+    i1 = *(int *)((int)self_ + 4) + 1;
+    *(int *)((int)self_ + 4) = i1;
+    *(int *)((int)self_ + u2 * 4 + 0x428) = i1;
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  return uVar2 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1006B1D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall VBPool_FindMatch(void * self_, int param_1)
+XI_API int __thiscall VBPool_FindMatch(void * self_, int arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  int *piVar4;
-  uint32_t local_4;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  int *p2;
+  uint32_t u1;
   
-  iVar3 = -1;
-  local_4 = 0xffffffff;
-  iVar1 = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x428);
-  piVar4 = (int *)((int)self_ + 0x40);
+  i2 = -1;
+  u1 = 0xffffffff;
+  i1 = 0;
+  p1 = (uint32_t *)((int)self_ + 0x428);
+  p2 = (int *)((int)self_ + 0x40);
   do {
-    if ((((*(char *)((int)self_ + iVar1 + 8) != '\0') && (piVar4[-1] == *(int *)(param_1 + 0x14))) &&
-        (*piVar4 == *(int *)(param_1 + 0x18))) && (*puVar2 <= local_4)) {
-      iVar3 = iVar1;
-      local_4 = *puVar2;
+    if ((((*(char *)((int)self_ + i1 + 8) != '\0') && (p2[-1] == *(int *)(arg2 + 0x14))) &&
+        (*p2 == *(int *)(arg2 + 0x18))) && (*p1 <= u1)) {
+      i2 = i1;
+      u1 = *p1;
     }
-    iVar1 = iVar1 + 1;
-    puVar2 = puVar2 + 1;
-    piVar4 = piVar4 + 8;
-  } while (iVar1 < 0x20);
-  if (iVar3 != -1) {
-    *(uint8_t *)(iVar3 + 8 + (int)self_) = 0;
-    *(uint32_t *)((int)self_ + iVar3 * 0x20 + 0x2c) = 0;
-    return (int)self_ + iVar3 * 0x20 + 0x28;
+    i1 = i1 + 1;
+    p1 = p1 + 1;
+    p2 = p2 + 8;
+  } while (i1 < 0x20);
+  if (i2 != -1) {
+    *(uint8_t *)(i2 + 8 + (int)self_) = 0;
+    *(uint32_t *)((int)self_ + i2 * 0x20 + 0x2c) = 0;
+    return (int)self_ + i2 * 0x20 + 0x28;
   }
   return 0;
 }

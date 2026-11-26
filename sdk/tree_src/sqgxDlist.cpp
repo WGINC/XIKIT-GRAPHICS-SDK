@@ -6,65 +6,65 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl SqgxDlist_CreateContextList(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x2c,aCDevDancerModu_30,0x1a);
-  *(undefined4 **)(g_pSqgxContext_as_s32 + 0xa04) = puVar1;
-  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa08) = 0;
-  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa0c) = 0;
-  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa10) = 0;
-  *(undefined4 *)(g_pSqgxContext_as_s32 + 0xa14) = 0;
+  p1 = orig::game_10275D80(1,0x2c,aCDevDancerModu_30,0x1a);
+  *(bits32 **)(g_pSqgxContext_as_s32 + 0xa04) = p1;
+  *(bits32 *)(g_pSqgxContext_as_s32 + 0xa08) = 0;
+  *(bits32 *)(g_pSqgxContext_as_s32 + 0xa0c) = 0;
+  *(bits32 *)(g_pSqgxContext_as_s32 + 0xa10) = 0;
+  *(bits32 *)(g_pSqgxContext_as_s32 + 0xa14) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1029B620
 // GATE: PASS -- 100 trials, 16 returned normally, 216 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 16
-XI_API _DWORD * __cdecl sqgxDlistEnd(void)
+XI_API uint32_t * __cdecl sqgxDlistEnd(void)
 {
-  _DWORD *v0;
-  int v1;
-  _DWORD *v2;
-  int v3;
-  int v4;
-  int v5;
-  int v6;
+  uint32_t *p1;
+  int i1;
+  uint32_t *p2;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
   alignas(16) unsigned char xi_frame[0x46C];  // address-taken locals at their original offsets
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0x60);
-  int &v9 = *reinterpret_cast<int *>(xi_frame + 0x64);
-  void * &v10 = *reinterpret_cast<void * *>(xi_frame + 0x68);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x60);
+  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x64);
+  void * &p3 = *reinterpret_cast<void * *>(xi_frame + 0x68);
 
-  v8 = 0;
-  v9 = 0;
-  v0 = (_DWORD *)g_pSqgxContext[641];
+  i6 = 0;
+  i7 = 0;
+  p1 = (uint32_t *)g_pSqgxContext[641];
   g_pSqgxContext[641] = 0;
   if ( (g_pSqgxContext[652] & 1) != 0 )
-    *v0 = g_pSqgxContext[598];
+    *p1 = g_pSqgxContext[598];
   else
-    *v0 = 0;
+    *p1 = 0;
   if ( (g_pSqgxContext[652] & 2) != 0 )
-    v0[1] = g_pSqgxContext[600];
+    p1[1] = g_pSqgxContext[600];
   else
-    v0[1] = 0;
-  v1 = 0;
-  v2 = v0 + 2;
+    p1[1] = 0;
+  i1 = 0;
+  p2 = p1 + 2;
   do
   {
-    if ( v1 < g_pSqgxContext[710] + 1 && (g_pSqgxContext[652] & 4) != 0 )
-      *v2 = *(int *)((char *)g_pSqgxContext + (_DWORD)v2 + 2400 - (_DWORD)v0);
+    if ( i1 < g_pSqgxContext[710] + 1 && (g_pSqgxContext[652] & 4) != 0 )
+      *p2 = *(int *)((char *)g_pSqgxContext + (uint32_t)p2 + 2400 - (uint32_t)p1);
     else
-      *v2 = 0;
-    ++v1;
-    ++v2;
+      *p2 = 0;
+    ++i1;
+    ++p2;
   }
-  while ( v1 < 2 );
+  while ( i1 < 2 );
   if ( (g_pSqgxContext[652] & 8) != 0 )
-    v0[4] = g_pSqgxContext[610];
+    p1[4] = g_pSqgxContext[610];
   else
-    v0[4] = 0;
+    p1[4] = 0;
   if ( (g_pSqgxContext[652] & 0x10) != 0 )
-    v0[5] = g_pSqgxContext[606];
+    p1[5] = g_pSqgxContext[606];
   else
-    v0[5] = 0;
+    p1[5] = 0;
   g_pSqgxContext[599] = 0;
   g_pSqgxContext[601] = 0;
   g_pSqgxContext[604] = 0;
@@ -77,141 +77,141 @@ XI_API _DWORD * __cdecl sqgxDlistEnd(void)
   g_pSqgxContext[603] = 0;
   g_pSqgxContext[610] = 0;
   g_pSqgxContext[606] = 0;
-  v0[6] = g_pSqgxContext[592];
-  v3 = g_pSqgxContext[642];
-  if ( v3 != 0 )
+  p1[6] = g_pSqgxContext[592];
+  i2 = g_pSqgxContext[642];
+  if ( i2 != 0 )
   {
     g_pDancerDevice->lpVtbl->CreateIndexBuffer(
       g_pDancerDevice,
-      2 * v3,
+      2 * i2,
       520u,
       D3DFMT_INDEX16,
       D3DPOOL_DEFAULT,
-      (IDirect3DIndexBuffer8 **)&v8);
-    (*(void (__stdcall **)(int, _DWORD, int, void **, int))(*(_DWORD *)v8 + 44))(
-      v8,
+      (IDirect3DIndexBuffer8 **)&i6);
+    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)i6 + 44))(
+      i6,
       0,
       2 * g_pSqgxContext[642],
-      &v10,
+      &p3,
       0x2000);
-    qmemcpy(v10, (const void *)g_pSqgxContext[643], 2 * g_pSqgxContext[642]);
-    (*(void (__stdcall **)(int))(*(_DWORD *)v8 + 48))(v8);
+    memcpy(p3, (const void *)g_pSqgxContext[643], 2 * g_pSqgxContext[642]);
+    (*(void (__stdcall **)(int))(*(uint32_t *)i6 + 48))(i6);
   }
-  v4 = g_pSqgxContext[644];
-  if ( v4 != 0 )
+  i3 = g_pSqgxContext[644];
+  if ( i3 != 0 )
   {
     g_pDancerDevice->lpVtbl->CreateIndexBuffer(
       g_pDancerDevice,
-      2 * v4,
+      2 * i3,
       520u,
       D3DFMT_INDEX16,
       D3DPOOL_DEFAULT,
-      (IDirect3DIndexBuffer8 **)&v9);
-    (*(void (__stdcall **)(int, _DWORD, int, void **, int))(*(_DWORD *)v9 + 44))(
-      v9,
+      (IDirect3DIndexBuffer8 **)&i7);
+    (*(void (__stdcall **)(int, uint32_t, int, void **, int))(*(uint32_t *)i7 + 44))(
+      i7,
       0,
       2 * g_pSqgxContext[644],
-      &v10,
+      &p3,
       0x2000);
-    qmemcpy(v10, (const void *)g_pSqgxContext[645], 2 * g_pSqgxContext[644]);
-    (*(void (__stdcall **)(int))(*(_DWORD *)v9 + 48))(v9);
+    memcpy(p3, (const void *)g_pSqgxContext[645], 2 * g_pSqgxContext[644]);
+    (*(void (__stdcall **)(int))(*(uint32_t *)i7 + 48))(i7);
   }
-  v0[8] = g_pSqgxContext[642] - 2;
-  v0[7] = v8;
-  v0[10] = g_pSqgxContext[644] / 3;
-  v0[9] = v9;
-  v5 = g_pSqgxContext[643];
-  if ( v5 != 0 )
-    orig::sqFree(v5, aCDevDancerModu_30, 107);
+  p1[8] = g_pSqgxContext[642] - 2;
+  p1[7] = i6;
+  p1[10] = g_pSqgxContext[644] / 3;
+  p1[9] = i7;
+  i4 = g_pSqgxContext[643];
+  if ( i4 != 0 )
+    orig::sqFree(i4, aCDevDancerModu_30, 107);
   g_pSqgxContext[643] = 0;
   g_pSqgxContext[642] = 0;
-  v6 = g_pSqgxContext[645];
-  if ( v6 != 0 )
-    orig::sqFree(v6, aCDevDancerModu_30, 112);
+  i5 = g_pSqgxContext[645];
+  if ( i5 != 0 )
+    orig::sqFree(i5, aCDevDancerModu_30, 112);
   g_pSqgxContext[645] = 0;
   g_pSqgxContext[644] = 0;
-  return v0;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1029B9D0
 // GATE: PASS -- 100 trials, 100 returned normally, 553 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **a1)
+XI_API void __cdecl sqgxDlistDraw(IDirect3DVertexBuffer8 **arg1)
 {
-  unsigned int v1;
-  int *v2;
-  int v4;
-  IDirect3DIndexBuffer8 *v5;
-  IDirect3DIndexBuffer8 *v6;
-  unsigned int v7;
-  unsigned int v8;
-  unsigned int v9;
-  int v10;
-  v1 = 0;
-  orig::sub_1028A730(0, 0);
+  unsigned int u1;
+  int *p1;
+  int i1;
+  IDirect3DIndexBuffer8 *p2;
+  IDirect3DIndexBuffer8 *p3;
+  unsigned int u2;
+  unsigned int u3;
+  unsigned int u4;
+  int i2;
+  u1 = 0;
+  orig::game_1028A730(0, 0);
   orig::sqgxShapeBegin();
-  v2 = g_pSqgxContext;
+  p1 = g_pSqgxContext;
   if ( (g_pSqgxContext[652] & 1) != 0 )
   {
-    v1 = 1;
-    g_pDancerDevice->SetStreamSource(0, *a1, 12u);
-    v2 = g_pSqgxContext;
+    u1 = 1;
+    g_pDancerDevice->SetStreamSource(0, *arg1, 12u);
+    p1 = g_pSqgxContext;
   }
-  if ( (v2[652] & 2) != 0 )
+  if ( (p1[652] & 2) != 0 )
   {
-    v8 = v1++;
-    g_pDancerDevice->SetStreamSource(v8, a1[1], 12u);
-    v2 = g_pSqgxContext;
+    u3 = u1++;
+    g_pDancerDevice->SetStreamSource(u3, arg1[1], 12u);
+    p1 = g_pSqgxContext;
   }
-  v10 = 0;
-  if ( v2[710] + 1 > 0 )
+  i2 = 0;
+  if ( p1[710] + 1 > 0 )
   {
-    v4 = 653;
+    i1 = 653;
     do
     {
-      if ( (v2[v4] & 4) != 0 )
+      if ( (p1[i1] & 4) != 0 )
       {
-        v7 = v1++;
-        g_pDancerDevice->SetStreamSource(v7, a1[v4 - 651], 8u);
-        v2 = g_pSqgxContext;
+        u2 = u1++;
+        g_pDancerDevice->SetStreamSource(u2, arg1[i1 - 651], 8u);
+        p1 = g_pSqgxContext;
       }
-      ++v4;
-      ++v10;
+      ++i1;
+      ++i2;
     }
-    while ( v10 < v2[710] + 1 );
+    while ( i2 < p1[710] + 1 );
   }
-  if ( (v2[652] & 8) != 0 )
+  if ( (p1[652] & 8) != 0 )
   {
-    v9 = v1++;
-    g_pDancerDevice->SetStreamSource(v9, a1[4], 4u);
-    v2 = g_pSqgxContext;
+    u4 = u1++;
+    g_pDancerDevice->SetStreamSource(u4, arg1[4], 4u);
+    p1 = g_pSqgxContext;
   }
-  if ( (v2[652] & 0x10) != 0 )
-    g_pDancerDevice->SetStreamSource(v1, a1[5], 12u);
-  v5 = (IDirect3DIndexBuffer8 *)a1[7];
-  if ( v5 != nullptr )
+  if ( (p1[652] & 0x10) != 0 )
+    g_pDancerDevice->SetStreamSource(u1, arg1[5], 12u);
+  p2 = (IDirect3DIndexBuffer8 *)arg1[7];
+  if ( p2 != nullptr )
   {
-    g_pDancerDevice->SetIndices(v5, 0);
+    g_pDancerDevice->SetIndices(p2, 0);
     g_pDancerDevice->lpVtbl->DrawIndexedPrimitive(
       g_pDancerDevice,
       D3DPT_TRIANGLESTRIP,
       0,
-      (unsigned int)a1[6],
+      (unsigned int)arg1[6],
       0,
-      (unsigned int)a1[8]);
+      (unsigned int)arg1[8]);
   }
-  v6 = (IDirect3DIndexBuffer8 *)a1[9];
-  if ( v6 != nullptr )
+  p3 = (IDirect3DIndexBuffer8 *)arg1[9];
+  if ( p3 != nullptr )
   {
-    g_pDancerDevice->SetIndices(v6, 0);
+    g_pDancerDevice->SetIndices(p3, 0);
     g_pDancerDevice->lpVtbl->DrawIndexedPrimitive(
       g_pDancerDevice,
       D3DPT_TRIANGLELIST,
       0,
-      (unsigned int)a1[6],
+      (unsigned int)arg1[6],
       0,
-      (unsigned int)a1[10]);
+      (unsigned int)arg1[10]);
   }
-  orig::sub_1028BBD0();
+  orig::game_1028BBD0();
 }
 
 // FUNCTION: FFXIMAIN 0x1029BB50

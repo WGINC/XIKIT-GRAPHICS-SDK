@@ -5,57 +5,57 @@
 #pragma pack(push, 1)
 class XI_API CDx {
 public:
-    static _UNKNOWN ** __cdecl GetRuntimeClass();  // 0x10008F80
-    void * ScalarDeletingDtor(char a2);  // 0x10009100
+    static uint8_t ** __cdecl GetRuntimeClass();  // 0x10008F80
+    void * ScalarDeletingDtor(char arg1);  // 0x10009100
     char Initialize();  // 0x100091B0
-    char SetDefaultRenderTargets(int a2, int a3, int a4);  // 0x10009620
-    int SetClearParams(int a2, int a3, int a4, int a5);  // 0x10009640
-    int SetClearColor(int a2);  // 0x10009670
-    int EndClearBegin(int a2, int a3, int a4, int a5, int a6, int a7);  // 0x100096B0
+    char SetDefaultRenderTargets(int arg1, int arg2, int arg3);  // 0x10009620
+    int SetClearParams(int arg1, int arg2, int arg3, int arg4);  // 0x10009640
+    int SetClearColor(int arg1);  // 0x10009670
+    int EndClearBegin(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);  // 0x100096B0
     bool TestCooperativeLevel();  // 0x10009710
     static int __cdecl Present();  // 0x10009720
     int BeginScene();  // 0x10009730
     int EndScene();  // 0x10009740
-    static void __stdcall SetHardwareCursor(HCURSOR param_1);  // 0x10009750
-    static undefined4 __thiscall ShowCursor(void * self, undefined4 param_1);  // 0x10009780
-    HCURSOR SetCursorShape(int a2, int a3);  // 0x100097F0
-    static undefined4 __thiscall CreateDeviceObjectOnce(void * self, undefined4 param_1, int * param_2);  // 0x10009870
-    static undefined4 __thiscall AppendStateRecord(void * self);  // 0x10009D20
-    int SetViewport(const void *a2);  // 0x10009DC0
-    unsigned __int8 * GetRenderTargetTop();  // 0x10009E00
-    int PushRenderTarget(int a2, int a3, int a4);  // 0x10009E20
-    static void __thiscall PushRenderTargetTexture_Flag1(void * self, int * param_1, undefined4 xi_s2, undefined4 xi_s3);  // 0x10009EA0
-    static void __thiscall PushRenderTargetTexture_Flag0(void * self, int * param_1, undefined4 xi_s2, undefined4 xi_s3);  // 0x10009EE0
-    int PushRenderTargetTexture(int a2, int a3, int a4, __int16 *a5, __int16 *a6, int a7, int a8);  // 0x10009F20
-    static void __thiscall Call1000A0A0Zeroed(void * self, int * param_1, undefined4 param_2, undefined4 param_3);  // 0x1000A070
-    int SetTexture(int a2, int a3);  // 0x1000A1D0
-    static void __thiscall PopRenderTargetA(void * self, undefined4 xi_s1, undefined4 xi_s2);  // 0x1000A200
-    static void __thiscall PopRenderTargetB(void * self, undefined4 xi_s1, undefined4 xi_s2);  // 0x1000A230
-    static void __thiscall PopRenderTargetDefault(void * self, undefined4 xi_s1, undefined4 xi_s2);  // 0x1000A290
-    static void __thiscall EndAndClearBegin(void * self, uint32_t param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4);  // 0x1000A390
-    int DrawScreenQuadAtDepth(int a1, int a2);  // 0x1000A3B0
-    static void __thiscall DrawTextureToViewport(void * self, undefined4 param_1, undefined4 param_2, undefined4 xi_s3);  // 0x1000A4F0
-    static void __thiscall DrawTexturedScreenQuadUnit(void * self, undefined4 param_1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4);  // 0x1000A550
-    int DrawTexturedScreenQuad(int a1, int a2, int a3, int a4, int a5);  // 0x1000A5A0
-    _DWORD * CreateTexture(unsigned __int16 width, unsigned __int16 height, _DWORD * a4, int a5, int a6);  // 0x1000A6E0
-    char PushRenderTargetRet1(int a2, int a3, int a4);  // 0x1000A800
-    int DrawFadeQuad(int a1, int a2);  // 0x1000A820
-    int Post_DepthBlurComposite(int a1, int a2);  // 0x1000AAB0
-    static uint32_t __thiscall StepFadeCounter(void * self, float param_1, float param_2, int param_3);  // 0x1000AE40
+    static void __stdcall SetHardwareCursor(HCURSOR arg1);  // 0x10009750
+    static bits32 __thiscall ShowCursor(void * self, bits32 arg2);  // 0x10009780
+    HCURSOR SetCursorShape(int arg1, int arg2);  // 0x100097F0
+    static bits32 __thiscall CreateDeviceObjectOnce(void * self, bits32 arg2, int * arg3);  // 0x10009870
+    static bits32 __thiscall AppendStateRecord(void * self);  // 0x10009D20
+    int SetViewport(const void *arg1);  // 0x10009DC0
+    unsigned char * GetRenderTargetTop();  // 0x10009E00
+    int PushRenderTarget(int arg1, int arg2, int arg3);  // 0x10009E20
+    static void __thiscall PushRenderTargetTexture_Flag1(void * self, int * arg2, bits32 xi_s2, bits32 xi_s3);  // 0x10009EA0
+    static void __thiscall PushRenderTargetTexture_Flag0(void * self, int * arg2, bits32 xi_s2, bits32 xi_s3);  // 0x10009EE0
+    int PushRenderTargetTexture(int arg1, int arg2, int arg3, short *arg4, short *arg5, int arg6, int arg7);  // 0x10009F20
+    static void __thiscall Call1000A0A0Zeroed(void * self, int * arg2, bits32 arg3, bits32 arg4);  // 0x1000A070
+    int SetTexture(int arg1, int arg2);  // 0x1000A1D0
+    static void __thiscall PopRenderTargetA(void * self, bits32 xi_s1, bits32 xi_s2);  // 0x1000A200
+    static void __thiscall PopRenderTargetB(void * self, bits32 xi_s1, bits32 xi_s2);  // 0x1000A230
+    static void __thiscall PopRenderTargetDefault(void * self, bits32 xi_s1, bits32 xi_s2);  // 0x1000A290
+    static void __thiscall EndAndClearBegin(void * self, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5);  // 0x1000A390
+    int DrawScreenQuadAtDepth(int arg1, int arg2);  // 0x1000A3B0
+    static void __thiscall DrawTextureToViewport(void * self, bits32 arg2, bits32 arg3, bits32 xi_s3);  // 0x1000A4F0
+    static void __thiscall DrawTexturedScreenQuadUnit(void * self, bits32 arg2, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4);  // 0x1000A550
+    int DrawTexturedScreenQuad(int arg1, int arg2, int arg3, int arg4, int arg5);  // 0x1000A5A0
+    uint32_t * CreateTexture(unsigned short width, unsigned short height, uint32_t * arg3, int arg4, int arg5);  // 0x1000A6E0
+    char PushRenderTargetRet1(int arg1, int arg2, int arg3);  // 0x1000A800
+    int DrawFadeQuad(int arg1, int arg2);  // 0x1000A820
+    int Post_DepthBlurComposite(int arg1, int arg2);  // 0x1000AAB0
+    static uint32_t __thiscall StepFadeCounter(void * self, float arg2, float arg3, int arg4);  // 0x1000AE40
     static void __cdecl NopA();  // 0x1000BB10
     static void __cdecl NopB();  // 0x1000BB20
-    char DrawStereoOddFrameOverlay(int a1);  // 0x1000BB90
-    int SetTransform(int a2, const void *a3);  // 0x1000BD50
-    int GetTransformCached(int a2, void *a3);  // 0x1000BDB0
-    int SetLight(int a2, float *a3);  // 0x1000BF30
-    int CompositeSceneToBackBuffer(int a1, int a2, int a3, int a4);  // 0x1000C0B0
-    int CreateStereoResources(unsigned __int16 a1, unsigned __int16 a2);  // 0x1000C6E0
+    char DrawStereoOddFrameOverlay(int arg1);  // 0x1000BB90
+    int SetTransform(int arg1, const void *arg2);  // 0x1000BD50
+    int GetTransformCached(int arg1, void *arg2);  // 0x1000BDB0
+    int SetLight(int arg1, float *arg2);  // 0x1000BF30
+    int CompositeSceneToBackBuffer(int arg1, int arg2, int arg3, int arg4);  // 0x1000C0B0
+    int CreateStereoResources(unsigned short arg1, unsigned short arg2);  // 0x1000C6E0
     int ReleaseStereoResources();  // 0x1000C7C0
-    int CreateRampTexture1x16(int a1);  // 0x1000C850
-    char CreateRampTextures1024x2(IDirect3DTexture8 **a2, int a3);  // 0x1000C900
-    int DrawPrimitive(int a1, int a2, int a3);  // 0x1000CB20
-    int DrawIndexedPrimitive(int a1, int a2, int a3, int a4, int a5);  // 0x1000CC00
-    int DrawPrimitiveUP(int a1, int a2, int a3, int a4);  // 0x1000CD00
+    int CreateRampTexture1x16(int arg1);  // 0x1000C850
+    char CreateRampTextures1024x2(IDirect3DTexture8 **arg1, int arg2);  // 0x1000C900
+    int DrawPrimitive(int arg1, int arg2, int arg3);  // 0x1000CB20
+    int DrawIndexedPrimitive(int arg1, int arg2, int arg3, int arg4, int arg5);  // 0x1000CC00
+    int DrawPrimitiveUP(int arg1, int arg2, int arg3, int arg4);  // 0x1000CD00
     void ApplyStereoEyeProjection();  // 0x1000CF20
     int RestoreProjection();  // 0x1000CF90
 
@@ -64,7 +64,7 @@ public:
     IDirect3D8 * pD3D;  // +0x8
     IDirect3DDevice8 * pDevice;  // +0xC
     uint8_t _pad_10[0x80];
-    _DWORD * defaultBackBuffer;  // +0x90 default render target: set by CDx::SetDefaultRenderTargets, restored by CDx_PopRenderTarge
+    uint32_t * defaultBackBuffer;  // +0x90 default render target: set by CDx::SetDefaultRenderTargets, restored by CDx_PopRenderTarge
     uint8_t defaultDepthSurface;  // +0x94 default depth surface, set with defaultBackBuffer by CDx::SetDefaultRenderTargets
     uint8_t _pad_95[0xC3];
     uint8_t renderTargetDepth;  // +0x158

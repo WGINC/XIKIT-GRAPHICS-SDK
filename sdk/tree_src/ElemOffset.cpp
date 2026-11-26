@@ -6,17 +6,17 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __thiscall ElemOffset_GetOffsetVec(void * self_)
 {
-  int *piVar1;
-  uint8_t *puVar2;
+  int *p1;
+  uint8_t *p2;
   
-  piVar1 = *(int **)((int)self_ + 4);
-  if (piVar1 == (int *)0x0) {
+  p1 = *(int **)((int)self_ + 4);
+  if (p1 == (int *)0x0) {
     return(uint8_t*)(&g_vec4_m1_m1_m1_1);
   }
-  if (piVar1 != (int *)0x0) {
-    puVar2 = (uint8_t *)orig::CMoSpline_GetData((void *)(*piVar1 + 0x30));
-    return puVar2;
+  if (p1 != (int *)0x0) {
+    p2 = (uint8_t *)orig::CMoSpline_GetData((void *)(*p1 + 0x30));
+    return p2;
   }
-  puVar2 = (uint8_t *)orig::CMoSpline_GetData((void *)0x30);
-  return puVar2;
+  p2 = (uint8_t *)orig::CMoSpline_GetData((void *)0x30);
+  return p2;
 }

@@ -6,8 +6,8 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoResType5E.cpp`.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CMoResType5E::SetupNop` | 0x10038920 | 1 | yes | - | Setup that does nothing. (reviewed as sub_10038920) | high |
-| `CMoResType5E::Slot9Nop` | 0x10071A10 | 1 | yes | - | Does nothing. (reviewed as sub_10071A10) | high |
+| `CMoResType5E::SetupNop` | 0x10038920 | 1 | yes | - | Setup that does nothing. (reviewed as game_10038920) | high |
+| `CMoResType5E::Slot9Nop` | 0x10071A10 | 1 | yes | - | Does nothing. (reviewed as game_10071A10) | high |
 | `CMoResType5E::ScalarDeletingDtor` | 0x10071B00 | 30 | yes | - | - | - |
 
 ## Direct calls

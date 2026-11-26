@@ -5,19 +5,19 @@
 #pragma pack(push, 1)
 class XI_API CYyModelDt {
 public:
-    static int __cdecl SetVertexShader(int a1);  // 0x10022FA0
+    static int __cdecl SetVertexShader(int arg1);  // 0x10022FA0
     static void * __thiscall Construct(void * self);  // 0x10025010
-    char PrepareRenderStateEntry(int a2, int a3, int a4, int a5, int a6, int a7);  // 0x10025030
-    unsigned __int16 PrepareRenderStateSimpleEntry(int a2, int a3, int a4, int a5, int a6);  // 0x10025060
-    int MarkReferencedBones(int a2);  // 0x100251A0
+    char PrepareRenderStateEntry(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);  // 0x10025030
+    unsigned short PrepareRenderStateSimpleEntry(int arg1, int arg2, int arg3, int arg4, int arg5);  // 0x10025060
+    int MarkReferencedBones(int arg1);  // 0x100251A0
     static char ** __cdecl GetRuntimeClass();  // 0x10029880
     static void __thiscall InitBase(void * self);  // 0x10029BB0
-    static undefined4 * __thiscall Init(void * self);  // 0x10029C90
-    _DWORD * ScalarDeletingDtor(char a1);  // 0x10029CB0
-    static void __thiscall PrepareRenderStateV2Entry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 * param_5, undefined4 * param_6);  // 0x1002A000
-    static undefined4 __thiscall PrepareRenderStateV2SimpleEntry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);  // 0x1002A040
-    static undefined4 __thiscall GetResourceWord5E(void * self);  // 0x1002A080
-    __int16 SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, _DWORD *a7);  // 0x1002DC10
+    static bits32 * __thiscall Init(void * self);  // 0x10029C90
+    uint32_t * ScalarDeletingDtor(char arg1);  // 0x10029CB0
+    static void __thiscall PrepareRenderStateV2Entry(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 * arg6, bits32 * arg7);  // 0x1002A000
+    static bits32 __thiscall PrepareRenderStateV2SimpleEntry(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6);  // 0x1002A040
+    static bits32 __thiscall GetResourceWord5E(void * self);  // 0x1002A080
+    short SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t *arg5, uint32_t *arg6);  // 0x1002DC10
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x4];

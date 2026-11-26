@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): Actor_SelectNearestLights, CX
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Actor_SelectNearestLights` calls `Camera_GetFrameScale`, `Vec3_Sub`, `Vec3_MulComponents`, `sub_100274B0`, `Vec3_ScaleInPlace`, `sub_10039410`, `XiZone::GetAmbient`, `XiZone::GetFog`, `TargetMenu_GetCachedUnlessFlag21`, `ActorHandle_ResolveObject`, `sub_10027020`, `sub_10311C2C`
+- `Actor_SelectNearestLights` calls `Camera_GetFrameScale`, `Vec3_Sub`, `Vec3_MulComponents`, `game_100274B0`, `Vec3_ScaleInPlace`, `game_10039410`, `XiZone::GetAmbient`, `XiZone::GetFog`, `TargetMenu_GetCachedUnlessFlag21`, `ActorHandle_ResolveObject`, `game_10027020`, `game_10311C2C`

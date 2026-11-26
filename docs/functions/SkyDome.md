@@ -27,17 +27,17 @@ Why the file has this name (data/unit_names.json): Sky_DrawDome, Sky_DrawDomeVie
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Sky_DrawDome` calls `Camera_SetClearColorRGB`, `MoDX_SetInvalid`, `sub_10313486`, `sub_1006AE30`, `CMoDX::SetWorldMatrix`, `Gfx_SetViewMatrixFromField90`, `sub_1003E2A0`, `Camera_GetFloat2E0`, `Camera_GetFloat2DC`, `sub_1003D640`, `Gfx_SetViewMatrixFromField10`
-- `Sky_DrawDomeViewCentered` calls `Camera_SetClearColorRGB`, `MoDX_SetInvalid`, `sub_10313486`, `sub_1006AE30`, `CMoDX::SetWorldMatrix`, `CMoDX::PushViewMatrix`, `CMoDX::SetViewMatrix`, `Color_SetFromU32SwapRB`, `Camera_GetFloat2E0`, `Camera_GetFloat2DC`, `sub_1003D640`, `CMoDX::PopViewMatrix`
-- `SkyDome_ScaleColorBytes` calls `sub_10311C2C`
-- `SkyDome_ScaleBytesByVec4` calls `sub_10311C2C`
+- `Sky_DrawDome` calls `Camera_SetClearColorRGB`, `MoDX_SetInvalid`, `game_10313486`, `game_1006AE30`, `CMoDX::SetWorldMatrix`, `Gfx_SetViewMatrixFromField90`, `game_1003E2A0`, `Camera_GetFloat2E0`, `Camera_GetFloat2DC`, `game_1003D640`, `Gfx_SetViewMatrixFromField10`
+- `Sky_DrawDomeViewCentered` calls `Camera_SetClearColorRGB`, `MoDX_SetInvalid`, `game_10313486`, `game_1006AE30`, `CMoDX::SetWorldMatrix`, `CMoDX::PushViewMatrix`, `CMoDX::SetViewMatrix`, `Color_SetFromU32SwapRB`, `Camera_GetFloat2E0`, `Camera_GetFloat2DC`, `game_1003D640`, `CMoDX::PopViewMatrix`
+- `SkyDome_ScaleColorBytes` calls `game_10311C2C`
+- `SkyDome_ScaleBytesByVec4` calls `game_10311C2C`
 - `SkyDome_AddBytes` calls nothing directly
 - `Color_SetFromU32SwapRB` calls nothing directly
-- `SkyDome_ScaleAlpha` calls `sub_10311C2C`
-- `SkyDome_AddScaledBytes` calls `sub_10311C2C`
-- `SkyDome_AddScaledWords` calls `sub_10311C2C`
-- `SkyDome_AddScaledWordsSaturated` calls `sub_10311C2C`
+- `SkyDome_ScaleAlpha` calls `game_10311C2C`
+- `SkyDome_AddScaledBytes` calls `game_10311C2C`
+- `SkyDome_AddScaledWords` calls `game_10311C2C`
+- `SkyDome_AddScaledWordsSaturated` calls `game_10311C2C`
 - `SkyDome_AddToByte2` calls nothing directly
 - `SkyDome_AddToByte1` calls nothing directly
 - `SkyDome_AddToByte0` calls nothing directly
-- `SkyDome_AddScaledToByte3` calls `sub_10311C2C`
+- `SkyDome_AddScaledToByte3` calls `game_10311C2C`

@@ -14,4 +14,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoCameraTask.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `CMoCameraTask::GetRuntimeClass` calls nothing directly
-- `CMoCameraTask::ScalarDeletingDtor` calls `sub_1003D030`, `SharedDeleteHelper`
+- `CMoCameraTask::ScalarDeletingDtor` calls `game_1003D030`, `SharedDeleteHelper`

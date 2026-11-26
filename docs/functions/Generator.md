@@ -20,8 +20,8 @@ Why the file has this name (data/unit_names.json): YmGenerater_Stop / UpdateAtta
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `Generator_ClearSubobjectOrSetFlag` calls nothing directly
-- `YmGenerater_Stop` calls `sub_10071E90`, `CMoResource::ReleaseChain`, `sub_10311C2C`, `CMoTask::Restart`, `sub_100496F0`, `Generator_ClearSubobjectOrSetFlag`
+- `YmGenerater_Stop` calls `game_10071E90`, `CMoResource::ReleaseChain`, `game_10311C2C`, `CMoTask::Restart`, `game_100496F0`, `Generator_ClearSubobjectOrSetFlag`
 - `Generator_IsFlag400OrField22Zero` calls `GeneratorClone_GetShort22ViaPtrE4`
-- `Generator_StopGenerators` calls `CYyObject_IsKindOf`, `Generator_ClearSubobjectOrSetFlag`, `YmGenerater_Stop`, `CMoAttachments::GetTarget`, `sub_10071E90`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`, `ResourceIter_Start`, `ResourceIter_FindNext`
+- `Generator_StopGenerators` calls `CYyObject_IsKindOf`, `Generator_ClearSubobjectOrSetFlag`, `YmGenerater_Stop`, `CMoAttachments::GetTarget`, `game_10071E90`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`, `ResourceIter_Start`, `ResourceIter_FindNext`
 - `YmGenerater_UpdateAttach` calls `YmGenerater_BuildAttachMatrix`
-- `YmGenerater_UpdateAttachIfPresent` calls `sub_100492B0`, `YmGenerater_UpdateAttach`
+- `YmGenerater_UpdateAttachIfPresent` calls `game_100492B0`, `YmGenerater_UpdateAttach`

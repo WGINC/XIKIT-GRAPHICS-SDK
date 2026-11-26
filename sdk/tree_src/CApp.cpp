@@ -8,36 +8,36 @@
 char CApp::RunMainLoop()
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  char *v2;
-  char *v3;
+  char *p1;
+  char *p2;
   alignas(16) unsigned char xi_frame[0x424];  // address-taken locals at their original offsets
-  char &v5 = *reinterpret_cast<char *>(xi_frame + 0x13);
+  char &c1 = *reinterpret_cast<char *>(xi_frame + 0x13);
   struct tagMSG &Msg = *reinterpret_cast<struct tagMSG *>(xi_frame + 0x14);
 
   orig::App_ForceForegroundWindow(*((HWND *)self + 6));
   if ( orig::CDx_Initialize(g_pCDx) != 0 && orig::App_CreateInputSystem(*((HINSTANCE *)self + 5)) != 0 )
   {
     GetWindowRect(*((HWND *)self + 6), (LPRECT)self + 2);
-    v2 = (char *)orig::Allocator_Generic(0x33Cu);
-    if ( v2 != nullptr )
+    p1 = (char *)orig::Allocator_Generic(0x33Cu);
+    if ( p1 != nullptr )
     {
-      v3 = orig::App_Constructor(v2);
-      g_pCamera = (std::codecvt_base *)v3;
-      if ( v3 != nullptr )
+      p2 = orig::App_Constructor(p1);
+      g_pCamera = (std::codecvt_base *)p2;
+      if ( p2 != nullptr )
       {
-        orig::App_SetSeqStep(v3, 0);
+        orig::App_SetSeqStep(p2, 0);
         do
         {
-          v5 = 0;
-          if ( orig::App_InitScene((int)g_pCamera, (int)&v5) == 0 )
-            goto LABEL_23;
+          c1 = 0;
+          if ( orig::App_InitScene((int)g_pCamera, (int)&c1) == 0 )
+            goto L1;
         }
-        while ( v5 != 1 );
+        while ( c1 != 1 );
         this->mainLoopActive = 1;
-LABEL_9:
+L2:
         orig::App_ForceForegroundWindow(*((HWND *)self + 6));
-        if ( (unsigned __int8)orig::App_RenderFrameMaskedFPU(self) == 0 )
-          goto LABEL_23;
+        if ( (unsigned char)orig::App_RenderFrameMaskedFPU(self) == 0 )
+          goto L1;
         while ( 1 )
         {
           do
@@ -45,18 +45,18 @@ LABEL_9:
             if ( !PeekMessageA(&Msg, nullptr, 0, 0, 1u) || Msg.message == 1025 )
             {
               if ( Msg.message == 18 )
-                goto LABEL_23;
-              goto LABEL_9;
+                goto L1;
+              goto L2;
             }
             if ( Msg.message == 18 )
-              goto LABEL_23;
+              goto L1;
           }
           while ( Msg.message == 641 || Msg.message == 28 );
           if ( Msg.message == 261 )
           {
             if ( Msg.wParam == 44 )
-              goto LABEL_17;
-LABEL_21:
+              goto L3;
+L4:
             orig::App_PreTranslateInputMessage((int)Msg.hwnd, Msg.message, Msg.wParam, Msg.lParam);
             TranslateMessage(&Msg);
             DispatchMessageA(&Msg);
@@ -64,8 +64,8 @@ LABEL_21:
           else
           {
             if ( Msg.message != 257 || Msg.wParam != 44 )
-              goto LABEL_21;
-LABEL_17:
+              goto L4;
+L3:
             orig::CApp_CopyTextToClipboard((HWND *)self, &Read);
           }
         }
@@ -76,32 +76,32 @@ LABEL_17:
       g_pCamera = nullptr;
     }
   }
-LABEL_23:
+L1:
   this->mainLoopActive = 0;
   return orig::Camera_ReleaseAll(g_pCamera);
 }
 
 // FUNCTION: FFXIMAIN 0x10001CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CApp::CopyTextToClipboard(void * self, LPCSTR param_1)
+void __thiscall CApp::CopyTextToClipboard(void * self, LPCSTR arg2)
 {
-  char cVar1;
+  char c1;
   HGLOBAL hMem;
   LPSTR lpString1;
-  uint32_t uVar2;
-  LPCSTR pCVar3;
+  uint32_t u1;
+  LPCSTR val1;
   
-  uVar2 = 0xffffffff;
-  pCVar3 = param_1;
+  u1 = 0xffffffff;
+  val1 = arg2;
   do {
-    if (uVar2 == 0) break;
-    uVar2 = uVar2 - 1;
-    cVar1 = *pCVar3;
-    pCVar3 = pCVar3 + 1;
-  } while (cVar1 != '\0');
-  hMem = GlobalAlloc(0x2002,~uVar2);
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *val1;
+    val1 = val1 + 1;
+  } while (c1 != '\0');
+  hMem = GlobalAlloc(0x2002,~u1);
   lpString1 = GlobalLock(hMem);
-  lstrcpyA(lpString1,param_1);
+  lstrcpyA(lpString1,arg2);
   GlobalUnlock(hMem);
   OpenClipboard(*(HWND *)((int)self + 0x18));
   EmptyClipboard();

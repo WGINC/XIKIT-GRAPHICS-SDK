@@ -22,14 +22,14 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqmdDMB.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqmdDMB_Resolve` calls `sqDebugPrintf`, `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`, `SqTimer_GetMicroseconds`, `SqmdDMB_ResolveTextures`, `SqmdDMB_ResolveShaders`, `SqmdDMB_ResolveMatrices`, `SqmdDMB_ResolveStrings`, `SqmdDMB_ClearTables`, `SqmdDMB_ResetCounts`, `sqmdDMBBuildShapes`, `SqmdDMB_BuildUpdaters`, `SqMem_HexDump`
+- `SqmdDMB_Resolve` calls `sqDebugPrintf`, `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`, `SqTimer_GetMicroseconds`, `SqmdDMB_ResolveTextures`, `SqmdDMB_ResolveShaders`, `SqmdDMB_ResolveMatrices`, `SqmdDMB_ResolveStrings`, `SqmdDMB_ClearTables`, `SqmdDMB_ResetCounts`, `sqmdDMBBuildShapes`, `SqmdDMB_BuildUpdaters`, `SqMem_HexDump`
 - `SqmdDMB_TraceDelta` calls nothing directly
-- `SqmdDMB_AlignMem` calls `SqmdDMB_TraceDelta`, `sub_10314D55`
-- `SqmdDMB_ResolveTextures` calls `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`, `sqgxTextureAdd`, `sqDebugPrintf`, `sqgxTextureClutAdd`
-- `SqmdDMB_ResolveShaders` calls `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`, `SqmdDMB_TextureLink`, `sqDebugPrintf`
+- `SqmdDMB_AlignMem` calls `SqmdDMB_TraceDelta`, `game_10314D55`
+- `SqmdDMB_ResolveTextures` calls `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`, `sqgxTextureAdd`, `sqDebugPrintf`, `sqgxTextureClutAdd`
+- `SqmdDMB_ResolveShaders` calls `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`, `SqmdDMB_TextureLink`, `sqDebugPrintf`
 - `SqmdDMB_TextureLink` calls `sqDebugPrintf`
-- `SqmdDMB_ResolveMatrices` calls `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`
-- `SqmdDMB_ResolveStrings` calls `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`
+- `SqmdDMB_ResolveMatrices` calls `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`
+- `SqmdDMB_ResolveStrings` calls `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`
 - `SqmdDMB_ClearTables` calls nothing directly
 - `SqmdDMB_ResetCounts` calls nothing directly
-- `sqmdDMBBuildShapes` calls `SqmdDMB_TraceDelta`, `sub_10314D55`, `SqmdDMB_AlignMem`, `SqshBuild_BuildSQO`, `sqsdSampling_BakeOntoShape`, `sqsdAniso_BakeOntoShape`, `sqsdGeneric_BakeOntoShape`, `sqsdGlow_BakeOntoShape`, `sqsdCartoon_BakeOntoShape_Stub`, `SqmdModel_AppendPair68Flag100`, `sqDebugPrintf`
+- `sqmdDMBBuildShapes` calls `SqmdDMB_TraceDelta`, `game_10314D55`, `SqmdDMB_AlignMem`, `SqshBuild_BuildSQO`, `sqsdSampling_BakeOntoShape`, `sqsdAniso_BakeOntoShape`, `sqsdGeneric_BakeOntoShape`, `sqsdGlow_BakeOntoShape`, `sqsdCartoon_BakeOntoShape_Stub`, `SqmdModel_AppendPair68Flag100`, `sqDebugPrintf`

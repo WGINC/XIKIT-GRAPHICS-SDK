@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): PlaybackChannel_Load, the str
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `PlaybackChannel_Load` calls `SqScriptRead_ReadBlock`, `sqDebugPrintf`, `SqmoPlaybackChannel_Create`, `sub_10275D80`, `SqChannelHandler_SetHandlerByType`, `SqmoPlaybackChannel_Update`
+- `PlaybackChannel_Load` calls `SqScriptRead_ReadBlock`, `sqDebugPrintf`, `SqmoPlaybackChannel_Create`, `game_10275D80`, `SqChannelHandler_SetHandlerByType`, `SqmoPlaybackChannel_Update`

@@ -40,22 +40,22 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `TextCommand_ParseOnOff` calls nothing directly
 - `TextCommand_ParseNumber` calls nothing directly
-- `SeekIdByString` calls `Target_GetActorPtr`, `Acter_CopyNameToBuffer`, `NetCellFont_GetIdPair`, `Acter_FindMatchingActor`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `NetCellFont_GetActiveBlock3AE98`, `ActerBuff_FindNearest`, `YkCommon_GetCC4F0ActorAt2A0`, `sub_10312050`, `TaskAndTextArgs_MapNameLetters`, `Actor_FindByName`, `TextCommand_ParseNumber`, `Entry_ValidateKey`, `Actor_FindInRange`, `Acter_GetCurrentIdRef`, `Acter_ClearCurrentName`
+- `SeekIdByString` calls `Target_GetActorPtr`, `Acter_CopyNameToBuffer`, `NetCellFont_GetIdPair`, `Acter_FindMatchingActor`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `NetCellFont_GetActiveBlock3AE98`, `ActerBuff_FindNearest`, `YkCommon_GetCC4F0ActorAt2A0`, `game_10312050`, `TaskAndTextArgs_MapNameLetters`, `Actor_FindByName`, `TextCommand_ParseNumber`, `Entry_ValidateKey`, `Actor_FindInRange`, `Acter_GetCurrentIdRef`, `Acter_ClearCurrentName`
 - `Actor_FindInRange` calls `Actor_FindByField78Entry`
 - `Actor_FindByName` calls `Actor_FindByField2a4`, `Actor_FindByNameEntry`
 - `TextCommand_PacketForIdPairKind04` calls `NetCellFont_GetIdPair`, `XI_PACKET_100780A0 (left out)`
 - `TextCommand_PacketForIdPairKind12` calls `NetCellFont_GetIdPair`, `XI_PACKET_100780A0 (left out)`
-- `TextCommand_PacketForIdPairKind1A` calls `NetCellFont_GetIdPair`, `sub_101CC0D0`, `MenuPanels_FindEntryByCallback64`, `XI_PACKET_100780A0 (left out)`
-- `TextCommand_TargetActionToPacket` calls `YkCommon_IsActorField170Is5`, `YkCommon_IsActorField170Is55`, `sub_100A1AB0`, `XI_PACKET_100780A0 (left out)`, `NetCellFont_SetWord40DAA`, `ChatLog_AddMessage7Code37B`
+- `TextCommand_PacketForIdPairKind1A` calls `NetCellFont_GetIdPair`, `game_101CC0D0`, `MenuPanels_FindEntryByCallback64`, `XI_PACKET_100780A0 (left out)`
+- `TextCommand_TargetActionToPacket` calls `YkCommon_IsActorField170Is5`, `YkCommon_IsActorField170Is55`, `game_100A1AB0`, `XI_PACKET_100780A0 (left out)`, `NetCellFont_SetWord40DAA`, `ChatLog_AddMessage7Code37B`
 - `UI_QuestCommand` calls `MenuMng_OpenByName`
-- `TextCommand_CheckThenPostUiRequest0E` calls `YkCommon_TestFlags100Or40DAC`, `NetCellFont_IsReadyBy3C350`, `NetCellFont_GetDword40C3C`, `ChatLog_AddMessage7Code37B`, `sub_101CC0D0`, `ntGameTimeGet`, `TargetMenu_GetByteAE`, `Acter_HasEntryForWord40D7C`, `ChatLog_AddTableMessage7`, `XI_PACKET_100F7FA0 (left out)`
-- `TextCommand_ChangeMyroomMode2` calls `YkCommon_TestFlags100Or40DAC`, `NetCellFont_IsReadyBy3C350`, `NetCellFont_GetDword40C3C`, `ChatLog_AddMessage7Code37B`, `sub_101CC0D0`, `ntGameTimeGet`, `TargetMenu_GetByteAE`, `Acter_HasEntryForWord40D7C`, `ChatLog_AddTableMessage7`, `YkMyroom::ChangeMode`
+- `TextCommand_CheckThenPostUiRequest0E` calls `YkCommon_TestFlags100Or40DAC`, `NetCellFont_IsReadyBy3C350`, `NetCellFont_GetDword40C3C`, `ChatLog_AddMessage7Code37B`, `game_101CC0D0`, `ntGameTimeGet`, `TargetMenu_GetByteAE`, `Acter_HasEntryForWord40D7C`, `ChatLog_AddTableMessage7`, `XI_PACKET_100F7FA0 (left out)`
+- `TextCommand_ChangeMyroomMode2` calls `YkCommon_TestFlags100Or40DAC`, `NetCellFont_IsReadyBy3C350`, `NetCellFont_GetDword40C3C`, `ChatLog_AddMessage7Code37B`, `game_101CC0D0`, `ntGameTimeGet`, `TargetMenu_GetByteAE`, `Acter_HasEntryForWord40D7C`, `ChatLog_AddTableMessage7`, `YkMyroom::ChangeMode`
 - `TextCommand_Run100A3040` calls `AuctionMenu_CreateTaskOnce`
 - `Actor_GetObjectByName` calls `SeekIdByString`
 - `TextCommand_GetWord1047D3FC` calls nothing directly
 - `TextCommand_IsIdNotInTable10357BB8` calls `ActorHandle_Resolve`
 - `Actor_IsInTable` calls nothing directly
-- `Command_RunLine` calls `TextInputFiles_ProcessInputLine`, `Arg_LookupWord`, `ChatLog_AddMessage7Code37B`, `preprocessArg`, `FsTextInput_GetDataPtr8`, `Arg_CopyCharOrPair`, `Arg_SplitQuoted`, `Arg_FindInSortedTable`, `ChatLog_AddFormattedMessage`, `TextCommand_CheckCommandAllowed`, `sub_10311FF1`, `TargetMenu_GetMessageFwd`
+- `Command_RunLine` calls `TextInputFiles_ProcessInputLine`, `Arg_LookupWord`, `ChatLog_AddMessage7Code37B`, `preprocessArg`, `FsTextInput_GetDataPtr8`, `Arg_CopyCharOrPair`, `Arg_SplitQuoted`, `Arg_FindInSortedTable`, `ChatLog_AddFormattedMessage`, `TextCommand_CheckCommandAllowed`, `game_10311FF1`, `TargetMenu_GetMessageFwd`
 - `TextCommand_CheckCommandAllowed` calls `TextCommand_GetWord1047D3FC`, `Acter_IsState5`, `Acter_IsState55`, `IsEvent`, `ChatLog_AddTableMessage7`, `YkCommon_IsActorField170Is6`, `ChatLog_AddMessage7Code37B`, `TextCommand_TestBit1047D499`, `Menu_FindByFlags34`, `Acter_IsFlag40DB6OrState17`, `TextCommand_IsIdNotInTable10357BB8`, `YkWindows_IsSingleUncheckedEntry`, `Actor_IsInTable`
 - `TextCommand_SetFlag1047D498` calls nothing directly
 - `TextCommand_TestBit1047D499` calls nothing directly

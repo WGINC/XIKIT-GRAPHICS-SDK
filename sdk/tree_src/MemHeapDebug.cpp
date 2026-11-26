@@ -4,56 +4,56 @@
 
 // FUNCTION: FFXIMAIN 0x10029390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall MemHeapDebug_ApplyFourTables(undefined4 param_1)
+XI_API bits32 __stdcall MemHeapDebug_ApplyFourTables(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  orig::MemBlock_CallEnabledList2(param_1);
-  orig::MemBlock_CallEnabledList3(param_1);
-  orig::MemBlock_CallEnabledList1(param_1);
-  uVar1 = orig::MemBlock_CallEnabledList0(param_1);
-  return uVar1;
+  orig::MemBlock_CallEnabledList2(arg1);
+  orig::MemBlock_CallEnabledList3(arg1);
+  orig::MemBlock_CallEnabledList1(arg1);
+  u1 = orig::MemBlock_CallEnabledList0(arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100295A0
 // GATE: PASS -- 100 trials, 100 returned normally, 1754 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall Mem_DrawHeapUsageBar(int a1, int a2, int a3, int a4, int a5)
+XI_API int __stdcall Mem_DrawHeapUsageBar(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
-  _DWORD *v5;
+  uint32_t *p1;
   alignas(16) unsigned char xi_frame[0x4F4];  // address-taken locals at their original offsets
-  int (&v7)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0xA4);
-  unsigned int &v8 = *reinterpret_cast<unsigned int *>(xi_frame + 0xB4);
-  float (&v9)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xB8);
-  unsigned int &v10 = *reinterpret_cast<unsigned int *>(xi_frame + 0xC8);
-  _DWORD (&v11)[4] = *reinterpret_cast<_DWORD (*)[4]>(xi_frame + 0xCC);
-  unsigned int &v12 = *reinterpret_cast<unsigned int *>(xi_frame + 0xDC);
-  float (&v13)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xE0);
-  unsigned int &v14 = *reinterpret_cast<unsigned int *>(xi_frame + 0xF0);
+  int (&i1)[4] = *reinterpret_cast<int (*)[4]>(xi_frame + 0xA4);
+  unsigned int &u1 = *reinterpret_cast<unsigned int *>(xi_frame + 0xB4);
+  float (&f1)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xB8);
+  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0xC8);
+  uint32_t (&u3)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0xCC);
+  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0xDC);
+  float (&f2)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0xE0);
+  unsigned int &u5 = *reinterpret_cast<unsigned int *>(xi_frame + 0xF0);
   float a2a;
   float a4a;
   float a5a;
-  v8 = 0x80000000;
-  v10 = 0x80000000;
-  v12 = 0x80000000;
-  v14 = 0x80000000;
-  v5 = (_DWORD *)a1;
-  v7[1] = a4;
-  LODWORD(v9[1]) = a4;
-  LODWORD(v13[1]) = a5;
-  v7[0] = 0;
-  v7[2] = 0;
-  v7[3] = 1065353216;
-  v9[0] = 0.0;
-  v9[2] = 0.0;
-  v9[3] = 1.0;
-  v11[0] = 0;
-  v11[2] = 0;
-  v11[3] = 1065353216;
-  v13[0] = 0.0;
-  v13[2] = 0.0;
-  v13[3] = 1.0;
-  v11[1] = a5;
-  a5a = (float)(unsigned int)(a2 - a1);
+  u1 = 0x80000000;
+  u2 = 0x80000000;
+  u4 = 0x80000000;
+  u5 = 0x80000000;
+  p1 = (uint32_t *)arg1;
+  i1[1] = arg4;
+  (*(uint32_t *)&(f1[1])) = arg4;
+  (*(uint32_t *)&(f2[1])) = arg5;
+  i1[0] = 0;
+  i1[2] = 0;
+  i1[3] = 1065353216;
+  f1[0] = 0.0;
+  f1[2] = 0.0;
+  f1[3] = 1.0;
+  u3[0] = 0;
+  u3[2] = 0;
+  u3[3] = 1065353216;
+  f2[0] = 0.0;
+  f2[2] = 0.0;
+  f2[3] = 1.0;
+  u3[1] = arg5;
+  a5a = (float)(unsigned int)(arg2 - arg1);
   a4a = 0.0;
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
@@ -66,35 +66,35 @@ XI_API int __stdcall Mem_DrawHeapUsageBar(int a1, int a2, int a3, int a4, int a5
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
-  if ( a1 != 0 )
+  if ( arg1 != 0 )
   {
     do
     {
-      orig::Vec4_Copy(v7, v9);
-      orig::Vec4_Copy(v11, v13);
-      if ( v5[1] == 1 )
+      orig::Vec4_Copy(i1, f1);
+      orig::Vec4_Copy(u3, f2);
+      if ( p1[1] == 1 )
       {
-        v8 = 1082130432;
-        v10 = 1082130432;
-        v12 = 1082130432;
-        v14 = 1082130432;
+        u1 = 1082130432;
+        u2 = 1082130432;
+        u4 = 1082130432;
+        u5 = 1082130432;
       }
       else
       {
-        v8 = 1073741952;
-        v10 = 1073741952;
-        v12 = 1073741952;
-        v14 = 1073741952;
+        u1 = 1073741952;
+        u2 = 1073741952;
+        u4 = 1073741952;
+        u5 = 1073741952;
       }
       a2a = 1.0 / a5a;
-      a4a = (double)orig::MemBlock_GetSize(v5) * a2a * 512.0 + a4a;
-      v13[0] = a4a;
-      v9[0] = a4a;
+      a4a = (double)orig::MemBlock_GetSize(p1) * a2a * 512.0 + a4a;
+      f2[0] = a4a;
+      f1[0] = a4a;
       (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 68u);
-      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)v7, 20);
-      v5 = (_DWORD *)v5[2];
+      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)i1, 20);
+      p1 = (uint32_t *)p1[2];
     }
-    while ( v5 != nullptr );
+    while ( p1 != nullptr );
   }
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);

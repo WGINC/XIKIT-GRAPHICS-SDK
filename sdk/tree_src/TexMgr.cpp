@@ -13,14 +13,14 @@ XI_API int __thiscall TexMgr_GetField8(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int * __thiscall TexMgr_GetTailLink(void * self_)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  piVar2 = (int *)orig::TexMgr_GetField8(self_);
-  for (iVar1 = *piVar2; iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x38)) {
-    piVar2 = (int *)(iVar1 + 0x38);
+  p1 = (int *)orig::TexMgr_GetField8(self_);
+  for (i1 = *p1; i1 != 0; i1 = *(int *)(i1 + 0x38)) {
+    p1 = (int *)(i1 + 0x38);
   }
-  return piVar2;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003AB70
@@ -33,91 +33,91 @@ XI_API uint8_t __thiscall TexMgr_UploadPumpEntry(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1003AB80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall TexMgr_Enqueue(void * self_, int param_1)
+XI_API void __thiscall TexMgr_Enqueue(void * self_, int arg2)
 {
-  *(uint32_t *)(param_1 + 0x3c) = 1;
-  orig::FUN_1003ab40(self_, param_1);
+  *(uint32_t *)(arg2 + 0x3c) = 1;
+  orig::game_1003AB40(self_, arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003ABB0
 // GATE: PASS -- 100 trials, 100 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TexMgr_UploadPump(void * self_)
+XI_API bits32 __thiscall TexMgr_UploadPump(void * self_)
 {
-  int *piVar1;
-  void *this_00;
-  int *piVar2;
-  int iVar3;
-  int *piVar4;
+  int *p1;
+  void *obj1;
+  int *p2;
+  int i1;
+  int *p3;
   
-  iVar3 = 0;
-  piVar2 = *(int **)((int)self_ + 0xc);
-  piVar1 = (int *)((int)self_ + 0xc);
-  piVar4 = piVar1;
-  if (piVar2 == (int *)0x0) {
-    piVar2 = (int *)orig::TexMgr_GetField8(self_);
-    piVar4 = piVar2;
+  i1 = 0;
+  p2 = *(int **)((int)self_ + 0xc);
+  p1 = (int *)((int)self_ + 0xc);
+  p3 = p1;
+  if (p2 == (int *)0x0) {
+    p2 = (int *)orig::TexMgr_GetField8(self_);
+    p3 = p2;
   }
-  this_00 = (void *)*piVar4;
-  while (this_00 != (void *)0x0) {
-    piVar2 = *(int **)((int)this_00 + 0x3c);
-    if (piVar2 == (int *)0x1) {
-      orig::TexObj_CreateAndUpload_v1(this_00);
-      piVar2 = (int *)*piVar4;
-      *piVar1 = (int)piVar2;
+  obj1 = (void *)*p3;
+  while (obj1 != (void *)0x0) {
+    p2 = *(int **)((int)obj1 + 0x3c);
+    if (p2 == (int *)0x1) {
+      orig::TexObj_CreateAndUpload_v1(obj1);
+      p2 = (int *)*p3;
+      *p1 = (int)p2;
       if (((*g_pSceneState_as_v0 == 0x60) &&
-          (piVar2 = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x10)))),
-          *(char *)((int)self_ + 0x10) == '\0')) && (iVar3 = iVar3 + 1, 0x14 < iVar3)) break;
+          (p2 = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x10)))),
+          *(char *)((int)self_ + 0x10) == '\0')) && (i1 = i1 + 1, 0x14 < i1)) break;
     }
-    else if (piVar2 == (int *)0x2) {
-      if ((*(int *)((int)this_00 + 0x40) != 0) || (*(int *)((int)this_00 + 0x44) != 0)) {
-        piVar2 = *(int **)((int)this_00 + 0x40);
-        if (piVar2 == (int *)0x0) {
-          piVar2 = *(int **)((int)this_00 + 0x44);
+    else if (p2 == (int *)0x2) {
+      if ((*(int *)((int)obj1 + 0x40) != 0) || (*(int *)((int)obj1 + 0x44) != 0)) {
+        p2 = *(int **)((int)obj1 + 0x40);
+        if (p2 == (int *)0x0) {
+          p2 = *(int **)((int)obj1 + 0x44);
         }
-        ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar2 + 8))))(piVar2);
+        ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p2 + 8))))(p2);
       }
-      orig::TexObj_Reupload((void *)*piVar4);
-      piVar2 = (int *)*piVar4;
-      *piVar1 = (int)piVar2;
+      orig::TexObj_Reupload((void *)*p3);
+      p2 = (int *)*p3;
+      *p1 = (int)p2;
     }
-    piVar4 = (int *)(*piVar4 + 0x38);
-    this_00 = (void *)*piVar4;
+    p3 = (int *)(*p3 + 0x38);
+    obj1 = (void *)*p3;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar2 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1003AEA0
 // GATE: PASS -- 100 trials, 65 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 65
-XI_API int __thiscall TexMgr_FindByName(void * self_, int param_1, int param_2, undefined4 param_3)
+XI_API int __thiscall TexMgr_FindByName(void * self_, int arg2, int arg3, bits32 arg4)
 {
-  int iVar1;
-  int *piVar2;
-  uint32_t uVar3;
-  int iVar4;
+  int i1;
+  int *p1;
+  uint32_t u1;
+  int i2;
   
-  piVar2 = (int *)orig::TexMgr_GetField8(self_);
-  iVar1 = *piVar2;
+  p1 = (int *)orig::TexMgr_GetField8(self_);
+  i1 = *p1;
   do {
-    if (iVar1 == 0) {
+    if (i1 == 0) {
       return 0;
     }
-    uVar3 = *(uint32_t *)(iVar1 + 0x2c) >> 3;
-    if ((char)param_3 == '\x01') {
-      if ((uVar3 & 1) != 0) {
-LAB_1003aed2:
-        iVar4 = 0;
+    u1 = *(uint32_t *)(i1 + 0x2c) >> 3;
+    if ((char)arg4 == '\x01') {
+      if ((u1 & 1) != 0) {
+code_1003AED2:
+        i2 = 0;
         do {
-          if (*(char *)(iVar1 + 0xc + iVar4) != *(char *)(iVar4 + param_1)) break;
-          iVar4 = iVar4 + 1;
-        } while (iVar4 < 0x10);
-        if ((iVar4 == 0x10) && (*(int *)(iVar1 + 8) == param_2)) {
-          return *piVar2;
+          if (*(char *)(i1 + 0xc + i2) != *(char *)(i2 + arg2)) break;
+          i2 = i2 + 1;
+        } while (i2 < 0x10);
+        if ((i2 == 0x10) && (*(int *)(i1 + 8) == arg3)) {
+          return *p1;
         }
       }
     }
-    else if ((uVar3 & 1) == 0) goto LAB_1003aed2;
-    piVar2 = (int *)(iVar1 + 0x38);
-    iVar1 = *(int *)(iVar1 + 0x38);
+    else if ((u1 & 1) == 0) goto code_1003AED2;
+    p1 = (int *)(i1 + 0x38);
+    i1 = *(int *)(i1 + 0x38);
   } while( true );
 }

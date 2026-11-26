@@ -4,20 +4,20 @@
 
 // FUNCTION: FFXIMAIN 0x10273840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneRecord_SetEntryField18(undefined4 param_1, uint32_t param_2, undefined4 param_3)
+XI_API void __cdecl SceneRecord_SetEntryField18(bits32 arg1, uint32_t arg2, bits32 arg3)
 {
   *(uint32_t *)
-   (*(int *)(DAT_1099b184 + 0x28 + ((int)param_2 >> 0x10) * 0x2c) + 0x18 + (param_2 & 0xffff) * 0x90
-   ) = param_3;
+   (*(int *)(g_1099B184 + 0x28 + ((int)arg2 >> 0x10) * 0x2c) + 0x18 + (arg2 & 0xffff) * 0x90
+   ) = arg3;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10273870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneRecord_ClearGroupField4(int param_1)
+XI_API void __cdecl SceneRecord_ClearGroupField4(int arg1)
 {
-  if ((-1 < param_1) && (param_1 < DAT_1099b180)) {
-    *(uint32_t *)(DAT_1099b184 + 4 + param_1 * 0x2c) = 0;
+  if ((-1 < arg1) && (arg1 < g_1099B180)) {
+    *(uint32_t *)(g_1099B184 + 4 + arg1 * 0x2c) = 0;
   }
   return;
 }
@@ -26,27 +26,27 @@ XI_API void __cdecl SceneRecord_ClearGroupField4(int param_1)
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
 XI_API void __cdecl SceneRecord_ClearCurrentField4(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = DAT_1099b100 * 0x30 + DAT_1099b17c;
-  if (*(int *)(iVar1 + 8) != 0) {
-    *(uint32_t *)(iVar1 + 4) = 0;
+  i1 = g_1099B100 * 0x30 + g_1099B17C;
+  if (*(int *)(i1 + 8) != 0) {
+    *(uint32_t *)(i1 + 4) = 0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102738D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneRecord_InitRecord(undefined4 * param_1)
+XI_API void __cdecl SceneRecord_InitRecord(bits32 * arg1)
 {
-  *param_1 = 1;
-  param_1[1] = 0xffffffff;
-  param_1[2] = 0;
-  param_1[3] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0xffffffff;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
+  *arg1 = 1;
+  arg1[1] = 0xffffffff;
+  arg1[2] = 0;
+  arg1[3] = 0;
+  arg1[4] = 0;
+  arg1[5] = 0xffffffff;
+  arg1[6] = 0;
+  arg1[7] = 0;
+  arg1[8] = 0;
   return;
 }

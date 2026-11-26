@@ -5,8 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CMoSchOp0CTask {
 public:
-    int * ScalarDeletingDtor(char a2);  // 0x10043C90
-    int ScalarDeletingDtor_2(int a1);  // 0x10043E20
+    int * ScalarDeletingDtor(char arg1);  // 0x10043C90
+    int ScalarDeletingDtor_2(int arg1);  // 0x10043E20
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

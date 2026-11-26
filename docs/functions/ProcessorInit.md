@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): InitMatrices; called only fro
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ProcessorInit_InitMatrices` calls `sub_10313486`
+- `ProcessorInit_InitMatrices` calls `game_10313486`

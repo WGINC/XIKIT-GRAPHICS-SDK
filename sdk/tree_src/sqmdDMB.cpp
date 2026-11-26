@@ -4,821 +4,821 @@
 
 // FUNCTION: FFXIMAIN 0x10287FB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqmdDMB_Resolve(char * param_1, undefined4 param_2)
+XI_API int __cdecl SqmdDMB_Resolve(char * arg1, bits32 arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int *piVar7;
-  uint8_t *pbVar8;
-  uint64_t uVar9;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  int i2;
+  int i3;
+  int i4;
+  int *p1;
+  uint8_t *p2;
+  uint64_t u3;
   
-  if (((uint32_t)param_1 & 0xf) != 0) {
-    orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolve___expe_103b8e8c,0x10);
+  if (((uint32_t)arg1 & 0xf) != 0) {
+    orig::sqDebugPrintf_v1(str_____Error__sqmdDMBResolve___expe_103B8E8C,0x10);
     return 0;
   }
-  if (((*param_1 == 'D') && (param_1[1] == 'M')) && (param_1[2] == 'B')) {
-    *(char **)(param_1 + 8) = param_1;
-    param_1[0xc] = '\0';
-    param_1[0xd] = '\0';
-    param_1[0xe] = '\0';
-    param_1[0xf] = '\0';
-    if (DAT_109a2788 != 0) {
-      iVar1 = orig::SqmdDMB_TraceDelta((int)param_1);
-      orig::FUN_10314d55(DAT_109a2788,s__06ld_____sqmdDMBResolve___103b8e70,iVar1);
+  if (((*arg1 == 'D') && (arg1[1] == 'M')) && (arg1[2] == 'B')) {
+    *(char **)(arg1 + 8) = arg1;
+    arg1[0xc] = '\0';
+    arg1[0xd] = '\0';
+    arg1[0xe] = '\0';
+    arg1[0xf] = '\0';
+    if (g_109A2788 != 0) {
+      i1 = orig::SqmdDMB_TraceDelta((int)arg1);
+      orig::game_10314D55(g_109A2788,str__06ld_____sqmdDMBResolve___103B8E70,i1);
     }
-    uVar2 = orig::SqmdDMB_AlignMem((uint32_t)(param_1 + 0x10));
-    *(code **)(uVar2 + 8) = XI_CODE(SqmdModel_Validate_v1);
-    *(code **)(uVar2 + 0xc) = XI_CODE(SqmdModel_Free_v1);
-    *(code **)(uVar2 + 0x10) = XI_CODE(FUN_10277ff0);
-    *(code **)(uVar2 + 0x18) = XI_CODE(SqmdModel_Update_v1);
-    uVar3 = orig::SqmdDMB_AlignMem(uVar2 + 0xac);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    iVar1 = *(int *)(uVar2 + 0x28);
-    if (*(int *)(uVar2 + 0x28) <= *(int *)(uVar2 + 0x24)) {
-      iVar1 = *(int *)(uVar2 + 0x24);
+    u1 = orig::SqmdDMB_AlignMem((uint32_t)(arg1 + 0x10));
+    *(untyped_fn **)(u1 + 8) = XI_CODE(SqmdModel_Validate_v1);
+    *(untyped_fn **)(u1 + 0xc) = XI_CODE(SqmdModel_Free_v1);
+    *(untyped_fn **)(u1 + 0x10) = XI_CODE(sqmdModel_Dump);
+    *(untyped_fn **)(u1 + 0x18) = XI_CODE(SqmdModel_Update_v1);
+    u2 = orig::SqmdDMB_AlignMem(u1 + 0xac);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    i1 = *(int *)(u1 + 0x28);
+    if (*(int *)(u1 + 0x28) <= *(int *)(u1 + 0x24)) {
+      i1 = *(int *)(u1 + 0x24);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x1c) = 0;
-      *(uint32_t *)(uVar2 + 0x20) = 0;
-    }
-    else {
-      *(uint32_t *)(uVar2 + 0x1c) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8E40,iVar5);
-      }
-      iVar5 = uVar3 + iVar1 * 4;
-      *(int *)(uVar2 + 0x20) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8E0C,iVar6);
-      }
-      uVar3 = iVar5 + iVar1 * 4;
-    }
-    iVar1 = *(int *)(uVar2 + 0x34);
-    if (*(int *)(uVar2 + 0x34) < *(int *)(uVar2 + 0x38)) {
-      iVar1 = *(int *)(uVar2 + 0x38);
-    }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x2c) = 0;
-      *(uint32_t *)(uVar2 + 0x30) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x1c) = 0;
+      *(uint32_t *)(u1 + 0x20) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x2c) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8DDC,iVar5);
+      *(uint32_t *)(u1 + 0x1c) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8E40,i3);
       }
-      iVar5 = uVar3 + iVar1 * 4;
-      *(int *)(uVar2 + 0x30) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8DA8,iVar6);
+      i3 = u2 + i1 * 4;
+      *(int *)(u1 + 0x20) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8E0C,i4);
       }
-      uVar3 = iVar5 + iVar1 * 4;
+      u2 = i3 + i1 * 4;
     }
-    iVar1 = *(int *)(uVar2 + 0x44);
-    if (*(int *)(uVar2 + 0x44) < *(int *)(uVar2 + 0x48)) {
-      iVar1 = *(int *)(uVar2 + 0x48);
+    i1 = *(int *)(u1 + 0x34);
+    if (*(int *)(u1 + 0x34) < *(int *)(u1 + 0x38)) {
+      i1 = *(int *)(u1 + 0x38);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x3c) = 0;
-      *(uint32_t *)(uVar2 + 0x40) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x2c) = 0;
+      *(uint32_t *)(u1 + 0x30) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x3c) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8D78,iVar5);
+      *(uint32_t *)(u1 + 0x2c) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8DDC,i3);
       }
-      iVar5 = uVar3 + iVar1 * 4;
-      *(int *)(uVar2 + 0x40) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8D44,iVar6);
+      i3 = u2 + i1 * 4;
+      *(int *)(u1 + 0x30) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8DA8,i4);
       }
-      uVar3 = iVar5 + iVar1 * 4;
+      u2 = i3 + i1 * 4;
     }
-    iVar1 = *(int *)(uVar2 + 0x58);
-    if (*(int *)(uVar2 + 0x58) < *(int *)(uVar2 + 0x5c)) {
-      iVar1 = *(int *)(uVar2 + 0x5c);
+    i1 = *(int *)(u1 + 0x44);
+    if (*(int *)(u1 + 0x44) < *(int *)(u1 + 0x48)) {
+      i1 = *(int *)(u1 + 0x48);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x4c) = 0;
-      *(uint32_t *)(uVar2 + 0x50) = 0;
-      *(uint32_t *)(uVar2 + 0x54) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x3c) = 0;
+      *(uint32_t *)(u1 + 0x40) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x4c) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8D14,iVar5);
+      *(uint32_t *)(u1 + 0x3c) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8D78,i3);
       }
-      iVar1 = iVar1 * 4;
-      iVar5 = uVar3 + iVar1;
-      *(int *)(uVar2 + 0x50) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8CE4,iVar6);
+      i3 = u2 + i1 * 4;
+      *(int *)(u1 + 0x40) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8D44,i4);
       }
-      iVar5 = iVar5 + iVar1;
-      *(int *)(uVar2 + 0x54) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8CB0,iVar6);
-      }
-      uVar3 = iVar5 + iVar1;
+      u2 = i3 + i1 * 4;
     }
-    iVar1 = *(int *)(uVar2 + 0x68);
-    if (*(int *)(uVar2 + 0x68) < *(int *)(uVar2 + 0x6c)) {
-      iVar1 = *(int *)(uVar2 + 0x6c);
+    i1 = *(int *)(u1 + 0x58);
+    if (*(int *)(u1 + 0x58) < *(int *)(u1 + 0x5c)) {
+      i1 = *(int *)(u1 + 0x5c);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x60) = 0;
-      *(uint32_t *)(uVar2 + 100) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x4c) = 0;
+      *(uint32_t *)(u1 + 0x50) = 0;
+      *(uint32_t *)(u1 + 0x54) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x60) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8C84,iVar5);
+      *(uint32_t *)(u1 + 0x4c) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8D14,i3);
       }
-      iVar5 = uVar3 + iVar1 * 4;
-      *(int *)(uVar2 + 100) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8C54,iVar6);
+      i1 = i1 * 4;
+      i3 = u2 + i1;
+      *(int *)(u1 + 0x50) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8CE4,i4);
       }
-      uVar3 = iVar5 + iVar1 * 4;
+      i3 = i3 + i1;
+      *(int *)(u1 + 0x54) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8CB0,i4);
+      }
+      u2 = i3 + i1;
     }
-    iVar1 = *(int *)(uVar2 + 0x7c);
-    if (*(int *)(uVar2 + 0x7c) < *(int *)(uVar2 + 0x80)) {
-      iVar1 = *(int *)(uVar2 + 0x80);
+    i1 = *(int *)(u1 + 0x68);
+    if (*(int *)(u1 + 0x68) < *(int *)(u1 + 0x6c)) {
+      i1 = *(int *)(u1 + 0x6c);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x70) = 0;
-      *(uint32_t *)(uVar2 + 0x74) = 0;
-      *(uint32_t *)(uVar2 + 0x78) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x60) = 0;
+      *(uint32_t *)(u1 + 100) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x70) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8C28,iVar5);
+      *(uint32_t *)(u1 + 0x60) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8C84,i3);
       }
-      iVar1 = iVar1 * 4;
-      iVar5 = uVar3 + iVar1;
-      *(int *)(uVar2 + 0x74) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8BF8,iVar6);
+      i3 = u2 + i1 * 4;
+      *(int *)(u1 + 100) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8C54,i4);
       }
-      iVar5 = iVar5 + iVar1;
-      *(int *)(uVar2 + 0x78) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8BC4,iVar6);
-      }
-      uVar3 = iVar5 + iVar1;
+      u2 = i3 + i1 * 4;
     }
-    iVar1 = *(int *)(uVar2 + 0x90);
-    if (*(int *)(uVar2 + 0x90) < *(int *)(uVar2 + 0x94)) {
-      iVar1 = *(int *)(uVar2 + 0x94);
+    i1 = *(int *)(u1 + 0x7c);
+    if (*(int *)(u1 + 0x7c) < *(int *)(u1 + 0x80)) {
+      i1 = *(int *)(u1 + 0x80);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x84) = 0;
-      *(uint32_t *)(uVar2 + 0x88) = 0;
-      *(uint32_t *)(uVar2 + 0x8c) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x70) = 0;
+      *(uint32_t *)(u1 + 0x74) = 0;
+      *(uint32_t *)(u1 + 0x78) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x84) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8B94,iVar5);
+      *(uint32_t *)(u1 + 0x70) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8C28,i3);
       }
-      iVar1 = iVar1 * 4;
-      iVar5 = uVar3 + iVar1;
-      *(int *)(uVar2 + 0x88) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8B60,iVar6);
+      i1 = i1 * 4;
+      i3 = u2 + i1;
+      *(int *)(u1 + 0x74) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8BF8,i4);
       }
-      iVar5 = iVar5 + iVar1;
-      *(int *)(uVar2 + 0x8c) = iVar5;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(iVar5);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8B2C,iVar6);
+      i3 = i3 + i1;
+      *(int *)(u1 + 0x78) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8BC4,i4);
       }
-      uVar3 = iVar5 + iVar1;
+      u2 = i3 + i1;
     }
-    iVar1 = *(int *)(uVar2 + 0x58);
-    if (*(int *)(uVar2 + 0x58) < *(int *)(uVar2 + 0x5c)) {
-      iVar1 = *(int *)(uVar2 + 0x5c);
+    i1 = *(int *)(u1 + 0x90);
+    if (*(int *)(u1 + 0x90) < *(int *)(u1 + 0x94)) {
+      i1 = *(int *)(u1 + 0x94);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x98) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x84) = 0;
+      *(uint32_t *)(u1 + 0x88) = 0;
+      *(uint32_t *)(u1 + 0x8c) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x98) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8AF4,iVar5);
+      *(uint32_t *)(u1 + 0x84) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8B94,i3);
       }
-      uVar3 = uVar3 + iVar1 * 4;
+      i1 = i1 * 4;
+      i3 = u2 + i1;
+      *(int *)(u1 + 0x88) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8B60,i4);
+      }
+      i3 = i3 + i1;
+      *(int *)(u1 + 0x8c) = i3;
+      if (g_109A2788 != 0) {
+        i4 = orig::SqmdDMB_TraceDelta(i3);
+        orig::game_10314D55(g_109A2788,g_103B8B2C,i4);
+      }
+      u2 = i3 + i1;
     }
-    iVar1 = *(int *)(uVar2 + 0x58);
-    if (*(int *)(uVar2 + 0x58) < *(int *)(uVar2 + 0x5c)) {
-      iVar1 = *(int *)(uVar2 + 0x5c);
+    i1 = *(int *)(u1 + 0x58);
+    if (*(int *)(u1 + 0x58) < *(int *)(u1 + 0x5c)) {
+      i1 = *(int *)(u1 + 0x5c);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x98) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x98) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0xa0) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8AC0,iVar5);
+      *(uint32_t *)(u1 + 0x98) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8AF4,i3);
       }
-      uVar3 = uVar3 + iVar1 * 4;
+      u2 = u2 + i1 * 4;
     }
-    iVar1 = *(int *)(uVar2 + 0x5c);
-    if (*(int *)(uVar2 + 0x5c) <= *(int *)(uVar2 + 0xa4)) {
-      iVar1 = *(int *)(uVar2 + 0xa4);
+    i1 = *(int *)(u1 + 0x58);
+    if (*(int *)(u1 + 0x58) < *(int *)(u1 + 0x5c)) {
+      i1 = *(int *)(u1 + 0x5c);
     }
-    if (iVar1 < 1) {
-      *(uint32_t *)(uVar2 + 0x9c) = 0;
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x98) = 0;
     }
     else {
-      *(uint32_t *)(uVar2 + 0x9c) = uVar3;
-      if (DAT_109a2788 != 0) {
-        iVar5 = orig::SqmdDMB_TraceDelta(uVar3);
-        orig::FUN_10314d55(DAT_109a2788,g_103B8A8C,iVar5);
+      *(uint32_t *)(u1 + 0xa0) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8AC0,i3);
       }
-      uVar3 = uVar3 + iVar1 * 4;
+      u2 = u2 + i1 * 4;
     }
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2770 = iVar1 - iVar4;
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    uVar3 = orig::SqmdDMB_ResolveTextures(uVar2,uVar3);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2774 = iVar4 - iVar1;
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    piVar7 = orig::SqmdDMB_ResolveShaders(uVar2,uVar3);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2778 = iVar4 - iVar1;
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    uVar3 = orig::SqmdDMB_ResolveMatrices(uVar2,(uint32_t)piVar7);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a277c = iVar4 - iVar1;
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    orig::SqmdDMB_ResolveStrings(uVar2,uVar3);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2780 = iVar4 - iVar1;
-    orig::SqmdDMB_ClearTables(uVar2);
-    orig::SqmdDMB_ResetCounts(uVar2);
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    pbVar8 = orig::FUN_10288e60(uVar2,param_2);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2750 = iVar4 - iVar1;
-    iVar1 = orig::SqTimer_GetMicroseconds_v1();
-    orig::SqmdDMB_BuildUpdaters(uVar2,pbVar8);
-    iVar4 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109a2754 = iVar4 - iVar1;
-    *(uint32_t *)(uVar2 + 0xa8) = *(uint32_t *)(uVar2 + 0xa8) | 0x200;
-    return uVar2;
+    i1 = *(int *)(u1 + 0x5c);
+    if (*(int *)(u1 + 0x5c) <= *(int *)(u1 + 0xa4)) {
+      i1 = *(int *)(u1 + 0xa4);
+    }
+    if (i1 < 1) {
+      *(uint32_t *)(u1 + 0x9c) = 0;
+    }
+    else {
+      *(uint32_t *)(u1 + 0x9c) = u2;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(g_109A2788,g_103B8A8C,i3);
+      }
+      u2 = u2 + i1 * 4;
+    }
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2770 = i1 - i2;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    u2 = orig::SqmdDMB_ResolveTextures(u1,u2);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2774 = i2 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    p1 = orig::SqmdDMB_ResolveShaders(u1,u2);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2778 = i2 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    u2 = orig::SqmdDMB_ResolveMatrices(u1,(uint32_t)p1);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A277C = i2 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    orig::SqmdDMB_ResolveStrings(u1,u2);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2780 = i2 - i1;
+    orig::SqmdDMB_ClearTables(u1);
+    orig::SqmdDMB_ResetCounts(u1);
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    p2 = orig::sqmdDMBBuildShapes_as_v0(u1,arg2);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2750 = i2 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    orig::SqmdDMB_BuildUpdaters(u1,p2);
+    i2 = orig::SqTimer_GetMicroseconds_v1();
+    g_109A2754 = i2 - i1;
+    *(uint32_t *)(u1 + 0xa8) = *(uint32_t *)(u1 + 0xa8) | 0x200;
+    return u1;
   }
-  uVar9 = orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolve___call_103b8a4c);
-  orig::SqMem_HexDump((int)param_1,0x100,(int)uVar9,(int)((uint64_t)uVar9 >> 0x20));
+  u3 = orig::sqDebugPrintf_v1(str_____Error__sqmdDMBResolve___call_103B8A4C);
+  orig::SqMem_HexDump((int)arg1,0x100,(int)u3,(int)((uint64_t)u3 >> 0x20));
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10288660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqmdDMB_TraceDelta(int param_1)
+XI_API int __cdecl SqmdDMB_TraceDelta(int arg1)
 {
-  if (DAT_109a278c == 0) {
-    DAT_109a278c = param_1;
+  if (g_109A278C == 0) {
+    g_109A278C = arg1;
     return 0;
   }
-  return param_1 - DAT_109a278c;
+  return arg1 - g_109A278C;
 }
 
 // FUNCTION: FFXIMAIN 0x10288680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl SqmdDMB_AlignMem(uint32_t param_1)
+XI_API uint32_t __cdecl SqmdDMB_AlignMem(uint32_t arg1)
 {
-  int iVar1;
+  int i1;
   int xi_s3;
-  int iVar2;
+  int i2;
   
-  iVar1 = DAT_109a2788;
-  if ((param_1 & 0xf) != 0) {
-    iVar2 = 0x10 - (param_1 & 0xf);
-    if (DAT_109a2788 != 0) {
-      xi_s3 = orig::SqmdDMB_TraceDelta(param_1);
-      orig::FUN_10314d55(iVar1,s__06ld__sqmdDMBAlignMem___adding___103b8ec8,xi_s3);
+  i1 = g_109A2788;
+  if ((arg1 & 0xf) != 0) {
+    i2 = 0x10 - (arg1 & 0xf);
+    if (g_109A2788 != 0) {
+      xi_s3 = orig::SqmdDMB_TraceDelta(arg1);
+      orig::game_10314D55(i1,str__06ld__sqmdDMBAlignMem___adding___103B8EC8,xi_s3);
     }
-    if (iVar2 != 0) {
-      param_1 = param_1 + iVar2;
+    if (i2 != 0) {
+      arg1 = arg1 + i2;
     }
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x102886D0
 // GATE: PASS -- 100 trials, 46 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 46
-XI_API uint32_t __cdecl SqmdDMB_ResolveTextures(int param_1, uint32_t param_2)
+XI_API uint32_t __cdecl SqmdDMB_ResolveTextures(int arg1, uint32_t arg2)
 {
-  int *piVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t uVar5;
-  int iVar6;
+  int *p1;
+  int i1;
+  uint32_t u1;
+  int i2;
+  uint32_t u2;
+  int i3;
   int xi_s3;
-  int iVar7;
-  int iVar8;
-  uint32_t uVar9;
+  int i4;
+  int i5;
+  uint32_t u3;
   
-  iVar2 = DAT_109a2788;
-  if (DAT_109a2788 != 0) {
-    iVar4 = orig::SqmdDMB_TraceDelta(param_2);
-    orig::FUN_10314d55(iVar2,s__06ld_____sqmdDMBResolveTextures_103b9004,iVar4);
+  i1 = g_109A2788;
+  if (g_109A2788 != 0) {
+    i2 = orig::SqmdDMB_TraceDelta(arg2);
+    orig::game_10314D55(i1,str__06ld_____sqmdDMBResolveTextures_103B9004,i2);
   }
-  uVar5 = orig::SqmdDMB_AlignMem(param_2);
-  iVar2 = *(int *)(param_1 + 0x24);
-  param_2 = 0;
-  uVar9 = uVar5;
-  if (0 < iVar2) {
+  u2 = orig::SqmdDMB_AlignMem(arg2);
+  i1 = *(int *)(arg1 + 0x24);
+  arg2 = 0;
+  u3 = u2;
+  if (0 < i1) {
     do {
-      piVar1 = (int *)(uVar5 + 0x14);
-      *(uint8_t **)(uVar5 + 8) =(uint8_t*)(&LAB_10298b50);
-      *(code **)(uVar5 + 0xc) = XI_CODE(FUN_10298b60);
-      *(code **)(uVar5 + 0x10) = XI_CODE(sqrdTexturePrint);
-      *piVar1 = -1;
-      *(int *)(uVar5 + 0x18) = -1;
-      iVar4 = DAT_109a2788;
-      if (DAT_109a2788 != 0) {
-        iVar6 = orig::SqmdDMB_TraceDelta(uVar5);
-        orig::FUN_10314d55(iVar4,s__06ld__texture__3d_103b8fec,iVar6);
+      p1 = (int *)(u2 + 0x14);
+      *(uint8_t **)(u2 + 8) =(uint8_t*)(&code_10298B50);
+      *(untyped_fn **)(u2 + 0xc) = XI_CODE(game_10298B60);
+      *(untyped_fn **)(u2 + 0x10) = XI_CODE(sqrdTexturePrint);
+      *p1 = -1;
+      *(int *)(u2 + 0x18) = -1;
+      i2 = g_109A2788;
+      if (g_109A2788 != 0) {
+        i3 = orig::SqmdDMB_TraceDelta(u2);
+        orig::game_10314D55(i2,str__06ld__texture__3d_103B8FEC,i3);
       }
-      uVar9 = uVar5 + 0x24;
-      *(uint32_t *)(*(int *)(param_1 + 0x1c) + param_2 * 4) = uVar5;
-      if (*(int *)(uVar5 + 0x1c) == -1) {
-        *(uint32_t *)(uVar5 + 0x1c) = 0;
+      u3 = u2 + 0x24;
+      *(uint32_t *)(*(int *)(arg1 + 0x1c) + arg2 * 4) = u2;
+      if (*(int *)(u2 + 0x1c) == -1) {
+        *(uint32_t *)(u2 + 0x1c) = 0;
       }
       else {
-        *(uint32_t *)(uVar5 + 0x1c) = uVar9;
-        *(uint8_t **)(uVar5 + 0x2c) =(uint8_t*)(&LAB_10298530);
-        *(code **)(uVar5 + 0x30) = XI_CODE(FUN_10298540);
-        *(uint8_t **)(uVar5 + 0x34) =(uint8_t*)(&LAB_102985a0);
-        iVar4 = DAT_109a2788;
-        if (DAT_109a2788 != 0) {
-          iVar6 = orig::SqmdDMB_TraceDelta(uVar9);
-          orig::FUN_10314d55(iVar4,s__06ld__image_103b8fd8,iVar6);
+        *(uint32_t *)(u2 + 0x1c) = u3;
+        *(uint8_t **)(u2 + 0x2c) =(uint8_t*)(&code_10298530);
+        *(untyped_fn **)(u2 + 0x30) = XI_CODE(game_10298540);
+        *(uint8_t **)(u2 + 0x34) =(uint8_t*)(&code_102985A0);
+        i2 = g_109A2788;
+        if (g_109A2788 != 0) {
+          i3 = orig::SqmdDMB_TraceDelta(u3);
+          orig::game_10314D55(i2,str__06ld__image_103B8FD8,i3);
         }
-        uVar3 = *(uint32_t *)(uVar5 + 0x4c);
-        uVar9 = uVar5 + 0x60;
-        if (uVar3 == 0xffffffff) {
-LAB_102888c0:
-          *(uint32_t *)(uVar5 + 0x4c) = 0;
+        u1 = *(uint32_t *)(u2 + 0x4c);
+        u3 = u2 + 0x60;
+        if (u1 == 0xffffffff) {
+code_102888C0:
+          *(uint32_t *)(u2 + 0x4c) = 0;
         }
         else {
-          if (uVar3 != 0xefbeddba) {
-            if (uVar3 < param_2) {
-              iVar4 = *(int *)(*(int *)(param_1 + 0x1c) + uVar3 * 4);
-              if ((iVar4 != 0) && (iVar4 = *(int *)(iVar4 + 0x1c), iVar4 != 0)) {
-                iVar4 = *(int *)(iVar4 + 0x28);
-                *(int *)(uVar5 + 0x4c) = iVar4;
-                iVar4 = orig::sqgxTextureAdd_v1(*(int *)(uVar5 + 0x40),*(int *)(uVar5 + 0x44),
-                                       *(int *)(uVar5 + 0x48),iVar4);
-                *piVar1 = iVar4;
-                *(uint32_t *)(uVar5 + 0x20) = *(uint32_t *)(uVar5 + 0x20) | 1;
-                goto LAB_102888c7;
+          if (u1 != 0xefbeddba) {
+            if (u1 < arg2) {
+              i2 = *(int *)(*(int *)(arg1 + 0x1c) + u1 * 4);
+              if ((i2 != 0) && (i2 = *(int *)(i2 + 0x1c), i2 != 0)) {
+                i2 = *(int *)(i2 + 0x28);
+                *(int *)(u2 + 0x4c) = i2;
+                i2 = orig::sqgxTextureAdd_v1(*(int *)(u2 + 0x40),*(int *)(u2 + 0x44),
+                                       *(int *)(u2 + 0x48),i2);
+                *p1 = i2;
+                *(uint32_t *)(u2 + 0x20) = *(uint32_t *)(u2 + 0x20) | 1;
+                goto code_102888C7;
               }
-              orig::sqDebugPrintf_v1(s_____Error__borrowTex_doesn_t_con_103b8f1c);
+              orig::sqDebugPrintf_v1(str_____Error__borrowTex_doesn_t_con_103B8F1C);
             }
             else {
-              orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolveTexture_103b8f70);
-              orig::sqDebugPrintf_v1(s_current__d_borrows_from__d_103b8f4c,param_2,
-                           *(uint32_t *)(uVar5 + 0x4c));
+              orig::sqDebugPrintf_v1(str_____Error__sqmdDMBResolveTexture_103B8F70);
+              orig::sqDebugPrintf_v1(str_current__d_borrows_from__d_103B8F4C,arg2,
+                           *(uint32_t *)(u2 + 0x4c));
             }
-            goto LAB_102888c0;
+            goto code_102888C0;
           }
-          uVar9 = orig::SqmdDMB_AlignMem(uVar9);
-          iVar4 = *(int *)(uVar5 + 0x44);
-          iVar6 = *(int *)(uVar5 + 0x48);
-          iVar8 = *(int *)(uVar5 + 0x40);
-          *(uint32_t *)(uVar5 + 0x4c) = uVar9;
-          iVar7 = DAT_109a2788;
-          if (DAT_109a2788 != 0) {
-            xi_s3 = orig::SqmdDMB_TraceDelta(uVar9);
-            orig::FUN_10314d55(iVar7,s__06ld__data___d_bytes__103b8fb8,xi_s3);
+          u3 = orig::SqmdDMB_AlignMem(u3);
+          i2 = *(int *)(u2 + 0x44);
+          i3 = *(int *)(u2 + 0x48);
+          i5 = *(int *)(u2 + 0x40);
+          *(uint32_t *)(u2 + 0x4c) = u3;
+          i4 = g_109A2788;
+          if (g_109A2788 != 0) {
+            xi_s3 = orig::SqmdDMB_TraceDelta(u3);
+            orig::game_10314D55(i4,str__06ld__data___d_bytes__103B8FB8,xi_s3);
           }
-          iVar7 = orig::sqgxTextureAdd_v1(*(int *)(uVar5 + 0x40),*(int *)(uVar5 + 0x44),
-                                 *(int *)(uVar5 + 0x48),*(int *)(uVar5 + 0x4c));
-          *piVar1 = iVar7;
-          uVar9 = uVar9 + iVar4 * iVar6 * iVar8;
-          *(uint32_t *)(uVar5 + 0x20) = *(uint32_t *)(uVar5 + 0x20) | 1;
+          i4 = orig::sqgxTextureAdd_v1(*(int *)(u2 + 0x40),*(int *)(u2 + 0x44),
+                                 *(int *)(u2 + 0x48),*(int *)(u2 + 0x4c));
+          *p1 = i4;
+          u3 = u3 + i2 * i3 * i5;
+          *(uint32_t *)(u2 + 0x20) = *(uint32_t *)(u2 + 0x20) | 1;
         }
-LAB_102888c7:
-        if (*(int *)(uVar5 + 0x5c) == -1) {
-          *(uint32_t *)(uVar5 + 0x5c) = 0;
+code_102888C7:
+        if (*(int *)(u2 + 0x5c) == -1) {
+          *(uint32_t *)(u2 + 0x5c) = 0;
         }
         else {
-          uVar9 = orig::SqmdDMB_AlignMem(uVar9);
-          iVar4 = *(int *)(uVar5 + 0x58);
-          iVar6 = *(int *)(uVar5 + 0x54);
-          *(uint32_t *)(uVar5 + 0x5c) = uVar9;
-          iVar8 = DAT_109a2788;
-          if (DAT_109a2788 != 0) {
-            iVar7 = orig::SqmdDMB_TraceDelta(uVar9);
-            orig::FUN_10314d55(iVar8,s__06ld__clutData___d_bytes__103b8ef8,iVar7);
+          u3 = orig::SqmdDMB_AlignMem(u3);
+          i2 = *(int *)(u2 + 0x58);
+          i3 = *(int *)(u2 + 0x54);
+          *(uint32_t *)(u2 + 0x5c) = u3;
+          i5 = g_109A2788;
+          if (g_109A2788 != 0) {
+            i4 = orig::SqmdDMB_TraceDelta(u3);
+            orig::game_10314D55(i5,str__06ld__clutData___d_bytes__103B8EF8,i4);
           }
-          iVar8 = orig::sqgxTextureClutAdd(*(uint32_t *)(uVar5 + 0x58),*(int *)(uVar5 + 0x54),
-                                     *(int *)(uVar5 + 0x5c));
-          uVar9 = uVar9 + iVar4 * iVar6;
-          *(int *)(uVar5 + 0x18) = iVar8;
+          i5 = orig::sqgxTextureClutAdd(*(uint32_t *)(u2 + 0x58),*(int *)(u2 + 0x54),
+                                     *(int *)(u2 + 0x5c));
+          u3 = u3 + i2 * i3;
+          *(int *)(u2 + 0x18) = i5;
         }
       }
-      param_2 = param_2 + 1;
-      uVar5 = uVar9;
-    } while ((int)param_2 < iVar2);
+      arg2 = arg2 + 1;
+      u2 = u3;
+    } while ((int)arg2 < i1);
   }
-  return uVar9;
+  return u3;
 }
 
 // FUNCTION: FFXIMAIN 0x10288950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl SqmdDMB_ResolveShaders(int param_1, uint32_t param_2)
+XI_API int * __cdecl SqmdDMB_ResolveShaders(int arg1, uint32_t arg2)
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
+  int i1;
+  int *p1;
+  int i2;
+  int i3;
   
-  iVar4 = DAT_109a2788;
-  if (DAT_109a2788 != 0) {
-    iVar1 = orig::SqmdDMB_TraceDelta(param_2);
-    orig::FUN_10314d55(iVar4,s__06ld_____sqmdDMBResolveShaders__103b90b0,iVar1);
+  i3 = g_109A2788;
+  if (g_109A2788 != 0) {
+    i1 = orig::SqmdDMB_TraceDelta(arg2);
+    orig::game_10314D55(i3,str__06ld_____sqmdDMBResolveShaders__103B90B0,i1);
   }
-  piVar2 = (int *)orig::SqmdDMB_AlignMem(param_2);
-  param_2 = *(uint32_t *)(param_1 + 0x38);
-  if ((int)*(uint32_t *)(param_1 + 0x38) <= (int)*(uint32_t *)(param_1 + 0x34)) {
-    param_2 = *(uint32_t *)(param_1 + 0x34);
+  p1 = (int *)orig::SqmdDMB_AlignMem(arg2);
+  arg2 = *(uint32_t *)(arg1 + 0x38);
+  if ((int)*(uint32_t *)(arg1 + 0x38) <= (int)*(uint32_t *)(arg1 + 0x34)) {
+    arg2 = *(uint32_t *)(arg1 + 0x34);
   }
-  iVar4 = 0;
-  if (0 < (int)param_2) {
+  i3 = 0;
+  if (0 < (int)arg2) {
     do {
-      *(int **)(*(int *)(param_1 + 0x2c) + iVar4 * 4) = piVar2;
-      iVar1 = *piVar2;
-      if (iVar1 == 0xf0001) {
-        piVar2[2] = (int)&LAB_102908d0;
-        piVar2[3] = (int)XI_CODE(FUN_102908e0);
-        piVar2[4] = (int)&LAB_10290a80;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x13]);
-        piVar2[0x13] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x14]);
-        piVar2[0x14] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x15]);
-        piVar2[0x15] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x16]);
-        piVar2[0x16] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x17]);
-        piVar2[0x17] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x18]);
-        piVar2[0x18] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x19]);
-        piVar2[0x19] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x2b]);
-        piVar2[0x2b] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x2c]);
-        piVar2[0x2c] = iVar1;
-        iVar1 = DAT_109a2788;
-        if (DAT_109a2788 != 0) {
-          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
-          orig::FUN_10314d55(iVar1,g_103B9058,iVar3);
+      *(int **)(*(int *)(arg1 + 0x2c) + i3 * 4) = p1;
+      i1 = *p1;
+      if (i1 == 0xf0001) {
+        p1[2] = (int)&code_102908D0;
+        p1[3] = (int)XI_CODE(game_102908E0);
+        p1[4] = (int)&code_10290A80;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x13]);
+        p1[0x13] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x14]);
+        p1[0x14] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x15]);
+        p1[0x15] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x16]);
+        p1[0x16] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x17]);
+        p1[0x17] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x18]);
+        p1[0x18] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x19]);
+        p1[0x19] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x2b]);
+        p1[0x2b] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x2c]);
+        p1[0x2c] = i1;
+        i1 = g_109A2788;
+        if (g_109A2788 != 0) {
+          i2 = orig::SqmdDMB_TraceDelta((int)p1);
+          orig::game_10314D55(i1,g_103B9058,i2);
         }
-        piVar2 = piVar2 + 0x60;
+        p1 = p1 + 0x60;
       }
-      else if (iVar1 == 0xf0002) {
-        piVar2[2] = (int)&LAB_10298ed0;
-        piVar2[3] = (int)XI_CODE(FUN_10298ee0);
-        piVar2[4] = (int)&LAB_10298fa0;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x14]);
-        piVar2[0x14] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x15]);
-        piVar2[0x15] = iVar1;
-        iVar1 = DAT_109a2788;
-        if (DAT_109a2788 != 0) {
-          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
-          orig::FUN_10314d55(iVar1,g_103B9074,iVar3);
+      else if (i1 == 0xf0002) {
+        p1[2] = (int)&code_10298ED0;
+        p1[3] = (int)XI_CODE(game_10298EE0);
+        p1[4] = (int)&code_10298FA0;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x14]);
+        p1[0x14] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x15]);
+        p1[0x15] = i1;
+        i1 = g_109A2788;
+        if (g_109A2788 != 0) {
+          i2 = orig::SqmdDMB_TraceDelta((int)p1);
+          orig::game_10314D55(i1,g_103B9074,i2);
         }
-        piVar2 = piVar2 + 0x5b;
+        p1 = p1 + 0x5b;
       }
       else {
-        if (iVar1 != 0xf0005) {
-          orig::sqDebugPrintf_v1(s_____Error__Encountered_unsupport_103b9028);
+        if (i1 != 0xf0005) {
+          orig::sqDebugPrintf_v1(str_____Error__Encountered_unsupport_103B9028);
           return (int *)0x0;
         }
-        piVar2[2] = (int)&LAB_102992e0;
-        piVar2[3] = (int)XI_CODE(FUN_102992f0);
-        piVar2[4] = (int)&LAB_10299390;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x18]);
-        piVar2[0x18] = iVar1;
-        iVar1 = orig::SqmdDMB_TextureLink(param_1,piVar2[0x19]);
-        piVar2[0x19] = iVar1;
-        iVar1 = DAT_109a2788;
-        if (DAT_109a2788 != 0) {
-          iVar3 = orig::SqmdDMB_TraceDelta((int)piVar2);
-          orig::FUN_10314d55(iVar1,g_103B9094,iVar3);
+        p1[2] = (int)&code_102992E0;
+        p1[3] = (int)XI_CODE(game_102992F0);
+        p1[4] = (int)&code_10299390;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x18]);
+        p1[0x18] = i1;
+        i1 = orig::SqmdDMB_TextureLink(arg1,p1[0x19]);
+        p1[0x19] = i1;
+        i1 = g_109A2788;
+        if (g_109A2788 != 0) {
+          i2 = orig::SqmdDMB_TraceDelta((int)p1);
+          orig::game_10314D55(i1,g_103B9094,i2);
         }
-        piVar2 = piVar2 + 0x1b;
+        p1 = p1 + 0x1b;
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < (int)param_2);
+      i3 = i3 + 1;
+    } while (i3 < (int)arg2);
   }
-  return piVar2;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10288B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdDMB_TextureLink(int param_1, uint32_t param_2)
+XI_API bits32 __cdecl SqmdDMB_TextureLink(int arg1, uint32_t arg2)
 {
-  if (param_2 != 0xefbeddba) {
-    if (param_2 < *(uint32_t *)(param_1 + 0x24)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x1c) + param_2 * 4);
+  if (arg2 != 0xefbeddba) {
+    if (arg2 < *(uint32_t *)(arg1 + 0x24)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x1c) + arg2 * 4);
     }
-    orig::sqDebugPrintf_v1(s_____Error__sqmdDMBTextureLink___t_103b90e8);
-    orig::sqDebugPrintf_v1(s__word____d_103b90d4,param_2);
+    orig::sqDebugPrintf_v1(str_____Error__sqmdDMBTextureLink___t_103B90E8);
+    orig::sqDebugPrintf_v1(str__word____d_103B90D4,arg2);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10288BB0
 // GATE: PASS -- 100 trials, 40 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 40
-XI_API undefined4 __cdecl SqmdDMB_ResolveMatrices(int param_1, uint32_t param_2)
+XI_API bits32 __cdecl SqmdDMB_ResolveMatrices(int arg1, uint32_t arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
+  int i1;
+  uint32_t u1;
+  int i2;
   
-  iVar3 = DAT_109a2788;
-  if (DAT_109a2788 != 0) {
-    iVar1 = orig::SqmdDMB_TraceDelta(param_2);
-    orig::FUN_10314d55(iVar3,s__06ld_____sqmdDMBResolveMatrices_103b9134,iVar1);
+  i2 = g_109A2788;
+  if (g_109A2788 != 0) {
+    i1 = orig::SqmdDMB_TraceDelta(arg2);
+    orig::game_10314D55(i2,str__06ld_____sqmdDMBResolveMatrices_103B9134,i1);
   }
-  uVar2 = orig::SqmdDMB_AlignMem(param_2);
-  iVar3 = *(int *)(param_1 + 0x5c);
-  if (*(int *)(param_1 + 0x5c) <= *(int *)(param_1 + 0x58)) {
-    iVar3 = *(int *)(param_1 + 0x58);
+  u1 = orig::SqmdDMB_AlignMem(arg2);
+  i2 = *(int *)(arg1 + 0x5c);
+  if (*(int *)(arg1 + 0x5c) <= *(int *)(arg1 + 0x58)) {
+    i2 = *(int *)(arg1 + 0x58);
   }
-  iVar1 = 0;
-  if (0 < iVar3) {
+  i1 = 0;
+  if (0 < i2) {
     do {
-      if (*(int *)(*(int *)(param_1 + 0x50) + iVar1 * 4) == -0x10412246) {
-        *(uint32_t *)(*(int *)(param_1 + 0x50) + iVar1 * 4) = uVar2;
-        uVar2 = uVar2 + 0x40;
+      if (*(int *)(*(int *)(arg1 + 0x50) + i1 * 4) == -0x10412246) {
+        *(uint32_t *)(*(int *)(arg1 + 0x50) + i1 * 4) = u1;
+        u1 = u1 + 0x40;
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < iVar3);
+      i1 = i1 + 1;
+    } while (i1 < i2);
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10288C20
 // GATE: PASS -- 100 trials, 12 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 12
-XI_API char * __cdecl SqmdDMB_ResolveStrings(int param_1, uint32_t param_2)
+XI_API char * __cdecl SqmdDMB_ResolveStrings(int arg1, uint32_t arg2)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  uint32_t uVar6;
-  int iVar7;
-  char *pcVar8;
+  char c1;
+  int i1;
+  char *p1;
+  int i2;
+  int i3;
+  uint32_t u1;
+  int i4;
+  char *p2;
   
-  iVar7 = DAT_109a2788;
-  if (DAT_109a2788 != 0) {
-    iVar2 = orig::SqmdDMB_TraceDelta(param_2);
-    orig::FUN_10314d55(iVar7,s__06ld_____sqmdDMBResolveStrings__103b9190,iVar2);
+  i4 = g_109A2788;
+  if (g_109A2788 != 0) {
+    i1 = orig::SqmdDMB_TraceDelta(arg2);
+    orig::game_10314D55(i4,str__06ld_____sqmdDMBResolveStrings__103B9190,i1);
   }
-  pcVar3 = (char *)orig::SqmdDMB_AlignMem(param_2);
-  iVar7 = 0;
-  if (0 < *(int *)(param_1 + 0x7c)) {
+  p1 = (char *)orig::SqmdDMB_AlignMem(arg2);
+  i4 = 0;
+  if (0 < *(int *)(arg1 + 0x7c)) {
     do {
-      iVar2 = DAT_109a2788;
-      if (DAT_109a2788 != 0) {
-        iVar4 = orig::SqmdDMB_TraceDelta((int)pcVar3);
-        orig::FUN_10314d55(iVar2,s__06ld__tag_string__s_103b9174,iVar4);
+      i1 = g_109A2788;
+      if (g_109A2788 != 0) {
+        i2 = orig::SqmdDMB_TraceDelta((int)p1);
+        orig::game_10314D55(i1,str__06ld__tag_string__s_103B9174,i2);
       }
-      uVar6 = 0xffffffff;
-      *(char **)(*(int *)(param_1 + 0x70) + iVar7 * 4) = pcVar3;
-      iVar2 = DAT_109a2788;
-      pcVar8 = pcVar3;
+      u1 = 0xffffffff;
+      *(char **)(*(int *)(arg1 + 0x70) + i4 * 4) = p1;
+      i1 = g_109A2788;
+      p2 = p1;
       do {
-        if (uVar6 == 0) break;
-        uVar6 = uVar6 - 1;
-        cVar1 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
-      } while (cVar1 != '\0');
-      pcVar3 = pcVar3 + ~uVar6;
-      if (((uint32_t)pcVar3 & 3) != 0) {
-        iVar4 = 4 - ((uint32_t)pcVar3 & 3);
-        if (DAT_109a2788 != 0) {
-          iVar5 = orig::SqmdDMB_TraceDelta((int)pcVar3);
-          orig::FUN_10314d55(iVar2,s__06ld__adding__d_align_bytes_103b8850,iVar5);
+        if (u1 == 0) break;
+        u1 = u1 - 1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      p1 = p1 + ~u1;
+      if (((uint32_t)p1 & 3) != 0) {
+        i2 = 4 - ((uint32_t)p1 & 3);
+        if (g_109A2788 != 0) {
+          i3 = orig::SqmdDMB_TraceDelta((int)p1);
+          orig::game_10314D55(i1,str__06ld__adding__d_align_bytes_103B8850,i3);
         }
-        if (iVar4 != 0) {
-          pcVar3 = pcVar3 + iVar4;
+        if (i2 != 0) {
+          p1 = p1 + i2;
         }
       }
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < *(int *)(param_1 + 0x7c));
+      i4 = i4 + 1;
+    } while (i4 < *(int *)(arg1 + 0x7c));
   }
-  iVar7 = *(int *)(param_1 + 0x7c);
-  if (iVar7 < *(int *)(param_1 + 0x80)) {
+  i4 = *(int *)(arg1 + 0x7c);
+  if (i4 < *(int *)(arg1 + 0x80)) {
     do {
-      iVar7 = iVar7 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 0x70) + -4 + iVar7 * 4) = 0;
-    } while (iVar7 < *(int *)(param_1 + 0x80));
+      i4 = i4 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 0x70) + -4 + i4 * 4) = 0;
+    } while (i4 < *(int *)(arg1 + 0x80));
   }
-  iVar7 = 0;
-  if (0 < *(int *)(param_1 + 0x90)) {
+  i4 = 0;
+  if (0 < *(int *)(arg1 + 0x90)) {
     do {
-      iVar2 = DAT_109a2788;
-      if (DAT_109a2788 != 0) {
-        iVar4 = orig::SqmdDMB_TraceDelta((int)pcVar3);
-        orig::FUN_10314d55(iVar2,s__06ld__file_string__s_103b9158,iVar4);
+      i1 = g_109A2788;
+      if (g_109A2788 != 0) {
+        i2 = orig::SqmdDMB_TraceDelta((int)p1);
+        orig::game_10314D55(i1,str__06ld__file_string__s_103B9158,i2);
       }
-      uVar6 = 0xffffffff;
-      *(char **)(*(int *)(param_1 + 0x84) + iVar7 * 4) = pcVar3;
-      iVar2 = DAT_109a2788;
-      pcVar8 = pcVar3;
+      u1 = 0xffffffff;
+      *(char **)(*(int *)(arg1 + 0x84) + i4 * 4) = p1;
+      i1 = g_109A2788;
+      p2 = p1;
       do {
-        if (uVar6 == 0) break;
-        uVar6 = uVar6 - 1;
-        cVar1 = *pcVar8;
-        pcVar8 = pcVar8 + 1;
-      } while (cVar1 != '\0');
-      pcVar3 = pcVar3 + ~uVar6;
-      if (((uint32_t)pcVar3 & 3) != 0) {
-        iVar4 = 4 - ((uint32_t)pcVar3 & 3);
-        if (DAT_109a2788 != 0) {
-          iVar5 = orig::SqmdDMB_TraceDelta((int)pcVar3);
-          orig::FUN_10314d55(iVar2,s__06ld__adding__d_align_bytes_103b8850,iVar5);
+        if (u1 == 0) break;
+        u1 = u1 - 1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      p1 = p1 + ~u1;
+      if (((uint32_t)p1 & 3) != 0) {
+        i2 = 4 - ((uint32_t)p1 & 3);
+        if (g_109A2788 != 0) {
+          i3 = orig::SqmdDMB_TraceDelta((int)p1);
+          orig::game_10314D55(i1,str__06ld__adding__d_align_bytes_103B8850,i3);
         }
-        if (iVar4 != 0) {
-          pcVar3 = pcVar3 + iVar4;
+        if (i2 != 0) {
+          p1 = p1 + i2;
         }
       }
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < *(int *)(param_1 + 0x90));
+      i4 = i4 + 1;
+    } while (i4 < *(int *)(arg1 + 0x90));
   }
-  iVar7 = *(int *)(param_1 + 0x90);
-  if (iVar7 < *(int *)(param_1 + 0x94)) {
+  i4 = *(int *)(arg1 + 0x90);
+  if (i4 < *(int *)(arg1 + 0x94)) {
     do {
-      iVar7 = iVar7 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 0x84) + -4 + iVar7 * 4) = 0;
-    } while (iVar7 < *(int *)(param_1 + 0x94));
+      i4 = i4 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 0x84) + -4 + i4 * 4) = 0;
+    } while (i4 < *(int *)(arg1 + 0x94));
   }
-  return pcVar3;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10288DC0
 // GATE: PASS -- 100 trials, 34 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 34
-XI_API void __cdecl SqmdDMB_ClearTables(int param_1)
+XI_API void __cdecl SqmdDMB_ClearTables(int arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar2 = *(int *)(param_1 + 0x68);
-  if (*(int *)(param_1 + 0x68) < *(int *)(param_1 + 0x6c)) {
-    iVar2 = *(int *)(param_1 + 0x6c);
+  i2 = *(int *)(arg1 + 0x68);
+  if (*(int *)(arg1 + 0x68) < *(int *)(arg1 + 0x6c)) {
+    i2 = *(int *)(arg1 + 0x6c);
   }
-  iVar1 = 0;
-  if (0 < iVar2) {
+  i1 = 0;
+  if (0 < i2) {
     do {
-      iVar1 = iVar1 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 100) + -4 + iVar1 * 4) = 0;
-      *(uint32_t *)(*(int *)(param_1 + 0x60) + -4 + iVar1 * 4) = 0;
-    } while (iVar1 < iVar2);
+      i1 = i1 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 100) + -4 + i1 * 4) = 0;
+      *(uint32_t *)(*(int *)(arg1 + 0x60) + -4 + i1 * 4) = 0;
+    } while (i1 < i2);
   }
-  *(uint32_t *)(param_1 + 0x68) = 0;
+  *(uint32_t *)(arg1 + 0x68) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10288E00
 // GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
-XI_API void __cdecl SqmdDMB_ResetCounts(int param_1)
+XI_API void __cdecl SqmdDMB_ResetCounts(int arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar2 = *(int *)(param_1 + 0xa4);
-  if (*(int *)(param_1 + 0xa4) < *(int *)(param_1 + 0x5c)) {
-    iVar2 = *(int *)(param_1 + 0x5c);
+  i2 = *(int *)(arg1 + 0xa4);
+  if (*(int *)(arg1 + 0xa4) < *(int *)(arg1 + 0x5c)) {
+    i2 = *(int *)(arg1 + 0x5c);
   }
-  iVar1 = 0;
-  if (0 < iVar2) {
+  i1 = 0;
+  if (0 < i2) {
     do {
-      iVar1 = iVar1 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 0x9c) + -4 + iVar1 * 4) = 0;
-    } while (iVar1 < iVar2);
+      i1 = i1 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 0x9c) + -4 + i1 * 4) = 0;
+    } while (i1 < i2);
   }
-  iVar2 = *(int *)(param_1 + 0x58);
-  if (*(int *)(param_1 + 0x58) < *(int *)(param_1 + 0x5c)) {
-    iVar2 = *(int *)(param_1 + 0x5c);
+  i2 = *(int *)(arg1 + 0x58);
+  if (*(int *)(arg1 + 0x58) < *(int *)(arg1 + 0x5c)) {
+    i2 = *(int *)(arg1 + 0x5c);
   }
-  iVar1 = 0;
-  if (0 < iVar2) {
+  i1 = 0;
+  if (0 < i2) {
     do {
-      iVar1 = iVar1 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 0xa0) + -4 + iVar1 * 4) = 0;
-    } while (iVar1 < iVar2);
+      i1 = i1 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 0xa0) + -4 + i1 * 4) = 0;
+    } while (i1 < i2);
   }
-  *(uint32_t *)(param_1 + 0xa4) = 0;
+  *(uint32_t *)(arg1 + 0xa4) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10288E60
 // GATE: PASS -- 100 trials, 30 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 30
-XI_API uint8_t * __cdecl sqmdDMBBuildShapes(int param_1, uint32_t param_2)
+XI_API uint8_t * __cdecl sqmdDMBBuildShapes(int arg1, uint32_t arg2)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
+  uint32_t u1;
+  uint32_t *p1;
   int xi_s3;
-  uint8_t *pbVar3;
-  int *piVar4;
-  uint8_t *pbVar5;
-  int iVar6;
+  uint8_t *p2;
+  int *p3;
+  uint8_t *p4;
+  int i1;
   
-  iVar6 = DAT_109a2788;
-  if (DAT_109a2788 != 0) {
-    xi_s3 = orig::SqmdDMB_TraceDelta(param_2);
-    orig::FUN_10314d55(iVar6,s__06ld_____sqmdDMBBuildShapes___103b9244,xi_s3);
+  i1 = g_109A2788;
+  if (g_109A2788 != 0) {
+    xi_s3 = orig::SqmdDMB_TraceDelta(arg2);
+    orig::game_10314D55(i1,str__06ld_____sqmdDMBBuildShapes___103B9244,xi_s3);
   }
-  pbVar3 = (uint8_t *)orig::SqmdDMB_AlignMem(param_2);
-  iVar6 = 0;
-  if (0 < *(int *)(param_1 + 0x58)) {
+  p2 = (uint8_t *)orig::SqmdDMB_AlignMem(arg2);
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x58)) {
     do {
-      if ((*pbVar3 & 4) == 0) {
-        orig::sqDebugPrintf_v1(s_____Error__Non_shape_encountered_103b91ec);
-        orig::sqDebugPrintf_v1(s_shape__d_of__d_103b91d8,iVar6,*(int *)(param_1 + 0x58) + -1);
-        orig::sqDebugPrintf_v1(s_flags___0x_08X_103b91c4,*(uint32_t *)pbVar3);
-        orig::sqDebugPrintf_v1(s_size____d_103b91b4,*(uint32_t *)(pbVar3 + 4));
+      if ((*p2 & 4) == 0) {
+        orig::sqDebugPrintf_v1(str_____Error__Non_shape_encountered_103B91EC);
+        orig::sqDebugPrintf_v1(str_shape__d_of__d_103B91D8,i1,*(int *)(arg1 + 0x58) + -1);
+        orig::sqDebugPrintf_v1(str_flags___0x_08X_103B91C4,*(uint32_t *)p2);
+        orig::sqDebugPrintf_v1(str_size____d_103B91B4,*(uint32_t *)(p2 + 4));
       }
       else {
-        pbVar5 = pbVar3 + 0x40;
-        piVar4 = (int *)orig::SqshBuild_BuildSQO((char *)pbVar5,*(uint32_t *)(pbVar3 + 4));
-        if (piVar4 == (int *)0x0) {
-          orig::sqDebugPrintf_v1(s_____Error__sqshBuildSQO__p___d__f_103b921c,pbVar5,
-                       *(uint32_t *)(pbVar3 + 4));
+        p4 = p2 + 0x40;
+        p3 = (int *)orig::SqshBuild_BuildSQO((char *)p4,*(uint32_t *)(p2 + 4));
+        if (p3 == (int *)0x0) {
+          orig::sqDebugPrintf_v1(str_____Error__sqshBuildSQO__p___d__f_103B921C,p4,
+                       *(uint32_t *)(p2 + 4));
         }
         else {
-          uVar1 = *(uint32_t *)(*(int *)(param_1 + 0x54) + iVar6 * 4);
-          if ((uVar1 & 0x400) == 0) {
-            if ((uVar1 & 0x800) != 0) {
-              puVar2 = *(uint32_t **)
-                        (*(int *)(param_1 + 0x2c) +
-                        *(int *)(*(int *)(param_1 + 0x98) + iVar6 * 4) * 4);
-              switch(xi_sw(*puVar2)) {
+          u1 = *(uint32_t *)(*(int *)(arg1 + 0x54) + i1 * 4);
+          if ((u1 & 0x400) == 0) {
+            if ((u1 & 0x800) != 0) {
+              p1 = *(uint32_t **)
+                        (*(int *)(arg1 + 0x2c) +
+                        *(int *)(*(int *)(arg1 + 0x98) + i1 * 4) * 4);
+              switch(xi_sw(*p1)) {
               case 0xf0001:
-                piVar4 = orig::sqsdGeneric_BakeOntoShape((int)puVar2,piVar4);
+                p3 = orig::sqsdGeneric_BakeOntoShape((int)p1,p3);
                 break;
               case 0xf0002:
-                piVar4 = (int *)orig::sqsdSampling_BakeOntoShape((int)puVar2,(int)piVar4);
+                p3 = (int *)orig::sqsdSampling_BakeOntoShape((int)p1,(int)p3);
                 break;
               case 0xf0003:
-                piVar4 = orig::sqsdGlow_BakeOntoShape(puVar2,piVar4);
+                p3 = orig::sqsdGlow_BakeOntoShape(p1,p3);
                 break;
               case 0xf0004:
-                piVar4 = (int *)orig::sqsdCartoon_BakeOntoShape_Stub();
+                p3 = (int *)orig::sqsdCartoon_BakeOntoShape_Stub();
                 break;
               case 0xf0005:
-                piVar4 = orig::sqsdAniso_BakeOntoShape((int)puVar2,piVar4);
+                p3 = orig::sqsdAniso_BakeOntoShape((int)p1,p3);
               }
             }
-            orig::SqmdModel_AppendPair68Flag100(param_1,piVar4);
+            orig::SqmdModel_AppendPair68Flag100(arg1,p3);
           }
-          *(int **)(*(int *)(param_1 + 0x4c) + iVar6 * 4) = piVar4;
+          *(int **)(*(int *)(arg1 + 0x4c) + i1 * 4) = p3;
         }
-        pbVar3 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)(pbVar5 + *(int *)(pbVar3 + 4)));
+        p2 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)(p4 + *(int *)(p2 + 4)));
       }
-      iVar6 = iVar6 + 1;
-    } while (iVar6 < *(int *)(param_1 + 0x58));
+      i1 = i1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x58));
   }
-  iVar6 = *(int *)(param_1 + 0x58);
-  if (iVar6 < *(int *)(param_1 + 0x5c)) {
+  i1 = *(int *)(arg1 + 0x58);
+  if (i1 < *(int *)(arg1 + 0x5c)) {
     do {
-      iVar6 = iVar6 + 1;
-      *(uint32_t *)(*(int *)(param_1 + 0x4c) + -4 + iVar6 * 4) = 0;
-    } while (iVar6 < *(int *)(param_1 + 0x5c));
+      i1 = i1 + 1;
+      *(uint32_t *)(*(int *)(arg1 + 0x4c) + -4 + i1 * 4) = 0;
+    } while (i1 < *(int *)(arg1 + 0x5c));
   }
-  return pbVar3;
+  return p2;
 }

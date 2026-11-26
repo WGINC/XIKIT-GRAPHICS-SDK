@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): CXiActor::GetName, ProjectThr
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ActorName_ProjectThroughCamera` calls `MathVector_ReturnThis`, `Vec3_Copy`, `Camera_GetViewMatrixPtr`, `Mat4_Copy`, `Mat4_TransformPointInPlace`, `MathVector_Nop`, `Camera_GetMatrix154Ptr`, `Mat4_PostMultiply`, `Mat4_TransformCoordInPlace`, `sub_10311C2C`
+- `ActorName_ProjectThroughCamera` calls `MathVector_ReturnThis`, `Vec3_Copy`, `Camera_GetViewMatrixPtr`, `Mat4_Copy`, `Mat4_TransformPointInPlace`, `MathVector_Nop`, `Camera_GetMatrix154Ptr`, `Mat4_PostMultiply`, `Mat4_TransformCoordInPlace`, `game_10311C2C`

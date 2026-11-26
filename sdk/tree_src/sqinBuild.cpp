@@ -4,68 +4,68 @@
 
 // FUNCTION: FFXIMAIN 0x1029ABD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqinSkinBuildBinary(undefined4 param_1, int param_2, int param_3, int param_4)
+XI_API void __cdecl sqinSkinBuildBinary(bits32 arg1, int arg2, int arg3, int arg4)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined4 *puVar6;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
+  bits32 *p3;
+  int i2;
+  bits32 *p4;
   char xi_frame[12] __attribute__((aligned(4)));
-  int  &local_c = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 8);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 8);
   
-  iVar1 = param_4;
-  if (param_3 != 2) {
-    orig::sqDebugPrintf_v1(s_____Error__Skin_version_mismatch_103bc554,param_3,2);
+  i1 = arg4;
+  if (arg3 != 2) {
+    orig::sqDebugPrintf_v1(str_____Error__Skin_version_mismatch_103BC554,arg3,2);
     return;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock(&param_4,4,1,(undefined4 *)(param_2 + 0x50),param_4);
-  if (param_4 < 1) {
-    orig::sqDebugPrintf_v1(s_____Error__invalid_clusterCount__103bc514,param_4);
+  p1 = orig::SqScriptRead_ReadBlock(&arg4,4,1,(bits32 *)(arg2 + 0x50),arg4);
+  if (arg4 < 1) {
+    orig::sqDebugPrintf_v1(str_____Error__invalid_clusterCount__103BC514,arg4);
     return;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock(&local_c,4,1,puVar2,iVar1);
-  if (local_c < 1) {
-    orig::sqDebugPrintf_v1(s_____Error__invalid_idMax__d__in_s_103bc4dc,local_c);
+  p1 = orig::SqScriptRead_ReadBlock(&i3,4,1,p1,i1);
+  if (i3 < 1) {
+    orig::sqDebugPrintf_v1(str_____Error__invalid_idMax__d__in_s_103BC4DC,i3);
     return;
   }
-  orig::SqinSkin_ResizeItemArray(param_1,param_4);
-  param_3 = 0;
-  if (0 < param_4) {
-    while ((puVar2 = orig::SqScriptRead_ReadBlock(&local_8,4,2,puVar2,iVar1), -1 < local_8 &&
-           (0 < local_4))) {
-      puVar3 = orig::FUN_10275d80(1,local_4 << 2,s_C__dev_dancer_modules_sqSkin_src_103bc4ac,0x5b);
-      if (puVar3 == (undefined4 *)0x0) {
-        orig::sqDebugPrintf_v1(s_Error__cluster__d____d_ids_cause_103bc478,param_3,local_4);
+  orig::SqinSkin_ResizeItemArray(arg1,arg4);
+  arg3 = 0;
+  if (0 < arg4) {
+    while ((p1 = orig::SqScriptRead_ReadBlock(&i4,4,2,p1,i1), -1 < i4 &&
+           (0 < i5))) {
+      p2 = orig::game_10275D80(1,i5 << 2,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x5b);
+      if (p2 == (bits32 *)0x0) {
+        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_ids_cause_103BC478,arg3,i5);
         return;
       }
-      puVar2 = orig::SqScriptRead_ReadBlock(puVar3,4,local_4,puVar2,iVar1);
-      puVar4 = orig::FUN_10275d80(1,local_4 * 4,s_C__dev_dancer_modules_sqSkin_src_103bc4ac,0x69);
-      if (puVar4 == (undefined4 *)0x0) {
-        orig::sqDebugPrintf_v1(s_Error__cluster__d____d_weights_c_103bc440,param_3,local_4);
+      p1 = orig::SqScriptRead_ReadBlock(p2,4,i5,p1,i1);
+      p3 = orig::game_10275D80(1,i5 * 4,str_C__dev_dancer_modules_sqSkin_src_103BC4AC,0x69);
+      if (p3 == (bits32 *)0x0) {
+        orig::sqDebugPrintf_v1(str_Error__cluster__d____d_weights_c_103BC440,arg3,i5);
         return;
       }
-      puVar2 = orig::SqScriptRead_ReadBlock(puVar4,4,local_4,puVar2,iVar1);
-      iVar5 = orig::sqskSkeleton_GetNodeByIndex(param_1,local_8);
-      if (iVar5 != 0) {
-        puVar6 = orig::sqinCluster_Create();
-        puVar6[0x27] = iVar5;
-        puVar6[0x14] = local_4;
-        puVar6[0xc] = puVar3;
-        puVar6[0xe] = puVar4;
-        puVar6[0xf] = 0;
-        puVar6[0x16] = iVar5 + 0x24;
-        orig::SqinSkinAppend_Append(param_1,(int)puVar6);
+      p1 = orig::SqScriptRead_ReadBlock(p3,4,i5,p1,i1);
+      i2 = orig::sqskSkeleton_GetNodeByIndex(arg1,i4);
+      if (i2 != 0) {
+        p4 = orig::sqinCluster_Create();
+        p4[0x27] = i2;
+        p4[0x14] = i5;
+        p4[0xc] = p2;
+        p4[0xe] = p3;
+        p4[0xf] = 0;
+        p4[0x16] = i2 + 0x24;
+        orig::SqinSkinAppend_Append(arg1,(int)p4);
       }
-      param_3 = param_3 + 1;
-      if (param_4 <= param_3) {
+      arg3 = arg3 + 1;
+      if (arg4 <= arg3) {
         return;
       }
     }
-    orig::sqDebugPrintf_v1(s_____Error__cluster__d___bad_vals_103bc414,param_3,local_8,local_4);
+    orig::sqDebugPrintf_v1(str_____Error__cluster__d___bad_vals_103BC414,arg3,i4,i5);
   }
   return;
 }

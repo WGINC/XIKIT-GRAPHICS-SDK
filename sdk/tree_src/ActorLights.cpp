@@ -5,431 +5,431 @@
 // GATE: PASS -- 100 trials, 99 returned normally, 547 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 XI_API int __thiscall Actor_SelectNearestLights(void *self_)
 {
-  _BYTE *v1;
-  double v2;
-  __int16 v3; // fps
-  bool v4; // c0
-  char v5; // c2
-  bool v6; // c3
-  int v7;
-  int v8;
-  char *v9;
-  float *v10;
-  long double v11;
-  __int16 v12; // fps
-  long double v13;
-  bool v14; // c0
-  char v15; // c2
-  bool v16; // c3
-  long double v17;
-  __int16 v18; // fps
-  long double v19;
+  uint8_t *p1;
+  double f1;
+  short i1; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  int i2;
+  int i3;
+  char *p2;
+  float *p3;
+  long double f2;
+  short i4; // fps
+  long double f3;
+  bool b3; // c0
+  char c2; // c2
+  bool b4; // c3
+  long double f4;
+  short i5; // fps
+  long double f5;
   int i;
-  bool v21; // c0
-  char v22; // c2
-  bool v23; // c3
+  bool b5; // c0
+  char c3; // c2
+  bool b6; // c3
   int j;
-  float v25;
-  int v26;
-  char *v27;
+  float f6;
+  int i6;
+  char *p4;
   int k;
-  int v29;
-  float *v30;
-  int v31;
-  const void *v32;
-  float *v33;
-  int v34;
-  char *v35;
-  BOOL v36;
-  int *v37;
-  int v38;
-  float *v39;
-  int v40;
-  int v41;
-  void *v42;
-  int v43;
-  int v44;
-  __int16 v45; // fps
-  double v46;
-  bool v47; // c0
-  char v48; // c2
-  bool v49; // c3
-  double v50;
-  double v51;
-  __int16 v52; // fps
-  bool v53; // c0
-  char v54; // c2
-  bool v55; // c3
-  __int16 v56; // fps
-  bool v57; // c0
-  char v58; // c2
-  bool v59; // c3
-  bool v60; // c0
-  char v61; // c2
-  bool v62; // c3
-  __int16 v63; // fps
-  bool v64; // c0
-  char v65; // c2
-  bool v66; // c3
-  __int16 v67; // fps
-  bool v68; // c0
-  char v69; // c2
-  bool v70; // c3
-  __int16 v71; // fps
-  bool v72; // c0
-  char v73; // c2
-  bool v74; // c3
-  double v75;
-  int v76;
-  unsigned int v77;
-  int v78;
+  int i7;
+  float *p5;
+  int i8;
+  const void *p6;
+  float *p7;
+  int i9;
+  char *p8;
+  BOOL i10;
+  int *p9;
+  int i11;
+  float *p10;
+  int i12;
+  int i13;
+  void *p11;
+  int i14;
+  int i15;
+  short i16; // fps
+  double f7;
+  bool b7; // c0
+  char c4; // c2
+  bool b8; // c3
+  double f8;
+  double f9;
+  short i17; // fps
+  bool b9; // c0
+  char c5; // c2
+  bool b10; // c3
+  short i18; // fps
+  bool b11; // c0
+  char c6; // c2
+  bool b12; // c3
+  bool b13; // c0
+  char c7; // c2
+  bool b14; // c3
+  short i19; // fps
+  bool b15; // c0
+  char c8; // c2
+  bool b16; // c3
+  short i20; // fps
+  bool b17; // c0
+  char c9; // c2
+  bool b18; // c3
+  short i21; // fps
+  bool b19; // c0
+  char c10; // c2
+  bool b20; // c3
+  double f10;
+  int i22;
+  unsigned int u1;
+  int i23;
   int result;
   alignas(16) unsigned char xi_frame[0x474];  // address-taken locals at their original offsets
-  float &v80 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &v81 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &v82 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float &v84 = *reinterpret_cast<float *>(xi_frame + 0x24);
-  unsigned int &v85 = *reinterpret_cast<unsigned int *>(xi_frame + 0x28);
-  unsigned int &v86 = *reinterpret_cast<unsigned int *>(xi_frame + 0x2C);
-  unsigned int &v87 = *reinterpret_cast<unsigned int *>(xi_frame + 0x30);
-  int &v88 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  float &v89 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &v90 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &v91 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &v92 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  int &v93 = *reinterpret_cast<int *>(xi_frame + 0x48);
-  int &v94 = *reinterpret_cast<int *>(xi_frame + 0x4C);
-  int &v95 = *reinterpret_cast<int *>(xi_frame + 0x50);
-  float (&v96)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x54);
-  float (&v97)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
+  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x4);
+  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x4);
+  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x18);
+  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x24);
+  unsigned int &u2 = *reinterpret_cast<unsigned int *>(xi_frame + 0x28);
+  unsigned int &u3 = *reinterpret_cast<unsigned int *>(xi_frame + 0x2C);
+  unsigned int &u4 = *reinterpret_cast<unsigned int *>(xi_frame + 0x30);
+  int &i24 = *reinterpret_cast<int *>(xi_frame + 0x34);
+  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x38);
+  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  int &i25 = *reinterpret_cast<int *>(xi_frame + 0x40);
+  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x44);
+  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x48);
+  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x4C);
+  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x50);
+  float (&f18)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x54);
+  float (&f19)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
   bool xi_fpu_unord = false;
 
-  v1 = self_;
-  v2 = orig::Camera_GetFrameScale() * 0x1.99999a0000000p-2;
-  v82 = v2;
-  (xi_fpu_unord = __builtin_isunordered(v2, 1.0), v4 = v2 < 1.0);
-  v5 = 0;
-  v6 = v2 == 1.0;
-  if ( ((__int16)(((v4 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-    v82 = 1.0;
-  v7 = 0;
-  v92 = 10000.0;
-  *(float *)&v88 = 0.0;
-  v89 = 0.0;
-  v90 = 0.0;
-  v91 = 0;
-  v93 = 1176256512;
-  v94 = 1176256512;
-  v95 = 1176256512;
-  v84 = 0.0;
-  v8 = 0;
-  v9 = v1 + 388;
+  p1 = self_;
+  f1 = orig::Camera_GetFrameScale() * 0x1.99999a0000000p-2;
+  f13 = f1;
+  (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b1 = f1 < 1.0);
+  c1 = 0;
+  b2 = f1 == 1.0;
+  if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+    f13 = 1.0;
+  i2 = 0;
+  f17 = 10000.0;
+  *(float *)&i24 = 0.0;
+  f15 = 0.0;
+  f16 = 0.0;
+  i25 = 0;
+  i26 = 1176256512;
+  i27 = 1176256512;
+  i28 = 1176256512;
+  f14 = 0.0;
+  i3 = 0;
+  p2 = p1 + 388;
   do
   {
-    if ( v7 >= 4 )
+    if ( i2 >= 4 )
       break;
-    *((_DWORD *)v9 - 1) = *((_DWORD *)v9 + 129);
-    if ( *((_DWORD *)v9 + 129) == 1 )
+    *((uint32_t *)p2 - 1) = *((uint32_t *)p2 + 129);
+    if ( *((uint32_t *)p2 + 129) == 1 )
     {
-      *(_DWORD *)v9 = *((_DWORD *)v9 + 130);
-      *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 131);
-      *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 132);
-      *((_DWORD *)v9 + 3) = *((_DWORD *)v9 + 133);
-      *((_DWORD *)v9 + 12) = *((_DWORD *)v9 + 142);
-      *((_DWORD *)v9 + 13) = *((_DWORD *)v9 + 143);
-      *((_DWORD *)v9 + 14) = *((_DWORD *)v9 + 144);
-      *((_DWORD *)v9 + 18) = *((_DWORD *)v9 + 148);
-      *((_DWORD *)v9 + 22) = *((_DWORD *)v9 + 152);
-      v10 = (float *)(*(int (__thiscall **)(void *))(*(_DWORD *)self_ + 444))(self_);
-      orig::Vec3_Sub(v97, (float *)v9 + 12, v10);
-      orig::Vec3_MulComponents(v96, v97, v97);
-      v11 = v96[2] + v96[1] + v96[0];
-      v13 = sqrt(v11);
-      (xi_fpu_unord = __builtin_isunordered(v13, *((float *)v9 + 18)), v14 = v13 < *((float *)v9 + 18));
-      v15 = 0;
-      v16 = v13 == *((float *)v9 + 18);
-      if ( ((__int16)(((v14 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v16 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
+      *(uint32_t *)p2 = *((uint32_t *)p2 + 130);
+      *((uint32_t *)p2 + 1) = *((uint32_t *)p2 + 131);
+      *((uint32_t *)p2 + 2) = *((uint32_t *)p2 + 132);
+      *((uint32_t *)p2 + 3) = *((uint32_t *)p2 + 133);
+      *((uint32_t *)p2 + 12) = *((uint32_t *)p2 + 142);
+      *((uint32_t *)p2 + 13) = *((uint32_t *)p2 + 143);
+      *((uint32_t *)p2 + 14) = *((uint32_t *)p2 + 144);
+      *((uint32_t *)p2 + 18) = *((uint32_t *)p2 + 148);
+      *((uint32_t *)p2 + 22) = *((uint32_t *)p2 + 152);
+      p3 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 444))(self_);
+      orig::Vec3_Sub(f19, (float *)p2 + 12, p3);
+      orig::Vec3_MulComponents(f18, f19, f19);
+      f2 = f18[2] + f18[1] + f18[0];
+      f3 = sqrt(f2);
+      (xi_fpu_unord = __builtin_isunordered(f3, *((float *)p2 + 18)), b3 = f3 < *((float *)p2 + 18));
+      c2 = 0;
+      b4 = f3 == *((float *)p2 + 18);
+      if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
       {
-        v17 = v11 * *((float *)v9 + 22);
-        if ( v17 <= 0x1.a36e2e0000000p-14 )
-          v17 = 0x1.a36e2e0000000p-14;
-        v19 = 1.0 / v17;
+        f4 = f2 * *((float *)p2 + 22);
+        if ( f4 <= 0x1.a36e2e0000000p-14 )
+          f4 = 0x1.a36e2e0000000p-14;
+        f5 = 1.0 / f4;
         for ( i = 0; i < 4; ++i )
         {
-          if ( *(&v88 + i) == 0 )
+          if ( *(&i24 + i) == 0 )
             break;
-          (xi_fpu_unord = __builtin_isunordered(v19, *(&v92 + i)), v21 = v19 < *(&v92 + i));
-          v22 = 0;
-          v23 = v19 == *(&v92 + i);
-          if ( ((__int16)(((v21 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v23 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+          (xi_fpu_unord = __builtin_isunordered(f5, *(&f17 + i)), b5 = f5 < *(&f17 + i));
+          c3 = 0;
+          b6 = f5 == *(&f17 + i);
+          if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
             break;
         }
         if ( i != 4 )
         {
           for ( j = 2; j >= i; --j )
           {
-            *((_DWORD *)&v89 + j) = *(&v88 + j);
-            *(&v93 + j) = *((_DWORD *)&v92 + j);
+            *((uint32_t *)&f15 + j) = *(&i24 + j);
+            *(&i26 + j) = *((uint32_t *)&f17 + j);
           }
-          v25 = v84;
-          *(&v88 + i) = (int)(v9 - 4);
-          *(&v92 + i) = v19;
-          LODWORD(v84) = LODWORD(v25) + 1;
+          f6 = f14;
+          *(&i24 + i) = (int)(p2 - 4);
+          *(&f17 + i) = f5;
+          (*(uint32_t *)&(f14)) = (*(uint32_t *)&(f6)) + 1;
         }
       }
     }
-    v7 = LODWORD(v84);
-    v1 = self_;
-    ++v8;
-    v9 += 104;
+    i2 = (*(uint32_t *)&(f14));
+    p1 = self_;
+    ++i3;
+    p2 += 104;
   }
-  while ( v8 < 5 );
-  if ( v7 > 1 )
+  while ( i3 < 5 );
+  if ( i2 > 1 )
   {
-    v93 = 0;
-    v89 = 0.0;
-    v94 = 0;
-    v90 = 0.0;
-    v95 = 0;
-    v91 = 0;
-    v7 = 1;
+    i26 = 0;
+    f15 = 0.0;
+    i27 = 0;
+    f16 = 0.0;
+    i28 = 0;
+    i25 = 0;
+    i2 = 1;
   }
-  v26 = 0;
-  v27 = v1 + 388;
+  i6 = 0;
+  p4 = p1 + 388;
   do
   {
-    if ( v7 >= 4 )
+    if ( i2 >= 4 )
       break;
-    *((_DWORD *)v27 - 1) = *((_DWORD *)v27 + 129);
-    if ( *((_DWORD *)v27 + 129) == 3 )
+    *((uint32_t *)p4 - 1) = *((uint32_t *)p4 + 129);
+    if ( *((uint32_t *)p4 + 129) == 3 )
     {
-      if ( v1[176] == 0 || *((_WORD *)v1 + 89) != 0 )
+      if ( p1[176] == 0 || *((uint16_t *)p1 + 89) != 0 )
       {
-        *(float *)v27 = (*((float *)v27 + 130) - *(float *)v27) * v82 + *(float *)v27;
-        *((float *)v27 + 1) = (*((float *)v27 + 131) - *((float *)v27 + 1)) * v82 + *((float *)v27 + 1);
-        *((float *)v27 + 2) = (*((float *)v27 + 132) - *((float *)v27 + 2)) * v82 + *((float *)v27 + 2);
-        *((float *)v27 + 3) = (*((float *)v27 + 133) - *((float *)v27 + 3)) * v82 + *((float *)v27 + 3);
-        *((float *)v27 + 15) = (*((float *)v27 + 145) - *((float *)v27 + 15)) * v82 + *((float *)v27 + 15);
-        *((float *)v27 + 16) = (*((float *)v27 + 146) - *((float *)v27 + 16)) * v82 + *((float *)v27 + 16);
-        *((float *)v27 + 17) = (*((float *)v27 + 147) - *((float *)v27 + 17)) * v82 + *((float *)v27 + 17);
+        *(float *)p4 = (*((float *)p4 + 130) - *(float *)p4) * f13 + *(float *)p4;
+        *((float *)p4 + 1) = (*((float *)p4 + 131) - *((float *)p4 + 1)) * f13 + *((float *)p4 + 1);
+        *((float *)p4 + 2) = (*((float *)p4 + 132) - *((float *)p4 + 2)) * f13 + *((float *)p4 + 2);
+        *((float *)p4 + 3) = (*((float *)p4 + 133) - *((float *)p4 + 3)) * f13 + *((float *)p4 + 3);
+        *((float *)p4 + 15) = (*((float *)p4 + 145) - *((float *)p4 + 15)) * f13 + *((float *)p4 + 15);
+        *((float *)p4 + 16) = (*((float *)p4 + 146) - *((float *)p4 + 16)) * f13 + *((float *)p4 + 16);
+        *((float *)p4 + 17) = (*((float *)p4 + 147) - *((float *)p4 + 17)) * f13 + *((float *)p4 + 17);
       }
       else
       {
-        *(_DWORD *)v27 = *((_DWORD *)v27 + 130);
-        *((_DWORD *)v27 + 1) = *((_DWORD *)v27 + 131);
-        *((_DWORD *)v27 + 2) = *((_DWORD *)v27 + 132);
-        *((_DWORD *)v27 + 3) = *((_DWORD *)v27 + 133);
-        *((_DWORD *)v27 + 15) = *((_DWORD *)v27 + 145);
-        *((_DWORD *)v27 + 16) = *((_DWORD *)v27 + 146);
-        *((_DWORD *)v27 + 17) = *((_DWORD *)v27 + 147);
+        *(uint32_t *)p4 = *((uint32_t *)p4 + 130);
+        *((uint32_t *)p4 + 1) = *((uint32_t *)p4 + 131);
+        *((uint32_t *)p4 + 2) = *((uint32_t *)p4 + 132);
+        *((uint32_t *)p4 + 3) = *((uint32_t *)p4 + 133);
+        *((uint32_t *)p4 + 15) = *((uint32_t *)p4 + 145);
+        *((uint32_t *)p4 + 16) = *((uint32_t *)p4 + 146);
+        *((uint32_t *)p4 + 17) = *((uint32_t *)p4 + 147);
       }
       for ( k = 0; k < 4; ++k )
       {
-        if ( *(&v88 + k) == 0 )
+        if ( *(&i24 + k) == 0 )
           break;
-        if ( *(&v92 + k) < 0x1.0624de0000000p-10 )
+        if ( *(&f17 + k) < 0x1.0624de0000000p-10 )
           break;
       }
       if ( k != 4 )
       {
-        v29 = 2;
+        i7 = 2;
         if ( k <= 2 )
         {
           do
           {
-            *((_DWORD *)&v89 + v29) = *(&v88 + v29);
-            *(&v93 + v29) = *((_DWORD *)&v92 + v29);
-            --v29;
+            *((uint32_t *)&f15 + i7) = *(&i24 + i7);
+            *(&i26 + i7) = *((uint32_t *)&f17 + i7);
+            --i7;
           }
-          while ( v29 >= k );
-          v1 = self_;
+          while ( i7 >= k );
+          p1 = self_;
         }
-        *(&v88 + k) = (int)(v27 - 4);
-        *(&v92 + k) = 0x1.0624de0000000p-10;
-        ++v7;
+        *(&i24 + k) = (int)(p4 - 4);
+        *(&f17 + k) = 0x1.0624de0000000p-10;
+        ++i2;
       }
     }
-    ++v26;
-    v27 += 104;
+    ++i6;
+    p4 += 104;
   }
-  while ( v26 < 5 );
-  v30 = &g_lightTable_Start;
-  v31 = 0;
+  while ( i6 < 5 );
+  p5 = &g_lightTable_Start;
+  i8 = 0;
   do
   {
-    v32 = *(const void **)((char *)&v88 + v31);
-    if ( v32 != nullptr )
+    p6 = *(const void **)((char *)&i24 + i8);
+    if ( p6 != nullptr )
     {
-      qmemcpy(v30, v32, 0x68u);
-      if ( *(_DWORD *)v30 == 1 )
+      memcpy(p5, p6, 0x68u);
+      if ( *(uint32_t *)p5 == 1 )
       {
-        *(_DWORD *)v30 = 3;
-        v33 = (float *)(*(int (__thiscall **)(void *))(*(_DWORD *)self_ + 444))(self_);
-        orig::Vec3_Sub(v30 + 16, v33, v30 + 13);
-        orig::sub_100274B0(v30 + 16);
-        orig::fn_100272B0((int)(v30 + 1), *(float *)((char *)&v92 + v31));
+        *(uint32_t *)p5 = 3;
+        p7 = (float *)(*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 444))(self_);
+        orig::Vec3_Sub(p5 + 16, p7, p5 + 13);
+        orig::game_100274B0_as_v0(p5 + 16);
+        orig::fn_100272B0((int)(p5 + 1), *(float *)((char *)&f17 + i8));
       }
     }
     else
     {
-      *v30 = 0.0;
+      *p5 = 0.0;
     }
-    v30 += 26;
-    v31 += 4;
+    p5 += 26;
+    i8 += 4;
   }
-  while ( (int)v30 < (int)&g_lightTable_End );
-  v34 = 0;
-  v35 = (char *)self_ + 384;
+  while ( (int)p5 < (int)&g_lightTable_End );
+  i9 = 0;
+  p8 = (char *)self_ + 384;
   do
   {
-    if ( v35 == (char *)v88 )
+    if ( p8 == (char *)i24 )
       break;
-    ++v34;
-    v35 += 104;
+    ++i9;
+    p8 += 104;
   }
-  while ( v34 < 4 );
-  if ( v34 == 4 )
-    v34 = 0;
-  g_nearestLight = (int)self_ + 104 * v34 + 904;
-  v36 = (*(int (__thiscall **)(void *))(*(_DWORD *)self_ + 560))(self_) == 0;
-  v37 = (int *)*orig::sub_10039410((_DWORD *)self_ + 452, &v84);
-  if ( v37 != nullptr && (v38 = *v37) != 0 )
+  while ( i9 < 4 );
+  if ( i9 == 4 )
+    i9 = 0;
+  g_nearestLight = (int)self_ + 104 * i9 + 904;
+  i10 = (*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 560))(self_) == 0;
+  p9 = (int *)*orig::game_10039410((uint32_t *)self_ + 452, &f14);
+  if ( p9 != nullptr && (i11 = *p9) != 0 )
   {
-    if ( (*(_BYTE *)(v38 + 48) & 2) == 0 )
+    if ( (*(uint8_t *)(i11 + 48) & 2) == 0 )
     {
-      v39 = &g_lightTable_Start;
+      p10 = &g_lightTable_Start;
       do
       {
-        *v39 = 0.0;
-        v39 += 26;
+        *p10 = 0.0;
+        p10 += 26;
       }
-      while ( (int)v39 < (int)&g_lightTable_End );
+      while ( (int)p10 < (int)&g_lightTable_End );
     }
     g_ambientColor = -2140114832;
   }
   else
   {
-    v40 = (*(int (__thiscall **)(void *))(*(_DWORD *)self_ + 392))(self_);
-    orig::XiZone_GetAmbient((char *)g_pXiZone, &g_ambientColor, v36, v40);
+    i12 = (*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 392))(self_);
+    orig::XiZone_GetAmbient((char *)g_pXiZone, &g_ambientColor, i10, i12);
   }
-  v41 = (*(int (__thiscall **)(void *))(*(_DWORD *)self_ + 392))(self_);
-  orig::XiZone_GetFog(g_pXiZone, &v85, (float *)&v87, (float *)&v86, v36, v41);
-  v42 = (void *)orig::sub_10157CF0(g_pTargetMng);
-  if ( v42 == nullptr )
-    v42 = (void *)orig::ActorHandle_ResolveObject((int)XiControlActor_userControlTarget);
-  if ( v42 == self_ || (*((_DWORD *)self_ + 34) & 0x200) != 0 )
+  i13 = (*(int (__thiscall **)(void *))(*(uint32_t *)self_ + 392))(self_);
+  orig::XiZone_GetFog(g_pXiZone, &u2, (float *)&u4, (float *)&u3, i10, i13);
+  p11 = (void *)orig::TargetMenu_GetCachedUnlessFlag21_as_v0(g_pTargetMng);
+  if ( p11 == nullptr )
+    p11 = (void *)orig::ActorHandle_ResolveObject((int)XiControlActor_userControlTarget);
+  if ( p11 == self_ || (*((uint32_t *)self_ + 34) & 0x200) != 0 )
   {
-    v44 = *((_DWORD *)self_ + 528);
-    if ( (v44 & 4) == 0 )
+    i15 = *((uint32_t *)self_ + 528);
+    if ( (i15 & 4) == 0 )
     {
-      *((_DWORD *)self_ + 529) = 1109393408;
-      *((_DWORD *)self_ + 528) = v44 | 0x6000000;
+      *((uint32_t *)self_ + 529) = 1109393408;
+      *((uint32_t *)self_ + 528) = i15 | 0x6000000;
     }
-    if ( (*((_DWORD *)self_ + 528) & 0x6000000) != 0 || (*((_DWORD *)self_ + 34) & 0x200) != 0 )
+    if ( (*((uint32_t *)self_ + 528) & 0x6000000) != 0 || (*((uint32_t *)self_ + 34) & 0x200) != 0 )
     {
-      v46 = *((float *)self_ + 529);
-      (xi_fpu_unord = __builtin_isunordered(v46, 20.0), v47 = v46 < 20.0);
-      v48 = 0;
-      v49 = v46 == 20.0;
-      if ( ((__int16)(((v47 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v49 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
-        v50 = *((float *)self_ + 529);
+      f7 = *((float *)self_ + 529);
+      (xi_fpu_unord = __builtin_isunordered(f7, 20.0), b7 = f7 < 20.0);
+      c4 = 0;
+      b8 = f7 == 20.0;
+      if ( ((short)(((b7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
+        f8 = *((float *)self_ + 529);
       else
-        v50 = 40.0 - *((float *)self_ + 529);
-      v84 = v50 * 0x1.99999a0000000p-5;
-      *(float *)&v88 = (float)(unsigned __int8)g_ambientColor;
-      v89 = (float)(unsigned __int8)g_ambientColorG;
-      v90 = (float)(unsigned __int8)g_ambientColorR;
-      v80 = 1.0 - v84;
-      orig::fn_100272B0((int)&v88, v80);
-      v81 = v84 * 220.0;
-      orig::sub_10027020((float *)&v88, v81);
-      if ( *(float *)&v88 < 0.0 )
-        *(float *)&v88 = 0.0;
-      if ( v89 < 0.0 )
-        v89 = 0.0;
-      v51 = v90;
-      if ( v90 < 0.0 )
-        v51 = 0.0;
-      (xi_fpu_unord = __builtin_isunordered(*(float *)&v88, 255.0), v53 = *(float *)&v88 < 255.0);
-      v54 = 0;
-      v55 = *(float *)&v88 == 255.0;
-      if ( ((__int16)(((v53 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v55 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        *(float *)&v88 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(v89, 255.0), v57 = v89 < 255.0);
-      v58 = 0;
-      v59 = v89 == 255.0;
-      if ( ((__int16)(((v57 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v59 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v89 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(v51, 255.0), v60 = v51 < 255.0);
-      v61 = 0;
-      v62 = v51 == 255.0;
-      if ( ((__int16)(((v60 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v62 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v51 = 255.0;
-      g_ambientColor = (__int64)*(float *)&v88 | (((__int64)v89 | ((unsigned int)(__int64)v51 << 8)) << 8);
-      *(float *)&v88 = (float)(unsigned __int8)v85;
-      v89 = (float)BYTE1(v85);
-      v90 = (float)BYTE2(v85);
-      orig::fn_100272B0((int)&v88, v84);
-      if ( *(float *)&v88 < 0.0 )
-        *(float *)&v88 = 0.0;
-      if ( v89 < 0.0 )
-        v89 = 0.0;
-      if ( v90 < 0.0 )
-        v90 = 0.0;
-      (xi_fpu_unord = __builtin_isunordered(*(float *)&v88, 255.0), v64 = *(float *)&v88 < 255.0);
-      v65 = 0;
-      v66 = *(float *)&v88 == 255.0;
-      if ( ((__int16)(((v64 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v66 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        *(float *)&v88 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(v89, 255.0), v68 = v89 < 255.0);
-      v69 = 0;
-      v70 = v89 == 255.0;
-      if ( ((__int16)(((v68 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v70 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v89 = 255.0;
-      (xi_fpu_unord = __builtin_isunordered(v90, 255.0), v72 = v90 < 255.0);
-      v73 = 0;
-      v74 = v90 == 255.0;
-      if ( ((__int16)(((v72 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v74 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v90 = 255.0;
-      v85 = (__int64)*(float *)&v88 | (((__int64)v89 | ((unsigned int)(__int64)v90 << 8)) << 8);
-      v75 = *((float *)self_ + 529) - orig::Camera_GetFrameScale();
-      *((float *)self_ + 529) = v75;
-      if ( v75 < 0.0 )
+        f8 = 40.0 - *((float *)self_ + 529);
+      f14 = f8 * 0x1.99999a0000000p-5;
+      *(float *)&i24 = (float)(unsigned char)g_ambientColor;
+      f15 = (float)(unsigned char)g_ambientColorG;
+      f16 = (float)(unsigned char)g_ambientColorR;
+      f11 = 1.0 - f14;
+      orig::fn_100272B0((int)&i24, f11);
+      f12 = f14 * 220.0;
+      orig::game_10027020((float *)&i24, f12);
+      if ( *(float *)&i24 < 0.0 )
+        *(float *)&i24 = 0.0;
+      if ( f15 < 0.0 )
+        f15 = 0.0;
+      f9 = f16;
+      if ( f16 < 0.0 )
+        f9 = 0.0;
+      (xi_fpu_unord = __builtin_isunordered(*(float *)&i24, 255.0), b9 = *(float *)&i24 < 255.0);
+      c5 = 0;
+      b10 = *(float *)&i24 == 255.0;
+      if ( ((short)(((b9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b10 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        *(float *)&i24 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(f15, 255.0), b11 = f15 < 255.0);
+      c6 = 0;
+      b12 = f15 == 255.0;
+      if ( ((short)(((b11 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b12 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f15 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(f9, 255.0), b13 = f9 < 255.0);
+      c7 = 0;
+      b14 = f9 == 255.0;
+      if ( ((short)(((b13 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b14 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f9 = 255.0;
+      g_ambientColor = (long long)*(float *)&i24 | (((long long)f15 | ((unsigned int)(long long)f9 << 8)) << 8);
+      *(float *)&i24 = (float)(unsigned char)u2;
+      f15 = (float)(*((uint8_t *)&(u2) + 1));
+      f16 = (float)(*((uint8_t *)&(u2) + 2));
+      orig::fn_100272B0((int)&i24, f14);
+      if ( *(float *)&i24 < 0.0 )
+        *(float *)&i24 = 0.0;
+      if ( f15 < 0.0 )
+        f15 = 0.0;
+      if ( f16 < 0.0 )
+        f16 = 0.0;
+      (xi_fpu_unord = __builtin_isunordered(*(float *)&i24, 255.0), b15 = *(float *)&i24 < 255.0);
+      c8 = 0;
+      b16 = *(float *)&i24 == 255.0;
+      if ( ((short)(((b15 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b16 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        *(float *)&i24 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(f15, 255.0), b17 = f15 < 255.0);
+      c9 = 0;
+      b18 = f15 == 255.0;
+      if ( ((short)(((b17 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b18 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f15 = 255.0;
+      (xi_fpu_unord = __builtin_isunordered(f16, 255.0), b19 = f16 < 255.0);
+      c10 = 0;
+      b20 = f16 == 255.0;
+      if ( ((short)(((b19 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b20 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f16 = 255.0;
+      u2 = (long long)*(float *)&i24 | (((long long)f15 | ((unsigned int)(long long)f16 << 8)) << 8);
+      f10 = *((float *)self_ + 529) - orig::Camera_GetFrameScale();
+      *((float *)self_ + 529) = f10;
+      if ( f10 < 0.0 )
       {
-        v76 = *((_DWORD *)self_ + 528);
-        *((_DWORD *)self_ + 529) = 1109393408;
-        v77 = v76 ^ (v76 ^ ((v76 & 0xFE000000) - 1)) & 0x6000000;
-        *((_DWORD *)self_ + 528) = v77;
-        if ( (v77 & 0x6000000) == 0 )
+        i22 = *((uint32_t *)self_ + 528);
+        *((uint32_t *)self_ + 529) = 1109393408;
+        u1 = i22 ^ (i22 ^ ((i22 & 0xFE000000) - 1)) & 0x6000000;
+        *((uint32_t *)self_ + 528) = u1;
+        if ( (u1 & 0x6000000) == 0 )
         {
-          v78 = *((_DWORD *)self_ + 34);
-          BYTE1(v78) &= ~2u;
-          *((_DWORD *)self_ + 34) = v78;
+          i23 = *((uint32_t *)self_ + 34);
+          (*((uint8_t *)&(i23) + 1)) &= ~2u;
+          *((uint32_t *)self_ + 34) = i23;
         }
       }
     }
-    v43 = *((_DWORD *)self_ + 528);
-    v43 = (int)(((uint32_t)(v43) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v43 | 4) << 0));
+    i14 = *((uint32_t *)self_ + 528);
+    i14 = (int)(((uint32_t)(i14) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i14 | 4) << 0));
   }
   else
   {
-    v43 = *((_DWORD *)self_ + 528);
-    v43 = (int)(((uint32_t)(v43) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v43 & 0xFB) << 0));
+    i14 = *((uint32_t *)self_ + 528);
+    i14 = (int)(((uint32_t)(i14) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i14 & 0xFB) << 0));
   }
-  *((_DWORD *)self_ + 528) = v43;
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGCOLOR, v85);
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGSTART, v86);
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGEND, v87);
-  result = *orig::sub_10039410((_DWORD *)self_ + 452, &v84);
+  *((uint32_t *)self_ + 528) = i14;
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGCOLOR, u2);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGSTART, u3);
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGEND, u4);
+  result = *orig::game_10039410((uint32_t *)self_ + 452, &f14);
   if ( result != 0 )
   {
-    result = *(_DWORD *)result;
-    if ( result != 0 && (*(_BYTE *)(result + 48) & 2) == 0 )
+    result = *(uint32_t *)result;
+    if ( result != 0 && (*(uint8_t *)(result + 48) & 2) == 0 )
     {
       result = (int)&g_lightTable_Start;
       do
       {
-        *(_DWORD *)result = 0;
+        *(uint32_t *)result = 0;
         result += 104;
       }
       while ( result < (int)&g_lightTable_End );

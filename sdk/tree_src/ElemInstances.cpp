@@ -3,192 +3,192 @@
 
 // FUNCTION: FFXIMAIN 0x10063C80
 // GATE: PASS -- 100 trials, 40 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 40
-XI_API int __thiscall YmElem_ForEachInstance(__int16 *self_, void (__cdecl *a2)(int, float *, int), int a3)
+XI_API int __thiscall YmElem_ForEachInstance(short *self_, void (__cdecl *arg2)(int, float *, int), int arg3)
 {
-  __int64 v4; // rax
-  double v5;
-  double v6;
+  long long i1; // rax
+  double f1;
+  double f2;
   int ScratchMatrixStackTop;
-  float *v9;
-  int v10;
-  float *v11;
-  float v12;
-  float v13;
-  float *v14;
-  int v15;
-  float *v16;
-  float v17;
-  float v18;
-  double v19;
-  double v20;
-  double v21;
-  double v22;
-  float *v23;
-  unsigned int v24;
-  CMoProcessor *v25;
-  int v26;
-  CMoProcessor *v27;
-  int v28;
+  float *p1;
+  int i2;
+  float *p2;
+  float f3;
+  float f4;
+  float *p3;
+  int i3;
+  float *p4;
+  float f5;
+  float f6;
+  double f7;
+  double f8;
+  double f9;
+  double f10;
+  float *p5;
+  unsigned int u1;
+  CMoProcessor *p6;
+  int i4;
+  CMoProcessor *p7;
+  int i5;
   alignas(16) unsigned char xi_frame[0xE68];  // address-taken locals at their original offsets
-  float &v29 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &v30 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  float &v31 = *reinterpret_cast<float *>(xi_frame + 0x24);
+  float &f11 = *reinterpret_cast<float *>(xi_frame + 0x1C);
+  float &f12 = *reinterpret_cast<float *>(xi_frame + 0x20);
+  float &f13 = *reinterpret_cast<float *>(xi_frame + 0x24);
   int &i = *reinterpret_cast<int *>(xi_frame + 0x28);
-  float &v33 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  int &v34 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  float &v35 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &v36 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  float &v37 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  float &v38 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &v39 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  float &v40 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &v41 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float &v42 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float &v43 = *reinterpret_cast<float *>(xi_frame + 0x54);
-  float &v44 = *reinterpret_cast<float *>(xi_frame + 0x58);
-  float &v45 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &v46 = *reinterpret_cast<float *>(xi_frame + 0x60);
-  float &v47 = *reinterpret_cast<float *>(xi_frame + 0x64);
-  float &v48 = *reinterpret_cast<float *>(xi_frame + 0x68);
-  float &v49 = *reinterpret_cast<float *>(xi_frame + 0x74);
-  float &v50 = *reinterpret_cast<float *>(xi_frame + 0x78);
-  float &v51 = *reinterpret_cast<float *>(xi_frame + 0x84);
-  float (&v52)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x90);
-  float &v53 = *reinterpret_cast<float *>(xi_frame + 0x9C);
-  _DWORD (&v54)[626] = *reinterpret_cast<_DWORD (*)[626]>(xi_frame + 0xA0);
+  float &f14 = *reinterpret_cast<float *>(xi_frame + 0x2C);
+  int &i6 = *reinterpret_cast<int *>(xi_frame + 0x30);
+  float &f15 = *reinterpret_cast<float *>(xi_frame + 0x34);
+  float &f16 = *reinterpret_cast<float *>(xi_frame + 0x38);
+  float &f17 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x40);
+  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x44);
+  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x48);
+  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x4C);
+  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x50);
+  float &f23 = *reinterpret_cast<float *>(xi_frame + 0x54);
+  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x58);
+  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x5C);
+  float &f26 = *reinterpret_cast<float *>(xi_frame + 0x60);
+  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x64);
+  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x68);
+  float &f29 = *reinterpret_cast<float *>(xi_frame + 0x74);
+  float &f30 = *reinterpret_cast<float *>(xi_frame + 0x78);
+  float &f31 = *reinterpret_cast<float *>(xi_frame + 0x84);
+  float (&f32)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x90);
+  float &f33 = *reinterpret_cast<float *>(xi_frame + 0x9C);
+  uint32_t (&u2)[626] = *reinterpret_cast<uint32_t (*)[626]>(xi_frame + 0xA0);
 
-  v4 = (__int64)(((uint64_t)(v4) & 0xFFFFFFFFFFFF0000ull) | ((uint64_t)(uint16_t)(*(self_ + 34)) << 0));
-  if ( (__int16)v4 >= 20 )
+  i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFFFFFF0000ull) | ((uint64_t)(uint16_t)(*(self_ + 34)) << 0));
+  if ( (short)i1 >= 20 )
   {
-    v5 = orig::AppMainLoop_GetFloat10456A68Or1();
-    if ( (*(_BYTE *)(self_ + 35) & 1) != 0 )
+    f1 = orig::AppMainLoop_GetFloat10456A68Or1();
+    if ( (*(uint8_t *)(self_ + 35) & 1) != 0 )
     {
       i = *(self_ + 34);
-      v6 = v5 * (double)i * 0.5;
+      f2 = f1 * (double)i * 0.5;
     }
     else
     {
       i = *(self_ + 34);
-      v6 = (double)i;
+      f2 = (double)i;
     }
-    v4 = (__int64)v6;
+    i1 = (long long)f2;
   }
   else
   {
-    v4 = (__int64)(((uint64_t)(v4) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)((__int16)v4) << 0));
+    i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)((short)i1) << 0));
   }
-  v34 = v4;
-  if ( (_DWORD)v4 == 0 )
+  i6 = i1;
+  if ( (uint32_t)i1 == 0 )
     return 0;
-  v54[624] = 625;
+  u2[624] = 625;
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-  v9 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+  p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-  qmemcpy(v9, (const void *)(g_pResourceMng + 2960), 0x40u);
-  (*((void (__thiscall **)(CMoProcessor *, float *))(*(void * *)&g_pProcessor->vftable) + 6))(g_pProcessor, v9);
-  if ( dword_1047BF34 != 0 )
+  memcpy(p1, (const void *)(g_pResourceMng + 2960), 0x40u);
+  (*((void (__thiscall **)(CMoProcessor *, float *))(*(void * *)&g_pProcessor->vftable) + 6))(g_pProcessor, p1);
+  if ( g_1047BF34 != 0 )
   {
     (*((void (__thiscall **)(CMoProcessor *, float *, int, float *))(*(void * *)&g_pProcessor->vftable) + 9))(
       g_pProcessor,
-      v9,
-      dword_1047BF34,
-      v9);
-    dword_1047BF34 = 0;
+      p1,
+      g_1047BF34,
+      p1);
+    g_1047BF34 = 0;
   }
-  v10 = (g_pProcessor->ScratchMatrixStackTop);
-  v11 = ((float * *)((char *)g_pProcessor + 0xA10))[v10];
-  (g_pProcessor->ScratchMatrixStackTop) = v10 + 1;
-  orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, v11);
-  v12 = v11[13];
-  v13 = v11[14];
-  v44 = v11[12];
-  v11[12] = 0.0;
-  v11[13] = 0.0;
-  v11[14] = 0.0;
-  v11[15] = 1.0;
-  v14 = *(float **)self_;
-  v45 = v12;
-  v46 = v13;
-  if ( v14 != nullptr )
+  i2 = (g_pProcessor->ScratchMatrixStackTop);
+  p2 = ((float * *)((char *)g_pProcessor + 0xA10))[i2];
+  (g_pProcessor->ScratchMatrixStackTop) = i2 + 1;
+  orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, p2);
+  f3 = p2[13];
+  f4 = p2[14];
+  f24 = p2[12];
+  p2[12] = 0.0;
+  p2[13] = 0.0;
+  p2[14] = 0.0;
+  p2[15] = 1.0;
+  p3 = *(float **)self_;
+  f25 = f3;
+  f26 = f4;
+  if ( p3 != nullptr )
   {
-    v37 = *v14;
-    v35 = *(float *)(LODWORD(v37) + 48);
+    f17 = *p3;
+    f15 = *(float *)((*(uint32_t *)&(f17)) + 48);
   }
   else
   {
-    v35 = 0.0;
+    f15 = 0.0;
   }
-  v33 = *((float *)self_ + 1) * *((float *)self_ + 1) * 0.5;
-  v38 = v33 * *((float *)self_ + 10);
-  v39 = v33 * *((float *)self_ + 11);
-  v40 = v33 * *((float *)self_ + 12);
-  if ( LODWORD(v35) != 0 && *((int *)self_ + 5) < 0 )
-    orig::sub_1006BC10(v54, *((_DWORD *)self_ + 4));
-  v15 = v34;
-  v16 = *((float **)self_ + 16);
-  if ( v34 > 0 )
+  f14 = *((float *)self_ + 1) * *((float *)self_ + 1) * 0.5;
+  f18 = f14 * *((float *)self_ + 10);
+  f19 = f14 * *((float *)self_ + 11);
+  f20 = f14 * *((float *)self_ + 12);
+  if ( (*(uint32_t *)&(f15)) != 0 && *((int *)self_ + 5) < 0 )
+    orig::game_1006BC10(u2, *((uint32_t *)self_ + 4));
+  i3 = i6;
+  p4 = *((float **)self_ + 16);
+  if ( i6 > 0 )
   {
-    for ( i = v34; i != 0; --i )
+    for ( i = i6; i != 0; --i )
     {
-      v29 = *v16;
-      v17 = v16[1];
-      v36 = *((float *)self_ + 6);
-      v30 = v17;
-      v18 = v16[2];
-      v16 += 9;
-      v31 = v18;
-      v19 = v33 * *(v16 - 6);
-      v20 = v33 * *(v16 - 5);
-      v53 = v33 * *(v16 - 4);
-      v47 = v19 * v36;
-      v48 = v20 * v36;
-      v21 = *((float *)self_ + 1);
-      v22 = v21 * *(v16 - 3);
-      v49 = v21 * *(v16 - 2);
-      v50 = v21 * *(v16 - 1);
-      v51 = v50 + v40;
-      v41 = v22 + v38 + v29;
-      v42 = v17 + v49 + v39;
-      v43 = v18 + v51;
-      v52[0] = v43 + v53 * v36;
-      v29 = v41 + v47;
-      v31 = v52[0];
-      v30 = v42 + v48;
-      if ( LODWORD(v35) != 0 )
+      f11 = *p4;
+      f5 = p4[1];
+      f16 = *((float *)self_ + 6);
+      f12 = f5;
+      f6 = p4[2];
+      p4 += 9;
+      f13 = f6;
+      f7 = f14 * *(p4 - 6);
+      f8 = f14 * *(p4 - 5);
+      f33 = f14 * *(p4 - 4);
+      f27 = f7 * f16;
+      f28 = f8 * f16;
+      f9 = *((float *)self_ + 1);
+      f10 = f9 * *(p4 - 3);
+      f29 = f9 * *(p4 - 2);
+      f30 = f9 * *(p4 - 1);
+      f31 = f30 + f20;
+      f21 = f10 + f18 + f11;
+      f22 = f5 + f29 + f19;
+      f23 = f6 + f31;
+      f32[0] = f23 + f33 * f16;
+      f11 = f21 + f27;
+      f13 = f32[0];
+      f12 = f22 + f28;
+      if ( (*(uint32_t *)&(f15)) != 0 )
       {
         if ( *((int *)self_ + 5) < 0 )
         {
-          v24 = orig::sub_1006BC80(v54);
-          v23 = (float *)orig::CMoSpline_GetWrapped((_DWORD *)(LODWORD(v37) + 48), v24 % LODWORD(v35));
+          u1 = orig::game_1006BC80(u2);
+          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(f17)) + 48), u1 % (*(uint32_t *)&(f15)));
         }
         else
         {
-          v23 = (float *)orig::CMoSpline_GetWrapped((_DWORD *)(LODWORD(v37) + 48), *((_DWORD *)self_ + 5));
+          p5 = (float *)orig::CMoSpline_GetWrapped((uint32_t *)((*(uint32_t *)&(f17)) + 48), *((uint32_t *)self_ + 5));
         }
-        v29 = v29 + *v23;
-        v30 = v30 + v23[1];
-        v31 = v31 + v23[2];
+        f11 = f11 + *p5;
+        f12 = f12 + p5[1];
+        f13 = f13 + p5[2];
       }
       (*((void (__thiscall **)(CMoProcessor *, float *, float *, float *))(*(void * *)&g_pProcessor->vftable) + 20))(
         g_pProcessor,
-        &v29,
-        v9,
-        &v29);
-      v29 = v29 + v44;
-      v30 = v30 + v45;
-      v31 = v31 + v46;
-      a2((int)v11, &v29, a3);
+        &f11,
+        p1,
+        &f11);
+      f11 = f11 + f24;
+      f12 = f12 + f25;
+      f13 = f13 + f26;
+      arg2((int)p2, &f11, arg3);
     }
-    v15 = v34;
+    i3 = i6;
   }
   *((float *)self_ + 1) = *(float *)(g_pResourceMng + 3760) + *((float *)self_ + 1);
-  v25 = g_pProcessor;
-  v26 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v26;
-  ((float * *)((char *)v25 + 0xA10))[v26] = v11;
-  v27 = g_pProcessor;
-  v28 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v28;
-  ((float * *)((char *)v27 + 0xA10))[v28] = v9;
-  return v15;
+  p6 = g_pProcessor;
+  i4 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i4;
+  ((float * *)((char *)p6 + 0xA10))[i4] = p2;
+  p7 = g_pProcessor;
+  i5 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i5;
+  ((float * *)((char *)p7 + 0xA10))[i5] = p1;
+  return i3;
 }

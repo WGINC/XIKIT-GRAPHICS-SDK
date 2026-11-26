@@ -6,7 +6,7 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MoProcessor_CallVSlot49(void * self_)
 {
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0xc4))))((void *)(g_pProcessor_as_v1),self_);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0xc4))))((void *)(g_pProcessor_as_v1),self_);
   return;
 }
 
@@ -14,6 +14,6 @@ XI_API void __thiscall MoProcessor_CallVSlot49(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall ProcessorSlot_ProcessorSlot41(void * self_)
 {
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0xa4))))((void *)(g_pProcessor_as_v1),self_);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0xa4))))((void *)(g_pProcessor_as_v1),self_);
   return;
 }

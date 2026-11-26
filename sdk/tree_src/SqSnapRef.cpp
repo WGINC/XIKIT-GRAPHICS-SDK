@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x1028DE10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqSnapRef_CreateRef(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __cdecl SqSnapRef_CreateRef(int arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqmdSnap_Create();
-  puVar1[10] = param_2;
-  puVar1[0x10] = param_3;
-  puVar1[7] = 2;
-  puVar1[9] = param_1;
-  puVar1[0x11] = param_4;
-  *(undefined4 *)(param_1 + 0x2c) = 0xffffffff;
-  return puVar1;
+  p1 = orig::SqmdSnap_Create();
+  p1[10] = arg2;
+  p1[0x10] = arg3;
+  p1[7] = 2;
+  p1[9] = arg1;
+  p1[0x11] = arg4;
+  *(bits32 *)(arg1 + 0x2c) = 0xffffffff;
+  return p1;
 }

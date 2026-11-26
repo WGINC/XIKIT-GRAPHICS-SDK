@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoGeneratorRes {
 public:
-    void * ScalarDeletingDtor(char a2);  // 0x10047FE0
+    void * ScalarDeletingDtor(char arg1);  // 0x10047FE0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2C];

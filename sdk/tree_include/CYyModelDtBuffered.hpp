@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CYyModelDtBuffered {
 public:
-    _DWORD * ScalarDeletingDtor(char a1);  // 0x1002A0A0
+    uint32_t * ScalarDeletingDtor(char arg1);  // 0x1002A0A0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x38];

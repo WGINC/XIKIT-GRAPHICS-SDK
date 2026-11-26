@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x10035E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SoundElem_SetFactor103516F8(undefined4 param_1)
+XI_API void __cdecl SoundElem_SetFactor103516F8(bits32 arg1)
 {
   uint32_t xi_eax;
   
-  _DAT_103516f8_as_v0 = param_1;
+  g_103516F8_as_v0 = arg1;
   xi_eax = orig::SoundElem_SetScaled10351708(1.0f);
   orig::SoundElem_SetScaled10351704(1.0f);
   orig::SoundElem_SetScaled10351700(1.0f);
@@ -18,11 +18,11 @@ XI_API void __cdecl SoundElem_SetFactor103516F8(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x10035EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SoundElem_SetFactor103516FC(undefined4 param_1)
+XI_API void __cdecl SoundElem_SetFactor103516FC(bits32 arg1)
 {
   uint32_t xi_eax;
   
-  _DAT_103516fc_as_v0 = param_1;
+  g_103516FC_as_v0 = arg1;
   xi_eax = orig::SoundElem_SetScaled10351708(1.0f);
   orig::SoundElem_SetScaled10351704(1.0f);
   orig::SoundElem_SetScaled10351700(1.0f);
@@ -32,85 +32,85 @@ XI_API void __cdecl SoundElem_SetFactor103516FC(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x10035F00
 // GATE: PASS -- 100 trials, 99 returned normally, 398 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __attribute__((cdecl, regparm(1))) MoTask_KillAllGlobalSlots(undefined4 xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) MoTask_KillAllGlobalSlots(bits32 xi_eax, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_1046392c != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_1046392c + 0x18))))((void *)(DAT_1046392c),1);
-    DAT_1046392c = (int *)0x0;
+  if (g_1046392C != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1046392C + 0x18))))((void *)(g_1046392C),1);
+    g_1046392C = (int *)0x0;
   }
-  if (DAT_10463928 != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463928 + 0x18))))((void *)(DAT_10463928),1);
-    DAT_10463928 = (int *)0x0;
+  if (g_10463928 != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463928 + 0x18))))((void *)(g_10463928),1);
+    g_10463928 = (int *)0x0;
   }
-  if (DAT_10463930 != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463930 + 0x18))))((void *)(DAT_10463930),1);
-    DAT_10463930 = (int *)0x0;
+  if (g_10463930 != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463930 + 0x18))))((void *)(g_10463930),1);
+    g_10463930 = (int *)0x0;
   }
-  if (DAT_10463934 != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463934 + 0x18))))((void *)(DAT_10463934),1);
-    DAT_10463934 = (int *)0x0;
+  if (g_10463934 != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463934 + 0x18))))((void *)(g_10463934),1);
+    g_10463934 = (int *)0x0;
   }
-  orig::SoundElem_Release10463928AndSetScaled(param_1,xi_eax);
-  uVar1 = orig::SoundElem_ClearGlobal10463930(param_1);
-  orig::MoTask_KillGlobalSlot1(param_1,uVar1);
-  uVar1 = orig::SoundElem_ClearGlobal10463934(param_1);
-  return uVar1;
+  orig::SoundElem_Release10463928AndSetScaled(arg2,xi_eax);
+  u1 = orig::SoundElem_ClearGlobal10463930(arg2);
+  orig::MoTask_KillGlobalSlot1(arg2,u1);
+  u1 = orig::SoundElem_ClearGlobal10463934(arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10035F80
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SoundElem_ClearGlobal10463930(undefined4 xi_s1)
+XI_API bits32 __cdecl SoundElem_ClearGlobal10463930(bits32 xi_s1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_10463930 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463930 + 0x18))))((void *)(DAT_10463930),1);
-    DAT_10463930 = (int *)0x0;
+  if (g_10463930 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463930 + 0x18))))((void *)(g_10463930),1);
+    g_10463930 = (int *)0x0;
   }
-  uVar1 = orig::SoundElem_SetScaled10351708(xi_s1);
-  return uVar1;
+  u1 = orig::SoundElem_SetScaled10351708(xi_s1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10035FB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SoundElem_SetScaled10351708(float param_1)
+XI_API bits32 __cdecl SoundElem_SetScaled10351708(float arg1)
 {
-  long double fVar1;
-  uint8_t bVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  int64_t lVar5;
-  uint32_t uVar6;
+  long double f1;
+  uint8_t u1;
+  uint8_t u2;
+  long double f2;
+  int64_t i1;
+  uint32_t u3;
   
-  fVar4 = (long double)DAT_10351708;
-  DAT_10351708 = (float)((long double)_DAT_103516fc * (long double)_DAT_103516f8 * (long double)param_1);
-  uVar6 = 0;
-  if ((DAT_10463914 != 0) &&
-     (uVar6 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_10463914 >> 8))) << 8) | (uint8_t)(DAT_104638f5))), DAT_104638f5 != '\0')) {
-    fVar1 = (long double)DAT_10351708;
-    bVar2 = NAN(fVar4) || NAN(fVar1);
-    bVar3 = bVar2 || fVar4 == fVar1;
-    uVar6 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_10463914 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar2 || fVar4 < fVar1) << 8 | (uint16_t)bVar2 << 10 |
-                     (uint16_t)bVar3 << 0xe)));
-    if (bVar2 == bVar3) {
-      uVar6 = 0;
-      lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351708 * (long double)127.0f);
-      uVar6 = orig::Music_SetTrackVolume(DAT_10463910_as_s32,(int)lVar5,uVar6,DAT_10463910_as_s32);
-      return uVar6;
+  f2 = g_10351708;
+  g_10351708 = (float)(g_103516FC * g_103516F8 * arg1);
+  u3 = 0;
+  if ((g_10463914 != 0) &&
+     (u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_10463914 >> 8))) << 8) | (uint8_t)(g_104638F5))), g_104638F5 != '\0')) {
+    f1 = g_10351708;
+    u1 = ((f2) != (f2)) || ((f1) != (f1));
+    u2 = u1 || f2 == f1;
+    u3 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_10463914 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u1 || f2 < f1) << 8 | (uint16_t)u1 << 10 |
+                     (uint16_t)u2 << 0xe)));
+    if (u1 == u2) {
+      u3 = 0;
+      i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351708 * 127.0f);
+      u3 = orig::Music_SetTrackVolume(g_10463910_as_s32,(int)i1,u3,g_10463910_as_s32);
+      return u3;
     }
   }
-  return uVar6;
+  return u3;
 }
 
 // FUNCTION: FFXIMAIN 0x10036020
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) SoundElem_Release10463928AndSetScaled(undefined4 xi_eax, undefined4 xi_s1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) SoundElem_Release10463928AndSetScaled(bits32 xi_eax, bits32 xi_s1)
 {
-  if (DAT_10463928 != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463928 + 0x18))))((void *)(DAT_10463928),1);
-    DAT_10463928 = (int *)0x0;
+  if (g_10463928 != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463928 + 0x18))))((void *)(g_10463928),1);
+    g_10463928 = (int *)0x0;
   }
   orig::SoundElem_SetScaled10351704(xi_s1);
   return xi_eax;
@@ -118,19 +118,19 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) SoundElem_Release10463928An
 
 // FUNCTION: FFXIMAIN 0x10036050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SoundElem_SetScaled10351704(float param_1)
+XI_API void __cdecl SoundElem_SetScaled10351704(float arg1)
 {
-  DAT_10351704 = (float)((long double)_DAT_103516fc * (long double)_DAT_103516f8 * (long double)param_1);
+  g_10351704 = (float)(g_103516FC * g_103516F8 * arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10036070
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) MoTask_KillGlobalSlot1(undefined4 xi_eax, undefined4 xi_s1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) MoTask_KillGlobalSlot1(bits32 xi_eax, bits32 xi_s1)
 {
-  if (DAT_1046392c != (int *)0x0) {
-    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_1046392c + 0x18))))((void *)(DAT_1046392c),1);
-    DAT_1046392c = (int *)0x0;
+  if (g_1046392C != (int *)0x0) {
+    xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1046392C + 0x18))))((void *)(g_1046392C),1);
+    g_1046392C = (int *)0x0;
   }
   orig::SoundElem_SetScaled10351700(xi_s1);
   return xi_eax;
@@ -138,80 +138,80 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) MoTask_KillGlobalSlot1(unde
 
 // FUNCTION: FFXIMAIN 0x100360A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SoundElem_SetScaled10351700(float param_1)
+XI_API void __cdecl SoundElem_SetScaled10351700(float arg1)
 {
-  DAT_10351700 = (float)((long double)_DAT_103516fc * (long double)_DAT_103516f8 * (long double)param_1);
+  g_10351700 = (float)(g_103516FC * g_103516F8 * arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100360C0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SoundElem_ClearGlobal10463934(undefined4 xi_s1)
+XI_API bits32 __cdecl SoundElem_ClearGlobal10463934(bits32 xi_s1)
 {
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_10463934 != (int *)0x0) {
-    xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463934 + 0x18))))((void *)(DAT_10463934),1);
-    DAT_10463934 = (int *)0x0;
+  if (g_10463934 != (int *)0x0) {
+    xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463934 + 0x18))))((void *)(g_10463934),1);
+    g_10463934 = (int *)0x0;
   }
-  uVar1 = orig::Music_ApplyVolume(xi_s1,xi_entry_eax);
-  return uVar1;
+  u1 = orig::Music_ApplyVolume(xi_s1,xi_entry_eax);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100360F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) Music_ApplyVolume(undefined4 xi_eax, float param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) Music_ApplyVolume(bits32 xi_eax, float arg2)
 {
-  long double fVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  int64_t lVar5;
+  long double f1;
+  uint32_t u1;
+  uint8_t u2;
+  long double f2;
+  int64_t i1;
   
-  uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(DAT_104638f5)));
-  if (DAT_104638f5 != '\0') {
-    fVar4 = (long double)param_1;
-    fVar1 = (long double)0.0f;
-    bVar3 = NAN(fVar4) || NAN(fVar1);
-    uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar3 || fVar4 < fVar1) << 8 | (uint16_t)bVar3 << 10 |
-                     (uint16_t)(bVar3 || fVar4 == fVar1) << 0xe)));
-    if (!(fVar4 <= fVar1)) {
-      uVar2 = 0;
-      lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(float)((long double)_DAT_103516fc * (long double)_DAT_103516f8 *
-                                      (long double)param_1 * (long double)127.0f));
-      uVar2 = orig::Music_SetTrackVolume(DAT_10463920,(int)lVar5,uVar2,DAT_10463920);
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_104638F5)));
+  if (g_104638F5 != '\0') {
+    f2 = arg2;
+    f1 = 0.0f;
+    u2 = ((f2) != (f2)) || ((f1) != (f1));
+    u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)(u2 || f2 < f1) << 8 | (uint16_t)u2 << 10 |
+                     (uint16_t)(u2 || f2 == f1) << 0xe)));
+    if (!(f2 <= f1)) {
+      u1 = 0;
+      i1 = XI_CALL_ST0(0x10311C2Cu)((float)(g_103516FC * g_103516F8 *
+                                      arg2 * 127.0f));
+      u1 = orig::Music_SetTrackVolume(g_10463920,(int)i1,u1,g_10463920);
     }
-    else if (DAT_1046393c != 0) {
-      uVar2 = orig::LobbyThread_SendCmd0(DAT_10463920,DAT_1046391c);
-      DAT_10463909 = 1;
-      return uVar2;
+    else if (g_1046393C != 0) {
+      u1 = orig::LobbyThread_SendCmd0(g_10463920,g_1046391C);
+      g_10463909 = 1;
+      return u1;
     }
-    DAT_10463909 = 1;
+    g_10463909 = 1;
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10036170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SoundElem_SetCurrent10463914(int param_1)
+XI_API void __cdecl SoundElem_SetCurrent10463914(int arg1)
 {
-  int64_t lVar1;
-  uint64_t uVar2;
+  int64_t i1;
+  uint64_t u1;
   
-  if (param_1 == 0) {
-    if (DAT_10463914_as_v1 != (void *)0x0) {
-      orig::SoundVolume_SendStopToLobby(DAT_10463914_as_v1,DAT_10463910);
-      DAT_10463914_as_v1 = (void *)param_1;
+  if (arg1 == 0) {
+    if (g_10463914_as_v1 != (void *)0x0) {
+      orig::SoundVolume_SendStopToLobby(g_10463914_as_v1,g_10463910);
+      g_10463914_as_v1 = (void *)arg1;
       return;
     }
   }
-  else if (DAT_10463914_as_v1 != (void *)param_1) {
-    _DAT_10463918 = *(uint32_t *)(param_1 + 0x38);
-    lVar1 = XI_CALL_ST0(0x10311C2Cu)((long double)DAT_10351708 * (long double)127.0f);
-    uVar2 = orig::SoundVolume_SetVolumeScalar((void *)param_1,0x40,(int)lVar1);
-    DAT_10463910 = (uint32_t)uVar2;
-    DAT_10463914_as_v1 = (void *)param_1;
+  else if (g_10463914_as_v1 != (void *)arg1) {
+    g_10463918 = *(uint32_t *)(arg1 + 0x38);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_10351708 * 127.0f);
+    u1 = orig::SoundVolume_SetVolumeScalar((void *)arg1,0x40,(int)i1);
+    g_10463910 = (uint32_t)u1;
+    g_10463914_as_v1 = (void *)arg1;
   }
   return;
 }
@@ -220,51 +220,51 @@ XI_API void __cdecl SoundElem_SetCurrent10463914(int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl SoundElem_ResetGlobals(void)
 {
-  DAT_10463914_as_v0 = 0;
-  DAT_10463910 = 0;
-  _DAT_10463918 = 0;
-  DAT_1046391c = 0;
-  DAT_10463920_as_v0 = 0;
+  g_10463914_as_v0 = 0;
+  g_10463910 = 0;
+  g_10463918 = 0;
+  g_1046391C = 0;
+  g_10463920_as_v0 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10036460
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl SoundElem_AddUniqueId(int param_1)
+XI_API uint32_t __cdecl SoundElem_AddUniqueId(int arg1)
 {
   uint32_t xi_entry_eax = 0;
-  int *piVar1;
+  int *p1;
   
-  if ((int *)0x13 < DAT_1046390c_as_v0) {
+  if ((int *)0x13 < g_1046390C_as_v0) {
     return xi_entry_eax & 0xffffff00;
   }
-  piVar1 = (int *)0x0;
-  if (DAT_1046390c_as_v0 != (int *)0x0) {
+  p1 = (int *)0x0;
+  if (g_1046390C_as_v0 != (int *)0x0) {
     do {
-      if ((&DAT_10462538)[(int)piVar1] == param_1) goto LAB_10036496;
-      piVar1 = (int *)((int)piVar1 + 1);
-    } while (piVar1 < DAT_1046390c_as_v0);
+      if ((&g_10462538)[(int)p1] == arg1) goto code_10036496;
+      p1 = (int *)((int)p1 + 1);
+    } while (p1 < g_1046390C_as_v0);
   }
-  piVar1 =(int*)(&DAT_10462538 + (int)DAT_1046390c_as_v0);
-  DAT_1046390c_as_v0 = (int *)((int)DAT_1046390c_as_v0 + 1);
-  *piVar1 = param_1;
-LAB_10036496:
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar1 >> 8))) << 8) | (uint8_t)(1)));
+  p1 =(int*)(&g_10462538 + (int)g_1046390C_as_v0);
+  g_1046390C_as_v0 = (int *)((int)g_1046390C_as_v0 + 1);
+  *p1 = arg1;
+code_10036496:
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100367F0
 // GATE: PASS -- 100 trials, 65 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 65
-XI_API uint32_t __attribute__((cdecl, regparm(1))) CYySoundElem_IsHandleInFrameList(undefined4 xi_eax, int param_1)
+XI_API uint32_t __attribute__((cdecl, regparm(1))) CYySoundElem_IsHandleInFrameList(bits32 xi_eax, int arg2)
 {
-  if (param_1 != 0) {
+  if (arg2 != 0) {
     xi_eax = 0;
-    if (0 < DAT_104638fc) {
+    if (0 < g_104638FC) {
       do {
-        if ((&DAT_10462590)[xi_eax] == param_1) {
+        if ((&g_10462590)[xi_eax] == arg2) {
           return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(1)));
         }
         xi_eax = xi_eax + 1;
-      } while ((int)xi_eax < DAT_104638fc);
+      } while ((int)xi_eax < g_104638FC);
     }
   }
   return xi_eax & 0xffffff00;

@@ -19,7 +19,7 @@ Why the file has this name (data/unit_names.json): SetVolumeScalar, SetVolumeVec
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `SoundVolume_SendStopToLobby` calls `LobbyThread_SendCmd0`
-- `SoundVolume_ComputeDistanceVolumeAndPan` calls `Camera_GetField50`, `sub_10027530`, `sub_10311C2C`, `Camera_GetViewMatrixPtr`, `Mat4_TransformPoint`, `Camera_GetField2F4`
+- `SoundVolume_ComputeDistanceVolumeAndPan` calls `Camera_GetField50`, `game_10027530`, `game_10311C2C`, `Camera_GetViewMatrixPtr`, `Mat4_TransformPoint`, `Camera_GetField2F4`
 - `SoundVolume_SetVolumeScalar` calls `SoundVolume_SetVolumeVector`
 - `SoundVolume_SetVolumeVector` calls `SoundElem_AddUniqueId`, `MusicFont_QueueSoundCmdIfChannelsBelowLimit`
-- `SoundVolume_CreateSoundElem` calls `Mem_AllocWithFallback`, `CYySoundElem::Constructor`, `sub_10071E90`
+- `SoundVolume_CreateSoundElem` calls `Mem_AllocWithFallback`, `CYySoundElem::Constructor`, `game_10071E90`

@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x10043C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoSchOp0CTask::ScalarDeletingDtor(char a2)
+int * CMoSchOp0CTask::ScalarDeletingDtor(char arg1)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   orig::CMoSchOp0CTask_Destructor(self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10043E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoSchOp0CTask::ScalarDeletingDtor_2(int a1)
+int CMoSchOp0CTask::ScalarDeletingDtor_2(int arg1)
 {
   Vt_1032AFD4 * self = reinterpret_cast<Vt_1032AFD4 *>(this);  // byte-exact view for the rest
   orig::DynVB_Destructor(self);
-  if ( (a1 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::operator_delete(self);
   return (int)self;
 }

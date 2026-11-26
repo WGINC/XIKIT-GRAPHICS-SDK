@@ -18,10 +18,10 @@ void CMoKeyFrameRes::Slot9Nop()
 
 // FUNCTION: FFXIMAIN 0x10071C40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoKeyFrameRes::ScalarDeletingDtor(char a2)
+unsigned int ** CMoKeyFrameRes::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

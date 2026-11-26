@@ -12,25 +12,25 @@ char ** __cdecl CXiSkeletonActorRes::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x100D7000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CXiSkeletonActorRes::ScalarDeletingDtor(char a2)
+uint32_t * CXiSkeletonActorRes::ScalarDeletingDtor(char arg1)
 {
   orig::CXiSkeletonActorRes_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
-  return(_DWORD*)(((unsigned __int8 *)((char *)this + 0x0)));
+  return(uint32_t*)(((unsigned char *)((char *)this + 0x0)));
 }
 
 // FUNCTION: FFXIMAIN 0x100D7020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CXiSkeletonActorRes::Constructor(int a2, int a3)
+uint32_t * CXiSkeletonActorRes::Constructor(int arg1, int arg2)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
   orig::CMoTask_Constructor(self);
-  at<uint32_t>(this, 0x34) = a2;
+  at<uint32_t>(this, 0x34) = arg1;
   this->loadState = 0;
   this->field_40 = 0;
   *self = &CXiSkeletonActorRes_vtbl;
-  at<uint32_t>(this, 0x38) = a3;
+  at<uint32_t>(this, 0x38) = arg2;
   return self;
 }
 
@@ -38,14 +38,14 @@ _DWORD * CXiSkeletonActorRes::Constructor(int a2, int a3)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CXiSkeletonActorRes::Destructor()
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
   int LinkedActor;
   *self = &CXiSkeletonActorRes_vtbl;
-  if ( (_DWORD *)g_pActiveSkeletonActorRes == self )
+  if ( (uint32_t *)g_pActiveSkeletonActorRes == self )
     g_pActiveSkeletonActorRes = 0;
   LinkedActor = orig::CXiSkeletonActorRes_GetLinkedActor((CXiSkeletonActorRes *)self);
   if ( LinkedActor != 0 )
-    *(_DWORD *)(LinkedActor + 2568) = 0;
+    *(uint32_t *)(LinkedActor + 2568) = 0;
   return orig::CMoTask_Destructor(self);
 }
 
@@ -58,49 +58,49 @@ int CXiSkeletonActorRes::CXiSkeletonActorRes_GetLinkedActor()
 
 // FUNCTION: FFXIMAIN 0x100D70A0
 // GATE: PASS -- 100 trials, 100 returned normally, 23 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiSkeletonActorRes::ProcessLoadState(void * self)
+bits32 __thiscall CXiSkeletonActorRes::ProcessLoadState(void * self)
 {
-  int *this_00;
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
+  int *obj1;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
   
-  this_00 = (int *)orig::CXiSkeletonActorRes_GetLinkedActor_v1(self);
-  if (this_00 == (int *)0x0) {
-    uVar1 = 0;
+  obj1 = (int *)orig::CXiSkeletonActorRes_GetLinkedActor_v1(self);
+  if (obj1 == (int *)0x0) {
+    u1 = 0;
     if (self != (void *)0x0) {
-      uVar1 = ((int (__stdcall *)(XI_ANY))((**(code **)(*(int *)self + 0x18))))(1);
+      u1 = ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))(1);
     }
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  iVar3 = *(int *)((int)self + 0x3c);
-  if (iVar3 == 0) {
-    uVar1 = ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x304))))((void *)(this_00));
-    if (((char)uVar1 == '\0') && (g_pActiveSkeletonActorRes_as_v0 != (void *)0x0)) {
-      iVar3 = orig::CXiActor_GetModelByteEE_v1(this_00);
-      uVar2 = 0;
-      if (iVar3 == 0) goto LAB_100d712c;
+  i1 = *(int *)((int)self + 0x3c);
+  if (i1 == 0) {
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x304))))((void *)(obj1));
+    if (((char)u1 == '\0') && (g_pActiveSkeletonActorRes_as_v0 != (void *)0x0)) {
+      i1 = orig::CXiActor_GetModelByteEE_v1(obj1);
+      u2 = 0;
+      if (i1 == 0) goto code_100D712C;
     }
-    uVar2 = *(int *)((int)self + 0x3c) + 1;
+    u2 = *(int *)((int)self + 0x3c) + 1;
     g_pActiveSkeletonActorRes_as_v0 = self;
-    *(uint32_t *)((int)self + 0x3c) = uVar2;
+    *(uint32_t *)((int)self + 0x3c) = u2;
   }
   else {
-    if (iVar3 == 1) {
-      (**(code **)((int)self + 0x38))(this_00,self);
-      uVar2 = *(int *)((int)self + 0x3c) + 1;
-      *(uint32_t *)((int)self + 0x3c) = uVar2;
-      return uVar2 & 0xffffff00;
+    if (i1 == 1) {
+      (**(untyped_fn **)((int)self + 0x38))(obj1,self);
+      u2 = *(int *)((int)self + 0x3c) + 1;
+      *(uint32_t *)((int)self + 0x3c) = u2;
+      return u2 & 0xffffff00;
     }
-    uVar2 = iVar3 - 2;
-    if (uVar2 == 0) {
-      uVar2 = ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x1e4))))((void *)(this_00));
-      if ((char)uVar2 == '\x01') {
-        uVar1 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    u2 = i1 - 2;
+    if (u2 == 0) {
+      u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1e4))))((void *)(obj1));
+      if ((char)u2 == '\x01') {
+        u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-LAB_100d712c:
-  return uVar2 & 0xffffff00;
+code_100D712C:
+  return u2 & 0xffffff00;
 }

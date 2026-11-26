@@ -3,53 +3,53 @@
 
 // FUNCTION: FFXIMAIN 0x101771B0
 // GATE: PASS -- 100 trials, 100 returned normally, 246 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall Gfx_CompileVertexShader(int a1, int a2)
+XI_API int __stdcall Gfx_CompileVertexShader(int arg1, int arg2)
 {
-  int v2;
+  int i1;
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  int v5;
+  int i2;
   alignas(16) unsigned char xi_frame[0x61C];  // address-taken locals at their original offsets
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  int &i3 = *reinterpret_cast<int *>(xi_frame + 0x18);
   char (&Buffer)[512] = *reinterpret_cast<char (*)[512]>(xi_frame + 0x1C);
 
-  v2 = orig::fn_102DA79B(aCTestVsh, 0, nullptr, (struct ID3DXBuffer **)&v7, nullptr);
-  orig::fn_102DAA71(v2, Buffer, 0x200u);
-  if ( v2 >= 0 )
+  i1 = orig::fn_102DA79B(aCTestVsh, 0, nullptr, (struct ID3DXBuffer **)&i3, nullptr);
+  orig::fn_102DAA71(i1, Buffer, 0x200u);
+  if ( i1 >= 0 )
   {
     pDevice = (g_pCDx->pDevice);
     lpVtbl = pDevice->lpVtbl;
-    v5 = (*(int (__stdcall **)(int))(*(_DWORD *)v7 + 12))(v7);
-    v2 = lpVtbl->CreateVertexShader(pDevice, (void *)a1, (void *)v5, (void *)a2, 0);
-    orig::fn_102DAA71(v2, Buffer, 0x200u);
-    (*(void (__stdcall **)(int))(*(_DWORD *)v7 + 8))(v7);
+    i2 = (*(int (__stdcall **)(int))(*(uint32_t *)i3 + 12))(i3);
+    i1 = lpVtbl->CreateVertexShader(pDevice, (void *)arg1, (void *)i2, (void *)arg2, 0);
+    orig::fn_102DAA71(i1, Buffer, 0x200u);
+    (*(void (__stdcall **)(int))(*(uint32_t *)i3 + 8))(i3);
   }
-  return v2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101772E0
 // GATE: PASS -- 100 trials, 100 returned normally, 261 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Gfx_CompilePixelShader(const char **self_, int a2)
+XI_API int __thiscall Gfx_CompilePixelShader(const char **self_, int arg2)
 {
   char *Text;
   int result;
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  int v7;
-  int v8;
+  int i1;
+  int i2;
   char TextLength;
-  struct ID3DXBuffer *v10;
+  struct ID3DXBuffer *p1;
   TextLength = orig::Gfx_ShaderSrc_GetTextLength(self_);
   Text = (char *)orig::Gfx_ShaderSrc_GetText(self_);
-  result = orig::fn_102DAA0D(Text, TextLength, 2u, nullptr, &v10, nullptr);
+  result = orig::fn_102DAA0D(Text, TextLength, 2u, nullptr, &p1, nullptr);
   if ( result >= 0 )
   {
     pDevice = (g_pCDx->pDevice);
     lpVtbl = pDevice->lpVtbl;
-    v7 = (*(int (__stdcall **)(struct ID3DXBuffer *))(*(_DWORD *)v10 + 12))(v10);
-    v8 = lpVtbl->CreatePixelShader(pDevice, (void *)v7, (void *)a2);
-    (*(void (__stdcall **)(struct ID3DXBuffer *))(*(_DWORD *)v10 + 8))(v10);
-    return v8;
+    i1 = (*(int (__stdcall **)(struct ID3DXBuffer *))(*(uint32_t *)p1 + 12))(p1);
+    i2 = lpVtbl->CreatePixelShader(pDevice, (void *)i1, (void *)arg2);
+    (*(void (__stdcall **)(struct ID3DXBuffer *))(*(uint32_t *)p1 + 8))(p1);
+    return i2;
   }
   return result;
 }

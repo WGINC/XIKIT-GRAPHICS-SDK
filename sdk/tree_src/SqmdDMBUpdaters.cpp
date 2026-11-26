@@ -4,237 +4,237 @@
 
 // FUNCTION: FFXIMAIN 0x10288FF0
 // GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
-XI_API uint8_t * __cdecl SqmdDMB_BuildUpdaters(int param_1, uint8_t * param_2)
+XI_API uint8_t * __cdecl SqmdDMB_BuildUpdaters(int arg1, uint8_t * arg2)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  char *pcVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  uint32_t uVar12;
-  uint32_t uVar13;
-  uint8_t *pbVar14;
-  uint8_t bVar15;
-  undefined4 *local_14;
+  char c1;
+  int i1;
+  char *p1;
+  char *p2;
+  int i2;
+  bits32 *p3;
+  bits32 *p4;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  uint32_t u1;
+  uint32_t u2;
+  uint8_t *p5;
+  uint8_t u3;
+  bits32 *p6;
   
-  iVar11 = DAT_109a2788;
-  uVar13 = 0;
-  if (DAT_109a2788 != 0) {
-    iVar2 = orig::SqmdDMB_TraceDelta((int)param_2);
-    orig::FUN_10314d55(iVar11,s__06ld_____sqmdDMBBuildUpdaters___103b9420,iVar2);
+  i6 = g_109A2788;
+  u2 = 0;
+  if (g_109A2788 != 0) {
+    i1 = orig::SqmdDMB_TraceDelta((int)arg2);
+    orig::game_10314D55(i6,str__06ld_____sqmdDMBBuildUpdaters___103B9420,i1);
   }
-  param_2 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)param_2);
-  DAT_109a2758 = 0;
-  DAT_109a275c = 0;
-  DAT_109a276c = 0;
-  DAT_109a2760 = 0;
-  DAT_109a2764 = 0;
-  DAT_109a2768 = 0;
-  if (0 < *(int *)(param_1 + 0x44)) {
+  arg2 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)arg2);
+  g_109A2758 = 0;
+  g_109A275C = 0;
+  g_109A276C = 0;
+  g_109A2760 = 0;
+  g_109A2764 = 0;
+  g_109A2768 = 0;
+  if (0 < *(int *)(arg1 + 0x44)) {
     do {
-      pcVar3 = orig::SqmdModel_FindItemName(param_1,2,uVar13);
-      iVar11 = 9;
-      bVar15 = true;
-      pcVar4 = s_untitled_103b3d70;
+      p1 = orig::SqmdModel_FindItemName(arg1,2,u2);
+      i6 = 9;
+      u3 = true;
+      p2 = str_untitled_103B3D70;
       do {
-        if (iVar11 == 0) break;
-        iVar11 = iVar11 + -1;
-        bVar15 = *pcVar3 == *pcVar4;
-        pcVar3 = pcVar3 + 1;
-        pcVar4 = pcVar4 + 1;
-      } while (bVar15);
-      if (bVar15) {
-        pcVar4 = orig::sqmdModel_GetItemName(param_1,2,uVar13);
-        uVar12 = 0xffffffff;
-        pcVar3 = pcVar4;
+        if (i6 == 0) break;
+        i6 = i6 + -1;
+        u3 = *p1 == *p2;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
+      } while (u3);
+      if (u3) {
+        p2 = orig::sqmdModel_GetItemName(arg1,2,u2);
+        u1 = 0xffffffff;
+        p1 = p2;
         do {
-          if (uVar12 == 0) break;
-          uVar12 = uVar12 - 1;
-          cVar1 = *pcVar3;
-          pcVar3 = pcVar3 + 1;
-        } while (cVar1 != '\0');
-        if (4 < ~uVar12 - 1) {
-          uVar12 = 0xffffffff;
-          pcVar3 = pcVar4;
+          if (u1 == 0) break;
+          u1 = u1 - 1;
+          c1 = *p1;
+          p1 = p1 + 1;
+        } while (c1 != '\0');
+        if (4 < ~u1 - 1) {
+          u1 = 0xffffffff;
+          p1 = p2;
           do {
-            if (uVar12 == 0) break;
-            uVar12 = uVar12 - 1;
-            cVar1 = *pcVar3;
-            pcVar3 = pcVar3 + 1;
-          } while (cVar1 != '\0');
-          iVar11 = 6;
-          bVar15 = true;
-          pcVar3 = pcVar4 + (~uVar12 - 6);
-          pcVar4 = s__sort_103b9418;
+            if (u1 == 0) break;
+            u1 = u1 - 1;
+            c1 = *p1;
+            p1 = p1 + 1;
+          } while (c1 != '\0');
+          i6 = 6;
+          u3 = true;
+          p1 = p2 + (~u1 - 6);
+          p2 = str__sort_103B9418;
           do {
-            if (iVar11 == 0) break;
-            iVar11 = iVar11 + -1;
-            bVar15 = *pcVar3 == *pcVar4;
-            pcVar3 = pcVar3 + 1;
-            pcVar4 = pcVar4 + 1;
-          } while (bVar15);
-          if (bVar15) {
-            uVar12 = *(uint32_t *)(*(int *)(param_1 + 0x40) + uVar13 * 4);
-            iVar11 = (int)uVar12 >> 8;
-            if ((iVar11 < 0) || (*(int *)(param_1 + 0x58) <= iVar11)) {
-              orig::sqDebugPrintf_v1(s_____Error__sqmdDMBBuildUpdaters__103b93dc);
-              orig::sqDebugPrintf_v1(s_encounter__d___d_shapes__103b93bc,iVar11,
-                           *(undefined4 *)(param_1 + 0x58));
+            if (i6 == 0) break;
+            i6 = i6 + -1;
+            u3 = *p1 == *p2;
+            p1 = p1 + 1;
+            p2 = p2 + 1;
+          } while (u3);
+          if (u3) {
+            u1 = *(uint32_t *)(*(int *)(arg1 + 0x40) + u2 * 4);
+            i6 = (int)u1 >> 8;
+            if ((i6 < 0) || (*(int *)(arg1 + 0x58) <= i6)) {
+              orig::sqDebugPrintf_v1(str_____Error__sqmdDMBBuildUpdaters__103B93DC);
+              orig::sqDebugPrintf_v1(str_encounter__d___d_shapes__103B93BC,i6,
+                           *(bits32 *)(arg1 + 0x58));
             }
             else {
-              iVar2 = orig::SqTimer_GetMicroseconds_v1();
-              iVar5 = orig::SqmdSort_CreateForStrips(*(int **)(*(int *)(param_1 + 0x4c) + iVar11 * 4),uVar12 & 0xf,
-                                   *(undefined4 *)(*(int *)(param_1 + 0x50) + iVar11 * 4),0);
-              *(int *)(*(int *)(param_1 + 0x3c) + uVar13 * 4) = iVar5;
-              orig::SqmdModel_AppendPair68Flag100(param_1,iVar5);
-              *(uint32_t *)(*(int *)(param_1 + 0x54) + iVar11 * 4) =
-                   *(uint32_t *)(*(int *)(param_1 + 0x54) + iVar11 * 4) | 0x4000;
-              iVar11 = orig::SqTimer_GetMicroseconds_v1();
-              DAT_109a2758 = DAT_109a2758 + (iVar11 - iVar2);
+              i1 = orig::SqTimer_GetMicroseconds_v1();
+              i2 = orig::SqmdSort_CreateForStrips(*(int **)(*(int *)(arg1 + 0x4c) + i6 * 4),u1 & 0xf,
+                                   *(bits32 *)(*(int *)(arg1 + 0x50) + i6 * 4),0);
+              *(int *)(*(int *)(arg1 + 0x3c) + u2 * 4) = i2;
+              orig::SqmdModel_AppendPair68Flag100(arg1,i2);
+              *(uint32_t *)(*(int *)(arg1 + 0x54) + i6 * 4) =
+                   *(uint32_t *)(*(int *)(arg1 + 0x54) + i6 * 4) | 0x4000;
+              i6 = orig::SqTimer_GetMicroseconds_v1();
+              g_109A2758 = g_109A2758 + (i6 - i1);
             }
           }
         }
       }
-      else if ((*param_2 & 2) == 0) {
-        orig::sqDebugPrintf_v1(s_____Error__Non_updater_encounter_103b9264);
-        orig::sqDebugPrintf_v1(s_updater__d_of__d_103b9294,uVar13,*(int *)(param_1 + 0x44) + -1);
-        orig::sqDebugPrintf_v1(s_flags___0x_08X_103b91c4,*(undefined4 *)param_2);
-        orig::sqDebugPrintf_v1(s_size____d_103b91b4,*(undefined4 *)(param_2 + 4));
-        *(undefined4 *)(*(int *)(param_1 + 0x3c) + uVar13 * 4) = 0;
+      else if ((*arg2 & 2) == 0) {
+        orig::sqDebugPrintf_v1(str_____Error__Non_updater_encounter_103B9264);
+        orig::sqDebugPrintf_v1(str_updater__d_of__d_103B9294,u2,*(int *)(arg1 + 0x44) + -1);
+        orig::sqDebugPrintf_v1(str_flags___0x_08X_103B91C4,*(bits32 *)arg2);
+        orig::sqDebugPrintf_v1(str_size____d_103B91B4,*(bits32 *)(arg2 + 4));
+        *(bits32 *)(*(int *)(arg1 + 0x3c) + u2 * 4) = 0;
       }
       else {
-        pbVar14 = param_2 + 0x40;
-        uVar12 = *(uint32_t *)(*(int *)(param_1 + 0x40) + uVar13 * 4);
-        if (uVar12 == 0xedfeedfe) {
-          iVar11 = orig::SqTimer_GetMicroseconds_v1();
-          iVar2 = orig::SqskSkeleton_BuildSQO((char *)pbVar14,*(undefined4 *)(param_2 + 4));
-          if (iVar2 == 0) {
-            orig::sqDebugPrintf_v1(s_____Error__sqskBuildSQO__p___d__f_103b9394,pbVar14,
-                         *(undefined4 *)(param_2 + 4));
+        p5 = arg2 + 0x40;
+        u1 = *(uint32_t *)(*(int *)(arg1 + 0x40) + u2 * 4);
+        if (u1 == 0xedfeedfe) {
+          i6 = orig::SqTimer_GetMicroseconds_v1();
+          i1 = orig::SqskSkeleton_BuildSQO((char *)p5,*(bits32 *)(arg2 + 4));
+          if (i1 == 0) {
+            orig::sqDebugPrintf_v1(str_____Error__sqskBuildSQO__p___d__f_103B9394,p5,
+                         *(bits32 *)(arg2 + 4));
           }
           else {
-            if ((*param_2 & 1) != 0) {
-              puVar6 = orig::SqhiNode_Create();
-              puVar7 = orig::SqskJoint_Create();
-              orig::SqVec_CopyVec3(puVar7 + 0x17,(undefined4 *)(param_2 + 0x10));
-              orig::SqVec_CopyVec3(puVar7 + 0x1e,(undefined4 *)(param_2 + 0x30));
-              orig::SqQuat_Copy_v1(puVar7 + 0x1a,(undefined4 *)(param_2 + 0x20));
-              orig::SqhiNode_SetField64((int)puVar6,puVar7);
-              orig::SqhiNode_AppendChild((int)puVar6,*(int *)(iVar2 + 0x1c));
-              orig::SqmdModel_AppendPair68Flag100(param_1,puVar6);
-              orig::SqmdModel_AppendPair68Flag100(param_1,puVar7);
+            if ((*arg2 & 1) != 0) {
+              p3 = orig::SqhiNode_Create();
+              p4 = orig::SqskJoint_Create();
+              orig::SqVec_CopyVec3(p4 + 0x17,(bits32 *)(arg2 + 0x10));
+              orig::SqVec_CopyVec3(p4 + 0x1e,(bits32 *)(arg2 + 0x30));
+              orig::SqQuat_Copy_v1(p4 + 0x1a,(bits32 *)(arg2 + 0x20));
+              orig::SqhiNode_SetField64((int)p3,p4);
+              orig::SqhiNode_AppendChild((int)p3,*(int *)(i1 + 0x1c));
+              orig::SqmdModel_AppendPair68Flag100(arg1,p3);
+              orig::SqmdModel_AppendPair68Flag100(arg1,p4);
             }
-            *(int *)(*(int *)(param_1 + 0x3c) + uVar13 * 4) = iVar2;
-            orig::SqmdModel_AppendPair68Flag100(param_1,iVar2);
-            orig::SqmdDMBUpdaters_ResolveSkelRefs(param_1,iVar2,uVar13);
+            *(int *)(*(int *)(arg1 + 0x3c) + u2 * 4) = i1;
+            orig::SqmdModel_AppendPair68Flag100(arg1,i1);
+            orig::SqmdDMBUpdaters_ResolveSkelRefs(arg1,i1,u2);
           }
-          iVar2 = orig::SqTimer_GetMicroseconds_v1();
-          DAT_109a275c = DAT_109a275c + (iVar2 - iVar11);
+          i1 = orig::SqTimer_GetMicroseconds_v1();
+          g_109A275C = g_109A275C + (i1 - i6);
         }
-        else if ((uVar12 & 0xbc000000) == 0) {
-          orig::sqDebugPrintf_v1(s_____Error__sqmdDMBBuildUpdaters__103b92ac);
-          orig::sqDebugPrintf_v1(s_updater__d_of__d_103b9294,uVar13,*(int *)(param_1 + 0x44) + -1);
-          orig::sqDebugPrintf_v1(s_flags___0x_08X_103b91c4,*(undefined4 *)param_2);
-          orig::sqDebugPrintf_v1(s_size____d_103b91b4,*(undefined4 *)(param_2 + 4));
+        else if ((u1 & 0xbc000000) == 0) {
+          orig::sqDebugPrintf_v1(str_____Error__sqmdDMBBuildUpdaters__103B92AC);
+          orig::sqDebugPrintf_v1(str_updater__d_of__d_103B9294,u2,*(int *)(arg1 + 0x44) + -1);
+          orig::sqDebugPrintf_v1(str_flags___0x_08X_103B91C4,*(bits32 *)arg2);
+          orig::sqDebugPrintf_v1(str_size____d_103B91B4,*(bits32 *)(arg2 + 4));
         }
         else {
-          iVar11 = (int)(uVar12 & 0x43ffffff) >> 0x10;
-          uVar12 = uVar12 & 0xffff;
-          if (((int)uVar12 < *(int *)(param_1 + 0x58)) && (iVar11 < (int)uVar13)) {
-            iVar5 = orig::SqTimer_GetMicroseconds_v1();
-            iVar2 = *(int *)(*(int *)(param_1 + 0x4c) + uVar12 * 4);
-            iVar11 = orig::SqinBuild_BuildSQO(*(undefined4 *)(*(int *)(param_1 + 0x3c) + iVar11 * 4),
-                                  (char *)pbVar14,*(undefined4 *)(param_2 + 4));
-            iVar8 = orig::SqTimer_GetMicroseconds_v1();
-            DAT_109a2760 = DAT_109a2760 + (iVar8 - iVar5);
-            if (iVar11 == 0) {
-              orig::sqDebugPrintf_v1(s_____Error__sqinBuildSQO__p___d__f_103b936c,pbVar14,
-                           *(undefined4 *)(param_2 + 4));
+          i6 = (int)(u1 & 0x43ffffff) >> 0x10;
+          u1 = u1 & 0xffff;
+          if (((int)u1 < *(int *)(arg1 + 0x58)) && (i6 < (int)u2)) {
+            i2 = orig::SqTimer_GetMicroseconds_v1();
+            i1 = *(int *)(*(int *)(arg1 + 0x4c) + u1 * 4);
+            i6 = orig::SqinBuild_BuildSQO(*(bits32 *)(*(int *)(arg1 + 0x3c) + i6 * 4),
+                                  (char *)p5,*(bits32 *)(arg2 + 4));
+            i3 = orig::SqTimer_GetMicroseconds_v1();
+            g_109A2760 = g_109A2760 + (i3 - i2);
+            if (i6 == 0) {
+              orig::sqDebugPrintf_v1(str_____Error__sqinBuildSQO__p___d__f_103B936C,p5,
+                           *(bits32 *)(arg2 + 4));
             }
             else {
-              iVar9 = orig::SqTimer_GetMicroseconds_v1();
-              *(int *)(*(int *)(param_1 + 0x3c) + uVar13 * 4) = iVar11;
-              iVar8 = *(int *)(iVar2 + 0x34);
-              puVar6 = (undefined4 *)0x0;
-              if (iVar8 == 0) {
-                local_14 = (undefined4 *)0x0;
+              i4 = orig::SqTimer_GetMicroseconds_v1();
+              *(int *)(*(int *)(arg1 + 0x3c) + u2 * 4) = i6;
+              i3 = *(int *)(i1 + 0x34);
+              p3 = (bits32 *)0x0;
+              if (i3 == 0) {
+                p6 = (bits32 *)0x0;
               }
               else {
-                local_14 = *(undefined4 **)(iVar8 + 0x58);
-                puVar6 = *(undefined4 **)(iVar8 + 0x54);
+                p6 = *(bits32 **)(i3 + 0x58);
+                p3 = *(bits32 **)(i3 + 0x54);
               }
-              orig::SqinSkin_InitShapeData(iVar11,*(int *)(iVar8 + 0x14),puVar6,local_14,
-                          *(undefined4 *)(*(int *)(param_1 + 0x50) + uVar12 * 4),0xffffffe0);
-              iVar10 = orig::SqTimer_GetMicroseconds_v1();
-              DAT_109a2764 = DAT_109a2764 + (iVar10 - iVar9);
-              iVar9 = orig::SqTimer_GetMicroseconds_v1();
-              orig::SqinSkin_ReleaseIfHasData(iVar11);
-              orig::SqinSkin_PropagateValue38(iVar11,iVar8);
-              iVar8 = orig::SqTimer_GetMicroseconds_v1();
-              DAT_109a2768 = DAT_109a2768 + (iVar8 - iVar9);
-              orig::SqmdModel_AppendPair68Flag100(param_1,iVar2);
-              orig::SqmdModel_AppendPair68Flag100(param_1,iVar11);
+              orig::SqinSkin_InitShapeData(i6,*(int *)(i3 + 0x14),p3,p6,
+                          *(bits32 *)(*(int *)(arg1 + 0x50) + u1 * 4),0xffffffe0);
+              i5 = orig::SqTimer_GetMicroseconds_v1();
+              g_109A2764 = g_109A2764 + (i5 - i4);
+              i4 = orig::SqTimer_GetMicroseconds_v1();
+              orig::SqinSkin_ReleaseIfHasData(i6);
+              orig::SqinSkin_PropagateValue38(i6,i3);
+              i3 = orig::SqTimer_GetMicroseconds_v1();
+              g_109A2768 = g_109A2768 + (i3 - i4);
+              orig::SqmdModel_AppendPair68Flag100(arg1,i1);
+              orig::SqmdModel_AppendPair68Flag100(arg1,i6);
             }
-            iVar11 = orig::SqTimer_GetMicroseconds_v1();
-            DAT_109a276c = DAT_109a276c + (iVar11 - iVar5);
+            i6 = orig::SqTimer_GetMicroseconds_v1();
+            g_109A276C = g_109A276C + (i6 - i2);
           }
           else {
-            orig::sqDebugPrintf_v1(s_____Error__sqmdDMBBuildUpdaters__103b9328);
-            orig::sqDebugPrintf_v1(s_shape__d_of__d_shapes_103b930c,uVar12,*(int *)(param_1 + 0x58) + -1);
-            orig::sqDebugPrintf_v1(s_skel__d_expected_before_updater___103b92e4,iVar11,uVar13);
+            orig::sqDebugPrintf_v1(str_____Error__sqmdDMBBuildUpdaters__103B9328);
+            orig::sqDebugPrintf_v1(str_shape__d_of__d_shapes_103B930C,u1,*(int *)(arg1 + 0x58) + -1);
+            orig::sqDebugPrintf_v1(str_skel__d_expected_before_updater___103B92E4,i6,u2);
           }
         }
-        param_2 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)(pbVar14 + *(int *)(param_2 + 4)));
+        arg2 = (uint8_t *)orig::SqmdDMB_AlignMem((uint32_t)(p5 + *(int *)(arg2 + 4)));
       }
-      uVar13 = uVar13 + 1;
-      *(undefined4 *)(*(int *)(param_1 + 0x40) + -4 + uVar13 * 4) = 0;
-    } while ((int)uVar13 < *(int *)(param_1 + 0x44));
+      u2 = u2 + 1;
+      *(bits32 *)(*(int *)(arg1 + 0x40) + -4 + u2 * 4) = 0;
+    } while ((int)u2 < *(int *)(arg1 + 0x44));
   }
-  iVar11 = *(int *)(param_1 + 0x44);
-  if (iVar11 < *(int *)(param_1 + 0x48)) {
+  i6 = *(int *)(arg1 + 0x44);
+  if (i6 < *(int *)(arg1 + 0x48)) {
     do {
-      iVar11 = iVar11 + 1;
-      *(undefined4 *)(*(int *)(param_1 + 0x3c) + -4 + iVar11 * 4) = 0;
-    } while (iVar11 < *(int *)(param_1 + 0x48));
+      i6 = i6 + 1;
+      *(bits32 *)(*(int *)(arg1 + 0x3c) + -4 + i6 * 4) = 0;
+    } while (i6 < *(int *)(arg1 + 0x48));
   }
-  return param_2;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x102894E0
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API void __cdecl SqmdDMBUpdaters_ResolveSkelRefs(int param_1, int param_2, uint32_t param_3)
+XI_API void __cdecl SqmdDMBUpdaters_ResolveSkelRefs(int arg1, int arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
+  uint32_t u1;
+  int i1;
+  uint32_t u2;
+  int i2;
   
-  iVar4 = 0;
-  if (0 < *(int *)(param_1 + 0x58)) {
+  i2 = 0;
+  if (0 < *(int *)(arg1 + 0x58)) {
     do {
-      if ((*(uint8_t *)(*(int *)(param_1 + 0x54) + iVar4 * 4) & 0x20) == 0) {
-        uVar3 = *(uint32_t *)(*(int *)(param_1 + 0x50) + iVar4 * 4);
-        uVar1 = uVar3 & 0xffff;
-        uVar3 = uVar3 >> 0x10;
-        if (uVar3 == param_3) {
-          iVar2 = orig::SqskSkeleton_GetNode(param_2,uVar1);
-          if (iVar2 == 0) {
-            orig::sqDebugPrintf_v1(s_____Error__sqmdDMBResolveSkelRef_103b9444,uVar3,uVar1);
-            *(uint32_t *)(*(int *)(param_1 + 0x50) + iVar4 * 4) = 0;
+      if ((*(uint8_t *)(*(int *)(arg1 + 0x54) + i2 * 4) & 0x20) == 0) {
+        u2 = *(uint32_t *)(*(int *)(arg1 + 0x50) + i2 * 4);
+        u1 = u2 & 0xffff;
+        u2 = u2 >> 0x10;
+        if (u2 == arg3) {
+          i1 = orig::SqskSkeleton_GetNode(arg2,u1);
+          if (i1 == 0) {
+            orig::sqDebugPrintf_v1(str_____Error__sqmdDMBResolveSkelRef_103B9444,u2,u1);
+            *(uint32_t *)(*(int *)(arg1 + 0x50) + i2 * 4) = 0;
           }
           else {
-            *(int *)(*(int *)(param_1 + 0x50) + iVar4 * 4) = iVar2 + 0x24;
+            *(int *)(*(int *)(arg1 + 0x50) + i2 * 4) = i1 + 0x24;
           }
         }
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < *(int *)(param_1 + 0x58));
+      i2 = i2 + 1;
+    } while (i2 < *(int *)(arg1 + 0x58));
   }
   return;
 }

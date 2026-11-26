@@ -4,26 +4,26 @@
 
 // FUNCTION: FFXIMAIN 0x100394D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ThreadPool_StartThread(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API void __thiscall ThreadPool_StartThread(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  void *this_00;
-  uint64_t uVar1;
+  void *obj1;
+  uint64_t u1;
   
   if (8 < *(int *)((int)self_ + 8)) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_Thread_Num_Over___10351c70);
+    orig::ErrorReport_NoOpVarargsA_v1(str_Thread_Num_Over___10351C70);
     return;
   }
-  uVar1 = orig::Allocator_Generic_v1(0x10);
-  if ((void *)uVar1 != (void *)0x0) {
-    this_00 = (void *)orig::CYyThreadPool_Construct((void *)uVar1);
-    if (this_00 != (void *)0x0) {
-      orig::ThreadPool_CreateSuspendedThread(this_00,param_1,param_2,param_3);
-      *(void **)((int)self_ + *(int *)((int)self_ + 8) * 4 + 0xc) = this_00;
+  u1 = orig::Allocator_Generic_v1(0x10);
+  if ((void *)u1 != (void *)0x0) {
+    obj1 = (void *)orig::CYyThreadPool_Construct((void *)u1);
+    if (obj1 != (void *)0x0) {
+      orig::ThreadPool_CreateSuspendedThread(obj1,arg2,arg3,arg4);
+      *(void **)((int)self_ + *(int *)((int)self_ + 8) * 4 + 0xc) = obj1;
       *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + 1;
       return;
     }
   }
-  orig::ErrorReport_NoOpVarargsA_v1(s_Thread_Create_Error___10351c58);
+  orig::ErrorReport_NoOpVarargsA_v1(str_Thread_Create_Error___10351C58);
   return;
 }
 
@@ -31,36 +31,36 @@ XI_API void __thiscall ThreadPool_StartThread(void * self_, undefined4 param_1, 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall ThreadPool_Shutdown(void * self_)
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar3;
+  int *p1;
+  int i1;
+  int *p2;
   
-  piVar3 = (int *)((int)self_ + 0xc);
-  iVar2 = 8;
-  piVar1 = piVar3;
+  p2 = (int *)((int)self_ + 0xc);
+  i1 = 8;
+  p1 = p2;
   do {
-    if (*piVar1 != 0) {
-      *(uint8_t *)(*piVar1 + 5) = 1;
+    if (*p1 != 0) {
+      *(uint8_t *)(*p1 + 5) = 1;
     }
-    piVar1 = piVar1 + 1;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  iVar2 = 8;
+    p1 = p1 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  i1 = 8;
   do {
-    if ((void *)*piVar3 != (void *)0x0) {
-      orig::Thread_ResumeAndWait((void *)*piVar3);
+    if ((void *)*p2 != (void *)0x0) {
+      orig::Thread_ResumeAndWait((void *)*p2);
     }
-    piVar3 = piVar3 + 1;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    p2 = p2 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100395D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CYyThreadPool_Construct(void * self_)
+XI_API bits32 __thiscall CYyThreadPool_Construct(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_CYyThreadPool_ScalarDeletingDtor_2_1032aa14;
+  *(uint8_t ***)self_ = &ptr_to_CYyThreadPool_ScalarDeletingDtor_2_1032AA14;
   *(uint8_t *)((int)self_ + 4) = 1;
   *(uint8_t *)((int)self_ + 5) = 0;
   *(uint8_t *)((int)self_ + 6) = 0;

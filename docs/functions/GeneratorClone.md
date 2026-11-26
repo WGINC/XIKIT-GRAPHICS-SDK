@@ -58,7 +58,7 @@ Why the file has this name (data/unit_names.json): CMoGeneratorClone::* (the eff
 | `GeneratorClone_GetFloat120` | 0x10052A40 | 7 | yes | - | Returns the float at +0x120. | low |
 | `GeneratorClone_GetFloat124` | 0x10052A50 | 7 | yes | - | Returns the float at +0x124. | low |
 | `GeneratorClone_AllocWithFallback` | 0x10052A60 | 23 | yes | - | Allocates a block at an offset computed from its arguments. | low |
-| `GeneratorClone_TestFn473F0` | 0x10052A80 | 12 | yes | - | Returns whether FUN_100473f0 reports non-zero for this object. | low |
+| `GeneratorClone_TestFn473F0` | 0x10052A80 | 12 | yes | - | Returns whether game_100473F0 reports non-zero for this object. | low |
 | `GeneratorClone_HasFlags4And8` | 0x10052A90 | 20 | yes | - | Tests bits 0x4 and 0x8 of the flags at +0x10C. | low |
 | `GeneratorClone_Get9C` | 0x10052AB0 | 7 | yes | - | Returns the dword at +0x9C. | low |
 | `GeneratorClone_Set9C` | 0x10052AC0 | 13 | yes | - | Stores a dword at +0x9C. | low |

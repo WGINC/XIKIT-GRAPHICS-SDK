@@ -20,6 +20,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `SqgxContext_StoreVec14` calls `SqgxContext_StoreEntryVec`
 - `StAvatar_InitGlobals1099AEB8` calls `Chn_InitDefaults`
-- `StAvatar_AllocArrays` calls `sub_10275D80`, `SqChannelDefaults_InitDefaults`, `StAvatar_InitModel`
+- `StAvatar_AllocArrays` calls `game_10275D80`, `SqChannelDefaults_InitDefaults`, `StAvatar_InitModel`
 - `StAvatar_InitModel` calls `SqVec_ZeroDwords`
 - `StAvatar_UpdateModels` calls `SqMatrixConnect_IsConnected`, `SqMatrixConnect_Advance`, `SqDebug_GetFlagByte14`, `SqDebug_InvokeCallback18`, `Chn_ForwardIfFlag2`, `scnCameraGetInfo`, `SqmdModel_LookAt`, `SqmdModel_Update`

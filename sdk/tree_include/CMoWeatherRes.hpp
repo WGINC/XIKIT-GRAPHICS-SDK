@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoWeatherRes {
 public:
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x101893D0
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x101893D0
     void SetupNop();  // 0x101893F0
 
     void **vftable;  // +0x0

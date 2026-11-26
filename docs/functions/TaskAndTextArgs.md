@@ -34,22 +34,22 @@ Why the file has this name (data/unit_names.json): CMoTask::Dispatch / DrawQuad*
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `TaskAndTextArgs_FindTask` calls nothing directly
-- `Gfx_InitCubeMapTextures` calls `sub_1000AD70`, `sub_1006A070`, `Gfx_CalcFVFStride`, `CDx::DrawPrimitiveUP`, `sub_1006A0E0`
+- `Gfx_InitCubeMapTextures` calls `game_1000AD70`, `game_1006A070`, `Gfx_CalcFVFStride`, `CDx::DrawPrimitiveUP`, `game_1006A0E0`
 - `TexRef_ResolveByName` calls `CYyTexMng::FindByNameInResource`, `TexMgr_GetField8`
-- `TexRef_EnsureRenderTarget` calls `Mem_AllocDefault`, `CAcc::Constructor`, `CMoDX::CreateTexture`, `sub_1000AD70`
-- `TextureHolder_BindWarped` calls `TexRef_EnsureRenderTarget`, `sub_1006A060`, `MoDX_SetInvalid`, `sub_10313486`, `sub_1006AE30`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CMoVuElem_Draw`, `sub_1006A0E0`
+- `TexRef_EnsureRenderTarget` calls `Mem_AllocDefault`, `CAcc::Constructor`, `CMoDX::CreateTexture`, `game_1000AD70`
+- `TextureHolder_BindWarped` calls `TexRef_EnsureRenderTarget`, `game_1006A060`, `MoDX_SetInvalid`, `game_10313486`, `game_1006AE30`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CMoVuElem_Draw`, `game_1006A0E0`
 - `TexRef_SetTexture` calls nothing directly
-- `TextureHolder_BindTinted` calls `TexRef_EnsureRenderTarget`, `sub_1006A060`, `MoDX_SetInvalid`, `sub_10313486`, `sub_1006AE30`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CMoVuElem_Draw`, `sub_1006A0E0`
+- `TextureHolder_BindTinted` calls `TexRef_EnsureRenderTarget`, `game_1006A060`, `MoDX_SetInvalid`, `game_10313486`, `game_1006AE30`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CMoVuElem_Draw`, `game_1006A0E0`
 - `Arg_SplitQuoted` calls `Arg_CopyCharOrPair`, `Arg_StripQuotes`
 - `Arg_CopyCharOrPair` calls nothing directly
 - `Arg_StripQuotes` calls nothing directly
-- `preprocessArg` calls `Arg_LookupWord`, `sub_10312940`, `Menu_FindByFlags34`, `YkCommon_TestFlags100Or40DAC`, `IsEvent`, `sub_10076FF0`, `Arg_CopyCharOrPair`, `ChatLog_AddTableMessage7`, `sub_10312050`, `YkWindows_SetModeFwd`, `TextCommand_SetFlag1047D498`, `sub_10202FE0`, `Target_SetIfUsable`, `Target_ApplyAction`, `Target_SetHandlerC8`, `sub_10077A00`
+- `preprocessArg` calls `Arg_LookupWord`, `game_10312940`, `Menu_FindByFlags34`, `YkCommon_TestFlags100Or40DAC`, `IsEvent`, `game_10076FF0`, `Arg_CopyCharOrPair`, `ChatLog_AddTableMessage7`, `game_10312050`, `YkWindows_SetModeFwd`, `TextCommand_SetFlag1047D498`, `game_10202FE0`, `Target_SetIfUsable`, `Target_ApplyAction`, `Target_SetHandlerC8`, `game_10077A00`
 - `Arg_FindInSortedTable` calls nothing directly
 - `Arg_LookupWord` calls `Arg_FindInSortedTable`
-- `TaskAndTextArgs_MapNameLetters` calls `sub_103146DE`, `sub_10313B74`, `sub_103145A4`
+- `TaskAndTextArgs_MapNameLetters` calls `game_103146DE`, `game_10313B74`, `game_103145A4`
 - `Acter_CopyNameToBuffer` calls `Acter_ClearCurrentName`
 - `Acter_GetCurrentIdRef` calls nothing directly
 - `Acter_ClearCurrentName` calls nothing directly
 - `Acter_FindMatchingActor` calls `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`
-- `ChatLog_AddFormattedMessage` calls `sub_10314942`, `ChatLog_AddMessage`
-- `TaskAndTextArgs_ToggleOnKey` calls `sub_10078090`, `NetCellFont_TestCommand36CF60`, `sub_100FC140`, `sub_100FC2E0`, `sub_100FC0F0`, `sub_10077ED0`
+- `ChatLog_AddFormattedMessage` calls `game_10314942`, `ChatLog_AddMessage`
+- `TaskAndTextArgs_ToggleOnKey` calls `game_10078090`, `NetCellFont_TestCommand36CF60`, `game_100FC140`, `game_100FC2E0`, `game_100FC0F0`, `game_10077ED0`

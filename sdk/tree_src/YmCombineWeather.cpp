@@ -5,182 +5,182 @@
 
 // FUNCTION: FFXIMAIN 0x1018AA50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl YmCombineWeather_ResetFlag1000Generator(undefined4 * param_1, undefined4 param_2)
+XI_API uint32_t __cdecl YmCombineWeather_ResetFlag1000Generator(bits32 * arg1, bits32 arg2)
 {
-  uint32_t *puVar1;
-  undefined4 uVar2;
+  uint32_t *p1;
+  bits32 u1;
   void *self_;
   
-  if (param_1 == (undefined4 *)0x0) {
+  if (arg1 == (bits32 *)0x0) {
     self_ = (void *)0x0;
   }
   else {
-    self_ = (void *)*param_1;
+    self_ = (void *)*arg1;
   }
-  puVar1 = (uint32_t *)(*(uint32_t *)((int)self_ + 0xd8) >> 0xc);
-  if (((uint32_t)puVar1 & 1) != 0) {
+  p1 = (uint32_t *)(*(uint32_t *)((int)self_ + 0xd8) >> 0xc);
+  if (((uint32_t)p1 & 1) != 0) {
     if (*(int *)(g_pXiZone_as_s32 + 0x1bc) != 0) {
-      uVar2 = orig::Generator_IsFlag400OrField22Zero_v1(self_);
-      if ((char)uVar2 == '\0') {
-        puVar1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
-        if ((*puVar1 & 4) != 0) goto LAB_1018aab0;
+      u1 = orig::Generator_IsFlag400OrField22Zero_v1(self_);
+      if ((char)u1 == '\0') {
+        p1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
+        if ((*p1 & 4) != 0) goto code_1018AAB0;
       }
-      puVar1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
-      if ((*puVar1 & 0x4000000) != 0) goto LAB_1018aab0;
+      p1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
+      if ((*p1 & 0x4000000) != 0) goto code_1018AAB0;
     }
-    puVar1 = (uint32_t *)orig::SharedConditionalStateReset_v1(self_);
-    *(undefined4 *)((int)self_ + 100) = param_2;
+    p1 = (uint32_t *)orig::SharedConditionalStateReset_v1(self_);
+    *(bits32 *)((int)self_ + 100) = arg2;
   }
-LAB_1018aab0:
-  return (uint32_t)puVar1 & 0xffffff00;
+code_1018AAB0:
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1018AAC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YmCombineWeather_FindKind5A(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YmCombineWeather_FindKind5A(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Resource_FindInChainByKind(*(void **)((int)self_ + 0xc),5,0,&LAB_1018aae0,0,xi_eax);
-  return uVar1;
+  u1 = orig::Resource_FindInChainByKind(*(void **)((int)self_ + 0xc),5,0,&YmCombineWeather_ResetFlag1000Not800Generator_as_v0,0,xi_eax);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018AAE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl YmCombineWeather_ResetFlag1000Not800Generator(undefined4 * param_1)
+XI_API uint32_t __cdecl YmCombineWeather_ResetFlag1000Not800Generator(bits32 * arg1)
 {
-  uint32_t *puVar1;
-  uint8_t *pbVar2;
+  uint32_t *p1;
+  uint8_t *p2;
   void *self_;
   
-  if (param_1 == (undefined4 *)0x0) {
+  if (arg1 == (bits32 *)0x0) {
     self_ = (void *)0x0;
   }
   else {
-    self_ = (void *)*param_1;
+    self_ = (void *)*arg1;
   }
-  puVar1 = *(uint32_t **)((int)self_ + 0xd8);
-  if ((((uint32_t)puVar1 >> 0xc & 1) != 0) && (((uint32_t)puVar1 & 0x800) == 0)) {
-    puVar1 = (uint32_t *)orig::Generator_IsFlag400OrField22Zero_v1(self_);
-    if ((char)puVar1 == '\0') {
-      pbVar2 = orig::GeneratorClone_GetCmdType1Data(self_);
-      if ((*pbVar2 & 4) == 0) {
-        puVar1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
-        if ((*puVar1 & 0x4000000) == 0) goto LAB_1018ab31;
+  p1 = *(uint32_t **)((int)self_ + 0xd8);
+  if ((((uint32_t)p1 >> 0xc & 1) != 0) && (((uint32_t)p1 & 0x800) == 0)) {
+    p1 = (uint32_t *)orig::Generator_IsFlag400OrField22Zero_v1(self_);
+    if ((char)p1 == '\0') {
+      p2 = orig::GeneratorClone_GetCmdType1Data(self_);
+      if ((*p2 & 4) == 0) {
+        p1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
+        if ((*p1 & 0x4000000) == 0) goto code_1018AB31;
       }
-      puVar1 = (uint32_t *)orig::SharedConditionalStateReset_v1(self_);
+      p1 = (uint32_t *)orig::SharedConditionalStateReset_v1(self_);
     }
   }
-LAB_1018ab31:
-  return (uint32_t)puVar1 & 0xffffff00;
+code_1018AB31:
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1018AB40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YmCombineWeather_FindKind5B(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YmCombineWeather_FindKind5B(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Resource_FindInChainByKind(*(void **)((int)self_ + 0xc),5,0,&LAB_1018ab60,0,xi_eax);
-  return uVar1;
+  u1 = orig::Resource_FindInChainByKind(*(void **)((int)self_ + 0xc),5,0,&YmCombineWeather_RunFlag800Generator_as_v0,0,xi_eax);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018AB60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl YmCombineWeather_RunFlag800Generator(undefined4 * param_1)
+XI_API uint32_t __cdecl YmCombineWeather_RunFlag800Generator(bits32 * arg1)
 {
-  uint32_t *puVar1;
-  uint8_t *pbVar2;
+  uint32_t *p1;
+  uint8_t *p2;
   void *self_;
   
-  if (param_1 == (undefined4 *)0x0) {
+  if (arg1 == (bits32 *)0x0) {
     self_ = (void *)0x0;
   }
   else {
-    self_ = (void *)*param_1;
+    self_ = (void *)*arg1;
   }
-  puVar1 = *(uint32_t **)((int)self_ + 0xd8);
-  if (((uint32_t)puVar1 & 0x800) != 0) {
-    puVar1 = (uint32_t *)orig::Generator_IsFlag400OrField22Zero_v1(self_);
-    if ((char)puVar1 == '\0') {
-      pbVar2 = orig::GeneratorClone_GetCmdType1Data(self_);
-      if ((*pbVar2 & 4) == 0) {
-        puVar1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
-        if ((*puVar1 & 0x4000000) == 0) goto LAB_1018aba9;
+  p1 = *(uint32_t **)((int)self_ + 0xd8);
+  if (((uint32_t)p1 & 0x800) != 0) {
+    p1 = (uint32_t *)orig::Generator_IsFlag400OrField22Zero_v1(self_);
+    if ((char)p1 == '\0') {
+      p2 = orig::GeneratorClone_GetCmdType1Data(self_);
+      if ((*p2 & 4) == 0) {
+        p1 = (uint32_t *)orig::GeneratorClone_GetCmdType1Data(self_);
+        if ((*p1 & 0x4000000) == 0) goto code_1018ABA9;
       }
-      puVar1 = (uint32_t *)orig::FUN_1018abb0_v1(self_);
+      p1 = (uint32_t *)orig::game_1018ABB0_v1(self_);
     }
   }
-LAB_1018aba9:
-  return (uint32_t)puVar1 & 0xffffff00;
+code_1018ABA9:
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1018ABF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall YmCombineWeather::Release(void * self)
 {
-  uint8_t bVar1;
-  int iVar2;
-  void *pvVar3;
+  uint8_t u1;
+  int i1;
+  void *p1;
   char xi_frame[28] __attribute__((aligned(4)));
-  uint8_t  (&local_1c)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
+  uint8_t  (&u2)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
   
-  *(uint8_t ***)self = &PTR_YmCombineWeather_GetRuntimeClass_10336814;
-  orig::FUN_100742a0(local_1c);
+  *(uint8_t ***)self = &ptr_to_YmCombineWeather_GetRuntimeClass_10336814;
+  orig::game_100742A0(u2);
   if (*(int *)(*(int *)((int)self + 4) + 0x20) == *(int *)((int)self + 0x2c)) {
-    iVar2 = orig::EnvBlend_GetField4(self);
-    *(uint32_t *)(iVar2 + 0x20) = 0;
+    i1 = orig::EnvBlend_GetField4(self);
+    *(uint32_t *)(i1 + 0x20) = 0;
   }
-  bVar1 = false;
-  orig::ResourceIter_FindFirst_v1(local_1c,*(int *)(*(int *)((int)self + 4) + 0x14),1,0,0xffffffff);
-  iVar2 = orig::ResourceIter_FindNext_v1(local_1c,0);
+  u1 = false;
+  orig::ResourceIter_FindFirst_v1(u2,*(int *)(*(int *)((int)self + 4) + 0x14),1,0,0xffffffff);
+  i1 = orig::ResourceIter_FindNext_v1(u2,0);
   do {
-    if (iVar2 == 0) {
-LAB_1018ac60:
+    if (i1 == 0) {
+code_1018AC60:
       do {
-        orig::ResourceIter_Start(local_1c,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+        orig::ResourceIter_Start(u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
         do {
-          pvVar3 = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
-          if (pvVar3 == (void *)0x0) {
+          p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+          if (p1 == (void *)0x0) {
             do {
-              orig::ResourceIter_FindFirst_v1(local_1c,*(int *)((int)self + 0xc),5,0,0xffffffff);
+              orig::ResourceIter_FindFirst_v1(u2,*(int *)((int)self + 0xc),5,0,0xffffffff);
               do {
-                pvVar3 = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
-                if (pvVar3 == (void *)0x0) {
+                p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+                if (p1 == (void *)0x0) {
                   if (*(int *)((int)*(void **)((int)self + 4) + 0x18) == *(int *)((int)self + 0x20))
                   {
                     orig::ZoneMap_SetRecord(*(void **)((int)self + 4),(uint32_t *)0x0);
                   }
                   orig::Blend_FreeResult(self);
-                  pvVar3 = orig::Blend_FindPrevious(self);
-                  if (pvVar3 == (void *)0x0) {
+                  p1 = orig::Blend_FindPrevious(self);
+                  if (p1 == (void *)0x0) {
                     orig::EnvBlend_SetField10Of4(self,*(uint32_t *)((int)self + 8));
                   }
                   else {
-                    *(uint32_t *)((int)pvVar3 + 8) = *(uint32_t *)((int)self + 8);
+                    *(uint32_t *)((int)p1 + 8) = *(uint32_t *)((int)self + 8);
                   }
-                  orig::ResourceIter_FindFirst_v1(local_1c,*(int *)((int)self + 0xc),7,0,0xffffffff);
-                  pvVar3 = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
-                  while (pvVar3 != (void *)0x0) {
-                    orig::Scheduler_RemoveTasksFor(pvVar3);
-                    pvVar3 = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
+                  orig::ResourceIter_FindFirst_v1(u2,*(int *)((int)self + 0xc),7,0,0xffffffff);
+                  p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+                  while (p1 != (void *)0x0) {
+                    orig::Scheduler_RemoveTasksFor(p1);
+                    p1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
                   }
                   return;
                 }
-              } while ((*(void **)((int)pvVar3 + 100) != self) ||
-                      (*(uint32_t *)((int)pvVar3 + 100) = 0, !bVar1));
-              orig::FUN_1018abb0(pvVar3,pvVar3);
+              } while ((*(void **)((int)p1 + 100) != self) ||
+                      (*(uint32_t *)((int)p1 + 100) = 0, !u1));
+              orig::game_1018ABB0(p1,p1);
             } while( true );
           }
-        } while ((*(void **)((int)pvVar3 + 100) != self) ||
-                (*(uint32_t *)((int)pvVar3 + 100) = 0, !bVar1));
-        orig::FUN_1018abb0(pvVar3,pvVar3);
+        } while ((*(void **)((int)p1 + 100) != self) ||
+                (*(uint32_t *)((int)p1 + 100) = 0, !u1));
+        orig::game_1018ABB0(p1,p1);
       } while( true );
     }
-    if (iVar2 == *(int *)((int)self + 0xc)) {
-      bVar1 = true;
-      goto LAB_1018ac60;
+    if (i1 == *(int *)((int)self + 0xc)) {
+      u1 = true;
+      goto code_1018AC60;
     }
-    iVar2 = orig::ResourceIter_FindNext_v1(local_1c,0);
+    i1 = orig::ResourceIter_FindNext_v1(u2,0);
   } while( true );
 }

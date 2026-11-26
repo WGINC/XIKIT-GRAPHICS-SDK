@@ -37,8 +37,8 @@ Group: `mdl` (by the file name only). Source: `sdk/tree_src/mdl.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `mdl_1026E900` calls `Chn_ReleaseIfSet`, `Chn_ReleaseRefs`, `sqFree`, `SqmdModel_Free`, `Mdl_ReleaseSlotPtr`
-- `Mdl_Register` calls `SceneCamera_ApplySceneToModel`, `sub_10273810`, `sqDebugPrintf`, `Mdl_UpdateSlotFlags`
-- `Mdl_FreeAllSlots` calls `SceneRecord_ClearGroupField4`, `SceneRecord_ClearCurrentField4`, `Mdl_ClearSlotFlags`, `sqDebugPrintf`, `SqmdModel_Free`, `SceneCamera_ApplySceneToModel`, `sub_10273810`
+- `Mdl_Register` calls `SceneCamera_ApplySceneToModel`, `game_10273810`, `sqDebugPrintf`, `Mdl_UpdateSlotFlags`
+- `Mdl_FreeAllSlots` calls `SceneRecord_ClearGroupField4`, `SceneRecord_ClearCurrentField4`, `Mdl_ClearSlotFlags`, `sqDebugPrintf`, `SqmdModel_Free`, `SceneCamera_ApplySceneToModel`, `game_10273810`
 - `Mdl_ClearSlotFlags` calls nothing directly
 - `Mdl_ChannelRegister` calls `SqChannelDefaults_InitDefaults`, `Chn_RegisterItem`, `sqDebugPrintf`
 - `Mdl_FindNthItemB0001` calls `SqmdModel_GetItemKind2`
@@ -59,5 +59,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Mdl_GetSlotPtrs` calls nothing directly
 - `Mdl_GetSlotWord0` calls nothing directly
 - `Mdl_UpdateSlotFlags` calls nothing directly
-- `Mdl_SetSlotVisible` calls `sub_10273810`, `Mdl_UpdateSlotFlags`
+- `Mdl_SetSlotVisible` calls `game_10273810`, `Mdl_UpdateSlotFlags`
 - `Mdl_ReleaseSlotPtr` calls `sqFree`

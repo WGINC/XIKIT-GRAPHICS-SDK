@@ -60,16 +60,16 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqsnScene_ShadowAddMember` calls `SqMem_Realloc`
 - `SqsnScene_GetEntryAddr` calls nothing directly
 - `SqsnScene_SetCursorIfInRange` calls nothing directly
-- `SqsnScene_DrawMatrixShape` calls `sqgxMatrixShape`, `sub_102A1F20`
+- `SqsnScene_DrawMatrixShape` calls `sqgxMatrixShape`, `game_102A1F20`
 - `sqsnScene_1028F5F0` calls `SqgxContext_SetCurrentIndex`, `SqgxContext_StoreVec14`, `SqgxContext_SetTransposedMatrix`, `SqgxContext_SetFloat72C`, `SqgxContext_SetContextSlot854`
 - `SqsnScene_SetupLayerLights` calls `SqgxContext_SetCurrentIndex`, `SqgxContext_StoreVec14`, `SqgxContext_SetTransposedMatrix`, `SqgxContext_SetFloat72C`, `SqgxContext_SetContextSlot854`
-- `sqsnSceneDraw` calls `sqsnSceneLayerSort`, `sqgxTextureAdd`, `sqgxTextureDraw`, `sqgxTextureClear`, `sqrdCamera_Apply`, `sqgxMatrixCamera`, `sqsnSceneLayerDrawShadowed`, `sqsnSceneLayerDraw`, `sqgxTextureSet`, `sqsnSceneLayerSnapShotComposite`, `sqgxTextureGetSize`, `sqgxTextureStencilClear`, `sqgxTextureDecal`, `sqgxTextureClamp`, `sqgxBlendOff`, `sqgxZTest`, `SqsnScene_NoOp`, `sqgxColor`, `sqgxBlendTrsp`, `sub_10280DE0`
+- `sqsnSceneDraw` calls `sqsnSceneLayerSort`, `sqgxTextureAdd`, `sqgxTextureDraw`, `sqgxTextureClear`, `sqrdCamera_Apply`, `sqgxMatrixCamera`, `sqsnSceneLayerDrawShadowed`, `sqsnSceneLayerDraw`, `sqgxTextureSet`, `sqsnSceneLayerSnapShotComposite`, `sqgxTextureGetSize`, `sqgxTextureStencilClear`, `sqgxTextureDecal`, `sqgxTextureClamp`, `sqgxBlendOff`, `sqgxZTest`, `SqsnScene_NoOp`, `sqgxColor`, `sqgxBlendTrsp`, `game_10280DE0`
 - `sqsnSceneLayerDraw` calls `sqrdCamera_Apply`, `sqgxMatrixCamera`, `SqShadowVolumeDraw_CopyBounds`, `SqsnScene_SetupLayerLights`, `SqsnScene_DrawMatrixShape`, `SqsnScene_DrawFadeSprite`
-- `SqsnScene_DrawFadeSprite` calls `sqgxZTest`, `sqgxTextureDraw`, `sqgxTextureSet`, `sqgxTextureDecal`, `sub_10280DE0`
+- `SqsnScene_DrawFadeSprite` calls `sqgxZTest`, `sqgxTextureDraw`, `sqgxTextureSet`, `sqgxTextureDecal`, `game_10280DE0`
 - `sqsnSceneLayerDrawShadowed` calls `sqrdCamera_Apply`, `sqgxMatrixCamera`, `sqsnPlanarShadowDraw`, `SqShadowVolumeDraw_CopyBounds`, `SqsnScene_SetupLayerLights`, `SqsnScene_DrawMatrixShape`, `SqShadowVolumeDraw_ContainsInAnyEntry`, `SqPlanarShadow_RenderShadowTexture`, `SqShadowVolumeDraw_ContainsInt`, `SqPlanarShadow_DrawShadowedShape`, `SqsnScene_DrawFadeSprite`
 - `sqsnSceneLayerSnapShotComposite` calls `SqgxTextureImage_CompositeBlendPasses`
 - `SqsnScene_NoOp` calls nothing directly
 - `sqsnSceneLayerSort` calls `sqgxMatrixCamera`, `SqBounds_GetCenter`, `sqgxMatrixShape`, `sqMatrix4_10280140`, `M4fTranspose`, `M4fTransform`
-- `SqsnScene_Preallocate` calls `sub_10275D80`, `sqDebugPrintf`, `SqsnScene_LayerInit`
-- `SqsnScene_LayerPreallocate` calls `sub_10275D80`, `sqDebugPrintf`
-- `SqsnScene_ShadowPreallocate` calls `sub_10275D80`, `sqDebugPrintf`
+- `SqsnScene_Preallocate` calls `game_10275D80`, `sqDebugPrintf`, `SqsnScene_LayerInit`
+- `SqsnScene_LayerPreallocate` calls `game_10275D80`, `sqDebugPrintf`
+- `SqsnScene_ShadowPreallocate` calls `game_10275D80`, `sqDebugPrintf`

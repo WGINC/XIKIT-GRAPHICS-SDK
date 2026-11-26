@@ -52,16 +52,16 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FontGlyphCache_AddToCounter` calls nothing directly
 - `FontGlyphCache_ClearCounter` calls nothing directly
 - `FontGlyphCache_DecayCounter` calls nothing directly
-- `FitFont_BaseCtor` calls `FitFont_InnerCtor`, `FitFont_CreateEvent`, `FitFont_InnerDtor`, `sub_10265B90`, `sub_103162F7`
-- `FitFont_BaseDtor` calls `FitFont_EndTimerPeriodIfActive`, `FitFont_ReleaseField6C`, `sub_10265B90`, `FitFont_InnerDtor`, `sub_103162F7`
-- `FitFont_ReleaseField6C` calls `sub_103162F7`
-- `FitFont_EndTimerPeriodIfActive` calls `sub_103162F7`
-- `FitFont_DerivedCtor` calls `FitFont_BaseCtor`, `FitFont_ResetState`, `FitFont_BaseDtor`, `sub_103162F7`
+- `FitFont_BaseCtor` calls `FitFont_InnerCtor`, `FitFont_CreateEvent`, `FitFont_InnerDtor`, `game_10265B90`, `game_103162F7`
+- `FitFont_BaseDtor` calls `FitFont_EndTimerPeriodIfActive`, `FitFont_ReleaseField6C`, `game_10265B90`, `FitFont_InnerDtor`, `game_103162F7`
+- `FitFont_ReleaseField6C` calls `game_103162F7`
+- `FitFont_EndTimerPeriodIfActive` calls `game_103162F7`
+- `FitFont_DerivedCtor` calls `FitFont_BaseCtor`, `FitFont_ResetState`, `FitFont_BaseDtor`, `game_103162F7`
 - `FitFont_ResetState` calls nothing directly
 - `FontGlyphCache_StoreElapsed158` calls nothing directly
 - `FontGlyphCache_NoOpZero` calls nothing directly
 - `FitFont_InnerCtor` calls `FitFont_RefObjCtor`
-- `FitFont_InnerDtor` calls `operator_delete`, `FitFont_ReleaseLibraryRef`, `sub_103162F7`
+- `FitFont_InnerDtor` calls `operator_delete`, `FitFont_ReleaseLibraryRef`, `game_103162F7`
 - `FitFont_AddLibraryRef` calls nothing directly
 - `FitFont_ReleaseLibraryRef` calls nothing directly
 - `FitFont_RefObjCtor` calls `FitFont_AddLibraryRef`

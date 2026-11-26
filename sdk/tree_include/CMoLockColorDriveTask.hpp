@@ -7,7 +7,7 @@ class XI_API CMoLockColorDriveTask {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x10056960
     int Slot11CallGetRuntimeClass();  // 0x100630F0
-    int Slot12ThunkDeletingDtor(int a1);  // 0x10063100
+    int Slot12ThunkDeletingDtor(int arg1);  // 0x10063100
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x78];

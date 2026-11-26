@@ -4,46 +4,46 @@
 
 // FUNCTION: FFXIMAIN 0x10280D10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sq_PrintFloat4x4Indented(float * param_1, undefined4 param_2, int param_3)
+XI_API void __cdecl Sq_PrintFloat4x4Indented(float * arg1, bits32 arg2, int arg3)
 {
   uint32_t xi_entry_eax = 0;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  orig::Sq_PrintIndent(param_3,xi_entry_eax);
-  uVar1 = orig::sqDebugPrintf_v1(s___f__f__f__f_103b480c,(double)(long double)*param_1,(double)(long double)param_1[1]
-                       ,(double)(long double)param_1[2],(double)(long double)param_1[3]);
-  orig::Sq_PrintIndent(param_3,(int)uVar1);
-  uVar1 = orig::sqDebugPrintf_v1(s__f__f__f__f_103b47fc,(double)(long double)param_1[4],
-                       (double)(long double)param_1[5],(double)(long double)param_1[6],
-                       (double)(long double)param_1[7]);
-  orig::Sq_PrintIndent(param_3,(int)uVar1);
-  uVar1 = orig::sqDebugPrintf_v1(s__f__f__f__f_103b47fc,(double)(long double)param_1[8],
-                       (double)(long double)param_1[9],(double)(long double)param_1[10],
-                       (double)(long double)param_1[0xb]);
-  orig::Sq_PrintIndent(param_3,(int)uVar1);
-  orig::sqDebugPrintf_v1(s__f__f__f__f__103b47ec,(double)(long double)param_1[0xc],(double)(long double)param_1[0xd],
-               (double)(long double)param_1[0xe],(double)(long double)param_1[0xf]);
+  orig::Sq_PrintIndent(arg3,xi_entry_eax);
+  u1 = orig::sqDebugPrintf_v1(str___f__f__f__f_103B480C,(double)*arg1,(double)arg1[1]
+                       ,(double)arg1[2],(double)arg1[3]);
+  orig::Sq_PrintIndent(arg3,(int)u1);
+  u1 = orig::sqDebugPrintf_v1(str__f__f__f__f_103B47FC,(double)arg1[4],
+                       (double)arg1[5],(double)arg1[6],
+                       (double)arg1[7]);
+  orig::Sq_PrintIndent(arg3,(int)u1);
+  u1 = orig::sqDebugPrintf_v1(str__f__f__f__f_103B47FC,(double)arg1[8],
+                       (double)arg1[9],(double)arg1[10],
+                       (double)arg1[0xb]);
+  orig::Sq_PrintIndent(arg3,(int)u1);
+  orig::sqDebugPrintf_v1(str__f__f__f__f__103B47EC,(double)arg1[0xc],(double)arg1[0xd],
+               (double)arg1[0xe],(double)arg1[0xf]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102813B0
 // GATE: PASS -- 100 trials, 61 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 61
-XI_API void __cdecl SqgxTextureImage_CompositeBlendPasses(int param_1, float param_2)
+XI_API void __cdecl SqgxTextureImage_CompositeBlendPasses(int arg1, float arg2)
 {
   char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
   
   orig::sqgxTextureDecal_v1(1);
   orig::sqgxZMask_v1(0);
   orig::sqgxTextureUpdate_v1();
-  orig::sqgxTextureGetSize_v1(*(int *)(g_pSqgxContext_as_s32 + 0x8b0),&local_4,&local_8);
-  if (0 < param_1) {
+  orig::sqgxTextureGetSize_v1(*(int *)(g_pSqgxContext_as_s32 + 0x8b0),&u2,&u1);
+  if (0 < arg1) {
     do {
-      orig::sqgxBlendAdd((float)((long double)1.0f / (long double)param_2));
+      orig::sqgxBlendAdd((float)(1.0f / arg2));
       orig::SqgxContext_NoOpA_v1();
-      param_1 = param_1 + -1;
-    } while (param_1 != 0);
+      arg1 = arg1 + -1;
+    } while (arg1 != 0);
   }
   orig::sqgxZMask_v1(1);
   orig::sqgxBlendOff_v1();
@@ -54,181 +54,181 @@ XI_API void __cdecl SqgxTextureImage_CompositeBlendPasses(int param_1, float par
 
 // FUNCTION: FFXIMAIN 0x10281510
 // GATE: PASS -- 100 trials, 98 returned normally, 296 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API int __cdecl sqgxTextureCreateFromImage(int a1, _BYTE *a2)
+XI_API int __cdecl sqgxTextureCreateFromImage(int arg1, uint8_t *arg2)
 {
-  int v2;
-  int v3;
-  int v4;
-  int v5;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
   int i;
-  int v7;
-  _BYTE *v8;
-  int v9;
+  int i5;
+  uint8_t *p1;
+  int i6;
   int j;
-  int v11;
+  int i7;
   int k;
   int result;
   alignas(16) unsigned char xi_frame[0x45C];  // address-taken locals at their original offsets
-  IDirect3DTexture8 * &v14 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x50);
-  char (&v15)[4] = *reinterpret_cast<char (*)[4]>(xi_frame + 0x54);
-  _BYTE * &v16 = *reinterpret_cast<_BYTE * *>(xi_frame + 0x58);
-  int v17;
-  v2 = 10 * a1;
-  v3 = 0;
+  IDirect3DTexture8 * &p2 = *reinterpret_cast<IDirect3DTexture8 * *>(xi_frame + 0x50);
+  char (&val1)[4] = *reinterpret_cast<char (*)[4]>(xi_frame + 0x54);
+  uint8_t * &p3 = *reinterpret_cast<uint8_t * *>(xi_frame + 0x58);
+  int i8;
+  i1 = 10 * arg1;
+  i2 = 0;
   if ( g_pDancerDevice->lpVtbl->CreateTexture(
          g_pDancerDevice,
-         g_sqgxTex_width[10 * a1],
-         g_sqgxTex_height[10 * a1],
+         g_sqgxTex_width[10 * arg1],
+         g_sqgxTex_height[10 * arg1],
          1u,
          0,
-         (D3DFORMAT)g_sqgxTex_format[10 * a1],
+         (D3DFORMAT)g_sqgxTex_format[10 * arg1],
          D3DPOOL_MANAGED,
-         &v14) != 0 )
+         &p2) != 0 )
     orig::sqDebugPrintf(aErrorCouldNotL);
-  v14->LockRect(0, (D3DLOCKED_RECT *)v15, nullptr, 0);
-  v4 = g_sqgxTex_kind[10 * a1];
-  if ( v4 == 3 )
+  p2->LockRect(0, (D3DLOCKED_RECT *)val1, nullptr, 0);
+  i3 = g_sqgxTex_kind[10 * arg1];
+  if ( i3 == 3 )
   {
-    v17 = 0;
-    if ( g_sqgxTex_height[v2] > 0 )
+    i8 = 0;
+    if ( g_sqgxTex_height[i1] > 0 )
     {
-      v5 = g_sqgxTex_width[v2];
+      i4 = g_sqgxTex_width[i1];
       do
       {
-        for ( i = 0; i < v5; v5 = g_sqgxTex_width[v2] )
+        for ( i = 0; i < i4; i4 = g_sqgxTex_width[i1] )
         {
-          v7 = i + v17 * v5;
+          i5 = i + i8 * i4;
           ++i;
-          v8 = &a2[2 * v7];
-          v16[4 * v7 + 2] = v8[v7];
-          v16[4 * v7 + 1] = v8[v7 + 1];
-          v16[4 * v7] = v8[v7 + 2];
+          p1 = &arg2[2 * i5];
+          p3[4 * i5 + 2] = p1[i5];
+          p3[4 * i5 + 1] = p1[i5 + 1];
+          p3[4 * i5] = p1[i5 + 2];
         }
-        ++v17;
+        ++i8;
       }
-      while ( v17 < g_sqgxTex_height[v2] );
+      while ( i8 < g_sqgxTex_height[i1] );
     }
   }
-  else if ( v4 == 4 && g_sqgxTex_height[10 * a1] > 0 )
+  else if ( i3 == 4 && g_sqgxTex_height[10 * arg1] > 0 )
   {
-    v9 = g_sqgxTex_width[10 * a1];
+    i6 = g_sqgxTex_width[10 * arg1];
     do
     {
-      for ( j = 0; j < v9; v9 = g_sqgxTex_width[10 * a1] )
+      for ( j = 0; j < i6; i6 = g_sqgxTex_width[10 * arg1] )
       {
-        v11 = j + v3 * v9;
+        i7 = j + i2 * i6;
         ++j;
-        v16[4 * v11 + 3] = a2[4 * v11 + 3];
-        v16[4 * v11 + 2] = a2[4 * v11];
-        v16[4 * v11 + 1] = a2[4 * v11 + 1];
-        v16[4 * v11] = a2[4 * v11 + 2];
+        p3[4 * i7 + 3] = arg2[4 * i7 + 3];
+        p3[4 * i7 + 2] = arg2[4 * i7];
+        p3[4 * i7 + 1] = arg2[4 * i7 + 1];
+        p3[4 * i7] = arg2[4 * i7 + 2];
       }
-      ++v3;
+      ++i2;
     }
-    while ( v3 < g_sqgxTex_height[10 * a1] );
+    while ( i2 < g_sqgxTex_height[10 * arg1] );
   }
-  if ( g_sqgxTex_kind[v2] == 1 )
+  if ( g_sqgxTex_kind[i1] == 1 )
   {
     for ( k = 0; k < 256; ++k )
     {
       sqgxTextureCreateFromImage_static_D218[4 * k] = k;
       sqgxTextureCreateFromImage_static_D219[4 * k] = k;
       sqgxTextureCreateFromImage_static_D21A[4 * k] = k;
-      byte_1099D21B[4 * k] = k;
+      g_1099D21B[4 * k] = k;
     }
     g_pDancerDevice->SetPaletteEntries(0, sqgxTextureCreateFromImage_static_D218);
     g_pDancerDevice->SetCurrentTexturePalette(0);
-    qmemcpy(v16, a2, g_sqgxTex_width[v2] * g_sqgxTex_height[v2]);
+    memcpy(p3, arg2, g_sqgxTex_width[i1] * g_sqgxTex_height[i1]);
   }
-  result = v14->UnlockRect(0);
-  (&g_sqgxTex_texture)[v2] = v14;
+  result = p2->UnlockRect(0);
+  (&g_sqgxTex_texture)[i1] = p2;
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x102816E0
 // GATE: PASS -- 100 trials, 82 returned normally, 79 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 82
-XI_API int __cdecl sqgxTextureAddZ(int a1, int a2, int a3)
+XI_API int __cdecl sqgxTextureAddZ(int arg1, int arg2, int arg3)
 {
-  int v3;
-  int *v4;
-  int v6;
-  IDirect3DDevice8 *v7;
-  int v8;
-  int v9;
-  int v10;
-  v3 = 0;
-  v10 = 0;
+  int i1;
+  int *p1;
+  int i2;
+  IDirect3DDevice8 *p2;
+  int i3;
+  int i4;
+  int i5;
+  i1 = 0;
+  i5 = 0;
   if ( g_counter_109A261C > 0 )
   {
-    v4 = g_sqgxTex_width;
+    p1 = g_sqgxTex_width;
     do
     {
-      if ( v4[5] == -1 && *v4 == a1 && v4[1] == a2 && v4[2] == a3 )
+      if ( p1[5] == -1 && *p1 == arg1 && p1[1] == arg2 && p1[2] == arg3 )
         break;
-      ++v3;
-      v4 += 10;
+      ++i1;
+      p1 += 10;
     }
-    while ( v3 < g_counter_109A261C );
+    while ( i1 < g_counter_109A261C );
   }
-  if ( v3 == g_counter_109A261C )
+  if ( i1 == g_counter_109A261C )
   {
     if ( g_counter_109A261C == 512 )
     {
       orig::sqDebugPrintf(aErrorSqgxtextu);
       return -1;
     }
-    v6 = 10 * v3;
+    i2 = 10 * i1;
     ++g_counter_109A261C;
-    g_sqgxTex_width[v6] = a1;
-    g_sqgxTex_height[v6] = a2;
-    g_sqgxTex_kind[v6] = a3;
-    g_sqgxTex_log2Width[10 * v3] = orig::sqgxCeilLog2(a1);
-    g_sqgxTex_log2Height[10 * v3] = orig::sqgxCeilLog2(a2);
-    switch ( a3 )
+    g_sqgxTex_width[i2] = arg1;
+    g_sqgxTex_height[i2] = arg2;
+    g_sqgxTex_kind[i2] = arg3;
+    g_sqgxTex_log2Width[10 * i1] = orig::sqgxCeilLog2(arg1);
+    g_sqgxTex_log2Height[10 * i1] = orig::sqgxCeilLog2(arg2);
+    switch ( arg3 )
     {
       case 4:
-        v10 = 71;
+        i5 = 71;
         break;
       case 3:
-        v10 = 75;
+        i5 = 75;
         break;
       case 2:
-        v10 = 80;
+        i5 = 80;
         break;
       default:
         break;
     }
-    v7 = g_pDancerDevice;
-    g_sqgxTex_format[10 * v3] = v10;
-    v9 = g_sqgxTex_height[10 * v3];
-    v8 = g_sqgxTex_width[10 * v3];
-    (&g_sqgxTex_texture)[10 * v3] = nullptr;
-    if ( v7->lpVtbl->CreateDepthStencilSurface(
-           v7,
-           v8,
-           v9,
-           (D3DFORMAT)v10,
+    p2 = g_pDancerDevice;
+    g_sqgxTex_format[10 * i1] = i5;
+    i4 = g_sqgxTex_height[10 * i1];
+    i3 = g_sqgxTex_width[10 * i1];
+    (&g_sqgxTex_texture)[10 * i1] = nullptr;
+    if ( p2->lpVtbl->CreateDepthStencilSurface(
+           p2,
+           i3,
+           i4,
+           (D3DFORMAT)i5,
            D3DMULTISAMPLE_NONE,
-           (IDirect3DSurface8 **)&g_sqgxTex_surface[v6]) == -2005530516 )
+           (IDirect3DSurface8 **)&g_sqgxTex_surface[i2]) == -2005530516 )
       orig::sqDebugPrintf(aErrorCouldNotA);
   }
-  return v3;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10281810
 // GATE: PASS -- 100 trials, 88 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 88
-XI_API int __cdecl sqgxCeilLog2(int param_1)
+XI_API int __cdecl sqgxCeilLog2(int arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar2 = 1;
-  iVar1 = 0;
-  if (1 < param_1) {
+  i2 = 1;
+  i1 = 0;
+  if (1 < arg1) {
     do {
-      iVar2 = iVar2 * 2;
-      iVar1 = iVar1 + 1;
-    } while (iVar2 < param_1);
+      i2 = i2 * 2;
+      i1 = i1 + 1;
+    } while (i2 < arg1);
   }
-  return iVar1;
+  return i1;
 }

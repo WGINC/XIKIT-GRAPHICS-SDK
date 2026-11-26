@@ -4,61 +4,61 @@
 
 // FUNCTION: FFXIMAIN 0x1027CCF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBoneTransform_TransformOrigin(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API void __cdecl SqBoneTransform_TransformOrigin(bits32 arg1, bits32 arg2, bits32 arg3)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  orig::SqBoneTransform_TransformPoint(param_1,param_2,&xi_frame[0],param_3,0,0,0);
+  orig::SqBoneTransform_TransformPoint(arg1,arg2,&xi_frame[0],arg3,0,0,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027CD30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBoneTransform_ComputeTransform(int param_1, int param_2, float * param_3, float * param_4)
+XI_API void __cdecl SqBoneTransform_ComputeTransform(int arg1, int arg2, float * arg3, float * arg4)
 {
-  int iVar1;
+  int i1;
   char xi_frame[140] __attribute__((aligned(4)));
-  float  (&local_8c)[19] = *reinterpret_cast<float  (*)[19]>(xi_frame + 0);
-  float  (&local_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 76);
+  float  (&f1)[19] = *reinterpret_cast<float  (*)[19]>(xi_frame + 0);
+  float  (&f2)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 76);
   
-  iVar1 = orig::SqskSkeleton_FindBoneIndex(param_1,param_2);
-  iVar1 = *(int *)(param_1 + 0x24) + iVar1 * 0x9c;
-  orig::SqMatrixConnect_Forward1027EBD0(local_8c + 3);
+  i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
+  i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
+  orig::SqMatrixConnect_Forward1027EBD0(f1 + 3);
   while( true ) {
-    orig::sqMatrix4_10280140_v1(local_40,(float *)(iVar1 + 0x1c),local_8c + 3);
-    orig::M4fSet_v1(local_8c + 3,local_40);
-    param_2 = *(int *)(param_2 + 0x68);
-    if (param_2 == 0) break;
-    iVar1 = orig::SqskSkeleton_FindBoneIndex(param_1,param_2);
-    iVar1 = *(int *)(param_1 + 0x24) + iVar1 * 0x9c;
+    orig::sqMatrix4_10280140_v1(f2,(float *)(i1 + 0x1c),f1 + 3);
+    orig::M4fSet_v1(f1 + 3,f2);
+    arg2 = *(int *)(arg2 + 0x68);
+    if (arg2 == 0) break;
+    i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
+    i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
   }
-  local_8c[0] = 0.0f;
-  local_8c[1] = 0.0f;
-  local_8c[2] = 0.0f;
-  orig::M4fTransform_v1(param_3,local_8c + 3,local_8c);
-  orig::FUN_1027a8a0(param_4,local_8c + 3);
+  f1[0] = 0.0f;
+  f1[1] = 0.0f;
+  f1[2] = 0.0f;
+  orig::M4fTransform_v1(arg3,f1 + 3,f1);
+  orig::game_1027A8A0(arg4,f1 + 3);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027CFD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBoneTransform_TransformPoint(int param_1, int param_2, float * param_3, float * param_4)
+XI_API void __cdecl SqBoneTransform_TransformPoint(int arg1, int arg2, float * arg3, float * arg4)
 {
-  int iVar1;
+  int i1;
   char xi_frame[128] __attribute__((aligned(4)));
-  float  (&local_80)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
-  float  (&local_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 64);
+  float  (&f1)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
+  float  (&f2)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 64);
   
-  iVar1 = orig::SqskSkeleton_FindBoneIndex(param_1,param_2);
-  iVar1 = *(int *)(param_1 + 0x24) + iVar1 * 0x9c;
-  orig::SqMatrixConnect_Forward1027EBD0(local_80);
+  i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
+  i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
+  orig::SqMatrixConnect_Forward1027EBD0(f1);
   while( true ) {
-    orig::sqMatrix4_10280140_v1(local_40,(float *)(iVar1 + 0x1c),local_80);
-    orig::M4fSet_v1(local_80,local_40);
-    param_2 = *(int *)(param_2 + 0x68);
-    if (param_2 == 0) break;
-    iVar1 = orig::SqskSkeleton_FindBoneIndex(param_1,param_2);
-    iVar1 = *(int *)(param_1 + 0x24) + iVar1 * 0x9c;
+    orig::sqMatrix4_10280140_v1(f2,(float *)(i1 + 0x1c),f1);
+    orig::M4fSet_v1(f1,f2);
+    arg2 = *(int *)(arg2 + 0x68);
+    if (arg2 == 0) break;
+    i1 = orig::SqskSkeleton_FindBoneIndex(arg1,arg2);
+    i1 = *(int *)(arg1 + 0x24) + i1 * 0x9c;
   }
-  orig::M4fTransform_v1(param_4,local_80,param_3);
+  orig::M4fTransform_v1(arg4,f1,arg3);
   return;
 }

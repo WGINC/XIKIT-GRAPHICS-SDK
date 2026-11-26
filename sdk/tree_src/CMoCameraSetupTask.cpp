@@ -7,31 +7,31 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint32_t __thiscall CMoCameraSetupTask::Slot8SetupCameraAfterOneTick(void * self)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(int *)((int)self + 0x34) == 0) {
     *(int *)((int)self + 0x34) = *(int *)((int)self + 0x34) + 1;
-    uVar1 = 0;
+    u1 = 0;
   }
   else {
-    uVar1 = *(int *)((int)self + 0x34) - 1;
-    if (uVar1 == 0) {
-      orig::FUN_10069ee0(g_pResourceMng_as_v0);
+    u1 = *(int *)((int)self + 0x34) - 1;
+    if (u1 == 0) {
+      orig::game_10069EE0(g_pResourceMng_as_v0);
       orig::CameraCache_CacheViewProjection(g_pMoCamera_as_v0);
-      uVar1 = orig::Camera_SetupMatrices(g_pResourceMng_as_v0,0,0,0,0);
-      return uVar1 & 0xffffff00;
+      u1 = orig::Camera_SetupMatrices(g_pResourceMng_as_v0,0,0,0,0);
+      return u1 & 0xffffff00;
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1006B4C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * __stdcall CMoCameraSetupTask::Slot1NopOnMessage6(_DWORD *a1)
+uint32_t * __stdcall CMoCameraSetupTask::Slot1NopOnMessage6(uint32_t *arg1)
 {
-  _DWORD *result;
-  result = a1;
-  if ( *a1 == 6 )
+  uint32_t *result;
+  result = arg1;
+  if ( *arg1 == 6 )
   {
     orig::MoDX_Nop(g_pResourceMng);
     return result;

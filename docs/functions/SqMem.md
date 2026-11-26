@@ -29,11 +29,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SqMem_InitBlock` calls nothing directly
 - `SqMem_ClassifyBlock` calls nothing directly
 - `SqMem_GetPayloadEnd` calls nothing directly
-- `SqMem_Check` calls `sqDebugPrintf`, `SqMem_ClassifyBlock`, `sub_102756A0`, `SqMem_GetPayloadEnd`
-- `SqMem_HexDump` calls `sub_102756A0`, `sqDebugPrintf`
+- `SqMem_Check` calls `sqDebugPrintf`, `SqMem_ClassifyBlock`, `game_102756A0`, `SqMem_GetPayloadEnd`
+- `SqMem_HexDump` calls `game_102756A0`, `sqDebugPrintf`
 - `SqMem_FindArena` calls nothing directly
-- `sqMemPoolRegister` calls `sqDebugPrintf`, `sub_10311FF1`
+- `sqMemPoolRegister` calls `sqDebugPrintf`, `game_10311FF1`
 - `SqMem_PrintPools` calls `sqDebugPrintf`
-- `SqMem_AllocZeroed` calls `sub_10275D80`
-- `SqMem_Realloc` calls `sub_10275D80`, `SqMem_FindArena`, `sqDebugPrintf`, `SqMem_ClassifyBlock`, `SqMem_Check`, `SqMem_HexDump`, `sub_102751D0`, `sqFree`
+- `SqMem_AllocZeroed` calls `game_10275D80`
+- `SqMem_Realloc` calls `game_10275D80`, `SqMem_FindArena`, `sqDebugPrintf`, `SqMem_ClassifyBlock`, `SqMem_Check`, `SqMem_HexDump`, `game_102751D0`, `sqFree`
 - `sqFree` calls `sqDebugPrintf`, `SqMem_ClassifyBlock`, `SqMem_HexDump`, `SqMem_FindArena`, `SqMem_GetPayloadEnd`

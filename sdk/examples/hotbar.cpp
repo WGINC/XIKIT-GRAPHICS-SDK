@@ -446,7 +446,7 @@ static void __thiscall my_Draw(void *mng) {
 }
 
 static xikit::fn<decltype(&Target_PickNearestToPoint)> prev_Pick;
-static undefined4 __thiscall my_Pick(void *self) {
+static bits32 __thiscall my_Pick(void *self) {
   int x, y;
   if (g_host->setting_int("hb_show", 1) && cursor(&x, &y) && over(x, y)) { *(reinterpret_cast<uint8_t *>(self) + 0x55) = 0; return 0; }
   return prev_Pick(self);
@@ -473,7 +473,7 @@ static void __thiscall my_Up(void *self) {
 // The game's macro, started: in hotbar mode, the hotbar's slot instead (see the first comment)
 static long g_macro_taken, g_macro_passed;
 static xikit::fn<decltype(&TextInputFiles_QueueEntry)> prev_Queue;
-static undefined4 __thiscall my_Queue(void *self, int n) {
+static bits32 __thiscall my_Queue(void *self, int n) {
   if (hb_mode() == 1 && n >= 0 && n < 20 && g_host->setting_int("hb_show", 1) && !g_hidden_by_cmd) {
     int b = n < 10 ? 1 : 2, i = n % 10;                       // palette 1 -> bar 2, palette 2 -> bar 3 (0-based 1, 2)
     if (g_cfg.bar[b].used && i < g_cfg.bar[b].slots && g_lay.a[g_env][b][i].used) {
@@ -496,7 +496,7 @@ static bool is_palette(const char *n) {
   return n && (!strncmp(n, "menu    mcr1pall", 16) || !strncmp(n, "menu    mcr2pall", 16)) && !n[16];
 }
 static xikit::fn<decltype(&MenuMng_OpenByName)> prev_Open;
-static int __thiscall my_Open(void *self, char *name, undefined4 a, undefined4 b) {
+static int __thiscall my_Open(void *self, char *name, bits32 a, bits32 b) {
   if (hb_mode() == 1 && is_palette(name)) { g_pal_refused++; return 0; }   // 0: what it returns when it opens nothing
   return prev_Open(self, name, a, b);
 }

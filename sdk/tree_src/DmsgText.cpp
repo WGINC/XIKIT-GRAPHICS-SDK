@@ -4,17 +4,17 @@
 
 // FUNCTION: FFXIMAIN 0x10253F60
 // GATE: PASS -- 100 trials, 100 returned normally, 624 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Gfx_DrawSpriteAlphaTested(void *self_, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+XI_API int __thiscall Gfx_DrawSpriteAlphaTested(void *self_, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10)
 {
   int result;
-  result = *((_DWORD *)self_ + 130);
+  result = *((uint32_t *)self_ + 130);
   if ( result != 0 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 16u);
-    orig::CYyIcon_DrawSubRect(*((void **)self_ + 130), a1, a2, a3, a4, a5, a6, a7, a8, a9);
+    orig::CYyIcon_DrawSubRect(*((void **)self_ + 130), arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAFUNC, D3DCMP_GREATER);
@@ -25,308 +25,308 @@ XI_API int __thiscall Gfx_DrawSpriteAlphaTested(void *self_, int a1, int a2, int
 
 // FUNCTION: FFXIMAIN 0x102572E0
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API undefined4 __cdecl DmsgText_InvertBytes(int param_1, int param_2, int param_3)
+XI_API bits32 __cdecl DmsgText_InvertBytes(int arg1, int arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = param_1 + -1;
-  if ((iVar1 == 0) && (iVar1 = 0, iVar2 = iVar1, 0 < param_3)) {
+  i1 = arg1 + -1;
+  if ((i1 == 0) && (i1 = 0, i2 = i1, 0 < arg3)) {
     do {
-      iVar1 = iVar2 + 1;
-      *(uint8_t *)(iVar2 + param_2) = ~*(uint8_t *)(iVar2 + param_2);
-      iVar2 = iVar1;
-    } while (iVar1 < param_3);
+      i1 = i2 + 1;
+      *(uint8_t *)(i2 + arg2) = ~*(uint8_t *)(i2 + arg2);
+      i2 = i1;
+    } while (i1 < arg3);
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102573C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl DmsgText_SwapEndianPair(uint32_t * param_1)
+XI_API void __cdecl DmsgText_SwapEndianPair(uint32_t * arg1)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::ByteSwap_ByteSwap32(*param_1);
-  *param_1 = (uint32_t)uVar1;
-  uVar1 = orig::ByteSwap_ByteSwap32(param_1[1]);
-  param_1[1] = (uint32_t)uVar1;
+  u1 = orig::ByteSwap_ByteSwap32(*arg1);
+  *arg1 = (uint32_t)u1;
+  u1 = orig::ByteSwap_ByteSwap32(arg1[1]);
+  arg1[1] = (uint32_t)u1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102574F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API short * __cdecl DmsgText_GetEntryPtr(uint16_t * param_1, uint32_t param_2)
+XI_API short * __cdecl DmsgText_GetEntryPtr(uint16_t * arg1, uint32_t arg2)
 {
-  if (param_1 == (uint16_t *)0x0) {
+  if (arg1 == (uint16_t *)0x0) {
     return (short *)0x0;
   }
-  if (*param_1 <= param_2) {
+  if (*arg1 <= arg2) {
     return (short *)0x0;
   }
-  if (*(int *)(param_1 + param_2 * 4 + 4) != 0) {
+  if (*(int *)(arg1 + arg2 * 4 + 4) != 0) {
     return (short *)0x0;
   }
-  if (*(short *)(*(int *)(param_1 + param_2 * 4 + 2) + (int)param_1) != 1) {
+  if (*(short *)(*(int *)(arg1 + arg2 * 4 + 2) + (int)arg1) != 1) {
     return (short *)0x0;
   }
-  return (short *)(*(int *)(param_1 + param_2 * 4 + 2) + (int)param_1) + 0xe;
+  return (short *)(*(int *)(arg1 + arg2 * 4 + 2) + (int)arg1) + 0xe;
 }
 
 // FUNCTION: FFXIMAIN 0x10257550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API short * __cdecl DmsgText_GetCellData(int param_1, int param_2, int param_3)
+XI_API short * __cdecl DmsgText_GetCellData(int arg1, int arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
-  short *psVar3;
+  int i1;
+  int i2;
+  short *p1;
   
-  iVar2 = *(int *)(param_1 + 0x20) * param_2;
-  iVar1 = iVar2 + 0x40 + param_1;
-  if ((int)(uint32_t)*(uint16_t *)(iVar2 + 0x40 + param_1) <= param_3) {
+  i2 = *(int *)(arg1 + 0x20) * arg2;
+  i1 = i2 + 0x40 + arg1;
+  if ((int)(uint32_t)*(uint16_t *)(i2 + 0x40 + arg1) <= arg3) {
     return (short *)0x0;
   }
-  if (*(int *)(iVar1 + 8 + param_3 * 8) != 0) {
+  if (*(int *)(i1 + 8 + arg3 * 8) != 0) {
     return (short *)0x0;
   }
-  psVar3 = (short *)(*(int *)(iVar1 + 4 + param_3 * 8) + iVar1);
-  if (*psVar3 != 1) {
+  p1 = (short *)(*(int *)(i1 + 4 + arg3 * 8) + i1);
+  if (*p1 != 1) {
     return (short *)0x0;
   }
-  return psVar3 + 0xe;
+  return p1 + 0xe;
 }
 
 // FUNCTION: FFXIMAIN 0x10257590
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl DmsgText_Align4(int param_1)
+XI_API int __cdecl DmsgText_Align4(int arg1)
 {
-  return ((int)(param_1 + 3 + (param_1 + 3 >> 0x1f & 3U)) >> 2) << 2;
+  return ((int)(arg1 + 3 + (arg1 + 3 >> 0x1f & 3U)) >> 2) << 2;
 }
 
 // FUNCTION: FFXIMAIN 0x102575B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsNotHashOrDot(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsNotHashOrDot(char * arg1)
 {
-  char cVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  char c1;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar2 = 0;
-  if (param_1 != (char *)0x0) {
-    cVar1 = *param_1;
-    uVar3 = (uint32_t)((uint32_t)param_1 >> 8);
-    uVar2 = ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(cVar1)));
-    if ((cVar1 != '#') && (cVar1 != '.')) {
-      return ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(1)));
+  u1 = 0;
+  if (arg1 != (char *)0x0) {
+    c1 = *arg1;
+    u2 = (uint32_t)((uint32_t)arg1 >> 8);
+    u1 = ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(c1)));
+    if ((c1 != '#') && (c1 != '.')) {
+      return ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar2 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x102575D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_GetWord40(int param_1)
+XI_API bits32 __cdecl DmsgText_GetWord40(int arg1)
 {
-  return (uint32_t)*(uint16_t *)(param_1 + 0x40);
+  return (uint32_t)*(uint16_t *)(arg1 + 0x40);
 }
 
 // FUNCTION: FFXIMAIN 0x102575E0
 // GATE: PASS -- 100 trials, 29 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 29
-XI_API int __cdecl DmsgText_ComputeTotalSize(int param_1)
+XI_API int __cdecl DmsgText_ComputeTotalSize(int arg1)
 {
-  uint32_t uVar1;
-  short sVar2;
-  int iVar3;
-  short *psVar4;
-  uint32_t uVar5;
-  int iVar6;
-  uint32_t uVar7;
-  int iVar8;
-  uint32_t uVar9;
-  int iVar10;
+  uint32_t u1;
+  short i1;
+  int i2;
+  short *p1;
+  uint32_t u2;
+  int i3;
+  uint32_t u3;
+  int i4;
+  uint32_t u4;
+  int i5;
   
-  iVar8 = 0x40;
-  iVar3 = orig::DmsgText_GetWord40(param_1);
-  uVar1 = *(uint32_t *)(param_1 + 0x28);
-  uVar9 = 0;
-  if (uVar1 != 0) {
+  i4 = 0x40;
+  i2 = orig::DmsgText_GetWord40(arg1);
+  u1 = *(uint32_t *)(arg1 + 0x28);
+  u4 = 0;
+  if (u1 != 0) {
     do {
-      iVar10 = 0;
-      if (0 < iVar3) {
+      i5 = 0;
+      if (0 < i2) {
         do {
-          iVar8 = iVar8 + 8;
-          psVar4 = orig::DmsgText_GetCellData(param_1,uVar9,iVar10);
-          uVar5 = orig::DmsgText_IsNotHashOrDot((char *)psVar4);
-          if ((char)uVar5 != '\0') {
-            uVar7 = 0xffffffff;
+          i4 = i4 + 8;
+          p1 = orig::DmsgText_GetCellData(arg1,u4,i5);
+          u2 = orig::DmsgText_IsNotHashOrDot((char *)p1);
+          if ((char)u2 != '\0') {
+            u3 = 0xffffffff;
             do {
-              if (uVar7 == 0) break;
-              uVar7 = uVar7 - 1;
-              sVar2 = *psVar4;
-              psVar4 = (short *)((int)psVar4 + 1);
-            } while ((char)sVar2 != '\0');
-            iVar6 = orig::DmsgText_Align4(~uVar7);
-            iVar8 = iVar8 + iVar6;
+              if (u3 == 0) break;
+              u3 = u3 - 1;
+              i1 = *p1;
+              p1 = (short *)((int)p1 + 1);
+            } while ((char)i1 != '\0');
+            i3 = orig::DmsgText_Align4(~u3);
+            i4 = i4 + i3;
           }
-          iVar10 = iVar10 + 1;
-        } while (iVar10 < iVar3);
+          i5 = i5 + 1;
+        } while (i5 < i2);
       }
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < uVar1);
+      u4 = u4 + 1;
+    } while (u4 < u1);
   }
-  return iVar8;
+  return i4;
 }
 
 // FUNCTION: FFXIMAIN 0x10257670
 // GATE: PASS -- 100 trials, 65 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 65
-XI_API undefined4 * __cdecl DmsgText_Clone(undefined4 * param_1, uint32_t * param_2)
+XI_API bits32 * __cdecl DmsgText_Clone(bits32 * arg1, uint32_t * arg2)
 {
-  int *piVar1;
-  uint32_t uVar2;
-  undefined4 *puVar3;
-  int *piVar4;
-  undefined4 uVar5;
-  int iVar6;
-  uint32_t uVar7;
-  int *piVar8;
-  int *piVar9;
-  undefined4 *puVar10;
-  int *piVar11;
-  undefined4 *puVar12;
-  int *piVar13;
-  uint64_t uVar14;
-  uint32_t local_8;
+  int *p1;
+  uint32_t u1;
+  bits32 *p2;
+  int *p3;
+  bits32 u2;
+  int i1;
+  uint32_t u3;
+  int *p4;
+  int *p5;
+  bits32 *p6;
+  int *p7;
+  bits32 *p8;
+  int *p9;
+  uint64_t u4;
+  uint32_t u5;
   
-  uVar2 = orig::DmsgText_ComputeTotalSize((int)param_1);
-  *param_2 = uVar2;
-  if ((int)uVar2 < 1) {
-    *param_2 = 0;
-    return (undefined4 *)0x0;
+  u1 = orig::DmsgText_ComputeTotalSize((int)arg1);
+  *arg2 = u1;
+  if ((int)u1 < 1) {
+    *arg2 = 0;
+    return (bits32 *)0x0;
   }
-  uVar14 = orig::Allocator_Generic_v1(uVar2);
-  puVar3 = (undefined4 *)uVar14;
-  puVar10 = param_1;
-  puVar12 = puVar3;
-  for (iVar6 = 0x10; iVar6 != 0; iVar6 = iVar6 + -1) {
-    *puVar12 = *puVar10;
-    puVar10 = puVar10 + 1;
-    puVar12 = puVar12 + 1;
+  u4 = orig::Allocator_Generic_v1(u1);
+  p2 = (bits32 *)u4;
+  p6 = arg1;
+  p8 = p2;
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p8 = *p6;
+    p6 = p6 + 1;
+    p8 = p8 + 1;
   }
-  *(uint16_t *)(puVar3 + 2) = 0x10;
-  uVar2 = orig::DmsgText_GetWord40((int)param_1);
-  *(short *)((int)puVar3 + 0x3e) = (short)uVar2;
-  piVar1 =(int*)(puVar3 + 0x10);
-  piVar8 = piVar1 + (uVar2 & 0xffff) * puVar3[10] * 2;
-  local_8 = 0;
-  piVar9 = piVar1;
-  if (puVar3[10] != 0) {
+  *(uint16_t *)(p2 + 2) = 0x10;
+  u1 = orig::DmsgText_GetWord40((int)arg1);
+  *(short *)((int)p2 + 0x3e) = (short)u1;
+  p1 =(int*)(p2 + 0x10);
+  p4 = p1 + (u1 & 0xffff) * p2[10] * 2;
+  u5 = 0;
+  p5 = p1;
+  if (p2[10] != 0) {
     do {
-      param_2 = (uint32_t *)0x0;
-      if (*(short *)((int)puVar3 + 0x3e) != 0) {
+      arg2 = (uint32_t *)0x0;
+      if (*(short *)((int)p2 + 0x3e) != 0) {
         do {
-          piVar4 = (int *)orig::DmsgText_GetCellData((int)param_1,local_8,(int)param_2);
-          uVar5 = orig::DmsgText_IsNotHashOrDot((char *)piVar4);
-          if ((char)uVar5 == '\0') {
-            *piVar9 = 0;
-            piVar9[1] = 0;
+          p3 = (int *)orig::DmsgText_GetCellData((int)arg1,u5,(int)arg2);
+          u2 = orig::DmsgText_IsNotHashOrDot((char *)p3);
+          if ((char)u2 == '\0') {
+            *p5 = 0;
+            p5[1] = 0;
           }
           else {
-            uVar2 = 0xffffffff;
-            piVar11 = piVar4;
+            u1 = 0xffffffff;
+            p7 = p3;
             do {
-              if (uVar2 == 0) break;
-              uVar2 = uVar2 - 1;
-              iVar6 = *piVar11;
-              piVar11 = (int *)((int)piVar11 + 1);
-            } while ((char)iVar6 != '\0');
-            piVar11 = piVar4;
-            piVar13 = piVar8;
-            for (uVar7 = ~uVar2 - 1 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-              *piVar13 = *piVar11;
-              piVar11 = piVar11 + 1;
-              piVar13 = piVar13 + 1;
+              if (u1 == 0) break;
+              u1 = u1 - 1;
+              i1 = *p7;
+              p7 = (int *)((int)p7 + 1);
+            } while ((char)i1 != '\0');
+            p7 = p3;
+            p9 = p4;
+            for (u3 = ~u1 - 1 >> 2; u3 != 0; u3 = u3 - 1) {
+              *p9 = *p7;
+              p7 = p7 + 1;
+              p9 = p9 + 1;
             }
-            for (uVar2 = ~uVar2 - 1 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-              *(char *)piVar13 = (char)*piVar11;
-              piVar11 = (int *)((int)piVar11 + 1);
-              piVar13 = (int *)((int)piVar13 + 1);
+            for (u1 = ~u1 - 1 & 3; u1 != 0; u1 = u1 - 1) {
+              *(char *)p9 = (char)*p7;
+              p7 = (int *)((int)p7 + 1);
+              p9 = (int *)((int)p9 + 1);
             }
-            uVar2 = 0xffffffff;
-            piVar11 = piVar4;
+            u1 = 0xffffffff;
+            p7 = p3;
             do {
-              if (uVar2 == 0) break;
-              uVar2 = uVar2 - 1;
-              iVar6 = *piVar11;
-              piVar11 = (int *)((int)piVar11 + 1);
-            } while ((char)iVar6 != '\0');
-            *(uint8_t *)((~uVar2 - 1) + (int)piVar8) = 0;
-            *piVar9 = (int)piVar8 - (int)piVar1;
-            uVar2 = 0xffffffff;
-            piVar11 = piVar4;
+              if (u1 == 0) break;
+              u1 = u1 - 1;
+              i1 = *p7;
+              p7 = (int *)((int)p7 + 1);
+            } while ((char)i1 != '\0');
+            *(uint8_t *)((~u1 - 1) + (int)p4) = 0;
+            *p5 = (int)p4 - (int)p1;
+            u1 = 0xffffffff;
+            p7 = p3;
             do {
-              if (uVar2 == 0) break;
-              uVar2 = uVar2 - 1;
-              iVar6 = *piVar11;
-              piVar11 = (int *)((int)piVar11 + 1);
-            } while ((char)iVar6 != '\0');
-            piVar9[1] = ~uVar2 - 1;
-            uVar2 = 0xffffffff;
+              if (u1 == 0) break;
+              u1 = u1 - 1;
+              i1 = *p7;
+              p7 = (int *)((int)p7 + 1);
+            } while ((char)i1 != '\0');
+            p5[1] = ~u1 - 1;
+            u1 = 0xffffffff;
             do {
-              if (uVar2 == 0) break;
-              uVar2 = uVar2 - 1;
-              iVar6 = *piVar4;
-              piVar4 = (int *)((int)piVar4 + 1);
-            } while ((char)iVar6 != '\0');
-            iVar6 = orig::DmsgText_Align4(~uVar2);
-            piVar8 = (int *)((int)piVar8 + iVar6);
+              if (u1 == 0) break;
+              u1 = u1 - 1;
+              i1 = *p3;
+              p3 = (int *)((int)p3 + 1);
+            } while ((char)i1 != '\0');
+            i1 = orig::DmsgText_Align4(~u1);
+            p4 = (int *)((int)p4 + i1);
           }
-          piVar9 = piVar9 + 2;
-          param_2 = (uint32_t *)((int)param_2 + 1);
-        } while ((int)param_2 < (int)(uint32_t)*(uint16_t *)((int)puVar3 + 0x3e));
+          p5 = p5 + 2;
+          arg2 = (uint32_t *)((int)arg2 + 1);
+        } while ((int)arg2 < (int)(uint32_t)*(uint16_t *)((int)p2 + 0x3e));
       }
-      local_8 = local_8 + 1;
-    } while (local_8 < (uint32_t)puVar3[10]);
+      u5 = u5 + 1;
+    } while (u5 < (uint32_t)p2[10]);
   }
-  return puVar3;
+  return p2;
 }
 
 // FUNCTION: FFXIMAIN 0x102577C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetDataOrDefault(int param_1, int param_2, int param_3, uint32_t param_4)
+XI_API uint8_t * __cdecl DmsgText_GetDataOrDefault(int arg1, int arg2, int arg3, uint32_t arg4)
 {
-  int iVar1;
+  int i1;
   
-  if (param_1 == 0) {
-    return PTR_Read_10389dac;
+  if (arg1 == 0) {
+    return ptr_to_Read_10389DAC;
   }
-  iVar1 = (param_4 & 0xffff) * param_2 + param_3;
-  if (*(int *)(param_1 + 4 + iVar1 * 8) == 0) {
-    return PTR_Read_10389dac;
+  i1 = (arg4 & 0xffff) * arg2 + arg3;
+  if (*(int *)(arg1 + 4 + i1 * 8) == 0) {
+    return ptr_to_Read_10389DAC;
   }
-  return (uint8_t *)(*(int *)(param_1 + iVar1 * 8) + param_1);
+  return (uint8_t *)(*(int *)(arg1 + i1 * 8) + arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x10257800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_GetDwordEntry(uint16_t * param_1, uint32_t param_2)
+XI_API bits32 __cdecl DmsgText_GetDwordEntry(uint16_t * arg1, uint32_t arg2)
 {
-  if (param_1 == (uint16_t *)0x0) {
+  if (arg1 == (uint16_t *)0x0) {
     return 0;
   }
-  if (*param_1 <= param_2) {
+  if (*arg1 <= arg2) {
     return 0;
   }
-  if (*(int *)(param_1 + param_2 * 4 + 4) != 1) {
+  if (*(int *)(arg1 + arg2 * 4 + 4) != 1) {
     return 0;
   }
-  return *(uint32_t *)((int)param_1 + *(int *)(param_1 + param_2 * 4 + 2));
+  return *(uint32_t *)((int)arg1 + *(int *)(arg1 + arg2 * 4 + 2));
 }
 
 // FUNCTION: FFXIMAIN 0x10257830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __cdecl DmsgText_GetDMsgTable(void)
 {
-  return &DAT_1033ce74;
+  return &g_1033CE74;
 }
 
 // FUNCTION: FFXIMAIN 0x10257840
@@ -349,156 +349,156 @@ XI_API void __thiscall DmsgText_FreeData(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10257870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall DmsgText_GetRowBase(void * self_, uint32_t param_1)
+XI_API int __thiscall DmsgText_GetRowBase(void * self_, uint32_t arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self_ + 4);
-  if (*(uint32_t *)(iVar1 + 0x28) <= param_1) {
+  i1 = *(int *)((int)self_ + 4);
+  if (*(uint32_t *)(i1 + 0x28) <= arg2) {
     return 0;
   }
-  if (*(int *)(iVar1 + 0x1c) != 0) {
-    return *(int *)(*(int *)((int)self_ + 8) + param_1 * 8) + *(int *)((int)self_ + 0xc);
+  if (*(int *)(i1 + 0x1c) != 0) {
+    return *(int *)(*(int *)((int)self_ + 8) + arg2 * 8) + *(int *)((int)self_ + 0xc);
   }
-  return *(int *)(iVar1 + 0x20) * param_1 + *(int *)((int)self_ + 0xc);
+  return *(int *)(i1 + 0x20) * arg2 + *(int *)((int)self_ + 0xc);
 }
 
 // FUNCTION: FFXIMAIN 0x102578B0
 // GATE: PASS -- 100 trials, 92 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 92
-XI_API short * __thiscall DmsgText_GetCell(void * self_, uint32_t param_1, uint32_t param_2)
+XI_API short * __thiscall DmsgText_GetCell(void * self_, uint32_t arg2, uint32_t arg3)
 {
-  int iVar1;
-  short *psVar2;
-  uint16_t *puVar3;
+  int i1;
+  short *p1;
+  uint16_t *p2;
   
-  iVar1 = *(int *)((int)self_ + 4);
-  if (*(uint32_t *)(iVar1 + 0x28) <= param_1) {
+  i1 = *(int *)((int)self_ + 4);
+  if (*(uint32_t *)(i1 + 0x28) <= arg2) {
     return (short *)0x0;
   }
-  if (*(short *)(iVar1 + 8) == 0x10) {
-    psVar2 = (short *)orig::DmsgText_GetDataOrDefault(*(int *)((int)self_ + 0xc),param_1,param_2,
-                                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(iVar1 + 0x3e)))));
-    return psVar2;
+  if (*(short *)(i1 + 8) == 0x10) {
+    p1 = (short *)orig::DmsgText_GetDataOrDefault(*(int *)((int)self_ + 0xc),arg2,arg3,
+                                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(i1 + 0x3e)))));
+    return p1;
   }
-  puVar3 = (uint16_t *)orig::DmsgText_GetRowBase(self_,param_1);
-  psVar2 = orig::DmsgText_GetEntryPtr(puVar3,param_2);
-  return psVar2;
+  p2 = (uint16_t *)orig::DmsgText_GetRowBase(self_,arg2);
+  p1 = orig::DmsgText_GetEntryPtr(p2,arg3);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10257920
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API undefined4 __thiscall DmsgText_GetDwordCell(void * self_, uint32_t param_1, uint32_t param_2)
+XI_API bits32 __thiscall DmsgText_GetDwordCell(void * self_, uint32_t arg2, uint32_t arg3)
 {
-  uint16_t *puVar1;
-  uint32_t uVar2;
+  uint16_t *p1;
+  uint32_t u1;
   
-  if (*(uint32_t *)(*(int *)((int)self_ + 4) + 0x28) <= param_1) {
+  if (*(uint32_t *)(*(int *)((int)self_ + 4) + 0x28) <= arg2) {
     return 0;
   }
-  puVar1 = (uint16_t *)orig::DmsgText_GetRowBase(self_,param_1);
-  uVar2 = orig::DmsgText_GetDwordEntry(puVar1,param_2);
-  return uVar2;
+  p1 = (uint16_t *)orig::DmsgText_GetRowBase(self_,arg2);
+  u1 = orig::DmsgText_GetDwordEntry(p1,arg3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10257950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetCellCol0(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall DmsgText_GetCellCol0(void * self_, bits32 arg2)
 {
-  short *psVar1;
+  short *p1;
   
-  psVar1 = orig::DmsgText_GetCell(self_,param_1,0);
-  return psVar1;
+  p1 = orig::DmsgText_GetCell(self_,arg2,0);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10257980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_Assign(void * self_, uint8_t * param_1, undefined4 param_2)
+XI_API bits32 __thiscall DmsgText_Assign(void * self_, uint8_t * arg2, bits32 arg3)
 {
-  orig::DmsgText_Bind(self_,param_1,param_2);
+  orig::DmsgText_Bind(self_,arg2,arg3);
   if (*(int *)((int)self_ + 4) != 0) {
-    *(uint8_t **)self_ = param_1;
+    *(uint8_t **)self_ = arg2;
   }
   return *(int *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x102579B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_Bind(void * self_, uint8_t * param_1, undefined4 xi_s2)
+XI_API void __thiscall DmsgText_Bind(void * self_, uint8_t * arg2, bits32 xi_s2)
 {
-  uint8_t bVar1;
-  uint16_t uVar2;
-  uint8_t *pbVar3;
-  int iVar4;
+  uint8_t u1;
+  uint16_t u2;
+  uint8_t *p1;
+  int i1;
   uint32_t xi_eax;
-  uint32_t uVar5;
-  uint8_t *pbVar6;
-  int iVar7;
-  uint16_t *puVar8;
-  uint8_t bVar9;
+  uint32_t u3;
+  uint8_t *p2;
+  int i2;
+  uint16_t *p3;
+  uint8_t u4;
   
-  pbVar6 = &DAT_1033ce74;
-  pbVar3 = param_1;
+  p2 = &g_1033CE74;
+  p1 = arg2;
   do {
-    bVar1 = *pbVar3;
-    bVar9 = bVar1 < *pbVar6;
-    if (bVar1 != *pbVar6) {
-LAB_102579e9:
-      iVar4 = (1 - (uint32_t)bVar9) - (uint32_t)(bVar9 != 0);
-      goto LAB_102579ee;
+    u1 = *p1;
+    u4 = u1 < *p2;
+    if (u1 != *p2) {
+code_102579E9:
+      i1 = (1 - (uint32_t)u4) - (uint32_t)(u4 != 0);
+      goto code_102579EE;
     }
-    if (bVar1 == 0) break;
-    bVar1 = pbVar3[1];
-    bVar9 = bVar1 < pbVar6[1];
-    if (bVar1 != pbVar6[1]) goto LAB_102579e9;
-    pbVar3 = pbVar3 + 2;
-    pbVar6 = pbVar6 + 2;
-  } while (bVar1 != 0);
-  iVar4 = 0;
-LAB_102579ee:
-  uVar5 = 0;
-  if (iVar4 == 0) {
-    *(uint8_t **)((int)self_ + 4) = param_1;
-    uVar2 = *(uint16_t *)(param_1 + 8);
-    if (uVar2 == 0x10) {
-      *(uint8_t **)((int)self_ + 0xc) = param_1 + 0x40;
+    if (u1 == 0) break;
+    u1 = p1[1];
+    u4 = u1 < p2[1];
+    if (u1 != p2[1]) goto code_102579E9;
+    p1 = p1 + 2;
+    p2 = p2 + 2;
+  } while (u1 != 0);
+  i1 = 0;
+code_102579EE:
+  u3 = 0;
+  if (i1 == 0) {
+    *(uint8_t **)((int)self_ + 4) = arg2;
+    u2 = *(uint16_t *)(arg2 + 8);
+    if (u2 == 0x10) {
+      *(uint8_t **)((int)self_ + 0xc) = arg2 + 0x40;
       return;
     }
-    if (uVar2 != 1) {
-      orig::FUN_10257310((int)param_1,(uint32_t)uVar2);
+    if (u2 != 1) {
+      orig::game_10257310((int)arg2,(uint32_t)u2);
     }
-    iVar4 = *(int *)((int)self_ + 4);
-    if ((*(short *)(iVar4 + 0xc) == 3) && (*(short *)(iVar4 + 0xe) == 0)) {
-      if (*(int *)(iVar4 + 0x1c) == 0) {
-        *(int *)((int)self_ + 0xc) = iVar4 + 0x40;
+    i1 = *(int *)((int)self_ + 4);
+    if ((*(short *)(i1 + 0xc) == 3) && (*(short *)(i1 + 0xe) == 0)) {
+      if (*(int *)(i1 + 0x1c) == 0) {
+        *(int *)((int)self_ + 0xc) = i1 + 0x40;
       }
       else {
-        iVar7 = iVar4 + 0x40;
-        *(int *)((int)self_ + 8) = iVar7;
-        *(int *)((int)self_ + 0xc) = iVar7 + *(int *)(iVar4 + 0x28) * 8;
-        orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(iVar4 + 10),iVar7,*(int *)(iVar4 + 0x28) << 3);
+        i2 = i1 + 0x40;
+        *(int *)((int)self_ + 8) = i2;
+        *(int *)((int)self_ + 0xc) = i2 + *(int *)(i1 + 0x28) * 8;
+        orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(i1 + 10),i2,*(int *)(i1 + 0x28) << 3);
       }
-      iVar4 = *(int *)((int)self_ + 4);
-      if (*(int *)(iVar4 + 0x28) != 0) {
+      i1 = *(int *)((int)self_ + 4);
+      if (*(int *)(i1 + 0x28) != 0) {
         do {
-          if (*(int *)(iVar4 + 0x1c) == 0) {
-            iVar4 = *(int *)(iVar4 + 0x20);
-            iVar7 = iVar4 * uVar5;
+          if (*(int *)(i1 + 0x1c) == 0) {
+            i1 = *(int *)(i1 + 0x20);
+            i2 = i1 * u3;
           }
           else {
-            if (*(short *)(iVar4 + 8) != 1) {
-              orig::DmsgText_SwapEndianPair((uint32_t *)(*(int *)((int)self_ + 8) + uVar5 * 8));
+            if (*(short *)(i1 + 8) != 1) {
+              orig::DmsgText_SwapEndianPair((uint32_t *)(*(int *)((int)self_ + 8) + u3 * 8));
             }
-            iVar4 = *(int *)(*(int *)((int)self_ + 8) + 4 + uVar5 * 8);
-            iVar7 = *(int *)(*(int *)((int)self_ + 8) + uVar5 * 8);
+            i1 = *(int *)(*(int *)((int)self_ + 8) + 4 + u3 * 8);
+            i2 = *(int *)(*(int *)((int)self_ + 8) + u3 * 8);
           }
-          puVar8 = (uint16_t *)(iVar7 + *(int *)((int)self_ + 0xc));
-          xi_eax = orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(*(int *)((int)self_ + 4) + 10),(int)puVar8,iVar4);
+          p3 = (uint16_t *)(i2 + *(int *)((int)self_ + 0xc));
+          xi_eax = orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(*(int *)((int)self_ + 4) + 10),(int)p3,i1);
           if (*(short *)(*(int *)((int)self_ + 4) + 8) != 1) {
-            orig::FUN_102573e0(puVar8,xi_eax);
+            orig::game_102573E0(p3,xi_eax);
           }
-          iVar4 = *(int *)((int)self_ + 4);
-          uVar5 = uVar5 + 1;
-        } while (uVar5 < *(uint32_t *)(iVar4 + 0x28));
+          i1 = *(int *)((int)self_ + 4);
+          u3 = u3 + 1;
+        } while (u3 < *(uint32_t *)(i1 + 0x28));
         return;
       }
     }
@@ -511,14 +511,14 @@ LAB_102579ee:
 
 // FUNCTION: FFXIMAIN 0x10257AF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetRowCount(void * self_)
+XI_API bits32 __thiscall DmsgText_GetRowCount(void * self_)
 {
   return *(uint32_t *)(*(int *)((int)self_ + 4) + 0x28);
 }
 
 // FUNCTION: FFXIMAIN 0x10257B10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_IsBound(void * self_)
+XI_API bits32 __thiscall DmsgText_IsBound(void * self_)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)*(int *)((int)self_ + 4) >> 8))) << 8) | (uint8_t)(*(int *)((int)self_ + 4) != 0)));
 }
@@ -536,11 +536,11 @@ XI_API void __thiscall DmsgText_Clear(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10257BA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_BindSource(void * self_, int param_1, undefined4 xi_s2)
+XI_API void __thiscall DmsgText_BindSource(void * self_, int arg2, bits32 xi_s2)
 {
-  *(int *)((int)self_ + 4) = param_1;
-  if (*(short *)(param_1 + 8) != 1) {
-    orig::FUN_10257310(param_1,param_1);
+  *(int *)((int)self_ + 4) = arg2;
+  if (*(short *)(arg2 + 8) != 1) {
+    orig::game_10257310(arg2,arg2);
   }
   return;
 }
@@ -554,81 +554,81 @@ XI_API int __thiscall DmsgText_GetRowBytes(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10257BD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_BindDataAndMark(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_BindDataAndMark(void * self_, bits32 arg2)
 {
-  orig::DmsgText_BindData(self_,param_1);
+  orig::DmsgText_BindData(self_,arg2);
   *(uint8_t *)((int)self_ + 8) = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10257BF0
 // GATE: PASS -- 100 trials, 38 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 38
-XI_API void __thiscall DmsgText_BindData(void * self_, int param_1)
+XI_API void __thiscall DmsgText_BindData(void * self_, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  *(int *)((int)self_ + 0xc) = param_1;
-  orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(*(int *)((int)self_ + 4) + 10),param_1,
+  *(int *)((int)self_ + 0xc) = arg2;
+  orig::DmsgText_InvertBytes((uint32_t)*(uint16_t *)(*(int *)((int)self_ + 4) + 10),arg2,
                *(int *)(*(int *)((int)self_ + 4) + 0x28) << 3);
-  iVar1 = *(int *)((int)self_ + 4);
-  if ((*(short *)(iVar1 + 8) != 1) && (uVar2 = 0, *(int *)(iVar1 + 0x28) != 0)) {
+  i1 = *(int *)((int)self_ + 4);
+  if ((*(short *)(i1 + 8) != 1) && (u1 = 0, *(int *)(i1 + 0x28) != 0)) {
     do {
-      if (*(int *)(iVar1 + 0x1c) != 0) {
-        orig::DmsgText_SwapEndianPair((uint32_t *)(*(int *)((int)self_ + 0xc) + uVar2 * 8));
+      if (*(int *)(i1 + 0x1c) != 0) {
+        orig::DmsgText_SwapEndianPair((uint32_t *)(*(int *)((int)self_ + 0xc) + u1 * 8));
       }
-      iVar1 = *(int *)((int)self_ + 4);
-      uVar2 = uVar2 + 1;
-    } while (uVar2 < *(uint32_t *)(iVar1 + 0x28));
+      i1 = *(int *)((int)self_ + 4);
+      u1 = u1 + 1;
+    } while (u1 < *(uint32_t *)(i1 + 0x28));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10257C60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetDataField28(void * self_)
+XI_API bits32 __thiscall DmsgText_GetDataField28(void * self_)
 {
   return *(uint32_t *)(*(int *)((int)self_ + 4) + 0x28);
 }
 
 // FUNCTION: FFXIMAIN 0x10257C70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetStride(void * self_)
+XI_API bits32 __thiscall DmsgText_GetStride(void * self_)
 {
   return *(uint32_t *)(*(int *)((int)self_ + 4) + 0x20);
 }
 
 // FUNCTION: FFXIMAIN 0x10257C80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetRowInfo(void * self_, int * param_1, int param_2)
+XI_API bits32 __thiscall DmsgText_GetRowInfo(void * self_, int * arg2, int arg3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self_ + 4);
-  if (*(int *)(iVar1 + 0x20) != 0) {
-    *param_1 = *(int *)(iVar1 + 0x20) * param_2 + 0x40;
+  i1 = *(int *)((int)self_ + 4);
+  if (*(int *)(i1 + 0x20) != 0) {
+    *arg2 = *(int *)(i1 + 0x20) * arg3 + 0x40;
     return *(uint32_t *)(*(int *)((int)self_ + 4) + 0x20);
   }
   if (*(int *)((int)self_ + 0xc) == 0) {
     return 0xffffffff;
   }
-  *param_1 = *(int *)(*(int *)((int)self_ + 0xc) + param_2 * 8) + *(int *)(iVar1 + 0x1c) +
-             *(int *)(iVar1 + 0x18);
-  return *(uint32_t *)(*(int *)((int)self_ + 0xc) + 4 + param_2 * 8);
+  *arg2 = *(int *)(*(int *)((int)self_ + 0xc) + arg3 * 8) + *(int *)(i1 + 0x1c) +
+             *(int *)(i1 + 0x18);
+  return *(uint32_t *)(*(int *)((int)self_ + 0xc) + 4 + arg3 * 8);
 }
 
 // FUNCTION: FFXIMAIN 0x10257FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsTypeOne(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsTypeOne(char * arg1)
 {
-  return (uint32_t)(*param_1 == '\x01');
+  return (uint32_t)(*arg1 == '\x01');
 }
 
 // FUNCTION: FFXIMAIN 0x10257FF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsTypeRange(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsTypeRange(char * arg1)
 {
-  if (('\x01' < *param_1) && (*param_1 < '\x10')) {
+  if (('\x01' < *arg1) && (*arg1 < '\x10')) {
     return 1;
   }
   return 0;
@@ -636,217 +636,217 @@ XI_API undefined4 __cdecl DmsgText_IsTypeRange(char * param_1)
 
 // FUNCTION: FFXIMAIN 0x10258040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint16_t * __cdecl DmsgText_GetFormString(int param_1, int param_2, int param_3)
+XI_API uint16_t * __cdecl DmsgText_GetFormString(int arg1, int arg2, int arg3)
 {
-  if (param_2 != 0) {
-    if ((param_3 != 0) && (param_3 == 1)) {
-      switch(xi_sw(param_1)) {
+  if (arg2 != 0) {
+    if ((arg3 != 0) && (arg3 == 1)) {
+      switch(xi_sw(arg1)) {
       default:
         break;
       case 2:
-        goto switchD_102580dc_caseD_2;
+        goto L1;
       }
     }
-    goto switchD_10258059_caseD_1;
+    goto L2;
   }
-  switch(xi_sw(param_3)) {
+  switch(xi_sw(arg3)) {
   case 0:
-    if (param_1 == 1) {
-      return (uint16_t *)&DAT_1037ab30;
+    if (arg1 == 1) {
+      return (uint16_t *)&g_1037AB30;
     }
     break;
   case 2:
-    if (param_1 == 1) {
-      return (uint16_t *)&DAT_1034f7b0;
+    if (arg1 == 1) {
+      return (uint16_t *)&g_1034F7B0;
     }
     break;
   case 3:
-    goto switchD_10258097_switchD;
+    goto L3;
   case 4:
-    if (param_1 != 0) {
-switchD_102580ba_caseD_2:
-      return (uint16_t *)&DAT_10389eb0;
+    if (arg1 != 0) {
+L4:
+      return (uint16_t *)&g_10389EB0;
     }
-    goto switchD_10258097_switchD;
+    goto L3;
   case 5:
-    switch(xi_sw(param_1)) {
+    switch(xi_sw(arg1)) {
     case 1:
-      return (uint16_t *)&DAT_10389eb4;
+      return (uint16_t *)&g_10389EB4;
     case 2:
-      goto switchD_102580ba_caseD_2;
+      goto L4;
     }
     break;
   case 6:
-    if (param_1 != 0) {
-      return &DAT_1034f7b4;
+    if (arg1 != 0) {
+      return &g_1034F7B4;
     }
-switchD_10258097_switchD:
-    switch(xi_sw(param_1)) {
+L3:
+    switch(xi_sw(arg1)) {
     case 1:
-      return (uint16_t *)&DAT_10389ebc;
+      return (uint16_t *)&g_10389EBC;
     case 2:
     case 3:
-switchD_102580dc_caseD_2:
-      return &DAT_1034f7b4;
+L1:
+      return &g_1034F7B4;
     }
     break;
   case 7:
-    if (param_1 == 1) {
-      return (uint16_t *)&DAT_10389eb8;
+    if (arg1 == 1) {
+      return (uint16_t *)&g_10389EB8;
     }
   }
-switchD_10258059_caseD_1:
+L2:
   return (uint16_t *)&Read_as_v0;
 }
 
 // FUNCTION: FFXIMAIN 0x10258150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_PickFormString(int param_1, int param_2, int param_3, int param_4, int param_5)
+XI_API uint8_t * __cdecl DmsgText_PickFormString(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
-  uint8_t **ppuVar1;
+  uint8_t **p1;
   
-  if (param_1 == -1) {
-    if ((param_5 == 0) || (ppuVar1 = &PTR_DAT_10389df0, param_4 != 0)) {
-      ppuVar1 = &PTR_DAT_10389db0;
+  if (arg1 == -1) {
+    if ((arg5 == 0) || (p1 = &g_10389DF0, arg4 != 0)) {
+      p1 = &g_10389DB0;
     }
   }
-  else if (param_1 == 0) {
-    ppuVar1 = &PTR_DAT_10389e30;
+  else if (arg1 == 0) {
+    p1 = &g_10389E30;
   }
   else {
-    ppuVar1 = &PTR_DAT_10389e70;
+    p1 = &g_10389E70;
   }
-  if (param_3 != 0) {
-    return ppuVar1[param_2 * 4 + 3];
+  if (arg3 != 0) {
+    return p1[arg2 * 4 + 3];
   }
-  if (param_4 == 0) {
-    return ppuVar1[param_2 * 4];
+  if (arg4 == 0) {
+    return p1[arg2 * 4];
   }
-  if (param_4 != 1) {
-    if (param_4 != 2) {
+  if (arg4 != 1) {
+    if (arg4 != 2) {
       return &Read_as_v0;
     }
-    return ppuVar1[param_2 * 4 + 2];
+    return p1[arg2 * 4 + 2];
   }
-  return ppuVar1[param_2 * 4 + 1];
+  return p1[arg2 * 4 + 1];
 }
 
 // FUNCTION: FFXIMAIN 0x102581D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl DmsgText_FindFirstTypeByte(char * param_1)
+XI_API int __cdecl DmsgText_FindFirstTypeByte(char * arg1)
 {
-  char *pcVar1;
-  char cVar2;
-  int iVar3;
-  int iVar4;
+  char *p1;
+  char c1;
+  int i1;
+  int i2;
   
-  iVar4 = 0;
-  cVar2 = *param_1;
-  pcVar1 = param_1;
+  i2 = 0;
+  c1 = *arg1;
+  p1 = arg1;
   while( true ) {
-    if (cVar2 == '\0') {
+    if (c1 == '\0') {
       return 0;
     }
-    iVar3 = orig::DmsgText_IsTypeRange(pcVar1);
-    if (iVar3 != 0) break;
-    iVar3 = orig::Sjis_GetCharByteLen_v1(pcVar1);
-    iVar4 = iVar4 + iVar3;
-    cVar2 = param_1[iVar4];
-    pcVar1 = param_1 + iVar4;
+    i1 = orig::DmsgText_IsTypeRange(p1);
+    if (i1 != 0) break;
+    i1 = orig::Sjis_GetCharByteLen_v1(p1);
+    i2 = i2 + i1;
+    c1 = arg1[i2];
+    p1 = arg1 + i2;
   }
-  return (int)param_1[iVar4];
+  return (int)arg1[i2];
 }
 
 // FUNCTION: FFXIMAIN 0x10258430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_ExpandFormCodes(void * param_1, undefined4 param_2, undefined4 param_3, char * param_4)
+XI_API bits32 __cdecl DmsgText_ExpandFormCodes(void * arg1, bits32 arg2, bits32 arg3, char * arg4)
 {
-  char *pcVar1;
-  char cVar2;
-  int iVar3;
-  uint8_t *puVar4;
-  uint16_t *puVar5;
-  size_t sVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int local_4;
+  char *p1;
+  char c1;
+  int i1;
+  uint8_t *p2;
+  uint16_t *p3;
+  size_t u1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
   
-  cVar2 = *param_4;
-  local_4 = 0;
+  c1 = *arg4;
+  i5 = 0;
   do {
-    if (cVar2 == '\0') {
-      return param_4;
+    if (c1 == '\0') {
+      return arg4;
     }
-    pcVar1 = param_4 + local_4;
-    iVar3 = orig::DmsgText_IsTypeOne(pcVar1);
-    if (iVar3 == 0) {
-      iVar3 = orig::DmsgText_IsTypeRange(pcVar1);
-      if (iVar3 == 0) {
-        sVar6 = orig::Sjis_GetCharByteLen_v1(pcVar1);
-        orig::TextInputFiles_AppendN(param_1,pcVar1,sVar6);
-        local_4 = local_4 + sVar6;
+    p1 = arg4 + i5;
+    i1 = orig::DmsgText_IsTypeOne(p1);
+    if (i1 == 0) {
+      i1 = orig::DmsgText_IsTypeRange(p1);
+      if (i1 == 0) {
+        u1 = orig::Sjis_GetCharByteLen_v1(p1);
+        orig::TextInputFiles_AppendN(arg1,p1,u1);
+        i5 = i5 + u1;
       }
       else {
-        iVar3 = 0;
-        switch(xi_sw(*pcVar1)) {
+        i1 = 0;
+        switch(xi_sw(*p1)) {
         case '\x04':
         case '\f':
         case '\r':
-          iVar9 = 1;
+          i4 = 1;
           break;
         case '\x05':
         case '\x06':
-          iVar9 = 2;
+          i4 = 2;
           break;
         case '\a':
-          iVar9 = 3;
+          i4 = 3;
           break;
         case '\b':
-          iVar9 = 4;
+          i4 = 4;
           break;
         case '\t':
-          iVar9 = 5;
+          i4 = 5;
           break;
         case '\n':
-          iVar9 = 6;
+          i4 = 6;
           break;
         case '\v':
-          iVar9 = 7;
+          i4 = 7;
           break;
         case '\x0e':
-          iVar3 = 1;
+          i1 = 1;
         default:
-          iVar9 = 0;
+          i4 = 0;
           break;
         case '\x0f':
-          iVar9 = 1;
-          iVar3 = iVar9;
+          i4 = 1;
+          i1 = i4;
         }
-        puVar5 = orig::DmsgText_GetFormString(param_3,iVar3,iVar9);
-        orig::TextInputFiles_Append(param_1,puVar5);
-        param_2 = -1;
-        local_4 = local_4 + 1;
+        p3 = orig::DmsgText_GetFormString(arg3,i1,i4);
+        orig::TextInputFiles_Append(arg1,p3);
+        arg2 = -1;
+        i5 = i5 + 1;
       }
-      goto LAB_10258581;
+      goto code_10258581;
     }
-    iVar3 = orig::DmsgText_FindFirstTypeByte(pcVar1);
-    if (iVar3 == 0) goto LAB_102584d7;
-    iVar9 = 0;
-    switch(xi_sw(iVar3)) {
+    i1 = orig::DmsgText_FindFirstTypeByte(p1);
+    if (i1 == 0) goto code_102584D7;
+    i4 = 0;
+    switch(xi_sw(i1)) {
     case 2:
     case 5:
     case 7:
     case 8:
     case 10:
     case 0xc:
-      iVar7 = 0;
-      iVar8 = 0;
-      if ((iVar3 == 8) || (iVar3 == 10)) {
-        iVar9 = 1;
+      i2 = 0;
+      i3 = 0;
+      if ((i1 == 8) || (i1 == 10)) {
+        i4 = 1;
       }
       else {
-        iVar9 = 0;
+        i4 = 0;
       }
       break;
     case 3:
@@ -854,175 +854,175 @@ XI_API undefined4 __cdecl DmsgText_ExpandFormCodes(void * param_1, undefined4 pa
     case 9:
     case 0xb:
     case 0xd:
-      iVar7 = 0;
-      iVar8 = 2;
+      i2 = 0;
+      i3 = 2;
       break;
     case 4:
-      iVar7 = 0;
-      iVar8 = 1;
+      i2 = 0;
+      i3 = 1;
       break;
     case 0xe:
     case 0xf:
-      iVar7 = 1;
-      goto LAB_102584bb;
+      i2 = 1;
+      goto code_102584BB;
     default:
-      iVar7 = 0;
-LAB_102584bb:
-      iVar8 = -1;
+      i2 = 0;
+code_102584BB:
+      i3 = -1;
     }
-    puVar4 = orig::DmsgText_PickFormString(param_2,param_3,iVar7,iVar8,iVar9);
-    orig::TextInputFiles_Append(param_1,puVar4);
-LAB_102584d7:
-    local_4 = local_4 + 1;
-LAB_10258581:
-    cVar2 = param_4[local_4];
+    p2 = orig::DmsgText_PickFormString(arg2,arg3,i2,i3,i4);
+    orig::TextInputFiles_Append(arg1,p2);
+code_102584D7:
+    i5 = i5 + 1;
+code_10258581:
+    c1 = arg4[i5];
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x102586D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_FindFirstTypeByteInText(void * self_)
+XI_API bits32 __thiscall DmsgText_FindFirstTypeByteInText(void * self_)
 {
-  char *pcVar1;
-  int iVar2;
+  char *p1;
+  int i1;
   
-  pcVar1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0xc));
-  iVar2 = orig::DmsgText_FindFirstTypeByte(pcVar1);
-  return iVar2;
+  p1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0xc));
+  i1 = orig::DmsgText_FindFirstTypeByte(p1);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102586F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetDataPtr(void * self_)
+XI_API bits32 __thiscall DmsgText_GetDataPtr(void * self_)
 {
   return *(uint32_t *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x10258740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_FormatTextAtC(void * self_, void * param_1, int param_2, int param_3)
+XI_API void __thiscall DmsgText_FormatTextAtC(void * self_, void * arg2, int arg3, int arg4)
 {
-  char *pcVar1;
+  char *p1;
   
-  pcVar1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0xc));
-  orig::DmsgText_ExpandFormCodes(param_1,param_2,param_3,pcVar1);
+  p1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0xc));
+  orig::DmsgText_ExpandFormCodes(arg2,arg3,arg4,p1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10258990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsInSjisSet(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsInSjisSet(char * arg1)
 {
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
+  int i1;
+  char *p1;
+  char *p2;
   
-  if (DAT_10389ec0 != '\0') {
-    pcVar2 = &DAT_10389ec0;
-    pcVar3 = &DAT_10389ec1;
+  if (g_10389EC0 != '\0') {
+    p1 = &g_10389EC0;
+    p2 = &g_10389EC1;
     do {
-      iVar1 = orig::Sjis_GetCharByteLen_v1(pcVar2);
-      if (iVar1 == 1) {
-        if (*param_1 == *pcVar2) {
+      i1 = orig::Sjis_GetCharByteLen_v1(p1);
+      if (i1 == 1) {
+        if (*arg1 == *p1) {
           return 1;
         }
-        pcVar3 = pcVar3 + 1;
-        pcVar2 = pcVar2 + 1;
+        p2 = p2 + 1;
+        p1 = p1 + 1;
       }
       else {
-        if ((*param_1 == *pcVar2) && (param_1[1] == *pcVar3)) {
+        if ((*arg1 == *p1) && (arg1[1] == *p2)) {
           return 1;
         }
-        pcVar3 = pcVar3 + 2;
-        pcVar2 = pcVar2 + 2;
+        p2 = p2 + 2;
+        p1 = p1 + 2;
       }
-    } while (*pcVar2 != '\0');
+    } while (*p1 != '\0');
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10258AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_GetText14(void * self_)
+XI_API bits32 __thiscall DmsgText_GetText14(void * self_)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  puVar1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0x14));
-  return puVar1;
+  p1 = orig::TextInputFiles_GetCStr((void *)((int)self_ + 0x14));
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10258D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_PickFormString2(int param_1, uint8_t * * param_2, int param_3, int param_4)
+XI_API uint8_t * __cdecl DmsgText_PickFormString2(int arg1, uint8_t * * arg2, int arg3, int arg4)
 {
-  uint8_t **ppuVar1;
+  uint8_t **p1;
   
-  if (param_1 == 0) {
-    ppuVar1 = &PTR_DAT_10389f10;
+  if (arg1 == 0) {
+    p1 = &g_10389F10;
   }
   else {
-    ppuVar1 = param_2;
-    if (param_1 == 1) {
-      ppuVar1 = &PTR_DAT_10389ed0;
+    p1 = arg2;
+    if (arg1 == 1) {
+      p1 = &g_10389ED0;
     }
   }
-  if (param_3 != 0) {
-    return ppuVar1[(int)param_2 * 4 + 3];
+  if (arg3 != 0) {
+    return p1[(int)arg2 * 4 + 3];
   }
-  if (param_4 == 0) {
-    return ppuVar1[(int)param_2 * 4];
+  if (arg4 == 0) {
+    return p1[(int)arg2 * 4];
   }
-  if (param_4 == 1) {
-    return ppuVar1[(int)param_2 * 4 + 1];
+  if (arg4 == 1) {
+    return p1[(int)arg2 * 4 + 1];
   }
-  if (param_4 == 2) {
-    return ppuVar1[(int)param_2 * 4 + 2];
+  if (arg4 == 2) {
+    return p1[(int)arg2 * 4 + 2];
   }
   return &Read_as_v0;
 }
 
 // FUNCTION: FFXIMAIN 0x10258D70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __cdecl DmsgText_SelectQuantifierForm(int param_1, int param_2, int param_3, int param_4, undefined4 param_5)
+XI_API char * __cdecl DmsgText_SelectQuantifierForm(int arg1, int arg2, int arg3, int arg4, bits32 arg5)
 {
-  if (param_1 != 0) {
-    return s_etwas_1038a26c;
+  if (arg1 != 0) {
+    return str_etwas_1038A26C;
   }
-  if (param_3 != 0) {
-    return (&PTR_s_einige_10389f5c)[param_2 * 4];
+  if (arg3 != 0) {
+    return (&g_10389F5C)[arg2 * 4];
   }
-  if (param_4 == 1) {
-    return (&PTR_s_einige_10389f54)[param_2 * 4];
+  if (arg4 == 1) {
+    return (&g_10389F54)[arg2 * 4];
   }
-  if (param_2 == 1) {
-    switch(xi_sw(param_5)) {
+  if (arg2 == 1) {
+    switch(xi_sw(arg5)) {
     case 0:
     case 2:
     case 3:
     case 5:
-      param_2 = 4;
+      arg2 = 4;
     }
   }
-  if (param_4 != 0) {
-    if (param_4 != 2) {
+  if (arg4 != 0) {
+    if (arg4 != 2) {
       return &Read_as_v0;
     }
-    return (&PTR_s_einiges_10389f58)[param_2 * 4];
+    return (&g_10389F58)[arg2 * 4];
   }
-  return (&PTR_s_einiger_10389f50)[param_2 * 4];
+  return (&g_10389F50)[arg2 * 4];
 }
 
 // FUNCTION: FFXIMAIN 0x10258E10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetSolchForm(undefined4 param_1)
+XI_API uint8_t * __cdecl DmsgText_GetSolchForm(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0:
-    return PTR_DAT_1038a160;
+    return g_1038A160;
   case 1:
-    return PTR_DAT_1038a164;
+    return g_1038A164;
   case 2:
-    return PTR_s_solch_1038a168;
+    return g_1038A168;
   default:
     return &Read_as_v0;
   }
@@ -1030,80 +1030,80 @@ XI_API uint8_t * __cdecl DmsgText_GetSolchForm(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x10258E50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_SelectNounForm(int param_1, int param_2, uint8_t * * param_3, int param_4, int param_5)
+XI_API uint8_t * __cdecl DmsgText_SelectNounForm(int arg1, int arg2, uint8_t * * arg3, int arg4, int arg5)
 {
-  uint8_t **ppuVar1;
+  uint8_t **p1;
   
-  if (param_1 == 0) {
-    ppuVar1 = &PTR_DAT_10389fa0;
+  if (arg1 == 0) {
+    p1 = &g_10389FA0;
   }
   else {
-    ppuVar1 = param_3;
-    if (param_1 == 1) {
-      if (param_2 == 0) {
-        ppuVar1 = &PTR_Read_10389fe0;
+    p1 = arg3;
+    if (arg1 == 1) {
+      if (arg2 == 0) {
+        p1 = &ptr_to_Read_10389FE0;
       }
       else {
-        ppuVar1 = &PTR_DAT_1038a020;
+        p1 = &g_1038A020;
       }
     }
   }
-  if (param_4 != 0) {
-    return ppuVar1[(int)param_3 * 4 + 3];
+  if (arg4 != 0) {
+    return p1[(int)arg3 * 4 + 3];
   }
-  if (param_5 == 0) {
-    return ppuVar1[(int)param_3 * 4];
+  if (arg5 == 0) {
+    return p1[(int)arg3 * 4];
   }
-  if (param_5 == 1) {
-    return ppuVar1[(int)param_3 * 4 + 1];
+  if (arg5 == 1) {
+    return p1[(int)arg3 * 4 + 1];
   }
-  if (param_5 == 2) {
-    return ppuVar1[(int)param_3 * 4 + 2];
+  if (arg5 == 2) {
+    return p1[(int)arg3 * 4 + 2];
   }
   return &Read_as_v0;
 }
 
 // FUNCTION: FFXIMAIN 0x10258ED0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetQuantifierByIndex(int param_1)
+XI_API uint8_t * __cdecl DmsgText_GetQuantifierByIndex(int arg1)
 {
-  if (param_1 == 0) {
-    return(uint8_t*)(&DAT_10387eb4);
+  if (arg1 == 0) {
+    return(uint8_t*)(&g_10387EB4);
   }
-  if (param_1 != 1) {
-    if (param_1 != 2) {
+  if (arg1 != 1) {
+    if (arg1 != 2) {
       return &Read_as_v0;
     }
-    return(uint8_t*)(&DAT_10387c0c);
+    return(uint8_t*)(&g_10387C0C);
   }
-  return(uint8_t*)(&DAT_1038a274);
+  return(uint8_t*)(&g_1038A274);
 }
 
 // FUNCTION: FFXIMAIN 0x10258F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_SelectAdjectiveForm(int param_1, int param_2, int param_3)
+XI_API uint8_t * __cdecl DmsgText_SelectAdjectiveForm(int arg1, int arg2, int arg3)
 {
-  if (param_2 == 0) {
-    if (param_1 == 0) {
-      if ((param_3 == 0) || (param_3 == 2)) {
-        return(uint8_t*)(&DAT_1038a278);
+  if (arg2 == 0) {
+    if (arg1 == 0) {
+      if ((arg3 == 0) || (arg3 == 2)) {
+        return(uint8_t*)(&g_1038A278);
       }
     }
-    else if (param_1 == 1) {
-      if ((param_3 == 0) || (param_3 == 2)) {
-        return(uint8_t*)(&DAT_1038a27c);
+    else if (arg1 == 1) {
+      if ((arg3 == 0) || (arg3 == 2)) {
+        return(uint8_t*)(&g_1038A27C);
       }
     }
-    else if (param_1 == 2) {
-      if (param_3 != 0) {
-        if (param_3 == 1) {
-          return(uint8_t*)(&DAT_1038a280);
+    else if (arg1 == 2) {
+      if (arg3 != 0) {
+        if (arg3 == 1) {
+          return(uint8_t*)(&g_1038A280);
         }
-        if (param_3 != 2) {
+        if (arg3 != 2) {
           return &Read_as_v0;
         }
       }
-      return(uint8_t*)(&DAT_1038a284);
+      return(uint8_t*)(&g_1038A284);
     }
   }
   return &Read_as_v0;
@@ -1111,16 +1111,16 @@ XI_API uint8_t * __cdecl DmsgText_SelectAdjectiveForm(int param_1, int param_2, 
 
 // FUNCTION: FFXIMAIN 0x10258F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_SelectGenderForm(int param_1, int param_2, int param_3)
+XI_API uint8_t * __cdecl DmsgText_SelectGenderForm(int arg1, int arg2, int arg3)
 {
-  if (param_2 == 0) {
-    if (param_1 == 0) {
-      if (param_3 == 2) {
-        return(uint8_t*)(&DAT_1038a288);
+  if (arg2 == 0) {
+    if (arg1 == 0) {
+      if (arg3 == 2) {
+        return(uint8_t*)(&g_1038A288);
       }
     }
-    else if ((param_1 == 1) && (param_3 == 2)) {
-      return(uint8_t*)(&DAT_1038a28c);
+    else if ((arg1 == 1) && (arg3 == 2)) {
+      return(uint8_t*)(&g_1038A28C);
     }
   }
   return &Read_as_v0;
@@ -1138,35 +1138,35 @@ XI_API void __thiscall DmsgText_ClearListHeader(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10259100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_Append(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_Append(void * self_, bits32 arg2)
 {
   if (*(int *)((int)self_ + 8) != 0) {
-    *(uint32_t *)(*(int *)((int)self_ + 8) + 4) = param_1;
-    *(uint32_t *)((int)self_ + 8) = param_1;
+    *(uint32_t *)(*(int *)((int)self_ + 8) + 4) = arg2;
+    *(uint32_t *)((int)self_ + 8) = arg2;
     return;
   }
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint32_t *)((int)self_ + 8) = param_1;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint32_t *)((int)self_ + 8) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10259130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_IsEmpty(void * self_)
+XI_API bits32 __thiscall DmsgText_IsEmpty(void * self_)
 {
   return (uint32_t)(*(int *)self_ == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x10259150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall DmsgText_FindNextTyped(int param_1)
+XI_API int __stdcall DmsgText_FindNextTyped(int arg1)
 {
-  if (param_1 != 0) {
+  if (arg1 != 0) {
     while( true ) {
-      param_1 = *(int *)(param_1 + 4);
-      if (param_1 == 0) break;
-      if ((*(int *)(param_1 + 8) != 0) && (*(int *)(param_1 + 8) != 8)) {
-        return param_1;
+      arg1 = *(int *)(arg1 + 4);
+      if (arg1 == 0) break;
+      if ((*(int *)(arg1 + 8) != 0) && (*(int *)(arg1 + 8) != 8)) {
+        return arg1;
       }
     }
   }
@@ -1175,24 +1175,24 @@ XI_API int __stdcall DmsgText_FindNextTyped(int param_1)
 
 // FUNCTION: FFXIMAIN 0x10259180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendNodeType2(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_AppendNodeType2(void * self_, bits32 arg2)
 {
-  uint32_t *puVar1;
-  uint64_t uVar2;
+  uint32_t *p1;
+  uint64_t u1;
   
-  uVar2 = orig::Allocator_Generic_v1(0x14);
-  puVar1 = (uint32_t *)uVar2;
-  if (puVar1 == (uint32_t *)0x0) {
-    puVar1 = (uint32_t *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x14);
+  p1 = (uint32_t *)u1;
+  if (p1 == (uint32_t *)0x0) {
+    p1 = (uint32_t *)0x0;
   }
   else {
-    puVar1[1] = 0;
-    puVar1[2] = 2;
-    puVar1[3] = param_1;
-    puVar1[4] = 0;
-    *puVar1 = &PTR_LAB_1033cea8;
+    p1[1] = 0;
+    p1[2] = 2;
+    p1[3] = arg2;
+    p1[4] = 0;
+    *p1 = &g_1033CEA8;
   }
-  orig::DmsgText_Append(self_,puVar1);
+  orig::DmsgText_Append(self_,p1);
   *(uint32_t *)self_ = 1;
   orig::DmsgText_IsEmpty(self_);
   return;
@@ -1200,101 +1200,101 @@ XI_API void __thiscall DmsgText_AppendNodeType2(void * self_, undefined4 param_1
 
 // FUNCTION: FFXIMAIN 0x102593F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendString(void * self_, char * param_1)
+XI_API void __thiscall DmsgText_AppendString(void * self_, char * arg2)
 {
-  uint32_t *puVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  char *pcVar4;
-  uint8_t bVar5;
-  uint64_t uVar6;
+  uint32_t *p1;
+  uint32_t *p2;
+  int i1;
+  char *p3;
+  uint8_t u1;
+  uint64_t u2;
   
-  uVar6 = orig::Allocator_Generic_v1(0x18);
-  puVar1 = (uint32_t *)uVar6;
-  puVar2 = (uint32_t *)0x0;
-  if (puVar1 != (uint32_t *)0x0) {
-    puVar1[1] = 0;
-    puVar1[2] = 1;
-    *puVar1 = &PTR_LAB_1033ceac;
-    orig::TextInputFiles_AssignCStr(puVar1 + 3,param_1);
-    *puVar1 = &PTR_FUN_1033cebc;
-    puVar2 = puVar1;
+  u2 = orig::Allocator_Generic_v1(0x18);
+  p1 = (uint32_t *)u2;
+  p2 = (uint32_t *)0x0;
+  if (p1 != (uint32_t *)0x0) {
+    p1[1] = 0;
+    p1[2] = 1;
+    *p1 = &g_1033CEAC;
+    orig::TextInputFiles_AssignCStr(p1 + 3,arg2);
+    *p1 = &g_1033CEBC;
+    p2 = p1;
   }
-  iVar3 = 2;
-  bVar5 = true;
-  pcVar4 = (char *)&c_strSpace_as_v0;
+  i1 = 2;
+  u1 = true;
+  p3 = (char *)&c_strSpace_as_v0;
   do {
-    if (iVar3 == 0) break;
-    iVar3 = iVar3 + -1;
-    bVar5 = *param_1 == *pcVar4;
-    param_1 = param_1 + 1;
-    pcVar4 = pcVar4 + 1;
-  } while (bVar5);
-  if (bVar5) {
-    puVar2[2] = 7;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *arg2 == *p3;
+    arg2 = arg2 + 1;
+    p3 = p3 + 1;
+  } while (u1);
+  if (u1) {
+    p2[2] = 7;
   }
-  orig::DmsgText_Append(self_,puVar2);
+  orig::DmsgText_Append(self_,p2);
   orig::DmsgText_IsEmpty(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10259460
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendValueNode(void * self_, int param_1, int param_2, int * param_3)
+XI_API void __thiscall DmsgText_AppendValueNode(void * self_, int arg2, int arg3, int * arg4)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t *puVar4;
-  uint64_t uVar5;
+  int i1;
+  int i2;
+  uint32_t u1;
+  uint32_t *p1;
+  uint64_t u2;
   
-  uVar5 = orig::Allocator_Generic_v1(0x38);
-  puVar4 = (uint32_t *)uVar5;
-  if (puVar4 == (uint32_t *)0x0) {
-    puVar4 = (uint32_t *)0x0;
+  u2 = orig::Allocator_Generic_v1(0x38);
+  p1 = (uint32_t *)u2;
+  if (p1 == (uint32_t *)0x0) {
+    p1 = (uint32_t *)0x0;
   }
   else {
-    puVar4[1] = 0;
-    puVar4[2] = 6;
-    *puVar4 = &PTR_LAB_1033ceac;
-    puVar4[3] = 0;
-    puVar4[4] = param_1;
-    puVar4[5] = 0xffffffff;
-    orig::TextInputFiles_AssignCStr(puVar4 + 8,(char *)0x0);
-    puVar4[0xb] = 0;
-    puVar4[0xc] = param_3;
-    puVar4[0xd] = param_2;
-    *puVar4 = &PTR_FUN_1033cec0;
-    if (param_2 == 0) {
-      uVar3 = ((int (__thiscall *)(void *))((**(code **)(*param_3 + 8))))((void *)(param_3));
-      puVar4[7] = uVar3;
+    p1[1] = 0;
+    p1[2] = 6;
+    *p1 = &g_1033CEAC;
+    p1[3] = 0;
+    p1[4] = arg2;
+    p1[5] = 0xffffffff;
+    orig::TextInputFiles_AssignCStr(p1 + 8,(char *)0x0);
+    p1[0xb] = 0;
+    p1[0xc] = arg4;
+    p1[0xd] = arg3;
+    *p1 = &g_1033CEC0;
+    if (arg3 == 0) {
+      u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg4 + 8))))((void *)(arg4));
+      p1[7] = u1;
     }
     else {
-      uVar3 = ((int (__thiscall *)(void *))((**(code **)(*param_3 + 0xc))))((void *)(param_3));
-      puVar4[7] = uVar3;
+      u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg4 + 0xc))))((void *)(arg4));
+      p1[7] = u1;
     }
   }
-  orig::DmsgText_Append(self_,puVar4);
+  orig::DmsgText_Append(self_,p1);
   if (*(int *)self_ == 1) {
-    for (iVar1 = *(int *)((int)self_ + 4); iVar1 != 0; iVar1 = *(int *)(iVar1 + 4)) {
-      iVar2 = *(int *)(iVar1 + 8);
-      if (iVar2 == 2) {
-        uVar3 = *(uint32_t *)(iVar1 + 0xc);
-        *(uint32_t **)(iVar1 + 0x10) = puVar4;
-LAB_1025951e:
-        puVar4[5] = uVar3;
+    for (i1 = *(int *)((int)self_ + 4); i1 != 0; i1 = *(int *)(i1 + 4)) {
+      i2 = *(int *)(i1 + 8);
+      if (i2 == 2) {
+        u1 = *(uint32_t *)(i1 + 0xc);
+        *(uint32_t **)(i1 + 0x10) = p1;
+code_1025951E:
+        p1[5] = u1;
       }
       else {
-        if (iVar2 == 3) {
-          uVar3 = *(uint32_t *)(iVar1 + 0xc);
-          *(uint32_t **)(iVar1 + 0x10) = puVar4;
-          param_1 = iVar1;
-          goto LAB_1025951e;
+        if (i2 == 3) {
+          u1 = *(uint32_t *)(i1 + 0xc);
+          *(uint32_t **)(i1 + 0x10) = p1;
+          arg2 = i1;
+          goto code_1025951E;
         }
-        if (iVar2 == 4) {
-          *(uint32_t **)(iVar1 + 0x10) = puVar4;
-          uVar3 = *(uint32_t *)(param_1 + 0xc);
-          goto LAB_1025951e;
+        if (i2 == 4) {
+          *(uint32_t **)(i1 + 0x10) = p1;
+          u1 = *(uint32_t *)(arg2 + 0xc);
+          goto code_1025951E;
         }
       }
     }
@@ -1306,231 +1306,231 @@ LAB_1025951e:
 
 // FUNCTION: FFXIMAIN 0x10259990
 // GATE: PASS -- 100 trials, 90 returned normally, 1 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-XI_API undefined4 __thiscall DmsgText_ComposeTextA(void * self_, int param_1)
+XI_API bits32 __thiscall DmsgText_ComposeTextA(void * self_, int arg2)
 {
-  void *pvVar1;
-  int *this_00;
-  int iVar2;
-  int iVar3;
-  uint8_t *puVar4;
-  uint8_t *puVar5;
-  char *pcVar6;
-  int iVar7;
+  void *p1;
+  int *obj1;
+  int i1;
+  int i2;
+  uint8_t *p2;
+  uint8_t *p3;
+  char *p4;
+  int i3;
   char xi_frame[64] __attribute__((aligned(4)));
-  int  &iVar8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &iVar9 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &uVar10 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint8_t  (&local_18)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 40);
-  uint8_t  (&local_c)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 52);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 12);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
+  uint8_t  (&u2)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 40);
+  uint8_t  (&u3)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 52);
   
-  iVar2 = orig::DmsgText_IsEmpty(self_);
-  if ((iVar2 == 0) || (param_1 == 0)) {
+  i1 = orig::DmsgText_IsEmpty(self_);
+  if ((i1 == 0) || (arg2 == 0)) {
     return 0;
   }
-  orig::TextInputFiles_Init(local_c);
-  orig::FUN_1018d3d0((void *)param_1);
-  iVar2 = *(int *)((int)self_ + 4);
+  orig::TextInputFiles_Init(u3);
+  orig::game_1018D3D0((void *)arg2);
+  i1 = *(int *)((int)self_ + 4);
   do {
-    if (iVar2 == 0) {
-      orig::TextInputFiles_Free(local_c);
+    if (i1 == 0) {
+      orig::TextInputFiles_Free(u3);
       return 1;
     }
-    switch(xi_sw(*(uint32_t *)(iVar2 + 8))) {
+    switch(xi_sw(*(uint32_t *)(i1 + 8))) {
     case 1:
-      orig::TextInputFiles_AppendBuf((void *)param_1,(void *)(iVar2 + 0xc));
+      orig::TextInputFiles_AppendBuf((void *)arg2,(void *)(i1 + 0xc));
       break;
     case 2:
-      iVar3 = *(int *)(iVar2 + 0x10);
-      if (iVar3 != 0) {
-        if (*(int *)(iVar3 + 0xc) == 2) {
-          iVar7 = orig::DmsgText_FindNextTyped(iVar2);
-          iVar3 = *(int *)(iVar7 + 8);
-          if (iVar3 == 7) {
-            *(uint32_t *)(iVar7 + 8) = 0;
+      i2 = *(int *)(i1 + 0x10);
+      if (i2 != 0) {
+        if (*(int *)(i2 + 0xc) == 2) {
+          i3 = orig::DmsgText_FindNextTyped(i1);
+          i2 = *(int *)(i3 + 8);
+          if (i2 == 7) {
+            *(uint32_t *)(i3 + 8) = 0;
           }
           else {
-LAB_10259beb:
-            if (iVar3 == 1) {
-              pvVar1 = (void *)(iVar7 + 0xc);
-              pcVar6 = orig::TextInputFiles_GetCStr(pvVar1);
-              if (*pcVar6 == ' ') {
-                puVar5 = orig::TextInputFiles_GetCStr(pvVar1);
-                orig::TextInputFiles_AssignWhole(pvVar1,puVar5 + 1);
+code_10259BEB:
+            if (i2 == 1) {
+              p1 = (void *)(i3 + 0xc);
+              p4 = orig::TextInputFiles_GetCStr(p1);
+              if (*p4 == ' ') {
+                p3 = orig::TextInputFiles_GetCStr(p1);
+                orig::TextInputFiles_AssignWhole(p1,p3 + 1);
               }
             }
           }
         }
-        else if ((*(int *)(iVar3 + 0xc) == 1) || (*(int *)(iVar2 + 0xc) == 0)) {
-          puVar4 = orig::DmsgText_PickFormString2(0,*(uint8_t ***)(iVar3 + 0x10),*(int *)(iVar3 + 0x34),
-                                *(int *)(iVar3 + 0x1c));
-          orig::TextInputFiles_Append((void *)param_1,puVar4);
+        else if ((*(int *)(i2 + 0xc) == 1) || (*(int *)(i1 + 0xc) == 0)) {
+          p2 = orig::DmsgText_PickFormString2(0,*(uint8_t ***)(i2 + 0x10),*(int *)(i2 + 0x34),
+                                *(int *)(i2 + 0x1c));
+          orig::TextInputFiles_Append((void *)arg2,p2);
         }
-        else if (*(int *)(iVar3 + 0x30) == 0) {
-          if ((*(void **)(iVar3 + 0x2c) != (void *)0x0) &&
-             (iVar3 = orig::DmsgText_GetDataPtr(*(void **)(iVar3 + 0x2c)), iVar3 != 0)) {
-            iVar8 = *(int *)(iVar2 + 0x10);
-            uVar10 = orig::DmsgText_FindFirstTypeByteInText(*(void **)(iVar8 + 0x2c));
-            iVar9 = *(int *)(iVar8 + 0x1c);
-            iVar3 = *(int *)(iVar8 + 0x10);
-            iVar7 = *(int *)(iVar8 + 0x34);
-            iVar8 = orig::DmsgText_GetDataPtr(*(void **)(iVar8 + 0x2c));
-            goto LAB_10259c80;
+        else if (*(int *)(i2 + 0x30) == 0) {
+          if ((*(void **)(i2 + 0x2c) != (void *)0x0) &&
+             (i2 = orig::DmsgText_GetDataPtr(*(void **)(i2 + 0x2c)), i2 != 0)) {
+            i4 = *(int *)(i1 + 0x10);
+            u1 = orig::DmsgText_FindFirstTypeByteInText(*(void **)(i4 + 0x2c));
+            i5 = *(int *)(i4 + 0x1c);
+            i2 = *(int *)(i4 + 0x10);
+            i3 = *(int *)(i4 + 0x34);
+            i4 = orig::DmsgText_GetDataPtr(*(void **)(i4 + 0x2c));
+            goto code_10259C80;
           }
-          iVar3 = *(int *)(iVar2 + 0x10);
-          puVar4 = orig::DmsgText_PickFormString2(1,*(uint8_t ***)(iVar3 + 0x10),*(int *)(iVar3 + 0x34),
-                                *(int *)(iVar3 + 0x1c));
-          orig::TextInputFiles_Append((void *)param_1,puVar4);
+          i2 = *(int *)(i1 + 0x10);
+          p2 = orig::DmsgText_PickFormString2(1,*(uint8_t ***)(i2 + 0x10),*(int *)(i2 + 0x34),
+                                *(int *)(i2 + 0x1c));
+          orig::TextInputFiles_Append((void *)arg2,p2);
         }
         else {
-          iVar7 = *(int *)(iVar3 + 0x34);
-          if (iVar7 == 0) {
-            puVar4 = orig::DmsgText_PickFormString2(1,*(uint8_t ***)(iVar3 + 0x10),0,*(int *)(iVar3 + 0x1c));
-            orig::TextInputFiles_Append((void *)param_1,puVar4);
+          i3 = *(int *)(i2 + 0x34);
+          if (i3 == 0) {
+            p2 = orig::DmsgText_PickFormString2(1,*(uint8_t ***)(i2 + 0x10),0,*(int *)(i2 + 0x1c));
+            orig::TextInputFiles_Append((void *)arg2,p2);
           }
           else {
-            iVar9 = *(int *)(iVar3 + 0x1c);
-            iVar3 = *(int *)(iVar3 + 0x10);
-            uVar10 = 0xffffffff;
-            iVar8 = 0;
-LAB_10259c80:
-            pcVar6 = orig::DmsgText_SelectQuantifierForm(iVar8,iVar3,iVar7,iVar9,uVar10);
-            orig::TextInputFiles_Append((void *)param_1,pcVar6);
+            i5 = *(int *)(i2 + 0x1c);
+            i2 = *(int *)(i2 + 0x10);
+            u1 = 0xffffffff;
+            i4 = 0;
+code_10259C80:
+            p4 = orig::DmsgText_SelectQuantifierForm(i4,i2,i3,i5,u1);
+            orig::TextInputFiles_Append((void *)arg2,p4);
           }
         }
       }
       break;
     case 3:
-      iVar3 = *(int *)(iVar2 + 0x10);
-      if (iVar3 != 0) {
-        if (*(int *)(iVar2 + 0xc) == 0) {
-          if (*(int *)(iVar3 + 0xc) == 2) {
-            iVar7 = orig::DmsgText_FindNextTyped(iVar2);
-            iVar3 = *(int *)(iVar7 + 8);
-            if (iVar3 != 7) goto LAB_10259beb;
-            *(uint32_t *)(iVar7 + 8) = 0;
+      i2 = *(int *)(i1 + 0x10);
+      if (i2 != 0) {
+        if (*(int *)(i1 + 0xc) == 0) {
+          if (*(int *)(i2 + 0xc) == 2) {
+            i3 = orig::DmsgText_FindNextTyped(i1);
+            i2 = *(int *)(i3 + 8);
+            if (i2 != 7) goto code_10259BEB;
+            *(uint32_t *)(i3 + 8) = 0;
           }
           else {
-            puVar5 = orig::DmsgText_GetSolchForm(*(uint32_t *)(iVar2 + 0x14));
-            orig::TextInputFiles_Append((void *)param_1,puVar5);
-            iVar3 = *(int *)(iVar2 + 0x10);
-            puVar4 = orig::DmsgText_SelectNounForm(*(int *)(iVar2 + 0xc),0,*(uint8_t ***)(iVar3 + 0x10),
-                                  *(int *)(iVar3 + 0x34),*(int *)(iVar3 + 0x1c));
-            orig::TextInputFiles_Append((void *)param_1,puVar4);
+            p3 = orig::DmsgText_GetSolchForm(*(uint32_t *)(i1 + 0x14));
+            orig::TextInputFiles_Append((void *)arg2,p3);
+            i2 = *(int *)(i1 + 0x10);
+            p2 = orig::DmsgText_SelectNounForm(*(int *)(i1 + 0xc),0,*(uint8_t ***)(i2 + 0x10),
+                                  *(int *)(i2 + 0x34),*(int *)(i2 + 0x1c));
+            orig::TextInputFiles_Append((void *)arg2,p2);
           }
         }
         else {
-          puVar4 = orig::DmsgText_SelectNounForm(*(int *)(iVar2 + 0xc),(uint32_t)(*(int *)(iVar2 + 0x14) == 0),
-                                *(uint8_t ***)(iVar3 + 0x10),*(int *)(iVar3 + 0x34),
-                                *(int *)(iVar3 + 0x1c));
-          orig::TextInputFiles_Append((void *)param_1,puVar4);
+          p2 = orig::DmsgText_SelectNounForm(*(int *)(i1 + 0xc),(uint32_t)(*(int *)(i1 + 0x14) == 0),
+                                *(uint8_t ***)(i2 + 0x10),*(int *)(i2 + 0x34),
+                                *(int *)(i2 + 0x1c));
+          orig::TextInputFiles_Append((void *)arg2,p2);
         }
       }
       break;
     case 4:
-      iVar3 = *(int *)(iVar2 + 0x10);
-      if (iVar3 != 0) {
-        iVar7 = *(int *)(iVar2 + 0xc);
-        if (iVar7 == 0) {
-LAB_10259ae5:
-          iVar7 = -1;
+      i2 = *(int *)(i1 + 0x10);
+      if (i2 != 0) {
+        i3 = *(int *)(i1 + 0xc);
+        if (i3 == 0) {
+code_10259AE5:
+          i3 = -1;
         }
-        else if (*(int *)(iVar7 + 8) == 2) {
-          iVar7 = *(int *)(iVar7 + 0xc);
+        else if (*(int *)(i3 + 8) == 2) {
+          i3 = *(int *)(i3 + 0xc);
         }
         else {
-          if (*(int *)(iVar7 + 8) != 3) goto LAB_10259ae5;
-          iVar7 = *(int *)(iVar7 + 0xc);
+          if (*(int *)(i3 + 8) != 3) goto code_10259AE5;
+          i3 = *(int *)(i3 + 0xc);
         }
-        puVar4 = orig::DmsgText_PickFormString(iVar7,*(int *)(iVar3 + 0x10),*(int *)(iVar3 + 0x34),
-                              *(int *)(iVar3 + 0x1c),(uint32_t)(*(int *)(iVar3 + 0x18) == 4));
-        orig::TextInputFiles_Append((void *)param_1,puVar4);
+        p2 = orig::DmsgText_PickFormString(i3,*(int *)(i2 + 0x10),*(int *)(i2 + 0x34),
+                              *(int *)(i2 + 0x1c),(uint32_t)(*(int *)(i2 + 0x18) == 4));
+        orig::TextInputFiles_Append((void *)arg2,p2);
       }
       break;
     case 5:
-      orig::FUN_1018d3d0(local_c);
-      iVar3 = orig::DmsgText_FindNextTyped(iVar2);
-      if ((((iVar3 != 0) && (*(int *)(iVar3 + 8) != 7)) && (iVar3 = orig::DmsgText_FindNextTyped(iVar3), iVar3 != 0)
-          ) && ((*(int *)(iVar3 + 8) == 2 && (*(int *)(iVar3 + 0xc) == 0)))) {
-        iVar3 = *(int *)(iVar3 + 0x10);
-        if (*(int *)(iVar3 + 0x10) == 2) {
-          puVar4 = orig::DmsgText_SelectAdjectiveForm(*(int *)(iVar2 + 0xc),*(int *)(iVar3 + 0x34),*(int *)(iVar3 + 0x1c))
+      orig::game_1018D3D0(u3);
+      i2 = orig::DmsgText_FindNextTyped(i1);
+      if ((((i2 != 0) && (*(int *)(i2 + 8) != 7)) && (i2 = orig::DmsgText_FindNextTyped(i2), i2 != 0)
+          ) && ((*(int *)(i2 + 8) == 2 && (*(int *)(i2 + 0xc) == 0)))) {
+        i2 = *(int *)(i2 + 0x10);
+        if (*(int *)(i2 + 0x10) == 2) {
+          p2 = orig::DmsgText_SelectAdjectiveForm(*(int *)(i1 + 0xc),*(int *)(i2 + 0x34),*(int *)(i2 + 0x1c))
           ;
         }
         else {
-          if (*(int *)(iVar3 + 0x10) != 3) goto LAB_10259b89;
-          puVar4 = orig::DmsgText_SelectGenderForm(*(int *)(iVar2 + 0xc),*(int *)(iVar3 + 0x34),*(int *)(iVar3 + 0x1c))
+          if (*(int *)(i2 + 0x10) != 3) goto code_10259B89;
+          p2 = orig::DmsgText_SelectGenderForm(*(int *)(i1 + 0xc),*(int *)(i2 + 0x34),*(int *)(i2 + 0x1c))
           ;
         }
-        orig::TextInputFiles_AssignWhole(local_c,puVar4);
+        orig::TextInputFiles_AssignWhole(u3,p2);
       }
-LAB_10259b89:
-      iVar3 = orig::TextInputFiles_GetLength(local_c);
-      if (iVar3 == 0) {
-        puVar5 = orig::DmsgText_GetQuantifierByIndex(*(int *)(iVar2 + 0xc));
-        orig::TextInputFiles_Append((void *)param_1,puVar5);
+code_10259B89:
+      i2 = orig::TextInputFiles_GetLength(u3);
+      if (i2 == 0) {
+        p3 = orig::DmsgText_GetQuantifierByIndex(*(int *)(i1 + 0xc));
+        orig::TextInputFiles_Append((void *)arg2,p3);
       }
       else {
-        orig::TextInputFiles_AppendBuf((void *)param_1,local_c);
+        orig::TextInputFiles_AppendBuf((void *)arg2,u3);
       }
       break;
     case 6:
-      orig::TextInputFiles_Init(local_18);
-      pvVar1 = *(void **)(iVar2 + 0x2c);
-      if (*(int *)(iVar2 + 0xc) == 2) {
-        if (pvVar1 == (void *)0x0) {
-          puVar5 = (uint8_t *)(iVar2 + 0x20);
+      orig::TextInputFiles_Init(u2);
+      p1 = *(void **)(i1 + 0x2c);
+      if (*(int *)(i1 + 0xc) == 2) {
+        if (p1 == (void *)0x0) {
+          p3 = (uint8_t *)(i1 + 0x20);
         }
         else {
-          orig::DmsgText_FormatTextAtC(pvVar1,local_18,-1,*(int *)(iVar2 + 0x10));
-          puVar5 = local_18;
+          orig::DmsgText_FormatTextAtC(p1,u2,-1,*(int *)(i1 + 0x10));
+          p3 = u2;
         }
       }
-      else if (pvVar1 == (void *)0x0) {
-        this_00 = *(int **)(iVar2 + 0x30);
-        if (this_00 == (int *)0x0) {
-          puVar5 = (uint8_t *)(iVar2 + 0x20);
+      else if (p1 == (void *)0x0) {
+        obj1 = *(int **)(i1 + 0x30);
+        if (obj1 == (int *)0x0) {
+          p3 = (uint8_t *)(i1 + 0x20);
         }
-        else if (*(int *)(iVar2 + 0x34) == 0) {
-          ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x10))
-                    ))((void *)(this_00),local_18,*(uint32_t *)(iVar2 + 0x14),*(uint32_t *)(iVar2 + 0x10));
-          puVar5 = local_18;
+        else if (*(int *)(i1 + 0x34) == 0) {
+          ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x10))
+                    ))((void *)(obj1),u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
+          p3 = u2;
         }
         else {
-          ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x18))
-                    ))((void *)(this_00),local_18,*(uint32_t *)(iVar2 + 0x14),*(uint32_t *)(iVar2 + 0x10));
-          puVar5 = local_18;
+          ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))
+                    ))((void *)(obj1),u2,*(uint32_t *)(i1 + 0x14),*(uint32_t *)(i1 + 0x10));
+          p3 = u2;
         }
       }
       else {
-        orig::DmsgText_FormatTextAtC(pvVar1,local_18,*(int *)(iVar2 + 0x14),*(int *)(iVar2 + 0x10));
-        puVar5 = local_18;
+        orig::DmsgText_FormatTextAtC(p1,u2,*(int *)(i1 + 0x14),*(int *)(i1 + 0x10));
+        p3 = u2;
       }
-      orig::TextInputFiles_AppendBuf((void *)param_1,puVar5);
-      orig::TextInputFiles_Free(local_18);
+      orig::TextInputFiles_AppendBuf((void *)arg2,p3);
+      orig::TextInputFiles_Free(u2);
       break;
     case 7:
-      orig::TextInputFiles_Append((void *)param_1,&c_strSpace_as_v0);
+      orig::TextInputFiles_Append((void *)arg2,&c_strSpace_as_v0);
       break;
     case 8:
-      orig::TextInputFiles_AppendBuf((void *)param_1,(void *)(iVar2 + 0xc));
+      orig::TextInputFiles_AppendBuf((void *)arg2,(void *)(i1 + 0xc));
     }
-    iVar2 = *(int *)(iVar2 + 4);
+    i1 = *(int *)(i1 + 4);
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10259DE0
 // GATE: PASS -- 100 trials, 82 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 82
-XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesA(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesA(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t *this_00;
+  uint32_t *obj1;
   
-  this_00 = *(uint32_t **)((int)self_ + 4);
-  while (this_00 != (uint32_t *)0x0) {
-    *(uint32_t *)((int)self_ + 4) = this_00[1];
-    if (this_00 != (uint32_t *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)*this_00)))((void *)(this_00),1);
+  obj1 = *(uint32_t **)((int)self_ + 4);
+  while (obj1 != (uint32_t *)0x0) {
+    *(uint32_t *)((int)self_ + 4) = obj1[1];
+    if (obj1 != (uint32_t *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*obj1)))((void *)(obj1),1);
     }
-    this_00 = *(uint32_t **)((int)self_ + 4);
+    obj1 = *(uint32_t **)((int)self_ + 4);
   }
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)self_ = 0;
@@ -1539,182 +1539,182 @@ XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesA(undefined
 
 // FUNCTION: FFXIMAIN 0x1025A580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsTypeTwoZero(int param_1, int param_2)
+XI_API bits32 __cdecl DmsgText_IsTypeTwoZero(int arg1, int arg2)
 {
-  if ((param_1 != 1) && (param_1 == 2)) {
-    return (uint32_t)(param_2 == 0);
+  if ((arg1 != 1) && (arg1 == 2)) {
+    return (uint32_t)(arg2 == 0);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetFormById(int param_1, int param_2, int param_3)
+XI_API uint8_t * __cdecl DmsgText_GetFormById(int arg1, int arg2, int arg3)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 != 1) {
-    if (param_1 != 2) {
+  if (arg1 != 1) {
+    if (arg1 != 2) {
       return &Read_as_v0;
     }
-    if (param_2 != 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,6);
-      return puVar1;
+    if (arg2 != 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,6);
+      return p1;
     }
-    if (param_3 == 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,4);
-      return puVar1;
+    if (arg3 == 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,4);
+      return p1;
     }
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,5);
-    return puVar1;
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,5);
+    return p1;
   }
-  if (param_2 != 0) {
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,3);
-    return puVar1;
+  if (arg2 != 0) {
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,3);
+    return p1;
   }
-  if (param_3 == 0) {
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,1);
-    return puVar1;
+  if (arg3 == 0) {
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,1);
+    return p1;
   }
-  puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,2);
-  return puVar1;
+  p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,2);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetFormAlt(int param_1, int param_2, int param_3)
+XI_API uint8_t * __cdecl DmsgText_GetFormAlt(int arg1, int arg2, int arg3)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 == 0) {
-    if (param_2 != 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0xe);
-      return puVar1;
+  if (arg1 == 0) {
+    if (arg2 != 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0xe);
+      return p1;
     }
-    if (param_3 == 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0xc);
-      return puVar1;
+    if (arg3 == 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0xc);
+      return p1;
     }
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0xd);
-    return puVar1;
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0xd);
+    return p1;
   }
-  if (param_1 != 1) {
-    if (param_1 != 2) {
+  if (arg1 != 1) {
+    if (arg1 != 2) {
       return &Read_as_v0;
     }
-    if (param_2 != 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0x14);
-      return puVar1;
+    if (arg2 != 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0x14);
+      return p1;
     }
-    if (param_3 == 0) {
-      puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0x12);
-      return puVar1;
+    if (arg3 == 0) {
+      p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0x12);
+      return p1;
     }
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0x13);
-    return puVar1;
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0x13);
+    return p1;
   }
-  if (param_2 != 0) {
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0x11);
-    return puVar1;
+  if (arg2 != 0) {
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0x11);
+    return p1;
   }
-  if (param_3 == 0) {
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0xf);
-    return puVar1;
+  if (arg3 == 0) {
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0xf);
+    return p1;
   }
-  puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0x10);
-  return puVar1;
+  p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0x10);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A6C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetSuffixByFlag(int param_1, int param_2)
+XI_API uint8_t * __cdecl DmsgText_GetSuffixByFlag(int arg1, int arg2)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 != 0) {
+  if (arg1 != 0) {
     return &Read_as_v0;
   }
-  puVar1 =(uint8_t*)(&DAT_1038a378);
-  if (param_2 == 0) {
-    puVar1 =(uint8_t*)(&DAT_1038a374);
+  p1 =(uint8_t*)(&g_1038A378);
+  if (arg2 == 0) {
+    p1 =(uint8_t*)(&g_1038A374);
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A6F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetEntryById(int param_1)
+XI_API uint8_t * __cdecl DmsgText_GetEntryById(int arg1)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 == 0) {
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,9);
-    return puVar1;
+  if (arg1 == 0) {
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,9);
+    return p1;
   }
-  if (param_1 != 1) {
-    if (param_1 != 2) {
+  if (arg1 != 1) {
+    if (arg1 != 2) {
       return &Read_as_v0;
     }
-    puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,0xb);
-    return puVar1;
+    p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,0xb);
+    return p1;
   }
-  puVar1 = (uint8_t *)orig::DmsgText_GetCellCol0(&DAT_10669454,10);
-  return puVar1;
+  p1 = (uint8_t *)orig::DmsgText_GetCellCol0(&g_10669454,10);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A730
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetPrefixByFlags(int param_1, int param_2, int param_3)
+XI_API uint8_t * __cdecl DmsgText_GetPrefixByFlags(int arg1, int arg2, int arg3)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 != 0) {
-    return PTR_DAT_1038a2f0;
+  if (arg1 != 0) {
+    return g_1038A2F0;
   }
-  if (param_2 != 0) {
-    return PTR_s_cette_1038a2ec;
+  if (arg2 != 0) {
+    return g_1038A2EC;
   }
-  puVar1 = PTR_DAT_1038a2e8;
-  if (param_3 != 0) {
-    puVar1 = PTR_DAT_1038a2f4;
+  p1 = g_1038A2E8;
+  if (arg3 != 0) {
+    p1 = g_1038A2F4;
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A760
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl DmsgText_GetPrefixByFlags2(int param_1, int param_2, int param_3, int param_4)
+XI_API uint8_t * __cdecl DmsgText_GetPrefixByFlags2(int arg1, int arg2, int arg3, int arg4)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
-  if (param_1 == 0) {
-    if (param_2 != 0) {
-      return PTR_DAT_1038a300;
+  if (arg1 == 0) {
+    if (arg2 != 0) {
+      return g_1038A300;
     }
-    if ((param_3 == 0) || (puVar1 = PTR_DAT_1038a2fc, param_4 != 0)) {
-      puVar1 = PTR_DAT_1038a2f8;
+    if ((arg3 == 0) || (p1 = g_1038A2FC, arg4 != 0)) {
+      p1 = g_1038A2F8;
     }
-    return puVar1;
+    return p1;
   }
-  if (param_1 == 1) {
-    if (param_2 != 0) {
-      return PTR_DAT_1038a30c;
+  if (arg1 == 1) {
+    if (arg2 != 0) {
+      return g_1038A30C;
     }
-    if ((param_3 != 0) && (param_4 == 0)) {
-      return PTR_DAT_1038a308;
+    if ((arg3 != 0) && (arg4 == 0)) {
+      return g_1038A308;
     }
-    return PTR_DAT_1038a304;
+    return g_1038A304;
   }
-  if (param_1 != 3) {
+  if (arg1 != 3) {
     return &Read_as_v0;
   }
-  if (param_2 != 0) {
-    return PTR_DAT_1038a318;
+  if (arg2 != 0) {
+    return g_1038A318;
   }
-  if ((param_3 != 0) && (param_4 == 0)) {
-    return PTR_DAT_1038a314;
+  if ((arg3 != 0) && (arg4 == 0)) {
+    return g_1038A314;
   }
-  return PTR_DAT_1038a310;
+  return g_1038A310;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A810
@@ -1729,17 +1729,17 @@ XI_API void __thiscall DmsgText_ClearHead(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1025A820
 // GATE: PASS -- 100 trials, 82 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 82
-XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesB(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesB(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint32_t *this_00;
+  uint32_t *obj1;
   
-  this_00 = *(uint32_t **)((int)self_ + 4);
-  while (this_00 != (uint32_t *)0x0) {
-    *(uint32_t *)((int)self_ + 4) = this_00[1];
-    if (this_00 != (uint32_t *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)*this_00)))((void *)(this_00),1);
+  obj1 = *(uint32_t **)((int)self_ + 4);
+  while (obj1 != (uint32_t *)0x0) {
+    *(uint32_t *)((int)self_ + 4) = obj1[1];
+    if (obj1 != (uint32_t *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*obj1)))((void *)(obj1),1);
     }
-    this_00 = *(uint32_t **)((int)self_ + 4);
+    obj1 = *(uint32_t **)((int)self_ + 4);
   }
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)self_ = 0;
@@ -1748,28 +1748,28 @@ XI_API void __attribute__((stdcall, regparm(3))) DmsgText_DeleteNodesB(undefined
 
 // FUNCTION: FFXIMAIN 0x1025A860
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendNode(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_AppendNode(void * self_, bits32 arg2)
 {
   if (*(int *)((int)self_ + 8) != 0) {
-    *(uint32_t *)(*(int *)((int)self_ + 8) + 4) = param_1;
-    *(uint32_t *)((int)self_ + 8) = param_1;
+    *(uint32_t *)(*(int *)((int)self_ + 8) + 4) = arg2;
+    *(uint32_t *)((int)self_ + 8) = arg2;
     return;
   }
-  *(uint32_t *)((int)self_ + 4) = param_1;
-  *(uint32_t *)((int)self_ + 8) = param_1;
+  *(uint32_t *)((int)self_ + 4) = arg2;
+  *(uint32_t *)((int)self_ + 8) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1025A890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall DmsgText_FindNextTyped9(int param_1)
+XI_API int __stdcall DmsgText_FindNextTyped9(int arg1)
 {
-  if (param_1 != 0) {
+  if (arg1 != 0) {
     while( true ) {
-      param_1 = *(int *)(param_1 + 4);
-      if (param_1 == 0) break;
-      if ((*(int *)(param_1 + 8) != 0) && (*(int *)(param_1 + 8) != 9)) {
-        return param_1;
+      arg1 = *(int *)(arg1 + 4);
+      if (arg1 == 0) break;
+      if ((*(int *)(arg1 + 8) != 0) && (*(int *)(arg1 + 8) != 9)) {
+        return arg1;
       }
     }
   }
@@ -1778,111 +1778,111 @@ XI_API int __stdcall DmsgText_FindNextTyped9(int param_1)
 
 // FUNCTION: FFXIMAIN 0x1025A8C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_ContainsChar(char * param_1)
+XI_API bits32 __cdecl DmsgText_ContainsChar(char * arg1)
 {
-  char *pcVar1;
-  char cVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
+  char *p1;
+  char c1;
+  char *p2;
+  int i1;
+  int i2;
   
-  pcVar3 = (char *)orig::DmsgText_GetCellCol0(&DAT_10669454,0);
-  iVar5 = 0;
-  cVar2 = *pcVar3;
+  p2 = (char *)orig::DmsgText_GetCellCol0(&g_10669454,0);
+  i2 = 0;
+  c1 = *p2;
   do {
-    if (cVar2 == '\0') {
+    if (c1 == '\0') {
       return 0;
     }
-    pcVar1 = pcVar3 + iVar5;
-    iVar4 = orig::Sjis_GetCharByteLen_v1(pcVar1);
-    if (iVar4 == 1) {
-      if (*param_1 == *pcVar1) {
+    p1 = p2 + i2;
+    i1 = orig::Sjis_GetCharByteLen_v1(p1);
+    if (i1 == 1) {
+      if (*arg1 == *p1) {
         return 1;
       }
-      iVar5 = iVar5 + 1;
+      i2 = i2 + 1;
     }
     else {
-      if ((*param_1 == *pcVar1) && (param_1[1] == pcVar3[iVar5 + 1])) {
+      if ((*arg1 == *p1) && (arg1[1] == p2[i2 + 1])) {
         return 1;
       }
-      iVar5 = iVar5 + 2;
+      i2 = i2 + 2;
     }
-    cVar2 = pcVar3[iVar5];
+    c1 = p2[i2];
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x1025A930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall DmsgText_BuildNodeString(void * self_, char * param_1)
+XI_API uint32_t __thiscall DmsgText_BuildNodeString(void * self_, char * arg2)
 {
-  int iVar1;
-  uint8_t *puVar2;
-  size_t sVar3;
-  uint32_t uVar4;
-  int iVar5;
-  char *pcVar6;
+  int i1;
+  uint8_t *p1;
+  size_t u1;
+  uint32_t u2;
+  int i2;
+  char *p2;
   
-  iVar1 = orig::DmsgText_FindNextTyped9((int)param_1);
-  if (iVar1 == 0) {
+  i1 = orig::DmsgText_FindNextTyped9((int)arg2);
+  if (i1 == 0) {
     return 0;
   }
-  iVar5 = 0;
-  if (*(int *)(iVar1 + 8) == 1) {
-    puVar2 = orig::TextInputFiles_GetCStr((void *)(iVar1 + 0xc));
-    pcVar6 = puVar2 + 1;
+  i2 = 0;
+  if (*(int *)(i1 + 8) == 1) {
+    p1 = orig::TextInputFiles_GetCStr((void *)(i1 + 0xc));
+    p2 = p1 + 1;
   }
   else {
-    pcVar6 = param_1;
-    if (*(int *)(iVar1 + 8) == 8) {
-      iVar1 = orig::DmsgText_FindNextTyped9(iVar1);
-      if (*(int *)(iVar1 + 8) == 1) {
-        pcVar6 = orig::TextInputFiles_GetCStr((void *)(iVar1 + 0xc));
+    p2 = arg2;
+    if (*(int *)(i1 + 8) == 8) {
+      i1 = orig::DmsgText_FindNextTyped9(i1);
+      if (*(int *)(i1 + 8) == 1) {
+        p2 = orig::TextInputFiles_GetCStr((void *)(i1 + 0xc));
       }
       else {
-        pcVar6 = param_1;
-        if (*(int *)(iVar1 + 8) == 7) {
-          iVar5 = iVar1;
-          if (*(void **)(iVar1 + 0x24) == (void *)0x0) {
-            pcVar6 = orig::TextInputFiles_GetCStr((void *)(iVar1 + 0x18));
+        p2 = arg2;
+        if (*(int *)(i1 + 8) == 7) {
+          i2 = i1;
+          if (*(void **)(i1 + 0x24) == (void *)0x0) {
+            p2 = orig::TextInputFiles_GetCStr((void *)(i1 + 0x18));
           }
           else {
-            pcVar6 = (char *)orig::DmsgText_GetText14(*(void **)(iVar1 + 0x24));
+            p2 = (char *)orig::DmsgText_GetText14(*(void **)(i1 + 0x24));
           }
         }
       }
     }
   }
-  iVar1 = orig::Sjis_IsCodeInSet(pcVar6);
-  if (iVar1 == 0) {
-    sVar3 = orig::Sjis_GetCharByteLen_v1(pcVar6);
-    orig::_strncpy_v2((char *)&param_1,pcVar6,sVar3);
+  i1 = orig::Sjis_IsCodeInSet(p2);
+  if (i1 == 0) {
+    u1 = orig::Sjis_GetCharByteLen_v1(p2);
+    orig::_strncpy_v2((char *)&arg2,p2,u1);
   }
   else {
-    sVar3 = orig::NetCellFont_LowercaseCharThen1011DAE0((uint8_t *)&param_1,pcVar6);
+    u1 = orig::NetCellFont_LowercaseCharThen1011DAE0((uint8_t *)&arg2,p2);
   }
-  *(uint8_t *)((int)&param_1 + sVar3) = 0;
-  if (((((char)param_1 != 'h') && ((char)param_1 != 'y')) && ((char)param_1 != 'H')) &&
-     ((char)param_1 != 'Y')) {
-    uVar4 = orig::DmsgText_ContainsChar((char *)&param_1);
-    return uVar4;
+  *(uint8_t *)((int)&arg2 + u1) = 0;
+  if (((((char)arg2 != 'h') && ((char)arg2 != 'y')) && ((char)arg2 != 'H')) &&
+     ((char)arg2 != 'Y')) {
+    u2 = orig::DmsgText_ContainsChar((char *)&arg2);
+    return u2;
   }
-  if (iVar5 != 0) {
-    iVar1 = *(int *)(iVar5 + 0x14);
-    if (iVar1 == 0) {
-      pcVar6 = pcVar6 + 1;
-      iVar1 = orig::Sjis_IsCodeInSet(pcVar6);
-      if (iVar1 == 0) {
-        sVar3 = orig::Sjis_GetCharByteLen_v1(pcVar6);
-        orig::_strncpy_v2((char *)&param_1,pcVar6,sVar3);
+  if (i2 != 0) {
+    i1 = *(int *)(i2 + 0x14);
+    if (i1 == 0) {
+      p2 = p2 + 1;
+      i1 = orig::Sjis_IsCodeInSet(p2);
+      if (i1 == 0) {
+        u1 = orig::Sjis_GetCharByteLen_v1(p2);
+        orig::_strncpy_v2((char *)&arg2,p2,u1);
       }
       else {
-        sVar3 = orig::NetCellFont_LowercaseCharThen1011DAE0((uint8_t *)&param_1,pcVar6);
+        u1 = orig::NetCellFont_LowercaseCharThen1011DAE0((uint8_t *)&arg2,p2);
       }
-      *(uint8_t *)((int)&param_1 + sVar3) = 0;
-      iVar1 = orig::DmsgText_ContainsChar((char *)&param_1);
-      return (uint32_t)(iVar1 == 0);
+      *(uint8_t *)((int)&arg2 + u1) = 0;
+      i1 = orig::DmsgText_ContainsChar((char *)&arg2);
+      return (uint32_t)(i1 == 0);
     }
-    if ((iVar1 != 1) && (iVar1 == 2)) {
+    if ((i1 != 1) && (i1 == 2)) {
       return 0;
     }
   }
@@ -1891,279 +1891,279 @@ XI_API uint32_t __thiscall DmsgText_BuildNodeString(void * self_, char * param_1
 
 // FUNCTION: FFXIMAIN 0x1025AA90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DmsgText_HasNoHead(void * self_)
+XI_API bits32 __thiscall DmsgText_HasNoHead(void * self_)
 {
   return (uint32_t)(*(int *)self_ == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x1025AAA0
 // GATE: PASS -- 100 trials, 92 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 92
-XI_API undefined4 __thiscall DmsgText_ComposeTextB(void * self_, int param_1)
+XI_API bits32 __thiscall DmsgText_ComposeTextB(void * self_, int arg2)
 {
-  void *this_00;
-  char *pcVar1;
-  int iVar2;
-  uint8_t bVar3;
-  int iVar4;
-  uint8_t *puVar5;
-  uint32_t uVar6;
-  uint8_t *puVar7;
-  char *pcVar8;
-  uint32_t uVar9;
-  int local_8;
-  uint32_t local_4;
+  void *obj1;
+  char *p1;
+  int i1;
+  uint8_t u1;
+  int i2;
+  uint8_t *p2;
+  uint32_t u2;
+  uint8_t *p3;
+  char *p4;
+  uint32_t u3;
+  int i3;
+  uint32_t u4;
   
-  iVar4 = orig::DmsgText_HasNoHead(self_);
-  if ((iVar4 == 0) || (param_1 == 0)) {
+  i2 = orig::DmsgText_HasNoHead(self_);
+  if ((i2 == 0) || (arg2 == 0)) {
     return 0;
   }
-  bVar3 = false;
-  local_4 = 0;
-  orig::FUN_1018d3d0((void *)param_1);
-  pcVar1 = *(char **)((int)self_ + 4);
-  iVar4 = local_8;
+  u1 = false;
+  u4 = 0;
+  orig::game_1018D3D0((void *)arg2);
+  p1 = *(char **)((int)self_ + 4);
+  i2 = i3;
   do {
-    if (pcVar1 == (char *)0x0) {
+    if (p1 == (char *)0x0) {
       return 1;
     }
-    local_8 = iVar4;
-    switch(xi_sw(*(uint32_t *)(pcVar1 + 8))) {
+    i3 = i2;
+    switch(xi_sw(*(uint32_t *)(p1 + 8))) {
     case 1:
-      orig::TextInputFiles_AppendBuf((void *)param_1,pcVar1 + 0xc);
+      orig::TextInputFiles_AppendBuf((void *)arg2,p1 + 0xc);
       break;
     case 2:
-      if (*(int *)(pcVar1 + 0x10) != 0) {
-        iVar2 = *(int *)(*(int *)(pcVar1 + 0x10) + 0xc);
-        if (iVar2 == 0) {
-          if (!bVar3) goto LAB_1025ae07;
-          if (iVar4 == 0) {
-            uVar6 = orig::DmsgText_BuildNodeString(self_,pcVar1);
-            goto joined_r0x1025ac25;
+      if (*(int *)(p1 + 0x10) != 0) {
+        i1 = *(int *)(*(int *)(p1 + 0x10) + 0xc);
+        if (i1 == 0) {
+          if (!u1) goto code_1025AE07;
+          if (i2 == 0) {
+            u2 = orig::DmsgText_BuildNodeString(self_,p1);
+            goto L1;
           }
-          goto LAB_1025ac2c;
+          goto code_1025AC2C;
         }
-        if ((iVar2 == 2) && (*(int *)(pcVar1 + 0xc) == 1)) {
-          bVar3 = true;
-          local_8 = 0;
-          pcVar1[0xc] = '\x02';
-          pcVar1[0xd] = '\0';
-          pcVar1[0xe] = '\0';
-          pcVar1[0xf] = '\0';
+        if ((i1 == 2) && (*(int *)(p1 + 0xc) == 1)) {
+          u1 = true;
+          i3 = 0;
+          p1[0xc] = '\x02';
+          p1[0xd] = '\0';
+          p1[0xe] = '\0';
+          p1[0xf] = '\0';
         }
-        uVar6 = orig::DmsgText_BuildNodeString(self_,pcVar1);
-        if ((uVar6 != 0) &&
-           (iVar4 = orig::DmsgText_IsTypeTwoZero(*(int *)(pcVar1 + 0xc),
-                                 (uint32_t)(*(int *)(*(int *)(pcVar1 + 0x10) + 0xc) == 4)), iVar4 != 0))
+        u2 = orig::DmsgText_BuildNodeString(self_,p1);
+        if ((u2 != 0) &&
+           (i2 = orig::DmsgText_IsTypeTwoZero(*(int *)(p1 + 0xc),
+                                 (uint32_t)(*(int *)(*(int *)(p1 + 0x10) + 0xc) == 4)), i2 != 0))
         {
-          if (bVar3) {
-            puVar7 = orig::DmsgText_GetEntryById(local_8);
-            orig::TextInputFiles_Append((void *)param_1,puVar7);
-            orig::TextInputFiles_Append((void *)param_1,&c_strSpace_as_v0);
+          if (u1) {
+            p3 = orig::DmsgText_GetEntryById(i3);
+            orig::TextInputFiles_Append((void *)arg2,p3);
+            orig::TextInputFiles_Append((void *)arg2,&c_strSpace_as_v0);
           }
-          puVar5 =(uint8_t*)(&DAT_1038a364);
-          goto LAB_1025ae00;
+          p2 =(uint8_t*)(&g_1038A364);
+          goto code_1025AE00;
         }
-        if (bVar3) {
-          if (*(int *)(pcVar1 + 0xc) == 2) {
-            iVar4 = *(int *)(pcVar1 + 0x10);
-            if ((*(int *)(iVar4 + 0xc) == 4) || (*(int *)(iVar4 + 0x10) != 1)) {
-              puVar7 = orig::DmsgText_GetFormAlt(local_8,(uint32_t)(*(int *)(iVar4 + 0xc) == 4),
-                                    *(int *)(iVar4 + 0x10));
-              orig::TextInputFiles_Append((void *)param_1,puVar7);
+        if (u1) {
+          if (*(int *)(p1 + 0xc) == 2) {
+            i2 = *(int *)(p1 + 0x10);
+            if ((*(int *)(i2 + 0xc) == 4) || (*(int *)(i2 + 0x10) != 1)) {
+              p3 = orig::DmsgText_GetFormAlt(i3,(uint32_t)(*(int *)(i2 + 0xc) == 4),
+                                    *(int *)(i2 + 0x10));
+              orig::TextInputFiles_Append((void *)arg2,p3);
               break;
             }
           }
-          puVar7 = orig::DmsgText_GetEntryById(local_8);
-          orig::TextInputFiles_Append((void *)param_1,puVar7);
-          orig::TextInputFiles_Append((void *)param_1,&c_strSpace_as_v0);
+          p3 = orig::DmsgText_GetEntryById(i3);
+          orig::TextInputFiles_Append((void *)arg2,p3);
+          orig::TextInputFiles_Append((void *)arg2,&c_strSpace_as_v0);
         }
-        puVar7 = orig::DmsgText_GetFormById(*(int *)(pcVar1 + 0xc),
-                              (uint32_t)(*(int *)(*(int *)(pcVar1 + 0x10) + 0xc) == 4),
-                              *(int *)(*(int *)(pcVar1 + 0x10) + 0x10));
-        orig::TextInputFiles_Append((void *)param_1,puVar7);
+        p3 = orig::DmsgText_GetFormById(*(int *)(p1 + 0xc),
+                              (uint32_t)(*(int *)(*(int *)(p1 + 0x10) + 0xc) == 4),
+                              *(int *)(*(int *)(p1 + 0x10) + 0x10));
+        orig::TextInputFiles_Append((void *)arg2,p3);
       }
       break;
     case 3:
-      local_4 = orig::DmsgText_BuildNodeString(self_,pcVar1);
-      puVar7 = orig::DmsgText_GetSuffixByFlag(*(int *)(pcVar1 + 0xc),local_4);
-      orig::TextInputFiles_Append((void *)param_1,puVar7);
-      if (local_4 != 0) {
-LAB_1025ae07:
-        iVar4 = orig::DmsgText_FindNextTyped9((int)pcVar1);
-        if (*(int *)(iVar4 + 8) == 8) {
-          *(uint32_t *)(iVar4 + 8) = 0;
+      u4 = orig::DmsgText_BuildNodeString(self_,p1);
+      p3 = orig::DmsgText_GetSuffixByFlag(*(int *)(p1 + 0xc),u4);
+      orig::TextInputFiles_Append((void *)arg2,p3);
+      if (u4 != 0) {
+code_1025AE07:
+        i2 = orig::DmsgText_FindNextTyped9((int)p1);
+        if (*(int *)(i2 + 8) == 8) {
+          *(uint32_t *)(i2 + 8) = 0;
         }
-        else if (*(int *)(iVar4 + 8) == 1) {
-          this_00 = (void *)(iVar4 + 0xc);
-          pcVar8 = orig::TextInputFiles_GetCStr(this_00);
-          if (*pcVar8 == ' ') {
-            puVar7 = orig::TextInputFiles_GetCStr(this_00);
-            orig::TextInputFiles_AssignWhole(this_00,puVar7 + 1);
+        else if (*(int *)(i2 + 8) == 1) {
+          obj1 = (void *)(i2 + 0xc);
+          p4 = orig::TextInputFiles_GetCStr(obj1);
+          if (*p4 == ' ') {
+            p3 = orig::TextInputFiles_GetCStr(obj1);
+            orig::TextInputFiles_AssignWhole(obj1,p3 + 1);
           }
         }
       }
       break;
     case 4:
-      local_8 = *(int *)(pcVar1 + 0xc);
-      iVar4 = orig::DmsgText_FindNextTyped9((int)pcVar1);
-      if (iVar4 != 0) {
-        if (*(int *)(iVar4 + 8) == 1) {
-          pcVar8 = orig::TextInputFiles_GetCStr((void *)(iVar4 + 0xc));
-          if (*pcVar8 == ' ') {
-LAB_1025ac0e:
-            local_4 = orig::DmsgText_BuildNodeString(self_,pcVar1);
+      i3 = *(int *)(p1 + 0xc);
+      i2 = orig::DmsgText_FindNextTyped9((int)p1);
+      if (i2 != 0) {
+        if (*(int *)(i2 + 8) == 1) {
+          p4 = orig::TextInputFiles_GetCStr((void *)(i2 + 0xc));
+          if (*p4 == ' ') {
+code_1025AC0E:
+            u4 = orig::DmsgText_BuildNodeString(self_,p1);
           }
         }
-        else if ((*(int *)(iVar4 + 8) == 8) && (iVar4 = orig::DmsgText_FindNextTyped9(iVar4), iVar4 != 0)) {
-          if (*(int *)(iVar4 + 8) != 2) goto LAB_1025ac0e;
-          if (*(int *)(iVar4 + 0xc) == 2) {
-            bVar3 = true;
-            goto LAB_1025ae07;
+        else if ((*(int *)(i2 + 8) == 8) && (i2 = orig::DmsgText_FindNextTyped9(i2), i2 != 0)) {
+          if (*(int *)(i2 + 8) != 2) goto code_1025AC0E;
+          if (*(int *)(i2 + 0xc) == 2) {
+            u1 = true;
+            goto code_1025AE07;
           }
         }
       }
-      iVar4 = *(int *)(pcVar1 + 0xc);
-      uVar6 = local_4;
-      if (iVar4 == 0) {
-joined_r0x1025ac25:
-        if (uVar6 != 0) {
-          bVar3 = false;
-          puVar5 =(uint8_t*)(&DAT_1038a37c);
-LAB_1025ae00:
-          orig::TextInputFiles_Append((void *)param_1,puVar5);
-          goto LAB_1025ae07;
+      i2 = *(int *)(p1 + 0xc);
+      u2 = u4;
+      if (i2 == 0) {
+L1:
+        if (u2 != 0) {
+          u1 = false;
+          p2 =(uint8_t*)(&g_1038A37C);
+code_1025AE00:
+          orig::TextInputFiles_Append((void *)arg2,p2);
+          goto code_1025AE07;
         }
       }
-LAB_1025ac2c:
-      bVar3 = false;
-      puVar7 = orig::DmsgText_GetEntryById(iVar4);
-      orig::TextInputFiles_Append((void *)param_1,puVar7);
+code_1025AC2C:
+      u1 = false;
+      p3 = orig::DmsgText_GetEntryById(i2);
+      orig::TextInputFiles_Append((void *)arg2,p3);
       break;
     case 5:
-      if (((*(int *)(pcVar1 + 0xc) != 0) &&
-          (iVar4 = *(int *)(*(int *)(pcVar1 + 0xc) + 0xc), iVar4 != 0)) && (iVar4 != 1)) {
-        iVar4 = *(int *)(pcVar1 + 0xc);
-        uVar6 = orig::DmsgText_BuildNodeString(self_,pcVar1);
-        puVar5 = orig::DmsgText_GetPrefixByFlags((uint32_t)(*(int *)(iVar4 + 0xc) == 4),*(int *)(iVar4 + 0x10),uVar6);
-        orig::TextInputFiles_Append((void *)param_1,puVar5);
+      if (((*(int *)(p1 + 0xc) != 0) &&
+          (i2 = *(int *)(*(int *)(p1 + 0xc) + 0xc), i2 != 0)) && (i2 != 1)) {
+        i2 = *(int *)(p1 + 0xc);
+        u2 = orig::DmsgText_BuildNodeString(self_,p1);
+        p2 = orig::DmsgText_GetPrefixByFlags((uint32_t)(*(int *)(i2 + 0xc) == 4),*(int *)(i2 + 0x10),u2);
+        orig::TextInputFiles_Append((void *)arg2,p2);
       }
       break;
     case 6:
-      iVar4 = *(int *)(pcVar1 + 0xc);
-      if (iVar4 != 0) {
-        uVar6 = orig::DmsgText_BuildNodeString(self_,pcVar1);
-        puVar7 = orig::DmsgText_GetPrefixByFlags2(*(int *)(pcVar1 + 0x10),(uint32_t)(*(int *)(iVar4 + 0xc) == 4),
-                              *(int *)(iVar4 + 0x10),uVar6);
-        orig::TextInputFiles_Append((void *)param_1,puVar7);
+      i2 = *(int *)(p1 + 0xc);
+      if (i2 != 0) {
+        u2 = orig::DmsgText_BuildNodeString(self_,p1);
+        p3 = orig::DmsgText_GetPrefixByFlags2(*(int *)(p1 + 0x10),(uint32_t)(*(int *)(i2 + 0xc) == 4),
+                              *(int *)(i2 + 0x10),u2);
+        orig::TextInputFiles_Append((void *)arg2,p3);
       }
       break;
     case 7:
-      if ((*(int *)(pcVar1 + 0xc) == 0) || (*(int *)(pcVar1 + 0xc) == 1)) {
-        orig::TextInputFiles_AppendBuf((void *)param_1,pcVar1 + 0x18);
+      if ((*(int *)(p1 + 0xc) == 0) || (*(int *)(p1 + 0xc) == 1)) {
+        orig::TextInputFiles_AppendBuf((void *)arg2,p1 + 0x18);
       }
-      else if (*(void **)(pcVar1 + 0x24) == (void *)0x0) {
-        orig::TextInputFiles_AppendBuf((void *)param_1,pcVar1 + 0x18);
+      else if (*(void **)(p1 + 0x24) == (void *)0x0) {
+        orig::TextInputFiles_AppendBuf((void *)arg2,p1 + 0x18);
       }
       else {
-        uVar9 = orig::DmsgText_GetText14(*(void **)(pcVar1 + 0x24));
-        orig::TextInputFiles_Append((void *)param_1,uVar9);
+        u3 = orig::DmsgText_GetText14(*(void **)(p1 + 0x24));
+        orig::TextInputFiles_Append((void *)arg2,u3);
       }
       break;
     case 8:
-      orig::TextInputFiles_Append((void *)param_1,&c_strSpace_as_v0);
+      orig::TextInputFiles_Append((void *)arg2,&c_strSpace_as_v0);
       break;
     case 9:
-      orig::TextInputFiles_AppendBuf((void *)param_1,pcVar1 + 0xc);
+      orig::TextInputFiles_AppendBuf((void *)arg2,p1 + 0xc);
     }
-    pcVar1 = *(char **)(pcVar1 + 4);
-    iVar4 = local_8;
+    p1 = *(char **)(p1 + 4);
+    i2 = i3;
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x1025AEF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendStringNode(void * self_, char * param_1)
+XI_API void __thiscall DmsgText_AppendStringNode(void * self_, char * arg2)
 {
-  int iVar1;
-  char *pcVar2;
-  uint32_t *puVar3;
-  char *pcVar4;
-  uint8_t bVar5;
-  uint64_t uVar6;
+  int i1;
+  char *p1;
+  uint32_t *p2;
+  char *p3;
+  uint8_t u1;
+  uint64_t u2;
   
-  iVar1 = 2;
-  bVar5 = true;
-  pcVar2 = param_1;
-  pcVar4 = (char *)&c_strSpace_as_v0;
+  i1 = 2;
+  u1 = true;
+  p1 = arg2;
+  p3 = (char *)&c_strSpace_as_v0;
   do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    bVar5 = *pcVar2 == *pcVar4;
-    pcVar2 = pcVar2 + 1;
-    pcVar4 = pcVar4 + 1;
-  } while (bVar5);
-  if (bVar5) {
-    uVar6 = orig::Allocator_Generic_v1(0x18);
-    puVar3 = (uint32_t *)uVar6;
-    if (puVar3 == (uint32_t *)0x0) {
-      puVar3 = (uint32_t *)0x0;
-      DAT_00000008 = 8;
+    if (i1 == 0) break;
+    i1 = i1 + -1;
+    u1 = *p1 == *p3;
+    p1 = p1 + 1;
+    p3 = p3 + 1;
+  } while (u1);
+  if (u1) {
+    u2 = orig::Allocator_Generic_v1(0x18);
+    p2 = (uint32_t *)u2;
+    if (p2 == (uint32_t *)0x0) {
+      p2 = (uint32_t *)0x0;
+      g_00000008 = 8;
     }
     else {
-      puVar3[1] = 0;
-      puVar3[2] = 1;
-      *puVar3 = &PTR_LAB_1033cee0;
-      orig::TextInputFiles_AssignCStr(puVar3 + 3,(char *)0x0);
-      *puVar3 = &PTR_FUN_1033cedc;
-      puVar3[2] = 8;
+      p2[1] = 0;
+      p2[2] = 1;
+      *p2 = &g_1033CEE0;
+      orig::TextInputFiles_AssignCStr(p2 + 3,(char *)0x0);
+      *p2 = &g_1033CEDC;
+      p2[2] = 8;
     }
   }
   else {
-    uVar6 = orig::Allocator_Generic_v1(0x18);
-    puVar3 = (uint32_t *)uVar6;
-    if (puVar3 == (uint32_t *)0x0) {
-      puVar3 = (uint32_t *)0x0;
+    u2 = orig::Allocator_Generic_v1(0x18);
+    p2 = (uint32_t *)u2;
+    if (p2 == (uint32_t *)0x0) {
+      p2 = (uint32_t *)0x0;
     }
     else {
-      puVar3[1] = 0;
-      puVar3[2] = 1;
-      *puVar3 = &PTR_LAB_1033cee0;
-      orig::TextInputFiles_AssignCStr(puVar3 + 3,param_1);
-      *puVar3 = &PTR_FUN_1033cedc;
+      p2[1] = 0;
+      p2[2] = 1;
+      *p2 = &g_1033CEE0;
+      orig::TextInputFiles_AssignCStr(p2 + 3,arg2);
+      *p2 = &g_1033CEDC;
     }
     if (*(int *)self_ == 2) {
       *(uint32_t *)self_ = 0;
     }
   }
-  orig::DmsgText_AppendNode(self_,puVar3);
+  orig::DmsgText_AppendNode(self_,p2);
   orig::DmsgText_HasNoHead(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1025AFB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendIdString(void * self_, undefined4 param_1, int param_2, char * param_3, undefined4 param_4)
+XI_API void __thiscall DmsgText_AppendIdString(void * self_, bits32 arg2, int arg3, char * arg4, bits32 arg5)
 {
-  uint32_t *puVar1;
-  uint64_t uVar2;
+  uint32_t *p1;
+  uint64_t u1;
   
-  if (param_2 == -1) {
+  if (arg3 == -1) {
     orig::DmsgText_HasNoHead(self_);
     return;
   }
-  uVar2 = orig::Allocator_Generic_v1(0x28);
-  puVar1 = (uint32_t *)uVar2;
-  if (puVar1 != (uint32_t *)0x0) {
-    puVar1[5] = param_4;
-    puVar1[1] = 0;
-    puVar1[2] = 7;
-    *puVar1 = &PTR_LAB_1033cee0;
-    puVar1[3] = param_1;
-    puVar1[4] = param_2;
-    orig::TextInputFiles_AssignCStr(puVar1 + 6,param_3);
-    puVar1[9] = 0;
-    *puVar1 = &PTR_FUN_1033cee4;
-    orig::DmsgText_LinkNode(self_,puVar1);
+  u1 = orig::Allocator_Generic_v1(0x28);
+  p1 = (uint32_t *)u1;
+  if (p1 != (uint32_t *)0x0) {
+    p1[5] = arg5;
+    p1[1] = 0;
+    p1[2] = 7;
+    *p1 = &g_1033CEE0;
+    p1[3] = arg2;
+    p1[4] = arg3;
+    orig::TextInputFiles_AssignCStr(p1 + 6,arg4);
+    p1[9] = 0;
+    *p1 = &g_1033CEE4;
+    orig::DmsgText_LinkNode(self_,p1);
     return;
   }
   orig::DmsgText_LinkNode(self_,0);
@@ -2172,23 +2172,23 @@ XI_API void __thiscall DmsgText_AppendIdString(void * self_, undefined4 param_1,
 
 // FUNCTION: FFXIMAIN 0x1025B100
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API void __thiscall DmsgText_LinkNode(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_LinkNode(void * self_, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  orig::DmsgText_AppendNode(self_,param_1);
+  orig::DmsgText_AppendNode(self_,arg2);
   if (*(int *)self_ == 1) {
-    for (iVar1 = *(int *)((int)self_ + 4); iVar1 != 0; iVar1 = *(int *)(iVar1 + 4)) {
-      iVar2 = *(int *)(iVar1 + 8);
-      if ((iVar2 == 2) && (*(int *)(iVar1 + 0x10) == 0)) {
-        *(uint32_t *)(iVar1 + 0x10) = param_1;
+    for (i1 = *(int *)((int)self_ + 4); i1 != 0; i1 = *(int *)(i1 + 4)) {
+      i2 = *(int *)(i1 + 8);
+      if ((i2 == 2) && (*(int *)(i1 + 0x10) == 0)) {
+        *(uint32_t *)(i1 + 0x10) = arg2;
       }
-      if ((iVar2 == 5) && (*(int *)(iVar1 + 0xc) == 0)) {
-        *(uint32_t *)(iVar1 + 0xc) = param_1;
+      if ((i2 == 5) && (*(int *)(i1 + 0xc) == 0)) {
+        *(uint32_t *)(i1 + 0xc) = arg2;
       }
-      if ((iVar2 == 6) && (*(int *)(iVar1 + 0xc) == 0)) {
-        *(uint32_t *)(iVar1 + 0xc) = param_1;
+      if ((i2 == 6) && (*(int *)(i1 + 0xc) == 0)) {
+        *(uint32_t *)(i1 + 0xc) = arg2;
       }
     }
     *(uint32_t *)self_ = 0;
@@ -2199,24 +2199,24 @@ XI_API void __thiscall DmsgText_LinkNode(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x1025B1E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DmsgText_AppendTypeTwo(void * self_, undefined4 param_1)
+XI_API void __thiscall DmsgText_AppendTypeTwo(void * self_, bits32 arg2)
 {
-  uint32_t *puVar1;
-  uint64_t uVar2;
+  uint32_t *p1;
+  uint64_t u1;
   
-  uVar2 = orig::Allocator_Generic_v1(0x14);
-  puVar1 = (uint32_t *)uVar2;
-  if (puVar1 == (uint32_t *)0x0) {
-    puVar1 = (uint32_t *)0x0;
+  u1 = orig::Allocator_Generic_v1(0x14);
+  p1 = (uint32_t *)u1;
+  if (p1 == (uint32_t *)0x0) {
+    p1 = (uint32_t *)0x0;
   }
   else {
-    puVar1[1] = 0;
-    puVar1[2] = 2;
-    puVar1[3] = param_1;
-    puVar1[4] = 0;
-    *puVar1 = &PTR_LAB_1033cee8;
+    p1[1] = 0;
+    p1[2] = 2;
+    p1[3] = arg2;
+    p1[4] = 0;
+    *p1 = &g_1033CEE8;
   }
-  orig::DmsgText_AppendNode(self_,puVar1);
+  orig::DmsgText_AppendNode(self_,p1);
   *(uint32_t *)self_ = 1;
   orig::DmsgText_HasNoHead(self_);
   return;
@@ -2224,26 +2224,26 @@ XI_API void __thiscall DmsgText_AppendTypeTwo(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x1025B4F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl DmsgText_SelectTableByLanguage(undefined4 param_1)
+XI_API void __cdecl DmsgText_SelectTableByLanguage(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0:
-    DAT_10669464_as_v0 =(DAT_10669464_as_v0_t)(&DAT_1038ab08);
+    g_10669464_as_v0 =(g_10669464_as_v0_t)(&g_1038AB08);
     return;
   case 1:
-    goto switchD_1025b4f9_caseD_1;
+    goto L1;
   case 2:
     if (-1 < *(char *)(g_pSceneState + 0x18)) {
-      DAT_10669464_as_v0 =(DAT_10669464_as_v0_t)(&DAT_1038a388);
+      g_10669464_as_v0 =(g_10669464_as_v0_t)(&g_1038A388);
       return;
     }
-switchD_1025b4f9_caseD_1:
-    DAT_10669464_as_v0 =(DAT_10669464_as_v0_t)(&DAT_1038a548);
+L1:
+    g_10669464_as_v0 =(g_10669464_as_v0_t)(&g_1038A548);
     return;
   case 3:
-    DAT_10669464_as_v0 =(DAT_10669464_as_v0_t)(&DAT_1038a548);
+    g_10669464_as_v0 =(g_10669464_as_v0_t)(&g_1038A548);
     if (-1 < *(char *)(g_pSceneState + 0x18)) {
-      DAT_10669464_as_v0 =(DAT_10669464_as_v0_t)(&DAT_1038a708);
+      g_10669464_as_v0 =(g_10669464_as_v0_t)(&g_1038A708);
     }
   default:
     return;
@@ -2252,368 +2252,368 @@ switchD_1025b4f9_caseD_1:
 
 // FUNCTION: FFXIMAIN 0x1025B560
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Scene_GetTableValue(int param_1)
+XI_API bits32 __cdecl Scene_GetTableValue(int arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)(g_pSceneState + 8);
-  if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((iVar1 == 2 || (iVar1 == 3)))) {
-    iVar1 = 1;
+  i1 = *(int *)(g_pSceneState + 8);
+  if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) {
+    i1 = 1;
   }
-  orig::DmsgText_SelectTableByLanguage(iVar1);
-  return *(uint32_t *)(DAT_10669464 + param_1 * 4);
+  orig::DmsgText_SelectTableByLanguage(i1);
+  return *(uint32_t *)(g_10669464 + arg1 * 4);
 }
 
 // FUNCTION: FFXIMAIN 0x1025B5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl Scene_GetMenuFrameName(int param_1)
+XI_API uint8_t * __cdecl Scene_GetMenuFrameName(int arg1)
 {
-  int iVar1;
+  int i1;
   
-  if ((-1 < param_1) && (param_1 < 8)) {
-    iVar1 = *(int *)(g_pSceneState + 8);
-    if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((iVar1 == 2 || (iVar1 == 3)))) {
-      iVar1 = 1;
+  if ((-1 < arg1) && (arg1 < 8)) {
+    i1 = *(int *)(g_pSceneState + 8);
+    if ((*(char *)(g_pSceneState + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) {
+      i1 = 1;
     }
-    return (&PTR_s_menu_frames_1038a8d0)[iVar1 + param_1 * 4];
+    return (&g_1038A8D0)[i1 + arg1 * 4];
   }
   return (uint8_t *)0x0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025B5E0
 // GATE: PASS -- 100 trials, 52 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 52
-XI_API int __cdecl DmsgText_CopyWithoutMarker(uint8_t * param_1, uint32_t param_2, int param_3, uint32_t param_4)
+XI_API int __cdecl DmsgText_CopyWithoutMarker(uint8_t * arg1, uint32_t arg2, int arg3, uint32_t arg4)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t *puVar4;
-  uint32_t *puVar5;
-  uint32_t local_4;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
+  uint32_t u3;
   
-  iVar3 = 0;
-  local_4 = 0;
-  if (param_4 == 0) {
-    *param_1 = 0;
+  i1 = 0;
+  u3 = 0;
+  if (arg4 == 0) {
+    *arg1 = 0;
     return 0;
   }
   do {
-    if (*(char *)(local_4 + param_3) == '\x15') {
-      local_4 = local_4 + 1;
+    if (*(char *)(u3 + arg3) == '\x15') {
+      u3 = u3 + 1;
     }
     else {
-      uVar1 = orig::Sjis_GetCharByteLen_v1((uint8_t *)(local_4 + param_3));
-      if ((param_2 != 0) && (param_2 <= uVar1 + iVar3)) {
-        param_1[iVar3] = 0;
-        param_1[iVar3] = 0;
-        return iVar3;
+      u1 = orig::Sjis_GetCharByteLen_v1((uint8_t *)(u3 + arg3));
+      if ((arg2 != 0) && (arg2 <= u1 + i1)) {
+        arg1[i1] = 0;
+        arg1[i1] = 0;
+        return i1;
       }
-      puVar5 = (uint32_t *)(param_1 + iVar3);
-      iVar3 = iVar3 + uVar1;
-      puVar4 = (uint32_t *)(local_4 + param_3);
-      for (uVar2 = uVar1 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *puVar5 = *puVar4;
-        puVar4 = puVar4 + 1;
-        puVar5 = puVar5 + 1;
+      p2 = (uint32_t *)(arg1 + i1);
+      i1 = i1 + u1;
+      p1 = (uint32_t *)(u3 + arg3);
+      for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+        *p2 = *p1;
+        p1 = p1 + 1;
+        p2 = p2 + 1;
       }
-      for (uVar2 = uVar1 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *(uint8_t *)puVar5 = *(uint8_t *)puVar4;
-        puVar4 = (uint32_t *)((int)puVar4 + 1);
-        puVar5 = (uint32_t *)((int)puVar5 + 1);
+      for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+        *(uint8_t *)p2 = *(uint8_t *)p1;
+        p1 = (uint32_t *)((int)p1 + 1);
+        p2 = (uint32_t *)((int)p2 + 1);
       }
-      param_1[iVar3] = 0;
-      local_4 = local_4 + uVar1;
+      arg1[i1] = 0;
+      u3 = u3 + u1;
     }
-    if (param_4 <= local_4) {
-      param_1[iVar3] = 0;
-      return iVar3;
+    if (arg4 <= u3) {
+      arg1[i1] = 0;
+      return i1;
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x1025B680
 // GATE: PASS -- 100 trials, 70 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-XI_API int __cdecl DmsgText_CountChars(int param_1, uint32_t param_2)
+XI_API int __cdecl DmsgText_CountChars(int arg1, uint32_t arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
+  int i1;
+  uint32_t u1;
+  int i2;
   
-  iVar3 = 0;
-  uVar2 = 0;
-  if (param_2 != 0) {
+  i2 = 0;
+  u1 = 0;
+  if (arg2 != 0) {
     do {
-      if (*(char *)(uVar2 + param_1) == '\x15') {
-        uVar2 = uVar2 + 1;
+      if (*(char *)(u1 + arg1) == '\x15') {
+        u1 = u1 + 1;
       }
       else {
-        iVar1 = orig::Sjis_GetCharByteLen_v1((uint8_t *)(uVar2 + param_1));
-        uVar2 = uVar2 + iVar1;
-        iVar3 = iVar3 + iVar1;
+        i1 = orig::Sjis_GetCharByteLen_v1((uint8_t *)(u1 + arg1));
+        u1 = u1 + i1;
+        i2 = i2 + i1;
       }
-    } while (uVar2 < param_2);
+    } while (u1 < arg2);
   }
-  return iVar3;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x1025B6C0
 // GATE: PASS -- 100 trials, 22 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 22
-XI_API int __cdecl DmsgText_WrapLine(int param_1, uint32_t param_2, char * param_3, uint32_t * param_4, undefined4 param_5, uint32_t param_6, uint32_t param_7, uint8_t * param_8, uint8_t * param_9)
+XI_API int __cdecl DmsgText_WrapLine(int arg1, uint32_t arg2, char * arg3, uint32_t * arg4, bits32 arg5, uint32_t arg6, uint32_t arg7, uint8_t * arg8, uint8_t * arg9)
 {
-  uint8_t *pbVar1;
-  uint32_t uVar2;
-  uint8_t *puVar3;
-  uint32_t uVar4;
-  uint8_t bVar5;
-  char cVar6;
-  uint8_t bVar7;
-  uint32_t uVar8;
-  int iVar9;
-  int iVar10;
-  char *pcVar11;
-  uint32_t uVar12;
-  uint32_t uVar13;
-  uint32_t uVar14;
-  uint32_t uStack_18;
-  uint32_t uStack_10;
-  int iStack_c;
+  uint8_t *p1;
+  uint32_t u1;
+  uint8_t *p2;
+  uint32_t u2;
+  uint8_t u3;
+  char c1;
+  uint8_t u4;
+  uint32_t u5;
+  int i1;
+  int i2;
+  char *p3;
+  uint32_t u6;
+  uint32_t u7;
+  uint32_t u8;
+  uint32_t u9;
+  uint32_t u10;
+  int i3;
   
-  *param_4 = 0;
-  if (param_1 == 0) {
+  *arg4 = 0;
+  if (arg1 == 0) {
     return 0;
   }
-  if (param_3 == (char *)0x0) {
+  if (arg3 == (char *)0x0) {
     return 0;
   }
-  if (param_8 == (uint8_t *)0x0) {
+  if (arg8 == (uint8_t *)0x0) {
     return 0;
   }
-  if (param_9 == (uint8_t *)0x0) {
+  if (arg9 == (uint8_t *)0x0) {
     return 0;
   }
-  bVar7 = false;
-  uVar8 = (*(code *)param_8)(param_3,param_5);
-  uStack_18 = uVar8;
-  if (param_3[uVar8] == '\0') {
-    uVar13 = 0;
-    param_6 = 0;
-    XI_PIECE(param_6, 0, 1) = 0;
-    bVar5 = (uint8_t)param_6;
-    if (uVar8 != 0) {
+  u4 = false;
+  u5 = (*(untyped_fn *)arg8)(arg3,arg5);
+  u9 = u5;
+  if (arg3[u5] == '\0') {
+    u7 = 0;
+    arg6 = 0;
+    XI_PIECE(arg6, 0, 1) = 0;
+    u3 = (uint8_t)arg6;
+    if (u5 != 0) {
       do {
-        pbVar1 = (uint8_t *)(param_3 + uVar13);
-        iVar9 = orig::DmsgText_IsWrapBreak((char *)pbVar1);
-        if (iVar9 != 0) {
-          iVar9 = orig::Sjis_GetCharByteLen_v1(param_3 + uVar13);
-          uStack_18 = iVar9 + uVar13;
-          bVar5 = (uint8_t)param_6;
+        p1 = (uint8_t *)(arg3 + u7);
+        i1 = orig::DmsgText_IsWrapBreak((char *)p1);
+        if (i1 != 0) {
+          i1 = orig::Sjis_GetCharByteLen_v1(arg3 + u7);
+          u9 = i1 + u7;
+          u3 = (uint8_t)arg6;
           break;
         }
-        bVar5 = *pbVar1;
-        param_6 = (uint32_t)bVar5;
-        iVar9 = orig::Sjis_GetCharByteLen_v1(pbVar1);
-        uVar13 = uVar13 + iVar9;
-      } while (uVar13 < uVar8);
+        u3 = *p1;
+        arg6 = (uint32_t)u3;
+        i1 = orig::Sjis_GetCharByteLen_v1(p1);
+        u7 = u7 + i1;
+      } while (u7 < u5);
     }
-    XI_PIECE(param_6, 0, 1) = bVar5;
-    iVar9 = orig::DmsgText_CopyWithoutMarker((uint8_t *)param_1,param_2 - 1,(int)param_3,uVar13);
-    if ((uint8_t)param_6 != 0x15) goto LAB_1025ba2d;
-    pcVar11 = (char *)&DAT_10353e04;
+    XI_PIECE(arg6, 0, 1) = u3;
+    i1 = orig::DmsgText_CopyWithoutMarker((uint8_t *)arg1,arg2 - 1,(int)arg3,u7);
+    if ((uint8_t)arg6 != 0x15) goto code_1025BA2D;
+    p3 = (char *)&g_10353E04;
     do {
-      cVar6 = *pcVar11;
-      pcVar11[param_1 + iVar9 + -(int)XI_GAME(0x10353E04u)] = cVar6;
-      pcVar11 = pcVar11 + 1;
-    } while (cVar6 != '\0');
+      c1 = *p3;
+      p3[arg1 + i1 + -(int)XI_GAME(0x10353E04u)] = c1;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
   }
   else {
-    uStack_18 = 0;
-    iVar9 = orig::DmsgText_IsWrapBreak(param_3 + uVar8);
-    if (iVar9 == 0) {
-      uVar13 = 0;
-      if (uVar8 != 0) {
+    u9 = 0;
+    i1 = orig::DmsgText_IsWrapBreak(arg3 + u5);
+    if (i1 == 0) {
+      u7 = 0;
+      if (u5 != 0) {
         do {
-          iVar9 = orig::DmsgText_IsWrapBreak(param_3 + uVar13);
-          if (iVar9 != 0) {
-            iVar9 = orig::Sjis_GetCharByteLen_v1(param_3 + uVar13);
-            uStack_18 = iVar9 + uVar13;
-            goto LAB_1025b871;
+          i1 = orig::DmsgText_IsWrapBreak(arg3 + u7);
+          if (i1 != 0) {
+            i1 = orig::Sjis_GetCharByteLen_v1(arg3 + u7);
+            u9 = i1 + u7;
+            goto code_1025B871;
           }
-          iVar9 = orig::Sjis_GetCharByteLen_v1(param_3 + uVar13);
-          uVar13 = uVar13 + iVar9;
-        } while (uVar13 < uVar8);
+          i1 = orig::Sjis_GetCharByteLen_v1(arg3 + u7);
+          u7 = u7 + i1;
+        } while (u7 < u5);
       }
     }
     else {
-      *param_4 = uVar8 + 1;
-      uVar13 = param_6;
-      uStack_18 = uVar8;
-LAB_1025b871:
-      if (uStack_18 != 0) {
-        iVar9 = orig::DmsgText_CopyWithoutMarker((uint8_t *)param_1,param_2,(int)param_3,uVar13);
-        goto LAB_1025ba2d;
+      *arg4 = u5 + 1;
+      u7 = arg6;
+      u9 = u5;
+code_1025B871:
+      if (u9 != 0) {
+        i1 = orig::DmsgText_CopyWithoutMarker((uint8_t *)arg1,arg2,(int)arg3,u7);
+        goto code_1025BA2D;
       }
     }
-    iVar9 = *(int *)(g_pSceneState + 8);
-    uVar13 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
-    iStack_c = iVar9;
-    if ((uVar13 != 0) && ((iVar9 == 2 || (iVar9 == 3)))) {
-      iStack_c = 1;
+    i1 = *(int *)(g_pSceneState + 8);
+    u7 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
+    i3 = i1;
+    if ((u7 != 0) && ((i1 == 2 || (i1 == 3)))) {
+      i3 = 1;
     }
-    uVar14 = 0;
-    if ((uVar13 == 0) || ((iVar9 != 2 && (iVar9 != 3)))) {
-      if (iVar9 == 0) {
-        iVar9 = orig::DmsgText_HasKnownPrefix(param_3 + uVar8);
-        uVar13 = uVar8;
-        if (iVar9 != 0) {
-          uStack_18 = 0;
-          if (uVar8 != 0) {
+    u8 = 0;
+    if ((u7 == 0) || ((i1 != 2 && (i1 != 3)))) {
+      if (i1 == 0) {
+        i1 = orig::DmsgText_HasKnownPrefix(arg3 + u5);
+        u7 = u5;
+        if (i1 != 0) {
+          u9 = 0;
+          if (u5 != 0) {
             do {
-              uStack_18 = uVar14;
-              iVar9 = orig::Sjis_GetCharByteLen_v1(param_3 + uStack_18);
-              uVar14 = uStack_18 + iVar9;
-            } while (uStack_18 + iVar9 < uVar8);
+              u9 = u8;
+              i1 = orig::Sjis_GetCharByteLen_v1(arg3 + u9);
+              u8 = u9 + i1;
+            } while (u9 + i1 < u5);
           }
-          uVar13 = uStack_18;
-          if (param_3[uStack_18] == '\x04') {
-            uVar13 = uStack_18 + 1;
+          u7 = u9;
+          if (arg3[u9] == '\x04') {
+            u7 = u9 + 1;
           }
         }
       }
       else {
-        uVar13 = uStack_18;
-        if ((0 < iVar9) && (iVar9 < 4)) goto LAB_1025b849;
+        u7 = u9;
+        if ((0 < i1) && (i1 < 4)) goto code_1025B849;
       }
     }
     else {
-LAB_1025b849:
-      uStack_10 = 0;
-      uStack_18 = 0;
-      pcVar11 = param_3;
-      if (*param_3 != '\0') {
-        while ((uVar13 = orig::FUN_1025bbe0(iStack_c,pcVar11,uVar8 - uStack_18), 0 < (int)uVar13 &&
-               (uVar2 = uVar13 + uStack_18, uVar2 <= uVar8))) {
-          iVar9 = orig::DmsgText_CountChars((int)pcVar11,uVar13);
-          uVar13 = iVar9 + uVar14;
-          if ((param_2 <= uVar13) ||
-             (pcVar11 = param_3 + uVar2, uVar14 = uVar13, uStack_18 = uVar2, param_3[uVar2] == '\0')
+code_1025B849:
+      u10 = 0;
+      u9 = 0;
+      p3 = arg3;
+      if (*arg3 != '\0') {
+        while ((u7 = orig::game_1025BBE0(i3,p3,u5 - u9), 0 < (int)u7 &&
+               (u1 = u7 + u9, u1 <= u5))) {
+          i1 = orig::DmsgText_CountChars((int)p3,u7);
+          u7 = i1 + u8;
+          if ((arg2 <= u7) ||
+             (p3 = arg3 + u1, u8 = u7, u9 = u1, arg3[u1] == '\0')
              ) break;
         }
       }
-      orig::DmsgText_CopyWithoutMarker((uint8_t *)param_1,0,(int)param_3,uStack_18);
-      pcVar11 = param_3 + uStack_18;
-      uVar13 = uStack_18;
-      uVar2 = uStack_18;
-      if (param_3[uStack_18] != '\0') {
+      orig::DmsgText_CopyWithoutMarker((uint8_t *)arg1,0,(int)arg3,u9);
+      p3 = arg3 + u9;
+      u7 = u9;
+      u1 = u9;
+      if (arg3[u9] != '\0') {
         do {
-          iVar9 = orig::DmsgText_FindMarker(pcVar11,uVar8 - uVar13);
-          if (iVar9 < 1) break;
-          uVar12 = iVar9 + 1;
-          uVar13 = uVar13 + uVar12;
-          if (uVar8 < uVar13) break;
-          iVar9 = orig::DmsgText_CountChars((int)pcVar11,uVar12);
-          uVar4 = iVar9 + 1 + uVar14;
-          if (param_2 <= uVar4) break;
-          orig::DmsgText_CopyWithoutMarker((uint8_t *)(uVar14 + param_1),iVar9 + 1,(int)pcVar11,uVar12);
-          pcVar11 = (char *)&DAT_10353e04;
-          puVar3 = (uint8_t *)(iVar9 + uVar14 + param_1);
+          i1 = orig::DmsgText_FindMarker(p3,u5 - u7);
+          if (i1 < 1) break;
+          u6 = i1 + 1;
+          u7 = u7 + u6;
+          if (u5 < u7) break;
+          i1 = orig::DmsgText_CountChars((int)p3,u6);
+          u2 = i1 + 1 + u8;
+          if (arg2 <= u2) break;
+          orig::DmsgText_CopyWithoutMarker((uint8_t *)(u8 + arg1),i1 + 1,(int)p3,u6);
+          p3 = (char *)&g_10353E04;
+          p2 = (uint8_t *)(i1 + u8 + arg1);
           do {
-            cVar6 = *pcVar11;
-            (puVar3 + -(int)XI_GAME(0x10353E04u))[(int)pcVar11] = cVar6;
-            pcVar11 = pcVar11 + 1;
-          } while (cVar6 != '\0');
-          puVar3[1] = 0;
-          iVar10 = (*(code *)param_9)(param_1,uVar4);
-          if ((short)param_5 < iVar10) break;
-          *puVar3 = 0;
-          pcVar11 = param_3 + uVar13;
-          uVar14 = uVar14 + iVar9;
-          uStack_10 = uVar13;
-        } while (*pcVar11 != '\0');
-        if (uStack_10 != 0) {
-          uVar2 = uStack_10;
+            c1 = *p3;
+            (p2 + -(int)XI_GAME(0x10353E04u))[(int)p3] = c1;
+            p3 = p3 + 1;
+          } while (c1 != '\0');
+          p2[1] = 0;
+          i2 = (*(untyped_fn *)arg9)(arg1,u2);
+          if ((short)arg5 < i2) break;
+          *p2 = 0;
+          p3 = arg3 + u7;
+          u8 = u8 + i1;
+          u10 = u7;
+        } while (*p3 != '\0');
+        if (u10 != 0) {
+          u1 = u10;
         }
       }
-      uVar13 = uVar8;
-      if (uVar8 - uVar2 < param_7) {
-        if (uStack_18 == 0) {
-          if (uStack_10 != 0) {
-            bVar7 = true;
-            uStack_18 = uStack_10;
-            uVar13 = uStack_18;
+      u7 = u5;
+      if (u5 - u1 < arg7) {
+        if (u9 == 0) {
+          if (u10 != 0) {
+            u4 = true;
+            u9 = u10;
+            u7 = u9;
           }
         }
         else {
-          uVar13 = uStack_18;
-          if (uStack_10 != 0) {
-            iVar9 = (*(code *)param_9)(param_3,uStack_18);
-            if (iVar9 + (short)param_6 < (int)(short)param_5) {
-              uStack_18 = uStack_10;
-              bVar7 = true;
-              uVar13 = uStack_18;
+          u7 = u9;
+          if (u10 != 0) {
+            i1 = (*(untyped_fn *)arg9)(arg3,u9);
+            if (i1 + (short)arg6 < (int)(short)arg5) {
+              u9 = u10;
+              u4 = true;
+              u7 = u9;
             }
           }
         }
       }
     }
-    uStack_18 = uVar13;
-    iVar9 = orig::DmsgText_CopyWithoutMarker((uint8_t *)param_1,param_2,(int)param_3,uStack_18);
-    if (!bVar7) goto LAB_1025ba2d;
-    pcVar11 = (char *)&DAT_10353e04;
+    u9 = u7;
+    i1 = orig::DmsgText_CopyWithoutMarker((uint8_t *)arg1,arg2,(int)arg3,u9);
+    if (!u4) goto code_1025BA2D;
+    p3 = (char *)&g_10353E04;
     do {
-      cVar6 = *pcVar11;
-      pcVar11[param_1 + iVar9 + -(int)XI_GAME(0x10353E04u)] = cVar6;
-      pcVar11 = pcVar11 + 1;
-    } while (cVar6 != '\0');
+      c1 = *p3;
+      p3[arg1 + i1 + -(int)XI_GAME(0x10353E04u)] = c1;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
   }
-  iVar9 = iVar9 + 1;
-LAB_1025ba2d:
-  if (*param_4 == 0) {
-    *param_4 = uStack_18;
+  i1 = i1 + 1;
+code_1025BA2D:
+  if (*arg4 == 0) {
+    *arg4 = u9;
   }
-  return iVar9;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025BB00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_HasKnownPrefix(char * param_1)
+XI_API bits32 __cdecl DmsgText_HasKnownPrefix(char * arg1)
 {
-  uint8_t **ppuVar1;
-  char cVar2;
-  uint32_t uVar3;
-  uint8_t **ppuVar4;
-  char *pcVar5;
-  uint64_t uVar6;
+  uint8_t **p1;
+  char c1;
+  uint32_t u1;
+  uint8_t **p2;
+  char *p3;
+  uint64_t u2;
   
-  uVar3 = 0xffffffff;
-  pcVar5 = param_1;
+  u1 = 0xffffffff;
+  p3 = arg1;
   do {
-    if (uVar3 == 0) break;
-    uVar3 = uVar3 - 1;
-    cVar2 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar2 != '\0');
-  if ((1 < ~uVar3 - 1) && (PTR_DAT_1038accc != (uint8_t *)0x0)) {
-    ppuVar4 = &PTR_DAT_1038accc;
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *p3;
+    p3 = p3 + 1;
+  } while (c1 != '\0');
+  if ((1 < ~u1 - 1) && (g_1038ACCC != (uint8_t *)0x0)) {
+    p2 = &g_1038ACCC;
     do {
-      uVar6 = orig::_strncmp_v1(param_1,*ppuVar4,2);
-      if ((int)uVar6 == 0) {
+      u2 = orig::_strncmp_v1(arg1,*p2,2);
+      if ((int)u2 == 0) {
         return 1;
       }
-      ppuVar1 = ppuVar4 + 1;
-      ppuVar4 = ppuVar4 + 1;
-    } while (*ppuVar1 != (uint8_t *)0x0);
+      p1 = p2 + 1;
+      p2 = p2 + 1;
+    } while (*p1 != (uint8_t *)0x0);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025BB60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsDashNotDigit(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsDashNotDigit(char * arg1)
 {
-  if (*param_1 != '-') {
+  if (*arg1 != '-') {
     return 0;
   }
-  if (('/' < param_1[1]) && (param_1[1] < '9')) {
+  if (('/' < arg1[1]) && (arg1[1] < '9')) {
     return 0;
   }
   return 1;
@@ -2621,25 +2621,25 @@ XI_API undefined4 __cdecl DmsgText_IsDashNotDigit(char * param_1)
 
 // FUNCTION: FFXIMAIN 0x1025BB80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API size_t __cdecl DmsgText_FindPrefixEntry(char * param_1, int param_2, size_t * param_3)
+XI_API size_t __cdecl DmsgText_FindPrefixEntry(char * arg1, int arg2, size_t * arg3)
 {
-  size_t *psVar1;
+  size_t *p1;
   size_t _MaxCount;
-  size_t *psVar2;
-  uint64_t uVar3;
+  size_t *p2;
+  uint64_t u1;
   
-  psVar2 = param_3 + 1;
-  if (param_3[1] == 0) {
+  p2 = arg3 + 1;
+  if (arg3[1] == 0) {
     return 0;
   }
   while( true ) {
-    _MaxCount = *param_3;
-    if (((int)_MaxCount <= param_2) &&
-       (uVar3 = orig::_strncmp_v1(param_1,(char *)*psVar2,_MaxCount), (int)uVar3 == 0)) break;
-    psVar1 = psVar2 + 2;
-    param_3 = psVar2 + 1;
-    psVar2 = psVar2 + 2;
-    if (*psVar1 == 0) {
+    _MaxCount = *arg3;
+    if (((int)_MaxCount <= arg2) &&
+       (u1 = orig::_strncmp_v1(arg1,(char *)*p2,_MaxCount), (int)u1 == 0)) break;
+    p1 = p2 + 2;
+    arg3 = p2 + 1;
+    p2 = p2 + 2;
+    if (*p1 == 0) {
       return 0;
     }
   }
@@ -2648,126 +2648,126 @@ XI_API size_t __cdecl DmsgText_FindPrefixEntry(char * param_1, int param_2, size
 
 // FUNCTION: FFXIMAIN 0x1025BDE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl DmsgText_FindMarker(char * param_1, int param_2)
+XI_API int __cdecl DmsgText_FindMarker(char * arg1, int arg2)
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
+  char c1;
+  int i1;
+  int i2;
   
-  iVar3 = 0;
-  cVar1 = *param_1;
-  while ((cVar1 != '\0' && (iVar3 < param_2))) {
-    if (param_1[iVar3] == '\x15') {
-      return iVar3;
+  i2 = 0;
+  c1 = *arg1;
+  while ((c1 != '\0' && (i2 < arg2))) {
+    if (arg1[i2] == '\x15') {
+      return i2;
     }
-    iVar2 = orig::Sjis_GetCharByteLen_v1(param_1 + iVar3);
-    iVar3 = iVar3 + iVar2;
-    cVar1 = param_1[iVar3];
+    i1 = orig::Sjis_GetCharByteLen_v1(arg1 + i2);
+    i2 = i2 + i1;
+    c1 = arg1[i2];
   }
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025BE20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DmsgText_IsWrapBreak(char * param_1)
+XI_API bits32 __cdecl DmsgText_IsWrapBreak(char * arg1)
 {
-  int iVar1;
-  uint8_t *puVar2;
+  int i1;
+  uint8_t *p1;
   char xi_frame[20] __attribute__((aligned(4)));
-  uint8_t  (&local_14)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  (&local_10)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 4);
+  uint8_t  (&u1)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
+  int  (&i2)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 4);
   
-  puVar2 = local_14;
-  local_10[1] = 10;
-  local_10[2] = 10;
-  local_10[0] = 0xd;
-  local_10[3] = 0;
-  iVar1 = 7;
+  p1 = u1;
+  i2[1] = 10;
+  i2[2] = 10;
+  i2[0] = 0xd;
+  i2[3] = 0;
+  i1 = 7;
   do {
-    if (*param_1 == iVar1) {
+    if (*arg1 == i1) {
       return 1;
     }
-    iVar1 = *(int *)(puVar2 + 4);
-    puVar2 = puVar2 + 4;
-  } while (iVar1 != 0);
+    i1 = *(int *)(p1 + 4);
+    p1 = p1 + 4;
+  } while (i1 != 0);
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1025BFB0
 // GATE: PASS -- 100 trials, 71 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 71
-XI_API uint32_t __cdecl DmsgText_ConvertCharByLanguage(undefined4 * param_1, undefined4 param_2, undefined4 * param_3)
+XI_API uint32_t __cdecl DmsgText_ConvertCharByLanguage(bits32 * arg1, bits32 arg2, bits32 * arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
   
-  iVar1 = *(int *)((int)g_pSceneState_as_v3 + 8);
-  if ((*(char *)((int)g_pSceneState_as_v3 + 0x18) < '\0') && ((iVar1 == 2 || (iVar1 == 3)))) {
-LAB_1025c079:
-    uVar2 = orig::NetCellFont_UppercaseCharThen1011DAE0(param_1,param_3);
-    return uVar2;
+  i1 = *(int *)((int)g_pSceneState_as_v3 + 8);
+  if ((*(char *)((int)g_pSceneState_as_v3 + 0x18) < '\0') && ((i1 == 2 || (i1 == 3)))) {
+code_1025C079:
+    u1 = orig::NetCellFont_UppercaseCharThen1011DAE0(arg1,arg3);
+    return u1;
   }
-  if (0 < iVar1) {
-    if (iVar1 < 3) goto LAB_1025c079;
-    if (iVar1 == 3) {
-      orig::FUN_1011daa0(g_pSceneState_as_v3);
-      switch(xi_sw((uint32_t)param_3 & 0xffff)) {
+  if (0 < i1) {
+    if (i1 < 3) goto code_1025C079;
+    if (i1 == 3) {
+      orig::game_1011DAA0(g_pSceneState_as_v3);
+      switch(xi_sw((uint32_t)arg3 & 0xffff)) {
       case 0x85bf:
       case 0x85c1:
-        *(uint8_t *)param_1 = 0x41;
+        *(uint8_t *)arg1 = 0x41;
         return 1;
       default:
-        uVar2 = orig::NetCellFont_UppercaseCharThen1011DAE0(param_1,param_3);
-        return uVar2;
+        u1 = orig::NetCellFont_UppercaseCharThen1011DAE0(arg1,arg3);
+        return u1;
       case 0x85c7:
       case 0x85c8:
       case 0x85c9:
       case 0x85ca:
-        *(uint8_t *)param_1 = 0x45;
+        *(uint8_t *)arg1 = 0x45;
         return 1;
       case 0x85cd:
       case 0x85ce:
-        *(uint8_t *)param_1 = 0x49;
+        *(uint8_t *)arg1 = 0x49;
         return 1;
       case 0x85d3:
-        *(uint8_t *)param_1 = 0x4f;
+        *(uint8_t *)arg1 = 0x4f;
         return 1;
       case 0x85d8:
       case 0x85da:
       case 0x85db:
-        *(uint8_t *)param_1 = 0x55;
+        *(uint8_t *)arg1 = 0x55;
         return 1;
       }
     }
   }
-  uVar2 = orig::Sjis_GetCharByteLen_v1((uint8_t *)param_3);
-  for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *param_1 = *param_3;
-    param_3 = param_3 + 1;
-    param_1 = param_1 + 1;
+  u1 = orig::Sjis_GetCharByteLen_v1((uint8_t *)arg3);
+  for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+    *arg1 = *arg3;
+    arg3 = arg3 + 1;
+    arg1 = arg1 + 1;
   }
-  for (uVar3 = uVar2 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *(uint8_t *)param_1 = *(uint8_t *)param_3;
-    param_3 = (undefined4 *)((int)param_3 + 1);
-    param_1 = (undefined4 *)((int)param_1 + 1);
+  for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+    *(uint8_t *)arg1 = *(uint8_t *)arg3;
+    arg3 = (bits32 *)((int)arg3 + 1);
+    arg1 = (bits32 *)((int)arg1 + 1);
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1025C0F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl DmsgText_WrapSjisAt(int param_1, int param_2, uint8_t * param_3)
+XI_API int __cdecl DmsgText_WrapSjisAt(int arg1, int arg2, uint8_t * arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
-  size_t sVar3;
+  uint32_t u1;
+  int i1;
+  size_t u2;
   
-  uVar1 = orig::FUN_1025be80(param_3);
-  if (param_2 <= (int)uVar1) {
+  u1 = orig::game_1025BE80(arg3);
+  if (arg2 <= (int)u1) {
     return 0;
   }
-  uVar1 = orig::DmsgText_ConvertCharByLanguage((uint8_t *)param_1,param_2,param_3);
-  iVar2 = orig::Sjis_GetCharByteLen_v1(param_3);
-  sVar3 = orig::Sjis_CopyPrefix((char *)(uVar1 + param_1),param_2 - uVar1,param_3 + iVar2);
-  return sVar3 + uVar1;
+  u1 = orig::DmsgText_ConvertCharByLanguage((uint8_t *)arg1,arg2,arg3);
+  i1 = orig::Sjis_GetCharByteLen_v1(arg3);
+  u2 = orig::Sjis_CopyPrefix((char *)(u1 + arg1),arg2 - u1,arg3 + i1);
+  return u2 + u1;
 }

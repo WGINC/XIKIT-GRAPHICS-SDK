@@ -7,28 +7,28 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoLfdElem::Constructor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoLfdElem_GetRuntimeClass_1032b538;
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoLfdElem_GetRuntimeClass_1032B538;
   *(uint16_t *)((int)self + 0x176) = 0x1a0;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10053050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoLfdElem::IsKind12(int a1)
+BOOL CMoLfdElem::IsKind12(int arg1)
 {
-  return a1 == 12;
+  return arg1 == 12;
 }
 
 // FUNCTION: FFXIMAIN 0x10053060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoLfdElem::ScalarDeletingDtor(char a2)
+int * CMoLfdElem::ScalarDeletingDtor(char arg1)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
   orig::CMoLfdElem_Destructor(self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

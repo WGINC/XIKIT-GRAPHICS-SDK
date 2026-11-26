@@ -16,7 +16,7 @@ void * __thiscall CMoAttachments::Construct(void * self)
 {
   orig::ActorHandle_Constructor_v1((void *)((int)self + 0x14));
   orig::ActorHandle_Constructor_v1((void *)((int)self + 0x20));
-  *(uint8_t ***)self = &PTR_CMoAttachments_GetRuntimeClass_1032ab08;
+  *(uint8_t ***)self = &ptr_to_CMoAttachments_GetRuntimeClass_1032AB08;
   orig::CMoAttachments_Reset_v1(self);
   return self;
 }
@@ -44,135 +44,135 @@ int CMoAttachments::Slot6ReturnZero()
 
 // FUNCTION: FFXIMAIN 0x1003B5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoAttachments::ScalarDeletingDtor(char a2)
+uint32_t * CMoAttachments::ScalarDeletingDtor(char arg1)
 {
   orig::ReleaseSubObjectIfPresent(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::operator_delete(this);
-  return(_DWORD*)(&(*(CMoAttachments_vtbl * *)&this->vftable));
+  return(uint32_t*)(&(*(CMoAttachments_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x1003B640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::Reset(void * self)
+bits32 __thiscall CMoAttachments::Reset(void * self)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   *(uint32_t *)((int)self + 0xc) = 0;
   *(uint32_t *)((int)self + 0x10) = 0;
   *(uint32_t *)((int)self + 0x2c) = 0;
   *(uint32_t *)((int)self + 0x30) = 0;
-  orig::ActorHandle_SetFields((void *)((int)self + 0x14),DAT_10351d00,DAT_10351d04);
-  uVar1 = orig::ActorHandle_SetFields((void *)((int)self + 0x20),DAT_10351d00,DAT_10351d04);
+  orig::ActorHandle_SetFields((void *)((int)self + 0x14),g_10351D00,g_10351D04);
+  u1 = orig::ActorHandle_SetFields((void *)((int)self + 0x20),g_10351D00,g_10351D04);
   *(uint32_t *)((int)self + 0x34) = 0;
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::ResetAll(void * self)
+bits32 __thiscall CMoAttachments::ResetAll(void * self)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::CMoAttachments_GetCaster_v1(self);
-  if ((int)uVar2 != 0) {
+  u2 = orig::CMoAttachments_GetCaster_v1(self);
+  if ((int)u2 != 0) {
     orig::CMoAttachments_ClearCaster_v1(self,1);
   }
-  uVar2 = orig::CMoAttachments_GetTarget_v1(self);
-  if ((int)uVar2 != 0) {
+  u2 = orig::CMoAttachments_GetTarget_v1(self);
+  if ((int)u2 != 0) {
     orig::CMoAttachments_ClearTarget_v1(self,1);
   }
-  uVar1 = orig::CMoAttachments_Reset_v1(self);
-  return uVar1;
+  u1 = orig::CMoAttachments_Reset_v1(self);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B6D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::GetCaster(void * self)
+bits32 __thiscall CMoAttachments::GetCaster(void * self)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
   if (*(int *)((int)self + 0x1c) == 0x4000000) {
     return *(uint32_t *)((int)self + 0xc);
   }
-  iVar1 = *(int *)((int)self + 0xc);
-  uVar2 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x14));
-  if ((int)uVar2 == iVar1) {
-    uVar2 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x14));
-    return (int)uVar2;
+  i1 = *(int *)((int)self + 0xc);
+  u1 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x14));
+  if ((int)u1 == i1) {
+    u1 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x14));
+    return (int)u1;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::GetTarget(void * self)
+bits32 __thiscall CMoAttachments::GetTarget(void * self)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
   if (*(int *)((int)self + 0x28) == 0x4000000) {
     return *(uint32_t *)((int)self + 0x10);
   }
-  iVar1 = *(int *)((int)self + 0x10);
-  uVar2 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x20));
-  if ((int)uVar2 == iVar1) {
-    uVar2 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x20));
-    return (int)uVar2;
+  i1 = *(int *)((int)self + 0x10);
+  u1 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x20));
+  if ((int)u1 == i1) {
+    u1 = orig::ActorHandle_Resolve_v1((void *)((int)self + 0x20));
+    return (int)u1;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoAttachments::ClearCaster(void * self, undefined4 param_1)
+void __thiscall CMoAttachments::ClearCaster(void * self, bits32 arg2)
 {
-  if ((char)param_1 != '\0') {
+  if ((char)arg2 != '\0') {
     orig::CMoAttachments_NotifyCaster(self);
   }
   *(uint32_t *)((int)self + 0xc) = 0;
-  orig::ActorHandle_SetFields((void *)((int)self + 0x14),DAT_10351d08,DAT_10351d0c);
+  orig::ActorHandle_SetFields((void *)((int)self + 0x14),g_10351D08,g_10351D0C);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoAttachments::ClearTarget(void * self, undefined4 param_1)
+void __thiscall CMoAttachments::ClearTarget(void * self, bits32 arg2)
 {
-  if ((char)param_1 != '\0') {
+  if ((char)arg2 != '\0') {
     orig::CMoAttachments_NotifyTarget(self);
   }
   *(uint32_t *)((int)self + 0x10) = 0;
-  orig::ActorHandle_SetFields((void *)((int)self + 0x20),DAT_10351d10,DAT_10351d14);
+  orig::ActorHandle_SetFields((void *)((int)self + 0x20),g_10351D10,g_10351D14);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B7B0
 // GATE: PASS -- 100 trials, 100 returned normally, 65 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoAttachments::SetCaster(void * self, int param_1)
+void __thiscall CMoAttachments::SetCaster(void * self, int arg2)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::CMoAttachments_GetCaster_v1(self);
-  if ((int)uVar2 != param_1) {
-    uVar2 = orig::CMoAttachments_GetCaster_v1(self);
-    if ((int)uVar2 != 0) {
-      uVar2 = orig::CMoAttachments_GetCaster_v1(self);
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)uVar2 + 1000))))((void *)((int *)uVar2),self);
+  u2 = orig::CMoAttachments_GetCaster_v1(self);
+  if ((int)u2 != arg2) {
+    u2 = orig::CMoAttachments_GetCaster_v1(self);
+    if ((int)u2 != 0) {
+      u2 = orig::CMoAttachments_GetCaster_v1(self);
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)u2 + 1000))))((void *)((int *)u2),self);
     }
-    orig::ActorHandle_SetFields((void *)((int)self + 0x14),DAT_10351d18,DAT_10351d1c);
-    *(int *)((int)self + 0xc) = param_1;
-    if (param_1 != 0) {
-      if (*(int *)(param_1 + 0x70) != 0) {
-        uVar1 = orig::CXiActor_GetField88Bit3((void *)param_1);
-        if ((char)uVar1 == '\0') {
-          orig::FUN_100814f0((void *)((int)self + 0x14),*(int *)((int)self + 0xc));
+    orig::ActorHandle_SetFields((void *)((int)self + 0x14),g_10351D18,g_10351D1C);
+    *(int *)((int)self + 0xc) = arg2;
+    if (arg2 != 0) {
+      if (*(int *)(arg2 + 0x70) != 0) {
+        u1 = orig::CXiActor_GetField88Bit3((void *)arg2);
+        if ((char)u1 == '\0') {
+          orig::game_100814F0((void *)((int)self + 0x14),*(int *)((int)self + 0xc));
         }
       }
-      orig::CMoAttachments_PushCasterLink((void *)param_1,(int)self);
+      orig::CMoAttachments_PushCasterLink((void *)arg2,(int)self);
     }
   }
   return;
@@ -180,498 +180,498 @@ void __thiscall CMoAttachments::SetCaster(void * self, int param_1)
 
 // FUNCTION: FFXIMAIN 0x1003B830
 // GATE: PASS -- 100 trials, 100 returned normally, 65 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::SetTarget(void * self, int param_1)
+bits32 __thiscall CMoAttachments::SetTarget(void * self, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar3 = orig::CMoAttachments_GetTarget_v1(self);
-  iVar1 = (int)uVar3;
-  if (iVar1 != param_1) {
-    uVar3 = orig::CMoAttachments_GetTarget_v1(self);
-    if ((int)uVar3 != 0) {
-      uVar3 = orig::CMoAttachments_GetTarget_v1(self);
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)uVar3 + 0x3ec))))((void *)((int *)uVar3),self);
+  u2 = orig::CMoAttachments_GetTarget_v1(self);
+  i1 = (int)u2;
+  if (i1 != arg2) {
+    u2 = orig::CMoAttachments_GetTarget_v1(self);
+    if ((int)u2 != 0) {
+      u2 = orig::CMoAttachments_GetTarget_v1(self);
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)u2 + 0x3ec))))((void *)((int *)u2),self);
     }
-    iVar1 = orig::ActorHandle_SetFields((void *)((int)self + 0x20),DAT_10351d20,DAT_10351d24);
-    *(int *)((int)self + 0x10) = param_1;
-    if (param_1 != 0) {
-      if (*(int *)(param_1 + 0x70) != 0) {
-        uVar2 = orig::CXiActor_GetField88Bit3((void *)param_1);
-        if ((char)uVar2 == '\0') {
-          orig::FUN_100814f0((void *)((int)self + 0x20),*(int *)((int)self + 0x10));
+    i1 = orig::ActorHandle_SetFields((void *)((int)self + 0x20),g_10351D20,g_10351D24);
+    *(int *)((int)self + 0x10) = arg2;
+    if (arg2 != 0) {
+      if (*(int *)(arg2 + 0x70) != 0) {
+        u1 = orig::CXiActor_GetField88Bit3((void *)arg2);
+        if ((char)u1 == '\0') {
+          orig::game_100814F0((void *)((int)self + 0x20),*(int *)((int)self + 0x10));
         }
       }
-      iVar1 = orig::CMoAttachments_PushTargetLink((void *)param_1,(int)self);
+      i1 = orig::CMoAttachments_PushTargetLink((void *)arg2,(int)self);
     }
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int __thiscall CMoAttachments::FindKindInChain(void * self)
 {
-  char cVar1;
-  void *this_00;
-  void *this_01;
-  uint64_t uVar2;
+  char c1;
+  void *obj1;
+  void *obj2;
+  uint64_t u1;
   
-  uVar2 = orig::CMoAttachments_GetCaster_v1(self);
-  this_00 = (void *)uVar2;
-  if (this_00 == (void *)0x0) {
+  u1 = orig::CMoAttachments_GetCaster_v1(self);
+  obj1 = (void *)u1;
+  if (obj1 == (void *)0x0) {
     return 0;
   }
-  uVar2 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-  cVar1 = (char)uVar2;
+  u1 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+  c1 = (char)u1;
   while( true ) {
-    if (cVar1 == '\0') {
-      return (int)this_00;
+    if (c1 == '\0') {
+      return (int)obj1;
     }
-    uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)this_00 + 0xc4));
-    this_01 = (void *)uVar2;
-    if (this_01 == (void *)0x0) break;
-    uVar2 = orig::CYyObject_IsKindOf(this_01,(int)XI_GAME(0x1032F910u));
-    cVar1 = (char)uVar2;
-    this_00 = this_01;
+    u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)obj1 + 0xc4));
+    obj2 = (void *)u1;
+    if (obj2 == (void *)0x0) break;
+    u1 = orig::CYyObject_IsKindOf(obj2,(int)XI_GAME(0x1032F910u));
+    c1 = (char)u1;
+    obj1 = obj2;
   }
-  return (int)this_00;
+  return (int)obj1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int __thiscall CMoAttachments::FindKindFromRoot(void * self)
 {
-  char cVar1;
-  void *this_00;
-  void *this_01;
-  uint64_t uVar2;
+  char c1;
+  void *obj1;
+  void *obj2;
+  uint64_t u1;
   
-  uVar2 = orig::CMoAttachments_GetTarget_v1(self);
-  this_00 = (void *)uVar2;
-  if (this_00 == (void *)0x0) {
+  u1 = orig::CMoAttachments_GetTarget_v1(self);
+  obj1 = (void *)u1;
+  if (obj1 == (void *)0x0) {
     return 0;
   }
-  uVar2 = orig::CYyObject_IsKindOf(this_00,(int)XI_GAME(0x1032F910u));
-  cVar1 = (char)uVar2;
+  u1 = orig::CYyObject_IsKindOf(obj1,(int)XI_GAME(0x1032F910u));
+  c1 = (char)u1;
   while( true ) {
-    if (cVar1 == '\0') {
-      return (int)this_00;
+    if (c1 == '\0') {
+      return (int)obj1;
     }
-    uVar2 = orig::CMoAttachments_GetCaster_v1((void *)((int)this_00 + 0xc4));
-    this_01 = (void *)uVar2;
-    if (this_01 == (void *)0x0) break;
-    uVar2 = orig::CYyObject_IsKindOf(this_01,(int)XI_GAME(0x1032F910u));
-    cVar1 = (char)uVar2;
-    this_00 = this_01;
+    u1 = orig::CMoAttachments_GetCaster_v1((void *)((int)obj1 + 0xc4));
+    obj2 = (void *)u1;
+    if (obj2 == (void *)0x0) break;
+    u1 = orig::CYyObject_IsKindOf(obj2,(int)XI_GAME(0x1032F910u));
+    c1 = (char)u1;
+    obj1 = obj2;
   }
-  return (int)this_00;
+  return (int)obj1;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B980
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl CMoAttachments_MatrixPointingFromTo(int param_1, float * param_2, float * param_3)
+XI_API long double __cdecl CMoAttachments_MatrixPointingFromTo(int arg1, float * arg2, float * arg3)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  long double fVar4;
-  long double fVar5;
+  long double f1;
+  long double f2;
+  long double f3;
+  long double f4;
+  long double f5;
   
-  fVar1 = (long double)param_3[1] - (long double)param_2[1];
-  fVar2 = (long double)*param_3 - (long double)*param_2;
-  fVar3 = (long double)param_3[2] - (long double)param_2[2];
-  fVar4 = xi_castbits<long double>(fpatan(fVar3,fVar2));
-  fVar5 = xi_castbits<long double>(fpatan(fVar1,SQRT((long double)(float)(fVar3 * fVar3) +
-                                     (long double)(float)(fVar2 * fVar2))));
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0x58))))((void *)(g_pProcessor_as_v1),param_1,0,(float)-fVar4,(float)fVar5);
-  *(float *)(param_1 + 0x30) = (float)((long double)*(float *)(param_1 + 0x30) + (long double)*param_2);
-  *(float *)(param_1 + 0x34) = (float)((long double)*(float *)(param_1 + 0x34) + (long double)param_2[1]);
-  *(float *)(param_1 + 0x38) = (float)((long double)*(float *)(param_1 + 0x38) + (long double)param_2[2]);
-  return SQRT((long double)(float)(fVar3 * fVar3) + (long double)(float)(fVar1 * fVar1) +
-              (long double)(float)(fVar2 * fVar2));
+  f1 = arg3[1] - arg2[1];
+  f2 = *arg3 - *arg2;
+  f3 = arg3[2] - arg2[2];
+  f4 = bit_cast<long double>(x87_fpatan(f3,f2));
+  f5 = bit_cast<long double>(x87_fpatan(f1,x87_fsqrt((float)(f3 * f3) +
+                                     (float)(f2 * f2))));
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x58))))((void *)(g_pProcessor_as_v1),arg1,0,(float)-f4,(float)f5);
+  *(float *)(arg1 + 0x30) = (float)(*(float *)(arg1 + 0x30) + *arg2);
+  *(float *)(arg1 + 0x34) = (float)(*(float *)(arg1 + 0x34) + arg2[1]);
+  *(float *)(arg1 + 0x38) = (float)(*(float *)(arg1 + 0x38) + arg2[2]);
+  return x87_fsqrt((float)(f3 * f3) + (float)(f1 * f1) +
+              (float)(f2 * f2));
 }
 
 // FUNCTION: FFXIMAIN 0x1003BD90
 // GATE: PASS -- 100 trials, 99 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-void __cdecl CMoAttachments::SetMappedSlot(undefined4 param_1, undefined4 param_2, int * param_3)
+void __cdecl CMoAttachments::SetMappedSlot(bits32 arg1, bits32 arg2, int * arg3)
 {
-  switch(xi_sw(param_2)) {
+  switch(xi_sw(arg2)) {
   case 0x36:
-    param_2 = 0x7e;
+    arg2 = 0x7e;
     break;
   case 0x37:
-    param_2 = 0x7f;
+    arg2 = 0x7f;
     break;
   case 0x38:
-    param_2 = 0x66;
+    arg2 = 0x66;
     break;
   case 0x39:
-    param_2 = 0x67;
+    arg2 = 0x67;
     break;
   case 0x3a:
-    param_2 = 0x68;
+    arg2 = 0x68;
     break;
   case 0x3b:
-    param_2 = 0x69;
+    arg2 = 0x69;
     break;
   case 0x3c:
-    param_2 = 0x6a;
+    arg2 = 0x6a;
   }
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*param_3 + 0x1d0))))((void *)(param_3),param_2,param_1);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*arg3 + 0x1d0))))((void *)(arg3),arg2,arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003BE10
 // GATE: PASS -- 100 trials, 96 returned normally, 87 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, _DWORD *a2, int a3, int a4)
+XI_API double __thiscall YmGenerater_BuildAttachMatrix(int self_, uint32_t *arg2, int arg3, int arg4)
 {
   int ScratchMatrixStackTop;
-  float *v6;
-  int v7;
-  float *v8;
-  float *v9;
-  int *v10;
-  int v11;
-  unsigned int v12;
-  int v13;
+  float *p1;
+  int i1;
+  float *p2;
+  float *p3;
+  int *p4;
+  int i2;
+  unsigned int u1;
+  int i3;
   void *vftable;
-  int *v15;
-  int v16;
-  int *v17;
-  int v18;
-  _DWORD *v19;
-  int v20;
-  int v21;
-  void *v22;
-  int v23;
-  int v24;
-  int v25;
-  int v26;
-  int v27;
-  int v28;
-  int v29;
-  int v30;
-  int v31;
-  int v32;
-  int v33;
-  int v34;
-  int v35;
-  float *v36;
-  int v37;
-  int v38;
-  int v39;
-  float *v40;
-  _DWORD *v41;
-  void (__thiscall **v42)(CMoProcessor *, int *, _DWORD *, char *);
-  char *v43;
-  CMoProcessor *v44;
-  int v46;
-  CMoProcessor *v47;
-  int v48;
-  int *v49;
-  int *v50;
+  int *p5;
+  int i4;
+  int *p6;
+  int i5;
+  uint32_t *p7;
+  int i6;
+  int i7;
+  void *p8;
+  int i8;
+  int i9;
+  int i10;
+  int i11;
+  int i12;
+  int i13;
+  int i14;
+  int i15;
+  int i16;
+  int i17;
+  int i18;
+  int i19;
+  int i20;
+  float *p9;
+  int i21;
+  int i22;
+  int i23;
+  float *p10;
+  uint32_t *p11;
+  void (__thiscall **var1)(CMoProcessor *, int *, uint32_t *, char *);
+  char *p12;
+  CMoProcessor *p13;
+  int i24;
+  CMoProcessor *p14;
+  int i25;
+  int *p15;
+  int *p16;
   alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  float &v51 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &v52 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &v53 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  int &v54 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  float * &v55 = *reinterpret_cast<float * *>(xi_frame + 0x20);
-  int &v56 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  int &v57 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &v58 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  float (&v59)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x30);
-  float (&v60)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x3C);
+  float &f1 = *reinterpret_cast<float *>(xi_frame + 0x0);
+  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x0);
+  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x14);
+  int &i26 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  float * &p17 = *reinterpret_cast<float * *>(xi_frame + 0x20);
+  int &i27 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  int &i28 = *reinterpret_cast<int *>(xi_frame + 0x28);
+  int &i29 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  float (&f4)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x30);
+  float (&f5)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x3C);
 
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-  v6 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+  p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-  v54 = (int)v6;
-  v53 = 0.0;
-  v7 = (g_pProcessor->ScratchMatrixStackTop);
-  v8 = ((float * *)((char *)g_pProcessor + 0xA10))[v7];
-  (g_pProcessor->ScratchMatrixStackTop) = v7 + 1;
-  v55 = v8;
-  v9 = (float *)orig::CMoAttachments_GetCaster((_DWORD *)self_);
-  v10 = (int *)orig::CMoAttachments_GetTarget((_DWORD *)self_);
-  if ( v9 == nullptr || (v11 = orig::CXiActor_GetSubModelResult(v9)) == 0 )
-    v11 = (int)v10;
-  v12 = *(_DWORD *)(self_ + 4);
-  switch ( (v12 & 0xF) + 16 * (*(_BYTE *)(self_ + 6) & 1) )
+  i26 = (int)p1;
+  f3 = 0.0;
+  i1 = (g_pProcessor->ScratchMatrixStackTop);
+  p2 = ((float * *)((char *)g_pProcessor + 0xA10))[i1];
+  (g_pProcessor->ScratchMatrixStackTop) = i1 + 1;
+  p17 = p2;
+  p3 = (float *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
+  p4 = (int *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
+  if ( p3 == nullptr || (i2 = orig::CXiActor_GetSubModelResult(p3)) == 0 )
+    i2 = (int)p4;
+  u1 = *(uint32_t *)(self_ + 4);
+  switch ( (u1 & 0xF) + 16 * (*(uint8_t *)(self_ + 6) & 1) )
   {
     case 1u:
-      if ( v9 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20((float *)&v56, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, v10, 0);
-      v13 = *(_DWORD *)v9;
+      if ( p3 == nullptr )
+        goto L1;
+      orig::game_1003BA20((float *)&i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
+      i3 = *(uint32_t *)p3;
       vftable = (*(void * *)&g_pProcessor->vftable);
-      v15 = (int *)v9;
-      goto LABEL_37;
+      p5 = (int *)p3;
+      goto L2;
     case 2u:
-      if ( v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20((float *)&v56, (unsigned __int16)v12 >> 10, (float *)v10, (int *)v9, 0);
-      v16 = *v10;
-      v17 = v10;
-      goto LABEL_43;
+      if ( p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20((float *)&i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
+      i4 = *p4;
+      p6 = p4;
+      goto L3;
     case 3u:
-      goto LABEL_21;
+      goto L4;
     case 4u:
-      goto LABEL_40;
+      goto L5;
     case 5u:
-      goto LABEL_34;
+      goto L6;
     case 6u:
-      goto LABEL_26;
+      goto L7;
     case 7u:
-      if ( v9 == nullptr )
-        goto LABEL_63;
-      qmemcpy(a2, (const void *)(g_pResourceMng + 3088), 0x40u);
-      orig::sub_1003BA20(
-        (float *)&v56,
-        ((*(_DWORD *)(self_ + 4) >> 4) & 0x3F) + (((*(_DWORD *)(self_ + 4) & 0x40000) != 0) << 6),
-        v9,
-        v10,
+      if ( p3 == nullptr )
+        goto L1;
+      memcpy(arg2, (const void *)(g_pResourceMng + 3088), 0x40u);
+      orig::game_1003BA20(
+        (float *)&i27,
+        ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6),
+        p3,
+        p4,
         0);
-      v26 = v57;
-      a2[12] = v56;
-      v27 = v58;
-      a2[13] = v26;
-      a2[14] = v27;
+      i11 = i28;
+      arg2[12] = i27;
+      i12 = i29;
+      arg2[13] = i11;
+      arg2[14] = i12;
       break;
     case 8u:
-      if ( v10 == nullptr )
-        goto LABEL_63;
-      qmemcpy(a2, (const void *)(g_pResourceMng + 3088), 0x40u);
-      orig::sub_1003BA20((float *)&v56, (unsigned __int16)*(_DWORD *)(self_ + 4) >> 10, (float *)v10, (int *)v9, 0);
-      v28 = v57;
-      a2[12] = v56;
-      v29 = v58;
-      a2[13] = v28;
-      a2[14] = v29;
+      if ( p4 == nullptr )
+        goto L1;
+      memcpy(arg2, (const void *)(g_pResourceMng + 3088), 0x40u);
+      orig::game_1003BA20((float *)&i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, 0);
+      i13 = i28;
+      arg2[12] = i27;
+      i14 = i29;
+      arg2[13] = i13;
+      arg2[14] = i14;
       break;
     case 9u:
-      if ( v9 == nullptr )
-        goto LABEL_63;
-      v30 = ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6);
-      v31 = orig::CMoAttachments_GetCaster((_DWORD *)self_);
-      orig::CMoAttachments_SetMappedSlot((int)a2, v30, v31);
+      if ( p3 == nullptr )
+        goto L1;
+      i15 = ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6);
+      i16 = orig::CMoAttachments_GetCaster((uint32_t *)self_);
+      orig::CMoAttachments_SetMappedSlot((int)arg2, i15, i16);
       break;
     case 0xAu:
-      if ( v10 == nullptr )
-        goto LABEL_63;
-      v32 = orig::CMoAttachments_GetTarget((_DWORD *)self_);
-      orig::CMoAttachments_SetMappedSlot((int)a2, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, v32);
+      if ( p4 == nullptr )
+        goto L1;
+      i17 = orig::CMoAttachments_GetTarget((uint32_t *)self_);
+      orig::CMoAttachments_SetMappedSlot((int)arg2, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, i17);
       break;
     case 0xBu:
-      if ( v9 == nullptr )
-        goto LABEL_56;
-      v33 = ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6);
-      v34 = orig::CMoAttachments_GetCaster((_DWORD *)self_);
-      orig::CMoAttachments_SetMappedSlot(v54, v33, v34);
-      v35 = ((*(_DWORD *)(self_ + 4) >> 4) & 0x3F) + (((*(_DWORD *)(self_ + 4) & 0x40000) != 0) << 6);
-      v49 = (int *)orig::CMoAttachments_GetTarget((_DWORD *)self_);
-      v36 = (float *)orig::CMoAttachments_GetCaster((_DWORD *)self_);
-      orig::sub_1003BA20((float *)&v56, v35, v36, v49, 0);
-      v51 = -atan2(*(float *)(v54 + 40), *(float *)(v54 + 32));
-      (*((void (__thiscall **)(CMoProcessor *, _DWORD *, _DWORD))(*(void * *)&g_pProcessor->vftable) + 25))(
+      if ( p3 == nullptr )
+        goto L8;
+      i18 = ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6);
+      i19 = orig::CMoAttachments_GetCaster((uint32_t *)self_);
+      orig::CMoAttachments_SetMappedSlot(i26, i18, i19);
+      i20 = ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6);
+      p15 = (int *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
+      p9 = (float *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
+      orig::game_1003BA20((float *)&i27, i20, p9, p15, 0);
+      f1 = -atan2(*(float *)(i26 + 40), *(float *)(i26 + 32));
+      (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))(*(void * *)&g_pProcessor->vftable) + 25))(
         g_pProcessor,
-        a2,
-        LODWORD(v51));
-      v37 = v57;
-      v38 = v58;
-      a2[12] = v56;
-      a2[13] = v37;
-      a2[14] = v38;
+        arg2,
+        (*(uint32_t *)&(f1)));
+      i21 = i28;
+      i22 = i29;
+      arg2[12] = i27;
+      arg2[13] = i21;
+      arg2[14] = i22;
       break;
     case 0xCu:
-      if ( v10 == nullptr )
-        goto LABEL_56;
-      v39 = orig::CMoAttachments_GetTarget((_DWORD *)self_);
-      orig::CMoAttachments_SetMappedSlot(v54, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, v39);
-      v50 = (int *)orig::CMoAttachments_GetCaster((_DWORD *)self_);
-      v40 = (float *)orig::CMoAttachments_GetTarget((_DWORD *)self_);
-      orig::sub_1003BA20((float *)&v56, (unsigned __int16)*(_DWORD *)(self_ + 4) >> 10, v40, v50, 0);
-      v19 = a2;
-      v52 = -atan2(*(float *)(v54 + 40), *(float *)(v54 + 32));
-      (*((void (__thiscall **)(CMoProcessor *, _DWORD *, _DWORD))(*(void * *)&g_pProcessor->vftable) + 25))(
+      if ( p4 == nullptr )
+        goto L8;
+      i23 = orig::CMoAttachments_GetTarget((uint32_t *)self_);
+      orig::CMoAttachments_SetMappedSlot(i26, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, i23);
+      p16 = (int *)orig::CMoAttachments_GetCaster((uint32_t *)self_);
+      p10 = (float *)orig::CMoAttachments_GetTarget((uint32_t *)self_);
+      orig::game_1003BA20((float *)&i27, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, p10, p16, 0);
+      p7 = arg2;
+      f2 = -atan2(*(float *)(i26 + 40), *(float *)(i26 + 32));
+      (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))(*(void * *)&g_pProcessor->vftable) + 25))(
         g_pProcessor,
-        a2,
-        LODWORD(v52));
-      goto LABEL_38;
+        arg2,
+        (*(uint32_t *)&(f2)));
+      goto L9;
     case 0xDu:
-      goto LABEL_6;
+      goto L10;
     case 0xEu:
-      v41 = a2;
-      qmemcpy(a2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
-      a2[12] = 0;
-      a2[13] = 0;
-      a2[14] = 0;
-      a2[15] = 1065353216;
-      v42 = (void (__thiscall **)(CMoProcessor *, int *, _DWORD *, char *))(*(void * *)&g_pProcessor->vftable);
-      v43 = orig::ZoneMap_GetAddr0B4((char *)g_pXiZone);
-      goto LABEL_62;
+      p11 = arg2;
+      memcpy(arg2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
+      arg2[12] = 0;
+      arg2[13] = 0;
+      arg2[14] = 0;
+      arg2[15] = 1065353216;
+      var1 = (void (__thiscall **)(CMoProcessor *, int *, uint32_t *, char *))(*(void * *)&g_pProcessor->vftable);
+      p12 = orig::ZoneMap_GetAddr0B4((char *)g_pXiZone);
+      goto L11;
     case 0xFu:
-      v41 = a2;
-      qmemcpy(a2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
-      a2[12] = 0;
-      a2[13] = 0;
-      a2[14] = 0;
-      a2[15] = 1065353216;
-      v42 = (void (__thiscall **)(CMoProcessor *, int *, _DWORD *, char *))(*(void * *)&g_pProcessor->vftable);
-      v43 = orig::ZoneMap_GetAddr0D4((char *)g_pXiZone);
-LABEL_62:
-      v42[20](g_pProcessor, &v56, v41, v43);
-      orig::MoProcessor_CallVSlot49(v41);
-      orig::Attach_SetTranslation(v41, &v56);
+      p11 = arg2;
+      memcpy(arg2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
+      arg2[12] = 0;
+      arg2[13] = 0;
+      arg2[14] = 0;
+      arg2[15] = 1065353216;
+      var1 = (void (__thiscall **)(CMoProcessor *, int *, uint32_t *, char *))(*(void * *)&g_pProcessor->vftable);
+      p12 = orig::ZoneMap_GetAddr0D4((char *)g_pXiZone);
+L11:
+      var1[20](g_pProcessor, &i27, p11, p12);
+      orig::MoProcessor_CallVSlot49(p11);
+      orig::Attach_SetTranslation(p11, &i27);
       break;
     case 0x10u:
-      if ( v9 == nullptr )
-        goto LABEL_56;
-      orig::sub_1003BA20(v59, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, (int *)v9, a3);
-      orig::sub_1003BA20(v60, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, v9, (int *)v9, a4);
-      v53 = orig::sub_1003B980((float *)a2, v59, v60);
+      if ( p3 == nullptr )
+        goto L8;
+      orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, (int *)p3, arg3);
+      orig::game_1003BA20(f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, p3, (int *)p3, arg4);
+      f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
       break;
     case 0x11u:
-      if ( v10 != nullptr )
+      if ( p4 != nullptr )
       {
-        orig::sub_1003BA20(v59, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), (float *)v10, v10, a3);
-        orig::sub_1003BA20(v60, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, (float *)v10, v10, a4);
-        v53 = orig::sub_1003B980((float *)a2, v59, v60);
+        orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), (float *)p4, p4, arg3);
+        orig::game_1003BA20(f5, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, p4, arg4);
+        f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
       }
       else
       {
-LABEL_56:
-        orig::MoProcessor_CallVSlot49(a2);
+L8:
+        orig::MoProcessor_CallVSlot49(arg2);
       }
       break;
     case 0x12u:
-      goto LABEL_10;
+      goto L12;
     case 0x13u:
-      orig::MoProcessor_CallVSlot49(a2);
-      if ( v10 != nullptr )
+      orig::MoProcessor_CallVSlot49(arg2);
+      if ( p4 != nullptr )
       {
-        orig::sub_1003BA20(v59, 2, (float *)v10, (int *)v9, 0);
-        *((float *)a2 + 12) = v59[0] + *((float *)a2 + 12);
-        *((float *)a2 + 13) = v59[1] + *((float *)a2 + 13) + 0x1.70a3d80000000p-3;
-        *((float *)a2 + 14) = v59[2] + *((float *)a2 + 14);
+        orig::game_1003BA20(f4, 2, (float *)p4, (int *)p3, 0);
+        *((float *)arg2 + 12) = f4[0] + *((float *)arg2 + 12);
+        *((float *)arg2 + 13) = f4[1] + *((float *)arg2 + 13) + 0x1.70a3d80000000p-3;
+        *((float *)arg2 + 14) = f4[2] + *((float *)arg2 + 14);
       }
       break;
     case 0x14u:
-      qmemcpy(a2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
+      memcpy(arg2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
       break;
     case 0x15u:
-      qmemcpy(a2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
-      a2[15] = 1065353216;
-      a2[12] = 0;
-      a2[13] = 0;
-      a2[14] = 0;
+      memcpy(arg2, orig::ZoneMap_GetMatrixGlobal(), 0x40u);
+      arg2[15] = 1065353216;
+      arg2[12] = 0;
+      arg2[13] = 0;
+      arg2[14] = 0;
       break;
     case 0x16u:
-      v10 = (int *)v11;
-LABEL_21:
-      if ( v9 == nullptr || v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20(v59, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, v10, a3);
-      orig::sub_1003BA20(v60, (unsigned __int16)*(_DWORD *)(self_ + 4) >> 10, (float *)v10, (int *)v9, a4);
-      goto LABEL_24;
+      p4 = (int *)i2;
+L4:
+      if ( p3 == nullptr || p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20(f4, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(f5, (unsigned short)*(uint32_t *)(self_ + 4) >> 10, (float *)p4, (int *)p3, arg4);
+      goto L13;
     case 0x17u:
-      v10 = (int *)v11;
-LABEL_40:
-      if ( v9 == nullptr || v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20((float *)&v56, (unsigned __int16)v12 >> 10, (float *)v10, (int *)v9, 0);
-      v16 = *(_DWORD *)v9;
-      v17 = (int *)v9;
-LABEL_43:
-      v22 = (*(void * *)&g_pProcessor->vftable);
-      v23 = (*(int (__thiscall **)(int *))(v16 + 448))(v17);
-      (*((void (__thiscall **)(CMoProcessor *, _DWORD *, _DWORD))v22 + 25))(g_pProcessor, a2, *(_DWORD *)(v23 + 4));
-      v24 = v57;
-      v25 = v58;
-      a2[12] = v56;
-      a2[13] = v24;
-      a2[14] = v25;
+      p4 = (int *)i2;
+L5:
+      if ( p3 == nullptr || p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20((float *)&i27, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, 0);
+      i4 = *(uint32_t *)p3;
+      p6 = (int *)p3;
+L3:
+      p8 = (*(void * *)&g_pProcessor->vftable);
+      i8 = (*(int (__thiscall **)(int *))(i4 + 448))(p6);
+      (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))p8 + 25))(g_pProcessor, arg2, *(uint32_t *)(i8 + 4));
+      i9 = i28;
+      i10 = i29;
+      arg2[12] = i27;
+      arg2[13] = i9;
+      arg2[14] = i10;
       break;
     case 0x18u:
-      v10 = (int *)v11;
-LABEL_34:
-      if ( v9 == nullptr || v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20((float *)&v56, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, v10, 0);
-      v13 = *v10;
+      p4 = (int *)i2;
+L6:
+      if ( p3 == nullptr || p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20((float *)&i27, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, 0);
+      i3 = *p4;
       vftable = (*(void * *)&g_pProcessor->vftable);
-      v15 = v10;
-LABEL_37:
-      v18 = (*(int (__thiscall **)(int *))(v13 + 448))(v15);
-      v19 = a2;
-      (*((void (__thiscall **)(CMoProcessor *, _DWORD *, _DWORD))vftable + 25))(g_pProcessor, a2, *(_DWORD *)(v18 + 4));
-LABEL_38:
-      v20 = v57;
-      v21 = v58;
-      v19[12] = v56;
-      v19[13] = v20;
-      v19[14] = v21;
+      p5 = p4;
+L2:
+      i5 = (*(int (__thiscall **)(int *))(i3 + 448))(p5);
+      p7 = arg2;
+      (*((void (__thiscall **)(CMoProcessor *, uint32_t *, uint32_t))vftable + 25))(g_pProcessor, arg2, *(uint32_t *)(i5 + 4));
+L9:
+      i6 = i28;
+      i7 = i29;
+      p7[12] = i27;
+      p7[13] = i6;
+      p7[14] = i7;
       break;
     case 0x19u:
-      v10 = (int *)v11;
-LABEL_26:
-      if ( v9 == nullptr || v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20(v59, (unsigned __int16)v12 >> 10, (float *)v10, (int *)v9, a4);
-      orig::sub_1003BA20(
-        v60,
-        ((*(_DWORD *)(self_ + 4) >> 4) & 0x3F) + (((*(_DWORD *)(self_ + 4) & 0x40000) != 0) << 6),
-        v9,
-        v10,
-        a3);
-LABEL_24:
-      v53 = orig::sub_1003B980((float *)a2, v59, v60);
+      p4 = (int *)i2;
+L7:
+      if ( p3 == nullptr || p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20(f4, (unsigned short)u1 >> 10, (float *)p4, (int *)p3, arg4);
+      orig::game_1003BA20(
+        f5,
+        ((*(uint32_t *)(self_ + 4) >> 4) & 0x3F) + (((*(uint32_t *)(self_ + 4) & 0x40000) != 0) << 6),
+        p3,
+        p4,
+        arg3);
+L13:
+      f3 = orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
       break;
     case 0x1Au:
-      v10 = (int *)v11;
-LABEL_6:
-      if ( v9 == nullptr && v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20(v60, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, v10, a3);
-      orig::sub_1003BA20(v59, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, (float *)v10, (int *)v9, a4);
-      orig::sub_1003B980((float *)a2, v60, v59);
+      p4 = (int *)i2;
+L10:
+      if ( p3 == nullptr && p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20(f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
+      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f5, f4);
       break;
     case 0x1Bu:
-      v10 = (int *)v11;
-LABEL_10:
-      if ( v9 == nullptr && v10 == nullptr )
-        goto LABEL_63;
-      orig::sub_1003BA20(v60, ((v12 >> 4) & 0x3F) + (((v12 & 0x40000) != 0) << 6), v9, v10, a3);
-      orig::sub_1003BA20(v59, (unsigned __int8)HIBYTE(*(_WORD *)(self_ + 4)) >> 2, (float *)v10, (int *)v9, a4);
-      orig::sub_1003B980((float *)a2, v59, v60);
+      p4 = (int *)i2;
+L12:
+      if ( p3 == nullptr && p4 == nullptr )
+        goto L1;
+      orig::game_1003BA20(f5, ((u1 >> 4) & 0x3F) + (((u1 & 0x40000) != 0) << 6), p3, p4, arg3);
+      orig::game_1003BA20(f4, (unsigned char)(*((uint8_t *)&(*(uint16_t *)(self_ + 4)) + sizeof(*(uint16_t *)(self_ + 4)) - 1)) >> 2, (float *)p4, (int *)p3, arg4);
+      orig::CMoAttachments_MatrixPointingFromTo_as_v0((float *)arg2, f4, f5);
       break;
     default:
-LABEL_63:
-      (*((void (__thiscall **)(CMoProcessor *, _DWORD *))(*(void * *)&g_pProcessor->vftable) + 49))(g_pProcessor, a2);
+L1:
+      (*((void (__thiscall **)(CMoProcessor *, uint32_t *))(*(void * *)&g_pProcessor->vftable) + 49))(g_pProcessor, arg2);
       break;
   }
-  v44 = g_pProcessor;
-  v46 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v46;
-  ((float * *)((char *)v44 + 0xA10))[v46] = v55;
-  v47 = g_pProcessor;
-  v48 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v48;
-  ((float * *)((char *)v47 + 0xA10))[v48] = (float *)v54;
-  return v53;
+  p13 = g_pProcessor;
+  i24 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i24;
+  ((float * *)((char *)p13 + 0xA10))[i24] = p17;
+  p14 = g_pProcessor;
+  i25 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i25;
+  ((float * *)((char *)p14 + 0xA10))[i25] = (float *)i26;
+  return f3;
 }
 
 // FUNCTION: FFXIMAIN 0x1003C6E0
 // GATE: PASS -- 100 trials, 100 returned normally, 71 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CMoAttachments::NotifyCaster(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoAttachments_GetCaster_v1(self);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetCaster_v1(self);
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)uVar1 + 1000))))((void *)((int *)uVar1),self);
+  u1 = orig::CMoAttachments_GetCaster_v1(self);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetCaster_v1(self);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)u1 + 1000))))((void *)((int *)u1),self);
   }
   return;
 }
@@ -680,30 +680,30 @@ void __thiscall CMoAttachments::NotifyCaster(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 71 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CMoAttachments::NotifyTarget(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoAttachments_GetTarget_v1(self);
-  if ((int)uVar1 != 0) {
-    uVar1 = orig::CMoAttachments_GetTarget_v1(self);
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)uVar1 + 0x3ec))))((void *)((int *)uVar1),self);
+  u1 = orig::CMoAttachments_GetTarget_v1(self);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetTarget_v1(self);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)u1 + 0x3ec))))((void *)((int *)u1),self);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10085D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoAttachments::PushCasterLink(void * self, int param_1)
+void __thiscall CMoAttachments::PushCasterLink(void * self, int arg2)
 {
-  *(uint32_t *)(param_1 + 0x2c) = *(uint32_t *)((int)self + 0x68);
-  *(int *)((int)self + 0x68) = param_1;
+  *(uint32_t *)(arg2 + 0x2c) = *(uint32_t *)((int)self + 0x68);
+  *(int *)((int)self + 0x68) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10085D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoAttachments::PushTargetLink(void * self, int param_1)
+bits32 __thiscall CMoAttachments::PushTargetLink(void * self, int arg2)
 {
-  *(uint32_t *)(param_1 + 0x30) = *(uint32_t *)((int)self + 0x6c);
-  *(int *)((int)self + 0x6c) = param_1;
-  return param_1;
+  *(uint32_t *)(arg2 + 0x30) = *(uint32_t *)((int)self + 0x6c);
+  *(int *)((int)self + 0x6c) = arg2;
+  return arg2;
 }

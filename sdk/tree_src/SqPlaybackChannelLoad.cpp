@@ -4,101 +4,101 @@
 
 // FUNCTION: FFXIMAIN 0x102853F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl PlaybackChannel_Load(undefined4 * param_1, undefined4 * param_2)
+XI_API int __cdecl PlaybackChannel_Load(bits32 * arg1, bits32 * arg2)
 {
-  int *piVar1;
-  int *piVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  int iVar8;
-  int *piVar9;
+  int *p1;
+  int *p2;
+  int i1;
+  bits32 *p3;
+  bits32 *p4;
+  bits32 *p5;
+  bits32 *p6;
+  int i2;
+  int *p7;
   char xi_frame[36] __attribute__((aligned(4)));
-  int  &local_24 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_20 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  (&local_1c)[3] = *reinterpret_cast<int  (*)[3]>(xi_frame + 8);
-  int  (&local_10)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 20);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  (&i5)[3] = *reinterpret_cast<int  (*)[3]>(xi_frame + 8);
+  int  (&i6)[4] = *reinterpret_cast<int  (*)[4]>(xi_frame + 20);
   
-  puVar7 = param_2;
-  puVar4 = orig::SqScriptRead_ReadBlock(&local_20,4,1,param_1,(int)param_2);
-  if (local_20 == 3) {
-    puVar5 = orig::SqmoPlaybackChannel_Create();
-    puVar4 = orig::SqScriptRead_ReadBlock(puVar5 + 8,4,1,puVar4 + 0x14,(int)param_2);
-    piVar1 =(int*)(puVar5 + 7);
-    puVar4 = orig::SqScriptRead_ReadBlock(piVar1,4,1,puVar4,(int)param_2);
-    puVar4 = orig::SqScriptRead_ReadBlock(puVar5 + 9,4,1,puVar4,(int)param_2);
-    puVar4 = orig::SqScriptRead_ReadBlock(puVar5 + 0xc,4,1,puVar4,(int)param_2);
-    puVar4 = orig::SqScriptRead_ReadBlock(local_1c,4,1,puVar4,(int)param_2);
-    iVar8 = *piVar1 << 2;
-    puVar6 = orig::FUN_10275d80(1,iVar8,s_accum__103b7be8,0x9f);
-    puVar5[0xe] = puVar6;
-    puVar6 = orig::FUN_10275d80(1,iVar8,s_previous_103b7bdc,0xa0);
-    puVar5[0xf] = puVar6;
-    puVar6 = orig::FUN_10275d80(1,iVar8,s_tmpValues_103b7bd0,0xa1);
-    puVar5[0x10] = puVar6;
-    puVar5[0x11] = iVar8;
-    iVar8 = 0;
-    if (local_1c[0] == 0) {
-      iVar8 = *piVar1;
-      iVar3 = puVar5[9];
-      puVar6 = orig::FUN_10275d80(1,iVar8 * iVar3 * 4,s_data_103b7b9c,0xd2);
-      puVar5[0xb] = puVar6;
-      param_1 = orig::SqScriptRead_ReadBlock(puVar6,4,iVar8 * iVar3,puVar4,(int)param_2);
+  p6 = arg2;
+  p3 = orig::SqScriptRead_ReadBlock(&i4,4,1,arg1,(int)arg2);
+  if (i4 == 3) {
+    p4 = orig::SqmoPlaybackChannel_Create();
+    p3 = orig::SqScriptRead_ReadBlock(p4 + 8,4,1,p3 + 0x14,(int)arg2);
+    p1 =(int*)(p4 + 7);
+    p3 = orig::SqScriptRead_ReadBlock(p1,4,1,p3,(int)arg2);
+    p3 = orig::SqScriptRead_ReadBlock(p4 + 9,4,1,p3,(int)arg2);
+    p3 = orig::SqScriptRead_ReadBlock(p4 + 0xc,4,1,p3,(int)arg2);
+    p3 = orig::SqScriptRead_ReadBlock(i5,4,1,p3,(int)arg2);
+    i2 = *p1 << 2;
+    p5 = orig::game_10275D80(1,i2,str_accum__103B7BE8,0x9f);
+    p4[0xe] = p5;
+    p5 = orig::game_10275D80(1,i2,str_previous_103B7BDC,0xa0);
+    p4[0xf] = p5;
+    p5 = orig::game_10275D80(1,i2,str_tmpValues_103B7BD0,0xa1);
+    p4[0x10] = p5;
+    p4[0x11] = i2;
+    i2 = 0;
+    if (i5[0] == 0) {
+      i2 = *p1;
+      i1 = p4[9];
+      p5 = orig::game_10275D80(1,i2 * i1 * 4,str_data_103B7B9C,0xd2);
+      p4[0xb] = p5;
+      arg1 = orig::SqScriptRead_ReadBlock(p5,4,i2 * i1,p3,(int)arg2);
     }
     else {
-      param_2 = (undefined4 *)0x0;
-      param_1 = puVar4;
-      if (0 < *piVar1) {
+      arg2 = (bits32 *)0x0;
+      arg1 = p3;
+      if (0 < *p1) {
         do {
-          puVar6 = orig::SqScriptRead_ReadBlock(local_10,4,1,param_1,(int)puVar7);
-          param_1 = (undefined4 *)((int)puVar6 + local_10[0] + 0xc);
-          param_2 = (undefined4 *)((int)param_2 + local_10[0]);
-          iVar8 = iVar8 + 1;
-        } while (iVar8 < *piVar1);
+          p5 = orig::SqScriptRead_ReadBlock(i6,4,1,arg1,(int)p6);
+          arg1 = (bits32 *)((int)p5 + i6[0] + 0xc);
+          arg2 = (bits32 *)((int)arg2 + i6[0]);
+          i2 = i2 + 1;
+        } while (i2 < *p1);
       }
-      puVar6 = orig::FUN_10275d80(1,*piVar1 << 2,s_entries_103b7bc4,0xb9);
-      puVar5[0xd] = puVar6;
-      puVar6 = orig::FUN_10275d80(1,*piVar1 * 0x18,s_entryBlock_103b7bb4,0xba);
-      param_2 = orig::FUN_10275d80(1,(int)param_2,s_playbackBlock_103b7ba4,0xbb);
-      local_24 = 0;
-      param_1 = puVar4;
-      if (0 < *piVar1) {
-        piVar9 =(int*)(puVar6 + 2);
+      p5 = orig::game_10275D80(1,*p1 << 2,str_entries_103B7BC4,0xb9);
+      p4[0xd] = p5;
+      p5 = orig::game_10275D80(1,*p1 * 0x18,str_entryBlock_103B7BB4,0xba);
+      arg2 = orig::game_10275D80(1,(int)arg2,str_playbackBlock_103B7BA4,0xbb);
+      i3 = 0;
+      arg1 = p3;
+      if (0 < *p1) {
+        p7 =(int*)(p5 + 2);
         do {
-          puVar4 = orig::SqScriptRead_ReadBlock(piVar9,4,1,param_1,(int)puVar7);
-          puVar4 = orig::SqScriptRead_ReadBlock(piVar9 + 1,4,1,puVar4,(int)puVar7);
-          orig::SqChannelHandler_SetHandlerByType((int)(piVar9 + -2),piVar9[1]);
-          puVar4 = orig::SqScriptRead_ReadBlock(piVar9 + 2,4,1,puVar4,(int)puVar7);
-          puVar4 = orig::SqScriptRead_ReadBlock(piVar9 + -2,4,1,puVar4,(int)puVar7);
-          piVar9[-1] = (int)param_2;
-          param_2 = (undefined4 *)((int)param_2 + *piVar9);
-          param_1 = orig::SqScriptRead_ReadBlock((undefined4 *)piVar9[-1],1,*piVar9,puVar4,(int)puVar7);
-          piVar2 = piVar9 + -2;
-          piVar9 = piVar9 + 6;
-          *(int **)(puVar5[0xd] + local_24 * 4) = piVar2;
-          *(int *)(puVar5[0xe] + local_24 * 4) = *piVar2;
-          local_24 = local_24 + 1;
-        } while (local_24 < *piVar1);
+          p3 = orig::SqScriptRead_ReadBlock(p7,4,1,arg1,(int)p6);
+          p3 = orig::SqScriptRead_ReadBlock(p7 + 1,4,1,p3,(int)p6);
+          orig::SqChannelHandler_SetHandlerByType((int)(p7 + -2),p7[1]);
+          p3 = orig::SqScriptRead_ReadBlock(p7 + 2,4,1,p3,(int)p6);
+          p3 = orig::SqScriptRead_ReadBlock(p7 + -2,4,1,p3,(int)p6);
+          p7[-1] = (int)arg2;
+          arg2 = (bits32 *)((int)arg2 + *p7);
+          arg1 = orig::SqScriptRead_ReadBlock((bits32 *)p7[-1],1,*p7,p3,(int)p6);
+          p2 = p7 + -2;
+          p7 = p7 + 6;
+          *(int **)(p4[0xd] + i3 * 4) = p2;
+          *(int *)(p4[0xe] + i3 * 4) = *p2;
+          i3 = i3 + 1;
+        } while (i3 < *p1);
       }
     }
-    puVar4 = orig::FUN_10275d80(1,*piVar1 << 2,s_dataType_103b7b90,0xd6);
-    puVar5[0x13] = puVar4;
-    orig::SqScriptRead_ReadBlock(puVar4,4,*piVar1,param_1,(int)puVar7);
-    *(uint8_t *)(puVar5 + 0x15) = 0;
-    *(uint8_t *)((int)puVar5 + 0x55) = 0xff;
-    puVar7 = orig::FUN_10275d80(1,*piVar1,s_entryEnabled_103b7b80,0xdd);
-    puVar5[0x14] = puVar7;
-    iVar8 = 0;
-    if (0 < *piVar1) {
+    p3 = orig::game_10275D80(1,*p1 << 2,str_dataType_103B7B90,0xd6);
+    p4[0x13] = p3;
+    orig::SqScriptRead_ReadBlock(p3,4,*p1,arg1,(int)p6);
+    *(uint8_t *)(p4 + 0x15) = 0;
+    *(uint8_t *)((int)p4 + 0x55) = 0xff;
+    p6 = orig::game_10275D80(1,*p1,str_entryEnabled_103B7B80,0xdd);
+    p4[0x14] = p6;
+    i2 = 0;
+    if (0 < *p1) {
       do {
-        orig::SqmoPlaybackChannel_Update((int)puVar5,iVar8);
-        iVar8 = iVar8 + 1;
-      } while (iVar8 < *piVar1);
+        orig::SqmoPlaybackChannel_Update((int)p4,i2);
+        i2 = i2 + 1;
+      } while (i2 < *p1);
     }
-    return (int)puVar5;
+    return (int)p4;
   }
-  orig::sqDebugPrintf_v1(s_____Error__PlaybackChannel_versi_103b7bf4,local_20,3);
+  orig::sqDebugPrintf_v1(str_____Error__PlaybackChannel_versi_103B7BF4,i4,3);
   return 0;
 }

@@ -4,686 +4,686 @@
 
 // FUNCTION: FFXIMAIN 0x10277A50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl SqmdModel_Validate(int param_1)
+XI_API uint32_t __cdecl SqmdModel_Validate(int arg1)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar1 = *(uint32_t *)(param_1 + 0xa8);
-  if ((uVar1 & 1) == 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x77);
-    uVar2 = orig::sqDebugPrintf_v1(s_model_is_not_loaded__validation_f_103b3848);
-    return (uint32_t)xi_trunc24(((uint64_t)uVar2 >> 8)) << 8;
+  u1 = *(uint32_t *)(arg1 + 0xa8);
+  if ((u1 & 1) == 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x77);
+    u2 = orig::sqDebugPrintf_v1(str_model_is_not_loaded__validation_f_103B3848);
+    return (uint32_t)xi_trunc24(((uint64_t)u2 >> 8)) << 8;
   }
-  if ((uVar1 & 2) == 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x7d);
-    uVar2 = orig::sqDebugPrintf_v1(s_model_is_not_linked__validation_f_103b381c);
-    return (uint32_t)xi_trunc24(((uint64_t)uVar2 >> 8)) << 8;
+  if ((u1 & 2) == 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x7d);
+    u2 = orig::sqDebugPrintf_v1(str_model_is_not_linked__validation_f_103B381C);
+    return (uint32_t)xi_trunc24(((uint64_t)u2 >> 8)) << 8;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(0xff)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(0xff)));
 }
 
 // FUNCTION: FFXIMAIN 0x10277AB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmdModel_Free(int * param_1)
+XI_API void __cdecl SqmdModel_Free(int * arg1)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  orig::SqmdModel_FreeBuffers(*param_1);
-  iVar1 = *param_1;
-  if ((*(uint32_t *)(iVar1 + 0xa8) & 0x200) == 0) {
-    orig::sqFree_v1(iVar1,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xb5);
+  orig::SqmdModel_FreeBuffers(*arg1);
+  i1 = *arg1;
+  if ((*(uint32_t *)(i1 + 0xa8) & 0x200) == 0) {
+    orig::sqFree_v1(i1,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xb5);
   }
   else {
-    if (((*(char *)(iVar1 + -0x10) != 'D') || (*(char *)(iVar1 + -0xf) != 'M')) ||
-       (*(char *)(iVar1 + -0xe) != 'B')) {
-      uVar2 = orig::sqDebugPrintf_v1(s_____Error__sqmdDMBHdr_not_found_c_103b3874);
-      orig::SqMem_HexDump(iVar1 + -0x20,0x30,(int)uVar2,(int)((uint64_t)uVar2 >> 0x20));
-      *param_1 = 0;
+    if (((*(char *)(i1 + -0x10) != 'D') || (*(char *)(i1 + -0xf) != 'M')) ||
+       (*(char *)(i1 + -0xe) != 'B')) {
+      u1 = orig::sqDebugPrintf_v1(str_____Error__sqmdDMBHdr_not_found_c_103B3874);
+      orig::SqMem_HexDump(i1 + -0x20,0x30,(int)u1,(int)((uint64_t)u1 >> 0x20));
+      *arg1 = 0;
       return;
     }
-    if (*(int *)(iVar1 + -4) != 0) {
-      orig::sqFree_v1(*(int *)(iVar1 + -4),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xa6);
-      *(uint32_t *)(iVar1 + -4) = 0;
+    if (*(int *)(i1 + -4) != 0) {
+      orig::sqFree_v1(*(int *)(i1 + -4),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xa6);
+      *(uint32_t *)(i1 + -4) = 0;
     }
-    if (*(int *)(iVar1 + -8) != 0) {
-      orig::sqFree_v1(*(int *)(iVar1 + -8),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xae);
-      *(uint32_t *)(iVar1 + -8) = 0;
-      *param_1 = 0;
+    if (*(int *)(i1 + -8) != 0) {
+      orig::sqFree_v1(*(int *)(i1 + -8),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xae);
+      *(uint32_t *)(i1 + -8) = 0;
+      *arg1 = 0;
       return;
     }
   }
-  *param_1 = 0;
+  *arg1 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10277B70
 // GATE: PASS -- 100 trials, 29 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 29
-XI_API void __cdecl SqmdModel_FreeBuffers(int param_1)
+XI_API void __cdecl SqmdModel_FreeBuffers(int arg1)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
-  orig::SqmdModel_FreeItems((int *)param_1);
-  if ((*(int *)(param_1 + 0x24) != 0) || (*(int *)(param_1 + 0x28) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      if (*(int *)(param_1 + 0x1c) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x1c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xdd);
-        *(uint32_t *)(param_1 + 0x1c) = 0;
+  orig::SqmdModel_FreeItems((int *)arg1);
+  if ((*(int *)(arg1 + 0x24) != 0) || (*(int *)(arg1 + 0x28) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      if (*(int *)(arg1 + 0x1c) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x1c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xdd);
+        *(uint32_t *)(arg1 + 0x1c) = 0;
       }
-      if (*(int *)(param_1 + 0x20) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x20),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xde);
-        *(uint32_t *)(param_1 + 0x20) = 0;
+      if (*(int *)(arg1 + 0x20) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x20),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xde);
+        *(uint32_t *)(arg1 + 0x20) = 0;
       }
     }
     else {
-      iVar3 = 0;
-      if (0 < *(int *)(param_1 + 0x24)) {
+      i3 = 0;
+      if (0 < *(int *)(arg1 + 0x24)) {
         do {
-          iVar1 = *(int *)(*(int *)(param_1 + 0x1c) + iVar3 * 4);
-          iVar2 = *(int *)(iVar1 + 0x14);
-          if (-1 < iVar2) {
-            orig::SqgxTexture_FreeSlot(iVar2);
+          i1 = *(int *)(*(int *)(arg1 + 0x1c) + i3 * 4);
+          i2 = *(int *)(i1 + 0x14);
+          if (-1 < i2) {
+            orig::SqgxTexture_FreeSlot(i2);
           }
-          iVar1 = *(int *)(iVar1 + 0x18);
-          if (-1 < iVar1) {
-            orig::SqgxTexture_ClearPaletteUsed(iVar1);
+          i1 = *(int *)(i1 + 0x18);
+          if (-1 < i1) {
+            orig::SqgxTexture_ClearPaletteUsed(i1);
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < *(int *)(param_1 + 0x24));
-        *(uint32_t *)(param_1 + 0x28) = 0;
-        *(uint32_t *)(param_1 + 0x24) = 0;
-        goto LAB_10277c2c;
+          i3 = i3 + 1;
+        } while (i3 < *(int *)(arg1 + 0x24));
+        *(uint32_t *)(arg1 + 0x28) = 0;
+        *(uint32_t *)(arg1 + 0x24) = 0;
+        goto code_10277C2C;
       }
     }
-    *(uint32_t *)(param_1 + 0x28) = 0;
-    *(uint32_t *)(param_1 + 0x24) = 0;
+    *(uint32_t *)(arg1 + 0x28) = 0;
+    *(uint32_t *)(arg1 + 0x24) = 0;
   }
-LAB_10277c2c:
-  if ((*(int *)(param_1 + 0x34) != 0) || (*(int *)(param_1 + 0x38) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      if (*(int *)(param_1 + 0x2c) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x2c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xe6);
-        *(uint32_t *)(param_1 + 0x2c) = 0;
+code_10277C2C:
+  if ((*(int *)(arg1 + 0x34) != 0) || (*(int *)(arg1 + 0x38) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      if (*(int *)(arg1 + 0x2c) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x2c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xe6);
+        *(uint32_t *)(arg1 + 0x2c) = 0;
       }
-      if (*(int *)(param_1 + 0x30) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x30),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xe7);
-        *(uint32_t *)(param_1 + 0x30) = 0;
+      if (*(int *)(arg1 + 0x30) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x30),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xe7);
+        *(uint32_t *)(arg1 + 0x30) = 0;
       }
     }
-    *(uint32_t *)(param_1 + 0x38) = 0;
-    *(uint32_t *)(param_1 + 0x34) = 0;
+    *(uint32_t *)(arg1 + 0x38) = 0;
+    *(uint32_t *)(arg1 + 0x34) = 0;
   }
-  if ((*(int *)(param_1 + 0x58) != 0) || (*(int *)(param_1 + 0x5c) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      iVar3 = 0;
-      if (0 < *(int *)(param_1 + 0x58)) {
+  if ((*(int *)(arg1 + 0x58) != 0) || (*(int *)(arg1 + 0x5c) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      i3 = 0;
+      if (0 < *(int *)(arg1 + 0x58)) {
         do {
-          if (((*(uint8_t *)(*(int *)(param_1 + 0x54) + iVar3 * 4) & 0x20) != 0) &&
-             (iVar1 = *(int *)(*(int *)(param_1 + 0x50) + iVar3 * 4), iVar1 != 0)) {
-            orig::sqFree_v1(iVar1,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xf1);
-            *(uint32_t *)(*(int *)(param_1 + 0x50) + iVar3 * 4) = 0;
+          if (((*(uint8_t *)(*(int *)(arg1 + 0x54) + i3 * 4) & 0x20) != 0) &&
+             (i1 = *(int *)(*(int *)(arg1 + 0x50) + i3 * 4), i1 != 0)) {
+            orig::sqFree_v1(i1,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xf1);
+            *(uint32_t *)(*(int *)(arg1 + 0x50) + i3 * 4) = 0;
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < *(int *)(param_1 + 0x58));
+          i3 = i3 + 1;
+        } while (i3 < *(int *)(arg1 + 0x58));
       }
-      if (*(int *)(param_1 + 0x4c) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x4c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xf4);
-        *(uint32_t *)(param_1 + 0x4c) = 0;
+      if (*(int *)(arg1 + 0x4c) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x4c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xf4);
+        *(uint32_t *)(arg1 + 0x4c) = 0;
       }
-      if (*(int *)(param_1 + 0x50) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x50),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xf5);
-        *(uint32_t *)(param_1 + 0x50) = 0;
+      if (*(int *)(arg1 + 0x50) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x50),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xf5);
+        *(uint32_t *)(arg1 + 0x50) = 0;
       }
-      if (*(int *)(param_1 + 0x54) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x54),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xf6);
-        *(uint32_t *)(param_1 + 0x54) = 0;
-      }
-    }
-    *(uint32_t *)(param_1 + 0x5c) = 0;
-    *(uint32_t *)(param_1 + 0x58) = 0;
-  }
-  if ((*(int *)(param_1 + 0x44) != 0) || (*(int *)(param_1 + 0x48) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      if (*(int *)(param_1 + 0x3c) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x3c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xfe);
-        *(uint32_t *)(param_1 + 0x3c) = 0;
-      }
-      if (*(int *)(param_1 + 0x40) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x40),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0xff);
-        *(uint32_t *)(param_1 + 0x40) = 0;
+      if (*(int *)(arg1 + 0x54) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x54),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xf6);
+        *(uint32_t *)(arg1 + 0x54) = 0;
       }
     }
-    *(uint32_t *)(param_1 + 0x48) = 0;
-    *(uint32_t *)(param_1 + 0x44) = 0;
+    *(uint32_t *)(arg1 + 0x5c) = 0;
+    *(uint32_t *)(arg1 + 0x58) = 0;
   }
-  if ((*(int *)(param_1 + 0x68) != 0) || (*(int *)(param_1 + 0x6c) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      if (*(int *)(param_1 + 0x60) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x60),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x107);
-        *(uint32_t *)(param_1 + 0x60) = 0;
+  if ((*(int *)(arg1 + 0x44) != 0) || (*(int *)(arg1 + 0x48) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      if (*(int *)(arg1 + 0x3c) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x3c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xfe);
+        *(uint32_t *)(arg1 + 0x3c) = 0;
       }
-      if (*(int *)(param_1 + 100) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 100),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x108);
-        *(uint32_t *)(param_1 + 100) = 0;
+      if (*(int *)(arg1 + 0x40) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x40),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0xff);
+        *(uint32_t *)(arg1 + 0x40) = 0;
       }
     }
-    *(uint32_t *)(param_1 + 0x6c) = 0;
-    *(uint32_t *)(param_1 + 0x68) = 0;
+    *(uint32_t *)(arg1 + 0x48) = 0;
+    *(uint32_t *)(arg1 + 0x44) = 0;
   }
-  if ((*(int *)(param_1 + 0x7c) != 0) || (*(int *)(param_1 + 0x80) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      iVar3 = 0;
-      if (0 < *(int *)(param_1 + 0x7c)) {
+  if ((*(int *)(arg1 + 0x68) != 0) || (*(int *)(arg1 + 0x6c) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      if (*(int *)(arg1 + 0x60) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x60),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x107);
+        *(uint32_t *)(arg1 + 0x60) = 0;
+      }
+      if (*(int *)(arg1 + 100) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 100),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x108);
+        *(uint32_t *)(arg1 + 100) = 0;
+      }
+    }
+    *(uint32_t *)(arg1 + 0x6c) = 0;
+    *(uint32_t *)(arg1 + 0x68) = 0;
+  }
+  if ((*(int *)(arg1 + 0x7c) != 0) || (*(int *)(arg1 + 0x80) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      i3 = 0;
+      if (0 < *(int *)(arg1 + 0x7c)) {
         do {
-          iVar1 = *(int *)(*(int *)(param_1 + 0x70) + iVar3 * 4);
-          if (iVar1 != 0) {
-            orig::sqFree_v1(iVar1,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x111);
-            *(uint32_t *)(*(int *)(param_1 + 0x70) + iVar3 * 4) = 0;
+          i1 = *(int *)(*(int *)(arg1 + 0x70) + i3 * 4);
+          if (i1 != 0) {
+            orig::sqFree_v1(i1,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x111);
+            *(uint32_t *)(*(int *)(arg1 + 0x70) + i3 * 4) = 0;
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < *(int *)(param_1 + 0x7c));
+          i3 = i3 + 1;
+        } while (i3 < *(int *)(arg1 + 0x7c));
       }
-      if (*(int *)(param_1 + 0x70) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x70),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x113);
-        *(uint32_t *)(param_1 + 0x70) = 0;
+      if (*(int *)(arg1 + 0x70) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x70),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x113);
+        *(uint32_t *)(arg1 + 0x70) = 0;
       }
-      if (*(int *)(param_1 + 0x74) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x74),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x114);
-        *(uint32_t *)(param_1 + 0x74) = 0;
+      if (*(int *)(arg1 + 0x74) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x74),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x114);
+        *(uint32_t *)(arg1 + 0x74) = 0;
       }
-      if (*(int *)(param_1 + 0x78) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x78),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x115);
-        *(uint32_t *)(param_1 + 0x78) = 0;
+      if (*(int *)(arg1 + 0x78) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x78),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x115);
+        *(uint32_t *)(arg1 + 0x78) = 0;
       }
     }
-    *(uint32_t *)(param_1 + 0x80) = 0;
-    *(uint32_t *)(param_1 + 0x7c) = 0;
+    *(uint32_t *)(arg1 + 0x80) = 0;
+    *(uint32_t *)(arg1 + 0x7c) = 0;
   }
-  if ((*(int *)(param_1 + 0x90) != 0) || (*(int *)(param_1 + 0x94) != 0)) {
-    if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-      iVar3 = 0;
-      if (0 < *(int *)(param_1 + 0x90)) {
+  if ((*(int *)(arg1 + 0x90) != 0) || (*(int *)(arg1 + 0x94) != 0)) {
+    if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+      i3 = 0;
+      if (0 < *(int *)(arg1 + 0x90)) {
         do {
-          iVar1 = *(int *)(*(int *)(param_1 + 0x84) + iVar3 * 4);
-          if (iVar1 != 0) {
-            orig::sqFree_v1(iVar1,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x11e);
-            *(uint32_t *)(*(int *)(param_1 + 0x84) + iVar3 * 4) = 0;
+          i1 = *(int *)(*(int *)(arg1 + 0x84) + i3 * 4);
+          if (i1 != 0) {
+            orig::sqFree_v1(i1,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x11e);
+            *(uint32_t *)(*(int *)(arg1 + 0x84) + i3 * 4) = 0;
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < *(int *)(param_1 + 0x90));
+          i3 = i3 + 1;
+        } while (i3 < *(int *)(arg1 + 0x90));
       }
-      if (*(int *)(param_1 + 0x84) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x84),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x120);
-        *(uint32_t *)(param_1 + 0x84) = 0;
+      if (*(int *)(arg1 + 0x84) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x84),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x120);
+        *(uint32_t *)(arg1 + 0x84) = 0;
       }
-      if (*(int *)(param_1 + 0x88) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x88),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x121);
-        *(uint32_t *)(param_1 + 0x88) = 0;
+      if (*(int *)(arg1 + 0x88) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x88),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x121);
+        *(uint32_t *)(arg1 + 0x88) = 0;
       }
-      if (*(int *)(param_1 + 0x8c) != 0) {
-        orig::sqFree_v1(*(int *)(param_1 + 0x8c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x122);
-        *(uint32_t *)(param_1 + 0x8c) = 0;
+      if (*(int *)(arg1 + 0x8c) != 0) {
+        orig::sqFree_v1(*(int *)(arg1 + 0x8c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x122);
+        *(uint32_t *)(arg1 + 0x8c) = 0;
       }
     }
-    *(uint32_t *)(param_1 + 0x94) = 0;
-    *(uint32_t *)(param_1 + 0x90) = 0;
+    *(uint32_t *)(arg1 + 0x94) = 0;
+    *(uint32_t *)(arg1 + 0x90) = 0;
   }
-  if ((*(uint32_t *)(param_1 + 0xa8) & 0x200) == 0) {
-    if (*(int *)(param_1 + 0x98) != 0) {
-      orig::sqFree_v1(*(int *)(param_1 + 0x98),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x129);
-      *(uint32_t *)(param_1 + 0x98) = 0;
+  if ((*(uint32_t *)(arg1 + 0xa8) & 0x200) == 0) {
+    if (*(int *)(arg1 + 0x98) != 0) {
+      orig::sqFree_v1(*(int *)(arg1 + 0x98),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x129);
+      *(uint32_t *)(arg1 + 0x98) = 0;
     }
-    if (*(int *)(param_1 + 0x9c) != 0) {
-      orig::sqFree_v1(*(int *)(param_1 + 0x9c),s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x12a);
-      *(uint32_t *)(param_1 + 0x9c) = 0;
+    if (*(int *)(arg1 + 0x9c) != 0) {
+      orig::sqFree_v1(*(int *)(arg1 + 0x9c),str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x12a);
+      *(uint32_t *)(arg1 + 0x9c) = 0;
     }
-    if (*(int *)(param_1 + 0xa0) != 0) {
-      orig::sqFree_v1(*(int *)(param_1 + 0xa0),s_C__dev_dancer_modules_sqModel_sr_103b37ec,299);
-      *(uint32_t *)(param_1 + 0xa0) = 0;
+    if (*(int *)(arg1 + 0xa0) != 0) {
+      orig::sqFree_v1(*(int *)(arg1 + 0xa0),str_C__dev_dancer_modules_sqModel_sr_103B37EC,299);
+      *(uint32_t *)(arg1 + 0xa0) = 0;
     }
   }
-  *(uint32_t *)(param_1 + 0xa4) = 0;
-  *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) & 0x200;
+  *(uint32_t *)(arg1 + 0xa4) = 0;
+  *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) & 0x200;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278490
 // GATE: PASS -- 100 trials, 86 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 86
-XI_API void __cdecl SqmdModel_Update(int param_1)
+XI_API void __cdecl SqmdModel_Update(int arg1)
 {
-  uint32_t uVar1;
-  int iVar2;
-  int *piVar3;
-  uint32_t uVar4;
-  int iVar5;
-  int iVar6;
+  uint32_t u1;
+  int i1;
+  int *p1;
+  uint32_t u2;
+  int i2;
+  int i3;
   
-  uVar1 = orig::SqmdModel_Validate(param_1);
-  if ((char)uVar1 == '\0') {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x1dc)
+  u1 = orig::SqmdModel_Validate(arg1);
+  if ((char)u1 == '\0') {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x1dc)
     ;
-    orig::sqDebugPrintf_v1(s_aborting___s__command__103b3ae4,s_sqmdModelUpdate_103b3afc);
+    orig::sqDebugPrintf_v1(str_aborting___s__command__103B3AE4,str_sqmdModelUpdate_103B3AFC);
     return;
   }
-  if ((*(uint8_t *)(param_1 + 0xa8) & 4) != 0) {
-    iVar2 = orig::SqTimer_GetMicroseconds_v1();
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+  if ((*(uint8_t *)(arg1 + 0xa8) & 4) != 0) {
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if (((char)uVar4 != '\0') && (*piVar3 == 0x130001)) {
-          orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if (((char)u2 != '\0') && (*p1 == 0x130001)) {
+          orig::SqDebug_InvokeCallback18_v1((int)p1);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if ((char)uVar4 != '\0') {
-          iVar5 = *piVar3;
-          if (iVar5 < 0x150002) {
-            if (iVar5 != 0x150001) {
-              if (iVar5 == 0xb0001) {
-                if (piVar3[0xb] != -1) {
-                  if (*(int **)(piVar3[7] + 0x68) != (int *)0x0) {
-                    piVar3 = *(int **)(piVar3[7] + 0x68);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if ((char)u2 != '\0') {
+          i2 = *p1;
+          if (i2 < 0x150002) {
+            if (i2 != 0x150001) {
+              if (i2 == 0xb0001) {
+                if (p1[0xb] != -1) {
+                  if (*(int **)(p1[7] + 0x68) != (int *)0x0) {
+                    p1 = *(int **)(p1[7] + 0x68);
                   }
-                  goto LAB_10278576;
+                  goto code_10278576;
                 }
               }
-              else if (iVar5 != 0x130001) {
-LAB_10278576:
-                orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+              else if (i2 != 0x130001) {
+code_10278576:
+                orig::SqDebug_InvokeCallback18_v1((int)p1);
               }
             }
           }
-          else if ((iVar5 < 0x1c0002) || (0x1c0003 < iVar5)) goto LAB_10278576;
+          else if ((i2 < 0x1c0002) || (0x1c0003 < i2)) goto code_10278576;
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if ((((char)uVar4 != '\0') && (*piVar3 == 0x1c0002)) && (piVar3[7] == 2)) {
-          orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if ((((char)u2 != '\0') && (*p1 == 0x1c0002)) && (p1[7] == 2)) {
+          orig::SqDebug_InvokeCallback18_v1((int)p1);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if (((char)uVar4 != '\0') && (*piVar3 == 0x150001)) {
-          orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if (((char)u2 != '\0') && (*p1 == 0x150001)) {
+          orig::SqDebug_InvokeCallback18_v1((int)p1);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    iVar6 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109f8270_as_s32 = iVar6 - iVar2;
-    iVar2 = orig::SqTimer_GetMicroseconds_v1();
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x58)) {
+    i3 = orig::SqTimer_GetMicroseconds_v1();
+    g_109F8270_as_s32 = i3 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x58)) {
       do {
-        if ((*(uint32_t *)(*(int *)(param_1 + 0x54) + iVar6 * 4) & 0x400) != 0) {
-          iVar5 = orig::SqmdModel_GetItemKind3(param_1,iVar6);
-          orig::SqIOHooks_CallHook2C(iVar5);
-          if ((*(uint32_t *)(*(int *)(param_1 + 0x54) + iVar6 * 4) & 0x1000) != 0) {
-            orig::SqIOHooks_CallHook3C(iVar5);
+        if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + i3 * 4) & 0x400) != 0) {
+          i2 = orig::SqmdModel_GetItemKind3(arg1,i3);
+          orig::SqIOHooks_CallHook2C(i2);
+          if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + i3 * 4) & 0x1000) != 0) {
+            orig::SqIOHooks_CallHook3C(i2);
           }
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x58));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x58));
     }
-    iVar6 = orig::SqTimer_GetMicroseconds_v1();
-    DAT_109f8274 = iVar6 - iVar2;
-    iVar2 = orig::SqTimer_GetMicroseconds_v1();
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    i3 = orig::SqTimer_GetMicroseconds_v1();
+    g_109F8274 = i3 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if ((((char)uVar4 != '\0') && (*piVar3 == 0x1c0002)) && (piVar3[7] != 2)) {
-          orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if ((((char)u2 != '\0') && (*p1 == 0x1c0002)) && (p1[7] != 2)) {
+          orig::SqDebug_InvokeCallback18_v1((int)p1);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    _DAT_109f8278 = orig::SqTimer_GetMicroseconds_v1();
-    _DAT_109f8278 = _DAT_109f8278 - iVar2;
-    iVar2 = orig::SqTimer_GetMicroseconds_v1();
-    iVar6 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    g_109F8278 = orig::SqTimer_GetMicroseconds_v1();
+    g_109F8278 = g_109F8278 - i1;
+    i1 = orig::SqTimer_GetMicroseconds_v1();
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        piVar3 = (int *)orig::SqmdModel_GetItemKind2(param_1,iVar6);
-        uVar4 = orig::SqDebug_GetFlagByte14((int)piVar3);
-        if (((char)uVar4 != '\0') && (*piVar3 == 0x1c0003)) {
-          orig::SqDebug_InvokeCallback18_v1((int)piVar3);
+        p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,i3);
+        u2 = orig::SqDebug_GetFlagByte14((int)p1);
+        if (((char)u2 != '\0') && (*p1 == 0x1c0003)) {
+          orig::SqDebug_InvokeCallback18_v1((int)p1);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i3 = i3 + 1;
+      } while (i3 < *(int *)(arg1 + 0x44));
     }
-    _DAT_109f827c = orig::SqTimer_GetMicroseconds_v1();
-    _DAT_109f827c = _DAT_109f827c - iVar2;
+    g_109F827C = orig::SqTimer_GetMicroseconds_v1();
+    g_109F827C = g_109F827C - i1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278710
 // GATE: PASS -- 100 trials, 88 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 88
-XI_API void __cdecl SqmdModel_Link(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __cdecl SqmdModel_Link(int arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  char *pcVar1;
-  int iVar2;
-  uint64_t uVar3;
-  char *pcVar4;
-  size_t sVar5;
+  char *p1;
+  int i1;
+  uint64_t u1;
+  char *p2;
+  size_t u2;
   
-  if ((*(uint8_t *)(param_1 + 0xa8) & 1) == 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x286)
+  if ((*(uint8_t *)(arg1 + 0xa8) & 1) == 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x286)
     ;
-    orig::sqDebugPrintf_v1(s_model_is_not_loaded__aborting____103b3b14,&DAT_103b3b44);
+    orig::sqDebugPrintf_v1(str_model_is_not_loaded__aborting____103B3B14,&g_103B3B44);
     return;
   }
-  iVar2 = 0;
-  if (0 < *(int *)(param_1 + 0x58)) {
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x58)) {
     do {
-      if ((*(uint32_t *)(*(int *)(param_1 + 0x54) + iVar2 * 4) & 0x2000) == 0) {
-        sVar5 = 7;
-        pcVar4 = s_eyelash_103b3b0c;
-        pcVar1 = (char *)orig::SqmdModel_GetItemNameKind3(param_1,iVar2);
-        uVar3 = orig::_strncmp_v1(pcVar1,pcVar4,sVar5);
-        if ((int)uVar3 != 0) {
-          orig::SqmdModel_LinkShape(param_1,iVar2,param_2,param_3,param_4);
+      if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + i1 * 4) & 0x2000) == 0) {
+        u2 = 7;
+        p2 = str_eyelash_103B3B0C;
+        p1 = (char *)orig::SqmdModel_GetItemNameKind3(arg1,i1);
+        u1 = orig::_strncmp_v1(p1,p2,u2);
+        if ((int)u1 != 0) {
+          orig::SqmdModel_LinkShape(arg1,i1,arg2,arg3,arg4);
         }
       }
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(param_1 + 0x58));
+      i1 = i1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x58));
   }
-  iVar2 = 0;
-  if (0 < *(int *)(param_1 + 0x58)) {
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x58)) {
     do {
-      if ((*(uint32_t *)(*(int *)(param_1 + 0x54) + iVar2 * 4) & 0x2000) == 0) {
-        sVar5 = 7;
-        pcVar4 = s_eyelash_103b3b0c;
-        pcVar1 = (char *)orig::SqmdModel_GetItemNameKind3(param_1,iVar2);
-        uVar3 = orig::_strncmp_v1(pcVar1,pcVar4,sVar5);
-        if ((int)uVar3 == 0) {
-          orig::SqmdModel_LinkShape(param_1,iVar2,param_2,param_3,param_4);
+      if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + i1 * 4) & 0x2000) == 0) {
+        u2 = 7;
+        p2 = str_eyelash_103B3B0C;
+        p1 = (char *)orig::SqmdModel_GetItemNameKind3(arg1,i1);
+        u1 = orig::_strncmp_v1(p1,p2,u2);
+        if ((int)u1 == 0) {
+          orig::SqmdModel_LinkShape(arg1,i1,arg2,arg3,arg4);
         }
       }
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(param_1 + 0x58));
+      i1 = i1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x58));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102787F0
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API void __cdecl SqmdModel_LinkShape(int param_1, int param_2, int param_3, undefined4 param_4, undefined4 param_5)
+XI_API void __cdecl SqmdModel_LinkShape(int arg1, int arg2, int arg3, bits32 arg4, bits32 arg5)
 {
-  uint32_t uVar1;
-  undefined4 *puVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  int iVar5;
-  undefined4 uVar6;
-  int iVar7;
+  uint32_t u1;
+  bits32 *p1;
+  bits32 u2;
+  bits32 u3;
+  int i1;
+  bits32 u4;
+  int i2;
   char xi_frame[264] __attribute__((aligned(4)));
-  int  &local_108 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_104 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 8);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  uint8_t  (&u5)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 8);
   
-  if ((*(uint8_t *)(param_1 + 0xa8) & 1) == 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x2bf)
+  if ((*(uint8_t *)(arg1 + 0xa8) & 1) == 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x2bf)
     ;
-    orig::sqDebugPrintf_v1(s_model_is_not_loaded__aborting____103b3b14,&DAT_103b3b44);
+    orig::sqDebugPrintf_v1(str_model_is_not_loaded__aborting____103B3B14,&g_103B3B44);
     return;
   }
-  local_104 = *(int *)(param_1 + 0xa4);
-  if (*(int *)(param_1 + 0x5c) <= local_104) {
-    uVar1 = local_104 * 4 + 4;
-    puVar2 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 0x9c),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x2c8);
-    *(undefined4 **)(param_1 + 0x9c) = puVar2;
-    puVar2 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 0xa0),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x2ca);
-    *(undefined4 **)(param_1 + 0xa0) = puVar2;
+  i4 = *(int *)(arg1 + 0xa4);
+  if (*(int *)(arg1 + 0x5c) <= i4) {
+    u1 = i4 * 4 + 4;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0x9c),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x2c8);
+    *(bits32 **)(arg1 + 0x9c) = p1;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0xa0),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x2ca);
+    *(bits32 **)(arg1 + 0xa0) = p1;
   }
-  uVar3 = orig::SqmdModel_GetItemKind1(param_1,*(undefined4 *)(*(int *)(param_1 + 0x98) + param_2 * 4));
-  uVar6 = *(undefined4 *)(*(int *)(param_1 + 0x50) + param_2 * 4);
-  uVar4 = orig::SqmdModel_GetItemKind3(param_1,param_2);
-  iVar5 = orig::SqsnScene_LayerAddItem(param_3,uVar4,uVar6,uVar3,param_4);
-  if ((char)param_5 != '\0') {
-    if ((*(uint8_t *)(*(int *)(param_1 + 0x54) + param_2 * 4) & 0x40) != 0) {
-      local_108 = 0;
-      if (0 < *(int *)(param_3 + 0x34)) {
+  u2 = orig::SqmdModel_GetItemKind1(arg1,*(bits32 *)(*(int *)(arg1 + 0x98) + arg2 * 4));
+  u4 = *(bits32 *)(*(int *)(arg1 + 0x50) + arg2 * 4);
+  u3 = orig::SqmdModel_GetItemKind3(arg1,arg2);
+  i1 = orig::SqsnScene_LayerAddItem(arg3,u3,u4,u2,arg4);
+  if ((char)arg5 != '\0') {
+    if ((*(uint8_t *)(*(int *)(arg1 + 0x54) + arg2 * 4) & 0x40) != 0) {
+      i3 = 0;
+      if (0 < *(int *)(arg3 + 0x34)) {
         do {
-          orig::SqsnScene_ShadowAddMember(param_3,local_108,iVar5);
-          local_108 = local_108 + 1;
-        } while (local_108 < *(int *)(param_3 + 0x34));
+          orig::SqsnScene_ShadowAddMember(arg3,i3,i1);
+          i3 = i3 + 1;
+        } while (i3 < *(int *)(arg3 + 0x34));
       }
     }
-    if ((*(uint32_t *)(*(int *)(param_1 + 0x54) + param_2 * 4) & 0x4000) != 0) {
-      uVar6 = orig::SqmdModel_GetItemNameKind3(param_1,param_2);
-      orig::_sprintf_v1(local_100,s__s_sort_103b3b4c,uVar6);
-      iVar7 = orig::SqmdModel_LookupKind2(param_1,local_100,&local_108);
-      *(int *)(iVar7 + 0x2c) = param_3;
+    if ((*(uint32_t *)(*(int *)(arg1 + 0x54) + arg2 * 4) & 0x4000) != 0) {
+      u4 = orig::SqmdModel_GetItemNameKind3(arg1,arg2);
+      orig::_sprintf_v1(u5,str__s_sort_103B3B4C,u4);
+      i2 = orig::SqmdModel_LookupKind2(arg1,u5,&i3);
+      *(int *)(i2 + 0x2c) = arg3;
     }
   }
-  *(int *)(*(int *)(param_1 + 0x9c) + local_104 * 4) = iVar5;
-  *(int *)(*(int *)(param_1 + 0xa0) + local_104 * 4) = param_2;
-  *(int *)(param_1 + 0xa4) = *(int *)(param_1 + 0xa4) + 1;
-  *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) | 2;
+  *(int *)(*(int *)(arg1 + 0x9c) + i4 * 4) = i1;
+  *(int *)(*(int *)(arg1 + 0xa0) + i4 * 4) = arg2;
+  *(int *)(arg1 + 0xa4) = *(int *)(arg1 + 0xa4) + 1;
+  *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) | 2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278990
 // GATE: PASS -- 100 trials, 71 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 71
-XI_API void __cdecl SqmdModel_AddIllumLight(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __cdecl SqmdModel_AddIllumLight(int arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  uVar1 = orig::SqmdModel_Validate(param_1);
-  if ((char)uVar1 != '\0') {
-    iVar2 = 0;
-    if (0 < *(int *)(param_1 + 0xa4)) {
+  u1 = orig::SqmdModel_Validate(arg1);
+  if ((char)u1 != '\0') {
+    i1 = 0;
+    if (0 < *(int *)(arg1 + 0xa4)) {
       do {
-        if (((char)param_4 == '\0') ||
-           (-1 < *(char *)(*(int *)(param_1 + 0x54) +
-                          *(int *)(*(int *)(param_1 + 0xa0) + iVar2 * 4) * 4))) {
-          orig::SqsnScene_ItemAddLight(param_2,*(uint32_t *)(*(int *)(param_1 + 0x9c) + iVar2 * 4),param_3);
+        if (((char)arg4 == '\0') ||
+           (-1 < *(char *)(*(int *)(arg1 + 0x54) +
+                          *(int *)(*(int *)(arg1 + 0xa0) + i1 * 4) * 4))) {
+          orig::SqsnScene_ItemAddLight(arg2,*(uint32_t *)(*(int *)(arg1 + 0x9c) + i1 * 4),arg3);
         }
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < *(int *)(param_1 + 0xa4));
+        i1 = i1 + 1;
+      } while (i1 < *(int *)(arg1 + 0xa4));
     }
     return;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x301);
-  orig::sqDebugPrintf_v1(s_aborting___s__command__103b3ae4,s_sqmdModelAddIllumLight_103b3b54);
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x301);
+  orig::sqDebugPrintf_v1(str_aborting___s__command__103B3AE4,str_sqmdModelAddIllumLight_103B3B54);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278B50
 // GATE: PASS -- 100 trials, 61 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 61
-XI_API void __cdecl SqmdModel_AddShadowLightInLayer(int param_1, undefined4 param_2, int param_3, undefined4 param_4, undefined4 param_5)
+XI_API void __cdecl SqmdModel_AddShadowLightInLayer(int arg1, bits32 arg2, int arg3, bits32 arg4, bits32 arg5)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  uVar1 = orig::SqmdModel_Validate(param_1);
-  if ((char)uVar1 != '\0') {
-    iVar2 = 0;
-    if (0 < *(int *)(param_1 + 0xa4)) {
+  u1 = orig::SqmdModel_Validate(arg1);
+  if ((char)u1 != '\0') {
+    i1 = 0;
+    if (0 < *(int *)(arg1 + 0xa4)) {
       do {
-        if ((((char)param_5 == '\0') ||
-            (*(char *)(*(int *)(param_1 + 0x54) + *(int *)(*(int *)(param_1 + 0xa0) + iVar2 * 4) * 4
+        if ((((char)arg5 == '\0') ||
+            (*(char *)(*(int *)(arg1 + 0x54) + *(int *)(*(int *)(arg1 + 0xa0) + i1 * 4) * 4
                       ) < '\0')) &&
-           (uVar1 = *(uint32_t *)(*(int *)(param_1 + 0x9c) + iVar2 * 4), (int)uVar1 >> 0x10 == param_3))
+           (u1 = *(uint32_t *)(*(int *)(arg1 + 0x9c) + i1 * 4), (int)u1 >> 0x10 == arg3))
         {
-          orig::SqsnScene_ItemAddShadowLight(param_2,uVar1,param_4);
+          orig::SqsnScene_ItemAddShadowLight(arg2,u1,arg4);
         }
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < *(int *)(param_1 + 0xa4));
+        i1 = i1 + 1;
+      } while (i1 < *(int *)(arg1 + 0xa4));
     }
     return;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x382);
-  orig::sqDebugPrintf_v1(s_aborting___s__command__103b3ae4,s_sqmdModelAddShadowLightInLayer_103b3ba4);
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x382);
+  orig::sqDebugPrintf_v1(str_aborting___s__command__103B3AE4,str_sqmdModelAddShadowLightInLayer_103B3BA4);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278BF0
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API void __cdecl SqmdModel_Show(int param_1, undefined4 param_2)
+XI_API void __cdecl SqmdModel_Show(int arg1, bits32 arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  int iVar3;
+  uint32_t u1;
+  int i1;
+  int i2;
   
-  uVar1 = orig::SqmdModel_Validate(param_1);
-  if ((char)uVar1 != '\0') {
-    iVar3 = 0;
-    if (0 < *(int *)(param_1 + 0xa4)) {
+  u1 = orig::SqmdModel_Validate(arg1);
+  if ((char)u1 != '\0') {
+    i2 = 0;
+    if (0 < *(int *)(arg1 + 0xa4)) {
       do {
-        iVar2 = orig::SqsnScene_GetEntryAddr(param_2,*(uint32_t *)(*(int *)(param_1 + 0x9c) + iVar3 * 4));
-        *(uint8_t *)(iVar2 + 0x1d) = 0xff;
-        *(uint8_t *)(iVar2 + 0x1c) = 0xff;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < *(int *)(param_1 + 0xa4));
+        i1 = orig::SqsnScene_GetEntryAddr(arg2,*(uint32_t *)(*(int *)(arg1 + 0x9c) + i2 * 4));
+        *(uint8_t *)(i1 + 0x1d) = 0xff;
+        *(uint8_t *)(i1 + 0x1c) = 0xff;
+        i2 = i2 + 1;
+      } while (i2 < *(int *)(arg1 + 0xa4));
     }
-    *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) | 4;
+    *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) | 4;
     return;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x3b0);
-  orig::sqDebugPrintf_v1(s_aborting___s__command__103b3ae4);
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x3b0);
+  orig::sqDebugPrintf_v1(str_aborting___s__command__103B3AE4);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278E10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmdModel_SetLayerSort(int param_1, int param_2)
+XI_API void __cdecl SqmdModel_SetLayerSort(int arg1, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_Validate(param_1);
-  if ((char)uVar1 == '\0') {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x415)
+  u1 = orig::SqmdModel_Validate(arg1);
+  if ((char)u1 == '\0') {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x415)
     ;
-    orig::sqDebugPrintf_v1(s_aborting___s__command__103b3ae4);
+    orig::sqDebugPrintf_v1(str_aborting___s__command__103B3AE4);
     return;
   }
-  if (param_2 == -1) {
-    *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) ^ 0x8000;
+  if (arg2 == -1) {
+    *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) ^ 0x8000;
     return;
   }
-  if (param_2 != 0) {
-    *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) | 0x8000;
+  if (arg2 != 0) {
+    *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) | 0x8000;
     return;
   }
-  *(uint32_t *)(param_1 + 0xa8) = *(uint32_t *)(param_1 + 0xa8) & 0xffff7fff;
+  *(uint32_t *)(arg1 + 0xa8) = *(uint32_t *)(arg1 + 0xa8) & 0xffff7fff;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10278E90
 // GATE: PASS -- 100 trials, 58 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 58
-XI_API void __cdecl SqmdModel_LookAt(int param_1, int param_2, int param_3, float * param_4, float param_5)
+XI_API void __cdecl SqmdModel_LookAt(int arg1, int arg2, int arg3, float * arg4, float arg5)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  float fVar4;
-  int *piVar5;
-  float *pfVar6;
-  uint8_t bVar7;
-  long double fVar8;
+  int i1;
+  int i2;
+  int i3;
+  float f1;
+  int *p1;
+  float *p2;
+  uint8_t u1;
+  long double f2;
   char xi_frame[108] __attribute__((aligned(4)));
-  float  &local_6c = *reinterpret_cast<float  *>(xi_frame + 0);
-  int  &local_68 = *reinterpret_cast<int  *>(xi_frame + 4);
-  float  &local_64 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_60 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &local_5c = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &local_58 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_54 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &local_50 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  (&local_4c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 32);
-  float  (&local_40)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 44);
-  float  (&local_30)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 60);
-  float  (&local_20)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 76);
-  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 92);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 12);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 16);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 24);
+  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 28);
+  float  (&f10)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 32);
+  float  (&f11)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 44);
+  float  (&f12)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 60);
+  float  (&f13)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 76);
+  uint8_t  (&u2)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 92);
   
-  local_68 = 0;
-  local_6c = 0.0f;
-  if (*(int *)(param_1 + 0x44) < 1) {
+  i4 = 0;
+  f3 = 0.0f;
+  if (*(int *)(arg1 + 0x44) < 1) {
     return;
   }
   do {
-    fVar4 = local_6c;
-    piVar5 = (int *)orig::SqmdModel_GetItemKind2(param_1,local_6c);
-    if (*piVar5 == 0xb0001) {
-      if (local_68 == param_2) {
-        if ((param_3 < 0) || (piVar5[10] <= param_3)) {
-          orig::sqDebugPrintf_v1(s_Error__sqmdModelLookAt___called_w_103b3c30,param_3,piVar5[10]);
+    f1 = f3;
+    p1 = (int *)orig::SqmdModel_GetItemKind2(arg1,f3);
+    if (*p1 == 0xb0001) {
+      if (i4 == arg2) {
+        if ((arg3 < 0) || (p1[10] <= arg3)) {
+          orig::sqDebugPrintf_v1(str_Error__sqmdModelLookAt___called_w_103B3C30,arg3,p1[10]);
           return;
         }
-        iVar2 = *(int *)(piVar5[7] + 0x68);
-        *(uint32_t *)(piVar5[7] + 0x68) = 0;
-        iVar1 = piVar5[8] + param_3 * 0xf8;
-        orig::SqBoneTransform_ComputeTransform((int)piVar5,iVar1,local_4c,local_10);
-        orig::SqVec_Sub(&local_64,param_4,local_4c);
-        if (iVar2 != 0) {
-          iVar3 = *(int *)(iVar2 + 100);
-          orig::SqQuat_Copy_v1(local_40,(uint32_t *)(iVar3 + 0x68));
-          orig::SqQuatMul_NegateInPlace(local_40);
-          local_64 = (float)((long double)local_64 - (long double)*(float *)(iVar3 + 0x5c));
-          local_60 = (float)((long double)local_60 - (long double)*(float *)(iVar3 + 0x60));
-          local_5c = (float)((long double)local_5c - (long double)*(float *)(iVar3 + 100));
-          orig::SqQuatMul_RotateVec(&local_64,local_40,&local_64);
+        i2 = *(int *)(p1[7] + 0x68);
+        *(uint32_t *)(p1[7] + 0x68) = 0;
+        i1 = p1[8] + arg3 * 0xf8;
+        orig::SqBoneTransform_ComputeTransform((int)p1,i1,f10,u2);
+        orig::SqVec_Sub(&f4,arg4,f10);
+        if (i2 != 0) {
+          i3 = *(int *)(i2 + 100);
+          orig::SqQuat_Copy_v1(f11,(uint32_t *)(i3 + 0x68));
+          orig::SqQuatMul_NegateInPlace(f11);
+          f4 = (float)((long double)f4 - (long double)*(float *)(i3 + 0x5c));
+          f5 = (float)((long double)f5 - (long double)*(float *)(i3 + 0x60));
+          f6 = (float)((long double)f6 - (long double)*(float *)(i3 + 100));
+          orig::SqQuatMul_RotateVec(&f4,f11,&f4);
         }
-        if (*(int *)(iVar1 + 0x68) != 0) {
-          orig::SqBoneTransform_ComputeTransform((int)piVar5,*(int *)(iVar1 + 0x68),&local_58,local_30);
-          orig::SqQuatMul_NegateInPlace(local_30);
-          local_64 = (float)((long double)local_64 - (long double)local_58);
-          local_60 = (float)((long double)local_60 - (long double)local_54);
-          local_5c = (float)((long double)local_5c - (long double)local_50);
-          orig::SqQuatMul_RotateVec(&local_64,local_30,&local_64);
+        if (*(int *)(i1 + 0x68) != 0) {
+          orig::SqBoneTransform_ComputeTransform((int)p1,*(int *)(i1 + 0x68),&f7,f12);
+          orig::SqQuatMul_NegateInPlace(f12);
+          f4 = (float)((long double)f4 - (long double)f7);
+          f5 = (float)((long double)f5 - (long double)f8);
+          f6 = (float)((long double)f6 - (long double)f9);
+          orig::SqQuatMul_RotateVec(&f4,f12,&f4);
         }
-        fVar8 = xi_castbits<long double>(fpatan((long double)local_64,(long double)local_5c));
-        local_6c = (float)fVar8;
-        if (fVar8 > (long double)param_5) {
-          local_6c = param_5;
+        f2 = bit_cast<long double>(x87_fpatan((long double)f4,(long double)f6));
+        f3 = (float)f2;
+        if (f2 > (long double)arg5) {
+          f3 = arg5;
         }
-        fVar8 = -(long double)param_5;
-        bVar7 = NAN((long double)local_6c) || NAN(fVar8);
-        if ((bVar7 || (long double)local_6c < fVar8) != bVar7) {
-          local_6c = (float)fVar8;
+        f2 = -(long double)arg5;
+        u1 = (((long double)f3) != ((long double)f3)) || ((f2) != (f2));
+        if ((u1 || (long double)f3 < f2) != u1) {
+          f3 = (float)f2;
         }
-        iVar1 = *(int *)(iVar1 + 100);
-        if (iVar1 != 0) {
-          orig::SqQuat_FromRotationX(local_20,local_6c);
-          pfVar6 = (float *)(iVar1 + 0x68);
-          orig::SqQuatMul_Mul(local_40,local_20,pfVar6);
-          orig::SqQuat_Copy_v1(pfVar6,local_40);
+        i1 = *(int *)(i1 + 100);
+        if (i1 != 0) {
+          orig::SqQuat_FromRotationX(f13,f3);
+          p2 = (float *)(i1 + 0x68);
+          orig::SqQuatMul_Mul(f11,f13,p2);
+          orig::SqQuat_Copy_v1(p2,f11);
         }
-        *(int *)(piVar5[7] + 0x68) = iVar2;
+        *(int *)(p1[7] + 0x68) = i2;
       }
-      local_68 = local_68 + 1;
+      i4 = i4 + 1;
     }
-    local_6c = xi_castbits<float>((xi_castbits<int>(fVar4) + 1));
-    if (*(int *)(param_1 + 0x44) <= xi_castbits<int>(local_6c)) {
+    f3 = bit_cast<float>((bit_cast<int>(f1) + 1));
+    if (*(int *)(arg1 + 0x44) <= bit_cast<int>(f3)) {
       return;
     }
   } while( true );
@@ -691,328 +691,328 @@ XI_API void __cdecl SqmdModel_LookAt(int param_1, int param_2, int param_3, floa
 
 // FUNCTION: FFXIMAIN 0x10279530
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API void __cdecl SqmdModel_AppendPair44(int param_1, undefined4 param_2)
+XI_API void __cdecl SqmdModel_AppendPair44(int arg1, bits32 arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  uint32_t u1;
+  int i1;
+  bits32 *p1;
   
-  iVar2 = *(int *)(param_1 + 0x44);
-  if (*(int *)(param_1 + 0x48) <= iVar2) {
-    uVar1 = iVar2 * 4 + 4;
-    puVar3 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 0x40),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x547);
-    *(undefined4 **)(param_1 + 0x40) = puVar3;
-    puVar3 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 0x3c),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x549);
-    *(undefined4 **)(param_1 + 0x3c) = puVar3;
+  i1 = *(int *)(arg1 + 0x44);
+  if (*(int *)(arg1 + 0x48) <= i1) {
+    u1 = i1 * 4 + 4;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0x40),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x547);
+    *(bits32 **)(arg1 + 0x40) = p1;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0x3c),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x549);
+    *(bits32 **)(arg1 + 0x3c) = p1;
   }
-  *(undefined4 *)(*(int *)(param_1 + 0x40) + iVar2 * 4) = 0;
-  *(undefined4 *)(*(int *)(param_1 + 0x3c) + iVar2 * 4) = param_2;
-  *(int *)(param_1 + 0x44) = *(int *)(param_1 + 0x44) + 1;
+  *(bits32 *)(*(int *)(arg1 + 0x40) + i1 * 4) = 0;
+  *(bits32 *)(*(int *)(arg1 + 0x3c) + i1 * 4) = arg2;
+  *(int *)(arg1 + 0x44) = *(int *)(arg1 + 0x44) + 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102796A0
 // GATE: PASS -- 100 trials, 80 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 80
-XI_API void __cdecl SqmdModel_AppendPair68(int param_1, undefined4 param_2)
+XI_API void __cdecl SqmdModel_AppendPair68(int arg1, bits32 arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  uint32_t u1;
+  int i1;
+  bits32 *p1;
   
-  iVar2 = *(int *)(param_1 + 0x68);
-  if (*(int *)(param_1 + 0x6c) <= iVar2) {
-    uVar1 = iVar2 * 4 + 4;
-    puVar3 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 100),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x58f);
-    *(undefined4 **)(param_1 + 100) = puVar3;
-    puVar3 = orig::SqMem_Realloc(*(undefined4 **)(param_1 + 0x60),uVar1,
-                          s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x591);
-    *(undefined4 **)(param_1 + 0x60) = puVar3;
+  i1 = *(int *)(arg1 + 0x68);
+  if (*(int *)(arg1 + 0x6c) <= i1) {
+    u1 = i1 * 4 + 4;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 100),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x58f);
+    *(bits32 **)(arg1 + 100) = p1;
+    p1 = orig::SqMem_Realloc(*(bits32 **)(arg1 + 0x60),u1,
+                          str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x591);
+    *(bits32 **)(arg1 + 0x60) = p1;
   }
-  *(undefined4 *)(*(int *)(param_1 + 100) + iVar2 * 4) = 0;
-  *(undefined4 *)(*(int *)(param_1 + 0x60) + iVar2 * 4) = param_2;
-  *(int *)(param_1 + 0x68) = *(int *)(param_1 + 0x68) + 1;
+  *(bits32 *)(*(int *)(arg1 + 100) + i1 * 4) = 0;
+  *(bits32 *)(*(int *)(arg1 + 0x60) + i1 * 4) = arg2;
+  *(int *)(arg1 + 0x68) = *(int *)(arg1 + 0x68) + 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10279710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItem(int param_1, undefined4 param_2, int param_3)
+XI_API bits32 __cdecl SqmdModel_GetItem(int arg1, bits32 arg2, int arg3)
 {
-  char *pcVar1;
+  char *p1;
   
-  if (param_3 < 0) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x5a4)
+  if (arg3 < 0) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x5a4)
     ;
-    orig::sqDebugPrintf_v1(s_negative_array_index__d__103b3d54,param_3);
+    orig::sqDebugPrintf_v1(str_negative_array_index__d__103B3D54,arg3);
     return 0;
   }
-  switch(xi_sw(param_2)) {
+  switch(xi_sw(arg2)) {
   case 0:
-    if (param_3 < *(int *)(param_1 + 0x24)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x1c) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x24)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x1c) + arg3 * 4);
     }
     break;
   case 1:
-    if (param_3 < *(int *)(param_1 + 0x34)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x2c) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x34)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x2c) + arg3 * 4);
     }
     break;
   case 2:
-    if (param_3 < *(int *)(param_1 + 0x44)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x3c) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x44)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x3c) + arg3 * 4);
     }
     break;
   case 3:
-    if (param_3 < *(int *)(param_1 + 0x58)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x4c) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x58)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x4c) + arg3 * 4);
     }
     break;
   case 4:
-    if (param_3 < *(int *)(param_1 + 0x68)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x60) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x68)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x60) + arg3 * 4);
     }
     break;
   case 5:
-    if (param_3 < *(int *)(param_1 + 0x58)) {
-      return *(uint32_t *)(*(int *)(param_1 + 0x50) + param_3 * 4);
+    if (arg3 < *(int *)(arg1 + 0x58)) {
+      return *(uint32_t *)(*(int *)(arg1 + 0x50) + arg3 * 4);
     }
     break;
   default:
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x5a9)
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x5a9)
     ;
-    orig::sqDebugPrintf_v1(s_illegal_component_type__d_103b3cfc,param_2);
+    orig::sqDebugPrintf_v1(str_illegal_component_type__d_103B3CFC,arg2);
     return 0;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x5c4);
-  pcVar1 = orig::SqmdModel_ItemKindName(param_2);
-  orig::sqDebugPrintf_v1(s_index__d_is_larger_that_number_o_103b3d18,param_3,pcVar1);
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x5c4);
+  p1 = orig::SqmdModel_ItemKindName(arg2);
+  orig::sqDebugPrintf_v1(str_index__d_is_larger_that_number_o_103B3D18,arg3,p1);
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10279830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemKind0(int param_1, int param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemKind0(int arg1, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_GetItem(param_1,0,param_2);
-  return uVar1;
+  u1 = orig::SqmdModel_GetItem(arg1,0,arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10279850
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemKind1(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemKind1(bits32 arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_GetItem(param_1,1,param_2);
-  return uVar1;
+  u1 = orig::SqmdModel_GetItem(arg1,1,arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10279870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemKind2(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemKind2(bits32 arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_GetItem(param_1,2,param_2);
-  return uVar1;
+  u1 = orig::SqmdModel_GetItem(arg1,2,arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10279890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemKind3(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemKind3(bits32 arg1, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_GetItem(param_1,3,param_2);
-  return uVar1;
+  u1 = orig::SqmdModel_GetItem(arg1,3,arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x102798B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemKind4(int param_1, int param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemKind4(int arg1, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_GetItem(param_1,4,param_2);
-  return uVar1;
+  u1 = orig::SqmdModel_GetItem(arg1,4,arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10279AB0
 // GATE: PASS -- 100 trials, 61 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 61
-XI_API char * __cdecl sqmdModel_GetItemName(int param_1, int param_2, int param_3)
+XI_API char * __cdecl sqmdModel_GetItemName(int arg1, int arg2, int arg3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 0;
-  if (0 < *(int *)(param_1 + 0x7c)) {
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x7c)) {
     do {
-      if ((*(int *)(*(int *)(param_1 + 0x74) + iVar1 * 4) == param_2) &&
-         (*(int *)(*(int *)(param_1 + 0x78) + iVar1 * 4) == param_3)) {
-        return *(char **)(*(int *)(param_1 + 0x70) + iVar1 * 4);
+      if ((*(int *)(*(int *)(arg1 + 0x74) + i1 * 4) == arg2) &&
+         (*(int *)(*(int *)(arg1 + 0x78) + i1 * 4) == arg3)) {
+        return *(char **)(*(int *)(arg1 + 0x70) + i1 * 4);
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < *(int *)(param_1 + 0x7c));
+      i1 = i1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x7c));
   }
-  return s_untitled_103b3d70;
+  return str_untitled_103B3D70;
 }
 
 // FUNCTION: FFXIMAIN 0x10279B40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_GetItemNameKind3(int param_1, int param_2)
+XI_API bits32 __cdecl SqmdModel_GetItemNameKind3(int arg1, int arg2)
 {
-  char *pcVar1;
+  char *p1;
   
-  pcVar1 = orig::sqmdModel_GetItemName(param_1,3,param_2);
-  return pcVar1;
+  p1 = orig::sqmdModel_GetItemName(arg1,3,arg2);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10279BA0
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API char * __cdecl SqmdModel_FindItemName(int param_1, int param_2, int param_3)
+XI_API char * __cdecl SqmdModel_FindItemName(int arg1, int arg2, int arg3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 0;
-  if (0 < *(int *)(param_1 + 0x90)) {
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x90)) {
     do {
-      if ((*(int *)(*(int *)(param_1 + 0x88) + iVar1 * 4) == param_2) &&
-         (*(int *)(*(int *)(param_1 + 0x8c) + iVar1 * 4) == param_3)) {
-        return *(char **)(*(int *)(param_1 + 0x84) + iVar1 * 4);
+      if ((*(int *)(*(int *)(arg1 + 0x88) + i1 * 4) == arg2) &&
+         (*(int *)(*(int *)(arg1 + 0x8c) + i1 * 4) == arg3)) {
+        return *(char **)(*(int *)(arg1 + 0x84) + i1 * 4);
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < *(int *)(param_1 + 0x90));
+      i1 = i1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x90));
   }
-  return s_untitled_103b3d70;
+  return str_untitled_103B3D70;
 }
 
 // FUNCTION: FFXIMAIN 0x10279BF0
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API undefined4 __cdecl SqmdModel_FindItemByName(int param_1, int param_2, int param_3, undefined4 * param_4)
+XI_API bits32 __cdecl SqmdModel_FindItemByName(int arg1, int arg2, int arg3, bits32 * arg4)
 {
-  int iVar1;
-  char *pcVar2;
-  uint32_t uVar3;
-  int iVar4;
+  int i1;
+  char *p1;
+  uint32_t u1;
+  int i2;
   
-  if (param_2 != 0) {
-    iVar4 = 0;
-    if (0 < *(int *)(param_1 + 0x7c)) {
+  if (arg2 != 0) {
+    i2 = 0;
+    if (0 < *(int *)(arg1 + 0x7c)) {
       do {
-        if ((*(int *)(*(int *)(param_1 + 0x74) + iVar4 * 4) == param_3) &&
-           (iVar1 = orig::sqScript_TokenEquals
-                              ((char *)param_2,*(char **)(*(int *)(param_1 + 0x70) + iVar4 * 4)),
-           iVar1 == 0)) {
-          iVar4 = *(int *)(*(int *)(param_1 + 0x78) + iVar4 * 4);
-          *param_4 = iVar4;
-          switch(xi_sw(param_3)) {
+        if ((*(int *)(*(int *)(arg1 + 0x74) + i2 * 4) == arg3) &&
+           (i1 = orig::sqScript_TokenEquals
+                              ((char *)arg2,*(char **)(*(int *)(arg1 + 0x70) + i2 * 4)),
+           i1 == 0)) {
+          i2 = *(int *)(*(int *)(arg1 + 0x78) + i2 * 4);
+          *arg4 = i2;
+          switch(xi_sw(arg3)) {
           case 0:
-            uVar3 = orig::SqmdModel_GetItemKind0(param_1,iVar4);
-            return uVar3;
+            u1 = orig::SqmdModel_GetItemKind0(arg1,i2);
+            return u1;
           case 1:
-            uVar3 = orig::SqmdModel_GetItemKind1(param_1,iVar4);
-            return uVar3;
+            u1 = orig::SqmdModel_GetItemKind1(arg1,i2);
+            return u1;
           case 2:
-            uVar3 = orig::SqmdModel_GetItemKind2(param_1,iVar4);
-            return uVar3;
+            u1 = orig::SqmdModel_GetItemKind2(arg1,i2);
+            return u1;
           case 3:
-            uVar3 = orig::SqmdModel_GetItemKind3(param_1,iVar4);
-            return uVar3;
+            u1 = orig::SqmdModel_GetItemKind3(arg1,i2);
+            return u1;
           case 4:
-            uVar3 = orig::SqmdModel_GetItemKind4(param_1,iVar4);
-            return uVar3;
+            u1 = orig::SqmdModel_GetItemKind4(arg1,i2);
+            return u1;
           default:
-            orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,
-                         s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x6ef);
-            orig::sqDebugPrintf_v1(s_illegal_tag_type__d_103b3d7c,param_3);
+            orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,
+                         str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x6ef);
+            orig::sqDebugPrintf_v1(str_illegal_tag_type__d_103B3D7C,arg3);
             return 0;
           }
         }
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < *(int *)(param_1 + 0x7c));
+        i2 = i2 + 1;
+      } while (i2 < *(int *)(arg1 + 0x7c));
     }
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x6ff)
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x6ff)
     ;
-    pcVar2 = orig::SqmdModel_ItemKindName(param_3);
-    orig::sqDebugPrintf_v1(s_object___s__of_type__s_not_found_103b3d94,param_2,pcVar2);
+    p1 = orig::SqmdModel_ItemKindName(arg3);
+    orig::sqDebugPrintf_v1(str_object___s__of_type__s_not_found_103B3D94,arg2,p1);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10279D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqmdModel_LookupKind2(undefined4 param_1, undefined4 param_2, int * param_3)
+XI_API bits32 __cdecl SqmdModel_LookupKind2(bits32 arg1, bits32 arg2, int * arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::SqmdModel_FindItemByName(param_1,param_2,2,param_3);
-  return uVar1;
+  u1 = orig::SqmdModel_FindItemByName(arg1,arg2,2,arg3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027A1C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __cdecl SqmdModel_ItemKindName(undefined4 param_1)
+XI_API char * __cdecl SqmdModel_ItemKindName(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0:
-    return s_texture_103b3ee4;
+    return str_texture_103B3EE4;
   case 1:
-    return s_shader_103b3edc;
+    return str_shader_103B3EDC;
   case 2:
-    return s_updater_103b3ed4;
+    return str_updater_103B3ED4;
   case 3:
-    return s_shape_103b3ecc;
+    return str_shape_103B3ECC;
   case 4:
-    return(char*)(&DAT_1038a350);
+    return(char*)(&g_1038A350);
   case 5:
-    return s_matrix_103b3ec4;
+    return str_matrix_103B3EC4;
   default:
-    return s_undefined_103b3eb8;
+    return str_undefined_103B3EB8;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x1027A220
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API undefined4 __cdecl SqmdModel_AppendPair68Flag100(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqmdModel_AppendPair68Flag100(int arg1, bits32 arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  orig::SqmdModel_AppendPair68(param_1,param_2);
-  puVar1 = (uint32_t *)(*(int *)(param_1 + 100) + -4 + *(int *)(param_1 + 0x68) * 4);
-  *puVar1 = *puVar1 | 0x100;
-  return puVar1;
+  orig::SqmdModel_AppendPair68(arg1,arg2);
+  p1 = (uint32_t *)(*(int *)(arg1 + 100) + -4 + *(int *)(arg1 + 0x68) * 4);
+  *p1 = *p1 | 0x100;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027A250
 // GATE: PASS -- 100 trials, 70 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-XI_API void __cdecl SqmdModel_FreeItems(int * param_1)
+XI_API void __cdecl SqmdModel_FreeItems(int * arg1)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  piVar2 = param_1;
-  iVar1 = param_1[0x1a];
-  while (iVar1 = iVar1 + -1, -1 < iVar1) {
-    if (((*(uint32_t *)(piVar2[0x19] + iVar1 * 4) & 0x100) != 0) &&
-       (param_1 = *(int **)(piVar2[0x18] + iVar1 * 4), *param_1 != 0x70004)) {
-      orig::SqObject_Release((int *)&param_1);
-      *(uint32_t *)(piVar2[0x18] + iVar1 * 4) = 0;
+  p1 = arg1;
+  i1 = arg1[0x1a];
+  while (i1 = i1 + -1, -1 < i1) {
+    if (((*(uint32_t *)(p1[0x19] + i1 * 4) & 0x100) != 0) &&
+       (arg1 = *(int **)(p1[0x18] + i1 * 4), *arg1 != 0x70004)) {
+      orig::SqObject_Release((int *)&arg1);
+      *(uint32_t *)(p1[0x18] + i1 * 4) = 0;
     }
   }
-  iVar1 = piVar2[0x1a];
-  while (iVar1 = iVar1 + -1, -1 < iVar1) {
-    param_1 = *(int **)(piVar2[0x18] + iVar1 * 4);
-    if (((param_1 != (int *)0x0) && ((*(uint32_t *)(piVar2[0x19] + iVar1 * 4) & 0x100) != 0)) &&
-       (*param_1 == 0x70004)) {
-      if ((*(uint8_t *)(param_1 + 8) & 8) == 0) {
-        orig::SqObject_Release((int *)&param_1);
+  i1 = p1[0x1a];
+  while (i1 = i1 + -1, -1 < i1) {
+    arg1 = *(int **)(p1[0x18] + i1 * 4);
+    if (((arg1 != (int *)0x0) && ((*(uint32_t *)(p1[0x19] + i1 * 4) & 0x100) != 0)) &&
+       (*arg1 == 0x70004)) {
+      if ((*(uint8_t *)(arg1 + 8) & 8) == 0) {
+        orig::SqObject_Release((int *)&arg1);
       }
       else {
-        orig::sqFree_v1((int)param_1,s_C__dev_dancer_modules_sqModel_sr_103b37ec,0x848);
+        orig::sqFree_v1((int)arg1,str_C__dev_dancer_modules_sqModel_sr_103B37EC,0x848);
       }
     }
   }

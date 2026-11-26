@@ -12,4 +12,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoVolumeChangeTask.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoVolumeChangeTask::ScalarDeletingDtor` calls `sub_10035B00`, `SharedDeleteHelper`
+- `CMoVolumeChangeTask::ScalarDeletingDtor` calls `game_10035B00`, `SharedDeleteHelper`

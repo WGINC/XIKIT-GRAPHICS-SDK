@@ -4,58 +4,58 @@
 
 // FUNCTION: FFXIMAIN 0x10071050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ResHandle_FreeIfUnreferenced(void * self_)
+XI_API bits32 __thiscall ResHandle_FreeIfUnreferenced(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::MoRes_FreeIfUnreferenced_v1(*(int **)self_);
-  return uVar1;
+  u1 = orig::MoRes_FreeIfUnreferenced_v1(*(int **)self_);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10071060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ResourceHandle_IsResident(void * self_)
+XI_API bits32 __thiscall ResourceHandle_IsResident(void * self_)
 {
-  void *this_00;
-  uint32_t uVar1;
-  int iVar2;
+  void *obj1;
+  uint32_t u1;
+  int i1;
   
-  uVar1 = orig::ResourceIter_InPoolRange(g_pMeshResourceMng_as_v1,*(uint32_t **)self_);
-  if ((char)uVar1 == '\0') {
-    return uVar1;
+  u1 = orig::ResourceIter_InPoolRange(g_pMeshResourceMng_as_v1,*(uint32_t **)self_);
+  if ((char)u1 == '\0') {
+    return u1;
   }
   if (*(uint32_t **)self_ == (uint32_t *)0x0) {
     return 0;
   }
-  this_00 = (void *)**(uint32_t **)self_;
-  if (this_00 == (void *)0x0) {
+  obj1 = (void *)**(uint32_t **)self_;
+  if (obj1 == (void *)0x0) {
     return 0;
   }
-  iVar2 = orig::FUN_10071f80(this_00);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(iVar2 == 0)));
+  i1 = orig::game_10071F80(obj1);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(i1 == 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x100710F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MeshResourceCreate_Create(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __thiscall MeshResourceCreate_Create(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 *this_00;
+  bits32 *obj1;
   
-  this_00 = orig::Mem_AllocFromArea_v2(0x84,4,0);
-  orig::CMoTask_ResetFields_v1(this_00);
+  obj1 = orig::Mem_AllocFromArea_v2(0x84,4,0);
+  orig::CMoTask_ResetFields_v1(obj1);
   g_resourcesDirty_as_v0 = 1;
-  if (this_00 == (undefined4 *)0x0) {
-    this_00 = (undefined4 *)0x0;
+  if (obj1 == (bits32 *)0x0) {
+    obj1 = (bits32 *)0x0;
   }
   else {
-    orig::CMoTask_InitVariant12(this_00);
-    orig::CMoAttachments_Construct(this_00 + 0x11);
-    this_00[0x11] = &PTR_CMoAttachments_GetRuntimeClass_1032c4e8;
-    *this_00 = &PTR_CMoTask_GetRuntimeClass_variant12_1032c4bc;
+    orig::CMoTask_InitVariant12(obj1);
+    orig::CMoAttachments_Construct(obj1 + 0x11);
+    obj1[0x11] = &ptr_to_CMoAttachments_GetRuntimeClass_1032C4E8;
+    *obj1 = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032C4BC;
   }
-  orig::CMoTask_InitAndRegister(this_00,*(undefined4 *)self_,param_1,param_2,1);
-  orig::CMoAttachments_SetCaster_v1(this_00 + 0x11,param_3);
-  orig::CMoAttachments_SetTarget_v2(this_00 + 0x11,param_4);
+  orig::CMoTask_InitAndRegister(obj1,*(bits32 *)self_,arg2,arg3,1);
+  orig::CMoAttachments_SetCaster_v1(obj1 + 0x11,arg4);
+  orig::CMoAttachments_SetTarget_v2(obj1 + 0x11,arg5);
   return;
 }
 
@@ -75,299 +75,299 @@ XI_API void __thiscall MeshResourceCreate_Reset(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100711D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MeshResourceCreate_CopyField14At0(void * self_, int param_1)
+XI_API void __thiscall MeshResourceCreate_CopyField14At0(void * self_, int arg2)
 {
-  if (param_1 != 0) {
-    *(uint32_t *)self_ = *(uint32_t *)(param_1 + 0x14);
+  if (arg2 != 0) {
+    *(uint32_t *)self_ = *(uint32_t *)(arg2 + 0x14);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100711E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MeshResourceCreate_CopyField14At4(void * self_, int param_1)
+XI_API void __thiscall MeshResourceCreate_CopyField14At4(void * self_, int arg2)
 {
-  if (param_1 != 0) {
-    *(uint32_t *)((int)self_ + 4) = *(uint32_t *)(param_1 + 0x14);
+  if (arg2 != 0) {
+    *(uint32_t *)((int)self_ + 4) = *(uint32_t *)(arg2 + 0x14);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10071200
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall MeshResourceCreate_CopyField14At8(void * self_, int param_1)
+XI_API void __thiscall MeshResourceCreate_CopyField14At8(void * self_, int arg2)
 {
-  if (param_1 != 0) {
-    *(uint32_t *)((int)self_ + 8) = *(uint32_t *)(param_1 + 0x14);
+  if (arg2 != 0) {
+    *(uint32_t *)((int)self_ + 8) = *(uint32_t *)(arg2 + 0x14);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10071270
 // GATE: PASS -- 100 trials, 87 returned normally, 80 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API int * __thiscall MeshResourceMng_CreateResourceByKind(void * self_, undefined4 xi_s1)
+XI_API int * __thiscall MeshResourceMng_CreateResourceByKind(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  int *this_00;
-  int iVar2;
-  uint64_t uVar3;
+  int i1;
+  int *obj1;
+  int i2;
+  uint64_t u1;
   
-  iVar2 = (*(uint32_t *)((int)self_ + 4) >> 7 & 0x7ffff) * 0x10;
-LAB_10071298:
+  i2 = (*(uint32_t *)((int)self_ + 4) >> 7 & 0x7ffff) * 0x10;
+code_10071298:
   do {
-    iVar1 = orig::MathVector_Call10029150(1);
-    if ((iVar1 < (iVar2 + -0x10) * 2) ||
-       ((long double)*(int *)((int)g_pMeshResourceMng_as_v1 + 0x4000c) > (long double)52428.80078125f)) {
-      iVar1 = 4;
+    i1 = orig::MathVector_Call10029150(1);
+    if ((i1 < (i2 + -0x10) * 2) ||
+       (*(int *)((int)g_pMeshResourceMng_as_v1 + 0x4000c) > 52428.80078125f)) {
+      i1 = 4;
       do {
         orig::MeshResourceMng_Evict(g_pMeshResourceMng_as_v1);
-        iVar1 = iVar1 + -1;
-      } while (iVar1 != 0);
+        i1 = i1 + -1;
+      } while (i1 != 0);
     }
     switch(xi_sw(*(uint32_t *)((int)self_ + 4) & 0x7f)) {
     case 0:
-      goto LAB_1007183f;
+      goto code_1007183F;
     case 1:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x30,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c588;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x30,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C588;
       break;
     default:
-LAB_1007183f:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x20,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::CMoResource_ConstructBase((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+code_1007183F:
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x20,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::CMoResource_ConstructBase((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 5:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x118,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::CMoGeneratorRes_Constructor_v1((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x118,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::CMoGeneratorRes_Constructor_v1((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 6:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0xa8,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      orig::CMoAttachments_Construct(this_00 + 0xc);
-      *this_00 = (int)&PTR_CMoCamera_GetRuntimeClass_1032c5d0;
-      this_00[0xc] = (int)&PTR_CMoRmpRes_vf011_1032c5b4;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0xa8,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      orig::CMoAttachments_Construct(obj1 + 0xc);
+      *obj1 = (int)&ptr_to_CMoCamera_GetRuntimeClass_1032C5D0;
+      obj1[0xc] = (int)&ptr_to_CMoRmpRes_vf011_1032C5B4;
       break;
     case 7:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x88,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      orig::CMoAttachments_Construct(this_00 + 0xc);
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c644;
-      this_00[0xc] = (int)&PTR_CMoAttachments_GetRuntimeClass_1032c628;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x88,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      orig::CMoAttachments_Construct(obj1 + 0xc);
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C644;
+      obj1[0xc] = (int)&ptr_to_CMoAttachments_GetRuntimeClass_1032C628;
       break;
     case 0x19:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x30,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c5fc;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x30,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C5FC;
       break;
     case 0x1b:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x5d,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c8ac;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x5d,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C8AC;
       break;
     case 0x1c:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x20,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::ZoneResWeather_Construct((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x20,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::ZoneResWeather_Construct((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 0x1f:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x20,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c74c;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x20,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C74C;
       break;
     case 0x20:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x5d,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) {
-        this_00 = (int *)0x0;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x5d,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) {
+        obj1 = (int *)0x0;
         uRam00000024 = uRam00000024 & 0xffffff80 ^ 0x1b;
       }
       else {
-        orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-        *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c8ac;
-        this_00[9] = this_00[9] & 0xffffff80U ^ 0x1b;
+        orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+        *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C8AC;
+        obj1[9] = obj1[9] & 0xffffff80U ^ 0x1b;
       }
       break;
     case 0x21:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x20,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c720;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x20,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C720;
       break;
     case 0x25:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x40,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c6f4;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x40,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C6F4;
       break;
     case 0x29:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x42,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c828;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x42,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C828;
       break;
     case 0x2a:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x60,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c854;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x60,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C854;
       break;
     case 0x2b:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x2c,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c7fc;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x2c,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C7FC;
       break;
     case 0x2e:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x24,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::ZoneMapLoad_ConstructResource10336698((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x24,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::ZoneMapLoad_ConstructResource10336698((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 0x2f:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0xcc,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::FUN_101893b0((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0xcc,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::WeatherRes_Construct_as_v0((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 0x30:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x21,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c69c;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x21,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C69C;
       break;
     case 0x31:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x21,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c6c8;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x21,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C6C8;
       break;
     case 0x36:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x20,1);
-      byte_1047D12C_as_v0 = 1;
-      if ((uint32_t *)uVar3 == (uint32_t *)0x0) goto LAB_10071298;
-      this_00 =(int*)(orig::ZoneResource_Construct((uint32_t *)uVar3,(int)((uint64_t)uVar3 >> 0x20)));
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x20,1);
+      g_1047D12C_as_v0 = 1;
+      if ((uint32_t *)u1 == (uint32_t *)0x0) goto code_10071298;
+      obj1 =(int*)(orig::ZoneResource_Construct((uint32_t *)u1,(int)((uint64_t)u1 >> 0x20)));
       break;
     case 0x3d:
-      goto LAB_100717b9;
+      goto code_100717B9;
     case 0x3e:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x40,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c55c;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x40,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C55C;
       break;
     case 0x45:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x30,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      orig::Actor_ClearIndexTable(this_00 + 0xc);
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c7d0;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x30,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      orig::Actor_ClearIndexTable(obj1 + 0xc);
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C7D0;
       break;
     case 0x4a:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x40,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoSphRes_GetRuntimeClass_1032c504;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x40,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoSphRes_GetRuntimeClass_1032C504;
       break;
     case 0x54:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x40,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      orig::ModelTranslucent_ReturnSelf(this_00 + 0xc);
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c778;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x40,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      orig::ModelTranslucent_ReturnSelf(obj1 + 0xc);
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C778;
       break;
     case 0x58:
-LAB_100717b9:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x30,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_LAB_1032c530;
+code_100717B9:
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x30,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&g_1032C530;
       break;
     case 0x5d:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x41,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) {
-        this_00 = (int *)0x0;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x41,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) {
+        obj1 = (int *)0x0;
         uRam00000024 = uRam00000024 & 0xffffff80 ^ 0x5d;
       }
       else {
-        orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-        *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c880;
-        this_00[9] = this_00[9] & 0xffffff80U ^ 0x5d;
+        orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+        *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C880;
+        obj1[9] = obj1[9] & 0xffffff80U ^ 0x5d;
       }
       break;
     case 0x5e:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x74,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c7a4;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x74,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C7A4;
       break;
     case 0x5f:
-      uVar3 = orig::Mem_AllocWithFallback_v1(iVar2 + 0x21,1);
-      this_00 = (int *)uVar3;
-      byte_1047D12C_as_v0 = 1;
-      if (this_00 == (int *)0x0) goto LAB_10071298;
-      orig::CMoResource_ConstructBase(this_00,(int)((uint64_t)uVar3 >> 0x20));
-      *this_00 = (int)&PTR_CMoResource_GetRuntimeClass_variant3_1032c670;
+      u1 = orig::Mem_AllocWithFallback_v1(i2 + 0x21,1);
+      obj1 = (int *)u1;
+      g_1047D12C_as_v0 = 1;
+      if (obj1 == (int *)0x0) goto code_10071298;
+      orig::CMoResource_ConstructBase(obj1,(int)((uint64_t)u1 >> 0x20));
+      *obj1 = (int)&ptr_to_CMoResource_GetRuntimeClass_variant3_1032C670;
     }
-    if (this_00 != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x1c))))((void *)(this_00),self_);
+    if (obj1 != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x1c))))((void *)(obj1),self_);
       if (xi_s1 != 0) {
-        this_00[10] = *(int *)(xi_s1 + 0x14);
+        obj1[10] = *(int *)(xi_s1 + 0x14);
       }
-      *(uint16_t *)((int)this_00 + 0x1a) = *(uint16_t *)((int)this_00 + 0x1a) & 0xfff1 | 1;
-      return this_00;
+      *(uint16_t *)((int)obj1 + 0x1a) = *(uint16_t *)((int)obj1 + 0x1a) & 0xfff1 | 1;
+      return obj1;
     }
   } while( true );
 }

@@ -4,10 +4,10 @@
 
 // FUNCTION: FFXIMAIN 0x10176F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoMzbRes::ScalarDeletingDtor(char a2)
+unsigned int ** CMoMzbRes::ScalarDeletingDtor(char arg1)
 {
   orig::CMoMzbRes_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

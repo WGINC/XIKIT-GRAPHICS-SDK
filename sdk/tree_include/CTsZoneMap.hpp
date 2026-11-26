@@ -11,8 +11,8 @@ public:
     int InitZBiasPresets();  // 0x101781D0
     static uint32_t __thiscall Render(void * self);  // 0x10178B30
     static void __thiscall UpdateViewerPosition(void * self);  // 0x10179390
-    float * DrawProjectedTexture(float *arg0, int a3, IDirect3DBaseTexture8 *a4, float a5);  // 0x10182700
-    int DrawProjectedShadow(int a1, int a2);  // 0x10184FE0
+    float * DrawProjectedTexture(float *arg0, int arg2, IDirect3DBaseTexture8 *arg3, float arg4);  // 0x10182700
+    int DrawProjectedShadow(int arg1, int arg2);  // 0x10184FE0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x174];

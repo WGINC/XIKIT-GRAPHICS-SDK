@@ -18,8 +18,8 @@ Group: `St` (by the file name only). Source: `sdk/tree_src/StChannel.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `StChannelItemResolve` calls `ErrorReport_NoOpVarargsA`, `SqTimer_GetMicroseconds`, `TextInputFiles_FileMngReleaseAt1F0`, `sqmoChannelBuildSQO`, `TextInputFiles_FileMngGetValueAt1F0`, `sub_10251020`, `sqFree`, `SqgxVertexShaderRelease_GetFloat20`
-- `StChannel_RegisterItem` calls `ErrorReport_NoOpVarargsA`, `Mdl_ChannelRegister`, `Mdl_UpdateEntryFlags`, `sub_1026F080`, `sub_1026EFB0`, `Mdl_GetEntryTable`, `sub_10311C2C`
+- `StChannelItemResolve` calls `ErrorReport_NoOpVarargsA`, `SqTimer_GetMicroseconds`, `TextInputFiles_FileMngReleaseAt1F0`, `sqmoChannelBuildSQO`, `TextInputFiles_FileMngGetValueAt1F0`, `game_10251020`, `sqFree`, `SqgxVertexShaderRelease_GetFloat20`
+- `StChannel_RegisterItem` calls `ErrorReport_NoOpVarargsA`, `Mdl_ChannelRegister`, `Mdl_UpdateEntryFlags`, `game_1026F080`, `game_1026EFB0`, `Mdl_GetEntryTable`, `game_10311C2C`
 - `StChannel_ClearFlags` calls nothing directly
 - `StChannel_MarkIfLoaded` calls `TextInputFiles_FileMngFindFileNumKind2`
 - `StChannel_SetValue9C` calls `Mdl_GetEntryTable`

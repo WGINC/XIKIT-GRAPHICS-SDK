@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x10296410
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixSet_Set(float * param_1, float param_2, float param_3, float param_4, float param_5, float param_6, float param_7, float param_8, float param_9, float param_10)
+XI_API void __cdecl SqMatrixSet_Set(float * arg1, float arg2, float arg3, float arg4, float arg5, float arg6, float arg7, float arg8, float arg9, float arg10)
 {
-  param_1[1] = param_3;
-  param_1[2] = param_4;
-  *param_1 = (float)(long double)param_2;
-  param_1[3] = param_5;
-  param_1[4] = param_6;
-  param_1[5] = param_7;
-  param_1[6] = param_8;
-  param_1[7] = param_9;
-  param_1[8] = param_10;
+  arg1[1] = arg3;
+  arg1[2] = arg4;
+  *arg1 = (float)arg2;
+  arg1[3] = arg5;
+  arg1[4] = arg6;
+  arg1[5] = arg7;
+  arg1[6] = arg8;
+  arg1[7] = arg9;
+  arg1[8] = arg10;
   return;
 }

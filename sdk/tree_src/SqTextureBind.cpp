@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x10298C50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Texture_BindFromObject(int param_1)
+XI_API void __cdecl Texture_BindFromObject(int arg1)
 {
-  if (param_1 != 0) {
-    orig::sqgxTextureSet_v1(*(int *)(param_1 + 0x14));
-    orig::sqgxTextureClut(*(int *)(param_1 + 0x18));
+  if (arg1 != 0) {
+    orig::sqgxTextureSet_v1(*(int *)(arg1 + 0x14));
+    orig::sqgxTextureClut(*(int *)(arg1 + 0x18));
     return;
   }
   orig::sqgxTextureSet_v1(-1);
@@ -18,25 +18,25 @@ XI_API void __cdecl Texture_BindFromObject(int param_1)
 
 // FUNCTION: FFXIMAIN 0x10298E10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Texture_CreateEntry(int param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API int __cdecl Texture_CreateEntry(int arg1, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  bits32 *p1;
+  bits32 *p2;
+  bits32 *p3;
+  int i1;
   
-  puVar1 = orig::SqimImage_Create();
-  puVar2 = orig::SqrdTexture_Create();
-  puVar3 = orig::FUN_1029c260(param_1,param_2,param_3,param_4,param_5);
-  puVar1[10] = puVar3;
-  puVar1[7] = param_1;
-  puVar1[8] = param_1;
-  puVar1[9] = 4;
-  puVar2[7] = puVar1;
-  if (DAT_103bbde0 != '\0') {
-    iVar4 = orig::sqgxTextureAdd_v1(param_1,param_1,4,puVar1[10]);
-    puVar2[5] = iVar4;
+  p1 = orig::SqimImage_Create();
+  p2 = orig::SqrdTexture_Create();
+  p3 = orig::game_1029C260(arg1,arg2,arg3,arg4,arg5);
+  p1[10] = p3;
+  p1[7] = arg1;
+  p1[8] = arg1;
+  p1[9] = 4;
+  p2[7] = p1;
+  if (g_103BBDE0 != '\0') {
+    i1 = orig::sqgxTextureAdd_v1(arg1,arg1,4,p1[10]);
+    p2[5] = i1;
   }
-  puVar2[8] = puVar2[8] | 4;
-  return (int)puVar2;
+  p2[8] = p2[8] | 4;
+  return (int)p2;
 }

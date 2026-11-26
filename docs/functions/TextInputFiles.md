@@ -97,7 +97,7 @@ Why the file has this name (data/unit_names.json): FsTextInput_* (37), FsWordCom
 | `SetConfig` | 0x10193830 | 30 | yes | - | - | - |
 | `Settings_GetValue` | 0x10193850 | 25 | yes | - | - | - |
 | `TextInputFiles_GetSetting99` | 0x10193890 | 19 | yes | - | Returns the setting with key 0x99, passed through fn_101938B0 with the caller's argument. | medium |
-| `TextInputFiles_GetSettingMapped` | 0x101938B0 | 22 | yes | - | Reads a setting and maps it through sub_101938D0. | high |
+| `TextInputFiles_GetSettingMapped` | 0x101938B0 | 22 | yes | - | Reads a setting and maps it through game_101938D0. | high |
 | `TextInputFiles_TestBit` | 0x101938D0 | 19 | yes | - | Returns bit n of a value. | low |
 | `TextInputFiles_TestBit64` | 0x10193A10 | 39 | yes | - | Tests one bit of a 64-bit mask. | low |
 | `TextInputFiles_InitPairNode` | 0x10193B00 | 32 | yes | - | Initialises a pair node: next pointer null, first and second values stored at +8 and +0xC. | medium |
@@ -178,10 +178,10 @@ Why the file has this name (data/unit_names.json): FsTextInput_* (37), FsWordCom
 | `TextInputFiles_WaitThenHandleFileEvent` | 0x1019F960 | 207 | yes | - | Waits on an event, hands a copied file request to the file thread manager, then calls 0x101B9530 on that event object. | medium |
 | `TextInputFiles_WaitEvent18At8` | 0x1019FA90 | 22 | yes | - | Waits without timeout on the event of the object at +8. | low |
 | `TextInputFiles_SignalMember8` | 0x1019FAB0 | 22 | yes | - | Signals the object at +8 (fn_101A0970); 1 on success, -1 on failure. | high |
-| `TextInputFiles_Call101BE510IfSize4` | 0x101A0710 | 27 | yes | - | Calls sub_101BE510 on a 4-byte argument; -1 for any other size. | high |
+| `TextInputFiles_Call101BE510IfSize4` | 0x101A0710 | 27 | yes | - | Calls game_101BE510 on a 4-byte argument; -1 for any other size. | high |
 | `TextInputFiles_FillSizeAndDatesFwd` | 0x101A0730 | 24 | yes | - | Forwards to Unit1018BA60_FillSizeAndThreeDates with its stacked arguments. | high |
-| `TextInputFiles_Call101BE670` | 0x101A0750 | 16 | yes | - | Calls sub_101BE670 with the string stored in its arguments. | high |
-| `TextInputFiles_Call101BE690` | 0x101A0760 | 16 | yes | - | Calls sub_101BE690 with the address of its third argument. | high |
+| `TextInputFiles_Call101BE670` | 0x101A0750 | 16 | yes | - | Calls game_101BE670 with the string stored in its arguments. | high |
+| `TextInputFiles_Call101BE690` | 0x101A0760 | 16 | yes | - | Calls game_101BE690 with the address of its third argument. | high |
 | `TextInputFiles_RunKind8WithCallback` | 0x101A0770 | 94 | yes | - | For kind 8, runs 0x101BE690 on the argument block and reports its result through the given callback. | low |
 | `TextInputFiles_SignalEvent10` | 0x101A0910 | 22 | yes | - | Signals the event at +0x10. | medium |
 | `TextInputFiles_ResetAndWaitEvent14` | 0x101A0930 | 29 | yes | - | Resets and waits on the event at +0x14 for up to the given milliseconds. | medium |
@@ -451,10 +451,10 @@ Why the file has this name (data/unit_names.json): FsTextInput_* (37), FsWordCom
 | `TextInputFiles_SetDateAt19` | 0x101BE3A0 | 97 | yes | - | Stores a time value as a calendar date in the fields at +0x19. | medium |
 | `TextInputFiles_SetVtable10337C64` | 0x101BE410 | 9 | yes | - | Sets the vtable to 0x10337C64. | high |
 | `File_FindByKind` | 0x101BE470 | 142 | yes | - | Looks up a file entry in one of three tables by kind. | low |
-| `TextInputFiles_Call10311F30` | 0x101BE500 | 16 | yes | - | Calls sub_10311F30. | high |
-| `TextInputFiles_SeekWhence012` | 0x101BE540 | 66 | yes | - | Seeks with origin 0, 1 or 2 through sub_10313CF0; -1 for any other origin. | medium |
+| `TextInputFiles_Call10311F30` | 0x101BE500 | 16 | yes | - | Calls game_10311F30. | high |
+| `TextInputFiles_SeekWhence012` | 0x101BE540 | 66 | yes | - | Seeks with origin 0, 1 or 2 through game_10313CF0; -1 for any other origin. | medium |
 | `File_WriteChunked` | 0x101BE590 | 177 | yes | - | Writes a large block in 256 KB chunks, yielding between them. | medium |
-| `TextInputFiles_Call10312296` | 0x101BE650 | 28 | yes | - | Calls sub_10312296(buffer, 1, count, handle). | high |
+| `TextInputFiles_Call10312296` | 0x101BE650 | 28 | yes | - | Calls game_10312296(buffer, 1, count, handle). | high |
 | `TextInputFiles_DeleteFile` | 0x101BE670 | 22 | yes | - | Deletes the named file, returning 1 on success and -1 on failure. | high |
 | `TextInputFiles_FillSizeAndThreeDates` | 0x101BE6C0 | 112 | no | - | Queries an item through 0x10312487 and fills a record with one value and three dates. | low |
 | `File_CreateParentDirs` | 0x101BE730 | 85 | yes | - | Creates each parent directory of a file path. | medium |
@@ -564,7 +564,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Time_GetModulo216000Div3600` calls nothing directly
 - `Time_GetModulo5184000Div216000` calls nothing directly
 - `Time_GetDiv5184000` calls nothing directly
-- `TextInputFiles_GetGameTimeValue` calls `ntGameTimeGet`, `sub_10103B60`, `sub_1018C180`, `Time_SetNormalized`, `Time_Normalize`, `Time_GetDiv5184000`
+- `TextInputFiles_GetGameTimeValue` calls `ntGameTimeGet`, `game_10103B60`, `game_1018C180`, `Time_SetNormalized`, `Time_Normalize`, `Time_GetDiv5184000`
 - `Time_SetModulo60` calls `Time_Normalize`
 - `Time_SetModulo3600Div60` calls `Time_Normalize`
 - `Time_SetModulo216000Div3600` calls `Time_Normalize`
@@ -572,8 +572,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Time_SetModulo155520000Div5184000` calls `Time_Normalize`
 - `Time_SetDiv155520000` calls `Time_Normalize`
 - `Time_GetDiv5184000Mul5184000` calls `unknown_libname_158`, `Time_GetDiv5184000`, `Time_SetModulo155520000Div5184000`
-- `Time_AddFrameScale` calls `Camera_GetFrameScale`, `sub_10311C2C`
-- `Time_SubtractFrameScale` calls `Camera_GetFrameScale`, `sub_10311C2C`
+- `Time_AddFrameScale` calls `Camera_GetFrameScale`, `game_10311C2C`
+- `Time_SubtractFrameScale` calls `Camera_GetFrameScale`, `game_10311C2C`
 - `TextInputFiles_GrowCapacity` calls nothing directly
 - `TextInputFiles_Free` calls `operator_delete`
 - `TextInputFiles_InitEmpty` calls `Allocator_Generic`
@@ -585,21 +585,21 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_GetCStr` calls nothing directly
 - `TextInputFiles_GetLength` calls nothing directly
 - `TextInputFiles_GetField4_1018D490` calls nothing directly
-- `TextInputFiles_AssignN` calls `sub_1018D3D0`, `operator_delete`, `TextInputFiles_GrowCapacity`, `Allocator_Generic`, `sub_10312050`
-- `TextInputFiles_AppendN` calls `sub_10312050`, `TextInputFiles_GrowCapacity`, `Allocator_Generic`, `operator_delete`, `sub_10313520`
+- `TextInputFiles_AssignN` calls `game_1018D3D0`, `operator_delete`, `TextInputFiles_GrowCapacity`, `Allocator_Generic`, `game_10312050`
+- `TextInputFiles_AppendN` calls `game_10312050`, `TextInputFiles_GrowCapacity`, `Allocator_Generic`, `operator_delete`, `game_10313520`
 - `TextInputFiles_InitAcqDat` calls `TextInputFiles_Register`, `TextInputFiles_ClearEntries`
-- `TextInputFiles_FillCompletionWords` calls `sub_10325D00`, `TextInputFiles_AppendCompletionWord`, `Target_GetActorPtr`, `Yk_GetActiveEntry`
+- `TextInputFiles_FillCompletionWords` calls `game_10325D00`, `TextInputFiles_AppendCompletionWord`, `Target_GetActorPtr`, `Yk_GetActiveEntry`
 - `TextInputFiles_CommitPending8C` calls nothing directly
 - `TextInputFiles_ClearByte10E` calls nothing directly
-- `TextInputFiles_Validate8NamesOrClear` calls `sub_103146DE`, `TextInputFiles_ClearByte10E`
+- `TextInputFiles_Validate8NamesOrClear` calls `game_103146DE`, `TextInputFiles_ClearByte10E`
 - `TextInputFiles_AppendCompletionWord` calls `TextInputFiles_Set`
 - `TextInputFiles_GetEntryMod` calls nothing directly
 - `TextInputFiles_ClearEntries` calls nothing directly
 - `TextInputFiles_InitPecDat` calls `TextInputFiles_Register`
-- `TextInputFiles_Validate64NamesOrClear` calls `sub_103146DE`
+- `TextInputFiles_Validate64NamesOrClear` calls `game_103146DE`
 - `FsLogPage_InitPage` calls nothing directly
 - `FsLogPage_ClearAndVisitFiles` calls `FsLogPage_ClearBuffer`, `FsLogPage_FormatFileName`, `TextInputFiles_FileMngFwd101C1820`, `operator_delete`
-- `FsLogPage_FormatFileName` calls `sub_10311FF1`
+- `FsLogPage_FormatFileName` calls `game_10311FF1`
 - `FsLogPage_AllocBuffer` calls `FsLogPage_ClearBuffer`, `Allocator_Generic`
 - `FsLogPage_load` calls `TextInputFiles_FileMngFwd101C1820`, `TextInputFiles_FileMngFwd101C1EC0`, `TextInputFiles_AllocZeroed`, `TextInputFiles_FileMngSubmitPath2F4Kind1`, `FsLogPage_ClearBuffer`, `Allocator_Generic`, `TextInputFiles_FreeBlock`, `FsLogPage_PruneOffsets`
 - `FsLogPage_WriteFile` calls `FsLogPage_PruneOffsets`, `TextInputFiles_FileMngFwd101C1820`, `FsLogPage_FormatFileName`, `operator_delete`, `Allocator_Generic`, `TextInputFiles_FileMngQueuePath2F4Kind3`, `TextInputFiles_FileMngSubmitPath2F4Kind3`
@@ -613,7 +613,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FsLogPage_HasPage` calls nothing directly
 - `FsLogPage_EnsurePage` calls `FsLogPage_FormatFileName`, `Allocator_Generic`, `FsLogPage_InitPage`, `FsLogPage_load`
 - `TextInputFiles_FreeLogPage` calls `FsLogPage_ClearAndVisitFiles`, `operator_delete`
-- `FsLogPage_Rotate` calls `FsLogPage_FormatFileName`, `FsLogPage_WriteFile`, `FsLogPage_ClearAndVisitFiles`, `operator_delete`, `sub_103149D0`
+- `FsLogPage_Rotate` calls `FsLogPage_FormatFileName`, `FsLogPage_WriteFile`, `FsLogPage_ClearAndVisitFiles`, `operator_delete`, `game_103149D0`
 - `TextInputFiles_ConstructKind1` calls `TextInputFiles_InitFields`
 - `TextInputFiles_ConstructKind2` calls `TextInputFiles_InitFields`
 - `TextInputFiles_InitFields` calls nothing directly
@@ -628,7 +628,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Text_GetCharLength` calls `Sjis_IsLeadByte`
 - `Text_CountChars` calls `Text_GetCharLength`
 - `Sjis_Remap82To83` calls `Text_GetCharLength`
-- `Text_EncodeQuotes` calls `Allocator_Generic`, `Text_GetCharLength`, `Text_ClassifyChar`, `sub_10312050`, `operator_delete`
+- `Text_EncodeQuotes` calls `Allocator_Generic`, `Text_GetCharLength`, `Text_ClassifyChar`, `game_10312050`, `operator_delete`
 - `TextInputFiles_AllocZeroed` calls `Allocator_Generic`
 - `TextInputFiles_FreeBlock` calls `operator_delete`
 - `TextInputFiles_Nop` calls nothing directly
@@ -664,11 +664,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_GetEntry2C` calls nothing directly
 - `TextInputFiles_WriteTigDat` calls `TextInputFiles_FileMngSubmitPathKind3`
 - `TextInputFiles_ReadTigDat` calls `TextInputFiles_FileMngSubmitPathKind1`, `Settings_GetValue`, `TextInputFiles_ForEach`, `TextInputFiles_SetConfigEntryValue`
-- `TextInputFiles_StoreExternalConfig` calls `sub_10310DF0`, `sub_10310DFB`, `TextInputFiles_WriteExternalKind1`, `TextInputFiles_IsExternalKind2Key`, `sub_10310E06`, `sub_10310E11`, `sub_10310E1C`
-- `TextInputFiles_LoadExternalConfig` calls `sub_10310DF0`, `sub_10310DFB`, `TextInputFiles_ReadExternalKind1`, `TextInputFiles_ReadExternalKind2`, `TextInputFiles_SetConfigEntryValue`, `sub_10310E1C`
-- `TextInputFiles_ReadExternalKind1` calls `sub_10310E27`
-- `TextInputFiles_WriteExternalKind1` calls `sub_10310E27`, `sub_10310E32`
-- `TextInputFiles_ReadExternalKind2` calls `sub_10310B30`, `sub_10310B3B`
+- `TextInputFiles_StoreExternalConfig` calls `game_10310DF0`, `game_10310DFB`, `TextInputFiles_WriteExternalKind1`, `TextInputFiles_IsExternalKind2Key`, `game_10310E06`, `game_10310E11`, `game_10310E1C`
+- `TextInputFiles_LoadExternalConfig` calls `game_10310DF0`, `game_10310DFB`, `TextInputFiles_ReadExternalKind1`, `TextInputFiles_ReadExternalKind2`, `TextInputFiles_SetConfigEntryValue`, `game_10310E1C`
+- `TextInputFiles_ReadExternalKind1` calls `game_10310E27`
+- `TextInputFiles_WriteExternalKind1` calls `game_10310E27`, `game_10310E32`
+- `TextInputFiles_ReadExternalKind2` calls `game_10310B30`, `game_10310B3B`
 - `TextInputFiles_IsExternalKind2Key` calls nothing directly
 - `TextInputFiles_SaveCnfDat` calls `SetConfig`, `TextInputFiles_FileMngSubmitPathKind3`
 - `TextInputFiles_LoadCnfDat` calls `TextInputFiles_FileMngSubmitPathKind1`, `TextInputFiles_SetConfigEntryValue`, `Settings_GetValue`, `TextInputFiles_ForEach`
@@ -699,38 +699,38 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_ConstructVt10336EE8` calls `TextInputFiles_WindowItemCtor`
 - `TextInputFiles_CtorVt10336F30` calls `NetCellFont_ClearWords`, `Shape_GetValueAt`, `TextInputFiles_ReturnZero`
 - `TextInputFiles_CtorVt10336F78` calls `NetCellFont_ClearWords`, `Shape_GetValueAt`
-- `TextInputFiles_RunPairA` calls `sub_103113D3`, `sub_10311386`
-- `TextInputFiles_RunPairB` calls `sub_10311386`, `sub_103113D3`
-- `TextInputFiles_Call10311386` calls `sub_10311386`
-- `TextInputFiles_GetSetting41` calls `Settings_GetValue`, `sub_10311386`
-- `TextInputFiles_Call103113C8` calls `sub_103113C8`
+- `TextInputFiles_RunPairA` calls `game_103113D3`, `game_10311386`
+- `TextInputFiles_RunPairB` calls `game_10311386`, `game_103113D3`
+- `TextInputFiles_Call10311386` calls `game_10311386`
+- `TextInputFiles_GetSetting41` calls `Settings_GetValue`, `game_10311386`
+- `TextInputFiles_Call103113C8` calls `game_103113C8`
 - `TextInputFiles_ByteTableCtor` calls `NetCellFont_ClearWords`
 - `TextInputFiles_HasTable1037A290CellByte` calls `Cell_GetWord1036D6B0`
-- `TextInputFiles_ByteTableDefaultCtor` calls `TextInputFiles_ByteTableCtor`, `TextInputFiles_FillTableBytes`, `sub_1019CFA0`, `Config_LoadDefaultTable`
-- `Config_LoadDefaultTable` calls `SetConfig`, `sub_1019CFA0`
-- `TextInputFiles_FillTableBytes` calls `Cell_GetWord1036D6B0`, `sub_1019D2B0`
-- `TextInputFiles_ByteTableAltCtor` calls `TextInputFiles_ByteTableCtor`, `sub_1019D2B0`, `sub_1019D350`, `Config_LoadAltTable`
-- `Config_LoadAltTable` calls `SetConfig`, `sub_1019D350`, `sub_1019D320`
+- `TextInputFiles_ByteTableDefaultCtor` calls `TextInputFiles_ByteTableCtor`, `TextInputFiles_FillTableBytes`, `game_1019CFA0`, `Config_LoadDefaultTable`
+- `Config_LoadDefaultTable` calls `SetConfig`, `game_1019CFA0`
+- `TextInputFiles_FillTableBytes` calls `Cell_GetWord1036D6B0`, `game_1019D2B0`
+- `TextInputFiles_ByteTableAltCtor` calls `TextInputFiles_ByteTableCtor`, `game_1019D2B0`, `game_1019D350`, `Config_LoadAltTable`
+- `Config_LoadAltTable` calls `SetConfig`, `game_1019D350`, `game_1019D320`
 - `TextInputFiles_CtorVt103370F8` calls `NetCellFont_ClearWords`
 - `TextInputFiles_CtorCachingSettings` calls `TextInputFiles_WindowItemCtor`, `Settings_CacheValues`
 - `Settings_CacheValues` calls `Shape_GetValueAt`, `Settings_GetValue`
-- `TextInputFiles_DrawTextBlockOnce` calls `sub_1019ED50`, `TextInputFiles_GetScaleTimes0`, `TextInputFiles_GetScaleTimes310`, `TextInputFiles_DrawTextLines`
-- `TextInputFiles_GetScaleTimes310` calls `sub_10311C2C`
-- `TextInputFiles_GetScaleTimes0` calls `sub_10311C2C`
-- `TextInputFiles_GetScaleTimes180` calls `sub_10311C2C`
+- `TextInputFiles_DrawTextBlockOnce` calls `game_1019ED50`, `TextInputFiles_GetScaleTimes0`, `TextInputFiles_GetScaleTimes310`, `TextInputFiles_DrawTextLines`
+- `TextInputFiles_GetScaleTimes310` calls `game_10311C2C`
+- `TextInputFiles_GetScaleTimes0` calls `game_10311C2C`
+- `TextInputFiles_GetScaleTimes180` calls `game_10311C2C`
 - `TextInputFiles_NextLine` calls nothing directly
-- `TextInputFiles_DrawTextLines` calls `sub_1019ED50`, `TextInputFiles_GetScaleTimes180`, `sub_1019E550`, `sub_1019E290`
+- `TextInputFiles_DrawTextLines` calls `game_1019ED50`, `TextInputFiles_GetScaleTimes180`, `game_1019E550`, `game_1019E290`
 - `TextInputFiles_CtorWithMenuFepShape` calls `NetCellFont_ClearWords`, `ShapeMng_FindShape`
 - `TextInputFiles_PushWithRetry` calls `TextInputFiles_Push`, `TextInputFiles_SignalEvent10`, `TextInputFiles_ResetAndWaitEvent14`
 - `TextInputFiles_FindMatchAt8` calls `TextInputFiles_FindMatch`
-- `TextInputFiles_WaitThenHandleFileEvent` calls `TextInputFiles_WaitEvent18`, `sub_1019FD50`, `TextInputFiles_SignalMember18`
+- `TextInputFiles_WaitThenHandleFileEvent` calls `TextInputFiles_WaitEvent18`, `game_1019FD50`, `TextInputFiles_SignalMember18`
 - `TextInputFiles_WaitEvent18At8` calls `TextInputFiles_WaitEvent18`
 - `TextInputFiles_SignalMember8` calls `TextInputFiles_SignalMember18`
-- `TextInputFiles_Call101BE510IfSize4` calls `sub_101BE510`
+- `TextInputFiles_Call101BE510IfSize4` calls `game_101BE510`
 - `TextInputFiles_FillSizeAndDatesFwd` calls `TextInputFiles_FillSizeAndThreeDates`
 - `TextInputFiles_Call101BE670` calls `TextInputFiles_DeleteFile`
-- `TextInputFiles_Call101BE690` calls `sub_101BE690`
-- `TextInputFiles_RunKind8WithCallback` calls `sub_101BE690`
+- `TextInputFiles_Call101BE690` calls `game_101BE690`
+- `TextInputFiles_RunKind8WithCallback` calls `game_101BE690`
 - `TextInputFiles_SignalEvent10` calls `Event_Signal`
 - `TextInputFiles_ResetAndWaitEvent14` calls `Event_ResetAndWait`
 - `TextInputFiles_WaitEvent18` calls `Event_Wait`
@@ -742,9 +742,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_Pop` calls `Event_Wait`, `TextInputFiles_ReleaseSemaphoreAt4`
 - `TextInputFiles_StringListCtor` calls nothing directly
 - `TextInputFiles_SetVtable10337210` calls nothing directly
-- `TextInputFiles_PushFrontString` calls `sub_103149D0`
-- `TextInputFiles_CopyCurrent` calls `sub_1018FDF0`
-- `TextInputFiles_SetCurrent` calls `sub_1018FDF0`
+- `TextInputFiles_PushFrontString` calls `game_103149D0`
+- `TextInputFiles_CopyCurrent` calls `game_1018FDF0`
+- `TextInputFiles_SetCurrent` calls `game_1018FDF0`
 - `TextInputFiles_Advance` calls nothing directly
 - `TextInputFiles_Retreat` calls nothing directly
 - `TextInputFiles_ClearFirstString` calls nothing directly
@@ -757,18 +757,18 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_Create` calls `Allocator_Generic`, `TextInputFiles_McrManagerCtor`
 - `TextInputFiles_McrManagerCtor` calls `TextInputFiles_McrEntryCtor`, `TextInputFiles_Register`
 - `TextInputFiles_QueueEntry` calls `TextInputFiles_CopyMcrEntry`
-- `TextInputFiles_StepScript` calls `sub_101A1CB0`, `TextInputFiles_GetMcrEntryLine`, `NetCellFont_AdvanceAndGetMs`, `TextInputFiles_ParseWaitCommand`, `Command_RunLine`
-- `TextInputFiles_OnMacroFileLoaded` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `ChatLog_AddTextCode37B`, `TextInputFiles_ClearRecord6x3D`, `TextInputFiles_LoadNumberedDatIntoBuffer`, `TextInputFiles_CopyRecord6x3D`, `TextInputFiles_ValidateRecord6x3D`
+- `TextInputFiles_StepScript` calls `game_101A1CB0`, `TextInputFiles_GetMcrEntryLine`, `NetCellFont_AdvanceAndGetMs`, `TextInputFiles_ParseWaitCommand`, `Command_RunLine`
+- `TextInputFiles_OnMacroFileLoaded` calls `TargetMenu_GetMessageFwd`, `game_10311FF1`, `ChatLog_AddTextCode37B`, `TextInputFiles_ClearRecord6x3D`, `TextInputFiles_LoadNumberedDatIntoBuffer`, `TextInputFiles_CopyRecord6x3D`, `TextInputFiles_ValidateRecord6x3D`
 - `TextInputFiles_LoadCurrentMacroDat` calls `TextInputFiles_SplitIndexBy20`, `TextInputFiles_LoadMacroDat`
 - `TextInputFiles_ResetNames0To19` calls `TextInputFiles_FillDefaultNames`, `TextInputFiles_SetName`
 - `TextInputFiles_ResetNames20To39` calls `TextInputFiles_FillDefaultNames`, `TextInputFiles_SetName`
-- `TextInputFiles_ParseWaitCommand` calls `sub_10311EB0`, `sub_10313643`, `NetCellFont_AdvanceAndGetMs`, `TextInputFiles_InputCall101AC990Swapped`
-- `TextInputFiles_FormatNumberedDatName` calls `sub_10311FF1`
+- `TextInputFiles_ParseWaitCommand` calls `game_10311EB0`, `game_10313643`, `NetCellFont_AdvanceAndGetMs`, `TextInputFiles_InputCall101AC990Swapped`
+- `TextInputFiles_FormatNumberedDatName` calls `game_10311FF1`
 - `TextInputFiles_LoadNumberedDatIntoBuffer` calls `TextInputFiles_FormatNumberedDatName`, `TextInputFiles_DatEntryCtor`, `XI_CRYPT_101B9A10 (left out)`, `TextInputFiles_ClearVtable`
 - `TextInputFiles_LoadMacroDat` calls `TextInputFiles_FormatNumberedDatName`, `TextInputFiles_InitWithCallback`, `XI_CRYPT_101B9BC0 (left out)`, `TextInputFiles_DatEntryCtor`, `TextInputFiles_RemoveById`, `TextInputFiles_AppendToList`, `TextInputFiles_ClearVtable`
 - `TextInputFiles_SplitIndexBy20` calls nothing directly
 - `TextInputFiles_SetReadPos` calls `TextInputFiles_LoadNumberedDatIntoBuffer`, `TextInputFiles_LoadMacroDat`
-- `TextInputFiles_SetName` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `sub_10312050`
+- `TextInputFiles_SetName` calls `TargetMenu_GetMessageFwd`, `game_10311FF1`, `game_10312050`
 - `TextInputFiles_GetEntryPtr` calls nothing directly
 - `TextInputFiles_FillDefaultNames` calls `TextInputFiles_SetName`
 - `TextInputFiles_CtorVt10337314` calls nothing directly
@@ -781,7 +781,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_PanelCtorVt10337320` calls `NetCellFont_ClearWords`, `Allocator_Generic`, `TextInputFiles_CtorVt10337B1C`, `FsTinyString_init`
 - `TextInputFiles_SetFlag29A` calls nothing directly
 - `TextInputFiles_AddMsg10_27IfChangedA` calls `TextInputFiles_GetEntryPtr`, `TextInputFiles_FormatMessage10_27`, `NetCellFont_AddEntry`
-- `TextInputFiles_FormatMessage10_27` calls `TargetMenu_GetMessageFwd`, `sub_10311FF1`
+- `TextInputFiles_FormatMessage10_27` calls `TargetMenu_GetMessageFwd`, `game_10311FF1`
 - `TextInputFiles_PanelCtorVt10337378` calls `NetCellFont_ClearWords`, `Allocator_Generic`, `TextInputFiles_CtorVt10337B1C`, `FsTinyString_init`
 - `TextInputFiles_SetFlag29B` calls nothing directly
 - `TextInputFiles_AddMsg10_27IfChangedB` calls `TextInputFiles_GetEntryPtr`, `TextInputFiles_FormatMessage10_27`, `NetCellFont_AddEntry`
@@ -797,23 +797,23 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_CtorVt10337580` calls nothing directly
 - `TextInputFiles_CreateAll` calls `Allocator_Generic`, `TextInputFiles_CtorVt10337B2C`, `TextInputFiles_InitAcqDat`, `TextInputFiles_InitPecDat`, `TextInputFiles_ConstructKind1`, `TextInputFiles_RecreateMembers`, `TextInputFiles_ConstructKind2`, `TextInputFiles_CtorVt10337C5C`, `TextInputFiles_CtorVt10337C3C`
 - `TextInputFiles_CreateDatManager` calls `TextInputFiles_CreateGlobal10662DB4`
-- `TextInputFiles_CreateConfigObjects` calls `Allocator_Generic`, `FsConfig_Constructor`, `NetCellFont_ClearWords`, `TextInputFiles_ClearWords3C`, `TextInputFiles_WindowItemCtorVt10336AC8`, `TextInputFiles_ConstructVt10336B60`, `TextInputFiles_CtorVt10336C00`, `TextInputFiles_CtorVt10336C48`, `TextInputFiles_ConstructVt10336C90`, `TextInputFiles_ConstructVt10336CD8`, `TextInputFiles_ConstructVt10336D70`, `TextInputFiles_ConstructVt10336DC0`, `TextInputFiles_WindowItemCtorVt10336E10`, `TextInputFiles_CtorVt10336F30`, `TextInputFiles_ConstructVt10336BB0`, `TextInputFiles_CtorVt10336F78`, `TextInputFiles_ByteTableAltCtor`, `TextInputFiles_ByteTableDefaultCtor`, `TextInputFiles_CtorVt103370F8`, `TextInputFiles_WindowItemCtorVt10336E58`, `TextInputFiles_WindowItemCtorVt10336EA0`, `TextInputFiles_ConstructVt10336EE8`, `TextInputFiles_CtorCachingSettings`, `TextInputFiles_AddPairChecked`, `TextInputFiles_RegisterMenuHandlers`, `sub_1019D320`
+- `TextInputFiles_CreateConfigObjects` calls `Allocator_Generic`, `FsConfig_Constructor`, `NetCellFont_ClearWords`, `TextInputFiles_ClearWords3C`, `TextInputFiles_WindowItemCtorVt10336AC8`, `TextInputFiles_ConstructVt10336B60`, `TextInputFiles_CtorVt10336C00`, `TextInputFiles_CtorVt10336C48`, `TextInputFiles_ConstructVt10336C90`, `TextInputFiles_ConstructVt10336CD8`, `TextInputFiles_ConstructVt10336D70`, `TextInputFiles_ConstructVt10336DC0`, `TextInputFiles_WindowItemCtorVt10336E10`, `TextInputFiles_CtorVt10336F30`, `TextInputFiles_ConstructVt10336BB0`, `TextInputFiles_CtorVt10336F78`, `TextInputFiles_ByteTableAltCtor`, `TextInputFiles_ByteTableDefaultCtor`, `TextInputFiles_CtorVt103370F8`, `TextInputFiles_WindowItemCtorVt10336E58`, `TextInputFiles_WindowItemCtorVt10336EA0`, `TextInputFiles_ConstructVt10336EE8`, `TextInputFiles_CtorCachingSettings`, `TextInputFiles_AddPairChecked`, `TextInputFiles_RegisterMenuHandlers`, `game_1019D320`
 - `TextInputFiles_RegisterMenuHandlers` calls `TextInputFiles_AddPairChecked`
-- `TextInputFiles_ApplyConfigSetting` calls `SoundElem_SetFactor103516F8`, `SoundElem_SetFactor103516FC`, `sub_100372A0`, `sub_100372E0`, `AppMainLoop_SetShadowSetting`, `AppMainLoop_SetFloat10456A68`, `Gfx_IsGammaSupported`, `Gfx_SetGammaR`, `Gfx_SetGammaG`, `Gfx_SetGammaB`, `AppMainLoop_SetGlobal10456A70`, `AppMainLoop_SetGlobal10456A5C`, `AppMainLoop_SetGlobal10456A6C`, `AppMainLoop_SetFloat10456AB8`, `AppMainLoop_SetFloat10456AA8`, `AppMainLoop_SetCfg0020`, `Gfx_SetAspectIndex`
-- `TextInputFiles_ApplyUiSetting` calls `TargetMenu_ResetScrollFwd`, `TargetMenu_SetWord56`, `Settings_GetValue`, `TargetMenu_SetLineCount`, `TargetMenu_SetShownLines`, `sub_10162D90`, `SetConfig`, `sub_10162EA0`, `TargetMenu_SetFlag58AndResetScroll`, `Menu_ReloadResource`
+- `TextInputFiles_ApplyConfigSetting` calls `SoundElem_SetFactor103516F8`, `SoundElem_SetFactor103516FC`, `game_100372A0`, `game_100372E0`, `AppMainLoop_SetShadowSetting`, `AppMainLoop_SetFloat10456A68`, `Gfx_IsGammaSupported`, `Gfx_SetGammaR`, `Gfx_SetGammaG`, `Gfx_SetGammaB`, `AppMainLoop_SetGlobal10456A70`, `AppMainLoop_SetGlobal10456A5C`, `AppMainLoop_SetGlobal10456A6C`, `AppMainLoop_SetFloat10456AB8`, `AppMainLoop_SetFloat10456AA8`, `AppMainLoop_SetCfg0020`, `Gfx_SetAspectIndex`
+- `TextInputFiles_ApplyUiSetting` calls `TargetMenu_ResetScrollFwd`, `TargetMenu_SetWord56`, `Settings_GetValue`, `TargetMenu_SetLineCount`, `TargetMenu_SetShownLines`, `game_10162D90`, `SetConfig`, `game_10162EA0`, `TargetMenu_SetFlag58AndResetScroll`, `Menu_ReloadResource`
 - `TextInputFiles_CreateEmptyObject` calls `Allocator_Generic`, `TextInputFiles_ReturnThis`
 - `TextInputFiles_CreateMenuSystem` calls `TextInputFiles_Create`, `Allocator_Generic`, `TextInputFiles_CtorVt10337314`, `TextInputFiles_PanelCtorVt10337320`, `TextInputFiles_PanelCtorVt10337378`, `TextInputFiles_SetFields1C20`, `TextInputFiles_CtorVt103373BC`, `TextInputFiles_PanelCtorVt103373C8`, `TextInputFiles_PanelCtorVt10337418`, `TextInputFiles_CtorVt10337460`, `NetCellFont_ClearWords`, `TextInputFiles_CtorVt103374A8`, `TextInputFiles_CtorVt1033757C`, `TextInputFiles_CtorVt10337580`, `TextInputFiles_CtorVt103374F0`, `TextInputFiles_CtorVt10337538`
 - `TextInputFiles_SaveAll` calls `TextInputFiles_RecreateMembers`, `TextInputFiles_ResetConfigReturn1`, `TextInputFiles_FlushThenTrue`, `TextInputFiles_ReadTigDatSetFlag`
 - `TextInputFiles_Call101953D0` calls `TextInputFiles_WriteTigDat`
 - `TextInputFiles_ReloadAll` calls `TextInputFiles_NoOpC`, `XI_CRYPT_101BA030 (left out)`, `TextInputFiles_ReloadConfig`, `TextInputFiles_BuildSlotLinks`
 - `TextInputFiles_HandleJumpMapKeys` calls `TextInputFiles_CommitPending8C`, `NetCellFont_TestCommand36CF60`, `Command_RunLine`
-- `TextInputFiles_LoadAllAndTimestamp` calls `XI_CRYPT_101B9FF0 (left out)`, `TextInputFiles_UpdateIfFlag9`, `sub_101C4CF0`, `TextInputFiles_NoOpD`
+- `TextInputFiles_LoadAllAndTimestamp` calls `XI_CRYPT_101B9FF0 (left out)`, `TextInputFiles_UpdateIfFlag9`, `game_101C4CF0`, `TextInputFiles_NoOpD`
 - `TextInputFiles_ReturnThis` calls nothing directly
 - `TextInputFiles_HandleMenuKeys` calls `TextInputFiles_IsModeFourOrFive`, `NetCellFont_TestCommand36CF60`, `Menu_HandleEvent`, `FitFont_ReturnFalse`
 - `FsTextInput_Init` calls nothing directly
 - `TextInputFiles_SetModeAndReset` calls `TextInputFiles_ResetLineState`
 - `TextInputFiles_ResetLineState` calls `TextInputFiles_ClearFirstString`
-- `FsTextInput_SetText` calls `Text_GetCharLength`, `sub_103149D0`, `FsTextInput_BuildDisplayText`
+- `FsTextInput_SetText` calls `Text_GetCharLength`, `game_103149D0`, `FsTextInput_BuildDisplayText`
 - `FsTextInput_GetFlag` calls nothing directly
 - `FsTextInput_ClearState` calls `TextInputFiles_ClearFirstString`
 - `FsTextInput_GetCode` calls nothing directly
@@ -825,14 +825,14 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FsTextInput_GetCursorOrLength` calls nothing directly
 - `FsTextInput_GetMaxLength` calls nothing directly
 - `FsTextInput_Reset` calls `TextInputFiles_ClearFirstString`
-- `FsTextInput_HistoryNext` calls `TextInputFiles_SetCurrent`, `TextInputFiles_Advance`, `TextInputFiles_CopyCurrent`, `FsTextInput_BuildDisplayText`, `sub_1018FDF0`
-- `FsTextInput_HistoryPrev` calls `TextInputFiles_SetCurrent`, `TextInputFiles_Retreat`, `TextInputFiles_CopyCurrent`, `FsTextInput_BuildDisplayText`, `sub_1018FDF0`
+- `FsTextInput_HistoryNext` calls `TextInputFiles_SetCurrent`, `TextInputFiles_Advance`, `TextInputFiles_CopyCurrent`, `FsTextInput_BuildDisplayText`, `game_1018FDF0`
+- `FsTextInput_HistoryPrev` calls `TextInputFiles_SetCurrent`, `TextInputFiles_Retreat`, `TextInputFiles_CopyCurrent`, `FsTextInput_BuildDisplayText`, `game_1018FDF0`
 - `FsTextInput_HasText` calls nothing directly
 - `FsTextInput_MoveCursorLeft` calls `Text_CountChars`
 - `FsTextInput_MoveCursorRight` calls `Text_GetCharLength`
 - `FsTextInput_ResetBuffer` calls `TextInputFiles_ClearFirstString`, `TextInputFiles_SetCurrent`, `TextInputFiles_PushFrontString`
 - `FsTextInput_ExpandMarkedPhrase` calls `FsTextInput_IsMarkerAt`, `FsWordCompletion_lookUp`
-- `FsTextInput_BuildDisplayText` calls `FsTextInput_IsMarkerAt`, `Sjis_GetCharByteLen`, `sub_10312050`, `FsTextInput_ExpandMarkedPhrase`
+- `FsTextInput_BuildDisplayText` calls `FsTextInput_IsMarkerAt`, `Sjis_GetCharByteLen`, `game_10312050`, `FsTextInput_ExpandMarkedPhrase`
 - `FsTextInput_BuildDisplayTextTrimmed` calls `FsTextInput_IsMarkerAt`, `FsTextInput_ExpandMarkedPhrase`
 - `FsTextInput_HasMarkedPhrase` calls `FsTextInput_IsMarkerAt`
 - `FsTextInput_CommitEntry` calls `FsTextInput_SetCode4`, `TextInputFiles_GetUsed`, `FsTextInput_MapCodeByte`, `FsTextInput_SetText`, `FsTextInput_CopyCode4`, `FsTextInput_IsMarkerAt`, `FsTextInput_InsertAtCursor`
@@ -840,14 +840,14 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FsTextInput_MapCodeByte` calls nothing directly
 - `FsTextInput_CopyCode4` calls nothing directly
 - `FsTextInput_ClearPair` calls nothing directly
-- `FsTextInput_InsertAtCursor` calls `sub_103149D0`, `FsTextInput_BuildDisplayText`
+- `FsTextInput_InsertAtCursor` calls `game_103149D0`, `FsTextInput_BuildDisplayText`
 - `FsTextInput_DeleteLastWord` calls `Text_CountChars`, `FsTextInput_BuildDisplayText`
 - `FsTextInput_IsMarkerAt` calls nothing directly
 - `FsPreParser_Constructor` calls nothing directly
-- `TextInputFiles_ProcessInputLine` calls `TextInputFiles_InputCall101ACAC0`, `TextInputFiles_IsSlashChar`, `FsTextInput_GetDataPtr8`, `sub_10312050`, `sub_10313520`, `sub_101ADBD0`, `TextInputFiles_InputCall101AC990Swapped`, `TextInputFiles_IsKnownCommand`
+- `TextInputFiles_ProcessInputLine` calls `TextInputFiles_InputCall101ACAC0`, `TextInputFiles_IsSlashChar`, `FsTextInput_GetDataPtr8`, `game_10312050`, `game_10313520`, `game_101ADBD0`, `TextInputFiles_InputCall101AC990Swapped`, `TextInputFiles_IsKnownCommand`
 - `FsTextInput_GetDataPtr8` calls nothing directly
 - `TextInputFiles_IsSlashChar` calls nothing directly
-- `TextInputFiles_IsKnownCommand` calls `sub_10312940`
+- `TextInputFiles_IsKnownCommand` calls `game_10312940`
 - `Shape_GetValueAt` calls `ResourceIter_FindById`, `ShapeMng_FindShape`
 - `TextInputFiles_ShortcutCtor` calls nothing directly
 - `FsTextInput_SetName` calls nothing directly
@@ -887,9 +887,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_CtorVt103379C0` calls nothing directly
 - `TextInputFiles_CtorVt103379C4` calls `TextInputFiles_CtorVt103379C0`
 - `TextInputFiles_Reset` calls nothing directly
-- `TextInputFiles_AppendByte` calls `sub_103149D0`
-- `TextInputFiles_DeleteLast` calls `Font_IsSingleByte`, `sub_103149D0`
-- `TextInputFiles_DeleteForward` calls `Font_IsSingleByte`, `sub_103149D0`
+- `TextInputFiles_AppendByte` calls `game_103149D0`
+- `TextInputFiles_DeleteLast` calls `Font_IsSingleByte`, `game_103149D0`
+- `TextInputFiles_DeleteForward` calls `Font_IsSingleByte`, `game_103149D0`
 - `TextInputFiles_ClearAll` calls nothing directly
 - `TextInputFiles_MoveBack` calls `Font_IsSingleByte`
 - `TextInputFiles_MoveForward` calls `Font_IsSingleByte`
@@ -904,14 +904,14 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_IsModeThree` calls nothing directly
 - `TextInputFiles_EndMode4Or5` calls nothing directly
 - `TextInputFiles_HandleEditKey` calls `TextInputFiles_GetFlag8C81`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `List_Retreat`, `List_Advance`, `TextInputFiles_GetLastWord`, `FsTextInput_HasText`, `FsTextInput_GetCursorOrLength`, `FsTextInput_GetPendingBuffer`, `TextInputFiles_InputNotify`, `FsTextInput_DeleteLastWord`, `TextInputFiles_InputSubmit`, `TextInputFiles_DeleteLast`, `FsTextInput_CursorLeft`, `TextInputFiles_DeleteForward`, `FsTextInput_RebuildAtCursor`, `TextInputFiles_IsModeFourOrFive`, `TextInputFiles_ClearAll`, `FsTextInput_ClearState`, `FsTextInput_ClearPair`, `FsTextInput_Reset`, `FsTextInput_HistoryNext`, `FsTextInput_HistoryPrev`, `FsTextInput_GetFlag`, `TextInputFiles_MoveBack`, `FsTextInput_MoveCursorLeft`, `TextInputFiles_MoveForward`, `FsTextInput_MoveCursorRight`, `List_PageDown`, `List_PageUp`
-- `FsTextInput_OnChar` calls `TextInputFiles_GetFlag8C81`, `sub_10311344`, `TextInputFiles_InputSubmit`, `FsTextInput_GetMaxLength`, `TextInputFiles_AppendByte`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`, `SetMusicTrackVolume_Tag0004`
+- `FsTextInput_OnChar` calls `TextInputFiles_GetFlag8C81`, `game_10311344`, `TextInputFiles_InputSubmit`, `FsTextInput_GetMaxLength`, `TextInputFiles_AppendByte`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`, `SetMusicTrackVolume_Tag0004`
 - `TextInputFiles_InputSubmit` calls `Cell_ClearAllFlags`, `TextInputFiles_GetFlag8C81`, `TextInputFiles_GetEntry`, `FsTextInput_CommitEntry`, `FsTextInput_ClearState`, `FsTextInput_ClearPair`, `FsTextInput_GetFlag`, `FsTextInput_GetCode`, `TextInputFiles_SetWordForCompletion`, `MenuMng_OpenByName`, `TextInputFiles_AcceptsChar`, `FsTextInput_SetText`
-- `TextInputFiles_AcceptsChar` calls `Font_IsPrintableAscii`, `sub_10314801`, `sub_103146DE`, `sub_1031475C`
+- `TextInputFiles_AcceptsChar` calls `Font_IsPrintableAscii`, `game_10314801`, `game_103146DE`, `game_1031475C`
 - `TextInputFiles_InputNotify` calls `FsTextInput_ResetBuffer`
 - `TextInputFiles_GetFlag8C81` calls nothing directly
 - `TextInputFiles_ResetCursor` calls nothing directly
 - `TextInputFiles_GetEntry` calls nothing directly
-- `TextInputFiles_SetWordForCompletion` calls `FsTextInput_ClearState`, `FsWordCompletion_SetWord`, `TextInputFiles_IsState204Not1`, `FsWordCompletion_Update`, `FsWordCompletion_getEntryList`, `TextInputFiles_FillCompletionWords`, `sub_10312050`
+- `TextInputFiles_SetWordForCompletion` calls `FsTextInput_ClearState`, `FsWordCompletion_SetWord`, `TextInputFiles_IsState204Not1`, `FsWordCompletion_Update`, `FsWordCompletion_getEntryList`, `TextInputFiles_FillCompletionWords`, `game_10312050`
 - `List_Advance` calls nothing directly
 - `List_Retreat` calls nothing directly
 - `List_PageDown` calls nothing directly
@@ -969,19 +969,19 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `FsWordCompletion_AddItem` calls `TextInputFiles_AppendPadded`, `TextInputFiles_ReserveZeroed`, `FsWordCompletion_BuildItems`, `TextInputFiles_ResetCounters`
 - `FsWordCompletion_BuildKind13Block` calls `TargetMenu_GetMessageFwd`, `FsWordCompletion_CountSupported`, `TextInputFiles_Clear`, `Allocator_Generic`, `FsMemory_Constructor`, `FsWordCompletion_AddItem`
 - `FsWordCompletion_Refresh` calls `FsWordCompletion_BuildKind13Block`, `FsWordCompletion_BuildKind7Block`, `FsWordCompletion__prepareAllData`, `TextInputFiles_Store101BB070At8`
-- `FsWordCompletion_LoadData` calls `TextInputFiles_Clear`, `Allocator_Generic`, `FsMemory_Constructor`, `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `TextInputFiles_ForwardOrExit`, `TextInputFiles_AppendPadded`, `TextInputFiles_ReserveZeroed`, `TextInputFiles_ResetCounters`, `FsWordCompletion__prepareAllData`, `TextInputFiles_Store101BB070At8`, `operator_delete`, `sub_101BCA30`
-- `FsWordCompletion_Release` calls `sub_101BCA30`, `operator_delete`, `TextInputFiles_FreeBuffer`
-- `FsWordCompletion_SetWord` calls `FsWordCompletion_Refresh`, `sub_101BB070`, `FsWordCompletion_GetField20`, `FsWordCompletion_GetField28`, `Sjis_Remap82To83`
-- `FsWordCompletion_Update` calls `sub_101BB070`, `FsWordCompletion_GetField20`, `FsWordCompletion_GetField28`
+- `FsWordCompletion_LoadData` calls `TextInputFiles_Clear`, `Allocator_Generic`, `FsMemory_Constructor`, `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `TextInputFiles_ForwardOrExit`, `TextInputFiles_AppendPadded`, `TextInputFiles_ReserveZeroed`, `TextInputFiles_ResetCounters`, `FsWordCompletion__prepareAllData`, `TextInputFiles_Store101BB070At8`, `operator_delete`, `game_101BCA30`
+- `FsWordCompletion_Release` calls `game_101BCA30`, `operator_delete`, `TextInputFiles_FreeBuffer`
+- `FsWordCompletion_SetWord` calls `FsWordCompletion_Refresh`, `game_101BB070`, `FsWordCompletion_GetField20`, `FsWordCompletion_GetField28`, `Sjis_Remap82To83`
+- `FsWordCompletion_Update` calls `game_101BB070`, `FsWordCompletion_GetField20`, `FsWordCompletion_GetField28`
 - `TextInputFiles_IsState204Not1` calls nothing directly
 - `FsWordCompletion_getEntryList` calls `TextInputFiles_Set`, `Entry_CompareKey`, `FsWordCompletion_GetCount18`
-- `FsWordCompletion_lookUp` calls `TextInputFiles_GetUsed`, `sub_1015BC40`, `TargetMenu_GetInstance`, `TargetMenu_GetByValue`, `DmsgText_WrapSjisAt`, `sub_101BB070`, `FsWordCompletion_FindNextByKey`
+- `FsWordCompletion_lookUp` calls `TextInputFiles_GetUsed`, `game_1015BC40`, `TargetMenu_GetInstance`, `TargetMenu_GetByValue`, `DmsgText_WrapSjisAt`, `game_101BB070`, `FsWordCompletion_FindNextByKey`
 - `FsWordCompletion__prepareAllData` calls `FsWordCompletion_GetCount18`, `FsWordCompletion_GetCount1C`, `TextInputFiles_AllocZeroed`, `operator_delete`, `TextInputFiles_GetUsed`
-- `TextInputFiles_Store101BB070At8` calls `sub_101BB070`
+- `TextInputFiles_Store101BB070At8` calls `game_101BB070`
 - `TextInputFiles_FreeBuffer` calls `TextInputFiles_FreeBlock`
 - `TextInputFiles_InitVt10337BA0` calls nothing directly
 - `TextInputFiles_Set` calls nothing directly
-- `Entry_CompareKey` calls `TextInputFiles_GetUsed`, `YkCommon_CompareMapped`, `sub_10312940`, `sub_10325D00`
+- `Entry_CompareKey` calls `TextInputFiles_GetUsed`, `YkCommon_CompareMapped`, `game_10312940`, `game_10325D00`
 - `TextInputFiles_GetUsed` calls nothing directly
 - `FsMemory_Constructor` calls `TextInputFiles_AllocZeroed`
 - `TextInputFiles_AppendPadded` calls nothing directly
@@ -994,43 +994,43 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_CtorVt10337C60` calls nothing directly
 - `TextInputFiles_SetVtable10337C60` calls nothing directly
 - `TextInputFiles_SetField4` calls nothing directly
-- `TextInputFiles_SetDateAt9` calls `sub_10314D91`
-- `TextInputFiles_SetDateAt11` calls `sub_10314D91`
-- `TextInputFiles_SetDateAt19` calls `sub_10314D91`
+- `TextInputFiles_SetDateAt9` calls `game_10314D91`
+- `TextInputFiles_SetDateAt11` calls `game_10314D91`
+- `TextInputFiles_SetDateAt19` calls `game_10314D91`
 - `TextInputFiles_SetVtable10337C64` calls nothing directly
-- `File_FindByKind` calls `sub_10311FDE`, `File_CreateParentDirs`
-- `TextInputFiles_Call10311F30` calls `sub_10311F30`
-- `TextInputFiles_SeekWhence012` calls `sub_10313CF0`
-- `File_WriteChunked` calls `sub_1031217F`
-- `TextInputFiles_Call10312296` calls `sub_10312296`
+- `File_FindByKind` calls `game_10311FDE`, `File_CreateParentDirs`
+- `TextInputFiles_Call10311F30` calls `game_10311F30`
+- `TextInputFiles_SeekWhence012` calls `game_10313CF0`
+- `File_WriteChunked` calls `game_1031217F`
+- `TextInputFiles_Call10312296` calls `game_10312296`
 - `TextInputFiles_DeleteFile` calls nothing directly
-- `TextInputFiles_FillSizeAndThreeDates` calls `sub_10312487`, `TextInputFiles_SetField4`, `TextInputFiles_SetDateAt9`, `TextInputFiles_SetDateAt11`, `TextInputFiles_SetDateAt19`
+- `TextInputFiles_FillSizeAndThreeDates` calls `game_10312487`, `TextInputFiles_SetField4`, `TextInputFiles_SetDateAt9`, `TextInputFiles_SetDateAt11`, `TextInputFiles_SetDateAt19`
 - `File_CreateParentDirs` calls nothing directly
-- `XiFileImpl_QueueLoad` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_PushWithRetry`
-- `TextInputFiles_SubmitFileNumKind1` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
+- `XiFileImpl_QueueLoad` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_PushWithRetry`
+- `TextInputFiles_SubmitFileNumKind1` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPathKind1` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath2F4Kind1` calls `TextInputFiles_FormatStrAt2F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath3F4Kind1` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_ReadFileByName` calls `TextInputFiles_FormatWithBase`, `TextInputFiles_WaitThenHandleFileEvent`
-- `TextInputFiles_ReadTextOrNoData` calls `TextInputFiles_GetFileSize24`, `Allocator_Generic`, `TextInputFiles_ReadFileByName`, `sub_10311856`, `operator_delete`
-- `TextInputFiles_QueueFileNumKind2` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_PushWithRetry`
+- `TextInputFiles_ReadTextOrNoData` calls `TextInputFiles_GetFileSize24`, `Allocator_Generic`, `TextInputFiles_ReadFileByName`, `game_10311856`, `operator_delete`
+- `TextInputFiles_QueueFileNumKind2` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_PushWithRetry`
 - `TextInputFiles_QueuePathKind3` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_PushWithRetry`
 - `TextInputFiles_QueuePath2F4Kind3` calls `TextInputFiles_FormatStrAt2F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_PushWithRetry`
 - `TextInputFiles_QueuePath3F4Kind3` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_PushWithRetry`
 - `TextInputFiles_SubmitPathKind3` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath2F4Kind3` calls `TextInputFiles_FormatStrAt2F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath3F4Kind3` calls `TextInputFiles_FormatPathByKind`, `TextInputFiles_CreateDirectories`, `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
-- `TextInputFiles_SubmitPath4F4Kind3` calls `sub_10311FF1`, `TextInputFiles_CopyPathByMode`, `TextInputFiles_CreateDirectories`, `TextInputFiles_FormatStrAt4F4`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
-- `TextInputFiles_CreateDirAndWait` calls `sub_1030FED0`, `TextInputFiles_WaitEvent18At8`, `sub_10311365`, `TextInputFiles_SignalMember8`, `sub_1031135A`
-- `TextInputFiles_CreateDirAndHandleFile` calls `sub_10311370`, `sub_1030FED0`, `TextInputFiles_WaitEvent18At8`, `sub_10311365`, `TextInputFiles_SignalMember8`, `sub_1031135A`, `TextInputFiles_FormatWithBase`, `TextInputFiles_MapCode012`, `sub_101C0BC0`, `TextInputFiles_WaitThenHandleFileEvent`
+- `TextInputFiles_SubmitPath4F4Kind3` calls `game_10311FF1`, `TextInputFiles_CopyPathByMode`, `TextInputFiles_CreateDirectories`, `TextInputFiles_FormatStrAt4F4`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
+- `TextInputFiles_CreateDirAndWait` calls `game_1030FED0`, `TextInputFiles_WaitEvent18At8`, `game_10311365`, `TextInputFiles_SignalMember8`, `game_1031135A`
+- `TextInputFiles_CreateDirAndHandleFile` calls `game_10311370`, `game_1030FED0`, `TextInputFiles_WaitEvent18At8`, `game_10311365`, `TextInputFiles_SignalMember8`, `game_1031135A`, `TextInputFiles_FormatWithBase`, `TextInputFiles_MapCode012`, `game_101C0BC0`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPathKind6` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath3F4Kind6` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
-- `TextInputFiles_FindFileNumKind1` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
-- `TextInputFiles_FindFileNumKind2` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
+- `TextInputFiles_FindFileNumKind1` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
+- `TextInputFiles_FindFileNumKind2` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
 - `TextInputFiles_FindPathKind3` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
 - `TextInputFiles_FindPath2F4Kind3` calls `TextInputFiles_FormatStrAt2F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
 - `TextInputFiles_FindPath3F4Kind3` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_FindMatchAt8`
-- `TextInputFiles_SubmitFileNumKind4` calls `sub_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
+- `TextInputFiles_SubmitFileNumKind4` calls `game_101C3A90`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath3F4Kind4` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPathKind4` calls `TextInputFiles_FormatUserPath`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath2F4Kind4` calls `TextInputFiles_FormatStrAt2F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
@@ -1039,20 +1039,20 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_SubmitPath3F4Kind5` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_SubmitPath3F4Kind7` calls `TextInputFiles_FormatStrAt3F4`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_WriteTimestampFwd` calls `TextInputFiles_WriteTimestamp`
-- `TextInputFiles_OpenHexPath` calls `sub_10311FF1`, `TextInputFiles_ReleaseAt1F0`, `sub_101C4080`, `TextInputFiles_GetValueAt1F0`, `TextInputFiles_CreateDirectories`
+- `TextInputFiles_OpenHexPath` calls `game_10311FF1`, `TextInputFiles_ReleaseAt1F0`, `game_101C4080`, `TextInputFiles_GetValueAt1F0`, `TextInputFiles_CreateDirectories`
 - `TextInputFiles_ReleaseAt1F0` calls `TextInputFiles_WaitEvent18At8`
 - `TextInputFiles_GetValueAt1F0` calls `TextInputFiles_SignalMember8`
-- `TextInputFiles_FormatUserPath` calls `NetCellFont_GetRecordDwordFwd`, `sub_10311FF1`
-- `TextInputFiles_FormatStrAt2F4` calls `sub_10311FF1`
-- `TextInputFiles_FormatStrAt3F4` calls `sub_10311FF1`
-- `TextInputFiles_FormatStrAt4F4` calls `sub_10311FF1`
-- `TextInputFiles_FormatWithBase` calls `sub_1030FED0`, `sub_10311FF1`
-- `TextInputFiles_FormatPathByKind` calls `sub_10311FF1`
-- `TextInputFiles_CopyPathByMode` calls `sub_10311FF1`
+- `TextInputFiles_FormatUserPath` calls `NetCellFont_GetRecordDwordFwd`, `game_10311FF1`
+- `TextInputFiles_FormatStrAt2F4` calls `game_10311FF1`
+- `TextInputFiles_FormatStrAt3F4` calls `game_10311FF1`
+- `TextInputFiles_FormatStrAt4F4` calls `game_10311FF1`
+- `TextInputFiles_FormatWithBase` calls `game_1030FED0`, `game_10311FF1`
+- `TextInputFiles_FormatPathByKind` calls `game_10311FF1`
+- `TextInputFiles_CopyPathByMode` calls `game_10311FF1`
 - `TextInputFiles_MapCode012` calls nothing directly
-- `TextInputFiles_CreateDirectories` calls `sub_10312050`
-- `TextInputFiles_WriteTimestamp` calls `sub_10311FF1`, `ntGameTimeGet`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
-- `TextInputFiles_ReadTimestamp` calls `sub_10311FF1`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
+- `TextInputFiles_CreateDirectories` calls `game_10312050`
+- `TextInputFiles_WriteTimestamp` calls `game_10311FF1`, `ntGameTimeGet`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_MapCode012`, `TextInputFiles_WaitThenHandleFileEvent`
+- `TextInputFiles_ReadTimestamp` calls `game_10311FF1`, `TextInputFiles_FormatPathByKind`, `TextInputFiles_WaitThenHandleFileEvent`
 - `TextInputFiles_FileMngQueueLoad` calls `XiFileImpl_QueueLoad`
 - `TextInputFiles_ForwardOrExit` calls `TextInputFiles_SubmitFileNumKind1`, `StAvatarInfo_SendBytePairKind2`, `_exit_0`
 - `TextInputFiles_FileMngSubmitPathKind1` calls `TextInputFiles_SubmitPathKind1`
@@ -1082,10 +1082,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_FileMngFwd101C1EC0` calls `TextInputFiles_SubmitPath2F4Kind4`
 - `TextInputFiles_FileMngFwd101C2450` calls `TextInputFiles_SubmitPath3F4Kind5`
 - `TextInputFiles_FileMngFwd101C2840` calls `TextInputFiles_SubmitPath3F4Kind7`
-- `TextInputFiles_FileMngFwd101C2B60` calls `sub_101C2B60`
-- `TextInputFiles_FileMngFwd101C2C80` calls `sub_101C2C80`
+- `TextInputFiles_FileMngFwd101C2B60` calls `game_101C2B60`
+- `TextInputFiles_FileMngFwd101C2C80` calls `game_101C2C80`
 - `TextInputFiles_FileMngFwd101C4170` calls `TextInputFiles_WriteTimestampFwd`
-- `TextInputFiles_FileMngFwd101C2E70` calls `sub_101C2E70`
+- `TextInputFiles_FileMngFwd101C2E70` calls `game_101C2E70`
 - `TextInputFiles_FileMngReleaseAt1F0` calls `TextInputFiles_ReleaseAt1F0`
 - `TextInputFiles_FileMngGetValueAt1F0` calls `TextInputFiles_GetValueAt1F0`
 - `TextInputFiles_AllocPlus300OrFree` calls `operator_delete`, `Allocator_Generic`
@@ -1095,7 +1095,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `TextInputFiles_EntriesSetCount` calls nothing directly
 - `TextInputFiles_SubmitFileOrExit` calls `TextInputFiles_ForwardOrExit`
 - `TextInputFiles_CtorVt10337C90` calls `TextInputFiles_InputCall101AC990Swapped`
-- `TextInputFiles_CommitTextInput` calls `sub_101C6960`, `TextInputFiles_InputCall101AC990Swapped`
+- `TextInputFiles_CommitTextInput` calls `game_101C6960`, `TextInputFiles_InputCall101AC990Swapped`
 - `TextInputFiles_EndTextInput` calls `TextInputFiles_CommitTextInput`
 - `TextInputFiles_CtorVt10337CA0` calls nothing directly
 - `TextInputFiles_CloseTextInput` calls `TextInputFiles_EndTextInput`

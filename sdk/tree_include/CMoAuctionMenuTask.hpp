@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoAuctionMenuTask {
 public:
-    _DWORD * ScalarDeletingDtor(char a2);  // 0x100A27F0
+    uint32_t * ScalarDeletingDtor(char arg1);  // 0x100A27F0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

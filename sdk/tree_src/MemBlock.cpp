@@ -4,110 +4,110 @@
 
 // FUNCTION: FFXIMAIN 0x10028AA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Mem_FreeBlockMergeNeighbours(undefined4 param_1)
+XI_API bits32 __cdecl Mem_FreeBlockMergeNeighbours(bits32 arg1)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
   
-  iVar3 = orig::Mem_GetPtrMinus0x20(param_1);
-  if (*(int *)(iVar3 + 4) != 0) {
-    iVar4 = *(int *)(iVar3 + 0xc);
-    *(uint32_t *)(iVar3 + 4) = 0;
-    if ((iVar4 != 0) && (*(int *)(iVar4 + 4) == 0)) {
-      *(uint32_t *)(iVar4 + 8) = *(uint32_t *)(iVar3 + 8);
-      *(int *)(*(int *)(iVar3 + 8) + 0xc) = iVar4;
-      iVar3 = iVar4;
+  i3 = orig::Mem_GetPtrMinus0x20(arg1);
+  if (*(int *)(i3 + 4) != 0) {
+    i4 = *(int *)(i3 + 0xc);
+    *(uint32_t *)(i3 + 4) = 0;
+    if ((i4 != 0) && (*(int *)(i4 + 4) == 0)) {
+      *(uint32_t *)(i4 + 8) = *(uint32_t *)(i3 + 8);
+      *(int *)(*(int *)(i3 + 8) + 0xc) = i4;
+      i3 = i4;
     }
-    iVar4 = *(int *)(iVar3 + 8);
-    if (*(int *)(iVar4 + 4) == 0) {
-      *(uint32_t *)(iVar3 + 8) = *(uint32_t *)(iVar4 + 8);
-      *(int *)(*(int *)(iVar4 + 8) + 0xc) = iVar3;
+    i4 = *(int *)(i3 + 8);
+    if (*(int *)(i4 + 4) == 0) {
+      *(uint32_t *)(i3 + 8) = *(uint32_t *)(i4 + 8);
+      *(int *)(*(int *)(i4 + 8) + 0xc) = i3;
     }
-    iVar2 = *(int *)(iVar3 + 0xc);
-    iVar4 = iVar3;
-    while (iVar1 = iVar2, iVar1 != 0) {
-      if (*(int *)(iVar1 + 4) == 0) {
-        iVar4 = *(int *)(iVar4 + 0xc);
+    i2 = *(int *)(i3 + 0xc);
+    i4 = i3;
+    while (i1 = i2, i1 != 0) {
+      if (*(int *)(i1 + 4) == 0) {
+        i4 = *(int *)(i4 + 0xc);
         break;
       }
-      iVar4 = iVar1;
-      iVar2 = *(int *)(iVar1 + 0xc);
+      i4 = i1;
+      i2 = *(int *)(i1 + 0xc);
     }
-    if ((*(int *)(iVar4 + 0xc) != 0) || (*(int *)(iVar3 + 0xc) != 0)) {
-      *(int *)(iVar4 + 0x10) = iVar3;
-      *(int *)(iVar3 + 0x14) = iVar4;
+    if ((*(int *)(i4 + 0xc) != 0) || (*(int *)(i3 + 0xc) != 0)) {
+      *(int *)(i4 + 0x10) = i3;
+      *(int *)(i3 + 0x14) = i4;
     }
-    iVar2 = *(int *)(iVar3 + 8);
-    iVar4 = iVar3;
-    while (iVar1 = iVar2, iVar1 != 0) {
-      if (*(int *)(iVar1 + 4) == 0) {
-        iVar4 = *(int *)(iVar4 + 8);
+    i2 = *(int *)(i3 + 8);
+    i4 = i3;
+    while (i1 = i2, i1 != 0) {
+      if (*(int *)(i1 + 4) == 0) {
+        i4 = *(int *)(i4 + 8);
         break;
       }
-      iVar4 = iVar1;
-      iVar2 = *(int *)(iVar1 + 8);
+      i4 = i1;
+      i2 = *(int *)(i1 + 8);
     }
-    if ((*(int *)(iVar4 + 8) != 0) || (*(int *)(iVar3 + 8) != 0)) {
-      *(int *)(iVar4 + 0x14) = iVar3;
-      *(int *)(iVar3 + 0x10) = iVar4;
+    if ((*(int *)(i4 + 8) != 0) || (*(int *)(i3 + 8) != 0)) {
+      *(int *)(i4 + 0x14) = i3;
+      *(int *)(i3 + 0x10) = i4;
     }
   }
-  return iVar3;
+  return i3;
 }
 
 // FUNCTION: FFXIMAIN 0x10028AC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Mem_FreeHeaderMergeNeighbours(int param_1)
+XI_API bits32 __cdecl Mem_FreeHeaderMergeNeighbours(int arg1)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
-  if (*(int *)(param_1 + 4) != 0) {
-    iVar3 = *(int *)(param_1 + 0xc);
-    *(uint32_t *)(param_1 + 4) = 0;
-    if ((iVar3 != 0) && (*(int *)(iVar3 + 4) == 0)) {
-      *(uint32_t *)(iVar3 + 8) = *(uint32_t *)(param_1 + 8);
-      *(int *)(*(int *)(param_1 + 8) + 0xc) = iVar3;
-      param_1 = iVar3;
+  if (*(int *)(arg1 + 4) != 0) {
+    i3 = *(int *)(arg1 + 0xc);
+    *(uint32_t *)(arg1 + 4) = 0;
+    if ((i3 != 0) && (*(int *)(i3 + 4) == 0)) {
+      *(uint32_t *)(i3 + 8) = *(uint32_t *)(arg1 + 8);
+      *(int *)(*(int *)(arg1 + 8) + 0xc) = i3;
+      arg1 = i3;
     }
-    iVar3 = *(int *)(param_1 + 8);
-    if (*(int *)(iVar3 + 4) == 0) {
-      *(uint32_t *)(param_1 + 8) = *(uint32_t *)(iVar3 + 8);
-      *(int *)(*(int *)(iVar3 + 8) + 0xc) = param_1;
+    i3 = *(int *)(arg1 + 8);
+    if (*(int *)(i3 + 4) == 0) {
+      *(uint32_t *)(arg1 + 8) = *(uint32_t *)(i3 + 8);
+      *(int *)(*(int *)(i3 + 8) + 0xc) = arg1;
     }
-    iVar2 = *(int *)(param_1 + 0xc);
-    iVar3 = param_1;
-    while (iVar1 = iVar2, iVar1 != 0) {
-      if (*(int *)(iVar1 + 4) == 0) {
-        iVar3 = *(int *)(iVar3 + 0xc);
+    i2 = *(int *)(arg1 + 0xc);
+    i3 = arg1;
+    while (i1 = i2, i1 != 0) {
+      if (*(int *)(i1 + 4) == 0) {
+        i3 = *(int *)(i3 + 0xc);
         break;
       }
-      iVar3 = iVar1;
-      iVar2 = *(int *)(iVar1 + 0xc);
+      i3 = i1;
+      i2 = *(int *)(i1 + 0xc);
     }
-    if ((*(int *)(iVar3 + 0xc) != 0) || (*(int *)(param_1 + 0xc) != 0)) {
-      *(int *)(iVar3 + 0x10) = param_1;
-      *(int *)(param_1 + 0x14) = iVar3;
+    if ((*(int *)(i3 + 0xc) != 0) || (*(int *)(arg1 + 0xc) != 0)) {
+      *(int *)(i3 + 0x10) = arg1;
+      *(int *)(arg1 + 0x14) = i3;
     }
-    iVar2 = *(int *)(param_1 + 8);
-    iVar3 = param_1;
-    while (iVar1 = iVar2, iVar1 != 0) {
-      if (*(int *)(iVar1 + 4) == 0) {
-        iVar3 = *(int *)(iVar3 + 8);
+    i2 = *(int *)(arg1 + 8);
+    i3 = arg1;
+    while (i1 = i2, i1 != 0) {
+      if (*(int *)(i1 + 4) == 0) {
+        i3 = *(int *)(i3 + 8);
         break;
       }
-      iVar3 = iVar1;
-      iVar2 = *(int *)(iVar1 + 8);
+      i3 = i1;
+      i2 = *(int *)(i1 + 8);
     }
-    if ((*(int *)(iVar3 + 8) != 0) || (*(int *)(param_1 + 8) != 0)) {
-      *(int *)(iVar3 + 0x14) = param_1;
-      *(int *)(param_1 + 0x10) = iVar3;
+    if ((*(int *)(i3 + 8) != 0) || (*(int *)(arg1 + 8) != 0)) {
+      *(int *)(i3 + 0x14) = arg1;
+      *(int *)(arg1 + 0x10) = i3;
     }
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10028B90
@@ -122,48 +122,48 @@ XI_API int __thiscall MemBlock_GetSize(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10028BF0
 // GATE: PASS -- 100 trials, 24 returned normally, 9 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 24
-XI_API undefined4 __attribute__((cdecl, regparm(1))) MemBlock_CallEnabledEntries(undefined4 xi_eax, undefined4 param_1, int param_2, int param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) MemBlock_CallEnabledEntries(bits32 xi_eax, bits32 arg2, int arg3, int arg4)
 {
   do {
-    if ((*(int *)(param_2 + 4) == 1) && (xi_eax = *(uint32_t *)(param_2 + 0x18) >> 1, (xi_eax & 1) == 0)
+    if ((*(int *)(arg3 + 4) == 1) && (xi_eax = *(uint32_t *)(arg3 + 0x18) >> 1, (xi_eax & 1) == 0)
        ) {
-      xi_eax = ((int (__stdcall *)(XI_ANY))((**(code **)(*(int *)(param_2 + 0x20) + 4))))(param_1);
+      xi_eax = ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*(int *)(arg3 + 0x20) + 4))))(arg2);
     }
-    param_2 = *(int *)(param_2 + 8);
-  } while (param_2 != param_3);
+    arg3 = *(int *)(arg3 + 8);
+  } while (arg3 != arg4);
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x10028C30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl MemBlock_CallEnabledList0(undefined4 param_1)
+XI_API bits32 __cdecl MemBlock_CallEnabledList0(bits32 arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::MemBlock_CallEnabledEntries(param_1,DAT_104570b4_as_s32,DAT_104570b8_as_s32,DAT_104570b8_as_s32);
-  return uVar1;
+  u1 = orig::MemBlock_CallEnabledEntries(arg1,g_104570B4_as_s32,g_104570B8_as_s32,g_104570B8_as_s32);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10028C50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl MemBlock_CallEnabledList1(undefined4 param_1)
+XI_API void __cdecl MemBlock_CallEnabledList1(bits32 arg1)
 {
-  orig::MemBlock_CallEnabledEntries(param_1,DAT_104570bc_as_s32,DAT_104570c0_as_s32,DAT_104570c0_as_s32);
+  orig::MemBlock_CallEnabledEntries(arg1,g_104570BC_as_s32,g_104570C0_as_s32,g_104570C0_as_s32);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10028C70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl MemBlock_CallEnabledList2(undefined4 param_1)
+XI_API void __cdecl MemBlock_CallEnabledList2(bits32 arg1)
 {
-  orig::MemBlock_CallEnabledEntries(param_1,DAT_104570c4_as_s32,DAT_104570c8_as_s32,DAT_104570c8_as_s32);
+  orig::MemBlock_CallEnabledEntries(arg1,g_104570C4_as_s32,g_104570C8_as_s32,g_104570C8_as_s32);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10028C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl MemBlock_CallEnabledList3(undefined4 param_1)
+XI_API void __cdecl MemBlock_CallEnabledList3(bits32 arg1)
 {
-  orig::MemBlock_CallEnabledEntries(param_1,DAT_104570cc_as_s32,DAT_104570d0_as_s32,DAT_104570d0_as_s32);
+  orig::MemBlock_CallEnabledEntries(arg1,g_104570CC_as_s32,g_104570D0_as_s32,g_104570D0_as_s32);
   return;
 }

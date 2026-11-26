@@ -6,11 +6,11 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoOtTask.cpp`.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CMoOtTask::Slot11DoNothing` | 0x10042650 | 1 | yes | - | The default of virtual slot 11: does nothing. (reviewed as sub_10042650) | low |
+| `CMoOtTask::Slot11DoNothing` | 0x10042650 | 1 | yes | - | The default of virtual slot 11: does nothing. (reviewed as game_10042650) | low |
 | `CMoOtTask::GetRuntimeClass_variant0` | 0x10044870 | 6 | yes | - | - | - |
 | `CMoOtTask::GetRuntimeClass_variant1` | 0x10055560 | 6 | yes | - | - | - |
-| `CMoOtTask::Constructor` | 0x10055570 | 36 | yes | - | Constructs the CMoOt task and links it into its list. (reviewed as sub_10055570) | medium |
-| `CMoOtTask::Clear` | 0x10055640 | 13 | yes | - | Clears the three link fields of a CMoOt task. (reviewed as sub_10055640) | low |
+| `CMoOtTask::Constructor` | 0x10055570 | 36 | yes | - | Constructs the CMoOt task and links it into its list. (reviewed as game_10055570) | medium |
+| `CMoOtTask::Clear` | 0x10055640 | 13 | yes | - | Clears the three link fields of a CMoOt task. (reviewed as game_10055640) | low |
 
 ## Direct calls
 

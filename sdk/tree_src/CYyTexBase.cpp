@@ -21,45 +21,45 @@ char ** __cdecl CYyTexBase::GetRuntimeClass_variant1()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CYyTexBase::Constructor(void * self)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  *(uint8_t ***)self = &PTR_CYyTexBase_GetRuntimeClass_variant0_1032aa4c;
+  *(uint8_t ***)self = &ptr_to_CYyTexBase_GetRuntimeClass_variant0_1032AA4C;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 8) = 0;
   *(uint16_t *)((int)self + 0x24) = 0;
   *(uint16_t *)((int)self + 0x26) = 0;
   *(uint8_t *)((int)self + 0x28) = 0;
   *(uint8_t *)((int)self + 0x29) = 0;
-  uVar2 = orig::Camera_GetByte0B();
+  u1 = orig::Camera_GetByte0B();
   *(uint32_t *)((int)self + 0x20) = 0;
   *(uint32_t *)((int)self + 0x1c) = 0;
-  *(char *)((int)self + 0x2a) = '\x02' - ((char)uVar2 != '\x01');
+  *(char *)((int)self + 0x2a) = '\x02' - ((char)u1 != '\x01');
   *(uint32_t *)((int)self + 0x2c) = *(uint32_t *)((int)self + 0x2c) & 0xfffffe00;
-  iVar1 = DAT_1047b96c;
-  DAT_1047b96c = DAT_1047b96c + 1;
-  orig::_sprintf(&DAT_10351c89,&DAT_10351cbc,iVar1);
-  orig::CYyTexBase_SetName(self,(uint32_t *)&DAT_10351c84);
+  i1 = g_1047B96C;
+  g_1047B96C = g_1047B96C + 1;
+  orig::_sprintf(&g_10351C89,&g_10351CBC,i1);
+  orig::CYyTexBase_SetName(self,(uint32_t *)&g_10351C84);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x100398B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CYyTexBase::ScalarDeletingDtor(char a2)
+uint32_t * CYyTexBase::ScalarDeletingDtor(char arg1)
 {
   orig::CYyTexBase_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CYyTexBase_vtbl * *)&this->vftable));
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CYyTexBase_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x100398E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyTexBase::SetName(void * self, undefined4 * param_1)
+void __thiscall CYyTexBase::SetName(void * self, bits32 * arg2)
 {
-  *(uint32_t *)((int)self + 0xc) = *param_1;
-  *(uint32_t *)((int)self + 0x10) = param_1[1];
-  *(uint32_t *)((int)self + 0x14) = param_1[2];
-  *(uint32_t *)((int)self + 0x18) = param_1[3];
+  *(uint32_t *)((int)self + 0xc) = *arg2;
+  *(uint32_t *)((int)self + 0x10) = arg2[1];
+  *(uint32_t *)((int)self + 0x14) = arg2[2];
+  *(uint32_t *)((int)self + 0x18) = arg2[3];
   return;
 }

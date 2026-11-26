@@ -18,7 +18,7 @@ XI_API void * __thiscall FaqHelp_CtorVt1033BCF8(void * self_)
   *(uint16_t *)((int)self_ + 0x2c) = 0;
   *(uint8_t *)((int)self_ + 0x32) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_1033bcf8;
+  *(uint8_t ***)self_ = &g_1033BCF8;
   return self_;
 }
 
@@ -26,47 +26,47 @@ XI_API void * __thiscall FaqHelp_CtorVt1033BCF8(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FaqHelp_CtorVt1033BD58(void * self_)
 {
-  uint32_t uVar1;
-  uint8_t *puVar2;
-  int iVar3;
-  void *this_00;
-  uint32_t *puVar4;
+  uint32_t u1;
+  uint8_t *p1;
+  int i1;
+  void *obj1;
+  uint32_t *p2;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_10333360;
+  *(uint8_t ***)self_ = &g_10333360;
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
   orig::FaqHelp_ClearWords0To0A((void *)((int)self_ + 0x52));
   orig::FaqHelp_ClearWords0To0A((void *)((int)self_ + 0x60));
-  this_00 = (void *)((int)self_ + 0x6e);
-  iVar3 = 0x20;
+  obj1 = (void *)((int)self_ + 0x6e);
+  i1 = 0x20;
   do {
-    orig::FaqHelp_ClearWords0To0A(this_00);
-    this_00 = (void *)((int)this_00 + 0xe);
-    iVar3 = iVar3 + -1;
-  } while (iVar3 != 0);
+    orig::FaqHelp_ClearWords0To0A(obj1);
+    obj1 = (void *)((int)obj1 + 0xe);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   orig::FaqHelp_ClearWords0To0A((void *)((int)self_ + 0x22e));
   orig::FaqHelp_ClearWords0To0A((void *)((int)self_ + 0x23c));
   orig::FaqHelp_ClearWords0To0A((void *)((int)self_ + 0x24a));
-  *(uint8_t ***)self_ = &PTR_FUN_1033bd58;
+  *(uint8_t ***)self_ = &g_1033BD58;
   *(uint8_t *)((int)self_ + 0x2c0) = 0;
-  puVar4 = (uint32_t *)((int)self_ + 0x2c4);
-  for (iVar3 = 0x20; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  p2 = (uint32_t *)((int)self_ + 0x2c4);
+  for (i1 = 0x20; i1 != 0; i1 = i1 + -1) {
+    *p2 = 0;
+    p2 = p2 + 1;
   }
-  iVar3 = *(int *)(g_pSceneState + 8);
-  uVar1 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
-  if ((((uVar1 == 0) || ((iVar3 != 2 && (iVar3 != 3)))) && (iVar3 == 2)) ||
-     ((uVar1 == 0 && (iVar3 == 3)))) {
-    puVar2 = (uint8_t *)((int)self_ + 0x7a);
-    iVar3 = 0x20;
+  i1 = *(int *)(g_pSceneState + 8);
+  u1 = *(uint32_t *)(g_pSceneState + 0x18) >> 7 & 1;
+  if ((((u1 == 0) || ((i1 != 2 && (i1 != 3)))) && (i1 == 2)) ||
+     ((u1 == 0 && (i1 == 3)))) {
+    p1 = (uint8_t *)((int)self_ + 0x7a);
+    i1 = 0x20;
     do {
-      *puVar2 = 1;
-      puVar2 = puVar2 + 0xe;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
+      *p1 = 1;
+      p1 = p1 + 0xe;
+      i1 = i1 + -1;
+    } while (i1 != 0);
     *(uint8_t *)((int)self_ + 0x5e) = 1;
     *(uint8_t *)((int)self_ + 0x6c) = 1;
     *(uint8_t *)((int)self_ + 0x23a) = 1;
@@ -78,7 +78,7 @@ XI_API void * __thiscall FaqHelp_CtorVt1033BD58(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1021B330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_ClearWords0To0A(void * self_)
+XI_API bits32 __thiscall FaqHelp_ClearWords0To0A(void * self_)
 {
   *(uint8_t *)((int)self_ + 0xc) = 0;
   *(uint16_t *)((int)self_ + 2) = 0;
@@ -94,18 +94,18 @@ XI_API undefined4 __thiscall FaqHelp_ClearWords0To0A(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl FaqHelp_Create(void)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if (DAT_106646a0 == (void *)0x0) {
-    uVar1 = orig::Allocator_Generic_v1(0x37c);
-    if ((void *)uVar1 != (void *)0x0) {
-      DAT_106646a0 = orig::FaqHelp_CtorVt1033BD58((void *)uVar1);
-      orig::FUN_102174f0();
+  if (g_106646A0 == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x37c);
+    if ((void *)u1 != (void *)0x0) {
+      g_106646A0 = orig::FaqHelp_CtorVt1033BD58((void *)u1);
+      orig::game_102174F0();
       return;
     }
-    DAT_106646a0 = (void *)0x0;
+    g_106646A0 = (void *)0x0;
   }
-  orig::FUN_102174f0();
+  orig::game_102174F0();
   return;
 }
 
@@ -113,30 +113,30 @@ XI_API void __cdecl FaqHelp_Create(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall FaqHelp_SetVtable1033BDA0(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_LAB_1033bda0;
+  *(uint8_t ***)self_ = &g_1033BDA0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1021BC30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __thiscall FaqHelp_CopyRecordCtor(void * self_, char * param_1)
+XI_API bits32 * __thiscall FaqHelp_CopyRecordCtor(void * self_, char * arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   orig::FaqHelp_SetVtable1033BDA0(self_);
-  *(uint8_t ***)self_ = &PTR_LAB_1033bda4;
-  puVar2 = (uint32_t *)((int)self_ + 4);
-  for (iVar1 = 6; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  *(uint8_t ***)self_ = &g_1033BDA4;
+  p1 = (uint32_t *)((int)self_ + 4);
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  if ((param_1 != (char *)0x0) && (*param_1 == '\x01')) {
-    puVar2 = (uint32_t *)((int)self_ + 4);
-    for (iVar1 = 6; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar2 = *(uint32_t *)param_1;
-      param_1 = param_1 + 4;
-      puVar2 = puVar2 + 1;
+  if ((arg2 != (char *)0x0) && (*arg2 == '\x01')) {
+    p1 = (uint32_t *)((int)self_ + 4);
+    for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+      *p1 = *(uint32_t *)arg2;
+      arg2 = arg2 + 4;
+      p1 = p1 + 1;
     }
     return self_;
   }
@@ -145,7 +145,7 @@ XI_API undefined4 * __thiscall FaqHelp_CopyRecordCtor(void * self_, char * param
 
 // FUNCTION: FFXIMAIN 0x1021BCB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FaqHelp_ReturnTrue(void)
+XI_API bits32 __cdecl FaqHelp_ReturnTrue(void)
 {
   uint32_t xi_entry_eax = 0;
   
@@ -154,92 +154,92 @@ XI_API undefined4 __cdecl FaqHelp_ReturnTrue(void)
 
 // FUNCTION: FFXIMAIN 0x1021BDB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API unsigned char __thiscall FaqHelp_SaveToDat(void * self_, char * param_1)
+XI_API unsigned char __thiscall FaqHelp_SaveToDat(void * self_, char * arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t *puVar4;
+  int i1;
+  uint32_t u1;
+  int i2;
+  uint32_t *p1;
   char xi_frame[2880] __attribute__((aligned(4)));
-  uint8_t  (&local_b40)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
-  uint32_t  (&local_a20)[648] = *reinterpret_cast<uint32_t  (*)[648]>(xi_frame + 288);
+  uint8_t  (&u2)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
+  uint32_t  (&u3)[648] = *reinterpret_cast<uint32_t  (*)[648]>(xi_frame + 288);
   
-  iVar1 = 0;
-  puVar4 = local_a20;
-  for (iVar3 = 0x288; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  i1 = 0;
+  p1 = u3;
+  for (i2 = 0x288; i2 != 0; i2 = i2 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar4 = local_a20;
+  p1 = u3;
   do {
-    iVar3 = iVar1 + 0x1368;
-    iVar1 = iVar1 + 1;
-    *(uint8_t *)puVar4 = *(uint8_t *)((int)self_ + iVar3);
-    puVar4 = puVar4 + 8;
-  } while (iVar1 < 0x51);
-  if ((param_1 != (char *)0x0) && (*param_1 != '\0')) {
-    orig::TextInputFiles_DatEntryCtor(local_b40,0xa200101,param_1,local_a20,0xa20,0,0,1);
-    uVar2 = orig::XI_CRYPT_101B9A10(local_b40);
-    orig::TextInputFiles_ClearVtable(local_b40);
-    return SUB41(uVar2,0);
+    i2 = i1 + 0x1368;
+    i1 = i1 + 1;
+    *(uint8_t *)p1 = *(uint8_t *)((int)self_ + i2);
+    p1 = p1 + 8;
+  } while (i1 < 0x51);
+  if ((arg2 != (char *)0x0) && (*arg2 != '\0')) {
+    orig::TextInputFiles_DatEntryCtor(u2,0xa200101,arg2,u3,0xa20,0,0,1);
+    u1 = orig::XI_CRYPT_101B9A10(u2);
+    orig::TextInputFiles_ClearVtable(u2);
+    return ((uint8_t)(to_bits32(u1) >> 0));
   }
   return false;
 }
 
 // FUNCTION: FFXIMAIN 0x1021BF60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_LoadFromDat(void * self_, char * param_1, undefined4 xi_s2)
+XI_API bits32 __thiscall FaqHelp_LoadFromDat(void * self_, char * arg2, bits32 xi_s2)
 {
-  uint8_t *puVar1;
-  short *psVar2;
-  uint8_t *puVar3;
-  int iVar4;
+  uint8_t *p1;
+  short *p2;
+  uint8_t *p3;
+  int i1;
   char xi_frame[2880] __attribute__((aligned(4)));
-  uint8_t  (&local_b40)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
-  uint8_t  (&local_a20)[2592] = *reinterpret_cast<uint8_t  (*)[2592]>(xi_frame + 288);
+  uint8_t  (&u1)[288] = *reinterpret_cast<uint8_t  (*)[288]>(xi_frame + 0);
+  uint8_t  (&u2)[2592] = *reinterpret_cast<uint8_t  (*)[2592]>(xi_frame + 288);
   
-  if ((param_1 != (char *)0x0) && (*param_1 != '\0')) {
-    orig::TextInputFiles_DatEntryCtor(local_b40,0xa200101,param_1,local_a20,0xa20,0,0,1);
-    param_1 = (char *)orig::XI_CRYPT_101B9BC0(local_b40,0);
-    if ((char)param_1 != '\0') {
-      puVar1 = (uint8_t *)((int)self_ + 0x1368);
-      psVar2 = (short *)((int)self_ + 0x80);
-      puVar3 = local_a20;
-      iVar4 = 0x51;
+  if ((arg2 != (char *)0x0) && (*arg2 != '\0')) {
+    orig::TextInputFiles_DatEntryCtor(u1,0xa200101,arg2,u2,0xa20,0,0,1);
+    arg2 = (char *)orig::XI_CRYPT_101B9BC0(u1,0);
+    if ((char)arg2 != '\0') {
+      p1 = (uint8_t *)((int)self_ + 0x1368);
+      p2 = (short *)((int)self_ + 0x80);
+      p3 = u2;
+      i1 = 0x51;
       do {
-        if (*psVar2 == 0) {
-          *puVar1 = 0;
+        if (*p2 == 0) {
+          *p1 = 0;
         }
         else {
-          *puVar1 = *puVar3;
+          *p1 = *p3;
         }
-        psVar2 = psVar2 + 0xc;
-        puVar3 = puVar3 + 0x20;
-        puVar1 = puVar1 + 1;
-        iVar4 = iVar4 + -1;
-      } while (iVar4 != 0);
-      orig::TextInputFiles_ClearVtable(local_b40);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)puVar1 >> 8))) << 8) | (uint8_t)(1)));
+        p2 = p2 + 0xc;
+        p3 = p3 + 0x20;
+        p1 = p1 + 1;
+        i1 = i1 + -1;
+      } while (i1 != 0);
+      orig::TextInputFiles_ClearVtable(u1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    orig::TextInputFiles_ClearVtable(local_b40);
+    orig::TextInputFiles_ClearVtable(u1);
   }
-  return (uint32_t)param_1 & 0xffffff00;
+  return (uint32_t)arg2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1021C010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall FaqHelp_ResetEntries(void * self_)
 {
-  int iVar1;
-  void *this_00;
+  int i1;
+  void *obj1;
   
-  iVar1 = 0x51;
-  this_00 = (void *)((int)self_ + 0x6c);
+  i1 = 0x51;
+  obj1 = (void *)((int)self_ + 0x6c);
   do {
-    orig::FaqHelp_ResetEntryCtor(this_00);
-    this_00 = (void *)((int)this_00 + 0x18);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
+    orig::FaqHelp_ResetEntryCtor(obj1);
+    obj1 = (void *)((int)obj1 + 0x18);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint8_t *)((int)self_ + 4) = 0;
   *(uint8_t *)((int)self_ + 5) = 0;
   *(uint8_t *)((int)self_ + 6) = 0;
@@ -249,582 +249,582 @@ XI_API void * __thiscall FaqHelp_ResetEntries(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1021C070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_Construct(void * self_, undefined4 param_1, int param_2, int param_3)
+XI_API bits32 __thiscall FaqHelp_Construct(void * self_, bits32 arg2, int arg3, int arg4)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
   
-  *(uint32_t *)self_ = param_1;
+  *(uint32_t *)self_ = arg2;
   *(uint32_t *)((int)self_ + 0x10) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 1;
   *(uint32_t *)((int)self_ + 0x14) = 0;
-  puVar3 = (uint32_t *)((int)self_ + 0x18);
-  for (iVar2 = 0x14; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x18);
+  for (i1 = 0x14; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint8_t *)puVar3 = 0;
-  puVar3 = (uint32_t *)((int)self_ + 0x6c);
-  for (iVar2 = 0x1e6; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  *(uint8_t *)p1 = 0;
+  p1 = (uint32_t *)((int)self_ + 0x6c);
+  for (i1 = 0x1e6; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar3 = (uint32_t *)((int)self_ + 0x804);
-  for (iVar2 = 0x288; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x804);
+  for (i1 = 0x288; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar3 = (uint32_t *)((int)self_ + 0x1224);
-  for (iVar2 = 0x51; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x1224);
+  for (i1 = 0x51; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  puVar3 = (uint32_t *)((int)self_ + 0x1368);
-  for (iVar2 = 0x14; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x1368);
+  for (i1 = 0x14; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint8_t *)puVar3 = 0;
-  if (param_2 != 0) {
-    orig::FUN_1021be50(self_,param_2,self_);
+  *(uint8_t *)p1 = 0;
+  if (arg3 != 0) {
+    orig::game_1021BE50(self_,arg3,self_);
   }
-  uVar1 = 0;
-  if (param_3 != 0) {
-    uVar1 = orig::FaqHelp_LoadFromDat(self_,(char *)param_3,self_);
+  u1 = 0;
+  if (arg4 != 0) {
+    u1 = orig::FaqHelp_LoadFromDat(self_,(char *)arg4,self_);
   }
   *(uint8_t *)((int)self_ + 4) = 1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) FaqHelp_SaveAndRelease(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2, int param_3)
+XI_API bits32 __attribute__((stdcall, regparm(3))) FaqHelp_SaveAndRelease(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4, int arg5)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  uint64_t uVar4;
+  uint32_t u1;
+  uint32_t *p1;
+  int i1;
+  uint64_t u2;
   
-  uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 4))));
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 4))));
   if (*(char *)((int)self_ + 4) != '\0') {
-    if (param_2 != 0) {
-      orig::FUN_1021bcc0(self_,param_2);
+    if (arg4 != 0) {
+      orig::game_1021BCC0(self_,arg4);
     }
-    if (param_3 != 0) {
-      orig::FaqHelp_SaveToDat(self_,(char *)param_3);
+    if (arg5 != 0) {
+      orig::FaqHelp_SaveToDat(self_,(char *)arg5);
     }
-    puVar2 = (uint32_t *)((int)self_ + 0x1224);
-    iVar3 = 0x51;
+    p1 = (uint32_t *)((int)self_ + 0x1224);
+    i1 = 0x51;
     do {
-      uVar1 = 0;
-      if ((LPVOID)*puVar2 != (LPVOID)0x0) {
-        uVar4 = orig::operator_delete_v1((LPVOID)*puVar2);
-        uVar1 = (uint32_t)uVar4;
-        *puVar2 = 0;
+      u1 = 0;
+      if ((LPVOID)*p1 != (LPVOID)0x0) {
+        u2 = orig::operator_delete_v1((LPVOID)*p1);
+        u1 = (uint32_t)u2;
+        *p1 = 0;
       }
-      puVar2 = puVar2 + 1;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
+      p1 = p1 + 1;
+      i1 = i1 + -1;
+    } while (i1 != 0);
     *(uint8_t *)((int)self_ + 4) = 0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_CanUpdate(void * self_)
+XI_API bits32 __thiscall FaqHelp_CanUpdate(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::NetCellFont_GetFlags();
-  if ((uVar1 & 0x200000) != 0) {
-    uVar1 = orig::FaqHelp_IsSpecialKey((int)self_);
-    if ((char)uVar1 != '\0') goto LAB_1021c1ac;
+  u1 = orig::NetCellFont_GetFlags();
+  if ((u1 & 0x200000) != 0) {
+    u1 = orig::FaqHelp_IsSpecialKey((int)self_);
+    if ((char)u1 != '\0') goto code_1021C1AC;
   }
-  uVar1 = orig::NetCellFont_GetFlags();
-  if ((uVar1 & 0x800) == 0) {
+  u1 = orig::NetCellFont_GetFlags();
+  if ((u1 & 0x800) == 0) {
     *(uint32_t *)((int)self_ + 0x14) = 0;
-    return uVar1 & 0xffffff00;
+    return u1 & 0xffffff00;
   }
-  uVar1 = orig::NetCellFont_GetFlags();
-  if ((uVar1 & 0x1000) == 0) {
-    uVar1 = orig::NetCellFont_ApplyStatusText(0x1000);
-    return uVar1 & 0xffffff00;
+  u1 = orig::NetCellFont_GetFlags();
+  if ((u1 & 0x1000) == 0) {
+    u1 = orig::NetCellFont_ApplyStatusText(0x1000);
+    return u1 & 0xffffff00;
   }
-LAB_1021c1ac:
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+code_1021C1AC:
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C1B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl FaqHelp_IsSpecialKey(int param_1)
+XI_API bits32 __cdecl FaqHelp_IsSpecialKey(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = xi_trunc24(((uint32_t)param_1 >> 8));
-  if ((((((param_1 != DAT_10666e2c_as_s32) && (param_1 != DAT_10666e4c_as_s32)) && (param_1 != DAT_10666e50_as_s32)) &&
-       ((param_1 != DAT_10666e54_as_s32 && (param_1 != DAT_10666e58_as_s32)))) &&
-      ((param_1 != DAT_10666e5c_as_s32 && ((param_1 != DAT_10666e60_as_s32 && (param_1 != DAT_10666e64_as_s32)))))) &&
-     (param_1 != DAT_10666e68_as_s32)) {
-    return (uint32_t)uVar1 << 8;
+  u1 = xi_trunc24(((uint32_t)arg1 >> 8));
+  if ((((((arg1 != g_10666E2C_as_s32) && (arg1 != g_10666E4C_as_s32)) && (arg1 != g_10666E50_as_s32)) &&
+       ((arg1 != g_10666E54_as_s32 && (arg1 != g_10666E58_as_s32)))) &&
+      ((arg1 != g_10666E5C_as_s32 && ((arg1 != g_10666E60_as_s32 && (arg1 != g_10666E64_as_s32)))))) &&
+     (arg1 != g_10666E68_as_s32)) {
+    return (uint32_t)u1 << 8;
   }
-  return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_AssignItem(void * self_, short * param_1, uint32_t param_2)
+XI_API bits32 __thiscall FaqHelp_AssignItem(void * self_, short * arg2, uint32_t arg3)
 {
-  void *pvVar1;
-  uint16_t uVar2;
-  int iVar3;
-  uint16_t uVar5;
-  uint32_t uVar4;
+  void *p1;
+  uint16_t u1;
+  int i1;
+  uint16_t u2;
+  uint32_t u3;
   
-  uVar2 = *(uint16_t *)((int)self_ + (param_2 & 0xff) * 0x18 + 0x80);
-  pvVar1 = (void *)((int)self_ + (param_2 & 0xff) * 0x18);
-  if (uVar2 == 0) {
-    iVar3 = orig::FUN_1015bc40(DAT_10621808,(uint32_t)(uint16_t)*param_1);
-    if (iVar3 != 0) {
-      *(char *)(iVar3 + 0x1b3) = *(char *)(iVar3 + 0x1b3) + '\x01';
+  u1 = *(uint16_t *)((int)self_ + (arg3 & 0xff) * 0x18 + 0x80);
+  p1 = (void *)((int)self_ + (arg3 & 0xff) * 0x18);
+  if (u1 == 0) {
+    i1 = orig::game_1015BC40(g_10621808,(uint32_t)(uint16_t)*arg2);
+    if (i1 != 0) {
+      *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + '\x01';
     }
   }
   else {
-    uVar5 = (uint16_t)((uint32_t)pvVar1 >> 0x10);
-    if (*param_1 == uVar2) goto LAB_1021c2aa;
-    iVar3 = orig::FUN_1015bc40(DAT_10621808,(uint32_t)(uint16_t)*param_1);
-    if (iVar3 != 0) {
-      *(char *)(iVar3 + 0x1b3) = *(char *)(iVar3 + 0x1b3) + '\x01';
+    u2 = (uint16_t)((uint32_t)p1 >> 0x10);
+    if (*arg2 == u1) goto code_1021C2AA;
+    i1 = orig::game_1015BC40(g_10621808,(uint32_t)(uint16_t)*arg2);
+    if (i1 != 0) {
+      *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + '\x01';
     }
-    orig::FaqHelp_Reset((void *)((int)pvVar1 + 0x6c));
-    orig::FaqHelp_RemoveByKey(self_,param_2);
+    orig::FaqHelp_Reset((void *)((int)p1 + 0x6c));
+    orig::FaqHelp_RemoveByKey(self_,arg3);
   }
-  uVar4 = orig::FaqHelp_AppendEntry(self_,param_1,param_2,iVar3);
-  uVar5 = (uint16_t)(uVar4 >> 0x10);
-  if (iVar3 != 0) {
-    *(char *)(iVar3 + 0x1b3) = *(char *)(iVar3 + 0x1b3) + -1;
+  u3 = orig::FaqHelp_AppendEntry(self_,arg2,arg3,i1);
+  u2 = (uint16_t)(u3 >> 0x10);
+  if (i1 != 0) {
+    *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + -1;
   }
-LAB_1021c2aa:
-  iVar3 = orig::FaqHelp_SetId((void *)((int)pvVar1 + 0x6c),((uint32_t)(((uint32_t)(uint16_t)(uVar5) << 16) | (uint16_t)(*param_1))),param_2);
-  if (((char)iVar3 != '\x01') && (*(short *)((int)pvVar1 + 0x80) == 0)) {
-    iVar3 = orig::FaqHelp_RemoveByKey(self_,param_2);
+code_1021C2AA:
+  i1 = orig::FaqHelp_SetId((void *)((int)p1 + 0x6c),((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(*arg2))),arg3);
+  if (((char)i1 != '\x01') && (*(short *)((int)p1 + 0x80) == 0)) {
+    i1 = orig::FaqHelp_RemoveByKey(self_,arg3);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C2E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_ClearAndAssign(void * self_, short * param_1, uint32_t param_2)
+XI_API bits32 __thiscall FaqHelp_ClearAndAssign(void * self_, short * arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  uVar1 = param_2 & 0xff;
-  if (*(short *)((int)self_ + uVar1 * 0x18 + 0x80) != 0) {
-    orig::FaqHelp_Reset((void *)((int)self_ + uVar1 * 0x18 + 0x6c));
-    orig::FaqHelp_RemoveByKey(self_,param_2);
+  u1 = arg3 & 0xff;
+  if (*(short *)((int)self_ + u1 * 0x18 + 0x80) != 0) {
+    orig::FaqHelp_Reset((void *)((int)self_ + u1 * 0x18 + 0x6c));
+    orig::FaqHelp_RemoveByKey(self_,arg3);
   }
-  orig::FaqHelp_AppendEntry(self_,param_1,param_2,0);
-  iVar2 = orig::FaqHelp_SetId((void *)((int)self_ + uVar1 * 0x18 + 0x6c),
-                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)self_ >> 0x10)) << 16) | (uint16_t)(*param_1))),param_2);
-  if (((char)iVar2 != '\x01') && (*(short *)((int)self_ + uVar1 * 0x18 + 0x80) == 0)) {
-    iVar2 = orig::FaqHelp_RemoveByKey(self_,param_2);
+  orig::FaqHelp_AppendEntry(self_,arg2,arg3,0);
+  i1 = orig::FaqHelp_SetId((void *)((int)self_ + u1 * 0x18 + 0x6c),
+                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)self_ >> 0x10)) << 16) | (uint16_t)(*arg2))),arg3);
+  if (((char)i1 != '\x01') && (*(short *)((int)self_ + u1 * 0x18 + 0x80) == 0)) {
+    i1 = orig::FaqHelp_RemoveByKey(self_,arg3);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_ResetSlot(void * self_, undefined4 param_1, uint32_t param_2)
+XI_API bits32 __thiscall FaqHelp_ResetSlot(void * self_, bits32 arg2, uint32_t arg3)
 {
-  int iVar1;
+  int i1;
   
-  orig::FaqHelp_Reset((void *)((int)self_ + (param_2 & 0xff) * 0x18 + 0x6c));
-  iVar1 = orig::FaqHelp_RemoveByKey(self_,param_2);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+  orig::FaqHelp_Reset((void *)((int)self_ + (arg3 & 0xff) * 0x18 + 0x6c));
+  i1 = orig::FaqHelp_RemoveByKey(self_,arg3);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C380
 // NOT VERIFIED -- FAIL
-XI_API undefined4 __thiscall FaqHelp_SyncSlots(void * self_)
+XI_API bits32 __thiscall FaqHelp_SyncSlots(void * self_)
 {
-  uint32_t uVar1;
-  uint8_t bVar2;
-  short *psVar3;
-  char *pcVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  undefined4 *puVar7;
-  uint64_t uVar8;
-  uint32_t local_c;
-  short *local_8;
+  uint32_t u1;
+  uint8_t u2;
+  short *p1;
+  char *p2;
+  bits32 *p3;
+  int i1;
+  bits32 *p4;
+  uint64_t u3;
+  uint32_t u4;
+  short *p5;
   
-  iVar6 = *(int *)((int)self_ + 0x14);
-  if (iVar6 != *(int *)(DAT_104dfd98 + 0x198c8)) {
-    local_8 = (short *)((int)self_ + 0x80);
-    local_c = local_c & 0xffffff00;
-    puVar7 = (undefined4 *)((int)self_ + 0x1224);
+  i1 = *(int *)((int)self_ + 0x14);
+  if (i1 != *(int *)(g_104DFD98 + 0x198c8)) {
+    p5 = (short *)((int)self_ + 0x80);
+    u4 = u4 & 0xffffff00;
+    p4 = (bits32 *)((int)self_ + 0x1224);
     do {
-      psVar3 = orig::NetCellFont_GetSlotPtr(*(int *)self_,local_c);
-      uVar1 = *(uint32_t *)self_;
-      if (psVar3 == (short *)0x0) {
-        if (((uVar1 == 1) || (uVar1 == 9)) && ((LPVOID)*puVar7 != (LPVOID)0x0)) {
-          orig::operator_delete_v1((LPVOID)*puVar7);
-          *puVar7 = 0;
+      p1 = orig::NetCellFont_GetSlotPtr(*(int *)self_,u4);
+      u1 = *(uint32_t *)self_;
+      if (p1 == (short *)0x0) {
+        if (((u1 == 1) || (u1 == 9)) && ((LPVOID)*p4 != (LPVOID)0x0)) {
+          orig::operator_delete_v1((LPVOID)*p4);
+          *p4 = 0;
         }
-        if (*local_8 != 0) {
-          orig::FaqHelp_ResetSlot(self_,0,local_c);
+        if (*p5 != 0) {
+          orig::FaqHelp_ResetSlot(self_,0,u4);
         }
       }
       else {
-        if (((uVar1 == 1) || (uVar1 == 9)) &&
-           (pcVar4 = (char *)orig::NetCellFont_FindOrRemove(uVar1,local_c,0), pcVar4 != (char *)0x0)) {
-          if ((LPVOID)*puVar7 != (LPVOID)0x0) {
-            orig::operator_delete_v1((LPVOID)*puVar7);
-            *puVar7 = 0;
+        if (((u1 == 1) || (u1 == 9)) &&
+           (p2 = (char *)orig::NetCellFont_FindOrRemove(u1,u4,0), p2 != (char *)0x0)) {
+          if ((LPVOID)*p4 != (LPVOID)0x0) {
+            orig::operator_delete_v1((LPVOID)*p4);
+            *p4 = 0;
           }
-          if (*pcVar4 == '\x01') {
-            uVar8 = orig::Allocator_Generic_v1(0x1c);
-            if ((void *)uVar8 == (void *)0x0) {
-              puVar5 = (undefined4 *)0x0;
+          if (*p2 == '\x01') {
+            u3 = orig::Allocator_Generic_v1(0x1c);
+            if ((void *)u3 == (void *)0x0) {
+              p3 = (bits32 *)0x0;
             }
             else {
-              puVar5 = orig::FaqHelp_CopyRecordCtor((void *)uVar8,pcVar4);
+              p3 = orig::FaqHelp_CopyRecordCtor((void *)u3,p2);
             }
-            *puVar7 = puVar5;
+            *p4 = p3;
           }
-          orig::NetCellFont_RemoveRecord(*(uint32_t *)self_,local_c);
+          orig::NetCellFont_RemoveRecord(*(uint32_t *)self_,u4);
         }
         if (*(int *)self_ == 0x11) {
-          orig::FaqHelp_ClearAndAssign(self_,psVar3,local_c);
+          orig::FaqHelp_ClearAndAssign(self_,p1,u4);
         }
         else {
-          orig::FaqHelp_AssignItem(self_,psVar3,local_c);
+          orig::FaqHelp_AssignItem(self_,p1,u4);
         }
       }
-      iVar6 = DAT_104dfd98;
-      bVar2 = (char)local_c + 1;
-      puVar7 = puVar7 + 1;
-      local_8 = local_8 + 0xc;
-      local_c = ((uint32_t)(((uint32_t)(XI_PIECE(local_c, 1, 3)) << 8) | (uint8_t)(bVar2)));
-    } while (bVar2 < 0x51);
-    *(undefined4 *)((int)self_ + 0x14) = *(undefined4 *)(DAT_104dfd98 + 0x198c8);
+      i1 = g_104DFD98;
+      u2 = (char)u4 + 1;
+      p4 = p4 + 1;
+      p5 = p5 + 0xc;
+      u4 = ((uint32_t)(((uint32_t)(XI_PIECE(u4, 1, 3)) << 8) | (uint8_t)(u2)));
+    } while (u2 < 0x51);
+    *(bits32 *)((int)self_ + 0x14) = *(bits32 *)(g_104DFD98 + 0x198c8);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar6 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C4C0
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 XI_API uint32_t __thiscall FaqHelp_Update(void * self_)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  short *psVar4;
-  uint32_t uVar5;
-  uint32_t local_4;
+  uint8_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  short *p1;
+  uint32_t u4;
+  uint32_t u5;
   
-  uVar2 = DAT_104dfd98_as_v0;
-  if ((DAT_104dfd98_as_v0 != 0) && (*(char *)((int)self_ + 4) == '\x01')) {
-    uVar2 = orig::FaqHelp_CanUpdate(self_);
-    if ((char)uVar2 == '\x01') {
-      uVar2 = orig::FaqHelp_SyncSlots(self_);
-      if ((char)uVar2 != '\x01') {
-        return uVar2 & 0xffffff00;
+  u2 = g_104DFD98_as_v0;
+  if ((g_104DFD98_as_v0 != 0) && (*(char *)((int)self_ + 4) == '\x01')) {
+    u2 = orig::FaqHelp_CanUpdate(self_);
+    if ((char)u2 == '\x01') {
+      u2 = orig::FaqHelp_SyncSlots(self_);
+      if ((char)u2 != '\x01') {
+        return u2 & 0xffffff00;
       }
-      uVar3 = orig::FaqHelp_IsSpecialKey((int)self_);
-      if ((char)uVar3 != '\0') {
+      u3 = orig::FaqHelp_IsSpecialKey((int)self_);
+      if ((char)u3 != '\0') {
         orig::NetCellFont_ApplyStatusText(0x400000);
       }
-      local_4 = (uint32_t)self_ & 0xffffff00;
+      u5 = (uint32_t)self_ & 0xffffff00;
       do {
-        psVar4 = orig::NetCellFont_GetSlotPtr(*(int *)self_,local_4);
-        if ((psVar4 != (short *)0x0) && (uVar2 = *(uint32_t *)(psVar4 + 0x14), (uVar2 & 1) != 0)) {
-          uVar3 = orig::FaqHelp_ReturnTrue();
-          *(uint32_t *)(psVar4 + 0x14) = ((char)uVar3 == '\0' ^ uVar2) & 1 ^ uVar2;
+        p1 = orig::NetCellFont_GetSlotPtr(*(int *)self_,u5);
+        if ((p1 != (short *)0x0) && (u2 = *(uint32_t *)(p1 + 0x14), (u2 & 1) != 0)) {
+          u3 = orig::FaqHelp_ReturnTrue();
+          *(uint32_t *)(p1 + 0x14) = ((char)u3 == '\0' ^ u2) & 1 ^ u2;
         }
-        bVar1 = (char)local_4 + 1;
-        local_4 = ((uint32_t)(((uint32_t)(XI_PIECE(local_4, 1, 3)) << 8) | (uint8_t)(bVar1)));
-      } while (bVar1 < 0x51);
-      uVar5 = orig::NetCellFont_CountFreeEntries(*(int *)self_);
-      uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar5 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 5))));
+        u1 = (char)u5 + 1;
+        u5 = ((uint32_t)(((uint32_t)(XI_PIECE(u5, 1, 3)) << 8) | (uint8_t)(u1)));
+      } while (u1 < 0x51);
+      u4 = orig::NetCellFont_CountFreeEntries(*(int *)self_);
+      u2 = ((uint32_t)(((uint32_t)(xi_strunc24((u4 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 5))));
       if (*(char *)((int)self_ + 5) != '\0') {
-        uVar2 = *(uint32_t *)((int)self_ + 8);
-        if (uVar5 != uVar2) {
-          if ((uVar5 < uVar2) &&
-             (uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6)))),
+        u2 = *(uint32_t *)((int)self_ + 8);
+        if (u4 != u2) {
+          if ((u4 < u2) &&
+             (u2 = ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6)))),
              *(char *)((int)self_ + 6) == '\0')) {
-            uVar2 = orig::FaqHelp_RebuildWithGlobalFlag(self_,0,1,*(uint32_t *)self_,uVar2);
+            u2 = orig::FaqHelp_RebuildWithGlobalFlag(self_,0,1,*(uint32_t *)self_,u2);
           }
           *(uint8_t *)((int)self_ + 6) = 0;
         }
       }
-      *(uint32_t *)((int)self_ + 8) = uVar5;
+      *(uint32_t *)((int)self_ + 8) = u4;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C5B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall FaqHelp_AppendEntry(void * self_, uint16_t * param_1, undefined4 param_2, int param_3)
+XI_API uint32_t __thiscall FaqHelp_AppendEntry(void * self_, uint16_t * arg2, bits32 arg3, int arg4)
 {
-  uint8_t bVar1;
-  char cVar2;
-  uint8_t bVar3;
-  int iVar4;
-  uint32_t uVar6;
-  uint32_t uVar5;
+  uint8_t u1;
+  char c1;
+  uint8_t u2;
+  int i1;
+  uint32_t u3;
+  uint32_t u4;
   
-  bVar1 = (uint8_t)param_2;
-  uVar6 = 0;
-  if (DAT_104dfd98 != 0) {
-    param_2 = 0;
-    *(uint8_t *)(bVar1 + 0x1368 + (int)self_) = 0;
+  u1 = (uint8_t)arg3;
+  u3 = 0;
+  if (g_104DFD98 != 0) {
+    arg3 = 0;
+    *(uint8_t *)(u1 + 0x1368 + (int)self_) = 0;
     do {
-      uVar5 = *(uint32_t *)((int)self_ + 0xc);
-      if ((((uVar5 != param_2) || (uVar5 = *(uint32_t *)((int)self_ + 0x10), uVar5 == 0)) ||
-          (param_3 == 0)) || ((uVar5 & *(uint16_t *)(param_3 + 0x1c)) != 0)) {
-        bVar3 = *(uint8_t *)(param_2 + 0x18 + (int)self_);
-        if (0x50 < bVar3) {
-          return uVar5 & 0xffffff00;
+      u4 = *(uint32_t *)((int)self_ + 0xc);
+      if ((((u4 != arg3) || (u4 = *(uint32_t *)((int)self_ + 0x10), u4 == 0)) ||
+          (arg4 == 0)) || ((u4 & *(uint16_t *)(arg4 + 0x1c)) != 0)) {
+        u2 = *(uint8_t *)(arg3 + 0x18 + (int)self_);
+        if (0x50 < u2) {
+          return u4 & 0xffffff00;
         }
-        iVar4 = param_2 * 0x51;
-        *(uint8_t *)((int)self_ + ((uint32_t)bVar3 + iVar4) * 8 + 0x80a) = bVar1;
+        i1 = arg3 * 0x51;
+        *(uint8_t *)((int)self_ + ((uint32_t)u2 + i1) * 8 + 0x80a) = u1;
         *(uint32_t *)
-         ((int)self_ + ((uint32_t)*(uint8_t *)(param_2 + 0x18 + (int)self_) + iVar4) * 8 + 0x804) = 0;
-        iVar4 = (uint32_t)*(uint8_t *)(param_2 + 0x18 + (int)self_) + iVar4;
-        *(uint16_t *)((int)self_ + iVar4 * 8 + 0x808) = *param_1;
-        cVar2 = *(char *)(param_2 + 0x18 + (int)self_) + '\x01';
-        uVar5 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar4 >> 8))) << 8) | (uint8_t)(cVar2)));
-        *(char *)(param_2 + 0x18 + (int)self_) = cVar2;
+         ((int)self_ + ((uint32_t)*(uint8_t *)(arg3 + 0x18 + (int)self_) + i1) * 8 + 0x804) = 0;
+        i1 = (uint32_t)*(uint8_t *)(arg3 + 0x18 + (int)self_) + i1;
+        *(uint16_t *)((int)self_ + i1 * 8 + 0x808) = *arg2;
+        c1 = *(char *)(arg3 + 0x18 + (int)self_) + '\x01';
+        u4 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(c1)));
+        *(char *)(arg3 + 0x18 + (int)self_) = c1;
         *(uint32_t *)((int)self_ + 8) = 0x52;
       }
-      uVar6 = (uint32_t)(uVar5 >> 8);
-      bVar3 = (uint8_t)param_2 + 1;
-      param_2 = (uint32_t)bVar3;
-    } while (bVar3 < 4);
+      u3 = (uint32_t)(u4 >> 8);
+      u2 = (uint8_t)arg3 + 1;
+      arg3 = (uint32_t)u2;
+    } while (u2 < 4);
   }
-  return ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall FaqHelp_RemoveByKey(void * self_, uint32_t param_1)
+XI_API int __thiscall FaqHelp_RemoveByKey(void * self_, uint32_t arg2)
 {
-  char cVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  uint32_t uVar4;
-  uint32_t uVar6;
-  uint32_t uVar7;
-  int iVar5;
-  uint8_t bVar8;
-  int iVar9;
-  uint32_t local_4;
+  char c1;
+  uint32_t u1;
+  uint8_t u2;
+  uint32_t u3;
+  uint32_t u4;
+  uint32_t u5;
+  int i1;
+  uint8_t u6;
+  int i2;
+  uint32_t u7;
   
-  uVar2 = param_1;
-  uVar4 = 0;
-  if (DAT_104dfd98 != 0) {
-    local_4 = 0;
-    uVar4 = param_1 & 0xff;
-    *(uint8_t *)(uVar4 + 0x1368 + (int)self_) = 0;
+  u1 = arg2;
+  u3 = 0;
+  if (g_104DFD98 != 0) {
+    u7 = 0;
+    u3 = arg2 & 0xff;
+    *(uint8_t *)(u3 + 0x1368 + (int)self_) = 0;
     do {
-      bVar3 = *(uint8_t *)(local_4 + 0x18 + (int)self_);
-      uVar6 = xi_trunc24((uVar4 >> 8));
-      if (0x51 < bVar3) {
-        *(uint8_t *)(local_4 + 0x18 + (int)self_) = 0x51;
-        return (uint32_t)uVar6 << 8;
+      u2 = *(uint8_t *)(u7 + 0x18 + (int)self_);
+      u4 = xi_trunc24((u3 >> 8));
+      if (0x51 < u2) {
+        *(uint8_t *)(u7 + 0x18 + (int)self_) = 0x51;
+        return (uint32_t)u4 << 8;
       }
-      bVar8 = 0;
-      param_1 = param_1 & 0xffffff00;
-      uVar4 = ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)(bVar3)));
-      if (bVar3 != 0) {
-        iVar9 = local_4 * 0x51;
+      u6 = 0;
+      arg2 = arg2 & 0xffffff00;
+      u3 = ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(u2)));
+      if (u2 != 0) {
+        i2 = u7 * 0x51;
         do {
-          if (*(char *)((int)self_ + ((param_1 & 0xff) + iVar9) * 8 + 0x80a) == (char)uVar2) {
-            cVar1 = *(char *)(local_4 + 0x18 + (int)self_);
-            uVar4 = param_1;
-            if (cVar1 != '\0') {
-              bVar3 = cVar1 - 1;
-              *(uint8_t *)(local_4 + 0x18 + (int)self_) = bVar3;
-              if (bVar8 < bVar3) {
+          if (*(char *)((int)self_ + ((arg2 & 0xff) + i2) * 8 + 0x80a) == (char)u1) {
+            c1 = *(char *)(u7 + 0x18 + (int)self_);
+            u3 = arg2;
+            if (c1 != '\0') {
+              u2 = c1 - 1;
+              *(uint8_t *)(u7 + 0x18 + (int)self_) = u2;
+              if (u6 < u2) {
                 do {
-                  iVar5 = (param_1 & 0xff) + iVar9;
-                  bVar8 = bVar8 + 1;
-                  param_1 = ((uint32_t)(((uint32_t)(XI_PIECE(param_1, 1, 3)) << 8) | (uint8_t)(bVar8)));
-                  *(uint32_t *)((int)self_ + iVar5 * 8 + 0x804) =
-                       *(uint32_t *)((int)self_ + iVar5 * 8 + 0x80c);
-                  *(uint32_t *)((int)self_ + iVar5 * 8 + 0x808) =
-                       *(uint32_t *)((int)self_ + iVar5 * 8 + 0x810);
-                } while (bVar8 < *(uint8_t *)(local_4 + 0x18 + (int)self_));
+                  i1 = (arg2 & 0xff) + i2;
+                  u6 = u6 + 1;
+                  arg2 = ((uint32_t)(((uint32_t)(XI_PIECE(arg2, 1, 3)) << 8) | (uint8_t)(u6)));
+                  *(uint32_t *)((int)self_ + i1 * 8 + 0x804) =
+                       *(uint32_t *)((int)self_ + i1 * 8 + 0x80c);
+                  *(uint32_t *)((int)self_ + i1 * 8 + 0x808) =
+                       *(uint32_t *)((int)self_ + i1 * 8 + 0x810);
+                } while (u6 < *(uint8_t *)(u7 + 0x18 + (int)self_));
               }
-              uVar4 = 0;
-              iVar9 = (uint32_t)*(uint8_t *)(local_4 + 0x18 + (int)self_) + iVar9;
-              *(uint32_t *)((int)self_ + iVar9 * 8 + 0x804) = 0;
-              *(uint32_t *)((int)self_ + iVar9 * 8 + 0x808) = 0;
+              u3 = 0;
+              i2 = (uint32_t)*(uint8_t *)(u7 + 0x18 + (int)self_) + i2;
+              *(uint32_t *)((int)self_ + i2 * 8 + 0x804) = 0;
+              *(uint32_t *)((int)self_ + i2 * 8 + 0x808) = 0;
               *(uint32_t *)((int)self_ + 8) = 0x52;
             }
             break;
           }
-          bVar3 = *(uint8_t *)(local_4 + 0x18 + (int)self_);
-          uVar7 = (uint32_t)(param_1 >> 8);
-          uVar4 = ((uint32_t)(((uint32_t)(uVar7) << 8) | (uint8_t)(bVar3)));
-          bVar8 = bVar8 + 1;
-          param_1 = ((uint32_t)(((uint32_t)(uVar7) << 8) | (uint8_t)(bVar8)));
-        } while (bVar8 < bVar3);
+          u2 = *(uint8_t *)(u7 + 0x18 + (int)self_);
+          u5 = (uint32_t)(arg2 >> 8);
+          u3 = ((uint32_t)(((uint32_t)(u5) << 8) | (uint8_t)(u2)));
+          u6 = u6 + 1;
+          arg2 = ((uint32_t)(((uint32_t)(u5) << 8) | (uint8_t)(u6)));
+        } while (u6 < u2);
       }
-      bVar3 = (char)local_4 + 1;
-      uVar4 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar4 >> 8))) << 8) | (uint8_t)(bVar3)));
-      local_4 = (uint32_t)bVar3;
-    } while (bVar3 < 4);
+      u2 = (char)u7 + 1;
+      u3 = ((uint32_t)(((uint32_t)(xi_strunc24((u3 >> 8))) << 8) | (uint8_t)(u2)));
+      u7 = (uint32_t)u2;
+    } while (u2 < 4);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar4 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u3 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021C7C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) FaqHelp_RebuildWithGlobalFlag(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __attribute__((stdcall, regparm(3))) FaqHelp_RebuildWithGlobalFlag(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FaqHelp_Rebuild(self_,param_2,param_3,param_4,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(DAT_10666e74)))
+  u1 = orig::FaqHelp_Rebuild(self_,arg4,arg5,arg6,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_10666E74)))
                       );
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1021C7E0
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API undefined4 __thiscall FaqHelp_Rebuild(void * self_, undefined4 param_1, int param_2, int param_3, undefined4 param_4)
+XI_API bits32 __thiscall FaqHelp_Rebuild(void * self_, bits32 arg2, int arg3, int arg4, bits32 arg5)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int iVar5;
-  char *pcVar6;
-  int iVar7;
-  uint8_t bVar8;
-  short *psVar9;
-  int iVar10;
-  uint32_t *puVar11;
+  int i1;
+  int i2;
+  uint32_t u1;
+  uint32_t u2;
+  int i3;
+  char *p1;
+  int i4;
+  uint8_t u3;
+  short *p2;
+  int i5;
+  uint32_t *p3;
   
-  iVar7 = 0;
-  if (DAT_104dfd98 != 0) {
-    *(uint32_t *)((int)self_ + 0x10) = param_1;
-    *(int *)((int)self_ + 0xc) = param_2;
-    if ((char)param_4 == '\0') {
-      puVar11 = (uint32_t *)((int)self_ + param_2 * 0x288 + 0x804);
-      for (iVar7 = 0xa2; iVar7 != 0; iVar7 = iVar7 + -1) {
-        *puVar11 = 0;
-        puVar11 = puVar11 + 1;
+  i4 = 0;
+  if (g_104DFD98 != 0) {
+    *(uint32_t *)((int)self_ + 0x10) = arg2;
+    *(int *)((int)self_ + 0xc) = arg3;
+    if ((char)arg5 == '\0') {
+      p3 = (uint32_t *)((int)self_ + arg3 * 0x288 + 0x804);
+      for (i4 = 0xa2; i4 != 0; i4 = i4 + -1) {
+        *p3 = 0;
+        p3 = p3 + 1;
       }
       *(uint16_t *)((int)self_ + *(int *)((int)self_ + 0xc) * 0x288 + 0x808) = 0xffff;
       *(uint32_t *)((int)self_ + *(int *)((int)self_ + 0xc) * 0x288 + 0x804) = 0;
       *(uint8_t *)((int)self_ + *(int *)((int)self_ + 0xc) * 0x288 + 0x80a) = 0;
-      pcVar6 = (char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_);
+      p1 = (char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_);
       if (*(char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) == '\0') {
-LAB_1021c9ee:
-        return (uint32_t)pcVar6 & 0xffffff00;
+code_1021C9EE:
+        return (uint32_t)p1 & 0xffffff00;
       }
-      *pcVar6 = '\x01';
-      bVar8 = 1;
-      psVar9 = (short *)((int)self_ + 0x98);
+      *p1 = '\x01';
+      u3 = 1;
+      p2 = (short *)((int)self_ + 0x98);
       do {
-        if ((*psVar9 != 0) &&
-           ((pcVar6 = *(char **)((int)self_ + 0x10), pcVar6 == (char *)0x0 ||
-            ((*(uint32_t *)(psVar9 + -6) & (uint32_t)pcVar6) != 0)))) {
+        if ((*p2 != 0) &&
+           ((p1 = *(char **)((int)self_ + 0x10), p1 == (char *)0x0 ||
+            ((*(uint32_t *)(p2 + -6) & (uint32_t)p1) != 0)))) {
           *(short *)((int)self_ +
                     ((uint32_t)*(uint8_t *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) +
-                    *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x808) = *psVar9;
+                    *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x808) = *p2;
           *(uint8_t *)((int)self_ +
                    ((uint32_t)*(uint8_t *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) +
-                   *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x80a) = bVar8;
+                   *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x80a) = u3;
           *(uint32_t *)
            ((int)self_ +
            ((uint32_t)*(uint8_t *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) +
-           *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x804) = *(uint32_t *)(psVar9 + -4);
-          pcVar6 = (char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_);
-          *pcVar6 = *(char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) + '\x01';
+           *(int *)((int)self_ + 0xc) * 0x51) * 8 + 0x804) = *(uint32_t *)(p2 + -4);
+          p1 = (char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_);
+          *p1 = *(char *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_) + '\x01';
         }
-        bVar8 = bVar8 + 1;
-        psVar9 = psVar9 + 0xc;
-      } while (bVar8 < 0x51);
-      iVar7 = *(int *)((int)self_ + 0xc);
-      bVar8 = *(uint8_t *)(iVar7 + 0x18 + (int)self_);
-      pcVar6 = (char *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pcVar6 >> 8))) << 8) | (uint8_t)(bVar8)));
-      if (bVar8 == 0) goto LAB_1021c9ee;
-      if ((0 < param_2) && (param_2 < 3)) {
-        orig::FUN_103156b3((uint32_t *)((int)self_ + iVar7 * 0x288 + 0x80c),(uint32_t *)(bVar8 - 1),8,&LAB_1021d220
-                     ,iVar7 * 9);
+        u3 = u3 + 1;
+        p2 = p2 + 0xc;
+      } while (u3 < 0x51);
+      i4 = *(int *)((int)self_ + 0xc);
+      u3 = *(uint8_t *)(i4 + 0x18 + (int)self_);
+      p1 = (char *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(u3)));
+      if (u3 == 0) goto code_1021C9EE;
+      if ((0 < arg3) && (arg3 < 3)) {
+        orig::game_103156B3((uint32_t *)((int)self_ + i4 * 0x288 + 0x80c),(uint32_t *)(u3 - 1),8,&code_1021D220
+                     ,i4 * 9);
       }
     }
-    else if (((0 < param_2) && (param_2 < 3)) &&
-            (iVar7 = 1, 1 < *(uint8_t *)(param_2 + 0x18 + (int)self_))) {
+    else if (((0 < arg3) && (arg3 < 3)) &&
+            (i4 = 1, 1 < *(uint8_t *)(arg3 + 0x18 + (int)self_))) {
       do {
-        iVar5 = *(int *)((int)self_ + 0xc);
-        iVar1 = iVar7 + 1;
-        iVar10 = iVar1;
-        if (iVar1 < (int)(uint32_t)*(uint8_t *)(iVar5 + 0x18 + (int)self_)) {
+        i3 = *(int *)((int)self_ + 0xc);
+        i1 = i4 + 1;
+        i5 = i1;
+        if (i1 < (int)(uint32_t)*(uint8_t *)(i3 + 0x18 + (int)self_)) {
           do {
-            iVar2 = iVar5 * 0x51 + iVar10;
-            if (*(short *)((int)self_ + (iVar5 * 0x51 + iVar7) * 8 + 0x808) ==
-                *(short *)((int)self_ + iVar2 * 8 + 0x808)) {
-              uVar3 = *(uint32_t *)((int)self_ + iVar2 * 8 + 0x804);
-              uVar4 = *(uint32_t *)((int)self_ + iVar2 * 8 + 0x808);
-              iVar5 = iVar10;
-              while (iVar5 = iVar5 + -1, iVar1 <= iVar5) {
-                iVar2 = iVar5 + *(int *)((int)self_ + 0xc) * 0x51;
-                *(uint32_t *)((int)self_ + iVar2 * 8 + 0x80c) =
-                     *(uint32_t *)((int)self_ + iVar2 * 8 + 0x804);
-                *(uint32_t *)((int)self_ + iVar2 * 8 + 0x810) =
-                     *(uint32_t *)((int)self_ + iVar2 * 8 + 0x808);
+            i2 = i3 * 0x51 + i5;
+            if (*(short *)((int)self_ + (i3 * 0x51 + i4) * 8 + 0x808) ==
+                *(short *)((int)self_ + i2 * 8 + 0x808)) {
+              u1 = *(uint32_t *)((int)self_ + i2 * 8 + 0x804);
+              u2 = *(uint32_t *)((int)self_ + i2 * 8 + 0x808);
+              i3 = i5;
+              while (i3 = i3 + -1, i1 <= i3) {
+                i2 = i3 + *(int *)((int)self_ + 0xc) * 0x51;
+                *(uint32_t *)((int)self_ + i2 * 8 + 0x80c) =
+                     *(uint32_t *)((int)self_ + i2 * 8 + 0x804);
+                *(uint32_t *)((int)self_ + i2 * 8 + 0x810) =
+                     *(uint32_t *)((int)self_ + i2 * 8 + 0x808);
               }
-              iVar5 = iVar7 + *(int *)((int)self_ + 0xc) * 0x51;
-              *(uint32_t *)((int)self_ + iVar5 * 8 + 0x80c) = uVar3;
-              *(uint32_t *)((int)self_ + iVar5 * 8 + 0x810) = uVar4;
+              i3 = i4 + *(int *)((int)self_ + 0xc) * 0x51;
+              *(uint32_t *)((int)self_ + i3 * 8 + 0x80c) = u1;
+              *(uint32_t *)((int)self_ + i3 * 8 + 0x810) = u2;
             }
-            iVar5 = *(int *)((int)self_ + 0xc);
-            iVar10 = iVar10 + 1;
-          } while (iVar10 < (int)(uint32_t)*(uint8_t *)(iVar5 + 0x18 + (int)self_));
+            i3 = *(int *)((int)self_ + 0xc);
+            i5 = i5 + 1;
+          } while (i5 < (int)(uint32_t)*(uint8_t *)(i3 + 0x18 + (int)self_));
         }
-        iVar7 = iVar1;
-      } while (iVar1 < (int)(uint32_t)*(uint8_t *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_));
+        i4 = i1;
+      } while (i1 < (int)(uint32_t)*(uint8_t *)(*(int *)((int)self_ + 0xc) + 0x18 + (int)self_));
     }
-    iVar7 = param_3;
-    if (param_3 < 0x12) {
-      iVar7 = orig::XI_PACKET_100EBF40(param_3);
+    i4 = arg4;
+    if (arg4 < 0x12) {
+      i4 = orig::XI_PACKET_100EBF40(arg4);
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar7 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i4 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1021CB80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_GetSlotForEntry(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall FaqHelp_GetSlotForEntry(void * self_, uint32_t arg2)
 {
-  int iVar1;
-  short *psVar2;
+  int i1;
+  short *p1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  iVar1 = *(int *)((int)self_ + 0xc) * 0x51 + (param_1 & 0xff);
-  psVar2 = orig::NetCellFont_GetSlotPtr
+  i1 = *(int *)((int)self_ + 0xc) * 0x51 + (arg2 & 0xff);
+  p1 = orig::NetCellFont_GetSlotPtr
                      (*(int *)self_,
-                      ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + iVar1 * 8 + 0x80a)))));
-  return psVar2;
+                      ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + i1 * 8 + 0x80a)))));
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1021CCB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_Is14Not198C8(void * self_)
+XI_API bits32 __thiscall FaqHelp_Is14Not198C8(void * self_)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 1;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_104dfd98 >> 8))) << 8) | (uint8_t)(*(int *)((int)self_ + 0x14) != *(int *)(DAT_104dfd98 + 0x198c8))));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_104DFD98 >> 8))) << 8) | (uint8_t)(*(int *)((int)self_ + 0x14) != *(int *)(g_104DFD98 + 0x198c8))));
 }
 
 // FUNCTION: FFXIMAIN 0x1021D250
@@ -837,7 +837,7 @@ XI_API void * __thiscall FaqHelp_ResetEntryCtor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1021D270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_Reset(void * self_)
+XI_API bits32 __thiscall FaqHelp_Reset(void * self_)
 {
   *(uint32_t *)self_ = 0;
   *(uint32_t *)((int)self_ + 4) = 0;
@@ -849,47 +849,47 @@ XI_API undefined4 __thiscall FaqHelp_Reset(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1021D2D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_LoadFromId(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall FaqHelp_LoadFromId(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
-  uVar1 = orig::FaqHelp_Reset(self_);
-  if ((uint16_t)param_1 != 0) {
-    if ((uint16_t)param_1 == 0xffff) {
+  u1 = orig::FaqHelp_Reset(self_);
+  if ((uint16_t)arg2 != 0) {
+    if ((uint16_t)arg2 == 0xffff) {
       *(uint16_t *)((int)self_ + 0x14) = 0xffff;
       *(uint32_t *)((int)self_ + 4) = 9;
-      *(uint8_t *)((int)self_ + 0x10) = (uint8_t)param_2;
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+      *(uint8_t *)((int)self_ + 0x10) = (uint8_t)arg3;
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    iVar2 = orig::FUN_1015bc40(DAT_10621808,(uint32_t)(uint16_t)param_1);
-    uVar1 = 0;
-    if (iVar2 != 0) {
-      *(char *)(iVar2 + 0x1b3) = *(char *)(iVar2 + 0x1b3) + '\x01';
-      *(uint32_t *)((int)self_ + 4) = (uint32_t)*(uint16_t *)(iVar2 + 4);
-      *(uint32_t *)((int)self_ + 8) = (uint32_t)*(uint16_t *)(iVar2 + 0x14);
-      *(uint32_t *)((int)self_ + 0xc) = (uint32_t)*(uint16_t *)(iVar2 + 0x1c);
-      *(uint8_t *)((int)self_ + 0x11) = *(uint8_t *)(iVar2 + 0x2d);
-      *(uint16_t *)((int)self_ + 0x12) = *(uint16_t *)(iVar2 + 8);
-      *(uint16_t *)((int)self_ + 0x16) = *(uint16_t *)(iVar2 + 10);
-      *(char *)(iVar2 + 0x1b3) = *(char *)(iVar2 + 0x1b3) + -1;
-      *(uint16_t *)((int)self_ + 0x14) = (uint16_t)param_1;
-      *(uint8_t *)((int)self_ + 0x10) = (uint8_t)param_2;
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(1)));
+    i1 = orig::game_1015BC40(g_10621808,(uint32_t)(uint16_t)arg2);
+    u1 = 0;
+    if (i1 != 0) {
+      *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + '\x01';
+      *(uint32_t *)((int)self_ + 4) = (uint32_t)*(uint16_t *)(i1 + 4);
+      *(uint32_t *)((int)self_ + 8) = (uint32_t)*(uint16_t *)(i1 + 0x14);
+      *(uint32_t *)((int)self_ + 0xc) = (uint32_t)*(uint16_t *)(i1 + 0x1c);
+      *(uint8_t *)((int)self_ + 0x11) = *(uint8_t *)(i1 + 0x2d);
+      *(uint16_t *)((int)self_ + 0x12) = *(uint16_t *)(i1 + 8);
+      *(uint16_t *)((int)self_ + 0x16) = *(uint16_t *)(i1 + 10);
+      *(char *)(i1 + 0x1b3) = *(char *)(i1 + 0x1b3) + -1;
+      *(uint16_t *)((int)self_ + 0x14) = (uint16_t)arg2;
+      *(uint8_t *)((int)self_ + 0x10) = (uint8_t)arg3;
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1021D380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall FaqHelp_SetId(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall FaqHelp_SetId(void * self_, bits32 arg2, bits32 arg3)
 {
-  if (((short)param_1 != 0) && (*(short *)((int)self_ + 0x14) != (short)param_1)) {
-    param_1 = orig::FaqHelp_LoadFromId(self_,param_1,param_2);
-    if ((char)param_1 != '\x01') {
-      return param_1 & 0xffffff00;
+  if (((short)arg2 != 0) && (*(short *)((int)self_ + 0x14) != (short)arg2)) {
+    arg2 = orig::FaqHelp_LoadFromId(self_,arg2,arg3);
+    if ((char)arg2 != '\x01') {
+      return arg2 & 0xffffff00;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((param_1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((arg2 >> 8))) << 8) | (uint8_t)(1)));
 }

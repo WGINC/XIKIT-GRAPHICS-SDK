@@ -18,7 +18,7 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqskSkeleton.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqskSkeleton_Create` calls `sub_10275D80`, `SqskSkeleton_Init`
+- `SqskSkeleton_Create` calls `game_10275D80`, `SqskSkeleton_Init`
 - `SqskSkeleton_Init` calls nothing directly
 - `SqskSkeleton_SetNodeCount` calls `SqhiNode_Nop`, `SqskJoint_Nop`, `sqFree`, `SqMem_AllocZeroed`, `SqhiNode_Init`, `SqskJoint_Init`
 - `SqskSkeleton_FindBoneIndex` calls `sqDebugPrintf`

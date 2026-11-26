@@ -7,14 +7,14 @@
 XI_API int * __cdecl TimerResolution_CreateObject(void)
 {
   void *self_;
-  int *this_00;
+  int *obj1;
   
   self_ = (void *)orig::Mem_AllocDefault_v1(0x20);
   if (self_ != (void *)0x0) {
-    this_00 = orig::CXiTimerLow_Init(self_);
-    if (this_00 != (int *)0x0) {
-      ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x1c))))((void *)(this_00));
-      return this_00;
+    obj1 = orig::CXiTimerLow_Init(self_);
+    if (obj1 != (int *)0x0) {
+      ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x1c))))((void *)(obj1));
+      return obj1;
     }
   }
   return (int *)0x0;

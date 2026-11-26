@@ -5,350 +5,350 @@
 
 // FUNCTION: FFXIMAIN 0x1006D3B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorX87::Vec3AddScaled(float *a1, float *a2, float a3)
+float * CMoProcessorX87::Vec3AddScaled(float *arg1, float *arg2, float arg3)
 {
-  *a1 = a3 * *a2 + *a1;
-  a1[1] = a3 * a2[1] + a1[1];
-  a1[2] = a3 * a2[2] + a1[2];
-  return a1;
+  *arg1 = arg3 * *arg2 + *arg1;
+  arg1[1] = arg3 * arg2[1] + arg1[1];
+  arg1[2] = arg3 * arg2[2] + arg1[2];
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D4D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); float result equal at its declared precision (the original returns ST0 unrounded); gates: fuzz PASS 100
-double CMoProcessorX87::Vec3Dot(float *a1, float *a2)
+double CMoProcessorX87::Vec3Dot(float *arg1, float *arg2)
 {
-  return a1[2] * a2[2] + a1[1] * a2[1] + *a1 * *a2;
+  return arg1[2] * arg2[2] + arg1[1] * arg2[1] + *arg1 * *arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorX87::Vec3Add(float *a1, float *a2, float *a3)
+float * CMoProcessorX87::Vec3Add(float *arg1, float *arg2, float *arg3)
 {
-  *a1 = *a2 + *a3;
-  a1[1] = a2[1] + a3[1];
-  a1[2] = a2[2] + a3[2];
-  return a2;
+  *arg1 = *arg2 + *arg3;
+  arg1[1] = arg2[1] + arg3[1];
+  arg1[2] = arg2[2] + arg3[2];
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D6B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorX87::Vec3MulComponents(float *a1, float *a2, float *a3)
+float * CMoProcessorX87::Vec3MulComponents(float *arg1, float *arg2, float *arg3)
 {
-  *a1 = *a2 * *a3;
-  a1[1] = a2[1] * a3[1];
-  a1[2] = a2[2] * a3[2];
-  return a2;
+  *arg1 = *arg2 * *arg3;
+  arg1[1] = arg2[1] * arg3[1];
+  arg1[2] = arg2[2] * arg3[2];
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __stdcall CMoProcessorX87::TransformPoint(float * param_1, float * param_2, float * param_3)
+bits32 __stdcall CMoProcessorX87::TransformPoint(float * arg1, float * arg2, float * arg3)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
+  long double f1;
+  long double f2;
+  long double f3;
   
-  fVar1 = (long double)*param_3;
-  fVar2 = (long double)param_3[1];
-  fVar3 = (long double)param_3[2];
-  *param_1 = (float)(fVar1 * (long double)*param_2 +
-                     fVar2 * (long double)param_2[4] + fVar3 * (long double)param_2[8] +
-                    (long double)param_2[0xc]);
-  param_1[1] = (float)(fVar1 * (long double)param_2[1] +
-                       fVar2 * (long double)param_2[5] + fVar3 * (long double)param_2[9] +
-                      (long double)param_2[0xd]);
-  param_1[2] = (float)(fVar1 * (long double)param_2[2] +
-                       fVar2 * (long double)param_2[6] + fVar3 * (long double)param_2[10] +
-                      (long double)param_2[0xe]);
-  return param_1;
+  f1 = *arg3;
+  f2 = arg3[1];
+  f3 = arg3[2];
+  *arg1 = (float)(f1 * *arg2 +
+                     f2 * arg2[4] + f3 * arg2[8] +
+                    arg2[0xc]);
+  arg1[1] = (float)(f1 * arg2[1] +
+                       f2 * arg2[5] + f3 * arg2[9] +
+                      arg2[0xd]);
+  arg1[2] = (float)(f1 * arg2[2] +
+                       f2 * arg2[6] + f3 * arg2[10] +
+                      arg2[0xe]);
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessorX87::Vec3Lerp(float *a1, float *a2, float *a3, float a4)
+float * CMoProcessorX87::Vec3Lerp(float *arg1, float *arg2, float *arg3, float arg4)
 {
-  *a1 = (*a3 - *a2) * a4 + *a2;
-  a1[1] = (a3[1] - a2[1]) * a4 + a2[1];
-  a1[2] = (a3[2] - a2[2]) * a4 + a2[2];
-  return a1;
+  *arg1 = (*arg3 - *arg2) * arg4 + *arg2;
+  arg1[1] = (arg3[1] - arg2[1]) * arg4 + arg2[1];
+  arg1[2] = (arg3[2] - arg2[2]) * arg4 + arg2[2];
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006DCF0
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoProcessorX87::RotationFromAnglesZYX(void * self, undefined4 param_1, float param_2, float param_3, float param_4)
+bits32 __thiscall CMoProcessorX87::RotationFromAnglesZYX(void * self, bits32 arg2, float arg3, float arg4, float arg5)
 {
-  int iVar1;
-  uint32_t a2;
-  long double fVar2;
-  uint8_t *a3;
+  int i1;
+  uint32_t u1;
+  long double f1;
+  uint8_t *p1;
   
-  if ((DAT_1047ccc0 & 1) == 0) {
-    DAT_1047ccc0 = DAT_1047ccc0 | 1;
-    DAT_1047cbb0 = 0x3f800000;
-    _DAT_1047cbb4 = 0;
-    _DAT_1047cbb8 = 0;
-    _DAT_1047cbbc = 0;
-    _DAT_1047cbc0 = 0;
-    _DAT_1047cbc4 = 1.0f;
-    _DAT_1047cbc8 = 0.0f;
-    _DAT_1047cbcc = 0;
-    _DAT_1047cbd0 = 0;
-    _DAT_1047cbd4 = 0.0f;
-    _DAT_1047cbd8 = 1.0f;
-    _DAT_1047cbdc = 0;
-    _DAT_1047cbe0 = 0;
-    _DAT_1047cbe4 = 0;
-    _DAT_1047cbe8 = 0;
-    _DAT_1047cbec = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e010);
+  if ((g_1047CCC0 & 1) == 0) {
+    g_1047CCC0 = g_1047CCC0 | 1;
+    g_1047CBB0 = 0x3f800000;
+    g_1047CBB4 = 0;
+    g_1047CBB8 = 0;
+    g_1047CBBC = 0;
+    g_1047CBC0 = 0;
+    g_1047CBC4 = 1.0f;
+    g_1047CBC8 = 0.0f;
+    g_1047CBCC = 0;
+    g_1047CBD0 = 0;
+    g_1047CBD4 = 0.0f;
+    g_1047CBD8 = 1.0f;
+    g_1047CBDC = 0;
+    g_1047CBE0 = 0;
+    g_1047CBE4 = 0;
+    g_1047CBE8 = 0;
+    g_1047CBEC = 0x3f800000;
+    orig::_atexit_v1(&g_1006E010);
   }
-  fVar2 = xi_castbits<long double>(fsin((long double)param_2));
-  _DAT_1047cbc8 = (float)fVar2;
-  _DAT_1047cbd4 = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_2));
-  _DAT_1047cbd8 = (float)fVar2;
-  _DAT_1047cbc4 = (float)fVar2;
-  if ((DAT_1047ccc0 & 2) == 0) {
-    DAT_1047ccc0 = DAT_1047ccc0 | 2;
-    DAT_1047ce20_as_v0 = 1.0f;
-    _DAT_1047ce24 = 0;
-    _DAT_1047ce28 = 0.0f;
-    _DAT_1047ce2c = 0;
-    _DAT_1047ce30 = 0;
-    _DAT_1047ce34 = 0x3f800000;
-    _DAT_1047ce38 = 0;
-    _DAT_1047ce3c = 0;
-    _DAT_1047ce40 = 0.0f;
-    _DAT_1047ce44 = 0;
-    _DAT_1047ce48 = 1.0f;
-    _DAT_1047ce4c = 0;
-    _DAT_1047ce50 = 0;
-    _DAT_1047ce54 = 0;
-    _DAT_1047ce58 = 0;
-    _DAT_1047ce5c = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e000);
+  f1 = bit_cast<long double>(x87_fsin(arg3));
+  g_1047CBC8 = (float)f1;
+  g_1047CBD4 = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg3));
+  g_1047CBD8 = (float)f1;
+  g_1047CBC4 = (float)f1;
+  if ((g_1047CCC0 & 2) == 0) {
+    g_1047CCC0 = g_1047CCC0 | 2;
+    g_1047CE20_as_v0 = 1.0f;
+    g_1047CE24 = 0;
+    g_1047CE28 = 0.0f;
+    g_1047CE2C = 0;
+    g_1047CE30 = 0;
+    g_1047CE34 = 0x3f800000;
+    g_1047CE38 = 0;
+    g_1047CE3C = 0;
+    g_1047CE40 = 0.0f;
+    g_1047CE44 = 0;
+    g_1047CE48 = 1.0f;
+    g_1047CE4C = 0;
+    g_1047CE50 = 0;
+    g_1047CE54 = 0;
+    g_1047CE58 = 0;
+    g_1047CE5C = 0x3f800000;
+    orig::_atexit_v1(&g_1006E000);
   }
-  fVar2 = xi_castbits<long double>(fcos((long double)param_3));
-  _DAT_1047ce48 = (float)fVar2;
-  DAT_1047ce20_as_v0 = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_3));
-  _DAT_1047ce40 = (float)fVar2;
-  _DAT_1047ce28 = (float)-fVar2;
-  if ((DAT_1047ccc0 & 4) == 0) {
-    DAT_1047ccc0 = DAT_1047ccc0 | 4;
-    DAT_1047cbf0_as_v0 = 1.0f;
-    _DAT_1047cbf4 = 0.0f;
-    _DAT_1047cbf8 = 0;
-    _DAT_1047cbfc = 0;
-    _DAT_1047cc00 = 0.0f;
-    _DAT_1047cc04 = 1.0f;
-    _DAT_1047cc08 = 0;
-    _DAT_1047cc0c = 0;
-    _DAT_1047cc10 = 0;
-    _DAT_1047cc14 = 0;
-    _DAT_1047cc18 = 0x3f800000;
-    _DAT_1047cc1c = 0;
-    _DAT_1047cc20 = 0;
-    _DAT_1047cc24 = 0;
-    _DAT_1047cc28 = 0;
-    _DAT_1047cc2c = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006dff0);
+  f1 = bit_cast<long double>(x87_fcos(arg4));
+  g_1047CE48 = (float)f1;
+  g_1047CE20_as_v0 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg4));
+  g_1047CE40 = (float)f1;
+  g_1047CE28 = (float)-f1;
+  if ((g_1047CCC0 & 4) == 0) {
+    g_1047CCC0 = g_1047CCC0 | 4;
+    g_1047CBF0_as_v0 = 1.0f;
+    g_1047CBF4 = 0.0f;
+    g_1047CBF8 = 0;
+    g_1047CBFC = 0;
+    g_1047CC00 = 0.0f;
+    g_1047CC04 = 1.0f;
+    g_1047CC08 = 0;
+    g_1047CC0C = 0;
+    g_1047CC10 = 0;
+    g_1047CC14 = 0;
+    g_1047CC18 = 0x3f800000;
+    g_1047CC1C = 0;
+    g_1047CC20 = 0;
+    g_1047CC24 = 0;
+    g_1047CC28 = 0;
+    g_1047CC2C = 0x3f800000;
+    orig::_atexit_v1(&g_1006DFF0);
   }
-  fVar2 = xi_castbits<long double>(fcos((long double)param_4));
-  a3 =(uint8_t*)(&DAT_1047cbb0);
-  _DAT_1047cc04 = (float)fVar2;
-  DAT_1047cbf0_as_v0 = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_4));
-  _DAT_1047cbf4 = (float)fVar2;
-  _DAT_1047cc00 = (float)-fVar2;
-  iVar1 = *(int *)self;
-  a2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,&DAT_1047cbf0_as_v0,&DAT_1047ce20_as_v0);
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,a2,a3);
-  return param_1;
+  f1 = bit_cast<long double>(x87_fcos(arg5));
+  p1 =(uint8_t*)(&g_1047CBB0);
+  g_1047CC04 = (float)f1;
+  g_1047CBF0_as_v0 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg5));
+  g_1047CBF4 = (float)f1;
+  g_1047CC00 = (float)-f1;
+  i1 = *(int *)self;
+  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,&g_1047CBF0_as_v0,&g_1047CE20_as_v0);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,u1,p1);
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006E140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __stdcall CMoProcessorX87::RotationY(undefined4 * param_1, float param_2)
+bits32 __stdcall CMoProcessorX87::RotationY(bits32 * arg1, float arg2)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  long double fVar4;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
+  long double f1;
   
-  if ((DAT_1047cf32 & 1) == 0) {
-    DAT_1047cf32 = DAT_1047cf32 | 1;
-    DAT_1047cb30 = 1.0f;
-    DAT_1047cb34 = 0;
-    _DAT_1047cb38 = 0.0f;
-    _DAT_1047cb3c = 0;
-    _DAT_1047cb40 = 0;
-    _DAT_1047cb44 = 0x3f800000;
-    _DAT_1047cb48 = 0;
-    _DAT_1047cb4c = 0;
-    _DAT_1047cb50 = 0.0f;
-    _DAT_1047cb54 = 0;
-    _DAT_1047cb58 = 1.0f;
-    _DAT_1047cb5c = 0;
-    _DAT_1047cb60 = 0;
-    _DAT_1047cb64 = 0;
-    _DAT_1047cb68 = 0;
-    _DAT_1047cb6c = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e250);
+  if ((g_1047CF32 & 1) == 0) {
+    g_1047CF32 = g_1047CF32 | 1;
+    g_1047CB30 = 1.0f;
+    g_1047CB34 = 0;
+    g_1047CB38 = 0.0f;
+    g_1047CB3C = 0;
+    g_1047CB40 = 0;
+    g_1047CB44 = 0x3f800000;
+    g_1047CB48 = 0;
+    g_1047CB4C = 0;
+    g_1047CB50 = 0.0f;
+    g_1047CB54 = 0;
+    g_1047CB58 = 1.0f;
+    g_1047CB5C = 0;
+    g_1047CB60 = 0;
+    g_1047CB64 = 0;
+    g_1047CB68 = 0;
+    g_1047CB6C = 0x3f800000;
+    orig::_atexit_v1(&g_1006E250);
   }
-  fVar4 = xi_castbits<long double>(fcos((long double)param_2));
-  iVar1 = 0x10;
-  _DAT_1047cb58 = (float)fVar4;
-  DAT_1047cb30 = (float)fVar4;
-  fVar4 = xi_castbits<long double>(fsin((long double)param_2));
-  _DAT_1047cb50 = (float)fVar4;
-  _DAT_1047cb38 = (float)-fVar4;
-  puVar2 =(undefined4*)(&DAT_1047cb30);
-  puVar3 = param_1;
-  for (; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  f1 = bit_cast<long double>(x87_fcos(arg2));
+  i1 = 0x10;
+  g_1047CB58 = (float)f1;
+  g_1047CB30 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg2));
+  g_1047CB50 = (float)f1;
+  g_1047CB38 = (float)-f1;
+  p1 =(bits32*)(&g_1047CB30);
+  p2 = arg1;
+  for (; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006E260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __stdcall CMoProcessorX87::RotationZ(undefined4 * param_1, float param_2)
+bits32 __stdcall CMoProcessorX87::RotationZ(bits32 * arg1, float arg2)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  long double fVar4;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
+  long double f1;
   
-  if ((DAT_1047cd0a & 1) == 0) {
-    DAT_1047cd0a = DAT_1047cd0a | 1;
-    DAT_1047cd10 = 1.0f;
-    DAT_1047cd14 = 0.0f;
-    _DAT_1047cd18 = 0;
-    _DAT_1047cd1c = 0;
-    _DAT_1047cd20 = 0.0f;
-    _DAT_1047cd24 = 1.0f;
-    _DAT_1047cd28 = 0;
-    _DAT_1047cd2c = 0;
-    _DAT_1047cd30 = 0;
-    _DAT_1047cd34 = 0;
-    _DAT_1047cd38 = 0x3f800000;
-    _DAT_1047cd3c = 0;
-    _DAT_1047cd40 = 0;
-    _DAT_1047cd44 = 0;
-    _DAT_1047cd48 = 0;
-    _DAT_1047cd4c = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e370);
+  if ((g_1047CD0A & 1) == 0) {
+    g_1047CD0A = g_1047CD0A | 1;
+    g_1047CD10 = 1.0f;
+    g_1047CD14 = 0.0f;
+    g_1047CD18 = 0;
+    g_1047CD1C = 0;
+    g_1047CD20 = 0.0f;
+    g_1047CD24 = 1.0f;
+    g_1047CD28 = 0;
+    g_1047CD2C = 0;
+    g_1047CD30 = 0;
+    g_1047CD34 = 0;
+    g_1047CD38 = 0x3f800000;
+    g_1047CD3C = 0;
+    g_1047CD40 = 0;
+    g_1047CD44 = 0;
+    g_1047CD48 = 0;
+    g_1047CD4C = 0x3f800000;
+    orig::_atexit_v1(&g_1006E370);
   }
-  fVar4 = xi_castbits<long double>(fcos((long double)param_2));
-  iVar1 = 0x10;
-  _DAT_1047cd24 = (float)fVar4;
-  DAT_1047cd10 = (float)fVar4;
-  fVar4 = xi_castbits<long double>(fsin((long double)param_2));
-  DAT_1047cd14 = (float)fVar4;
-  _DAT_1047cd20 = (float)-fVar4;
-  puVar2 =(undefined4*)(&DAT_1047cd10);
-  puVar3 = param_1;
-  for (; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  f1 = bit_cast<long double>(x87_fcos(arg2));
+  i1 = 0x10;
+  g_1047CD24 = (float)f1;
+  g_1047CD10 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg2));
+  g_1047CD14 = (float)f1;
+  g_1047CD20 = (float)-f1;
+  p1 =(bits32*)(&g_1047CD10);
+  p2 = arg1;
+  for (; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006E380
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoProcessorX87::RotationFromAnglesXYZ(void * self, undefined4 param_1, float param_2, float param_3, float param_4)
+bits32 __thiscall CMoProcessorX87::RotationFromAnglesXYZ(void * self, bits32 arg2, float arg3, float arg4, float arg5)
 {
-  int iVar1;
-  uint32_t a2;
-  long double fVar2;
-  uint8_t *a3;
+  int i1;
+  uint32_t u1;
+  long double f1;
+  uint8_t *p1;
   
-  if ((DAT_1047cd08 & 1) == 0) {
-    DAT_1047cd08 = DAT_1047cd08 | 1;
-    DAT_1047cf38 = 0x3f800000;
-    _DAT_1047cf3c = 0;
-    _DAT_1047cf40 = 0;
-    _DAT_1047cf44 = 0;
-    _DAT_1047cf48 = 0;
-    _DAT_1047cf4c = 1.0f;
-    _DAT_1047cf50 = 0.0f;
-    _DAT_1047cf54 = 0;
-    _DAT_1047cf58 = 0;
-    _DAT_1047cf5c = 0.0f;
-    _DAT_1047cf60 = 1.0f;
-    _DAT_1047cf64 = 0;
-    _DAT_1047cf68 = 0;
-    _DAT_1047cf6c = 0;
-    _DAT_1047cf70 = 0;
-    _DAT_1047cf74 = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e6a0);
+  if ((g_1047CD08 & 1) == 0) {
+    g_1047CD08 = g_1047CD08 | 1;
+    g_1047CF38 = 0x3f800000;
+    g_1047CF3C = 0;
+    g_1047CF40 = 0;
+    g_1047CF44 = 0;
+    g_1047CF48 = 0;
+    g_1047CF4C = 1.0f;
+    g_1047CF50 = 0.0f;
+    g_1047CF54 = 0;
+    g_1047CF58 = 0;
+    g_1047CF5C = 0.0f;
+    g_1047CF60 = 1.0f;
+    g_1047CF64 = 0;
+    g_1047CF68 = 0;
+    g_1047CF6C = 0;
+    g_1047CF70 = 0;
+    g_1047CF74 = 0x3f800000;
+    orig::_atexit_v1(&g_1006E6A0);
   }
-  fVar2 = xi_castbits<long double>(fsin((long double)param_2));
-  _DAT_1047cf50 = (float)fVar2;
-  _DAT_1047cf5c = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_2));
-  _DAT_1047cf60 = (float)fVar2;
-  _DAT_1047cf4c = (float)fVar2;
-  if ((DAT_1047cd08 & 2) == 0) {
-    DAT_1047cd08 = DAT_1047cd08 | 2;
-    DAT_1047cea8_as_v0 = 1.0f;
-    _DAT_1047ceac = 0;
-    _DAT_1047ceb0 = 0.0f;
-    _DAT_1047ceb4 = 0;
-    _DAT_1047ceb8 = 0;
-    _DAT_1047cebc = 0x3f800000;
-    _DAT_1047cec0 = 0;
-    _DAT_1047cec4 = 0;
-    _DAT_1047cec8 = 0.0f;
-    _DAT_1047cecc = 0;
-    _DAT_1047ced0 = 1.0f;
-    _DAT_1047ced4 = 0;
-    _DAT_1047ced8 = 0;
-    _DAT_1047cedc = 0;
-    _DAT_1047cee0 = 0;
-    _DAT_1047cee4 = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e690);
+  f1 = bit_cast<long double>(x87_fsin(arg3));
+  g_1047CF50 = (float)f1;
+  g_1047CF5C = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg3));
+  g_1047CF60 = (float)f1;
+  g_1047CF4C = (float)f1;
+  if ((g_1047CD08 & 2) == 0) {
+    g_1047CD08 = g_1047CD08 | 2;
+    g_1047CEA8_as_v0 = 1.0f;
+    g_1047CEAC = 0;
+    g_1047CEB0 = 0.0f;
+    g_1047CEB4 = 0;
+    g_1047CEB8 = 0;
+    g_1047CEBC = 0x3f800000;
+    g_1047CEC0 = 0;
+    g_1047CEC4 = 0;
+    g_1047CEC8 = 0.0f;
+    g_1047CECC = 0;
+    g_1047CED0 = 1.0f;
+    g_1047CED4 = 0;
+    g_1047CED8 = 0;
+    g_1047CEDC = 0;
+    g_1047CEE0 = 0;
+    g_1047CEE4 = 0x3f800000;
+    orig::_atexit_v1(&g_1006E690);
   }
-  fVar2 = xi_castbits<long double>(fcos((long double)param_3));
-  _DAT_1047ced0 = (float)fVar2;
-  DAT_1047cea8_as_v0 = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_3));
-  _DAT_1047cec8 = (float)fVar2;
-  _DAT_1047ceb0 = (float)-fVar2;
-  if ((DAT_1047cd08 & 4) == 0) {
-    DAT_1047cd08 = DAT_1047cd08 | 4;
-    DAT_1047ccc8_as_v0 = 1.0f;
-    _DAT_1047cccc = 0.0f;
-    _DAT_1047ccd0 = 0;
-    _DAT_1047ccd4 = 0;
-    _DAT_1047ccd8 = 0.0f;
-    _DAT_1047ccdc = 1.0f;
-    _DAT_1047cce0 = 0;
-    _DAT_1047cce4 = 0;
-    _DAT_1047cce8 = 0;
-    _DAT_1047ccec = 0;
-    _DAT_1047ccf0 = 0x3f800000;
-    _DAT_1047ccf4 = 0;
-    _DAT_1047ccf8 = 0;
-    _DAT_1047ccfc = 0;
-    _DAT_1047cd00 = 0;
-    _DAT_1047cd04 = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006e680);
+  f1 = bit_cast<long double>(x87_fcos(arg4));
+  g_1047CED0 = (float)f1;
+  g_1047CEA8_as_v0 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg4));
+  g_1047CEC8 = (float)f1;
+  g_1047CEB0 = (float)-f1;
+  if ((g_1047CD08 & 4) == 0) {
+    g_1047CD08 = g_1047CD08 | 4;
+    g_1047CCC8_as_v0 = 1.0f;
+    g_1047CCCC = 0.0f;
+    g_1047CCD0 = 0;
+    g_1047CCD4 = 0;
+    g_1047CCD8 = 0.0f;
+    g_1047CCDC = 1.0f;
+    g_1047CCE0 = 0;
+    g_1047CCE4 = 0;
+    g_1047CCE8 = 0;
+    g_1047CCEC = 0;
+    g_1047CCF0 = 0x3f800000;
+    g_1047CCF4 = 0;
+    g_1047CCF8 = 0;
+    g_1047CCFC = 0;
+    g_1047CD00 = 0;
+    g_1047CD04 = 0x3f800000;
+    orig::_atexit_v1(&g_1006E680);
   }
-  fVar2 = xi_castbits<long double>(fcos((long double)param_4));
-  a3 =(uint8_t*)(&DAT_1047ccc8_as_v0);
-  _DAT_1047ccdc = (float)fVar2;
-  DAT_1047ccc8_as_v0 = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_4));
-  _DAT_1047cccc = (float)fVar2;
-  _DAT_1047ccd8 = (float)-fVar2;
-  iVar1 = *(int *)self;
-  a2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,&DAT_1047cf38,&DAT_1047cea8_as_v0);
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,a2,a3);
-  return param_1;
+  f1 = bit_cast<long double>(x87_fcos(arg5));
+  p1 =(uint8_t*)(&g_1047CCC8_as_v0);
+  g_1047CCDC = (float)f1;
+  g_1047CCC8_as_v0 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg5));
+  g_1047CCCC = (float)f1;
+  g_1047CCD8 = (float)-f1;
+  i1 = *(int *)self;
+  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,&g_1047CF38,&g_1047CEA8_as_v0);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,u1,p1);
+  return arg2;
 }

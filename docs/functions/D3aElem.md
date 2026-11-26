@@ -16,4 +16,4 @@ Why the file has this name (data/unit_names.json): CMoD3aElem, YmElem_DrawD3ASeg
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `YmElem_DrawD3ASegment` calls `TexRef_SetTexture`, `YmElem_SetD3ADrawState`, `CMoVuElem_Draw`
-- `YmElem_SetD3ADrawState` calls `MoDX_SetInvalid`, `sub_10313486`, `StateBlock_ApplyTSS`
+- `YmElem_SetD3ADrawState` calls `MoDX_SetInvalid`, `game_10313486`, `StateBlock_ApplyTSS`

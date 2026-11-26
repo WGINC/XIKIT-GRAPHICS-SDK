@@ -4,28 +4,28 @@
 
 // FUNCTION: FFXIMAIN 0x1001B170
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API void __thiscall KzMotionQueList_AdvanceAll(void * self_, float param_1)
+XI_API void __thiscall KzMotionQueList_AdvanceAll(void * self_, float arg2)
 {
-  void *this_00;
+  void *obj1;
   
-  for (this_00 = *(void **)((int)self_ + 4); this_00 != (void *)0x0;
-      this_00 = *(void **)((int)this_00 + 4)) {
-    orig::QueTimeStep_StepStateByTime(this_00,param_1);
+  for (obj1 = *(void **)((int)self_ + 4); obj1 != (void *)0x0;
+      obj1 = *(void **)((int)obj1 + 4)) {
+    orig::QueTimeStep_StepStateByTime(obj1,arg2);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1001B1F0
 // GATE: PASS -- 100 trials, 57 returned normally, 182 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 57
-XI_API void __thiscall KzMotionQueList_NotifyAll(void * self_, void * param_1, undefined4 param_2)
+XI_API void __thiscall KzMotionQueList_NotifyAll(void * self_, void * arg2, bits32 arg3)
 {
-  int *this_00;
-  uint32_t uVar1;
+  int *obj1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_10084620(param_1);
-  if (uVar1 == 0) {
-    for (this_00 = *(int **)((int)self_ + 4); this_00 != (int *)0x0; this_00 = (int *)this_00[1]) {
-      ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x34))))((void *)(this_00),param_1,param_2);
+  u1 = orig::game_10084620(arg2);
+  if (u1 == 0) {
+    for (obj1 = *(int **)((int)self_ + 4); obj1 != (int *)0x0; obj1 = (int *)obj1[1]) {
+      ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x34))))((void *)(obj1),arg2,arg3);
     }
   }
   return;

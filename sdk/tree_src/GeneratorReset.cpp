@@ -4,71 +4,71 @@
 
 // FUNCTION: FFXIMAIN 0x100531D0
 // GATE: PASS -- 100 trials, 99 returned normally, 59 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __thiscall SharedConditionalStateReset(void * self_)
+XI_API bits32 __thiscall SharedConditionalStateReset(void * self_)
 {
-  undefined4 uVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *this_00;
+  bits32 u1;
+  uint32_t u2;
+  int i1;
+  int i2;
+  bits32 *obj1;
   char xi_frame[16] __attribute__((aligned(4)));
-  int * &piVar5 = *reinterpret_cast<int * *>(xi_frame + 0);
+  int * &p1 = *reinterpret_cast<int * *>(xi_frame + 0);
   
   if (((*(uint8_t *)((int)self_ + 0xdc) & 1) != 0) || ((*(uint32_t *)((int)self_ + 0xd8) & 0x800) != 0)) {
-    uVar1 = orig::Generator_IsFlag400OrField22Zero_v1(self_);
-    if ((char)uVar1 != '\0') {
+    u1 = orig::Generator_IsFlag400OrField22Zero_v1(self_);
+    if ((char)u1 != '\0') {
       orig::YmGenerater_Stop_v3(self_,(int *)0x0,&xi_frame[0]);
-      uVar2 = (*(uint8_t *)((int)self_ + 0x36) & 1) * 0x10 + (*(uint32_t *)((int)self_ + 0x34) & 0xf);
-      if ((uVar2 != 0x14) && (((uVar2 != 0 && (uVar2 < 0xe)) || (0xf < uVar2)))) {
-        uVar1 = 0;
-        piVar5 = (int *)0x0;
-        iVar3 = orig::CMoAttachments_GetTarget_v2((void *)((int)self_ + 0x30));
-        iVar4 = orig::CMoAttachments_GetCaster_v2((void *)((int)self_ + 0x30));
-        orig::Generator_StopGenerators(self_,iVar4,iVar3,uVar1,piVar5);
+      u2 = (*(uint8_t *)((int)self_ + 0x36) & 1) * 0x10 + (*(uint32_t *)((int)self_ + 0x34) & 0xf);
+      if ((u2 != 0x14) && (((u2 != 0 && (u2 < 0xe)) || (0xf < u2)))) {
+        u1 = 0;
+        p1 = (int *)0x0;
+        i1 = orig::CMoAttachments_GetTarget_v2((void *)((int)self_ + 0x30));
+        i2 = orig::CMoAttachments_GetCaster_v2((void *)((int)self_ + 0x30));
+        orig::Generator_StopGenerators(self_,i2,i1,u1,p1);
       }
     }
-    *(undefined4 *)((int)self_ + 0x9c) = 0;
-    *(undefined4 *)((int)self_ + 0xcc) = 0;
-    *(undefined4 *)((int)self_ + 200) = 0;
+    *(bits32 *)((int)self_ + 0x9c) = 0;
+    *(bits32 *)((int)self_ + 0xcc) = 0;
+    *(bits32 *)((int)self_ + 200) = 0;
   }
   if ((*(uint8_t *)((int)self_ + 0xdc) & 1) != 0) {
     if (*(int *)((int)self_ + 0xa8) != 0) {
-      *(undefined4 *)(*(int *)((int)self_ + 0xa8) + 0x14) = 0;
+      *(bits32 *)(*(int *)((int)self_ + 0xa8) + 0x14) = 0;
     }
     *(uint8_t *)((int)self_ + 0xdc) = *(uint8_t *)((int)self_ + 0xdc) & 0xfe;
-    uVar2 = *(uint32_t *)((int)self_ + 0xd8) | 0x800;
-    *(uint32_t *)((int)self_ + 0xd8) = uVar2;
-    return uVar2;
+    u2 = *(uint32_t *)((int)self_ + 0xd8) | 0x800;
+    *(uint32_t *)((int)self_ + 0xd8) = u2;
+    return u2;
   }
   *(uint8_t *)((int)self_ + 0xdc) = *(uint8_t *)((int)self_ + 0xdc) & 0xfe;
   *(uint32_t *)((int)self_ + 0xd8) = *(uint32_t *)((int)self_ + 0xd8) | 0x800;
-  piVar5 = *(int **)((int)self_ + 0xa8);
-  if (piVar5 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar5 + 0x18))))((void *)(piVar5),1);
-    *(undefined4 *)((int)self_ + 0xa8) = 0;
+  p1 = *(int **)((int)self_ + 0xa8);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
+    *(bits32 *)((int)self_ + 0xa8) = 0;
   }
-  this_00 = orig::Mem_AllocFromArea_v2(0x3d,4,0);
-  orig::CMoTask_ResetFields_v1(this_00);
+  obj1 = orig::Mem_AllocFromArea_v2(0x3d,4,0);
+  orig::CMoTask_ResetFields_v1(obj1);
   g_resourcesDirty_as_v0 = 1;
-  if (this_00 == (undefined4 *)0x0) {
-    this_00 = (undefined4 *)0x0;
+  if (obj1 == (bits32 *)0x0) {
+    obj1 = (bits32 *)0x0;
   }
   else {
-    orig::CMoTask_Constructor_v2(this_00);
-    *this_00 = &PTR_CMoTask_GetRuntimeClass_variant12_1032b654;
-    *(uint8_t *)(this_00 + 0xf) = 0;
+    orig::CMoTask_Constructor_v2(obj1);
+    *obj1 = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032B654;
+    *(uint8_t *)(obj1 + 0xf) = 0;
   }
-  *(undefined4 **)((int)self_ + 0xa8) = this_00;
-  this_00[0xd] = *(undefined4 *)((int)self_ + 0x14);
-  this_00[0xe] = *(undefined4 *)((int)self_ + 0x14);
-  this_00[6] = *(undefined4 *)((int)self_ + 0x14);
-  this_00[7] = 0x4d670000;
-  orig::FUN_10053e60(self_);
-  uVar2 = (*(uint8_t *)((int)self_ + 0x36) & 1) * 0x10 + (*(uint32_t *)((int)self_ + 0x34) & 0xf);
-  if ((uVar2 != 0x14) && (((uVar2 != 0 && (uVar2 < 0xe)) || (0xf < uVar2)))) {
-    uVar1 = orig::CMoTask_RegisterWithMng_v1(9);
-    return uVar1;
+  *(bits32 **)((int)self_ + 0xa8) = obj1;
+  obj1[0xd] = *(bits32 *)((int)self_ + 0x14);
+  obj1[0xe] = *(bits32 *)((int)self_ + 0x14);
+  obj1[6] = *(bits32 *)((int)self_ + 0x14);
+  obj1[7] = 0x4d670000;
+  orig::game_10053E60(self_);
+  u2 = (*(uint8_t *)((int)self_ + 0x36) & 1) * 0x10 + (*(uint32_t *)((int)self_ + 0x34) & 0xf);
+  if ((u2 != 0x14) && (((u2 != 0 && (u2 < 0xe)) || (0xf < u2)))) {
+    u1 = orig::CMoTask_RegisterWithMng_v1(9);
+    return u1;
   }
-  uVar1 = orig::FUN_10074a00();
-  return uVar1;
+  u1 = orig::game_10074A00();
+  return u1;
 }

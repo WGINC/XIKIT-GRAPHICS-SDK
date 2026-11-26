@@ -123,11 +123,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DmsgText_GetDwordCell` calls `DmsgText_GetRowBase`, `DmsgText_GetDwordEntry`
 - `DmsgText_GetCellCol0` calls `DmsgText_GetCell`
 - `DmsgText_Assign` calls `DmsgText_Bind`
-- `DmsgText_Bind` calls `sub_10257310`, `DmsgText_InvertBytes`, `DmsgText_SwapEndianPair`, `sub_102573E0`
+- `DmsgText_Bind` calls `game_10257310`, `DmsgText_InvertBytes`, `DmsgText_SwapEndianPair`, `game_102573E0`
 - `DmsgText_GetRowCount` calls nothing directly
 - `DmsgText_IsBound` calls nothing directly
 - `DmsgText_Clear` calls nothing directly
-- `DmsgText_BindSource` calls `sub_10257310`
+- `DmsgText_BindSource` calls `game_10257310`
 - `DmsgText_GetRowBytes` calls nothing directly
 - `DmsgText_BindDataAndMark` calls `DmsgText_BindData`
 - `DmsgText_BindData` calls `DmsgText_InvertBytes`, `DmsgText_SwapEndianPair`
@@ -159,7 +159,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DmsgText_AppendNodeType2` calls `Allocator_Generic`, `DmsgText_Append`, `DmsgText_IsEmpty`
 - `DmsgText_AppendString` calls `Allocator_Generic`, `TextInputFiles_AssignCStr`, `DmsgText_Append`, `DmsgText_IsEmpty`
 - `DmsgText_AppendValueNode` calls `Allocator_Generic`, `TextInputFiles_AssignCStr`, `DmsgText_Append`, `DmsgText_IsEmpty`
-- `DmsgText_ComposeTextA` calls `DmsgText_IsEmpty`, `TextInputFiles_Init`, `sub_1018D3D0`, `TextInputFiles_Append`, `TextInputFiles_AppendBuf`, `DmsgText_FindNextTyped`, `DmsgText_GetSolchForm`, `DmsgText_SelectNounForm`, `DmsgText_PickFormString`, `DmsgText_SelectAdjectiveForm`, `DmsgText_SelectGenderForm`, `TextInputFiles_AssignWhole`, `TextInputFiles_GetLength`, `DmsgText_GetQuantifierByIndex`, `TextInputFiles_GetCStr`, `DmsgText_PickFormString2`, `DmsgText_SelectQuantifierForm`, `DmsgText_GetDataPtr`, `DmsgText_FindFirstTypeByteInText`, `DmsgText_FormatTextAtC`, `TextInputFiles_Free`
+- `DmsgText_ComposeTextA` calls `DmsgText_IsEmpty`, `TextInputFiles_Init`, `game_1018D3D0`, `TextInputFiles_Append`, `TextInputFiles_AppendBuf`, `DmsgText_FindNextTyped`, `DmsgText_GetSolchForm`, `DmsgText_SelectNounForm`, `DmsgText_PickFormString`, `DmsgText_SelectAdjectiveForm`, `DmsgText_SelectGenderForm`, `TextInputFiles_AssignWhole`, `TextInputFiles_GetLength`, `DmsgText_GetQuantifierByIndex`, `TextInputFiles_GetCStr`, `DmsgText_PickFormString2`, `DmsgText_SelectQuantifierForm`, `DmsgText_GetDataPtr`, `DmsgText_FindFirstTypeByteInText`, `DmsgText_FormatTextAtC`, `TextInputFiles_Free`
 - `DmsgText_DeleteNodesA` calls nothing directly
 - `DmsgText_IsTypeTwoZero` calls nothing directly
 - `DmsgText_GetFormById` calls `DmsgText_GetCellCol0`
@@ -173,9 +173,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DmsgText_AppendNode` calls nothing directly
 - `DmsgText_FindNextTyped9` calls nothing directly
 - `DmsgText_ContainsChar` calls `DmsgText_GetCellCol0`, `Sjis_GetCharByteLen`
-- `DmsgText_BuildNodeString` calls `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetText14`, `Sjis_IsCodeInSet`, `NetCellFont_LowercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`, `sub_10312050`, `DmsgText_ContainsChar`
+- `DmsgText_BuildNodeString` calls `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetText14`, `Sjis_IsCodeInSet`, `NetCellFont_LowercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`, `game_10312050`, `DmsgText_ContainsChar`
 - `DmsgText_HasNoHead` calls nothing directly
-- `DmsgText_ComposeTextB` calls `DmsgText_HasNoHead`, `sub_1018D3D0`, `TextInputFiles_Append`, `TextInputFiles_AppendBuf`, `DmsgText_BuildNodeString`, `DmsgText_GetSuffixByFlag`, `DmsgText_GetPrefixByFlags`, `DmsgText_GetPrefixByFlags2`, `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetEntryById`, `DmsgText_IsTypeTwoZero`, `DmsgText_GetFormAlt`, `DmsgText_GetFormById`, `DmsgText_GetText14`, `TextInputFiles_AssignWhole`
+- `DmsgText_ComposeTextB` calls `DmsgText_HasNoHead`, `game_1018D3D0`, `TextInputFiles_Append`, `TextInputFiles_AppendBuf`, `DmsgText_BuildNodeString`, `DmsgText_GetSuffixByFlag`, `DmsgText_GetPrefixByFlags`, `DmsgText_GetPrefixByFlags2`, `DmsgText_FindNextTyped9`, `TextInputFiles_GetCStr`, `DmsgText_GetEntryById`, `DmsgText_IsTypeTwoZero`, `DmsgText_GetFormAlt`, `DmsgText_GetFormById`, `DmsgText_GetText14`, `TextInputFiles_AssignWhole`
 - `DmsgText_AppendStringNode` calls `Allocator_Generic`, `TextInputFiles_AssignCStr`, `DmsgText_AppendNode`, `DmsgText_HasNoHead`
 - `DmsgText_AppendIdString` calls `DmsgText_HasNoHead`, `Allocator_Generic`, `TextInputFiles_AssignCStr`, `DmsgText_LinkNode`
 - `DmsgText_LinkNode` calls `DmsgText_AppendNode`, `DmsgText_HasNoHead`
@@ -185,11 +185,11 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Scene_GetMenuFrameName` calls nothing directly
 - `DmsgText_CopyWithoutMarker` calls `Sjis_GetCharByteLen`
 - `DmsgText_CountChars` calls `Sjis_GetCharByteLen`
-- `DmsgText_WrapLine` calls `DmsgText_IsWrapBreak`, `Sjis_GetCharByteLen`, `DmsgText_CopyWithoutMarker`, `sub_1025BBE0`, `DmsgText_CountChars`, `DmsgText_FindMarker`, `DmsgText_HasKnownPrefix`
-- `DmsgText_HasKnownPrefix` calls `sub_10312940`
+- `DmsgText_WrapLine` calls `DmsgText_IsWrapBreak`, `Sjis_GetCharByteLen`, `DmsgText_CopyWithoutMarker`, `game_1025BBE0`, `DmsgText_CountChars`, `DmsgText_FindMarker`, `DmsgText_HasKnownPrefix`
+- `DmsgText_HasKnownPrefix` calls `game_10312940`
 - `DmsgText_IsDashNotDigit` calls nothing directly
-- `DmsgText_FindPrefixEntry` calls `sub_10312940`
+- `DmsgText_FindPrefixEntry` calls `game_10312940`
 - `DmsgText_FindMarker` calls `Sjis_GetCharByteLen`
 - `DmsgText_IsWrapBreak` calls nothing directly
-- `DmsgText_ConvertCharByLanguage` calls `sub_1011DAA0`, `NetCellFont_UppercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`
-- `DmsgText_WrapSjisAt` calls `sub_1025BE80`, `DmsgText_ConvertCharByLanguage`, `Sjis_GetCharByteLen`, `Sjis_CopyPrefix`
+- `DmsgText_ConvertCharByLanguage` calls `game_1011DAA0`, `NetCellFont_UppercaseCharThen1011DAE0`, `Sjis_GetCharByteLen`
+- `DmsgText_WrapSjisAt` calls `game_1025BE80`, `DmsgText_ConvertCharByLanguage`, `Sjis_GetCharByteLen`, `Sjis_CopyPrefix`

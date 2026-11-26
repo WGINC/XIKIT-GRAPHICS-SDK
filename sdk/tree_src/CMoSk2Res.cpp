@@ -4,15 +4,15 @@
 
 // FUNCTION: FFXIMAIN 0x10034170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoSk2Res::Slot4StoreInHandle(int a2)
+int CMoSk2Res::Slot4StoreInHandle(int arg1)
 {
-  *this->field_14 = a2;
-  return a2;
+  *this->field_14 = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10034180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void CMoSk2Res::Slot5Nop(int a1)
+void CMoSk2Res::Slot5Nop(int arg1)
 {
   ;
 }
@@ -26,10 +26,10 @@ void CMoSk2Res::Slot9Nop()
 
 // FUNCTION: FFXIMAIN 0x10071AA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoSk2Res::ScalarDeletingDtor(char a2)
+unsigned int ** CMoSk2Res::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

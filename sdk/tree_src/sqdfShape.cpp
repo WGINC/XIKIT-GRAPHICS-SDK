@@ -4,51 +4,51 @@
 
 // FUNCTION: FFXIMAIN 0x102AEE90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqdfShape_Create(void)
+XI_API bits32 * __cdecl SqdfShape_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x40,s_C__dev_dancer_modules_sqDeform_s_103bf324,0x22);
-  orig::SqdfShape_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x40,str_C__dev_dancer_modules_sqDeform_s_103BF324,0x22);
+  orig::SqdfShape_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102AEEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqdfShape_Init(undefined4 * param_1)
+XI_API void __cdecl SqdfShape_Init(bits32 * arg1)
 {
-  *param_1 = 0x30009;
-  param_1[2] = &LAB_102aefd0;
-  param_1[3] = XI_CODE(FUN_102aefe0);
-  param_1[4] = XI_CODE(FUN_102af020);
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[10] = 0;
-  param_1[7] = 0;
-  param_1[9] = 0;
-  param_1[8] = 0;
-  param_1[0xb] = 0;
-  param_1[0xd] = 0xffffffe0;
-  param_1[0xe] = 0;
-  param_1[0xf] = 0;
+  *arg1 = 0x30009;
+  arg1[2] = &code_102AEFD0;
+  arg1[3] = XI_CODE(game_102AEFE0);
+  arg1[4] = XI_CODE(game_102AF020);
+  arg1[5] = 0;
+  arg1[6] = 0;
+  arg1[10] = 0;
+  arg1[7] = 0;
+  arg1[9] = 0;
+  arg1[8] = 0;
+  arg1[0xb] = 0;
+  arg1[0xd] = 0xffffffe0;
+  arg1[0xe] = 0;
+  arg1[0xf] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102AF170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqdfShape_InitCallbacks(undefined4 * param_1)
+XI_API void __cdecl SqdfShape_InitCallbacks(bits32 * arg1)
 {
-  *param_1 = 0x30008;
-  param_1[2] = &LAB_102af290;
-  param_1[3] = XI_CODE(FUN_102af2a0);
-  param_1[4] = &LAB_102af2e0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  orig::SqVec_ZeroDwords(param_1 + 10);
+  *arg1 = 0x30008;
+  arg1[2] = &code_102AF290;
+  arg1[3] = XI_CODE(game_102AF2A0);
+  arg1[4] = &code_102AF2E0;
+  arg1[5] = 0;
+  arg1[6] = 0;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 0;
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
+  orig::SqVec_ZeroDwords(arg1 + 10);
   return;
 }

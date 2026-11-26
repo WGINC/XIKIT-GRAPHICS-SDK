@@ -20,8 +20,8 @@ Why the file has this name (data/unit_names.json): OpeningSubtitle_Constructor /
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `OpeningSubtitle_IsStateFour` calls nothing directly
-- `OpeningSubtitle_Constructor` calls `sub_100731B0`, `sub_10071E90`, `ShapeMng_FindShape`, `OpeningSubtitle_Reset`
+- `OpeningSubtitle_Constructor` calls `game_100731B0`, `game_10071E90`, `ShapeMng_FindShape`, `OpeningSubtitle_Reset`
 - `OpeningSubtitle_Reset` calls nothing directly
-- `OpeningSubtitle_UpdateRangeEntries` calls `sub_10311C2C`, `sub_1011FB60`
+- `OpeningSubtitle_UpdateRangeEntries` calls `game_10311C2C`, `game_1011FB60`
 - `Vt10329FE0_Constructor` calls `Vt10329FE0_Reset`
 - `Vt10329FE0_Reset` calls nothing directly

@@ -17,7 +17,7 @@ XI_API void * __thiscall LobbyThread_Construct(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_1033cbe0;
+  *(uint8_t ***)self_ = &g_1033CBE0;
   orig::LobbyThread_InitState(self_);
   return self_;
 }
@@ -32,36 +32,36 @@ XI_API void __thiscall LobbyThread_InitState(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10245460
 // GATE: PASS -- 100 trials, 26 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 26
-XI_API undefined4 __cdecl LobbyScreen_LoadResourceRunMain(int * param_1, int param_2)
+XI_API bits32 __cdecl LobbyScreen_LoadResourceRunMain(int * arg1, int arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   void *self_;
-  int *piVar2;
+  int *p2;
   
-  piVar2 = (int *)orig::FUN_100731b0(g_pMeshResourceMng_as_v1,&param_2,param_2 + 0x17);
-  puVar1 = (uint32_t *)*piVar2;
-  if (puVar1 != (uint32_t *)0x0) {
-    orig::CMoResource_AddRefChain_v3((void *)*puVar1);
-    piVar2 = (int *)orig::CMoResource_FindByTypeAndId_v2((void *)*puVar1,&param_2,7,0x6e69616d);
-    if (((uint32_t *)*piVar2 != (uint32_t *)0x0) &&
-       (self_ = *(void **)*piVar2, self_ != (void *)0x0)) {
-      orig::FUN_10056b80(self_,0,0);
+  p2 = (int *)orig::game_100731B0(g_pMeshResourceMng_as_v1,&arg2,arg2 + 0x17);
+  p1 = (uint32_t *)*p2;
+  if (p1 != (uint32_t *)0x0) {
+    orig::CMoResource_AddRefChain_v3((void *)*p1);
+    p2 = (int *)orig::CMoResource_FindByTypeAndId_v2((void *)*p1,&arg2,7,0x6e69616d);
+    if (((uint32_t *)*p2 != (uint32_t *)0x0) &&
+       (self_ = *(void **)*p2, self_ != (void *)0x0)) {
+      orig::game_10056B80(self_,0,0);
     }
   }
-  *param_1 = (int)puVar1;
-  return param_1;
+  *arg1 = (int)p1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x102454E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl LobbyScreen_ReleaseResource(void)
 {
-  if ((DAT_10669094 != (int *)0x0) && (*DAT_10669094 != 0)) {
-    orig::DynVB_ReleaseResourcesOf(*DAT_10669094);
-    if (DAT_10669094 != (int *)0x0) {
-      orig::CMoResource_ReleaseChain_v2((void *)*DAT_10669094);
-      orig::ResHandle_FreeIfUnreferenced_v2(&DAT_10669094);
-      DAT_10669094 = (int *)0x0;
+  if ((g_10669094 != (int *)0x0) && (*g_10669094 != 0)) {
+    orig::DynVB_ReleaseResourcesOf(*g_10669094);
+    if (g_10669094 != (int *)0x0) {
+      orig::CMoResource_ReleaseChain_v2((void *)*g_10669094);
+      orig::ResHandle_FreeIfUnreferenced_v2(&g_10669094);
+      g_10669094 = (int *)0x0;
     }
   }
   return;
@@ -69,41 +69,41 @@ XI_API void __cdecl LobbyScreen_ReleaseResource(void)
 
 // FUNCTION: FFXIMAIN 0x10245520
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl LobbyScreen_LoadResourceOnce(undefined4 param_1)
+XI_API void __cdecl LobbyScreen_LoadResourceOnce(bits32 arg1)
 {
-  int *piVar1;
+  int *p1;
   
-  if (DAT_10669094_as_s32 == 0) {
-    piVar1 = (int *)orig::LobbyScreen_LoadResourceRunMain(&param_1,param_1);
-    DAT_10669094_as_s32 = *piVar1;
+  if (g_10669094_as_s32 == 0) {
+    p1 = (int *)orig::LobbyScreen_LoadResourceRunMain(&arg1,arg1);
+    g_10669094_as_s32 = *p1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10245600
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl LobbyThread_Start(undefined4 param_1)
+XI_API bits32 __cdecl LobbyThread_Start(bits32 arg1)
 {
   void *self_;
   
   self_ = (void *)orig::Mem_AllocDefault_v1(0x2c);
   if (self_ == (void *)0x0) {
-    DAT_10669098 = (void *)0x0;
+    g_10669098 = (void *)0x0;
   }
   else {
-    DAT_10669098 = orig::CYyObject_Init(self_);
+    g_10669098 = orig::CYyObject_Init(self_);
   }
-  orig::ThreadPool_StartThread(DAT_10669098,&LAB_10245650,0,0);
-  DAT_106690a4 = 0;
-  DAT_106690a8 = param_1;
+  orig::ThreadPool_StartThread(g_10669098,&LobbyThread_Proc,0,0);
+  g_106690A4 = 0;
+  g_106690A8 = arg1;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10245B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl LobbyThread_SetGlobal106690AC(undefined4 param_1)
+XI_API bits32 __cdecl LobbyThread_SetGlobal106690AC(bits32 arg1)
 {
-  _DAT_106690ac = param_1;
+  g_106690AC = arg1;
   return 0;
 }
 
@@ -111,17 +111,17 @@ XI_API undefined4 __cdecl LobbyThread_SetGlobal106690AC(undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 94 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl Lobby_DestroyThreadPool(void)
 {
-  orig::ThreadPool_Shutdown(DAT_10669098_as_v0);
-  if ((DAT_106690a4_as_s32 != 0) && (DAT_10669098_as_v0 != (int *)0x0)) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10669098_as_v0 + 0x18))))((void *)(DAT_10669098_as_v0),1);
-    DAT_10669098_as_v0 = (int *)0x0;
+  orig::ThreadPool_Shutdown(g_10669098_as_v0);
+  if ((g_106690A4_as_s32 != 0) && (g_10669098_as_v0 != (int *)0x0)) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10669098_as_v0 + 0x18))))((void *)(g_10669098_as_v0),1);
+    g_10669098_as_v0 = (int *)0x0;
   }
-  return DAT_106690a4_as_s32;
+  return g_106690A4_as_s32;
 }
 
 // FUNCTION: FFXIMAIN 0x10245BA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl thunk_sub_10245BB0(void)
+XI_API void __cdecl thunk_LobbyThread_ResetZone_as_v0(void)
 {
   orig::LobbyThread_ResetZone();
   return;
@@ -134,7 +134,7 @@ XI_API void __cdecl LobbyThread_ResetZone(void)
   if (g_pXiZone != (void *)0x0) {
     orig::XiZone_ResetState(g_pXiZone);
     orig::WinMain_ApplyTables10350210();
-    orig::FUN_1018b130();
+    orig::XiZone_GetInstance_as_v0();
     orig::CYyCamMng2_CreateGlobal();
     orig::Actor_ResetDrawLists();
     return;
@@ -144,23 +144,23 @@ XI_API void __cdecl LobbyThread_ResetZone(void)
 
 // FUNCTION: FFXIMAIN 0x10245BE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl LobbyThread_IsSystemState1(void)
+XI_API bits32 __cdecl LobbyThread_IsSystemState1(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::CYyThreadPool_Call10039700IfField8(DAT_10669098,1);
-  return uVar1;
+  u1 = orig::CYyThreadPool_Call10039700IfField8(g_10669098,1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10245F30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall LobbyThread_NextSequence(void * self_)
+XI_API bits32 __thiscall LobbyThread_NextSequence(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = *(int *)((int)self_ + 8) + 1U & 0x7fffffff;
-  *(uint32_t *)((int)self_ + 8) = uVar1;
-  if (uVar1 == 0) {
+  u1 = *(int *)((int)self_ + 8) + 1U & 0x7fffffff;
+  *(uint32_t *)((int)self_ + 8) = u1;
+  if (u1 == 0) {
     *(uint32_t *)((int)self_ + 8) = 1;
   }
   return *(uint32_t *)((int)self_ + 8);
@@ -168,380 +168,380 @@ XI_API undefined4 __thiscall LobbyThread_NextSequence(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10246000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall LobbyThread_SendCmd0(int * param_1, undefined4 param_2)
+XI_API bits32 __stdcall LobbyThread_SendCmd0(int * arg1, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::LobbyThread_PushCmd(0,param_1,param_2,0,0,0,0,0);
-  return (int)uVar1;
+  u1 = orig::LobbyThread_PushCmd(0,arg1,arg2,0,0,0,0,0);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10246030
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall LobbyThread_QueueSoundCmd(void * self_, char * param_1, uint32_t param_2, uint32_t param_3)
+XI_API uint64_t __thiscall LobbyThread_QueueSoundCmd(void * self_, char * arg2, uint32_t arg3, uint32_t arg4)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
-  char *pcVar4;
-  uint8_t bVar5;
-  uint64_t uVar6;
+  int i1;
+  int i2;
+  char *p1;
+  char *p2;
+  uint8_t u1;
+  uint64_t u2;
   
-  iVar1 = orig::LobbyThread_NextSequence(self_);
-  bVar5 = true;
-  iVar2 = 5;
-  pcVar3 = param_1;
-  pcVar4 = s_SeSep_1035d5f8;
+  i1 = orig::LobbyThread_NextSequence(self_);
+  u1 = true;
+  i2 = 5;
+  p1 = arg2;
+  p2 = str_SeSep_1035D5F8;
   do {
-    if (iVar2 == 0) break;
-    iVar2 = iVar2 + -1;
-    bVar5 = *pcVar3 == *pcVar4;
-    pcVar3 = pcVar3 + 1;
-    pcVar4 = pcVar4 + 1;
-  } while (bVar5);
-  if (bVar5) {
-    uVar6 = orig::LobbyThread_PushCmd(2,*(int **)(param_1 + 8),iVar1,param_2 & 0x7f,param_3 & 0x7f,0,0,0);
-    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar6 >> 0x20)) << 32) | (uint32_t)(iVar1)));
+    if (i2 == 0) break;
+    i2 = i2 + -1;
+    u1 = *p1 == *p2;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
+  } while (u1);
+  if (u1) {
+    u2 = orig::LobbyThread_PushCmd(2,*(int **)(arg2 + 8),i1,arg3 & 0x7f,arg4 & 0x7f,0,0,0);
+    return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(i1)));
   }
-  uVar6 = orig::LobbyThread_PushCmd(1,(int *)param_1,iVar1,param_2 & 0x7f,param_3 & 0x7f,0,0,0);
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar6 >> 0x20)) << 32) | (uint32_t)(iVar1)));
+  u2 = orig::LobbyThread_PushCmd(1,(int *)arg2,i1,arg3 & 0x7f,arg4 & 0x7f,0,0,0);
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(i1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10246160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __stdcall LobbyThread_QueryChannels(undefined4 param_1, int param_2, int param_3)
+XI_API uint64_t __stdcall LobbyThread_QueryChannels(bits32 arg1, int arg2, int arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
   
-  iVar1 = -1;
-  uVar2 = DAT_106690c8;
-  switch(xi_sw(param_1)) {
+  i1 = -1;
+  u1 = g_106690C8;
+  switch(xi_sw(arg1)) {
   case 0:
-    if (param_2 == 0) {
-      while ((*(int *)(uVar2 + 0xc0) < 1 || ((-1 < param_3 && (*(int *)(uVar2 + 0xc4) != param_3))))
+    if (arg2 == 0) {
+      while ((*(int *)(u1 + 0xc0) < 1 || ((-1 < arg3 && (*(int *)(u1 + 0xc4) != arg3))))
             ) {
-        uVar2 = uVar2 + 0xf4;
-        if (DAT_106690c8 + 0x1310 <= uVar2) {
-          return (uint64_t)DAT_106690c8 << 0x20;
+        u1 = u1 + 0xf4;
+        if (g_106690C8 + 0x1310 <= u1) {
+          return (uint64_t)g_106690C8 << 0x20;
         }
       }
     }
     else {
-      while (((-1 < param_2 || (*(int *)(uVar2 + 0xc0) < 1)) && (*(int *)(uVar2 + 0xc0) != param_2))
+      while (((-1 < arg2 || (*(int *)(u1 + 0xc0) < 1)) && (*(int *)(u1 + 0xc0) != arg2))
             ) {
-        uVar2 = uVar2 + 0xf4;
-        if (DAT_106690c8 + 0x1310 <= uVar2) {
-          return (uint64_t)DAT_106690c8 << 0x20;
+        u1 = u1 + 0xf4;
+        if (g_106690C8 + 0x1310 <= u1) {
+          return (uint64_t)g_106690C8 << 0x20;
         }
       }
     }
-    return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(1)));
+    return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(1)));
   case 1:
-    if (0 < param_2) {
+    if (0 < arg2) {
       do {
-        if (*(int *)(uVar2 + 0xc0) == param_2) {
-          return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(*(int *)(uVar2 + 0x70) >> 0xc)));
+        if (*(int *)(u1 + 0xc0) == arg2) {
+          return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(*(int *)(u1 + 0x70) >> 0xc)));
         }
-        uVar2 = uVar2 + 0xf4;
-      } while (uVar2 < DAT_106690c8 + 0x1310);
-      return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(0xffffffff)));
+        u1 = u1 + 0xf4;
+      } while (u1 < g_106690C8 + 0x1310);
+      return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(0xffffffff)));
     }
     break;
   case 2:
-    if (0 < param_2) {
+    if (0 < arg2) {
       do {
-        if (*(int *)(uVar2 + 0xc0) == param_2) {
-          return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(*(int *)(uVar2 + 0x80) >> 0xc)));
+        if (*(int *)(u1 + 0xc0) == arg2) {
+          return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(*(int *)(u1 + 0x80) >> 0xc)));
         }
-        uVar2 = uVar2 + 0xf4;
-      } while (uVar2 < DAT_106690c8 + 0x1310);
-      return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(0xffffffff)));
+        u1 = u1 + 0xf4;
+      } while (u1 < g_106690C8 + 0x1310);
+      return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(0xffffffff)));
     }
     break;
   case 3:
-    if (0 < param_2) {
+    if (0 < arg2) {
       do {
-        if (*(int *)(uVar2 + 0xc0) == param_2) {
-          return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(*(uint32_t *)(uVar2 + 0x6c))));
+        if (*(int *)(u1 + 0xc0) == arg2) {
+          return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(*(uint32_t *)(u1 + 0x6c))));
         }
-        uVar2 = uVar2 + 0xf4;
-      } while (uVar2 < DAT_106690c8 + 0x1310);
-      return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(0xffffffff)));
+        u1 = u1 + 0xf4;
+      } while (u1 < g_106690C8 + 0x1310);
+      return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(0xffffffff)));
     }
     break;
   case 4:
-    if (0 < param_2) {
+    if (0 < arg2) {
       do {
-        if (*(int *)(uVar2 + 0xc0) == param_2) {
-          return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(*(uint32_t *)(uVar2 + 0x7c))));
+        if (*(int *)(u1 + 0xc0) == arg2) {
+          return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(*(uint32_t *)(u1 + 0x7c))));
         }
-        uVar2 = uVar2 + 0xf4;
-      } while (uVar2 < DAT_106690c8 + 0x1310);
-      return ((uint64_t)(((uint64_t)(uint32_t)(DAT_106690c8) << 32) | (uint32_t)(0xffffffff)));
+        u1 = u1 + 0xf4;
+      } while (u1 < g_106690C8 + 0x1310);
+      return ((uint64_t)(((uint64_t)(uint32_t)(g_106690C8) << 32) | (uint32_t)(0xffffffff)));
     }
     break;
   case 5:
-    iVar1 = 0;
-    uVar3 = DAT_106690c8;
+    i1 = 0;
+    u2 = g_106690C8;
     do {
-      if (*(int *)(uVar3 + 0x3c) != 0) {
-        iVar1 = iVar1 + 1;
+      if (*(int *)(u2 + 0x3c) != 0) {
+        i1 = i1 + 1;
       }
-      uVar3 = uVar3 + 0xf4;
-      uVar2 = DAT_106690c8 + 0x1310;
-    } while (uVar3 < DAT_106690c8 + 0x1310);
+      u2 = u2 + 0xf4;
+      u1 = g_106690C8 + 0x1310;
+    } while (u2 < g_106690C8 + 0x1310);
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar2) << 32) | (uint32_t)(iVar1)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(i1)));
 }
 
 // FUNCTION: FFXIMAIN 0x102462F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall LobbyThread_SendCmd3(int * param_1, uint32_t param_2, undefined4 param_3)
+XI_API void __stdcall LobbyThread_SendCmd3(int * arg1, uint32_t arg2, bits32 arg3)
 {
-  orig::LobbyThread_PushCmd(3,param_1,0,param_2 & 0x7f,param_3,0,0,0);
+  orig::LobbyThread_PushCmd(3,arg1,0,arg2 & 0x7f,arg3,0,0,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10246320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall LobbyThread_SendCmd4(int * param_1, uint32_t param_2, undefined4 param_3)
+XI_API bits32 __stdcall LobbyThread_SendCmd4(int * arg1, uint32_t arg2, bits32 arg3)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::LobbyThread_PushCmd(4,param_1,0,param_2 & 0x7f,param_3,0,0,0);
-  return (int)uVar1;
+  u1 = orig::LobbyThread_PushCmd(4,arg1,0,arg2 & 0x7f,arg3,0,0,0);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x102463C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall LobbyThread_SendCmd6(int * param_1)
+XI_API void __stdcall LobbyThread_SendCmd6(int * arg1)
 {
-  orig::LobbyThread_PushCmd(6,param_1,0,0,0,0,0,0);
+  orig::LobbyThread_PushCmd(6,arg1,0,0,0,0,0,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102463F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall LobbyThread_QueueStreamFile(int * param_1, uint32_t param_2, undefined4 param_3)
+XI_API bits32 __stdcall LobbyThread_QueueStreamFile(int * arg1, uint32_t arg2, bits32 arg3)
 {
-  char *pcVar1;
-  int iVar2;
-  uint32_t uVar3;
-  char *pcVar4;
-  char *pcVar5;
-  uint8_t bVar6;
-  uint64_t uVar7;
+  char *p1;
+  int i1;
+  uint32_t u1;
+  char *p2;
+  char *p3;
+  uint8_t u2;
+  uint64_t u3;
   
-  uVar3 = 0xffffffff;
-  uVar7 = orig::Allocator_Generic_v1(0x30);
-  pcVar1 = (char *)uVar7;
-  if (pcVar1 != (char *)0x0) {
-    pcVar4 = pcVar1;
-    for (iVar2 = 0xc; iVar2 != 0; iVar2 = iVar2 + -1) {
-      pcVar4[0] = '\0';
-      pcVar4[1] = '\0';
-      pcVar4[2] = '\0';
-      pcVar4[3] = '\0';
-      pcVar4 = pcVar4 + 4;
+  u1 = 0xffffffff;
+  u3 = orig::Allocator_Generic_v1(0x30);
+  p1 = (char *)u3;
+  if (p1 != (char *)0x0) {
+    p2 = p1;
+    for (i1 = 0xc; i1 != 0; i1 = i1 + -1) {
+      p2[0] = '\0';
+      p2[1] = '\0';
+      p2[2] = '\0';
+      p2[3] = '\0';
+      p2 = p2 + 4;
     }
-    iVar2 = orig::FUN_10311fde(param_1,&DAT_1034f2d0);
-    if (iVar2 != 0) {
-      orig::FUN_1031217f(pcVar1,1,0x30,iVar2);
-      orig::FUN_10311f30(iVar2);
+    i1 = orig::game_10311FDE(arg1,&g_1034F2D0);
+    if (i1 != 0) {
+      orig::game_1031217F(p1,1,0x30,i1);
+      orig::game_10311F30(i1);
     }
-    iVar2 = 10;
-    bVar6 = true;
-    pcVar4 = pcVar1;
-    pcVar5 = s_BGMStream_103888d0;
+    i1 = 10;
+    u2 = true;
+    p2 = p1;
+    p3 = str_BGMStream_103888D0;
     do {
-      if (iVar2 == 0) break;
-      iVar2 = iVar2 + -1;
-      bVar6 = *pcVar4 == *pcVar5;
-      pcVar4 = pcVar4 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (bVar6);
-    if (bVar6) {
-      uVar3 = *(uint32_t *)(pcVar1 + 0x14);
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      u2 = *p2 == *p3;
+      p2 = p2 + 1;
+      p3 = p3 + 1;
+    } while (u2);
+    if (u2) {
+      u1 = *(uint32_t *)(p1 + 0x14);
     }
     else {
-      uVar3 = 0x400;
+      u1 = 0x400;
     }
-    orig::LobbyThread_PushCmd(7,param_1,param_2 & 0x7f,param_3,0,0,0,0);
-    orig::operator_delete_v1(pcVar1);
+    orig::LobbyThread_PushCmd(7,arg1,arg2 & 0x7f,arg3,0,0,0,0);
+    orig::operator_delete_v1(p1);
   }
-  return uVar3;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x102465E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __stdcall LobbyThread_QueueMusicFile(uint32_t param_1, uint32_t param_2, undefined4 param_3)
+XI_API uint32_t __stdcall LobbyThread_QueueMusicFile(uint32_t arg1, uint32_t arg2, bits32 arg3)
 {
-  char cVar1;
-  uint8_t *puVar2;
-  int *piVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  uint64_t uVar7;
+  char c1;
+  uint8_t *p1;
+  int *p2;
+  int i1;
+  char *p3;
+  int i2;
+  uint64_t u1;
   char xi_frame[64] __attribute__((aligned(4)));
-  uint32_t  (&auStack_40)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
+  uint32_t  (&u2)[16] = *reinterpret_cast<uint32_t  (*)[16]>(xi_frame + 0);
   
-  pcVar5 = (char *)(DAT_10669108 + 4);
-  if (*pcVar5 != '\0') {
-    param_1 = param_1 & 0x3ff;
-    uVar7 = orig::Allocator_Generic_v1(0x104);
-    piVar3 = (int *)uVar7;
-    if (piVar3 != (int *)0x0) {
-      iVar6 = 0;
+  p3 = (char *)(g_10669108 + 4);
+  if (*p3 != '\0') {
+    arg1 = arg1 & 0x3ff;
+    u1 = orig::Allocator_Generic_v1(0x104);
+    p2 = (int *)u1;
+    if (p2 != (int *)0x0) {
+      i2 = 0;
       do {
-        uVar7 = orig::Allocator_Generic_v1(0x104);
-        auStack_40[iVar6] = (int)uVar7;
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < 0x10);
-      iVar6 = 0;
+        u1 = orig::Allocator_Generic_v1(0x104);
+        u2[i2] = (int)u1;
+        i2 = i2 + 1;
+      } while (i2 < 0x10);
+      i2 = 0;
       while( true ) {
-        puVar2 = (uint8_t *)auStack_40[iVar6];
-        if (puVar2 != (uint8_t *)0x0) {
-          orig::_sprintf(puVar2,s__s_music_3_3u_bgw_103888dc,pcVar5,param_1);
+        p1 = (uint8_t *)u2[i2];
+        if (p1 != (uint8_t *)0x0) {
+          orig::_sprintf(p1,str__s_music_3_3u_bgw_103888DC,p3,arg1);
         }
-        iVar4 = orig::FUN_10311fde(puVar2,&DAT_1034f2d0);
-        if (iVar4 != 0) break;
-        pcVar5 = pcVar5 + 0x108;
-        iVar6 = iVar6 + 1;
-        if (0xf < iVar6) goto LAB_10246691;
+        i1 = orig::game_10311FDE(p1,&g_1034F2D0);
+        if (i1 != 0) break;
+        p3 = p3 + 0x108;
+        i2 = i2 + 1;
+        if (0xf < i2) goto code_10246691;
       }
-      pcVar5 = (char *)auStack_40[iVar6];
-      iVar6 = (int)piVar3 - (int)pcVar5;
+      p3 = (char *)u2[i2];
+      i2 = (int)p2 - (int)p3;
       do {
-        cVar1 = *pcVar5;
-        pcVar5[iVar6] = cVar1;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar1 != '\0');
-LAB_10246691:
-      if (iVar4 != 0) {
-        orig::FUN_10311f30(iVar4);
-        orig::LobbyThread_PushCmd(7,piVar3,param_2 & 0x7f,param_3,0,0,0,0);
+        c1 = *p3;
+        p3[i2] = c1;
+        p3 = p3 + 1;
+      } while (c1 != '\0');
+code_10246691:
+      if (i1 != 0) {
+        orig::game_10311F30(i1);
+        orig::LobbyThread_PushCmd(7,p2,arg2 & 0x7f,arg3,0,0,0,0);
       }
-      orig::operator_delete_v1(piVar3);
-      iVar6 = 0;
+      orig::operator_delete_v1(p2);
+      i2 = 0;
       do {
-        if ((LPVOID)auStack_40[iVar6] != (LPVOID)0x0) {
-          orig::operator_delete_v1((LPVOID)auStack_40[iVar6]);
+        if ((LPVOID)u2[i2] != (LPVOID)0x0) {
+          orig::operator_delete_v1((LPVOID)u2[i2]);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < 0x10);
+        i2 = i2 + 1;
+      } while (i2 < 0x10);
     }
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10246770
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall LobbyThread_SendCmd8(int * param_1, uint32_t param_2, undefined4 param_3)
+XI_API void __stdcall LobbyThread_SendCmd8(int * arg1, uint32_t arg2, bits32 arg3)
 {
-  orig::LobbyThread_PushCmd(8,param_1,param_2 & 0x7f,param_3,0,0,0,0);
+  orig::LobbyThread_PushCmd(8,arg1,arg2 & 0x7f,arg3,0,0,0,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102467A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall LobbyThread_SendCmd9(int * param_1, undefined4 param_2)
+XI_API void __stdcall LobbyThread_SendCmd9(int * arg1, bits32 arg2)
 {
-  orig::LobbyThread_PushCmd(9,param_1,param_2,0,0,0,0,0);
+  orig::LobbyThread_PushCmd(9,arg1,arg2,0,0,0,0,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102467F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __stdcall LobbyThread_SendCmd11(int * param_1)
+XI_API uint64_t __stdcall LobbyThread_SendCmd11(int * arg1)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::LobbyThread_PushCmd(0xb,param_1,0,0,0,0,0,0);
-  return uVar1;
+  u1 = orig::LobbyThread_PushCmd(0xb,arg1,0,0,0,0,0,0);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1024C060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __stdcall LobbyThread_PushCmd(int param_1, int * param_2, int param_3, int param_4, int param_5, int param_6, int param_7, int param_8)
+XI_API uint64_t __stdcall LobbyThread_PushCmd(int arg1, int * arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8)
 {
-  int *piVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  int *piVar5;
+  int *p1;
+  int *p2;
+  int i1;
+  int i2;
+  int *p3;
   
-  piVar2 = DAT_106690f0;
-  if (DAT_106690f0 <= DAT_106690c4) {
-    piVar2 = DAT_106690f0 + 0x800;
+  p2 = g_106690F0;
+  if (g_106690F0 <= g_106690C4) {
+    p2 = g_106690F0 + 0x800;
   }
-  if (param_1 == 7) {
-    param_1 = (int)(DAT_106690c4 + 0x48);
-    if (piVar2 <= (uint32_t)param_1) goto LAB_1024c154;
-    *DAT_106690c4 = 7;
-    DAT_106690c4[1] = param_3;
-    DAT_106690c4[2] = param_4;
-    piVar2 = DAT_106690c4 + 8;
-    iVar4 = 8;
+  if (arg1 == 7) {
+    arg1 = (int)(g_106690C4 + 0x48);
+    if (p2 <= (uint32_t)arg1) goto code_1024C154;
+    *g_106690C4 = 7;
+    g_106690C4[1] = arg3;
+    g_106690C4[2] = arg4;
+    p2 = g_106690C4 + 8;
+    i2 = 8;
     do {
-      piVar1 = piVar2;
-      if (DAT_106690e8 + 0x800 <= piVar2) {
-        piVar1 = DAT_106690e8;
+      p1 = p2;
+      if (g_106690E8 + 0x800 <= p2) {
+        p1 = g_106690E8;
       }
-      piVar2 = piVar1 + 8;
-      iVar4 = iVar4 + -1;
-      piVar5 = param_2;
-      for (iVar3 = 8; iVar3 != 0; iVar3 = iVar3 + -1) {
-        *piVar1 = *piVar5;
-        piVar5 = piVar5 + 1;
-        piVar1 = piVar1 + 1;
+      p2 = p1 + 8;
+      i2 = i2 + -1;
+      p3 = arg2;
+      for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+        *p1 = *p3;
+        p3 = p3 + 1;
+        p1 = p1 + 1;
       }
-      param_2 = param_2 + 8;
-    } while (iVar4 != 0);
-    piVar1 = DAT_106690e8 + 0x800;
-    if (piVar1 <= piVar2) {
-      piVar2 = DAT_106690e8;
+      arg2 = arg2 + 8;
+    } while (i2 != 0);
+    p1 = g_106690E8 + 0x800;
+    if (p1 <= p2) {
+      p2 = g_106690E8;
     }
   }
   else {
-    if (piVar2 <= DAT_106690c4 + 8) {
-LAB_1024c154:
-      return ((uint64_t)(((uint64_t)(uint32_t)(param_1) << 32) | (uint32_t)((int)DAT_106690c4 - (int)DAT_106690e8 >> 5)));
+    if (p2 <= g_106690C4 + 8) {
+code_1024C154:
+      return ((uint64_t)(((uint64_t)(uint32_t)(arg1) << 32) | (uint32_t)((int)g_106690C4 - (int)g_106690E8 >> 5)));
     }
-    *DAT_106690c4 = param_1;
-    DAT_106690c4[1] = (int)param_2;
-    DAT_106690c4[2] = param_3;
-    DAT_106690c4[3] = param_4;
-    DAT_106690c4[4] = param_5;
-    DAT_106690c4[5] = param_6;
-    DAT_106690c4[6] = param_7;
-    DAT_106690c4[7] = param_8;
-    piVar1 = DAT_106690e8 + 0x800;
-    piVar2 = DAT_106690c4 + 8;
-    if (piVar1 <= DAT_106690c4 + 8) {
-      DAT_106690c4 = DAT_106690e8;
-      return ((uint64_t)(uint32_t)(piVar1)) << 0x20;
+    *g_106690C4 = arg1;
+    g_106690C4[1] = (int)arg2;
+    g_106690C4[2] = arg3;
+    g_106690C4[3] = arg4;
+    g_106690C4[4] = arg5;
+    g_106690C4[5] = arg6;
+    g_106690C4[6] = arg7;
+    g_106690C4[7] = arg8;
+    p1 = g_106690E8 + 0x800;
+    p2 = g_106690C4 + 8;
+    if (p1 <= g_106690C4 + 8) {
+      g_106690C4 = g_106690E8;
+      return ((uint64_t)(uint32_t)(p1)) << 0x20;
     }
   }
-  DAT_106690c4 = piVar2;
-  return ((uint64_t)(((uint64_t)(uint32_t)(piVar1) << 32) | (uint32_t)((int)piVar2 - (int)DAT_106690e8 >> 5)));
+  g_106690C4 = p2;
+  return ((uint64_t)(((uint64_t)(uint32_t)(p1) << 32) | (uint32_t)((int)p2 - (int)g_106690E8 >> 5)));
 }
 
 // FUNCTION: FFXIMAIN 0x1024C210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall LobbyThread_CtorVt1033CCA8(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
+  int i1;
+  uint32_t *p1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_1033cca8;
+  *(uint8_t ***)self_ = &g_1033CCA8;
   *(uint32_t *)((int)self_ + 0x14) = 0;
   *(uint32_t *)((int)self_ + 0x18) = 0;
   *(uint32_t *)((int)self_ + 0x1c) = 0;
@@ -551,18 +551,18 @@ XI_API void * __thiscall LobbyThread_CtorVt1033CCA8(void * self_)
   *(uint32_t *)((int)self_ + 0x2c) = 0;
   *(uint32_t *)((int)self_ + 0x30) = 0;
   *(uint32_t *)((int)self_ + 0x74) = 0;
-  puVar2 = (uint32_t *)((int)self_ + 0x34);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self_ + 0x34);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  if (DAT_10669144 == (void *)0x0) {
-    uVar3 = orig::Allocator_Generic_v1(0x14);
-    if ((void *)uVar3 != (void *)0x0) {
-      DAT_10669144 = orig::LobbyThread_ConstructQueue((void *)uVar3);
+  if (g_10669144 == (void *)0x0) {
+    u1 = orig::Allocator_Generic_v1(0x14);
+    if ((void *)u1 != (void *)0x0) {
+      g_10669144 = orig::LobbyThread_ConstructQueue((void *)u1);
       return self_;
     }
-    DAT_10669144 = (void *)0x0;
+    g_10669144 = (void *)0x0;
   }
   return self_;
 }
@@ -575,75 +575,75 @@ XI_API void * __thiscall LobbyThread_ConstructQueue(void * self_)
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
-  *(uint8_t ***)self_ = &PTR_FUN_1033ccf0;
+  *(uint8_t ***)self_ = &g_1033CCF0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1024CF50
 // GATE: PASS -- 100 trials, 100 returned normally, 66 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl StAvatarInit(_DWORD *a1)
+XI_API int __cdecl StAvatarInit(uint32_t *arg1)
 {
-  int v2;
-  int *v3;
-  int v4;
-  _DWORD *v5;
-  _DWORD *v6;
+  int i1;
+  int *p1;
+  int i2;
+  uint32_t *p2;
+  uint32_t *p3;
   int i;
-  *a1 = 1;
-  a1[1] = 0;
-  a1[2] = -1;
-  a1[3] = -1;
-  a1[4] = 0;
-  a1[5] = 0;
-  a1[6] = 0;
-  a1[7] = 0;
-  a1[8] = -1;
-  a1[16] = 30;
-  a1[9] = -1;
-  a1[10] = orig::SqTimer_GetMicroseconds();
-  a1[11] = 0;
-  a1[12] = 0;
-  a1[13] = 0;
-  a1[14] = 0;
-  a1[15] = 0;
-  a1[17] = 0;
-  a1[18] = 0;
-  a1[19] = 1203982336;
-  a1[21] = 1065353216;
-  a1[22] = 1065353216;
-  a1[23] = 0;
-  a1[24] = 1065353216;
-  a1[25] = 1065353216;
-  a1[26] = 0;
-  a1[27] = 1065353216;
-  a1[28] = 1065353216;
-  a1[29] = 0;
-  orig::PackVec4((int)(a1 + 34), 0.0, 0, 1101004800, 1065353216);
-  orig::PackVec4((int)(a1 + 38), 0.0, 0, 0, 1065353216);
-  orig::SceneRecord_InitRecord(a1 + 160);
-  orig::StAvatar_InitSlotRecord(a1 + 42);
-  orig::StAvatar_InitSlotRecord(a1 + 51);
-  v2 = 0;
-  v3 = a1 + 62;
+  *arg1 = 1;
+  arg1[1] = 0;
+  arg1[2] = -1;
+  arg1[3] = -1;
+  arg1[4] = 0;
+  arg1[5] = 0;
+  arg1[6] = 0;
+  arg1[7] = 0;
+  arg1[8] = -1;
+  arg1[16] = 30;
+  arg1[9] = -1;
+  arg1[10] = orig::SqTimer_GetMicroseconds();
+  arg1[11] = 0;
+  arg1[12] = 0;
+  arg1[13] = 0;
+  arg1[14] = 0;
+  arg1[15] = 0;
+  arg1[17] = 0;
+  arg1[18] = 0;
+  arg1[19] = 1203982336;
+  arg1[21] = 1065353216;
+  arg1[22] = 1065353216;
+  arg1[23] = 0;
+  arg1[24] = 1065353216;
+  arg1[25] = 1065353216;
+  arg1[26] = 0;
+  arg1[27] = 1065353216;
+  arg1[28] = 1065353216;
+  arg1[29] = 0;
+  orig::PackVec4((int)(arg1 + 34), 0.0, 0, 1101004800, 1065353216);
+  orig::PackVec4((int)(arg1 + 38), 0.0, 0, 0, 1065353216);
+  orig::SceneRecord_InitRecord(arg1 + 160);
+  orig::StAvatar_InitSlotRecord(arg1 + 42);
+  orig::StAvatar_InitSlotRecord(arg1 + 51);
+  i1 = 0;
+  p1 = arg1 + 62;
   do
   {
-    orig::StAvatar_InitIndices(v3 - 2);
-    v4 = -1 - (v2++ & 1);
-    *v3 = v4;
-    v3 += 7;
+    orig::StAvatar_InitIndices(p1 - 2);
+    i2 = -1 - (i1++ & 1);
+    *p1 = i2;
+    p1 += 7;
   }
-  while ( v2 < 4 );
-  v5 = a1 + 116;
-  v6 = a1 + 30;
+  while ( i1 < 4 );
+  p2 = arg1 + 116;
+  p3 = arg1 + 30;
   for ( i = 4; i != 0; --i )
   {
-    *v6 = 0;
-    orig::StAvatar_InitIndices(v5 - 28);
-    orig::StAvatar_InitIndices(v5);
-    ++v6;
-    v5 += 7;
+    *p3 = 0;
+    orig::StAvatar_InitIndices(p2 - 28);
+    orig::StAvatar_InitIndices(p2);
+    ++p3;
+    p2 += 7;
   }
-  orig::StModelItem_Init(a1 + 144);
+  orig::StModelItem_Init(arg1 + 144);
   if ( g_stateBlock_914C == 0 )
   {
     (g_pCDx->pDevice)->lpVtbl->CreateStateBlock((g_pCDx->pDevice), D3DSBT_ALL, &g_stateBlock_914C);
@@ -672,15 +672,15 @@ XI_API int __cdecl StAvatarInit(_DWORD *a1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl StAvatar_InitEntriesFromTables(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 0;
+  i1 = 0;
   do {
-    orig::StAvatar_SetEntryTransform(iVar1,(int)(&PTR_DAT_1038930c)[iVar1],(int)(&PTR_DAT_10389320)[iVar1]);
-    orig::StAvatar_SetEntryFlag2(iVar1,*(int *)(PTR_DAT_10389304 + iVar1 * 4));
-    orig::StAvatar_SetEntryFlag(iVar1,*(int *)(PTR_DAT_10389308 + iVar1 * 4));
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 5);
+    orig::StAvatar_SetEntryTransform(i1,(int)(&g_1038930C)[i1],(int)(&g_10389320)[i1]);
+    orig::StAvatar_SetEntryFlag2(i1,*(int *)(g_10389304 + i1 * 4));
+    orig::StAvatar_SetEntryFlag(i1,*(int *)(g_10389308 + i1 * 4));
+    i1 = i1 + 1;
+  } while (i1 < 5);
   orig::StAvatar_ToggleFlag168(1);
   return;
 }

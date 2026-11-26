@@ -19,25 +19,25 @@ void CMoDisintegrateProgElem::Slot18DoNothing()
 
 // FUNCTION: FFXIMAIN 0x100530F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-uint64_t __thiscall CMoDisintegrateProgElem::Construct(void * self, undefined4 param_1)
+uint64_t __thiscall CMoDisintegrateProgElem::Construct(void * self, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
+  u1 = orig::CMoElem_Constructor(self);
   *(uint32_t *)((int)self + 0x198) = 0;
   *(uint32_t *)((int)self + 0x1d4) = 0;
   *(uint16_t *)((int)self + 0x1da) = 0;
-  *(uint32_t *)((int)self + 0x1dc) = param_1;
-  *(uint8_t ***)self = &PTR_CMoDisintegrateProgElem_GetRuntimeClass_1032b598;
+  *(uint32_t *)((int)self + 0x1dc) = arg2;
+  *(uint8_t ***)self = &ptr_to_CMoDisintegrateProgElem_GetRuntimeClass_1032B598;
   *(uint16_t *)((int)self + 0x176) = 0x1e0;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10053130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoDisintegrateProgElem::IsKind13(int a1)
+BOOL CMoDisintegrateProgElem::IsKind13(int arg1)
 {
-  return a1 == 13;
+  return arg1 == 13;
 }
 
 // FUNCTION: FFXIMAIN 0x10053140
@@ -49,11 +49,11 @@ int CMoDisintegrateProgElem::Slot8CallSlot10()
 
 // FUNCTION: FFXIMAIN 0x10053150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDisintegrateProgElem::ScalarDeletingDtor(char a2)
+int * CMoDisintegrateProgElem::ScalarDeletingDtor(char arg1)
 {
-  orig::MoProgElem_FreeBuffer40((int *)((unsigned __int8 *)((char *)this + 0x194)));
+  orig::MoProgElem_FreeBuffer40((int *)((unsigned char *)((char *)this + 0x194)));
   orig::CMoElemFamily_SharedCleanup((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

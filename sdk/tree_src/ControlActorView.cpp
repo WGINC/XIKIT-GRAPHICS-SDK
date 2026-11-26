@@ -4,56 +4,56 @@
 
 // FUNCTION: FFXIMAIN 0x100A5E10
 // GATE: PASS -- 100 trials, 100 returned normally, 63 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl XiControlActor_UpdateCamera(int * param_1)
+XI_API bits32 __cdecl XiControlActor_UpdateCamera(int * arg1)
 {
-  void *pvVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int *piVar4;
+  void *p1;
+  uint32_t u1;
+  int i1;
+  int *p2;
   char xi_frame[32] __attribute__((aligned(4)));
-  float * &pfVar5 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float  (&afStack_18)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
-  float  (&afStack_c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 20);
+  float * &p3 = *reinterpret_cast<float * *>(xi_frame + 0);
+  float  (&f1)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 8);
+  float  (&f2)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 20);
   
-  piVar4 = g_pSceneState_as_v0;
-  if ((*g_pSceneState_as_v0 != 0x40) && (param_1 != (int *)0x0)) {
+  p2 = g_pSceneState_as_v0;
+  if ((*g_pSceneState_as_v0 != 0x40) && (arg1 != (int *)0x0)) {
     if (XiControlActor_isFirstPersonView != '\0') {
-      piVar4 = param_1;
-      pvVar1 = (void *)orig::Camera_GetField50_v1();
-      orig::FUN_10021110(pvVar1,piVar4);
-      uVar2 = orig::XiControlActor_UpdateView(param_1);
-      return uVar2;
+      p2 = arg1;
+      p1 = (void *)orig::Camera_GetField50_v1();
+      orig::game_10021110(p1,p2);
+      u1 = orig::XiControlActor_UpdateView(arg1);
+      return u1;
     }
-    uVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x340))))((void *)(param_1));
-    if ((char)uVar2 != '\0') {
-      uVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x330))))((void *)(param_1));
-      if ((char)uVar2 != '\0') {
-        orig::FUN_1025e090(afStack_18);
-        iVar3 = orig::Camera_GetField50_v1();
-        orig::Vec3_Add_10026FA0_v1(afStack_c,afStack_18,(float *)(iVar3 + 0x50));
-        pfVar5 = afStack_c;
-        pvVar1 = (void *)orig::Camera_GetField50_v1();
-        orig::Camera_SetPosition(pvVar1,pfVar5);
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x340))))((void *)(arg1));
+    if ((char)u1 != '\0') {
+      u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x330))))((void *)(arg1));
+      if ((char)u1 != '\0') {
+        orig::game_1025E090(f1);
+        i1 = orig::Camera_GetField50_v1();
+        orig::Vec3_Add_10026FA0_v1(f2,f1,(float *)(i1 + 0x50));
+        p3 = f2;
+        p1 = (void *)orig::Camera_GetField50_v1();
+        orig::Camera_SetPosition(p1,p3);
       }
     }
-    piVar4 = param_1;
-    pvVar1 = (void *)orig::Camera_GetField50_v1();
-    orig::YmCameraManager_Follow(pvVar1,piVar4);
-    piVar4 = (int *)orig::XiControlActor_UpdateView(param_1);
+    p2 = arg1;
+    p1 = (void *)orig::Camera_GetField50_v1();
+    orig::YmCameraManager_Follow(p1,p2);
+    p2 = (int *)orig::XiControlActor_UpdateView(arg1);
   }
-  return piVar4;
+  return p2;
 }
 
 // FUNCTION: FFXIMAIN 0x100A5EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 56 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ControlActorView_CallUnlessFlag(void * self_, float * param_1)
+XI_API void __thiscall ControlActorView_CallUnlessFlag(void * self_, float * arg2)
 {
-  int iVar1;
+  int i1;
   
   if ((*(uint8_t *)((int)self_ + 0x88) & 1) == 0) {
-    iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x310))))((void *)(self_));
-    if (iVar1 == 0) {
-      orig::FUN_100a6240(self_,param_1);
+    i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x310))))((void *)(self_));
+    if (i1 == 0) {
+      orig::game_100A6240(self_,arg2);
     }
   }
   return;
@@ -61,23 +61,23 @@ XI_API void __thiscall ControlActorView_CallUnlessFlag(void * self_, float * par
 
 // FUNCTION: FFXIMAIN 0x100A5EF0
 // GATE: PASS -- 100 trials, 100 returned normally, 30 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall XiControlActor_UpdateView(void * self_)
+XI_API bits32 __thiscall XiControlActor_UpdateView(void * self_)
 {
-  int iVar1;
+  int i1;
   int xi_eax;
-  uint64_t uVar2;
+  uint64_t u1;
   
-  iVar1 = g_pCamera_as_s32;
-  if (((*(char *)(g_pCamera_as_s32 + 8) == '\0') || (iVar1 = *(int *)((int)self_ + 0x70), iVar1 == 0)) ||
-     (((*(uint32_t *)(iVar1 + 0x120) >> 7 & 1) == 0 && ((*(uint32_t *)(iVar1 + 300) >> 0xd & 1) == 0)))) {
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3f,0x1c,1,-1,iVar1);
-    if ((char)uVar2 != '\0') {
+  i1 = g_pCamera_as_s32;
+  if (((*(char *)(g_pCamera_as_s32 + 8) == '\0') || (i1 = *(int *)((int)self_ + 0x70), i1 == 0)) ||
+     (((*(uint32_t *)(i1 + 0x120) >> 7 & 1) == 0 && ((*(uint32_t *)(i1 + 300) >> 0xd & 1) == 0)))) {
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3f,0x1c,1,-1,i1);
+    if ((char)u1 != '\0') {
       orig::XiControlActor_SetAutoRunning((uint32_t)(XiControlActor_isAutoRunning == '\0'),
-                   ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar2 >> 8))) << 8) | (uint8_t)(XiControlActor_isAutoRunning))));
+                   ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 8))) << 8) | (uint8_t)(XiControlActor_isAutoRunning))));
     }
-    iVar1 = orig::CXiActor_GetModelField170_v1(self_);
-    xi_eax = iVar1 + -2;
-    switch(xi_sw(iVar1)) {
+    i1 = orig::CXiActor_GetModelField170_v1(self_);
+    xi_eax = i1 + -2;
+    switch(xi_sw(i1)) {
     case 2:
     case 3:
     case 6:
@@ -126,87 +126,87 @@ XI_API undefined4 __thiscall XiControlActor_UpdateView(void * self_)
     case 0x53:
       xi_eax = orig::XiControlActor_SetAutoRunning(0,xi_eax);
     }
-    uVar2 = orig::NetCellFont_TestCommand36CF60(0x3f,0x10,1,-1,xi_eax);
-    if ((char)uVar2 != '\0') {
-      orig::FUN_100a8cc0(CONCAT31(xi_strunc24(((uint64_t)uVar2 >> 0x28)),XiControlActor_isFirstPersonView == '\0'));
+    u1 = orig::NetCellFont_TestCommand36CF60(0x3f,0x10,1,-1,xi_eax);
+    if ((char)u1 != '\0') {
+      orig::game_100A8CC0(((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 0x28))) << 8) | (uint8_t)(XiControlActor_isFirstPersonView == '\0'))));
       if (XiControlActor_isFirstPersonView == '\0') {
-        uVar2 = orig::Settings_GetValue_v1(0x49);
-        orig::Camera_SetField2F8OnGlobal((float)(long double)(int)uVar2);
-        ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x344))))((void *)(self_),0);
+        u1 = orig::Settings_GetValue_v1(0x49);
+        orig::Camera_SetField2F8OnGlobal((float)(int)u1);
+        ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x344))))((void *)(self_),0);
       }
       else {
         orig::Camera_SetField2F8OnGlobal(0x438c0000);
       }
-      orig::FUN_10037ef0();
+      orig::game_10037EF0();
     }
-    iVar1 = orig::CXiActor_GetModelField170_v1(self_);
-    if ((iVar1 == 2) || (iVar1 = orig::CXiActor_GetModelField170_v1(self_), iVar1 == 3)) {
-      iVar1 = orig::FUN_100a8cc0(0);
+    i1 = orig::CXiActor_GetModelField170_v1(self_);
+    if ((i1 == 2) || (i1 = orig::CXiActor_GetModelField170_v1(self_), i1 == 3)) {
+      i1 = orig::game_100A8CC0(0);
     }
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100A6070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(1))) XiControlActor_SetAutoRunning(undefined4 xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((stdcall, regparm(1))) XiControlActor_SetAutoRunning(bits32 xi_eax, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  XiControlActor_isAutoRunning = (char)param_1;
-  if ((char)param_1 == '\0') {
-    _DAT_10487f64 = DAT_1035bba8;
-    _DAT_10487f68 = DAT_1035bbac;
-    _DAT_10487f6c = DAT_1035bbb0;
-    _DAT_10487f70 = DAT_1035bbb4;
-    uVar1 = orig::ActorHandle_Resolve_v1(&DAT_10487f74);
-    if ((int)uVar1 != 0) {
+  XiControlActor_isAutoRunning = (char)arg2;
+  if ((char)arg2 == '\0') {
+    g_10487F64 = g_1035BBA8;
+    g_10487F68 = g_1035BBAC;
+    g_10487F6C = g_1035BBB0;
+    g_10487F70 = g_1035BBB4;
+    u1 = orig::ActorHandle_Resolve_v1(&g_10487F74);
+    if ((int)u1 != 0) {
       orig::ChatLog_AddMessage9Code379(g_pTkMsgWinData_as_v1,0x41);
     }
-    uVar1 = orig::FUN_100814f0(&DAT_10487f74,0);
-    return (int)uVar1;
+    u1 = orig::game_100814F0(&g_10487F74,0);
+    return (int)u1;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)param_1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)arg2)));
 }
 
 // FUNCTION: FFXIMAIN 0x100A78D0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall XiControlActor_NormalizeInput(void * self_, float * param_1, float * param_2, undefined4 xi_s3)
+XI_API void __thiscall XiControlActor_NormalizeInput(void * self_, float * arg2, float * arg3, bits32 xi_s3)
 {
-  float *pfVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  long double fVar5;
+  float *p1;
+  uint32_t u1;
+  uint8_t u2;
+  long double f1;
+  long double f2;
   
-  pfVar1 = param_1;
-  fVar4 = SQRT((long double)*param_1 * (long double)*param_1 + (long double)*param_2 * (long double)*param_2);
-  bVar3 = NAN(fVar4) || NAN((long double)xi_k4(0x358637BDull));
-  if ((bVar3 || fVar4 < (long double)xi_k4(0x358637BDull)) == bVar3) {
-    fVar5 = (long double)1.0f / fVar4;
+  p1 = arg2;
+  f1 = x87_fsqrt(*arg2 * *arg2 + *arg3 * *arg3);
+  u2 = ((f1) != (f1)) || ((xi_k4(0x358637BDull)) != (xi_k4(0x358637BDull)));
+  if ((u2 || f1 < xi_k4(0x358637BDull)) == u2) {
+    f2 = 1.0f / f1;
   }
   else {
-    fVar5 = (long double)0.0f;
+    f2 = 0.0f;
   }
-  *param_1 = (float)(fVar5 * (long double)*param_1);
-  *param_2 = (float)(fVar5 * (long double)*param_2);
-  if (!(fVar4 > (long double)0.89999997615814208984375f)) {
-    param_1 = (float *)0x3eaaaaab;
-    if (!(fVar4 > (long double)0.0500000007450580596923828125f)) {
-      param_1 = (float *)0x0;
+  *arg2 = (float)(f2 * *arg2);
+  *arg3 = (float)(f2 * *arg3);
+  if (!(f1 > 0.89999997615814208984375f)) {
+    arg2 = (float *)0x3eaaaaab;
+    if (!(f1 > 0.0500000007450580596923828125f)) {
+      arg2 = (float *)0x0;
     }
   }
   else {
-    param_1 = (float *)&DAT_3f800000;
+    arg2 = (float *)&g_3F800000;
   }
-  uVar2 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x338))))((void *)(self_));
-  if (((char)uVar2 != '\0') &&
-     ((!NAN((long double)xi_castbits<float>(param_1)) && !NAN((long double)0.3333333432674407958984375f)) &&
-      (long double)0.3333333432674407958984375f < (long double)xi_castbits<float>(param_1))) {
-    param_1 = (float *)0x3eaaaaab;
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x338))))((void *)(self_));
+  if (((char)u1 != '\0') &&
+     ((!((bit_cast<float>(arg2)) != (bit_cast<float>(arg2))) && !((0.3333333432674407958984375f) != (0.3333333432674407958984375f))) &&
+      0.3333333432674407958984375f < bit_cast<float>(arg2))) {
+    arg2 = (float *)0x3eaaaaab;
   }
-  *pfVar1 = (float)((long double)xi_castbits<float>(param_1) * (long double)*pfVar1);
-  *param_2 = (float)((long double)xi_castbits<float>(param_1) * (long double)*param_2);
-  *(float **)((int)self_ + 0x594) = param_1;
+  *p1 = (float)(bit_cast<float>(arg2) * *p1);
+  *arg3 = (float)(bit_cast<float>(arg2) * *arg3);
+  *(float **)((int)self_ + 0x594) = arg2;
   return;
 }

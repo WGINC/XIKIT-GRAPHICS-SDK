@@ -626,7 +626,7 @@ inline ::xikit::fn<decltype(&::CYyModel::QueryPartsB)> CYyModel__QueryPartsB() {
 inline ::xikit::fn<decltype(&::List_GetTail)> List_GetTail() { return reinterpret_cast< ::xikit::fn<decltype(&::List_GetTail)> >(XI_GAME(0x1002C7C0u)); }
 inline ::xikit::fn<decltype(&::ListUtil_PopHead)> ListUtil_PopHead() { return reinterpret_cast< ::xikit::fn<decltype(&::ListUtil_PopHead)> >(XI_GAME(0x1002C800u)); }
 inline ::xikit::fn<decltype(&::Mem_AllocDefault)> Mem_AllocDefault() { return reinterpret_cast< ::xikit::fn<decltype(&::Mem_AllocDefault)> >(XI_GAME(0x1002C890u)); }
-inline ::xikit::fn<decltype(&::thunk_sub_10028AA0)> thunk_sub_10028AA0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_sub_10028AA0)> >(XI_GAME(0x1002C8B0u)); }
+inline ::xikit::fn<decltype(&::thunk_Mem_FreeBlockMergeNeighbours_as_v0)> thunk_Mem_FreeBlockMergeNeighbours_as_v0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_Mem_FreeBlockMergeNeighbours_as_v0)> >(XI_GAME(0x1002C8B0u)); }
 inline ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant2)> CMoTask__GetRuntimeClass_variant2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant2)> >(XI_GAME(0x1002C950u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CreateBuffersStep)> CYyOs2VtxBuffer__CreateBuffersStep() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CreateBuffersStep)> >(XI_GAME(0x1002CCB0u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> CYyOs2VtxBuffer_ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> >(XI_GAME(0x1002D660u)); }
@@ -4093,7 +4093,7 @@ inline ::xikit::fn<decltype(&::LobbyScreen_LoadResourceOnce)> LobbyScreen_LoadRe
 inline ::xikit::fn<decltype(&::LobbyThread_Start)> LobbyThread_Start() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_Start)> >(XI_GAME(0x10245600u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_SetGlobal106690AC)> LobbyThread_SetGlobal106690AC() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_SetGlobal106690AC)> >(XI_GAME(0x10245B50u)); }
 inline ::xikit::fn<decltype(&::Lobby_DestroyThreadPool)> Lobby_DestroyThreadPool() { return reinterpret_cast< ::xikit::fn<decltype(&::Lobby_DestroyThreadPool)> >(XI_GAME(0x10245B60u)); }
-inline ::xikit::fn<decltype(&::thunk_sub_10245BB0)> thunk_sub_10245BB0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_sub_10245BB0)> >(XI_GAME(0x10245BA0u)); }
+inline ::xikit::fn<decltype(&::thunk_LobbyThread_ResetZone_as_v0)> thunk_LobbyThread_ResetZone_as_v0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_LobbyThread_ResetZone_as_v0)> >(XI_GAME(0x10245BA0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_ResetZone)> LobbyThread_ResetZone() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_ResetZone)> >(XI_GAME(0x10245BB0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_IsSystemState1)> LobbyThread_IsSystemState1() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_IsSystemState1)> >(XI_GAME(0x10245BE0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_NextSequence)> LobbyThread_NextSequence() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_NextSequence)> >(XI_GAME(0x10245F30u)); }
@@ -5257,7 +5257,7 @@ constexpr unsigned CYyModel__CallPartIndex = 4, CYyModel__CallPartIndex_TRAMP = 
 constexpr unsigned List_GetTail = 20, List_GetTail_TRAMP = 0;  // "List_GetTail" 0x1002C7C0
 constexpr unsigned ListUtil_PopHead = 4, ListUtil_PopHead_TRAMP = 1;  // "ListUtil_PopHead" 0x1002C800
 constexpr unsigned Mem_AllocDefault = 4, Mem_AllocDefault_TRAMP = 1;  // "Mem_AllocDefault" 0x1002C890
-constexpr unsigned thunk_sub_10028AA0 = 4, thunk_sub_10028AA0_TRAMP = 1;  // "thunk_sub_10028AA0" 0x1002C8B0
+constexpr unsigned thunk_Mem_FreeBlockMergeNeighbours_as_v0 = 4, thunk_Mem_FreeBlockMergeNeighbours_as_v0_TRAMP = 1;  // "thunk_sub_10028AA0" 0x1002C8B0
 constexpr unsigned CMoTask__GetRuntimeClass_variant2 = 0, CMoTask__GetRuntimeClass_variant2_TRAMP = 1;  // "CMoTask::GetRuntimeClass_variant2" 0x1002C950
 constexpr unsigned CYyOs2VtxBuffer__CreateBuffersStep = 4, CYyOs2VtxBuffer__CreateBuffersStep_TRAMP = 1;  // "CYyOs2VtxBuffer::CreateBuffersStep" 0x1002CCB0
 constexpr unsigned CYyOs2VtxBuffer_ScalarDeletingDtor = 4, CYyOs2VtxBuffer_ScalarDeletingDtor_TRAMP = 1;  // "CYyOs2VtxBuffer_ScalarDeletingDtor" 0x1002D660
@@ -8702,7 +8702,7 @@ constexpr unsigned LobbyScreen_LoadResourceOnce = 4, LobbyScreen_LoadResourceOnc
 constexpr unsigned LobbyThread_Start = 4, LobbyThread_Start_TRAMP = 1;  // "LobbyThread_Start" 0x10245600
 constexpr unsigned LobbyThread_SetGlobal106690AC = 4, LobbyThread_SetGlobal106690AC_TRAMP = 1;  // "LobbyThread_SetGlobal106690AC" 0x10245B50
 constexpr unsigned Lobby_DestroyThreadPool = 4, Lobby_DestroyThreadPool_TRAMP = 1;  // "Lobby_DestroyThreadPool" 0x10245B60
-constexpr unsigned thunk_sub_10245BB0 = 4, thunk_sub_10245BB0_TRAMP = 1;  // "thunk_sub_10245BB0" 0x10245BA0
+constexpr unsigned thunk_LobbyThread_ResetZone_as_v0 = 4, thunk_LobbyThread_ResetZone_as_v0_TRAMP = 1;  // "thunk_sub_10245BB0" 0x10245BA0
 constexpr unsigned LobbyThread_ResetZone = 4, LobbyThread_ResetZone_TRAMP = 1;  // "LobbyThread_ResetZone" 0x10245BB0
 constexpr unsigned LobbyThread_IsSystemState1 = 4, LobbyThread_IsSystemState1_TRAMP = 1;  // "LobbyThread_IsSystemState1" 0x10245BE0
 constexpr unsigned LobbyThread_NextSequence = 4, LobbyThread_NextSequence_TRAMP = 1;  // "LobbyThread_NextSequence" 0x10245F30

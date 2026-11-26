@@ -4,10 +4,10 @@
 
 // FUNCTION: FFXIMAIN 0x10071C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoRmpRes::ScalarDeletingDtor(char a2)
+unsigned int ** CMoRmpRes::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }
@@ -21,10 +21,10 @@ int CMoRmpRes::Slot11GetCameraRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x100745F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoRmpRes::Slot12DeleteOwner(int a1)
+int CMoRmpRes::Slot12DeleteOwner(int arg1)
 {
   Vt_1032C5B4 * self = reinterpret_cast<Vt_1032C5B4 *>(this);  // byte-exact view for the rest
-  return (int)orig::CMoRmpRes_ScalarDeletingDtor_10071C60((unsigned int **)self - 12, a1);
+  return (int)orig::CMoRmpRes_ScalarDeletingDtor_10071C60((unsigned int **)self - 12, arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x10074610

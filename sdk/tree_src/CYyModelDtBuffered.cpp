@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x1002A0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CYyModelDtBuffered::ScalarDeletingDtor(char a1)
+uint32_t * CYyModelDtBuffered::ScalarDeletingDtor(char arg1)
 {
-  int v2;
-  orig::CYyModelDtBase_Destructor(this, v2);
-  if ( (a1 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CYyModelDt_vtbl * *)&this->vftable));
+  int i1;
+  orig::CYyModelDtBase_Destructor(this, i1);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CYyModelDt_vtbl * *)&this->vftable));
 }

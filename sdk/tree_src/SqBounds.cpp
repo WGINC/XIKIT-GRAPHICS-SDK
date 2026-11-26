@@ -4,122 +4,122 @@
 
 // FUNCTION: FFXIMAIN 0x1028D990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl SqBounds_SumAxis(int param_1)
+XI_API long double __cdecl SqBounds_SumAxis(int arg1)
 {
-  return (long double)*(float *)(param_1 + 0x24) + (long double)*(float *)(param_1 + 0x20);
+  return *(float *)(arg1 + 0x24) + *(float *)(arg1 + 0x20);
 }
 
 // FUNCTION: FFXIMAIN 0x1028D9A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBounds_Reset(undefined4 * param_1)
+XI_API void __cdecl SqBounds_Reset(bits32 * arg1)
 {
-  *param_1 = 0x7f7fffff;
-  param_1[1] = 0x7f7fffff;
-  param_1[2] = 0x7f7fffff;
-  param_1[3] = 0xff7fffff;
-  param_1[4] = 0xff7fffff;
-  param_1[5] = 0xff7fffff;
+  *arg1 = 0x7f7fffff;
+  arg1[1] = 0x7f7fffff;
+  arg1[2] = 0x7f7fffff;
+  arg1[3] = 0xff7fffff;
+  arg1[4] = 0xff7fffff;
+  arg1[5] = 0xff7fffff;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1028D9C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBounds_Copy(undefined4 * param_1, undefined4 * param_2)
+XI_API void __cdecl SqBounds_Copy(bits32 * arg1, bits32 * arg2)
 {
-  *param_1 = *param_2;
-  param_1[1] = param_2[1];
-  param_1[2] = param_2[2];
-  param_1[3] = param_2[3];
-  param_1[4] = param_2[4];
-  param_1[5] = param_2[5];
+  *arg1 = *arg2;
+  arg1[1] = arg2[1];
+  arg1[2] = arg2[2];
+  arg1[3] = arg2[3];
+  arg1[4] = arg2[4];
+  arg1[5] = arg2[5];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1028DA20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) SqBounds_ComputeBounds(float * xi_eax, float * param_1, float * param_2, int param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) SqBounds_ComputeBounds(float * xi_eax, float * arg2, float * arg3, int arg4)
 {
-  int iVar1;
-  int iVar2;
-  float *pfVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  float local_18;
-  float local_14;
-  float local_10;
-  float local_c;
-  float local_8;
-  float local_4;
+  int i1;
+  int i2;
+  float *p1;
+  uint8_t u1;
+  long double f1;
+  float f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
   
-  if (0 < param_3) {
-    local_18 = *param_2;
-    local_14 = param_2[1];
-    local_10 = param_2[2];
-    iVar2 = 1;
-    iVar1 = (param_3 >> 6) + 1;
-    local_c = local_18;
-    local_8 = local_14;
-    local_4 = local_10;
-    if (1 < param_3) {
-      pfVar3 = param_2 + 5;
+  if (0 < arg4) {
+    f2 = *arg3;
+    f3 = arg3[1];
+    f4 = arg3[2];
+    i2 = 1;
+    i1 = (arg4 >> 6) + 1;
+    f5 = f2;
+    f6 = f3;
+    f7 = f4;
+    if (1 < arg4) {
+      p1 = arg3 + 5;
       do {
-        fVar5 = (long double)pfVar3[-2];
-        if (!((long double)local_c > fVar5)) {
-          bVar4 = NAN((long double)local_18) || NAN(fVar5);
-          if ((bVar4 || (long double)local_18 < fVar5) != bVar4) {
-            local_18 = (float)fVar5;
+        f1 = p1[-2];
+        if (!(f5 > f1)) {
+          u1 = ((f2) != (f2)) || ((f1) != (f1));
+          if ((u1 || f2 < f1) != u1) {
+            f2 = (float)f1;
           }
         }
         else {
-          local_c = (float)fVar5;
+          f5 = (float)f1;
         }
-        fVar5 = (long double)pfVar3[-1];
-        if (!((long double)local_8 > fVar5)) {
-          bVar4 = NAN((long double)local_14) || NAN(fVar5);
-          if ((bVar4 || (long double)local_14 < fVar5) != bVar4) {
-            local_14 = (float)fVar5;
+        f1 = p1[-1];
+        if (!(f6 > f1)) {
+          u1 = ((f3) != (f3)) || ((f1) != (f1));
+          if ((u1 || f3 < f1) != u1) {
+            f3 = (float)f1;
           }
         }
         else {
-          local_8 = (float)fVar5;
+          f6 = (float)f1;
         }
-        fVar5 = (long double)*pfVar3;
-        if (!((long double)local_4 > fVar5)) {
-          bVar4 = NAN((long double)local_10) || NAN(fVar5);
-          if ((bVar4 || (long double)local_10 < fVar5) != bVar4) {
-            local_10 = (float)fVar5;
+        f1 = *p1;
+        if (!(f7 > f1)) {
+          u1 = ((f4) != (f4)) || ((f1) != (f1));
+          if ((u1 || f4 < f1) != u1) {
+            f4 = (float)f1;
           }
         }
         else {
-          local_4 = (float)fVar5;
+          f7 = (float)f1;
         }
-        iVar2 = iVar2 + iVar1;
-        pfVar3 = pfVar3 + iVar1 * 3;
-      } while (iVar2 < param_3);
+        i2 = i2 + i1;
+        p1 = p1 + i1 * 3;
+      } while (i2 < arg4);
     }
-    param_1[1] = local_8;
-    *param_1 = (float)(long double)local_c;
-    param_1[2] = local_4;
-    param_1[3] = local_18;
-    param_1[4] = local_14;
-    param_1[5] = local_10;
-    xi_eax = param_1;
+    arg2[1] = f6;
+    *arg2 = (float)f5;
+    arg2[2] = f7;
+    arg2[3] = f2;
+    arg2[4] = f3;
+    arg2[5] = f4;
+    xi_eax = arg2;
   }
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x1028DBB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqBounds_GetCenter(float * param_1, float * param_2)
+XI_API void __cdecl SqBounds_GetCenter(float * arg1, float * arg2)
 {
-  if (param_1 == (float *)0x0) {
-    *param_2 = 0.0f;
-    param_2[1] = 0.0f;
-    param_2[2] = 0.0f;
+  if (arg1 == (float *)0x0) {
+    *arg2 = 0.0f;
+    arg2[1] = 0.0f;
+    arg2[2] = 0.0f;
     return;
   }
-  *param_2 = (float)(((long double)param_1[3] + (long double)*param_1) * (long double)0.5f);
-  param_2[1] = (float)(((long double)param_1[4] + (long double)param_1[1]) * (long double)0.5f);
-  param_2[2] = (float)(((long double)param_1[5] + (long double)param_1[2]) * (long double)0.5f);
+  *arg2 = (float)((arg1[3] + *arg1) * 0.5f);
+  arg2[1] = (float)((arg1[4] + arg1[1]) * 0.5f);
+  arg2[2] = (float)((arg1[5] + arg1[2]) * 0.5f);
   return;
 }

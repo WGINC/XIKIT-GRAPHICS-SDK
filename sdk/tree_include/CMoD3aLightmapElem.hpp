@@ -6,10 +6,10 @@
 class XI_API CMoD3aLightmapElem {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x1003EE60
-    static undefined8 __thiscall Init(void * self);  // 0x10052C30
-    int set_field_194(int a2);  // 0x10052C50
+    static uint64_t __thiscall Init(void * self);  // 0x10052C30
+    int set_field_194(int arg1);  // 0x10052C50
     int get_field_194();  // 0x10052C60
-    int * ScalarDeletingDtor(char a2);  // 0x10052C70
+    int * ScalarDeletingDtor(char arg1);  // 0x10052C70
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x194];

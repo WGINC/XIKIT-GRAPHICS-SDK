@@ -26,7 +26,7 @@ XI_API int __cdecl sqgxVertexShaderRelease(void)
 
 // FUNCTION: FFXIMAIN 0x10284F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl SqgxVertexShaderRelease_GetFloat20(int param_1)
+XI_API long double __cdecl SqgxVertexShaderRelease_GetFloat20(int arg1)
 {
-  return (long double)*(float *)(param_1 + 0x20);
+  return *(float *)(arg1 + 0x20);
 }

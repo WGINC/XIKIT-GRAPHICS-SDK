@@ -4,18 +4,18 @@
 
 // FUNCTION: FFXIMAIN 0x10285740
 // GATE: PASS -- 100 trials, 23 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 23
-XI_API void __cdecl SqObject_Release(int * param_1)
+XI_API void __cdecl SqObject_Release(int * arg1)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = (uint32_t *)*param_1;
-  if ((code *)puVar1[3] != (code *)0x0) {
+  p1 = (uint32_t *)*arg1;
+  if ((untyped_fn *)p1[3] != (untyped_fn *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x10285753. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (*(code *)puVar1[3])();
+    (*(untyped_fn *)p1[3])();
     return;
   }
-  orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqBase_src_103b7c6c,0x3b);
-  orig::sqDebugPrintf_v1(g_103B7C98,puVar1,*puVar1);
+  orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqBase_src_103B7C6C,0x3b);
+  orig::sqDebugPrintf_v1(g_103B7C98,p1,*p1);
   return;
 }

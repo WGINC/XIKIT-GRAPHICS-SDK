@@ -4,55 +4,55 @@
 
 // FUNCTION: FFXIMAIN 0x102A2130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqShadowVolumeDraw_CopyBounds(int param_1, int param_2)
+XI_API void __cdecl SqShadowVolumeDraw_CopyBounds(int arg1, int arg2)
 {
-  orig::SqBounds_Copy((uint32_t *)(param_1 + 0x14),(uint32_t *)(param_2 + 0x14));
+  orig::SqBounds_Copy((uint32_t *)(arg1 + 0x14),(uint32_t *)(arg2 + 0x14));
   orig::SqgxDlist_Nop();
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A2160
 // GATE: PASS -- 100 trials, 72 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 72
-XI_API undefined4 __cdecl SqShadowVolumeDraw_ContainsInt(int param_1, int param_2)
+XI_API bits32 __cdecl SqShadowVolumeDraw_ContainsInt(int arg1, int arg2)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  iVar1 = 0;
-  if (0 < *(int *)(param_1 + 0x44)) {
-    piVar2 = (int *)(param_1 + 0x48);
+  i1 = 0;
+  if (0 < *(int *)(arg1 + 0x44)) {
+    p1 = (int *)(arg1 + 0x48);
     do {
-      if (*piVar2 == param_2) {
+      if (*p1 == arg2) {
         return 1;
       }
-      iVar1 = iVar1 + 1;
-      piVar2 = piVar2 + 1;
-    } while (iVar1 < *(int *)(param_1 + 0x44));
+      i1 = i1 + 1;
+      p1 = p1 + 1;
+    } while (i1 < *(int *)(arg1 + 0x44));
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x102A2190
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-XI_API undefined4 __cdecl SqShadowVolumeDraw_ContainsInAnyEntry(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqShadowVolumeDraw_ContainsInAnyEntry(int arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
   
-  iVar1 = *(int *)(param_1 + 4);
-  iVar3 = 0;
-  if (0 < iVar1) {
-    iVar4 = *(int *)(param_1 + 0x28);
+  i1 = *(int *)(arg1 + 4);
+  i3 = 0;
+  if (0 < i1) {
+    i4 = *(int *)(arg1 + 0x28);
     do {
-      iVar2 = orig::SqShadowVolumeDraw_ContainsInt(iVar4,param_2);
-      if (iVar2 != 0) {
+      i2 = orig::SqShadowVolumeDraw_ContainsInt(i4,arg2);
+      if (i2 != 0) {
         return 1;
       }
-      iVar3 = iVar3 + 1;
-      iVar4 = iVar4 + 0x90;
-    } while (iVar3 < iVar1);
+      i3 = i3 + 1;
+      i4 = i4 + 0x90;
+    } while (i3 < i1);
   }
   return 0;
 }

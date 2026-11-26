@@ -7,27 +7,27 @@
 char CMoAfbRes::Setup()
 {
   char * self = reinterpret_cast<char *>(this);  // byte-exact view for the rest
-  char *v1;
-  char *v2;
-  char *v3;
-  char *v4;
-  v4 = self + 48;
-  v1 = v4;
-  if ( v4[31] != 0 )
+  char *p1;
+  char *p2;
+  char *p3;
+  char *p4;
+  p4 = self + 48;
+  p1 = p4;
+  if ( p4[31] != 0 )
   {
-    orig::nullsub_90(v4);
-    orig::ErrorReport_NoOpVarargsA(aAfbVersionErro, (unsigned __int8)v1[31]);
+    orig::nullsub_90(p4);
+    orig::ErrorReport_NoOpVarargsA(aAfbVersionErro, (unsigned char)p1[31]);
   }
-  LOBYTE(v2) = v1[28];
-  if ( (_BYTE)v2 == 0 )
+  (*(uint8_t *)&(p2)) = p1[28];
+  if ( (uint8_t)p2 == 0 )
   {
-    v3 = &v1[*((_DWORD *)v1 + 5)];
-    v2 = &v1[*((_DWORD *)v1 + 6)];
-    v1[28] = 1;
-    *((_DWORD *)v1 + 5) = v3;
-    *((_DWORD *)v1 + 6) = v2;
+    p3 = &p1[*((uint32_t *)p1 + 5)];
+    p2 = &p1[*((uint32_t *)p1 + 6)];
+    p1[28] = 1;
+    *((uint32_t *)p1 + 5) = p3;
+    *((uint32_t *)p1 + 6) = p2;
   }
-  return (char)v2;
+  return (char)p2;
 }
 
 // FUNCTION: FFXIMAIN 0x10071A30
@@ -35,18 +35,18 @@ char CMoAfbRes::Setup()
 char CMoAfbRes::Slot9UnfixPointers()
 {
   char * self = reinterpret_cast<char *>(this);  // byte-exact view for the rest
-  int v1;
-  int v2;
-  char *v3;
-  v3 = self + 48;
-  v1 = (int)(((uint32_t)(v1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v3[28]) << 0));
-  if ( (_BYTE)v1 != 0 )
+  int i1;
+  int i2;
+  char *p1;
+  p1 = self + 48;
+  i1 = (int)(((uint32_t)(i1) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(p1[28]) << 0));
+  if ( (uint8_t)i1 != 0 )
   {
-    v2 = *((_DWORD *)v3 + 5);
-    v3[28] = 0;
-    *((_DWORD *)v3 + 5) = v2 - (_DWORD)v3;
-    v1 = *((_DWORD *)v3 + 6) - (_DWORD)v3;
-    *((_DWORD *)v3 + 6) = v1;
+    i2 = *((uint32_t *)p1 + 5);
+    p1[28] = 0;
+    *((uint32_t *)p1 + 5) = i2 - (uint32_t)p1;
+    i1 = *((uint32_t *)p1 + 6) - (uint32_t)p1;
+    *((uint32_t *)p1 + 6) = i1;
   }
-  return v1;
+  return i1;
 }

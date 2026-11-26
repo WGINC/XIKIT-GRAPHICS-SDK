@@ -11,25 +11,25 @@ char ** __cdecl CMoOcclusionMng::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1006C1C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoOcclusionMng::ScalarDeletingDtor(char a2)
+int * CMoOcclusionMng::ScalarDeletingDtor(char arg1)
 {
   orig::CMoOcclusionMng_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }
 
 // FUNCTION: FFXIMAIN 0x1006C220
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoOcclusionMng::OcclusionMng_CreateTarget()
+uint32_t * CMoOcclusionMng::OcclusionMng_CreateTarget()
 {
-  _DWORD *result;
-  int v3;
-  int a4;
-  a4 = 0;
-  result = orig::CDx_CreateTexture(g_pCDx, 0x10u, 0x10u, &a4, 1, 0);
-  v3 = a4;
+  uint32_t *result;
+  int i1;
+  int i2;
+  i2 = 0;
+  result = orig::CDx_CreateTexture(g_pCDx, 0x10u, 0x10u, &i2, 1, 0);
+  i1 = i2;
   this->occlusionTexture = result;
-  this->field_10 = v3;
+  this->field_10 = i1;
   return result;
 }

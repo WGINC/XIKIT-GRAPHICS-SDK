@@ -5,94 +5,94 @@
 
 // FUNCTION: FFXIMAIN 0x1002CCB0
 // GATE: PASS -- 100 trials, 90 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-uint32_t __thiscall CYyOs2VtxBuffer::CreateBuffersStep(void * self, undefined4 xi_s1)
+uint32_t __thiscall CYyOs2VtxBuffer::CreateBuffersStep(void * self, bits32 xi_s1)
 {
-  int *a1;
-  uint32_t uVar4;
-  undefined4 *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  int *p1;
+  uint32_t u1;
+  bits32 *p2;
+  int i1;
+  uint32_t u2;
   
-  iVar2 = *(int *)((int)self + 0x58);
-  uVar4 = xi_trunc24(((uint32_t)iVar2 >> 8));
-  if (iVar2 == 0) {
-switchD_1002ccce_default:
-    return ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(1)));
+  i1 = *(int *)((int)self + 0x58);
+  u1 = xi_trunc24(((uint32_t)i1 >> 8));
+  if (i1 == 0) {
+L1:
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
-  switch(xi_sw(*(undefined4 *)((int)self + 0x3c))) {
+  switch(xi_sw(*(bits32 *)((int)self + 0x3c))) {
   case 0:
-    puVar1 = orig::Mem_AllocObject_v1(iVar2 * 2,4);
-    *(undefined4 **)((int)self + 0x5c) = puVar1;
-    if (puVar1 == (undefined4 *)0x0) goto LAB_1002cd93;
-    uVar3 = 0;
+    p2 = orig::Mem_AllocObject_v1(i1 * 2,4);
+    *(bits32 **)((int)self + 0x5c) = p2;
+    if (p2 == (bits32 *)0x0) goto code_1002CD93;
+    u2 = 0;
     if (*(int *)((int)self + 0x58) != 0) {
       do {
-        uVar3 = uVar3 + 1;
-        *(uint16_t *)(*(int *)((int)self + 0x5c) + -2 + uVar3 * 2) = 0xffff;
-      } while (uVar3 < *(uint32_t *)((int)self + 0x58));
-      uVar3 = *(int *)((int)self + 0x3c) + 1;
-      *(uint32_t *)((int)self + 0x3c) = uVar3;
-      return uVar3 & 0xffffff00;
+        u2 = u2 + 1;
+        *(uint16_t *)(*(int *)((int)self + 0x5c) + -2 + u2 * 2) = 0xffff;
+      } while (u2 < *(uint32_t *)((int)self + 0x58));
+      u2 = *(int *)((int)self + 0x3c) + 1;
+      *(uint32_t *)((int)self + 0x3c) = u2;
+      return u2 & 0xffffff00;
     }
-    goto LAB_1002cd75;
+    goto code_1002CD75;
   case 1:
-    iVar2 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pCDx_as_s32 + 0xc) + 0x60))
-                      ))(*(int **)(g_pCDx_as_s32 + 0xc),iVar2 * 2,8,0x65,0,(int)self + 0x40);
+    i1 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pCDx_as_s32 + 0xc) + 0x60))
+                      ))(*(int **)(g_pCDx_as_s32 + 0xc),i1 * 2,8,0x65,0,(int)self + 0x40);
     break;
   case 2:
-    *(undefined4 *)((int)self + 0x3c) = 3;
-    return (uint32_t)uVar4 << 8;
+    *(bits32 *)((int)self + 0x3c) = 3;
+    return (uint32_t)u1 << 8;
   case 3:
-    *(undefined4 *)((int)self + 0x3c) = 4;
-    return (uint32_t)uVar4 << 8;
+    *(bits32 *)((int)self + 0x3c) = 4;
+    return (uint32_t)u1 << 8;
   case 4:
-    iVar2 = orig::CYyVbMng_AcquireVertexBuffer_v1
-                      (g_pVbMng_as_v1,iVar2 * 8 + 4,0x208,0,0,(int *)((int)self + 0x4c),0);
+    i1 = orig::CYyVbMng_AcquireVertexBuffer_v1
+                      (g_pVbMng_as_v1,i1 * 8 + 4,0x208,0,0,(int *)((int)self + 0x4c),0);
     break;
   case 5:
-    *(undefined4 *)((int)self + 0x3c) = 6;
-    return (uint32_t)uVar4 << 8;
+    *(bits32 *)((int)self + 0x3c) = 6;
+    return (uint32_t)u1 << 8;
   case 6:
-    *(undefined4 *)((int)self + 0x3c) = 7;
-    return (uint32_t)uVar4 << 8;
+    *(bits32 *)((int)self + 0x3c) = 7;
+    return (uint32_t)u1 << 8;
   default:
-    goto switchD_1002ccce_default;
+    goto L1;
   }
-  if (iVar2 < 0) {
-LAB_1002cd93:
+  if (i1 < 0) {
+code_1002CD93:
     if (*(int *)((int)self + 0x5c) != 0) {
       orig::Mem_FreeObject_v1(*(int *)((int)self + 0x5c));
-      *(undefined4 *)((int)self + 0x5c) = 0;
+      *(bits32 *)((int)self + 0x5c) = 0;
     }
-    a1 = *(int **)((int)self + 0x40);
-    *(undefined4 *)((int)self + 0x60) = 0;
-    if (a1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
-      *(undefined4 *)((int)self + 0x40) = 0;
+    p1 = *(int **)((int)self + 0x40);
+    *(bits32 *)((int)self + 0x60) = 0;
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
+      *(bits32 *)((int)self + 0x40) = 0;
     }
-    uVar3 = 0;
+    u2 = 0;
     if (*(int *)((int)self + 0x4c) != 0) {
-      uVar3 = orig::CYyVbMng_ReleaseVertexBuffer_v1((int *)((int)self + 0x4c));
+      u2 = orig::CYyVbMng_ReleaseVertexBuffer_v1((int *)((int)self + 0x4c));
       *(int *)((int)self + 0x4c) = 0;
     }
-    *(undefined4 *)((int)self + 0x44) = 0;
-    *(undefined4 *)((int)self + 0x48) = 0;
-    *(undefined4 *)((int)self + 0x50) = 0;
-    *(undefined4 *)((int)self + 0x54) = 0;
-    return uVar3 & 0xffffff00;
+    *(bits32 *)((int)self + 0x44) = 0;
+    *(bits32 *)((int)self + 0x48) = 0;
+    *(bits32 *)((int)self + 0x50) = 0;
+    *(bits32 *)((int)self + 0x54) = 0;
+    return u2 & 0xffffff00;
   }
-LAB_1002cd75:
-  uVar3 = *(int *)((int)self + 0x3c) + 1;
-  *(uint32_t *)((int)self + 0x3c) = uVar3;
-  return uVar3 & 0xffffff00;
+code_1002CD75:
+  u2 = *(int *)((int)self + 0x3c) + 1;
+  *(uint32_t *)((int)self + 0x3c) = u2;
+  return u2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1002D660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall CYyOs2VtxBuffer_ScalarDeletingDtor(void * self_, undefined4 param_1)
+XI_API void * __thiscall CYyOs2VtxBuffer_ScalarDeletingDtor(void * self_, bits32 arg2)
 {
   orig::CYyOs2VtxBuffer_CYyOs2VtxBuffer_Destructor(self_);
-  if ((param_1 & 1) != 0) {
+  if ((arg2 & 1) != 0) {
     orig::SharedDeleteHelper_v1(self_);
   }
   return self_;
@@ -100,19 +100,19 @@ XI_API void * __thiscall CYyOs2VtxBuffer_ScalarDeletingDtor(void * self_, undefi
 
 // FUNCTION: FFXIMAIN 0x1002D680
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyOs2VtxBuffer::Constructor(_DWORD **a2)
+int CYyOs2VtxBuffer::Constructor(uint32_t **arg1)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  _DWORD *v3;
-  orig::CMoTask_Constructor((_DWORD *)self);
+  uint32_t *p1;
+  orig::CMoTask_Constructor((uint32_t *)self);
   at<uint32_t>(this, 0x0) = &CYyOs2VtxBuffer_vtbl;
   this->field_38 = 0;
-  this->field_34 = a2;
-  if ( a2 != nullptr )
-    v3 = *a2;
+  this->field_34 = arg1;
+  if ( arg1 != nullptr )
+    p1 = *arg1;
   else
-    v3 = nullptr;
-  orig::sub_10071F50(v3);
+    p1 = nullptr;
+  orig::game_10071F50(p1);
   this->pIndices = 0;
   this->field_60 = 0;
   this->indexBuffer = 0;
@@ -137,24 +137,24 @@ int CYyOs2VtxBuffer::Constructor(_DWORD **a2)
 // GATE: PASS -- 100 trials, 100 returned normally, 158 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
 {
-  unsigned int v2;
-  unsigned int v3;
-  unsigned int v4;
-  unsigned int v5;
-  unsigned int v6;
+  unsigned int u1;
+  unsigned int u2;
+  unsigned int u3;
+  unsigned int u4;
+  unsigned int u5;
   int i;
-  v2 = this->pIndices;
+  u1 = this->pIndices;
   (*(CMoTask_vtbl * *)&this->vftable) = (CMoTask_vtbl *)&CYyOs2VtxBuffer_vtbl;
-  if ( v2 != 0 )
+  if ( u1 != 0 )
   {
-    orig::Mem_FreeObject(v2);
+    orig::Mem_FreeObject(u1);
     this->pIndices = 0;
   }
-  v3 = this->indexBuffer;
+  u2 = this->indexBuffer;
   this->field_60 = 0;
-  if ( v3 != 0 )
+  if ( u2 != 0 )
   {
-    (*(void (__stdcall **)(unsigned int))(*(_DWORD *)v3 + 8))(v3);
+    (*(void (__stdcall **)(unsigned int))(*(uint32_t *)u2 + 8))(u2);
     this->indexBuffer = 0;
   }
   if ( this->vertexBuffer != 0 )
@@ -162,30 +162,30 @@ char CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor()
     orig::CYyVbMng_ReleaseVertexBuffer(&this->vertexBuffer);
     this->vertexBuffer = 0;
   }
-  v4 = this->vertexShader;
+  u3 = this->vertexShader;
   this->field_44 = 0;
   this->field_48 = 0;
   this->field_50 = 0;
   this->field_54 = 0;
   this->indexCount = 0;
-  if ( v4 != 0 )
+  if ( u3 != 0 )
   {
-    (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), v4);
+    (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), u3);
     this->vertexShader = 0;
   }
-  v5 = this->field_6A;
+  u4 = this->field_6A;
   this->field_68 = 0;
   this->field_69 = 0;
-  if ( v5 != 0 )
+  if ( u4 != 0 )
   {
-    orig::Mem_FreeObject(v5);
+    orig::Mem_FreeObject(u4);
     this->field_6A = 0;
   }
-  v6 = this->field_72;
+  u5 = this->field_72;
   this->field_6E = 0;
-  if ( v6 != 0 )
+  if ( u5 != 0 )
   {
-    orig::Mem_FreeObject(v6);
+    orig::Mem_FreeObject(u5);
     this->field_72 = 0;
   }
   this->field_76 = 0;

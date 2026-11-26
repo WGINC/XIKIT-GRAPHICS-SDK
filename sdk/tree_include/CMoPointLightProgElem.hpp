@@ -6,9 +6,9 @@
 class XI_API CMoPointLightProgElem {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x100562E0
-    static undefined8 __thiscall Construct(void * self, uint32_t param_1, undefined4 param_2);  // 0x100562F0
-    BOOL IsKind11(int a1);  // 0x10056360
-    int * ScalarDeletingDtor(char a2);  // 0x10056370
+    static uint64_t __thiscall Construct(void * self, uint32_t arg2, bits32 arg3);  // 0x100562F0
+    BOOL IsKind11(int arg1);  // 0x10056360
+    int * ScalarDeletingDtor(char arg1);  // 0x10056370
     static void __thiscall Update(void * self);  // 0x10056400
 
     void **vftable;  // +0x0

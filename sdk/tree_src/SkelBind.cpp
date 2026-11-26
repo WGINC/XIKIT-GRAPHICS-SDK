@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x10034330
 // GATE: PASS -- 100 trials, 90 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-XI_API undefined4 __thiscall Skel_BindShared(void * self_)
+XI_API bits32 __thiscall Skel_BindShared(void * self_)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint8_t *pbVar3;
+  uint32_t u1;
+  int i1;
+  uint8_t *p1;
   
   if (*(int *)((int)self_ + 4) == 0) {
     return 0;
@@ -16,19 +16,19 @@ XI_API undefined4 __thiscall Skel_BindShared(void * self_)
   if (*(int *)((int)self_ + 8) != 0) {
     if (*(int *)((int)self_ + 0x14) != 0) {
       g_pSharedSkeleton_as_s32 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
-      uVar1 = (uint32_t)*(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
+      u1 = (uint32_t)*(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
       g_boneWeightMatrixTable_as_v1 = *(uint32_t *)((int)self_ + 0xc);
-      iVar2 = 0;
-      DAT_10462430 = uVar1;
-      if (uVar1 != 0) {
+      i1 = 0;
+      g_10462430 = u1;
+      if (u1 != 0) {
         do {
-          pbVar3 = (uint8_t *)(*(int *)((int)self_ + 0x14) + iVar2);
-          iVar2 = iVar2 + 1;
-          *pbVar3 = *pbVar3 & 0x80;
-          (&g_pSharedSkeleton_as_s32)[iVar2] = 1;
-        } while (iVar2 < (int)uVar1);
+          p1 = (uint8_t *)(*(int *)((int)self_ + 0x14) + i1);
+          i1 = i1 + 1;
+          *p1 = *p1 & 0x80;
+          (&g_pSharedSkeleton_as_s32)[i1] = 1;
+        } while (i1 < (int)u1);
       }
-      DAT_1045f028 = *(uint32_t *)((int)self_ + 0x14);
+      g_1045F028 = *(uint32_t *)((int)self_ + 0x14);
       return 1;
     }
     return 0;

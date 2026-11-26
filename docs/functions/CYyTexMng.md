@@ -18,6 +18,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `CYyTexMng::GetRuntimeClass` calls nothing directly
 - `CYyTexMng_Init` calls nothing directly
-- `CYyTexMng::ScalarDeletingDtor` calls `sub_1003AA90`, `thunk_sub_10028AA0`
+- `CYyTexMng::ScalarDeletingDtor` calls `game_1003AA90`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `CYyTexMng::FindByName` calls `TexMgr_GetField8`
 - `CYyTexMng::FindByNameInResource` calls `CMoResource_FindInScope`, `TexMgr_GetField8`

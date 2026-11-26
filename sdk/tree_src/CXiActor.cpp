@@ -7,35 +7,35 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CXiActor::Init(void * self)
 {
-  char cVar1;
-  uint32_t *puVar2;
-  char *pcVar3;
+  char c1;
+  uint32_t *p1;
+  char *p2;
   uint32_t xi_eax;
-  int iVar4;
-  uint32_t *puVar5;
+  int i1;
+  uint32_t *p3;
   
-  puVar5 = (uint32_t *)&DAT_103581b4;
-  puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  orig::Vec4_Copy_v1(puVar2,puVar5);
-  puVar5 = (uint32_t *)&DAT_103581c4;
-  puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Vec4_Copy_v1(puVar2,puVar5);
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x268))))((void *)(self),0);
+  p3 = (uint32_t *)&g_103581B4;
+  p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  orig::Vec4_Copy_v1(p1,p3);
+  p3 = (uint32_t *)&g_103581C4;
+  p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Vec4_Copy_v1(p1,p3);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x268))))((void *)(self),0);
   if (*(char *)(g_pCamera_as_s32 + 9) == '\0') {
-    pcVar3 = s_roro_thomashi_1035821c;
+    p2 = str_roro_thomashi_1035821C;
     do {
-      cVar1 = *pcVar3;
-      pcVar3[(int)self + -0x10358164] = cVar1;
-      pcVar3 = pcVar3 + 1;
-    } while (cVar1 != '\0');
+      c1 = *p2;
+      p2[(int)self + -0x10358164] = c1;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
   }
   else {
-    pcVar3 = &Read_as_v0;
+    p2 = &Read_as_v0;
     do {
-      cVar1 = *pcVar3;
-      pcVar3[(int)self + -0x103d3bcc] = cVar1;
-      pcVar3 = pcVar3 + 1;
-    } while (cVar1 != '\0');
+      c1 = *p2;
+      p2[(int)self + -0x103d3bcc] = c1;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
   }
   *(uint32_t *)((int)self + 0x88) = *(uint32_t *)((int)self + 0x88) & 0xfffff800;
   *(uint32_t *)((int)self + 0x78) = 0x80808080;
@@ -50,18 +50,18 @@ void __thiscall CXiActor::Init(void * self)
   *(uint8_t *)((int)self + 0xc0) = 0;
   *(uint32_t *)((int)self + 0x6c) = 0;
   *(uint32_t *)((int)self + 0x68) = 0;
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x1ac))))((void *)(self),0x40a00000);
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x1a4))))((void *)(self),(float)((long double)_DAT_103581a0 * (long double)5.0f));
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x1b4))))((void *)(self),(float)((long double)_DAT_103581a0 * (long double)1.66666662693023681640625f));
-  xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x290))))((void *)(self),0);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1ac))))((void *)(self),0x40a00000);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1a4))))((void *)(self),(float)(g_103581A0 * 5.0f));
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x1b4))))((void *)(self),(float)(g_103581A0 * 1.66666662693023681640625f));
+  xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x290))))((void *)(self),0);
   orig::CXiActor_LinkIntoDrawList(self,xi_eax);
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x350))))((void *)(self),0);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x350))))((void *)(self),0);
   if (*(char *)(g_pCamera_as_s32 + 9) == '\0') {
-    iVar4 = orig::Actor_CountAll();
-    *(int *)((int)self + 0x74) = iVar4;
+    i1 = orig::Actor_CountAll();
+    *(int *)((int)self + 0x74) = i1;
   }
-  iVar4 = orig::Actor_CountAll();
-  *(int *)((int)self + 0x74) = iVar4;
+  i1 = orig::Actor_CountAll();
+  *(int *)((int)self + 0x74) = i1;
   return;
 }
 
@@ -71,7 +71,7 @@ void * __thiscall CXiActor::ConstructBase(void * self)
 {
   orig::CMoTask_Constructor_v1(self);
   orig::ActorHandle_Constructor_v1((void *)((int)self + 0x5c));
-  *(uint8_t ***)self = &PTR_CXiActor_GetRuntimeClass_variant0_1032cfe0;
+  *(uint8_t ***)self = &ptr_to_CXiActor_GetRuntimeClass_variant0_1032CFE0;
   orig::CXiActor_Init(self);
   return self;
 }
@@ -85,9 +85,9 @@ double CXiActor::CXiSkeletonActor_GetMoveSpeed()
 
 // FUNCTION: FFXIMAIN 0x10082080
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiSkeletonActor_SetMoveSpeed(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiSkeletonActor_SetMoveSpeed(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0x98) = param_1;
+  *(uint32_t *)((int)self_ + 0x98) = arg2;
   return;
 }
 
@@ -100,9 +100,9 @@ float CXiActor::CXiSkeletonActor_GetMoveSpeedBase()
 
 // FUNCTION: FFXIMAIN 0x100820A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiSkeletonActor_SetMoveSpeedBase(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiSkeletonActor_SetMoveSpeedBase(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0x94) = param_1;
+  *(uint32_t *)((int)self_ + 0x94) = arg2;
   return;
 }
 
@@ -115,15 +115,15 @@ double CXiActor::CXiSkeletonActor_GetWalkSpeed()
 
 // FUNCTION: FFXIMAIN 0x100820C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiSkeletonActor_SetWalkSpeed(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiSkeletonActor_SetWalkSpeed(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0x9c) = param_1;
+  *(uint32_t *)((int)self_ + 0x9c) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100820D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CXiActor::CXiSkeletonActor_GetEquip(int a1)
+int CXiActor::CXiSkeletonActor_GetEquip(int arg1)
 {
   return 1952805748;
 }
@@ -144,45 +144,45 @@ XI_API int __thiscall GetEmbeddedMember_0x44(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10082200
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiActor_GetModel(void * self_, undefined4 * param_1)
+XI_API void __thiscall CXiActor_GetModel(void * self_, bits32 * arg2)
 {
-  *param_1 = *(uint32_t *)((int)self_ + 0xb4);
+  *arg2 = *(uint32_t *)((int)self_ + 0xb4);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10082380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiActor_GetFieldA8(void * self_)
+XI_API bits32 __thiscall CXiActor_GetFieldA8(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0xa8);
 }
 
 // FUNCTION: FFXIMAIN 0x10082460
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiActor_Slot154ForwardTo5C(void * self_, undefined4 xi_s1)
+XI_API void __thiscall CXiActor_Slot154ForwardTo5C(void * self_, bits32 xi_s1)
 {
-  orig::FUN_100814f0_v1((void *)((int)self_ + 0x5c),xi_s1);
+  orig::game_100814F0_v1((void *)((int)self_ + 0x5c),xi_s1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10082780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CXiActor_GetSubActorStatus(void * self_)
+XI_API bits32 __thiscall CXiActor_GetSubActorStatus(void * self_)
 {
   return *(uint32_t *)((int)self_ + 0xa4);
 }
 
 // FUNCTION: FFXIMAIN 0x10082790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiActor_SetSubActorStatus(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiActor_SetSubActorStatus(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0xa4) = param_1;
+  *(uint32_t *)((int)self_ + 0xa4) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100827A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsChocobo(void * self)
+bits32 __thiscall CXiActor::IsChocobo(void * self)
 {
   if ((0 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 5)) {
     return 1;
@@ -192,7 +192,7 @@ undefined4 __thiscall CXiActor::IsChocobo(void * self)
 
 // FUNCTION: FFXIMAIN 0x100827F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsStateA4Eq54(void * self)
+bits32 __thiscall CXiActor::IsStateA4Eq54(void * self)
 {
   if ((0x53 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x55)) {
     return 1;
@@ -202,7 +202,7 @@ undefined4 __thiscall CXiActor::IsStateA4Eq54(void * self)
 
 // FUNCTION: FFXIMAIN 0x10082860
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsA4InRange3DTo51(void * self)
+bits32 __thiscall CXiActor::IsA4InRange3DTo51(void * self)
 {
   if ((0x3c < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x52)) {
     return 1;
@@ -212,7 +212,7 @@ undefined4 __thiscall CXiActor::IsA4InRange3DTo51(void * self)
 
 // FUNCTION: FFXIMAIN 0x100828B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsA4InRange25To34(void * self)
+bits32 __thiscall CXiActor::IsA4InRange25To34(void * self)
 {
   if ((0x24 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x35)) {
     return 1;
@@ -222,7 +222,7 @@ undefined4 __thiscall CXiActor::IsA4InRange25To34(void * self)
 
 // FUNCTION: FFXIMAIN 0x10082900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsA4InRange35To3C(void * self)
+bits32 __thiscall CXiActor::IsA4InRange35To3C(void * self)
 {
   if ((0x34 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x3d)) {
     return 1;
@@ -234,32 +234,32 @@ undefined4 __thiscall CXiActor::IsA4InRange35To3C(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint8_t * __thiscall CXiActor::GetName(void * self)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  char *pcVar4;
+  char c1;
+  int i1;
+  char *p1;
+  char *p2;
   
-  DAT_1047d4f8 = 0;
+  g_1047D4F8 = 0;
   if (*(int *)((int)self + 0x70) != 0) {
-    iVar2 = orig::CXiActor_IsInModelSlotTable_v1(self);
-    if ((char)iVar2 == '\0') {
-      pcVar3 = orig::FUN_100979b0(*(void **)((int)self + 0x70));
-      pcVar4 = &DAT_1047d4f8;
+    i1 = orig::CXiActor_IsInModelSlotTable_v1(self);
+    if ((char)i1 == '\0') {
+      p1 = orig::game_100979B0(*(void **)((int)self + 0x70));
+      p2 = &g_1047D4F8;
       do {
-        cVar1 = *pcVar3;
-        pcVar3 = pcVar3 + 1;
-        *pcVar4 = cVar1;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar1 != '\0');
+        c1 = *p1;
+        p1 = p1 + 1;
+        *p2 = c1;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
     }
-    return &DAT_1047d4f8;
+    return &g_1047D4F8;
   }
   return (uint8_t *)((int)self + 0xb8);
 }
 
 // FUNCTION: FFXIMAIN 0x10082FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::GetField78Of70(void * self)
+bits32 __thiscall CXiActor::GetField78Of70(void * self)
 {
   if (*(int *)((int)self + 0x70) != 0) {
     return *(uint32_t *)(*(int *)((int)self + 0x70) + 0x78);
@@ -269,49 +269,49 @@ undefined4 __thiscall CXiActor::GetField78Of70(void * self)
 
 // FUNCTION: FFXIMAIN 0x100830C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-uint32_t __thiscall CXiActor::NameCalc(void * self, undefined4 * param_1, int param_2, float * param_3, uint32_t * param_4)
+uint32_t __thiscall CXiActor::NameCalc(void * self, bits32 * arg2, int arg3, float * arg4, uint32_t * arg5)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  int iVar4;
-  long double fVar5;
-  int64_t lVar6;
+  uint8_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  int i1;
+  long double f1;
+  int64_t i2;
   
-  *param_3 = 1.0f;
-  uVar2 = orig::ActorName_ProjectThroughCamera(param_1,(uint32_t *)param_2);
-  if ((char)uVar2 == '\0') {
-    return uVar2;
+  *arg4 = 1.0f;
+  u2 = orig::ActorName_ProjectThroughCamera(arg2,(uint32_t *)arg3);
+  if ((char)u2 == '\0') {
+    return u2;
   }
-  uVar2 = *(uint32_t *)(param_2 + 8);
-  if (DAT_103581d8 < uVar2) {
-    return DAT_103581d8 & 0xffffff00;
+  u2 = *(uint32_t *)(arg3 + 8);
+  if (g_103581D8 < u2) {
+    return g_103581D8 & 0xffffff00;
   }
-  if (uVar2 < DAT_103581d4) {
-    *param_3 = 1.0f;
+  if (u2 < g_103581D4) {
+    *arg4 = 1.0f;
   }
   else {
-    *param_3 = (float)((long double)(DAT_103581d8 - uVar2) / (long double)(int)(DAT_103581d8 - DAT_103581d4)
+    *arg4 = (float)((long double)(g_103581D8 - u2) / (long double)(int)(g_103581D8 - g_103581D4)
                       );
   }
-  uVar2 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x304))))((void *)(self));
-  if (((char)uVar2 != '\0') && (XiControlActor_isFirstPersonView != '\0')) {
-    return uVar2 & 0xffffff00;
+  u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x304))))((void *)(self));
+  if (((char)u2 != '\0') && (XiControlActor_isFirstPersonView != '\0')) {
+    return u2 & 0xffffff00;
   }
-  *param_4 = *(uint32_t *)((int)self + 0x78);
+  *arg5 = *(uint32_t *)((int)self + 0x78);
   if (*(char *)(g_pCamera_as_s32 + 9) == '\0') {
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x300))))((void *)(self));
-    if ((char)uVar3 != '\0') {
-      *param_4 = *(uint32_t *)((int)self + 0x78) & 0xffffff00;
+    u3 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x300))))((void *)(self));
+    if ((char)u3 != '\0') {
+      *arg5 = *(uint32_t *)((int)self + 0x78) & 0xffffff00;
     }
   }
   if ((*(uint8_t *)((int)self + 0x88) & 4) != 0) {
-    bVar1 = *(uint8_t *)((int)param_4 + 3);
-    iVar4 = orig::GetFrameCounter_v1();
-    *(uint8_t *)((int)param_4 + 3) = 0;
-    fVar5 = xi_castbits<long double>(fsin((long double)((iVar4 << 4) % 0x168) * (long double)0.01745329238474369049072265625f));
-    lVar6 = XI_CALL_ST0(0x10311C2Cu)((fVar5 * (long double)32.0f + (long double)96.0f) * (long double)bVar1);
-    *param_4 = *param_4 | ((uint32_t)lVar6 & 0xffffff80) << 0x11;
+    u1 = *(uint8_t *)((int)arg5 + 3);
+    i1 = orig::GetFrameCounter_v1();
+    *(uint8_t *)((int)arg5 + 3) = 0;
+    f1 = bit_cast<long double>(x87_fsin((long double)((i1 << 4) % 0x168) * (long double)0.01745329238474369049072265625f));
+    i2 = XI_CALL_ST0(0x10311C2Cu)((f1 * (long double)32.0f + (long double)96.0f) * (long double)u1);
+    *arg5 = *arg5 | ((uint32_t)i2 & 0xffffff80) << 0x11;
   }
   if ((*(short *)((int)self + 0xb2) == 0) && (*(char *)(g_pCamera_as_s32 + 8) != '\0')) {
     return 1;
@@ -342,481 +342,481 @@ void CXiActor::CXiSkeletonActor_SubSchRef()
 
 // FUNCTION: FFXIMAIN 0x10083430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActor::ComputeDrawState(void * param_1, int param_2, uint32_t param_3, uint32_t param_4, undefined4 param_5)
+bits32 __cdecl CXiActor::ComputeDrawState(void * arg1, int arg2, uint32_t arg3, uint32_t arg4, bits32 arg5)
 {
   void *self;
-  long double fVar1;
-  void *pvVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int iVar5;
-  uint32_t uVar6;
-  uint8_t bVar7;
-  uint8_t bVar8;
-  long double fVar9;
-  uint64_t uVar10;
-  int local_8;
+  long double f1;
+  void *p1;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t u3;
+  uint8_t u4;
+  uint8_t u5;
+  long double f2;
+  uint64_t u6;
+  int i2;
   
-  uVar10 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  pvVar2 = (void *)uVar10;
-  uVar3 = orig::CXiActor_IsModelMissingOrFlag2000_v1(param_1);
-  bVar7 = (char)uVar3 == '\x01';
-  if (pvVar2 == (void *)0x0) {
-    local_8 = 0;
+  u6 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  p1 = (void *)u6;
+  u1 = orig::CXiActor_IsModelMissingOrFlag2000_v1(arg1);
+  u4 = (char)u1 == '\x01';
+  if (p1 == (void *)0x0) {
+    i2 = 0;
   }
   else {
-    local_8 = *(int *)((int)pvVar2 + 0x70);
+    i2 = *(int *)((int)p1 + 0x70);
   }
-  self = *(void **)((int)param_1 + 0x70);
+  self = *(void **)((int)arg1 + 0x70);
   if (self != (void *)0x0) {
-    uVar3 = *(uint32_t *)((int)self + 0x1d0);
-    if ((uVar3 & param_4) != 0) {
-      return uVar3 & 0xffffff00;
+    u1 = *(uint32_t *)((int)self + 0x1d0);
+    if ((u1 & arg4) != 0) {
+      return u1 & 0xffffff00;
     }
-    if ((((param_3 & uVar3) == 0) &&
-        ((uVar3 = orig::YkCommon_ActorTest1D0((int)self,uVar3), (char)uVar3 == '\0' || ((param_3 & 1) == 0)))) &&
-       ((uVar3 = orig::YkCommon_ActorPairTest1FF((int)self,uVar3), (char)uVar3 == '\0' || ((param_3 & 0x10) == 0)))) {
-      return uVar3 & 0xffffff00;
+    if ((((arg3 & u1) == 0) &&
+        ((u1 = orig::YkCommon_ActorTest1D0((int)self,u1), (char)u1 == '\0' || ((arg3 & 1) == 0)))) &&
+       ((u1 = orig::YkCommon_ActorPairTest1FF((int)self,u1), (char)u1 == '\0' || ((arg3 & 0x10) == 0)))) {
+      return u1 & 0xffffff00;
     }
-    uVar10 = orig::Settings_GetValue_v1(0x97);
-    if ((((((int)uVar10 != 0) && ((*(uint32_t *)((int)self + 0x1d0) & 0x100) != 0)) &&
-         (uVar3 = *(uint32_t *)((int)self + 300), (uVar3 >> 0xd & 1) != 0)) &&
-        (((uVar3 >> 0x1e & 1) == 0 && (-1 < (int)uVar3)))) &&
-       ((uVar3 = orig::YkCommon_ActorPairTest1FF((int)self,0), (char)uVar3 == '\0' && ((void *)param_2 != self)))) {
-      return uVar3 & 0xffffff00;
+    u6 = orig::Settings_GetValue_v1(0x97);
+    if ((((((int)u6 != 0) && ((*(uint32_t *)((int)self + 0x1d0) & 0x100) != 0)) &&
+         (u1 = *(uint32_t *)((int)self + 300), (u1 >> 0xd & 1) != 0)) &&
+        (((u1 >> 0x1e & 1) == 0 && (-1 < (int)u1)))) &&
+       ((u1 = orig::YkCommon_ActorPairTest1FF((int)self,0), (char)u1 == '\0' && ((void *)arg2 != self)))) {
+      return u1 & 0xffffff00;
     }
-    uVar10 = orig::Settings_GetValue_v1(0xaa);
-    if ((((int)uVar10 != 0) && ((*(uint32_t *)((int)self + 300) >> 0x16 & 1) != 0)) &&
+    u6 = orig::Settings_GetValue_v1(0xaa);
+    if ((((int)u6 != 0) && ((*(uint32_t *)((int)self + 300) >> 0x16 & 1) != 0)) &&
        ((*(uint8_t *)((int)self + 0x1d0) & 0xc) == 0)) {
       return (*(uint32_t *)((int)self + 300) >> 0x1e) << 8;
     }
-    if ((((!bVar7) && (pvVar2 != (void *)0x0)) && (uVar4 = orig::CXiActor_IsField78HighZero(self), (char)uVar4 != '\0'))
-       && (uVar3 = orig::Acter_IsBytes1FFBothIn89NotEqual(self,local_8), (char)uVar3 != '\0')) {
-      bVar7 = true;
+    if ((((!u4) && (p1 != (void *)0x0)) && (u2 = orig::CXiActor_IsField78HighZero(self), (char)u2 != '\0'))
+       && (u1 = orig::Acter_IsBytes1FFBothIn89NotEqual(self,i2), (char)u1 != '\0')) {
+      u4 = true;
     }
   }
-  iVar5 = orig::CXiActor_GetModelField170_v1(param_1);
-  uVar6 = xi_trunc24(((uint32_t)iVar5 >> 8));
-  if ((bVar7) && ((iVar5 == 2 || (iVar5 == 3)))) {
-    return (uint32_t)uVar6 << 8;
+  i1 = orig::CXiActor_GetModelField170_v1(arg1);
+  u3 = xi_trunc24(((uint32_t)i1 >> 8));
+  if ((u4) && ((i1 == 2 || (i1 == 3)))) {
+    return (uint32_t)u3 << 8;
   }
-  if (((char)param_5 != '\0') && (param_1 == pvVar2)) {
-    return (uint32_t)uVar6 << 8;
+  if (((char)arg5 != '\0') && (arg1 == p1)) {
+    return (uint32_t)u3 << 8;
   }
-  if (*(short *)((int)param_1 + 0xb2) != 0) {
-    return (uint32_t)uVar6 << 8;
+  if (*(short *)((int)arg1 + 0xb2) != 0) {
+    return (uint32_t)u3 << 8;
   }
-  if (*(char *)((int)param_1 + 0xc0) != '\x02') {
-    uVar3 = orig::CXiActor_IsModelMissingOrSuppressed_v1(param_1);
-    if (uVar3 != 0) {
-      return uVar3 & 0xffffff00;
+  if (*(char *)((int)arg1 + 0xc0) != '\x02') {
+    u1 = orig::CXiActor_IsModelMissingOrSuppressed_v1(arg1);
+    if (u1 != 0) {
+      return u1 & 0xffffff00;
     }
-    fVar9 = (long double)*(float *)((int)param_1 + 0x8c);
-    fVar1 = (long double)0.0f;
-    bVar8 = NAN(fVar9) || NAN(fVar1);
-    bVar7 = bVar8 || fVar9 < fVar1;
-    uVar6 = xi_trunc24((uint8_t)(bVar7 | (uint8_t)((uint16_t)((uint16_t)bVar8 << 10) >> 8) |
-                         (uint8_t)((uint16_t)((uint16_t)(bVar8 || fVar9 == fVar1) << 0xe) >> 8)));
-    if (bVar7 == bVar8) {
-      return ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)(1)));
+    f2 = *(float *)((int)arg1 + 0x8c);
+    f1 = 0.0f;
+    u5 = ((f2) != (f2)) || ((f1) != (f1));
+    u4 = u5 || f2 < f1;
+    u3 = xi_trunc24((uint8_t)(u4 | (uint8_t)((uint16_t)((uint16_t)u5 << 10) >> 8) |
+                         (uint8_t)((uint16_t)((uint16_t)(u5 || f2 == f1) << 0xe) >> 8)));
+    if (u4 == u5) {
+      return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
     }
-    return (uint32_t)uVar6 << 8;
+    return (uint32_t)u3 << 8;
   }
-  return (uint32_t)uVar6 << 8;
+  return (uint32_t)u3 << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x10083750
 // GATE: PASS -- 100 trials, 99 returned normally, 98 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-int * __cdecl CXiActor::FindNearestToPoint(float * param_1, uint32_t param_2, uint32_t param_3)
+int * __cdecl CXiActor::FindNearestToPoint(float * arg1, uint32_t arg2, uint32_t arg3)
 {
-  long double fVar1;
-  int iVar2;
-  uint32_t *puVar3;
+  long double f1;
+  int i1;
+  uint32_t *p1;
   int *self;
-  uint32_t uVar4;
-  long double fVar5;
-  uint64_t uVar6;
+  uint32_t u1;
+  long double f2;
+  uint64_t u2;
   char xi_frame[124] __attribute__((aligned(4)));
-  float  &local_7c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &fStack_78 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &local_74 = *reinterpret_cast<int * *>(xi_frame + 8);
-  int  &local_70 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  (&local_6c)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 16);
-  float  &local_60 = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &fStack_5c = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &fStack_54 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &local_50 = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &fStack_4c = *reinterpret_cast<float  *>(xi_frame + 48);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 60);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 4);
+  int * &p2 = *reinterpret_cast<int * *>(xi_frame + 8);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 12);
+  uint32_t  (&u3)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 16);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 28);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 32);
+  float  &f7 = *reinterpret_cast<float  *>(xi_frame + 40);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 44);
+  float  &f9 = *reinterpret_cast<float  *>(xi_frame + 48);
+  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 60);
   
-  iVar2 = orig::Camera_GetField50_v1();
-  if (iVar2 != 0) {
-    iVar2 = orig::Camera_GetField50_v1();
-    orig::Vec3_Copy_v1(local_6c,(uint32_t *)(iVar2 + 0x44));
-    orig::MathVector_ReturnThis_v1(local_40);
-    puVar3 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-    orig::Mat4_Copy_v1(local_40,puVar3);
-    iVar2 = orig::Camera_GetMatrix154Ptr_v1();
-    orig::Mat4_PostMultiply_v1(local_40,iVar2);
-    local_74 = (int *)0x0;
-    local_7c = 1e+09f;
-    local_70 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
-    uVar6 = orig::FUN_10085240();
-    self = (int *)uVar6;
+  i1 = orig::Camera_GetField50_v1();
+  if (i1 != 0) {
+    i1 = orig::Camera_GetField50_v1();
+    orig::Vec3_Copy_v1(u3,(uint32_t *)(i1 + 0x44));
+    orig::MathVector_ReturnThis_v1(u4);
+    p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
+    orig::Mat4_Copy_v1(u4,p1);
+    i1 = orig::Camera_GetMatrix154Ptr_v1();
+    orig::Mat4_PostMultiply_v1(u4,i1);
+    p2 = (int *)0x0;
+    f3 = 1e+09f;
+    i2 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+    u2 = orig::game_10085240();
+    self = (int *)u2;
     if (self != (int *)0x0) {
       do {
-        uVar4 = orig::CXiActor_ComputeDrawState(self,local_70,param_2,param_3,
-                             ((uint32_t)(((uint32_t)(xi_trunc24((param_2 >> 0x11))) << 8) | (uint8_t)(~(uint8_t)(param_2 >> 9)))) & 0xffffff01);
-        if (((char)uVar4 != '\0') &&
-           (uVar4 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*self + 0x3d0))))((void *)(self),&local_60,&local_50,local_40),
-           (char)uVar4 != '\0')) {
-          fVar5 = (long double)local_60;
-          fVar1 = (long double)*param_1;
-          param_1[3] = fStack_54;
-          if ((fVar5 <= fVar1) &&
-             ((long double)local_50 >= (long double)*param_1)) {
-            fVar5 = (long double)fStack_5c;
-            fVar1 = (long double)param_1[1];
-            if ((((fVar5 <= fVar1) &&
-                 ((long double)fStack_4c >= (long double)param_1[1])) &&
-                ((long double)local_7c > (long double)fStack_54)) &&
-               ((((!NAN((long double)fStack_54) && !NAN((long double)0.0f)) &&
-                  (long double)0.0f < (long double)fStack_54 &&
-                 (uVar4 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*self + 0x3d4))))((void *)(self),param_1,&fStack_78),
-                 (char)uVar4 == '\x01')) &&
-                ((long double)local_7c > (long double)fStack_78)))) {
-              local_7c = fStack_78;
-              local_74 = self;
+        u1 = orig::CXiActor_ComputeDrawState(self,i2,arg2,arg3,
+                             ((uint32_t)(((uint32_t)(xi_trunc24((arg2 >> 0x11))) << 8) | (uint8_t)(~(uint8_t)(arg2 >> 9)))) & 0xffffff01);
+        if (((char)u1 != '\0') &&
+           (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d0))))((void *)(self),&f5,&f8,u4),
+           (char)u1 != '\0')) {
+          f2 = f5;
+          f1 = *arg1;
+          arg1[3] = f7;
+          if ((f2 <= f1) &&
+             (f8 >= *arg1)) {
+            f2 = f6;
+            f1 = arg1[1];
+            if ((((f2 <= f1) &&
+                 (f9 >= arg1[1])) &&
+                (f3 > f7)) &&
+               ((((!((f7) != (f7)) && !((0.0f) != (0.0f))) &&
+                  0.0f < f7 &&
+                 (u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*self + 0x3d4))))((void *)(self),arg1,&f4),
+                 (char)u1 == '\x01')) &&
+                (f3 > f4)))) {
+              f3 = f4;
+              p2 = self;
             }
           }
         }
-        uVar6 = orig::FUN_10085270(self);
-        self = (int *)uVar6;
+        u2 = orig::game_10085270(self);
+        self = (int *)u2;
       } while (self != (int *)0x0);
     }
     orig::MathVector_Nop();
-    return local_74;
+    return p2;
   }
   return (int *)0x0;
 }
 
 // FUNCTION: FFXIMAIN 0x10083B40
 // GATE: PASS -- 100 trials, 97 returned normally, 219 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-int * __cdecl CXiActor::FindNearestLowerInView(int * param_1, uint32_t param_2, float param_3)
+int * __cdecl CXiActor::FindNearestLowerInView(int * arg1, uint32_t arg2, float arg3)
 {
-  long double fVar1;
-  float fVar2;
-  uint32_t *puVar3;
-  float *pfVar4;
-  int iVar5;
+  long double f1;
+  float f2;
+  uint32_t *p1;
+  float *p2;
+  int i1;
   int *self;
-  uint32_t uVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  uint64_t uVar10;
+  uint32_t u1;
+  uint8_t u2;
+  long double f3;
+  long double f4;
+  uint64_t u3;
   char xi_frame[108] __attribute__((aligned(4)));
-  float  &fStack_6c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &fStack_68 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &piStack_64 = *reinterpret_cast<int * *>(xi_frame + 8);
-  float  (&afStack_60)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
-  float  &fStack_58 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  (&afStack_50)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
-  float  &fStack_48 = *reinterpret_cast<float  *>(xi_frame + 36);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
+  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 8);
+  float  (&f7)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  (&f9)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
+  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 36);
+  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
   
-  fVar2 = param_3;
-  orig::MathVector_ReturnThis_v1(local_40);
-  puVar3 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-  orig::Mat4_Copy_v1(local_40,puVar3);
-  pfVar4 = (float *)((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x1bc))))((void *)(param_1));
-  orig::Mat4_TransformPoint(local_40,afStack_50,pfVar4);
-  bVar7 = NAN((long double)fStack_48) || NAN((long double)0.0f);
-  fVar8 = (long double)fStack_48;
-  if ((bVar7 || (long double)fStack_48 < (long double)0.0f) != bVar7) {
-    fVar8 = -fVar8;
+  f2 = arg3;
+  orig::MathVector_ReturnThis_v1(u4);
+  p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
+  orig::Mat4_Copy_v1(u4,p1);
+  p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x1bc))))((void *)(arg1));
+  orig::Mat4_TransformPoint(u4,f9,p2);
+  u2 = ((f10) != (f10)) || ((0.0f) != (0.0f));
+  f3 = f10;
+  if ((u2 || f10 < 0.0f) != u2) {
+    f3 = -f3;
   }
-  fStack_6c = (float)fVar8;
-  bVar7 = NAN(fVar8) || NAN((long double)1.0f);
-  if ((bVar7 || fVar8 < (long double)1.0f) != bVar7) {
-    fStack_6c = 1.0f;
+  f5 = (float)f3;
+  u2 = ((f3) != (f3)) || ((1.0f) != (1.0f));
+  if ((u2 || f3 < 1.0f) != u2) {
+    f5 = 1.0f;
   }
-  fVar8 = orig::Camera_GetField2F4();
-  piStack_64 = (int *)0x0;
-  fStack_68 = 3.6e+03f;
-  fVar1 = (float)(((long double)afStack_50[0] / (long double)fStack_6c) * fVar8);
-  iVar5 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
-  uVar10 = orig::FUN_10085240();
-  self = (int *)uVar10;
+  f3 = orig::Camera_GetField2F4();
+  p3 = (int *)0x0;
+  f6 = 3.6e+03f;
+  f1 = (float)((f9[0] / f5) * f3);
+  i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+  u3 = orig::game_10085240();
+  self = (int *)u3;
   while (self != (int *)0x0) {
-    if ((self != param_1) &&
-       (uVar6 = orig::CXiActor_ComputeDrawState(self,iVar5,param_2,xi_castbits<uint32_t>(fVar2),1), (char)uVar6 != '\0')) {
-      pfVar4 = (float *)((int (__thiscall *)(void *))((**(code **)(*self + 0x1bc))))((void *)(self));
-      orig::Mat4_TransformPoint(local_40,afStack_60,pfVar4);
-      fVar8 = orig::MathVector_Length3(afStack_60);
-      bVar7 = NAN(fVar8) || NAN((long double)5e+01f);
-      if ((bVar7 || fVar8 < (long double)5e+01f) != bVar7) {
-        bVar7 = NAN((long double)fStack_58) || NAN((long double)0.0f);
-        if ((bVar7 || (long double)fStack_58 < (long double)0.0f) == bVar7) {
-          param_3 = fStack_58;
+    if ((self != arg1) &&
+       (u1 = orig::CXiActor_ComputeDrawState(self,i1,arg2,bit_cast<uint32_t>(f2),1), (char)u1 != '\0')) {
+      p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self + 0x1bc))))((void *)(self));
+      orig::Mat4_TransformPoint(u4,f7,p2);
+      f3 = orig::MathVector_Length3(f7);
+      u2 = ((f3) != (f3)) || ((5e+01f) != (5e+01f));
+      if ((u2 || f3 < 5e+01f) != u2) {
+        u2 = ((f8) != (f8)) || ((0.0f) != (0.0f));
+        if ((u2 || f8 < 0.0f) == u2) {
+          arg3 = f8;
         }
         else {
-          param_3 = (float)-(long double)fStack_58;
+          arg3 = (float)-f8;
         }
-        bVar7 = NAN((long double)param_3) || NAN((long double)1.0f);
-        if ((bVar7 || (long double)param_3 < (long double)1.0f) != bVar7) {
-          param_3 = 1.0f;
+        u2 = ((arg3) != (arg3)) || ((1.0f) != (1.0f));
+        if ((u2 || arg3 < 1.0f) != u2) {
+          arg3 = 1.0f;
         }
-        fVar9 = orig::Camera_GetField2F4();
-        fVar9 = ((long double)afStack_60[0] / (long double)param_3) * fVar9;
-        fVar8 = (long double)fVar1;
-        bVar7 = NAN(fVar9) || NAN(fVar8);
-        if (((bVar7 || fVar9 < fVar8) != bVar7) &&
-           (fVar9 = (long double)fVar1 - fVar9, bVar7 = NAN(fVar9) || NAN((long double)fStack_68),
-           (bVar7 || fVar9 < (long double)fStack_68) != bVar7)) {
-          fStack_68 = (float)fVar9;
-          piStack_64 = self;
+        f4 = orig::Camera_GetField2F4();
+        f4 = (f7[0] / arg3) * f4;
+        f3 = f1;
+        u2 = ((f4) != (f4)) || ((f3) != (f3));
+        if (((u2 || f4 < f3) != u2) &&
+           (f4 = f1 - f4, u2 = ((f4) != (f4)) || ((f6) != (f6)),
+           (u2 || f4 < f6) != u2)) {
+          f6 = (float)f4;
+          p3 = self;
         }
       }
     }
-    uVar10 = orig::FUN_10085270(self);
-    self = (int *)uVar10;
+    u3 = orig::game_10085270(self);
+    self = (int *)u3;
   }
   orig::MathVector_Nop();
-  return piStack_64;
+  return p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10083D00
 // GATE: PASS -- 100 trials, 97 returned normally, 219 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-int * __cdecl CXiActor::FindNearestHigherInView(int * param_1, uint32_t param_2, float param_3)
+int * __cdecl CXiActor::FindNearestHigherInView(int * arg1, uint32_t arg2, float arg3)
 {
-  long double fVar1;
-  float fVar2;
-  uint32_t *puVar3;
-  float *pfVar4;
-  int iVar5;
+  long double f1;
+  float f2;
+  uint32_t *p1;
+  float *p2;
+  int i1;
   int *self;
-  uint32_t uVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  uint64_t uVar10;
+  uint32_t u1;
+  uint8_t u2;
+  long double f3;
+  long double f4;
+  uint64_t u3;
   char xi_frame[108] __attribute__((aligned(4)));
-  float  &fStack_6c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &fStack_68 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int * &piStack_64 = *reinterpret_cast<int * *>(xi_frame + 8);
-  float  (&afStack_60)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
-  float  &fStack_58 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  (&afStack_50)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
-  float  &fStack_48 = *reinterpret_cast<float  *>(xi_frame + 36);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
+  float  &f5 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f6 = *reinterpret_cast<float  *>(xi_frame + 4);
+  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 8);
+  float  (&f7)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 12);
+  float  &f8 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float  (&f9)[2] = *reinterpret_cast<float  (*)[2]>(xi_frame + 28);
+  float  &f10 = *reinterpret_cast<float  *>(xi_frame + 36);
+  uint8_t  (&u4)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 44);
   
-  fVar2 = param_3;
-  orig::MathVector_ReturnThis_v1(local_40);
-  puVar3 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
-  orig::Mat4_Copy_v1(local_40,puVar3);
-  pfVar4 = (float *)((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x1bc))))((void *)(param_1));
-  orig::Mat4_TransformPoint(local_40,afStack_50,pfVar4);
-  bVar7 = NAN((long double)fStack_48) || NAN((long double)0.0f);
-  fVar8 = (long double)fStack_48;
-  if ((bVar7 || (long double)fStack_48 < (long double)0.0f) != bVar7) {
-    fVar8 = -fVar8;
+  f2 = arg3;
+  orig::MathVector_ReturnThis_v1(u4);
+  p1 = (uint32_t *)orig::Camera_GetViewMatrixPtr_v1();
+  orig::Mat4_Copy_v1(u4,p1);
+  p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x1bc))))((void *)(arg1));
+  orig::Mat4_TransformPoint(u4,f9,p2);
+  u2 = ((f10) != (f10)) || ((0.0f) != (0.0f));
+  f3 = f10;
+  if ((u2 || f10 < 0.0f) != u2) {
+    f3 = -f3;
   }
-  fStack_6c = (float)fVar8;
-  bVar7 = NAN(fVar8) || NAN((long double)1.0f);
-  if ((bVar7 || fVar8 < (long double)1.0f) != bVar7) {
-    fStack_6c = 1.0f;
+  f5 = (float)f3;
+  u2 = ((f3) != (f3)) || ((1.0f) != (1.0f));
+  if ((u2 || f3 < 1.0f) != u2) {
+    f5 = 1.0f;
   }
-  fVar8 = orig::Camera_GetField2F4();
-  piStack_64 = (int *)0x0;
-  fStack_68 = 3.6e+03f;
-  fVar1 = (float)(((long double)afStack_50[0] / (long double)fStack_6c) * fVar8);
-  iVar5 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
-  uVar10 = orig::FUN_10085240();
-  self = (int *)uVar10;
+  f3 = orig::Camera_GetField2F4();
+  p3 = (int *)0x0;
+  f6 = 3.6e+03f;
+  f1 = (float)((f9[0] / f5) * f3);
+  i1 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+  u3 = orig::game_10085240();
+  self = (int *)u3;
   while (self != (int *)0x0) {
-    if ((self != param_1) &&
-       (uVar6 = orig::CXiActor_ComputeDrawState(self,iVar5,param_2,xi_castbits<uint32_t>(fVar2),1), (char)uVar6 != '\0')) {
-      pfVar4 = (float *)((int (__thiscall *)(void *))((**(code **)(*self + 0x1bc))))((void *)(self));
-      orig::Mat4_TransformPoint(local_40,afStack_60,pfVar4);
-      fVar8 = orig::MathVector_Length3(afStack_60);
-      bVar7 = NAN(fVar8) || NAN((long double)5e+01f);
-      if ((bVar7 || fVar8 < (long double)5e+01f) != bVar7) {
-        bVar7 = NAN((long double)fStack_58) || NAN((long double)0.0f);
-        if ((bVar7 || (long double)fStack_58 < (long double)0.0f) == bVar7) {
-          param_3 = fStack_58;
+    if ((self != arg1) &&
+       (u1 = orig::CXiActor_ComputeDrawState(self,i1,arg2,bit_cast<uint32_t>(f2),1), (char)u1 != '\0')) {
+      p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*self + 0x1bc))))((void *)(self));
+      orig::Mat4_TransformPoint(u4,f7,p2);
+      f3 = orig::MathVector_Length3(f7);
+      u2 = ((f3) != (f3)) || ((5e+01f) != (5e+01f));
+      if ((u2 || f3 < 5e+01f) != u2) {
+        u2 = ((f8) != (f8)) || ((0.0f) != (0.0f));
+        if ((u2 || f8 < 0.0f) == u2) {
+          arg3 = f8;
         }
         else {
-          param_3 = (float)-(long double)fStack_58;
+          arg3 = (float)-f8;
         }
-        bVar7 = NAN((long double)param_3) || NAN((long double)1.0f);
-        if ((bVar7 || (long double)param_3 < (long double)1.0f) != bVar7) {
-          param_3 = 1.0f;
+        u2 = ((arg3) != (arg3)) || ((1.0f) != (1.0f));
+        if ((u2 || arg3 < 1.0f) != u2) {
+          arg3 = 1.0f;
         }
-        fVar9 = orig::Camera_GetField2F4();
-        fVar9 = ((long double)afStack_60[0] / (long double)param_3) * fVar9;
-        fVar8 = (long double)fVar1;
-        if ((fVar9 > fVar8) &&
-           (fVar9 = fVar9 - (long double)fVar1, bVar7 = NAN(fVar9) || NAN((long double)fStack_68),
-           (bVar7 || fVar9 < (long double)fStack_68) != bVar7)) {
-          fStack_68 = (float)fVar9;
-          piStack_64 = self;
+        f4 = orig::Camera_GetField2F4();
+        f4 = (f7[0] / arg3) * f4;
+        f3 = f1;
+        if ((f4 > f3) &&
+           (f4 = f4 - f1, u2 = ((f4) != (f4)) || ((f6) != (f6)),
+           (u2 || f4 < f6) != u2)) {
+          f6 = (float)f4;
+          p3 = self;
         }
       }
     }
-    uVar10 = orig::FUN_10085270(self);
-    self = (int *)uVar10;
+    u3 = orig::game_10085270(self);
+    self = (int *)u3;
   }
   orig::MathVector_Nop();
-  return piStack_64;
+  return p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10083EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActor::FindNearestToTarget_Mode0(undefined4 param_1, undefined4 param_2)
+bits32 __cdecl CXiActor::FindNearestToTarget_Mode0(bits32 arg1, bits32 arg2)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::CXiActor_FindNearestToTarget(param_1,param_2,0);
-  return piVar1;
+  p1 = orig::CXiActor_FindNearestToTarget(arg1,arg2,0);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10083EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActor::FindNearestToTarget_Mode1(uint32_t param_1, uint32_t param_2)
+bits32 __cdecl CXiActor::FindNearestToTarget_Mode1(uint32_t arg1, uint32_t arg2)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::CXiActor_FindNearestToTarget(param_1,param_2,1);
-  return piVar1;
+  p1 = orig::CXiActor_FindNearestToTarget(arg1,arg2,1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10083F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActor::FindNearestToTarget_Mode2(uint32_t param_1, uint32_t param_2)
+bits32 __cdecl CXiActor::FindNearestToTarget_Mode2(uint32_t arg1, uint32_t arg2)
 {
-  int *piVar1;
+  int *p1;
   
-  piVar1 = orig::CXiActor_FindNearestToTarget(param_1,param_2,2);
-  return piVar1;
+  p1 = orig::CXiActor_FindNearestToTarget(arg1,arg2,2);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10083F20
 // GATE: PASS -- 100 trials, 89 returned normally, 210 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 89
-int * __cdecl CXiActor::FindNearestToTarget(uint32_t param_1, uint32_t param_2, int param_3)
+int * __cdecl CXiActor::FindNearestToTarget(uint32_t arg1, uint32_t arg2, int arg3)
 {
-  uint8_t bVar1;
+  uint8_t u1;
   void *self;
-  int iVar2;
-  char cVar3;
-  int *piVar4;
-  int iVar5;
-  uint32_t *puVar6;
-  uint32_t uVar7;
-  uint32_t uVar8;
-  uint32_t uVar9;
-  float *pfVar10;
-  char cVar11;
-  uint8_t bVar12;
-  long double fVar13;
-  uint64_t uVar14;
+  int i1;
+  char c1;
+  int *p1;
+  int i2;
+  uint32_t *p2;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
+  float *p3;
+  char c2;
+  uint8_t u5;
+  long double f1;
+  uint64_t u6;
   char xi_frame[88] __attribute__((aligned(4)));
-  float  &fStack_58 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int * &piStack_54 = *reinterpret_cast<int * *>(xi_frame + 4);
-  float  (&afStack_4c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 24);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
+  int * &p4 = *reinterpret_cast<int * *>(xi_frame + 4);
+  float  (&f3)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
+  uint8_t  (&u7)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 24);
   
-  uVar14 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-  piVar4 = (int *)uVar14;
-  if (piVar4 == (int *)0x0) {
+  u6 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+  p1 = (int *)u6;
+  if (p1 == (int *)0x0) {
     return (int *)0x0;
   }
-  orig::MathVector_ReturnThis_v1(local_40);
-  orig::Mat4_SetIdentity_v1(local_40);
-  iVar5 = ((int (__thiscall *)(void *))(*(code **)(*piVar4 + 0x1c0)))((void *)(piVar4));
-  orig::Mat4_PostRotateY_v1(local_40,*(float *)(iVar5 + 4));
-  puVar6 = (uint32_t *)((int (__thiscall *)(void *))(*(code **)(*piVar4 + 0x1bc)))((void *)(piVar4));
-  orig::Mat4_SetRow3_v1(local_40,puVar6);
-  orig::Mat4_InvertOrthonormal_v1(local_40);
-  piStack_54 = (int *)0x0;
-  fStack_58 = 2.5e+03f;
-  iVar5 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
-  self = (void *)piVar4[0x1c];
-  uVar14 = orig::FUN_10085240();
-  piVar4 = (int *)uVar14;
+  orig::MathVector_ReturnThis_v1(u7);
+  orig::Mat4_SetIdentity_v1(u7);
+  i2 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*p1 + 0x1c0)))((void *)(p1));
+  orig::Mat4_PostRotateY_v1(u7,*(float *)(i2 + 4));
+  p2 = (uint32_t *)((int (__thiscall *)(void *))(*(untyped_fn **)(*p1 + 0x1bc)))((void *)(p1));
+  orig::Mat4_SetRow3_v1(u7,p2);
+  orig::Mat4_InvertOrthonormal_v1(u7);
+  p4 = (int *)0x0;
+  f2 = 2.5e+03f;
+  i2 = orig::YkCommon_GetCC4F0ActorByIndexAt1FA();
+  self = (void *)p1[0x1c];
+  u6 = orig::game_10085240();
+  p1 = (int *)u6;
   do {
-    if (piVar4 == (int *)0x0) {
+    if (p1 == (int *)0x0) {
       orig::MathVector_Nop();
-      return piStack_54;
+      return p4;
     }
-    iVar2 = piVar4[0x1c];
-    uVar7 = orig::CXiActor_GetField78Of70(piVar4);
-    cVar11 = (uVar7 & 0xff000000) == 0;
-    uVar7 = orig::CXiActor_GetField78Of70(piVar4);
-    cVar3 = '\0';
-    if ((self != (void *)0x0) && (iVar2 != 0)) {
+    i1 = p1[0x1c];
+    u2 = orig::CXiActor_GetField78Of70(p1);
+    c2 = (u2 & 0xff000000) == 0;
+    u2 = orig::CXiActor_GetField78Of70(p1);
+    c1 = '\0';
+    if ((self != (void *)0x0) && (i1 != 0)) {
       if (((*(uint32_t *)((int)self + 0x1d0) & 0x400) == 0) ||
-         (((*(uint32_t *)(iVar2 + 0x1d0) & 0x400) == 0 ||
-          (*(char *)((int)self + 0x1ff) != *(char *)(iVar2 + 0x1ff))))) {
-        bVar1 = *(uint8_t *)((int)self + 0x1ff);
-        uVar9 = ((uint32_t)(((uint32_t)(4) << 8) | (uint8_t)(bVar1)));
-        if ((7 < bVar1) && (bVar1 < 10)) {
-          bVar1 = *(uint8_t *)(iVar2 + 0x1ff);
-          uVar9 = ((uint32_t)(((uint32_t)(4) << 8) | (uint8_t)(bVar1)));
-          if ((7 < bVar1) && (bVar1 < 10)) {
-            uVar8 = orig::Acter_IsBytes1FFBothIn89NotEqual(self,iVar2);
-            cVar3 = (char)uVar8;
-            goto LAB_10084048;
+         (((*(uint32_t *)(i1 + 0x1d0) & 0x400) == 0 ||
+          (*(char *)((int)self + 0x1ff) != *(char *)(i1 + 0x1ff))))) {
+        u1 = *(uint8_t *)((int)self + 0x1ff);
+        u4 = ((uint32_t)(((uint32_t)(4) << 8) | (uint8_t)(u1)));
+        if ((7 < u1) && (u1 < 10)) {
+          u1 = *(uint8_t *)(i1 + 0x1ff);
+          u4 = ((uint32_t)(((uint32_t)(4) << 8) | (uint8_t)(u1)));
+          if ((7 < u1) && (u1 < 10)) {
+            u3 = orig::Acter_IsBytes1FFBothIn89NotEqual(self,i1);
+            c1 = (char)u3;
+            goto code_10084048;
           }
         }
-        if (*(short *)(iVar2 + 0x210) == 0) {
-          uVar9 = orig::YkCommon_ActorPairTest1FF(iVar2,uVar9);
-          cVar3 = (char)uVar9;
+        if (*(short *)(i1 + 0x210) == 0) {
+          u4 = orig::YkCommon_ActorPairTest1FF(i1,u4);
+          c1 = (char)u4;
         }
         else {
-          cVar3 = '\0';
+          c1 = '\0';
         }
       }
       else {
-        cVar3 = '\0';
+        c1 = '\0';
       }
     }
-LAB_10084048:
-    if (((((param_3 != 0) && (cVar11 = (uVar7 & 0xff000000) != 0, param_3 != 1)) &&
-         (cVar11 = cVar3, param_3 != 2)) || (cVar11 != '\0')) &&
-       (uVar9 = orig::CXiActor_ComputeDrawState(piVar4,iVar5,param_1,param_2,1), (char)uVar9 != '\0')) {
-      pfVar10 = (float *)((int (__thiscall *)(void *))((**(code **)(*piVar4 + 0x1bc))))((void *)(piVar4));
-      orig::Mat4_TransformPoint(local_40,afStack_4c,pfVar10);
-      bVar12 = NAN((long double)afStack_4c[0]) || NAN((long double)0.0f);
-      if (((bVar12 || (long double)afStack_4c[0] < (long double)0.0f) == bVar12) &&
-         (fVar13 = orig::FUN_10027530(afStack_4c,afStack_4c),
-         bVar12 = NAN(fVar13) || NAN((long double)fStack_58),
-         (bVar12 || fVar13 < (long double)fStack_58) != bVar12)) {
-        fStack_58 = (float)fVar13;
-        piStack_54 = piVar4;
+code_10084048:
+    if (((((arg3 != 0) && (c2 = (u2 & 0xff000000) != 0, arg3 != 1)) &&
+         (c2 = c1, arg3 != 2)) || (c2 != '\0')) &&
+       (u4 = orig::CXiActor_ComputeDrawState(p1,i2,arg1,arg2,1), (char)u4 != '\0')) {
+      p3 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*p1 + 0x1bc))))((void *)(p1));
+      orig::Mat4_TransformPoint(u7,f3,p3);
+      u5 = ((f3[0]) != (f3[0])) || ((0.0f) != (0.0f));
+      if (((u5 || f3[0] < 0.0f) == u5) &&
+         (f1 = orig::game_10027530(f3,f3),
+         u5 = ((f1) != (f1)) || ((f2) != (f2)),
+         (u5 || f1 < f2) != u5)) {
+        f2 = (float)f1;
+        p4 = p1;
       }
     }
-    uVar14 = orig::FUN_10085270(piVar4);
-    piVar4 = (int *)uVar14;
+    u6 = orig::game_10085270(p1);
+    p1 = (int *)u6;
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10084100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiActor::IsWithinRadius(int param_1, int param_2, float param_3)
+bits32 __cdecl CXiActor::IsWithinRadius(int arg1, int arg2, float arg3)
 {
-  long double fVar1;
-  uint8_t bVar2;
-  long double fVar3;
+  long double f1;
+  uint8_t u1;
+  long double f2;
   
-  fVar3 = orig::MathVector_Distance3((float *)(param_1 + 0x34),(float *)(param_2 + 0x34));
-  fVar3 = fVar3 * fVar3;
-  fVar1 = (long double)param_3;
-  bVar2 = !(fVar3 >= fVar1);
-  if (fVar3 > fVar1) {
-    return (uint32_t)bVar2 << 8;
+  f2 = orig::MathVector_Distance3((float *)(arg1 + 0x34),(float *)(arg2 + 0x34));
+  f2 = f2 * f2;
+  f1 = arg3;
+  u1 = !(f2 >= f1);
+  if (f2 > f1) {
+    return (uint32_t)u1 << 8;
   }
-  return (uint32_t)CONCAT11(bVar2,*(char *)(param_2 + 0xc0) != '\x02');
+  return (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(u1) << 8) | (uint8_t)(*(char *)(arg2 + 0xc0) != '\x02')));
 }
 
 // FUNCTION: FFXIMAIN 0x10084140
@@ -831,88 +831,88 @@ uint32_t __thiscall CXiActor::IsModelMissingOrFlag2000(void * self)
 
 // FUNCTION: FFXIMAIN 0x10084330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __attribute__((stdcall, regparm(3))) CXiActor_ModelTest95790(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API uint32_t __attribute__((stdcall, regparm(3))) CXiActor_ModelTest95790(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(void **)((int)self_ + 0x70) != (void *)0x0) {
-    uVar1 = orig::Acter_IsStateGroup3F(*(void **)((int)self_ + 0x70),param_2);
-    return uVar1;
+    u1 = orig::Acter_IsStateGroup3F(*(void **)((int)self_ + 0x70),arg4);
+    return u1;
   }
   return xi_eax & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10084350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiActor_ModelTest95680(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiActor_ModelTest95680(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(void **)((int)self_ + 0x70) != (void *)0x0) {
-    uVar1 = orig::Acter_IsState5(*(void **)((int)self_ + 0x70),param_2);
-    return uVar1;
+    u1 = orig::Acter_IsState5(*(void **)((int)self_ + 0x70),arg4);
+    return u1;
   }
   return xi_eax & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10084370
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiActor_ModelTest956A0(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiActor_ModelTest956A0(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(void **)((int)self_ + 0x70) != (void *)0x0) {
-    uVar1 = orig::Acter_IsState55(*(void **)((int)self_ + 0x70),param_2);
-    return uVar1;
+    u1 = orig::Acter_IsState55(*(void **)((int)self_ + 0x70),arg4);
+    return u1;
   }
   return xi_eax & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10084390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::GetModelField170(void * self)
+bits32 __thiscall CXiActor::GetModelField170(void * self)
 {
   if (*(int *)((int)self + 0x70) != 0) {
     return *(uint32_t *)(*(int *)((int)self + 0x70) + 0x170);
   }
-  return DAT_1047d60c;
+  return g_1047D60C;
 }
 
 // FUNCTION: FFXIMAIN 0x100843B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::HasNonzeroField150or158(void * self)
+bits32 __thiscall CXiActor::HasNonzeroField150or158(void * self)
 {
-  int iVar1;
-  long double fVar2;
-  uint16_t uVar4;
-  uint32_t uVar3;
-  uint8_t bVar5;
-  uint8_t bVar6;
-  long double fVar7;
+  int i1;
+  long double f1;
+  uint16_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  long double f2;
   
-  uVar3 = 0;
+  u2 = 0;
   if ((*(int *)((int)self + 0x70) != 0) &&
-     (iVar1 = *(int *)(*(int *)((int)self + 0x70) + 0xd4), uVar3 = 0, iVar1 != 0)) {
-    fVar7 = (long double)*(float *)(*(int *)(iVar1 + 0x260) + 0x150);
-    fVar2 = (long double)0.0f;
-    bVar5 = NAN(fVar7) || NAN(fVar2);
-    bVar6 = bVar5 || fVar7 == fVar2;
-    uVar4 = (uint16_t)((uint32_t)iVar1 >> 0x10);
-    if (bVar5 == bVar6) {
-      return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)((uint16_t)(bVar5 || fVar7 < fVar2) << 8 |
-                                            (uint16_t)bVar5 << 10 | (uint16_t)bVar6 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+     (i1 = *(int *)(*(int *)((int)self + 0x70) + 0xd4), u2 = 0, i1 != 0)) {
+    f2 = *(float *)(*(int *)(i1 + 0x260) + 0x150);
+    f1 = 0.0f;
+    u3 = ((f2) != (f2)) || ((f1) != (f1));
+    u4 = u3 || f2 == f1;
+    u1 = (uint16_t)((uint32_t)i1 >> 0x10);
+    if (u3 == u4) {
+      return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                            (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
     }
-    fVar7 = (long double)*(float *)(*(int *)(iVar1 + 0x260) + 0x158);
-    fVar2 = (long double)0.0f;
-    bVar5 = NAN(fVar7) || NAN(fVar2);
-    bVar6 = bVar5 || fVar7 == fVar2;
-    uVar3 = ((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)((uint16_t)(bVar5 || fVar7 < fVar2) << 8 | (uint16_t)bVar5 << 10 |
-                           (uint16_t)bVar6 << 0xe)));
-    if (bVar5 == bVar6) {
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+    f2 = *(float *)(*(int *)(i1 + 0x260) + 0x158);
+    f1 = 0.0f;
+    u3 = ((f2) != (f2)) || ((f1) != (f1));
+    u4 = u3 || f2 == f1;
+    u2 = ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 | (uint16_t)u3 << 10 |
+                           (uint16_t)u4 << 0xe)));
+    if (u3 == u4) {
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return uVar3;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10084400
@@ -922,47 +922,47 @@ int __thiscall CXiActor::GetModelByteEE(void * self)
   if (*(int *)((int)self + 0x70) != 0) {
     return (int)*(char *)(*(int *)((int)self + 0x70) + 0xee);
   }
-  return DAT_1047d610;
+  return g_1047D610;
 }
 
 // FUNCTION: FFXIMAIN 0x10084420
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int __thiscall CXiActor::GetModelByteEF(void * self)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
+  int i1;
+  int i2;
+  uint32_t u1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  iVar2 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3b4))))((void *)(self));
-  if (iVar2 != 0) {
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3bc))))((void *)(self));
-    return (int)(char)uVar3;
+  i1 = *(int *)((int)self + 0x70);
+  i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3b4))))((void *)(self));
+  if (i2 != 0) {
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3bc))))((void *)(self));
+    return (int)(char)u1;
   }
-  if (iVar1 != 0) {
-    return (int)*(char *)(iVar1 + 0xef);
+  if (i1 != 0) {
+    return (int)*(char *)(i1 + 0xef);
   }
-  return DAT_1047d614;
+  return g_1047D614;
 }
 
 // FUNCTION: FFXIMAIN 0x10084480
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-uint32_t __thiscall CXiActor::GetModelPartWord(void * self, int param_1)
+uint32_t __thiscall CXiActor::GetModelPartWord(void * self, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
+  int i1;
+  int i2;
+  uint32_t u1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  iVar2 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3b4))))((void *)(self));
-  if (iVar2 != 0) {
-    uVar3 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x3c4))))((void *)(self),param_1);
-    return uVar3 & 0xffff;
+  i1 = *(int *)((int)self + 0x70);
+  i2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3b4))))((void *)(self));
+  if (i2 != 0) {
+    u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x3c4))))((void *)(self),arg2);
+    return u1 & 0xffff;
   }
-  if (iVar1 != 0) {
-    return (uint32_t)*(uint16_t *)(iVar1 + 0xfc + (char)param_1 * 2);
+  if (i1 != 0) {
+    return (uint32_t)*(uint16_t *)(i1 + 0xfc + (char)arg2 * 2);
   }
-  return (uint32_t)*(uint16_t *)(((char *)&DAT_1047d61c) + param_1 * 2) | param_1 << 0xc;
+  return (uint32_t)*(uint16_t *)(((char *)&g_1047D61C) + arg2 * 2) | arg2 << 0xc;
 }
 
 // FUNCTION: FFXIMAIN 0x10084500
@@ -989,13 +989,13 @@ uint32_t __thiscall CXiActor::GetModelFlags130Top2(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 long double __thiscall CXiActor::GetModelFloat9AEC0(void * self)
 {
-  long double fVar1;
+  long double f1;
   
   if (*(void **)((int)self + 0x70) != (void *)0x0) {
-    fVar1 = orig::Acter_GetField138Clamped(*(void **)((int)self + 0x70));
-    return fVar1;
+    f1 = orig::Acter_GetField138Clamped(*(void **)((int)self + 0x70));
+    return f1;
   }
-  return (long double)0.0f;
+  return 0.0f;
 }
 
 // FUNCTION: FFXIMAIN 0x10084580
@@ -1012,12 +1012,12 @@ uint32_t __thiscall CXiActor::IsModelMissingOrSuppressed(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint32_t __thiscall CXiActor::TestModelFlags100000_200000_4000(void * self)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  if (iVar1 != 0) {
-    return (*(uint32_t *)(iVar1 + 0x128) >> 0xe | *(uint32_t *)(iVar1 + 0x120) >> 0x15 |
-           *(uint32_t *)(iVar1 + 0x120) >> 0x14) & 1;
+  i1 = *(int *)((int)self + 0x70);
+  if (i1 != 0) {
+    return (*(uint32_t *)(i1 + 0x128) >> 0xe | *(uint32_t *)(i1 + 0x120) >> 0x15 |
+           *(uint32_t *)(i1 + 0x120) >> 0x14) & 1;
   }
   return 0;
 }
@@ -1034,20 +1034,20 @@ uint32_t __thiscall CXiActor::GetModelFlag120Bit5(void * self)
 
 // FUNCTION: FFXIMAIN 0x10084690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::GetModelWord166(void * self)
+bits32 __thiscall CXiActor::GetModelWord166(void * self)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  if (iVar1 != 0) {
-    return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(iVar1 + 0x166))));
+  i1 = *(int *)((int)self + 0x70);
+  if (i1 != 0) {
+    return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(i1 + 0x166))));
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10084720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::GetModelByte1DB(void * self)
+bits32 __thiscall CXiActor::GetModelByte1DB(void * self)
 {
   if (*(int *)((int)self + 0x70) != 0) {
     return (uint32_t)*(uint8_t *)(*(int *)((int)self + 0x70) + 0x1db);
@@ -1060,9 +1060,9 @@ undefined4 __thiscall CXiActor::GetModelByte1DB(void * self)
 long double __thiscall CXiActor::GetModelField204(void * self)
 {
   if (*(int *)((int)self + 0x70) != 0) {
-    return (long double)*(float *)(*(int *)((int)self + 0x70) + 0x204);
+    return *(float *)(*(int *)((int)self + 0x70) + 0x204);
   }
-  return (long double)(-1.0f);
+  return (-1.0f);
 }
 
 // FUNCTION: FFXIMAIN 0x10084BA0
@@ -1072,56 +1072,56 @@ uint32_t __thiscall CXiActor::GetModelField12CBit17(void * self)
   if (*(int *)((int)self + 0x70) != 0) {
     return *(uint32_t *)(*(int *)((int)self + 0x70) + 300) >> 0x11 & 1;
   }
-  return (int)DAT_1047d631;
+  return (int)g_1047D631;
 }
 
 // FUNCTION: FFXIMAIN 0x10084BC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsModelField210Set(void * self)
+bits32 __thiscall CXiActor::IsModelField210Set(void * self)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  if (iVar1 != 0) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(*(short *)(iVar1 + 0x210) != 0)));
+  i1 = *(int *)((int)self + 0x70);
+  if (i1 != 0) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(short *)(i1 + 0x210) != 0)));
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10085010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiActor_SetField0B4(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiActor_SetField0B4(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0xb4) = param_1;
+  *(uint32_t *)((int)self_ + 0xb4) = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10085060
 // GATE: PASS -- 100 trials, 97 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-void __thiscall CXiActor::SpawnResourceGenerators(void * self, undefined4 * file)
+void __thiscall CXiActor::SpawnResourceGenerators(void * self, bits32 * file)
 {
-  int iVar1;
-  void *this_00;
-  int iVar2;
+  int i1;
+  void *obj1;
+  int i2;
   char xi_frame[568] __attribute__((aligned(4)));
-  uint8_t  (&auStack_238)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
-  uint8_t  (&auStack_21c)[24] = *reinterpret_cast<uint8_t  (*)[24]>(xi_frame + 28);
-  int  (&aiStack_204)[129] = *reinterpret_cast<int  (*)[129]>(xi_frame + 52);
+  uint8_t  (&u1)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 0);
+  uint8_t  (&u2)[24] = *reinterpret_cast<uint8_t  (*)[24]>(xi_frame + 28);
+  int  (&i3)[129] = *reinterpret_cast<int  (*)[129]>(xi_frame + 52);
   
-  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x124))))((void *)(self));
-  if ((iVar1 == 0) && ((*(uint8_t *)((int)self + 0xb2) & 2) == 0)) {
-    if (file == (undefined4 *)0x0) {
-      iVar1 = 0;
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x124))))((void *)(self));
+  if ((i1 == 0) && ((*(uint8_t *)((int)self + 0xb2) & 2) == 0)) {
+    if (file == (bits32 *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar1 = *file;
+      i1 = *file;
     }
-    orig::ResourceIter_FindFirst_v1(auStack_21c,iVar1,5,0,0xffffffff);
-    this_00 = (void *)orig::ResourceIter_FindNext_v1(auStack_21c,0);
-    while (this_00 != (void *)0x0) {
-      if ((*(uint8_t *)((int)this_00 + 0x1a) >> 2 & 1) == 0) {
-        switch(xi_sw((*(uint8_t *)((int)this_00 + 0x36) & 1) * 0x10 + -1 +
-               (*(uint32_t *)((int)this_00 + 0x34) & 0xf))) {
+    orig::ResourceIter_FindFirst_v1(u2,i1,5,0,0xffffffff);
+    obj1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
+    while (obj1 != (void *)0x0) {
+      if ((*(uint8_t *)((int)obj1 + 0x1a) >> 2 & 1) == 0) {
+        switch(xi_sw((*(uint8_t *)((int)obj1 + 0x36) & 1) * 0x10 + -1 +
+               (*(uint32_t *)((int)obj1 + 0x34) & 0xf))) {
         case 0:
         case 1:
         case 3:
@@ -1136,26 +1136,26 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, undefined4 * file
         case 0x10:
         case 0x11:
         case 0x12:
-          if ((*(uint32_t *)((int)this_00 + 0xd8) >> 0xc & 1) != 0) {
-            orig::Generator_StopGenerators(this_00,(int)self,0,0,(undefined4 *)0x0);
+          if ((*(uint32_t *)((int)obj1 + 0xd8) >> 0xc & 1) != 0) {
+            orig::Generator_StopGenerators(obj1,(int)self,0,0,(bits32 *)0x0);
           }
         }
       }
-      this_00 = (void *)orig::ResourceIter_FindNext_v1(auStack_21c,0);
+      obj1 = (void *)orig::ResourceIter_FindNext_v1(u2,0);
     }
-    iVar1 = 0;
-    if (file == (undefined4 *)0x0) {
-      iVar2 = 0;
+    i1 = 0;
+    if (file == (bits32 *)0x0) {
+      i2 = 0;
     }
     else {
-      iVar2 = *file;
+      i2 = *file;
     }
-    orig::ResourceIter_FindFirst_v1(auStack_238,iVar2,5,0,0xffffffff);
-    iVar2 = orig::ResourceIter_FindNext_v1(auStack_238,0);
-    if (iVar2 != 0) {
+    orig::ResourceIter_FindFirst_v1(u1,i2,5,0,0xffffffff);
+    i2 = orig::ResourceIter_FindNext_v1(u1,0);
+    if (i2 != 0) {
       do {
-        if ((*(uint8_t *)(iVar2 + 0x1a) >> 2 & 1) == 0) {
-          switch(xi_sw((*(uint8_t *)(iVar2 + 0x36) & 1) * 0x10 + -1 + (*(uint32_t *)(iVar2 + 0x34) & 0xf))) {
+        if ((*(uint8_t *)(i2 + 0x1a) >> 2 & 1) == 0) {
+          switch(xi_sw((*(uint8_t *)(i2 + 0x36) & 1) * 0x10 + -1 + (*(uint32_t *)(i2 + 0x34) & 0xf))) {
           case 0:
           case 1:
           case 3:
@@ -1170,21 +1170,21 @@ void __thiscall CXiActor::SpawnResourceGenerators(void * self, undefined4 * file
           case 0x10:
           case 0x11:
           case 0x12:
-            if ((*(uint32_t *)(iVar2 + 0xd8) >> 0xc & 1) != 0) {
-              aiStack_204[iVar1 + 1] = iVar2;
-              iVar1 = iVar1 + 1;
-              if (0x7f < iVar1) {
-                orig::ErrorReport_NoOpVarargsA_v1(&DAT_10358288);
-                goto joined_r0x100851b9;
+            if ((*(uint32_t *)(i2 + 0xd8) >> 0xc & 1) != 0) {
+              i3[i1 + 1] = i2;
+              i1 = i1 + 1;
+              if (0x7f < i1) {
+                orig::ErrorReport_NoOpVarargsA_v1(&g_10358288);
+                goto L1;
               }
             }
           }
         }
-        iVar2 = orig::ResourceIter_FindNext_v1(auStack_238,0);
-      } while (iVar2 != 0);
-joined_r0x100851b9:
-      for (; iVar1 != 0; iVar1 = iVar1 + -1) {
-        orig::CMoGeneratorClone_CreateInstance((void *)aiStack_204[iVar1],(int)self,0,1);
+        i2 = orig::ResourceIter_FindNext_v1(u1,0);
+      } while (i2 != 0);
+L1:
+      for (; i1 != 0; i1 = i1 + -1) {
+        orig::CMoGeneratorClone_CreateInstance((void *)i3[i1],(int)self,0,1);
       }
     }
   }
@@ -1195,23 +1195,23 @@ joined_r0x100851b9:
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int __thiscall CXiActor::IsInModelSlotTable(void * self)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = *(int *)((int)self + 0x70);
-  uVar2 = xi_trunc24(((uint32_t)iVar1 >> 8));
-  if ((iVar1 != 0) &&
-     (((((*(void **)(iVar1 + 0xa4) == self || (*(void **)(iVar1 + 0xa8) == self)) ||
-        (*(void **)(iVar1 + 0xac) == self)) ||
-       ((((*(void **)(iVar1 + 0xb0) == self || (*(void **)(iVar1 + 0xb4) == self)) ||
-         ((*(void **)(iVar1 + 0xb8) == self ||
-          ((*(void **)(iVar1 + 0xbc) == self || (*(void **)(iVar1 + 0xc0) == self)))))) ||
-        (*(void **)(iVar1 + 0xc4) == self)))) ||
-      (((*(void **)(iVar1 + 200) == self || (*(void **)(iVar1 + 0xcc) == self)) ||
-       (*(void **)(iVar1 + 0xd0) == self)))))) {
-    return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+  i1 = *(int *)((int)self + 0x70);
+  u1 = xi_trunc24(((uint32_t)i1 >> 8));
+  if ((i1 != 0) &&
+     (((((*(void **)(i1 + 0xa4) == self || (*(void **)(i1 + 0xa8) == self)) ||
+        (*(void **)(i1 + 0xac) == self)) ||
+       ((((*(void **)(i1 + 0xb0) == self || (*(void **)(i1 + 0xb4) == self)) ||
+         ((*(void **)(i1 + 0xb8) == self ||
+          ((*(void **)(i1 + 0xbc) == self || (*(void **)(i1 + 0xc0) == self)))))) ||
+        (*(void **)(i1 + 0xc4) == self)))) ||
+      (((*(void **)(i1 + 200) == self || (*(void **)(i1 + 0xcc) == self)) ||
+       (*(void **)(i1 + 0xd0) == self)))))) {
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
-  return (uint32_t)uVar2 << 8;
+  return (uint32_t)u1 << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x10085500
@@ -1223,9 +1223,9 @@ XI_API uint32_t __thiscall CXiActor_GetField88Bit3(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10085BF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CXiActor_SetField0BC(void * self_, undefined4 param_1)
+XI_API void __thiscall CXiActor_SetField0BC(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0xbc) = param_1;
+  *(uint32_t *)((int)self_ + 0xbc) = arg2;
   return;
 }
 
@@ -1241,33 +1241,33 @@ uint32_t __thiscall CXiActor::GetTwoBitField(void * self)
 
 // FUNCTION: FFXIMAIN 0x1008A120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::Construct(void * self)
+bits32 __thiscall CXiActor::Construct(void * self)
 {
-  *(uint8_t ***)self = &PTR_CYyObject_GetRuntimeClass_variant18_1032d69c;
+  *(uint8_t ***)self = &ptr_to_CYyObject_GetRuntimeClass_variant18_1032D69C;
   orig::CXiActor_InitDefaults(self,0);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x1008A1A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::SelectMotionTags(void * self)
+bits32 __thiscall CXiActor::SelectMotionTags(void * self)
 {
-  uint16_t uVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  uint16_t u1;
+  int i1;
+  uint32_t u2;
+  uint32_t u3;
   
   if (*(char *)((int)self + 0xee) != '\b') {
-    if (*(void **)((int)self + 0xa0) == (void *)0x0) goto LAB_1008a1d4;
-    iVar2 = orig::CXiActor_IsInModelSlotTable_v1(*(void **)((int)self + 0xa0));
-    if ((char)iVar2 == '\0') goto LAB_1008a1d4;
-    uVar3 = orig::Acter_IsByte123Mask7In234(self);
-    if ((char)uVar3 != '\x01') goto LAB_1008a1d4;
+    if (*(void **)((int)self + 0xa0) == (void *)0x0) goto code_1008A1D4;
+    i1 = orig::CXiActor_IsInModelSlotTable_v1(*(void **)((int)self + 0xa0));
+    if ((char)i1 == '\0') goto code_1008A1D4;
+    u2 = orig::Acter_IsByte123Mask7In234(self);
+    if ((char)u2 != '\x01') goto code_1008A1D4;
   }
   *(uint32_t *)((int)self + 400) = 0x20696863;
-LAB_1008a1d4:
-  uVar4 = orig::CXiActor_GetTwoBitField(self);
-  if ((char)uVar4 == '\x02') {
+code_1008A1D4:
+  u3 = orig::CXiActor_GetTwoBitField(self);
+  if ((char)u3 == '\x02') {
     *(uint32_t *)((int)self + 0x1ac) = 0x20316664;
     *(uint32_t *)((int)self + 0x1a8) = 0x20746664;
     *(uint32_t *)((int)self + 0x1a4) = 0x20746664;
@@ -1275,69 +1275,69 @@ LAB_1008a1d4:
     *(uint32_t *)((int)self + 0x1b4) = 0x20727368;
   }
   else {
-    iVar2 = orig::Acter_IsStateGroup3F(self,0xff);
-    if ((char)iVar2 == '\0') {
+    i1 = orig::Acter_IsStateGroup3F(self,0xff);
+    if ((char)i1 == '\0') {
       if (*(int *)((int)self + 0x170) == 0x2f) {
-        uVar3 = *(uint32_t *)((int)self + 0x194);
+        u2 = *(uint32_t *)((int)self + 0x194);
       }
       else {
-        uVar3 = *(uint32_t *)((int)self + 400);
+        u2 = *(uint32_t *)((int)self + 400);
       }
     }
     else {
-      uVar3 = orig::CXiActor_IsIdAbove6ff(self,iVar2);
-      if ((((char)uVar3 == '\0') && ((*(uint32_t *)((int)self + 300) >> 0x1e & 1) == 0)) &&
+      u2 = orig::CXiActor_IsIdAbove6ff(self,i1);
+      if ((((char)u2 == '\0') && ((*(uint32_t *)((int)self + 300) >> 0x1e & 1) == 0)) &&
          (-1 < (int)*(uint32_t *)((int)self + 300))) {
-        uVar3 = *(uint32_t *)((int)self + 0x1a0);
+        u2 = *(uint32_t *)((int)self + 0x1a0);
       }
       else {
-        uVar3 = *(uint32_t *)((int)self + 0x194);
+        u2 = *(uint32_t *)((int)self + 0x194);
       }
     }
-    *(uint32_t *)((int)self + 0x1a8) = uVar3;
-    *(uint32_t *)((int)self + 0x1a4) = uVar3;
-    *(uint32_t *)((int)self + 0x1ac) = uVar3;
+    *(uint32_t *)((int)self + 0x1a8) = u2;
+    *(uint32_t *)((int)self + 0x1a4) = u2;
+    *(uint32_t *)((int)self + 0x1ac) = u2;
     *(uint32_t *)((int)self + 0x1b0) = *(uint32_t *)((int)self + 0x198);
     *(uint32_t *)((int)self + 0x1b4) = *(uint32_t *)((int)self + 0x19c);
     if (((*(char *)((int)self + 0xee) == '\x02') || (*(char *)((int)self + 0xee) == '\a')) &&
-       ((((uVar1 = *(uint16_t *)((int)self + 0xfc), 0x3bf < uVar1 && (uVar1 < 0x3ca)) ||
-         ((0x978 < uVar1 && (uVar1 < 0x97e)))) || ((0x9be < uVar1 && (uVar1 < 0x9c4)))))) {
+       ((((u1 = *(uint16_t *)((int)self + 0xfc), 0x3bf < u1 && (u1 < 0x3ca)) ||
+         ((0x978 < u1 && (u1 < 0x97e)))) || ((0x9be < u1 && (u1 < 0x9c4)))))) {
       *(uint32_t *)((int)self + 0x1ac) = *(uint32_t *)((int)self + 400);
-      uVar3 = orig::CXiActor_PushTagsToObject(self);
-      return uVar3;
+      u2 = orig::CXiActor_PushTagsToObject(self);
+      return u2;
     }
   }
-  uVar3 = orig::CXiActor_PushTagsToObject(self);
-  return uVar3;
+  u2 = orig::CXiActor_PushTagsToObject(self);
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x1008A2F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::PushTagsToObject(void * self)
+bits32 __thiscall CXiActor::PushTagsToObject(void * self)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar1 = *(uint32_t *)((int)self + 0x120);
-  if ((uVar1 & 0x200) != 0) {
-    uVar2 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
-    uVar1 = (uint32_t)uVar2;
-    if ((char)uVar2 != '\0') {
+  u1 = *(uint32_t *)((int)self + 0x120);
+  if ((u1 & 0x200) != 0) {
+    u2 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
+    u1 = (uint32_t)u2;
+    if ((char)u2 != '\0') {
       *(uint32_t *)(*(int *)((int)self + 0xa0) + 0x7c8) = *(uint32_t *)((int)self + 0x1a4);
-      uVar1 = *(uint32_t *)((int)self + 0x1b0);
-      *(uint32_t *)(*(int *)((int)self + 0xa0) + 0x7cc) = uVar1;
+      u1 = *(uint32_t *)((int)self + 0x1b0);
+      *(uint32_t *)(*(int *)((int)self + 0xa0) + 0x7cc) = u1;
       *(uint32_t *)(*(int *)((int)self + 0xa0) + 2000) = *(uint32_t *)((int)self + 0x1b4);
     }
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1008A350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
+bits32 __thiscall CXiActor::InitDefaults(void * self, int arg2)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
   *(uint32_t *)((int)self + 0xdc) = 100;
   *(uint32_t *)((int)self + 0xe0) = 100;
@@ -1359,10 +1359,10 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
   *(uint32_t *)((int)self + 0x78) = 0;
   *(uint8_t *)((int)self + 0x7c) = 0;
   *(uint32_t *)((int)self + 0xa0) = 0;
-  puVar2 = (uint32_t *)((int)self + 0xa4);
-  for (iVar1 = 0xc; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0xa4);
+  for (i1 = 0xc; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self + 0xe8) = 0;
   *(uint32_t *)((int)self + 0x120) = *(uint32_t *)((int)self + 0x120) & 0xffffffcf;
@@ -1370,10 +1370,10 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
   *(uint8_t *)((int)self + 0xef) = 0;
   *(uint16_t *)((int)self + 0x166) = 0;
   *(uint32_t *)((int)self + 0x168) = 0x34756f6d;
-  puVar2 = (uint32_t *)((int)self + 0xfc);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0xfc);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint16_t *)((int)self + 0xf4) = 0;
   *(uint8_t *)((int)self + 0xf6) = 0;
@@ -1433,19 +1433,19 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
   *(uint16_t *)((int)self + 0x210) = 0;
   *(uint8_t *)((int)self + 0x212) = 0;
   *(uint8_t *)((int)self + 0x213) = 0;
-  puVar2 = (uint32_t *)((int)self + 0x250);
-  for (iVar1 = 0xb; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0x250);
+  for (i1 = 0xb; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint32_t *)((int)self + 0x13c) = *(uint32_t *)((int)self + 0x13c) & 0x1fffffff;
   *(uint32_t *)((int)self + 0x140) = *(uint32_t *)((int)self + 0x140) & 0xfffffff8;
   *(uint32_t *)((int)self + 0x18c) = 0;
   *(uint32_t *)((int)self + 0x130) = *(uint32_t *)((int)self + 0x130) & 0xfffc80ff;
-  puVar2 = (uint32_t *)((int)self + 0x27c);
-  for (iVar1 = 9; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0x27c);
+  for (i1 = 9; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint8_t *)((int)self + 0x138) = 0;
   *(uint32_t *)((int)self + 0x130) = *(uint32_t *)((int)self + 0x130) & 0x103ffff;
@@ -1456,7 +1456,7 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
   *(uint32_t *)((int)self + 0x138) = *(uint32_t *)((int)self + 0x138) & 0xff;
   *(uint32_t *)((int)self + 0x13c) = *(uint32_t *)((int)self + 0x13c) & 0xfffffffc;
   orig::Actor_SetDefaultMotionTags(self);
-  if (param_1 == 0x1000000) {
+  if (arg2 == 0x1000000) {
     *(uint32_t *)((int)self + 0x78) = 0x1000000;
     *(uint32_t *)((int)self + 0x74) = 0x900;
     *(uint32_t *)((int)self + 0x1d0) = *(uint32_t *)((int)self + 0x1d0) | 2;
@@ -1481,18 +1481,18 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
   *(uint16_t *)((int)self + 0x1e8) = 0;
   *(uint16_t *)((int)self + 0x1ea) = 0;
   *(uint32_t *)((int)self + 0x2a8) = 0;
-  puVar2 = (uint32_t *)((int)self + 0x214);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0x214);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint8_t *)puVar2 = 0;
-  puVar2 = (uint32_t *)((int)self + 0x235);
-  for (iVar1 = 6; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  *(uint8_t *)p1 = 0;
+  p1 = (uint32_t *)((int)self + 0x235);
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint8_t *)puVar2 = 0;
+  *(uint8_t *)p1 = 0;
   return 0;
 }
 
@@ -1500,7 +1500,7 @@ undefined4 __thiscall CXiActor::InitDefaults(void * self, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CXiActor::Destroy(void * self)
 {
-  *(uint8_t ***)self = &PTR_CYyObject_GetRuntimeClass_variant18_1032d69c;
+  *(uint8_t ***)self = &ptr_to_CYyObject_GetRuntimeClass_variant18_1032D69C;
   orig::Acter_ReleaseEventRecord(self);
   orig::Acter_ReleaseAllSlots(self);
   return;
@@ -1510,20 +1510,20 @@ void __thiscall CXiActor::Destroy(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CXiActor::ResetRandomTimer(void * self)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
   if ((*(uint32_t *)((int)self + 0x120) & 0x2000) == 0) {
-    iVar1 = orig::_rand();
-    *(short *)((int)self + 0x1ba) = (short)(iVar1 % 600) + 600;
+    i1 = orig::_rand();
+    *(short *)((int)self + 0x1ba) = (short)(i1 % 600) + 600;
   }
   else {
     *(uint16_t *)((int)self + 0x1ba) = 0;
   }
   *(uint32_t *)((int)self + 0x1a4) = *(uint32_t *)((int)self + 0x1a8);
   if ((*(uint32_t *)((int)self + 0x120) & 0x200) != 0) {
-    uVar2 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
-    if ((char)uVar2 != '\0') {
+    u1 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
+    if ((char)u1 != '\0') {
       if (*(int *)(*(int *)((int)self + 0xa0) + 0x7c8) != *(int *)((int)self + 0x1a4)) {
         *(int *)(*(int *)((int)self + 0xa0) + 0x7c8) = *(int *)((int)self + 0x1a4);
       }
@@ -1536,32 +1536,32 @@ void __thiscall CXiActor::ResetRandomTimer(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CXiActor::TickRandomTimer(void * self)
 {
-  char cVar1;
-  uint16_t uVar2;
-  short sVar3;
-  int iVar4;
-  uint32_t uVar5;
-  long double fVar6;
-  int64_t lVar7;
-  uint64_t uVar8;
+  char c1;
+  uint16_t u1;
+  short i1;
+  int i2;
+  uint32_t u2;
+  long double f1;
+  int64_t i3;
+  uint64_t u3;
   
   if ((((*(uint32_t *)((int)self + 0x120) & 0x2000) == 0) &&
       ((*(uint32_t *)((int)self + 0x78) & 0xff000000) != 0)) &&
-     ((((cVar1 = *(char *)((int)self + 0xee), cVar1 != '\x02' && (cVar1 != '\a')) ||
-       ((((uVar2 = *(uint16_t *)((int)self + 0xfc), uVar2 < 0x3c0 || (0x3c9 < uVar2)) &&
-         ((uVar2 < 0x979 || (0x97d < uVar2)))) && ((uVar2 < 0x9bf || (0x9c3 < uVar2)))))) &&
+     ((((c1 = *(char *)((int)self + 0xee), c1 != '\x02' && (c1 != '\a')) ||
+       ((((u1 = *(uint16_t *)((int)self + 0xfc), u1 < 0x3c0 || (0x3c9 < u1)) &&
+         ((u1 < 0x979 || (0x97d < u1)))) && ((u1 < 0x9bf || (0x9c3 < u1)))))) &&
       (((-1 < (char)*(uint32_t *)((int)self + 0x120) &&
-        (((*(int *)((int)self + 0x170) == 0 && (cVar1 != '\x03')) && (cVar1 != '\x04')))) &&
-       (cVar1 != '\x05')))))) {
-    sVar3 = *(short *)((int)self + 0x1ba);
-    fVar6 = orig::Camera_GetFrameScale_v1((int)sVar3);
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)((long double)(float)(long double)(int)sVar3 - fVar6);
-    *(short *)((int)self + 0x1ba) = (short)lVar7;
-    if ((short)lVar7 < 0) {
-      iVar4 = orig::_rand();
-      *(short *)((int)self + 0x1ba) = (short)(iVar4 % 600) + 600;
-      uVar5 = orig::_rand();
-      if ((uVar5 & 1) == 0) {
+        (((*(int *)((int)self + 0x170) == 0 && (c1 != '\x03')) && (c1 != '\x04')))) &&
+       (c1 != '\x05')))))) {
+    i1 = *(short *)((int)self + 0x1ba);
+    f1 = orig::Camera_GetFrameScale_v1((int)i1);
+    i3 = XI_CALL_ST0(0x10311C2Cu)((float)(int)i1 - f1);
+    *(short *)((int)self + 0x1ba) = (short)i3;
+    if ((short)i3 < 0) {
+      i2 = orig::_rand();
+      *(short *)((int)self + 0x1ba) = (short)(i2 % 600) + 600;
+      u2 = orig::_rand();
+      if ((u2 & 1) == 0) {
         *(uint32_t *)((int)self + 0x1a4) = *(uint32_t *)((int)self + 0x1a8);
       }
       else {
@@ -1569,8 +1569,8 @@ void __thiscall CXiActor::TickRandomTimer(void * self)
       }
     }
     if ((*(uint32_t *)((int)self + 0x120) & 0x200) != 0) {
-      uVar8 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
-      if ((char)uVar8 != '\0') {
+      u3 = orig::CYyObject_IsKindOf(*(void **)((int)self + 0xa0),(int)XI_GAME(0x10330EBCu));
+      if ((char)u3 != '\0') {
         *(uint32_t *)(*(int *)((int)self + 0xa0) + 0x7c8) = *(uint32_t *)((int)self + 0x1a4);
       }
     }
@@ -1580,14 +1580,14 @@ void __thiscall CXiActor::TickRandomTimer(void * self)
 
 // FUNCTION: FFXIMAIN 0x1008E140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsField78HighZero(void * self)
+bits32 __thiscall CXiActor::IsField78HighZero(void * self)
 {
   return (uint32_t)((*(uint32_t *)((int)self + 0x78) & 0xff000000) == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x1008E150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiActor::IsFlag1d0Clear(void * self)
+bits32 __thiscall CXiActor::IsFlag1d0Clear(void * self)
 {
   if ((((*(uint32_t *)((int)self + 0x1d0) & 1) == 0) && ((*(uint32_t *)((int)self + 0x1d0) & 0x100) == 0))
      && (*(char *)((int)self + 0x1ff) == '\x01')) {
@@ -1600,152 +1600,152 @@ undefined4 __thiscall CXiActor::IsFlag1d0Clear(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint32_t __thiscall CXiActor::CorrectOnZoneMap(void * self)
 {
-  float *pfVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  float *p1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
   char xi_frame[112] __attribute__((aligned(4)));
-  float  (&local_70)[10] = *reinterpret_cast<float  (*)[10]>(xi_frame + 0);
-  float  &local_48 = *reinterpret_cast<float  *>(xi_frame + 40);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 48);
+  float  (&f1)[10] = *reinterpret_cast<float  (*)[10]>(xi_frame + 0);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 40);
+  uint8_t  (&u3)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 48);
   
-  iVar2 = orig::CXiActor_GetModelField170_v1(self);
-  uVar3 = orig::CXiActor_ModelTest95680(self,iVar2,iVar2);
-  if ((char)uVar3 == '\0') {
-    iVar2 = orig::CXiActor_GetModelField170_v1(self);
-    uVar4 = orig::CXiActor_ModelTest956A0_v1(self,iVar2,iVar2);
-    if ((char)uVar4 == '\0') goto LAB_100c83b3;
+  i1 = orig::CXiActor_GetModelField170_v1(self);
+  u1 = orig::CXiActor_ModelTest95680(self,i1,i1);
+  if ((char)u1 == '\0') {
+    i1 = orig::CXiActor_GetModelField170_v1(self);
+    u2 = orig::CXiActor_ModelTest956A0_v1(self,i1,i1);
+    if ((char)u2 == '\0') goto code_100C83B3;
   }
-  local_70[0] = 1.10000002384185791015625f;
-  local_70[1] = (-1.0f);
-  local_70[2] = 0.0f;
-  local_70[3] = 1.0f;
-  local_70[4] = 0.800000011920928955078125f;
-  local_70[5] = (-1.0f);
-  local_70[6] = 0.0f;
-  local_70[7] = 1.0f;
-  orig::MathVector_ReturnThis_v1(local_40);
-  orig::Mat4_SetIdentity_v1(local_40);
-  orig::Mat4_PostRotateX_v1(local_40,*(float *)((int)self + 0x61c));
-  orig::Mat4_PostRotateY_v1(local_40,*(float *)((int)self + 0x620));
-  orig::Mat4_PostRotateZ_v1(local_40,*(float *)((int)self + 0x624));
-  pfVar1 = (float *)((int)self + 0x5fc);
-  orig::Mat4_SetTranslation_v1(local_40,pfVar1);
-  orig::Mat4_TransformPointInPlace_v2(local_40,local_70);
-  orig::Mat4_TransformPointInPlace_v2(local_40,local_70 + 4);
-  uVar4 = orig::ZoneMap_Query1693B0(g_pZoneMap,local_70,local_70 + 4,local_70 + 8);
-  if ((char)uVar4 != '\0') {
-    *pfVar1 = (float)(((long double)local_70[8] - (long double)local_70[0]) + (long double)*pfVar1);
+  f1[0] = 1.10000002384185791015625f;
+  f1[1] = (-1.0f);
+  f1[2] = 0.0f;
+  f1[3] = 1.0f;
+  f1[4] = 0.800000011920928955078125f;
+  f1[5] = (-1.0f);
+  f1[6] = 0.0f;
+  f1[7] = 1.0f;
+  orig::MathVector_ReturnThis_v1(u3);
+  orig::Mat4_SetIdentity_v1(u3);
+  orig::Mat4_PostRotateX_v1(u3,*(float *)((int)self + 0x61c));
+  orig::Mat4_PostRotateY_v1(u3,*(float *)((int)self + 0x620));
+  orig::Mat4_PostRotateZ_v1(u3,*(float *)((int)self + 0x624));
+  p1 = (float *)((int)self + 0x5fc);
+  orig::Mat4_SetTranslation_v1(u3,p1);
+  orig::Mat4_TransformPointInPlace_v2(u3,f1);
+  orig::Mat4_TransformPointInPlace_v2(u3,f1 + 4);
+  u2 = orig::ZoneMap_Query1693B0(g_pZoneMap,f1,f1 + 4,f1 + 8);
+  if ((char)u2 != '\0') {
+    *p1 = (float)((f1[8] - f1[0]) + *p1);
     *(float *)((int)self + 0x604) =
-         (float)(((long double)local_48 - (long double)local_70[2]) + (long double)*(float *)((int)self + 0x604)
+         (float)((f2 - f1[2]) + *(float *)((int)self + 0x604)
                 );
     orig::MathVector_Nop();
-    return uVar4 & 0xffffff00;
+    return u2 & 0xffffff00;
   }
   orig::MathVector_Nop();
-LAB_100c83b3:
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar4 >> 8))) << 8) | (uint8_t)(1)));
+code_100C83B3:
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100D14C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CXiActor::RequestModelParts(void * self)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  uint32_t uVar5;
-  uint32_t *puVar6;
-  uint64_t uVar7;
+  uint32_t *p1;
+  int i1;
+  int i2;
+  int i3;
+  uint32_t u1;
+  uint32_t *p2;
+  uint64_t u2;
   char xi_frame[8] __attribute__((aligned(4)));
-  int * &local_8 = *reinterpret_cast<int * *>(xi_frame + 0);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  int * &p3 = *reinterpret_cast<int * *>(xi_frame + 0);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
   
-  iVar2 = orig::CXiActor_GetModelByteEE_v1(self);
-  if (iVar2 != 2) {
-    iVar2 = orig::CXiActor_GetModelByteEF(self);
-    if (8 < iVar2) {
-      iVar2 = 1;
+  i1 = orig::CXiActor_GetModelByteEE_v1(self);
+  if (i1 != 2) {
+    i1 = orig::CXiActor_GetModelByteEF(self);
+    if (8 < i1) {
+      i1 = 1;
     }
-    iVar3 = orig::FUN_100d2d70(self,iVar2,0,0);
-    if ((0 < iVar3) && (iVar4 = orig::FUN_100d4520(self,iVar3), iVar4 == 0)) {
-      local_8 =(int*)(orig::CMoResource_FindOrCreateTask(&local_4,iVar3));
-      local_8 = (int *)*local_8;
-      if (local_8 != (int *)0x0) {
-        orig::CXiSkeletonActor_AddListEntry(self,local_8,2,iVar3,5);
-        uVar5 = orig::ResourceHandle_IsResident_v1(&local_8);
-        if ((char)uVar5 == '\0') {
-          uVar7 = orig::Allocator_Generic_v1(0x14);
-          puVar6 = (uint32_t *)uVar7;
-          if (puVar6 == (uint32_t *)0x0) {
-            puVar6 = (uint32_t *)0x0;
+    i2 = orig::game_100D2D70(self,i1,0,0);
+    if ((0 < i2) && (i3 = orig::game_100D4520(self,i2), i3 == 0)) {
+      p3 =(int*)(orig::CMoResource_FindOrCreateTask(&u3,i2));
+      p3 = (int *)*p3;
+      if (p3 != (int *)0x0) {
+        orig::CXiSkeletonActor_AddListEntry(self,p3,2,i2,5);
+        u1 = orig::ResourceHandle_IsResident_v1(&p3);
+        if ((char)u1 == '\0') {
+          u2 = orig::Allocator_Generic_v1(0x14);
+          p2 = (uint32_t *)u2;
+          if (p2 == (uint32_t *)0x0) {
+            p2 = (uint32_t *)0x0;
           }
           else {
-            puVar1 = puVar6 + 1;
-            orig::ActorHandle_Constructor_v1(puVar1);
+            p1 = p2 + 1;
+            orig::ActorHandle_Constructor_v1(p1);
             if (self == (void *)0x0) {
-              *puVar6 = g_actorSerialCounter_as_v0;
-              orig::FUN_100814f0(puVar1,0);
-              puVar6[4] = 2;
+              *p2 = g_actorSerialCounter_as_v0;
+              orig::game_100814F0(p1,0);
+              p2[4] = 2;
             }
             else {
-              *puVar6 = *(uint32_t *)((int)self + 0x9ec);
-              orig::FUN_100814f0(puVar1,(int)self);
-              puVar6[4] = 2;
+              *p2 = *(uint32_t *)((int)self + 0x9ec);
+              orig::game_100814F0(p1,(int)self);
+              p2[4] = 2;
             }
           }
-          orig::MeshResourceCreate_Create(&local_8,&LAB_100d1400,puVar6,(int)self,0);
+          orig::MeshResourceCreate_Create(&p3,&code_100D1400,p2,(int)self,0);
         }
         else {
-          orig::ActorModelParts_ProcessResidentListEntries(self,local_8,*(int *)((int)self + 0x9ec));
+          orig::ActorModelParts_ProcessResidentListEntries(self,p3,*(int *)((int)self + 0x9ec));
         }
       }
     }
-    iVar2 = orig::FUN_100d2e30(self,iVar2,0);
-    if (-1 < iVar2) {
-      local_8 =(int*)(orig::CMoResource_FindOrCreateTask(&local_4,iVar2));
-      local_8 = (int *)*local_8;
-      if (local_8 != (int *)0x0) {
-        orig::CXiSkeletonActor_AddListEntry(self,local_8,1,iVar2,0);
-        uVar5 = orig::ResourceHandle_IsResident_v1(&local_8);
-        if ((char)uVar5 == '\0') {
-          uVar7 = orig::Allocator_Generic_v1(0x14);
-          puVar6 = (uint32_t *)uVar7;
-          if (puVar6 == (uint32_t *)0x0) {
-            puVar6 = (uint32_t *)0x0;
+    i1 = orig::game_100D2E30(self,i1,0);
+    if (-1 < i1) {
+      p3 =(int*)(orig::CMoResource_FindOrCreateTask(&u3,i1));
+      p3 = (int *)*p3;
+      if (p3 != (int *)0x0) {
+        orig::CXiSkeletonActor_AddListEntry(self,p3,1,i1,0);
+        u1 = orig::ResourceHandle_IsResident_v1(&p3);
+        if ((char)u1 == '\0') {
+          u2 = orig::Allocator_Generic_v1(0x14);
+          p2 = (uint32_t *)u2;
+          if (p2 == (uint32_t *)0x0) {
+            p2 = (uint32_t *)0x0;
           }
           else {
-            puVar1 = puVar6 + 1;
-            orig::ActorHandle_Constructor_v1(puVar1);
+            p1 = p2 + 1;
+            orig::ActorHandle_Constructor_v1(p1);
             if (self == (void *)0x0) {
-              *puVar6 = g_actorSerialCounter_as_v0;
-              orig::FUN_100814f0(puVar1,0);
-              puVar6[4] = 1;
+              *p2 = g_actorSerialCounter_as_v0;
+              orig::game_100814F0(p1,0);
+              p2[4] = 1;
             }
             else {
-              *puVar6 = *(uint32_t *)((int)self + 0x9ec);
-              orig::FUN_100814f0(puVar1,(int)self);
-              puVar6[4] = 1;
+              *p2 = *(uint32_t *)((int)self + 0x9ec);
+              orig::game_100814F0(p1,(int)self);
+              p2[4] = 1;
             }
           }
-          orig::MeshResourceCreate_Create(&local_8,&LAB_100d1400,puVar6,(int)self,0);
+          orig::MeshResourceCreate_Create(&p3,&code_100D1400,p2,(int)self,0);
         }
         else {
-          orig::ActorModelParts_ProcessResidentListEntries(self,local_8,*(int *)((int)self + 0x9ec));
+          orig::ActorModelParts_ProcessResidentListEntries(self,p3,*(int *)((int)self + 0x9ec));
         }
       }
     }
-    iVar2 = orig::CXiActor_GetModelField170_v1(self);
-    uVar5 = orig::CXiActor_ModelTest95680(self,iVar2,iVar2);
-    if ((char)uVar5 == '\0') {
-      iVar2 = orig::CXiActor_GetModelField170_v1(self);
-      uVar5 = orig::CXiActor_ModelTest956A0_v1(self,iVar2,iVar2);
-      if ((char)uVar5 == '\0') {
+    i1 = orig::CXiActor_GetModelField170_v1(self);
+    u1 = orig::CXiActor_ModelTest95680(self,i1,i1);
+    if ((char)u1 == '\0') {
+      i1 = orig::CXiActor_GetModelField170_v1(self);
+      u1 = orig::CXiActor_ModelTest956A0_v1(self,i1,i1);
+      if ((char)u1 == '\0') {
         return;
       }
     }
-    orig::FUN_100d2800(self);
+    orig::game_100D2800(self);
   }
   return;
 }

@@ -22,4 +22,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `PostCapture_ReleaseTextures` calls nothing directly
 - `PostCapture_Init` calls nothing directly
 - `Post_CaptureSceneToTarget` calls `Settings_GetValue`, `CEnv::IsStereoMode`, `CDx::PushRenderTarget`, `CDx::DrawPrimitiveUP`, `CDx::SetTexture`
-- `Post_DrawRotatingGhostLayers` calls `Settings_GetValue`, `CDx::GetRenderTargetTop`, `CEnv::IsStereoMode`, `CDx::PushRenderTarget`, `CDx::DrawPrimitiveUP`, `CDx::SetTexture`, `Camera_GetFrameScale`, `sub_10311C2C`
+- `Post_DrawRotatingGhostLayers` calls `Settings_GetValue`, `CDx::GetRenderTargetTop`, `CEnv::IsStereoMode`, `CDx::PushRenderTarget`, `CDx::DrawPrimitiveUP`, `CDx::SetTexture`, `Camera_GetFrameScale`, `game_10311C2C`

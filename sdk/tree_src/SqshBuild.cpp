@@ -4,37 +4,37 @@
 
 // FUNCTION: FFXIMAIN 0x10299B30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqshBuild_BuildSQO(char * param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqshBuild_BuildSQO(char * arg1, bits32 arg2)
 {
-  char *pcVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  uint32_t uVar4;
+  char *p1;
+  bits32 *p2;
+  int i1;
+  uint32_t u1;
   char xi_frame[4] __attribute__((aligned(4)));
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i2 = *reinterpret_cast<int  *>(xi_frame + 0);
   
-  pcVar1 = param_1;
-  if ((((*param_1 != 'S') || (param_1[1] != 'Q')) || (param_1[2] != 'L')) || (param_1[3] != 'E')) {
-    orig::sqDebugPrintf_v1(s_____Error__memPtr_0x_08X__not_an_103b7a04,param_1);
-    orig::sqDebugPrintf_v1(s_sqshBuildSQO_0x_08X___d__103bc128,pcVar1,param_2);
+  p1 = arg1;
+  if ((((*arg1 != 'S') || (arg1[1] != 'Q')) || (arg1[2] != 'L')) || (arg1[3] != 'E')) {
+    orig::sqDebugPrintf_v1(str_____Error__memPtr_0x_08X__not_an_103B7A04,arg1);
+    orig::sqDebugPrintf_v1(str_sqshBuildSQO_0x_08X___d__103BC128,p1,arg2);
     return 0;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock(&param_1,4,1,(undefined4 *)(param_1 + 4),0);
-  uVar4 = (uint32_t)(((uint32_t)param_1 & 1) != 0);
-  puVar2 = orig::SqScriptRead_ReadBlock(&local_4,4,1,puVar2,0);
-  if (local_4 == 0xa0002) {
-    iVar3 = orig::SqshBuild_BuildCurves(puVar2,uVar4);
-    return iVar3;
+  p2 = orig::SqScriptRead_ReadBlock(&arg1,4,1,(bits32 *)(arg1 + 4),0);
+  u1 = (uint32_t)(((uint32_t)arg1 & 1) != 0);
+  p2 = orig::SqScriptRead_ReadBlock(&i2,4,1,p2,0);
+  if (i2 == 0xa0002) {
+    i1 = orig::SqshBuild_BuildCurves(p2,u1);
+    return i1;
   }
-  if (local_4 != 0xa0005) {
-    if (local_4 != 0xa0009) {
-      orig::sqDebugPrintf_v1(s_____Error__Unsupported_shape_typ_103bc148,local_4);
-      orig::sqDebugPrintf_v1(s_sqshBuildSQO_0x_08X___d__103bc128,puVar2,param_2);
+  if (i2 != 0xa0005) {
+    if (i2 != 0xa0009) {
+      orig::sqDebugPrintf_v1(str_____Error__Unsupported_shape_typ_103BC148,i2);
+      orig::sqDebugPrintf_v1(str_sqshBuildSQO_0x_08X___d__103BC128,p2,arg2);
       return 0;
     }
-    iVar3 = orig::SqshBuild_BuildTriStrip(puVar2,uVar4);
-    return iVar3;
+    i1 = orig::SqshBuild_BuildTriStrip(p2,u1);
+    return i1;
   }
-  iVar3 = orig::SqshBuild_BuildPoints(puVar2,uVar4);
-  return iVar3;
+  i1 = orig::SqshBuild_BuildPoints(p2,u1);
+  return i1;
 }

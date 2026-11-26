@@ -7,73 +7,73 @@
 char CMoFloatingNumberTask::Slot8Update()
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  double v2;
-  int v3;
-  __int16 v4; // fps
-  int v5;
-  bool v6; // c0
-  char v7; // c2
-  bool v8; // c3
-  double v9;
-  int v10;
-  double v11;
-  int v12;
-  float v13;
+  double f1;
+  int i1;
+  short i2; // fps
+  int i3;
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  double f2;
+  int i4;
+  double f3;
+  int i5;
+  float f4;
   int ScratchMatrixStackTop;
-  float *v15;
-  CMoProcessor *v16;
-  int v17;
+  float *p1;
+  CMoProcessor *p2;
+  int i6;
   alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  int &v19 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  float &v20 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &v21 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  int &v22 = *reinterpret_cast<int *>(xi_frame + 0x24);
-  float &v23 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  int &v24 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  int &i7 = *reinterpret_cast<int *>(xi_frame + 0x18);
+  float &f5 = *reinterpret_cast<float *>(xi_frame + 0x1C);
+  float &f6 = *reinterpret_cast<float *>(xi_frame + 0x20);
+  int &i8 = *reinterpret_cast<int *>(xi_frame + 0x24);
+  float &f7 = *reinterpret_cast<float *>(xi_frame + 0x28);
+  int &i9 = *reinterpret_cast<int *>(xi_frame + 0x2C);
   bool xi_fpu_unord = false;
 
-  v2 = *(float *)(g_pResourceMng + 3760) + at<float>(this, 0xAC);
-  v3 = at<uint32_t>(this, 0xB8);
-  at<float>(this, 0xAC) = v2;
-  if ( v3 != 0 && (v5 = at<uint32_t>(this, 0xB4)) != 0 && ((xi_fpu_unord = __builtin_isunordered(v2, 150.0), v6 = v2 < 150.0), v7 = 0, v8 = v2 == 150.0, ((__int16)(((v6 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0) )
+  f1 = *(float *)(g_pResourceMng + 3760) + at<float>(this, 0xAC);
+  i1 = at<uint32_t>(this, 0xB8);
+  at<float>(this, 0xAC) = f1;
+  if ( i1 != 0 && (i3 = at<uint32_t>(this, 0xB4)) != 0 && ((xi_fpu_unord = __builtin_isunordered(f1, 150.0), b1 = f1 < 150.0), c1 = 0, b2 = f1 == 150.0, ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0) )
   {
-    (*(void (__thiscall **)(int, _DWORD, int *))(*(_DWORD *)v5 + 452))(v5, 0, &v22);
-    v9 = v23 - 0x1.99999a0000000p-3;
-    v10 = v24;
-    at<uint32_t>(this, 0x94) = v22;
-    at<uint32_t>(this, 0x9C) = v10;
-    v23 = v9;
-    at<float>(this, 0x98) = v9;
-    v11 = at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8;
-    v12 = at<uint32_t>(this, 0x94);
-    v13 = at<float>(this, 0x9C);
-    v20 = at<float>(this, 0x98);
-    v19 = v12;
-    v21 = v13;
-    at<float>(this, 0xB0) = v11;
-    v20 = v20 - at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8 * 0.5;
+    (*(void (__thiscall **)(int, uint32_t, int *))(*(uint32_t *)i3 + 452))(i3, 0, &i8);
+    f2 = f7 - 0x1.99999a0000000p-3;
+    i4 = i9;
+    at<uint32_t>(this, 0x94) = i8;
+    at<uint32_t>(this, 0x9C) = i4;
+    f7 = f2;
+    at<float>(this, 0x98) = f2;
+    f3 = at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8;
+    i5 = at<uint32_t>(this, 0x94);
+    f4 = at<float>(this, 0x9C);
+    f5 = at<float>(this, 0x98);
+    i7 = i5;
+    f6 = f4;
+    at<float>(this, 0xB0) = f3;
+    f5 = f5 - at<float>(this, 0xAC) * 0x1.b4e81c0000000p-8 * 0.5;
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-    v15 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+    p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 3, v15);
+    orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 3, p1);
     (*((void (__thiscall **)(void *, int *, int, int, int, float *, float, float))(*(void * *)&g_pProcessor->vftable) + 32))(g_pProcessor, 
-      &v19,
+      &i7,
       self + 160,
       1,
       g_pResourceMng + 2896,
-      v15,
+      p1,
       *(float *)(g_pResourceMng + 3520),
       *(float *)(g_pResourceMng + 3524));
-    orig::sub_100555B0((_DWORD *)self, at<uint32_t>(this, 0xA8));
-    v16 = g_pProcessor;
-    v17 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-    (g_pProcessor->ScratchMatrixStackTop) = v17;
-    ((float * *)((char *)v16 + 0xA10))[v17] = v15;
+    orig::game_100555B0_as_v0((uint32_t *)self, at<uint32_t>(this, 0xA8));
+    p2 = g_pProcessor;
+    i6 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+    (g_pProcessor->ScratchMatrixStackTop) = i6;
+    ((float * *)((char *)p2 + 0xA10))[i6] = p1;
     return 0;
   }
   else
   {
-    (*(void (__thiscall **)(int, int))(*(_DWORD *)self + 24))(self, 1);
+    (*(void (__thiscall **)(int, int))(*(uint32_t *)self + 24))(self, 1);
     return 1;
   }
 }

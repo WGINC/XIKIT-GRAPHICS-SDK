@@ -5,28 +5,28 @@
 
 // FUNCTION: FFXIMAIN 0x100C3E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __cdecl XiFurnitureActor::Release(void * param_1)
+void __cdecl XiFurnitureActor::Release(void * arg1)
 {
-  uint16_t uVar1;
-  void *pvVar2;
-  uint64_t uVar3;
+  uint16_t u1;
+  void *p1;
+  uint64_t u2;
   
-  uVar3 = orig::FUN_10085240();
-  pvVar2 = (void *)uVar3;
-  if (pvVar2 != (void *)0x0) {
-    while (pvVar2 != param_1) {
-      uVar3 = orig::FUN_10085270(pvVar2);
-      pvVar2 = (void *)uVar3;
-      if (pvVar2 == (void *)0x0) {
+  u2 = orig::game_10085240();
+  p1 = (void *)u2;
+  if (p1 != (void *)0x0) {
+    while (p1 != arg1) {
+      u2 = orig::game_10085270(p1);
+      p1 = (void *)u2;
+      if (p1 == (void *)0x0) {
         return;
       }
     }
-    pvVar2 = *(void **)((int)param_1 + 0x70);
-    if (pvVar2 != (void *)0x0) {
-      uVar1 = *(uint16_t *)((int)pvVar2 + 0x74);
-      orig::CXiActor_Destroy(pvVar2);
-      orig::thunk_sub_10028AA0_v1((int)pvVar2);
-      (&ActerBuffPtr_as_v0)[uVar1] = 0;
+    p1 = *(void **)((int)arg1 + 0x70);
+    if (p1 != (void *)0x0) {
+      u1 = *(uint16_t *)((int)p1 + 0x74);
+      orig::CXiActor_Destroy(p1);
+      orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1((int)p1);
+      (&ActerBuffPtr_as_v0)[u1] = 0;
     }
   }
   return;

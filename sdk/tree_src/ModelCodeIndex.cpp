@@ -4,62 +4,62 @@
 
 // FUNCTION: FFXIMAIN 0x100C51C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ModelCodeIndex_MapCodeIndex(undefined4 param_1, int param_2)
+XI_API int __cdecl ModelCodeIndex_MapCodeIndex(bits32 arg1, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 1:
-    iVar1 = orig::ModelCodeIndex_AddOffset996B(param_2);
-    return iVar1;
+    i1 = orig::ModelCodeIndex_AddOffset996B(arg2);
+    return i1;
   case 2:
-    iVar1 = orig::ModelCodeIndex_ForwardToCce00(param_2);
-    return iVar1;
+    i1 = orig::ModelCodeIndex_ForwardToCce00(arg2);
+    return i1;
   case 3:
-    iVar1 = orig::ModelCodeIndex_AddOffset1889B(param_2);
-    return iVar1;
+    i1 = orig::ModelCodeIndex_AddOffset1889B(arg2);
+    return i1;
   case 4:
-    iVar1 = orig::ModelCodeIndex_AddOffset19131(param_2);
-    return iVar1;
+    i1 = orig::ModelCodeIndex_AddOffset19131(arg2);
+    return i1;
   }
-  iVar1 = 0x514;
-  if (param_2 < 0xdac) {
-    if (param_2 < 3000) {
-      if (0x5db < param_2) {
-        iVar1 = 0xca53;
-        param_2 = param_2 + -0x5dc;
+  i1 = 0x514;
+  if (arg2 < 0xdac) {
+    if (arg2 < 3000) {
+      if (0x5db < arg2) {
+        i1 = 0xca53;
+        arg2 = arg2 + -0x5dc;
       }
-      return param_2 + iVar1;
+      return arg2 + i1;
     }
-    return param_2 + 0x17a8b;
+    return arg2 + 0x17a8b;
   }
-  return param_2 + 0x17fbf;
+  return arg2 + 0x17fbf;
 }
 
 // FUNCTION: FFXIMAIN 0x100C5260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ModelCodeIndex_AddOffset996B(int param_1)
+XI_API int __cdecl ModelCodeIndex_AddOffset996B(int arg1)
 {
-  return param_1 + 0x996b;
+  return arg1 + 0x996b;
 }
 
 // FUNCTION: FFXIMAIN 0x100C5270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ModelCodeIndex_AddOffset19131(int param_1)
+XI_API int __cdecl ModelCodeIndex_AddOffset19131(int arg1)
 {
-  return param_1 + 0x19131;
+  return arg1 + 0x19131;
 }
 
 // FUNCTION: FFXIMAIN 0x100C5280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ModelCodeIndex_AddOffset1889B(int param_1)
+XI_API int __cdecl ModelCodeIndex_AddOffset1889B(int arg1)
 {
-  return param_1 + 0x1889b;
+  return arg1 + 0x1889b;
 }
 
 // FUNCTION: FFXIMAIN 0x100C5290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ModelCodeIndex_ForwardToCce00(int param_1)
+XI_API int __cdecl ModelCodeIndex_ForwardToCce00(int arg1)
 {
-  return orig::Yk_MapCodeOffset(param_1);
+  return orig::Yk_MapCodeOffset(arg1);
 }

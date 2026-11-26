@@ -4,29 +4,29 @@
 
 // FUNCTION: FFXIMAIN 0x102984B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqimImage_Create(void)
+XI_API bits32 * __cdecl SqimImage_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x3c,s_C__dev_dancer_modules_sqImage_sr_103bbc70,0x1b);
-  orig::SqimImage_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x3c,str_C__dev_dancer_modules_sqImage_sr_103BBC70,0x1b);
+  orig::SqimImage_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10298570
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqimImage_Init(undefined4 * param_1)
+XI_API void __cdecl SqimImage_Init(bits32 * arg1)
 {
-  *(uint8_t *)(param_1 + 5) = 0;
-  param_1[6] = 0;
-  *param_1 = 0x180001;
-  param_1[9] = 0;
-  param_1[8] = 0;
-  param_1[7] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  param_1[0xc] = 3;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
+  *(uint8_t *)(arg1 + 5) = 0;
+  arg1[6] = 0;
+  *arg1 = 0x180001;
+  arg1[9] = 0;
+  arg1[8] = 0;
+  arg1[7] = 0;
+  arg1[10] = 0;
+  arg1[0xb] = 0;
+  arg1[0xc] = 3;
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
   return;
 }

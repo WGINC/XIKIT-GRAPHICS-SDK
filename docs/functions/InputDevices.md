@@ -39,10 +39,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Input_MapAxisLow` calls nothing directly
 - `Input_MapAxisHigh` calls nothing directly
 - `InputDevices_FindMapValue` calls nothing directly
-- `Input_HandleChar` calls `TextInputFiles_OnChar`, `sub_10312BDB`, `sub_1015DD70`, `Command_RunLine`, `sub_10312AD3`, `sub_1015DD50`
+- `Input_HandleChar` calls `TextInputFiles_OnChar`, `game_10312BDB`, `game_1015DD70`, `Command_RunLine`, `game_10312AD3`, `game_1015DD50`
 - `DirectInput_InstallKeyboard` calls nothing directly
 - `DirectInput_InstallMouse` calls `CDx::ShowCursor`
-- `InputDevices_JmpGetKeyboardLayout` calls `LinkedLibraries_JmpImmGetDescriptionA`, `sub_10312940`
+- `InputDevices_JmpGetKeyboardLayout` calls `LinkedLibraries_JmpImmGetDescriptionA`, `game_10312940`
 - `DirectInput_InstallJoystick` calls `XInput_ProbeDll`, `XInput_LoadFunctions`, `DirectInput_ReleaseDevice`
 - `DirectInput_ReleaseDevice` calls nothing directly
 - `Input_SetActive` calls nothing directly

@@ -5,9 +5,9 @@
 
 // FUNCTION: FFXIMAIN 0x1000CFB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CAcc::Constructor(void * self)
+bits32 __thiscall CAcc::Constructor(void * self)
 {
-  *(uint8_t ***)self = &PTR_CAcc_GetRuntimeClass_10329a3c;
+  *(uint8_t ***)self = &ptr_to_CAcc_GetRuntimeClass_10329A3C;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 0xc) = 0;
   *(uint32_t *)((int)self + 8) = 0;

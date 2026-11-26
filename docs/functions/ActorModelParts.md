@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): CXiActor::RequestModelParts, 
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ActorModelParts_ProcessResidentListEntries` calls `CXiActor::SpawnResourceGenerators`, `ResourceHandle_IsResident`, `sub_1001B7B0`
+- `ActorModelParts_ProcessResidentListEntries` calls `CXiActor::SpawnResourceGenerators`, `ResourceHandle_IsResident`, `game_1001B7B0`

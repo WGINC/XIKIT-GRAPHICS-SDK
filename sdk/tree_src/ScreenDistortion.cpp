@@ -3,88 +3,88 @@
 
 // FUNCTION: FFXIMAIN 0x100426F0
 // GATE: PASS -- 100 trials, 69 returned normally, 332 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 69
-XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_)
+XI_API uint32_t * __thiscall YmElem_DrawScreenDistortion(float *self_)
 {
   void (__thiscall **vftable)(CMoProcessor *, int *, char *, int, float *, int, int, int);
-  double v3;
-  char *v4;
-  int v5;
-  double v6;
-  double v7;
-  float v8;
-  _DWORD *result;
-  int v10;
-  double v11;
+  double f1;
+  char *p1;
+  int i1;
+  double f2;
+  double f3;
+  float f4;
+  uint32_t *result;
+  int i2;
+  double f5;
   int i;
-  __int16 v13; // fps
-  bool v14; // c0
-  char v15; // c2
-  bool v16; // c3
-  __int16 v17; // fps
-  bool v18; // c0
-  char v19; // c2
-  bool v20; // c3
-  __int16 v21; // fps
-  bool v22; // c0
-  char v23; // c2
-  bool v24; // c3
-  double v25;
-  __int16 v26; // fps
-  bool v27; // c0
-  char v28; // c2
-  bool v29; // c3
-  double v30;
+  short i3; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  short i4; // fps
+  bool b3; // c0
+  char c2; // c2
+  bool b4; // c3
+  short i5; // fps
+  bool b5; // c0
+  char c3; // c2
+  bool b6; // c3
+  double f6;
+  short i6; // fps
+  bool b7; // c0
+  char c4; // c2
+  bool b8; // c3
+  double f7;
   int j;
-  double v32;
-  float *v33;
-  int v34;
-  int v35;
-  int v36;
-  int v37;
-  int v38;
-  int v39;
-  int v40;
-  float v41;
-  float v42;
-  float v43;
-  float v44;
-  float v45;
-  float v46;
-  float v47;
-  float v48;
-  _DWORD *v49;
-  _DWORD *v50;
+  double f8;
+  float *p2;
+  int i7;
+  int i8;
+  int i9;
+  int i10;
+  int i11;
+  int i12;
+  int i13;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
+  float f15;
+  float f16;
+  uint32_t *p3;
+  uint32_t *p4;
   int k;
-  float *v52;
+  float *p5;
   int m;
-  double v54;
+  double f17;
   int ScratchMatrixStackTop;
-  float *v56;
-  float *v57;
-  int v58;
+  float *p6;
+  float *p7;
+  int i14;
   alignas(16) unsigned char xi_frame[0x4E0];  // address-taken locals at their original offsets
-  int &v59 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  float &v60 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  float &v61 = *reinterpret_cast<float *>(xi_frame + 0x3C);
-  int &v62 = *reinterpret_cast<int *>(xi_frame + 0x40);
-  float &v63 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &v64 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &v65 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  float &v66 = *reinterpret_cast<float *>(xi_frame + 0x44);
-  float &v67 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &v68 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float (&v69)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x50);
-  float &v70 = *reinterpret_cast<float *>(xi_frame + 0x5C);
-  float &v71 = *reinterpret_cast<float *>(xi_frame + 0x60);
-  float (&v72)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
-  float * &v73 = *reinterpret_cast<float * *>(xi_frame + 0x74);
-  const void * &v74 = *reinterpret_cast<const void * *>(xi_frame + 0x78);
-  _DWORD (&v75)[4] = *reinterpret_cast<_DWORD (*)[4]>(xi_frame + 0x7C);
-  _DWORD (&v76)[6] = *reinterpret_cast<_DWORD (*)[6]>(xi_frame + 0x8C);
-  char (&v77)[60] = *reinterpret_cast<char (*)[60]>(xi_frame + 0xA4);
+  int &i15 = *reinterpret_cast<int *>(xi_frame + 0x3C);
+  float &f18 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  float &f19 = *reinterpret_cast<float *>(xi_frame + 0x3C);
+  int &i16 = *reinterpret_cast<int *>(xi_frame + 0x40);
+  float &f20 = *reinterpret_cast<float *>(xi_frame + 0x40);
+  float &f21 = *reinterpret_cast<float *>(xi_frame + 0x40);
+  float &f22 = *reinterpret_cast<float *>(xi_frame + 0x40);
+  float &f23 = *reinterpret_cast<float *>(xi_frame + 0x44);
+  float &f24 = *reinterpret_cast<float *>(xi_frame + 0x48);
+  float &f25 = *reinterpret_cast<float *>(xi_frame + 0x4C);
+  float (&f26)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x50);
+  float &f27 = *reinterpret_cast<float *>(xi_frame + 0x5C);
+  float &f28 = *reinterpret_cast<float *>(xi_frame + 0x60);
+  float (&f29)[4] = *reinterpret_cast<float (*)[4]>(xi_frame + 0x64);
+  float * &p8 = *reinterpret_cast<float * *>(xi_frame + 0x74);
+  const void * &p9 = *reinterpret_cast<const void * *>(xi_frame + 0x78);
+  uint32_t (&u1)[4] = *reinterpret_cast<uint32_t (*)[4]>(xi_frame + 0x7C);
+  uint32_t (&u2)[6] = *reinterpret_cast<uint32_t (*)[6]>(xi_frame + 0x8C);
+  char (&val1)[60] = *reinterpret_cast<char (*)[60]>(xi_frame + 0xA4);
   bool xi_fpu_unord = false;
 
-  v73 = self_;
+  p8 = self_;
   if ( (CMoDist_vf18_staticGuards & 1) == 0 )
   {
     CMoDist_vf18_static_BB04 = 0;
@@ -105,124 +105,124 @@ XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_)
     CMoDist_vf18_static_BB3C = 0;
     orig::_atexit(XI_CODE(nullsub_136));
   }
-  v62 = *(_DWORD *)(g_pResourceMng + 3524);
-  v59 = *(_DWORD *)(g_pResourceMng + 3520);
+  i16 = *(uint32_t *)(g_pResourceMng + 3524);
+  i15 = *(uint32_t *)(g_pResourceMng + 3520);
   orig::RegisterWithProcessor((int)self_);
   vftable = (void (__thiscall **)(CMoProcessor *, int *, char *, int, float *, int, int, int))(*(void * *)&g_pProcessor->vftable);
-  v74 = self_ + 40;
-  vftable[32](g_pProcessor, &CMoDist_vf18_static_BB04, v77, 5, self_ + 40, g_pResourceMng + 2832, v59, v62);
-  v63 = (float)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2);
-  v3 = (double)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3);
-  v4 = &v77[4];
-  v5 = 0;
-  v64 = 1.0 / v63;
-  v6 = 1.0 / v3;
+  p9 = self_ + 40;
+  vftable[32](g_pProcessor, &CMoDist_vf18_static_BB04, val1, 5, self_ + 40, g_pResourceMng + 2832, i15, i16);
+  f20 = (float)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
+  f1 = (double)*((int *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
+  p1 = &val1[4];
+  i1 = 0;
+  f21 = 1.0 / f20;
+  f2 = 1.0 / f1;
   do
   {
-    v7 = v64 * *((float *)v4 - 1);
-    v8 = *((float *)v4 - 1);
-    v4 += 12;
-    v72[v5 - 1] = v8;
-    v69[v5 - 1] = *((float *)v4 - 3);
-    *(float *)&v75[v5++] = v7;
-    *(float *)&v76[v5] = v6 * *((float *)v4 - 3);
+    f3 = f21 * *((float *)p1 - 1);
+    f4 = *((float *)p1 - 1);
+    p1 += 12;
+    f29[i1 - 1] = f4;
+    f26[i1 - 1] = *((float *)p1 - 3);
+    *(float *)&u1[i1++] = f3;
+    *(float *)&u2[i1] = f2 * *((float *)p1 - 3);
   }
-  while ( v5 < 5 );
-  result =(_DWORD*)(&(*(void * *)&g_pCDx->vftable));
-  v10 = *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194));
-  if ( v10 != 0 )
+  while ( i1 < 5 );
+  result =(uint32_t*)(&(*(void * *)&g_pCDx->vftable));
+  i2 = *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194));
+  if ( i2 != 0 )
   {
-    v11 = v68;
-    v67 = v71;
-    v60 = v71;
-    v66 = v68;
+    f5 = f25;
+    f24 = f28;
+    f18 = f28;
+    f23 = f25;
     for ( i = 0; i < 4; ++i )
     {
-      if ( v60 < (double)v72[i] )
-        v60 = v72[i];
-      if ( v11 < v69[i] )
-        v11 = v69[i];
-      (xi_fpu_unord = __builtin_isunordered(v67, (double)v72[i]), v14 = v67 < (double)v72[i]);
-      v15 = 0;
-      v16 = v67 == v72[i];
-      if ( ((__int16)(((v14 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v16 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v67 = v72[i];
-      (xi_fpu_unord = __builtin_isunordered(v66, (double)v69[i]), v18 = v66 < (double)v69[i]);
-      v19 = 0;
-      v20 = v66 == v69[i];
-      if ( ((__int16)(((v18 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v20 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-        v66 = v69[i];
+      if ( f18 < (double)f29[i] )
+        f18 = f29[i];
+      if ( f5 < f26[i] )
+        f5 = f26[i];
+      (xi_fpu_unord = __builtin_isunordered(f24, (double)f29[i]), b1 = f24 < (double)f29[i]);
+      c1 = 0;
+      b2 = f24 == f29[i];
+      if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f24 = f29[i];
+      (xi_fpu_unord = __builtin_isunordered(f23, (double)f26[i]), b3 = f23 < (double)f26[i]);
+      c2 = 0;
+      b4 = f23 == f26[i];
+      if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f23 = f26[i];
     }
-    v61 = v60 - v67;
-    v65 = v11 - v66;
-    (xi_fpu_unord = __builtin_isunordered(v61, 256.0), v22 = v61 < 256.0);
-    v23 = 0;
-    v24 = v61 == 256.0;
-    if ( ((__int16)(((v22 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v24 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
-      v25 = 1.0;
+    f19 = f18 - f24;
+    f22 = f5 - f23;
+    (xi_fpu_unord = __builtin_isunordered(f19, 256.0), b5 = f19 < 256.0);
+    c3 = 0;
+    b6 = f19 == 256.0;
+    if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
+      f6 = 1.0;
     else
-      v25 = 255.0 / v61;
-    (xi_fpu_unord = __builtin_isunordered(v65, 256.0), v27 = v65 < 256.0);
-    v28 = 0;
-    v29 = v65 == 256.0;
-    if ( ((__int16)(((v27 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v29 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
-      v30 = 1.0;
+      f6 = 255.0 / f19;
+    (xi_fpu_unord = __builtin_isunordered(f22, 256.0), b7 = f22 < 256.0);
+    c4 = 0;
+    b8 = f22 == 256.0;
+    if ( ((short)(((b7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 )
+      f7 = 1.0;
     else
-      v30 = 255.0 / v65;
-    for ( j = 0; j < 5; *(float *)((char *)&v67 + j * 4) = (*(float *)((char *)&v67 + j * 4) - v66) * v30 )
+      f7 = 255.0 / f22;
+    for ( j = 0; j < 5; *(float *)((char *)&f24 + j * 4) = (*(float *)((char *)&f24 + j * 4) - f23) * f7 )
     {
-      v32 = v72[j++ - 1];
-      *(float *)((char *)&v70 + j * 4) = (v32 - v67) * v25;
+      f8 = f29[j++ - 1];
+      *(float *)((char *)&f27 + j * 4) = (f8 - f24) * f6;
     }
     orig::DynVB_Reserve((void *)g_pDynVB_FVF144, 4);
-    v33 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
-    v34 = v76[2];
-    v33[5] = *(float *)&v75[1];
-    v35 = v75[2];
-    *((_DWORD *)v33 + 6) = v34;
-    v36 = v76[3];
-    *((_DWORD *)v33 + 12) = v35;
-    v37 = v76[0];
-    *((_DWORD *)v33 + 13) = v36;
-    v38 = v76[5];
-    *((_DWORD *)v33 + 19) = v37;
-    v39 = v75[3];
-    *((_DWORD *)v33 + 20) = v38;
-    v40 = v76[4];
-    *((_DWORD *)v33 + 26) = v39;
-    v41 = v72[0];
-    *((_DWORD *)v33 + 27) = v40;
-    v42 = v69[0];
-    *v33 = v41;
-    v43 = v72[1];
-    v33[1] = v42;
-    v44 = v69[1];
-    v33[7] = v43;
-    v45 = v72[3];
-    v33[8] = v44;
-    v46 = v70;
-    v33[14] = v45;
-    v47 = v72[2];
-    v33[15] = v46;
-    v48 = v69[2];
-    v33[2] = 0.0;
-    v33[3] = 1.0;
-    v33[9] = 0.0;
-    v33[10] = 1.0;
-    v33[16] = 0.0;
-    v33[17] = 1.0;
-    v33[21] = v47;
-    v33[22] = v48;
-    v33[23] = 0.0;
-    v33[24] = 1.0;
+    p2 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
+    i7 = u2[2];
+    p2[5] = *(float *)&u1[1];
+    i8 = u1[2];
+    *((uint32_t *)p2 + 6) = i7;
+    i9 = u2[3];
+    *((uint32_t *)p2 + 12) = i8;
+    i10 = u2[0];
+    *((uint32_t *)p2 + 13) = i9;
+    i11 = u2[5];
+    *((uint32_t *)p2 + 19) = i10;
+    i12 = u1[3];
+    *((uint32_t *)p2 + 20) = i11;
+    i13 = u2[4];
+    *((uint32_t *)p2 + 26) = i12;
+    f9 = f29[0];
+    *((uint32_t *)p2 + 27) = i13;
+    f10 = f26[0];
+    *p2 = f9;
+    f11 = f29[1];
+    p2[1] = f10;
+    f12 = f26[1];
+    p2[7] = f11;
+    f13 = f29[3];
+    p2[8] = f12;
+    f14 = f27;
+    p2[14] = f13;
+    f15 = f29[2];
+    p2[15] = f14;
+    f16 = f26[2];
+    p2[2] = 0.0;
+    p2[3] = 1.0;
+    p2[9] = 0.0;
+    p2[10] = 1.0;
+    p2[16] = 0.0;
+    p2[17] = 1.0;
+    p2[21] = f15;
+    p2[22] = f16;
+    p2[23] = 0.0;
+    p2[24] = 1.0;
     orig::DynVB_Unlock((void *)g_pDynVB_FVF144);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(0));
     orig::CDx_PushRenderTargetTexture_Flag1(
       *(void **)(g_pResourceMng + 3528),
-      *(_DWORD *)(g_pMoAccumTarget + 4),
-      *(_DWORD *)(g_pMoAccumTarget + 8),
-      *(_DWORD *)(g_pMoAccumTarget + 12));
-    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(v10));
+      *(uint32_t *)(g_pMoAccumTarget + 4),
+      *(uint32_t *)(g_pMoAccumTarget + 8),
+      *(uint32_t *)(g_pMoAccumTarget + 12));
+    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(i2));
     if ( (CMoDist_vf18_staticGuards & 2) == 0 )
     {
       CMoDist_vf18_staticGuards |= 2u;
@@ -232,54 +232,54 @@ XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_)
     orig::StateBlock_ApplyRSTSS(CMoDist_vf18_stateBlock, (int)CMoDist_vf18_renderStates, (int)CMoDist_vf18_textureStageStates);
     orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF144, 0, 2, 5, 0, -1);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(0));
-    orig::sub_1006A0E0(g_pResourceMng, 0, 0);
+    orig::game_1006A0E0_as_v0(g_pResourceMng, 0, 0);
     orig::DynVB_Reserve((void *)g_pDynVB_FVF142, 6);
-    v49 = orig::DynVB_Lock((void *)g_pDynVB_FVF142);
-    v50 = v49 + 9;
+    p3 = orig::DynVB_Lock((void *)g_pDynVB_FVF142);
+    p4 = p3 + 9;
     for ( k = 5; k != 0; --k )
     {
-      *v50 = 8421504;
-      v50 += 6;
+      *p4 = 8421504;
+      p4 += 6;
     }
-    v49[3] = g_scratchValue;
-    v49[30] = -1082130432;
-    v49[6] = -1082130432;
-    v49[13] = -1082130432;
-    v49[32] = 0;
-    v49[26] = 0;
-    v49[20] = 0;
-    v49[14] = 0;
-    v49[8] = 0;
-    v49[2] = 0;
-    *v49 = 0;
-    v49[1] = 0;
-    v49[31] = 0;
-    v49[7] = 0;
-    v49[12] = 0;
-    v49[18] = 1065353216;
-    v49[19] = 0;
-    v49[24] = 0;
-    v49[25] = 1065353216;
-    v52 = (float *)(v49 + 5);
-    for ( m = 0; m < 5; *(v52 - 6) = *(float *)((char *)&v67 + m * 4) * 0x1.0101020000000p-8 )
+    p3[3] = g_scratchValue;
+    p3[30] = -1082130432;
+    p3[6] = -1082130432;
+    p3[13] = -1082130432;
+    p3[32] = 0;
+    p3[26] = 0;
+    p3[20] = 0;
+    p3[14] = 0;
+    p3[8] = 0;
+    p3[2] = 0;
+    *p3 = 0;
+    p3[1] = 0;
+    p3[31] = 0;
+    p3[7] = 0;
+    p3[12] = 0;
+    p3[18] = 1065353216;
+    p3[19] = 0;
+    p3[24] = 0;
+    p3[25] = 1065353216;
+    p5 = (float *)(p3 + 5);
+    for ( m = 0; m < 5; *(p5 - 6) = *(float *)((char *)&f24 + m * 4) * 0x1.0101020000000p-8 )
     {
-      v54 = v72[m++ - 1] * 0x1.0101020000000p-8;
-      v52 += 6;
-      *(v52 - 7) = v54;
+      f17 = f29[m++ - 1] * 0x1.0101020000000p-8;
+      p5 += 6;
+      *(p5 - 7) = f17;
     }
-    *((float *)v49 + 34) = v72[0] * 0x1.0101020000000p-8;
-    *((float *)v49 + 35) = v69[0] * 0x1.0101020000000p-8;
+    *((float *)p3 + 34) = f29[0] * 0x1.0101020000000p-8;
+    *((float *)p3 + 35) = f26[0] * 0x1.0101020000000p-8;
     orig::DynVB_Unlock((void *)g_pDynVB_FVF142);
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-    v56 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+    p6 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
     orig::RegisterWithProcessor((int)self_);
-    v57 = v73;
-    qmemcpy(v56, v74, 0x40u);
-    v56[12] = v57[101] + v56[12];
-    v56[13] = v57[101] + v56[13];
-    orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, v56);
-    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(*(_DWORD *)(g_pMoAccumTarget + 4)));
+    p7 = p8;
+    memcpy(p6, p9, 0x40u);
+    p6[12] = p7[101] + p6[12];
+    p6[13] = p7[101] + p6[13];
+    orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, p6);
+    (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(*(uint32_t *)(g_pMoAccumTarget + 4)));
     if ( (CMoDist_vf18_staticGuards & 4) == 0 )
     {
       CMoDist_vf18_staticGuards |= 4u;
@@ -291,10 +291,10 @@ XI_API _DWORD * __thiscall YmElem_DrawScreenDistortion(float *self_)
       (int)CMoDist_vf18_renderStates2,
       (int)CMoDist_vf18_textureStageStates2);
     orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF142, 0, 4, 6, 0, -1);
-    result =(_DWORD*)(&(*(void * *)&g_pProcessor->vftable));
-    v58 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-    (g_pProcessor->ScratchMatrixStackTop) = v58;
-    result[v58 + 644] = v56;
+    result =(uint32_t*)(&(*(void * *)&g_pProcessor->vftable));
+    i14 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+    (g_pProcessor->ScratchMatrixStackTop) = i14;
+    result[i14 + 644] = p6;
   }
   return result;
 }

@@ -88,6 +88,17 @@ static HRESULT __stdcall d_tcl(void *d) { (void)d; tcl_calls++; return 0; }
 static HRESULT __stdcall d_beginscene(void *d) { (void)d; bs_calls++; return 0; }   /* GetColor's entry: the band it "draws" is bright while it is swapped */
 static uint8_t g_cdx[0x1000];
 
+/* (staterun) a stand-in actor's vtable +0xCC: the name the game draws (GetEnglishName's slot) */
+static const char *__attribute__((thiscall)) actor_drawn_name(void *self) { (void)self; return "Alice"; }
+/* (staterun, xianim) a stand-in actor's vtable slot 0, GetRuntimeClass, as CYyObject_IsKindOf (0x1002C8F0) calls it:
+   the player's stand-in is a CXiSkeletonActor (the game's own class descriptor 0x10330EBC); the other one is a class
+   whose chain ends at once (+8 NULL), like a door's actor (27 Nov: the owner's crash at prishe.dll+0x10F20) */
+static uint8_t g_other_class[16];
+static void *__attribute__((thiscall)) runtime_class_skeleton(void *self) { (void)self; return (void *)ga(0x10330EBCu); }
+static void *__attribute__((thiscall)) runtime_class_other(void *self) { (void)self; return g_other_class; }
+static const char *__attribute__((thiscall)) actor_drawn_name_bob(void *self) { (void)self; return "Bob"; }
+/* (prishert) a stand-in actor's vtable slot that returns 0 (GetModelPartWord's +0x3B4 test: the record path) */
+static int __attribute__((thiscall)) vt_zero(void *self) { (void)self; return 0; }
 static void check(int cond, const char *what) { printf("%s: %s\n", cond ? "ok" : "FAIL", what); if (!cond) fails++; }
 static void paint(void) {        /* the top band animates smoothly (a triangle wave); the bottom band is GetColor's */
   int t = presents % 400; uint32_t a = (uint32_t)(t < 200 ? t : 400 - t), b = g_paint_site && g_paint_site[0] == 0xE9 ? 200 : 50;
@@ -1299,6 +1310,52 @@ static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
     if (ok) { D3DLOCKED_RECT lr; if (SUCCEEDED(IDirect3DTexture8_LockRect(tx, 0, &lr, NULL, D3DLOCK_READONLY))) { v = *(uint32_t *)lr.pBits; IDirect3DTexture8_UnlockRect(tx, 0); } }
     snprintf(what, sizeof what, "prishert: prtex01 through the game's TexObj_Create: %ux%u, first texel %08lx (16x16, ff445566: b_two's, priority 30)", ok ? sd.Width : 0, ok ? sd.Height : 0, (unsigned long)v);
     check(ok && sd.Width == 16 && sd.Height == 16 && v == 0xFF445566u, what); }
+  /* (Prishe V2) the on-screen view's two hooks by name: LoadSkeletonSync (which character) and FindOrCreateTask (which
+     file number); no character is loaded here, so the view holds none */
+  check(*(uint8_t *)ga(0x100730E0u) == 0xE9 && *(uint8_t *)ga(0x100D2F60u) == 0xE9, "prishert: CMoResource::FindOrCreateTask's and CXiSkeletonActor::LoadSkeletonSync's entries jump (Prishe's on-screen view)");
+  { int (*os)(void) = (int (*)(void))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_onscreen");
+    if (os) check(os() == 0, "prishert: the on-screen view holds no character (none was loaded)"); }
+  /* (Prishe C1, S1) the look override: looks\mine.json (written by test_xikit.py) gives "Alice" slot 2 word 0x2077. A
+     stand-in record named Alice in the game DLL's record array, its actor's vtable +0x3B4 returning 0 (the record
+     path of GetModelPartWord); a few frames for Prishe to match it; then the game's own GetModelPartWord, called on
+     that actor, gives the look's word for slot 2 and the record's for slot 1 */
+  check(*(uint8_t *)ga(0x10084480u) == 0xE9, "prishert: CXiActor::GetModelPartWord's entry jumps (Prishe's look override)");
+  { static uint8_t rec[0x300]; static void *vt[0x100]; static void *act[0x40];
+    for (int k = 0; k < 0x100; k++) vt[k] = (void *)vt_zero;
+    act[0] = vt; *(void **)((uint8_t *)act + 0x70) = rec; *(void **)(rec + 0xA0) = act;
+    strcpy((char *)rec + 0x7C, "Alice"); rec[0xEF] = 2;
+    for (int s2 = 0; s2 < 9; s2++) *(uint16_t *)(rec + 0xFC + 2 * s2) = (uint16_t)(0x1000 * s2 + 0x11);
+    void **arr = (void **)(uintptr_t)ga(0x10480AF0u); arr[3] = rec;
+    for (int f = 0; f < 4; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    typedef unsigned (__attribute__((thiscall)) *WordFn)(void *, int);
+    unsigned w2 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 2), w1 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 1);
+    long (*lk)(void) = (long (*)(void))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_looks");
+    { long (*st)(int) = (long (*)(int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_state");
+      if (st) printf("  prishe state: %ld frames, %ld matched, %ld looks, record 3 %p (ours %p)\n", st(0), st(1), st(2), (void *)st(3), (void *)rec); }
+    snprintf(what, sizeof what, "prishert: the game's GetModelPartWord on Alice's actor: slot 2 %04x (the look's 2077), slot 1 %04x (the record's 1011); %ld replaced", w2 & 0xFFFF, w1 & 0xFFFF, lk ? lk() : -1);
+    check((w2 & 0xFFFF) == 0x2077 && (w1 & 0xFFFF) == 0x1011 && lk && lk() >= 1, what);
+    arr[3] = NULL; for (int f = 0; f < 3; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    w2 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 2);
+    snprintf(what, sizeof what, "prishert: after Alice's record left the array, slot 2 is the record's own again (%04x)", w2 & 0xFFFF);
+    check((w2 & 0xFFFF) == 0x2011, what); }
+  /* (Prishe H1) host=1: the shared memory "Local\PrisheHost_<pid>" made by prishe.dll, its magic, and frames written */
+  { char nm[64]; snprintf(nm, sizeof nm, "Local\\PrisheHost_%lu", GetCurrentProcessId());
+    HANDLE hm = OpenFileMappingA(FILE_MAP_READ, FALSE, nm); const uint8_t *blk = hm ? (const uint8_t *)MapViewOfFile(hm, FILE_MAP_READ, 0, 0, 0x10050) : NULL;
+    uint32_t f1 = blk ? *(const uint32_t *)(blk + 0x14) : 0;
+    for (int f = 0; f < 3; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    uint32_t f2 = blk ? *(const uint32_t *)(blk + 0x14) : 0;
+    snprintf(what, sizeof what, "prishert: host=1: %s exists, magic %.7s, version %u, size %u, frames %u then %u", nm, blk ? (const char *)blk : "-", blk ? *(const uint32_t *)(blk + 8) : 0, blk ? *(const uint32_t *)(blk + 12) : 0, f1, f2);
+    check(blk && !memcmp(blk, "PRISHE1", 8) && *(const uint32_t *)(blk + 8) == 1 && *(const uint32_t *)(blk + 12) == 0x10050 && f2 >= f1 + 3, what);
+    if (blk) UnmapViewOfFile(blk); if (hm) CloseHandle(hm); }
+  /* (Prishe M4) dump_textures=1: the game's own prtex01 (8x8, before Prishe's replacement) written once to
+     prishe\textures_dump\prtex01_<crc>.dds, when this Prishe has the dump (built with the SDK's texture_replace_core) */
+  { WIN32_FIND_DATAA fd; HANDLE h = FindFirstFileA("prishe\\textures_dump\\prtex01_*.dds", &fd);
+    if (h == INVALID_HANDLE_VALUE) check(0, "prishert: dump_textures=1 wrote prishe\\textures_dump\\prtex01_<crc>.dds");
+    else { FindClose(h); char p[MAX_PATH]; snprintf(p, sizeof p, "prishe\\textures_dump\\%s", fd.cFileName);
+      FILE *f = fopen(p, "rb"); uint8_t hd[128] = {0}; size_t n = f ? fread(hd, 1, sizeof hd, f) : 0; if (f) fclose(f);
+      uint32_t w = 0, hh = 0; memcpy(&hh, hd + 12, 4); memcpy(&w, hd + 16, 4);
+      snprintf(what, sizeof what, "prishert: dump_textures=1 wrote %s, a DDS of %ux%u (the game's own 8x8, not the pack's 16x16)", fd.cFileName, w, hh);
+      check(n == 128 && !memcmp(hd, "DDS ", 4) && w == 8 && hh == 8, what); } }
   /* the in-game panel (runtime/panel.cpp, when Prishe was built with the SDK's xiimgui): panel_show=1 (xikit_mods.ini),
      five frames through the game's Menu_DrawLayers */
   { int (*panel)(int) = (int (*)(int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_panel");
@@ -1338,6 +1395,8 @@ static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
 
 int main(int argc, char **argv) {
   int reloadrun = argc > 1 && !strcmp(argv[1], "reload"), chainrun = argc > 1 && !strcmp(argv[1], "chain");
+  int faultrun = argc > 1 && !strcmp(argv[1], "modfault");   /* (27 Nov, Prishe P4) a mod that faults stays alone */
+  int staterun = argc > 1 && !strcmp(argv[1], "staterun");   /* (27 Nov) xistate's record, player, zone readers and watchers */
   int toolrun = argc > 1 && !strcmp(argv[1], "toolhook");   /* (25 Nov) another tool's jump at Command_RunLine first */
   int modrun = argc > 1 && (!strcmp(argv[1], "mod") || !strcmp(argv[1], "modrel") || reloadrun);
   int caprun = argc > 1 && !strcmp(argv[1], "capture");
@@ -1444,7 +1503,7 @@ int main(int argc, char **argv) {
                   mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\nfile:4321 0\n", mf); fclose(mf); } fill_iat(g); }
     if (uirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=100\nui_list=1\n", mf); fclose(mf); }
                  mf = fopen("ui_layout.txt", "w"); if (mf) { fputs("# window dx dy\nmenuinventor 5 -3\n", mf); fclose(mf); } fill_iat(g); }
-    if (prtrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe]\npanel_show=1\nreplies_in_chat=0\n", mf); fclose(mf); } }   /* (Prishe's in-game panel shown) */
+    if (prtrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe]\npanel_show=1\nreplies_in_chat=0\ndump_textures=1\nhost=1\n", mf); fclose(mf); } }   /* (Prishe's in-game panel shown) */
     if (hbrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[hotbar]\nhb_dry=1\n", mf); fclose(mf); }
                  mf = fopen("hotbar.txt", "w"); if (mf) { fputs("bar 1 3 100 100\nbar 2 4 10 10 v\nxiv xiv\njob war\nset Sword\n"
                    "1.1 f9 Heal = /heal\n1.2 c-1 Check = /check <t>\n1.3 none Wave = /wave\nbattle 2.1 none Seq = /wave; wait 0.2; /bow\n"
@@ -1499,6 +1558,8 @@ int main(int argc, char **argv) {
   touch_ini(ini, pubrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_public.dll\n"
                  : toolrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_cmd.dll\n"
                  : chainrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll,mod_chain.dll\nmod_reload=1\n"
+                 : faultrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll,mod_fault.dll\n"
+                 : staterun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_state.dll\n"
                  : abrun ? "[xikit]\nlog_folder=1\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nab=1\nab_after=0\nab_phase=1\nab_rounds=2\nab_settle=3\n"
                  : profile ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nprofile=1\ncall_time=1\nkernel_calls=2\ntrace=1\ntrace_after=4\ntrace_count=1\nsample=1\ntrace_pictures=1\n"
                  : reloadrun ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll\nmod_reload=1\n"
@@ -1622,8 +1683,8 @@ int main(int argc, char **argv) {
     printf(fails ? "FAILED (%d)\n" : "ALL OK\n", fails);
     ExitProcess(fails ? 1 : 0);
   }
-  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
-  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
+  if (!caprun && !factrun && !toolrun && !chainrun && !faultrun && !staterun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
+  if (!caprun && !factrun && !toolrun && !chainrun && !faultrun && !staterun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
   if (g_swap_set && (argc < 2 || !strcmp(argv[1], "base"))) {      /* (at its base: the manifest's bytes are the preferred-base ones) */
     check(g_keep32 && !memcmp((uint8_t *)(uintptr_t)ga(g_keep32), g_keep32_bytes, 5), "swap_set build: a function of flag 32 keeps the game's code while the others swap");
     FILE *lf = fopen("xikit.log", "r"); char line[600]; int said = 0;
@@ -1733,6 +1794,95 @@ int main(int argc, char **argv) {
       check(s1 - s0 == 1 && t1 == t0 && t2 - t1 == 1 && rb == 7, what);
     }
     { FILE *lg2 = fopen("xikit.log", "r"); if (lg2) { while (fgets(l, sizeof l, lg2)) if (strstr(l, "Command_RunLine")) printf("  log: %s", l); fclose(lg2); } }
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (staterun) {
+    /* stand-in records in the game DLL's own record array (ActerBuffPtr 0x10480AF0, 0x900 pointers), its player
+       index (0x10485F7A) and g_pXiZone (0x1065CB04, the zone number at +0x1B4): written before the first frame, then
+       changed between frames; mod_state.dll reads them through xistate and counts the watchers' events */
+    static uint8_t rec[2][0x300], zone[0x200]; static void *avt[0x100]; static void *act[0x40];
+    void **arr = (void **)(uintptr_t)ga(0x10480AF0u); int16_t *self = (int16_t *)(uintptr_t)ga(0x10485F7Au); void **gz = (void **)(uintptr_t)ga(0x1065CB04u);
+    HMODULE m = GetModuleHandleA("mod_state.dll");
+    check(m != NULL, "mods=mod_state.dll: loaded");
+    if (!m) { printf("FAILED\n"); ExitProcess(1); }
+    const char *txt = (const char *)GetProcAddress(m, "state_text");
+    volatile long *ap = (volatile long *)GetProcAddress(m, "ev_appeared"), *lf = (volatile long *)GetProcAddress(m, "ev_left"), *gr = (volatile long *)GetProcAddress(m, "ev_gear"), *zn = (volatile long *)GetProcAddress(m, "ev_zone");
+    volatile long *gs = (volatile long *)GetProcAddress(m, "gear_slot"), *ga2 = (volatile long *)GetProcAddress(m, "gear_after");
+    for (int k = 0; k < 0x100; k++) avt[k] = NULL;
+    avt[0xCC / 4] = (void *)actor_drawn_name; avt[0] = (void *)runtime_class_skeleton; act[0] = avt;
+    /* Bob's actor: another class, with junk where a skeleton actor's part list would be (actor +0x674 +0x44) */
+    static void *bvt[0x100]; static uint8_t bobact[0x800];
+    for (int k = 0; k < 0x100; k++) bvt[k] = NULL;
+    bvt[0] = (void *)runtime_class_other; bvt[0xCC / 4] = (void *)actor_drawn_name_bob; *(void ***)bobact = bvt;
+    *(uintptr_t *)(bobact + 0x674 + 0x44) = 0x10;
+    strcpy((char *)rec[0] + 0x7C, "Alice"); rec[0][0xEE] = 0; rec[0][0xEF] = 2; *(uint32_t *)(rec[0] + 0x78) = 0x01000123u;
+    for (int s2 = 0; s2 < 9; s2++) *(uint16_t *)(rec[0] + 0xFC + 2 * s2) = (uint16_t)(0x1000 * s2 + 0x11);
+    float pos[3] = { 1.5f, 2.5f, -3.5f }, ang[3] = { 0.1f, 0.2f, 0.3f }; memcpy(rec[0] + 4, pos, 12); memcpy(rec[0] + 0x14, ang, 12);
+    *(void **)(rec[0] + 0xA0) = act;
+    strcpy((char *)rec[1] + 0x7C, "Bob"); *(int16_t *)(rec[1] + 0x210) = 1; strcpy((char *)rec[1] + 0x214, "Bob the Mithra"); rec[1][0xEF] = 7;
+    *(void **)(rec[1] + 0xA0) = bobact;
+    *(int *)(zone + 0x1B4) = 230;
+    long ap0 = *ap, zn0 = *zn;                                   /* (the mod may have run frames already: counts from here) */
+    /* (L21, xianim) the actor's model at +0x674: its parts' list at model +0x44; one part, its queue 0's list at part
+       +0x24 +0x78 +4, holding two motions whose vtable is the game's CYyMotionQue (0x1032A1C0) */
+    static uint8_t bigact[0x800], part[0x100], el1[0x40], el2[0x40];
+    memcpy(bigact, act, sizeof act); *(void **)(rec[0] + 0xA0) = bigact;
+    *(void **)(bigact + 0x674 + 0x44) = part; *(void **)(part + 0x24 + 0x78 + 4) = el1; *(void **)(el1 + 4) = el2;
+    *(uintptr_t *)el1 = (uintptr_t)ga(0x1032A1C0u); *(uintptr_t *)el2 = (uintptr_t)ga(0x1032A1C0u);
+    *(float *)(el1 + 0x24) = 10.0f; *(float *)(el1 + 0x28) = 1.0f; *(float *)(el2 + 0x24) = 3.0f; *(float *)(el2 + 0x28) = 0.5f;
+    arr[5] = rec[0]; arr[7] = rec[1]; *self = 5; *gz = zone;
+    present(2);
+    char what[700];
+    snprintf(what, sizeof what, "the readers: %s", txt); 
+    check(strstr(txt, "self=Alice drawn=Alice kind=0 race=2 id=01000123 w0=0011 w8=8011 pos=1.5,2.5,-3.5 ang=0.10,0.20,0.30 zone=230 rec7=1") != NULL, what);
+    snprintf(what, sizeof what, "both stand-in records reported as appearing (%ld), the zone as one change (%ld)", *ap - ap0, *zn - zn0);
+    check(*ap - ap0 == 2 && *lf == 0 && *gr == 0 && *zn - zn0 == 1, what);
+    { const char *at = (const char *)GetProcAddress(m, "anim_text"); volatile long *ac = (volatile long *)GetProcAddress(m, "anim_cmd");
+      snprintf(what, sizeof what, "xianim: the player's actor's motions: %s", at); check(strstr(at, "motions=2 frozen=0 [q0 f=10.0 s=1.00] [q0 f=3.0 s=0.50]") != NULL, what);
+      *ac = 1; present(2);
+      snprintf(what, sizeof what, "xianim: frozen: both speeds 0 (%s)", at); check(strstr(at, "frozen=1 [q0 f=10.0 s=0.00] [q0 f=3.0 s=0.00]") != NULL, what);
+      *ac = 3; present(1);
+      snprintf(what, sizeof what, "xianim: stepped 5 frames while frozen (%s)", at); check(strstr(at, "[q0 f=15.0 s=0.00] [q0 f=8.0 s=0.00]") != NULL, what);
+      *ac = 2; present(1);
+      snprintf(what, sizeof what, "xianim: let go: the speeds back (%s)", at); check(strstr(at, "frozen=0 [q0 f=15.0 s=1.00] [q0 f=8.0 s=0.50]") != NULL, what); }
+    *(uint16_t *)(rec[0] + 0xFC + 2 * 4) = 0x4055; present(1);
+    snprintf(what, sizeof what, "gear: slot 4 changed to 0x4055: one gear event (%ld), slot %ld, word %lx", *gr, *gs, *ga2);
+    check(*gr == 1 && *gs == 4 && *ga2 == 0x4055, what);
+    *self = 7; present(1);
+    check(strstr(txt, "self=Bob the Mithra") != NULL && strstr(txt, "race=7") != NULL, "the player index set to 7: the record's second name (+0x214, its word at +0x210 set)");
+    { const char *at = (const char *)GetProcAddress(m, "anim_text");
+      snprintf(what, sizeof what, "xianim: an actor that is not a CXiSkeletonActor (junk at +0x6B8) has no motions and is not walked (%s)", at);
+      check(strncmp(at, "motions=0 frozen=0", 18) == 0, what); }
+    arr[7] = NULL; present(1);
+    check(*lf == 1 && strstr(txt, "self= ") != NULL && strstr(txt, "rec7=0") != NULL, "a record left: one event; the player's record then none (its slot empty)");
+    *(int *)(zone + 0x1B4) = 231; present(1);
+    check(*zn - zn0 == 2 && strstr(txt, "zone=231") != NULL, "the zone number changed: one zone event");
+    *gz = NULL; present(1);
+    check(*zn - zn0 == 3 && strstr(txt, "zone=-1") != NULL, "g_pXiZone NULL (between zones): -1, one more event");
+    arr[5] = NULL; *self = 0; present(1);
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (faultrun) {
+    /* mod_test.dll (game + 1) and mod_fault.dll (+ 1000, faulting in its third frame) both hook GetColor. Before the
+       fault both run; the fault turns mod_fault off (hook taken off, no more frames), the game's frames go on, and
+       mod_test's hook still runs */
+    HMODULE m = GetModuleHandleA("mod_test.dll"), fm = GetModuleHandleA("mod_fault.dll");
+    check(m && fm, "mods=mod_test.dll,mod_fault.dll: both loaded");
+    if (!m || !fm) { printf("FAILED\n"); ExitProcess(1); }
+    uint8_t *get = (uint8_t *)(uintptr_t)ga(GETCOLOR);
+    ((SetColorFn)(uintptr_t)ga(SETCOLOR))(actor, 0x11223344u);
+    check(*(volatile long *)GetProcAddress(fm, "fault_hooked") == 0 && ((GetColorFn)get)(actor) == 0x11223344u + 1001, "before the fault: both hooks run (+ 1 + 1000)");
+    long before = presents;
+    present(20);
+    check(presents == before + 20, "the frames went on through the mod's fault (20 presents)");
+    check(*(volatile long *)GetProcAddress(fm, "fault_frames") == 3, "the faulting mod's frame callback ran 3 times, then no more");
+    check(((GetColorFn)get)(actor) == 0x11223344u + 1, "its hook is taken off: only mod_test's + 1 runs");
+    { FILE *lg = fopen("xikit.log", "r"); char l[900]; int said = 0; if (lg) { while (fgets(l, sizeof l, lg)) said |= strstr(l, "mod mod_fault.dll turned off: exception 0xC0000005") && strstr(l, "frame callback") && strstr(l, "1 function hooks"); fclose(lg); }
+      check(said, "xikit.log: the mod turned off, the exception, the callback and the hook taken off"); }
+    volatile long *mf = (volatile long *)GetProcAddress(m, "mod_frames"); long f0 = mf ? *mf : -1; present(5);
+    check(mf && *mf == f0 + 5, "the other mod's frame callback still runs");
     printf("%s\n", fails ? "FAILED" : "ALL OK");
     ExitProcess(fails ? 1 : 0);
   }

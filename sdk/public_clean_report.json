@@ -1,0 +1,223 @@
+{
+ "types": {
+  "files_failing_to_compile": {},
+  "files_differing": {}
+ },
+ "names": {
+  "renamed": 4792
+ },
+ "decls": {
+  "files_failing_to_compile": {},
+  "files_differing": {}
+ },
+ "macros": {
+  "functions_changed": 220,
+  "functions_kept_old": 0,
+  "kept_old": {}
+ },
+ "vars": {
+  "functions_changed": 3612,
+  "functions_kept_old": 0,
+  "kept_old": {}
+ },
+ "casts": {
+  "functions_changed": 370,
+  "functions_kept_old": 34,
+  "kept_old": {
+   "ActorCamera.cpp": [
+    [
+     "code",
+     "Actor_GetPercentScaleByIndex"
+    ]
+   ],
+   "CMoD3mSpecularElem.cpp": [
+    [
+     "code",
+     "CMoD3mSpecularElem::BindTintedTexture"
+    ]
+   ],
+   "CMoProcessor.cpp": [
+    [
+     "code",
+     "CMoProcessor::CalcScreenBoundsAndVisible"
+    ]
+   ],
+   "CMoSchedularTask.cpp": [
+    [
+     "code",
+     "CMoSchedularTask::InitFromSource"
+    ]
+   ],
+   "CXiActor.cpp": [
+    [
+     "code",
+     "CXiActor::NameCalc"
+    ]
+   ],
+   "CXiSkeletonActor.cpp": [
+    [
+     "code",
+     "CXiSkeletonActor::UpdateRandomTimer"
+    ]
+   ],
+   "ElemFog.cpp": [
+    [
+     "code",
+     "YmElem_DrawWithOwnProjection"
+    ]
+   ],
+   "EnvBlend.cpp": [
+    [
+     "code",
+     "Blend_Update"
+    ]
+   ],
+   "EnvKeys.cpp": [
+    [
+     "code",
+     "Env_BlendKeys"
+    ],
+    [
+     "code",
+     "Env_BlendTimeOfDay"
+    ]
+   ],
+   "MenuPanels.cpp": [
+    [
+     "code",
+     "MenuPanels_DrawStrongholdPanel"
+    ],
+    [
+     "code",
+     "MenuPanels_ComputeClampedIndex"
+    ]
+   ],
+   "MusicFont.cpp": [
+    [
+     "code",
+     "MusicFont_Create"
+    ]
+   ],
+   "NetCellFont.cpp": [
+    [
+     "code",
+     "Menu_DrawWindowItems"
+    ],
+    [
+     "code",
+     "NetCellFont_UpdateLayout"
+    ],
+    [
+     "code",
+     "Font_MeasureString"
+    ],
+    [
+     "code",
+     "NetCellFont_CursorUpdateEdgeAxes"
+    ]
+   ],
+   "SkyDome.cpp": [
+    [
+     "code",
+     "SkyDome_ScaleColorBytes"
+    ],
+    [
+     "code",
+     "SkyDome_ScaleBytesByVec4"
+    ],
+    [
+     "code",
+     "SkyDome_ScaleAlpha"
+    ]
+   ],
+   "StAvatarCore.cpp": [
+    [
+     "code",
+     "StAvatarCore_MoveByAnalogStick"
+    ]
+   ],
+   "TextInputFiles.cpp": [
+    [
+     "code",
+     "TextInputFiles_ApplyConfigSetting"
+    ]
+   ],
+   "WinMain.cpp": [
+    [
+     "code",
+     "Camera_PickNearestAspect"
+    ],
+    [
+     "code",
+     "App_WndProc"
+    ]
+   ],
+   "XiZone.cpp": [
+    [
+     "code",
+     "Env_RampWindStrength"
+    ]
+   ],
+   "YkCommon.cpp": [
+    [
+     "code",
+     "YkCommon_DrawFractionRange"
+    ],
+    [
+     "code",
+     "YkCommon_DrawSmoothed"
+    ]
+   ],
+   "YkWindows.cpp": [
+    [
+     "code",
+     "YkWindows_CtorVt1033A000"
+    ],
+    [
+     "code",
+     "YkWindows_UpdateTargetMarker"
+    ]
+   ],
+   "ZoneMap.cpp": [
+    [
+     "code",
+     "ZoneMap_SetRecord"
+    ],
+    [
+     "code",
+     "ZoneMap_ApplyColors"
+    ]
+   ],
+   "ZoneMapLoad.cpp": [
+    [
+     "code",
+     "ZoneMapLoad_BuildMatrixFromNegatedPosRot"
+    ]
+   ],
+   "sqmdModel.cpp": [
+    [
+     "code",
+     "SqmdModel_LookAt"
+    ]
+   ],
+   "sqsdGlow.cpp": [
+    [
+     "code",
+     "SqsdGlow_ApplyShader"
+    ]
+   ]
+  }
+ },
+ "compat_kept": {
+  "xi_decomp.hpp": [],
+  "xi_ghidra.hpp": [],
+  "xi_ghidra_shared.hpp": []
+ },
+ "final": {
+  "files": 409,
+  "not_identical": {}
+ },
+ "sdk_include": [
+  "xikit_game.hpp"
+ ]
+}

@@ -5,9 +5,9 @@
 #pragma pack(push, 1)
 class XI_API CMoLfdElem {
 public:
-    static undefined8 __thiscall Constructor(void * self);  // 0x10053030
-    BOOL IsKind12(int a1);  // 0x10053050
-    int * ScalarDeletingDtor(char a2);  // 0x10053060
+    static uint64_t __thiscall Constructor(void * self);  // 0x10053030
+    BOOL IsKind12(int arg1);  // 0x10053050
+    int * ScalarDeletingDtor(char arg1);  // 0x10053060
     static char ** __cdecl GetRuntimeClass();  // 0x100548B0
 
     void **vftable;  // +0x0

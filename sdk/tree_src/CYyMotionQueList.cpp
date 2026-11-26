@@ -6,7 +6,7 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall CYyMotionQueList_Init(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_CYyMotionQueList_GetRuntimeClass_1032a210;
+  *(uint8_t ***)self_ = &ptr_to_CYyMotionQueList_GetRuntimeClass_1032A210;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0x3f800000;
   return;

@@ -6,13 +6,13 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall MoElem_GetVertexData(void * self_)
 {
-  uint8_t bVar1;
-  int iVar2;
+  uint8_t u1;
+  int i1;
   
-  bVar1 = *(uint8_t *)((int)self_ + 0x30) & 0xf;
-  if ((4 < bVar1) && (bVar1 < 8)) {
-    iVar2 = orig::CMoDistModelElem_GetDataEnd_v1(self_);
-    return iVar2 + (uint32_t)*(uint8_t *)((int)self_ + 0x34) * 0x10;
+  u1 = *(uint8_t *)((int)self_ + 0x30) & 0xf;
+  if ((4 < u1) && (u1 < 8)) {
+    i1 = orig::CMoDistModelElem_GetDataEnd_v1(self_);
+    return i1 + (uint32_t)*(uint8_t *)((int)self_ + 0x34) * 0x10;
   }
   return (int)self_ + 0x80;
 }

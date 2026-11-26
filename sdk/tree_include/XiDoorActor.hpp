@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API XiDoorActor {
 public:
-    static undefined4 __thiscall UpdateAndRunTimer(void * self);  // 0x100AC4E0
+    static bits32 __thiscall UpdateAndRunTimer(void * self);  // 0x100AC4E0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x890];

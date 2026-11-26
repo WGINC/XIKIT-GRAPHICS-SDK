@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): Gfx_AssembleVertexShader, Gfx
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Gfx_CompileVertexShader` calls `sub_102DA79B`, `sub_102DAA71`
-- `Gfx_CompilePixelShader` calls `sub_10177350`, `sub_10177340`, `sub_102DAA0D`
+- `Gfx_CompileVertexShader` calls `game_102DA79B`, `game_102DAA71`
+- `Gfx_CompilePixelShader` calls `game_10177350`, `game_10177340`, `game_102DAA0D`

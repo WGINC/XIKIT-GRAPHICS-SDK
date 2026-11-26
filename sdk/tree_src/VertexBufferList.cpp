@@ -6,10 +6,10 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall VertexBufferList_Register(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = *(uint32_t *)(g_pVertexBufferListHead + 8);
+  u1 = *(uint32_t *)(g_pVertexBufferListHead + 8);
   *(void **)(g_pVertexBufferListHead + 8) = self_;
-  *(uint32_t *)((int)self_ + 8) = uVar1;
+  *(uint32_t *)((int)self_ + 8) = u1;
   return;
 }

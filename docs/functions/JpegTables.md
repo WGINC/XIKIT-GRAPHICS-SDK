@@ -20,4 +20,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `JpegTables_BuildTables` calls `JpegScreenshot_PutFFThenByte`, `JpegScreenshot_PutWordBE`, `JpegScreenshot_PutByte`
 - `JpegTables_BuildCodeTable` calls nothing directly
 - `JpegTables_Reset` calls nothing directly
-- `JpegTables_Free` calls `thunk_sub_10028AA0`, `operator_delete`
+- `JpegTables_Free` calls `thunk_Mem_FreeBlockMergeNeighbours_as_v0`, `operator_delete`

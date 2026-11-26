@@ -32,14 +32,14 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `SoundElem_SetFactor103516FC` calls `SoundElem_SetScaled10351708`, `SoundElem_SetScaled10351704`, `SoundElem_SetScaled10351700`, `Music_ApplyVolume`
 - `MoTask_KillAllGlobalSlots` calls `SoundElem_Release10463928AndSetScaled`, `SoundElem_ClearGlobal10463930`, `MoTask_KillGlobalSlot1`, `SoundElem_ClearGlobal10463934`
 - `SoundElem_ClearGlobal10463930` calls `SoundElem_SetScaled10351708`
-- `SoundElem_SetScaled10351708` calls `sub_10311C2C`, `Music_SetTrackVolume`
+- `SoundElem_SetScaled10351708` calls `game_10311C2C`, `Music_SetTrackVolume`
 - `SoundElem_Release10463928AndSetScaled` calls `SoundElem_SetScaled10351704`
 - `SoundElem_SetScaled10351704` calls nothing directly
 - `MoTask_KillGlobalSlot1` calls `SoundElem_SetScaled10351700`
 - `SoundElem_SetScaled10351700` calls nothing directly
 - `SoundElem_ClearGlobal10463934` calls `Music_ApplyVolume`
-- `Music_ApplyVolume` calls `LobbyThread_SendCmd0`, `sub_10311C2C`, `Music_SetTrackVolume`
-- `SoundElem_SetCurrent10463914` calls `SoundVolume_SendStopToLobby`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `Music_ApplyVolume` calls `LobbyThread_SendCmd0`, `game_10311C2C`, `Music_SetTrackVolume`
+- `SoundElem_SetCurrent10463914` calls `SoundVolume_SendStopToLobby`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
 - `SoundElem_ResetGlobals` calls nothing directly
 - `SoundElem_AddUniqueId` calls nothing directly
 - `CYySoundElem_IsHandleInFrameList` calls nothing directly

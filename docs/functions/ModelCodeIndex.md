@@ -12,7 +12,7 @@ Why the file has this name (data/unit_names.json): MapCodeIndex, AddOffset*: rea
 | `ModelCodeIndex_AddOffset996B` | 0x100C5260 | 10 | yes | - | Adds 0x996B to its argument. | low |
 | `ModelCodeIndex_AddOffset19131` | 0x100C5270 | 10 | yes | - | Adds 0x19131 to its argument. | low |
 | `ModelCodeIndex_AddOffset1889B` | 0x100C5280 | 10 | yes | - | Adds 0x1889B to its argument. | low |
-| `ModelCodeIndex_ForwardToCce00` | 0x100C5290 | 5 | yes | - | Forwards its argument to FUN_101cce00. | low |
+| `ModelCodeIndex_ForwardToCce00` | 0x100C5290 | 5 | yes | - | Forwards its argument to game_101CCE00. | low |
 
 ## Direct calls
 

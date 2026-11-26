@@ -4,23 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x10293F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqChannelHandler_SetHandlerByType(int param_1, undefined4 param_2)
+XI_API void __cdecl SqChannelHandler_SetHandlerByType(int arg1, bits32 arg2)
 {
-  switch(xi_sw(param_2)) {
+  switch(xi_sw(arg2)) {
   case 2:
-    *(code **)(param_1 + 0x14) = XI_CODE(FUN_102934c0);
+    *(untyped_fn **)(arg1 + 0x14) = XI_CODE(game_102934C0);
     return;
   default:
-    *(uint8_t **)(param_1 + 0x14) =(uint8_t*)(&LAB_102934b0);
+    *(uint8_t **)(arg1 + 0x14) =(uint8_t*)(&code_102934B0);
     return;
   case 4:
-    *(uint8_t **)(param_1 + 0x14) =(uint8_t*)(&LAB_10293540);
+    *(uint8_t **)(arg1 + 0x14) =(uint8_t*)(&code_10293540);
     return;
   case 8:
-    *(uint8_t **)(param_1 + 0x14) =(uint8_t*)(&LAB_10293590);
+    *(uint8_t **)(arg1 + 0x14) =(uint8_t*)(&code_10293590);
     return;
   case 0x10:
-    *(uint8_t **)(param_1 + 0x14) =(uint8_t*)(&LAB_102935c0);
+    *(uint8_t **)(arg1 + 0x14) =(uint8_t*)(&code_102935C0);
     return;
   }
 }

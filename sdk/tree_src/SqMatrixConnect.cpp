@@ -4,263 +4,263 @@
 
 // FUNCTION: FFXIMAIN 0x1027E150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_UpdateMask(uint32_t * param_1, uint32_t param_2, int param_3)
+XI_API void __cdecl SqMatrixConnect_UpdateMask(uint32_t * arg1, uint32_t arg2, int arg3)
 {
-  if (param_3 == -1) {
-    *param_1 = *param_1 ^ param_2;
+  if (arg3 == -1) {
+    *arg1 = *arg1 ^ arg2;
     return;
   }
-  if (param_3 != 0) {
-    *param_1 = *param_1 | param_2;
+  if (arg3 != 0) {
+    *arg1 = *arg1 | arg2;
     return;
   }
-  *param_1 = *param_1 & ~param_2;
+  *arg1 = *arg1 & ~arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E190
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_SetCallback(int param_1, undefined4 param_2, undefined4 param_3)
+XI_API void __cdecl SqMatrixConnect_SetCallback(int arg1, bits32 arg2, bits32 arg3)
 {
-  *(uint32_t *)(param_1 + 0x60) = param_2;
-  *(uint32_t *)(param_1 + 100) = param_3;
+  *(uint32_t *)(arg1 + 0x60) = arg2;
+  *(uint32_t *)(arg1 + 100) = arg3;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E3B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqMatrixConnect_ReleaseConnection(uint8_t * param_1)
+XI_API bits32 __cdecl SqMatrixConnect_ReleaseConnection(uint8_t * arg1)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = param_1;
-  if ((*param_1 & 2) != 0) {
-    param_1 = *(uint8_t **)(param_1 + 0x1c);
-    if (param_1 != (uint8_t *)0x0) {
-      if (*(int *)(param_1 + 0x28) != 0) {
-        orig::SqObject_Release((int *)(param_1 + 0x28));
+  p1 = arg1;
+  if ((*arg1 & 2) != 0) {
+    arg1 = *(uint8_t **)(arg1 + 0x1c);
+    if (arg1 != (uint8_t *)0x0) {
+      if (*(int *)(arg1 + 0x28) != 0) {
+        orig::SqObject_Release((int *)(arg1 + 0x28));
       }
-      orig::SqObject_Release((int *)&param_1);
+      orig::SqObject_Release((int *)&arg1);
     }
-    orig::SqcoConnector_Init((uint32_t *)(pbVar1 + 0x20));
-    orig::SqMatrixConnect_UpdateMask((uint32_t *)pbVar1,2,0);
+    orig::SqcoConnector_Init((uint32_t *)(p1 + 0x20));
+    orig::SqMatrixConnect_UpdateMask((uint32_t *)p1,2,0);
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqMatrixConnect_IsConnected(uint8_t * param_1)
+XI_API bits32 __cdecl SqMatrixConnect_IsConnected(uint8_t * arg1)
 {
-  return *param_1 >> 1 & 1;
+  return *arg1 >> 1 & 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqMatrixConnect_UpdateRange(uint8_t * param_1)
+XI_API bits32 __cdecl SqMatrixConnect_UpdateRange(uint8_t * arg1)
 {
-  float fVar1;
-  int iVar2;
-  long double fVar3;
+  float f1;
+  int i1;
+  long double f2;
   
-  if ((*param_1 & 4) != 0) {
-    iVar2 = *(int *)(param_1 + 0x18);
-    fVar3 = ((long double)*(float *)(iVar2 + 0xac) /
-            ((long double)*(float *)(iVar2 + 0xa8) - (long double)*(float *)(iVar2 + 0xa4))) *
-            (long double)*(float *)(*(int *)(*(int *)(param_1 + 0x14) + 0xb8) + 0x24);
-    *(float *)(param_1 + 8) = (float)fVar3;
-    fVar1 = *(float *)(*(int *)(param_1 + 0x1c) + 0x24);
-    *(uint32_t *)(param_1 + 0x10) = *(uint32_t *)(param_1 + 8);
-    *(float *)(param_1 + 0xc) = (float)(fVar3 + (long double)fVar1);
+  if ((*arg1 & 4) != 0) {
+    i1 = *(int *)(arg1 + 0x18);
+    f2 = (*(float *)(i1 + 0xac) /
+            (*(float *)(i1 + 0xa8) - *(float *)(i1 + 0xa4))) *
+            *(float *)(*(int *)(*(int *)(arg1 + 0x14) + 0xb8) + 0x24);
+    *(float *)(arg1 + 8) = (float)f2;
+    f1 = *(float *)(*(int *)(arg1 + 0x1c) + 0x24);
+    *(uint32_t *)(arg1 + 0x10) = *(uint32_t *)(arg1 + 8);
+    *(float *)(arg1 + 0xc) = (float)(f2 + f1);
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E490
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API void __cdecl SqMatrixConnect_Advance(uint8_t * param_1, int param_2)
+XI_API void __cdecl SqMatrixConnect_Advance(uint8_t * arg1, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
+  int i1;
+  uint32_t u1;
+  uint8_t u2;
+  long double f1;
   
-  iVar1 = orig::SqMatrixConnect_IsConnected(param_1);
-  if (iVar1 == 0) {
+  i1 = orig::SqMatrixConnect_IsConnected(arg1);
+  if (i1 == 0) {
     return;
   }
-  uVar2 = orig::SqDebug_GetFlagByte14((int)(param_1 + 0x20));
-  if ((char)uVar2 == '\0') {
+  u1 = orig::SqDebug_GetFlagByte14((int)(arg1 + 0x20));
+  if ((char)u1 == '\0') {
     return;
   }
-  fVar4 = (long double)param_2 * (long double)*(float *)(param_1 + 4) * (long double)xi_k4(0x358637BDull) +
-          (long double)*(float *)(param_1 + 0x10);
-  *(float *)(param_1 + 0x10) = (float)fVar4;
-  if (!(fVar4 > (long double)*(float *)(param_1 + 0xc))) {
-    bVar3 = NAN(fVar4) || NAN((long double)*(float *)(param_1 + 8));
-    if ((bVar3 || fVar4 < (long double)*(float *)(param_1 + 8)) == bVar3) goto LAB_1027e543;
-    uVar2 = *(uint32_t *)(param_1 + 8);
-    *(uint32_t *)(*(int *)(param_1 + 0x14) + 0xac) = uVar2;
-    iVar1 = *(int *)(param_1 + 0x1c);
-    param_1[8] = 0;
-    param_1[9] = 0;
-    param_1[10] = 0;
-    param_1[0xb] = 0;
-    *(uint32_t *)(param_1 + 0xc) = *(uint32_t *)(iVar1 + 0x24);
+  f1 = arg2 * *(float *)(arg1 + 4) * xi_k4(0x358637BDull) +
+          *(float *)(arg1 + 0x10);
+  *(float *)(arg1 + 0x10) = (float)f1;
+  if (!(f1 > *(float *)(arg1 + 0xc))) {
+    u2 = ((f1) != (f1)) || ((*(float *)(arg1 + 8)) != (*(float *)(arg1 + 8)));
+    if ((u2 || f1 < *(float *)(arg1 + 8)) == u2) goto code_1027E543;
+    u1 = *(uint32_t *)(arg1 + 8);
+    *(uint32_t *)(*(int *)(arg1 + 0x14) + 0xac) = u1;
+    i1 = *(int *)(arg1 + 0x1c);
+    arg1[8] = 0;
+    arg1[9] = 0;
+    arg1[10] = 0;
+    arg1[0xb] = 0;
+    *(uint32_t *)(arg1 + 0xc) = *(uint32_t *)(i1 + 0x24);
   }
   else {
-    *(uint32_t *)(*(int *)(param_1 + 0x14) + 0xac) = *(uint32_t *)(param_1 + 0xc);
-    iVar1 = *(int *)(param_1 + 0x1c);
-    param_1[8] = 0;
-    param_1[9] = 0;
-    param_1[10] = 0;
-    param_1[0xb] = 0;
-    uVar2 = *(uint32_t *)(iVar1 + 0x24);
-    *(uint32_t *)(param_1 + 0xc) = uVar2;
+    *(uint32_t *)(*(int *)(arg1 + 0x14) + 0xac) = *(uint32_t *)(arg1 + 0xc);
+    i1 = *(int *)(arg1 + 0x1c);
+    arg1[8] = 0;
+    arg1[9] = 0;
+    arg1[10] = 0;
+    arg1[0xb] = 0;
+    u1 = *(uint32_t *)(i1 + 0x24);
+    *(uint32_t *)(arg1 + 0xc) = u1;
   }
-  param_1[0x10] = 0;
-  param_1[0x11] = 0;
-  param_1[0x12] = 0;
-  param_1[0x13] = 0;
-  orig::SqDebug_SetByte14((int)(param_1 + 0x20),0,uVar2);
-  if (*(code **)(param_1 + 0x60) != (code *)0x0) {
-    (**(code **)(param_1 + 0x60))(param_1,*(uint32_t *)(param_1 + 100));
+  arg1[0x10] = 0;
+  arg1[0x11] = 0;
+  arg1[0x12] = 0;
+  arg1[0x13] = 0;
+  orig::SqDebug_SetByte14((int)(arg1 + 0x20),0,u1);
+  if (*(untyped_fn **)(arg1 + 0x60) != (untyped_fn *)0x0) {
+    (**(untyped_fn **)(arg1 + 0x60))(arg1,*(uint32_t *)(arg1 + 100));
   }
-LAB_1027e543:
-  orig::FUN_1027dd90(*(uint32_t **)(param_1 + 0x18),param_2);
+code_1027E543:
+  orig::game_1027DD90(*(uint32_t **)(arg1 + 0x18),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EAF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_Forward1027EBD0(undefined4 * param_1)
+XI_API void __cdecl SqMatrixConnect_Forward1027EBD0(bits32 * arg1)
 {
-  orig::SqMatrixConnect_SetIdentity(param_1);
+  orig::SqMatrixConnect_SetIdentity(arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EB00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_Zero(undefined4 * param_1)
+XI_API void __cdecl SqMatrixConnect_Zero(bits32 * arg1)
 {
-  int iVar1;
+  int i1;
   
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *param_1 = 0;
-    param_1 = param_1 + 1;
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *arg1 = 0;
+    arg1 = arg1 + 1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EB50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_Set(float * param_1, float param_2, float param_3, float param_4, float param_5, float param_6, float param_7, float param_8, float param_9, float param_10, float param_11, float param_12, float param_13, float param_14, float param_15, float param_16, float param_17)
+XI_API void __cdecl SqMatrixConnect_Set(float * arg1, float arg2, float arg3, float arg4, float arg5, float arg6, float arg7, float arg8, float arg9, float arg10, float arg11, float arg12, float arg13, float arg14, float arg15, float arg16, float arg17)
 {
-  param_1[1] = param_3;
-  param_1[2] = param_4;
-  param_1[3] = param_5;
-  param_1[4] = param_6;
-  param_1[5] = param_7;
-  param_1[6] = param_8;
-  param_1[7] = param_9;
-  param_1[8] = param_10;
-  param_1[9] = param_11;
-  *param_1 = (float)(long double)param_2;
-  param_1[10] = param_12;
-  param_1[0xb] = param_13;
-  param_1[0xc] = param_14;
-  param_1[0xd] = param_15;
-  param_1[0xe] = param_16;
-  param_1[0xf] = param_17;
+  arg1[1] = arg3;
+  arg1[2] = arg4;
+  arg1[3] = arg5;
+  arg1[4] = arg6;
+  arg1[5] = arg7;
+  arg1[6] = arg8;
+  arg1[7] = arg9;
+  arg1[8] = arg10;
+  arg1[9] = arg11;
+  *arg1 = (float)arg2;
+  arg1[10] = arg12;
+  arg1[0xb] = arg13;
+  arg1[0xc] = arg14;
+  arg1[0xd] = arg15;
+  arg1[0xe] = arg16;
+  arg1[0xf] = arg17;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EBD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqMatrixConnect_SetIdentity(undefined4 * param_1)
+XI_API bits32 __cdecl SqMatrixConnect_SetIdentity(bits32 * arg1)
 {
-  orig::SqMatrixConnect_Zero(param_1);
-  param_1[0xf] = 0x3f800000;
-  param_1[10] = 0x3f800000;
-  param_1[5] = 0x3f800000;
-  *param_1 = 0x3f800000;
+  orig::SqMatrixConnect_Zero(arg1);
+  arg1[0xf] = 0x3f800000;
+  arg1[10] = 0x3f800000;
+  arg1[5] = 0x3f800000;
+  *arg1 = 0x3f800000;
   return 0x3f800000;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EF20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl M4fTransform(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl M4fTransform(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)*param_2 * (long double)*param_3 +
-                     (long double)param_2[1] * (long double)param_3[1] +
-                     (long double)param_2[2] * (long double)param_3[2] + (long double)param_2[3]);
-  param_1[1] = (float)((long double)param_2[5] * (long double)param_3[1] +
-                       (long double)param_2[4] * (long double)*param_3 +
-                       (long double)param_2[6] * (long double)param_3[2] + (long double)param_2[7]);
-  param_1[2] = (float)((long double)param_2[9] * (long double)param_3[1] +
-                       (long double)param_2[8] * (long double)*param_3 +
-                       (long double)param_2[10] * (long double)param_3[2] + (long double)param_2[0xb]);
+  *arg1 = (float)(*arg2 * *arg3 +
+                     arg2[1] * arg3[1] +
+                     arg2[2] * arg3[2] + arg2[3]);
+  arg1[1] = (float)(arg2[5] * arg3[1] +
+                       arg2[4] * *arg3 +
+                       arg2[6] * arg3[2] + arg2[7]);
+  arg1[2] = (float)(arg2[9] * arg3[1] +
+                       arg2[8] * *arg3 +
+                       arg2[10] * arg3[2] + arg2[0xb]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EF80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqMatrixConnect_TransformVec3(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl SqMatrixConnect_TransformVec3(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)*param_2 * (long double)*param_3 +
-                    (long double)param_2[1] * (long double)param_3[1] +
-                    (long double)param_2[2] * (long double)param_3[2]);
-  param_1[1] = (float)((long double)param_2[5] * (long double)param_3[1] +
-                      (long double)param_2[4] * (long double)*param_3 +
-                      (long double)param_2[6] * (long double)param_3[2]);
-  param_1[2] = (float)((long double)param_2[9] * (long double)param_3[1] +
-                      (long double)param_2[8] * (long double)*param_3 +
-                      (long double)param_2[10] * (long double)param_3[2]);
+  *arg1 = (float)(*arg2 * *arg3 +
+                    arg2[1] * arg3[1] +
+                    arg2[2] * arg3[2]);
+  arg1[1] = (float)(arg2[5] * arg3[1] +
+                      arg2[4] * *arg3 +
+                      arg2[6] * arg3[2]);
+  arg1[2] = (float)(arg2[9] * arg3[1] +
+                      arg2[8] * *arg3 +
+                      arg2[10] * arg3[2]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027EFE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Mat4x4_TransformVec4(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl Mat4x4_TransformVec4(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)*param_2 * (long double)*param_3 +
-                    (long double)param_2[1] * (long double)param_3[1] +
-                    (long double)param_2[2] * (long double)param_3[2] +
-                    (long double)param_2[3] * (long double)param_3[3]);
-  param_1[1] = (float)((long double)param_2[5] * (long double)param_3[1] +
-                      (long double)param_2[6] * (long double)param_3[2] +
-                      (long double)param_2[4] * (long double)*param_3 +
-                      (long double)param_2[7] * (long double)param_3[3]);
-  param_1[2] = (float)((long double)param_2[9] * (long double)param_3[1] +
-                      (long double)param_2[10] * (long double)param_3[2] +
-                      (long double)param_2[8] * (long double)*param_3 +
-                      (long double)param_2[0xb] * (long double)param_3[3]);
-  param_1[3] = (float)((long double)param_2[0xd] * (long double)param_3[1] +
-                      (long double)param_2[0xe] * (long double)param_3[2] +
-                      (long double)param_2[0xc] * (long double)*param_3 +
-                      (long double)param_2[0xf] * (long double)param_3[3]);
+  *arg1 = (float)(*arg2 * *arg3 +
+                    arg2[1] * arg3[1] +
+                    arg2[2] * arg3[2] +
+                    arg2[3] * arg3[3]);
+  arg1[1] = (float)(arg2[5] * arg3[1] +
+                      arg2[6] * arg3[2] +
+                      arg2[4] * *arg3 +
+                      arg2[7] * arg3[3]);
+  arg1[2] = (float)(arg2[9] * arg3[1] +
+                      arg2[10] * arg3[2] +
+                      arg2[8] * *arg3 +
+                      arg2[0xb] * arg3[3]);
+  arg1[3] = (float)(arg2[0xd] * arg3[1] +
+                      arg2[0xe] * arg3[2] +
+                      arg2[0xc] * *arg3 +
+                      arg2[0xf] * arg3[3]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027F070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl M4fTranspose(undefined4 * param_1, undefined4 * param_2)
+XI_API void __cdecl M4fTranspose(bits32 * arg1, bits32 * arg2)
 {
-  *param_1 = *param_2;
-  param_1[1] = param_2[4];
-  param_1[2] = param_2[8];
-  param_1[3] = param_2[0xc];
-  param_1[4] = param_2[1];
-  param_1[5] = param_2[5];
-  param_1[6] = param_2[9];
-  param_1[7] = param_2[0xd];
-  param_1[8] = param_2[2];
-  param_1[9] = param_2[6];
-  param_1[10] = param_2[10];
-  param_1[0xb] = param_2[0xe];
-  param_1[0xc] = param_2[3];
-  param_1[0xd] = param_2[7];
-  param_1[0xe] = param_2[0xb];
-  param_1[0xf] = param_2[0xf];
+  *arg1 = *arg2;
+  arg1[1] = arg2[4];
+  arg1[2] = arg2[8];
+  arg1[3] = arg2[0xc];
+  arg1[4] = arg2[1];
+  arg1[5] = arg2[5];
+  arg1[6] = arg2[9];
+  arg1[7] = arg2[0xd];
+  arg1[8] = arg2[2];
+  arg1[9] = arg2[6];
+  arg1[10] = arg2[10];
+  arg1[0xb] = arg2[0xe];
+  arg1[0xc] = arg2[3];
+  arg1[0xd] = arg2[7];
+  arg1[0xe] = arg2[0xb];
+  arg1[0xf] = arg2[0xf];
   return;
 }

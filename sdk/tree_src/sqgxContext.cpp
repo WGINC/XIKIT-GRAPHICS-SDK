@@ -4,267 +4,267 @@
 
 // FUNCTION: FFXIMAIN 0x10276260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl sqgxContext_Create(void)
+XI_API bits32 __cdecl sqgxContext_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0xe28,s_C__dev_dancer_modules_sqGrafix_s_103b2e54,0x1b);
-  orig::sqgxContext_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0xe28,str_C__dev_dancer_modules_sqGrafix_s_103B2E54,0x1b);
+  orig::sqgxContext_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10276290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxContext_Init(undefined4 * param_1)
+XI_API void __cdecl sqgxContext_Init(bits32 * arg1)
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  float *pfVar5;
-  int local_4;
+  bits32 *p1;
+  bits32 *p2;
+  bits32 *p3;
+  int i1;
+  float *p4;
+  int i2;
   
-  puVar1 = param_1;
-  *param_1 = 0x170002;
-  param_1[2] = &sqgxContext_Unimplemented_Stub;
-  param_1[3] = XI_CODE(FUN_10276770);
-  param_1[4] = XI_CODE(sqgxContext_Dump);
-  param_1[5] = 0x3f800000;
-  param_1[0x47] = 0xffffffff;
-  param_1[0x48] = 0x40a00000;
-  param_1[0x49] = 0;
-  param_1[0x4a] = 0x40093f7d;
-  param_1[0x4f] = 0;
-  param_1[0x51] = 0;
-  param_1[0x50] = 0;
-  orig::PackVec4_v1((float *)(param_1 + 0x4b),0.0f,1.0f,0.0f,0.0f);
-  param_1[0xb4] = 0;
-  orig::SqMatrixConnect_SetIdentity(param_1 + 0x62);
-  orig::SqMatrixConnect_SetIdentity(param_1 + 0x82);
-  orig::SqMatrixConnect_SetIdentity(param_1 + 0x72);
-  orig::SqMatrixConnect_SetIdentity(param_1 + 0x52);
-  param_1[0xab] = 0x42200000;
-  param_1[0xac] = 0x44200000;
-  param_1[0xad] = 0x43f00000;
-  param_1[0xaf] = 0x3dcccccd;
-  param_1[0xae] = 0x447a0000;
-  param_1[0xb5] = 0x280;
-  param_1[0xb6] = 0x1e0;
-  param_1[0xb7] = 0x3f800000;
-  param_1[0xb8] = 0;
-  param_1[0xb9] = 0;
-  param_1[0xba] = 0;
-  orig::SqMatrixConnect_Set((float *)(param_1 + 0xbb),1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,(-1.0f),0.0f,0.0f,
+  p1 = arg1;
+  *arg1 = 0x170002;
+  arg1[2] = &sqgxContext_Unimplemented_Stub;
+  arg1[3] = XI_CODE(game_10276770);
+  arg1[4] = XI_CODE(sqgxContext_Dump);
+  arg1[5] = 0x3f800000;
+  arg1[0x47] = 0xffffffff;
+  arg1[0x48] = 0x40a00000;
+  arg1[0x49] = 0;
+  arg1[0x4a] = 0x40093f7d;
+  arg1[0x4f] = 0;
+  arg1[0x51] = 0;
+  arg1[0x50] = 0;
+  orig::PackVec4_v1((float *)(arg1 + 0x4b),0.0f,1.0f,0.0f,0.0f);
+  arg1[0xb4] = 0;
+  orig::SqMatrixConnect_SetIdentity(arg1 + 0x62);
+  orig::SqMatrixConnect_SetIdentity(arg1 + 0x82);
+  orig::SqMatrixConnect_SetIdentity(arg1 + 0x72);
+  orig::SqMatrixConnect_SetIdentity(arg1 + 0x52);
+  arg1[0xab] = 0x42200000;
+  arg1[0xac] = 0x44200000;
+  arg1[0xad] = 0x43f00000;
+  arg1[0xaf] = 0x3dcccccd;
+  arg1[0xae] = 0x447a0000;
+  arg1[0xb5] = 0x280;
+  arg1[0xb6] = 0x1e0;
+  arg1[0xb7] = 0x3f800000;
+  arg1[0xb8] = 0;
+  arg1[0xb9] = 0;
+  arg1[0xba] = 0;
+  orig::SqMatrixConnect_Set((float *)(arg1 + 0xbb),1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,(-1.0f),0.0f,0.0f,
                0.0f,0.0f);
-  puVar3 = param_1 + 0xcb;
-  puVar2 = param_1 + 0x1cb;
-  local_4 = 2;
+  p3 = arg1 + 0xcb;
+  p2 = arg1 + 0x1cb;
+  i2 = 2;
   do {
-    param_1 = (undefined4 *)&DAT_00000008;
+    arg1 = (bits32 *)&g_00000008;
     do {
-      orig::SqMatrixConnect_SetIdentity(puVar3);
-      puVar3 = puVar3 + 0x10;
-      param_1 = (undefined4 *)((int)param_1 + -1);
-      *puVar2 = 0;
-    } while (param_1 != (undefined4 *)0x0);
-    puVar2 = puVar2 + 1;
-    local_4 = local_4 + -1;
-  } while (local_4 != 0);
-  puVar1[0x1d3] = 0x3f800000;
-  puVar1[0x1d4] = 0x3f800000;
-  *(uint8_t *)(puVar1 + 0x1d5) = 0;
-  orig::PackVec4_v1((float *)(puVar1 + 0x1d6),0.0f,0.0f,0.0f,0.0f);
-  puVar1[0x1da] = 0;
-  puVar1[0x1db] = 0;
-  puVar1[0x1dc] = 0;
-  puVar1[0x1dd] = 0;
-  orig::PackVec4_v1((float *)(puVar1 + 0x1de),0.0f,0.0f,0.0f,0.0f);
-  puVar1[0x1e2] = 0;
-  puVar1[0x1e3] = 0;
-  pfVar5 = (float *)(puVar1 + 0x1e5);
-  puVar3 = puVar1 + 0x215;
-  local_4 = 2;
+      orig::SqMatrixConnect_SetIdentity(p3);
+      p3 = p3 + 0x10;
+      arg1 = (bits32 *)((int)arg1 + -1);
+      *p2 = 0;
+    } while (arg1 != (bits32 *)0x0);
+    p2 = p2 + 1;
+    i2 = i2 + -1;
+  } while (i2 != 0);
+  p1[0x1d3] = 0x3f800000;
+  p1[0x1d4] = 0x3f800000;
+  *(uint8_t *)(p1 + 0x1d5) = 0;
+  orig::PackVec4_v1((float *)(p1 + 0x1d6),0.0f,0.0f,0.0f,0.0f);
+  p1[0x1da] = 0;
+  p1[0x1db] = 0;
+  p1[0x1dc] = 0;
+  p1[0x1dd] = 0;
+  orig::PackVec4_v1((float *)(p1 + 0x1de),0.0f,0.0f,0.0f,0.0f);
+  p1[0x1e2] = 0;
+  p1[0x1e3] = 0;
+  p4 = (float *)(p1 + 0x1e5);
+  p3 = p1 + 0x215;
+  i2 = 2;
   do {
-    param_1 = (undefined4 *)&DAT_00000008;
+    arg1 = (bits32 *)&g_00000008;
     do {
-      orig::SqVec_SetXyz(pfVar5,0.0f,0.0f,0.0f);
-      *puVar3 = 0;
-      pfVar5 = pfVar5 + 3;
-      puVar3 = puVar3 + 1;
-      param_1 = (undefined4 *)((int)param_1 + -1);
-    } while (param_1 != (undefined4 *)0x0);
-    local_4 = local_4 + -1;
-  } while (local_4 != 0);
-  puVar1[0x237] = 0x80;
-  puVar1[0x238] = 0x80;
-  puVar1[0x226] = 0;
-  puVar1[0x227] = 1;
-  puVar1[0x229] = 0;
-  puVar1[0x22a] = 1;
-  puVar1[0x22b] = 2;
-  puVar1[0x228] = 2;
-  puVar1[0x236] = 1;
-  puVar1[0x239] = 1;
-  puVar1[0x225] = 0;
-  puVar1[0x23a] = 1;
-  puVar1[0x23b] = 0;
-  puVar1[0x23e] = 0;
-  puVar1[0x23c] = 0;
-  puVar1[0x23d] = 0;
-  puVar3 = puVar1 + 0x22e;
-  iVar4 = 2;
+      orig::SqVec_SetXyz(p4,0.0f,0.0f,0.0f);
+      *p3 = 0;
+      p4 = p4 + 3;
+      p3 = p3 + 1;
+      arg1 = (bits32 *)((int)arg1 + -1);
+    } while (arg1 != (bits32 *)0x0);
+    i2 = i2 + -1;
+  } while (i2 != 0);
+  p1[0x237] = 0x80;
+  p1[0x238] = 0x80;
+  p1[0x226] = 0;
+  p1[0x227] = 1;
+  p1[0x229] = 0;
+  p1[0x22a] = 1;
+  p1[0x22b] = 2;
+  p1[0x228] = 2;
+  p1[0x236] = 1;
+  p1[0x239] = 1;
+  p1[0x225] = 0;
+  p1[0x23a] = 1;
+  p1[0x23b] = 0;
+  p1[0x23e] = 0;
+  p1[0x23c] = 0;
+  p1[0x23d] = 0;
+  p3 = p1 + 0x22e;
+  i1 = 2;
   do {
-    puVar3[-2] = 0xffffffff;
-    *puVar3 = 0xffffffff;
-    puVar3[2] = 0;
-    puVar3[4] = 0;
-    puVar3[6] = 0;
-    puVar3 = puVar3 + 1;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  puVar1[0x23f] = 0;
-  puVar1[0x240] = 0;
-  puVar1[0x241] = 0;
-  puVar1[0x242] = 0;
-  puVar1[0x243] = 0;
-  puVar1[0x244] = 0;
-  puVar1[0x245] = 1;
-  puVar1[0x246] = 0;
-  puVar1[0x247] = 0;
-  puVar1[0x24a] = 0;
-  puVar1[0x24b] = 0;
-  puVar1[0x24c] = 0;
-  puVar3 = puVar1 + 0x24d;
-  iVar4 = 2;
+    p3[-2] = 0xffffffff;
+    *p3 = 0xffffffff;
+    p3[2] = 0;
+    p3[4] = 0;
+    p3[6] = 0;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p1[0x23f] = 0;
+  p1[0x240] = 0;
+  p1[0x241] = 0;
+  p1[0x242] = 0;
+  p1[0x243] = 0;
+  p1[0x244] = 0;
+  p1[0x245] = 1;
+  p1[0x246] = 0;
+  p1[0x247] = 0;
+  p1[0x24a] = 0;
+  p1[0x24b] = 0;
+  p1[0x24c] = 0;
+  p3 = p1 + 0x24d;
+  i1 = 2;
   do {
-    puVar3[-5] = 0;
-    *puVar3 = 0;
-    puVar3[4] = 0;
-    puVar3 = puVar3 + 1;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  puVar1[0x24f] = 0;
-  puVar1[0x250] = 0;
-  puVar1[0x253] = 0;
-  puVar1[0x254] = 0;
-  puVar1[0x255] = 0;
-  puVar1[0x256] = 0;
-  puVar1[599] = 0;
-  puVar1[600] = 0;
-  puVar1[0x259] = 0;
-  puVar3 = puVar1 + 0x25c;
-  iVar4 = 2;
+    p3[-5] = 0;
+    *p3 = 0;
+    p3[4] = 0;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p1[0x24f] = 0;
+  p1[0x250] = 0;
+  p1[0x253] = 0;
+  p1[0x254] = 0;
+  p1[0x255] = 0;
+  p1[0x256] = 0;
+  p1[599] = 0;
+  p1[600] = 0;
+  p1[0x259] = 0;
+  p3 = p1 + 0x25c;
+  i1 = 2;
   do {
-    puVar3[-2] = 0;
-    *puVar3 = 0;
-    puVar3 = puVar3 + 1;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  puVar1[0x25e] = 0;
-  puVar1[0x25f] = 0;
-  puVar1[0x260] = 0;
-  puVar1[0x261] = 0;
-  puVar1[0x262] = 0;
-  puVar1[0x263] = 0;
-  puVar1[0x264] = 0;
-  puVar1[0x265] = 0;
-  puVar1[0x266] = 0;
-  puVar1[0x267] = 0;
-  puVar1[0x268] = 0;
-  puVar1[0x269] = 0x3c23d70a;
-  puVar1[0x26a] = 0;
-  orig::PackVec4_v1((float *)(puVar1 + 0x26b),0.0f,0.0f,0.0f,0.0f);
-  orig::PackVec4_v1((float *)(puVar1 + 0x26f),0.0f,0.0f,0.0f,0.0f);
-  puVar1[0x273] = 0x3d4ccccd;
-  puVar1[0x274] = 0;
-  puVar1[0x275] = 0;
-  puVar1[0x276] = 0xffffffff;
-  puVar1[0x277] = 0xffffffff;
-  puVar1[0x278] = 0;
-  puVar1[0x279] = 0;
-  puVar1[0x27a] = 0;
-  puVar1[0x27b] = 0;
-  puVar1[0x27c] = 0;
-  puVar1[0x27d] = puVar1[0xb5];
-  puVar1[0x27e] = puVar1[0xb6];
-  puVar1[0x27f] = 0;
-  puVar1[0x280] = 0;
-  puVar1[0x281] = 0;
-  puVar1[0x282] = 0;
-  puVar1[0x283] = 0;
-  puVar1[0x284] = 0;
-  puVar1[0x285] = 0;
-  puVar3 = puVar1 + 0x28d;
-  puVar2 = puVar1 + 0x288;
-  iVar4 = 2;
+    p3[-2] = 0;
+    *p3 = 0;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p1[0x25e] = 0;
+  p1[0x25f] = 0;
+  p1[0x260] = 0;
+  p1[0x261] = 0;
+  p1[0x262] = 0;
+  p1[0x263] = 0;
+  p1[0x264] = 0;
+  p1[0x265] = 0;
+  p1[0x266] = 0;
+  p1[0x267] = 0;
+  p1[0x268] = 0;
+  p1[0x269] = 0x3c23d70a;
+  p1[0x26a] = 0;
+  orig::PackVec4_v1((float *)(p1 + 0x26b),0.0f,0.0f,0.0f,0.0f);
+  orig::PackVec4_v1((float *)(p1 + 0x26f),0.0f,0.0f,0.0f,0.0f);
+  p1[0x273] = 0x3d4ccccd;
+  p1[0x274] = 0;
+  p1[0x275] = 0;
+  p1[0x276] = 0xffffffff;
+  p1[0x277] = 0xffffffff;
+  p1[0x278] = 0;
+  p1[0x279] = 0;
+  p1[0x27a] = 0;
+  p1[0x27b] = 0;
+  p1[0x27c] = 0;
+  p1[0x27d] = p1[0xb5];
+  p1[0x27e] = p1[0xb6];
+  p1[0x27f] = 0;
+  p1[0x280] = 0;
+  p1[0x281] = 0;
+  p1[0x282] = 0;
+  p1[0x283] = 0;
+  p1[0x284] = 0;
+  p1[0x285] = 0;
+  p3 = p1 + 0x28d;
+  p2 = p1 + 0x288;
+  i1 = 2;
   do {
-    *puVar2 = 0xffffffff;
-    puVar2[1] = 0xffffffff;
-    *puVar3 = 0;
-    puVar2 = puVar2 + 2;
-    puVar3 = puVar3 + 1;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  puVar1[0x28c] = 0;
-  puVar1[0x28f] = 0;
-  puVar1[0x292] = 0;
-  puVar1[699] = 0;
-  puVar1[0x2c6] = 0;
-  puVar3 = puVar1 + 0x327;
-  iVar4 = 0x10;
+    *p2 = 0xffffffff;
+    p2[1] = 0xffffffff;
+    *p3 = 0;
+    p2 = p2 + 2;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p1[0x28c] = 0;
+  p1[0x28f] = 0;
+  p1[0x292] = 0;
+  p1[699] = 0;
+  p1[0x2c6] = 0;
+  p3 = p1 + 0x327;
+  i1 = 0x10;
   do {
-    puVar3[-0x10] = 0xffffffff;
-    *puVar3 = 0xffffffff;
-    puVar3[0x20] = 0;
-    puVar3[0x40] = 0;
-    puVar3[0x50] = 0;
-    puVar3[-0x60] = 0;
-    puVar3[-0x50] = 0;
-    puVar3[-0x30] = 0;
-    puVar3[-0x40] = 0;
-    puVar3[-0x20] = 0;
-    puVar3 = puVar3 + 1;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  puVar1[0x387] = 0;
-  puVar1[0x388] = 0;
+    p3[-0x10] = 0xffffffff;
+    *p3 = 0xffffffff;
+    p3[0x20] = 0;
+    p3[0x40] = 0;
+    p3[0x50] = 0;
+    p3[-0x60] = 0;
+    p3[-0x50] = 0;
+    p3[-0x30] = 0;
+    p3[-0x40] = 0;
+    p3[-0x20] = 0;
+    p3 = p3 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  p1[0x387] = 0;
+  p1[0x388] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10284B20
 // GATE: PASS -- 100 trials, 100 returned normally, 46 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqgxShader(int a1, int a2)
+XI_API int * __cdecl sqgxShader(int arg1, int arg2)
 {
-  int v2;
-  int *v3;
-  int v4;
+  int i1;
+  int *p1;
+  int i2;
   int *result;
-  int v6;
-  int v7;
-  int v8;
-  int v9;
-  int v10;
-  int *v11;
-  int *v12;
-  int v13;
-  int v14;
-  int *v15;
-  int *v16;
-  int v17;
-  int v18;
-  int v19;
-  v2 = g_pSqgxContext[710];
-  g_pSqgxContext[2 * v2 + 648] = a1;
-  g_pSqgxContext[2 * v2 + 649] = a2;
-  v3 = g_pSqgxContext;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  int *p2;
+  int *p3;
+  int i8;
+  int i9;
+  int *p4;
+  int *p5;
+  int i10;
+  int i11;
+  int i12;
+  i1 = g_pSqgxContext[710];
+  g_pSqgxContext[2 * i1 + 648] = arg1;
+  g_pSqgxContext[2 * i1 + 649] = arg2;
+  p1 = g_pSqgxContext;
   if ( g_pSqgxContext[710] == 0 )
   {
-    v4 = g_pSqgxContext[648];
-    if ( (v4 & 0x4000) != 0 )
+    i2 = g_pSqgxContext[648];
+    if ( (i2 & 0x4000) != 0 )
     {
       g_pDancerDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     }
-    else if ( (v4 & 0x8000) != 0 )
+    else if ( (i2 & 0x8000) != 0 )
     {
       g_pDancerDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
     }
@@ -273,97 +273,97 @@ XI_API int * __cdecl sqgxShader(int a1, int a2)
       g_pDancerDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     }
     orig::SqgxVertexShaderRelease_NoOp();
-    v3 = g_pSqgxContext;
+    p1 = g_pSqgxContext;
   }
-  v3[v3[710] + 653] = 1;
+  p1[p1[710] + 653] = 1;
   result = g_pSqgxContext;
-  v6 = g_pSqgxContext[710];
-  v7 = g_pSqgxContext[2 * v6 + 648];
-  if ( (v7 & 0x400000) != 0 || (v7 & 0x8000000) != 0 )
+  i3 = g_pSqgxContext[710];
+  i4 = g_pSqgxContext[2 * i3 + 648];
+  if ( (i4 & 0x400000) != 0 || (i4 & 0x8000000) != 0 )
   {
-    g_pSqgxContext[v6 + 653] |= 8u;
+    g_pSqgxContext[i3 + 653] |= 8u;
     result = g_pSqgxContext;
   }
-  v8 = result[710];
-  if ( (result[2 * v8 + 648] & 1) != 0 )
+  i5 = result[710];
+  if ( (result[2 * i5 + 648] & 1) != 0 )
   {
-    result[v8 + 653] |= 8u;
+    result[i5 + 653] |= 8u;
     result = g_pSqgxContext;
   }
-  v9 = result[710];
-  if ( (result[2 * v9 + 648] & 4) != 0 )
+  i6 = result[710];
+  if ( (result[2 * i6 + 648] & 4) != 0 )
   {
-    result[v9 + 653] |= 4u;
+    result[i6 + 653] |= 4u;
     result = g_pSqgxContext;
   }
-  v10 = result[710];
-  if ( (result[2 * v10 + 648] & 2) != 0 )
+  i7 = result[710];
+  if ( (result[2 * i7 + 648] & 2) != 0 )
   {
-    result[v10 + 653] |= 2u;
+    result[i7 + 653] |= 2u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 0x40) != 0 )
   {
     orig::sqgxTextureClamp(1);
     orig::sqgxTextureDecal(1);
-    v11 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
-    *v11 |= 2u;
+    p2 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
+    *p2 |= 2u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 0x20000000) != 0 )
   {
     orig::sqgxTextureClamp(1);
     orig::sqgxTextureDecal(1);
-    v12 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
-    *v12 |= 4u;
+    p3 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
+    *p3 |= 4u;
     result = g_pSqgxContext;
   }
-  v13 = result[710];
-  if ( (result[2 * v13 + 648] & 0x40000000) != 0 )
+  i8 = result[710];
+  if ( (result[2 * i8 + 648] & 0x40000000) != 0 )
   {
-    result[v13 + 653] |= 2u;
+    result[i8 + 653] |= 2u;
     result = g_pSqgxContext;
   }
-  v14 = result[710];
-  if ( (result[2 * v14 + 648] & 0x20) != 0 )
+  i9 = result[710];
+  if ( (result[2 * i9 + 648] & 0x20) != 0 )
   {
-    result[v14 + 653] |= 6u;
+    result[i9 + 653] |= 6u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 8) != 0 )
   {
     orig::sqgxTextureDecal(1);
     orig::sqgxTextureClamp(0);
-    v15 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
-    *v15 |= 4u;
+    p4 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
+    *p4 |= 4u;
     result = g_pSqgxContext;
   }
   if ( (result[2 * result[710] + 648] & 0x100000) != 0 )
   {
     orig::sqgxTextureClamp(1);
-    v16 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
-    *v16 |= 0xEu;
+    p5 = &g_pSqgxContext[g_pSqgxContext[710] + 653];
+    *p5 |= 0xEu;
     result = g_pSqgxContext;
   }
-  v17 = result[710];
-  if ( (result[2 * v17 + 648] & 0x40000) != 0 )
+  i10 = result[710];
+  if ( (result[2 * i10 + 648] & 0x40000) != 0 )
   {
-    result[v17 + 653] |= 8u;
+    result[i10 + 653] |= 8u;
     result = g_pSqgxContext;
   }
-  v18 = result[710];
-  if ( (result[2 * v18 + 648] & 0x10) != 0 )
+  i11 = result[710];
+  if ( (result[2 * i11 + 648] & 0x10) != 0 )
   {
-    result[v18 + 653] |= 0xCu;
+    result[i11 + 653] |= 0xCu;
     orig::sqgxTextureDecal(0);
     orig::sqgxTextureClamp(1);
     result = g_pSqgxContext;
   }
-  v19 = result[653];
+  i12 = result[653];
   if ( result[710] != 0 )
-    result[652] = v19 | result[654];
+    result[652] = i12 | result[654];
   else
-    result[652] = v19;
+    result[652] = i12;
   g_sqgxShaderDirty = 1;
   return result;
 }

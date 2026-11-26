@@ -4,21 +4,21 @@
 
 // FUNCTION: FFXIMAIN 0x102A1FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqsdPassTest_TestSeparationHalf(int param_1)
+XI_API bits32 __cdecl SqsdPassTest_TestSeparationHalf(int arg1)
 {
-  uint32_t uVar1;
-  long double fVar2;
+  uint32_t u1;
+  long double f1;
   char xi_frame[24] __attribute__((aligned(4)));
-  float  &local_18 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  (&local_c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 4);
+  float  &f4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  float  (&f5)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
   
-  local_18 = (float)((long double)*(float *)(param_1 + 0x14) - (long double)*(float *)(param_1 + 0x20));
-  local_14 = (float)((long double)*(float *)(param_1 + 0x18) - (long double)*(float *)(param_1 + 0x24));
-  local_10 = (float)((long double)*(float *)(param_1 + 0x1c) - (long double)*(float *)(param_1 + 0x28));
-  fVar2 = orig::SqVec_Length(&local_18);
-  orig::SqBounds_GetCenter((float *)(param_1 + 0x14),local_c);
-  uVar1 = orig::SqgxContext_TestClipBounds(local_c,(float)(fVar2 * (long double)0.5f));
-  return uVar1;
+  f2 = (float)(*(float *)(arg1 + 0x14) - *(float *)(arg1 + 0x20));
+  f3 = (float)(*(float *)(arg1 + 0x18) - *(float *)(arg1 + 0x24));
+  f4 = (float)(*(float *)(arg1 + 0x1c) - *(float *)(arg1 + 0x28));
+  f1 = orig::SqVec_Length(&f2);
+  orig::SqBounds_GetCenter((float *)(arg1 + 0x14),f5);
+  u1 = orig::SqgxContext_TestClipBounds(f5,(float)(f1 * 0.5f));
+  return u1;
 }

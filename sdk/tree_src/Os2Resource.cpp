@@ -4,13 +4,13 @@
 
 // FUNCTION: FFXIMAIN 0x1002D860
 // GATE: PASS -- 100 trials, 100 returned normally, 49 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) CMoResource_DropObjectAt5E(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API void __attribute__((stdcall, regparm(3))) CMoResource_DropObjectAt5E(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  int *this_00;
+  int *obj1;
   
   if (((*(uint8_t *)((int)self_ + 0x32) & 0x7f) == 0) &&
-     (this_00 = *(int **)((int)self_ + 0x5e), this_00 != (int *)0x0)) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+     (obj1 = *(int **)((int)self_ + 0x5e), obj1 != (int *)0x0)) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self_ + 0x5e) = 0;
   }
   return;

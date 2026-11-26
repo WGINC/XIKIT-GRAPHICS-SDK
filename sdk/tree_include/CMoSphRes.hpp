@@ -8,7 +8,7 @@ public:
     static char ** __cdecl GetRuntimeClass();  // 0x100562A0
     char * FixupOffsetsAt30();  // 0x100562B0
     void Slot9DoNothing();  // 0x100562C0
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071D00
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071D00
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x4C];

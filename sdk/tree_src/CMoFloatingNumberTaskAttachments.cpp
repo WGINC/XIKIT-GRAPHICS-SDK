@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x10042690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoFloatingNumberTaskAttachments::Slot1DeleteOwner(char a2)
+uint32_t * CMoFloatingNumberTaskAttachments::Slot1DeleteOwner(char arg1)
 {
-  return orig::CMoOtTask_ScalarDeletingDtor((_DWORD *)this - 21, a2);
+  return orig::CMoOtTask_ScalarDeletingDtor((uint32_t *)this - 21, arg1);
 }

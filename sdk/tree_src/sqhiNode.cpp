@@ -4,35 +4,35 @@
 
 // FUNCTION: FFXIMAIN 0x10291B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqhiNode_Create(void)
+XI_API bits32 * __cdecl SqhiNode_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0xf8,s_C__dev_dancer_modules_sqHierarch_103baf34,0x1a);
-  orig::SqhiNode_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0xf8,str_C__dev_dancer_modules_sqHierarch_103BAF34,0x1a);
+  orig::SqhiNode_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10291BA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqhiNode_Init(undefined4 * param_1)
+XI_API void __cdecl SqhiNode_Init(bits32 * arg1)
 {
-  *param_1 = 0xd0001;
-  param_1[2] = &LAB_10291c10;
-  param_1[3] = XI_CODE(FUN_10291c20);
-  param_1[4] = XI_CODE(FUN_10291c60);
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = XI_CODE(FUN_10291fe0);
-  param_1[7] = 0xffffffff;
-  param_1[8] = 0;
-  param_1[0x19] = 0;
-  param_1[0x1a] = 0;
-  param_1[0x1b] = 0;
-  param_1[0x1c] = 0;
-  orig::SqMatrixConnect_SetIdentity(param_1 + 9);
-  *(uint8_t *)(param_1 + 0x1d) = 0xff;
-  orig::SqMatrixConnect_Zero(param_1 + 0x1e);
-  orig::M4fSet_v1(param_1 + 0x2e,param_1 + 9);
+  *arg1 = 0xd0001;
+  arg1[2] = &code_10291C10;
+  arg1[3] = XI_CODE(game_10291C20);
+  arg1[4] = XI_CODE(sqhiNode_Dump);
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = XI_CODE(game_10291FE0);
+  arg1[7] = 0xffffffff;
+  arg1[8] = 0;
+  arg1[0x19] = 0;
+  arg1[0x1a] = 0;
+  arg1[0x1b] = 0;
+  arg1[0x1c] = 0;
+  orig::SqMatrixConnect_SetIdentity(arg1 + 9);
+  *(uint8_t *)(arg1 + 0x1d) = 0xff;
+  orig::SqMatrixConnect_Zero(arg1 + 0x1e);
+  orig::M4fSet_v1(arg1 + 0x2e,arg1 + 9);
   return;
 }
 
@@ -45,34 +45,34 @@ XI_API void __cdecl SqhiNode_Nop(void)
 
 // FUNCTION: FFXIMAIN 0x10291F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqhiNode_SetField64(int param_1, undefined4 param_2)
+XI_API void __cdecl SqhiNode_SetField64(int arg1, bits32 arg2)
 {
-  if (param_1 != 0) {
-    *(uint32_t *)(param_1 + 100) = param_2;
+  if (arg1 != 0) {
+    *(uint32_t *)(arg1 + 100) = arg2;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10291F10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqhiNode_AppendChild(int param_1, int param_2)
+XI_API void __cdecl SqhiNode_AppendChild(int arg1, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
-  iVar3 = *(int *)(param_1 + 0x6c);
-  iVar2 = *(int *)(param_1 + 0x6c);
-  while (iVar1 = iVar3, iVar1 != 0) {
-    iVar2 = iVar1;
-    iVar3 = *(int *)(iVar1 + 0x70);
+  i3 = *(int *)(arg1 + 0x6c);
+  i2 = *(int *)(arg1 + 0x6c);
+  while (i1 = i3, i1 != 0) {
+    i2 = i1;
+    i3 = *(int *)(i1 + 0x70);
   }
-  if (iVar2 != 0) {
-    *(int *)(iVar2 + 0x70) = param_2;
-    *(int *)(param_2 + 0x68) = param_1;
+  if (i2 != 0) {
+    *(int *)(i2 + 0x70) = arg2;
+    *(int *)(arg2 + 0x68) = arg1;
     return;
   }
-  *(int *)(param_1 + 0x6c) = param_2;
-  *(int *)(param_2 + 0x68) = param_1;
+  *(int *)(arg1 + 0x6c) = arg2;
+  *(int *)(arg2 + 0x68) = arg1;
   return;
 }

@@ -6,7 +6,7 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl LobbyThread_SendCmd6IfRunning(void)
 {
-  if (DAT_1046393c != 0) {
+  if (g_1046393C != 0) {
     orig::LobbyThread_SendCmd6(0xffffffff);
   }
   return;

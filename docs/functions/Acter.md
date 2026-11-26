@@ -16,21 +16,21 @@ Why the file has this name (data/unit_names.json): Acter_* and ActerBuff_* (the 
 | `IsEvent` | 0x10087070 | 112 | yes | - | - | - |
 | `Menu_HasAnyFlag` | 0x100870E0 | 42 | yes | - | Returns 1 when either global mask shares a bit with the arguments. | low |
 | `Acter_GetGlobalByte` | 0x10087110 | 6 | yes | - | Returns a byte global, keeping the argument's high bits. | low |
-| `Help_UpdateFromFlags` | 0x100872C0 | 237 | yes | - | Syncs the help object at sub_105781F8 with the session flag bits. | medium |
-| `Acter_UpdateObject10578184` | 0x100873B0 | 188 | yes | - | Per-frame update of the object at DAT_10578184, which a callee ties to the 'cnttime' menu. | low |
+| `Help_UpdateFromFlags` | 0x100872C0 | 237 | yes | - | Syncs the help object at game_105781F8 with the session flag bits. | medium |
+| `Acter_UpdateObject10578184` | 0x100873B0 | 188 | yes | - | Per-frame update of the object at g_10578184, which a callee ties to the 'cnttime' menu. | low |
 | `Acter_TargetClearAndSetFlag53` | 0x100875C0 | 11 | yes | - | Target_ClearAndSetFlag53 on the global target manager. | high |
-| `Acter_IsIdMatchGlobal` | 0x100875D0 | 31 | yes | - | Returns 1 when the id at +0x1fa of the object from FUN_101cc4f0 equals a global. | low |
+| `Acter_IsIdMatchGlobal` | 0x100875D0 | 31 | yes | - | Returns 1 when the id at +0x1fa of the object from game_101CC4F0 equals a global. | low |
 | `Acter_GetByteIfIdMatch` | 0x100875F0 | 20 | yes | - | Returns a byte global when the id test of fn_100875D0 passes, else 0. | low |
 | `Acter_GetDwordIfIdMatch` | 0x10087610 | 18 | yes | - | Returns a dword global when the id test of fn_100875D0 passes, else 0. | low |
 | `Acter_GetGlobal10482F38IfIdMatch` | 0x10087630 | 18 | yes | - | Returns the value at 0x10482F38 if the acter id matches the global one, else 0. | low |
 | `Acter_IsWord104802BASet` | 0x10087650 | 12 | yes | - | Returns whether the word at 0x104802BA is nonzero. | low |
 | `Acter_GetMaskedFlagByte` | 0x10087660 | 8 | yes | - | Returns a byte global with bits 1 to 7 cleared, keeping the argument's high bits. | low |
-| `Acter_IsGlobalNonzero` | 0x10087670 | 11 | yes | - | Returns 1 when the dword global DAT_10480818 is nonzero. | low |
+| `Acter_IsGlobalNonzero` | 0x10087670 | 11 | yes | - | Returns 1 when the dword global g_10480818 is nonzero. | low |
 | `Acter_GetDword10480800IfFlag` | 0x10087690 | 18 | yes | - | Returns the dword at 0x10480800 when the masked flag byte is set, else 0. | high |
 | `Acter_GetByte10480824IfFlag` | 0x100876B0 | 18 | yes | - | Returns the byte at 0x10480824 when the masked flag byte is set, else 0. | high |
 | `Acter_GetTable10480828IfFlag` | 0x10087760 | 15 | yes | - | Returns the table at 0x10480828 when the masked flag byte is set, else null. | high |
 | `Acter_GetByte10480825IfSet` | 0x10087830 | 18 | yes | - | Returns the byte at 0x10480825 when the global is non-zero, else 0. | high |
-| `Acter_GetByte10480826IfFlag` | 0x10087890 | 18 | yes | - | Returns the byte at 0x10480826 when sub_10087680 is true, else 0. | high |
+| `Acter_GetByte10480826IfFlag` | 0x10087890 | 18 | yes | - | Returns the byte at 0x10480826 when game_10087680 is true, else 0. | high |
 | `Acter_IsByte10483158Set` | 0x10087B20 | 11 | yes | - | Returns whether the byte at 0x10483158 is set. | low |
 | `Acter_ApplyPair1EC1F4` | 0x10087D40 | 51 | yes | - | Passes the actor's two values at +0x1EC/+0x1F4 to its model object (+0xA0) through vtable slot 0x29C. | medium |
 | `Acter_ResetMotionCounters` | 0x10087E40 | 63 | yes | - | Clears two motion counters of the actor, advancing its motion queue first when the flag and type test pass. | low |
@@ -73,10 +73,10 @@ Why the file has this name (data/unit_names.json): Acter_* and ActerBuff_* (the 
 | `Acter_ResetGlobals` | 0x10093720 | 776 | yes | - | - | - |
 | `Acter_ClearGlobalBlocks` | 0x10093A30 | 84 | yes | - | Clears the module's global arrays and flags. | low |
 | `Acter_ResetGlobalSentinels` | 0x10093A90 | 55 | yes | - | Clears a global block and sets two sentinel words to -1. | low |
-| `Acter_ClearGlobalBlock182` | 0x10093AD0 | 17 | yes | - | Zeroes the global block at DAT_1047feb8. | low |
-| `Acter_ClearGlobalBlock2C` | 0x10093AF0 | 17 | yes | - | Zeroes the global block at DAT_10480800. | low |
-| `Acter_ClearGlobalBlock23` | 0x10093B10 | 17 | yes | - | Zeroes the global block at DAT_10480900. | low |
-| `Acter_ClearGlobalBlock71` | 0x10093B30 | 17 | yes | - | Zeroes the global block at DAT_10482f98. | low |
+| `Acter_ClearGlobalBlock182` | 0x10093AD0 | 17 | yes | - | Zeroes the global block at g_1047FEB8. | low |
+| `Acter_ClearGlobalBlock2C` | 0x10093AF0 | 17 | yes | - | Zeroes the global block at g_10480800. | low |
+| `Acter_ClearGlobalBlock23` | 0x10093B10 | 17 | yes | - | Zeroes the global block at g_10480900. | low |
+| `Acter_ClearGlobalBlock71` | 0x10093B30 | 17 | yes | - | Zeroes the global block at g_10482F98. | low |
 | `Acter_ClearTable10488B08` | 0x10093B50 | 17 | yes | - | Zeroes the 128-dword table at 0x10488B08. | low |
 | `Acter_ShutdownGlobals` | 0x10093B70 | 557 | yes | - | Tears down the module's global objects and actor slots. | medium |
 | `Acter_Nop` | 0x10093DA0 | 1 | yes | - | Does nothing. | low |
@@ -104,7 +104,7 @@ Why the file has this name (data/unit_names.json): Acter_* and ActerBuff_* (the 
 | `Acter_LookupTable10487E84` | 0x10096410 | 21 | yes | - | Returns the entry of the offset table at 0x10487E84 for the index. | medium |
 | `Acter_LookupTable10487E80` | 0x10096470 | 21 | yes | - | Returns the entry of the offset table at 0x10487E80 for the index. | medium |
 | `Acter_UpdateFrame` | 0x10096640 | 1613 | yes | 6 | Runs the per-frame update of the actor table, with the camera, target and network steps around it. | low |
-| `Acter_UpdateSkeletonParts` | 0x100973F0 | 261 | yes | - | Runs the model's per-part routines (sub_100CF100 and related) when the actor's flags call for it. | low |
+| `Acter_UpdateSkeletonParts` | 0x100973F0 | 261 | yes | - | Runs the model's per-part routines (game_100CF100 and related) when the actor's flags call for it. | low |
 | `Acter_TestFlagsAndUpdateParts` | 0x100977F0 | 79 | yes | - | Under the acter's flag conditions, runs the skeleton part update and returns whether it returned 0. | low |
 | `Entity_BuildDisplayName` | 0x10097840 | 353 | yes | - | - | - |
 | `Entity_GetIndexedPtr` | 0x10097A40 | 28 | yes | - | - | - |
@@ -112,7 +112,7 @@ Why the file has this name (data/unit_names.json): Acter_* and ActerBuff_* (the 
 | `Acter_FindEntryForWord40D7C` | 0x10097B50 | 105 | yes | - | Returns the 8-byte entry of the table at 0x1035B630 whose four ids include a word of the object at 0x104DFD98, or 0. | low |
 | `Acter_GetByte40DB4ByKind` | 0x10097BC0 | 230 | yes | - | Returns the byte at DAT_104DFD98+0x40DB4 or a constant chosen by the value at +0x40D80. | medium |
 | `Acter_IsFlag40DB6OrState17` | 0x10097D50 | 33 | yes | - | Returns whether the short at DAT_104DFD98+0x40DB6 is set or the byte at 0x10485640 is 0x17. | high |
-| `Acter_TestFlagTable` | 0x10097E50 | 35 | yes | - | Tests a bit mask against an entry of the flag table at DAT_1047feb8. | low |
+| `Acter_TestFlagTable` | 0x10097E50 | 35 | yes | - | Tests a bit mask against an entry of the flag table at g_1047FEB8. | low |
 | `Acter_TestFlagBit` | 0x10097E80 | 40 | yes | - | Returns whether bit n of the flag table at 0x1047FEB8 is set. | medium |
 | `Acter_IsSpecialIdRange` | 0x10098180 | 130 | yes | - | Tests whether the actor's id word at +0xFC lies in one of several fixed ranges. | low |
 | `Acter_ActerTestEE120` | 0x10098210 | 270 | yes | - | A flag test on an actor's state byte +0xEE and flag words; its meaning is not established. | low |
@@ -131,7 +131,7 @@ Why the file has this name (data/unit_names.json): Acter_* and ActerBuff_* (the 
 | `Acter_FindStringById` | 0x100A1770 | 126 | yes | - | Returns the display string for an acter id, searching the acter list first and then the acter buffers. | medium |
 | `Acter_SetFlag8000OfFound` | 0x100A17F0 | 47 | yes | - | Sets or clears flag 0x8000 of the first acter of the four kinds. | low |
 | `Acter_CheckIdAgainstBlockBits` | 0x100A19B0 | 68 | yes | - | Compares a table value for an id with two bits of a zone-state block. | low |
-| `Acter_MatchActorNameOrKind` | 0x100A1A00 | 152 | yes | - | Tests a string against the name of the actor from sub_101CC4F0 and, failing that, with fn_100E0A50 for certain kinds. | low |
+| `Acter_MatchActorNameOrKind` | 0x100A1A00 | 152 | yes | - | Tests a string against the name of the actor from game_101CC4F0 and, failing that, with fn_100E0A50 for certain kinds. | low |
 | `ActerBuff_GetStringByIdLookup` | 0x100A1D50 | 98 | yes | - | Returns the display string for an acter id from the acter buffers, falling back to a lookup. | medium |
 | `Acter_ConstructTask1032D6D4` | 0x100A2790 | 82 | yes | - | Constructs the task with vtable 0x1032D6D4 for a record and makes it the current one at 0x10487F08 if there is none. | medium |
 
@@ -147,8 +147,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `IsEvent` calls `Acter_GetActerAt10485F7A`, `Acter_IsStateGroup06Or38`
 - `Menu_HasAnyFlag` calls nothing directly
 - `Acter_GetGlobalByte` calls nothing directly
-- `Help_UpdateFromFlags` calls `NetCellFont_GetFlags`, `sub_10221340`, `sub_102212E0`, `sub_10221230`, `sub_10221320`, `sub_102212C0`, `sub_102211F0`, `sub_102213B0`
-- `Acter_UpdateObject10578184` calls `sub_1012C900`, `Acter_GetDword10480800IfFlag`, `Acter_GetByte10480824IfFlag`, `sub_1012C8C0`, `sub_1012C8E0`, `sub_100876D0`, `sub_10087850`, `sub_10087870`, `TargetMenu_GetMessageFwd`, `sub_10139F40`, `sub_100876E0`, `sub_10139FB0`
+- `Help_UpdateFromFlags` calls `NetCellFont_GetFlags`, `game_10221340`, `game_102212E0`, `game_10221230`, `game_10221320`, `game_102212C0`, `game_102211F0`, `game_102213B0`
+- `Acter_UpdateObject10578184` calls `game_1012C900`, `Acter_GetDword10480800IfFlag`, `Acter_GetByte10480824IfFlag`, `game_1012C8C0`, `game_1012C8E0`, `game_100876D0`, `game_10087850`, `game_10087870`, `TargetMenu_GetMessageFwd`, `game_10139F40`, `game_100876E0`, `game_10139FB0`
 - `Acter_TargetClearAndSetFlag53` calls `Target_ClearAndSetFlag53`
 - `Acter_IsIdMatchGlobal` calls `Acter_GetActerAt10485F7A`
 - `Acter_GetByteIfIdMatch` calls `Acter_IsIdMatchGlobal`
@@ -161,32 +161,32 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Acter_GetByte10480824IfFlag` calls `Acter_GetMaskedFlagByte`
 - `Acter_GetTable10480828IfFlag` calls `Acter_GetMaskedFlagByte`
 - `Acter_GetByte10480825IfSet` calls `Acter_IsGlobalNonzero`
-- `Acter_GetByte10480826IfFlag` calls `sub_10087680`
+- `Acter_GetByte10480826IfFlag` calls `game_10087680`
 - `Acter_IsByte10483158Set` calls nothing directly
 - `Acter_ApplyPair1EC1F4` calls nothing directly
 - `Acter_ResetMotionCounters` calls `CYyObject_IsKindOf`, `CXiSkeletonActor::AdvanceMotionQueue`
-- `Acter_AdvanceMotionTimer` calls `Camera_GetFrameScale`, `sub_10311C2C`, `CYyObject_IsKindOf`, `sub_100CE0E0`, `Acter_ResetMotionCounters`
+- `Acter_AdvanceMotionTimer` calls `Camera_GetFrameScale`, `game_10311C2C`, `CYyObject_IsKindOf`, `game_100CE0E0`, `Acter_ResetMotionCounters`
 - `Acter_UpdateModelPoint848` calls `CYyObject_IsKindOf`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateZ`, `Mat4_PostRotateY`, `Mat4_PostRotateX`, `Mat4_SetTranslation`, `Mat4_TransformPoint`, `MathVector_Nop`
-- `Acter_UpdateByKind170NotGroup38` calls `Acter_IsStateGroup38`, `Camera_SetField30`, `Camera_GetFrameScale`, `sub_10311C2C`, `sub_10088B50`, `XI_PACKET_10088320 (left out)`, `sub_10088B20`, `sub_10177730`, `NetCellFont_ClearGlobalLists2150And2154`, `sub_10088BD0`, `sub_10088BB0`, `operator_delete`
-- `Acter_UpdateByKind170NotGroup06` calls `Acter_IsStateGroup06`, `sub_10089FF0`, `Camera_GetFrameScale`, `sub_10311C2C`, `sub_10088B50`, `XI_PACKET_10088380 (left out)`, `sub_10088B20`, `sub_10177730`, `NetCellFont_ClearGlobalLists2150And2154`, `sub_10089850`, `sub_10088BB0`, `operator_delete`
+- `Acter_UpdateByKind170NotGroup38` calls `Acter_IsStateGroup38`, `Camera_SetField30`, `Camera_GetFrameScale`, `game_10311C2C`, `game_10088B50`, `XI_PACKET_10088320 (left out)`, `game_10088B20`, `game_10177730`, `NetCellFont_ClearGlobalLists2150And2154`, `game_10088BD0`, `game_10088BB0`, `operator_delete`
+- `Acter_UpdateByKind170NotGroup06` calls `Acter_IsStateGroup06`, `game_10089FF0`, `Camera_GetFrameScale`, `game_10311C2C`, `game_10088B50`, `XI_PACKET_10088380 (left out)`, `game_10088B20`, `game_10177730`, `NetCellFont_ClearGlobalLists2150And2154`, `game_10089850`, `game_10088BB0`, `operator_delete`
 - `Call1008A0E0With2` calls `Camera_SetField30`
-- `Camera_SetField30` calls `sub_10311FF1`
+- `Camera_SetField30` calls `game_10311FF1`
 - `Actor_SetDefaultMotionTags` calls nothing directly
 - `ActerBuff_FindByMaskedId` calls nothing directly
 - `ActerBuff_FindById` calls nothing directly
-- `Acter_StartAutoRunFromZoneMap` calls `sub_10181510`, `XiControlActor_SetAutoRunning`
+- `Acter_StartAutoRunFromZoneMap` calls `game_10181510`, `XiControlActor_SetAutoRunning`
 - `Actor_FindByNameEntry` calls `Actor_CompareNames`
 - `Actor_CompareNames` calls `TaskAndTextArgs_MapNameLetters`
 - `Actor_FindByField78Entry` calls nothing directly
-- `Acter_UpdateOnePart1008CD90` calls `sub_1008D910`, `sub_1008AF60`, `NetCellFont_GetIdPair`, `Vec4_Copy`, `XiZone::DrawMarkerForward`, `CYyObject_IsKindOf`, `Vec3_Copy`, `sub_100814F0`, `TargetMenu_SetTargetMode`, `XiControlActor_UpdateCamera`, `Camera_GetFrameScale`, `sub_10311C2C`, `Acter_CopyPosAndAnglesToActorA0`, `Acter_CopyPosToCached`, `CXiControlActor_SetVec4`
-- `Acter_SetModelField78FromTable` calls `sub_10097A60`, `Acter_GetActerAt10485F7A`, `CXiActor::IsField78HighZero`, `Acter_IsBytes1FFBothIn89NotEqual`, `sub_1008E920`, `sub_1008E180`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Vec3_Call100275D0`, `CXiActor::IsFlag1d0Clear`, `sub_1008E240`
+- `Acter_UpdateOnePart1008CD90` calls `game_1008D910`, `game_1008AF60`, `NetCellFont_GetIdPair`, `Vec4_Copy`, `XiZone::DrawMarkerForward`, `CYyObject_IsKindOf`, `Vec3_Copy`, `game_100814F0`, `TargetMenu_SetTargetMode`, `XiControlActor_UpdateCamera`, `Camera_GetFrameScale`, `game_10311C2C`, `Acter_CopyPosAndAnglesToActorA0`, `Acter_CopyPosToCached`, `CXiControlActor_SetVec4`
+- `Acter_SetModelField78FromTable` calls `game_10097A60`, `Acter_GetActerAt10485F7A`, `CXiActor::IsField78HighZero`, `Acter_IsBytes1FFBothIn89NotEqual`, `game_1008E920`, `game_1008E180`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`, `Vec3_Call100275D0`, `CXiActor::IsFlag1d0Clear`, `game_1008E240`
 - `CXiActor_IsIdAbove6ff` calls nothing directly
 - `Acter_GetActerAt2A4` calls nothing directly
 - `Actor_FindByField2a4` calls `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`
-- `Acter_UpdateFlags120Bit23` calls `Acter_GetActerAt10485F7A`, `sub_10085A10`, `sub_10085A50`, `TextInputFiles_GetSetting99`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`
-- `Acter_PlayChorMotion` calls `XiControlActor_SetAutoRunning`, `sub_100D65B0`, `XI_PACKET_10088270 (left out)`
+- `Acter_UpdateFlags120Bit23` calls `Acter_GetActerAt10485F7A`, `game_10085A10`, `game_10085A50`, `TextInputFiles_GetSetting99`, `NetCellFont_SetByte9800AndGetEntry`, `NetCellFont_SelectNext`
+- `Acter_PlayChorMotion` calls `XiControlActor_SetAutoRunning`, `game_100D65B0`, `XI_PACKET_10088270 (left out)`
 - `Acter_IsBytes1FFBothIn89NotEqual` calls nothing directly
-- `Acter_UpdateOne` calls `Acter_GetActerAt10485F7A`, `XI_PACKET_100AEC70 (left out)`, `Camera_GetFrameScale`, `sub_10311C2C`, `sub_1008E290`, `Acter_SetModelField78FromTable`, `sub_1008E3F0`, `Acter_UpdateOnePart1008CD90`, `CXiActor::TickRandomTimer`, `Acter_UpdateModelPoint848`, `Acter_AdvanceMotionTimer`, `Acter_UpdateByKind170NotGroup38`, `Acter_UpdateByKind170NotGroup06`, `Acter_PlayChorMotion`, `sub_1008E870`, `XI_PACKET_1009F4C0 (left out)`, `XI_PACKET_1008B410 (left out)`, `sub_1008B460`, `CXiSkeletonActor_IsReadCompleteBody`, `NetCellFont_GetFlags`, `sub_100FC2B0`, `YkWindows_CloseIfAt14`, `YkWindows_DestroyDrawMenuIfAt14`, `sub_10160930`, `sub_1008C480`, `sub_1008C6C0`, `XiEvent_EventIdle`, `NetCellFont_GetIdPair`, `Acter_UpdateFlags120Bit23`
+- `Acter_UpdateOne` calls `Acter_GetActerAt10485F7A`, `XI_PACKET_100AEC70 (left out)`, `Camera_GetFrameScale`, `game_10311C2C`, `game_1008E290`, `Acter_SetModelField78FromTable`, `game_1008E3F0`, `Acter_UpdateOnePart1008CD90`, `CXiActor::TickRandomTimer`, `Acter_UpdateModelPoint848`, `Acter_AdvanceMotionTimer`, `Acter_UpdateByKind170NotGroup38`, `Acter_UpdateByKind170NotGroup06`, `Acter_PlayChorMotion`, `game_1008E870`, `XI_PACKET_1009F4C0 (left out)`, `XI_PACKET_1008B410 (left out)`, `game_1008B460`, `CXiSkeletonActor_IsReadCompleteBody`, `NetCellFont_GetFlags`, `game_100FC2B0`, `YkWindows_CloseIfAt14`, `YkWindows_DestroyDrawMenuIfAt14`, `game_10160930`, `game_1008C480`, `game_1008C6C0`, `XiEvent_EventIdle`, `NetCellFont_GetIdPair`, `Acter_UpdateFlags120Bit23`
 - `Acter_ReleaseEventRecord` calls `CXiActor::SelectMotionTags`, `XiEvent_RestoreActer`, `operator_delete`
 - `Acter_CallVt180IfState` calls nothing directly
 - `Acter_ReleaseSlotD0` calls nothing directly
@@ -209,7 +209,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Acter_ClearGlobalBlock23` calls nothing directly
 - `Acter_ClearGlobalBlock71` calls nothing directly
 - `Acter_ClearTable10488B08` calls nothing directly
-- `Acter_ShutdownGlobals` calls `LobbyThread_SendCmd11`, `Target_Reset`, `YkMyroom::Destructor`, `thunk_sub_10028AA0`, `operator_delete`, `XiEvent_GetSingleton_100C3190`, `XiEvent_Clear`, `XiEvent_ResetActersAndGlobals`, `XI_PACKET_1008ABE0 (left out)`, `sub_1015EEA0`, `CXiActor::Destroy`
+- `Acter_ShutdownGlobals` calls `LobbyThread_SendCmd11`, `Target_Reset`, `YkMyroom::Destructor`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`, `operator_delete`, `XiEvent_GetSingleton_100C3190`, `XiEvent_Clear`, `XiEvent_ResetActersAndGlobals`, `XI_PACKET_1008ABE0 (left out)`, `game_1015EEA0`, `CXiActor::Destroy`
 - `Acter_Nop` calls nothing directly
 - `CallMotd` calls `Command_RunLine`
 - `Acter_IsState5` calls nothing directly
@@ -219,7 +219,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Acter_IsStateGroup38` calls nothing directly
 - `Acter_IsStateGroup3F` calls nothing directly
 - `Acter_CanClearPendingState` calls `Acter_IsStateGroup06Or38`
-- `Acter_UpdateAllLists` calls `sub_10095D80`, `Acter_IsEvent`, `CYyObject_IsKindOf`, `sub_100C4400`, `Acter_ReleaseAllSlots`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `sub_100961D0`, `sub_10096200`, `sub_10095DA0`, `Acter_ClearPendingState`, `Acter_ClearPending272`, `Acter_UpdateActionState`, `sub_1008F740`, `sub_100960F0`, `sub_10096040`
+- `Acter_UpdateAllLists` calls `game_10095D80`, `Acter_IsEvent`, `CYyObject_IsKindOf`, `game_100C4400`, `Acter_ReleaseAllSlots`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `game_100961D0`, `game_10096200`, `game_10095DA0`, `Acter_ClearPendingState`, `Acter_ClearPending272`, `Acter_UpdateActionState`, `game_1008F740`, `game_100960F0`, `game_10096040`
 - `Acter_ClearPendingState` calls `Acter_CanClearPendingState`, `Acter_ReleaseAllSlots`
 - `Acter_ClearPending272` calls `Acter_IsState5`, `Acter_IsState55`, `Acter_IsByte123Mask7In234`, `Acter_ReleaseAllSlots`
 - `Acter_UpdateActionState` calls `Acter_IsStateGroup06Or38`, `Acter_IsState5`, `Acter_IsState55`, `Acter_IsStateGroup3F`, `Acter_ReleaseAllSlots`
@@ -234,10 +234,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Acter_LookupTable10487E7C` calls `Acter_OffsetTableEntry`
 - `Acter_LookupTable10487E84` calls `Acter_OffsetTableEntry`
 - `Acter_LookupTable10487E80` calls `Acter_OffsetTableEntry`
-- `Acter_UpdateFrame` calls `NetCellFont_GetFlags`, `XI_PACKET_10094190 (left out)`, `Acter_GetActerAt10485F7A`, `Camera_SetTargetIfMoved`, `Camera_PlaceRelativeToActor`, `XI_PACKET_10093DB0 (left out)`, `Camera_GetFrameScale`, `sub_10311C2C`, `XI_PACKET_1008ABE0 (left out)`, `Cell_SetByte104E1C3E`, `sub_100AED00`, `sub_100882D0`, `sub_100AEA40`, `sub_100973B0`, `Acter_ReleaseEventRecord`, `Acter_ReleaseAllSlots`, `sub_10095660`, `Acter_StartAutoRunFromZoneMap`, `sub_1008B170`, `sub_100B37A0`, `sub_100BD0E0`, `Acter_UpdateOne`, `Acter_UpdateAllLists`, `SetMusicTrackVolume_B`, `sub_100AE960`, `TaskAndTextArgs_ToggleOnKey`, `XI_PACKET_100983F0 (left out)`, `XI_PACKET_100780A0 (left out)`, `sub_10096C90`, `sub_10093E30`, `sub_10093E50`, `sub_10097AF0`, `sub_100A3D00`, `sub_1009F2F0`, `Acter_UpdateFrame997B0`, `sub_10087220`, `Help_UpdateFromFlags`, `Acter_UpdateObject10578184`, `NetCellFont_GetWord40DAA`, `NetCellFont_SetWord40DAA`, `NetCellFont_TestCommand36CF60`
-- `Acter_UpdateSkeletonParts` calls `Acter_GetActerAt10485F7A`, `sub_100CF0B0`, `sub_100CF160`, `sub_100CF060`, `CXiSkeletonActor::ForParts0To9`
+- `Acter_UpdateFrame` calls `NetCellFont_GetFlags`, `XI_PACKET_10094190 (left out)`, `Acter_GetActerAt10485F7A`, `Camera_SetTargetIfMoved`, `Camera_PlaceRelativeToActor`, `XI_PACKET_10093DB0 (left out)`, `Camera_GetFrameScale`, `game_10311C2C`, `XI_PACKET_1008ABE0 (left out)`, `Cell_SetByte104E1C3E`, `game_100AED00`, `game_100882D0`, `game_100AEA40`, `game_100973B0`, `Acter_ReleaseEventRecord`, `Acter_ReleaseAllSlots`, `game_10095660`, `Acter_StartAutoRunFromZoneMap`, `game_1008B170`, `game_100B37A0`, `game_100BD0E0`, `Acter_UpdateOne`, `Acter_UpdateAllLists`, `SetMusicTrackVolume_B`, `game_100AE960`, `TaskAndTextArgs_ToggleOnKey`, `XI_PACKET_100983F0 (left out)`, `XI_PACKET_100780A0 (left out)`, `game_10096C90`, `game_10093E30`, `game_10093E50`, `game_10097AF0`, `game_100A3D00`, `game_1009F2F0`, `Acter_UpdateFrame997B0`, `game_10087220`, `Help_UpdateFromFlags`, `Acter_UpdateObject10578184`, `NetCellFont_GetWord40DAA`, `NetCellFont_SetWord40DAA`, `NetCellFont_TestCommand36CF60`
+- `Acter_UpdateSkeletonParts` calls `Acter_GetActerAt10485F7A`, `game_100CF0B0`, `game_100CF160`, `game_100CF060`, `CXiSkeletonActor::ForParts0To9`
 - `Acter_TestFlagsAndUpdateParts` calls `Acter_UpdateSkeletonParts`
-- `Entity_BuildDisplayName` calls `Acter_TestFlagsAndUpdateParts`, `sub_10097500`, `sub_10097730`, `sub_100977A0`, `sub_10313520`
+- `Entity_BuildDisplayName` calls `Acter_TestFlagsAndUpdateParts`, `game_10097500`, `game_10097730`, `game_100977A0`, `game_10313520`
 - `Entity_GetIndexedPtr` calls nothing directly
 - `Acter_HasEntryForWord40D7C` calls `Acter_FindEntryForWord40D7C`
 - `Acter_FindEntryForWord40D7C` calls nothing directly
@@ -249,8 +249,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Acter_ActerTestEE120` calls `Acter_IsSpecialIdRange`
 - `Acter_GetPartnerIfKind` calls `CYyObject_IsKindOf`
 - `Acter_GetTable10485830IfBit2` calls nothing directly
-- `Acter_ResolveEntryNames` calls `TargetMenu_GetCachedOrLoad`, `sub_100935C0`
-- `Acter_UpdateFrame997B0` calls `Acter_ResolveEntryNames`, `Acter_GetActerAt10485F7A`, `sub_100E6080`, `TargetMenu_GetCachedOrLoad`
+- `Acter_ResolveEntryNames` calls `TargetMenu_GetCachedOrLoad`, `game_100935C0`
+- `Acter_UpdateFrame997B0` calls `Acter_ResolveEntryNames`, `Acter_GetActerAt10485F7A`, `game_100E6080`, `TargetMenu_GetCachedOrLoad`
 - `Acter_IsByte123Mask7In234` calls `Acter_IsState55`
 - `Acter_IsByte123Low3Bits3` calls nothing directly
 - `Acter_SetFieldsAt134And138` calls `Acter_ReleaseSlotCC`, `ActerBuff_FindByField78`, `Acter_GetPartnerIfKind`

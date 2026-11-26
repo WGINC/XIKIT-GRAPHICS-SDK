@@ -7,29 +7,29 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 300 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall YkMyroom::Destructor(void * self)
 {
-  *(uint8_t ***)self = &PTR_YkMyroom_GetRuntimeClass_103384a4;
+  *(uint8_t ***)self = &ptr_to_YkMyroom_GetRuntimeClass_103384A4;
   orig::MyRoom_ReleaseTable(self);
   orig::YkMyroom_ReleaseObject38(self);
   orig::Target_SetHandlerCc(g_pTargetMng,0);
-  if (DAT_106631dc != (undefined4 *)0x0) {
-    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,DAT_106631dc[2],DAT_106631dc[2]);
-    if (DAT_106631dc != (undefined4 *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_106631dc)))((void *)(DAT_106631dc),1);
-      DAT_106631dc = (undefined4 *)0x0;
+  if (g_106631DC != (bits32 *)0x0) {
+    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,g_106631DC[2],g_106631DC[2]);
+    if (g_106631DC != (bits32 *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_106631DC)))((void *)(g_106631DC),1);
+      g_106631DC = (bits32 *)0x0;
     }
   }
-  if (DAT_106631e0 != (undefined4 *)0x0) {
-    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,DAT_106631e0[2],DAT_106631e0[2]);
-    if (DAT_106631e0 != (undefined4 *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_106631e0)))((void *)(DAT_106631e0),1);
-      DAT_106631e0 = (undefined4 *)0x0;
+  if (g_106631E0 != (bits32 *)0x0) {
+    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,g_106631E0[2],g_106631E0[2]);
+    if (g_106631E0 != (bits32 *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_106631E0)))((void *)(g_106631E0),1);
+      g_106631E0 = (bits32 *)0x0;
     }
   }
-  if (DAT_106631e4 != (undefined4 *)0x0) {
-    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,DAT_106631e4[2],DAT_106631e4[2]);
-    if (DAT_106631e4 != (undefined4 *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)*DAT_106631e4)))((void *)(DAT_106631e4),1);
-      DAT_106631e4 = (undefined4 *)0x0;
+  if (g_106631E4 != (bits32 *)0x0) {
+    orig::Menu_RemoveAndFreeItem(&g_menuMng_as_v0,g_106631E4[2],g_106631E4[2]);
+    if (g_106631E4 != (bits32 *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)*g_106631E4)))((void *)(g_106631E4),1);
+      g_106631E4 = (bits32 *)0x0;
     }
   }
   orig::operator_delete_v1(*(LPVOID *)((int)self + 0x14));
@@ -43,11 +43,11 @@ void __thiscall YkMyroom::Destructor(void * self)
 // GATE: PASS -- 100 trials, 100 returned normally, 78 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall YkMyroom::ReleaseObject38(void * self)
 {
-  int *this_00;
+  int *obj1;
   
-  this_00 = *(int **)((int)self + 0x38);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  obj1 = *(int **)((int)self + 0x38);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self + 0x38) = 0;
     *(uint32_t *)(*(int *)((int)self + 4) + 0xa0) = 0;
     return;
@@ -70,61 +70,61 @@ void __thiscall YkMyroom::ReleaseResource8(void * self)
 
 // FUNCTION: FFXIMAIN 0x101D3380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall YkMyroom::ChangeMode(void * self, int param_1, int param_2, uint32_t param_3)
+bits32 __thiscall YkMyroom::ChangeMode(void * self, int arg2, int arg3, uint32_t arg4)
 {
-  void *this_00;
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  int iVar5;
-  uint32_t uVar6;
-  uint32_t *puVar7;
-  uint64_t uVar8;
+  void *obj1;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
+  uint32_t u3;
+  int i2;
+  uint32_t u4;
+  uint32_t *p1;
+  uint64_t u5;
   uint32_t xi_s2;
   
-  iVar3 = param_1;
-  uVar4 = param_2;
-  uVar6 = param_3;
-  param_3 = (uint32_t)(param_3 == 9);
-  if (-1 < param_1) {
-LAB_101d33a6:
-    if (4 < param_1) {
-      return iVar3;
+  i1 = arg2;
+  u3 = arg3;
+  u4 = arg4;
+  arg4 = (uint32_t)(arg4 == 9);
+  if (-1 < arg2) {
+code_101D33A6:
+    if (4 < arg2) {
+      return i1;
     }
-    uVar1 = orig::Acter_HasEntryForWord40D7C();
-    if (((char)uVar1 == '\0') && (uVar1 = 0, param_1 != 0)) {
-      return param_1;
+    u1 = orig::Acter_HasEntryForWord40D7C();
+    if (((char)u1 == '\0') && (u1 = 0, arg2 != 0)) {
+      return arg2;
     }
-    uVar2 = orig::IsEvent_v1(0,uVar1);
-    if (((char)uVar2 != '\0') && (param_1 != 0)) {
-      return uVar2;
+    u2 = orig::IsEvent_v1(0,u1);
+    if (((char)u2 != '\0') && (arg2 != 0)) {
+      return u2;
     }
-    uVar8 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-    if ((int)uVar8 == 0) {
+    u5 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+    if ((int)u5 == 0) {
       return 0;
     }
-    iVar3 = param_1;
-    switch(xi_sw(param_1)) {
+    i1 = arg2;
+    switch(xi_sw(arg2)) {
     case 0:
-      iVar3 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
-      if ((char)iVar3 == '\0') {
+      i1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
+      if ((char)i1 == '\0') {
         *(uint16_t *)((int)self + 0x7e6) = 0;
         orig::MyRoom_CallAllFurniture101CEA80(self,0x80808080);
         orig::ZoneMap_SetByteOfId999Entries(g_pZoneMap,2);
-        puVar7 = (uint32_t *)((int)self + 0x4c);
-        iVar3 = 2;
+        p1 = (uint32_t *)((int)self + 0x4c);
+        i1 = 2;
         do {
-          iVar5 = 0x51;
+          i2 = 0x51;
           do {
-            if ((void *)*puVar7 != (void *)0x0) {
-              orig::PlantMenu_SetState((void *)*puVar7,0,5);
+            if ((void *)*p1 != (void *)0x0) {
+              orig::PlantMenu_SetState((void *)*p1,0,5);
             }
-            puVar7 = puVar7 + 1;
-            iVar5 = iVar5 + -1;
-          } while (iVar5 != 0);
-          iVar3 = iVar3 + -1;
-        } while (iVar3 != 0);
+            p1 = p1 + 1;
+            i2 = i2 + -1;
+          } while (i2 != 0);
+          i1 = i1 + -1;
+        } while (i1 != 0);
         if (*(int *)((int)self + 0x38) != 0) {
           *(uint8_t *)(*(int *)((int)self + 0x38) + 0xc0) = 1;
         }
@@ -133,38 +133,38 @@ LAB_101d33a6:
         *(uint8_t *)((int)g_pTargetMng + 0x74) = *(uint8_t *)((int)g_pTargetMng + 0x74) & 0xef;
         orig::TargetMenu_SetTextFwd(g_pTkTitle,0,0);
         orig::TargetMenu_ForwardToPanel_v1(g_pTkHelp,0,0);
-        iVar3 = *(int *)(DAT_105782b4_as_s32 + 8);
-        if (iVar3 == 0) {
-          iVar3 = orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_myroom_1036fff0,1,0);
+        i1 = *(int *)(g_105782B4_as_s32 + 8);
+        if (i1 == 0) {
+          i1 = orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_myroom_1036FFF0,1,0);
         }
         if (*(short *)((int)self + 0x1c) == 1) {
-          iVar3 = orig::XI_PACKET_100F0C80();
+          i1 = orig::XI_PACKET_100F0C80();
         }
       }
       else if (*(short *)((int)self + 0x1c) != 0) {
-        iVar3 = orig::MyRoom_BeginMode(self,1);
+        i1 = orig::MyRoom_BeginMode(self,1);
       }
-      goto switchD_101d33ff_default;
+      goto L1;
     case 1:
-      iVar3 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
-      if ((char)iVar3 == '\0') {
+      i1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
+      if ((char)i1 == '\0') {
         orig::MyRoom_CallAllFurniture101CEA80(self,0x80808080);
         if (*(char *)((int)self + 0x24) == '\0') {
           orig::ZoneMap_SetByteOfId999Entries(g_pZoneMap,0);
         }
-        puVar7 = (uint32_t *)((int)self + 0x4c);
-        param_2 = 2;
+        p1 = (uint32_t *)((int)self + 0x4c);
+        arg3 = 2;
         do {
-          iVar3 = 0x51;
+          i1 = 0x51;
           do {
-            if ((void *)*puVar7 != (void *)0x0) {
-              orig::PlantMenu_SetState((void *)*puVar7,1,5);
+            if ((void *)*p1 != (void *)0x0) {
+              orig::PlantMenu_SetState((void *)*p1,1,5);
             }
-            puVar7 = puVar7 + 1;
-            iVar3 = iVar3 + -1;
-          } while (iVar3 != 0);
-          param_2 = param_2 + -1;
-        } while (param_2 != 0);
+            p1 = p1 + 1;
+            i1 = i1 + -1;
+          } while (i1 != 0);
+          arg3 = arg3 + -1;
+        } while (arg3 != 0);
         if (*(int *)((int)self + 0x38) != 0) {
           *(uint8_t *)(*(int *)((int)self + 0x38) + 0xc0) = 2;
         }
@@ -172,85 +172,85 @@ LAB_101d33a6:
         *(uint32_t *)((int)self + 0x7e8) = 1;
         *(uint32_t *)((int)self + 0x7f0) = 0;
         orig::Cell_SetGlobal1036E3A0(0x42);
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_playermo_1036f5b4);
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_targetwi_1035bad8);
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_menuwind_10371b4c);
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_myroom_1036fff0);
-        orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mogpost_1037160c);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_playermo_1036F5B4);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_targetwi_1035BAD8);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_menuwind_10371B4C);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_myroom_1036FFF0);
+        orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mogpost_1037160C);
         *(uint8_t *)((int)g_pTargetMng + 0x74) = *(uint8_t *)((int)g_pTargetMng + 0x74) | 0x10;
         orig::TargetMenu_SetTargetMode_v2(g_pTargetMng,0);
-        uVar1 = 0;
-        iVar3 = orig::TargetMenu_GetMessageFwd(0xd,4);
-        orig::TargetMenu_SetTextFwd(g_pTkTitle,iVar3,uVar1);
+        u1 = 0;
+        i1 = orig::TargetMenu_GetMessageFwd(0xd,4);
+        orig::TargetMenu_SetTextFwd(g_pTkTitle,i1,u1);
         xi_s2 = 0;
-        uVar1 = orig::TargetMenu_GetMessageFwd(0xe,0xe);
-        orig::TargetMenu_ForwardToPanel_v1(g_pTkHelp,uVar1,xi_s2);
-        if ((((int)uVar4 < 0) || (0x50 < (int)uVar4)) ||
-           (this_00 = *(void **)((int)self + uVar4 * 4 + param_3 * 0x144 + 0x4c),
-           this_00 == (void *)0x0)) {
-          iVar3 = orig::MyRoom_GetFirstFurnitureId(self);
-          *(short *)((int)self + 0x7e6) = (short)iVar3;
-          if ((*(short *)((int)self + 0x48) == 0) && ((short)iVar3 == 0)) {
-            iVar3 = orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,s_menu_rmlo1_1037ec94,1,0);
+        u1 = orig::TargetMenu_GetMessageFwd(0xe,0xe);
+        orig::TargetMenu_ForwardToPanel_v1(g_pTkHelp,u1,xi_s2);
+        if ((((int)u3 < 0) || (0x50 < (int)u3)) ||
+           (obj1 = *(void **)((int)self + u3 * 4 + arg4 * 0x144 + 0x4c),
+           obj1 == (void *)0x0)) {
+          i1 = orig::MyRoom_GetFirstFurnitureId(self);
+          *(short *)((int)self + 0x7e6) = (short)i1;
+          if ((*(short *)((int)self + 0x48) == 0) && ((short)i1 == 0)) {
+            i1 = orig::MenuMng_OpenByName_v1(&g_menuMng_as_v0,str_menu_rmlo1_1037EC94,1,0);
           }
         }
         else {
-          iVar3 = orig::PlantMenu_GetWord58(this_00,this_00);
-          *(short *)((int)self + 0x7e6) = (short)iVar3;
+          i1 = orig::PlantMenu_GetWord58(obj1,obj1);
+          *(short *)((int)self + 0x7e6) = (short)i1;
         }
       }
-      goto switchD_101d33ff_default;
+      goto L1;
     case 2:
-      if (DAT_106631e4_as_v0 != (void *)0x0) {
-        iVar3 = orig::MyRoom_StartWithCallbackOnce(DAT_106631e4_as_v0,&LAB_101d3bf0);
+      if (g_106631E4_as_v0 != (void *)0x0) {
+        i1 = orig::MyRoom_StartWithCallbackOnce(g_106631E4_as_v0,&code_101D3BF0);
       }
-      goto switchD_101d33ff_default;
+      goto L1;
     case 3:
-      uVar1 = orig::YkWindows_HasKind0CFlag40Entry(DAT_10664420_as_v0);
-      if ((char)uVar1 != '\0') {
-        uVar1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
-        if (((char)uVar1 == '\0') || (uVar1 = orig::MyRoom_IsWord40D82Zero(), (char)uVar1 == '\0')) {
+      u1 = orig::YkWindows_HasKind0CFlag40Entry(g_10664420_as_v0);
+      if ((char)u1 != '\0') {
+        u1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
+        if (((char)u1 == '\0') || (u1 = orig::MyRoom_IsWord40D82Zero(), (char)u1 == '\0')) {
           orig::Cell_SetGlobal1036E3A0(0x42);
-          orig::YkWndItem_Open(DAT_10663740,DAT_10664420_as_v0);
+          orig::YkWndItem_Open(g_10663740,g_10664420_as_v0);
           orig::TargetMenu_SetTargetMode_v2(g_pTargetMng,0);
         }
         else {
           orig::MyRoom_BeginMode(self,0);
           orig::TargetMenu_SetTargetMode_v2(g_pTargetMng,0);
         }
-        goto LAB_101d3778;
+        goto code_101D3778;
       }
-      iVar3 = orig::FUN_100a1860(0x3b);
-      param_1 = 0;
-      param_3 = 0;
-      uVar4 = 0xffffffff;
-      uVar6 = 1;
-      goto LAB_101d33a6;
+      i1 = orig::game_100A1860(0x3b);
+      arg2 = 0;
+      arg4 = 0;
+      u3 = 0xffffffff;
+      u4 = 1;
+      goto code_101D33A6;
     case 4:
-      uVar1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
-      if ((char)uVar1 == '\0') {
+      u1 = orig::MyRoom_Is104DFD98Bit40DB1x10Clear();
+      if ((char)u1 == '\0') {
         orig::Cell_SetGlobal1036E3A0(0x42);
-        if (((-1 < (int)uVar4) && ((int)uVar4 < 0x51)) &&
-           (*(int *)((int)self + uVar4 * 4 + param_3 * 0x144 + 0x4c) != 0)) {
-          orig::MyRoom_SelectFurniture(g_C_106631D4_as_v1,uVar4,uVar6);
+        if (((-1 < (int)u3) && ((int)u3 < 0x51)) &&
+           (*(int *)((int)self + u3 * 4 + arg4 * 0x144 + 0x4c) != 0)) {
+          orig::MyRoom_SelectFurniture(g_C_106631D4_as_v1,u3,u4);
         }
       }
       else {
         orig::MyRoom_BeginMode(self,0);
       }
-LAB_101d3778:
-      orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_targetwi_1035bad8);
-      orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_menuwind_10371b4c);
-      orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_roommenu_1037ec80);
-      iVar3 = orig::Menu_CloseEntry(&g_menuMng_as_v0,s_menu_mogpost_1037160c);
-switchD_101d33ff_default:
-      param_1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar3 >> 0x10)) << 16) | (uint16_t)((uint16_t)param_1)));
+code_101D3778:
+      orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_targetwi_1035BAD8);
+      orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_menuwind_10371B4C);
+      orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_roommenu_1037EC80);
+      i1 = orig::Menu_CloseEntry(&g_menuMng_as_v0,str_menu_mogpost_1037160C);
+L1:
+      arg2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i1 >> 0x10)) << 16) | (uint16_t)((uint16_t)arg2)));
       *(uint16_t *)((int)self + 0x1e) = *(uint16_t *)((int)self + 0x1c);
-      *(uint16_t *)((int)self + 0x1c) = (uint16_t)param_1;
+      *(uint16_t *)((int)self + 0x1c) = (uint16_t)arg2;
       break;
     default:
-      goto switchD_101d33ff_default;
+      goto L1;
     }
   }
-  return param_1;
+  return arg2;
 }

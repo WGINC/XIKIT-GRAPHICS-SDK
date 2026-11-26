@@ -4,13 +4,13 @@
 
 // FUNCTION: FFXIMAIN 0x102960A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqChannelMotion_CreateWithOwner(int param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqChannelMotion_CreateWithOwner(int arg1, bits32 arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqmoChannelMotion_Create();
-  puVar1[10] = param_1;
-  puVar1[8] = param_2;
-  puVar1[9] = *(undefined4 *)(param_1 + 0x20);
-  return puVar1;
+  p1 = orig::SqmoChannelMotion_Create();
+  p1[10] = arg1;
+  p1[8] = arg2;
+  p1[9] = *(bits32 *)(arg1 + 0x20);
+  return p1;
 }

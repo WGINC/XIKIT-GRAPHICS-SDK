@@ -12,4 +12,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoMmbRes.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoMmbRes::ScalarDeletingDtor` calls `sub_10176EC0`, `SharedDeleteHelper`
+- `CMoMmbRes::ScalarDeletingDtor` calls `game_10176EC0`, `SharedDeleteHelper`

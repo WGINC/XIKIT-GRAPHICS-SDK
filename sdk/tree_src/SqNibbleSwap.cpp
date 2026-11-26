@@ -4,18 +4,18 @@
 
 // FUNCTION: FFXIMAIN 0x10292490
 // GATE: PASS -- 100 trials, 39 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 39
-XI_API void __cdecl SqNibbleSwap_SwapNibblesXor(int param_1, uint32_t param_2)
+XI_API void __cdecl SqNibbleSwap_SwapNibblesXor(int arg1, uint32_t arg2)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
+  uint8_t u1;
+  uint32_t u2;
   
-  uVar2 = 0;
-  if (param_2 != 0) {
+  u2 = 0;
+  if (arg2 != 0) {
     do {
-      bVar1 = *(uint8_t *)(uVar2 + param_1) ^ DAT_103bb0c8;
-      *(uint8_t *)(uVar2 + param_1) = bVar1 >> 4 ^ bVar1 << 4;
-      uVar2 = uVar2 + 1;
-    } while (uVar2 < param_2);
+      u1 = *(uint8_t *)(u2 + arg1) ^ g_103BB0C8;
+      *(uint8_t *)(u2 + arg1) = u1 >> 4 ^ u1 << 4;
+      u2 = u2 + 1;
+    } while (u2 < arg2);
   }
   return;
 }

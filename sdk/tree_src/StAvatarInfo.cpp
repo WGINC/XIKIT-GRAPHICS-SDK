@@ -4,23 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x10253210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_ClearResource(uint32_t * param_1)
+XI_API bits32 __cdecl StAvatar_ClearResource(uint32_t * arg1)
 {
   uint32_t *self_;
   
-  if ((*param_1 & 1) != 0) {
-    self_ = param_1 + 5;
-    param_1[3] = 0xffffffff;
-    param_1[4] = 0xffffffff;
-    param_1[1] = 0;
-    param_1[2] = 0;
+  if ((*arg1 & 1) != 0) {
+    self_ = arg1 + 5;
+    arg1[3] = 0xffffffff;
+    arg1[4] = 0xffffffff;
+    arg1[1] = 0;
+    arg1[2] = 0;
     if ((uint32_t *)*self_ != (uint32_t *)0x0) {
       orig::CMoResource_ReleaseChain_v1(*(void **)*self_);
       orig::ResHandle_FreeIfUnreferenced_v1(self_);
       *self_ = 0;
     }
-    orig::SqopSystem_ClearOpcodes(param_1 + 6);
-    *param_1 = *param_1 & 0xfffffff3;
+    orig::SqopSystem_ClearOpcodes(arg1 + 6);
+    *arg1 = *arg1 & 0xfffffff3;
     return 0;
   }
   return 0xffffffff;
@@ -28,10 +28,10 @@ XI_API undefined4 __cdecl StAvatar_ClearResource(uint32_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x102532C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) StAvatarInfo_SubmitInfoBinIfObjSet(undefined4 xi_eax, int param_1, int param_2, int param_3)
+XI_API bits32 __attribute__((cdecl, regparm(1))) StAvatarInfo_SubmitInfoBinIfObjSet(bits32 xi_eax, int arg2, int arg3, int arg4)
 {
   if (g_pObj_Vtbl1033CE34 != 0) {
-    xi_eax = orig::StAvatarInfo_SubmitInfoBinIfChanged(param_1,param_2,param_3);
+    xi_eax = orig::StAvatarInfo_SubmitInfoBinIfChanged(arg2,arg3,arg4);
   }
   return xi_eax;
 }
@@ -40,7 +40,7 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) StAvatarInfo_SubmitInfoBinI
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall StAvatarInfo_Ctor(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_1033ce34;
+  *(uint8_t ***)self_ = &g_1033CE34;
   orig::StAvatarInfo_NoOp();
   return self_;
 }
@@ -54,54 +54,54 @@ XI_API void __cdecl StAvatarInfo_NoOp(void)
 
 // FUNCTION: FFXIMAIN 0x10253360
 // GATE: PASS -- 100 trials, 97 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API void __stdcall StAvatar_LoadInfoFile(int param_1)
+XI_API void __stdcall StAvatar_LoadInfoFile(int arg1)
 {
-  int iVar1;
-  uint8_t **ppuVar2;
-  uint32_t *puVar3;
-  int iVar4;
-  uint32_t uVar5;
-  uint64_t uVar6;
+  int i1;
+  uint8_t **p1;
+  uint32_t *p2;
+  int i2;
+  uint32_t u1;
+  uint64_t u2;
   char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&local_20)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  uint8_t  (&u3)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
   
-  if (param_1 < 4) {
-    iVar1 = param_1 * 0x14;
-    ppuVar2 =(uint8_t**)(&PTR_s_info00_bin_10389d08 + param_1 * 5);
-    if (((uint8_t *)((&DAT_10389d0d)))[param_1 * 0x14] != '\0') {
-      if (*(int *)(((char *)&DAT_10389d14) + iVar1) == 0) {
-        uVar6 = orig::Allocator_Generic_v1(*(int *)(((char *)&DAT_10389d10) + iVar1) + 1);
-        puVar3 = (uint32_t *)uVar6;
-        *(uint32_t **)(((char *)&DAT_10389d14) + iVar1) = puVar3;
-        if (puVar3 != (uint32_t *)0x0) {
-          iVar4 = *(int *)(((char *)&DAT_10389d10) + iVar1);
-          for (uVar5 = iVar4 + 1U >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
-            *puVar3 = 0;
-            puVar3 = puVar3 + 1;
+  if (arg1 < 4) {
+    i1 = arg1 * 0x14;
+    p1 =(uint8_t**)(&g_10389D08 + arg1 * 5);
+    if (((uint8_t *)((&g_10389D0D)))[arg1 * 0x14] != '\0') {
+      if (*(int *)(((char *)&g_10389D14) + i1) == 0) {
+        u2 = orig::Allocator_Generic_v1(*(int *)(((char *)&g_10389D10) + i1) + 1);
+        p2 = (uint32_t *)u2;
+        *(uint32_t **)(((char *)&g_10389D14) + i1) = p2;
+        if (p2 != (uint32_t *)0x0) {
+          i2 = *(int *)(((char *)&g_10389D10) + i1);
+          for (u1 = i2 + 1U >> 2; u1 != 0; u1 = u1 - 1) {
+            *p2 = 0;
+            p2 = p2 + 1;
           }
-          for (uVar5 = iVar4 + 1U & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-            *(uint8_t *)puVar3 = 0;
-            puVar3 = (uint32_t *)((int)puVar3 + 1);
+          for (u1 = i2 + 1U & 3; u1 != 0; u1 = u1 - 1) {
+            *(uint8_t *)p2 = 0;
+            p2 = (uint32_t *)((int)p2 + 1);
           }
         }
       }
-      if (((g_pFileMng_as_v0 != (void *)0x0) && (((uint8_t *)((&DAT_10389d0c)))[iVar1] != '\0')) &&
-         (*(int *)(((char *)&DAT_10389d14) + iVar1) != 0)) {
-        orig::TextInputFiles_CtorVt10337C60(local_20);
-        iVar4 = orig::TextInputFiles_FileMngFwd101C2450(g_pFileMng_as_v0,*ppuVar2,local_20);
-        if (-1 < iVar4) {
-          iVar4 = orig::TextInputFiles_FileMngSubmitPath3F4Kind1(g_pFileMng_as_v0,*ppuVar2,*(LPVOID *)(((char *)&DAT_10389d14) + iVar1),
-                               *(uint32_t *)(((char *)&DAT_10389d10) + iVar1),0);
-          if (-1 < iVar4) {
-            orig::TextInputFiles_FileMngSubmitPath3F4Kind6(g_pFileMng_as_v0,*ppuVar2);
+      if (((g_pFileMng_as_v0 != (void *)0x0) && (((uint8_t *)((&g_10389D0C)))[i1] != '\0')) &&
+         (*(int *)(((char *)&g_10389D14) + i1) != 0)) {
+        orig::TextInputFiles_CtorVt10337C60(u3);
+        i2 = orig::TextInputFiles_FileMngFwd101C2450(g_pFileMng_as_v0,*p1,u3);
+        if (-1 < i2) {
+          i2 = orig::TextInputFiles_FileMngSubmitPath3F4Kind1(g_pFileMng_as_v0,*p1,*(LPVOID *)(((char *)&g_10389D14) + i1),
+                               *(uint32_t *)(((char *)&g_10389D10) + i1),0);
+          if (-1 < i2) {
+            orig::TextInputFiles_FileMngSubmitPath3F4Kind6(g_pFileMng_as_v0,*p1);
           }
-          ((uint8_t *)((&DAT_10389d0c)))[iVar1] = 0;
-          orig::TextInputFiles_SetVtable10337C60(local_20);
+          ((uint8_t *)((&g_10389D0C)))[i1] = 0;
+          orig::TextInputFiles_SetVtable10337C60(u3);
           return;
         }
-        orig::operator_delete_v1(*(LPVOID *)(((char *)&DAT_10389d14) + iVar1));
-        *(uint32_t *)(((char *)&DAT_10389d14) + iVar1) = 0;
-        orig::TextInputFiles_SetVtable10337C60(local_20);
+        orig::operator_delete_v1(*(LPVOID *)(((char *)&g_10389D14) + i1));
+        *(uint32_t *)(((char *)&g_10389D14) + i1) = 0;
+        orig::TextInputFiles_SetVtable10337C60(u3);
       }
     }
   }
@@ -110,64 +110,64 @@ XI_API void __stdcall StAvatar_LoadInfoFile(int param_1)
 
 // FUNCTION: FFXIMAIN 0x102534F0
 // GATE: PASS -- 100 trials, 82 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 82
-XI_API undefined4 __stdcall StAvatarInfo_SubmitInfoBinIfChanged(int param_1, int param_2, int param_3)
+XI_API bits32 __stdcall StAvatarInfo_SubmitInfoBinIfChanged(int arg1, int arg2, int arg3)
 {
-  int iVar1;
-  uint8_t bVar2;
-  uint8_t bVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint32_t uVar6;
-  int iVar7;
+  int i1;
+  uint8_t u1;
+  uint8_t u2;
+  int i2;
+  uint32_t *p1;
+  uint32_t u3;
+  int i3;
   
-  if (param_1 < 4) {
-    iVar1 = param_1 * 0x14;
-    iVar4 = param_1 * 5;
-    iVar7 = param_1 * 0x14;
-    param_1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)(param_1 * 5) >> 8))) << 8) | (uint8_t)(((uint8_t *)((&DAT_10389d0d)))[iVar7])));
-    if (((uint8_t *)((&DAT_10389d0d)))[iVar7] != '\0') {
-      bVar2 = false;
-      bVar3 = false;
-      if (*(int *)(((char *)&DAT_10389d18) + iVar1) == 0) {
-        puVar5 = orig::Allocator_Generic_v3(*(int *)(((char *)&DAT_10389d10) + iVar1) + 1);
-        *(uint32_t **)(((char *)&DAT_10389d18) + iVar1) = puVar5;
-        if (puVar5 != (uint32_t *)0x0) {
-          iVar7 = *(int *)(((char *)&DAT_10389d10) + iVar1);
-          for (uVar6 = iVar7 + 1U >> 2; uVar6 != 0; uVar6 = uVar6 - 1) {
-            *puVar5 = 0;
-            puVar5 = puVar5 + 1;
+  if (arg1 < 4) {
+    i1 = arg1 * 0x14;
+    i2 = arg1 * 5;
+    i3 = arg1 * 0x14;
+    arg1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)(arg1 * 5) >> 8))) << 8) | (uint8_t)(((uint8_t *)((&g_10389D0D)))[i3])));
+    if (((uint8_t *)((&g_10389D0D)))[i3] != '\0') {
+      u1 = false;
+      u2 = false;
+      if (*(int *)(((char *)&g_10389D18) + i1) == 0) {
+        p1 = orig::Allocator_Generic_v3(*(int *)(((char *)&g_10389D10) + i1) + 1);
+        *(uint32_t **)(((char *)&g_10389D18) + i1) = p1;
+        if (p1 != (uint32_t *)0x0) {
+          i3 = *(int *)(((char *)&g_10389D10) + i1);
+          for (u3 = i3 + 1U >> 2; u3 != 0; u3 = u3 - 1) {
+            *p1 = 0;
+            p1 = p1 + 1;
           }
-          for (uVar6 = iVar7 + 1U & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-            *(uint8_t *)puVar5 = 0;
-            puVar5 = (uint32_t *)((int)puVar5 + 1);
+          for (u3 = i3 + 1U & 3; u3 != 0; u3 = u3 - 1) {
+            *(uint8_t *)p1 = 0;
+            p1 = (uint32_t *)((int)p1 + 1);
           }
         }
-        bVar2 = true;
-        if (*(int *)(((char *)&DAT_10389d18) + iVar1) == 0) {
+        u1 = true;
+        if (*(int *)(((char *)&g_10389D18) + i1) == 0) {
           return 0;
         }
       }
-      iVar7 = 0;
-      param_1 = param_3;
-      if (0 < param_3) {
+      i3 = 0;
+      arg1 = arg3;
+      if (0 < arg3) {
         do {
-          if ((*(char *)(*(int *)(((char *)&DAT_10389d18) + iVar1) + iVar7) != *(char *)(iVar7 + param_2)) ||
-             (bVar2)) {
-            *(char *)(*(int *)(((char *)&DAT_10389d18) + iVar1) + iVar7) = *(char *)(iVar7 + param_2);
-            bVar3 = true;
+          if ((*(char *)(*(int *)(((char *)&g_10389D18) + i1) + i3) != *(char *)(i3 + arg2)) ||
+             (u1)) {
+            *(char *)(*(int *)(((char *)&g_10389D18) + i1) + i3) = *(char *)(i3 + arg2);
+            u2 = true;
           }
-          iVar7 = iVar7 + 1;
-        } while (iVar7 < param_3);
-        if ((bVar3) && (g_pFileMng_as_v0 != (void *)0x0)) {
-          param_1 = orig::TextInputFiles_FileMngSubmitPath3F4Kind3
-                              (g_pFileMng_as_v0,(&PTR_s_info00_bin_10389d08)[iVar4],
-                               *(uint32_t *)(((char *)&DAT_10389d18) + iVar1),
-                               *(int *)(((char *)&DAT_10389d10) + iVar1) + 1,0);
+          i3 = i3 + 1;
+        } while (i3 < arg3);
+        if ((u2) && (g_pFileMng_as_v0 != (void *)0x0)) {
+          arg1 = orig::TextInputFiles_FileMngSubmitPath3F4Kind3
+                              (g_pFileMng_as_v0,(&g_10389D08)[i2],
+                               *(uint32_t *)(((char *)&g_10389D18) + i1),
+                               *(int *)(((char *)&g_10389D10) + i1) + 1,0);
         }
       }
     }
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x102535B0
@@ -182,13 +182,13 @@ XI_API void __cdecl StAvatar_LoadInfo0(void)
 
 // FUNCTION: FFXIMAIN 0x102535F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __attribute__((cdecl, regparm(1))) StAvatarInfo_SendBytePairKind0(undefined4 xi_eax, undefined4 param_1, undefined4 param_2)
+XI_API uint64_t __attribute__((cdecl, regparm(1))) StAvatarInfo_SendBytePairKind0(bits32 xi_eax, bits32 arg2, bits32 arg3)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  XI_PIECE(param_1, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((uint8_t)param_2) << 8) | (uint8_t)((uint8_t)param_1)));
-  uVar1 = orig::StAvatarInfo_SubmitInfoBinIfObjSet(0,&param_1,2,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)param_1))));
-  return uVar1;
+  XI_PIECE(arg2, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((uint8_t)arg3) << 8) | (uint8_t)((uint8_t)arg2)));
+  u1 = orig::StAvatarInfo_SubmitInfoBinIfObjSet(0,&arg2,2,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)arg2))));
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10253630
@@ -203,12 +203,12 @@ XI_API void __cdecl StAvatar_LoadInfo2(void)
 
 // FUNCTION: FFXIMAIN 0x10253670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl StAvatarInfo_SendBytePairKind2(undefined4 param_1, undefined4 param_2)
+XI_API void __cdecl StAvatarInfo_SendBytePairKind2(bits32 arg1, bits32 arg2)
 {
   uint32_t xi_entry_eax = 0;
   
-  XI_PIECE(param_1, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((uint8_t)param_2) << 8) | (uint8_t)((uint8_t)param_1)));
-  orig::StAvatarInfo_SubmitInfoBinIfObjSet(2,&param_1,2,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)((uint8_t)param_1))));
+  XI_PIECE(arg1, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((uint8_t)arg2) << 8) | (uint8_t)((uint8_t)arg1)));
+  orig::StAvatarInfo_SubmitInfoBinIfObjSet(2,&arg1,2,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)((uint8_t)arg1))));
   return;
 }
 

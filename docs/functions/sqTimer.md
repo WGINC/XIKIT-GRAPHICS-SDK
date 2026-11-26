@@ -12,4 +12,4 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqTimer.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqTimer_GetMicroseconds` calls `sqDebugPrintf`, `sub_10311C2C`
+- `SqTimer_GetMicroseconds` calls `sqDebugPrintf`, `game_10311C2C`

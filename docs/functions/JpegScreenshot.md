@@ -30,12 +30,12 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `JpegScreenshot_PutWordBE` calls `JpegScreenshot_PutByte`
 - `JpegScreenshot_PutFFThenByte` calls `JpegScreenshot_PutByte`
 - `JpegScreenshot_TriggerOnSceneState60` calls `Menu_IsStateB4Eq1`, `MusicTrack_SetVolumeId0016`
-- `CopyrightText_Draw` calls `Menu_IsStateB4Eq1`, `CDx::GetRenderTargetTop`, `CopyrightText_Format`, `sub_10311C2C`, `sub_101C9B50`
-- `CopyrightText_Format` calls `YkCommon_GetOffset`, `sub_10311FF1`
-- `JpegScreenshot_TakeScreenshot` calls `sub_100DBE10`, `YkCommon_TimeToTmWrap28Years`, `sub_10311FF1`, `ntGameTimeGet`, `Time_ModMul3CDiv90`, `JpegScreenshot_SaveJpeg512x382`, `JpegScreenshot_SaveJpegScreenSize`
-- `JpegScreenshot_SaveJpeg512x382` calls `Mem_AllocDefault`, `YkJpeg::Destructor`, `YkJpeg::CaptureAndEncode`, `JpegScreenshot_WriteWithFileMngA`, `YkJpeg::Release`, `thunk_sub_10028AA0`
+- `CopyrightText_Draw` calls `Menu_IsStateB4Eq1`, `CDx::GetRenderTargetTop`, `CopyrightText_Format`, `game_10311C2C`, `game_101C9B50`
+- `CopyrightText_Format` calls `YkCommon_GetOffset`, `game_10311FF1`
+- `JpegScreenshot_TakeScreenshot` calls `game_100DBE10`, `YkCommon_TimeToTmWrap28Years`, `game_10311FF1`, `ntGameTimeGet`, `Time_ModMul3CDiv90`, `JpegScreenshot_SaveJpeg512x382`, `JpegScreenshot_SaveJpegScreenSize`
+- `JpegScreenshot_SaveJpeg512x382` calls `Mem_AllocDefault`, `YkJpeg::Destructor`, `YkJpeg::CaptureAndEncode`, `JpegScreenshot_WriteWithFileMngA`, `YkJpeg::Release`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `JpegScreenshot_WriteWithFileMngA` calls `TextInputFiles_FileMngCall101C0A40`
-- `JpegScreenshot_SaveJpegScreenSize` calls `Camera_GetWord10`, `Camera_GetWord12`, `Mem_AllocDefault`, `YkJpeg::Destructor`, `YkJpeg::CaptureAndEncode`, `JpegScreenshot_WriteWithFileMngB`, `YkJpeg::Release`, `thunk_sub_10028AA0`
+- `JpegScreenshot_SaveJpegScreenSize` calls `Camera_GetWord10`, `Camera_GetWord12`, `Mem_AllocDefault`, `YkJpeg::Destructor`, `YkJpeg::CaptureAndEncode`, `JpegScreenshot_WriteWithFileMngB`, `YkJpeg::Release`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `JpegScreenshot_WriteWithFileMngB` calls `TextInputFiles_FileMngSubmitPath4F4Kind3`
 - `YkInit` calls `YkCommonInit`, `Allocator_Generic`, `YkWindows_CtorVt1033A8B8`, `Yk_CtorVt10339BC0`, `YkWindows_CtorVt103394C0`, `YkWindows_CtorVt10339698`, `YkWindows_CtorVt10339D78`, `YkWindows_CtorVt10338F68`, `YkWindows_CtorVt1033B948`, `NetCellFont_ClearWords`, `YkWindows_InitFromTablesA`, `YkWindows_InitFromTablesB`, `YkWindows_CtorVt1033ABE0`, `YkWindows_Init`, `Scene_GetMenuFrameName`, `YkWindows_ClearFields14To24`, `YkWindows_CtorVt10339250`, `YkWindows_CtorVt10338D88`, `YkWindows_CtorVt1033A5D8`, `YkWndShop_Constructor`, `Yk_CreateSecondaryObjects`, `YkWindows_CtorVt10339FA0`, `Yk_CreateCommonObjects`, `YkWindows_CtorVt1033B3A0`, `YkWindows_CtorVt10339E48`, `YkWndList_Init`, `YkWindows_CtorVt1033B248`, `YkWindows_CtorVt1033B340`, `YkWindows_CtorVt1033AAB0`, `YkWindows_CtorVt1033A6D0`, `YkWindows_CreateMenuObjects`, `YkCommon_Init`, `YkCommon_ResizeEntries`, `Scene_GetTableValue`, `YkCommon_LoadTable`
 - `JpegScreenshot_TestMask10663188` calls nothing directly

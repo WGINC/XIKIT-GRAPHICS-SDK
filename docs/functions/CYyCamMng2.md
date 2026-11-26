@@ -9,10 +9,10 @@ Group: `CYy` (by the file name only). Source: `sdk/tree_src/CYyCamMng2.cpp`.
 | `CYyCamMng2_SetGlobalFlags` | 0x1001E2F0 | 48 | yes | - | Sets the camera manager's global flag bytes. | low |
 | `CYyCamMng2::CreateGlobal` | 0x1001E470 | 53 | yes | - | - | - |
 | `CYyCamMng2_CallGlobalVfunc1` | 0x1001E4B0 | 21 | yes | - | - | - |
-| `CYyCamMng2::GetYaw` | 0x1001E4D0 | 25 | yes | - | Returns the camera yaw from two camera fields. (reviewed as sub_1001E4D0) | low |
-| `CYyCamMng2::Reset` | 0x1001E4F0 | 149 | yes | - | Resets the camera manager's position and state vectors to their defaults. (reviewed as sub_1001E4F0) | low |
-| `CYyCamMng2::SetDefaultDistances` | 0x1001E590 | 30 | yes | - | Resets the camera and sets its default distances. (reviewed as sub_1001E590) | low |
-| `CYyCamMng2::Construct` | 0x1001E600 | 146 | yes | - | Constructs the camera manager and clears its global state. (reviewed as sub_1001E600) | medium |
+| `CYyCamMng2::GetYaw` | 0x1001E4D0 | 25 | yes | - | Returns the camera yaw from two camera fields. (reviewed as game_1001E4D0) | low |
+| `CYyCamMng2::Reset` | 0x1001E4F0 | 149 | yes | - | Resets the camera manager's position and state vectors to their defaults. (reviewed as game_1001E4F0) | low |
+| `CYyCamMng2::SetDefaultDistances` | 0x1001E590 | 30 | yes | - | Resets the camera and sets its default distances. (reviewed as game_1001E590) | low |
+| `CYyCamMng2::Construct` | 0x1001E600 | 146 | yes | - | Constructs the camera manager and clears its global state. (reviewed as game_1001E600) | medium |
 
 ## Direct calls
 

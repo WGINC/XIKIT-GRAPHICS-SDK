@@ -6,7 +6,7 @@
 class XI_API CMoCameraTask {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x1003CC70
-    _DWORD * ScalarDeletingDtor(char a1);  // 0x1003D010
+    uint32_t * ScalarDeletingDtor(char arg1);  // 0x1003D010
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xC4];

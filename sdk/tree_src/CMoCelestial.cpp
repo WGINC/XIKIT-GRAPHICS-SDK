@@ -11,10 +11,10 @@ char ** __cdecl CMoCelestial::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1003D960
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoCelestial::ScalarDeletingDtor(char a2)
+uint32_t * CMoCelestial::ScalarDeletingDtor(char arg1)
 {
   orig::CMoCelestial_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CMoCelestial_vtbl * *)&this->vftable));
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CMoCelestial_vtbl * *)&this->vftable));
 }

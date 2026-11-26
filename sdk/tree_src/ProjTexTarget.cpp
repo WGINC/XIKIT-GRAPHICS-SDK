@@ -7,12 +7,12 @@
 XI_API void __cdecl ProjTexTarget_Release(void)
 {
   if (Fn10025260_targetTex_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*Fn10025260_targetTex_as_v0 + 8))))(Fn10025260_targetTex_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*Fn10025260_targetTex_as_v0 + 8))))(Fn10025260_targetTex_as_v0);
     Fn10025260_targetTex_as_v0 = (int *)0x0;
   }
-  if (dword_10456E70_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*dword_10456E70_as_v0 + 8))))(dword_10456E70_as_v0);
-    dword_10456E70_as_v0 = (int *)0x0;
+  if (g_10456E70_as_v0 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_10456E70_as_v0 + 8))))(g_10456E70_as_v0);
+    g_10456E70_as_v0 = (int *)0x0;
   }
   return;
 }
@@ -22,15 +22,15 @@ XI_API void __cdecl ProjTexTarget_Release(void)
 XI_API Vt_1032A460_vtbl ** __thiscall ProjTexTarget_Init(Vt_1032A460_vtbl **self_)
 {
   Vt_1032A460_vtbl *Texture;
-  unsigned __int16 ViewportWidth;
-  Vt_1032A460_vtbl *v4;
-  unsigned __int16 ViewportHeight;
+  unsigned short ViewportWidth;
+  Vt_1032A460_vtbl *p1;
+  unsigned short ViewportHeight;
   *self_ = &Vtbl_1032A460;
   Texture = (Vt_1032A460_vtbl *)Fn10025260_targetTex;
   if ( Fn10025260_targetTex != 0
     || (ViewportHeight = orig::Camera_GetViewportHeight(),
         ViewportWidth = orig::Camera_GetViewportWidth(),
-        Texture = (Vt_1032A460_vtbl *)orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &dword_10456E70, 1, 0),
+        Texture = (Vt_1032A460_vtbl *)orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &g_10456E70, 1, 0),
         Fn10025260_targetTex = (int)Texture,
         Texture != nullptr) )
   {
@@ -38,13 +38,13 @@ XI_API Vt_1032A460_vtbl ** __thiscall ProjTexTarget_Init(Vt_1032A460_vtbl **self
     Texture = (Vt_1032A460_vtbl *)Fn10025260_targetTex;
   }
   *(self_ + 1) = Texture;
-  v4 = (Vt_1032A460_vtbl *)dword_10456E70;
-  if ( dword_10456E70 != 0 )
+  p1 = (Vt_1032A460_vtbl *)g_10456E70;
+  if ( g_10456E70 != 0 )
   {
-    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)dword_10456E70 + 4))(dword_10456E70);
-    v4 = (Vt_1032A460_vtbl *)dword_10456E70;
+    (*(void (__stdcall **)(uint32_t))(*(uint32_t *)g_10456E70 + 4))(g_10456E70);
+    p1 = (Vt_1032A460_vtbl *)g_10456E70;
   }
-  *(self_ + 2) = v4;
+  *(self_ + 2) = p1;
   g_projTexTarget = 0;
   return self_;
 }

@@ -4,156 +4,156 @@
 
 // FUNCTION: FFXIMAIN 0x1026E3D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_StoreVec14(int param_1)
+XI_API void __cdecl SqgxContext_StoreVec14(int arg1)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
+  uint32_t  &u1 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
+  uint32_t  &u2 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t  &u3 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
   
-  local_c = *(uint32_t *)(param_1 + 0x14);
-  local_8 = *(uint32_t *)(param_1 + 0x18);
-  local_4 = *(uint32_t *)(param_1 + 0x1c);
-  orig::SqgxContext_StoreEntryVec(&local_c);
+  u1 = *(uint32_t *)(arg1 + 0x14);
+  u2 = *(uint32_t *)(arg1 + 0x18);
+  u3 = *(uint32_t *)(arg1 + 0x1c);
+  orig::SqgxContext_StoreEntryVec(&u1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1026E400
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_InitGlobals1099AEB8(void)
+XI_API bits32 __cdecl StAvatar_InitGlobals1099AEB8(void)
 {
-  _DAT_1099aeb8 = 1;
-  _DAT_1099aebc = 0;
-  _DAT_1099aec0 = 0xffffffff;
-  _DAT_1099aec4 = 0xffffffff;
-  orig::Chn_InitDefaults((uint32_t *)&DAT_1099aee0);
-  DAT_1099aec8 = 0;
-  DAT_1099aecc_as_v0 = 0;
-  DAT_1099aed0_as_v3 = 0;
-  DAT_1099aed4_as_v0 = 0;
-  DAT_1099aed8_as_v0 = 0;
-  DAT_1099aedc_as_v0 = 0;
+  g_1099AEB8 = 1;
+  g_1099AEBC = 0;
+  g_1099AEC0 = 0xffffffff;
+  g_1099AEC4 = 0xffffffff;
+  orig::Chn_InitDefaults((uint32_t *)&g_1099AEE0);
+  g_1099AEC8 = 0;
+  g_1099AECC_as_v0 = 0;
+  g_1099AED0_as_v3 = 0;
+  g_1099AED4_as_v0 = 0;
+  g_1099AED8_as_v0 = 0;
+  g_1099AEDC_as_v0 = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1026E460
 // GATE: PASS -- 100 trials, 47 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 47
-XI_API void __cdecl StAvatar_AllocArrays(int param_1, int param_2)
+XI_API void __cdecl StAvatar_AllocArrays(int arg1, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  DAT_1099aec8_as_s32 = param_1;
-  DAT_1099aecc_as_v0 = 0;
-  DAT_1099aed0_as_v4 = orig::FUN_10275d80(1,param_1 * 0xac,s_mdlArray_103b17b4,0x487);
-  DAT_1099aed4 = param_2;
-  DAT_1099aed8_as_v0 = 0;
-  if (param_2 == 0) {
-    DAT_1099aedc_as_v1 = (undefined4 *)param_2;
+  g_1099AEC8_as_s32 = arg1;
+  g_1099AECC_as_v0 = 0;
+  g_1099AED0_as_v4 = orig::game_10275D80(1,arg1 * 0xac,str_mdlArray_103B17B4,0x487);
+  g_1099AED4 = arg2;
+  g_1099AED8_as_v0 = 0;
+  if (arg2 == 0) {
+    g_1099AEDC_as_v1 = (bits32 *)arg2;
   }
   else {
-    DAT_1099aedc_as_v1 = orig::FUN_10275d80(1,param_2 * 0xc0,s_chnArray_103b17a8,0x494);
-    if (0 < param_2) {
-      iVar1 = 0;
+    g_1099AEDC_as_v1 = orig::game_10275D80(1,arg2 * 0xc0,str_chnArray_103B17A8,0x494);
+    if (0 < arg2) {
+      i1 = 0;
       do {
-        orig::SqChannelDefaults_InitDefaults((undefined4 *)(iVar1 + (int)DAT_1099aedc_as_v1));
-        iVar1 = iVar1 + 0xc0;
-        param_2 = param_2 + -1;
-      } while (param_2 != 0);
+        orig::SqChannelDefaults_InitDefaults((bits32 *)(i1 + (int)g_1099AEDC_as_v1));
+        i1 = i1 + 0xc0;
+        arg2 = arg2 + -1;
+      } while (arg2 != 0);
     }
   }
-  if (0 < param_1) {
-    iVar1 = 0;
+  if (0 < arg1) {
+    i1 = 0;
     do {
-      orig::StAvatar_InitModel((undefined4 *)(iVar1 + (int)DAT_1099aed0_as_v4));
-      iVar1 = iVar1 + 0xac;
-      param_1 = param_1 + -1;
-    } while (param_1 != 0);
+      orig::StAvatar_InitModel((bits32 *)(i1 + (int)g_1099AED0_as_v4));
+      i1 = i1 + 0xac;
+      arg1 = arg1 + -1;
+    } while (arg1 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1026E530
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_InitModel(undefined4 * param_1)
+XI_API bits32 __cdecl StAvatar_InitModel(bits32 * arg1)
 {
-  param_1[0x22] = 0xffffffff;
-  param_1[0x24] = 0xffffffff;
-  *param_1 = 1;
-  *(uint8_t *)(param_1 + 1) = 0;
-  param_1[0x21] = 0x3f800000;
-  param_1[0x25] = 0x3f060a92;
-  orig::SqVec_ZeroDwords(param_1 + 0x26);
-  param_1[0x23] = 0;
-  param_1[0x29] = 0;
-  param_1[0x2a] = 0;
+  arg1[0x22] = 0xffffffff;
+  arg1[0x24] = 0xffffffff;
+  *arg1 = 1;
+  *(uint8_t *)(arg1 + 1) = 0;
+  arg1[0x21] = 0x3f800000;
+  arg1[0x25] = 0x3f060a92;
+  orig::SqVec_ZeroDwords(arg1 + 0x26);
+  arg1[0x23] = 0;
+  arg1[0x29] = 0;
+  arg1[0x2a] = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1026E590
 // GATE: PASS -- 100 trials, 35 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 35
-XI_API void __cdecl StAvatar_UpdateModels(undefined4 param_1)
+XI_API void __cdecl StAvatar_UpdateModels(bits32 arg1)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int *piVar4;
-  int iVar5;
+  int i1;
+  uint32_t u1;
+  int i2;
+  int *p1;
+  int i3;
   char xi_frame[8] __attribute__((aligned(4)));
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 4);
   
-  iVar1 = orig::SqMatrixConnect_IsConnected(&DAT_1099aee0);
-  if (iVar1 != 0) {
-    orig::SqMatrixConnect_Advance(&DAT_1099aee0,param_1);
-    uVar2 = orig::SqDebug_GetFlagByte14((int)XI_GAME(0x1099AF00u));
-    if ((char)uVar2 != '\0') {
+  i1 = orig::SqMatrixConnect_IsConnected(&g_1099AEE0);
+  if (i1 != 0) {
+    orig::SqMatrixConnect_Advance(&g_1099AEE0,arg1);
+    u1 = orig::SqDebug_GetFlagByte14((int)XI_GAME(0x1099AF00u));
+    if ((char)u1 != '\0') {
       orig::SqDebug_InvokeCallback18((int)XI_GAME(0x1099AF00u));
     }
   }
-  if ((DAT_1099aedc != 0) && (iVar1 = 0, 0 < DAT_1099aed8)) {
-    piVar4 = (int *)(DAT_1099aedc + 0xbc);
+  if ((g_1099AEDC != 0) && (i1 = 0, 0 < g_1099AED8)) {
+    p1 = (int *)(g_1099AEDC + 0xbc);
     do {
-      orig::Chn_ForwardIfFlag2((uint8_t *)(piVar4 + -0x2f),param_1);
-      uVar2 = orig::SqDebug_GetFlagByte14(*piVar4);
-      if ((char)uVar2 != '\0') {
-        if (piVar4[-10] < 0) {
-          orig::scnCameraGetInfo_v1(-1,&local_8,&local_4);
-          iVar5 = *piVar4;
-          if ((*(int *)(iVar5 + 0x20) == local_8) || (*(int *)(iVar5 + 0x20) == local_4))
-          goto LAB_1026e662;
+      orig::Chn_ForwardIfFlag2((uint8_t *)(p1 + -0x2f),arg1);
+      u1 = orig::SqDebug_GetFlagByte14(*p1);
+      if ((char)u1 != '\0') {
+        if (p1[-10] < 0) {
+          orig::scnCameraGetInfo_v1(-1,&i4,&i5);
+          i3 = *p1;
+          if ((*(int *)(i3 + 0x20) == i4) || (*(int *)(i3 + 0x20) == i5))
+          goto code_1026E662;
         }
-        else if ((*(uint8_t *)(DAT_1099aed0 + piVar4[-10] * 0xac) & 4) != 0) {
-          iVar5 = *piVar4;
-LAB_1026e662:
-          orig::SqDebug_InvokeCallback18(iVar5);
+        else if ((*(uint8_t *)(g_1099AED0 + p1[-10] * 0xac) & 4) != 0) {
+          i3 = *p1;
+code_1026E662:
+          orig::SqDebug_InvokeCallback18(i3);
         }
       }
-      piVar4 = piVar4 + 0x30;
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < DAT_1099aed8);
+      p1 = p1 + 0x30;
+      i1 = i1 + 1;
+    } while (i1 < g_1099AED8);
   }
-  if (DAT_1099aed0 != 0) {
-    DAT_1099af48 = 0;
-    iVar1 = 0;
-    DAT_1099af4c = 0;
-    _DAT_1099af50 = 0;
-    _DAT_1099af54 = 0;
-    if (0 < DAT_1099aecc) {
-      iVar5 = DAT_1099aed0 + 0x98;
+  if (g_1099AED0 != 0) {
+    g_1099AF48 = 0;
+    i1 = 0;
+    g_1099AF4C = 0;
+    g_1099AF50 = 0;
+    g_1099AF54 = 0;
+    if (0 < g_1099AECC) {
+      i3 = g_1099AED0 + 0x98;
       do {
-        if ((*(uint32_t *)(iVar5 + -0x98) & 0x200) != 0) {
-          orig::SqmdModel_LookAt(*(int *)(iVar5 + 0x10),0,*(int *)(iVar5 + -8),iVar5,*(float *)(iVar5 + -4));
+        if ((*(uint32_t *)(i3 + -0x98) & 0x200) != 0) {
+          orig::SqmdModel_LookAt(*(int *)(i3 + 0x10),0,*(int *)(i3 + -8),i3,*(float *)(i3 + -4));
         }
-        orig::SqmdModel_Update(*(int *)(iVar5 + 0x10));
-        iVar3 = 0;
+        orig::SqmdModel_Update(*(int *)(i3 + 0x10));
+        i2 = 0;
         do {
-          *(int *)((int)&DAT_1099af48 + iVar3) =
-               *(int *)((int)&DAT_1099af48 + iVar3) + *(int *)((int)&DAT_109f8270 + iVar3);
-          iVar3 = iVar3 + 4;
-        } while (iVar3 < 0x10);
-        iVar5 = iVar5 + 0xac;
-        iVar1 = iVar1 + 1;
-      } while (iVar1 < DAT_1099aecc);
+          *(int *)((int)&g_1099AF48 + i2) =
+               *(int *)((int)&g_1099AF48 + i2) + *(int *)((int)&g_109F8270 + i2);
+          i2 = i2 + 4;
+        } while (i2 < 0x10);
+        i3 = i3 + 0xac;
+        i1 = i1 + 1;
+      } while (i1 < g_1099AECC);
     }
   }
   return;

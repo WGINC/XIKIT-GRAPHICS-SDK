@@ -12,4 +12,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoAuctionMenuTask.c
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoAuctionMenuTask::ScalarDeletingDtor` calls `sub_100A2810`, `SharedDeleteHelper`
+- `CMoAuctionMenuTask::ScalarDeletingDtor` calls `game_100A2810`, `SharedDeleteHelper`

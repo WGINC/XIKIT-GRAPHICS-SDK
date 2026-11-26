@@ -3,39 +3,39 @@
 
 // FUNCTION: FFXIMAIN 0x102A21F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
+XI_API void __cdecl sqsnShadowVolumeDraw(int arg1, int arg2, int arg3)
 {
-  int v3;
-  _DWORD *v4;
-  int v5;
-  _DWORD *v6;
-  int *v7;
-  int v8;
-  BOOL v9;
-  bool v10; // zf
-  int v11;
-  double v12;
-  int v13;
-  int v14;
-  int v15;
-  int v16;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  uint32_t *p2;
+  int *p3;
+  int i3;
+  BOOL i4;
+  bool b1; // zf
+  int i5;
+  double f1;
+  int i6;
+  int i7;
+  int i8;
+  int i9;
   alignas(16) unsigned char xi_frame[0x468];  // address-taken locals at their original offsets
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  float &v18 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  float &v19 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float &v20 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  int (&v21)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x1C);
-  float (&v22)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x28);
-  int v23;
-  int v24;
-  v3 = 3 * a3;
-  v24 = 0;
-  v4 = (_DWORD *)(*(_DWORD *)(a1 + 36) + 4 * v3);
-  v5 = 2;
-  v6 = *(_DWORD **)(a2 + 12);
-  if ( v6 != nullptr )
+  int &i10 = *reinterpret_cast<int *>(xi_frame + 0xC);
+  float &f2 = *reinterpret_cast<float *>(xi_frame + 0x10);
+  float &f3 = *reinterpret_cast<float *>(xi_frame + 0x14);
+  float &f4 = *reinterpret_cast<float *>(xi_frame + 0x18);
+  int (&i11)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x1C);
+  float (&f5)[16] = *reinterpret_cast<float (*)[16]>(xi_frame + 0x28);
+  int i12;
+  int i13;
+  i1 = 3 * arg3;
+  i13 = 0;
+  p1 = (uint32_t *)(*(uint32_t *)(arg1 + 36) + 4 * i1);
+  i2 = 2;
+  p2 = *(uint32_t **)(arg2 + 12);
+  if ( p2 != nullptr )
   {
-    if ( *v6 != 655369 )
+    if ( *p2 != 655369 )
     {
       orig::sqDebugPrintf(aShadowVolumesO);
       return;
@@ -43,107 +43,107 @@ XI_API void __cdecl sqsnShadowVolumeDraw(int a1, int a2, int a3)
   }
   else
   {
-    v6 = *(_DWORD **)a2;
-    if ( **(_DWORD **)a2 != 655369 )
+    p2 = *(uint32_t **)arg2;
+    if ( **(uint32_t **)arg2 != 655369 )
     {
       orig::sqDebugPrintf(aShadowVolumesO_0);
       return;
     }
   }
-  v7 = (int *)v6[18];
-  v17 = *v7;
-  orig::sqMatrix4_1027F0E0(v22, *(_DWORD *)(a2 + 4));
-  v8 = *(_DWORD *)(*v4 + 48);
-  v9 = v8 == 0;
-  v10 = v8 == 0;
-  v11 = v4[1];
-  v23 = v9;
-  if ( v10 )
+  p3 = (int *)p2[18];
+  i10 = *p3;
+  orig::sqMatrix4_1027F0E0(f5, *(uint32_t *)(arg2 + 4));
+  i3 = *(uint32_t *)(*p1 + 48);
+  i4 = i3 == 0;
+  b1 = i3 == 0;
+  i5 = p1[1];
+  i12 = i4;
+  if ( b1 )
   {
-    v18 = *(float *)(v11 + 12);
-    v19 = *(float *)(v4[1] + 28);
-    v20 = *(float *)(v4[1] + 44);
+    f2 = *(float *)(i5 + 12);
+    f3 = *(float *)(p1[1] + 28);
+    f4 = *(float *)(p1[1] + 44);
   }
   else
   {
-    v18 = *(float *)(v11 + 8) * -1.0;
-    v19 = *(float *)(v4[1] + 24) * -1.0;
-    v12 = *(float *)(v4[1] + 40) * -1.0;
-    v22[3] = 0.0;
-    v22[7] = 0.0;
-    v22[11] = 0.0;
-    v20 = v12;
+    f2 = *(float *)(i5 + 8) * -1.0;
+    f3 = *(float *)(p1[1] + 24) * -1.0;
+    f1 = *(float *)(p1[1] + 40) * -1.0;
+    f5[3] = 0.0;
+    f5[7] = 0.0;
+    f5[11] = 0.0;
+    f4 = f1;
   }
-  orig::M4fTransform((float *)v21, v22, &v18);
-  v13 = v6[13];
-  if ( v13 != 0 )
-    v13 = *(_DWORD *)(v13 + 84);
+  orig::M4fTransform((float *)i11, f5, &f2);
+  i6 = p2[13];
+  if ( i6 != 0 )
+    i6 = *(uint32_t *)(i6 + 84);
   orig::sqsnShadowComputeFacing(
-    *(_DWORD *)(a2 + 20),
-    (float *)v6[21],
-    v6[17],
-    v13,
-    (int *)v6[18],
-    *(_DWORD *)(*v4 + 48) == 0,
-    (float *)v21);
+    *(uint32_t *)(arg2 + 20),
+    (float *)p2[21],
+    p2[17],
+    i6,
+    (int *)p2[18],
+    *(uint32_t *)(*p1 + 48) == 0,
+    (float *)i11);
   orig::sqsnShadowVolumeBeginVB();
-  if ( v17 != 0 )
+  if ( i10 != 0 )
   {
     do
     {
-      v14 = v7[v5 - 1];
-      v15 = v6[13];
-      if ( v14 <= 0 )
+      i7 = p3[i2 - 1];
+      i8 = p2[13];
+      if ( i7 <= 0 )
       {
-        if ( v15 != 0 )
-          v15 = *(_DWORD *)(v15 + 84);
+        if ( i8 != 0 )
+          i8 = *(uint32_t *)(i8 + 84);
         orig::sqsnShadowVolumeExtrudeTriStrip(
-          -v14,
-          v24,
-          v5,
-          v15,
-          (int)v7,
-          v6[22],
-          *(_DWORD *)(a2 + 20),
-          v23,
-          (float *)v21,
+          -i7,
+          i13,
+          i2,
+          i8,
+          (int)p3,
+          p2[22],
+          *(uint32_t *)(arg2 + 20),
+          i12,
+          (float *)i11,
           1000.0,
           1);
       }
       else
       {
-        if ( v15 != 0 )
-          v15 = *(_DWORD *)(v15 + 84);
+        if ( i8 != 0 )
+          i8 = *(uint32_t *)(i8 + 84);
         orig::sqsnShadowVolumeExtrudeTriList(
-          v14,
-          v24,
-          v5,
-          v15,
-          (int)v7,
-          v6[22],
-          *(_DWORD *)(a2 + 20),
-          v23,
-          (float *)v21,
+          i7,
+          i13,
+          i2,
+          i8,
+          (int)p3,
+          p2[22],
+          *(uint32_t *)(arg2 + 20),
+          i12,
+          (float *)i11,
           1000.0,
           1);
       }
-      if ( v14 <= 0 )
+      if ( i7 <= 0 )
       {
-        v14 = -v14;
-        v16 = v24 + v14 - 2;
+        i7 = -i7;
+        i9 = i13 + i7 - 2;
       }
       else
       {
-        v16 = v14 / 3 + v24;
+        i9 = i7 / 3 + i13;
       }
-      v24 = v16;
-      v10 = v17 == 1;
-      v5 += v14 + 1;
-      --v17;
+      i13 = i9;
+      b1 = i10 == 1;
+      i2 += i7 + 1;
+      --i10;
     }
-    while ( !v10 );
+    while ( !b1 );
   }
-  (*(void (__cdecl **)(int))(*(_DWORD *)g_pSqgxContext[79] + 48))(g_pSqgxContext[79]);
+  (*(void (__cdecl **)(int))(*(uint32_t *)g_pSqgxContext[79] + 48))(g_pSqgxContext[79]);
   orig::sqsnShadowVolumeSetPass(0);
   g_pDancerDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, g_pSqgxContext[81] / 3);
   orig::sqsnShadowVolumeSetPass(1);

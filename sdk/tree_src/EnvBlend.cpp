@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x1018AD50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall EnvBlend_GetField4(void * self_)
+XI_API bits32 __thiscall EnvBlend_GetField4(void * self_)
 {
   return *(uint32_t *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x1018AD60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall EnvBlend_SetField10Of4(void * self_, undefined4 param_1)
+XI_API void __thiscall EnvBlend_SetField10Of4(void * self_, bits32 arg2)
 {
-  *(uint32_t *)(*(int *)((int)self_ + 4) + 0x10) = param_1;
+  *(uint32_t *)(*(int *)((int)self_ + 4) + 0x10) = arg2;
   return;
 }
 
@@ -21,20 +21,20 @@ XI_API void __thiscall EnvBlend_SetField10Of4(void * self_, undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall Blend_FindPrevious(void * self_)
 {
-  void *pvVar1;
-  void *pvVar2;
+  void *p1;
+  void *p2;
   
-  pvVar1 = (void *)0x0;
-  pvVar2 = *(void **)(*(int *)((int)self_ + 4) + 0x10);
+  p1 = (void *)0x0;
+  p2 = *(void **)(*(int *)((int)self_ + 4) + 0x10);
   while( true ) {
-    if (pvVar2 == (void *)0x0) {
+    if (p2 == (void *)0x0) {
       return (void *)0x0;
     }
-    if (pvVar2 == self_) break;
-    pvVar1 = pvVar2;
-    pvVar2 = *(void **)((int)pvVar2 + 8);
+    if (p2 == self_) break;
+    p1 = p2;
+    p2 = *(void **)((int)p2 + 8);
   }
-  return pvVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1018ADA0
@@ -63,42 +63,42 @@ XI_API void __thiscall EnvBlend_CallBlendUpdate(void * self_)
 // GATE: PASS -- 100 trials, 59 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 59
 XI_API void __thiscall Blend_Update(void * self_)
 {
-  int *this_00;
+  int *obj1;
   int xi_s1;
   uint32_t xi_eax;
-  void *pvVar1;
+  void *p1;
   
   if (*(void **)((int)self_ + 8) != (void *)0x0) {
-    orig::FUN_1018ade0(*(void **)((int)self_ + 8));
+    orig::Blend_Update_as_v0(*(void **)((int)self_ + 8));
   }
-  this_00 = (int *)((int)self_ + 0x14);
+  obj1 = (int *)((int)self_ + 0x14);
   if (*(int *)((int)self_ + 0x14) == 0) {
-    pvVar1 = *(void **)((int)self_ + 8);
-    if (pvVar1 != (void *)0x0) {
-      orig::YmCombineWeather_Release(pvVar1);
-      orig::thunk_sub_10028AA0_v1((int)pvVar1);
+    p1 = *(void **)((int)self_ + 8);
+    if (p1 != (void *)0x0) {
+      orig::YmCombineWeather_Release(p1);
+      orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1((int)p1);
       *(uint32_t *)((int)self_ + 8) = 0;
     }
   }
   else {
-    xi_eax = orig::Time_SubtractFrameScale(this_00);
+    xi_eax = orig::Time_SubtractFrameScale(obj1);
     if ((char)xi_eax != '\0') {
-      orig::FUN_1018bc40(this_00,0,xi_eax);
+      orig::Time_Normalize_as_v0(obj1,0,xi_eax);
     }
   }
   *(uint32_t *)((int)self_ + 0x1c) = 0x3f800000;
-  orig::FUN_1018a340(self_);
+  orig::Env_BlendTimeOfDay_as_v0(self_);
   if (*(int *)((int)self_ + 8) != 0) {
     *(float *)((int)self_ + 0x1c) =
-         (float)((long double)(*(int *)((int)self_ + 0x18) - *this_00) /
+         (float)((long double)(*(int *)((int)self_ + 0x18) - *obj1) /
                 (long double)*(int *)((int)self_ + 0x18));
     xi_s1 = *(int *)(*(int *)((int)self_ + 8) + 0x20);
     if ((xi_s1 != 0) && (*(int *)((int)self_ + 0x20) != 0)) {
-      pvVar1 = (void *)orig::Blend_AllocResult(xi_s1,*(int *)((int)self_ + 0x20));
-      orig::Env_BlendKeys(pvVar1,*(uint32_t **)((int)self_ + 0x20),*(uint32_t **)(*(int *)((int)self_ + 8) + 0x20),
+      p1 = (void *)orig::Blend_AllocResult(xi_s1,*(int *)((int)self_ + 0x20));
+      orig::Env_BlendKeys(p1,*(uint32_t **)((int)self_ + 0x20),*(uint32_t **)(*(int *)((int)self_ + 8) + 0x20),
                    *(float *)((int)self_ + 0x1c));
       orig::Blend_FreeResult(self_);
-      *(void **)((int)self_ + 0x20) = pvVar1;
+      *(void **)((int)self_ + 0x20) = p1;
       *(float *)(*(int *)((int)self_ + 8) + 0x1c) =
            (float)((long double)1.0f - (long double)*(float *)((int)self_ + 0x1c));
     }
@@ -108,13 +108,13 @@ XI_API void __thiscall Blend_Update(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1018AEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall Blend_AllocResult(undefined4 xi_s1, undefined4 xi_s2)
+XI_API bits32 __stdcall Blend_AllocResult(bits32 xi_s1, bits32 xi_s2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 =(uint32_t*)(orig::Mem_AllocObject_v1(0xac,2));
-  if (puVar1 != (uint32_t *)0x0) {
-    *puVar1 = *puVar1 | 4;
+  p1 =(uint32_t*)(orig::Mem_AllocObject_v1(0xac,2));
+  if (p1 != (uint32_t *)0x0) {
+    *p1 = *p1 | 4;
   }
-  return puVar1;
+  return p1;
 }

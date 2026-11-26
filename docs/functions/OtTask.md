@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): CMoOtTask::*, CMoOt_InitSyste
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoOt_InitSystem` calls `Mem_AllocDefault`, `CMoOT::Constructor`, `OtLink_Init`, `sub_10074CC0`
+- `CMoOt_InitSystem` calls `Mem_AllocDefault`, `CMoOT::Constructor`, `OtLink_Init`, `game_10074CC0`
 - `CMoOt_Update` calls `Zone_UpdateFogAmbient`, `OtLink_Free`, `OtLink_RelinkEntries`

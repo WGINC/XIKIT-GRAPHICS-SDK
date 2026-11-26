@@ -13,7 +13,7 @@ XI_API int __cdecl CreateSharedVertexBuffers(void)
   g_vertexBuffer_7150 = 0;
   g_vertexBuffer_7154 = 0;
   if ( g_sharedVertexBuffersCreated != 0 )
-    goto LABEL_7;
+    goto L1;
   result = (g_pCDx->pDevice)->lpVtbl->CreateVertexBuffer(
              (g_pCDx->pDevice),
              28672u,
@@ -51,16 +51,16 @@ XI_API int __cdecl CreateSharedVertexBuffers(void)
         if ( result >= 0 )
         {
           g_sharedVertexBuffersCreated = 1;
-LABEL_7:
+L1:
           orig::Model_CreateTranslucentTargets();
           orig::BoneShadow_InitTargets();
           orig::Post_CreateScreenEffectTargets();
           orig::EnvMapProjTex_Nop_10025BD0();
           result = g_translucentTarget;
           Fn10025260_targetTex = 0;
-          dword_10456E70 = g_translucentTarget;
+          g_10456E70 = g_translucentTarget;
           if ( g_translucentTarget != 0 )
-            return (*(int (__stdcall **)(_DWORD))(*(_DWORD *)g_translucentTarget + 4))(g_translucentTarget);
+            return (*(int (__stdcall **)(uint32_t))(*(uint32_t *)g_translucentTarget + 4))(g_translucentTarget);
         }
       }
     }
@@ -72,23 +72,23 @@ LABEL_7:
 // GATE: PASS -- 100 trials, 99 returned normally, 124 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 XI_API void __cdecl ModelDtInit_ReleaseAll(void)
 {
-  int *a1;
-  int *piVar1;
+  int *p1;
+  int *p2;
   
-  piVar1 =(int*)(&g_vertexBuffer_7148_as_v0);
+  p2 =(int*)(&g_vertexBuffer_7148_as_v0);
   do {
-    a1 = (int *)*piVar1;
-    if (a1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
-      *piVar1 = 0;
+    p1 = (int *)*p2;
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
+      *p2 = 0;
     }
-    piVar1 = piVar1 + 1;
-  } while ((int)piVar1 < (int)XI_GAME(0x10457158u));
+    p2 = p2 + 1;
+  } while ((int)p2 < (int)XI_GAME(0x10457158u));
   g_sharedVertexBuffersCreated_as_v0 = 0;
   orig::ProjTexTarget_Release();
   orig::EnvMapProjTex_Nop_10025BE0();
   orig::PostCapture_ReleaseTextures();
   orig::BoneShadow_ReleaseTargets();
-  orig::FUN_1001d110();
+  orig::game_1001D110();
   return;
 }

@@ -20,4 +20,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Sq_PrintIndent` calls `sqDebugPrintf`
 - `SqScriptRead_ReturnZero` calls nothing directly
 - `SqScriptRead_ReadBlock` calls `SqNibbleSwap_SwapNibblesXor`, `SqScriptRead_ReturnZero`, `SqIO_SwapBytes`
-- `sqScript_TokenEquals` calls `sub_103145A4`
+- `sqScript_TokenEquals` calls `game_103145A4`

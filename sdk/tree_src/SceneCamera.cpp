@@ -4,159 +4,159 @@
 
 // FUNCTION: FFXIMAIN 0x10273370
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl scnCameraGetInfo(int param_1, undefined4 * param_2, undefined4 * param_3)
+XI_API void __cdecl scnCameraGetInfo(int arg1, bits32 * arg2, bits32 * arg3)
 {
-  if (param_1 == -1) {
-    param_1 = DAT_1099b0f4;
+  if (arg1 == -1) {
+    arg1 = g_1099B0F4;
   }
-  if (param_2 != (undefined4 *)0x0) {
-    *param_2 = ((char *)&DAT_1099b1d0) + param_1 * 0x34;
+  if (arg2 != (bits32 *)0x0) {
+    *arg2 = ((char *)&g_1099B1D0) + arg1 * 0x34;
   }
-  if (param_3 != (undefined4 *)0x0) {
-    *param_3 = ((char *)&DAT_1099b33c) + param_1 * 0x7c;
+  if (arg3 != (bits32 *)0x0) {
+    *arg3 = ((char *)&g_1099B33C) + arg1 * 0x7c;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102733B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneCamera_SelectCamera(int param_1)
+XI_API void __cdecl SceneCamera_SelectCamera(int arg1)
 {
-  long double fVar1;
-  int iVar2;
-  long double fVar3;
+  long double f1;
+  int i1;
+  long double f2;
   
-  iVar2 = DAT_1099b0f4;
-  fVar3 = (long double)DAT_1099b138_as_f32;
-  fVar1 = (long double)0.0f;
-  DAT_1099b12c = DAT_1099b0f4;
-  DAT_1099b0f4 = param_1;
-  DAT_1099b130 = param_1;
-  if (fVar3 <= fVar1) {
-    orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),(&DAT_1099b1b4)[param_1]);
-    iVar2 = 0;
+  i1 = g_1099B0F4;
+  f2 = g_1099B138_as_f32;
+  f1 = 0.0f;
+  g_1099B12C = g_1099B0F4;
+  g_1099B0F4 = arg1;
+  g_1099B130 = arg1;
+  if (f2 <= f1) {
+    orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),(&g_1099B1B4)[arg1]);
+    i1 = 0;
     do {
-      orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),iVar2,(&DAT_1099b1b4)[DAT_1099b0f4]);
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < 4);
+      orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),i1,(&g_1099B1B4)[g_1099B0F4]);
+      i1 = i1 + 1;
+    } while (i1 < 4);
     return;
   }
-  _DAT_1099b134 = 0;
-  DAT_1099b0d8 = DAT_1099b0d8 | 0x100;
-  orig::SceneCamera_SetCameraEntry(6,(int)(((char *)&DAT_1099b1d0) + iVar2 * 0x34),(int)(((char *)&DAT_1099b33c) + iVar2 * 0x7c));
-  orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),DAT_1099b1cc);
-  iVar2 = 0;
+  g_1099B134 = 0;
+  g_1099B0D8 = g_1099B0D8 | 0x100;
+  orig::SceneCamera_SetCameraEntry(6,(int)(((char *)&g_1099B1D0) + i1 * 0x34),(int)(((char *)&g_1099B33C) + i1 * 0x7c));
+  orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),g_1099B1CC);
+  i1 = 0;
   do {
-    orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),iVar2,DAT_1099b1cc);
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 4);
+    orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),i1,g_1099B1CC);
+    i1 = i1 + 1;
+  } while (i1 < 4);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10273490
 // GATE: PASS -- 100 trials, 68 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 68
-XI_API void __cdecl SceneCamera_SetCameraEntry(int param_1, int param_2, int param_3)
+XI_API void __cdecl SceneCamera_SetCameraEntry(int arg1, int arg2, int arg3)
 {
-  int iVar1;
+  int i1;
   
-  if (param_1 == -1) {
-    param_1 = DAT_1099b0f4;
+  if (arg1 == -1) {
+    arg1 = g_1099B0F4;
   }
-  if (param_2 != 0) {
-    iVar1 = param_1 * 0x34;
-    (&DAT_1099b1e4)[param_1 * 0xd] = *(uint32_t *)(param_2 + 0x14);
-    (&DAT_1099b1e8)[param_1 * 0xd] = *(uint32_t *)(param_2 + 0x18);
-    (&DAT_1099b1ec)[param_1 * 0xd] = *(uint32_t *)(param_2 + 0x1c);
-    *(uint32_t *)(((char *)&DAT_1099b1f0) + iVar1) = *(uint32_t *)(param_2 + 0x20);
-    *(uint32_t *)(((char *)&DAT_1099b1f4) + iVar1) = *(uint32_t *)(param_2 + 0x24);
-    *(uint32_t *)(((char *)&DAT_1099b1f8) + iVar1) = *(uint32_t *)(param_2 + 0x28);
-    *(uint32_t *)(((char *)&DAT_1099b1fc) + iVar1) = *(uint32_t *)(param_2 + 0x2c);
-    *(uint32_t *)(((char *)&DAT_1099b200) + iVar1) = *(uint32_t *)(param_2 + 0x30);
+  if (arg2 != 0) {
+    i1 = arg1 * 0x34;
+    (&g_1099B1E4)[arg1 * 0xd] = *(uint32_t *)(arg2 + 0x14);
+    (&g_1099B1E8)[arg1 * 0xd] = *(uint32_t *)(arg2 + 0x18);
+    (&g_1099B1EC)[arg1 * 0xd] = *(uint32_t *)(arg2 + 0x1c);
+    *(uint32_t *)(((char *)&g_1099B1F0) + i1) = *(uint32_t *)(arg2 + 0x20);
+    *(uint32_t *)(((char *)&g_1099B1F4) + i1) = *(uint32_t *)(arg2 + 0x24);
+    *(uint32_t *)(((char *)&g_1099B1F8) + i1) = *(uint32_t *)(arg2 + 0x28);
+    *(uint32_t *)(((char *)&g_1099B1FC) + i1) = *(uint32_t *)(arg2 + 0x2c);
+    *(uint32_t *)(((char *)&g_1099B200) + i1) = *(uint32_t *)(arg2 + 0x30);
   }
-  if (param_3 != 0) {
-    orig::M4fSet_v1((uint32_t *)(((char *)&DAT_1099b358) + param_1 * 0x7c),(uint32_t *)(param_3 + 0x1c));
-    orig::SqVec_CopyVec3(&DAT_1099b398 + param_1 * 0x1f,(uint32_t *)(param_3 + 0x5c));
-    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&DAT_1099b3a4) + param_1 * 0x7c),(uint32_t *)(param_3 + 0x68));
-    (&DAT_1099b3b4)[param_1 * 0x1f] = *(uint32_t *)(param_3 + 0x78);
-    orig::sqxfXformTD_Update(param_3);
+  if (arg3 != 0) {
+    orig::M4fSet_v1((uint32_t *)(((char *)&g_1099B358) + arg1 * 0x7c),(uint32_t *)(arg3 + 0x1c));
+    orig::SqVec_CopyVec3(&g_1099B398 + arg1 * 0x1f,(uint32_t *)(arg3 + 0x5c));
+    orig::SqQuat_Copy_v1((uint32_t *)(((char *)&g_1099B3A4) + arg1 * 0x7c),(uint32_t *)(arg3 + 0x68));
+    (&g_1099B3B4)[arg1 * 0x1f] = *(uint32_t *)(arg3 + 0x78);
+    orig::sqxfXformTD_Update(arg3);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10273560
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneCamera_UpdateCameraBlend(int param_1)
+XI_API void __cdecl SceneCamera_UpdateCameraBlend(int arg1)
 {
-  int iVar1;
-  long double fVar2;
-  int iVar3;
-  long double fVar4;
+  int i1;
+  long double f1;
+  int i2;
+  long double f2;
   
-  if (DAT_1099b12c != DAT_1099b130) {
-    fVar4 = (long double)param_1 * (long double)xi_k4(0x387BA883ull) + (long double)_DAT_1099b134_as_f32;
-    _DAT_1099b134_as_f32 = (float)fVar4;
-    if (!(fVar4 >= (long double)DAT_1099b138_as_f32)) {
-      iVar3 = DAT_1099b12c * 0x7c;
-      iVar1 = DAT_1099b130 * 0x7c;
-      fVar4 = xi_castbits<long double>(fcos(((long double)_DAT_1099b134_as_f32 / (long double)DAT_1099b138_as_f32) * (long double)3.1415927410125732421875f));
-      fVar4 = (fVar4 + (long double)1.0f) * (long double)0.5f;
-      fVar2 = (float)((long double)1.0f - fVar4);
-      _DAT_1099b31c =
-           (float)(fVar4 * (long double)xi_castbits<float>((&DAT_1099b1e4)[DAT_1099b12c * 0xd]) +
-                  (long double)fVar2 * (long double)xi_castbits<float>((&DAT_1099b1e4)[DAT_1099b130 * 0xd]));
-      _DAT_1099b69c =
-           (float)(fVar4 * (long double)xi_castbits<float>((&DAT_1099b3b4)[DAT_1099b12c * 0x1f]) +
-                  (long double)fVar2 * (long double)xi_castbits<float>((&DAT_1099b3b4)[DAT_1099b130 * 0x1f]));
-      orig::SqVec_LerpFactor((float *)&DAT_1099b680,(float *)(&DAT_1099b398 + DAT_1099b12c * 0x1f),
-                   (float *)(&DAT_1099b398 + DAT_1099b130 * 0x1f),fVar2);
-      orig::FUN_1027b2c0((float *)&DAT_1099b68c,(float *)(((char *)&DAT_1099b3a4) + iVar3),
-                   (float *)(((char *)&DAT_1099b3a4) + iVar1),fVar2);
+  if (g_1099B12C != g_1099B130) {
+    f2 = arg1 * xi_k4(0x387BA883ull) + g_1099B134_as_f32;
+    g_1099B134_as_f32 = (float)f2;
+    if (!(f2 >= g_1099B138_as_f32)) {
+      i2 = g_1099B12C * 0x7c;
+      i1 = g_1099B130 * 0x7c;
+      f2 = bit_cast<long double>(x87_fcos((g_1099B134_as_f32 / g_1099B138_as_f32) * 3.1415927410125732421875f));
+      f2 = (f2 + 1.0f) * 0.5f;
+      f1 = (float)(1.0f - f2);
+      g_1099B31C =
+           (float)(f2 * bit_cast<float>((&g_1099B1E4)[g_1099B12C * 0xd]) +
+                  f1 * bit_cast<float>((&g_1099B1E4)[g_1099B130 * 0xd]));
+      g_1099B69C =
+           (float)(f2 * bit_cast<float>((&g_1099B3B4)[g_1099B12C * 0x1f]) +
+                  f1 * bit_cast<float>((&g_1099B3B4)[g_1099B130 * 0x1f]));
+      orig::SqVec_LerpFactor((float *)&g_1099B680,(float *)(&g_1099B398 + g_1099B12C * 0x1f),
+                   (float *)(&g_1099B398 + g_1099B130 * 0x1f),f1);
+      orig::game_1027B2C0((float *)&g_1099B68C,(float *)(((char *)&g_1099B3A4) + i2),
+                   (float *)(((char *)&g_1099B3A4) + i1),f1);
       orig::sqxfXformTD_Update((int)XI_GAME(0x1099B624u));
       return;
     }
   }
-  orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),(&DAT_1099b1b4)[DAT_1099b0f4]);
-  iVar3 = 0;
+  orig::SqsnScene_SetCursorIfInRange((int)XI_GAME(0x1099B13Cu),(&g_1099B1B4)[g_1099B0F4]);
+  i2 = 0;
   do {
-    orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),iVar3,(&DAT_1099b1b4)[DAT_1099b0f4]);
-    iVar3 = iVar3 + 1;
-  } while (iVar3 < 4);
-  _DAT_1099b134_as_f32 = 0.0f;
-  DAT_1099b0d8 = DAT_1099b0d8 & 0xfffffeff;
+    orig::SqsnScene_SetEntryField8((int)XI_GAME(0x1099B13Cu),i2,(&g_1099B1B4)[g_1099B0F4]);
+    i2 = i2 + 1;
+  } while (i2 < 4);
+  g_1099B134_as_f32 = 0.0f;
+  g_1099B0D8 = g_1099B0D8 & 0xfffffeff;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102736D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SceneCamera_SetVtable1099B138(undefined4 * param_1)
+XI_API void __cdecl SceneCamera_SetVtable1099B138(bits32 * arg1)
 {
-  if (param_1 != (undefined4 *)0x0) {
-    *param_1 = &DAT_1099b138;
+  if (arg1 != (bits32 *)0x0) {
+    *arg1 = &g_1099B138;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102736E0
 // GATE: PASS -- 100 trials, 92 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 92
-XI_API void __cdecl SceneCamera_ApplySceneToModel(undefined4 param_1, int param_2)
+XI_API void __cdecl SceneCamera_ApplySceneToModel(bits32 arg1, int arg2)
 {
-  int *piVar1;
-  uint32_t uVar2;
+  int *p1;
+  uint32_t u1;
   
-  orig::SqmdModel_Link(param_1,&DAT_1099b13c,param_2,0xff);
-  orig::SqmdModel_SetLayerSort(param_1,(uint32_t)(param_2 == 2));
-  orig::SqmdModel_AddShadowLightInLayer(param_1,&DAT_1099b13c,param_2,DAT_1099b100,0xff);
+  orig::SqmdModel_Link(arg1,&g_1099B13C,arg2,0xff);
+  orig::SqmdModel_SetLayerSort(arg1,(uint32_t)(arg2 == 2));
+  orig::SqmdModel_AddShadowLightInLayer(arg1,&g_1099B13C,arg2,g_1099B100,0xff);
   orig::StAvatar_SelectIndex(4);
-  piVar1 =(int*)(&DAT_1099bb74);
+  p1 =(int*)(&g_1099BB74);
   do {
-    if (*piVar1 == *(int *)(DAT_1099b100 * 0x30 + DAT_1099b17c)) {
-      uVar2 = 0xff;
+    if (*p1 == *(int *)(g_1099B100 * 0x30 + g_1099B17C)) {
+      u1 = 0xff;
     }
     else {
-      uVar2 = 0;
+      u1 = 0;
     }
-    orig::SqmdModel_AddIllumLight(param_1,(int)XI_GAME(0x1099B13Cu),*piVar1,uVar2);
-    piVar1 = piVar1 + 1;
-  } while ((int)piVar1 < (int)XI_GAME(0x1099BB88u));
+    orig::SqmdModel_AddIllumLight(arg1,(int)XI_GAME(0x1099B13Cu),*p1,u1);
+    p1 = p1 + 1;
+  } while ((int)p1 < (int)XI_GAME(0x1099BB88u));
   return;
 }

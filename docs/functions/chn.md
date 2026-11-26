@@ -18,8 +18,8 @@ Group: `chn` (by the file name only). Source: `sdk/tree_src/chn.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `Chn_ReleaseRefs` calls `SqObject_Release`
-- `Chn_RegisterItem` calls `SqTimer_GetMicroseconds`, `SqChannelMotion_CreateWithOwner`, `SqgxVertexShaderRelease_GetFloat20`, `sub_10312050`, `SqBounds_SumAxis`, `Chn_GetSubIndex`
-- `Chn_ForwardIfFlag2` calls `sub_1027DD90`
+- `Chn_RegisterItem` calls `SqTimer_GetMicroseconds`, `SqChannelMotion_CreateWithOwner`, `SqgxVertexShaderRelease_GetFloat20`, `game_10312050`, `SqBounds_SumAxis`, `Chn_GetSubIndex`
+- `Chn_ForwardIfFlag2` calls `game_1027DD90`
 - `Chn_GetSubIndex` calls nothing directly
 - `Chn_InitDefaults` calls `SqcoConnector_Init`
 - `Chn_ReleaseIfSet` calls `SqMatrixConnect_ReleaseConnection`

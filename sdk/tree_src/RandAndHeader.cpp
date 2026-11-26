@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x1006BD90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Rand_SeedMT19937(uint32_t param_1)
+XI_API void __cdecl Rand_SeedMT19937(uint32_t arg1)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
-  uint32_t *puVar3;
+  uint32_t u1;
+  uint32_t *p1;
+  uint32_t *p2;
   
-  puVar2 =(uint32_t*)(&DAT_1047c110);
+  p1 =(uint32_t*)(&g_1047C110);
   do {
-    puVar3 = puVar2 + 1;
-    *puVar2 = param_1 & 0xffff0000;
-    uVar1 = param_1 * 0x10dcd + 1;
-    *puVar2 = *puVar2 | uVar1 >> 0x10;
-    param_1 = uVar1 * 0x10dcd + 1;
-    puVar2 = puVar3;
-  } while ((int)puVar3 < (int)XI_GAME(0x1047CAD0u));
-  DAT_10354040 = 0x270;
+    p2 = p1 + 1;
+    *p1 = arg1 & 0xffff0000;
+    u1 = arg1 * 0x10dcd + 1;
+    *p1 = *p1 | u1 >> 0x10;
+    arg1 = u1 * 0x10dcd + 1;
+    p1 = p2;
+  } while ((int)p2 < (int)XI_GAME(0x1047CAD0u));
+  g_10354040 = 0x270;
   return;
 }
 
@@ -27,106 +27,106 @@ XI_API void __cdecl Rand_SeedMT19937(uint32_t param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __cdecl RandAndHeader_Next(void)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t *puVar3;
-  uint32_t *puVar4;
+  uint32_t u1;
+  int i1;
+  uint32_t *p1;
+  uint32_t *p2;
   
-  if (0x26f < DAT_10354040_as_s32) {
-    if (DAT_10354040_as_s32 == 0x271) {
+  if (0x26f < g_10354040_as_s32) {
+    if (g_10354040_as_s32 == 0x271) {
       orig::Rand_SeedMT19937_v1(0x1105);
     }
-    iVar2 = 0;
+    i1 = 0;
     do {
-      uVar1 = ((&DAT_1047c114)[iVar2] ^ (&DAT_1047c110)[iVar2]) & 0x7fffffff ^
-              (&DAT_1047c110)[iVar2];
-      (&DAT_1047c110)[iVar2] =
-           *(uint32_t *)(((char *)&DAT_1035404c) + (uVar1 & 1) * 4) ^ uVar1 >> 1 ^ (&DAT_1047c744)[iVar2];
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < 0xe3);
-    if (iVar2 < 0x26f) {
-      puVar3 =(uint32_t*)(&DAT_1047c110 + iVar2);
+      u1 = ((&g_1047C114)[i1] ^ (&g_1047C110)[i1]) & 0x7fffffff ^
+              (&g_1047C110)[i1];
+      (&g_1047C110)[i1] =
+           *(uint32_t *)(((char *)&g_1035404C) + (u1 & 1) * 4) ^ u1 >> 1 ^ (&g_1047C744)[i1];
+      i1 = i1 + 1;
+    } while (i1 < 0xe3);
+    if (i1 < 0x26f) {
+      p1 =(uint32_t*)(&g_1047C110 + i1);
       do {
-        puVar4 = puVar3 + 1;
-        uVar1 = (puVar3[1] ^ *puVar3) & 0x7fffffff ^ *puVar3;
-        *puVar3 = *(uint32_t *)(((char *)&DAT_1035404c) + (uVar1 & 1) * 4) ^ puVar3[-0xe3] ^ uVar1 >> 1;
-        puVar3 = puVar4;
-      } while ((int)puVar4 < (int)XI_GAME(0x1047CACCu));
+        p2 = p1 + 1;
+        u1 = (p1[1] ^ *p1) & 0x7fffffff ^ *p1;
+        *p1 = *(uint32_t *)(((char *)&g_1035404C) + (u1 & 1) * 4) ^ p1[-0xe3] ^ u1 >> 1;
+        p1 = p2;
+      } while ((int)p2 < (int)XI_GAME(0x1047CACCu));
     }
-    uVar1 = (DAT_1047c110 ^ DAT_1047cacc) & 0x7fffffff ^ DAT_1047cacc;
-    DAT_1047cacc = *(uint32_t *)(((char *)&DAT_1035404c) + (uVar1 & 1) * 4) ^ uVar1 >> 1 ^ DAT_1047c740;
-    DAT_10354040_as_s32 = 0;
+    u1 = (g_1047C110 ^ g_1047CACC) & 0x7fffffff ^ g_1047CACC;
+    g_1047CACC = *(uint32_t *)(((char *)&g_1035404C) + (u1 & 1) * 4) ^ u1 >> 1 ^ g_1047C740;
+    g_10354040_as_s32 = 0;
   }
-  puVar3 =(uint32_t*)(&DAT_1047c110 + DAT_10354040_as_s32);
-  DAT_10354040_as_s32 = DAT_10354040_as_s32 + 1;
-  uVar1 = *puVar3 ^ *puVar3 >> 0xb;
-  uVar1 = uVar1 ^ (uVar1 & 0xff3a58ad) << 7;
-  uVar1 = uVar1 ^ (uVar1 & 0xffffdf8c) << 0xf;
-  return uVar1 >> 0x12 ^ uVar1;
+  p1 =(uint32_t*)(&g_1047C110 + g_10354040_as_s32);
+  g_10354040_as_s32 = g_10354040_as_s32 + 1;
+  u1 = *p1 ^ *p1 >> 0xb;
+  u1 = u1 ^ (u1 & 0xff3a58ad) << 7;
+  u1 = u1 ^ (u1 & 0xffffdf8c) << 0xf;
+  return u1 >> 0x12 ^ u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006BF40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Rand_NextMod(int param_1)
+XI_API int __cdecl Rand_NextMod(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (param_1 == 0) {
+  if (arg1 == 0) {
     return 0;
   }
-  uVar1 = orig::RandAndHeader_Next();
-  return (int)uVar1 % param_1;
+  u1 = orig::RandAndHeader_Next();
+  return (int)u1 % arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006BF60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl Rand_NextModUnsigned(uint32_t param_1)
+XI_API uint32_t __cdecl Rand_NextModUnsigned(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (param_1 == 0) {
+  if (arg1 == 0) {
     return 0;
   }
-  uVar1 = orig::RandAndHeader_Next();
-  return uVar1 % param_1;
+  u1 = orig::RandAndHeader_Next();
+  return u1 % arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006BF80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __attribute__((cdecl, regparm(1))) Rand_UniformTimes(undefined4 xi_eax, float param_1)
+XI_API long double __attribute__((cdecl, regparm(1))) Rand_UniformTimes(bits32 xi_eax, float arg2)
 {
-  uint32_t uVar1;
-  uint8_t bVar2;
+  uint32_t u1;
+  uint8_t u2;
   
-  bVar2 = NAN((long double)param_1) || NAN((long double)0.0f);
-  if (bVar2 != (bVar2 || (long double)param_1 == (long double)0.0f)) {
-    return (long double)0.0f;
+  u2 = ((arg2) != (arg2)) || ((0.0f) != (0.0f));
+  if (u2 != (u2 || arg2 == 0.0f)) {
+    return 0.0f;
   }
-  uVar1 = orig::RandAndHeader_Next();
-  return (long double)(uVar1 % 100000) * (long double)xi_k4(0x3727C5ACull) * (long double)param_1;
+  u1 = orig::RandAndHeader_Next();
+  return (u1 % 100000) * xi_k4(0x3727C5ACull) * arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006BFD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __attribute__((cdecl, regparm(1))) Rand_SignedUniformTimes(undefined4 xi_eax, float param_1)
+XI_API long double __attribute__((cdecl, regparm(1))) Rand_SignedUniformTimes(bits32 xi_eax, float arg2)
 {
-  uint32_t uVar1;
-  uint8_t bVar2;
+  uint32_t u1;
+  uint8_t u2;
   
-  bVar2 = NAN((long double)param_1) || NAN((long double)0.0f);
-  if (bVar2 != (bVar2 || (long double)param_1 == (long double)0.0f)) {
-    return (long double)0.0f;
+  u2 = ((arg2) != (arg2)) || ((0.0f) != (0.0f));
+  if (u2 != (u2 || arg2 == 0.0f)) {
+    return 0.0f;
   }
-  uVar1 = orig::RandAndHeader_Next();
-  return ((long double)(uVar1 % 200000) * (long double)xi_k4(0x3727C5ACull) - (long double)1.0f) * (long double)param_1;
+  u1 = orig::RandAndHeader_Next();
+  return ((u1 % 200000) * xi_k4(0x3727C5ACull) - 1.0f) * arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006C0F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Mem_AllocWithHeader12(int param_1, undefined4 param_2)
+XI_API int __cdecl Mem_AllocWithHeader12(int arg1, bits32 arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::Mem_AllocObject_v1(param_1 + 0xc,param_2);
-  return (int)(puVar1 + 3);
+  p1 = orig::Mem_AllocObject_v1(arg1 + 0xc,arg2);
+  return (int)(p1 + 3);
 }
