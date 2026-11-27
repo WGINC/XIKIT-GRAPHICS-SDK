@@ -5,7 +5,7 @@ Names that do not yet say what the function does, by the patterns in public_docs
 | Kind | Functions |
 |---|---|
 | address name | 1 |
-| address name, no source here | 15234 |
+| address name, no source here | 15236 |
 
 ## address name (1)
 

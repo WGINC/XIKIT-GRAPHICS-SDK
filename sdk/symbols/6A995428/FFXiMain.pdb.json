@@ -29598,6 +29598,13 @@
 "source": "none"
 },
 {
+"address": "0x1009F3C0",
+"name": "game_1009F3C0",
+"kind": "function",
+"size": 42,
+"source": "none"
+},
+{
 "address": "0x1009F3F0",
 "name": "Acter_ClearGlobals10488800",
 "kind": "function",
@@ -42224,6 +42231,13 @@
 "kind": "function",
 "size": 27,
 "source": "tree"
+},
+{
+"address": "0x100FACF0",
+"name": "game_100FACF0",
+"kind": "function",
+"size": 2384,
+"source": "none"
 },
 {
 "address": "0x100FC0F0",

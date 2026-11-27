@@ -99,7 +99,8 @@ What that interpreter's scripts are, read 27 Nov (disassembly):
     the game state words +0x40D90, +0x40D92, +0x40D8E and +0x3C35A. In 0x100AED00 (0x100AEDEE..0x100AEE1D): when the
     fourth is 0x3E8..0x513, the key is the fourth + 0x3E8; otherwise, when the first equals the third, the key is the
     first; otherwise the third + 0x3E8.
-  - **Where those words come from (not published):** +0x40D90 = message +0x62, +0x40D92 = +0x64, +0x40D8E = +0x66, +0x3C35A = +0x9E, and the zone change's
+  - **Where those words come from (the zone-in message 0x00A's handler 0x100FACF0, at 0x100FAEE2..0x100FAF68; released
+    from the security set 29 Nov):** +0x40D90 = message +0x62, +0x40D92 = +0x64, +0x40D8E = +0x66, +0x3C35A = +0x9E, and the zone change's
     number +0x40D80 = message +0xAA (also +0x3C350 = the dword at +0x30, +0x40D7C = +0x42). Windower's field list
     (addons/libs/packets/fields.lua, a lead) calls +0x30 "Zone", +0x42 "_dupeZone", +0x62 "Menu Zone" ("only set if
     the menu ID is sent"), +0x64 "Menu ID", +0x66 unknown and +0xAA "Zone model". So **the event key is not the zone
@@ -150,7 +151,7 @@ What that interpreter's scripts are, read 27 Nov (disassembly):
   paths: docs/DATA_FILES.md). So the draw distance is the float at +0x58 of the type-0x2F chunk's data in the zone's
   file. Later records: `ZoneMap_Update` sets `[map + 0x10] + 0x20` (the environment blend's record),
   `YmCombineWeather::Release` and 0x101873A0 set others. **Their source, read 28 Nov (RESEARCH F3):** the weather
-  message **0x057** (not published) stores its +4 dword at 0x104807F8, its +8 word (the
+  message **0x057** (handler 0x1009F3C0; released from the security set 29 Nov) stores its +4 dword at 0x104807F8, its +8 word (the
   weather) at 0x104807F0 and its +0xA word at 0x1047FAAC, and sets 0x104807F6. Each frame `game_1009F2F0` (from
   `Acter_UpdateFrame` 0x10096BBE), when 0x104807F6 is set and 0x10487E48 is not, copies the weather to 0x10485FE0,
   sets the clock (0x1018D1B0 with [0x104819A8] x 60, `Time_Normalize` with the hour [0x10480C5C] x 3600; running-build

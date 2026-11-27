@@ -33826,6 +33826,14 @@
 "analysed_address": "0x1009F2F0"
 },
 {
+"address": "0x1009F3C0",
+"name": "game_1009F3C0",
+"kind": "function",
+"size": 42,
+"source": "none",
+"analysed_address": "0x1009F3C0"
+},
+{
 "address": "0x1009F3F0",
 "name": "Acter_ClearGlobals10488800",
 "kind": "function",
@@ -48256,6 +48264,14 @@
 "size": 27,
 "source": "tree",
 "analysed_address": "0x100F9D50"
+},
+{
+"address": "0x100FAE40",
+"name": "game_100FACF0",
+"kind": "function",
+"size": 1,
+"source": "none (not shown the same in this build)",
+"analysed_address": "0x100FACF0"
 },
 {
 "address": "0x100FC240",
