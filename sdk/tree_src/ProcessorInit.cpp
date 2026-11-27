@@ -6,58 +6,58 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall ProcessorInit_InitMatrices(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
   
-  if ((DAT_1047cee8 & 1) == 0) {
-    DAT_1047cee8 = DAT_1047cee8 | 1;
-    DAT_1047cc38 = 0x3f800000;
-    DAT_1047cc3c = 0;
-    _DAT_1047cc40 = 0;
-    _DAT_1047cc44 = 0;
-    _DAT_1047cc48 = 0;
-    _DAT_1047cc4c = 0x3f800000;
-    _DAT_1047cc50 = 0;
-    _DAT_1047cc54 = 0;
-    _DAT_1047cc58 = 0;
-    _DAT_1047cc5c = 0;
-    _DAT_1047cc60 = 0x3f800000;
-    _DAT_1047cc64 = 0;
-    _DAT_1047cc68 = 0;
-    _DAT_1047cc6c = 0;
-    _DAT_1047cc70 = 0;
-    _DAT_1047cc74 = 0x3f800000;
-    orig::_atexit_v1(&DAT_10070200);
+  if ((g_1047CEE8 & 1) == 0) {
+    g_1047CEE8 = g_1047CEE8 | 1;
+    g_1047CC38 = 0x3f800000;
+    g_1047CC3C = 0;
+    g_1047CC40 = 0;
+    g_1047CC44 = 0;
+    g_1047CC48 = 0;
+    g_1047CC4C = 0x3f800000;
+    g_1047CC50 = 0;
+    g_1047CC54 = 0;
+    g_1047CC58 = 0;
+    g_1047CC5C = 0;
+    g_1047CC60 = 0x3f800000;
+    g_1047CC64 = 0;
+    g_1047CC68 = 0;
+    g_1047CC6C = 0;
+    g_1047CC70 = 0;
+    g_1047CC74 = 0x3f800000;
+    orig::_atexit_v1(&g_10070200);
   }
-  puVar2 = &DAT_1047cc38;
-  puVar3 = (undefined4 *)((int)self_ + 0x810);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CC38;
+  p2 = (bits32 *)((int)self_ + 0x810);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cc38;
-  puVar3 = (undefined4 *)((int)self_ + 0x850);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CC38;
+  p2 = (bits32 *)((int)self_ + 0x850);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cc38;
-  puVar3 = (undefined4 *)((int)self_ + 0x890);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CC38;
+  p2 = (bits32 *)((int)self_ + 0x890);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cc38;
-  puVar3 = (undefined4 *)((int)self_ + 0x8d0);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CC38;
+  p2 = (bits32 *)((int)self_ + 0x8d0);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  orig::FUN_1006ce40(self_);
+  orig::game_1006CE40(self_);
   return;
 }

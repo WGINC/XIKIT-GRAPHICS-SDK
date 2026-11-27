@@ -64,7 +64,7 @@ static void apply(void *cam) {
 }
 
 static xikit::fn<decltype(&XiZone::ComputeFogDistance)> prev_Dist;
-static long double __thiscall my_Dist(void *zone, undefined4 kind) {
+static long double __thiscall my_Dist(void *zone, bits32 kind) {
   long double d = prev_Dist(zone, kind);
   int p = g_host->setting_int("draw_percent", 100);
   return p != 100 ? d * p / 100.0L : d;

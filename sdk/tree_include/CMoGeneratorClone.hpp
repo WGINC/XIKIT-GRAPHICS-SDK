@@ -5,22 +5,22 @@
 #pragma pack(push, 1)
 class XI_API CMoGeneratorClone {
 public:
-    char * ScalarDeletingDtor(char a2);  // 0x10053840
+    char * ScalarDeletingDtor(char arg1);  // 0x10053840
     static char ** __cdecl CMoGeneratorClone_GetRuntimeClass();  // 0x100542E0
-    int InitCloneFromSource(_DWORD *a2);  // 0x10047C30
-    _DWORD * FixupClonedPointers();  // 0x10047CE0
+    int InitCloneFromSource(uint32_t *arg1);  // 0x10047C30
+    uint32_t * FixupClonedPointers();  // 0x10047CE0
     static void __thiscall Release(void * self);  // 0x100480D0
-    static void __thiscall UnlinkElemListA(void * self, int param_1);  // 0x10048140
+    static void __thiscall UnlinkElemListA(void * self, int arg2);  // 0x10048140
     static void __thiscall ResolveCmdTargets(void * self);  // 0x10048220
-    static uint32_t * __thiscall FindCmdByType(void * self, uint32_t param_1);  // 0x100492F0
-    static void __thiscall CopyType1Dwords(void * self, uint32_t * param_1);  // 0x10049520
-    static undefined4 __thiscall ResolveTarget(void * self);  // 0x10049570
-    static undefined4 __thiscall TestFlag20000000(void * self);  // 0x1004E470
-    void ExecuteCmdList(int a2);  // 0x1004E720
-    static void __thiscall SetFlagBit0At17B(void * self, undefined4 param_1);  // 0x10052960
-    static void __thiscall SetFlagBit1At17B(void * self, undefined4 param_1);  // 0x10052980
-    static void __thiscall CopyParams(void * self, int param_1);  // 0x10053450
-    int CreateInstance(_DWORD *a2, _DWORD *a3, int a4);  // 0x100536C0
+    static uint32_t * __thiscall FindCmdByType(void * self, uint32_t arg2);  // 0x100492F0
+    static void __thiscall CopyType1Dwords(void * self, uint32_t * arg2);  // 0x10049520
+    static bits32 __thiscall ResolveTarget(void * self);  // 0x10049570
+    static bits32 __thiscall TestFlag20000000(void * self);  // 0x1004E470
+    void ExecuteCmdList(int arg1);  // 0x1004E720
+    static void __thiscall SetFlagBit0At17B(void * self, bits32 arg2);  // 0x10052960
+    static void __thiscall SetFlagBit1At17B(void * self, bits32 arg2);  // 0x10052980
+    static void __thiscall CopyParams(void * self, int arg2);  // 0x10053450
+    int CreateInstance(uint32_t *arg1, uint32_t *arg2, int arg3);  // 0x100536C0
     int InitDefaultParams();  // 0x10053E00
     static void __thiscall Destructor(void * self);  // 0x100542F0
 

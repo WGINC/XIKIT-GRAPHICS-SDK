@@ -4,17 +4,17 @@
 
 // FUNCTION: FFXIMAIN 0x10054410
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl GeneratorRelease_Get10353710(void)
+XI_API bits32 __cdecl GeneratorRelease_Get10353710(void)
 {
-  return DAT_10353710;
+  return g_10353710;
 }
 
 // FUNCTION: FFXIMAIN 0x10054430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl GeneratorRelease_CopyFromPtr(undefined4 * param_1, undefined4 * param_2)
+XI_API void __cdecl GeneratorRelease_CopyFromPtr(bits32 * arg1, bits32 * arg2)
 {
-  *param_1 = *param_2;
-  param_1[1] = param_2[1];
-  param_1[2] = param_2[2];
+  *arg1 = *arg2;
+  arg1[1] = arg2[1];
+  arg1[2] = arg2[2];
   return;
 }

@@ -441,15 +441,19 @@ setting 0x6A + record is written as the **first key binding** of each of those a
 | 13, 14 | `Yk_GetActerPtrA0(6)`, `(12)`, when +0x60 has 8 |
 | 15, 16 | `Target_CycleInViewOrFirst` (1, 0) |
 | 17, 23 | when a target is held (`Target_GetCachedIfValid`): `Target_ClearAll` |
-| 18, 20 | `CXiActor::FindNearestToTarget_Mode1(0x12, 0)`, else a further search (not read) |
+| 18, 20 | `CXiActor::FindNearestToTarget_Mode1(0x12, 0)`, else the same with the target manager's own filter words (+0x60, +0x64) (read 28 Nov) |
 | 19 | `CXiActor::FindNearestToTarget_Mode2(0x10, 0)` |
 | 21 | `CXiActor::FindNearestToTarget_Mode0` (+0x60, +0x64) |
 | 22 | `Target_PickNearestToPoint`, unless +0x22 is set |
 | 24..27 | direction 0..3 to `TargetMenu_MoveByDirectionIf58` (when +0x58 is set and +0x59 or +0xC4) |
-| 28 | `CXiActor::FindNearestToTarget_Mode1(0x10, 0)`, else a further search (not read) |
+| 28 | `CXiActor::FindNearestToTarget_Mode1(0x10, 0)`, else the same with +0x60, +0x64 (read 28 Nov) |
 
-So F1..F6 (commands 6..11) take, besides 6, the actors 1..5 of the list at `[0x106643A8]`; F7 is 6 again; what the
-object 0x1047D600 and the list are, by their data: **not read**.
+So F1..F6 (commands 6..11) take, besides 6, the actors 1..5 of the list at `[0x106643A8]`; F7 is 6 again.
+**Read 28 Nov:** `Yk_GetActerPtrA0(n)` (0x102034A0) is `Yk_GetActerIfValid(n)` and the record's actor (+0xA0):
+the slot n of the alliance's 18 (RECORD.md section 7: three parties of six, slot = party x 6 + member). So commands
+7..11 (F2..F6) are party slots 1..5, 13 and 14 the first slots of the other two parties (6 and 12). Command 6 (F1)
+resolves the actor handle at 0x1047D600, which the camera code also reads (0x10014390, 0x10021280); that it is your
+own actor is what its use with F1 shows, not read further.
 
 **The macro set position** (`TextInputFiles_SetReadPos` 0x101A2890): the argument (0..19, wrapped) is a position in
 the current page of 20 (+0x1DC0; +0x1DBC = page x 20 + position); when it changes, the game passes the old file

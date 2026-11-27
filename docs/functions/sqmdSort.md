@@ -15,7 +15,7 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqmdSort.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqmdSort_Create` calls `sub_10275D80`, `SqmdSort_Init`
+- `SqmdSort_Create` calls `game_10275D80`, `SqmdSort_Init`
 - `SqmdSort_Init` calls nothing directly
-- `SqmdSort_AllocLists` calls `sub_10275D80`
+- `SqmdSort_AllocLists` calls `game_10275D80`
 - `SqmdSort_CreateForStrips` calls `sqDebugPrintf`, `SqmdSort_Create`, `SqmdSort_AllocLists`

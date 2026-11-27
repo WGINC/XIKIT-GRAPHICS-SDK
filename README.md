@@ -115,7 +115,7 @@ none has run in the game yet.
 | `audio_mix` | Interface, effect, ambient and music volume |
 | `color_filter` | Colour-blind correction or simulation of the whole frame (`cb_mode`; needs d3d8on11) |
 | `ui_layout` | Interface windows moved, each by name (`ui_layout.txt`) or all together (`ui_dx`, `ui_dy`) |
-| `hotbar` | Action bars from XIVhotbar2's job files, icons and keybinds, drawn with the game's font; a slot runs its line through the game's command line, as typed (`hotbar.txt`); default keys 1-0 - = (bar 2 with Ctrl, 3 Alt, 4 Shift); the game's macro keys run bars 2 and 3 (`/hb mode hotbar`) or the game's macros (`/hb mode macro`); `/hb run 1.3` |
+| `hotbar` | Action bars from XIVhotbar2's job files, icons and keybinds, drawn with the game's font; a slot runs its line through the game's command line, as typed (`hotbar.txt`); default keys 1-0 - = (bar 2 with Ctrl, 3 Alt, 4 Shift); the game's macro keys run bars 2 and 3 (`/htb mode hotbar`) or the game's macros (`/htb mode macro`); `/htb run 1.3`; layout mode and the action picker after XIVhotbar2 Petit Trois Edition (`/htb move`), `/htb set`, `clear`, `rename` |
 | `click_target` | Click anywhere on a nameplate to target its character; a click on nothing deselects (`ct_deselect`) |
 | `status_text` | The local time over the interface (the tutorial's mod: `sdk/TUTORIAL.md`); `/stext` shows or hides it |
 

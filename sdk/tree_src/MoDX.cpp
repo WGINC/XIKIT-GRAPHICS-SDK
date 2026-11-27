@@ -13,19 +13,19 @@ XI_API void __cdecl MoDX_Nop(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MoDX_ClearByteTables(void * self_)
 {
-  uint8_t *puVar1;
-  uint32_t *puVar2;
+  uint8_t *p1;
+  uint32_t *p2;
   
-  puVar1 = (uint8_t *)((int)self_ + 0x110);
-  puVar2 = (uint32_t *)((int)self_ + 0x310);
+  p1 = (uint8_t *)((int)self_ + 0x110);
+  p2 = (uint32_t *)((int)self_ + 0x310);
   do {
-    puVar1[0x100] = 0;
-    *puVar1 = 0;
-    puVar1[-0x100] = 0;
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
-    puVar1 = puVar1 + 1;
-  } while ((int)(puVar1 + (-0x110 - (int)self_)) < 0x100);
+    p1[0x100] = 0;
+    *p1 = 0;
+    p1[-0x100] = 0;
+    *p2 = 0;
+    p2 = p2 + 1;
+    p1 = p1 + 1;
+  } while ((int)(p1 + (-0x110 - (int)self_)) < 0x100);
   return;
 }
 
@@ -33,84 +33,84 @@ XI_API void __thiscall MoDX_ClearByteTables(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall MoDX_Update(void * self_)
 {
-  int iVar1;
+  int i1;
   DWORD xi_eax;
-  long double fVar2;
+  long double f1;
   
   xi_eax = timeGetTime();
   if (xi_eax < *(uint32_t *)((int)self_ + 0xea8)) {
     xi_eax = 0x10;
     *(uint32_t *)((int)self_ + 0xea8) = 0;
   }
-  iVar1 = *(int *)((int)self_ + 0xea8);
+  i1 = *(int *)((int)self_ + 0xea8);
   *(DWORD *)((int)self_ + 0xea8) = xi_eax;
-  fVar2 = (long double)(xi_eax - iVar1) * (long double)0.001000000047497451305389404296875f;
-  *(float *)((int)self_ + 0xeac) = (float)fVar2;
-  *(float *)((int)self_ + 0xeb0) = (float)(fVar2 * (long double)6e+01f);
+  f1 = (xi_eax - i1) * 0.001000000047497451305389404296875f;
+  *(float *)((int)self_ + 0xeac) = (float)f1;
+  *(float *)((int)self_ + 0xeb0) = (float)(f1 * 6e+01f);
   *(double *)((int)self_ + 0xeb4) =
-       (double)((long double)*(float *)((int)self_ + 0xeac) * (long double)6e+01f +
-               (long double)*(double *)((int)self_ + 0xeb4));
-  fVar2 = orig::Camera_GetFrameScale_v1(xi_eax);
-  *(float *)((int)self_ + 0xeb0) = (float)fVar2;
+       (double)(*(float *)((int)self_ + 0xeac) * 6e+01f +
+               *(double *)((int)self_ + 0xeb4));
+  f1 = orig::Camera_GetFrameScale_v1(xi_eax);
+  *(float *)((int)self_ + 0xeb0) = (float)f1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006A020
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API unsigned int __stdcall Gfx_CreateVertexBuffer(unsigned int a1, int a2, int a3, int a4)
+XI_API unsigned int __stdcall Gfx_CreateVertexBuffer(unsigned int arg1, int arg2, int arg3, int arg4)
 {
-  unsigned int v4;
-  int v5;
-  v4 = a1;
-  v5 = orig::Gfx_CalcFVFStride(a1);
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(a2 * v5, 8, v4, D3DPOOL_MANAGED, (IDirect3DVertexBuffer8 **)(&a1));
-  return a1;
+  unsigned int FVF;
+  int i1;
+  FVF = arg1;
+  i1 = orig::Gfx_CalcFVFStride(arg1);
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * i1, 8, FVF, D3DPOOL_MANAGED, (IDirect3DVertexBuffer8 **)(&arg1));
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006A180
 // GATE: PASS -- 100 trials, 64 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 64
-XI_API undefined4 __thiscall Camera_SetupMatrices(void * self_, undefined4 xi_s1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4)
+XI_API bits32 __thiscall Camera_SetupMatrices(void * self_, bits32 xi_s1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4)
 {
-  uint32_t *puVar1;
-  float fVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t *puVar5;
-  uint32_t *puVar6;
-  uint32_t *puVar7;
+  uint32_t *p1;
+  float f1;
+  uint32_t u1;
+  int i1;
+  uint32_t *p2;
+  uint32_t *p3;
+  uint32_t *p4;
   
-  puVar1 = (uint32_t *)((int)self_ + 0xb50);
-  orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),2,puVar1);
-  puVar5 = puVar1;
-  puVar6 = (uint32_t *)((int)self_ + 0xb90);
-  for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
-    *puVar6 = *puVar5;
-    puVar5 = puVar5 + 1;
-    puVar6 = puVar6 + 1;
+  p1 = (uint32_t *)((int)self_ + 0xb50);
+  orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),2,p1);
+  p2 = p1;
+  p3 = (uint32_t *)((int)self_ + 0xb90);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p3 = *p2;
+    p2 = p2 + 1;
+    p3 = p3 + 1;
   }
   *(uint32_t *)((int)self_ + 0xbc0) = 0;
   *(uint32_t *)((int)self_ + 0xbc4) = 0;
   *(uint32_t *)((int)self_ + 0xbc8) = 0;
   *(uint32_t *)((int)self_ + 0xbcc) = 0x3f800000;
-  *(float *)((int)self_ + 0xdb4) = (float)-(long double)*(float *)((int)self_ + 0xb58);
-  *(float *)((int)self_ + 0xdb8) = (float)-(long double)*(float *)((int)self_ + 0xb68);
-  fVar2 = *(float *)((int)self_ + 0xb78);
-  puVar5 = (uint32_t *)((int)self_ + 0xd50);
-  puVar6 = puVar1;
-  puVar7 = puVar5;
-  for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  *(float *)((int)self_ + 0xdb4) = (float)-*(float *)((int)self_ + 0xb58);
+  *(float *)((int)self_ + 0xdb8) = (float)-*(float *)((int)self_ + 0xb68);
+  f1 = *(float *)((int)self_ + 0xb78);
+  p2 = (uint32_t *)((int)self_ + 0xd50);
+  p3 = p1;
+  p4 = p2;
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p4 = *p3;
+    p3 = p3 + 1;
+    p4 = p4 + 1;
   }
-  *puVar5 = 0x3f800000;
-  *(float *)((int)self_ + 0xdbc) = (float)-(long double)fVar2;
-  puVar6 = puVar1;
-  puVar7 = (uint32_t *)((int)self_ + 0xd10);
-  for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
-    *puVar7 = *puVar6;
-    puVar6 = puVar6 + 1;
-    puVar7 = puVar7 + 1;
+  *p2 = 0x3f800000;
+  *(float *)((int)self_ + 0xdbc) = (float)-f1;
+  p3 = p1;
+  p4 = (uint32_t *)((int)self_ + 0xd10);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p4 = *p3;
+    p3 = p3 + 1;
+    p4 = p4 + 1;
   }
   *(uint32_t *)((int)self_ + 0xd54) = 0;
   *(uint32_t *)((int)self_ + 0xd58) = 0;
@@ -122,125 +122,125 @@ XI_API undefined4 __thiscall Camera_SetupMatrices(void * self_, undefined4 xi_s1
   *(uint32_t *)((int)self_ + 0xd28) = 0;
   *(uint32_t *)((int)self_ + 0xd14) = 0;
   *(uint32_t *)((int)self_ + 0xd34) = 0;
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0x24))))((void *)(g_pProcessor_as_v1),(int)self_ + 0xc10,(int)self_ + 0xd10,puVar5);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x24))))((void *)(g_pProcessor_as_v1),(int)self_ + 0xc10,(int)self_ + 0xd10,p2);
   orig::Processor_ApplyPair((int)self_ + 0xc50,(int)self_ + 0xc10);
-  orig::Processor_ApplyPair((int)self_ + 0xbd0,(int)puVar1);
+  orig::Processor_ApplyPair((int)self_ + 0xbd0,(int)p1);
   orig::Processor_ApplyPair((int)self_ + 0xc90,(int)self_ + 0xd10);
   orig::Processor_ApplyPair((int)self_ + 0xcd0,(int)self_ + 0xd50);
-  iVar4 = orig::CDx_GetRenderTargetTop_v1(*(void **)((int)self_ + 0xdc8));
-  *(float *)((int)self_ + 0xdc0) = (float)((long double)*(int *)(iVar4 + 8) * (long double)0.5f);
-  iVar4 = orig::CDx_GetRenderTargetTop_v1(*(void **)((int)self_ + 0xdc8));
-  *(float *)((int)self_ + 0xdc4) = (float)((long double)*(int *)(iVar4 + 0xc) * (long double)0.5f);
-  uVar3 = orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),3,(uint32_t *)((int)self_ + 0xb10));
-  return uVar3;
+  i1 = orig::CDx_GetRenderTargetTop_v1(*(void **)((int)self_ + 0xdc8));
+  *(float *)((int)self_ + 0xdc0) = (float)(*(int *)(i1 + 8) * 0.5f);
+  i1 = orig::CDx_GetRenderTargetTop_v1(*(void **)((int)self_ + 0xdc8));
+  *(float *)((int)self_ + 0xdc4) = (float)(*(int *)(i1 + 0xc) * 0.5f);
+  u1 = orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),3,(uint32_t *)((int)self_ + 0xb10));
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006A540
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Dx_GetCachedTransform2(void * self_, undefined4 * param_1)
+XI_API void __thiscall Dx_GetCachedTransform2(void * self_, bits32 * arg2)
 {
-  orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),2,param_1);
+  orig::CDx_GetTransformCached_v1(*(void **)((int)self_ + 0xdc8),2,arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006A560
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_CalcFVFStride(uint32_t param_1)
+XI_API int __cdecl Gfx_CalcFVFStride(uint32_t arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 0;
-  if ((param_1 & 2) != 0) {
-    iVar1 = 3;
+  i1 = 0;
+  if ((arg1 & 2) != 0) {
+    i1 = 3;
   }
-  if ((param_1 & 4) != 0) {
-    iVar1 = 4;
+  if ((arg1 & 4) != 0) {
+    i1 = 4;
   }
-  if ((param_1 & 0x10) != 0) {
-    iVar1 = iVar1 + 3;
+  if ((arg1 & 0x10) != 0) {
+    i1 = i1 + 3;
   }
-  if ((param_1 & 0x40) != 0) {
-    iVar1 = iVar1 + 1;
+  if ((arg1 & 0x40) != 0) {
+    i1 = i1 + 1;
   }
-  if ((char)param_1 < '\0') {
-    iVar1 = iVar1 + 1;
+  if ((char)arg1 < '\0') {
+    i1 = i1 + 1;
   }
-  if ((param_1 & 0x100) != 0) {
-    switch(xi_sw(param_1 >> 0x10 & 3)) {
+  if ((arg1 & 0x100) != 0) {
+    switch(xi_sw(arg1 >> 0x10 & 3)) {
     case 0:
-      return (iVar1 + 2) * 4;
+      return (i1 + 2) * 4;
     case 1:
-      return (iVar1 + 3) * 4;
+      return (i1 + 3) * 4;
     case 2:
-      iVar1 = iVar1 + 4;
+      i1 = i1 + 4;
       break;
     case 3:
-      return (iVar1 + 1) * 4;
+      return (i1 + 1) * 4;
     }
   }
-  return iVar1 << 2;
+  return i1 << 2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006AA30
 // GATE: PASS -- 100 trials, 16 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 16
-XI_API int __thiscall Batch_DrawPrimitives(_DWORD *self_, int arg0)
+XI_API int __thiscall Batch_DrawPrimitives(uint32_t *self_, int arg0)
 {
-  int v3;
+  int i1;
   int i;
-  int v5;
-  int v6;
-  int v7;
-  int v8;
-  int v9;
-  int v10;
-  int a2;
-  v3 = 0;
-  a2 = 0;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  int StartVertex;
+  i1 = 0;
+  StartVertex = 0;
   if ( *(self_ + 6) != 0 )
   {
-    for ( i = 0; (int)(i) < (int)(*(self_ + 3)); a2 = v3 )
+    for ( i = 0; (int)(i) < (int)(*(self_ + 3)); StartVertex = i1 )
     {
-      (*(void (__stdcall **)(_DWORD, _DWORD))(**(_DWORD **)(arg0 + 3772) + 304))(*(_DWORD *)(arg0 + 3772), *(self_ + 8));
-      v7 = *(_DWORD *)(arg0 + 3772);
-      v5 = *(_DWORD *)v7;
-      v6 = orig::Gfx_CalcFVFStride(*(self_ + 8));
-      (*(void (__stdcall **)(int, _DWORD, _DWORD, int))(v5 + 332))(v7, 0, *(self_ + 1), v6);
-      orig::CDx_DrawPrimitive(*(void **)(arg0 + 3528), 5, a2, *(__int16 *)(*(self_ + 6) + 2 * i) - 2);
-      v3 = *(__int16 *)(*(self_ + 6) + 2 * i++) + a2;
+      (*(void (__stdcall **)(uint32_t, uint32_t))(**(uint32_t **)(arg0 + 3772) + 304))(*(uint32_t *)(arg0 + 3772), *(self_ + 8));
+      i4 = *(uint32_t *)(arg0 + 3772);
+      i2 = *(uint32_t *)i4;
+      i3 = orig::Gfx_CalcFVFStride(*(self_ + 8));
+      (*(void (__stdcall **)(int, uint32_t, uint32_t, int))(i2 + 332))(i4, 0, *(self_ + 1), i3);
+      orig::CDx_DrawPrimitive(*(void **)(arg0 + 3528), 5, StartVertex, *(short *)(*(self_ + 6) + 2 * i) - 2);
+      i1 = *(short *)(*(self_ + 6) + 2 * i++) + StartVertex;
     }
   }
   if ( *(self_ + 2) != 0 )
   {
-    (*(void (__stdcall **)(_DWORD, _DWORD))(**(_DWORD **)(arg0 + 3772) + 304))(*(_DWORD *)(arg0 + 3772), *(self_ + 8));
-    v10 = *(_DWORD *)(arg0 + 3772);
-    v8 = *(_DWORD *)v10;
-    v9 = orig::Gfx_CalcFVFStride(*(self_ + 8));
-    (*(void (__stdcall **)(int, _DWORD, _DWORD, int))(v8 + 332))(v10, 0, *(self_ + 2), v9);
+    (*(void (__stdcall **)(uint32_t, uint32_t))(**(uint32_t **)(arg0 + 3772) + 304))(*(uint32_t *)(arg0 + 3772), *(self_ + 8));
+    i7 = *(uint32_t *)(arg0 + 3772);
+    i5 = *(uint32_t *)i7;
+    i6 = orig::Gfx_CalcFVFStride(*(self_ + 8));
+    (*(void (__stdcall **)(int, uint32_t, uint32_t, int))(i5 + 332))(i7, 0, *(self_ + 2), i6);
     orig::CDx_DrawPrimitive(*(void **)(arg0 + 3528), 4, 0, *(self_ + 5));
   }
-  return v3 + *(self_ + 5);
+  return i1 + *(self_ + 5);
 }
 
 // FUNCTION: FFXIMAIN 0x1006AD30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Attach_SetTranslation(int param_1, undefined4 * param_2)
+XI_API void __cdecl Attach_SetTranslation(int arg1, bits32 * arg2)
 {
-  *(uint32_t *)(param_1 + 0x30) = *param_2;
-  *(uint32_t *)(param_1 + 0x34) = param_2[1];
-  *(uint32_t *)(param_1 + 0x38) = param_2[2];
+  *(uint32_t *)(arg1 + 0x30) = *arg2;
+  *(uint32_t *)(arg1 + 0x34) = arg2[1];
+  *(uint32_t *)(arg1 + 0x38) = arg2[2];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006AD50
 // GATE: PASS -- 100 trials, 99 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __cdecl Processor_ApplyPair(int param_1, int param_2)
+XI_API int __cdecl Processor_ApplyPair(int arg1, int arg2)
 {
-  if (param_1 == param_2) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0xb8))))((void *)(g_pProcessor_as_v1),param_1);
-    return param_1;
+  if (arg1 == arg2) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0xb8))))((void *)(g_pProcessor_as_v1),arg1);
+    return arg1;
   }
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0xb4))))((void *)(g_pProcessor_as_v1),param_1,param_2);
-  return param_1;
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0xb4))))((void *)(g_pProcessor_as_v1),arg1,arg2);
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006AD90
@@ -267,22 +267,22 @@ XI_API void __thiscall MoDX_Insert(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1006AF00
 // GATE: PASS -- 100 trials, 86 returned normally, 69298 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 86
-XI_API int __thiscall StateBlockHolder_ApplyRenderStates(_DWORD *self_, int *a2)
+XI_API int __thiscall StateBlockHolder_ApplyRenderStates(uint32_t *self_, int *arg2)
 {
-  int v4;
+  int i1;
   while ( *self_ == -1 )
   {
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->BeginStateBlock();
-    if ( a2 != nullptr )
+    if ( arg2 != nullptr )
     {
-      v4 = *a2;
+      i1 = *arg2;
       do
       {
-        (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState((D3DRENDERSTATETYPE)(v4), a2[1]);
-        v4 = a2[2];
-        a2 += 2;
+        (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState((D3DRENDERSTATETYPE)(i1), arg2[1]);
+        i1 = arg2[2];
+        arg2 += 2;
       }
-      while ( v4 != 0x7FFFFFFF );
+      while ( i1 != 0x7FFFFFFF );
     }
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->EndStateBlock((void *)(self_));
     orig::MoDX_Insert(self_);
@@ -292,25 +292,25 @@ XI_API int __thiscall StateBlockHolder_ApplyRenderStates(_DWORD *self_, int *a2)
 
 // FUNCTION: FFXIMAIN 0x1006AF90
 // GATE: PASS -- 100 trials, 86 returned normally, 61466 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 86
-XI_API int __thiscall StateBlock_ApplyTSS(void *self_, int a1)
+XI_API int __thiscall StateBlock_ApplyTSS(void *self_, int arg2)
 {
-  int v4;
-  while ( *(_DWORD *)self_ == -1 )
+  int i1;
+  while ( *(uint32_t *)self_ == -1 )
   {
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->BeginStateBlock();
-    if ( a1 != 0 )
+    if ( arg2 != 0 )
     {
-      v4 = *(_DWORD *)(a1 + 4);
+      i1 = *(uint32_t *)(arg2 + 4);
       do
       {
-        (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(*(_DWORD *)a1, (D3DTEXTURESTAGESTATETYPE)(v4), *(_DWORD *)(a1 + 8));
-        v4 = *(_DWORD *)(a1 + 16);
-        a1 += 12;
+        (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(*(uint32_t *)arg2, (D3DTEXTURESTAGESTATETYPE)(i1), *(uint32_t *)(arg2 + 8));
+        i1 = *(uint32_t *)(arg2 + 16);
+        arg2 += 12;
       }
-      while ( v4 != 0x7FFFFFFF );
+      while ( i1 != 0x7FFFFFFF );
     }
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->EndStateBlock((void *)(self_));
     orig::MoDX_Insert(self_);
   }
-  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->ApplyStateBlock(*(_DWORD *)self_);
+  return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->ApplyStateBlock(*(uint32_t *)self_);
 }

@@ -20,7 +20,7 @@ the game (0: it has one). The graphics system is the functions with a depth.
 
 The kit does not swap reconstructed code into the game. Every hook's `previous` is the game's own code.
 
-A first mod, step by step: `TUTORIAL.md`. Every declaration of the headers with its comment: `API.md` (made by the
+How to read the tree's code (its names, types and helpers): `TREE.md`. A first mod, step by step: `TUTORIAL.md`. Every declaration of the headers with its comment: `API.md` (made by the
 analysis repository's `sdk/api_reference.py`). What stays the same between kit versions: `COMPATIBILITY.md`.
 
 ## What you need
@@ -197,7 +197,7 @@ once.
   click from the game it does not call `previous`, and it keeps the release of the same press too.
   `sdk/examples/hotbar.cpp` does this over its bars.
 - **Chat commands, not hotkeys.** The SDK's mods take their switches as chat commands (`/stext`, `/photo shot`,
-  `/hb run 1.3`, `/prishe panel`), with `xikit_cmd.hpp`: `xicmd::add("word", handler)`, then `xicmd::install(host)`
+  `/htb run 1.3`, `/prishe panel`), with `xikit_cmd.hpp`: `xicmd::add("word", handler)`, then `xicmd::install(host)`
   in `xikit_mod_init`. A command also works from the game's macros, and it cannot clash with another mod's key or
   the game's. Choose a word the game does not have: its own commands are `/word` strings in FFXiMain.dll
   (`strings FFXiMain.dll | grep '^/'`). A handler runs inside the game's Command_RunLine; to run a line of the game's
@@ -333,6 +333,23 @@ The build can then write `my_mod.dll` while the game runs.
 - **Old builds stay loaded but are never called again.** A thread may still be returning through one. Each reload
   costs one copy of the DLL in memory.
 - **Trampolines are built once,** from the untouched entry, so a reloaded hook's `previous` is the same code.
+
+## Testing a mod outside the game (`test/mod_host.c`)
+
+`test/mod_host.exe MOD.dll [FRAMES]` runs the kit and one mod against a copy of your own `FFXiMain.dll` and a real
+Direct3D 8 device, on Windows or under Wine, without starting the game (`test/build_host.sh` builds it; with Visual
+Studio, `cl /O2 mod_host.c user32.lib`). Put in one folder: `mod_host.exe`, `FFXiMain.dll` (copied from your game; it
+is mapped, never run), `xikit.dll` with its `xikit_manifest*.txt`, and your mod. It writes `xikit.ini` with your mod
+alone and `swap=0`, loads the kit, presents the frames (your `xikit_mod_frame` runs in each), calls your mod's
+optional export
+
+```cpp
+extern "C" __declspec(dllexport) int xikit_mod_selftest(void *device);   // 0: passed
+```
+
+and prints the kit's log, with a line for each hook that was refused. The game's code does not run, so a hooked
+function is reached only when your self test calls it; what the host shows is that the mod loads, declares its
+settings, hooks what it asks for, draws, and passes its own checks. It knows builds 6A995428 and 6AE818B4.
 
 ## Limits
 

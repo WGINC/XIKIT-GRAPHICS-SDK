@@ -7,10 +7,10 @@ class XI_API CMoDist {
 public:
     static char ** __cdecl GetRuntimeClass_variant0();  // 0x100426E0
     static char ** __cdecl GetRuntimeClass_variant1();  // 0x100430B0
-    static undefined8 __thiscall Init(void * self);  // 0x10052D40
-    BOOL IsKind1(int a1);  // 0x10052D60
-    int set_field_194(int a2);  // 0x10052D70
-    int * ScalarDeletingDtor(char a2);  // 0x10052D80
+    static uint64_t __thiscall Init(void * self);  // 0x10052D40
+    BOOL IsKind1(int arg1);  // 0x10052D60
+    int set_field_194(int arg1);  // 0x10052D70
+    int * ScalarDeletingDtor(char arg1);  // 0x10052D80
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x190];

@@ -4,83 +4,85 @@
 
 // FUNCTION: FFXIMAIN 0x10071FD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall MoRes_FindPrevious(void * self_)
+XI_API bits32 __thiscall MoRes_FindPrevious(void * self_)
 {
-  void *pvVar1;
-  void *pvVar2;
+  void *p1;
+  void *p2;
   
-  pvVar1 = (void *)0x0;
-  if (DAT_1047d124 == (int *)0x0) {
-    pvVar2 = (void *)0x0;
+  p1 = (void *)0x0;
+  if (g_1047D124 == (int *)0x0) {
+    p2 = (void *)0x0;
   }
   else {
-    pvVar2 = (void *)*DAT_1047d124;
+    p2 = (void *)*g_1047D124;
   }
-  while ((pvVar2 != (void *)0x0 && (pvVar2 != self_))) {
-    pvVar1 = pvVar2;
-    if (*(int **)((int)pvVar2 + 0x2c) == (int *)0x0) {
-      pvVar2 = (void *)0x0;
+  while ((p2 != (void *)0x0 && (p2 != self_))) {
+    p1 = p2;
+    if (*(int **)((int)p2 + 0x2c) == (int *)0x0) {
+      p2 = (void *)0x0;
     }
     else {
-      pvVar2 = (void *)**(int **)((int)pvVar2 + 0x2c);
+      p2 = (void *)**(int **)((int)p2 + 0x2c);
     }
   }
-  return pvVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10072180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall WeatherRes_GetTimeKey(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall WeatherRes_GetTimeKey(void * self_, bits32 * arg2)
 {
-  uint32_t uVar1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+  } frame;
   
-  uVar1 = *(uint32_t *)((int)self_ + 0x20);
-  local_4 = uVar1;
-  orig::unknown_libname_158(&local_8);
-  orig::FUN_1018bf50(&local_8,((uVar1 >> 8 & 0xff) - 0x210) + (uVar1 & 0xff) * 10);
-  orig::Time_SetModulo216000Div3600(&local_8,((uVar1 >> 0x18) - 0x210) + (local_4 >> 0x10 & 0xff) * 10);
-  *param_1 = local_8;
-  return param_1;
+  u1 = *(uint32_t *)((int)self_ + 0x20);
+  frame.u3 = u1;
+  orig::unknown_libname_158(&frame.u2);
+  orig::Time_FromHours_as_v0(&frame.u2,((u1 >> 8 & 0xff) - 0x210) + (u1 & 0xff) * 10);
+  orig::Time_SetModulo216000Div3600(&frame.u2,((u1 >> 0x18) - 0x210) + (frame.u3 >> 0x10 & 0xff) * 10);
+  *arg2 = frame.u2;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x100721F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CMoResource_Destroy(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CMoResource_Destroy(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
+  uint8_t u1;
+  uint32_t u2;
   
-  uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x1a))));
-  bVar1 = (uint8_t)*(uint16_t *)((int)self_ + 0x1a);
-  if ((bVar1 >> 1 & 1) == 0) {
-    *(uint16_t *)((int)self_ + 0x1a) = (uint16_t)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(bVar1))) | 2;
-    uVar2 = orig::CMoResource_InitAndGetFlag(self_);
+  u2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x1a))));
+  u1 = (uint8_t)*(uint16_t *)((int)self_ + 0x1a);
+  if ((u1 >> 1 & 1) == 0) {
+    *(uint16_t *)((int)self_ + 0x1a) = (uint16_t)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(u1))) | 2;
+    u2 = orig::CMoResource_InitAndGetFlag(self_);
     if ((*(uint8_t *)((int)self_ + 0x1a) & 1) != 0) {
       *(uint8_t *)((int)self_ + 0x1a) = *(uint8_t *)((int)self_ + 0x1a) & 0xfe;
       orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,*(uint32_t **)((int)self_ + 0x14));
-      uVar2 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x18))))((void *)(self_),1);
+      u2 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),1);
     }
   }
-  return uVar2;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10072240
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall Resource_FindSelfLinkedNode(void * self_)
 {
-  void *pvVar1;
+  void *p1;
   
   while( true ) {
     if (*(uint32_t **)((int)self_ + 0x28) == (uint32_t *)0x0) {
-      pvVar1 = (void *)0x0;
+      p1 = (void *)0x0;
     }
     else {
-      pvVar1 = (void *)**(uint32_t **)((int)self_ + 0x28);
+      p1 = (void *)**(uint32_t **)((int)self_ + 0x28);
     }
-    if (pvVar1 == self_) break;
+    if (p1 == self_) break;
     if (*(int **)((int)self_ + 0x28) == (int *)0x0) {
       return (void *)0x0;
     }
@@ -91,69 +93,69 @@ XI_API void * __thiscall Resource_FindSelfLinkedNode(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10072430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoResource_FindInScope(undefined4 xi_eax, undefined4 * param_1, int param_2, uint32_t param_3, int param_4)
+XI_API bits32 __attribute__((stdcall, regparm(1))) CMoResource_FindInScope(bits32 xi_eax, bits32 * arg2, int arg3, uint32_t arg4, int arg5)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = ((*(uint8_t *)(param_2 + 0x24) & 0x7f) != 1) - 1;
+  i1 = ((*(uint8_t *)(arg3 + 0x24) & 0x7f) != 1) - 1;
   do {
-    uVar2 = *(uint32_t *)(param_2 + 0x24) & 0x7f;
-    if (uVar2 == 1) {
-      iVar1 = iVar1 + 1;
+    u1 = *(uint32_t *)(arg3 + 0x24) & 0x7f;
+    if (u1 == 1) {
+      i1 = i1 + 1;
     }
-    if ((uVar2 == 0) && (iVar1 = iVar1 + -1, iVar1 < 0)) break;
-    if (param_3 == 0) {
-      if (*(int *)(param_2 + 0x20) == param_4) {
-LAB_1007246a:
-        *param_1 = *(uint32_t *)(param_2 + 0x14);
-        return param_1;
+    if ((u1 == 0) && (i1 = i1 + -1, i1 < 0)) break;
+    if (arg4 == 0) {
+      if (*(int *)(arg3 + 0x20) == arg5) {
+code_1007246A:
+        *arg2 = *(uint32_t *)(arg3 + 0x14);
+        return arg2;
       }
     }
-    else if (uVar2 == param_3) {
-      if (param_4 == 0) goto LAB_1007246a;
-      if (*(int *)(param_2 + 0x20) == param_4) {
-        *param_1 = *(uint32_t *)(param_2 + 0x14);
-        return param_1;
+    else if (u1 == arg4) {
+      if (arg5 == 0) goto code_1007246A;
+      if (*(int *)(arg3 + 0x20) == arg5) {
+        *arg2 = *(uint32_t *)(arg3 + 0x14);
+        return arg2;
       }
     }
-    if (*(int **)(param_2 + 8) == (int *)0x0) {
-      param_2 = 0;
+    if (*(int **)(arg3 + 8) == (int *)0x0) {
+      arg3 = 0;
     }
     else {
-      param_2 = **(int **)(param_2 + 8);
+      arg3 = **(int **)(arg3 + 8);
     }
-  } while (param_2 != 0);
-  *param_1 = 0;
-  return param_1;
+  } while (arg3 != 0);
+  *arg2 = 0;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x100724C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YmResourceFile_FindResourceUnder(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 * param_2, uint32_t param_3, int param_4)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YmResourceFile_FindResourceUnder(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 * arg4, uint32_t arg5, int arg6)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = ((*(uint8_t *)((int)self_ + 0x24) & 0x7f) != 1) - 1;
+  i1 = ((*(uint8_t *)((int)self_ + 0x24) & 0x7f) != 1) - 1;
   do {
-    uVar2 = *(uint32_t *)((int)self_ + 0x24) & 0x7f;
-    if (uVar2 == 1) {
-      iVar1 = iVar1 + 1;
+    u1 = *(uint32_t *)((int)self_ + 0x24) & 0x7f;
+    if (u1 == 1) {
+      i1 = i1 + 1;
     }
-    if ((uVar2 == 0) && (iVar1 = iVar1 + -1, iVar1 < 0)) break;
-    if (param_3 == 0) {
-      if (*(int *)((int)self_ + 0x20) == param_4) {
-LAB_100724f6:
-        *param_2 = *(uint32_t *)((int)self_ + 0x14);
-        return param_2;
+    if ((u1 == 0) && (i1 = i1 + -1, i1 < 0)) break;
+    if (arg5 == 0) {
+      if (*(int *)((int)self_ + 0x20) == arg6) {
+code_100724F6:
+        *arg4 = *(uint32_t *)((int)self_ + 0x14);
+        return arg4;
       }
     }
-    else if (uVar2 == param_3) {
-      if (param_4 == 0) goto LAB_100724f6;
-      if (*(int *)((int)self_ + 0x20) == param_4) {
-        *param_2 = *(uint32_t *)((int)self_ + 0x14);
-        return param_2;
+    else if (u1 == arg5) {
+      if (arg6 == 0) goto code_100724F6;
+      if (*(int *)((int)self_ + 0x20) == arg6) {
+        *arg4 = *(uint32_t *)((int)self_ + 0x14);
+        return arg4;
       }
     }
     if (*(uint32_t **)((int)self_ + 8) == (uint32_t *)0x0) {
@@ -163,39 +165,39 @@ LAB_100724f6:
       self_ = (void *)**(uint32_t **)((int)self_ + 8);
     }
   } while (self_ != (void *)0x0);
-  *param_2 = 0;
-  return param_2;
+  *arg4 = 0;
+  return arg4;
 }
 
 // FUNCTION: FFXIMAIN 0x10072540
 // GATE: PASS -- 100 trials, 97 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 97
-XI_API undefined4 __attribute__((stdcall, regparm(3))) Resource_FindInChainByKind(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, uint32_t param_2, int param_3, uint8_t * param_4, undefined4 param_5)
+XI_API bits32 __attribute__((stdcall, regparm(3))) Resource_FindInChainByKind(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, uint32_t arg4, int arg5, uint8_t * arg6, bits32 arg7)
 {
-  uint32_t uVar1;
-  int local_4;
+  uint32_t u1;
+  int i1;
   
-  local_4 = ((*(uint8_t *)((int)self_ + 0x24) & 0x7f) != 1) - 1;
+  i1 = ((*(uint8_t *)((int)self_ + 0x24) & 0x7f) != 1) - 1;
   do {
-    uVar1 = *(uint32_t *)((int)self_ + 0x24) & 0x7f;
-    if (uVar1 == 1) {
-      local_4 = local_4 + 1;
+    u1 = *(uint32_t *)((int)self_ + 0x24) & 0x7f;
+    if (u1 == 1) {
+      i1 = i1 + 1;
     }
-    if ((uVar1 == 0) && (local_4 = local_4 + -1, local_4 < 0)) {
+    if ((u1 == 0) && (i1 = i1 + -1, i1 < 0)) {
       return 0;
     }
-    if (param_2 == 0) {
-LAB_10072593:
-      if (*(int *)((int)self_ + 0x20) == param_3) {
-LAB_10072598:
-        uVar1 = (*(code *)param_4)(*(uint32_t *)((int)self_ + 0x14),param_5);
-        if ((char)uVar1 != '\0') {
-          return uVar1;
+    if (arg4 == 0) {
+code_10072593:
+      if (*(int *)((int)self_ + 0x20) == arg5) {
+code_10072598:
+        u1 = (*(untyped_fn *)arg6)(*(uint32_t *)((int)self_ + 0x14),arg7);
+        if ((char)u1 != '\0') {
+          return u1;
         }
       }
     }
-    else if (uVar1 == param_2) {
-      if (param_3 != 0) goto LAB_10072593;
-      goto LAB_10072598;
+    else if (u1 == arg4) {
+      if (arg5 != 0) goto code_10072593;
+      goto code_10072598;
     }
     if (*(uint32_t **)((int)self_ + 8) == (uint32_t *)0x0) {
       self_ = (void *)0x0;
@@ -204,19 +206,19 @@ LAB_10072598:
       self_ = (void *)**(uint32_t **)((int)self_ + 8);
     }
     if (self_ == (void *)0x0) {
-      return uVar1;
+      return u1;
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10072990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) Resource_InitFieldsTakeFlag1047D12C(uint32_t xi_eax_unused, undefined4 xi_edx, int param_1)
+XI_API void __attribute__((stdcall, regparm(3))) Resource_InitFieldsTakeFlag1047D12C(uint32_t xi_eax_unused, bits32 xi_edx, int arg3)
 {
-  *(uint32_t *)(param_1 + 0x14) = 0;
-  *(uint16_t *)(param_1 + 0x1a) = (uint16_t)(byte_1047D12C_as_v1 & 1) | *(uint16_t *)(param_1 + 0x1a) & 0xfffe;
-  byte_1047D12C_as_v1 = 0;
-  *(uint32_t *)(param_1 + 0x28) = 0;
+  *(uint32_t *)(arg3 + 0x14) = 0;
+  *(uint16_t *)(arg3 + 0x1a) = (uint16_t)(g_1047D12C_as_v1 & 1) | *(uint16_t *)(arg3 + 0x1a) & 0xfffe;
+  g_1047D12C_as_v1 = 0;
+  *(uint32_t *)(arg3 + 0x28) = 0;
   return;
 }
 
@@ -225,7 +227,7 @@ XI_API void __attribute__((stdcall, regparm(3))) Resource_InitFieldsTakeFlag1047
 XI_API void __cdecl Resource_ResetGlobals(void)
 {
   orig::Resource_ClearGlobal1047D138();
-  orig::FUN_10072970();
+  orig::game_10072970();
   return;
 }
 
@@ -233,6 +235,6 @@ XI_API void __cdecl Resource_ResetGlobals(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Resource_ClearGlobal1047D138(void)
 {
-  DAT_1047d138 = 0;
+  g_1047D138 = 0;
   return;
 }

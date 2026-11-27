@@ -11,7 +11,7 @@ int CMoSchOp1DTask::Slot11GetPathDriveActorRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10063140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoSchOp1DTask::Slot12DeletePathDriveActorTask(int a1)
+int CMoSchOp1DTask::Slot12DeletePathDriveActorTask(int arg1)
 {
-  return (int)orig::CMoPathDriveActorTask_ScalarDeletingDtor((_DWORD *)this - 13, a1);
+  return (int)orig::CMoPathDriveActorTask_ScalarDeletingDtor((uint32_t *)this - 13, arg1);
 }

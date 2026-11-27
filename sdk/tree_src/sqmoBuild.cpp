@@ -4,84 +4,84 @@
 
 // FUNCTION: FFXIMAIN 0x102851C0
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API int __cdecl SqmoBuild_ReadFrameChannel(undefined4 * param_1, int param_2)
+XI_API int __cdecl SqmoBuild_ReadFrameChannel(bits32 * arg1, int arg2)
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
-  int iVar7;
+  int *p1;
+  int i1;
+  int i2;
+  bits32 *p2;
+  bits32 *p3;
+  bits32 *p4;
+  int i3;
   
-  iVar7 = param_2;
-  puVar4 = orig::SqScriptRead_ReadBlock(&param_2,4,1,param_1,param_2);
-  if (param_2 != 4) {
-    orig::sqDebugPrintf_v1(s_____Error__FrameChannel_version_m_103b7b08,param_2,4);
+  i3 = arg2;
+  p2 = orig::SqScriptRead_ReadBlock(&arg2,4,1,arg1,arg2);
+  if (arg2 != 4) {
+    orig::sqDebugPrintf_v1(str_____Error__FrameChannel_version_m_103B7B08,arg2,4);
     return 0;
   }
-  puVar5 = orig::SqmoFrameChannel_Create();
-  puVar4 = orig::SqScriptRead_ReadBlock(puVar5 + 8,4,1,puVar4 + 0x14,iVar7);
-  piVar1 =(int*)(puVar5 + 7);
-  puVar4 = orig::SqScriptRead_ReadBlock(piVar1,4,1,puVar4,iVar7);
-  puVar6 = orig::SqMem_AllocZeroed(*piVar1,4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x31);
-  puVar5[0xd] = puVar6;
-  puVar4 = orig::SqScriptRead_ReadBlock(puVar6,4,*piVar1,puVar4,iVar7);
-  puVar4 = orig::SqScriptRead_ReadBlock(puVar5 + 9,4,1,puVar4,iVar7);
-  iVar2 = *piVar1;
-  iVar3 = puVar5[9];
-  puVar6 = orig::SqMem_AllocZeroed(iVar2 * iVar3,4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x39);
-  puVar5[0xb] = puVar6;
-  orig::SqScriptRead_ReadBlock(puVar6,4,iVar2 * iVar3,puVar4,iVar7);
-  puVar4 = orig::SqMem_AllocZeroed(*piVar1,4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x3e);
-  puVar5[0xc] = puVar4;
-  *(uint8_t *)(puVar5 + 0xf) = 0;
-  puVar4 = orig::SqMem_AllocZeroed(*piVar1,1,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x40);
-  puVar5[0xe] = puVar4;
-  iVar7 = 0;
-  if (0 < *piVar1) {
+  p3 = orig::SqmoFrameChannel_Create();
+  p2 = orig::SqScriptRead_ReadBlock(p3 + 8,4,1,p2 + 0x14,i3);
+  p1 =(int*)(p3 + 7);
+  p2 = orig::SqScriptRead_ReadBlock(p1,4,1,p2,i3);
+  p4 = orig::SqMem_AllocZeroed(*p1,4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x31);
+  p3[0xd] = p4;
+  p2 = orig::SqScriptRead_ReadBlock(p4,4,*p1,p2,i3);
+  p2 = orig::SqScriptRead_ReadBlock(p3 + 9,4,1,p2,i3);
+  i1 = *p1;
+  i2 = p3[9];
+  p4 = orig::SqMem_AllocZeroed(i1 * i2,4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x39);
+  p3[0xb] = p4;
+  orig::SqScriptRead_ReadBlock(p4,4,i1 * i2,p2,i3);
+  p2 = orig::SqMem_AllocZeroed(*p1,4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x3e);
+  p3[0xc] = p2;
+  *(uint8_t *)(p3 + 0xf) = 0;
+  p2 = orig::SqMem_AllocZeroed(*p1,1,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x40);
+  p3[0xe] = p2;
+  i3 = 0;
+  if (0 < *p1) {
     do {
-      *(uint8_t *)(iVar7 + puVar5[0xe]) = 0;
-      orig::SqmoFrameChannel_Apply((int)puVar5,iVar7);
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < *piVar1);
+      *(uint8_t *)(i3 + p3[0xe]) = 0;
+      orig::SqmoFrameChannel_Apply((int)p3,i3);
+      i3 = i3 + 1;
+    } while (i3 < *p1);
   }
-  return (int)puVar5;
+  return (int)p3;
 }
 
 // FUNCTION: FFXIMAIN 0x102852E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqmoBuild_ReadKeyChannel(undefined4 * param_1, int param_2)
+XI_API int __cdecl SqmoBuild_ReadKeyChannel(bits32 * arg1, int arg2)
 {
-  int *piVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  int iVar6;
+  int *p1;
+  int i1;
+  bits32 *p2;
+  bits32 *p3;
+  bits32 *p4;
+  int i2;
   
-  iVar2 = param_2;
-  puVar3 = orig::SqScriptRead_ReadBlock(&param_2,4,1,param_1,param_2);
-  if (param_2 != 3) {
-    orig::sqDebugPrintf_v1(s_____Error__KeyChannel_version_mi_103b7b44,param_2,3);
+  i1 = arg2;
+  p2 = orig::SqScriptRead_ReadBlock(&arg2,4,1,arg1,arg2);
+  if (arg2 != 3) {
+    orig::sqDebugPrintf_v1(str_____Error__KeyChannel_version_mi_103B7B44,arg2,3);
     return 0;
   }
-  puVar4 = orig::SqmoKeyChannel_Create();
-  puVar3 = orig::SqScriptRead_ReadBlock(puVar4 + 8,4,1,puVar3 + 0x14,iVar2);
-  puVar3 = orig::SqScriptRead_ReadBlock(puVar4 + 7,4,1,puVar3,iVar2);
-  piVar1 =(int*)(puVar4 + 10);
-  puVar3 = orig::SqScriptRead_ReadBlock(piVar1,4,1,puVar3,iVar2);
-  puVar5 = orig::SqMem_AllocZeroed(*piVar1,4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x68);
-  puVar4[0xb] = puVar5;
-  puVar3 = orig::SqScriptRead_ReadBlock(puVar5,4,*piVar1,puVar3,iVar2);
-  if (param_2 == 1) {
-    puVar4[8] = *(undefined4 *)(puVar4[0xb] + -4 + *piVar1 * 4);
+  p3 = orig::SqmoKeyChannel_Create();
+  p2 = orig::SqScriptRead_ReadBlock(p3 + 8,4,1,p2 + 0x14,i1);
+  p2 = orig::SqScriptRead_ReadBlock(p3 + 7,4,1,p2,i1);
+  p1 =(int*)(p3 + 10);
+  p2 = orig::SqScriptRead_ReadBlock(p1,4,1,p2,i1);
+  p4 = orig::SqMem_AllocZeroed(*p1,4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x68);
+  p3[0xb] = p4;
+  p2 = orig::SqScriptRead_ReadBlock(p4,4,*p1,p2,i1);
+  if (arg2 == 1) {
+    p3[8] = *(bits32 *)(p3[0xb] + -4 + *p1 * 4);
   }
-  iVar6 = puVar4[7] * *piVar1;
-  puVar5 = orig::SqMem_AllocZeroed(iVar6,4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x70);
-  puVar4[0xc] = puVar5;
-  orig::SqScriptRead_ReadBlock(puVar5,4,iVar6,puVar3,iVar2);
-  puVar3 = orig::SqMem_AllocZeroed(puVar4[7],4,s_C__dev_dancer_modules_sqMotion_s_103b7ad8,0x72);
-  puVar4[0xd] = puVar3;
-  return (int)puVar4;
+  i2 = p3[7] * *p1;
+  p4 = orig::SqMem_AllocZeroed(i2,4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x70);
+  p3[0xc] = p4;
+  orig::SqScriptRead_ReadBlock(p4,4,i2,p2,i1);
+  p2 = orig::SqMem_AllocZeroed(p3[7],4,str_C__dev_dancer_modules_sqMotion_s_103B7AD8,0x72);
+  p3[0xd] = p2;
+  return (int)p3;
 }

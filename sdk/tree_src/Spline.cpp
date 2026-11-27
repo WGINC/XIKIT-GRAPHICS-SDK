@@ -4,63 +4,65 @@
 
 // FUNCTION: FFXIMAIN 0x10063890
 // GATE: PASS -- 100 trials, 90 returned normally, 83 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 90
-XI_API long double __attribute__((stdcall, regparm(3))) CMoSpline_EvalCubicSegment(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, float param_2, int param_3)
+XI_API long double __attribute__((stdcall, regparm(3))) CMoSpline_EvalCubicSegment(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, float arg4, int arg5)
 {
-  int iVar1;
-  float *pfVar2;
-  int iVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  long double fVar6;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  int i1;
+  float *p1;
+  int i2;
+  uint8_t u1;
+  long double f1;
+  long double f2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+  } frame;
   
-  if (param_3 == 0) {
-    return (long double)0.0f;
+  if (arg5 == 0) {
+    return 0.0f;
   }
-  fVar5 = (long double)param_2;
+  f1 = arg4;
   if (*(char *)((int)self_ + 0x24) != '\0') {
-    bVar4 = NAN(fVar5) || NAN((long double)0.0f);
-    if ((bVar4 || fVar5 < (long double)0.0f) != bVar4) {
+    u1 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+    if ((u1 || f1 < 0.0f) != u1) {
       do {
-        fVar5 = fVar5 + (long double)1.0f;
-        bVar4 = NAN(fVar5) || NAN((long double)0.0f);
-      } while ((bVar4 || fVar5 < (long double)0.0f) != bVar4);
+        f1 = f1 + 1.0f;
+        u1 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+      } while ((u1 || f1 < 0.0f) != u1);
     }
-    if (fVar5 > (long double)1.0f) {
+    if (f1 > 1.0f) {
       do {
-        fVar5 = fVar5 - (long double)1.0f;
-      } while (fVar5 > (long double)1.0f);
+        f1 = f1 - 1.0f;
+      } while (f1 > 1.0f);
     }
   }
-  fVar6 = (long double)0.0f;
-  iVar1 = *(int *)((int)self_ + 4) + -1;
-  pfVar2 = (float *)(*(int *)((int)self_ + 0x18) + 4);
-  iVar3 = 0;
-  if (0 < iVar1) {
+  f2 = 0.0f;
+  i1 = *(int *)((int)self_ + 4) + -1;
+  p1 = (float *)(*(int *)((int)self_ + 0x18) + 4);
+  i2 = 0;
+  if (0 < i1) {
     do {
-      fVar6 = fVar6 + (long double)*pfVar2;
-      if (fVar5 <= fVar6) break;
-      iVar3 = iVar3 + 1;
-      pfVar2 = pfVar2 + 1;
-    } while (iVar3 < iVar1);
+      f2 = f2 + *p1;
+      if (f1 <= f2) break;
+      i2 = i2 + 1;
+      p1 = p1 + 1;
+    } while (i2 < i1);
   }
-  if (iVar3 < iVar1) {
-    fVar5 = (fVar5 - (fVar6 - (long double)*pfVar2)) / (long double)*pfVar2;
+  if (i2 < i1) {
+    f1 = (f1 - (f2 - *p1)) / *p1;
   }
   else {
-    fVar5 = (long double)1.0f;
-    iVar3 = *(int *)((int)self_ + 4) + -2;
+    f1 = 1.0f;
+    i2 = *(int *)((int)self_ + 4) + -2;
   }
-  local_4 = (float)fVar5;
-  local_8 = (float)(fVar5 * fVar5);
-  local_c = (float)(fVar5 * fVar5 * fVar5);
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0x40))
-            ))((void *)(g_pProcessor_as_v1),g_pProcessor_as_v1 + 0x248,iVar3 * 0x40 + *(int *)((int)self_ + 0x1c),&local_c);
-  return (long double)xi_castbits<float>(g_pProcessor_as_v1[0x248]) * (long double)*(float *)(param_3 + iVar3 * 4) +
-         (long double)*(float *)(param_3 + 4 + iVar3 * 4) * (long double)xi_castbits<float>(g_pProcessor_as_v1[0x249]) +
-         (long double)*(float *)(param_3 + 8 + iVar3 * 4) * (long double)xi_castbits<float>(g_pProcessor_as_v1[0x24a]) +
-         (long double)*(float *)(param_3 + 0xc + iVar3 * 4) * (long double)xi_castbits<float>(g_pProcessor_as_v1[0x24b]);
+  frame.f5 = (float)f1;
+  frame.f4 = (float)(f1 * f1);
+  frame.f3 = (float)(f1 * f1 * f1);
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x40))
+            ))((void *)(g_pProcessor_as_v1),g_pProcessor_as_v1 + 0x248,i2 * 0x40 + *(int *)((int)self_ + 0x1c),&frame.f3);
+  return bit_cast<float>(g_pProcessor_as_v1[0x248]) * *(float *)(arg5 + i2 * 4) +
+         *(float *)(arg5 + 4 + i2 * 4) * bit_cast<float>(g_pProcessor_as_v1[0x249]) +
+         *(float *)(arg5 + 8 + i2 * 4) * bit_cast<float>(g_pProcessor_as_v1[0x24a]) +
+         *(float *)(arg5 + 0xc + i2 * 4) * bit_cast<float>(g_pProcessor_as_v1[0x24b]);
 }

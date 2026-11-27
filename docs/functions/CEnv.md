@@ -7,7 +7,7 @@ Group: `CEnv` (by the file name only). Source: `sdk/tree_src/CEnv.cpp`.
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
 | `j_CEnv_UpdateDualTargetMode` | 0x1000D3F0 | 5 | yes | - | - | - |
-| `CEnv::Nop` | 0x1000D620 | 1 | yes | - | Does nothing. (reviewed as sub_1000D620) | low |
+| `CEnv::Nop` | 0x1000D620 | 1 | yes | - | Does nothing. (reviewed as game_1000D620) | low |
 | `CEnv::UpdateStereoMode` | 0x1000D630 | 42 | yes | - | - | - |
 | `CEnv::IsStereoMode` | 0x1000D660 | 9 | yes | - | - | - |
 

@@ -4,29 +4,29 @@
 
 // FUNCTION: FFXIMAIN 0x102ACB60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqshPoints_Create(void)
+XI_API bits32 * __cdecl SqshPoints_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x44,s_C__dev_dancer_modules_sqShape_sr_103bec10,0x1d);
-  orig::SqshPoints_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x44,str_C__dev_dancer_modules_sqShape_sr_103BEC10,0x1d);
+  orig::SqshPoints_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102ACB80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqshPoints_Init(undefined4 * param_1)
+XI_API void __cdecl SqshPoints_Init(bits32 * arg1)
 {
-  *param_1 = 0xa0005;
-  param_1[2] = &LAB_102acbd0;
-  param_1[3] = XI_CODE(FUN_102acbe0);
-  param_1[4] = XI_CODE(sqshPointsPrint);
-  param_1[0xb] = &LAB_10291260;
-  param_1[0xc] = &LAB_102b3770;
-  orig::SqBounds_Reset(param_1 + 5);
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0xf] = 0;
-  param_1[0x10] = 0;
+  *arg1 = 0xa0005;
+  arg1[2] = &code_102ACBD0;
+  arg1[3] = XI_CODE(game_102ACBE0);
+  arg1[4] = XI_CODE(sqshPointsPrint);
+  arg1[0xb] = &code_10291260;
+  arg1[0xc] = &code_102B3770;
+  orig::SqBounds_Reset(arg1 + 5);
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
+  arg1[0xf] = 0;
+  arg1[0x10] = 0;
   return;
 }

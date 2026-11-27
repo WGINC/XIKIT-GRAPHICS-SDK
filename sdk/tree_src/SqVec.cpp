@@ -4,64 +4,64 @@
 
 // FUNCTION: FFXIMAIN 0x102741F0
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API int __cdecl SqVec_Relink(int param_1, int param_2)
+XI_API int __cdecl SqVec_Relink(int arg1, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int *piVar4;
+  int i1;
+  uint32_t u1;
+  int i2;
+  int *p1;
   
-  iVar1 = *(int *)(param_1 + 4);
-  if (param_2 == iVar1) {
-    return param_2;
+  i1 = *(int *)(arg1 + 4);
+  if (arg2 == i1) {
+    return arg2;
   }
-  if ((*(int *)(param_1 + 0x14) < 0) && (iVar1 != -1)) {
-    piVar4 = *(int **)(param_1 + 0x20);
-    iVar3 = 0;
-    if (0 < *(int *)(param_1 + 0x18)) {
+  if ((*(int *)(arg1 + 0x14) < 0) && (i1 != -1)) {
+    p1 = *(int **)(arg1 + 0x20);
+    i2 = 0;
+    if (0 < *(int *)(arg1 + 0x18)) {
       do {
-        if ((*piVar4 == iVar1) && (piVar4[1] == param_2)) {
-          orig::Chasm_ToggleLayerState(param_1,iVar1,0);
-          uVar2 = orig::SqMatrixConnect_UpdateRange((uint8_t *)(piVar4 + 2));
-          orig::SqDebug_SetByte14((int)(piVar4 + 10),0xff,uVar2);
-          orig::SqMatrixConnect_SetCallback((int)(piVar4 + 0x1c),XI_CODE(FUN_102742c0),param_1);
-          uVar2 = orig::SqMatrixConnect_UpdateRange((uint8_t *)(piVar4 + 0x1c));
-          orig::SqDebug_SetByte14((int)(piVar4 + 0x24),0xff,uVar2);
-          *(int *)(param_1 + 0x14) = iVar3;
-          return param_2;
+        if ((*p1 == i1) && (p1[1] == arg2)) {
+          orig::Chasm_ToggleLayerState(arg1,i1,0);
+          u1 = orig::SqMatrixConnect_UpdateRange((uint8_t *)(p1 + 2));
+          orig::SqDebug_SetByte14((int)(p1 + 10),0xff,u1);
+          orig::SqMatrixConnect_SetCallback((int)(p1 + 0x1c),XI_CODE(game_102742C0),arg1);
+          u1 = orig::SqMatrixConnect_UpdateRange((uint8_t *)(p1 + 0x1c));
+          orig::SqDebug_SetByte14((int)(p1 + 0x24),0xff,u1);
+          *(int *)(arg1 + 0x14) = i2;
+          return arg2;
         }
-        piVar4 = piVar4 + 0x36;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < *(int *)(param_1 + 0x18));
+        p1 = p1 + 0x36;
+        i2 = i2 + 1;
+      } while (i2 < *(int *)(arg1 + 0x18));
     }
-    orig::sqDebugPrintf_v1(s_____Error__Couldn_t_find_link__d_103b2784,iVar1,param_2);
-    orig::Chasm_ToggleLayerState(param_1,*(int *)(param_1 + 4),0);
-    orig::Chasm_ToggleLayerState(param_1,param_2,1);
+    orig::sqDebugPrintf_v1(str_____Error__Couldn_t_find_link__d_103B2784,i1,arg2);
+    orig::Chasm_ToggleLayerState(arg1,*(int *)(arg1 + 4),0);
+    orig::Chasm_ToggleLayerState(arg1,arg2,1);
   }
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x10274370
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-XI_API undefined4 __cdecl SqVec_GetInterpolated(int param_1, int param_2, undefined4 * param_3, undefined4 * param_4)
+XI_API bits32 __cdecl SqVec_GetInterpolated(int arg1, int arg2, bits32 * arg3, bits32 * arg4)
 {
-  uint8_t *pbVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  uint8_t *p1;
+  int i1;
+  bits32 *p2;
   
-  pbVar1 = (uint8_t *)(*(int *)(param_1 + 0x20) + 0x70 + param_2 * 0xd8);
-  iVar2 = orig::SqMatrixConnect_IsConnected(pbVar1);
-  if ((iVar2 != 0) && (iVar2 = *(int *)(pbVar1 + 0x3c), iVar2 != 0)) {
-    puVar3 = (undefined4 *)
-             orig::SqmoChannel_Evaluate(*(int *)(iVar2 + 0x28),
-                          (float)(((long double)*(float *)(pbVar1 + 0x10) -
-                                  (long double)*(float *)(pbVar1 + 8)) /
-                                 (long double)*(float *)(iVar2 + 0x24)));
-    if (param_3 != (undefined4 *)0x0) {
-      *param_3 = puVar3[1];
+  p1 = (uint8_t *)(*(int *)(arg1 + 0x20) + 0x70 + arg2 * 0xd8);
+  i1 = orig::SqMatrixConnect_IsConnected(p1);
+  if ((i1 != 0) && (i1 = *(int *)(p1 + 0x3c), i1 != 0)) {
+    p2 = (bits32 *)
+             orig::SqmoChannel_Evaluate(*(int *)(i1 + 0x28),
+                          (float)((*(float *)(p1 + 0x10) -
+                                  *(float *)(p1 + 8)) /
+                                 *(float *)(i1 + 0x24)));
+    if (arg3 != (bits32 *)0x0) {
+      *arg3 = p2[1];
     }
-    if (param_4 != (undefined4 *)0x0) {
-      *param_4 = *puVar3;
+    if (arg4 != (bits32 *)0x0) {
+      *arg4 = *p2;
     }
     return 0;
   }
@@ -70,109 +70,109 @@ XI_API undefined4 __cdecl SqVec_GetInterpolated(int param_1, int param_2, undefi
 
 // FUNCTION: FFXIMAIN 0x10274640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVec_ZeroDwords(undefined4 * param_1)
+XI_API void __cdecl SqVec_ZeroDwords(bits32 * arg1)
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
+  *arg1 = 0;
+  arg1[1] = 0;
+  arg1[2] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10274650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqVec_CopyVec3(undefined4 * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl SqVec_CopyVec3(bits32 * arg1, bits32 * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  *param_1 = *param_2;
-  param_1[1] = param_2[1];
-  uVar1 = param_2[2];
-  param_1[2] = uVar1;
-  return uVar1;
+  *arg1 = *arg2;
+  arg1[1] = arg2[1];
+  u1 = arg2[2];
+  arg1[2] = u1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10274670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVec_SetXyz(float * param_1, float param_2, float param_3, float param_4)
+XI_API void __cdecl SqVec_SetXyz(float * arg1, float arg2, float arg3, float arg4)
 {
-  *param_1 = (float)(long double)param_2;
-  param_1[1] = param_3;
-  param_1[2] = param_4;
+  *arg1 = (float)arg2;
+  arg1[1] = arg3;
+  arg1[2] = arg4;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102746C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl SqVec_Length(undefined4 param_1)
+XI_API long double __cdecl SqVec_Length(bits32 arg1)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = orig::FUN_10274690(param_1);
-  return SQRT(fVar1);
+  f1 = orig::game_10274690(arg1);
+  return x87_fsqrt(f1);
 }
 
 // FUNCTION: FFXIMAIN 0x10274890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVec_CrossProduct(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl SqVec_CrossProduct(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)param_3[2] * (long double)param_2[1] -
-                    (long double)param_3[1] * (long double)param_2[2]);
-  param_1[1] = (float)((long double)*param_3 * (long double)param_2[2] -
-                      (long double)param_3[2] * (long double)*param_2);
-  param_1[2] = (float)((long double)param_3[1] * (long double)*param_2 -
-                      (long double)*param_3 * (long double)param_2[1]);
+  *arg1 = (float)(arg3[2] * arg2[1] -
+                    arg3[1] * arg2[2]);
+  arg1[1] = (float)(*arg3 * arg2[2] -
+                      arg3[2] * *arg2);
+  arg1[2] = (float)(arg3[1] * *arg2 -
+                      *arg3 * arg2[1]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102748F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl SqVec_ScaleVec3ByInverseOf102746C0(float * param_1)
+XI_API long double __cdecl SqVec_ScaleVec3ByInverseOf102746C0(float * arg1)
 {
-  uint8_t bVar1;
-  long double fVar2;
-  long double fVar3;
+  uint8_t u1;
+  long double f1;
+  long double f2;
   
-  fVar2 = orig::SqVec_Length(param_1);
-  bVar1 = NAN(fVar2) || NAN((long double)0.0f);
-  if (bVar1 == (bVar1 || fVar2 == (long double)0.0f)) {
-    fVar3 = (long double)1.0f / fVar2;
-    *param_1 = (float)(fVar3 * (long double)*param_1);
-    param_1[1] = (float)(fVar3 * (long double)param_1[1]);
-    param_1[2] = (float)(fVar3 * (long double)param_1[2]);
+  f1 = orig::SqVec_Length(arg1);
+  u1 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+  if (u1 == (u1 || f1 == 0.0f)) {
+    f2 = 1.0f / f1;
+    *arg1 = (float)(f2 * *arg1);
+    arg1[1] = (float)(f2 * arg1[1]);
+    arg1[2] = (float)(f2 * arg1[2]);
   }
-  return fVar2;
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x102749C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVec_Sub(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl SqVec_Sub(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)((long double)*param_2 - (long double)*param_3);
-  param_1[1] = (float)((long double)param_2[1] - (long double)param_3[1]);
-  param_1[2] = (float)((long double)param_2[2] - (long double)param_3[2]);
+  *arg1 = (float)(*arg2 - *arg3);
+  arg1[1] = (float)(arg2[1] - arg3[1]);
+  arg1[2] = (float)(arg2[2] - arg3[2]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10274A20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqVec_LerpFactor(float * param_1, float * param_2, float * param_3, float param_4)
+XI_API void __cdecl SqVec_LerpFactor(float * arg1, float * arg2, float * arg3, float arg4)
 {
-  *param_1 = (float)(((long double)*param_3 - (long double)*param_2) * (long double)param_4 + (long double)*param_2)
+  *arg1 = (float)((*arg3 - *arg2) * arg4 + *arg2)
   ;
-  param_1[1] = (float)(((long double)param_3[1] - (long double)param_2[1]) * (long double)param_4 +
-                      (long double)param_2[1]);
-  param_1[2] = (float)(((long double)param_3[2] - (long double)param_2[2]) * (long double)param_4 +
-                      (long double)param_2[2]);
+  arg1[1] = (float)((arg3[1] - arg2[1]) * arg4 +
+                      arg2[1]);
+  arg1[2] = (float)((arg3[2] - arg2[2]) * arg4 +
+                      arg2[2]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10274D40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl PackVec4(float * param_1, float param_2, float param_3, float param_4, float param_5)
+XI_API void __cdecl PackVec4(float * arg1, float arg2, float arg3, float arg4, float arg5)
 {
-  param_1[1] = param_3;
-  param_1[2] = param_4;
-  *param_1 = (float)(long double)param_2;
-  param_1[3] = param_5;
+  arg1[1] = arg3;
+  arg1[2] = arg4;
+  *arg1 = (float)arg2;
+  arg1[3] = arg5;
   return;
 }

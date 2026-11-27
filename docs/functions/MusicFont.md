@@ -30,20 +30,20 @@ Why the file has this name (data/unit_names.json): Music_SetTrackVolume, MusicTr
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SetMusicTrackVolume_C` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `SetMusicTrackVolume_A` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `SetMusicTrackVolume_B` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `SetMusicTrackVolume_Tag0004` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicTrack_SetVolumeId0009` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicTrack_SetVolumeId0010` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicTrack_SetVolumeId0011` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicTrack_SetVolumeId0013` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicTrack_SetVolumeId0016` calls `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
-- `MusicFont_Create` calls `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `CMoResource::FindByTypeAndId`, `sub_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `SetMusicTrackVolume_C` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `SetMusicTrackVolume_A` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `SetMusicTrackVolume_B` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `SetMusicTrackVolume_Tag0004` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicTrack_SetVolumeId0009` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicTrack_SetVolumeId0010` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicTrack_SetVolumeId0011` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicTrack_SetVolumeId0013` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicTrack_SetVolumeId0016` calls `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
+- `MusicFont_Create` calls `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `CMoResource::FindByTypeAndId`, `game_10311C2C`, `SoundVolume_SetVolumeScalar`
 - `Music_LoadTrackIfRunning` calls `LobbyThread_QueueMusicFile`
-- `MusicFont_QueueSoundCmdIfChannelsBelowLimit` calls `Acter_IsEvent`, `LobbyThread_QueryChannels`, `sub_10311C2C`, `LobbyThread_QueueSoundCmd`
-- `LobbyThread_SendCmd3FromFloat` calls `sub_10311C2C`, `LobbyThread_SendCmd3`
+- `MusicFont_QueueSoundCmdIfChannelsBelowLimit` calls `Acter_IsEvent`, `LobbyThread_QueryChannels`, `game_10311C2C`, `LobbyThread_QueueSoundCmd`
+- `LobbyThread_SendCmd3FromFloat` calls `game_10311C2C`, `LobbyThread_SendCmd3`
 - `Music_SetTrackVolume` calls `LobbyThread_SendCmd4`
 - `Font_QueueText` calls nothing directly
 - `Font_DrawPass` calls `Font_BindGlyphTexture`, `Font_DrawString`
-- `Font_DrawString` calls `sub_10311C2C`, `Font_DecodeNextChar`, `Font_AddGlyphAdvance`, `CDx::DrawPrimitiveUP`
+- `Font_DrawString` calls `game_10311C2C`, `Font_DecodeNextChar`, `Font_AddGlyphAdvance`, `CDx::DrawPrimitiveUP`

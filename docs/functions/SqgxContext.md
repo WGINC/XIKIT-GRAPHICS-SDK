@@ -68,7 +68,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `sqgxBlendAdd` calls nothing directly
 - `SqgxContext_SetMultiplyAdd` calls nothing directly
 - `sqgxBlendSub` calls nothing directly
-- `sqgxBlendLin` calls `sub_10311C2C`
+- `sqgxBlendLin` calls `game_10311C2C`
 - `sqgxBlendTrsp` calls nothing directly
 - `sqgxBlendTrspInv` calls nothing directly
 - `sqgxBlendAddDestAlpha` calls nothing directly
@@ -89,9 +89,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `___setargv_16` calls nothing directly
 - `sqgxPixelSize` calls nothing directly
 - `SqgxContext_SetViewportVec4` calls nothing directly
-- `sqgxViewport` calls `sub_10311C2C`
+- `sqgxViewport` calls `game_10311C2C`
 - `SqgxContext_SetPerspective` calls nothing directly
-- `sqgxMatrixCamera` calls `M4fTranspose`, `sub_1027F0E0`
+- `sqgxMatrixCamera` calls `M4fTranspose`, `game_1027F0E0`
 - `SqgxContext_SetTransposedMatrix` calls `M4fTranspose`
 - `SqgxContext_SetFloat72C` calls nothing directly
 - `sqgxMatrixShape` calls `M4fTranspose`
@@ -99,5 +99,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `sqgxPassAdd` calls nothing directly
 - `sqgxPass` calls nothing directly
 - `SqgxContext_TestClipBounds` calls `sqMatrix4_10280140`, `M4fTranspose`, `M4fTransform`, `SqMatrixConnect_TransformVec3`
-- `sqgxMatrixUpdate` calls `sqgxShadowPlaneMatrix`, `sqMatrix4_10280140`, `sub_1027EB10`, `sub_1027F0E0`, `sqMatrix4_1027FCC0`, `M4fTranspose`
+- `sqgxMatrixUpdate` calls `sqgxShadowPlaneMatrix`, `sqMatrix4_10280140`, `game_1027EB10`, `game_1027F0E0`, `sqMatrix4_1027FCC0`, `M4fTranspose`
 - `___setargv_24` calls nothing directly

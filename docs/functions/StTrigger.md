@@ -14,6 +14,6 @@ Group: `St` (by the file name only). Source: `sdk/tree_src/StTrigger.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `StTrigger_ProcessOpcodesUpToTime` calls `sqopOpcodeGet`, `sub_10311FF1`, `CMoResource::FindByTypeAndId`, `SoundVolume_SetVolumeScalar`, `SoundVolume_CreateSoundElem`, `sqopTrackAdvance`
+- `StTrigger_ProcessOpcodesUpToTime` calls `sqopOpcodeGet`, `game_10311FF1`, `CMoResource::FindByTypeAndId`, `SoundVolume_SetVolumeScalar`, `SoundVolume_CreateSoundElem`, `sqopTrackAdvance`
 - `StTrigger_FindIndexAtLeast` calls nothing directly
 - `StTrigger_RegisterCallbacks` calls `TextInputFiles_FileMngQueueFileNumKind2`, `ErrorReport_NoOpVarargsA`

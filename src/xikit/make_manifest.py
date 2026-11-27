@@ -93,6 +93,16 @@ def trampoline(ea, rs, img, targets):
     return ('%d:%s' % (n, ','.join(map(str, fix))) if fix else '%d' % n), None
 
 
+_PIECE = {}
+def piece_reads_no_ecx(ea):
+    dll = os.environ.get('FFXI_DLL_6A995428') or os.environ.get('FFXI_DLL')
+    if not dll or not os.path.exists(dll): return False
+    if ea not in _PIECE:
+        r = subprocess.run([sys.executable, '-I', os.path.join(ROOT, 'pipeline', 'piece_ecx_read.py'), dll, '0x%08X' % ea], capture_output=True, text=True)
+        _PIECE[ea] = ' does not read' in r.stdout
+    return _PIECE[ea]
+
+
 def ecx_hazards():
     """{0xFUNC: why} for the tree functions calling an ECX-less wrapper of code whose ECX use is not ruled out"""
     ext = {int(k, 16) for k in json.load(open(os.path.join(ROOT, 'data', 'func_extents.json'))) if not k.startswith('_')}
@@ -101,7 +111,12 @@ def ecx_hazards():
     for m in re.finditer(r'XI_ORIG [^\n]*?\b(\w+)\([^)]*\) \{ [^\n]*?reinterpret_cast<[^>]*\((__cdecl|__stdcall)\b[^>]*>\(XI_GAME\(0x([0-9A-F]{8})u\)\)',
                          open(os.path.join(ROOT, 'tree', 'include', 'gfx_orig.hpp')).read()):
         name, ea = m.group(1), int(m.group(3), 16)
-        if ea not in ext: bad[name] = '0x%08X (not a function start)' % ea
+        if ea not in ext:
+            # (28 Nov, ISSUES 4.3) a piece that reads ECX on no path (pipeline/piece_ecx_read.py on the analysed DLL,
+            # FFXI_DLL_6A995428 or FFXI_DLL) is no hazard: what ECX holds at the tail jump does not matter to it. Without
+            # the DLL, or with "reads" / "cannot tell", the piece stays refused as before.
+            if piece_reads_no_ecx(ea): continue
+            bad[name] = '0x%08X (not a function start)' % ea
         elif isinstance(ecx.get('0x%08X' % ea), str): bad[name] = '0x%08X (reads ECX: %s)' % (ea, ecx['0x%08X' % ea])
     res = {}
     for f in sorted(os.listdir(os.path.join(ROOT, 'tree', 'src'))):

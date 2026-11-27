@@ -21,5 +21,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Gfx_SetStreamSourceCached` calls `Gfx_ApplyCachedStreamSource`
 - `Gfx_ApplyCachedStreamSource` calls nothing directly
 - `Gfx_ApplyCachedVertexShader` calls nothing directly
-- `Model_SkinVerticesCpu` calls `sub_1000D680`, `sub_1000D6B0`, `sub_10030FB0`, `Mat4_TransformPoint`, `Mat4_TransformNormal`, `Skin_BlendWeightMatrices`, `sub_100309B0`, `sub_10030A40`
-- `Skin_BlendWeightMatrices` calls `sub_100309B0`, `sub_10030A40`
+- `Model_SkinVerticesCpu` calls `game_1000D680`, `game_1000D6B0`, `game_10030FB0`, `Mat4_TransformPoint`, `Mat4_TransformNormal`, `Skin_BlendWeightMatrices`, `game_100309B0`, `game_10030A40`
+- `Skin_BlendWeightMatrices` calls `game_100309B0`, `game_10030A40`

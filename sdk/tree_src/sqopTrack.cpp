@@ -4,44 +4,44 @@
 
 // FUNCTION: FFXIMAIN 0x10289B40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqopTrack_Reset(undefined4 * param_1)
+XI_API void __cdecl SqopTrack_Reset(bits32 * arg1)
 {
-  *param_1 = 0xffffffff;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  param_1[3] = 0;
+  *arg1 = 0xffffffff;
+  arg1[1] = 0;
+  arg1[2] = 0;
+  arg1[3] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10289BA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqopTrack_Free(int param_1)
+XI_API void __cdecl SqopTrack_Free(int arg1)
 {
-  if (*(int *)(param_1 + 0xc) != 0) {
-    orig::sqFree_v1(*(int *)(param_1 + 0xc),s_C__dev_dancer_modules_sqOpcode_s_103b9618,0x69);
+  if (*(int *)(arg1 + 0xc) != 0) {
+    orig::sqFree_v1(*(int *)(arg1 + 0xc),str_C__dev_dancer_modules_sqOpcode_s_103B9618,0x69);
   }
-  orig::SqopTrack_Reset((uint32_t *)param_1);
+  orig::SqopTrack_Reset((uint32_t *)arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10289EF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqopTrackSetIndex(int * param_1, int param_2)
+XI_API int __cdecl sqopTrackSetIndex(int * arg1, int arg2)
 {
-  if ((-1 < param_2) && (param_2 < param_1[1])) {
-    *param_1 = param_2;
-    return param_2;
+  if ((-1 < arg2) && (arg2 < arg1[1])) {
+    *arg1 = arg2;
+    return arg2;
   }
-  *param_1 = -1;
+  *arg1 = -1;
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x10289F10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl sqopTrackAdvance(int * param_1)
+XI_API bits32 __cdecl sqopTrackAdvance(int * arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::sqopTrackSetIndex(param_1,*param_1 + 1);
-  return iVar1;
+  i1 = orig::sqopTrackSetIndex(arg1,*arg1 + 1);
+  return i1;
 }

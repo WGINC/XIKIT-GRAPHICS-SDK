@@ -4,84 +4,84 @@
 
 // FUNCTION: FFXIMAIN 0x1029B100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqmdSort_Create(void)
+XI_API bits32 * __cdecl SqmdSort_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10275d80(1,0x3c,s_C__dev_dancer_modules_sqModel_sr_103bc66c,0x1d);
-  orig::SqmdSort_Init(puVar1);
-  return puVar1;
+  p1 = orig::game_10275D80(1,0x3c,str_C__dev_dancer_modules_sqModel_sr_103BC66C,0x1d);
+  orig::SqmdSort_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x1029B120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmdSort_Init(undefined4 * param_1)
+XI_API void __cdecl SqmdSort_Init(bits32 * arg1)
 {
-  *param_1 = 0x1c0003;
-  param_1[2] = &LAB_1029b170;
-  param_1[3] = XI_CODE(FUN_1029b1a0);
-  param_1[4] = &LAB_1029b230;
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = &sqshTriStrip_ThrottledZSortUpdate;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
+  *arg1 = 0x1c0003;
+  arg1[2] = &code_1029B170;
+  arg1[3] = XI_CODE(game_1029B1A0);
+  arg1[4] = &code_1029B230;
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = &sqshTriStrip_ThrottledZSortUpdate;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 0;
+  arg1[10] = 0;
+  arg1[0xb] = 0;
+  arg1[0xc] = 0;
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1029B310
 // GATE: PASS -- 100 trials, 28 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
-XI_API void __cdecl SqmdSort_AllocLists(int * param_1, int * param_2, int param_3)
+XI_API void __cdecl SqmdSort_AllocLists(int * arg1, int * arg2, int arg3)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  int *piVar3;
-  int iVar4;
+  int i1;
+  bits32 *p1;
+  int *p2;
+  int i2;
   
-  iVar4 = **(int **)(param_3 + 0x48);
-  piVar3 = *(int **)(param_3 + 0x48) + 1;
-  *param_1 = iVar4;
-  puVar2 = orig::FUN_10275d80(1,iVar4 * 4,s_C__dev_dancer_modules_sqModel_sr_103bc66c,0xb3);
-  *param_2 = (int)puVar2;
-  while (iVar4 != 0) {
-    iVar1 = *piVar3;
-    iVar4 = iVar4 + -1;
-    if (iVar1 < 1) {
-      *(undefined4 *)(*param_2 + iVar4 * 4) = 0;
-      iVar1 = iVar1 * -4;
+  i2 = **(int **)(arg3 + 0x48);
+  p2 = *(int **)(arg3 + 0x48) + 1;
+  *arg1 = i2;
+  p1 = orig::game_10275D80(1,i2 * 4,str_C__dev_dancer_modules_sqModel_sr_103BC66C,0xb3);
+  *arg2 = (int)p1;
+  while (i2 != 0) {
+    i1 = *p2;
+    i2 = i2 + -1;
+    if (i1 < 1) {
+      *(bits32 *)(*arg2 + i2 * 4) = 0;
+      i1 = i1 * -4;
     }
     else {
-      iVar1 = iVar1 * 4;
-      puVar2 = orig::FUN_10275d80(1,iVar1,s_C__dev_dancer_modules_sqModel_sr_103bc66c,0xb7);
-      *(undefined4 **)(*param_2 + iVar4 * 4) = puVar2;
+      i1 = i1 * 4;
+      p1 = orig::game_10275D80(1,i1,str_C__dev_dancer_modules_sqModel_sr_103BC66C,0xb7);
+      *(bits32 **)(*arg2 + i2 * 4) = p1;
     }
-    piVar3 = (int *)((int)piVar3 + iVar1 + 4);
+    p2 = (int *)((int)p2 + i1 + 4);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1029B3A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqmdSort_CreateForStrips(int * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __cdecl SqmdSort_CreateForStrips(int * arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  if (*param_1 != 0xa0009) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqModel_sr_103bc66c,199);
-    orig::sqDebugPrintf_v1(s_sort_updater_must_use_tri_strips_103bc69c);
+  if (*arg1 != 0xa0009) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqModel_sr_103BC66C,199);
+    orig::sqDebugPrintf_v1(str_sort_updater_must_use_tri_strips_103BC69C);
     return 0;
   }
-  puVar1 = orig::SqmdSort_Create();
-  puVar1[7] = param_2;
-  puVar1[10] = param_3;
-  puVar1[9] = param_1;
-  puVar1[0xb] = param_4;
-  orig::SqmdSort_AllocLists(puVar1 + 0xc,puVar1 + 0xd,(int)param_1);
-  puVar1[0xe] = 1;
-  return (int)puVar1;
+  p1 = orig::SqmdSort_Create();
+  p1[7] = arg2;
+  p1[10] = arg3;
+  p1[9] = arg1;
+  p1[0xb] = arg4;
+  orig::SqmdSort_AllocLists(p1 + 0xc,p1 + 0xd,(int)arg1);
+  p1[0xe] = 1;
+  return (int)p1;
 }

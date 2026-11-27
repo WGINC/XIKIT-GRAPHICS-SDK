@@ -18,4 +18,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CXiCollisionActor_IsTouchDown` calls nothing directly
 - `CXiCollisionActor_IsOnLift` calls nothing directly
 - `CXiCollisionActor_GetCurrentAreaId` calls nothing directly
-- `CXiCollisionActor::Constructor` calls `CXiControlActor::Constructor`, `sub_103149A0`, `Vec4_Set`
+- `CXiCollisionActor::Constructor` calls `CXiControlActor::Constructor`, `game_103149A0`, `Vec4_Set`

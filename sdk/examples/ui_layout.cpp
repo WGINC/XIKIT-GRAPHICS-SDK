@@ -77,11 +77,11 @@ static Win *win_of(void *w) {
 }
 
 static xikit::fn<decltype(&NetCellFont_SetRectAndUpdateNodes)> prev_SetRect;
-static undefined4 __thiscall my_SetRect(void *w, undefined4 x, undefined4 y, undefined4 wd, undefined4 ht, undefined4 p5, undefined4 snap, undefined4 p7) {
+static bits32 __thiscall my_SetRect(void *w, bits32 x, bits32 y, bits32 wd, bits32 ht, bits32 p5, bits32 snap, bits32 p7) {
   int dx, dy; char key[17]; offset_of(w, &dx, &dy, key);
   Win *r = win_of(w); r->bx = (int)x; r->by = (int)y; r->bw = (int)wd; r->bh = (int)ht; r->p5 = (int)p5; r->p7 = (int)p7; r->dx = dx; r->dy = dy;
   if (g_host->setting_int("ui_list", 0) && !r->listed) { r->listed = true; char t[64]; title_of(w, t); g_host->log("ui_layout: window %s (\"%s\") placed by the game at %d,%d size %d,%d; offset %d,%d", key, t, (int)x, (int)y, (int)wd, (int)ht, dx, dy); }
-  return prev_SetRect(w, (undefined4)((int)x + dx), (undefined4)((int)y + dy), wd, ht, p5, snap, p7);
+  return prev_SetRect(w, (bits32)((int)x + dx), (bits32)((int)y + dy), wd, ht, p5, snap, p7);
 }
 
 static void replace_visible() {                             // the settings changed: the windows still listed, placed again
@@ -92,7 +92,7 @@ static void replace_visible() {                             // the settings chan
     for (int i = 0; i < g_nwin; i++) if (g_win[i].w == w) {
       int dx, dy; char key[17]; offset_of(w, &dx, &dy, key);
       if (dx != g_win[i].dx || dy != g_win[i].dy) { Win r = g_win[i];
-        my_SetRect(w, (undefined4)r.bx, (undefined4)r.by, (undefined4)r.bw, (undefined4)r.bh, (undefined4)r.p5, 0, (undefined4)*(reinterpret_cast<uint8_t *>(w) + 0x9A)); n++; }
+        my_SetRect(w, (bits32)r.bx, (bits32)r.by, (bits32)r.bw, (bits32)r.bh, (bits32)r.p5, 0, (bits32)*(reinterpret_cast<uint8_t *>(w) + 0x9A)); n++; }
       break;
     }
   }

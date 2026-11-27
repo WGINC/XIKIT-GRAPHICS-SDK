@@ -13,5 +13,5 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqrdTexture.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqrdTexture_Create` calls `sub_10275D80`, `SqrdTexture_Init`
+- `SqrdTexture_Create` calls `game_10275D80`, `SqrdTexture_Init`
 - `SqrdTexture_Init` calls nothing directly

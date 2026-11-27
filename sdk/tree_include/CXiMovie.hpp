@@ -5,10 +5,10 @@
 #pragma pack(push, 1)
 class XI_API CXiMovie {
 public:
-    int Draw(int a1, int a2, int a3, int a4, int a5);  // 0x10026AD0
-    static undefined4 __cdecl Create(undefined4 param_1);  // 0x1021D3D0
-    static undefined4 __cdecl UpdateIfPresent();  // 0x1021D440
-    static undefined4 __cdecl GetField4();  // 0x1021D490
+    int Draw(int arg1, int arg2, int arg3, int arg4, int arg5);  // 0x10026AD0
+    static bits32 __cdecl Create(bits32 arg1);  // 0x1021D3D0
+    static bits32 __cdecl UpdateIfPresent();  // 0x1021D440
+    static bits32 __cdecl GetField4();  // 0x1021D490
     static long double __cdecl GetDoubleField8();  // 0x1021D4A0
     static int __cdecl DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom, float * scale);  // 0x1021D4C0
     static void * __thiscall Construct(void * self);  // 0x1021D7F0

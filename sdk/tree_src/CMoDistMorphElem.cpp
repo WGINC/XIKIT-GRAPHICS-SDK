@@ -5,130 +5,130 @@
 
 // FUNCTION: FFXIMAIN 0x1003F440
 // GATE: PASS -- 100 trials, 61 returned normally, 180 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 61
-int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, char a7)
+int CMoDistMorphElem::ApplyMorph(int arg1, uint32_t *arg2, int arg3, int arg4, uint32_t *C, char arg6)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  int v7;
-  _DWORD *v8;
-  int v9;
-  unsigned __int16 *v10;
-  unsigned __int16 *v11;
-  _DWORD *v12;
-  unsigned __int16 v14;
-  _DWORD *v15;
-  _DWORD *v16;
-  _DWORD *v17;
-  int v18;
-  unsigned __int16 v19;
-  _DWORD *v20;
-  unsigned __int16 v21;
-  unsigned int v22;
-  unsigned int v23;
-  unsigned int v24;
-  unsigned int v25;
-  int v26;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  unsigned short *p2;
+  unsigned short *p3;
+  uint32_t *p4;
+  unsigned short u1;
+  uint32_t *p5;
+  uint32_t *p6;
+  uint32_t *p7;
+  int i3;
+  unsigned short u2;
+  uint32_t *p8;
+  unsigned short u3;
+  unsigned int u4;
+  unsigned int u5;
+  unsigned int u6;
+  unsigned int u7;
+  int i4;
   int ScratchMatrixStackTop;
-  float *v28;
-  CMoProcessor *v29;
-  int v30;
+  float *p9;
+  CMoProcessor *p10;
+  int i5;
   int result;
-  int v33;
-  _DWORD *v34;
+  int i6;
+  uint32_t *p11;
   int *Ca;
-  int v36;
-  v7 = self;
+  int i7;
+  i1 = self;
   if ( at<int8_t>(this, 0x32) < 0 )
   {
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHAREF, 96);
   }
-  if ( a7 == 0 )
-    orig::TextureHolder_BindWarped((int *)(v7 + 64), 0, *(float *)(a2 + 320), *(float *)(a2 + 324), *(float *)(a2 + 328));
-  v8 = C;
+  if ( arg6 == 0 )
+    orig::TextureHolder_BindWarped((int *)(i1 + 64), 0, *(float *)(arg1 + 320), *(float *)(arg1 + 324), *(float *)(arg1 + 328));
+  p1 = C;
   if ( C == nullptr )
-    v8 = orig::CMoDistMorphElem_ComputeMorphHandle(v7, a4, a5);
-  Ca = (int *)(*(unsigned __int16 *)(v7 + 60) + v7 + 48);
-  if ( *(_WORD *)(v7 + 60) >= *(_WORD *)(v7 + 62) )
-    v9 = *(unsigned __int16 *)(v7 + 62) + 0x10000;
+    p1 = orig::CMoDistMorphElem_ComputeMorphHandle(i1, arg3, arg4);
+  Ca = (int *)(*(unsigned short *)(i1 + 60) + i1 + 48);
+  if ( *(uint16_t *)(i1 + 60) >= *(uint16_t *)(i1 + 62) )
+    i2 = *(unsigned short *)(i1 + 62) + 0x10000;
   else
-    v9 = *(unsigned __int16 *)(v7 + 62);
-  v34 = (_DWORD *)(v9 + v7 + 48);
-  v10 = (unsigned __int16 *)(*(unsigned __int16 *)(v7 + 56) + (*(char *)(v7 + 51) << 16) + v7 + 48);
-  v11 = &v10[3 * *(unsigned __int16 *)(v7 + 58)];
-  orig::DynVB_Reserve((void *)g_pDynVB_FVF152, 3 * *(unsigned __int16 *)(v7 + 58));
-  v12 = orig::DynVB_Lock((void *)g_pDynVB_FVF152);
-  v36 = 0;
-  if ( a7 != 0 )
+    i2 = *(unsigned short *)(i1 + 62);
+  p11 = (uint32_t *)(i2 + i1 + 48);
+  p2 = (unsigned short *)(*(unsigned short *)(i1 + 56) + (*(char *)(i1 + 51) << 16) + i1 + 48);
+  p3 = &p2[3 * *(unsigned short *)(i1 + 58)];
+  orig::DynVB_Reserve((void *)g_pDynVB_FVF152, 3 * *(unsigned short *)(i1 + 58));
+  p4 = orig::DynVB_Lock((void *)g_pDynVB_FVF152);
+  i7 = 0;
+  if ( arg6 != 0 )
   {
-    if ( 3 * *(unsigned __int16 *)(v7 + 58) != 0 )
+    if ( 3 * *(unsigned short *)(i1 + 58) != 0 )
     {
       do
       {
-        ++v11;
-        v14 = *v10++;
-        v15 = &v8[9 * v14];
-        *v12 = *v15;
-        v12[1] = v15[1];
-        v12[2] = v15[2];
-        v16 = &v8[9 * *(v11 - 1) + 3];
-        v17 = v12 + 3;
-        v12 += 9;
-        *v17 = *v16;
-        v17[1] = v16[1];
-        v7 = self;
-        v17[2] = v16[2];
-        v18 = *Ca++;
-        *(v12 - 3) = v18;
-        *(v12 - 2) = v8[9 * *(v10 - 1) + 7];
-        *(v12 - 1) = v8[9 * *(v10 - 1) + 8];
-        ++v36;
+        ++p3;
+        u1 = *p2++;
+        p5 = &p1[9 * u1];
+        *p4 = *p5;
+        p4[1] = p5[1];
+        p4[2] = p5[2];
+        p6 = &p1[9 * *(p3 - 1) + 3];
+        p7 = p4 + 3;
+        p4 += 9;
+        *p7 = *p6;
+        p7[1] = p6[1];
+        i1 = self;
+        p7[2] = p6[2];
+        i3 = *Ca++;
+        *(p4 - 3) = i3;
+        *(p4 - 2) = p1[9 * *(p2 - 1) + 7];
+        *(p4 - 1) = p1[9 * *(p2 - 1) + 8];
+        ++i7;
       }
-      while ( v36 < 3 * this->triangleCount );
+      while ( i7 < 3 * this->triangleCount );
     }
   }
-  else if ( 3 * *(unsigned __int16 *)(v7 + 58) != 0 )
+  else if ( 3 * *(unsigned short *)(i1 + 58) != 0 )
   {
     while ( 1 )
     {
-      v19 = *v10;
-      v33 = (int)(v11 + 1);
-      ++v10;
-      v20 = &v8[9 * v19];
-      *v12 = *v20;
-      v12[1] = v20[1];
-      v12[2] = v20[2];
-      v21 = *v11;
-      v12[3] = v8[9 * *v11 + 3];
-      v12[4] = v8[9 * v21 + 4];
-      v12[5] = v8[9 * v21 + 5];
-      v22 = 2 * (unsigned __int8)*Ca;
-      v23 = ((unsigned int)*Ca >> 7) & 0x1FE;
-      v24 = ((unsigned int)*Ca >> 15) & 0x1FE;
-      v25 = ((unsigned int)*Ca >> 23) & 0x1FE;
-      if ( v22 > 0xFF )
-        v22 = 255;
-      if ( v23 > 0xFF )
-        v23 = 255;
-      if ( v24 > 0xFF )
-        v24 = 255;
-      if ( v25 > 0xFF )
-        v25 = 255;
+      u2 = *p2;
+      i6 = (int)(p3 + 1);
+      ++p2;
+      p8 = &p1[9 * u2];
+      *p4 = *p8;
+      p4[1] = p8[1];
+      p4[2] = p8[2];
+      u3 = *p3;
+      p4[3] = p1[9 * *p3 + 3];
+      p4[4] = p1[9 * u3 + 4];
+      p4[5] = p1[9 * u3 + 5];
+      u4 = 2 * (unsigned char)*Ca;
+      u5 = ((unsigned int)*Ca >> 7) & 0x1FE;
+      u6 = ((unsigned int)*Ca >> 15) & 0x1FE;
+      u7 = ((unsigned int)*Ca >> 23) & 0x1FE;
+      if ( u4 > 0xFF )
+        u4 = 255;
+      if ( u5 > 0xFF )
+        u5 = 255;
+      if ( u6 > 0xFF )
+        u6 = 255;
+      if ( u7 > 0xFF )
+        u7 = 255;
       ++Ca;
-      v12[6] = v22 | ((v23 | ((v24 | (v25 << 8)) << 8)) << 8);
-      v7 = self;
-      v12 += 9;
-      *(v12 - 2) = *v34;
-      v26 = v34[1];
-      v34 += 2;
-      *(v12 - 1) = v26;
-      if ( ++v36 >= 3 * this->triangleCount )
+      p4[6] = u4 | ((u5 | ((u6 | (u7 << 8)) << 8)) << 8);
+      i1 = self;
+      p4 += 9;
+      *(p4 - 2) = *p11;
+      i4 = p11[1];
+      p11 += 2;
+      *(p4 - 1) = i4;
+      if ( ++i7 >= 3 * this->triangleCount )
         break;
-      v11 = (unsigned __int16 *)v33;
+      p3 = (unsigned short *)i6;
     }
   }
   orig::DynVB_Unlock((void *)g_pDynVB_FVF152);
-  orig::Mem_FreeObject((int)v8);
+  orig::Mem_FreeObject((int)p1);
   if ( (CMoDistMorphElem_ApplyMorph_staticGuards & 1) == 0 )
   {
     CMoDistMorphElem_ApplyMorph_staticGuards |= 1u;
@@ -136,26 +136,26 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
     orig::_atexit(XI_CODE(unknown_libname_25));
   }
   orig::StateBlock_ApplyTSS(CMoDistMorphElem_ApplyMorph_stateBlock, (int)CMoDistMorphElem_ApplyMorph_textureStageStates);
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, *a3);
-  if ( a2 != 0 && (*(_BYTE *)(a2 + 379) & 3) != 0 )
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, *arg2);
+  if ( arg1 != 0 && (*(uint8_t *)(arg1 + 379) & 3) != 0 )
   {
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-    v28 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+    p9 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    orig::MoProcessor_CallVSlot49(v28);
-    v28[8] = *(float *)(a2 + 288);
-    v28[9] = *(float *)(a2 + 292);
+    orig::MoProcessor_CallVSlot49(p9);
+    p9[8] = *(float *)(arg1 + 288);
+    p9[9] = *(float *)(arg1 + 292);
     (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
-    orig::CDx_SetTransform(*(_DWORD ***)(g_pResourceMng + 3528), 16, v28);
-    v29 = g_pProcessor;
-    v30 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-    (g_pProcessor->ScratchMatrixStackTop) = v30;
-    ((float * *)((char *)v29 + 0xA10))[v30] = v28;
+    orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 16, p9);
+    p10 = g_pProcessor;
+    i5 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+    (g_pProcessor->ScratchMatrixStackTop) = i5;
+    ((float * *)((char *)p10 + 0xA10))[i5] = p9;
   }
-  result = orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, 0, *(unsigned __int16 *)(v7 + 58), 4, 0, -1);
-  if ( a2 != 0 && (*(_BYTE *)(a2 + 379) & 3) != 0 )
+  result = orig::VertexBatch_BindAndDraw((int *)g_pDynVB_FVF152, 0, *(unsigned short *)(i1 + 58), 4, 0, -1);
+  if ( arg1 != 0 && (*(uint8_t *)(arg1 + 379) & 3) != 0 )
   {
-    orig::CDx_SetTransform(*(_DWORD ***)(g_pResourceMng + 3528), 16, ((float *)((char *)g_pProcessor + 0x810)));
+    orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 16, ((float *)((char *)g_pProcessor + 0x810)));
     return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
   }
   return result;
@@ -163,167 +163,169 @@ int CMoDistMorphElem::ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, 
 
 // FUNCTION: FFXIMAIN 0x1003F8A0
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-_DWORD * CMoDistMorphElem::ComputeMorphHandle(int a2, int a3)
+uint32_t * CMoDistMorphElem::ComputeMorphHandle(int arg1, int arg2)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  __int16 v4;
-  __int16 v5;
-  int v6;
-  double v7;
-  int v8;
-  int v9;
-  int v10;
-  int v11;
-  int v12;
-  int v13;
-  int v14;
-  int v15;
-  int v16;
-  int v17;
-  float v18;
-  int v19;
-  float *v20;
-  int v21;
-  float v22;
-  double v23;
-  int v24;
-  float *v25;
-  int v26;
-  float v27;
-  int v28;
-  alignas(16) unsigned char xi_frame[0x460];  // address-taken locals at their original offsets
-  _DWORD * &v30 = *reinterpret_cast<_DWORD * *>(xi_frame + 0x10);
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &v32 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  float &v33 = *reinterpret_cast<float *>(xi_frame + 0x20);
-  float (&v34)[15] = *reinterpret_cast<float (*)[15]>(xi_frame + 0x24);
+  short i1;
+  short i2;
+  int i3;
+  double f1;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  int i8;
+  int i9;
+  int positionCount;
+  int i11;
+  int i12;
+  int i13;
+  float f2;
+  int i14;
+  float *p1;
+  int i15;
+  float f3;
+  double f4;
+  int i16;
+  float *p2;
+  int i17;
+  float f5;
+  int i18;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x460];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; uint32_t * p3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; float f6; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_4[0x20]; float f7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_5[0x24]; float f8[15]; };   // at 0x24
+  } frame;
 
-  v4 = at<uint16_t>(this, 0x36);
-  v5 = at<uint16_t>(this, 0x34);
-  if ( v5 > v4 )
-    v4 = v5;
-  v30 = orig::Mem_AllocObject(36 * v4, 4);
-  v6 = 0;
-  v7 = 0.0;
-  v8 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
-  v9 = 0;
-  if ( v8 <= 0 )
-    goto LABEL_6;
+  i1 = at<uint16_t>(this, 0x36);
+  i2 = at<uint16_t>(this, 0x34);
+  if ( i2 > i1 )
+    i1 = i2;
+  frame.p3 = orig::Mem_AllocObject(36 * i1, 4);
+  i3 = 0;
+  f1 = 0.0;
+  i4 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
+  i5 = 0;
+  if ( i4 <= 0 )
+    goto L1;
   do
   {
-    ++v9;
-    v7 = v7 + *(float *)(a2 + 4 * v9 - 4);
+    ++i5;
+    f1 = f1 + *(float *)(arg1 + 4 * i5 - 4);
   }
-  while ( v9 < v8 );
-  if ( !(v7 < 0x1.0000000000000p-126) )
+  while ( i5 < i4 );
+  if ( !(f1 < 0x1.0000000000000p-126) )
   {
-    if ( v7 == 0.0 )
-      goto LABEL_13;
+    if ( f1 == 0.0 )
+      goto L2;
   }
   else
   {
-LABEL_6:
-    v10 = 1;
-    for ( i = 0; v10 < v8; ++v10 )
+L1:
+    i6 = 1;
+    for ( frame.i = 0; i6 < i4; ++i6 )
     {
-      if ( *(float *)(v6 + a3) < (double)*(float *)(4 * v10 + a3) )
+      if ( *(float *)(i3 + arg2) < (double)*(float *)(4 * i6 + arg2) )
       {
-        i = v10;
-        v6 = 4 * v10;
+        frame.i = i6;
+        i3 = 4 * i6;
       }
     }
-    v7 = 1.0;
-    *(_DWORD *)(a2 + 4 * i) = 1065353216;
+    f1 = 1.0;
+    *(uint32_t *)(arg1 + 4 * frame.i) = 1065353216;
   }
-  v7 = 1.0 / v7;
-LABEL_13:
-  v11 = 0;
-  v12 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
-  if ( v12 > 0 )
+  f1 = 1.0 / f1;
+L2:
+  i7 = 0;
+  i8 = (char)(2 * this->morphTargetCountAndFlags) >> 1;
+  if ( i8 > 0 )
   {
     do
     {
-      v13 = a2 - (_DWORD)v34 + 4 * v11++;
-      v34[v11 - 1] = v7 * *(float *)((char *)v34 + v13);
+      i9 = arg1 - (uint32_t)frame.f8 + 4 * i7++;
+      frame.f8[i7 - 1] = f1 * *(float *)((char *)frame.f8 + i9);
     }
-    while ( v11 < v12 );
+    while ( i7 < i8 );
   }
-  v14 = this->positionCount;
-  v15 = 0;
-  v16 = 4 * (this->packedNormalCount + 3 * v14);
-  if ( v12 > 0 )
+  positionCount = this->positionCount;
+  i11 = 0;
+  i12 = 4 * (this->packedNormalCount + 3 * positionCount);
+  if ( i8 > 0 )
   {
-    v17 = self + 80 + 12 * v14;
-    LODWORD(v18) = self + 80;
+    i13 = self + 80 + 12 * positionCount;
+    (*(uint32_t *)&(f2)) = self + 80;
     do
     {
-      v34[v15 + 5] = v18;
-      LODWORD(v34[v15++ + 10]) = v17;
-      LODWORD(v18) += v16;
-      v17 += v16;
+      frame.f8[i11 + 5] = f2;
+      (*(uint32_t *)&(frame.f8[i11++ + 10])) = i13;
+      (*(uint32_t *)&(f2)) += i12;
+      i13 += i12;
     }
-    while ( v15 < v12 );
+    while ( i11 < i8 );
   }
-  v19 = 0;
-  if ( v14 > 0 )
+  i14 = 0;
+  if ( positionCount > 0 )
   {
-    v20 = (float *)(v30 + 2);
+    p1 = (float *)(frame.p3 + 2);
     do
     {
-      *v20 = 0.0;
-      *(v20 - 1) = 0.0;
-      *(v20 - 2) = 0.0;
-      v21 = 0;
+      *p1 = 0.0;
+      *(p1 - 1) = 0.0;
+      *(p1 - 2) = 0.0;
+      i15 = 0;
       if ( (char)(2 * this->morphTargetCountAndFlags) > 0 )
       {
         do
         {
-          v22 = v34[v21 + 5];
-          LODWORD(v34[v21++ + 5]) = LODWORD(v22) + 12;
-          v32 = *(float *)(LODWORD(v22) + 4);
-          v23 = *(float *)LODWORD(v22) * v34[v21 - 1] + *(v20 - 2);
-          v33 = *(float *)(LODWORD(v22) + 8);
-          *(v20 - 2) = v23;
-          *(v20 - 1) = v32 * v34[v21 - 1] + *(v20 - 1);
-          *v20 = v33 * v34[v21 - 1] + *v20;
+          f3 = frame.f8[i15 + 5];
+          (*(uint32_t *)&(frame.f8[i15++ + 5])) = (*(uint32_t *)&(f3)) + 12;
+          frame.f6 = *(float *)((*(uint32_t *)&(f3)) + 4);
+          f4 = *(float *)(*(uint32_t *)&(f3)) * frame.f8[i15 - 1] + *(p1 - 2);
+          frame.f7 = *(float *)((*(uint32_t *)&(f3)) + 8);
+          *(p1 - 2) = f4;
+          *(p1 - 1) = frame.f6 * frame.f8[i15 - 1] + *(p1 - 1);
+          *p1 = frame.f7 * frame.f8[i15 - 1] + *p1;
         }
-        while ( v21 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
+        while ( i15 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
       }
-      v20 += 9;
-      ++v19;
+      p1 += 9;
+      ++i14;
     }
-    while ( v19 < this->positionCount );
+    while ( i14 < this->positionCount );
   }
-  v24 = 0;
+  i16 = 0;
   if ( this->packedNormalCount > 0 )
   {
-    v25 = (float *)(v30 + 4);
+    p2 = (float *)(frame.p3 + 4);
     do
     {
-      v25[1] = 0.0;
-      *v25 = 0.0;
-      *(v25 - 1) = 0.0;
-      v26 = 0;
+      p2[1] = 0.0;
+      *p2 = 0.0;
+      *(p2 - 1) = 0.0;
+      i17 = 0;
       if ( (char)(2 * this->morphTargetCountAndFlags) > 0 )
       {
         do
         {
-          v27 = v34[v26 + 10];
-          v28 = *(_DWORD *)LODWORD(v27);
-          LODWORD(v27) += 4;
-          v34[v26 + 10] = v27;
-          *(v25 - 1) = (double)(v28 << 22 >> 22) * v34[v26] * 0.001953125 + *(v25 - 1);
-          *v25 = (double)((int)(*(_DWORD *)(LODWORD(v27) - 4) << 12) >> 22) * v34[v26++] * 0.001953125 + *v25;
-          v25[1] = (double)((4 * *(_DWORD *)(LODWORD(v27) - 4)) >> 22) * v34[v26 - 1] * 0.001953125 + v25[1];
+          f5 = frame.f8[i17 + 10];
+          i18 = *(uint32_t *)(*(uint32_t *)&(f5));
+          (*(uint32_t *)&(f5)) += 4;
+          frame.f8[i17 + 10] = f5;
+          *(p2 - 1) = (double)(i18 << 22 >> 22) * frame.f8[i17] * 0.001953125 + *(p2 - 1);
+          *p2 = (double)((int)(*(uint32_t *)((*(uint32_t *)&(f5)) - 4) << 12) >> 22) * frame.f8[i17++] * 0.001953125 + *p2;
+          p2[1] = (double)((4 * *(uint32_t *)((*(uint32_t *)&(f5)) - 4)) >> 22) * frame.f8[i17 - 1] * 0.001953125 + p2[1];
         }
-        while ( v26 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
+        while ( i17 < (char)(2 * this->morphTargetCountAndFlags) >> 1 );
       }
-      v25 += 9;
-      ++v24;
+      p2 += 9;
+      ++i16;
     }
-    while ( v24 < this->packedNormalCount );
+    while ( i16 < this->packedNormalCount );
   }
-  return v30;
+  return frame.p3;
 }
 
 // FUNCTION: FFXIMAIN 0x10043580
@@ -337,35 +339,35 @@ char ** __cdecl CMoDistMorphElem::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoDistMorphElem::Construct(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoD3bElem_Ctor(self);
-  *(uint8_t ***)self = &PTR_CMoDistMorphElem_GetRuntimeClass_1032b358;
+  u1 = orig::CMoD3bElem_Ctor(self);
+  *(uint8_t ***)self = &ptr_to_CMoDistMorphElem_GetRuntimeClass_1032B358;
   *(uint16_t *)((int)self + 0x176) = 0x1c4;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10052E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoDistMorphElem::IsKind6(int a1)
+BOOL CMoDistMorphElem::IsKind6(int arg1)
 {
-  return a1 == 6;
+  return arg1 == 6;
 }
 
 // FUNCTION: FFXIMAIN 0x10052E50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoDistMorphElem::set_field_1C0(int a2)
+int CMoDistMorphElem::set_field_1C0(int arg1)
 {
-  this->field_1C0 = a2;
-  return a2;
+  this->field_1C0 = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10052E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDistMorphElem::ScalarDeletingDtor(char a2)
+int * CMoDistMorphElem::ScalarDeletingDtor(char arg1)
 {
   orig::CMoD3bElem_Dtor((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

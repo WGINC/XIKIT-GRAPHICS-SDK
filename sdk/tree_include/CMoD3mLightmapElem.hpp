@@ -5,8 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CMoD3mLightmapElem {
 public:
-    static undefined4 __thiscall DrawLightmapPass(void * self);  // 0x10040E70
-    static undefined8 __thiscall Ctor(void * self);  // 0x10052E90
+    static bits32 __thiscall DrawLightmapPass(void * self);  // 0x10040E70
+    static uint64_t __thiscall Ctor(void * self);  // 0x10052E90
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x198];

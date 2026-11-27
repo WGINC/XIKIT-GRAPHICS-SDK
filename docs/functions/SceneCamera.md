@@ -21,7 +21,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `scnCameraGetInfo` calls nothing directly
 - `SceneCamera_SelectCamera` calls `SqsnScene_SetCursorIfInRange`, `SqsnScene_SetEntryField8`, `SceneCamera_SetCameraEntry`
-- `SceneCamera_SetCameraEntry` calls `sub_1027EB10`, `SqVec_CopyVec3`, `SqQuat_Copy`, `sqxfXformTD_Update`
-- `SceneCamera_UpdateCameraBlend` calls `SqVec_LerpFactor`, `sub_1027B2C0`, `sqxfXformTD_Update`, `SqsnScene_SetCursorIfInRange`, `SqsnScene_SetEntryField8`
+- `SceneCamera_SetCameraEntry` calls `game_1027EB10`, `SqVec_CopyVec3`, `SqQuat_Copy`, `sqxfXformTD_Update`
+- `SceneCamera_UpdateCameraBlend` calls `SqVec_LerpFactor`, `game_1027B2C0`, `sqxfXformTD_Update`, `SqsnScene_SetCursorIfInRange`, `SqsnScene_SetEntryField8`
 - `SceneCamera_SetVtable1099B138` calls nothing directly
 - `SceneCamera_ApplySceneToModel` calls `SqmdModel_Link`, `SqmdModel_SetLayerSort`, `SqmdModel_AddShadowLightInLayer`, `StAvatar_SelectIndex`, `SqmdModel_AddIllumLight`

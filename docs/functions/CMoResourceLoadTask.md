@@ -12,4 +12,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoResourceLoadTask.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoResourceLoadTask::ScalarDeletingDtor` calls `sub_100729E0`, `SharedDeleteHelper`
+- `CMoResourceLoadTask::ScalarDeletingDtor` calls `game_100729E0`, `SharedDeleteHelper`

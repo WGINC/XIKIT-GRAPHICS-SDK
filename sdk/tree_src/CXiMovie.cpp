@@ -5,63 +5,63 @@
 
 // FUNCTION: FFXIMAIN 0x10026AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 554 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CXiMovie::Draw(int a1, int a2, int a3, int a4, int a5)
+int CXiMovie::Draw(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int result;
-  IDirect3DBaseTexture8 *v8;
-  int v9;
-  double v10;
-  double v11;
-  double v12;
-  __int16 v13; // fps
-  bool v14; // c0
-  char v15; // c2
-  bool v16; // c3
-  int v17;
-  float v18;
+  IDirect3DBaseTexture8 *p1;
+  int pMovieTexture;
+  double f1;
+  double f2;
+  double f3;
+  short i2; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  int i3;
+  float f4;
   float a1a;
   bool xi_fpu_unord = false;
 
   result = this->pMovieTexture;
-  if ( result != 0 && (*(_DWORD *)(result + 64) != 0 || *(_DWORD *)(result + 68) != 0) )
+  if ( result != 0 && (*(uint32_t *)(result + 64) != 0 || *(uint32_t *)(result + 68) != 0) )
   {
-    v8 = *(IDirect3DBaseTexture8 **)(result + 64);
-    if ( v8 == nullptr )
-      v8 = *(IDirect3DBaseTexture8 **)(result + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v8);
-    if ( *(float *)&a3 != 1.0 )
+    p1 = *(IDirect3DBaseTexture8 **)(result + 64);
+    if ( p1 == nullptr )
+      p1 = *(IDirect3DBaseTexture8 **)(result + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
+    if ( *(float *)&arg3 != 1.0 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 96u);
     }
-    v9 = this->pMovieTexture;
-    v17 = *(unsigned __int16 *)(v9 + 38);
-    v18 = (double)*(unsigned __int16 *)(v9 + 36) * *(float *)&a3;
-    v10 = (double)a1 - 0.5;
-    a1a = (double)a2 - 0.5;
-    this->quad0_x = v10;
-    v11 = v18 + v10;
+    pMovieTexture = this->pMovieTexture;
+    i3 = *(unsigned short *)(pMovieTexture + 38);
+    f4 = (double)*(unsigned short *)(pMovieTexture + 36) * *(float *)&arg3;
+    f1 = (double)arg1 - 0.5;
+    a1a = (double)arg2 - 0.5;
+    this->quad0_x = f1;
+    f2 = f4 + f1;
     this->quad0_y = a1a;
     at<float>(this, 0x2C) = a1a;
-    this->quad0_color = a4;
-    at<uint32_t>(this, 0x38) = a4;
-    at<float>(this, 0x28) = v11;
-    at<float>(this, 0x44) = v10;
-    at<uint32_t>(this, 0x54) = a4;
-    at<uint32_t>(this, 0x70) = a4;
-    at<float>(this, 0x60) = v11;
-    v12 = (double)v17 * *(float *)&a3 + a1a;
-    at<float>(this, 0x48) = v12;
-    at<float>(this, 0x64) = v12;
+    this->quad0_color = arg4;
+    at<uint32_t>(this, 0x38) = arg4;
+    at<float>(this, 0x28) = f2;
+    at<float>(this, 0x44) = f1;
+    at<uint32_t>(this, 0x54) = arg4;
+    at<uint32_t>(this, 0x70) = arg4;
+    at<float>(this, 0x60) = f2;
+    f3 = (double)i3 * *(float *)&arg3 + a1a;
+    at<float>(this, 0x48) = f3;
+    at<float>(this, 0x64) = f3;
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
     result = (int)(((uint32_t)(result) & 0xFFFFu) | ((uint32_t)(uint16_t)((unsigned int)orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self + 12, 28) >> 16) << 16));
-    (xi_fpu_unord = __builtin_isunordered(*(float *)&a3, 1.0), v14 = *(float *)&a3 < 1.0);
-    v15 = 0;
-    v16 = *(float *)&a3 == 1.0;
-    result = (int)(((uint32_t)(result) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((__int16)(((v14 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v16 || xi_fpu_unord) ? 0x4000 : 0))) << 0));
-    if ( *(float *)&a3 != 1.0 )
+    (xi_fpu_unord = __builtin_isunordered(*(float *)&arg3, 1.0), b1 = *(float *)&arg3 < 1.0);
+    c1 = 0;
+    b2 = *(float *)&arg3 == 1.0;
+    result = (int)(((uint32_t)(result) & 0xFFFF0000u) | ((uint32_t)(uint16_t)((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0))) << 0));
+    if ( *(float *)&arg3 != 1.0 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
@@ -73,15 +73,15 @@ int CXiMovie::Draw(int a1, int a2, int a3, int a4, int a5)
 
 // FUNCTION: FFXIMAIN 0x1021D3D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiMovie::Create(undefined4 param_1)
+bits32 __cdecl CXiMovie::Create(bits32 arg1)
 {
-  int iVar1;
+  int i1;
   void *self;
-  uint32_t uVar2;
+  uint32_t u1;
   
-  iVar1 = orig::FUN_10311fde(param_1,&DAT_1034f2d0);
-  if (iVar1 != 0) {
-    orig::FUN_10311f30(iVar1);
+  i1 = orig::game_10311FDE(arg1,&g_1034F2D0);
+  if (i1 != 0) {
+    orig::game_10311F30(i1);
     self = (void *)orig::Mem_AllocDefault_v1(0x28);
     if (self == (void *)0x0) {
       g_pMovie_as_v1 = (void *)0x0;
@@ -89,12 +89,12 @@ undefined4 __cdecl CXiMovie::Create(undefined4 param_1)
     else {
       g_pMovie_as_v1 = orig::CXiMovie_Construct(self);
       if (g_pMovie_as_v1 != (void *)0x0) {
-        uVar2 = orig::MenuPanels_InitAndMarkReady(g_pMovie_as_v1,param_1);
-        if ((char)uVar2 == '\0') {
-          uVar2 = orig::CXiMovie_DestroyGlobal(uVar2);
-          return uVar2 & 0xffffff00;
+        u1 = orig::MenuPanels_InitAndMarkReady(g_pMovie_as_v1,arg1);
+        if ((char)u1 == '\0') {
+          u1 = orig::CXiMovie_DestroyGlobal(u1);
+          return u1 & 0xffffff00;
         }
-        return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
@@ -103,26 +103,26 @@ undefined4 __cdecl CXiMovie::Create(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x1021D440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiMovie::UpdateIfPresent()
+bits32 __cdecl CXiMovie::UpdateIfPresent()
 {
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (g_pMovie != 0) {
-    uVar1 = orig::FUN_1021d960(*(void **)(unsigned int)XI_GAME(0x10666E7Cu));
-    return uVar1;
+    u1 = orig::game_1021D960(*(void **)(unsigned int)XI_GAME(0x10666E7Cu));
+    return u1;
   }
   return xi_entry_eax & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1021D460
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) CXiMovie_DestroyGlobal(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) CXiMovie_DestroyGlobal(bits32 xi_eax)
 {
   if (g_pMovie_as_v0 != (int *)0x0) {
     xi_eax = orig::MenuPanels_ReleaseReturnTrue(xi_eax);
     if (g_pMovie_as_v0 != (int *)0x0) {
-      xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*g_pMovie_as_v0 + 0x18))))((void *)(g_pMovie_as_v0),1);
+      xi_eax = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_pMovie_as_v0 + 0x18))))((void *)(g_pMovie_as_v0),1);
       g_pMovie_as_v0 = (int *)0x0;
     }
   }
@@ -131,7 +131,7 @@ XI_API undefined4 __attribute__((cdecl, regparm(1))) CXiMovie_DestroyGlobal(unde
 
 // FUNCTION: FFXIMAIN 0x1021D490
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CXiMovie::GetField4()
+bits32 __cdecl CXiMovie::GetField4()
 {
   if (g_pMovie != 0) {
     return *(uint32_t *)(g_pMovie + 4);
@@ -144,9 +144,9 @@ undefined4 __cdecl CXiMovie::GetField4()
 long double __cdecl CXiMovie::GetDoubleField8()
 {
   if (g_pMovie != 0) {
-    return (long double)*(double *)(g_pMovie + 8);
+    return *(double *)(g_pMovie + 8);
   }
-  return (long double)0.0f;
+  return 0.0f;
 }
 
 // FUNCTION: FFXIMAIN 0x1021D4C0
@@ -157,86 +157,88 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
   int CurrentTexture;
-  int v4;
-  alignas(16) unsigned char xi_frame[0x560];  // address-taken locals at their original offsets
-  float &v5 = *reinterpret_cast<float *>(xi_frame + 0xCC);
-  int &a3 = *reinterpret_cast<int *>(xi_frame + 0xD0);
-  float &v7 = *reinterpret_cast<float *>(xi_frame + 0xD4);
-  float &v8 = *reinterpret_cast<float *>(xi_frame + 0xD8);
-  int &v9 = *reinterpret_cast<int *>(xi_frame + 0xDC);
-  int &v10 = *reinterpret_cast<int *>(xi_frame + 0xE0);
-  int &v11 = *reinterpret_cast<int *>(xi_frame + 0xE4);
-  int &v12 = *reinterpret_cast<int *>(xi_frame + 0xE8);
-  float &v13 = *reinterpret_cast<float *>(xi_frame + 0xEC);
-  float &v14 = *reinterpret_cast<float *>(xi_frame + 0xF0);
-  float &v15 = *reinterpret_cast<float *>(xi_frame + 0xF4);
-  int &v16 = *reinterpret_cast<int *>(xi_frame + 0xF8);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0xFC);
-  int &v18 = *reinterpret_cast<int *>(xi_frame + 0x100);
-  int &v19 = *reinterpret_cast<int *>(xi_frame + 0x104);
-  int &v20 = *reinterpret_cast<int *>(xi_frame + 0x108);
-  float &v21 = *reinterpret_cast<float *>(xi_frame + 0x10C);
-  float &v22 = *reinterpret_cast<float *>(xi_frame + 0x110);
-  int &v23 = *reinterpret_cast<int *>(xi_frame + 0x114);
-  int &v24 = *reinterpret_cast<int *>(xi_frame + 0x118);
-  int &v25 = *reinterpret_cast<int *>(xi_frame + 0x11C);
-  int &v26 = *reinterpret_cast<int *>(xi_frame + 0x120);
-  float &v27 = *reinterpret_cast<float *>(xi_frame + 0x124);
-  float &v28 = *reinterpret_cast<float *>(xi_frame + 0x128);
-  int &v29 = *reinterpret_cast<int *>(xi_frame + 0x12C);
-  int &v30 = *reinterpret_cast<int *>(xi_frame + 0x130);
-  int &v31 = *reinterpret_cast<int *>(xi_frame + 0x134);
-  int &v32 = *reinterpret_cast<int *>(xi_frame + 0x138);
-  int &v33 = *reinterpret_cast<int *>(xi_frame + 0x13C);
-  _BYTE (&v34)[32] = *reinterpret_cast<_BYTE (*)[32]>(xi_frame + 0x140);
+  int i1;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x560];
+    struct __attribute__((packed)) { unsigned char pad_1[0xCC]; float f1; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_2[0xD0]; int i2; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_3[0xD4]; float f2; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_4[0xD8]; float f3; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_5[0xDC]; int i3; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_6[0xE0]; int i4; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_7[0xE4]; int i5; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_8[0xE8]; int i6; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_9[0xEC]; float f4; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_10[0xF0]; float f5; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_11[0xF4]; float f6; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_12[0xF8]; int i7; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_13[0xFC]; int i8; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_14[0x100]; int i9; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_15[0x104]; int i10; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_16[0x108]; int i11; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_17[0x10C]; float f7; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_18[0x110]; float f8; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_19[0x114]; int i12; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_20[0x118]; int i13; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_21[0x11C]; int i14; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_22[0x120]; int i15; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_23[0x124]; float f9; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_24[0x128]; float f10; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_25[0x12C]; int i16; };   // at 0x12C
+    struct __attribute__((packed)) { unsigned char pad_26[0x130]; int i17; };   // at 0x130
+    struct __attribute__((packed)) { unsigned char pad_27[0x134]; int i18; };   // at 0x134
+    struct __attribute__((packed)) { unsigned char pad_28[0x138]; int i19; };   // at 0x138
+    struct __attribute__((packed)) { unsigned char pad_29[0x13C]; int i20; };   // at 0x13C
+    struct __attribute__((packed)) { unsigned char pad_30[0x140]; uint8_t u1[32]; };   // at 0x140
+  } frame;
 
   if ( g_pMovie != 0 )
   {
     orig::Movie_Update(g_pMovie);
-    result = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
+    result = orig::Movie_GetCurrentTexture((uint32_t *)g_pMovie);
     if ( result != 0 )
     {
       pDevice = (g_pCDx->pDevice);
       lpVtbl = pDevice->lpVtbl;
-      CurrentTexture = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
+      CurrentTexture = orig::Movie_GetCurrentTexture((uint32_t *)g_pMovie);
       lpVtbl->SetTexture(pDevice, 0, (IDirect3DBaseTexture8 *)CurrentTexture);
-      v4 = orig::Movie_GetCurrentTexture((_DWORD *)g_pMovie);
-      result = (*(int (__stdcall **)(int, _DWORD, _BYTE *))(*(_DWORD *)v4 + 56))(v4, 0, v34);
+      i1 = orig::Movie_GetCurrentTexture((uint32_t *)g_pMovie);
+      result = (*(int (__stdcall **)(int, uint32_t, uint8_t *))(*(uint32_t *)i1 + 56))(i1, 0, frame.u1);
       if ( result >= 0 )
       {
-        rcLeft = (__int64)(((double)rcLeft + *scale) * scale[1]);
-        rcRight = (__int64)(((double)rcRight + *scale) * scale[1]);
-        rcBottom = (__int64)(((double)rcBottom + scale[2]) * scale[3]);
-        rcTop = (__int64)(((double)rcTop + scale[2]) * scale[3]);
-        v8 = 0.0;
-        v9 = 1065353216;
-        *(float *)&a3 = (float)rcLeft;
-        v10 = -2139062144;
-        v11 = 0;
-        v12 = 1065353216;
-        v15 = 0.0;
-        v7 = (float)rcTop;
-        v16 = 1065353216;
-        v17 = -2139062144;
-        v18 = 1065353216;
-        v19 = 1065353216;
-        v5 = (float)rcRight;
-        v13 = v5;
-        v22 = 0.0;
-        v14 = v7;
-        v27 = v5;
-        v20 = a3;
-        v23 = 1065353216;
-        v24 = -2139062144;
-        v25 = 0;
-        v26 = 0;
-        v21 = (float)rcBottom;
-        v28 = v21;
-        v29 = 0;
-        v30 = 1065353216;
-        v31 = -2139062144;
-        v32 = 1065353216;
-        v33 = 0;
+        rcLeft = (long long)(((double)rcLeft + *scale) * scale[1]);
+        rcRight = (long long)(((double)rcRight + *scale) * scale[1]);
+        rcBottom = (long long)(((double)rcBottom + scale[2]) * scale[3]);
+        rcTop = (long long)(((double)rcTop + scale[2]) * scale[3]);
+        frame.f3 = 0.0;
+        frame.i3 = 1065353216;
+        *(float *)&frame.i2 = (float)rcLeft;
+        frame.i4 = -2139062144;
+        frame.i5 = 0;
+        frame.i6 = 1065353216;
+        frame.f6 = 0.0;
+        frame.f2 = (float)rcTop;
+        frame.i7 = 1065353216;
+        frame.i8 = -2139062144;
+        frame.i9 = 1065353216;
+        frame.i10 = 1065353216;
+        frame.f1 = (float)rcRight;
+        frame.f4 = frame.f1;
+        frame.f8 = 0.0;
+        frame.f5 = frame.f2;
+        frame.f9 = frame.f1;
+        frame.i11 = frame.i2;
+        frame.i12 = 1065353216;
+        frame.i13 = -2139062144;
+        frame.i14 = 0;
+        frame.i15 = 0;
+        frame.f7 = (float)rcBottom;
+        frame.f10 = frame.f7;
+        frame.i16 = 0;
+        frame.i17 = 1065353216;
+        frame.i18 = -2139062144;
+        frame.i19 = 1065353216;
+        frame.i20 = 0;
         orig::CDx_SetDefaultRenderState(g_pCDx);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_FOGENABLE, FALSE);
@@ -251,7 +253,7 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_DISABLE);
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
         (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&a3, 28);
+        orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)&frame.i2, 28);
         orig::CDx_SetDefaultRenderState(g_pCDx);
         return (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
       }
@@ -264,32 +266,32 @@ int __cdecl CXiMovie::DrawFrame(int rcLeft, int rcTop, int rcRight, int rcBottom
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CXiMovie::Construct(void * self)
 {
-  int *piVar1;
+  int *p1;
   
   *(uint32_t *)((int)self + 0x10) = 0;
   *(uint32_t *)((int)self + 0x14) = 0;
   *(uint32_t *)((int)self + 0x18) = 0;
   *(uint32_t *)((int)self + 0x1c) = 0;
-  *(uint8_t ***)self = &PTR_CXiMovie_GetRuntimeClass_1033bdd0;
+  *(uint8_t ***)self = &ptr_to_CXiMovie_GetRuntimeClass_1033BDD0;
   *(uint32_t *)((int)self + 4) = 0;
-  piVar1 = *(int **)((int)self + 0x10);
-  if (piVar1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  p1 = *(int **)((int)self + 0x10);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
   }
   *(uint32_t *)((int)self + 0x10) = 0;
-  piVar1 = *(int **)((int)self + 0x14);
-  if (piVar1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  p1 = *(int **)((int)self + 0x14);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
   }
   *(uint32_t *)((int)self + 0x14) = 0;
-  piVar1 = *(int **)((int)self + 0x18);
-  if (piVar1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  p1 = *(int **)((int)self + 0x18);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
   }
   *(uint32_t *)((int)self + 0x18) = 0;
-  piVar1 = *(int **)((int)self + 0x1c);
-  if (piVar1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*piVar1 + 8))))(piVar1);
+  p1 = *(int **)((int)self + 0x1c);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
   }
   *(uint32_t *)((int)self + 0x1c) = 0;
   *(uint32_t *)((int)self + 0x20) = 0;

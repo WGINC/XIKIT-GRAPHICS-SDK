@@ -13,5 +13,5 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqimImage.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqimImage_Create` calls `sub_10275D80`, `SqimImage_Init`
+- `SqimImage_Create` calls `game_10275D80`, `SqimImage_Init`
 - `SqimImage_Init` calls nothing directly

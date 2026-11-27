@@ -4,14 +4,14 @@
 
 // FUNCTION: FFXIMAIN 0x10289F50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqxfXformM_Init(undefined4 * param_1)
+XI_API void __cdecl SqxfXformM_Init(bits32 * arg1)
 {
-  *param_1 = 0xc0001;
-  param_1[2] = &LAB_10289fa0;
-  param_1[3] = XI_CODE(FUN_10289fb0);
-  param_1[4] = XI_CODE(FUN_1028a040);
-  *(uint8_t *)(param_1 + 5) = 0xff;
-  param_1[6] = &DAT_1028a0a0;
-  orig::SqMatrixConnect_SetIdentity(param_1 + 7);
+  *arg1 = 0xc0001;
+  arg1[2] = &code_10289FA0;
+  arg1[3] = XI_CODE(game_10289FB0);
+  arg1[4] = XI_CODE(sqxfXformMPrint);
+  *(uint8_t *)(arg1 + 5) = 0xff;
+  arg1[6] = &g_1028A0A0;
+  orig::SqMatrixConnect_SetIdentity(arg1 + 7);
   return;
 }

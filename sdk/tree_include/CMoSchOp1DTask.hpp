@@ -6,7 +6,7 @@
 class XI_API CMoSchOp1DTask {
 public:
     int Slot11GetPathDriveActorRuntimeClass();  // 0x10063130
-    int Slot12DeletePathDriveActorTask(int a1);  // 0x10063140
+    int Slot12DeletePathDriveActorTask(int arg1);  // 0x10063140
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

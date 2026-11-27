@@ -7,7 +7,7 @@ class XI_API CMoActorColorDriveTask {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x100569A0
     int Slot11CallGetRuntimeClass();  // 0x10062FE0
-    tagRECT * Slot12ThunkDeletingDtor(char a2);  // 0x10062FF0
+    tagRECT * Slot12ThunkDeletingDtor(char arg1);  // 0x10062FF0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x84];

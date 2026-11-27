@@ -4,108 +4,110 @@
 
 // FUNCTION: FFXIMAIN 0x102993B0
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API void __cdecl SqsdAniso_DrawPasses(int * param_1, int * param_2)
+XI_API void __cdecl SqsdAniso_DrawPasses(int * arg1, int * arg2)
 {
-  uint32_t uVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  uint32_t uVar5;
-  char xi_frame[56] __attribute__((aligned(4)));
-  uint32_t  &uVar6 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  &local_24 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 28);
-  float  &local_18 = *reinterpret_cast<float  *>(xi_frame + 32);
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 36);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 40);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 44);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 48);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 52);
+  uint32_t u1;
+  int *p1;
+  int i1;
+  int i2;
+  uint32_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { uint32_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f2; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f3; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; float f4; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; float f5; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; float f6; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; float f7; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_9[0x30]; float f8; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_10[0x34]; float f9; };   // at 0x34
+  } frame;
   
-  uVar5 = 0;
-  if ((param_1[0x14] == 0) || ((uVar1 = param_1[0x13], (uVar1 & 2) != 0 && ((uVar1 & 4) != 0)))) {
+  u2 = 0;
+  if ((arg1[0x14] == 0) || ((u1 = arg1[0x13], (u1 & 2) != 0 && ((u1 & 4) != 0)))) {
     return;
   }
-  piVar2 = (int *)*param_2;
-  if (*piVar2 == 0xa000b) {
-    iVar4 = 0;
+  p1 = (int *)*arg2;
+  if (*p1 == 0xa000b) {
+    i2 = 0;
   }
   else {
-    iVar4 = piVar2[0xd];
+    i2 = p1[0xd];
   }
-  if ((uVar1 != 0) && (iVar3 = orig::SqsdPassTest_TestSeparationHalf((int)piVar2), iVar3 == 2)) {
+  if ((u1 != 0) && (i1 = orig::SqsdPassTest_TestSeparationHalf((int)p1), i1 == 2)) {
     return;
   }
-  if ((((param_1[0x16] != 0) && (*param_1 != 0xa000b)) && (iVar4 != 0)) &&
-     (*(int *)(iVar4 + 100) == 0)) {
-    orig::SqIOHooks_CallHook40(*param_2);
+  if ((((arg1[0x16] != 0) && (*arg1 != 0xa000b)) && (i2 != 0)) &&
+     (*(int *)(i2 + 100) == 0)) {
+    orig::SqIOHooks_CallHook40(*arg2);
   }
-  if ((param_1[0x13] & 2U) != 0) {
-    uVar5 = 0x4000;
+  if ((arg1[0x13] & 2U) != 0) {
+    u2 = 0x4000;
   }
-  if ((param_1[0x13] & 4U) != 0) {
-    uVar5 = uVar5 | 0x8000;
+  if ((arg1[0x13] & 4U) != 0) {
+    u2 = u2 | 0x8000;
   }
-  orig::SqgxLighting_ApplyLighting((int)(param_1 + 5));
-  if (param_1[0x18] == 0) {
-    orig::sqgxShader_v2(uVar5 | 2,0);
+  orig::SqgxLighting_ApplyLighting((int)(arg1 + 5));
+  if (arg1[0x18] == 0) {
+    orig::sqgxShader_v2(u2 | 2,0);
   }
   else {
-    orig::sqgxTextureSet_v1(*(int *)(param_1[0x18] + 0x14));
-    orig::sqgxTextureClut(*(int *)(param_1[0x18] + 0x18));
+    orig::sqgxTextureSet_v1(*(int *)(arg1[0x18] + 0x14));
+    orig::sqgxTextureClut(*(int *)(arg1[0x18] + 0x18));
     orig::sqgxTextureDecal_v1(0);
-    orig::sqgxShader_v2(uVar5 | 6,0);
-    iVar4 = *(int *)(*(int *)(param_1[0x18] + 0x1c) + 0x24);
-    if (((iVar4 == 2) || (iVar4 == 4)) || (*(int *)(*(int *)(param_1[0x18] + 0x1c) + 0x30) == 4)) {
+    orig::sqgxShader_v2(u2 | 6,0);
+    i2 = *(int *)(*(int *)(arg1[0x18] + 0x1c) + 0x24);
+    if (((i2 == 2) || (i2 == 4)) || (*(int *)(*(int *)(arg1[0x18] + 0x1c) + 0x30) == 4)) {
       orig::sqgxBlendTrsp_v1();
     }
   }
-  if (param_1[0x15] != 0) {
+  if (arg1[0x15] != 0) {
     orig::sqgxAlphaTest(1,0x5f);
   }
   orig::Sqgx_IncCounter();
   orig::sqgxTextureDecal_v1(0);
-  orig::SqgxContext_SetMultiplyAdd(param_1[0xf]);
-  if (param_1[0x19] == 0) {
-    local_c = (float)((long double)xi_castbits<float>(param_1[10]) * (long double)xi_castbits<float>(param_1[0xd]));
-    local_8 = (float)((long double)xi_castbits<float>(param_1[0xb]) * (long double)xi_castbits<float>(param_1[0xd]));
-    local_4 = (float)((long double)xi_castbits<float>(param_1[0xc]) * (long double)xi_castbits<float>(param_1[0xd]));
-    local_18 = (float)((long double)xi_castbits<float>(param_1[10]) * (long double)xi_castbits<float>(param_1[0xe]));
-    local_14 = (float)((long double)xi_castbits<float>(param_1[0xb]) * (long double)xi_castbits<float>(param_1[0xe]));
-    local_10 = (float)((long double)xi_castbits<float>(param_1[0xc]) * (long double)xi_castbits<float>(param_1[0xe]));
-    if ((char)param_1[0x12] == '\0') {
-      local_24 = xi_castbits<float>(param_1[0xf]);
-      local_20 = local_24;
-      local_1c = local_24;
+  orig::SqgxContext_SetMultiplyAdd(arg1[0xf]);
+  if (arg1[0x19] == 0) {
+    frame.f7 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xd]));
+    frame.f8 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xd]));
+    frame.f9 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xd]));
+    frame.f4 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xe]));
+    frame.f5 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xe]));
+    frame.f6 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xe]));
+    if ((char)arg1[0x12] == '\0') {
+      frame.f1 = bit_cast<float>(arg1[0xf]);
+      frame.f2 = frame.f1;
+      frame.f3 = frame.f1;
     }
     else {
-      local_24 = (float)((long double)xi_castbits<float>(param_1[10]) * (long double)xi_castbits<float>(param_1[0xf]));
-      local_20 = (float)((long double)xi_castbits<float>(param_1[0xb]) * (long double)xi_castbits<float>(param_1[0xf]));
-      local_1c = (float)((long double)xi_castbits<float>(param_1[0xc]) * (long double)xi_castbits<float>(param_1[0xf]));
+      frame.f1 = (float)(bit_cast<float>(arg1[10]) * bit_cast<float>(arg1[0xf]));
+      frame.f2 = (float)(bit_cast<float>(arg1[0xb]) * bit_cast<float>(arg1[0xf]));
+      frame.f3 = (float)(bit_cast<float>(arg1[0xc]) * bit_cast<float>(arg1[0xf]));
     }
-    iVar4 = orig::Texture_CreateEntry(0x80,param_1[0x10],&local_c,&local_18,&local_24);
-    param_1[0x19] = iVar4;
+    i2 = orig::Texture_CreateEntry(0x80,arg1[0x10],&frame.f7,&frame.f4,&frame.f1);
+    arg1[0x19] = i2;
   }
-  orig::sqgxShader_v2(uVar5 | 0x100000,0);
-  orig::sqgxTextureSet_v1(*(int *)(param_1[0x19] + 0x14));
+  orig::sqgxShader_v2(u2 | 0x100000,0);
+  orig::sqgxTextureSet_v1(*(int *)(arg1[0x19] + 0x14));
   orig::sqgxTextureClut(-1);
-  iVar4 = param_1[0x16];
-  if (iVar4 == 0) {
-LAB_102995bf:
-    uVar6 = 1;
+  i2 = arg1[0x16];
+  if (i2 == 0) {
+code_102995BF:
+    frame.u3 = 1;
   }
   else {
-    if (iVar4 != 1) {
-      if (iVar4 != 2) goto LAB_102995c9;
-      goto LAB_102995bf;
+    if (i2 != 1) {
+      if (i2 != 2) goto code_102995C9;
+      goto code_102995BF;
     }
-    uVar6 = 0;
+    frame.u3 = 0;
   }
-  orig::Sqgx_SetContextFieldE24(uVar6);
-LAB_102995c9:
-  orig::sqDrawableDraw_v1(*param_2);
-  if (param_1[0x15] != 0) {
+  orig::Sqgx_SetContextFieldE24(frame.u3);
+code_102995C9:
+  orig::sqDrawableDraw_v1(*arg2);
+  if (arg1[0x15] != 0) {
     orig::sqgxAlphaTest(0,0);
   }
   orig::sqgxBlendOff_v1();
@@ -115,49 +117,49 @@ LAB_102995c9:
 
 // FUNCTION: FFXIMAIN 0x10299610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqsdAniso_BakeOntoShape(int param_1, int * param_2)
+XI_API int * __cdecl sqsdAniso_BakeOntoShape(int arg1, int * arg2)
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  int *piVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
+  int i1;
+  int i2;
+  bits32 *p1;
+  int *p2;
+  bits32 u1;
+  bits32 u2;
   
-  uVar5 = 0;
-  iVar1 = param_2[0xd];
-  if ((*param_2 != 0xa0009) || (piVar4 = param_2, param_2[0x14] == 0)) {
-    if (*(int *)(param_1 + 0x60) == 0) {
-      uVar6 = 0x100002;
+  u1 = 0;
+  i1 = arg2[0xd];
+  if ((*arg2 != 0xa0009) || (p2 = arg2, arg2[0x14] == 0)) {
+    if (*(int *)(arg1 + 0x60) == 0) {
+      u2 = 0x100002;
     }
     else {
-      uVar6 = 0x100006;
+      u2 = 0x100006;
     }
-    orig::sqgxShader_v1(uVar6,0);
-    if ((*(int *)(param_1 + 0x58) != 0) && (*(int *)(iVar1 + 100) == 0)) {
-      orig::SqIOHooks_CallHook40((int)param_2);
+    orig::sqgxShader_v1(u2,0);
+    if ((*(int *)(arg1 + 0x58) != 0) && (*(int *)(i1 + 100) == 0)) {
+      orig::SqIOHooks_CallHook40((int)arg2);
     }
-    iVar2 = *(int *)(param_1 + 0x58);
-    if (iVar2 == 0) {
-      uVar5 = *(undefined4 *)(iVar1 + 0x58);
+    i2 = *(int *)(arg1 + 0x58);
+    if (i2 == 0) {
+      u1 = *(bits32 *)(i1 + 0x58);
     }
-    else if (iVar2 == 1) {
-      uVar5 = *(undefined4 *)(iVar1 + 100);
+    else if (i2 == 1) {
+      u1 = *(bits32 *)(i1 + 100);
     }
-    else if (iVar2 == 2) {
-      uVar5 = *(undefined4 *)(iVar1 + 0x68);
+    else if (i2 == 2) {
+      u1 = *(bits32 *)(i1 + 0x68);
     }
-    uVar6 = *(undefined4 *)(iVar1 + 100);
-    *(undefined4 *)(iVar1 + 100) = uVar5;
+    u2 = *(bits32 *)(i1 + 100);
+    *(bits32 *)(i1 + 100) = u1;
     orig::SqgxDlist_CreateContextList();
-    orig::sqDrawableDraw_v1((int)param_2);
-    puVar3 = orig::FUN_1029b620();
+    orig::sqDrawableDraw_v1((int)arg2);
+    p1 = orig::sqgxDlistEnd_as_v0();
     orig::Sqgx_ResetCounter();
-    *(undefined4 *)(iVar1 + 100) = uVar6;
-    piVar4 =(int*)(orig::SqshDispList_Create());
-    piVar4[0x11] = (int)puVar3;
-    orig::SqBounds_Copy(piVar4 + 5,param_2 + 5);
-    orig::SqObject_Release((int *)&param_2);
+    *(bits32 *)(i1 + 100) = u2;
+    p2 =(int*)(orig::SqshDispList_Create());
+    p2[0x11] = (int)p1;
+    orig::SqBounds_Copy(p2 + 5,arg2 + 5);
+    orig::SqObject_Release((int *)&arg2);
   }
-  return piVar4;
+  return p2;
 }

@@ -14,6 +14,6 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqgxContext.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `sqgxContext_Create` calls `sub_10275D80`, `sqgxContext_Init`
+- `sqgxContext_Create` calls `game_10275D80`, `sqgxContext_Init`
 - `sqgxContext_Init` calls `PackVec4`, `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_Set`, `SqVec_SetXyz`
 - `sqgxShader` calls `SqgxVertexShaderRelease_NoOp`, `sqgxTextureClamp`, `sqgxTextureDecal`

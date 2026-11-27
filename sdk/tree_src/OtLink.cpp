@@ -12,86 +12,86 @@ XI_API void __thiscall OtLink_ClearLink(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10055300
 // GATE: PASS -- 100 trials, 55 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 55
-XI_API void __thiscall OtLink_Init(void * self_, int param_1, float param_2, float param_3)
+XI_API void __thiscall OtLink_Init(void * self_, int arg2, float arg3, float arg4)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  long double fVar4;
-  long double fVar5;
+  int i1;
+  bits32 *p1;
+  int i2;
+  long double f1;
+  long double f2;
   
-  fVar4 = (long double)param_3;
-  *(int *)((int)self_ + 8) = param_1;
-  *(float *)((int)self_ + 0xc) = param_2;
-  *(float *)((int)self_ + 0x10) = param_3;
+  f1 = arg4;
+  *(int *)((int)self_ + 8) = arg2;
+  *(float *)((int)self_ + 0xc) = arg3;
+  *(float *)((int)self_ + 0x10) = arg4;
   *(float *)((int)self_ + 0x14) =
-       (float)((long double)(param_1 + 1) / (long double)(float)(fVar4 - (long double)param_2));
-  puVar2 = orig::Mem_AllocObject_v1((param_1 + 1) * 0x20,4);
-  *(undefined4 **)((int)self_ + 4) = puVar2;
+       (float)((arg2 + 1) / (float)(f1 - arg3));
+  p1 = orig::Mem_AllocObject_v1((arg2 + 1) * 0x20,4);
+  *(bits32 **)((int)self_ + 4) = p1;
   orig::OtLink_RelinkEntries(self_);
-  iVar1 = *(int *)((int)self_ + 8);
-  param_3 = 0.0f;
-  if (-1 < iVar1) {
-    iVar3 = 0;
+  i1 = *(int *)((int)self_ + 8);
+  arg4 = 0.0f;
+  if (-1 < i1) {
+    i2 = 0;
     do {
-      fVar5 = (long double)xi_castbits<int>(param_3);
-      param_3 = xi_castbits<float>((xi_castbits<int>(param_3) + 1));
-      *(float *)(iVar3 + *(int *)((int)self_ + 4)) =
-           (float)(fVar5 * (long double)(float)((long double)(float)(fVar4 - (long double)param_2) /
-                                           (long double)iVar1));
-      *(uint8_t **)(*(int *)((int)self_ + 4) + -0x18 + iVar3 + 0x20) =(uint8_t*)(&DAT_100554a0);
-      iVar3 = iVar3 + 0x20;
-    } while (xi_castbits<int>(param_3) <= *(int *)((int)self_ + 8));
+      f2 = bit_cast<int>(arg4);
+      arg4 = bit_cast<float>((bit_cast<int>(arg4) + 1));
+      *(float *)(i2 + *(int *)((int)self_ + 4)) =
+           (float)(f2 * (float)((float)(f1 - arg3) /
+                                           i1));
+      *(uint8_t **)(*(int *)((int)self_ + 4) + -0x18 + i2 + 0x20) =(uint8_t*)(&g_100554A0);
+      i2 = i2 + 0x20;
+    } while (bit_cast<int>(arg4) <= *(int *)((int)self_ + 8));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100554B0
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 __thiscall OtLink_RelinkEntries(void * self_)
+XI_API bits32 __thiscall OtLink_RelinkEntries(void * self_)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
-  iVar3 = 0;
+  i3 = 0;
   if (*(int *)((int)self_ + 4) != 0) {
-    iVar3 = *(int *)((int)self_ + 8);
-    if (iVar3 != 0) {
-      iVar1 = iVar3 << 5;
+    i3 = *(int *)((int)self_ + 8);
+    if (i3 != 0) {
+      i1 = i3 << 5;
       do {
-        iVar2 = *(int *)((int)self_ + 4) + iVar1;
-        *(int *)(iVar2 + 4) = iVar2 + -0x20;
-        *(int *)(iVar1 + 0x10 + *(int *)((int)self_ + 4)) = iVar1 + 0x20 + *(int *)((int)self_ + 4);
-        *(uint32_t *)(iVar1 + 0x14 + *(int *)((int)self_ + 4)) = 0;
-        iVar1 = iVar1 + -0x20;
-        iVar3 = iVar3 + -1;
-      } while (iVar3 != 0);
+        i2 = *(int *)((int)self_ + 4) + i1;
+        *(int *)(i2 + 4) = i2 + -0x20;
+        *(int *)(i1 + 0x10 + *(int *)((int)self_ + 4)) = i1 + 0x20 + *(int *)((int)self_ + 4);
+        *(uint32_t *)(i1 + 0x14 + *(int *)((int)self_ + 4)) = 0;
+        i1 = i1 + -0x20;
+        i3 = i3 + -1;
+      } while (i3 != 0);
     }
     *(int *)(*(int *)((int)self_ + 4) + 0x10) = *(int *)((int)self_ + 4) + 0x20;
     *(uint32_t *)(*(int *)((int)self_ + 4) + 4) = 0;
     *(uint32_t *)(*(int *)((int)self_ + 4) + 0x14) = 0;
-    iVar3 = *(int *)((int)self_ + 8) * 0x20;
-    *(uint32_t *)(iVar3 + 0x10 + *(int *)((int)self_ + 4)) = 0;
+    i3 = *(int *)((int)self_ + 8) * 0x20;
+    *(uint32_t *)(i3 + 0x10 + *(int *)((int)self_ + 4)) = 0;
   }
-  DAT_1047bc90 = 0;
-  return iVar3;
+  g_1047BC90 = 0;
+  return i3;
 }
 
 // FUNCTION: FFXIMAIN 0x10055520
 // GATE: PASS -- 100 trials, 92 returned normally, 292 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 92
 XI_API void __thiscall OtLink_Free(void * self_)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
   if (*(int *)((int)self_ + 4) != 0) {
-    iVar2 = *(int *)((int)self_ + 8) * 0x20 + *(int *)((int)self_ + 4);
-    while (iVar2 != 0) {
-      iVar1 = *(int *)(iVar2 + 4);
-      (**(code **)(iVar2 + 8))(*(uint32_t *)(iVar2 + 0xc));
-      *(uint32_t *)(iVar2 + 0x14) = 0;
-      iVar2 = iVar1;
+    i2 = *(int *)((int)self_ + 8) * 0x20 + *(int *)((int)self_ + 4);
+    while (i2 != 0) {
+      i1 = *(int *)(i2 + 4);
+      (**(untyped_fn **)(i2 + 8))(*(uint32_t *)(i2 + 0xc));
+      *(uint32_t *)(i2 + 0x14) = 0;
+      i2 = i1;
     }
   }
   return;

@@ -4,64 +4,66 @@
 
 // FUNCTION: FFXIMAIN 0x102999A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqsdGlow_ApplyShader(int param_1, int param_2)
+XI_API bits32 __cdecl SqsdGlow_ApplyShader(int arg1, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  long double fVar3;
-  char xi_frame[48] __attribute__((aligned(4)));
-  uint32_t  &local_30 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  float  &local_28 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_24 = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  (&local_1c)[7] = *reinterpret_cast<float  (*)[7]>(xi_frame + 20);
+  int i1;
+  uint32_t u1;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[48];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f3; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f4; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f5[7]; };   // at 0x14
+  } frame;
   
-  local_1c[1] = 4.0f;
-  local_1c[2] = 16.0f;
-  local_1c[3] = 256.0f;
-  local_1c[4] = 65536.0f;
-  local_1c[5] = 4294969856.0f;
-  local_1c[6] = 18446700093244440576.0f;
-  if ((*(int *)(param_1 + 0x60) != 0) && (iVar1 = orig::SqsdPassTest_TestSeparationHalf(param_2), iVar1 == 2)) {
+  frame.f5[1] = 4.0f;
+  frame.f5[2] = 16.0f;
+  frame.f5[3] = 256.0f;
+  frame.f5[4] = 65536.0f;
+  frame.f5[5] = 4294969856.0f;
+  frame.f5[6] = 18446700093244440576.0f;
+  if ((*(int *)(arg1 + 0x60) != 0) && (i1 = orig::SqsdPassTest_TestSeparationHalf(arg2), i1 == 2)) {
     return 0;
   }
-  local_30 = *(uint32_t *)(param_1 + 0x5c);
-  fVar3 = (long double)*(float *)(param_1 + 0x58);
-  if (local_30 != 0) {
-    if (((int)local_30 < 0) || (5 < local_30)) {
-      local_30 = 6;
+  frame.u2 = *(uint32_t *)(arg1 + 0x5c);
+  f1 = (long double)*(float *)(arg1 + 0x58);
+  if (frame.u2 != 0) {
+    if (((int)frame.u2 < 0) || (5 < frame.u2)) {
+      frame.u2 = 6;
     }
-    fVar3 = fVar3 * (long double)local_1c[local_30];
+    f1 = f1 * (long double)frame.f5[frame.u2];
   }
-  local_28 = (float)(fVar3 * (long double)*(float *)(param_1 + 0x4c));
-  local_24 = (float)(fVar3 * (long double)*(float *)(param_1 + 0x50));
-  local_20 = (float)(fVar3 * (long double)*(float *)(param_1 + 0x54));
-  local_1c[0] = (float)(long double)(int)local_30;
-  orig::SqgxContext_SetViewportVec4(&local_28);
-  uVar2 = orig::sqgxShader_v1(0x400000,0);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(0xff)));
+  frame.f2 = (float)(f1 * (long double)*(float *)(arg1 + 0x4c));
+  frame.f3 = (float)(f1 * (long double)*(float *)(arg1 + 0x50));
+  frame.f4 = (float)(f1 * (long double)*(float *)(arg1 + 0x54));
+  frame.f5[0] = (float)(long double)(int)frame.u2;
+  orig::SqgxContext_SetViewportVec4(&frame.f2);
+  u1 = orig::sqgxShader_v1(0x400000,0);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(0xff)));
 }
 
 // FUNCTION: FFXIMAIN 0x10299AB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl sqsdGlow_BakeOntoShape(int param_1, int * param_2)
+XI_API int * __cdecl sqsdGlow_BakeOntoShape(int arg1, int * arg2)
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  int *piVar3;
+  bits32 u1;
+  bits32 *p1;
+  int *p2;
   
-  if ((*param_2 != 0xa0009) || (piVar3 = param_2, param_2[0x14] == 0)) {
-    uVar1 = orig::SqsdGlow_ApplyShader(param_1,(int)param_2);
-    if ((char)uVar1 == '\0') {
-      return param_2;
+  if ((*arg2 != 0xa0009) || (p2 = arg2, arg2[0x14] == 0)) {
+    u1 = orig::SqsdGlow_ApplyShader(arg1,(int)arg2);
+    if ((char)u1 == '\0') {
+      return arg2;
     }
     orig::SqgxDlist_CreateContextList();
-    orig::sqDrawableDraw_v1((int)param_2);
-    puVar2 = orig::FUN_1029b620();
-    piVar3 =(int*)(orig::SqshDispList_Create());
-    piVar3[0x11] = (int)puVar2;
-    orig::SqBounds_Copy(piVar3 + 5,param_2 + 5);
-    orig::SqObject_Release((int *)&param_2);
+    orig::sqDrawableDraw_v1((int)arg2);
+    p1 = orig::sqgxDlistEnd_as_v0();
+    p2 =(int*)(orig::SqshDispList_Create());
+    p2[0x11] = (int)p1;
+    orig::SqBounds_Copy(p2 + 5,arg2 + 5);
+    orig::SqObject_Release((int *)&arg2);
   }
-  return piVar3;
+  return p2;
 }

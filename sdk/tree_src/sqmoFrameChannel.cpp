@@ -4,42 +4,42 @@
 
 // FUNCTION: FFXIMAIN 0x10293F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqmoFrameChannel_Create(void)
+XI_API bits32 * __cdecl SqmoFrameChannel_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x40,s_C__dev_dancer_modules_sqMotion_s_103bb558,0x1c);
-  orig::SqmoFrameChannel_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x40,str_C__dev_dancer_modules_sqMotion_s_103BB558,0x1c);
+  orig::SqmoFrameChannel_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10293FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmoFrameChannel_Init(undefined4 * param_1)
+XI_API void __cdecl SqmoFrameChannel_Init(bits32 * arg1)
 {
-  *param_1 = 0x50001;
-  param_1[2] = &LAB_10293ff0;
-  param_1[3] = XI_CODE(FUN_10294000);
-  param_1[4] = XI_CODE(sqmoFrameChannel_Dump);
-  param_1[5] = &LAB_102942b0;
-  param_1[6] = &LAB_102942f0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 1;
-  param_1[0xb] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  *(uint8_t *)(param_1 + 0xf) = 0;
+  *arg1 = 0x50001;
+  arg1[2] = &code_10293FF0;
+  arg1[3] = XI_CODE(game_10294000);
+  arg1[4] = XI_CODE(sqmoFrameChannel_Dump);
+  arg1[5] = &code_102942B0;
+  arg1[6] = &code_102942F0;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 0;
+  arg1[10] = 1;
+  arg1[0xb] = 0;
+  arg1[0xc] = 0;
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
+  *(uint8_t *)(arg1 + 0xf) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102944E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmoFrameChannel_Apply(int param_1, int param_2)
+XI_API void __cdecl SqmoFrameChannel_Apply(int arg1, int arg2)
 {
-  orig::SqmoUtil_MarkSlot(*(int *)(param_1 + 0x38),*(int *)(param_1 + 0x1c),param_2,
-               (uint8_t *)(param_1 + 0x3c));
+  orig::SqmoUtil_MarkSlot(*(int *)(arg1 + 0x38),*(int *)(arg1 + 0x1c),arg2,
+               (uint8_t *)(arg1 + 0x3c));
   return;
 }

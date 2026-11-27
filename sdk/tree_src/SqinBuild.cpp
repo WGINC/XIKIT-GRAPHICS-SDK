@@ -4,38 +4,40 @@
 
 // FUNCTION: FFXIMAIN 0x1029AA80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqinBuild_BuildSQO(undefined4 param_1, char * param_2, undefined4 param_3)
+XI_API int __cdecl SqinBuild_BuildSQO(bits32 arg1, char * arg2, bits32 arg3)
 {
-  char *pcVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  uint32_t uVar4;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint8_t  (&local_8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  char *p1;
+  bits32 *p2;
+  bits32 *p3;
+  uint32_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i1; };   // at 0x4
+  } frame;
   
-  pcVar1 = param_2;
-  if ((((*param_2 != 'S') || (param_2[1] != 'Q')) || (param_2[2] != 'L')) || (param_2[3] != 'E')) {
-    orig::sqDebugPrintf_v1(s_____Error__memPtr_0x_08X__not_an_103b7a04,param_2);
-    orig::sqDebugPrintf_v1(s_sqinBuildSQO_0x_08X__0x_08X___d__103bc3c0,param_1,pcVar1,param_3);
+  p1 = arg2;
+  if ((((*arg2 != 'S') || (arg2[1] != 'Q')) || (arg2[2] != 'L')) || (arg2[3] != 'E')) {
+    orig::sqDebugPrintf_v1(str_____Error__memPtr_0x_08X__not_an_103B7A04,arg2);
+    orig::sqDebugPrintf_v1(str_sqinBuildSQO_0x_08X__0x_08X___d__103BC3C0,arg1,p1,arg3);
     return 0;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock((undefined4 *)local_8,4,1,(undefined4 *)(param_2 + 4),0);
-  uVar4 = (uint32_t)((local_8[0] & 1) != 0);
-  puVar2 = orig::SqScriptRead_ReadBlock(&local_4,4,1,puVar2,0);
-  if (local_4 != 0x150001) {
-    orig::sqDebugPrintf_v1(s_____Error__Unknown_skin_type_0x0_103bc398,local_4);
-    orig::sqDebugPrintf_v1(s_sqinBuildSQO_0x_08X__0x_08X___d__103bc3c0,param_1,puVar2,param_3);
+  p2 = orig::SqScriptRead_ReadBlock((bits32 *)frame.u2,4,1,(bits32 *)(arg2 + 4),0);
+  u1 = (uint32_t)((frame.u2[0] & 1) != 0);
+  p2 = orig::SqScriptRead_ReadBlock(&frame.i1,4,1,p2,0);
+  if (frame.i1 != 0x150001) {
+    orig::sqDebugPrintf_v1(str_____Error__Unknown_skin_type_0x0_103BC398,frame.i1);
+    orig::sqDebugPrintf_v1(str_sqinBuildSQO_0x_08X__0x_08X___d__103BC3C0,arg1,p2,arg3);
     return 0;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock(&param_2,4,1,puVar2,uVar4);
-  if (((uint32_t)param_2 & 0x10000) != 0) {
-    puVar3 = orig::SqinSkin_Create();
-    puVar3[7] = param_1;
-    orig::FUN_1029abd0(puVar3,(int)puVar2,(uint32_t)param_2 & 0xfffeffff,uVar4);
-    return (int)puVar3;
+  p2 = orig::SqScriptRead_ReadBlock(&arg2,4,1,p2,u1);
+  if (((uint32_t)arg2 & 0x10000) != 0) {
+    p3 = orig::SqinSkin_Create();
+    p3[7] = arg1;
+    orig::sqinSkinBuildBinary_as_v0(p3,(int)p2,(uint32_t)arg2 & 0xfffeffff,u1);
+    return (int)p3;
   }
-  orig::sqDebugPrintf_v1(s_____Error__Only_binary_formats_s_103bc3e8);
-  orig::sqDebugPrintf_v1(s_sqinBuildSQO_0x_08X__0x_08X___d__103bc3c0,param_1,puVar2,param_3);
+  orig::sqDebugPrintf_v1(str_____Error__Only_binary_formats_s_103BC3E8);
+  orig::sqDebugPrintf_v1(str_sqinBuildSQO_0x_08X__0x_08X___d__103BC3C0,arg1,p2,arg3);
   return 0;
 }

@@ -4,139 +4,139 @@
 
 // FUNCTION: FFXIMAIN 0x100544D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __thiscall ElemCurve_EvaluateWithFlag34(void * self_, undefined4 param_2, undefined4 param_3)
+XI_API long double __thiscall ElemCurve_EvaluateWithFlag34(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
-  long double fVar2;
+  uint32_t u1;
+  long double f1;
   
-  uVar1 = *(uint32_t *)((int)self_ + 0x34);
-  *(uint32_t *)((int)self_ + 0x34) = param_3;
-  fVar2 = orig::ElemCurve_Evaluate(self_,param_2);
-  *(uint32_t *)((int)self_ + 0x34) = uVar1;
-  return fVar2;
+  u1 = *(uint32_t *)((int)self_ + 0x34);
+  *(uint32_t *)((int)self_ + 0x34) = arg3;
+  f1 = orig::ElemCurve_Evaluate(self_,arg2);
+  *(uint32_t *)((int)self_ + 0x34) = u1;
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x10054500
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __thiscall ElemCurve_Evaluate(void * self_, float param_2)
+XI_API long double __thiscall ElemCurve_Evaluate(void * self_, float arg2)
 {
-  float *pfVar1;
-  float *pfVar2;
-  uint8_t bVar3;
+  float *p1;
+  float *p2;
+  uint8_t u1;
   
-  pfVar2 = (float *)((int)self_ + 0x30);
-  pfVar1 = (float *)((int)self_ + 0x38);
-  if (!((long double)param_2 > (long double)1.0f)) {
-    bVar3 = NAN((long double)param_2) || NAN((long double)0.0f);
-    if ((bVar3 || (long double)param_2 < (long double)0.0f) != bVar3) {
-      param_2 = 0.0f;
+  p2 = (float *)((int)self_ + 0x30);
+  p1 = (float *)((int)self_ + 0x38);
+  if (!(arg2 > 1.0f)) {
+    u1 = ((arg2) != (arg2)) || ((0.0f) != (0.0f));
+    if ((u1 || arg2 < 0.0f) != u1) {
+      arg2 = 0.0f;
     }
   }
   else {
-    param_2 = 1.0f;
+    arg2 = 1.0f;
   }
-  bVar3 = NAN((long double)*pfVar1) || NAN((long double)param_2);
-  if ((bVar3 || (long double)*pfVar1 < (long double)param_2) != bVar3) {
+  u1 = ((*p1) != (*p1)) || ((arg2) != (arg2));
+  if ((u1 || *p1 < arg2) != u1) {
     do {
-      pfVar2 = pfVar1;
-      bVar3 = NAN((long double)*pfVar2) || NAN((long double)1.0f);
-      if ((bVar3 || (long double)*pfVar2 < (long double)1.0f) == bVar3) {
-        pfVar1 = (float *)0x0;
+      p2 = p1;
+      u1 = ((*p2) != (*p2)) || ((1.0f) != (1.0f));
+      if ((u1 || *p2 < 1.0f) == u1) {
+        p1 = (float *)0x0;
       }
       else {
-        pfVar1 = pfVar2 + 2;
+        p1 = p2 + 2;
       }
-      bVar3 = NAN((long double)*pfVar1) || NAN((long double)param_2);
-    } while ((bVar3 || (long double)*pfVar1 < (long double)param_2) != bVar3);
+      u1 = ((*p1) != (*p1)) || ((arg2) != (arg2));
+    } while ((u1 || *p1 < arg2) != u1);
   }
-  bVar3 = NAN((long double)*pfVar2) || NAN((long double)*pfVar1);
-  if (bVar3 != (bVar3 || (long double)*pfVar2 == (long double)*pfVar1)) {
-    return (long double)pfVar1[1];
+  u1 = ((*p2) != (*p2)) || ((*p1) != (*p1));
+  if (u1 != (u1 || *p2 == *p1)) {
+    return p1[1];
   }
-  return ((long double)pfVar1[1] - (long double)pfVar2[1]) *
-         (((long double)param_2 - (long double)*pfVar2) / ((long double)*pfVar1 - (long double)*pfVar2)) +
-         (long double)pfVar2[1];
+  return (p1[1] - p2[1]) *
+         ((arg2 - *p2) / (*p1 - *p2)) +
+         p2[1];
 }
 
 // FUNCTION: FFXIMAIN 0x100546F0
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-XI_API long double __thiscall ElemCurve_EvaluateEaseIn(void * self_, float param_2, undefined4 param_3)
+XI_API long double __thiscall ElemCurve_EvaluateEaseIn(void * self_, float arg2, bits32 arg3)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float *pfVar4;
-  float *pfVar5;
-  uint8_t bVar6;
-  long double fVar7;
+  float f1;
+  float f2;
+  float f3;
+  float *p1;
+  float *p2;
+  uint8_t u1;
+  long double f4;
   
-  pfVar4 = (float *)((int)self_ + 0x38);
-  fVar1 = *(float *)((int)self_ + 0x34);
-  *(uint32_t *)((int)self_ + 0x34) = param_3;
-  bVar6 = NAN((long double)*pfVar4) || NAN((long double)param_2);
-  pfVar5 = (float *)((int)self_ + 0x30);
-  if ((bVar6 || (long double)*pfVar4 < (long double)param_2) != bVar6) {
+  p1 = (float *)((int)self_ + 0x38);
+  f1 = *(float *)((int)self_ + 0x34);
+  *(uint32_t *)((int)self_ + 0x34) = arg3;
+  u1 = ((*p1) != (*p1)) || ((arg2) != (arg2));
+  p2 = (float *)((int)self_ + 0x30);
+  if ((u1 || *p1 < arg2) != u1) {
     do {
-      pfVar5 = pfVar4;
-      bVar6 = NAN((long double)*pfVar5) || NAN((long double)1.0f);
-      if ((bVar6 || (long double)*pfVar5 < (long double)1.0f) == bVar6) {
-        pfVar4 = (float *)0x0;
+      p2 = p1;
+      u1 = ((*p2) != (*p2)) || ((1.0f) != (1.0f));
+      if ((u1 || *p2 < 1.0f) == u1) {
+        p1 = (float *)0x0;
       }
       else {
-        pfVar4 = pfVar5 + 2;
+        p1 = p2 + 2;
       }
-      bVar6 = NAN((long double)*pfVar4) || NAN((long double)param_2);
-    } while ((bVar6 || (long double)*pfVar4 < (long double)param_2) != bVar6);
+      u1 = ((*p1) != (*p1)) || ((arg2) != (arg2));
+    } while ((u1 || *p1 < arg2) != u1);
   }
-  fVar7 = ((long double)param_2 - (long double)*pfVar5) / ((long double)*pfVar4 - (long double)*pfVar5);
-  bVar6 = NAN(fVar7) || NAN((long double)0.5f);
-  if ((bVar6 || fVar7 < (long double)0.5f) != bVar6) {
-    fVar7 = fVar7 * fVar7 + fVar7 * fVar7;
-    fVar2 = pfVar5[1];
-    fVar3 = pfVar4[1];
-    *(float *)((int)self_ + 0x34) = (float)(long double)fVar1;
-    return (long double)fVar3 * fVar7 + ((long double)1.0f - fVar7) * (long double)fVar2;
+  f4 = (arg2 - *p2) / (*p1 - *p2);
+  u1 = ((f4) != (f4)) || ((0.5f) != (0.5f));
+  if ((u1 || f4 < 0.5f) != u1) {
+    f4 = f4 * f4 + f4 * f4;
+    f2 = p2[1];
+    f3 = p1[1];
+    *(float *)((int)self_ + 0x34) = (float)f1;
+    return f3 * f4 + (1.0f - f4) * f2;
   }
-  fVar7 = ((long double)1.0f - fVar7) * ((long double)1.0f - fVar7);
-  fVar7 = fVar7 + fVar7;
-  fVar2 = pfVar4[1];
-  fVar3 = pfVar5[1];
-  *(float *)((int)self_ + 0x34) = (float)(long double)fVar1;
-  return (long double)fVar3 * fVar7 + ((long double)1.0f - fVar7) * (long double)fVar2;
+  f4 = (1.0f - f4) * (1.0f - f4);
+  f4 = f4 + f4;
+  f2 = p1[1];
+  f3 = p2[1];
+  *(float *)((int)self_ + 0x34) = (float)f1;
+  return f3 * f4 + (1.0f - f4) * f2;
 }
 
 // FUNCTION: FFXIMAIN 0x100547A0
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-XI_API long double __thiscall ElemCurve_EvaluateEaseInOut(void * self_, float param_2)
+XI_API long double __thiscall ElemCurve_EvaluateEaseInOut(void * self_, float arg2)
 {
-  float *pfVar1;
-  float *pfVar2;
-  uint8_t bVar3;
-  long double fVar4;
+  float *p1;
+  float *p2;
+  uint8_t u1;
+  long double f1;
   
-  pfVar2 = (float *)((int)self_ + 0x30);
-  pfVar1 = (float *)((int)self_ + 0x38);
-  bVar3 = NAN((long double)*(float *)((int)self_ + 0x38)) || NAN((long double)param_2);
-  if ((bVar3 || (long double)*(float *)((int)self_ + 0x38) < (long double)param_2) != bVar3) {
+  p2 = (float *)((int)self_ + 0x30);
+  p1 = (float *)((int)self_ + 0x38);
+  u1 = ((*(float *)((int)self_ + 0x38)) != (*(float *)((int)self_ + 0x38))) || ((arg2) != (arg2));
+  if ((u1 || *(float *)((int)self_ + 0x38) < arg2) != u1) {
     do {
-      pfVar2 = pfVar1;
-      bVar3 = NAN((long double)*pfVar2) || NAN((long double)1.0f);
-      if ((bVar3 || (long double)*pfVar2 < (long double)1.0f) == bVar3) {
-        pfVar1 = (float *)0x0;
+      p2 = p1;
+      u1 = ((*p2) != (*p2)) || ((1.0f) != (1.0f));
+      if ((u1 || *p2 < 1.0f) == u1) {
+        p1 = (float *)0x0;
       }
       else {
-        pfVar1 = pfVar2 + 2;
+        p1 = p2 + 2;
       }
-      bVar3 = NAN((long double)*pfVar1) || NAN((long double)param_2);
-    } while ((bVar3 || (long double)*pfVar1 < (long double)param_2) != bVar3);
+      u1 = ((*p1) != (*p1)) || ((arg2) != (arg2));
+    } while ((u1 || *p1 < arg2) != u1);
   }
-  fVar4 = ((long double)param_2 - (long double)*pfVar2) / ((long double)*pfVar1 - (long double)*pfVar2);
-  bVar3 = NAN(fVar4) || NAN((long double)0.5f);
-  if ((bVar3 || fVar4 < (long double)0.5f) != bVar3) {
-    fVar4 = fVar4 * fVar4 + fVar4 * fVar4;
-    return (long double)pfVar1[1] * fVar4 + ((long double)1.0f - fVar4) * (long double)pfVar2[1];
+  f1 = (arg2 - *p2) / (*p1 - *p2);
+  u1 = ((f1) != (f1)) || ((0.5f) != (0.5f));
+  if ((u1 || f1 < 0.5f) != u1) {
+    f1 = f1 * f1 + f1 * f1;
+    return p1[1] * f1 + (1.0f - f1) * p2[1];
   }
-  fVar4 = ((long double)1.0f - fVar4) * ((long double)1.0f - fVar4);
-  fVar4 = fVar4 + fVar4;
-  return (long double)pfVar2[1] * fVar4 + ((long double)1.0f - fVar4) * (long double)pfVar1[1];
+  f1 = (1.0f - f1) * (1.0f - f1);
+  f1 = f1 + f1;
+  return p2[1] * f1 + (1.0f - f1) * p1[1];
 }

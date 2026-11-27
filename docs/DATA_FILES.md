@@ -60,6 +60,15 @@ data/lang_file_tables.json, written by `python3 pipeline/lang_files.py $FFXI_DLL
 | 95, 96 | 55581, 55613 | 55701, 55733 | 55821, 55853 | 56241, 56273 | `MenuPanels_LoadFromFile` |
 | 97, 98 | 55561, 55562 | 55681, 55682 | 55801, 55802 | 56221, 56222 | `MenuPanels_LoadDMsgTable` |
 
+**The spells' and abilities' tables (28 Nov, Ghidra on 6AE818B4's `ZoneMapLoad_InitGlobalTables`):** not files of
+their own but resource chunks already loaded, found with `ResourceIter_Start` by type: **type 0x49** is the spells'
+table (kept at [0x10667A74] + 0x30 past the chunk's header; 1,024 records of 100 bytes), **type 0x53** the abilities'
+([0x1066714C], 0xB00 records of 0x30 bytes); each record is decoded in place with `MenuPanels_RotateBytesByBitCount`
+(0x1021E870). Type 4 chunks named `mon_` (0x5F6E6F6D), `mnc2` and `levc` are kept at [0x1057829C], [0x105782A0] and
+[0x10667A78]. In a record: the spells' byte +0xD is the recast in quarter seconds (it is multiplied by 15 to 1/60 s:
+HOTBAR_CURSOR.md item 2); the abilities' word +8 is the recast timer id and byte +2 a kind the charge code tests. Which
+file holds those chunks, and the records' other fields (names are in the message tables above; icons), are not read.
+
 ## 3. Files named by number in the code
 
 | File number | Loaded by | What the code does with it |

@@ -21,8 +21,11 @@ volumes:
 | 0xA8 | 0x1019DF20 -> 0x1019DE50 (disassembly) | both pairs from the one value: `[0x103516FC]` = 1.0, `[0x103517F8]` = 1.0, `[0x103516F8]` and `[0x103517F4]` = v x 0.01 (0x10329A18); 0 for v <= 0 |
 
 0xA8 is registered after 9 and 10 (0x101A9E26, after 0x101A97F0 and 0x101A97FD), so at the table's creation its value
-is the last written to both pairs. Which options of the game's menus these keys are: **not read** (the menus' text
-for them is not traced).
+is the last written to both pairs. Which options of the game's menus these keys are, by what they do (28 Nov, from
+the table above and the mutes below): **9 is the sound effects' volume** (the factor pair every effect, interface and
+ambient sound is scaled by, the one `/mutese` toggles), **10 the music's volume** (the pair the music is scaled by,
+the one `/mutebgm` toggles), and **0xA8 sets both at once** (one value for both pairs). Their labels in the menus
+(the text) are not traced: that is the menus' text files.
 
 The two factors that settings 9 and 10 reset to 1.0 are the typed mutes (25 Nov): `Command_RunLine` dispatches
 through the table 0x10356E30 (216 entries of {command, handler, flag}) after looking the typed word up in the table
@@ -144,8 +147,10 @@ decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it 
 - **Format 0** decodes through 0x10246AB0 (0x10246F31, 0x10247413) and nothing else.
 - **Format 3** decodes frames (0x10246F47..0x1024716B, the same in 0x10247230):
   - Before each frame is decoded, 0x10246A70 combines it with a table of 4-byte words that 0x10246A20 makes when the
-    stream starts. The table is made from a header value (the steps are in the development history, not published:
-    this is the music data's protection).
+    stream starts. 0x10246A20 makes 100 words (0x190 bytes): the seed is the header's +0x24 (stream
+    object +0x2C, the second half of the sample-rate pair) rotated left by 11; each word is stored, then the next
+    is that word plus itself rotated left by 3. 0x10246A70 XORs the frame's 4-byte words with the table in order,
+    from the table's first word on every call (0x10246A73; the length is the caller's object +0x74, 0x10246F4D; that it never passes the table's 0x190 bytes is not checked in the code).
   - Then 0x102CA1F0 decodes the frame. 0x102CA240 copies the frame and calls the frame decoder 0x102CEBF0 (which goes
     on through a function pointer at its context + 0x36D0, not read). It turns the decoder's two float outputs into
     1,024 stereo 16-bit frames: each value is clamped to -32767..32767 and rounded by adding 12,582,912.0
@@ -155,6 +160,24 @@ decode a block (0x10246D30 for streams, 0x10247230 for effect sounds), write it 
     is 2, 0x180 otherwise.
   - Those three sizes and the 1,024 samples per frame are the frame sizes of ATRAC3, a public codec. That is a match
     of numbers, not a name in the code.
+**Format 3 is ATRAC3 under the XOR table (26 Nov, the owner's music040, music041 and music138).** Each 0x180-byte frame,
+with its words XORed with the table above (pipeline/bgm_format3_to_atrac3_wav.py), is accepted by ffmpeg's ATRAC3
+decoder as a stereo frame (not joint stereo: that is refused at the first frame), with its sound-unit sync word in
+place in every frame of all three files (11,568 frames). Without the XOR, every frame fails that check. The output is
+music: 98, 74 and 95 s of 44.1 kHz stereo, each exactly its frame count x 1,024 samples, smooth (mean step 0.03 of
+the mean level, where noise gives about 1.4), its channels correlated 0.92. What this does not show: that ffmpeg's
+samples equal the game's (0x102CEBF0 and the function at its context + 0x36D0 are not read or run here); the frame
+sizes 0x130 and 0xC0 (header +0x2F = 1 and 2) are not in these files.
+**Checked against the game's own decoder (27 Nov).** `pipeline/bgm3_game_decode_check.py` runs the game's codec calls
+of build 6A995428 under unicorn, as the stream code makes them: the start (0x10247A00) calls 0x102CA130(&ctx) (a
+0x30-byte context and a 0x46E3-byte work area from the CRT's allocator), 0x102CA030(ctx, 1, 0x84) for 0x180-byte
+frames ((1, 0x69) for 0x130, (2, 0x42) for 0xC0), and 0x102CA1C0(ctx, &value); each frame (0x10246F66) is XORed and
+handed to 0x102CA1F0(ctx, frame, out, &bytes, &count), whose count is in bytes (4,096 per frame: 1,024 stereo 16-bit
+frames). Only the CRT's malloc and free are answered by the script. On the owner's three files: the game's output is
+ffmpeg's (and Prishe's core/atrac3.cpp) **with the sign inverted**: correlation -1.0000. With the sign inverted
+(Prishe since 27 Nov), 91.8% (music040), 98.9% (041) and 99.8% (138) of the samples are equal, and none differs by more
+than 4 of 32,767; the rest is the two decoders' floating-point arithmetic. The sample counts are equal (the first frame
+gives no output in both).
 - **A file without "BGMStream"** has its header made by 0x10249AD0, as format 1 or 2 (0x1024B063). Not read.
 
 **Format 0 is a 4-bit ADPCM** (0x10246AB0): each block starts with a header byte
@@ -167,6 +190,13 @@ interleaved L, R.
 Checked 26 Nov on the viewer's `se000154.spw` (pipeline/spw_decode.py follows this): the data from +0x30 to the end
 is exactly 17,600 blocks of 9 bytes (a header byte, 8 bytes = 16 samples), every filter nibble 0..4, header +8 equal
 to the file's size, and the decode gives 2.93 s of 48 kHz stereo peaking near +-18,000 with no sample past 16 bits.
+Checked again 26 Nov by running the game's own 0x10246AB0 under an emulator (pipeline/bgm_game_decode_check.py in the
+analysis repository), called as the stream code calls it (0x10246F31: channels = header byte +0x2E, samples per block
+= byte +0x2F, so a block is 1 + +0x2F / 2 bytes), on three of the owner's game music files: music023 and music089
+(128 samples per block, 65-byte blocks) and music160 (16 per block): 53.7 million samples, every one equal to
+Prishe's decoder (core/spw.cpp). The decoder keeps its state in 32 bits and stores the low 16 bits with no clamp
+(0x10246B37, 0x10246B39), so a sample past 16 bits wraps: music023 has about 570 such steps in 170 s, in the game's
+own output as in Prishe's.
 
 **A sound block's header** (command 1's "SeWave" blocks, 0x1024A7A0; checked 26 Nov against a real file, the
 PlayOnline viewer's `se000154.spw` from the owner's archive). The function fills a WAVEFORMATEX (field order from the
@@ -198,11 +228,11 @@ naming pipeline.
 
 ## 6. Not known
 
-- Which options in the game's menus settings 9, 10 and 0xA8 are (their labels are the game's data files).
+- The menu labels of settings 9, 10 and 0xA8 (what they do is in section 1).
 - Commands 1 and 2: the header is read (section 4, 26 Nov); the data after the header and the stereo decode are read
   and checked on a file (section 4). 0x102CA1F0 and the table step 0x10246A70 were read 27 Nov: they are format 3
-  (section 4). Format 3's frame decoder 0x102CEBF0 past its first call is not read, and no file the owner sent is
-  format 3. `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
+  (section 4). Format 3's frame decoder 0x102CEBF0 is not read line by line; it was run (section 4, 27 Nov). The owner's
+  game holds 81 format-3 files; three were sent on 26 Nov (music040, 041, 138), and their frames are ATRAC3 (section 4; the count is Prishe's audio-formats of 26 Nov: 81 of 224 music files, 143 format 0). `[stream pool + 0x434]` (read 26 Nov) is stream channel 2's field +0xB4 (the
   pool is three channels of 0x1C0 bytes): commands 0 and 1 write 0 there (0x1024A72C, 0x1024A7BA) and no instruction
   in the game reads [register + 0x434] on the pool, nor +0xB4 of a stream channel in the sound code (the only reads of
   +0xB4 there are the effect thread's, 0x102480C0, on its own channel). As far as direct reads show, nothing uses it.

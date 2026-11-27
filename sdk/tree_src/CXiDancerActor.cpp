@@ -5,213 +5,213 @@
 
 // FUNCTION: FFXIMAIN 0x100AB700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiDancerActor::Construct(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, uint32_t param_4)
+bits32 __thiscall CXiDancerActor::Construct(void * self, bits32 arg2, bits32 arg3, bits32 arg4, uint32_t arg5)
 {
   orig::CXiSkeletonActor_Constructor_1Arg(self,0);
   orig::CXiActor_Construct((void *)((int)self + 0xa0c));
-  *(uint8_t ***)self = &PTR_CXiDancerActor_GetRuntimeClass_variant0_1032f4f0;
-  orig::CXiDancerActor_InitBind(self,param_1,param_2,param_3,param_4);
+  *(uint8_t ***)self = &ptr_to_CXiDancerActor_GetRuntimeClass_variant0_1032F4F0;
+  orig::CXiDancerActor_InitBind(self,arg2,arg3,arg4,arg5);
   orig::CXiSkeletonActor_LoadSkeletonResource_v1(self,0xffffffff);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x100AB750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiDancerActor::InitBind(void * self, undefined4 param_1, undefined4 param_2, undefined4 * param_3, uint32_t param_4)
+void __thiscall CXiDancerActor::InitBind(void * self, bits32 arg2, bits32 arg3, bits32 * arg4, uint32_t arg5)
 {
-  void *pvVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t local_4;
+  void *p1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
   
-  uVar2 = local_4 & 0xffffff | 0x4000000;
-  if ((int)param_4 < 0) {
+  u1 = u3 & 0xffffff | 0x4000000;
+  if ((int)arg5 < 0) {
     *(void **)((int)self + 0x70) = (void *)((int)self + 0xa0c);
-    DAT_10487fb4 = DAT_10487fb4 + 1;
-    uVar3 = DAT_10487fb4 ^ uVar2;
-    *(uint32_t *)((int)self + 0xa80) = DAT_10487fb4;
-    *(uint32_t *)((int)self + 0xa84) = uVar2 ^ uVar3 & 0xffffff;
-    orig::CXiDancerActor_ApplyStateBlock(self,(void *)((int)self + 0xa0c),param_1,param_2,param_3);
+    g_10487FB4 = g_10487FB4 + 1;
+    u2 = g_10487FB4 ^ u1;
+    *(uint32_t *)((int)self + 0xa80) = g_10487FB4;
+    *(uint32_t *)((int)self + 0xa84) = u1 ^ u2 & 0xffffff;
+    orig::CXiDancerActor_ApplyStateBlock(self,(void *)((int)self + 0xa0c),arg2,arg3,arg4);
     return;
   }
-  pvVar1 = (void *)(&ActerBuffPtr_as_v0)[param_4];
-  *(void **)((int)self + 0x70) = pvVar1;
-  *(uint32_t *)((int)pvVar1 + 0x74) = param_4;
-  *(uint32_t *)((int)pvVar1 + 0x78) = uVar2 ^ (uVar2 ^ param_4) & 0xffffff;
-  *(void **)((int)pvVar1 + 0xa0) = self;
-  orig::CXiDancerActor_ApplyStateBlock(self,pvVar1,param_1,param_2,param_3);
-  *(uint32_t *)((int)pvVar1 + 0x120) = *(uint32_t *)((int)pvVar1 + 0x120) | 0x200;
+  p1 = (void *)(&ActerBuffPtr_as_v0)[arg5];
+  *(void **)((int)self + 0x70) = p1;
+  *(uint32_t *)((int)p1 + 0x74) = arg5;
+  *(uint32_t *)((int)p1 + 0x78) = u1 ^ (u1 ^ arg5) & 0xffffff;
+  *(void **)((int)p1 + 0xa0) = self;
+  orig::CXiDancerActor_ApplyStateBlock(self,p1,arg2,arg3,arg4);
+  *(uint32_t *)((int)p1 + 0x120) = *(uint32_t *)((int)p1 + 0x120) | 0x200;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100AB830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiDancerActor::SetPosition(void * self, undefined4 * param_1)
+void __thiscall CXiDancerActor::SetPosition(void * self, bits32 * arg2)
 {
-  void *this_00;
+  void *obj1;
   
-  this_00 = *(void **)((int)self + 0x70);
-  if (this_00 != (void *)0x0) {
-    *(uint32_t *)((int)this_00 + 0x24) = *param_1;
-    *(uint32_t *)((int)this_00 + 0x28) = param_1[1];
-    *(uint32_t *)((int)this_00 + 0x2c) = param_1[2];
-    orig::Acter_CopyPosToCached(this_00);
+  obj1 = *(void **)((int)self + 0x70);
+  if (obj1 != (void *)0x0) {
+    *(uint32_t *)((int)obj1 + 0x24) = *arg2;
+    *(uint32_t *)((int)obj1 + 0x28) = arg2[1];
+    *(uint32_t *)((int)obj1 + 0x2c) = arg2[2];
+    orig::Acter_CopyPosToCached(obj1);
   }
-  orig::Vec4_Copy_v1((uint32_t *)((int)self + 0x5fc),param_1);
+  orig::Vec4_Copy_v1((uint32_t *)((int)self + 0x5fc),arg2);
   *(uint32_t *)((int)self + 0x608) = 0x3f800000;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100AB880
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiDancerActor_SetAnglesWrapped(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 * param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiDancerActor_SetAnglesWrapped(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 * arg4)
 {
-  float *pfVar1;
-  void *this_00;
-  long double fVar2;
-  uint32_t uVar3;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  long double fVar6;
+  float *p1;
+  void *obj1;
+  long double f1;
+  uint32_t u1;
+  uint8_t u2;
+  uint8_t u3;
+  long double f2;
   
-  this_00 = *(void **)((int)self_ + 0x70);
-  if (this_00 != (void *)0x0) {
-    *(uint32_t *)((int)this_00 + 0x34) = *param_2;
-    *(uint32_t *)((int)this_00 + 0x38) = param_2[1];
-    *(uint32_t *)((int)this_00 + 0x3c) = param_2[2];
-    orig::Acter_CopyPosToCached(this_00);
+  obj1 = *(void **)((int)self_ + 0x70);
+  if (obj1 != (void *)0x0) {
+    *(uint32_t *)((int)obj1 + 0x34) = *arg4;
+    *(uint32_t *)((int)obj1 + 0x38) = arg4[1];
+    *(uint32_t *)((int)obj1 + 0x3c) = arg4[2];
+    orig::Acter_CopyPosToCached(obj1);
   }
-  uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x318))))((void *)(self_));
-  if (uVar3 == 0) {
-    pfVar1 = (float *)((int)self_ + 0x61c);
-    orig::Vec4_Copy_v2(pfVar1,param_2);
-    if ((long double)*pfVar1 > (long double)3.141499996185302734375f) {
-      *pfVar1 = (float)((long double)*pfVar1 - (long double)6.28299999237060546875f);
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x318))))((void *)(self_));
+  if (u1 == 0) {
+    p1 = (float *)((int)self_ + 0x61c);
+    orig::Vec4_Copy_v2(p1,arg4);
+    if (*p1 > 3.141499996185302734375f) {
+      *p1 = (float)(*p1 - 6.28299999237060546875f);
     }
-    bVar4 = NAN((long double)*pfVar1) || NAN((long double)(-3.141499996185302734375f));
-    if ((bVar4 || (long double)*pfVar1 < (long double)(-3.141499996185302734375f)) != bVar4) {
-      *pfVar1 = (float)((long double)*pfVar1 + (long double)6.28299999237060546875f);
+    u2 = ((*p1) != (*p1)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u2 || *p1 < (-3.141499996185302734375f)) != u2) {
+      *p1 = (float)(*p1 + 6.28299999237060546875f);
     }
-    if ((long double)*(float *)((int)self_ + 0x620) > (long double)3.141499996185302734375f) {
+    if (*(float *)((int)self_ + 0x620) > 3.141499996185302734375f) {
       *(float *)((int)self_ + 0x620) =
-           (float)((long double)*(float *)((int)self_ + 0x620) - (long double)6.28299999237060546875f);
+           (float)(*(float *)((int)self_ + 0x620) - 6.28299999237060546875f);
     }
-    bVar4 = NAN((long double)*(float *)((int)self_ + 0x620)) || NAN((long double)(-3.141499996185302734375f));
-    if ((bVar4 || (long double)*(float *)((int)self_ + 0x620) < (long double)(-3.141499996185302734375f)) != bVar4) {
+    u2 = ((*(float *)((int)self_ + 0x620)) != (*(float *)((int)self_ + 0x620))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+    if ((u2 || *(float *)((int)self_ + 0x620) < (-3.141499996185302734375f)) != u2) {
       *(float *)((int)self_ + 0x620) =
-           (float)((long double)*(float *)((int)self_ + 0x620) + (long double)6.28299999237060546875f);
+           (float)(*(float *)((int)self_ + 0x620) + 6.28299999237060546875f);
     }
-    if ((long double)*(float *)((int)self_ + 0x624) > (long double)3.141499996185302734375f) {
+    if (*(float *)((int)self_ + 0x624) > 3.141499996185302734375f) {
       *(float *)((int)self_ + 0x624) =
-           (float)((long double)*(float *)((int)self_ + 0x624) - (long double)6.28299999237060546875f);
+           (float)(*(float *)((int)self_ + 0x624) - 6.28299999237060546875f);
     }
-    fVar6 = (long double)*(float *)((int)self_ + 0x624);
-    fVar2 = (long double)(-3.141499996185302734375f);
-    bVar5 = NAN(fVar6) || NAN(fVar2);
-    bVar4 = bVar5 || fVar6 < fVar2;
-    uVar3 = (uint32_t)(uint16_t)((uint16_t)bVar4 << 8 | (uint16_t)bVar5 << 10 |
-                          (uint16_t)(bVar5 || fVar6 == fVar2) << 0xe);
-    if (bVar4 != bVar5) {
+    f2 = *(float *)((int)self_ + 0x624);
+    f1 = (-3.141499996185302734375f);
+    u3 = ((f2) != (f2)) || ((f1) != (f1));
+    u2 = u3 || f2 < f1;
+    u1 = (uint32_t)(uint16_t)((uint16_t)u2 << 8 | (uint16_t)u3 << 10 |
+                          (uint16_t)(u3 || f2 == f1) << 0xe);
+    if (u2 != u3) {
       *(float *)((int)self_ + 0x624) =
-           (float)((long double)*(float *)((int)self_ + 0x624) + (long double)6.28299999237060546875f);
+           (float)(*(float *)((int)self_ + 0x624) + 6.28299999237060546875f);
     }
   }
-  return uVar3;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100AB9A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CXiDancerActor::ApplyStateBlock(void * self, void * param_1, undefined4 * param_2, undefined4 * param_3, undefined4 * param_4)
+void __thiscall CXiDancerActor::ApplyStateBlock(void * self, void * arg2, bits32 * arg3, bits32 * arg4, bits32 * arg5)
 {
-  short sVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  undefined4 *puVar5;
-  undefined4 uVar6;
-  uint32_t uVar7;
-  short local_14;
-  short sStack_12;
-  short local_10;
-  short sStack_e;
-  short local_c;
-  short sStack_a;
-  short local_8;
-  short sStack_6;
+  short i1;
+  bits32 u1;
+  bits32 u2;
+  bits32 u3;
+  bits32 *p1;
+  bits32 u4;
+  uint32_t u5;
+  short i2;
+  short i3;
+  short i4;
+  short i5;
+  short i6;
+  short i7;
+  short i8;
+  short i9;
   
-  puVar5 = param_4;
-  orig::Acter_CopySixDwordsTo7C(param_1,param_4);
-  orig::CopyPair_CopyReturnZ((undefined4 *)((int)param_1 + 4),param_2);
-  orig::CXiDancerActor_SetPosition(self,param_2);
-  uVar6 = orig::CopyPair_CopyReturnZ((undefined4 *)((int)param_1 + 0x14),param_3);
-  orig::CXiDancerActor_SetAnglesWrapped(self,param_3,uVar6);
-  *(uint8_t *)((int)param_1 + 0xee) = 0;
-  param_4 = (undefined4 *)(uint32_t)*(uint8_t *)(param_4 + 9);
-  uVar7 = *(uint32_t *)((int)param_1 + 0x120) & 0x3fffffff ^ (int)param_4 << 0x1e;
-  *(uint32_t *)((int)param_1 + 0x120) = uVar7;
-  uVar6 = puVar5[4];
-  uVar2 = puVar5[5];
-  uVar3 = puVar5[6];
-  uVar4 = puVar5[7];
-  sVar1 = *(short *)(puVar5 + 8);
-  if ((uint32_t)*(uint8_t *)((int)param_1 + 0xef) != (int)*(char *)((int)puVar5 + 0x22)) {
-    *(char *)((int)param_1 + 0xef) = *(char *)((int)puVar5 + 0x22);
-    *(uint32_t *)((int)param_1 + 0x120) = uVar7 | 1;
+  p1 = arg5;
+  orig::Acter_CopySixDwordsTo7C(arg2,arg5);
+  orig::CopyPair_CopyReturnZ((bits32 *)((int)arg2 + 4),arg3);
+  orig::CXiDancerActor_SetPosition(self,arg3);
+  u4 = orig::CopyPair_CopyReturnZ((bits32 *)((int)arg2 + 0x14),arg4);
+  orig::CXiDancerActor_SetAnglesWrapped(self,arg4,u4);
+  *(uint8_t *)((int)arg2 + 0xee) = 0;
+  arg5 = (bits32 *)(uint32_t)*(uint8_t *)(arg5 + 9);
+  u5 = *(uint32_t *)((int)arg2 + 0x120) & 0x3fffffff ^ (int)arg5 << 0x1e;
+  *(uint32_t *)((int)arg2 + 0x120) = u5;
+  u4 = p1[4];
+  u1 = p1[5];
+  u2 = p1[6];
+  u3 = p1[7];
+  i1 = *(short *)(p1 + 8);
+  if ((uint32_t)*(uint8_t *)((int)arg2 + 0xef) != (int)*(char *)((int)p1 + 0x22)) {
+    *(char *)((int)arg2 + 0xef) = *(char *)((int)p1 + 0x22);
+    *(uint32_t *)((int)arg2 + 0x120) = u5 | 1;
   }
-  local_14 = (short)uVar6;
-  if (*(short *)((int)param_1 + 0xfc) != local_14) {
-    *(short *)((int)param_1 + 0xfc) = local_14;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 1;
+  i2 = (short)u4;
+  if (*(short *)((int)arg2 + 0xfc) != i2) {
+    *(short *)((int)arg2 + 0xfc) = i2;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 1;
   }
-  sStack_12 = (short)((uint32_t)uVar6 >> 0x10);
-  if (*(short *)((int)param_1 + 0xfe) != sStack_12) {
-    *(short *)((int)param_1 + 0xfe) = sStack_12;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 2;
+  i3 = (short)((uint32_t)u4 >> 0x10);
+  if (*(short *)((int)arg2 + 0xfe) != i3) {
+    *(short *)((int)arg2 + 0xfe) = i3;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 2;
   }
-  local_10 = (short)uVar2;
-  if (*(short *)((int)param_1 + 0x100) != local_10) {
-    *(short *)((int)param_1 + 0x100) = local_10;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 4;
+  i4 = (short)u1;
+  if (*(short *)((int)arg2 + 0x100) != i4) {
+    *(short *)((int)arg2 + 0x100) = i4;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 4;
   }
-  sStack_e = (short)((uint32_t)uVar2 >> 0x10);
-  if (*(short *)((int)param_1 + 0x102) != sStack_e) {
-    *(short *)((int)param_1 + 0x102) = sStack_e;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 8;
+  i5 = (short)((uint32_t)u1 >> 0x10);
+  if (*(short *)((int)arg2 + 0x102) != i5) {
+    *(short *)((int)arg2 + 0x102) = i5;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 8;
   }
-  local_c = (short)uVar3;
-  if (*(short *)((int)param_1 + 0x104) != local_c) {
-    *(short *)((int)param_1 + 0x104) = local_c;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 0x10;
+  i6 = (short)u2;
+  if (*(short *)((int)arg2 + 0x104) != i6) {
+    *(short *)((int)arg2 + 0x104) = i6;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 0x10;
   }
-  sStack_a = (short)((uint32_t)uVar3 >> 0x10);
-  if (*(short *)((int)param_1 + 0x106) != sStack_a) {
-    *(short *)((int)param_1 + 0x106) = sStack_a;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 0x20;
+  i7 = (short)((uint32_t)u2 >> 0x10);
+  if (*(short *)((int)arg2 + 0x106) != i7) {
+    *(short *)((int)arg2 + 0x106) = i7;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 0x20;
   }
-  local_8 = (short)uVar4;
-  if (*(short *)((int)param_1 + 0x108) != local_8) {
-    *(short *)((int)param_1 + 0x108) = local_8;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 0x40;
+  i8 = (short)u3;
+  if (*(short *)((int)arg2 + 0x108) != i8) {
+    *(short *)((int)arg2 + 0x108) = i8;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 0x40;
   }
-  sStack_6 = (short)((uint32_t)uVar4 >> 0x10);
-  if (*(short *)((int)param_1 + 0x10a) != sStack_6) {
-    *(short *)((int)param_1 + 0x10a) = sStack_6;
-    *(uint8_t *)((int)param_1 + 0xf4) = *(uint8_t *)((int)param_1 + 0xf4) | 0x80;
+  i9 = (short)((uint32_t)u3 >> 0x10);
+  if (*(short *)((int)arg2 + 0x10a) != i9) {
+    *(short *)((int)arg2 + 0x10a) = i9;
+    *(uint8_t *)((int)arg2 + 0xf4) = *(uint8_t *)((int)arg2 + 0xf4) | 0x80;
   }
-  if (*(short *)((int)param_1 + 0x10c) != sVar1) {
-    *(short *)((int)param_1 + 0x10c) = sVar1;
-    *(uint8_t *)((int)param_1 + 0xf5) = *(uint8_t *)((int)param_1 + 0xf5) | 1;
+  if (*(short *)((int)arg2 + 0x10c) != i1) {
+    *(short *)((int)arg2 + 0x10c) = i1;
+    *(uint8_t *)((int)arg2 + 0xf5) = *(uint8_t *)((int)arg2 + 0xf5) | 1;
   }
-  *(uint8_t *)((int)param_1 + 0x250) = *(uint8_t *)((int)puVar5 + 0x22);
-  *(short *)((int)param_1 + 0x252) = local_14;
-  *(short *)((int)param_1 + 0x25c) = sStack_a;
-  *(short *)((int)param_1 + 0x254) = sStack_12;
-  *(short *)((int)param_1 + 0x256) = local_10;
-  *(short *)((int)param_1 + 600) = sStack_e;
-  *(short *)((int)param_1 + 0x25a) = local_c;
-  *(short *)((int)param_1 + 0x25e) = local_8;
-  *(short *)((int)param_1 + 0x260) = sStack_6;
-  *(short *)((int)param_1 + 0x262) = sVar1;
-  *(uint32_t *)((int)param_1 + 0x120) = *(uint32_t *)((int)param_1 + 0x120) | 0x100000;
+  *(uint8_t *)((int)arg2 + 0x250) = *(uint8_t *)((int)p1 + 0x22);
+  *(short *)((int)arg2 + 0x252) = i2;
+  *(short *)((int)arg2 + 0x25c) = i7;
+  *(short *)((int)arg2 + 0x254) = i3;
+  *(short *)((int)arg2 + 0x256) = i4;
+  *(short *)((int)arg2 + 600) = i5;
+  *(short *)((int)arg2 + 0x25a) = i6;
+  *(short *)((int)arg2 + 0x25e) = i8;
+  *(short *)((int)arg2 + 0x260) = i9;
+  *(short *)((int)arg2 + 0x262) = i1;
+  *(uint32_t *)((int)arg2 + 0x120) = *(uint32_t *)((int)arg2 + 0x120) | 0x100000;
   return;
 }

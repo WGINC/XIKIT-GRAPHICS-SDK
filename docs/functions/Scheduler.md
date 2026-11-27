@@ -20,7 +20,7 @@ Why the file has this name (data/unit_names.json): Scheduler_AddTask / CreateTas
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `CMoResource_CopyHeaderAndBodyThenReset` calls `CMoAttachments::Reset`
-- `Scheduler_AddTask` calls `CMoTaskMng::RemoveByKey`, `sub_100720B0`
+- `Scheduler_AddTask` calls `CMoTaskMng::RemoveByKey`, `game_100720B0`
 - `Scheduler_CreateTask` calls `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoSchedularTask::Construct`, `AfterimageTask_SetCaster`, `AfterimageTask_SetTarget`
 - `Scheduler_RemoveTasksFor` calls `CMoTask::Release`
 - `Scheduler_Kill` calls `AfterimageTask_FindFirstKind`, `Scheduler_ResolveOwner`

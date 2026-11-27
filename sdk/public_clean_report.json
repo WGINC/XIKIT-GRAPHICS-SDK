@@ -1,0 +1,1659 @@
+{
+ "types": {
+  "files_failing_to_compile": {},
+  "files_differing": {}
+ },
+ "names": {
+  "renamed": 4793
+ },
+ "decls": {
+  "files_failing_to_compile": {},
+  "files_differing": {}
+ },
+ "macros": {
+  "functions_changed": 220,
+  "functions_kept_old": 0,
+  "kept_old": {}
+ },
+ "vars": {
+  "functions_changed": 3613,
+  "functions_kept_old": 0,
+  "kept_old": {}
+ },
+ "evidence": {
+  "functions_changed": 118,
+  "functions_kept_old": 0,
+  "kept_old": {},
+  "names": {
+   "0x10002040": {
+    "u1": {
+     "name": "height",
+     "kind": "call",
+     "detail": "argument 2 of CDx_CreateTexture (0x1000A6E0), whose parameter is height"
+    },
+    "u2": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 1 of CDx_CreateTexture (0x1000A6E0), whose parameter is width"
+    }
+   },
+   "0x10008020": {
+    "c2": {
+     "name": "lpszDescription",
+     "kind": "call",
+     "detail": "argument 2 of ImmGetDescriptionA_102BC826 (0x102BC826), whose parameter is lpszDescription"
+    }
+   },
+   "0x100091B0": {
+    "u1": {
+     "name": "pMode",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3D8::GetAdapterDisplayMode (xi_d3d8.hpp: pMode)"
+    },
+    "u3": {
+     "name": "pIdentifier",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3D8::GetAdapterIdentifier (xi_d3d8.hpp: pIdentifier)"
+    }
+   },
+   "0x1000BF30": {
+    "arg1": {
+     "name": "index",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetLight (xi_d3d8.hpp: index)"
+    },
+    "arg2": {
+     "name": "light",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetLight (xi_d3d8.hpp: light)"
+    }
+   },
+   "0x1000C6E0": {
+    "arg1": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 1 of CDx_CreateTexture (0x1000A6E0), whose parameter is width"
+    },
+    "arg2": {
+     "name": "height",
+     "kind": "call",
+     "detail": "argument 2 of CDx_CreateTexture (0x1000A6E0), whose parameter is height"
+    }
+   },
+   "0x1000CB20": {
+    "arg2": {
+     "name": "StartVertex",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::DrawPrimitive (xi_d3d8.hpp: StartVertex)"
+    },
+    "arg3": {
+     "name": "PrimitiveCount",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::DrawPrimitive (xi_d3d8.hpp: PrimitiveCount)"
+    },
+    "i1": {
+     "name": "stereoEye",
+     "kind": "field",
+     "detail": "every assignment is from the field stereoEye"
+    }
+   },
+   "0x1000CC00": {
+    "arg2": {
+     "name": "minIndex",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::DrawIndexedPrimitive (xi_d3d8.hpp: minIndex)"
+    },
+    "arg3": {
+     "name": "NumVertices",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::DrawIndexedPrimitive (xi_d3d8.hpp: NumVertices)"
+    },
+    "arg4": {
+     "name": "startIndex",
+     "kind": "api",
+     "detail": "argument 4 of IDirect3DDevice8::DrawIndexedPrimitive (xi_d3d8.hpp: startIndex)"
+    },
+    "arg5": {
+     "name": "primCount",
+     "kind": "api",
+     "detail": "argument 5 of IDirect3DDevice8::DrawIndexedPrimitive (xi_d3d8.hpp: primCount)"
+    },
+    "i1": {
+     "name": "stereoEye",
+     "kind": "field",
+     "detail": "every assignment is from the field stereoEye"
+    }
+   },
+   "0x1000CD00": {
+    "arg2": {
+     "name": "primitive_count",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::DrawPrimitiveUP (xi_d3d8.hpp: primitive_count)"
+    },
+    "arg4": {
+     "name": "stride",
+     "kind": "api",
+     "detail": "argument 4 of IDirect3DDevice8::DrawPrimitiveUP (xi_d3d8.hpp: stride)"
+    },
+    "i1": {
+     "name": "stereoEye",
+     "kind": "field",
+     "detail": "every assignment is from the field stereoEye"
+    }
+   },
+   "0x1000CF20": {
+    "f1": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x10010D20": {
+    "u1": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 1 of CDx_CreateTexture (0x1000A6E0), whose parameter is width"
+    },
+    "u2": {
+     "name": "height",
+     "kind": "call",
+     "detail": "argument 2 of CDx_CreateTexture (0x1000A6E0), whose parameter is height"
+    }
+   },
+   "0x100177A0": {
+    "u1": {
+     "name": "Handle",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::DeleteVertexShader (xi_d3d8.hpp: Handle)"
+    }
+   },
+   "0x100180D0": {
+    "arg1": {
+     "name": "ErrCode",
+     "kind": "call",
+     "detail": "argument 1 of XiErrMsgGetErrCode (0x10017D90), whose parameter is ErrCode"
+    }
+   },
+   "0x10018310": {
+    "arg2": {
+     "name": "ErrCode",
+     "kind": "call",
+     "detail": "argument 1 of ErrorReport_DispatchErrorCode (0x100180D0), whose parameter is ErrCode"
+    }
+   },
+   "0x1001D0A0": {
+    "u1": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 1 of CDx_CreateTexture (0x1000A6E0), whose parameter is width"
+    },
+    "u2": {
+     "name": "height",
+     "kind": "call",
+     "detail": "argument 2 of CDx_CreateTexture (0x1000A6E0), whose parameter is height"
+    }
+   },
+   "0x10025030": {
+    "p1": {
+     "name": "modelResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field modelResourceHandle"
+    }
+   },
+   "0x10025060": {
+    "p1": {
+     "name": "modelResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field modelResourceHandle"
+    }
+   },
+   "0x100251A0": {
+    "i1": {
+     "name": "modelResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field modelResourceHandle"
+    }
+   },
+   "0x10025330": {
+    "buf1": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x10025C40": {
+    "buf1": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x10026990": {
+    "i1": {
+     "name": "pIconTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field pIconTexture"
+    }
+   },
+   "0x10026AD0": {
+    "i1": {
+     "name": "pMovieTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field pMovieTexture"
+    }
+   },
+   "0x10026C70": {
+    "i1": {
+     "name": "pIconTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field pIconTexture"
+    }
+   },
+   "0x10027930": {
+    "buf1": {
+     "name": "pViewport",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::GetViewport (xi_d3d8.hpp: pViewport)"
+    }
+   },
+   "0x1002A000": {
+    "arg4": {
+     "name": "_180",
+     "kind": "call",
+     "detail": "argument 3 of CYyModelDt_SkinAndDrawV2 (0x1002DC10), whose parameter is _180"
+    }
+   },
+   "0x1002A3B0": {
+    "i1": {
+     "name": "cubemapSpecTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field cubemapSpecTexture"
+    },
+    "p2": {
+     "name": "light",
+     "kind": "call",
+     "detail": "argument 2 of CDx_SetLight (0x1000BF30), whose parameter is light"
+    }
+   },
+   "0x1002D700": {
+    "u1": {
+     "name": "pIndices",
+     "kind": "field",
+     "detail": "every assignment is from the field pIndices"
+    },
+    "u2": {
+     "name": "indexBuffer",
+     "kind": "field",
+     "detail": "every assignment is from the field indexBuffer"
+    }
+   },
+   "0x1002DC10": {
+    "i1": {
+     "name": "startIndex",
+     "kind": "call",
+     "detail": "argument 4 of CDx_DrawIndexedPrimitive (0x1000CC00), whose parameter is startIndex"
+    },
+    "i12": {
+     "name": "primCount",
+     "kind": "call",
+     "detail": "argument 5 of CDx_DrawIndexedPrimitive (0x1000CC00), whose parameter is primCount"
+    },
+    "u1": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x1002F130": {
+    "arg1": {
+     "name": "StreamNumber",
+     "kind": "call",
+     "detail": "argument 1 of Gfx_ApplyCachedStreamSource (0x1002F160), whose parameter is StreamNumber"
+    }
+   },
+   "0x1002F160": {
+    "arg1": {
+     "name": "StreamNumber",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetStreamSource (xi_d3d8.hpp: StreamNumber)"
+    },
+    "p1": {
+     "name": "pStreamData",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetStreamSource (xi_d3d8.hpp: pStreamData)"
+    }
+   },
+   "0x1003B210": {
+    "arg2": {
+     "name": "Usage",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Usage)"
+    },
+    "arg3": {
+     "name": "FVF",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: FVF)"
+    },
+    "u1": {
+     "name": "Length",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Length)"
+    }
+   },
+   "0x1003F8A0": {
+    "i10": {
+     "name": "positionCount",
+     "kind": "field",
+     "detail": "every assignment is from the field positionCount"
+    }
+   },
+   "0x10040220": {
+    "i4": {
+     "name": "PrimitiveCount",
+     "kind": "call",
+     "detail": "argument 3 of VertexBatch_BindAndDraw_v2 (0x10043F40), whose parameter is PrimitiveCount"
+    },
+    "u4": {
+     "name": "Handle",
+     "kind": "call",
+     "detail": "argument 5 of VertexBatch_BindAndDraw_v2 (0x10043F40), whose parameter is Handle"
+    }
+   },
+   "0x10040670": {
+    "i2": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    },
+    "i6": {
+     "name": "PrimitiveCount",
+     "kind": "call",
+     "detail": "argument 3 of VertexBatch_BindAndDraw (0x10043F40), whose parameter is PrimitiveCount"
+    }
+   },
+   "0x10041160": {
+    "u2": {
+     "name": "Value",
+     "kind": "call",
+     "detail": "argument 3 of TextureHolder_BindTinted (0x100759C0), whose parameter is Value"
+    }
+   },
+   "0x10041AF0": {
+    "p1": {
+     "name": "listAResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field listAResourceHandle"
+    }
+   },
+   "0x10043720": {
+    "i1": {
+     "name": "ringLevelCount",
+     "kind": "field",
+     "detail": "every assignment is from the field ringLevelCount"
+    },
+    "i13": {
+     "name": "stride",
+     "kind": "call",
+     "detail": "argument 4 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is stride"
+    }
+   },
+   "0x10043E50": {
+    "arg3": {
+     "name": "FVF",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: FVF)"
+    }
+   },
+   "0x10043F40": {
+    "arg3": {
+     "name": "PrimitiveCount",
+     "kind": "call",
+     "detail": "argument 3 of CDx_DrawPrimitive (0x1000CB20), whose parameter is PrimitiveCount"
+    },
+    "arg5": {
+     "name": "Handle",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetVertexShader (xi_d3d8.hpp: Handle)"
+    }
+   },
+   "0x10044970": {
+    "p1": {
+     "name": "listAResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field listAResourceHandle"
+    },
+    "p4": {
+     "name": "backrefResourceHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field backrefResourceHandle"
+    }
+   },
+   "0x100467E0": {
+    "f7": {
+     "name": "light",
+     "kind": "call",
+     "detail": "argument 2 of CDx_SetLight (0x1000BF30), whose parameter is light"
+    },
+    "i11": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x10047CE0": {
+    "i1": {
+     "name": "pResolveCommandStream",
+     "kind": "field",
+     "detail": "every assignment is from the field pResolveCommandStream"
+    },
+    "i2": {
+     "name": "pExecCommandStream",
+     "kind": "field",
+     "detail": "every assignment is from the field pExecCommandStream"
+    },
+    "i3": {
+     "name": "pFindCommandStream",
+     "kind": "field",
+     "detail": "every assignment is from the field pFindCommandStream"
+    },
+    "i5": {
+     "name": "typeTag",
+     "kind": "field",
+     "detail": "every assignment is from the field typeTag"
+    }
+   },
+   "0x1006A020": {
+    "u1": {
+     "name": "FVF",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: FVF)"
+    }
+   },
+   "0x1006A150": {
+    "arg2": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 1 of CDx_CreateTexture_v1 (0x1000A6E0), whose parameter is width"
+    },
+    "arg3": {
+     "name": "height",
+     "kind": "call",
+     "detail": "argument 2 of CDx_CreateTexture_v1 (0x1000A6E0), whose parameter is height"
+    }
+   },
+   "0x1006AA30": {
+    "i8": {
+     "name": "StartVertex",
+     "kind": "call",
+     "detail": "argument 2 of CDx_DrawPrimitive (0x1000CB20), whose parameter is StartVertex"
+    }
+   },
+   "0x1006C280": {
+    "arg8": {
+     "name": "_60",
+     "kind": "call",
+     "detail": "argument 8 of Occlusion_QueryScreenRectImpl (0x1006C300), whose parameter is _60"
+    }
+   },
+   "0x1006C530": {
+    "i2": {
+     "name": "stride",
+     "kind": "call",
+     "detail": "argument 4 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is stride"
+    }
+   },
+   "0x10075280": {
+    "i6": {
+     "name": "stride",
+     "kind": "call",
+     "detail": "argument 4 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is stride"
+    }
+   },
+   "0x100755A0": {
+    "u1": {
+     "name": "width",
+     "kind": "call",
+     "detail": "argument 2 of CMoDX_CreateTexture (0x1006A150), whose parameter is width"
+    }
+   },
+   "0x10075700": {
+    "arg2": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTexture (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10075960": {
+    "arg2": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTexture (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x100759C0": {
+    "arg2": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTexture (xi_d3d8.hpp: Stage)"
+    },
+    "arg3": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x10080DC0": {
+    "val2": {
+     "name": "orgstr",
+     "kind": "call",
+     "detail": "argument 1 of preprocessArg (0x10076AB0), whose parameter is orgstr"
+    }
+   },
+   "0x100A47F0": {
+    "arg1": {
+     "name": "partSlot9Resource",
+     "kind": "field",
+     "detail": "every assignment is from the field partSlot9Resource"
+    }
+   },
+   "0x100C5880": {
+    "arg3": {
+     "name": "dvdno1",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_LoadSkeletonResource (0x100D4330), whose parameter is dvdno1"
+    }
+   },
+   "0x100C5C00": {
+    "i5": {
+     "name": "bucketA",
+     "kind": "field",
+     "detail": "every assignment is from the field bucketA"
+    },
+    "i7": {
+     "name": "bucketB",
+     "kind": "field",
+     "detail": "every assignment is from the field bucketB"
+    },
+    "i9": {
+     "name": "pSkeletonRes",
+     "kind": "field",
+     "detail": "every assignment is from the field pSkeletonRes"
+    }
+   },
+   "0x100C5D60": {
+    "i10": {
+     "name": "lockFlags",
+     "kind": "field",
+     "detail": "every assignment is from the field lockFlags"
+    },
+    "i11": {
+     "name": "posHandle",
+     "kind": "field",
+     "detail": "every assignment is from the field posHandle"
+    }
+   },
+   "0x100CB4E0": {
+    "u2": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x100CBDE0": {
+    "f6": {
+     "name": "boundRadius",
+     "kind": "field",
+     "detail": "every assignment is from the field boundRadius"
+    },
+    "i1": {
+     "name": "pModelInfo",
+     "kind": "field",
+     "detail": "every assignment is from the field pModelInfo"
+    },
+    "i10": {
+     "name": "linkedActor0",
+     "kind": "field",
+     "detail": "every assignment is from the field linkedActor0"
+    },
+    "i14": {
+     "name": "bucketA",
+     "kind": "field",
+     "detail": "every assignment is from the field bucketA"
+    },
+    "i19": {
+     "name": "bucketB",
+     "kind": "field",
+     "detail": "every assignment is from the field bucketB"
+    },
+    "i25": {
+     "name": "linkedActor1",
+     "kind": "field",
+     "detail": "every assignment is from the field linkedActor1"
+    }
+   },
+   "0x100CD920": {
+    "arg10": {
+     "name": "sframe",
+     "kind": "call",
+     "detail": "argument 11 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is sframe"
+    },
+    "arg11": {
+     "name": "rf",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is rf"
+    },
+    "arg2": {
+     "name": "resid",
+     "kind": "call",
+     "detail": "argument 3 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is resid"
+    },
+    "arg3": {
+     "name": "wt",
+     "kind": "call",
+     "detail": "argument 4 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is wt"
+    },
+    "arg4": {
+     "name": "sp",
+     "kind": "call",
+     "detail": "argument 5 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is sp"
+    },
+    "arg5": {
+     "name": "lp",
+     "kind": "call",
+     "detail": "argument 6 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is lp"
+    },
+    "arg6": {
+     "name": "in",
+     "kind": "call",
+     "detail": "argument 7 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is in"
+    },
+    "arg7": {
+     "name": "out",
+     "kind": "call",
+     "detail": "argument 8 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is out"
+    },
+    "arg8": {
+     "name": "layno",
+     "kind": "call",
+     "detail": "argument 9 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is layno"
+    },
+    "arg9": {
+     "name": "sync",
+     "kind": "call",
+     "detail": "argument 10 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is sync"
+    },
+    "p1": {
+     "name": "eframe",
+     "kind": "call",
+     "detail": "argument 12 of CXiSkeletonActor_SetMotion (0x100CD540), whose parameter is eframe"
+    }
+   },
+   "0x100CFA50": {
+    "arg2": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of CXiActor_SpawnResourceGenerators_v1 (0x10085060), whose parameter is file"
+    }
+   },
+   "0x100D0B50": {
+    "arg2": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_AddResourceParts (0x100CFA50), whose parameter is file"
+    }
+   },
+   "0x100D0D70": {
+    "arg5": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_AddPartAndMarkSlot (0x100D0B50), whose parameter is file"
+    }
+   },
+   "0x100D1450": {
+    "arg2": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of CXiActor_SpawnResourceGenerators_v2 (0x10085060), whose parameter is file"
+    }
+   },
+   "0x100D14C0": {
+    "p3": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of ActorModelParts_ProcessResidentListEntries (0x100D1450), whose parameter is file"
+    }
+   },
+   "0x100D2F60": {
+    "p5": {
+     "name": "file",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_AddPartAndMarkSlot (0x100D0B50), whose parameter is file"
+    }
+   },
+   "0x100D4330": {
+    "arg2": {
+     "name": "dvdno1",
+     "kind": "call",
+     "detail": "argument 2 of CXiSkeletonActor_LoadSkeletonSync_v1 (0x100D2F60), whose parameter is dvdno1"
+    }
+   },
+   "0x100DBB50": {
+    "u17": {
+     "name": "url",
+     "kind": "call",
+     "detail": "argument 1 of setPolUrl (0x10017630), whose parameter is url"
+    }
+   },
+   "0x10120590": {
+    "i1": {
+     "name": "fontTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field fontTexture"
+    }
+   },
+   "0x101207B0": {
+    "i1": {
+     "name": "dmgNumTexture",
+     "kind": "field",
+     "detail": "every assignment is from the field dmgNumTexture"
+    }
+   },
+   "0x10124700": {
+    "i1": {
+     "name": "Y",
+     "kind": "call",
+     "detail": "argument 2 of SetCursorPos_10009770 (0x10009770), whose parameter is Y"
+    }
+   },
+   "0x1016DDF0": {
+    "buf1": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x1016FCD0": {
+    "p10": {
+     "name": "ppVertexBuffer",
+     "kind": "api",
+     "detail": "argument 5 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: ppVertexBuffer)"
+    },
+    "val2": {
+     "name": "Pool",
+     "kind": "api",
+     "detail": "argument 4 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Pool)"
+    }
+   },
+   "0x10174EC0": {
+    "f5": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x10177400": {
+    "arg1": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x10178B00": {
+    "u1": {
+     "name": "Token",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::DeleteStateBlock (xi_d3d8.hpp: Token)"
+    }
+   },
+   "0x10182700": {
+    "i17": {
+     "name": "primitive_count",
+     "kind": "call",
+     "detail": "argument 2 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is primitive_count"
+    }
+   },
+   "0x101844C0": {
+    "i6": {
+     "name": "light",
+     "kind": "call",
+     "detail": "argument 2 of CDx_SetLight_v1 (0x1000BF30), whose parameter is light"
+    }
+   },
+   "0x10184FE0": {
+    "f31": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::GetTransform (xi_d3d8.hpp: pMatrix), by address"
+    },
+    "i18": {
+     "name": "primitive_count",
+     "kind": "call",
+     "detail": "argument 2 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is primitive_count"
+    }
+   },
+   "0x10185CA0": {
+    "i22": {
+     "name": "primitive_count",
+     "kind": "call",
+     "detail": "argument 2 of CDx_DrawPrimitiveUP (0x1000CD00), whose parameter is primitive_count"
+    },
+    "i36": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::GetTransform (xi_d3d8.hpp: pMatrix), by address"
+    }
+   },
+   "0x1018E800": {
+    "u2": {
+     "name": "fileNameString",
+     "kind": "call",
+     "detail": "argument 2 of FsLogPage_load (0x1018E1D0), whose parameter is fileNameString"
+    }
+   },
+   "0x1019CE70": {
+    "i1": {
+     "name": "configKey",
+     "kind": "call",
+     "detail": "argument 1 of SetConfig (0x10193830), whose parameter is configKey"
+    }
+   },
+   "0x1019D1C0": {
+    "i1": {
+     "name": "configKey",
+     "kind": "call",
+     "detail": "argument 1 of SetConfig (0x10193830), whose parameter is configKey"
+    }
+   },
+   "0x101AAA90": {
+    "u1": {
+     "name": "configValue",
+     "kind": "call",
+     "detail": "argument 2 of SetConfig (0x10193830), whose parameter is configValue"
+    }
+   },
+   "0x101AEAC0": {
+    "p1": {
+     "name": "id",
+     "kind": "call",
+     "detail": "argument 2 of ShapeMng_FindShape_v1 (0x10120450), whose parameter is id"
+    }
+   },
+   "0x101B29F0": {
+    "u7": {
+     "name": "lpBuf",
+     "kind": "call",
+     "detail": "argument 3 of Imm_GetCompositionStringAJmp (0x102BC868), whose parameter is lpBuf"
+    }
+   },
+   "0x101B3F00": {
+    "u2": {
+     "name": "lpBuf",
+     "kind": "call",
+     "detail": "argument 3 of Imm_GetCompositionStringAJmp (0x102BC868), whose parameter is lpBuf"
+    }
+   },
+   "0x101B3F70": {
+    "u1": {
+     "name": "lpBuf",
+     "kind": "call",
+     "detail": "argument 3 of Imm_GetCompositionStringAJmp (0x102BC868), whose parameter is lpBuf"
+    }
+   },
+   "0x101B6EE0": {
+    "p1": {
+     "name": "listNum",
+     "kind": "call",
+     "detail": "argument 3 of FsWordCompletion_getEntryList (0x101BBE60), whose parameter is listNum"
+    }
+   },
+   "0x101C8950": {
+    "p2": {
+     "name": "id",
+     "kind": "call",
+     "detail": "argument 2 of ShapeMng_FindShape_v2 (0x10120450), whose parameter is id"
+    }
+   },
+   "0x1021E4D0": {
+    "i1": {
+     "name": "id",
+     "kind": "call",
+     "detail": "argument 2 of ShapeMng_FindShape_v1 (0x10120450), whose parameter is id"
+    }
+   },
+   "0x10220C80": {
+    "p1": {
+     "name": "id",
+     "kind": "call",
+     "detail": "argument 2 of ShapeMng_FindShape_v1 (0x10120450), whose parameter is id"
+    }
+   },
+   "0x1025D760": {
+    "arg1": {
+     "name": "Width",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Width)"
+    },
+    "arg2": {
+     "name": "Height",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Height)"
+    },
+    "arg3": {
+     "name": "Levels",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Levels)"
+    },
+    "arg4": {
+     "name": "Usage",
+     "kind": "api",
+     "detail": "argument 4 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Usage)"
+    },
+    "arg5": {
+     "name": "Format",
+     "kind": "api",
+     "detail": "argument 5 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Format)"
+    },
+    "arg6": {
+     "name": "Pool",
+     "kind": "api",
+     "detail": "argument 6 of IDirect3DDevice8::CreateTexture (xi_d3d8.hpp: Pool)"
+    }
+   },
+   "0x1025D7B0": {
+    "arg1": {
+     "name": "Length",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Length)"
+    },
+    "arg2": {
+     "name": "Usage",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Usage)"
+    },
+    "arg3": {
+     "name": "FVF",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: FVF)"
+    },
+    "arg4": {
+     "name": "Pool",
+     "kind": "api",
+     "detail": "argument 4 of IDirect3DDevice8::CreateVertexBuffer (xi_d3d8.hpp: Pool)"
+    }
+   },
+   "0x102816E0": {
+    "i3": {
+     "name": "Width",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::CreateDepthStencilSurface (xi_d3d8.hpp: Width)"
+    },
+    "i4": {
+     "name": "Height",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::CreateDepthStencilSurface (xi_d3d8.hpp: Height)"
+    }
+   },
+   "0x102819D0": {
+    "buf1": {
+     "name": "entries",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetPaletteEntries (xi_d3d8.hpp: entries)"
+    }
+   },
+   "0x10281D60": {
+    "arg1": {
+     "name": "PaletteNumber",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetCurrentTexturePalette (xi_d3d8.hpp: PaletteNumber)"
+    }
+   },
+   "0x10281DB0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTexture (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x102820E0": {
+    "p3": {
+     "name": "pRenderTarget",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetRenderTarget (xi_d3d8.hpp: pRenderTarget)"
+    }
+   },
+   "0x10282190": {
+    "p1": {
+     "name": "pNewZStencil",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderTarget (xi_d3d8.hpp: pNewZStencil)"
+    }
+   },
+   "0x102823F0": {
+    "arg1": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x102824C0": {
+    "u1": {
+     "name": "Value",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetRenderState (xi_d3d8.hpp: Value)"
+    }
+   },
+   "0x10282640": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x102826C0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x102827D0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282910": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282A30": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282B90": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282CB0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282DC0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282ED0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10282FF0": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10283110": {
+    "u1": {
+     "name": "Stage",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetTextureStageState (xi_d3d8.hpp: Stage)"
+    }
+   },
+   "0x10283420": {
+    "f2": {
+     "name": "material",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetMaterial (xi_d3d8.hpp: material)"
+    }
+   },
+   "0x10283A10": {
+    "buf1": {
+     "name": "viewport",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetViewport (xi_d3d8.hpp: viewport)"
+    }
+   },
+   "0x10284410": {
+    "f3": {
+     "name": "light",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetLight (xi_d3d8.hpp: light)"
+    },
+    "f5": {
+     "name": "matrix",
+     "kind": "api",
+     "detail": "argument 2 of IDirect3DDevice8::SetTransform (xi_d3d8.hpp: matrix)"
+    }
+   },
+   "0x10284950": {
+    "arg1": {
+     "name": "shader",
+     "kind": "api",
+     "detail": "argument 3 of IDirect3DDevice8::CreateVertexShader (xi_d3d8.hpp: shader)"
+    },
+    "buf1": {
+     "name": "declaration",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::CreateVertexShader (xi_d3d8.hpp: declaration)"
+    }
+   },
+   "0x1028AFE0": {
+    "u1": {
+     "name": "StreamNumber",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetStreamSource (xi_d3d8.hpp: StreamNumber)"
+    }
+   },
+   "0x1029B9D0": {
+    "p2": {
+     "name": "pIndexData",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetIndices (xi_d3d8.hpp: pIndexData)"
+    },
+    "u1": {
+     "name": "StreamNumber",
+     "kind": "api",
+     "detail": "argument 1 of IDirect3DDevice8::SetStreamSource (xi_d3d8.hpp: StreamNumber)"
+    }
+   }
+  }
+ },
+ "casts": {
+  "functions_changed": 370,
+  "functions_kept_old": 34,
+  "kept_old": {
+   "ActorCamera.cpp": [
+    [
+     "code",
+     "Actor_GetPercentScaleByIndex"
+    ]
+   ],
+   "CMoD3mSpecularElem.cpp": [
+    [
+     "code",
+     "CMoD3mSpecularElem::BindTintedTexture"
+    ]
+   ],
+   "CMoProcessor.cpp": [
+    [
+     "code",
+     "CMoProcessor::CalcScreenBoundsAndVisible"
+    ]
+   ],
+   "CMoSchedularTask.cpp": [
+    [
+     "code",
+     "CMoSchedularTask::InitFromSource"
+    ]
+   ],
+   "CXiActor.cpp": [
+    [
+     "code",
+     "CXiActor::NameCalc"
+    ]
+   ],
+   "CXiSkeletonActor.cpp": [
+    [
+     "code",
+     "CXiSkeletonActor::UpdateRandomTimer"
+    ]
+   ],
+   "ElemFog.cpp": [
+    [
+     "code",
+     "YmElem_DrawWithOwnProjection"
+    ]
+   ],
+   "EnvBlend.cpp": [
+    [
+     "code",
+     "Blend_Update"
+    ]
+   ],
+   "EnvKeys.cpp": [
+    [
+     "code",
+     "Env_BlendKeys"
+    ],
+    [
+     "code",
+     "Env_BlendTimeOfDay"
+    ]
+   ],
+   "MenuPanels.cpp": [
+    [
+     "code",
+     "MenuPanels_DrawStrongholdPanel"
+    ],
+    [
+     "code",
+     "MenuPanels_ComputeClampedIndex"
+    ]
+   ],
+   "MusicFont.cpp": [
+    [
+     "code",
+     "MusicFont_Create"
+    ]
+   ],
+   "NetCellFont.cpp": [
+    [
+     "code",
+     "Menu_DrawWindowItems"
+    ],
+    [
+     "code",
+     "NetCellFont_UpdateLayout"
+    ],
+    [
+     "code",
+     "Font_MeasureString"
+    ],
+    [
+     "code",
+     "NetCellFont_CursorUpdateEdgeAxes"
+    ]
+   ],
+   "SkyDome.cpp": [
+    [
+     "code",
+     "SkyDome_ScaleColorBytes"
+    ],
+    [
+     "code",
+     "SkyDome_ScaleBytesByVec4"
+    ],
+    [
+     "code",
+     "SkyDome_ScaleAlpha"
+    ]
+   ],
+   "StAvatarCore.cpp": [
+    [
+     "code",
+     "StAvatarCore_MoveByAnalogStick"
+    ]
+   ],
+   "TextInputFiles.cpp": [
+    [
+     "code",
+     "TextInputFiles_ApplyConfigSetting"
+    ]
+   ],
+   "WinMain.cpp": [
+    [
+     "code",
+     "Camera_PickNearestAspect"
+    ],
+    [
+     "code",
+     "App_WndProc"
+    ]
+   ],
+   "XiZone.cpp": [
+    [
+     "code",
+     "Env_RampWindStrength"
+    ]
+   ],
+   "YkCommon.cpp": [
+    [
+     "code",
+     "YkCommon_DrawFractionRange"
+    ],
+    [
+     "code",
+     "YkCommon_DrawSmoothed"
+    ]
+   ],
+   "YkWindows.cpp": [
+    [
+     "code",
+     "YkWindows_CtorVt1033A000"
+    ],
+    [
+     "code",
+     "YkWindows_UpdateTargetMarker"
+    ]
+   ],
+   "ZoneMap.cpp": [
+    [
+     "code",
+     "ZoneMap_SetRecord"
+    ],
+    [
+     "code",
+     "ZoneMap_ApplyColors"
+    ]
+   ],
+   "ZoneMapLoad.cpp": [
+    [
+     "code",
+     "ZoneMapLoad_BuildMatrixFromNegatedPosRot"
+    ]
+   ],
+   "sqmdModel.cpp": [
+    [
+     "code",
+     "SqmdModel_LookAt"
+    ]
+   ],
+   "sqsdGlow.cpp": [
+    [
+     "code",
+     "SqsdGlow_ApplyShader"
+    ]
+   ]
+  }
+ },
+ "frames": {
+  "functions_changed": 485,
+  "functions_kept_old": 56,
+  "kept_old": {
+   "AfterimageTask.cpp": [
+    [
+     "compile",
+     "AfterimageTask_IsResourceMoving"
+    ]
+   ],
+   "CXiSkeletonActor.cpp": [
+    [
+     "compile",
+     "CXiSkeletonActor::SetMotionFromSources"
+    ],
+    [
+     "compile",
+     "CXiSkeletonActor::SetAction"
+    ],
+    [
+     "compile",
+     "CXiSkeletonActor::LoadSkeletonSync"
+    ]
+   ],
+   "InputDevices.cpp": [
+    [
+     "code",
+     "Input_HandleChar"
+    ],
+    [
+     "code",
+     "InputDevices_JmpGetKeyboardLayout"
+    ]
+   ],
+   "MenuPanels.cpp": [
+    [
+     "code",
+     "MenuPanels_DrawEntryRows"
+    ],
+    [
+     "code",
+     "MenuPanels_DrawTargetEntryIcons"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_FindByName"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_GetWindowRect"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawActorPanelFigures"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawTwoDigitValue"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawNameRows"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "ActerBuff_DrawNearby"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawStrongholdPanel"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawGameTime"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_Draw"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_GetWindowLocate"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_RunRowCallbacks"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_SetTargetValuesFor"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_LoadFromFile"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_Refresh"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_DrawTimeLeftText"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_TestBitForId"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_GetEntryState"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_LoadMessageTable"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_LoadStringTable"
+    ],
+    [
+     "unplaced:.rdata$CSWTCH.2296,.rdata$CSWTCH.2304",
+     "MenuPanels_CreateMessagePanels"
+    ]
+   ],
+   "MeshResourceMng.cpp": [
+    [
+     "code",
+     "MeshResourceMng_ResolveTree"
+    ]
+   ],
+   "NetCellFont.cpp": [
+    [
+     "compile",
+     "GameMode_OpenTacticsUrl"
+    ],
+    [
+     "compile",
+     "NetCellFont_GetSessionField13C"
+    ],
+    [
+     "compile",
+     "NetCellFont_BeginRequests"
+    ],
+    [
+     "compile",
+     "NetCellFont_RunCallbacks"
+    ],
+    [
+     "compile",
+     "NetCellFont_ErrorLogPop"
+    ],
+    [
+     "compile",
+     "NetCellFont_ErrorLogFlush"
+    ],
+    [
+     "compile",
+     "NetCellFont_ReportError"
+    ],
+    [
+     "compile",
+     "NetCellFont_SelectFirstVisible"
+    ],
+    [
+     "compile",
+     "NetCellFont_ComputeRect"
+    ],
+    [
+     "compile",
+     "NetCellFont_UpdateLayout"
+    ],
+    [
+     "compile",
+     "NetCellFont_UpdateState"
+    ],
+    [
+     "compile",
+     "NetCellFont_ResolveShape"
+    ],
+    [
+     "compile",
+     "ChatLog_AddMessage"
+    ],
+    [
+     "compile",
+     "regparm"
+    ],
+    [
+     "compile",
+     "NetCellFont_IsKindEnabledInSettings"
+    ],
+    [
+     "code",
+     "NetCellFont_RunState"
+    ]
+   ],
+   "Skeleton.cpp": [
+    [
+     "compile",
+     "Skel_LoadBoneRotTrans"
+    ]
+   ],
+   "SkinCpu.cpp": [
+    [
+     "code",
+     "Model_SkinVerticesCpu"
+    ]
+   ],
+   "TargetMenu.cpp": [
+    [
+     "code",
+     "MenuMng_OpenByName"
+    ]
+   ],
+   "TextCommand.cpp": [
+    [
+     "compile",
+     "Command_RunLine"
+    ]
+   ],
+   "TextInputFiles.cpp": [
+    [
+     "code",
+     "FsTextInput_OnChar"
+    ],
+    [
+     "code",
+     "FsWordCompletion__prepareAllData"
+    ]
+   ],
+   "YkWindows.cpp": [
+    [
+     "compile",
+     "YkWindows_GetItemEntryState"
+    ]
+   ],
+   "ZoneMap.cpp": [
+    [
+     "compile",
+     "ZoneMap_UpdateLoadState"
+    ]
+   ],
+   "ZoneMapLoad.cpp": [
+    [
+     "compile",
+     "ZoneMapLoad_BuildMatrixFromNegatedPosRot"
+    ],
+    [
+     "compile",
+     "ZoneMapLoad_SweepSetupAndTest"
+    ]
+   ],
+   "sqmdModel.cpp": [
+    [
+     "code",
+     "SqmdModel_LookAt"
+    ]
+   ]
+  }
+ },
+ "gotos": {
+  "functions_changed": 0,
+  "functions_kept_old": 2,
+  "kept_old": {
+   "NetCellFont.cpp": [
+    [
+     "code",
+     "NetCellFont_DeleteAllEntries"
+    ]
+   ],
+   "TargetMenu.cpp": [
+    [
+     "code",
+     "Menu_DrawAll"
+    ]
+   ]
+  }
+ },
+ "compat_kept": {
+  "xi_decomp.hpp": [],
+  "xi_ghidra.hpp": [],
+  "xi_ghidra_shared.hpp": []
+ },
+ "final": {
+  "files": 409,
+  "not_identical": {}
+ },
+ "sdk_include": [
+  "xikit_game.hpp"
+ ]
+}

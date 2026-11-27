@@ -4,9 +4,9 @@
 
 // FUNCTION: FFXIMAIN 0x10038930
 // GATE: PASS -- 100 trials, 100 returned normally, 78 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API _DWORD * __cdecl Post_CreateScreenEffectTargets(void)
+XI_API uint32_t * __cdecl Post_CreateScreenEffectTargets(void)
 {
-  _DWORD *result;
+  uint32_t *result;
   g_sceneCaptureDepth = 0;
   g_sceneCaptureTex = (int)orig::CDx_CreateTexture(g_pCDx, 0x100u, 0x100u, &g_sceneCaptureDepth, 1, 0);
   result = g_pEnv;
@@ -14,7 +14,7 @@ XI_API _DWORD * __cdecl Post_CreateScreenEffectTargets(void)
   {
     g_sceneCaptureDepthEye2 = g_translucentDepth;
     if ( g_translucentDepth != 0 )
-      (*(void (__stdcall **)(_DWORD))(*(_DWORD *)g_translucentDepth + 4))(g_translucentDepth);
+      (*(void (__stdcall **)(uint32_t))(*(uint32_t *)g_translucentDepth + 4))(g_translucentDepth);
     result = orig::CDx_CreateTexture(g_pCDx, 0x100u, 0x100u, &g_sceneCaptureDepthEye2, 1, 0);
     g_sceneCaptureTexEye2 = (int)result;
   }
@@ -31,19 +31,19 @@ XI_API _DWORD * __cdecl Post_CreateScreenEffectTargets(void)
 XI_API void __cdecl PostCapture_ReleaseTextures(void)
 {
   if (g_sceneCaptureTex_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*g_sceneCaptureTex_as_v0 + 8))))(g_sceneCaptureTex_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_sceneCaptureTex_as_v0 + 8))))(g_sceneCaptureTex_as_v0);
     g_sceneCaptureTex_as_v0 = (int *)0x0;
   }
   if (g_sceneCaptureTexEye2_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*g_sceneCaptureTexEye2_as_v0 + 8))))(g_sceneCaptureTexEye2_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_sceneCaptureTexEye2_as_v0 + 8))))(g_sceneCaptureTexEye2_as_v0);
     g_sceneCaptureTexEye2_as_v0 = (int *)0x0;
   }
   if (g_sceneCaptureDepth_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*g_sceneCaptureDepth_as_v0 + 8))))(g_sceneCaptureDepth_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_sceneCaptureDepth_as_v0 + 8))))(g_sceneCaptureDepth_as_v0);
     g_sceneCaptureDepth_as_v0 = (int *)0x0;
   }
   if (g_sceneCaptureDepthEye2_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*g_sceneCaptureDepthEye2_as_v0 + 8))))(g_sceneCaptureDepthEye2_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_sceneCaptureDepthEye2_as_v0 + 8))))(g_sceneCaptureDepthEye2_as_v0);
     g_sceneCaptureDepthEye2_as_v0 = (int *)0x0;
   }
   return;
@@ -53,7 +53,7 @@ XI_API void __cdecl PostCapture_ReleaseTextures(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall PostCapture_Init(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_1032a9ec;
+  *(uint8_t ***)self_ = &g_1032A9EC;
   *(uint32_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   return;
@@ -64,40 +64,40 @@ XI_API void __thiscall PostCapture_Init(void * self_)
 XI_API int __thiscall Post_CaptureSceneToTarget(void *self_)
 {
   int result;
-  unsigned __int8 v3;
-  int v4[28];
+  unsigned char c1;
+  int buf1[28];
   result = orig::Settings_GetValue(200);
   if ( result != 0
-    && (result = *((_DWORD *)self_ + 1)) != 0
+    && (result = *((uint32_t *)self_ + 1)) != 0
     && (result = g_sceneCaptureTex, g_sceneCaptureTex != 0)
     && (result = (int)pTexture, pTexture != nullptr) )
   {
-    memset(v4, 0, 12);
-    v4[4] = g_sceneCaptureTint;
-    v4[11] = g_sceneCaptureTint;
-    v4[18] = g_sceneCaptureTint;
-    v4[25] = g_sceneCaptureTint;
-    v4[3] = 1065353216;
-    v4[5] = 0;
-    v4[6] = 0;
-    v4[7] = 1132462080;
-    v4[8] = 0;
-    v4[9] = 0;
-    v4[10] = 1065353216;
-    v4[12] = 1065353216;
-    v4[13] = 0;
-    v4[14] = 0;
-    v4[15] = 1132462080;
-    v4[16] = 0;
-    v4[17] = 1065353216;
-    v4[19] = 0;
-    v4[20] = 1065353216;
-    v4[21] = 1132462080;
-    v4[22] = 1132462080;
-    v4[23] = 0;
-    v4[24] = 1065353216;
-    v4[26] = 1065353216;
-    v4[27] = 1065353216;
+    memset(buf1, 0, 12);
+    buf1[4] = g_sceneCaptureTint;
+    buf1[11] = g_sceneCaptureTint;
+    buf1[18] = g_sceneCaptureTint;
+    buf1[25] = g_sceneCaptureTint;
+    buf1[3] = 1065353216;
+    buf1[5] = 0;
+    buf1[6] = 0;
+    buf1[7] = 1132462080;
+    buf1[8] = 0;
+    buf1[9] = 0;
+    buf1[10] = 1065353216;
+    buf1[12] = 1065353216;
+    buf1[13] = 0;
+    buf1[14] = 0;
+    buf1[15] = 1132462080;
+    buf1[16] = 0;
+    buf1[17] = 1065353216;
+    buf1[19] = 0;
+    buf1[20] = 1065353216;
+    buf1[21] = 1132462080;
+    buf1[22] = 1132462080;
+    buf1[23] = 0;
+    buf1[24] = 1065353216;
+    buf1[26] = 1065353216;
+    buf1[27] = 1065353216;
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
@@ -115,20 +115,20 @@ XI_API int __thiscall Post_CaptureSceneToTarget(void *self_)
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ZERO);
     }
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 0x144u);
-    v3 = (*(unsigned __int8 *)((char *)g_pCDx + 0x828));
-    (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = 0;
+    c1 = (*(unsigned char *)((char *)g_pCDx + 0x828));
+    (*(unsigned char *)((char *)g_pCDx + 0x828)) = 0;
     if ( orig::CEnv_IsStereoMode(g_pEnv) != 0 && g_sceneCaptureTexEye2 != 0 && g_translucentTargetEye2 != 0 )
     {
       (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, (IDirect3DBaseTexture8 *)g_translucentTargetEye2);
       orig::CDx_PushRenderTarget(g_pCDx, g_sceneCaptureTexEye2, g_sceneCaptureDepthEye2, 0);
-      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)v4, 28);
+      orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)buf1, 28);
       orig::CDx_SetTexture(g_pCDx, 0, 0);
     }
     (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, (IDirect3DBaseTexture8 *)pTexture);
     orig::CDx_PushRenderTarget(g_pCDx, g_sceneCaptureTex, g_sceneCaptureDepth, 0);
-    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)v4, 28);
+    orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)buf1, 28);
     orig::CDx_SetTexture(g_pCDx, 0, 0);
-    (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = v3;
+    (*(unsigned char *)((char *)g_pCDx + 0x828)) = c1;
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, TRUE);
     result = (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_TRUE);
     result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(1) << 0));
@@ -142,184 +142,186 @@ XI_API int __thiscall Post_CaptureSceneToTarget(void *self_)
 
 // FUNCTION: FFXIMAIN 0x10038E10
 // GATE: PASS -- 100 trials, 100 returned normally, 10062 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Post_DrawRotatingGhostLayers(void * self_)
+XI_API bits32 __thiscall Post_DrawRotatingGhostLayers(void * self_)
 {
-  long double fVar1;
-  uint8_t uVar2;
-  int *piVar3;
+  long double f1;
+  uint8_t u1;
+  int *p1;
   void *xi_eax;
-  uint32_t uVar4;
-  int iVar5;
-  uint32_t uVar6;
-  uint32_t uVar7;
-  int iVar8;
-  uint32_t *puVar9;
-  uint8_t bVar10;
-  long double fVar11;
-  long double fVar12;
-  uint64_t uVar13;
-  int64_t lVar14;
-  char xi_frame[164] __attribute__((aligned(4)));
-  float  &fStack_a4 = *reinterpret_cast<float  *>(xi_frame + 0);
-  uint32_t  &uStack_a0 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int  &iStack_98 = *reinterpret_cast<int  *>(xi_frame + 12);
-  float  &fStack_70 = *reinterpret_cast<float  *>(xi_frame + 52);
-  float  &fStack_6c = *reinterpret_cast<float  *>(xi_frame + 56);
-  uint32_t  &uStack_68 = *reinterpret_cast<uint32_t  *>(xi_frame + 60);
-  uint32_t  &uStack_64 = *reinterpret_cast<uint32_t  *>(xi_frame + 64);
-  uint32_t  &uStack_60 = *reinterpret_cast<uint32_t  *>(xi_frame + 68);
-  uint32_t  &uStack_5c = *reinterpret_cast<uint32_t  *>(xi_frame + 72);
-  uint32_t  &uStack_58 = *reinterpret_cast<uint32_t  *>(xi_frame + 76);
-  float  &fStack_54 = *reinterpret_cast<float  *>(xi_frame + 80);
-  float  &fStack_50 = *reinterpret_cast<float  *>(xi_frame + 84);
-  uint32_t  &uStack_4c = *reinterpret_cast<uint32_t  *>(xi_frame + 88);
-  uint32_t  &uStack_48 = *reinterpret_cast<uint32_t  *>(xi_frame + 92);
-  uint32_t  &uStack_44 = *reinterpret_cast<uint32_t  *>(xi_frame + 96);
-  uint32_t  &uStack_40 = *reinterpret_cast<uint32_t  *>(xi_frame + 100);
-  uint32_t  &uStack_3c = *reinterpret_cast<uint32_t  *>(xi_frame + 104);
-  float  &fStack_38 = *reinterpret_cast<float  *>(xi_frame + 108);
-  float  &fStack_34 = *reinterpret_cast<float  *>(xi_frame + 112);
-  uint32_t  &uStack_30 = *reinterpret_cast<uint32_t  *>(xi_frame + 116);
-  uint32_t  &uStack_2c = *reinterpret_cast<uint32_t  *>(xi_frame + 120);
-  uint32_t  &uStack_28 = *reinterpret_cast<uint32_t  *>(xi_frame + 124);
-  uint32_t  &uStack_24 = *reinterpret_cast<uint32_t  *>(xi_frame + 128);
-  uint32_t  &uStack_20 = *reinterpret_cast<uint32_t  *>(xi_frame + 132);
-  float  &fStack_1c = *reinterpret_cast<float  *>(xi_frame + 136);
-  float  &fStack_18 = *reinterpret_cast<float  *>(xi_frame + 140);
-  uint32_t  &uStack_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 144);
-  uint32_t  &uStack_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 148);
-  uint32_t  &uStack_c = *reinterpret_cast<uint32_t  *>(xi_frame + 152);
-  uint32_t  &uStack_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 156);
-  uint32_t  &uStack_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 160);
+  uint32_t u2;
+  int i1;
+  uint32_t u3;
+  uint32_t u4;
+  int i2;
+  uint32_t *p2;
+  uint8_t u5;
+  long double f2;
+  long double f3;
+  uint64_t u6;
+  int64_t i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[164];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; int i4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x34]; float f5; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_5[0x38]; float f6; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_6[0x3C]; uint32_t u8; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_7[0x40]; uint32_t u9; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_8[0x44]; uint32_t u10; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_9[0x48]; uint32_t u11; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_10[0x4C]; uint32_t u12; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_11[0x50]; float f7; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_12[0x54]; float f8; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_13[0x58]; uint32_t u13; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_14[0x5C]; uint32_t u14; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_15[0x60]; uint32_t u15; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_16[0x64]; uint32_t u16; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_17[0x68]; uint32_t u17; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_18[0x6C]; float f9; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_19[0x70]; float f10; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_20[0x74]; uint32_t u18; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_21[0x78]; uint32_t u19; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_22[0x7C]; uint32_t u20; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_23[0x80]; uint32_t u21; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_24[0x84]; uint32_t u22; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_25[0x88]; float f11; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_26[0x8C]; float f12; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_27[0x90]; uint32_t u23; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_28[0x94]; uint32_t u24; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_29[0x98]; uint32_t u25; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_30[0x9C]; uint32_t u26; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_31[0xA0]; uint32_t u27; };   // at 0xA0
+  } frame;
   
-  uVar13 = orig::Settings_GetValue_v1(200);
-  if (((int)uVar13 != 0) && (piVar3 = *(int **)((int)self_ + 4), piVar3 != (int *)0x0)) {
-    if (piVar3 == (int *)0x0) {
-      iVar5 = 0;
+  u6 = orig::Settings_GetValue_v1(200);
+  if (((int)u6 != 0) && (p1 = *(int **)((int)self_ + 4), p1 != (int *)0x0)) {
+    if (p1 == (int *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar5 = *piVar3;
+      i1 = *p1;
     }
     if ((g_sceneCaptureTex != 0) && (pTexture_as_s32 != 0)) {
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x19,5);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x18,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0xe,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),7,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,1);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x13,5);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x14,6);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,1,5);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,2,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,3,2);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,4,6);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,5,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,6,2);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),1,4,1);
-      xi_eax = (void *)((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x19,5);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x18,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0xe,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),7,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,1);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x13,5);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x14,6);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,1,5);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,2,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,3,2);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,4,6);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,5,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,6,2);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),1,4,1);
+      xi_eax = (void *)((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))
                                  ))(*(int **)((int)g_pCDx_as_v1 + 0xc),1,1,1);
-      iVar8 = 0;
-      uVar7 = (uint32_t)*(uint8_t *)(iVar5 + 0x31);
-      if (uVar7 != 0) {
-        iStack_98 = 0;
-        puVar9 = (uint32_t *)(iVar5 + 0x40);
+      i2 = 0;
+      u4 = (uint32_t)*(uint8_t *)(i1 + 0x31);
+      if (u4 != 0) {
+        frame.i4 = 0;
+        p2 = (uint32_t *)(i1 + 0x40);
         do {
-          if (iVar8 == uVar7 - 1) {
-            ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0x130))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x144)
+          if (i2 == u4 - 1) {
+            ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0x130))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x144)
             ;
-            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
+            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
                       ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x18,0x60);
-            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,0);
-            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,1,3);
-            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,4,3);
-            fVar11 = (long double)0.0f;
-            fStack_a4 = 0.0f;
+            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,0);
+            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,1,3);
+            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xfc))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,4,3);
+            f2 = 0.0f;
+            frame.f4 = 0.0f;
           }
           else {
-            ((int (__stdcall *)(XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0x130))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x144)
+            ((int (__stdcall *)(XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0x130))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x144)
             ;
-            fVar11 = (long double)(iStack_98 / (int)uVar7 + *(int *)((int)self_ + 8)) *
-                     (long double)0.01745277829468250274658203125f;
-            if (fVar11 > (long double)3.141499996185302734375f) {
-              fVar11 = fVar11 - (long double)6.28299999237060546875f;
+            f2 = (frame.i4 / (int)u4 + *(int *)((int)self_ + 8)) *
+                     0.01745277829468250274658203125f;
+            if (f2 > 3.141499996185302734375f) {
+              f2 = f2 - 6.28299999237060546875f;
             }
-            bVar10 = NAN(fVar11) || NAN((long double)(-3.141499996185302734375f));
-            if ((bVar10 || fVar11 < (long double)(-3.141499996185302734375f)) != bVar10) {
-              fVar11 = fVar11 + (long double)6.28299999237060546875f;
+            u5 = ((f2) != (f2)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+            if ((u5 || f2 < (-3.141499996185302734375f)) != u5) {
+              f2 = f2 + 6.28299999237060546875f;
             }
-            fVar12 = xi_castbits<long double>(fsin(fVar11));
-            uVar4 = *puVar9 & 0xffffff;
-            uStack_a0 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)puVar9 + 3)) << 8) | (uint8_t)((char)uVar4))) << 0x10 |
-                        uVar4 >> 0x10 | *puVar9 & 0xff00;
-            fStack_a4 = (float)(fVar12 * (long double)xi_castbits<float>(puVar9[-1]) * (long double)0.0625f);
-            fVar11 = xi_castbits<long double>(fcos(fVar11));
-            fVar11 = fVar11 * (long double)xi_castbits<float>(puVar9[-1]) * (long double)0.0625f;
+            f3 = bit_cast<long double>(x87_fsin(f2));
+            u2 = *p2 & 0xffffff;
+            frame.u7 = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)((int)p2 + 3)) << 8) | (uint8_t)((char)u2))) << 0x10 |
+                        u2 >> 0x10 | *p2 & 0xff00;
+            frame.f4 = (float)(f3 * bit_cast<float>(p2[-1]) * 0.0625f);
+            f2 = bit_cast<long double>(x87_fcos(f2));
+            f2 = f2 * bit_cast<float>(p2[-1]) * 0.0625f;
           }
-          fVar1 = (float)fVar11;
-          fStack_6c = (float)fVar11;
-          fStack_70 = fStack_a4;
-          uStack_68 = 0;
-          uStack_64 = 0x3f800000;
-          uStack_5c = 0;
-          uStack_58 = 0;
-          uStack_60 = uStack_a0;
-          iVar5 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          uStack_4c = 0;
-          uStack_48 = 0x3f800000;
-          uStack_40 = 0x3f800000;
-          uStack_3c = 0;
-          fStack_38 = fStack_a4;
-          fStack_54 = (float)((long double)*(uint32_t *)(iVar5 + 8) + (long double)fStack_a4);
-          fStack_50 = fVar1;
-          uStack_44 = uStack_a0;
-          iVar5 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          uStack_30 = 0;
-          uStack_2c = 0x3f800000;
-          uStack_24 = 0;
-          uStack_20 = 0x3f800000;
-          fStack_34 = (float)((long double)*(uint32_t *)(iVar5 + 0xc) + (long double)fVar1);
-          uStack_28 = uStack_a0;
-          iVar5 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          fStack_1c = (float)((long double)*(uint32_t *)(iVar5 + 8) + (long double)fStack_a4);
-          iVar5 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
-          uStack_14 = 0;
-          uStack_10 = 0x3f800000;
-          uStack_8 = 0x3f800000;
-          uStack_4 = 0x3f800000;
-          fStack_18 = (float)((long double)*(uint32_t *)(iVar5 + 0xc) + (long double)fVar1);
-          uVar2 = *(uint8_t *)((int)g_pCDx_as_v1 + 0x828);
+          f1 = (float)f2;
+          frame.f6 = (float)f2;
+          frame.f5 = frame.f4;
+          frame.u8 = 0;
+          frame.u9 = 0x3f800000;
+          frame.u11 = 0;
+          frame.u12 = 0;
+          frame.u10 = frame.u7;
+          i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
+          frame.u13 = 0;
+          frame.u14 = 0x3f800000;
+          frame.u16 = 0x3f800000;
+          frame.u17 = 0;
+          frame.f9 = frame.f4;
+          frame.f7 = (float)(*(uint32_t *)(i1 + 8) + frame.f4);
+          frame.f8 = f1;
+          frame.u15 = frame.u7;
+          i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
+          frame.u18 = 0;
+          frame.u19 = 0x3f800000;
+          frame.u21 = 0;
+          frame.u22 = 0x3f800000;
+          frame.f10 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
+          frame.u20 = frame.u7;
+          i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
+          frame.f11 = (float)(*(uint32_t *)(i1 + 8) + frame.f4);
+          i1 = orig::CDx_GetRenderTargetTop_v1(g_pCDx_as_v1);
+          frame.u23 = 0;
+          frame.u24 = 0x3f800000;
+          frame.u26 = 0x3f800000;
+          frame.u27 = 0x3f800000;
+          frame.f12 = (float)(*(uint32_t *)(i1 + 0xc) + f1);
+          u1 = *(uint8_t *)((int)g_pCDx_as_v1 + 0x828);
           *(uint8_t *)((int)g_pCDx_as_v1 + 0x828) = 0;
-          uStack_c = uStack_a0;
-          uVar6 = orig::CEnv_IsStereoMode_v1(g_pEnv_as_v0);
-          if (((((char)uVar6 != '\0') && (g_sceneCaptureTexEye2 != 0)) &&
+          frame.u25 = frame.u7;
+          u3 = orig::CEnv_IsStereoMode_v1(g_pEnv_as_v0);
+          if (((((char)u3 != '\0') && (g_sceneCaptureTexEye2 != 0)) &&
               (*(int *)((int)g_pCDx_as_v1 + 0x198) != 0)) && (*(int *)((int)g_pCDx_as_v1 + 0x1a8) != 0)) {
-            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xf4))
+            ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xf4))
                       ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,g_sceneCaptureTexEye2);
             orig::CDx_PushRenderTarget_v1
                       (g_pCDx_as_v1,*(uint32_t *)((int)g_pCDx_as_v1 + 0x198),
                        *(uint32_t *)((int)g_pCDx_as_v1 + 0x1a0),*(uint32_t *)((int)g_pCDx_as_v1 + 0x1a8));
-            orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&fStack_70,0x1c);
+            orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&frame.f5,0x1c);
             orig::CDx_SetTexture_v1(g_pCDx_as_v1,0,0);
           }
-          ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xf4))
+          ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 0xf4))
                     ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0,g_sceneCaptureTex);
-          orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&fStack_70,0x1c);
+          orig::CDx_DrawPrimitiveUP_v1(g_pCDx_as_v1,5,2,&frame.f5,0x1c);
           xi_eax = g_pCDx_as_v1;
-          iVar8 = iVar8 + 1;
-          iStack_98 = iStack_98 + 0x168;
-          puVar9 = puVar9 + 2;
-          *(uint8_t *)((int)g_pCDx_as_v1 + 0x828) = uVar2;
-        } while (iVar8 < (int)uVar7);
+          i2 = i2 + 1;
+          frame.i4 = frame.i4 + 0x168;
+          p2 = p2 + 2;
+          *(uint8_t *)((int)g_pCDx_as_v1 + 0x828) = u1;
+        } while (i2 < (int)u4);
       }
-      fVar11 = orig::Camera_GetFrameScale_v1(xi_eax);
-      lVar14 = XI_CALL_ST0(0x10311C2Cu)(fVar11);
-      *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + (int)lVar14;
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,0);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x18,0x60);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0xe,1);
-      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),7,1);
-      uVar6 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
+      f2 = orig::Camera_GetFrameScale_v1(xi_eax);
+      i3 = XI_CALL_ST0(0x10311C2Cu)(f2);
+      *(int *)((int)self_ + 8) = *(int *)((int)self_ + 8) + (int)i3;
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x1b,0);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x18,0x60);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),0xe,1);
+      ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))))(*(int **)((int)g_pCDx_as_v1 + 0xc),7,1);
+      u3 = ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)g_pCDx_as_v1 + 0xc) + 200))
                         ))(*(int **)((int)g_pCDx_as_v1 + 0xc),0x19,8);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
   return 0;

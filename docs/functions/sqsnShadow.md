@@ -12,4 +12,4 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqsnShadow.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `sqsnShadowVolumeDraw` calls `sqDebugPrintf`, `sub_1027F0E0`, `M4fTransform`, `sub_10297F90`, `sqsnShadowVolumeBeginVB`, `sub_102979E0`, `sub_10297B10`, `sqsnShadowVolumeSetPass`
+- `sqsnShadowVolumeDraw` calls `sqDebugPrintf`, `game_1027F0E0`, `M4fTransform`, `game_10297F90`, `sqsnShadowVolumeBeginVB`, `game_102979E0`, `game_10297B10`, `sqsnShadowVolumeSetPass`

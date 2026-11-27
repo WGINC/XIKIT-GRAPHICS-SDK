@@ -6,29 +6,31 @@
 // NOT VERIFIED -- FAIL
 XI_API char __cdecl BeginEffectOffscreenPass(void)
 {
-  int v0;
+  int i1;
   int ScratchMatrixStackTop;
-  float *v3;
-  float v4;
-  int v5;
-  float *v6;
-  CMoProcessor *v7;
-  int v8;
-  CMoProcessor *v9;
-  int v10;
-  alignas(16) unsigned char xi_frame[0x494];  // address-taken locals at their original offsets
-  float &v11 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  float &v12 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  float &v13 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  float (&v14)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x34);
-  _DWORD (&v15)[6] = *reinterpret_cast<_DWORD (*)[6]>(xi_frame + 0x40);
-  float (&v16)[15] = *reinterpret_cast<float (*)[15]>(xi_frame + 0x58);
+  float *p1;
+  float f1;
+  int i2;
+  float *p2;
+  CMoProcessor *p3;
+  int i3;
+  CMoProcessor *p4;
+  int i4;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x494];
+    struct __attribute__((packed)) { unsigned char pad_1[0x28]; float f2; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_2[0x2C]; float f3; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_3[0x30]; float f4; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_4[0x34]; float f5[3]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_5[0x40]; uint32_t u1[6]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_6[0x58]; float f6[15]; };   // at 0x58
+  } frame;
 
-  v0 = *(_DWORD *)(g_pMoAccumTarget + 4);
-  if ( v0 == 0 )
+  i1 = *(uint32_t *)(g_pMoAccumTarget + 4);
+  if ( i1 == 0 )
     return 0;
-  orig::sub_1006A060((void **)g_pResourceMng, v0, *(_DWORD *)(g_pMoAccumTarget + 8), *(_DWORD *)(g_pMoAccumTarget + 12));
-  (*(void (__stdcall **)(void *, int, int, int, int, int, int))(**(_DWORD **)(g_pResourceMng + 3772) + 144))(
+  orig::game_1006A060((void **)g_pResourceMng, i1, *(uint32_t *)(g_pMoAccumTarget + 8), *(uint32_t *)(g_pMoAccumTarget + 12));
+  (*(void (__stdcall **)(void *, int, int, int, int, int, int))(**(uint32_t **)(g_pResourceMng + 3772) + 144))(
     *(void **)(g_pResourceMng + 3772),
     0,
     0,
@@ -36,15 +38,15 @@ XI_API char __cdecl BeginEffectOffscreenPass(void)
     0,
     1065353216,
     0);
-  orig::sub_1006A420((int *)g_pResourceMng);
+  orig::game_1006A420((int *)g_pResourceMng);
   orig::CMoDX_PushViewMatrix((int *)g_pResourceMng);
-  v15[1] = 0;
-  v15[2] = 256;
-  v15[3] = 256;
-  v15[0] = 0;
-  v15[4] = 0;
-  v15[5] = 1065353216;
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetViewport((void *)(v15));
+  frame.u1[1] = 0;
+  frame.u1[2] = 256;
+  frame.u1[3] = 256;
+  frame.u1[0] = 0;
+  frame.u1[4] = 0;
+  frame.u1[5] = 1065353216;
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetViewport((void *)(frame.u1));
   if ( (Fn10054D70_staticGuards & 1) == 0 )
   {
     Fn10054D70_lookAtUp = 0;
@@ -54,47 +56,47 @@ XI_API char __cdecl BeginEffectOffscreenPass(void)
     orig::_atexit(XI_CODE(nullsub_130));
   }
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-  v3 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+  p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-  orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, v3);
-  v11 = v3[12];
-  v12 = v3[13];
-  v4 = v3[14];
-  v14[0] = v11;
-  v13 = v4;
-  v14[2] = v4;
-  v14[1] = v12 - 2.0;
-  orig::fn_102D7FF9(v16, v14, &v11, (float *)&Fn10054D70_lookAtUp);
-  orig::CDx_SetTransform(*(_DWORD ***)(g_pResourceMng + 3528), 2, v16);
-  v5 = (g_pProcessor->ScratchMatrixStackTop);
-  v6 = ((float * *)((char *)g_pProcessor + 0xA10))[v5];
-  (g_pProcessor->ScratchMatrixStackTop) = v5 + 1;
-  orig::MoProcessor_CallVSlot49(v6);
-  v6[10] = 0.25;
-  v6[5] = 0.25;
-  *v6 = 0.25;
-  (*((void (__thiscall **)(CMoProcessor *, float *, float *))(*(void * *)&g_pProcessor->vftable) + 9))(g_pProcessor, v3, v6);
-  orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, v3);
-  v7 = g_pProcessor;
-  v8 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v8;
-  ((float * *)((char *)v7 + 0xA10))[v8] = v6;
-  v9 = g_pProcessor;
-  v10 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v10;
-  ((float * *)((char *)v9 + 0xA10))[v10] = v3;
+  orig::CMoDX_GetWorldMatrix((int *)g_pResourceMng, p1);
+  frame.f2 = p1[12];
+  frame.f3 = p1[13];
+  f1 = p1[14];
+  frame.f5[0] = frame.f2;
+  frame.f4 = f1;
+  frame.f5[2] = f1;
+  frame.f5[1] = frame.f3 - 2.0;
+  orig::fn_102D7FF9(frame.f6, frame.f5, &frame.f2, (float *)&Fn10054D70_lookAtUp);
+  orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 2, frame.f6);
+  i2 = (g_pProcessor->ScratchMatrixStackTop);
+  p2 = ((float * *)((char *)g_pProcessor + 0xA10))[i2];
+  (g_pProcessor->ScratchMatrixStackTop) = i2 + 1;
+  orig::MoProcessor_CallVSlot49(p2);
+  p2[10] = 0.25;
+  p2[5] = 0.25;
+  *p2 = 0.25;
+  (*((void (__thiscall **)(CMoProcessor *, float *, float *))(*(void * *)&g_pProcessor->vftable) + 9))(g_pProcessor, p1, p2);
+  orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, p1);
+  p3 = g_pProcessor;
+  i3 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i3;
+  ((float * *)((char *)p3 + 0xA10))[i3] = p2;
+  p4 = g_pProcessor;
+  i4 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i4;
+  ((float * *)((char *)p4 + 0xA10))[i4] = p1;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10054F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API float * __stdcall EndEffectOffscreenPass(float *a1, int a2)
+XI_API float * __stdcall EndEffectOffscreenPass(float *arg1, int arg2)
 {
-  orig::CMoDX_SetViewMatrix((_DWORD ***)g_pResourceMng, (const void *)(g_pResourceMng + 2896));
+  orig::CMoDX_SetViewMatrix((uint32_t ***)g_pResourceMng, (const void *)(g_pResourceMng + 2896));
   return orig::CTsZoneMap_DrawProjectedTexture(
            (int)g_pZoneMap,
-           a1,
-           a2,
+           arg1,
+           arg2,
            *(IDirect3DBaseTexture8 **)(g_pMoAccumTarget + 4),
            10.0);
 }
@@ -103,7 +105,7 @@ XI_API float * __stdcall EndEffectOffscreenPass(float *a1, int a2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall EffectOffscreen_Init(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_1032b6d8;
+  *(uint8_t ***)self_ = &g_1032B6D8;
   *(uint32_t *)((int)self_ + 0xc) = 0;
   *(uint32_t *)((int)self_ + 0x14) = 0;
   return;
@@ -111,17 +113,17 @@ XI_API void __thiscall EffectOffscreen_Init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100550F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) EffectOffscreen_FreeSplineSet(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API void __attribute__((stdcall, regparm(3))) EffectOffscreen_FreeSplineSet(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)((int)self_ + 0x14);
+  i1 = *(int *)((int)self_ + 0x14);
   *(uint32_t *)((int)self_ + 0xc) = 0;
-  if (iVar1 != 0) {
-    orig::CMoSpline_Destructor_v1((void *)(iVar1 + 0x54));
-    orig::CMoSpline_Destructor_v1((void *)(iVar1 + 0x2c));
-    orig::CMoSpline_Destructor_v1((void *)(iVar1 + 4));
-    orig::thunk_sub_10028AA0_v1(iVar1);
+  if (i1 != 0) {
+    orig::CMoSpline_Destructor_v1((void *)(i1 + 0x54));
+    orig::CMoSpline_Destructor_v1((void *)(i1 + 0x2c));
+    orig::CMoSpline_Destructor_v1((void *)(i1 + 4));
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1(i1);
     *(uint32_t *)((int)self_ + 0x14) = 0;
   }
   return;

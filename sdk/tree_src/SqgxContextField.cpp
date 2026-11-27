@@ -4,8 +4,8 @@
 
 // FUNCTION: FFXIMAIN 0x1029C460
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sqgx_SetContextFieldE24(undefined4 param_1)
+XI_API void __cdecl Sqgx_SetContextFieldE24(bits32 arg1)
 {
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xe24) = param_1;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xe24) = arg1;
   return;
 }

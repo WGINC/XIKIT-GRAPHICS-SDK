@@ -34,7 +34,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `StAvatar_UpdateFlag2` calls `Mdl_SetChannelActive`, `Mdl_GetEntryWord0`
 - `StAvatar_GetValue2B` calls `Mdl_GetEntryTable`
 - `StAvatar_GetValue2A` calls `Mdl_GetEntryTable`
-- `StAvatar_ComputeRatioValue` calls `Mdl_GetEntryTable`, `Chn_GetSubIndex`, `sub_1027D110`
+- `StAvatar_ComputeRatioValue` calls `Mdl_GetEntryTable`, `Chn_GetSubIndex`, `game_1027D110`
 - `StDancer_Init` calls nothing directly
 - `StDancer_Update` calls `StAvatar_Update`, `Dancer_InitDevice`, `ErrorReport_NoOpVarargsA`, `StAvatarInit`, `StAvatar_SetStateTeardown`, `StAvatar_SetMode`, `StAvatar_SetLevel`, `Dancer_SetStateIfIdle`, `StDancer_SetJobLock`, `StAvatar_SetFlagBit`
 - `Dancer_WorldEnd` calls `StAvatar_RenderIfEnabled`

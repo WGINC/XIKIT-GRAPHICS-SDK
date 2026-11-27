@@ -16,4 +16,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `CMoDxStatusMng::GetRuntimeClass` calls nothing directly
 - `CMoDxStatusMng::Constructor` calls `MoDX_SetInvalid`
-- `CMoDxStatusMng::ScalarDeletingDtor` calls `sub_1006B090`, `thunk_sub_10028AA0`
+- `CMoDxStatusMng::ScalarDeletingDtor` calls `game_1006B090`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`

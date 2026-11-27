@@ -3,18 +3,18 @@
 
 // FUNCTION: FFXIMAIN 0x10017810
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Shader_CreateVertexShader(void *self_, int a1)
+XI_API int __thiscall Shader_CreateVertexShader(void *self_, int arg2)
 {
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  int v4;
+  int i1;
   int result;
-  char *v6;
+  char *p1;
   pDevice = (g_pCDx->pDevice);
-  v6 = (char *)self_ + 16;
+  p1 = (char *)self_ + 16;
   lpVtbl = pDevice->lpVtbl;
-  v4 = (*(int (__stdcall **)(_DWORD))(**((_DWORD **)self_ + 2) + 12))(*((_DWORD *)self_ + 2));
-  result = lpVtbl->CreateVertexShader(pDevice, (void *)a1, (void *)v4, v6, 0);
+  i1 = (*(int (__stdcall **)(uint32_t))(**((uint32_t **)self_ + 2) + 12))(*((uint32_t *)self_ + 2));
+  result = lpVtbl->CreateVertexShader(pDevice, (void *)arg2, (void *)i1, p1, 0);
   result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(result >= 0) << 0));
   return result;
 }

@@ -11,11 +11,11 @@ char ** __cdecl CMoSkeletonElem::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10047940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoSkeletonElem::ScalarDeletingDtor(char a1)
+int CMoSkeletonElem::ScalarDeletingDtor(char arg1)
 {
-  int v2;
-  orig::CMoSkeletonElem_Destructor((int)this, v2);
-  if ( (a1 & 1) != 0 )
+  int i1;
+  orig::CMoSkeletonElem_Destructor((int)this, i1);
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int)this;
 }

@@ -1,4 +1,4 @@
-# xikit devkit, release 3
+# xikit devkit, release 4
 
 A kit for changing how FINAL FANTASY XI draws, for the game's builds 6A995428 (3 Sep 2026), 6AC37846 and 6AE818B4
 (2 Nov 2026, the current one). It holds no game code or data.

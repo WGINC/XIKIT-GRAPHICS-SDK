@@ -4,19 +4,19 @@
 
 // FUNCTION: FFXIMAIN 0x10251320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_UpdateFlag2(uint32_t * param_1, undefined4 param_2)
+XI_API bits32 __cdecl StAvatar_UpdateFlag2(uint32_t * arg1, bits32 arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = param_1;
-  if ((param_1 != (uint32_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::Mdl_SetChannelActive(param_1[3],4,param_2);
-    orig::Mdl_GetEntryWord0(puVar1[3],&param_1);
-    if (((uint32_t)param_1 & 2) != 0) {
-      *puVar1 = *puVar1 | 2;
+  p1 = arg1;
+  if ((arg1 != (uint32_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::Mdl_SetChannelActive(arg1[3],4,arg2);
+    orig::Mdl_GetEntryWord0(p1[3],&arg1);
+    if (((uint32_t)arg1 & 2) != 0) {
+      *p1 = *p1 | 2;
       return 0;
     }
-    *puVar1 = *puVar1 & 0xfffffffd;
+    *p1 = *p1 & 0xfffffffd;
     return 0;
   }
   return 0xffffffff;
@@ -24,15 +24,15 @@ XI_API undefined4 __cdecl StAvatar_UpdateFlag2(uint32_t * param_1, undefined4 pa
 
 // FUNCTION: FFXIMAIN 0x10251370
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_GetValue2B(uint8_t * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl StAvatar_GetValue2B(uint8_t * arg1, bits32 * arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = param_2;
-  *param_2 = 0;
-  if ((param_1 != (uint8_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::Mdl_GetEntryTable((int *)&param_2,(int *)0x0);
-    *puVar1 = param_2[*(int *)(param_1 + 0xc) * 0x30 + 0x2b];
+  p1 = arg2;
+  *arg2 = 0;
+  if ((arg1 != (uint8_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::Mdl_GetEntryTable((int *)&arg2,(int *)0x0);
+    *p1 = arg2[*(int *)(arg1 + 0xc) * 0x30 + 0x2b];
     return 0;
   }
   return 0xffffffff;
@@ -40,15 +40,15 @@ XI_API undefined4 __cdecl StAvatar_GetValue2B(uint8_t * param_1, undefined4 * pa
 
 // FUNCTION: FFXIMAIN 0x102513C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_GetValue2A(uint8_t * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl StAvatar_GetValue2A(uint8_t * arg1, bits32 * arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = param_2;
-  *param_2 = 0;
-  if ((param_1 != (uint8_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::Mdl_GetEntryTable((int *)&param_2,(int *)0x0);
-    *puVar1 = param_2[*(int *)(param_1 + 0xc) * 0x30 + 0x2a];
+  p1 = arg2;
+  *arg2 = 0;
+  if ((arg1 != (uint8_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::Mdl_GetEntryTable((int *)&arg2,(int *)0x0);
+    *p1 = arg2[*(int *)(arg1 + 0xc) * 0x30 + 0x2a];
     return 0;
   }
   return 0xffffffff;
@@ -56,34 +56,36 @@ XI_API undefined4 __cdecl StAvatar_GetValue2A(uint8_t * param_1, undefined4 * pa
 
 // FUNCTION: FFXIMAIN 0x10251410
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __cdecl StAvatar_ComputeRatioValue(uint8_t * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl StAvatar_ComputeRatioValue(uint8_t * arg1, bits32 * arg2)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  undefined4 *puVar4;
-  uint8_t *pbVar5;
-  int iVar6;
-  char xi_frame[24] __attribute__((aligned(4)));
-  undefined4 ** &ppuVar7 = *reinterpret_cast<undefined4 ** *>(xi_frame + 0);
-  float * &pfVar8 = *reinterpret_cast<float * *>(xi_frame + 4);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 20);
+  float f1;
+  float f2;
+  float f3;
+  bits32 *p1;
+  uint8_t *p2;
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { bits32 ** p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; float f4; };   // at 0x14
+  } frame;
   
-  puVar4 = param_2;
-  pbVar5 = param_1;
-  *param_2 = 0;
-  if ((param_1 != (uint8_t *)0x0) && ((*param_1 & 0x10) != 0)) {
-    orig::Mdl_GetEntryTable((int *)&param_1,(int *)0x0);
-    ppuVar7 = &param_2;
-    pbVar5 = param_1 + *(int *)(pbVar5 + 0xc) * 0xc0;
-    fVar1 = *(float *)(pbVar5 + 0xac);
-    fVar2 = *(float *)(*(int *)(pbVar5 + 0xb8) + 0x20);
-    fVar3 = *(float *)(*(int *)(pbVar5 + 0xb8) + 0x24);
-    pfVar8 = &local_4;
-    iVar6 = orig::Chn_GetSubIndex((int)pbVar5);
-    iVar6 = orig::FUN_1027d110((float)(((long double)fVar1 - (long double)fVar2) / (long double)fVar3),iVar6,
-                         (uint8_t *)ppuVar7,pfVar8);
-    *puVar4 = iVar6;
+  p1 = arg2;
+  p2 = arg1;
+  *arg2 = 0;
+  if ((arg1 != (uint8_t *)0x0) && ((*arg1 & 0x10) != 0)) {
+    orig::Mdl_GetEntryTable((int *)&arg1,(int *)0x0);
+    frame.p3 = &arg2;
+    p2 = arg1 + *(int *)(p2 + 0xc) * 0xc0;
+    f1 = *(float *)(p2 + 0xac);
+    f2 = *(float *)(*(int *)(p2 + 0xb8) + 0x20);
+    f3 = *(float *)(*(int *)(p2 + 0xb8) + 0x24);
+    frame.p4 = &frame.f4;
+    i1 = orig::Chn_GetSubIndex((int)p2);
+    i1 = orig::game_1027D110((float)((f1 - f2) / f3),i1,
+                         (uint8_t *)frame.p3,frame.p4);
+    *p1 = i1;
     return 0;
   }
   return 0xffffffff;
@@ -91,7 +93,7 @@ XI_API undefined4 __cdecl StAvatar_ComputeRatioValue(uint8_t * param_1, undefine
 
 // FUNCTION: FFXIMAIN 0x102514C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall StDancer_Init(void * self_)
+XI_API bits32 __thiscall StDancer_Init(void * self_)
 {
   *(uint32_t *)((int)self_ + 4) = 1;
   *(uint32_t *)self_ = 0;
@@ -109,24 +111,24 @@ XI_API undefined4 __thiscall StDancer_Init(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall StDancer_Update(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   uint32_t xi_eax;
-  int *piVar2;
+  int *p1;
   
   if ((*(uint32_t *)((int)self_ + 4) & 4) != 0) {
-    orig::StAvatar_Update((uint8_t *)&DAT_10669158);
+    orig::StAvatar_Update((uint8_t *)&g_10669158);
     return;
   }
   if ((*(uint32_t *)((int)self_ + 4) & 2) != 0) {
-    uVar1 = orig::Dancer_InitDevice(self_);
-    if ((char)uVar1 == '\0') {
+    u1 = orig::Dancer_InitDevice(self_);
+    if ((char)u1 == '\0') {
       *(uint32_t *)((int)self_ + 4) = *(uint32_t *)((int)self_ + 4) & 0xfffffff9;
-      orig::ErrorReport_NoOpVarargsA_v1(s_____Error___dancerInit___failed_10389908);
+      orig::ErrorReport_NoOpVarargsA_v1(str_____Error___dancerInit___failed_10389908);
       return;
     }
-    orig::StAvatarInit(&DAT_10669158);
+    orig::StAvatarInit(&g_10669158);
     if (*(int *)((int)self_ + 0xc) == 0) {
-      DAT_10669158 = DAT_10669158 | 0x30;
+      g_10669158 = g_10669158 | 0x30;
     }
     orig::StAvatar_SetStateTeardown(self_,*(int *)((int)self_ + 8),*(uint32_t *)((int)self_ + 0x10));
     *(uint32_t *)((int)self_ + 4) = *(uint32_t *)((int)self_ + 4) | 4;
@@ -135,61 +137,61 @@ XI_API void __thiscall StDancer_Update(void * self_)
     orig::Dancer_SetStateIfIdle(self_,*(int *)((int)self_ + 0x1c),xi_eax);
     orig::StAvatar_SetStateTeardown(self_,*(int *)((int)self_ + 8),*(uint32_t *)((int)self_ + 0x10));
     orig::StDancer_SetJobLock(self_,*(int *)((int)self_ + 0x20));
-    piVar2 =(int*)(&DAT_10389894);
+    p1 =(int*)(&g_10389894);
     do {
-      orig::StAvatar_SetFlagBit(&DAT_10669158,*piVar2,(uint32_t)piVar2[-1] >> 1 & 1);
-      piVar2 = piVar2 + 2;
-    } while ((int)piVar2 < (int)XI_GAME(0x1038990Cu));
+      orig::StAvatar_SetFlagBit(&g_10669158,*p1,(uint32_t)p1[-1] >> 1 & 1);
+      p1 = p1 + 2;
+    } while ((int)p1 < (int)XI_GAME(0x1038990Cu));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102515F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Dancer_WorldEnd(void * self_, undefined4 param_1)
+XI_API void __thiscall Dancer_WorldEnd(void * self_, bits32 arg2)
 {
   if ((*(uint8_t *)((int)self_ + 4) & 4) != 0) {
-    byte_10669420_as_v0 = 1;
-    orig::StAvatar_RenderIfEnabled((int)XI_GAME(0x10669158u),param_1);
+    g_10669420_as_v0 = 1;
+    orig::StAvatar_RenderIfEnabled((int)XI_GAME(0x10669158u),arg2);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10251620
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall StAvatar_SetActive(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, int param_4)
+XI_API void __thiscall StAvatar_SetActive(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = *(uint32_t *)((int)self_ + 4);
-  if ((uVar1 & 1) != 0) {
-    if (param_4 == -1) {
-      uVar2 = uVar1 ^ 4;
+  u1 = *(uint32_t *)((int)self_ + 4);
+  if ((u1 & 1) != 0) {
+    if (arg5 == -1) {
+      u2 = u1 ^ 4;
     }
-    else if (param_4 == 0) {
-      uVar2 = uVar1 & 0xfffffffb;
+    else if (arg5 == 0) {
+      u2 = u1 & 0xfffffffb;
     }
     else {
-      if ((uVar1 & 4) != 0) {
+      if ((u1 & 4) != 0) {
         return;
       }
-      uVar2 = uVar1 | 4;
+      u2 = u1 | 4;
     }
-    *(uint32_t *)((int)self_ + 4) = uVar2;
-    if ((uVar2 & 4) != 0) {
-      *(uint32_t *)((int)self_ + 4) = uVar2 & 0xfffffff7;
+    *(uint32_t *)((int)self_ + 4) = u2;
+    if ((u2 & 4) != 0) {
+      *(uint32_t *)((int)self_ + 4) = u2 & 0xfffffff7;
     }
     if ((*(uint32_t *)((int)self_ + 4) & 4) != 0) {
-      *(uint32_t *)((int)self_ + 0x10) = param_3;
+      *(uint32_t *)((int)self_ + 0x10) = arg4;
       *(uint32_t *)((int)self_ + 4) = *(uint32_t *)((int)self_ + 4) & 0xfffffffb;
-      *(uint32_t *)((int)self_ + 8) = param_1;
-      *(uint32_t *)((int)self_ + 0xc) = param_2;
+      *(uint32_t *)((int)self_ + 8) = arg2;
+      *(uint32_t *)((int)self_ + 0xc) = arg3;
       orig::StAvatar_ResetOrSetFlag2(self_,0);
       return;
     }
-    if ((uVar1 & 4) != 0) {
-      orig::StAvatarFini(&DAT_10669158);
+    if ((u1 & 4) != 0) {
+      orig::StAvatarFini(&g_10669158);
       orig::StAvatar_ReleaseMemory();
     }
     *(uint32_t *)((int)self_ + 4) = *(uint32_t *)((int)self_ + 4) & 0xfffffffd;
@@ -199,13 +201,13 @@ XI_API void __thiscall StAvatar_SetActive(void * self_, undefined4 param_1, unde
 
 // FUNCTION: FFXIMAIN 0x102516B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall StAvatar_SetStateTeardown(void * self_, int param_1, uint32_t param_2)
+XI_API void __thiscall StAvatar_SetStateTeardown(void * self_, int arg2, uint32_t arg3)
 {
-  if ((-1 < param_1) && (param_1 < 8)) {
-    *(int *)((int)self_ + 8) = param_1;
-    *(uint32_t *)((int)self_ + 0x10) = param_2;
+  if ((-1 < arg2) && (arg2 < 8)) {
+    *(int *)((int)self_ + 8) = arg2;
+    *(uint32_t *)((int)self_ + 0x10) = arg3;
     if ((*(uint8_t *)((int)self_ + 4) & 4) != 0) {
-      orig::StAvatar_Teardown(&DAT_10669158,param_1,param_2);
+      orig::StAvatar_Teardown(&g_10669158,arg2,arg3);
     }
   }
   return;
@@ -213,34 +215,34 @@ XI_API void __thiscall StAvatar_SetStateTeardown(void * self_, int param_1, uint
 
 // FUNCTION: FFXIMAIN 0x10251720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall StAvatar_SetMode(void * self_, int param_1)
+XI_API void __thiscall StAvatar_SetMode(void * self_, int arg2)
 {
-  if (((-1 < param_1) && (param_1 < 3)) &&
-     (*(int *)((int)self_ + 0x14) = param_1, (*(uint8_t *)((int)self_ + 4) & 4) != 0)) {
-    orig::StAvatar_StoreMode(&DAT_10669158,param_1);
+  if (((-1 < arg2) && (arg2 < 3)) &&
+     (*(int *)((int)self_ + 0x14) = arg2, (*(uint8_t *)((int)self_ + 4) & 4) != 0)) {
+    orig::StAvatar_StoreMode(&g_10669158,arg2);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10251750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall StAvatar_SetLevel(void * self_, int param_1)
+XI_API bits32 __thiscall StAvatar_SetLevel(void * self_, int arg2)
 {
-  if (((-1 < param_1) && (param_1 < 5)) &&
-     (*(int *)((int)self_ + 0x18) = param_1, (*(uint8_t *)((int)self_ + 4) & 4) != 0)) {
-    param_1 = orig::StAvatar_Start((uint8_t *)&DAT_10669158,param_1);
+  if (((-1 < arg2) && (arg2 < 5)) &&
+     (*(int *)((int)self_ + 0x18) = arg2, (*(uint8_t *)((int)self_ + 4) & 4) != 0)) {
+    arg2 = orig::StAvatar_Start((uint8_t *)&g_10669158,arg2);
   }
-  return param_1;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10251780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) Dancer_SetStateIfIdle(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API void __attribute__((stdcall, regparm(3))) Dancer_SetStateIfIdle(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
   if (*(uint32_t *)((int)self_ + 0x1c) < 2) {
-    *(int *)((int)self_ + 0x1c) = param_2;
+    *(int *)((int)self_ + 0x1c) = arg4;
     if ((*(uint8_t *)((int)self_ + 4) & 4) != 0) {
-      orig::StAvatar_SetField10((uint8_t *)&DAT_10669158,param_2);
+      orig::StAvatar_SetField10((uint8_t *)&g_10669158,arg4);
     }
   }
   return;
@@ -252,16 +254,16 @@ XI_API void __thiscall StDancer_SetJobLock(void * self_, int jobNdx)
 {
   if (((-1 < jobNdx) && (jobNdx < 0x18)) &&
      (*(int *)((int)self_ + 0x20) = jobNdx, (*(uint8_t *)((int)self_ + 4) & 2) != 0)) {
-    orig::StAvatar_SetLock(&DAT_10669158,jobNdx - 1,(uint32_t)(jobNdx != 0));
+    orig::StAvatar_SetLock(&g_10669158,jobNdx - 1,(uint32_t)(jobNdx != 0));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10251920
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall StAvatar_ResetOrSetFlag2(void * self_, int param_1)
+XI_API void __thiscall StAvatar_ResetOrSetFlag2(void * self_, int arg2)
 {
-  if (param_1 == -1) {
+  if (arg2 == -1) {
     *(uint32_t *)self_ = 0;
     *(uint32_t *)((int)self_ + 4) = *(uint32_t *)((int)self_ + 4) & 0xfffffffd;
     return;
@@ -281,41 +283,43 @@ XI_API uint32_t __thiscall StAvatar_IsFlag20(void * self_)
 // GATE: PASS -- 100 trials, 18 returned normally, 236 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 18
 XI_API char __thiscall Dancer_InitDevice(int *self_)
 {
-  _DWORD *v2;
-  unsigned int v3;
-  int v5;
+  uint32_t *p1;
+  unsigned int u1;
+  int i1;
   IDirect3DDevice8 *pDevice;
-  alignas(16) unsigned char xi_frame[0x85C];  // address-taken locals at their original offsets
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int (&v9)[272] = *reinterpret_cast<int (*)[272]>(xi_frame + 0x1C);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x85C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i3; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; int i4[272]; };   // at 0x1C
+  } frame;
 
   *self_ = 11534336;
-  v2 = orig::Mem_AllocObject(11534352, 0);
-  v3 = ((unsigned int)v2 + 15) & 0xFFFFFFF0;
-  g_dancerMemBlock = (int)v2;
-  if ( v3 != 0 )
+  p1 = orig::Mem_AllocObject(11534352, 0);
+  u1 = ((unsigned int)p1 + 15) & 0xFFFFFFF0;
+  g_dancerMemBlock = (int)p1;
+  if ( u1 != 0 )
   {
-    v7 = *self_;
-    v5 = *self_ - 0x200000;
-    orig::ErrorReport_NoOpVarargsB(aMemtotal0x08xB, v7);
-    orig::ErrorReport_NoOpVarargsB(aWorkpool0x08xB, 0x200000, v3);
-    orig::ErrorReport_NoOpVarargsB(aMainpool0x08xB, v5);
+    frame.i2 = *self_;
+    i1 = *self_ - 0x200000;
+    orig::ErrorReport_NoOpVarargsB(aMemtotal0x08xB, frame.i2);
+    orig::ErrorReport_NoOpVarargsB(aWorkpool0x08xB, 0x200000, u1);
+    orig::ErrorReport_NoOpVarargsB(aMainpool0x08xB, i1);
     g_This_10669418 = g_pD3DHolder->pD3D;
     pDevice = g_pD3DHolder->pDevice;
-    g_dancerMainMemSize = v5;
+    g_dancerMainMemSize = i1;
     g_pDancerDevice = pDevice;
-    g_dancerMainMemBase = v3;
+    g_dancerMainMemBase = u1;
     g_dancerWorkMemSize = 0x200000;
-    g_dancerWorkMemBase = v3 + v5;
+    g_dancerWorkMemBase = u1 + i1;
     orig::sqMemInit();
     orig::sqMemPoolRegister(0, g_dancerMainMemBase, g_dancerMainMemSize, aMainmem);
     orig::sqMemPoolRegister(1, g_dancerWorkMemBase, g_dancerWorkMemSize, aWorkmem);
     g_pSqgxContext = orig::sqgxContext_Create();
     g_pDancerDevice->GetRenderTarget((IDirect3DSurface8 **)g_pSqgxContext + 575);
     g_pDancerDevice->GetDepthStencilSurface((IDirect3DSurface8 **)(g_pSqgxContext + 576));
-    (*(void (__stdcall **)(int, int *))(*(_DWORD *)g_pSqgxContext[575] + 32))(g_pSqgxContext[575], &v8);
-    if ( v9[3] > 0x200u )
+    (*(void (__stdcall **)(int, int *))(*(uint32_t *)g_pSqgxContext[575] + 32))(g_pSqgxContext[575], &frame.i3);
+    if ( frame.i4[3] > 0x200u )
     {
       orig::sqgxTextureAdd(2, 2, (IDirect3DTexture8 *)4, nullptr);
       orig::sqgxTextureAdd(2, 2, (IDirect3DTexture8 *)4, nullptr);
@@ -323,12 +327,12 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
     }
     else
     {
-      orig::sqgxTextureAdd(v9[3], v9[4], (IDirect3DTexture8 *)4, nullptr);
+      orig::sqgxTextureAdd(frame.i4[3], frame.i4[4], (IDirect3DTexture8 *)4, nullptr);
       orig::sqgxTextureAdd(xRight, yBottom, (IDirect3DTexture8 *)4, nullptr);
-      orig::sqgxTextureAddZ(v9[3], v9[4], 3);
+      orig::sqgxTextureAddZ(frame.i4[3], frame.i4[4], 3);
     }
-    g_This_10669418->GetAdapterIdentifier(0, 2u, &v9[5]);
-    g_pSqgxContext[180] = v9[263] == 4098 || (*(unsigned __int8 *)((char *)g_pCDx + 0x912)) == 0;
+    g_This_10669418->GetAdapterIdentifier(0, 2u, &frame.i4[5]);
+    g_pSqgxContext[180] = frame.i4[263] == 4098 || (*(unsigned char *)((char *)g_pCDx + 0x912)) == 0;
     g_pSqgxContext[553] = 1;
     g_pSqgxContext[554] = 0;
     g_pSqgxContext[555] = 2;
@@ -348,9 +352,9 @@ XI_API char __thiscall Dancer_InitDevice(int *self_)
 
 // FUNCTION: FFXIMAIN 0x10251CE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_ReleaseMemory(void)
+XI_API bits32 __cdecl StAvatar_ReleaseMemory(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   orig::SqgxContext_ResetHandles();
   orig::SqObject_Release(&g_pSqgxContext_as_v1);
@@ -360,26 +364,26 @@ XI_API undefined4 __cdecl StAvatar_ReleaseMemory(void)
     g_dancerMemBlock_as_v0 = 0;
     g_dancerMainMemBase = 0;
   }
-  uVar1 = (uint32_t)g_dancerWorkMemBase >> 8;
+  u1 = (uint32_t)g_dancerWorkMemBase >> 8;
   if (g_dancerWorkMemBase != 0) {
     g_dancerWorkMemSize_as_v0 = 0;
     g_dancerWorkMemBase = 0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(uVar1)) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(u1)) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x102524B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StAvatar_InitSlotRecord(undefined4 * param_1)
+XI_API bits32 __cdecl StAvatar_InitSlotRecord(bits32 * arg1)
 {
-  *param_1 = 1;
-  param_1[1] = 0;
-  param_1[2] = 0xffffffff;
-  param_1[3] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
+  *arg1 = 1;
+  arg1[1] = 0;
+  arg1[2] = 0xffffffff;
+  arg1[3] = 0;
+  arg1[4] = 0;
+  arg1[5] = 0;
+  arg1[6] = 0;
+  arg1[7] = 0;
+  arg1[8] = 0;
   return 0;
 }

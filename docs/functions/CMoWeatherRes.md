@@ -7,7 +7,7 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoWeatherRes.cpp`.
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
 | `CMoWeatherRes::ScalarDeletingDtor` | 0x101893D0 | 30 | yes | - | - | - |
-| `CMoWeatherRes::SetupNop` | 0x101893F0 | 1 | yes | - | Setup that does nothing. (reviewed as sub_101893F0) | high |
+| `CMoWeatherRes::SetupNop` | 0x101893F0 | 1 | yes | - | Setup that does nothing. (reviewed as game_101893F0) | high |
 
 ## Direct calls
 

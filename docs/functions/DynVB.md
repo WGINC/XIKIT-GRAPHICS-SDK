@@ -34,6 +34,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `CameraCache_CacheViewProjection` calls `CDx::GetTransformCached`
 - `Gfx_SetViewMatrixFromField10` calls `CDx::SetTransform`
 - `Gfx_SetViewMatrixFromField90` calls `CDx::SetTransform`
-- `Mo_InitSharedRenderResources` calls `Rand_SeedMT19937`, `TexRef_ResolveByName`, `Mem_AllocDefault`, `CAcc::Constructor`, `CMoDX::CreateTexture`, `sub_1000AD70`, `Allocator_Generic`, `DynVB_Constructor`, `DynVB_Create`
+- `Mo_InitSharedRenderResources` calls `Rand_SeedMT19937`, `TexRef_ResolveByName`, `Mem_AllocDefault`, `CAcc::Constructor`, `CMoDX::CreateTexture`, `game_1000AD70`, `Allocator_Generic`, `DynVB_Constructor`, `DynVB_Create`
 - `DynVB_ToggleDynVBs` calls `DynVBCtor_ToggleByte45`
-- `DynVB_ReleaseResourcesOf` calls `sub_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `ResourceIter_Start`, `sub_10071E90`, `YmGenerater_Stop`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`, `Generator_ClearSubobjectOrSetFlag`, `CMoTask::Release`
+- `DynVB_ReleaseResourcesOf` calls `game_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `ResourceIter_Start`, `game_10071E90`, `YmGenerater_Stop`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`, `Generator_ClearSubobjectOrSetFlag`, `CMoTask::Release`

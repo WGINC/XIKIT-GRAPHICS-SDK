@@ -4,77 +4,77 @@
 
 // FUNCTION: FFXIMAIN 0x100397A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TexBase_CopyName16(void * self_, char * param_1)
+XI_API bits32 __thiscall TexBase_CopyName16(void * self_, char * arg2)
 {
-  char cVar1;
-  uint8_t *puVar2;
-  uint32_t uVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  uint32_t *puVar7;
+  char c1;
+  uint8_t *p1;
+  uint32_t u1;
+  int i1;
+  char *p2;
+  int i2;
+  uint32_t *p3;
   
-  uVar3 = 0xffffffff;
-  pcVar5 = param_1;
+  u1 = 0xffffffff;
+  p2 = arg2;
   do {
-    if (uVar3 == 0) break;
-    uVar3 = uVar3 - 1;
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar1 != '\0');
-  if (~uVar3 - 1 < 0x10) {
-    uVar3 = 0xffffffff;
-    pcVar5 = param_1;
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *p2;
+    p2 = p2 + 1;
+  } while (c1 != '\0');
+  if (~u1 - 1 < 0x10) {
+    u1 = 0xffffffff;
+    p2 = arg2;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    iVar4 = ~uVar3 - 1;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    i1 = ~u1 - 1;
   }
   else {
-    iVar4 = 0x10;
+    i1 = 0x10;
   }
-  iVar6 = 0;
-  if (0 < iVar4) {
-    puVar2 = self_;
-    iVar6 = iVar4;
+  i2 = 0;
+  if (0 < i1) {
+    p1 = self_;
+    i2 = i1;
     do {
-      *puVar2 = puVar2[(int)param_1 - (int)self_];
-      puVar2 = puVar2 + 1;
-      iVar6 = iVar6 + -1;
-    } while (iVar6 != 0);
-    iVar6 = iVar4;
-    if (0xf < iVar4) {
-      return puVar2;
+      *p1 = p1[(int)arg2 - (int)self_];
+      p1 = p1 + 1;
+      i2 = i2 + -1;
+    } while (i2 != 0);
+    i2 = i1;
+    if (0xf < i1) {
+      return p1;
     }
   }
-  puVar7 = (uint32_t *)((int)self_ + iVar6);
-  for (uVar3 = 0x10U - iVar6 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *puVar7 = 0;
-    puVar7 = puVar7 + 1;
+  p3 = (uint32_t *)((int)self_ + i2);
+  for (u1 = 0x10U - i2 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p3 = 0;
+    p3 = p3 + 1;
   }
-  for (uVar3 = 0x10U - iVar6 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *(uint8_t *)puVar7 = 0;
-    puVar7 = (uint32_t *)((int)puVar7 + 1);
+  for (u1 = 0x10U - i2 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p3 = 0;
+    p3 = (uint32_t *)((int)p3 + 1);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10039810
 // GATE: PASS -- 100 trials, 53 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 53
-XI_API void __thiscall Util_Copy16Bytes(void * self_, int param_1)
+XI_API void __thiscall Util_Copy16Bytes(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = param_1 - (int)self_;
-  iVar2 = 0x10;
+  i1 = arg2 - (int)self_;
+  i2 = 0x10;
   do {
-    *(uint8_t *)self_ = *(uint8_t *)((int)self_ + iVar1);
+    *(uint8_t *)self_ = *(uint8_t *)((int)self_ + i1);
     self_ = (void *)((int)self_ + 1);
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    i2 = i2 + -1;
+  } while (i2 != 0);
   return;
 }

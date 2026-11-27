@@ -4,100 +4,104 @@
 
 // FUNCTION: FFXIMAIN 0x1029ADF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqskSkeleton_BuildSQO(char * param_1, undefined4 param_2)
+XI_API bits32 __cdecl SqskSkeleton_BuildSQO(char * arg1, bits32 arg2)
 {
-  char *pcVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  uint32_t uVar4;
-  char xi_frame[8] __attribute__((aligned(4)));
-  uint8_t  (&local_8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  char *p1;
+  bits32 *p2;
+  int i1;
+  uint32_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { uint8_t u2[4]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+  } frame;
   
-  pcVar1 = param_1;
-  if ((((*param_1 != 'S') || (param_1[1] != 'Q')) || (param_1[2] != 'L')) || (param_1[3] != 'E')) {
-    orig::sqDebugPrintf_v1(s_____Error__memPtr_0x_08X__not_an_103b7a04,param_1);
-    orig::sqDebugPrintf_v1(s_sqskBuildSQO_0x_08X___d__103bc5b0,pcVar1,param_2);
+  p1 = arg1;
+  if ((((*arg1 != 'S') || (arg1[1] != 'Q')) || (arg1[2] != 'L')) || (arg1[3] != 'E')) {
+    orig::sqDebugPrintf_v1(str_____Error__memPtr_0x_08X__not_an_103B7A04,arg1);
+    orig::sqDebugPrintf_v1(str_sqskBuildSQO_0x_08X___d__103BC5B0,p1,arg2);
     return 0;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock((undefined4 *)local_8,4,1,(undefined4 *)(param_1 + 4),0);
-  uVar4 = (uint32_t)((local_8[0] & 1) != 0);
-  puVar2 = orig::SqScriptRead_ReadBlock(&local_4,4,1,puVar2,0);
-  if (local_4 != 0xb0001) {
-    orig::sqDebugPrintf_v1(s_____Error__Unknown_skeleton_type_103bc5d0,local_4);
-    orig::sqDebugPrintf_v1(s_sqskBuildSQO_0x_08X___d__103bc5b0,puVar2,param_2);
+  p2 = orig::SqScriptRead_ReadBlock((bits32 *)frame.u2,4,1,(bits32 *)(arg1 + 4),0);
+  u1 = (uint32_t)((frame.u2[0] & 1) != 0);
+  p2 = orig::SqScriptRead_ReadBlock(&frame.i2,4,1,p2,0);
+  if (frame.i2 != 0xb0001) {
+    orig::sqDebugPrintf_v1(str_____Error__Unknown_skeleton_type_103BC5D0,frame.i2);
+    orig::sqDebugPrintf_v1(str_sqskBuildSQO_0x_08X___d__103BC5B0,p2,arg2);
     return 0;
   }
-  puVar2 = orig::SqScriptRead_ReadBlock(&param_1,4,1,puVar2,uVar4);
-  if (((uint32_t)param_1 & 0x10000) != 0) {
-    param_1 = (char *)((uint32_t)param_1 & 0xfffeffff);
-    iVar3 = orig::SqskSkeleton_BuildBinary((int)puVar2,(int)param_1,uVar4);
-    return iVar3;
+  p2 = orig::SqScriptRead_ReadBlock(&arg1,4,1,p2,u1);
+  if (((uint32_t)arg1 & 0x10000) != 0) {
+    arg1 = (char *)((uint32_t)arg1 & 0xfffeffff);
+    i1 = orig::SqskSkeleton_BuildBinary((int)p2,(int)arg1,u1);
+    return i1;
   }
-  orig::sqDebugPrintf_v1(s_____Error__Only_binary_files_sup_103bc588);
-  orig::sqDebugPrintf_v1(s_sqskBuildSQO_0x_08X___d__103bc5b0,puVar2,param_2);
+  orig::sqDebugPrintf_v1(str_____Error__Only_binary_files_sup_103BC588);
+  orig::sqDebugPrintf_v1(str_sqskBuildSQO_0x_08X___d__103BC5B0,p2,arg2);
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1029AF20
 // GATE: PASS -- 100 trials, 96 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-XI_API int __cdecl SqskSkeleton_BuildBinary(int param_1, int param_2, int param_3)
+XI_API int __cdecl SqskSkeleton_BuildBinary(int arg1, int arg2, int arg3)
 {
-  float *pfVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  char xi_frame[44] __attribute__((aligned(4)));
-  int  &local_2c = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  (&local_28)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 4);
-  float  (&local_1c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 16);
-  float  (&local_10)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 28);
+  float *p1;
+  bits32 *p2;
+  int i1;
+  int i2;
+  int i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[44];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f1[3]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f2[3]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f3[4]; };   // at 0x1C
+  } frame;
   
-  iVar3 = param_3;
-  if (param_2 != 4) {
-    orig::sqDebugPrintf_v1(s_____Error__Skeleton_version_mism_103bc634,param_2,4);
+  i1 = arg3;
+  if (arg2 != 4) {
+    orig::sqDebugPrintf_v1(str_____Error__Skeleton_version_mism_103BC634,arg2,4);
     return 0;
   }
-  pfVar1 = (float *)orig::SqScriptRead_ReadBlock(&param_2,4,1,(undefined4 *)(param_1 + 0x50),param_3);
-  if (param_2 < 0) {
-    orig::sqDebugPrintf_v1(s_____Error__invalid_boneCount__d__103bc5fc,param_2);
+  p1 = (float *)orig::SqScriptRead_ReadBlock(&arg2,4,1,(bits32 *)(arg1 + 0x50),arg3);
+  if (arg2 < 0) {
+    orig::sqDebugPrintf_v1(str_____Error__invalid_boneCount__d__103BC5FC,arg2);
     return 0;
   }
-  puVar2 = orig::SqskSkeleton_Create();
-  orig::SqskSkeleton_SetNodeCount((int)puVar2,param_2);
-  iVar4 = param_2 << 4;
-  if (iVar3 != 0) {
-    orig::SqNibbleSwap_SwapNibblesXor((int)pfVar1,param_2 << 6);
+  p2 = orig::SqskSkeleton_Create();
+  orig::SqskSkeleton_SetNodeCount((int)p2,arg2);
+  i2 = arg2 << 4;
+  if (i1 != 0) {
+    orig::SqNibbleSwap_SwapNibblesXor((int)p1,arg2 << 6);
   }
-  iVar3 = orig::SqScriptRead_ReturnZero();
-  if (iVar3 != 0) {
-    orig::SqIO_SwapBytes((uint8_t *)pfVar1,4,iVar4,iVar3);
+  i1 = orig::SqScriptRead_ReturnZero();
+  if (i1 != 0) {
+    orig::SqIO_SwapBytes((uint8_t *)p1,4,i2,i1);
   }
-  iVar3 = 0;
-  local_2c = 0;
-  if (0 < param_2) {
-    param_3 = 0;
+  i1 = 0;
+  frame.i4 = 0;
+  if (0 < arg2) {
+    arg3 = 0;
     do {
-      iVar4 = puVar2[8];
-      iVar5 = puVar2[9] + param_3;
-      orig::SqVec_SetXyz(local_28,*pfVar1,pfVar1[1],pfVar1[2]);
-      orig::SqSkelNode_CopyVec3At5C(iVar5,local_28);
-      orig::SqQuat_Set(local_10,pfVar1[3],pfVar1[4],pfVar1[5],pfVar1[6]);
-      orig::SqSkelNode_CopyQuatAt68(iVar5,local_10);
-      orig::SqVec_SetXyz(local_1c,pfVar1[7],pfVar1[8],pfVar1[9]);
-      orig::SqSkelNode_CopyVec3At78(iVar5,local_1c);
-      orig::SqSkelNode_SetTripleAt84(iVar5,(int *)(pfVar1 + 10));
-      orig::SqSkelNode_SetFloatAt94(iVar5,(float)(long double)xi_castbits<int>(pfVar1[0xd]));
-      orig::SqSkelNode_SetFloatAt98(iVar5,(float)(long double)xi_castbits<int>(pfVar1[0xe]));
-      if (0 < iVar3) {
-        orig::SqhiNode_AppendChild(puVar2[8] + xi_castbits<int>(pfVar1[0xf]) * 0xf8,iVar4 + iVar3);
+      i2 = p2[8];
+      i3 = p2[9] + arg3;
+      orig::SqVec_SetXyz(frame.f1,*p1,p1[1],p1[2]);
+      orig::SqSkelNode_CopyVec3At5C(i3,frame.f1);
+      orig::SqQuat_Set(frame.f3,p1[3],p1[4],p1[5],p1[6]);
+      orig::SqSkelNode_CopyQuatAt68(i3,frame.f3);
+      orig::SqVec_SetXyz(frame.f2,p1[7],p1[8],p1[9]);
+      orig::SqSkelNode_CopyVec3At78(i3,frame.f2);
+      orig::SqSkelNode_SetTripleAt84(i3,(int *)(p1 + 10));
+      orig::SqSkelNode_SetFloatAt94(i3,(float)bit_cast<int>(p1[0xd]));
+      orig::SqSkelNode_SetFloatAt98(i3,(float)bit_cast<int>(p1[0xe]));
+      if (0 < i1) {
+        orig::SqhiNode_AppendChild(p2[8] + bit_cast<int>(p1[0xf]) * 0xf8,i2 + i1);
       }
-      pfVar1 = pfVar1 + 0x10;
-      local_2c = local_2c + 1;
-      iVar3 = iVar3 + 0xf8;
-      param_3 = param_3 + 0x9c;
-    } while (local_2c < param_2);
+      p1 = p1 + 0x10;
+      frame.i4 = frame.i4 + 1;
+      i1 = i1 + 0xf8;
+      arg3 = arg3 + 0x9c;
+    } while (frame.i4 < arg2);
   }
-  return (int)puVar2;
+  return (int)p2;
 }

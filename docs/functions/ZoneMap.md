@@ -24,7 +24,7 @@ Why the file has this name (data/unit_names.json): CTsZoneMap::Render / DrawProj
 | `ZoneMap_QueryBoxHeight` | 0x10181210 | 117 | yes | - | Tests a box against the zone map and returns the height of the hit. | low |
 | `ZoneMap_QueryBoxHeightBand` | 0x10181290 | 95 | yes | - | Queries the box height at two offsets 0.51 either side of the given position. | low |
 | `ZoneMap_QueryBoxHeightByRadius` | 0x10181300 | 104 | yes | - | Queries the box height at two offsets given by the stored radius at this+0x170. | low |
-| `ZoneMap_QueryExpandedBox` | 0x10181370 | 115 | yes | - | Tests a box around the given point, expanded by a constant, against the sub-object at +0x178 and writes the hit height to *param_5. | low |
+| `ZoneMap_QueryExpandedBox` | 0x10181370 | 115 | yes | - | Tests a box around the given point, expanded by a constant, against the sub-object at +0x178 and writes the hit height to *arg6. | low |
 | `ZoneMap_FindGroundHeight` | 0x101813F0 | 183 | yes | - | - | - |
 | `ZoneMap_Query169290` | 0x101814D0 | 49 | yes | - | Queries the zone map's +0x178 member through 0x10169290. | low |
 | `ZoneMap_Query1693B0` | 0x10181590 | 11 | yes | - | Queries the zone map's +0x178 member for a position through 0x101693B0. | low |
@@ -81,7 +81,7 @@ Why the file has this name (data/unit_names.json): CTsZoneMap::Render / DrawProj
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `ZoneMap_UpdateLoadState` calls `ZoneMap_ReleaseSlot`, `sub_10178D90`, `ResourceHandle_IsResident`, `sub_10178DD0`, `sub_10072FD0`, `sub_10071E90`, `XI_PACKET_100FC680 (left out)`, `ZoneMapLoad_SetFlag2000OnUnderscoreEntries`, `sub_1017A630`, `sub_10186D30`, `XiZone::FindSubArea`, `sub_100852D0`, `XI_PACKET_10178790 (left out)`
+- `ZoneMap_UpdateLoadState` calls `ZoneMap_ReleaseSlot`, `game_10178D90`, `ResourceHandle_IsResident`, `game_10178DD0`, `game_10072FD0`, `game_10071E90`, `XI_PACKET_100FC680 (left out)`, `ZoneMapLoad_SetFlag2000OnUnderscoreEntries`, `game_1017A630`, `game_10186D30`, `XiZone::FindSubArea`, `game_100852D0`, `XI_PACKET_10178790 (left out)`
 - `ZoneMap_SetArea` calls `ZoneMap_ReleaseSlot`, `XI_PACKET_100FC680 (left out)`, `ZoneMap_Call10173AE0`, `ZoneMapLoad_SetFlag2000OnUnderscoreEntries`
 - `ZoneMap_ReleaseSlot` calls `ZoneMap_UnlinkSlotCells`, `ZoneMap_FreeSlot`
 - `ZoneMap_Reset` calls `ZoneMap_TeardownStep`, `EffectOffscreen_FreeSplineSet`
@@ -91,7 +91,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ZoneMap_GetField342C8` calls nothing directly
 - `ZoneMap_SetByteOfId999Entries` calls nothing directly
 - `ZoneMap_DrawMeshGroupsWithFog` calls `ZoneMap_DrawMeshById`
-- `ZoneMap_FreeSlot` calls `Mem_FreeObject`, `ZoneMapLoad_FreeNodeOrAll`, `ZoneMap_FreeSubAreas`, `sub_1017A690`, `DynVB_ReleaseResourcesOf`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`
+- `ZoneMap_FreeSlot` calls `Mem_FreeObject`, `ZoneMapLoad_FreeNodeOrAll`, `ZoneMap_FreeSubAreas`, `game_1017A690`, `DynVB_ReleaseResourcesOf`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`
 - `ZoneMap_TeardownStep` calls `ZoneMap_FreeDbgBoxList`, `ZoneMap_FreeSlot`, `ZoneMap_ResetGlobalTables`, `ZoneMap_ReleaseBuffers`, `CMoResource::ReleaseChain`, `MoRes_FreeIfUnreferenced`
 - `ZoneMap_QueryBoxHeightBandThenGetCount34154` calls `ZoneMap_QueryBoxHeightBand`, `ZoneMap_GetCount34154`
 - `ZoneMap_QueryBoxHeight` calls `ZoneMapLoad_SegmentHit3413A`
@@ -104,15 +104,15 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ZoneMap_IsTargetAheadKind9` calls `ActorHandle_Resolve`, `Mat44_Multiply`, `ZoneMapLoad_SegmentHitWithObjects`, `ZoneMap_QueryBoxHeight`, `ZoneMapLoad_GetField34148`
 - `ZoneMap_GetTargetGroundKindByte` calls `ActorHandle_Resolve`, `ZoneMap_QueryBoxHeight`, `ZoneMapLoad_GetField34148`
 - `ZoneMap_IsBoxHeightHitByRadius` calls `ZoneMap_QueryBoxHeight`
-- `ZoneMap_Query16E7E0` calls `sub_1016E7E0`
+- `ZoneMap_Query16E7E0` calls `game_1016E7E0`
 - `ZoneMap_MulPointXyz` calls nothing directly
 - `ZoneMap_BuildPerspective` calls nothing directly
 - `Gfx_DrawWireBox` calls `CDx::DrawPrimitiveUP`
 - `ZoneMap_FindSlotByName` calls `ZoneMap_FindEntryByName`
-- `ZoneMap_DrawMeshById` calls `sub_10181BB0`, `CDx::SetLight`, `CDx::SetTransform`, `XiZone::GetDirLights`, `ZoneMap_FillDirLight`, `Env_ComputeAmbient`, `Env_ComputeFog`, `CDx::DrawPrimitive`
-- `ModelActor_Draw` calls `sub_10178760`, `CDx::SetLight`, `XiZone::GetDirLights`, `XiZone::GetDirLight`, `XiZone::GetAmbient`, `XiZone::GetFog`, `Gfx_SetZBias`, `CDx::SetTransform`, `CDx::DrawPrimitive`
+- `ZoneMap_DrawMeshById` calls `game_10181BB0`, `CDx::SetLight`, `CDx::SetTransform`, `XiZone::GetDirLights`, `ZoneMap_FillDirLight`, `Env_ComputeAmbient`, `Env_ComputeFog`, `CDx::DrawPrimitive`
+- `ModelActor_Draw` calls `game_10178760`, `CDx::SetLight`, `XiZone::GetDirLights`, `XiZone::GetDirLight`, `XiZone::GetAmbient`, `XiZone::GetFog`, `Gfx_SetZBias`, `CDx::SetTransform`, `CDx::DrawPrimitive`
 - `ZoneMap_ClearSlots` calls `ZoneMap_FreeSubAreas`
-- `ZoneMap_FreeSubAreas` calls `XiZone::FindSubArea`, `sub_10187470`, `thunk_sub_10028AA0`, `operator_delete`
+- `ZoneMap_FreeSubAreas` calls `XiZone::FindSubArea`, `game_10187470`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`, `operator_delete`
 - `ZoneMap_GetAddr0B4` calls nothing directly
 - `ZoneMap_GetAddr0C4` calls nothing directly
 - `ZoneMap_GetAddr0D4` calls nothing directly
@@ -142,9 +142,9 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ZoneMap_ForEachFindKind5B` calls `YmCombineWeather_FindKind5B`
 - `ZoneMap_ForEachFindKind5A` calls `YmCombineWeather_FindKind5A`
 - `ZoneMap_SaveState` calls `ZoneMap_UpdateOrbit`
-- `ZoneMap_UpdateOrbit` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateX`, `Mat4_TransformPointInPlace`, `Camera_GetField50`, `Vec3_Copy`, `Vec3_SubInPlace`, `Vec3_ScaleInPlace`, `Vec3_AddInPlace`, `sub_100274B0`, `sub_10027530`, `MathVector_Nop`
-- `ZoneMap_SetRecord` calls `sub_10311C2C`, `Camera_SetField304BytesOnGlobal`, `Camera_SetField300`, `Camera_SetField2FC`, `ZoneMap_GetFloatRef1CPlus8`, `Camera_SetField314`, `ZoneMap_GetFloatRef1CPlus4`, `Camera_SetField318`, `ZoneMap_ApplyColors`
-- `ZoneMap_ApplyColors` calls `sub_100274B0`, `Env_GetAmbientColorPtr`, `Env_GetColorPtr84`, `ZoneMap_GetAddr114`, `ZoneMap_GetAddr094`, `ZoneMap_GetAddrRef18Plus3C`, `ZoneMap_GetAddrRef18Plus40`, `ZoneMap_GetAddrRef18Plus1C`, `ZoneMap_GetAddrRef18Plus20`, `ZoneMap_GetAddr0F4`, `ZoneMap_GetAddr074`, `ZoneMap_GetAddr0C4`, `ZoneMap_GetAddr044`, `ZoneMap_GetAddr064`, `ZoneMap_GetAddr024`
+- `ZoneMap_UpdateOrbit` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateX`, `Mat4_TransformPointInPlace`, `Camera_GetField50`, `Vec3_Copy`, `Vec3_SubInPlace`, `Vec3_ScaleInPlace`, `Vec3_AddInPlace`, `game_100274B0`, `game_10027530`, `MathVector_Nop`
+- `ZoneMap_SetRecord` calls `game_10311C2C`, `Camera_SetField304BytesOnGlobal`, `Camera_SetField300`, `Camera_SetField2FC`, `ZoneMap_GetFloatRef1CPlus8`, `Camera_SetField314`, `ZoneMap_GetFloatRef1CPlus4`, `Camera_SetField318`, `ZoneMap_ApplyColors`
+- `ZoneMap_ApplyColors` calls `game_100274B0`, `Env_GetAmbientColorPtr`, `Env_GetColorPtr84`, `ZoneMap_GetAddr114`, `ZoneMap_GetAddr094`, `ZoneMap_GetAddrRef18Plus3C`, `ZoneMap_GetAddrRef18Plus40`, `ZoneMap_GetAddrRef18Plus1C`, `ZoneMap_GetAddrRef18Plus20`, `ZoneMap_GetAddr0F4`, `ZoneMap_GetAddr074`, `ZoneMap_GetAddr0C4`, `ZoneMap_GetAddr044`, `ZoneMap_GetAddr064`, `ZoneMap_GetAddr024`
 - `ZoneMap_GetCurrent` calls nothing directly
 - `ZoneMap_AppendToList` calls `ZoneMap_GetCurrent`, `ZoneMap_GetTail`
 - `ZoneMap_FindPrevious` calls `ZoneMap_GetCurrent`

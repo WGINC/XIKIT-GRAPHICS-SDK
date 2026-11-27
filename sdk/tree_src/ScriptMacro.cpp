@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x100684F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ScriptMacro_SetDwordValue(void * self_, undefined4 xi_s1)
+XI_API void __thiscall ScriptMacro_SetDwordValue(void * self_, bits32 xi_s1)
 {
   orig::ScriptMacro_AssignTyped(self_,&xi_s1,0);
   return;
@@ -12,16 +12,16 @@ XI_API void __thiscall ScriptMacro_SetDwordValue(void * self_, undefined4 xi_s1)
 
 // FUNCTION: FFXIMAIN 0x10068590
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ScriptMacro_AssignTyped(void * self_, undefined4 * param_1, undefined4 param_2)
+XI_API void __thiscall ScriptMacro_AssignTyped(void * self_, bits32 * arg2, bits32 arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
   if (*(int *)((int)self_ + 4) == 4) {
     orig::operator_delete_v1(*(LPVOID *)self_);
     *(uint32_t *)((int)self_ + 4) = 0;
   }
-  uVar1 = *param_1;
-  *(uint32_t *)((int)self_ + 4) = param_2;
-  *(uint32_t *)self_ = uVar1;
+  u1 = *arg2;
+  *(uint32_t *)((int)self_ + 4) = arg3;
+  *(uint32_t *)self_ = u1;
   return;
 }

@@ -4,84 +4,84 @@
 
 // FUNCTION: FFXIMAIN 0x102A2530
 // GATE: PASS -- 100 trials, 93 returned normally, 19 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API void __cdecl sqsnPlanarShadowDraw(int a1, int a2)
+XI_API void __cdecl sqsnPlanarShadowDraw(int arg1, int arg2)
 {
-  int *v3;
-  float *v4;
-  __int16 v5; // fps
-  double v6;
-  bool v7; // c0
-  char v8; // c2
-  bool v9; // c3
-  int v10;
-  int v11;
-  int v12;
-  int v13;
-  char v14;
-  int *v15;
-  __int16 v16; // fps
-  double v17;
-  bool v18; // c0
-  char v19; // c2
-  bool v20; // c3
-  float v21;
-  int v22;
-  int v23;
-  int v24[4];
+  int *p1;
+  float *p2;
+  short i1; // fps
+  double f1;
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  char c2;
+  int *p3;
+  short i6; // fps
+  double f2;
+  bool b3; // c0
+  char c3; // c2
+  bool b4; // c3
+  float f3;
+  int i7;
+  int i8;
+  int buf1[4];
   int i;
-  int v26;
+  int i9;
   bool xi_fpu_unord = false;
 
-  if ( !(*(float *)(a1 + 56) < 1.0) )
+  if ( !(*(float *)(arg1 + 56) < 1.0) )
   {
-    v3 = (int *)(*(_DWORD *)(a1 + 64) + 48 * a2);
-    v4 = *(float **)(*(_DWORD *)(a1 + 36) + 12 * *v3);
-    orig::sqsnScene_1028F5F0(a1, *v3, 1);
+    p1 = (int *)(*(uint32_t *)(arg1 + 64) + 48 * arg2);
+    p2 = *(float **)(*(uint32_t *)(arg1 + 36) + 12 * *p1);
+    orig::sqsnScene_1028F5F0(arg1, *p1, 1);
     orig::sqgxTextureSet(-1);
-    *(float *)&v23 = 1.0 - v4[7];
-    *(float *)&v22 = 1.0 - v4[6];
-    v21 = 1.0 - v4[5];
-    orig::PackVec4((int)v24, v21, v22, v23, 1065353216);
+    *(float *)&i8 = 1.0 - p2[7];
+    *(float *)&i7 = 1.0 - p2[6];
+    f3 = 1.0 - p2[5];
+    orig::PackVec4((int)buf1, f3, i7, i8, 1065353216);
     orig::sqgxAmbient(1.0);
     orig::sqgxBlendMul();
-    orig::sqgxColor(v24);
+    orig::sqgxColor(buf1);
     orig::sqgxPassAdd(4);
     orig::sqgxZMask(0);
     orig::sqgxZTest(0);
-    v6 = *(float *)(a1 + 56);
-    (xi_fpu_unord = __builtin_isunordered(v6, 0.9999), v7 = v6 < 0.9999);
-    v8 = 0;
-    v9 = v6 == 0.9999;
-    if ( ((__int16)(((v7 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v9 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+    f1 = *(float *)(arg1 + 56);
+    (xi_fpu_unord = __builtin_isunordered(f1, 0.9999), b1 = f1 < 0.9999);
+    c1 = 0;
+    b2 = f1 == 0.9999;
+    if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
     {
       g_pDancerDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
       orig::sqgxTextureStencilClear(0);
     }
     g_pDancerDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
     g_pDancerDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-    v10 = 0;
-    for ( i = 0; v10 < v3[1]; i = v10 )
+    i2 = 0;
+    for ( i = 0; i2 < p1[1]; i = i2 )
     {
-      v11 = 144 * (*(_DWORD *)(v3[2] + 4 * v10) & 0x7FFF);
-      v12 = 44 * (*(int *)(v3[2] + 4 * v10) >> 16);
-      v13 = *(_DWORD *)(*(_DWORD *)(a1 + 72) + v12 + 40);
-      v14 = *(_BYTE *)(v13 + v11 + 29);
-      v15 = (int *)(v11 + v13);
-      if ( v14 != 0 )
+      i3 = 144 * (*(uint32_t *)(p1[2] + 4 * i2) & 0x7FFF);
+      i4 = 44 * (*(int *)(p1[2] + 4 * i2) >> 16);
+      i5 = *(uint32_t *)(*(uint32_t *)(arg1 + 72) + i4 + 40);
+      c2 = *(uint8_t *)(i5 + i3 + 29);
+      p3 = (int *)(i3 + i5);
+      if ( c2 != 0 )
       {
-        v26 = *v15;
+        i9 = *p3;
         orig::sqgxShader(0x80000000, 0);
-        orig::sqgxMatrixShape(*(_DWORD **)(*(_DWORD *)(*(_DWORD *)(a1 + 72) + v12 + 40) + v11 + 4));
-        orig::sqDrawableDraw(v26);
-        v10 = i;
+        orig::sqgxMatrixShape(*(uint32_t **)(*(uint32_t *)(*(uint32_t *)(arg1 + 72) + i4 + 40) + i3 + 4));
+        orig::sqDrawableDraw(i9);
+        i2 = i;
       }
-      ++v10;
+      ++i2;
     }
-    v17 = *(float *)(a1 + 56);
-    (xi_fpu_unord = __builtin_isunordered(v17, 0.9999), v18 = v17 < 0.9999);
-    v19 = 0;
-    v20 = v17 == 0.9999;
-    if ( ((__int16)(((v18 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v20 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
+    f2 = *(float *)(arg1 + 56);
+    (xi_fpu_unord = __builtin_isunordered(f2, 0.9999), b3 = f2 < 0.9999);
+    c3 = 0;
+    b4 = f2 == 0.9999;
+    if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) != 0 )
       g_pDancerDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
     else
       g_pDancerDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
@@ -95,123 +95,125 @@ XI_API void __cdecl sqsnPlanarShadowDraw(int a1, int a2)
 
 // FUNCTION: FFXIMAIN 0x102A2720
 // GATE: PASS -- 100 trials, 32 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 32
-XI_API void __cdecl SqPlanarShadow_RenderShadowTexture(int param_1, int param_2)
+XI_API void __cdecl SqPlanarShadow_RenderShadowTexture(int arg1, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int *piVar5;
-  int iVar6;
-  char xi_frame[32] __attribute__((aligned(4)));
-  int  &local_20 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_1c = *reinterpret_cast<int  *>(xi_frame + 4);
-  int  &local_18 = *reinterpret_cast<int  *>(xi_frame + 8);
-  int  &local_14 = *reinterpret_cast<int  *>(xi_frame + 12);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
+  int i1;
+  int i2;
+  uint32_t u1;
+  int i3;
+  int *p1;
+  int i4;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { int i5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; int i8; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x1C]; uint32_t u5; };   // at 0x1C
+  } frame;
   
-  piVar5 = (int *)(param_2 * 0x30 + *(int *)(param_1 + 0x40));
-  iVar1 = *piVar5;
-  local_20 = piVar5[7];
-  iVar4 = *(int *)(iVar1 * 0xc + *(int *)(param_1 + 0x24));
-  local_1c = piVar5[7];
-  local_18 = piVar5[7];
-  local_14 = piVar5[7];
-  local_10 = 0x3f800000;
-  local_c = 0x3f800000;
-  local_8 = 0x3f800000;
-  local_4 = 0x3f800000;
-  iVar2 = *(int *)(g_pSqgxContext_as_s32 + 0x89c);
-  if (DAT_103bd524 == -1) {
-    DAT_103bd524 = orig::sqgxTextureAdd_v1(*(int *)(param_1 + 0x30),*(int *)(param_1 + 0x30),4,0);
+  p1 = (int *)(arg2 * 0x30 + *(int *)(arg1 + 0x40));
+  i1 = *p1;
+  frame.i5 = p1[7];
+  i3 = *(int *)(i1 * 0xc + *(int *)(arg1 + 0x24));
+  frame.i6 = p1[7];
+  frame.i7 = p1[7];
+  frame.i8 = p1[7];
+  frame.u2 = 0x3f800000;
+  frame.u3 = 0x3f800000;
+  frame.u4 = 0x3f800000;
+  frame.u5 = 0x3f800000;
+  i2 = *(int *)(g_pSqgxContext_as_s32 + 0x89c);
+  if (g_103BD524 == -1) {
+    g_103BD524 = orig::sqgxTextureAdd_v1(*(int *)(arg1 + 0x30),*(int *)(arg1 + 0x30),4,0);
   }
-  piVar5[3] = DAT_103bd524;
-  orig::sqgxColor_v1(&local_20);
-  orig::sqgxTextureDraw_v1(piVar5[3],0);
-  orig::sqgxTextureClear_v1(&local_10,0);
-  iVar6 = *(int *)(*(int *)(param_1 + 0x18) + *(int *)(param_1 + 0x1c) * 0xc);
-  orig::SqgxContext_SetPerspective(*(float *)(iVar4 + 0x24),*(float *)(iVar6 + 0x18),*(float *)(iVar6 + 0x1c));
-  orig::sqgxMatrixCamera_v1(*(uint32_t **)(iVar1 * 0xc + 4 + *(int *)(param_1 + 0x24)));
+  p1[3] = g_103BD524;
+  orig::sqgxColor_v1(&frame.i5);
+  orig::sqgxTextureDraw_v1(p1[3],0);
+  orig::sqgxTextureClear_v1(&frame.u2,0);
+  i4 = *(int *)(*(int *)(arg1 + 0x18) + *(int *)(arg1 + 0x1c) * 0xc);
+  orig::SqgxContext_SetPerspective(*(float *)(i3 + 0x24),*(float *)(i4 + 0x18),*(float *)(i4 + 0x1c));
+  orig::sqgxMatrixCamera_v1(*(uint32_t **)(i1 * 0xc + 4 + *(int *)(arg1 + 0x24)));
   orig::sqgxShader_v1(0,0);
   orig::sqgxZMask_v1(0);
   orig::sqgxZTest_v1(0);
-  param_2 = 0;
-  if (0 < piVar5[1]) {
+  arg2 = 0;
+  if (0 < p1[1]) {
     do {
-      uVar3 = *(uint32_t *)(piVar5[2] + param_2 * 4);
-      iVar4 = (uVar3 & 0x7fff) * 0x90;
-      iVar6 = ((int)uVar3 >> 0x10) * 0x2c;
-      iVar1 = *(int *)(*(int *)(param_1 + 0x48) + 0x28 + iVar6);
-      if (*(char *)(iVar1 + 0x1d + iVar4) != '\0') {
-        orig::sqgxMatrixShape_v1(*(uint32_t **)(iVar1 + iVar4 + 4));
-        orig::sqgxColor_v1(&local_20);
+      u1 = *(uint32_t *)(p1[2] + arg2 * 4);
+      i3 = (u1 & 0x7fff) * 0x90;
+      i4 = ((int)u1 >> 0x10) * 0x2c;
+      i1 = *(int *)(*(int *)(arg1 + 0x48) + 0x28 + i4);
+      if (*(char *)(i1 + 0x1d + i3) != '\0') {
+        orig::sqgxMatrixShape_v1(*(uint32_t **)(i1 + i3 + 4));
+        orig::sqgxColor_v1(&frame.i5);
         orig::sqgxColorUpdate_v1();
-        orig::sqDrawableDraw_v1(*(int *)(*(int *)(*(int *)(param_1 + 0x48) + 0x28 + iVar6) + iVar4));
+        orig::sqDrawableDraw_v1(*(int *)(*(int *)(*(int *)(arg1 + 0x48) + 0x28 + i4) + i3));
       }
-      param_2 = param_2 + 1;
-    } while (param_2 < piVar5[1]);
+      arg2 = arg2 + 1;
+    } while (arg2 < p1[1]);
   }
   orig::sqgxZMask_v1(1);
   orig::sqgxZTest_v1(1);
-  orig::sqgxTextureDraw_v1(iVar2,1);
+  orig::sqgxTextureDraw_v1(i2,1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A2A30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sqgx_SetTextureAt(int param_1, int param_2)
+XI_API void __cdecl Sqgx_SetTextureAt(int arg1, int arg2)
 {
-  orig::sqgxTextureSet_v1(*(int *)(*(int *)(param_1 + 0x40) + 0xc + param_2 * 0x30));
+  orig::sqgxTextureSet_v1(*(int *)(*(int *)(arg1 + 0x40) + 0xc + arg2 * 0x30));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A2A50
 // GATE: PASS -- 100 trials, 81 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 81
-XI_API void __cdecl Sqgx_CheckShadowGroupMember(undefined4 param_1, int param_2, int param_3)
+XI_API void __cdecl Sqgx_CheckShadowGroupMember(bits32 arg1, int arg2, int arg3)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  iVar1 = 0;
-  if (0 < *(int *)(param_3 + 0x44)) {
-    piVar2 = (int *)(param_3 + 0x48);
+  i1 = 0;
+  if (0 < *(int *)(arg3 + 0x44)) {
+    p1 = (int *)(arg3 + 0x48);
     do {
-      if (*piVar2 == param_2) {
+      if (*p1 == arg2) {
         return;
       }
-      iVar1 = iVar1 + 1;
-      piVar2 = piVar2 + 1;
-    } while (iVar1 < *(int *)(param_3 + 0x44));
+      i1 = i1 + 1;
+      p1 = p1 + 1;
+    } while (i1 < *(int *)(arg3 + 0x44));
   }
-  orig::sqDebugPrintf_v1(s_ERROR__shadow_group_does_not_cas_103bd604);
+  orig::sqDebugPrintf_v1(str_ERROR__shadow_group_does_not_cas_103BD604);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A2C00
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API void __cdecl SqPlanarShadow_DrawShadowedShape(int param_1, int * param_2, int param_3, int param_4)
+XI_API void __cdecl SqPlanarShadow_DrawShadowedShape(int arg1, int * arg2, int arg3, int arg4)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)(param_1 + 0x40);
-  orig::sqsnScene_1028F5F0_v1(param_1,*(int *)(iVar1 + param_3 * 0x30),1);
-  if (param_4 == 1) {
-    orig::Sqgx_CheckShadowGroupMember(param_1,param_3,(int)param_2);
+  i1 = *(int *)(arg1 + 0x40);
+  orig::sqsnScene_1028F5F0_v1(arg1,*(int *)(i1 + arg3 * 0x30),1);
+  if (arg4 == 1) {
+    orig::Sqgx_CheckShadowGroupMember(arg1,arg3,(int)arg2);
   }
-  else if (param_4 == 0) {
-    orig::Sqgx_SetTextureAt(param_1,param_3);
+  else if (arg4 == 0) {
+    orig::Sqgx_SetTextureAt(arg1,arg3);
   }
   orig::sqgxBlendZeroSrcAlpha();
   orig::sqgxPassAdd_v1(0x14);
   orig::sqgxZMask_v1(0);
-  orig::sqgxMatrixShape_v1((uint32_t *)param_2[1]);
-  orig::SqgxContext_SetCotHalfAngle(*(float *)(*(int *)(*(int *)(param_1 + 0x24) + *(int *)(iVar1 + param_3 * 0x30) * 0xc
+  orig::sqgxMatrixShape_v1((uint32_t *)arg2[1]);
+  orig::SqgxContext_SetCotHalfAngle(*(float *)(*(int *)(*(int *)(arg1 + 0x24) + *(int *)(i1 + arg3 * 0x30) * 0xc
                                   ) + 0x24));
   orig::sqgxShader_v1(0x20000000,0);
-  orig::sqDrawableDraw_v1(*param_2);
+  orig::sqDrawableDraw_v1(*arg2);
   orig::sqgxTextureSet_v1(-1);
   orig::sqgxBlendOff_v1();
   orig::sqgxPassAdd_v1(-0x14);

@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x10074600
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoSchedulerResAttachments::Slot1DeleteOwner(char a2)
+unsigned int ** CMoSchedulerResAttachments::Slot1DeleteOwner(char arg1)
 {
-  return orig::CMoSchedulerResAttachments_ScalarDeletingDtor((unsigned int **)this - 12, a2);
+  return orig::CMoSchedulerResAttachments_ScalarDeletingDtor((unsigned int **)this - 12, arg1);
 }

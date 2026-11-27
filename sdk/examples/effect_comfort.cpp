@@ -230,7 +230,7 @@ static xikit::fn<decltype(&YmElem_SetupDevice)> prev_Setup;
 static xikit::fn<decltype(&YmElem_RestoreDevice)> prev_Restore;
 static void enter_elem(void *e) { g_in_elem = 1; g_elem_pct = e && (g_nkeys || g_host->setting_int("fx_list", 0)) ? elem_percent(e) : 100; }
 static int __thiscall my_Setup(void *e, int a1) { int r = prev_Setup(e, a1); enter_elem(e); return r; }
-static int __thiscall my_Restore(_WORD *e, __int16 a4) { g_in_elem = 0; return prev_Restore(e, a4); }
+static int __thiscall my_Restore(uint16_t *e, short a4) { g_in_elem = 0; return prev_Restore(e, a4); }
 extern "C" __declspec(dllexport) void xikit_mod_frame(void *) {
   static unsigned n;
   if (++n % 1800 == 0 && (g_scaled || g_skipped || g_flashes || g_left_out))

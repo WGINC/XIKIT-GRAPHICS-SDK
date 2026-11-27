@@ -24,7 +24,7 @@ Why the file has this name (data/unit_names.json): CApp::RunMainLoop, App_Render
 | `Gfx_SetGammaG` | 0x10002C80 | 71 | yes | - | - | - |
 | `Gfx_SetGammaB` | 0x10002CD0 | 71 | yes | - | - | - |
 | `Gfx_GetGammaRGB` | 0x10002D20 | 36 | yes | - | - | - |
-| `AppMainLoop_SetShadowSetting` | 0x10002D50 | 10 | yes | - | Stores its argument in sub_10456ACC. | medium |
+| `AppMainLoop_SetShadowSetting` | 0x10002D50 | 10 | yes | - | Stores its argument in game_10456ACC. | medium |
 | `AppMainLoop_SetFloat10456A68` | 0x10002D70 | 10 | yes | - | Stores its argument in the global at 0x10456A68. | medium |
 | `AppMainLoop_GetFloat10456A68Or1` | 0x10002D80 | 23 | yes | - | Returns 1.0 or the float at 0x10456A68, by a global flag. | low |
 | `AppMainLoop_SetGlobal10456A5C` | 0x10002DA0 | 10 | yes | - | Stores its argument in the global at 0x10456A5C;. | low |
@@ -32,7 +32,7 @@ Why the file has this name (data/unit_names.json): CApp::RunMainLoop, App_Render
 | `AppMainLoop_SetFloat10456AB8` | 0x10002DE0 | 10 | yes | - | Stores its argument in the global at 0x10456AB8. | low |
 | `AppMainLoop_SetFloat10456AA8` | 0x10002E00 | 10 | yes | - | Stores its argument in the global at 0x10456AA8. | low |
 | `AppMainLoop_SetGlobal10456A70` | 0x10002E20 | 10 | yes | - | Stores its argument in the global at 0x10456A70;. | low |
-| `AppMainLoop_SetCfg0020` | 0x10002E40 | 10 | yes | - | Stores its argument in sub_10456C00. | medium |
+| `AppMainLoop_SetCfg0020` | 0x10002E40 | 10 | yes | - | Stores its argument in game_10456C00. | medium |
 | `Gfx_SetAspectIndex` | 0x10002E60 | 18 | yes | - | Stores an aspect-ratio index and applies its scale. | low |
 | `Gfx_ApplyAspectScale` | 0x10002E80 | 33 | yes | - | Sets the camera scale from the aspect-ratio table entry for an index. | medium |
 | `Gfx_GetAspectTableA` | 0x10002EC0 | 22 | yes | - | Returns the first value of the aspect-ratio table entry for an index, clamped to five. | low |
@@ -50,13 +50,13 @@ Why the file has this name (data/unit_names.json): CApp::RunMainLoop, App_Render
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `App_ForceForegroundWindow` calls nothing directly
-- `App_RenderFrameMaskedFPU` calls `sub_10311C7A`, `Frame_Render`, `sub_100DAF30`
-- `App_CreateInputSystem` calls `Allocator_Generic`, `Input_InitState`, `sub_100058F0`
+- `App_RenderFrameMaskedFPU` calls `game_10311C7A`, `Frame_Render`, `game_100DAF30`
+- `App_CreateInputSystem` calls `Allocator_Generic`, `Input_InitState`, `game_100058F0`
 - `AppMainLoop_ForwardMouseMove` calls `Menu_HasFocusedItem`, `CTkMouse_OnMouseMove`, `FontGlyphCache_AddToCounter`
 - `AppMainLoop_AppendWithSpace` calls `Allocator_Generic`, `operator_delete`
 - `AppMainLoop_FindTokenCopyDefault` calls `AppMainLoop_FindTokenCopy`
-- `AppMainLoop_FindTokenCopy` calls `sub_10311EB0`
-- `Gfx_CopySurfaceRectToTexture` calls `CDx::CreateTexture`, `sub_102D4515`, `Gfx_ProbeDeviceCaps`
+- `AppMainLoop_FindTokenCopy` calls `game_10311EB0`
+- `Gfx_CopySurfaceRectToTexture` calls `CDx::CreateTexture`, `game_102D4515`, `Gfx_ProbeDeviceCaps`
 - `Gfx_ProbeDeviceCaps` calls `AppMainLoop_SwapRedBlue`
 - `AppMainLoop_SwapRedBlue` calls nothing directly
 - `Gfx_IsGammaSupported` calls nothing directly
@@ -78,10 +78,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Gfx_ApplyAspectScale` calls `Gfx_GetAspectTableB`, `Gfx_GetAspectTableA`, `Camera_SetField2F0`
 - `Gfx_GetAspectTableA` calls nothing directly
 - `Gfx_GetAspectTableB` calls nothing directly
-- `Gfx_CreateD3DHolder` calls `Allocator_Generic`, `sub_10003070`, `sub_10003110`
-- `Gfx_DestroyD3DHolder` calls `sub_100035A0`
-- `Gfx_D3DBootstrap` calls `sub_102D2600`, `Allocator_Generic`, `Gfx_TryCreateDeviceForMode`
-- `Gfx_TryCreateDeviceForMode` calls `sub_10003460`, `Gfx_CreateDevice`
+- `Gfx_CreateD3DHolder` calls `Allocator_Generic`, `game_10003070`, `game_10003110`
+- `Gfx_DestroyD3DHolder` calls `game_100035A0`
+- `Gfx_D3DBootstrap` calls `game_102D2600`, `Allocator_Generic`, `Gfx_TryCreateDeviceForMode`
+- `Gfx_TryCreateDeviceForMode` calls `game_10003460`, `Gfx_CreateDevice`
 - `Gfx_CreateDevice` calls nothing directly
 - `Gfx_InitObject` calls `Debug_Construct`, `Gfx_ResetObject`
 - `Gfx_ResetObject` calls nothing directly

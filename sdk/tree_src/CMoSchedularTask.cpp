@@ -12,37 +12,37 @@ char ** __cdecl CMoSchedularTask::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10057250
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * CMoSchedularTask::ScalarDeletingDtor(char a2)
+void * CMoSchedularTask::ScalarDeletingDtor(char arg1)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   orig::CMoSchedularTask_Destructor((int)self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10057270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * __thiscall CMoSchedularTask::Construct(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+void * __thiscall CMoSchedularTask::Construct(void * self, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  uint32_t *puVar1;
-  int iVar2;
+  uint32_t *p1;
+  int i1;
   
   orig::CMoTask_Constructor_v1(self);
   orig::CMoAttachments_Construct((uint32_t *)((int)self + 0x34));
   orig::CMoOtTask_Clear((void *)((int)self + 0xb4));
-  puVar1 = (uint32_t *)((int)self + 0xc0);
-  iVar2 = 0x10;
+  p1 = (uint32_t *)((int)self + 0xc0);
+  i1 = 0x10;
   do {
-    *puVar1 = 0;
-    puVar1 = puVar1 + 2;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
-  *(uint8_t ***)self = &PTR_CMoSchedularTask_GetRuntimeClass_1032b860;
-  *(uint32_t *)((int)self + 0x34) = &PTR_LAB_1032b844;
+    *p1 = 0;
+    p1 = p1 + 2;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  *(uint8_t ***)self = &ptr_to_CMoSchedularTask_GetRuntimeClass_1032B860;
+  *(uint32_t *)((int)self + 0x34) = &g_1032B844;
   orig::CMoSchedularTask_ResetFlags(self);
-  orig::CMoSchedularTask_InitFromSource(self,param_1,param_2,param_3);
-  orig::FUN_10074a00();
+  orig::CMoSchedularTask_InitFromSource(self,arg2,arg3,arg4);
+  orig::game_10074A00();
   return self;
 }
 
@@ -61,100 +61,100 @@ XI_API void __thiscall CMoSchedularTask_ResetFlags(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100573E0
 // GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
-undefined4 __thiscall CMoSchedularTask::InitFromSource(void * self, int param_1, uint32_t param_2, short * param_3)
+bits32 __thiscall CMoSchedularTask::InitFromSource(void * self, int arg2, uint32_t arg3, short * arg4)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   *(uint32_t *)((int)self + 0x90) = 0;
   *(uint8_t *)((int)self + 0x140) = 0;
   *(uint32_t *)((int)self + 0xac) = 0;
-  orig::CMoSchedularTask_SetSharedRef(self,param_3);
-  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(param_1 + 0x14);
-  if (param_2 != 0) {
-    if (param_2 != 1) {
+  orig::CMoSchedularTask_SetSharedRef(self,arg4);
+  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(arg2 + 0x14);
+  if (arg3 != 0) {
+    if (arg3 != 1) {
       if (*(int **)((int)self + 0x80) == (int *)0x0) {
-        iVar2 = 0;
+        i1 = 0;
       }
       else {
-        iVar2 = **(int **)((int)self + 0x80);
+        i1 = **(int **)((int)self + 0x80);
       }
-      *(float *)((int)self + 0x9c) = (float)((long double)param_2 / (long double)*(int *)(iVar2 + 0x7c));
-      goto LAB_1005742f;
+      *(float *)((int)self + 0x9c) = (float)((long double)arg3 / (long double)*(int *)(i1 + 0x7c));
+      goto code_1005742F;
     }
     *(uint8_t *)((int)self + 0x141) = 1;
   }
   *(uint32_t *)((int)self + 0x9c) = 0x3f800000;
-LAB_1005742f:
+code_1005742F:
   *(uint32_t *)((int)self + 0xa0) = 0;
   *(uint32_t *)((int)self + 0x84) = 0;
-  uVar1 = *(uint32_t *)(param_1 + 0x14);
-  *(uint32_t *)((int)self + 0x80) = uVar1;
+  u1 = *(uint32_t *)(arg2 + 0x14);
+  *(uint32_t *)((int)self + 0x80) = u1;
   *(uint32_t *)((int)self + 0x94) = 0;
   *(uint32_t *)((int)self + 0x98) = 0;
-  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(param_1 + 0x74);
-  return uVar1;
+  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(arg2 + 0x74);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100574A0
 // GATE: PASS -- 100 trials, 28 returned normally, 144 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
 void __thiscall CMoSchedularTask::Destructor(void * self)
 {
-  uint32_t *this_00;
+  uint32_t *obj1;
   uint32_t xi_eax;
-  int iVar1;
-  void *this_01;
-  uint64_t uVar2;
+  int i1;
+  void *obj2;
+  uint64_t u1;
   
-  this_00 = (uint32_t *)((int)self + 0x34);
-  *(uint8_t ***)self = &PTR_CMoSchedularTask_GetRuntimeClass_1032b860;
-  *this_00 = &PTR_LAB_1032b844;
-  uVar2 = orig::CMoAttachments_GetCaster_v1(this_00);
-  if ((int)uVar2 != 0) {
-    uVar2 = orig::CMoAttachments_GetCaster_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar2 + 0x16c))))((void *)((int *)uVar2));
+  obj1 = (uint32_t *)((int)self + 0x34);
+  *(uint8_t ***)self = &ptr_to_CMoSchedularTask_GetRuntimeClass_1032B860;
+  *obj1 = &g_1032B844;
+  u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetCaster_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x16c))))((void *)((int *)u1));
   }
-  uVar2 = orig::CMoAttachments_GetTarget_v1(this_00);
-  if ((int)uVar2 != 0) {
-    uVar2 = orig::CMoAttachments_GetTarget_v1(this_00);
-    ((int (__thiscall *)(void *))((**(code **)(*(int *)uVar2 + 0x16c))))((void *)((int *)uVar2));
+  u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+  if ((int)u1 != 0) {
+    u1 = orig::CMoAttachments_GetTarget_v1(obj1);
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)u1 + 0x16c))))((void *)((int *)u1));
   }
-  for (iVar1 = *(int *)(dword_1047D140 + 0xd50); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0xc)) {
-    if ((*(int *)(iVar1 + 0x1c) == 0x4d730000) && (*(void **)(iVar1 + 0x84) == self)) {
-      *(uint32_t *)(iVar1 + 0x84) = 0;
+  for (i1 = *(int *)(g_1047D140 + 0xd50); i1 != 0; i1 = *(int *)(i1 + 0xc)) {
+    if ((*(int *)(i1 + 0x1c) == 0x4d730000) && (*(void **)(i1 + 0x84) == self)) {
+      *(uint32_t *)(i1 + 0x84) = 0;
     }
   }
   if (*(void **)((int)self + 0x84) != (void *)0x0) {
-    orig::FUN_10074a50(*(void **)((int)self + 0x84),0);
+    orig::game_10074A50(*(void **)((int)self + 0x84),0);
   }
   if (*(void **)((int)self + 0x90) != (void *)0x0) {
-    orig::FUN_1018cea0(*(void **)((int)self + 0x90));
+    orig::game_1018CEA0(*(void **)((int)self + 0x90));
   }
   orig::CMoResource_ReleaseChain_v1((void *)**(uint32_t **)((int)self + 0x80));
-  if (*(code **)((int)self + 0xac) != (code *)0x0) {
-    (**(code **)((int)self + 0xac))(self,*(uint32_t *)((int)self + 0xb0));
+  if (*(untyped_fn **)((int)self + 0xac) != (untyped_fn *)0x0) {
+    (**(untyped_fn **)((int)self + 0xac))(self,*(uint32_t *)((int)self + 0xb0));
   }
-  xi_eax = orig::CMoAttachments_ResetAll(this_00);
-  this_01 = (void *)((int)self + 0x140);
-  iVar1 = 0x10;
+  xi_eax = orig::CMoAttachments_ResetAll(obj1);
+  obj2 = (void *)((int)self + 0x140);
+  i1 = 0x10;
   do {
-    this_01 = (void *)((int)this_01 + -8);
-    xi_eax = orig::FUN_100683d0(this_01,xi_eax);
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
-  orig::FUN_10055650((void *)((int)self + 0xb4));
-  orig::ReleaseSubObjectIfPresent_v1(this_00);
+    obj2 = (void *)((int)obj2 + -8);
+    xi_eax = orig::game_100683D0(obj2,xi_eax);
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  orig::game_10055650((void *)((int)self + 0xb4));
+  orig::ReleaseSubObjectIfPresent_v1(obj1);
   orig::CMoTask_Destructor_v1(self);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10057CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoSchedularTask::SetSharedRef(void * self, short * param_1)
+void __thiscall CMoSchedularTask::SetSharedRef(void * self, short * arg2)
 {
-  if (param_1 != (short *)0x0) {
-    *(short **)((int)self + 0x90) = param_1;
-    *param_1 = *param_1 + 1;
+  if (arg2 != (short *)0x0) {
+    *(short **)((int)self + 0x90) = arg2;
+    *arg2 = *arg2 + 1;
     orig::ScriptMacro_SetDwordValue((void *)((int)self + 0xc0),0);
     return;
   }
@@ -163,97 +163,97 @@ void __thiscall CMoSchedularTask::SetSharedRef(void * self, short * param_1)
 
 // FUNCTION: FFXIMAIN 0x10057E10
 // GATE: PASS -- 100 trials, 100 returned normally, 55 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoSchedularTask::Update(void * self)
+bits32 __thiscall CMoSchedularTask::Update(void * self)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint16_t uVar5;
-  int iVar3;
-  uint32_t *puVar4;
-  uint8_t bVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  float fStack_8;
+  uint32_t u1;
+  uint32_t u2;
+  uint16_t u3;
+  int i1;
+  uint32_t *p1;
+  uint8_t u4;
+  uint8_t u5;
+  long double f1;
+  long double f2;
+  float f3;
   
   if (*(char *)((int)self + 0x145) != '\0') {
-    uVar1 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
-LAB_10057e27:
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
+code_10057E27:
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar2 = orig::ResourceHandle_IsResident_v1((void *)((int)self + 0x80));
-  if ((char)uVar2 == '\0') {
-LAB_10057ef9:
-    return uVar2 & 0xffffff00;
+  u2 = orig::ResourceHandle_IsResident_v1((void *)((int)self + 0x80));
+  if ((char)u2 == '\0') {
+code_10057EF9:
+    return u2 & 0xffffff00;
   }
-  uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x140))));
-  fStack_8 = 0.0f;
+  u1 = ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x140))));
+  f3 = 0.0f;
   if (*(char *)((int)self + 0x140) == '\0') {
-    fVar8 = (long double)*(float *)(g_pResourceMng + 0xeb0);
-    *(float *)((int)self + 0x98) = (float)((long double)*(float *)((int)self + 0x98) - fVar8);
+    f1 = *(float *)(g_pResourceMng + 0xeb0);
+    *(float *)((int)self + 0x98) = (float)(*(float *)((int)self + 0x98) - f1);
   }
   else {
     *(float *)((int)self + 0x98) =
-         (float)((long double)*(float *)((int)self + 0x98) - (long double)_DAT_1065cb0c);
-    fVar8 = (long double)_DAT_1065cb0c;
+         (float)(*(float *)((int)self + 0x98) - g_1065CB0C);
+    f1 = g_1065CB0C;
   }
-  *(float *)((int)self + 0x94) = (float)(fVar8 + (long double)*(float *)((int)self + 0x94));
+  *(float *)((int)self + 0x94) = (float)(f1 + *(float *)((int)self + 0x94));
   Fn10057E10_static_BEF8 = 0;
   do {
-    bVar6 = NAN((long double)*(float *)((int)self + 0x98)) || NAN((long double)0.0f);
-    uVar5 = (uint16_t)((uint32_t)uVar1 >> 0x10);
-    if ((bVar6 || (long double)*(float *)((int)self + 0x98) < (long double)0.0f) != bVar6) {
-      fStack_8 = (float)-(long double)*(float *)((int)self + 0x98);
+    u4 = ((*(float *)((int)self + 0x98)) != (*(float *)((int)self + 0x98))) || ((0.0f) != (0.0f));
+    u3 = (uint16_t)((uint32_t)u1 >> 0x10);
+    if ((u4 || *(float *)((int)self + 0x98) < 0.0f) != u4) {
+      f3 = (float)-*(float *)((int)self + 0x98);
       *(uint32_t *)((int)self + 0x98) = 0;
     }
-    bVar6 = NAN((long double)*(float *)((int)self + 0x98)) || NAN((long double)0.0f);
-    bVar7 = bVar6 || (long double)*(float *)((int)self + 0x98) == (long double)0.0f;
-    iVar3 = *(int *)((int)self + 0x88);
-    if (iVar3 == 0) {
-      if (bVar6 != bVar7) {
-        uVar2 = orig::FUN_10057c20(self);
-        if ((char)uVar2 != '\0') {
+    u4 = ((*(float *)((int)self + 0x98)) != (*(float *)((int)self + 0x98))) || ((0.0f) != (0.0f));
+    u5 = u4 || *(float *)((int)self + 0x98) == 0.0f;
+    i1 = *(int *)((int)self + 0x88);
+    if (i1 == 0) {
+      if (u4 != u5) {
+        u2 = orig::game_10057C20(self);
+        if ((char)u2 != '\0') {
           *(uint8_t *)((int)self + 0x145) = 1;
         }
-        goto LAB_10057ef9;
+        goto code_10057EF9;
       }
     }
-    else if (bVar6 != bVar7) {
-      while (iVar3 != 0) {
+    else if (u4 != u5) {
+      while (i1 != 0) {
         *(float *)((int)self + 0x98) =
-             (float)((long double)(int)*(short *)(iVar3 + 4) * (long double)*(float *)((int)self + 0x9c) +
-                    (long double)*(float *)((int)self + 0x98));
-        iVar3 = orig::CMoSchedularTask_Interpret(self);
-        uVar1 = 0;
-        if (iVar3 == 1) goto LAB_10057e27;
-        uVar2 = 0;
-        if (iVar3 == 2) goto LAB_10057ef9;
-        uVar2 = **(uint32_t **)((int)self + 0x88);
-        if ((char)uVar2 == '\0') {
-          puVar4 = (uint32_t *)0x0;
+             (float)((int)*(short *)(i1 + 4) * *(float *)((int)self + 0x9c) +
+                    *(float *)((int)self + 0x98));
+        i1 = orig::CMoSchedularTask_Interpret(self);
+        u1 = 0;
+        if (i1 == 1) goto code_10057E27;
+        u2 = 0;
+        if (i1 == 2) goto code_10057EF9;
+        u2 = **(uint32_t **)((int)self + 0x88);
+        if ((char)u2 == '\0') {
+          p1 = (uint32_t *)0x0;
         }
         else {
-          puVar4 = *(uint32_t **)((int)self + 0x88) + (uVar2 >> 8 & 0x1f);
+          p1 = *(uint32_t **)((int)self + 0x88) + (u2 >> 8 & 0x1f);
         }
-        uVar1 = orig::FUN_10062de0(self,(char *)puVar4);
-        bVar6 = NAN((long double)*(float *)((int)self + 0x98)) || NAN((long double)0.0f);
-        uVar5 = (uint16_t)((uint32_t)uVar1 >> 0x10);
-        if (bVar6 == (bVar6 || (long double)*(float *)((int)self + 0x98) == (long double)0.0f)) {
+        u1 = orig::game_10062DE0(self,(char *)p1);
+        u4 = ((*(float *)((int)self + 0x98)) != (*(float *)((int)self + 0x98))) || ((0.0f) != (0.0f));
+        u3 = (uint16_t)((uint32_t)u1 >> 0x10);
+        if (u4 == (u4 || *(float *)((int)self + 0x98) == 0.0f)) {
           *(float *)((int)self + 0x98) =
-               (float)((long double)*(float *)((int)self + 0x98) - (long double)fStack_8);
+               (float)(*(float *)((int)self + 0x98) - f3);
           break;
         }
-        iVar3 = *(int *)((int)self + 0x88);
+        i1 = *(int *)((int)self + 0x88);
       }
     }
-    fVar9 = (long double)*(float *)((int)self + 0x98);
-    fVar8 = (long double)0.0f;
-    bVar7 = NAN(fVar9) || NAN(fVar8);
-    bVar6 = bVar7 || fVar9 < fVar8;
-    uVar1 = ((uint32_t)(((uint32_t)(uint16_t)(uVar5) << 16) | (uint16_t)((uint16_t)bVar6 << 8 | (uint16_t)bVar7 << 10 |
-                           (uint16_t)(bVar7 || fVar9 == fVar8) << 0xe)));
-    if (bVar6 == bVar7) {
-      return uVar1;
+    f2 = *(float *)((int)self + 0x98);
+    f1 = 0.0f;
+    u5 = ((f2) != (f2)) || ((f1) != (f1));
+    u4 = u5 || f2 < f1;
+    u1 = ((uint32_t)(((uint32_t)(uint16_t)(u3) << 16) | (uint16_t)((uint16_t)u4 << 8 | (uint16_t)u5 << 10 |
+                           (uint16_t)(u5 || f2 == f1) << 0xe)));
+    if (u4 == u5) {
+      return u1;
     }
   } while( true );
 }

@@ -626,7 +626,7 @@ inline ::xikit::fn<decltype(&::CYyModel::QueryPartsB)> CYyModel__QueryPartsB() {
 inline ::xikit::fn<decltype(&::List_GetTail)> List_GetTail() { return reinterpret_cast< ::xikit::fn<decltype(&::List_GetTail)> >(XI_GAME(0x1002C7C0u)); }
 inline ::xikit::fn<decltype(&::ListUtil_PopHead)> ListUtil_PopHead() { return reinterpret_cast< ::xikit::fn<decltype(&::ListUtil_PopHead)> >(XI_GAME(0x1002C800u)); }
 inline ::xikit::fn<decltype(&::Mem_AllocDefault)> Mem_AllocDefault() { return reinterpret_cast< ::xikit::fn<decltype(&::Mem_AllocDefault)> >(XI_GAME(0x1002C890u)); }
-inline ::xikit::fn<decltype(&::thunk_sub_10028AA0)> thunk_sub_10028AA0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_sub_10028AA0)> >(XI_GAME(0x1002C8B0u)); }
+inline ::xikit::fn<decltype(&::thunk_Mem_FreeBlockMergeNeighbours_as_v0)> thunk_Mem_FreeBlockMergeNeighbours_as_v0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_Mem_FreeBlockMergeNeighbours_as_v0)> >(XI_GAME(0x1002C8B0u)); }
 inline ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant2)> CMoTask__GetRuntimeClass_variant2() { return reinterpret_cast< ::xikit::fn<decltype(&::CMoTask::GetRuntimeClass_variant2)> >(XI_GAME(0x1002C950u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CreateBuffersStep)> CYyOs2VtxBuffer__CreateBuffersStep() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer::CreateBuffersStep)> >(XI_GAME(0x1002CCB0u)); }
 inline ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> CYyOs2VtxBuffer_ScalarDeletingDtor() { return reinterpret_cast< ::xikit::fn<decltype(&::CYyOs2VtxBuffer_ScalarDeletingDtor)> >(XI_GAME(0x1002D660u)); }
@@ -3059,6 +3059,7 @@ inline ::xikit::fn<decltype(&::Time_SetDiv155520000)> Time_SetDiv155520000() { r
 inline ::xikit::fn<decltype(&::Time_GetDiv5184000Mul5184000)> Time_GetDiv5184000Mul5184000() { return reinterpret_cast< ::xikit::fn<decltype(&::Time_GetDiv5184000Mul5184000)> >(XI_GAME(0x1018C1B0u)); }
 inline ::xikit::fn<decltype(&::Time_AddFrameScale)> Time_AddFrameScale() { return reinterpret_cast< ::xikit::fn<decltype(&::Time_AddFrameScale)> >(XI_GAME(0x1018C270u)); }
 inline ::xikit::fn<decltype(&::Time_SubtractFrameScale)> Time_SubtractFrameScale() { return reinterpret_cast< ::xikit::fn<decltype(&::Time_SubtractFrameScale)> >(XI_GAME(0x1018C290u)); }
+inline ::xikit::fn<decltype(&::fn_1018D170)> fn_1018D170() { return reinterpret_cast< ::xikit::fn<decltype(&::fn_1018D170)> >(XI_GAME(0x1018D170u)); }
 inline ::xikit::fn<decltype(&::TextInputFiles_GrowCapacity)> TextInputFiles_GrowCapacity() { return reinterpret_cast< ::xikit::fn<decltype(&::TextInputFiles_GrowCapacity)> >(XI_GAME(0x1018D230u)); }
 inline ::xikit::fn<decltype(&::TextInputFiles_Free)> TextInputFiles_Free() { return reinterpret_cast< ::xikit::fn<decltype(&::TextInputFiles_Free)> >(XI_GAME(0x1018D250u)); }
 inline ::xikit::fn<decltype(&::TextInputFiles_InitEmpty)> TextInputFiles_InitEmpty() { return reinterpret_cast< ::xikit::fn<decltype(&::TextInputFiles_InitEmpty)> >(XI_GAME(0x1018D280u)); }
@@ -4093,7 +4094,7 @@ inline ::xikit::fn<decltype(&::LobbyScreen_LoadResourceOnce)> LobbyScreen_LoadRe
 inline ::xikit::fn<decltype(&::LobbyThread_Start)> LobbyThread_Start() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_Start)> >(XI_GAME(0x10245600u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_SetGlobal106690AC)> LobbyThread_SetGlobal106690AC() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_SetGlobal106690AC)> >(XI_GAME(0x10245B50u)); }
 inline ::xikit::fn<decltype(&::Lobby_DestroyThreadPool)> Lobby_DestroyThreadPool() { return reinterpret_cast< ::xikit::fn<decltype(&::Lobby_DestroyThreadPool)> >(XI_GAME(0x10245B60u)); }
-inline ::xikit::fn<decltype(&::thunk_sub_10245BB0)> thunk_sub_10245BB0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_sub_10245BB0)> >(XI_GAME(0x10245BA0u)); }
+inline ::xikit::fn<decltype(&::thunk_LobbyThread_ResetZone_as_v0)> thunk_LobbyThread_ResetZone_as_v0() { return reinterpret_cast< ::xikit::fn<decltype(&::thunk_LobbyThread_ResetZone_as_v0)> >(XI_GAME(0x10245BA0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_ResetZone)> LobbyThread_ResetZone() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_ResetZone)> >(XI_GAME(0x10245BB0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_IsSystemState1)> LobbyThread_IsSystemState1() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_IsSystemState1)> >(XI_GAME(0x10245BE0u)); }
 inline ::xikit::fn<decltype(&::LobbyThread_NextSequence)> LobbyThread_NextSequence() { return reinterpret_cast< ::xikit::fn<decltype(&::LobbyThread_NextSequence)> >(XI_GAME(0x10245F30u)); }
@@ -5257,7 +5258,7 @@ constexpr unsigned CYyModel__CallPartIndex = 4, CYyModel__CallPartIndex_TRAMP = 
 constexpr unsigned List_GetTail = 20, List_GetTail_TRAMP = 0;  // "List_GetTail" 0x1002C7C0
 constexpr unsigned ListUtil_PopHead = 4, ListUtil_PopHead_TRAMP = 1;  // "ListUtil_PopHead" 0x1002C800
 constexpr unsigned Mem_AllocDefault = 4, Mem_AllocDefault_TRAMP = 1;  // "Mem_AllocDefault" 0x1002C890
-constexpr unsigned thunk_sub_10028AA0 = 4, thunk_sub_10028AA0_TRAMP = 1;  // "thunk_sub_10028AA0" 0x1002C8B0
+constexpr unsigned thunk_Mem_FreeBlockMergeNeighbours_as_v0 = 4, thunk_Mem_FreeBlockMergeNeighbours_as_v0_TRAMP = 1;  // "thunk_sub_10028AA0" 0x1002C8B0
 constexpr unsigned CMoTask__GetRuntimeClass_variant2 = 0, CMoTask__GetRuntimeClass_variant2_TRAMP = 1;  // "CMoTask::GetRuntimeClass_variant2" 0x1002C950
 constexpr unsigned CYyOs2VtxBuffer__CreateBuffersStep = 4, CYyOs2VtxBuffer__CreateBuffersStep_TRAMP = 1;  // "CYyOs2VtxBuffer::CreateBuffersStep" 0x1002CCB0
 constexpr unsigned CYyOs2VtxBuffer_ScalarDeletingDtor = 4, CYyOs2VtxBuffer_ScalarDeletingDtor_TRAMP = 1;  // "CYyOs2VtxBuffer_ScalarDeletingDtor" 0x1002D660
@@ -5997,6 +5998,7 @@ constexpr unsigned CMoResource_FindInScope = 4, CMoResource_FindInScope_TRAMP = 
 constexpr unsigned YmResourceFile_FindResourceUnder = 12, YmResourceFile_FindResourceUnder_TRAMP = 1;  // "YmResourceFile_FindResourceUnder" 0x100724C0
 constexpr unsigned Resource_FindInChainByKind = 12, Resource_FindInChainByKind_TRAMP = 1;  // "Resource_FindInChainByKind" 0x10072540
 constexpr unsigned Resource_InitFieldsTakeFlag1047D12C = 12, Resource_InitFieldsTakeFlag1047D12C_TRAMP = 1;  // "Resource_InitFieldsTakeFlag1047D12C" 0x10072990
+constexpr unsigned Resource_ResetGlobals = 4, Resource_ResetGlobals_TRAMP = 1;  // "Resource_ResetGlobals" 0x100729C0
 constexpr unsigned Resource_ClearGlobal1047D138 = 4, Resource_ClearGlobal1047D138_TRAMP = 1;  // "Resource_ClearGlobal1047D138" 0x100729D0
 constexpr unsigned CMoResourceLoadTask__ScalarDeletingDtor = 0, CMoResourceLoadTask__ScalarDeletingDtor_TRAMP = 1;  // "CMoResourceLoadTask::ScalarDeletingDtor" 0x10072A30
 constexpr unsigned ResourceLoadTask_Step = 4, ResourceLoadTask_Step_TRAMP = 1;  // "ResourceLoadTask_Step" 0x10072A70
@@ -6863,6 +6865,8 @@ constexpr unsigned Font_GetCharWidthAt = 12, Font_GetCharWidthAt_TRAMP = 1;  // 
 constexpr unsigned Sjis_IsLeadByte = 4, Sjis_IsLeadByte_TRAMP = 1;  // "Sjis_IsLeadByte" 0x1011DA30
 constexpr unsigned Sjis_GetCharByteLen = 4, Sjis_GetCharByteLen_TRAMP = 1;  // "Sjis_GetCharByteLen" 0x1011DA80
 constexpr unsigned Sjis_IsCodeInSet = 4, Sjis_IsCodeInSet_TRAMP = 1;  // "Sjis_IsCodeInSet" 0x1011DB40
+constexpr unsigned NetCellFont_UppercaseCharThen1011DAE0 = 4, NetCellFont_UppercaseCharThen1011DAE0_TRAMP = 1;  // "NetCellFont_UppercaseCharThen1011DAE0" 0x1011DC00
+constexpr unsigned NetCellFont_LowercaseCharThen1011DAE0 = 4, NetCellFont_LowercaseCharThen1011DAE0_TRAMP = 1;  // "NetCellFont_LowercaseCharThen1011DAE0" 0x1011DCC0
 constexpr unsigned Sjis_CopyPrefix = 4, Sjis_CopyPrefix_TRAMP = 1;  // "Sjis_CopyPrefix" 0x1011DE80
 constexpr unsigned Cell_GetField20Ptr = 4, Cell_GetField20Ptr_TRAMP = 0;  // "Cell_GetField20Ptr" 0x1011E290
 constexpr unsigned Cell_ResolveSubCells = 4, Cell_ResolveSubCells_TRAMP = 1;  // "Cell_ResolveSubCells" 0x1011E2A0
@@ -7157,6 +7161,7 @@ constexpr unsigned TargetMenu_FormatMessage5 = 4, TargetMenu_FormatMessage5_TRAM
 constexpr unsigned TargetMenu_Read2Byte7Bit = 4, TargetMenu_Read2Byte7Bit_TRAMP = 1;  // "TargetMenu_Read2Byte7Bit" 0x101531B0
 constexpr unsigned TargetMenu_ReadArgCode = 4, TargetMenu_ReadArgCode_TRAMP = 1;  // "TargetMenu_ReadArgCode" 0x101531D0
 constexpr unsigned TargetMenu_FormatDecimal = 4, TargetMenu_FormatDecimal_TRAMP = 1;  // "TargetMenu_FormatDecimal" 0x10153230
+constexpr unsigned TargetMenu_Call101532B0OnWordBE = 4, TargetMenu_Call101532B0OnWordBE_TRAMP = 1;  // "TargetMenu_Call101532B0OnWordBE" 0x101532F0
 constexpr unsigned TargetMenu_FormatMessageWithArgs = 4, TargetMenu_FormatMessageWithArgs_TRAMP = 1;  // "TargetMenu_FormatMessageWithArgs" 0x10153A40
 constexpr unsigned TargetMenu_LoadMessageBlocksSetA = 4, TargetMenu_LoadMessageBlocksSetA_TRAMP = 1;  // "TargetMenu_LoadMessageBlocksSetA" 0x10153AF0
 constexpr unsigned TargetMenu_LoadMessageBlocksSetB = 4, TargetMenu_LoadMessageBlocksSetB_TRAMP = 1;  // "TargetMenu_LoadMessageBlocksSetB" 0x10153B30
@@ -7675,6 +7680,7 @@ constexpr unsigned Time_SetDiv155520000 = 4, Time_SetDiv155520000_TRAMP = 1;  //
 constexpr unsigned Time_GetDiv5184000Mul5184000 = 4, Time_GetDiv5184000Mul5184000_TRAMP = 1;  // "Time_GetDiv5184000Mul5184000" 0x1018C1B0
 constexpr unsigned Time_AddFrameScale = 4, Time_AddFrameScale_TRAMP = 1;  // "Time_AddFrameScale" 0x1018C270
 constexpr unsigned Time_SubtractFrameScale = 4, Time_SubtractFrameScale_TRAMP = 1;  // "Time_SubtractFrameScale" 0x1018C290
+constexpr unsigned fn_1018D170 = 4, fn_1018D170_TRAMP = 1;  // "fn_1018D170" 0x1018D170
 constexpr unsigned TextInputFiles_GrowCapacity = 4, TextInputFiles_GrowCapacity_TRAMP = 1;  // "TextInputFiles_GrowCapacity" 0x1018D230
 constexpr unsigned TextInputFiles_Free = 4, TextInputFiles_Free_TRAMP = 1;  // "TextInputFiles_Free" 0x1018D250
 constexpr unsigned TextInputFiles_InitEmpty = 4, TextInputFiles_InitEmpty_TRAMP = 1;  // "TextInputFiles_InitEmpty" 0x1018D280
@@ -8702,7 +8708,7 @@ constexpr unsigned LobbyScreen_LoadResourceOnce = 4, LobbyScreen_LoadResourceOnc
 constexpr unsigned LobbyThread_Start = 4, LobbyThread_Start_TRAMP = 1;  // "LobbyThread_Start" 0x10245600
 constexpr unsigned LobbyThread_SetGlobal106690AC = 4, LobbyThread_SetGlobal106690AC_TRAMP = 1;  // "LobbyThread_SetGlobal106690AC" 0x10245B50
 constexpr unsigned Lobby_DestroyThreadPool = 4, Lobby_DestroyThreadPool_TRAMP = 1;  // "Lobby_DestroyThreadPool" 0x10245B60
-constexpr unsigned thunk_sub_10245BB0 = 4, thunk_sub_10245BB0_TRAMP = 1;  // "thunk_sub_10245BB0" 0x10245BA0
+constexpr unsigned thunk_LobbyThread_ResetZone_as_v0 = 4, thunk_LobbyThread_ResetZone_as_v0_TRAMP = 1;  // "thunk_sub_10245BB0" 0x10245BA0
 constexpr unsigned LobbyThread_ResetZone = 4, LobbyThread_ResetZone_TRAMP = 1;  // "LobbyThread_ResetZone" 0x10245BB0
 constexpr unsigned LobbyThread_IsSystemState1 = 4, LobbyThread_IsSystemState1_TRAMP = 1;  // "LobbyThread_IsSystemState1" 0x10245BE0
 constexpr unsigned LobbyThread_NextSequence = 4, LobbyThread_NextSequence_TRAMP = 1;  // "LobbyThread_NextSequence" 0x10245F30

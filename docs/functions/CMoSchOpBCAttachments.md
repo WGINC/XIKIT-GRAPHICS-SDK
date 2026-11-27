@@ -6,10 +6,10 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoSchOpBCAttachment
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CMoSchOpBCAttachments::Slot1DeleteOwner` | 0x100630D0 | 8 | yes | - | Deletes the object this attachments member belongs to. (reviewed as sub_100630D0) | high |
+| `CMoSchOpBCAttachments::Slot1DeleteOwner` | 0x100630D0 | 8 | yes | - | Deletes the object this attachments member belongs to. (reviewed as game_100630D0) | high |
 
 ## Direct calls
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoSchOpBCAttachments::Slot1DeleteOwner` calls `sub_10061D00`
+- `CMoSchOpBCAttachments::Slot1DeleteOwner` calls `game_10061D00`

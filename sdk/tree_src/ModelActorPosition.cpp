@@ -4,66 +4,66 @@
 
 // FUNCTION: FFXIMAIN 0x100C3FF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ModelActorPosition_SetPosition(void * self_, undefined4 * param_1)
+XI_API void __thiscall ModelActorPosition_SetPosition(void * self_, bits32 * arg2)
 {
-  void *this_00;
+  void *obj1;
   
-  this_00 = *(void **)((int)self_ + 0x70);
-  if (this_00 != (void *)0x0) {
-    *(uint32_t *)((int)this_00 + 0x24) = *param_1;
-    *(uint32_t *)((int)this_00 + 0x28) = param_1[1];
-    *(uint32_t *)((int)this_00 + 0x2c) = param_1[2];
-    orig::Acter_CopyPosToCached(this_00);
+  obj1 = *(void **)((int)self_ + 0x70);
+  if (obj1 != (void *)0x0) {
+    *(uint32_t *)((int)obj1 + 0x24) = *arg2;
+    *(uint32_t *)((int)obj1 + 0x28) = arg2[1];
+    *(uint32_t *)((int)obj1 + 0x2c) = arg2[2];
+    orig::Acter_CopyPosToCached(obj1);
   }
-  *(uint32_t *)((int)self_ + 0x734) = *param_1;
-  *(uint32_t *)((int)self_ + 0x738) = param_1[1];
-  *(uint32_t *)((int)self_ + 0x73c) = param_1[2];
-  *(uint32_t *)((int)self_ + 0x740) = param_1[3];
-  orig::Vec4_Copy_v3((uint32_t *)((int)self_ + 0x34),param_1);
+  *(uint32_t *)((int)self_ + 0x734) = *arg2;
+  *(uint32_t *)((int)self_ + 0x738) = arg2[1];
+  *(uint32_t *)((int)self_ + 0x73c) = arg2[2];
+  *(uint32_t *)((int)self_ + 0x740) = arg2[3];
+  orig::Vec4_Copy_v3((uint32_t *)((int)self_ + 0x34),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100C4050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ModelActorPosition_SetAnglesWrapped(void * self_, undefined4 * param_1)
+XI_API void __thiscall ModelActorPosition_SetAnglesWrapped(void * self_, bits32 * arg2)
 {
-  float *pfVar1;
-  void *this_00;
-  uint8_t bVar2;
+  float *p1;
+  void *obj1;
+  uint8_t u1;
   
-  this_00 = *(void **)((int)self_ + 0x70);
-  if (this_00 != (void *)0x0) {
-    *(uint32_t *)((int)this_00 + 0x34) = *param_1;
-    *(uint32_t *)((int)this_00 + 0x38) = param_1[1];
-    *(uint32_t *)((int)this_00 + 0x3c) = param_1[2];
-    orig::Acter_CopyPosToCached(this_00);
+  obj1 = *(void **)((int)self_ + 0x70);
+  if (obj1 != (void *)0x0) {
+    *(uint32_t *)((int)obj1 + 0x34) = *arg2;
+    *(uint32_t *)((int)obj1 + 0x38) = arg2[1];
+    *(uint32_t *)((int)obj1 + 0x3c) = arg2[2];
+    orig::Acter_CopyPosToCached(obj1);
   }
-  *(uint32_t *)((int)self_ + 0x744) = *param_1;
-  *(uint32_t *)((int)self_ + 0x748) = param_1[1];
-  *(uint32_t *)((int)self_ + 0x74c) = param_1[2];
-  pfVar1 = (float *)((int)self_ + 0x44);
-  *(uint32_t *)((int)self_ + 0x750) = param_1[3];
-  orig::Vec4_Copy_v3(pfVar1,param_1);
-  if ((long double)*pfVar1 > (long double)3.141499996185302734375f) {
-    *pfVar1 = (float)((long double)*pfVar1 - (long double)6.28299999237060546875f);
+  *(uint32_t *)((int)self_ + 0x744) = *arg2;
+  *(uint32_t *)((int)self_ + 0x748) = arg2[1];
+  *(uint32_t *)((int)self_ + 0x74c) = arg2[2];
+  p1 = (float *)((int)self_ + 0x44);
+  *(uint32_t *)((int)self_ + 0x750) = arg2[3];
+  orig::Vec4_Copy_v3(p1,arg2);
+  if (*p1 > 3.141499996185302734375f) {
+    *p1 = (float)(*p1 - 6.28299999237060546875f);
   }
-  bVar2 = NAN((long double)*pfVar1) || NAN((long double)(-3.141499996185302734375f));
-  if ((bVar2 || (long double)*pfVar1 < (long double)(-3.141499996185302734375f)) != bVar2) {
-    *pfVar1 = (float)((long double)*pfVar1 + (long double)6.28299999237060546875f);
+  u1 = ((*p1) != (*p1)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+  if ((u1 || *p1 < (-3.141499996185302734375f)) != u1) {
+    *p1 = (float)(*p1 + 6.28299999237060546875f);
   }
-  if ((long double)*(float *)((int)self_ + 0x48) > (long double)3.141499996185302734375f) {
-    *(float *)((int)self_ + 0x48) = (float)((long double)*(float *)((int)self_ + 0x48) - (long double)6.28299999237060546875f);
+  if (*(float *)((int)self_ + 0x48) > 3.141499996185302734375f) {
+    *(float *)((int)self_ + 0x48) = (float)(*(float *)((int)self_ + 0x48) - 6.28299999237060546875f);
   }
-  bVar2 = NAN((long double)*(float *)((int)self_ + 0x48)) || NAN((long double)(-3.141499996185302734375f));
-  if ((bVar2 || (long double)*(float *)((int)self_ + 0x48) < (long double)(-3.141499996185302734375f)) != bVar2) {
-    *(float *)((int)self_ + 0x48) = (float)((long double)*(float *)((int)self_ + 0x48) + (long double)6.28299999237060546875f);
+  u1 = ((*(float *)((int)self_ + 0x48)) != (*(float *)((int)self_ + 0x48))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+  if ((u1 || *(float *)((int)self_ + 0x48) < (-3.141499996185302734375f)) != u1) {
+    *(float *)((int)self_ + 0x48) = (float)(*(float *)((int)self_ + 0x48) + 6.28299999237060546875f);
   }
-  if ((long double)*(float *)((int)self_ + 0x4c) > (long double)3.141499996185302734375f) {
-    *(float *)((int)self_ + 0x4c) = (float)((long double)*(float *)((int)self_ + 0x4c) - (long double)6.28299999237060546875f);
+  if (*(float *)((int)self_ + 0x4c) > 3.141499996185302734375f) {
+    *(float *)((int)self_ + 0x4c) = (float)(*(float *)((int)self_ + 0x4c) - 6.28299999237060546875f);
   }
-  bVar2 = NAN((long double)*(float *)((int)self_ + 0x4c)) || NAN((long double)(-3.141499996185302734375f));
-  if ((bVar2 || (long double)*(float *)((int)self_ + 0x4c) < (long double)(-3.141499996185302734375f)) != bVar2) {
-    *(float *)((int)self_ + 0x4c) = (float)((long double)*(float *)((int)self_ + 0x4c) + (long double)6.28299999237060546875f);
+  u1 = ((*(float *)((int)self_ + 0x4c)) != (*(float *)((int)self_ + 0x4c))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+  if ((u1 || *(float *)((int)self_ + 0x4c) < (-3.141499996185302734375f)) != u1) {
+    *(float *)((int)self_ + 0x4c) = (float)(*(float *)((int)self_ + 0x4c) + 6.28299999237060546875f);
   }
   return;
 }

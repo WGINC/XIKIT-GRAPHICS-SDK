@@ -4,68 +4,68 @@
 
 // FUNCTION: FFXIMAIN 0x1003C740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall AttachNotify_CopyFields(void * self_, int param_1)
+XI_API void __thiscall AttachNotify_CopyFields(void * self_, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ *(uint32_t *)((int)self_ + 4)) & 0xf ^ *(uint32_t *)((int)self_ + 4);
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ uVar1) & 0x3f0 ^ uVar1;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ uVar1) & 0xfc00 ^ uVar1;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint8_t *)(param_1 + 6) & 1) << 0x10 ^ uVar1 & 0xfffeffff;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ uVar1) & 0x40000 ^ uVar1;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ uVar1) & 0x80000 ^ uVar1;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  uVar1 = (*(uint32_t *)(param_1 + 4) ^ uVar1) & 0xf00000 ^ uVar1;
-  *(uint32_t *)((int)self_ + 4) = uVar1;
-  *(uint32_t *)((int)self_ + 4) = (*(uint8_t *)(param_1 + 7) & 0xf) << 0x18 ^ uVar1 & 0xf0ffffff;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ *(uint32_t *)((int)self_ + 4)) & 0xf ^ *(uint32_t *)((int)self_ + 4);
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ u1) & 0x3f0 ^ u1;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ u1) & 0xfc00 ^ u1;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint8_t *)(arg2 + 6) & 1) << 0x10 ^ u1 & 0xfffeffff;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ u1) & 0x40000 ^ u1;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ u1) & 0x80000 ^ u1;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  u1 = (*(uint32_t *)(arg2 + 4) ^ u1) & 0xf00000 ^ u1;
+  *(uint32_t *)((int)self_ + 4) = u1;
+  *(uint32_t *)((int)self_ + 4) = (*(uint8_t *)(arg2 + 7) & 0xf) << 0x18 ^ u1 & 0xf0ffffff;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003C7D0
 // GATE: PASS -- 100 trials, 99 returned normally, 98 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API long double __attribute__((stdcall, regparm(3))) AttachNotify_GetFactorFromAttachments(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, uint8_t * param_2, float param_3)
+XI_API long double __attribute__((stdcall, regparm(3))) AttachNotify_GetFactorFromAttachments(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, uint8_t * arg4, float arg5)
 {
-  int iVar1;
-  int *piVar2;
-  uint32_t uVar3;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  long double fVar6;
+  int i1;
+  int *p1;
+  uint32_t u1;
+  uint8_t u2;
+  uint8_t u3;
+  long double f1;
   
-  bVar4 = 0;
-  if (((*param_2 & 2) == 0) && (iVar1 = orig::CMoAttachments_FindKindInChain(self_), iVar1 != 0)) {
-    piVar2 = (int *)orig::CMoAttachments_FindKindInChain(self_);
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*piVar2 + 0x304))))((void *)(piVar2));
-    bVar4 = (uint8_t)uVar3;
+  u2 = 0;
+  if (((*arg4 & 2) == 0) && (i1 = orig::CMoAttachments_FindKindInChain(self_), i1 != 0)) {
+    p1 = (int *)orig::CMoAttachments_FindKindInChain(self_);
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*p1 + 0x304))))((void *)(p1));
+    u2 = (uint8_t)u1;
   }
-  if (((*param_2 & 4) == 0) && (iVar1 = orig::CMoAttachments_FindKindFromRoot(self_), iVar1 != 0)) {
-    piVar2 = (int *)orig::CMoAttachments_FindKindFromRoot(self_);
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*piVar2 + 0x304))))((void *)(piVar2));
-    bVar4 = bVar4 | (uint8_t)uVar3;
+  if (((*arg4 & 4) == 0) && (i1 = orig::CMoAttachments_FindKindFromRoot(self_), i1 != 0)) {
+    p1 = (int *)orig::CMoAttachments_FindKindFromRoot(self_);
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*p1 + 0x304))))((void *)(p1));
+    u2 = u2 | (uint8_t)u1;
   }
-  fVar6 = (long double)1.0f;
-  if ((*param_2 & 1) == 0) {
-    if (bVar4 != 0) {
-      return fVar6;
+  f1 = 1.0f;
+  if ((*arg4 & 1) == 0) {
+    if (u2 != 0) {
+      return f1;
     }
-    bVar5 = NAN((long double)param_3) || NAN((long double)0.0f);
-    if (bVar5 != (bVar5 || (long double)param_3 == (long double)0.0f)) {
-      return (long double)0.5f;
+    u3 = ((arg5) != (arg5)) || ((0.0f) != (0.0f));
+    if (u3 != (u3 || arg5 == 0.0f)) {
+      return 0.5f;
     }
   }
   else {
-    if (bVar4 == 0) {
-      return fVar6;
+    if (u2 == 0) {
+      return f1;
     }
-    bVar5 = NAN((long double)param_3) || NAN((long double)0.0f);
-    if (bVar5 != (bVar5 || (long double)param_3 == (long double)0.0f)) {
-      return fVar6;
+    u3 = ((arg5) != (arg5)) || ((0.0f) != (0.0f));
+    if (u3 != (u3 || arg5 == 0.0f)) {
+      return f1;
     }
   }
-  return (long double)param_3;
+  return arg5;
 }

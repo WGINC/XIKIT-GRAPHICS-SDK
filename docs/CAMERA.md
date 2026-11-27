@@ -95,6 +95,17 @@ What that interpreter's scripts are, read 27 Nov (disassembly):
 - **Where the zone setup's inputs come from:**
   - 0x100AED00 is called from the event system's step 0x10096640, with values from the game state block
     [0x104dfd98] + 0x40D90, 0x40D92, 0x40D8E and 0x3C35A.
+  - (28 Nov, disassembly; RESEARCH F4; corrected the same day) the key: at 0x100967DD the four arguments are, in order,
+    the game state words +0x40D90, +0x40D92, +0x40D8E and +0x3C35A. In 0x100AED00 (0x100AEDEE..0x100AEE1D): when the
+    fourth is 0x3E8..0x513, the key is the fourth + 0x3E8; otherwise, when the first equals the third, the key is the
+    first; otherwise the third + 0x3E8.
+  - **Where those words come from (not published):** +0x40D90 = message +0x62, +0x40D92 = +0x64, +0x40D8E = +0x66, +0x3C35A = +0x9E, and the zone change's
+    number +0x40D80 = message +0xAA (also +0x3C350 = the dword at +0x30, +0x40D7C = +0x42). Windower's field list
+    (addons/libs/packets/fields.lua, a lead) calls +0x30 "Zone", +0x42 "_dupeZone", +0x62 "Menu Zone" ("only set if
+    the menu ID is sent"), +0x64 "Menu ID", +0x66 unknown and +0xAA "Zone model". So **the event key is not the zone
+    number field**: it is made from +0x62, +0x66 and +0x9E as above; the zone's resource file comes from +0xAA. Whether
+    those hold the zone's number in a given zone is the server's choice; the probe logging the message's +0x30, +0x62,
+    +0x66, +0x9E and +0xAA would show it.
   - The code that writes those values, and three more callers of 0x100AED00, are left out of the public kit
     (security set).
   - The zone key is the first value when it equals the third, else the third + 1000. When the fourth is in
@@ -104,6 +115,28 @@ What that interpreter's scripts are, read 27 Nov (disassembly):
 - **Which events hold them is not read.** It needs the zone event files, which the owner has not sent (none of the
   416 game files received is an event file of a known zone), and the length of every opcode, so the code can be walked
   from each entry.
+- **The opcodes' lengths (28 Nov, `pipeline/event_opcode_lengths.py`, its output `data/event_opcodes.txt`).** For each of
+  the 219 handlers, what it does to the program counter (+0x256): 169 add one constant (0x34 and 0x35 add 3); 10 add
+  one of several constants by a branch (0x1F: 2 or 8; `EventOp_LoadWeather` 4, 6 or 10 by the byte after the opcode);
+  25 store a computed value (jumps, and lengths read from the code: 0x01, 0x02, 0x1A, 0x1B among them); 18 change
+  nothing in themselves or their direct callees (0x00, 0x21, 0x26, 0x7A among them: waits, the end, or a counter
+  moved deeper than the scan follows). A walk of an event file can take the 169 as they are; the other 53 need their
+  handlers read one by one (their addresses are in the file). The event files themselves: `pipeline/collect_event_files.py`
+  copies the player's own into one zip.
+- **The walk (28 Nov, `pipeline/event_walk.py` on the owner's files; its output `data/event_walk_28nov.txt`).** Of
+  the 1,190 files the script took (every key 0..0xFFF), 334 are event files: all 256 keys below 0x100, and 78 above
+  (the other 856 numbers hold other files; their block sizes do not add up). Their 217,392 events were walked through
+  the 169 fixed-length opcodes and the control opcodes read from their handlers (0x01 jump, 0x02 branch, 0x1A call,
+  0x1B return, 0x21 wait, 0x1F's two sub-codes), every reachable point once:
+  - **679 events reach 0x34 or 0x35**, in 84 files (keys and files listed in the output), so those are the zone
+    events that release the zone object and change the zone (533 before 0x3E, 0x43, 0x5B and 0x66 were read: 0x43
+    is 2 bytes, 0x5B and 0x66 15, 0x3E a branch to pc+7 or the word at pc+5);
+  - 185,900 have every path end (0x00, 0x1B, 0x21) without reaching them: they do not;
+  - 30,813 reach an opcode the walk cannot step over before reaching either (0x9D, 0xB6, 0x47, 0xCC, 0xB4, 0x59 most):
+    open. Those handlers switch on a sub-code with cases that fall into one another (0xCC, 0x71: eight or more
+    cases each) or compute a length (0x9D); each needs its cases read exactly, as a wrong length would mislead the
+    walk both ways.
+  Which events are which in the game (a cutscene, a door, a mog house exit) is not read: the event numbers are given.
 
 ## 4. Not known
 
@@ -116,7 +149,30 @@ What that interpreter's scripts are, read 27 Nov (disassembly):
   numbered zone + 100, or zone + 0x144F7 for zones 600 and above (0x10178DF0, 0x10178EB1..0x10178EF1; file numbers to
   paths: docs/DATA_FILES.md). So the draw distance is the float at +0x58 of the type-0x2F chunk's data in the zone's
   file. Later records: `ZoneMap_Update` sets `[map + 0x10] + 0x20` (the environment blend's record),
-  `YmCombineWeather::Release` and 0x101873A0 set others (their records' source: not read).
+  `YmCombineWeather::Release` and 0x101873A0 set others. **Their source, read 28 Nov (RESEARCH F3):** the weather
+  message **0x057** (not published) stores its +4 dword at 0x104807F8, its +8 word (the
+  weather) at 0x104807F0 and its +0xA word at 0x1047FAAC, and sets 0x104807F6. Each frame `game_1009F2F0` (from
+  `Acter_UpdateFrame` 0x10096BBE), when 0x104807F6 is set and 0x10487E48 is not, copies the weather to 0x10485FE0,
+  sets the clock (0x1018D1B0 with [0x104819A8] x 60, `Time_Normalize` with the hour [0x10480C5C] x 3600; running-build
+  addresses), takes the zone's weather record **[XiZone + 0x1D8] + 4 x weather** and hands it to 0x10188AC0, which,
+  when it differs from the current one, releases the current blends (`YmCombineWeather::Release`) and makes a new one
+  (0x1018BD70), then clears 0x104807F6. `XiZone::SetPtr1D8FromTable` sets +0x1D8 to one of two constant tables
+  (pointers at 0x10377C58, analysed): **20 four-character names by weather number**, `fine suny clod mist dryw heat
+  rain squl dust sand wind stom snow bliz thdr bolt aura ligt fogd dark`, and the same with a final `1` (`fin1 sun1
+  ...`). So the zone's weather is the resource of that name in the zone's data, picked by the server's weather number.
+  A mod could ask the client's own path for another weather by writing 0x104807F0 and setting 0x104807F6 (untested:
+  the server's next 0x057 sets it back).
+  **The time of day the light is blended for (read 28 Nov, Ghidra on 6AE818B4's `Zone_GetClock` and
+  `Env_BlendTimeOfDay`; RESEARCH F2):** `Zone_GetClock` gives **XiZone + 0x1C8 when it is 0 or more and the byte
+  g_pCamera + 9 is set, otherwise the game's clock at 0x1065CB18** (analysed). The clock counts 1/60 s of game time:
+  `Time_GetModulo3600Div60` minutes, `Time_GetModulo216000Div3600` hours, `Time_GetModulo5184000Div216000` days of a
+  30-day month, `Time_SetModulo155520000Div5184000` months; a day is 0x4F1A00 (5,184,000). `Env_BlendTimeOfDay` keeps
+  the zone's two weather records whose time keys (`WeatherRes_GetTimeKey`: the four-digit ids, 0000..2100) are at or
+  before and after that time, and blends them by where the time falls between the keys, wrapping at a day. So a mod
+  can hold the light's time of day by setting XiZone + 0x1C8 (in 1/60 s since midnight) while g_pCamera + 9 is set;
+  what else reads +0x1C8 is not read. **g_pCamera + 9** (read 28 Nov, `Frame_Render`'s state switch, kit/speedfix's fork
+of it, lines ~288-350): set to 1 when the game's scene starts (after `Game_InitSceneState`, or when the lobby hands
+over, `App_GetGlobal_104569C8`), and to 0 when the application setting +40 is 0; so it is 1 while you play.
   Checked 26 Nov on a real file: the owner's file 218 (`ROM/0/71.DAT`, zone 118 taken from row 118 of the English
   zone-name table, ROM/165/84.DAT, "Buburimu Peninsula"; that the table's row is the zone number is not shown by the
   code read). It walks as 1,794 resource chunks to its exact end, with the zone-map types 0x1C, 0x2E, 0x36 and 57

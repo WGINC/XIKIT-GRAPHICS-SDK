@@ -89,22 +89,49 @@ UINT d8_rows(D3DFORMAT f, UINT h) { return d8_fmt(f).block ? (h + 3) / 4 : h; }
 #include <map>
 thread_local void *d8_rb_site;
 static CRITICAL_SECTION g_rb_cs; static bool g_rb_init;
-static std::map<void *, std::pair<unsigned long, double>> g_rb;
+static std::map<std::pair<void *, void *>, std::pair<unsigned long, double>> g_rb;
+// (28 Nov, ISSUES 1.6) the game function under a readback: when the site is inside FFXiMain's D3DX library (at or past
+// the module's +0x2C0000, where the library's code starts in both builds), the first return address on the stack into
+// FFXiMain below that, right after a call instruction (E8 rel32, or FF /2), names the game's caller (TexObj_Upload,
+// Tex_LoadSurfaceFromDatFile, the screenshot copy, or 0x10283908 are the candidates read in the code). The scan reads
+// the stack only (up to 4 KB above this frame), so it can name a stale return address; the log says "via".
+static void *game_caller_of(void *site) {
+  static uintptr_t lo, hi;
+  if (!lo) { HMODULE m = GetModuleHandleA("FFXiMain.dll"); if (!m) return nullptr;
+    auto *nt = (IMAGE_NT_HEADERS *)((uint8_t *)m + ((IMAGE_DOS_HEADER *)m)->e_lfanew); lo = (uintptr_t)m; hi = lo + nt->OptionalHeader.SizeOfImage; }
+  uintptr_t a = (uintptr_t)site;
+  if (a < lo + 0x2C0000 || a >= hi) return nullptr;
+  uintptr_t *sp = (uintptr_t *)__builtin_frame_address(0);
+  for (int i = 0; i < 1024; i++) {
+    uintptr_t v;
+    if (IsBadReadPtr(sp + i, sizeof v)) break;
+    v = sp[i];
+    if (v < lo + 0x1000 || v >= lo + 0x2C0000) continue;
+    const uint8_t *c = (const uint8_t *)v;
+    if (IsBadReadPtr(c - 6, 6)) continue;
+    if (c[-5] == 0xE8 || (c[-6] == 0xFF && (c[-5] & 0x38) == 0x10) || (c[-2] == 0xFF && (c[-1] & 0x38) == 0x10) || (c[-3] == 0xFF && (c[-2] & 0x38) == 0x10))
+      return (void *)v;
+  }
+  return nullptr;
+}
 void d8_rb_count(double ms) {
   if (!g_rb_init) { InitializeCriticalSection(&g_rb_cs); g_rb_init = true; }
-  EnterCriticalSection(&g_rb_cs); auto &e = g_rb[d8_rb_site]; e.first++; e.second += ms; LeaveCriticalSection(&g_rb_cs);
+  void *via = game_caller_of(d8_rb_site);
+  EnterCriticalSection(&g_rb_cs); auto &e = g_rb[{d8_rb_site, via}]; e.first++; e.second += ms; LeaveCriticalSection(&g_rb_cs);
 }
 void d8_rb_log(unsigned frames) {
   if (!g_rb_init) return;
   EnterCriticalSection(&g_rb_cs);
-  std::vector<std::pair<void *, std::pair<unsigned long, double>>> v(g_rb.begin(), g_rb.end()); g_rb.clear();
+  std::vector<std::pair<std::pair<void *, void *>, std::pair<unsigned long, double>>> v(g_rb.begin(), g_rb.end()); g_rb.clear();
   LeaveCriticalSection(&g_rb_cs);
   if (v.empty()) return;
   std::sort(v.begin(), v.end(), [](const auto &a, const auto &b) { return a.second.second > b.second.second; });
   char line[1200]; size_t at = 0;
   for (size_t i = 0; i < v.size() && i < 6 && at < sizeof line - 160; i++) {
-    char w[MAX_PATH + 16]; d8_caller(v[i].first, w, sizeof w);
-    at += snprintf(line + at, sizeof line - at, "%s%s: %lu, %.1f ms", i ? "; " : "", v[i].first ? w : "(no site)", v[i].second.first, v[i].second.second);
+    char w[MAX_PATH + 16], g[MAX_PATH + 16]; d8_caller(v[i].first.first, w, sizeof w);
+    if (v[i].first.second) d8_caller(v[i].first.second, g, sizeof g); else g[0] = 0;
+    at += snprintf(line + at, sizeof line - at, "%s%s%s%s: %lu, %.1f ms", i ? "; " : "", v[i].first.first ? w : "(no site)", g[0] ? " via " : "", g,
+                   v[i].second.first, v[i].second.second);
   }
   d8_log("readbacks by call site, %u frames (each waits for the GPU): %s", frames, line);
 }

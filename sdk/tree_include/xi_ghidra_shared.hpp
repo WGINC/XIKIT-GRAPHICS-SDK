@@ -3,30 +3,28 @@
 #pragma once
 #include <stdint.h>
 
-typedef unsigned char undefined; typedef unsigned char undefined1; typedef uint16_t undefined2;
-typedef uint32_t undefined3; typedef uint64_t undefined5; typedef uint64_t undefined6;
-typedef uint64_t undefined7; typedef uint64_t undefined8;
 // Ghidra's undefined4: four bytes of no type. A value of another type copied into it keeps its bits (a float stays
 // the float's encoding: Ghidra's COPY), where a C++ uint32_t would convert the float's value; integers and pointers
 // convert as they would to uint32_t; reading it gives the uint32_t.
-struct undefined4 {
+struct bits32 {
     uint32_t v;
-    undefined4() = default;
-#define XI_U4_INT(t) undefined4(t x) : v((uint32_t)x) {}
+    bits32() = default;
+#define XI_U4_INT(t) bits32(t x) : v((uint32_t)x) {}
     XI_U4_INT(bool) XI_U4_INT(char) XI_U4_INT(signed char) XI_U4_INT(unsigned char) XI_U4_INT(short) XI_U4_INT(unsigned short)
     XI_U4_INT(int) XI_U4_INT(unsigned) XI_U4_INT(long) XI_U4_INT(unsigned long) XI_U4_INT(long long) XI_U4_INT(unsigned long long)
 #undef XI_U4_INT
-    template <class T> undefined4(T *p) : v((uint32_t)(uintptr_t)p) {}
-    undefined4(float f) { __builtin_memcpy(&v, &f, 4); }
-    undefined4(double) = delete;             // eight bytes do not copy into four: no fact says which four
+    template <class T> bits32(T *p) : v((uint32_t)(uintptr_t)p) {}
+    bits32(float f) { __builtin_memcpy(&v, &f, 4); }
+    bits32(double) = delete;             // eight bytes do not copy into four: no fact says which four
     operator uint32_t() const { return v; }
     template <class T> explicit operator T *() const { return (T *)(uintptr_t)v; }
-#define XI_U4_OP(op) template <class T> undefined4 &operator op##=(T x) { v op##= x; return *this; }
+#define XI_U4_OP(op) template <class T> bits32 &operator op##=(T x) { v op##= x; return *this; }
     XI_U4_OP(+) XI_U4_OP(-) XI_U4_OP(*) XI_U4_OP(/) XI_U4_OP(%) XI_U4_OP(&) XI_U4_OP(|) XI_U4_OP(^) XI_U4_OP(<<) XI_U4_OP(>>)
 #undef XI_U4_OP
-    undefined4 &operator++() { ++v; return *this; } undefined4 &operator--() { --v; return *this; }
+    bits32 &operator++() { ++v; return *this; } bits32 &operator--() { --v; return *this; }
     uint32_t operator++(int) { return v++; } uint32_t operator--(int) { return v--; }
 };
+typedef bits32 bits32;  // the public tree's name for it (sdk/public_clean): mods written for either tree compile on both
 
 // An argument slot of a called game function: 4 bytes on the stack, holding the bits of whatever the
 // caller passes (int, pointer or float), exactly as the original pushes them.

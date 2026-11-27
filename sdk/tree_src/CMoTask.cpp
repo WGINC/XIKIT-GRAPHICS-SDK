@@ -26,7 +26,7 @@ void CMoTask::Slot9DoNothing()
 
 // FUNCTION: FFXIMAIN 0x10011940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void CMoTask::Slot10DoNothing(int a1)
+void CMoTask::Slot10DoNothing(int arg1)
 {
   ;
 }
@@ -47,86 +47,86 @@ char ** __cdecl CMoTask::GetRuntimeClass_variant2()
 
 // FUNCTION: FFXIMAIN 0x10035A00
 // GATE: PASS -- 100 trials, 100 returned normally, 10 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * __thiscall CMoTask::CtorByMode(void * self, undefined4 param_1, int param_2, undefined4 param_3)
+void * __thiscall CMoTask::CtorByMode(void * self, bits32 arg2, int arg3, bits32 arg4)
 {
-  int *piVar1;
-  int *piVar2;
-  int *piVar3;
-  uint32_t uVar4;
+  int *p1;
+  int *p2;
+  int *p3;
+  uint32_t u1;
   
   orig::CMoTask_Constructor_v2(self);
-  *(uint8_t ***)self = &PTR_CMoTask_GetRuntimeClass_variant12_1032a904;
-  *(uint32_t *)((int)self + 0x34) = param_3;
-  piVar1 = DAT_10463928;
-  piVar2 = DAT_10463930;
-  piVar3 = DAT_10463934;
-  switch(xi_sw(param_3)) {
+  *(uint8_t ***)self = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032A904;
+  *(uint32_t *)((int)self + 0x34) = arg4;
+  p1 = g_10463928;
+  p2 = g_10463930;
+  p3 = g_10463934;
+  switch(xi_sw(arg4)) {
   case 1:
-    if (DAT_1046392c != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_1046392c + 0x18))))((void *)(DAT_1046392c),1);
+    if (g_1046392C != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_1046392C + 0x18))))((void *)(g_1046392C),1);
     }
-    DAT_1046392c = self;
-    *(uint32_t *)((int)self + 0x40) = DAT_10351700_as_v0;
-    goto switchD_10035a1f_caseD_3;
+    g_1046392C = self;
+    *(uint32_t *)((int)self + 0x40) = g_10351700_as_v0;
+    goto L1;
   case 2:
-    uVar4 = DAT_10351704_as_v0;
-    piVar1 = self;
-    if (DAT_10463928 != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463928 + 0x18))))((void *)(DAT_10463928),1);
-      uVar4 = DAT_10351704_as_v0;
-      piVar1 = self;
-      piVar2 = DAT_10463930;
-      piVar3 = DAT_10463934;
+    u1 = g_10351704_as_v0;
+    p1 = self;
+    if (g_10463928 != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463928 + 0x18))))((void *)(g_10463928),1);
+      u1 = g_10351704_as_v0;
+      p1 = self;
+      p2 = g_10463930;
+      p3 = g_10463934;
     }
     break;
   default:
-    goto switchD_10035a1f_caseD_3;
+    goto L1;
   case 4:
-    uVar4 = DAT_10351708_as_v0;
-    piVar2 = self;
-    if (DAT_10463930 != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463930 + 0x18))))((void *)(DAT_10463930),1);
-      uVar4 = DAT_10351708_as_v0;
-      piVar1 = DAT_10463928;
-      piVar2 = self;
-      piVar3 = DAT_10463934;
+    u1 = g_10351708_as_v0;
+    p2 = self;
+    if (g_10463930 != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463930 + 0x18))))((void *)(g_10463930),1);
+      u1 = g_10351708_as_v0;
+      p1 = g_10463928;
+      p2 = self;
+      p3 = g_10463934;
     }
     break;
   case 8:
-    uVar4 = DAT_1035170c;
-    piVar3 = self;
-    if (DAT_10463934 != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463934 + 0x18))))((void *)(DAT_10463934),1);
-      uVar4 = DAT_1035170c;
-      piVar1 = DAT_10463928;
-      piVar2 = DAT_10463930;
-      piVar3 = self;
+    u1 = g_1035170C;
+    p3 = self;
+    if (g_10463934 != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463934 + 0x18))))((void *)(g_10463934),1);
+      u1 = g_1035170C;
+      p1 = g_10463928;
+      p2 = g_10463930;
+      p3 = self;
     }
   }
-  DAT_10463934 = piVar3;
-  DAT_10463930 = piVar2;
-  DAT_10463928 = piVar1;
-  *(uint32_t *)((int)self + 0x40) = uVar4;
-switchD_10035a1f_caseD_3:
-  *(uint32_t *)((int)self + 0x44) = param_1;
-  *(float *)((int)self + 0x38) = (float)(long double)param_2;
-  *(float *)((int)self + 0x3c) = (float)(long double)param_2;
+  g_10463934 = p3;
+  g_10463930 = p2;
+  g_10463928 = p1;
+  *(uint32_t *)((int)self + 0x40) = u1;
+L1:
+  *(uint32_t *)((int)self + 0x44) = arg2;
+  *(float *)((int)self + 0x38) = (float)arg3;
+  *(float *)((int)self + 0x3c) = (float)arg3;
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10035D40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __cdecl CMoTask::CreateMode2(undefined4 param_1, undefined4 param_2)
+void __cdecl CMoTask::CreateMode2(bits32 arg1, bits32 arg2)
 {
-  undefined4 *self;
-  void *pvVar1;
+  bits32 *self;
+  void *p1;
   
   self = orig::Mem_AllocFromArea_v2(0x48,4,0);
   orig::CMoTask_ResetFields_v1(self);
   g_resourcesDirty_as_v0 = 1;
-  if (self != (undefined4 *)0x0) {
-    pvVar1 = orig::CMoTask_CtorByMode(self,param_1,param_2,2);
-    if (pvVar1 != (void *)0x0) {
+  if (self != (bits32 *)0x0) {
+    p1 = orig::CMoTask_CtorByMode(self,arg1,arg2,2);
+    if (p1 != (void *)0x0) {
       orig::CMoTask_RegisterWithMng_v1(5);
     }
   }
@@ -135,17 +135,17 @@ void __cdecl CMoTask::CreateMode2(undefined4 param_1, undefined4 param_2)
 
 // FUNCTION: FFXIMAIN 0x10035D90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __cdecl CMoTask::CreateMode1(undefined4 param_1, int param_2)
+void __cdecl CMoTask::CreateMode1(bits32 arg1, int arg2)
 {
-  undefined4 *self;
-  void *pvVar1;
+  bits32 *self;
+  void *p1;
   
   self = orig::Mem_AllocFromArea_v2(0x48,4,0);
   orig::CMoTask_ResetFields_v1(self);
   g_resourcesDirty_as_v0 = 1;
-  if (self != (undefined4 *)0x0) {
-    pvVar1 = orig::CMoTask_CtorByMode(self,param_1,param_2,1);
-    if (pvVar1 != (void *)0x0) {
+  if (self != (bits32 *)0x0) {
+    p1 = orig::CMoTask_CtorByMode(self,arg1,arg2,1);
+    if (p1 != (void *)0x0) {
       orig::CMoTask_RegisterWithMng_v1(5);
     }
   }
@@ -154,17 +154,17 @@ void __cdecl CMoTask::CreateMode1(undefined4 param_1, int param_2)
 
 // FUNCTION: FFXIMAIN 0x10035DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __cdecl CMoTask::CreateMode4(undefined4 param_1, int param_2)
+void __cdecl CMoTask::CreateMode4(bits32 arg1, int arg2)
 {
-  undefined4 *self;
-  void *pvVar1;
+  bits32 *self;
+  void *p1;
   
   self = orig::Mem_AllocFromArea_v2(0x48,4,0);
   orig::CMoTask_ResetFields_v1(self);
   g_resourcesDirty_as_v0 = 1;
-  if (self != (undefined4 *)0x0) {
-    pvVar1 = orig::CMoTask_CtorByMode(self,param_1,param_2,4);
-    if (pvVar1 != (void *)0x0) {
+  if (self != (bits32 *)0x0) {
+    p1 = orig::CMoTask_CtorByMode(self,arg1,arg2,4);
+    if (p1 != (void *)0x0) {
       orig::CMoTask_RegisterWithMng_v1(5);
     }
   }
@@ -196,15 +196,15 @@ char CMoTask::Slot8ReturnFalse()
 // GATE: PASS -- 100 trials, 99 returned normally, 51 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 void __thiscall CMoTask::Restart(void * self)
 {
-  int *this_00;
-  undefined4 *this_01;
+  int *obj1;
+  bits32 *obj2;
   
-  *(undefined4 *)((int)self + 0x9c) = 0;
-  *(undefined4 *)((int)self + 0xcc) = 0;
-  *(undefined4 *)((int)self + 200) = 0;
+  *(bits32 *)((int)self + 0x9c) = 0;
+  *(bits32 *)((int)self + 0xcc) = 0;
+  *(bits32 *)((int)self + 200) = 0;
   if ((*(uint8_t *)((int)self + 0xdc) & 1) != 0) {
     if (*(int *)((int)self + 0xa8) != 0) {
-      *(undefined4 *)(*(int *)((int)self + 0xa8) + 0x14) = 0;
+      *(bits32 *)(*(int *)((int)self + 0xa8) + 0x14) = 0;
     }
     *(uint8_t *)((int)self + 0xdc) = *(uint8_t *)((int)self + 0xdc) & 0xfe;
     *(uint32_t *)((int)self + 0xd8) = *(uint32_t *)((int)self + 0xd8) | 0x800;
@@ -212,28 +212,28 @@ void __thiscall CMoTask::Restart(void * self)
   }
   *(uint8_t *)((int)self + 0xdc) = *(uint8_t *)((int)self + 0xdc) & 0xfe;
   *(uint32_t *)((int)self + 0xd8) = *(uint32_t *)((int)self + 0xd8) | 0x800;
-  this_00 = *(int **)((int)self + 0xa8);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
-    *(undefined4 *)((int)self + 0xa8) = 0;
+  obj1 = *(int **)((int)self + 0xa8);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
+    *(bits32 *)((int)self + 0xa8) = 0;
   }
-  this_01 = orig::Mem_AllocFromArea_v2(0x3d,4,0);
-  orig::CMoTask_ResetFields_v1(this_01);
+  obj2 = orig::Mem_AllocFromArea_v2(0x3d,4,0);
+  orig::CMoTask_ResetFields_v1(obj2);
   g_resourcesDirty_as_v0 = 1;
-  if (this_01 == (undefined4 *)0x0) {
-    this_01 = (undefined4 *)0x0;
+  if (obj2 == (bits32 *)0x0) {
+    obj2 = (bits32 *)0x0;
   }
   else {
-    orig::CMoTask_Constructor_v2(this_01);
-    *this_01 = &PTR_CMoTask_GetRuntimeClass_variant12_1032b654;
-    *(uint8_t *)(this_01 + 0xf) = 0;
+    orig::CMoTask_Constructor_v2(obj2);
+    *obj2 = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032B654;
+    *(uint8_t *)(obj2 + 0xf) = 0;
   }
-  *(undefined4 **)((int)self + 0xa8) = this_01;
-  orig::FUN_10074a00_v1();
-  this_01[0xd] = *(undefined4 *)((int)self + 0x14);
-  this_01[0xe] = *(undefined4 *)((int)self + 0x14);
-  this_01[6] = *(undefined4 *)((int)self + 0x14);
-  this_01[7] = 0x4d670000;
+  *(bits32 **)((int)self + 0xa8) = obj2;
+  orig::game_10074A00_v1();
+  obj2[0xd] = *(bits32 *)((int)self + 0x14);
+  obj2[0xe] = *(bits32 *)((int)self + 0x14);
+  obj2[6] = *(bits32 *)((int)self + 0x14);
+  obj2[7] = 0x4d670000;
   return;
 }
 
@@ -291,19 +291,19 @@ char ** __cdecl CMoTask::GetRuntimeClass_variant11()
 void * __thiscall CMoTask::InitVariant12(void * self)
 {
   orig::CMoTask_Constructor_v1(self);
-  *(uint8_t ***)self = &PTR_CMoTask_GetRuntimeClass_variant12_1032c490;
+  *(uint8_t ***)self = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032C490;
   *(uint32_t *)((int)self + 0x3c) = 0;
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10070F90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoTask::InitAndRegister(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+void __thiscall CMoTask::InitAndRegister(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  *(uint32_t *)((int)self + 0x34) = param_1;
-  *(uint32_t *)((int)self + 0x38) = param_2;
-  *(uint32_t *)((int)self + 0x3c) = param_3;
-  *(uint8_t *)((int)self + 0x40) = (uint8_t)param_4;
+  *(uint32_t *)((int)self + 0x34) = arg2;
+  *(uint32_t *)((int)self + 0x38) = arg3;
+  *(uint32_t *)((int)self + 0x3c) = arg4;
+  *(uint8_t *)((int)self + 0x40) = (uint8_t)arg5;
   orig::CMoTask_RegisterWithMng_v1(0);
   return;
 }
@@ -319,29 +319,29 @@ char ** __cdecl CMoTask::GetRuntimeClass_variant12()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CMoTask::Constructor(void * self)
 {
-  *(uint8_t ***)self = &PTR_CMoTask_GetRuntimeClass_variant12_1032c978;
-  if (byte_1047D13D == '\0') {
+  *(uint8_t ***)self = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032C978;
+  if (g_1047D13D == '\0') {
     orig::CMoTask_ResetFields_v2(self);
-    orig::FUN_100749f0();
+    orig::game_100749F0();
   }
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10074770
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoTask::ScalarDeletingDtor(char a2)
+uint32_t * CMoTask::ScalarDeletingDtor(char arg1)
 {
   orig::CMoTask_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
-  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+  return(uint32_t*)(&(*(CMoTask_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x100747C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CMoTask::Destructor(void * self)
 {
-  *(uint8_t ***)self = &PTR_CMoTask_GetRuntimeClass_variant12_1032c978;
+  *(uint8_t ***)self = &ptr_to_CMoTask_GetRuntimeClass_variant12_1032C978;
   orig::CMoTask_DetachAndRecycle(self,1);
   return;
 }
@@ -351,16 +351,16 @@ void __thiscall CMoTask::Destructor(void * self)
 void __thiscall CMoTask::DestroyChain(void * self)
 {
   if (*(void **)((int)self + 0x28) != (void *)0x0) {
-    orig::FUN_10074890(*(void **)((int)self + 0x28));
+    orig::CMoTask_DestroyChain_as_v0(*(void **)((int)self + 0x28));
   }
   *(uint32_t *)((int)self + 0x10) = 0;
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100748F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoTask::ResetFields(void * self)
+bits32 __thiscall CMoTask::ResetFields(void * self)
 {
   *(uint32_t *)((int)self + 0xc) = 0;
   *(uint32_t *)((int)self + 8) = 0;
@@ -379,46 +379,46 @@ undefined4 __thiscall CMoTask::ResetFields(void * self)
 
 // FUNCTION: FFXIMAIN 0x10074920
 // GATE: PASS -- 100 trials, 17 returned normally, 17 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 17
-undefined4 * __thiscall CMoTask::Clone(void * self, uint32_t param_1)
+bits32 * __thiscall CMoTask::Clone(void * self, uint32_t arg2)
 {
-  undefined4 *puVar1;
-  uint32_t uVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  bits32 *p1;
+  uint32_t u1;
+  bits32 *p2;
+  bits32 *p3;
   
-  byte_1047D13D_as_v0 = 1;
-  puVar1 = orig::Mem_AllocFromArea_v2(param_1,4,0);
+  g_1047D13D_as_v0 = 1;
+  p1 = orig::Mem_AllocFromArea_v2(arg2,4,0);
   g_resourcesDirty_as_v0 = 1;
-  if (puVar1 == (undefined4 *)0x0) {
-    puVar1 = (undefined4 *)0x0;
+  if (p1 == (bits32 *)0x0) {
+    p1 = (bits32 *)0x0;
   }
   else {
-    puVar1 = orig::CMoTask_Constructor_v2(puVar1);
+    p1 = orig::CMoTask_Constructor_v2(p1);
   }
-  byte_1047D13D_as_v0 = 0;
-  puVar3 = self;
-  puVar4 = puVar1;
-  for (uVar2 = param_1 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *puVar4 = *puVar3;
-    puVar3 = puVar3 + 1;
-    puVar4 = puVar4 + 1;
+  g_1047D13D_as_v0 = 0;
+  p2 = self;
+  p3 = p1;
+  for (u1 = arg2 >> 2; u1 != 0; u1 = u1 - 1) {
+    *p3 = *p2;
+    p2 = p2 + 1;
+    p3 = p3 + 1;
   }
-  for (uVar2 = param_1 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-    *(uint8_t *)puVar4 = *(uint8_t *)puVar3;
-    puVar3 = (undefined4 *)((int)puVar3 + 1);
-    puVar4 = (undefined4 *)((int)puVar4 + 1);
+  for (u1 = arg2 & 3; u1 != 0; u1 = u1 - 1) {
+    *(uint8_t *)p3 = *(uint8_t *)p2;
+    p2 = (bits32 *)((int)p2 + 1);
+    p3 = (bits32 *)((int)p3 + 1);
   }
-  puVar1[2] = 0;
-  puVar1[3] = 0;
-  puVar1[4] = 0;
-  puVar1[9] = 0;
-  puVar1[10] = 0;
+  p1[2] = 0;
+  p1[3] = 0;
+  p1[4] = 0;
+  p1[9] = 0;
+  p1[10] = 0;
   if (*(void **)((int)self + 0x10) != (void *)0x0) {
-    orig::FUN_10074850(*(void **)((int)self + 0x10),(int)puVar1);
+    orig::game_10074850(*(void **)((int)self + 0x10),(int)p1);
   }
-  orig::FUN_100749f0();
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x28))))((void *)(self),puVar1);
-  return puVar1;
+  orig::game_100749F0();
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x28))))((void *)(self),p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10074AB0
@@ -426,7 +426,7 @@ undefined4 * __thiscall CMoTask::Clone(void * self, uint32_t param_1)
 void __thiscall CMoTask::Release(void * self)
 {
   if (*(char *)((int)self + 0x20) != '\0') {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self + 0x18))))((void *)(self),1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self + 0x18))))((void *)(self),1);
     return;
   }
   orig::CMoTask_DetachAndRecycle(self,1);
@@ -435,10 +435,10 @@ void __thiscall CMoTask::Release(void * self)
 
 // FUNCTION: FFXIMAIN 0x10074AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoTask::DetachAndRecycle(void * self, int param_1)
+bits32 __thiscall CMoTask::DetachAndRecycle(void * self, int arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   if (*(void **)((int)self + 0x10) != (void *)0x0) {
     orig::Task_Remove(*(void **)((int)self + 0x10),(int)self);
@@ -446,35 +446,35 @@ undefined4 __thiscall CMoTask::DetachAndRecycle(void * self, int param_1)
   if (*(void **)((int)self + 0x24) != (void *)0x0) {
     orig::CMoTask_DestroyChain(*(void **)((int)self + 0x24));
   }
-  iVar2 = 0;
+  i1 = 0;
   if (*(int *)((int)self + 4) != 0) {
-    uVar1 = 0;
-    if (param_1 != 0) {
-      uVar1 = orig::FUN_10074a20();
+    u1 = 0;
+    if (arg2 != 0) {
+      u1 = orig::game_10074A20();
     }
-    iVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x20))));
+    i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self + 0x20))));
     if (*(char *)((int)self + 0x20) == '\0') {
-      *(uint32_t *)(dword_1047D140 + 0xd5c) = *(uint32_t *)(dword_1047D140 + 0xd50);
-      *(void **)(dword_1047D140 + 0xd50) = self;
+      *(uint32_t *)(g_1047D140 + 0xd5c) = *(uint32_t *)(g_1047D140 + 0xd50);
+      *(void **)(g_1047D140 + 0xd50) = self;
       *(uint32_t *)((int)self + 4) = 0;
-      iVar2 = dword_1047D140;
-      *(int *)(dword_1047D140 + 0xd44) = *(int *)(dword_1047D140 + 0xd44) + -1;
+      i1 = g_1047D140;
+      *(int *)(g_1047D140 + 0xd44) = *(int *)(g_1047D140 + 0xd44) + -1;
     }
   }
-  return iVar2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10075000
 // GATE: PASS -- 100 trials, 70 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-void __cdecl CMoTask::Dispatch(int * param_1)
+void __cdecl CMoTask::Dispatch(int * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x20))))((void *)(param_1));
-  if ((char)uVar1 == '\0') {
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg1 + 0x20))))((void *)(arg1));
+  if ((char)u1 == '\0') {
                     /* WARNING: Could not recover jumptable at 0x10075015. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(*param_1 + 0x24))();
+    (**(untyped_fn **)(*arg1 + 0x24))();
     return;
   }
   return;
@@ -482,27 +482,29 @@ void __cdecl CMoTask::Dispatch(int * param_1)
 
 // FUNCTION: FFXIMAIN 0x10076030
 // GATE: PASS -- 100 trials, 96 returned normally, 2603 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-int CMoTask::DrawQuadStates(float *a2, char arg4)
+int CMoTask::DrawQuadStates(float *arg1, char arg4)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  double v3;
-  alignas(16) unsigned char xi_frame[0x5D4];  // address-taken locals at their original offsets
-  int (&a3)[6] = *reinterpret_cast<int (*)[6]>(xi_frame + 0x170);
-  int &v6 = *reinterpret_cast<int *>(xi_frame + 0x188);
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x18C);
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0x190);
-  int &v9 = *reinterpret_cast<int *>(xi_frame + 0x194);
-  int &v10 = *reinterpret_cast<int *>(xi_frame + 0x198);
-  float &v11 = *reinterpret_cast<float *>(xi_frame + 0x19C);
-  int &v12 = *reinterpret_cast<int *>(xi_frame + 0x1A0);
-  int &v13 = *reinterpret_cast<int *>(xi_frame + 0x1A4);
-  int &v14 = *reinterpret_cast<int *>(xi_frame + 0x1A8);
-  float &v15 = *reinterpret_cast<float *>(xi_frame + 0x1AC);
-  float &v16 = *reinterpret_cast<float *>(xi_frame + 0x1B0);
-  int &v17 = *reinterpret_cast<int *>(xi_frame + 0x1B4);
-  int &v18 = *reinterpret_cast<int *>(xi_frame + 0x1B8);
-  int &v19 = *reinterpret_cast<int *>(xi_frame + 0x1BC);
-  _BYTE (&v20)[20] = *reinterpret_cast<_BYTE (*)[20]>(xi_frame + 0x1C0);
+  double f1;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x5D4];
+    struct __attribute__((packed)) { unsigned char pad_1[0x170]; int i1[6]; };   // at 0x170
+    struct __attribute__((packed)) { unsigned char pad_2[0x188]; int i2; };   // at 0x188
+    struct __attribute__((packed)) { unsigned char pad_3[0x18C]; int i3; };   // at 0x18C
+    struct __attribute__((packed)) { unsigned char pad_4[0x190]; int i4; };   // at 0x190
+    struct __attribute__((packed)) { unsigned char pad_5[0x194]; int i5; };   // at 0x194
+    struct __attribute__((packed)) { unsigned char pad_6[0x198]; int i6; };   // at 0x198
+    struct __attribute__((packed)) { unsigned char pad_7[0x19C]; float f2; };   // at 0x19C
+    struct __attribute__((packed)) { unsigned char pad_8[0x1A0]; int i7; };   // at 0x1A0
+    struct __attribute__((packed)) { unsigned char pad_9[0x1A4]; int i8; };   // at 0x1A4
+    struct __attribute__((packed)) { unsigned char pad_10[0x1A8]; int i9; };   // at 0x1A8
+    struct __attribute__((packed)) { unsigned char pad_11[0x1AC]; float f3; };   // at 0x1AC
+    struct __attribute__((packed)) { unsigned char pad_12[0x1B0]; float f4; };   // at 0x1B0
+    struct __attribute__((packed)) { unsigned char pad_13[0x1B4]; int i10; };   // at 0x1B4
+    struct __attribute__((packed)) { unsigned char pad_14[0x1B8]; int i11; };   // at 0x1B8
+    struct __attribute__((packed)) { unsigned char pad_15[0x1BC]; int i12; };   // at 0x1BC
+    struct __attribute__((packed)) { unsigned char pad_16[0x1C0]; uint8_t u1[20]; };   // at 0x1C0
+  } frame;
 
   Fn10076030_static_D1DC = 0;
   Fn10076030_static_D1C0 = 0;
@@ -516,21 +518,21 @@ int CMoTask::DrawQuadStates(float *a2, char arg4)
   Fn10076030_static_D1C8 = -2139062144;
   Fn10076030_static_D1AC = -2139062144;
   Fn10076030_static_D190 = -2139062144;
-  Fn10076030_static_D1B8 = *a2;
+  Fn10076030_static_D1B8 = *arg1;
   Fn10076030_static_D180 = Fn10076030_static_D1B8;
-  Fn10076030_static_D1D4 = a2[2] + *a2;
+  Fn10076030_static_D1D4 = arg1[2] + *arg1;
   Fn10076030_static_D19C = Fn10076030_static_D1D4;
-  Fn10076030_static_D1A0 = a2[1];
+  Fn10076030_static_D1A0 = arg1[1];
   Fn10076030_static_D184 = Fn10076030_static_D1A0;
-  v3 = a2[1] + a2[3];
+  f1 = arg1[1] + arg1[3];
   Fn10076030_static_D1CC = 0;
   Fn10076030_static_D194 = 0;
   Fn10076030_static_D1E8 = 1065353216;
   Fn10076030_static_D1B0 = 1065353216;
   Fn10076030_static_D1B4 = 0;
   Fn10076030_static_D198 = 0;
-  Fn10076030_static_D1D8 = v3;
-  Fn10076030_static_D1BC = v3;
+  Fn10076030_static_D1D8 = f1;
+  Fn10076030_static_D1BC = f1;
   Fn10076030_static_D1EC = 1065353216;
   Fn10076030_static_D1D0 = 1065353216;
   if ( arg4 != 0 )
@@ -555,27 +557,27 @@ int CMoTask::DrawQuadStates(float *a2, char arg4)
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(324);
   orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 5, 2, (int)&Fn10076030_static_D180, 28);
-  v17 = 0;
-  v12 = 0;
-  v7 = 0;
-  a3[2] = 0;
-  v18 = 1065353216;
-  v13 = 1065353216;
-  v8 = 1065353216;
-  a3[3] = 1065353216;
-  v19 = -2130771968;
-  v14 = -2130771968;
-  v9 = -2130771968;
-  a3[4] = -2130771968;
-  v15 = *a2;
-  *(float *)a3 = v15;
-  *(float *)&v10 = a2[2] + *a2;
-  a3[5] = v10;
-  v6 = *((int *)a2 + 1);
-  a3[1] = v6;
-  v16 = a2[1] + a2[3];
-  v11 = v16;
-  qmemcpy(v20, a3, sizeof(v20));
+  frame.i10 = 0;
+  frame.i7 = 0;
+  frame.i3 = 0;
+  frame.i1[2] = 0;
+  frame.i11 = 1065353216;
+  frame.i8 = 1065353216;
+  frame.i4 = 1065353216;
+  frame.i1[3] = 1065353216;
+  frame.i12 = -2130771968;
+  frame.i9 = -2130771968;
+  frame.i5 = -2130771968;
+  frame.i1[4] = -2130771968;
+  frame.f3 = *arg1;
+  *(float *)frame.i1 = frame.f3;
+  *(float *)&frame.i6 = arg1[2] + *arg1;
+  frame.i1[5] = frame.i6;
+  frame.i2 = *((int *)arg1 + 1);
+  frame.i1[1] = frame.i2;
+  frame.f4 = arg1[1] + arg1[3];
+  frame.f2 = frame.f4;
+  memcpy(frame.u1, frame.i1, sizeof(frame.u1));
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
@@ -583,64 +585,64 @@ int CMoTask::DrawQuadStates(float *a2, char arg4)
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
-  orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 3, 4, (int)a3, 20);
+  orig::CDx_DrawPrimitiveUP(*(void **)(g_pResourceMng + 3528), 3, 4, (int)frame.i1, 20);
   return (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 }
 
 // FUNCTION: FFXIMAIN 0x10076520
 // GATE: PASS -- 100 trials, 100 returned normally, 1000 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoTask::DrawQuadDynVB(float *a2, float *a3, char a4)
+int CMoTask::DrawQuadDynVB(float *arg1, float *arg2, char arg3)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  float *v5;
-  double v7;
-  double v8;
-  double v9;
-  double v10;
-  double v11;
-  double v12;
-  double v13;
-  double v14;
+  float *p1;
+  double f1;
+  double f2;
+  double f3;
+  double f4;
+  double f5;
+  double f6;
+  double f7;
+  double f8;
   orig::DynVB_Reserve((void *)g_pDynVB_FVF144, 4);
-  v5 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
-  v5[24] = 1.0;
-  v5[17] = 1.0;
-  v5[10] = 1.0;
-  v5[3] = 1.0;
-  v5[23] = 0.0;
-  v5[25] = -2.3418052e-38;
-  v5[18] = -2.3418052e-38;
-  v5[11] = -2.3418052e-38;
-  v5[4] = -2.3418052e-38;
-  v5[16] = 0.0;
-  v5[9] = 0.0;
-  v5[2] = 0.0;
-  v7 = *a2;
-  v5[14] = *a2;
-  *v5 = v7;
-  v8 = a2[2] + *a2;
-  v5[21] = v8;
-  v5[7] = v8;
-  v9 = a2[1];
-  v5[8] = a2[1];
-  v5[1] = v9;
-  v10 = a2[3] + a2[1];
-  v5[22] = v10;
-  v5[15] = v10;
-  v11 = *a3;
-  v5[19] = *a3;
-  v5[5] = v11;
-  v12 = a3[2];
-  v5[26] = a3[2];
-  v5[12] = v12;
-  v13 = a3[1];
-  v5[13] = a3[1];
-  v5[6] = v13;
-  v14 = a3[3];
-  v5[27] = a3[3];
-  v5[20] = v14;
+  p1 = (float *)orig::DynVB_Lock((void *)g_pDynVB_FVF144);
+  p1[24] = 1.0;
+  p1[17] = 1.0;
+  p1[10] = 1.0;
+  p1[3] = 1.0;
+  p1[23] = 0.0;
+  p1[25] = -2.3418052e-38;
+  p1[18] = -2.3418052e-38;
+  p1[11] = -2.3418052e-38;
+  p1[4] = -2.3418052e-38;
+  p1[16] = 0.0;
+  p1[9] = 0.0;
+  p1[2] = 0.0;
+  f1 = *arg1;
+  p1[14] = *arg1;
+  *p1 = f1;
+  f2 = arg1[2] + *arg1;
+  p1[21] = f2;
+  p1[7] = f2;
+  f3 = arg1[1];
+  p1[8] = arg1[1];
+  p1[1] = f3;
+  f4 = arg1[3] + arg1[1];
+  p1[22] = f4;
+  p1[15] = f4;
+  f5 = *arg2;
+  p1[19] = *arg2;
+  p1[5] = f5;
+  f6 = arg2[2];
+  p1[26] = arg2[2];
+  p1[12] = f6;
+  f7 = arg2[1];
+  p1[13] = arg2[1];
+  p1[6] = f7;
+  f8 = arg2[3];
+  p1[27] = arg2[3];
+  p1[20] = f8;
   orig::DynVB_Unlock((void *)g_pDynVB_FVF144);
-  if ( a4 != 0 )
+  if ( arg3 != 0 )
     orig::TexRef_SetTexture(self, 0);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTextureStageState(0, D3DTSS_TEXCOORDINDEX, 0);
@@ -657,12 +659,12 @@ int CMoTask::DrawQuadDynVB(float *a2, float *a3, char a4)
 
 // FUNCTION: FFXIMAIN 0x10076750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoTask::SetRect30(void * self, undefined4 * param_1)
+void __thiscall CMoTask::SetRect30(void * self, bits32 * arg2)
 {
-  *(uint32_t *)((int)self + 0x38) = param_1[2];
-  *(uint32_t *)((int)self + 0x3c) = param_1[3];
-  *(uint32_t *)((int)self + 0x30) = *param_1;
-  *(uint32_t *)((int)self + 0x34) = param_1[1];
+  *(uint32_t *)((int)self + 0x38) = arg2[2];
+  *(uint32_t *)((int)self + 0x3c) = arg2[3];
+  *(uint32_t *)((int)self + 0x30) = *arg2;
+  *(uint32_t *)((int)self + 0x34) = arg2[1];
   return;
 }
 

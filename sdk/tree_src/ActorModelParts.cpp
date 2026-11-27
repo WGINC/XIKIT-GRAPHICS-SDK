@@ -4,29 +4,29 @@
 
 // FUNCTION: FFXIMAIN 0x100D1450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ActorModelParts_ProcessResidentListEntries(void * self_, int * param_1, int param_2)
+XI_API bits32 __thiscall ActorModelParts_ProcessResidentListEntries(void * self_, int * file, int arg3)
 {
-  void *pvVar1;
-  void *this_00;
+  void *p1;
+  void *obj1;
   int *xi_eax;
   
-  if (param_2 == *(int *)((int)self_ + 0x9ec)) {
-    if (((uint8_t)*(uint32_t *)(*param_1 + 0x24) & 0x7f) == 1) {
-      param_1 = (int *)orig::CXiActor_SpawnResourceGenerators_v2(self_,param_1);
+  if (arg3 == *(int *)((int)self_ + 0x9ec)) {
+    if (((uint8_t)*(uint32_t *)(*file + 0x24) & 0x7f) == 1) {
+      file = (int *)orig::CXiActor_SpawnResourceGenerators_v2(self_,file);
     }
-    pvVar1 = *(void **)((int)self_ + 0x7e4);
-    xi_eax = param_1;
-    while (param_2 = (int)xi_eax, this_00 = pvVar1, this_00 != (void *)0x0) {
-      param_2 = *(int *)((int)this_00 + 0x1c);
-      pvVar1 = *(void **)((int)this_00 + 4);
+    p1 = *(void **)((int)self_ + 0x7e4);
+    xi_eax = file;
+    while (arg3 = (int)xi_eax, obj1 = p1, obj1 != (void *)0x0) {
+      arg3 = *(int *)((int)obj1 + 0x1c);
+      p1 = *(void **)((int)obj1 + 4);
       xi_eax = (int *)0x0;
-      if (((param_2 != 0) &&
-          (xi_eax = (int *)orig::ResourceHandle_IsResident_v1(&param_2), (char)xi_eax == '\x01')) &&
-         (xi_eax = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)this_00 + 0x20)))),
-         *(char *)((int)this_00 + 0x20) == '\0')) {
-        xi_eax = (int *)orig::FUN_1001b7b0(this_00,xi_eax);
+      if (((arg3 != 0) &&
+          (xi_eax = (int *)orig::ResourceHandle_IsResident_v1(&arg3), (char)xi_eax == '\x01')) &&
+         (xi_eax = (int *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)obj1 + 0x20)))),
+         *(char *)((int)obj1 + 0x20) == '\0')) {
+        xi_eax = (int *)orig::game_1001B7B0(obj1,xi_eax);
       }
     }
   }
-  return param_2;
+  return arg3;
 }

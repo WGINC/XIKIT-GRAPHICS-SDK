@@ -4,14 +4,14 @@
 
 // FUNCTION: FFXIMAIN 0x102AEC50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqinShape_Reset(undefined4 * param_1)
+XI_API void __cdecl SqinShape_Reset(bits32 * arg1)
 {
-  if (param_1 != (undefined4 *)0x0) {
-    *param_1 = 0;
-    param_1[1] = 0;
-    param_1[2] = 0;
-    param_1[3] = 0;
-    param_1[3] = param_1[3] & 0xfffffffe;
+  if (arg1 != (bits32 *)0x0) {
+    *arg1 = 0;
+    arg1[1] = 0;
+    arg1[2] = 0;
+    arg1[3] = 0;
+    arg1[3] = arg1[3] & 0xfffffffe;
   }
   return;
 }

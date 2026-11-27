@@ -7,7 +7,7 @@ class XI_API CMoLockLookAtDriveTask {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x10056980
     int Slot11CallGetRuntimeClass();  // 0x10062F80
-    int Slot12ThunkDeletingDtor(int a1);  // 0x10062F90
+    int Slot12ThunkDeletingDtor(int arg1);  // 0x10062F90
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x7C];

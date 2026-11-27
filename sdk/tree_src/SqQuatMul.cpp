@@ -4,79 +4,81 @@
 
 // FUNCTION: FFXIMAIN 0x1027B060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuatMul_NegateInPlace(float * param_1)
+XI_API void __cdecl SqQuatMul_NegateInPlace(float * arg1)
 {
-  *param_1 = (float)-(long double)*param_1;
-  param_1[1] = (float)-(long double)param_1[1];
-  param_1[2] = (float)-(long double)param_1[2];
+  *arg1 = (float)-*arg1;
+  arg1[1] = (float)-arg1[1];
+  arg1[2] = (float)-arg1[2];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027B080
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuatMul_RotateVec(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl SqQuatMul_RotateVec(float * arg1, float * arg2, float * arg3)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  long double fVar4;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 12);
+  long double f1;
+  long double f2;
+  long double f3;
+  long double f4;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f5; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f6; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f7; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f8; };   // at 0xC
+  } frame;
   
-  orig::SqQuat_Copy_v1(&local_10,param_2);
-  orig::SqQuatMul_NegateInPlace(&local_10);
-  fVar1 = ((long double)param_2[3] * (long double)*param_3 + (long double)param_3[2] * (long double)param_2[1]) -
-          (long double)param_3[1] * (long double)param_2[2];
-  fVar2 = ((long double)param_2[3] * (long double)param_3[1] + (long double)param_2[2] * (long double)*param_3) -
-          (long double)param_3[2] * (long double)*param_2;
-  fVar3 = ((long double)param_3[1] * (long double)*param_2 + (long double)param_2[3] * (long double)param_3[2]) -
-          (long double)*param_3 * (long double)param_2[1];
-  fVar4 = (-((long double)*param_2 * (long double)*param_3) - (long double)param_3[1] * (long double)param_2[1]) -
-          (long double)param_2[2] * (long double)param_3[2];
-  *param_1 = (float)(((long double)local_4 * fVar1 +
-                     (long double)local_8 * fVar2 + (long double)local_10 * fVar4) -
-                    (long double)local_c * fVar3);
-  param_1[1] = (float)(((long double)local_4 * fVar2 +
-                       (long double)local_10 * fVar3 + (long double)local_c * fVar4) -
-                      (long double)local_8 * fVar1);
-  param_1[2] = (float)(((long double)local_c * fVar1 +
-                       (long double)local_4 * fVar3 + (long double)local_8 * fVar4) -
-                      (long double)local_10 * fVar2);
+  orig::SqQuat_Copy_v1(&frame.f5,arg2);
+  orig::SqQuatMul_NegateInPlace(&frame.f5);
+  f1 = (arg2[3] * *arg3 + arg3[2] * arg2[1]) -
+          arg3[1] * arg2[2];
+  f2 = (arg2[3] * arg3[1] + arg2[2] * *arg3) -
+          arg3[2] * *arg2;
+  f3 = (arg3[1] * *arg2 + arg2[3] * arg3[2]) -
+          *arg3 * arg2[1];
+  f4 = (-(*arg2 * *arg3) - arg3[1] * arg2[1]) -
+          arg2[2] * arg3[2];
+  *arg1 = (float)((frame.f8 * f1 +
+                     frame.f7 * f2 + frame.f5 * f4) -
+                    frame.f6 * f3);
+  arg1[1] = (float)((frame.f8 * f2 +
+                       frame.f5 * f3 + frame.f6 * f4) -
+                      frame.f7 * f1);
+  arg1[2] = (float)((frame.f6 * f1 +
+                       frame.f8 * f3 + frame.f7 * f4) -
+                      frame.f5 * f2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027B170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuatMul_Mul(float * param_1, float * param_2, float * param_3)
+XI_API void __cdecl SqQuatMul_Mul(float * arg1, float * arg2, float * arg3)
 {
-  *param_1 = (float)(((long double)param_3[3] * (long double)*param_2 +
-                     (long double)param_3[2] * (long double)param_2[1] +
-                     (long double)param_2[3] * (long double)*param_3) -
-                    (long double)param_3[1] * (long double)param_2[2]);
-  param_1[1] = (float)(((long double)param_2[2] * (long double)*param_3 +
-                       (long double)param_2[3] * (long double)param_3[1] +
-                       (long double)param_3[3] * (long double)param_2[1]) -
-                      (long double)param_3[2] * (long double)*param_2);
-  param_1[2] = (float)(((long double)param_3[1] * (long double)*param_2 +
-                       (long double)param_2[3] * (long double)param_3[2] +
-                       (long double)param_3[3] * (long double)param_2[2]) -
-                      (long double)*param_3 * (long double)param_2[1]);
-  param_1[3] = (float)((((long double)param_3[3] * (long double)param_2[3] -
-                        (long double)*param_2 * (long double)*param_3) -
-                       (long double)param_3[1] * (long double)param_2[1]) -
-                      (long double)param_2[2] * (long double)param_3[2]);
+  *arg1 = (float)((arg3[3] * *arg2 +
+                     arg3[2] * arg2[1] +
+                     arg2[3] * *arg3) -
+                    arg3[1] * arg2[2]);
+  arg1[1] = (float)((arg2[2] * *arg3 +
+                       arg2[3] * arg3[1] +
+                       arg3[3] * arg2[1]) -
+                      arg3[2] * *arg2);
+  arg1[2] = (float)((arg3[1] * *arg2 +
+                       arg2[3] * arg3[2] +
+                       arg3[3] * arg2[2]) -
+                      *arg3 * arg2[1]);
+  arg1[3] = (float)(((arg3[3] * arg2[3] -
+                        *arg2 * *arg3) -
+                       arg3[1] * arg2[1]) -
+                      arg2[2] * arg3[2]);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027B480
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sq_PrintFloat4Indented(float * xi_s1, undefined4 xi_s2, undefined4 xi_s3)
+XI_API void __cdecl Sq_PrintFloat4Indented(float * xi_s1, bits32 xi_s2, bits32 xi_s3)
 {
   orig::Sq_PrintIndent(xi_s3,xi_s3);
-  orig::sqDebugPrintf_v1(s__f__f__f__f_103b27c8,(double)(long double)*xi_s1,(double)(long double)xi_s1[1],
-               (double)(long double)xi_s1[2],(double)(long double)xi_s1[3]);
+  orig::sqDebugPrintf_v1(str__f__f__f__f_103B27C8,(double)*xi_s1,(double)xi_s1[1],
+               (double)xi_s1[2],(double)xi_s1[3]);
   return;
 }

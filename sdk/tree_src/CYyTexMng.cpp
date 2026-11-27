@@ -12,9 +12,9 @@ char ** __cdecl CYyTexMng::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1003AA50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall CYyTexMng_Init(void * self_)
+XI_API bits32 __thiscall CYyTexMng_Init(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_CYyTexMng_GetRuntimeClass_1032aa90;
+  *(uint8_t ***)self_ = &ptr_to_CYyTexMng_GetRuntimeClass_1032AA90;
   *(uint16_t *)((int)self_ + 4) = 0;
   *(uint32_t *)((int)self_ + 8) = 0;
   *(uint32_t *)((int)self_ + 0xc) = 0;
@@ -24,104 +24,104 @@ XI_API undefined4 __thiscall CYyTexMng_Init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1003AA70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CYyTexMng::ScalarDeletingDtor(char a2)
+uint32_t * CYyTexMng::ScalarDeletingDtor(char arg1)
 {
   orig::CYyTexMng_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CYyTexMng_vtbl * *)&this->vftable));
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CYyTexMng_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x1003AC80
 // GATE: PASS -- 100 trials, 68 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 68
-uint64_t __thiscall CYyTexMng::FindByName(void * self, int param_1)
+uint64_t __thiscall CYyTexMng::FindByName(void * self, int arg2)
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  int i1;
+  int *p1;
+  int i2;
   
-  piVar2 = (int *)orig::TexMgr_GetField8(self);
-  iVar1 = *piVar2;
+  p1 = (int *)orig::TexMgr_GetField8(self);
+  i1 = *p1;
   do {
-    if (iVar1 == 0) {
+    if (i1 == 0) {
       return 0;
     }
-    if ((*(uint32_t *)(iVar1 + 0x2c) >> 3 & 1) == 0) {
-      iVar3 = 0;
+    if ((*(uint32_t *)(i1 + 0x2c) >> 3 & 1) == 0) {
+      i2 = 0;
       do {
-        if (*(char *)(iVar1 + 0xc + iVar3) != *(char *)(iVar3 + param_1)) break;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < 0x10);
-      if (iVar3 == 0x10) {
-        return ((uint64_t)(((uint64_t)(uint32_t)(iVar1) << 32) | (uint32_t)(*piVar2)));
+        if (*(char *)(i1 + 0xc + i2) != *(char *)(i2 + arg2)) break;
+        i2 = i2 + 1;
+      } while (i2 < 0x10);
+      if (i2 == 0x10) {
+        return ((uint64_t)(((uint64_t)(uint32_t)(i1) << 32) | (uint32_t)(*p1)));
       }
     }
-    piVar2 = (int *)(iVar1 + 0x38);
-    iVar1 = *(int *)(iVar1 + 0x38);
+    p1 = (int *)(i1 + 0x38);
+    i1 = *(int *)(i1 + 0x38);
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x1003AF10
 // GATE: PASS -- 100 trials, 79 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-int __thiscall CYyTexMng::FindByNameInResource(void * self, char * param_1, int param_2)
+int __thiscall CYyTexMng::FindByNameInResource(void * self, char * arg2, int arg3)
 {
-  char *pcVar1;
+  char *p1;
   uint32_t xi_eax;
-  int *piVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
+  int *p2;
+  char *p3;
+  int i1;
+  int i2;
   
-  xi_eax = *(uint32_t *)(param_2 + 0x24) & 0x7f;
-  iVar4 = param_2;
+  xi_eax = *(uint32_t *)(arg3 + 0x24) & 0x7f;
+  i1 = arg3;
   if ((char)xi_eax != '\x01') {
-    if (*(int **)(param_2 + 0x28) == (int *)0x0) {
-      iVar4 = 0;
+    if (*(int **)(arg3 + 0x28) == (int *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar4 = **(int **)(param_2 + 0x28);
+      i1 = **(int **)(arg3 + 0x28);
     }
   }
-  piVar2 = (int *)orig::CMoResource_FindInScope(&param_2,iVar4,0x20,0,xi_eax);
-  pcVar1 = param_1;
-  if ((int *)*piVar2 == (int *)0x0) {
-    iVar4 = 0;
+  p2 = (int *)orig::CMoResource_FindInScope(&arg3,i1,0x20,0,xi_eax);
+  p1 = arg2;
+  if ((int *)*p2 == (int *)0x0) {
+    i1 = 0;
   }
   else {
-    iVar4 = *(int *)*piVar2;
+    i1 = *(int *)*p2;
   }
   do {
-    if (iVar4 == 0) {
+    if (i1 == 0) {
       return 0;
     }
-    iVar5 = 0;
-    pcVar3 = pcVar1;
+    i2 = 0;
+    p3 = p1;
     do {
-      if ((uint32_t)(uint8_t)pcVar3[(iVar4 + 0x31) - (int)pcVar1] != (int)*pcVar3) break;
-      iVar5 = iVar5 + 1;
-      pcVar3 = pcVar3 + 1;
-    } while (iVar5 < 0x10);
-    if (iVar5 == 0x10) {
-      piVar2 = (int *)orig::TexMgr_GetField8(self);
-      for (iVar5 = *piVar2; iVar5 != 0; iVar5 = *(int *)(iVar5 + 0x38)) {
-        if (*(int *)(iVar5 + 8) == iVar4) {
-          return *piVar2;
+      if ((uint32_t)(uint8_t)p3[(i1 + 0x31) - (int)p1] != (int)*p3) break;
+      i2 = i2 + 1;
+      p3 = p3 + 1;
+    } while (i2 < 0x10);
+    if (i2 == 0x10) {
+      p2 = (int *)orig::TexMgr_GetField8(self);
+      for (i2 = *p2; i2 != 0; i2 = *(int *)(i2 + 0x38)) {
+        if (*(int *)(i2 + 8) == i1) {
+          return *p2;
         }
-        piVar2 = (int *)(iVar5 + 0x38);
+        p2 = (int *)(i2 + 0x38);
       }
     }
-    if (*(int **)(iVar4 + 8) == (int *)0x0) {
-      iVar4 = 0;
+    if (*(int **)(i1 + 8) == (int *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar4 = **(int **)(iVar4 + 8);
+      i1 = **(int **)(i1 + 8);
     }
-    piVar2 = (int *)orig::CMoResource_FindInScope(&param_1,iVar4,0x20,0,&param_1);
-    if ((int *)*piVar2 == (int *)0x0) {
-      iVar4 = 0;
+    p2 = (int *)orig::CMoResource_FindInScope(&arg2,i1,0x20,0,&arg2);
+    if ((int *)*p2 == (int *)0x0) {
+      i1 = 0;
     }
     else {
-      iVar4 = *(int *)*piVar2;
+      i1 = *(int *)*p2;
     }
   } while( true );
 }

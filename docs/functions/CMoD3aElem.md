@@ -7,10 +7,10 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoD3aElem.cpp`.
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
 | `CMoD3aElem::GetRuntimeClass_variant0` | 0x1003E6A0 | 6 | yes | - | - | - |
-| `CMoD3aElem::DrawSegment` | 0x1003EB30 | 41 | yes | 1 | Draws the element's D3A segment when it has a draw handle. (reviewed as sub_1003EB30) | medium |
+| `CMoD3aElem::DrawSegment` | 0x1003EB30 | 41 | yes | 1 | Draws the element's D3A segment when it has a draw handle. (reviewed as game_1003EB30) | medium |
 | `CMoD3aElem::GetRuntimeClass_variant1` | 0x1003EE50 | 6 | yes | - | - | - |
 | `CMoD3aElem::GetRuntimeClass_variant2` | 0x1003EF00 | 6 | yes | - | - | - |
-| `CMoD3aElem::Init` | 0x10052C90 | 18 | yes | - | Constructs the base element and sets the CMoD3aElem vtable. (reviewed as sub_10052C90) | medium |
+| `CMoD3aElem::Init` | 0x10052C90 | 18 | yes | - | Constructs the base element and sets the CMoD3aElem vtable. (reviewed as game_10052C90) | medium |
 | `CMoD3aElem::ScalarDeletingDtor` | 0x10052CB0 | 30 | yes | - | - | - |
 
 ## Direct calls

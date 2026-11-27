@@ -24,12 +24,12 @@ Why the file has this name (data/unit_names.json): EnvMap_BeginPass / EndPass, P
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `ProjTex_BeginPass` calls `MathVector_ReturnThis`, `MathVector_Nop`, `Mat4_Copy`
-- `ProjTex_EndPass` calls `sub_10025860`
+- `ProjTex_EndPass` calls `game_10025860`
 - `ProjTex_CaptureToTarget` calls `CDx::GetRenderTargetTop`, `CDx::PushRenderTarget`, `CDx::DrawPrimitiveUP`, `CDx::SetTexture`
 - `EnvMapProjTex_Nop_10025BD0` calls nothing directly
 - `EnvMapProjTex_Nop_10025BE0` calls nothing directly
 - `EnvMapProjTex_ClearCounter` calls nothing directly
 - `EnvMap_BeginPass` calls `MathVector_ReturnThis`, `MathVector_Nop`, `TexRef_SetTexture`, `Mat4_SetIdentity`, `Mat4_PreMultiply`
-- `EnvMap_EndPass` calls `sub_10025860`
+- `EnvMap_EndPass` calls `game_10025860`
 - `Dbg_DrawViewAxisGizmo` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_InvertOrthonormal`, `Mat4_TransformPointInPlace`, `Mat4_SetScale`, `Mat4_SetTranslation`, `CDx::SetTransform`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`
 - `Dbg_DrawAxesAt` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `CDx::SetTransform`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`

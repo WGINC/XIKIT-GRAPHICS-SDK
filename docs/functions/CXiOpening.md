@@ -13,5 +13,5 @@ Group: `CXi` (by the file name only). Source: `sdk/tree_src/CXiOpening.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CXiOpening::Constructor` calls `GammaRamp_GetRGB`, `GammaRamp_SetRGB`, `sub_10312050`, `Allocator_Generic`, `OpeningSubtitle_Constructor`, `OpeningSubtitle_Reset`, `Vt10329FE0_Constructor`, `Vt10329FE0_Reset`
+- `CXiOpening::Constructor` calls `GammaRamp_GetRGB`, `GammaRamp_SetRGB`, `game_10312050`, `Allocator_Generic`, `OpeningSubtitle_Constructor`, `OpeningSubtitle_Reset`, `Vt10329FE0_Constructor`, `Vt10329FE0_Reset`
 - `CXiOpening::CXiOpening_Destructor` calls `GammaRamp_SetRGB`

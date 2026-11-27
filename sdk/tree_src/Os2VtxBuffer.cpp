@@ -4,31 +4,31 @@
 
 // FUNCTION: FFXIMAIN 0x1002D8F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer(void * self_)
+XI_API bits32 __thiscall Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer(void * self_)
 {
-  int iVar1;
-  undefined4 *this_00;
-  void *pvVar2;
+  int i1;
+  bits32 *obj1;
+  void *p1;
   
   *(int *)((int)self_ + 0x36) = (int)self_ + *(int *)((int)self_ + 0x36) * 2 + 0x30;
   *(int *)((int)self_ + 0x3c) = (int)self_ + *(int *)((int)self_ + 0x3c) * 2 + 0x30;
   *(int *)((int)self_ + 0x42) = (int)self_ + *(int *)((int)self_ + 0x42) * 2 + 0x30;
   *(int *)((int)self_ + 0x48) = (int)self_ + *(int *)((int)self_ + 0x48) * 2 + 0x30;
-  iVar1 = (int)self_ + *(int *)((int)self_ + 0x4e) * 2 + 0x30;
-  *(int *)((int)self_ + 0x4e) = iVar1;
-  pvVar2 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x34))));
+  i1 = (int)self_ + *(int *)((int)self_ + 0x4e) * 2 + 0x30;
+  *(int *)((int)self_ + 0x4e) = i1;
+  p1 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x34))));
   *(int *)((int)self_ + 0x54) = (int)self_ + *(int *)((int)self_ + 0x54) * 2 + 0x30;
   if ((*(uint8_t *)((int)self_ + 0x34) & 2) == 0) {
-    this_00 = orig::Mem_AllocFromArea_v2(0x9e,4,0);
-    pvVar2 = (void *)orig::CMoTask_ResetFields_v1(this_00);
+    obj1 = orig::Mem_AllocFromArea_v2(0x9e,4,0);
+    p1 = (void *)orig::CMoTask_ResetFields_v1(obj1);
     g_resourcesDirty_as_v0 = 1;
-    if (this_00 != (undefined4 *)0x0) {
-      pvVar2 = orig::CYyOs2VtxBuffer_Constructor(this_00,*(undefined4 *)((int)self_ + 0x14));
-      if (pvVar2 != (void *)0x0) {
+    if (obj1 != (bits32 *)0x0) {
+      p1 = orig::CYyOs2VtxBuffer_Constructor(obj1,*(bits32 *)((int)self_ + 0x14));
+      if (p1 != (void *)0x0) {
         *(uint8_t *)((int)self_ + 0x34) = *(uint8_t *)((int)self_ + 0x34) | 2;
-        *(void **)((int)self_ + 0x5e) = pvVar2;
+        *(void **)((int)self_ + 0x5e) = p1;
       }
     }
   }
-  return pvVar2;
+  return p1;
 }

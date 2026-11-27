@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoD3bElem {
 public:
-    static undefined8 __thiscall Ctor(void * self);  // 0x1003FB70
+    static uint64_t __thiscall Ctor(void * self);  // 0x1003FB70
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x190];

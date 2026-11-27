@@ -6,11 +6,11 @@ Group: `CXi` (by the file name only). Source: `sdk/tree_src/CXiDancerActor.cpp`.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CXiDancerActor::Construct` | 0x100AB700 | 69 | yes | 4 | Constructs a dancer actor and loads its skeleton resource. (reviewed as sub_100AB700) | medium |
-| `CXiDancerActor::InitBind` | 0x100AB750 | 183 | yes | - | Binds the dancer actor to its slot or its own sub-object. (reviewed as sub_100AB750) | low |
-| `CXiDancerActor::SetPosition` | 0x100AB830 | 68 | yes | - | Sets the dancer actor's position and its stored vector. (reviewed as sub_100AB830) | medium |
+| `CXiDancerActor::Construct` | 0x100AB700 | 69 | yes | 4 | Constructs a dancer actor and loads its skeleton resource. (reviewed as game_100AB700) | medium |
+| `CXiDancerActor::InitBind` | 0x100AB750 | 183 | yes | - | Binds the dancer actor to its slot or its own sub-object. (reviewed as game_100AB750) | low |
+| `CXiDancerActor::SetPosition` | 0x100AB830 | 68 | yes | - | Sets the dancer actor's position and its stored vector. (reviewed as game_100AB830) | medium |
 | `CXiDancerActor_SetAnglesWrapped` | 0x100AB880 | 282 | yes | - | Sets the dancer's three angles (wrapped to about [-pi, pi]) on its acter and on itself. | medium |
-| `CXiDancerActor::ApplyStateBlock` | 0x100AB9A0 | 558 | yes | - | Applies a state block to the dancer actor and marks the changed fields. (reviewed as sub_100AB9A0) | low |
+| `CXiDancerActor::ApplyStateBlock` | 0x100AB9A0 | 558 | yes | - | Applies a state block to the dancer actor and marks the changed fields. (reviewed as game_100AB9A0) | low |
 
 ## Direct calls
 

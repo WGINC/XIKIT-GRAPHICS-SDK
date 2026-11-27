@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x102531B0
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API undefined4 __cdecl sqopSystemActivate(uint32_t * param_1)
+XI_API bits32 __cdecl sqopSystemActivate(uint32_t * arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (((param_1 != (uint32_t *)0x0) && ((*param_1 & 4) != 0)) && ((*param_1 & 8) != 0)) {
-    iVar2 = 0;
-    param_1[1] = 0;
-    param_1[2] = 0;
-    if (0 < (int)param_1[0xd]) {
-      iVar1 = 0;
+  if (((arg1 != (uint32_t *)0x0) && ((*arg1 & 4) != 0)) && ((*arg1 & 8) != 0)) {
+    i2 = 0;
+    arg1[1] = 0;
+    arg1[2] = 0;
+    if (0 < (int)arg1[0xd]) {
+      i1 = 0;
       do {
-        orig::sqopTrackSetIndex((int *)(param_1[0xf] + iVar1),0);
-        iVar2 = iVar2 + 1;
-        iVar1 = iVar1 + 0x10;
-      } while (iVar2 < (int)param_1[0xd]);
+        orig::sqopTrackSetIndex((int *)(arg1[0xf] + i1),0);
+        i2 = i2 + 1;
+        i1 = i1 + 0x10;
+      } while (i2 < (int)arg1[0xd]);
     }
     return 0;
   }
@@ -28,39 +28,39 @@ XI_API undefined4 __cdecl sqopSystemActivate(uint32_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x10289620
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqopSystem_Init(undefined4 * param_1)
+XI_API void __cdecl SqopSystem_Init(bits32 * arg1)
 {
-  *param_1 = 0x1d0001;
-  param_1[2] = &LAB_10289660;
-  param_1[3] = XI_CODE(FUN_10289670);
-  param_1[4] = &sqopSystemPrint;
-  param_1[5] = 1;
-  param_1[6] = 0xffffffff;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
+  *arg1 = 0x1d0001;
+  arg1[2] = &code_10289660;
+  arg1[3] = XI_CODE(game_10289670);
+  arg1[4] = &sqopSystemPrint;
+  arg1[5] = 1;
+  arg1[6] = 0xffffffff;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[9] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102896A0
 // GATE: PASS -- 100 trials, 74 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 74
-XI_API void __cdecl SqopSystem_ClearOpcodes(undefined4 * param_1)
+XI_API void __cdecl SqopSystem_ClearOpcodes(bits32 * arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (param_1[9] != 0) {
-    iVar2 = 0;
-    if (0 < (int)param_1[7]) {
-      iVar1 = 0;
+  if (arg1[9] != 0) {
+    i2 = 0;
+    if (0 < (int)arg1[7]) {
+      i1 = 0;
       do {
-        orig::SqopTrack_Free(param_1[9] + iVar1);
-        iVar2 = iVar2 + 1;
-        iVar1 = iVar1 + 0x10;
-      } while (iVar2 < (int)param_1[7]);
+        orig::SqopTrack_Free(arg1[9] + i1);
+        i2 = i2 + 1;
+        i1 = i1 + 0x10;
+      } while (i2 < (int)arg1[7]);
     }
-    orig::sqFree_v1(param_1[9],s_C__dev_dancer_modules_sqOpcode_s_103b9484,0x97);
+    orig::sqFree_v1(arg1[9],str_C__dev_dancer_modules_sqOpcode_s_103B9484,0x97);
   }
-  orig::SqopSystem_Init(param_1);
+  orig::SqopSystem_Init(arg1);
   return;
 }

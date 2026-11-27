@@ -5,9 +5,9 @@
 #pragma pack(push, 1)
 class XI_API CMoRmpRes {
 public:
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071C90
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071C90
     int Slot11GetCameraRuntimeClass();  // 0x100745E0
-    int Slot12DeleteOwner(int a1);  // 0x100745F0
+    int Slot12DeleteOwner(int arg1);  // 0x100745F0
     void SetupNop();  // 0x10074610
 
     void **vftable;  // +0x0

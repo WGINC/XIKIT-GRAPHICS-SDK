@@ -13,7 +13,7 @@ char ** __cdecl CMoSphRes::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 char * CMoSphRes::FixupOffsetsAt30()
 {
-  return orig::CMoSphRes_FixupOffsets(((unsigned __int8 *)((char *)this + 0x30)));
+  return orig::CMoSphRes_FixupOffsets(((unsigned char *)((char *)this + 0x30)));
 }
 
 // FUNCTION: FFXIMAIN 0x100562C0
@@ -25,10 +25,10 @@ void CMoSphRes::Slot9DoNothing()
 
 // FUNCTION: FFXIMAIN 0x10071D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoSphRes::ScalarDeletingDtor(char a2)
+unsigned int ** CMoSphRes::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

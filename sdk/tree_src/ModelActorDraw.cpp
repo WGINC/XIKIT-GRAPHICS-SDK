@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x100C4BC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ModelActorDraw_GetVec3PairIfModel(void * self_, undefined4 * param_1, undefined4 * param_2)
+XI_API bits32 __thiscall ModelActorDraw_GetVec3PairIfModel(void * self_, bits32 * arg2, bits32 * arg3)
 {
   if (*(int *)((int)self_ + 0x5c4) == 0) {
     return 0;
   }
-  *param_1 = *(uint32_t *)((int)self_ + 0x734);
-  param_1[1] = *(uint32_t *)((int)self_ + 0x738);
-  param_1[2] = *(uint32_t *)((int)self_ + 0x73c);
-  *param_2 = *(uint32_t *)((int)self_ + 0x744);
-  param_2[1] = *(uint32_t *)((int)self_ + 0x748);
-  param_2[2] = *(uint32_t *)((int)self_ + 0x74c);
+  *arg2 = *(uint32_t *)((int)self_ + 0x734);
+  arg2[1] = *(uint32_t *)((int)self_ + 0x738);
+  arg2[2] = *(uint32_t *)((int)self_ + 0x73c);
+  *arg3 = *(uint32_t *)((int)self_ + 0x744);
+  arg3[1] = *(uint32_t *)((int)self_ + 0x748);
+  arg3[2] = *(uint32_t *)((int)self_ + 0x74c);
   return *(uint32_t *)(*(int *)((int)self_ + 0x5c4) + 0x30);
 }

@@ -4,334 +4,340 @@
 
 // FUNCTION: FFXIMAIN 0x10188CA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ZoneMap_FillDirLight(void * self_, undefined4 * param_1, int param_2)
+XI_API void __thiscall ZoneMap_FillDirLight(void * self_, bits32 * arg2, int arg3)
 {
-  float *pfVar1;
-  long double fVar2;
-  char xi_frame[48] __attribute__((aligned(4)));
-  uint32_t  &local_30 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_2c = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &local_28 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &local_24 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint32_t  &local_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
+  float *p1;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[48];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; float f2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; uint32_t u6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x20]; uint32_t u7; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_9[0x24]; uint32_t u8; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_10[0x28]; uint32_t u9; };   // at 0x28
+  } frame;
   
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0xf] = 0;
-  param_1[0x13] = 0;
-  param_1[0x14] = 0;
-  param_1[0x15] = 0;
-  param_1[0x16] = 0;
-  param_1[0x17] = 0;
-  param_1[0x18] = 0;
-  param_1[0x19] = 0;
+  arg2[0xd] = 0;
+  arg2[0xe] = 0;
+  arg2[0xf] = 0;
+  arg2[0x13] = 0;
+  arg2[0x14] = 0;
+  arg2[0x15] = 0;
+  arg2[0x16] = 0;
+  arg2[0x17] = 0;
+  arg2[0x18] = 0;
+  arg2[0x19] = 0;
   if (*(int *)((int)self_ + -0x1c) != 1) {
-    param_1[0x10] = 0;
-    param_1[1] = 0x437f0000;
-    param_1[2] = 0x437f0000;
-    param_1[3] = 0x437f0000;
-    param_1[4] = 0x437f0000;
-    param_1[9] = 0x437f0000;
-    param_1[10] = 0x437f0000;
-    param_1[0xb] = 0x437f0000;
-    param_1[0xc] = 0x437f0000;
-    param_1[0x11] = 0x3f800000;
-    param_1[0x12] = 0;
-    goto LAB_10188dd7;
+    arg2[0x10] = 0;
+    arg2[1] = 0x437f0000;
+    arg2[2] = 0x437f0000;
+    arg2[3] = 0x437f0000;
+    arg2[4] = 0x437f0000;
+    arg2[9] = 0x437f0000;
+    arg2[10] = 0x437f0000;
+    arg2[0xb] = 0x437f0000;
+    arg2[0xc] = 0x437f0000;
+    arg2[0x11] = 0x3f800000;
+    arg2[0x12] = 0;
+    goto code_10188DD7;
   }
-  if (param_2 == 0) {
-    orig::Vec4_Copy_v1(&local_30,(uint32_t *)&DAT_1065ca34);
-    orig::Vec4_Copy_v1(&local_10,(uint32_t *)((int)self_ + 0x14c));
-    fVar2 = orig::ZoneMap_GetFloatRef18Plus44(self_);
-    pfVar1 = (float *)((int)self_ + 0x16c);
-LAB_10188d82:
-    orig::Vec3_Scale_v1(&local_20,pfVar1,(float)fVar2);
+  if (arg3 == 0) {
+    orig::Vec4_Copy_v1(&frame.u1,(uint32_t *)&g_1065CA34);
+    orig::Vec4_Copy_v1(&frame.u7,(uint32_t *)((int)self_ + 0x14c));
+    f1 = orig::ZoneMap_GetFloatRef18Plus44(self_);
+    p1 = (float *)((int)self_ + 0x16c);
+code_10188D82:
+    orig::Vec3_Scale_v1(&frame.f2,p1,(float)f1);
   }
-  else if (param_2 == 1) {
-    orig::Vec4_Copy_v1(&local_30,(uint32_t *)&DAT_1065ca34);
-    orig::Vec4_Copy_v1(&local_10,(uint32_t *)((int)self_ + 0x17c));
-    fVar2 = orig::FUN_10186f60(self_);
-    pfVar1 = (float *)((int)self_ + 0x19c);
-    goto LAB_10188d82;
+  else if (arg3 == 1) {
+    orig::Vec4_Copy_v1(&frame.u1,(uint32_t *)&g_1065CA34);
+    orig::Vec4_Copy_v1(&frame.u7,(uint32_t *)((int)self_ + 0x17c));
+    f1 = orig::game_10186F60(self_);
+    p1 = (float *)((int)self_ + 0x19c);
+    goto code_10188D82;
   }
-  param_1[1] = local_20;
-  param_1[2] = local_1c;
-  param_1[3] = local_18;
-  param_1[9] = local_30;
-  param_1[10] = local_2c;
-  param_1[0xb] = local_28;
-  param_1[0xc] = local_24;
-  param_1[4] = 0x3f800000;
-  param_1[0x10] = local_10;
-  param_1[0x11] = local_c;
-  param_1[0x12] = local_8;
-LAB_10188dd7:
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  *param_1 = 3;
+  arg2[1] = frame.f2;
+  arg2[2] = frame.u5;
+  arg2[3] = frame.u6;
+  arg2[9] = frame.u1;
+  arg2[10] = frame.u2;
+  arg2[0xb] = frame.u3;
+  arg2[0xc] = frame.u4;
+  arg2[4] = 0x3f800000;
+  arg2[0x10] = frame.u7;
+  arg2[0x11] = frame.u8;
+  arg2[0x12] = frame.u9;
+code_10188DD7:
+  arg2[5] = 0;
+  arg2[6] = 0;
+  arg2[7] = 0;
+  arg2[8] = 0;
+  *arg2 = 3;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10188E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API _DWORD * __thiscall Env_ComputeAmbient(char *self_, _DWORD *a2, int a3)
+XI_API uint32_t * __thiscall Env_ComputeAmbient(char *self_, uint32_t *arg2, int arg3)
 {
-  __int64 v3; // rax
+  long long i1; // rax
   float *ColorPtr84;
-  double v6;
+  double f1;
   float *AmbientColorPtr;
-  __int16 v8; // fps
-  bool v9; // c0
-  char v10; // c2
-  bool v11; // c3
-  __int16 v12; // fps
-  bool v13; // c0
-  char v14; // c2
-  bool v15; // c3
-  bool v16; // c0
-  char v17; // c2
-  bool v18; // c3
-  alignas(16) unsigned char xi_frame[0x424];  // address-taken locals at their original offsets
-  float &v20 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &v21 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  float &v22 = *reinterpret_cast<float *>(xi_frame + 0xC);
-  float &v23 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float &v24 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float (&v25)[2] = *reinterpret_cast<float (*)[2]>(xi_frame + 0x1C);
-  int v26;
+  short i2; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  short i3; // fps
+  bool b3; // c0
+  char c2; // c2
+  bool b4; // c3
+  bool b5; // c0
+  char c3; // c2
+  bool b6; // c3
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x424];
+    struct __attribute__((packed)) { unsigned char pad_1[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; float f7[2]; };   // at 0x1C
+  } frame;
+  int i4;
   bool xi_fpu_unord = false;
 
-  v3 = (__int64)(((uint64_t)(v3) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((_DWORD *)self_ - 7)) << 0));
-  if ( (_DWORD)v3 == 1 )
+  i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(*((uint32_t *)self_ - 7)) << 0));
+  if ( (uint32_t)i1 == 1 )
   {
-    *a2 = 0;
+    *arg2 = 0;
     if ( self_ != (char *)-36 )
     {
-      if ( a3 != 0 )
+      if ( arg3 != 0 )
       {
-        if ( a3 == 1 )
+        if ( arg3 == 1 )
         {
           ColorPtr84 = (float *)orig::Env_GetColorPtr84(self_);
-          v6 = ColorPtr84[2];
-          v22 = ColorPtr84[2];
-          v20 = *ColorPtr84;
-          v21 = ColorPtr84[1];
+          f1 = ColorPtr84[2];
+          frame.f4 = ColorPtr84[2];
+          frame.f2 = *ColorPtr84;
+          frame.f3 = ColorPtr84[1];
         }
         else
         {
-          v6 = v22;
+          f1 = frame.f4;
         }
       }
       else
       {
         AmbientColorPtr = (float *)orig::Env_GetAmbientColorPtr(self_);
-        v6 = AmbientColorPtr[2];
-        v22 = AmbientColorPtr[2];
-        v20 = *AmbientColorPtr;
-        v21 = AmbientColorPtr[1];
+        f1 = AmbientColorPtr[2];
+        frame.f4 = AmbientColorPtr[2];
+        frame.f2 = *AmbientColorPtr;
+        frame.f3 = AmbientColorPtr[1];
       }
-      if ( g_windowMode != 0 && v20 < 0x1.99999a0000000p-1 && v21 < 0x1.99999a0000000p-1 && v6 < 0x1.99999a0000000p-1 )
+      if ( g_windowMode != 0 && frame.f2 < 0x1.99999a0000000p-1 && frame.f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
       {
-        orig::GammaRamp_GetChannelSamples((unsigned __int16 *)((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), &v23, &v24, v25);
-        v20 = v23 * v20;
-        v21 = v24 * v21;
-        v6 = v25[0] * v22;
-        (xi_fpu_unord = __builtin_isunordered(v20, 1.0), v9 = v20 < 1.0);
-        v10 = 0;
-        v11 = v20 == 1.0;
-        if ( ((__int16)(((v9 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v11 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v20 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(v21, 1.0), v13 = v21 < 1.0);
-        v14 = 0;
-        v15 = v21 == 1.0;
-        if ( ((__int16)(((v13 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v15 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v21 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(v6, 1.0), v16 = v6 < 1.0);
-        v17 = 0;
-        v18 = v6 == 1.0;
-        if ( ((__int16)(((v16 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v18 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v6 = 1.0;
+        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.f5, &frame.f6, frame.f7);
+        frame.f2 = frame.f5 * frame.f2;
+        frame.f3 = frame.f6 * frame.f3;
+        f1 = frame.f7[0] * frame.f4;
+        (xi_fpu_unord = __builtin_isunordered(frame.f2, 1.0), b1 = frame.f2 < 1.0);
+        c1 = 0;
+        b2 = frame.f2 == 1.0;
+        if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          frame.f2 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(frame.f3, 1.0), b3 = frame.f3 < 1.0);
+        c2 = 0;
+        b4 = frame.f3 == 1.0;
+        if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          frame.f3 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b5 = f1 < 1.0);
+        c3 = 0;
+        b6 = f1 == 1.0;
+        if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          f1 = 1.0;
       }
-      v26 = (int)(((uint32_t)(v26) & 0xFFFFu) | ((uint32_t)(uint16_t)((unsigned __int8)(__int64)(v20 * 128.0)) << 16));
-      v26 = (int)(((uint32_t)(v26) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)((__int64)(v21 * 128.0)) << 8));
-      v3 = (__int64)(v6 * 128.0);
-      v26 = (int)(((uint32_t)(v26) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v3) << 0));
-      *a2 = v26;
+      i4 = (int)(((uint32_t)(i4) & 0xFFFFu) | ((uint32_t)(uint16_t)((unsigned char)(long long)(frame.f2 * 128.0)) << 16));
+      i4 = (int)(((uint32_t)(i4) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)((long long)(frame.f3 * 128.0)) << 8));
+      i1 = (long long)(f1 * 128.0);
+      i4 = (int)(((uint32_t)(i4) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i1) << 0));
+      *arg2 = i4;
     }
   }
   else
   {
-    *a2 = -1;
-    v3 = (__int64)(((uint64_t)(v3) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(a2) << 0));
+    *arg2 = -1;
+    i1 = (long long)(((uint64_t)(i1) & 0xFFFFFFFF00000000ull) | ((uint64_t)(uint32_t)(arg2) << 0));
   }
-  return (_DWORD *)v3;
+  return (uint32_t *)i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10188FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API float * __thiscall Env_ComputeAmbientFloat4(char *self_, float *a2)
+XI_API float * __thiscall Env_ComputeAmbientFloat4(char *self_, float *arg2)
 {
   float *AmbientColorPtr;
-  double v4;
-  __int16 v5; // fps
-  bool v6; // c0
-  char v7; // c2
-  bool v8; // c3
-  __int16 v9; // fps
-  bool v10; // c0
-  char v11; // c2
-  bool v12; // c3
-  bool v13; // c0
-  char v14; // c2
-  bool v15; // c3
-  alignas(16) unsigned char xi_frame[0x420];  // address-taken locals at their original offsets
-  float &v16 = *reinterpret_cast<float *>(xi_frame + 0x0);
-  float &v17 = *reinterpret_cast<float *>(xi_frame + 0x4);
-  float &v18 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  float &v19 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  float &v20 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  float (&v21)[2] = *reinterpret_cast<float (*)[2]>(xi_frame + 0x18);
+  double f1;
+  short i1; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  short i2; // fps
+  bool b3; // c0
+  char c2; // c2
+  bool b4; // c3
+  bool b5; // c0
+  char c3; // c2
+  bool b6; // c3
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x420];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; float f6; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x18]; float f7[2]; };   // at 0x18
+  } frame;
   bool xi_fpu_unord = false;
 
-  if ( *((_DWORD *)self_ - 7) == 1 )
+  if ( *((uint32_t *)self_ - 7) == 1 )
   {
     if ( self_ == (char *)-36 )
     {
-      a2[2] = 0.0;
-      a2[1] = 0.0;
-      *a2 = 0.0;
-      a2[3] = 0.0;
-      return a2;
+      arg2[2] = 0.0;
+      arg2[1] = 0.0;
+      *arg2 = 0.0;
+      arg2[3] = 0.0;
+      return arg2;
     }
     else
     {
       AmbientColorPtr = (float *)orig::Env_GetAmbientColorPtr(self_);
-      v4 = AmbientColorPtr[2];
-      v16 = *AmbientColorPtr;
-      v18 = AmbientColorPtr[2];
-      v17 = AmbientColorPtr[1];
-      if ( g_windowMode != 0 && v16 < 0x1.99999a0000000p-1 && v17 < 0x1.99999a0000000p-1 && v4 < 0x1.99999a0000000p-1 )
+      f1 = AmbientColorPtr[2];
+      frame.f2 = *AmbientColorPtr;
+      frame.f4 = AmbientColorPtr[2];
+      frame.f3 = AmbientColorPtr[1];
+      if ( g_windowMode != 0 && frame.f2 < 0x1.99999a0000000p-1 && frame.f3 < 0x1.99999a0000000p-1 && f1 < 0x1.99999a0000000p-1 )
       {
-        orig::GammaRamp_GetChannelSamples((unsigned __int16 *)((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), &v19, &v20, v21);
-        v16 = v19 * v16;
-        v17 = v20 * v17;
-        v4 = v21[0] * v18;
-        (xi_fpu_unord = __builtin_isunordered(v16, 1.0), v6 = v16 < 1.0);
-        v7 = 0;
-        v8 = v16 == 1.0;
-        if ( ((__int16)(((v6 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v16 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(v17, 1.0), v10 = v17 < 1.0);
-        v11 = 0;
-        v12 = v17 == 1.0;
-        if ( ((__int16)(((v10 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v12 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v17 = 1.0;
-        (xi_fpu_unord = __builtin_isunordered(v4, 1.0), v13 = v4 < 1.0);
-        v14 = 0;
-        v15 = v4 == 1.0;
-        if ( ((__int16)(((v13 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v15 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
-          v4 = 1.0;
+        orig::GammaRamp_GetChannelSamples((unsigned short *)((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.f5, &frame.f6, frame.f7);
+        frame.f2 = frame.f5 * frame.f2;
+        frame.f3 = frame.f6 * frame.f3;
+        f1 = frame.f7[0] * frame.f4;
+        (xi_fpu_unord = __builtin_isunordered(frame.f2, 1.0), b1 = frame.f2 < 1.0);
+        c1 = 0;
+        b2 = frame.f2 == 1.0;
+        if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          frame.f2 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(frame.f3, 1.0), b3 = frame.f3 < 1.0);
+        c2 = 0;
+        b4 = frame.f3 == 1.0;
+        if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          frame.f3 = 1.0;
+        (xi_fpu_unord = __builtin_isunordered(f1, 1.0), b5 = f1 < 1.0);
+        c3 = 0;
+        b6 = f1 == 1.0;
+        if ( ((short)(((b5 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b6 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) == 0 )
+          f1 = 1.0;
       }
-      a2[3] = 0.0;
-      *a2 = v16 * 0.5;
-      a2[1] = v17 * 0.5;
-      a2[2] = v4 * 0.5;
-      return a2;
+      arg2[3] = 0.0;
+      *arg2 = frame.f2 * 0.5;
+      arg2[1] = frame.f3 * 0.5;
+      arg2[2] = f1 * 0.5;
+      return arg2;
     }
   }
   else
   {
-    a2[3] = 255.0;
-    a2[2] = 255.0;
-    a2[1] = 255.0;
-    *a2 = 255.0;
-    return a2;
+    arg2[3] = 255.0;
+    arg2[2] = 255.0;
+    arg2[1] = 255.0;
+    *arg2 = 255.0;
+    return arg2;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10189120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Env_ComputeFog(void * self_, uint32_t * param_1, float * param_2, float * param_3, int param_4)
+XI_API void __thiscall Env_ComputeFog(void * self_, uint32_t * arg2, float * arg3, float * arg4, int arg5)
 {
-  float *pfVar1;
-  float *pfVar2;
-  long double fVar3;
-  long double fVar4;
-  int64_t lVar5;
-  int64_t lVar6;
-  int iVar7;
+  float *p1;
+  float *p2;
+  long double f1;
+  long double f2;
+  int64_t i1;
+  int64_t i2;
+  int i3;
   
-  pfVar1 = param_3;
+  p1 = arg4;
   if (*(int *)((int)self_ + -0x1c) != 1) {
-    *param_1 = 0xffffffff;
-    *param_2 = 4e+02f;
-    *param_3 = 0.0f;
+    *arg2 = 0xffffffff;
+    *arg3 = 4e+02f;
+    *arg4 = 0.0f;
     return;
   }
-  *param_1 = 0x808080;
-  *param_2 = 4e+02f;
-  *param_3 = 3e+02f;
+  *arg2 = 0x808080;
+  *arg3 = 4e+02f;
+  *arg4 = 3e+02f;
   if (*(int *)((int)self_ + 0x18) == 0) {
     return;
   }
-  if (param_4 == 0) {
-    pfVar2 = (float *)orig::ZoneMap_GetAddr114(self_);
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)pfVar2[2] * (long double)255.0f);
-    lVar6 = XI_CALL_ST0(0x10311C2Cu)((long double)pfVar2[1] * (long double)255.0f);
-    XI_PIECE(param_3, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((char)lVar6) << 8) | (uint8_t)((char)lVar5)));
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)*pfVar2 * (long double)255.0f);
-    XI_PIECE(param_3, 0, 3) = ((uint32_t)(((uint32_t)(uint8_t)((char)lVar5) << 16) | (uint16_t)(XI_PIECE(param_3, 0, 2))));
-    param_3 = (float *)(uint32_t)xi_trunc24(param_3);
-    *param_1 = (uint32_t)param_3;
-    pfVar2 = (float *)orig::ZoneMap_GetAddrRef18Plus3C(self_);
-    *param_2 = *pfVar2;
-    fVar3 = orig::FUN_101892b0(self_,0);
-    *param_2 = (float)(fVar3 * (long double)*param_2);
-    pfVar2 = (float *)orig::ZoneMap_GetAddrRef18Plus40(self_);
-    iVar7 = 0;
+  if (arg5 == 0) {
+    p2 = (float *)orig::ZoneMap_GetAddr114(self_);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(p2[2] * 255.0f);
+    i2 = XI_CALL_ST0(0x10311C2Cu)(p2[1] * 255.0f);
+    XI_PIECE(arg4, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((char)i2) << 8) | (uint8_t)((char)i1)));
+    i1 = XI_CALL_ST0(0x10311C2Cu)(*p2 * 255.0f);
+    XI_PIECE(arg4, 0, 3) = ((uint32_t)(((uint32_t)(uint8_t)((char)i1) << 16) | (uint16_t)(XI_PIECE(arg4, 0, 2))));
+    arg4 = (float *)(uint32_t)xi_trunc24(arg4);
+    *arg2 = (uint32_t)arg4;
+    p2 = (float *)orig::ZoneMap_GetAddrRef18Plus3C(self_);
+    *arg3 = *p2;
+    f1 = orig::Env_FogDistanceFactor(self_,0);
+    *arg3 = (float)(f1 * *arg3);
+    p2 = (float *)orig::ZoneMap_GetAddrRef18Plus40(self_);
+    i3 = 0;
   }
   else {
-    if (param_4 != 1) goto LAB_10189287;
-    pfVar2 = (float *)orig::ZoneMap_GetAddr114(self_);
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)pfVar2[2] * (long double)255.0f);
-    lVar6 = XI_CALL_ST0(0x10311C2Cu)((long double)pfVar2[1] * (long double)255.0f);
-    XI_PIECE(param_3, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((char)lVar6) << 8) | (uint8_t)((char)lVar5)));
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)*pfVar2 * (long double)255.0f);
-    XI_PIECE(param_3, 0, 3) = ((uint32_t)(((uint32_t)(uint8_t)((char)lVar5) << 16) | (uint16_t)(XI_PIECE(param_3, 0, 2))));
-    param_3 = (float *)(uint32_t)xi_trunc24(param_3);
-    *param_1 = (uint32_t)param_3;
-    pfVar2 = (float *)orig::ZoneMap_GetAddrRef18Plus1C(self_);
-    *param_2 = *pfVar2;
-    fVar3 = orig::FUN_101892b0(self_,1);
-    *param_2 = (float)(fVar3 * (long double)*param_2);
-    pfVar2 = (float *)orig::ZoneMap_GetAddrRef18Plus20(self_);
-    iVar7 = 1;
+    if (arg5 != 1) goto code_10189287;
+    p2 = (float *)orig::ZoneMap_GetAddr114(self_);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(p2[2] * 255.0f);
+    i2 = XI_CALL_ST0(0x10311C2Cu)(p2[1] * 255.0f);
+    XI_PIECE(arg4, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)((char)i2) << 8) | (uint8_t)((char)i1)));
+    i1 = XI_CALL_ST0(0x10311C2Cu)(*p2 * 255.0f);
+    XI_PIECE(arg4, 0, 3) = ((uint32_t)(((uint32_t)(uint8_t)((char)i1) << 16) | (uint16_t)(XI_PIECE(arg4, 0, 2))));
+    arg4 = (float *)(uint32_t)xi_trunc24(arg4);
+    *arg2 = (uint32_t)arg4;
+    p2 = (float *)orig::ZoneMap_GetAddrRef18Plus1C(self_);
+    *arg3 = *p2;
+    f1 = orig::Env_FogDistanceFactor(self_,1);
+    *arg3 = (float)(f1 * *arg3);
+    p2 = (float *)orig::ZoneMap_GetAddrRef18Plus20(self_);
+    i3 = 1;
   }
-  *pfVar1 = *pfVar2;
-  fVar3 = orig::FUN_101892b0(self_,iVar7);
-  *pfVar1 = (float)(fVar3 * (long double)*pfVar1);
-LAB_10189287:
-  fVar4 = (long double)*param_2;
-  fVar3 = (long double)*pfVar1;
-  if (fVar4 <= fVar3) {
-    *param_2 = (float)((long double)*pfVar1 + (long double)1.0f);
+  *p1 = *p2;
+  f1 = orig::Env_FogDistanceFactor(self_,i3);
+  *p1 = (float)(f1 * *p1);
+code_10189287:
+  f2 = *arg3;
+  f1 = *p1;
+  if (f2 <= f1) {
+    *arg3 = (float)(*p1 + 1.0f);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101893B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) WeatherRes_Construct(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
+XI_API bits32 * __attribute__((stdcall, regparm(3))) WeatherRes_Construct(uint32_t xi_eax_unused, bits32 xi_edx, bits32 * arg3)
 {
-  orig::CMoResource_ConstructBase(param_1,xi_edx);
-  orig::WeatherRes_InitKeyDefaults(param_1 + 0xc);
-  *param_1 = &PTR_CMoResource_GetRuntimeClass_variant3_103367e8;
-  return param_1;
+  orig::CMoResource_ConstructBase(arg3,xi_edx);
+  orig::WeatherRes_InitKeyDefaults(arg3 + 0xc);
+  *arg3 = &ptr_to_CMoResource_GetRuntimeClass_variant3_103367E8;
+  return arg3;
 }

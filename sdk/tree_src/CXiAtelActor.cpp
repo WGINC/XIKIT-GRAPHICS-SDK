@@ -5,7 +5,7 @@
 
 // FUNCTION: FFXIMAIN 0x10082960
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiAtelActor::IsAtelType82(void * self)
+bits32 __thiscall CXiAtelActor::IsAtelType82(void * self)
 {
   if ((0x51 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x53)) {
     return 1;
@@ -15,7 +15,7 @@ undefined4 __thiscall CXiAtelActor::IsAtelType82(void * self)
 
 // FUNCTION: FFXIMAIN 0x100829C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiAtelActor::IsAtelType83(void * self)
+bits32 __thiscall CXiAtelActor::IsAtelType83(void * self)
 {
   if ((0x52 < *(int *)((int)self + 0xa4)) && (*(int *)((int)self + 0xa4) < 0x54)) {
     return 1;
@@ -25,34 +25,34 @@ undefined4 __thiscall CXiAtelActor::IsAtelType83(void * self)
 
 // FUNCTION: FFXIMAIN 0x10085C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkCasterAttachments(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkCasterAttachments(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  uint32_t u1;
+  int i3;
   
-  if (param_2 != 0) {
+  if (arg4 != 0) {
     xi_eax = 0;
-    iVar1 = *(int *)((int)self_ + 0x68);
-    iVar4 = 0;
+    i1 = *(int *)((int)self_ + 0x68);
+    i3 = 0;
     if (*(int *)((int)self_ + 0x68) != 0) {
-      while (iVar2 = iVar1, iVar2 != param_2) {
-        iVar1 = *(int *)(iVar2 + 0x2c);
-        iVar4 = iVar2;
-        if (*(int *)(iVar2 + 0x2c) == 0) {
+      while (i2 = i1, i2 != arg4) {
+        i1 = *(int *)(i2 + 0x2c);
+        i3 = i2;
+        if (*(int *)(i2 + 0x2c) == 0) {
           return 0;
         }
       }
-      if (iVar4 != 0) {
-        *(uint32_t *)(iVar4 + 0x2c) = *(uint32_t *)(iVar2 + 0x2c);
-        *(uint32_t *)(param_2 + 0x2c) = 0;
-        uVar3 = orig::CMoAttachments_ClearCaster_v2((void *)param_2,0);
-        return uVar3;
+      if (i3 != 0) {
+        *(uint32_t *)(i3 + 0x2c) = *(uint32_t *)(i2 + 0x2c);
+        *(uint32_t *)(arg4 + 0x2c) = 0;
+        u1 = orig::CMoAttachments_ClearCaster_v2((void *)arg4,0);
+        return u1;
       }
-      *(uint32_t *)((int)self_ + 0x68) = *(uint32_t *)(iVar2 + 0x2c);
-      *(uint32_t *)(param_2 + 0x2c) = 0;
-      xi_eax = orig::CMoAttachments_ClearCaster_v2((void *)param_2,0);
+      *(uint32_t *)((int)self_ + 0x68) = *(uint32_t *)(i2 + 0x2c);
+      *(uint32_t *)(arg4 + 0x2c) = 0;
+      xi_eax = orig::CMoAttachments_ClearCaster_v2((void *)arg4,0);
     }
   }
   return xi_eax;
@@ -60,34 +60,34 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkCaster
 
 // FUNCTION: FFXIMAIN 0x10085CF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkTargetAttachments(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkTargetAttachments(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  int iVar1;
-  int iVar2;
-  uint32_t uVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  uint32_t u1;
+  int i3;
   
-  if (param_2 != 0) {
+  if (arg4 != 0) {
     xi_eax = 0;
-    iVar1 = *(int *)((int)self_ + 0x6c);
-    iVar4 = 0;
+    i1 = *(int *)((int)self_ + 0x6c);
+    i3 = 0;
     if (*(int *)((int)self_ + 0x6c) != 0) {
-      while (iVar2 = iVar1, iVar2 != param_2) {
-        iVar1 = *(int *)(iVar2 + 0x30);
-        iVar4 = iVar2;
-        if (*(int *)(iVar2 + 0x30) == 0) {
+      while (i2 = i1, i2 != arg4) {
+        i1 = *(int *)(i2 + 0x30);
+        i3 = i2;
+        if (*(int *)(i2 + 0x30) == 0) {
           return 0;
         }
       }
-      if (iVar4 != 0) {
-        *(uint32_t *)(iVar4 + 0x30) = *(uint32_t *)(iVar2 + 0x30);
-        *(uint32_t *)(param_2 + 0x30) = 0;
-        uVar3 = orig::CMoAttachments_ClearTarget_v2((void *)param_2,0);
-        return uVar3;
+      if (i3 != 0) {
+        *(uint32_t *)(i3 + 0x30) = *(uint32_t *)(i2 + 0x30);
+        *(uint32_t *)(arg4 + 0x30) = 0;
+        u1 = orig::CMoAttachments_ClearTarget_v2((void *)arg4,0);
+        return u1;
       }
-      *(uint32_t *)((int)self_ + 0x6c) = *(uint32_t *)(iVar2 + 0x30);
-      *(uint32_t *)(param_2 + 0x30) = 0;
-      xi_eax = orig::CMoAttachments_ClearTarget_v2((void *)param_2,0);
+      *(uint32_t *)((int)self_ + 0x6c) = *(uint32_t *)(i2 + 0x30);
+      *(uint32_t *)(arg4 + 0x30) = 0;
+      xi_eax = orig::CMoAttachments_ClearTarget_v2((void *)arg4,0);
     }
   }
   return xi_eax;
@@ -95,292 +95,294 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiAtelActor_UnlinkTarget
 
 // FUNCTION: FFXIMAIN 0x10086210
 // GATE: PASS -- 100 trials, 100 returned normally, 216 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Actor_DrawWorldText(_DWORD *a1, const char *a2, float a3, unsigned int a4, int a5)
+XI_API void __cdecl Actor_DrawWorldText(uint32_t *arg1, const char *arg2, float arg3, unsigned int arg4, int arg5)
 {
-  __int16 v5; // fps
-  bool v6; // c0
-  char v7; // c2
-  bool v8; // c3
+  short i1; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
   double ViewportHeight;
-  int v10;
-  int v11;
-  int v12;
-  int v13;
-  char v14;
-  int v15;
-  int v16;
-  char *v17;
-  int v18;
-  int v19;
-  __int16 *v20;
-  unsigned __int8 v21;
-  __int64 v22; // rax
-  __int16 v23;
-  double v24;
-  int v25;
-  unsigned __int8 v26;
-  double v27;
-  double v28;
-  int *v29;
-  double v30;
-  float *v31;
-  float *v32;
-  double v33;
-  double v34;
-  int v35;
-  int v36;
-  int v37;
-  unsigned int v38;
-  unsigned int *v39;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  char c2;
+  int i6;
+  int i7;
+  char *p1;
+  int i8;
+  int i9;
+  short *p2;
+  unsigned char c3;
+  long long i10; // rax
+  short i11;
+  double f1;
+  int i12;
+  unsigned char c4;
+  double f2;
+  double f3;
+  int *p3;
+  double f4;
+  float *p4;
+  float *p5;
+  double f5;
+  double f6;
+  int i13;
+  int i14;
+  int i15;
+  unsigned int u1;
+  unsigned int *p6;
   int i;
-  alignas(16) unsigned char xi_frame[0x659];  // address-taken locals at their original offsets
-  unsigned __int8 &v41 = *reinterpret_cast<unsigned __int8 *>(xi_frame + 0x10);
-  int &v42 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  int &v43 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &v44 = *reinterpret_cast<float *>(xi_frame + 0x10);
-  int &v45 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  int &v46 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  float &v47 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  float &v48 = *reinterpret_cast<float *>(xi_frame + 0x18);
-  int &v49 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  char * &v50 = *reinterpret_cast<char * *>(xi_frame + 0x18);
-  char * &v51 = *reinterpret_cast<char * *>(xi_frame + 0x1C);
-  float &v52 = *reinterpret_cast<float *>(xi_frame + 0x1C);
-  int &v53 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int &v54 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  unsigned int &v55 = *reinterpret_cast<unsigned int *>(xi_frame + 0x24);
-  float &v56 = *reinterpret_cast<float *>(xi_frame + 0x28);
-  int &v57 = *reinterpret_cast<int *>(xi_frame + 0x2C);
-  float &v58 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  float &v59 = *reinterpret_cast<float *>(xi_frame + 0x34);
-  float &v60 = *reinterpret_cast<float *>(xi_frame + 0x38);
-  int &v61 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  float &v62 = *reinterpret_cast<float *>(xi_frame + 0x40);
-  int &v63 = *reinterpret_cast<int *>(xi_frame + 0x44);
-  float &v64 = *reinterpret_cast<float *>(xi_frame + 0x48);
-  float &v65 = *reinterpret_cast<float *>(xi_frame + 0x4C);
-  float &v66 = *reinterpret_cast<float *>(xi_frame + 0x50);
-  float (&v67)[12] = *reinterpret_cast<float (*)[12]>(xi_frame + 0x54);
-  _DWORD (&v68)[16] = *reinterpret_cast<_DWORD (*)[16]>(xi_frame + 0x84);
-  _WORD (&v69)[144] = *reinterpret_cast<_WORD (*)[144]>(xi_frame + 0xC4);
-  char (&v70)[8] = *reinterpret_cast<char (*)[8]>(xi_frame + 0x1E4);
-  char &v71 = *reinterpret_cast<char *>(xi_frame + 0x1EC);
-  char &v72 = *reinterpret_cast<char *>(xi_frame + 0x1F4);
-  char &v73 = *reinterpret_cast<char *>(xi_frame + 0x254);
-  char &v74 = *reinterpret_cast<char *>(xi_frame + 0x258);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x659];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; unsigned char c5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i16; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; int i17; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f7; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x14]; int i18; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; int i19; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f8; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_8[0x18]; float f9; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_9[0x18]; int i20; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_10[0x18]; char * p7; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_11[0x1C]; char * p8; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_12[0x1C]; float f10; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_13[0x20]; int i21; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_14[0x20]; int i22; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_15[0x24]; unsigned int u2; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_16[0x28]; float f11; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_17[0x2C]; int i23; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_18[0x30]; float f12; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_19[0x34]; float f13; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_20[0x38]; float f14; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_21[0x3C]; int i24; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_22[0x40]; float f15; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_23[0x44]; int i25; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_24[0x48]; float f16; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_25[0x4C]; float f17; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_26[0x50]; float f18; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_27[0x54]; float f19[12]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_28[0x84]; uint32_t u3[16]; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_29[0xC4]; uint16_t u4[144]; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_30[0x1E4]; char val1[8]; };   // at 0x1E4
+    struct __attribute__((packed)) { unsigned char pad_31[0x1EC]; char c6; };   // at 0x1EC
+    struct __attribute__((packed)) { unsigned char pad_32[0x1F4]; char c7; };   // at 0x1F4
+    struct __attribute__((packed)) { unsigned char pad_33[0x254]; char c8; };   // at 0x254
+    struct __attribute__((packed)) { unsigned char pad_34[0x258]; char c9; };   // at 0x258
+  } frame;
   bool xi_fpu_unord = false;
 
-  orig::fn_10027990((Iostream_init *)v68);
-  v58 = 0.0;
-  v59 = 0.0;
-  v60 = 0.0;
-  v61 = 1065353216;
-  orig::Mat4_SetIdentity(v68);
-  orig::Mat4_SetTranslation(v68, a1);
-  orig::CDx_SetTransform(g_pCDx, 256, v68);
-  orig::Gfx_ProjectWorldToClip(&v58, &v58);
-  (xi_fpu_unord = __builtin_isunordered(v60, 1.0), v6 = v60 < 1.0);
-  v7 = 0;
-  v8 = v60 == 1.0;
-  v64 = v60;
-  if ( ((__int16)(((v6 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v8 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 && !(v60 < 0.0) )
+  orig::fn_10027990((Iostream_init *)frame.u3);
+  frame.f12 = 0.0;
+  frame.f13 = 0.0;
+  frame.f14 = 0.0;
+  frame.i24 = 1065353216;
+  orig::Mat4_SetIdentity(frame.u3);
+  orig::Mat4_SetTranslation(frame.u3, arg1);
+  orig::CDx_SetTransform(g_pCDx, 256, frame.u3);
+  orig::Gfx_ProjectWorldToClip(&frame.f12, &frame.f12);
+  (xi_fpu_unord = __builtin_isunordered(frame.f14, 1.0), b1 = frame.f14 < 1.0);
+  c1 = 0;
+  b2 = frame.f14 == 1.0;
+  frame.f16 = frame.f14;
+  if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x100) != 0 && !(frame.f14 < 0.0) )
   {
-    orig::Gfx_NdcToScreen(&v58);
-    orig::Vec2_AddScalar(&v58, -0.5);
-    v47 = v58 >= 0.0 ? v58 : -v58;
-    if ( !((double)(unsigned __int16)orig::Camera_GetViewportWidth() + 100.0 < v47) )
+    orig::Gfx_NdcToScreen(&frame.f12);
+    orig::Vec2_AddScalar(&frame.f12, -0.5);
+    frame.f8 = frame.f12 >= 0.0 ? frame.f12 : -frame.f12;
+    if ( !((double)(unsigned short)orig::Camera_GetViewportWidth() + 100.0 < frame.f8) )
     {
-      v48 = v59 >= 0.0 ? v59 : -v59;
-      if ( !((double)(unsigned __int16)orig::Camera_GetViewportHeight() + 100.0 < v48) )
+      frame.f9 = frame.f13 >= 0.0 ? frame.f13 : -frame.f13;
+      if ( !((double)(unsigned short)orig::Camera_GetViewportHeight() + 100.0 < frame.f9) )
       {
-        v65 = (double)(unsigned __int16)orig::Camera_GetViewportWidth() * 0x1.3333340000000p-9 * a3;
-        ViewportHeight = (double)(unsigned __int16)orig::Camera_GetViewportHeight();
-        v10 = strlen(a2);
-        v49 = v10;
-        v66 = ViewportHeight * 0x1.3333340000000p-9 * a3;
-        if ( v10 > 36 )
+        frame.f17 = (double)(unsigned short)orig::Camera_GetViewportWidth() * 0x1.3333340000000p-9 * arg3;
+        ViewportHeight = (double)(unsigned short)orig::Camera_GetViewportHeight();
+        i2 = strlen(arg2);
+        frame.i20 = i2;
+        frame.f18 = ViewportHeight * 0x1.3333340000000p-9 * arg3;
+        if ( i2 > 36 )
         {
-          v10 = 36;
-          v49 = 36;
+          i2 = 36;
+          frame.i20 = 36;
         }
-        v11 = 0;
-        v12 = 0;
-        v13 = 0;
-        v63 = 0;
-        if ( v10 > 0 )
+        i3 = 0;
+        i4 = 0;
+        i5 = 0;
+        frame.i25 = 0;
+        if ( i2 > 0 )
         {
           do
           {
-            v14 = a2[v13];
-            if ( (unsigned __int8)v14 < 0xC8u || (unsigned __int8)v14 > 0xCDu )
+            c2 = arg2[i5];
+            if ( (unsigned char)c2 < 0xC8u || (unsigned char)c2 > 0xCDu )
             {
-              *((_BYTE *)&v67[3] + v12++) = v14;
-              if ( v14 == -84 )
-                *((_BYTE *)&v67[3] + v12++) = -83;
+              *((uint8_t *)&frame.f19[3] + i4++) = c2;
+              if ( c2 == -84 )
+                *((uint8_t *)&frame.f19[3] + i4++) = -83;
             }
             else
             {
-              v15 = (unsigned __int8)a2[v13];
-              ++v12;
-              v41 = *((_BYTE *)&off_1032D374 + v15);
-              *((_BYTE *)&v67[2] + v12 + 3) = *((_BYTE *)&off_1032D36C + v15);
-              if ( v41 != 0 )
+              i6 = (unsigned char)arg2[i5];
+              ++i4;
+              frame.c5 = *((uint8_t *)&g_1032D374 + i6);
+              *((uint8_t *)&frame.f19[2] + i4 + 3) = *((uint8_t *)&g_1032D36C + i6);
+              if ( frame.c5 != 0 )
               {
-                v16 = v41 >> 2;
-                memset((char *)&v67[3] + v12, 0xAAu, 4 * v16);
-                v17 = (char *)&v67[v16 + 3] + v12;
-                v12 += v41;
-                memset(v17, 170, v41 & 3);
-                v10 = v49;
+                i7 = frame.c5 >> 2;
+                memset((char *)&frame.f19[3] + i4, 0xAAu, 4 * i7);
+                p1 = (char *)&frame.f19[i7 + 3] + i4;
+                i4 += frame.c5;
+                memset(p1, 170, frame.c5 & 3);
+                i2 = frame.i20;
               }
             }
-            ++v13;
+            ++i5;
           }
-          while ( v13 < v10 );
-          v63 = v12;
-          v11 = 0;
+          while ( i5 < i2 );
+          frame.i25 = i4;
+          i3 = 0;
         }
-        v18 = 0;
-        v19 = 0;
-        v45 = 0;
-        v62 = 0.0;
-        if ( v12 > 0 )
+        i8 = 0;
+        i9 = 0;
+        frame.i18 = 0;
+        frame.f15 = 0.0;
+        if ( i4 > 0 )
         {
-          v20 = v69;
-          v51 = &v73;
+          p2 = frame.u4;
+          frame.p8 = &frame.c8;
           while ( 1 )
           {
-            v21 = *((_BYTE *)&v67[3] + v19);
-            if ( v21 < 0x20u )
+            c3 = *((uint8_t *)&frame.f19[3] + i9);
+            if ( c3 < 0x20u )
             {
-              *v20 = 0;
-              v20[1] = 0;
-              v69[v19 + 72] = 0;
-              v69[v19 + 108] = 0;
+              *p2 = 0;
+              p2[1] = 0;
+              frame.u4[i9 + 72] = 0;
+              frame.u4[i9 + 108] = 0;
             }
             else
             {
-              orig::ShapeMng_GetFontGlyph(g_shapeMng, v21, (int)v51, v20, &v69[v19 + 72], &v69[v19 + 108]);
-              if ( v19 == 0 )
-                goto LABEL_31;
-              if ( v21 < 0x8Eu || v21 > 0xA8u )
+              orig::ShapeMng_GetFontGlyph(g_shapeMng, c3, (int)frame.p8, p2, &frame.u4[i9 + 72], &frame.u4[i9 + 108]);
+              if ( i9 == 0 )
+                goto L1;
+              if ( c3 < 0x8Eu || c3 > 0xA8u )
               {
-                if ( v21 != 0xAA )
+                if ( c3 != 0xAA )
                 {
-LABEL_31:
-                  if ( v21 != 0xAD )
-                    v45 += *v20;
-                  goto LABEL_34;
+L1:
+                  if ( c3 != 0xAD )
+                    frame.i18 += *p2;
+                  goto L2;
                 }
-                v23 = (__int64)((double)*v20 * 0.5);
-                v24 = (double)v20[1];
-                *v20 = v23;
-                v20[1] = (__int64)(v24 * 0.5);
-                v45 = (__int64)((double)v23 * 0.5 + (double)v45);
+                i11 = (long long)((double)*p2 * 0.5);
+                f1 = (double)p2[1];
+                *p2 = i11;
+                p2[1] = (long long)(f1 * 0.5);
+                frame.i18 = (long long)((double)i11 * 0.5 + (double)frame.i18);
               }
               else
               {
-                v42 = *v20;
-                v45 += v42 / 2;
-                v22 = (__int64)((double)v42 * 0x1.99999a0000000p-1);
-                v43 = v20[1];
-                *v20 = v22;
-                v20[1] = (__int64)((double)v43 * 0x1.99999a0000000p-1);
+                frame.i16 = *p2;
+                frame.i18 += frame.i16 / 2;
+                i10 = (long long)((double)frame.i16 * 0x1.99999a0000000p-1);
+                frame.i17 = p2[1];
+                *p2 = i10;
+                p2[1] = (long long)((double)frame.i17 * 0x1.99999a0000000p-1);
               }
             }
-LABEL_34:
-            ++v19;
-            v20 += 2;
-            v51 += 32;
-            v11 = 0;
-            if ( v19 >= v12 )
+L2:
+            ++i9;
+            p2 += 2;
+            frame.p8 += 32;
+            i3 = 0;
+            if ( i9 >= i4 )
             {
-              v18 = v45;
+              i8 = frame.i18;
               break;
             }
           }
         }
-        v25 = 0;
-        v44 = (double)-v18 * 0.5;
-        v52 = v44;
-        if ( v12 > 0 )
+        i12 = 0;
+        frame.f7 = (double)-i8 * 0.5;
+        frame.f10 = frame.f7;
+        if ( i4 > 0 )
         {
-          v50 = &v74;
+          frame.p7 = &frame.c9;
           while ( 1 )
           {
-            v26 = *((_BYTE *)&v67[3] + v25);
-            if ( v26 == 10 )
+            c4 = *((uint8_t *)&frame.f19[3] + i12);
+            if ( c4 == 10 )
             {
-              v52 = v44;
-              v62 = v62 + 8.0;
-              goto LABEL_62;
+              frame.f10 = frame.f7;
+              frame.f15 = frame.f15 + 8.0;
+              goto L3;
             }
-            if ( v25 == 0 )
+            if ( i12 == 0 )
               break;
-            if ( v26 < 0x8Eu || v26 > 0xA8u )
+            if ( c4 < 0x8Eu || c4 > 0xA8u )
             {
-              if ( v26 != 0xAA )
+              if ( c4 != 0xAA )
                 break;
-              v27 = 1.0;
-              v46 = (__int16)v69[2 * v25];
-              v53 = (__int16)v69[2 * v25 + 1];
-              v57 = -v46;
-              v28 = (double)v46 * 0.5;
+              f2 = 1.0;
+              frame.i19 = (short)frame.u4[2 * i12];
+              frame.i21 = (short)frame.u4[2 * i12 + 1];
+              frame.i23 = -frame.i19;
+              f3 = (double)frame.i19 * 0.5;
             }
             else
             {
-              v27 = 0x1.99999a0000000p-1;
-              v46 = (__int16)v69[2 * v25];
-              v57 = v46 / -2;
-              v28 = (double)v46 * 0.625;
-              v53 = (__int16)v69[2 * v25 + 1] / 2;
+              f2 = 0x1.99999a0000000p-1;
+              frame.i19 = (short)frame.u4[2 * i12];
+              frame.i23 = frame.i19 / -2;
+              f3 = (double)frame.i19 * 0.625;
+              frame.i21 = (short)frame.u4[2 * i12 + 1] / 2;
             }
-LABEL_50:
-            LODWORD(v56) = (__int16)v69[v25 + 72];
-            v29 = (int *)v50;
-            v30 = (double)SLODWORD(v56) + (double)v57;
-            LODWORD(v56) = (__int16)v69[v25 + 108];
-            v31 = (float *)&v71;
-            v32 = (float *)&g_worldTextQuad_v0_y;
-            v33 = (double)SLODWORD(v56);
-            LODWORD(v56) = (__int16)v69[2 * v25 + 1];
-            *(float *)&v54 = v33 + (double)v53 + v62;
-            g_worldTextQuad_v0_y = v54;
-            g_worldTextQuad_v1_y = v54;
-            v56 = (double)SLODWORD(v56) * v27;
-            v34 = v30 + v52;
-            g_worldTextQuad = v34;
-            g_worldTextQuad_v1_x = (double)v46 * v27 + v34;
-            g_worldTextQuad_v2_x = v34;
+L4:
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[i12 + 72];
+            p3 = (int *)frame.p7;
+            f4 = (double)(*(int32_t *)&(frame.f11)) + (double)frame.i23;
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[i12 + 108];
+            p4 = (float *)&frame.c6;
+            p5 = (float *)&g_worldTextQuad_v0_y;
+            f5 = (double)(*(int32_t *)&(frame.f11));
+            (*(uint32_t *)&(frame.f11)) = (short)frame.u4[2 * i12 + 1];
+            *(float *)&frame.i22 = f5 + (double)frame.i21 + frame.f15;
+            g_worldTextQuad_v0_y = frame.i22;
+            g_worldTextQuad_v1_y = frame.i22;
+            frame.f11 = (double)(*(int32_t *)&(frame.f11)) * f2;
+            f6 = f4 + frame.f10;
+            g_worldTextQuad = f6;
+            g_worldTextQuad_v1_x = (double)frame.i19 * f2 + f6;
+            g_worldTextQuad_v2_x = f6;
             g_worldTextQuad_v3_x = g_worldTextQuad_v1_x;
-            g_worldTextQuad_v2_y = v56 + *(float *)&v54;
+            g_worldTextQuad_v2_y = frame.f11 + *(float *)&frame.i22;
             g_worldTextQuad_v3_y = g_worldTextQuad_v2_y;
-            v52 = v28 + v52;
+            frame.f10 = f3 + frame.f10;
             do
             {
-              v67[0] = v65 * *(v32 - 1);
-              v67[1] = v66 * *v32;
-              orig::Vec2_Add(v31 - 2, &v58, v67);
-              v35 = *(v29 - 1);
-              v36 = *v29;
-              *v31 = v64;
-              v31[1] = 1.0;
-              *((_DWORD *)v31 + 3) = v35;
-              *((_DWORD *)v31 + 4) = v36;
-              v32 += 3;
-              v29 += 2;
-              v31 += 7;
+              frame.f19[0] = frame.f17 * *(p5 - 1);
+              frame.f19[1] = frame.f18 * *p5;
+              orig::Vec2_Add(p4 - 2, &frame.f12, frame.f19);
+              i13 = *(p3 - 1);
+              i14 = *p3;
+              *p4 = frame.f16;
+              p4[1] = 1.0;
+              *((uint32_t *)p4 + 3) = i13;
+              *((uint32_t *)p4 + 4) = i14;
+              p5 += 3;
+              p3 += 2;
+              p4 += 7;
             }
-            while ( (int)v32 < (int)XI_GAME(0x10358314u) );
-            v55 = a4;
-            if ( orig::ShapeMng_BindFontTexture(g_shapeMng, *((unsigned __int8 *)&v67[3] + v25), &v55, &a5) == 0 )
-              goto LABEL_63;
-            v37 = a5;
-            if ( v55 == a5 )
+            while ( (int)p5 < (int)XI_GAME(0x10358314u) );
+            frame.u2 = arg4;
+            if ( orig::ShapeMng_BindFontTexture(g_shapeMng, *((unsigned char *)&frame.f19[3] + i12), &frame.u2, &arg5) == 0 )
+              goto L5;
+            i15 = arg5;
+            if ( frame.u2 == arg5 )
             {
-              if ( *((_BYTE *)&v67[3] + v25) != 0x92 )
-                v37 = -2139062144;
-              v55 = v37 & 0xFF00 | (_BYTE)((uint32_t)(v37) >> 16) | (((unsigned __int8)v37 | 0xFFFF8000) << 16);
+              if ( *((uint8_t *)&frame.f19[3] + i12) != 0x92 )
+                i15 = -2139062144;
+              frame.u2 = i15 & 0xFF00 | (uint8_t)((uint32_t)(i15) >> 16) | (((unsigned char)i15 | 0xFFFF8000) << 16);
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 96u);
             }
             else
@@ -388,85 +390,85 @@ LABEL_50:
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 0);
             }
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
-            v38 = v55;
-            v39 = (unsigned int *)&v72;
+            u1 = frame.u2;
+            p6 = (unsigned int *)&frame.c7;
             for ( i = 4; i != 0; --i )
             {
-              *v39 = v38;
-              v39 += 7;
+              *p6 = u1;
+              p6 += 7;
             }
             (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-            orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)v70, 28);
+            orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)frame.val1, 28);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHAREF, 0);
-            v12 = v63;
-LABEL_62:
-            ++v25;
-            v50 += 32;
-            if ( v25 >= v12 )
-              goto LABEL_63;
-            v11 = 0;
+            i4 = frame.i25;
+L3:
+            ++i12;
+            frame.p7 += 32;
+            if ( i12 >= i4 )
+              goto L5;
+            i3 = 0;
           }
-          v46 = (__int16)v69[2 * v25];
-          if ( v26 == 0xAD )
+          frame.i19 = (short)frame.u4[2 * i12];
+          if ( c4 == 0xAD )
           {
-            v27 = 0.5;
-            v28 = 0.0;
-            v53 = -2;
-            v11 = -2 - (__int16)v69[2 * v25];
+            f2 = 0.5;
+            f3 = 0.0;
+            frame.i21 = -2;
+            i3 = -2 - (short)frame.u4[2 * i12];
           }
           else
           {
-            v27 = 1.0;
-            v28 = (double)v46;
-            v53 = 0;
+            f2 = 1.0;
+            f3 = (double)frame.i19;
+            frame.i21 = 0;
           }
-          v57 = v11;
-          goto LABEL_50;
+          frame.i23 = i3;
+          goto L4;
         }
       }
     }
   }
-LABEL_63:
+L5:
   orig::MathVector_Nop();
 }
 
 // FUNCTION: FFXIMAIN 0x10086E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CXiAtelActor::CopyAndWrapAngles(void * self)
+bits32 __thiscall CXiAtelActor::CopyAndWrapAngles(void * self)
 {
-  float *pfVar1;
-  long double fVar2;
-  uint8_t bVar3;
-  uint8_t bVar4;
-  long double fVar5;
+  float *p1;
+  long double f1;
+  uint8_t u1;
+  uint8_t u2;
+  long double f2;
   
   orig::Vec4_Copy_v1((uint32_t *)((int)self + 0xc4),(uint32_t *)((int)self + 0x34));
-  pfVar1 = (float *)((int)self + 0x44);
-  orig::Vec4_Copy_v1(pfVar1,pfVar1);
-  if ((long double)*pfVar1 > (long double)3.141499996185302734375f) {
-    *pfVar1 = (float)((long double)*pfVar1 - (long double)6.28299999237060546875f);
+  p1 = (float *)((int)self + 0x44);
+  orig::Vec4_Copy_v1(p1,p1);
+  if (*p1 > 3.141499996185302734375f) {
+    *p1 = (float)(*p1 - 6.28299999237060546875f);
   }
-  bVar3 = NAN((long double)*pfVar1) || NAN((long double)(-3.141499996185302734375f));
-  if ((bVar3 || (long double)*pfVar1 < (long double)(-3.141499996185302734375f)) != bVar3) {
-    *pfVar1 = (float)((long double)*pfVar1 + (long double)6.28299999237060546875f);
+  u1 = ((*p1) != (*p1)) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+  if ((u1 || *p1 < (-3.141499996185302734375f)) != u1) {
+    *p1 = (float)(*p1 + 6.28299999237060546875f);
   }
-  if ((long double)*(float *)((int)self + 0x48) > (long double)3.141499996185302734375f) {
-    *(float *)((int)self + 0x48) = (float)((long double)*(float *)((int)self + 0x48) - (long double)6.28299999237060546875f);
+  if (*(float *)((int)self + 0x48) > 3.141499996185302734375f) {
+    *(float *)((int)self + 0x48) = (float)(*(float *)((int)self + 0x48) - 6.28299999237060546875f);
   }
-  bVar3 = NAN((long double)*(float *)((int)self + 0x48)) || NAN((long double)(-3.141499996185302734375f));
-  if ((bVar3 || (long double)*(float *)((int)self + 0x48) < (long double)(-3.141499996185302734375f)) != bVar3) {
-    *(float *)((int)self + 0x48) = (float)((long double)*(float *)((int)self + 0x48) + (long double)6.28299999237060546875f);
+  u1 = ((*(float *)((int)self + 0x48)) != (*(float *)((int)self + 0x48))) || (((-3.141499996185302734375f)) != ((-3.141499996185302734375f)));
+  if ((u1 || *(float *)((int)self + 0x48) < (-3.141499996185302734375f)) != u1) {
+    *(float *)((int)self + 0x48) = (float)(*(float *)((int)self + 0x48) + 6.28299999237060546875f);
   }
-  if ((long double)*(float *)((int)self + 0x4c) > (long double)3.141499996185302734375f) {
-    *(float *)((int)self + 0x4c) = (float)((long double)*(float *)((int)self + 0x4c) - (long double)6.28299999237060546875f);
+  if (*(float *)((int)self + 0x4c) > 3.141499996185302734375f) {
+    *(float *)((int)self + 0x4c) = (float)(*(float *)((int)self + 0x4c) - 6.28299999237060546875f);
   }
-  fVar5 = (long double)*(float *)((int)self + 0x4c);
-  fVar2 = (long double)(-3.141499996185302734375f);
-  bVar4 = NAN(fVar5) || NAN(fVar2);
-  bVar3 = bVar4 || fVar5 < fVar2;
-  if (bVar3 != bVar4) {
-    *(float *)((int)self + 0x4c) = (float)((long double)*(float *)((int)self + 0x4c) + (long double)6.28299999237060546875f);
+  f2 = *(float *)((int)self + 0x4c);
+  f1 = (-3.141499996185302734375f);
+  u2 = ((f2) != (f2)) || ((f1) != (f1));
+  u1 = u2 || f2 < f1;
+  if (u1 != u2) {
+    *(float *)((int)self + 0x4c) = (float)(*(float *)((int)self + 0x4c) + 6.28299999237060546875f);
   }
-  return (uint32_t)(uint8_t)(bVar3 | (uint8_t)((uint16_t)((uint16_t)bVar4 << 10) >> 8) |
-                     (uint8_t)((uint16_t)((uint16_t)(bVar4 || fVar5 == fVar2) << 0xe) >> 8)) << 8;
+  return (uint32_t)(uint8_t)(u1 | (uint8_t)((uint16_t)((uint16_t)u2 << 10) >> 8) |
+                     (uint8_t)((uint16_t)((uint16_t)(u2 || f2 == f1) << 0xe) >> 8)) << 8;
 }

@@ -20,4 +20,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `ModelBaseDraw_ApplyToVec4` calls `MathVector_ReturnThis`, `Skel_GetRecordAt`, `Mat4_SetIdentity`, `Mat4_PostRotateX`, `Mat4_PostRotateY`, `Mat4_PostRotateZ`, `Part_CopyTranslation`, `Mat4_SetTranslation`, `Mat4_PostMultiply`, `Mat4_TransformVec4InPlace`, `MathVector_Nop`
 - `Part_CopyTranslation` calls `Vec3_Copy`
 - `Part_AddTranslation` calls `MathVector_ReturnThis`, `Skel_GetRecordAt`, `Vec3_AddInPlace`, `MathVector_Nop`
-- `ModelBaseDraw_ClampPointToLocalEllipse` calls `MathVector_ReturnThis`, `sub_102D8141`, `Mat4_TransformNormal`, `Vec3_ScaleInPlace`, `Mat4_InvertOrthonormal`, `Mat4_TransformNormalInPlace`, `sub_100274B0`, `MathVector_Nop`, `Vec3_Copy`
+- `ModelBaseDraw_ClampPointToLocalEllipse` calls `MathVector_ReturnThis`, `game_102D8141`, `Mat4_TransformNormal`, `Vec3_ScaleInPlace`, `Mat4_InvertOrthonormal`, `Mat4_TransformNormalInPlace`, `game_100274B0`, `MathVector_Nop`, `Vec3_Copy`

@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): CXiActor::ComputeDrawState an
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Target_FindNearestOnLocalPositiveX` calls `ActorHandle_Resolve`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateY`, `Mat4_SetRow3`, `Mat4_InvertOrthonormal`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `sub_10085240`, `CXiActor::ComputeDrawState`, `Mat4_TransformPoint`, `sub_10027530`, `sub_10085270`, `MathVector_Nop`
+- `Target_FindNearestOnLocalPositiveX` calls `ActorHandle_Resolve`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateY`, `Mat4_SetRow3`, `Mat4_InvertOrthonormal`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `game_10085240`, `CXiActor::ComputeDrawState`, `Mat4_TransformPoint`, `game_10027530`, `game_10085270`, `MathVector_Nop`

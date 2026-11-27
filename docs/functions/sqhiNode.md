@@ -16,8 +16,8 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqhiNode.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqhiNode_Create` calls `sub_10275D80`, `SqhiNode_Init`
-- `SqhiNode_Init` calls `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_Zero`, `sub_1027EB10`
+- `SqhiNode_Create` calls `game_10275D80`, `SqhiNode_Init`
+- `SqhiNode_Init` calls `SqMatrixConnect_SetIdentity`, `SqMatrixConnect_Zero`, `game_1027EB10`
 - `SqhiNode_Nop` calls nothing directly
 - `SqhiNode_SetField64` calls nothing directly
 - `SqhiNode_AppendChild` calls nothing directly

@@ -4,25 +4,25 @@
 
 // FUNCTION: FFXIMAIN 0x1027AFB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqQuat_Invert(float * param_1)
+XI_API bits32 __cdecl SqQuat_Invert(float * arg1)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = (long double)param_1[3] * (long double)param_1[3] +
-          (long double)param_1[2] * (long double)param_1[2] +
-          (long double)param_1[1] * (long double)param_1[1] + (long double)*param_1 * (long double)*param_1;
-  if (fVar1 > (long double)0.0f) {
-    fVar1 = (long double)1.0f / SQRT(fVar1);
-    *param_1 = (float)-(fVar1 * (long double)*param_1);
-    param_1[1] = (float)-(fVar1 * (long double)param_1[1]);
-    param_1[2] = (float)-(fVar1 * (long double)param_1[2]);
-    param_1[3] = (float)(fVar1 * (long double)param_1[3]);
+  f1 = arg1[3] * arg1[3] +
+          arg1[2] * arg1[2] +
+          arg1[1] * arg1[1] + *arg1 * *arg1;
+  if (f1 > 0.0f) {
+    f1 = 1.0f / x87_fsqrt(f1);
+    *arg1 = (float)-(f1 * *arg1);
+    arg1[1] = (float)-(f1 * arg1[1]);
+    arg1[2] = (float)-(f1 * arg1[2]);
+    arg1[3] = (float)(f1 * arg1[3]);
     return 0xff;
   }
-  orig::sqDebugPrintf_v1(s_Warning_in__s__line__d__103b27fc,s_C__dev_dancer_modules_sqBase_src_103b40c0,0x222)
+  orig::sqDebugPrintf_v1(str_Warning_in__s__line__d__103B27FC,str_C__dev_dancer_modules_sqBase_src_103B40C0,0x222)
   ;
-  orig::sqDebugPrintf_v1(s_QfInvert__can_t_invert_the_singu_103b408c);
-  orig::Sq_PrintFloat4Indented(param_1,0,0);
-  orig::SqQuat_SetIdentity(param_1);
+  orig::sqDebugPrintf_v1(str_QfInvert__can_t_invert_the_singu_103B408C);
+  orig::Sq_PrintFloat4Indented(arg1,0,0);
+  orig::SqQuat_SetIdentity(arg1);
   return 0;
 }

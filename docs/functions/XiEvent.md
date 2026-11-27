@@ -39,19 +39,19 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `XiEvent_IsIdOutsideList` calls nothing directly
 - `XiEvent_GetGlobalDword` calls nothing directly
 - `XiEvent_ResetPending` calls `Menu_CloseQuery`, `NetCellFont_ClearGlobalLists2150And2154`
-- `XiEvent_ResetActersAndGlobals` calls `sub_101C4AE0`, `Acter_TargetClearAndSetFlag53`, `XiEvent_ResetPending`, `ZoneMap_QueryBoxHeightBand`, `ZoneMap_QueryBoxHeightByRadius`, `Acter_CopyPosAndSnap`, `Acter_ReleaseEventRecord`, `CXiSkeletonActor::SetFlag840Bit23`, `Acter_CallVt180IfState`, `Acter_CopyPosToCached`, `Camera_GetField50`, `Camera_SetTargetIfMoved`, `Camera_PlaceRelativeToActor`, `operator_delete`, `XiEvent_GetGlobalDword`, `Cell_SetByte104E1C3E`, `XiZone::RestoreSavedFields`, `Acter_ClearGlobals10488800`, `YkWindows_CloseMapMenus`, `CMoTask::CreateMode4`, `CMoTask::CreateMode2`, `TargetMenu_SetPosition`, `TargetMenu_MenuInitAndFadeItem`, `TargetMenu_InitFields1CTo3A7`, `MenuPanels_ClearMenu`, `sub_101FCFB0`, `CallMotd`, `NetCellFont_SetWord40DAA`
+- `XiEvent_ResetActersAndGlobals` calls `game_101C4AE0`, `Acter_TargetClearAndSetFlag53`, `XiEvent_ResetPending`, `ZoneMap_QueryBoxHeightBand`, `ZoneMap_QueryBoxHeightByRadius`, `Acter_CopyPosAndSnap`, `Acter_ReleaseEventRecord`, `CXiSkeletonActor::SetFlag840Bit23`, `Acter_CallVt180IfState`, `Acter_CopyPosToCached`, `Camera_GetField50`, `Camera_SetTargetIfMoved`, `Camera_PlaceRelativeToActor`, `operator_delete`, `XiEvent_GetGlobalDword`, `Cell_SetByte104E1C3E`, `XiZone::RestoreSavedFields`, `Acter_ClearGlobals10488800`, `YkWindows_CloseMapMenus`, `CMoTask::CreateMode4`, `CMoTask::CreateMode2`, `TargetMenu_SetPosition`, `TargetMenu_MenuInitAndFadeItem`, `TargetMenu_InitFields1CTo3A7`, `MenuPanels_ClearMenu`, `game_101FCFB0`, `CallMotd`, `NetCellFont_SetWord40DAA`
 - `_EventDataReadCallBack` calls `ErrorReport_NoOpVarargsA`, `operator_delete`
 - `XiEvent_RestoreActer` calls `operator_delete`, `Acter_ApplyPair1EC1F4`, `CYyObject_IsKindOf`, `Acter_ResetMotionCounters`, `CXiSkeletonActor_ReleaseListEntriesMatching`, `CXiSkeletonActor::SetFlag840Bit23`
-- `XiEvent_GetSingleton` calls `sub_100BD820`, `sub_10313486`
-- `XiEvent_Init` calls `Acter_IsParamBelow901`, `sub_10312050`
+- `XiEvent_GetSingleton` calls `game_100BD820`, `game_10313486`
+- `XiEvent_Init` calls `Acter_IsParamBelow901`, `game_10312050`
 - `XiEvent_GetWordBFE` calls nothing directly
 - `XiEvent_GetWordC00` calls nothing directly
 - `XiEvent_FreeData` calls `operator_delete`
 - `XiEvent_Init_100C3060` calls nothing directly
-- `XiEvent_GetSingleton_100C3190` calls `sub_100C31F0`, `sub_10313486`
+- `XiEvent_GetSingleton_100C3190` calls `game_100C31F0`, `game_10313486`
 - `XiEvent_SetFlag8` calls nothing directly
 - `XiEvent_HasItems` calls nothing directly
 - `XiEvent_Clear` calls `XiEvent_FreeData`, `operator_delete`
 - `XiEvent_Append` calls nothing directly
 - `XiEvent_AddEvent` calls `XiEvent_GetWordBFE`, `Acter_IsParamBelow901`, `XiEvent_GetWordC00`, `Allocator_Generic`, `XiEvent_Init_100C3060`, `XiEvent_Append`
-- `XiEvent_StepTimedMessage` calls `sub_100C3130`, `sub_100C3140`, `Camera_GetFrameScale`, `sub_10311C2C`, `sub_100C2FB0`, `sub_100C30F0`, `sub_100C2D00`, `sub_100C2FE0`, `sub_100C3150`, `sub_100C3100`, `sub_100C3120`, `sub_100C3160`, `sub_10087DF0`, `ChatLog_AddMessage`, `sub_100C3170`
+- `XiEvent_StepTimedMessage` calls `game_100C3130`, `game_100C3140`, `Camera_GetFrameScale`, `game_10311C2C`, `game_100C2FB0`, `game_100C30F0`, `game_100C2D00`, `game_100C2FE0`, `game_100C3150`, `game_100C3100`, `game_100C3120`, `game_100C3160`, `game_10087DF0`, `ChatLog_AddMessage`, `game_100C3170`

@@ -12,4 +12,4 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqinBuild.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `sqinSkinBuildBinary` calls `sqDebugPrintf`, `SqScriptRead_ReadBlock`, `SqinSkin_ResizeItemArray`, `sub_10275D80`, `sqskSkeleton_GetNodeByIndex`, `sqinCluster_Create`, `SqinSkinAppend_Append`
+- `sqinSkinBuildBinary` calls `sqDebugPrintf`, `SqScriptRead_ReadBlock`, `SqinSkin_ResizeItemArray`, `game_10275D80`, `sqskSkeleton_GetNodeByIndex`, `sqinCluster_Create`, `SqinSkinAppend_Append`

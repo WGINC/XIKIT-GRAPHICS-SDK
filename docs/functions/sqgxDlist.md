@@ -15,7 +15,7 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqgxDlist.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqgxDlist_CreateContextList` calls `sub_10275D80`
+- `SqgxDlist_CreateContextList` calls `game_10275D80`
 - `sqgxDlistEnd` calls `sqFree`
-- `sqgxDlistDraw` calls `sub_1028A730`, `sqgxShapeBegin`, `sub_1028BBD0`
+- `sqgxDlistDraw` calls `game_1028A730`, `sqgxShapeBegin`, `game_1028BBD0`
 - `SqgxDlist_Nop` calls nothing directly

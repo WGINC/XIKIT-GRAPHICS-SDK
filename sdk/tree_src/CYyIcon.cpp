@@ -4,116 +4,116 @@
 
 // FUNCTION: FFXIMAIN 0x10026990
 // GATE: PASS -- 100 trials, 100 returned normally, 361 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyIcon::Draw(int a1, int a2, int a3, int a4)
+int CYyIcon::Draw(int arg1, int arg2, int arg3, int arg4)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  char v5;
+  char c1;
   int result;
-  IDirect3DBaseTexture8 *v8;
-  int v9;
-  unsigned __int16 v10;
-  double v11;
-  double v12;
-  double v13;
+  IDirect3DBaseTexture8 *p1;
+  int pIconTexture;
+  unsigned short u1;
+  double f1;
+  double f2;
+  double f3;
   float a3a;
   float a4a;
-  v5 = a4;
-  if ( (_BYTE)a4 != 0 )
+  c1 = arg4;
+  if ( (uint8_t)arg4 != 0 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
   }
   result = this->pIconTexture;
-  if ( result != 0 && (*(_DWORD *)(result + 64) != 0 || *(_DWORD *)(result + 68) != 0) )
+  if ( result != 0 && (*(uint32_t *)(result + 64) != 0 || *(uint32_t *)(result + 68) != 0) )
   {
-    v8 = *(IDirect3DBaseTexture8 **)(result + 64);
-    if ( v8 == nullptr )
-      v8 = *(IDirect3DBaseTexture8 **)(result + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v8);
-    this->quad0_color = a3;
-    this->quad1_color = a3;
-    this->quad2_color = a3;
-    this->quad3_color = a3;
-    v9 = this->pIconTexture;
-    v10 = *(_WORD *)(v9 + 38);
-    a3a = (float)*(unsigned __int16 *)(v9 + 36);
-    v11 = (double)a1 - 0.5;
-    a4a = (double)a2 - 0.5;
-    this->quad0_x = v11;
-    v12 = a3a + v11;
+    p1 = *(IDirect3DBaseTexture8 **)(result + 64);
+    if ( p1 == nullptr )
+      p1 = *(IDirect3DBaseTexture8 **)(result + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
+    this->quad0_color = arg3;
+    this->quad1_color = arg3;
+    this->quad2_color = arg3;
+    this->quad3_color = arg3;
+    pIconTexture = this->pIconTexture;
+    u1 = *(uint16_t *)(pIconTexture + 38);
+    a3a = (float)*(unsigned short *)(pIconTexture + 36);
+    f1 = (double)arg1 - 0.5;
+    a4a = (double)arg2 - 0.5;
+    this->quad0_x = f1;
+    f2 = a3a + f1;
     this->quad0_y = a4a;
     this->quad1_y = a4a;
-    this->quad1_x = v12;
-    this->quad2_x = v11;
-    this->quad3_x = v12;
-    v13 = (double)v10 + a4a;
-    this->quad2_y = v13;
-    this->quad3_y = v13;
+    this->quad1_x = f2;
+    this->quad2_x = f1;
+    this->quad3_x = f2;
+    f3 = (double)u1 + a4a;
+    this->quad2_y = f3;
+    this->quad3_y = f3;
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
     result = orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self + 12, 28);
   }
-  if ( v5 != 0 )
+  if ( c1 != 0 )
     return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10026C70
 // GATE: PASS -- 100 trials, 100 returned normally, 134 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyIcon::DrawSubRect(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+int CYyIcon::DrawSubRect(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int result;
-  IDirect3DBaseTexture8 *v12;
-  double v13;
-  double v15;
-  double v16;
-  double v17;
-  int v18;
-  double v19; // rt1
-  int v20;
-  int v21;
+  IDirect3DBaseTexture8 *p1;
+  double f1;
+  double f2;
+  double f3;
+  double f4;
+  int pIconTexture;
+  double f5; // rt1
+  int i2;
+  int i3;
   float a1a;
   int a5a;
   float a9a;
   float a9b;
   result = this->pIconTexture;
-  if ( result != 0 && (*(_DWORD *)(result + 64) != 0 || *(_DWORD *)(result + 68) != 0) )
+  if ( result != 0 && (*(uint32_t *)(result + 64) != 0 || *(uint32_t *)(result + 68) != 0) )
   {
-    v12 = *(IDirect3DBaseTexture8 **)(result + 64);
-    if ( v12 == nullptr )
-      v12 = *(IDirect3DBaseTexture8 **)(result + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v12);
-    v13 = (double)a1;
-    this->quad0_color = a9;
-    this->quad1_color = a9;
-    a9a = v13;
-    v15 = (double)a2;
-    this->quad2_color = a9;
-    this->quad3_color = a9;
-    a1a = v15;
-    v16 = (double)a3 + a9a - 0.5;
-    a9b = (double)a4 + a1a - 0.5;
-    v17 = v13 - 0.5;
-    this->quad0_x = v17;
+    p1 = *(IDirect3DBaseTexture8 **)(result + 64);
+    if ( p1 == nullptr )
+      p1 = *(IDirect3DBaseTexture8 **)(result + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
+    f1 = (double)arg1;
+    this->quad0_color = arg9;
+    this->quad1_color = arg9;
+    a9a = f1;
+    f2 = (double)arg2;
+    this->quad2_color = arg9;
+    this->quad3_color = arg9;
+    a1a = f2;
+    f3 = (double)arg3 + a9a - 0.5;
+    a9b = (double)arg4 + a1a - 0.5;
+    f4 = f1 - 0.5;
+    this->quad0_x = f4;
     this->quad2_y = a9b;
-    this->quad1_x = v16;
-    this->quad2_x = v17;
-    v18 = this->pIconTexture;
+    this->quad1_x = f3;
+    this->quad2_x = f4;
+    pIconTexture = this->pIconTexture;
     this->quad3_y = a9b;
-    v19 = v15 - 0.5;
-    this->quad3_x = v16;
-    this->quad0_y = v19;
-    this->quad1_y = v19;
-    this->quad0_u = (double)a5 / (double)*(unsigned __int16 *)(v18 + 36);
-    this->quad0_v = (double)a6 / (double)*(unsigned __int16 *)(v18 + 38);
-    this->quad3_u = (double)(a7 + a5) / (double)*(unsigned __int16 *)(v18 + 36);
-    a5a = *(unsigned __int16 *)(v18 + 38);
-    v20 = at<uint32_t>(this, 0x24);
-    v21 = at<uint32_t>(this, 0x20);
+    f5 = f2 - 0.5;
+    this->quad3_x = f3;
+    this->quad0_y = f5;
+    this->quad1_y = f5;
+    this->quad0_u = (double)arg5 / (double)*(unsigned short *)(pIconTexture + 36);
+    this->quad0_v = (double)arg6 / (double)*(unsigned short *)(pIconTexture + 38);
+    this->quad3_u = (double)(arg7 + arg5) / (double)*(unsigned short *)(pIconTexture + 36);
+    a5a = *(unsigned short *)(pIconTexture + 38);
+    i2 = at<uint32_t>(this, 0x24);
+    i3 = at<uint32_t>(this, 0x20);
     this->quad1_u = at<uint32_t>(this, 0x74);
-    this->quad1_v = v20;
-    this->quad2_u = v21;
-    this->quad3_v = (double)(a8 + a6) / (double)a5a;
+    this->quad1_v = i2;
+    this->quad2_u = i3;
+    this->quad3_v = (double)(arg8 + arg6) / (double)a5a;
     this->quad2_v = at<uint32_t>(this, 0x78);
     (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
     return orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self + 12, 28);

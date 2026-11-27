@@ -4,130 +4,130 @@
 
 // FUNCTION: FFXIMAIN 0x10120590
 // GATE: PASS -- 100 trials, 100 returned normally, 67 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-char ShapeMng::ShapeMng_BindFontTexture(int a2, _DWORD *a3, _DWORD *a4)
+char ShapeMng::ShapeMng_BindFontTexture(int arg1, uint32_t *arg2, uint32_t *arg3)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  int v5;
-  IDirect3DBaseTexture8 *v7;
-  int v8;
-  int *v9;
-  int v10;
-  IDirect3DBaseTexture8 *v11;
-  v5 = this->fontTexture;
-  if ( v5 == 0 )
+  int fontTexture;
+  IDirect3DBaseTexture8 *p1;
+  int i2;
+  int *p2;
+  int i3;
+  IDirect3DBaseTexture8 *p3;
+  fontTexture = this->fontTexture;
+  if ( fontTexture == 0 )
   {
     orig::ShapeMng_LoadFontTextures(self);
-    v5 = this->fontTexture;
-    if ( v5 == 0 )
+    fontTexture = this->fontTexture;
+    if ( fontTexture == 0 )
       return 0;
   }
-  if ( a2 >= 0 )
+  if ( arg1 >= 0 )
   {
-    v8 = 1;
-    v9 = self + 10;
+    i2 = 1;
+    p2 = self + 10;
     do
     {
-      if ( *v9 <= (unsigned int)a2 )
+      if ( *p2 <= (unsigned int)arg1 )
         break;
-      --v8;
-      --v9;
+      --i2;
+      --p2;
     }
-    while ( v8 >= 0 );
-    if ( v8 != 0 )
+    while ( i2 >= 0 );
+    if ( i2 != 0 )
     {
-      if ( v8 == 1 )
+      if ( i2 == 1 )
       {
-        if ( a3 != nullptr && a4 != nullptr )
-          *a3 = *a4;
+        if ( arg2 != nullptr && arg3 != nullptr )
+          *arg2 = *arg3;
       }
       else
       {
-        v8 = 0;
+        i2 = 0;
       }
     }
-    v10 = *(self + v8 + 7);
-    if ( v10 != 0 )
+    i3 = *(self + i2 + 7);
+    if ( i3 != 0 )
     {
-      if ( *(_DWORD *)(v10 + 64) != 0 )
-        v11 = *(IDirect3DBaseTexture8 **)(v10 + 64);
+      if ( *(uint32_t *)(i3 + 64) != 0 )
+        p3 = *(IDirect3DBaseTexture8 **)(i3 + 64);
       else
-        v11 = *(IDirect3DBaseTexture8 **)(v10 + 68);
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v11);
+        p3 = *(IDirect3DBaseTexture8 **)(i3 + 68);
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p3);
     }
     return 1;
   }
   else
   {
-    v7 = *(IDirect3DBaseTexture8 **)(v5 + 64);
-    if ( v7 != nullptr )
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v7);
+    p1 = *(IDirect3DBaseTexture8 **)(fontTexture + 64);
+    if ( p1 != nullptr )
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
     else
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(v5 + 68));
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(fontTexture + 68));
     return 1;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x101207B0
 // GATE: PASS -- 100 trials, 100 returned normally, 66 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-char ShapeMng::ShapeMng_BindDmgNumTexture(int a2, _DWORD *a3, _DWORD *a4)
+char ShapeMng::ShapeMng_BindDmgNumTexture(int arg1, uint32_t *arg2, uint32_t *arg3)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  int v5;
-  IDirect3DBaseTexture8 *v7;
-  int v8;
-  int *v9;
-  int v10;
-  IDirect3DBaseTexture8 *v11;
-  v5 = this->dmgNumTexture;
-  if ( v5 == 0 )
+  int dmgNumTexture;
+  IDirect3DBaseTexture8 *p1;
+  int i2;
+  int *p2;
+  int i3;
+  IDirect3DBaseTexture8 *p3;
+  dmgNumTexture = this->dmgNumTexture;
+  if ( dmgNumTexture == 0 )
   {
     orig::ShapeMng_LoadDmgNumTextures(self);
-    v5 = this->dmgNumTexture;
-    if ( v5 == 0 )
+    dmgNumTexture = this->dmgNumTexture;
+    if ( dmgNumTexture == 0 )
       return 0;
   }
-  if ( a2 >= 0 )
+  if ( arg1 >= 0 )
   {
-    v8 = 1;
-    v9 = self + 15;
+    i2 = 1;
+    p2 = self + 15;
     do
     {
-      if ( *v9 <= (unsigned int)a2 )
+      if ( *p2 <= (unsigned int)arg1 )
         break;
-      --v8;
-      --v9;
+      --i2;
+      --p2;
     }
-    while ( v8 >= 0 );
-    if ( v8 != 0 )
+    while ( i2 >= 0 );
+    if ( i2 != 0 )
     {
-      if ( v8 == 1 )
+      if ( i2 == 1 )
       {
-        if ( a3 != nullptr && a4 != nullptr )
-          *a3 = *a4;
+        if ( arg2 != nullptr && arg3 != nullptr )
+          *arg2 = *arg3;
       }
       else
       {
-        v8 = 0;
+        i2 = 0;
       }
     }
-    v10 = *(self + v8 + 12);
-    if ( v10 != 0 )
+    i3 = *(self + i2 + 12);
+    if ( i3 != 0 )
     {
-      if ( *(_DWORD *)(v10 + 64) != 0 )
-        v11 = *(IDirect3DBaseTexture8 **)(v10 + 64);
+      if ( *(uint32_t *)(i3 + 64) != 0 )
+        p3 = *(IDirect3DBaseTexture8 **)(i3 + 64);
       else
-        v11 = *(IDirect3DBaseTexture8 **)(v10 + 68);
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v11);
+        p3 = *(IDirect3DBaseTexture8 **)(i3 + 68);
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p3);
     }
     return 1;
   }
   else
   {
-    v7 = *(IDirect3DBaseTexture8 **)(v5 + 64);
-    if ( v7 != nullptr )
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v7);
+    p1 = *(IDirect3DBaseTexture8 **)(dmgNumTexture + 64);
+    if ( p1 != nullptr )
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
     else
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(v5 + 68));
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, *(IDirect3DBaseTexture8 **)(dmgNumTexture + 68));
     return 1;
   }
 }

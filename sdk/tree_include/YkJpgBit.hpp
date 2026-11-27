@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API YkJpgBit {
 public:
-    static undefined4 __thiscall Init(void * self, undefined4 param_1, undefined4 param_2);  // 0x101D08E0
+    static bits32 __thiscall Init(void * self, bits32 arg2, bits32 arg3);  // 0x101D08E0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x10];

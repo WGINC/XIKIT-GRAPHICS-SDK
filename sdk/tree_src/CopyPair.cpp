@@ -4,36 +4,36 @@
 
 // FUNCTION: FFXIMAIN 0x100ABC20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall CopyPair_CopyFrom(void * self_, char * param_1, int param_2)
+XI_API void * __thiscall CopyPair_CopyFrom(void * self_, char * arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
-  uint16_t *puVar3;
+  int i1;
+  int i2;
+  uint16_t *p1;
   
-  orig::_strncpy_v2(self_,param_1,0xf);
-  iVar2 = 0;
+  orig::_strncpy_v2(self_,arg2,0xf);
+  i2 = 0;
   *(uint8_t *)((int)self_ + 0xf) = 0;
-  *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(param_2 + 0x12);
-  puVar3 = (uint16_t *)((int)self_ + 0x10);
+  *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(arg3 + 0x12);
+  p1 = (uint16_t *)((int)self_ + 0x10);
   do {
-    iVar1 = iVar2 * 2;
-    iVar2 = iVar2 + 1;
-    *puVar3 = *(uint16_t *)(param_2 + iVar1);
-    puVar3 = puVar3 + 1;
-  } while (iVar2 < 9);
-  *(uint8_t *)((int)self_ + 0x24) = *(uint8_t *)(param_2 + 0x14);
+    i1 = i2 * 2;
+    i2 = i2 + 1;
+    *p1 = *(uint16_t *)(arg3 + i1);
+    p1 = p1 + 1;
+  } while (i2 < 9);
+  *(uint8_t *)((int)self_ + 0x24) = *(uint8_t *)(arg3 + 0x14);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x100ABC70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl CopyPair_CopyReturnZ(undefined4 * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl CopyPair_CopyReturnZ(bits32 * arg1, bits32 * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  *param_1 = *param_2;
-  param_1[1] = param_2[1];
-  uVar1 = param_2[2];
-  param_1[2] = uVar1;
-  return uVar1;
+  *arg1 = *arg2;
+  arg1[1] = arg2[1];
+  u1 = arg2[2];
+  arg1[2] = u1;
+  return u1;
 }

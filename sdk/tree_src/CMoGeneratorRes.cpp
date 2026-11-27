@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x10047FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * CMoGeneratorRes::ScalarDeletingDtor(char a2)
+void * CMoGeneratorRes::ScalarDeletingDtor(char arg1)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   orig::CMoGeneratorRes_Destructor((int)self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

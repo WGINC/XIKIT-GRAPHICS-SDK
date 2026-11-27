@@ -4,45 +4,47 @@
 
 // FUNCTION: FFXIMAIN 0x102B2CA0
 // GATE: PASS -- 100 trials, 63 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 63
-XI_API void __cdecl Drawable_DrawTwoPass(int param_1, int * param_2)
+XI_API void __cdecl Drawable_DrawTwoPass(int arg1, int * arg2)
 {
-  int iVar1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u4; };   // at 0xC
+  } frame;
   
-  if ((*(int *)(param_1 + 0x4c) != 0) &&
-     (iVar1 = orig::SqsdPassTest_TestSeparationHalf(*param_2), iVar1 == 2)) {
+  if ((*(int *)(arg1 + 0x4c) != 0) &&
+     (i1 = orig::SqsdPassTest_TestSeparationHalf(*arg2), i1 == 2)) {
     return;
   }
-  local_10 = 0x3f800000;
-  local_c = 0x3f800000;
-  local_8 = 0x3f800000;
-  local_4 = 0x3f800000;
-  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa48) = *(uint32_t *)(param_1 + 0x54);
-  *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x1044) = *(uint32_t *)(param_1 + 0x3c);
-  *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x103c) = *(uint32_t *)(param_1 + 0x40);
-  orig::sqgxColor_v1(&local_10);
-  orig::sqgxAmbient_v1(*(float *)(param_1 + 0x34));
-  orig::SqgxContext_SetFloat76C(*(float *)(param_1 + 0x38));
+  frame.u1 = 0x3f800000;
+  frame.u2 = 0x3f800000;
+  frame.u3 = 0x3f800000;
+  frame.u4 = 0x3f800000;
+  *(uint32_t *)(g_pSqgxContext_as_s32 + 0xa48) = *(uint32_t *)(arg1 + 0x54);
+  *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x1044) = *(uint32_t *)(arg1 + 0x3c);
+  *(uint32_t *)(*(int *)(g_pSqgxContext_as_s32 + 0xa48) + 0x103c) = *(uint32_t *)(arg1 + 0x40);
+  orig::sqgxColor_v1(&frame.u1);
+  orig::sqgxAmbient_v1(*(float *)(arg1 + 0x34));
+  orig::SqgxContext_SetFloat76C(*(float *)(arg1 + 0x38));
   orig::SqgxContext_SetDword774AndFactor(0,0.0f,0);
   orig::sqgxTextureDecal_v1(0);
-  orig::SqgxLighting_ApplyLighting(param_1 + 0x14);
-  if (*(int *)(param_1 + 0x50) == 0) {
+  orig::SqgxLighting_ApplyLighting(arg1 + 0x14);
+  if (*(int *)(arg1 + 0x50) == 0) {
     orig::sqgxShader_v2(2,0);
   }
   else {
-    orig::Texture_BindFromObject(*(int *)(param_1 + 0x50));
+    orig::Texture_BindFromObject(*(int *)(arg1 + 0x50));
     orig::sqgxTextureUpdate_v1();
     orig::sqgxShader_v2(6,0);
   }
-  orig::sqDrawableDraw_v1(*param_2);
+  orig::sqDrawableDraw_v1(*arg2);
   orig::sqgxBlendAdd(0x3f800000);
   orig::sqgxPass(2000);
   orig::sqgxShader_v2(0x2000000,0);
-  orig::sqDrawableDraw_v1(*param_2);
+  orig::sqDrawableDraw_v1(*arg2);
   orig::sqgxPass(0);
   orig::sqgxBlendOff_v1();
   orig::sqgxTextureDecal_v1(0);

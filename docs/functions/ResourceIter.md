@@ -29,7 +29,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `MoRes_FreeIfUnreferenced` calls `Resource_FindSelfLinkedNode`, `CMoResource_Destroy`
 - `ResourceIter_FindById` calls nothing directly
-- `ResourceIter_FindOrStartTask` calls `TaskAndTextArgs_FindTask`, `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `sub_10074A00`, `ResourceLoadTask_Start`
+- `ResourceIter_FindOrStartTask` calls `TaskAndTextArgs_FindTask`, `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `game_10074A00`, `ResourceLoadTask_Start`
 - `MeshResourceMng_Evict` calls `Resource_FindSelfLinkedNode`, `MoRes_FreeIfUnreferenced`
 - `ResourceIter_PopFreeNode` calls nothing directly
 - `MeshResourceMng_AllocHandle` calls nothing directly

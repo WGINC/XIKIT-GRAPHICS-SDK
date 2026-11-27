@@ -12,4 +12,4 @@ Group: `Font` (by the file name only). Source: `sdk/tree_src/FontGlyphs.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `FontGlyphs::FontGlyphs_DrawString` calls `Gfx_SetCellBlendMode`, `Gfx_SetAdditiveBlend`, `Font_BindGlyphTexture`, `Sjis_GetCharByteLen`, `Font_DecodeNextChar`, `Font_DrawChar`, `Font_AddGlyphAdvance`, `sub_10311C2C`
+- `FontGlyphs::FontGlyphs_DrawString` calls `Gfx_SetCellBlendMode`, `Gfx_SetAdditiveBlend`, `Font_BindGlyphTexture`, `Sjis_GetCharByteLen`, `Font_DecodeNextChar`, `Font_DrawChar`, `Font_AddGlyphAdvance`, `game_10311C2C`

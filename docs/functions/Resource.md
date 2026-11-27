@@ -16,7 +16,7 @@ Why the file has this name (data/unit_names.json): CMoResource::FindByTypeAndId 
 | `YmResourceFile_FindResourceUnder` | 0x100724C0 | 127 | yes | - | - | - |
 | `Resource_FindInChainByKind` | 0x10072540 | 127 | yes | - | Walks a node chain and returns the first callback result that is true for nodes of a kind. | medium |
 | `Resource_InitFieldsTakeFlag1047D12C` | 0x10072990 | 45 | yes | - | Clears two fields of a new resource and moves a pending flag from a global into bit 0 of its flags. | medium |
-| `Resource_ResetGlobals` | 0x100729C0 | 10 | no | - | Clears the resource globals at 0x1047D138 and runs 0x10072970 at scene start. | low |
+| `Resource_ResetGlobals` | 0x100729C0 | 10 | yes | - | Clears the resource globals at 0x1047D138 and runs 0x10072970 at scene start. | low |
 | `Resource_ClearGlobal1047D138` | 0x100729D0 | 11 | yes | - | Clears the global at 0x1047D138. | low |
 
 ## Direct calls

@@ -4,167 +4,169 @@
 
 // FUNCTION: FFXIMAIN 0x1006D0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(1))) CMoProcessorX87_SetIdentity(undefined4 xi_eax, undefined4 * param_1)
+XI_API bits32 __attribute__((stdcall, regparm(1))) CMoProcessorX87_SetIdentity(bits32 xi_eax, bits32 * arg2)
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  int i1;
+  int i2;
+  bits32 *p1;
   
-  iVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(1)));
-  if ((DAT_1047cdd8 & 1) == 0) {
-    DAT_1047cdd8 = DAT_1047cdd8 | 1;
-    DAT_1047caf0 = 0x3f800000;
-    DAT_1047caf4 = 0;
-    _DAT_1047caf8 = 0;
-    _DAT_1047cafc = 0;
-    _DAT_1047cb00 = 0;
-    _DAT_1047cb04 = 0x3f800000;
-    _DAT_1047cb08 = 0;
-    _DAT_1047cb0c = 0;
-    _DAT_1047cb10 = 0;
-    _DAT_1047cb14 = 0;
-    _DAT_1047cb18 = 0x3f800000;
-    _DAT_1047cb1c = 0;
-    _DAT_1047cb20 = 0;
-    _DAT_1047cb24 = 0;
-    _DAT_1047cb28 = 0;
-    _DAT_1047cb2c = 0x3f800000;
-    iVar1 = orig::_atexit_v1(&DAT_1006d180);
+  i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(1)));
+  if ((g_1047CDD8 & 1) == 0) {
+    g_1047CDD8 = g_1047CDD8 | 1;
+    g_1047CAF0 = 0x3f800000;
+    g_1047CAF4 = 0;
+    g_1047CAF8 = 0;
+    g_1047CAFC = 0;
+    g_1047CB00 = 0;
+    g_1047CB04 = 0x3f800000;
+    g_1047CB08 = 0;
+    g_1047CB0C = 0;
+    g_1047CB10 = 0;
+    g_1047CB14 = 0;
+    g_1047CB18 = 0x3f800000;
+    g_1047CB1C = 0;
+    g_1047CB20 = 0;
+    g_1047CB24 = 0;
+    g_1047CB28 = 0;
+    g_1047CB2C = 0x3f800000;
+    i1 = orig::_atexit_v1(&g_1006D180);
   }
-  puVar3 = &DAT_1047caf0;
-  for (iVar2 = 0x10; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *param_1 = *puVar3;
-    puVar3 = puVar3 + 1;
-    param_1 = param_1 + 1;
+  p1 = &g_1047CAF0;
+  for (i2 = 0x10; i2 != 0; i2 = i2 + -1) {
+    *arg2 = *p1;
+    p1 = p1 + 1;
+    arg2 = arg2 + 1;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D190
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall ProcessorMatrix_InvertMat4InPlace(float * param_1)
+XI_API void __stdcall ProcessorMatrix_InvertMat4InPlace(float * arg1)
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  float *pfVar8;
-  float *pfVar9;
-  uint8_t bVar10;
-  long double fVar11;
-  long double fVar12;
-  int iStack_10;
-  float *pfStack_c;
-  float *pfStack_8;
+  float f1;
+  int i1;
+  int i2;
+  float *p1;
+  float *p2;
+  float *p3;
+  float *p4;
+  float *p5;
+  float *p6;
+  uint8_t u1;
+  long double f2;
+  long double f3;
+  int i3;
+  float *p7;
+  float *p8;
   
-  iStack_10 = 0;
-  pfStack_8 = param_1;
-  pfStack_c = param_1;
-  pfVar8 = param_1;
+  i3 = 0;
+  p8 = arg1;
+  p7 = arg1;
+  p5 = arg1;
   do {
-    fVar11 = (long double)*pfStack_c;
-    bVar10 = NAN(fVar11) || NAN((long double)0.0f);
-    if (bVar10 != (bVar10 || fVar11 == (long double)0.0f)) {
-      fVar11 = (long double)xi_k4(0x3727C5ACull);
+    f2 = *p7;
+    u1 = ((f2) != (f2)) || ((0.0f) != (0.0f));
+    if (u1 != (u1 || f2 == 0.0f)) {
+      f2 = xi_k4(0x3727C5ACull);
     }
-    fVar11 = (long double)1.0f / fVar11;
-    iVar2 = 4;
-    pfVar5 = pfVar8;
+    f2 = 1.0f / f2;
+    i1 = 4;
+    p2 = p5;
     do {
-      pfVar6 = pfVar5 + 1;
-      iVar2 = iVar2 + -1;
-      *pfVar5 = (float)(fVar11 * (long double)*pfVar5);
-      pfVar5 = pfVar6;
-    } while (iVar2 != 0);
-    *pfStack_c = (float)fVar11;
-    iVar2 = 0;
-    pfVar5 = pfStack_8;
-    pfVar9 = param_1;
+      p3 = p2 + 1;
+      i1 = i1 + -1;
+      *p2 = (float)(f2 * *p2);
+      p2 = p3;
+    } while (i1 != 0);
+    *p7 = (float)f2;
+    i1 = 0;
+    p2 = p8;
+    p6 = arg1;
     do {
-      if (iVar2 != iStack_10) {
-        fVar1 = *pfVar5;
-        iVar3 = 0;
-        pfVar4 = pfVar9;
-        pfVar7 = pfVar8;
+      if (i1 != i3) {
+        f1 = *p2;
+        i2 = 0;
+        p1 = p6;
+        p4 = p5;
         do {
-          if (iVar3 == iStack_10) {
-            fVar12 = -((long double)fVar1 * fVar11);
+          if (i2 == i3) {
+            f3 = -(f1 * f2);
           }
           else {
-            fVar12 = (long double)*pfVar4 - (long double)fVar1 * (long double)*pfVar7;
+            f3 = *p1 - f1 * *p4;
           }
-          *pfVar4 = (float)fVar12;
-          iVar3 = iVar3 + 1;
-          pfVar7 = pfVar7 + 1;
-          pfVar4 = pfVar4 + 1;
-        } while (iVar3 < 4);
+          *p1 = (float)f3;
+          i2 = i2 + 1;
+          p4 = p4 + 1;
+          p1 = p1 + 1;
+        } while (i2 < 4);
       }
-      iVar2 = iVar2 + 1;
-      pfVar5 = pfVar5 + 4;
-      pfVar9 = pfVar9 + 4;
-    } while (iVar2 < 4);
-    iStack_10 = iStack_10 + 1;
-    pfStack_c = pfStack_c + 5;
-    pfStack_8 = pfStack_8 + 1;
-    pfVar8 = pfVar6;
-  } while (iStack_10 < 4);
+      i1 = i1 + 1;
+      p2 = p2 + 4;
+      p6 = p6 + 4;
+    } while (i1 < 4);
+    i3 = i3 + 1;
+    p7 = p7 + 5;
+    p8 = p8 + 1;
+    p5 = p3;
+  } while (i3 < 4);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D270
 // GATE: PASS -- 100 trials, 45 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 45
-XI_API void __stdcall ProcessorMatrix_MultiplyTo(float * param_1, int param_2, float * param_3)
+XI_API void __stdcall ProcessorMatrix_MultiplyTo(float * arg1, int arg2, float * arg3)
 {
-  float fVar1;
-  float fVar2;
-  float *pfVar3;
-  float *pfVar4;
-  int iVar5;
-  int iVar6;
-  float *pfVar7;
-  int iVar8;
-  float *pfVar9;
-  float *pfVar10;
-  long double fVar11;
-  char xi_frame[64] __attribute__((aligned(4)));
-  float  (&afStack_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 0);
+  float f1;
+  float f2;
+  float *p1;
+  float *p2;
+  int i1;
+  int i2;
+  float *p3;
+  int i3;
+  float *p4;
+  float *p5;
+  long double f3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { float f4[16]; };   // at 0x0
+  } frame;
   
-  iVar6 = param_2 - (int)afStack_40;
-  pfVar9 = afStack_40;
-  param_2 = 4;
+  i2 = arg2 - (int)frame.f4;
+  p4 = frame.f4;
+  arg2 = 4;
   do {
-    pfVar7 = (float *)(iVar6 + (int)pfVar9);
-    iVar8 = 4;
-    pfVar10 = param_3;
+    p3 = (float *)(i2 + (int)p4);
+    i3 = 4;
+    p5 = arg3;
     do {
-      fVar11 = (long double)0.0f;
-      *pfVar9 = 0.0f;
-      iVar5 = 4;
-      pfVar3 = pfVar10;
-      pfVar4 = pfVar7;
+      f3 = 0.0f;
+      *p4 = 0.0f;
+      i1 = 4;
+      p1 = p5;
+      p2 = p3;
       do {
-        fVar1 = *pfVar4;
-        fVar2 = *pfVar3;
-        pfVar3 = pfVar3 + 4;
-        pfVar4 = pfVar4 + 1;
-        iVar5 = iVar5 + -1;
-        fVar11 = (long double)fVar1 * (long double)fVar2 + fVar11;
-      } while (iVar5 != 0);
-      *pfVar9 = (float)fVar11;
-      pfVar9 = pfVar9 + 1;
-      pfVar10 = pfVar10 + 1;
-      iVar8 = iVar8 + -1;
-    } while (iVar8 != 0);
-    param_2 = param_2 + -1;
-  } while (param_2 != 0);
-  pfVar9 = afStack_40;
-  for (iVar6 = 0x10; iVar6 != 0; iVar6 = iVar6 + -1) {
-    *param_1 = *pfVar9;
-    pfVar9 = pfVar9 + 1;
-    param_1 = param_1 + 1;
+        f1 = *p2;
+        f2 = *p1;
+        p1 = p1 + 4;
+        p2 = p2 + 1;
+        i1 = i1 + -1;
+        f3 = f1 * f2 + f3;
+      } while (i1 != 0);
+      *p4 = (float)f3;
+      p4 = p4 + 1;
+      p5 = p5 + 1;
+      i3 = i3 + -1;
+    } while (i3 != 0);
+    arg2 = arg2 + -1;
+  } while (arg2 != 0);
+  p4 = frame.f4;
+  for (i2 = 0x10; i2 != 0; i2 = i2 + -1) {
+    *arg1 = *p4;
+    p4 = p4 + 1;
+    arg1 = arg1 + 1;
   }
   return;
 }

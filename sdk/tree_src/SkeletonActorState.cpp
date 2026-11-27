@@ -4,11 +4,11 @@
 
 // FUNCTION: FFXIMAIN 0x100D6F50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) SkeletonActorState_SetFlag8ACBit1(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) SkeletonActorState_SetFlag8ACBit1(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  uint8_t bVar1;
+  uint8_t u1;
   
-  bVar1 = *(uint8_t *)((int)self_ + 0x8ac);
-  *(uint8_t *)((int)self_ + 0x8ac) = ((char)param_2 * '\x02' ^ bVar1) & 2 ^ bVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(bVar1)));
+  u1 = *(uint8_t *)((int)self_ + 0x8ac);
+  *(uint8_t *)((int)self_ + 0x8ac) = ((char)arg4 * '\x02' ^ u1) & 2 ^ u1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(u1)));
 }

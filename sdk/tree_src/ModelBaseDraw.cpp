@@ -4,51 +4,55 @@
 
 // FUNCTION: FFXIMAIN 0x1002A780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ModelBaseDraw_ApplyToVec4(void * self_, undefined4 param_1, undefined4 * param_2)
+XI_API bits32 __thiscall ModelBaseDraw_ApplyToVec4(void * self_, bits32 arg2, bits32 * arg3)
 {
-  short *psVar1;
-  uint32_t uVar2;
-  char xi_frame[76] __attribute__((aligned(4)));
-  uint32_t  (&local_4c)[3] = *reinterpret_cast<uint32_t  (*)[3]>(xi_frame + 0);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 12);
+  short *p1;
+  uint32_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[76];
+    struct __attribute__((packed)) { uint32_t u2[3]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; uint8_t u3[64]; };   // at 0xC
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(local_40);
-  psVar1 = (short *)orig::Skel_GetRecordAt((void *)((int)self_ + 8),param_1);
-  uVar2 = 0;
-  if (psVar1 != (short *)0x0) {
-    orig::Mat4_SetIdentity_v1(local_40);
-    orig::Mat4_PostRotateX_v1(local_40,*(float *)(psVar1 + 1));
-    orig::Mat4_PostRotateY_v1(local_40,*(float *)(psVar1 + 3));
-    orig::Mat4_PostRotateZ_v1(local_40,*(float *)(psVar1 + 5));
-    orig::Part_CopyTranslation((int)psVar1,local_4c);
-    orig::Mat4_SetTranslation_v1(local_40,local_4c);
-    orig::Mat4_PostMultiply_v1(local_40,*psVar1 * 0x40 + *(int *)((int)self_ + 0x14));
-    uVar2 = orig::Mat4_TransformVec4InPlace_v1(local_40,param_2);
+  orig::MathVector_ReturnThis_v1(frame.u3);
+  p1 = (short *)orig::Skel_GetRecordAt((void *)((int)self_ + 8),arg2);
+  u1 = 0;
+  if (p1 != (short *)0x0) {
+    orig::Mat4_SetIdentity_v1(frame.u3);
+    orig::Mat4_PostRotateX_v1(frame.u3,*(float *)(p1 + 1));
+    orig::Mat4_PostRotateY_v1(frame.u3,*(float *)(p1 + 3));
+    orig::Mat4_PostRotateZ_v1(frame.u3,*(float *)(p1 + 5));
+    orig::Part_CopyTranslation((int)p1,frame.u2);
+    orig::Mat4_SetTranslation_v1(frame.u3,frame.u2);
+    orig::Mat4_PostMultiply_v1(frame.u3,*p1 * 0x40 + *(int *)((int)self_ + 0x14));
+    u1 = orig::Mat4_TransformVec4InPlace_v1(frame.u3,arg3);
   }
   orig::MathVector_Nop();
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A890
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall Part_CopyTranslation(int param_1, undefined4 * param_2)
+XI_API void __stdcall Part_CopyTranslation(int arg1, bits32 * arg2)
 {
-  orig::Vec3_Copy_v1(param_2,(uint32_t *)(param_1 + 0xe));
+  orig::Vec3_Copy_v1(arg2,(uint32_t *)(arg1 + 0xe));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Part_AddTranslation(void * self_, int param_1, float * param_2)
+XI_API void __thiscall Part_AddTranslation(void * self_, int arg2, float * arg3)
 {
-  int iVar1;
-  char xi_frame[64] __attribute__((aligned(4)));
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 0);
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[64];
+    struct __attribute__((packed)) { uint8_t u1[64]; };   // at 0x0
+  } frame;
   
-  orig::MathVector_ReturnThis_v1(local_40);
-  iVar1 = orig::Skel_GetRecordAt((void *)((int)self_ + 8),param_1);
-  if (iVar1 != 0) {
-    orig::Vec3_AddInPlace_v1(param_2,(float *)(iVar1 + 0xe));
+  orig::MathVector_ReturnThis_v1(frame.u1);
+  i1 = orig::Skel_GetRecordAt((void *)((int)self_ + 8),arg2);
+  if (i1 != 0) {
+    orig::Vec3_AddInPlace_v1(arg3,(float *)(i1 + 0xe));
   }
   orig::MathVector_Nop();
   return;
@@ -56,93 +60,95 @@ XI_API void __thiscall Part_AddTranslation(void * self_, int param_1, float * pa
 
 // FUNCTION: FFXIMAIN 0x1002B140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall ModelBaseDraw_ClampPointToLocalEllipse(float * param_1, float * param_2, undefined4 * param_3, float * param_4)
+XI_API bits32 __stdcall ModelBaseDraw_ClampPointToLocalEllipse(float * arg1, float * arg2, bits32 * arg3, float * arg4)
 {
-  float fVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  long double fVar6;
-  long double fVar7;
-  long double fVar8;
-  long double fVar9;
-  unkbyte10 Var10;
-  char xi_frame[128] __attribute__((aligned(4)));
-  float  &local_80 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_7c = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_70 = *reinterpret_cast<float  *>(xi_frame + 16);
-  float  &local_6c = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_68 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  (&local_60)[24] = *reinterpret_cast<float  (*)[24]>(xi_frame + 32);
+  float f1;
+  uint32_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  long double f2;
+  long double f3;
+  long double f4;
+  long double f5;
+  long double f6;
+  long double f7;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[128];
+    struct __attribute__((packed)) { float f8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f9; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; float f10; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f11; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f12; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f13[24]; };   // at 0x20
+  } frame;
   
-  orig::MathVector_ReturnThis(local_60 + 8);
-  local_60[4] = 0.0f;
-  local_60[5] = 0.0f;
-  local_60[6] = 0.0f;
-  local_60[7] = 1.0f;
-  local_60[0] = 0.0f;
-  local_60[1] = 1.0f;
-  local_60[2] = 0.0f;
-  local_60[3] = 1.0f;
-  orig::FUN_102d8141(local_60 + 8,local_60 + 4,param_2,local_60);
-  orig::Mat4_TransformNormal_v2(local_60 + 8,&local_70,(float *)param_3);
-  orig::Vec3_ScaleInPlace(&local_70,2.0f);
-  fVar5 = (long double)*param_4;
-  bVar4 = NAN(fVar5) || NAN((long double)0.0f);
-  local_80 = param_4[1];
-  if (bVar4 != (bVar4 || fVar5 == (long double)0.0f)) {
-    fVar5 = (long double)0.001000000047497451305389404296875f;
+  orig::MathVector_ReturnThis(frame.f13 + 8);
+  frame.f13[4] = 0.0f;
+  frame.f13[5] = 0.0f;
+  frame.f13[6] = 0.0f;
+  frame.f13[7] = 1.0f;
+  frame.f13[0] = 0.0f;
+  frame.f13[1] = 1.0f;
+  frame.f13[2] = 0.0f;
+  frame.f13[3] = 1.0f;
+  orig::game_102D8141(frame.f13 + 8,frame.f13 + 4,arg2,frame.f13);
+  orig::Mat4_TransformNormal_v2(frame.f13 + 8,&frame.f10,(float *)arg3);
+  orig::Vec3_ScaleInPlace(&frame.f10,2.0f);
+  f2 = *arg4;
+  u3 = ((f2) != (f2)) || ((0.0f) != (0.0f));
+  frame.f8 = arg4[1];
+  if (u3 != (u3 || f2 == 0.0f)) {
+    f2 = 0.001000000047497451305389404296875f;
   }
-  bVar4 = NAN((long double)local_80) || NAN((long double)0.0f);
-  if (bVar4 != (bVar4 || (long double)local_80 == (long double)0.0f)) {
-    local_80 = 0.001000000047497451305389404296875f;
+  u3 = ((frame.f8) != (frame.f8)) || ((0.0f) != (0.0f));
+  if (u3 != (u3 || frame.f8 == 0.0f)) {
+    frame.f8 = 0.001000000047497451305389404296875f;
   }
-  if (!(fVar5 > (long double)local_80)) {
-    fVar6 = (long double)local_80;
-    local_7c = (float)((long double)local_80 / fVar5);
-    local_70 = (float)((long double)local_70 * (long double)local_7c);
-  }
-  else {
-    local_7c = (float)(fVar5 / (long double)local_80);
-    local_6c = (float)((long double)local_6c * (long double)local_7c);
-    fVar6 = fVar5;
-  }
-  fVar7 = (long double)local_68;
-  fVar8 = (long double)0.0f;
-  if (!(fVar7 <= fVar8)) {
-    fVar8 = ((long double)1.0f / (long double)local_68) * (long double)param_4[2] * (long double)local_70;
-    fVar7 = (long double)(float)((long double)1.0f / (long double)local_68) * (long double)param_4[2] *
-            (long double)local_6c;
+  if (!(f2 > frame.f8)) {
+    f3 = frame.f8;
+    frame.f9 = (float)(frame.f8 / f2);
+    frame.f10 = (float)(frame.f10 * frame.f9);
   }
   else {
-    fVar8 = (long double)local_70 * (long double)param_4[2] * (long double)1e+02f;
-    fVar7 = (long double)local_6c * (long double)param_4[2] * (long double)1e+02f;
+    frame.f9 = (float)(f2 / frame.f8);
+    frame.f11 = (float)(frame.f11 * frame.f9);
+    f3 = f2;
   }
-  fVar9 = SQRT(fVar8 * fVar8 + fVar7 * fVar7);
-  if (fVar9 > fVar6) {
-    Var10 = fpatan(fVar7,fVar8);
-    fVar8 = xi_castbits<long double>(fcos(Var10));
-    *param_1 = (float)(fVar8 * fVar6);
-    fVar7 = xi_castbits<long double>(fsin(Var10));
-    param_1[1] = (float)(fVar7 * fVar6);
-    fVar1 = param_4[2];
-    param_1[3] = 1.0f;
-    param_1[2] = fVar1;
-    if (!(fVar5 > (long double)local_80)) {
-      *param_1 = (float)((long double)(float)(fVar8 * fVar6) / (long double)local_7c);
+  f4 = frame.f12;
+  f5 = 0.0f;
+  if (!(f4 <= f5)) {
+    f5 = (1.0f / frame.f12) * arg4[2] * frame.f10;
+    f4 = (float)(1.0f / frame.f12) * arg4[2] *
+            frame.f11;
+  }
+  else {
+    f5 = frame.f10 * arg4[2] * 1e+02f;
+    f4 = frame.f11 * arg4[2] * 1e+02f;
+  }
+  f6 = x87_fsqrt(f5 * f5 + f4 * f4);
+  if (f6 > f3) {
+    f7 = x87_fpatan(f4,f5);
+    f5 = bit_cast<long double>(x87_fcos(f7));
+    *arg1 = (float)(f5 * f3);
+    f4 = bit_cast<long double>(x87_fsin(f7));
+    arg1[1] = (float)(f4 * f3);
+    f1 = arg4[2];
+    arg1[3] = 1.0f;
+    arg1[2] = f1;
+    if (!(f2 > frame.f8)) {
+      *arg1 = (float)((float)(f5 * f3) / frame.f9);
     }
     else {
-      param_1[1] = (float)((long double)(float)(fVar7 * fVar6) / (long double)local_7c);
+      arg1[1] = (float)((float)(f4 * f3) / frame.f9);
     }
-    orig::Mat4_InvertOrthonormal_v2(local_60 + 8);
-    uVar2 = orig::Mat4_TransformNormalInPlace_v1(local_60 + 8,param_1);
-    uVar2 = orig::FUN_100274b0(param_1,uVar2);
+    orig::Mat4_InvertOrthonormal_v2(frame.f13 + 8);
+    u1 = orig::Mat4_TransformNormalInPlace_v1(frame.f13 + 8,arg1);
+    u1 = orig::game_100274B0(arg1,u1);
     orig::MathVector_Nop();
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar3 = orig::Vec3_Copy_v1(param_1,param_3);
-  param_1[3] = 1.0f;
+  u2 = orig::Vec3_Copy_v1(arg1,arg3);
+  arg1[3] = 1.0f;
   orig::MathVector_Nop();
-  return uVar3 & 0xffffff00;
+  return u2 & 0xffffff00;
 }

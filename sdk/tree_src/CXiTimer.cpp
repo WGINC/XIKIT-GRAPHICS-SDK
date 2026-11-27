@@ -6,7 +6,7 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall CXiTimer_Constructor(void * self_)
 {
-  *(uint8_t ***)self_ = &PTR_CXiTimer_GetRuntimeClass_variant0_1032a08c;
+  *(uint8_t ***)self_ = &ptr_to_CXiTimer_GetRuntimeClass_variant0_1032A08C;
   *(uint32_t *)((int)self_ + 4) = 0x3f800000;
   *(uint32_t *)((int)self_ + 8) = 0x3f800000;
   return;
@@ -16,5 +16,5 @@ XI_API void __thiscall CXiTimer_Constructor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall CXiTimer_GetFloat08(void * self_)
 {
-  return (long double)*(float *)((int)self_ + 8);
+  return *(float *)((int)self_ + 8);
 }

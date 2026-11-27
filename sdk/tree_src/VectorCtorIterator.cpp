@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x10001070
 // GATE: PASS -- 100 trials, 33 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 33
-XI_API undefined4 __stdcall VectorCtorIterator_CallForEachElement(undefined4 param_1, undefined4 param_2, int param_3, uint8_t * param_4)
+XI_API bits32 __stdcall VectorCtorIterator_CallForEachElement(bits32 arg1, bits32 arg2, int arg3, uint8_t * arg4)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = param_3 + -1;
-  if (-1 < iVar1) {
+  i1 = arg3 + -1;
+  if (-1 < i1) {
     do {
-      iVar1 = (*(code *)param_4)();
-      param_3 = param_3 + -1;
-    } while (param_3 != 0);
+      i1 = (*(untyped_fn *)arg4)();
+      arg3 = arg3 + -1;
+    } while (arg3 != 0);
   }
-  return iVar1;
+  return i1;
 }

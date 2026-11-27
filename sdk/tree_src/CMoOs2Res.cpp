@@ -5,69 +5,69 @@
 
 // FUNCTION: FFXIMAIN 0x1002D7F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoOs2Res::CheckVersionAndInit(void * self)
+bits32 __thiscall CMoOs2Res::CheckVersionAndInit(void * self)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  void *pvVar4;
+  uint8_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  void *p1;
   
   if ((*(char *)((int)self + 0x30) != '\0') && (*(char *)((int)self + 0x30) != '\x01')) {
-    pvVar4 = self;
+    p1 = self;
     orig::nullsub_90_v1();
-    bVar1 = *(uint8_t *)((int)self + 0x30);
-    orig::ErrorReport_NoOpVarargsA_v1(s_Os2_Version_Error__d__10351654,(uint32_t)bVar1,pvVar4);
-    return (uint32_t)bVar1;
+    u1 = *(uint8_t *)((int)self + 0x30);
+    orig::ErrorReport_NoOpVarargsA_v1(str_Os2_Version_Error__d__10351654,(uint32_t)u1,p1);
+    return (uint32_t)u1;
   }
-  uVar2 = (uint32_t)*(uint8_t *)((int)self + 0x31);
+  u2 = (uint32_t)*(uint8_t *)((int)self + 0x31);
   if (*(uint8_t *)((int)self + 0x31) == 0) {
     if ((*(uint8_t *)((int)self + 0x32) & 0x7f) == 0) {
       *(uint32_t *)((int)self + 0x5e) = 0;
-      uVar2 = orig::Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer(self);
+      u2 = orig::Os2VtxBuffer_FixOffsetsAndCreateVtxBuffer(self);
     }
     else {
-      uVar2 = (*(uint8_t *)((int)self + 0x32) & 0x7f) - 1;
-      if (uVar2 == 0) {
-        uVar3 = orig::FUN_10022470(self);
+      u2 = (*(uint8_t *)((int)self + 0x32) & 0x7f) - 1;
+      if (u2 == 0) {
+        u3 = orig::game_10022470(self);
         *(uint8_t *)((int)self + 0x31) = 1;
-        return uVar3;
+        return u3;
       }
     }
     *(uint8_t *)((int)self + 0x31) = 1;
   }
-  return uVar2;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x1002D880
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoOs2Res::Slot4PointersToWordOffsets(int a2)
+int CMoOs2Res::Slot4PointersToWordOffsets(int arg1)
 {
-  unsigned int v2;
-  unsigned int v3;
-  unsigned int v4;
-  unsigned int v5;
-  unsigned int v6;
-  v2 = (this->field_3C - (unsigned int)this - 48) >> 1;
+  unsigned int u1;
+  unsigned int u2;
+  unsigned int u3;
+  unsigned int u4;
+  unsigned int u5;
+  u1 = (this->field_3C - (unsigned int)this - 48) >> 1;
   this->field_36 = (this->field_36 - (unsigned int)this - 48) >> 1;
-  v3 = this->field_42;
-  this->field_3C = v2;
-  v4 = (this->field_48 - (unsigned int)this - 48) >> 1;
-  this->field_42 = (v3 - (unsigned int)this - 48) >> 1;
-  v5 = this->field_4E;
-  this->field_48 = v4;
-  v6 = (this->field_54 - (unsigned int)this - 48) >> 1;
-  this->field_4E = (v5 - (unsigned int)this - 48) >> 1;
-  this->field_54 = v6;
-  *(_DWORD *)(*(unsigned __int32 *)((char *)this + 0x14)) = a2;
-  return a2;
+  u2 = this->field_42;
+  this->field_3C = u1;
+  u3 = (this->field_48 - (unsigned int)this - 48) >> 1;
+  this->field_42 = (u2 - (unsigned int)this - 48) >> 1;
+  u4 = this->field_4E;
+  this->field_48 = u3;
+  u5 = (this->field_54 - (unsigned int)this - 48) >> 1;
+  this->field_4E = (u4 - (unsigned int)this - 48) >> 1;
+  this->field_54 = u5;
+  *(uint32_t *)(*(unsigned int *)((char *)this + 0x14)) = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10071A80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoOs2Res::ScalarDeletingDtor(char a2)
+unsigned int ** CMoOs2Res::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

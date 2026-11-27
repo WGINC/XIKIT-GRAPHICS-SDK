@@ -6,11 +6,11 @@
 class XI_API CXiControlActor {
 public:
     static unsigned char __thiscall AmIControlActor(void * self);  // 0x100A4640
-    static void __thiscall FillHistory(void * self, undefined4 * param_1);  // 0x100A5770
+    static void __thiscall FillHistory(void * self, bits32 * arg2);  // 0x100A5770
     static void * __thiscall Constructor(void * self);  // 0x100A89E0
-    static long double __stdcall GetSpeed(int * param_1);  // 0x100AAEF0
-    static void __thiscall Slot137_Set388(void * self, int * param_1);  // 0x100AAF50
-    static void __thiscall Slot138_Scan3F0(void * self, undefined4 * param_1);  // 0x100AAF70
+    static long double __stdcall GetSpeed(int * arg1);  // 0x100AAEF0
+    static void __thiscall Slot137_Set388(void * self, int * arg2);  // 0x100AAF50
+    static void __thiscall Slot138_Scan3F0(void * self, bits32 * arg2);  // 0x100AAF70
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x16C];

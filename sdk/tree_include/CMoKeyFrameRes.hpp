@@ -7,7 +7,7 @@ class XI_API CMoKeyFrameRes {
 public:
     void SetupNop();  // 0x10054480
     void Slot9Nop();  // 0x10054490
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071C40
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071C40
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2C];

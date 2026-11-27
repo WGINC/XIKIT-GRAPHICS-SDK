@@ -21,35 +21,35 @@ char ** __cdecl CMoDist::GetRuntimeClass_variant1()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoDist::Init(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoDist_GetRuntimeClass_variant0_1032b298;
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoDist_GetRuntimeClass_variant0_1032B298;
   *(uint16_t *)((int)self + 0x176) = 0x198;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10052D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoDist::IsKind1(int a1)
+BOOL CMoDist::IsKind1(int arg1)
 {
-  return a1 == 1;
+  return arg1 == 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10052D70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoDist::set_field_194(int a2)
+int CMoDist::set_field_194(int arg1)
 {
-  this->field_194 = a2;
-  return a2;
+  this->field_194 = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10052D80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDist::ScalarDeletingDtor(char a2)
+int * CMoDist::ScalarDeletingDtor(char arg1)
 {
   orig::CMoElemFamily_SharedCleanup((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

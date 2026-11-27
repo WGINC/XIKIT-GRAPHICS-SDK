@@ -14,22 +14,22 @@ char ** __cdecl CMoVuDist::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoVuDist::Construct(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
+  u1 = orig::CMoElem_Constructor(self);
   *(uint32_t *)((int)self + 0x19c) = 0;
   *(uint32_t *)((int)self + 0x1d8) = 0;
   *(uint16_t *)((int)self + 0x1de) = 0;
-  *(uint8_t ***)self = &PTR_CMoVuDist_GetRuntimeClass_1032b2f8;
+  *(uint8_t ***)self = &ptr_to_CMoVuDist_GetRuntimeClass_1032B2F8;
   *(uint16_t *)((int)self + 0x176) = 0x1e0;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10052DD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoVuDist::IsKind10(int a1)
+BOOL CMoVuDist::IsKind10(int arg1)
 {
-  return a1 == 10;
+  return arg1 == 10;
 }
 
 // FUNCTION: FFXIMAIN 0x10052DE0
@@ -41,11 +41,11 @@ int CMoVuDist::Slot8CallSlot10()
 
 // FUNCTION: FFXIMAIN 0x10052DF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoVuDist::ScalarDeletingDtor(char a2)
+int * CMoVuDist::ScalarDeletingDtor(char arg1)
 {
   orig::MoProgElem_FreeBuffer40((int *)&this->programBuffer);
   orig::CMoElemFamily_SharedCleanup((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

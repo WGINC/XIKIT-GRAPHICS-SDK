@@ -4,157 +4,157 @@
 
 // FUNCTION: FFXIMAIN 0x100569D0
 // GATE: PASS -- 100 trials, 19 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 19
-XI_API undefined4 __thiscall CMoResource_CopyHeaderAndBodyThenReset(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall CMoResource_CopyHeaderAndBodyThenReset(void * self_, bits32 * arg2)
 {
-  undefined4 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  bits32 u1;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
   
-  *(undefined4 *)((int)self_ + 0x20) = *param_1;
-  *(undefined4 *)((int)self_ + 0x24) = param_1[1];
-  *(undefined4 *)((int)self_ + 0x28) = param_1[2];
-  *(undefined4 *)((int)self_ + 0x2c) = param_1[3];
-  *(undefined4 *)((int)self_ + 0x34) = param_1[4];
-  *(undefined4 *)((int)self_ + 0x38) = param_1[5];
-  *(undefined4 *)((int)self_ + 0x3c) = param_1[6];
-  *(undefined4 *)((int)self_ + 0x40) = param_1[7];
-  puVar3 = param_1 + 8;
-  puVar4 = (undefined4 *)((int)self_ + 0x70);
-  for (iVar2 = (((uint32_t)param_1[1] >> 7 & 0x7ffff) - 2 & 0xfffffff) << 2; iVar2 != 0;
-      iVar2 = iVar2 + -1) {
-    *puVar4 = *puVar3;
-    puVar3 = puVar3 + 1;
-    puVar4 = puVar4 + 1;
+  *(bits32 *)((int)self_ + 0x20) = *arg2;
+  *(bits32 *)((int)self_ + 0x24) = arg2[1];
+  *(bits32 *)((int)self_ + 0x28) = arg2[2];
+  *(bits32 *)((int)self_ + 0x2c) = arg2[3];
+  *(bits32 *)((int)self_ + 0x34) = arg2[4];
+  *(bits32 *)((int)self_ + 0x38) = arg2[5];
+  *(bits32 *)((int)self_ + 0x3c) = arg2[6];
+  *(bits32 *)((int)self_ + 0x40) = arg2[7];
+  p1 = arg2 + 8;
+  p2 = (bits32 *)((int)self_ + 0x70);
+  for (i1 = (((uint32_t)arg2[1] >> 7 & 0x7ffff) - 2 & 0xfffffff) << 2; i1 != 0;
+      i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  for (iVar2 = 0; iVar2 != 0; iVar2 = iVar2 + -1) {
-    *(uint8_t *)puVar4 = *(uint8_t *)puVar3;
-    puVar3 = (undefined4 *)((int)puVar3 + 1);
-    puVar4 = (undefined4 *)((int)puVar4 + 1);
+  for (i1 = 0; i1 != 0; i1 = i1 + -1) {
+    *(uint8_t *)p2 = *(uint8_t *)p1;
+    p1 = (bits32 *)((int)p1 + 1);
+    p2 = (bits32 *)((int)p2 + 1);
   }
-  uVar1 = orig::CMoAttachments_Reset_v1((void *)((int)self_ + 0x30));
-  return uVar1;
+  u1 = orig::CMoAttachments_Reset_v1((void *)((int)self_ + 0x30));
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10056AA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Scheduler_AddTask(void * self_)
 {
-  orig::CMoTaskMng_RemoveByKey(dword_1047D140_as_v1,(int)self_,0x4d730000);
-  orig::FUN_100720b0(self_);
+  orig::CMoTaskMng_RemoveByKey(g_1047D140_as_v1,(int)self_,0x4d730000);
+  orig::game_100720B0(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10056CE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Scheduler_CreateTask(void * self_, int param_1, int param_2, undefined4 param_3, undefined4 param_4)
+XI_API int __thiscall Scheduler_CreateTask(void * self_, int arg2, int arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 uVar1;
-  undefined4 *this_00;
-  void *this_01;
+  bits32 u1;
+  bits32 *obj1;
+  void *obj2;
   
-  this_00 = orig::Mem_AllocFromArea_v2(0x14a,4,0);
-  orig::CMoTask_ResetFields_v1(this_00);
+  obj1 = orig::Mem_AllocFromArea_v2(0x14a,4,0);
+  orig::CMoTask_ResetFields_v1(obj1);
   g_resourcesDirty_as_v0 = 1;
-  if (this_00 == (undefined4 *)0x0) {
-    this_01 = (void *)0x0;
+  if (obj1 == (bits32 *)0x0) {
+    obj2 = (void *)0x0;
   }
   else {
-    this_01 = orig::CMoSchedularTask_Construct(this_00,self_,param_4,param_3);
+    obj2 = orig::CMoSchedularTask_Construct(obj1,self_,arg5,arg4);
   }
-  uVar1 = *(undefined4 *)((int)self_ + 0x74);
-  *(undefined4 *)((int)this_01 + 0x8c) = uVar1;
-  *(undefined4 *)((int)this_01 + 0x88) = uVar1;
-  if ((param_1 == 0) || (*(int *)(param_1 + 0x70) == 0)) {
-    *(undefined4 *)((int)this_01 + 0x18) = 0;
+  u1 = *(bits32 *)((int)self_ + 0x74);
+  *(bits32 *)((int)obj2 + 0x8c) = u1;
+  *(bits32 *)((int)obj2 + 0x88) = u1;
+  if ((arg2 == 0) || (*(int *)(arg2 + 0x70) == 0)) {
+    *(bits32 *)((int)obj2 + 0x18) = 0;
   }
   else {
-    *(undefined4 *)((int)this_01 + 0x18) = *(undefined4 *)(*(int *)(param_1 + 0x70) + 0x78);
+    *(bits32 *)((int)obj2 + 0x18) = *(bits32 *)(*(int *)(arg2 + 0x70) + 0x78);
   }
-  *(undefined4 *)((int)this_01 + 0x1c) = 0x4d730000;
-  if (param_1 != 0) {
-    orig::AfterimageTask_SetCaster(this_01,param_1);
+  *(bits32 *)((int)obj2 + 0x1c) = 0x4d730000;
+  if (arg2 != 0) {
+    orig::AfterimageTask_SetCaster(obj2,arg2);
   }
-  if (param_2 != 0) {
-    orig::AfterimageTask_SetTarget(this_01,param_2);
+  if (arg3 != 0) {
+    orig::AfterimageTask_SetTarget(obj2,arg3);
   }
-  *(undefined4 *)((int)this_01 + 0x94) = 0;
-  *(undefined4 *)((int)this_01 + 0x98) = 0;
-  return (int)this_01;
+  *(bits32 *)((int)obj2 + 0x94) = 0;
+  *(bits32 *)((int)obj2 + 0x98) = 0;
+  return (int)obj2;
 }
 
 // FUNCTION: FFXIMAIN 0x10056EB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Scheduler_RemoveTasksFor(void * self_)
 {
-  void *pvVar1;
-  void *this_00;
+  void *p1;
+  void *obj1;
   
-LAB_10056eb9:
-  this_00 = *(void **)(dword_1047D140 + 0xd50);
+code_10056EB9:
+  obj1 = *(void **)(g_1047D140 + 0xd50);
   do {
-    if (this_00 == (void *)0x0) {
+    if (obj1 == (void *)0x0) {
       return;
     }
-    if (*(int *)((int)this_00 + 0x1c) == 0x4d730000) {
-      if (*(int **)((int)this_00 + 0x80) == (int *)0x0) {
-        pvVar1 = (void *)0x0;
+    if (*(int *)((int)obj1 + 0x1c) == 0x4d730000) {
+      if (*(int **)((int)obj1 + 0x80) == (int *)0x0) {
+        p1 = (void *)0x0;
       }
       else {
-        pvVar1 = (void *)**(int **)((int)this_00 + 0x80);
+        p1 = (void *)**(int **)((int)obj1 + 0x80);
       }
-      if (pvVar1 == self_) break;
+      if (p1 == self_) break;
     }
-    this_00 = *(void **)((int)this_00 + 0xc);
+    obj1 = *(void **)((int)obj1 + 0xc);
   } while( true );
-  orig::CMoTask_Release(this_00);
-  goto LAB_10056eb9;
+  orig::CMoTask_Release(obj1);
+  goto code_10056EB9;
 }
 
 // FUNCTION: FFXIMAIN 0x10056EF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Scheduler_Kill(void * self_, int param_1, int param_2)
+XI_API bits32 __thiscall Scheduler_Kill(void * self_, int arg2, int arg3)
 {
-  int *this_00;
-  int iVar1;
+  int *obj1;
+  int i1;
   
   do {
-    this_00 = *(int **)(dword_1047D140 + 0xd50);
-    iVar1 = dword_1047D140;
+    obj1 = *(int **)(g_1047D140 + 0xd50);
+    i1 = g_1047D140;
     while( true ) {
-      if (this_00 == (int *)0x0) {
-        return iVar1;
+      if (obj1 == (int *)0x0) {
+        return i1;
       }
-      if ((((param_1 == 0) || (this_00[6] == *(int *)(*(int *)(param_1 + 0x70) + 0x78))) &&
-          (this_00[7] == 0x4d730000)) &&
-         (((iVar1 = *(int *)((int)self_ + 0x14), this_00[0x20] == iVar1 &&
-           (iVar1 = orig::AfterimageTask_FindFirstKind(this_00), iVar1 == param_1)) &&
-          (iVar1 = orig::Scheduler_ResolveOwner(this_00), iVar1 == param_2)))) break;
-      this_00 = (int *)this_00[3];
+      if ((((arg2 == 0) || (obj1[6] == *(int *)(*(int *)(arg2 + 0x70) + 0x78))) &&
+          (obj1[7] == 0x4d730000)) &&
+         (((i1 = *(int *)((int)self_ + 0x14), obj1[0x20] == i1 &&
+           (i1 = orig::AfterimageTask_FindFirstKind(obj1), i1 == arg2)) &&
+          (i1 = orig::Scheduler_ResolveOwner(obj1), i1 == arg3)))) break;
+      obj1 = (int *)obj1[3];
     }
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10057010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Scheduler_IsMoving(void * self_, int param_1, int param_2)
+XI_API bits32 __thiscall Scheduler_IsMoving(void * self_, int arg2, int arg3)
 {
-  void *this_00;
-  uint32_t uVar1;
+  void *obj1;
+  uint32_t u1;
   
-  this_00 = *(void **)(dword_1047D140_as_v2 + 0xd50);
-  uVar1 = dword_1047D140_as_v2;
+  obj1 = *(void **)(g_1047D140_as_v2 + 0xd50);
+  u1 = g_1047D140_as_v2;
   while( true ) {
-    if (this_00 == (void *)0x0) {
-      return uVar1 & 0xffffff00;
+    if (obj1 == (void *)0x0) {
+      return u1 & 0xffffff00;
     }
-    if ((((*(int *)((int)this_00 + 0x18) == *(int *)(*(int *)(param_1 + 0x70) + 0x78)) &&
-         (*(int *)((int)this_00 + 0x1c) == 0x4d730000)) &&
-        (uVar1 = *(uint32_t *)((int)self_ + 0x14), *(uint32_t *)((int)this_00 + 0x80) == uVar1)) &&
-       ((uVar1 = orig::AfterimageTask_FindFirstKind(this_00), uVar1 == param_1 &&
-        (uVar1 = orig::Scheduler_ResolveOwner(this_00), uVar1 == param_2)))) break;
-    this_00 = *(void **)((int)this_00 + 0xc);
+    if ((((*(int *)((int)obj1 + 0x18) == *(int *)(*(int *)(arg2 + 0x70) + 0x78)) &&
+         (*(int *)((int)obj1 + 0x1c) == 0x4d730000)) &&
+        (u1 = *(uint32_t *)((int)self_ + 0x14), *(uint32_t *)((int)obj1 + 0x80) == u1)) &&
+       ((u1 = orig::AfterimageTask_FindFirstKind(obj1), u1 == arg2 &&
+        (u1 = orig::Scheduler_ResolveOwner(obj1), u1 == arg3)))) break;
+    obj1 = *(void **)((int)obj1 + 0xc);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }

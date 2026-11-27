@@ -28,4 +28,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Model_TranslucentUnbindTexture` calls `CDx::SetTexture`
 - `ModelTranslucent_SetColorForce` calls nothing directly
 - `Model_CompositeTranslucentPass` calls `CDx::GetRenderTargetTop`, `CEnv::IsStereoMode`, `CDx::DrawPrimitiveUP`, `CDx::PushRenderTarget`, `CDx::SetTexture`
-- `TexRes_LoadBm2` calls `sub_10017D50`, `ErrorReport_NoOpVarargsA`, `Util_Copy16Bytes`, `TexMgr_FindByName`, `Mem_AllocDefault`, `TexObj_Constructor`, `sub_1001D8E0`, `TexMgr_Enqueue`, `sub_10071F50`, `TexObj_CreateAndUpload`
+- `TexRes_LoadBm2` calls `game_10017D50`, `ErrorReport_NoOpVarargsA`, `Util_Copy16Bytes`, `TexMgr_FindByName`, `Mem_AllocDefault`, `TexObj_Constructor`, `game_1001D8E0`, `TexMgr_Enqueue`, `game_10071F50`, `TexObj_CreateAndUpload`

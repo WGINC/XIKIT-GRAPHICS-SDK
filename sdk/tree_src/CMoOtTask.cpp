@@ -28,14 +28,14 @@ char ** __cdecl CMoOtTask::GetRuntimeClass_variant1()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoOtTask::Constructor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoTask_Constructor_v1(self);
+  u1 = orig::CMoTask_Constructor_v1(self);
   orig::LinkNode_Init_v1((void *)((int)self + 0x34));
   *(uint8_t ***)self = &CMoOtTask_vtbl_ambiguous1_as_v0;
-  *(uint8_t **)((int)self + 0x3c) =(uint8_t*)(&LAB_100555a0);
+  *(uint8_t **)((int)self + 0x3c) =(uint8_t*)(&code_100555A0);
   *(void **)((int)self + 0x40) = self;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }
 
 // FUNCTION: FFXIMAIN 0x10055640

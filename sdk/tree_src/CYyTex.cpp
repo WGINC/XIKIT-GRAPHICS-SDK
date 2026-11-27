@@ -5,31 +5,31 @@
 
 // FUNCTION: FFXIMAIN 0x10039790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_UNKNOWN ** __cdecl CYyTex::GetRuntimeClass()
+uint8_t ** __cdecl CYyTex::GetRuntimeClass()
 {
   return &CYyTex_classdesc;
 }
 
 // FUNCTION: FFXIMAIN 0x10039920
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall TexObj_Constructor(void * self_)
+XI_API bits32 __thiscall TexObj_Constructor(void * self_)
 {
   orig::CYyTexBase_Constructor(self_);
-  *(uint8_t ***)self_ = &PTR_CYyTex_GetRuntimeClass_1032aa68;
+  *(uint8_t ***)self_ = &ptr_to_CYyTex_GetRuntimeClass_1032AA68;
   *(uint32_t *)((int)self_ + 0x38) = 0;
   *(uint32_t *)((int)self_ + 0x3c) = 0;
   *(uint32_t *)((int)self_ + 0x40) = 0;
   *(uint32_t *)((int)self_ + 0x44) = 0;
-  *(uint32_t *)((int)self_ + 0x34) = DAT_1047b968;
+  *(uint32_t *)((int)self_ + 0x34) = g_1047B968;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10039950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CYyTex::ScalarDeletingDtor(char a2)
+uint32_t * CYyTex::ScalarDeletingDtor(char arg1)
 {
   orig::CYyTex_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CYyTexBase_vtbl * *)&this->vftable));
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CYyTexBase_vtbl * *)&this->vftable));
 }

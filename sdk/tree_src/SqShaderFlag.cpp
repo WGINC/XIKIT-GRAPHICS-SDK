@@ -4,8 +4,8 @@
 
 // FUNCTION: FFXIMAIN 0x102778C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Shader_SetFlagBit0(int param_1, uint32_t param_2)
+XI_API void __cdecl Shader_SetFlagBit0(int arg1, uint32_t arg2)
 {
-  *(uint32_t *)(param_1 + 0x68) = *(uint32_t *)(param_1 + 0x68) & 0xfffffffe | param_2 & 0xff;
+  *(uint32_t *)(arg1 + 0x68) = *(uint32_t *)(arg1 + 0x68) & 0xfffffffe | arg2 & 0xff;
   return;
 }

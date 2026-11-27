@@ -6,10 +6,10 @@
 class XI_API CMoPathDriveActorTask {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x10056940
-    static undefined4 __thiscall Update(void * self);  // 0x1005E9C0
-    static undefined4 __thiscall ApplyFraction(void * self, undefined4 param_1);  // 0x1005EEF0
+    static bits32 __thiscall Update(void * self);  // 0x1005E9C0
+    static bits32 __thiscall ApplyFraction(void * self, bits32 arg2);  // 0x1005EEF0
     int Slot11CallGetRuntimeClass();  // 0x100630A0
-    int Slot12ThunkDeletingDtor(int a1);  // 0x100630B0
+    int Slot12ThunkDeletingDtor(int arg1);  // 0x100630B0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xAC];

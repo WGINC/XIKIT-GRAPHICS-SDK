@@ -6,29 +6,31 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl SqTimer_GetMicroseconds(void)
 {
-  int iVar1;
-  BOOL BVar2;
-  int64_t lVar3;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 0);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  int i1;
+  BOOL i2;
+  int64_t i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u1; };   // at 0x4
+  } frame;
   
-  if (DAT_103b27e8 != 0) {
-    BVar2 = QueryPerformanceFrequency((LARGE_INTEGER *)&DAT_1099cee0_as_v0);
-    if (BVar2 == 0) {
-      orig::sqDebugPrintf_v3(s_Warning_in__s__line__d__103b27fc,s_C__dev_dancer_modules_sqBase_src_103b2818,
+  if (g_103B27E8 != 0) {
+    i2 = QueryPerformanceFrequency((LARGE_INTEGER *)&g_1099CEE0_as_v0);
+    if (i2 == 0) {
+      orig::sqDebugPrintf_v3(str_Warning_in__s__line__d__103B27FC,str_C__dev_dancer_modules_sqBase_src_103B2818,
                    0xcd);
-      orig::sqDebugPrintf_v3(s_Timer_failed_103b27ec);
+      orig::sqDebugPrintf_v3(str_Timer_failed_103B27EC);
     }
-    QueryPerformanceCounter((LARGE_INTEGER *)&DAT_1099cee8);
-    DAT_103b27e8 = 0;
-    return DAT_1099cef0;
+    QueryPerformanceCounter((LARGE_INTEGER *)&g_1099CEE8);
+    g_103B27E8 = 0;
+    return g_1099CEF0;
   }
-  QueryPerformanceCounter(&local_8);
-  iVar1 = DAT_1099cee8;
-  DAT_1099cee8 = local_8;
-  _DAT_1099ceec = local_4;
-  lVar3 = XI_CALL_ST0(0x10311C2Cu)(((long double)1e+06f / (long double)DAT_1099cee0_as_v0) * (long double)(local_8 - iVar1));
-  DAT_1099cef0 = DAT_1099cef0 + (int)lVar3;
-  return DAT_1099cef0;
+  QueryPerformanceCounter(&frame.i4);
+  i1 = g_1099CEE8;
+  g_1099CEE8 = frame.i4;
+  g_1099CEEC = frame.u1;
+  i3 = XI_CALL_ST0(0x10311C2Cu)((1e+06f / g_1099CEE0_as_v0) * (frame.i4 - i1));
+  g_1099CEF0 = g_1099CEF0 + (int)i3;
+  return g_1099CEF0;
 }

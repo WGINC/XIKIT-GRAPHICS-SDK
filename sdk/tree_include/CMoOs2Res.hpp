@@ -5,9 +5,9 @@
 #pragma pack(push, 1)
 class XI_API CMoOs2Res {
 public:
-    static undefined4 __thiscall CheckVersionAndInit(void * self);  // 0x1002D7F0
-    int Slot4PointersToWordOffsets(int a2);  // 0x1002D880
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071A80
+    static bits32 __thiscall CheckVersionAndInit(void * self);  // 0x1002D7F0
+    int Slot4PointersToWordOffsets(int arg1);  // 0x1002D880
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071A80
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x32];

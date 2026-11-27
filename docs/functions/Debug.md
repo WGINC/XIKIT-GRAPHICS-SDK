@@ -20,6 +20,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `DebugOverlay_Draw` calls `DebugOverlay_Update`
 - `Debug_Construct` calls nothing directly
 - `DebugOverlay_Update` calls `InputDevices_DrawActorAxes`, `Debug_DrawTextTable`, `Allocator_Generic`, `DebugOverlay_SetEntry`
-- `DebugOverlay_SetEntry` calls `ErrorReport_NoOpVarargsA`, `sub_10312050`
+- `DebugOverlay_SetEntry` calls `ErrorReport_NoOpVarargsA`, `game_10312050`
 - `Debug_DrawTextTable` calls `Debug_DrawWorldText`
-- `Debug_DrawWorldText` calls `sub_10312150`, `MathVector_ReturnThis`, `ShapeMng::ShapeMng_BindFontTexture`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `CDx::SetTransform`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `ShapeMng_GetFontGlyph`, `Vec3_Scale`, `Vec3_Add_10026FA0`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`
+- `Debug_DrawWorldText` calls `game_10312150`, `MathVector_ReturnThis`, `ShapeMng::ShapeMng_BindFontTexture`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `CDx::SetTransform`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `ShapeMng_GetFontGlyph`, `Vec3_Scale`, `Vec3_Add_10026FA0`, `CDx::DrawPrimitiveUP`, `MathVector_Nop`

@@ -7,7 +7,7 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CYySkl::Construct(void * self)
 {
-  *(uint8_t ***)self = &PTR_CYySkl_GetRuntimeClass_1032a888;
+  *(uint8_t ***)self = &ptr_to_CYySkl_GetRuntimeClass_1032A888;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 8) = 0;
   *(uint32_t *)((int)self + 0xc) = 0;

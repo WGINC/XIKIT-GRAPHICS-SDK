@@ -4,21 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x102A1FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqsdPassTest_TestSeparationHalf(int param_1)
+XI_API bits32 __cdecl SqsdPassTest_TestSeparationHalf(int arg1)
 {
-  uint32_t uVar1;
-  long double fVar2;
-  char xi_frame[24] __attribute__((aligned(4)));
-  float  &local_18 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  (&local_c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 12);
+  uint32_t u1;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f5[3]; };   // at 0xC
+  } frame;
   
-  local_18 = (float)((long double)*(float *)(param_1 + 0x14) - (long double)*(float *)(param_1 + 0x20));
-  local_14 = (float)((long double)*(float *)(param_1 + 0x18) - (long double)*(float *)(param_1 + 0x24));
-  local_10 = (float)((long double)*(float *)(param_1 + 0x1c) - (long double)*(float *)(param_1 + 0x28));
-  fVar2 = orig::SqVec_Length(&local_18);
-  orig::SqBounds_GetCenter((float *)(param_1 + 0x14),local_c);
-  uVar1 = orig::SqgxContext_TestClipBounds(local_c,(float)(fVar2 * (long double)0.5f));
-  return uVar1;
+  frame.f2 = (float)(*(float *)(arg1 + 0x14) - *(float *)(arg1 + 0x20));
+  frame.f3 = (float)(*(float *)(arg1 + 0x18) - *(float *)(arg1 + 0x24));
+  frame.f4 = (float)(*(float *)(arg1 + 0x1c) - *(float *)(arg1 + 0x28));
+  f1 = orig::SqVec_Length(&frame.f2);
+  orig::SqBounds_GetCenter((float *)(arg1 + 0x14),frame.f5);
+  u1 = orig::SqgxContext_TestClipBounds(frame.f5,(float)(f1 * 0.5f));
+  return u1;
 }

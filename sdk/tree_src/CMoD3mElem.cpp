@@ -5,11 +5,11 @@
 
 // FUNCTION: FFXIMAIN 0x10041130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall CMoD3mElem_DeletingDtor(void * self_, undefined4 param_1)
+XI_API void * __thiscall CMoD3mElem_DeletingDtor(void * self_, bits32 arg2)
 {
-  *(uint8_t ***)self_ = &PTR_CMoElem_GetRuntimeClass_variant8_1032ad80;
+  *(uint8_t ***)self_ = &ptr_to_CMoElem_GetRuntimeClass_variant8_1032AD80;
   orig::CMoElemFamily_SharedCleanup_v1(self_);
-  if ((param_1 & 1) != 0) {
+  if ((arg2 & 1) != 0) {
     orig::SharedDeleteHelper_v1((int)self_);
   }
   return self_;
@@ -19,9 +19,9 @@ XI_API void * __thiscall CMoD3mElem_DeletingDtor(void * self_, undefined4 param_
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoD3mElem::Ctor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoElem_GetRuntimeClass_variant8_1032ad80;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoElem_GetRuntimeClass_variant8_1032AD80;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }

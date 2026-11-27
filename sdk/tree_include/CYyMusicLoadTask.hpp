@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CYyMusicLoadTask {
 public:
-    static undefined4 __cdecl StartTrack(int param_1);  // 0x100378B0
+    static bits32 __cdecl StartTrack(int arg1);  // 0x100378B0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x58];

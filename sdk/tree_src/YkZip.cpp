@@ -18,26 +18,26 @@ void * __thiscall YkZip::Construct(void * self)
   *(uint16_t *)((int)self + 0xe) = 0xffff;
   *(uint32_t *)((int)self + 8) = 0;
   *(uint8_t *)((int)self + 0xc) = 1;
-  *(uint8_t ***)self = &PTR_FUN_1033cb98;
+  *(uint8_t ***)self = &g_1033CB98;
   orig::LobbyThread_NoOp();
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x10244E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YkZip_SetGlobal2CTo31Or32(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YkZip_SetGlobal2CTo31Or32(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)param_2)));
-  if ((char)param_2 != '\0') {
-    uVar2 = 0x31;
-    iVar1 = *(short *)(*(int *)((int)self_ + 8) + 0x4c) + -2;
-    if (iVar1 == 0) {
-      uVar2 = 0x32;
+  i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((char)arg4)));
+  if ((char)arg4 != '\0') {
+    u1 = 0x31;
+    i1 = *(short *)(*(int *)((int)self_ + 8) + 0x4c) + -2;
+    if (i1 == 0) {
+      u1 = 0x32;
     }
-    *(uint32_t *)(DAT_10669078 + 0x2c) = uVar2;
+    *(uint32_t *)(g_10669078 + 0x2c) = u1;
   }
-  return iVar1;
+  return i1;
 }

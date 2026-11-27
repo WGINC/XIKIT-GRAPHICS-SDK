@@ -5,8 +5,8 @@
 #pragma pack(push, 1)
 class XI_API ShapeMng {
 public:
-    char ShapeMng_BindFontTexture(int a2, _DWORD *a3, _DWORD *a4);  // 0x10120590
-    char ShapeMng_BindDmgNumTexture(int a2, _DWORD *a3, _DWORD *a4);  // 0x101207B0
+    char ShapeMng_BindFontTexture(int arg1, uint32_t *arg2, uint32_t *arg3);  // 0x10120590
+    char ShapeMng_BindDmgNumTexture(int arg1, uint32_t *arg2, uint32_t *arg3);  // 0x101207B0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x18];

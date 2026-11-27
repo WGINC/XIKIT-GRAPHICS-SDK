@@ -25,5 +25,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Blend_FindPrevious` calls nothing directly
 - `Blend_FreeResult` calls `Mem_FreeObject`
 - `EnvBlend_CallBlendUpdate` calls `Blend_Update`
-- `Blend_Update` calls `Time_SubtractFrameScale`, `Time_Normalize`, `YmCombineWeather::Release`, `thunk_sub_10028AA0`, `Env_BlendTimeOfDay`, `Blend_AllocResult`, `Env_BlendKeys`, `Blend_FreeResult`
+- `Blend_Update` calls `Time_SubtractFrameScale`, `Time_Normalize`, `YmCombineWeather::Release`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`, `Env_BlendTimeOfDay`, `Blend_AllocResult`, `Env_BlendKeys`, `Blend_FreeResult`
 - `Blend_AllocResult` calls `Mem_AllocObject`

@@ -54,6 +54,65 @@ the whole game was scanned for other writers: section 5.
 +0x94 runs; then the parts are laid out from it. So **where a window is drawn follows +0x8C/+0x8E; the hit rectangle
 +0x3A only decides clicks**. Writing +0x3A alone moves where clicks land, not the picture.
 
+## 3b. Hiding each part of the interface (RESEARCH.md E1; read 27 Nov)
+
+Read from build 6AE818B4 with Ghidra 11.4.2's decompiler and capstone; addresses 6A995428's, 6AE818B4's after the slash.
+
+- **Every window (menus, the chat log, the target arrow):** `Menu_DrawLayers` (0x1015F6A0 / 0x10160C70) draws the
+  visible windows layer by layer, nine layers (the window's byte +0x60, 0..8), each through `Menu_DrawWindowItems`
+  (0x101177D0 / 0x10118C60); when `Menu_IsStateB4Eq1` holds, only windows with bit 0x40 of +0x34 are drawn. Nothing
+  else draws a window, so hiding one window is skipping `Menu_DrawWindowItems` for it, found by its name ([+4]+0x46,
+  section 4; ui_layout's `ui_list=1` logs the names in the game). Its hit rectangle still takes clicks while hidden
+  (section 3): a hidden window should also be moved off the screen, or its clicks refused.
+- **The target arrow** is one of those windows: `TargetMenu_UpdateTargetMarker` (0x10150090 / 0x10151660) places it
+  over the target each frame from `Target_GetPosShortsMainOrSub` (its +0xBC/+0xBE, and +0xC0/+0xC2 for a sub-target),
+  and with no target fades it out with `TargetMenu_MenuInitAndFadeItem` on the window at its +8. So it hides as a
+  window. Its name is not read (the in-game log of `ui_list=1` gives it).
+- **Nameplates** are not windows: each skeleton actor draws its own in `CXiSkeletonActor::OnDrawName` (0x100D0510 in
+  both builds; a virtual method, in seven actor vtables), through `Actor_DrawWorldText` (0x10086210) for the name and
+  `DrawNameplateSecondString` (0x10086900) for the second line, each only while the actor's word +0xB2 is 0. It
+  returns early for the player in first-person view, when the actor's virtual methods +0x260, +0x34C or +0x358 say so,
+  and by the game's own name setting: when the byte 0x1047D694 (6AE818B4 0x1047E844) is set, the next byte chooses
+  who has a name (0 everyone; 1 records whose +0x78 top byte is 0; 2 and 3 by bit 13 of +0x120; 4 those whose +0x78
+  equals the player's). What each choice is in the game's menus is not read. A hook on `OnDrawName` that returns at
+  once hides every nameplate; one that checks the actor hides chosen ones.
+- **The chat log** is a window (section 4 gives its placement in the owner's game); its name is not read.
+
+## 3c. Opening a window, and making one of our own (RESEARCH.md E2; read 27 Nov)
+
+`MenuMng_OpenByName` (0x1015E350 / 0x1015F920; name, a flag to place it, a flag) opens a window only when three
+lookups by name succeed:
+1. **The game's table of windows** (6A995428 0x103722D8, 6AE818B4 0x10373320; `Menu_LookupWindowByName`): 373 entries
+   of 0x2C bytes, ended by an empty name; each is a 16-byte name (`menu    logwindo`, `menu    mcr1pall`, ...), a
+   pointer to its handler object's slot, flags, a byte, the layer and a word. All 373, with their fields:
+   `data/menu_windows.json`. Which window on the screen each name is, the in-game log of ui_layout's `ui_list=1`
+   shows; the names alone are not taken as that.
+2. **The scene state** allows it (`MenuMng_TestNameForSceneState`).
+3. **A definition of that name is loaded** (`Menu_FindItemByNameAt1C`: a walk of the loaded definitions comparing
+   +0x46): the definitions come from the game's data files (type-0x30 chunks, docs/DATA_FILES.md section 4).
+Then it allocates the 0xD4-byte window (`NetCellFont_MenuCtor`), binds the table's fields into it
+(`Menu_FindWindowDefByName`: +0x30, +0x34, +0x60, +0x38, and the handler at +0xC, whose +8 is set to the window),
+calls the handler's virtual +4, and inserts the window by layer (`NetCellFont_InsertSortedBy60`).
+
+So a window of a mod's own needs an entry in that table and a loaded definition of the same name, both of which the
+game takes from its own data: the table is fixed in the DLL, and a definition comes from a DAT. Neither has been
+tried; adding an entry would mean placing a longer copy of the table and pointing the two lookups at it (code
+changes at the two functions), and a definition could come from a pack (a DAT with a type-0x30 chunk). **The handler's interface (read 28 Nov: every call through a window's +0xC handler in the window code
+0x10115000..0x10165000, 6A995428):** +4 when the window is opened (`MenuMng_OpenByName`); **+0xC when it is freed**
+(`NetCellFont_FreeChild` 0x10118F4C, which then clears the handler's +8, its window); **+0x14 when it is placed**
+(`game_10119110`, which `Menu_PositionWindow`, `Menu_PositionWindowBySetting`, `TargetMenu_PlaceByLayout` and some 70
+other layout functions call); **+0x18 when the selection moves** (`NetCellFont_MenuMoveSelection` 0x101184D1, with the
+window and the selected item, +0x4C); **+0x24 when it is made active or not** (`NetCellFont_SetActive` 0x10119293). The
+handler's +8 is its window. **`Menu_DrawWindowItems`' parts (read 28 Nov, Ghidra on 6AE818B4's 0x10118C60):** it
+walks the window's items (the definition's list, through `game_10126520`); each item of kind 0, 1 or 2 (its first word;
+kind 2 only while the window's +0x78 is set) that has a shape is drawn by **0x1011FC80 (analysed; 0x10121110 in
+6AE818B4), a method of the shape that draws each of its cells with `Cell_DrawTexturedQuad` over the item's rectangle**
+(x, y, width, height and a colour, 0x80808080 by default); the title and edges by 0x1011A150 and 0x1011A250; then,
+when the window's +0x6A is set and its +0x10 is not 0xE, **the handler's +0x10, which draws the window's own
+contents**; then the viewport is put back when +0x9B is set. So a frame without a window is 0x1011FC80 called on a
+frame shape (the shapes `ShapeMng_FindShape` gives from files 14..21, DATA_FILES.md section 3) at a rectangle; it has
+not been tried. Until then, the hotbar keeps drawing its own frame (xiui).
+
 ## 4. What a mod uses
 
 - To move a window: hook `NetCellFont_SetRectAndUpdateNodes` and change x and y (sdk/examples/ui_layout.cpp since

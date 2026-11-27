@@ -4,183 +4,187 @@
 
 // FUNCTION: FFXIMAIN 0x10036B90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall SoundVolume_SendStopToLobby(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall SoundVolume_SendStopToLobby(void * self_, bits32 arg2)
 {
   uint32_t xi_entry_eax = 0;
-  int iVar1;
+  int i1;
   
-  iVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(DAT_104638f5)));
-  DAT_10463909 = 1;
-  if (DAT_104638f5 != '\0') {
-    if (DAT_1046393c != 0) {
-      orig::LobbyThread_SendCmd0(param_1,*(uint32_t *)((int)self_ + 0x38));
+  i1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(g_104638F5)));
+  g_10463909 = 1;
+  if (g_104638F5 != '\0') {
+    if (g_1046393C != 0) {
+      orig::LobbyThread_SendCmd0(arg2,*(uint32_t *)((int)self_ + 0x38));
     }
-    iVar1 = *(int *)((int)self_ + 0x38);
-    if ((iVar1 == 0x8bf) || (iVar1 == 0x80f)) {
-      DAT_104638f4 = 0;
+    i1 = *(int *)((int)self_ + 0x38);
+    if ((i1 == 0x8bf) || (i1 == 0x80f)) {
+      g_104638F4 = 0;
     }
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10036C70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * param_1, uint32_t * param_2, float * param_3, float param_4, float param_5, float param_6, undefined4 param_7, int param_8)
+XI_API uint32_t __cdecl SoundVolume_ComputeDistanceVolumeAndPan(float * arg1, uint32_t * arg2, float * arg3, float arg4, float arg5, float arg6, bits32 arg7, int arg8)
 {
-  long double fVar1;
-  int iVar2;
+  long double f1;
+  int i1;
   void *self_;
-  uint32_t uVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  long double fVar6;
-  int64_t lVar7;
-  char xi_frame[36] __attribute__((aligned(4)));
-  float * &pfVar8 = *reinterpret_cast<float * *>(xi_frame + 0);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 28);
+  uint32_t u1;
+  uint8_t u2;
+  long double f2;
+  long double f3;
+  int64_t i2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { float * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f4; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; float f5; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; float f6; };   // at 0x1C
+  } frame;
   
-  iVar2 = orig::Camera_GetField50_v1();
-  if (iVar2 == 0) {
-    *param_1 = 0.0f;
-    *param_2 = 0;
+  i1 = orig::Camera_GetField50_v1();
+  if (i1 == 0) {
+    *arg1 = 0.0f;
+    *arg2 = 0;
     return 0;
   }
-  bVar4 = NAN((long double)param_5) || NAN((long double)0.0f);
-  if (bVar4 != (bVar4 || (long double)param_5 == (long double)0.0f)) {
-    param_5 = DAT_103516e8;
+  u2 = ((arg5) != (arg5)) || ((0.0f) != (0.0f));
+  if (u2 != (u2 || arg5 == 0.0f)) {
+    arg5 = g_103516E8;
   }
-  bVar4 = NAN((long double)param_4) || NAN((long double)0.0f);
-  if (bVar4 != (bVar4 || (long double)param_4 == (long double)0.0f)) {
-    param_4 = DAT_103516ec;
+  u2 = ((arg4) != (arg4)) || ((0.0f) != (0.0f));
+  if (u2 != (u2 || arg4 == 0.0f)) {
+    arg4 = g_103516EC;
   }
-  bVar4 = NAN((long double)param_6) || NAN((long double)0.0f);
-  if (bVar4 == (bVar4 || (long double)param_6 == (long double)0.0f)) {
-    param_6 = (float)((long double)param_6 * (long double)512.0f);
+  u2 = ((arg6) != (arg6)) || ((0.0f) != (0.0f));
+  if (u2 == (u2 || arg6 == 0.0f)) {
+    arg6 = (float)(arg6 * 512.0f);
   }
   else {
-    param_6 = DAT_103516f0;
+    arg6 = g_103516F0;
   }
-  iVar2 = orig::Camera_GetField50_v1();
-  local_10 = (float)((long double)*(float *)(iVar2 + 0x60) - (long double)*param_3);
-  iVar2 = orig::Camera_GetField50_v1();
-  local_c = (float)((long double)*(float *)(iVar2 + 100) - (long double)param_3[1]);
-  iVar2 = orig::Camera_GetField50_v1();
-  local_8 = (float)((long double)*(float *)(iVar2 + 0x68) - (long double)param_3[2]);
-  if (param_8 != 1) {
-    if (param_8 == 2) {
-      local_c = 0.0f;
+  i1 = orig::Camera_GetField50_v1();
+  frame.f4 = (float)(*(float *)(i1 + 0x60) - *arg3);
+  i1 = orig::Camera_GetField50_v1();
+  frame.f5 = (float)(*(float *)(i1 + 100) - arg3[1]);
+  i1 = orig::Camera_GetField50_v1();
+  frame.f6 = (float)(*(float *)(i1 + 0x68) - arg3[2]);
+  if (arg8 != 1) {
+    if (arg8 == 2) {
+      frame.f5 = 0.0f;
     }
     else {
-      local_c = (float)((long double)local_c * (long double)3.0f);
+      frame.f5 = (float)(frame.f5 * 3.0f);
     }
   }
-  fVar5 = orig::FUN_10027530(&local_10,&local_10);
-  fVar5 = SQRT(fVar5);
-  fVar1 = (float)fVar5;
-  bVar4 = NAN(fVar5) || NAN((long double)0.100000001490116119384765625f);
-  if ((bVar4 || fVar5 < (long double)0.100000001490116119384765625f) == bVar4) {
-    if (!((long double)fVar1 > (long double)param_5)) {
-      if ((long double)fVar1 > (long double)param_4) {
-        lVar7 = XI_CALL_ST0(0x10311C2Cu)(((long double)1.0f -
-                       ((long double)fVar1 - (long double)param_4) / ((long double)param_5 - (long double)param_4))
-                       * (long double)(int)*param_2);
-        *param_2 = (uint32_t)lVar7;
+  f2 = orig::game_10027530(&frame.f4,&frame.f4);
+  f2 = x87_fsqrt(f2);
+  f1 = (float)f2;
+  u2 = ((f2) != (f2)) || ((0.100000001490116119384765625f) != (0.100000001490116119384765625f));
+  if ((u2 || f2 < 0.100000001490116119384765625f) == u2) {
+    if (!(f1 > arg5)) {
+      if (f1 > arg4) {
+        i2 = XI_CALL_ST0(0x10311C2Cu)((1.0f -
+                       (f1 - arg4) / (arg5 - arg4))
+                       * (int)*arg2);
+        *arg2 = (uint32_t)i2;
       }
     }
     else {
-      if ((uint8_t)param_7 == 0) {
-        *param_2 = 0;
+      if ((uint8_t)arg7 == 0) {
+        *arg2 = 0;
         return 0;
       }
-      *param_2 = 1;
+      *arg2 = 1;
     }
-    pfVar8 = &local_10;
+    frame.p1 = &frame.f4;
     self_ = (void *)orig::Camera_GetViewMatrixPtr_v1();
-    orig::Mat4_TransformPoint_v1(self_,pfVar8,param_3);
-    fVar6 = (long double)local_8;
-    fVar5 = (long double)0.100000001490116119384765625f;
-    if (!(fVar6 <= fVar5)) {
-      lVar7 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*param_2 * (long double)_DAT_103516e4);
-      *param_2 = (uint32_t)lVar7;
+    orig::Mat4_TransformPoint_v1(self_,frame.p1,arg3);
+    f3 = frame.f6;
+    f2 = 0.100000001490116119384765625f;
+    if (!(f3 <= f2)) {
+      i2 = XI_CALL_ST0(0x10311C2Cu)((int)*arg2 * g_103516E4);
+      *arg2 = (uint32_t)i2;
     }
     else {
-      bVar4 = NAN(fVar6) || NAN((long double)0.0f);
-      if ((bVar4 || fVar6 < (long double)0.0f) != bVar4) {
-        fVar6 = -fVar6;
+      u2 = ((f3) != (f3)) || ((0.0f) != (0.0f));
+      if ((u2 || f3 < 0.0f) != u2) {
+        f3 = -f3;
       }
     }
-    param_4 = (float)fVar6;
-    bVar4 = NAN((long double)param_4) || NAN((long double)1.0f);
-    if ((bVar4 || (long double)param_4 < (long double)1.0f) == bVar4) {
-      bVar4 = NAN((long double)param_4) || NAN((long double)0.0f);
-      if (bVar4 != (bVar4 || (long double)param_4 == (long double)0.0f)) {
-        param_4 = 0.001000000047497451305389404296875f;
-      }
-    }
-    else {
-      param_4 = 1.0f;
-    }
-    fVar5 = orig::Camera_GetField2F4();
-    fVar5 = ((fVar5 / (long double)param_4) * (long double)local_10) / (long double)param_6;
-    if (!(fVar5 > (long double)1.0f)) {
-      bVar4 = NAN(fVar5) || NAN((long double)(-1.0f));
-      if ((bVar4 || fVar5 < (long double)(-1.0f)) != bVar4) {
-        fVar5 = (long double)(-1.0f);
+    arg4 = (float)f3;
+    u2 = ((arg4) != (arg4)) || ((1.0f) != (1.0f));
+    if ((u2 || arg4 < 1.0f) == u2) {
+      u2 = ((arg4) != (arg4)) || ((0.0f) != (0.0f));
+      if (u2 != (u2 || arg4 == 0.0f)) {
+        arg4 = 0.001000000047497451305389404296875f;
       }
     }
     else {
-      fVar5 = (long double)1.0f;
+      arg4 = 1.0f;
     }
-    fVar5 = fVar5 * (long double)*param_1 + (long double)64.0f;
-    *param_1 = (float)fVar5;
-    if (!(fVar5 > (long double)127.0f)) {
-      bVar4 = NAN(fVar5) || NAN((long double)0.0f);
-      if ((bVar4 || fVar5 < (long double)0.0f) != bVar4) {
-        *param_1 = 0.0f;
+    f2 = orig::Camera_GetField2F4();
+    f2 = ((f2 / arg4) * frame.f4) / arg6;
+    if (!(f2 > 1.0f)) {
+      u2 = ((f2) != (f2)) || (((-1.0f)) != ((-1.0f)));
+      if ((u2 || f2 < (-1.0f)) != u2) {
+        f2 = (-1.0f);
       }
     }
     else {
-      *param_1 = 127.0f;
+      f2 = 1.0f;
     }
-    uVar3 = *param_2;
-    if (uVar3 == 0) {
-      uVar3 = (uint32_t)(uint8_t)param_7;
+    f2 = f2 * *arg1 + 64.0f;
+    *arg1 = (float)f2;
+    if (!(f2 > 127.0f)) {
+      u2 = ((f2) != (f2)) || ((0.0f) != (0.0f));
+      if ((u2 || f2 < 0.0f) != u2) {
+        *arg1 = 0.0f;
+      }
     }
-    return uVar3;
+    else {
+      *arg1 = 127.0f;
+    }
+    u1 = *arg2;
+    if (u1 == 0) {
+      u1 = (uint32_t)(uint8_t)arg7;
+    }
+    return u1;
   }
-  return *param_2;
+  return *arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10036F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall SoundVolume_SetVolumeScalar(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API uint64_t __thiscall SoundVolume_SetVolumeScalar(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint64_t uVar1;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&local_10)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f1[4]; };   // at 0x0
+  } frame;
   
-  local_10[2] = 0.0f;
-  local_10[0] = (float)(long double)(int)(short)param_1;
-  local_10[1] = 0.0f;
-  local_10[3] = 0.0f;
-  uVar1 = orig::SoundVolume_SetVolumeVector(self_,local_10,param_2);
-  return uVar1;
+  frame.f1[2] = 0.0f;
+  frame.f1[0] = (float)(int)(short)arg2;
+  frame.f1[1] = 0.0f;
+  frame.f1[3] = 0.0f;
+  u1 = orig::SoundVolume_SetVolumeVector(self_,frame.f1,arg3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10036F50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall SoundVolume_SetVolumeVector(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall SoundVolume_SetVolumeVector(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  if (DAT_104638f5 != '\0') {
-    uVar1 = orig::SoundElem_AddUniqueId(*(int *)((int)self_ + 0x14));
-    if (((char)uVar1 != '\0') && (DAT_10463909 = 1, DAT_1046393c != 0)) {
-      uVar2 = orig::MusicFont_QueueSoundCmdIfChannelsBelowLimit((int)self_ + 0x30,param_1,param_2);
-      return uVar2;
+  if (g_104638F5 != '\0') {
+    u1 = orig::SoundElem_AddUniqueId(*(int *)((int)self_ + 0x14));
+    if (((char)u1 != '\0') && (g_10463909 = 1, g_1046393C != 0)) {
+      u2 = orig::MusicFont_QueueSoundCmdIfChannelsBelowLimit((int)self_ + 0x30,arg2,arg3);
+      return u2;
     }
   }
   return 0;
@@ -188,29 +192,29 @@ XI_API undefined4 __thiscall SoundVolume_SetVolumeVector(void * self_, undefined
 
 // FUNCTION: FFXIMAIN 0x10037020
 // GATE: PASS -- 100 trials, 37 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 37
-XI_API void __thiscall SoundVolume_CreateSoundElem(void * self_, undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+XI_API void __thiscall SoundVolume_CreateSoundElem(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
   int xi_eax;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::Mem_AllocWithFallback_v1(0x2ed,3);
-  if ((void *)uVar1 != (void *)0x0) {
-    xi_eax = orig::CYySoundElem_Constructor((void *)uVar1);
+  u1 = orig::Mem_AllocWithFallback_v1(0x2ed,3);
+  if ((void *)u1 != (void *)0x0) {
+    xi_eax = orig::CYySoundElem_Constructor((void *)u1);
     if (xi_eax != 0) {
       orig::CMoResource_AddRefChain_v1(self_,xi_eax);
       *(uint32_t *)(xi_eax + 0x104) = *(uint32_t *)((int)self_ + 0x14);
-      *(uint32_t *)(xi_eax + 0x54) = *param_1;
-      *(uint32_t *)(xi_eax + 0x58) = param_1[1];
-      *(uint32_t *)(xi_eax + 0x5c) = param_1[2];
-      *(uint32_t *)(xi_eax + 0x60) = param_1[3];
-      *(uint32_t *)(xi_eax + 0x1b0) = param_2;
-      *(uint32_t *)(xi_eax + 0x1b4) = param_3;
-      *(uint32_t *)(xi_eax + 0x1b8) = param_4;
-      *(uint32_t *)(xi_eax + 0x1d0) = param_5;
-      *(uint32_t *)(xi_eax + 0x1d4) = param_6;
-      *(uint32_t *)(xi_eax + 0x1d8) = param_7;
+      *(uint32_t *)(xi_eax + 0x54) = *arg2;
+      *(uint32_t *)(xi_eax + 0x58) = arg2[1];
+      *(uint32_t *)(xi_eax + 0x5c) = arg2[2];
+      *(uint32_t *)(xi_eax + 0x60) = arg2[3];
+      *(uint32_t *)(xi_eax + 0x1b0) = arg3;
+      *(uint32_t *)(xi_eax + 0x1b4) = arg4;
+      *(uint32_t *)(xi_eax + 0x1b8) = arg5;
+      *(uint32_t *)(xi_eax + 0x1d0) = arg6;
+      *(uint32_t *)(xi_eax + 0x1d4) = arg7;
+      *(uint32_t *)(xi_eax + 0x1d8) = arg8;
       *(uint32_t *)(xi_eax + 0x1dc) = 0;
-      *(uint16_t *)(xi_eax + 0x1be) = (uint16_t)param_8;
+      *(uint16_t *)(xi_eax + 0x1be) = (uint16_t)arg9;
     }
   }
   return;

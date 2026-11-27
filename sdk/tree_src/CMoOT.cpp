@@ -14,17 +14,17 @@ char ** __cdecl CMoOT::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CMoOT::Constructor(void * self)
 {
-  *(uint8_t ***)self = &PTR_CMoOT_GetRuntimeClass_1032b6f4;
+  *(uint8_t ***)self = &ptr_to_CMoOT_GetRuntimeClass_1032B6F4;
   orig::OtLink_ClearLink(self);
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x100552C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoOT::ScalarDeletingDtor(char a2)
+int * CMoOT::ScalarDeletingDtor(char arg1)
 {
   orig::CMoOT_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }

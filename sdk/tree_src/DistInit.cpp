@@ -6,12 +6,12 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __cdecl DistInit_ReturnOne(void)
 {
-  return (long double)1.0f;
+  return 1.0f;
 }
 
 // FUNCTION: FFXIMAIN 0x10052D30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall DistInit_ReturnSelf(void * self_)
+XI_API bits32 __thiscall DistInit_ReturnSelf(void * self_)
 {
   return self_;
 }

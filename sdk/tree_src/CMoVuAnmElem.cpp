@@ -12,9 +12,9 @@ char ** __cdecl CMoVuAnmElem::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1003EF80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-BOOL CMoVuAnmElem::IsKind8(int a1)
+BOOL CMoVuAnmElem::IsKind8(int arg1)
 {
-  return a1 == 8;
+  return arg1 == 8;
 }
 
 // FUNCTION: FFXIMAIN 0x1003EF90
@@ -26,10 +26,10 @@ int CMoVuAnmElem::Slot8CallSlot10()
 
 // FUNCTION: FFXIMAIN 0x1003EFA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * CMoVuAnmElem::ScalarDeletingDtor(char a2)
+void * CMoVuAnmElem::ScalarDeletingDtor(char arg1)
 {
   orig::CMoVuAnmElem_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return this;
 }
@@ -38,16 +38,16 @@ void * CMoVuAnmElem::ScalarDeletingDtor(char a2)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoVuAnmElem::Construct(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoD3aElem_GetRuntimeClass_variant0_1032b238;
+  *(uint8_t ***)self = &ptr_to_CMoD3aElem_GetRuntimeClass_variant0_1032B238;
   *(uint32_t *)((int)self + 0x198) = 0;
   *(uint32_t *)((int)self + 0x1d4) = 0;
   *(uint16_t *)((int)self + 0x1da) = 0;
-  uVar1 = orig::DynVB_Constructor_v1((void *)((int)self + 0x1dd));
-  *(uint8_t ***)self = &PTR_CMoVuAnmElem_GetRuntimeClass_1032ac10;
+  u1 = orig::DynVB_Constructor_v1((void *)((int)self + 0x1dd));
+  *(uint8_t ***)self = &ptr_to_CMoVuAnmElem_GetRuntimeClass_1032AC10;
   *(uint16_t *)((int)self + 0x176) = 0x231;
   *(uint8_t *)((int)self + 0x1dc) = 0;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }

@@ -19,81 +19,81 @@ XI_API int __thiscall XiModelActor_GetPtr744(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100C4B00
 // GATE: PASS -- 100 trials, 100 returned normally, 400 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall XiModelActor::CopyRectFromSlot(void * self, undefined4 param_1, undefined4 * param_2)
+bits32 __thiscall XiModelActor::CopyRectFromSlot(void * self, bits32 arg2, bits32 * arg3)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
-  int iVar3;
+  uint32_t u1;
+  uint32_t *p1;
+  int i1;
   
-  puVar2 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  *param_2 = *puVar2;
-  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  param_2[1] = *(uint32_t *)(iVar3 + 4);
-  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  param_2[2] = *(uint32_t *)(iVar3 + 8);
-  iVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  uVar1 = *(uint32_t *)(iVar3 + 0xc);
-  param_2[3] = uVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  *arg3 = *p1;
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  arg3[1] = *(uint32_t *)(i1 + 4);
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  arg3[2] = *(uint32_t *)(i1 + 8);
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  u1 = *(uint32_t *)(i1 + 0xc);
+  arg3[3] = u1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100C4B50
 // GATE: PASS -- 100 trials, 100 returned normally, 400 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall XiModelActor::BuildWorldMatrix(void * self, undefined4 param_1, void * param_2)
+bits32 __thiscall XiModelActor::BuildWorldMatrix(void * self, bits32 arg2, void * arg3)
 {
-  int iVar1;
-  float *pfVar2;
-  uint32_t *puVar3;
-  uint32_t uVar4;
+  int i1;
+  float *p1;
+  uint32_t *p2;
+  uint32_t u1;
   
-  orig::Mat4_SetIdentity_v1(param_2);
-  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Mat4_PostRotateZ_v1(param_2,*(float *)(iVar1 + 8));
-  iVar1 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Mat4_PostRotateY_v1(param_2,*(float *)(iVar1 + 4));
-  pfVar2 = (float *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
-  orig::Mat4_PostRotateX_v1(param_2,*pfVar2);
-  puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  uVar4 = orig::Mat4_SetTranslation_v1(param_2,puVar3);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+  orig::Mat4_SetIdentity_v1(arg3);
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateZ_v1(arg3,*(float *)(i1 + 8));
+  i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateY_v1(arg3,*(float *)(i1 + 4));
+  p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
+  orig::Mat4_PostRotateX_v1(arg3,*p1);
+  p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  u1 = orig::Mat4_SetTranslation_v1(arg3,p2);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100C4C20
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall XiModelActor::BuildMatrixAndDraw(void * self)
+bits32 __thiscall XiModelActor::BuildMatrixAndDraw(void * self)
 {
-  void *this_00;
-  uint32_t *puVar1;
-  float *pfVar2;
-  uint32_t uVar3;
-  int iVar4;
-  uint32_t *puVar5;
+  void *obj1;
+  uint32_t *p1;
+  float *p2;
+  uint32_t u1;
+  int i1;
+  uint32_t *p3;
   
-  puVar1 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1bc))))((void *)(self));
-  pfVar2 = (float *)((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x1c0))))((void *)(self));
-  iVar4 = 0;
+  p1 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1bc))))((void *)(self));
+  p2 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x1c0))))((void *)(self));
+  i1 = 0;
   if (*(int *)((int)self + 0x5c4) != 0) {
-    puVar5 = (uint32_t *)((int)self + 0x5c8);
-    for (iVar4 = 0x5b; iVar4 != 0; iVar4 = iVar4 + -1) {
-      *puVar5 = 0;
-      puVar5 = puVar5 + 1;
+    p3 = (uint32_t *)((int)self + 0x5c8);
+    for (i1 = 0x5b; i1 != 0; i1 = i1 + -1) {
+      *p3 = 0;
+      p3 = p3 + 1;
     }
-    this_00 = (void *)((int)self + 0x608);
-    uVar3 = *(uint32_t *)(*(int *)((int)self + 0x5c4) + 0x30);
+    obj1 = (void *)((int)self + 0x608);
+    u1 = *(uint32_t *)(*(int *)((int)self + 0x5c4) + 0x30);
     *(uint16_t *)((int)self + 0x69c) = 0;
-    *(uint32_t *)((int)self + 0x5e0) = uVar3;
-    orig::Mat4_SetIdentity_v2(this_00);
-    orig::Mat4_PostRotateZ_v1(this_00,pfVar2[2]);
-    orig::Mat4_PostRotateY_v1(this_00,pfVar2[1]);
-    orig::Mat4_PostRotateX_v1(this_00,*pfVar2);
-    orig::Mat4_SetTranslation_v2(this_00,puVar1);
+    *(uint32_t *)((int)self + 0x5e0) = u1;
+    orig::Mat4_SetIdentity_v2(obj1);
+    orig::Mat4_PostRotateZ_v1(obj1,p2[2]);
+    orig::Mat4_PostRotateY_v1(obj1,p2[1]);
+    orig::Mat4_PostRotateX_v1(obj1,*p2);
+    orig::Mat4_SetTranslation_v2(obj1,p1);
     if (*(int *)((int)self + 0x774) == 0) {
-      uVar3 = orig::FUN_101844c0(g_pZoneMap,(int)self + 0x5c8,*(uint32_t *)((int)self + 0x770),
+      u1 = orig::ModelActor_Draw_as_v0(g_pZoneMap,(int)self + 0x5c8,*(uint32_t *)((int)self + 0x770),
                            *(uint32_t *)((int)self + 0x770));
-      return uVar3;
+      return u1;
     }
-    iVar4 = *(int *)((int)self + 0x774) + -1;
-    *(int *)((int)self + 0x774) = iVar4;
+    i1 = *(int *)((int)self + 0x774) + -1;
+    *(int *)((int)self + 0x774) = i1;
   }
-  return iVar4;
+  return i1;
 }

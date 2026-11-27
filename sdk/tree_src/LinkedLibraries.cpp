@@ -4,156 +4,156 @@
 
 // FUNCTION: FFXIMAIN 0x102BC820
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API UINT __stdcall Imm_GetVirtualKeyJmp(HWND param_1)
+XI_API UINT __stdcall Imm_GetVirtualKeyJmp(HWND arg1)
 {
-  UINT UVar1;
+  UINT u1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc820. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  UVar1 = ImmGetVirtualKey(param_1);
-  return UVar1;
+  u1 = ImmGetVirtualKey(arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC826
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API UINT __stdcall LinkedLibraries_JmpImmGetDescriptionA(HKL param_1, LPSTR lpszDescription, UINT uBufLen)
+XI_API UINT __stdcall LinkedLibraries_JmpImmGetDescriptionA(HKL arg1, LPSTR lpszDescription, UINT uBufLen)
 {
-  UINT UVar1;
+  UINT u1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc826. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  UVar1 = ImmGetDescriptionA(param_1,lpszDescription,uBufLen);
-  return UVar1;
+  u1 = ImmGetDescriptionA(arg1,lpszDescription,uBufLen);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC82C
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API HIMC __stdcall LinkedLibraries_JmpImmGetContext(HWND param_1)
+XI_API HIMC __stdcall LinkedLibraries_JmpImmGetContext(HWND arg1)
 {
-  HIMC pHVar1;
+  HIMC val1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc82c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  pHVar1 = ImmGetContext(param_1);
-  return pHVar1;
+  val1 = ImmGetContext(arg1);
+  return val1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC832
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall LinkedLibraries_JmpImmReleaseContext(HWND param_1, HIMC param_2)
+XI_API BOOL __stdcall LinkedLibraries_JmpImmReleaseContext(HWND arg1, HIMC arg2)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc832. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmReleaseContext(param_1,param_2);
-  return BVar1;
+  i1 = ImmReleaseContext(arg1,arg2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC838
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall Imm_NotifyIMEJmp(HIMC param_1, DWORD dwAction, DWORD dwIndex, DWORD dwValue)
+XI_API BOOL __stdcall Imm_NotifyIMEJmp(HIMC arg1, DWORD dwAction, DWORD dwIndex, DWORD dwValue)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc838. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmNotifyIME(param_1,dwAction,dwIndex,dwValue);
-  return BVar1;
+  i1 = ImmNotifyIME(arg1,dwAction,dwIndex,dwValue);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC83E
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall LinkedLibraries_JmpImmSetCandidateWindow(HIMC param_1, LPCANDIDATEFORM lpCandidate)
+XI_API BOOL __stdcall LinkedLibraries_JmpImmSetCandidateWindow(HIMC arg1, LPCANDIDATEFORM lpCandidate)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc83e. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmSetCandidateWindow(param_1,lpCandidate);
-  return BVar1;
+  i1 = ImmSetCandidateWindow(arg1,lpCandidate);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC844
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall LinkedLibraries_JmpImmSetCompositionWindow(HIMC param_1, LPCOMPOSITIONFORM lpCompForm)
+XI_API BOOL __stdcall LinkedLibraries_JmpImmSetCompositionWindow(HIMC arg1, LPCOMPOSITIONFORM lpCompForm)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc844. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmSetCompositionWindow(param_1,lpCompForm);
-  return BVar1;
+  i1 = ImmSetCompositionWindow(arg1,lpCompForm);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC856
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall Imm_SetOpenStatusJmp(HIMC param_1, BOOL param_2)
+XI_API BOOL __stdcall Imm_SetOpenStatusJmp(HIMC arg1, BOOL arg2)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc856. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmSetOpenStatus(param_1,param_2);
-  return BVar1;
+  i1 = ImmSetOpenStatus(arg1,arg2);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC85C
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall Imm_GetOpenStatusJmp(HIMC param_1)
+XI_API BOOL __stdcall Imm_GetOpenStatusJmp(HIMC arg1)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc85c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmGetOpenStatus(param_1);
-  return BVar1;
+  i1 = ImmGetOpenStatus(arg1);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC862
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall Imm_GetConversionStatusJmp(HIMC param_1, LPDWORD lpfdwConversion, LPDWORD lpfdwSentence)
+XI_API BOOL __stdcall Imm_GetConversionStatusJmp(HIMC arg1, LPDWORD lpfdwConversion, LPDWORD lpfdwSentence)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc862. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmGetConversionStatus(param_1,lpfdwConversion,lpfdwSentence);
-  return BVar1;
+  i1 = ImmGetConversionStatus(arg1,lpfdwConversion,lpfdwSentence);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC868
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API LONG __stdcall Imm_GetCompositionStringAJmp(HIMC param_1, DWORD param_2, LPVOID lpBuf, DWORD dwBufLen)
+XI_API LONG __stdcall Imm_GetCompositionStringAJmp(HIMC arg1, DWORD arg2, LPVOID lpBuf, DWORD dwBufLen)
 {
-  LONG LVar1;
+  LONG i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc868. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  LVar1 = ImmGetCompositionStringA(param_1,param_2,lpBuf,dwBufLen);
-  return LVar1;
+  i1 = ImmGetCompositionStringA(arg1,arg2,lpBuf,dwBufLen);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC86E
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall Imm_SetCompositionStringAJmp(HIMC param_1, DWORD dwIndex, LPVOID lpComp, DWORD dwCompLen, LPVOID lpRead, DWORD dwReadLen)
+XI_API BOOL __stdcall Imm_SetCompositionStringAJmp(HIMC arg1, DWORD dwIndex, LPVOID lpComp, DWORD dwCompLen, LPVOID lpRead, DWORD dwReadLen)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc86e. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmSetCompositionStringA(param_1,dwIndex,lpComp,dwCompLen,lpRead,dwReadLen);
-  return BVar1;
+  i1 = ImmSetCompositionStringA(arg1,dwIndex,lpComp,dwCompLen,lpRead,dwReadLen);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x102BC874
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API BOOL __stdcall LinkedLibraries_JmpImmSetConversionStatus(HIMC param_1, DWORD param_2, DWORD param_3)
+XI_API BOOL __stdcall LinkedLibraries_JmpImmSetConversionStatus(HIMC arg1, DWORD arg2, DWORD arg3)
 {
-  BOOL BVar1;
+  BOOL i1;
   
                     /* WARNING: Could not recover jumptable at 0x102bc874. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  BVar1 = ImmSetConversionStatus(param_1,param_2,param_3);
-  return BVar1;
+  i1 = ImmSetConversionStatus(arg1,arg2,arg3);
+  return i1;
 }

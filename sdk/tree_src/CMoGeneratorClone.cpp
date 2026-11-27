@@ -5,60 +5,60 @@
 
 // FUNCTION: FFXIMAIN 0x10047C30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoGeneratorClone::InitCloneFromSource(_DWORD *a2)
+int CMoGeneratorClone::InitCloneFromSource(uint32_t *arg1)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
   memset(self + 28, 0, 0x50u);
-  this->typeTag = *a2;
-  this->typeSizeFlags = a2[1];
-  this->pParentNode = a2[2];
-  this->field_2C = a2[3];
-  this->field_34 = a2[4];
-  this->field_38 = a2[5];
-  this->field_3C = a2[6];
-  this->field_40 = a2[7];
-  qmemcpy(self + 48, a2 + 24, 16 * (((a2[1] >> 7) & 0x7FFFF) - 6));
+  this->typeTag = *arg1;
+  this->typeSizeFlags = arg1[1];
+  this->pParentNode = arg1[2];
+  this->field_2C = arg1[3];
+  this->field_34 = arg1[4];
+  this->field_38 = arg1[5];
+  this->field_3C = arg1[6];
+  this->field_40 = arg1[7];
+  memcpy(self + 48, arg1 + 24, 16 * (((arg1[1] >> 7) & 0x7FFFF) - 6));
   this->field_9C = 0;
-  this->field_70 = a2[8];
-  this->field_74 = a2[9];
-  this->field_98 = a2[11];
+  this->field_70 = arg1[8];
+  this->field_74 = arg1[9];
+  this->field_98 = arg1[11];
   return orig::CMoAttachments_Reset(self + 12);
 }
 
 // FUNCTION: FFXIMAIN 0x10047CE0
 // GATE: PASS -- 100 trials, 32 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 32
-_DWORD * CMoGeneratorClone::FixupClonedPointers()
+uint32_t * CMoGeneratorClone::FixupClonedPointers()
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  int v2;
-  int v3;
-  int v4;
-  int v5;
-  _DWORD *v6;
-  bool v7;
-  _DWORD *v8;
-  _DWORD *v9;
-  _DWORD *v10;
-  _DWORD *v11;
-  char v12;
+  int pResolveCommandStream;
+  int pExecCommandStream;
+  int pFindCommandStream;
+  int i4;
+  uint32_t *p1;
+  bool b1;
+  uint32_t *p2;
+  uint32_t *p3;
+  uint32_t *p4;
+  uint32_t *p5;
+  char c1;
   int Global_1047D114;
-  char v14;
-  int v15;
-  bool v16; // zf
-  int v17;
-  _DWORD *result;
-  v2 = this->pResolveCommandStream;
-  v3 = this->pExecCommandStream;
-  v4 = this->pFindCommandStream;
+  char c2;
+  int typeTag;
+  bool b2; // zf
+  int i6;
+  uint32_t *result;
+  pResolveCommandStream = this->pResolveCommandStream;
+  pExecCommandStream = this->pExecCommandStream;
+  pFindCommandStream = this->pFindCommandStream;
   this->pCommandStream += self + 96;
-  this->pFindCommandStream = self + 96 + v4;
-  this->pResolveCommandStream = self + 96 + v2;
-  v5 = self + 48;
+  this->pFindCommandStream = self + 96 + pFindCommandStream;
+  this->pResolveCommandStream = self + 96 + pResolveCommandStream;
+  i4 = self + 48;
   this->field_DC = 0;
   this->elemListHead = 0;
-  this->pExecCommandStream = self + 96 + v3;
-  orig::CMoAttachments_ClearCaster((_DWORD *)(self + 48), 0);
-  orig::CMoAttachments_ClearTarget((_DWORD *)v5, 0);
+  this->pExecCommandStream = self + 96 + pExecCommandStream;
+  orig::CMoAttachments_ClearCaster((uint32_t *)(self + 48), 0);
+  orig::CMoAttachments_ClearTarget((uint32_t *)i4, 0);
   this->field_78 = 1065353216;
   this->field_7C = 1065353216;
   this->field_80 = 1065353216;
@@ -66,8 +66,8 @@ _DWORD * CMoGeneratorClone::FixupClonedPointers()
   this->field_88 = 1065353216;
   this->field_8C = 1065353216;
   if ( at<uint8_t>(this, 0x20) != 126
-    || orig::CMoGeneratorClone_ResolveTarget((_DWORD *)self) != 0
-    && (*(_BYTE *)(orig::CMoGeneratorClone_ResolveTarget((_DWORD *)self) + 36) & 0x7F) == 0x3D )
+    || orig::CMoGeneratorClone_ResolveTarget((uint32_t *)self) != 0
+    && (*(uint8_t *)(orig::CMoGeneratorClone_ResolveTarget((uint32_t *)self) + 36) & 0x7F) == 0x3D )
   {
     this->field_DE = 0;
     this->field_DF = 0;
@@ -76,83 +76,83 @@ _DWORD * CMoGeneratorClone::FixupClonedPointers()
   {
     this->field_DE = (at<uint8_t>(this, 0x21) - 48) & 0x7B | 0x80;
   }
-  v6 = (_DWORD *)self;
-  v7 = (this->flags & 0x1000) != 0;
+  p1 = (uint32_t *)self;
+  b1 = (this->flags & 0x1000) != 0;
   while ( 1 )
   {
-    v8 = v6;
-    v9 = (_DWORD *)v6[10];
-    v6 = v9 != nullptr ? (_DWORD *)*v9 : nullptr;
-    if ( v6[8] == 1952540023 || (int)v6[9] < 0 )
+    p2 = p1;
+    p3 = (uint32_t *)p1[10];
+    p1 = p3 != nullptr ? (uint32_t *)*p3 : nullptr;
+    if ( p1[8] == 1952540023 || (int)p1[9] < 0 )
       break;
-    v10 = (_DWORD *)v6[10];
-    if ( v10 != nullptr )
-      v11 = (_DWORD *)*v10;
+    p4 = (uint32_t *)p1[10];
+    if ( p4 != nullptr )
+      p5 = (uint32_t *)*p4;
     else
-      v11 = nullptr;
-    if ( v11 == v6 )
-      goto LABEL_21;
+      p5 = nullptr;
+    if ( p5 == p1 )
+      goto L1;
   }
-  v7 = false;
-  v12 = this->field_DE | 0x83;
-  this->field_DE = v12;
-  if ( v8[8] == 2004447844 )
-    this->field_DE = v12 | 0x40;
-  if ( v8[8] == 1953723748 )
+  b1 = false;
+  c1 = this->field_DE | 0x83;
+  this->field_DE = c1;
+  if ( p2[8] == 2004447844 )
+    this->field_DE = c1 | 0x40;
+  if ( p2[8] == 1953723748 )
     this->field_DE |= 0x20u;
-LABEL_21:
+L1:
   Global_1047D114 = orig::GetGlobal_1047D114();
   if ( Global_1047D114 == 56885 )
   {
-    v14 = this->field_DF | 1;
-LABEL_48:
-    this->field_DF = v14;
-    goto LABEL_49;
+    c2 = this->field_DF | 1;
+L2:
+    this->field_DF = c2;
+    goto L3;
   }
   if ( Global_1047D114 == 83895 || Global_1047D114 == 83896 || Global_1047D114 == 83903 || Global_1047D114 == 83904 )
   {
-    v15 = this->typeTag;
-    if ( v15 == 825319984
-      || v15 == 842097200
-      || v15 == 825385520
-      || v15 == 842162736
-      || v15 == 825451056
-      || v15 == 842228272 )
+    typeTag = this->typeTag;
+    if ( typeTag == 825319984
+      || typeTag == 842097200
+      || typeTag == 825385520
+      || typeTag == 842162736
+      || typeTag == 825451056
+      || typeTag == 842228272 )
     {
       this->field_DF |= 2u;
     }
   }
   if ( Global_1047D114 == 83897 )
   {
-    v16 = this->typeTag == 825516656;
+    b2 = this->typeTag == 825516656;
   }
   else
   {
     if ( Global_1047D114 != 83905 && Global_1047D114 != 83906 && Global_1047D114 != 83907 && Global_1047D114 != 83908 )
-      goto LABEL_49;
-    v17 = this->typeTag;
-    if ( v17 == 808542768 || v17 == 825319984 || v17 == 842097200 || v17 == 808608304 || v17 == 825385520 )
-      goto LABEL_47;
-    v16 = v17 == 842162736;
+      goto L3;
+    i6 = this->typeTag;
+    if ( i6 == 808542768 || i6 == 825319984 || i6 == 842097200 || i6 == 808608304 || i6 == 825385520 )
+      goto L4;
+    b2 = i6 == 842162736;
   }
-  if ( v16 )
+  if ( b2 )
   {
-LABEL_47:
-    v14 = this->field_DF | 2;
-    goto LABEL_48;
+L4:
+    c2 = this->field_DF | 2;
+    goto L2;
   }
-LABEL_49:
-  if ( ((*(_DWORD *)(v5 + 4) & 0xF) + 16 * (*(_BYTE *)(v5 + 6) & 1) == 20
-     || ((*(_DWORD *)(v5 + 4) & 0xF) + 16 * (*(_BYTE *)(v5 + 6) & 1) == 0
-      || (*(_DWORD *)(v5 + 4) & 0xF) + 16 * (*(_BYTE *)(v5 + 6) & 1u) >= 0xE)
-     && (*(_DWORD *)(v5 + 4) & 0xF) + 16 * (*(_BYTE *)(v5 + 6) & 1u) <= 0xF)
-    && v7 )
+L3:
+  if ( ((*(uint32_t *)(i4 + 4) & 0xF) + 16 * (*(uint8_t *)(i4 + 6) & 1) == 20
+     || ((*(uint32_t *)(i4 + 4) & 0xF) + 16 * (*(uint8_t *)(i4 + 6) & 1) == 0
+      || (*(uint32_t *)(i4 + 4) & 0xF) + 16 * (*(uint8_t *)(i4 + 6) & 1u) >= 0xE)
+     && (*(uint32_t *)(i4 + 4) & 0xF) + 16 * (*(uint8_t *)(i4 + 6) & 1u) <= 0xF)
+    && b1 )
   {
-    orig::CMoAttachments_SetCaster((int *)v5, nullptr);
-    orig::CMoAttachments_SetTarget((int *)v5, nullptr);
+    orig::CMoAttachments_SetCaster((int *)i4, nullptr);
+    orig::CMoAttachments_SetTarget((int *)i4, nullptr);
     orig::SharedConditionalStateReset(self);
   }
-  result = orig::CMoGeneratorClone_FindCmdByType((_DWORD *)self, 123);
+  result = orig::CMoGeneratorClone_FindCmdByType((uint32_t *)self, 123);
   if ( result == nullptr )
     this->field_98 = 0;
   return result;
@@ -162,29 +162,29 @@ LABEL_49:
 // GATE: PASS -- 100 trials, 100 returned normally, 74 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CMoGeneratorClone::Release(void * self)
 {
-  int *this_00;
+  int *obj1;
   
-  this_00 = *(int **)((int)self + 0xa8);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  obj1 = *(int **)((int)self + 0xa8);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self + 0xa8) = 0;
   }
-  orig::FUN_100720b0(self);
+  orig::game_100720B0(self);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10048140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoGeneratorClone::UnlinkElemListA(void * self, int param_1)
+void __thiscall CMoGeneratorClone::UnlinkElemListA(void * self, int arg2)
 {
-  if (*(int *)(param_1 + 0x14c) == 0) {
-    *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(param_1 + 0x150);
+  if (*(int *)(arg2 + 0x14c) == 0) {
+    *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(arg2 + 0x150);
   }
   else {
-    *(uint32_t *)(*(int *)(param_1 + 0x14c) + 0x150) = *(uint32_t *)(param_1 + 0x150);
+    *(uint32_t *)(*(int *)(arg2 + 0x14c) + 0x150) = *(uint32_t *)(arg2 + 0x150);
   }
-  if (*(int *)(param_1 + 0x150) != 0) {
-    *(uint32_t *)(*(int *)(param_1 + 0x150) + 0x14c) = *(uint32_t *)(param_1 + 0x14c);
+  if (*(int *)(arg2 + 0x150) != 0) {
+    *(uint32_t *)(*(int *)(arg2 + 0x150) + 0x14c) = *(uint32_t *)(arg2 + 0x14c);
   }
   orig::CMoResource_ReleaseChain_v1(self);
   return;
@@ -194,1114 +194,1118 @@ void __thiscall CMoGeneratorClone::UnlinkElemListA(void * self, int param_1)
 // GATE: PASS -- 100 trials, 27 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 27
 void __thiscall CMoGeneratorClone::ResolveCmdTargets(void * self)
 {
-  uint8_t *puVar1;
-  uint32_t *puVar2;
-  uint64_t uVar3;
-  char xi_frame[308] __attribute__((aligned(4)));
-  uint32_t  &uVar4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &uVar5 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint8_t  (&local_124)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 16);
-  uint8_t  (&local_120)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 20);
-  uint8_t  (&local_11c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 24);
-  uint8_t  (&local_118)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 28);
-  uint8_t  (&local_114)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 32);
-  uint8_t  (&local_110)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 36);
-  uint8_t  (&local_10c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 40);
-  uint8_t  (&local_108)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 44);
-  uint8_t  (&local_104)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 48);
-  uint8_t  (&local_100)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 52);
-  uint8_t  (&local_fc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 56);
-  uint8_t  (&local_f8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 60);
-  uint8_t  (&local_f4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 64);
-  uint8_t  (&local_f0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 68);
-  uint8_t  (&local_ec)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 72);
-  uint8_t  (&local_e8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 76);
-  uint8_t  (&local_e4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 80);
-  uint8_t  (&local_e0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 84);
-  uint8_t  (&local_dc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 88);
-  uint8_t  (&local_d8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 92);
-  uint8_t  (&local_d4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 96);
-  uint8_t  (&local_d0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 100);
-  uint8_t  (&local_cc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 104);
-  uint8_t  (&local_c8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 108);
-  uint8_t  (&local_c4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 112);
-  uint8_t  (&local_c0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 116);
-  uint8_t  (&local_bc)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 120);
-  uint8_t  (&local_b8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 124);
-  uint8_t  (&local_b4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 128);
-  uint8_t  (&local_b0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 132);
-  uint8_t  (&local_ac)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 136);
-  uint8_t  (&local_a8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 140);
-  uint8_t  (&local_a4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 144);
-  uint8_t  (&local_a0)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 148);
-  uint8_t  (&local_9c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 152);
-  uint8_t  (&local_98)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 156);
-  uint8_t  (&local_94)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 160);
-  uint8_t  (&local_90)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 164);
-  uint8_t  (&local_8c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 168);
-  uint8_t  (&local_88)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 172);
-  uint8_t  (&local_84)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 176);
-  uint8_t  (&local_80)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 180);
-  uint8_t  (&local_7c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 184);
-  uint8_t  (&local_78)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 188);
-  uint8_t  (&local_74)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 192);
-  uint8_t  (&local_70)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 196);
-  uint8_t  (&local_6c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 200);
-  uint8_t  (&local_68)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 204);
-  uint8_t  (&local_64)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 208);
-  uint8_t  (&local_60)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 212);
-  uint8_t  (&local_5c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 216);
-  uint8_t  (&local_58)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 220);
-  uint8_t  (&local_54)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 224);
-  uint8_t  (&local_50)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 228);
-  uint8_t  (&local_4c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 232);
-  uint8_t  (&local_48)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 236);
-  uint8_t  (&local_44)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 240);
-  uint8_t  (&local_40)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 244);
-  uint8_t  (&local_3c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 248);
-  uint8_t  (&local_38)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 252);
-  uint8_t  (&local_34)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 256);
-  uint8_t  (&local_30)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 260);
-  uint8_t  (&local_2c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 264);
-  uint8_t  (&local_28)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 268);
-  uint8_t  (&local_24)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 272);
-  uint8_t  (&local_20)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 276);
-  uint8_t  (&local_1c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 280);
-  uint8_t  (&local_18)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 284);
-  uint8_t  (&local_14)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 288);
-  uint8_t  (&local_10)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 292);
-  uint8_t  (&local_c)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 296);
-  uint8_t  (&local_8)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 300);
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 304);
+  uint8_t *p1;
+  uint32_t *p2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[308];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint8_t u4[4]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; uint8_t u5[4]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; uint8_t u6[4]; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x1C]; uint8_t u7[4]; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_7[0x20]; uint8_t u8[4]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_8[0x24]; uint8_t u9[4]; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_9[0x28]; uint8_t u10[4]; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_10[0x2C]; uint8_t u11[4]; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_11[0x30]; uint8_t u12[4]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_12[0x34]; uint8_t u13[4]; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_13[0x38]; uint8_t u14[4]; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_14[0x3C]; uint8_t u15[4]; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_15[0x40]; uint8_t u16[4]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_16[0x44]; uint8_t u17[4]; };   // at 0x44
+    struct __attribute__((packed)) { unsigned char pad_17[0x48]; uint8_t u18[4]; };   // at 0x48
+    struct __attribute__((packed)) { unsigned char pad_18[0x4C]; uint8_t u19[4]; };   // at 0x4C
+    struct __attribute__((packed)) { unsigned char pad_19[0x50]; uint8_t u20[4]; };   // at 0x50
+    struct __attribute__((packed)) { unsigned char pad_20[0x54]; uint8_t u21[4]; };   // at 0x54
+    struct __attribute__((packed)) { unsigned char pad_21[0x58]; uint8_t u22[4]; };   // at 0x58
+    struct __attribute__((packed)) { unsigned char pad_22[0x5C]; uint8_t u23[4]; };   // at 0x5C
+    struct __attribute__((packed)) { unsigned char pad_23[0x60]; uint8_t u24[4]; };   // at 0x60
+    struct __attribute__((packed)) { unsigned char pad_24[0x64]; uint8_t u25[4]; };   // at 0x64
+    struct __attribute__((packed)) { unsigned char pad_25[0x68]; uint8_t u26[4]; };   // at 0x68
+    struct __attribute__((packed)) { unsigned char pad_26[0x6C]; uint8_t u27[4]; };   // at 0x6C
+    struct __attribute__((packed)) { unsigned char pad_27[0x70]; uint8_t u28[4]; };   // at 0x70
+    struct __attribute__((packed)) { unsigned char pad_28[0x74]; uint8_t u29[4]; };   // at 0x74
+    struct __attribute__((packed)) { unsigned char pad_29[0x78]; uint8_t u30[4]; };   // at 0x78
+    struct __attribute__((packed)) { unsigned char pad_30[0x7C]; uint8_t u31[4]; };   // at 0x7C
+    struct __attribute__((packed)) { unsigned char pad_31[0x80]; uint8_t u32[4]; };   // at 0x80
+    struct __attribute__((packed)) { unsigned char pad_32[0x84]; uint8_t u33[4]; };   // at 0x84
+    struct __attribute__((packed)) { unsigned char pad_33[0x88]; uint8_t u34[4]; };   // at 0x88
+    struct __attribute__((packed)) { unsigned char pad_34[0x8C]; uint8_t u35[4]; };   // at 0x8C
+    struct __attribute__((packed)) { unsigned char pad_35[0x90]; uint8_t u36[4]; };   // at 0x90
+    struct __attribute__((packed)) { unsigned char pad_36[0x94]; uint8_t u37[4]; };   // at 0x94
+    struct __attribute__((packed)) { unsigned char pad_37[0x98]; uint8_t u38[4]; };   // at 0x98
+    struct __attribute__((packed)) { unsigned char pad_38[0x9C]; uint8_t u39[4]; };   // at 0x9C
+    struct __attribute__((packed)) { unsigned char pad_39[0xA0]; uint8_t u40[4]; };   // at 0xA0
+    struct __attribute__((packed)) { unsigned char pad_40[0xA4]; uint8_t u41[4]; };   // at 0xA4
+    struct __attribute__((packed)) { unsigned char pad_41[0xA8]; uint8_t u42[4]; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_42[0xAC]; uint8_t u43[4]; };   // at 0xAC
+    struct __attribute__((packed)) { unsigned char pad_43[0xB0]; uint8_t u44[4]; };   // at 0xB0
+    struct __attribute__((packed)) { unsigned char pad_44[0xB4]; uint8_t u45[4]; };   // at 0xB4
+    struct __attribute__((packed)) { unsigned char pad_45[0xB8]; uint8_t u46[4]; };   // at 0xB8
+    struct __attribute__((packed)) { unsigned char pad_46[0xBC]; uint8_t u47[4]; };   // at 0xBC
+    struct __attribute__((packed)) { unsigned char pad_47[0xC0]; uint8_t u48[4]; };   // at 0xC0
+    struct __attribute__((packed)) { unsigned char pad_48[0xC4]; uint8_t u49[4]; };   // at 0xC4
+    struct __attribute__((packed)) { unsigned char pad_49[0xC8]; uint8_t u50[4]; };   // at 0xC8
+    struct __attribute__((packed)) { unsigned char pad_50[0xCC]; uint8_t u51[4]; };   // at 0xCC
+    struct __attribute__((packed)) { unsigned char pad_51[0xD0]; uint8_t u52[4]; };   // at 0xD0
+    struct __attribute__((packed)) { unsigned char pad_52[0xD4]; uint8_t u53[4]; };   // at 0xD4
+    struct __attribute__((packed)) { unsigned char pad_53[0xD8]; uint8_t u54[4]; };   // at 0xD8
+    struct __attribute__((packed)) { unsigned char pad_54[0xDC]; uint8_t u55[4]; };   // at 0xDC
+    struct __attribute__((packed)) { unsigned char pad_55[0xE0]; uint8_t u56[4]; };   // at 0xE0
+    struct __attribute__((packed)) { unsigned char pad_56[0xE4]; uint8_t u57[4]; };   // at 0xE4
+    struct __attribute__((packed)) { unsigned char pad_57[0xE8]; uint8_t u58[4]; };   // at 0xE8
+    struct __attribute__((packed)) { unsigned char pad_58[0xEC]; uint8_t u59[4]; };   // at 0xEC
+    struct __attribute__((packed)) { unsigned char pad_59[0xF0]; uint8_t u60[4]; };   // at 0xF0
+    struct __attribute__((packed)) { unsigned char pad_60[0xF4]; uint8_t u61[4]; };   // at 0xF4
+    struct __attribute__((packed)) { unsigned char pad_61[0xF8]; uint8_t u62[4]; };   // at 0xF8
+    struct __attribute__((packed)) { unsigned char pad_62[0xFC]; uint8_t u63[4]; };   // at 0xFC
+    struct __attribute__((packed)) { unsigned char pad_63[0x100]; uint8_t u64[4]; };   // at 0x100
+    struct __attribute__((packed)) { unsigned char pad_64[0x104]; uint8_t u65[4]; };   // at 0x104
+    struct __attribute__((packed)) { unsigned char pad_65[0x108]; uint8_t u66[4]; };   // at 0x108
+    struct __attribute__((packed)) { unsigned char pad_66[0x10C]; uint8_t u67[4]; };   // at 0x10C
+    struct __attribute__((packed)) { unsigned char pad_67[0x110]; uint8_t u68[4]; };   // at 0x110
+    struct __attribute__((packed)) { unsigned char pad_68[0x114]; uint8_t u69[4]; };   // at 0x114
+    struct __attribute__((packed)) { unsigned char pad_69[0x118]; uint8_t u70[4]; };   // at 0x118
+    struct __attribute__((packed)) { unsigned char pad_70[0x11C]; uint8_t u71[4]; };   // at 0x11C
+    struct __attribute__((packed)) { unsigned char pad_71[0x120]; uint8_t u72[4]; };   // at 0x120
+    struct __attribute__((packed)) { unsigned char pad_72[0x124]; uint8_t u73[4]; };   // at 0x124
+    struct __attribute__((packed)) { unsigned char pad_73[0x128]; uint8_t u74[4]; };   // at 0x128
+    struct __attribute__((packed)) { unsigned char pad_74[0x12C]; uint8_t u75[4]; };   // at 0x12C
+    struct __attribute__((packed)) { unsigned char pad_75[0x130]; uint8_t u76[4]; };   // at 0x130
+  } frame;
   
   orig::CMoGeneratorClone_ResolveTarget_v1(self);
-  puVar2 = *(uint32_t **)((int)self + 0xe0);
+  p2 = *(uint32_t **)((int)self + 0xe0);
   *(uint32_t *)((int)self + 0x78) = 0x3f800000;
   *(uint32_t *)((int)self + 0x7c) = 0x3f800000;
   *(uint32_t *)((int)self + 0x80) = 0x3f800000;
   *(uint32_t *)((int)self + 0x84) = 0x3f800000;
   *(uint32_t *)((int)self + 0x88) = 0x3f800000;
   *(uint32_t *)((int)self + 0x8c) = 0x3f800000;
-  for (; puVar2 != (uint32_t *)0x0; puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f)) {
-    switch(xi_sw(*puVar2 & 0xff)) {
+  for (; p2 != (uint32_t *)0x0; p2 = p2 + (*p2 >> 8 & 0x1f)) {
+    switch(xi_sw(*p2 & 0xff)) {
     case 5:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_f0;
-LAB_100483c4:
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,0x19,uVar5);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u17;
+code_100483C4:
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,p1,0x19,frame.u3);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 6:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_e4;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u20;
+        goto code_100483C4;
       }
       break;
     case 7:
-      if (puVar2[1] == 0) {
-        puVar1 = local_e0;
-LAB_100483bd:
-        uVar5 = puVar2[2];
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        p1 = frame.u21;
+code_100483BD:
+        frame.u3 = p2[2];
+        goto code_100483C4;
       }
       break;
     case 8:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_ec;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u18;
+        goto code_100483C4;
       }
       break;
     case 9:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_114;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u8;
+        goto code_100483C4;
       }
       break;
     case 0xb:
-      if (puVar2[1] == 0) {
-        puVar1 = local_10c;
-        goto LAB_100483bd;
+      if (p2[1] == 0) {
+        p1 = frame.u10;
+        goto code_100483BD;
       }
       break;
     case 0xc:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_f4;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u16;
+        goto code_100483C4;
       }
       break;
     case 0xd:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_104;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u12;
+        goto code_100483C4;
       }
       break;
     case 0xe:
-      if (puVar2[1] == 0) {
-        puVar1 = local_110;
-        goto LAB_100483bd;
+      if (p2[1] == 0) {
+        p1 = frame.u9;
+        goto code_100483BD;
       }
       break;
     case 0xf:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_108;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u11;
+        goto code_100483C4;
       }
       break;
     case 0x10:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_100;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u13;
+        goto code_100483C4;
       }
       break;
     case 0x12:
-      if (puVar2[1] == 0) {
-        puVar1 = local_11c;
-        goto LAB_100483bd;
+      if (p2[1] == 0) {
+        p1 = frame.u6;
+        goto code_100483BD;
       }
       break;
     case 0x13:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_fc;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u14;
+        goto code_100483C4;
       }
       break;
     case 0x14:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_118;
-        goto LAB_100483c4;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u7;
+        goto code_100483C4;
       }
       break;
     case 0x17:
-      if (puVar2[1] == 0) {
-        puVar1 = local_f8;
-        goto LAB_100483bd;
+      if (p2[1] == 0) {
+        p1 = frame.u15;
+        goto code_100483BD;
       }
     }
-    if ((char)*puVar2 == '\0') break;
+    if ((char)*p2 == '\0') break;
   }
-  puVar2 = *(uint32_t **)((int)self + 0xe4);
-  while (puVar2 != (uint32_t *)0x0) {
-    switch(xi_sw(*puVar2 & 0xff)) {
+  p2 = *(uint32_t **)((int)self + 0xe4);
+  while (p2 != (uint32_t *)0x0) {
+    switch(xi_sw(*p2 & 0xff)) {
     case 0x21:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_fc,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u14,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x22:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u23,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x23:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u24,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x24:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_28,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u67,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x25:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_dc,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u22,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x26:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_48,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u59,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x27:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_88,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u43,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x28:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u75,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x29:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_80,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u45,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2a:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_40,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u61,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2b:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_78,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u47,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_20,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u69,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2d:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_70,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u49,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2e:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_bc,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u30,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x2f:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u32,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x33:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_ac,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u34,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x34:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u36,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x35:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_9c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u38,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x36:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_94,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u40,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x37:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_8c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u42,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x38:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_84,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u44,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x39:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_7c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u46,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x3c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_110,5,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u9,5,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x44:
     case 0x53:
     case 0x6a:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_118,5,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u7,5,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x4e:
     case 0x4f:
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_f8;
-        uVar4 = 0x3e;
-LAB_1004845e:
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,uVar4,uVar5);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u15;
+        frame.u2 = 0x3e;
+code_1004845E:
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,p1,frame.u2,frame.u3);
+        p2[1] = *(uint32_t *)u1;
       }
-      goto LAB_1004846b;
+      goto code_1004846B;
     case 0x50:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_24,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u68,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x51:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_1c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u70,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x52:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u19,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x54:
-      if (puVar2[4] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_100,0x3e,puVar2[5]);
-        puVar2[4] = *(uint32_t *)uVar3;
+      if (p2[4] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u13,0x3e,p2[5]);
+        p2[4] = *(uint32_t *)u1;
       }
-      uVar5 = puVar2[2];
-      if ((uVar5 != 0) && (puVar2[1] == 0)) {
-        uVar4 = 0x19;
-        puVar1 = local_108;
-        goto LAB_1004845e;
+      frame.u3 = p2[2];
+      if ((frame.u3 != 0) && (p2[1] == 0)) {
+        frame.u2 = 0x19;
+        p1 = frame.u11;
+        goto code_1004845E;
       }
-LAB_1004846b:
-      *(uint32_t *)((int)self + 0xa0) = puVar2[1];
+code_1004846B:
+      *(uint32_t *)((int)self + 0xa0) = p2[1];
       break;
     case 0x55:
-      if ((puVar2[4] != 0) && (puVar2[5] == 0)) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_120,10,puVar2[4]);
-        puVar2[5] = *(uint32_t *)uVar3;
+      if ((p2[4] != 0) && (p2[5] == 0)) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u5,10,p2[4]);
+        p2[5] = *(uint32_t *)u1;
       }
       break;
     case 0x59:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_74,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u48,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5a:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_6c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u50,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5b:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_64,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u52,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_5c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u54,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5d:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_54,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u56,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5e:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_4c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u58,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x5f:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_44,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u60,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x60:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_60,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u53,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x61:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u31,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x62:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_30,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u65,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 99:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_b0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u33,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 100:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u27,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x65:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_10,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u73,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x66:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u29,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x68:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_58,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u55,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x69:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_3c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u62,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x6b:
-      if (puVar2[2] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_124,0x4a,puVar2[1]);
-        puVar2[2] = *(uint32_t *)uVar3;
+      if (p2[2] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u4,0x4a,p2[1]);
+        p2[2] = *(uint32_t *)u1;
       }
       break;
     case 0x6c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a8,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u35,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x6d:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_18,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u71,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x6e:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_a0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u37,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x6f:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_50,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u57,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x70:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_98,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u39,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x74:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u76,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x75:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_38,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u63,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x76:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_11c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u6,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x77:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_104,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u12,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x78:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_f4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u16,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x7c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_cc,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u26,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x7d:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u28,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x80:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_d0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u25,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x81:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_68,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u51,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x82:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_2c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u66,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x83:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_10c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u10,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x84:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_ec,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u18,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x85:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_114,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u8,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x8b:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_90,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u41,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x8c:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_14,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u72,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x8d:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_c,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u74,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x93:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_34,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u64,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x95:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u21,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x96:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e4,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u20,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
       break;
     case 0x97:
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_f0,0x19,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u17,0x19,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
     }
-    if ((char)*puVar2 == '\0') {
-      puVar2 = (uint32_t *)0x0;
+    if ((char)*p2 == '\0') {
+      p2 = (uint32_t *)0x0;
     }
     else {
-      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+      p2 = p2 + (*p2 >> 8 & 0x1f);
     }
   }
-  puVar2 = *(uint32_t **)((int)self + 0xe8);
-  while (puVar2 != (uint32_t *)0x0) {
-    if ((*puVar2 & 0xff) == 0x47) {
-      if (puVar2[3] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_e8,10,puVar2[2]);
-        puVar2[3] = *(uint32_t *)uVar3;
+  p2 = *(uint32_t **)((int)self + 0xe8);
+  while (p2 != (uint32_t *)0x0) {
+    if ((*p2 & 0xff) == 0x47) {
+      if (p2[3] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u19,10,p2[2]);
+        p2[3] = *(uint32_t *)u1;
       }
     }
-    else if ((*puVar2 & 0xff) == 0x65) {
-      if (puVar2[1] == 0) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_120,7,puVar2[2]);
-        puVar2[1] = *(uint32_t *)uVar3;
+    else if ((*p2 & 0xff) == 0x65) {
+      if (p2[1] == 0) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u5,7,p2[2]);
+        p2[1] = *(uint32_t *)u1;
       }
-      if ((puVar2[1] != 0) && (puVar2[2] == 0)) {
-        uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,local_124,5,puVar2[1]);
-        puVar2[2] = *(uint32_t *)uVar3;
+      if ((p2[1] != 0) && (p2[2] == 0)) {
+        u1 = orig::CMoResource_FindByTypeAndId_v1(self,frame.u4,5,p2[1]);
+        p2[2] = *(uint32_t *)u1;
       }
     }
-    if ((char)*puVar2 == '\0') {
-      puVar2 = (uint32_t *)0x0;
+    if ((char)*p2 == '\0') {
+      p2 = (uint32_t *)0x0;
     }
     else {
-      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+      p2 = p2 + (*p2 >> 8 & 0x1f);
     }
   }
-  puVar2 = *(uint32_t **)((int)self + 0xec);
+  p2 = *(uint32_t **)((int)self + 0xec);
   do {
-    if (puVar2 == (uint32_t *)0x0) {
+    if (p2 == (uint32_t *)0x0) {
       return;
     }
-    if ((*puVar2 & 0xff) == 1) {
-      if (puVar2[1] == 0) {
-        uVar5 = puVar2[2];
-        puVar1 = local_124;
-        uVar4 = 5;
-        goto LAB_1004907c;
+    if ((*p2 & 0xff) == 1) {
+      if (p2[1] == 0) {
+        frame.u3 = p2[2];
+        p1 = frame.u4;
+        frame.u2 = 5;
+        goto code_1004907C;
       }
     }
-    else if (((*puVar2 & 0xff) == 2) && (puVar2[1] == 0)) {
-      uVar5 = puVar2[2];
-      puVar1 = local_120;
-      uVar4 = 7;
-LAB_1004907c:
-      uVar3 = orig::CMoResource_FindByTypeAndId_v1(self,puVar1,uVar4,uVar5);
-      puVar2[1] = *(uint32_t *)uVar3;
+    else if (((*p2 & 0xff) == 2) && (p2[1] == 0)) {
+      frame.u3 = p2[2];
+      p1 = frame.u5;
+      frame.u2 = 7;
+code_1004907C:
+      u1 = orig::CMoResource_FindByTypeAndId_v1(self,p1,frame.u2,frame.u3);
+      p2[1] = *(uint32_t *)u1;
     }
-    if ((char)*puVar2 == '\0') {
-      puVar2 = (uint32_t *)0x0;
+    if ((char)*p2 == '\0') {
+      p2 = (uint32_t *)0x0;
     }
     else {
-      puVar2 = puVar2 + (*puVar2 >> 8 & 0x1f);
+      p2 = p2 + (*p2 >> 8 & 0x1f);
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x100492F0
 // GATE: PASS -- 100 trials, 70 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-uint32_t * __thiscall CMoGeneratorClone::FindCmdByType(void * self, uint32_t param_1)
+uint32_t * __thiscall CMoGeneratorClone::FindCmdByType(void * self, uint32_t arg2)
 {
-  uint32_t *puVar1;
-  uint32_t uVar2;
+  uint32_t *p1;
+  uint32_t u1;
   
-  puVar1 = *(uint32_t **)((int)self + 0xe4);
+  p1 = *(uint32_t **)((int)self + 0xe4);
   while( true ) {
-    if (puVar1 == (uint32_t *)0x0) {
+    if (p1 == (uint32_t *)0x0) {
       return (uint32_t *)0x0;
     }
-    uVar2 = *puVar1 & 0xff;
-    if (uVar2 == param_1) break;
-    if (uVar2 == 0) {
+    u1 = *p1 & 0xff;
+    if (u1 == arg2) break;
+    if (u1 == 0) {
       return (uint32_t *)0x0;
     }
-    puVar1 = puVar1 + (*puVar1 >> 8 & 0x1f);
+    p1 = p1 + (*p1 >> 8 & 0x1f);
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10049520
 // GATE: PASS -- 100 trials, 1 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 1
-void __thiscall CMoGeneratorClone::CopyType1Dwords(void * self, uint32_t * param_1)
+void __thiscall CMoGeneratorClone::CopyType1Dwords(void * self, uint32_t * arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
-  *param_1 = puVar1[5];
-  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
-  param_1[1] = puVar1[6];
-  puVar1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
-  param_1[2] = puVar1[7];
+  p1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  *arg2 = p1[5];
+  p1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  arg2[1] = p1[6];
+  p1 = orig::CMoGeneratorClone_FindCmdByType_v1(self,1);
+  arg2[2] = p1[7];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10049570
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoGeneratorClone::ResolveTarget(void * self)
+bits32 __thiscall CMoGeneratorClone::ResolveTarget(void * self)
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  uint32_t *puVar4;
-  int iVar5;
-  int *piVar6;
-  uint8_t bVar7;
-  uint64_t uVar8;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  int i2;
+  int *p1;
+  uint32_t *p2;
+  int i3;
+  int *p3;
+  uint8_t u1;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p4; };   // at 0x0
+  } frame;
   
-  iVar1 = *(int *)((int)self + 0xe4);
-  if (*(int *)(iVar1 + 8) == 0) {
-    iVar5 = (int)*(char *)(iVar1 + 0x21);
-    switch(xi_sw(iVar5)) {
+  i1 = *(int *)((int)self + 0xe4);
+  if (*(int *)(i1 + 8) == 0) {
+    i3 = (int)*(char *)(i1 + 0x21);
+    switch(xi_sw(i3)) {
     case 0xb:
     case 0xc:
     case 0x1f:
-      iVar5 = 0x1f;
+      i3 = 0x1f;
       break;
     case 0xe:
     case 0x21:
     case 0x39:
-      iVar5 = 0x21;
+      i3 = 0x21;
       break;
     case 0x1d:
-      iVar5 = 0x25;
+      i3 = 0x25;
     }
-    *(uint8_t *)(iVar1 + 0x28) = 0;
-    if ((((iVar5 == 0x57) || (iVar5 == 0x47)) || (iVar5 == 0x22)) ||
-       ((iVar5 == 0x24 || (iVar5 == 0x5c)))) {
+    *(uint8_t *)(i1 + 0x28) = 0;
+    if ((((i3 == 0x57) || (i3 == 0x47)) || (i3 == 0x22)) ||
+       ((i3 == 0x24 || (i3 == 0x5c)))) {
       *(uint32_t *)(*(int *)((int)self + 0xe4) + 8) = 1;
       return 0;
     }
-    iVar1 = *(int *)((int)self + 0xe4);
-    local_4 = self;
-    uVar8 = orig::CMoResource_FindByTypeAndId_v1(self,&local_4,iVar5,*(uint32_t *)(iVar1 + 0xc));
-    iVar2 = *(int *)uVar8;
-    *(int *)(iVar1 + 8) = iVar2;
-    if ((iVar2 == 0) && (iVar5 == 0x1f)) {
+    i1 = *(int *)((int)self + 0xe4);
+    frame.p4 = self;
+    u2 = orig::CMoResource_FindByTypeAndId_v1(self,&frame.p4,i3,*(uint32_t *)(i1 + 0xc));
+    i2 = *(int *)u2;
+    *(int *)(i1 + 8) = i2;
+    if ((i2 == 0) && (i3 == 0x1f)) {
       *(uint32_t *)(*(int *)((int)self + 0xe4) + 8) = 0;
-      piVar6 = *(int **)((int)self + 0x14);
+      p3 = *(int **)((int)self + 0x14);
       do {
-        if ((piVar6 == (int *)0x0) || ((void *)*piVar6 == (void *)0x0)) break;
-        uVar8 = orig::CMoResource_FindByTypeAndId_v1
-                          ((void *)*piVar6,&local_4,0x2e,
+        if ((p3 == (int *)0x0) || ((void *)*p3 == (void *)0x0)) break;
+        u2 = orig::CMoResource_FindByTypeAndId_v1
+                          ((void *)*p3,&frame.p4,0x2e,
                            *(uint32_t *)(*(int *)((int)self + 0xe4) + 0xc));
-        piVar3 = (int *)*(int *)uVar8;
-        if ((piVar3 != (int *)0x0) && (*piVar3 != 0)) {
-          iVar1 = *(int *)((int)self + 0xe4);
-          iVar5 = orig::ZoneMap_FindSlotByName(g_pZoneMap,*piVar3 + 0x30);
-          *(int *)(iVar1 + 8) = iVar5;
+        p1 = (int *)*(int *)u2;
+        if ((p1 != (int *)0x0) && (*p1 != 0)) {
+          i1 = *(int *)((int)self + 0xe4);
+          i3 = orig::ZoneMap_FindSlotByName(g_pZoneMap,*p1 + 0x30);
+          *(int *)(i1 + 8) = i3;
           *(uint8_t *)(*(int *)((int)self + 0xe4) + 0x28) = 1;
           break;
         }
-        bVar7 = *(int **)(*piVar6 + 0x28) != piVar6;
-        piVar6 = *(int **)(*piVar6 + 0x28);
-      } while (bVar7);
+        u1 = *(int **)(*p3 + 0x28) != p3;
+        p3 = *(int **)(*p3 + 0x28);
+      } while (u1);
     }
   }
-  puVar4 = *(uint32_t **)(*(int *)((int)self + 0xe4) + 8);
-  if (((uint32_t *)0x1 < puVar4) && (puVar4 != (uint32_t *)0x0)) {
-    return *puVar4;
+  p2 = *(uint32_t **)(*(int *)((int)self + 0xe4) + 8);
+  if (((uint32_t *)0x1 < p2) && (p2 != (uint32_t *)0x0)) {
+    return *p2;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1004E470
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoGeneratorClone::TestFlag20000000(void * self)
+bits32 __thiscall CMoGeneratorClone::TestFlag20000000(void * self)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = *(uint32_t *)((int)self + 0xd8) & 0x20000000;
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(uVar1 == 0x20000000)));
+  u1 = *(uint32_t *)((int)self + 0xd8) & 0x20000000;
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(u1 == 0x20000000)));
 }
 
 // FUNCTION: FFXIMAIN 0x1004E720
 // GATE: PASS -- 100 trials, 77 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 77
-void CMoGeneratorClone::ExecuteCmdList(int a2)
+void CMoGeneratorClone::ExecuteCmdList(int arg1)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
-  int v2;
-  _DWORD *v3;
-  int v4;
-  unsigned int v5;
-  int *v6;
-  int v7;
-  int v8;
-  int *v9;
-  int v10;
-  __int16 v11;
-  int **v12;
-  int *v13;
-  _DWORD *v14;
-  _DWORD *v15;
-  _DWORD *v16;
-  int v17;
-  _DWORD *v18;
-  v2 = a2;
-  v3 = (_DWORD *)this->pExecCommandStream;
-  v4 = a2 + *(__int16 *)(a2 + 374);
-  v18 = self;
-  v17 = v4;
-  if ( v3 != nullptr )
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
+  int i1;
+  uint32_t *p1;
+  int i2;
+  unsigned int u1;
+  int *p2;
+  int i3;
+  int i4;
+  int *p3;
+  int i5;
+  short i6;
+  int **p4;
+  int *p5;
+  uint32_t *p6;
+  uint32_t *p7;
+  uint32_t *p8;
+  int i7;
+  uint32_t *p9;
+  i1 = arg1;
+  p1 = (uint32_t *)this->pExecCommandStream;
+  i2 = arg1 + *(short *)(arg1 + 374);
+  p9 = self;
+  i7 = i2;
+  if ( p1 != nullptr )
   {
     while ( 1 )
     {
-      v5 = (unsigned __int8)*v3 - 1;
+      u1 = (unsigned char)*p1 - 1;
       while ( 2 )
       {
-        switch ( v5 )
+        switch ( u1 )
         {
           case 0u:
-            v9 = (int *)v3[1];
-            if ( v9 != nullptr )
+            p3 = (int *)p1[1];
+            if ( p3 != nullptr )
             {
-              v10 = *v9;
-              if ( *v9 != 0 )
+              i5 = *p3;
+              if ( *p3 != 0 )
               {
-                v11 = *(_WORD *)(v10 + 214);
-                if ( orig::Generator_IsFlag400OrField22Zero((_DWORD *)*v9) )
-                  orig::YmGenerater_Stop(v10, nullptr);
-                *(_WORD *)(v10 + 214) = (__int64)(*(float *)(g_pResourceMng + 3760) + 1.0);
-                *(_DWORD *)(v10 + 204) = 0;
-                orig::CMoTask_Restart(v10);
-                v2 = a2;
-                orig::sub_100496F0(v10, a2);
-                orig::Generator_ClearSubobjectOrSetFlag(v10, 0);
-                *(_WORD *)(v10 + 214) = v11;
+                i6 = *(uint16_t *)(i5 + 214);
+                if ( orig::Generator_IsFlag400OrField22Zero((uint32_t *)*p3) )
+                  orig::YmGenerater_Stop(i5, nullptr);
+                *(uint16_t *)(i5 + 214) = (long long)(*(float *)(g_pResourceMng + 3760) + 1.0);
+                *(uint32_t *)(i5 + 204) = 0;
+                orig::CMoTask_Restart(i5);
+                i1 = arg1;
+                orig::game_100496F0(i5, arg1);
+                orig::Generator_ClearSubobjectOrSetFlag(i5, 0);
+                *(uint16_t *)(i5 + 214) = i6;
               }
             }
             break;
           case 1u:
-            v12 = (int **)v3[1];
-            if ( v12 != nullptr )
+            p4 = (int **)p1[1];
+            if ( p4 != nullptr )
             {
-              v13 = *v12;
-              v14 = self + 12;
-              v16 = (_DWORD *)orig::CMoAttachments_GetTarget(self + 12);
-              v15 = (_DWORD *)orig::CMoAttachments_GetCaster(v14);
-              orig::Scheduler_Execute(v13, v15, v16, 0, 0);
+              p5 = *p4;
+              p6 = self + 12;
+              p8 = (uint32_t *)orig::CMoAttachments_GetTarget(self + 12);
+              p7 = (uint32_t *)orig::CMoAttachments_GetCaster(p6);
+              orig::Scheduler_Execute(p5, p7, p8, 0, 0);
             }
             break;
           case 3u:
-            v8 = *(_DWORD *)(v4 + 4 * ((*v3 >> 13) & 0x3F) + 28);
-            if ( v8 != 0 )
-              orig::CMoSpline_ReleaseRef((_DWORD *)(*(_DWORD *)v8 + 48));
+            i4 = *(uint32_t *)(i2 + 4 * ((*p1 >> 13) & 0x3F) + 28);
+            if ( i4 != 0 )
+              orig::CMoSpline_ReleaseRef((uint32_t *)(*(uint32_t *)i4 + 48));
             break;
           case 4u:
-            *(float *)(v2 + 272) = *(float *)(v2 + 276);
+            *(float *)(i1 + 272) = *(float *)(i1 + 276);
             break;
           case 5u:
-            v6 = (int *)v3[1];
-            if ( v6 != nullptr )
+            p2 = (int *)p1[1];
+            if ( p2 != nullptr )
             {
-              v7 = *v6;
-              if ( v7 != 0 )
+              i3 = *p2;
+              if ( i3 != 0 )
               {
-                v3 = *(_DWORD **)(v7 + 236);
-                v5 = (unsigned __int8)*v3 - 1;
-                if ( v5 <= 5 )
+                p1 = *(uint32_t **)(i3 + 236);
+                u1 = (unsigned char)*p1 - 1;
+                if ( u1 <= 5 )
                   continue;
               }
             }
             break;
           default:
-            goto LABEL_20;
+            goto L1;
         }
         break;
       }
-LABEL_20:
-      if ( (unsigned __int8)*v3 == 0 )
+L1:
+      if ( (unsigned char)*p1 == 0 )
         break;
-      v3 += (*v3 >> 8) & 0x1F;
-      if ( v3 == nullptr )
+      p1 += (*p1 >> 8) & 0x1F;
+      if ( p1 == nullptr )
         break;
-      v4 = v17;
-      self = v18;
+      i2 = i7;
+      self = p9;
     }
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10052960
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoGeneratorClone::SetFlagBit0At17B(void * self, undefined4 param_1)
+void __thiscall CMoGeneratorClone::SetFlagBit0At17B(void * self, bits32 arg2)
 {
-  *(uint32_t *)((int)self + 0x17b) = param_1 & 1 | *(uint32_t *)((int)self + 0x17b) & 0xfffffffe;
+  *(uint32_t *)((int)self + 0x17b) = arg2 & 1 | *(uint32_t *)((int)self + 0x17b) & 0xfffffffe;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10052980
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoGeneratorClone::SetFlagBit1At17B(void * self, undefined4 param_1)
+void __thiscall CMoGeneratorClone::SetFlagBit1At17B(void * self, bits32 arg2)
 {
-  *(uint32_t *)((int)self + 0x17b) = (param_1 & 1) * 2 ^ *(uint32_t *)((int)self + 0x17b) & 0xfffffffd;
+  *(uint32_t *)((int)self + 0x17b) = (arg2 & 1) * 2 ^ *(uint32_t *)((int)self + 0x17b) & 0xfffffffd;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10053450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CMoGeneratorClone::CopyParams(void * self, int param_1)
+void __thiscall CMoGeneratorClone::CopyParams(void * self, int arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t *puVar5;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t *p1;
   
-  *(uint32_t *)((int)self + 0x20) = *(uint32_t *)(param_1 + 0x20);
-  *(uint32_t *)((int)self + 0x24) = *(uint32_t *)(param_1 + 0x24);
-  *(uint32_t *)((int)self + 0x28) = *(uint32_t *)(param_1 + 0x28);
-  *(uint32_t *)((int)self + 0x2c) = *(uint32_t *)(param_1 + 0x2c);
-  orig::AttachNotify_CopyFields((void *)((int)self + 0x30),param_1 + 0x30);
-  *(uint32_t *)((int)self + 0x70) = *(uint32_t *)(param_1 + 0x70);
-  *(uint32_t *)((int)self + 0x74) = *(uint32_t *)(param_1 + 0x74);
-  *(uint32_t *)((int)self + 0x78) = *(uint32_t *)(param_1 + 0x78);
-  *(uint32_t *)((int)self + 0x7c) = *(uint32_t *)(param_1 + 0x7c);
-  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(param_1 + 0x80);
-  *(uint32_t *)((int)self + 0x84) = *(uint32_t *)(param_1 + 0x84);
-  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(param_1 + 0x88);
-  *(uint32_t *)((int)self + 0x8c) = *(uint32_t *)(param_1 + 0x8c);
-  *(uint32_t *)((int)self + 0x90) = *(uint32_t *)(param_1 + 0x90);
-  *(uint32_t *)((int)self + 0x94) = *(uint32_t *)(param_1 + 0x94);
-  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(param_1 + 0x98);
-  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(param_1 + 0x98);
-  *(uint32_t *)((int)self + 0x9c) = *(uint32_t *)(param_1 + 0x9c);
-  *(uint32_t *)((int)self + 0xa0) = *(uint32_t *)(param_1 + 0xa0);
-  *(uint32_t *)((int)self + 0xa4) = *(uint32_t *)(param_1 + 0xa4);
-  *(uint32_t *)((int)self + 0xa8) = *(uint32_t *)(param_1 + 0xa8);
-  *(uint32_t *)((int)self + 0xac) = *(uint32_t *)(param_1 + 0xac);
-  *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(param_1 + 0xb0);
-  puVar5 = (uint32_t *)((int)self + 0xb4);
-  iVar1 = 3;
+  *(uint32_t *)((int)self + 0x20) = *(uint32_t *)(arg2 + 0x20);
+  *(uint32_t *)((int)self + 0x24) = *(uint32_t *)(arg2 + 0x24);
+  *(uint32_t *)((int)self + 0x28) = *(uint32_t *)(arg2 + 0x28);
+  *(uint32_t *)((int)self + 0x2c) = *(uint32_t *)(arg2 + 0x2c);
+  orig::AttachNotify_CopyFields((void *)((int)self + 0x30),arg2 + 0x30);
+  *(uint32_t *)((int)self + 0x70) = *(uint32_t *)(arg2 + 0x70);
+  *(uint32_t *)((int)self + 0x74) = *(uint32_t *)(arg2 + 0x74);
+  *(uint32_t *)((int)self + 0x78) = *(uint32_t *)(arg2 + 0x78);
+  *(uint32_t *)((int)self + 0x7c) = *(uint32_t *)(arg2 + 0x7c);
+  *(uint32_t *)((int)self + 0x80) = *(uint32_t *)(arg2 + 0x80);
+  *(uint32_t *)((int)self + 0x84) = *(uint32_t *)(arg2 + 0x84);
+  *(uint32_t *)((int)self + 0x88) = *(uint32_t *)(arg2 + 0x88);
+  *(uint32_t *)((int)self + 0x8c) = *(uint32_t *)(arg2 + 0x8c);
+  *(uint32_t *)((int)self + 0x90) = *(uint32_t *)(arg2 + 0x90);
+  *(uint32_t *)((int)self + 0x94) = *(uint32_t *)(arg2 + 0x94);
+  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(arg2 + 0x98);
+  *(uint32_t *)((int)self + 0x98) = *(uint32_t *)(arg2 + 0x98);
+  *(uint32_t *)((int)self + 0x9c) = *(uint32_t *)(arg2 + 0x9c);
+  *(uint32_t *)((int)self + 0xa0) = *(uint32_t *)(arg2 + 0xa0);
+  *(uint32_t *)((int)self + 0xa4) = *(uint32_t *)(arg2 + 0xa4);
+  *(uint32_t *)((int)self + 0xa8) = *(uint32_t *)(arg2 + 0xa8);
+  *(uint32_t *)((int)self + 0xac) = *(uint32_t *)(arg2 + 0xac);
+  *(uint32_t *)((int)self + 0xb0) = *(uint32_t *)(arg2 + 0xb0);
+  p1 = (uint32_t *)((int)self + 0xb4);
+  i1 = 3;
   do {
-    *puVar5 = *(uint32_t *)(((param_1 + 0x70) - ((int)self + 0x70)) + (int)puVar5);
-    puVar5 = puVar5 + 1;
-    iVar1 = iVar1 + -1;
-  } while (iVar1 != 0);
+    *p1 = *(uint32_t *)(((arg2 + 0x70) - ((int)self + 0x70)) + (int)p1);
+    p1 = p1 + 1;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint32_t *)((int)self + 0xb0) = 0;
   *(uint32_t *)((int)self + 0xac) = 0;
   *(uint32_t *)((int)self + 0xa8) = 0;
   *(uint32_t *)((int)self + 0xa4) = 0;
-  *(uint32_t *)((int)self + 0xc0) = *(uint32_t *)(param_1 + 0xc0);
-  *(uint32_t *)((int)self + 0xc4) = *(uint32_t *)(param_1 + 0xc4);
-  *(uint32_t *)((int)self + 200) = *(uint32_t *)(param_1 + 200);
-  *(uint32_t *)((int)self + 0xcc) = *(uint32_t *)(param_1 + 0xcc);
-  *(uint32_t *)((int)self + 0xd0) = *(uint32_t *)(param_1 + 0xd0);
-  *(uint16_t *)((int)self + 0xd4) = *(uint16_t *)(param_1 + 0xd4);
-  *(uint16_t *)((int)self + 0xd6) = *(uint16_t *)(param_1 + 0xd6);
-  uVar3 = *(uint32_t *)((int)self + 0xd8);
-  uVar4 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x1ff ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar4;
-  uVar2 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar4) & 0x200 ^ uVar4;
-  *(uint32_t *)((int)self + 0xd8) = uVar2;
-  uVar3 = ((uint32_t)(((uint32_t)(uint16_t)((short)(uVar3 >> 0x10)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)(uVar2 >> 8)) << 8) | (uint8_t)((char)uVar4)))))) & 0xfffff3ff ^
-          *(uint32_t *)(param_1 + 0xd8) & 0x400;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x1000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x2000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0xfffc000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x10000000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x20000000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
-  uVar3 = (*(uint32_t *)(param_1 + 0xd8) ^ uVar3) & 0x40000000 ^ uVar3;
-  *(uint32_t *)((int)self + 0xd8) = uVar3;
+  *(uint32_t *)((int)self + 0xc0) = *(uint32_t *)(arg2 + 0xc0);
+  *(uint32_t *)((int)self + 0xc4) = *(uint32_t *)(arg2 + 0xc4);
+  *(uint32_t *)((int)self + 200) = *(uint32_t *)(arg2 + 200);
+  *(uint32_t *)((int)self + 0xcc) = *(uint32_t *)(arg2 + 0xcc);
+  *(uint32_t *)((int)self + 0xd0) = *(uint32_t *)(arg2 + 0xd0);
+  *(uint16_t *)((int)self + 0xd4) = *(uint16_t *)(arg2 + 0xd4);
+  *(uint16_t *)((int)self + 0xd6) = *(uint16_t *)(arg2 + 0xd6);
+  u2 = *(uint32_t *)((int)self + 0xd8);
+  u3 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x1ff ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u3;
+  u1 = (*(uint32_t *)(arg2 + 0xd8) ^ u3) & 0x200 ^ u3;
+  *(uint32_t *)((int)self + 0xd8) = u1;
+  u2 = ((uint32_t)(((uint32_t)(uint16_t)((short)(u2 >> 0x10)) << 16) | (uint16_t)(((uint16_t)(((uint16_t)(uint8_t)((char)(u1 >> 8)) << 8) | (uint8_t)((char)u3)))))) & 0xfffff3ff ^
+          *(uint32_t *)(arg2 + 0xd8) & 0x400;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x1000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x2000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0xfffc000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x10000000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x20000000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
+  u2 = (*(uint32_t *)(arg2 + 0xd8) ^ u2) & 0x40000000 ^ u2;
+  *(uint32_t *)((int)self + 0xd8) = u2;
   *(uint32_t *)((int)self + 0xd8) =
-       (uVar3 ^ *(uint32_t *)(param_1 + 0xd8)) & 0x7fffffff ^ *(uint32_t *)(param_1 + 0xd8);
-  *(uint16_t *)((int)self + 0xdc) = *(uint16_t *)(param_1 + 0xdc);
-  *(uint8_t *)((int)self + 0xde) = *(uint8_t *)(param_1 + 0xde);
-  *(uint8_t *)((int)self + 0xdf) = *(uint8_t *)(param_1 + 0xdf);
-  *(uint32_t *)((int)self + 0xe0) = *(uint32_t *)(param_1 + 0xe0);
-  *(uint32_t *)((int)self + 0xe4) = *(uint32_t *)(param_1 + 0xe4);
-  *(uint32_t *)((int)self + 0xe8) = *(uint32_t *)(param_1 + 0xe8);
-  *(uint32_t *)((int)self + 0xec) = *(uint32_t *)(param_1 + 0xec);
+       (u2 ^ *(uint32_t *)(arg2 + 0xd8)) & 0x7fffffff ^ *(uint32_t *)(arg2 + 0xd8);
+  *(uint16_t *)((int)self + 0xdc) = *(uint16_t *)(arg2 + 0xdc);
+  *(uint8_t *)((int)self + 0xde) = *(uint8_t *)(arg2 + 0xde);
+  *(uint8_t *)((int)self + 0xdf) = *(uint8_t *)(arg2 + 0xdf);
+  *(uint32_t *)((int)self + 0xe0) = *(uint32_t *)(arg2 + 0xe0);
+  *(uint32_t *)((int)self + 0xe4) = *(uint32_t *)(arg2 + 0xe4);
+  *(uint32_t *)((int)self + 0xe8) = *(uint32_t *)(arg2 + 0xe8);
+  *(uint32_t *)((int)self + 0xec) = *(uint32_t *)(arg2 + 0xec);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100536C0
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
-int CMoGeneratorClone::CreateInstance(_DWORD *a2, _DWORD *a3, int a4)
+int CMoGeneratorClone::CreateInstance(uint32_t *arg1, uint32_t *arg2, int arg3)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
-  _DWORD *v5;
-  int v6;
-  int v7;
-  int v8;
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
+  uint32_t *p1;
+  int i1;
+  int i2;
+  int i3;
   int i;
-  int v11;
-  v5 = orig::Mem_AllocWithFallback(252, 1);
-  v6 = (int)v5;
-  byte_1047D12C = 1;
-  if ( v5 != nullptr )
+  int i4;
+  p1 = orig::Mem_AllocWithFallback(252, 1);
+  i1 = (int)p1;
+  g_1047D12C = 1;
+  if ( p1 != nullptr )
   {
-    orig::CMoGeneratorRes_Constructor((int)v5);
-    *(_DWORD *)v6 = &CMoGeneratorClone_vtbl;
-    *(_DWORD *)(v6 + 48) = &mixin_of_CMoGeneratorClone_0x1032B680;
-    *(_DWORD *)(v6 + 240) = 0;
-    *(_DWORD *)(v6 + 248) = 0;
+    orig::CMoGeneratorRes_Constructor((int)p1);
+    *(uint32_t *)i1 = &CMoGeneratorClone_vtbl;
+    *(uint32_t *)(i1 + 48) = &mixin_of_CMoGeneratorClone_0x1032B680;
+    *(uint32_t *)(i1 + 240) = 0;
+    *(uint32_t *)(i1 + 248) = 0;
   }
   else
   {
-    v6 = 0;
+    i1 = 0;
   }
-  orig::CMoGeneratorClone_CopyParams(v6, (int)self);
-  *(_DWORD *)(v6 + 120) = 1065353216;
-  *(_DWORD *)(v6 + 124) = 1065353216;
-  *(_DWORD *)(v6 + 128) = 1065353216;
-  *(_DWORD *)(v6 + 132) = 1065353216;
-  *(_DWORD *)(v6 + 136) = 1065353216;
-  *(_DWORD *)(v6 + 140) = 1065353216;
-  orig::CMoAttachments_Reset((_DWORD *)(v6 + 48));
-  v7 = *(_DWORD *)(v6 + 36);
-  *(_BYTE *)(v6 + 26) |= 5u;
-  *(_DWORD *)(v6 + 156) = 0;
-  *(_DWORD *)(v6 + 36) = v7 | 0x4000000;
-  *(_DWORD *)(v6 + 244) = this->field_14;
-  orig::MeshResourceMng_AllocHandle((_DWORD *)g_pMeshResourceMng, &v11, v6);
-  orig::CMoAttachments_SetCaster((int *)(v6 + 48), a2);
-  orig::CMoAttachments_SetTarget((int *)(v6 + 48), a3);
-  v8 = *(_DWORD *)(v6 + 216);
-  *(_DWORD *)(v6 + 32) = 1852796003;
-  *(_DWORD *)(v6 + 156) = 0;
-  *(_DWORD *)(v6 + 216) = v8 & 0xFFFFF7FF;
-  *(_DWORD *)(v6 + 40) = this->field_14;
-  *(_WORD *)(v6 + 24) &= 0x8000u;
-  *(_DWORD *)(v6 + 36) &= ~0x8000000u;
-  orig::CMoResource_RegisterInTypeList((_DWORD *)v6);
-  if ( (_BYTE)a4 != 0 )
-    orig::SharedConditionalStateReset(v6);
-  for ( i = this->pCommandStream; i != 0; i += 4 * ((*(_DWORD *)i >> 8) & 0x1F) )
+  orig::CMoGeneratorClone_CopyParams(i1, (int)self);
+  *(uint32_t *)(i1 + 120) = 1065353216;
+  *(uint32_t *)(i1 + 124) = 1065353216;
+  *(uint32_t *)(i1 + 128) = 1065353216;
+  *(uint32_t *)(i1 + 132) = 1065353216;
+  *(uint32_t *)(i1 + 136) = 1065353216;
+  *(uint32_t *)(i1 + 140) = 1065353216;
+  orig::CMoAttachments_Reset((uint32_t *)(i1 + 48));
+  i2 = *(uint32_t *)(i1 + 36);
+  *(uint8_t *)(i1 + 26) |= 5u;
+  *(uint32_t *)(i1 + 156) = 0;
+  *(uint32_t *)(i1 + 36) = i2 | 0x4000000;
+  *(uint32_t *)(i1 + 244) = this->field_14;
+  orig::MeshResourceMng_AllocHandle((uint32_t *)g_pMeshResourceMng, &i4, i1);
+  orig::CMoAttachments_SetCaster((int *)(i1 + 48), arg1);
+  orig::CMoAttachments_SetTarget((int *)(i1 + 48), arg2);
+  i3 = *(uint32_t *)(i1 + 216);
+  *(uint32_t *)(i1 + 32) = 1852796003;
+  *(uint32_t *)(i1 + 156) = 0;
+  *(uint32_t *)(i1 + 216) = i3 & 0xFFFFF7FF;
+  *(uint32_t *)(i1 + 40) = this->field_14;
+  *(uint16_t *)(i1 + 24) &= 0x8000u;
+  *(uint32_t *)(i1 + 36) &= ~0x8000000u;
+  orig::CMoResource_RegisterInTypeList((uint32_t *)i1);
+  if ( (uint8_t)arg3 != 0 )
+    orig::SharedConditionalStateReset(i1);
+  for ( i = this->pCommandStream; i != 0; i += 4 * ((*(uint32_t *)i >> 8) & 0x1F) )
   {
-    if ( *(_BYTE *)i == 4 )
+    if ( *(uint8_t *)i == 4 )
     {
-      if ( *(_DWORD *)(i + 4) == 0 )
-        *(_DWORD *)(i + 4) = *orig::CMoResource_FindByTypeAndId(self, &a2, 25, *(_DWORD *)(i + 8));
-      a4 = this->flags & 0x1FF;
-      *(float *)(i + 16) = (float)a4;
+      if ( *(uint32_t *)(i + 4) == 0 )
+        *(uint32_t *)(i + 4) = *orig::CMoResource_FindByTypeAndId(self, &arg1, 25, *(uint32_t *)(i + 8));
+      arg3 = this->flags & 0x1FF;
+      *(float *)(i + 16) = (float)arg3;
     }
-    if ( (unsigned __int8)*(_DWORD *)i == 0 )
+    if ( (unsigned char)*(uint32_t *)i == 0 )
       break;
   }
-  return v6;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10053E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 int CMoGeneratorClone::InitDefaultParams()
 {
-  _DWORD *v2;
+  uint32_t *p1;
   if ( this->field_A4 == 0 )
   {
-    v2 = orig::Mem_AllocWithHeader12(64, 1);
-    this->field_A4 = v2;
-    orig::MoProcessor_CallVSlot49(v2);
+    p1 = orig::Mem_AllocWithHeader12(64, 1);
+    this->field_A4 = p1;
+    orig::MoProcessor_CallVSlot49(p1);
     this->field_78 = 1065353216;
     this->field_7C = 1065353216;
     this->field_80 = 1065353216;
@@ -1317,16 +1321,16 @@ int CMoGeneratorClone::InitDefaultParams()
 void __thiscall CMoGeneratorClone::Destructor(void * self)
 {
   char xi_frame[12] __attribute__((aligned(4)));
-  int *this_00;
+  int *obj1;
   
   *(uint8_t ***)self =
        &CMoGeneratorClone_vtbl_as_v0;
   *(uint32_t *)((int)self + 0x30) = &mixin_of_CMoGeneratorClone_0x1032B680_as_v0;
   orig::YmGenerater_Stop_v3(self,(int *)0x0,&xi_frame[0]);
   orig::CMoAttachments_ResetAll_v1((uint32_t *)((int)self + 0x30));
-  this_00 = *(int **)((int)self + 0xa8);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  obj1 = *(int **)((int)self + 0xa8);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self + 0xa8) = 0;
   }
   if (*(int *)((int)self + 0xf8) != 0) {
@@ -1339,11 +1343,11 @@ void __thiscall CMoGeneratorClone::Destructor(void * self)
 
 // FUNCTION: FFXIMAIN 0x10053840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-char * CMoGeneratorClone::ScalarDeletingDtor(char a2)
+char * CMoGeneratorClone::ScalarDeletingDtor(char arg1)
 {
   char * self = reinterpret_cast<char *>(this);  // byte-exact view for the rest
   orig::CMoGeneratorClone_Destructor(self);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

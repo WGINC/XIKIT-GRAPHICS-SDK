@@ -22,7 +22,7 @@ Why the file has this name (data/unit_names.json): MeshResourceMng_CreateResourc
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `ResHandle_FreeIfUnreferenced` calls `MoRes_FreeIfUnreferenced`
-- `ResourceHandle_IsResident` calls `ResourceIter_InPoolRange`, `sub_10071F80`
+- `ResourceHandle_IsResident` calls `ResourceIter_InPoolRange`, `game_10071F80`
 - `MeshResourceCreate_Create` calls `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::InitVariant12`, `CMoAttachments::Construct`, `CMoTask::InitAndRegister`, `CMoAttachments::SetCaster`, `CMoAttachments::SetTarget`
 - `MeshResourceCreate_Reset` calls nothing directly
 - `MeshResourceCreate_CopyField14At0` calls nothing directly

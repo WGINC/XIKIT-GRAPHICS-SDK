@@ -4,31 +4,33 @@
 
 // FUNCTION: FFXIMAIN 0x102A34D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxLighting_ApplyLighting(int param_1)
+XI_API void __cdecl SqgxLighting_ApplyLighting(int arg1)
 {
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 12);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u3; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f1; };   // at 0xC
+  } frame;
   
-  local_10 = *(uint32_t *)(param_1 + 0x14);
-  local_c = *(uint32_t *)(param_1 + 0x18);
-  local_8 = *(uint32_t *)(param_1 + 0x1c);
-  local_4 = (float)((long double)1.0f - (long double)*(float *)(param_1 + 0x30));
-  orig::sqgxColor_v1(&local_10);
-  orig::sqgxAmbient_v1(*(float *)(param_1 + 0x20));
-  orig::SqgxContext_SetFloat76C(*(float *)(param_1 + 0x24));
-  orig::SqgxContext_SetDword774AndFactor(*(uint32_t *)(param_1 + 0x28),*(float *)(param_1 + 0x2c),
-               (uint32_t)*(uint8_t *)(param_1 + 0x34));
+  frame.u1 = *(uint32_t *)(arg1 + 0x14);
+  frame.u2 = *(uint32_t *)(arg1 + 0x18);
+  frame.u3 = *(uint32_t *)(arg1 + 0x1c);
+  frame.f1 = (float)(1.0f - *(float *)(arg1 + 0x30));
+  orig::sqgxColor_v1(&frame.u1);
+  orig::sqgxAmbient_v1(*(float *)(arg1 + 0x20));
+  orig::SqgxContext_SetFloat76C(*(float *)(arg1 + 0x24));
+  orig::SqgxContext_SetDword774AndFactor(*(uint32_t *)(arg1 + 0x28),*(float *)(arg1 + 0x2c),
+               (uint32_t)*(uint8_t *)(arg1 + 0x34));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102A3540
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Sqgx_SetParam9cc(float param_1)
+XI_API void __cdecl Sqgx_SetParam9cc(float arg1)
 {
-  *(float *)(g_pSqgxContext_as_s32 + 0x9cc) = (float)(long double)param_1;
+  *(float *)(g_pSqgxContext_as_s32 + 0x9cc) = (float)arg1;
   return;
 }
 

@@ -18,8 +18,8 @@ int CMoActorColorDriveTask::Slot11CallGetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10062FF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-tagRECT * CMoActorColorDriveTask::Slot12ThunkDeletingDtor(char a2)
+tagRECT * CMoActorColorDriveTask::Slot12ThunkDeletingDtor(char arg1)
 {
   Vt_1032BAA8 * self = reinterpret_cast<Vt_1032BAA8 *>(this);  // byte-exact view for the rest
-  return orig::CMoActorRotationDriveTask_ScalarDeletingDtor((tagRECT *)(self - 13), a2);
+  return orig::CMoActorRotationDriveTask_ScalarDeletingDtor((tagRECT *)(self - 13), arg1);
 }

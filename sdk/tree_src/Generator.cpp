@@ -4,343 +4,347 @@
 
 // FUNCTION: FFXIMAIN 0x10053890
 // GATE: PASS -- 100 trials, 100 returned normally, 62 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) Generator_ClearSubobjectOrSetFlag(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) Generator_ClearSubobjectOrSetFlag(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  int *this_00;
-  uint32_t uVar1;
+  int *obj1;
+  uint32_t u1;
   
   *(uint32_t *)((int)self_ + 0xd8) = *(uint32_t *)((int)self_ + 0xd8) & 0xfffff7ff;
-  this_00 = *(int **)((int)self_ + 0xa8);
-  if (this_00 != (int *)0x0) {
-    if ((char)param_2 != '\0') {
-      uVar1 = ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  obj1 = *(int **)((int)self_ + 0xa8);
+  if (obj1 != (int *)0x0) {
+    if ((char)arg4 != '\0') {
+      u1 = ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
       *(uint32_t *)((int)self_ + 0xa8) = 0;
-      return uVar1;
+      return u1;
     }
     xi_eax = 1;
     *(uint16_t *)((int)self_ + 0xdc) = *(uint16_t *)((int)self_ + 0xdc) | 1;
-    this_00[5] = 1;
+    obj1[5] = 1;
   }
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x100538E0
 // GATE: PASS -- 100 trials, 28 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 28
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YmGenerater_Stop(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 * param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YmGenerater_Stop(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 * arg4)
 {
-  uint16_t uVar1;
-  int *piVar2;
-  int iVar3;
-  undefined4 uVar4;
-  uint32_t uVar5;
-  void *this_00;
-  int64_t lVar6;
-  uint8_t local_1;
+  uint16_t u1;
+  int *p1;
+  int i1;
+  bits32 u2;
+  uint32_t u3;
+  void *obj1;
+  int64_t i2;
+  uint8_t u4;
   
-  uVar5 = xi_eax & 0xffffff00;
-  local_1 = 0;
+  u3 = xi_eax & 0xffffff00;
+  u4 = 0;
   if ((*(uint8_t *)((int)self_ + 0x1a) >> 1 & 1) == 0) {
-    orig::CMoResource_AddRefChain_v1(self_,uVar5);
-    piVar2 = *(int **)((int)self_ + 0xac);
-    while (piVar2 != (int *)0x0) {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar2 + 0x18))))((void *)(piVar2),1);
-      piVar2 = *(int **)((int)self_ + 0xac);
+    orig::CMoResource_AddRefChain_v1(self_,u3);
+    p1 = *(int **)((int)self_ + 0xac);
+    while (p1 != (int *)0x0) {
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
+      p1 = *(int **)((int)self_ + 0xac);
     }
     if (((*(uint8_t *)((int)self_ + 0x1a) >> 2 & 1) != 0) && (*(int *)((int)self_ + 0xf8) != 0)) {
-      *(undefined4 *)(*(int *)((int)self_ + 0xf8) + 0x164) = 0;
-      *(undefined4 *)((int)self_ + 0xf8) = 0;
+      *(bits32 *)(*(int *)((int)self_ + 0xf8) + 0x164) = 0;
+      *(bits32 *)((int)self_ + 0xf8) = 0;
       orig::CMoResource_ReleaseChain_v1(self_);
     }
-    if (param_2 == (undefined4 *)0x0) {
-      this_00 = (void *)0x0;
+    if (arg4 == (bits32 *)0x0) {
+      obj1 = (void *)0x0;
     }
     else {
-      this_00 = (void *)*param_2;
+      obj1 = (void *)*arg4;
     }
-    iVar3 = *(int *)((int)self_ + 0xb0);
-    while (iVar3 != 0) {
-      if (this_00 != (void *)0x0) {
-        uVar1 = *(uint16_t *)((int)this_00 + 0xd6);
-        lVar6 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)(g_pResourceMng + 0xeb0) + (long double)1.0f);
-        *(short *)((int)this_00 + 0xd6) = (short)lVar6;
-        *(undefined4 *)((int)this_00 + 0xcc) = 0;
-        uVar4 = orig::CMoTask_Restart_v1(this_00);
-        uVar5 = orig::FUN_100496f0(this_00,*(int *)((int)self_ + 0xb0),uVar4);
-        orig::Generator_ClearSubobjectOrSetFlag_v1(this_00,0,uVar5);
-        *(uint16_t *)((int)this_00 + 0xd6) = uVar1;
-        local_1 = 1;
+    i1 = *(int *)((int)self_ + 0xb0);
+    while (i1 != 0) {
+      if (obj1 != (void *)0x0) {
+        u1 = *(uint16_t *)((int)obj1 + 0xd6);
+        i2 = XI_CALL_ST0(0x10311C2Cu)(*(float *)(g_pResourceMng + 0xeb0) + 1.0f);
+        *(short *)((int)obj1 + 0xd6) = (short)i2;
+        *(bits32 *)((int)obj1 + 0xcc) = 0;
+        u2 = orig::CMoTask_Restart_v1(obj1);
+        u3 = orig::game_100496F0_as_v0(obj1,*(int *)((int)self_ + 0xb0),u2);
+        orig::Generator_ClearSubobjectOrSetFlag_v1(obj1,0,u3);
+        *(uint16_t *)((int)obj1 + 0xd6) = u1;
+        u4 = 1;
       }
-      piVar2 = *(int **)((int)self_ + 0xb0);
-      if (piVar2 != (int *)0x0) {
-        ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar2 + 0x18))))((void *)(piVar2),1);
+      p1 = *(int **)((int)self_ + 0xb0);
+      if (p1 != (int *)0x0) {
+        ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
       }
-      iVar3 = *(int *)((int)self_ + 0xb0);
+      i1 = *(int *)((int)self_ + 0xb0);
     }
-    uVar4 = orig::CMoResource_ReleaseChain_v1(self_);
-    uVar5 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(local_1)));
+    u2 = orig::CMoResource_ReleaseChain_v1(self_);
+    u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(u4)));
   }
-  return uVar5;
+  return u3;
 }
 
 // FUNCTION: FFXIMAIN 0x100539E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Generator_IsFlag400OrField22Zero(void * self_)
+XI_API bits32 __thiscall Generator_IsFlag400OrField22Zero(void * self_)
 {
-  int iVar1;
+  int i1;
   
   if ((*(uint32_t *)((int)self_ + 0xd8) & 0x400) != 0) {
     return ((uint32_t)(((uint32_t)(xi_strunc24((*(uint32_t *)((int)self_ + 0xd8) >> 8))) << 8) | (uint8_t)(1)));
   }
-  iVar1 = orig::GeneratorClone_GetShort22ViaPtrE4(self_);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(iVar1 == 0)));
+  i1 = orig::GeneratorClone_GetShort22ViaPtrE4(self_);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(i1 == 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10053A00
 // GATE: PASS -- 100 trials, 83 returned normally, 254 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 83
-XI_API undefined4 __thiscall Generator_StopGenerators(void * self_, int param_1, int param_2, undefined4 param_3, undefined4 * param_4)
+XI_API bits32 __thiscall Generator_StopGenerators(void * self_, int arg2, int arg3, bits32 arg4, bits32 * arg5)
 {
-  uint16_t uVar1;
-  uint16_t uVar2;
-  long double fVar3;
-  void *pvVar4;
-  void *pvVar5;
-  uint32_t uVar6;
-  int *this_00;
-  uint8_t bVar7;
-  uint8_t bVar8;
-  long double fVar9;
-  uint64_t uVar10;
-  char xi_frame[33] __attribute__((aligned(4)));
-  uint8_t  &local_21 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  void * &local_20 = *reinterpret_cast<void * *>(xi_frame + 1);
-  uint8_t  (&local_1c)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 5);
+  uint16_t u1;
+  uint16_t u2;
+  long double f1;
+  void *p1;
+  void *p2;
+  uint32_t u3;
+  int *obj1;
+  uint8_t u4;
+  uint8_t u5;
+  long double f2;
+  uint64_t u6;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[33];
+    struct __attribute__((packed)) { uint8_t u7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; void * p3; };   // at 0x1
+    struct __attribute__((packed)) { unsigned char pad_3[0x5]; uint8_t u8[28]; };   // at 0x5
+  } frame;
   
-  local_21 = 0;
-  uVar10 = orig::CYyObject_IsKindOf(self_,(int)XI_GAME(0x1032B108u));
-  local_20 = self_;
-  if ((char)uVar10 != '\0') {
+  frame.u7 = 0;
+  u6 = orig::CYyObject_IsKindOf(self_,(int)XI_GAME(0x1032B108u));
+  frame.p3 = self_;
+  if ((char)u6 != '\0') {
     if (*(uint32_t **)((int)self_ + 0x28) == (uint32_t *)0x0) {
-      local_20 = (void *)0x0;
+      frame.p3 = (void *)0x0;
     }
     else {
-      local_20 = (void *)**(uint32_t **)((int)self_ + 0x28);
+      frame.p3 = (void *)**(uint32_t **)((int)self_ + 0x28);
     }
   }
-  pvVar5 = (void *)param_1;
-  if (param_1 == 0) {
-LAB_10053b91:
+  p2 = (void *)arg2;
+  if (arg2 == 0) {
+code_10053B91:
     do {
-      orig::ResourceIter_Start(local_1c,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+      orig::ResourceIter_Start(frame.u8,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
       do {
         do {
           do {
-            pvVar4 = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
-            pvVar5 = (void *)0x0;
-            if (pvVar4 == (void *)0x0) goto LAB_10053c65;
-          } while ((*(uint8_t *)((int)pvVar4 + 0x1a) >> 2 & 1) == 0);
-          if (*(uint32_t **)((int)pvVar4 + 0xf4) == (uint32_t *)0x0) {
-            pvVar5 = (void *)0x0;
+            p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u8,0);
+            p2 = (void *)0x0;
+            if (p1 == (void *)0x0) goto code_10053C65;
+          } while ((*(uint8_t *)((int)p1 + 0x1a) >> 2 & 1) == 0);
+          if (*(uint32_t **)((int)p1 + 0xf4) == (uint32_t *)0x0) {
+            p2 = (void *)0x0;
           }
           else {
-            pvVar5 = (void *)**(uint32_t **)((int)pvVar4 + 0xf4);
+            p2 = (void *)**(uint32_t **)((int)p1 + 0xf4);
           }
-        } while (pvVar5 != local_20);
-        if ((char)param_3 == '\0') {
-          uVar10 = orig::CMoResource_AddRefChain_v1(pvVar4,pvVar5);
-          orig::YmGenerater_Stop_v1(pvVar4,param_4,(int)uVar10);
-          orig::CMoResource_ReleaseChain_v1(pvVar4);
-          local_21 = 1;
-          orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)pvVar4 + 0x14));
-          goto LAB_10053b91;
+        } while (p2 != frame.p3);
+        if ((char)arg4 == '\0') {
+          u6 = orig::CMoResource_AddRefChain_v1(p1,p2);
+          orig::YmGenerater_Stop_v1(p1,arg5,(int)u6);
+          orig::CMoResource_ReleaseChain_v1(p1);
+          frame.u7 = 1;
+          orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)p1 + 0x14));
+          goto code_10053B91;
         }
-        orig::Generator_ClearSubobjectOrSetFlag_v1(pvVar4,0,pvVar5);
-        bVar7 = NAN((long double)*(float *)((int)pvVar4 + 0xd0)) || NAN((long double)0.0f);
-      } while (((bVar7 != (bVar7 || (long double)*(float *)((int)pvVar4 + 0xd0) == (long double)0.0f)) ||
-               (!((long double)*(float *)((int)pvVar4 + 0xd0) > (long double)*(float *)((int)pvVar4 + 200))))
-              || (*(uint32_t *)((int)pvVar4 + 200) = *(uint32_t *)((int)pvVar4 + 0xd0),
-                 (*(uint16_t *)((int)pvVar4 + 0x18) & 0x7fff) != 0));
-      orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)pvVar4 + 0x14));
+        orig::Generator_ClearSubobjectOrSetFlag_v1(p1,0,p2);
+        u4 = ((*(float *)((int)p1 + 0xd0)) != (*(float *)((int)p1 + 0xd0))) || ((0.0f) != (0.0f));
+      } while (((u4 != (u4 || *(float *)((int)p1 + 0xd0) == 0.0f)) ||
+               (!(*(float *)((int)p1 + 0xd0) > *(float *)((int)p1 + 200))))
+              || (*(uint32_t *)((int)p1 + 200) = *(uint32_t *)((int)p1 + 0xd0),
+                 (*(uint16_t *)((int)p1 + 0x18) & 0x7fff) != 0));
+      orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)p1 + 0x14));
     } while( true );
   }
   do {
-    this_00 = *(int **)(param_1 + 0x68);
-LAB_10053a50:
-    if (this_00 == (int *)0x0) {
-LAB_10053c65:
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar5 >> 8))) << 8) | (uint8_t)(local_21)));
+    obj1 = *(int **)(arg2 + 0x68);
+code_10053A50:
+    if (obj1 == (int *)0x0) {
+code_10053C65:
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(frame.u7)));
     }
-    pvVar4 = (void *)((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x18))))((void *)(this_00));
-    pvVar5 = (void *)0x0;
-    if (pvVar4 == (void *)0x0) {
-LAB_10053b50:
-      this_00 = (int *)this_00[0xb];
-      goto LAB_10053a50;
+    p1 = (void *)((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1));
+    p2 = (void *)0x0;
+    if (p1 == (void *)0x0) {
+code_10053B50:
+      obj1 = (int *)obj1[0xb];
+      goto code_10053A50;
     }
-    uVar10 = orig::CYyObject_IsKindOf(pvVar4,(int)XI_GAME(0x1032B108u));
-    pvVar5 = (void *)uVar10;
-    if ((char)uVar10 == '\0') goto LAB_10053b50;
-    if (pvVar4 == self_) {
-      uVar6 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar10 >> 8))) << 8) | (uint8_t)((char)param_3)));
-      if ((char)param_3 == '\0') {
-        local_21 = 1;
-        pvVar5 = (void *)orig::YmGenerater_Stop_v1(self_,param_4,uVar6);
-        this_00 = (int *)this_00[0xb];
+    u6 = orig::CYyObject_IsKindOf(p1,(int)XI_GAME(0x1032B108u));
+    p2 = (void *)u6;
+    if ((char)u6 == '\0') goto code_10053B50;
+    if (p1 == self_) {
+      u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u6 >> 8))) << 8) | (uint8_t)((char)arg4)));
+      if ((char)arg4 == '\0') {
+        frame.u7 = 1;
+        p2 = (void *)orig::YmGenerater_Stop_v1(self_,arg5,u3);
+        obj1 = (int *)obj1[0xb];
       }
       else {
-        orig::Generator_ClearSubobjectOrSetFlag_v1(self_,0,uVar6);
-        fVar9 = (long double)*(float *)((int)self_ + 0xd0);
-        fVar3 = (long double)*(float *)((int)self_ + 200);
-        uVar1 = (uint16_t)(!(fVar9 >= fVar3));
-        uVar2 = (uint16_t)((NAN(fVar9) || NAN(fVar3)) || fVar9 == fVar3);
-        pvVar5 = (void *)(uint32_t)(uint16_t)(uVar1 << 8 | uVar2 << 0xe);
-        if (uVar1 != 0 || uVar2 != 0) goto LAB_10053b50;
-        pvVar5 = *(void **)((int)self_ + 0xd0);
-        *(void **)((int)self_ + 200) = pvVar5;
-        this_00 = (int *)this_00[0xb];
+        orig::Generator_ClearSubobjectOrSetFlag_v1(self_,0,u3);
+        f2 = *(float *)((int)self_ + 0xd0);
+        f1 = *(float *)((int)self_ + 200);
+        u1 = (uint16_t)(!(f2 >= f1));
+        u2 = (uint16_t)((((f2) != (f2)) || ((f1) != (f1))) || f2 == f1);
+        p2 = (void *)(uint32_t)(uint16_t)(u1 << 8 | u2 << 0xe);
+        if (u1 != 0 || u2 != 0) goto code_10053B50;
+        p2 = *(void **)((int)self_ + 0xd0);
+        *(void **)((int)self_ + 200) = p2;
+        obj1 = (int *)obj1[0xb];
       }
-      goto LAB_10053a50;
+      goto code_10053A50;
     }
-    if (*(uint32_t **)((int)pvVar4 + 0x28) == (uint32_t *)0x0) {
-      pvVar5 = (void *)0x0;
+    if (*(uint32_t **)((int)p1 + 0x28) == (uint32_t *)0x0) {
+      p2 = (void *)0x0;
     }
     else {
-      pvVar5 = (void *)**(uint32_t **)((int)pvVar4 + 0x28);
+      p2 = (void *)**(uint32_t **)((int)p1 + 0x28);
     }
-    if (pvVar5 != local_20) goto LAB_10053b50;
-    uVar10 = orig::CMoAttachments_GetTarget_v1((void *)((int)pvVar4 + 0x30));
-    pvVar5 = (void *)0x0;
-    if ((int)uVar10 != 0) {
-      uVar10 = orig::CMoAttachments_GetTarget_v1((void *)((int)pvVar4 + 0x30));
-      pvVar5 = (void *)uVar10;
-      if (pvVar5 != (void *)param_2) goto LAB_10053b50;
+    if (p2 != frame.p3) goto code_10053B50;
+    u6 = orig::CMoAttachments_GetTarget_v1((void *)((int)p1 + 0x30));
+    p2 = (void *)0x0;
+    if ((int)u6 != 0) {
+      u6 = orig::CMoAttachments_GetTarget_v1((void *)((int)p1 + 0x30));
+      p2 = (void *)u6;
+      if (p2 != (void *)arg3) goto code_10053B50;
     }
-    uVar6 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar5 >> 8))) << 8) | (uint8_t)((char)param_3)));
-    if ((char)param_3 != '\0') {
-      uVar6 = orig::Generator_ClearSubobjectOrSetFlag_v1(pvVar4,0,uVar6);
-      fVar9 = (long double)*(float *)((int)pvVar4 + 0xd0);
-      fVar3 = (long double)0.0f;
-      bVar7 = NAN(fVar9) || NAN(fVar3);
-      bVar8 = bVar7 || fVar9 == fVar3;
-      pvVar5 = (void *)((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar6 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar7 || fVar9 < fVar3) << 8 | (uint16_t)bVar7 << 10 |
-                                (uint16_t)bVar8 << 0xe)));
-      if (bVar7 != bVar8) goto LAB_10053b50;
-      fVar9 = (long double)*(float *)((int)pvVar4 + 0xd0);
-      fVar3 = (long double)*(float *)((int)pvVar4 + 200);
-      uVar1 = (uint16_t)(!(fVar9 >= fVar3));
-      uVar2 = (uint16_t)((NAN(fVar9) || NAN(fVar3)) || fVar9 == fVar3);
-      pvVar5 = (void *)(uint32_t)(uint16_t)(uVar1 << 8 | uVar2 << 0xe);
-      if ((uVar1 == 0 && uVar2 == 0) &&
-         (*(uint32_t *)((int)pvVar4 + 200) = *(uint32_t *)((int)pvVar4 + 0xd0),
-         (*(uint16_t *)((int)pvVar4 + 0x18) & 0x7fff) == 0)) goto LAB_10053b75;
-      goto LAB_10053b50;
+    u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)((char)arg4)));
+    if ((char)arg4 != '\0') {
+      u3 = orig::Generator_ClearSubobjectOrSetFlag_v1(p1,0,u3);
+      f2 = *(float *)((int)p1 + 0xd0);
+      f1 = 0.0f;
+      u4 = ((f2) != (f2)) || ((f1) != (f1));
+      u5 = u4 || f2 == f1;
+      p2 = (void *)((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u4 || f2 < f1) << 8 | (uint16_t)u4 << 10 |
+                                (uint16_t)u5 << 0xe)));
+      if (u4 != u5) goto code_10053B50;
+      f2 = *(float *)((int)p1 + 0xd0);
+      f1 = *(float *)((int)p1 + 200);
+      u1 = (uint16_t)(!(f2 >= f1));
+      u2 = (uint16_t)((((f2) != (f2)) || ((f1) != (f1))) || f2 == f1);
+      p2 = (void *)(uint32_t)(uint16_t)(u1 << 8 | u2 << 0xe);
+      if ((u1 == 0 && u2 == 0) &&
+         (*(uint32_t *)((int)p1 + 200) = *(uint32_t *)((int)p1 + 0xd0),
+         (*(uint16_t *)((int)p1 + 0x18) & 0x7fff) == 0)) goto code_10053B75;
+      goto code_10053B50;
     }
-    orig::CMoResource_AddRefChain_v1(pvVar4,uVar6);
-    orig::YmGenerater_Stop_v1(pvVar4,param_4,param_4);
-    orig::CMoResource_ReleaseChain_v1(pvVar4);
-    local_21 = 1;
-LAB_10053b75:
-    pvVar5 = (void *)orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)pvVar4 + 0x14));
+    orig::CMoResource_AddRefChain_v1(p1,u3);
+    orig::YmGenerater_Stop_v1(p1,arg5,arg5);
+    orig::CMoResource_ReleaseChain_v1(p1);
+    frame.u7 = 1;
+code_10053B75:
+    p2 = (void *)orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)p1 + 0x14));
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10053C80
 // GATE: PASS -- 100 trials, 82 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 82
-XI_API undefined4 __thiscall YmGenerater_UpdateAttach(void * self_, int param_1, float * param_2)
+XI_API bits32 __thiscall YmGenerater_UpdateAttach(void * self_, int arg2, float * arg3)
 {
-  uint32_t *puVar1;
-  uint64_t uVar2;
-  float *pfVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  char xi_frame[52] __attribute__((aligned(4)));
-  uint32_t * &puVar9 = *reinterpret_cast<uint32_t * *>(xi_frame + 0);
-  uint32_t * &puVar10 = *reinterpret_cast<uint32_t * *>(xi_frame + 4);
-  uint32_t  &local_20 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  uint32_t  &uStack_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 28);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 32);
-  uint32_t  &local_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 40);
-  uint32_t  &local_8 = *reinterpret_cast<uint32_t  *>(xi_frame + 44);
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 48);
+  uint32_t *p1;
+  uint64_t u1;
+  float *p2;
+  int i1;
+  int i2;
+  int i3;
+  uint8_t u2;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[52];
+    struct __attribute__((packed)) { uint32_t * p3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t * p4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x14]; uint32_t u3; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_4[0x18]; uint32_t u4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_5[0x1C]; uint32_t u5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; uint32_t u6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x24]; uint32_t u7; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_8[0x28]; uint32_t u8; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_9[0x2C]; uint32_t u9; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_10[0x30]; uint32_t u10; };   // at 0x30
+  } frame;
   
-  uStack_1c = 0;
-  local_20 = *(uint32_t *)(param_1 + 4) >> 2 & 0xff;
-  uVar2 = (uint64_t)local_20;
-  puVar1 = *(uint32_t **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
+  frame.u4 = 0;
+  frame.u3 = *(uint32_t *)(arg2 + 4) >> 2 & 0xff;
+  u1 = (uint64_t)frame.u3;
+  p1 = *(uint32_t **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
   *(int *)(g_pProcessor_as_s32 + 0xa90) = *(int *)(g_pProcessor_as_s32 + 0xa90) + 1;
-  iVar5 = *(int *)((int)self_ + 0x98);
-  if (iVar5 == 0) {
-    puVar10 = (uint32_t *)0x0;
-    puVar9 = (uint32_t *)0x0;
+  i2 = *(int *)((int)self_ + 0x98);
+  if (i2 == 0) {
+    frame.p4 = (uint32_t *)0x0;
+    frame.p3 = (uint32_t *)0x0;
   }
   else {
-    local_10 = *(uint32_t *)(iVar5 + 4);
-    local_c = *(uint32_t *)(iVar5 + 8);
-    local_8 = *(uint32_t *)(iVar5 + 0xc);
-    local_4 = 0x3f800000;
-    local_20 = *(uint32_t *)(iVar5 + 0x10);
-    uStack_1c = *(uint32_t *)(iVar5 + 0x14);
-    local_18 = *(uint32_t *)(iVar5 + 0x18);
-    puVar10 = &local_20;
-    puVar9 = &local_10;
-    local_14 = 0x3f800000;
+    frame.u7 = *(uint32_t *)(i2 + 4);
+    frame.u8 = *(uint32_t *)(i2 + 8);
+    frame.u9 = *(uint32_t *)(i2 + 0xc);
+    frame.u10 = 0x3f800000;
+    frame.u3 = *(uint32_t *)(i2 + 0x10);
+    frame.u4 = *(uint32_t *)(i2 + 0x14);
+    frame.u5 = *(uint32_t *)(i2 + 0x18);
+    frame.p4 = &frame.u3;
+    frame.p3 = &frame.u7;
+    frame.u6 = 0x3f800000;
   }
-  fVar8 = orig::YmGenerater_BuildAttachMatrix((void *)((int)self_ + 0x30),puVar1,xi_castbits<float>(puVar9),xi_castbits<float>(puVar10));
-  *(float *)((int)self_ + 0x90) = (float)fVar8;
-  bVar7 = NAN((long double)*(float *)((int)self_ + 0x90)) || NAN((long double)0.0f);
-  if (bVar7 == (bVar7 || (long double)*(float *)((int)self_ + 0x90) == (long double)0.0f)) {
+  f1 = orig::YmGenerater_BuildAttachMatrix((void *)((int)self_ + 0x30),p1,bit_cast<float>(frame.p3),bit_cast<float>(frame.p4));
+  *(float *)((int)self_ + 0x90) = (float)f1;
+  u2 = ((*(float *)((int)self_ + 0x90)) != (*(float *)((int)self_ + 0x90))) || ((0.0f) != (0.0f));
+  if (u2 == (u2 || *(float *)((int)self_ + 0x90) == 0.0f)) {
     *(uint32_t *)((int)self_ + 0x78) = *(uint32_t *)((int)self_ + 0x90);
   }
-  if ((*(uint8_t *)(param_1 + 4) & 1) != 0) {
-    iVar5 = 4;
-    pfVar3 = param_2 + 0xc;
+  if ((*(uint8_t *)(arg2 + 4) & 1) != 0) {
+    i2 = 4;
+    p2 = arg3 + 0xc;
     do {
-      iVar5 = iVar5 + -1;
-      *pfVar3 = (float)(((long double)*(float *)(((int)puVar1 - (int)param_2) + (int)pfVar3) -
-                        (long double)*pfVar3) * (long double)(float)((long double)uVar2 * (long double)0.0039215688593685626983642578125f)
-                       + (long double)*pfVar3);
-      pfVar3 = pfVar3 + 1;
-    } while (iVar5 != 0);
+      i2 = i2 + -1;
+      *p2 = (float)((*(float *)(((int)p1 - (int)arg3) + (int)p2) -
+                        *p2) * (float)(u1 * 0.0039215688593685626983642578125f)
+                       + *p2);
+      p2 = p2 + 1;
+    } while (i2 != 0);
   }
-  if ((*(uint8_t *)(param_1 + 4) & 2) != 0) {
-    iVar5 = (int)puVar1 - (int)param_2;
-    iVar6 = 3;
+  if ((*(uint8_t *)(arg2 + 4) & 2) != 0) {
+    i2 = (int)p1 - (int)arg3;
+    i3 = 3;
     do {
-      iVar4 = 4;
-      pfVar3 = param_2;
+      i1 = 4;
+      p2 = arg3;
       do {
-        param_2 = pfVar3 + 1;
-        iVar4 = iVar4 + -1;
-        *pfVar3 = (float)(((long double)*(float *)((int)pfVar3 + iVar5) - (long double)*pfVar3) *
-                          (long double)(float)((long double)uVar2 * (long double)0.0039215688593685626983642578125f) + (long double)*pfVar3
+        arg3 = p2 + 1;
+        i1 = i1 + -1;
+        *p2 = (float)((*(float *)((int)p2 + i2) - *p2) *
+                          (float)(u1 * 0.0039215688593685626983642578125f) + *p2
                          );
-        pfVar3 = param_2;
-      } while (iVar4 != 0);
-      iVar6 = iVar6 + -1;
-    } while (iVar6 != 0);
+        p2 = arg3;
+      } while (i1 != 0);
+      i3 = i3 + -1;
+    } while (i3 != 0);
   }
-  iVar5 = g_pProcessor_as_s32;
-  iVar6 = *(int *)(g_pProcessor_as_s32 + 0xa90) + -1;
-  *(int *)(g_pProcessor_as_s32 + 0xa90) = iVar6;
-  *(uint32_t **)(iVar5 + 0xa10 + iVar6 * 4) = puVar1;
-  return iVar5;
+  i2 = g_pProcessor_as_s32;
+  i3 = *(int *)(g_pProcessor_as_s32 + 0xa90) + -1;
+  *(int *)(g_pProcessor_as_s32 + 0xa90) = i3;
+  *(uint32_t **)(i2 + 0xa10 + i3 * 4) = p1;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10053DD0
 // GATE: PASS -- 100 trials, 74 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 74
-XI_API undefined4 __attribute__((stdcall, regparm(3))) YmGenerater_UpdateAttachIfPresent(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) YmGenerater_UpdateAttachIfPresent(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  if (param_2 != 0) {
-    puVar1 = orig::FUN_100492b0(self_,0x11);
+  if (arg4 != 0) {
+    p1 = orig::game_100492B0(self_,0x11);
     xi_eax = 0;
-    if (puVar1 != (uint32_t *)0x0) {
-      xi_eax = orig::YmGenerater_UpdateAttach(self_,(int)puVar1,(float *)param_2);
+    if (p1 != (uint32_t *)0x0) {
+      xi_eax = orig::YmGenerater_UpdateAttach(self_,(int)p1,(float *)arg4);
     }
   }
   return xi_eax;

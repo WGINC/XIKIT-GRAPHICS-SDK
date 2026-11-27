@@ -6,7 +6,7 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoD3bRes.cpp`.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CMoD3bRes::Slot9Nop` | 0x1003F430 | 1 | yes | - | Does nothing. (reviewed as sub_1003F430) | high |
+| `CMoD3bRes::Slot9Nop` | 0x1003F430 | 1 | yes | - | Does nothing. (reviewed as game_1003F430) | high |
 | `CMoD3bRes::ScalarDeletingDtor` | 0x10071B90 | 30 | yes | - | - | - |
 
 ## Direct calls

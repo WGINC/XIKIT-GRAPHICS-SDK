@@ -6,56 +6,58 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall ResourceLoadTask_Step(void * self_)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   uint32_t xi_s3;
-  uint32_t uVar2;
-  int *piVar3;
-  int iVar4;
+  uint32_t u1;
+  int *p2;
+  int i1;
   void *xi_s2;
-  uint64_t uVar5;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &pvStack_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p3; };   // at 0x0
+  } frame;
   
-  iVar4 = *(int *)((int)self_ + 0x41);
-  pvStack_4 = self_;
-  if (iVar4 == 0) {
+  i1 = *(int *)((int)self_ + 0x41);
+  frame.p3 = self_;
+  if (i1 == 0) {
     if (*(char *)((int)self_ + 0x3c) == '\0') {
-      if (0x10 < DAT_1047d138_as_s32) {
+      if (0x10 < g_1047D138_as_s32) {
         return;
       }
-      DAT_1047d138_as_s32 = DAT_1047d138_as_s32 + 1;
-      uVar5 = orig::Allocator_Generic_v1(0x20);
-      if ((void *)uVar5 == (void *)0x0) {
+      g_1047D138_as_s32 = g_1047D138_as_s32 + 1;
+      u2 = orig::Allocator_Generic_v1(0x20);
+      if ((void *)u2 == (void *)0x0) {
         xi_s2 = (void *)0x0;
       }
       else {
-        xi_s2 = orig::TextInputFiles_CtorVt10337C60((void *)uVar5);
+        xi_s2 = orig::TextInputFiles_CtorVt10337C60((void *)u2);
       }
       *(void **)((int)self_ + 0x45) = xi_s2;
       if ((xi_s2 != (void *)0x0) &&
-         (iVar4 = orig::FUN_101c4bc0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),xi_s2), -1 < iVar4)) {
+         (i1 = orig::game_101C4BC0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),xi_s2), -1 < i1)) {
         *(int *)((int)self_ + 0x41) = *(int *)((int)self_ + 0x41) + 1;
         return;
       }
     }
-LAB_10072c0c:
-    puVar1 = *(uint32_t **)((int)self_ + 0x3d);
+code_10072C0C:
+    p1 = *(uint32_t **)((int)self_ + 0x3d);
   }
   else {
-    if (iVar4 == 1) {
-      uVar2 = orig::FUN_101c4ad0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34));
-      if ((char)uVar2 != '\0') {
+    if (i1 == 1) {
+      u1 = orig::game_101C4AD0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34));
+      if ((char)u1 != '\0') {
         return;
       }
       if (*(char *)((int)self_ + 0x3c) == '\0') {
         xi_s3 = *(uint32_t *)(*(int *)((int)self_ + 0x45) + 4);
         if (0 < (int)xi_s3) {
-          uVar5 = orig::Allocator_Generic_v1(xi_s3);
-          iVar4 = (int)uVar5;
-          *(int *)((int)self_ + 0x38) = iVar4;
-          if ((iVar4 != 0) &&
-             (iVar4 = orig::FUN_101c46d0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),iVar4,xi_s3,0),
-             -1 < iVar4)) {
+          u2 = orig::Allocator_Generic_v1(xi_s3);
+          i1 = (int)u2;
+          *(int *)((int)self_ + 0x38) = i1;
+          if ((i1 != 0) &&
+             (i1 = orig::game_101C46D0(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),i1,xi_s3,0),
+             -1 < i1)) {
             *(int *)((int)self_ + 0x41) = *(int *)((int)self_ + 0x41) + 1;
             return;
           }
@@ -63,61 +65,61 @@ LAB_10072c0c:
         if (*(uint32_t **)((int)self_ + 0x3d) != (uint32_t *)0x0) {
           orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,*(uint32_t **)((int)self_ + 0x3d));
         }
-        ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x18))))((void *)(self_),1);
+        ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),1);
         return;
       }
-      goto LAB_10072c0c;
+      goto code_10072C0C;
     }
-    if (iVar4 == 2) {
-      uVar2 = orig::TextInputFiles_FileMngFindFileNumKind1(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),0,0);
-      if ((char)uVar2 != '\0') {
+    if (i1 == 2) {
+      u1 = orig::TextInputFiles_FileMngFindFileNumKind1(g_pFileMng_as_v0,*(uint32_t *)((int)self_ + 0x34),0,0);
+      if ((char)u1 != '\0') {
         return;
       }
-      if (*(char *)((int)self_ + 0x3c) != '\0') goto LAB_10072c0c;
+      if (*(char *)((int)self_ + 0x3c) != '\0') goto code_10072C0C;
       if (*(int *)((int)self_ + 0x38) != 0) {
         orig::ResourceIter_SetCurrentGlobal(*(uint32_t *)((int)self_ + 0x34));
-        piVar3 = (int *)orig::MeshResourceMng_ResolveTree
-                                  (g_pMeshResourceMng_as_v1,(int *)&pvStack_4,*(void **)((int)self_ + 0x38)
+        p2 = (int *)orig::MeshResourceMng_ResolveTree
+                                  (g_pMeshResourceMng_as_v1,(int *)&frame.p3,*(void **)((int)self_ + 0x38)
                                    ,*(uint32_t **)((int)self_ + 0x3d));
-        if (((int *)*piVar3 != (int *)0x0) && (iVar4 = *(int *)*piVar3, iVar4 != 0)) {
-          *(uint8_t *)(iVar4 + 0x1a) = *(uint8_t *)(iVar4 + 0x1a) | 1;
-          *(uint32_t *)(iVar4 + 0x34) = *(uint32_t *)((int)self_ + 0x34);
-          ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x18))))((void *)(self_),1);
+        if (((int *)*p2 != (int *)0x0) && (i1 = *(int *)*p2, i1 != 0)) {
+          *(uint8_t *)(i1 + 0x1a) = *(uint8_t *)(i1 + 0x1a) | 1;
+          *(uint32_t *)(i1 + 0x34) = *(uint32_t *)((int)self_ + 0x34);
+          ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),1);
           return;
         }
-        goto LAB_10072c21;
+        goto code_10072C21;
       }
-      orig::ErrorReport_NoOpVarargsA_v1(&DAT_10354658);
-      puVar1 = *(uint32_t **)((int)self_ + 0x3d);
+      orig::ErrorReport_NoOpVarargsA_v1(&g_10354658);
+      p1 = *(uint32_t **)((int)self_ + 0x3d);
     }
     else {
-      puVar1 = *(uint32_t **)((int)self_ + 0x3d);
+      p1 = *(uint32_t **)((int)self_ + 0x3d);
     }
   }
-  if (puVar1 != (uint32_t *)0x0) {
-    orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,puVar1);
+  if (p1 != (uint32_t *)0x0) {
+    orig::NodePool_ReleaseNode_v1(g_pMeshResourceMng_as_v1,p1);
   }
-LAB_10072c21:
-  ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*(int *)self_ + 0x18))))((void *)(self_),1);
+code_10072C21:
+  ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0x18))))((void *)(self_),1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10072C30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall ResourceLoadTask_Start(void * self_, undefined4 * param_1, undefined4 param_2)
+XI_API uint64_t __thiscall ResourceLoadTask_Start(void * self_, bits32 * arg2, bits32 arg3)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
   *(uint8_t *)((int)self_ + 0x3c) = 0;
   *(uint32_t *)((int)self_ + 0x41) = 0;
-  *(uint32_t *)((int)self_ + 0x34) = param_2;
-  *(uint32_t *)((int)self_ + 0x18) = param_2;
+  *(uint32_t *)((int)self_ + 0x34) = arg3;
+  *(uint32_t *)((int)self_ + 0x18) = arg3;
   *(uint32_t *)((int)self_ + 0x1c) = 0x4d727400;
   orig::CMoTask_RegisterWithMng_v1(0);
-  uVar2 = orig::ResourceIter_PopFreeNode(g_pMeshResourceMng_as_v1,&param_2);
-  uVar1 = *(uint32_t *)uVar2;
-  *(uint32_t *)((int)self_ + 0x3d) = uVar1;
-  *param_1 = uVar1;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar2 >> 0x20)) << 32) | (uint32_t)(param_1)));
+  u2 = orig::ResourceIter_PopFreeNode(g_pMeshResourceMng_as_v1,&arg3);
+  u1 = *(uint32_t *)u2;
+  *(uint32_t *)((int)self_ + 0x3d) = u1;
+  *arg2 = u1;
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u2 >> 0x20)) << 32) | (uint32_t)(arg2)));
 }

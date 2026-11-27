@@ -4,229 +4,229 @@
 
 // FUNCTION: FFXIMAIN 0x1027A6F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_SetIdentityFwd(undefined4 * param_1)
+XI_API void __cdecl SqQuat_SetIdentityFwd(bits32 * arg1)
 {
-  orig::SqQuat_SetIdentity(param_1);
+  orig::SqQuat_SetIdentity(arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027A700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqQuat_Copy(undefined4 * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl SqQuat_Copy(bits32 * arg1, bits32 * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  *param_1 = *param_2;
-  param_1[1] = param_2[1];
-  param_1[2] = param_2[2];
-  uVar1 = param_2[3];
-  param_1[3] = uVar1;
-  return uVar1;
+  *arg1 = *arg2;
+  arg1[1] = arg2[1];
+  arg1[2] = arg2[2];
+  u1 = arg2[3];
+  arg1[3] = u1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027A720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_Set(float * param_1, float param_2, float param_3, float param_4, float param_5)
+XI_API void __cdecl SqQuat_Set(float * arg1, float arg2, float arg3, float arg4, float arg5)
 {
-  param_1[1] = param_3;
-  param_1[2] = param_4;
-  *param_1 = (float)(long double)param_2;
-  param_1[3] = param_5;
+  arg1[1] = arg3;
+  arg1[2] = arg4;
+  *arg1 = (float)arg2;
+  arg1[3] = arg5;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027A9D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_ToMatrix3(float * param_1, float * param_2)
+XI_API void __cdecl SqQuat_ToMatrix3(float * arg1, float * arg2)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  long double fVar11;
+  long double f1;
+  long double f2;
+  long double f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  long double f11;
   
-  fVar11 = (long double)2.0f /
-           ((long double)param_2[3] * (long double)param_2[3] +
-           (long double)param_2[2] * (long double)param_2[2] +
-           (long double)param_2[1] * (long double)param_2[1] + (long double)*param_2 * (long double)*param_2);
-  fVar1 = (float)(fVar11 * (long double)param_2[1]);
-  fVar2 = (float)(fVar11 * (long double)param_2[2]);
-  fVar3 = (float)(fVar11 * (long double)*param_2 * (long double)param_2[3]);
-  fVar4 = param_2[3];
-  fVar5 = param_2[3];
-  fVar11 = fVar11 * (long double)*param_2 * (long double)*param_2;
-  fVar6 = *param_2;
-  fVar7 = *param_2;
-  fVar8 = param_2[1];
-  fVar9 = param_2[1];
-  fVar10 = param_2[2];
-  *param_1 = (float)((long double)1.0f -
-                    ((long double)(float)((long double)fVar1 * (long double)fVar8) +
-                    (long double)fVar2 * (long double)fVar10));
-  param_1[1] = (float)((long double)fVar1 * (long double)fVar6 -
-                      (long double)(float)((long double)fVar2 * (long double)fVar5));
-  param_1[2] = (float)((long double)fVar2 * (long double)fVar7 +
-                      (long double)(float)((long double)fVar1 * (long double)fVar4));
-  param_1[3] = (float)((long double)fVar1 * (long double)fVar6 +
-                      (long double)(float)((long double)fVar2 * (long double)fVar5));
-  param_1[4] = (float)((long double)1.0f - ((long double)fVar2 * (long double)fVar10 + fVar11));
-  param_1[5] = (float)((long double)(float)((long double)fVar2 * (long double)fVar9) - (long double)fVar3);
-  param_1[6] = (float)((long double)fVar2 * (long double)fVar7 -
-                      (long double)(float)((long double)fVar1 * (long double)fVar4));
-  param_1[7] = (float)((long double)(float)((long double)fVar2 * (long double)fVar9) + (long double)fVar3);
-  param_1[8] = (float)((long double)1.0f - ((long double)(float)((long double)fVar1 * (long double)fVar8) + fVar11));
+  f11 = 2.0f /
+           (arg2[3] * arg2[3] +
+           arg2[2] * arg2[2] +
+           arg2[1] * arg2[1] + *arg2 * *arg2);
+  f1 = (float)(f11 * arg2[1]);
+  f2 = (float)(f11 * arg2[2]);
+  f3 = (float)(f11 * *arg2 * arg2[3]);
+  f4 = arg2[3];
+  f5 = arg2[3];
+  f11 = f11 * *arg2 * *arg2;
+  f6 = *arg2;
+  f7 = *arg2;
+  f8 = arg2[1];
+  f9 = arg2[1];
+  f10 = arg2[2];
+  *arg1 = (float)(1.0f -
+                    ((float)(f1 * f8) +
+                    f2 * f10));
+  arg1[1] = (float)(f1 * f6 -
+                      (float)(f2 * f5));
+  arg1[2] = (float)(f2 * f7 +
+                      (float)(f1 * f4));
+  arg1[3] = (float)(f1 * f6 +
+                      (float)(f2 * f5));
+  arg1[4] = (float)(1.0f - (f2 * f10 + f11));
+  arg1[5] = (float)((float)(f2 * f9) - f3);
+  arg1[6] = (float)(f2 * f7 -
+                      (float)(f1 * f4));
+  arg1[7] = (float)((float)(f2 * f9) + f3);
+  arg1[8] = (float)(1.0f - ((float)(f1 * f8) + f11));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AAE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqQuat_QuatFromEuler(float * param_1, float param_2, float param_3, float param_4)
+XI_API bits32 __cdecl SqQuat_QuatFromEuler(float * arg1, float arg2, float arg3, float arg4)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  long double fVar4;
-  long double fVar5;
-  long double fVar6;
+  long double f1;
+  long double f2;
+  long double f3;
+  long double f4;
+  long double f5;
+  long double f6;
   
-  fVar5 = xi_castbits<long double>(fcos((long double)param_4 * (long double)0.5f));
-  fVar1 = (float)fVar5;
-  fVar5 = xi_castbits<long double>(fcos((long double)param_3 * (long double)0.5f));
-  fVar2 = (float)fVar5;
-  fVar5 = xi_castbits<long double>(fcos((long double)(float)((long double)param_2 * (long double)0.5f)));
-  fVar3 = (float)fVar5;
-  fVar5 = xi_castbits<long double>(fsin((long double)param_4 * (long double)0.5f));
-  fVar4 = (float)fVar5;
-  fVar5 = xi_castbits<long double>(fsin((long double)param_3 * (long double)0.5f));
-  fVar6 = xi_castbits<long double>(fsin((long double)(float)((long double)param_2 * (long double)0.5f)));
-  *param_1 = (float)((long double)fVar2 * fVar6 * (long double)fVar1 -
-                    fVar5 * (long double)fVar4 * (long double)fVar3);
-  param_1[1] = (float)(fVar5 * (long double)fVar3 * (long double)fVar1 +
-                      (long double)fVar4 * fVar6 * (long double)fVar2);
-  param_1[2] = (float)((long double)fVar4 * (long double)fVar3 * (long double)fVar2 -
-                      fVar6 * fVar5 * (long double)fVar1);
-  param_1[3] = (float)(fVar6 * fVar5 * (long double)fVar4 +
-                      (long double)fVar3 * (long double)fVar2 * (long double)fVar1);
-  return param_1;
+  f5 = bit_cast<long double>(x87_fcos(arg4 * 0.5f));
+  f1 = (float)f5;
+  f5 = bit_cast<long double>(x87_fcos(arg3 * 0.5f));
+  f2 = (float)f5;
+  f5 = bit_cast<long double>(x87_fcos((float)(arg2 * 0.5f)));
+  f3 = (float)f5;
+  f5 = bit_cast<long double>(x87_fsin(arg4 * 0.5f));
+  f4 = (float)f5;
+  f5 = bit_cast<long double>(x87_fsin(arg3 * 0.5f));
+  f6 = bit_cast<long double>(x87_fsin((float)(arg2 * 0.5f)));
+  *arg1 = (float)(f2 * f6 * f1 -
+                    f5 * f4 * f3);
+  arg1[1] = (float)(f5 * f3 * f1 +
+                      f4 * f6 * f2);
+  arg1[2] = (float)(f4 * f3 * f2 -
+                      f6 * f5 * f1);
+  arg1[3] = (float)(f6 * f5 * f4 +
+                      f3 * f2 * f1);
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027ABA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_FromRotationX(float * param_1, float param_2)
+XI_API void __cdecl SqQuat_FromRotationX(float * arg1, float arg2)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = xi_castbits<long double>(fsin((long double)param_2 * (long double)0.5f));
-  param_1[1] = 0.0f;
-  param_1[2] = 0.0f;
-  *param_1 = (float)fVar1;
-  fVar1 = xi_castbits<long double>(fcos((long double)param_2 * (long double)0.5f));
-  param_1[3] = (float)fVar1;
+  f1 = bit_cast<long double>(x87_fsin(arg2 * 0.5f));
+  arg1[1] = 0.0f;
+  arg1[2] = 0.0f;
+  *arg1 = (float)f1;
+  f1 = bit_cast<long double>(x87_fcos(arg2 * 0.5f));
+  arg1[3] = (float)f1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027ABD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_FromRotationY(undefined4 * param_1, float param_2)
+XI_API void __cdecl SqQuat_FromRotationY(bits32 * arg1, float arg2)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = xi_castbits<long double>(fsin((long double)param_2 * (long double)0.5f));
-  *param_1 = 0;
-  param_1[2] = 0;
-  param_1[1] = (float)fVar1;
-  fVar1 = xi_castbits<long double>(fcos((long double)param_2 * (long double)0.5f));
-  param_1[3] = (float)fVar1;
+  f1 = bit_cast<long double>(x87_fsin(arg2 * 0.5f));
+  *arg1 = 0;
+  arg1[2] = 0;
+  arg1[1] = (float)f1;
+  f1 = bit_cast<long double>(x87_fcos(arg2 * 0.5f));
+  arg1[3] = (float)f1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AC00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_FromRotationZ(undefined4 * param_1, float param_2)
+XI_API void __cdecl SqQuat_FromRotationZ(bits32 * arg1, float arg2)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = xi_castbits<long double>(fsin((long double)param_2 * (long double)0.5f));
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = (float)fVar1;
-  fVar1 = xi_castbits<long double>(fcos((long double)param_2 * (long double)0.5f));
-  param_1[3] = (float)fVar1;
+  f1 = bit_cast<long double>(x87_fsin(arg2 * 0.5f));
+  *arg1 = 0;
+  arg1[1] = 0;
+  arg1[2] = (float)f1;
+  f1 = bit_cast<long double>(x87_fcos(arg2 * 0.5f));
+  arg1[3] = (float)f1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AC30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_FromAxisAngle(float * param_1, float * param_2, float param_3)
+XI_API void __cdecl SqQuat_FromAxisAngle(float * arg1, float * arg2, float arg3)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = xi_castbits<long double>(fsin((long double)param_3 * (long double)0.5f));
-  *param_1 = (float)(fVar1 * (long double)*param_2);
-  param_1[1] = (float)(fVar1 * (long double)param_2[1]);
-  param_1[2] = (float)(fVar1 * (long double)param_2[2]);
-  fVar1 = xi_castbits<long double>(fcos((long double)param_3 * (long double)0.5f));
-  param_1[3] = (float)fVar1;
+  f1 = bit_cast<long double>(x87_fsin(arg3 * 0.5f));
+  *arg1 = (float)(f1 * *arg2);
+  arg1[1] = (float)(f1 * arg2[1]);
+  arg1[2] = (float)(f1 * arg2[2]);
+  f1 = bit_cast<long double>(x87_fcos(arg3 * 0.5f));
+  arg1[3] = (float)f1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AE50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_SetIdentity(undefined4 * param_1)
+XI_API void __cdecl SqQuat_SetIdentity(bits32 * arg1)
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  param_1[3] = 0x3f800000;
+  *arg1 = 0;
+  arg1[1] = 0;
+  arg1[2] = 0;
+  arg1[3] = 0x3f800000;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AEF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqQuat_Negate(float * param_1)
+XI_API void __cdecl SqQuat_Negate(float * arg1)
 {
-  *param_1 = (float)-(long double)*param_1;
-  param_1[1] = (float)-(long double)param_1[1];
-  param_1[2] = (float)-(long double)param_1[2];
-  param_1[3] = (float)-(long double)param_1[3];
+  *arg1 = (float)-*arg1;
+  arg1[1] = (float)-arg1[1];
+  arg1[2] = (float)-arg1[2];
+  arg1[3] = (float)-arg1[3];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027AF20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqQuat_NormalizeVec4(float * param_1)
+XI_API bits32 __cdecl SqQuat_NormalizeVec4(float * arg1)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  long double fVar5;
+  uint16_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  long double f1;
+  long double f2;
   
-  fVar5 = (long double)param_1[3] * (long double)param_1[3] +
-          (long double)param_1[2] * (long double)param_1[2] +
-          (long double)param_1[1] * (long double)param_1[1] + (long double)*param_1 * (long double)*param_1;
-  fVar4 = (long double)0.0f;
-  bVar3 = NAN(fVar5) || NAN(fVar4);
-  uVar1 = (uint16_t)(bVar3 || fVar5 == fVar4);
-  uVar2 = (uint32_t)(uint16_t)((uint16_t)(bVar3 || fVar5 < fVar4) << 8 | uVar1 << 0xe);
-  if ((fVar5 >= fVar4) && uVar1 == 0) {
-    fVar4 = (long double)1.0f / SQRT(fVar5);
-    *param_1 = (float)(fVar4 * (long double)*param_1);
-    param_1[1] = (float)(fVar4 * (long double)param_1[1]);
-    param_1[2] = (float)(fVar4 * (long double)param_1[2]);
-    param_1[3] = (float)(fVar4 * (long double)param_1[3]);
-    return uVar2;
+  f2 = arg1[3] * arg1[3] +
+          arg1[2] * arg1[2] +
+          arg1[1] * arg1[1] + *arg1 * *arg1;
+  f1 = 0.0f;
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u1 = (uint16_t)(u3 || f2 == f1);
+  u2 = (uint32_t)(uint16_t)((uint16_t)(u3 || f2 < f1) << 8 | u1 << 0xe);
+  if ((f2 >= f1) && u1 == 0) {
+    f1 = 1.0f / x87_fsqrt(f2);
+    *arg1 = (float)(f1 * *arg1);
+    arg1[1] = (float)(f1 * arg1[1]);
+    arg1[2] = (float)(f1 * arg1[2]);
+    arg1[3] = (float)(f1 * arg1[3]);
+    return u2;
   }
-  param_1[3] = 0.0f;
-  fVar4 = (long double)1.0f / SQRT((long double)3.0);
-  *param_1 = (float)fVar4;
-  param_1[1] = (float)fVar4;
-  param_1[2] = (float)fVar4;
-  return uVar2;
+  arg1[3] = 0.0f;
+  f1 = 1.0f / x87_fsqrt(3.0);
+  *arg1 = (float)f1;
+  arg1[1] = (float)f1;
+  arg1[2] = (float)f1;
+  return u2;
 }

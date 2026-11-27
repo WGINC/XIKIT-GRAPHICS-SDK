@@ -8,7 +8,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `MenuPanels_InitAndMarkReady` | 0x1021D930 | 35 | yes | - | Initialises the movie object through sub_1021D9B0 and sets its ready flag at +4 on success. | medium |
+| `MenuPanels_InitAndMarkReady` | 0x1021D930 | 35 | yes | - | Initialises the movie object through game_1021D9B0 and sets its ready flag at +4 on success. | medium |
 | `Movie_Update` | 0x1021D980 | 28 | yes | - | - | - |
 | `MenuPanels_ReleaseReturnTrue` | 0x1021D9A0 | 8 | yes | - | Calls the empty fn_1021DDC0 and returns true. | high |
 | `MenuPanels_Assign` | 0x1021DD20 | 41 | yes | - | Assigns a reference-counted pointer, releasing the old value and adding a reference to the new one. | medium |
@@ -30,8 +30,8 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_ResetFields` | 0x1021E690 | 29 | yes | - | Resets the object's vtable and six fields to zero. | low |
 | `MenuPanels_Init` | 0x1021E760 | 186 | yes | - | Allocates and initialises the index tables for a fixed number of entries. | medium |
 | `MenuPanels_RotateBytesByBitCount` | 0x1021E870 | 364 | yes | - | Rotates a record's bytes in place (except indices 2, 11, 12) by an amount (0..4 selects the rotation) taken from the bits of bytes 2, 11 and 12. | medium |
-| `MenuPanels_CallPanel1021F240And102203B0` | 0x1021ED90 | 41 | yes | - | Calls sub_1021F240 on the object at DAT_10666E84 and then sub_102203B0 unless fn_1015DCE0(&sub_10621838) returns 1. | low |
-| `MenuPanels_CallPanel1021EF10` | 0x1021EDC0 | 16 | yes | - | Calls sub_1021EF10 on the panel object at DAT_10666E84, if any. | high |
+| `MenuPanels_CallPanel1021F240And102203B0` | 0x1021ED90 | 41 | yes | - | Calls game_1021F240 on the object at DAT_10666E84 and then game_102203B0 unless fn_1015DCE0(&game_10621838) returns 1. | low |
+| `MenuPanels_CallPanel1021EF10` | 0x1021EDC0 | 16 | yes | - | Calls game_1021EF10 on the panel object at DAT_10666E84, if any. | high |
 | `MenuPanels_Call1021EF30If10666E84` | 0x1021EDD0 | 16 | yes | - | Runs 0x1021EF30 when the object pointer at 0x10666E84 is set. | low |
 | `Menu_GetPanelByte0D` | 0x1021EDE0 | 23 | yes | - | Returns the byte at offset 0x0D of the menu panel, or 4 when none is set. | low |
 | `Menu_SetPanelWord28` | 0x1021EE00 | 19 | yes | - | Stores a word at offset 0x28 of the menu panel. | low |
@@ -43,7 +43,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `ActerBuff_FindNearest` | 0x1021F030 | 270 | yes | - | Finds the nearest eligible acter to the reference acter and returns its distance. | medium |
 | `ActerBuff_CollectNearby` | 0x1021F140 | 239 | yes | - | Collects up to three acters near the reference acter that match a class filter. | medium |
 | `MenuPanels_GetWindowRect` | 0x1021F360 | 169 | yes | - | Computes the menu's window rectangle, offset by the draw window. | medium |
-| `MenuPanels_DrawPanelForActor` | 0x1021F410 | 103 | yes | 3 | Draws one of two panels depending on the +0x1FF byte of the actor from sub_101CC4F0 and the value at DAT_104DFD98+0x3C350. | low |
+| `MenuPanels_DrawPanelForActor` | 0x1021F410 | 103 | yes | 3 | Draws one of two panels depending on the +0x1FF byte of the actor from game_101CC4F0 and the value at DAT_104DFD98+0x3C350. | low |
 | `MenuPanels_DrawActorPanelFigures` | 0x1021F480 | 1226 | yes | 2 | Draws a panel of an actor's figures (counts, ranges, icons) at the menu's window position. | low |
 | `MenuPanels_DrawEntryRows` | 0x1021F950 | 315 | yes | 5 | Draws three value rows (two labelled rows and one bar row) of the panel from Unit101D7020 entries 1 and 2. | low |
 | `MenuPanels_DrawLabelledRow` | 0x1021FA90 | 121 | yes | 4 | Draws a row: a label, a smoothed value, a second label and a smaller (0.7) smoothed value. | medium |
@@ -86,7 +86,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_SetTargetValuesFor` | 0x102233E0 | 201 | yes | - | Fills the target menu's values from the record for an id. | low |
 | `MenuPanels_SetTargetValuesWithCallback` | 0x10223760 | 113 | yes | - | Sets the target menu's values from the record for an id, with the callback at 0x102237E0. | low |
 | `MenuPanels_ConstructFromScene` | 0x102238E0 | 45 | yes | - | Constructs the object and initialises its index tables from the scene table value 0x38 with 0x400 entries. | medium |
-| `MenuPanels_GetObjectOnce` | 0x10223930 | 51 | yes | - | Returns the static object at DAT_10667050, constructing it on the first call. | medium |
+| `MenuPanels_GetObjectOnce` | 0x10223930 | 51 | yes | - | Returns the static object at g_10667050, constructing it on the first call. | medium |
 | `MenuPanels_Ctor102239A0` | 0x102239A0 | 20 | yes | - | Constructs the object at 0x10667050: base init and clears the member at +0x10. | medium |
 | `MenuPanels_LoadFromFile` | 0x102239C0 | 201 | yes | - | Loads a table's entries from a file. | low |
 | `MenuPanels_InitAndRegister` | 0x10223BB0 | 76 | yes | - | Initialises a table and registers it with the data manager. | low |
@@ -116,7 +116,7 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 | `MenuPanels_DrawTimeLeftText` | 0x10228080 | 298 | yes | 3 | Draws, when setting 0xC3 is on, the time left until an entry's stored time as a number, minutes ('%dm') or hours ('%dh'). | medium |
 | `MenuPanels_ClearHeaderFields` | 0x102281C0 | 13 | yes | - | Clears the two dwords and the byte at the start of the object. | low |
 | `MenuPanels_ConstructBuffersAt8` | 0x10228200 | 72 | yes | - | Constructs the object and allocates 32 buffers of 0x1800 bytes at offset 0x8. | low |
-| `MenuPanels_DrawTargetEntryIcons` | 0x10228440 | 1174 | yes | 1 | When setting 0xC2 is on, draws the current target's entry name and up to 32 images, eight to a row, near the menu at sub_10621838. | low |
+| `MenuPanels_DrawTargetEntryIcons` | 0x10228440 | 1174 | yes | 1 | When setting 0xC2 is on, draws the current target's entry name and up to 32 images, eight to a row, near the menu at game_10621838. | low |
 | `MenuPanels_InitGlobals` | 0x10229430 | 114 | yes | - | Creates the UI's global objects and builds their lookup table. | medium |
 | `MenuPanels_ConstructInitAt64` | 0x10229670 | 97 | yes | - | Constructs the object, initialises the sub-object at offset 0x64 and clears its fields. | low |
 | `MenuPanels_ClearMenu` | 0x1022A6D0 | 32 | yes | - | Clears the item's flags and destroys its draw menu. | low |
@@ -168,8 +168,8 @@ Why the file has this name (data/unit_names.json): Menu_* panels, Movie_CreateFr
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `MenuPanels_InitAndMarkReady` calls `sub_1021D9B0`
-- `Movie_Update` calls `sub_1021DD50`
+- `MenuPanels_InitAndMarkReady` calls `game_1021D9B0`
+- `Movie_Update` calls `game_1021DD50`
 - `MenuPanels_ReleaseReturnTrue` calls `MenuPanels_NoOp`
 - `MenuPanels_Assign` calls nothing directly
 - `MenuPanels_NoOp` calls nothing directly
@@ -180,7 +180,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_QueryInterface10385E90` calls nothing directly
 - `MenuPanels_QueryInterface10385EA0` calls nothing directly
 - `MenuPanels_ConstructWithBase` calls `FitFont_DerivedCtor`
-- `Movie_CreateFrameTextures` calls `sub_102D2FB9`
+- `Movie_CreateFrameTextures` calls `game_102D2FB9`
 - `MenuPanels_FindByName` calls `ResourceIter_Start`, `ResourceIter_FindNext`
 - `MenuPanels_FindForIds` calls `Scene_GetMenuFrameName`, `MenuPanels_FindByName`
 - `ShapeMng_FindShapes` calls `ShapeMng_FindShape`
@@ -190,7 +190,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_ResetFields` calls nothing directly
 - `MenuPanels_Init` calls `Allocator_Generic`
 - `MenuPanels_RotateBytesByBitCount` calls nothing directly
-- `MenuPanels_CallPanel1021F240And102203B0` calls `sub_1021F240`, `TargetMenu_MenuTest48OrStateB4`, `sub_102203B0`
+- `MenuPanels_CallPanel1021F240And102203B0` calls `game_1021F240`, `TargetMenu_MenuTest48OrStateB4`, `game_102203B0`
 - `MenuPanels_CallPanel1021EF10` calls `MenuPanels_SetFlagDAndField1C`
 - `MenuPanels_Call1021EF30If10666E84` calls nothing directly
 - `Menu_GetPanelByte0D` calls nothing directly
@@ -202,52 +202,52 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_SetPanelMetricsByKind` calls `Menu_SetPanelMetrics`
 - `ActerBuff_FindNearest` calls nothing directly
 - `ActerBuff_CollectNearby` calls nothing directly
-- `MenuPanels_GetWindowRect` calls `sub_101602F0`, `sub_1011BA40`, `NetCellFont_GetRect`
+- `MenuPanels_GetWindowRect` calls `game_101602F0`, `game_1011BA40`, `NetCellFont_GetRect`
 - `MenuPanels_DrawPanelForActor` calls `Acter_GetActerAt10485F7A`, `MenuPanels_DrawEntryRows`, `MenuPanels_DrawActorPanelFigures`
-- `MenuPanels_DrawActorPanelFigures` calls `MenuPanels_GetWindowRect`, `TargetMenu_GetMessageFwd`, `sub_10311FF1`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `sub_1011FB60`
+- `MenuPanels_DrawActorPanelFigures` calls `MenuPanels_GetWindowRect`, `TargetMenu_GetMessageFwd`, `game_10311FF1`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `game_1011FB60`
 - `MenuPanels_DrawEntryRows` calls `MenuPanels_GetWindowRect`, `YkWindows_GetEntryFieldA`, `YkWindows_GetEntryFieldBPercent`, `MenuPanels_DrawLabelledRow`, `Yk_GetSharePercent`, `MenuPanels_DrawBarRow`, `YkWindows_GetValueIfLoaded`, `MenuPanels_DrawTwoDigitValue`
 - `MenuPanels_DrawLabelledRow` calls `YkCommon_DrawUnscaled`, `YkCommon_DrawSmoothedItem1A`, `YkCommon_DrawSmoothedExItem1B`
-- `MenuPanels_DrawTwoDigitValue` calls `YkCommon_DrawUnscaled`, `sub_10311FF1`
+- `MenuPanels_DrawTwoDigitValue` calls `YkCommon_DrawUnscaled`, `game_10311FF1`
 - `MenuPanels_DrawBarRow` calls `YkCommon_DrawEasedPercentItem1A`, `YkCommon_DrawUnscaled`
 - `MenuPanels_DrawNameRows` calls `NetCellFont_GetRect`, `YkCommon_DrawSmoothedItem1A`, `YkCommon_DrawString`, `YkCommon_DrawUnscaled`
-- `ActerBuff_DrawNearby` calls `sub_1011BA40`, `Acter_GetActerAt10485F7A`, `ActerBuff_CollectNearby`, `MenuPanels_DrawNameRows`
-- `MenuPanels_DrawStrongholdPanel` calls `Acter_GetByte10480824IfFlag`, `Acter_GetDword10480800IfFlag`, `Acter_GetTable10480828IfFlag`, `MenuPanels_GetWindowRect`, `YkCommon_DrawFractionItem1A`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `sub_1011FB60`, `sub_10311FF1`, `sub_101C9B50`, `MenuPanels_DrawLabelBar`
-- `MenuPanels_DrawLabelBar` calls `sub_1011FB60`, `YkCommon_DrawFractionItem1A`, `YkCommon_DrawUnscaled`
-- `MenuPanels_DrawGameTime` calls `MenuPanels_RefreshTargetGridText`, `ntGameTimeGet`, `Time_ModMul3CDiv90`, `Time_ModDivD80Div90`, `sub_10311FF1`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `Time_ModDiv6C00Scaled`, `sub_1011FB60`
-- `MenuPanels_RefreshTargetGridText` calls `Camera_GetFrameScale`, `sub_10311C2C`, `YkWindows_FormatTargetMapGrid`, `sub_10312050`
+- `ActerBuff_DrawNearby` calls `game_1011BA40`, `Acter_GetActerAt10485F7A`, `ActerBuff_CollectNearby`, `MenuPanels_DrawNameRows`
+- `MenuPanels_DrawStrongholdPanel` calls `Acter_GetByte10480824IfFlag`, `Acter_GetDword10480800IfFlag`, `Acter_GetTable10480828IfFlag`, `MenuPanels_GetWindowRect`, `YkCommon_DrawFractionItem1A`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `game_1011FB60`, `game_10311FF1`, `game_101C9B50`, `MenuPanels_DrawLabelBar`
+- `MenuPanels_DrawLabelBar` calls `game_1011FB60`, `YkCommon_DrawFractionItem1A`, `YkCommon_DrawUnscaled`
+- `MenuPanels_DrawGameTime` calls `MenuPanels_RefreshTargetGridText`, `ntGameTimeGet`, `Time_ModMul3CDiv90`, `Time_ModDivD80Div90`, `game_10311FF1`, `YkCommon_DrawUnscaled`, `YkCommon_GetIndexed`, `Time_ModDiv6C00Scaled`, `game_1011FB60`
+- `MenuPanels_RefreshTargetGridText` calls `Camera_GetFrameScale`, `game_10311C2C`, `YkWindows_FormatTargetMapGrid`, `game_10312050`
 - `Camera_GetWrappedYaw` calls `Camera_GetField50`, `CYyCamMng2::GetYaw`
 - `ShapeMng_FillMenuShapes` calls `Scene_GetMenuFrameName`, `ShapeMng_FindShape`, `ShapeMng_FindShapes`
 - `Menu_GetTableEntry` calls nothing directly
 - `Menu_GetGlobalTableEntry` calls nothing directly
 - `MenuPanels_InitPanelState` calls `MenuPanels_SelectShownLine`
-- `MenuPanels_SetEntryText` calls `Entry_ClearText`, `Font_MeasureTextAll2`, `sub_10312940`, `sub_10312050`, `sub_10313520`, `TargetMenu_CallIfNot3`, `MenuPanels_SelectShownLine`
+- `MenuPanels_SetEntryText` calls `Entry_ClearText`, `Font_MeasureTextAll2`, `game_10312940`, `game_10312050`, `game_10313520`, `TargetMenu_CallIfNot3`, `MenuPanels_SelectShownLine`
 - `Entry_ClearText` calls `MenuPanels_SelectShownLine`
 - `KaHelpMes_ResetLoadMes` calls nothing directly
-- `MenuPanels_Draw` calls `sub_10220EF0`, `CDx::GetRenderTargetTop`, `CDx::SetViewport`, `sub_1011D050`, `Font_DrawGlyphQuadGrey`, `sub_10221770`, `sub_10220F40`
+- `MenuPanels_Draw` calls `game_10220EF0`, `CDx::GetRenderTargetTop`, `CDx::SetViewport`, `game_1011D050`, `Font_DrawGlyphQuadGrey`, `game_10221770`, `game_10220F40`
 - `MenuPanels_SelectShownLine` calls `Font_MeasureTextAll2`
 - `MenuPanels_IsDone` calls nothing directly
-- `MenuPanels_InitMenuShapes` calls `ShapeMng_FillMenuShapes`, `sub_102224C0`, `Allocator_Generic`, `MenuPanels_InitFieldsDTo38`
+- `MenuPanels_InitMenuShapes` calls `ShapeMng_FillMenuShapes`, `game_102224C0`, `Allocator_Generic`, `MenuPanels_InitFieldsDTo38`
 - `MenuPanels_Construct` calls `NetCellFont_ClearWords`, `MenuPanels_InitRect`
 - `MenuPanels_InitRect` calls `MenuPanels_AllocEntriesAndSetCounts`
-- `MenuPanels_AllocEntriesAndSetCounts` calls `operator_delete`, `Allocator_Generic`, `sub_10221ED0`
-- `MenuPanels_SetCountAndRebuild` calls `operator_delete`, `sub_10221E10`, `Allocator_Generic`, `sub_10221B90`
+- `MenuPanels_AllocEntriesAndSetCounts` calls `operator_delete`, `Allocator_Generic`, `game_10221ED0`
+- `MenuPanels_SetCountAndRebuild` calls `operator_delete`, `game_10221E10`, `Allocator_Generic`, `game_10221B90`
 - `MenuPanels_GetWindowLocate` calls `NetCellFont_GetRect`
-- `MenuPanels_RunRowCallbacks` calls `MenuPanels_GetWindowLocate`, `sub_102225F0`, `sub_10118900`, `sub_101188E0`
+- `MenuPanels_RunRowCallbacks` calls `MenuPanels_GetWindowLocate`, `game_102225F0`, `game_10118900`, `game_101188E0`
 - `MenuPanels_SetMode` calls `NetCellFont_TestCommand36CF60`
 - `MenuPanels_CreateSubsystems` calls `Allocator_Generic`, `NetCellFont_ClearWords`, `MenuPanels_ConstructFillMinus1`, `MenuPanels_InitAndRegister`, `MenuPanels_ConstructFromScene`, `MenuPanels_InitIndexMap128`, `MenuPanels_ConstructSetGlobals`, `MenuPanels_InitIndexMap64`, `MenuPanels_ConstructZeroFields`
 - `MenuPanels_ResolveAlias` calls nothing directly
 - `MenuPanels_GetSlotInfo` calls `MenuPanels_ResolveAlias`, `MenuPanels_ComputeCount`, `MenuPanels_ComputeDelta`
-- `MenuPanels_FindRecordIdByText` calls `MenuPanels_GetObjectOnce`, `sub_10223A90`, `sub_10223B10`, `MenuPanels_Refresh`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `XI_PACKET_100FC9C0 (left out)`
+- `MenuPanels_FindRecordIdByText` calls `MenuPanels_GetObjectOnce`, `game_10223A90`, `game_10223B10`, `MenuPanels_Refresh`, `YkCommon_GetCC4F0ActorByIndexAt1FA`, `XI_PACKET_100FC9C0 (left out)`
 - `MenuPanels_FindByTypeIndex` calls `MenuPanels_Refresh`
 - `MenuPanels_IsListedIdFlagged` calls `Acter_IsByte10483158Set`
-- `MenuPanels_FindEntryByCallback` calls `MenuPanels_IsListedIdFlagged`, `MenuPanels_GetObjectOnce`, `sub_10223A90`, `sub_10223B10`
+- `MenuPanels_FindEntryByCallback` calls `MenuPanels_IsListedIdFlagged`, `MenuPanels_GetObjectOnce`, `game_10223A90`, `game_10223B10`
 - `MenuPanels_HasBitIdPlus200` calls `NetCellFont_GetBlock2CDE8IfReady`, `MenuPanels_TestBit`
 - `MenuPanels_TestBit` calls nothing directly
 - `MenuPanels_SetTargetValuesFor` calls `MenuPanels_GetRecord`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
 - `MenuPanels_SetTargetValuesWithCallback` calls `MenuPanels_GetRecord`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
 - `MenuPanels_ConstructFromScene` calls `MenuPanels_ResetFields`, `Scene_GetTableValue`, `MenuPanels_Init`
-- `MenuPanels_GetObjectOnce` calls `MenuPanels_Ctor102239A0`, `sub_10313486`
-- `MenuPanels_Ctor102239A0` calls `sub_10257860`, `YkCommon_Clear`
+- `MenuPanels_GetObjectOnce` calls `MenuPanels_Ctor102239A0`, `game_10313486`
+- `MenuPanels_Ctor102239A0` calls `game_10257860`, `YkCommon_Clear`
 - `MenuPanels_LoadFromFile` calls `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `DmsgText_Clone`, `operator_delete`, `YkCommon_Load`
 - `MenuPanels_InitAndRegister` calls `MenuPanels_ClearArrays`, `TextInputFiles_Register`
 - `MenuPanels_ClearRecordIfAskedOrFull` calls nothing directly
@@ -256,27 +256,27 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_GetEntryId` calls nothing directly
 - `MenuPanels_GetRecord` calls `MenuPanels_GetEntryId`
 - `MenuPanels_FindByteIndex` calls nothing directly
-- `MenuPanels_ComputeCount` calls `MenuPanels_FindByteIndex`, `sub_10311C2C`
-- `MenuPanels_ComputeDelta` calls `MenuPanels_FindByteIndex`, `sub_10311C2C`
+- `MenuPanels_ComputeCount` calls `MenuPanels_FindByteIndex`, `game_10311C2C`
+- `MenuPanels_ComputeDelta` calls `MenuPanels_FindByteIndex`, `game_10311C2C`
 - `MenuPanels_ConstructSetGlobals` calls `MenuPanels_Construct`
 - `MenuPanels_InitIndexMap128` calls `TextInputFiles_Register`
 - `MenuPanels_FillIdentity128` calls nothing directly
-- `MenuPanels_GetObject106670C8Once` calls `MenuPanels_Ctor102261F0`, `sub_10313486`
-- `MenuPanels_Ctor102261F0` calls `sub_10257860`, `YkCommon_Clear`
+- `MenuPanels_GetObject106670C8Once` calls `MenuPanels_Ctor102261F0`, `game_10313486`
+- `MenuPanels_Ctor102261F0` calls `game_10257860`, `YkCommon_Clear`
 - `MenuPanels_LoadDMsgTable` calls `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `YkCommon_Load`
 - `MenuPanels_ConstructZeroFields` calls `MenuPanels_Construct`
 - `MenuPanels_InitIndexMap64` calls `TextInputFiles_Register`
-- `MenuPanels_FindEntryByCallback64` calls `MenuPanels_GetObject106670C8Once`, `sub_102262B0`, `sub_10226320`
+- `MenuPanels_FindEntryByCallback64` calls `MenuPanels_GetObject106670C8Once`, `game_102262B0`, `game_10226320`
 - `MenuPanels_Alloc1800` calls `Allocator_Generic`
-- `MenuPanels_ConstructAllocEntries` calls `sub_10257860`, `TextInputFiles_EntriesCtorEmpty`
+- `MenuPanels_ConstructAllocEntries` calls `game_10257860`, `TextInputFiles_EntriesCtorEmpty`
 - `MenuPanels_LoadNamedEntries` calls `TextInputFiles_AllocEntries`, `Scene_GetTableValue`, `TextInputFiles_EntriesSetCount`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `DmsgText_GetDMsgTable`, `DmsgText_Bind`
 - `MenuPanels_CreateAndLoadEntries` calls `Allocator_Generic`, `MenuPanels_ConstructBuffersAt68`, `MenuPanels_ConstructBuffersAt8`, `MenuPanels_ConstructAllocEntries`, `MenuPanels_LoadNamedEntries`
 - `MenuPanels_ConstructBuffersAt68` calls `MenuPanels_Construct`, `MenuPanels_Alloc1800`
-- `MenuPanels_DrawMovie` calls `ntGameTimeGet`, `sub_10227930`, `Settings_GetValue`, `sub_10227100`, `sub_10311C2C`, `sub_102270F0`, `sub_10227130`, `sub_10227920`, `CXiMovie::Draw`
-- `MenuPanels_DrawTimeLeftText` calls `Settings_GetValue`, `ntGameTimeGet`, `sub_10227930`, `sub_10227100`, `sub_10311FF1`, `YkCommon_DrawTextItem0`
+- `MenuPanels_DrawMovie` calls `ntGameTimeGet`, `game_10227930`, `Settings_GetValue`, `game_10227100`, `game_10311C2C`, `game_102270F0`, `game_10227130`, `game_10227920`, `CXiMovie::Draw`
+- `MenuPanels_DrawTimeLeftText` calls `Settings_GetValue`, `ntGameTimeGet`, `game_10227930`, `game_10227100`, `game_10311FF1`, `YkCommon_DrawTextItem0`
 - `MenuPanels_ClearHeaderFields` calls nothing directly
 - `MenuPanels_ConstructBuffersAt8` calls `MenuPanels_Alloc1800`, `MenuPanels_ClearHeaderFields`
-- `MenuPanels_DrawTargetEntryIcons` calls `Settings_GetValue`, `TextInputFiles_GetSetting99`, `TargetMenu_GetField84Ptr`, `sub_101593C0`, `TargetMenu_GetTargetActorPtr74`, `sub_102288E0`, `Yk_FindIndexById`, `Yk_GetActiveEntry`, `sub_10202CC0`, `sub_10098F70`, `sub_10098F90`, `sub_10227110`, `sub_10227920`, `sub_10311C2C`, `sub_10228910`, `Menu_GetDwordAt8C`, `NetCellFont_GetRect`, `YkCommon_DrawUnscaled`, `sub_101C9B50`, `sub_10228280`, `sub_10227130`, `CXiMovie::Draw`
+- `MenuPanels_DrawTargetEntryIcons` calls `Settings_GetValue`, `TextInputFiles_GetSetting99`, `TargetMenu_GetField84Ptr`, `game_101593C0`, `TargetMenu_GetTargetActorPtr74`, `game_102288E0`, `Yk_FindIndexById`, `Yk_GetActiveEntry`, `game_10202CC0`, `game_10098F70`, `game_10098F90`, `game_10227110`, `game_10227920`, `game_10311C2C`, `game_10228910`, `Menu_GetDwordAt8C`, `NetCellFont_GetRect`, `YkCommon_DrawUnscaled`, `game_101C9B50`, `game_10228280`, `game_10227130`, `CXiMovie::Draw`
 - `MenuPanels_InitGlobals` calls `Allocator_Generic`, `MenuPanels_ConstructInitAt64`, `MenuPanels_Construct`, `MenuPanels_FindForIds`
 - `MenuPanels_ConstructInitAt64` calls `MenuPanels_Construct`, `TextInputFiles_Init`
 - `MenuPanels_ClearMenu` calls `TargetMenu_MenuInitAndFadeItem`
@@ -288,13 +288,13 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_TickCounters` calls `Camera_GetField38`, `NetCellFont_FindTimerKind10`, `MenuPanels_SetTimerSeconds`
 - `MenuPanels_GetMinutesCeil` calls nothing directly
 - `MenuPanels_SetTimerSeconds` calls nothing directly
-- `MenuPanels_FindTableIdByText` calls `MenuPanels_GetSingleton`, `sub_1022BF10`, `MenuPanels_GetRowFirstCell`, `NetCellFont_GetBlock2CF54IfFlag`, `MenuPanels_IsEntryAvailable`
+- `MenuPanels_FindTableIdByText` calls `MenuPanels_GetSingleton`, `game_1022BF10`, `MenuPanels_GetRowFirstCell`, `NetCellFont_GetBlock2CF54IfFlag`, `MenuPanels_IsEntryAvailable`
 - `MenuPanels_IsEntryAvailable` calls `Acter_GetTable10485830IfBit2`
 - `MenuPanels_SetTargetValuesFromList7A70` calls `MenuPanels_GetRecord100`, `TargetMenu_SetValues3`, `TargetMenu_SetFields78D0`
 - `MenuPanels_GetEntryState` calls `Acter_IsFlag40DB6OrState17`, `MenuPanels_GetRecord100`, `MenuPanels_IsIdInTable10485A30`, `MenuPanels_HasBitIdPlus200`, `TargetMenu_GetActiveEntry16`, `MenuPanels_ComputeEntryFlags`, `MenuPanels_ComputeEntryMode`, `MenuPanels_DecodeEntryState`
 - `MenuPanels_CtorVt1033C50C` calls `MenuPanels_ResetFields`, `Scene_GetTableValue`, `MenuPanels_Init`
-- `MenuPanels_GetSingleton` calls `MenuPanels_SingletonCtor`, `sub_10313486`
-- `MenuPanels_SingletonCtor` calls `sub_10257860`, `YkCommon_Clear`
+- `MenuPanels_GetSingleton` calls `MenuPanels_SingletonCtor`, `game_10313486`
+- `MenuPanels_SingletonCtor` calls `game_10257860`, `YkCommon_Clear`
 - `MenuPanels_LoadMessageTable` calls `Scene_GetTableValue`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `DmsgText_Clone`, `operator_delete`, `YkCommon_Load`
 - `MenuPanels_GetRowFirstCell` calls `DmsgText_GetCell`
 - `MenuPanels_MixDatCtor` calls `MenuPanels_ClearArrays`, `TextInputFiles_Register`
@@ -310,7 +310,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_Clear` calls nothing directly
 - `MenuPanels_Alloc` calls `Allocator_Generic`
 - `MenuPanels_Append` calls nothing directly
-- `MenuPanels_LoadStringTable` calls `sub_10257860`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `operator_delete`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `DmsgText_GetRowCount`, `DmsgText_GetCell`, `MenuPanels_Alloc`, `DmsgText_GetDwordCell`, `MenuPanels_Append`, `TextInputFiles_AllocEntries`, `TextInputFiles_EntriesSetCount`, `DmsgText_BindSource`, `DmsgText_GetRowInfo`, `DmsgText_CallFreeData`
+- `MenuPanels_LoadStringTable` calls `game_10257860`, `FileMng_ResolveOrExit`, `Allocator_Generic`, `TextInputFiles_ForwardOrExit`, `operator_delete`, `DmsgText_GetDMsgTable`, `DmsgText_Assign`, `DmsgText_GetRowCount`, `DmsgText_GetCell`, `MenuPanels_Alloc`, `DmsgText_GetDwordCell`, `MenuPanels_Append`, `TextInputFiles_AllocEntries`, `TextInputFiles_EntriesSetCount`, `DmsgText_BindSource`, `DmsgText_GetRowInfo`, `DmsgText_CallFreeData`
 - `MenuPanels_ReadChunk` calls `Scene_GetTableValue`, `TextInputFiles_ForwardOrExit`
 - `MenuPanels_CreateMessagePanels` calls `Allocator_Generic`, `MenuPanels_PanelCtorVt1033C6B0`, `MenuPanels_Construct`, `MenuPanels_CtorVt1033C718`, `MenuPanels_PanelCtorVt1033C720`, `MenuPanels_PanelCtorVt1033C788`, `Scene_GetTableValue`, `MenuPanels_LoadStringTable`
 - `MenuPanels_PanelCtorVt1033C6B0` calls `MenuPanels_Construct`
@@ -319,7 +319,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MenuPanels_PanelCtorVt1033C720` calls `MenuPanels_Construct`
 - `MenuPanels_PanelCtorVt1033C788` calls `MenuPanels_Construct`
 - `MenuPanels_InitDrawRect` calls nothing directly
-- `MenuPanels_DrawProgressBar` calls `sub_10311C2C`, `Menu_GetTableEntry`, `Cell_DrawFirstStretched`
+- `MenuPanels_DrawProgressBar` calls `game_10311C2C`, `Menu_GetTableEntry`, `Cell_DrawFirstStretched`
 - `MenuPanels_SendMenuEventByKind` calls `NetCellFont_TestCommand36CF60`, `Menu_HandleEvent`
-- `MenuPanels_ComputeClampedIndex` calls `sub_10311C2C`
+- `MenuPanels_ComputeClampedIndex` calls `game_10311C2C`
 - `MenuPanels_SetPair` calls nothing directly

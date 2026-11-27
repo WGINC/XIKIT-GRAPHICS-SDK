@@ -21,7 +21,7 @@ Why the file has this name (data/unit_names.json): YkCommonInit, CTkSubWindow_Dr
 | `YkCommonInit` | 0x101C8950 | 474 | yes | - | - | - |
 | `YkCommon_GetIndexed` | 0x101C8C30 | 24 | yes | - | Returns the pointer stored at the given index of the 18-entry global array at 0x10662E50, or 0 when the index is out of range. | low |
 | `YkCommon_Checksum` | 0x101C8C50 | 52 | yes | - | Computes a table-driven 32-bit checksum over a byte range. | medium |
-| `YkCommon_TimeToTmWrap28Years` | 0x101C8D10 | 84 | yes | - | Converts a time value with sub_10314D91, stepping times past 0x7FE8177F back by 28-year cycles and adding the years back to the result. | medium |
+| `YkCommon_TimeToTmWrap28Years` | 0x101C8D10 | 84 | yes | - | Converts a time value with game_10314D91, stepping times past 0x7FE8177F back by 28-year cycles and adding the years back to the result. | medium |
 | `YkCommon_GetOffset` | 0x101C8D70 | 33 | yes | - | Returns the offset 0x76C plus a field of a looked-up record, or 0x76C when there is no record. | low |
 | `Gfx_ProjectWorldToScreen` | 0x101C8DA0 | 322 | yes | 1 | - | - |
 | `YkCommon_FormatDateTime` | 0x101C8FD0 | 667 | yes | - | Formats a time value as date and/or time text (by flags in arg2) into a static buffer and returns it. | medium |
@@ -43,9 +43,9 @@ Why the file has this name (data/unit_names.json): YkCommonInit, CTkSubWindow_Dr
 | `YkCommon_DrawEasedPercent` | 0x101CB430 | 196 | yes | 3 | Draws a 0..100 value as a fraction and eases the stored displayed value toward the target by 15% per call. | medium |
 | `YkCommon_DrawEasedPercentUnitScale` | 0x101CB500 | 69 | yes | 4 | Unit101C72E0_DrawEasedPercent with all four scales 1.0. | high |
 | `YkCommon_DrawEasedPercentItem1A` | 0x101CB550 | 62 | yes | 5 | DrawEasedPercentUnitScale with the +0x184/+0x98 resources of item 1 and colours 0x80001080/0x80801000. | medium |
-| `YkCommon_BeginCapture` | 0x101CB770 | 31 | yes | 1 | Starts a capture on sub_10456C0C for the given rectangle and returns true. | medium |
+| `YkCommon_BeginCapture` | 0x101CB770 | 31 | yes | 1 | Starts a capture on game_10456C0C for the given rectangle and returns true. | medium |
 | `YkCommon_Forward10097E80` | 0x101CBC60 | 5 | yes | - | Calls the function at 0x10097E80 with its argument and returns its result. | low |
-| `YkCommon_IsActorField170` | 0x101CBDF0 | 44 | yes | - | Returns whether the actor sub_10480AF0[DAT_10485F7A] has the value param_1 at +0x170. | medium |
+| `YkCommon_IsActorField170` | 0x101CBDF0 | 44 | yes | - | Returns whether the actor game_10480AF0[DAT_10485F7A] has the value arg2 at +0x170. | medium |
 | `YkCommon_IsActorField170Is5` | 0x101CBE50 | 11 | yes | - | Unit101C72E0_IsActorField170(5). | high |
 | `YkCommon_IsActorField170Is55` | 0x101CBE60 | 11 | yes | - | Unit101C72E0_IsActorField170(0x55). | high |
 | `YkCommon_IsActorField170Is6` | 0x101CBE70 | 11 | yes | - | Unit101C72E0_IsActorField170(6). | high |
@@ -53,13 +53,13 @@ Why the file has this name (data/unit_names.json): YkCommonInit, CTkSubWindow_Dr
 | `YkCommon_Test104DFD98Field40C3CZero` | 0x101CC0A0 | 40 | yes | - | Returns whether the object at 0x104DFD98 passes the check at 0x100F9680 and its dword at +0x40C3C is zero. | low |
 | `YkCommon_GetByte1048098D` | 0x101CC1B0 | 6 | yes | - | Returns the byte at 0x1048098D. | low |
 | `YkCommon_ActorTest1D0` | 0x101CC1D0 | 77 | yes | - | Flag test on an actor combining fn_101CC220 and bits at +0x1D0/+0x128/+0x130; its meaning is not established. | low |
-| `YkCommon_ActorPairTest1FF` | 0x101CC220 | 253 | yes | - | Compares the +0x1FF bytes of an actor and the actor sub_10480AF0[DAT_10485F7A] when both have flag 0x400; its meaning is not established. | low |
+| `YkCommon_ActorPairTest1FF` | 0x101CC220 | 253 | yes | - | Compares the +0x1FF bytes of an actor and the actor game_10480AF0[DAT_10485F7A] when both have flag 0x400; its meaning is not established. | low |
 | `YkCommon_IsNotD3` | 0x101CC320 | 12 | yes | - | Returns whether its argument is not 0xD3. | low |
-| `YkCommon_CC4F0ActorTest400` | 0x101CC350 | 72 | yes | - | Tests flag 0x400 and the +0x1FF byte of the actor from sub_101CC4F0. | low |
+| `YkCommon_CC4F0ActorTest400` | 0x101CC350 | 72 | yes | - | Tests flag 0x400 and the +0x1FF byte of the actor from game_101CC4F0. | low |
 | `Acter_GetActerAt10485F7A` | 0x101CC4F0 | 28 | yes | - | Returns the acter in the table slot whose index is held at 0x10485F7A, or 0. | medium |
-| `YkCommon_GetCC4F0ActorByIndexAt1FA` | 0x101CC510 | 15 | yes | - | Acter_GetByIndexAt1FA of the actor from sub_101CC4F0. | high |
+| `YkCommon_GetCC4F0ActorByIndexAt1FA` | 0x101CC510 | 15 | yes | - | Acter_GetByIndexAt1FA of the actor from game_101CC4F0. | high |
 | `Acter_GetByIndexAt1FA` | 0x101CC520 | 36 | yes | - | Returns the actor-table entry indexed by the 16-bit field at +0x1FA of the given actor, or 0. | medium |
-| `YkCommon_GetCC4F0ActorAt2A0` | 0x101CC550 | 15 | yes | - | Unit101C72E0_GetActorAt2A0 of the actor from sub_101CC4F0. | high |
+| `YkCommon_GetCC4F0ActorAt2A0` | 0x101CC550 | 15 | yes | - | Unit101C72E0_GetActorAt2A0 of the actor from game_101CC4F0. | high |
 | `YkCommon_GetActorAt2A0` | 0x101CC560 | 36 | yes | - | Returns the actor whose index the object holds at +0x2A0. | medium |
 
 ## Direct calls
@@ -76,29 +76,29 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `YkCommon_LoadTable` calls `TextInputFiles_EntriesSetCount`, `FileMng_ResolveOrExit`, `TextInputFiles_ForwardOrExit`, `DmsgText_BindSource`, `DmsgText_GetRowBytes`, `Allocator_Generic`, `operator_delete`, `DmsgText_BindDataAndMark`, `DmsgText_GetDataField28`
 - `YkCommon_MapChar` calls nothing directly
 - `YkCommon_CompareMapped` calls `YkCommon_MapChar`
-- `YkCommonInit` calls `TargetMenu_GetMessageFwd`, `ShapeMng_FindShape`, `Scene_GetMenuFrameName`, `sub_101CC620`
+- `YkCommonInit` calls `TargetMenu_GetMessageFwd`, `ShapeMng_FindShape`, `Scene_GetMenuFrameName`, `game_101CC620`
 - `YkCommon_GetIndexed` calls nothing directly
 - `YkCommon_Checksum` calls nothing directly
-- `YkCommon_TimeToTmWrap28Years` calls `sub_10314D91`
-- `YkCommon_GetOffset` calls `sub_100DBE10`, `YkCommon_TimeToTmWrap28Years`
-- `Gfx_ProjectWorldToScreen` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `Camera_GetViewMatrixPtr`, `CDx::SetTransform`, `Vec4_Set`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `sub_10311C2C`, `MathVector_Nop`
-- `YkCommon_FormatDateTime` calls `YkCommon_TimeToTmWrap28Years`, `YkCommon_FindShortKeyEntry`, `TargetMenu_FormatMessage4`, `TargetMenu_FormatMessage5`, `sub_10311FF1`, `TargetMenu_GetMessageFwd`
+- `YkCommon_TimeToTmWrap28Years` calls `game_10314D91`
+- `YkCommon_GetOffset` calls `game_100DBE10`, `YkCommon_TimeToTmWrap28Years`
+- `Gfx_ProjectWorldToScreen` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_SetIdentity`, `Mat4_SetTranslation`, `Camera_GetViewMatrixPtr`, `CDx::SetTransform`, `Vec4_Set`, `Gfx_ProjectWorldToClip`, `Gfx_NdcToScreen`, `game_10311C2C`, `MathVector_Nop`
+- `YkCommon_FormatDateTime` calls `YkCommon_TimeToTmWrap28Years`, `YkCommon_FindShortKeyEntry`, `TargetMenu_FormatMessage4`, `TargetMenu_FormatMessage5`, `game_10311FF1`, `TargetMenu_GetMessageFwd`
 - `YkCommon_FindShortKeyEntry` calls nothing directly
-- `CTkSubWindow_DrawTime` calls `sub_10311FF1`
+- `CTkSubWindow_DrawTime` calls `game_10311FF1`
 - `YkCommon_MeasureText` calls `YkCommon_GetIndexed`
 - `YkCommon_DrawUnscaled` calls `YkCommon_DrawTextItem0`
-- `YkCommon_DrawTextItem0` calls `YkCommon_MeasureText`, `YkCommon_GetIndexed`, `sub_10311C2C`, `sub_1011FB60`, `sub_1011FC80`
-- `YkCommon_DrawString` calls `YkCommon_GetIndexed`, `sub_1011FB60`, `sub_1011FC80`
-- `YkCommon_DrawTruncated` calls `YkCommon_GetIndexed`, `YkCommon_DrawUnscaled`, `sub_1011FC80`
-- `YkCommon_DrawFractionRange` calls `sub_10311C2C`, `sub_1011FC80`
+- `YkCommon_DrawTextItem0` calls `YkCommon_MeasureText`, `YkCommon_GetIndexed`, `game_10311C2C`, `game_1011FB60`, `game_1011FC80`
+- `YkCommon_DrawString` calls `YkCommon_GetIndexed`, `game_1011FB60`, `game_1011FC80`
+- `YkCommon_DrawTruncated` calls `YkCommon_GetIndexed`, `YkCommon_DrawUnscaled`, `game_1011FC80`
+- `YkCommon_DrawFractionRange` calls `game_10311C2C`, `game_1011FC80`
 - `YkCommon_DrawFractionDefault` calls `YkCommon_DrawFractionRange`
-- `YkCommon_DrawSmoothed` calls `YkCommon_DrawFractionRange`, `sub_10311C2C`
+- `YkCommon_DrawSmoothed` calls `YkCommon_DrawFractionRange`, `game_10311C2C`
 - `YkCommon_DrawSmoothedDefault` calls `YkCommon_DrawSmoothed`
 - `YkCommon_DrawFractionItem1A` calls `YkCommon_GetIndexed`, `YkCommon_DrawFractionDefault`
 - `YkCommon_DrawSmoothedItem1A` calls `YkCommon_GetIndexed`, `YkCommon_DrawSmoothedDefault`
 - `YkCommon_DrawSmoothedItem1B` calls `YkCommon_GetIndexed`, `YkCommon_DrawSmoothedDefault`
 - `YkCommon_DrawSmoothedExItem1B` calls `YkCommon_GetIndexed`, `YkCommon_DrawSmoothed`
-- `YkCommon_DrawEasedPercent` calls `sub_101CB280`, `sub_10311C2C`
+- `YkCommon_DrawEasedPercent` calls `game_101CB280`, `game_10311C2C`
 - `YkCommon_DrawEasedPercentUnitScale` calls `YkCommon_DrawEasedPercent`
 - `YkCommon_DrawEasedPercentItem1A` calls `YkCommon_GetIndexed`, `YkCommon_DrawEasedPercentUnitScale`
 - `YkCommon_BeginCapture` calls `ErrorReport_Begin`

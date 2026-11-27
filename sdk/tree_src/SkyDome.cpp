@@ -7,27 +7,29 @@
 XI_API int __cdecl Sky_DrawDome(void)
 {
   int result;
-  int v1;
-  unsigned __int8 *v2;
-  unsigned __int8 *v3;
-  _BYTE *v4;
+  int i1;
+  unsigned char *p1;
+  unsigned char *p2;
+  uint8_t *p3;
   int i;
-  alignas(16) unsigned char xi_frame[0x43C];  // address-taken locals at their original offsets
-  float &v6 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &v7 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &Float2E0 = *reinterpret_cast<float *>(xi_frame + 0x2C);
-  unsigned __int8 (&v9)[12] = *reinterpret_cast<unsigned __int8 (*)[12]>(xi_frame + 0x30);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x43C];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i2; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; float Float2E0; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; unsigned char u1[12]; };   // at 0x30
+  } frame;
 
   result = (int)g_pXiZone;
-  v1 = *((_DWORD *)g_pXiZone + 6);
-  if ( v1 != 0 )
+  i1 = *((uint32_t *)g_pXiZone + 6);
+  if ( i1 != 0 )
   {
-    v2 = (unsigned __int8 *)(v1 + 76);
-    if ( v2 != nullptr )
+    p1 = (unsigned char *)(i1 + 76);
+    if ( p1 != nullptr )
     {
-      result = orig::Camera_SetClearColorRGB(*v2, v2[1], v2[2]);
-      result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v2[18]) << 0));
-      if ( (unsigned __int8)result > 2u )
+      result = orig::Camera_SetClearColorRGB(*p1, p1[1], p1[2]);
+      result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(p1[18]) << 0));
+      if ( (unsigned char)result > 2u )
       {
         if ( (Sky_DrawDome_staticGuard & 1) == 0 )
         {
@@ -39,22 +41,22 @@ XI_API int __cdecl Sky_DrawDome(void)
           Sky_DrawDome_stateBlock,
           (int)Sky_DrawDome_renderStates,
           (int)Sky_DrawDome_textureStageStates);
-        orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
+        orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
         orig::Gfx_SetViewMatrixFromField90(g_pMoCamera);
-        v3 = v9;
-        v4 = v2 + 32;
+        p2 = frame.u1;
+        p3 = p1 + 32;
         for ( i = 8; i != 0; --i )
         {
-          orig::Color_CopySwapRB(v3, v4);
-          v4 += 4;
-          v3 += 4;
+          orig::Color_CopySwapRB(p2, p3);
+          p3 += 4;
+          p2 += 4;
         }
-        v7 = v2[18];
-        Float2E0 = orig::Camera_GetFloat2E0();
-        v6 = Float2E0 - orig::Camera_GetFloat2DC() - 1.0;
-        orig::Sky_DrawGradientDome(v6, COERCE_FLOAT(8), v7, v9, COERCE_FLOAT(v2 + 64));
-        orig::Camera_SetClearColorRGB(v9[2], v9[1], v9[0]);
-        *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x178)) = 1124073472;
+        frame.i2 = p1[18];
+        frame.Float2E0 = orig::Camera_GetFloat2E0();
+        frame.f1 = frame.Float2E0 - orig::Camera_GetFloat2DC() - 1.0;
+        orig::Sky_DrawGradientDome(frame.f1, bit_copy<float>((uint32_t)(8)), frame.i2, frame.u1, bit_copy<float>((uint32_t)(p1 + 64)));
+        orig::Camera_SetClearColorRGB(frame.u1[2], frame.u1[1], frame.u1[0]);
+        *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x178)) = 1124073472;
         orig::Gfx_SetViewMatrixFromField10(g_pMoCamera);
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
         (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -72,39 +74,41 @@ XI_API int __cdecl Sky_DrawDome(void)
 XI_API int __cdecl Sky_DrawDomeViewCentered(void)
 {
   int result;
-  unsigned __int8 *v1;
+  unsigned char *p1;
   int ScratchMatrixStackTop;
-  float *v3;
-  int v4;
-  float *v5;
-  int v6;
-  unsigned int *v7;
-  bool v8; // zf
-  CMoProcessor *v9;
-  int v10;
-  int v11;
-  alignas(16) unsigned char xi_frame[0x440];  // address-taken locals at their original offsets
-  float &v12 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &v13 = *reinterpret_cast<int *>(xi_frame + 0x10);
-  unsigned __int8 * &v14 = *reinterpret_cast<unsigned __int8 * *>(xi_frame + 0x2C);
-  int &v15 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  int &v16 = *reinterpret_cast<int *>(xi_frame + 0x30);
-  float &Float2E0 = *reinterpret_cast<float *>(xi_frame + 0x30);
-  unsigned __int8 (&v18)[12] = *reinterpret_cast<unsigned __int8 (*)[12]>(xi_frame + 0x34);
+  float *p2;
+  int i1;
+  float *p3;
+  int i2;
+  unsigned int *p4;
+  bool b1; // zf
+  CMoProcessor *p5;
+  int i3;
+  int i4;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x440];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; int i5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_3[0x2C]; unsigned char * p6; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; int i6; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_5[0x30]; int i7; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_6[0x30]; float Float2E0; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_7[0x34]; unsigned char u1[12]; };   // at 0x34
+  } frame;
 
   result = g_pResourceMng;
   if ( g_pResourceMng != 0 )
   {
-    result = *((_DWORD *)g_pXiZone + 6);
+    result = *((uint32_t *)g_pXiZone + 6);
     if ( result != 0 )
     {
-      v1 = (unsigned __int8 *)(result + 76);
-      v15 = result + 76;
+      p1 = (unsigned char *)(result + 76);
+      frame.i6 = result + 76;
       if ( result != -76 )
       {
-        result = orig::Camera_SetClearColorRGB(*v1, *(_BYTE *)(result + 77), *(_BYTE *)(result + 78));
-        result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v1[18]) << 0));
-        if ( (unsigned __int8)result > 2u )
+        result = orig::Camera_SetClearColorRGB(*p1, *(uint8_t *)(result + 77), *(uint8_t *)(result + 78));
+        result = (int)(((uint32_t)(result) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(p1[18]) << 0));
+        if ( (unsigned char)result > 2u )
         {
           if ( (Sky_DrawDomeViewCentered_staticGuard & 1) == 0 )
           {
@@ -117,53 +121,53 @@ XI_API int __cdecl Sky_DrawDomeViewCentered(void)
             (int)Sky_DrawDomeViewCentered_renderStates,
             (int)Sky_DrawDomeViewCentered_textureStageStates);
           ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-          v3 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+          p2 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
           (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-          qmemcpy(v3, (const void *)(g_pResourceMng + 2896), 0x40u);
-          v4 = (g_pProcessor->ScratchMatrixStackTop);
-          v5 = ((float * *)((char *)g_pProcessor + 0xA10))[v4];
-          (g_pProcessor->ScratchMatrixStackTop) = v4 + 1;
-          qmemcpy(v5, (const void *)(g_pResourceMng + 3408), 0x40u);
-          orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, v5);
-          orig::CMoDX_SetWorldMatrix((_DWORD ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
+          memcpy(p2, (const void *)(g_pResourceMng + 2896), 0x40u);
+          i1 = (g_pProcessor->ScratchMatrixStackTop);
+          p3 = ((float * *)((char *)g_pProcessor + 0xA10))[i1];
+          (g_pProcessor->ScratchMatrixStackTop) = i1 + 1;
+          memcpy(p3, (const void *)(g_pResourceMng + 3408), 0x40u);
+          orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, p3);
+          orig::CMoDX_SetWorldMatrix((uint32_t ***)g_pResourceMng, ((float *)((char *)g_pProcessor + 0x810)));
           orig::CMoDX_PushViewMatrix((int *)g_pResourceMng);
-          v3[15] = 1.0;
-          v3[12] = 0.0;
-          v3[13] = 0.0;
-          v3[14] = 0.0;
-          orig::CMoDX_SetViewMatrix((_DWORD ***)g_pResourceMng, v3);
-          v6 = v15;
-          v14 = v18;
-          v16 = 8;
-          v7 = (unsigned int *)(v6 + 32);
+          p2[15] = 1.0;
+          p2[12] = 0.0;
+          p2[13] = 0.0;
+          p2[14] = 0.0;
+          orig::CMoDX_SetViewMatrix((uint32_t ***)g_pResourceMng, p2);
+          i2 = frame.i6;
+          frame.p6 = frame.u1;
+          frame.i7 = 8;
+          p4 = (unsigned int *)(i2 + 32);
           do
           {
-            orig::Color_SetFromU32SwapRB(v14, *v7++);
-            v8 = v16 == 1;
-            v14 += 4;
-            --v16;
+            orig::Color_SetFromU32SwapRB(frame.p6, *p4++);
+            b1 = frame.i7 == 1;
+            frame.p6 += 4;
+            --frame.i7;
           }
-          while ( !v8 );
-          v13 = *(unsigned __int8 *)(v6 + 18);
-          Float2E0 = orig::Camera_GetFloat2E0();
-          v12 = (Float2E0 - orig::Camera_GetFloat2DC()) * 0x1.99999a0000000p-1;
-          orig::Sky_DrawGradientDome(v12, COERCE_FLOAT(8), v13, v18, COERCE_FLOAT(v6 + 64));
-          orig::Camera_SetClearColorRGB(v18[2], v18[1], v18[0]);
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x178)) = 1124073472;
+          while ( !b1 );
+          frame.i5 = *(unsigned char *)(i2 + 18);
+          frame.Float2E0 = orig::Camera_GetFloat2E0();
+          frame.f1 = (frame.Float2E0 - orig::Camera_GetFloat2DC()) * 0x1.99999a0000000p-1;
+          orig::Sky_DrawGradientDome(frame.f1, bit_copy<float>((uint32_t)(8)), frame.i5, frame.u1, bit_copy<float>((uint32_t)(i2 + 64)));
+          orig::Camera_SetClearColorRGB(frame.u1[2], frame.u1[1], frame.u1[0]);
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x178)) = 1124073472;
           orig::CMoDX_PopViewMatrix(g_pResourceMng);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_LIGHTING, TRUE);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_FOGENABLE, FALSE);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
           (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-          v9 = g_pProcessor;
-          v10 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-          (g_pProcessor->ScratchMatrixStackTop) = v10;
-          ((float * *)((char *)v9 + 0xA10))[v10] = v5;
+          p5 = g_pProcessor;
+          i3 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+          (g_pProcessor->ScratchMatrixStackTop) = i3;
+          ((float * *)((char *)p5 + 0xA10))[i3] = p3;
           result = (int)g_pProcessor;
-          v11 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-          (g_pProcessor->ScratchMatrixStackTop) = v11;
-          *(_DWORD *)(result + 4 * v11 + 2576) = v3;
+          i4 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+          (g_pProcessor->ScratchMatrixStackTop) = i4;
+          *(uint32_t *)(result + 4 * i4 + 2576) = p2;
         }
       }
     }
@@ -173,267 +177,267 @@ XI_API int __cdecl Sky_DrawDomeViewCentered(void)
 
 // FUNCTION: FFXIMAIN 0x1003DFE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall SkyDome_ScaleColorBytes(void * self_, uint32_t * param_1, float param_2)
+XI_API bits32 __thiscall SkyDome_ScaleColorBytes(void * self_, uint32_t * arg2, float arg3)
 {
-  uint32_t uVar1;
-  uint8_t uVar2;
-  uint8_t uVar3;
-  uint8_t uVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  int64_t lVar7;
-  uint32_t local_8;
+  uint32_t u1;
+  uint8_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  uint8_t u5;
+  long double f1;
+  int64_t i1;
+  uint32_t u6;
   
-  fVar6 = (long double)*(uint8_t *)((int)self_ + 2) * (long double)param_2;
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar2 = (uint8_t)lVar7;
+  f1 = (long double)*(uint8_t *)((int)self_ + 2) * (long double)arg3;
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u2 = (uint8_t)i1;
   }
   else {
-    uVar2 = 0;
+    u2 = 0;
   }
-  fVar6 = (long double)*(uint8_t *)((int)self_ + 1) * (long double)param_2;
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar3 = (uint8_t)lVar7;
-  }
-  else {
-    uVar3 = 0;
-  }
-  fVar6 = (long double)*(uint8_t *)self_ * (long double)param_2;
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar4 = (uint8_t)lVar7;
+  f1 = (long double)*(uint8_t *)((int)self_ + 1) * (long double)arg3;
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u3 = (uint8_t)i1;
   }
   else {
-    uVar4 = 0;
+    u3 = 0;
   }
-  uVar1 = CONCAT21(((uint16_t)(((uint16_t)(uint8_t)(uVar2) << 8) | (uint8_t)(uVar3))),uVar4);
-  local_8 = (uint32_t)uVar1;
-  fVar6 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)param_2;
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) != bVar5) {
-    *param_1 = local_8;
-    return param_1;
+  f1 = (long double)*(uint8_t *)self_ * (long double)arg3;
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u4 = (uint8_t)i1;
   }
-  lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-  local_8 = CONCAT13((char)lVar7,uVar1);
-  *param_1 = local_8;
-  return param_1;
+  else {
+    u4 = 0;
+  }
+  u1 = ((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(u2) << 8) | (uint8_t)(u3)))) << 8) | (uint8_t)(u4)));
+  u6 = (uint32_t)u1;
+  f1 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)arg3;
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) != u5) {
+    *arg2 = u6;
+    return arg2;
+  }
+  i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+  u6 = ((uint32_t)(((uint32_t)(uint8_t)((char)i1) << 24) | ((uint32_t)(u1) & 0xFFFFFFu)));
+  *arg2 = u6;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E0D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall SkyDome_ScaleBytesByVec4(void * self_, undefined4 * param_1, float * param_2)
+XI_API bits32 __thiscall SkyDome_ScaleBytesByVec4(void * self_, bits32 * arg2, float * arg3)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  uint8_t uVar3;
-  uint8_t uVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  int64_t lVar7;
-  uint32_t local_8;
+  uint8_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  uint8_t u5;
+  long double f1;
+  int64_t i1;
+  uint32_t u6;
   
-  bVar1 = *(uint8_t *)((int)self_ + 2);
-  fVar6 = (long double)bVar1 * (long double)*param_2;
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar3 = (uint8_t)lVar7;
+  u1 = *(uint8_t *)((int)self_ + 2);
+  f1 = (long double)u1 * (long double)*arg3;
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u3 = (uint8_t)i1;
   }
   else {
-    uVar3 = 0;
+    u3 = 0;
   }
-  fVar6 = (long double)*(uint8_t *)((int)self_ + 1) * (long double)param_2[1];
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar4 = (uint8_t)lVar7;
-  }
-  else {
-    uVar4 = 0;
-  }
-  XI_PIECE(local_8, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(uVar4) << 8) | (uint8_t)(bVar1)));
-  fVar6 = (long double)*(uint8_t *)self_ * (long double)param_2[2];
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-    uVar4 = (uint8_t)lVar7;
+  f1 = (long double)*(uint8_t *)((int)self_ + 1) * (long double)arg3[1];
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u4 = (uint8_t)i1;
   }
   else {
-    uVar4 = 0;
+    u4 = 0;
   }
-  uVar2 = ((uint32_t)(((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(uVar3) << 16) | (uint16_t)((uint16_t)local_8))) >> 8) << 8) | (uint8_t)(uVar4)));
-  fVar6 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)param_2[3];
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) != bVar5) {
-    *param_1 = uVar2;
-    return param_1;
+  XI_PIECE(u6, 0, 2) = ((uint16_t)(((uint16_t)(uint8_t)(u4) << 8) | (uint8_t)(u1)));
+  f1 = (long double)*(uint8_t *)self_ * (long double)arg3[2];
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) == u5) {
+    i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    u4 = (uint8_t)i1;
   }
-  lVar7 = XI_CALL_ST0(0x10311C2Cu)(fVar6);
-  local_8 = CONCAT13((char)lVar7,xi_strunc24(uVar2));
-  *param_1 = local_8;
-  return param_1;
+  else {
+    u4 = 0;
+  }
+  u2 = ((uint32_t)(((uint32_t)(((uint32_t)(((uint32_t)(uint8_t)(u3) << 16) | (uint16_t)((uint16_t)u6))) >> 8) << 8) | (uint8_t)(u4)));
+  f1 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)arg3[3];
+  u5 = ((f1) != (f1)) || (((long double)0.0f) != ((long double)0.0f));
+  if ((u5 || f1 < (long double)0.0f) != u5) {
+    *arg2 = u2;
+    return arg2;
+  }
+  i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+  u6 = ((uint32_t)(((uint32_t)(uint8_t)((char)i1) << 24) | ((uint32_t)(xi_strunc24(u2)) & 0xFFFFFFu)));
+  *arg2 = u6;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E1D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall SkyDome_AddBytes(void * self_, char * param_1)
+XI_API void __thiscall SkyDome_AddBytes(void * self_, char * arg2)
 {
-  *(char *)((int)self_ + 2) = *(char *)((int)self_ + 2) + param_1[2];
-  *(char *)((int)self_ + 1) = *(char *)((int)self_ + 1) + param_1[1];
-  *(char *)self_ = *(char *)self_ + *param_1;
-  *(char *)((int)self_ + 3) = *(char *)((int)self_ + 3) + param_1[3];
+  *(char *)((int)self_ + 2) = *(char *)((int)self_ + 2) + arg2[2];
+  *(char *)((int)self_ + 1) = *(char *)((int)self_ + 1) + arg2[1];
+  *(char *)self_ = *(char *)self_ + *arg2;
+  *(char *)((int)self_ + 3) = *(char *)((int)self_ + 3) + arg2[3];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Color_SetFromU32SwapRB(void * self_, undefined4 param_1)
+XI_API void __thiscall Color_SetFromU32SwapRB(void * self_, bits32 arg2)
 {
-  *(char *)((int)self_ + 2) = (char)param_1;
-  *(char *)((int)self_ + 1) = (char)((uint32_t)param_1 >> 8);
-  *(char *)self_ = (char)((uint32_t)param_1 >> 0x10);
-  *(char *)((int)self_ + 3) = (char)((uint32_t)param_1 >> 0x18);
+  *(char *)((int)self_ + 2) = (char)arg2;
+  *(char *)((int)self_ + 1) = (char)((uint32_t)arg2 >> 8);
+  *(char *)self_ = (char)((uint32_t)arg2 >> 0x10);
+  *(char *)((int)self_ + 3) = (char)((uint32_t)arg2 >> 0x18);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t * __thiscall SkyDome_ScaleAlpha(void * self_, uint32_t * param_1, float param_2)
+XI_API uint32_t * __thiscall SkyDome_ScaleAlpha(void * self_, uint32_t * arg2, float arg3)
 {
-  uint32_t uVar1;
-  uint8_t bVar2;
+  uint32_t u1;
+  uint8_t u2;
   long double st0;
-  int64_t lVar3;
+  int64_t i1;
   
-  bVar2 = NAN((long double)param_2) || NAN((long double)1.0f);
-  if ((bVar2 || (long double)param_2 < (long double)1.0f) != bVar2) {
-    st0 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)param_2;
-    bVar2 = NAN(st0) || NAN((long double)0.0f);
-    if ((bVar2 || st0 < (long double)0.0f) == bVar2) {
-      lVar3 = XI_CALL_ST0(0x10311C2Cu)(st0);
-      uVar1 = (uint32_t)lVar3 & 0xff;
+  u2 = (((long double)arg3) != ((long double)arg3)) || (((long double)1.0f) != ((long double)1.0f));
+  if ((u2 || (long double)arg3 < (long double)1.0f) != u2) {
+    st0 = (long double)*(uint8_t *)((int)self_ + 3) * (long double)arg3;
+    u2 = ((st0) != (st0)) || (((long double)0.0f) != ((long double)0.0f));
+    if ((u2 || st0 < (long double)0.0f) == u2) {
+      i1 = XI_CALL_ST0(0x10311C2Cu)(st0);
+      u1 = (uint32_t)i1 & 0xff;
     }
     else {
-      uVar1 = 0;
+      u1 = 0;
     }
-    *param_1 = uVar1 << 0x18 | *(uint32_t *)self_ & 0xffffff;
-    return param_1;
+    *arg2 = u1 << 0x18 | *(uint32_t *)self_ & 0xffffff;
+    return arg2;
   }
-  *param_1 = *(uint32_t *)self_;
-  return param_1;
+  *arg2 = *(uint32_t *)self_;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E3A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API __int64 __thiscall SkyDome_AddScaledBytes(unsigned __int8 *self_, unsigned __int8 *a2)
+XI_API long long __thiscall SkyDome_AddScaledBytes(unsigned char *self_, unsigned char *arg2)
 {
-  double v2;
-  __int64 result; // rax
+  double f1;
+  long long result; // rax
 
-  v2 = *(float *)(g_pResourceMng + 3756);
-  *(self_ + 2) = (__int64)((double)*a2 * v2 + (double)*(self_ + 2));
-  *(self_ + 1) = (__int64)((double)a2[1] * v2 + (double)*(self_ + 1));
-  *self_ = (__int64)((double)a2[2] * v2 + (double)*self_);
-  result = (__int64)((double)a2[3] * v2 + (double)*(self_ + 3));
+  f1 = *(float *)(g_pResourceMng + 3756);
+  *(self_ + 2) = (long long)((double)*arg2 * f1 + (double)*(self_ + 2));
+  *(self_ + 1) = (long long)((double)arg2[1] * f1 + (double)*(self_ + 1));
+  *self_ = (long long)((double)arg2[2] * f1 + (double)*self_);
+  result = (long long)((double)arg2[3] * f1 + (double)*(self_ + 3));
   *(self_ + 3) = result;
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API __int64 __thiscall SkyDome_AddScaledWords(unsigned __int8 *self_, __int16 *a2)
+XI_API long long __thiscall SkyDome_AddScaledWords(unsigned char *self_, short *arg2)
 {
-  double v2;
-  __int64 result; // rax
+  double f1;
+  long long result; // rax
 
-  v2 = *(float *)(g_pResourceMng + 3756);
-  *(self_ + 2) = (__int64)((double)*a2 * v2 + (double)*(self_ + 2));
-  *(self_ + 1) = (__int64)((double)a2[1] * v2 + (double)*(self_ + 1));
-  *self_ = (__int64)((double)a2[2] * v2 + (double)*self_);
-  result = (__int64)((double)a2[3] * v2 + (double)*(self_ + 3));
+  f1 = *(float *)(g_pResourceMng + 3756);
+  *(self_ + 2) = (long long)((double)*arg2 * f1 + (double)*(self_ + 2));
+  *(self_ + 1) = (long long)((double)arg2[1] * f1 + (double)*(self_ + 1));
+  *self_ = (long long)((double)arg2[2] * f1 + (double)*self_);
+  result = (long long)((double)arg2[3] * f1 + (double)*(self_ + 3));
   *(self_ + 3) = result;
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E500
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall SkyDome_AddScaledWordsSaturated(unsigned __int8 *self_, __int16 *a2)
+XI_API int __thiscall SkyDome_AddScaledWordsSaturated(unsigned char *self_, short *arg2)
 {
-  double v2;
-  int v4;
-  __int16 v5;
-  int v6;
-  __int16 v7;
-  int v8;
-  __int16 v9;
-  int v10;
-  int v11;
+  double f1;
+  int i1;
+  short i2;
+  int i3;
+  short i4;
+  int i5;
+  short i6;
+  int i7;
+  int i8;
   int result;
-  v2 = *(float *)(g_pResourceMng + 3760);
-  v4 = (*(self_ + 2) << 8) + (__int16)(__int64)((double)*a2 * v2);
-  if ( v4 <= 0xFFFF )
-    v5 = v4 < 0 ? 0 : v4;
+  f1 = *(float *)(g_pResourceMng + 3760);
+  i1 = (*(self_ + 2) << 8) + (short)(long long)((double)*arg2 * f1);
+  if ( i1 <= 0xFFFF )
+    i2 = i1 < 0 ? 0 : i1;
   else
-    v5 = (__int16)(((uint16_t)(v5) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
-  v6 = (__int16)(__int64)((double)a2[1] * v2) + (*(self_ + 1) << 8);
-  if ( v6 <= 0xFFFF )
-    v7 = v6 < 0 ? 0 : v6;
+    i2 = (short)(((uint16_t)(i2) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
+  i3 = (short)(long long)((double)arg2[1] * f1) + (*(self_ + 1) << 8);
+  if ( i3 <= 0xFFFF )
+    i4 = i3 < 0 ? 0 : i3;
   else
-    v7 = (__int16)(((uint16_t)(v7) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
-  v8 = (__int16)(__int64)((double)a2[2] * v2) + (*self_ << 8);
-  if ( v8 <= 0xFFFF )
-    v9 = v8 < 0 ? 0 : v8;
+    i4 = (short)(((uint16_t)(i4) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
+  i5 = (short)(long long)((double)arg2[2] * f1) + (*self_ << 8);
+  if ( i5 <= 0xFFFF )
+    i6 = i5 < 0 ? 0 : i5;
   else
-    v9 = (__int16)(((uint16_t)(v9) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
-  v10 = (__int16)(__int64)((double)a2[3] * v2) + (*(self_ + 3) << 8);
-  if ( v10 <= 0xFFFF )
-    v11 = v10 < 0 ? 0 : v10;
+    i6 = (short)(((uint16_t)(i6) & 0xFFu) | ((uint16_t)(uint8_t)(-1) << 8));
+  i7 = (short)(long long)((double)arg2[3] * f1) + (*(self_ + 3) << 8);
+  if ( i7 <= 0xFFFF )
+    i8 = i7 < 0 ? 0 : i7;
   else
-    v11 = 0xFFFF;
-  *(self_ + 2) = (_BYTE)((uint16_t)(v5) >> 8);
-  result = v11 >> 8;
-  *(self_ + 1) = (_BYTE)((uint16_t)(v7) >> 8);
-  *self_ = (_BYTE)((uint16_t)(v9) >> 8);
+    i8 = 0xFFFF;
+  *(self_ + 2) = (uint8_t)((uint16_t)(i2) >> 8);
+  result = i8 >> 8;
+  *(self_ + 1) = (uint8_t)((uint16_t)(i4) >> 8);
+  *self_ = (uint8_t)((uint16_t)(i6) >> 8);
   *(self_ + 3) = result;
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E630
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall SkyDome_AddToByte2(void * self_, undefined4 param_1)
+XI_API void __thiscall SkyDome_AddToByte2(void * self_, bits32 arg2)
 {
-  *(char *)((int)self_ + 2) = *(char *)((int)self_ + 2) + (char)param_1;
+  *(char *)((int)self_ + 2) = *(char *)((int)self_ + 2) + (char)arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall SkyDome_AddToByte1(void * self_, undefined4 param_1)
+XI_API void __thiscall SkyDome_AddToByte1(void * self_, bits32 arg2)
 {
-  *(char *)((int)self_ + 1) = *(char *)((int)self_ + 1) + (char)param_1;
+  *(char *)((int)self_ + 1) = *(char *)((int)self_ + 1) + (char)arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall SkyDome_AddToByte0(void * self_, undefined4 param_1)
+XI_API void __thiscall SkyDome_AddToByte0(void * self_, bits32 arg2)
 {
-  *(char *)self_ = *(char *)self_ + (char)param_1;
+  *(char *)self_ = *(char *)self_ + (char)arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1003E660
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall SkyDome_AddScaledToByte3(void *self_, int a1)
+XI_API void __thiscall SkyDome_AddScaledToByte3(void *self_, int arg2)
 {
-  double v2;
-  v2 = *(float *)(g_pResourceMng + 3756) * (double)a1 + (double)*((unsigned __int8 *)self_ + 3);
-  *((_BYTE *)self_ + 3) = (__int64)v2;
-  (void)(v2); return;
+  double f1;
+  f1 = *(float *)(g_pResourceMng + 3756) * (double)arg2 + (double)*((unsigned char *)self_ + 3);
+  *((uint8_t *)self_ + 3) = (long long)f1;
+  (void)(f1); return;
 }

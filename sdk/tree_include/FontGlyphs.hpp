@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API FontGlyphs {
 public:
-    int FontGlyphs_DrawString(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // 0x1011C080
+    int FontGlyphs_DrawString(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8);  // 0x1011C080
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xC];

@@ -4,90 +4,90 @@
 
 // FUNCTION: FFXIMAIN 0x10028FD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl Mem_AllocFromArea(int param_1, undefined4 param_2)
+XI_API bits32 * __cdecl Mem_AllocFromArea(int arg1, bits32 arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  DAT_104570dc_as_s32 = DAT_104570dc_as_s32 + param_1;
-  switch(xi_sw(param_2)) {
+  g_104570DC_as_s32 = g_104570DC_as_s32 + arg1;
+  switch(xi_sw(arg2)) {
   case 0:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromFront(0x20,DAT_104570b4_as_s32,DAT_104570b8_as_s32);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_LAB_1032a664;
-      return puVar1 + 8;
+    p1 = (bits32 *)orig::MemBlock_AllocFromFront(0x20,g_104570B4_as_s32,g_104570B8_as_s32);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &g_1032A664;
+      return p1 + 8;
     }
     break;
   case 1:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570b4_as_s32,DAT_104570b8_as_s32);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_LAB_1032a67c;
-      return puVar1 + 8;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570B4_as_s32,g_104570B8_as_s32);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &g_1032A67C;
+      return p1 + 8;
     }
     break;
   case 2:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570bc_as_v1,DAT_104570c0_as_s32);
-    if (puVar1 == (undefined4 *)0x0) {
-      return (undefined4 *)0x0;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570BC_as_v1,g_104570C0_as_s32);
+    if (p1 == (bits32 *)0x0) {
+      return (bits32 *)0x0;
     }
-    *puVar1 = &PTR_LAB_1032a64c;
-    return puVar1 + 8;
+    *p1 = &g_1032A64C;
+    return p1 + 8;
   case 3:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570bc_as_v1,DAT_104570c0_as_s32);
-    if (puVar1 == (undefined4 *)0x0) {
-      return (undefined4 *)0x0;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570BC_as_v1,g_104570C0_as_s32);
+    if (p1 == (bits32 *)0x0) {
+      return (bits32 *)0x0;
     }
-    *puVar1 = &PTR_LAB_1032a634;
-    return puVar1 + 8;
+    *p1 = &g_1032A634;
+    return p1 + 8;
   default:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570c4_as_v1,DAT_104570c8_as_s32);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_LAB_1032a5ec;
-      return puVar1 + 8;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570C4_as_v1,g_104570C8_as_s32);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &g_1032A5EC;
+      return p1 + 8;
     }
     break;
   case 5:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570cc_as_v1,DAT_104570d0_as_s32);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_LAB_1032a61c;
-      return puVar1 + 8;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570CC_as_v1,g_104570D0_as_s32);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &g_1032A61C;
+      return p1 + 8;
     }
     break;
   case 6:
-    puVar1 = (undefined4 *)orig::MemBlock_AllocFromBack(0x20,DAT_104570d4_as_v1,DAT_104570d8_as_s32);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_LAB_1032a604;
-      return puVar1 + 8;
+    p1 = (bits32 *)orig::MemBlock_AllocFromBack(0x20,g_104570D4_as_v1,g_104570D8_as_s32);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &g_1032A604;
+      return p1 + 8;
     }
   }
   orig::_exit_0_v2(0x7d2);
-  return (undefined4 *)0x0;
+  return (bits32 *)0x0;
 }
 
 // FUNCTION: FFXIMAIN 0x10029150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl MemArea_CallListByKind(undefined4 param_1)
+XI_API void __cdecl MemArea_CallListByKind(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570b4_as_s32,DAT_104570b8_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570B4_as_s32,g_104570B8_as_s32);
     return;
   case 1:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570b4_as_s32,DAT_104570b8_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570B4_as_s32,g_104570B8_as_s32);
     return;
   case 2:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570bc_as_s32,DAT_104570c0_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570BC_as_s32,g_104570C0_as_s32);
     return;
   case 3:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570bc_as_s32,DAT_104570c0_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570BC_as_s32,g_104570C0_as_s32);
     return;
   default:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570c4_as_s32,DAT_104570c8_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570C4_as_s32,g_104570C8_as_s32);
     return;
   case 5:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570cc_as_s32,DAT_104570d0_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570CC_as_s32,g_104570D0_as_s32);
     return;
   case 6:
-    orig::MemBlock_FindLargestFreeSize(DAT_104570d4_as_s32,DAT_104570d8_as_s32);
+    orig::MemBlock_FindLargestFreeSize(g_104570D4_as_s32,g_104570D8_as_s32);
     return;
   }
 }

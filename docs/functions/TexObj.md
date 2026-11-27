@@ -17,7 +17,7 @@ Why the file has this name (data/unit_names.json): TexObj_CreateAndUpload / Uplo
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `TexObj_Release` calls `sub_1003AB10`
-- `TexObj_CreateAndUpload` calls `TexObj_Create`, `sub_10071F60`
+- `TexObj_Release` calls `game_1003AB10`
+- `TexObj_CreateAndUpload` calls `TexObj_Create`, `game_10071F60`
 - `TexObj_Reupload` calls `TexObj_Upload`
-- `TexObj_Upload` calls `sub_102D2FB9`, `sub_1001E0A0`, `sub_102D4515`, `sub_102D2868`
+- `TexObj_Upload` calls `game_102D2FB9`, `game_1001E0A0`, `game_102D4515`, `game_102D2868`

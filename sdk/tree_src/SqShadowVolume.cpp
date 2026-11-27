@@ -4,23 +4,23 @@
 
 // FUNCTION: FFXIMAIN 0x102972D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqgxContext_SetCotHalfAngle(float param_1)
+XI_API void __cdecl SqgxContext_SetCotHalfAngle(float arg1)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = xi_castbits<long double>(fptan((long double)param_1 * (long double)0.008726646192371845245361328125f));
-  *(float *)(g_pSqgxContext_as_s32 + 0x128) = (float)((long double)1.0f / fVar1);
+  f1 = bit_cast<long double>(x87_fptan(arg1 * 0.008726646192371845245361328125f));
+  *(float *)(g_pSqgxContext_as_s32 + 0x128) = (float)(1.0f / f1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10297CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 227 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqsnShadowVolumeSetPass(int a1)
+XI_API int __cdecl sqsnShadowVolumeSetPass(int arg1)
 {
   int result;
-  if ( a1 != 0 )
+  if ( arg1 != 0 )
   {
-    if ( a1 == 1 )
+    if ( arg1 == 1 )
     {
       orig::sqgxZMask(0);
       orig::sqgxFBMask(255, 255, 255, 255);
@@ -35,8 +35,8 @@ XI_API int __cdecl sqsnShadowVolumeSetPass(int a1)
       g_pDancerDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_DECR);
       return g_pDancerDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     }
-    result = a1 - 2;
-    if ( a1 != 2 )
+    result = arg1 - 2;
+    if ( arg1 != 2 )
       return result;
     orig::sqgxZMask(1);
     orig::sqgxFBMask(0, 0, 0, 0);
@@ -62,10 +62,10 @@ XI_API int __cdecl sqsnShadowVolumeSetPass(int a1)
 
 // FUNCTION: FFXIMAIN 0x10297EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 674 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqgxShadowStencilEnable(int a1)
+XI_API int __cdecl sqgxShadowStencilEnable(int arg1)
 {
-  g_pSqgxContext[73] = a1;
-  if ( a1 != 0 )
+  g_pSqgxContext[73] = arg1;
+  if ( arg1 != 0 )
   {
     g_pDancerDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
     g_pDancerDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_GREATER);
@@ -100,7 +100,7 @@ XI_API int __cdecl sqsnShadowVolumeBeginVB(void)
     orig::sqDebugPrintf(aErrorInSetStre);
   if ( g_pDancerDevice->SetVertexShader(2u) != 0 )
     orig::sqDebugPrintf(aErrorInSetVert);
-  return (*(int (__stdcall **)(int, _DWORD, _DWORD, int *, int))(*(_DWORD *)g_pSqgxContext[79] + 44))(
+  return (*(int (__stdcall **)(int, uint32_t, uint32_t, int *, int))(*(uint32_t *)g_pSqgxContext[79] + 44))(
            g_pSqgxContext[79],
            0,
            0,
@@ -110,36 +110,38 @@ XI_API int __cdecl sqsnShadowVolumeBeginVB(void)
 
 // FUNCTION: FFXIMAIN 0x10298350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqgxShadowPlaneMatrix(float * param_1)
+XI_API void __cdecl sqgxShadowPlaneMatrix(float * arg1)
 {
-  float fVar1;
-  long double fVar2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  float f1;
+  long double f2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f5; };   // at 0x8
+  } frame;
   
-  local_c = *(float *)(g_pSqgxContext_as_s32 + 0x34c);
-  local_8 = *(float *)(g_pSqgxContext_as_s32 + 0x350);
-  local_4 = *(float *)(g_pSqgxContext_as_s32 + 0x354);
-  orig::SqVec_ScaleVec3ByInverseOf102746C0(&local_c);
-  fVar2 = orig::FUN_10274870((float *)(g_pSqgxContext_as_s32 + 300),&local_c);
-  *param_1 = (float)(fVar2 - (long double)local_c * (long double)*(float *)(g_pSqgxContext_as_s32 + 300));
-  param_1[4] = (float)-((long double)local_c * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x130));
-  param_1[8] = (float)-((long double)local_c * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x134));
-  param_1[0xc] = (float)-((long double)local_c * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x138));
-  param_1[1] = (float)-((long double)local_8 * (long double)*(float *)(g_pSqgxContext_as_s32 + 300));
-  param_1[5] = (float)(fVar2 - (long double)local_8 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x130));
-  param_1[9] = (float)-((long double)local_8 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x134));
-  param_1[0xd] = (float)-((long double)local_8 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x138));
-  param_1[2] = (float)-((long double)local_4 * (long double)*(float *)(g_pSqgxContext_as_s32 + 300));
-  param_1[6] = (float)-((long double)local_4 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x130));
-  param_1[10] = (float)(fVar2 - (long double)local_4 * (long double)*(float *)(g_pSqgxContext_as_s32 + 0x134));
-  fVar1 = *(float *)(g_pSqgxContext_as_s32 + 0x138);
-  param_1[3] = 0.0f;
-  param_1[7] = 0.0f;
-  param_1[0xe] = (float)-((long double)local_4 * (long double)fVar1);
-  param_1[0xb] = 0.0f;
-  param_1[0xf] = (float)fVar2;
+  frame.f3 = *(float *)(g_pSqgxContext_as_s32 + 0x34c);
+  frame.f4 = *(float *)(g_pSqgxContext_as_s32 + 0x350);
+  frame.f5 = *(float *)(g_pSqgxContext_as_s32 + 0x354);
+  orig::SqVec_ScaleVec3ByInverseOf102746C0(&frame.f3);
+  f2 = orig::game_10274870((float *)(g_pSqgxContext_as_s32 + 300),&frame.f3);
+  *arg1 = (float)(f2 - frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[4] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[8] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  arg1[0xc] = (float)-(frame.f3 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
+  arg1[1] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[5] = (float)(f2 - frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[9] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  arg1[0xd] = (float)-(frame.f4 * *(float *)(g_pSqgxContext_as_s32 + 0x138));
+  arg1[2] = (float)-(frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 300));
+  arg1[6] = (float)-(frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 0x130));
+  arg1[10] = (float)(f2 - frame.f5 * *(float *)(g_pSqgxContext_as_s32 + 0x134));
+  f1 = *(float *)(g_pSqgxContext_as_s32 + 0x138);
+  arg1[3] = 0.0f;
+  arg1[7] = 0.0f;
+  arg1[0xe] = (float)-(frame.f5 * f1);
+  arg1[0xb] = 0.0f;
+  arg1[0xf] = (float)f2;
   return;
 }

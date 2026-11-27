@@ -20,10 +20,10 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoDX.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `CMoDX::GetRuntimeClass` calls nothing directly
-- `CMoDX::ScalarDeletingDtor` calls `sub_10069D70`, `thunk_sub_10028AA0`
+- `CMoDX::ScalarDeletingDtor` calls `game_10069D70`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `CMoDX::CreateTexture` calls `CDx::CreateTexture`
 - `CMoDX::SetWorldMatrix` calls `CDx::SetTransform`
 - `CMoDX::PushViewMatrix` calls `Dx_GetCachedTransform2`
 - `CMoDX::PopViewMatrix` calls `CMoDX::SetViewMatrix`
 - `CMoDX::SetViewMatrix` calls `CDx::SetTransform`
-- `CMoDX::CreateAndInitSystem` calls `Mem_AllocDefault`, `sub_10069DD0`, `VBPool_Constructor`, `MeshResourceMng_LoadSystemResources`, `CMoResource::FindByTypeAndId`, `Mo_InitSharedRenderResources`, `CMoDxStatusMng::Constructor`, `Gfx_InitCubeMapTextures`, `CMoOt_InitSystem`, `sub_1006C140`, `j_OcclusionMng_CreateTarget`
+- `CMoDX::CreateAndInitSystem` calls `Mem_AllocDefault`, `game_10069DD0`, `VBPool_Constructor`, `MeshResourceMng_LoadSystemResources`, `CMoResource::FindByTypeAndId`, `Mo_InitSharedRenderResources`, `CMoDxStatusMng::Constructor`, `Gfx_InitCubeMapTextures`, `CMoOt_InitSystem`, `game_1006C140`, `j_OcclusionMng_CreateTarget`

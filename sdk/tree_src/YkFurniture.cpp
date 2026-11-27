@@ -5,87 +5,87 @@
 
 // FUNCTION: FFXIMAIN 0x101CCE00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Yk_MapCodeOffset(int param_1)
+XI_API int __cdecl Yk_MapCodeOffset(int arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 0x809f;
-  if (param_1 < 0x100) {
-    return param_1 + 0x809f;
+  i1 = 0x809f;
+  if (arg1 < 0x100) {
+    return arg1 + 0x809f;
   }
-  if (param_1 < 0x200) {
-    return param_1 + 0xc7ef;
+  if (arg1 < 0x200) {
+    return arg1 + 0xc7ef;
   }
-  if (param_1 < 0xe00) {
+  if (arg1 < 0xe00) {
     return 0;
   }
-  if ((param_1 < 0xf00) || (param_1 < 0x1000)) {
-    iVar1 = param_1 + 0xe75b;
+  if ((arg1 < 0xf00) || (arg1 < 0x1000)) {
+    i1 = arg1 + 0xe75b;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101CCE50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl YkFurniture_GetEntry1037D7B4(int param_1)
+XI_API uint8_t * __cdecl YkFurniture_GetEntry1037D7B4(int arg1)
 {
-  return ((char *)&DAT_1037d7b4) + param_1 * 0x10;
+  return ((char *)&g_1037D7B4) + arg1 * 0x10;
 }
 
 // FUNCTION: FFXIMAIN 0x101CCE90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl YkFurniture_GetTablePtrBy121(int param_1)
+XI_API uint8_t * __cdecl YkFurniture_GetTablePtrBy121(int arg1)
 {
   if (*(short *)(g_C_106631D4 + 0x26) == 0x121) {
-    return (&PTR_DAT_10337df8)[param_1 * 2];
+    return (&g_10337DF8)[arg1 * 2];
   }
-  return (&PTR_DAT_10337df4)[param_1 * 2];
+  return (&g_10337DF4)[arg1 * 2];
 }
 
 // FUNCTION: FFXIMAIN 0x101CD2D0
 // GATE: PASS -- 100 trials, 53 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 53
-XI_API void __thiscall YkFurniture_RotateStepAroundOther(void * self_, void * param_1, undefined4 param_2)
+XI_API void __thiscall YkFurniture_RotateStepAroundOther(void * self_, void * arg2, bits32 arg3)
 {
-  int iVar1;
-  int iVar2;
-  void *pvVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  void *p1;
+  int i3;
   
-  iVar1 = orig::PlantMenu_GetField14(param_1);
-  iVar1 = *(int *)((int)self_ + 0x14) - iVar1;
-  iVar2 = orig::PlantMenu_GetField1C(param_1);
-  iVar2 = *(int *)((int)self_ + 0x1c) - iVar2;
-  iVar4 = iVar1;
-  switch(xi_sw(param_2)) {
+  i1 = orig::PlantMenu_GetField14(arg2);
+  i1 = *(int *)((int)self_ + 0x14) - i1;
+  i2 = orig::PlantMenu_GetField1C(arg2);
+  i2 = *(int *)((int)self_ + 0x1c) - i2;
+  i3 = i1;
+  switch(xi_sw(arg3)) {
   case 0:
   case 2:
-    pvVar3 = orig::PlantMenu_GetTurnedByte4(param_1);
-    iVar2 = (int)pvVar3 - iVar2;
-    pvVar3 = orig::PlantMenu_GetTurnedByte5(self_);
+    p1 = orig::PlantMenu_GetTurnedByte4(arg2);
+    i2 = (int)p1 - i2;
+    p1 = orig::PlantMenu_GetTurnedByte5(self_);
     break;
   case 1:
   case 3:
-    pvVar3 = orig::PlantMenu_GetTurnedByte4(param_1);
-    iVar2 = (int)pvVar3 - iVar2;
-    pvVar3 = orig::PlantMenu_GetTurnedByte5(self_);
+    p1 = orig::PlantMenu_GetTurnedByte4(arg2);
+    i2 = (int)p1 - i2;
+    p1 = orig::PlantMenu_GetTurnedByte5(self_);
     break;
   default:
-    goto switchD_101cd2fb_default;
+    goto L1;
   }
-  iVar4 = iVar2 - (int)pvVar3;
-  iVar2 = iVar1;
-switchD_101cd2fb_default:
-  iVar1 = *(int *)((int)self_ + 0x20) + -1;
-  *(int *)((int)self_ + 0x20) = iVar1;
-  if (iVar1 < 0) {
+  i3 = i2 - (int)p1;
+  i2 = i1;
+L1:
+  i1 = *(int *)((int)self_ + 0x20) + -1;
+  *(int *)((int)self_ + 0x20) = i1;
+  if (i1 < 0) {
     *(uint32_t *)((int)self_ + 0x20) = 3;
   }
-  iVar1 = orig::PlantMenu_GetField14(param_1);
-  *(int *)((int)self_ + 0x14) = iVar1 + iVar4;
-  iVar4 = orig::PlantMenu_GetField1C(param_1);
-  *(int *)((int)self_ + 0x1c) = iVar4 + iVar2;
+  i1 = orig::PlantMenu_GetField14(arg2);
+  *(int *)((int)self_ + 0x14) = i1 + i3;
+  i3 = orig::PlantMenu_GetField1C(arg2);
+  *(int *)((int)self_ + 0x1c) = i3 + i2;
   orig::PlantMenu_SetQuarterTurn(self_,*(int *)((int)self_ + 0x20));
-  orig::FUN_101cdd90(self_,(int)*(char *)((int)self_ + 6),*(int *)((int)self_ + 0x14),
+  orig::game_101CDD90(self_,(int)*(char *)((int)self_ + 6),*(int *)((int)self_ + 0x14),
                *(uint32_t *)((int)self_ + 0x18),*(uint32_t *)((int)self_ + 0x1c));
   return;
 }
@@ -94,38 +94,38 @@ switchD_101cd2fb_default:
 // GATE: PASS -- 100 trials, 100 returned normally, 147 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall YkFurniture::Destructor(void * self)
 {
-  int *piVar1;
-  int iVar2;
-  void *pvVar3;
+  int *p1;
+  int i1;
+  void *p2;
   
-  *(uint8_t ***)self = &PTR_YkFurniture_GetRuntimeClass_10337e08;
-  iVar2 = orig::PlantMenu_GetValueAt5A(self);
-  if (iVar2 != 0) {
-    iVar2 = orig::PlantMenu_GetValueAt5A(self);
-    orig::FurnitureRelease_ReleaseSlot(iVar2);
+  *(uint8_t ***)self = &ptr_to_YkFurniture_GetRuntimeClass_10337E08;
+  i1 = orig::PlantMenu_GetValueAt5A(self);
+  if (i1 != 0) {
+    i1 = orig::PlantMenu_GetValueAt5A(self);
+    orig::FurnitureRelease_ReleaseSlot(i1);
     *(uint16_t *)((int)self + 0x5a) = 0;
   }
-  iVar2 = orig::PlantMenu_GetValueAt54(self);
-  if (iVar2 != 0) {
-    pvVar3 = (void *)orig::PlantMenu_GetValueAt54(self);
-    orig::XiFurnitureActor_Release(pvVar3);
+  i1 = orig::PlantMenu_GetValueAt54(self);
+  if (i1 != 0) {
+    p2 = (void *)orig::PlantMenu_GetValueAt54(self);
+    orig::XiFurnitureActor_Release(p2);
     *(uint16_t *)((int)self + 0x54) = 0;
   }
-  iVar2 = orig::PlantMenu_GetValueAt56(self);
-  if (iVar2 != 0) {
-    iVar2 = orig::PlantMenu_GetValueAt56(self);
-    orig::Acter_DestroyAndClearSlot(iVar2);
+  i1 = orig::PlantMenu_GetValueAt56(self);
+  if (i1 != 0) {
+    i1 = orig::PlantMenu_GetValueAt56(self);
+    orig::Acter_DestroyAndClearSlot(i1);
     *(uint16_t *)((int)self + 0x56) = 0;
   }
-  piVar1 = *(int **)((int)self + 100);
+  p1 = *(int **)((int)self + 100);
   *(uint16_t *)((int)self + 0x58) = 0;
-  if (piVar1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0x18))))((void *)(piVar1),1);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
     *(uint32_t *)((int)self + 100) = 0;
   }
-  piVar1 = *(int **)((int)self + 0x68);
-  if (piVar1 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*piVar1 + 0x18))))((void *)(piVar1),1);
+  p1 = *(int **)((int)self + 0x68);
+  if (p1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*p1 + 0x18))))((void *)(p1),1);
     *(uint32_t *)((int)self + 0x68) = 0;
   }
   return;

@@ -4,92 +4,92 @@
 
 // FUNCTION: FFXIMAIN 0x102ACF20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqshCurves_Create(void)
+XI_API bits32 * __cdecl SqshCurves_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x6c,s_C__dev_dancer_modules_sqShape_sr_103bef68,0x24);
-  orig::SqshCurves_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x6c,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0x24);
+  orig::SqshCurves_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x102ACF40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqshCurves_Init(undefined4 * param_1)
+XI_API void __cdecl SqshCurves_Init(bits32 * arg1)
 {
-  *param_1 = 0xa0002;
-  param_1[2] = &LAB_102acfb0;
-  param_1[3] = XI_CODE(FUN_102acfc0);
-  param_1[4] = XI_CODE(sqshCurvesPrint);
-  param_1[0xb] = &LAB_10291260;
-  param_1[0xc] = &DAT_102b34e0;
-  orig::SqBounds_Reset(param_1 + 5);
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0xf] = 0;
-  param_1[0x10] = XI_CODE(SqshCurves_ComputeTangents);
-  param_1[0x11] = 0;
-  param_1[0x12] = 0;
-  param_1[0x14] = 0;
-  param_1[0x15] = 0x3f800000;
-  param_1[0x16] = 0;
-  param_1[0x17] = 0;
-  param_1[0x18] = 0;
-  param_1[0x19] = 0;
-  param_1[0x1a] = 0;
+  *arg1 = 0xa0002;
+  arg1[2] = &code_102ACFB0;
+  arg1[3] = XI_CODE(game_102ACFC0);
+  arg1[4] = XI_CODE(sqshCurvesPrint);
+  arg1[0xb] = &code_10291260;
+  arg1[0xc] = &g_102B34E0;
+  orig::SqBounds_Reset(arg1 + 5);
+  arg1[0xd] = 0;
+  arg1[0xe] = 0;
+  arg1[0xf] = 0;
+  arg1[0x10] = XI_CODE(SqshCurves_ComputeTangents);
+  arg1[0x11] = 0;
+  arg1[0x12] = 0;
+  arg1[0x14] = 0;
+  arg1[0x15] = 0x3f800000;
+  arg1[0x16] = 0;
+  arg1[0x17] = 0;
+  arg1[0x18] = 0;
+  arg1[0x19] = 0;
+  arg1[0x1a] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102AD1D0
 // GATE: PASS -- 100 trials, 79 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-XI_API void __cdecl SqshCurves_ComputeNormals(int param_1, undefined4 xi_s2)
+XI_API void __cdecl SqshCurves_ComputeNormals(int arg1, bits32 xi_s2)
 {
-  int iVar1;
-  uint32_t *puVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
+  int i1;
+  uint32_t *p1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
   
-  iVar1 = *(int *)(param_1 + 0x34);
-  if ((iVar1 == 0) || (*(int *)(iVar1 + 0x14) == 0)) {
-    orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,0xba);
-    orig::sqDebugPrintf_v1(s_empty_or_missing_vertex__can_t___103beaa4,s_compute_curve_normals_103bf024);
+  i1 = *(int *)(arg1 + 0x34);
+  if ((i1 == 0) || (*(int *)(i1 + 0x14) == 0)) {
+    orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0xba);
+    orig::sqDebugPrintf_v1(str_empty_or_missing_vertex__can_t___103BEAA4,str_compute_curve_normals_103BF024);
   }
   else {
-    if (*(int *)(iVar1 + 0x54) == 0) {
-      orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,0xbd
+    if (*(int *)(i1 + 0x54) == 0) {
+      orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0xbd
                   );
-      orig::sqDebugPrintf_v1(s_missing_control_vertices_103bf050);
+      orig::sqDebugPrintf_v1(str_missing_control_vertices_103BF050);
       return;
     }
-    iVar1 = *(int *)(iVar1 + 0x58);
-    if (iVar1 == 0) {
-      orig::sqDebugPrintf_v1(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,0xc1
+    i1 = *(int *)(i1 + 0x58);
+    if (i1 == 0) {
+      orig::sqDebugPrintf_v1(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0xc1
                   );
-      orig::sqDebugPrintf_v1(s_missing_normals_103bf03c);
+      orig::sqDebugPrintf_v1(str_missing_normals_103BF03C);
       return;
     }
-    iVar6 = 0;
-    iVar4 = 0;
-    if (0 < *(int *)(param_1 + 0x44)) {
+    i5 = 0;
+    i3 = 0;
+    if (0 < *(int *)(arg1 + 0x44)) {
       do {
-        iVar3 = *(int *)(*(int *)(param_1 + 0x48) + iVar6 * 4);
-        iVar5 = iVar4;
-        if (0 < iVar3) {
-          iVar5 = iVar4 + iVar3;
-          puVar2 = (uint32_t *)(iVar1 + 8 + iVar4 * 0xc);
+        i2 = *(int *)(*(int *)(arg1 + 0x48) + i5 * 4);
+        i4 = i3;
+        if (0 < i2) {
+          i4 = i3 + i2;
+          p1 = (uint32_t *)(i1 + 8 + i3 * 0xc);
           do {
-            puVar2[-2] = 0;
-            puVar2[-1] = 0;
-            *puVar2 = 0x3f800000;
-            puVar2 = puVar2 + 3;
-            iVar3 = iVar3 + -1;
-          } while (iVar3 != 0);
+            p1[-2] = 0;
+            p1[-1] = 0;
+            *p1 = 0x3f800000;
+            p1 = p1 + 3;
+            i2 = i2 + -1;
+          } while (i2 != 0);
         }
-        iVar6 = iVar6 + 1;
-        iVar4 = iVar5;
-      } while (iVar6 < *(int *)(param_1 + 0x44));
+        i5 = i5 + 1;
+        i3 = i4;
+      } while (i5 < *(int *)(arg1 + 0x44));
       return;
     }
   }
@@ -98,132 +98,132 @@ XI_API void __cdecl SqshCurves_ComputeNormals(int param_1, undefined4 xi_s2)
 
 // FUNCTION: FFXIMAIN 0x102AD770
 // GATE: PASS -- 100 trials, 73 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 73
-XI_API undefined4 __cdecl SqshCurves_ComputeTangents(int param_1, undefined4 xi_s2)
+XI_API bits32 __cdecl SqshCurves_ComputeTangents(int arg1, bits32 xi_s2)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  int iVar3;
-  uint32_t uVar4;
-  float *pfVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  float *pfVar9;
-  int local_c;
-  int local_4;
+  uint32_t *p1;
+  int i1;
+  int i2;
+  uint32_t u1;
+  float *p2;
+  int i3;
+  int i4;
+  int i5;
+  float *p3;
+  int i6;
+  int i7;
   
-  iVar8 = *(int *)(param_1 + 0x34);
-  if ((iVar8 == 0) || (*(int *)(iVar8 + 0x14) == 0)) {
-    orig::sqDebugPrintf_v2(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,0x17e)
+  i5 = *(int *)(arg1 + 0x34);
+  if ((i5 == 0) || (*(int *)(i5 + 0x14) == 0)) {
+    orig::sqDebugPrintf_v2(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0x17e)
     ;
-    iVar8 = orig::sqDebugPrintf_v2(s_empty_or_missing_vertex__can_t___103beaa4,
-                         s_compute_curve_tangents_103bf0dc);
+    i5 = orig::sqDebugPrintf_v2(str_empty_or_missing_vertex__can_t___103BEAA4,
+                         str_compute_curve_tangents_103BF0DC);
   }
   else {
-    iVar2 = *(int *)(iVar8 + 0x54);
-    if (iVar2 == 0) {
-      orig::sqDebugPrintf_v2(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,
+    i1 = *(int *)(i5 + 0x54);
+    if (i1 == 0) {
+      orig::sqDebugPrintf_v2(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,
                    0x181);
-      uVar4 = orig::sqDebugPrintf_v2(s_missing_control_vertices_103bf050);
-      return uVar4;
+      u1 = orig::sqDebugPrintf_v2(str_missing_control_vertices_103BF050);
+      return u1;
     }
-    iVar3 = *(int *)(iVar8 + 100);
-    if (iVar3 == 0) {
-      orig::sqDebugPrintf_v2(s_Error_in__s__line__d__103b379c,s_C__dev_dancer_modules_sqShape_sr_103bef68,
+    i2 = *(int *)(i5 + 100);
+    if (i2 == 0) {
+      orig::sqDebugPrintf_v2(str_Error_in__s__line__d__103B379C,str_C__dev_dancer_modules_sqShape_sr_103BEF68,
                    0x185);
-      uVar4 = orig::sqDebugPrintf_v2(s_missing_tangents_103bf118);
-      return uVar4;
+      u1 = orig::sqDebugPrintf_v2(str_missing_tangents_103BF118);
+      return u1;
     }
-    iVar8 = *(int *)(param_1 + 0x44);
-    iVar6 = 0;
-    local_4 = 0;
-    if (0 < iVar8) {
+    i5 = *(int *)(arg1 + 0x44);
+    i3 = 0;
+    i7 = 0;
+    if (0 < i5) {
       do {
-        local_c = *(int *)(*(int *)(param_1 + 0x48) + local_4 * 4);
-        if (local_c < 2) {
-          orig::sqDebugPrintf_v2(s_Warning_in__s__line__d__103b27fc,
-                       s_C__dev_dancer_modules_sqShape_sr_103bef68,0x18d);
-          orig::sqDebugPrintf_v2(s_curve_with_less_than_2_points___103bf0f4);
-          puVar1 = (uint32_t *)(iVar3 + iVar6 * 0xc);
-          *puVar1 = 0;
-          puVar1[1] = 0;
-          puVar1[2] = 0x3f800000;
+        i6 = *(int *)(*(int *)(arg1 + 0x48) + i7 * 4);
+        if (i6 < 2) {
+          orig::sqDebugPrintf_v2(str_Warning_in__s__line__d__103B27FC,
+                       str_C__dev_dancer_modules_sqShape_sr_103BEF68,0x18d);
+          orig::sqDebugPrintf_v2(str_curve_with_less_than_2_points___103BF0F4);
+          p1 = (uint32_t *)(i2 + i3 * 0xc);
+          *p1 = 0;
+          p1[1] = 0;
+          p1[2] = 0x3f800000;
         }
         else {
-          pfVar9 = (float *)(iVar6 * 0xc + iVar3);
-          orig::SqVec_Sub(pfVar9,(float *)(iVar2 + (iVar6 * 3 + 3) * 4),
-                           (float *)(iVar6 * 0xc + iVar2));
-          orig::SqVec_ScaleVec3ByInverseOf102746C0(pfVar9);
-          iVar7 = iVar6 + 1;
-          local_c = local_c + -2;
-          iVar8 = iVar7;
-          if (0 < local_c) {
-            iVar8 = iVar7 + local_c;
-            pfVar5 = (float *)(iVar3 + iVar7 * 0xc);
-            pfVar9 = (float *)(iVar2 + (iVar6 + 4 + iVar7 * 2) * 4);
+          p3 = (float *)(i3 * 0xc + i2);
+          orig::SqVec_Sub(p3,(float *)(i1 + (i3 * 3 + 3) * 4),
+                           (float *)(i3 * 0xc + i1));
+          orig::SqVec_ScaleVec3ByInverseOf102746C0(p3);
+          i4 = i3 + 1;
+          i6 = i6 + -2;
+          i5 = i4;
+          if (0 < i6) {
+            i5 = i4 + i6;
+            p2 = (float *)(i2 + i4 * 0xc);
+            p3 = (float *)(i1 + (i3 + 4 + i4 * 2) * 4);
             do {
-              orig::SqVec_Sub(pfVar5,pfVar9,pfVar9 + -6);
-              orig::SqVec_ScaleVec3ByInverseOf102746C0(pfVar5);
-              pfVar9 = pfVar9 + 3;
-              pfVar5 = pfVar5 + 3;
-              local_c = local_c + -1;
-            } while (local_c != 0);
+              orig::SqVec_Sub(p2,p3,p3 + -6);
+              orig::SqVec_ScaleVec3ByInverseOf102746C0(p2);
+              p3 = p3 + 3;
+              p2 = p2 + 3;
+              i6 = i6 + -1;
+            } while (i6 != 0);
           }
-          pfVar9 = (float *)(iVar8 * 0xc + iVar2);
-          pfVar5 = (float *)(iVar8 * 0xc + iVar3);
-          orig::SqVec_Sub(pfVar5,pfVar9,pfVar9 + -3);
-          orig::SqVec_ScaleVec3ByInverseOf102746C0(pfVar5);
-          iVar6 = iVar8 + 1;
+          p3 = (float *)(i5 * 0xc + i1);
+          p2 = (float *)(i5 * 0xc + i2);
+          orig::SqVec_Sub(p2,p3,p3 + -3);
+          orig::SqVec_ScaleVec3ByInverseOf102746C0(p2);
+          i3 = i5 + 1;
         }
-        local_4 = local_4 + 1;
-      } while (local_4 < *(int *)(param_1 + 0x44));
-      return param_1;
+        i7 = i7 + 1;
+      } while (i7 < *(int *)(arg1 + 0x44));
+      return arg1;
     }
   }
-  return iVar8;
+  return i5;
 }
 
 // FUNCTION: FFXIMAIN 0x102AD990
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API void __cdecl SqshCurves_RebuildIndex(int param_1)
+XI_API void __cdecl SqshCurves_RebuildIndex(int arg1)
 {
-  undefined4 *puVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
+  bits32 *p1;
+  int *p2;
+  int i1;
+  int i2;
   
-  if (*(int *)(param_1 + 0x4c) == 0) {
-    iVar3 = *(int *)(param_1 + 0x44);
-    iVar4 = 0;
-    if (0 < iVar3) {
-      piVar2 = *(int **)(param_1 + 0x48);
+  if (*(int *)(arg1 + 0x4c) == 0) {
+    i1 = *(int *)(arg1 + 0x44);
+    i2 = 0;
+    if (0 < i1) {
+      p2 = *(int **)(arg1 + 0x48);
       do {
-        if (iVar4 < *piVar2) {
-          iVar4 = *piVar2;
+        if (i2 < *p2) {
+          i2 = *p2;
         }
-        piVar2 = piVar2 + 1;
-        iVar3 = iVar3 + -1;
-      } while (iVar3 != 0);
+        p2 = p2 + 1;
+        i1 = i1 + -1;
+      } while (i1 != 0);
     }
-    if (*(int *)(param_1 + 0x50) != 0) {
-      orig::sqFree_v1(*(int *)(param_1 + 0x50),s_C__dev_dancer_modules_sqShape_sr_103bef68,0x1dd);
+    if (*(int *)(arg1 + 0x50) != 0) {
+      orig::sqFree_v1(*(int *)(arg1 + 0x50),str_C__dev_dancer_modules_sqShape_sr_103BEF68,0x1dd);
     }
-    puVar1 = orig::SqMem_AllocZeroed(iVar4,4,s_C__dev_dancer_modules_sqShape_sr_103bef68,0x1df);
-    *(undefined4 **)(param_1 + 0x50) = puVar1;
-    iVar3 = 0;
-    if (0 < iVar4) {
+    p1 = orig::SqMem_AllocZeroed(i2,4,str_C__dev_dancer_modules_sqShape_sr_103BEF68,0x1df);
+    *(bits32 **)(arg1 + 0x50) = p1;
+    i1 = 0;
+    if (0 < i2) {
       do {
-        *(int *)(*(int *)(param_1 + 0x50) + iVar3 * 4) = iVar3;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar4);
+        *(int *)(*(int *)(arg1 + 0x50) + i1 * 4) = i1;
+        i1 = i1 + 1;
+      } while (i1 < i2);
     }
-    iVar3 = *(int *)(param_1 + 0x34);
-    orig::SqVtx_ClearEntries(iVar3);
-    orig::SqshCurves_ComputeNormals(param_1,iVar3);
-    iVar3 = *(int *)(param_1 + 0x34);
-    orig::SqVtx_ClearEntriesAlt(iVar3);
-    orig::SqshCurves_ComputeTangents_v1(param_1,iVar3);
-    *(uint8_t **)(param_1 + 0x30) =(uint8_t*)(&LAB_102b3340);
+    i1 = *(int *)(arg1 + 0x34);
+    orig::SqVtx_ClearEntries(i1);
+    orig::SqshCurves_ComputeNormals(arg1,i1);
+    i1 = *(int *)(arg1 + 0x34);
+    orig::SqVtx_ClearEntriesAlt(i1);
+    orig::SqshCurves_ComputeTangents_v1(arg1,i1);
+    *(uint8_t **)(arg1 + 0x30) =(uint8_t*)(&code_102B3340);
   }
   return;
 }

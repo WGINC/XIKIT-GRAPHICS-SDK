@@ -3,74 +3,74 @@
 
 // FUNCTION: FFXIMAIN 0x10284950
 // GATE: PASS -- 100 trials, 99 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __cdecl sqgxVertexShaderCreate(_DWORD *a1)
+XI_API int __cdecl sqgxVertexShaderCreate(uint32_t *shader)
 {
-  int v1;
-  int v2;
-  int *v3;
-  int v4;
-  int v5;
-  _BYTE *v6;
-  int v7;
-  int v8;
-  int v9;
+  int i1;
+  int i2;
+  int *p1;
+  int i3;
+  int i4;
+  uint8_t *p2;
+  int i5;
+  int i6;
+  int i7;
   int result;
-  _DWORD v11[16];
-  v1 = 0;
-  v2 = 0;
-  v3 = g_pSqgxContext;
+  uint32_t declaration[16];
+  i1 = 0;
+  i2 = 0;
+  p1 = g_pSqgxContext;
   if ( (g_pSqgxContext[652] & 1) != 0 )
   {
-    v11[0] = 0x20000000;
-    v2 = 1;
-    v11[1] = 1073872896;
-    v1 = 2;
+    declaration[0] = 0x20000000;
+    i2 = 1;
+    declaration[1] = 1073872896;
+    i1 = 2;
   }
   if ( (g_pSqgxContext[652] & 2) != 0 )
   {
-    v11[v1] = v2 | 0x20000000;
-    v4 = v1 + 1;
-    ++v2;
-    v11[v4] = 1073872899;
-    v1 = v4 + 1;
+    declaration[i1] = i2 | 0x20000000;
+    i3 = i1 + 1;
+    ++i2;
+    declaration[i3] = 1073872899;
+    i1 = i3 + 1;
   }
-  v5 = 0;
-  if ( v3[710] + 1 > 0 )
+  i4 = 0;
+  if ( p1[710] + 1 > 0 )
   {
-    v6 =(_BYTE*)(v3 + 653);
+    p2 =(uint8_t*)(p1 + 653);
     do
     {
-      if ( (*v6 & 4) != 0 )
+      if ( (*p2 & 4) != 0 )
       {
-        v11[v1] = v2 | 0x20000000;
-        v7 = v1 + 1;
-        ++v2;
-        v11[v7] = (v5 + 7) | 0x40010000;
-        v1 = v7 + 1;
+        declaration[i1] = i2 | 0x20000000;
+        i5 = i1 + 1;
+        ++i2;
+        declaration[i5] = (i4 + 7) | 0x40010000;
+        i1 = i5 + 1;
       }
-      ++v5;
-      v6 += 4;
+      ++i4;
+      p2 += 4;
     }
-    while ( v5 < v3[710] + 1 );
+    while ( i4 < p1[710] + 1 );
   }
-  if ( (v3[652] & 0x10) != 0 )
+  if ( (p1[652] & 0x10) != 0 )
   {
-    v11[v1] = v2 | 0x20000000;
-    v8 = v1 + 1;
-    ++v2;
-    v11[v8] = 1073872911;
-    v1 = v8 + 1;
+    declaration[i1] = i2 | 0x20000000;
+    i6 = i1 + 1;
+    ++i2;
+    declaration[i6] = 1073872911;
+    i1 = i6 + 1;
   }
-  if ( (v3[653] & 8) != 0 || (v3[654] & 8) != 0 && v3[710] > 0 )
+  if ( (p1[653] & 8) != 0 || (p1[654] & 8) != 0 && p1[710] > 0 )
   {
-    v11[v1] = v2 | 0x20000000;
-    v9 = v1 + 1;
-    v11[v9] = 1074003973;
-    v1 = v9 + 1;
+    declaration[i1] = i2 | 0x20000000;
+    i7 = i1 + 1;
+    declaration[i7] = 1074003973;
+    i1 = i7 + 1;
   }
-  v11[v1] = -1;
-  g_pDancerDevice->CreateVertexShader(v11, nullptr, a1, 0);
-  result = g_pDancerDevice->SetVertexShader(*a1);
+  declaration[i1] = -1;
+  g_pDancerDevice->CreateVertexShader(declaration, nullptr, shader, 0);
+  result = g_pDancerDevice->SetVertexShader(*shader);
   g_sqgxShaderDirty = 1;
   return result;
 }
@@ -79,46 +79,46 @@ XI_API int __cdecl sqgxVertexShaderCreate(_DWORD *a1)
 // GATE: PASS -- 100 trials, 100 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl sqgxVertexShaderSelect(void)
 {
-  int v0;
-  int v1;
-  int v2;
-  int *v3;
-  int v4;
-  int v5;
-  int v6;
-  v0 = 0;
-  v1 = 0;
-  v2 = g_pSqgxContext[710] + 1;
-  if ( v2 > 0 )
+  int i1;
+  int i2;
+  int i3;
+  int *p1;
+  int i4;
+  int i5;
+  int i6;
+  i1 = 0;
+  i2 = 0;
+  i3 = g_pSqgxContext[710] + 1;
+  if ( i3 > 0 )
   {
-    v3 = g_pSqgxContext + 648;
+    p1 = g_pSqgxContext + 648;
     do
     {
-      v4 = *v3;
-      v3 += 2;
-      v0 |= v4;
-      v1 |= *(v3 - 1);
-      --v2;
+      i4 = *p1;
+      p1 += 2;
+      i1 |= i4;
+      i2 |= *(p1 - 1);
+      --i3;
     }
-    while ( v2 != 0 );
+    while ( i3 != 0 );
   }
-  v5 = g_counter_109A2744;
-  v6 = 0;
+  i5 = g_counter_109A2744;
+  i6 = 0;
   if ( g_counter_109A2744 <= 0 )
   {
-LABEL_8:
-    g_sqgxVertexShaderKeyA[2 * g_counter_109A2744] = v0;
-    g_sqgxVertexShaderKeyB[2 * v5] = v1;
-    orig::sqgxVertexShaderCreate((_DWORD *)(4 * v5 + (int)XI_GAME(0x103B4910u)));
+L1:
+    g_sqgxVertexShaderKeyA[2 * g_counter_109A2744] = i1;
+    g_sqgxVertexShaderKeyB[2 * i5] = i2;
+    orig::sqgxVertexShaderCreate((uint32_t *)(4 * i5 + (int)XI_GAME(0x103B4910u)));
     return ++g_counter_109A2744;
   }
   else
   {
-    while ( g_sqgxVertexShaderKeyA[2 * v6] != v0 || g_sqgxVertexShaderKeyB[2 * v6] != v1 )
+    while ( g_sqgxVertexShaderKeyA[2 * i6] != i1 || g_sqgxVertexShaderKeyB[2 * i6] != i2 )
     {
-      if ( ++v6 >= g_counter_109A2744 )
-        goto LABEL_8;
+      if ( ++i6 >= g_counter_109A2744 )
+        goto L1;
     }
-    return g_pDancerDevice->SetVertexShader(g_sqgxVertexShaderHandle[v6]);
+    return g_pDancerDevice->SetVertexShader(g_sqgxVertexShaderHandle[i6]);
   }
 }

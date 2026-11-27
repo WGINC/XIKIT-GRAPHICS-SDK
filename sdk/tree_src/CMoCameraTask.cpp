@@ -11,12 +11,12 @@ char ** __cdecl CMoCameraTask::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1003D010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoCameraTask::ScalarDeletingDtor(char a1)
+uint32_t * CMoCameraTask::ScalarDeletingDtor(char arg1)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
-  int v2;
-  orig::CMoCameraTask_Destructor(self, v2);
-  if ( (a1 & 1) != 0 )
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
+  int i1;
+  orig::CMoCameraTask_Destructor(self, i1);
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)self);
   return self;
 }

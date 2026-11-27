@@ -5,11 +5,11 @@
 
 // FUNCTION: FFXIMAIN 0x1006CE70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoProcessor::InitRotationMatrices()
+uint32_t * CMoProcessor::InitRotationMatrices()
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
-  _DWORD *result;
-  _DWORD *v2;
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
+  uint32_t *result;
+  uint32_t *p1;
   int i;
   if ( (CMoProcessor_InitRotationMatrices_staticGuard & 1) == 0 )
   {
@@ -32,407 +32,407 @@ _DWORD * CMoProcessor::InitRotationMatrices()
     g_identityMatrix_1047CC80_m33 = 1065353216;
     orig::_atexit(XI_CODE(nullsub_44));
   }
-  qmemcpy(self + 516, &g_identityMatrix_1047CC80_m00, 64);
-  qmemcpy(self + 532, &g_identityMatrix_1047CC80_m00, 64);
-  qmemcpy(self + 548, &g_identityMatrix_1047CC80_m00, 64);
-  qmemcpy(self + 564, &g_identityMatrix_1047CC80_m00, 64);
+  memcpy(self + 516, &g_identityMatrix_1047CC80_m00, 64);
+  memcpy(self + 532, &g_identityMatrix_1047CC80_m00, 64);
+  memcpy(self + 548, &g_identityMatrix_1047CC80_m00, 64);
+  memcpy(self + 564, &g_identityMatrix_1047CC80_m00, 64);
   this->ScratchMatrixStackTop = 0;
   result = self + 644;
-  v2 = self + 4;
+  p1 = self + 4;
   for ( i = 32; i != 0; --i )
   {
-    *result++ = v2;
-    v2 += 16;
+    *result++ = p1;
+    p1 += 16;
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D3E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __stdcall CMoProcessor::TransposeInPlace(int param_1)
+void __stdcall CMoProcessor::TransposeInPlace(int arg1)
 {
-  float fVar1;
-  float fVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
+  float f1;
+  float f2;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
   
-  uVar3 = *(uint32_t *)(param_1 + 0xc);
-  uVar4 = *(uint32_t *)(param_1 + 0x18);
-  fVar1 = *(float *)(param_1 + 4);
-  fVar2 = *(float *)(param_1 + 8);
-  uVar5 = *(uint32_t *)(param_1 + 0x1c);
-  uVar6 = *(uint32_t *)(param_1 + 0x2c);
-  *(uint32_t *)(param_1 + 4) = *(uint32_t *)(param_1 + 0x10);
-  *(uint32_t *)(param_1 + 8) = *(uint32_t *)(param_1 + 0x20);
-  *(float *)(param_1 + 0x10) = (float)(long double)fVar1;
-  *(uint32_t *)(param_1 + 0xc) = *(uint32_t *)(param_1 + 0x30);
-  *(uint32_t *)(param_1 + 0x18) = *(uint32_t *)(param_1 + 0x24);
-  *(float *)(param_1 + 0x20) = (float)(long double)fVar2;
-  *(uint32_t *)(param_1 + 0x1c) = *(uint32_t *)(param_1 + 0x34);
-  *(uint32_t *)(param_1 + 0x2c) = *(uint32_t *)(param_1 + 0x38);
-  *(uint32_t *)(param_1 + 0x24) = uVar4;
-  *(uint32_t *)(param_1 + 0x30) = uVar3;
-  *(uint32_t *)(param_1 + 0x34) = uVar5;
-  *(uint32_t *)(param_1 + 0x38) = uVar6;
+  u1 = *(uint32_t *)(arg1 + 0xc);
+  u2 = *(uint32_t *)(arg1 + 0x18);
+  f1 = *(float *)(arg1 + 4);
+  f2 = *(float *)(arg1 + 8);
+  u3 = *(uint32_t *)(arg1 + 0x1c);
+  u4 = *(uint32_t *)(arg1 + 0x2c);
+  *(uint32_t *)(arg1 + 4) = *(uint32_t *)(arg1 + 0x10);
+  *(uint32_t *)(arg1 + 8) = *(uint32_t *)(arg1 + 0x20);
+  *(float *)(arg1 + 0x10) = (float)f1;
+  *(uint32_t *)(arg1 + 0xc) = *(uint32_t *)(arg1 + 0x30);
+  *(uint32_t *)(arg1 + 0x18) = *(uint32_t *)(arg1 + 0x24);
+  *(float *)(arg1 + 0x20) = (float)f2;
+  *(uint32_t *)(arg1 + 0x1c) = *(uint32_t *)(arg1 + 0x34);
+  *(uint32_t *)(arg1 + 0x2c) = *(uint32_t *)(arg1 + 0x38);
+  *(uint32_t *)(arg1 + 0x24) = u2;
+  *(uint32_t *)(arg1 + 0x30) = u1;
+  *(uint32_t *)(arg1 + 0x34) = u3;
+  *(uint32_t *)(arg1 + 0x38) = u4;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006D580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-long double __stdcall CMoProcessor::LengthSafe(float * param_1)
+long double __stdcall CMoProcessor::LengthSafe(float * arg1)
 {
-  uint8_t bVar1;
-  long double fVar2;
+  uint8_t u1;
+  long double f1;
   
-  fVar2 = (long double)param_1[2] * (long double)param_1[2] +
-          (long double)param_1[1] * (long double)param_1[1] + (long double)*param_1 * (long double)*param_1;
-  bVar1 = NAN(fVar2) || NAN((long double)0.0);
-  if (bVar1 != (bVar1 || fVar2 == (long double)0.0)) {
-    return (long double)0.0f;
+  f1 = arg1[2] * arg1[2] +
+          arg1[1] * arg1[1] + *arg1 * *arg1;
+  u1 = ((f1) != (f1)) || ((0.0) != (0.0));
+  if (u1 != (u1 || f1 == 0.0)) {
+    return 0.0f;
   }
-  return SQRT(fVar2);
+  return x87_fsqrt(f1);
 }
 
 // FUNCTION: FFXIMAIN 0x1006E6B0
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor::ScratchMatrixOp(int a2, int a3, int a4)
+int CMoProcessor::ScratchMatrixOp(int arg1, int arg2, int arg3)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
   int ScratchMatrixStackTop;
-  float *v6;
+  float *p1;
   int result;
-  CMoProcessor *v8;
-  int v9;
+  CMoProcessor *p2;
+  int i1;
   ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-  v6 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+  p1 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
   (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-  (*(void (__thiscall **)(void *, float *, int))(*(_DWORD *)self + 92))(self, v6, a4);
-  result = (*(int (__thiscall **)(void *, int, int, float *))(*(_DWORD *)self + 36))(self, a2, a3, v6);
-  v8 = g_pProcessor;
-  v9 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-  (g_pProcessor->ScratchMatrixStackTop) = v9;
-  ((float * *)((char *)v8 + 0xA10))[v9] = v6;
+  (*(void (__thiscall **)(void *, float *, int))(*(uint32_t *)self + 92))(self, p1, arg3);
+  result = (*(int (__thiscall **)(void *, int, int, float *))(*(uint32_t *)self + 36))(self, arg1, arg2, p1);
+  p2 = g_pProcessor;
+  i1 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+  (g_pProcessor->ScratchMatrixStackTop) = i1;
+  ((float * *)((char *)p2 + 0xA10))[i1] = p1;
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1006E970
 // GATE: PASS -- 100 trials, 56 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-CMoProcessor * __stdcall CMoProcessor::CalcScreenBounds(float *a1, float *a2, int a3, int a4, const void *a5)
+CMoProcessor * __stdcall CMoProcessor::CalcScreenBounds(float *arg1, float *arg2, int arg3, int arg4, const void *arg5)
 {
   CMoProcessor *result;
-  float *v6;
+  float *p1;
   int ScratchMatrixStackTop;
-  double v8;
-  float *v9;
+  double f1;
+  float *p2;
   int i;
-  double v12;
-  double v13;
-  double v14;
-  double v15;
-  double v16;
-  double v17;
-  __int16 v18; // fps
-  bool v19; // c0
-  char v20; // c2
-  bool v21; // c3
-  bool v22; // c0
-  char v23; // c2
-  bool v24; // c3
-  int v25;
-  float v26;
-  float v27;
-  float v28;
-  float v29;
-  float v30;
-  float v31;
-  float v32;
+  double f2;
+  double f3;
+  double f4;
+  double f5;
+  double f6;
+  double f7;
+  short i1; // fps
+  bool b1; // c0
+  char c1; // c2
+  bool b2; // c3
+  bool b3; // c0
+  char c2; // c2
+  bool b4; // c3
+  int i2;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
   bool xi_fpu_unord = false;
 
   result = (CMoProcessor *)g_pResourceMng;
   if ( g_pResourceMng != 0 )
   {
-    v6 = (float *)(g_pResourceMng + 2832);
+    p1 = (float *)(g_pResourceMng + 2832);
     ScratchMatrixStackTop = (g_pProcessor->ScratchMatrixStackTop);
-    v27 = 10000.0;
-    v8 = -10000.0;
-    v9 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
+    f9 = 10000.0;
+    f1 = -10000.0;
+    p2 = ((float * *)((char *)g_pProcessor + 0xA10))[ScratchMatrixStackTop];
     (g_pProcessor->ScratchMatrixStackTop) = ScratchMatrixStackTop + 1;
-    qmemcpy(v9, a5, 0x40u);
-    v26 = 10000.0;
-    v28 = -10000.0;
-    if ( a4 > 0 )
+    memcpy(p2, arg5, 0x40u);
+    f8 = 10000.0;
+    f10 = -10000.0;
+    if ( arg4 > 0 )
     {
-      for ( i = a4; i != 0; --i )
+      for ( i = arg4; i != 0; --i )
       {
-        v12 = v9[8] * a2[2] + a2[1] * v9[4] + *v9 * *a2 + v9[12];
-        v13 = *a2 * v9[1] + v9[9] * a2[2] + a2[1] * v9[5] + v9[13];
-        v14 = v9[10] * a2[2] + a2[1] * v9[6] + v9[2] * *a2 + v9[14];
-        v31 = v12 * *v6 + v14 * v6[8] + v13 * v6[4] + v6[12];
-        v29 = v12 * v6[1] + v14 * v6[9] + v13 * v6[5] + v6[13];
-        v15 = v14 * v6[11] + v13 * v6[7] + v12 * v6[3] + v6[15];
-        if ( v15 < 0.0 )
-          v15 = -v15;
-        if ( v15 == 0.0 )
-          v15 = 1.0;
-        v16 = 1.0 / v15;
-        v32 = (v31 * v16 + 1.0) * *(float *)(g_pResourceMng + 3520);
-        v17 = (1.0 - v16 * v29) * *(float *)(g_pResourceMng + 3524);
-        if ( v32 < (double)v26 )
-          v26 = v32;
-        (xi_fpu_unord = __builtin_isunordered(v32, (double)v28), v19 = v32 < (double)v28);
-        v20 = 0;
-        v21 = v32 == v28;
-        if ( ((__int16)(((v19 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v21 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
-          v28 = v32;
-        if ( v17 < v27 )
-          v27 = v17;
-        (xi_fpu_unord = __builtin_isunordered(v17, v8), v22 = v17 < v8);
-        v23 = 0;
-        v24 = v17 == v8;
-        if ( ((__int16)(((v22 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v24 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+        f2 = p2[8] * arg2[2] + arg2[1] * p2[4] + *p2 * *arg2 + p2[12];
+        f3 = *arg2 * p2[1] + p2[9] * arg2[2] + arg2[1] * p2[5] + p2[13];
+        f4 = p2[10] * arg2[2] + arg2[1] * p2[6] + p2[2] * *arg2 + p2[14];
+        f13 = f2 * *p1 + f4 * p1[8] + f3 * p1[4] + p1[12];
+        f11 = f2 * p1[1] + f4 * p1[9] + f3 * p1[5] + p1[13];
+        f5 = f4 * p1[11] + f3 * p1[7] + f2 * p1[3] + p1[15];
+        if ( f5 < 0.0 )
+          f5 = -f5;
+        if ( f5 == 0.0 )
+          f5 = 1.0;
+        f6 = 1.0 / f5;
+        f14 = (f13 * f6 + 1.0) * *(float *)(g_pResourceMng + 3520);
+        f7 = (1.0 - f6 * f11) * *(float *)(g_pResourceMng + 3524);
+        if ( f14 < (double)f8 )
+          f8 = f14;
+        (xi_fpu_unord = __builtin_isunordered(f14, (double)f10), b1 = f14 < (double)f10);
+        c1 = 0;
+        b2 = f14 == f10;
+        if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+          f10 = f14;
+        if ( f7 < f9 )
+          f9 = f7;
+        (xi_fpu_unord = __builtin_isunordered(f7, f1), b3 = f7 < f1);
+        c2 = 0;
+        b4 = f7 == f1;
+        if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
         {
-          v30 = v17;
-          v8 = v30;
+          f12 = f7;
+          f1 = f12;
         }
-        a2 = (float *)((char *)a2 + a3);
+        arg2 = (float *)((char *)arg2 + arg3);
       }
     }
-    *a1 = v26;
-    a1[1] = v27;
-    a1[3] = v8;
-    a1[2] = v28;
+    *arg1 = f8;
+    arg1[1] = f9;
+    arg1[3] = f1;
+    arg1[2] = f10;
     result = g_pProcessor;
-    v25 = (g_pProcessor->ScratchMatrixStackTop) - 1;
-    (g_pProcessor->ScratchMatrixStackTop) = v25;
-    ((float * *)((char *)result + 0xA10))[v25] = v9;
+    i2 = (g_pProcessor->ScratchMatrixStackTop) - 1;
+    (g_pProcessor->ScratchMatrixStackTop) = i2;
+    ((float * *)((char *)result + 0xA10))[i2] = p2;
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1006ED10
 // GATE: PASS -- 100 trials, 60 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-void __thiscall CMoProcessor::CalcScreenBoundsAndVisible(void * self, float * param_1, float * param_2, float param_3, float param_4, float param_5, undefined4 xi_s6, undefined4 xi_s7)
+void __thiscall CMoProcessor::CalcScreenBoundsAndVisible(void * self, float * arg2, float * arg3, float arg4, float arg5, float arg6, bits32 xi_s6, bits32 xi_s7)
 {
-  long double fVar1;
-  long double fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float fVar13;
-  float fVar14;
-  float *a1;
-  int iVar15;
-  int *piVar16;
-  uint8_t bVar17;
-  long double fVar18;
-  long double fVar19;
-  long double fVar20;
-  float local_10;
-  float local_c;
-  float local_8;
+  long double f1;
+  long double f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
+  float *p1;
+  int i1;
+  int *p2;
+  uint8_t u1;
+  long double f15;
+  long double f16;
+  long double f17;
+  float f18;
+  float f19;
+  float f20;
   
   *(uint32_t *)((int)self + 0xa94) = 0;
   *(uint32_t *)((int)self + 0xa98) = 0x461c4000;
   *(uint32_t *)((int)self + 0xa9c) = 0xc61c4000;
-  local_c = 1e+04f;
-  local_10 = 1e+04f;
-  local_8 = (-1e+04f);
-  a1 = (float *)g_pProcessor_as_v1[g_pProcessor_as_v1[0x2a4] + 0x284];
+  f19 = 1e+04f;
+  f18 = 1e+04f;
+  f20 = (-1e+04f);
+  p1 = (float *)g_pProcessor_as_v1[g_pProcessor_as_v1[0x2a4] + 0x284];
   g_pProcessor_as_v1[0x2a4] = g_pProcessor_as_v1[0x2a4] + 1;
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*g_pProcessor_as_v1 + 0x24))))((void *)(g_pProcessor_as_v1),a1,param_4,param_5);
-  fVar18 = (long double)(-1e+04f);
-  if (0 < xi_castbits<int>(param_3)) {
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*g_pProcessor_as_v1 + 0x24))))((void *)(g_pProcessor_as_v1),p1,arg5,arg6);
+  f15 = (long double)(-1e+04f);
+  if (0 < bit_cast<int>(arg4)) {
     do {
-      fVar1 = *param_2;
-      fVar2 = *a1;
-      fVar3 = a1[8];
-      fVar4 = param_2[2];
-      fVar5 = a1[4];
-      fVar6 = param_2[1];
-      fVar7 = a1[0xc];
-      fVar8 = a1[9];
-      fVar9 = param_2[2];
-      fVar10 = *param_2;
-      fVar11 = a1[1];
-      fVar12 = a1[5];
-      fVar13 = param_2[1];
-      fVar14 = a1[0xd];
-      fVar19 = (long double)a1[7] * (long double)param_2[1] +
-               (long double)param_2[2] * (long double)a1[0xb] + (long double)*param_2 * (long double)a1[3] +
-               (long double)a1[0xf];
-      bVar17 = NAN(fVar19) || NAN((long double)0.0f);
-      if (bVar17 == (bVar17 || fVar19 == (long double)0.0f)) {
-        fVar20 = ((long double)a1[10] * (long double)param_2[2] +
-                  (long double)a1[6] * (long double)param_2[1] + (long double)a1[2] * (long double)*param_2 +
-                 (long double)a1[0xe]) / fVar19;
-        bVar17 = NAN(fVar20) || NAN((long double)*(float *)((int)self + 0xa98));
-        if ((bVar17 || fVar20 < (long double)*(float *)((int)self + 0xa98)) != bVar17) {
-          *(float *)((int)self + 0xa98) = (float)fVar20;
+      f1 = *arg3;
+      f2 = *p1;
+      f3 = p1[8];
+      f4 = arg3[2];
+      f5 = p1[4];
+      f6 = arg3[1];
+      f7 = p1[0xc];
+      f8 = p1[9];
+      f9 = arg3[2];
+      f10 = *arg3;
+      f11 = p1[1];
+      f12 = p1[5];
+      f13 = arg3[1];
+      f14 = p1[0xd];
+      f16 = (long double)p1[7] * (long double)arg3[1] +
+               (long double)arg3[2] * (long double)p1[0xb] + (long double)*arg3 * (long double)p1[3] +
+               (long double)p1[0xf];
+      u1 = ((f16) != (f16)) || (((long double)0.0f) != ((long double)0.0f));
+      if (u1 == (u1 || f16 == (long double)0.0f)) {
+        f17 = ((long double)p1[10] * (long double)arg3[2] +
+                  (long double)p1[6] * (long double)arg3[1] + (long double)p1[2] * (long double)*arg3 +
+                 (long double)p1[0xe]) / f16;
+        u1 = ((f17) != (f17)) || (((long double)*(float *)((int)self + 0xa98)) != ((long double)*(float *)((int)self + 0xa98)));
+        if ((u1 || f17 < (long double)*(float *)((int)self + 0xa98)) != u1) {
+          *(float *)((int)self + 0xa98) = (float)f17;
         }
-        if (fVar20 > (long double)*(float *)((int)self + 0xa9c)) {
-          *(float *)((int)self + 0xa9c) = (float)fVar20;
+        if (f17 > (long double)*(float *)((int)self + 0xa9c)) {
+          *(float *)((int)self + 0xa9c) = (float)f17;
         }
-        bVar17 = NAN(fVar19) || NAN((long double)0.0f);
-        if ((bVar17 || fVar19 < (long double)0.0f) != bVar17) {
-          fVar19 = -fVar19;
+        u1 = ((f16) != (f16)) || (((long double)0.0f) != ((long double)0.0f));
+        if ((u1 || f16 < (long double)0.0f) != u1) {
+          f16 = -f16;
         }
       }
       else {
-        fVar19 = (long double)1.0f;
+        f16 = (long double)1.0f;
       }
-      fVar1 = (float)((((long double)1.0f / fVar19) *
-                       ((long double)fVar5 * (long double)fVar6 +
-                        (long double)fVar3 * (long double)fVar4 + (long double)fVar1 * (long double)fVar2 +
-                       (long double)fVar7) + (long double)1.0f) * (long double)xi_s6);
-      fVar2 = (float)(((long double)1.0f -
-                      ((long double)1.0f / fVar19) *
-                      ((long double)fVar12 * (long double)fVar13 +
-                       (long double)fVar10 * (long double)fVar11 + (long double)fVar8 * (long double)fVar9 +
-                      (long double)fVar14)) * (long double)xi_s7);
-      bVar17 = NAN((long double)fVar1) || NAN((long double)local_10);
-      if ((bVar17 || (long double)fVar1 < (long double)local_10) != bVar17) {
-        local_10 = fVar1;
+      f1 = (float)((((long double)1.0f / f16) *
+                       ((long double)f5 * (long double)f6 +
+                        (long double)f3 * (long double)f4 + (long double)f1 * (long double)f2 +
+                       (long double)f7) + (long double)1.0f) * (long double)xi_s6);
+      f2 = (float)(((long double)1.0f -
+                      ((long double)1.0f / f16) *
+                      ((long double)f12 * (long double)f13 +
+                       (long double)f10 * (long double)f11 + (long double)f8 * (long double)f9 +
+                      (long double)f14)) * (long double)xi_s7);
+      u1 = (((long double)f1) != ((long double)f1)) || (((long double)f18) != ((long double)f18));
+      if ((u1 || (long double)f1 < (long double)f18) != u1) {
+        f18 = f1;
       }
-      if ((long double)fVar1 > (long double)local_8) {
-        local_8 = fVar1;
+      if ((long double)f1 > (long double)f20) {
+        f20 = f1;
       }
-      bVar17 = NAN((long double)fVar2) || NAN((long double)local_c);
-      if ((bVar17 || (long double)fVar2 < (long double)local_c) != bVar17) {
-        local_c = fVar2;
+      u1 = (((long double)f2) != ((long double)f2)) || (((long double)f19) != ((long double)f19));
+      if ((u1 || (long double)f2 < (long double)f19) != u1) {
+        f19 = f2;
       }
-      if ((long double)fVar2 > fVar18) {
-        fVar18 = (long double)fVar2;
+      if ((long double)f2 > f15) {
+        f15 = (long double)f2;
       }
-      if (((((long double)fVar1 > (long double)0.0f) &&
-           (fVar19 = (long double)xi_s6 + (long double)xi_s6,
-           (!NAN(fVar19) && !NAN((long double)fVar1)) && (long double)fVar1 < fVar19)) &&
-          ((long double)fVar2 > (long double)0.0f)) &&
-         (fVar19 = (long double)xi_s7 + (long double)xi_s7,
-         (!NAN(fVar19) && !NAN((long double)fVar2)) && (long double)fVar2 < fVar19)) {
+      if (((((long double)f1 > (long double)0.0f) &&
+           (f16 = (long double)xi_s6 + (long double)xi_s6,
+           (!((f16) != (f16)) && !(((long double)f1) != ((long double)f1))) && (long double)f1 < f16)) &&
+          ((long double)f2 > (long double)0.0f)) &&
+         (f16 = (long double)xi_s7 + (long double)xi_s7,
+         (!((f16) != (f16)) && !(((long double)f2) != ((long double)f2))) && (long double)f2 < f16)) {
         *(int *)((int)self + 0xa94) = *(int *)((int)self + 0xa94) + 1;
       }
-      param_2 = param_2 + 4;
-      param_3 = xi_castbits<float>((xi_castbits<int>(param_3) + -1));
-    } while (param_3 != 0.0f);
+      arg3 = arg3 + 4;
+      arg4 = bit_cast<float>((bit_cast<int>(arg4) + -1));
+    } while (arg4 != 0.0f);
   }
-  *param_1 = (float)(long double)local_10;
-  param_1[1] = local_c;
-  param_1[2] = local_8;
-  param_1[3] = (float)fVar18;
-  piVar16 = g_pProcessor_as_v1;
-  iVar15 = g_pProcessor_as_v1[0x2a4];
-  g_pProcessor_as_v1[0x2a4] = iVar15 + -1;
-  piVar16[iVar15 + 0x283] = (int)a1;
+  *arg2 = (float)(long double)f18;
+  arg2[1] = f19;
+  arg2[2] = f20;
+  arg2[3] = (float)f15;
+  p2 = g_pProcessor_as_v1;
+  i1 = g_pProcessor_as_v1[0x2a4];
+  g_pProcessor_as_v1[0x2a4] = i1 + -1;
+  p2[i1 + 0x283] = (int)p1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006F800
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-__attribute__((target("sse,fpmath=sse"))) float * __stdcall CMoProcessor::MulPointVec3(float * param_1, float * param_2, float * param_3)
+__attribute__((target("sse,fpmath=sse"))) float * __stdcall CMoProcessor::MulPointVec3(float * arg1, float * arg2, float * arg3)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
+  float f1;
+  float f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
   
-  fVar4 = param_2[1];
-  fVar5 = param_2[2];
-  fVar6 = param_2[5];
-  fVar7 = param_2[6];
-  fVar8 = param_2[9];
-  fVar9 = param_2[10];
-  fVar10 = param_2[0xd];
-  fVar11 = param_2[0xe];
-  fVar1 = *param_3;
-  fVar2 = param_3[1];
-  fVar3 = param_3[2];
-  *param_1 = fVar1 * *param_2 + fVar2 * param_2[4] + fVar3 * param_2[8] + param_2[0xc];
-  param_1[1] = fVar1 * fVar4 + fVar2 * fVar6 + fVar3 * fVar8 + fVar10;
-  param_1[2] = fVar1 * fVar5 + fVar2 * fVar7 + fVar3 * fVar9 + fVar11;
-  return param_1;
+  f4 = arg2[1];
+  f5 = arg2[2];
+  f6 = arg2[5];
+  f7 = arg2[6];
+  f8 = arg2[9];
+  f9 = arg2[10];
+  f10 = arg2[0xd];
+  f11 = arg2[0xe];
+  f1 = *arg3;
+  f2 = arg3[1];
+  f3 = arg3[2];
+  *arg1 = f1 * *arg2 + f2 * arg2[4] + f3 * arg2[8] + arg2[0xc];
+  arg1[1] = f1 * f4 + f2 * f6 + f3 * f8 + f10;
+  arg1[2] = f1 * f5 + f2 * f7 + f3 * f9 + f11;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1006FAE0
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoProcessor::BuildRotationXYZ(void * self, undefined4 param_1, float param_2, float param_3, float param_4)
+bits32 __thiscall CMoProcessor::BuildRotationXYZ(void * self, bits32 arg2, float arg3, float arg4, float arg5)
 {
-  int iVar1;
-  uint32_t a2;
-  long double fVar2;
-  int a3;
+  int i1;
+  uint32_t u1;
+  long double f1;
+  int i2;
   
-  fVar2 = xi_castbits<long double>(fsin((long double)param_2));
-  a3 = (int)self + 0x850;
-  *(float *)((int)self + 0x868) = (float)fVar2;
-  *(float *)((int)self + 0x874) = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_2));
-  *(float *)((int)self + 0x878) = (float)fVar2;
-  *(float *)((int)self + 0x864) = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_3));
-  *(float *)((int)self + 0x8b8) = (float)fVar2;
-  *(float *)((int)self + 0x890) = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_3));
-  *(float *)((int)self + 0x8b0) = (float)fVar2;
-  *(float *)((int)self + 0x898) = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_4));
-  *(float *)((int)self + 0x8e4) = (float)fVar2;
-  *(float *)((int)self + 0x8d0) = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_4));
-  *(float *)((int)self + 0x8d4) = (float)fVar2;
-  *(float *)((int)self + 0x8e0) = (float)-fVar2;
-  iVar1 = *(int *)self;
-  a2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))
-                 ))((void *)(self),param_1,(float *)((int)self + 0x8d0),(float *)((int)self + 0x890));
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,a2,a3);
-  return param_1;
+  f1 = bit_cast<long double>(x87_fsin(arg3));
+  i2 = (int)self + 0x850;
+  *(float *)((int)self + 0x868) = (float)f1;
+  *(float *)((int)self + 0x874) = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg3));
+  *(float *)((int)self + 0x878) = (float)f1;
+  *(float *)((int)self + 0x864) = (float)f1;
+  f1 = bit_cast<long double>(x87_fcos(arg4));
+  *(float *)((int)self + 0x8b8) = (float)f1;
+  *(float *)((int)self + 0x890) = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg4));
+  *(float *)((int)self + 0x8b0) = (float)f1;
+  *(float *)((int)self + 0x898) = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg5));
+  *(float *)((int)self + 0x8e4) = (float)f1;
+  *(float *)((int)self + 0x8d0) = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg5));
+  *(float *)((int)self + 0x8d4) = (float)f1;
+  *(float *)((int)self + 0x8e0) = (float)-f1;
+  i1 = *(int *)self;
+  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))
+                 ))((void *)(self),arg2,(float *)((int)self + 0x8d0),(float *)((int)self + 0x890));
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,u1,i2);
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1006FC40
 // GATE: PASS -- 100 trials, 100 returned normally, 200 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoProcessor::SetRotationFromAngles(void * self, undefined4 param_1, float param_2, float param_3, float param_4)
+bits32 __thiscall CMoProcessor::SetRotationFromAngles(void * self, bits32 arg2, float arg3, float arg4, float arg5)
 {
-  int iVar1;
-  uint32_t a2;
-  long double fVar2;
-  float *a3;
+  int i1;
+  uint32_t u1;
+  long double f1;
+  float *p1;
   
-  fVar2 = xi_castbits<long double>(fsin((long double)param_2));
-  a3 = (float *)((int)self + 0x8d0);
-  *(float *)((int)self + 0x868) = (float)fVar2;
-  *(float *)((int)self + 0x874) = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_2));
-  *(float *)((int)self + 0x878) = (float)fVar2;
-  *(float *)((int)self + 0x864) = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_3));
-  *(float *)((int)self + 0x8b8) = (float)fVar2;
-  *(float *)((int)self + 0x890) = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_3));
-  *(float *)((int)self + 0x8b0) = (float)fVar2;
-  *(float *)((int)self + 0x898) = (float)-fVar2;
-  fVar2 = xi_castbits<long double>(fcos((long double)param_4));
-  *(float *)((int)self + 0x8e4) = (float)fVar2;
-  *a3 = (float)fVar2;
-  fVar2 = xi_castbits<long double>(fsin((long double)param_4));
-  *(float *)((int)self + 0x8d4) = (float)fVar2;
-  *(float *)((int)self + 0x8e0) = (float)-fVar2;
-  iVar1 = *(int *)self;
-  a2 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,(int)self + 0x850,(float *)((int)self + 0x890));
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(code **)(iVar1 + 0x24))))((void *)(self),param_1,a2,a3);
-  return param_1;
+  f1 = bit_cast<long double>(x87_fsin(arg3));
+  p1 = (float *)((int)self + 0x8d0);
+  *(float *)((int)self + 0x868) = (float)f1;
+  *(float *)((int)self + 0x874) = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg3));
+  *(float *)((int)self + 0x878) = (float)f1;
+  *(float *)((int)self + 0x864) = (float)f1;
+  f1 = bit_cast<long double>(x87_fcos(arg4));
+  *(float *)((int)self + 0x8b8) = (float)f1;
+  *(float *)((int)self + 0x890) = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg4));
+  *(float *)((int)self + 0x8b0) = (float)f1;
+  *(float *)((int)self + 0x898) = (float)-f1;
+  f1 = bit_cast<long double>(x87_fcos(arg5));
+  *(float *)((int)self + 0x8e4) = (float)f1;
+  *p1 = (float)f1;
+  f1 = bit_cast<long double>(x87_fsin(arg5));
+  *(float *)((int)self + 0x8d4) = (float)f1;
+  *(float *)((int)self + 0x8e0) = (float)-f1;
+  i1 = *(int *)self;
+  u1 = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,(int)self + 0x850,(float *)((int)self + 0x890));
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(i1 + 0x24))))((void *)(self),arg2,u1,p1);
+  return arg2;
 }

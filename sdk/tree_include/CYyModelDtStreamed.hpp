@@ -6,8 +6,8 @@
 class XI_API CYyModelDtStreamed {
 public:
     int Slot11ReturnZero();  // 0x10025090
-    int * ScalarDeletingDtor(char a2);  // 0x100250A0
-    int ScalarDeletingDtor_2(int a1);  // 0x100252D0
+    int * ScalarDeletingDtor(char arg1);  // 0x100250A0
+    int ScalarDeletingDtor_2(int arg1);  // 0x100252D0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x38];

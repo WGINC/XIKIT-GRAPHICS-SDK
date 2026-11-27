@@ -7,14 +7,14 @@
 XI_API void __cdecl ActorBase_ReleaseQueued(void)
 {
   int *self_;
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::FUN_10085240();
-  self_ = (int *)uVar1;
+  u1 = orig::game_10085240();
+  self_ = (int *)u1;
   while (self_ != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*self_ + 0x18))))((void *)(self_),1);
-    uVar1 = orig::FUN_10085240();
-    self_ = (int *)uVar1;
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*self_ + 0x18))))((void *)(self_),1);
+    u1 = orig::game_10085240();
+    self_ = (int *)u1;
   }
   return;
 }
@@ -24,26 +24,26 @@ XI_API void __cdecl ActorBase_ReleaseQueued(void)
 XI_API void __cdecl Actor_ResetDrawLists(void)
 {
   g_pActorDrawListHead_as_v0 = 0;
-  orig::FUN_100814f0(&g_targetActorHandle_as_v0,0);
+  orig::game_100814F0(&g_targetActorHandle_as_v0,0);
   g_actorUpdateBucketCountA_as_v0 = 0;
   g_actorUpdateBucketCountB_as_v0 = 0;
-  DAT_1048a35c = 0;
-  DAT_1048a36c = 0;
-  DAT_1048a360 = 0;
-  DAT_1048a370 = 0;
+  g_1048A35C = 0;
+  g_1048A36C = 0;
+  g_1048A360 = 0;
+  g_1048A370 = 0;
   g_actorSerialCounter_as_v0 = 0;
   g_actorUpdateCounter_as_v0 = 0;
   g_actorUpdateInterval_as_v0 = 0x32;
-  _DAT_1048a364 = 0;
-  _DAT_1048a374 = 0;
+  g_1048A364 = 0;
+  g_1048A374 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10081AE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiActor_LinkIntoDrawList(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) CXiActor_LinkIntoDrawList(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  int iVar1;
+  int i1;
   
   if ((*(uint8_t *)((int)self_ + 0x88) & 2) == 0) {
     if (g_pActorDrawListHead_as_v2 != (void *)0x0) {
@@ -52,8 +52,8 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) CXiActor_LinkIntoDrawList
     *(void **)((int)self_ + 0x54) = g_pActorDrawListHead_as_v2;
     *(uint32_t *)((int)self_ + 0x58) = 0;
     g_pActorDrawListHead_as_v2 = self_;
-    iVar1 = orig::Actor_CountAll();
-    *(int *)((int)self_ + 0x74) = iVar1;
+    i1 = orig::Actor_CountAll();
+    *(int *)((int)self_ + 0x74) = i1;
     xi_eax = *(uint32_t *)((int)self_ + 0x88) | 2;
     *(uint32_t *)((int)self_ + 0x88) = xi_eax;
   }

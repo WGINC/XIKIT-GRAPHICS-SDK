@@ -17,5 +17,5 @@ Read from the game's code (call/jmp rel32 to a function start).
 
 - `CYyOs2VtxBuffer::CreateBuffersStep` calls `Mem_AllocObject`, `CYyVbMng::AcquireVertexBuffer`, `Mem_FreeObject`, `CYyVbMng::ReleaseVertexBuffer`
 - `CYyOs2VtxBuffer_ScalarDeletingDtor` calls `CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor`, `SharedDeleteHelper`
-- `CYyOs2VtxBuffer::Constructor` calls `CMoTask::Constructor`, `sub_10071F50`
+- `CYyOs2VtxBuffer::Constructor` calls `CMoTask::Constructor`, `game_10071F50`
 - `CYyOs2VtxBuffer::CYyOs2VtxBuffer_Destructor` calls `Mem_FreeObject`, `CYyVbMng::ReleaseVertexBuffer`, `CMoTask::Destructor`

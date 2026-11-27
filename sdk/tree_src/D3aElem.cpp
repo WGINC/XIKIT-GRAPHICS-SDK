@@ -4,21 +4,21 @@
 
 // FUNCTION: FFXIMAIN 0x1003E910
 // GATE: PASS -- 100 trials, 70 returned normally, 68 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 70
-XI_API void __thiscall YmElem_DrawD3ASegment(void * self_, undefined4 param_1, undefined4 param_2, int param_3)
+XI_API void __thiscall YmElem_DrawD3ASegment(void * self_, bits32 arg2, bits32 arg3, int arg4)
 {
-  short *psVar1;
+  short *p1;
   
   if (*(int *)((int)self_ + 0x3c) != 0) {
-    if ((int)*(short *)((int)self_ + 0x32) <= (int)(uint32_t)*(uint16_t *)(param_3 + 0x170)) {
-      *(uint16_t *)(param_3 + 0x170) = 0;
+    if ((int)*(short *)((int)self_ + 0x32) <= (int)(uint32_t)*(uint16_t *)(arg4 + 0x170)) {
+      *(uint16_t *)(arg4 + 0x170) = 0;
     }
-    psVar1 = (short *)(*(int *)((int)self_ + 0x44) + (uint32_t)*(uint16_t *)(param_3 + 0x170) * 4);
+    p1 = (short *)(*(int *)((int)self_ + 0x44) + (uint32_t)*(uint16_t *)(arg4 + 0x170) * 4);
     orig::TexRef_SetTexture_v1((void *)((int)self_ + 0x38),0);
-    orig::YmElem_SetD3ADrawState((void *)param_3);
-    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(code **)(**(int **)(g_pResourceMng + 0xebc) + 200))))(*(int **)(g_pResourceMng + 0xebc),0xe,0)
+    orig::YmElem_SetD3ADrawState((void *)arg4);
+    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)(g_pResourceMng + 0xebc) + 200))))(*(int **)(g_pResourceMng + 0xebc),0xe,0)
     ;
     if (*(void **)((int)self_ + 0x3c) != (void *)0x0) {
-      orig::VertexBatch_BindAndDraw_v1(*(void **)((int)self_ + 0x3c),(int)psVar1[1],*psVar1 * 2,4,0,0xffffffff);
+      orig::VertexBatch_BindAndDraw_v1(*(void **)((int)self_ + 0x3c),(int)p1[1],*p1 * 2,4,0,0xffffffff);
     }
   }
   return;
@@ -28,8 +28,8 @@ XI_API void __thiscall YmElem_DrawD3ASegment(void * self_, undefined4 param_1, u
 // GATE: PASS -- 100 trials, 100 returned normally, 500 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall YmElem_SetD3ADrawState(int self_)
 {
-  int v2;
-  if ( (*(_DWORD *)(self_ + 268) & 0x10000000) != 0 )
+  int i1;
+  if ( (*(uint32_t *)(self_ + 268) & 0x10000000) != 0 )
   {
     if ( (Fn1003E9A0_staticGuards & 1) == 0 )
     {
@@ -38,7 +38,7 @@ XI_API int __thiscall YmElem_SetD3ADrawState(int self_)
       orig::_atexit(XI_CODE(unknown_libname_22));
     }
     orig::StateBlock_ApplyTSS(Fn1003E9A0_stateBlock, (int)Fn1003E9A0_textureStageStates);
-    v2 = 0;
+    i1 = 0;
   }
   else
   {
@@ -49,14 +49,14 @@ XI_API int __thiscall YmElem_SetD3ADrawState(int self_)
       orig::_atexit(XI_CODE(unknown_libname_21));
     }
     orig::StateBlock_ApplyTSS(Fn1003E9A0_stateBlock2, (int)Fn1003E9A0_textureStageStates2);
-    v2 = 1;
+    i1 = 1;
   }
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, g_scratchValue);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_LIGHTING, FALSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_FOGENABLE, FALSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-  if ( *(_BYTE *)(self_ + 364) == 64 )
+  if ( *(uint8_t *)(self_ + 364) == 64 )
   {
     if ( (Fn1003E9A0_staticGuards & 4) == 0 )
     {
@@ -65,7 +65,7 @@ XI_API int __thiscall YmElem_SetD3ADrawState(int self_)
       orig::_atexit(XI_CODE(unknown_libname_20));
     }
     orig::StateBlock_ApplyTSS(Fn1003E9A0_stateBlock3, (int)Fn1003E9A0_textureStageStates3);
-    v2 += 2;
+    i1 += 2;
   }
-  return v2;
+  return i1;
 }

@@ -35,7 +35,7 @@ inline const char *split(const char *line, char *w, int n) {
   while (*p == ' ') p++;
   return p;
 }
-inline int __cdecl hook(char *line, undefined4 mode) {
+inline int __cdecl hook(char *line, bits32 mode) {
   if (line) {
     char w[24]; const char *args = split(line, w, sizeof w);
     for (int i = 0; i < count(); i++)

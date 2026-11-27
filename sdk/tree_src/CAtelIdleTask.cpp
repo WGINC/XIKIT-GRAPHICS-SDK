@@ -7,54 +7,54 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint32_t __cdecl CAtelIdleTask::UpdateFrame()
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = g_pCamera_as_v1;
+  u1 = g_pCamera_as_v1;
   if (*(char *)(g_pCamera_as_v1 + 9) != '\0') {
-    uVar1 = orig::Acter_UpdateFrame();
+    u1 = orig::Acter_UpdateFrame();
     if (g_C_106631D4_as_v1 != (void *)0x0) {
-      uVar1 = orig::FUN_101d4a20(g_C_106631D4_as_v1);
-      return uVar1 & 0xffffff00;
+      u1 = orig::game_101D4A20(g_C_106631D4_as_v1);
+      return u1 & 0xffffff00;
     }
-    if (DAT_106631d8 != (void *)0x0) {
-      uVar1 = orig::FUN_101d5370(DAT_106631d8,uVar1);
+    if (g_106631D8 != (void *)0x0) {
+      u1 = orig::game_101D5370(g_106631D8,u1);
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100142B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CAtelIdleTask::Create()
+bits32 __cdecl CAtelIdleTask::Create()
 {
-  undefined4 *self;
-  uint32_t uVar1;
-  undefined4 uVar2;
+  bits32 *self;
+  uint32_t u1;
+  bits32 u2;
   
   orig::Menu_CloseEntry_v1(&g_menuMng_as_v0,aMenuChdummy);
   *g_pSceneState_as_v2 = 0x60;
   orig::TextInputFiles_ReloadAll();
   self = orig::Mem_AllocFromArea_v2(0x34,4,0);
-  uVar1 = orig::CMoTask_ResetFields_v1(self);
+  u1 = orig::CMoTask_ResetFields_v1(self);
   g_resourcesDirty_as_v0 = 1;
-  if (self != (undefined4 *)0x0) {
+  if (self != (bits32 *)0x0) {
     orig::CMoTask_Constructor_v2(self);
-    *self = &PTR_LAB_10329cfc;
-    DAT_1045690c_as_v1 = self;
-    uVar2 = orig::CMoTask_RegisterWithMng_v1(0xd);
+    *self = &g_10329CFC;
+    g_1045690C_as_v1 = self;
+    u2 = orig::CMoTask_RegisterWithMng_v1(0xd);
     orig::App_AdvanceSeqStep_v1(g_pCamera_as_v2);
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
   }
-  DAT_1045690c_as_v1 = (undefined4 *)0x0;
-  return uVar1 & 0xffffff00;
+  g_1045690C_as_v1 = (bits32 *)0x0;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10014330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall CAtelIdleTask_ScalarDeletingDtor(void * self_, undefined4 param_1)
+XI_API void * __thiscall CAtelIdleTask_ScalarDeletingDtor(void * self_, bits32 arg2)
 {
   orig::CMoTask_Destructor_v1(self_);
-  if ((param_1 & 1) != 0) {
+  if ((arg2 & 1) != 0) {
     orig::SharedDeleteHelper_v1(self_);
   }
   return self_;

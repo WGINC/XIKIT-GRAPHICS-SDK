@@ -6,148 +6,148 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Processor_InitIdentityMatrices(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  int i1;
+  bits32 *p1;
+  bits32 *p2;
   
-  if ((DAT_1047cd90 & 1) == 0) {
-    DAT_1047cd90 = DAT_1047cd90 | 1;
-    DAT_1047cde0 = 0x3f800000;
-    DAT_1047cde4 = 0;
-    _DAT_1047cde8 = 0;
-    _DAT_1047cdec = 0;
-    _DAT_1047cdf0 = 0;
-    _DAT_1047cdf4 = 0x3f800000;
-    _DAT_1047cdf8 = 0;
-    _DAT_1047cdfc = 0;
-    _DAT_1047ce00 = 0;
-    _DAT_1047ce04 = 0;
-    _DAT_1047ce08 = 0x3f800000;
-    _DAT_1047ce0c = 0;
-    _DAT_1047ce10 = 0;
-    _DAT_1047ce14 = 0;
-    _DAT_1047ce18 = 0;
-    _DAT_1047ce1c = 0x3f800000;
-    orig::_atexit_v1(&DAT_1006f090);
+  if ((g_1047CD90 & 1) == 0) {
+    g_1047CD90 = g_1047CD90 | 1;
+    g_1047CDE0 = 0x3f800000;
+    g_1047CDE4 = 0;
+    g_1047CDE8 = 0;
+    g_1047CDEC = 0;
+    g_1047CDF0 = 0;
+    g_1047CDF4 = 0x3f800000;
+    g_1047CDF8 = 0;
+    g_1047CDFC = 0;
+    g_1047CE00 = 0;
+    g_1047CE04 = 0;
+    g_1047CE08 = 0x3f800000;
+    g_1047CE0C = 0;
+    g_1047CE10 = 0;
+    g_1047CE14 = 0;
+    g_1047CE18 = 0;
+    g_1047CE1C = 0x3f800000;
+    orig::_atexit_v1(&g_1006F090);
   }
-  puVar2 = &DAT_1047cde0;
-  puVar3 = (undefined4 *)((int)self_ + 0x810);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CDE0;
+  p2 = (bits32 *)((int)self_ + 0x810);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cde0;
-  puVar3 = (undefined4 *)((int)self_ + 0x850);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CDE0;
+  p2 = (bits32 *)((int)self_ + 0x850);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cde0;
-  puVar3 = (undefined4 *)((int)self_ + 0x890);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CDE0;
+  p2 = (bits32 *)((int)self_ + 0x890);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  puVar2 = &DAT_1047cde0;
-  puVar3 = (undefined4 *)((int)self_ + 0x8d0);
-  for (iVar1 = 0x10; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *puVar2;
-    puVar2 = puVar2 + 1;
-    puVar3 = puVar3 + 1;
+  p1 = &g_1047CDE0;
+  p2 = (bits32 *)((int)self_ + 0x8d0);
+  for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  orig::FUN_1006ce40(self_);
+  orig::game_1006CE40(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1006F0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API __attribute__((target("sse,fpmath=sse"))) float * __thiscall Mat4x4_SafeTranspose(void * self_, float * param_1, undefined4 param_2, float * param_3)
+XI_API __attribute__((target("sse,fpmath=sse"))) float * __thiscall Mat4x4_SafeTranspose(void * self_, float * arg2, bits32 arg3, float * arg4)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float fVar13;
-  float fVar14;
-  float fVar15;
-  float fVar16;
-  float fVar17;
-  float fVar18;
-  float fVar19;
-  float fVar20;
-  int iVar21;
-  float *pfVar22;
-  float *pfVar23;
+  float f1;
+  float f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
+  float f15;
+  float f16;
+  float f17;
+  float f18;
+  float f19;
+  float f20;
+  int i1;
+  float *p1;
+  float *p2;
   
-  if (param_1 == param_3) {
-    pfVar22 = param_3;
-    pfVar23 = (float *)((int)self_ + 0xae0);
-    for (iVar21 = 0x10; param_3 = (float *)((int)self_ + 0xae0), iVar21 != 0; iVar21 = iVar21 + -1) {
-      *pfVar23 = *pfVar22;
-      pfVar22 = pfVar22 + 1;
-      pfVar23 = pfVar23 + 1;
+  if (arg2 == arg4) {
+    p1 = arg4;
+    p2 = (float *)((int)self_ + 0xae0);
+    for (i1 = 0x10; arg4 = (float *)((int)self_ + 0xae0), i1 != 0; i1 = i1 + -1) {
+      *p2 = *p1;
+      p1 = p1 + 1;
+      p2 = p2 + 1;
     }
   }
-  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(*(int *)self_ + 0xbc))))((void *)(self_),(float *)((int)self_ + 0xaa0),param_2);
-  fVar5 = *(float *)((int)self_ + 0xaa0);
-  fVar6 = *(float *)((int)self_ + 0xaa4);
-  fVar7 = *(float *)((int)self_ + 0xaa8);
-  fVar8 = *(float *)((int)self_ + 0xaac);
-  fVar9 = *(float *)((int)self_ + 0xab0);
-  fVar10 = *(float *)((int)self_ + 0xab4);
-  fVar11 = *(float *)((int)self_ + 0xab8);
-  fVar12 = *(float *)((int)self_ + 0xabc);
-  fVar13 = *(float *)((int)self_ + 0xac0);
-  fVar14 = *(float *)((int)self_ + 0xac4);
-  fVar15 = *(float *)((int)self_ + 0xac8);
-  fVar16 = *(float *)((int)self_ + 0xacc);
-  fVar17 = *(float *)((int)self_ + 0xad0);
-  fVar18 = *(float *)((int)self_ + 0xad4);
-  fVar19 = *(float *)((int)self_ + 0xad8);
-  fVar20 = *(float *)((int)self_ + 0xadc);
-  fVar1 = *param_3;
-  fVar2 = param_3[4];
-  fVar3 = param_3[8];
-  fVar4 = param_3[0xc];
-  *param_1 = fVar1 * fVar5 + fVar2 * fVar9 + fVar3 * fVar13 + fVar4 * fVar17;
-  param_1[1] = fVar1 * fVar6 + fVar2 * fVar10 + fVar3 * fVar14 + fVar4 * fVar18;
-  param_1[2] = fVar1 * fVar7 + fVar2 * fVar11 + fVar3 * fVar15 + fVar4 * fVar19;
-  param_1[3] = fVar1 * fVar8 + fVar2 * fVar12 + fVar3 * fVar16 + fVar4 * fVar20;
-  fVar1 = param_3[1];
-  fVar2 = param_3[5];
-  fVar3 = param_3[9];
-  fVar4 = param_3[0xd];
-  param_1[4] = fVar1 * fVar5 + fVar2 * fVar9 + fVar3 * fVar13 + fVar4 * fVar17;
-  param_1[5] = fVar1 * fVar6 + fVar2 * fVar10 + fVar3 * fVar14 + fVar4 * fVar18;
-  param_1[6] = fVar1 * fVar7 + fVar2 * fVar11 + fVar3 * fVar15 + fVar4 * fVar19;
-  param_1[7] = fVar1 * fVar8 + fVar2 * fVar12 + fVar3 * fVar16 + fVar4 * fVar20;
-  fVar1 = param_3[2];
-  fVar2 = param_3[6];
-  fVar3 = param_3[10];
-  fVar4 = param_3[0xe];
-  param_1[8] = fVar1 * fVar5 + fVar2 * fVar9 + fVar3 * fVar13 + fVar4 * fVar17;
-  param_1[9] = fVar1 * fVar6 + fVar2 * fVar10 + fVar3 * fVar14 + fVar4 * fVar18;
-  param_1[10] = fVar1 * fVar7 + fVar2 * fVar11 + fVar3 * fVar15 + fVar4 * fVar19;
-  param_1[0xb] = fVar1 * fVar8 + fVar2 * fVar12 + fVar3 * fVar16 + fVar4 * fVar20;
-  fVar1 = param_3[3];
-  fVar2 = param_3[7];
-  fVar3 = param_3[0xb];
-  fVar4 = param_3[0xf];
-  param_1[0xc] = fVar1 * fVar5 + fVar2 * fVar9 + fVar3 * fVar13 + fVar4 * fVar17;
-  param_1[0xd] = fVar1 * fVar6 + fVar2 * fVar10 + fVar3 * fVar14 + fVar4 * fVar18;
-  param_1[0xe] = fVar1 * fVar7 + fVar2 * fVar11 + fVar3 * fVar15 + fVar4 * fVar19;
-  param_1[0xf] = fVar1 * fVar8 + fVar2 * fVar12 + fVar3 * fVar16 + fVar4 * fVar20;
-  orig::CMoProcessor_TransposeInPlace((int)param_1);
-  return param_1;
+  ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(*(int *)self_ + 0xbc))))((void *)(self_),(float *)((int)self_ + 0xaa0),arg3);
+  f5 = *(float *)((int)self_ + 0xaa0);
+  f6 = *(float *)((int)self_ + 0xaa4);
+  f7 = *(float *)((int)self_ + 0xaa8);
+  f8 = *(float *)((int)self_ + 0xaac);
+  f9 = *(float *)((int)self_ + 0xab0);
+  f10 = *(float *)((int)self_ + 0xab4);
+  f11 = *(float *)((int)self_ + 0xab8);
+  f12 = *(float *)((int)self_ + 0xabc);
+  f13 = *(float *)((int)self_ + 0xac0);
+  f14 = *(float *)((int)self_ + 0xac4);
+  f15 = *(float *)((int)self_ + 0xac8);
+  f16 = *(float *)((int)self_ + 0xacc);
+  f17 = *(float *)((int)self_ + 0xad0);
+  f18 = *(float *)((int)self_ + 0xad4);
+  f19 = *(float *)((int)self_ + 0xad8);
+  f20 = *(float *)((int)self_ + 0xadc);
+  f1 = *arg4;
+  f2 = arg4[4];
+  f3 = arg4[8];
+  f4 = arg4[0xc];
+  *arg2 = f1 * f5 + f2 * f9 + f3 * f13 + f4 * f17;
+  arg2[1] = f1 * f6 + f2 * f10 + f3 * f14 + f4 * f18;
+  arg2[2] = f1 * f7 + f2 * f11 + f3 * f15 + f4 * f19;
+  arg2[3] = f1 * f8 + f2 * f12 + f3 * f16 + f4 * f20;
+  f1 = arg4[1];
+  f2 = arg4[5];
+  f3 = arg4[9];
+  f4 = arg4[0xd];
+  arg2[4] = f1 * f5 + f2 * f9 + f3 * f13 + f4 * f17;
+  arg2[5] = f1 * f6 + f2 * f10 + f3 * f14 + f4 * f18;
+  arg2[6] = f1 * f7 + f2 * f11 + f3 * f15 + f4 * f19;
+  arg2[7] = f1 * f8 + f2 * f12 + f3 * f16 + f4 * f20;
+  f1 = arg4[2];
+  f2 = arg4[6];
+  f3 = arg4[10];
+  f4 = arg4[0xe];
+  arg2[8] = f1 * f5 + f2 * f9 + f3 * f13 + f4 * f17;
+  arg2[9] = f1 * f6 + f2 * f10 + f3 * f14 + f4 * f18;
+  arg2[10] = f1 * f7 + f2 * f11 + f3 * f15 + f4 * f19;
+  arg2[0xb] = f1 * f8 + f2 * f12 + f3 * f16 + f4 * f20;
+  f1 = arg4[3];
+  f2 = arg4[7];
+  f3 = arg4[0xb];
+  f4 = arg4[0xf];
+  arg2[0xc] = f1 * f5 + f2 * f9 + f3 * f13 + f4 * f17;
+  arg2[0xd] = f1 * f6 + f2 * f10 + f3 * f14 + f4 * f18;
+  arg2[0xe] = f1 * f7 + f2 * f11 + f3 * f15 + f4 * f19;
+  arg2[0xf] = f1 * f8 + f2 * f12 + f3 * f16 + f4 * f20;
+  orig::CMoProcessor_TransposeInPlace((int)arg2);
+  return arg2;
 }

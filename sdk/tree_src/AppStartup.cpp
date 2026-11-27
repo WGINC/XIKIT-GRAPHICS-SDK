@@ -6,57 +6,57 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl App_RegisterSystemDats(void)
 {
-  orig::FaqHelp_Construct(DAT_10666e2c,0,(int)XI_GAME(0x103502D4u),(int)XI_GAME(0x103502DCu));
-  orig::FaqHelp_Construct(DAT_10666e30,1,(int)XI_GAME(0x103502CCu),0);
-  if (DAT_10666e34 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e34,2,(int)XI_GAME(0x103502C4u),0);
+  orig::FaqHelp_Construct(g_10666E2C,0,(int)XI_GAME(0x103502D4u),(int)XI_GAME(0x103502DCu));
+  orig::FaqHelp_Construct(g_10666E30,1,(int)XI_GAME(0x103502CCu),0);
+  if (g_10666E34 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E34,2,(int)XI_GAME(0x103502C4u),0);
   }
-  if (DAT_10666e38 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e38,3,(int)XI_GAME(0x103502BCu),0);
+  if (g_10666E38 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E38,3,(int)XI_GAME(0x103502BCu),0);
   }
-  if (DAT_10666e3c != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e3c,4,(int)XI_GAME(0x103502B4u),0);
+  if (g_10666E3C != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E3C,4,(int)XI_GAME(0x103502B4u),0);
   }
-  if (DAT_10666e40 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e40,5,(int)XI_GAME(0x103502ACu),0);
+  if (g_10666E40 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E40,5,(int)XI_GAME(0x103502ACu),0);
   }
-  if (DAT_10666e44 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e44,6,(int)XI_GAME(0x103502A4u),0);
+  if (g_10666E44 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E44,6,(int)XI_GAME(0x103502A4u),0);
   }
-  if (DAT_10666e48 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e48,7,(int)XI_GAME(0x1035029Cu),0);
+  if (g_10666E48 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E48,7,(int)XI_GAME(0x1035029Cu),0);
   }
-  if (DAT_10666e4c != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e4c,8,(int)XI_GAME(0x10350294u),0);
+  if (g_10666E4C != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E4C,8,(int)XI_GAME(0x10350294u),0);
   }
-  if (DAT_10666e50 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e50,10,(int)XI_GAME(0x10350288u),0);
+  if (g_10666E50 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E50,10,(int)XI_GAME(0x10350288u),0);
   }
-  if (DAT_10666e54 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e54,0xb,(int)XI_GAME(0x1035027Cu),0);
+  if (g_10666E54 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E54,0xb,(int)XI_GAME(0x1035027Cu),0);
   }
-  if (DAT_10666e58 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e58,0xc,(int)XI_GAME(0x10350270u),0);
+  if (g_10666E58 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E58,0xc,(int)XI_GAME(0x10350270u),0);
   }
-  if (DAT_10666e5c != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e5c,0xd,(int)XI_GAME(0x10350264u),0);
+  if (g_10666E5C != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E5C,0xd,(int)XI_GAME(0x10350264u),0);
   }
-  if (DAT_10666e60 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e60,0xe,(int)XI_GAME(0x10350258u),0);
+  if (g_10666E60 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E60,0xe,(int)XI_GAME(0x10350258u),0);
   }
-  if (DAT_10666e64 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e64,0xf,(int)XI_GAME(0x1035024Cu),0);
+  if (g_10666E64 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E64,0xf,(int)XI_GAME(0x1035024Cu),0);
   }
-  if (DAT_10666e68 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e68,0x10,(int)XI_GAME(0x10350240u),0);
+  if (g_10666E68 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E68,0x10,(int)XI_GAME(0x10350240u),0);
   }
-  if (DAT_10666e6c != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e6c,9,(int)XI_GAME(0x10350238u),0);
+  if (g_10666E6C != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E6C,9,(int)XI_GAME(0x10350238u),0);
   }
-  if (DAT_10666e70 != (void *)0x0) {
-    orig::FaqHelp_Construct(DAT_10666e70,0x11,0,0);
+  if (g_10666E70 != (void *)0x0) {
+    orig::FaqHelp_Construct(g_10666E70,0x11,0,0);
   }
-  orig::FUN_10103720();
+  orig::game_10103720();
   return;
 }
 
@@ -64,61 +64,61 @@ XI_API void __cdecl App_RegisterSystemDats(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl App_SaveAllSlotData(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Game_ClearFlagsBits();
-  uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e2c,(int)XI_GAME(0x103502D4u),(int)XI_GAME(0x103502DCu),uVar1);
-  uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e30,(int)XI_GAME(0x103502CCu),0,uVar1);
-  if (DAT_10666e34 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e34,(int)XI_GAME(0x103502C4u),0,uVar1);
+  u1 = orig::Game_ClearFlagsBits();
+  u1 = orig::FaqHelp_SaveAndRelease(g_10666E2C,(int)XI_GAME(0x103502D4u),(int)XI_GAME(0x103502DCu),u1);
+  u1 = orig::FaqHelp_SaveAndRelease(g_10666E30,(int)XI_GAME(0x103502CCu),0,u1);
+  if (g_10666E34 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E34,(int)XI_GAME(0x103502C4u),0,u1);
   }
-  if (DAT_10666e38 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e38,(int)XI_GAME(0x103502BCu),0,uVar1);
+  if (g_10666E38 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E38,(int)XI_GAME(0x103502BCu),0,u1);
   }
-  if (DAT_10666e3c != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e3c,(int)XI_GAME(0x103502B4u),0,uVar1);
+  if (g_10666E3C != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E3C,(int)XI_GAME(0x103502B4u),0,u1);
   }
-  if (DAT_10666e40 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e40,(int)XI_GAME(0x103502ACu),0,uVar1);
+  if (g_10666E40 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E40,(int)XI_GAME(0x103502ACu),0,u1);
   }
-  if (DAT_10666e44 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e44,(int)XI_GAME(0x103502A4u),0,uVar1);
+  if (g_10666E44 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E44,(int)XI_GAME(0x103502A4u),0,u1);
   }
-  if (DAT_10666e48 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e48,(int)XI_GAME(0x1035029Cu),0,uVar1);
+  if (g_10666E48 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E48,(int)XI_GAME(0x1035029Cu),0,u1);
   }
-  if (DAT_10666e4c != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e4c,(int)XI_GAME(0x10350294u),0,uVar1);
+  if (g_10666E4C != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E4C,(int)XI_GAME(0x10350294u),0,u1);
   }
-  if (DAT_10666e50 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e50,(int)XI_GAME(0x10350288u),0,uVar1);
+  if (g_10666E50 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E50,(int)XI_GAME(0x10350288u),0,u1);
   }
-  if (DAT_10666e54 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e54,(int)XI_GAME(0x1035027Cu),0,uVar1);
+  if (g_10666E54 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E54,(int)XI_GAME(0x1035027Cu),0,u1);
   }
-  if (DAT_10666e58 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e58,(int)XI_GAME(0x10350270u),0,uVar1);
+  if (g_10666E58 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E58,(int)XI_GAME(0x10350270u),0,u1);
   }
-  if (DAT_10666e5c != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e5c,(int)XI_GAME(0x10350264u),0,uVar1);
+  if (g_10666E5C != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E5C,(int)XI_GAME(0x10350264u),0,u1);
   }
-  if (DAT_10666e60 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e60,(int)XI_GAME(0x10350258u),0,uVar1);
+  if (g_10666E60 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E60,(int)XI_GAME(0x10350258u),0,u1);
   }
-  if (DAT_10666e64 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e64,(int)XI_GAME(0x1035024Cu),0,uVar1);
+  if (g_10666E64 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E64,(int)XI_GAME(0x1035024Cu),0,u1);
   }
-  if (DAT_10666e68 != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e68,(int)XI_GAME(0x10350240u),0,uVar1);
+  if (g_10666E68 != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E68,(int)XI_GAME(0x10350240u),0,u1);
   }
-  if (DAT_10666e6c != (void *)0x0) {
-    uVar1 = orig::FaqHelp_SaveAndRelease(DAT_10666e6c,(int)XI_GAME(0x10350238u),0,uVar1);
+  if (g_10666E6C != (void *)0x0) {
+    u1 = orig::FaqHelp_SaveAndRelease(g_10666E6C,(int)XI_GAME(0x10350238u),0,u1);
   }
-  if (DAT_10666e70 != (void *)0x0) {
-    orig::FaqHelp_SaveAndRelease(DAT_10666e70,0,0,uVar1);
+  if (g_10666E70 != (void *)0x0) {
+    orig::FaqHelp_SaveAndRelease(g_10666E70,0,0,u1);
   }
   orig::Acter_Nop();
-  orig::FUN_10240860();
+  orig::game_10240860();
   return;
 }
 
@@ -136,7 +136,7 @@ XI_API void * __thiscall App_Constructor(void * self_)
   orig::MathVector_ReturnThis_v1((void *)((int)self_ + 0x214));
   orig::MathVector_ReturnThis_v1((void *)((int)self_ + 0x254));
   orig::MathVector_ReturnThis_v1((void *)((int)self_ + 0x294));
-  *(uint8_t ***)self_ = &PTR_FUN_10329c14;
+  *(uint8_t ***)self_ = &g_10329C14;
   *(uint8_t *)((int)self_ + 0xb) = 1;
   *(uint16_t *)((int)self_ + 4) = 0;
   *(uint16_t *)((int)self_ + 6) = 0;
@@ -157,17 +157,17 @@ XI_API void * __thiscall App_Constructor(void * self_)
   *(uint32_t *)((int)self_ + 0x4c) = 0;
   g_pTextureMng_as_v1 = 0;
   g_pVbMng_as_v0 = 0;
-  dword_1045B774_as_v1 = 0;
-  dword_1047D140_as_v0 = 0;
+  g_1045B774_as_v1 = 0;
+  g_1047D140_as_v0 = 0;
   g_pMeshResourceMng_as_v0 = 0;
-  dword_1047BFFC_as_v0 = 0;
-  dword_104E1BF4_as_v0 = 0;
+  g_1047BFFC_as_v0 = 0;
+  g_104E1BF4_as_v0 = 0;
   g_pTkMsgWinData_as_v0 = 0;
-  dword_1057815C_as_v0 = 0;
-  dword_10578160_as_v0 = 0;
-  DAT_1045690c = 0;
-  dword_1047D688_as_v0 = 0;
-  dword_1047D68C_as_v0 = 0;
+  g_1057815C_as_v0 = 0;
+  g_10578160_as_v0 = 0;
+  g_1045690C = 0;
+  g_1047D688_as_v0 = 0;
+  g_1047D68C_as_v0 = 0;
   g_pXiCapture_as_v0 = 0;
   g_pObj_Vtbl10329F8C_as_v0 = 0;
   *(uint8_t *)((int)self_ + 0xb) = (uint8_t)g_cfg0000_as_v0;
@@ -178,14 +178,14 @@ XI_API void * __thiscall App_Constructor(void * self_)
   g_afterimageTex_as_v0 = 0;
   g_afterimageHalfTex = 0;
   g_afterimageDepth_as_v0 = 0;
-  dword_1045691C = 0;
+  g_1045691C = 0;
   g_feedbackBufferIndex_as_v0 = 0;
   g_feedbackBufferState_as_v0 = 0;
   g_feedbackActive_as_v0 = 0;
   g_feedbackTexHalfRes_as_v0 = 0;
   g_halfScreenTex_as_v0 = 0;
   g_feedbackDepth_as_v0 = 0;
-  dword_10456944_as_v0 = 0;
+  g_10456944_as_v0 = 0;
   XI_PIECE(g_screenFadeLevel_as_v0, 0, 1) = 0x80;
   *(uint32_t *)((int)self_ + 0x2e4) = 0x3f800000;
   *(uint32_t *)((int)self_ + 0x2e8) = 0x3f4a7efa;
@@ -197,10 +197,10 @@ XI_API void * __thiscall App_Constructor(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10010CE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall App_SetSeqStep(void * self_, undefined4 param_1)
+XI_API void __thiscall App_SetSeqStep(void * self_, bits32 arg2)
 {
   *(uint16_t *)((int)self_ + 6) = 0;
-  *(uint16_t *)((int)self_ + 4) = (uint16_t)param_1;
+  *(uint16_t *)((int)self_ + 4) = (uint16_t)arg2;
   return;
 }
 
@@ -223,162 +223,164 @@ XI_API void __thiscall AppStartup_IncrementShort6(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10010D20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz UNRESOLVED 98, town PASS 100, town2 PASS 100, combat PASS 100, zonetoinn PASS 100
-XI_API char __thiscall App_InitScene(int self_, int a4)
+XI_API char __thiscall App_InitScene(int self_, int arg2)
 {
-  _DWORD *v3;
-  _DWORD *v4;
-  void *v5;
-  int *v6;
-  int *v7;
-  _DWORD *v8;
-  _DWORD *v9;
-  int v10;
-  _DWORD *v12;
-  _WORD *v13;
-  type_info *v14;
-  _DWORD *v15;
-  int v16;
-  int v17;
-  int v18;
-  int v19;
-  int *v20;
-  int v21;
-  int *v22;
-  int *v23;
-  void *v24;
-  _DWORD *v25;
-  _DWORD *v26;
-  _DWORD *v27;
-  _DWORD *v28;
-  _DWORD *v29;
-  _DWORD *v30;
-  void *v31;
-  void *v32;
-  _DWORD *v33;
-  void *v34;
-  _DWORD *v35;
-  _DWORD *v36;
-  exception *v37;
-  _DWORD *v38;
-  _DWORD *v39;
-  _DWORD *v40;
-  void *v41;
-  __int16 v42;
-  int v43;
-  _DWORD *v44;
+  uint32_t *p1;
+  uint32_t *p2;
+  void *p3;
+  int *p4;
+  int *p5;
+  uint32_t *p6;
+  uint32_t *p7;
+  int i1;
+  uint32_t *p8;
+  uint16_t *p9;
+  type_info *p10;
+  uint32_t *p11;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int *p12;
+  int i6;
+  int *p13;
+  int *p14;
+  void *p15;
+  uint32_t *p16;
+  uint32_t *p17;
+  uint32_t *p18;
+  uint32_t *p19;
+  uint32_t *p20;
+  uint32_t *p21;
+  void *p22;
+  void *p23;
+  uint32_t *p24;
+  void *p25;
+  uint32_t *p26;
+  uint32_t *p27;
+  exception *p28;
+  uint32_t *p29;
+  uint32_t *p30;
+  uint32_t *p31;
+  void *p32;
+  short i7;
+  int i8;
+  uint32_t *p33;
   int DepthSurfaceLikeMain;
-  unsigned __int16 v46;
-  unsigned __int16 v47;
-  CDx *v48;
-  __int16 v49;
-  _DWORD *Texture;
-  int v51;
-  unsigned __int16 v52;
-  unsigned __int16 v53;
-  alignas(16) unsigned char xi_frame[0x430];  // address-taken locals at their original offsets
-  int &i = *reinterpret_cast<int *>(xi_frame + 0x10);
-  float &v55 = *reinterpret_cast<float *>(xi_frame + 0x14);
-  int &v56 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int &v57 = *reinterpret_cast<int *>(xi_frame + 0x1C);
-  int &v58 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int * &v59 = *reinterpret_cast<int * *>(xi_frame + 0x24);
-  int &v60 = *reinterpret_cast<int *>(xi_frame + 0x28);
-  int &v61 = *reinterpret_cast<int *>(xi_frame + 0x2C);
+  unsigned short width;
+  unsigned short height;
+  CDx *p34;
+  short i9;
+  uint32_t *Texture;
+  int i10;
+  unsigned short u3;
+  unsigned short u4;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x430];
+    struct __attribute__((packed)) { unsigned char pad_1[0x10]; int i; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; float f1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x18]; int i11; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_4[0x1C]; int i12; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i13; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x24]; int * p35; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_7[0x28]; int i14; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_8[0x2C]; int i15; };   // at 0x2C
+  } frame;
 
   orig::CDx_BeginScene(g_pCDx);
   orig::CDx_NopA();
-  if ( *(_WORD *)(self_ + 4) == 0 )
+  if ( *(uint16_t *)(self_ + 4) == 0 )
   {
-    if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x915)) != 0 )
-      orig::GammaRamp_ApplyIfChanged((int)((unsigned __int8 *)((char *)g_pCDx + 0x1F4)));
-    *(_DWORD *)g_pSceneState = 112;
-    dword_1047D140 = 0;
+    if ( (*(unsigned char *)((char *)g_pCDx + 0x915)) != 0 )
+      orig::GammaRamp_ApplyIfChanged((int)((unsigned char *)((char *)g_pCDx + 0x1F4)));
+    *(uint32_t *)g_pSceneState = 112;
+    g_1047D140 = 0;
     g_pMeshResourceMng = 0;
-    dword_1047BFFC = 0;
+    g_1047BFFC = 0;
     g_pZoneMap = nullptr;
-    *(_WORD *)(self_ + 16) = *(_WORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x15C));
-    *(_WORD *)(self_ + 18) = *(_WORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x160));
-    *(_WORD *)(self_ + 20) = g_cfgMenuResX;
-    *(_WORD *)(self_ + 22) = g_cfgMenuResY;
-    orig::App_GetGlobalPair(&i, &v55);
-    v42 = LOWORD(v55);
-    *(_WORD *)(self_ + 24) = i;
-    *(_WORD *)(self_ + 26) = v42;
+    *(uint16_t *)(self_ + 16) = *(uint16_t *)&(*(unsigned char *)((char *)g_pCDx + 0x15C));
+    *(uint16_t *)(self_ + 18) = *(uint16_t *)&(*(unsigned char *)((char *)g_pCDx + 0x160));
+    *(uint16_t *)(self_ + 20) = g_cfgMenuResX;
+    *(uint16_t *)(self_ + 22) = g_cfgMenuResY;
+    orig::App_GetGlobalPair(&frame.i, &frame.f1);
+    i7 = (*(uint16_t *)&(frame.f1));
+    *(uint16_t *)(self_ + 24) = frame.i;
+    *(uint16_t *)(self_ + 26) = i7;
     orig::Camera_SetField2E4(0);
-    v43 = orig::Camera_PickNearestAspect(*(unsigned __int16 *)(self_ + 16), *(unsigned __int16 *)(self_ + 18), &i, &v55);
-    orig::Camera_SetField2F0(*(float *)&i, v55);
-    orig::Gfx_SetAspectIndex(v43);
+    i8 = orig::Camera_PickNearestAspect(*(unsigned short *)(self_ + 16), *(unsigned short *)(self_ + 18), &frame.i, &frame.f1);
+    orig::Camera_SetField2F0(*(float *)&frame.i, frame.f1);
+    orig::Gfx_SetAspectIndex(i8);
     orig::CDx_SetClearParams(g_pCDx, 3, 0x80000000, 1065353216, 0);
     orig::CDx_AppendStateRecord((int)g_pCDx);
-    v53 = *(_WORD *)(self_ + 26);
-    v52 = *(_WORD *)(self_ + 24);
-    a4 = 0;
-    v44 = orig::CDx_CreateTexture(g_pCDx, v52, v53, &a4, 1, 0);
-    if ( v44 != nullptr )
+    u4 = *(uint16_t *)(self_ + 26);
+    u3 = *(uint16_t *)(self_ + 24);
+    arg2 = 0;
+    p33 = orig::CDx_CreateTexture(g_pCDx, u3, u4, &arg2, 1, 0);
+    if ( p33 != nullptr )
     {
-      DepthSurfaceLikeMain = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, *(_WORD *)(self_ + 24), *(_WORD *)(self_ + 26));
+      DepthSurfaceLikeMain = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, *(uint16_t *)(self_ + 24), *(uint16_t *)(self_ + 26));
       if ( DepthSurfaceLikeMain != 0 )
       {
-        *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)) = v44;
-        *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x19C)) = a4;
-        *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A4)) = DepthSurfaceLikeMain;
+        *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)) = p33;
+        *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x19C)) = arg2;
+        *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A4)) = DepthSurfaceLikeMain;
         orig::CDx_PushRenderTarget(
           g_pCDx,
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)),
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x19C)),
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A4)));
-        orig::CDx_EndAndClearBegin(g_pCDx, 3, *(_DWORD *)(self_ + 776), 1065353216, 0);
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x19C)),
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A4)));
+        orig::CDx_EndAndClearBegin(g_pCDx, 3, *(uint32_t *)(self_ + 776), 1065353216, 0);
         orig::CDx_SetTexture(g_pCDx, 0, 0);
         g_feedbackDepth[0] = 0;
         g_feedbackTexHalfRes[0] = (int)orig::CDx_CreateTexture(
                                          g_pCDx,
-                                         *(_WORD *)(self_ + 24) >> 1,
-                                         *(_WORD *)(self_ + 26) >> 1,
+                                         *(uint16_t *)(self_ + 24) >> 1,
+                                         *(uint16_t *)(self_ + 26) >> 1,
                                          g_feedbackDepth,
                                          1,
                                          0);
-        v46 = *(_WORD *)(self_ + 20);
-        if ( v46 == 0
-          || (v47 = *(_WORD *)(self_ + 22)) == 0
-          || v46 == *(_WORD *)(self_ + 16) && v47 == *(_WORD *)(self_ + 18)
-          || (a4 = 0,
-              *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E0)) = orig::CDx_CreateTexture(g_pCDx, v46, v47, &a4, 1, 0),
-              *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E4)) = a4,
-              *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E8)) = orig::CDx_CreateDepthSurfaceLikeMain(
+        width = *(uint16_t *)(self_ + 20);
+        if ( width == 0
+          || (height = *(uint16_t *)(self_ + 22)) == 0
+          || width == *(uint16_t *)(self_ + 16) && height == *(uint16_t *)(self_ + 18)
+          || (arg2 = 0,
+              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)) = orig::CDx_CreateTexture(g_pCDx, width, height, &arg2, 1, 0),
+              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E4)) = arg2,
+              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E8)) = orig::CDx_CreateDepthSurfaceLikeMain(
                                                    g_pCDx,
-                                                   *(_WORD *)(self_ + 20),
-                                                   *(_WORD *)(self_ + 22)),
-              v48 = g_pCDx,
-              *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E0)) == 0)
-          || *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1E8)) == 0 )
+                                                   *(uint16_t *)(self_ + 20),
+                                                   *(uint16_t *)(self_ + 22)),
+              p34 = g_pCDx,
+              *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E0)) == 0)
+          || *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1E8)) == 0 )
         {
-          v49 = *(_WORD *)(self_ + 18);
-          *(_WORD *)(self_ + 20) = *(_WORD *)(self_ + 16);
-          *(_WORD *)(self_ + 22) = v49;
-          v48 = g_pCDx;
+          i9 = *(uint16_t *)(self_ + 18);
+          *(uint16_t *)(self_ + 20) = *(uint16_t *)(self_ + 16);
+          *(uint16_t *)(self_ + 22) = i9;
+          p34 = g_pCDx;
         }
-        orig::CDx_CreateStereoResources(v48, *(_WORD *)(self_ + 24), *(_WORD *)(self_ + 26));
+        orig::CDx_CreateStereoResources(p34, *(uint16_t *)(self_ + 24), *(uint16_t *)(self_ + 26));
         if ( g_pEnv[6] != 0
-          && (Texture = orig::CDx_CreateTexture(g_pCDx, *(_WORD *)(self_ + 24), *(_WORD *)(self_ + 26), nullptr, 1, 0),
-              v51 = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, *(_WORD *)(self_ + 24), *(_WORD *)(self_ + 26)),
+          && (Texture = orig::CDx_CreateTexture(g_pCDx, *(uint16_t *)(self_ + 24), *(uint16_t *)(self_ + 26), nullptr, 1, 0),
+              i10 = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, *(uint16_t *)(self_ + 24), *(uint16_t *)(self_ + 26)),
               Texture != nullptr)
-          && v51 != 0 )
+          && i10 != 0 )
         {
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)) = Texture;
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A8)) = v51;
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)) = Texture;
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A8)) = i10;
           orig::CDx_PushRenderTarget(
             g_pCDx,
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x198)),
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A0)),
-            *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A8)));
-          orig::CDx_EndAndClearBegin(g_pCDx, 3, *(_DWORD *)(self_ + 776), 1065353216, 0);
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x198)),
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A0)),
+            *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A8)));
+          orig::CDx_EndAndClearBegin(g_pCDx, 3, *(uint32_t *)(self_ + 776), 1065353216, 0);
           orig::CDx_SetTexture(g_pCDx, 0, 0);
-          dword_10456944 = 0;
+          g_10456944 = 0;
           g_halfScreenTex = (int)orig::CDx_CreateTexture(
                                    g_pCDx,
-                                   *(_WORD *)(self_ + 24) >> 1,
-                                   *(_WORD *)(self_ + 26) >> 1,
-                                   &dword_10456944,
+                                   *(uint16_t *)(self_ + 24) >> 1,
+                                   *(uint16_t *)(self_ + 26) >> 1,
+                                   &g_10456944,
                                    1,
                                    0);
         }
@@ -388,316 +390,316 @@ XI_API char __thiscall App_InitScene(int self_, int a4)
         }
         if ( g_depthBlurEnabled_Dead != 0 )
         {
-          a4 = 0;
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C0)) = orig::CDx_CreateTexture(g_pCDx, 0x100u, 0x100u, &a4, 1, 0);
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C4)) = a4;
-          *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1C8)) = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, 0x100u, 0x100u);
+          arg2 = 0;
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C0)) = orig::CDx_CreateTexture(g_pCDx, 0x100u, 0x100u, &arg2, 1, 0);
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C4)) = arg2;
+          *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1C8)) = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, 0x100u, 0x100u);
         }
-        *(_BYTE *)(self_ + 814) = 0x80;
-        *(_BYTE *)(self_ + 813) = 0x80;
-        *(_BYTE *)(self_ + 812) = 0x80;
-        a4 = -2139062144;
-        *(_DWORD *)(self_ + 820) = -2139062144;
-        *(_DWORD *)(self_ + 796) = -2139062144;
-        *(_DWORD *)(self_ + 804) = 0x80000000;
-        *(_DWORD *)(self_ + 808) = 0x80000000;
-        *(_DWORD *)(self_ + 824) = 0x80000000;
-        *(_DWORD *)(self_ + 816) = 1065353216;
-        *(_BYTE *)(self_ + 815) = 0;
-        *(_DWORD *)(self_ + 800) = 0x80000000;
-        orig::App_AdvanceSeqStep((_WORD *)self_);
-        goto LABEL_101;
+        *(uint8_t *)(self_ + 814) = 0x80;
+        *(uint8_t *)(self_ + 813) = 0x80;
+        *(uint8_t *)(self_ + 812) = 0x80;
+        arg2 = -2139062144;
+        *(uint32_t *)(self_ + 820) = -2139062144;
+        *(uint32_t *)(self_ + 796) = -2139062144;
+        *(uint32_t *)(self_ + 804) = 0x80000000;
+        *(uint32_t *)(self_ + 808) = 0x80000000;
+        *(uint32_t *)(self_ + 824) = 0x80000000;
+        *(uint32_t *)(self_ + 816) = 1065353216;
+        *(uint8_t *)(self_ + 815) = 0;
+        *(uint32_t *)(self_ + 800) = 0x80000000;
+        orig::App_AdvanceSeqStep((uint16_t *)self_);
+        goto L1;
       }
     }
-    goto LABEL_85;
+    goto L2;
   }
-  if ( *(_WORD *)(self_ + 4) == 1 )
+  if ( *(uint16_t *)(self_ + 4) == 1 )
   {
-    v3 = orig::TimerResolution_CreateObject();
-    *(_DWORD *)(self_ + 28) = v3;
-    if ( v3 != nullptr )
+    p1 = orig::TimerResolution_CreateObject();
+    *(uint32_t *)(self_ + 28) = p1;
+    if ( p1 != nullptr )
     {
-      v4 = orig::TimerResolution_CreateObject();
-      *(_DWORD *)(self_ + 32) = v4;
-      if ( v4 != nullptr )
+      p2 = orig::TimerResolution_CreateObject();
+      *(uint32_t *)(self_ + 32) = p2;
+      if ( p2 != nullptr )
       {
         orig::TargetMenu_Clear32();
-        if ( orig::TargetMenu_LoadAllMessageTables(v5) != 0 )
+        if ( orig::TargetMenu_LoadAllMessageTables(p3) != 0 )
         {
           orig::CreateSharedVertexBuffers();
           orig::CreateProcessorInstance();
-          byte_1047D13D = 1;
-          v6 = orig::Mem_AllocDefault(3428);
-          v7 = v6;
-          if ( v6 == nullptr )
+          g_1047D13D = 1;
+          p4 = orig::Mem_AllocDefault(3428);
+          p5 = p4;
+          if ( p4 == nullptr )
           {
-            dword_1047D140 = 0;
+            g_1047D140 = 0;
             orig::CDx_EndScene(g_pCDx);
             return 0;
           }
-          *v6 = (int)&CYyObject_vtbl_ambiguous0;
-          v8 = v6 + 1;
-          for ( i = 64; i != 0; --i )
+          *p4 = (int)&CYyObject_vtbl_ambiguous0;
+          p6 = p4 + 1;
+          for ( frame.i = 64; frame.i != 0; --frame.i )
           {
-            orig::CMoTask_Constructor(v8);
-            v8 += 13;
+            orig::CMoTask_Constructor(p6);
+            p6 += 13;
           }
-          *v7 = (int)&CMoTaskMng_vtbl;
-          orig::CMoTaskMng_InitPool(v7);
-          dword_1047D140 = (int)v7;
-          byte_1047D13D = 0;
+          *p5 = (int)&CMoTaskMng_vtbl;
+          orig::CMoTaskMng_InitPool(p5);
+          g_1047D140 = (int)p5;
+          g_1047D13D = 0;
           orig::Resource_ResetGlobals();
-          v9 = orig::Mem_AllocDefault(262160);
-          v10 = (int)v9;
-          if ( v9 == nullptr )
+          p7 = orig::Mem_AllocDefault(262160);
+          i1 = (int)p7;
+          if ( p7 == nullptr )
           {
             g_pMeshResourceMng = 0;
             orig::CDx_EndScene(g_pCDx);
             return 0;
           }
-          *v9 = &CMoResourceMng_vtbl;
-          orig::sub_10072DB0(v9);
-          g_pMeshResourceMng = v10;
-          v12 = orig::Mem_AllocFromArea(56, 4);
-          orig::CMoTask_ResetFields((int)v12);
+          *p7 = &CMoResourceMng_vtbl;
+          orig::game_10072DB0(p7);
+          g_pMeshResourceMng = i1;
+          p8 = orig::Mem_AllocFromArea(56, 4);
+          orig::CMoTask_ResetFields((int)p8);
           g_resourcesDirty = 1;
-          if ( v12 == nullptr )
+          if ( p8 == nullptr )
           {
-            dword_1047BFFC = 0;
+            g_1047BFFC = 0;
             orig::CDx_EndScene(g_pCDx);
             return 0;
           }
-          orig::CMoTask_Constructor(v12);
-          v12[13] = 0;
-          *v12 = &CMoTask_vtbl_ambiguous0;
-          dword_1047BFFC = (int)v12;
-          orig::CMoTask_RegisterWithMng(v12, 8);
-          v13 =(_WORD*)(orig::Mem_AllocDefault(20));
-          if ( v13 == nullptr )
+          orig::CMoTask_Constructor(p8);
+          p8[13] = 0;
+          *p8 = &CMoTask_vtbl_ambiguous0;
+          g_1047BFFC = (int)p8;
+          orig::CMoTask_RegisterWithMng(p8, 8);
+          p9 =(uint16_t*)(orig::Mem_AllocDefault(20));
+          if ( p9 == nullptr )
           {
             g_pTextureMng = nullptr;
             orig::CDx_EndScene(g_pCDx);
             return 0;
           }
-          v14 = (type_info *)orig::CYyTexMng_Init(v13);
-          g_pTextureMng = v14;
-          if ( v14 != nullptr )
+          p10 = (type_info *)orig::CYyTexMng_Init(p9);
+          g_pTextureMng = p10;
+          if ( p10 != nullptr )
           {
-            v15 = orig::Mem_AllocDefault(12);
-            if ( v15 == nullptr )
+            p11 = orig::Mem_AllocDefault(12);
+            if ( p11 == nullptr )
             {
               g_pVbMng = 0;
               orig::CDx_EndScene(g_pCDx);
               return 0;
             }
-            g_pVbMng = (int)orig::sub_1003B080(v15);
+            g_pVbMng = (int)orig::game_1003B080(p11);
             if ( g_pVbMng != 0 )
             {
-              dword_1045B774 = 0;
-              v16 = orig::Scene_GetTableValue(90);
-              g_appMeshResA = *orig::sub_100731B0((_DWORD *)g_pMeshResourceMng, &v56, v16);
-              v17 = orig::Scene_GetTableValue(91);
-              g_appMeshResB = *orig::sub_100731B0((_DWORD *)g_pMeshResourceMng, &v57, v17);
-              v18 = *(_DWORD *)(g_pSceneState + 8);
-              if ( *(char *)(g_pSceneState + 24) < 0 && (v18 == 2 || v18 == 3) || v18 != 0 )
+              g_1045B774 = 0;
+              i2 = orig::Scene_GetTableValue(90);
+              g_appMeshResA = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i11, i2);
+              i3 = orig::Scene_GetTableValue(91);
+              g_appMeshResB = *orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i12, i3);
+              i4 = *(uint32_t *)(g_pSceneState + 8);
+              if ( *(char *)(g_pSceneState + 24) < 0 && (i4 == 2 || i4 == 3) || i4 != 0 )
                 orig::TargetMenu_Nop(1);
               else
                 orig::TargetMenu_Nop(0);
-              v19 = orig::Scene_GetTableValue(0);
-              v20 = (int *)*orig::sub_100731B0((_DWORD *)g_pMeshResourceMng, &v58, v19);
-              g_appMeshResC = (int)v20;
-              if ( v20 != nullptr )
-                orig::CMoResource_AddRefChain(*v20);
+              i5 = orig::Scene_GetTableValue(0);
+              p12 = (int *)*orig::game_100731B0_as_v0((uint32_t *)g_pMeshResourceMng, &frame.i13, i5);
+              g_appMeshResC = (int)p12;
+              if ( p12 != nullptr )
+                orig::CMoResource_AddRefChain(*p12);
               if ( g_appMeshResA != 0 )
-                orig::CMoResource_AddRefChain(*(_DWORD *)g_appMeshResA);
+                orig::CMoResource_AddRefChain(*(uint32_t *)g_appMeshResA);
               if ( g_appMeshResB != 0 )
-                orig::CMoResource_AddRefChain(*(_DWORD *)g_appMeshResB);
-              orig::Menu_ReloadResource((int)g_menuMng, v21, &v59, 0);
-              v22 = (int *)*orig::sub_10072FD0((_DWORD *)g_pMeshResourceMng, &v60, 39551);
-              g_appMeshRes_39551 = (int)v22;
-              if ( v22 != nullptr )
-                orig::CMoResource_AddRefChain(*v22);
-              v23 = (int *)*orig::sub_10072FD0((_DWORD *)g_pMeshResourceMng, &v61, 39560);
-              g_appMeshRes_39560 = (int)v23;
-              if ( v23 != nullptr )
-                orig::CMoResource_AddRefChain(*v23);
-              v24 = orig::Allocator_Generic(4u);
-              if ( v24 == nullptr )
+                orig::CMoResource_AddRefChain(*(uint32_t *)g_appMeshResB);
+              orig::Menu_ReloadResource((int)g_menuMng, i6, &frame.p35, 0);
+              p13 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &frame.i14, 39551);
+              g_appMeshRes_39551 = (int)p13;
+              if ( p13 != nullptr )
+                orig::CMoResource_AddRefChain(*p13);
+              p14 = (int *)*orig::game_10072FD0((uint32_t *)g_pMeshResourceMng, &frame.i15, 39560);
+              g_appMeshRes_39560 = (int)p14;
+              if ( p14 != nullptr )
+                orig::CMoResource_AddRefChain(*p14);
+              p15 = orig::Allocator_Generic(4u);
+              if ( p15 == nullptr )
               {
-                dword_104E1BF4 = 0;
+                g_104E1BF4 = 0;
                 orig::CDx_EndScene(g_pCDx);
                 return 0;
               }
-              dword_104E1BF4 = orig::unknown_libname_88(v24);
-              if ( dword_104E1BF4 != 0 )
+              g_104E1BF4 = orig::unknown_libname_88(p15);
+              if ( g_104E1BF4 != 0 )
               {
                 orig::Font_LoadWidthTable();
-                v25 = orig::Allocator_Generic(0x64058u);
-                if ( v25 == nullptr )
+                p16 = orig::Allocator_Generic(0x64058u);
+                if ( p16 == nullptr )
                 {
                   g_pTkMsgWinData = 0;
                   orig::CDx_EndScene(g_pCDx);
                   return 0;
                 }
-                v26 = orig::NetCellFont_MsgWinDataCtor(v25);
-                g_pTkMsgWinData = (int)v26;
-                if ( v26 != nullptr )
+                p17 = orig::NetCellFont_MsgWinDataCtor(p16);
+                g_pTkMsgWinData = (int)p17;
+                if ( p17 != nullptr )
                 {
-                  v27 = orig::Allocator_Generic(0x64058u);
-                  if ( v27 == nullptr )
+                  p18 = orig::Allocator_Generic(0x64058u);
+                  if ( p18 == nullptr )
                   {
-                    dword_1057815C = 0;
+                    g_1057815C = 0;
                     orig::CDx_EndScene(g_pCDx);
                     return 0;
                   }
-                  dword_1057815C = (int)orig::NetCellFont_MsgWinDataCtor(v27);
-                  if ( dword_1057815C != 0 )
+                  g_1057815C = (int)orig::NetCellFont_MsgWinDataCtor(p18);
+                  if ( g_1057815C != 0 )
                   {
-                    v28 = orig::Allocator_Generic(0x7Cu);
-                    if ( v28 == nullptr )
+                    p19 = orig::Allocator_Generic(0x7Cu);
+                    if ( p19 == nullptr )
                     {
-                      dword_10578160 = 0;
+                      g_10578160 = 0;
                       orig::CDx_EndScene(g_pCDx);
                       return 0;
                     }
-                    v29 = orig::NetCellFont_CtorResetAll(v28);
-                    dword_10578160 = (int)v29;
-                    if ( v29 != nullptr )
+                    p20 = orig::NetCellFont_CtorResetAll(p19);
+                    g_10578160 = (int)p20;
+                    if ( p20 != nullptr )
                     {
-                      v30 = orig::Mem_AllocFromArea(234932, 4);
-                      orig::CMoTask_ResetFields((int)v30);
+                      p21 = orig::Mem_AllocFromArea(234932, 4);
+                      orig::CMoTask_ResetFields((int)p21);
                       g_resourcesDirty = 1;
-                      if ( v30 == nullptr )
+                      if ( p21 == nullptr )
                       {
                         g_pZoneMap = nullptr;
                         orig::CDx_EndScene(g_pCDx);
                         return 0;
                       }
-                      v31 = (void *)orig::CTsZoneMap_Init((int)v30);
-                      g_pZoneMap = v31;
-                      if ( v31 != nullptr )
+                      p22 = (void *)orig::CTsZoneMap_Init((int)p21);
+                      g_pZoneMap = p22;
+                      if ( p22 != nullptr )
                       {
-                        orig::CMoTask_RegisterWithMng(v31, 5);
+                        orig::CMoTask_RegisterWithMng(p22, 5);
                         orig::ZoneMapLoad_InitGlobalTables();
                         orig::TextInputFiles_CreateDatManager();
                         orig::TextInputFiles_CreateAll();
-                        orig::sub_101B8E70();
+                        orig::game_101B8E70();
                         orig::TextInputFiles_CreateEmptyObject();
                         orig::TextInputFiles_CreateMenuSystem();
-                        v32 = orig::Allocator_Generic(0x84u);
-                        if ( v32 != nullptr )
-                          g_pFontGlyphs = (void *)orig::NetCellFont_InitColors((int)v32);
+                        p23 = orig::Allocator_Generic(0x84u);
+                        if ( p23 != nullptr )
+                          g_pFontGlyphs = (void *)orig::NetCellFont_InitColors((int)p23);
                         else
                           g_pFontGlyphs = nullptr;
-                        v33 = orig::Allocator_Generic(0x258u);
-                        if ( v33 != nullptr )
+                        p24 = orig::Allocator_Generic(0x258u);
+                        if ( p24 != nullptr )
                         {
-                          v33[130] = 0;
-                          v33[129] = 0;
-                          *((_WORD *)v33 + 257) = 0;
-                          *((_WORD *)v33 + 256) = 0;
-                          *((_BYTE *)v33 + 526) = 0;
-                          *((_BYTE *)v33 + 525) = 0;
-                          *((_BYTE *)v33 + 524) = 0;
-                          *((_BYTE *)v33 + 528) = 0;
-                          *((_BYTE *)v33 + 530) = 0;
-                          v33[136] = 0;
-                          v33[137] = 0;
-                          v33[138] = 0;
-                          v33[139] = 0;
-                          v33[140] = 0;
-                          v33[141] = 0;
-                          v33[142] = 0;
-                          v33[143] = 0;
-                          v33[144] = 0;
-                          v33[145] = 0;
-                          v33[147] = 0;
-                          v33[146] = 0;
-                          *((_BYTE *)v33 + 595) = 0;
-                          *((_BYTE *)v33 + 594) = 0;
-                          *((_BYTE *)v33 + 593) = 0;
-                          *((_BYTE *)v33 + 592) = 0;
-                          dword_104E1D44 = (int)v33;
+                          p24[130] = 0;
+                          p24[129] = 0;
+                          *((uint16_t *)p24 + 257) = 0;
+                          *((uint16_t *)p24 + 256) = 0;
+                          *((uint8_t *)p24 + 526) = 0;
+                          *((uint8_t *)p24 + 525) = 0;
+                          *((uint8_t *)p24 + 524) = 0;
+                          *((uint8_t *)p24 + 528) = 0;
+                          *((uint8_t *)p24 + 530) = 0;
+                          p24[136] = 0;
+                          p24[137] = 0;
+                          p24[138] = 0;
+                          p24[139] = 0;
+                          p24[140] = 0;
+                          p24[141] = 0;
+                          p24[142] = 0;
+                          p24[143] = 0;
+                          p24[144] = 0;
+                          p24[145] = 0;
+                          p24[147] = 0;
+                          p24[146] = 0;
+                          *((uint8_t *)p24 + 595) = 0;
+                          *((uint8_t *)p24 + 594) = 0;
+                          *((uint8_t *)p24 + 593) = 0;
+                          *((uint8_t *)p24 + 592) = 0;
+                          g_104E1D44 = (int)p24;
                         }
                         else
                         {
-                          dword_104E1D44 = 0;
+                          g_104E1D44 = 0;
                         }
                         orig::ZoneMapLoad_CreateUiObjects();
                         orig::TextInputFiles_CreateConfigObjects();
                         orig::YkInit();
                         orig::FaqHelp_Create();
-                        v34 = orig::Allocator_Generic(0x20u);
-                        if ( v34 != nullptr )
-                          g_pDebugOverlay = orig::Gfx_InitObject((int)v34);
+                        p25 = orig::Allocator_Generic(0x20u);
+                        if ( p25 != nullptr )
+                          g_pDebugOverlay = orig::Gfx_InitObject((int)p25);
                         else
                           g_pDebugOverlay = 0;
                         orig::MenuPanels_InitMenuShapes();
                         orig::FontGlyphCache_GetCounterBlock();
                         orig::FontGlyphCache_ResetCounter();
-                        v35 = orig::Mem_AllocFromArea(52, 4);
-                        orig::CMoTask_ResetFields((int)v35);
+                        p26 = orig::Mem_AllocFromArea(52, 4);
+                        orig::CMoTask_ResetFields((int)p26);
                         g_resourcesDirty = 1;
-                        if ( v35 == nullptr )
+                        if ( p26 == nullptr )
                         {
-                          dword_1047D688 = 0;
+                          g_1047D688 = 0;
                           orig::CDx_EndScene(g_pCDx);
                           return 0;
                         }
-                        orig::CMoTask_Constructor(v35);
-                        *v35 = &CXiActorDraw_vtbl;
-                        dword_1047D688 = (int)v35;
-                        orig::CMoTask_RegisterWithMng(v35, 6);
-                        v36 = orig::Mem_AllocFromArea(52, 4);
-                        orig::CMoTask_ResetFields((int)v36);
+                        orig::CMoTask_Constructor(p26);
+                        *p26 = &CXiActorDraw_vtbl;
+                        g_1047D688 = (int)p26;
+                        orig::CMoTask_RegisterWithMng(p26, 6);
+                        p27 = orig::Mem_AllocFromArea(52, 4);
+                        orig::CMoTask_ResetFields((int)p27);
                         g_resourcesDirty = 1;
-                        if ( v36 == nullptr )
+                        if ( p27 == nullptr )
                         {
-                          dword_1047D68C = 0;
+                          g_1047D68C = 0;
                           orig::CDx_EndScene(g_pCDx);
                           return 0;
                         }
-                        orig::CMoTask_Constructor(v36);
-                        *v36 = &CXiActorNameDraw_vtbl;
-                        dword_1047D68C = (int)v36;
-                        orig::CMoTask_RegisterWithMng(v36, 12);
-                        v37 = (exception *)orig::Mem_AllocDefault(24);
-                        if ( v37 == nullptr )
+                        orig::CMoTask_Constructor(p27);
+                        *p27 = &CXiActorNameDraw_vtbl;
+                        g_1047D68C = (int)p27;
+                        orig::CMoTask_RegisterWithMng(p27, 12);
+                        p28 = (exception *)orig::Mem_AllocDefault(24);
+                        if ( p28 == nullptr )
                         {
                           g_pXiCapture = nullptr;
                           orig::CDx_EndScene(g_pCDx);
                           return 0;
                         }
-                        g_pXiCapture = orig::fn_10017BB0(v37);
+                        g_pXiCapture = orig::fn_10017BB0(p28);
                         if ( g_pXiCapture != nullptr )
                         {
-                          v38 = orig::Allocator_Generic(0x19Cu);
-                          if ( v38 != nullptr )
+                          p29 = orig::Allocator_Generic(0x19Cu);
+                          if ( p29 != nullptr )
                           {
-                            v39 = orig::ErrorReport_CtorVt10329F8C(v38);
-                            g_pObj_Vtbl10329F8C = (int)v39;
-                            if ( v39 != nullptr )
+                            p30 = orig::ErrorReport_CtorVt10329F8C(p29);
+                            g_pObj_Vtbl10329F8C = (int)p30;
+                            if ( p30 != nullptr )
                             {
-                              orig::ErrorReport_LoadChecksum(v39 + 100, &Stream, 0x13u);
-                              *(_DWORD *)(g_pSceneState + 32) = *(_DWORD *)(g_pObj_Vtbl10329F8C + 408);
+                              orig::ErrorReport_LoadChecksum(p30 + 100, &Stream, 0x13u);
+                              *(uint32_t *)(g_pSceneState + 32) = *(uint32_t *)(g_pObj_Vtbl10329F8C + 408);
                             }
                           }
                           else
                           {
                             g_pObj_Vtbl10329F8C = 0;
                           }
-                          v40 = orig::Allocator_Generic(4u);
-                          if ( v40 != nullptr )
-                            g_pObj_Vtbl1033CE34 = (int)orig::StAvatarInfo_Ctor(v40);
+                          p31 = orig::Allocator_Generic(4u);
+                          if ( p31 != nullptr )
+                            g_pObj_Vtbl1033CE34 = (int)orig::StAvatarInfo_Ctor(p31);
                           else
                             g_pObj_Vtbl1033CE34 = 0;
-                          dword_10456954 = 0;
-                          dword_10456958 = 0;
-                          dword_1045695C = 0;
-                          orig::CMoDX_CreateAndInitSystem(v41);
-                          orig::App_SetSeqStep((_WORD *)self_, 0);
-                          *(_BYTE *)a4 = 1;
-                          goto LABEL_101;
+                          g_10456954 = 0;
+                          g_10456958 = 0;
+                          g_1045695C = 0;
+                          orig::CMoDX_CreateAndInitSystem(p32);
+                          orig::App_SetSeqStep((uint16_t *)self_, 0);
+                          *(uint8_t *)arg2 = 1;
+                          goto L1;
                         }
                       }
                     }
@@ -709,11 +711,11 @@ XI_API char __thiscall App_InitScene(int self_, int a4)
         }
       }
     }
-LABEL_85:
+L2:
     orig::CDx_EndScene(g_pCDx);
     return 0;
   }
-LABEL_101:
+L1:
   orig::CDx_EndScene(g_pCDx);
   return 1;
 }

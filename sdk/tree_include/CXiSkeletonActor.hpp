@@ -5,26 +5,26 @@
 #pragma pack(push, 1)
 class XI_API CXiSkeletonActor {
 public:
-    char DrawModel(_DWORD *a2, __int16 *a3, int a4, _DWORD *a5, int a6, int a7, unsigned int a8);  // 0x1002B6E0
-    static uint32_t __thiscall AnimateModels(void * self, int * param_1, int param_2, uint32_t param_3, undefined4 xi_s4);  // 0x1002C2D0
-    void PrepareModelsOnce(int a2, int a3);  // 0x1002C360
-    static undefined4 __thiscall GetElemThunk(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, float * param_4, undefined4 xi_s5, undefined4 xi_s6, undefined4 xi_s7);  // 0x1002C3E0
-    static int __thiscall GetModelElem(void * self, uint32_t param_1, int param_2);  // 0x1002C5C0
-    _BYTE * PoseCompose(int a2, int a3, int a4, int a5, _BYTE *a6);  // 0x100343C0
+    char DrawModel(uint32_t *arg1, short *arg2, int arg3, uint32_t *arg4, int arg5, int arg6, unsigned int arg7);  // 0x1002B6E0
+    static uint32_t __thiscall AnimateModels(void * self, int * arg2, int arg3, uint32_t arg4, bits32 xi_s4);  // 0x1002C2D0
+    void PrepareModelsOnce(int arg1, int arg2);  // 0x1002C360
+    static bits32 __thiscall GetElemThunk(void * self, bits32 arg2, bits32 arg3, bits32 arg4, float * arg5, bits32 xi_s5, bits32 xi_s6, bits32 xi_s7);  // 0x1002C3E0
+    static int __thiscall GetModelElem(void * self, uint32_t arg2, int arg3);  // 0x1002C5C0
+    uint8_t * PoseCompose(int arg1, int arg2, int arg3, int arg4, uint8_t *arg5);  // 0x100343C0
     char * GetEnglishName();  // 0x10082F20
     int SubRef();  // 0x100832E0
     char * GetPos();  // 0x100A4740
     char * GetDir();  // 0x100A4750
     BOOL IsMotionLock();  // 0x100A4760
-    int IsMotionLock_Set(char a2);  // 0x100A4770
+    int IsMotionLock_Set(char arg1);  // 0x100A4770
     void EnableFlag8AC();  // 0x100A4790
     void DisableFlag8AC();  // 0x100A47A0
     int IsFlag8ACSet();  // 0x100A47B0
     char GetField79C();  // 0x100A47C0
-    char SetField79C(char a2);  // 0x100A47D0
-    _DWORD * GetPartSlot9Resource(_DWORD *a2);  // 0x100A47F0
-    __int16 SetField670(__int16 a2);  // 0x100A4800
-    __int16 GetField670();  // 0x100A4810
+    char SetField79C(char arg1);  // 0x100A47D0
+    uint32_t * GetPartSlot9Resource(uint32_t *arg1);  // 0x100A47F0
+    short SetField670(short arg1);  // 0x100A4800
+    short GetField670();  // 0x100A4810
     char Slot257ReturnFalse();  // 0x100A4820
     void SetColor(unsigned int color);  // 0x100A4830
     unsigned int GetColor();  // 0x100A4840
@@ -33,102 +33,102 @@ public:
     void SetSahdowAlpha(int alpha);  // 0x100A4880
     void EnableEffect(unsigned int flagBit);  // 0x100A48A0
     void DisableEffect(unsigned int flagBit);  // 0x100A48C0
-    int SetUVOffset(int a2, int a3);  // 0x100A48F0
+    int SetUVOffset(int arg1, int arg2);  // 0x100A48F0
     void SetEmapColor(unsigned int color);  // 0x100A4920
     void SetEmapTexture(void *texture);  // 0x100A4930
     void SetEmapAlphaMode(int mode);  // 0x100A4950
     int GetEmapAlphaMode();  // 0x100A4960
-    _DWORD * GetDword750(_DWORD *a2);  // 0x100A4970
+    uint32_t * GetDword750(uint32_t *arg1);  // 0x100A4970
     int get_field_74C();  // 0x100A4980
-    int set_field_73C(int a2);  // 0x100A4990
+    int set_field_73C(int arg1);  // 0x100A4990
     double get_field_73C();  // 0x100A49A0
-    int set_field_740(int a2);  // 0x100A49B0
+    int set_field_740(int arg1);  // 0x100A49B0
     double get_field_740();  // 0x100A49C0
     int IsEnvmap();  // 0x100A49D0
     BOOL IsDistortion();  // 0x100A49E0
     BOOL IsMasking();  // 0x100A49F0
     BOOL IsEffectFlag8();  // 0x100A4A00
     int IsDirectionLock();  // 0x100A4A10
-    __int16 IsConstrain();  // 0x100A4A20
-    bool IsConstrain_Set(char a2, int a3);  // 0x100A4A30
-    __int16 IsConstrain2();  // 0x100A4A50
-    bool IsConstrain2_Set(char a2, int a3);  // 0x100A4A70
+    short IsConstrain();  // 0x100A4A20
+    bool IsConstrain_Set(char arg1, int arg2);  // 0x100A4A30
+    short IsConstrain2();  // 0x100A4A50
+    bool IsConstrain2_Set(char arg1, int arg2);  // 0x100A4A70
     char GetByte8A5();  // 0x100A4A90
-    char SetByte8A5(char a2);  // 0x100A4AA0
+    char SetByte8A5(char arg1);  // 0x100A4AA0
     char GetByte8A6();  // 0x100A4AB0
-    char SetByte8A6(char a2);  // 0x100A4AC0
+    char SetByte8A6(char arg1);  // 0x100A4AC0
     char GetByte8A7();  // 0x100A4AD0
-    char SetByte8A7(char a2);  // 0x100A4AE0
+    char SetByte8A7(char arg1);  // 0x100A4AE0
     char GetByte8A8();  // 0x100A4AF0
-    char ActivateFlag9F8(char a2);  // 0x100A4B00
+    char ActivateFlag9F8(char arg1);  // 0x100A4B00
     char ActivateFlagA04();  // 0x100A4B10
-    char SetByte8A9(char a2);  // 0x100A4B20
+    char SetByte8A9(char arg1);  // 0x100A4B20
     void SetForceUpdateFlag();  // 0x100A4B30
     void SetByteA04();  // 0x100A4B40
     static char ** __cdecl GetRuntimeClass_variant0();  // 0x100AB070
     static char ** __cdecl GetRuntimeClass_variant1();  // 0x100C5190
-    int Constructor_1Arg(int a2);  // 0x100C52A0
-    int ScalarDeletingDtor(char a1);  // 0x100C5540
-    int Constructor_2Arg(_DWORD *a2, int a3);  // 0x100C5560
-    int Constructor_3Arg(_DWORD *a2, int a3, int a4);  // 0x100C56E0
-    int Constructor_4Arg(_DWORD *a2, int a3, int a4, int a5);  // 0x100C5880
-    int Constructor_Factory(_DWORD *a2, int a3, int a4);  // 0x100C59B0
+    int Constructor_1Arg(int arg1);  // 0x100C52A0
+    int ScalarDeletingDtor(char arg1);  // 0x100C5540
+    int Constructor_2Arg(uint32_t *arg1, int arg2);  // 0x100C5560
+    int Constructor_3Arg(uint32_t *arg1, int arg2, int arg3);  // 0x100C56E0
+    int Constructor_4Arg(uint32_t *arg1, int arg2, int arg3, int arg4);  // 0x100C5880
+    int Constructor_Factory(uint32_t *arg1, int arg2, int arg3);  // 0x100C59B0
     char DestructorBody();  // 0x100C5C00
     int Init();  // 0x100C5D60
-    static void __thiscall PlaceAttachedInRing(void * self, undefined4 xi_s1);  // 0x100C9C10
-    static void __thiscall CopyModelValuesTo(void * self, int param_1);  // 0x100CB390
+    static void __thiscall PlaceAttachedInRing(void * self, bits32 xi_s1);  // 0x100C9C10
+    static void __thiscall CopyModelValuesTo(void * self, int arg2);  // 0x100CB390
     void RunStaggeredUpdates();  // 0x100CBD60
     void PerActor_FourBucketStaggeredUpdate();  // 0x100CBDE0
-    char * SetMotion(int *a2, float a3);  // 0x100CD490
-    static void __thiscall SetSlotMotion(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, int param_7);  // 0x100CD4E0
-    static undefined4 __thiscall SetMotion(void * self, int * param_1, uint32_t param_2, undefined4 param_3, float param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, int param_8, int param_9, undefined4 param_10, undefined4 param_11);  // 0x100CD540
-    static undefined4 __thiscall SetMotionFromSources(void * self, uint32_t param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8, undefined4 param_9, int * param_10, int param_11);  // 0x100CD920
+    char * SetMotion(int *arg1, float arg2);  // 0x100CD490
+    static void __thiscall SetSlotMotion(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, int arg8);  // 0x100CD4E0
+    static bits32 __thiscall SetMotion(void * self, int * arg2, uint32_t arg3, bits32 arg4, float arg5, bits32 arg6, bits32 arg7, bits32 arg8, int arg9, int arg10, bits32 arg11, bits32 arg12);  // 0x100CD540
+    static bits32 __thiscall SetMotionFromSources(void * self, uint32_t arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9, bits32 arg10, int * arg11, int arg12);  // 0x100CD920
     static void __thiscall UpdateRandomTimer(void * self);  // 0x100CDF90
     static void __thiscall AdvanceMotionQueue(void * self);  // 0x100CE160
-    _DWORD * ReverseFindRes(_DWORD *a2, int a3, int a4, int a5, int a6, char a7);  // 0x100CE480
-    _DWORD * ActorFindResource(_DWORD *a2, int a3, int a4);  // 0x100CE9B0
-    _DWORD * ActorFindResourceNth(_DWORD *a2, int a3, int a4, int a5);  // 0x100CEB00
-    int ActorGetResourceCount(int a2, int a3);  // 0x100CEC90
-    void ReplaceAttack(int a1, int a2, int a3, int a4);  // 0x100CEDF0
-    char SetAttack(int a2, int a3, int a4, char *Source);  // 0x100CEE00
-    static undefined4 __thiscall SetAction(void * self, undefined4 * param_1, undefined4 param_2, int param_3);  // 0x100CEE40
-    int SetAttack_SchStatus(int a2);  // 0x100CF030
-    static undefined8 __thiscall ForParts0To9(void * self, undefined4 xi_s1);  // 0x100CF100
-    void ForwardToModelField24(int a2);  // 0x100CF200
-    static void __thiscall AddResourceParts(void * self, int * param_1, void * param_2);  // 0x100CFA50
-    static undefined * __thiscall GetTableOrDefault(void * self, int param_1);  // 0x100CFAD0
+    uint32_t * ReverseFindRes(uint32_t *arg1, int arg2, int arg3, int arg4, int arg5, char arg6);  // 0x100CE480
+    uint32_t * ActorFindResource(uint32_t *arg1, int arg2, int arg3);  // 0x100CE9B0
+    uint32_t * ActorFindResourceNth(uint32_t *arg1, int arg2, int arg3, int arg4);  // 0x100CEB00
+    int ActorGetResourceCount(int arg1, int arg2);  // 0x100CEC90
+    void ReplaceAttack(int arg1, int arg2, int arg3, int arg4);  // 0x100CEDF0
+    char SetAttack(int arg1, int arg2, int arg3, char *Source);  // 0x100CEE00
+    static bits32 __thiscall SetAction(void * self, bits32 * arg2, bits32 arg3, int arg4);  // 0x100CEE40
+    int SetAttack_SchStatus(int arg1);  // 0x100CF030
+    static uint64_t __thiscall ForParts0To9(void * self, bits32 xi_s1);  // 0x100CF100
+    void ForwardToModelField24(int arg1);  // 0x100CF200
+    static void __thiscall AddResourceParts(void * self, int * arg2, void * arg3);  // 0x100CFA50
+    static uint8_t * __thiscall GetTableOrDefault(void * self, int arg2);  // 0x100CFAD0
     static int __thiscall GetTableEntryByModelKind(void * self);  // 0x100CFB40
-    static undefined4 __thiscall Slot244_Unknown(void * self, float * param_1, float * param_2, int param_3);  // 0x100CFC10
+    static bits32 __thiscall Slot244_Unknown(void * self, float * arg2, float * arg3, int arg4);  // 0x100CFC10
     char * GetField878Ptr_Candidate();  // 0x100D04B0
-    char GetNamePos(int a2, float *a3, int a4);  // 0x100D04C0
-    static undefined4 __thiscall OnDrawName(void * self);  // 0x100D0510
-    char GetArrowPos(int a2, int a3, int a4);  // 0x100D06F0
-    static undefined4 __stdcall ProjectToScreen(float * param_1, undefined4 xi_s2, undefined4 xi_s3);  // 0x100D0740
-    static void __thiscall DrawNameIfVisible(void * self, undefined4 * param_1, char * param_2, float param_3, uint32_t param_4, uint32_t param_5);  // 0x100D0880
+    char GetNamePos(int arg1, float *arg2, int arg3);  // 0x100D04C0
+    static bits32 __thiscall OnDrawName(void * self);  // 0x100D0510
+    char GetArrowPos(int arg1, int arg2, int arg3);  // 0x100D06F0
+    static bits32 __stdcall ProjectToScreen(float * arg1, bits32 xi_s2, bits32 xi_s3);  // 0x100D0740
+    static void __thiscall DrawNameIfVisible(void * self, bits32 * arg2, char * arg3, float arg4, uint32_t arg5, uint32_t arg6);  // 0x100D0880
     double GetWidthScale();  // 0x100D08E0
     double GetHeightScale();  // 0x100D09B0
     double GetDepthScale();  // 0x100D0A80
-    static undefined4 __thiscall AddPartAndMarkSlot(void * self, int * param_1, int param_2, int param_3, undefined4 param_4);  // 0x100D0B50
-    static undefined4 __thiscall SetField0B4IfField9EC(void * self, int * param_1, int param_2);  // 0x100D0D40
-    static void __thiscall SelectStateMessage(void * self, undefined4 xi_s1, undefined4 xi_s2);  // 0x100D0FC0
-    static undefined4 __thiscall RunPendingPartStep(void * self);  // 0x100D1070
-    static undefined4 __thiscall ChoosePendingPartStep(void * self);  // 0x100D1190
-    static char __cdecl OnSkeletonLoaded(int a1, int a2);  // 0x100D2F40
-    static undefined4 __thiscall LoadSkeletonSync(void * self, uint32_t param_1);  // 0x100D2F60
-    static undefined4 __thiscall LoadSkeletonResource(void * self, undefined4 param_1);  // 0x100D4330
+    static bits32 __thiscall AddPartAndMarkSlot(void * self, int * arg2, int arg3, int arg4, bits32 arg5);  // 0x100D0B50
+    static bits32 __thiscall SetField0B4IfField9EC(void * self, int * arg2, int arg3);  // 0x100D0D40
+    static void __thiscall SelectStateMessage(void * self, bits32 xi_s1, bits32 xi_s2);  // 0x100D0FC0
+    static bits32 __thiscall RunPendingPartStep(void * self);  // 0x100D1070
+    static bits32 __thiscall ChoosePendingPartStep(void * self);  // 0x100D1190
+    static char __cdecl OnSkeletonLoaded(int arg1, int arg2);  // 0x100D2F40
+    static bits32 __thiscall LoadSkeletonSync(void * self, uint32_t arg2);  // 0x100D2F60
+    static bits32 __thiscall LoadSkeletonResource(void * self, bits32 arg2);  // 0x100D4330
     static int __cdecl GetSkeletonFileNo();  // 0x100D43E0
-    static int __thiscall AddListEntry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4);  // 0x100D4410
-    static int __thiscall FindListEntry(void * self, int param_1);  // 0x100D4540
-    static undefined4 __thiscall SetFlag840Bit23(void * self, undefined4 param_1);  // 0x100D5430
-    char IsDirectionLock_Set(char a2);  // 0x100D5460
-    static void __thiscall BuildBasisFromVf210(void * self, float * param_1);  // 0x100D59A0
+    static int __thiscall AddListEntry(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5);  // 0x100D4410
+    static int __thiscall FindListEntry(void * self, int arg2);  // 0x100D4540
+    static bits32 __thiscall SetFlag840Bit23(void * self, bits32 arg2);  // 0x100D5430
+    char IsDirectionLock_Set(char arg1);  // 0x100D5460
+    static void __thiscall BuildBasisFromVf210(void * self, float * arg2);  // 0x100D59A0
     static void __thiscall UpdateHeadLook(void * self);  // 0x100D5B10
-    static uint32_t __thiscall FindPartValue(void * self, int * param_1);  // 0x100D6240
+    static uint32_t __thiscall FindPartValue(void * self, int * arg2);  // 0x100D6240
     char * DrawResourceShadows();  // 0x100D62C0
     void Slot33DoNothing();  // 0x100D6F90
     void Slot34DoNothing();  // 0x100D6FA0
-    void Slot35DoNothing(int a1, int a2);  // 0x100D6FB0
-    void Slot36DoNothing(int a1);  // 0x100D6FC0
+    void Slot35DoNothing(int arg1, int arg2);  // 0x100D6FB0
+    void Slot36DoNothing(int arg1);  // 0x100D6FC0
     void Slot37DoNothing();  // 0x100D6FD0
     static char ** __cdecl GetRuntimeClass_variant2();  // 0x100D7140
 
@@ -155,7 +155,7 @@ public:
     uint8_t _pad_A8[0x8];
     char hiddenFlagByte;  // +0xB0
     uint8_t _pad_B1[0x1];
-    __int16 hiddenFlagWord;  // +0xB2
+    short hiddenFlagWord;  // +0xB2
     uint32_t field_B4;  // +0xB4
     uint8_t field_B8;  // +0xB8
     uint8_t _pad_B9[0x3];

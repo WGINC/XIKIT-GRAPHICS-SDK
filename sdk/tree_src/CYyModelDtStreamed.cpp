@@ -11,21 +11,21 @@ int CYyModelDtStreamed::Slot11ReturnZero()
 
 // FUNCTION: FFXIMAIN 0x100250A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CYyModelDtStreamed::ScalarDeletingDtor(char a2)
+int * CYyModelDtStreamed::ScalarDeletingDtor(char arg1)
 {
   orig::CYyModelDt_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }
 
 // FUNCTION: FFXIMAIN 0x100252D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyModelDtStreamed::ScalarDeletingDtor_2(int a1)
+int CYyModelDtStreamed::ScalarDeletingDtor_2(int arg1)
 {
   Vt_1032A460 * self = reinterpret_cast<Vt_1032A460 *>(this);  // byte-exact view for the rest
   orig::ProjTex_Destructor((int *)self);
-  if ( (a1 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::operator_delete(self);
   return (int)self;
 }

@@ -4,10 +4,10 @@
 
 // FUNCTION: FFXIMAIN 0x10070F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoResourceWaitTask::ScalarDeletingDtor(char a2)
+uint32_t * CMoResourceWaitTask::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResourceWaitTask_Destructor(this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
-  return(_DWORD*)(&(*(CMoTask_vtbl * *)&this->vftable));
+  return(uint32_t*)(&(*(CMoTask_vtbl * *)&this->vftable));
 }

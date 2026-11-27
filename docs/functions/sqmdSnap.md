@@ -13,5 +13,5 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqmdSnap.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqmdSnap_Create` calls `sub_10275D80`, `SqmdSnap_Init`
+- `SqmdSnap_Create` calls `game_10275D80`, `SqmdSnap_Init`
 - `SqmdSnap_Init` calls nothing directly

@@ -4,7 +4,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 
 | Group | Files | Functions |
 |---|---|---|
-| `Text` | 2 | 568 |
+| `Text` | 2 | 569 |
 | `Net` | 1 | 493 |
 | `CMo` | 109 | 440 |
 | `Target` | 1 | 422 |
@@ -637,7 +637,7 @@ The source files (`sdk/tree_src`) grouped by the first part of their names (publ
 ## Text
 
 - [TextCommand](functions/TextCommand.md): 25 functions. Command_RunLine, SeekIdByString, the commands "/ver", "echo", Actor_FindByName / GetObjectByName, ActorHandle_*
-- [TextInputFiles](functions/TextInputFiles.md): 543 functions. FsTextInput_* (37), FsWordCompletion_* (24), FsLogPage_*, File_* and FileMng, Config_*, Event_Wait / Signal, the menus "keylayou", "macro", the command "/say " (an address range between two evidenced source files, holding several of the original files: named for its main contents)
+- [TextInputFiles](functions/TextInputFiles.md): 544 functions. FsTextInput_* (37), FsWordCompletion_* (24), FsLogPage_*, File_* and FileMng, Config_*, Event_Wait / Signal, the menus "keylayou", "macro", the command "/say " (an address range between two evidenced source files, holding several of the original files: named for its main contents)
 
 ## Texture
 

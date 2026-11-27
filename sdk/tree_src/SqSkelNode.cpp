@@ -4,51 +4,51 @@
 
 // FUNCTION: FFXIMAIN 0x102915B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_CopyVec3At5C(int param_1, undefined4 * param_2)
+XI_API void __cdecl SqSkelNode_CopyVec3At5C(int arg1, bits32 * arg2)
 {
-  orig::SqVec_CopyVec3((uint32_t *)(param_1 + 0x5c),param_2);
+  orig::SqVec_CopyVec3((uint32_t *)(arg1 + 0x5c),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102915E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_CopyQuatAt68(int param_1, undefined4 * param_2)
+XI_API void __cdecl SqSkelNode_CopyQuatAt68(int arg1, bits32 * arg2)
 {
-  orig::SqQuat_Copy_v1((uint32_t *)(param_1 + 0x68),param_2);
+  orig::SqQuat_Copy_v1((uint32_t *)(arg1 + 0x68),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102915F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_CopyVec3At78(int param_1, undefined4 * param_2)
+XI_API void __cdecl SqSkelNode_CopyVec3At78(int arg1, bits32 * arg2)
 {
-  orig::SqVec_CopyVec3((uint32_t *)(param_1 + 0x78),param_2);
+  orig::SqVec_CopyVec3((uint32_t *)(arg1 + 0x78),arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x102916D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_SetTripleAt84(int param_1, int * param_2)
+XI_API void __cdecl SqSkelNode_SetTripleAt84(int arg1, int * arg2)
 {
-  *(int *)(param_1 + 0x84) = *param_2;
-  *(int *)(param_1 + 0x88) = param_2[1];
-  *(int *)(param_1 + 0x8c) = param_2[2];
-  *(int *)(param_1 + 0x90) = param_2[2] + *param_2 + param_2[1];
+  *(int *)(arg1 + 0x84) = *arg2;
+  *(int *)(arg1 + 0x88) = arg2[1];
+  *(int *)(arg1 + 0x8c) = arg2[2];
+  *(int *)(arg1 + 0x90) = arg2[2] + *arg2 + arg2[1];
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10291780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_SetFloatAt94(int param_1, float param_2)
+XI_API void __cdecl SqSkelNode_SetFloatAt94(int arg1, float arg2)
 {
-  *(float *)(param_1 + 0x94) = (float)(long double)param_2;
+  *(float *)(arg1 + 0x94) = (float)arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10291790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqSkelNode_SetFloatAt98(int param_1, float param_2)
+XI_API void __cdecl SqSkelNode_SetFloatAt98(int arg1, float arg2)
 {
-  *(float *)(param_1 + 0x98) = (float)(long double)param_2;
+  *(float *)(arg1 + 0x98) = (float)arg2;
   return;
 }

@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): CMoRabRes and CMoResource run
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `RabRes_MinOf10055F60OverIndexPairs` calls `sub_10055F60`
+- `RabRes_MinOf10055F60OverIndexPairs` calls `game_10055F60`
 - `CMoRabRes_GetRuntimeClass` calls nothing directly

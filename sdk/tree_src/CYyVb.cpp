@@ -5,37 +5,37 @@
 
 // FUNCTION: FFXIMAIN 0x1003B420
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyVb::Init(void * self)
+bits32 __thiscall CYyVb::Init(void * self)
 {
-  *(uint8_t ***)self = &PTR_CYyVb_GetRuntimeClass_1032aae0;
+  *(uint8_t ***)self = &ptr_to_CYyVb_GetRuntimeClass_1032AAE0;
   *(uint32_t *)((int)self + 8) = 0;
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B430
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall CYyVb_ScalarDelete(void * self_, undefined4 param_1)
+XI_API void * __thiscall CYyVb_ScalarDelete(void * self_, bits32 arg2)
 {
   orig::CYyVb_Destroy(self_);
-  if ((param_1 & 1) != 0) {
-    orig::thunk_sub_10028AA0_v1((int)self_);
+  if ((arg2 & 1) != 0) {
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1((int)self_);
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void * __thiscall CYyVb::Constructor(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+void * __thiscall CYyVb::Constructor(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  *(uint8_t ***)self = &PTR_CYyVb_GetRuntimeClass_1032aae0;
+  *(uint8_t ***)self = &ptr_to_CYyVb_GetRuntimeClass_1032AAE0;
   *(uint32_t *)((int)self + 8) = 0;
   orig::VertexBufferList_Register(self);
-  *(uint32_t *)((int)self + 0xc) = param_1;
-  *(uint32_t *)((int)self + 0x10) = param_2;
-  *(uint32_t *)((int)self + 0x18) = param_4;
+  *(uint32_t *)((int)self + 0xc) = arg2;
+  *(uint32_t *)((int)self + 0x10) = arg3;
+  *(uint32_t *)((int)self + 0x18) = arg5;
   *(uint32_t *)((int)self + 4) = 3;
-  *(uint32_t *)((int)self + 0x14) = param_3;
-  *(uint32_t *)((int)self + 0x1c) = param_5;
+  *(uint32_t *)((int)self + 0x14) = arg4;
+  *(uint32_t *)((int)self + 0x1c) = arg6;
   return self;
 }
 
@@ -43,16 +43,16 @@ void * __thiscall CYyVb::Constructor(void * self, undefined4 param_1, undefined4
 // GATE: PASS -- 100 trials, 100 returned normally, 80 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CYyVb::Destroy(void * self)
 {
-  int *a1;
+  int *p1;
   
-  *(uint8_t ***)self = &PTR_CYyVb_GetRuntimeClass_1032aae0;
+  *(uint8_t ***)self = &ptr_to_CYyVb_GetRuntimeClass_1032AAE0;
   if (self != g_pVertexBufferListHead_as_v0) {
-    a1 = *(int **)((int)self + 0x1c);
-    if (a1 != (int *)0x0) {
-      ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 8))))(a1);
+    p1 = *(int **)((int)self + 0x1c);
+    if (p1 != (int *)0x0) {
+      ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 8))))(p1);
       *(uint32_t *)((int)self + 0x1c) = 0;
     }
-    orig::FUN_1003b4e0(self);
+    orig::game_1003B4E0(self);
     return;
   }
   return;

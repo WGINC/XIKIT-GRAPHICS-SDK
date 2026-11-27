@@ -6,23 +6,23 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall ModelBaseParts_FindTailLink(void * self_)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = (int)self_ + 0x20;
-  for (iVar2 = *(int *)((int)self_ + 0x20); iVar2 != 0; iVar2 = *(int *)(iVar2 + 4)) {
-    iVar1 = iVar2 + 4;
+  i1 = (int)self_ + 0x20;
+  for (i2 = *(int *)((int)self_ + 0x20); i2 != 0; i2 = *(int *)(i2 + 4)) {
+    i1 = i2 + 4;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10029F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ModelBaseParts_AppendAtTail(void * self_, undefined4 param_1)
+XI_API void __thiscall ModelBaseParts_AppendAtTail(void * self_, bits32 arg2)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = (uint32_t *)orig::ModelBaseParts_FindTailLink(self_);
-  *puVar1 = param_1;
+  p1 = (uint32_t *)orig::ModelBaseParts_FindTailLink(self_);
+  *p1 = arg2;
   return;
 }

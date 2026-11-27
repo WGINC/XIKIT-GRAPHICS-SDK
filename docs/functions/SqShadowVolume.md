@@ -22,4 +22,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `sqsnShadowVolumeSetPass` calls `sqgxZMask`, `sqgxFBMask`
 - `sqgxShadowStencilEnable` calls `sqgxZMask`
 - `sqsnShadowVolumeBeginVB` calls `sqDebugPrintf`
-- `sqgxShadowPlaneMatrix` calls `SqVec_ScaleVec3ByInverseOf102746C0`, `sub_10274870`
+- `sqgxShadowPlaneMatrix` calls `SqVec_ScaleVec3ByInverseOf102746C0`, `game_10274870`

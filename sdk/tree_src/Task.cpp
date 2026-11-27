@@ -4,31 +4,31 @@
 
 // FUNCTION: FFXIMAIN 0x100747F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Task_Remove(void * self_, int param_1)
+XI_API void __thiscall Task_Remove(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
+  int i3;
   
-  iVar3 = 0;
-  iVar1 = *(int *)((int)self_ + 0x24);
+  i3 = 0;
+  i1 = *(int *)((int)self_ + 0x24);
   if (*(int *)((int)self_ + 0x24) != 0) {
-    while (iVar2 = iVar1, iVar2 != param_1) {
-      iVar1 = *(int *)(iVar2 + 0x28);
-      iVar3 = iVar2;
-      if (*(int *)(iVar2 + 0x28) == 0) {
+    while (i2 = i1, i2 != arg2) {
+      i1 = *(int *)(i2 + 0x28);
+      i3 = i2;
+      if (*(int *)(i2 + 0x28) == 0) {
         return;
       }
     }
-    if (iVar3 != 0) {
-      *(uint32_t *)(iVar3 + 0x28) = *(uint32_t *)(iVar2 + 0x28);
-      *(uint32_t *)(param_1 + 0x28) = 0;
-      *(uint32_t *)(param_1 + 0x10) = 0;
+    if (i3 != 0) {
+      *(uint32_t *)(i3 + 0x28) = *(uint32_t *)(i2 + 0x28);
+      *(uint32_t *)(arg2 + 0x28) = 0;
+      *(uint32_t *)(arg2 + 0x10) = 0;
       return;
     }
-    *(uint32_t *)((int)self_ + 0x24) = *(uint32_t *)(iVar2 + 0x28);
-    *(uint32_t *)(param_1 + 0x28) = 0;
-    *(uint32_t *)(param_1 + 0x10) = 0;
+    *(uint32_t *)((int)self_ + 0x24) = *(uint32_t *)(i2 + 0x28);
+    *(uint32_t *)(arg2 + 0x28) = 0;
+    *(uint32_t *)(arg2 + 0x10) = 0;
   }
   return;
 }
@@ -37,11 +37,11 @@ XI_API void __thiscall Task_Remove(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Task_RunAsCurrent(void * self_)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = *(uint32_t *)(dword_1047D140 + 0xd4c);
-  *(void **)(dword_1047D140 + 0xd4c) = self_;
-  ((int (__thiscall *)(void *))((**(code **)(*(int *)self_ + 0x20))))((void *)(self_));
-  *(uint32_t *)(dword_1047D140 + 0xd4c) = uVar1;
+  u1 = *(uint32_t *)(g_1047D140 + 0xd4c);
+  *(void **)(g_1047D140 + 0xd4c) = self_;
+  ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self_ + 0x20))))((void *)(self_));
+  *(uint32_t *)(g_1047D140 + 0xd4c) = u1;
   return;
 }

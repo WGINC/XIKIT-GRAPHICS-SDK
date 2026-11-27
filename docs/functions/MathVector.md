@@ -84,10 +84,10 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Vec3_Scale` calls nothing directly
 - `Vec3_MulInPlace` calls nothing directly
 - `Vec3_MulComponents` calls nothing directly
-- `Vec3_CopyThen100274B0` calls `Vec3_Copy`, `sub_100274B0`
+- `Vec3_CopyThen100274B0` calls `Vec3_Copy`, `game_100274B0`
 - `Vec3_Cross` calls `Vec3_Copy`
-- `MathVector_Distance3` calls `Vec3_Sub`, `sub_10027530`
-- `MathVector_Length3` calls `sub_10027530`
+- `MathVector_Distance3` calls `Vec3_Sub`, `game_10027530`
+- `MathVector_Length3` calls `game_10027530`
 - `Vec3_Call100275D0` calls `MathVector_Distance3`
 - `Gfx_ProjectWorldToClip` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_PostMultiply`, `Vec4_Copy`, `Mat4_TransformCoordInPlace`, `MathVector_Nop`
 - `Gfx_TransformWorldToView` calls `MathVector_ReturnThis`, `CDx::GetTransformCached`, `Mat4_PostMultiply`, `Vec4_Copy`, `Mat4_TransformVec4InPlace`, `MathVector_Nop`
@@ -116,7 +116,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Mat4_TransformNormal` calls nothing directly
 - `Mat4_TransformCoordInPlace` calls `Mat4_TransformVec4InPlace`
 - `Mat4_InvertOrthonormal` calls `Vec4_Copy`, `Mat4_TransformVec4InPlace`, `Mat4_Copy`
-- `Mem_AllocObject` calls `sub_10313486`, `Mem_AllocFromArea`
+- `Mem_AllocObject` calls `game_10313486`, `Mem_AllocFromArea`
 - `Mem_AllocWithFallback` calls `Mem_AllocFromArea`, `_exit_0`
 - `Mem_FreeObject` calls `Mem_FreeBlockMergeNeighbours`
 - `SharedDeleteHelper` calls `Mem_FreeBlockMergeNeighbours`

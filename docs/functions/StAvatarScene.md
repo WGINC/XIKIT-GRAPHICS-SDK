@@ -44,7 +44,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `StAvatarScene_InitScene` calls `SqsnScene_Init`, `SqsnScene_Preallocate`, `SqrdCamera_Init`, `sqxfXformTD_Init`, `sqxfXformTD_Update`, `SqsnScene_AddCamera`, `StAvatarScene_NoOpB`, `sqrdLight_Init`, `SqsnScene_AddLight`, `StAvatar_UpdateTransform`, `SqsnScene_SetByteAt28`, `SqsdGeneric_Init`, `SqsnScene_LayerAddItem`, `SqsnScene_ItemAddLight`, `StAvatar_InitEntry`, `SqQuat_SetIdentity`, `StAvatarScene_NoOpA`, `StAvatar_SetFlag3`, `StAvatar_SelectIndex`, `SqsnScene_SetItemByte19`
 - `StAvatar_UpdateTransform` calls `sqxfXformTD_Update`
 - `StAvatarScene_UpdateScene` calls `StAvatar_ApplyModes`, `StAvatar_ApplyEffectFlags`, `SceneCamera_UpdateCameraBlend`, `StAvatar_UpdateModels`, `SqQuatMul_Mul`, `sqxfXformTD_Update`, `SqMatrix4_ScaleAxes`
-- `StAvatar_ApplyModes` calls `sub_102712E0`, `StAvatarScene_RotatePanZoomRoll`, `StAvatar_UpdateTransform`
+- `StAvatar_ApplyModes` calls `game_102712E0`, `StAvatarScene_RotatePanZoomRoll`, `StAvatar_UpdateTransform`
 - `StAvatarScene_RotatePanZoomRoll` calls `SqQuat_FromRotationY`, `SqQuat_FromRotationX`, `SqQuatMul_Mul`, `sqxfXformTD_Update`, `SqVec_SetXyz`, `SqQuatMul_RotateVec`, `SqQuat_FromRotationZ`, `SqQuat_Copy`
 - `StAvatar_ApplyEffectFlags` calls `StAvatar_UpdateAngles`
 - `StAvatar_UpdateAngles` calls `SqQuat_FromAxisAngle`, `SqQuatMul_Mul`, `SqQuat_Copy`, `sqxfXformTD_Update`, `SqMatrix4_ScaleAxes`
@@ -56,7 +56,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `StAvatar_SetSceneValue2` calls `SqsnScene_ShadowPreallocate`
 - `StAvatar_StoreParams` calls nothing directly
 - `StAvatar_StoreEntry` calls nothing directly
-- `StAvatar_SelectEntry` calls `StAvatar_StoreEntry`, `StAvatar_StoreParams`, `sub_102712E0`
+- `StAvatar_SelectEntry` calls `StAvatar_StoreEntry`, `StAvatar_StoreParams`, `game_102712E0`
 - `scnGetFlags` calls nothing directly
 - `StAvatar_InitEntry` calls `StAvatar_SetEntryColor`, `sqxfXformTD_Init`, `sqxfXformTD_Update`, `SqMatrix4_ScaleAxes`, `ModelMinMax_ComputeMinMax`, `StAvatar_SetEntryPosition`
 - `StAvatarScene_NoOpA` calls nothing directly
@@ -65,7 +65,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `StAvatar_SetFlag3` calls `SqsnScene_SetItemByte18`
 - `StAvatar_SetEntryFlag2` calls `SqQuat_Copy`, `SqQuat_Invert`, `SqQuatMul_Mul`
 - `StAvatar_SetEntryColor` calls nothing directly
-- `StAvatar_SetEntryTransform` calls `sub_1027EB10`, `SqVec_CopyVec3`, `SqQuat_Copy`
+- `StAvatar_SetEntryTransform` calls `game_1027EB10`, `SqVec_CopyVec3`, `SqQuat_Copy`
 - `StAvatar_ToggleFlag168` calls nothing directly
 - `StAvatar_SelectIndex` calls `SqsnScene_AddShadow`, `SqsnScene_SetItemDword28`
 - `StAvatarScene_NoOpB` calls nothing directly

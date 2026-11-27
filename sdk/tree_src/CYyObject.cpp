@@ -7,15 +7,15 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void * __thiscall CYyObject::Init(void * self)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self = &PTR_CYyObject_GetRuntimeClass_variant18_1032a9f8;
+  *(uint8_t ***)self = &ptr_to_CYyObject_GetRuntimeClass_variant18_1032A9F8;
   *(uint32_t *)((int)self + 8) = 0;
-  puVar2 = (uint32_t *)((int)self + 0xc);
-  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (uint32_t *)((int)self + 0xc);
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint8_t *)((int)self + 4) = 1;
   return self;

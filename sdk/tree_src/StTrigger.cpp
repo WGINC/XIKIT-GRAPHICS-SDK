@@ -4,127 +4,129 @@
 
 // FUNCTION: FFXIMAIN 0x10252CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl StTrigger_ProcessOpcodesUpToTime(uint32_t * param_1, uint32_t param_2, int param_3, undefined4 * param_4)
+XI_API int __cdecl StTrigger_ProcessOpcodesUpToTime(uint32_t * arg1, uint32_t arg2, int arg3, bits32 * arg4)
 {
-  int *piVar1;
+  int *p1;
   void *self_;
-  uint32_t uVar2;
-  undefined4 *puVar3;
-  int *piVar4;
-  int iVar5;
-  char *pcVar6;
-  char *pcVar7;
-  uint8_t bVar8;
-  uint64_t uVar9;
-  char xi_frame[28] __attribute__((aligned(4)));
-  int  &local_1c = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_18 = *reinterpret_cast<int  *>(xi_frame + 4);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  undefined4  (&local_10)[4] = *reinterpret_cast<undefined4  (*)[4]>(xi_frame + 12);
+  uint32_t u1;
+  bits32 *p2;
+  int *p3;
+  int i1;
+  char *p4;
+  char *p5;
+  uint8_t u2;
+  uint64_t u3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; bits32 u5[4]; };   // at 0xC
+  } frame;
   
-  uVar2 = param_2;
-  if (((int)param_2 < 0) || ((int)param_1[0xd] <= (int)param_2)) {
+  u1 = arg2;
+  if (((int)arg2 < 0) || ((int)arg1[0xd] <= (int)arg2)) {
     return -1;
   }
-  param_2 = 0;
-  if (((*param_1 & 4) != 0) && ((*param_1 & 8) != 0)) {
-    if (uVar2 != param_1[0xc]) {
-      param_1[1] = 0;
-      param_1[2] = 0;
-      param_1[0xc] = uVar2;
+  arg2 = 0;
+  if (((*arg1 & 4) != 0) && ((*arg1 & 8) != 0)) {
+    if (u1 != arg1[0xc]) {
+      arg1[1] = 0;
+      arg1[2] = 0;
+      arg1[0xc] = u1;
     }
-    piVar4 = (int *)(uVar2 * 0x10 + param_1[0xf]);
-    iVar5 = orig::sqopOpcodeGet(piVar4,&local_1c);
-    puVar3 = param_4;
-    if (iVar5 != -1) {
-      while (local_18 <= param_3) {
-        if (local_1c == 0) {
-          piVar1 = (int *)param_1[5];
-          if ((piVar1 != (int *)0x0) && (*piVar1 != 0)) {
-            orig::_sprintf((uint8_t *)local_10,&DAT_10350958,local_14);
-            uVar9 = orig::CMoResource_FindByTypeAndId_v1((void *)*piVar1,&param_4,0x3d,local_10[0]);
-            if (((undefined4 *)*(int *)uVar9 != (undefined4 *)0x0) &&
-               (self_ = *(void **)*(int *)uVar9, self_ != (void *)0x0)) {
-              iVar5 = 5;
-              bVar8 = true;
-              pcVar6 = (char *)local_10;
-              pcVar7 = &DAT_10389c64;
+    p3 = (int *)(u1 * 0x10 + arg1[0xf]);
+    i1 = orig::sqopOpcodeGet(p3,&frame.i2);
+    p2 = arg4;
+    if (i1 != -1) {
+      while (frame.i3 <= arg3) {
+        if (frame.i2 == 0) {
+          p1 = (int *)arg1[5];
+          if ((p1 != (int *)0x0) && (*p1 != 0)) {
+            orig::_sprintf((uint8_t *)frame.u5,&g_10350958,frame.u4);
+            u3 = orig::CMoResource_FindByTypeAndId_v1((void *)*p1,&arg4,0x3d,frame.u5[0]);
+            if (((bits32 *)*(int *)u3 != (bits32 *)0x0) &&
+               (self_ = *(void **)*(int *)u3, self_ != (void *)0x0)) {
+              i1 = 5;
+              u2 = true;
+              p4 = (char *)frame.u5;
+              p5 = &g_10389C64;
               do {
-                if (iVar5 == 0) break;
-                iVar5 = iVar5 + -1;
-                bVar8 = *pcVar6 == *pcVar7;
-                pcVar6 = pcVar6 + 1;
-                pcVar7 = pcVar7 + 1;
-              } while (bVar8);
-              if (bVar8) {
+                if (i1 == 0) break;
+                i1 = i1 + -1;
+                u2 = *p4 == *p5;
+                p4 = p4 + 1;
+                p5 = p5 + 1;
+              } while (u2);
+              if (u2) {
                 orig::SoundVolume_SetVolumeScalar(self_,0x40,0x7f);
-                param_2 = param_2 + 1;
-                goto LAB_10252e08;
+                arg2 = arg2 + 1;
+                goto code_10252E08;
               }
-              orig::SoundVolume_CreateSoundElem(self_,puVar3,0x40400000,0x41a00000,0x44000000,0x42800000,0,0,0x7f);
+              orig::SoundVolume_CreateSoundElem(self_,p2,0x40400000,0x41a00000,0x44000000,0x42800000,0,0,0x7f);
             }
           }
-          param_2 = param_2 + 1;
+          arg2 = arg2 + 1;
         }
-        else if (local_1c == 1) {
-          param_1[1] = local_14;
+        else if (frame.i2 == 1) {
+          arg1[1] = frame.u4;
         }
-        else if (local_1c == 2) {
-          param_1[2] = local_14;
+        else if (frame.i2 == 2) {
+          arg1[2] = frame.u4;
         }
-LAB_10252e08:
-        iVar5 = orig::sqopTrackAdvance(piVar4);
-        if (iVar5 == -1) {
-          local_18 = 0x7fffffff;
+code_10252E08:
+        i1 = orig::sqopTrackAdvance(p3);
+        if (i1 == -1) {
+          frame.i3 = 0x7fffffff;
         }
         else {
-          orig::sqopOpcodeGet(piVar4,&local_1c);
+          orig::sqopOpcodeGet(p3,&frame.i2);
         }
       }
     }
-    iVar5 = g_pAppInputState;
-    uVar2 = param_1[1];
-    if (0 < (int)uVar2) {
-      piVar4 = (int *)(g_pAppInputState + 0xdb4);
+    i1 = g_pAppInputState;
+    u1 = arg1[1];
+    if (0 < (int)u1) {
+      p3 = (int *)(g_pAppInputState + 0xdb4);
       *(uint8_t *)(g_pAppInputState + 0xdbc) = 1;
-      *(uint32_t *)(iVar5 + 0xdb4) = *piVar4 + uVar2;
+      *(uint32_t *)(i1 + 0xdb4) = *p3 + u1;
     }
-    iVar5 = g_pAppInputState;
-    uVar2 = param_1[2];
-    if (0 < (int)uVar2) {
-      piVar4 = (int *)(g_pAppInputState + 0xdb4);
+    i1 = g_pAppInputState;
+    u1 = arg1[2];
+    if (0 < (int)u1) {
+      p3 = (int *)(g_pAppInputState + 0xdb4);
       *(uint8_t *)(g_pAppInputState + 0xdbc) = 1;
-      *(uint32_t *)(iVar5 + 0xdb4) = *piVar4 + (uint32_t)(0x7f < (int)uVar2);
+      *(uint32_t *)(i1 + 0xdb4) = *p3 + (uint32_t)(0x7f < (int)u1);
     }
   }
-  return param_2;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10252EA0
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API int __cdecl StTrigger_FindIndexAtLeast(uint32_t * param_1, int param_2, int param_3)
+XI_API int __cdecl StTrigger_FindIndexAtLeast(uint32_t * arg1, int arg2, int arg3)
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar3;
+  int *p1;
+  int i1;
+  int *p2;
   
-  if ((((-1 < param_2) && (param_2 < (int)param_1[0xd])) && ((*param_1 & 4) != 0)) &&
-     ((*param_1 & 8) != 0)) {
-    param_1[1] = 0;
-    piVar1 = (int *)(param_2 * 0x10 + param_1[0xf]);
-    param_1[2] = 0;
-    if (piVar1[3] != 0) {
-      iVar2 = 0;
-      if (0 < piVar1[1]) {
-        piVar3 = (int *)(piVar1[3] + 4);
+  if ((((-1 < arg2) && (arg2 < (int)arg1[0xd])) && ((*arg1 & 4) != 0)) &&
+     ((*arg1 & 8) != 0)) {
+    arg1[1] = 0;
+    p1 = (int *)(arg2 * 0x10 + arg1[0xf]);
+    arg1[2] = 0;
+    if (p1[3] != 0) {
+      i1 = 0;
+      if (0 < p1[1]) {
+        p2 = (int *)(p1[3] + 4);
         do {
-          if (param_3 <= *piVar3) {
-            *piVar1 = iVar2;
-            return iVar2;
+          if (arg3 <= *p2) {
+            *p1 = i1;
+            return i1;
           }
-          piVar3 = piVar3 + 3;
-          iVar2 = iVar2 + 1;
-        } while (iVar2 < piVar1[1]);
+          p2 = p2 + 3;
+          i1 = i1 + 1;
+        } while (i1 < p1[1]);
       }
     }
   }
@@ -133,16 +135,16 @@ XI_API int __cdecl StTrigger_FindIndexAtLeast(uint32_t * param_1, int param_2, i
 
 // FUNCTION: FFXIMAIN 0x10252F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl StTrigger_RegisterCallbacks(int param_1, uint32_t param_2, uint32_t param_3)
+XI_API bits32 __cdecl StTrigger_RegisterCallbacks(int arg1, uint32_t arg2, uint32_t arg3)
 {
-  int iVar1;
+  int i1;
   
-  *(uint32_t *)(param_1 + 0xc) = param_3;
-  *(uint32_t *)(param_1 + 0x10) = param_2;
-  orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,param_3,0,0,param_1,(int)XI_GAME(0x10253020u),XI_CODE(StTrigger_AllocFromPool));
-  iVar1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,param_2,0,0,param_1,(int)XI_GAME(0x102530C0u),XI_CODE(StTrigger_AllocFromPool));
-  if (iVar1 < 0) {
-    orig::ErrorReport_NoOpVarargsA_v1(s_____Error__Trigger_file_not_foun_10389c6c,param_2);
+  *(uint32_t *)(arg1 + 0xc) = arg3;
+  *(uint32_t *)(arg1 + 0x10) = arg2;
+  orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,arg3,0,0,arg1,(int)XI_GAME(0x10253020u),XI_CODE(StTrigger_AllocFromPool));
+  i1 = orig::TextInputFiles_FileMngQueueFileNumKind2(g_pFileMng_as_v0,arg2,0,0,arg1,(int)XI_GAME(0x102530C0u),XI_CODE(StTrigger_AllocFromPool));
+  if (i1 < 0) {
+    orig::ErrorReport_NoOpVarargsA_v1(str_____Error__Trigger_file_not_foun_10389C6C,arg2);
     return 0xffffffff;
   }
   return 0;

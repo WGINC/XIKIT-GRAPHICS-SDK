@@ -7,7 +7,7 @@ class XI_API CMoCibRes {
 public:
     void SetupNop();  // 0x100719C0
     void Slot9Nop();  // 0x100719D0
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071AE0
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071AE0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2C];

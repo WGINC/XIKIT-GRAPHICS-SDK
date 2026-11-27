@@ -12,19 +12,19 @@ char ** __cdecl CMoDxStatusMng::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x1006B050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 * __thiscall CMoDxStatusMng::Constructor(void * self)
+bits32 * __thiscall CMoDxStatusMng::Constructor(void * self)
 {
   orig::MoDX_SetInvalid((void *)((int)self + 4));
-  *(uint8_t ***)self = &PTR_CMoDxStatusMng_GetRuntimeClass_1032c10c;
+  *(uint8_t ***)self = &ptr_to_CMoDxStatusMng_GetRuntimeClass_1032C10C;
   return self;
 }
 
 // FUNCTION: FFXIMAIN 0x1006B070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDxStatusMng::ScalarDeletingDtor(char a2)
+int * CMoDxStatusMng::ScalarDeletingDtor(char arg1)
 {
   orig::CMoDxStatusMng_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (int *)this;
 }

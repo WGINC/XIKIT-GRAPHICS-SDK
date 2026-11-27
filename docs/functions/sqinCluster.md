@@ -13,5 +13,5 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqinCluster.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `sqinCluster_Create` calls `sub_10275D80`, `sqinCluster_Init`
+- `sqinCluster_Create` calls `game_10275D80`, `sqinCluster_Init`
 - `sqinCluster_Init` calls `SqdfShape_InitCallbacks`, `SqMatrixConnect_SetIdentity`

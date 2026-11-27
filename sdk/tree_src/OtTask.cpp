@@ -10,13 +10,13 @@ XI_API void __cdecl CMoOt_InitSystem(void)
   
   self_ = (void *)orig::Mem_AllocDefault_v1(0x18);
   if (self_ == (void *)0x0) {
-    dword_1047BC94 = (void *)0x0;
+    g_1047BC94 = (void *)0x0;
   }
   else {
-    dword_1047BC94 = orig::CMoOT_Constructor(self_);
+    g_1047BC94 = orig::CMoOT_Constructor(self_);
   }
-  orig::OtLink_Init(dword_1047BC94,0x200,0.0f,512.0f);
-  orig::FUN_10074cc0(dword_1047D140_as_v1,XI_CODE(CMoOt_Update),0xc);
+  orig::OtLink_Init(g_1047BC94,0x200,0.0f,512.0f);
+  orig::game_10074CC0(g_1047D140_as_v1,XI_CODE(CMoOt_Update),0xc);
   return;
 }
 
@@ -25,7 +25,7 @@ XI_API void __cdecl CMoOt_InitSystem(void)
 XI_API void __cdecl CMoOt_Update(void)
 {
   orig::Zone_UpdateFogAmbient();
-  orig::OtLink_Free(dword_1047BC94);
-  orig::OtLink_RelinkEntries(dword_1047BC94);
+  orig::OtLink_Free(g_1047BC94);
+  orig::OtLink_RelinkEntries(g_1047BC94);
   return;
 }

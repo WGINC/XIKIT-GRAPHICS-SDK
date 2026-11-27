@@ -11,11 +11,11 @@ char ** __cdecl CShader::GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10017780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int * CShader::ScalarDeletingDtor(char a2)
+unsigned int * CShader::ScalarDeletingDtor(char arg1)
 {
   orig::CShader_Destructor(this);
-  if ( (a2 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
   return (unsigned int *)this;
 }
 
@@ -24,16 +24,16 @@ unsigned int * CShader::ScalarDeletingDtor(char a2)
 int CShader::CShader_Destructor()
 {
   int result;
-  unsigned int v3;
-  result = (*(unsigned __int32 *)((char *)this + 0x8));
+  unsigned int Handle;
+  result = (*(unsigned int *)((char *)this + 0x8));
   (*(void * *)&this->vftable) = &CShader_vtbl;
   if ( result != 0 )
   {
-    result = (*(int (__stdcall **)(int))(*(_DWORD *)result + 8))(result);
-    (*(unsigned __int32 *)((char *)this + 0x8)) = 0;
+    result = (*(int (__stdcall **)(int))(*(uint32_t *)result + 8))(result);
+    (*(unsigned int *)((char *)this + 0x8)) = 0;
   }
-  v3 = (*(unsigned __int32 *)((char *)this + 0x10));
-  if ( v3 != 0 )
-    return (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), v3);
+  Handle = (*(unsigned int *)((char *)this + 0x10));
+  if ( Handle != 0 )
+    return (g_pCDx->pDevice)->lpVtbl->DeleteVertexShader((g_pCDx->pDevice), Handle);
   return result;
 }

@@ -4,109 +4,109 @@
 
 // FUNCTION: FFXIMAIN 0x1024D180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl StAvatar_Teardown(uint32_t * param_1, uint32_t param_2, uint32_t param_3)
+XI_API uint32_t __cdecl StAvatar_Teardown(uint32_t * arg1, uint32_t arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   uint32_t *xi_eax;
   
-  if ((int)param_2 < 0) {
-    param_2 = param_1[2];
+  if ((int)arg2 < 0) {
+    arg2 = arg1[2];
   }
-  if (((param_2 == param_1[2]) && (param_1 + 0x2a != (uint32_t *)0x0)) && ((param_1[0x2a] & 4) != 0)) {
-    if (param_3 != param_1[3]) {
-      *param_1 = *param_1 | 0x80;
-      uVar1 = orig::StAvatar_SetPending(param_1,param_3);
-      return uVar1;
+  if (((arg2 == arg1[2]) && (arg1 + 0x2a != (uint32_t *)0x0)) && ((arg1[0x2a] & 4) != 0)) {
+    if (arg3 != arg1[3]) {
+      *arg1 = *arg1 | 0x80;
+      u1 = orig::StAvatar_SetPending(arg1,arg3);
+      return u1;
     }
-    return param_3;
+    return arg3;
   }
-  *param_1 = *param_1 & 0xffffff7f;
-  xi_eax = param_1;
-  if (param_1[1] == 1) {
-    xi_eax = (uint32_t *)orig::StAvatar_StopAndFreeBuffers((int)param_1);
+  *arg1 = *arg1 & 0xffffff7f;
+  xi_eax = arg1;
+  if (arg1[1] == 1) {
+    xi_eax = (uint32_t *)orig::StAvatar_StopAndFreeBuffers((int)arg1);
   }
-  orig::StAvatar_SetStopped(param_1,0,xi_eax);
-  orig::StAvatar_Reset((int)param_1);
-  orig::StAvatar_ReleaseResources(param_1,1);
-  orig::StAvatar_RegisterTriggers((int)param_1,param_2);
-  if ((*param_1 & 0x20) == 0) {
-    uVar1 = (uint32_t)(uint8_t)((uint8_t *)((&DAT_10389578)))[param_2];
+  orig::StAvatar_SetStopped(arg1,0,xi_eax);
+  orig::StAvatar_Reset((int)arg1);
+  orig::StAvatar_ReleaseResources(arg1,1);
+  orig::StAvatar_RegisterTriggers((int)arg1,arg2);
+  if ((*arg1 & 0x20) == 0) {
+    u1 = (uint32_t)(uint8_t)((uint8_t *)((&g_10389578)))[arg2];
   }
   else {
-    uVar1 = 0xa9;
+    u1 = 0xa9;
   }
-  orig::FUN_10037960(uVar1);
-  orig::StAvatar_SetTableValues((uint8_t *)param_1,param_2);
-  param_1[2] = param_2;
-  param_1[3] = param_3;
-  param_1[1] = 1;
-  uVar1 = *(uint32_t *)(((char *)&DAT_10389538) + param_2 * 4);
-  if ((*param_1 & 0x20) == 0) {
-    uVar1 = uVar1 + 2;
+  orig::StAvatar_SwitchMusicTask_as_v0(u1);
+  orig::StAvatar_SetTableValues((uint8_t *)arg1,arg2);
+  arg1[2] = arg2;
+  arg1[3] = arg3;
+  arg1[1] = 1;
+  u1 = *(uint32_t *)(((char *)&g_10389538) + arg2 * 4);
+  if ((*arg1 & 0x20) == 0) {
+    u1 = u1 + 2;
   }
-  orig::StModelItem_ReadStart((int)(param_1 + 0x2a),uVar1);
-  orig::StAvatar_SetChannel((uint8_t *)param_1,param_2,param_3);
-  orig::StModelItem_ReadStart((int)(param_1 + 0x33),*(int *)(((char *)&DAT_10389538) + param_2 * 4) + 4 + param_3 * 2);
-  param_1[0x13] = 0x47c35000;
-  *param_1 = *param_1 & 0xfffff9ff;
-  param_1[0x1e] = 0;
-  param_1[0x1f] = 0;
-  param_1[0x20] = 0;
-  param_1[0x21] = 0;
+  orig::StModelItem_ReadStart((int)(arg1 + 0x2a),u1);
+  orig::StAvatar_SetChannel((uint8_t *)arg1,arg2,arg3);
+  orig::StModelItem_ReadStart((int)(arg1 + 0x33),*(int *)(((char *)&g_10389538) + arg2 * 4) + 4 + arg3 * 2);
+  arg1[0x13] = 0x47c35000;
+  *arg1 = *arg1 & 0xfffff9ff;
+  arg1[0x1e] = 0;
+  arg1[0x1f] = 0;
+  arg1[0x20] = 0;
+  arg1[0x21] = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1024D2C0
 // GATE: PASS -- 100 trials, 50 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 50
-XI_API undefined4 __cdecl StAvatar_ReleaseResources(uint32_t * param_1, int param_2)
+XI_API bits32 __cdecl StAvatar_ReleaseResources(uint32_t * arg1, int arg2)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
-  uint32_t uVar3;
-  int iVar4;
+  uint32_t u1;
+  uint32_t *p1;
+  uint32_t u2;
+  int i1;
   
-  orig::StModelItem_ClearModelItem((uint8_t *)(param_1 + 0x33));
-  if (param_2 != 0) {
-    orig::StModelItem_ClearModelItem((uint8_t *)(param_1 + 0x2a));
+  orig::StModelItem_ClearModelItem((uint8_t *)(arg1 + 0x33));
+  if (arg2 != 0) {
+    orig::StModelItem_ClearModelItem((uint8_t *)(arg1 + 0x2a));
   }
-  puVar2 = param_1 + 0x89;
-  iVar4 = 4;
+  p1 = arg1 + 0x89;
+  i1 = 4;
   do {
-    orig::StChannelItemClear(puVar2);
-    puVar2 = puVar2 + -7;
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
-  if (param_2 != 0) {
-    puVar2 = param_1 + 0x6d;
-    iVar4 = 4;
+    orig::StChannelItemClear(p1);
+    p1 = p1 + -7;
+    i1 = i1 + -1;
+  } while (i1 != 0);
+  if (arg2 != 0) {
+    p1 = arg1 + 0x6d;
+    i1 = 4;
     do {
-      orig::StChannelItemClear(puVar2);
-      puVar2 = puVar2 + -7;
-      iVar4 = iVar4 + -1;
-    } while (iVar4 != 0);
-    uVar3 = 3;
-    puVar2 = param_1 + 0x53;
+      orig::StChannelItemClear(p1);
+      p1 = p1 + -7;
+      i1 = i1 + -1;
+    } while (i1 != 0);
+    u2 = 3;
+    p1 = arg1 + 0x53;
     do {
-      orig::StChannelItemClear(puVar2 + -2);
-      uVar1 = uVar3 & 1;
-      uVar3 = uVar3 - 1;
-      *puVar2 = -uVar1 - 1;
-      puVar2 = puVar2 + -7;
-    } while (-1 < (int)uVar3);
-    orig::StAvatar_ClearResource(param_1 + 0x90);
+      orig::StChannelItemClear(p1 + -2);
+      u1 = u2 & 1;
+      u2 = u2 - 1;
+      *p1 = -u1 - 1;
+      p1 = p1 + -7;
+    } while (-1 < (int)u2);
+    orig::StAvatar_ClearResource(arg1 + 0x90);
   }
-  iVar4 = 0x934;
-  *param_1 = *param_1 & 0xffffdfff;
+  i1 = 0x934;
+  *arg1 = *arg1 & 0xffffdfff;
   do {
-    if (*(int *)(iVar4 + g_pSqgxContext_as_s32) != 0) {
-      orig::sqFree_v1(*(int *)(iVar4 + g_pSqgxContext_as_s32),s_D__build0001_FFXi_Win_Main_dance_1038969c,0x160);
-      *(uint32_t *)(iVar4 + g_pSqgxContext_as_s32) = 0;
-      *(uint32_t *)(iVar4 + 0x10 + g_pSqgxContext_as_s32) = 0;
+    if (*(int *)(i1 + g_pSqgxContext_as_s32) != 0) {
+      orig::sqFree_v1(*(int *)(i1 + g_pSqgxContext_as_s32),str_D__build0001_FFXi_Win_Main_dance_1038969C,0x160);
+      *(uint32_t *)(i1 + g_pSqgxContext_as_s32) = 0;
+      *(uint32_t *)(i1 + 0x10 + g_pSqgxContext_as_s32) = 0;
     }
-    iVar4 = iVar4 + 4;
-  } while (iVar4 < 0x93c);
+    i1 = i1 + 4;
+  } while (i1 < 0x93c);
   if (*(int *)(g_pSqgxContext_as_s32 + 0x93c) != 0) {
-    orig::sqFree_v1(*(int *)(g_pSqgxContext_as_s32 + 0x93c),s_D__build0001_FFXi_Win_Main_dance_1038969c,0x167);
+    orig::sqFree_v1(*(int *)(g_pSqgxContext_as_s32 + 0x93c),str_D__build0001_FFXi_Win_Main_dance_1038969C,0x167);
     *(uint32_t *)(g_pSqgxContext_as_s32 + 0x93c) = 0;
     *(uint32_t *)(g_pSqgxContext_as_s32 + 0x94c) = 0;
   }

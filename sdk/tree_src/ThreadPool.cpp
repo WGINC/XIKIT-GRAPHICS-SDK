@@ -4,13 +4,13 @@
 
 // FUNCTION: FFXIMAIN 0x10039670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ThreadPool_CreateSuspendedThread(void * self_, LPTHREAD_START_ROUTINE param_1, LPVOID param_2, undefined4 xi_s3)
+XI_API void __thiscall ThreadPool_CreateSuspendedThread(void * self_, LPTHREAD_START_ROUTINE arg2, LPVOID arg3, bits32 xi_s3)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = CreateThread(0,0,param_1,param_2,4,(int)self_ + 0xc);
-  *(int *)((int)self_ + 8) = iVar1;
-  if (iVar1 != 0) {
+  i1 = CreateThread(0,0,arg2,arg3,4,(int)self_ + 0xc);
+  *(int *)((int)self_ + 8) = i1;
+  if (i1 != 0) {
     *(uint8_t *)((int)self_ + 4) = 1;
     *(uint8_t *)((int)self_ + 5) = 0;
   }
@@ -21,7 +21,7 @@ XI_API void __thiscall ThreadPool_CreateSuspendedThread(void * self_, LPTHREAD_S
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Thread_ResumeAndWait(void * self_)
 {
-  int iVar1;
+  int i1;
   
   if (*(int *)((int)self_ + 8) != 0) {
     if (*(char *)((int)self_ + 4) == '\x01') {
@@ -30,7 +30,7 @@ XI_API void __thiscall Thread_ResumeAndWait(void * self_)
       *(uint8_t *)((int)self_ + 5) = 1;
     }
     if (*(char *)((int)self_ + 5) == '\x01') {
-      while (iVar1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 8),0), iVar1 == 0x102) {
+      while (i1 = WaitForSingleObject(*(uint32_t *)((int)self_ + 8),0), i1 == 0x102) {
         Sleep(1);
         if (*(char *)((int)self_ + 5) != '\x01') {
           return;

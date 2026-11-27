@@ -16,4 +16,4 @@ Why the file has this name (data/unit_names.json): KzMotionQueList_AdvanceAll / 
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `KzMotionQueList_AdvanceAll` calls `QueTimeStep_StepStateByTime`
-- `KzMotionQueList_NotifyAll` calls `sub_10084620`
+- `KzMotionQueList_NotifyAll` calls `game_10084620`

@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): Actor_CountAll; called from t
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `Actor_CountAll` calls `sub_10085240`, `sub_10085270`
+- `Actor_CountAll` calls `game_10085240`, `game_10085270`

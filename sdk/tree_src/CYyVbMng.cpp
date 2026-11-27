@@ -5,127 +5,127 @@
 
 // FUNCTION: FFXIMAIN 0x1003B210
 // GATE: PASS -- 100 trials, 100 returned normally, 105 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CYyVbMng::AcquireVertexBuffer(int a2, int a3, int a4, int a5, int *a6, char a7)
+int CYyVbMng::AcquireVertexBuffer(int arg1, int Usage, int FVF, int arg4, int *arg5, char arg6)
 {
-  _DWORD * self = reinterpret_cast<_DWORD *>(this);  // byte-exact view for the rest
-  _DWORD *v7;
-  _DWORD *v8;
-  unsigned int v9;
-  _DWORD *v10;
-  _DWORD *v11;
-  int v12;
-  unsigned int v13;
-  _DWORD *v14;
-  int v15;
-  int v16;
+  uint32_t * self = reinterpret_cast<uint32_t *>(this);  // byte-exact view for the rest
+  uint32_t *p1;
+  uint32_t *p2;
+  unsigned int Length;
+  uint32_t *p3;
+  uint32_t *p4;
+  int i1;
+  unsigned int u2;
+  uint32_t *p5;
+  int i2;
+  int i3;
   IDirect3DDevice8 *pDevice;
-  _DWORD *v19;
-  _DWORD *v20;
-  int v21;
-  int v23;
-  v7 = self;
-  v8 = nullptr;
-  v23 = -1;
-  v9 = 2000 * ((unsigned int)(((unsigned int)(a2 + 1999) * (unsigned __int64)(unsigned int)&c_div2000Magic) >> 32) >> 7);
-  if ( a7 != 0 )
-    goto LABEL_26;
-  v10 = *(_DWORD **)(g_pVertexBufferListHead + 8);
-  v11 = v10;
-  if ( v10 == nullptr )
-    goto LABEL_15;
+  uint32_t *p6;
+  uint32_t *p7;
+  int i4;
+  int i5;
+  p1 = self;
+  p2 = nullptr;
+  i5 = -1;
+  Length = 2000 * ((unsigned int)(((unsigned int)(arg1 + 1999) * (unsigned long long)(unsigned int)&c_div2000Magic) >> 32) >> 7);
+  if ( arg6 != 0 )
+    goto L1;
+  p3 = *(uint32_t **)(g_pVertexBufferListHead + 8);
+  p4 = p3;
+  if ( p3 == nullptr )
+    goto L2;
   while ( 1 )
   {
-    v12 = v11[2];
-    if ( v11[4] == a3 && v11[6] == a5 && v11[5] == a4 && v11[1] == 0 )
+    i1 = p4[2];
+    if ( p4[4] == Usage && p4[6] == arg4 && p4[5] == FVF && p4[1] == 0 )
       break;
-LABEL_12:
-    v11 = (_DWORD *)v11[2];
-    if ( v12 == 0 )
-      goto LABEL_15;
+L3:
+    p4 = (uint32_t *)p4[2];
+    if ( i1 == 0 )
+      goto L2;
   }
-  v13 = v11[3];
-  if ( v13 != v9 )
+  u2 = p4[3];
+  if ( u2 != Length )
   {
-    if ( v13 >= v9 && (v8 == nullptr || v8[3] > v13) )
-      v8 = v11;
-    goto LABEL_12;
+    if ( u2 >= Length && (p2 == nullptr || p2[3] > u2) )
+      p2 = p4;
+    goto L3;
   }
-  v8 = v11;
-LABEL_15:
-  if ( v10 != nullptr )
+  p2 = p4;
+L2:
+  if ( p3 != nullptr )
   {
     do
     {
-      v14 = (_DWORD *)v10[2];
-      if ( v8 != v10 )
+      p5 = (uint32_t *)p3[2];
+      if ( p2 != p3 )
       {
-        v15 = v10[1];
-        if ( v15 != 0 )
+        i2 = p3[1];
+        if ( i2 != 0 )
         {
-          if ( v15 < 3 )
-            v10[1] = v15 - 1;
+          if ( i2 < 3 )
+            p3[1] = i2 - 1;
         }
         else if ( (int)this->pooledBufferCount > 300 )
         {
-          (*(void (__thiscall **)(_DWORD *, int))(*v10 + 24))(v10, 1);
+          (*(void (__thiscall **)(uint32_t *, int))(*p3 + 24))(p3, 1);
           --this->pooledBufferCount;
         }
       }
-      v10 = v14;
+      p3 = p5;
     }
-    while ( v14 != nullptr );
-    v7 = self;
+    while ( p5 != nullptr );
+    p1 = self;
   }
-  if ( v8 != nullptr )
+  if ( p2 != nullptr )
   {
-    v16 = v8[7];
-    v8[1] = 3;
-    *a6 = v16;
+    i3 = p2[7];
+    p2[1] = 3;
+    *arg5 = i3;
     return 0;
   }
-LABEL_26:
+L1:
   pDevice = (g_pCDx->pDevice);
   if ( pDevice == nullptr )
-    return v23;
-  v23 = pDevice->CreateVertexBuffer(v9, a3, a4, (D3DPOOL)a5, (IDirect3DVertexBuffer8 **)a6);
-  if ( v23 < 0 )
-    return v23;
-  v19 = orig::Mem_AllocDefault(32);
-  if ( v19 == nullptr )
+    return i5;
+  i5 = pDevice->CreateVertexBuffer(Length, Usage, FVF, (D3DPOOL)arg4, (IDirect3DVertexBuffer8 **)arg5);
+  if ( i5 < 0 )
+    return i5;
+  p6 = orig::Mem_AllocDefault(32);
+  if ( p6 == nullptr )
     return -1;
-  v20 = orig::CYyVb_Constructor(v19, v9, a3, a4, a5, *a6);
-  if ( v20 == nullptr )
+  p7 = orig::CYyVb_Constructor(p6, Length, Usage, FVF, arg4, *arg5);
+  if ( p7 == nullptr )
     return -1;
-  if ( a7 != 0 )
+  if ( arg6 != 0 )
   {
-    v20[1] = 4;
+    p7[1] = 4;
   }
   else
   {
-    v21 = v7[2];
-    ++v7[1];
-    v7[2] = v9 + v21;
+    i4 = p1[2];
+    ++p1[1];
+    p1[2] = Length + i4;
   }
-  return v23;
+  return i5;
 }
 
 // FUNCTION: FFXIMAIN 0x1003B3C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __stdcall CYyVbMng::ReleaseVertexBuffer(int * param_1)
+bits32 __stdcall CYyVbMng::ReleaseVertexBuffer(int * arg1)
 {
-  int *piVar1;
-  int iVar2;
+  int *p1;
+  int i1;
   
-  iVar2 = *(int *)(g_pVertexBufferListHead + 8);
-  if (iVar2 != 0) {
-    while ((piVar1 = (int *)(iVar2 + 8), *(int *)(iVar2 + 4) != 3 ||
-           (*(int *)(iVar2 + 0x1c) != *param_1))) {
-      iVar2 = *piVar1;
-      if (*piVar1 == 0) {
+  i1 = *(int *)(g_pVertexBufferListHead + 8);
+  if (i1 != 0) {
+    while ((p1 = (int *)(i1 + 8), *(int *)(i1 + 4) != 3 ||
+           (*(int *)(i1 + 0x1c) != *arg1))) {
+      i1 = *p1;
+      if (*p1 == 0) {
         return 0;
       }
     }
-    *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + -1;
+    *(int *)(i1 + 4) = *(int *)(i1 + 4) + -1;
   }
   return 0;
 }

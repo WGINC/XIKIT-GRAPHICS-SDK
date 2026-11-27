@@ -31,7 +31,7 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Camera_PlaceRelativeToActor` calls `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateX`, `Mat4_PostRotateY`, `Mat4_PostRotateZ`, `Mat4_SetTranslation`, `Mat4_TransformPoint`, `Vec3_Copy`, `Camera_SetPosition`, `Camera_SetTargetIfMoved`, `Mat4_SetRow3`, `Mat4_TransformPointInPlace`, `Camera_SnapshotState`, `MathVector_Nop`
 - `Camera_DiffersFromSaved` calls nothing directly
 - `Camera_SnapshotState` calls `Camera_BuildLookAtView`, `Vec3_Copy`
-- `Camera_BuildLookAtView` calls `Vec3_Copy`, `Vec3_Sub`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateZ`, `Mat4_PostRotateY`, `Mat4_PostRotateX`, `Mat4_TransformNormalInPlace`, `sub_100274B0`, `Vec3_Add_10026FA0`, `sub_102D7FF9`, `Occlusion_AreAll16FloatsAccepted`, `Mat4_Copy`, `MathVector_Nop`
+- `Camera_BuildLookAtView` calls `Vec3_Copy`, `Vec3_Sub`, `MathVector_ReturnThis`, `Mat4_SetIdentity`, `Mat4_PostRotateZ`, `Mat4_PostRotateY`, `Mat4_PostRotateX`, `Mat4_TransformNormalInPlace`, `game_100274B0`, `Vec3_Add_10026FA0`, `game_102D7FF9`, `Occlusion_AreAll16FloatsAccepted`, `Mat4_Copy`, `MathVector_Nop`
 - `Actor_ClearIndexTable` calls nothing directly
 - `Actor_GetPercentScaleByIndex` calls `ErrorReport_NoOpVarargsB`
 - `Actor_MapPercentScaleIndex` calls nothing directly

@@ -4,19 +4,19 @@
 
 // FUNCTION: FFXIMAIN 0x1026E2F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl sqrdLight_Init(undefined4 * param_1)
+XI_API void __cdecl sqrdLight_Init(bits32 * arg1)
 {
-  param_1[5] = 0x3f800000;
-  param_1[6] = 0x3f800000;
-  param_1[7] = 0x3f800000;
-  param_1[8] = 0x3f800000;
-  *param_1 = 0x70002;
-  param_1[9] = 0;
-  param_1[0xb] = 0;
-  param_1[2] = &LAB_1026e2b0;
-  param_1[3] = XI_CODE(FUN_1026e2c0);
-  param_1[4] = XI_CODE(FUN_1026e350);
-  param_1[0xc] = 1;
-  param_1[0xd] = 1;
+  arg1[5] = 0x3f800000;
+  arg1[6] = 0x3f800000;
+  arg1[7] = 0x3f800000;
+  arg1[8] = 0x3f800000;
+  *arg1 = 0x70002;
+  arg1[9] = 0;
+  arg1[0xb] = 0;
+  arg1[2] = &sqrdLightValidate_Stub;
+  arg1[3] = XI_CODE(sqrdLightDestroy);
+  arg1[4] = XI_CODE(sqrdLightPrint);
+  arg1[0xc] = 1;
+  arg1[0xd] = 1;
   return;
 }

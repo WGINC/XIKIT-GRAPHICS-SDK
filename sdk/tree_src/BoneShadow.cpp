@@ -30,206 +30,210 @@ XI_API void __cdecl BoneShadow_Nop(void)
 
 // FUNCTION: FFXIMAIN 0x10032B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Quat_Multiply(void * self_, float * param_1, float * param_2)
+XI_API bits32 __thiscall Quat_Multiply(void * self_, float * arg2, float * arg3)
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float fVar13;
-  float fVar14;
-  float fVar15;
-  float fVar16;
-  float fVar17;
-  float fVar18;
-  float fVar19;
-  float fVar20;
-  float fVar21;
-  float fVar22;
-  float fVar23;
-  float fVar24;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  float f1;
+  float f2;
+  float f3;
+  float f4;
+  float f5;
+  float f6;
+  float f7;
+  float f8;
+  float f9;
+  float f10;
+  float f11;
+  float f12;
+  float f13;
+  float f14;
+  float f15;
+  float f16;
+  float f17;
+  float f18;
+  float f19;
+  float f20;
+  float f21;
+  float f22;
+  float f23;
+  float f24;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u1[16]; };   // at 0x0
+  } frame;
   
-  orig::Quat_SetIdentityChained(local_10);
-  fVar1 = *param_2;
-  fVar2 = *(float *)((int)self_ + 8);
-  fVar3 = *(float *)self_;
-  fVar4 = param_2[2];
-  fVar5 = param_2[1];
-  fVar6 = *(float *)self_;
-  fVar7 = *(float *)((int)self_ + 4);
-  fVar8 = *param_2;
-  fVar9 = param_2[3];
-  fVar10 = *(float *)((int)self_ + 0xc);
-  fVar11 = *param_2;
-  fVar12 = *(float *)self_;
-  fVar13 = param_2[1];
-  fVar14 = *(float *)((int)self_ + 4);
-  fVar15 = param_2[2];
-  fVar16 = *(float *)((int)self_ + 8);
-  fVar17 = param_2[1];
-  fVar18 = *(float *)((int)self_ + 0xc);
-  fVar19 = param_2[3];
-  fVar20 = *(float *)((int)self_ + 4);
-  fVar21 = param_2[3];
-  fVar22 = *(float *)((int)self_ + 8);
-  fVar23 = param_2[2];
-  fVar24 = *(float *)((int)self_ + 0xc);
-  *param_1 = (float)((long double)*param_2 * (long double)*(float *)((int)self_ + 0xc) +
-                     (long double)param_2[3] * (long double)*(float *)self_ +
-                    ((long double)*(float *)((int)self_ + 4) * (long double)param_2[2] -
-                    (long double)param_2[1] * (long double)*(float *)((int)self_ + 8)));
-  param_1[1] = (float)((long double)fVar19 * (long double)fVar20 + (long double)fVar17 * (long double)fVar18 +
-                      ((long double)fVar1 * (long double)fVar2 - (long double)fVar3 * (long double)fVar4));
-  param_1[2] = (float)((long double)fVar23 * (long double)fVar24 + (long double)fVar21 * (long double)fVar22 +
-                      (long double)(float)((long double)fVar5 * (long double)fVar6 -
-                                      (long double)fVar7 * (long double)fVar8));
-  param_1[3] = (float)((long double)fVar9 * (long double)fVar10 -
-                      ((long double)fVar15 * (long double)fVar16 +
-                      (long double)fVar13 * (long double)fVar14 + (long double)fVar11 * (long double)fVar12));
-  return param_1;
+  orig::Quat_SetIdentityChained(frame.u1);
+  f1 = *arg3;
+  f2 = *(float *)((int)self_ + 8);
+  f3 = *(float *)self_;
+  f4 = arg3[2];
+  f5 = arg3[1];
+  f6 = *(float *)self_;
+  f7 = *(float *)((int)self_ + 4);
+  f8 = *arg3;
+  f9 = arg3[3];
+  f10 = *(float *)((int)self_ + 0xc);
+  f11 = *arg3;
+  f12 = *(float *)self_;
+  f13 = arg3[1];
+  f14 = *(float *)((int)self_ + 4);
+  f15 = arg3[2];
+  f16 = *(float *)((int)self_ + 8);
+  f17 = arg3[1];
+  f18 = *(float *)((int)self_ + 0xc);
+  f19 = arg3[3];
+  f20 = *(float *)((int)self_ + 4);
+  f21 = arg3[3];
+  f22 = *(float *)((int)self_ + 8);
+  f23 = arg3[2];
+  f24 = *(float *)((int)self_ + 0xc);
+  *arg2 = (float)(*arg3 * *(float *)((int)self_ + 0xc) +
+                     arg3[3] * *(float *)self_ +
+                    (*(float *)((int)self_ + 4) * arg3[2] -
+                    arg3[1] * *(float *)((int)self_ + 8)));
+  arg2[1] = (float)(f19 * f20 + f17 * f18 +
+                      (f1 * f2 - f3 * f4));
+  arg2[2] = (float)(f23 * f24 + f21 * f22 +
+                      (float)(f5 * f6 -
+                                      f7 * f8));
+  arg2[3] = (float)(f9 * f10 -
+                      (f15 * f16 +
+                      f13 * f14 + f11 * f12));
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10032DA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Quat_NormalizeInPlace(void * self_)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = (long double)*(float *)((int)self_ + 0xc) * (long double)*(float *)((int)self_ + 0xc) +
-          (long double)*(float *)((int)self_ + 8) * (long double)*(float *)((int)self_ + 8) +
-          (long double)*(float *)((int)self_ + 4) * (long double)*(float *)((int)self_ + 4) +
-          (long double)*(float *)self_ * (long double)*(float *)self_;
-  if (!(fVar1 > (long double)0.0)) {
-    fVar1 = (long double)1.0f;
+  f1 = *(float *)((int)self_ + 0xc) * *(float *)((int)self_ + 0xc) +
+          *(float *)((int)self_ + 8) * *(float *)((int)self_ + 8) +
+          *(float *)((int)self_ + 4) * *(float *)((int)self_ + 4) +
+          *(float *)self_ * *(float *)self_;
+  if (!(f1 > 0.0)) {
+    f1 = 1.0f;
   }
   else {
-    fVar1 = (long double)1.0 / SQRT(fVar1);
+    f1 = 1.0 / x87_fsqrt(f1);
   }
-  *(float *)self_ = (float)(fVar1 * (long double)*(float *)self_);
-  *(float *)((int)self_ + 4) = (float)(fVar1 * (long double)*(float *)((int)self_ + 4));
-  *(float *)((int)self_ + 8) = (float)(fVar1 * (long double)*(float *)((int)self_ + 8));
-  *(float *)((int)self_ + 0xc) = (float)(fVar1 * (long double)*(float *)((int)self_ + 0xc));
+  *(float *)self_ = (float)(f1 * *(float *)self_);
+  *(float *)((int)self_ + 4) = (float)(f1 * *(float *)((int)self_ + 4));
+  *(float *)((int)self_ + 8) = (float)(f1 * *(float *)((int)self_ + 8));
+  *(float *)((int)self_ + 0xc) = (float)(f1 * *(float *)((int)self_ + 0xc));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10032FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall BoneShadow_FromQuat(void * self_, float * param_1)
+XI_API void __thiscall BoneShadow_FromQuat(void * self_, float * arg2)
 {
-  long double fVar1;
-  long double fVar2;
-  long double fVar3;
-  long double fVar4;
-  float fVar5;
-  long double fVar6;
-  long double fVar7;
-  long double fVar8;
-  long double fVar9;
-  long double fVar10;
-  long double fVar11;
+  long double f1;
+  long double f2;
+  long double f3;
+  long double f4;
+  float f5;
+  long double f6;
+  long double f7;
+  long double f8;
+  long double f9;
+  long double f10;
+  long double f11;
   
-  fVar9 = (long double)*(float *)self_ * (long double)*(float *)self_;
-  fVar10 = (long double)*(float *)((int)self_ + 4) * (long double)*(float *)((int)self_ + 4);
-  fVar11 = (long double)*(float *)((int)self_ + 8) * (long double)*(float *)((int)self_ + 8);
-  fVar6 = (long double)*(float *)((int)self_ + 4) * (long double)*(float *)self_;
-  fVar1 = (float)((long double)*(float *)((int)self_ + 8) * (long double)*(float *)((int)self_ + 4));
-  fVar7 = (long double)*(float *)((int)self_ + 8) * (long double)*(float *)((int)self_ + 0xc);
-  fVar2 = (float)((long double)*(float *)((int)self_ + 8) * (long double)*(float *)self_);
-  fVar3 = (float)((long double)*(float *)((int)self_ + 4) * (long double)*(float *)((int)self_ + 0xc));
-  fVar4 = *(float *)((int)self_ + 0xc);
-  fVar5 = *(float *)self_;
-  param_1[3] = 0.0f;
-  param_1[7] = 0.0f;
-  param_1[0xb] = 0.0f;
-  param_1[0xe] = 0.0f;
-  fVar4 = (float)((long double)fVar4 * (long double)fVar5);
-  fVar8 = fVar11 + fVar10;
-  param_1[0xd] = 0.0f;
-  param_1[0xc] = 0.0f;
-  *param_1 = (float)((long double)1.0f - (fVar8 + fVar8));
-  fVar8 = fVar7 + fVar6;
-  param_1[1] = (float)(fVar8 + fVar8);
-  fVar8 = (long double)fVar2 - (long double)fVar3;
-  param_1[2] = (float)(fVar8 + fVar8);
-  fVar6 = fVar6 - fVar7;
-  param_1[4] = (float)(fVar6 + fVar6);
-  fVar11 = fVar11 + fVar9;
-  param_1[5] = (float)((long double)1.0f - (fVar11 + fVar11));
-  fVar7 = (long double)fVar4 + (long double)fVar1;
-  param_1[6] = (float)(fVar7 + fVar7);
-  fVar7 = (long double)fVar3 + (long double)fVar2;
-  param_1[8] = (float)(fVar7 + fVar7);
-  fVar7 = (long double)fVar1 - (long double)fVar4;
-  param_1[9] = (float)(fVar7 + fVar7);
-  fVar10 = fVar10 + fVar9;
-  param_1[10] = (float)((long double)1.0f - (fVar10 + fVar10));
-  param_1[0xf] = 1.0f;
+  f9 = *(float *)self_ * *(float *)self_;
+  f10 = *(float *)((int)self_ + 4) * *(float *)((int)self_ + 4);
+  f11 = *(float *)((int)self_ + 8) * *(float *)((int)self_ + 8);
+  f6 = *(float *)((int)self_ + 4) * *(float *)self_;
+  f1 = (float)(*(float *)((int)self_ + 8) * *(float *)((int)self_ + 4));
+  f7 = *(float *)((int)self_ + 8) * *(float *)((int)self_ + 0xc);
+  f2 = (float)(*(float *)((int)self_ + 8) * *(float *)self_);
+  f3 = (float)(*(float *)((int)self_ + 4) * *(float *)((int)self_ + 0xc));
+  f4 = *(float *)((int)self_ + 0xc);
+  f5 = *(float *)self_;
+  arg2[3] = 0.0f;
+  arg2[7] = 0.0f;
+  arg2[0xb] = 0.0f;
+  arg2[0xe] = 0.0f;
+  f4 = (float)(f4 * f5);
+  f8 = f11 + f10;
+  arg2[0xd] = 0.0f;
+  arg2[0xc] = 0.0f;
+  *arg2 = (float)(1.0f - (f8 + f8));
+  f8 = f7 + f6;
+  arg2[1] = (float)(f8 + f8);
+  f8 = f2 - f3;
+  arg2[2] = (float)(f8 + f8);
+  f6 = f6 - f7;
+  arg2[4] = (float)(f6 + f6);
+  f11 = f11 + f9;
+  arg2[5] = (float)(1.0f - (f11 + f11));
+  f7 = f4 + f1;
+  arg2[6] = (float)(f7 + f7);
+  f7 = f3 + f2;
+  arg2[8] = (float)(f7 + f7);
+  f7 = f1 - f4;
+  arg2[9] = (float)(f7 + f7);
+  f10 = f10 + f9;
+  arg2[10] = (float)(1.0f - (f10 + f10));
+  arg2[0xf] = 1.0f;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10033220
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Quat_NLerp(void * self_, float * param_1, float * param_2, float param_3)
+XI_API bits32 __thiscall Quat_NLerp(void * self_, float * arg2, float * arg3, float arg4)
 {
-  long double fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  uint8_t bVar5;
-  long double fVar6;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_18 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 12);
-  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 16);
+  long double f1;
+  float f2;
+  float f3;
+  float f4;
+  uint8_t u1;
+  long double f5;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float f6; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f7; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f8; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; float f9; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint8_t u2[16]; };   // at 0x10
+  } frame;
   
-  bVar5 = NAN((long double)param_3) || NAN((long double)1.0f);
-  if (bVar5 != (bVar5 || (long double)param_3 == (long double)1.0f)) {
-    *param_1 = *param_2;
-    param_1[1] = param_2[1];
-    param_1[2] = param_2[2];
-    param_1[3] = param_2[3];
-    return param_1;
+  u1 = ((arg4) != (arg4)) || ((1.0f) != (1.0f));
+  if (u1 != (u1 || arg4 == 1.0f)) {
+    *arg2 = *arg3;
+    arg2[1] = arg3[1];
+    arg2[2] = arg3[2];
+    arg2[3] = arg3[3];
+    return arg2;
   }
-  fVar6 = (long double)*param_2 * (long double)*(float *)self_ +
-          (long double)param_2[1] * (long double)*(float *)((int)self_ + 4) +
-          (long double)param_2[2] * (long double)*(float *)((int)self_ + 8) +
-          (long double)*(float *)((int)self_ + 0xc) * (long double)param_2[3];
-  bVar5 = NAN(fVar6) || NAN((long double)0.0f);
-  if ((bVar5 || fVar6 < (long double)0.0f) == bVar5) {
-    local_20 = *param_2;
-    local_1c = param_2[1];
-    local_18 = param_2[2];
-    local_14 = param_2[3];
+  f5 = *arg3 * *(float *)self_ +
+          arg3[1] * *(float *)((int)self_ + 4) +
+          arg3[2] * *(float *)((int)self_ + 8) +
+          *(float *)((int)self_ + 0xc) * arg3[3];
+  u1 = ((f5) != (f5)) || ((0.0f) != (0.0f));
+  if ((u1 || f5 < 0.0f) == u1) {
+    frame.f6 = *arg3;
+    frame.f7 = arg3[1];
+    frame.f8 = arg3[2];
+    frame.f9 = arg3[3];
   }
   else {
-    local_20 = (float)-(long double)*param_2;
-    local_1c = (float)-(long double)param_2[1];
-    local_18 = (float)-(long double)param_2[2];
-    local_14 = (float)-(long double)param_2[3];
+    frame.f6 = (float)-*arg3;
+    frame.f7 = (float)-arg3[1];
+    frame.f8 = (float)-arg3[2];
+    frame.f9 = (float)-arg3[3];
   }
-  fVar1 = (float)((long double)1.0f - (long double)param_3);
-  orig::Quat_SetIdentityChained(local_10);
-  fVar2 = *(float *)((int)self_ + 4);
-  fVar3 = *(float *)((int)self_ + 8);
-  fVar4 = *(float *)((int)self_ + 0xc);
-  *param_1 = (float)((long double)local_20 * (long double)param_3 + (long double)fVar1 * (long double)*(float *)self_
+  f1 = (float)(1.0f - arg4);
+  orig::Quat_SetIdentityChained(frame.u2);
+  f2 = *(float *)((int)self_ + 4);
+  f3 = *(float *)((int)self_ + 8);
+  f4 = *(float *)((int)self_ + 0xc);
+  *arg2 = (float)(frame.f6 * arg4 + f1 * *(float *)self_
                     );
-  param_1[1] = (float)((long double)local_1c * (long double)param_3 + (long double)fVar1 * (long double)fVar2);
-  param_1[2] = (float)((long double)local_18 * (long double)param_3 + (long double)fVar1 * (long double)fVar3);
-  param_1[3] = (float)((long double)local_14 * (long double)param_3 + (long double)fVar1 * (long double)fVar4);
-  return param_1;
+  arg2[1] = (float)(frame.f7 * arg4 + f1 * f2);
+  arg2[2] = (float)(frame.f8 * arg4 + f1 * f3);
+  arg2[3] = (float)(frame.f9 * arg4 + f1 * f4);
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x100336B0
@@ -237,9 +241,9 @@ XI_API undefined4 __thiscall Quat_NLerp(void * self_, float * param_1, float * p
 XI_API void __cdecl BoneShadow_InitTargets(void)
 {
   Fn10033710_targetTex_as_v1 = 0;
-  dword_1045B81C_as_v0 = g_translucentTarget_as_v0;
+  g_1045B81C_as_v0 = g_translucentTarget_as_v0;
   if (g_translucentTarget_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*g_translucentTarget_as_v0 + 4))))(g_translucentTarget_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_translucentTarget_as_v0 + 4))))(g_translucentTarget_as_v0);
   }
   return;
 }
@@ -249,75 +253,77 @@ XI_API void __cdecl BoneShadow_InitTargets(void)
 XI_API void __cdecl BoneShadow_ReleaseTargets(void)
 {
   if (Fn10033710_targetTex_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*Fn10033710_targetTex_as_v0 + 8))))(Fn10033710_targetTex_as_v0);
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*Fn10033710_targetTex_as_v0 + 8))))(Fn10033710_targetTex_as_v0);
     Fn10033710_targetTex_as_v0 = (int *)0x0;
   }
-  if (dword_1045B81C_as_v0 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*dword_1045B81C_as_v0 + 8))))(dword_1045B81C_as_v0);
-    dword_1045B81C_as_v0 = (int *)0x0;
+  if (g_1045B81C_as_v0 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*g_1045B81C_as_v0 + 8))))(g_1045B81C_as_v0);
+    g_1045B81C_as_v0 = (int *)0x0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10033710
 // GATE: PASS -- 100 trials, 100 returned normally, 187 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API _DWORD * __thiscall BoneShadow_Construct(_DWORD *self_)
+XI_API uint32_t * __thiscall BoneShadow_Construct(uint32_t *self_)
 {
-  _DWORD *Texture;
-  unsigned __int16 ViewportWidth;
-  int v4;
-  unsigned __int16 ViewportHeight;
+  uint32_t *Texture;
+  unsigned short ViewportWidth;
+  int i1;
+  unsigned short ViewportHeight;
   *self_ = &Vtbl_1032A844;
-  Texture = (_DWORD *)Fn10033710_targetTex;
+  Texture = (uint32_t *)Fn10033710_targetTex;
   if ( Fn10033710_targetTex != 0
     || (ViewportHeight = orig::Camera_GetViewportHeight(),
         ViewportWidth = orig::Camera_GetViewportWidth(),
-        Texture = orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &dword_1045B81C, 1, 0),
+        Texture = orig::CDx_CreateTexture(g_pCDx, ViewportWidth, ViewportHeight, &g_1045B81C, 1, 0),
         Fn10033710_targetTex = (int)Texture,
         Texture != nullptr) )
   {
-    (*(void (__stdcall **)(_DWORD *))(*Texture + 4))(Texture);
-    Texture = (_DWORD *)Fn10033710_targetTex;
+    (*(void (__stdcall **)(uint32_t *))(*Texture + 4))(Texture);
+    Texture = (uint32_t *)Fn10033710_targetTex;
   }
   *(self_ + 2) = Texture;
-  v4 = dword_1045B81C;
-  if ( dword_1045B81C != 0 )
+  i1 = g_1045B81C;
+  if ( g_1045B81C != 0 )
   {
-    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)dword_1045B81C + 4))(dword_1045B81C);
-    v4 = dword_1045B81C;
+    (*(void (__stdcall **)(uint32_t))(*(uint32_t *)g_1045B81C + 4))(g_1045B81C);
+    i1 = g_1045B81C;
   }
-  *(self_ + 3) = v4;
+  *(self_ + 3) = i1;
   orig::Vec3_SetZero(self_ + 5);
   orig::Vec3_SetZero(self_ + 8);
-  dword_1045B810 = 1065353216;
-  *((_BYTE *)self_ + 4) = 0;
+  g_1045B810 = 1065353216;
+  *((uint8_t *)self_ + 4) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10033800
 // GATE: PASS -- 100 trials, 100 returned normally, 36 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *a2, int a3)
+XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *arg2, int arg3)
 {
-  alignas(16) unsigned char xi_frame[0x528];  // address-taken locals at their original offsets
-  int (&v5)[16] = *reinterpret_cast<int (*)[16]>(xi_frame + 0xA8);
-  _BYTE (&v6)[64] = *reinterpret_cast<_BYTE (*)[64]>(xi_frame + 0xE8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x528];
+    struct __attribute__((packed)) { unsigned char pad_1[0xA8]; int i1[16]; };   // at 0xA8
+    struct __attribute__((packed)) { unsigned char pad_2[0xE8]; uint8_t u1[64]; };   // at 0xE8
+  } frame;
 
-  orig::fn_10027990((Iostream_init *)v6);
-  orig::fn_10027990((Iostream_init *)v5);
-  if ( g_actorShadowMode == 1 && g_shadowCasterDistance < 4.0 && *(_DWORD *)(self_ + 8) != 0 )
+  orig::fn_10027990((Iostream_init *)frame.u1);
+  orig::fn_10027990((Iostream_init *)frame.i1);
+  if ( g_actorShadowMode == 1 && g_shadowCasterDistance < 4.0 && *(uint32_t *)(self_ + 8) != 0 )
   {
-    g_offscreenPrevTex0 = *a2;
-    g_offscreenPrevTex1 = a2[1];
-    g_texturefactor_B808 = a3;
-    if ( *(_BYTE *)(self_ + 4) != 0 )
+    g_offscreenPrevTex0 = *arg2;
+    g_offscreenPrevTex1 = arg2[1];
+    g_texturefactor_B808 = arg3;
+    if ( *(uint8_t *)(self_ + 4) != 0 )
     {
-      orig::CDx_PushRenderTarget(g_pCDx, *(_DWORD *)(self_ + 8), *(_DWORD *)(self_ + 12), 0);
+      orig::CDx_PushRenderTarget(g_pCDx, *(uint32_t *)(self_ + 8), *(uint32_t *)(self_ + 12), 0);
     }
     else
     {
-      orig::CDx_PushRenderTarget(g_pCDx, *(_DWORD *)(self_ + 8), *(_DWORD *)(self_ + 12), 0);
+      orig::CDx_PushRenderTarget(g_pCDx, *(uint32_t *)(self_ + 8), *(uint32_t *)(self_ + 12), 0);
       orig::CDx_EndClearBegin(g_pCDx, 0, 0, 1, 0, 0, 0);
-      *(_BYTE *)(self_ + 4) = 1;
+      *(uint8_t *)(self_ + 4) = 1;
     }
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, -2130706433u);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
@@ -331,8 +337,8 @@ XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *a2, int a3)
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZENABLE, D3DZB_FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ZWRITEENABLE, FALSE);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SHADEMODE, D3DSHADE_FLAT);
-    orig::D3DXMatrixPerspectiveFovLH_static((int)v5, 0.19634955, 1.0, 0.1, 65535.0);
-    orig::CDx_SetTransform(g_pCDx, 3, v5);
+    orig::D3DXMatrixPerspectiveFovLH_static((int)frame.i1, 0.19634955, 1.0, 0.1, 65535.0);
+    orig::CDx_SetTransform(g_pCDx, 3, frame.i1);
     orig::CDx_SetTransform(g_pCDx, 2, g_lightViewMatrix);
     orig::CDx_SetTransform(g_pCDx, 256, g_offscreenWorldMatrix);
     orig::MathVector_Nop();
@@ -349,10 +355,10 @@ XI_API char __thiscall Model_BeginOffscreenPass(int self_, int *a2, int a3)
 
 // FUNCTION: FFXIMAIN 0x10033A70
 // GATE: PASS -- 100 trials, 100 returned normally, 50 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Model_EndOffscreenPassBindTextures(_DWORD *self_, int a2)
+XI_API char __thiscall Model_EndOffscreenPassBindTextures(uint32_t *self_, int arg2)
 {
-  IDirect3DBaseTexture8 *v4;
-  IDirect3DBaseTexture8 *v5;
+  IDirect3DBaseTexture8 *p1;
+  IDirect3DBaseTexture8 *p2;
   if ( g_actorShadowMode != 1 )
     return 0;
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
@@ -360,7 +366,7 @@ XI_API char __thiscall Model_EndOffscreenPassBindTextures(_DWORD *self_, int a2)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE2X);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLORARG2, D3DTA_CURRENT);
-  if ( a2 <= 0 || a2 > 2 )
+  if ( arg2 <= 0 || arg2 > 2 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG1, D3DTA_CURRENT);
@@ -395,11 +401,11 @@ XI_API char __thiscall Model_EndOffscreenPassBindTextures(_DWORD *self_, int a2)
   }
   if ( g_offscreenPrevTex0 != 0 )
   {
-    if ( *(_DWORD *)(g_offscreenPrevTex0 + 64) != 0 )
-      v4 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex0 + 64);
+    if ( *(uint32_t *)(g_offscreenPrevTex0 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex0 + 64);
     else
-      v4 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex0 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v4);
+      p1 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex0 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   }
   else
   {
@@ -407,11 +413,11 @@ XI_API char __thiscall Model_EndOffscreenPassBindTextures(_DWORD *self_, int a2)
   }
   if ( g_offscreenPrevTex1 != 0 )
   {
-    if ( *(_DWORD *)(g_offscreenPrevTex1 + 64) != 0 )
-      v5 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex1 + 64);
+    if ( *(uint32_t *)(g_offscreenPrevTex1 + 64) != 0 )
+      p2 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex1 + 64);
     else
-      v5 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex1 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 1u, v5);
+      p2 = *(IDirect3DBaseTexture8 **)(g_offscreenPrevTex1 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 1u, p2);
     return 1;
   }
   else
@@ -423,156 +429,158 @@ XI_API char __thiscall Model_EndOffscreenPassBindTextures(_DWORD *self_, int a2)
 
 // FUNCTION: FFXIMAIN 0x10033DA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Shadow_DrawByMode(void * self_, float * param_1)
+XI_API bits32 __thiscall Shadow_DrawByMode(void * self_, float * arg2)
 {
   uint32_t xi_entry_eax = 0;
-  uint32_t uVar1;
-  uint8_t bVar2;
+  uint32_t u1;
+  uint8_t u2;
   
-  uVar1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_entry_eax >> 0x10)) << 16) | (uint16_t)(g_actorShadowMode_as_v0)));
+  u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_entry_eax >> 0x10)) << 16) | (uint16_t)(g_actorShadowMode_as_v0)));
   if (g_actorShadowMode_as_v0 < 3) {
     if (g_actorShadowMode_as_v0 == 2) {
-      if (word_1045B814_as_v0 != 1) {
-        uVar1 = orig::XiZone_DrawGroundShadowQuad(g_pZoneMap,param_1,
-                             (float)((long double)dword_1045B810_as_f32 * (long double)0.3333333432674407958984375f),
+      if (g_1045B814_as_v0 != 1) {
+        u1 = orig::XiZone_DrawGroundShadowQuad(g_pZoneMap,arg2,
+                             (float)(g_1045B810_as_f32 * 0.3333333432674407958984375f),
                              (int)self_ + 0x14);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
     else if (g_actorShadowMode_as_v0 == 1) {
-      uVar1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 4))));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 4))));
       if (*(char *)((int)self_ + 4) != '\0') {
         if (*(int *)((int)self_ + 8) == 0) {
           return 0;
         }
-        uVar1 = orig::XiZone_DrawDecalOnTriangles(g_pZoneMap,param_1,(int)self_ + 0x14,*(int *)((int)self_ + 8),
-                             (float)((long double)dword_1045B810_as_f32 * (long double)2.400000095367431640625f));
+        u1 = orig::XiZone_DrawDecalOnTriangles(g_pZoneMap,arg2,(int)self_ + 0x14,*(int *)((int)self_ + 8),
+                             (float)(g_1045B810_as_f32 * 2.400000095367431640625f));
         *(uint8_t *)((int)self_ + 4) = 0;
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
-    else if (word_1045B814_as_v0 != 1) {
-      bVar2 = NAN((long double)g_shadowCasterDistance) || NAN((long double)2e+01f);
-      if ((bVar2 || (long double)g_shadowCasterDistance < (long double)2e+01f) != bVar2) {
-        uVar1 = orig::CTsZoneMap_DrawProjectedShadow
-                          (g_pZoneMap,param_1,
-                           (float)((long double)dword_1045B810_as_f32 * (long double)0.3333333432674407958984375f));
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    else if (g_1045B814_as_v0 != 1) {
+      u2 = ((g_shadowCasterDistance) != (g_shadowCasterDistance)) || ((2e+01f) != (2e+01f));
+      if ((u2 || g_shadowCasterDistance < 2e+01f) != u2) {
+        u1 = orig::CTsZoneMap_DrawProjectedShadow
+                          (g_pZoneMap,arg2,
+                           (float)(g_1045B810_as_f32 * 0.3333333432674407958984375f));
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
-      uVar1 = orig::XiZone_DrawGroundShadowQuad(g_pZoneMap,param_1,
-                           (float)((long double)dword_1045B810_as_f32 * (long double)0.3333333432674407958984375f),(int)self_ + 0x14)
+      u1 = orig::XiZone_DrawGroundShadowQuad(g_pZoneMap,arg2,
+                           (float)(g_1045B810_as_f32 * 0.3333333432674407958984375f),(int)self_ + 0x14)
       ;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10033EA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Shadow_SmoothLightDirection(void * self_, float * param_1)
+XI_API void __thiscall Shadow_SmoothLightDirection(void * self_, float * arg2)
 {
-  float *pfVar1;
-  float *pfVar2;
-  uint16_t uVar3;
+  float *p1;
+  float *p2;
+  uint16_t u1;
   uint32_t xi_eax;
-  uint32_t uVar4;
-  uint16_t uVar5;
-  uint8_t bVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  long double fVar10;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_4 = *reinterpret_cast<float  *>(xi_frame + 8);
+  uint32_t u2;
+  uint16_t u3;
+  uint8_t u4;
+  uint8_t u5;
+  long double f1;
+  long double f2;
+  long double f3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f6; };   // at 0x8
+  } frame;
   
-  pfVar2 = param_1;
-  fVar8 = (long double)param_1[1];
-  fVar9 = (long double)0.0f;
-  bVar6 = NAN(fVar8) || NAN(fVar9);
-  uVar3 = (uint16_t)(bVar6 || fVar8 == fVar9);
-  if ((fVar8 >= fVar9) && uVar3 == 0) {
-    *param_1 = 0.449999988079071044921875f;
-    param_1[1] = (-0.89999997615814208984375f);
-    param_1[2] = 0.0f;
+  p2 = arg2;
+  f1 = arg2[1];
+  f2 = 0.0f;
+  u4 = ((f1) != (f1)) || ((f2) != (f2));
+  u1 = (uint16_t)(u4 || f1 == f2);
+  if ((f1 >= f2) && u1 == 0) {
+    *arg2 = 0.449999988079071044921875f;
+    arg2[1] = (-0.89999997615814208984375f);
+    arg2[2] = 0.0f;
   }
-  fVar9 = orig::Camera_GetFrameScale_v1((uint32_t)(uint16_t)((uint16_t)(bVar6 || fVar8 < fVar9) << 8 | uVar3 << 0xe))
+  f2 = orig::Camera_GetFrameScale_v1((uint32_t)(uint16_t)((uint16_t)(u4 || f1 < f2) << 8 | u1 << 0xe))
   ;
-  fVar9 = fVar9 * (long double)0.039999999105930328369140625f;
-  param_1 = xi_castbits<float *>((float)fVar9);
-  if (fVar9 > (long double)1.0f) {
-    param_1 = (float *)&DAT_3f800000;
+  f2 = f2 * 0.039999999105930328369140625f;
+  arg2 = bit_cast<float *>((float)f2);
+  if (f2 > 1.0f) {
+    arg2 = (float *)&g_3F800000;
   }
-  pfVar1 = (float *)((int)self_ + 0x20);
-  orig::Vec3_SubInPlace(pfVar2,pfVar1);
-  orig::Vec3_ScaleInPlace(pfVar2,xi_castbits<float>(param_1));
-  orig::Vec3_AddInPlace_v1(pfVar1,pfVar2);
-  orig::Vec3_CopyThen100274B0(&local_c,pfVar1);
-  fVar9 = SQRT((long double)local_c * (long double)local_c + (long double)local_4 * (long double)local_4);
-  if ((NAN(fVar9) || NAN((long double)xi_k4(0x38D1B717ull))) || fVar9 <= (long double)xi_k4(0x38D1B717ull)) {
-    uVar4 = orig::Vec3_Set(&local_c,0.0f,(-1.0f),0.0f);
-    goto LAB_10033fab;
+  p1 = (float *)((int)self_ + 0x20);
+  orig::Vec3_SubInPlace(p2,p1);
+  orig::Vec3_ScaleInPlace(p2,bit_cast<float>(arg2));
+  orig::Vec3_AddInPlace_v1(p1,p2);
+  orig::Vec3_CopyThen100274B0(&frame.f4,p1);
+  f2 = x87_fsqrt(frame.f4 * frame.f4 + frame.f6 * frame.f6);
+  if ((((f2) != (f2)) || ((xi_k4(0x38D1B717ull)) != (xi_k4(0x38D1B717ull)))) || f2 <= xi_k4(0x38D1B717ull)) {
+    u2 = orig::Vec3_Set(&frame.f4,0.0f,(-1.0f),0.0f);
+    goto code_10033FAB;
   }
-  fVar10 = (long double)local_8;
-  fVar8 = (long double)0.0f;
-  bVar7 = NAN(fVar10) || NAN(fVar8);
-  bVar6 = bVar7 || fVar10 < fVar8;
-  xi_eax = (uint32_t)(uint16_t)((uint16_t)bVar6 << 8 | (uint16_t)bVar7 << 10 |
-                         (uint16_t)(bVar7 || fVar10 == fVar8) << 0xe);
-  if (bVar6 == bVar7) {
-LAB_10033f74:
-    fVar8 = xi_castbits<long double>(fsin((long double)1.0471975803375244140625));
-    local_8 = (float)-(fVar8 * (long double)(float)fVar9);
+  f3 = frame.f5;
+  f1 = 0.0f;
+  u5 = ((f3) != (f3)) || ((f1) != (f1));
+  u4 = u5 || f3 < f1;
+  xi_eax = (uint32_t)(uint16_t)((uint16_t)u4 << 8 | (uint16_t)u5 << 10 |
+                         (uint16_t)(u5 || f3 == f1) << 0xe);
+  if (u4 == u5) {
+code_10033F74:
+    f1 = bit_cast<long double>(x87_fsin(1.0471975803375244140625));
+    frame.f5 = (float)-(f1 * (float)f2);
   }
   else {
-    fVar10 = xi_castbits<long double>(fpatan((long double)local_8,(long double)(float)fVar9));
-    fVar10 = -fVar10;
-    fVar8 = (long double)1.0471975803375244140625f;
-    bVar7 = NAN(fVar10) || NAN(fVar8);
-    bVar6 = bVar7 || fVar10 < fVar8;
-    xi_eax = (uint32_t)(uint16_t)((uint16_t)bVar6 << 8 | (uint16_t)bVar7 << 10 |
-                           (uint16_t)(bVar7 || fVar10 == fVar8) << 0xe);
-    if (bVar6 != bVar7) goto LAB_10033f74;
+    f3 = bit_cast<long double>(x87_fpatan(frame.f5,(float)f2));
+    f3 = -f3;
+    f1 = 1.0471975803375244140625f;
+    u5 = ((f3) != (f3)) || ((f1) != (f1));
+    u4 = u5 || f3 < f1;
+    xi_eax = (uint32_t)(uint16_t)((uint16_t)u4 << 8 | (uint16_t)u5 << 10 |
+                           (uint16_t)(u5 || f3 == f1) << 0xe);
+    if (u4 != u5) goto code_10033F74;
   }
-  uVar4 = orig::FUN_100274b0(&local_c,xi_eax);
-LAB_10033fab:
-  fVar9 = orig::Camera_GetFrameScale_v1(uVar4);
-  fVar9 = fVar9 * (long double)0.039999999105930328369140625f;
-  param_1 = xi_castbits<float *>((float)fVar9);
-  if (fVar9 > (long double)1.0f) {
-    param_1 = (float *)&DAT_3f800000;
+  u2 = orig::game_100274B0(&frame.f4,xi_eax);
+code_10033FAB:
+  f2 = orig::Camera_GetFrameScale_v1(u2);
+  f2 = f2 * 0.039999999105930328369140625f;
+  arg2 = bit_cast<float *>((float)f2);
+  if (f2 > 1.0f) {
+    arg2 = (float *)&g_3F800000;
   }
-  pfVar2 = (float *)((int)self_ + 0x14);
-  orig::Vec3_SubInPlace(&local_c,pfVar2);
-  orig::Vec3_ScaleInPlace(&local_c,xi_castbits<float>(param_1));
-  uVar4 = orig::Vec3_AddInPlace_v1(pfVar2,&local_c);
-  bVar6 = NAN((long double)*pfVar2) || NAN((long double)0.0f);
-  fVar9 = (long double)*pfVar2;
-  uVar5 = (uint16_t)((uint32_t)uVar4 >> 0x10);
-  if ((bVar6 || (long double)*pfVar2 < (long double)0.0f) != bVar6) {
-    fVar9 = -fVar9;
+  p2 = (float *)((int)self_ + 0x14);
+  orig::Vec3_SubInPlace(&frame.f4,p2);
+  orig::Vec3_ScaleInPlace(&frame.f4,bit_cast<float>(arg2));
+  u2 = orig::Vec3_AddInPlace_v1(p2,&frame.f4);
+  u4 = ((*p2) != (*p2)) || ((0.0f) != (0.0f));
+  f2 = *p2;
+  u3 = (uint16_t)((uint32_t)u2 >> 0x10);
+  if ((u4 || *p2 < 0.0f) != u4) {
+    f2 = -f2;
   }
-  fVar8 = (long double)0.00999999977648258209228515625f;
-  bVar7 = NAN(fVar9) || NAN(fVar8);
-  bVar6 = bVar7 || fVar9 < fVar8;
-  uVar4 = ((uint32_t)(((uint32_t)(uint16_t)(uVar5) << 16) | (uint16_t)((uint16_t)bVar6 << 8 | (uint16_t)bVar7 << 10 |
-                         (uint16_t)(bVar7 || fVar9 == fVar8) << 0xe)));
-  if (bVar6 != bVar7) {
-    bVar6 = NAN((long double)*(float *)((int)self_ + 0x1c)) || NAN((long double)0.0f);
-    fVar9 = (long double)*(float *)((int)self_ + 0x1c);
-    if ((bVar6 || (long double)*(float *)((int)self_ + 0x1c) < (long double)0.0f) != bVar6) {
-      fVar9 = -fVar9;
+  f1 = 0.00999999977648258209228515625f;
+  u5 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u5 || f2 < f1;
+  u2 = ((uint32_t)(((uint32_t)(uint16_t)(u3) << 16) | (uint16_t)((uint16_t)u4 << 8 | (uint16_t)u5 << 10 |
+                         (uint16_t)(u5 || f2 == f1) << 0xe)));
+  if (u4 != u5) {
+    u4 = ((*(float *)((int)self_ + 0x1c)) != (*(float *)((int)self_ + 0x1c))) || ((0.0f) != (0.0f));
+    f2 = *(float *)((int)self_ + 0x1c);
+    if ((u4 || *(float *)((int)self_ + 0x1c) < 0.0f) != u4) {
+      f2 = -f2;
     }
-    fVar8 = (long double)0.00999999977648258209228515625f;
-    bVar7 = NAN(fVar9) || NAN(fVar8);
-    bVar6 = bVar7 || fVar9 < fVar8;
-    uVar4 = ((uint32_t)(((uint32_t)(uint16_t)(uVar5) << 16) | (uint16_t)((uint16_t)bVar6 << 8 | (uint16_t)bVar7 << 10 |
-                           (uint16_t)(bVar7 || fVar9 == fVar8) << 0xe)));
-    if (bVar6 != bVar7) {
-      *pfVar2 = 0.00999999977648258209228515625f;
+    f1 = 0.00999999977648258209228515625f;
+    u5 = ((f2) != (f2)) || ((f1) != (f1));
+    u4 = u5 || f2 < f1;
+    u2 = ((uint32_t)(((uint32_t)(uint16_t)(u3) << 16) | (uint16_t)((uint16_t)u4 << 8 | (uint16_t)u5 << 10 |
+                           (uint16_t)(u5 || f2 == f1) << 0xe)));
+    if (u4 != u5) {
+      *p2 = 0.00999999977648258209228515625f;
     }
   }
-  orig::FUN_100274b0(pfVar2,uVar4);
+  orig::game_100274B0(p2,u2);
   return;
 }

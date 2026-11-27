@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x10018840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall OpeningSubtitle_IsStateFour(void * self_)
+XI_API bits32 __thiscall OpeningSubtitle_IsStateFour(void * self_)
 {
   uint32_t xi_entry_eax = 0;
   
@@ -13,39 +13,39 @@ XI_API undefined4 __thiscall OpeningSubtitle_IsStateFour(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10018A50
 // GATE: PASS -- 100 trials, 75 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 75
-XI_API void * __thiscall OpeningSubtitle_Constructor(void * self_, int param_1)
+XI_API void * __thiscall OpeningSubtitle_Constructor(void * self_, int arg2)
 {
-  uint32_t *puVar1;
-  int *piVar2;
-  uint64_t uVar3;
+  uint32_t *p1;
+  int *p2;
+  uint64_t u1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10329fdc;
+  *(uint8_t ***)self_ = &g_10329FDC;
   *(uint32_t *)((int)self_ + 4) = 0;
-  if (param_1 == 0) {
-    puVar1 = (uint32_t *)0x9a6b;
+  if (arg2 == 0) {
+    p1 = (uint32_t *)0x9a6b;
   }
-  else if (param_1 == 2) {
+  else if (arg2 == 2) {
     if (*(char *)(g_pSceneState + 0x18) < '\0') {
       return self_;
     }
-    puVar1 = (uint32_t *)0xd9c3;
+    p1 = (uint32_t *)0xd9c3;
   }
   else {
-    if (param_1 != 3) {
+    if (arg2 != 3) {
       return self_;
     }
     if (*(char *)(g_pSceneState + 0x18) < '\0') {
       return self_;
     }
-    puVar1 = (uint32_t *)0xdb67;
+    p1 = (uint32_t *)0xdb67;
   }
-  piVar2 = (int *)orig::FUN_100731b0(g_pMeshResourceMng_as_v1,&param_1,puVar1);
-  puVar1 = (uint32_t *)*piVar2;
-  *(uint32_t **)((int)self_ + 4) = puVar1;
-  if (puVar1 != (uint32_t *)0x0) {
-    orig::CMoResource_AddRefChain_v1((void *)*puVar1,puVar1);
-    uVar3 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_screens_subtites_10350fd8);
-    *(int *)((int)self_ + 8) = (int)uVar3;
+  p2 = (int *)orig::game_100731B0(g_pMeshResourceMng_as_v1,&arg2,p1);
+  p1 = (uint32_t *)*p2;
+  *(uint32_t **)((int)self_ + 4) = p1;
+  if (p1 != (uint32_t *)0x0) {
+    orig::CMoResource_AddRefChain_v1((void *)*p1,p1);
+    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_screens_subtites_10350FD8);
+    *(int *)((int)self_ + 8) = (int)u1;
   }
   orig::OpeningSubtitle_Reset_v1(self_);
   return self_;
@@ -66,41 +66,41 @@ XI_API void __thiscall OpeningSubtitle_Reset(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall OpeningSubtitle_UpdateRangeEntries(void * self_)
 {
-  void *this_00;
-  long double fVar1;
-  int iVar2;
-  long double fVar3;
-  int64_t lVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  int iVar7;
+  void *obj1;
+  long double f1;
+  int i1;
+  long double f2;
+  int64_t i2;
+  uint32_t u1;
+  uint32_t u2;
+  int i3;
   
-  if ((*(int *)((int)self_ + 4) != 0) && (iVar2 = *(int *)((int)self_ + 0xc), iVar2 < 0x18)) {
-    fVar3 = (long double)*(int *)(((char *)&DAT_10350e60) + iVar2 * 8);
-    fVar1 = (long double)*(float *)((int)self_ + 0x10);
-    if ((fVar3 <= fVar1) &&
-       ((long double)*(int *)(((char *)&DAT_10350e64) + iVar2 * 8) > (long double)*(float *)((int)self_ + 0x10))) {
-      iVar7 = 0;
-      uVar6 = 0;
-      uVar5 = 0x80808080;
-      this_00 = *(void **)(**(int **)((int)self_ + 8) + iVar2 * 4);
-      iVar2 = (short)(XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) - XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2)) * 400;
-      iVar2 = (int)(iVar2 + (iVar2 >> 0x1f & 0x1ffU)) >> 9;
-      lVar4 = XI_CALL_ST0(0x10311C2Cu)((long double)((int)(short)((short)g_screenRectBottomRight_as_v0 -
+  if ((*(int *)((int)self_ + 4) != 0) && (i1 = *(int *)((int)self_ + 0xc), i1 < 0x18)) {
+    f2 = *(int *)(((char *)&g_10350E60) + i1 * 8);
+    f1 = *(float *)((int)self_ + 0x10);
+    if ((f2 <= f1) &&
+       (*(int *)(((char *)&g_10350E64) + i1 * 8) > *(float *)((int)self_ + 0x10))) {
+      i3 = 0;
+      u2 = 0;
+      u1 = 0x80808080;
+      obj1 = *(void **)(**(int **)((int)self_ + 8) + i1 * 4);
+      i1 = (short)(XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) - XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2)) * 400;
+      i1 = (int)(i1 + (i1 >> 0x1f & 0x1ffU)) >> 9;
+      i2 = XI_CALL_ST0(0x10311C2Cu)(((int)(short)((short)g_screenRectBottomRight_as_v0 -
                                            (short)g_screenRectTopLeft_as_v0) / 2) -
-                     (long double)((int)*(short *)((int)this_00 + 0x22) -
-                              (int)*(short *)((int)this_00 + 0x20)) * (long double)0.5f);
-      orig::FUN_1011fb60(this_00,(int)lVar4,iVar2,uVar5,uVar6,iVar7);
+                     ((int)*(short *)((int)obj1 + 0x22) -
+                              (int)*(short *)((int)obj1 + 0x20)) * 0.5f);
+      orig::game_1011FB60(obj1,(int)i2,i1,u1,u2,i3);
     }
-    iVar2 = *(int *)((int)self_ + 0xc);
-    fVar3 = (long double)*(int *)(((char *)&DAT_10350e64) + iVar2 * 8);
-    fVar1 = (long double)*(float *)((int)self_ + 0x10);
-    if (fVar3 <= fVar1) {
-      *(int *)((int)self_ + 0xc) = iVar2 + 1;
-      fVar3 = (long double)*(int *)(((char *)&DAT_10350e64) + (iVar2 + 1) * 8);
-      fVar1 = (long double)*(float *)((int)self_ + 0x10);
-      if (fVar3 <= fVar1) {
-        *(int *)((int)self_ + 0xc) = iVar2 + 2;
+    i1 = *(int *)((int)self_ + 0xc);
+    f2 = *(int *)(((char *)&g_10350E64) + i1 * 8);
+    f1 = *(float *)((int)self_ + 0x10);
+    if (f2 <= f1) {
+      *(int *)((int)self_ + 0xc) = i1 + 1;
+      f2 = *(int *)(((char *)&g_10350E64) + (i1 + 1) * 8);
+      f1 = *(float *)((int)self_ + 0x10);
+      if (f2 <= f1) {
+        *(int *)((int)self_ + 0xc) = i1 + 2;
       }
     }
   }
@@ -111,14 +111,14 @@ XI_API void __thiscall OpeningSubtitle_UpdateRangeEntries(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall Vt10329FE0_Constructor(void * self_)
 {
-  int iVar1;
-  uint32_t *puVar2;
+  int i1;
+  uint32_t *p1;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10329fe0;
+  *(uint8_t ***)self_ = &g_10329FE0;
   *(uint32_t *)((int)self_ + 0x38) = 0;
-  puVar2 = self_;
-  for (iVar1 = 6; puVar2 = puVar2 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
+  p1 = self_;
+  for (i1 = 6; p1 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
   }
   orig::Vt10329FE0_Reset_v1(self_);
   return self_;
@@ -128,11 +128,11 @@ XI_API void * __thiscall Vt10329FE0_Constructor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Vt10329FE0_Reset(void * self_)
 {
-  int iVar1;
+  int i1;
   
   *(uint32_t *)((int)self_ + 0x34) = 0;
   *(uint32_t *)((int)self_ + 0x38) = 0;
-  for (iVar1 = 6; self_ = (void *)((int)self_ + 4), iVar1 != 0; iVar1 = iVar1 + -1) {
+  for (i1 = 6; self_ = (void *)((int)self_ + 4), i1 != 0; i1 = i1 + -1) {
     *(uint32_t *)self_ = 0;
   }
   return;

@@ -21,145 +21,147 @@ XI_API void __thiscall OcclusionQuery_Init(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1006C280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Occlusion_QueryScreenRect(__int16 *self_, float *a2, int a3, int a4, int a5, int a6, int a7, int a8, char a9, int a10)
+XI_API int __thiscall Occlusion_QueryScreenRect(short *self_, float *arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int _60, char arg9, int arg10)
 {
-  unsigned __int8 v11;
+  unsigned char c1;
   int ScreenRectImpl;
-  v11 = (*(unsigned __int8 *)((char *)g_pCDx + 0x828));
-  (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = 0;
+  c1 = (*(unsigned char *)((char *)g_pCDx + 0x828));
+  (*(unsigned char *)((char *)g_pCDx + 0x828)) = 0;
   orig::OcclusionMng_Prepare(self_);
   orig::CDx_NopB();
-  ScreenRectImpl = orig::Occlusion_QueryScreenRectImpl(self_, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+  ScreenRectImpl = orig::Occlusion_QueryScreenRectImpl(self_, arg2, arg3, arg4, arg5, arg6, arg7, _60, arg9, arg10);
   orig::CDx_NopA();
-  (*(unsigned __int8 *)((char *)g_pCDx + 0x828)) = v11;
+  (*(unsigned char *)((char *)g_pCDx + 0x828)) = c1;
   return ScreenRectImpl;
 }
 
 // FUNCTION: FFXIMAIN 0x1006C300
 // GATE: PASS -- 100 trials, 54 returned normally, 2 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API int __thiscall Occlusion_QueryScreenRectImpl(__int16 *self_, float *arg0, int a2, int a5, int a6, int a7, int a8, int _60, char a9, int a10)
+XI_API int __thiscall Occlusion_QueryScreenRectImpl(short *self_, float *arg0, int arg3, int arg4, int arg5, int arg6, int arg7, int _60, char arg9, int arg10)
 {
-  int v10;
-  int v11;
-  int v12;
-  int v13;
-  int v14;
-  int v15;
-  int v16;
-  alignas(16) unsigned char xi_frame[0x444];  // address-taken locals at their original offsets
-  int &a3 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &a4 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &a1 = *reinterpret_cast<int *>(xi_frame + 0x34);
-  int &v22 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &v23 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  int &v24 = *reinterpret_cast<int *>(xi_frame + 0x40);
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int i5;
+  int i6;
+  int i7;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x444];
+    struct __attribute__((packed)) { int i8; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i9; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x34]; int i10; };   // at 0x34
+    struct __attribute__((packed)) { unsigned char pad_4[0x38]; int i11; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_5[0x3C]; int i12; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_6[0x40]; int i13; };   // at 0x40
+  } frame;
 
-  v10 = (__int64)*arg0;
-  v11 = (__int64)arg0[1];
-  v12 = (__int64)arg0[2];
-  v13 = (__int64)arg0[3];
-  if ( v10 > v12 )
+  i1 = (long long)*arg0;
+  i2 = (long long)arg0[1];
+  i3 = (long long)arg0[2];
+  i4 = (long long)arg0[3];
+  if ( i1 > i3 )
   {
-    v10 = (__int64)arg0[2];
-    v12 = (__int64)*arg0;
+    i1 = (long long)arg0[2];
+    i3 = (long long)*arg0;
   }
-  if ( v11 > v13 )
+  if ( i2 > i4 )
   {
-    v11 = (__int64)arg0[3];
-    v13 = (__int64)arg0[1];
+    i2 = (long long)arg0[3];
+    i4 = (long long)arg0[1];
   }
-  a1 = v10;
-  v22 = v11;
-  v23 = v12;
-  v24 = v13;
-  if ( v10 < -256 )
-    a1 = -256;
-  if ( v11 < -256 )
-    v22 = -256;
-  if ( v23 >= *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2) + 256 )
-    v23 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2) + 256;
-  if ( v24 >= *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3) + 256 )
-    v24 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3) + 256;
-  if ( v10 < 0 )
-    v10 = 0;
-  if ( v11 < 0 )
-    v11 = 0;
-  if ( (int)(v12) >= (int)(*((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2)) )
-    v12 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2);
-  if ( (int)(v13) >= (int)(*((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3)) )
-    v13 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3);
-  v14 = v12 - v10;
-  v15 = v13 - v11;
-  if ( v14 <= 0 || v15 <= 0 )
+  frame.i10 = i1;
+  frame.i11 = i2;
+  frame.i12 = i3;
+  frame.i13 = i4;
+  if ( i1 < -256 )
+    frame.i10 = -256;
+  if ( i2 < -256 )
+    frame.i11 = -256;
+  if ( frame.i12 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256 )
+    frame.i12 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2) + 256;
+  if ( frame.i13 >= *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256 )
+    frame.i13 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3) + 256;
+  if ( i1 < 0 )
+    i1 = 0;
+  if ( i2 < 0 )
+    i2 = 0;
+  if ( (int)(i3) >= (int)(*((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2)) )
+    i3 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
+  if ( (int)(i4) >= (int)(*((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3)) )
+    i4 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
+  i5 = i3 - i1;
+  i6 = i4 - i2;
+  if ( i5 <= 0 || i6 <= 0 )
     return 0;
-  if ( a9 == 0 )
-    a2 = 1065353214;
-  *(float *)&a4 = (float)(16 * v15 / (v24 - v22));
-  *(float *)&a3 = (float)(16 * v14 / (v23 - a1));
-  orig::DrawScreenProbe((int)&a1, a2, a3, a4, a5, a6, a7, a8, 0);
-  v16 = orig::sub_1006C8B0(self_, 0);
+  if ( arg9 == 0 )
+    arg3 = 1065353214;
+  *(float *)&frame.i9 = (float)(16 * i6 / (frame.i13 - frame.i11));
+  *(float *)&frame.i8 = (float)(16 * i5 / (frame.i12 - frame.i10));
+  orig::DrawScreenProbe((int)&frame.i10, arg3, frame.i8, frame.i9, arg4, arg5, arg6, arg7, 0);
+  i7 = orig::Occlusion_ReadbackCount_as_v0(self_, 0);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-  return v16;
+  return i7;
 }
 
 // FUNCTION: FFXIMAIN 0x1006C530
 // GATE: PASS -- 100 trials, 100 returned normally, 500 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall Occlusion_DrawQuery(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+XI_API int __stdcall Occlusion_DrawQuery(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9)
 {
-  double v9;
-  double v10;
-  double v11;
-  double v12;
-  double v13;
-  double v14;
-  int v15;
-  void *v16;
-  int v17;
-  int v18;
-  void *v19;
-  int v20;
-  int v21;
-  void *v22;
-  int v23;
-  Fn1006C530_quadVerts = (float)*(int *)a1;
-  Fn1006C530_quadVerts_v0_y = (float)*(int *)(a1 + 4);
-  Fn1006C530_quadVerts_v1_x = (float)*(int *)(a1 + 8);
-  Fn1006C530_quadVerts_v1_y = (float)*(int *)(a1 + 4);
-  Fn1006C530_quadVerts_v2_x = (float)*(int *)a1;
-  Fn1006C530_quadVerts_v2_y = (float)*(int *)(a1 + 12);
-  Fn1006C530_quadVerts_v3_x = (float)*(int *)(a1 + 8);
-  Fn1006C530_quadVerts_v3_y = (float)*(int *)(a1 + 12);
-  Fn1006C530_quadVerts2 = (float)*(int *)a1;
-  v9 = (double)*(int *)(a1 + 4);
-  Fn1006C530_quadVerts2_v0_z = a2;
-  Fn1006C530_quadVerts2_v0_y = v9;
-  Fn1006C530_quadVerts2_v1_x = (float)*(int *)(a1 + 8);
-  v10 = (double)*(int *)(a1 + 4);
-  Fn1006C530_quadVerts2_v1_z = a2;
-  Fn1006C530_quadVerts2_v1_y = v10;
-  Fn1006C530_quadVerts2_v2_x = (float)*(int *)a1;
-  v11 = (double)*(int *)(a1 + 12);
-  Fn1006C530_quadVerts2_v2_z = a2;
-  Fn1006C530_quadVerts2_v2_y = v11;
-  Fn1006C530_quadVerts2_v3_x = (float)*(int *)(a1 + 8);
-  v12 = (double)*(int *)(a1 + 12);
-  Fn1006C530_quadVerts2_v3_z = a2;
-  Fn1006C530_quadVerts3_v1_x = a3;
-  Fn1006C530_quadVerts3_v2_y = a4;
-  Fn1006C530_quadVerts2_v3_y = v12;
-  v13 = 1.0 / *(float *)&a5;
-  Fn1006C530_quadVerts3_v3_x = a3;
-  Fn1006C530_quadVerts3_v3_y = a4;
-  Fn1006C530_quadVerts3_v0_u = (double)(int)(*(_DWORD *)a1 + 1) * v13;
-  v14 = 1.0 / *(float *)&a6;
-  Fn1006C530_quadVerts3_v0_v = (double)(int)(*(_DWORD *)(a1 + 4) + 1) * v14;
-  Fn1006C530_quadVerts3_v1_u = (double)*(int *)(a1 + 8) * v13;
-  Fn1006C530_quadVerts3_v1_v = (double)(int)(*(_DWORD *)(a1 + 4) + 1) * v14;
-  Fn1006C530_quadVerts3_v2_u = (double)(int)(*(_DWORD *)a1 + 1) * v13;
-  Fn1006C530_quadVerts3_v2_v = (double)*(int *)(a1 + 12) * v14;
-  Fn1006C530_quadVerts3_v3_u = (double)*(int *)(a1 + 8) * v13;
-  Fn1006C530_quadVerts3_v3_v = (double)*(int *)(a1 + 12) * v14;
+  double f1;
+  double f2;
+  double f3;
+  double f4;
+  double f5;
+  double f6;
+  int i1;
+  void *p1;
+  int stride;
+  int i3;
+  void *p2;
+  int i4;
+  int i5;
+  void *p3;
+  int i6;
+  Fn1006C530_quadVerts = (float)*(int *)arg1;
+  Fn1006C530_quadVerts_v0_y = (float)*(int *)(arg1 + 4);
+  Fn1006C530_quadVerts_v1_x = (float)*(int *)(arg1 + 8);
+  Fn1006C530_quadVerts_v1_y = (float)*(int *)(arg1 + 4);
+  Fn1006C530_quadVerts_v2_x = (float)*(int *)arg1;
+  Fn1006C530_quadVerts_v2_y = (float)*(int *)(arg1 + 12);
+  Fn1006C530_quadVerts_v3_x = (float)*(int *)(arg1 + 8);
+  Fn1006C530_quadVerts_v3_y = (float)*(int *)(arg1 + 12);
+  Fn1006C530_quadVerts2 = (float)*(int *)arg1;
+  f1 = (double)*(int *)(arg1 + 4);
+  Fn1006C530_quadVerts2_v0_z = arg2;
+  Fn1006C530_quadVerts2_v0_y = f1;
+  Fn1006C530_quadVerts2_v1_x = (float)*(int *)(arg1 + 8);
+  f2 = (double)*(int *)(arg1 + 4);
+  Fn1006C530_quadVerts2_v1_z = arg2;
+  Fn1006C530_quadVerts2_v1_y = f2;
+  Fn1006C530_quadVerts2_v2_x = (float)*(int *)arg1;
+  f3 = (double)*(int *)(arg1 + 12);
+  Fn1006C530_quadVerts2_v2_z = arg2;
+  Fn1006C530_quadVerts2_v2_y = f3;
+  Fn1006C530_quadVerts2_v3_x = (float)*(int *)(arg1 + 8);
+  f4 = (double)*(int *)(arg1 + 12);
+  Fn1006C530_quadVerts2_v3_z = arg2;
+  Fn1006C530_quadVerts3_v1_x = arg3;
+  Fn1006C530_quadVerts3_v2_y = arg4;
+  Fn1006C530_quadVerts2_v3_y = f4;
+  f5 = 1.0 / *(float *)&arg5;
+  Fn1006C530_quadVerts3_v3_x = arg3;
+  Fn1006C530_quadVerts3_v3_y = arg4;
+  Fn1006C530_quadVerts3_v0_u = (double)(int)(*(uint32_t *)arg1 + 1) * f5;
+  f6 = 1.0 / *(float *)&arg6;
+  Fn1006C530_quadVerts3_v0_v = (double)(int)(*(uint32_t *)(arg1 + 4) + 1) * f6;
+  Fn1006C530_quadVerts3_v1_u = (double)*(int *)(arg1 + 8) * f5;
+  Fn1006C530_quadVerts3_v1_v = (double)(int)(*(uint32_t *)(arg1 + 4) + 1) * f6;
+  Fn1006C530_quadVerts3_v2_u = (double)(int)(*(uint32_t *)arg1 + 1) * f5;
+  Fn1006C530_quadVerts3_v2_v = (double)*(int *)(arg1 + 12) * f6;
+  Fn1006C530_quadVerts3_v3_u = (double)*(int *)(arg1 + 8) * f5;
+  Fn1006C530_quadVerts3_v3_v = (double)*(int *)(arg1 + 12) * f6;
   if ( (Fn1006C530_staticGuards & 1) == 0 )
   {
     Fn1006C530_staticGuards |= 1u;
@@ -167,26 +169,26 @@ XI_API int __stdcall Occlusion_DrawQuery(int a1, int a2, int a3, int a4, int a5,
     orig::_atexit(XI_CODE(unknown_libname_60));
   }
   orig::StateBlock_ApplyRSTSS(Fn1006C530_stateBlock, (int)Fn1006C530_renderStates, (int)Fn1006C530_textureStageStates);
-  orig::CDx_PushRenderTargetTexture_Flag1(*(void **)(g_pResourceMng + 3528), a7, a8, *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x1A4)));
-  v15 = g_pResourceMng;
+  orig::CDx_PushRenderTargetTexture_Flag1(*(void **)(g_pResourceMng + 3528), arg7, arg8, *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x1A4)));
+  i1 = g_pResourceMng;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
-  v16 = *(void **)(v15 + 3528);
-  v17 = orig::Gfx_CalcFVFStride(0x44u);
-  orig::CDx_DrawPrimitiveUP(v16, 5, 2, (int)&Fn1006C530_quadVerts, v17);
+  p1 = *(void **)(i1 + 3528);
+  stride = orig::Gfx_CalcFVFStride(0x44u);
+  orig::CDx_DrawPrimitiveUP(p1, 5, 2, (int)&Fn1006C530_quadVerts, stride);
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-  v18 = g_pResourceMng;
+  i3 = g_pResourceMng;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(68);
-  v19 = *(void **)(v18 + 3528);
-  v20 = orig::Gfx_CalcFVFStride(0x44u);
-  orig::CDx_DrawPrimitiveUP(v19, 5, 2, (int)&Fn1006C530_quadVerts2, v20);
-  orig::CDx_PopRenderTargetA(*(_DWORD ***)(g_pResourceMng + 3528), 0, 0);
+  p2 = *(void **)(i3 + 3528);
+  i4 = orig::Gfx_CalcFVFStride(0x44u);
+  orig::CDx_DrawPrimitiveUP(p2, 5, 2, (int)&Fn1006C530_quadVerts2, i4);
+  orig::CDx_PopRenderTargetA(*(uint32_t ***)(g_pResourceMng + 3528), 0, 0);
   orig::CDx_PushRenderTargetTexture_Flag0(
     *(void **)(g_pResourceMng + 3528),
-    *(_DWORD *)(g_pOcclusionMng + 12),
-    *(_DWORD *)(g_pOcclusionMng + 16),
-    *(_DWORD *)(g_pOcclusionMng + 20));
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(a7));
-  orig::CDx_EndAndClearBegin(*(_DWORD ***)(g_pResourceMng + 3528), 1, 0, 1065353216, 0);
+    *(uint32_t *)(g_pOcclusionMng + 12),
+    *(uint32_t *)(g_pOcclusionMng + 16),
+    *(uint32_t *)(g_pOcclusionMng + 20));
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetTexture(0, (IDirect3DBaseTexture8 *)(arg7));
+  orig::CDx_EndAndClearBegin(*(uint32_t ***)(g_pResourceMng + 3528), 1, 0, 1065353216, 0);
   if ( (Fn1006C530_staticGuards & 2) == 0 )
   {
     Fn1006C530_staticGuards |= 2u;
@@ -194,190 +196,194 @@ XI_API int __stdcall Occlusion_DrawQuery(int a1, int a2, int a3, int a4, int a5,
     orig::_atexit(XI_CODE(unknown_libname_59));
   }
   orig::StateBlock_ApplyRSTSS(Fn1006C530_stateBlock2, (int)Fn1006C530_renderStates2, (int)Fn1006C530_textureStageStates2);
-  v21 = g_pResourceMng;
+  i5 = g_pResourceMng;
   (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(260);
-  v22 = *(void **)(v21 + 3528);
-  v23 = orig::Gfx_CalcFVFStride(0x104u);
-  orig::CDx_DrawPrimitiveUP(v22, 5, 2, (int)&Fn1006C530_quadVerts3, v23);
-  return orig::CDx_PopRenderTargetB(*(_DWORD ***)(g_pResourceMng + 3528), 0, 0);
+  p3 = *(void **)(i5 + 3528);
+  i6 = orig::Gfx_CalcFVFStride(0x104u);
+  orig::CDx_DrawPrimitiveUP(p3, 5, 2, (int)&Fn1006C530_quadVerts3, i6);
+  return orig::CDx_PopRenderTargetB(*(uint32_t ***)(g_pResourceMng + 3528), 0, 0);
 }
 
 // FUNCTION: FFXIMAIN 0x1006C8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 486 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Occlusion_ReadbackCount(__int16 *self_, char a2)
+XI_API int __thiscall Occlusion_ReadbackCount(short *self_, char arg2)
 {
-  int v2;
-  int v4;
-  int v5;
-  int *v6;
+  int i1;
+  int i2;
+  int i3;
+  int *p1;
   int *i;
-  int v8;
-  int v9;
-  __int16 v11;
-  alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  int &v12 = *reinterpret_cast<int *>(xi_frame + 0x38);
-  int &v13 = *reinterpret_cast<int *>(xi_frame + 0x3C);
-  _DWORD (&v14)[2] = *reinterpret_cast<_DWORD (*)[2]>(xi_frame + 0x40);
+  int i4;
+  int i5;
+  short i6;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x448];
+    struct __attribute__((packed)) { unsigned char pad_1[0x38]; int i7; };   // at 0x38
+    struct __attribute__((packed)) { unsigned char pad_2[0x3C]; int i8; };   // at 0x3C
+    struct __attribute__((packed)) { unsigned char pad_3[0x40]; uint32_t u1[2]; };   // at 0x40
+  } frame;
 
-  v2 = 0;
-  v4 = 0;
-  (*(void (__stdcall **)(_DWORD, _DWORD, int *))(**(_DWORD **)(g_pOcclusionMng + 12) + 60))(
-    *(_DWORD *)(g_pOcclusionMng + 12),
+  i1 = 0;
+  i2 = 0;
+  (*(void (__stdcall **)(uint32_t, uint32_t, int *))(**(uint32_t **)(g_pOcclusionMng + 12) + 60))(
+    *(uint32_t *)(g_pOcclusionMng + 12),
     0,
-    &v12);
-  if ( a2 != 0 )
-    v2 = *self_;
-  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CopyRects((IDirect3DSurface8 *)(v12), (void *)(&unk_1032C18C), 1, (IDirect3DSurface8 *)(*((_DWORD *)self_ + v2 + 1)), (void *)(0));
-  (*(void (__stdcall **)(int))(*(_DWORD *)v12 + 8))(v12);
-  v5 = *((_DWORD *)self_ + 1);
-  if ( (*(int (__stdcall **)(int, _DWORD *, void *, int))(*(_DWORD *)v5 + 36))(v5, v14, &unk_1032C17C, 16) == 0 )
+    &frame.i7);
+  if ( arg2 != 0 )
+    i1 = *self_;
+  (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CopyRects((IDirect3DSurface8 *)(frame.i7), (void *)(&g_1032C18C), 1, (IDirect3DSurface8 *)(*((uint32_t *)self_ + i1 + 1)), (void *)(0));
+  (*(void (__stdcall **)(int))(*(uint32_t *)frame.i7 + 8))(frame.i7);
+  i3 = *((uint32_t *)self_ + 1);
+  if ( (*(int (__stdcall **)(int, uint32_t *, void *, int))(*(uint32_t *)i3 + 36))(i3, frame.u1, &g_1032C17C, 16) == 0 )
   {
-    v12 = 8;
-    v13 = 2 * v14[0];
-    v6 = (int *)v14[1];
+    frame.i7 = 8;
+    frame.i8 = 2 * frame.u1[0];
+    p1 = (int *)frame.u1[1];
     do
     {
-      for ( i = v6; i < v6 + 16; v4 += v8 & 0x80 )
+      for ( i = p1; i < p1 + 16; i2 += i4 & 0x80 )
       {
-        v8 = *i;
+        i4 = *i;
         i += 2;
       }
-      v6 = (int *)((char *)v6 + v13);
-      --v12;
+      p1 = (int *)((char *)p1 + frame.i8);
+      --frame.i7;
     }
-    while ( v12 != 0 );
-    (*(void (__stdcall **)(int))(*(_DWORD *)v5 + 40))(v5);
+    while ( frame.i7 != 0 );
+    (*(void (__stdcall **)(int))(*(uint32_t *)i3 + 40))(i3);
   }
-  v9 = v4 >> 5;
-  if ( a2 == 0 )
-    return v9;
+  i5 = i2 >> 5;
+  if ( arg2 == 0 )
+    return i5;
   *self_ = 0;
-  if ( v9 == 0 )
+  if ( i5 == 0 )
   {
     *(self_ + 1) = 1;
-    return v9;
+    return i5;
   }
-  v11 = *(self_ + 1);
-  if ( v11 == 0 )
-    return v9;
-  *(self_ + 1) = v11 - 1;
+  i6 = *(self_ + 1);
+  if ( i6 == 0 )
+    return i5;
+  *(self_ + 1) = i6 - 1;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1006C9B0
 // GATE: PASS -- 100 trials, 94 returned normally, 94 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API int __thiscall OcclusionMng_Prepare(_DWORD *self_)
+XI_API int __thiscall OcclusionMng_Prepare(uint32_t *self_)
 {
   int result;
-  alignas(16) unsigned char xi_frame[0x438];  // address-taken locals at their original offsets
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0x14);
-  _BYTE (&v4)[32] = *reinterpret_cast<_BYTE (*)[32]>(xi_frame + 0x18);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x438];
+    struct __attribute__((packed)) { unsigned char pad_1[0x14]; int i1; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; uint8_t u1[32]; };   // at 0x18
+  } frame;
 
-  if ( *(_DWORD *)(g_pOcclusionMng + 12) == 0 )
-    orig::OcclusionMng_CreateTarget((_DWORD *)g_pOcclusionMng);
+  if ( *(uint32_t *)(g_pOcclusionMng + 12) == 0 )
+    orig::OcclusionMng_CreateTarget((uint32_t *)g_pOcclusionMng);
   result = *(self_ + 1);
   if ( result == 0 )
   {
-    (*(void (__stdcall **)(_DWORD, _DWORD, int *))(**(_DWORD **)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)) + 60))(
-      *(_DWORD *)&(*(unsigned __int8 *)((char *)g_pCDx + 0x194)),
+    (*(void (__stdcall **)(uint32_t, uint32_t, int *))(**(uint32_t **)&(*(unsigned char *)((char *)g_pCDx + 0x194)) + 60))(
+      *(uint32_t *)&(*(unsigned char *)((char *)g_pCDx + 0x194)),
       0,
-      &v3);
-    (*(void (__stdcall **)(int, _BYTE *))(*(_DWORD *)v3 + 32))(v3, v4);
-    (*(void (__stdcall **)(int))(*(_DWORD *)v3 + 8))(v3);
-    result = *(_DWORD *)(g_pOcclusionMng + 24);
+      &frame.i1);
+    (*(void (__stdcall **)(int, uint8_t *))(*(uint32_t *)frame.i1 + 32))(frame.i1, frame.u1);
+    (*(void (__stdcall **)(int))(*(uint32_t *)frame.i1 + 8))(frame.i1);
+    result = *(uint32_t *)(g_pOcclusionMng + 24);
     *(self_ + 1) = result;
     if ( result != 0 )
-      result = (*(int (__stdcall **)(int))(*(_DWORD *)result + 4))(result);
-    *(_WORD *)self_ = 0;
+      result = (*(int (__stdcall **)(int))(*(uint32_t *)result + 4))(result);
+    *(uint16_t *)self_ = 0;
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1006CA20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Occlusion_IsFloatClassAccepted(float param_1)
+XI_API bits32 __cdecl Occlusion_IsFloatClassAccepted(float arg1)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::FUN_1031450a(SUB84((double)(long double)param_1,0),
-                       (uint32_t)(xi_castbits<uint64_t>((double)(long double)param_1) >> 0x20));
-  uVar2 = uVar1;
-  if ((int)uVar1 < 0x11) {
-    if ((uVar1 != 0x10) &&
-       (((uVar2 = 0, uVar1 != 1 && (uVar2 = 0, uVar1 != 2)) &&
-        (uVar1 = uVar1 - 4, uVar2 = 0, uVar1 != 0)))) {
-LAB_1006ca55:
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = orig::game_1031450A(((uint32_t)(to_bits64((double)arg1) >> 0)),
+                       (uint32_t)(bit_cast<uint64_t>((double)arg1) >> 0x20));
+  u2 = u1;
+  if ((int)u1 < 0x11) {
+    if ((u1 != 0x10) &&
+       (((u2 = 0, u1 != 1 && (u2 = 0, u1 != 2)) &&
+        (u1 = u1 - 4, u2 = 0, u1 != 0)))) {
+code_1006CA55:
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  else if ((uVar1 != 0x80) && (uVar1 != 0x200)) goto LAB_1006ca55;
-  return uVar2 & 0xffffff00;
+  else if ((u1 != 0x80) && (u1 != 0x200)) goto code_1006CA55;
+  return u2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1006CA60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Occlusion_AreAll16FloatsAccepted(undefined4 * param_1)
+XI_API bits32 __cdecl Occlusion_AreAll16FloatsAccepted(bits32 * arg1)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
   
-  iVar3 = 0;
+  i1 = 0;
   do {
-    uVar1 = orig::Occlusion_IsFloatClassAccepted(xi_castbits<float>(*param_1));
-    uVar2 = xi_trunc24(((uint32_t)uVar1 >> 8));
-    if ((char)uVar1 == '\0') {
-      return (uint32_t)uVar2 << 8;
+    u1 = orig::Occlusion_IsFloatClassAccepted(bit_cast<float>(*arg1));
+    u2 = xi_trunc24(((uint32_t)u1 >> 8));
+    if ((char)u1 == '\0') {
+      return (uint32_t)u2 << 8;
     }
-    iVar3 = iVar3 + 1;
-    param_1 = param_1 + 1;
-  } while (iVar3 < 0x10);
-  return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+    i1 = i1 + 1;
+    arg1 = arg1 + 1;
+  } while (i1 < 0x10);
+  return ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1006CB50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 xi_ecx)
+XI_API void __attribute__((stdcall, regparm(3))) CreateProcessorInstance(uint32_t xi_eax_unused, bits32 xi_edx, bits32 xi_ecx)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  orig::FUN_1006cce0(xi_ecx,xi_edx);
-  if (DAT_1047cf78 == '\0') {
-    if (DAT_1047ce60 == '\0') {
-      puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xaa0);
-      if (puVar1 != (undefined4 *)0x0) {
-        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
-        orig::CMoProcessor_InitRotationMatrices(puVar1);
-        g_pProcessor_as_v2 = puVar1;
+  orig::CMoProcessor_DetectCpu(xi_ecx,xi_edx);
+  if (g_1047CF78 == '\0') {
+    if (g_1047CE60 == '\0') {
+      p1 = (bits32 *)orig::Mem_AllocDefault_v1(0xaa0);
+      if (p1 != (bits32 *)0x0) {
+        *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C368;
+        orig::CMoProcessor_InitRotationMatrices(p1);
+        g_pProcessor_as_v2 = p1;
         return;
       }
     }
     else {
-      puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xbb0);
-      if (puVar1 != (undefined4 *)0x0) {
-        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
-        orig::CMoProcessor_InitRotationMatrices(puVar1);
-        *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c1c8;
-        orig::ProcessorInit_InitMatrices(puVar1);
-        g_pProcessor_as_v2 = puVar1;
+      p1 = (bits32 *)orig::Mem_AllocDefault_v1(0xbb0);
+      if (p1 != (bits32 *)0x0) {
+        *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C368;
+        orig::CMoProcessor_InitRotationMatrices(p1);
+        *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C1C8;
+        orig::ProcessorInit_InitMatrices(p1);
+        g_pProcessor_as_v2 = p1;
         return;
       }
     }
   }
   else {
-    puVar1 = (undefined4 *)orig::Mem_AllocDefault_v1(0xbb0);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c434;
-      orig::VectorCtorIterator_CallForEachElement(puVar1 + 0x204,0x40,4,&LAB_1006cc30);
-      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c368;
-      orig::CMoProcessor_InitRotationMatrices(puVar1);
-      *puVar1 = &PTR_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032c298;
-      orig::Processor_InitIdentityMatrices(puVar1);
-      g_pProcessor_as_v2 = puVar1;
+    p1 = (bits32 *)orig::Mem_AllocDefault_v1(0xbb0);
+    if (p1 != (bits32 *)0x0) {
+      *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C434;
+      orig::VectorCtorIterator_CallForEachElement(p1 + 0x204,0x40,4,&code_1006CC30);
+      *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C368;
+      orig::CMoProcessor_InitRotationMatrices(p1);
+      *p1 = &ptr_to_CMoProcessor3DNow_CMoProcessor_GetRuntimeClass_1032C298;
+      orig::Processor_InitIdentityMatrices(p1);
+      g_pProcessor_as_v2 = p1;
       return;
     }
   }
-  g_pProcessor_as_v2 = (undefined4 *)0x0;
+  g_pProcessor_as_v2 = (bits32 *)0x0;
   return;
 }

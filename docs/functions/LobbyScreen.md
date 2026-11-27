@@ -17,7 +17,7 @@ Why the file has this name (data/unit_names.json): the lobby menus "loby1win", "
 | `LobbyThread_Start` | 0x10245600 | 68 | yes | - | - | - |
 | `LobbyThread_SetGlobal106690AC` | 0x10245B50 | 12 | yes | - | Stores a value in the global at DAT_106690AC. | low |
 | `Lobby_DestroyThreadPool` | 0x10245B60 | 53 | yes | - | - | - |
-| `thunk_sub_10245BB0` | 0x10245BA0 | 5 | yes | - | - | - |
+| `thunk_LobbyThread_ResetZone_as_v0` | 0x10245BA0 | 5 | yes | - | - | - |
 | `LobbyThread_ResetZone` | 0x10245BB0 | 42 | yes | 9 | Resets the zone and recreates the camera manager and draw lists. | low |
 | `LobbyThread_IsSystemState1` | 0x10245BE0 | 14 | yes | - | Tests whether the system at 0x10669098 is in state 1. | low |
 | `LobbyThread_NextSequence` | 0x10245F30 | 25 | yes | - | Advances the thread's sequence number, skipping zero. | medium |
@@ -45,15 +45,15 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `LobbyThread_NoOp` calls nothing directly
 - `LobbyThread_Construct` calls `NetCellFont_ClearWords`, `LobbyThread_InitState`
 - `LobbyThread_InitState` calls nothing directly
-- `LobbyScreen_LoadResourceRunMain` calls `sub_100731B0`, `sub_10071E90`, `CMoResource::FindByTypeAndId`, `sub_10056B80`
+- `LobbyScreen_LoadResourceRunMain` calls `game_100731B0`, `game_10071E90`, `CMoResource::FindByTypeAndId`, `game_10056B80`
 - `LobbyScreen_ReleaseResource` calls `DynVB_ReleaseResourcesOf`, `CMoResource::ReleaseChain`, `ResHandle_FreeIfUnreferenced`
 - `LobbyScreen_LoadResourceOnce` calls `LobbyScreen_LoadResourceRunMain`
 - `LobbyThread_Start` calls `Mem_AllocDefault`, `CYyObject::Init`, `ThreadPool_StartThread`
 - `LobbyThread_SetGlobal106690AC` calls nothing directly
 - `Lobby_DestroyThreadPool` calls `ThreadPool_Shutdown`
-- `thunk_sub_10245BB0` calls `LobbyThread_ResetZone`
+- `thunk_LobbyThread_ResetZone_as_v0` calls `LobbyThread_ResetZone`
 - `LobbyThread_ResetZone` calls `XiZone::ResetState`, `WinMain_ApplyTables10350210`, `XiZone::GetInstance`, `CYyCamMng2::CreateGlobal`, `Actor_ResetDrawLists`
-- `LobbyThread_IsSystemState1` calls `sub_10039590`
+- `LobbyThread_IsSystemState1` calls `game_10039590`
 - `LobbyThread_NextSequence` calls nothing directly
 - `LobbyThread_SendCmd0` calls `LobbyThread_PushCmd`
 - `LobbyThread_QueueSoundCmd` calls `LobbyThread_NextSequence`, `LobbyThread_PushCmd`
@@ -61,8 +61,8 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `LobbyThread_SendCmd3` calls `LobbyThread_PushCmd`
 - `LobbyThread_SendCmd4` calls `LobbyThread_PushCmd`
 - `LobbyThread_SendCmd6` calls `LobbyThread_PushCmd`
-- `LobbyThread_QueueStreamFile` calls `Allocator_Generic`, `sub_10311FDE`, `sub_1031217F`, `sub_10311F30`, `LobbyThread_PushCmd`, `operator_delete`
-- `LobbyThread_QueueMusicFile` calls `Allocator_Generic`, `sub_10311FF1`, `sub_10311FDE`, `sub_10311F30`, `LobbyThread_PushCmd`, `operator_delete`
+- `LobbyThread_QueueStreamFile` calls `Allocator_Generic`, `game_10311FDE`, `game_1031217F`, `game_10311F30`, `LobbyThread_PushCmd`, `operator_delete`
+- `LobbyThread_QueueMusicFile` calls `Allocator_Generic`, `game_10311FF1`, `game_10311FDE`, `game_10311F30`, `LobbyThread_PushCmd`, `operator_delete`
 - `LobbyThread_SendCmd8` calls `LobbyThread_PushCmd`
 - `LobbyThread_SendCmd9` calls `LobbyThread_PushCmd`
 - `LobbyThread_SendCmd11` calls `LobbyThread_PushCmd`

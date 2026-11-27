@@ -6,29 +6,31 @@
 // GATE: PASS -- 100 trials, 100 returned normally, 81 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall CYyModelDtBase_Destructor(void * self_)
 {
-  int *this_00;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int *obj1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  *(uint8_t ***)self_ = &PTR_CYyModelDt_GetRuntimeClass_1032a6e0;
+  *(uint8_t ***)self_ = &ptr_to_CYyModelDt_GetRuntimeClass_1032A6E0;
   if (*(uint32_t **)((int)self_ + 8) != (uint32_t *)0x0) {
-    local_4 = self_;
+    frame.p1 = self_;
     orig::CMoResource_ReleaseChain_v1((void *)**(uint32_t **)((int)self_ + 8));
   }
-  local_4 = *(void **)((int)self_ + 8);
-  orig::ResHandle_FreeIfUnreferenced_v1(&local_4);
-  this_00 = *(int **)((int)self_ + 4);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
+  frame.p1 = *(void **)((int)self_ + 8);
+  orig::ResHandle_FreeIfUnreferenced_v1(&frame.p1);
+  obj1 = *(int **)((int)self_ + 4);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
     *(uint32_t *)((int)self_ + 4) = 0;
   }
-  orig::FUN_10029c00((void *)((int)self_ + 0x10));
+  orig::game_10029C00((void *)((int)self_ + 0x10));
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10029D20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ModelDtBase_GetField20(void * self_)
+XI_API bits32 __thiscall ModelDtBase_GetField20(void * self_)
 {
   if (*(int **)((int)self_ + 8) != (int *)0x0) {
     return *(uint32_t *)(**(int **)((int)self_ + 8) + 0x20);

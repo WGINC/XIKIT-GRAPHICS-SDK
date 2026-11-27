@@ -6,7 +6,7 @@
 class XI_API CMoDamValueProgElem {
 public:
     void Slot18DrawTextAtTarget();  // 0x10041AF0
-    int * ScalarDeletingDtor(char a2);  // 0x10041FE0
+    int * ScalarDeletingDtor(char arg1);  // 0x10041FE0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0xF8];

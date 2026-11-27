@@ -4,17 +4,17 @@
 
 // FUNCTION: FFXIMAIN 0x100AB320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Acter_DestroyAndClearSlot(int param_1)
+XI_API bits32 __cdecl Acter_DestroyAndClearSlot(int arg1)
 {
-  uint16_t uVar1;
+  uint16_t u1;
   void *self_;
   
-  self_ = *(void **)(param_1 + 0x70);
+  self_ = *(void **)(arg1 + 0x70);
   if (self_ != (void *)0x0) {
-    uVar1 = *(uint16_t *)((int)self_ + 0x74);
+    u1 = *(uint16_t *)((int)self_ + 0x74);
     orig::CXiActor_Destroy(self_);
-    param_1 = orig::thunk_sub_10028AA0_v3(self_);
-    (&ActerBuffPtr_as_v0)[uVar1] = 0;
+    arg1 = orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v3(self_);
+    (&ActerBuffPtr_as_v0)[u1] = 0;
   }
-  return param_1;
+  return arg1;
 }

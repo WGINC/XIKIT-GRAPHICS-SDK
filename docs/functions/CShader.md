@@ -15,5 +15,5 @@ Group: `CShader` (by the file name only). Source: `sdk/tree_src/CShader.cpp`.
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `CShader::GetRuntimeClass` calls nothing directly
-- `CShader::ScalarDeletingDtor` calls `CShader::CShader_Destructor`, `thunk_sub_10028AA0`
+- `CShader::ScalarDeletingDtor` calls `CShader::CShader_Destructor`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `CShader::CShader_Destructor` calls nothing directly

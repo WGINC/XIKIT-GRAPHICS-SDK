@@ -15,5 +15,5 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoOcclusionMng.cpp`
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `CMoOcclusionMng::GetRuntimeClass` calls nothing directly
-- `CMoOcclusionMng::ScalarDeletingDtor` calls `sub_1006C1E0`, `thunk_sub_10028AA0`
+- `CMoOcclusionMng::ScalarDeletingDtor` calls `game_1006C1E0`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `CMoOcclusionMng::OcclusionMng_CreateTarget` calls `CDx::CreateTexture`

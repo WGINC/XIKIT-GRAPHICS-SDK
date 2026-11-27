@@ -5,8 +5,8 @@
 #pragma pack(push, 1)
 class XI_API CYyIcon {
 public:
-    int Draw(int a1, int a2, int a3, int a4);  // 0x10026990
-    int DrawSubRect(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9);  // 0x10026C70
+    int Draw(int arg1, int arg2, int arg3, int arg4);  // 0x10026990
+    int DrawSubRect(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);  // 0x10026C70
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x4];

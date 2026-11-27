@@ -10,6 +10,15 @@
 // Camera_SnapshotState: while photo mode is on it puts its own eye in +0x44 for the game's build and the game's eye
 // back afterwards. The saved copy then holds the mod's eye, so the controller "differs" every frame and the view is
 // rebuilt every frame while photo mode is on, and once more when it is turned off.
+// (28 Nov, the owner's run: "the photo mode camera features all don't work"; every setting reached the kit, the hook
+// was in) Camera_ApplyViewProjection calls Camera_SnapshotState only when Camera_DiffersFromSaved says the camera
+// moved, or when the controller's byte +0xF4 is set (0x1001553C reads it, 0x1001554B clears it before the build). A
+// camera that has not moved is never rebuilt, so photo mode turned on while the camera stood still (the panel open)
+// never reached this hook, and nothing changed. Camera_PlaceRelativeToActor (0x10021680) sets +0xF4 to 1 after it
+// places the camera (0x100218E8, after its own Camera_SnapshotState), so that the next frame's view is built: the game's own request. The mod now sets
+// it in its frame while photo mode is on and once when it is turned off, on the controller Camera_GetField50
+// (0x10015250: [g_pCamera] + 0x50, g_pCamera at 0x104568FC) returns. That this was the cause in the owner's run is not known (the log has no
+// line from the hook): the mod now logs once each time the camera is taken.
 // The mod's eye: the game's eye orbited about the game's look-at point (photo_yaw, photo_pitch in degrees), its
 // distance scaled (photo_dist percent), and raised along the game's Y axis (photo_raise, hundredths of a unit; which
 // sign is up was not checked). What the game culls with: the zone's culling frustum and the actors' depth test are
@@ -37,6 +46,7 @@
 #include "xikit_sdk.hpp"
 #include "xikit_cmd.hpp"
 #include "photo_mode_core.h"
+#include <stdint.h>
 #include <stdlib.h>
 XIKIT_MOD_GLOBALS
 
@@ -46,6 +56,7 @@ static void log_line(const char *s) { g_host->log("%s", s); }
 static bool photo_on() { return g_host->setting_int("photo", 0) != 0; }
 static bool hide_on() { return g_host->setting_int("photo_hide_ui", 0) != 0; }
 
+static bool g_taken, g_was_on;                              // the camera taken since photo mode was turned on; photo mode last frame
 static xikit::fn<decltype(&Camera_SnapshotState)> prev_Snap;
 static int __thiscall my_Snap(void *ctl) {
   if (!ctl || !photo_on()) return prev_Snap(ctl);
@@ -54,6 +65,7 @@ static int __thiscall my_Snap(void *ctl) {
   ph_orbit(game, at, (float)g_host->setting_int("photo_yaw", 0), (float)g_host->setting_int("photo_pitch", 0),
            (float)g_host->setting_int("photo_dist", 100), g_host->setting_int("photo_raise", 0) / 100.0f, mine);
   for (int i = 0; i < 3; i++) eye[i] = mine[i];
+  if (!g_taken) { g_taken = true; g_host->log("photo_mode: the camera taken: the game's eye (%.1f %.1f %.1f), the mod's (%.1f %.1f %.1f)", game[0], game[1], game[2], mine[0], mine[1], mine[2]); }
   int r = prev_Snap(ctl);                                    // the game's build of the view, from the mod's eye
   for (int i = 0; i < 3; i++) eye[i] = game[i];              // (the copy at +0x60 keeps the mod's: rebuilt next frame)
   return r;
@@ -71,6 +83,15 @@ static int __thiscall my_Comp(CDx *self, int a1, int a2, int a3, int a4) {
 }
 
 extern "C" __declspec(dllexport) void xikit_mod_frame(void *device) {
+  // the game's request to build the view at the next Camera_ApplyViewProjection (controller +0xF4; see the top)
+  bool on = photo_on();
+  if (on || g_was_on) {
+    uint8_t *cam = *reinterpret_cast<uint8_t *volatile *>((uintptr_t)XI_GAME(0x104568FCu));   // g_pCamera (analysed build; 0x10457AAC in 6AE818B4)
+    uint8_t *ctl = cam ? *reinterpret_cast<uint8_t **>(cam + 0x50) : nullptr;
+    if (ctl) ctl[0xF4] = 1;
+  }
+  if (!on) g_taken = false;
+  g_was_on = on;
   if (hide_on() && g_world && device) ph_cover(device, g_world);
 }
 

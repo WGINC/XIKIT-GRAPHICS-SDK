@@ -4,62 +4,62 @@
 
 // FUNCTION: FFXIMAIN 0x1027DB80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Chn_ReleaseRefs(uint32_t * param_1)
+XI_API void __cdecl Chn_ReleaseRefs(uint32_t * arg1)
 {
-  if (param_1[0x2f] != 0) {
-    orig::SqObject_Release((int *)(param_1 + 0x2f));
+  if (arg1[0x2f] != 0) {
+    orig::SqObject_Release((int *)(arg1 + 0x2f));
   }
-  if (param_1[0x2e] != 0) {
-    orig::SqObject_Release((int *)(param_1 + 0x2e));
+  if (arg1[0x2e] != 0) {
+    orig::SqObject_Release((int *)(arg1 + 0x2e));
   }
-  if (param_1[0x2d] != 0) {
-    if ((*param_1 & 0x200) == 0) {
-      orig::SqObject_Release((int *)(param_1 + 0x2d));
+  if (arg1[0x2d] != 0) {
+    if ((*arg1 & 0x200) == 0) {
+      orig::SqObject_Release((int *)(arg1 + 0x2d));
       return;
     }
-    param_1[0x2d] = 0;
+    arg1[0x2d] = 0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027DCC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t * __cdecl Chn_RegisterItem(uint32_t * param_1, uint32_t param_2)
+XI_API uint32_t * __cdecl Chn_RegisterItem(uint32_t * arg1, uint32_t arg2)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
-  long double fVar4;
+  int i1;
+  uint32_t u1;
+  int i2;
+  long double f1;
   
-  iVar1 = orig::SqTimer_GetMicroseconds_v1();
-  uVar2 = orig::SqChannelMotion_CreateWithOwner(param_2,0);
-  fVar4 = orig::SqgxVertexShaderRelease_GetFloat20(param_2);
-  *(float *)(uVar2 + 0x24) = (float)fVar4;
-  orig::_strncpy_v2((char *)(param_1 + 1),s_chnItemRegister_sqo_103b46e8,0x7f);
-  param_1[0x29] = *(uint32_t *)(uVar2 + 0x20);
-  fVar4 = orig::SqBounds_SumAxis(uVar2);
-  param_1[0x2a] = xi_castbits<uint32_t>((float)fVar4);
-  param_1[0x2d] = param_2;
-  param_1[0x2e] = uVar2;
-  iVar3 = orig::Chn_GetSubIndex((int)param_1);
-  if (iVar3 == -1) {
-    param_1[0x2c] = 0x3d088889;
+  i1 = orig::SqTimer_GetMicroseconds_v1();
+  u1 = orig::SqChannelMotion_CreateWithOwner(arg2,0);
+  f1 = orig::SqgxVertexShaderRelease_GetFloat20(arg2);
+  *(float *)(u1 + 0x24) = (float)f1;
+  orig::_strncpy_v2((char *)(arg1 + 1),str_chnItemRegister_sqo_103B46E8,0x7f);
+  arg1[0x29] = *(uint32_t *)(u1 + 0x20);
+  f1 = orig::SqBounds_SumAxis(u1);
+  arg1[0x2a] = bit_cast<uint32_t>((float)f1);
+  arg1[0x2d] = arg2;
+  arg1[0x2e] = u1;
+  i2 = orig::Chn_GetSubIndex((int)arg1);
+  if (i2 == -1) {
+    arg1[0x2c] = 0x3d088889;
   }
   else {
-    param_1[0x2c] = xi_castbits<uint32_t>((float)((long double)xi_castbits<float>(param_1[0x2a]) / (long double)(iVar3 + -1)));
+    arg1[0x2c] = bit_cast<uint32_t>((float)(bit_cast<float>(arg1[0x2a]) / (i2 + -1)));
   }
-  iVar3 = orig::SqTimer_GetMicroseconds_v1();
-  param_1[0x21] = iVar3 - iVar1;
-  *param_1 = *param_1 | 0x10;
-  return param_1;
+  i2 = orig::SqTimer_GetMicroseconds_v1();
+  arg1[0x21] = i2 - i1;
+  *arg1 = *arg1 | 0x10;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027DD70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Chn_ForwardIfFlag2(uint8_t * param_1, undefined4 xi_s2)
+XI_API void __cdecl Chn_ForwardIfFlag2(uint8_t * arg1, bits32 xi_s2)
 {
-  if ((*param_1 & 2) != 0) {
-    orig::FUN_1027dd90((uint32_t *)param_1,xi_s2);
+  if ((*arg1 & 2) != 0) {
+    orig::game_1027DD90((uint32_t *)arg1,xi_s2);
     return;
   }
   return;
@@ -67,46 +67,46 @@ XI_API void __cdecl Chn_ForwardIfFlag2(uint8_t * param_1, undefined4 xi_s2)
 
 // FUNCTION: FFXIMAIN 0x1027DF70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Chn_GetSubIndex(int param_1)
+XI_API int __cdecl Chn_GetSubIndex(int arg1)
 {
-  int *piVar1;
-  int iVar2;
+  int *p1;
+  int i1;
   
-  iVar2 = -1;
-  piVar1 = *(int **)(param_1 + 0xb4);
-  if (piVar1 != (int *)0x0) {
-    if ((*piVar1 != 0x50001) && (*piVar1 != 0x50003)) {
+  i1 = -1;
+  p1 = *(int **)(arg1 + 0xb4);
+  if (p1 != (int *)0x0) {
+    if ((*p1 != 0x50001) && (*p1 != 0x50003)) {
       return -1;
     }
-    iVar2 = piVar1[9];
+    i1 = p1[9];
   }
-  return iVar2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Chn_InitDefaults(undefined4 * param_1)
+XI_API void __cdecl Chn_InitDefaults(bits32 * arg1)
 {
-  *param_1 = 1;
-  param_1[1] = 0x3f800000;
-  param_1[2] = 0;
-  param_1[3] = 0x3eaaaaab;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[0x18] = 0;
-  param_1[0x19] = 0;
-  orig::SqcoConnector_Init(param_1 + 8);
+  *arg1 = 1;
+  arg1[1] = 0x3f800000;
+  arg1[2] = 0;
+  arg1[3] = 0x3eaaaaab;
+  arg1[4] = 0;
+  arg1[5] = 0;
+  arg1[6] = 0;
+  arg1[7] = 0;
+  arg1[0x18] = 0;
+  arg1[0x19] = 0;
+  orig::SqcoConnector_Init(arg1 + 8);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1027E0D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Chn_ReleaseIfSet(int param_1)
+XI_API void __cdecl Chn_ReleaseIfSet(int arg1)
 {
-  if (*(int *)(param_1 + 0x1c) != 0) {
-    orig::SqMatrixConnect_ReleaseConnection((uint8_t *)param_1);
+  if (*(int *)(arg1 + 0x1c) != 0) {
+    orig::SqMatrixConnect_ReleaseConnection((uint8_t *)arg1);
     return;
   }
   return;

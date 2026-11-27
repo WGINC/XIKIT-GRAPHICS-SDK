@@ -5,10 +5,10 @@
 #pragma pack(push, 1)
 class XI_API CMoGeneratorTask {
 public:
-    _DWORD * ScalarDeletingDtor(char a2);  // 0x10053350
-    static undefined4 __thiscall RunGeneratorAndFinish(void * self);  // 0x10054220
+    uint32_t * ScalarDeletingDtor(char arg1);  // 0x10053350
+    static bits32 __thiscall RunGeneratorAndFinish(void * self);  // 0x10054220
     int Slot11GetCloneRuntimeClass();  // 0x10054460
-    int Slot12DeleteClone(int a1);  // 0x10054470
+    int Slot12DeleteClone(int arg1);  // 0x10054470
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x30];

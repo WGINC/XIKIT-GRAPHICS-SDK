@@ -32,16 +32,16 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `MyRoom_GetObjectAtIndex` calls nothing directly
 - `MyRoom_SelectFurniture` calls `PlantMenu_SetState`, `PlantMenu_SetWord28Recursive`, `PlantMenu_GetWord58`
 - `MyRoom_CallAllFurniture101CEA80` calls `PlantMenu_CallSlot12OnObjects`
-- `MyRoom_ReleaseTable` calls `YkFurniture::Destructor`, `thunk_sub_10028AA0`
+- `MyRoom_ReleaseTable` calls `YkFurniture::Destructor`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`
 - `MyRoom_GetFirstFurnitureId` calls `PlantMenu_GetWord58`
 - `MyRoom_CopyList6To818` calls `YkCommon_GetIndexed`
 - `MyRoom_DoNothing` calls nothing directly
-- `MyRoom_Draw` calls `Gfx_ProjectWorldToScreen`, `Camera_GetFrameScale`, `sub_10311C2C`, `sub_1011FB60`
-- `MyRoom_BeginMode` calls `MyRoom_IsWord40D82Zero`, `Acter_SetFlag8000OfFound`, `sub_100A1860`, `Acter_FindFirstMatchingKinds`, `AfterimageTask_IsResourceMoving`, `AfterimageTask_Execute`
+- `MyRoom_Draw` calls `Gfx_ProjectWorldToScreen`, `Camera_GetFrameScale`, `game_10311C2C`, `game_1011FB60`
+- `MyRoom_BeginMode` calls `MyRoom_IsWord40D82Zero`, `Acter_SetFlag8000OfFound`, `game_100A1860`, `Acter_FindFirstMatchingKinds`, `AfterimageTask_IsResourceMoving`, `AfterimageTask_Execute`
 - `MyRoom_Update` calls `MyRoom_GetObjectAtIndex`, `MyRoom_Draw`
 - `MyRoom_GetFurnitureAtCell` calls `PlantMenu_GetGridCellByte`
-- `MyRoom_Refresh101CEC50` calls `sub_101CEC50`
+- `MyRoom_Refresh101CEC50` calls `game_101CEC50`
 - `MyRoom_PlaceItemThenRefresh` calls `PlantMenu_ClearItemFromGrid`, `MyRoom_Refresh101CEC50`
 - `MyRoom_Is104DFD98Bit40DB1x10Clear` calls nothing directly
 - `MyRoom_IsWord40D82Zero` calls `NetCellFont_GetWord40D82`
-- `MyRoom_StartWithCallbackOnce` calls `sub_101D6CC0`
+- `MyRoom_StartWithCallbackOnce` calls `game_101D6CC0`

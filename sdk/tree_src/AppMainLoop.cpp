@@ -4,25 +4,27 @@
 
 // FUNCTION: FFXIMAIN 0x100014A0
 // GATE: PASS -- 100 trials, 94 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API void __cdecl App_ForceForegroundWindow(HWND param_1)
+XI_API void __cdecl App_ForceForegroundWindow(HWND arg1)
 {
   HWND hWnd;
   DWORD idAttachTo;
   DWORD idAttach;
-  char xi_frame[24] __attribute__((aligned(4)));
-  LPDWORD  &lpdwProcessId = *reinterpret_cast<LPDWORD  *>(xi_frame + 0);
-  uint8_t  (&local_4)[4] = *reinterpret_cast<uint8_t  (*)[4]>(xi_frame + 20);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { LPDWORD lpdwProcessId; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; uint8_t u1[4]; };   // at 0x14
+  } frame;
   
   if (g_windowMode == 0) {
-    lpdwProcessId = (LPDWORD)0x0;
+    frame.lpdwProcessId = (LPDWORD)0x0;
     hWnd = GetForegroundWindow();
-    idAttachTo = GetWindowThreadProcessId(hWnd,lpdwProcessId);
-    idAttach = GetWindowThreadProcessId(param_1,(LPDWORD)0x0);
+    idAttachTo = GetWindowThreadProcessId(hWnd,frame.lpdwProcessId);
+    idAttach = GetWindowThreadProcessId(arg1,(LPDWORD)0x0);
     AttachThreadInput(idAttach,idAttachTo,1);
-    SystemParametersInfoA(0x2000,0,local_4,0);
+    SystemParametersInfoA(0x2000,0,frame.u1,0);
     SystemParametersInfoA(0x2001,0,(PVOID)0x0,0);
-    SetForegroundWindow(param_1);
-    SystemParametersInfoA(0x2001,0,local_4,0);
+    SetForegroundWindow(arg1);
+    SystemParametersInfoA(0x2001,0,frame.u1,0);
     AttachThreadInput(idAttach,idAttachTo,0);
   }
   return;
@@ -30,339 +32,343 @@ XI_API void __cdecl App_ForceForegroundWindow(HWND param_1)
 
 // FUNCTION: FFXIMAIN 0x10001B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl App_RenderFrameMaskedFPU(void)
+XI_API bits32 __cdecl App_RenderFrameMaskedFPU(void)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::FUN_10311c7a(0,0);
-  orig::FUN_10311c7a(0x8001f,0x8001f);
-  uVar2 = orig::Frame_Render(g_pCamera_as_v2);
-  if ((char)uVar2 == '\0') {
-    uVar1 = orig::FUN_10311c7a(uVar1,0x8001f);
-    return uVar1 & 0xffffff00;
+  u1 = orig::game_10311C7A(0,0);
+  orig::game_10311C7A(0x8001f,0x8001f);
+  u2 = orig::Frame_Render(g_pCamera_as_v2);
+  if ((char)u2 == '\0') {
+    u1 = orig::game_10311C7A(u1,0x8001f);
+    return u1 & 0xffffff00;
   }
-  uVar1 = orig::FUN_10311c7a(uVar1,0x8001f);
+  u1 = orig::game_10311C7A(u1,0x8001f);
   if (g_pGameMode_as_v0 != (uint8_t *)0x0) {
-    uVar1 = orig::FUN_100daf30(g_pGameMode_as_v0);
+    u1 = orig::game_100DAF30(g_pGameMode_as_v0);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10001BB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall App_CreateInputSystem(undefined4 param_1)
+XI_API bits32 __stdcall App_CreateInputSystem(bits32 arg1)
 {
-  uint32_t uVar1;
-  uint64_t uVar2;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar2 = orig::Allocator_Generic_v1(0xdc4);
-  if ((void *)uVar2 == (void *)0x0) {
+  u2 = orig::Allocator_Generic_v1(0xdc4);
+  if ((void *)u2 == (void *)0x0) {
     g_pAppInputState_as_v0 = (void *)0x0;
-    uVar1 = 0;
+    u1 = 0;
   }
   else {
-    g_pAppInputState_as_v0 = orig::Input_InitState((void *)uVar2);
-    uVar1 = 0;
+    g_pAppInputState_as_v0 = orig::Input_InitState((void *)u2);
+    u1 = 0;
     if (g_pAppInputState_as_v0 != (void *)0x0) {
-      uVar1 = orig::FUN_100058f0(g_pAppInputState_as_v0,param_1);
-      if ((char)uVar1 != '\0') {
-        return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = orig::game_100058F0(g_pAppInputState_as_v0,arg1);
+      if ((char)u1 != '\0') {
+        return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10001D90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_ForwardMouseMove(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_ForwardMouseMove(bits32 arg1)
 {
-  int iVar1;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&local_8)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i2[2]; };   // at 0x0
+  } frame;
   
-  iVar1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  if ((char)iVar1 != '\0') {
-    local_8[0] = 0;
-    local_8[1] = 0;
-    orig::CTkMouse_OnMouseMove(g_pCursor_as_v2,local_8,(int)(short)param_1 / 0x78);
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  if ((char)i1 != '\0') {
+    frame.i2[0] = 0;
+    frame.i2[1] = 0;
+    orig::CTkMouse_OnMouseMove(g_pCursor_as_v2,frame.i2,(int)(short)arg1 / 0x78);
     return;
   }
-  orig::FontGlyphCache_AddToCounter((int)(short)param_1 / 0x78);
+  orig::FontGlyphCache_AddToCounter((int)(short)arg1 / 0x78);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10001E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl AppMainLoop_AppendWithSpace(char * param_1)
+XI_API bits32 __cdecl AppMainLoop_AppendWithSpace(char * arg1)
 {
-  char cVar1;
+  char c1;
   uint32_t xi_entry_eax = 0;
-  char *pcVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
-  uint64_t uVar9;
+  char *p1;
+  uint32_t u1;
+  uint32_t u2;
+  char *p2;
+  int i1;
+  char *p3;
+  char *p4;
+  uint64_t u3;
   
-  pcVar2 = DAT_103d3c88;
-  if (param_1 != (char *)0x0) {
-    uVar3 = 0xffffffff;
+  p1 = g_103D3C88;
+  if (arg1 != (char *)0x0) {
+    u1 = 0xffffffff;
     do {
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      cVar1 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    uVar4 = 0xffffffff;
-    pcVar2 = param_1;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    u2 = 0xffffffff;
+    p1 = arg1;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar1 != '\0');
-    uVar9 = orig::Allocator_Generic_v1(~uVar3 + ~uVar4);
-    pcVar2 = (char *)uVar9;
-    pcVar5 = DAT_103d3c88;
-    pcVar7 = pcVar2;
-    if (pcVar2 == (char *)0x0) {
-      return (uint32_t)xi_trunc24(((uint64_t)uVar9 >> 8)) << 8;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
+    u3 = orig::Allocator_Generic_v1(~u1 + ~u2);
+    p1 = (char *)u3;
+    p2 = g_103D3C88;
+    p3 = p1;
+    if (p1 == (char *)0x0) {
+      return (uint32_t)xi_trunc24(((uint64_t)u3 >> 8)) << 8;
     }
     do {
-      cVar1 = *pcVar5;
-      *pcVar7 = cVar1;
-      pcVar5 = pcVar5 + 1;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 != '\0');
-    iVar6 = -1;
-    pcVar5 = pcVar2;
+      c1 = *p2;
+      *p3 = c1;
+      p2 = p2 + 1;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    i1 = -1;
+    p2 = p1;
     do {
-      pcVar7 = pcVar5;
-      if (iVar6 == 0) break;
-      iVar6 = iVar6 + -1;
-      pcVar7 = pcVar5 + 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar7;
-    } while (cVar1 != '\0');
-    *(uint16_t *)(pcVar7 + -1) = c_strSpace_as_v0;
-    uVar3 = 0xffffffff;
+      p3 = p2;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      p3 = p2 + 1;
+      c1 = *p2;
+      p2 = p3;
+    } while (c1 != '\0');
+    *(uint16_t *)(p3 + -1) = c_strSpace_as_v0;
+    u1 = 0xffffffff;
     do {
-      pcVar5 = param_1;
-      if (uVar3 == 0) break;
-      uVar3 = uVar3 - 1;
-      pcVar5 = param_1 + 1;
-      cVar1 = *param_1;
-      param_1 = pcVar5;
-    } while (cVar1 != '\0');
-    uVar3 = ~uVar3;
-    iVar6 = -1;
-    pcVar7 = pcVar2;
+      p2 = arg1;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      p2 = arg1 + 1;
+      c1 = *arg1;
+      arg1 = p2;
+    } while (c1 != '\0');
+    u1 = ~u1;
+    i1 = -1;
+    p3 = p1;
     do {
-      pcVar8 = pcVar7;
-      if (iVar6 == 0) break;
-      iVar6 = iVar6 + -1;
-      pcVar8 = pcVar7 + 1;
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar8;
-    } while (cVar1 != '\0');
-    pcVar5 = pcVar5 + -uVar3;
-    pcVar7 = pcVar8 + -1;
-    for (uVar4 = uVar3 >> 2; uVar4 != 0; uVar4 = uVar4 - 1) {
-      *(uint32_t *)pcVar7 = *(uint32_t *)pcVar5;
-      pcVar5 = pcVar5 + 4;
-      pcVar7 = pcVar7 + 4;
+      p4 = p3;
+      if (i1 == 0) break;
+      i1 = i1 + -1;
+      p4 = p3 + 1;
+      c1 = *p3;
+      p3 = p4;
+    } while (c1 != '\0');
+    p2 = p2 + -u1;
+    p3 = p4 + -1;
+    for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+      *(uint32_t *)p3 = *(uint32_t *)p2;
+      p2 = p2 + 4;
+      p3 = p3 + 4;
     }
-    for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-      *pcVar7 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-      pcVar7 = pcVar7 + 1;
+    for (u1 = u1 & 3; u1 != 0; u1 = u1 - 1) {
+      *p3 = *p2;
+      p2 = p2 + 1;
+      p3 = p3 + 1;
     }
     xi_entry_eax = 0;
-    if (DAT_103d3c88 != (char *)0x0) {
-      uVar9 = orig::operator_delete_v1(DAT_103d3c88);
-      xi_entry_eax = (uint32_t)uVar9;
+    if (g_103D3C88 != (char *)0x0) {
+      u3 = orig::operator_delete_v1(g_103D3C88);
+      xi_entry_eax = (uint32_t)u3;
     }
   }
-  DAT_103d3c88 = pcVar2;
+  g_103D3C88 = p1;
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10001F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl AppMainLoop_FindTokenCopyDefault(char * param_1, char * param_2)
+XI_API bits32 __cdecl AppMainLoop_FindTokenCopyDefault(char * arg1, char * arg2)
 {
-  char *pcVar1;
+  char *p1;
   
-  pcVar1 = orig::AppMainLoop_FindTokenCopy(param_1,param_2,0);
-  return pcVar1;
+  p1 = orig::AppMainLoop_FindTokenCopy(arg1,arg2,0);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10001F40
 // GATE: PASS -- 100 trials, 79 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-XI_API char * __cdecl AppMainLoop_FindTokenCopy(char * param_1, char * param_2, int param_3)
+XI_API char * __cdecl AppMainLoop_FindTokenCopy(char * arg1, char * arg2, int arg3)
 {
-  char cVar1;
-  uint8_t bVar2;
-  uint32_t *puVar3;
-  char *pcVar4;
-  uint32_t uVar5;
-  uint8_t bVar6;
+  char c1;
+  uint8_t u1;
+  uint32_t *p1;
+  char *p2;
+  uint32_t u2;
+  uint8_t u3;
   
-  if (DAT_103d3c88_as_v0 != (uint32_t *)0x0) {
-    uVar5 = 0xffffffff;
-    pcVar4 = param_1;
+  if (g_103D3C88_as_v0 != (uint32_t *)0x0) {
+    u2 = 0xffffffff;
+    p2 = arg1;
     do {
-      if (uVar5 == 0) break;
-      uVar5 = uVar5 - 1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar1 != '\0');
-    puVar3 = orig::FUN_10311eb0(DAT_103d3c88_as_v0,param_1);
-    if (puVar3 != (uint32_t *)0x0) {
-      for (puVar3 = orig::FUN_10311eb0(DAT_103d3c88_as_v0,param_1); puVar3 != (uint32_t *)0x0;
-          puVar3 = orig::FUN_10311eb0((uint32_t *)((int)puVar3 + 1),param_1)) {
-        cVar1 = *(char *)((int)puVar3 + (~uVar5 - 1));
-        if ((((((cVar1 == ' ') || (cVar1 == '\0')) || (cVar1 == '0')) ||
-             ((cVar1 == '1' || (cVar1 == '2')))) ||
-            (((cVar1 == '3' || ((cVar1 == '4' || (cVar1 == '5')))) || (cVar1 == '6')))) ||
-           (((cVar1 == '7' || (cVar1 == '8')) || (cVar1 == '9')))) {
-          pcVar4 = (char *)((int)puVar3 + (~uVar5 - 1));
-          if (param_2 == (char *)0x0) {
-            return pcVar4;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    p1 = orig::game_10311EB0(g_103D3C88_as_v0,arg1);
+    if (p1 != (uint32_t *)0x0) {
+      for (p1 = orig::game_10311EB0(g_103D3C88_as_v0,arg1); p1 != (uint32_t *)0x0;
+          p1 = orig::game_10311EB0((uint32_t *)((int)p1 + 1),arg1)) {
+        c1 = *(char *)((int)p1 + (~u2 - 1));
+        if ((((((c1 == ' ') || (c1 == '\0')) || (c1 == '0')) ||
+             ((c1 == '1' || (c1 == '2')))) ||
+            (((c1 == '3' || ((c1 == '4' || (c1 == '5')))) || (c1 == '6')))) ||
+           (((c1 == '7' || (c1 == '8')) || (c1 == '9')))) {
+          p2 = (char *)((int)p1 + (~u2 - 1));
+          if (arg2 == (char *)0x0) {
+            return p2;
           }
-          bVar2 = false;
-          goto LAB_10001fe5;
+          u1 = false;
+          goto code_10001FE5;
         }
       }
     }
   }
   return (char *)0x0;
-LAB_10001fe5:
-  if (bVar2) {
-    if (param_3 == 0) {
-      cVar1 = *pcVar4;
-      if ((cVar1 == ' ') || (cVar1 == '\0')) {
-LAB_10002023:
-        *param_2 = '\0';
-        return pcVar4;
+code_10001FE5:
+  if (u1) {
+    if (arg3 == 0) {
+      c1 = *p2;
+      if ((c1 == ' ') || (c1 == '\0')) {
+code_10002023:
+        *arg2 = '\0';
+        return p2;
       }
-      bVar6 = cVar1 == '\t';
+      u3 = c1 == '\t';
     }
     else {
-      param_3 = param_3 + -1;
-      bVar6 = param_3 == 0;
+      arg3 = arg3 + -1;
+      u3 = arg3 == 0;
     }
-    if (bVar6) goto LAB_10002023;
-    *param_2 = *pcVar4;
-    param_2 = param_2 + 1;
+    if (u3) goto code_10002023;
+    *arg2 = *p2;
+    arg2 = arg2 + 1;
   }
   else {
-    cVar1 = *pcVar4;
-    if (((cVar1 != ' ') && (cVar1 != '\0')) && (cVar1 != '\t')) {
-      *param_2 = cVar1;
-      param_2 = param_2 + 1;
-      bVar2 = true;
-      pcVar4 = pcVar4 + 1;
-      goto LAB_10001fe5;
+    c1 = *p2;
+    if (((c1 != ' ') && (c1 != '\0')) && (c1 != '\t')) {
+      *arg2 = c1;
+      arg2 = arg2 + 1;
+      u1 = true;
+      p2 = p2 + 1;
+      goto code_10001FE5;
     }
   }
-  pcVar4 = pcVar4 + 1;
-  goto LAB_10001fe5;
+  p2 = p2 + 1;
+  goto code_10001FE5;
 }
 
 // FUNCTION: FFXIMAIN 0x10002040
 // GATE: PASS -- 100 trials, 100 returned normally, 263 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __cdecl Gfx_CopySurfaceRectToTexture(struct IDirect3DSurface8 *a1, const struct tagRECT *a2, unsigned int *a3, int a4)
+XI_API char __cdecl Gfx_CopySurfaceRectToTexture(struct IDirect3DSurface8 *arg1, const struct tagRECT *arg2, unsigned int *arg3, int arg4)
 {
-  unsigned __int16 v4;
-  unsigned __int16 v5;
-  _DWORD *Texture;
-  struct IDirect3DSurface8 *v8;
-  v4 = *(_WORD *)(a4 + 12) - *(_WORD *)(a4 + 4);
-  v5 = *(_WORD *)(a4 + 8) - *(_WORD *)a4;
-  v8 = nullptr;
-  Texture = orig::CDx_CreateTexture(g_pCDx, v5, v4, nullptr, 0, 1);
+  unsigned short height;
+  unsigned short width;
+  uint32_t *Texture;
+  struct IDirect3DSurface8 *p1;
+  height = *(uint16_t *)(arg4 + 12) - *(uint16_t *)(arg4 + 4);
+  width = *(uint16_t *)(arg4 + 8) - *(uint16_t *)arg4;
+  p1 = nullptr;
+  Texture = orig::CDx_CreateTexture(g_pCDx, width, height, nullptr, 0, 1);
   if ( (Texture != nullptr || (Texture = orig::CDx_CreateTexture(g_pCDx, 0x200u, 0x200u, nullptr, 0, 1)) != nullptr)
-    && (*(int (__stdcall **)(_DWORD *, _DWORD, struct IDirect3DSurface8 **))(*Texture + 60))(Texture, 0, &v8) >= 0
-    && orig::fn_102D4515(v8, nullptr, (const struct tagRECT *)a4, a1, nullptr, a2, 3, 0) >= 0
-    && orig::Gfx_ProbeDeviceCaps((int)v8, a3, (int *)a4) != 0 )
+    && (*(int (__stdcall **)(uint32_t *, uint32_t, struct IDirect3DSurface8 **))(*Texture + 60))(Texture, 0, &p1) >= 0
+    && orig::fn_102D4515(p1, nullptr, (const struct tagRECT *)arg4, arg1, nullptr, arg2, 3, 0) >= 0
+    && orig::Gfx_ProbeDeviceCaps((int)p1, arg3, (int *)arg4) != 0 )
   {
-    if ( v8 != nullptr )
+    if ( p1 != nullptr )
     {
-      v8->Release();
-      v8 = nullptr;
+      p1->Release();
+      p1 = nullptr;
     }
-    (*(void (__stdcall **)(_DWORD *))(*Texture + 8))(Texture);
+    (*(void (__stdcall **)(uint32_t *))(*Texture + 8))(Texture);
     return 1;
   }
   else
   {
-    if ( v8 != nullptr )
+    if ( p1 != nullptr )
     {
-      v8->Release();
-      v8 = nullptr;
+      p1->Release();
+      p1 = nullptr;
     }
     if ( Texture != nullptr )
-      (*(void (__stdcall **)(_DWORD *))(*Texture + 8))(Texture);
+      (*(void (__stdcall **)(uint32_t *))(*Texture + 8))(Texture);
     return 0;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10002130
 // GATE: PASS -- 100 trials, 21 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 21
-XI_API char __cdecl Gfx_ProbeDeviceCaps(int a1, unsigned int *a2, int *a3)
+XI_API char __cdecl Gfx_ProbeDeviceCaps(int arg1, unsigned int *arg2, int *arg3)
 {
-  int v4;
-  int v5;
-  bool v7; // zf
+  int i1;
+  int i2;
+  bool b1; // zf
   unsigned int i;
-  int v10;
+  int i3;
   char *j;
   unsigned int k;
-  _WORD *v13;
+  uint16_t *p1;
   int m;
   unsigned int n;
-  _DWORD *v16;
+  uint32_t *p2;
   int ii;
   unsigned int jj;
-  int *v19;
+  int *p3;
   int kk;
-  alignas(16) unsigned char xi_frame[0x444];  // address-taken locals at their original offsets
-  int &v21 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int &v22 = *reinterpret_cast<int *>(xi_frame + 0x1C);
-  int &v23 = *reinterpret_cast<int *>(xi_frame + 0x20);
-  int (&v24)[8] = *reinterpret_cast<int (*)[8]>(xi_frame + 0x24);
-  unsigned int v25;
-  v4 = 0;
-  v5 = *a3;
-  v25 = a3[3] - a3[1];
-  v21 = a3[2] - v5;
-  if ( (*(int (__stdcall **)(int, int *, _DWORD, int))(*(_DWORD *)a1 + 36))(a1, &v22, 0, 16) < 0 )
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x444];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; int i4; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; int i5; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; int i6; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; int i7[8]; };   // at 0x24
+  } frame;
+  unsigned int u1;
+  i1 = 0;
+  i2 = *arg3;
+  u1 = arg3[3] - arg3[1];
+  frame.i4 = arg3[2] - i2;
+  if ( (*(int (__stdcall **)(int, int *, uint32_t, int))(*(uint32_t *)arg1 + 36))(arg1, &frame.i5, 0, 16) < 0 )
     return 0;
-  (*(void (__stdcall **)(int, int *))(*(_DWORD *)a1 + 32))(a1, v24);
-  if ( v24[0] <= 62 )
+  (*(void (__stdcall **)(int, int *))(*(uint32_t *)arg1 + 32))(arg1, frame.i7);
+  if ( frame.i7[0] <= 62 )
   {
-    if ( v24[0] == 62 )
+    if ( frame.i7[0] == 62 )
     {
-LABEL_11:
-      v4 = 4;
+L1:
+      i1 = 4;
     }
     else
     {
-      switch ( v24[0] )
+      switch ( frame.i7[0] )
       {
         case 0:
-          goto LABEL_24;
+          goto L2;
         case 0x14:
-          v4 = 3;
+          i1 = 3;
           break;
         case 0x15:
         case 0x16:
-          goto LABEL_11;
+          goto L1;
         case 0x17:
         case 0x18:
         case 0x19:
@@ -373,25 +379,25 @@ LABEL_11:
         case 0x33:
         case 0x3C:
         case 0x3D:
-          goto LABEL_18;
+          goto L3;
         case 0x1B:
         case 0x1C:
         case 0x29:
         case 0x32:
         case 0x34:
-          v4 = 1;
+          i1 = 1;
           break;
         default:
-          goto LABEL_25;
+          goto L4;
       }
     }
-    goto LABEL_25;
+    goto L4;
   }
-  if ( v24[0] <= 100 )
+  if ( frame.i7[0] <= 100 )
   {
-    if ( v24[0] != 100 )
+    if ( frame.i7[0] != 100 )
     {
-      switch ( v24[0] )
+      switch ( frame.i7[0] )
       {
         case '?':
         case '@':
@@ -400,116 +406,116 @@ LABEL_11:
         case 'K':
         case 'M':
         case 'O':
-          goto LABEL_11;
+          goto L1;
         case 'F':
         case 'I':
         case 'P':
-          goto LABEL_18;
+          goto L3;
         default:
-          goto LABEL_25;
+          goto L4;
       }
     }
-    goto LABEL_24;
+    goto L2;
   }
-  if ( v24[0] > 861165636 )
+  if ( frame.i7[0] > 861165636 )
   {
-    if ( v24[0] == 877942852 || v24[0] == 894720068 )
-      goto LABEL_24;
-    v7 = v24[0] == 1498831189;
+    if ( frame.i7[0] == 877942852 || frame.i7[0] == 894720068 )
+      goto L2;
+    b1 = frame.i7[0] == 1498831189;
   }
   else
   {
-    if ( v24[0] == 861165636 )
-      goto LABEL_24;
-    if ( v24[0] > 844388420 )
+    if ( frame.i7[0] == 861165636 )
+      goto L2;
+    if ( frame.i7[0] > 844388420 )
     {
-      v7 = v24[0] == 844715353;
-      goto LABEL_23;
+      b1 = frame.i7[0] == 844715353;
+      goto L5;
     }
-    if ( v24[0] == 844388420 )
+    if ( frame.i7[0] == 844388420 )
     {
-LABEL_24:
-      v4 = 0;
-      goto LABEL_25;
+L2:
+      i1 = 0;
+      goto L4;
     }
-    if ( v24[0] == 101 )
+    if ( frame.i7[0] == 101 )
     {
-LABEL_18:
-      v4 = 2;
-      goto LABEL_25;
+L3:
+      i1 = 2;
+      goto L4;
     }
-    v7 = v24[0] == 827611204;
+    b1 = frame.i7[0] == 827611204;
   }
-LABEL_23:
-  if ( v7 )
-    goto LABEL_24;
-LABEL_25:
-  switch ( v4 )
+L5:
+  if ( b1 )
+    goto L2;
+L4:
+  switch ( i1 )
   {
     case 1:
-      for ( i = 0; i < v25; ++i )
+      for ( i = 0; i < u1; ++i )
       {
-        v10 = v21;
-        for ( j = (char *)(v23 + i * v22); v10 != 0; --v10 )
-          *a2++ = orig::AppMainLoop_SwapRedBlue(*j++);
+        i3 = frame.i4;
+        for ( j = (char *)(frame.i6 + i * frame.i5); i3 != 0; --i3 )
+          *arg2++ = orig::AppMainLoop_SwapRedBlue(*j++);
       }
       break;
     case 2:
-      for ( k = 0; k < v25; ++k )
+      for ( k = 0; k < u1; ++k )
       {
-        v13 = (_WORD *)(v23 + k * v22);
-        if ( v21 != 0 )
+        p1 = (uint16_t *)(frame.i6 + k * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( m = v21; m != 0; --m )
+          for ( m = frame.i4; m != 0; --m )
           {
-            *a2++ = orig::AppMainLoop_SwapRedBlue(8 * (*v13 & 0x1F | (8 * (*v13 & 0x3E0 | (8 * (*v13 & 0x7C00))))));
-            ++v13;
+            *arg2++ = orig::AppMainLoop_SwapRedBlue(8 * (*p1 & 0x1F | (8 * (*p1 & 0x3E0 | (8 * (*p1 & 0x7C00))))));
+            ++p1;
           }
         }
       }
       break;
     case 3:
-      for ( n = 0; n < v25; ++n )
+      for ( n = 0; n < u1; ++n )
       {
-        v16 = (_DWORD *)(v23 + n * v22);
-        if ( v21 != 0 )
+        p2 = (uint32_t *)(frame.i6 + n * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( ii = v21; ii != 0; --ii )
+          for ( ii = frame.i4; ii != 0; --ii )
           {
-            *a2++ = orig::AppMainLoop_SwapRedBlue(*v16 & 0xFFFFFF);
-            v16 = (_DWORD *)((char *)v16 + 3);
+            *arg2++ = orig::AppMainLoop_SwapRedBlue(*p2 & 0xFFFFFF);
+            p2 = (uint32_t *)((char *)p2 + 3);
           }
         }
       }
       break;
     case 4:
-      for ( jj = 0; jj < v25; ++jj )
+      for ( jj = 0; jj < u1; ++jj )
       {
-        v19 = (int *)(v23 + jj * v22);
-        if ( v21 != 0 )
+        p3 = (int *)(frame.i6 + jj * frame.i5);
+        if ( frame.i4 != 0 )
         {
-          for ( kk = v21; kk != 0; --kk )
-            *a2++ = orig::AppMainLoop_SwapRedBlue(*v19++);
+          for ( kk = frame.i4; kk != 0; --kk )
+            *arg2++ = orig::AppMainLoop_SwapRedBlue(*p3++);
         }
       }
       break;
     default:
       break;
   }
-  (*(void (__stdcall **)(int))(*(_DWORD *)a1 + 40))(a1);
+  (*(void (__stdcall **)(int))(*(uint32_t *)arg1 + 40))(arg1);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10002440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl AppMainLoop_SwapRedBlue(uint32_t param_1)
+XI_API uint32_t __cdecl AppMainLoop_SwapRedBlue(uint32_t arg1)
 {
-  return param_1 & 0xff00ff00 | param_1 >> 0x10 & 0xff | (param_1 & 0xff) << 0x10;
+  return arg1 & 0xff00ff00 | arg1 >> 0x10 & 0xff | (arg1 & 0xff) << 0x10;
 }
 
 // FUNCTION: FFXIMAIN 0x10002BE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Gfx_IsGammaSupported(void)
+XI_API bits32 __cdecl Gfx_IsGammaSupported(void)
 {
   if (g_pCDx_as_s32 != 0) {
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_pCDx_as_s32 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(g_pCDx_as_s32 + 0x915))));
@@ -519,253 +525,259 @@ XI_API undefined4 __cdecl Gfx_IsGammaSupported(void)
 
 // FUNCTION: FFXIMAIN 0x10002C00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API CDx * __cdecl Gfx_SetGammaRGB(int a1, int a2, int a3)
+XI_API CDx * __cdecl Gfx_SetGammaRGB(int arg1, int arg2, int arg3)
 {
   CDx *result;
   result = g_pCDx;
   if ( g_pCDx != nullptr )
-    return (CDx *)orig::GammaRamp_SetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), a1, a2, a3);
+    return (CDx *)orig::GammaRamp_SetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), arg1, arg2, arg3);
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10002C30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API CDx * __cdecl Gfx_SetGammaR(int a1)
+XI_API CDx * __cdecl Gfx_SetGammaR(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &v2 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &v4 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), &v2, &v4, &v3);
-    v2 = a1;
-    return orig::Gfx_SetGammaRGB(a1, v4, v3);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i1, &frame.i3, &frame.i2);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(arg1, frame.i3, frame.i2);
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10002C80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API CDx * __cdecl Gfx_SetGammaG(int a1)
+XI_API CDx * __cdecl Gfx_SetGammaG(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &v2 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &v4 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), &v4, &v2, &v3);
-    v2 = a1;
-    return orig::Gfx_SetGammaRGB(v4, a1, v3);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i3, &frame.i1, &frame.i2);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(frame.i3, arg1, frame.i2);
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10002CD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API CDx * __cdecl Gfx_SetGammaB(int a1)
+XI_API CDx * __cdecl Gfx_SetGammaB(int arg1)
 {
   CDx *result;
-  alignas(16) unsigned char xi_frame[0x40C];  // address-taken locals at their original offsets
-  int &v2 = *reinterpret_cast<int *>(xi_frame + 0x0);
-  int &v3 = *reinterpret_cast<int *>(xi_frame + 0x4);
-  int &v4 = *reinterpret_cast<int *>(xi_frame + 0x8);
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x40C];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i3; };   // at 0x8
+  } frame;
 
   result = g_pCDx;
   if ( g_pCDx != nullptr )
   {
-    orig::GammaRamp_GetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), &v4, &v3, &v2);
-    v2 = a1;
-    return orig::Gfx_SetGammaRGB(v4, v3, a1);
+    orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), &frame.i3, &frame.i2, &frame.i1);
+    frame.i1 = arg1;
+    return orig::Gfx_SetGammaRGB(frame.i3, frame.i2, arg1);
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10002D20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_GetGammaRGB(int a1, int a2, int a3)
+XI_API int __cdecl Gfx_GetGammaRGB(int arg1, int arg2, int arg3)
 {
   int result;
   result = (int)g_pCDx;
   if ( g_pCDx != nullptr )
-    return orig::GammaRamp_GetRGB(((unsigned __int8 *)((char *)g_pCDx + 0x1F4)), (_DWORD *)a1, (_DWORD *)a2, (_DWORD *)a3);
+    return orig::GammaRamp_GetRGB(((unsigned char *)((char *)g_pCDx + 0x1F4)), (uint32_t *)arg1, (uint32_t *)arg2, (uint32_t *)arg3);
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10002D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetShadowSetting(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetShadowSetting(bits32 arg1)
 {
-  g_shadowSetting_as_v0 = param_1;
+  g_shadowSetting_as_v0 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002D70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetFloat10456A68(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetFloat10456A68(bits32 arg1)
 {
-  _DAT_10456a68_as_v0 = param_1;
+  g_10456A68_as_v0 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002D80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __attribute__((cdecl, regparm(1))) AppMainLoop_GetFloat10456A68Or1(undefined4 xi_eax)
+XI_API long double __attribute__((cdecl, regparm(1))) AppMainLoop_GetFloat10456A68Or1(bits32 xi_eax)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Acter_GetGlobalByte(xi_eax);
-  if ((char)uVar1 != '\0') {
-    return (long double)1.0f;
+  u1 = orig::Acter_GetGlobalByte(xi_eax);
+  if ((char)u1 != '\0') {
+    return 1.0f;
   }
-  return (long double)_DAT_10456a68;
+  return g_10456A68;
 }
 
 // FUNCTION: FFXIMAIN 0x10002DA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetGlobal10456A5C(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetGlobal10456A5C(bits32 arg1)
 {
-  _DAT_10456a5c = param_1;
+  g_10456A5C = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002DC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetGlobal10456A6C(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetGlobal10456A6C(bits32 arg1)
 {
-  _DAT_10456a6c = param_1;
+  g_10456A6C = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetFloat10456AB8(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetFloat10456AB8(bits32 arg1)
 {
-  _DAT_10456ab8 = param_1;
+  g_10456AB8 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002E00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetFloat10456AA8(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetFloat10456AA8(bits32 arg1)
 {
-  _DAT_10456aa8 = param_1;
+  g_10456AA8 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetGlobal10456A70(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetGlobal10456A70(bits32 arg1)
 {
-  DAT_10456a70 = param_1;
+  g_10456A70 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl AppMainLoop_SetCfg0020(undefined4 param_1)
+XI_API void __cdecl AppMainLoop_SetCfg0020(bits32 arg1)
 {
-  g_cfg0020_as_v0 = param_1;
+  g_cfg0020_as_v0 = arg1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Gfx_SetAspectIndex(undefined4 param_1)
+XI_API void __cdecl Gfx_SetAspectIndex(bits32 arg1)
 {
-  _DAT_10456be8 = param_1;
-  orig::Gfx_ApplyAspectScale(param_1);
+  g_10456BE8 = arg1;
+  orig::Gfx_ApplyAspectScale(arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Gfx_ApplyAspectScale(undefined4 param_1)
+XI_API void __cdecl Gfx_ApplyAspectScale(bits32 arg1)
 {
-  long double fVar1;
-  float fVar2;
+  long double f1;
+  float f2;
   
-  fVar1 = orig::Gfx_GetAspectTableB(param_1);
-  fVar2 = (float)fVar1;
-  fVar1 = orig::Gfx_GetAspectTableA(param_1);
-  orig::Camera_SetField2F0_v1((float)fVar1,fVar2);
+  f1 = orig::Gfx_GetAspectTableB(arg1);
+  f2 = (float)f1;
+  f1 = orig::Gfx_GetAspectTableA(arg1);
+  orig::Camera_SetField2F0_v1((float)f1,f2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10002EC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl Gfx_GetAspectTableA(int param_1)
+XI_API long double __cdecl Gfx_GetAspectTableA(int arg1)
 {
-  if (5 < param_1) {
-    param_1 = 5;
+  if (5 < arg1) {
+    arg1 = 5;
   }
-  return (long double)xi_castbits<float>((&DAT_1034f4a0)[param_1 * 2]);
+  return bit_cast<float>((&g_1034F4A0)[arg1 * 2]);
 }
 
 // FUNCTION: FFXIMAIN 0x10002EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __cdecl Gfx_GetAspectTableB(int param_1)
+XI_API long double __cdecl Gfx_GetAspectTableB(int arg1)
 {
-  if (5 < param_1) {
-    param_1 = 5;
+  if (5 < arg1) {
+    arg1 = 5;
   }
-  return (long double)xi_castbits<float>((&DAT_1034f4a4)[param_1 * 2]);
+  return bit_cast<float>((&g_1034F4A4)[arg1 * 2]);
 }
 
 // FUNCTION: FFXIMAIN 0x10002F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __cdecl Gfx_CreateD3DHolder(int a1, int a2, int a3, char a4, char a5)
+XI_API char __cdecl Gfx_CreateD3DHolder(int arg1, int arg2, int arg3, char arg4, char arg5)
 {
-  _DWORD *v5;
-  D3DHolder *v6;
-  D3DHolder *v7;
-  int v8;
-  int v9;
-  char v11;
-  v11 = 0;
-  v5 = orig::Allocator_Generic(0x478u);
-  if ( v5 != nullptr )
+  uint32_t *p1;
+  D3DHolder *p2;
+  D3DHolder *p3;
+  int i1;
+  int i2;
+  char c1;
+  c1 = 0;
+  p1 = orig::Allocator_Generic(0x478u);
+  if ( p1 != nullptr )
   {
-    v6 = (D3DHolder *)orig::D3DHolder_Constructor(v5);
-    g_pD3DHolder = v6;
-    if ( v6 != nullptr )
+    p2 = (D3DHolder *)orig::D3DHolder_Constructor(p1);
+    g_pD3DHolder = p2;
+    if ( p2 != nullptr )
     {
-      v11 = orig::D3DHolder_Initialize(v6, a1, a2, a3, a4, a5);
-      if ( v11 != 0 && a5 == 1 )
+      c1 = orig::D3DHolder_Initialize(p2, arg1, arg2, arg3, arg4, arg5);
+      if ( c1 != 0 && arg5 == 1 )
       {
-        v7 = g_pD3DHolder;
-        if ( *(_DWORD *)&g_pD3DHolder->_rest[1092] == 32902 )
+        p3 = g_pD3DHolder;
+        if ( *(uint32_t *)&g_pD3DHolder->_rest[1092] == 32902 )
         {
-          v8 = *(_DWORD *)&g_pD3DHolder->_rest[1096];
-          if ( v8 != 9570
-            && v8 != 4402
-            && v8 != 28961
-            && v8 != 28963
-            && v8 != 28965
-            && v8 != 28967
-            && v8 != 13687
-            && v8 != 13698 )
+          i1 = *(uint32_t *)&g_pD3DHolder->_rest[1096];
+          if ( i1 != 9570
+            && i1 != 4402
+            && i1 != 28961
+            && i1 != 28963
+            && i1 != 28965
+            && i1 != 28967
+            && i1 != 13687
+            && i1 != 13698 )
           {
             g_pD3DHolder->_rest[1128] = 1;
-            v7 = g_pD3DHolder;
+            p3 = g_pD3DHolder;
           }
-          if ( *(_DWORD *)&v7->_rest[1092] == 32902 )
+          if ( *(uint32_t *)&p3->_rest[1092] == 32902 )
           {
-            v9 = *(_DWORD *)&v7->_rest[1096];
-            if ( v9 != 9602 && v9 != 10114 && v9 != 9586 && v9 != 13698 && v9 != 9570 && v9 != 13687 )
-              v7->_rest[1128] = 1;
+            i2 = *(uint32_t *)&p3->_rest[1096];
+            if ( i2 != 9602 && i2 != 10114 && i2 != 9586 && i2 != 13698 && i2 != 9570 && i2 != 13687 )
+              p3->_rest[1128] = 1;
           }
         }
       }
     }
-    return v11;
+    return c1;
   }
   else
   {
@@ -793,124 +805,128 @@ XI_API int __cdecl Gfx_DestroyD3DHolder(void)
 
 // FUNCTION: FFXIMAIN 0x100031F0
 // GATE: PASS -- 100 trials, 79 returned normally, 315507 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-XI_API char __thiscall Gfx_D3DBootstrap(int self_, int a2, int a3, int a4, char a5, char a6, int a7)
+XI_API char __thiscall Gfx_D3DBootstrap(int self_, int arg2, int arg3, int arg4, char arg5, char arg6, int arg7)
 {
-  int v8;
-  int v9;
-  void *v10;
-  unsigned int v11;
+  int i1;
+  int i2;
+  void *p1;
+  unsigned int u1;
   unsigned int i;
-  unsigned int *v13;
-  unsigned int v14;
-  _DWORD *v15;
-  int v17;
-  alignas(16) unsigned char xi_frame[0x428];  // address-taken locals at their original offsets
-  unsigned int &v18 = *reinterpret_cast<unsigned int *>(xi_frame + 0x18);
-  unsigned int &v19 = *reinterpret_cast<unsigned int *>(xi_frame + 0x1C);
-  unsigned int &v20 = *reinterpret_cast<unsigned int *>(xi_frame + 0x20);
-  unsigned int &v21 = *reinterpret_cast<unsigned int *>(xi_frame + 0x24);
+  unsigned int *p2;
+  unsigned int u2;
+  uint32_t *p3;
+  int i3;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x428];
+    struct __attribute__((packed)) { unsigned char pad_1[0x18]; unsigned int u3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_2[0x1C]; unsigned int u4; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; unsigned int u5; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x24]; unsigned int u6; };   // at 0x24
+  } frame;
 
-  v8 = orig::Direct3DCreate8(220);
-  *(_DWORD *)(self_ + 4) = v8;
-  if ( v8 != 0 )
+  i1 = orig::Direct3DCreate8(220);
+  *(uint32_t *)(self_ + 4) = i1;
+  if ( i1 != 0 )
   {
-    v9 = (*(int (__stdcall **)(int, _DWORD))(*(_DWORD *)v8 + 24))(v8, 0);
-    *(_DWORD *)(self_ + 64) = v9;
-    if ( v9 != 0 )
+    i2 = (*(int (__stdcall **)(int, uint32_t))(*(uint32_t *)i1 + 24))(i1, 0);
+    *(uint32_t *)(self_ + 64) = i2;
+    if ( i2 != 0 )
     {
-      v10 = orig::Allocator_Generic(16 * v9);
-      *(_DWORD *)(self_ + 68) = v10;
-      if ( v10 != nullptr )
+      p1 = orig::Allocator_Generic(16 * i2);
+      *(uint32_t *)(self_ + 68) = p1;
+      if ( p1 != nullptr )
       {
-        v11 = 0;
-        for ( i = 0; i < *(_DWORD *)(self_ + 64); ++i )
+        u1 = 0;
+        for ( i = 0; i < *(uint32_t *)(self_ + 64); ++i )
         {
-          (*(void (__stdcall **)(_DWORD, _DWORD, unsigned int, unsigned int *))(**(_DWORD **)(self_ + 4) + 28))(
-            *(_DWORD *)(self_ + 4),
+          (*(void (__stdcall **)(uint32_t, uint32_t, unsigned int, unsigned int *))(**(uint32_t **)(self_ + 4) + 28))(
+            *(uint32_t *)(self_ + 4),
             0,
             i,
-            &v18);
-          if ( v18 >= 0x280 && v19 >= 0x1E0 && v18 <= 0x800 && v19 <= 0x800 && (v21 == 22 || v21 == 21) )
+            &frame.u3);
+          if ( frame.u3 >= 0x280 && frame.u4 >= 0x1E0 && frame.u3 <= 0x800 && frame.u4 <= 0x800 && (frame.u6 == 22 || frame.u6 == 21) )
           {
-            if ( v11 != 0 )
+            if ( u1 != 0 )
             {
-              v14 = 0;
-              v15 = *(_DWORD **)(self_ + 68);
+              u2 = 0;
+              p3 = *(uint32_t **)(self_ + 68);
               do
               {
-                if ( *v15 == v18 && v15[1] == v19 )
+                if ( *p3 == frame.u3 && p3[1] == frame.u4 )
                   break;
-                ++v14;
-                v15 += 4;
+                ++u2;
+                p3 += 4;
               }
-              while ( v14 < v11 );
-              if ( v14 != v11 )
+              while ( u2 < u1 );
+              if ( u2 != u1 )
                 continue;
-              v13 = (unsigned int *)(*(_DWORD *)(self_ + 68) + 16 * v11++);
+              p2 = (unsigned int *)(*(uint32_t *)(self_ + 68) + 16 * u1++);
             }
             else
             {
-              v13 = *(unsigned int **)(self_ + 68);
-              v11 = 1;
+              p2 = *(unsigned int **)(self_ + 68);
+              u1 = 1;
             }
-            *v13 = v18;
-            v13[1] = v19;
-            v13[2] = v20;
-            v13[3] = v21;
+            *p2 = frame.u3;
+            p2[1] = frame.u4;
+            p2[2] = frame.u5;
+            p2[3] = frame.u6;
           }
         }
-        *(_DWORD *)(self_ + 64) = v11;
-        if ( dword_10456A80 == 1 )
+        *(uint32_t *)(self_ + 64) = u1;
+        if ( g_10456A80 == 1 )
         {
-          if ( orig::Gfx_TryCreateDeviceForMode((_DWORD **)self_, a2, a3, a4, a5, a6, a7, 1) != 0
-            || orig::Gfx_TryCreateDeviceForMode((_DWORD **)self_, a2, a3, a4, a5, a6, a7, 0) != 0 )
+          if ( orig::Gfx_TryCreateDeviceForMode((uint32_t **)self_, arg2, arg3, arg4, arg5, arg6, arg7, 1) != 0
+            || orig::Gfx_TryCreateDeviceForMode((uint32_t **)self_, arg2, arg3, arg4, arg5, arg6, arg7, 0) != 0 )
           {
             return 1;
           }
         }
-        else if ( orig::Gfx_TryCreateDeviceForMode((_DWORD **)self_, a2, a3, a4, a5, a6, a7, 0) != 0
-               || orig::Gfx_TryCreateDeviceForMode((_DWORD **)self_, a2, a3, a4, a5, a6, a7, 1) != 0 )
+        else if ( orig::Gfx_TryCreateDeviceForMode((uint32_t **)self_, arg2, arg3, arg4, arg5, arg6, arg7, 0) != 0
+               || orig::Gfx_TryCreateDeviceForMode((uint32_t **)self_, arg2, arg3, arg4, arg5, arg6, arg7, 1) != 0 )
         {
           return 1;
         }
       }
     }
   }
-  v17 = *(_DWORD *)(self_ + 4);
-  if ( v17 != 0 )
+  i3 = *(uint32_t *)(self_ + 4);
+  if ( i3 != 0 )
   {
-    (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v17 + 8))(*(_DWORD *)(self_ + 4));
-    *(_DWORD *)(self_ + 4) = 0;
+    (*(void (__stdcall **)(uint32_t))(*(uint32_t *)i3 + 8))(*(uint32_t *)(self_ + 4));
+    *(uint32_t *)(self_ + 4) = 0;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100033C0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Gfx_TryCreateDeviceForMode(_DWORD **self_, int a2, int a3, int a4, char a5, char a6, int a7, int a8)
+XI_API char __thiscall Gfx_TryCreateDeviceForMode(uint32_t **self_, int arg2, int arg3, int arg4, char arg5, char arg6, int arg7, int arg8)
 {
   int *i;
-  int v10;
-  int v11;
-  alignas(16) unsigned char xi_frame[0x41C];  // address-taken locals at their original offsets
-  _DWORD (&v13)[3] = *reinterpret_cast<_DWORD (*)[3]>(xi_frame + 0xC);
-  int &v14 = *reinterpret_cast<int *>(xi_frame + 0x18);
-  int *v15;
-  if ( (*(int (__stdcall **)(_DWORD, _DWORD, _DWORD *))(**(self_ + 1) + 32))(*(self_ + 1), 0, v13) < 0 )
+  int i1;
+  int i2;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x41C];
+    struct __attribute__((packed)) { unsigned char pad_1[0xC]; uint32_t u1[3]; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; int i3; };   // at 0x18
+  } frame;
+  int *p1;
+  if ( (*(int (__stdcall **)(uint32_t, uint32_t, uint32_t *))(**(self_ + 1) + 32))(*(self_ + 1), 0, frame.u1) < 0 )
     return 0;
-  for ( i = (int *)*(&g_deviceFormatPairsByDepth + a8); ; i = v15 + 2 )
+  for ( i = (int *)*(&g_deviceFormatPairsByDepth + arg8); ; i = p1 + 2 )
   {
-    v10 = *i;
-    v11 = i[1];
-    v15 = i;
+    i1 = *i;
+    i2 = i[1];
+    p1 = i;
     if ( *i == 0 )
     {
-      if ( v11 == 0 )
+      if ( i2 == 0 )
         return 0;
-      v10 = v14;
+      i1 = frame.i3;
     }
-    if ( orig::D3DHolder_CheckDepthFormat(self_, v14, v10, v11)
-      && orig::Gfx_CreateDevice(self_, a2, v10, v11, a3, a4, a5, a6, a7) != 0 )
+    if ( orig::D3DHolder_CheckDepthFormat(self_, frame.i3, i1, i2)
+      && orig::Gfx_CreateDevice(self_, arg2, i1, i2, arg3, arg4, arg5, arg6, arg7) != 0 )
     {
       break;
     }
@@ -920,28 +936,28 @@ XI_API char __thiscall Gfx_TryCreateDeviceForMode(_DWORD **self_, int a2, int a3
 
 // FUNCTION: FFXIMAIN 0x100034B0
 // GATE: PASS -- 100 trials, 100 returned normally, 182 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char __thiscall Gfx_CreateDevice(_DWORD *self_, int a2, int a3, int a4, int a5, int a6, char a7, char a8, int a9)
+XI_API char __thiscall Gfx_CreateDevice(uint32_t *self_, int arg2, int arg3, int arg4, int arg5, int arg6, char arg7, char arg8, int arg9)
 {
-  _DWORD *v10;
-  int *v11;
-  int v12;
-  if ( (*(int (__stdcall **)(_DWORD, _DWORD, int, int))(*(_DWORD *)*(self_ + 1) + 52))(*(self_ + 1), 0, 1, a9) >= 0 )
+  uint32_t *p1;
+  int *p2;
+  int i1;
+  if ( (*(int (__stdcall **)(uint32_t, uint32_t, int, int))(*(uint32_t *)*(self_ + 1) + 52))(*(self_ + 1), 0, 1, arg9) >= 0 )
   {
-    v10 = self_ + 3;
+    p1 = self_ + 3;
     memset(self_ + 3, 0, 0x34u);
     *(self_ + 8) = 1;
-    if ( a7 != 0 )
+    if ( arg7 != 0 )
     {
       *(self_ + 10) = 0;
-      if ( *(_DWORD *)(g_pAppSettings + 104) != 0 )
+      if ( *(uint32_t *)(g_pAppSettings + 104) != 0 )
       {
-        if ( (*(_BYTE *)(a9 + 20) & 1) != 0 )
+        if ( (*(uint8_t *)(arg9 + 20) & 1) != 0 )
         {
           *(self_ + 15) = 1;
           *(self_ + 8) = 2;
         }
       }
-      else if ( *(int *)(a9 + 20) >= 0 )
+      else if ( *(int *)(arg9 + 20) >= 0 )
       {
         *(self_ + 15) = 0;
       }
@@ -955,34 +971,34 @@ XI_API char __thiscall Gfx_CreateDevice(_DWORD *self_, int a2, int a3, int a4, i
       *(self_ + 10) = 1;
       *(self_ + 15) = 0;
     }
-    *v10 = a5;
-    *(self_ + 4) = a6;
-    *(self_ + 5) = a3;
-    *(self_ + 12) = a4;
-    v11 = (int *)*(self_ + 1);
+    *p1 = arg5;
+    *(self_ + 4) = arg6;
+    *(self_ + 5) = arg3;
+    *(self_ + 12) = arg4;
+    p2 = (int *)*(self_ + 1);
     *(self_ + 6) = 1;
     *(self_ + 11) = 1;
-    *(self_ + 9) = a2;
-    v12 = *v11;
-    if ( a8 != 0 )
+    *(self_ + 9) = arg2;
+    i1 = *p2;
+    if ( arg8 != 0 )
     {
-      if ( (*(int (__stdcall **)(int *, _DWORD, int, int, int, _DWORD *, _DWORD *))(v12 + 60))(
-             v11,
+      if ( (*(int (__stdcall **)(int *, uint32_t, int, int, int, uint32_t *, uint32_t *))(i1 + 60))(
+             p2,
              0,
              1,
-             a2,
+             arg2,
              32,
-             v10,
+             p1,
              self_ + 2) >= 0 )
         return 1;
     }
-    else if ( (*(int (__stdcall **)(int *, _DWORD, int, int, int, _DWORD *, _DWORD *))(v12 + 60))(
-                v11,
+    else if ( (*(int (__stdcall **)(int *, uint32_t, int, int, int, uint32_t *, uint32_t *))(i1 + 60))(
+                p2,
                 0,
                 1,
-                a2,
+                arg2,
                 64,
-                v10,
+                p1,
                 self_ + 2) >= 0 )
     {
       return 1;
@@ -996,7 +1012,7 @@ XI_API char __thiscall Gfx_CreateDevice(_DWORD *self_, int a2, int a3, int a4, i
 XI_API void * __thiscall Gfx_InitObject(void * self_)
 {
   orig::Debug_Construct((void *)((int)self_ + 4));
-  *(uint8_t ***)self_ = &PTR_FUN_1032965c;
+  *(uint8_t ***)self_ = &g_1032965C;
   orig::Gfx_ResetObject(self_);
   return self_;
 }
@@ -1005,6 +1021,6 @@ XI_API void * __thiscall Gfx_InitObject(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Gfx_ResetObject(void * self_)
 {
-  orig::FUN_10003700((void *)((int)self_ + 0x4));
+  orig::game_10003700((void *)((int)self_ + 0x4));
   return;
 }

@@ -12,4 +12,4 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoUseMagicWaitTask.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CMoUseMagicWaitTask::ScalarDeletingDtor` calls `sub_100A9D30`, `SharedDeleteHelper`
+- `CMoUseMagicWaitTask::ScalarDeletingDtor` calls `game_100A9D30`, `SharedDeleteHelper`

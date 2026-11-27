@@ -5,52 +5,52 @@
 
 // FUNCTION: FFXIMAIN 0x100378B0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __cdecl CYyMusicLoadTask::StartTrack(int param_1)
+bits32 __cdecl CYyMusicLoadTask::StartTrack(int arg1)
 {
-  uint32_t uVar1;
-  int64_t lVar2;
+  uint32_t u1;
+  int64_t i1;
   
-  if (DAT_10463948 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463948 + 0x18))))((void *)(DAT_10463948),1);
-    DAT_10463948 = (int *)0x0;
+  if (g_10463948 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463948 + 0x18))))((void *)(g_10463948),1);
+    g_10463948 = (int *)0x0;
   }
-  if ((DAT_10463944 != param_1) && (DAT_1046393c != 0)) {
+  if ((g_10463944 != arg1) && (g_1046393C != 0)) {
     orig::LobbyThread_SendCmd9(0xffffffff,0);
   }
-  DAT_10463944 = param_1;
-  lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)_DAT_103517f8 * (long double)_DAT_103517f4 * (long double)127.0f);
-  uVar1 = orig::Music_LoadTrackIfRunning(param_1,(int)lVar2,(int)lVar2);
-  if (DAT_1046393c != 0) {
-    uVar1 = 0;
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)_DAT_103517f8 * (long double)_DAT_103517f4 * (long double)127.0f);
-    uVar1 = orig::LobbyThread_SendCmd8(0xffffffff,(uint32_t)lVar2,uVar1);
+  g_10463944 = arg1;
+  i1 = XI_CALL_ST0(0x10311C2Cu)(g_103517F8 * g_103517F4 * 127.0f);
+  u1 = orig::Music_LoadTrackIfRunning(arg1,(int)i1,(int)i1);
+  if (g_1046393C != 0) {
+    u1 = 0;
+    i1 = XI_CALL_ST0(0x10311C2Cu)(g_103517F8 * g_103517F4 * 127.0f);
+    u1 = orig::LobbyThread_SendCmd8(0xffffffff,(uint32_t)i1,u1);
   }
-  DAT_10463940 = param_1;
-  DAT_10463909 = 1;
-  return uVar1;
+  g_10463940 = arg1;
+  g_10463909 = 1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10037960
 // GATE: PASS -- 100 trials, 100 returned normally, 99 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl StAvatar_SwitchMusicTask(int param_1)
+XI_API void __cdecl StAvatar_SwitchMusicTask(int arg1)
 {
   int *self_;
   
-  if (DAT_10463944 != param_1) {
-    DAT_10463944 = param_1;
+  if (g_10463944 != arg1) {
+    g_10463944 = arg1;
     self_ =(int*)(orig::Mem_AllocFromArea_v2(0x5c,4,0));
     orig::CMoTask_ResetFields_v1(self_);
     g_resourcesDirty_as_v0 = 1;
     if (self_ != (int *)0x0) {
       orig::CMoTask_Constructor_v2(self_);
-      *self_ = (int)&PTR_LAB_1032a990;
-      if (DAT_10463948 != (int *)0x0) {
-        ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*DAT_10463948 + 0x18))))((void *)(DAT_10463948),1);
+      *self_ = (int)&g_1032A990;
+      if (g_10463948 != (int *)0x0) {
+        ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*g_10463948 + 0x18))))((void *)(g_10463948),1);
       }
       *(uint8_t *)((int)self_ + 0x35) = 1;
       *(uint8_t *)(self_ + 0xd) = 0;
-      DAT_10463948 = self_;
-      self_[0xf] = param_1;
+      g_10463948 = self_;
+      self_[0xf] = arg1;
       self_[0x10] = 0x7f;
       self_[0x11] = 0x7f;
       self_[0x12] = 0;

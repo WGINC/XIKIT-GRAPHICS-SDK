@@ -4,25 +4,25 @@
 
 // FUNCTION: FFXIMAIN 0x1029A380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl SqinSkinAppend_Append(int param_1, int param_2)
+XI_API int __cdecl SqinSkinAppend_Append(int arg1, int arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if ((param_1 != 0) && (param_2 != 0)) {
-    iVar1 = *(int *)(param_1 + 0x3c);
-    if ((*(int *)(param_1 + 0x38) == 0) ||
-       ((*(int *)(param_1 + 0x40) == 0 || (*(int *)(param_1 + 0x40) <= iVar1)))) {
-      iVar2 = *(int *)(param_1 + 0x40) + 0x10;
-      if (iVar2 < iVar1) {
-        iVar2 = iVar1;
+  if ((arg1 != 0) && (arg2 != 0)) {
+    i1 = *(int *)(arg1 + 0x3c);
+    if ((*(int *)(arg1 + 0x38) == 0) ||
+       ((*(int *)(arg1 + 0x40) == 0 || (*(int *)(arg1 + 0x40) <= i1)))) {
+      i2 = *(int *)(arg1 + 0x40) + 0x10;
+      if (i2 < i1) {
+        i2 = i1;
       }
-      orig::SqinSkin_ResizeItemArray(param_1,iVar2);
+      orig::SqinSkin_ResizeItemArray(arg1,i2);
     }
-    if (*(int *)(param_1 + 0x38) != 0) {
-      *(int *)(param_1 + 0x3c) = *(int *)(param_1 + 0x3c) + 1;
-      *(int *)(*(int *)(param_1 + 0x38) + iVar1 * 4) = param_2;
-      return iVar1;
+    if (*(int *)(arg1 + 0x38) != 0) {
+      *(int *)(arg1 + 0x3c) = *(int *)(arg1 + 0x3c) + 1;
+      *(int *)(*(int *)(arg1 + 0x38) + i1 * 4) = arg2;
+      return i1;
     }
   }
   return -1;

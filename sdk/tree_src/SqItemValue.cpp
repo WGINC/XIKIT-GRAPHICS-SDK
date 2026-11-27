@@ -4,46 +4,46 @@
 
 // FUNCTION: FFXIMAIN 0x10284FD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqItemValue_SetValueByType(int * param_1, int param_2)
+XI_API void __cdecl SqItemValue_SetValueByType(int * arg1, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *param_1;
-  if (iVar1 != 0x50001) {
-    if (iVar1 == 0x50002) {
-      param_1[9] = param_2;
+  i1 = *arg1;
+  if (i1 != 0x50001) {
+    if (i1 == 0x50002) {
+      arg1[9] = arg2;
       return;
     }
-    if (iVar1 != 0x50003) {
+    if (i1 != 0x50003) {
       return;
     }
   }
-  param_1[10] = param_2;
+  arg1[10] = arg2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10285000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqItemValue_GetValueByItemKind(int * param_1, int * param_2)
+XI_API bits32 __cdecl SqItemValue_GetValueByItemKind(int * arg1, int * arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *param_1;
-  if (iVar1 == 0x50001) {
-    *param_2 = param_1[10];
-    iVar1 = 0;
+  i1 = *arg1;
+  if (i1 == 0x50001) {
+    *arg2 = arg1[10];
+    i1 = 0;
   }
   else {
-    if (iVar1 == 0x50002) {
-      *param_2 = param_1[9];
-      return (int)param_2;
+    if (i1 == 0x50002) {
+      *arg2 = arg1[9];
+      return (int)arg2;
     }
-    iVar1 = iVar1 + -0x50003;
-    if (iVar1 == 0) {
-      iVar1 = param_1[10];
-      *param_2 = iVar1;
-      return iVar1;
+    i1 = i1 + -0x50003;
+    if (i1 == 0) {
+      i1 = arg1[10];
+      *arg2 = i1;
+      return i1;
     }
   }
-  return iVar1;
+  return i1;
 }

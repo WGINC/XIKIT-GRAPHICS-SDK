@@ -4,9 +4,9 @@
 
 // FUNCTION: FFXIMAIN 0x10176FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) ZoneResource_Construct(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
+XI_API bits32 * __attribute__((stdcall, regparm(3))) ZoneResource_Construct(uint32_t xi_eax_unused, bits32 xi_edx, bits32 * arg3)
 {
-  orig::CMoResource_ConstructBase(param_1,xi_edx);
-  *param_1 = &PTR_CMoResource_GetRuntimeClass_variant3_103366f0;
-  return param_1;
+  orig::CMoResource_ConstructBase(arg3,xi_edx);
+  *arg3 = &ptr_to_CMoResource_GetRuntimeClass_variant3_103366F0;
+  return arg3;
 }

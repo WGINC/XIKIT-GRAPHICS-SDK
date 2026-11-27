@@ -6,8 +6,8 @@
 class XI_API CMoOcclusionMng {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x1006C130
-    int * ScalarDeletingDtor(char a2);  // 0x1006C1C0
-    _DWORD * OcclusionMng_CreateTarget();  // 0x1006C220
+    int * ScalarDeletingDtor(char arg1);  // 0x1006C1C0
+    uint32_t * OcclusionMng_CreateTarget();  // 0x1006C220
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x8];

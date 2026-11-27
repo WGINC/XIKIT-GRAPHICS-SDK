@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoSchOp0CAttachments {
 public:
-    int * Slot1DeleteOwner(char a2);  // 0x10043DC0
+    int * Slot1DeleteOwner(char arg1);  // 0x10043DC0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x3C];

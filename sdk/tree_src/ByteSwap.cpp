@@ -4,24 +4,24 @@
 
 // FUNCTION: FFXIMAIN 0x1000D100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl ByteSwap_Swap16(uint32_t param_1)
+XI_API uint32_t __cdecl ByteSwap_Swap16(uint32_t arg1)
 {
-  return (param_1 & 0xffff) >> 8 | (param_1 & 0xffff) << 8;
+  return (arg1 & 0xffff) >> 8 | (arg1 & 0xffff) << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x1000D120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl ByteSwap_Swap32(uint32_t param_1)
+XI_API uint32_t __cdecl ByteSwap_Swap32(uint32_t arg1)
 {
-  return (param_1 & 0xff00 | param_1 << 0x10) << 8 | (param_1 & 0xff0000 | param_1 >> 0x10) >> 8;
+  return (arg1 & 0xff00 | arg1 << 0x10) << 8 | (arg1 & 0xff0000 | arg1 >> 0x10) >> 8;
 }
 
 // FUNCTION: FFXIMAIN 0x1000D150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl ByteSwap_ByteSwap32(uint32_t param_1)
+XI_API uint64_t __cdecl ByteSwap_ByteSwap32(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (param_1 & 0xff0000 | param_1 >> 0x10) >> 8;
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar1) << 32) | (uint32_t)((param_1 & 0xff00 | param_1 << 0x10) << 8 | uVar1)));
+  u1 = (arg1 & 0xff0000 | arg1 >> 0x10) >> 8;
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)((arg1 & 0xff00 | arg1 << 0x10) << 8 | u1)));
 }

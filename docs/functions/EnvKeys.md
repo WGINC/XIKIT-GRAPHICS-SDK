@@ -34,15 +34,15 @@ Why the file has this name (data/unit_names.json): Env_BlendKeys / BlendTimeOfDa
 Read from the game's code (call/jmp rel32 to a function start).
 
 - `WeatherRes_InitKeyDefaults` calls nothing directly
-- `Env_BlendKeys` calls `Env_LerpKeyValues`, `sub_100274B0`, `Quat_SetIdentityChained`, `sub_10033360`, `MathVector_ReturnThis`, `BoneShadow_FromQuat`, `Mat4_TransformPointInPlace`, `sub_10311C2C`, `MathVector_Nop`, `BoneShadow_Nop`, `sub_10189980`
+- `Env_BlendKeys` calls `Env_LerpKeyValues`, `game_100274B0`, `Quat_SetIdentityChained`, `game_10033360`, `MathVector_ReturnThis`, `BoneShadow_FromQuat`, `Mat4_TransformPointInPlace`, `game_10311C2C`, `MathVector_Nop`, `BoneShadow_Nop`, `game_10189980`
 - `Env_LerpFloat` calls nothing directly
-- `Env_LerpKeyValues` calls `sub_10189750`, `Env_LerpFloat`
+- `Env_LerpKeyValues` calls `game_10189750`, `Env_LerpFloat`
 - `WeatherRes_IsTimeKeyName` calls nothing directly
 - `Zone_GetClock` calls nothing directly
-- `Env_FindPrevKey` calls `Zone_GetClock`, `Time_SetNormalized`, `YmResourceFile_FindResourceUnder`, `sub_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_IsTimeKeyName`, `WeatherRes_GetTimeKey`, `Time_Normalize`
-- `WeatherRes_FindAtOrBefore` calls `Zone_GetClock`, `Time_SetNormalized`, `sub_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_GetTimeKey`, `Time_Normalize`
-- `Env_FindNextKey` calls `Zone_GetClock`, `Time_SetNormalized`, `YmResourceFile_FindResourceUnder`, `sub_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_IsTimeKeyName`, `WeatherRes_GetTimeKey`, `Time_Normalize`
-- `WeatherRes_FindNeighbor` calls `Zone_GetClock`, `Time_SetNormalized`, `sub_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_GetTimeKey`, `Time_Normalize`
+- `Env_FindPrevKey` calls `Zone_GetClock`, `Time_SetNormalized`, `YmResourceFile_FindResourceUnder`, `game_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_IsTimeKeyName`, `WeatherRes_GetTimeKey`, `Time_Normalize`
+- `WeatherRes_FindAtOrBefore` calls `Zone_GetClock`, `Time_SetNormalized`, `game_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_GetTimeKey`, `Time_Normalize`
+- `Env_FindNextKey` calls `Zone_GetClock`, `Time_SetNormalized`, `YmResourceFile_FindResourceUnder`, `game_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_IsTimeKeyName`, `WeatherRes_GetTimeKey`, `Time_Normalize`
+- `WeatherRes_FindNeighbor` calls `Zone_GetClock`, `Time_SetNormalized`, `game_100742A0`, `ResourceIter_FindFirst`, `ResourceIter_FindNext`, `WeatherRes_GetTimeKey`, `Time_Normalize`
 - `Env_UpdatePrevKey` calls `Env_FindPrevKey`, `Env_SetKeyField2C`
 - `Env_UpdateNextKey` calls `Env_FindNextKey`, `Env_SetKeyField30`
 - `Env_UpdateKeyAtOrBefore` calls `WeatherRes_FindAtOrBefore`, `Env_SetKeyField24`

@@ -4,16 +4,16 @@
 
 // FUNCTION: FFXIMAIN 0x100A28E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall AuctionMenu_ResetAndFillHeader(void * self_)
+XI_API bits32 __thiscall AuctionMenu_ResetAndFillHeader(void * self_)
 {
-  uint32_t *puVar1;
-  uint8_t bVar2;
-  uint32_t uVar3;
-  uint8_t *pbVar4;
-  int iVar5;
-  uint32_t *puVar6;
+  uint32_t *p1;
+  uint8_t u1;
+  uint32_t u2;
+  uint8_t *p2;
+  int i1;
+  uint32_t *p3;
   
-  puVar1 = (uint32_t *)((int)self_ + 0x70);
+  p1 = (uint32_t *)((int)self_ + 0x70);
   *(uint8_t *)((int)self_ + 0x58) = 0;
   *(uint8_t *)((int)self_ + 0x59) = 0;
   *(uint8_t *)((int)self_ + 0x5a) = 0;
@@ -23,192 +23,192 @@ XI_API undefined4 __thiscall AuctionMenu_ResetAndFillHeader(void * self_)
   *(uint32_t *)((int)self_ + 100) = 0;
   *(uint32_t *)((int)self_ + 0x68) = 0;
   *(uint32_t *)((int)self_ + 0x6c) = 0;
-  puVar6 = puVar1;
-  for (iVar5 = 0x20; iVar5 != 0; iVar5 = iVar5 + -1) {
-    *puVar6 = 0;
-    puVar6 = puVar6 + 1;
+  p3 = p1;
+  for (i1 = 0x20; i1 != 0; i1 = i1 + -1) {
+    *p3 = 0;
+    p3 = p3 + 1;
   }
-  pbVar4 = *(uint8_t **)((int)self_ + 0x48);
-  if (pbVar4 != (uint8_t *)0x0) {
-    bVar2 = *pbVar4;
-    if (bVar2 == 1) {
+  p2 = *(uint8_t **)((int)self_ + 0x48);
+  if (p2 != (uint8_t *)0x0) {
+    u1 = *p2;
+    if (u1 == 1) {
       *(uint8_t *)((int)self_ + 0x58) = 1;
-      bVar2 = pbVar4[2];
-      *(uint8_t *)((int)self_ + 0x5a) = bVar2;
-      *(uint8_t *)((int)self_ + 0x5b) = pbVar4[3];
-      if (bVar2 == 1) {
+      u1 = p2[2];
+      *(uint8_t *)((int)self_ + 0x5a) = u1;
+      *(uint8_t *)((int)self_ + 0x5b) = p2[3];
+      if (u1 == 1) {
         *(uint32_t *)((int)self_ + 100) = 0xec;
       }
-      else if (bVar2 == 2) {
+      else if (u1 == 2) {
         *(uint32_t *)((int)self_ + 100) = 0xb4;
       }
       else {
         *(uint32_t *)((int)self_ + 100) = 0;
       }
-      uVar3 = orig::AuctionMenu_WriteHeader(self_,(uint8_t *)puVar1,*(uint32_t *)((int)self_ + 100));
+      u2 = orig::AuctionMenu_WriteHeader(self_,(uint8_t *)p1,*(uint32_t *)((int)self_ + 100));
       *(uint32_t *)((int)self_ + 0x34) = 0;
-      pbVar4 = (uint8_t *)(*(int *)((int)self_ + 0x38) + -1);
-      *(uint32_t *)((int)self_ + 0x6c) = *(int *)((int)self_ + 0x6c) + uVar3;
-      *(uint8_t **)((int)self_ + 0x38) = pbVar4;
+      p2 = (uint8_t *)(*(int *)((int)self_ + 0x38) + -1);
+      *(uint32_t *)((int)self_ + 0x6c) = *(int *)((int)self_ + 0x6c) + u2;
+      *(uint8_t **)((int)self_ + 0x38) = p2;
     }
-    else if ((9 < bVar2) && (bVar2 < 0xe)) {
-      *(uint8_t *)((int)self_ + 0x58) = bVar2;
-      *(uint8_t *)((int)self_ + 0x5a) = pbVar4[2];
-      *(uint8_t *)((int)self_ + 0x5b) = pbVar4[3];
-      uVar3 = orig::AuctionMenu_WriteHeader(self_,(uint8_t *)puVar1,0);
+    else if ((9 < u1) && (u1 < 0xe)) {
+      *(uint8_t *)((int)self_ + 0x58) = u1;
+      *(uint8_t *)((int)self_ + 0x5a) = p2[2];
+      *(uint8_t *)((int)self_ + 0x5b) = p2[3];
+      u2 = orig::AuctionMenu_WriteHeader(self_,(uint8_t *)p1,0);
       *(uint32_t *)((int)self_ + 0x38) = 0;
       *(uint32_t *)((int)self_ + 0x34) = 0;
-      *(uint32_t *)((int)self_ + 0x6c) = *(int *)((int)self_ + 0x6c) + uVar3;
-      return uVar3;
+      *(uint32_t *)((int)self_ + 0x6c) = *(int *)((int)self_ + 0x6c) + u2;
+      return u2;
     }
   }
-  return (uint32_t)pbVar4;
+  return (uint32_t)p2;
 }
 
 // FUNCTION: FFXIMAIN 0x100A2B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall AuctionMenu_WriteHeader(void * self_, uint8_t * param_1, uint32_t param_2)
+XI_API uint32_t __thiscall AuctionMenu_WriteHeader(void * self_, uint8_t * arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (0xec < param_2) {
-    param_2 = 0xec;
+  if (0xec < arg3) {
+    arg3 = 0xec;
   }
-  *param_1 = *(uint8_t *)((int)self_ + 0x58);
-  param_1[1] = *(uint8_t *)((int)self_ + 0x5a);
-  param_1[2] = *(uint8_t *)((int)self_ + 0x5b);
+  *arg2 = *(uint8_t *)((int)self_ + 0x58);
+  arg2[1] = *(uint8_t *)((int)self_ + 0x5a);
+  arg2[2] = *(uint8_t *)((int)self_ + 0x5b);
   if ((*(uint8_t *)((int)self_ + 0x58) == 0) || (2 < *(uint8_t *)((int)self_ + 0x58))) {
-    param_1[3] = 1;
+    arg2[3] = 1;
   }
   else {
-    param_1[3] = *(uint8_t *)((int)self_ + 0x40);
+    arg2[3] = *(uint8_t *)((int)self_ + 0x40);
   }
-  *(uint32_t *)(param_1 + 8) = 0;
-  *(uint32_t *)(param_1 + 0xc) = 0;
-  *(uint32_t *)(param_1 + 0x10) = *(uint32_t *)((int)self_ + 0x5c);
-  *(uint32_t *)(param_1 + 0x14) = *(uint32_t *)((int)self_ + 0x60);
-  uVar1 = *(uint32_t *)((int)self_ + 0x6c);
-  *(uint32_t *)(param_1 + 0x1c) = param_2;
-  *(uint32_t *)(param_1 + 0x18) = uVar1;
-  return param_2;
+  *(uint32_t *)(arg2 + 8) = 0;
+  *(uint32_t *)(arg2 + 0xc) = 0;
+  *(uint32_t *)(arg2 + 0x10) = *(uint32_t *)((int)self_ + 0x5c);
+  *(uint32_t *)(arg2 + 0x14) = *(uint32_t *)((int)self_ + 0x60);
+  u1 = *(uint32_t *)((int)self_ + 0x6c);
+  *(uint32_t *)(arg2 + 0x1c) = arg3;
+  *(uint32_t *)(arg2 + 0x18) = u1;
+  return arg3;
 }
 
 // FUNCTION: FFXIMAIN 0x100A2FD0
 // GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
-XI_API undefined4 __attribute__((cdecl, regparm(1))) AuctionMenu_InitRecord(undefined4 xi_eax, uint8_t * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 * param_5, uint32_t param_6)
+XI_API bits32 __attribute__((cdecl, regparm(1))) AuctionMenu_InitRecord(bits32 xi_eax, uint8_t * arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 * arg6, uint32_t arg7)
 {
-  int iVar1;
-  uint32_t uVar2;
-  undefined4 *puVar3;
+  int i1;
+  uint32_t u1;
+  bits32 *p1;
   
-  if (param_1 != (uint8_t *)0x0) {
-    *param_1 = (uint8_t)param_2;
-    param_1[2] = (uint8_t)param_3;
-    param_1[3] = (uint8_t)param_4;
+  if (arg2 != (uint8_t *)0x0) {
+    *arg2 = (uint8_t)arg3;
+    arg2[2] = (uint8_t)arg4;
+    arg2[3] = (uint8_t)arg5;
     xi_eax = 0;
-    param_1[1] = 0;
-    *(undefined4 *)(param_1 + 4) = 0;
-    *(undefined4 *)(param_1 + 8) = 0;
-    *(undefined4 *)(param_1 + 0x18) = 0;
-    puVar3 = (undefined4 *)(param_1 + 0x1c);
-    for (iVar1 = 9; iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar3 = 0;
-      puVar3 = puVar3 + 1;
+    arg2[1] = 0;
+    *(bits32 *)(arg2 + 4) = 0;
+    *(bits32 *)(arg2 + 8) = 0;
+    *(bits32 *)(arg2 + 0x18) = 0;
+    p1 = (bits32 *)(arg2 + 0x1c);
+    for (i1 = 9; i1 != 0; i1 = i1 + -1) {
+      *p1 = 0;
+      p1 = p1 + 1;
     }
-    *(undefined4 *)(param_1 + 0xc) = 0;
-    if ((param_5 != (undefined4 *)0x0) && (0 < (int)param_6)) {
-      *(uint32_t *)(param_1 + 0x10) = param_6;
-      *(undefined4 **)(param_1 + 0x14) = param_5;
-      for (uVar2 = param_6 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *param_5 = 0;
-        param_5 = param_5 + 1;
+    *(bits32 *)(arg2 + 0xc) = 0;
+    if ((arg6 != (bits32 *)0x0) && (0 < (int)arg7)) {
+      *(uint32_t *)(arg2 + 0x10) = arg7;
+      *(bits32 **)(arg2 + 0x14) = arg6;
+      for (u1 = arg7 >> 2; u1 != 0; u1 = u1 - 1) {
+        *arg6 = 0;
+        arg6 = arg6 + 1;
       }
-      for (uVar2 = param_6 & 3; uVar2 != 0; uVar2 = uVar2 - 1) {
-        *(uint8_t *)param_5 = 0;
-        param_5 = (undefined4 *)((int)param_5 + 1);
+      for (u1 = arg7 & 3; u1 != 0; u1 = u1 - 1) {
+        *(uint8_t *)arg6 = 0;
+        arg6 = (bits32 *)((int)arg6 + 1);
       }
       return xi_eax;
     }
-    *(undefined4 *)(param_1 + 0x10) = 0;
-    *(undefined4 *)(param_1 + 0x14) = 0;
+    *(bits32 *)(arg2 + 0x10) = 0;
+    *(bits32 *)(arg2 + 0x14) = 0;
   }
   return xi_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x100A3040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl AuctionMenu_CreateTaskOnce(void)
+XI_API bits32 __cdecl AuctionMenu_CreateTaskOnce(void)
 {
-  undefined4 uVar1;
-  void *pvVar2;
-  undefined4 *puVar3;
-  uint32_t uVar4;
+  bits32 u1;
+  void *p1;
+  bits32 *p2;
+  uint32_t u2;
   
-  pvVar2 = DAT_10487f08;
-  if (DAT_10487f08 == (void *)0x0) {
-    uVar4 = 0x400;
-    puVar3 = (undefined4 *)(int)XI_GAME(0x10485178u);
-    uVar1 = orig::AuctionMenu_GetSceneStateCode(0);
-    orig::AuctionMenu_InitRecord((uint8_t *)(int)XI_GAME(0x104808B0u),1,1,uVar1,puVar3,uVar4,uVar1);
-    puVar3 = orig::Mem_AllocFromArea_v2(0xf0,4,0);
-    pvVar2 = (void *)orig::CMoTask_ResetFields_v1(puVar3);
+  p1 = g_10487F08;
+  if (g_10487F08 == (void *)0x0) {
+    u2 = 0x400;
+    p2 = (bits32 *)(int)XI_GAME(0x10485178u);
+    u1 = orig::AuctionMenu_GetSceneStateCode(0);
+    orig::AuctionMenu_InitRecord((uint8_t *)(int)XI_GAME(0x104808B0u),1,1,u1,p2,u2,u1);
+    p2 = orig::Mem_AllocFromArea_v2(0xf0,4,0);
+    p1 = (void *)orig::CMoTask_ResetFields_v1(p2);
     g_resourcesDirty_as_v0 = 1;
-    if (puVar3 == (undefined4 *)0x0) {
-      DAT_10487f08 = (void *)0x0;
+    if (p2 == (bits32 *)0x0) {
+      g_10487F08 = (void *)0x0;
     }
     else {
-      DAT_10487f08 = orig::Acter_ConstructTask1032D6D4(puVar3,(int)XI_GAME(0x104808B0u));
-      pvVar2 = (void *)0x0;
-      if (DAT_10487f08 != (void *)0x0) {
-        *(undefined4 *)((int)DAT_10487f08 + 0x50) = (int)XI_GAME(0x100A3160u);
-        *(undefined4 *)((int)DAT_10487f08 + 0x54) = (int)XI_GAME(0x100A3130u);
-        uVar1 = orig::AuctionMenu_ResetAndFillHeader(DAT_10487f08);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+      g_10487F08 = orig::Acter_ConstructTask1032D6D4(p2,(int)XI_GAME(0x104808B0u));
+      p1 = (void *)0x0;
+      if (g_10487F08 != (void *)0x0) {
+        *(bits32 *)((int)g_10487F08 + 0x50) = (int)XI_GAME(0x100A3160u);
+        *(bits32 *)((int)g_10487F08 + 0x54) = (int)XI_GAME(0x100A3130u);
+        u1 = orig::AuctionMenu_ResetAndFillHeader(g_10487F08);
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-  return (uint32_t)pvVar2 & 0xffffff00;
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100A30E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) AuctionMenu_GetSceneStateCode(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) AuctionMenu_GetSceneStateCode(bits32 xi_eax)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
   
-  uVar3 = (uint32_t)((uint32_t)xi_eax >> 8);
-  uVar2 = ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(1)));
-  uVar1 = *(uint32_t *)(g_pSceneState + 8);
-  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((uVar1 == 2 || (uVar1 == 3)))) || (uVar1 < 4)) {
-    switch(xi_sw(uVar1)) {
+  u3 = (uint32_t)((uint32_t)xi_eax >> 8);
+  u2 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
+  u1 = *(uint32_t *)(g_pSceneState + 8);
+  if (((*(char *)(g_pSceneState + 0x18) < '\0') && ((u1 == 2 || (u1 == 3)))) || (u1 < 4)) {
+    switch(xi_sw(u1)) {
     case 0:
-      return ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(1)));
+      return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
     default:
-      return ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(2)));
+      return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(2)));
     case 2:
-      return ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(3)));
+      return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(3)));
     case 3:
-      uVar2 = ((uint32_t)(((uint32_t)(uVar3) << 8) | (uint8_t)(4)));
+      u2 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(4)));
     }
   }
-  return uVar2;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x100A3CD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl AuctionMenu_ResetRecords(void)
 {
-  uint16_t *puVar1;
+  uint16_t *p1;
   
-  puVar1 = &DAT_10485bb6;
+  p1 = &g_10485BB6;
   do {
-    *(uint8_t *)(puVar1 + -1) = 0;
-    *puVar1 = 0;
-    puVar1 = puVar1 + 0xa0;
-  } while ((int)puVar1 < (int)XI_GAME(0x104860B6u));
-  DAT_10487f0c = 0;
-  DAT_10487f14 = 0;
+    *(uint8_t *)(p1 + -1) = 0;
+    *p1 = 0;
+    p1 = p1 + 0xa0;
+  } while ((int)p1 < (int)XI_GAME(0x104860B6u));
+  g_10487F0C = 0;
+  g_10487F14 = 0;
   return;
 }

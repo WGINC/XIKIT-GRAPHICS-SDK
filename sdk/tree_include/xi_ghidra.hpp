@@ -4,99 +4,46 @@
 #include <stdint.h>
 #include "xi_ghidra_shared.hpp"  // undefinedN, undefined4, XI_ANY (also in the clean tree's shared headers)
 
-typedef unsigned char byte; typedef unsigned char uchar; typedef unsigned short ushort; typedef unsigned int uint;
-typedef unsigned long ulong; typedef long long longlong; typedef unsigned long long ulonglong;
-typedef unsigned short word; typedef uint32_t dword; typedef uint64_t qword;
-typedef unsigned char xi_bool;               // Ghidra's bool: one byte, any value (hx2cpp.ghidra_bool)
-typedef long double float10;                 // x87 80-bit; GCC's long double on i686
-typedef unsigned short wchar16; typedef unsigned int wchar32;
-typedef int32_t int3; typedef uint32_t uint3; typedef int64_t int5; typedef uint64_t uint5; typedef int64_t int6; typedef uint64_t uint6; typedef int64_t int7; typedef uint64_t uint7;   // Ghidra's odd-width integers
-typedef int code(...);                       // `(*(code *)p)(...)`: a call through an untyped pointer
+typedef int untyped_fn(...);  // `(*(code *)p)(...)`: a call through an untyped pointer
 // Ghidra's cast to a 3-byte integer, `(uint3)x` / `(int3)x`: the low 24 bits of x, zero- or sign-extended to 32
 // (hx2cpp.ghidra_odd_casts writes the casts as these; uint3 / int3 above are 32-bit, so the cast alone would keep 32)
 template<class T> static inline uint32_t xi_bits32(T *p) { return (uint32_t)(uintptr_t)p; }
 template<class T> static inline uint32_t xi_bits32(T x) { return (uint32_t)x; }
 template<class T> static inline uint32_t xi_trunc24(T x) { return xi_bits32(x) & 0xFFFFFFu; }
 template<class T> static inline int32_t xi_strunc24(T x) { return (int32_t)(xi_bits32(x) << 8) >> 8; }
-typedef void *pointer; typedef void *addr;
 
 // piece / subpiece / extension: Ghidra's names, sizes in bytes
-#define CONCAT11(h, l) ((uint16_t)(((uint16_t)(uint8_t)(h) << 8) | (uint8_t)(l)))
-#define CONCAT12(h, l) ((uint32_t)(((uint32_t)(uint8_t)(h) << 16) | (uint16_t)(l)))
-#define CONCAT13(h, l) ((uint32_t)(((uint32_t)(uint8_t)(h) << 24) | ((uint32_t)(l) & 0xFFFFFFu)))
-#define CONCAT21(h, l) ((uint32_t)(((uint32_t)(uint16_t)(h) << 8) | (uint8_t)(l)))
-#define CONCAT22(h, l) ((uint32_t)(((uint32_t)(uint16_t)(h) << 16) | (uint16_t)(l)))
-#define CONCAT31(h, l) ((uint32_t)(((uint32_t)(h) << 8) | (uint8_t)(l)))
-#define CONCAT43(h, l) ((uint64_t)(((uint64_t)(uint32_t)(h) << 24) | ((uint64_t)(l) & 0xFFFFFFull)))
-#define CONCAT44(h, l) ((uint64_t)(((uint64_t)(uint32_t)(h) << 32) | (uint32_t)(l)))
-#define CONCAT26(h, l) ((uint64_t)(((uint64_t)(uint16_t)(h) << 48) | ((uint64_t)(l) & 0xFFFFFFFFFFFFull)))
-#define CONCAT14(h, l) ((uint64_t)(((uint64_t)(uint8_t)(h) << 32) | (uint32_t)(l)))
-#define CONCAT17(h, l) ((uint64_t)(((uint64_t)(uint8_t)(h) << 56) | ((uint64_t)(l) & 0xFFFFFFFFFFFFFFull)))
 // p-code CAST between a floating and a non-floating type of one size: the same bits (GfxExport `/*XI_BC*/`)
-template <class To, class From> static inline To xi_castbits(From f) { static_assert(sizeof(To) == sizeof(From), "xi_castbits: one size"); To t; __builtin_memcpy(&t, &f, sizeof(t)); return t; }
+template <class To, class From> static inline To bit_cast(From f) { static_assert(sizeof(To) == sizeof(From), "xi_castbits: one size"); To t; __builtin_memcpy(&t, &f, sizeof(t)); return t; }
 // SUBnm is p-code SUBPIECE, the bytes of x: a floating x gives its encoding, not its value converted
-template <class T> static inline uint32_t xi_b32(T x) { return (uint32_t)x; }
-static inline uint32_t xi_b32(float x) { uint32_t u; __builtin_memcpy(&u, &x, 4); return u; }
-template <class T> static inline uint64_t xi_b64(T x) { return (uint64_t)x; }
-static inline uint64_t xi_b64(double x) { uint64_t u; __builtin_memcpy(&u, &x, 8); return u; }
-#define SUB41(x, b) ((uint8_t)(xi_b32(x) >> (8 * (b))))
-#define SUB42(x, b) ((uint16_t)(xi_b32(x) >> (8 * (b))))
-#define SUB21(x, b) ((uint8_t)((uint16_t)(x) >> (8 * (b))))
-#define SUB81(x, b) ((uint8_t)(xi_b64(x) >> (8 * (b))))
-#define SUB84(x, b) ((uint32_t)(xi_b64(x) >> (8 * (b))))
-#define SUB82(x, b) ((uint16_t)(xi_b64(x) >> (8 * (b))))
-#define ZEXT14(x) ((uint32_t)(uint8_t)(x))
-#define ZEXT24(x) ((uint32_t)(uint16_t)(x))
-#define ZEXT48(x) ((uint64_t)(uint32_t)(x))
-#define ZEXT12(x) ((uint16_t)(uint8_t)(x))
-#define SEXT14(x) ((int32_t)(int8_t)(x))
-#define SEXT24(x) ((int32_t)(int16_t)(x))
-#define SEXT48(x) ((int64_t)(int32_t)(x))
-#define SEXT12(x) ((int16_t)(int8_t)(x))
-#define CARRY1(a, b) ((uint8_t)((uint8_t)(a) + (uint8_t)(b)) < (uint8_t)(a))
-#define CARRY2(a, b) ((uint16_t)((uint16_t)(a) + (uint16_t)(b)) < (uint16_t)(a))
-#define CARRY4(a, b) ((uint32_t)((uint32_t)(a) + (uint32_t)(b)) < (uint32_t)(a))
-#define SCARRY4(a, b) ((((int32_t)(a) ^ (int32_t)((uint32_t)(a) + (uint32_t)(b))) & ((int32_t)(b) ^ (int32_t)((uint32_t)(a) + (uint32_t)(b)))) < 0)
-#define SBORROW4(a, b) ((((int32_t)(a) ^ (int32_t)(b)) & ((int32_t)(a) ^ (int32_t)((uint32_t)(a) - (uint32_t)(b)))) < 0)
-#define SBORROW2(a, b) ((((int16_t)(a) ^ (int16_t)(b)) & ((int16_t)(a) ^ (int16_t)((uint16_t)(a) - (uint16_t)(b)))) < 0)
-#define SBORROW1(a, b) ((((int8_t)(a) ^ (int8_t)(b)) & ((int8_t)(a) ^ (int8_t)((uint8_t)(a) - (uint8_t)(b)))) < 0)
-#define NAN_CHK(x) ((x) != (x))
-#define NAN(x) ((x) != (x))
-#define ROUND(x) ((long double)__builtin_rintl(x))
-#define TRUNC(x) ((long double)(long long)(x))
-#define ABS(x) ((x) < 0 ? -(x) : (x))
+template <class T> static inline uint32_t to_bits32(T x) { return (uint32_t)x; }
+static inline uint32_t to_bits32(float x) { uint32_t u; __builtin_memcpy(&u, &x, 4); return u; }
+template <class T> static inline uint64_t to_bits64(T x) { return (uint64_t)x; }
+static inline uint64_t to_bits64(double x) { uint64_t u; __builtin_memcpy(&u, &x, 8); return u; }
 // x87 fsqrt, the instruction Ghidra's FLOAT_SQRT comes from in the game's x87 code. __builtin_sqrtl inlines fsqrt
 // only where GCC proves the operand non-negative; elsewhere it calls sqrtl for errno, which the freestanding build
 // does not link (fs22: 12 functions without a DLL)
-static inline long double xi_fsqrt(long double x) { long double r; __asm__("fsqrt" : "=t"(r) : "0"(x)); return r; }
-#define SQRT(x) xi_fsqrt(x)
-#define POPCOUNT(x) __builtin_popcount(x)
+static inline long double x87_fsqrt(long double x) { long double r; __asm__("fsqrt" : "=t"(r) : "0"(x)); return r; }
 
 // Ghidra intrinsics
-static inline long double xi_fpatan(long double y, long double x) {      // x87 fpatan: atan(ST1 / ST0)
+static inline long double x87_fpatan(long double y, long double x) {      // x87 fpatan: atan(ST1 / ST0)
     long double r; __asm__("fpatan" : "=t"(r) : "0"(x), "u"(y) : "st(1)"); return r;
 }
-#define fpatan(y, x) xi_fpatan((y), (x))
-static inline long double xi_fsin(long double x) { long double r; __asm__("fsin" : "=t"(r) : "0"(x)); return r; }   // x87 fsin
-static inline long double xi_fcos(long double x) { long double r; __asm__("fcos" : "=t"(r) : "0"(x)); return r; }   // x87 fcos
+static inline long double x87_fsin(long double x) { long double r; __asm__("fsin" : "=t"(r) : "0"(x)); return r; }   // x87 fsin
+static inline long double x87_fcos(long double x) { long double r; __asm__("fcos" : "=t"(r) : "0"(x)); return r; }   // x87 fcos
 // x87 fptan: ST0 = tan(ST0), then 1.0 pushed (Intel SDM), which Ghidra's fptan() leaves out; popped here
-static inline long double xi_fptan(long double x) { long double r; __asm__("fptan\n\tfstp %%st(0)" : "=t"(r) : "0"(x)); return r; }
-#define fptan(x) xi_fptan((x))
-#define fsin(x) xi_fsin((x))
-#define fcos(x) xi_fcos((x))
+static inline long double x87_fptan(long double x) { long double r; __asm__("fptan\n\tfstp %%st(0)" : "=t"(r) : "0"(x)); return r; }
 
 // Ghidra's unkbyte10: ten bytes of no type, which it gives an x87 register value it could not type (fpatan's result
 // fed to fcos, 0x1002B140). An x87 value is the 80-bit extended format, which long double holds in its first 10 bytes.
-typedef long double unkbyte10;
 // `switch (x)` on what Ghidra typed a pointer or undefined4: the switch is on its 32-bit value (C++ needs an integer)
 template <class T> static inline uint32_t xi_sw(T *p) { return (uint32_t)(uintptr_t)p; }
-static inline uint32_t xi_sw(undefined4 u) { return u.v; }
+static inline uint32_t xi_sw(bits32 u) { return u.v; }
 template <class T> static inline T xi_sw(T v) { return v; }
 // Ghidra's sbyte: a signed byte
-typedef int8_t sbyte;
 // Ghidra's builtin_strncpy(dst, "...", n): the stores of a constant string it recognised, as C strncpy (ISO C
 // 7.24.2.4: copy up to the NUL, then zeros up to n bytes). The build is freestanding (-fno-builtin): a loop.
-static inline char *builtin_strncpy(void *d, const char *s, unsigned n) {
+static inline char *stored_strncpy(void *d, const char *s, unsigned n) {
     char *o = (char *)d; unsigned i = 0;
     for (; i < n && s[i]; i++) o[i] = s[i];
     for (; i < n; i++) o[i] = 0;

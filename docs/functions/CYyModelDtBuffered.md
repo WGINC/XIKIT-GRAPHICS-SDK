@@ -12,4 +12,4 @@ Group: `CYy` (by the file name only). Source: `sdk/tree_src/CYyModelDtBuffered.c
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CYyModelDtBuffered::ScalarDeletingDtor` calls `CYyModelDtBase_Destructor`, `thunk_sub_10028AA0`
+- `CYyModelDtBuffered::ScalarDeletingDtor` calls `CYyModelDtBase_Destructor`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`

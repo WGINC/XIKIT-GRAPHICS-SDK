@@ -4,22 +4,22 @@
 
 // FUNCTION: FFXIMAIN 0x102997A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqsdCartoon_Draw(int param_1, int * param_2)
+XI_API void __cdecl SqsdCartoon_Draw(int arg1, int * arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((*(int *)(param_1 + 0x54) != 0) && (iVar1 = orig::SqsdPassTest_TestSeparationHalf(*param_2), iVar1 == 2)) {
+  if ((*(int *)(arg1 + 0x54) != 0) && (i1 = orig::SqsdPassTest_TestSeparationHalf(*arg2), i1 == 2)) {
     return;
   }
-  orig::SqgxLighting_ApplyLighting(param_1 + 0x14);
-  orig::Texture_BindFromObject(*(int *)(param_1 + 0x50));
+  orig::SqgxLighting_ApplyLighting(arg1 + 0x14);
+  orig::Texture_BindFromObject(*(int *)(arg1 + 0x50));
   orig::sqgxShader_v1(0x10000,0);
-  orig::sqDrawableDraw_v1(*param_2);
+  orig::sqDrawableDraw_v1(*arg2);
   orig::sqgxPassAdd_v1(2);
   orig::sqgxBlendSub();
-  orig::Texture_BindFromObject(*(int *)(param_1 + 0x4c));
+  orig::Texture_BindFromObject(*(int *)(arg1 + 0x4c));
   orig::sqgxShader_v1(0x800000,0);
-  orig::sqDrawableDraw_v1(*param_2);
+  orig::sqDrawableDraw_v1(*arg2);
   orig::sqgxPassAdd_v1(-2);
   orig::sqgxBlendOff_v1();
   return;
@@ -27,8 +27,8 @@ XI_API void __cdecl SqsdCartoon_Draw(int param_1, int * param_2)
 
 // FUNCTION: FFXIMAIN 0x10299840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl sqsdCartoon_BakeOntoShape_Stub(void)
+XI_API bits32 __cdecl sqsdCartoon_BakeOntoShape_Stub(void)
 {
-  orig::sqDebugPrintf_v1(s_warning_not_implemented_yet_103bc04c);
+  orig::sqDebugPrintf_v1(str_warning_not_implemented_yet_103BC04C);
   return 0;
 }

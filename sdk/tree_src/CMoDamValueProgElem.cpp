@@ -8,89 +8,91 @@
 void CMoDamValueProgElem::Slot18DrawTextAtTarget()
 {
   int ** self = reinterpret_cast<int **>(this);  // byte-exact view for the rest
-  int *v2;
-  int v3;
-  _DWORD *v4;
-  int *v5;
-  unsigned int v6;
-  alignas(16) unsigned char xi_frame[0x448];  // address-taken locals at their original offsets
-  float &v7 = *reinterpret_cast<float *>(xi_frame + 0x8);
-  int &v8 = *reinterpret_cast<int *>(xi_frame + 0xC);
-  _BYTE (&v9)[4] = *reinterpret_cast<_BYTE (*)[4]>(xi_frame + 0x10);
-  int (&a1)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x14);
-  int (&a4)[3] = *reinterpret_cast<int (*)[3]>(xi_frame + 0x20);
-  float (&v12)[3] = *reinterpret_cast<float (*)[3]>(xi_frame + 0x2C);
-  _BYTE (&v13)[16] = *reinterpret_cast<_BYTE (*)[16]>(xi_frame + 0x38);
+  int *listAResourceHandle;
+  int i1;
+  uint32_t *p2;
+  int *p3;
+  unsigned int u1;
+  union __attribute__((aligned(16))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    unsigned char bytes[0x448];
+    struct __attribute__((packed)) { unsigned char pad_1[0x8]; float f1; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_2[0xC]; int i2; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; uint8_t u2[4]; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; int i3[3]; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x20]; int i4[3]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_6[0x2C]; float f2[3]; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_7[0x38]; uint8_t u3[16]; };   // at 0x38
+  } frame;
 
-  v2 = this->listAResourceHandle;
-  if ( v2 != nullptr )
-    v3 = *v2;
+  listAResourceHandle = this->listAResourceHandle;
+  if ( listAResourceHandle != nullptr )
+    i1 = *listAResourceHandle;
   else
-    v3 = 0;
-  v4 = (_DWORD *)orig::CMoAttachments_GetTarget((_DWORD *)(v3 + 48));
-  if ( v4 != nullptr )
+    i1 = 0;
+  p2 = (uint32_t *)orig::CMoAttachments_GetTarget((uint32_t *)(i1 + 48));
+  if ( p2 != nullptr )
   {
-    v7 = 1.0;
-    v5 = (int *)orig::ElemFog_ComputeWorldPos((int)self, v12);
-    a1[0] = *v5;
-    a1[1] = v5[1];
-    a1[2] = v5[2];
-    if ( orig::CXiActor_NameCalc(v4, a1, (int)v13, &v7, (int)v9) != 0 )
+    frame.f1 = 1.0;
+    p3 = (int *)orig::ElemFog_ComputeWorldPos((int)self, frame.f2);
+    frame.i3[0] = *p3;
+    frame.i3[1] = p3[1];
+    frame.i3[2] = p3[2];
+    if ( orig::CXiActor_NameCalc(p2, frame.i3, (int)frame.u3, &frame.f1, (int)frame.u2) != 0 )
     {
-      v8 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 2);
-      *(float *)a4 = (double)v8 * v7 * 0x1.3333340000000p-9;
-      v8 = *((_DWORD *)orig::CDx_GetRenderTargetTop(*(unsigned __int8 **)(g_pResourceMng + 3528)) + 3);
-      v6 = g_scratchValue;
-      *(float *)&a4[1] = (double)v8 * v7 * 0x1.3333340000000p-9;
+      frame.i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 2);
+      *(float *)frame.i4 = (double)frame.i2 * frame.f1 * 0x1.3333340000000p-9;
+      frame.i2 = *((uint32_t *)orig::CDx_GetRenderTargetTop(*(unsigned char **)(g_pResourceMng + 3528)) + 3);
+      u1 = g_scratchValue;
+      *(float *)&frame.i4[1] = (double)frame.i2 * frame.f1 * 0x1.3333340000000p-9;
       if ( (g_scratchValue & 0xFFFFFF) == 0x808080 )
-        v6 = (unsigned int)at<int *>(this, 0x194) | g_scratchValue & 0xFF000000;
+        u1 = (unsigned int)at<int *>(this, 0x194) | g_scratchValue & 0xFF000000;
       (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetRenderState(D3DRS_TEXTUREFACTOR, g_scratchValue);
-      orig::Font_DrawProjectedText3D((int)a1, (int)(self + 102), v6, (int)a4, 1036831949);
+      orig::Font_DrawProjectedText3D((int)frame.i3, (int)(self + 102), u1, (int)frame.i4, 1036831949);
     }
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10041F40
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API uint64_t __thiscall CMoDamValueProgElem_Construct(void * self_, int param_1)
+XI_API uint64_t __thiscall CMoDamValueProgElem_Construct(void * self_, int arg2)
 {
-  uint8_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint64_t uVar4;
+  uint8_t *p1;
+  int i1;
+  uint32_t u1;
+  uint64_t u2;
   
-  uVar4 = orig::CMoElem_Constructor(self_);
-  uVar3 = (uint32_t)((uint64_t)uVar4 >> 0x20);
-  puVar1 = (uint8_t *)((int)self_ + 0x198);
-  *(uint8_t ***)self_ = &PTR_CMoElem_GetRuntimeClass_variant8_1032ade8;
+  u2 = orig::CMoElem_Constructor(self_);
+  u1 = (uint32_t)((uint64_t)u2 >> 0x20);
+  p1 = (uint8_t *)((int)self_ + 0x198);
+  *(uint8_t ***)self_ = &ptr_to_CMoElem_GetRuntimeClass_variant8_1032ADE8;
   *(uint16_t *)((int)self_ + 0x176) = 0x1a8;
-  *puVar1 = 0;
-  if ((param_1 != 0) && (*(void **)(param_1 + 100) != (void *)0x0)) {
-    uVar4 = orig::CYyObject_IsKindOf(*(void **)(param_1 + 100),(int)XI_GAME(0x1032B7F8u));
-    uVar3 = (uint32_t)((uint64_t)uVar4 >> 0x20);
-    if ((char)uVar4 != '\0') {
-      iVar2 = *(int *)(param_1 + 100);
-      if (*(int *)(**(int **)(iVar2 + 0x80) + 0x20) == 0x7673696d) {
-        *puVar1 = 0x3a;
+  *p1 = 0;
+  if ((arg2 != 0) && (*(void **)(arg2 + 100) != (void *)0x0)) {
+    u2 = orig::CYyObject_IsKindOf(*(void **)(arg2 + 100),(int)XI_GAME(0x1032B7F8u));
+    u1 = (uint32_t)((uint64_t)u2 >> 0x20);
+    if ((char)u2 != '\0') {
+      i1 = *(int *)(arg2 + 100);
+      if (*(int *)(**(int **)(i1 + 0x80) + 0x20) == 0x7673696d) {
+        *p1 = 0x3a;
         *(uint8_t *)((int)self_ + 0x199) = 0;
-        uVar3 = *(uint32_t *)(iVar2 + 0xa4);
-        *(uint32_t *)((int)self_ + 0x194) = uVar3;
-        return ((uint64_t)(((uint64_t)(uint32_t)(uVar3) << 32) | (uint32_t)(self_)));
+        u1 = *(uint32_t *)(i1 + 0xa4);
+        *(uint32_t *)((int)self_ + 0x194) = u1;
+        return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(self_)));
       }
-      orig::_sprintf(puVar1,&aD_4,*(uint32_t *)(iVar2 + 0xa8));
-      uVar3 = *(uint32_t *)(iVar2 + 0xa4);
-      *(uint32_t *)((int)self_ + 0x194) = uVar3;
+      orig::_sprintf(p1,&aD_4,*(uint32_t *)(i1 + 0xa8));
+      u1 = *(uint32_t *)(i1 + 0xa4);
+      *(uint32_t *)((int)self_ + 0x194) = u1;
     }
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar3) << 32) | (uint32_t)(self_)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(self_)));
 }
 
 // FUNCTION: FFXIMAIN 0x10041FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int * CMoDamValueProgElem::ScalarDeletingDtor(char a2)
+int * CMoDamValueProgElem::ScalarDeletingDtor(char arg1)
 {
   orig::CMoElemFamily_SharedCleanup((int *)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (int *)this;
 }

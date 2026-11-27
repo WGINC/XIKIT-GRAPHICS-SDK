@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): ReleaseSlot; called from YkFu
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `FurnitureRelease_ReleaseSlot` calls `CXiActor::Destroy`, `thunk_sub_10028AA0`
+- `FurnitureRelease_ReleaseSlot` calls `CXiActor::Destroy`, `thunk_Mem_FreeBlockMergeNeighbours_as_v0`

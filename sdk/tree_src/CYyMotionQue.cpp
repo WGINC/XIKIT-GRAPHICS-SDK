@@ -5,49 +5,49 @@
 
 // FUNCTION: FFXIMAIN 0x1001A660
 // GATE: PASS -- 100 trials, 100 returned normally, 42 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyMotionQue::SetSlotMotion(void * self, int * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, int param_8, undefined4 param_9, undefined4 param_10)
+void __thiscall CYyMotionQue::SetSlotMotion(void * self, int * arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, int arg9, bits32 arg10, bits32 arg11)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::FUN_10084620(param_1);
-  if ((uVar1 != 0) && (uVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_1 + 0x200))))((void *)(param_1)), (char)uVar2 == '\0')) {
+  u1 = orig::game_10084620(arg2);
+  if ((u1 != 0) && (u2 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg2 + 0x200))))((void *)(arg2)), (char)u2 == '\0')) {
     return;
   }
-  if ((((-1 < param_8) && (param_8 < 7)) &&
-      (orig::CYyMotionQue_AppendSync((void *)((int)self + param_8 * 0x14),param_2,param_3,param_4,param_5,param_6,
-                    param_7,param_9,param_10), param_8 == 0)) && (param_1 != (int *)0x0)) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*param_1 + 0x1fc))))((void *)(param_1),0);
+  if ((((-1 < arg9) && (arg9 < 7)) &&
+      (orig::CYyMotionQue_AppendSync((void *)((int)self + arg9 * 0x14),arg3,arg4,arg5,arg6,arg7,
+                    arg8,arg10,arg11), arg9 == 0)) && (arg2 != (int *)0x0)) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*arg2 + 0x1fc))))((void *)(arg2),0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1001A850
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall CYyMotionQue_GetResource(void * self_, undefined4 * param_1)
+XI_API void __thiscall CYyMotionQue_GetResource(void * self_, bits32 * arg2)
 {
-  *param_1 = *(uint32_t *)((int)self_ + 0x34);
+  *arg2 = *(uint32_t *)((int)self_ + 0x34);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1001AB60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyMotionQue::StartMotion(void * self, int param_1, undefined4 param_2, undefined4 param_3, int param_4)
+void __thiscall CYyMotionQue::StartMotion(void * self, int arg2, bits32 arg3, bits32 arg4, int arg5)
 {
-  undefined4 uVar1;
-  void *this_00;
-  undefined4 uStack_4;
+  bits32 u1;
+  void *obj1;
+  bits32 u2;
   
-  uStack_4 = *(float *)((int)self + 0x10);
-  if ((param_4 == 0) && (4 < param_1)) {
-    uStack_4 = 1.0f;
+  u2 = *(float *)((int)self + 0x10);
+  if ((arg5 == 0) && (4 < arg2)) {
+    u2 = 1.0f;
   }
   if (*(int *)((int)self + 0x34) != 0) {
-    uVar1 = orig::ResourceHandle_IsResident_v1((undefined4 *)((int)self + 0x34));
-    if ((char)uVar1 != '\0') {
-      uVar1 = *(undefined4 *)((int)self + 0x24);
-      this_00 = (void *)orig::ResourceHandle_Deref_v1(*(undefined4 **)((int)self + 0x34));
-      orig::FUN_10019a50(this_00,param_1,uVar1,uStack_4,param_3,this_00);
+    u1 = orig::ResourceHandle_IsResident_v1((bits32 *)((int)self + 0x34));
+    if ((char)u1 != '\0') {
+      u1 = *(bits32 *)((int)self + 0x24);
+      obj1 = (void *)orig::ResourceHandle_Deref_v1(*(bits32 **)((int)self + 0x34));
+      orig::MotionQueue_ApplyPolicy_as_v0(obj1,arg2,u1,u2,arg4,obj1);
     }
   }
   return;
@@ -55,89 +55,89 @@ void __thiscall CYyMotionQue::StartMotion(void * self, int param_1, undefined4 p
 
 // FUNCTION: FFXIMAIN 0x1001ACB0
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-void __thiscall CYyMotionQue::AppendSync(void * self, int * param_1, undefined4 * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7, undefined4 param_8)
+void __thiscall CYyMotionQue::AppendSync(void * self, int * arg2, bits32 * arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8, bits32 arg9)
 {
-  int iVar1;
+  int i1;
   
-  orig::KzMotionQueList_AppendSync(self,param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
-  iVar1 = orig::FUN_1001b1a0(self);
-  if (iVar1 != 0) {
-    *(int *)(iVar1 + 0x24) = param_7;
+  orig::KzMotionQueList_AppendSync(self,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+  i1 = orig::game_1001B1A0(self);
+  if (i1 != 0) {
+    *(int *)(i1 + 0x24) = arg8;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1001B230
 // GATE: PASS -- 100 trials, 87 returned normally, 268 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
-undefined4 __thiscall CYyMotionQue::SampleInto(void * self, int param_1, undefined4 param_2)
+bits32 __thiscall CYyMotionQue::SampleInto(void * self, int arg2, bits32 arg3)
 {
-  int iVar1;
-  long double fVar2;
-  int *a4;
-  int *this_00;
+  int i1;
+  long double f1;
+  int *p1;
+  int *obj1;
   uint32_t xi_entry_eax = 0;
-  uint8_t bVar3;
-  uint8_t bVar4;
-  long double fVar5;
+  uint8_t u1;
+  uint8_t u2;
+  long double f2;
   
   *(uint32_t *)((int)self + 0xc) = 0;
-  a4 = (int *)0x0;
-  for (this_00 = *(int **)((int)self + 4); this_00 != (int *)0x0; this_00 = (int *)this_00[1]) {
-    iVar1 = this_00[1];
-    if (iVar1 == 0) {
-      xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x38))))((void *)(this_00),param_1,(int)self + 0x10,param_2,a4);
+  p1 = (int *)0x0;
+  for (obj1 = *(int **)((int)self + 4); obj1 != (int *)0x0; obj1 = (int *)obj1[1]) {
+    i1 = obj1[1];
+    if (i1 == 0) {
+      xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x38))))((void *)(obj1),arg2,(int)self + 0x10,arg3,p1);
     }
     else {
-      fVar5 = (long double)*(float *)(iVar1 + 0x10);
-      fVar2 = (long double)1.0f;
-      bVar3 = NAN(fVar5) || NAN(fVar2);
-      bVar4 = bVar3 || fVar5 == fVar2;
-      xi_entry_eax = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar1 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar3 || fVar5 < fVar2) << 8 | (uint16_t)bVar3 << 10 |
-                        (uint16_t)bVar4 << 0xe)));
-      if (bVar3 == bVar4) {
-        xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*this_00 + 0x38))))((void *)(this_00),param_1,(int)self + 0x10,param_2,a4);
+      f2 = *(float *)(i1 + 0x10);
+      f1 = 1.0f;
+      u1 = ((f2) != (f2)) || ((f1) != (f1));
+      u2 = u1 || f2 == f1;
+      xi_entry_eax = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i1 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u1 || f2 < f1) << 8 | (uint16_t)u1 << 10 |
+                        (uint16_t)u2 << 0xe)));
+      if (u1 == u2) {
+        xi_entry_eax = ((int (__thiscall *)(void *, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*obj1 + 0x38))))((void *)(obj1),arg2,(int)self + 0x10,arg3,p1);
       }
     }
-    if (param_1 != 0) {
+    if (arg2 != 0) {
       *(float *)((int)self + 0xc) =
-           (float)((long double)xi_castbits<float>(this_00[7]) * (long double)xi_castbits<float>(this_00[4]) +
-                  ((long double)1.0f - (long double)xi_castbits<float>(this_00[4])) * (long double)*(float *)((int)self + 0xc)
+           (float)(bit_cast<float>(obj1[7]) * bit_cast<float>(obj1[4]) +
+                  (1.0f - bit_cast<float>(obj1[4])) * *(float *)((int)self + 0xc)
                   );
     }
-    a4 = this_00;
+    p1 = obj1;
   }
   return xi_entry_eax;
 }
 
 // FUNCTION: FFXIMAIN 0x1001B2E0
 // GATE: PASS -- 100 trials, 96 returned normally, 157 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-void __thiscall CYyMotionQue::Update(void * self, int * param_1, int param_2)
+void __thiscall CYyMotionQue::Update(void * self, int * arg2, int arg3)
 {
-  int *piVar1;
-  int *this_00;
-  int *this_01;
-  int iVar2;
+  int *p1;
+  int *obj1;
+  int *obj2;
+  int i1;
   
-  this_01 = param_1;
-  this_00 = *(int **)((int)self + 4);
-  while (this_00 != (int *)0x0) {
-    piVar1 = (int *)this_00[1];
-    iVar2 = orig::QueTimeStep_Update(this_00);
-    if (iVar2 == 0) {
-      if ((piVar1 == (int *)0x0) && (param_2 < 3)) {
-        this_00 = piVar1;
-        if (this_01 != (int *)0x0) {
-          ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_01 + 0x1fc))))((void *)(this_01),1);
+  obj2 = arg2;
+  obj1 = *(int **)((int)self + 4);
+  while (obj1 != (int *)0x0) {
+    p1 = (int *)obj1[1];
+    i1 = orig::QueTimeStep_Update(obj1);
+    if (i1 == 0) {
+      if ((p1 == (int *)0x0) && (arg3 < 3)) {
+        obj1 = p1;
+        if (obj2 != (int *)0x0) {
+          ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj2 + 0x1fc))))((void *)(obj2),1);
         }
       }
       else {
-        orig::FUN_1001b0f0(self,this_00);
-        this_00 = piVar1;
+        orig::game_1001B0F0(self,obj1);
+        obj1 = p1;
       }
     }
     else {
-      ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x24))))((void *)(this_00),&param_1);
-      this_00 = piVar1;
+      ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x24))))((void *)(obj1),&arg2);
+      obj1 = p1;
     }
   }
   return;

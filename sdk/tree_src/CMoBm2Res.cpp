@@ -5,39 +5,41 @@
 
 // FUNCTION: FFXIMAIN 0x1001DBD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoBm2Res::ReleaseTexture(void * self)
+bits32 __thiscall CMoBm2Res::ReleaseTexture(void * self)
 {
-  void *this_00;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&auStack_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  void *obj1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u1[16]; };   // at 0x0
+  } frame;
   
-  orig::Util_Copy16Bytes_v1(auStack_10,(int)self + 0x31);
-  this_00 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)auStack_10,(int)self,0);
-  if (this_00 != (void *)0x0) {
-    if (*(int *)((int)this_00 + 4) != 0) {
-      *(int *)((int)this_00 + 4) = *(int *)((int)this_00 + 4) + -1;
+  orig::Util_Copy16Bytes_v1(frame.u1,(int)self + 0x31);
+  obj1 = (void *)orig::TexMgr_FindByName_v1(g_pTextureMng_as_v2,(int)frame.u1,(int)self,0);
+  if (obj1 != (void *)0x0) {
+    if (*(int *)((int)obj1 + 4) != 0) {
+      *(int *)((int)obj1 + 4) = *(int *)((int)obj1 + 4) + -1;
     }
-    if (*(int *)((int)this_00 + 4) == 0) {
-      this_00 = (void *)orig::TexObj_Release(this_00);
+    if (*(int *)((int)obj1 + 4) == 0) {
+      obj1 = (void *)orig::TexObj_Release(obj1);
     }
   }
-  return this_00;
+  return obj1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001DC20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoBm2Res::Slot4StoreInHandle(int a2)
+int CMoBm2Res::Slot4StoreInHandle(int arg1)
 {
-  *this->field_14 = a2;
-  return a2;
+  *this->field_14 = arg1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x10071A40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned int ** CMoBm2Res::ScalarDeletingDtor(char a2)
+unsigned int ** CMoBm2Res::ScalarDeletingDtor(char arg1)
 {
   orig::CMoResource_Destructor((unsigned int **)this);
-  if ( (a2 & 1) != 0 )
+  if ( (arg1 & 1) != 0 )
     orig::SharedDeleteHelper((int)this);
   return (unsigned int **)this;
 }

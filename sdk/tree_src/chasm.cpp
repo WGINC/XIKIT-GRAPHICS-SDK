@@ -4,59 +4,59 @@
 
 // FUNCTION: FFXIMAIN 0x10273920
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API void __cdecl chasm_10273920(uint8_t * param_1)
+XI_API void __cdecl chasm_10273920(uint8_t * arg1)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if ((*param_1 & 1) != 0) {
-    if (*(int *)(param_1 + 0x10) != 0) {
-      orig::sqFree_v1(*(int *)(param_1 + 0x10),s_C__dev_dancer_tools_mdlview_src__103b24f4,0x78);
-      param_1[0x10] = 0;
-      param_1[0x11] = 0;
-      param_1[0x12] = 0;
-      param_1[0x13] = 0;
-      param_1[4] = 0xff;
-      param_1[5] = 0xff;
-      param_1[6] = 0xff;
-      param_1[7] = 0xff;
-      param_1[8] = 0;
-      param_1[9] = 0;
-      param_1[10] = 0;
-      param_1[0xb] = 0;
-      param_1[0xc] = 0;
-      param_1[0xd] = 0;
-      param_1[0xe] = 0;
-      param_1[0xf] = 0;
+  if ((*arg1 & 1) != 0) {
+    if (*(int *)(arg1 + 0x10) != 0) {
+      orig::sqFree_v1(*(int *)(arg1 + 0x10),str_C__dev_dancer_tools_mdlview_src__103B24F4,0x78);
+      arg1[0x10] = 0;
+      arg1[0x11] = 0;
+      arg1[0x12] = 0;
+      arg1[0x13] = 0;
+      arg1[4] = 0xff;
+      arg1[5] = 0xff;
+      arg1[6] = 0xff;
+      arg1[7] = 0xff;
+      arg1[8] = 0;
+      arg1[9] = 0;
+      arg1[10] = 0;
+      arg1[0xb] = 0;
+      arg1[0xc] = 0;
+      arg1[0xd] = 0;
+      arg1[0xe] = 0;
+      arg1[0xf] = 0;
     }
-    if (*(int *)(param_1 + 0x20) != 0) {
-      iVar1 = 0;
-      if (0 < *(int *)(param_1 + 0x18)) {
-        iVar2 = 0;
+    if (*(int *)(arg1 + 0x20) != 0) {
+      i1 = 0;
+      if (0 < *(int *)(arg1 + 0x18)) {
+        i2 = 0;
         do {
-          orig::Chn_ReleaseIfSet(*(int *)(param_1 + 0x20) + 8 + iVar2);
-          orig::Chn_ReleaseIfSet(*(int *)(param_1 + 0x20) + 0x70 + iVar2);
-          iVar1 = iVar1 + 1;
-          iVar2 = iVar2 + 0xd8;
-        } while (iVar1 < *(int *)(param_1 + 0x18));
+          orig::Chn_ReleaseIfSet(*(int *)(arg1 + 0x20) + 8 + i2);
+          orig::Chn_ReleaseIfSet(*(int *)(arg1 + 0x20) + 0x70 + i2);
+          i1 = i1 + 1;
+          i2 = i2 + 0xd8;
+        } while (i1 < *(int *)(arg1 + 0x18));
       }
-      orig::sqFree_v1(*(int *)(param_1 + 0x20),s_C__dev_dancer_tools_mdlview_src__103b24f4,0x86);
-      param_1[0x20] = 0;
-      param_1[0x21] = 0;
-      param_1[0x22] = 0;
-      param_1[0x23] = 0;
-      param_1[0x14] = 0xff;
-      param_1[0x15] = 0xff;
-      param_1[0x16] = 0xff;
-      param_1[0x17] = 0xff;
-      param_1[0x18] = 0;
-      param_1[0x19] = 0;
-      param_1[0x1a] = 0;
-      param_1[0x1b] = 0;
-      param_1[0x1c] = 0;
-      param_1[0x1d] = 0;
-      param_1[0x1e] = 0;
-      param_1[0x1f] = 0;
+      orig::sqFree_v1(*(int *)(arg1 + 0x20),str_C__dev_dancer_tools_mdlview_src__103B24F4,0x86);
+      arg1[0x20] = 0;
+      arg1[0x21] = 0;
+      arg1[0x22] = 0;
+      arg1[0x23] = 0;
+      arg1[0x14] = 0xff;
+      arg1[0x15] = 0xff;
+      arg1[0x16] = 0xff;
+      arg1[0x17] = 0xff;
+      arg1[0x18] = 0;
+      arg1[0x19] = 0;
+      arg1[0x1a] = 0;
+      arg1[0x1b] = 0;
+      arg1[0x1c] = 0;
+      arg1[0x1d] = 0;
+      arg1[0x1e] = 0;
+      arg1[0x1f] = 0;
     }
   }
   return;
@@ -64,54 +64,54 @@ XI_API void __cdecl chasm_10273920(uint8_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x10273D60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Chasm_ApplyAtCurrentIndex(int param_1, undefined4 * param_2, undefined4 * param_3)
+XI_API bits32 __cdecl Chasm_ApplyAtCurrentIndex(int arg1, bits32 * arg2, bits32 * arg3)
 {
-  int iVar1;
-  uint32_t uVar2;
+  int i1;
+  uint32_t u1;
   
-  iVar1 = *(int *)(param_1 + 0x14);
-  if ((-1 < iVar1) && (iVar1 < *(int *)(param_1 + 0x18))) {
-    uVar2 = orig::SqVec_GetInterpolated(param_1,iVar1,param_2,param_3);
-    return uVar2;
+  i1 = *(int *)(arg1 + 0x14);
+  if ((-1 < i1) && (i1 < *(int *)(arg1 + 0x18))) {
+    u1 = orig::SqVec_GetInterpolated(arg1,i1,arg2,arg3);
+    return u1;
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x10273E80
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __cdecl Chasm_ToggleLayerState(int param_1, int param_2, int param_3)
+XI_API bits32 __cdecl Chasm_ToggleLayerState(int arg1, int arg2, int arg3)
 {
-  uint32_t *puVar1;
-  uint32_t uVar2;
+  uint32_t *p1;
+  uint32_t u1;
   
-  puVar1 = (uint32_t *)(*(int *)(param_1 + 0x10) + param_2 * 0xc);
-  uVar2 = *(uint32_t *)(*(int *)(param_1 + 0x10) + param_2 * 0xc);
-  if ((uVar2 & 2) != 0) {
-    if (param_3 == -1) {
-      if ((uVar2 & 4) != 0) {
-        orig::FUN_10273e80(param_1,param_2,0);
-        return *(uint32_t *)(param_1 + 4);
+  p1 = (uint32_t *)(*(int *)(arg1 + 0x10) + arg2 * 0xc);
+  u1 = *(uint32_t *)(*(int *)(arg1 + 0x10) + arg2 * 0xc);
+  if ((u1 & 2) != 0) {
+    if (arg3 == -1) {
+      if ((u1 & 4) != 0) {
+        orig::Chasm_ToggleLayerState_as_v0(arg1,arg2,0);
+        return *(uint32_t *)(arg1 + 4);
       }
-      orig::FUN_10273e80(param_1,param_2,1);
-      return *(uint32_t *)(param_1 + 4);
+      orig::Chasm_ToggleLayerState_as_v0(arg1,arg2,1);
+      return *(uint32_t *)(arg1 + 4);
     }
-    if (param_3 == 0) {
-      *(uint32_t *)(param_1 + 4) = 0xffffffff;
-      if ((*puVar1 & 4) != 0) {
-        orig::Mdl_SetChannelActive(puVar1[1],0,0);
-        orig::Mdl_SetChannelActive(puVar1[2],0,0);
-        *puVar1 = *puVar1 & 0xfffffffb;
+    if (arg3 == 0) {
+      *(uint32_t *)(arg1 + 4) = 0xffffffff;
+      if ((*p1 & 4) != 0) {
+        orig::Mdl_SetChannelActive(p1[1],0,0);
+        orig::Mdl_SetChannelActive(p1[2],0,0);
+        *p1 = *p1 & 0xfffffffb;
       }
     }
     else {
-      *(int *)(param_1 + 4) = param_2;
-      if ((*puVar1 & 4) == 0) {
-        orig::Mdl_SetChannelActive(puVar1[1],4,1);
-        orig::Mdl_SetChannelActive(puVar1[2],4,1);
-        *puVar1 = *puVar1 | 4;
-        return *(uint32_t *)(param_1 + 4);
+      *(int *)(arg1 + 4) = arg2;
+      if ((*p1 & 4) == 0) {
+        orig::Mdl_SetChannelActive(p1[1],4,1);
+        orig::Mdl_SetChannelActive(p1[2],4,1);
+        *p1 = *p1 | 4;
+        return *(uint32_t *)(arg1 + 4);
       }
     }
   }
-  return *(uint32_t *)(param_1 + 4);
+  return *(uint32_t *)(arg1 + 4);
 }

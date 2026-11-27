@@ -24,6 +24,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Scheduler_ResolveOwner` calls `CMoAttachments::GetTarget`, `CYyObject_IsKindOf`, `CMoAttachments::GetCaster`
 - `AfterimageTask_SetCaster` calls `CMoAttachments::GetCaster`, `CMoAttachments::SetCaster`
 - `AfterimageTask_SetTarget` calls `CMoAttachments::GetTarget`, `CMoAttachments::SetTarget`
-- `AfterimageTask_Execute` calls `sub_100731B0`, `CMoResource::FindByTypeAndId`, `Scheduler_Execute`
+- `AfterimageTask_Execute` calls `game_100731B0`, `CMoResource::FindByTypeAndId`, `Scheduler_Execute`
 - `AfterimageTask_Kill` calls `ResourceIter_FindOrStartTask`, `CMoResource::FindByTypeAndId`, `Scheduler_Kill`
 - `AfterimageTask_IsResourceMoving` calls `ResourceIter_FindOrStartTask`, `ResourceHandle_IsResident`, `CMoResource::FindByTypeAndId`, `Scheduler_IsMoving`

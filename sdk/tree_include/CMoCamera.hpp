@@ -7,7 +7,7 @@ class XI_API CMoCamera {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x1003C880
     void Slot8DoNothing();  // 0x1003C890
-    int SetPathData(_DWORD *a2);  // 0x1003CB30
+    int SetPathData(uint32_t *arg1);  // 0x1003CB30
     static void * __cdecl GetSharedInstance();  // 0x10071980
     void Slot9DoNothing();  // 0x100719F0
 

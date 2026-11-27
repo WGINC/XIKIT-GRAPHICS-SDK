@@ -4,149 +4,149 @@
 
 // FUNCTION: FFXIMAIN 0x100D7E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_AddOne(int param_1)
+XI_API int __cdecl NetCellFont_AddOne(int arg1)
 {
-  return param_1 + 1;
+  return arg1 + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x100D9A70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Game_HasInitCount(void * self_)
+XI_API bits32 __thiscall Game_HasInitCount(void * self_)
 {
-  undefined4 xi_entry_eax = 0;
+  bits32 xi_entry_eax = 0;
   
-  return CONCAT31(xi_strunc24(((uint32_t)xi_entry_eax >> 8)),*(char *)((int)self_ + 2) != '\0');
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 2) != '\0')));
 }
 
 // FUNCTION: FFXIMAIN 0x100D9B00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetEntryMod1066268C(void)
+XI_API bits32 __cdecl NetCellFont_GetEntryMod1066268C(void)
 {
-  int iVar1;
+  int i1;
   
-  if (DAT_1066268c == (void *)0x0) {
+  if (g_1066268C == (void *)0x0) {
     return 0;
   }
-  iVar1 = orig::TextInputFiles_GetEntryMod(DAT_1066268c,0);
-  return iVar1;
+  i1 = orig::TextInputFiles_GetEntryMod(g_1066268C,0);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DA6A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __thiscall Game_InitSceneState(void * self_)
 {
-  uint32_t uVar1;
-  undefined4 uVar2;
+  uint32_t u1;
+  bits32 u2;
   
-  uVar1 = orig::XI_NETWORK_100D9950(self_);
-  if ((char)uVar1 == '\x01') {
-    *(undefined4 *)((int)self_ + 8) = 0;
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x80) = 0;
-    *(undefined4 *)((int)self_ + 0x90) = 0x65;
-    *(undefined4 *)((int)self_ + 0x8c) = 0xffffffff;
-    *(undefined4 *)((int)self_ + 0x94) = 200;
-    *(undefined4 *)((int)self_ + 0x14) = 0;
-    uVar2 = orig::Game_GetField4();
-    *(undefined4 *)((int)self_ + 0x98) = uVar2;
-    uVar2 = orig::NetCellFont_ReturnZero();
-    *(undefined4 *)((int)self_ + 0x9c) = uVar2;
-    uVar2 = orig::NetCellFont_GetWord8Of104E0AF4();
-    *(int *)((int)self_ + 0xa4) = (int)(short)uVar2;
-    *(undefined4 *)((int)self_ + 0xa0) = 0;
-    *(undefined4 *)((int)self_ + 0xb4) = 0;
+  u1 = orig::XI_NETWORK_100D9950(self_);
+  if ((char)u1 == '\x01') {
+    *(bits32 *)((int)self_ + 8) = 0;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x80) = 0;
+    *(bits32 *)((int)self_ + 0x90) = 0x65;
+    *(bits32 *)((int)self_ + 0x8c) = 0xffffffff;
+    *(bits32 *)((int)self_ + 0x94) = 200;
+    *(bits32 *)((int)self_ + 0x14) = 0;
+    u2 = orig::Game_GetField4();
+    *(bits32 *)((int)self_ + 0x98) = u2;
+    u2 = orig::NetCellFont_ReturnZero();
+    *(bits32 *)((int)self_ + 0x9c) = u2;
+    u2 = orig::NetCellFont_GetWord8Of104E0AF4();
+    *(int *)((int)self_ + 0xa4) = (int)(short)u2;
+    *(bits32 *)((int)self_ + 0xa0) = 0;
+    *(bits32 *)((int)self_ + 0xb4) = 0;
     if (*(int *)((int)self_ + 0x98) == 3) {
-      *(undefined4 *)((int)self_ + 0x88) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 0;
     }
     else {
-      *(undefined4 *)((int)self_ + 0x88) = 3;
+      *(bits32 *)((int)self_ + 0x88) = 3;
     }
     *(uint8_t *)((int)self_ + 0x18) = 0;
-    *(undefined4 *)((int)self_ + 0xb8) = 0;
-    *(undefined4 *)((int)self_ + 0xa8) = 2;
+    *(bits32 *)((int)self_ + 0xb8) = 0;
+    *(bits32 *)((int)self_ + 0xa8) = 2;
     return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)*(int *)((int)self_ + 0x98) >> 8))) << 8) | (uint8_t)(1)));
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall GameMode_GetField98(void * self_)
+XI_API bits32 __thiscall GameMode_GetField98(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 0x98);
+  return *(bits32 *)((int)self_ + 0x98);
 }
 
 // FUNCTION: FFXIMAIN 0x100DB140
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall GameMode_PollPendingState(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = 100;
+  i1 = 100;
   if (*(int *)((int)self_ + 0x90) != 100) {
-    iVar1 = *(int *)((int)self_ + 0x8c);
-    if (-1 < iVar1) {
-      *(int *)((int)self_ + 0x14) = iVar1;
-      return iVar1;
+    i1 = *(int *)((int)self_ + 0x8c);
+    if (-1 < i1) {
+      *(int *)((int)self_ + 0x14) = i1;
+      return i1;
     }
-    iVar1 = 0x65;
+    i1 = 0x65;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall GameMode_RequestState(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall GameMode_RequestState(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
+  int i1;
   
-  if (*(int *)((int)self_ + 0x98) == 0) goto switchD_100db19b_caseD_c;
-  switch(xi_sw(param_1)) {
+  if (*(int *)((int)self_ + 0x98) == 0) goto L1;
+  switch(xi_sw(arg2)) {
   case 0:
-    *(undefined4 *)((int)self_ + 0x88) = 0;
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    *(bits32 *)((int)self_ + 0x88) = 0;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     return 1;
   case 1:
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x88) = 1;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x88) = 1;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     return 1;
   case 2:
-    iVar1 = *(int *)((int)self_ + 0x88);
-    if ((((iVar1 == 1) || (iVar1 == 0x13)) || (iVar1 == 3)) ||
-       (((iVar1 == 4 || (iVar1 == 0x14)) || ((iVar1 == 0x16 || ((iVar1 == 0x17 || (iVar1 == 5)))))))
+    i1 = *(int *)((int)self_ + 0x88);
+    if ((((i1 == 1) || (i1 == 0x13)) || (i1 == 3)) ||
+       (((i1 == 4 || (i1 == 0x14)) || ((i1 == 0x16 || ((i1 == 0x17 || (i1 == 5)))))))
        ) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x88) = 2;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 2;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 3:
     if ((*(int *)((int)self_ + 0x88) == 2) || (*(int *)((int)self_ + 0x88) == 1)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 3;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 3;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 4:
     if ((*(int *)((int)self_ + 0x88) == 1) || (*(int *)((int)self_ + 0x88) == 0x14)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 4;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 4;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 5:
     if ((*(int *)((int)self_ + 0x88) == 2) || (*(int *)((int)self_ + 0x88) == 1)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 5;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 5;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
@@ -154,212 +154,212 @@ XI_API undefined4 __thiscall GameMode_RequestState(void * self_, undefined4 para
     if (*(int *)((int)self_ + 0x10) != 0) {
       orig::NetCellFont_StoreQueriesInto104DF90C();
     }
-    iVar1 = *(int *)((int)self_ + 0x88);
-    if (((((iVar1 != 10) && (iVar1 != 3)) && (iVar1 != 0xb)) && ((iVar1 != 0xe && (iVar1 != 0xc))))
-       && (iVar1 != 0x15)) break;
-    *(undefined4 *)((int)self_ + 0x88) = 6;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    i1 = *(int *)((int)self_ + 0x88);
+    if (((((i1 != 10) && (i1 != 3)) && (i1 != 0xb)) && ((i1 != 0xe && (i1 != 0xc))))
+       && (i1 != 0x15)) break;
+    *(bits32 *)((int)self_ + 0x88) = 6;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     if (*(int *)((int)self_ + 0x98) != 3) {
-      *(undefined4 *)((int)self_ + 0xc) = 0xf;
+      *(bits32 *)((int)self_ + 0xc) = 0xf;
       return 1;
     }
-    goto LAB_100db555;
+    goto code_100DB555;
   case 7:
     if (*(int *)((int)self_ + 0x88) == 6) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x88) = 7;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 7;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 8:
     if (*(int *)((int)self_ + 0x88) == 6) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x88) = 8;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 8;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 9:
     if ((*(int *)((int)self_ + 0x88) != 7) && (*(int *)((int)self_ + 0x88) != 8)) break;
-    param_1 = 9;
-    *(undefined4 *)((int)self_ + 0x8c) = 9;
+    arg2 = 9;
+    *(bits32 *)((int)self_ + 0x8c) = 9;
   case 0xc:
   case 0x15:
   case 0xc9:
   case 0xca:
   case 0xcb:
-switchD_100db19b_caseD_c:
-    *(undefined4 *)((int)self_ + 0x88) = param_1;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
-LAB_100db555:
-    *(undefined4 *)((int)self_ + 0xc) = 0;
+L1:
+    *(bits32 *)((int)self_ + 0x88) = arg2;
+    *(bits32 *)((int)self_ + 0x90) = 100;
+code_100DB555:
+    *(bits32 *)((int)self_ + 0xc) = 0;
     return 1;
   case 10:
     if (*(int *)((int)self_ + 0x88) == 9) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x88) = 10;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 10;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 0xb:
   case 0xe:
     if (*(int *)((int)self_ + 0x88) != 9) break;
-    goto switchD_100db19b_caseD_c;
+    goto L1;
   case 0x11:
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x84) = param_2;
-    *(undefined4 *)((int)self_ + 0x88) = 0x11;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x84) = arg3;
+    *(bits32 *)((int)self_ + 0x88) = 0x11;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     return 1;
   case 0x12:
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x84) = param_2;
-    *(undefined4 *)((int)self_ + 0x88) = 0x12;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x84) = arg3;
+    *(bits32 *)((int)self_ + 0x88) = 0x12;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     return 1;
   case 0x13:
-    *(undefined4 *)((int)self_ + 0xc) = 0;
-    *(undefined4 *)((int)self_ + 0x88) = 0x13;
-    *(undefined4 *)((int)self_ + 0x90) = 100;
+    *(bits32 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0x88) = 0x13;
+    *(bits32 *)((int)self_ + 0x90) = 100;
     return 1;
   case 0x14:
-    iVar1 = *(int *)((int)self_ + 0x88);
-    if (((iVar1 == 2) || (iVar1 == 1)) || (iVar1 == 0x14)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 0x14;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+    i1 = *(int *)((int)self_ + 0x88);
+    if (((i1 == 2) || (i1 == 1)) || (i1 == 0x14)) {
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 0x14;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 0x16:
-    iVar1 = *(int *)((int)self_ + 0x88);
-    if (((iVar1 == 2) || (iVar1 == 1)) || (iVar1 == 0x16)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 0x16;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+    i1 = *(int *)((int)self_ + 0x88);
+    if (((i1 == 2) || (i1 == 1)) || (i1 == 0x16)) {
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 0x16;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
     break;
   case 0x17:
-    iVar1 = *(int *)((int)self_ + 0x88);
-    if (((iVar1 == 2) || (iVar1 == 1)) || (iVar1 == 0x17)) {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
-      *(undefined4 *)((int)self_ + 0x80) = param_2;
-      *(undefined4 *)((int)self_ + 0x88) = 0x17;
-      *(undefined4 *)((int)self_ + 0x90) = 100;
+    i1 = *(int *)((int)self_ + 0x88);
+    if (((i1 == 2) || (i1 == 1)) || (i1 == 0x17)) {
+      *(bits32 *)((int)self_ + 0xc) = 0;
+      *(bits32 *)((int)self_ + 0x80) = arg3;
+      *(bits32 *)((int)self_ + 0x88) = 0x17;
+      *(bits32 *)((int)self_ + 0x90) = 100;
       return 1;
     }
   }
-  *(undefined4 *)((int)self_ + 0x94) = 0xc9;
-  orig::FUN_100db170(self_,0xc9,0);
+  *(bits32 *)((int)self_ + 0x94) = 0xc9;
+  orig::GameMode_RequestState_as_v0(self_,0xc9,0);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall NetCellFont_GetRecordWordFwd(undefined4 param_1)
+XI_API bits32 __stdcall NetCellFont_GetRecordWordFwd(bits32 arg1)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::NetCellFont_GetRecordWord(param_1);
-  return uVar1;
+  u1 = orig::NetCellFont_GetRecordWord(arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall NetCellFont_GetRecordDwordFwd(undefined4 param_1)
+XI_API bits32 __stdcall NetCellFont_GetRecordDwordFwd(bits32 arg1)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::NetCellFont_GetRecordDword(param_1);
-  return uVar1;
+  u1 = orig::NetCellFont_GetRecordDword(arg1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB7B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_LookupNameIfKind3(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall NetCellFont_LookupNameIfKind3(void * self_, bits32 arg2)
 {
-  char *pcVar1;
+  char *p1;
   
   if (*(int *)((int)self_ + 0x98) == 3) {
-    pcVar1 = orig::Name_LookupByKey(param_1);
-    return pcVar1;
+    p1 = orig::Name_LookupByKey(arg2);
+    return p1;
   }
   return (char *)0;
 }
 
 // FUNCTION: FFXIMAIN 0x100DB930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetWord40D7C(void)
+XI_API bits32 __cdecl NetCellFont_GetWord40D7C(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_104dfd98 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(DAT_104dfd98 + 0x40d7c))));
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_104DFD98 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(g_104DFD98 + 0x40d7c))));
 }
 
 // FUNCTION: FFXIMAIN 0x100DBAA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetField0xA4(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetField0xA4(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 0xa4);
+  return *(bits32 *)((int)self_ + 0xa4);
 }
 
 // FUNCTION: FFXIMAIN 0x100DBB50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall GameMode_OpenTacticsUrl(void * self_, int param_1)
+XI_API bits32 __thiscall GameMode_OpenTacticsUrl(void * self_, int arg2)
 {
-  int iVar1;
-  undefined4 uVar2;
+  int i1;
+  bits32 u1;
   char xi_frame[436] __attribute__((aligned(4)));
-  undefined4  &uVar3 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  undefined4  &uVar4 = *reinterpret_cast<undefined4  *>(xi_frame + 4);
-  undefined4  &uVar5 = *reinterpret_cast<undefined4  *>(xi_frame + 8);
-  undefined4  &uVar6 = *reinterpret_cast<undefined4  *>(xi_frame + 12);
-  undefined4  &uVar7 = *reinterpret_cast<undefined4  *>(xi_frame + 16);
-  undefined4  &uVar8 = *reinterpret_cast<undefined4  *>(xi_frame + 20);
-  undefined4  &uVar9 = *reinterpret_cast<undefined4  *>(xi_frame + 24);
-  undefined4  &uVar10 = *reinterpret_cast<undefined4  *>(xi_frame + 28);
-  undefined4  &uVar11 = *reinterpret_cast<undefined4  *>(xi_frame + 32);
-  undefined4  &uVar12 = *reinterpret_cast<undefined4  *>(xi_frame + 36);
-  undefined4  &uVar13 = *reinterpret_cast<undefined4  *>(xi_frame + 40);
-  undefined4  &uVar14 = *reinterpret_cast<undefined4  *>(xi_frame + 44);
-  undefined4  &uVar15 = *reinterpret_cast<undefined4  *>(xi_frame + 48);
-  undefined4  &uVar16 = *reinterpret_cast<undefined4  *>(xi_frame + 52);
-  undefined4  &uVar17 = *reinterpret_cast<undefined4  *>(xi_frame + 56);
-  uint8_t  (&local_174)[372] = *reinterpret_cast<uint8_t  (*)[372]>(xi_frame + 64);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 4);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 8);
+  bits32  &u5 = *reinterpret_cast<bits32  *>(xi_frame + 12);
+  bits32  &u6 = *reinterpret_cast<bits32  *>(xi_frame + 16);
+  bits32  &u7 = *reinterpret_cast<bits32  *>(xi_frame + 20);
+  bits32  &u8 = *reinterpret_cast<bits32  *>(xi_frame + 24);
+  bits32  &u9 = *reinterpret_cast<bits32  *>(xi_frame + 28);
+  bits32  &u10 = *reinterpret_cast<bits32  *>(xi_frame + 32);
+  bits32  &u11 = *reinterpret_cast<bits32  *>(xi_frame + 36);
+  bits32  &u12 = *reinterpret_cast<bits32  *>(xi_frame + 40);
+  bits32  &u13 = *reinterpret_cast<bits32  *>(xi_frame + 44);
+  bits32  &u14 = *reinterpret_cast<bits32  *>(xi_frame + 48);
+  bits32  &u15 = *reinterpret_cast<bits32  *>(xi_frame + 52);
+  bits32  &u16 = *reinterpret_cast<bits32  *>(xi_frame + 56);
+  uint8_t  (&url)[372] = *reinterpret_cast<uint8_t  (*)[372]>(xi_frame + 64);
   
-  if (param_1 == 0) {
-    orig::_sprintf_v1(local_174,s_http___wh000_pol_com_polapps_s_f_1036024c);
-    orig::setPolUrl(local_174,0);
+  if (arg2 == 0) {
+    orig::_sprintf_v1(url,str_http___wh000_pol_com_polapps_s_f_1036024C);
+    orig::setPolUrl(url,0);
   }
   else {
-    iVar1 = orig::GameMode_PollPendingState_v1(self_);
-    if (iVar1 != 100) {
-      uVar17 = *(undefined4 *)(param_1 + 0x48);
-      uVar16 = *(undefined4 *)(param_1 + 0x44);
-      uVar15 = *(undefined4 *)(param_1 + 0x40);
-      uVar14 = *(undefined4 *)(param_1 + 0x3c);
-      uVar13 = *(undefined4 *)(param_1 + 0x38);
-      uVar12 = *(undefined4 *)(param_1 + 0x34);
-      uVar11 = *(undefined4 *)(param_1 + 0x30);
-      uVar10 = *(undefined4 *)(param_1 + 0x2c);
-      uVar9 = *(undefined4 *)(param_1 + 0x28);
-      uVar8 = *(undefined4 *)(param_1 + 0x24);
-      uVar7 = *(undefined4 *)(param_1 + 0x20);
-      uVar6 = *(undefined4 *)(param_1 + 0x1c);
-      uVar5 = *(undefined4 *)(param_1 + 0x4c);
-      uVar4 = *(undefined4 *)(param_1 + 0x18);
-      uVar3 = *(undefined4 *)(param_1 + 0x14);
-      uVar2 = orig::NetCellFont_LookupNameIfKind3(self_,*(undefined4 *)(param_1 + 0x10));
-      orig::_sprintf_v1(local_174,s_http___wh000_pol_com_polapps_s_f_10360280,param_1,uVar2,uVar3,uVar4,
-                   uVar5,uVar6,uVar7,uVar8,uVar9,uVar10,uVar11,uVar12,uVar13,uVar14,uVar15,uVar16,
-                   uVar17);
-      orig::setPolUrl(local_174,1);
+    i1 = orig::GameMode_PollPendingState_v1(self_);
+    if (i1 != 100) {
+      u16 = *(bits32 *)(arg2 + 0x48);
+      u15 = *(bits32 *)(arg2 + 0x44);
+      u14 = *(bits32 *)(arg2 + 0x40);
+      u13 = *(bits32 *)(arg2 + 0x3c);
+      u12 = *(bits32 *)(arg2 + 0x38);
+      u11 = *(bits32 *)(arg2 + 0x34);
+      u10 = *(bits32 *)(arg2 + 0x30);
+      u9 = *(bits32 *)(arg2 + 0x2c);
+      u8 = *(bits32 *)(arg2 + 0x28);
+      u7 = *(bits32 *)(arg2 + 0x24);
+      u6 = *(bits32 *)(arg2 + 0x20);
+      u5 = *(bits32 *)(arg2 + 0x1c);
+      u4 = *(bits32 *)(arg2 + 0x4c);
+      u3 = *(bits32 *)(arg2 + 0x18);
+      u2 = *(bits32 *)(arg2 + 0x14);
+      u1 = orig::NetCellFont_LookupNameIfKind3(self_,*(bits32 *)(arg2 + 0x10));
+      orig::_sprintf_v1(url,str_http___wh000_pol_com_polapps_s_f_10360280,arg2,u1,u2,u3,
+                   u4,u5,u6,u7,u8,u9,u10,u11,u12,u13,u14,u15,
+                   u16);
+      orig::setPolUrl(url,1);
       return 0;
     }
   }
@@ -368,9 +368,9 @@ XI_API undefined4 __thiscall GameMode_OpenTacticsUrl(void * self_, int param_1)
 
 // FUNCTION: FFXIMAIN 0x100DBCA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Game_IsFlag10492DB4(void)
+XI_API bits32 __cdecl Game_IsFlag10492DB4(void)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_10492db4 >> 8))) << 8) | (uint8_t)(DAT_10492db4 != 0)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_10492DB4 >> 8))) << 8) | (uint8_t)(g_10492DB4 != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x100DBDE0
@@ -384,119 +384,119 @@ XI_API uint8_t __cdecl NetCellFont_ReturnTrue100DBDE0(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API DWORD __stdcall Time_GetMilliseconds(void)
 {
-  DWORD DVar1;
+  DWORD u1;
   
                     /* WARNING: Could not recover jumptable at 0x100dbe00. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  DVar1 = timeGetTime();
-  return DVar1;
+  u1 = timeGetTime();
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DBE30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetTimeNow(undefined4 * param_1, undefined4 * param_2)
+XI_API bits32 __cdecl NetCellFont_GetTimeNow(bits32 * arg1, bits32 * arg2)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::FUN_10314ef1((undefined4 *)0x0);
-  *param_1 = uVar1;
-  *param_2 = 0;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = orig::game_10314EF1((bits32 *)0x0);
+  *arg1 = u1;
+  *arg2 = 0;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100DBE50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_InitTimer(void)
+XI_API bits32 __cdecl NetCellFont_InitTimer(void)
 {
-  DWORD DVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  DWORD u1;
+  bits32 u2;
+  int i1;
+  bits32 *p1;
   
-  DAT_10492e10_as_v0 =(DAT_10492e10_as_v0_t)(&DAT_10492db8);
-  puVar4 = &DAT_10492db8;
-  for (iVar3 = 0x16; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar4 = 0;
-    puVar4 = puVar4 + 1;
+  g_10492E10_as_v0 =(g_10492E10_as_v0_t)(&g_10492DB8);
+  p1 = &g_10492DB8;
+  for (i1 = 0x16; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   orig::NetCellFont_ReturnTrue100DBDE0();
-  orig::NetCellFont_GetTimeNow(DAT_10492e10_as_v0 + 3,DAT_10492e10_as_v0 + 4);
-  DVar1 = orig::Time_GetMilliseconds();
-  *DAT_10492e10_as_v0 = DVar1;
-  DAT_10492e10_as_v0[0x15] = 0;
-  uVar2 = orig::NetCellFont_Reset();
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  orig::NetCellFont_GetTimeNow(g_10492E10_as_v0 + 3,g_10492E10_as_v0 + 4);
+  u1 = orig::Time_GetMilliseconds();
+  *g_10492E10_as_v0 = u1;
+  g_10492E10_as_v0[0x15] = 0;
+  u2 = orig::NetCellFont_Reset();
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100DBEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_Sync(void)
+XI_API bits32 __cdecl NetCellFont_Sync(void)
 {
-  int iVar1;
-  undefined4 uVar2;
+  int i1;
+  bits32 u1;
   
   orig::NetCellFont_AdvanceClock();
-  iVar1 = orig::NetCellFont_DiffWrapped(1000,*(uint32_t *)(DAT_10492e10 + 4),*(uint32_t *)(DAT_10492e10 + 0x10));
-  *(int *)(DAT_10492e10 + 8) = iVar1;
-  *(undefined4 *)(DAT_10492e10 + 4) = *(undefined4 *)(DAT_10492e10 + 0x10);
-  *(undefined4 *)(DAT_10492e10 + 0x54) = 1;
-  uVar2 = orig::NetCellFont_Update();
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  i1 = orig::NetCellFont_DiffWrapped(1000,*(uint32_t *)(g_10492E10 + 4),*(uint32_t *)(g_10492E10 + 0x10));
+  *(int *)(g_10492E10 + 8) = i1;
+  *(bits32 *)(g_10492E10 + 4) = *(bits32 *)(g_10492E10 + 0x10);
+  *(bits32 *)(g_10492E10 + 0x54) = 1;
+  u1 = orig::NetCellFont_Update();
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100DBF00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_DiffWrapped(int param_1, uint32_t param_2, uint32_t param_3)
+XI_API int __cdecl NetCellFont_DiffWrapped(int arg1, uint32_t arg2, uint32_t arg3)
 {
-  if (param_3 < param_2) {
-    return (param_1 - param_2) + param_3;
+  if (arg3 < arg2) {
+    return (arg1 - arg2) + arg3;
   }
-  return param_3 - param_2;
+  return arg3 - arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x100DBF20
 // GATE: PASS -- 100 trials, 69 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 69
 XI_API void __cdecl NetCellFont_AdvanceClock(void)
 {
-  uint32_t uVar1;
-  uint32_t *puVar2;
-  DWORD DVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
+  uint32_t u1;
+  uint32_t *p1;
+  DWORD u2;
+  uint32_t u3;
+  uint32_t u4;
   
-  DVar3 = orig::Time_GetMilliseconds();
-  puVar2 = DAT_10492e10_as_v1;
-  uVar4 = orig::NetCellFont_DiffWrapped(-1,*DAT_10492e10_as_v1,DVar3);
-  *puVar2 = DVar3;
-  if (-1 < (int)uVar4) {
-    uVar1 = DAT_10492e10_as_v1[5];
-    if ((uVar1 != 0) && (0x14 < (int)uVar4)) {
-      uVar5 = uVar1;
-      if ((int)uVar1 < 0) {
-        if ((int)uVar1 < -0x14) {
-          uVar5 = 0xffffffec;
+  u2 = orig::Time_GetMilliseconds();
+  p1 = g_10492E10_as_v1;
+  u3 = orig::NetCellFont_DiffWrapped(-1,*g_10492E10_as_v1,u2);
+  *p1 = u2;
+  if (-1 < (int)u3) {
+    u1 = g_10492E10_as_v1[5];
+    if ((u1 != 0) && (0x14 < (int)u3)) {
+      u4 = u1;
+      if ((int)u1 < 0) {
+        if ((int)u1 < -0x14) {
+          u4 = 0xffffffec;
         }
-        if ((int)uVar5 < (int)-uVar4) {
-          uVar5 = -uVar4;
+        if ((int)u4 < (int)-u3) {
+          u4 = -u3;
         }
       }
       else {
-        if (0x14 < (int)uVar1) {
-          uVar5 = 0x14;
+        if (0x14 < (int)u1) {
+          u4 = 0x14;
         }
-        if ((int)uVar4 < (int)uVar5) {
-          uVar5 = uVar4;
+        if ((int)u3 < (int)u4) {
+          u4 = u3;
         }
       }
-      uVar4 = uVar4 + uVar5;
-      DAT_10492e10_as_v1[5] = uVar1 - uVar5;
+      u3 = u3 + u4;
+      g_10492E10_as_v1[5] = u1 - u4;
     }
-    DAT_10492e10_as_v1[4] = DAT_10492e10_as_v1[4] + uVar4;
-    uVar4 = DAT_10492e10_as_v1[4];
-    while (999 < uVar4) {
-      DAT_10492e10_as_v1[3] = DAT_10492e10_as_v1[3] + 1;
-      DAT_10492e10_as_v1[4] = DAT_10492e10_as_v1[4] - 1000;
-      uVar4 = DAT_10492e10_as_v1[4];
+    g_10492E10_as_v1[4] = g_10492E10_as_v1[4] + u3;
+    u3 = g_10492E10_as_v1[4];
+    while (999 < u3) {
+      g_10492E10_as_v1[3] = g_10492E10_as_v1[3] + 1;
+      g_10492E10_as_v1[4] = g_10492E10_as_v1[4] - 1000;
+      u3 = g_10492E10_as_v1[4];
     }
   }
   return;
@@ -506,127 +506,129 @@ XI_API void __cdecl NetCellFont_AdvanceClock(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl NetCellFont_GetTotalMilliseconds(void)
 {
-  return *(int *)(DAT_10492e10 + 0x10) + *(int *)(DAT_10492e10 + 0xc) * 1000;
+  return *(int *)(g_10492E10 + 0x10) + *(int *)(g_10492E10 + 0xc) * 1000;
 }
 
 // FUNCTION: FFXIMAIN 0x100DC080
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetSeconds(void)
+XI_API bits32 __cdecl NetCellFont_GetSeconds(void)
 {
-  return *(undefined4 *)(DAT_10492e10 + 0xc);
+  return *(bits32 *)(g_10492E10 + 0xc);
 }
 
 // FUNCTION: FFXIMAIN 0x100DC090
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetMilliseconds(void)
+XI_API bits32 __cdecl NetCellFont_GetMilliseconds(void)
 {
-  return *(undefined4 *)(DAT_10492e10 + 0x10);
+  return *(bits32 *)(g_10492E10 + 0x10);
 }
 
 // FUNCTION: FFXIMAIN 0x100DC120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AdvanceAndGetMs(void)
+XI_API bits32 __cdecl NetCellFont_AdvanceAndGetMs(void)
 {
-  int iVar1;
+  int i1;
   
   orig::NetCellFont_AdvanceClock();
-  iVar1 = orig::NetCellFont_GetTotalMilliseconds();
-  return iVar1;
+  i1 = orig::NetCellFont_GetTotalMilliseconds();
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DC130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AdvanceAndGetSeconds(void)
+XI_API bits32 __cdecl NetCellFont_AdvanceAndGetSeconds(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
   orig::NetCellFont_AdvanceClock();
-  uVar1 = orig::NetCellFont_GetSeconds();
-  return uVar1;
+  u1 = orig::NetCellFont_GetSeconds();
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DC1F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_Reset(void)
+XI_API bits32 __cdecl NetCellFont_Reset(void)
 {
-  DWORD DVar1;
+  DWORD u1;
   
-  *(undefined4 *)(DAT_10492e10 + 0x4c) = 0;
-  DVar1 = orig::Time_GetMilliseconds();
-  *(DWORD *)(DAT_10492e10 + 0x50) = DVar1;
-  return DVar1;
+  *(bits32 *)(g_10492E10 + 0x4c) = 0;
+  u1 = orig::Time_GetMilliseconds();
+  *(DWORD *)(g_10492E10 + 0x50) = u1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DC210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_Update(void)
+XI_API bits32 __cdecl NetCellFont_Update(void)
 {
-  DWORD DVar1;
+  DWORD u1;
   
-  DVar1 = orig::Time_GetMilliseconds();
-  if (*(uint32_t *)(DAT_10492e10 + 0x50) < DVar1) {
-    *(DWORD *)(DAT_10492e10 + 0x50) = DVar1;
-    return DVar1;
+  u1 = orig::Time_GetMilliseconds();
+  if (*(uint32_t *)(g_10492E10 + 0x50) < u1) {
+    *(DWORD *)(g_10492E10 + 0x50) = u1;
+    return u1;
   }
-  if (0xdfffffff < *(uint32_t *)(DAT_10492e10 + 0x50) - DVar1) {
-    *(int *)(DAT_10492e10 + 0x4c) = *(int *)(DAT_10492e10 + 0x4c) + 1;
-    *(DWORD *)(DAT_10492e10 + 0x50) = DVar1;
+  if (0xdfffffff < *(uint32_t *)(g_10492E10 + 0x50) - u1) {
+    *(int *)(g_10492E10 + 0x4c) = *(int *)(g_10492E10 + 0x4c) + 1;
+    *(DWORD *)(g_10492E10 + 0x50) = u1;
   }
-  return DVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100DC2C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsInitialized(void)
+XI_API bits32 __cdecl NetCellFont_IsInitialized(void)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_104ae8ac >> 8))) << 8) | (uint8_t)(DAT_104ae8ac != 0)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_104AE8AC >> 8))) << 8) | (uint8_t)(g_104AE8AC != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E08D0
 // GATE: PASS -- 100 trials, 2 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz INCONCLUSIVE 0, town PASS 2, town2 PASS 2, combat PASS 2, zonetoinn PASS 2
-XI_API int __cdecl Entry_FindByNormalizedName(char * param_1)
+XI_API int __cdecl Entry_FindByNormalizedName(char * arg1)
 {
-  short *psVar1;
-  uint8_t bVar2;
-  uint8_t *pbVar3;
-  int iVar4;
-  int iVar5;
-  uint8_t *pbVar6;
-  uint8_t bVar7;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&local_20)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
-  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 16);
+  short *p1;
+  uint8_t u1;
+  uint8_t *p2;
+  int i1;
+  int i2;
+  uint8_t *p3;
+  uint8_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u3[16]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; uint8_t u4[16]; };   // at 0x10
+  } frame;
   
-  if ((*(short *)(DAT_104dfd98 + 0x1a6a0) != -1) &&
-     (iVar5 = (int)*(short *)(DAT_104dfd98 + 0x1a6a0),
-     *(short *)(DAT_104dfd98 + 0x1a6a8 + iVar5 * 0x1c) != -1)) {
-    while (iVar5 != -1) {
-      psVar1 = (short *)(DAT_104dfd98 + 0x1a6a4 + iVar5 * 0x1c);
-      orig::Name_Normalize((int)local_10,param_1);
-      orig::Name_Normalize((int)local_20,(char *)(psVar1 + 6));
-      pbVar6 = local_20;
-      pbVar3 = local_10;
+  if ((*(short *)(g_104DFD98 + 0x1a6a0) != -1) &&
+     (i2 = (int)*(short *)(g_104DFD98 + 0x1a6a0),
+     *(short *)(g_104DFD98 + 0x1a6a8 + i2 * 0x1c) != -1)) {
+    while (i2 != -1) {
+      p1 = (short *)(g_104DFD98 + 0x1a6a4 + i2 * 0x1c);
+      orig::Name_Normalize((int)frame.u4,arg1);
+      orig::Name_Normalize((int)frame.u3,(char *)(p1 + 6));
+      p3 = frame.u3;
+      p2 = frame.u4;
       do {
-        bVar2 = *pbVar3;
-        bVar7 = bVar2 < *pbVar6;
-        if (bVar2 != *pbVar6) {
-LAB_100e096e:
-          iVar4 = (1 - (uint32_t)bVar7) - (uint32_t)(bVar7 != 0);
-          goto LAB_100e0973;
+        u1 = *p2;
+        u2 = u1 < *p3;
+        if (u1 != *p3) {
+code_100E096E:
+          i1 = (1 - (uint32_t)u2) - (uint32_t)(u2 != 0);
+          goto code_100E0973;
         }
-        if (bVar2 == 0) break;
-        bVar2 = pbVar3[1];
-        bVar7 = bVar2 < pbVar6[1];
-        if (bVar2 != pbVar6[1]) goto LAB_100e096e;
-        pbVar3 = pbVar3 + 2;
-        pbVar6 = pbVar6 + 2;
-      } while (bVar2 != 0);
-      iVar4 = 0;
-LAB_100e0973:
-      if (iVar4 == 0) {
-        return iVar5;
+        if (u1 == 0) break;
+        u1 = p2[1];
+        u2 = u1 < p3[1];
+        if (u1 != p3[1]) goto code_100E096E;
+        p2 = p2 + 2;
+        p3 = p3 + 2;
+      } while (u1 != 0);
+      i1 = 0;
+code_100E0973:
+      if (i1 == 0) {
+        return i2;
       }
-      iVar5 = (int)*psVar1;
+      i2 = (int)*p1;
     }
   }
   return -1;
@@ -634,50 +636,50 @@ LAB_100e0973:
 
 // FUNCTION: FFXIMAIN 0x100E09A0
 // GATE: PASS -- 100 trials, 50 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 50
-XI_API void __cdecl Name_Normalize(int param_1, char * param_2)
+XI_API void __cdecl Name_Normalize(int arg1, char * arg2)
 {
-  uint32_t uVar1;
-  int iVar2;
-  int iVar3;
-  uint64_t uVar4;
+  uint32_t u1;
+  int i1;
+  int i2;
+  uint64_t u2;
   
-  iVar3 = 0;
-  iVar2 = param_1 - (int)param_2;
+  i2 = 0;
+  i1 = arg1 - (int)arg2;
   while( true ) {
-    if (DAT_103d023c < 2) {
-      uVar1 = *(uint16_t *)(PTR_DAT_103d0030 + *param_2 * 2) & 0x103;
+    if (g_103D023C < 2) {
+      u1 = *(uint16_t *)(g_103D0030 + *arg2 * 2) & 0x103;
     }
     else {
-      uVar4 = orig::FUN_10315140((int)*param_2,0x103);
-      uVar1 = (uint32_t)uVar4;
+      u2 = orig::game_10315140((int)*arg2,0x103);
+      u1 = (uint32_t)u2;
     }
-    if (uVar1 == 0) break;
-    iVar3 = iVar3 + 1;
-    param_2[iVar2] = *param_2;
-    param_2 = param_2 + 1;
-    if (0xf < iVar3) {
+    if (u1 == 0) break;
+    i2 = i2 + 1;
+    arg2[i1] = *arg2;
+    arg2 = arg2 + 1;
+    if (0xf < i2) {
       return;
     }
   }
-  *(uint8_t *)(iVar3 + param_1) = 0;
+  *(uint8_t *)(i2 + arg1) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100E0A50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_FindEntryByName(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_FindEntryByName(bits32 arg1)
 {
-  int iVar1;
+  int i1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 2;
   }
-  if (*(char *)(DAT_104dfd98 + 0x1a698) != '\x01') {
+  if (*(char *)(g_104DFD98 + 0x1a698) != '\x01') {
     orig::XI_PACKET_100E0AA0();
     return 2;
   }
-  iVar1 = orig::Entry_FindByNormalizedName(param_1);
-  if (iVar1 == -1) {
+  i1 = orig::Entry_FindByNormalizedName(arg1);
+  if (i1 == -1) {
     return 0;
   }
   orig::NetCellFont_NoOp100E0B10();
@@ -693,531 +695,531 @@ XI_API void __cdecl NetCellFont_NoOp100E0B10(void)
 
 // FUNCTION: FFXIMAIN 0x100E0D50
 // GATE: PASS -- 100 trials, 46 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 46
-XI_API undefined4 __cdecl NetCellFont_ApplyNoticeRecord(int param_1)
+XI_API bits32 __cdecl NetCellFont_ApplyNoticeRecord(int arg1)
 {
-  uint16_t *puVar1;
-  code *pcVar2;
-  uint8_t bVar3;
-  char cVar4;
+  uint16_t *p1;
+  untyped_fn *p2;
+  uint8_t u1;
+  char c1;
   short *xi_entry_eax = 0;
-  uint32_t uVar5;
-  uint32_t *puVar6;
-  undefined4 uVar7;
-  uint16_t uVar8;
-  short sVar9;
-  void *pvVar10;
-  int *piVar11;
-  uint32_t *puVar12;
-  undefined4 *puVar13;
-  int iVar14;
+  uint32_t u2;
+  uint32_t *p3;
+  bits32 u3;
+  uint16_t u4;
+  short i1;
+  void *p4;
+  int *p5;
+  uint32_t *p6;
+  bits32 *p7;
+  int i2;
   
-  if (param_1 != 0) {
-    uVar5 = orig::FUN_100dbe10();
-    switch(xi_sw(*(uint16_t *)(param_1 + 0xc))) {
+  if (arg1 != 0) {
+    u2 = orig::game_100DBE10();
+    switch(xi_sw(*(uint16_t *)(arg1 + 0xc))) {
     case 0:
-      puVar1 = (uint16_t *)(param_1 + 0x1ea0);
-      uVar8 = 0;
+      p1 = (uint16_t *)(arg1 + 0x1ea0);
+      u4 = 0;
       do {
-        xi_entry_eax = (short *)((uint32_t)uVar8 * 0x1f5);
-        if (*(int *)(param_1 + 0x1f20 + (uint32_t)uVar8 * 0x7d4) != 0) {
-          pcVar2 = *(code **)(param_1 + 0x1ea4 + (uint32_t)*puVar1 * 4);
+        xi_entry_eax = (short *)((uint32_t)u4 * 0x1f5);
+        if (*(int *)(arg1 + 0x1f20 + (uint32_t)u4 * 0x7d4) != 0) {
+          p2 = *(untyped_fn **)(arg1 + 0x1ea4 + (uint32_t)*p1 * 4);
           xi_entry_eax = (short *)0x0;
-          if ((pcVar2 != (code *)0x0) &&
-             (xi_entry_eax = (short *)(*pcVar2)(puVar1,0,param_1), (char)xi_entry_eax == '\0')) {
-            *puVar1 = 0;
-            *(uint16_t *)(param_1 + 0x1ea2) = 2;
-            pvVar10 = (void *)(param_1 + 0x1f0c);
-            iVar14 = 2;
+          if ((p2 != (untyped_fn *)0x0) &&
+             (xi_entry_eax = (short *)(*p2)(p1,0,arg1), (char)xi_entry_eax == '\0')) {
+            *p1 = 0;
+            *(uint16_t *)(arg1 + 0x1ea2) = 2;
+            p4 = (void *)(arg1 + 0x1f0c);
+            i2 = 2;
             do {
-              uVar7 = orig::Entry_ResetFields(pvVar10);
-              pvVar10 = (void *)((int)pvVar10 + 0x7d4);
-              iVar14 = iVar14 + -1;
-            } while (iVar14 != 0);
-            *(uint16_t *)(param_1 + 0xc) = 2;
-            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar7 >> 8))) << 8) | (uint8_t)(1)));
+              u3 = orig::Entry_ResetFields(p4);
+              p4 = (void *)((int)p4 + 0x7d4);
+              i2 = i2 + -1;
+            } while (i2 != 0);
+            *(uint16_t *)(arg1 + 0xc) = 2;
+            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
           }
-          if (*(int *)(param_1 + 0x1ea4 + (uint32_t)*puVar1 * 4) == 0) {
-            *puVar1 = 0;
-            *(uint16_t *)(param_1 + 0x1ea2) = 2;
-            *(uint16_t *)(param_1 + 0xc) = 3;
+          if (*(int *)(arg1 + 0x1ea4 + (uint32_t)*p1 * 4) == 0) {
+            *p1 = 0;
+            *(uint16_t *)(arg1 + 0x1ea2) = 2;
+            *(uint16_t *)(arg1 + 0xc) = 3;
             return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
           }
-          goto LAB_100e139b;
+          goto code_100E139B;
         }
-        uVar8 = uVar8 + 1;
-      } while (uVar8 < 2);
-      if (*puVar1 != 0) {
-        *puVar1 = 0;
-        *(uint16_t *)(param_1 + 0x1ea2) = 2;
-        *(uint16_t *)(param_1 + 0xc) = 1;
+        u4 = u4 + 1;
+      } while (u4 < 2);
+      if (*p1 != 0) {
+        *p1 = 0;
+        *(uint16_t *)(arg1 + 0x1ea2) = 2;
+        *(uint16_t *)(arg1 + 0xc) = 1;
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
       }
       break;
     case 1:
-      bVar3 = false;
-      uVar8 = 0;
+      u1 = false;
+      u4 = 0;
       do {
-        iVar14 = param_1 + (uint32_t)uVar8 * 0x7d4;
-        puVar1 = (uint16_t *)(iVar14 + 0x26bc);
-        if ((*(int *)(param_1 + 0x1f20 + (uint32_t)uVar8 * 0x7d4) != 0) && (*puVar1 != 0)) {
-          pcVar2 = *(code **)(iVar14 + 0x26c0 + (uint32_t)*puVar1 * 4);
-          if (((pcVar2 != (code *)0x0) &&
-              (cVar4 = (*pcVar2)(puVar1,iVar14 + 0x1f0c,param_1), cVar4 == '\0')) ||
-             (*(int *)(iVar14 + 0x1f0c) + 0x1eU < uVar5)) {
-            pvVar10 = (void *)(param_1 + 0x1f0c);
-            iVar14 = 2;
+        i2 = arg1 + (uint32_t)u4 * 0x7d4;
+        p1 = (uint16_t *)(i2 + 0x26bc);
+        if ((*(int *)(arg1 + 0x1f20 + (uint32_t)u4 * 0x7d4) != 0) && (*p1 != 0)) {
+          p2 = *(untyped_fn **)(i2 + 0x26c0 + (uint32_t)*p1 * 4);
+          if (((p2 != (untyped_fn *)0x0) &&
+              (c1 = (*p2)(p1,i2 + 0x1f0c,arg1), c1 == '\0')) ||
+             (*(int *)(i2 + 0x1f0c) + 0x1eU < u2)) {
+            p4 = (void *)(arg1 + 0x1f0c);
+            i2 = 2;
             do {
-              uVar7 = orig::Entry_ResetFields(pvVar10);
-              pvVar10 = (void *)((int)pvVar10 + 0x7d4);
-              iVar14 = iVar14 + -1;
-            } while (iVar14 != 0);
-            *(uint16_t *)(param_1 + 0xc) = 2;
-            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar7 >> 8))) << 8) | (uint8_t)(1)));
+              u3 = orig::Entry_ResetFields(p4);
+              p4 = (void *)((int)p4 + 0x7d4);
+              i2 = i2 + -1;
+            } while (i2 != 0);
+            *(uint16_t *)(arg1 + 0xc) = 2;
+            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
           }
-          if (*(int *)(iVar14 + 0x26c0 + (uint32_t)*puVar1 * 4) == 0) {
-            if (*(code **)(iVar14 + 0x1f20) != (code *)0x0) {
-              (**(code **)(iVar14 + 0x1f20))(*(undefined4 *)(iVar14 + 0x1f24),0);
+          if (*(int *)(i2 + 0x26c0 + (uint32_t)*p1 * 4) == 0) {
+            if (*(untyped_fn **)(i2 + 0x1f20) != (untyped_fn *)0x0) {
+              (**(untyped_fn **)(i2 + 0x1f20))(*(bits32 *)(i2 + 0x1f24),0);
             }
-            *(uint8_t *)(iVar14 + 0x1f10) = 0;
-            *(undefined4 *)(iVar14 + 0x1f0c) = 0;
-            *(undefined4 *)(iVar14 + 0x1f20) = 0;
-            *(undefined4 *)(iVar14 + 0x1f24) = 0;
-            *(uint16_t *)(iVar14 + 0x1f28) = 0;
-            *(uint8_t *)(iVar14 + 0x1f11) = 0;
-            *(uint16_t *)(iVar14 + 0x1f12) = 0;
-            *(uint16_t *)(iVar14 + 0x26bc) = 0;
-            *(uint16_t *)(iVar14 + 0x26be) = 2;
-            *(undefined4 *)(iVar14 + 0x26c0) = 0;
+            *(uint8_t *)(i2 + 0x1f10) = 0;
+            *(bits32 *)(i2 + 0x1f0c) = 0;
+            *(bits32 *)(i2 + 0x1f20) = 0;
+            *(bits32 *)(i2 + 0x1f24) = 0;
+            *(uint16_t *)(i2 + 0x1f28) = 0;
+            *(uint8_t *)(i2 + 0x1f11) = 0;
+            *(uint16_t *)(i2 + 0x1f12) = 0;
+            *(uint16_t *)(i2 + 0x26bc) = 0;
+            *(uint16_t *)(i2 + 0x26be) = 2;
+            *(bits32 *)(i2 + 0x26c0) = 0;
           }
           else {
-            bVar3 = true;
+            u1 = true;
           }
         }
-        uVar8 = uVar8 + 1;
-      } while (uVar8 < 2);
-      puVar1 = (uint16_t *)(param_1 + 0x1ea0 + (uint32_t)*(uint16_t *)(param_1 + 0xc) * 0x24);
+        u4 = u4 + 1;
+      } while (u4 < 2);
+      p1 = (uint16_t *)(arg1 + 0x1ea0 + (uint32_t)*(uint16_t *)(arg1 + 0xc) * 0x24);
       xi_entry_eax = (short *)0x0;
-      if ((*(code **)(puVar1 + (uint32_t)*(uint16_t *)
-                                      (param_1 + 0x1ea0 + (uint32_t)*(uint16_t *)(param_1 + 0xc) * 0x24) *
-                               2 + 2) != (code *)0x0) &&
-         (xi_entry_eax = (short *)(**(code **)(puVar1 + (uint32_t)*(uint16_t *)
-                                                         (param_1 + 0x1ea0 +
-                                                         (uint32_t)*(uint16_t *)(param_1 + 0xc) * 0x24) *
-                                                  2 + 2))(puVar1,0,param_1), (char)xi_entry_eax == '\0'))
+      if ((*(untyped_fn **)(p1 + (uint32_t)*(uint16_t *)
+                                      (arg1 + 0x1ea0 + (uint32_t)*(uint16_t *)(arg1 + 0xc) * 0x24) *
+                               2 + 2) != (untyped_fn *)0x0) &&
+         (xi_entry_eax = (short *)(**(untyped_fn **)(p1 + (uint32_t)*(uint16_t *)
+                                                         (arg1 + 0x1ea0 +
+                                                         (uint32_t)*(uint16_t *)(arg1 + 0xc) * 0x24) *
+                                                  2 + 2))(p1,0,arg1), (char)xi_entry_eax == '\0'))
       {
-        *puVar1 = 0;
-        puVar1[1] = 2;
-        pvVar10 = (void *)(param_1 + 0x1f0c);
-        iVar14 = 2;
+        *p1 = 0;
+        p1[1] = 2;
+        p4 = (void *)(arg1 + 0x1f0c);
+        i2 = 2;
         do {
-          uVar7 = orig::Entry_ResetFields(pvVar10);
-          pvVar10 = (void *)((int)pvVar10 + 0x7d4);
-          iVar14 = iVar14 + -1;
-        } while (iVar14 != 0);
-        *(uint16_t *)(param_1 + 0xc) = 2;
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar7 >> 8))) << 8) | (uint8_t)(1)));
+          u3 = orig::Entry_ResetFields(p4);
+          p4 = (void *)((int)p4 + 0x7d4);
+          i2 = i2 + -1;
+        } while (i2 != 0);
+        *(uint16_t *)(arg1 + 0xc) = 2;
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
       }
-      if ((!bVar3) && (*(int *)(puVar1 + (uint32_t)*puVar1 * 2 + 2) == 0)) {
-        *puVar1 = 0;
-        puVar1[1] = 2;
-        *(uint16_t *)(param_1 + 0xc) = 0;
+      if ((!u1) && (*(int *)(p1 + (uint32_t)*p1 * 2 + 2) == 0)) {
+        *p1 = 0;
+        p1[1] = 2;
+        *(uint16_t *)(arg1 + 0xc) = 0;
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
       }
       break;
     case 2:
-      puVar1 = (uint16_t *)(param_1 + 0x1ee8);
-      pcVar2 = *(code **)(param_1 + 0x1eec + (uint32_t)*puVar1 * 4);
+      p1 = (uint16_t *)(arg1 + 0x1ee8);
+      p2 = *(untyped_fn **)(arg1 + 0x1eec + (uint32_t)*p1 * 4);
       xi_entry_eax = (short *)0x0;
-      if (((pcVar2 != (code *)0x0) &&
-          (xi_entry_eax = (short *)(*pcVar2)(puVar1,0,param_1), (char)xi_entry_eax == '\0')) ||
-         (*(int *)(param_1 + 0x1eec + (uint32_t)*puVar1 * 4) == 0)) {
-        *puVar1 = 0;
-        *(uint16_t *)(param_1 + 0x1eea) = 2;
-        *(uint16_t *)(param_1 + 0xc) = 0;
+      if (((p2 != (untyped_fn *)0x0) &&
+          (xi_entry_eax = (short *)(*p2)(p1,0,arg1), (char)xi_entry_eax == '\0')) ||
+         (*(int *)(arg1 + 0x1eec + (uint32_t)*p1 * 4) == 0)) {
+        *p1 = 0;
+        *(uint16_t *)(arg1 + 0x1eea) = 2;
+        *(uint16_t *)(arg1 + 0xc) = 0;
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
       }
       break;
     case 3:
-      bVar3 = false;
-      piVar11 = (int *)(param_1 + 0x1f0c);
-      iVar14 = 2;
+      u1 = false;
+      p5 = (int *)(arg1 + 0x1f0c);
+      i2 = 2;
       do {
-        iVar14 = iVar14 + -1;
-        if ((piVar11[5] != 0) && (*(short *)((int)piVar11 + 0x7b2) == 1)) {
-          puVar1 = (uint16_t *)(piVar11 + 0x1ec);
-          if ((((code *)piVar11[*puVar1 + 0x1ed] != (code *)0x0) &&
-              (cVar4 = (*(code *)piVar11[*puVar1 + 0x1ed])(puVar1,piVar11,param_1), cVar4 == '\0'))
-             || (*piVar11 + 0x1eU < uVar5)) {
-            *puVar1 = 0;
-            *(uint16_t *)((int)piVar11 + 0x7b2) = 2;
-            puVar13 = (undefined4 *)(param_1 + 0x1f20);
-            iVar14 = 2;
+        i2 = i2 + -1;
+        if ((p5[5] != 0) && (*(short *)((int)p5 + 0x7b2) == 1)) {
+          p1 = (uint16_t *)(p5 + 0x1ec);
+          if ((((untyped_fn *)p5[*p1 + 0x1ed] != (untyped_fn *)0x0) &&
+              (c1 = (*(untyped_fn *)p5[*p1 + 0x1ed])(p1,p5,arg1), c1 == '\0'))
+             || (*p5 + 0x1eU < u2)) {
+            *p1 = 0;
+            *(uint16_t *)((int)p5 + 0x7b2) = 2;
+            p7 = (bits32 *)(arg1 + 0x1f20);
+            i2 = 2;
             do {
-              uVar7 = 0;
-              if ((code *)*puVar13 != (code *)0x0) {
-                uVar7 = (*(code *)*puVar13)(puVar13[1],0);
+              u3 = 0;
+              if ((untyped_fn *)*p7 != (untyped_fn *)0x0) {
+                u3 = (*(untyped_fn *)*p7)(p7[1],0);
               }
-              *(uint8_t *)(puVar13 + -4) = 0;
-              puVar13[-5] = 0;
-              *puVar13 = 0;
-              puVar13[1] = 0;
-              *(uint16_t *)(puVar13 + 2) = 0;
-              *(uint8_t *)((int)puVar13 + -0xf) = 0;
-              *(uint16_t *)((int)puVar13 + -0xe) = 0;
-              *(uint16_t *)(puVar13 + 0x1e7) = 0;
-              *(uint16_t *)((int)puVar13 + 0x79e) = 2;
-              puVar13[0x1e8] = 0;
-              puVar13 = puVar13 + 0x1f5;
-              iVar14 = iVar14 + -1;
-            } while (iVar14 != 0);
-            *(uint16_t *)(param_1 + 0xc) = 2;
-            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar7 >> 8))) << 8) | (uint8_t)(1)));
+              *(uint8_t *)(p7 + -4) = 0;
+              p7[-5] = 0;
+              *p7 = 0;
+              p7[1] = 0;
+              *(uint16_t *)(p7 + 2) = 0;
+              *(uint8_t *)((int)p7 + -0xf) = 0;
+              *(uint16_t *)((int)p7 + -0xe) = 0;
+              *(uint16_t *)(p7 + 0x1e7) = 0;
+              *(uint16_t *)((int)p7 + 0x79e) = 2;
+              p7[0x1e8] = 0;
+              p7 = p7 + 0x1f5;
+              i2 = i2 + -1;
+            } while (i2 != 0);
+            *(uint16_t *)(arg1 + 0xc) = 2;
+            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
           }
-          if (piVar11[*puVar1 + 0x1ed] == 0) {
-            if ((code *)piVar11[5] != (code *)0x0) {
-              (*(code *)piVar11[5])(piVar11[6],0);
+          if (p5[*p1 + 0x1ed] == 0) {
+            if ((untyped_fn *)p5[5] != (untyped_fn *)0x0) {
+              (*(untyped_fn *)p5[5])(p5[6],0);
             }
-            *(uint8_t *)(piVar11 + 1) = 0;
-            *piVar11 = 0;
-            piVar11[5] = 0;
-            piVar11[6] = 0;
-            *(uint16_t *)(piVar11 + 7) = 0;
-            *(uint8_t *)((int)piVar11 + 5) = 0;
-            *(uint16_t *)((int)piVar11 + 6) = 0;
-            *puVar1 = 0;
-            *(uint16_t *)((int)piVar11 + 0x7b2) = 2;
-            piVar11[0x1ed] = 0;
+            *(uint8_t *)(p5 + 1) = 0;
+            *p5 = 0;
+            p5[5] = 0;
+            p5[6] = 0;
+            *(uint16_t *)(p5 + 7) = 0;
+            *(uint8_t *)((int)p5 + 5) = 0;
+            *(uint16_t *)((int)p5 + 6) = 0;
+            *p1 = 0;
+            *(uint16_t *)((int)p5 + 0x7b2) = 2;
+            p5[0x1ed] = 0;
           }
-          else if (*(short *)((int)piVar11 + 0x7b2) == 1) {
-            bVar3 = true;
+          else if (*(short *)((int)p5 + 0x7b2) == 1) {
+            u1 = true;
           }
         }
-        piVar11 = piVar11 + 0x1f5;
-      } while (0 < iVar14);
-      if (!bVar3) {
-        puVar12 = (uint32_t *)0x0;
-        puVar6 = (uint32_t *)(param_1 + 0x1f0c);
-        iVar14 = 2;
+        p5 = p5 + 0x1f5;
+      } while (0 < i2);
+      if (!u1) {
+        p6 = (uint32_t *)0x0;
+        p3 = (uint32_t *)(arg1 + 0x1f0c);
+        i2 = 2;
         do {
-          if (((puVar6[5] != 0) && (*(short *)((int)puVar6 + 0x7b2) != 1)) &&
-             ((puVar12 == (uint32_t *)0x0 || (*puVar6 < *puVar12)))) {
-            puVar12 = puVar6;
+          if (((p3[5] != 0) && (*(short *)((int)p3 + 0x7b2) != 1)) &&
+             ((p6 == (uint32_t *)0x0 || (*p3 < *p6)))) {
+            p6 = p3;
           }
-          puVar6 = puVar6 + 0x1f5;
-          iVar14 = iVar14 + -1;
-        } while (iVar14 != 0);
-        if (puVar12 != (uint32_t *)0x0) {
-          puVar6 = puVar12 + 0x1ec;
-          if (((code *)puVar12[(uint16_t)*puVar6 + 0x1ed] != (code *)0x0) &&
-             (cVar4 = (*(code *)puVar12[(uint16_t)*puVar6 + 0x1ed])(puVar6,puVar12,param_1),
-             cVar4 == '\0')) {
-            *(uint16_t *)puVar6 = 0;
-            *(uint16_t *)((int)puVar12 + 0x7b2) = 2;
-            puVar13 = (undefined4 *)(param_1 + 0x1f20);
-            iVar14 = 2;
+          p3 = p3 + 0x1f5;
+          i2 = i2 + -1;
+        } while (i2 != 0);
+        if (p6 != (uint32_t *)0x0) {
+          p3 = p6 + 0x1ec;
+          if (((untyped_fn *)p6[(uint16_t)*p3 + 0x1ed] != (untyped_fn *)0x0) &&
+             (c1 = (*(untyped_fn *)p6[(uint16_t)*p3 + 0x1ed])(p3,p6,arg1),
+             c1 == '\0')) {
+            *(uint16_t *)p3 = 0;
+            *(uint16_t *)((int)p6 + 0x7b2) = 2;
+            p7 = (bits32 *)(arg1 + 0x1f20);
+            i2 = 2;
             do {
-              if ((code *)*puVar13 != (code *)0x0) {
-                (*(code *)*puVar13)(puVar13[1],0);
+              if ((untyped_fn *)*p7 != (untyped_fn *)0x0) {
+                (*(untyped_fn *)*p7)(p7[1],0);
               }
-              *(uint8_t *)(puVar13 + -4) = 0;
-              puVar13[-5] = 0;
-              *puVar13 = 0;
-              puVar13[1] = 0;
-              *(uint16_t *)(puVar13 + 2) = 0;
-              *(uint8_t *)((int)puVar13 + -0xf) = 0;
-              *(uint16_t *)((int)puVar13 + -0xe) = 0;
-              *(uint16_t *)(puVar13 + 0x1e7) = 0;
-              *(uint16_t *)((int)puVar13 + 0x79e) = 2;
-              puVar13[0x1e8] = 0;
-              puVar13 = puVar13 + 0x1f5;
-              iVar14 = iVar14 + -1;
-            } while (iVar14 != 0);
-            *(uint16_t *)(param_1 + 0xc) = 2;
-            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(1)));
+              *(uint8_t *)(p7 + -4) = 0;
+              p7[-5] = 0;
+              *p7 = 0;
+              p7[1] = 0;
+              *(uint16_t *)(p7 + 2) = 0;
+              *(uint8_t *)((int)p7 + -0xf) = 0;
+              *(uint16_t *)((int)p7 + -0xe) = 0;
+              *(uint16_t *)(p7 + 0x1e7) = 0;
+              *(uint16_t *)((int)p7 + 0x79e) = 2;
+              p7[0x1e8] = 0;
+              p7 = p7 + 0x1f5;
+              i2 = i2 + -1;
+            } while (i2 != 0);
+            *(uint16_t *)(arg1 + 0xc) = 2;
+            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg1 >> 8))) << 8) | (uint8_t)(1)));
           }
-          if (puVar12[(uint16_t)*puVar6 + 0x1ed] == 0) {
-            if ((code *)puVar12[5] != (code *)0x0) {
-              (*(code *)puVar12[5])(puVar12[6],0);
+          if (p6[(uint16_t)*p3 + 0x1ed] == 0) {
+            if ((untyped_fn *)p6[5] != (untyped_fn *)0x0) {
+              (*(untyped_fn *)p6[5])(p6[6],0);
             }
-            *(uint8_t *)(puVar12 + 1) = 0;
-            *puVar12 = 0;
-            puVar12[5] = 0;
-            puVar12[6] = 0;
-            *(uint16_t *)(puVar12 + 7) = 0;
-            *(uint8_t *)((int)puVar12 + 5) = 0;
-            *(uint16_t *)((int)puVar12 + 6) = 0;
-            *(uint16_t *)puVar6 = 0;
-            *(uint16_t *)((int)puVar12 + 0x7b2) = 2;
-            puVar12[0x1ed] = 0;
+            *(uint8_t *)(p6 + 1) = 0;
+            *p6 = 0;
+            p6[5] = 0;
+            p6[6] = 0;
+            *(uint16_t *)(p6 + 7) = 0;
+            *(uint8_t *)((int)p6 + 5) = 0;
+            *(uint16_t *)((int)p6 + 6) = 0;
+            *(uint16_t *)p3 = 0;
+            *(uint16_t *)((int)p6 + 0x7b2) = 2;
+            p6[0x1ed] = 0;
           }
-          else if (*puVar12 + 0x1e < uVar5) {
-            *(uint16_t *)puVar6 = 0;
-            *(uint16_t *)((int)puVar12 + 0x7b2) = 2;
-            puVar13 = (undefined4 *)(param_1 + 0x1f20);
-            iVar14 = 2;
+          else if (*p6 + 0x1e < u2) {
+            *(uint16_t *)p3 = 0;
+            *(uint16_t *)((int)p6 + 0x7b2) = 2;
+            p7 = (bits32 *)(arg1 + 0x1f20);
+            i2 = 2;
             do {
-              uVar7 = 0;
-              if ((code *)*puVar13 != (code *)0x0) {
-                uVar7 = (*(code *)*puVar13)(puVar13[1],0);
+              u3 = 0;
+              if ((untyped_fn *)*p7 != (untyped_fn *)0x0) {
+                u3 = (*(untyped_fn *)*p7)(p7[1],0);
               }
-              *(uint8_t *)(puVar13 + -4) = 0;
-              puVar13[-5] = 0;
-              *puVar13 = 0;
-              puVar13[1] = 0;
-              *(uint16_t *)(puVar13 + 2) = 0;
-              *(uint8_t *)((int)puVar13 + -0xf) = 0;
-              *(uint16_t *)((int)puVar13 + -0xe) = 0;
-              *(uint16_t *)(puVar13 + 0x1e7) = 0;
-              *(uint16_t *)((int)puVar13 + 0x79e) = 2;
-              puVar13[0x1e8] = 0;
-              puVar13 = puVar13 + 0x1f5;
-              iVar14 = iVar14 + -1;
-            } while (iVar14 != 0);
-            *(uint16_t *)(param_1 + 0xc) = 2;
-            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar7 >> 8))) << 8) | (uint8_t)(1)));
+              *(uint8_t *)(p7 + -4) = 0;
+              p7[-5] = 0;
+              *p7 = 0;
+              p7[1] = 0;
+              *(uint16_t *)(p7 + 2) = 0;
+              *(uint8_t *)((int)p7 + -0xf) = 0;
+              *(uint16_t *)((int)p7 + -0xe) = 0;
+              *(uint16_t *)(p7 + 0x1e7) = 0;
+              *(uint16_t *)((int)p7 + 0x79e) = 2;
+              p7[0x1e8] = 0;
+              p7 = p7 + 0x1f5;
+              i2 = i2 + -1;
+            } while (i2 != 0);
+            *(uint16_t *)(arg1 + 0xc) = 2;
+            return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
           }
         }
       }
-      sVar9 = 0;
-      xi_entry_eax = (short *)(param_1 + 0x26be);
-      iVar14 = 2;
+      i1 = 0;
+      xi_entry_eax = (short *)(arg1 + 0x26be);
+      i2 = 2;
       do {
         if ((*(int *)(xi_entry_eax + -0x3cf) != 0) && (*xi_entry_eax != 3)) {
-          sVar9 = sVar9 + 1;
+          i1 = i1 + 1;
         }
         xi_entry_eax = xi_entry_eax + 0x3ea;
-        iVar14 = iVar14 + -1;
-      } while (iVar14 != 0);
-      if (sVar9 == 0) {
-        *(uint16_t *)(param_1 + 0xc) = 1;
+        i2 = i2 + -1;
+      } while (i2 != 0);
+      if (i1 == 0) {
+        *(uint16_t *)(arg1 + 0xc) = 1;
         return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
       }
       break;
     default:
-      puVar13 = (undefined4 *)(param_1 + 0x1f20);
-      iVar14 = 2;
+      p7 = (bits32 *)(arg1 + 0x1f20);
+      i2 = 2;
       do {
-        if ((code *)*puVar13 != (code *)0x0) {
-          (*(code *)*puVar13)(puVar13[1],0);
+        if ((untyped_fn *)*p7 != (untyped_fn *)0x0) {
+          (*(untyped_fn *)*p7)(p7[1],0);
         }
-        *(uint8_t *)(puVar13 + -4) = 0;
+        *(uint8_t *)(p7 + -4) = 0;
         xi_entry_eax = (short *)0x0;
-        puVar13[-5] = 0;
-        *puVar13 = 0;
-        puVar13[1] = 0;
-        *(uint16_t *)(puVar13 + 2) = 0;
-        *(uint8_t *)((int)puVar13 + -0xf) = 0;
-        *(uint16_t *)((int)puVar13 + -0xe) = 0;
-        *(uint16_t *)(puVar13 + 0x1e7) = 0;
-        *(uint16_t *)((int)puVar13 + 0x79e) = 2;
-        puVar13[0x1e8] = 0;
-        puVar13 = puVar13 + 0x1f5;
-        iVar14 = iVar14 + -1;
-      } while (iVar14 != 0);
-      *(uint16_t *)(param_1 + 0xc) = 2;
+        p7[-5] = 0;
+        *p7 = 0;
+        p7[1] = 0;
+        *(uint16_t *)(p7 + 2) = 0;
+        *(uint8_t *)((int)p7 + -0xf) = 0;
+        *(uint16_t *)((int)p7 + -0xe) = 0;
+        *(uint16_t *)(p7 + 0x1e7) = 0;
+        *(uint16_t *)((int)p7 + 0x79e) = 2;
+        p7[0x1e8] = 0;
+        p7 = p7 + 0x1f5;
+        i2 = i2 + -1;
+      } while (i2 != 0);
+      *(uint16_t *)(arg1 + 0xc) = 2;
     }
   }
-LAB_100e139b:
+code_100E139B:
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E13C0
 // GATE: PASS -- 100 trials, 20 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 20
-XI_API undefined4 __thiscall Entry_ResetFields(void * self_)
+XI_API bits32 __thiscall Entry_ResetFields(void * self_)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = 0;
-  if (*(code **)((int)self_ + 0x14) != (code *)0x0) {
-    uVar1 = (**(code **)((int)self_ + 0x14))(*(undefined4 *)((int)self_ + 0x18),0);
+  u1 = 0;
+  if (*(untyped_fn **)((int)self_ + 0x14) != (untyped_fn *)0x0) {
+    u1 = (**(untyped_fn **)((int)self_ + 0x14))(*(bits32 *)((int)self_ + 0x18),0);
   }
   *(uint8_t *)((int)self_ + 4) = 0;
-  *(undefined4 *)self_ = 0;
-  *(undefined4 *)((int)self_ + 0x14) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = 0;
+  *(bits32 *)self_ = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0x18) = 0;
   *(uint16_t *)((int)self_ + 0x1c) = 0;
   *(uint8_t *)((int)self_ + 5) = 0;
   *(uint16_t *)((int)self_ + 6) = 0;
   *(uint16_t *)((int)self_ + 0x7b0) = 0;
   *(uint16_t *)((int)self_ + 0x7b2) = 2;
-  *(undefined4 *)((int)self_ + 0x7b4) = 0;
-  return uVar1;
+  *(bits32 *)((int)self_ + 0x7b4) = 0;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E19C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_AllocEntry4(int param_1)
+XI_API int __cdecl NetCellFont_AllocEntry4(int arg1)
 {
-  uint16_t uVar1;
-  uint16_t uVar2;
-  int iVar3;
-  uint16_t *puVar4;
-  uint16_t uVar5;
-  uint16_t uVar6;
-  uint16_t uVar7;
+  uint16_t u1;
+  uint16_t u2;
+  int i1;
+  uint16_t *p1;
+  uint16_t u3;
+  uint16_t u4;
+  uint16_t u5;
   
-  iVar3 = 0;
-  if (param_1 != 0) {
-    uVar6 = 0;
+  i1 = 0;
+  if (arg1 != 0) {
+    u4 = 0;
     do {
-      if (*(short *)(param_1 + 0x7a0 + (uint32_t)uVar6 * 0x794) == 0) {
-        *(short *)(param_1 + 10) = *(short *)(param_1 + 10) + 1;
-        iVar3 = param_1 + (uint32_t)uVar6 * 0x794;
-        *(uint16_t *)(iVar3 + 0x7a0) = *(uint16_t *)(param_1 + 10);
-        iVar3 = iVar3 + 0x10;
-        if (iVar3 != 0) goto LAB_100e1a9d;
+      if (*(short *)(arg1 + 0x7a0 + (uint32_t)u4 * 0x794) == 0) {
+        *(short *)(arg1 + 10) = *(short *)(arg1 + 10) + 1;
+        i1 = arg1 + (uint32_t)u4 * 0x794;
+        *(uint16_t *)(i1 + 0x7a0) = *(uint16_t *)(arg1 + 10);
+        i1 = i1 + 0x10;
+        if (i1 != 0) goto code_100E1A9D;
         break;
       }
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < 4);
-    uVar6 = *(uint16_t *)(param_1 + 10);
-    uVar7 = 0;
-    uVar5 = 1;
-    puVar4 = (uint16_t *)(param_1 + 0xf34);
+      u4 = u4 + 1;
+    } while (u4 < 4);
+    u4 = *(uint16_t *)(arg1 + 10);
+    u5 = 0;
+    u3 = 1;
+    p1 = (uint16_t *)(arg1 + 0xf34);
     do {
-      uVar1 = *(uint16_t *)(param_1 + 0x7a0 + (uint32_t)uVar7 * 0x794);
-      if (uVar6 < uVar1) {
-        uVar2 = *puVar4;
-LAB_100e1a64:
-        if (uVar2 <= uVar1) goto LAB_100e1a66;
+      u1 = *(uint16_t *)(arg1 + 0x7a0 + (uint32_t)u5 * 0x794);
+      if (u4 < u1) {
+        u2 = *p1;
+code_100E1A64:
+        if (u2 <= u1) goto code_100E1A66;
       }
       else {
-        uVar2 = *puVar4;
-        if (uVar2 < uVar6) goto LAB_100e1a64;
-LAB_100e1a66:
-        uVar7 = uVar5;
+        u2 = *p1;
+        if (u2 < u4) goto code_100E1A64;
+code_100E1A66:
+        u5 = u3;
       }
-      uVar5 = uVar5 + 1;
-      puVar4 = puVar4 + 0x3ca;
-    } while (uVar5 < 4);
-    *(uint16_t *)(param_1 + 10) = uVar6 + 1;
-    iVar3 = param_1 + (uint32_t)uVar7 * 0x794;
-    *(uint16_t *)(iVar3 + 0x7a0) = uVar6 + 1;
-    iVar3 = iVar3 + 0x10;
-LAB_100e1a9d:
-    if (*(short *)(param_1 + 10) == 0) {
-      *(uint16_t *)(param_1 + 10) = 1;
+      u3 = u3 + 1;
+      p1 = p1 + 0x3ca;
+    } while (u3 < 4);
+    *(uint16_t *)(arg1 + 10) = u4 + 1;
+    i1 = arg1 + (uint32_t)u5 * 0x794;
+    *(uint16_t *)(i1 + 0x7a0) = u4 + 1;
+    i1 = i1 + 0x10;
+code_100E1A9D:
+    if (*(short *)(arg1 + 10) == 0) {
+      *(uint16_t *)(arg1 + 10) = 1;
     }
   }
-  return iVar3;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E1AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AllocEntryFromTable(void)
+XI_API bits32 __cdecl NetCellFont_AllocEntryFromTable(void)
 {
-  int iVar1;
+  int i1;
   
-  if (DAT_104df770 == 0) {
+  if (g_104DF770 == 0) {
     return 0;
   }
-  iVar1 = orig::NetCellFont_AllocEntry4(*(int *)(DAT_104df770 + 0x1369c));
-  return iVar1;
+  i1 = orig::NetCellFont_AllocEntry4(*(int *)(g_104DF770 + 0x1369c));
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E1B50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl NetCellFont_CountActive(void)
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  int i1;
+  int *p1;
+  int i2;
   
-  iVar1 = 0;
-  if ((DAT_104df770 != 0) && (*(int *)(DAT_104df770 + 0x1369c) != 0)) {
-    piVar2 = (int *)(*(int *)(DAT_104df770 + 0x1369c) + 0x1f20);
-    iVar3 = 2;
+  i1 = 0;
+  if ((g_104DF770 != 0) && (*(int *)(g_104DF770 + 0x1369c) != 0)) {
+    p1 = (int *)(*(int *)(g_104DF770 + 0x1369c) + 0x1f20);
+    i2 = 2;
     do {
-      if (*piVar2 != 0) {
-        iVar1 = iVar1 + 1;
+      if (*p1 != 0) {
+        i1 = i1 + 1;
       }
-      piVar2 = piVar2 + 0x1f5;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
+      p1 = p1 + 0x1f5;
+      i2 = i2 + -1;
+    } while (i2 != 0);
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E1C00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ClearMatching(int param_1, uint16_t * param_2)
+XI_API bits32 __cdecl NetCellFont_ClearMatching(int arg1, uint16_t * arg2)
 {
-  uint16_t *puVar1;
-  int iVar2;
+  uint16_t *p1;
+  int i1;
   
-  puVar1 = (uint16_t *)0x0;
-  if (param_1 != 0) {
-    puVar1 = (uint16_t *)(param_1 + 0x7a0);
-    iVar2 = 4;
+  p1 = (uint16_t *)0x0;
+  if (arg1 != 0) {
+    p1 = (uint16_t *)(arg1 + 0x7a0);
+    i1 = 4;
     do {
-      if (param_2 == puVar1 + -0x3c8) {
-        *puVar1 = 0;
+      if (arg2 == p1 + -0x3c8) {
+        *p1 = 0;
       }
-      puVar1 = puVar1 + 0x3ca;
-      iVar2 = iVar2 + -1;
-    } while (iVar2 != 0);
+      p1 = p1 + 0x3ca;
+      i1 = i1 + -1;
+    } while (i1 != 0);
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E2E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_RegisterHandler1369C(undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __cdecl NetCellFont_RegisterHandler1369C(bits32 * arg1, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 uVar3;
-  uint32_t uVar4;
+  int i1;
+  bits32 *p1;
+  bits32 u1;
+  uint32_t u2;
   
-  uVar4 = DAT_104df770_as_v0;
-  if ((DAT_104df770_as_v0 != 0) && (iVar1 = *(int *)(DAT_104df770_as_v0 + 0x1369c), iVar1 != 0)) {
-    puVar2 = orig::XI_LOBBY_100E1C30(iVar1,(uint32_t *)0x0,param_1,(undefined4 *)0x0,(undefined4 *)0x0,
-                          (undefined4 *)0x0,(undefined4 *)0x0,0,param_3,param_4,param_5,param_6);
-    if (puVar2 != (undefined4 *)0x0) {
-      uVar3 = orig::NetCellFont_ClearMatching(iVar1,(uint16_t *)param_1);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(1)));
+  u2 = g_104DF770_as_v0;
+  if ((g_104DF770_as_v0 != 0) && (i1 = *(int *)(g_104DF770_as_v0 + 0x1369c), i1 != 0)) {
+    p1 = orig::XI_LOBBY_100E1C30(i1,(uint32_t *)0x0,arg1,(bits32 *)0x0,(bits32 *)0x0,
+                          (bits32 *)0x0,(bits32 *)0x0,0,arg3,arg4,arg5,arg6);
+    if (p1 != (bits32 *)0x0) {
+      u1 = orig::NetCellFont_ClearMatching(i1,(uint16_t *)arg1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    uVar4 = orig::NetCellFont_ClearMatching(iVar1,(uint16_t *)param_1);
+    u2 = orig::NetCellFont_ClearMatching(i1,(uint16_t *)arg1);
   }
-  return uVar4 & 0xffffff00;
+  return u2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100E2EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_RegisterHandler1369CFlag1(undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API bits32 __cdecl NetCellFont_RegisterHandler1369CFlag1(bits32 * arg1, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::NetCellFont_RegisterHandler1369C(param_1,param_2,param_3,param_4,param_5,1);
-  return uVar1;
+  u1 = orig::NetCellFont_RegisterHandler1369C(arg1,arg2,arg3,arg4,arg5,1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E3E30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetEntryMod1066268CFwd(void)
+XI_API bits32 __cdecl NetCellFont_GetEntryMod1066268CFwd(void)
 {
   return orig::NetCellFont_GetEntryMod1066268C();
 }
 
 // FUNCTION: FFXIMAIN 0x100E47A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetBlock2CFD8(int * param_1)
+XI_API bits32 __cdecl NetCellFont_GetBlock2CFD8(int * arg1)
 {
-  int iVar1;
+  int i1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  iVar1 = DAT_104dfd98 + 0x2cfd8;
-  *param_1 = iVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(1)));
+  i1 = g_104DFD98 + 0x2cfd8;
+  *arg1 = i1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E5E30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_SetGlobal104B1774(undefined4 param_1)
+XI_API void __cdecl NetCellFont_SetGlobal104B1774(bits32 arg1)
 {
-  DAT_104b1774 = param_1;
+  g_104B1774 = arg1;
   return;
 }
 
@@ -1225,208 +1227,208 @@ XI_API void __cdecl NetCellFont_SetGlobal104B1774(undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl NetCellFont_GetBlock2CDE8IfReady(void)
 {
-  if (((DAT_104dfd98 != 0) && (*(char *)(DAT_104dfd98 + 0x2cf49) != '\0')) &&
-     (*(char *)(DAT_104dfd98 + 0x2cf4a) != '\0')) {
-    return DAT_104dfd98 + 0x2cde8;
+  if (((g_104DFD98 != 0) && (*(char *)(g_104DFD98 + 0x2cf49) != '\0')) &&
+     (*(char *)(g_104DFD98 + 0x2cf4a) != '\0')) {
+    return g_104DFD98 + 0x2cde8;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100E62C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_SetWord130(undefined4 param_1)
+XI_API void __cdecl NetCellFont_SetWord130(bits32 arg1)
 {
-  *(uint16_t *)(DAT_104df770 + 0x130) = (uint16_t)param_1;
+  *(uint16_t *)(g_104DF770 + 0x130) = (uint16_t)arg1;
   orig::NetCellFont_BuildListA90();
-  *(uint8_t *)(DAT_104df770 + 0x134) = 0;
+  *(uint8_t *)(g_104DF770 + 0x134) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100E6370
 // GATE: PASS -- 100 trials, 84 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 84
-XI_API undefined4 __cdecl NetCellFont_ClearBit0Slot(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_ClearBit0Slot(bits32 arg1)
 {
-  uint32_t *puVar1;
+  uint32_t *p1;
   
-  puVar1 = (uint32_t *)((short)param_1 * 0x100 + 0xb8c + DAT_104df770);
-  *puVar1 = *puVar1 & 0xfffffffe;
-  return puVar1;
+  p1 = (uint32_t *)((short)arg1 * 0x100 + 0xb8c + g_104DF770);
+  *p1 = *p1 & 0xfffffffe;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E63B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetFlagFCBit1(int param_1)
+XI_API bits32 __cdecl NetCellFont_SetFlagFCBit1(int arg1)
 {
-  *(uint32_t *)(param_1 + 0xfc) = *(uint32_t *)(param_1 + 0xfc) | 2;
-  return param_1;
+  *(uint32_t *)(arg1 + 0xfc) = *(uint32_t *)(arg1 + 0xfc) | 2;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E63C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ClearBit1Fc(int param_1)
+XI_API bits32 __cdecl NetCellFont_ClearBit1Fc(int arg1)
 {
-  *(uint32_t *)(param_1 + 0xfc) = *(uint32_t *)(param_1 + 0xfc) & 0xfffffffd;
-  return param_1;
+  *(uint32_t *)(arg1 + 0xfc) = *(uint32_t *)(arg1 + 0xfc) & 0xfffffffd;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E63E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ScanEntriesAndInit(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_ScanEntriesAndInit(bits32 arg1)
 {
-  int iVar1;
-  int iVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  uint32_t uVar6;
-  int iVar7;
-  int iVar8;
-  uint8_t bVar9;
-  uint8_t local_d;
-  undefined4 local_c;
-  undefined4 local_8;
-  undefined4 local_4;
+  int i1;
+  int i2;
+  bits32 u1;
+  int i3;
+  int i4;
+  uint32_t u2;
+  int i5;
+  int i6;
+  uint8_t u3;
+  uint8_t u4;
+  bits32 u5;
+  bits32 u6;
+  bits32 u7;
   
-  iVar7 = DAT_104df770;
-  if (*(short *)(DAT_104df770 + 0x132) == 0) goto LAB_100e6646;
-  *(undefined4 *)(DAT_104df770 + 0x144) = 0;
-  local_8 = 0;
-  local_d = '\0';
-  if ((char)param_1 == '\0') {
-LAB_100e641e:
-    uVar3 = orig::NetCellFont_IsCountOrByte134Set();
-    bVar9 = (char)uVar3 == '\0';
+  i5 = g_104DF770;
+  if (*(short *)(g_104DF770 + 0x132) == 0) goto code_100E6646;
+  *(bits32 *)(g_104DF770 + 0x144) = 0;
+  u6 = 0;
+  u4 = '\0';
+  if ((char)arg1 == '\0') {
+code_100E641E:
+    u1 = orig::NetCellFont_IsCountOrByte134Set();
+    u3 = (char)u1 == '\0';
   }
   else {
-    uVar3 = orig::NetCellFont_IsBeforeDeadline();
-    if ((char)uVar3 != '\0') goto LAB_100e641e;
-    bVar9 = false;
+    u1 = orig::NetCellFont_IsBeforeDeadline();
+    if ((char)u1 != '\0') goto code_100E641E;
+    u3 = false;
   }
-  iVar8 = 0;
-  local_c = 0;
-  local_4 = 0x174;
-  iVar7 = 0x148;
+  i6 = 0;
+  u5 = 0;
+  u7 = 0x174;
+  i5 = 0x148;
   do {
-    iVar5 = local_c + 0xa90 + DAT_104df770;
-    iVar4 = orig::NetCellFont_ThunkByIndex200(iVar8,iVar5);
-    if (-1 < iVar4) {
-      if ((((((*(uint32_t *)(iVar5 + 0x98) & 1) == 0) || ((*(uint32_t *)(iVar5 + 0xc) >> 1 & 0x3ff) != 1))
-           || ((*(uint32_t *)(iVar5 + 8) & 0x10000) == 0)) ||
-          ((iVar4 = (*(uint32_t *)(iVar5 + 8) >> 0x11 & 7) * 0x10, iVar1 = iVar4 + 0x18 + iVar5,
-           (*(uint8_t *)(iVar4 + 0x18 + iVar5) & 1) == 0 || (*(short *)(iVar1 + 2) != 1)))) ||
-         ((uint16_t)*(uint8_t *)(iVar1 + 6) != *(uint16_t *)(DAT_104df770 + 0x130))) {
-        iVar4 = orig::NetCellFont_ClearBit0Slot(iVar8);
+    i4 = u5 + 0xa90 + g_104DF770;
+    i3 = orig::NetCellFont_ThunkByIndex200(i6,i4);
+    if (-1 < i3) {
+      if ((((((*(uint32_t *)(i4 + 0x98) & 1) == 0) || ((*(uint32_t *)(i4 + 0xc) >> 1 & 0x3ff) != 1))
+           || ((*(uint32_t *)(i4 + 8) & 0x10000) == 0)) ||
+          ((i3 = (*(uint32_t *)(i4 + 8) >> 0x11 & 7) * 0x10, i1 = i3 + 0x18 + i4,
+           (*(uint8_t *)(i3 + 0x18 + i4) & 1) == 0 || (*(short *)(i1 + 2) != 1)))) ||
+         ((uint16_t)*(uint8_t *)(i1 + 6) != *(uint16_t *)(g_104DF770 + 0x130))) {
+        i3 = orig::NetCellFont_ClearBit0Slot(i6);
       }
       else {
-        iVar5 = local_c;
-        if (*(uint32_t *)(local_c + 0xb58 + DAT_104df770) !=
-            (*(uint32_t *)(iVar1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(iVar1 + 4) & 0xffff)) {
-          iVar5 = orig::NetCellFont_ClearBit0Slot(iVar8);
+        i4 = u5;
+        if (*(uint32_t *)(u5 + 0xb58 + g_104DF770) !=
+            (*(uint32_t *)(i1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(i1 + 4) & 0xffff)) {
+          i4 = orig::NetCellFont_ClearBit0Slot(i6);
         }
-        iVar2 = DAT_104df770;
-        uVar6 = (uint32_t)((uint32_t)iVar5 >> 8);
-        iVar4 = ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)(bVar9)));
-        if (((bVar9 != false) && (iVar4 = ((uint32_t)(((uint32_t)(uVar6) << 8) | (uint8_t)(local_d))), local_d == '\0')) &&
-           (iVar4 = iVar2, *(short *)(DAT_104df770 + 0x140) <= iVar8)) {
-          if (iVar7 < 0x170) {
-            if (*(int *)(DAT_104df770 + 0x144) == 0) {
-              uVar3 = orig::NetCellFont_AllocEntryFromTable();
-              *(undefined4 *)(DAT_104df770 + 0x144) = uVar3;
-              orig::NetCellFont_SetZero(*(uint16_t **)(DAT_104df770 + 0x144));
+        i2 = g_104DF770;
+        u2 = (uint32_t)((uint32_t)i4 >> 8);
+        i3 = ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(u3)));
+        if (((u3 != false) && (i3 = ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(u4))), u4 == '\0')) &&
+           (i3 = i2, *(short *)(g_104DF770 + 0x140) <= i6)) {
+          if (i5 < 0x170) {
+            if (*(int *)(g_104DF770 + 0x144) == 0) {
+              u1 = orig::NetCellFont_AllocEntryFromTable();
+              *(bits32 *)(g_104DF770 + 0x144) = u1;
+              orig::NetCellFont_SetZero(*(uint16_t **)(g_104DF770 + 0x144));
             }
-            orig::NetCellFont_AppendMax20(*(uint16_t **)(DAT_104df770 + 0x144),
-                         *(uint32_t *)(iVar1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(iVar1 + 4) & 0xffff);
-            *(short *)(iVar7 + DAT_104df770) = (short)iVar8;
-            iVar7 = iVar7 + 2;
-            local_8 = local_8 + 1;
-            *(uint32_t *)(local_4 + DAT_104df770) =
-                 *(uint32_t *)(iVar1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(iVar1 + 4) & 0xffff;
-            iVar4 = local_4 + 4;
-            local_4 = iVar4;
+            orig::NetCellFont_AppendMax20(*(uint16_t **)(g_104DF770 + 0x144),
+                         *(uint32_t *)(i1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(i1 + 4) & 0xffff);
+            *(short *)(i5 + g_104DF770) = (short)i6;
+            i5 = i5 + 2;
+            u6 = u6 + 1;
+            *(uint32_t *)(u7 + g_104DF770) =
+                 *(uint32_t *)(i1 + 4) >> 8 & 0xf0000 | *(uint32_t *)(i1 + 4) & 0xffff;
+            i3 = u7 + 4;
+            u7 = i3;
           }
           else {
-            *(short *)(DAT_104df770 + 0x140) = (short)iVar8;
-            local_d = '\x01';
+            *(short *)(g_104DF770 + 0x140) = (short)i6;
+            u4 = '\x01';
           }
         }
       }
     }
-    iVar8 = iVar8 + 1;
-    local_c = local_c + 0x100;
-  } while (local_c < 0x12c00);
-  iVar7 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar4 >> 8))) << 8) | (uint8_t)(bVar9)));
-  if (bVar9 != false) {
-    if (local_d == '\0') {
-      *(uint16_t *)(DAT_104df770 + 0x140) = 0;
+    i6 = i6 + 1;
+    u5 = u5 + 0x100;
+  } while (u5 < 0x12c00);
+  i5 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(u3)));
+  if (u3 != false) {
+    if (u4 == '\0') {
+      *(uint16_t *)(g_104DF770 + 0x140) = 0;
     }
-    iVar7 = 0;
-    if (local_8 != 0) {
-      iVar7 = orig::NetCellFont_InitEncrypt(local_8);
+    i5 = 0;
+    if (u6 != 0) {
+      i5 = orig::NetCellFont_InitEncrypt(u6);
     }
   }
-LAB_100e6646:
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar7 >> 8))) << 8) | (uint8_t)(1)));
+code_100E6646:
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i5 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E6650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_InitEncrypt(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_InitEncrypt(bits32 arg1)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  *(uint8_t *)(DAT_104df770 + 0x170) = (uint8_t)param_1;
-  *(uint8_t *)(DAT_104df770 + 0x134) = 1;
-  uVar1 = orig::NetCellFont_RegisterHandler1369CFlag1(*(undefined4 **)(DAT_104df770 + 0x144),0,3,&LAB_100e6690,0);
-  return uVar1;
+  *(uint8_t *)(g_104DF770 + 0x170) = (uint8_t)arg1;
+  *(uint8_t *)(g_104DF770 + 0x134) = 1;
+  u1 = orig::NetCellFont_RegisterHandler1369CFlag1(*(bits32 **)(g_104DF770 + 0x144),0,3,&code_100E6690,0);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E6790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsBeforeDeadline(void)
+XI_API bits32 __cdecl NetCellFont_IsBeforeDeadline(void)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
+  uint32_t u1;
+  uint32_t u2;
   
-  uVar1 = orig::NetCellFont_GetSeconds();
-  uVar2 = xi_trunc24((uVar1 >> 8));
-  if (uVar1 < (uint32_t)(*(int *)(DAT_104df770 + 0x13c) + *(int *)(DAT_104df770 + 0x138))) {
-    return (uint32_t)uVar2 << 8;
+  u1 = orig::NetCellFont_GetSeconds();
+  u2 = xi_trunc24((u1 >> 8));
+  if (u1 < (uint32_t)(*(int *)(g_104DF770 + 0x13c) + *(int *)(g_104DF770 + 0x138))) {
+    return (uint32_t)u2 << 8;
   }
-  return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E67E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsCountOrByte134Set(void)
+XI_API bits32 __cdecl NetCellFont_IsCountOrByte134Set(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::NetCellFont_CountActive();
-  if (((short)uVar1 == 0) && (uVar1 = DAT_104df770_as_v0, *(char *)(DAT_104df770_as_v0 + 0x134) == '\0')) {
-    return DAT_104df770_as_v0 & 0xffffff00;
+  u1 = orig::NetCellFont_CountActive();
+  if (((short)u1 == 0) && (u1 = g_104DF770_as_v0, *(char *)(g_104DF770_as_v0 + 0x134) == '\0')) {
+    return g_104DF770_as_v0 & 0xffffff00;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E6810
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ClearTimer140(void)
+XI_API bits32 __cdecl NetCellFont_ClearTimer140(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  *(uint16_t *)(DAT_104df770 + 0x140) = 0;
-  uVar1 = orig::NetCellFont_ScanEntriesAndInit(0);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  *(uint16_t *)(g_104DF770 + 0x140) = 0;
+  u1 = orig::NetCellFont_ScanEntriesAndInit(0);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100E6830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ScanIfTimer140Set(void)
+XI_API bits32 __cdecl NetCellFont_ScanIfTimer140Set(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::NetCellFont_IsTimer140Clear();
-  if ((char)uVar1 == '\0') {
+  u1 = orig::NetCellFont_IsTimer140Clear();
+  if ((char)u1 == '\0') {
     orig::NetCellFont_ScanEntriesAndInit(0);
     return 0;
   }
@@ -1435,167 +1437,167 @@ XI_API undefined4 __cdecl NetCellFont_ScanIfTimer140Set(void)
 
 // FUNCTION: FFXIMAIN 0x100E6860
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsTimer140Clear(void)
+XI_API bits32 __cdecl NetCellFont_IsTimer140Clear(void)
 {
-  return (uint32_t)(*(short *)(DAT_104df770 + 0x140) == 0);
+  return (uint32_t)(*(short *)(g_104DF770 + 0x140) == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x100E6B10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetWord132(void)
+XI_API bits32 __cdecl NetCellFont_GetWord132(void)
 {
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_104df770 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(DAT_104df770 + 0x132))));
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_104DF770 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(g_104DF770 + 0x132))));
 }
 
 // FUNCTION: FFXIMAIN 0x100E6B20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_BuildListA90(void)
+XI_API bits32 __cdecl NetCellFont_BuildListA90(void)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
   
-  iVar3 = 0;
-  *(uint16_t *)(DAT_104df770 + 0x132) = 0;
-  iVar4 = 0;
+  i3 = 0;
+  *(uint16_t *)(g_104DF770 + 0x132) = 0;
+  i4 = 0;
   do {
-    iVar1 = iVar4 + 0xa90 + DAT_104df770;
-    iVar2 = orig::NetCellFont_ThunkByIndex200(iVar3,iVar1);
-    if ((-1 < iVar2) && ((*(uint32_t *)(iVar1 + 0x98) & 1) != 0)) {
-      *(uint8_t *)(iVar4 + 0xb88 + DAT_104df770) = 199 < iVar3;
-      *(short *)(DAT_104df770 + 0x832 + *(short *)(DAT_104df770 + 0x132) * 2) = (short)iVar3;
-      *(short *)(DAT_104df770 + 0x132) = *(short *)(DAT_104df770 + 0x132) + 1;
+    i1 = i4 + 0xa90 + g_104DF770;
+    i2 = orig::NetCellFont_ThunkByIndex200(i3,i1);
+    if ((-1 < i2) && ((*(uint32_t *)(i1 + 0x98) & 1) != 0)) {
+      *(uint8_t *)(i4 + 0xb88 + g_104DF770) = 199 < i3;
+      *(short *)(g_104DF770 + 0x832 + *(short *)(g_104DF770 + 0x132) * 2) = (short)i3;
+      *(short *)(g_104DF770 + 0x132) = *(short *)(g_104DF770 + 0x132) + 1;
     }
-    iVar4 = iVar4 + 0x100;
-    iVar3 = iVar3 + 1;
-  } while (iVar4 < 0x12c00);
-  if (*(short *)(DAT_104df770 + 0x132) < 300) {
-    iVar3 = *(short *)(DAT_104df770 + 0x132) * 2 + 0x832;
+    i4 = i4 + 0x100;
+    i3 = i3 + 1;
+  } while (i4 < 0x12c00);
+  if (*(short *)(g_104DF770 + 0x132) < 300) {
+    i3 = *(short *)(g_104DF770 + 0x132) * 2 + 0x832;
     do {
-      *(uint16_t *)(iVar3 + DAT_104df770) = 0xffff;
-      iVar3 = iVar3 + 2;
-    } while (iVar3 < 0xa8a);
+      *(uint16_t *)(i3 + g_104DF770) = 0xffff;
+      i3 = i3 + 2;
+    } while (i3 < 0xa8a);
   }
-  *(uint16_t *)(DAT_104df770 + 0x830) = *(uint16_t *)(DAT_104df770 + 0x132);
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_104df770 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(DAT_104df770 + 0x132))));
+  *(uint16_t *)(g_104DF770 + 0x830) = *(uint16_t *)(g_104DF770 + 0x132);
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_104DF770 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(g_104DF770 + 0x132))));
 }
 
 // FUNCTION: FFXIMAIN 0x100E6C40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_GetEntryPtrA90(undefined4 param_1)
+XI_API int __cdecl NetCellFont_GetEntryPtrA90(bits32 arg1)
 {
-  if (*(short *)(DAT_104df770 + 0x830) <= (short)param_1) {
+  if (*(short *)(g_104DF770 + 0x830) <= (short)arg1) {
     return 0;
   }
-  return *(short *)(DAT_104df770 + 0x832 + (short)param_1 * 2) * 0x100 + 0xa90 + DAT_104df770;
+  return *(short *)(g_104DF770 + 0x832 + (short)arg1 * 2) * 0x100 + 0xa90 + g_104DF770;
 }
 
 // FUNCTION: FFXIMAIN 0x100E7260
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_ClearPending(void)
 {
-  *(uint8_t *)(DAT_104df770 + 0x1c4) = 0;
-  *(uint16_t *)(DAT_104df770 + 0x3c8) = 0;
+  *(uint8_t *)(g_104DF770 + 0x1c4) = 0;
+  *(uint16_t *)(g_104DF770 + 0x3c8) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100E7B20
 // NOT VERIFIED -- UNRESOLVED
-XI_API int __cdecl NetCellFont_ThunkByIndex200(int param_1, undefined4 param_2)
+XI_API int __cdecl NetCellFont_ThunkByIndex200(int arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  if (param_1 < 200) {
-    iVar1 = orig::thunk_FUN_1030ff33();
+  if (arg1 < 200) {
+    i1 = orig::thunk_game_1030FF33();
   }
   else {
-    iVar1 = orig::thunk_FUN_1030ff49();
+    i1 = orig::thunk_game_1030FF49();
   }
-  if (iVar1 < 0) {
-    orig::_exit_0_v1(iVar1);
+  if (i1 < 0) {
+    orig::_exit_0_v1(i1);
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E8B80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_SetByte9800AndGetEntry(undefined4 param_1)
+XI_API int __cdecl NetCellFont_SetByte9800AndGetEntry(bits32 arg1)
 {
-  int iVar1;
-  char cVar2;
+  int i1;
+  char c1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  *(uint8_t *)(DAT_104dfd98 + 0x9800) = (uint8_t)param_1;
-  *(undefined4 *)(DAT_104dfd98 + 0x97fc) = 1;
-  cVar2 = *(char *)(DAT_104dfd98 + 0x9800);
-  if (cVar2 != '\0') {
-    if (cVar2 == '\x01') {
-      XI_PIECE(param_1, 0, 1) = 1;
-      goto LAB_100e8bcd;
+  *(uint8_t *)(g_104DFD98 + 0x9800) = (uint8_t)arg1;
+  *(bits32 *)(g_104DFD98 + 0x97fc) = 1;
+  c1 = *(char *)(g_104DFD98 + 0x9800);
+  if (c1 != '\0') {
+    if (c1 == '\x01') {
+      XI_PIECE(arg1, 0, 1) = 1;
+      goto code_100E8BCD;
     }
-    if (cVar2 != '\x05') goto LAB_100e8bcd;
+    if (c1 != '\x05') goto code_100E8BCD;
   }
-  XI_PIECE(param_1, 0, 1) = 0;
-LAB_100e8bcd:
-  iVar1 = DAT_104dfd98 + (uint32_t)*(uint8_t *)(DAT_104dfd98 + 0x9534 + (uint32_t)(uint8_t)param_1 * 100) * 0x70 +
-          0x57d8 + (uint32_t)(uint8_t)param_1 * 0x8c4;
-  orig::_strncpy_v2((char *)(iVar1 + 2),(char *)(DAT_104dfd98 + 0x3c3a4),0x10);
-  *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(DAT_104dfd98 + 0x3c390);
-  *(uint16_t *)(iVar1 + 0x18) = *(uint16_t *)(DAT_104dfd98 + 0x40da8);
-  *(uint16_t *)(iVar1 + 0x2e) = *(uint16_t *)(DAT_104dfd98 + 0x3c350);
-  return iVar1;
+  XI_PIECE(arg1, 0, 1) = 0;
+code_100E8BCD:
+  i1 = g_104DFD98 + (uint32_t)*(uint8_t *)(g_104DFD98 + 0x9534 + (uint32_t)(uint8_t)arg1 * 100) * 0x70 +
+          0x57d8 + (uint32_t)(uint8_t)arg1 * 0x8c4;
+  orig::_strncpy_v2((char *)(i1 + 2),(char *)(g_104DFD98 + 0x3c3a4),0x10);
+  *(bits32 *)(i1 + 0x14) = *(bits32 *)(g_104DFD98 + 0x3c390);
+  *(uint16_t *)(i1 + 0x18) = *(uint16_t *)(g_104DFD98 + 0x40da8);
+  *(uint16_t *)(i1 + 0x2e) = *(uint16_t *)(g_104DFD98 + 0x3c350);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100E8C70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl NetCellFont_SelectNext(void)
 {
-  int iVar1;
-  char cVar2;
-  uint8_t bVar3;
-  uint32_t uVar4;
-  int local_8;
+  int i1;
+  char c1;
+  uint8_t u1;
+  uint32_t u2;
+  int i2;
   
-  cVar2 = *(char *)(DAT_104dfd98 + 0x9800);
-  bVar3 = false;
-  if (cVar2 == '\0') {
-    bVar3 = true;
+  c1 = *(char *)(g_104DFD98 + 0x9800);
+  u1 = false;
+  if (c1 == '\0') {
+    u1 = true;
   }
   else {
-    if (cVar2 == '\x01') {
-      local_8 = 1;
-      goto LAB_100e8cb6;
+    if (c1 == '\x01') {
+      i2 = 1;
+      goto code_100E8CB6;
     }
-    if (cVar2 != '\x05') {
+    if (c1 != '\x05') {
       return 0;
     }
   }
-  local_8 = 0;
-LAB_100e8cb6:
-  uVar4 = *(uint32_t *)(DAT_104dfd98 + 0x97fc);
-  if (0x13 < uVar4) {
+  i2 = 0;
+code_100E8CB6:
+  u2 = *(uint32_t *)(g_104DFD98 + 0x97fc);
+  if (0x13 < u2) {
     return 0;
   }
   do {
-    if ((*(int *)(DAT_104dfd98 + 0x9548 + (uVar4 + local_8 * 0x19) * 4) != 0) &&
-       (iVar1 = DAT_104dfd98 + (uint32_t)*(uint8_t *)(uVar4 + local_8 * 100 + 0x9534 + DAT_104dfd98) * 0x70
-                + 0x57d8 + local_8 * 0x8c4, *(int *)(iVar1 + 0x14) != 0)) {
+    if ((*(int *)(g_104DFD98 + 0x9548 + (u2 + i2 * 0x19) * 4) != 0) &&
+       (i1 = g_104DFD98 + (uint32_t)*(uint8_t *)(u2 + i2 * 100 + 0x9534 + g_104DFD98) * 0x70
+                + 0x57d8 + i2 * 0x8c4, *(int *)(i1 + 0x14) != 0)) {
       orig::NetCellFont_GetTotalMilliseconds();
       orig::NetCellFont_GetTotalMilliseconds();
-      if ((!bVar3) || (((*(uint32_t *)(DAT_104dfd98 + 0x97f8) ^ *(uint32_t *)(iVar1 + 0x34)) & 3) == 0)) {
-        *(int *)(DAT_104dfd98 + 0x97fc) = *(int *)(DAT_104dfd98 + 0x97fc) + 1;
-        if (*(char *)(iVar1 + 2) == '\0') {
+      if ((!u1) || (((*(uint32_t *)(g_104DFD98 + 0x97f8) ^ *(uint32_t *)(i1 + 0x34)) & 3) == 0)) {
+        *(int *)(g_104DFD98 + 0x97fc) = *(int *)(g_104DFD98 + 0x97fc) + 1;
+        if (*(char *)(i1 + 2) == '\0') {
           orig::XI_PACKET_100E9550(0);
         }
-        return iVar1;
+        return i1;
       }
     }
-    *(int *)(DAT_104dfd98 + 0x97fc) = *(int *)(DAT_104dfd98 + 0x97fc) + 1;
-    uVar4 = *(uint32_t *)(DAT_104dfd98 + 0x97fc);
-    if (0x13 < uVar4) {
+    *(int *)(g_104DFD98 + 0x97fc) = *(int *)(g_104DFD98 + 0x97fc) + 1;
+    u2 = *(uint32_t *)(g_104DFD98 + 0x97fc);
+    if (0x13 < u2) {
       return 0;
     }
   } while( true );
@@ -1603,116 +1605,116 @@ LAB_100e8cb6:
 
 // FUNCTION: FFXIMAIN 0x100EB490
 // GATE: PASS -- 100 trials, 83 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 83
-XI_API short * __cdecl NetCellFont_GetSlotPtr(int param_1, undefined4 param_2)
+XI_API short * __cdecl NetCellFont_GetSlotPtr(int arg1, bits32 arg2)
 {
-  short *psVar1;
+  short *p1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return (short *)0x0;
   }
-  psVar1 = (short *)(DAT_104dfd98 + 0x9868 + (param_1 * 0x51 + (uint32_t)(uint8_t)param_2) * 0x2c);
-  if ((uint8_t)param_2 == 0) {
-    if (*psVar1 == 0) {
-      psVar1[2] = 0;
-      psVar1[3] = 0;
-      *psVar1 = -1;
-      return psVar1;
+  p1 = (short *)(g_104DFD98 + 0x9868 + (arg1 * 0x51 + (uint32_t)(uint8_t)arg2) * 0x2c);
+  if ((uint8_t)arg2 == 0) {
+    if (*p1 == 0) {
+      p1[2] = 0;
+      p1[3] = 0;
+      *p1 = -1;
+      return p1;
     }
   }
   else {
-    psVar1 = (short *)((uint32_t)psVar1 & -(uint32_t)(*psVar1 != 0));
+    p1 = (short *)((uint32_t)p1 & -(uint32_t)(*p1 != 0));
   }
-  return psVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x100EB8D0
 // GATE: PASS -- 100 trials, 89 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 89
-XI_API int __cdecl NetCellFont_CountFreeEntries(int param_1)
+XI_API int __cdecl NetCellFont_CountFreeEntries(int arg1)
 {
-  undefined4 uVar1;
-  uint8_t bVar2;
-  short *psVar3;
-  int local_4;
+  bits32 u1;
+  uint8_t u2;
+  short *p1;
+  int i1;
   
-  local_4 = 0;
-  if (DAT_104dfd98 == 0) {
+  i1 = 0;
+  if (g_104DFD98 == 0) {
     return -1;
   }
-  bVar2 = 1;
-  psVar3 = (short *)(DAT_104dfd98 + 0x9894 + param_1 * 0xdec);
-  uVar1 = orig::NetCellFont_GetEntryCount(param_1);
-  if (1 < (uint8_t)uVar1) {
+  u2 = 1;
+  p1 = (short *)(g_104DFD98 + 0x9894 + arg1 * 0xdec);
+  u1 = orig::NetCellFont_GetEntryCount(arg1);
+  if (1 < (uint8_t)u1) {
     do {
-      if (*psVar3 == 0) {
-        local_4 = local_4 + 1;
+      if (*p1 == 0) {
+        i1 = i1 + 1;
       }
-      bVar2 = bVar2 + 1;
-      psVar3 = psVar3 + 0x16;
-      uVar1 = orig::NetCellFont_GetEntryCount(param_1);
-    } while (bVar2 < (uint8_t)uVar1);
+      u2 = u2 + 1;
+      p1 = p1 + 0x16;
+      u1 = orig::NetCellFont_GetEntryCount(arg1);
+    } while (u2 < (uint8_t)u1);
   }
-  return local_4;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100EB940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetEntryCount(int param_1)
+XI_API bits32 __cdecl NetCellFont_GetEntryCount(int arg1)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0xff;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_104dfd98 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(DAT_104dfd98 + 0x19891 + param_1))))
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_104DFD98 >> 8))) << 8) | (uint8_t)(*(uint8_t *)(g_104DFD98 + 0x19891 + arg1))))
   ;
 }
 
 // FUNCTION: FFXIMAIN 0x100EBF80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_FindOrRemove(uint32_t param_1, undefined4 param_2, undefined4 param_3)
+XI_API int __cdecl NetCellFont_FindOrRemove(uint32_t arg1, bits32 arg2, bits32 arg3)
 {
-  uint16_t uVar1;
-  int iVar2;
-  int iVar3;
-  uint16_t uVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
+  uint16_t u1;
+  int i1;
+  int i2;
+  uint16_t u2;
+  bits32 *p1;
+  bits32 *p2;
   
-  iVar2 = DAT_104dfd98;
-  if (DAT_104dfd98 != 0) {
-    uVar4 = 0;
-    if (*(uint16_t *)(DAT_104dfd98 + 0x19a50) != 0) {
+  i1 = g_104DFD98;
+  if (g_104DFD98 != 0) {
+    u2 = 0;
+    if (*(uint16_t *)(g_104DFD98 + 0x19a50) != 0) {
       do {
-        if (0xf < uVar4) {
+        if (0xf < u2) {
           return 0;
         }
-        if ((param_1 == *(uint8_t *)(DAT_104dfd98 + 0x198d1 + (uint32_t)uVar4 * 0x18)) &&
-           ((char)param_2 == *(char *)(DAT_104dfd98 + (uint32_t)uVar4 * 0x18 + 0x198d2))) {
-          if ((char)param_3 == '\0') {
-            return DAT_104dfd98 + 0x9868 + (uVar4 + 0xaaf) * 0x18;
+        if ((arg1 == *(uint8_t *)(g_104DFD98 + 0x198d1 + (uint32_t)u2 * 0x18)) &&
+           ((char)arg2 == *(char *)(g_104DFD98 + (uint32_t)u2 * 0x18 + 0x198d2))) {
+          if ((char)arg3 == '\0') {
+            return g_104DFD98 + 0x9868 + (u2 + 0xaaf) * 0x18;
           }
-          puVar6 = (undefined4 *)(DAT_104dfd98 + 0x9868 + (uVar4 + 0xaaf) * 0x18);
-          puVar5 = puVar6;
-          for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-            *puVar5 = 0;
-            puVar5 = puVar5 + 1;
+          p2 = (bits32 *)(g_104DFD98 + 0x9868 + (u2 + 0xaaf) * 0x18);
+          p1 = p2;
+          for (i2 = 6; i2 != 0; i2 = i2 + -1) {
+            *p1 = 0;
+            p1 = p1 + 1;
           }
-          *(short *)(iVar2 + 0x19a50) = *(short *)(iVar2 + 0x19a50) + -1;
-          uVar1 = *(uint16_t *)(iVar2 + 0x19a50);
-          if (uVar1 <= uVar4) {
+          *(short *)(i1 + 0x19a50) = *(short *)(i1 + 0x19a50) + -1;
+          u1 = *(uint16_t *)(i1 + 0x19a50);
+          if (u1 <= u2) {
             return 0;
           }
-          if (0xf < uVar1) {
+          if (0xf < u1) {
             return 0;
           }
-          puVar5 = (undefined4 *)(iVar2 + 0x9868 + (uVar1 + 0xaaf) * 0x18);
-          for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
-            *puVar6 = *puVar5;
-            puVar5 = puVar5 + 1;
-            puVar6 = puVar6 + 1;
+          p1 = (bits32 *)(i1 + 0x9868 + (u1 + 0xaaf) * 0x18);
+          for (i2 = 6; i2 != 0; i2 = i2 + -1) {
+            *p2 = *p1;
+            p1 = p1 + 1;
+            p2 = p2 + 1;
           }
           return 0;
         }
-        uVar4 = uVar4 + 1;
-      } while (uVar4 < *(uint16_t *)(DAT_104dfd98 + 0x19a50));
+        u2 = u2 + 1;
+      } while (u2 < *(uint16_t *)(g_104DFD98 + 0x19a50));
     }
   }
   return 0;
@@ -1720,9 +1722,9 @@ XI_API int __cdecl NetCellFont_FindOrRemove(uint32_t param_1, undefined4 param_2
 
 // FUNCTION: FFXIMAIN 0x100EC060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_RemoveRecord(uint32_t param_1, undefined4 param_2)
+XI_API void __cdecl NetCellFont_RemoveRecord(uint32_t arg1, bits32 arg2)
 {
-  orig::NetCellFont_FindOrRemove(param_1,param_2,1);
+  orig::NetCellFont_FindOrRemove(arg1,arg2,1);
   return;
 }
 
@@ -1730,60 +1732,60 @@ XI_API void __cdecl NetCellFont_RemoveRecord(uint32_t param_1, undefined4 param_
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_ResetCounter(void)
 {
-  DAT_104ca648 = 0;
+  g_104CA648 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100EDEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_Advance(void)
+XI_API bits32 __cdecl NetCellFont_Advance(void)
 {
-  DAT_104ca648_as_s32 = DAT_104ca648_as_s32 + 1;
-  return (uint32_t)(0xe0f < DAT_104ca648_as_s32);
+  g_104CA648_as_s32 = g_104CA648_as_s32 + 1;
+  return (uint32_t)(0xe0f < g_104CA648_as_s32);
 }
 
 // FUNCTION: FFXIMAIN 0x100EDFB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest1FSequence(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepRequest1FSequence(int * arg1)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
+  int i1;
+  int i2;
+  char *p1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    *(undefined4 *)(iVar1 + 0x136ac) = 0;
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,8);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    orig::XI_NETWORK_10115610(*(int *)(DAT_104df770 + 0x13690));
-    *param_1 = *param_1 + 1;
+    *(bits32 *)(i1 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,8);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    orig::XI_NETWORK_10115610(*(int *)(g_104DF770 + 0x13690));
+    *arg1 = *arg1 + 1;
     break;
   case 1:
   case 3:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     break;
   case 2:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    *param_1 = *param_1 + 1;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 4:
     return 1;
@@ -1793,142 +1795,142 @@ XI_API undefined4 __cdecl NetCellFont_StepRequest1FSequence(int * param_1)
 
 // FUNCTION: FFXIMAIN 0x100EE0A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepWait1030FF96(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepWait1030FF96(int * arg1)
 {
-  char *pcVar1;
-  undefined4 uVar2;
-  int iVar3;
+  char *p1;
+  bits32 u1;
+  int i1;
   
-  if (DAT_104df770 == 0) {
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
-    pcVar1 = (char *)orig::TargetMenu_GetMessageFwd(8,9);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar1);
-    uVar2 = orig::FUN_1030ff8b();
-    *(undefined4 *)(DAT_104df770 + 0x136a8) = uVar2;
-    iVar3 = *(int *)(DAT_104df770 + 0x136a8);
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,9);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    u1 = orig::game_1030FF8B();
+    *(bits32 *)(g_104DF770 + 0x136a8) = u1;
+    i1 = *(int *)(g_104DF770 + 0x136a8);
     break;
   case 1:
-    iVar3 = orig::FUN_1030ff96();
-    if (iVar3 == 0) {
+    i1 = orig::game_1030FF96();
+    if (i1 == 0) {
       return 0;
     }
     break;
   case 2:
-    *param_1 = 3;
+    *arg1 = 3;
     return 0;
   case 3:
-    *param_1 = 4;
+    *arg1 = 4;
     return 0;
   case 4:
     return 1;
   default:
-    goto switchD_100ee0bb_default;
+    goto L1;
   }
-  if (iVar3 < 0) {
-    *(int *)(DAT_104df770 + 0x136ac) = iVar3;
+  if (i1 < 0) {
+    *(int *)(g_104DF770 + 0x136ac) = i1;
     return 0xffffffff;
   }
-  *param_1 = *param_1 + 1;
-switchD_100ee0bb_default:
+  *arg1 = *arg1 + 1;
+L1:
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100EE690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest21Sequence(int * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_StepRequest21Sequence(int * arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  int i1;
+  int i2;
+  char *p1;
+  bits32 u1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,0x16);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x16);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
     orig::NetCellFont_SetSessionData
-              (*(int *)(DAT_104df770 + 0x13690),(undefined4 *)(DAT_104df770 + 0x136dc));
-    *param_1 = *param_1 + 1;
+              (*(int *)(g_104DF770 + 0x13690),(bits32 *)(g_104DF770 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 1:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-    goto LAB_100ee86c;
+    i1 = *(int *)(g_104DF770 + 0x13698);
+    goto code_100EE86C;
   case 2:
-    orig::XI_NETWORK_10115A00(*(int *)(iVar1 + 0x13690),param_2);
-    *param_1 = *param_1 + 1;
+    orig::XI_NETWORK_10115A00(*(int *)(i1 + 0x13690),arg2);
+    *arg1 = *arg1 + 1;
     break;
   case 3:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
-      *param_1 = *param_1 + 3;
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
+      *arg1 = *arg1 + 3;
       return 0;
     }
     break;
   case 4:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    goto LAB_100ee84c;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    goto code_100EE84C;
   case 5:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = 10;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = 10;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
   case 6:
-    uVar4 = orig::NetCellFont_GetSessionField13C();
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = uVar4;
-    orig::XI_DEBUGLINK_10115820(*(int *)(DAT_104df770 + 0x13690));
-    *param_1 = *param_1 + 1;
+    u1 = orig::NetCellFont_GetSessionField13C();
+    *(bits32 *)(g_104DF770 + 0x136ac) = u1;
+    orig::XI_DEBUGLINK_10115820(*(int *)(g_104DF770 + 0x13690));
+    *arg1 = *arg1 + 1;
     return 0;
   case 7:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-LAB_100ee84c:
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+code_100EE84C:
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-LAB_100ee86c:
-    if (iVar1 == -1) {
+    i1 = *(int *)(g_104DF770 + 0x13698);
+code_100EE86C:
+    if (i1 == -1) {
       return 0xffffffff;
     }
     return 0;
   case 8:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    *param_1 = *param_1 + 1;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 9:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
       return 0xffffffff;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
@@ -1940,96 +1942,96 @@ LAB_100ee86c:
 
 // FUNCTION: FFXIMAIN 0x100EE900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest22Sequence(int * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_StepRequest22Sequence(int * arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  int i1;
+  int i2;
+  char *p1;
+  bits32 u1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,0x17);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x17);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
     orig::NetCellFont_SetSessionData
-              (*(int *)(DAT_104df770 + 0x13690),(undefined4 *)(DAT_104df770 + 0x136dc));
-    *param_1 = *param_1 + 1;
+              (*(int *)(g_104DF770 + 0x13690),(bits32 *)(g_104DF770 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 1:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-    goto LAB_100eeadc;
+    i1 = *(int *)(g_104DF770 + 0x13698);
+    goto code_100EEADC;
   case 2:
-    orig::XI_NETWORK_10115B20(*(int *)(iVar1 + 0x13690),param_2);
-    *param_1 = *param_1 + 1;
+    orig::XI_NETWORK_10115B20(*(int *)(i1 + 0x13690),arg2);
+    *arg1 = *arg1 + 1;
     break;
   case 3:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
-      *param_1 = *param_1 + 3;
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
+      *arg1 = *arg1 + 3;
       return 0;
     }
     break;
   case 4:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    goto LAB_100eeabc;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    goto code_100EEABC;
   case 5:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = 10;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = 10;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
   case 6:
-    uVar4 = orig::NetCellFont_GetSessionField13C();
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = uVar4;
-    orig::XI_DEBUGLINK_10115820(*(int *)(DAT_104df770 + 0x13690));
-    *param_1 = *param_1 + 1;
+    u1 = orig::NetCellFont_GetSessionField13C();
+    *(bits32 *)(g_104DF770 + 0x136ac) = u1;
+    orig::XI_DEBUGLINK_10115820(*(int *)(g_104DF770 + 0x13690));
+    *arg1 = *arg1 + 1;
     return 0;
   case 7:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-LAB_100eeabc:
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+code_100EEABC:
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-LAB_100eeadc:
-    if (iVar1 == -1) {
+    i1 = *(int *)(g_104DF770 + 0x13698);
+code_100EEADC:
+    if (i1 == -1) {
       return 0xffffffff;
     }
     return 0;
   case 8:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    *param_1 = *param_1 + 1;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 9:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
       return 0xffffffff;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
@@ -2041,96 +2043,96 @@ LAB_100eeadc:
 
 // FUNCTION: FFXIMAIN 0x100EEB70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest28Sequence(int * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_StepRequest28Sequence(int * arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  int i1;
+  int i2;
+  char *p1;
+  bits32 u1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,0x18);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x18);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
     orig::NetCellFont_SetSessionData
-              (*(int *)(DAT_104df770 + 0x13690),(undefined4 *)(DAT_104df770 + 0x136dc));
-    *param_1 = *param_1 + 1;
+              (*(int *)(g_104DF770 + 0x13690),(bits32 *)(g_104DF770 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 1:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-    goto LAB_100eed4c;
+    i1 = *(int *)(g_104DF770 + 0x13698);
+    goto code_100EED4C;
   case 2:
-    orig::XI_NETWORK_10115C30(*(int *)(iVar1 + 0x13690),param_2);
-    *param_1 = *param_1 + 1;
+    orig::XI_NETWORK_10115C30(*(int *)(i1 + 0x13690),arg2);
+    *arg1 = *arg1 + 1;
     break;
   case 3:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
-      *param_1 = *param_1 + 3;
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
+      *arg1 = *arg1 + 3;
       return 0;
     }
     break;
   case 4:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    goto LAB_100eed2c;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    goto code_100EED2C;
   case 5:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = 10;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = 10;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
   case 6:
-    uVar4 = orig::NetCellFont_GetSessionField13C();
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = uVar4;
-    orig::XI_DEBUGLINK_10115820(*(int *)(DAT_104df770 + 0x13690));
-    *param_1 = *param_1 + 1;
+    u1 = orig::NetCellFont_GetSessionField13C();
+    *(bits32 *)(g_104DF770 + 0x136ac) = u1;
+    orig::XI_DEBUGLINK_10115820(*(int *)(g_104DF770 + 0x13690));
+    *arg1 = *arg1 + 1;
     return 0;
   case 7:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-LAB_100eed2c:
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+code_100EED2C:
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    iVar1 = *(int *)(DAT_104df770 + 0x13698);
-LAB_100eed4c:
-    if (iVar1 == -1) {
+    i1 = *(int *)(g_104DF770 + 0x13698);
+code_100EED4C:
+    if (i1 == -1) {
       return 0xffffffff;
     }
     return 0;
   case 8:
-    orig::NetCellFont_GetSessionData(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x136dc));
-    *param_1 = *param_1 + 1;
+    orig::NetCellFont_GetSessionData(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x136dc));
+    *arg1 = *arg1 + 1;
     return 0;
   case 9:
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
       return 0xffffffff;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
     return 0;
@@ -2142,42 +2144,42 @@ LAB_100eed4c:
 
 // FUNCTION: FFXIMAIN 0x100EEDE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest2BSequence(int * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_StepRequest2BSequence(int * arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
+  int i1;
+  int i2;
+  char *p1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  iVar2 = *param_1;
-  if (iVar2 == 0) {
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,0x19);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    orig::XI_NETWORK_10115CC0(*(int *)(DAT_104df770 + 0x13690),param_2);
-    *param_1 = *param_1 + 1;
+  i2 = *arg1;
+  if (i2 == 0) {
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x19);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    orig::XI_NETWORK_10115CC0(*(int *)(g_104DF770 + 0x13690),arg2);
+    *arg1 = *arg1 + 1;
   }
-  else if (iVar2 == 1) {
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+  else if (i2 == 1) {
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
   }
-  else if (iVar2 == 2) {
+  else if (i2 == 2) {
     return 1;
   }
   return 0;
@@ -2185,137 +2187,137 @@ XI_API undefined4 __cdecl NetCellFont_StepRequest2BSequence(int * param_1, undef
 
 // FUNCTION: FFXIMAIN 0x100EEE90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepState1030FFxx(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepState1030FFxx(int * arg1)
 {
-  undefined4 uVar1;
-  int iVar2;
+  bits32 u1;
+  int i1;
   
-  switch(xi_sw(*param_1)) {
+  switch(xi_sw(*arg1)) {
   case 0:
-    uVar1 = orig::FUN_1030ffcd();
-    *(undefined4 *)(DAT_104df770 + 0x136a8) = uVar1;
-    if (*(int *)(DAT_104df770 + 0x136a8) < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = *(int *)(DAT_104df770 + 0x136a8);
+    u1 = orig::game_1030FFCD();
+    *(bits32 *)(g_104DF770 + 0x136a8) = u1;
+    if (*(int *)(g_104DF770 + 0x136a8) < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = *(int *)(g_104DF770 + 0x136a8);
       return 0xffffffff;
     }
     break;
   case 1:
-    iVar2 = orig::FUN_1030ffd8(*(undefined4 *)(DAT_104df770 + 0x136a8));
-    if (iVar2 == 0) {
+    i1 = orig::game_1030FFD8(*(bits32 *)(g_104DF770 + 0x136a8));
+    if (i1 == 0) {
       return 0;
     }
-    if (iVar2 < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = iVar2;
+    if (i1 < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = i1;
       return 0xffffffff;
     }
     break;
   case 2:
-    uVar1 = orig::FUN_1030ffb7();
-    *(undefined4 *)(DAT_104df770 + 0x136a8) = uVar1;
-    if (*(int *)(DAT_104df770 + 0x136a8) < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = *(int *)(DAT_104df770 + 0x136a8);
+    u1 = orig::game_1030FFB7();
+    *(bits32 *)(g_104DF770 + 0x136a8) = u1;
+    if (*(int *)(g_104DF770 + 0x136a8) < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = *(int *)(g_104DF770 + 0x136a8);
       return 0xffffffff;
     }
     break;
   case 3:
-    iVar2 = orig::FUN_1030ffc2(*(undefined4 *)(DAT_104df770 + 0x136a8));
-    if (iVar2 == 0) {
+    i1 = orig::game_1030FFC2(*(bits32 *)(g_104DF770 + 0x136a8));
+    if (i1 == 0) {
       return 0;
     }
-    if (iVar2 < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = iVar2;
+    if (i1 < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = i1;
       return 0xffffffff;
     }
     break;
   case 4:
     return 1;
   default:
-    goto switchD_100eeea0_default;
+    goto L1;
   }
-  *param_1 = *param_1 + 1;
-switchD_100eeea0_default:
+  *arg1 = *arg1 + 1;
+L1:
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100EEF80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepWait1030FFD8(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepWait1030FFD8(int * arg1)
 {
-  int iVar1;
-  char *pcVar2;
-  undefined4 uVar3;
+  int i1;
+  char *p1;
+  bits32 u1;
   
-  iVar1 = *param_1;
-  if (iVar1 == 0) {
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
-    pcVar2 = (char *)orig::TargetMenu_GetMessageFwd(8,0x1b);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar2);
-    uVar3 = orig::FUN_1030ffcd();
-    *(undefined4 *)(DAT_104df770 + 0x136a8) = uVar3;
-    if (*(int *)(DAT_104df770 + 0x136a8) < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = *(int *)(DAT_104df770 + 0x136a8);
+  i1 = *arg1;
+  if (i1 == 0) {
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x1b);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    u1 = orig::game_1030FFCD();
+    *(bits32 *)(g_104DF770 + 0x136a8) = u1;
+    if (*(int *)(g_104DF770 + 0x136a8) < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = *(int *)(g_104DF770 + 0x136a8);
       return 0xffffffff;
     }
   }
   else {
-    if (iVar1 != 1) {
-      if (iVar1 != 2) {
+    if (i1 != 1) {
+      if (i1 != 2) {
         return 0;
       }
       return 1;
     }
-    iVar1 = orig::FUN_1030ffd8(*(undefined4 *)(DAT_104df770 + 0x136a8));
-    if (iVar1 == 0) {
+    i1 = orig::game_1030FFD8(*(bits32 *)(g_104DF770 + 0x136a8));
+    if (i1 == 0) {
       return 0;
     }
-    if (iVar1 < 0) {
-      *(int *)(DAT_104df770 + 0x136ac) = iVar1;
+    if (i1 < 0) {
+      *(int *)(g_104DF770 + 0x136ac) = i1;
       return 0xffffffff;
     }
   }
-  *param_1 = *param_1 + 1;
+  *arg1 = *arg1 + 1;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100EF020
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepRequest14Sequence(int * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_StepRequest14Sequence(int * arg1, bits32 arg2)
 {
-  int iVar1;
-  int iVar2;
-  char *pcVar3;
+  int i1;
+  int i2;
+  char *p1;
   
-  iVar1 = DAT_104df770;
-  if (DAT_104df770 == 0) {
+  i1 = g_104DF770;
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  if (*param_1 == 0) {
+  if (*arg1 == 0) {
     orig::NetCellFont_ResetCounter();
   }
   else {
-    iVar2 = orig::NetCellFont_Advance();
-    if (iVar2 != 0) {
+    i2 = orig::NetCellFont_Advance();
+    if (i2 != 0) {
       return 0xffffffff;
     }
   }
-  iVar2 = *param_1;
-  if (iVar2 == 0) {
-    pcVar3 = (char *)orig::TargetMenu_GetMessageFwd(8,0x1c);
-    orig::NetCellFont_CopyToGlobalBuffer(pcVar3);
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
-    orig::XI_NETWORK_10115A90(*(int *)(DAT_104df770 + 0x13690),param_2);
-    *param_1 = *param_1 + 1;
+  i2 = *arg1;
+  if (i2 == 0) {
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(8,0x1c);
+    orig::NetCellFont_CopyToGlobalBuffer(p1);
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
+    orig::XI_NETWORK_10115A90(*(int *)(g_104DF770 + 0x13690),arg2);
+    *arg1 = *arg1 + 1;
   }
-  else if (iVar2 == 1) {
-    orig::XI_DEBUGLINK_10115D50(*(int *)(iVar1 + 0x13690),(undefined4 *)(iVar1 + 0x13698));
-    if (*(int *)(DAT_104df770 + 0x13698) == 0) {
-      *param_1 = *param_1 + 1;
+  else if (i2 == 1) {
+    orig::XI_DEBUGLINK_10115D50(*(int *)(i1 + 0x13690),(bits32 *)(i1 + 0x13698));
+    if (*(int *)(g_104DF770 + 0x13698) == 0) {
+      *arg1 = *arg1 + 1;
     }
-    if (*(int *)(DAT_104df770 + 0x13698) == -1) {
+    if (*(int *)(g_104DF770 + 0x13698) == -1) {
       return 0xffffffff;
     }
   }
-  else if (iVar2 == 2) {
+  else if (i2 == 2) {
     return 1;
   }
   return 0;
@@ -2323,143 +2325,143 @@ XI_API undefined4 __cdecl NetCellFont_StepRequest14Sequence(int * param_1, undef
 
 // FUNCTION: FFXIMAIN 0x100EF0E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int * __cdecl NetCellFont_RunState(int * param_1)
+XI_API int * __cdecl NetCellFont_RunState(int * arg1)
 {
-  int iVar1;
+  int i1;
   char xi_frame[68] __attribute__((aligned(4)));
-  code * (&local_44)[4] = *reinterpret_cast<code * (*)[4]>(xi_frame + 0);
-  code * &local_34 = *reinterpret_cast<code * *>(xi_frame + 16);
-  code * &local_30 = *reinterpret_cast<code * *>(xi_frame + 20);
-  code * &local_2c = *reinterpret_cast<code * *>(xi_frame + 24);
-  code * &local_28 = *reinterpret_cast<code * *>(xi_frame + 28);
-  code * &local_24 = *reinterpret_cast<code * *>(xi_frame + 32);
-  code * &local_20 = *reinterpret_cast<code * *>(xi_frame + 36);
-  code * &local_1c = *reinterpret_cast<code * *>(xi_frame + 40);
-  code * &local_18 = *reinterpret_cast<code * *>(xi_frame + 44);
-  code * &local_14 = *reinterpret_cast<code * *>(xi_frame + 48);
-  code * &local_10 = *reinterpret_cast<code * *>(xi_frame + 52);
-  code * &local_c = *reinterpret_cast<code * *>(xi_frame + 56);
-  uint8_t * &local_8 = *reinterpret_cast<uint8_t * *>(xi_frame + 60);
-  uint8_t * &local_4 = *reinterpret_cast<uint8_t * *>(xi_frame + 64);
+  untyped_fn * (&p1)[4] = *reinterpret_cast<untyped_fn * (*)[4]>(xi_frame + 0);
+  untyped_fn * &p2 = *reinterpret_cast<untyped_fn * *>(xi_frame + 16);
+  untyped_fn * &p3 = *reinterpret_cast<untyped_fn * *>(xi_frame + 20);
+  untyped_fn * &p4 = *reinterpret_cast<untyped_fn * *>(xi_frame + 24);
+  untyped_fn * &p5 = *reinterpret_cast<untyped_fn * *>(xi_frame + 28);
+  untyped_fn * &p6 = *reinterpret_cast<untyped_fn * *>(xi_frame + 32);
+  untyped_fn * &p7 = *reinterpret_cast<untyped_fn * *>(xi_frame + 36);
+  untyped_fn * &p8 = *reinterpret_cast<untyped_fn * *>(xi_frame + 40);
+  untyped_fn * &p9 = *reinterpret_cast<untyped_fn * *>(xi_frame + 44);
+  untyped_fn * &p10 = *reinterpret_cast<untyped_fn * *>(xi_frame + 48);
+  untyped_fn * &p11 = *reinterpret_cast<untyped_fn * *>(xi_frame + 52);
+  untyped_fn * &p12 = *reinterpret_cast<untyped_fn * *>(xi_frame + 56);
+  uint8_t * &p13 = *reinterpret_cast<uint8_t * *>(xi_frame + 60);
+  uint8_t * &p14 = *reinterpret_cast<uint8_t * *>(xi_frame + 64);
   
-  local_44[0] = XI_CODE(FUN_100ef1a0);
-  local_44[1] = XI_CODE(FUN_100ef1a0);
-  local_44[2] = XI_CODE(FUN_100ef1a0);
-  local_44[3] = XI_CODE(FUN_100ef1a0);
-  local_34 = XI_CODE(FUN_100ef1a0);
-  local_30 = XI_CODE(FUN_100ef1a0);
-  local_2c = XI_CODE(FUN_100ef1a0);
-  local_28 = XI_CODE(FUN_100ef1a0);
-  local_24 = XI_CODE(FUN_100ef1a0);
-  local_20 = XI_CODE(FUN_100ef1a0);
-  local_1c = XI_CODE(FUN_100ef1a0);
-  local_18 = XI_CODE(FUN_100ef1a0);
-  local_14 = XI_CODE(FUN_100ef1a0);
-  local_10 = XI_CODE(FUN_100ef1a0);
-  local_c = XI_CODE(FUN_100ef1a0);
-  local_8 =(uint8_t*)(&LAB_100ef450);
-  local_4 =(uint8_t*)(&LAB_100ef4b0);
-  if (DAT_104df770 != 0) {
-    if (*param_1 == 0) {
+  p1[0] = XI_CODE(game_100EF1A0);
+  p1[1] = XI_CODE(game_100EF1A0);
+  p1[2] = XI_CODE(game_100EF1A0);
+  p1[3] = XI_CODE(game_100EF1A0);
+  p2 = XI_CODE(game_100EF1A0);
+  p3 = XI_CODE(game_100EF1A0);
+  p4 = XI_CODE(game_100EF1A0);
+  p5 = XI_CODE(game_100EF1A0);
+  p6 = XI_CODE(game_100EF1A0);
+  p7 = XI_CODE(game_100EF1A0);
+  p8 = XI_CODE(game_100EF1A0);
+  p9 = XI_CODE(game_100EF1A0);
+  p10 = XI_CODE(game_100EF1A0);
+  p11 = XI_CODE(game_100EF1A0);
+  p12 = XI_CODE(game_100EF1A0);
+  p13 =(uint8_t*)(&code_100EF450);
+  p14 =(uint8_t*)(&code_100EF4B0);
+  if (g_104DF770 != 0) {
+    if (*arg1 == 0) {
       orig::NetCellFont_ResetCounter();
     }
     else {
-      iVar1 = orig::NetCellFont_Advance();
-      if (iVar1 != 0) goto LAB_100ef174;
+      i1 = orig::NetCellFont_Advance();
+      if (i1 != 0) goto code_100EF174;
     }
-    if (local_44[*param_1] != (code *)0x0) {
-      param_1 = (int *)(*local_44[*param_1])(param_1);
+    if (p1[*arg1] != (untyped_fn *)0x0) {
+      arg1 = (int *)(*p1[*arg1])(arg1);
     }
-    if (param_1 != (int *)0xffffffff) {
+    if (arg1 != (int *)0xffffffff) {
       orig::NetCellFont_UpdateSession();
-      return param_1;
+      return arg1;
     }
   }
-LAB_100ef174:
+code_100EF174:
   orig::_exit_0_v1(0xbb9);
   return (int *)0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x100EF4C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepStateWithEntries(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepStateWithEntries(int * arg1)
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined4 uVar4;
+  int i1;
+  bits32 u1;
+  int i2;
+  bits32 u2;
   
-  uVar4 = 0;
-  iVar3 = *param_1;
-  if (iVar3 == 0) {
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
-    uVar2 = orig::NetCellFont_GetRecordWordFwd(*(undefined4 *)(g_pGameMode_as_v0 + 0x80));
-    orig::NetCellFont_SetWord130(uVar2);
+  u2 = 0;
+  i2 = *arg1;
+  if (i2 == 0) {
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
+    u1 = orig::NetCellFont_GetRecordWordFwd(*(bits32 *)(g_pGameMode_as_v0 + 0x80));
+    orig::NetCellFont_SetWord130(u1);
     orig::NetCellFont_ClearTimer140();
   }
   else {
-    if (iVar3 != 1) {
-      if (iVar3 == 2) {
-        iVar3 = 0;
-        iVar1 = orig::NetCellFont_GetEntryPtrA90(0);
-        while (iVar1 != 0) {
-          iVar3 = iVar3 + 1;
-          iVar1 = orig::NetCellFont_GetEntryPtrA90(iVar3);
+    if (i2 != 1) {
+      if (i2 == 2) {
+        i2 = 0;
+        i1 = orig::NetCellFont_GetEntryPtrA90(0);
+        while (i1 != 0) {
+          i2 = i2 + 1;
+          i1 = orig::NetCellFont_GetEntryPtrA90(i2);
         }
-        uVar4 = 1;
+        u2 = 1;
       }
-      goto LAB_100ef535;
+      goto code_100EF535;
     }
-    iVar3 = orig::NetCellFont_ScanIfTimer140Set();
-    if (iVar3 != 1) goto LAB_100ef535;
+    i2 = orig::NetCellFont_ScanIfTimer140Set();
+    if (i2 != 1) goto code_100EF535;
   }
-  *param_1 = *param_1 + 1;
-LAB_100ef535:
-  if (DAT_104df770 == 0) {
+  *arg1 = *arg1 + 1;
+code_100EF535:
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
   orig::NetCellFont_UpdateSession();
-  return uVar4;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x100EF550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StepStateWithTimer(int * param_1)
+XI_API bits32 __cdecl NetCellFont_StepStateWithTimer(int * arg1)
 {
-  int iVar1;
-  undefined4 uVar2;
+  int i1;
+  bits32 u1;
   
-  uVar2 = 0;
-  iVar1 = *param_1;
-  if (iVar1 == 0) {
-    *(undefined4 *)(DAT_104df770 + 0x136ac) = 0;
+  u1 = 0;
+  i1 = *arg1;
+  if (i1 == 0) {
+    *(bits32 *)(g_104DF770 + 0x136ac) = 0;
   }
   else {
-    if (iVar1 != 1) {
-      if (iVar1 == 2) {
-        iVar1 = orig::NetCellFont_ScanIfTimer140Set();
-        if (iVar1 != 0) {
-          uVar2 = 1;
+    if (i1 != 1) {
+      if (i1 == 2) {
+        i1 = orig::NetCellFont_ScanIfTimer140Set();
+        if (i1 != 0) {
+          u1 = 1;
         }
       }
-      goto LAB_100ef58c;
+      goto code_100EF58C;
     }
     orig::NetCellFont_ClearTimer140();
   }
-  *param_1 = *param_1 + 1;
-LAB_100ef58c:
+  *arg1 = *arg1 + 1;
+code_100EF58C:
   orig::NetCellFont_UpdateSession();
-  if (DAT_104df770 == 0) {
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100EF5B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_UpdateSessionIfReady(void)
+XI_API bits32 __cdecl NetCellFont_UpdateSessionIfReady(void)
 {
-  if (DAT_104df770 == 0) {
+  if (g_104DF770 == 0) {
     return 0xffffffff;
   }
   orig::NetCellFont_UpdateSession();
@@ -2468,7 +2470,7 @@ XI_API undefined4 __cdecl NetCellFont_UpdateSessionIfReady(void)
 
 // FUNCTION: FFXIMAIN 0x100EF5BD
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_UpdateSessionReturn1(void)
+XI_API bits32 __cdecl NetCellFont_UpdateSessionReturn1(void)
 {
   orig::NetCellFont_UpdateSession();
   return 1;
@@ -2476,33 +2478,33 @@ XI_API undefined4 __cdecl NetCellFont_UpdateSessionReturn1(void)
 
 // FUNCTION: FFXIMAIN 0x100EF640
 // GATE: PASS -- 100 trials, 33 returned normally, 1 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 33
-XI_API int * __cdecl NetCellFont_DispatchByKindAndUpdate(int * param_1)
+XI_API int * __cdecl NetCellFont_DispatchByKindAndUpdate(int * arg1)
 {
-  int *piVar1;
+  int *p1;
   
-  if (DAT_104df770 == 0) {
+  if (g_104DF770 == 0) {
     return (int *)0xffffffff;
   }
-  if ((code *)(&PTR_LAB_1036202c)[*param_1] != (code *)0x0) {
-    piVar1 = (int *)(*(code *)(&PTR_LAB_1036202c)[*param_1])(param_1);
+  if ((untyped_fn *)(&g_1036202C)[*arg1] != (untyped_fn *)0x0) {
+    p1 = (int *)(*(untyped_fn *)(&g_1036202C)[*arg1])(arg1);
     orig::NetCellFont_UpdateSession();
-    return piVar1;
+    return p1;
   }
   orig::NetCellFont_UpdateSession();
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x100EF870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StatusText80IfFlags44(void)
+XI_API bits32 __cdecl NetCellFont_StatusText80IfFlags44(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  if (DAT_104dfd98 != 0) {
-    uVar1 = orig::NetCellFont_GetFlags();
-    if (-1 < (char)uVar1) {
-      uVar1 = orig::NetCellFont_GetFlags();
-      if (((uint8_t)uVar1 & 0x44) == 0x44) {
+  if (g_104DFD98 != 0) {
+    u1 = orig::NetCellFont_GetFlags();
+    if (-1 < (char)u1) {
+      u1 = orig::NetCellFont_GetFlags();
+      if (((uint8_t)u1 & 0x44) == 0x44) {
         orig::NetCellFont_ApplyStatusText(0x80);
         return 1;
       }
@@ -2513,15 +2515,15 @@ XI_API undefined4 __cdecl NetCellFont_StatusText80IfFlags44(void)
 
 // FUNCTION: FFXIMAIN 0x100EF8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StatusText80IfFlag4Only(void)
+XI_API bits32 __cdecl NetCellFont_StatusText80IfFlag4Only(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  if (DAT_104dfd98 != 0) {
-    uVar1 = orig::NetCellFont_GetFlags();
-    if (-1 < (char)uVar1) {
-      uVar1 = orig::NetCellFont_GetFlags();
-      if (((uint8_t)uVar1 & 0x44) == 4) {
+  if (g_104DFD98 != 0) {
+    u1 = orig::NetCellFont_GetFlags();
+    if (-1 < (char)u1) {
+      u1 = orig::NetCellFont_GetFlags();
+      if (((uint8_t)u1 & 0x44) == 4) {
         orig::NetCellFont_ApplyStatusText(0x80);
         return 1;
       }
@@ -2532,69 +2534,69 @@ XI_API undefined4 __cdecl NetCellFont_StatusText80IfFlag4Only(void)
 
 // FUNCTION: FFXIMAIN 0x100EF8F0
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 __cdecl NetCellFont_GetSessionField13C(void)
+XI_API bits32 __cdecl NetCellFont_GetSessionField13C(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   char xi_frame[4] __attribute__((aligned(4)));
-  undefined4  &local_4 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
   
-  local_4 = 0;
-  uVar1 = 0;
-  if (*(int *)(DAT_104df770 + 0x13690) != 0) {
-    orig::NetCellFont_GetField13C(*(int *)(DAT_104df770 + 0x13690),&local_4);
-    uVar1 = local_4;
+  u2 = 0;
+  u1 = 0;
+  if (*(int *)(g_104DF770 + 0x13690) != 0) {
+    orig::NetCellFont_GetField13C(*(int *)(g_104DF770 + 0x13690),&u2);
+    u1 = u2;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100EFC70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetRecordWord(int param_1)
+XI_API bits32 __cdecl NetCellFont_GetRecordWord(int arg1)
 {
-  return (uint32_t)*(uint16_t *)(DAT_104df770 + 0x1382a + param_1 * 0x8c);
+  return (uint32_t)*(uint16_t *)(g_104DF770 + 0x1382a + arg1 * 0x8c);
 }
 
 // FUNCTION: FFXIMAIN 0x100EFCA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetRecordDword(int param_1)
+XI_API bits32 __cdecl NetCellFont_GetRecordDword(int arg1)
 {
-  return *(undefined4 *)(DAT_104df770 + 0x13824 + param_1 * 0x8c);
+  return *(bits32 *)(g_104DF770 + 0x13824 + arg1 * 0x8c);
 }
 
 // FUNCTION: FFXIMAIN 0x100EFCE0
 // GATE: PASS -- 100 trials, 59 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 59
-XI_API char * __cdecl Name_LookupByKey(int param_1)
+XI_API char * __cdecl Name_LookupByKey(int arg1)
 {
-  uint32_t uVar1;
-  int *piVar2;
+  uint32_t u1;
+  int *p1;
   
-  uVar1 = 0;
-  if (*(uint32_t *)(DAT_104df770 + 0x14140) != 0) {
-    piVar2 = (int *)(DAT_104df770 + 0x14144);
+  u1 = 0;
+  if (*(uint32_t *)(g_104DF770 + 0x14140) != 0) {
+    p1 = (int *)(g_104DF770 + 0x14144);
     do {
-      if (*piVar2 == param_1) {
-        return (char *)(DAT_104df770 + 0x14148 + uVar1 * 0x14);
+      if (*p1 == arg1) {
+        return (char *)(g_104DF770 + 0x14148 + u1 * 0x14);
       }
-      uVar1 = uVar1 + 1;
-      piVar2 = piVar2 + 5;
-    } while (uVar1 < *(uint32_t *)(DAT_104df770 + 0x14140));
+      u1 = u1 + 1;
+      p1 = p1 + 5;
+    } while (u1 < *(uint32_t *)(g_104DF770 + 0x14140));
   }
-  return s_unknown_1036203c;
+  return str_unknown_1036203C;
 }
 
 // FUNCTION: FFXIMAIN 0x100F0000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_CopyToGlobalBuffer(char * param_1)
+XI_API bits32 __cdecl NetCellFont_CopyToGlobalBuffer(char * arg1)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  iVar2 = (int)&DAT_104ca438 - (int)param_1;
+  i1 = (int)&g_104CA438 - (int)arg1;
   do {
-    cVar1 = *param_1;
-    param_1[iVar2] = cVar1;
-    param_1 = param_1 + 1;
-  } while (cVar1 != '\0');
+    c1 = *arg1;
+    arg1[i1] = c1;
+    arg1 = arg1 + 1;
+  } while (c1 != '\0');
   return 0;
 }
 
@@ -2602,290 +2604,290 @@ XI_API undefined4 __cdecl NetCellFont_CopyToGlobalBuffer(char * param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl NetCellFont_GetBlock2CF54IfFlag(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  if (((uint8_t *)((&DAT_0002cfd4_as_v0)))[DAT_104dfd98] == '\0') {
+  if (((uint8_t *)((&g_0002CFD4_as_v0)))[g_104DFD98] == '\0') {
     return 0;
   }
-  return DAT_104dfd98 + 0x2cf54;
+  return g_104DFD98 + 0x2cf54;
 }
 
 // FUNCTION: FFXIMAIN 0x100F02A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) NetCellFont_ReturnTrue100F02A0(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) NetCellFont_ReturnTrue100F02A0(bits32 xi_eax)
 {
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F04F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetByte15110(uint8_t * param_1)
+XI_API bits32 __cdecl NetCellFont_SetByte15110(uint8_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)DAT_104df770 >> 8;
-  if (DAT_104df770 == 0) {
+  u1 = (uint32_t)g_104DF770 >> 8;
+  if (g_104DF770 == 0) {
     return 0;
   }
-  *(uint8_t *)(DAT_104df770 + 0x15110) = *param_1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(uVar1)) << 8) | (uint8_t)(1)));
+  *(uint8_t *)(g_104DF770 + 0x15110) = *arg1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(u1)) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F0550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetByte15114(uint8_t * param_1)
+XI_API bits32 __cdecl NetCellFont_SetByte15114(uint8_t * arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)DAT_104df770 >> 8;
-  if (DAT_104df770 == 0) {
+  u1 = (uint32_t)g_104DF770 >> 8;
+  if (g_104DF770 == 0) {
     return 0;
   }
-  *(uint8_t *)(DAT_104df770 + 0x15114) = *param_1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(uVar1)) << 8) | (uint8_t)(1)));
+  *(uint8_t *)(g_104DF770 + 0x15114) = *arg1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(u1)) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F05F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ClearDword136A4(void)
+XI_API bits32 __cdecl NetCellFont_ClearDword136A4(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)DAT_104df770 >> 8;
-  if (DAT_104df770 == 0) {
+  u1 = (uint32_t)g_104DF770 >> 8;
+  if (g_104DF770 == 0) {
     return 0;
   }
-  *(undefined4 *)(DAT_104df770 + 0x136a4) = 0;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(uVar1)) << 8) | (uint8_t)(1)));
+  *(bits32 *)(g_104DF770 + 0x136a4) = 0;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(u1)) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F0C50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint32_t __cdecl NetCellFont_GetFlagsMasked(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  uVar1 = orig::NetCellFont_GetFlags();
-  return uVar1 >> 8 & 0xffff01;
+  u1 = orig::NetCellFont_GetFlags();
+  return u1 >> 8 & 0xffff01;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1080
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetWord40D82(void)
+XI_API bits32 __cdecl NetCellFont_GetWord40D82(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  return (uint32_t)*(uint16_t *)(DAT_104dfd98 + 0x40d82);
+  return (uint32_t)*(uint16_t *)(g_104DFD98 + 0x40d82);
 }
 
 // FUNCTION: FFXIMAIN 0x100F10C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ClearRecord(uint8_t * param_1)
+XI_API bits32 __cdecl NetCellFont_ClearRecord(uint8_t * arg1)
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  *(undefined4 *)(param_1 + 4) = 0;
-  *(undefined4 *)(param_1 + 8) = 0;
-  *(undefined4 *)(param_1 + 0xc) = 0;
-  *(undefined4 *)(param_1 + 0x10) = 0;
-  *(undefined4 *)(param_1 + 0x14) = 0;
-  *(undefined4 *)(param_1 + 0x18) = 0;
-  *(undefined4 *)(param_1 + 0x1c) = 0;
-  *(undefined4 *)(param_1 + 0x20) = 0;
-  *(undefined4 *)(param_1 + 0x24) = 0;
-  *(undefined4 *)(param_1 + 0x28) = 0;
-  return param_1;
+  *arg1 = 0;
+  arg1[1] = 0;
+  *(bits32 *)(arg1 + 4) = 0;
+  *(bits32 *)(arg1 + 8) = 0;
+  *(bits32 *)(arg1 + 0xc) = 0;
+  *(bits32 *)(arg1 + 0x10) = 0;
+  *(bits32 *)(arg1 + 0x14) = 0;
+  *(bits32 *)(arg1 + 0x18) = 0;
+  *(bits32 *)(arg1 + 0x1c) = 0;
+  *(bits32 *)(arg1 + 0x20) = 0;
+  *(bits32 *)(arg1 + 0x24) = 0;
+  *(bits32 *)(arg1 + 0x28) = 0;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F10F0
 // GATE: PASS -- 100 trials, 6 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 6
 XI_API int __cdecl NetCellFont_UpdateActive(void)
 {
-  uint8_t *puVar1;
-  char cVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  uint8_t *p1;
+  char c1;
+  int i1;
+  int i2;
+  int i3;
   
-  iVar4 = 0;
-  if (DAT_104df774_as_s32 == 0) {
+  i2 = 0;
+  if (g_104DF774_as_s32 == 0) {
     return 0;
   }
-  iVar5 = 0;
+  i3 = 0;
   do {
-    puVar1 = (uint8_t *)(iVar5 + 4 + DAT_104df774_as_s32);
-    if (*(char *)(iVar5 + 5 + DAT_104df774_as_s32) != '\0') {
-      iVar3 = orig::NetCellFont_StepBitGuardedTask((int)puVar1);
-      if (iVar3 != 0) {
-        if (*(code **)(puVar1 + 4) != (code *)0x0) {
-          cVar2 = (**(code **)(puVar1 + 4))(iVar3,*(undefined4 *)(puVar1 + 0x1c));
-          if (cVar2 != '\0') goto LAB_100f1140;
+    p1 = (uint8_t *)(i3 + 4 + g_104DF774_as_s32);
+    if (*(char *)(i3 + 5 + g_104DF774_as_s32) != '\0') {
+      i1 = orig::NetCellFont_StepBitGuardedTask((int)p1);
+      if (i1 != 0) {
+        if (*(untyped_fn **)(p1 + 4) != (untyped_fn *)0x0) {
+          c1 = (**(untyped_fn **)(p1 + 4))(i1,*(bits32 *)(p1 + 0x1c));
+          if (c1 != '\0') goto code_100F1140;
         }
-        orig::NetCellFont_ClearRecord(puVar1);
+        orig::NetCellFont_ClearRecord(p1);
       }
-LAB_100f1140:
-      iVar4 = iVar4 + 1;
+code_100F1140:
+      i2 = i2 + 1;
     }
-    iVar5 = iVar5 + 0x2c;
-    if (0x20f < iVar5) {
-      return iVar4;
+    i3 = i3 + 0x2c;
+    if (0x20f < i3) {
+      return i2;
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x100F1160
 // GATE: PASS -- 100 trials, 81 returned normally, 4 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 81
-XI_API int __cdecl NetCellFont_StepBitGuardedTask(int param_1)
+XI_API int __cdecl NetCellFont_StepBitGuardedTask(int arg1)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t u1;
+  int i1;
+  uint32_t u2;
   
-  uVar3 = 0;
-  switch(xi_sw(*(undefined4 *)(param_1 + 0x24))) {
+  u2 = 0;
+  switch(xi_sw(*(bits32 *)(arg1 + 0x24))) {
   case 0:
-    uVar1 = orig::NetCellFont_IsBitSet(*(undefined4 *)(param_1 + 8));
-    if ((char)uVar1 != '\0') {
+    u1 = orig::NetCellFont_IsBitSet(*(bits32 *)(arg1 + 8));
+    if ((char)u1 != '\0') {
       return 0;
     }
-    orig::NetCellFont_SetBit(*(undefined4 *)(param_1 + 8));
-    *(int *)(param_1 + 0x24) = *(int *)(param_1 + 0x24) + 1;
-switchD_100f1177_caseD_1:
-    if (*(code **)(param_1 + 0xc) == (code *)0x0) {
-      *(int *)(param_1 + 0x24) = *(int *)(param_1 + 0x24) + 1;
-switchD_100f1177_caseD_2:
-      uVar3 = (**(code **)(param_1 + 0x10))(*(undefined4 *)(param_1 + 0x18));
-      *(uint32_t *)(param_1 + 0x20) = uVar3;
-      if (-1 < (int)uVar3) {
-        *(undefined4 *)(param_1 + 0x28) = 0;
-        *(int *)(param_1 + 0x24) = *(int *)(param_1 + 0x24) + 1;
+    orig::NetCellFont_SetBit(*(bits32 *)(arg1 + 8));
+    *(int *)(arg1 + 0x24) = *(int *)(arg1 + 0x24) + 1;
+L1:
+    if (*(untyped_fn **)(arg1 + 0xc) == (untyped_fn *)0x0) {
+      *(int *)(arg1 + 0x24) = *(int *)(arg1 + 0x24) + 1;
+L2:
+      u2 = (**(untyped_fn **)(arg1 + 0x10))(*(bits32 *)(arg1 + 0x18));
+      *(uint32_t *)(arg1 + 0x20) = u2;
+      if (-1 < (int)u2) {
+        *(bits32 *)(arg1 + 0x28) = 0;
+        *(int *)(arg1 + 0x24) = *(int *)(arg1 + 0x24) + 1;
         return 0;
       }
-      if (uVar3 != 0xffffeb34) {
-        if ((-0x800 < (int)uVar3) && (*(int *)(param_1 + 0x28) < 0x32)) {
-          *(int *)(param_1 + 0x28) = *(int *)(param_1 + 0x28) + 1;
-          orig::ErrorReport_Call10114F10NoArgs(uVar3);
+      if (u2 != 0xffffeb34) {
+        if ((-0x800 < (int)u2) && (*(int *)(arg1 + 0x28) < 0x32)) {
+          *(int *)(arg1 + 0x28) = *(int *)(arg1 + 0x28) + 1;
+          orig::ErrorReport_Call10114F10NoArgs(u2);
           return 0;
         }
-LAB_100f123a:
-        orig::_exit_0_v2(uVar3);
-LAB_100f1244:
-        if (uVar3 == 0) {
+code_100F123A:
+        orig::_exit_0_v2(u2);
+code_100F1244:
+        if (u2 == 0) {
           return 0;
         }
       }
-      *(undefined4 *)(param_1 + 0x28) = 0;
-      *(undefined4 *)(param_1 + 0x24) = 0;
-      *(undefined4 *)(param_1 + 0x20) = 0;
-      orig::NetCellFont_ClearBit(*(undefined4 *)(param_1 + 8));
+      *(bits32 *)(arg1 + 0x28) = 0;
+      *(bits32 *)(arg1 + 0x24) = 0;
+      *(bits32 *)(arg1 + 0x20) = 0;
+      orig::NetCellFont_ClearBit(*(bits32 *)(arg1 + 8));
     }
     else {
-      iVar2 = (**(code **)(param_1 + 0xc))();
-      if (iVar2 != 0) {
-        *(int *)(param_1 + 0x24) = *(int *)(param_1 + 0x24) + 1;
+      i1 = (**(untyped_fn **)(arg1 + 0xc))();
+      if (i1 != 0) {
+        *(int *)(arg1 + 0x24) = *(int *)(arg1 + 0x24) + 1;
         return 0;
       }
     }
-switchD_100f1177_default:
-    return uVar3;
+L3:
+    return u2;
   case 1:
-    goto switchD_100f1177_caseD_1;
+    goto L1;
   case 2:
-    goto switchD_100f1177_caseD_2;
+    goto L2;
   case 3:
-    uVar3 = (**(code **)(param_1 + 0x14))
-                      (*(undefined4 *)(param_1 + 0x20),*(undefined4 *)(param_1 + 0x1c));
-    if (uVar3 == 0) {
+    u2 = (**(untyped_fn **)(arg1 + 0x14))
+                      (*(bits32 *)(arg1 + 0x20),*(bits32 *)(arg1 + 0x1c));
+    if (u2 == 0) {
       return 0;
     }
-    if ((uVar3 != 0xffffeb34) && ((int)uVar3 < 0)) goto LAB_100f123a;
-    goto LAB_100f1244;
+    if ((u2 != 0xffffeb34) && ((int)u2 < 0)) goto code_100F123A;
+    goto code_100F1244;
   default:
-    goto switchD_100f1177_default;
+    goto L3;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x100F1280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AcquireIfFree(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __cdecl NetCellFont_AcquireIfFree(bits32 arg1, bits32 arg2, bits32 arg3)
 {
-  undefined4 uVar1;
-  char *pcVar2;
+  bits32 u1;
+  char *p1;
   
-  uVar1 = orig::FUN_100f1410(param_1);
-  if ((char)uVar1 != '\0') {
-    pcVar2 = orig::NetCellFont_AllocRecord(param_1,0,param_2,param_3);
-    return pcVar2;
+  u1 = orig::game_100F1410(arg1);
+  if ((char)u1 != '\0') {
+    p1 = orig::NetCellFont_AllocRecord(arg1,0,arg2,arg3);
+    return p1;
   }
   return (char *)0;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1300
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __cdecl NetCellFont_AllocRecord(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API char * __cdecl NetCellFont_AllocRecord(bits32 arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  char *pcVar1;
-  int iVar2;
+  char *p1;
+  int i1;
   
-  iVar2 = 0;
-  pcVar1 = (char *)(DAT_104df774_as_s32 + 4);
+  i1 = 0;
+  p1 = (char *)(g_104DF774_as_s32 + 4);
   do {
-    if (*pcVar1 == '\0') {
-      *(undefined4 *)(pcVar1 + 8) = param_1;
-      *(undefined4 *)(pcVar1 + 0xc) = param_2;
-      *pcVar1 = '\x01';
-      *(undefined4 *)(pcVar1 + 0x10) = param_3;
-      *(undefined4 *)(pcVar1 + 0x14) = param_4;
-      return pcVar1;
+    if (*p1 == '\0') {
+      *(bits32 *)(p1 + 8) = arg1;
+      *(bits32 *)(p1 + 0xc) = arg2;
+      *p1 = '\x01';
+      *(bits32 *)(p1 + 0x10) = arg3;
+      *(bits32 *)(p1 + 0x14) = arg4;
+      return p1;
     }
-    iVar2 = iVar2 + 1;
-    pcVar1 = pcVar1 + 0x2c;
-  } while (iVar2 < 0x40);
+    i1 = i1 + 1;
+    p1 = p1 + 0x2c;
+  } while (i1 < 0x40);
   return (char *)0x0;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1340
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_InitEntry(char * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __cdecl NetCellFont_InitEntry(char * arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  if (param_1 == (char *)0x0) {
+  if (arg1 == (char *)0x0) {
     return 0xffffffff;
   }
-  if (*param_1 == '\0') {
+  if (*arg1 == '\0') {
     return 0xffffffff;
   }
-  param_1[1] = '\x01';
-  *(undefined4 *)(param_1 + 0x18) = param_2;
-  *(undefined4 *)(param_1 + 0x1c) = param_3;
-  *(undefined4 *)(param_1 + 4) = param_4;
+  arg1[1] = '\x01';
+  *(bits32 *)(arg1 + 0x18) = arg2;
+  *(bits32 *)(arg1 + 0x1c) = arg3;
+  *(bits32 *)(arg1 + 4) = arg4;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100F13B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_IsBitSet(undefined4 param_1)
+XI_API uint32_t __cdecl NetCellFont_IsBitSet(bits32 arg1)
 {
-  return 1 << ((uint8_t)param_1 & 0x1f) & *DAT_104df774;
+  return 1 << ((uint8_t)arg1 & 0x1f) & *g_104DF774;
 }
 
 // FUNCTION: FFXIMAIN 0x100F13D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_SetBit(undefined4 param_1)
+XI_API void __cdecl NetCellFont_SetBit(bits32 arg1)
 {
-  *DAT_104df774 = *DAT_104df774 | 1 << ((uint8_t)param_1 & 0x1f);
+  *g_104DF774 = *g_104DF774 | 1 << ((uint8_t)arg1 & 0x1f);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100F13F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_ClearBit(undefined4 param_1)
+XI_API void __cdecl NetCellFont_ClearBit(bits32 arg1)
 {
-  *DAT_104df774 = *DAT_104df774 & ~(1 << ((uint8_t)param_1 & 0x1f));
+  *g_104DF774 = *g_104DF774 & ~(1 << ((uint8_t)arg1 & 0x1f));
   return;
 }
 
@@ -2894,18 +2896,20 @@ XI_API void __cdecl NetCellFont_ClearBit(undefined4 param_1)
 XI_API uint32_t __cdecl NetCellFont_Query10310030(void)
 {
   uint32_t xi_s1;
-  char xi_frame[40] __attribute__((aligned(4)));
-  uint32_t  (&auStack_28)[6] = *reinterpret_cast<uint32_t  (*)[6]>(xi_frame + 0);
-  uint32_t  &uStack_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 24);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[40];
+    struct __attribute__((packed)) { uint32_t u1[6]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; uint32_t u2; };   // at 0x18
+  } frame;
   
-  xi_s1 = orig::FUN_10310030();
+  xi_s1 = orig::game_10310030();
   if (-1 < (int)xi_s1) {
-    xi_s1 = orig::FUN_1030ff75_v1(xi_s1,auStack_28);
+    xi_s1 = orig::game_1030FF75_v1(xi_s1,frame.u1);
     if (-1 < (int)xi_s1) {
-      if ((auStack_28[0] & 1) == 0) {
+      if ((frame.u1[0] & 1) == 0) {
         return 0xffffffff;
       }
-      xi_s1 = uStack_10 & 3;
+      xi_s1 = frame.u2 & 3;
     }
   }
   return xi_s1;
@@ -2913,9 +2917,9 @@ XI_API uint32_t __cdecl NetCellFont_Query10310030(void)
 
 // FUNCTION: FFXIMAIN 0x100F1870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_Call10310067(undefined4 param_1)
+XI_API void __cdecl NetCellFont_Call10310067(bits32 arg1)
 {
-  orig::FUN_10310067(0xfffffffe,param_1,0xfffffffe,0xfffffffe,0xffffffff,0xfffffffe);
+  orig::game_10310067(0xfffffffe,arg1,0xfffffffe,0xfffffffe,0xffffffff,0xfffffffe);
   return;
 }
 
@@ -2923,68 +2927,68 @@ XI_API void __cdecl NetCellFont_Call10310067(undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_Call10310072(void)
 {
-  orig::FUN_10310072();
+  orig::game_10310072();
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetLow16(void)
+XI_API bits32 __cdecl NetCellFont_GetLow16(void)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::FUN_103100eb();
-  return uVar1 & 0xffff;
+  u1 = orig::game_103100EB();
+  return u1 & 0xffff;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1B20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall NetCellFont_AcquireNode(void * self_)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  iVar1 = *(int *)((int)self_ + 0x1c);
+  i1 = *(int *)((int)self_ + 0x1c);
   while( true ) {
-    if (iVar1 == 0) {
-      iVar1 = 0;
+    if (i1 == 0) {
+      i1 = 0;
       if (*(uint16_t *)((int)self_ + 0x18) < 0x1e) {
-        uVar2 = orig::Allocator_Generic_v1(0x1060);
-        if ((void *)uVar2 == (void *)0x0) {
+        u1 = orig::Allocator_Generic_v1(0x1060);
+        if ((void *)u1 == (void *)0x0) {
           return 0;
         }
-        iVar1 = orig::NetCellFont_ClearNode((void *)uVar2);
-        if (iVar1 != 0) {
+        i1 = orig::NetCellFont_ClearNode((void *)u1);
+        if (i1 != 0) {
           *(short *)((int)self_ + 8) = *(short *)((int)self_ + 8) + 1;
           if (*(short *)((int)self_ + 8) == 0) {
             *(uint16_t *)((int)self_ + 8) = 1;
           }
           *(short *)((int)self_ + 0x18) = *(short *)((int)self_ + 0x18) + 1;
-          *(undefined4 *)(iVar1 + 4) = *(undefined4 *)((int)self_ + 0x1c);
-          *(int *)((int)self_ + 0x1c) = iVar1;
+          *(bits32 *)(i1 + 4) = *(bits32 *)((int)self_ + 0x1c);
+          *(int *)((int)self_ + 0x1c) = i1;
         }
       }
-      return iVar1;
+      return i1;
     }
-    if (*(short *)(iVar1 + 0x1058) == 0) break;
-    iVar1 = *(int *)(iVar1 + 4);
+    if (*(short *)(i1 + 0x1058) == 0) break;
+    i1 = *(int *)(i1 + 4);
   }
   *(short *)((int)self_ + 8) = *(short *)((int)self_ + 8) + 1;
   if (*(short *)((int)self_ + 8) != 0) {
-    return iVar1;
+    return i1;
   }
   *(uint16_t *)((int)self_ + 8) = 1;
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1BA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitTwoNodes(void * self_)
+XI_API bits32 __thiscall NetCellFont_InitTwoNodes(void * self_)
 {
-  undefined4 uVar1;
-  uint64_t uVar2;
+  bits32 u1;
+  uint64_t u2;
   
-  *(undefined4 *)self_ = 0;
+  *(bits32 *)self_ = 0;
   *(uint16_t *)((int)self_ + 10) = 0;
   *(uint16_t *)((int)self_ + 0xc) = 0;
   *(uint16_t *)((int)self_ + 0xe) = 0;
@@ -2992,189 +2996,189 @@ XI_API undefined4 __thiscall NetCellFont_InitTwoNodes(void * self_)
   *(uint16_t *)((int)self_ + 0x16) = 0;
   *(uint16_t *)((int)self_ + 0x10) = 0;
   *(uint16_t *)((int)self_ + 0x12) = 0;
-  *(undefined4 *)((int)self_ + 0x28) = 0;
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  *(undefined4 *)((int)self_ + 0x24) = 0;
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x28) = 0;
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  *(bits32 *)((int)self_ + 0x24) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
   *(uint8_t *)((int)self_ + 6) = 0;
   *(uint8_t *)((int)self_ + 7) = 0;
   orig::NetCellFont_ResetPending(self_);
-  uVar2 = orig::Allocator_Generic_v1(0x1060);
-  if ((void *)uVar2 == (void *)0x0) {
-    uVar1 = 0;
+  u2 = orig::Allocator_Generic_v1(0x1060);
+  if ((void *)u2 == (void *)0x0) {
+    u1 = 0;
   }
   else {
-    uVar1 = orig::NetCellFont_ClearNode((void *)uVar2);
+    u1 = orig::NetCellFont_ClearNode((void *)u2);
   }
-  *(undefined4 *)((int)self_ + 0x20) = uVar1;
-  uVar2 = orig::Allocator_Generic_v1(0x1060);
-  if ((void *)uVar2 != (void *)0x0) {
-    uVar1 = orig::NetCellFont_ClearNode((void *)uVar2);
-    *(undefined4 *)((int)self_ + 0x24) = uVar1;
-    *(undefined4 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x20) = u1;
+  u2 = orig::Allocator_Generic_v1(0x1060);
+  if ((void *)u2 != (void *)0x0) {
+    u1 = orig::NetCellFont_ClearNode((void *)u2);
+    *(bits32 *)((int)self_ + 0x24) = u1;
+    *(bits32 *)((int)self_ + 0x1c) = 0;
     *(uint16_t *)((int)self_ + 0x18) = 0;
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
-  *(undefined4 *)((int)self_ + 0x24) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x24) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F1C40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall NetCellFont_Destroy(void * self_, undefined4 param_1)
+XI_API uint32_t __thiscall NetCellFont_Destroy(void * self_, bits32 arg2)
 {
-  short sVar1;
-  void *pvVar2;
-  uint32_t uVar3;
+  short i1;
+  void *p1;
+  uint32_t u1;
   
   orig::NetCellFont_ResetPending(self_);
   *(char *)((int)self_ + 7) = *(char *)((int)self_ + 7) + '\x01';
-  pvVar2 = *(void **)((int)self_ + 0x28);
-  if (pvVar2 != (void *)0x0) {
-    sVar1 = *(short *)((int)pvVar2 + 0x1058);
-    while ((sVar1 != 0 && (uVar3 = orig::NetCellFont_RunCallbacks(pvVar2,1), (char)uVar3 == '\0'))) {
-      if ((char)param_1 == '\0') {
-        return uVar3 & 0xffffff00;
+  p1 = *(void **)((int)self_ + 0x28);
+  if (p1 != (void *)0x0) {
+    i1 = *(short *)((int)p1 + 0x1058);
+    while ((i1 != 0 && (u1 = orig::NetCellFont_RunCallbacks(p1,1), (char)u1 == '\0'))) {
+      if ((char)arg2 == '\0') {
+        return u1 & 0xffffff00;
       }
-      pvVar2 = *(void **)((int)self_ + 0x28);
-      sVar1 = *(short *)((int)pvVar2 + 0x1058);
+      p1 = *(void **)((int)self_ + 0x28);
+      i1 = *(short *)((int)p1 + 0x1058);
     }
-    *(undefined4 *)((int)self_ + 0x28) = 0;
+    *(bits32 *)((int)self_ + 0x28) = 0;
   }
-  pvVar2 = *(void **)((int)self_ + 0x20);
-  if (pvVar2 != (void *)0x0) {
-    orig::NetCellFont_DestroyNode(pvVar2);
-    orig::operator_delete_v1(pvVar2);
+  p1 = *(void **)((int)self_ + 0x20);
+  if (p1 != (void *)0x0) {
+    orig::NetCellFont_DestroyNode(p1);
+    orig::operator_delete_v1(p1);
   }
-  pvVar2 = *(void **)((int)self_ + 0x24);
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  if (pvVar2 != (void *)0x0) {
-    orig::NetCellFont_DestroyNode(pvVar2);
-    orig::operator_delete_v1(pvVar2);
+  p1 = *(void **)((int)self_ + 0x24);
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  if (p1 != (void *)0x0) {
+    orig::NetCellFont_DestroyNode(p1);
+    orig::operator_delete_v1(p1);
   }
-  pvVar2 = *(void **)((int)self_ + 0x1c);
-  *(undefined4 *)((int)self_ + 0x24) = 0;
-  if (pvVar2 != (void *)0x0) {
-    orig::NetCellFont_DestroyNode(pvVar2);
-    orig::operator_delete_v1(pvVar2);
+  p1 = *(void **)((int)self_ + 0x1c);
+  *(bits32 *)((int)self_ + 0x24) = 0;
+  if (p1 != (void *)0x0) {
+    orig::NetCellFont_DestroyNode(p1);
+    orig::operator_delete_v1(p1);
   }
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
   *(uint8_t *)((int)self_ + 7) = 0;
-  pvVar2 = DAT_104df908;
-  if (self_ == DAT_104df908) {
-    DAT_104df908 = (void *)0x0;
+  p1 = g_104DF908;
+  if (self_ == g_104DF908) {
+    g_104DF908 = (void *)0x0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar2 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F1D20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_UpdateRequests(void * self_)
+XI_API bits32 __thiscall NetCellFont_UpdateRequests(void * self_)
 {
-  int iVar1;
-  void *pvVar2;
-  void *pvVar3;
-  undefined4 uVar4;
+  int i1;
+  void *p1;
+  void *p2;
+  bits32 u1;
   
-  pvVar2 = *(void **)((int)self_ + 0x28);
-  if ((((pvVar2 != (void *)0x0) && (pvVar3 = *(void **)((int)self_ + 0x24), pvVar3 != (void *)0x0))
-      && (pvVar2 != pvVar3)) && (*(short *)((int)pvVar3 + 0x1058) != 0)) {
-    pvVar2 = (void *)orig::NetCellFont_RunCallbacks(pvVar3,0);
+  p1 = *(void **)((int)self_ + 0x28);
+  if ((((p1 != (void *)0x0) && (p2 = *(void **)((int)self_ + 0x24), p2 != (void *)0x0))
+      && (p1 != p2)) && (*(short *)((int)p2 + 0x1058) != 0)) {
+    p1 = (void *)orig::NetCellFont_RunCallbacks(p2,0);
   }
-  pvVar3 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 7))));
-  pvVar2 = *(void **)((int)self_ + 0x28);
+  p2 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 7))));
+  p1 = *(void **)((int)self_ + 0x28);
   if (*(char *)((int)self_ + 7) == '\0') {
-    if (pvVar2 != (void *)0x0) {
-      pvVar3 = *(void **)((int)self_ + 0x24);
-      if ((pvVar2 == pvVar3) && (*(short *)((int)pvVar3 + 0x1058) != 0)) goto LAB_100f1e5a;
-      if ((((pvVar2 != (void *)0x0) && (pvVar2 != *(void **)((int)self_ + 0x24))) &&
-          (pvVar2 != *(void **)((int)self_ + 0x20))) &&
-         ((pvVar3 = (void *)orig::NetCellFont_CallStateCallback3(pvVar2,pvVar3), (char)pvVar3 != '\0' &&
-          (pvVar3 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar3 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6)))),
+    if (p1 != (void *)0x0) {
+      p2 = *(void **)((int)self_ + 0x24);
+      if ((p1 == p2) && (*(short *)((int)p2 + 0x1058) != 0)) goto code_100F1E5A;
+      if ((((p1 != (void *)0x0) && (p1 != *(void **)((int)self_ + 0x24))) &&
+          (p1 != *(void **)((int)self_ + 0x20))) &&
+         ((p2 = (void *)orig::NetCellFont_CallStateCallback3(p1,p2), (char)p2 != '\0' &&
+          (p2 = (void *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6)))),
           *(char *)((int)self_ + 6) != '\0')))) {
-        uVar4 = orig::NetCellFont_Complete(*(void **)((int)self_ + 0x28));
-        *(undefined4 *)((int)self_ + 0x28) = 0;
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+        u1 = orig::NetCellFont_Complete(*(void **)((int)self_ + 0x28));
+        *(bits32 *)((int)self_ + 0x28) = 0;
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
-    pvVar2 = *(void **)((int)self_ + 0x28);
-    if (pvVar2 == (void *)0x0) {
-      pvVar3 = *(void **)((int)self_ + 0x24);
-      if ((pvVar3 != (void *)0x0) && (*(short *)((int)pvVar3 + 0x1058) != 0)) {
-        *(void **)((int)self_ + 0x28) = pvVar3;
-        uVar4 = orig::NetCellFont_RunCallbacks(pvVar3,0);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+    p1 = *(void **)((int)self_ + 0x28);
+    if (p1 == (void *)0x0) {
+      p2 = *(void **)((int)self_ + 0x24);
+      if ((p2 != (void *)0x0) && (*(short *)((int)p2 + 0x1058) != 0)) {
+        *(void **)((int)self_ + 0x28) = p2;
+        u1 = orig::NetCellFont_RunCallbacks(p2,0);
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
-    else if (*(short *)((int)pvVar2 + 0x1058) != 0) {
-      uVar4 = orig::NetCellFont_RunCallbacks(pvVar2,0);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+    else if (*(short *)((int)p1 + 0x1058) != 0) {
+      u1 = orig::NetCellFont_RunCallbacks(p1,0);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
   else {
-    if ((pvVar2 == (void *)0x0) || (*(short *)((int)pvVar2 + 0x1058) == 0)) {
-      pvVar2 = *(void **)((int)self_ + 0x24);
-      if ((pvVar2 != (void *)0x0) && (*(short *)((int)pvVar2 + 0x1058) != 0)) {
-        *(void **)((int)self_ + 0x28) = pvVar2;
-        uVar4 = orig::NetCellFont_RunCallbacks(pvVar2,0);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+    if ((p1 == (void *)0x0) || (*(short *)((int)p1 + 0x1058) == 0)) {
+      p1 = *(void **)((int)self_ + 0x24);
+      if ((p1 != (void *)0x0) && (*(short *)((int)p1 + 0x1058) != 0)) {
+        *(void **)((int)self_ + 0x28) = p1;
+        u1 = orig::NetCellFont_RunCallbacks(p1,0);
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
-      pvVar2 = *(void **)((int)self_ + 0x20);
-      if ((pvVar2 != (void *)0x0) && (*(short *)((int)pvVar2 + 0x1058) != 0)) {
-        *(void **)((int)self_ + 0x28) = pvVar2;
-        uVar4 = orig::NetCellFont_RunCallbacks(pvVar2,0);
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar4 >> 8))) << 8) | (uint8_t)(1)));
+      p1 = *(void **)((int)self_ + 0x20);
+      if ((p1 != (void *)0x0) && (*(short *)((int)p1 + 0x1058) != 0)) {
+        *(void **)((int)self_ + 0x28) = p1;
+        u1 = orig::NetCellFont_RunCallbacks(p1,0);
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
       }
       *(int *)((int)self_ + 0x28) = *(int *)((int)self_ + 0x1c);
-      pvVar3 = (void *)0x0;
-      if (*(int *)((int)self_ + 0x1c) == 0) goto LAB_100f1e61;
+      p2 = (void *)0x0;
+      if (*(int *)((int)self_ + 0x1c) == 0) goto code_100F1E61;
       while (*(short *)(*(int *)((int)self_ + 0x28) + 0x1058) == 0) {
-        iVar1 = *(int *)(*(int *)((int)self_ + 0x28) + 4);
-        *(int *)((int)self_ + 0x28) = iVar1;
-        if (iVar1 == 0) {
+        i1 = *(int *)(*(int *)((int)self_ + 0x28) + 4);
+        *(int *)((int)self_ + 0x28) = i1;
+        if (i1 == 0) {
           return 1;
         }
       }
-      pvVar2 = *(void **)((int)self_ + 0x28);
+      p1 = *(void **)((int)self_ + 0x28);
     }
-LAB_100f1e5a:
-    pvVar3 = (void *)orig::NetCellFont_RunCallbacks(pvVar2,0);
+code_100F1E5A:
+    p2 = (void *)orig::NetCellFont_RunCallbacks(p1,0);
   }
-LAB_100f1e61:
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar3 >> 8))) << 8) | (uint8_t)(1)));
+code_100F1E61:
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F1E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t __thiscall NetCellFont_ResetPending(void * self_)
 {
-  void *pvVar1;
-  undefined4 uVar2;
+  void *p1;
+  bits32 u1;
   
-  uVar2 = orig::FUN_1031040e(0);
-  pvVar1 = *(void **)((int)self_ + 0x20);
+  u1 = orig::game_1031040E(0);
+  p1 = *(void **)((int)self_ + 0x20);
   *(uint16_t *)((int)self_ + 4) = 0;
-  if (((pvVar1 != (void *)0x0) && (*(void **)((int)self_ + 0x28) != pvVar1)) &&
-     (*(short *)((int)pvVar1 + 0x1058) != 0)) {
-    uVar2 = orig::FUN_100f2a70(pvVar1);
+  if (((p1 != (void *)0x0) && (*(void **)((int)self_ + 0x28) != p1)) &&
+     (*(short *)((int)p1 + 0x1058) != 0)) {
+    u1 = orig::game_100F2A70(p1);
   }
-  for (pvVar1 = *(void **)((int)self_ + 0x1c); pvVar1 != (void *)0x0;
-      pvVar1 = *(void **)((int)pvVar1 + 4)) {
-    if ((*(void **)((int)self_ + 0x28) != pvVar1) && (*(short *)((int)pvVar1 + 0x1058) != 0)) {
-      uVar2 = orig::FUN_100f2a70(pvVar1);
+  for (p1 = *(void **)((int)self_ + 0x1c); p1 != (void *)0x0;
+      p1 = *(void **)((int)p1 + 4)) {
+    if ((*(void **)((int)self_ + 0x28) != p1) && (*(short *)((int)p1 + 0x1058) != 0)) {
+      u1 = orig::game_100F2A70(p1);
     }
   }
-  pvVar1 = *(void **)((int)self_ + 0x28);
-  if (((pvVar1 != (void *)0x0) && (pvVar1 != *(void **)((int)self_ + 0x20))) &&
-     ((pvVar1 != *(void **)((int)self_ + 0x24) &&
-      ((uVar2 = orig::NetCellFont_CallStateCallback3(pvVar1,uVar2), (char)uVar2 != '\0' &&
+  p1 = *(void **)((int)self_ + 0x28);
+  if (((p1 != (void *)0x0) && (p1 != *(void **)((int)self_ + 0x20))) &&
+     ((p1 != *(void **)((int)self_ + 0x24) &&
+      ((u1 = orig::NetCellFont_CallStateCallback3(p1,u1), (char)u1 != '\0' &&
        (*(char *)((int)self_ + 6) != '\0')))))) {
     orig::NetCellFont_Complete_v1(*(void **)((int)self_ + 0x28));
-    *(undefined4 *)((int)self_ + 0x28) = 0;
+    *(bits32 *)((int)self_ + 0x28) = 0;
   }
   *(uint8_t *)((int)self_ + 7) = 0;
   return 1;
@@ -3182,74 +3186,74 @@ XI_API uint8_t __thiscall NetCellFont_ResetPending(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100F1F00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_BeginRequests(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall NetCellFont_BeginRequests(void * self_, bits32 arg2)
 {
-  char cVar1;
+  char c1;
   int xi_entry_eax = 0;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
-  short sVar5;
-  uint64_t uVar6;
+  bits32 u1;
+  int i1;
+  int i2;
+  short i3;
+  uint64_t u2;
   char xi_frame[8] __attribute__((aligned(4)));
-  undefined4  &uStack_8 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  undefined4  &uStack_4 = *reinterpret_cast<undefined4  *>(xi_frame + 4);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 4);
   
-  *(undefined4 *)self_ = 0;
+  *(bits32 *)self_ = 0;
   *(char *)((int)self_ + 7) = *(char *)((int)self_ + 7) + '\x01';
   if (*(short *)((int)self_ + 4) == 0) {
-    xi_entry_eax = orig::FUN_10310d82();
+    xi_entry_eax = orig::game_10310D82();
     if (xi_entry_eax == 1) {
       *(uint16_t *)((int)self_ + 4) = 1;
       if (*(int *)((int)self_ + 0x20) == 0) {
-        uVar6 = orig::Allocator_Generic_v1(0x1060);
-        if ((void *)uVar6 == (void *)0x0) {
-          uVar2 = 0;
+        u2 = orig::Allocator_Generic_v1(0x1060);
+        if ((void *)u2 == (void *)0x0) {
+          u1 = 0;
         }
         else {
-          uVar2 = orig::NetCellFont_ClearNode((void *)uVar6);
+          u1 = orig::NetCellFont_ClearNode((void *)u2);
         }
-        *(undefined4 *)((int)self_ + 0x20) = uVar2;
+        *(bits32 *)((int)self_ + 0x20) = u1;
       }
-      iVar3 = *(int *)((int)self_ + 0x24);
-      if (iVar3 == 0) {
-        uVar6 = orig::Allocator_Generic_v1(0x1060);
-        if ((void *)uVar6 == (void *)0x0) {
-          iVar3 = 0;
+      i1 = *(int *)((int)self_ + 0x24);
+      if (i1 == 0) {
+        u2 = orig::Allocator_Generic_v1(0x1060);
+        if ((void *)u2 == (void *)0x0) {
+          i1 = 0;
         }
         else {
-          iVar3 = orig::NetCellFont_ClearNode((void *)uVar6);
+          i1 = orig::NetCellFont_ClearNode((void *)u2);
         }
-        *(int *)((int)self_ + 0x24) = iVar3;
+        *(int *)((int)self_ + 0x24) = i1;
       }
-      uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6))));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 6))));
       if (*(char *)((int)self_ + 6) == '\0') {
-        uVar2 = orig::NetCellFont_GetWord132();
-        iVar3 = 0;
-        sVar5 = (short)uVar2;
-        if (0 < sVar5) {
+        u1 = orig::NetCellFont_GetWord132();
+        i1 = 0;
+        i3 = (short)u1;
+        if (0 < i3) {
           do {
-            iVar4 = orig::NetCellFont_GetEntryPtrA90(iVar3);
-            uVar2 = 0;
-            if (iVar4 != 0) {
-              uVar2 = orig::NetCellFont_ClearBit1Fc(iVar4);
+            i2 = orig::NetCellFont_GetEntryPtrA90(i1);
+            u1 = 0;
+            if (i2 != 0) {
+              u1 = orig::NetCellFont_ClearBit1Fc(i2);
             }
-            iVar3 = iVar3 + 1;
-          } while ((short)iVar3 < sVar5);
+            i1 = i1 + 1;
+          } while ((short)i1 < i3);
         }
       }
-      xi_entry_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)((char)param_1)));
-      if ((char)param_1 != '\0') {
-        cVar1 = *(char *)((int)self_ + 6);
-        uStack_8 = 0;
-        uStack_4 = 0;
-        xi_entry_eax = orig::NetCellFont_StartRequestSlot20(self_,&uStack_8,0xffffffff,&LAB_100f2020,self_);
+      xi_entry_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)((char)arg2)));
+      if ((char)arg2 != '\0') {
+        c1 = *(char *)((int)self_ + 6);
+        u3 = 0;
+        u4 = 0;
+        xi_entry_eax = orig::NetCellFont_StartRequestSlot20(self_,&u3,0xffffffff,&code_100F2020,self_);
         if ((xi_entry_eax == 0) && (xi_entry_eax = 0, *(char *)((int)self_ + 6) == '\0')) {
           *(uint16_t *)((int)self_ + 10) = 0;
         }
-        if (cVar1 == '\0') {
-          orig::NetCellFont_StartRequestOnNewNodeA(self_,&uStack_8,0xffffffff,0,self_);
-          xi_entry_eax = orig::NetCellFont_StartRequestOnNewNodeB(self_,&uStack_8,0xffffffff,0,self_);
+        if (c1 == '\0') {
+          orig::NetCellFont_StartRequestOnNewNodeA(self_,&u3,0xffffffff,0,self_);
+          xi_entry_eax = orig::NetCellFont_StartRequestOnNewNodeB(self_,&u3,0xffffffff,0,self_);
         }
       }
     }
@@ -3259,9 +3263,9 @@ XI_API undefined4 __thiscall NetCellFont_BeginRequests(void * self_, undefined4 
 
 // FUNCTION: FFXIMAIN 0x100F25F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_StartRequestSlot20(void * self_, undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall NetCellFont_StartRequestSlot20(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
   if (*(void **)((int)self_ + 0x20) == (void *)0x0) {
     return 0x10;
@@ -3270,51 +3274,51 @@ XI_API undefined4 __thiscall NetCellFont_StartRequestSlot20(void * self_, undefi
   if (*(short *)((int)self_ + 8) == 0) {
     *(uint16_t *)((int)self_ + 8) = 1;
   }
-  uVar1 = orig::NetCellFont_InitRequestA(*(void **)((int)self_ + 0x20),self_,
-                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)param_1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
-                       param_1,param_2,param_3,param_4);
-  return uVar1;
+  u1 = orig::NetCellFont_InitRequestA(*(void **)((int)self_ + 0x20),self_,
+                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)arg2 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
+                       arg2,arg3,arg4,arg5);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F2690
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_StartRequestOnNewNodeA(void * self_, undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall NetCellFont_StartRequestOnNewNodeA(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  void *this_00;
-  undefined4 uVar1;
+  void *obj1;
+  bits32 u1;
   
-  this_00 = (void *)orig::NetCellFont_AcquireNode(self_);
-  if (this_00 == (void *)0x0) {
+  obj1 = (void *)orig::NetCellFont_AcquireNode(self_);
+  if (obj1 == (void *)0x0) {
     return 0x10;
   }
-  uVar1 = orig::NetCellFont_InitRequestB(this_00,self_,
-                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)param_2 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
-                       param_1,param_2,param_3,param_4);
-  return uVar1;
+  u1 = orig::NetCellFont_InitRequestB(obj1,self_,
+                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)arg3 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
+                       arg2,arg3,arg4,arg5);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F2720
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_StartRequestOnNewNodeB(void * self_, undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall NetCellFont_StartRequestOnNewNodeB(void * self_, bits32 * arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  void *this_00;
-  undefined4 uVar1;
+  void *obj1;
+  bits32 u1;
   
-  this_00 = (void *)orig::NetCellFont_AcquireNode(self_);
-  if (this_00 == (void *)0x0) {
+  obj1 = (void *)orig::NetCellFont_AcquireNode(self_);
+  if (obj1 == (void *)0x0) {
     return 0x10;
   }
-  uVar1 = orig::NetCellFont_InitRequestC(this_00,self_,
-                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)param_2 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
-                       param_1,param_2,param_3,param_4);
-  return uVar1;
+  u1 = orig::NetCellFont_InitRequestC(obj1,self_,
+                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)arg3 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
+                       arg2,arg3,arg4,arg5);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F2760
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_StartRequestSlot24(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __thiscall NetCellFont_StartRequestSlot24(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
   if (*(void **)((int)self_ + 0x24) == (void *)0x0) {
     return 0x10;
@@ -3323,31 +3327,31 @@ XI_API undefined4 __thiscall NetCellFont_StartRequestSlot24(void * self_, undefi
   if (*(short *)((int)self_ + 8) == 0) {
     *(uint16_t *)((int)self_ + 8) = 1;
   }
-  uVar1 = orig::NetCellFont_InitRequestD(*(void **)((int)self_ + 0x24),self_,
-                      ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)param_1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
-                      param_1,param_2,param_3);
-  return uVar1;
+  u1 = orig::NetCellFont_InitRequestD(*(void **)((int)self_ + 0x24),self_,
+                      ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)arg2 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 8)))),
+                      arg2,arg3,arg4);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F29E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_ClearNode(void * self_)
+XI_API bits32 __thiscall NetCellFont_ClearNode(void * self_)
 {
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)((int)self_ + 0x9c) = 0;
-  *(undefined4 *)((int)self_ + 0xa0) = 0;
-  *(undefined4 *)((int)self_ + 0xa4) = 0;
-  *(undefined4 *)((int)self_ + 0xac) = 0;
-  *(undefined4 *)((int)self_ + 0xb0) = 0;
-  *(undefined4 *)((int)self_ + 0xb4) = 0;
-  *(undefined4 *)((int)self_ + 0x1048) = 0;
-  *(undefined4 *)((int)self_ + 0x104c) = 0;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(undefined4 *)((int)self_ + 0x1054) = 0;
-  *(undefined4 *)((int)self_ + 0xd0) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)((int)self_ + 0x9c) = 0;
+  *(bits32 *)((int)self_ + 0xa0) = 0;
+  *(bits32 *)((int)self_ + 0xa4) = 0;
+  *(bits32 *)((int)self_ + 0xac) = 0;
+  *(bits32 *)((int)self_ + 0xb0) = 0;
+  *(bits32 *)((int)self_ + 0xb4) = 0;
+  *(bits32 *)((int)self_ + 0x1048) = 0;
+  *(bits32 *)((int)self_ + 0x104c) = 0;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(bits32 *)((int)self_ + 0x1054) = 0;
+  *(bits32 *)((int)self_ + 0xd0) = 0;
   *(uint16_t *)((int)self_ + 0x1058) = 0;
   *(uint16_t *)((int)self_ + 0x105a) = 0;
-  *(undefined4 *)((int)self_ + 0x105c) = 0;
+  *(bits32 *)((int)self_ + 0x105c) = 0;
   return self_;
 }
 
@@ -3355,435 +3359,435 @@ XI_API undefined4 __thiscall NetCellFont_ClearNode(void * self_)
 // GATE: PASS -- 100 trials, 58 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 58
 XI_API void __thiscall NetCellFont_DestroyNode(void * self_)
 {
-  void *this_00;
+  void *obj1;
   
-  orig::FUN_100f2a70(self_);
-  this_00 = *(void **)((int)self_ + 4);
-  if (this_00 != (void *)0x0) {
-    orig::FUN_100f2a40(this_00);
-    orig::operator_delete_v1(this_00);
+  orig::game_100F2A70(self_);
+  obj1 = *(void **)((int)self_ + 4);
+  if (obj1 != (void *)0x0) {
+    orig::NetCellFont_DestroyNode_as_v0(obj1);
+    orig::operator_delete_v1(obj1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100F2B80
 // GATE: PASS -- 100 trials, 39 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 39
-XI_API undefined4 __thiscall NetCellFont_Complete(void * self_)
+XI_API bits32 __thiscall NetCellFont_Complete(void * self_)
 {
-  int *piVar1;
-  code *pcVar2;
-  int iVar3;
-  undefined4 uVar4;
+  int *p1;
+  untyped_fn *p2;
+  int i1;
+  bits32 u1;
   
   if ((*(int *)((int)self_ + 0x105c) != 0) &&
-     (pcVar2 = *(code **)(*(int *)((int)self_ + 0x105c) + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4),
-     pcVar2 != (code *)0x0)) {
-    iVar3 = (*pcVar2)(self_,2);
-    piVar1 = (int *)((int)self_ + 8);
-    *(undefined4 *)((int)self_ + 0x105c) = 0;
-    if (*piVar1 < 0) {
-      orig::ErrorReport_Call10114F10NoArgs(*piVar1);
+     (p2 = *(untyped_fn **)(*(int *)((int)self_ + 0x105c) + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4),
+     p2 != (untyped_fn *)0x0)) {
+    i1 = (*p2)(self_,2);
+    p1 = (int *)((int)self_ + 8);
+    *(bits32 *)((int)self_ + 0x105c) = 0;
+    if (*p1 < 0) {
+      orig::ErrorReport_Call10114F10NoArgs(*p1);
     }
-    if (*(code **)((int)self_ + 0x104c) != (code *)0x0) {
-      (**(code **)((int)self_ + 0x104c))
-                (*(undefined4 *)((int)self_ + 0x1048),0,iVar3,-(uint32_t)(iVar3 != 0) & (uint32_t)piVar1);
+    if (*(untyped_fn **)((int)self_ + 0x104c) != (untyped_fn *)0x0) {
+      (**(untyped_fn **)((int)self_ + 0x104c))
+                (*(bits32 *)((int)self_ + 0x1048),0,i1,-(uint32_t)(i1 != 0) & (uint32_t)p1);
     }
-    if (*(code **)((int)self_ + 0x1050) != (code *)0x0) {
-      (**(code **)((int)self_ + 0x1050))
-                (*(undefined4 *)((int)self_ + 0x1048),0,iVar3,0,-(uint32_t)(iVar3 != 0) & (uint32_t)piVar1);
+    if (*(untyped_fn **)((int)self_ + 0x1050) != (untyped_fn *)0x0) {
+      (**(untyped_fn **)((int)self_ + 0x1050))
+                (*(bits32 *)((int)self_ + 0x1048),0,i1,0,-(uint32_t)(i1 != 0) & (uint32_t)p1);
     }
-    if (*(code **)((int)self_ + 0x1054) != (code *)0x0) {
-      (**(code **)((int)self_ + 0x1054))(*(undefined4 *)((int)self_ + 0x1048),0,iVar3,0,0);
+    if (*(untyped_fn **)((int)self_ + 0x1054) != (untyped_fn *)0x0) {
+      (**(untyped_fn **)((int)self_ + 0x1054))(*(bits32 *)((int)self_ + 0x1048),0,i1,0,0);
     }
   }
-  uVar4 = orig::FUN_100f2a70(self_);
-  return uVar4;
+  u1 = orig::game_100F2A70(self_);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F2C40
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_CallStateCallback3(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_CallStateCallback3(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  code *pcVar1;
-  int iVar2;
+  untyped_fn *p1;
+  int i1;
   
   if (((*(short *)((int)self_ + 0x1058) != 0) && (xi_eax = 0, *(int *)((int)self_ + 0x105c) != 0)) &&
-     (pcVar1 = *(code **)(*(int *)((int)self_ + 0x105c) + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4),
-     xi_eax = 0, pcVar1 != (code *)0x0)) {
-    iVar2 = (*pcVar1)(self_,3);
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar2 >> 8))) << 8) | (uint8_t)(iVar2 == 0)));
+     (p1 = *(untyped_fn **)(*(int *)((int)self_ + 0x105c) + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4),
+     xi_eax = 0, p1 != (untyped_fn *)0x0)) {
+    i1 = (*p1)(self_,3);
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(i1 == 0)));
   }
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F2C80
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
-XI_API undefined4 __thiscall NetCellFont_RunCallbacks(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall NetCellFont_RunCallbacks(void * self_, bits32 arg2)
 {
-  code *pcVar1;
-  int *piVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int iVar5;
-  undefined4 uVar6;
+  untyped_fn *p1;
+  int *p2;
+  uint32_t u1;
+  int i1;
+  int i2;
+  bits32 u2;
   char xi_frame[408] __attribute__((aligned(4)));
-  undefined4 * &puVar7 = *reinterpret_cast<undefined4 * *>(xi_frame + 0);
-  undefined4  &uStack_184 = *reinterpret_cast<undefined4  *>(xi_frame + 20);
-  undefined4  &uStack_180 = *reinterpret_cast<undefined4  *>(xi_frame + 24);
-  undefined4 * &puStack_17c = *reinterpret_cast<undefined4 * *>(xi_frame + 28);
-  undefined4 * &puStack_178 = *reinterpret_cast<undefined4 * *>(xi_frame + 32);
-  uint8_t * &puStack_174 = *reinterpret_cast<uint8_t * *>(xi_frame + 36);
-  undefined4  &uStack_170 = *reinterpret_cast<undefined4  *>(xi_frame + 40);
-  undefined4  &uStack_16c = *reinterpret_cast<undefined4  *>(xi_frame + 44);
-  uint32_t  &uStack_164 = *reinterpret_cast<uint32_t  *>(xi_frame + 52);
-  undefined4  (&auStack_15c)[8] = *reinterpret_cast<undefined4  (*)[8]>(xi_frame + 60);
-  int  &iStack_13c = *reinterpret_cast<int  *>(xi_frame + 92);
-  int  &iStack_138 = *reinterpret_cast<int  *>(xi_frame + 96);
-  uint32_t  &uStack_a4 = *reinterpret_cast<uint32_t  *>(xi_frame + 244);
-  uint32_t  &uStack_a0 = *reinterpret_cast<uint32_t  *>(xi_frame + 248);
-  undefined4  (&auStack_9c)[4] = *reinterpret_cast<undefined4  (*)[4]>(xi_frame + 252);
-  uint8_t  (&auStack_8c)[128] = *reinterpret_cast<uint8_t  (*)[128]>(xi_frame + 268);
-  undefined4  &uStack_c = *reinterpret_cast<undefined4  *>(xi_frame + 396);
+  bits32 * &p3 = *reinterpret_cast<bits32 * *>(xi_frame + 0);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 20);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 24);
+  bits32 * &p4 = *reinterpret_cast<bits32 * *>(xi_frame + 28);
+  bits32 * &p5 = *reinterpret_cast<bits32 * *>(xi_frame + 32);
+  uint8_t * &p6 = *reinterpret_cast<uint8_t * *>(xi_frame + 36);
+  bits32  &u5 = *reinterpret_cast<bits32  *>(xi_frame + 40);
+  bits32  &u6 = *reinterpret_cast<bits32  *>(xi_frame + 44);
+  uint32_t  &u7 = *reinterpret_cast<uint32_t  *>(xi_frame + 52);
+  bits32  (&u8)[8] = *reinterpret_cast<bits32  (*)[8]>(xi_frame + 60);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 92);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 96);
+  uint32_t  &u9 = *reinterpret_cast<uint32_t  *>(xi_frame + 244);
+  uint32_t  &u10 = *reinterpret_cast<uint32_t  *>(xi_frame + 248);
+  bits32  (&u11)[4] = *reinterpret_cast<bits32  (*)[4]>(xi_frame + 252);
+  uint8_t  (&u12)[128] = *reinterpret_cast<uint8_t  (*)[128]>(xi_frame + 268);
+  bits32  &u13 = *reinterpret_cast<bits32  *>(xi_frame + 396);
   
-  uVar6 = 1;
-  if ((char)param_1 != '\0') {
-    *(undefined4 *)((int)self_ + 0x104c) = 0;
-    *(undefined4 *)((int)self_ + 0x1050) = 0;
-    *(undefined4 *)((int)self_ + 0x1054) = 0;
-    *(undefined4 *)((int)self_ + 0x1048) = 0;
+  u2 = 1;
+  if ((char)arg2 != '\0') {
+    *(bits32 *)((int)self_ + 0x104c) = 0;
+    *(bits32 *)((int)self_ + 0x1050) = 0;
+    *(bits32 *)((int)self_ + 0x1054) = 0;
+    *(bits32 *)((int)self_ + 0x1048) = 0;
   }
-  iVar4 = *(int *)((int)self_ + 0x105c);
-  uVar3 = 0;
-  if (iVar4 == 0) {
-LAB_100f2fd4:
-    if (((char)param_1 != '\0') &&
-       ((uVar3 = *(uint32_t *)((int)self_ + 0x105c), uVar3 == 0 ||
-        (*(int *)(uVar3 + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4) == 0)))) {
-      uVar6 = orig::FUN_100f2a70(self_);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+  i1 = *(int *)((int)self_ + 0x105c);
+  u1 = 0;
+  if (i1 == 0) {
+code_100F2FD4:
+    if (((char)arg2 != '\0') &&
+       ((u1 = *(uint32_t *)((int)self_ + 0x105c), u1 == 0 ||
+        (*(int *)(u1 + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4) == 0)))) {
+      u2 = orig::game_100F2A70(self_);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
   else {
     while( true ) {
-      pcVar1 = *(code **)(iVar4 + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4);
-      if (pcVar1 == (code *)0x0) {
-        if ((char)param_1 != '\0') {
-          uVar6 = orig::FUN_100f2a70(self_);
-          return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+      p1 = *(untyped_fn **)(i1 + (uint32_t)*(uint16_t *)((int)self_ + 0x105a) * 4);
+      if (p1 == (untyped_fn *)0x0) {
+        if ((char)arg2 != '\0') {
+          u2 = orig::game_100F2A70(self_);
+          return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
         }
-        pcVar1 = *(code **)((int)self_ + 0x104c);
-        if (pcVar1 != (code *)0x0) {
+        p1 = *(untyped_fn **)((int)self_ + 0x104c);
+        if (p1 != (untyped_fn *)0x0) {
           if (*(int *)((int)self_ + 0xd0) != 0) {
-            (*pcVar1)(*(undefined4 *)((int)self_ + 0x1048),0,0,(int)self_ + 0x208);
-            goto LAB_100f2f3c;
+            (*p1)(*(bits32 *)((int)self_ + 0x1048),0,0,(int)self_ + 0x208);
+            goto code_100F2F3C;
           }
-          if (pcVar1 != (code *)0x0) {
-            (*pcVar1)(*(undefined4 *)((int)self_ + 0x1048),0,0,0);
-            goto LAB_100f2f3c;
+          if (p1 != (untyped_fn *)0x0) {
+            (*p1)(*(bits32 *)((int)self_ + 0x1048),0,0,0);
+            goto code_100F2F3C;
           }
         }
         if (*(int *)((int)self_ + 0x1050) != 0) {
-          iVar4 = *(int *)((int)self_ + 0xa0);
-          puVar7 = (undefined4 *)((int)self_ + 0x68);
-          uStack_184 = *(undefined4 *)(iVar4 + 0x30);
-          uStack_180 = *(undefined4 *)(iVar4 + 0x34);
-          puStack_17c = (undefined4 *)(iVar4 + 0x10);
-          *(uint8_t *)puVar7 = 0;
-          iVar4 = orig::FUN_1030ff75();
-          if ((-1 < iVar4) && ((uStack_164 & 1) != 0)) {
-            orig::NetCellFont_CopyBounded(puVar7,auStack_15c,0x10);
+          i1 = *(int *)((int)self_ + 0xa0);
+          p3 = (bits32 *)((int)self_ + 0x68);
+          u3 = *(bits32 *)(i1 + 0x30);
+          u4 = *(bits32 *)(i1 + 0x34);
+          p4 = (bits32 *)(i1 + 0x10);
+          *(uint8_t *)p3 = 0;
+          i1 = orig::game_1030FF75();
+          if ((-1 < i1) && ((u7 & 1) != 0)) {
+            orig::NetCellFont_CopyBounded(p3,u8,0x10);
           }
-          iVar4 = 0;
-          puStack_178 = puVar7;
+          i1 = 0;
+          p5 = p3;
           do {
-            iVar5 = orig::FUN_1030ff49();
-            if ((((iVar5 == 0) && ((uStack_a4 & 1) != 0)) &&
-                (piVar2 = *(int **)((int)self_ + 0xa0), *piVar2 == iStack_13c)) &&
-               ((piVar2[1] == iStack_138 &&
-                ((uint32_t)*(uint8_t *)(piVar2 + 0xf) == (uStack_a0 >> 0xd & 0x3f))))) {
-              orig::NetCellFont_CopyBounded((undefined4 *)((int)self_ + 0x78),auStack_9c,0x10);
-              puStack_17c = (undefined4 *)((int)self_ + 0x78);
+            i2 = orig::game_1030FF49();
+            if ((((i2 == 0) && ((u9 & 1) != 0)) &&
+                (p2 = *(int **)((int)self_ + 0xa0), *p2 == i3)) &&
+               ((p2[1] == i4 &&
+                ((uint32_t)*(uint8_t *)(p2 + 0xf) == (u10 >> 0xd & 0x3f))))) {
+              orig::NetCellFont_CopyBounded((bits32 *)((int)self_ + 0x78),u11,0x10);
+              p4 = (bits32 *)((int)self_ + 0x78);
             }
-            iVar4 = iVar4 + 1;
-          } while (iVar4 < 100);
-          iVar4 = 0;
+            i1 = i1 + 1;
+          } while (i1 < 100);
+          i1 = 0;
           do {
-            iVar5 = orig::FUN_1030ff33();
-            if (((iVar5 == 0) && ((uStack_a4 & 1) != 0)) &&
-               ((piVar2 = *(int **)((int)self_ + 0xa0), *piVar2 == iStack_13c &&
-                ((piVar2[1] == iStack_138 &&
-                 ((uint32_t)*(uint8_t *)(piVar2 + 0xf) == (uStack_a0 >> 0xd & 0x3f))))))) {
-              orig::NetCellFont_CopyBounded((undefined4 *)((int)self_ + 0x78),auStack_9c,0x10);
-              puStack_17c = (undefined4 *)((int)self_ + 0x78);
+            i2 = orig::game_1030FF33();
+            if (((i2 == 0) && ((u9 & 1) != 0)) &&
+               ((p2 = *(int **)((int)self_ + 0xa0), *p2 == i3 &&
+                ((p2[1] == i4 &&
+                 ((uint32_t)*(uint8_t *)(p2 + 0xf) == (u10 >> 0xd & 0x3f))))))) {
+              orig::NetCellFont_CopyBounded((bits32 *)((int)self_ + 0x78),u11,0x10);
+              p4 = (bits32 *)((int)self_ + 0x78);
             }
-            iVar4 = iVar4 + 1;
-          } while (iVar4 < 200);
-          uStack_16c = *(undefined4 *)((int)self_ + 0xa0);
-          iVar4 = orig::FUN_10310353();
-          if (iVar4 == 0) {
-            puVar7 = (undefined4 *)0x0;
-            uVar6 = 0x10;
+            i1 = i1 + 1;
+          } while (i1 < 200);
+          u6 = *(bits32 *)((int)self_ + 0xa0);
+          i1 = orig::game_10310353();
+          if (i1 == 0) {
+            p3 = (bits32 *)0x0;
+            u2 = 0x10;
           }
           else {
-            puVar7 = &uStack_184;
-            puStack_174 = auStack_8c;
-            uStack_170 = uStack_c;
-            uVar6 = 0;
+            p3 = &u3;
+            p6 = u12;
+            u5 = u13;
+            u2 = 0;
           }
-          (**(code **)((int)self_ + 0x1050))
-                    (*(undefined4 *)((int)self_ + 0x1048),
-                     (*(uint16_t *)(*(int *)((int)self_ + 0xa0) + 0x3e) & 0xf80) >> 7,uVar6,0,puVar7);
+          (**(untyped_fn **)((int)self_ + 0x1050))
+                    (*(bits32 *)((int)self_ + 0x1048),
+                     (*(uint16_t *)(*(int *)((int)self_ + 0xa0) + 0x3e) & 0xf80) >> 7,u2,0,p3);
         }
-        goto LAB_100f2f3c;
+        goto code_100F2F3C;
       }
-      uVar3 = (*pcVar1)(self_,uVar6);
-      if (uVar3 != 0x17) break;
-      if ((char)param_1 != '\0') goto LAB_100f2f5b;
-      iVar4 = *(int *)((int)self_ + 0x105c);
+      u1 = (*p1)(self_,u2);
+      if (u1 != 0x17) break;
+      if ((char)arg2 != '\0') goto code_100F2F5B;
+      i1 = *(int *)((int)self_ + 0x105c);
       *(short *)((int)self_ + 0x105a) = *(short *)((int)self_ + 0x105a) + 1;
-      uVar6 = 0;
-      if (iVar4 == 0) {
+      u2 = 0;
+      if (i1 == 0) {
         return 0;
       }
     }
-    if (uVar3 == 0x16) goto LAB_100f2fd4;
-    if ((char)param_1 != '\0') {
-LAB_100f2f5b:
-      *(undefined4 *)((int)self_ + 0x105c) = 0;
-      uVar6 = orig::FUN_100f2a70(self_);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+    if (u1 == 0x16) goto code_100F2FD4;
+    if ((char)arg2 != '\0') {
+code_100F2F5B:
+      *(bits32 *)((int)self_ + 0x105c) = 0;
+      u2 = orig::game_100F2A70(self_);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
     }
     if (*(int *)((int)self_ + 8) < 0) {
       orig::_exit_0_v1(*(int *)((int)self_ + 8));
     }
-    if (*(code **)((int)self_ + 0x104c) == (code *)0x0) {
-      if (*(code **)((int)self_ + 0x1050) != (code *)0x0) {
-        (**(code **)((int)self_ + 0x1050))
-                  (*(undefined4 *)((int)self_ + 0x1048),0,uVar3,0,
-                   -(uint32_t)(uVar3 != 0) & (int)self_ + 8U);
+    if (*(untyped_fn **)((int)self_ + 0x104c) == (untyped_fn *)0x0) {
+      if (*(untyped_fn **)((int)self_ + 0x1050) != (untyped_fn *)0x0) {
+        (**(untyped_fn **)((int)self_ + 0x1050))
+                  (*(bits32 *)((int)self_ + 0x1048),0,u1,0,
+                   -(uint32_t)(u1 != 0) & (int)self_ + 8U);
       }
     }
     else {
-      (**(code **)((int)self_ + 0x104c))
-                (*(undefined4 *)((int)self_ + 0x1048),0,uVar3,-(uint32_t)(uVar3 != 0) & (int)self_ + 8U);
+      (**(untyped_fn **)((int)self_ + 0x104c))
+                (*(bits32 *)((int)self_ + 0x1048),0,u1,-(uint32_t)(u1 != 0) & (int)self_ + 8U);
     }
-LAB_100f2f3c:
-    uVar3 = orig::FUN_100f2a70(self_);
+code_100F2F3C:
+    u1 = orig::game_100F2A70(self_);
   }
-  return uVar3 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3010
 // GATE: PASS -- 100 trials, 35 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 35
-XI_API void __cdecl NetCellFont_CopyBounded(undefined4 * param_1, undefined4 * param_2, uint32_t param_3)
+XI_API void __cdecl NetCellFont_CopyBounded(bits32 * arg1, bits32 * arg2, uint32_t arg3)
 {
-  uint32_t uVar1;
-  undefined4 *puVar2;
+  uint32_t u1;
+  bits32 *p1;
   
-  if (param_2 != (undefined4 *)0x0) {
-    puVar2 = param_1;
-    for (uVar1 = param_3 >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-      *puVar2 = *param_2;
-      param_2 = param_2 + 1;
-      puVar2 = puVar2 + 1;
+  if (arg2 != (bits32 *)0x0) {
+    p1 = arg1;
+    for (u1 = arg3 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p1 = *arg2;
+      arg2 = arg2 + 1;
+      p1 = p1 + 1;
     }
-    for (uVar1 = param_3 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-      *(uint8_t *)puVar2 = *(uint8_t *)param_2;
-      param_2 = (undefined4 *)((int)param_2 + 1);
-      puVar2 = (undefined4 *)((int)puVar2 + 1);
+    for (u1 = arg3 & 3; u1 != 0; u1 = u1 - 1) {
+      *(uint8_t *)p1 = *(uint8_t *)arg2;
+      arg2 = (bits32 *)((int)arg2 + 1);
+      p1 = (bits32 *)((int)p1 + 1);
     }
-    *(uint8_t *)((int)param_1 + (param_3 - 1)) = 0;
+    *(uint8_t *)((int)arg1 + (arg3 - 1)) = 0;
     return;
   }
-  *(uint8_t *)param_1 = 0;
+  *(uint8_t *)arg1 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100F32B0
 // GATE: PASS -- 100 trials, 18 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 18
-XI_API int __thiscall NetCellFont_StartCallbacks(void * self_, undefined4 * param_1)
+XI_API int __thiscall NetCellFont_StartCallbacks(void * self_, bits32 * arg2)
 {
-  int iVar1;
+  int i1;
   
-  *(undefined4 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
   *(uint16_t *)((int)self_ + 0x105a) = 0;
-  *(undefined4 **)((int)self_ + 0x105c) = param_1;
-  if ((param_1 == (undefined4 *)0x0) || ((code *)*param_1 == (code *)0x0)) {
-    iVar1 = 0x10;
+  *(bits32 **)((int)self_ + 0x105c) = arg2;
+  if ((arg2 == (bits32 *)0x0) || ((untyped_fn *)*arg2 == (untyped_fn *)0x0)) {
+    i1 = 0x10;
   }
   else {
-    iVar1 = (*(code *)*param_1)(self_,0);
-    if (iVar1 == 0x17) {
+    i1 = (*(untyped_fn *)*arg2)(self_,0);
+    if (i1 == 0x17) {
       *(short *)((int)self_ + 0x105a) = *(short *)((int)self_ + 0x105a) + 1;
       return 0;
     }
-    if (iVar1 == 0x16) {
+    if (i1 == 0x16) {
       return 0;
     }
   }
   *(uint16_t *)((int)self_ + 0x1058) = 0;
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_StartIfIdle(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall NetCellFont_StartIfIdle(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
+  int i1;
   
   if (*(short *)((int)self_ + 0x1058) != 0) {
     return 3;
   }
-  *(undefined4 *)self_ = param_1;
-  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)param_2;
-  *(undefined4 *)((int)self_ + 0x104c) = 0;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(undefined4 *)((int)self_ + 0x1048) = 0;
+  *(bits32 *)self_ = arg2;
+  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)arg3;
+  *(bits32 *)((int)self_ + 0x104c) = 0;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(bits32 *)((int)self_ + 0x1048) = 0;
   *(uint8_t *)((int)self_ + 0x88) = 0;
-  iVar1 = orig::NetCellFont_StartCallbacks(self_,&PTR_LAB_103622fc);
-  return iVar1;
+  i1 = orig::NetCellFont_StartCallbacks(self_,&g_103622FC);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3BB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitRequestA(void * self_, undefined4 param_1, undefined4 param_2, undefined4 * param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __thiscall NetCellFont_InitRequestA(void * self_, bits32 arg2, bits32 arg3, bits32 * arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
+  int i1;
   
   if (*(short *)((int)self_ + 0x1058) != 0) {
     return 3;
   }
-  *(undefined4 *)self_ = param_1;
-  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)param_2;
-  *(undefined4 *)((int)self_ + 0x1054) = param_5;
-  *(undefined4 *)((int)self_ + 0x1048) = param_6;
-  *(undefined4 *)((int)self_ + 0x104c) = 0;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = *param_3;
-  *(undefined4 *)((int)self_ + 0x1c) = param_3[1];
-  *(undefined4 *)((int)self_ + 0x20) = param_4;
+  *(bits32 *)self_ = arg2;
+  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)arg3;
+  *(bits32 *)((int)self_ + 0x1054) = arg6;
+  *(bits32 *)((int)self_ + 0x1048) = arg7;
+  *(bits32 *)((int)self_ + 0x104c) = 0;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(bits32 *)((int)self_ + 0x18) = *arg4;
+  *(bits32 *)((int)self_ + 0x1c) = arg4[1];
+  *(bits32 *)((int)self_ + 0x20) = arg5;
   *(uint8_t *)((int)self_ + 0x88) = 0;
-  iVar1 = orig::NetCellFont_StartCallbacks(self_,&PTR_LAB_10362294);
-  return iVar1;
+  i1 = orig::NetCellFont_StartCallbacks(self_,&g_10362294);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3C20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitRequestB(void * self_, undefined4 param_1, undefined4 param_2, undefined4 * param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __thiscall NetCellFont_InitRequestB(void * self_, bits32 arg2, bits32 arg3, bits32 * arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
+  int i1;
   
   if (*(short *)((int)self_ + 0x1058) != 0) {
     return 3;
   }
-  *(undefined4 *)((int)self_ + 0x104c) = 0;
-  *(undefined4 *)self_ = param_1;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)param_2;
-  *(undefined4 *)((int)self_ + 0x1054) = param_5;
-  *(undefined4 *)((int)self_ + 0x1048) = param_6;
-  *(undefined4 *)((int)self_ + 0x18) = *param_3;
-  *(undefined4 *)((int)self_ + 0x1c) = param_3[1];
-  *(undefined4 *)((int)self_ + 0x20) = param_4;
-  iVar1 = orig::NetCellFont_StartCallbacks(self_,&PTR_LAB_103622a0);
-  return iVar1;
+  *(bits32 *)((int)self_ + 0x104c) = 0;
+  *(bits32 *)self_ = arg2;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)arg3;
+  *(bits32 *)((int)self_ + 0x1054) = arg6;
+  *(bits32 *)((int)self_ + 0x1048) = arg7;
+  *(bits32 *)((int)self_ + 0x18) = *arg4;
+  *(bits32 *)((int)self_ + 0x1c) = arg4[1];
+  *(bits32 *)((int)self_ + 0x20) = arg5;
+  i1 = orig::NetCellFont_StartCallbacks(self_,&g_103622A0);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitRequestC(void * self_, undefined4 param_1, undefined4 param_2, undefined4 * param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6)
+XI_API bits32 __thiscall NetCellFont_InitRequestC(void * self_, bits32 arg2, bits32 arg3, bits32 * arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  int iVar1;
+  int i1;
   
   if (*(short *)((int)self_ + 0x1058) != 0) {
     return 3;
   }
-  *(undefined4 *)self_ = param_1;
-  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)param_2;
-  *(undefined4 *)((int)self_ + 0x1054) = param_5;
-  *(undefined4 *)((int)self_ + 0x1048) = param_6;
-  *(undefined4 *)((int)self_ + 0x104c) = 0;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = *param_3;
-  *(undefined4 *)((int)self_ + 0x1c) = param_3[1];
-  *(undefined4 *)((int)self_ + 0x20) = param_4;
+  *(bits32 *)self_ = arg2;
+  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)arg3;
+  *(bits32 *)((int)self_ + 0x1054) = arg6;
+  *(bits32 *)((int)self_ + 0x1048) = arg7;
+  *(bits32 *)((int)self_ + 0x104c) = 0;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(bits32 *)((int)self_ + 0x18) = *arg4;
+  *(bits32 *)((int)self_ + 0x1c) = arg4[1];
+  *(bits32 *)((int)self_ + 0x20) = arg5;
   *(uint8_t *)((int)self_ + 0x88) = 0;
-  iVar1 = orig::NetCellFont_StartCallbacks(self_,&PTR_LAB_103622ac);
-  return iVar1;
+  i1 = orig::NetCellFont_StartCallbacks(self_,&g_103622AC);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F3D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitRequestD(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API bits32 __thiscall NetCellFont_InitRequestD(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  int iVar1;
+  int i1;
   
   if (*(short *)((int)self_ + 0x1058) != 0) {
     return 3;
   }
-  *(undefined4 *)self_ = param_1;
-  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)param_2;
-  *(undefined4 *)((int)self_ + 0x104c) = param_4;
-  *(undefined4 *)((int)self_ + 0x1048) = param_5;
-  *(undefined4 *)((int)self_ + 0x1050) = 0;
-  *(undefined4 *)((int)self_ + 0x1054) = 0;
-  *(undefined4 *)((int)self_ + 0xd0) = param_3;
+  *(bits32 *)self_ = arg2;
+  *(uint16_t *)((int)self_ + 0x1058) = (uint16_t)arg3;
+  *(bits32 *)((int)self_ + 0x104c) = arg5;
+  *(bits32 *)((int)self_ + 0x1048) = arg6;
+  *(bits32 *)((int)self_ + 0x1050) = 0;
+  *(bits32 *)((int)self_ + 0x1054) = 0;
+  *(bits32 *)((int)self_ + 0xd0) = arg4;
   *(uint8_t *)((int)self_ + 0x208) = 0;
-  iVar1 = orig::NetCellFont_StartCallbacks(self_,&PTR_LAB_103622c8);
-  return iVar1;
+  i1 = orig::NetCellFont_StartCallbacks(self_,&g_103622C8);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F7620
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StartGlobalRequestSlot24(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __cdecl NetCellFont_StartGlobalRequestSlot24(bits32 arg1, bits32 arg2, bits32 arg3)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  if (DAT_104df908 == (void *)0x0) {
+  if (g_104DF908 == (void *)0x0) {
     return 2;
   }
-  uVar1 = orig::NetCellFont_StartRequestSlot24(DAT_104df908,param_1,param_2,param_3);
-  return uVar1;
+  u1 = orig::NetCellFont_StartRequestSlot24(g_104DF908,arg1,arg2,arg3);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F76B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_EnsureGlobal(void)
+XI_API bits32 __cdecl NetCellFont_EnsureGlobal(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  if (DAT_104df908_as_v0 == (uint8_t *)0x0) {
-    DAT_104df908_as_v0 =(DAT_104df908_as_v0_t)(&DAT_104df8a8);
-    uVar1 = orig::NetCellFont_InitTwoNodes(&DAT_104df8a8);
-    return uVar1;
+  if (g_104DF908_as_v0 == (uint8_t *)0x0) {
+    g_104DF908_as_v0 =(g_104DF908_as_v0_t)(&g_104DF8A8);
+    u1 = orig::NetCellFont_InitTwoNodes(&g_104DF8A8);
+    return u1;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_104df908_as_v0 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_104DF908_as_v0 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F76D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) NetCellFont_DestroyGlobal(undefined4 xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) NetCellFont_DestroyGlobal(bits32 xi_eax, bits32 arg2)
 {
-  if (DAT_104df908 != (void *)0x0) {
-    xi_eax = orig::NetCellFont_Destroy(DAT_104df908,param_1);
-    if (((char)param_1 == '\0') && ((char)xi_eax == '\0')) {
+  if (g_104DF908 != (void *)0x0) {
+    xi_eax = orig::NetCellFont_Destroy(g_104DF908,arg2);
+    if (((char)arg2 == '\0') && ((char)xi_eax == '\0')) {
       return xi_eax;
     }
-    DAT_104df908 = (void *)0x0;
+    g_104DF908 = (void *)0x0;
   }
   return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F7700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_UpdateGlobalRequests(void)
+XI_API bits32 __cdecl NetCellFont_UpdateGlobalRequests(void)
 {
   uint32_t xi_entry_eax = 0;
-  undefined4 uVar1;
+  bits32 u1;
   
-  if (DAT_104df908 != (void *)0x0) {
-    uVar1 = orig::NetCellFont_UpdateRequests(DAT_104df908);
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  if (g_104DF908 != (void *)0x0) {
+    u1 = orig::NetCellFont_UpdateRequests(g_104DF908);
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
   }
   return xi_entry_eax & 0xffffff00;
 }
@@ -3793,113 +3797,113 @@ XI_API undefined4 __cdecl NetCellFont_UpdateGlobalRequests(void)
 XI_API uint8_t __cdecl NetCellFont_BeginGlobalRequests(void)
 {
   orig::NetCellFont_EnsureGlobal();
-  if (DAT_104df908 != (void *)0x0) {
-    orig::NetCellFont_BeginRequests(DAT_104df908,1);
+  if (g_104DF908 != (void *)0x0) {
+    orig::NetCellFont_BeginRequests(g_104DF908,1);
   }
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F78C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StoreQueriesInto104DF90C(void)
+XI_API bits32 __cdecl NetCellFont_StoreQueriesInto104DF90C(void)
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  uint32_t uVar3;
+  bits32 *p1;
+  bits32 u1;
+  uint32_t u2;
   
-  uVar2 = orig::thunk_FUN_10310030();
-  DAT_104df90c[6] = uVar2;
-  *DAT_104df90c = DAT_104df90c[6];
-  uVar2 = orig::thunk_FUN_10310025();
-  DAT_104df90c[7] = uVar2;
-  DAT_104df90c[1] = DAT_104df90c[7];
-  uVar2 = orig::thunk_FUN_103100ca();
-  DAT_104df90c[8] = uVar2;
-  DAT_104df90c[2] = DAT_104df90c[8];
-  uVar2 = orig::thunk_FUN_103100e0();
-  DAT_104df90c[9] = uVar2;
-  DAT_104df90c[3] = DAT_104df90c[9];
-  uVar2 = orig::NetCellFont_GetLow16();
-  DAT_104df90c[0xb] = uVar2;
-  DAT_104df90c[5] = DAT_104df90c[0xb];
-  uVar3 = orig::NetCellFont_Query10310030();
-  DAT_104df90c[0xf] = uVar3;
-  puVar1 = DAT_104df90c;
-  DAT_104df90c[0xe] = DAT_104df90c[0xf];
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)puVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = orig::thunk_game_10310030();
+  g_104DF90C[6] = u1;
+  *g_104DF90C = g_104DF90C[6];
+  u1 = orig::thunk_game_10310025();
+  g_104DF90C[7] = u1;
+  g_104DF90C[1] = g_104DF90C[7];
+  u1 = orig::thunk_game_103100CA();
+  g_104DF90C[8] = u1;
+  g_104DF90C[2] = g_104DF90C[8];
+  u1 = orig::thunk_game_103100E0();
+  g_104DF90C[9] = u1;
+  g_104DF90C[3] = g_104DF90C[9];
+  u1 = orig::NetCellFont_GetLow16();
+  g_104DF90C[0xb] = u1;
+  g_104DF90C[5] = g_104DF90C[0xb];
+  u2 = orig::NetCellFont_Query10310030();
+  g_104DF90C[0xf] = u2;
+  p1 = g_104DF90C;
+  g_104DF90C[0xe] = g_104DF90C[0xf];
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F7960
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StoreQueries2Into104DF90C(void)
+XI_API bits32 __cdecl NetCellFont_StoreQueries2Into104DF90C(void)
 {
-  undefined4 uVar1;
-  uint32_t uVar2;
+  bits32 u1;
+  uint32_t u2;
   
-  uVar1 = orig::thunk_FUN_103100ca();
-  *(undefined4 *)(DAT_104df90c_as_s32 + 0x20) = uVar1;
-  *(undefined4 *)(DAT_104df90c_as_s32 + 8) = *(undefined4 *)(DAT_104df90c_as_s32 + 0x20);
-  uVar1 = orig::thunk_FUN_103100e0();
-  *(undefined4 *)(DAT_104df90c_as_s32 + 0x24) = uVar1;
-  *(undefined4 *)(DAT_104df90c_as_s32 + 0xc) = *(undefined4 *)(DAT_104df90c_as_s32 + 0x24);
-  *(undefined4 *)(DAT_104df90c_as_s32 + 0x28) = 0xffffffff;
-  *(undefined4 *)(DAT_104df90c_as_s32 + 0x10) = 0xffffffff;
+  u1 = orig::thunk_game_103100CA();
+  *(bits32 *)(g_104DF90C_as_s32 + 0x20) = u1;
+  *(bits32 *)(g_104DF90C_as_s32 + 8) = *(bits32 *)(g_104DF90C_as_s32 + 0x20);
+  u1 = orig::thunk_game_103100E0();
+  *(bits32 *)(g_104DF90C_as_s32 + 0x24) = u1;
+  *(bits32 *)(g_104DF90C_as_s32 + 0xc) = *(bits32 *)(g_104DF90C_as_s32 + 0x24);
+  *(bits32 *)(g_104DF90C_as_s32 + 0x28) = 0xffffffff;
+  *(bits32 *)(g_104DF90C_as_s32 + 0x10) = 0xffffffff;
   orig::NetCellFont_InitEntryAt104DF90C();
-  uVar2 = orig::NetCellFont_Query10310030();
-  *(uint32_t *)(DAT_104df90c_as_s32 + 0x3c) = uVar2;
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  u2 = orig::NetCellFont_Query10310030();
+  *(uint32_t *)(g_104DF90C_as_s32 + 0x3c) = u2;
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F7A00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_InitEntryAt104DF90C(void)
 {
-  orig::NetCellFont_InitEntry(*(char **)(DAT_104df90c_as_s32 + 0x30),DAT_104df90c_as_s32,0,&LAB_100f79c0);
+  orig::NetCellFont_InitEntry(*(char **)(g_104DF90C_as_s32 + 0x30),g_104DF90C_as_s32,0,&code_100F79C0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100F7A80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetFieldCOf104DF90C(void)
+XI_API bits32 __cdecl NetCellFont_GetFieldCOf104DF90C(void)
 {
-  return *(undefined4 *)(DAT_104df90c_as_s32 + 0xc);
+  return *(bits32 *)(g_104DF90C_as_s32 + 0xc);
 }
 
 // FUNCTION: FFXIMAIN 0x100F94D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall NetCellFont_GetActiveBlock3AE98(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  if ((((DAT_104dfd98 == 0) || ((*(uint32_t *)(DAT_104dfd98 + 0x3aea8) & 0xffff) == 0)) ||
-      (*(char *)(DAT_104dfd98 + 0x3aeaa) == '\0')) ||
-     (iVar1 = DAT_104dfd98 + 0x3ae98, *(int *)(DAT_104dfd98 + 0x3ae98) != 1)) {
-    iVar1 = 0;
+  if ((((g_104DFD98 == 0) || ((*(uint32_t *)(g_104DFD98 + 0x3aea8) & 0xffff) == 0)) ||
+      (*(char *)(g_104DFD98 + 0x3aeaa) == '\0')) ||
+     (i1 = g_104DFD98 + 0x3ae98, *(int *)(g_104DFD98 + 0x3ae98) != 1)) {
+    i1 = 0;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100F9600
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetDword40C3C(int param_1)
+XI_API bits32 __cdecl NetCellFont_GetDword40C3C(int arg1)
 {
-  if ((param_1 == 0) && (param_1 = DAT_104dfd98, DAT_104dfd98 == 0)) {
+  if ((arg1 == 0) && (arg1 = g_104DFD98, g_104DFD98 == 0)) {
     return 0;
   }
-  return *(undefined4 *)(param_1 + 0x40c3c);
+  return *(bits32 *)(arg1 + 0x40c3c);
 }
 
 // FUNCTION: FFXIMAIN 0x100F9680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsReadyBy3C350(int param_1)
+XI_API bits32 __cdecl NetCellFont_IsReadyBy3C350(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  if ((param_1 == 0) && (param_1 = DAT_104dfd98, DAT_104dfd98 == 0)) {
+  if ((arg1 == 0) && (arg1 = g_104DFD98, g_104DFD98 == 0)) {
     return 0;
   }
-  uVar1 = (uint32_t)((uint32_t)param_1 >> 8);
-  switch(xi_sw(*(undefined4 *)(param_1 + 0x3c350))) {
+  u1 = (uint32_t)((uint32_t)arg1 >> 8);
+  switch(xi_sw(*(bits32 *)(arg1 + 0x3c350))) {
   case 0xe6:
   case 0xe7:
   case 0xe8:
@@ -3910,1261 +3914,1263 @@ XI_API undefined4 __cdecl NetCellFont_IsReadyBy3C350(int param_1)
   case 0xef:
   case 0xf0:
   case 0xf1:
-    return CONCAT31(uVar1,*(char *)(param_1 + 0x40c41) != '\0');
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(char *)(arg1 + 0x40c41) != '\0')));
   default:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
 }
 
 // FUNCTION: FFXIMAIN 0x100F9CC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_TickSecondCounters(void)
+XI_API bits32 __cdecl NetCellFont_TickSecondCounters(void)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
+  uint32_t u1;
+  uint32_t u2;
+  int i1;
   
-  if (DAT_104dfd94 == 0) {
+  if (g_104DFD94 == 0) {
     return 0;
   }
-  orig::NetCellFont_SetByte15110(&DAT_10362058);
-  uVar2 = *(uint32_t *)(DAT_104e0af0 + 0x18c);
-  uVar1 = orig::NetCellFont_GetTotalMilliseconds();
-  iVar3 = uVar1 * 0x10624dd3;
-  if (uVar2 != uVar1 / 1000) {
-    *(uint32_t *)(DAT_104e0af0 + 400) = uVar2;
-    uVar2 = orig::NetCellFont_GetTotalMilliseconds();
-    iVar3 = DAT_104e0af0;
-    *(uint32_t *)(DAT_104e0af0 + 0x18c) = uVar2 / 1000;
-    *(undefined4 *)(DAT_104e0af0 + 0x194) = 0;
-    *(undefined4 *)(DAT_104e0af0 + 0x198) = 0;
+  orig::NetCellFont_SetByte15110(&g_10362058);
+  u2 = *(uint32_t *)(g_104E0AF0 + 0x18c);
+  u1 = orig::NetCellFont_GetTotalMilliseconds();
+  i1 = u1 * 0x10624dd3;
+  if (u2 != u1 / 1000) {
+    *(uint32_t *)(g_104E0AF0 + 400) = u2;
+    u2 = orig::NetCellFont_GetTotalMilliseconds();
+    i1 = g_104E0AF0;
+    *(uint32_t *)(g_104E0AF0 + 0x18c) = u2 / 1000;
+    *(bits32 *)(g_104E0AF0 + 0x194) = 0;
+    *(bits32 *)(g_104E0AF0 + 0x198) = 0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100F9D50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_UpdateSession(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::NetCellFont_TickSecondCounters();
-  if ((char)uVar1 == '\0') {
+  u1 = orig::NetCellFont_TickSecondCounters();
+  if ((char)u1 == '\0') {
     return;
   }
-  orig::XI_NETWORK_100FA180(*DAT_104dfd94_as_v0);
+  orig::XI_NETWORK_100FA180(*g_104DFD94_as_v0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100FC160
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetFlags(void)
+XI_API bits32 __cdecl NetCellFont_GetFlags(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  return *(undefined4 *)(DAT_104dfd98 + 0x3c35c);
+  return *(bits32 *)(g_104DFD98 + 0x3c35c);
 }
 
 // FUNCTION: FFXIMAIN 0x100FC180
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ApplyStatusText(uint32_t param_1)
+XI_API bits32 __cdecl NetCellFont_ApplyStatusText(uint32_t arg1)
 {
-  uint32_t uVar1;
-  undefined4 uVar2;
-  char xi_frame[260] __attribute__((aligned(4)));
-  uint8_t * &puVar3 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 4);
+  uint32_t u1;
+  bits32 u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[260];
+    struct __attribute__((packed)) { uint8_t * p1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint8_t u3[256]; };   // at 0x4
+  } frame;
   
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  *(uint32_t *)(DAT_104dfd98 + 0x3c35c) = *(uint32_t *)(DAT_104dfd98 + 0x3c35c) | param_1;
-  uVar1 = *(uint32_t *)(DAT_104dfd98 + 0x3c35c);
-  if ((uVar1 & 1) == 0) {
-    if ((uVar1 & 2) == 0) {
-      if ((uVar1 & 4) == 0) {
-        if ((uVar1 & 8) == 0) {
-          if ((uVar1 & 0x10) == 0) {
-            if ((uVar1 & 0x20) == 0) {
-              if ((uVar1 & 0x40) == 0) {
-                if ((char)uVar1 < '\0') {
-                  puVar3 =(uint8_t*)(&DAT_1036245c);
+  *(uint32_t *)(g_104DFD98 + 0x3c35c) = *(uint32_t *)(g_104DFD98 + 0x3c35c) | arg1;
+  u1 = *(uint32_t *)(g_104DFD98 + 0x3c35c);
+  if ((u1 & 1) == 0) {
+    if ((u1 & 2) == 0) {
+      if ((u1 & 4) == 0) {
+        if ((u1 & 8) == 0) {
+          if ((u1 & 0x10) == 0) {
+            if ((u1 & 0x20) == 0) {
+              if ((u1 & 0x40) == 0) {
+                if ((char)u1 < '\0') {
+                  frame.p1 =(uint8_t*)(&g_1036245C);
                 }
-                else if ((uVar1 & 0x100) == 0) {
-                  if ((uVar1 & 0x200) == 0) {
-                    if ((uVar1 & 0x400) == 0) {
-                      if ((uVar1 & 0x2000) == 0) {
-                        if ((uVar1 & 0x4000) == 0) goto LAB_100fc28c;
-                        puVar3 =(uint8_t*)(&DAT_10357cc4);
+                else if ((u1 & 0x100) == 0) {
+                  if ((u1 & 0x200) == 0) {
+                    if ((u1 & 0x400) == 0) {
+                      if ((u1 & 0x2000) == 0) {
+                        if ((u1 & 0x4000) == 0) goto code_100FC28C;
+                        frame.p1 =(uint8_t*)(&g_10357CC4);
                       }
                       else {
-                        puVar3 =(uint8_t*)(&DAT_10357cc8);
+                        frame.p1 =(uint8_t*)(&g_10357CC8);
                       }
                     }
                     else {
-                      puVar3 =(uint8_t*)(&DAT_10357ccc);
+                      frame.p1 =(uint8_t*)(&g_10357CCC);
                     }
                   }
                   else {
-                    puVar3 =(uint8_t*)(&DAT_10354010);
+                    frame.p1 =(uint8_t*)(&g_10354010);
                   }
                 }
                 else {
-                  puVar3 =(uint8_t*)(&DAT_10362458);
+                  frame.p1 =(uint8_t*)(&g_10362458);
                 }
               }
               else {
-                puVar3 =(uint8_t*)(&DAT_10362460);
+                frame.p1 =(uint8_t*)(&g_10362460);
               }
             }
             else {
-              puVar3 =(uint8_t*)(&DAT_1034f2a4);
+              frame.p1 =(uint8_t*)(&g_1034F2A4);
             }
           }
           else {
-            puVar3 =(uint8_t*)(&DAT_10362464);
+            frame.p1 =(uint8_t*)(&g_10362464);
           }
         }
         else {
-          puVar3 =(uint8_t*)(&DAT_103514ec);
+          frame.p1 =(uint8_t*)(&g_103514EC);
         }
       }
       else {
-        puVar3 =(uint8_t*)(&DAT_10362468);
+        frame.p1 =(uint8_t*)(&g_10362468);
       }
     }
     else {
-      puVar3 =(uint8_t*)(&DAT_103514e4);
+      frame.p1 =(uint8_t*)(&g_103514E4);
     }
   }
   else {
-    puVar3 =(uint8_t*)(&DAT_1036246c);
+    frame.p1 =(uint8_t*)(&g_1036246C);
   }
-  orig::_sprintf(local_100,puVar3);
-LAB_100fc28c:
-  uVar2 = orig::NetCellFont_SetByte15114(local_100);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  orig::_sprintf(frame.u3,frame.p1);
+code_100FC28C:
+  u2 = orig::NetCellFont_SetByte15114(frame.u3);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x100FC300
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetWord40DAA(void)
+XI_API bits32 __cdecl NetCellFont_GetWord40DAA(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_104dfd98 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(DAT_104dfd98 + 0x40daa))));
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_104DFD98 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(g_104DFD98 + 0x40daa))));
 }
 
 // FUNCTION: FFXIMAIN 0x100FC320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetWord40DAA(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_SetWord40DAA(bits32 arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = DAT_104dfd98;
-  if (DAT_104dfd98 != 0) {
-    *(uint16_t *)(DAT_104dfd98 + 0x40daa) = (uint16_t)param_1;
+  i1 = g_104DFD98;
+  if (g_104DFD98 != 0) {
+    *(uint16_t *)(g_104DFD98 + 0x40daa) = (uint16_t)arg1;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x100FC4E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __cdecl NetCellFont_GetBlock3C3A4OrDefault(void)
 {
-  if (DAT_104df770 == 0) {
-    return(uint8_t*)(&DAT_104dfd30);
+  if (g_104DF770 == 0) {
+    return(uint8_t*)(&g_104DFD30);
   }
-  if (DAT_104dfd98 == 0) {
-    return(uint8_t*)(&DAT_104dfd30);
+  if (g_104DFD98 == 0) {
+    return(uint8_t*)(&g_104DFD30);
   }
-  return (uint8_t *)(DAT_104dfd98 + 0x3c3a4);
+  return (uint8_t *)(g_104DFD98 + 0x3c3a4);
 }
 
 // FUNCTION: FFXIMAIN 0x100FC510
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __cdecl NetCellFont_GetIdPair(void)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return (uint8_t *)0x0;
   }
-  DAT_104df928_as_v0 = (uint32_t)*(uint16_t *)(DAT_104dfd98 + 0x40da8);
-  _DAT_104df92c = *(undefined4 *)(DAT_104dfd98 + 0x3c390);
-  return(uint8_t*)(&DAT_104df928_as_v0);
+  g_104DF928_as_v0 = (uint32_t)*(uint16_t *)(g_104DFD98 + 0x40da8);
+  g_104DF92C = *(bits32 *)(g_104DFD98 + 0x3c390);
+  return(uint8_t*)(&g_104DF928_as_v0);
 }
 
 // FUNCTION: FFXIMAIN 0x100FCD70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_FindTimerKind10(void)
+XI_API bits32 __cdecl NetCellFont_FindTimerKind10(void)
 {
-  uint8_t bVar1;
-  undefined4 local_4;
+  uint8_t u1;
+  bits32 u2;
   
-  if (DAT_104dfd98 != 0) {
-    bVar1 = 0;
-    local_4 = 0;
+  if (g_104DFD98 != 0) {
+    u1 = 0;
+    u2 = 0;
     do {
-      if (*(char *)(DAT_104dfd98 + 0x40c44 + local_4 * 0x9c) == '\x10') {
-        return *(undefined4 *)(DAT_104dfd98 + local_4 * 0x9c + 0x40c5c);
+      if (*(char *)(g_104DFD98 + 0x40c44 + u2 * 0x9c) == '\x10') {
+        return *(bits32 *)(g_104DFD98 + u2 * 0x9c + 0x40c5c);
       }
-      bVar1 = bVar1 + 1;
-      local_4 = (uint32_t)bVar1;
-    } while (bVar1 < 2);
+      u1 = u1 + 1;
+      u2 = (uint32_t)u1;
+    } while (u1 < 2);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x100FD3A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsId50To99Or88Or89(uint32_t param_1)
+XI_API bits32 __cdecl NetCellFont_IsId50To99Or88Or89(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)(param_1 >> 8);
-  if ((0x4f < param_1) && (param_1 < 100)) {
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+  u1 = (uint32_t)(arg1 >> 8);
+  if ((0x4f < arg1) && (arg1 < 100)) {
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
-  if (param_1 == 0x88) {
+  if (arg1 == 0x88) {
     return 1;
   }
-  return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(param_1 == 0x89)));
+  return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(arg1 == 0x89)));
 }
 
 // FUNCTION: FFXIMAIN 0x100FD6E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_TestBit198CC(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_TestBit198CC(bits32 arg1)
 {
-  if (DAT_104dfd98 == 0) {
+  if (g_104DFD98 == 0) {
     return 0;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)DAT_104dfd98 >> 8))) << 8) | (uint8_t)((*(uint32_t *)(DAT_104dfd98 + 0x198cc) & 1 << ((uint8_t)param_1 & 0x1f)) != 0)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)g_104DFD98 >> 8))) << 8) | (uint8_t)((*(uint32_t *)(g_104DFD98 + 0x198cc) & 1 << ((uint8_t)arg1 & 0x1f)) != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10101BC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetTableByteForTens(uint32_t param_1)
+XI_API bits32 __cdecl NetCellFont_GetTableByteForTens(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::NetCellFont_CeilDiv10Max10(param_1);
-  param_1 = uVar1 & 0xff;
-  return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(((uint8_t *)((&DAT_1036447c)))[param_1])));
+  u1 = orig::NetCellFont_CeilDiv10Max10(arg1);
+  arg1 = u1 & 0xff;
+  return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(((uint8_t *)((&g_1036447C)))[arg1])));
 }
 
 // FUNCTION: FFXIMAIN 0x10101BF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_CeilDiv10Max10(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_CeilDiv10Max10(uint32_t arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = ((param_1 & 0xff) + 9) / 10;
-  if (10 < (uint8_t)uVar1) {
-    uVar1 = 10;
+  u1 = ((arg1 & 0xff) + 9) / 10;
+  if (10 < (uint8_t)u1) {
+    u1 = 10;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10103740
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Game_ClearFlagsBits(void)
+XI_API bits32 __cdecl Game_ClearFlagsBits(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = DAT_104e0af4;
-  if (DAT_104e0af4 != 0) {
-    *(uint32_t *)(DAT_104e0af4 + 0x46c) = *(uint32_t *)(DAT_104e0af4 + 0x46c) & 0xfffffff7;
-    *(uint32_t *)(DAT_104e0af4 + 0x46c) = *(uint32_t *)(DAT_104e0af4 + 0x46c) & 0xfffffffb;
-    iVar1 = DAT_104e0af4;
-    *(uint32_t *)(DAT_104e0af4 + 0x46c) = *(uint32_t *)(DAT_104e0af4 + 0x46c) & 0xfffffffd;
+  i1 = g_104E0AF4;
+  if (g_104E0AF4 != 0) {
+    *(uint32_t *)(g_104E0AF4 + 0x46c) = *(uint32_t *)(g_104E0AF4 + 0x46c) & 0xfffffff7;
+    *(uint32_t *)(g_104E0AF4 + 0x46c) = *(uint32_t *)(g_104E0AF4 + 0x46c) & 0xfffffffb;
+    i1 = g_104E0AF4;
+    *(uint32_t *)(g_104E0AF4 + 0x46c) = *(uint32_t *)(g_104E0AF4 + 0x46c) & 0xfffffffd;
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101037F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Game_SetSlot44C(undefined4 param_1, undefined4 param_2)
+XI_API void __cdecl Game_SetSlot44C(bits32 arg1, bits32 arg2)
 {
-  if (((uint16_t)param_1 < 8) && (DAT_104e0af4 != 0)) {
-    *(undefined4 *)(DAT_104e0af4 + 0x44c + (uint32_t)(uint16_t)param_1 * 4) = param_2;
+  if (((uint16_t)arg1 < 8) && (g_104E0AF4 != 0)) {
+    *(bits32 *)(g_104E0AF4 + 0x44c + (uint32_t)(uint16_t)arg1 * 4) = arg2;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101038C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ReturnZero(void)
+XI_API bits32 __cdecl NetCellFont_ReturnZero(void)
 {
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101038D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Game_GetField4(void)
+XI_API bits32 __cdecl Game_GetField4(void)
 {
-  if (DAT_104e0af4 == 0) {
+  if (g_104E0AF4 == 0) {
     return 0;
   }
-  return *(undefined4 *)(DAT_104e0af4 + 4);
+  return *(bits32 *)(g_104E0AF4 + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x101038E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetWord8Of104E0AF4(void)
+XI_API bits32 __cdecl NetCellFont_GetWord8Of104E0AF4(void)
 {
-  if (DAT_104e0af4 == 0) {
+  if (g_104E0AF4 == 0) {
     return 0;
   }
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)DAT_104e0af4 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(DAT_104e0af4 + 8))));
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)g_104E0AF4 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)(g_104E0AF4 + 8))));
 }
 
 // FUNCTION: FFXIMAIN 0x10103920
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_UpdateNoticesIfReady(void)
+XI_API bits32 __cdecl NetCellFont_UpdateNoticesIfReady(void)
 {
-  uint32_t uVar1;
-  undefined4 uVar2;
+  uint32_t u1;
+  bits32 u2;
   
-  if (DAT_104e0af4 == 0) {
+  if (g_104E0AF4 == 0) {
     return 0;
   }
-  uVar1 = orig::NetCellFont_Sync();
-  if ((char)uVar1 == '\x01') {
-    uVar1 = orig::Game_IsFlag10492DB4();
-    if ((char)uVar1 == '\x01') {
-      uVar1 = orig::NetCellFont_IsInitialized();
-      if ((char)uVar1 == '\x01') {
-        orig::NetCellFont_ApplyNoticeRecord(*(int *)(DAT_104df770 + 0x1369c));
+  u1 = orig::NetCellFont_Sync();
+  if ((char)u1 == '\x01') {
+    u1 = orig::Game_IsFlag10492DB4();
+    if ((char)u1 == '\x01') {
+      u1 = orig::NetCellFont_IsInitialized();
+      if ((char)u1 == '\x01') {
+        orig::NetCellFont_ApplyNoticeRecord(*(int *)(g_104DF770 + 0x1369c));
         orig::FDtGmNoticeProc();
-        uVar2 = orig::NetCellFont_UpdateGlobalRequests();
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+        u2 = orig::NetCellFont_UpdateGlobalRequests();
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u2 >> 8))) << 8) | (uint8_t)(1)));
       }
     }
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101039E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __cdecl ntGameTimeGet(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::NetCellFont_AdvanceAndGetSeconds();
-  return iVar1 + _DAT_104e0af8;
+  i1 = orig::NetCellFont_AdvanceAndGetSeconds();
+  return i1 + g_104E0AF8;
 }
 
 // FUNCTION: FFXIMAIN 0x10103A90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Time_ModDiv12FC00Div19500(uint32_t param_1)
+XI_API bits32 __cdecl Time_ModDiv12FC00Div19500(uint32_t arg1)
 {
-  return (int)(((uint64_t)param_1 % 0x12fc00) / 0x19500);
+  return (int)(((uint64_t)arg1 % 0x12fc00) / 0x19500);
 }
 
 // FUNCTION: FFXIMAIN 0x10103AB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl Time_ModDiv19500Scaled(uint32_t param_1)
+XI_API uint32_t __cdecl Time_ModDiv19500Scaled(uint32_t arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = (int)(((uint64_t)param_1 % 0x19500) * 0x2f684bdb >> 0x20);
-  return ((uint32_t)((int)((uint64_t)param_1 % 0x19500) - iVar1) >> 1) + iVar1 >> 0xb;
+  i1 = (int)(((uint64_t)arg1 % 0x19500) * 0x2f684bdb >> 0x20);
+  return ((uint32_t)((int)((uint64_t)arg1 % 0x19500) - i1) >> 1) + i1 >> 0xb;
 }
 
 // FUNCTION: FFXIMAIN 0x10103AE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl Time_ModDiv6C00Scaled(uint32_t param_1)
+XI_API uint32_t __cdecl Time_ModDiv6C00Scaled(uint32_t arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = (int)(((uint64_t)param_1 % 0x6c00) * 0x2f684bdb >> 0x20);
-  return ((uint32_t)((int)((uint64_t)param_1 % 0x6c00) - iVar1) >> 1) + iVar1 >> 0xb;
+  i1 = (int)(((uint64_t)arg1 % 0x6c00) * 0x2f684bdb >> 0x20);
+  return ((uint32_t)((int)((uint64_t)arg1 % 0x6c00) - i1) >> 1) + i1 >> 0xb;
 }
 
 // FUNCTION: FFXIMAIN 0x10103B10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Time_ModDivD80Div90(uint32_t param_1)
+XI_API bits32 __cdecl Time_ModDivD80Div90(uint32_t arg1)
 {
-  return (int)(((uint64_t)param_1 % 0xd80) / 0x90);
+  return (int)(((uint64_t)arg1 % 0xd80) / 0x90);
 }
 
 // FUNCTION: FFXIMAIN 0x10103B30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl Time_ModMul3CDiv90(uint32_t param_1)
+XI_API uint32_t __cdecl Time_ModMul3CDiv90(uint32_t arg1)
 {
-  return ((param_1 % 0x90) * 0x3c) / 0x90;
+  return ((arg1 % 0x90) * 0x3c) / 0x90;
 }
 
 // FUNCTION: FFXIMAIN 0x10103F50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_SetZero(uint16_t * param_1)
+XI_API void __cdecl NetCellFont_SetZero(uint16_t * arg1)
 {
-  *param_1 = 0;
+  *arg1 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101061D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t * __cdecl NetCellFont_UnpackBitFields(uint8_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API uint8_t * __cdecl NetCellFont_UnpackBitFields(uint8_t * arg1, uint32_t * arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  uint8_t bVar1;
-  uint8_t bVar2;
-  uint16_t uVar3;
-  uint16_t uVar4;
-  int iVar5;
-  uint8_t *pbVar6;
-  uint8_t *pbVar7;
-  uint32_t uVar8;
-  short sVar9;
-  uint16_t uVar10;
-  uint16_t uVar11;
-  short sVar12;
-  uint32_t *puVar13;
+  uint8_t u1;
+  uint8_t u2;
+  uint16_t u3;
+  uint16_t u4;
+  int i1;
+  uint8_t *p1;
+  uint8_t *p2;
+  uint32_t u5;
+  short i2;
+  uint16_t u6;
+  uint16_t u7;
+  short i3;
+  uint32_t *p3;
   
-  sVar9 = 8;
-  puVar13 = param_2;
-  for (iVar5 = 0x12; iVar5 != 0; iVar5 = iVar5 + -1) {
-    *puVar13 = 0;
-    puVar13 = puVar13 + 1;
+  i2 = 8;
+  p3 = arg2;
+  for (i1 = 0x12; i1 != 0; i1 = i1 + -1) {
+    *p3 = 0;
+    p3 = p3 + 1;
   }
-  pbVar7 = (uint8_t *)(uint32_t)*param_1;
-  bVar1 = 0;
-  pbVar6 = param_1;
-  param_1 = pbVar7;
+  p2 = (uint8_t *)(uint32_t)*arg1;
+  u1 = 0;
+  p1 = arg1;
+  arg1 = p2;
   do {
-    uVar3 = (uint16_t)(uint8_t)param_4;
-    uVar10 = 0;
-    uVar11 = 0;
-    if ((uint8_t)param_4 != 0) {
+    u3 = (uint16_t)(uint8_t)arg4;
+    u6 = 0;
+    u7 = 0;
+    if ((uint8_t)arg4 != 0) {
       do {
-        uVar3 = uVar3 - 1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        u3 = u3 - 1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar10 = uVar11 * 2;
-        if ((char)bVar1 < '\0') {
-          uVar10 = uVar10 | 1;
+        u6 = u7 * 2;
+        if ((char)u1 < '\0') {
+          u6 = u6 | 1;
         }
-        uVar11 = uVar10;
-      } while (0 < (short)uVar3);
+        u7 = u6;
+      } while (0 < (short)u3);
     }
-    if (((uint8_t)param_5 == 0) || ((uint8_t)param_5 != uVar10)) {
-      uVar8 = 1 << ((uint8_t)uVar10 & 0x1f);
-      if ((uVar8 & *param_2) != 0) break;
-      *param_2 = *param_2 | uVar8;
+    if (((uint8_t)arg5 == 0) || ((uint8_t)arg5 != u6)) {
+      u5 = 1 << ((uint8_t)u6 & 0x1f);
+      if ((u5 & *arg2) != 0) break;
+      *arg2 = *arg2 | u5;
     }
-    pbVar7 = param_1;
-    if (((uint8_t)param_5 != 0) && ((uint32_t)(uint8_t)param_5 == (int)(short)uVar10)) {
-      uVar4 = (uint16_t)(uint8_t)param_4;
-      uVar11 = 0;
-      uVar3 = 0;
-      if ((uint8_t)param_4 != 0) {
+    p2 = arg1;
+    if (((uint8_t)arg5 != 0) && ((uint32_t)(uint8_t)arg5 == (int)(short)u6)) {
+      u4 = (uint16_t)(uint8_t)arg4;
+      u7 = 0;
+      u3 = 0;
+      if ((uint8_t)arg4 != 0) {
         do {
-          uVar4 = uVar4 - 1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          u4 = u4 - 1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar11 = uVar3 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar11 = uVar11 | 1;
+          u7 = u3 * 2;
+          if ((char)u1 < '\0') {
+            u7 = u7 | 1;
           }
-          uVar3 = uVar11;
-        } while (0 < (short)uVar4);
+          u3 = u7;
+        } while (0 < (short)u4);
       }
-      uVar11 = uVar11 | 8;
-      if (uVar11 == 8) {
-        sVar12 = 0x14;
-        uVar8 = 0;
+      u7 = u7 | 8;
+      if (u7 == 8) {
+        i3 = 0x14;
+        u5 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar8 = uVar8 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar8 = uVar8 | 1;
+          u5 = u5 * 2;
+          if ((char)u1 < '\0') {
+            u5 = u5 | 1;
           }
-        } while (0 < sVar12);
-        if ((short)param_3 != 0) {
-          param_2[6] = uVar8;
-          *param_2 = *param_2 | 0x100;
+        } while (0 < i3);
+        if ((short)arg3 != 0) {
+          arg2[6] = u5;
+          *arg2 = *arg2 | 0x100;
         }
       }
-      else if (uVar11 == 0xd) {
-        sVar12 = 8;
-        bVar2 = 0;
+      else if (u7 == 0xd) {
+        i3 = 8;
+        u2 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          bVar2 = bVar2 * '\x02';
-          if ((char)bVar1 < '\0') {
-            bVar2 = bVar2 | 1;
+          u2 = u2 * '\x02';
+          if ((char)u1 < '\0') {
+            u2 = u2 | 1;
           }
-        } while (0 < sVar12);
-        *(uint8_t *)(param_2 + 0xe) = bVar2;
-        bVar2 = 0;
-        *param_2 = *param_2 | 0x2000;
-        sVar12 = 8;
+        } while (0 < i3);
+        *(uint8_t *)(arg2 + 0xe) = u2;
+        u2 = 0;
+        *arg2 = *arg2 | 0x2000;
+        i3 = 8;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          bVar2 = bVar2 * '\x02';
-          if ((char)bVar1 < '\0') {
-            bVar2 = bVar2 | 1;
+          u2 = u2 * '\x02';
+          if ((char)u1 < '\0') {
+            u2 = u2 | 1;
           }
-        } while (0 < sVar12);
-        *(uint8_t *)((int)param_2 + 0x39) = bVar2;
-        sVar12 = 8;
-        bVar2 = 0;
+        } while (0 < i3);
+        *(uint8_t *)((int)arg2 + 0x39) = u2;
+        i3 = 8;
+        u2 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          bVar2 = bVar2 * '\x02';
-          if ((char)bVar1 < '\0') {
-            bVar2 = bVar2 | 1;
+          u2 = u2 * '\x02';
+          if ((char)u1 < '\0') {
+            u2 = u2 | 1;
           }
-        } while (0 < sVar12);
-        *(uint8_t *)((int)param_2 + 0x3a) = bVar2;
-        sVar12 = 0x20;
-        uVar8 = 0;
+        } while (0 < i3);
+        *(uint8_t *)((int)arg2 + 0x3a) = u2;
+        i3 = 0x20;
+        u5 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar8 = uVar8 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar8 = uVar8 | 1;
+          u5 = u5 * 2;
+          if ((char)u1 < '\0') {
+            u5 = u5 | 1;
           }
-        } while (0 < sVar12);
-        param_2[0xf] = uVar8;
-        sVar12 = 0x20;
-        uVar8 = 0;
+        } while (0 < i3);
+        arg2[0xf] = u5;
+        i3 = 0x20;
+        u5 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar8 = uVar8 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar8 = uVar8 | 1;
+          u5 = u5 * 2;
+          if ((char)u1 < '\0') {
+            u5 = u5 | 1;
           }
-        } while (0 < sVar12);
-        param_2[0x10] = uVar8;
-        sVar12 = 0x20;
-        uVar8 = 0;
+        } while (0 < i3);
+        arg2[0x10] = u5;
+        i3 = 0x20;
+        u5 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar8 = uVar8 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar8 = uVar8 | 1;
+          u5 = u5 * 2;
+          if ((char)u1 < '\0') {
+            u5 = u5 | 1;
           }
-        } while (0 < sVar12);
-        param_2[0x11] = uVar8;
+        } while (0 < i3);
+        arg2[0x11] = u5;
       }
-      else if (uVar11 == 0xe) {
-        sVar12 = 0x20;
-        uVar8 = 0;
+      else if (u7 == 0xe) {
+        i3 = 0x20;
+        u5 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          uVar8 = uVar8 * 2;
-          if ((char)bVar1 < '\0') {
-            uVar8 = uVar8 | 1;
+          u5 = u5 * 2;
+          if ((char)u1 < '\0') {
+            u5 = u5 | 1;
           }
-        } while (0 < sVar12);
-        param_2[5] = uVar8;
-        *param_2 = *param_2 | 0x4000;
+        } while (0 < i3);
+        arg2[5] = u5;
+        *arg2 = *arg2 | 0x4000;
       }
     }
-    switch(xi_sw((int)(short)uVar10)) {
+    switch(xi_sw((int)(short)u6)) {
     case 0:
-      puVar13 = param_2 + 1;
-      sVar12 = 4;
-      uVar10 = 0;
+      p3 = arg2 + 1;
+      i3 = 4;
+      u6 = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) {
-LAB_10106bcd:
-            *(uint16_t *)(param_2 + 0xc) = 0;
-            param_2[0xc] = param_2[0xc] | (uint32_t)*(uint16_t *)((int)param_2 + 0x2a);
+          if ((short)p2 < 1) {
+code_10106BCD:
+            *(uint16_t *)(arg2 + 0xc) = 0;
+            arg2[0xc] = arg2[0xc] | (uint32_t)*(uint16_t *)((int)arg2 + 0x2a);
             return (uint8_t *)0x0;
           }
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar10 = uVar10 * 2;
-        if ((char)bVar1 < '\0') {
-          uVar10 = uVar10 | 1;
+        u6 = u6 * 2;
+        if ((char)u1 < '\0') {
+          u6 = u6 | 1;
         }
-      } while (0 < sVar12);
-      while (0 < (short)uVar10) {
-        uVar10 = uVar10 - 1;
-        sVar12 = 7;
-        bVar2 = 0;
+      } while (0 < i3);
+      while (0 < (short)u6) {
+        u6 = u6 - 1;
+        i3 = 7;
+        u2 = 0;
         do {
-          sVar12 = sVar12 + -1;
-          if (sVar9 < 8) {
-            bVar1 = bVar1 * '\x02';
-            sVar9 = sVar9 + 1;
+          i3 = i3 + -1;
+          if (i2 < 8) {
+            u1 = u1 * '\x02';
+            i2 = i2 + 1;
           }
           else {
-            if ((short)pbVar7 < 1) goto LAB_10106bcd;
-            bVar1 = pbVar6[1];
-            pbVar6 = pbVar6 + 1;
-            pbVar7 = pbVar7 + -1;
-            sVar9 = 1;
-            param_1 = pbVar7;
+            if ((short)p2 < 1) goto code_10106BCD;
+            u1 = p1[1];
+            p1 = p1 + 1;
+            p2 = p2 + -1;
+            i2 = 1;
+            arg1 = p2;
           }
-          bVar2 = bVar2 * '\x02';
-          if ((char)bVar1 < '\0') {
-            bVar2 = bVar2 | 1;
+          u2 = u2 * '\x02';
+          if ((char)u1 < '\0') {
+            u2 = u2 | 1;
           }
-        } while (0 < sVar12);
-        *(uint8_t *)puVar13 = bVar2 & 0x7f;
-        puVar13 = (uint32_t *)((int)puVar13 + 1);
+        } while (0 < i3);
+        *(uint8_t *)p3 = u2 & 0x7f;
+        p3 = (uint32_t *)((int)p3 + 1);
       }
-      *(uint8_t *)puVar13 = 0;
+      *(uint8_t *)p3 = 0;
       break;
     case 1:
-      sVar12 = 10;
-      *(uint16_t *)(param_2 + 10) = 0;
+      i3 = 10;
+      *(uint16_t *)(arg2 + 10) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        *(short *)(param_2 + 10) = (short)param_2[10] << 1;
-        if ((char)bVar1 < '\0') {
-          *(uint16_t *)(param_2 + 10) = (uint16_t)param_2[10] | 1;
+        *(short *)(arg2 + 10) = (short)arg2[10] << 1;
+        if ((char)u1 < '\0') {
+          *(uint16_t *)(arg2 + 10) = (uint16_t)arg2[10] | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 2:
-      sVar12 = 2;
-      *(uint8_t *)(param_2 + 7) = 0;
+      i3 = 2;
+      *(uint8_t *)(arg2 + 7) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = (char)param_2[7] * '\x02';
-        *(uint8_t *)(param_2 + 7) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)(param_2 + 7) = bVar2 | 1;
+        u2 = (char)arg2[7] * '\x02';
+        *(uint8_t *)(arg2 + 7) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)(arg2 + 7) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 3:
-      sVar12 = 5;
-      *(uint8_t *)(param_2 + 8) = 0;
+      i3 = 5;
+      *(uint8_t *)(arg2 + 8) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = (char)param_2[8] * '\x02';
-        *(uint8_t *)(param_2 + 8) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)(param_2 + 8) = bVar2 | 1;
+        u2 = (char)arg2[8] * '\x02';
+        *(uint8_t *)(arg2 + 8) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)(arg2 + 8) = u2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 5;
-      *(uint8_t *)((int)param_2 + 0x21) = 0;
+      } while (0 < i3);
+      i3 = 5;
+      *(uint8_t *)((int)arg2 + 0x21) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x21) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x21) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x21) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x21) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x21) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x21) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 4:
-      sVar12 = 8;
-      *(uint8_t *)((int)param_2 + 0x22) = 0;
+      i3 = 8;
+      *(uint8_t *)((int)arg2 + 0x22) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x22) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x22) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x22) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x22) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x22) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x22) = u2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 8;
-      *(uint8_t *)((int)param_2 + 0x23) = 0;
+      } while (0 < i3);
+      i3 = 8;
+      *(uint8_t *)((int)arg2 + 0x23) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x23) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x23) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x23) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x23) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x23) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x23) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 5:
-      sVar12 = 4;
-      *(uint8_t *)((int)param_2 + 0x1d) = 0;
+      i3 = 4;
+      *(uint8_t *)((int)arg2 + 0x1d) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x1d) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x1d) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x1d) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x1d) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x1d) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x1d) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 6:
-      sVar12 = 0x10;
-      *(uint16_t *)((int)param_2 + 0x2a) = 0;
+      i3 = 0x10;
+      *(uint16_t *)((int)arg2 + 0x2a) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        *(short *)((int)param_2 + 0x2a) = *(short *)((int)param_2 + 0x2a) << 1;
-        if ((char)bVar1 < '\0') {
-          *(uint16_t *)((int)param_2 + 0x2a) = *(uint16_t *)((int)param_2 + 0x2a) | 1;
+        *(short *)((int)arg2 + 0x2a) = *(short *)((int)arg2 + 0x2a) << 1;
+        if ((char)u1 < '\0') {
+          *(uint16_t *)((int)arg2 + 0x2a) = *(uint16_t *)((int)arg2 + 0x2a) | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 7:
-      sVar12 = 8;
-      *(uint8_t *)(param_2 + 9) = 0;
+      i3 = 8;
+      *(uint8_t *)(arg2 + 9) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = (char)param_2[9] * '\x02';
-        *(uint8_t *)(param_2 + 9) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)(param_2 + 9) = bVar2 | 1;
+        u2 = (char)arg2[9] * '\x02';
+        *(uint8_t *)(arg2 + 9) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)(arg2 + 9) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 8:
-      sVar12 = 0x14;
-      param_2[6] = 0;
+      i3 = 0x14;
+      arg2[6] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[6];
-        param_2[6] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[6] = uVar8 * 2 | 1;
+        u5 = arg2[6];
+        arg2[6] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[6] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 0xd:
-      sVar12 = 8;
-      *(uint8_t *)(param_2 + 0xe) = 0;
+      i3 = 8;
+      *(uint8_t *)(arg2 + 0xe) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = (char)param_2[0xe] * '\x02';
-        *(uint8_t *)(param_2 + 0xe) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)(param_2 + 0xe) = bVar2 | 1;
+        u2 = (char)arg2[0xe] * '\x02';
+        *(uint8_t *)(arg2 + 0xe) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)(arg2 + 0xe) = u2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 8;
-      *(uint8_t *)((int)param_2 + 0x39) = 0;
+      } while (0 < i3);
+      i3 = 8;
+      *(uint8_t *)((int)arg2 + 0x39) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x39) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x39) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x39) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x39) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x39) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x39) = u2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 8;
-      *(uint8_t *)((int)param_2 + 0x3a) = 0;
+      } while (0 < i3);
+      i3 = 8;
+      *(uint8_t *)((int)arg2 + 0x3a) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x3a) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x3a) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x3a) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x3a) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x3a) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x3a) = u2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 0x20;
-      param_2[0xf] = 0;
+      } while (0 < i3);
+      i3 = 0x20;
+      arg2[0xf] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[0xf];
-        param_2[0xf] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[0xf] = uVar8 * 2 | 1;
+        u5 = arg2[0xf];
+        arg2[0xf] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[0xf] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 0x20;
-      param_2[0x10] = 0;
+      } while (0 < i3);
+      i3 = 0x20;
+      arg2[0x10] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[0x10];
-        param_2[0x10] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[0x10] = uVar8 * 2 | 1;
+        u5 = arg2[0x10];
+        arg2[0x10] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[0x10] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
-      sVar12 = 0x20;
-      param_2[0x11] = 0;
+      } while (0 < i3);
+      i3 = 0x20;
+      arg2[0x11] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[0x11];
-        param_2[0x11] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[0x11] = uVar8 * 2 | 1;
+        u5 = arg2[0x11];
+        arg2[0x11] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[0x11] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 0xe:
-      sVar12 = 0x20;
-      param_2[5] = 0;
+      i3 = 0x20;
+      arg2[5] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[5];
-        param_2[5] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[5] = uVar8 * 2 | 1;
+        u5 = arg2[5];
+        arg2[5] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[5] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 0x10:
-      sVar12 = 8;
-      *(uint8_t *)((int)param_2 + 0x1e) = 0;
+      i3 = 8;
+      *(uint8_t *)((int)arg2 + 0x1e) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        bVar2 = *(char *)((int)param_2 + 0x1e) * '\x02';
-        *(uint8_t *)((int)param_2 + 0x1e) = bVar2;
-        if ((char)bVar1 < '\0') {
-          *(uint8_t *)((int)param_2 + 0x1e) = bVar2 | 1;
+        u2 = *(char *)((int)arg2 + 0x1e) * '\x02';
+        *(uint8_t *)((int)arg2 + 0x1e) = u2;
+        if ((char)u1 < '\0') {
+          *(uint8_t *)((int)arg2 + 0x1e) = u2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 0x11:
-      sVar12 = 0x20;
-      param_2[0xd] = 0;
+      i3 = 0x20;
+      arg2[0xd] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[0xd];
-        param_2[0xd] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[0xd] = uVar8 * 2 | 1;
+        u5 = arg2[0xd];
+        arg2[0xd] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[0xd] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
       break;
     case 0x16:
-      sVar12 = 0x20;
-      param_2[0xc] = 0;
+      i3 = 0x20;
+      arg2[0xc] = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        uVar8 = param_2[0xc];
-        param_2[0xc] = uVar8 * 2;
-        if ((char)bVar1 < '\0') {
-          param_2[0xc] = uVar8 * 2 | 1;
+        u5 = arg2[0xc];
+        arg2[0xc] = u5 * 2;
+        if ((char)u1 < '\0') {
+          arg2[0xc] = u5 * 2 | 1;
         }
-      } while (0 < sVar12);
-      *(uint8_t *)((int)param_2 + 0x25) =
-           ((uint8_t)(param_2[0xc] >> 0x1e) ^ *(uint8_t *)((int)param_2 + 0x25)) & 1 ^
-           *(uint8_t *)((int)param_2 + 0x25);
-      pbVar7 = param_1;
+      } while (0 < i3);
+      *(uint8_t *)((int)arg2 + 0x25) =
+           ((uint8_t)(arg2[0xc] >> 0x1e) ^ *(uint8_t *)((int)arg2 + 0x25)) & 1 ^
+           *(uint8_t *)((int)arg2 + 0x25);
+      p2 = arg1;
       break;
     case 0x17:
-      sVar12 = 0x10;
-      *(uint16_t *)(param_2 + 0xb) = 0;
+      i3 = 0x10;
+      *(uint16_t *)(arg2 + 0xb) = 0;
       do {
-        sVar12 = sVar12 + -1;
-        if (sVar9 < 8) {
-          bVar1 = bVar1 * '\x02';
-          sVar9 = sVar9 + 1;
+        i3 = i3 + -1;
+        if (i2 < 8) {
+          u1 = u1 * '\x02';
+          i2 = i2 + 1;
         }
         else {
-          if ((short)pbVar7 < 1) goto LAB_10106bcd;
-          bVar1 = pbVar6[1];
-          pbVar6 = pbVar6 + 1;
-          pbVar7 = pbVar7 + -1;
-          sVar9 = 1;
-          param_1 = pbVar7;
+          if ((short)p2 < 1) goto code_10106BCD;
+          u1 = p1[1];
+          p1 = p1 + 1;
+          p2 = p2 + -1;
+          i2 = 1;
+          arg1 = p2;
         }
-        *(short *)(param_2 + 0xb) = (short)param_2[0xb] << 1;
-        if ((char)bVar1 < '\0') {
-          *(uint16_t *)(param_2 + 0xb) = (uint16_t)param_2[0xb] | 1;
+        *(short *)(arg2 + 0xb) = (short)arg2[0xb] << 1;
+        if ((char)u1 < '\0') {
+          *(uint16_t *)(arg2 + 0xb) = (uint16_t)arg2[0xb] | 1;
         }
-      } while (0 < sVar12);
+      } while (0 < i3);
     }
-  } while (-1 < (short)pbVar7);
-  *(uint16_t *)(param_2 + 0xc) = 0;
-  param_2[0xc] = param_2[0xc] | (uint32_t)*(uint16_t *)((int)param_2 + 0x2a);
-  return pbVar6 + 1;
+  } while (-1 < (short)p2);
+  *(uint16_t *)(arg2 + 0xc) = 0;
+  arg2[0xc] = arg2[0xc] | (uint32_t)*(uint16_t *)((int)arg2 + 0x2a);
+  return p1 + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101072D0
 // GATE: PASS -- 100 trials, 72 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 72
-XI_API int __cdecl NetCellFont_LookupMaskedTable(uint32_t param_1, uint32_t param_2, int param_3)
+XI_API int __cdecl NetCellFont_LookupMaskedTable(uint32_t arg1, uint32_t arg2, int arg3)
 {
-  int *piVar1;
-  int iVar2;
+  int *p1;
+  int i1;
   
-  piVar1 = (int *)(param_3 + (param_1 & param_2 & 0xffff) * 0xc);
-  iVar2 = piVar1[2];
-  if (iVar2 == 0) {
-    iVar2 = *piVar1;
+  p1 = (int *)(arg3 + (arg1 & arg2 & 0xffff) * 0xc);
+  i1 = p1[2];
+  if (i1 == 0) {
+    i1 = *p1;
   }
-  return iVar2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10107320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_LookupTable10364CB0(undefined4 param_1, uint32_t param_2)
+XI_API bits32 __cdecl NetCellFont_LookupTable10364CB0(bits32 arg1, uint32_t arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::NetCellFont_LookupMaskedTable(param_2,0xf,(int)XI_GAME(0x10364CB0u));
-  return iVar1;
+  i1 = orig::NetCellFont_LookupMaskedTable(arg2,0xf,(int)XI_GAME(0x10364CB0u));
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10107610
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AppendMax20(uint16_t * param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_AppendMax20(uint16_t * arg1, bits32 arg2)
 {
-  if (*param_1 < 0x14) {
-    *(undefined4 *)(param_1 + (uint32_t)*param_1 * 2 + 2) = param_2;
-    *param_1 = *param_1 + 1;
+  if (*arg1 < 0x14) {
+    *(bits32 *)(arg1 + (uint32_t)*arg1 * 2 + 2) = arg2;
+    *arg1 = *arg1 + 1;
     return 1;
   }
   return 0;
@@ -5174,231 +5180,233 @@ XI_API undefined4 __cdecl NetCellFont_AppendMax20(uint16_t * param_1, undefined4
 // GATE: PASS -- 100 trials, 16 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 16
 XI_API void __cdecl NetCellFont_DumpHexBytes(void)
 {
-  uint8_t bVar1;
-  void *pvVar2;
+  uint8_t u1;
+  void *p1;
   void *self_;
-  uint16_t uVar3;
-  uint16_t uVar4;
-  uint32_t uVar5;
-  uint32_t uVar6;
-  int *piVar7;
-  undefined4 *puVar8;
-  uint16_t uVar9;
-  uint32_t uVar10;
-  char xi_frame[80] __attribute__((aligned(4)));
-  int  &local_50 = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_48 = *reinterpret_cast<int  *>(xi_frame + 8);
-  uint8_t  (&local_30)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 32);
-  uint8_t  (&local_20)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 48);
+  uint16_t u2;
+  uint16_t u3;
+  uint32_t u4;
+  uint32_t u5;
+  int *p2;
+  bits32 *p3;
+  uint16_t u6;
+  uint32_t u7;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[80];
+    struct __attribute__((packed)) { int i1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; int i2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_3[0x20]; uint8_t u8[16]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_4[0x30]; uint8_t u9[32]; };   // at 0x30
+  } frame;
   
-  uVar4 = 0;
-  if (DAT_104e0afc != 0) {
-    puVar8 = (undefined4 *)((int)DAT_104e0b00_as_v0 + 4);
+  u3 = 0;
+  if (g_104E0AFC != 0) {
+    p3 = (bits32 *)((int)g_104E0B00_as_v0 + 4);
     do {
-      self_ = (void *)*puVar8;
+      self_ = (void *)*p3;
       while (self_ != (void *)0x0) {
-        pvVar2 = *(void **)((int)self_ + 4);
-        for (piVar7 = (int *)((int)self_ + 0x14); piVar7 != (int *)0x0;
-            piVar7 = (int *)orig::NetCellFont_GetNextBlock(self_,(int)piVar7)) {
-          uVar3 = *(short *)((int)piVar7 + 6) - 8;
-          if ((*piVar7 != 0) && (uVar3 != 0)) {
-            local_50 = 0;
-            local_48 = ((uint16_t)(*(short *)((int)piVar7 + 6) - 9U) >> 3) + 1;
+        p1 = *(void **)((int)self_ + 4);
+        for (p2 = (int *)((int)self_ + 0x14); p2 != (int *)0x0;
+            p2 = (int *)orig::NetCellFont_GetNextBlock(self_,(int)p2)) {
+          u2 = *(short *)((int)p2 + 6) - 8;
+          if ((*p2 != 0) && (u2 != 0)) {
+            frame.i1 = 0;
+            frame.i2 = ((uint16_t)(*(short *)((int)p2 + 6) - 9U) >> 3) + 1;
             do {
-              uVar9 = 0;
+              u6 = 0;
               do {
-                uVar10 = (uint32_t)uVar9;
-                if ((int)(uint32_t)uVar3 <= (int)(local_50 + uVar10)) break;
-                bVar1 = *(uint8_t *)(local_50 + uVar10 + 8 + (int)piVar7);
-                orig::_sprintf(local_20 + uVar10 * 3,s__02x_1036be9c,(uint32_t)bVar1);
-                uVar5 = orig::FUN_1031482f((uint32_t)bVar1);
-                uVar6 = (uint32_t)bVar1;
-                if (uVar5 == 0) {
-                  uVar6 = 0x2e;
+                u7 = (uint32_t)u6;
+                if ((int)(uint32_t)u2 <= (int)(frame.i1 + u7)) break;
+                u1 = *(uint8_t *)(frame.i1 + u7 + 8 + (int)p2);
+                orig::_sprintf(frame.u9 + u7 * 3,str__02x_1036BE9C,(uint32_t)u1);
+                u4 = orig::game_1031482F((uint32_t)u1);
+                u5 = (uint32_t)u1;
+                if (u4 == 0) {
+                  u5 = 0x2e;
                 }
-                if (3 < uVar9) {
-                  uVar10 = uVar10 + 1;
+                if (3 < u6) {
+                  u7 = u7 + 1;
                 }
-                orig::_sprintf(local_30 + uVar10,&DAT_1036be98,uVar6);
-                uVar9 = uVar9 + 1;
-              } while (uVar9 < 8);
-              local_50 = local_50 + 8;
-              local_48 = local_48 + -1;
-            } while (local_48 != 0);
+                orig::_sprintf(frame.u8 + u7,&g_1036BE98,u5);
+                u6 = u6 + 1;
+              } while (u6 < 8);
+              frame.i1 = frame.i1 + 8;
+              frame.i2 = frame.i2 + -1;
+            } while (frame.i2 != 0);
           }
         }
-        if ((code *)puVar8[2] == (code *)0x0) {
-          orig::FUN_10312ead(self_);
-          self_ = pvVar2;
+        if ((untyped_fn *)p3[2] == (untyped_fn *)0x0) {
+          orig::game_10312EAD(self_);
+          self_ = p1;
         }
         else {
-          (*(code *)puVar8[2])();
-          self_ = pvVar2;
+          (*(untyped_fn *)p3[2])();
+          self_ = p1;
         }
       }
-      *puVar8 = 0;
-      uVar4 = uVar4 + 1;
-      puVar8 = puVar8 + 5;
-    } while (uVar4 < DAT_104e0afc);
+      *p3 = 0;
+      u3 = u3 + 1;
+      p3 = p3 + 5;
+    } while (u3 < g_104E0AFC);
   }
-  orig::operator_delete_v1(DAT_104e0b00_as_v0);
-  DAT_104e0afc = 0;
-  DAT_104e0b00_as_v0 = (LPVOID)0x0;
+  orig::operator_delete_v1(g_104E0B00_as_v0);
+  g_104E0AFC = 0;
+  g_104E0B00_as_v0 = (LPVOID)0x0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101083C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_GetPoolBlockPayload(uint32_t param_1)
+XI_API int __cdecl NetCellFont_GetPoolBlockPayload(uint32_t arg1)
 {
-  return *(uint16_t *)(DAT_104e0b00 + 0x10 + (param_1 & 0xffff) * 0x14) - 0x14;
+  return *(uint16_t *)(g_104E0B00 + 0x10 + (arg1 & 0xffff) * 0x14) - 0x14;
 }
 
 // FUNCTION: FFXIMAIN 0x10108590
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AllocEntry(uint32_t param_1, uint32_t param_2, uint32_t param_3)
+XI_API bits32 __cdecl NetCellFont_AllocEntry(uint32_t arg1, uint32_t arg2, uint32_t arg3)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  if (param_1 < param_2) {
-    param_1 = param_2;
+  if (arg1 < arg2) {
+    arg1 = arg2;
   }
-  puVar1 = orig::FUN_10108460(param_1,DAT_104e0b00 + (param_3 & 0xffff) * 0x14);
-  return puVar1;
+  p1 = orig::game_10108460(arg1,g_104E0B00 + (arg3 & 0xffff) * 0x14);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101085C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AllocFromPool(uint32_t param_1, uint32_t param_2)
+XI_API bits32 __cdecl NetCellFont_AllocFromPool(uint32_t arg1, uint32_t arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10108460(param_1,DAT_104e0b00 + (param_2 & 0xffff) * 0x14);
-  return puVar1;
+  p1 = orig::game_10108460(arg1,g_104E0B00 + (arg2 & 0xffff) * 0x14);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101085E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_AllocFromPool0(uint32_t param_1)
+XI_API bits32 __cdecl NetCellFont_AllocFromPool0(uint32_t arg1)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::FUN_10108460(param_1,DAT_104e0b00);
-  return puVar1;
+  p1 = orig::game_10108460(arg1,g_104E0B00);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101086C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_InitBlock(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall NetCellFont_InitBlock(void * self_, bits32 arg2, bits32 arg3)
 {
-  *(undefined4 *)((int)self_ + 0xc) = param_1;
-  *(undefined4 **)((int)self_ + 0x10) = (undefined4 *)((int)self_ + 0x14);
-  *(undefined4 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0xc) = arg2;
+  *(bits32 **)((int)self_ + 0x10) = (bits32 *)((int)self_ + 0x14);
+  *(bits32 *)((int)self_ + 0x14) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
-  *(short *)((int)self_ + 0x1a) = (short)param_2 + -0x14;
+  *(short *)((int)self_ + 0x1a) = (short)arg3 + -0x14;
   *(uint16_t *)((int)self_ + 0x1e) = 0;
   *(uint16_t *)((int)self_ + 0x1c) = 0;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)self_ = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)self_ = 0;
   *(uint16_t *)((int)self_ + 8) = *(uint16_t *)((int)self_ + 0x1a);
-  *(short *)((int)self_ + 10) = (short)param_2;
+  *(short *)((int)self_ + 10) = (short)arg3;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10108700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_InsertBlock(void * self_, int param_1)
+XI_API void __thiscall NetCellFont_InsertBlock(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  iVar1 = *(int *)((int)self_ + 0x10);
-  iVar2 = 0;
-  if (iVar1 != 0) {
+  i1 = *(int *)((int)self_ + 0x10);
+  i2 = 0;
+  if (i1 != 0) {
     do {
-      if (*(uint16_t *)(param_1 + 6) <= *(uint16_t *)(iVar1 + 6)) break;
-      iVar2 = iVar1;
-      if (*(uint16_t *)(iVar1 + 10) == 0) {
-        iVar1 = 0;
+      if (*(uint16_t *)(arg2 + 6) <= *(uint16_t *)(i1 + 6)) break;
+      i2 = i1;
+      if (*(uint16_t *)(i1 + 10) == 0) {
+        i1 = 0;
         break;
       }
-      iVar1 = (uint32_t)*(uint16_t *)(iVar1 + 10) + (int)self_;
-    } while (iVar1 != 0);
+      i1 = (uint32_t)*(uint16_t *)(i1 + 10) + (int)self_;
+    } while (i1 != 0);
   }
-  *(uint16_t *)(param_1 + 10) = 0;
-  *(uint16_t *)(param_1 + 8) = 0;
-  if (iVar1 != 0) {
-    orig::NetCellFont_LinkBefore(self_,param_1,iVar1);
+  *(uint16_t *)(arg2 + 10) = 0;
+  *(uint16_t *)(arg2 + 8) = 0;
+  if (i1 != 0) {
+    orig::NetCellFont_LinkBefore(self_,arg2,i1);
     return;
   }
-  if (iVar2 == 0) {
-    *(int *)((int)self_ + 0x10) = param_1;
-    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(param_1 + 6);
+  if (i2 == 0) {
+    *(int *)((int)self_ + 0x10) = arg2;
+    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(arg2 + 6);
     orig::NetCellFont_RebalanceList(self_);
     return;
   }
-  orig::NetCellFont_LinkAfter(self_,param_1,iVar2);
+  orig::NetCellFont_LinkAfter(self_,arg2,i2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10108780
 // GATE: PASS -- 100 trials, 60 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-XI_API void __thiscall NetCellFont_InsertAndCoalesce(void * self_, int param_1)
+XI_API void __thiscall NetCellFont_InsertAndCoalesce(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (*(uint16_t *)(param_1 + 8) == 0) {
-    iVar2 = 0;
+  if (*(uint16_t *)(arg2 + 8) == 0) {
+    i2 = 0;
   }
   else {
-    iVar2 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_;
+    i2 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_;
   }
-  if (((*(uint16_t *)(param_1 + 10) == 0) ||
-      (iVar1 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_, iVar1 == 0)) ||
-     (*(uint16_t *)(param_1 + 6) <= *(uint16_t *)(iVar1 + 6))) {
-    if ((iVar2 != 0) && (*(uint16_t *)(param_1 + 6) < *(uint16_t *)(iVar2 + 6))) {
+  if (((*(uint16_t *)(arg2 + 10) == 0) ||
+      (i1 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_, i1 == 0)) ||
+     (*(uint16_t *)(arg2 + 6) <= *(uint16_t *)(i1 + 6))) {
+    if ((i2 != 0) && (*(uint16_t *)(arg2 + 6) < *(uint16_t *)(i2 + 6))) {
       do {
-        if ((*(uint16_t *)(iVar2 + 8) == 0) || ((uint32_t)*(uint16_t *)(iVar2 + 8) + (int)self_ == 0)) {
-          *(int *)((int)self_ + 0x10) = param_1;
+        if ((*(uint16_t *)(i2 + 8) == 0) || ((uint32_t)*(uint16_t *)(i2 + 8) + (int)self_ == 0)) {
+          *(int *)((int)self_ + 0x10) = arg2;
         }
-        orig::NetCellFont_UnlinkBlock(self_,param_1);
-        orig::NetCellFont_LinkBefore(self_,param_1,iVar2);
-      } while (((*(uint16_t *)(param_1 + 8) != 0) &&
-               (iVar2 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_, iVar2 != 0)) &&
-              (*(uint16_t *)(param_1 + 6) < *(uint16_t *)(iVar2 + 6)));
+        orig::NetCellFont_UnlinkBlock(self_,arg2);
+        orig::NetCellFont_LinkBefore(self_,arg2,i2);
+      } while (((*(uint16_t *)(arg2 + 8) != 0) &&
+               (i2 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_, i2 != 0)) &&
+              (*(uint16_t *)(arg2 + 6) < *(uint16_t *)(i2 + 6)));
     }
   }
   else {
     do {
-      orig::NetCellFont_UnlinkBlock(self_,param_1);
-      orig::NetCellFont_LinkAfter(self_,param_1,iVar1);
-      if ((*(uint16_t *)(param_1 + 10) == 0) ||
-         (iVar1 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_, iVar1 == 0)) break;
-    } while (*(uint16_t *)(iVar1 + 6) < *(uint16_t *)(param_1 + 6));
+      orig::NetCellFont_UnlinkBlock(self_,arg2);
+      orig::NetCellFont_LinkAfter(self_,arg2,i1);
+      if ((*(uint16_t *)(arg2 + 10) == 0) ||
+         (i1 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_, i1 == 0)) break;
+    } while (*(uint16_t *)(i1 + 6) < *(uint16_t *)(arg2 + 6));
   }
-  if ((*(uint16_t *)(param_1 + 10) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_ == 0)) {
-    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(param_1 + 6);
+  if ((*(uint16_t *)(arg2 + 10) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_ == 0)) {
+    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(arg2 + 6);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10108870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall NetCellFont_GetNextBlock(void * self_, int param_1)
+XI_API uint32_t __thiscall NetCellFont_GetNextBlock(void * self_, int arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)*(uint16_t *)(param_1 + 6) + param_1;
-  return ~-(uint32_t)((uint32_t)*(uint16_t *)((int)self_ + 10) + (int)self_ < uVar1 + 0xc) & uVar1;
+  u1 = (uint32_t)*(uint16_t *)(arg2 + 6) + arg2;
+  return ~-(uint32_t)((uint32_t)*(uint16_t *)((int)self_ + 10) + (int)self_ < u1 + 0xc) & u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101088A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall NetCellFont_GetPrevBlock(int param_1)
+XI_API int __stdcall NetCellFont_GetPrevBlock(int arg1)
 {
-  if (*(uint16_t *)(param_1 + 4) != 0) {
-    return param_1 - (uint32_t)*(uint16_t *)(param_1 + 4);
+  if (*(uint16_t *)(arg1 + 4) != 0) {
+    return arg1 - (uint32_t)*(uint16_t *)(arg1 + 4);
   }
   return 0;
 }
@@ -5407,52 +5415,52 @@ XI_API int __stdcall NetCellFont_GetPrevBlock(int param_1)
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
 XI_API void __thiscall NetCellFont_RebalanceList(void * self_)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  iVar1 = *(int *)((int)self_ + 4);
+  i1 = *(int *)((int)self_ + 4);
   if (*(short *)((int)self_ + 8) == 0) {
-    while ((iVar1 != 0 && (*(short *)(iVar1 + 8) != 0))) {
-      *(int *)(*(int *)self_ + 4) = iVar1;
-      **(undefined4 **)((int)self_ + 4) = *(undefined4 *)self_;
+    while ((i1 != 0 && (*(short *)(i1 + 8) != 0))) {
+      *(int *)(*(int *)self_ + 4) = i1;
+      **(bits32 **)((int)self_ + 4) = *(bits32 *)self_;
       *(int *)self_ = *(int *)((int)self_ + 4);
-      *(undefined4 *)((int)self_ + 4) = *(undefined4 *)(*(int *)((int)self_ + 4) + 4);
+      *(bits32 *)((int)self_ + 4) = *(bits32 *)(*(int *)((int)self_ + 4) + 4);
       *(void **)(*(int *)self_ + 4) = self_;
-      if (*(undefined4 **)((int)self_ + 4) == (undefined4 *)0x0) {
+      if (*(bits32 **)((int)self_ + 4) == (bits32 *)0x0) {
         return;
       }
-      **(undefined4 **)((int)self_ + 4) = self_;
-      iVar1 = *(int *)((int)self_ + 4);
+      **(bits32 **)((int)self_ + 4) = self_;
+      i1 = *(int *)((int)self_ + 4);
     }
   }
   else {
-    while (((iVar1 != 0 && (*(uint16_t *)(iVar1 + 8) != 0)) &&
-           (*(uint16_t *)(iVar1 + 8) < *(uint16_t *)((int)self_ + 8)))) {
-      *(int *)(*(int *)self_ + 4) = iVar1;
-      **(undefined4 **)((int)self_ + 4) = *(undefined4 *)self_;
+    while (((i1 != 0 && (*(uint16_t *)(i1 + 8) != 0)) &&
+           (*(uint16_t *)(i1 + 8) < *(uint16_t *)((int)self_ + 8)))) {
+      *(int *)(*(int *)self_ + 4) = i1;
+      **(bits32 **)((int)self_ + 4) = *(bits32 *)self_;
       *(int *)self_ = *(int *)((int)self_ + 4);
-      *(undefined4 *)((int)self_ + 4) = *(undefined4 *)(*(int *)((int)self_ + 4) + 4);
+      *(bits32 *)((int)self_ + 4) = *(bits32 *)(*(int *)((int)self_ + 4) + 4);
       *(void **)(*(int *)self_ + 4) = self_;
-      if (*(undefined4 **)((int)self_ + 4) == (undefined4 *)0x0) break;
-      **(undefined4 **)((int)self_ + 4) = self_;
-      iVar1 = *(int *)((int)self_ + 4);
+      if (*(bits32 **)((int)self_ + 4) == (bits32 *)0x0) break;
+      **(bits32 **)((int)self_ + 4) = self_;
+      i1 = *(int *)((int)self_ + 4);
     }
-    piVar2 = *(int **)self_;
-    if (piVar2 != (int *)0x0) {
-      while ((*piVar2 != 0 &&
-             ((*(uint16_t *)(piVar2 + 2) == 0 ||
-              (*(uint16_t *)((int)self_ + 8) < *(uint16_t *)(piVar2 + 2)))))) {
-        piVar2[1] = *(int *)((int)self_ + 4);
-        if (*(undefined4 **)((int)self_ + 4) != (undefined4 *)0x0) {
-          **(undefined4 **)((int)self_ + 4) = *(undefined4 *)self_;
+    p1 = *(int **)self_;
+    if (p1 != (int *)0x0) {
+      while ((*p1 != 0 &&
+             ((*(uint16_t *)(p1 + 2) == 0 ||
+              (*(uint16_t *)((int)self_ + 8) < *(uint16_t *)(p1 + 2)))))) {
+        p1[1] = *(int *)((int)self_ + 4);
+        if (*(bits32 **)((int)self_ + 4) != (bits32 *)0x0) {
+          **(bits32 **)((int)self_ + 4) = *(bits32 *)self_;
         }
         *(int **)((int)self_ + 4) = *(int **)self_;
-        iVar1 = **(int **)self_;
-        *(int *)self_ = iVar1;
-        *(void **)(iVar1 + 4) = self_;
-        **(undefined4 **)((int)self_ + 4) = self_;
-        piVar2 = *(int **)self_;
-        if (piVar2 == (int *)0x0) {
+        i1 = **(int **)self_;
+        *(int *)self_ = i1;
+        *(void **)(i1 + 4) = self_;
+        **(bits32 **)((int)self_ + 4) = self_;
+        p1 = *(int **)self_;
+        if (p1 == (int *)0x0) {
           return;
         }
       }
@@ -5463,92 +5471,92 @@ XI_API void __thiscall NetCellFont_RebalanceList(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10108990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __thiscall NetCellFont_TakeFreeBlock(void * self_, int param_1)
+XI_API bits32 * __thiscall NetCellFont_TakeFreeBlock(void * self_, int arg2)
 {
-  undefined4 *puVar1;
-  uint32_t uVar2;
-  short sVar3;
-  uint32_t uVar4;
-  short sVar5;
-  undefined4 *puVar6;
+  bits32 *p1;
+  uint32_t u1;
+  short i1;
+  uint32_t u2;
+  short i2;
+  bits32 *p2;
   
-  uVar2 = param_1 + 8;
-  puVar1 = (undefined4 *)0x0;
-  if ((uVar2 <= *(uint16_t *)((int)self_ + 8)) &&
-     (puVar1 = *(undefined4 **)((int)self_ + 0x10), puVar1 != (undefined4 *)0x0)) {
-    while (*(uint16_t *)((int)puVar1 + 6) < uVar2) {
-      if (*(uint16_t *)((int)puVar1 + 10) == 0) {
-        return (undefined4 *)0x0;
+  u1 = arg2 + 8;
+  p1 = (bits32 *)0x0;
+  if ((u1 <= *(uint16_t *)((int)self_ + 8)) &&
+     (p1 = *(bits32 **)((int)self_ + 0x10), p1 != (bits32 *)0x0)) {
+    while (*(uint16_t *)((int)p1 + 6) < u1) {
+      if (*(uint16_t *)((int)p1 + 10) == 0) {
+        return (bits32 *)0x0;
       }
-      puVar1 = (undefined4 *)((uint32_t)*(uint16_t *)((int)puVar1 + 10) + (int)self_);
-      if (puVar1 == (undefined4 *)0x0) {
-        return (undefined4 *)0x0;
+      p1 = (bits32 *)((uint32_t)*(uint16_t *)((int)p1 + 10) + (int)self_);
+      if (p1 == (bits32 *)0x0) {
+        return (bits32 *)0x0;
       }
     }
-    uVar4 = 0;
-    puVar6 = puVar1;
-    if (param_1 != -8) {
-      uVar4 = 0;
+    u2 = 0;
+    p2 = p1;
+    if (arg2 != -8) {
+      u2 = 0;
       do {
-        uVar4 = uVar4 + 0xc;
-        puVar6 = puVar6 + 3;
-      } while (uVar4 < uVar2);
+        u2 = u2 + 0xc;
+        p2 = p2 + 3;
+      } while (u2 < u1);
     }
-    if (uVar4 + 0xc <= (uint32_t)*(uint16_t *)((int)puVar1 + 6)) {
-      *puVar6 = 0;
-      sVar3 = (short)uVar4;
-      sVar5 = *(short *)((int)puVar1 + 6) - sVar3;
-      *(short *)((int)puVar6 + 6) = sVar5;
-      uVar2 = orig::NetCellFont_GetNextBlock(self_,(int)puVar6);
-      if (uVar2 != 0) {
-        *(short *)(uVar2 + 4) = sVar5;
+    if (u2 + 0xc <= (uint32_t)*(uint16_t *)((int)p1 + 6)) {
+      *p2 = 0;
+      i1 = (short)u2;
+      i2 = *(short *)((int)p1 + 6) - i1;
+      *(short *)((int)p2 + 6) = i2;
+      u1 = orig::NetCellFont_GetNextBlock(self_,(int)p2);
+      if (u1 != 0) {
+        *(short *)(u1 + 4) = i2;
       }
-      orig::NetCellFont_InsertBlock(self_,(int)puVar6);
-      *(short *)((int)puVar1 + 6) = sVar3;
-      *(short *)(puVar6 + 1) = sVar3;
+      orig::NetCellFont_InsertBlock(self_,(int)p2);
+      *(short *)((int)p1 + 6) = i1;
+      *(short *)(p2 + 1) = i1;
     }
-    *puVar1 = self_;
-    orig::NetCellFont_UnlinkBlock(self_,(int)puVar1);
+    *p1 = self_;
+    orig::NetCellFont_UnlinkBlock(self_,(int)p1);
   }
-  return puVar1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10108A50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_Free(void * self_, int * param_1)
+XI_API void __thiscall NetCellFont_Free(void * self_, int * arg2)
 {
-  uint16_t uVar1;
-  int *piVar2;
-  uint32_t uVar3;
+  uint16_t u1;
+  int *p1;
+  uint32_t u2;
   
-  *param_1 = 0;
-  *(uint16_t *)((int)param_1 + 10) = 0;
-  *(uint16_t *)(param_1 + 2) = 0;
-  piVar2 = (int *)orig::NetCellFont_GetPrevBlock((int)param_1);
-  if ((piVar2 == (int *)0x0) || (*piVar2 != 0)) {
-    *param_1 = 0;
-    orig::NetCellFont_InsertBlock(self_,(int)param_1);
+  *arg2 = 0;
+  *(uint16_t *)((int)arg2 + 10) = 0;
+  *(uint16_t *)(arg2 + 2) = 0;
+  p1 = (int *)orig::NetCellFont_GetPrevBlock((int)arg2);
+  if ((p1 == (int *)0x0) || (*p1 != 0)) {
+    *arg2 = 0;
+    orig::NetCellFont_InsertBlock(self_,(int)arg2);
   }
   else {
-    *(short *)((int)piVar2 + 6) = *(short *)((int)piVar2 + 6) + *(short *)((int)param_1 + 6);
-    uVar1 = *(uint16_t *)((int)piVar2 + 6);
-    uVar3 = orig::NetCellFont_GetNextBlock(self_,(int)piVar2);
-    if (uVar3 != 0) {
-      *(uint16_t *)(uVar3 + 4) = uVar1;
+    *(short *)((int)p1 + 6) = *(short *)((int)p1 + 6) + *(short *)((int)arg2 + 6);
+    u1 = *(uint16_t *)((int)p1 + 6);
+    u2 = orig::NetCellFont_GetNextBlock(self_,(int)p1);
+    if (u2 != 0) {
+      *(uint16_t *)(u2 + 4) = u1;
     }
-    orig::NetCellFont_InsertAndCoalesce(self_,(int)piVar2);
-    param_1 = piVar2;
+    orig::NetCellFont_InsertAndCoalesce(self_,(int)p1);
+    arg2 = p1;
   }
-  piVar2 = (int *)orig::NetCellFont_GetNextBlock(self_,(int)param_1);
-  if ((piVar2 != (int *)0x0) && (*piVar2 == 0)) {
-    orig::NetCellFont_UnlinkBlock(self_,(int)piVar2);
-    *(short *)((int)param_1 + 6) = *(short *)((int)param_1 + 6) + *(short *)((int)piVar2 + 6);
-    uVar1 = *(uint16_t *)((int)param_1 + 6);
-    uVar3 = orig::NetCellFont_GetNextBlock(self_,(int)piVar2);
-    if (uVar3 != 0) {
-      *(uint16_t *)(uVar3 + 4) = uVar1;
+  p1 = (int *)orig::NetCellFont_GetNextBlock(self_,(int)arg2);
+  if ((p1 != (int *)0x0) && (*p1 == 0)) {
+    orig::NetCellFont_UnlinkBlock(self_,(int)p1);
+    *(short *)((int)arg2 + 6) = *(short *)((int)arg2 + 6) + *(short *)((int)p1 + 6);
+    u1 = *(uint16_t *)((int)arg2 + 6);
+    u2 = orig::NetCellFont_GetNextBlock(self_,(int)p1);
+    if (u2 != 0) {
+      *(uint16_t *)(u2 + 4) = u1;
     }
-    orig::NetCellFont_InsertAndCoalesce(self_,(int)param_1);
+    orig::NetCellFont_InsertAndCoalesce(self_,(int)arg2);
   }
   orig::NetCellFont_RebalanceList(self_);
   return;
@@ -5556,222 +5564,222 @@ XI_API void __thiscall NetCellFont_Free(void * self_, int * param_1)
 
 // FUNCTION: FFXIMAIN 0x10108D80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_UnlinkBlock(void * self_, int param_1)
+XI_API void __thiscall NetCellFont_UnlinkBlock(void * self_, int arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint16_t uVar3;
-  short sVar4;
+  int i1;
+  int i2;
+  uint16_t u1;
+  short i3;
   
-  if ((*(uint16_t *)(param_1 + 10) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_ == 0)) {
-    if ((*(uint16_t *)(param_1 + 8) == 0) ||
-       (iVar1 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_, iVar1 == 0)) {
-      uVar3 = 0;
+  if ((*(uint16_t *)(arg2 + 10) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_ == 0)) {
+    if ((*(uint16_t *)(arg2 + 8) == 0) ||
+       (i1 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_, i1 == 0)) {
+      u1 = 0;
     }
     else {
-      uVar3 = *(uint16_t *)(iVar1 + 6);
+      u1 = *(uint16_t *)(i1 + 6);
     }
-    *(uint16_t *)((int)self_ + 8) = uVar3;
+    *(uint16_t *)((int)self_ + 8) = u1;
     orig::NetCellFont_RebalanceList(self_);
   }
-  if ((*(uint16_t *)(param_1 + 8) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_ == 0)) {
-    if (*(uint16_t *)(param_1 + 10) == 0) {
-      iVar1 = 0;
+  if ((*(uint16_t *)(arg2 + 8) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_ == 0)) {
+    if (*(uint16_t *)(arg2 + 10) == 0) {
+      i1 = 0;
     }
     else {
-      iVar1 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_;
+      i1 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_;
     }
-    *(int *)((int)self_ + 0x10) = iVar1;
+    *(int *)((int)self_ + 0x10) = i1;
   }
-  if (*(uint16_t *)(param_1 + 10) == 0) {
-    iVar1 = 0;
+  if (*(uint16_t *)(arg2 + 10) == 0) {
+    i1 = 0;
   }
   else {
-    iVar1 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_;
+    i1 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_;
   }
-  if ((*(uint16_t *)(param_1 + 8) != 0) &&
-     (iVar2 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_, iVar2 != 0)) {
-    if (iVar1 == 0) {
-      sVar4 = 0;
+  if ((*(uint16_t *)(arg2 + 8) != 0) &&
+     (i2 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_, i2 != 0)) {
+    if (i1 == 0) {
+      i3 = 0;
     }
     else {
-      sVar4 = (short)iVar1 - (short)self_;
+      i3 = (short)i1 - (short)self_;
     }
-    *(short *)(iVar2 + 10) = sVar4;
+    *(short *)(i2 + 10) = i3;
   }
-  if (*(uint16_t *)(param_1 + 8) == 0) {
-    iVar1 = 0;
+  if (*(uint16_t *)(arg2 + 8) == 0) {
+    i1 = 0;
   }
   else {
-    iVar1 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_;
+    i1 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_;
   }
-  if ((*(uint16_t *)(param_1 + 10) != 0) &&
-     (iVar2 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_, iVar2 != 0)) {
-    if (iVar1 != 0) {
-      *(short *)(iVar2 + 8) = (short)iVar1 - (short)self_;
-      *(uint16_t *)(param_1 + 8) = 0;
-      *(uint16_t *)(param_1 + 10) = 0;
+  if ((*(uint16_t *)(arg2 + 10) != 0) &&
+     (i2 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_, i2 != 0)) {
+    if (i1 != 0) {
+      *(short *)(i2 + 8) = (short)i1 - (short)self_;
+      *(uint16_t *)(arg2 + 8) = 0;
+      *(uint16_t *)(arg2 + 10) = 0;
       return;
     }
-    *(uint16_t *)(iVar2 + 8) = 0;
+    *(uint16_t *)(i2 + 8) = 0;
   }
-  *(uint16_t *)(param_1 + 8) = 0;
-  *(uint16_t *)(param_1 + 10) = 0;
+  *(uint16_t *)(arg2 + 8) = 0;
+  *(uint16_t *)(arg2 + 10) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10108E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_LinkAfter(void * self_, int param_1, int param_2)
+XI_API void __thiscall NetCellFont_LinkAfter(void * self_, int arg2, int arg3)
 {
-  short sVar1;
-  short sVar2;
-  int iVar3;
+  short i1;
+  short i2;
+  int i3;
   
-  sVar1 = (short)self_;
-  if (param_1 != 0) {
-    if (param_2 == 0) {
-      sVar2 = 0;
+  i1 = (short)self_;
+  if (arg2 != 0) {
+    if (arg3 == 0) {
+      i2 = 0;
     }
     else {
-      sVar2 = (short)param_2 - sVar1;
+      i2 = (short)arg3 - i1;
     }
-    *(short *)(param_1 + 8) = sVar2;
+    *(short *)(arg2 + 8) = i2;
   }
-  if ((param_2 == 0) || (*(uint16_t *)(param_2 + 10) == 0)) {
-    iVar3 = 0;
+  if ((arg3 == 0) || (*(uint16_t *)(arg3 + 10) == 0)) {
+    i3 = 0;
   }
   else {
-    iVar3 = (uint32_t)*(uint16_t *)(param_2 + 10) + (int)self_;
+    i3 = (uint32_t)*(uint16_t *)(arg3 + 10) + (int)self_;
   }
-  if (param_1 != 0) {
-    if (iVar3 == 0) {
-      sVar2 = 0;
+  if (arg2 != 0) {
+    if (i3 == 0) {
+      i2 = 0;
     }
     else {
-      sVar2 = (short)iVar3 - sVar1;
+      i2 = (short)i3 - i1;
     }
-    *(short *)(param_1 + 10) = sVar2;
+    *(short *)(arg2 + 10) = i2;
   }
-  if ((*(uint16_t *)(param_1 + 8) != 0) &&
-     (iVar3 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_, iVar3 != 0)) {
-    *(short *)(iVar3 + 10) = (short)param_1 - sVar1;
+  if ((*(uint16_t *)(arg2 + 8) != 0) &&
+     (i3 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_, i3 != 0)) {
+    *(short *)(i3 + 10) = (short)arg2 - i1;
   }
-  if ((*(uint16_t *)(param_1 + 10) != 0) &&
-     (iVar3 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_, iVar3 != 0)) {
-    *(short *)(iVar3 + 8) = (short)param_1 - sVar1;
+  if ((*(uint16_t *)(arg2 + 10) != 0) &&
+     (i3 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_, i3 != 0)) {
+    *(short *)(i3 + 8) = (short)arg2 - i1;
   }
-  if ((*(uint16_t *)(param_1 + 10) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_ == 0)) {
-    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(param_1 + 6);
+  if ((*(uint16_t *)(arg2 + 10) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_ == 0)) {
+    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(arg2 + 6);
     orig::NetCellFont_RebalanceList(self_);
   }
-  if ((*(uint16_t *)(param_1 + 8) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_ == 0)) {
-    *(int *)((int)self_ + 0x10) = param_1;
+  if ((*(uint16_t *)(arg2 + 8) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_ == 0)) {
+    *(int *)((int)self_ + 0x10) = arg2;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10108F40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_LinkBefore(void * self_, int param_1, int param_2)
+XI_API void __thiscall NetCellFont_LinkBefore(void * self_, int arg2, int arg3)
 {
-  short sVar1;
-  short sVar2;
-  int iVar3;
+  short i1;
+  short i2;
+  int i3;
   
-  if ((param_2 == 0) || (*(uint16_t *)(param_2 + 8) == 0)) {
-    iVar3 = 0;
+  if ((arg3 == 0) || (*(uint16_t *)(arg3 + 8) == 0)) {
+    i3 = 0;
   }
   else {
-    iVar3 = (uint32_t)*(uint16_t *)(param_2 + 8) + (int)self_;
+    i3 = (uint32_t)*(uint16_t *)(arg3 + 8) + (int)self_;
   }
-  sVar1 = (short)self_;
-  if (param_1 != 0) {
-    if (iVar3 == 0) {
-      sVar2 = 0;
+  i1 = (short)self_;
+  if (arg2 != 0) {
+    if (i3 == 0) {
+      i2 = 0;
     }
     else {
-      sVar2 = (short)iVar3 - sVar1;
+      i2 = (short)i3 - i1;
     }
-    *(short *)(param_1 + 8) = sVar2;
-    if (param_2 == 0) {
-      sVar2 = 0;
+    *(short *)(arg2 + 8) = i2;
+    if (arg3 == 0) {
+      i2 = 0;
     }
     else {
-      sVar2 = (short)param_2 - sVar1;
+      i2 = (short)arg3 - i1;
     }
-    *(short *)(param_1 + 10) = sVar2;
+    *(short *)(arg2 + 10) = i2;
   }
-  if ((*(uint16_t *)(param_1 + 8) != 0) &&
-     (iVar3 = (uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_, iVar3 != 0)) {
-    *(short *)(iVar3 + 10) = (short)param_1 - sVar1;
+  if ((*(uint16_t *)(arg2 + 8) != 0) &&
+     (i3 = (uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_, i3 != 0)) {
+    *(short *)(i3 + 10) = (short)arg2 - i1;
   }
-  if ((*(uint16_t *)(param_1 + 10) != 0) &&
-     (iVar3 = (uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_, iVar3 != 0)) {
-    *(short *)(iVar3 + 8) = (short)param_1 - sVar1;
+  if ((*(uint16_t *)(arg2 + 10) != 0) &&
+     (i3 = (uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_, i3 != 0)) {
+    *(short *)(i3 + 8) = (short)arg2 - i1;
   }
-  if ((*(uint16_t *)(param_1 + 10) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 10) + (int)self_ == 0)) {
-    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(param_1 + 6);
+  if ((*(uint16_t *)(arg2 + 10) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 10) + (int)self_ == 0)) {
+    *(uint16_t *)((int)self_ + 8) = *(uint16_t *)(arg2 + 6);
     orig::NetCellFont_RebalanceList(self_);
   }
-  if ((*(uint16_t *)(param_1 + 8) == 0) || ((uint32_t)*(uint16_t *)(param_1 + 8) + (int)self_ == 0)) {
-    *(int *)((int)self_ + 0x10) = param_1;
+  if ((*(uint16_t *)(arg2 + 8) == 0) || ((uint32_t)*(uint16_t *)(arg2 + 8) + (int)self_ == 0)) {
+    *(int *)((int)self_ + 0x10) = arg2;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10109000
 // GATE: PASS -- 100 trials, 96 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 96
-XI_API undefined4 * __thiscall NetCellFont_AllocCopy(void * self_, undefined4 param_1, undefined4 * param_2, uint32_t param_3)
+XI_API bits32 * __thiscall NetCellFont_AllocCopy(void * self_, bits32 arg2, bits32 * arg3, uint32_t arg4)
 {
-  uint32_t uVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  uint32_t u1;
+  bits32 *p1;
+  bits32 *p2;
   
-  puVar2 = *(undefined4 **)((int)self_ + 4);
-  if ((puVar2 == (undefined4 *)0x0) || (*(uint16_t *)self_ < (uint16_t)param_1)) {
-    puVar2 = (undefined4 *)0x0;
-    uVar1 = orig::NetCellFont_GetPoolBlockPayload(0);
-    if (((uint16_t)param_1 <= uVar1) &&
-       (puVar2 = (undefined4 *)orig::NetCellFont_AllocEntry(4,(uint32_t)(uint16_t)param_1,0), puVar2 != (undefined4 *)0x0)
+  p1 = *(bits32 **)((int)self_ + 4);
+  if ((p1 == (bits32 *)0x0) || (*(uint16_t *)self_ < (uint16_t)arg2)) {
+    p1 = (bits32 *)0x0;
+    u1 = orig::NetCellFont_GetPoolBlockPayload(0);
+    if (((uint16_t)arg2 <= u1) &&
+       (p1 = (bits32 *)orig::NetCellFont_AllocEntry(4,(uint32_t)(uint16_t)arg2,0), p1 != (bits32 *)0x0)
        ) {
-      if ((param_2 != (undefined4 *)0x0) && ((short)param_3 != 0)) {
-        puVar3 = puVar2;
-        for (uVar1 = (param_3 & 0xffff) >> 2; uVar1 != 0; uVar1 = uVar1 - 1) {
-          *puVar3 = *param_2;
-          param_2 = param_2 + 1;
-          puVar3 = puVar3 + 1;
+      if ((arg3 != (bits32 *)0x0) && ((short)arg4 != 0)) {
+        p2 = p1;
+        for (u1 = (arg4 & 0xffff) >> 2; u1 != 0; u1 = u1 - 1) {
+          *p2 = *arg3;
+          arg3 = arg3 + 1;
+          p2 = p2 + 1;
         }
-        for (uVar1 = param_3 & 3; uVar1 != 0; uVar1 = uVar1 - 1) {
-          *(uint8_t *)puVar3 = *(uint8_t *)param_2;
-          param_2 = (undefined4 *)((int)param_2 + 1);
-          puVar3 = (undefined4 *)((int)puVar3 + 1);
+        for (u1 = arg4 & 3; u1 != 0; u1 = u1 - 1) {
+          *(uint8_t *)p2 = *(uint8_t *)arg3;
+          arg3 = (bits32 *)((int)arg3 + 1);
+          p2 = (bits32 *)((int)p2 + 1);
         }
       }
-      *(uint8_t *)((param_3 & 0xffff) + (int)puVar2) = 0;
-      *(uint16_t *)self_ = (uint16_t)param_1;
-      orig::thunk_FUN_10108600(*(undefined4 **)((int)self_ + 4));
-      *(undefined4 **)((int)self_ + 4) = puVar2;
+      *(uint8_t *)((arg4 & 0xffff) + (int)p1) = 0;
+      *(uint16_t *)self_ = (uint16_t)arg2;
+      orig::thunk_game_10108600(*(bits32 **)((int)self_ + 4));
+      *(bits32 **)((int)self_ + 4) = p1;
     }
   }
-  return puVar2;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x101090A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_Release(void * self_)
 {
-  short *psVar1;
-  undefined4 *puVar2;
+  short *p1;
+  bits32 *p2;
   
-  *(uint8_t ***)self_ = &PTR_FUN_10332e30;
+  *(uint8_t ***)self_ = &g_10332E30;
   if (*(int *)((int)self_ + 4) != 0) {
-    psVar1 = (short *)(*(int *)((int)self_ + 4) + 2);
-    *psVar1 = *psVar1 + -1;
-    puVar2 = *(undefined4 **)((int)self_ + 4);
-    if ((*(short *)((int)puVar2 + 2) == 0) && (puVar2 != (undefined4 *)0x0)) {
-      orig::thunk_FUN_10108600((undefined4 *)puVar2[1]);
-      orig::thunk_FUN_10108600(puVar2);
+    p1 = (short *)(*(int *)((int)self_ + 4) + 2);
+    *p1 = *p1 + -1;
+    p2 = *(bits32 **)((int)self_ + 4);
+    if ((*(short *)((int)p2 + 2) == 0) && (p2 != (bits32 *)0x0)) {
+      orig::thunk_game_10108600((bits32 *)p2[1]);
+      orig::thunk_game_10108600(p2);
     }
   }
   return;
@@ -5781,7 +5789,7 @@ XI_API void __thiscall NetCellFont_Release(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_RefStringClear(void * self_)
 {
-  *(undefined4 *)((int)self_ + 4) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
   return;
 }
 
@@ -5789,7 +5797,7 @@ XI_API void __thiscall NetCellFont_RefStringClear(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall NetCellFont_RefStringCtor(void * self_, char * xi_s1)
 {
-  *(uint8_t ***)self_ = &PTR_FUN_10332e30;
+  *(uint8_t ***)self_ = &g_10332E30;
   orig::NetCellFont_RefStringClear(self_);
   orig::NetCellFont_RefStringAssign(self_,xi_s1,xi_s1);
   return self_;
@@ -5797,95 +5805,95 @@ XI_API void * __thiscall NetCellFont_RefStringCtor(void * self_, char * xi_s1)
 
 // FUNCTION: FFXIMAIN 0x101091D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall NetCellFont_RefStringReserve(void * self_, undefined4 param_1)
+XI_API int __thiscall NetCellFont_RefStringReserve(void * self_, bits32 arg2)
 {
-  char cVar1;
-  int iVar2;
-  uint16_t *puVar3;
-  undefined4 *puVar4;
-  char *pcVar5;
-  uint32_t uVar6;
-  char *pcVar7;
+  char c1;
+  int i1;
+  uint16_t *p1;
+  bits32 *p2;
+  char *p3;
+  uint32_t u1;
+  char *p4;
   
-  iVar2 = *(int *)((int)self_ + 4);
-  if ((iVar2 == 0) || (pcVar5 = *(char **)(iVar2 + 4), pcVar5 == (char *)0x0)) {
-    pcVar5 = (char *)0x0;
-    uVar6 = 0;
+  i1 = *(int *)((int)self_ + 4);
+  if ((i1 == 0) || (p3 = *(char **)(i1 + 4), p3 == (char *)0x0)) {
+    p3 = (char *)0x0;
+    u1 = 0;
   }
   else {
-    uVar6 = 0xffffffff;
-    pcVar7 = pcVar5;
+    u1 = 0xffffffff;
+    p4 = p3;
     do {
-      if (uVar6 == 0) break;
-      uVar6 = uVar6 - 1;
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 != '\0');
-    uVar6 = ~uVar6 - 1;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p4;
+      p4 = p4 + 1;
+    } while (c1 != '\0');
+    u1 = ~u1 - 1;
   }
-  if (iVar2 == 0) {
-    puVar3 = (uint16_t *)orig::NetCellFont_AllocFromPool(8,0);
-    if (puVar3 == (uint16_t *)0x0) {
-      puVar3 = (uint16_t *)0x0;
+  if (i1 == 0) {
+    p1 = (uint16_t *)orig::NetCellFont_AllocFromPool(8,0);
+    if (p1 == (uint16_t *)0x0) {
+      p1 = (uint16_t *)0x0;
     }
     else {
-      *(undefined4 *)(puVar3 + 2) = 0;
-      *puVar3 = 0;
-      puVar3[1] = 1;
+      *(bits32 *)(p1 + 2) = 0;
+      *p1 = 0;
+      p1[1] = 1;
     }
-    *(uint16_t **)((int)self_ + 4) = puVar3;
-    if (puVar3 == (uint16_t *)0x0) {
+    *(uint16_t **)((int)self_ + 4) = p1;
+    if (p1 == (uint16_t *)0x0) {
       orig::NetCellFont_RefStringClear(self_);
       return 0;
     }
   }
-  puVar4 = orig::NetCellFont_AllocCopy(*(void **)((int)self_ + 4),uVar6 + 1 + param_1,(undefined4 *)pcVar5,uVar6);
-  if (puVar4 == (undefined4 *)0x0) {
+  p2 = orig::NetCellFont_AllocCopy(*(void **)((int)self_ + 4),u1 + 1 + arg2,(bits32 *)p3,u1);
+  if (p2 == (bits32 *)0x0) {
     return 0;
   }
-  return (int)puVar4 + uVar6;
+  return (int)p2 + u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101092C0
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
-XI_API void * __attribute__((stdcall, regparm(3))) NetCellFont_RefStringAssign(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, char * param_2)
+XI_API void * __attribute__((stdcall, regparm(3))) NetCellFont_RefStringAssign(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, char * arg4)
 {
-  char cVar1;
-  undefined4 *puVar2;
-  char *pcVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
+  char c1;
+  bits32 *p1;
+  char *p2;
+  uint32_t u1;
+  uint32_t u2;
   
   orig::NetCellFont_RefStringRelease(self_,0,xi_eax);
-  if (param_2 == (char *)0x0) {
-    puVar2 = *(undefined4 **)((int)self_ + 4);
-    if (puVar2 != (undefined4 *)0x0) {
-      orig::thunk_FUN_10108600((undefined4 *)puVar2[1]);
-      orig::thunk_FUN_10108600(puVar2);
+  if (arg4 == (char *)0x0) {
+    p1 = *(bits32 **)((int)self_ + 4);
+    if (p1 != (bits32 *)0x0) {
+      orig::thunk_game_10108600((bits32 *)p1[1]);
+      orig::thunk_game_10108600(p1);
     }
     orig::NetCellFont_RefStringClear(self_);
   }
   else {
-    uVar4 = 0xffffffff;
-    pcVar3 = param_2;
+    u1 = 0xffffffff;
+    p2 = arg4;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar3;
-      pcVar3 = pcVar3 + 1;
-    } while (cVar1 != '\0');
-    pcVar3 = (char *)orig::NetCellFont_RefStringReserve(self_,~uVar4 - 1);
-    if (pcVar3 != (char *)0x0) {
-      uVar5 = (~uVar4 - 1 & 0xffff) + 1;
-      for (uVar4 = uVar5 >> 2; uVar4 != 0; uVar4 = uVar4 - 1) {
-        *(undefined4 *)pcVar3 = *(undefined4 *)param_2;
-        param_2 = param_2 + 4;
-        pcVar3 = pcVar3 + 4;
+      if (u1 == 0) break;
+      u1 = u1 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    p2 = (char *)orig::NetCellFont_RefStringReserve(self_,~u1 - 1);
+    if (p2 != (char *)0x0) {
+      u2 = (~u1 - 1 & 0xffff) + 1;
+      for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+        *(bits32 *)p2 = *(bits32 *)arg4;
+        arg4 = arg4 + 4;
+        p2 = p2 + 4;
       }
-      for (uVar5 = uVar5 & 3; uVar5 != 0; uVar5 = uVar5 - 1) {
-        *pcVar3 = *param_2;
-        param_2 = param_2 + 1;
-        pcVar3 = pcVar3 + 1;
+      for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+        *p2 = *arg4;
+        arg4 = arg4 + 1;
+        p2 = p2 + 1;
       }
       return self_;
     }
@@ -5895,31 +5903,31 @@ XI_API void * __attribute__((stdcall, regparm(3))) NetCellFont_RefStringAssign(u
 
 // FUNCTION: FFXIMAIN 0x101094D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_RefStringRelease(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_RefStringRelease(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = *(undefined4 **)((int)self_ + 4);
-  if (puVar1 != (undefined4 *)0x0) {
-    if (*(uint16_t *)((int)puVar1 + 2) < 2) {
-      if (puVar1 != (undefined4 *)0x0) {
-        if ((char)param_2 == '\0') {
-          if ((uint8_t *)puVar1[1] == (uint8_t *)0x0) {
+  p1 = *(bits32 **)((int)self_ + 4);
+  if (p1 != (bits32 *)0x0) {
+    if (*(uint16_t *)((int)p1 + 2) < 2) {
+      if (p1 != (bits32 *)0x0) {
+        if ((char)arg4 == '\0') {
+          if ((uint8_t *)p1[1] == (uint8_t *)0x0) {
             return;
           }
-          *(uint8_t *)puVar1[1] = 0;
+          *(uint8_t *)p1[1] = 0;
           return;
         }
-        if (puVar1 != (undefined4 *)0x0) {
-          orig::thunk_FUN_10108600((undefined4 *)puVar1[1]);
-          orig::thunk_FUN_10108600(puVar1);
+        if (p1 != (bits32 *)0x0) {
+          orig::thunk_game_10108600((bits32 *)p1[1]);
+          orig::thunk_game_10108600(p1);
           orig::NetCellFont_RefStringClear(self_);
           return;
         }
       }
     }
     else {
-      *(uint16_t *)((int)puVar1 + 2) = *(uint16_t *)((int)puVar1 + 2) - 1;
+      *(uint16_t *)((int)p1 + 2) = *(uint16_t *)((int)p1 + 2) - 1;
     }
   }
   orig::NetCellFont_RefStringClear(self_);
@@ -5928,125 +5936,127 @@ XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_RefStringRelease(un
 
 // FUNCTION: FFXIMAIN 0x1010E040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_Copy12(void * self_, void * param_1)
+XI_API void __thiscall NetCellFont_Copy12(void * self_, void * arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (self_ != param_1) {
-    iVar1 = (int)param_1 - (int)self_;
-    iVar2 = 3;
+  if (self_ != arg2) {
+    i1 = (int)arg2 - (int)self_;
+    i2 = 3;
     do {
-      *(undefined4 *)self_ = *(undefined4 *)(iVar1 + (int)self_);
+      *(bits32 *)self_ = *(bits32 *)(i1 + (int)self_);
       self_ = (void *)((int)self_ + 4);
-      iVar2 = iVar2 + -1;
-    } while (iVar2 != 0);
+      i2 = i2 + -1;
+    } while (i2 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1010FA30
 // GATE: PASS -- 100 trials, 58 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 58
-XI_API void __thiscall NetCellFont_RecorderAddHandler(void * self_, uint32_t * param_1, uint32_t * param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API void __thiscall NetCellFont_RecorderAddHandler(void * self_, uint32_t * arg2, uint32_t * arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  int *piVar1;
-  int iVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
-  int *piVar5;
-  uint32_t *puVar6;
-  void *this_00;
-  undefined4 *this_01;
-  int iVar7;
-  uint64_t uVar8;
-  char xi_frame[24] __attribute__((aligned(4)));
-  uint32_t  &local_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  int * &local_10 = *reinterpret_cast<int * *>(xi_frame + 8);
-  uint8_t  (&local_c)[12] = *reinterpret_cast<uint8_t  (*)[12]>(xi_frame + 12);
+  int *p1;
+  int i1;
+  uint32_t u1;
+  uint32_t u2;
+  int *p2;
+  uint32_t *p3;
+  void *obj1;
+  bits32 *obj2;
+  int i2;
+  uint64_t u3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { uint32_t u4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int * p4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint8_t u6[12]; };   // at 0xC
+  } frame;
   
-  piVar1 = *(int **)((int)self_ + 0x10);
-LAB_1010fa46:
+  p1 = *(int **)((int)self_ + 0x10);
+code_1010FA46:
   do {
-    local_10 = piVar1;
-    piVar5 = local_10;
-    if ((local_10[1] == 0) || (piVar1 = (int *)local_10[2], piVar1 == (int *)0x0)) {
-LAB_1010fb1d:
-      uVar8 = orig::Allocator_Generic_v1(0x24);
-      this_00 = (void *)uVar8;
-      if (this_00 != (void *)0x0) {
-        if (&local_18 != param_2) {
-          local_18 = *param_2;
-          local_14 = param_2[1];
-          local_10 = (int *)param_2[2];
+    frame.p4 = p1;
+    p2 = frame.p4;
+    if ((frame.p4[1] == 0) || (p1 = (int *)frame.p4[2], p1 == (int *)0x0)) {
+code_1010FB1D:
+      u3 = orig::Allocator_Generic_v1(0x24);
+      obj1 = (void *)u3;
+      if (obj1 != (void *)0x0) {
+        if (&frame.u4 != arg3) {
+          frame.u4 = *arg3;
+          frame.u5 = arg3[1];
+          frame.p4 = (int *)arg3[2];
         }
-        orig::NetCellFont_Copy12B(local_c,param_1);
-        orig::NetCellFont_Copy12(this_00,local_c);
-        orig::NetCellFont_Copy12((void *)((int)this_00 + 0xc),&local_18);
-        *(undefined4 *)((int)this_00 + 0x1c) = 0;
-        *(undefined4 *)((int)this_00 + 0x20) = 0;
-        this_01 = (undefined4 *)orig::NetCellFont_AllocFromPool0(0xc);
-        if (this_01 == (undefined4 *)0x0) {
-          this_01 = (undefined4 *)0x0;
+        orig::NetCellFont_Copy12B(frame.u6,arg2);
+        orig::NetCellFont_Copy12(obj1,frame.u6);
+        orig::NetCellFont_Copy12((void *)((int)obj1 + 0xc),&frame.u4);
+        *(bits32 *)((int)obj1 + 0x1c) = 0;
+        *(bits32 *)((int)obj1 + 0x20) = 0;
+        obj2 = (bits32 *)orig::NetCellFont_AllocFromPool0(0xc);
+        if (obj2 == (bits32 *)0x0) {
+          obj2 = (bits32 *)0x0;
         }
         else {
-          *this_01 = this_00;
-          this_01[2] = 0;
-          this_01[1] = 0;
+          *obj2 = obj1;
+          obj2[2] = 0;
+          obj2[1] = 0;
         }
-        orig::NetCellFont_ListInsertBefore(this_01,(int)piVar5);
+        orig::NetCellFont_ListInsertBefore(obj2,(int)p2);
         *(short *)((int)self_ + 6) = *(short *)((int)self_ + 6) + 1;
-        *(undefined4 *)((int)this_00 + 0x18) = param_5;
-        *(undefined4 *)((int)this_00 + 0x1c) = param_3;
-        *(undefined4 *)((int)this_00 + 0x20) = param_4;
+        *(bits32 *)((int)obj1 + 0x18) = arg6;
+        *(bits32 *)((int)obj1 + 0x1c) = arg4;
+        *(bits32 *)((int)obj1 + 0x20) = arg5;
       }
       return;
     }
-    iVar2 = *local_10;
-    iVar7 = 0;
-    puVar6 = param_1;
+    i1 = *frame.p4;
+    i2 = 0;
+    p3 = arg2;
     do {
-      uVar3 = *(uint32_t *)((iVar2 - (int)param_1) + (int)puVar6);
-      uVar4 = *puVar6;
-      if (uVar3 >= uVar4 && uVar3 != uVar4) goto LAB_1010fb1d;
-      if (uVar3 < uVar4) break;
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + 1;
-    } while (iVar7 < 3);
-    iVar7 = 0;
-    puVar6 = param_1;
+      u1 = *(uint32_t *)((i1 - (int)arg2) + (int)p3);
+      u2 = *p3;
+      if (u1 >= u2 && u1 != u2) goto code_1010FB1D;
+      if (u1 < u2) break;
+      i2 = i2 + 1;
+      p3 = p3 + 1;
+    } while (i2 < 3);
+    i2 = 0;
+    p3 = arg2;
     do {
-      uVar3 = *(uint32_t *)((iVar2 - (int)param_1) + (int)puVar6);
-      uVar4 = *puVar6;
-      if (uVar3 >= uVar4 && uVar3 != uVar4) break;
-      if (uVar3 < uVar4) goto LAB_1010fa46;
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + 1;
-    } while (iVar7 < 3);
-    iVar7 = 0;
-    puVar6 = param_2;
+      u1 = *(uint32_t *)((i1 - (int)arg2) + (int)p3);
+      u2 = *p3;
+      if (u1 >= u2 && u1 != u2) break;
+      if (u1 < u2) goto code_1010FA46;
+      i2 = i2 + 1;
+      p3 = p3 + 1;
+    } while (i2 < 3);
+    i2 = 0;
+    p3 = arg3;
     do {
-      uVar3 = *(uint32_t *)(((iVar2 + 0xc) - (int)param_2) + (int)puVar6);
-      uVar4 = *puVar6;
-      if (uVar3 >= uVar4 && uVar3 != uVar4) goto LAB_1010fb1d;
-      if (uVar3 < uVar4) break;
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + 1;
-    } while (iVar7 < 3);
-    iVar7 = 0;
-    puVar6 = param_2;
+      u1 = *(uint32_t *)(((i1 + 0xc) - (int)arg3) + (int)p3);
+      u2 = *p3;
+      if (u1 >= u2 && u1 != u2) goto code_1010FB1D;
+      if (u1 < u2) break;
+      i2 = i2 + 1;
+      p3 = p3 + 1;
+    } while (i2 < 3);
+    i2 = 0;
+    p3 = arg3;
     while( true ) {
-      uVar3 = *(uint32_t *)(((iVar2 + 0xc) - (int)param_2) + (int)puVar6);
-      uVar4 = *puVar6;
-      if (uVar3 >= uVar4 && uVar3 != uVar4) goto LAB_1010fadf;
-      if (uVar3 < uVar4) break;
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + 1;
-      if (2 < iVar7) {
-LAB_1010fadf:
-        *(undefined4 *)(*local_10 + 0x18) = param_5;
-        *(undefined4 *)(*local_10 + 0x1c) = param_3;
-        *(undefined4 *)(*local_10 + 0x20) = param_4;
+      u1 = *(uint32_t *)(((i1 + 0xc) - (int)arg3) + (int)p3);
+      u2 = *p3;
+      if (u1 >= u2 && u1 != u2) goto code_1010FADF;
+      if (u1 < u2) break;
+      i2 = i2 + 1;
+      p3 = p3 + 1;
+      if (2 < i2) {
+code_1010FADF:
+        *(bits32 *)(*frame.p4 + 0x18) = arg6;
+        *(bits32 *)(*frame.p4 + 0x1c) = arg4;
+        *(bits32 *)(*frame.p4 + 0x20) = arg5;
         return;
       }
     }
@@ -6055,27 +6065,27 @@ LAB_1010fadf:
 
 // FUNCTION: FFXIMAIN 0x1010FBD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_RecorderRecordCode(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall NetCellFont_RecorderRecordCode(void * self_, bits32 arg2, bits32 arg3)
 {
-  short *psVar1;
-  uint16_t uVar2;
-  uint32_t uVar3;
+  short *p1;
+  uint16_t u1;
+  uint32_t u2;
   
-  uVar2 = *(uint16_t *)((int)self_ + 0x62);
-  if ((uVar2 != *(uint16_t *)((int)self_ + 0x60)) &&
-     (uVar3 = (uint8_t)((char)uVar2 - 1) & 7,
-     (short)param_1 == *(short *)((int)self_ + uVar3 * 8 + 0x20))) {
-    psVar1 = (short *)((int)self_ + uVar3 * 8 + 0x22);
-    *psVar1 = *psVar1 + 1;
-    *(undefined4 *)((int)self_ + uVar3 * 8 + 0x24) = param_2;
+  u1 = *(uint16_t *)((int)self_ + 0x62);
+  if ((u1 != *(uint16_t *)((int)self_ + 0x60)) &&
+     (u2 = (uint8_t)((char)u1 - 1) & 7,
+     (short)arg2 == *(short *)((int)self_ + u2 * 8 + 0x20))) {
+    p1 = (short *)((int)self_ + u2 * 8 + 0x22);
+    *p1 = *p1 + 1;
+    *(bits32 *)((int)self_ + u2 * 8 + 0x24) = arg3;
     return;
   }
-  *(short *)((int)self_ + (uint32_t)uVar2 * 8 + 0x20) = (short)param_1;
+  *(short *)((int)self_ + (uint32_t)u1 * 8 + 0x20) = (short)arg2;
   *(uint16_t *)((int)self_ + (uint32_t)*(uint16_t *)((int)self_ + 0x62) * 8 + 0x22) = 1;
-  *(undefined4 *)((int)self_ + (uint32_t)*(uint16_t *)((int)self_ + 0x62) * 8 + 0x24) = param_2;
-  uVar2 = (uint8_t)(*(char *)((int)self_ + 0x62) + 1) & 7;
-  *(uint16_t *)((int)self_ + 0x62) = uVar2;
-  if (*(uint16_t *)((int)self_ + 0x60) == uVar2) {
+  *(bits32 *)((int)self_ + (uint32_t)*(uint16_t *)((int)self_ + 0x62) * 8 + 0x24) = arg3;
+  u1 = (uint8_t)(*(char *)((int)self_ + 0x62) + 1) & 7;
+  *(uint16_t *)((int)self_ + 0x62) = u1;
+  if (*(uint16_t *)((int)self_ + 0x60) == u1) {
     *(uint16_t *)((int)self_ + 0x60) = (uint8_t)((char)*(uint16_t *)((int)self_ + 0x60) + 1) & 7;
   }
   return;
@@ -6083,44 +6093,44 @@ XI_API void __thiscall NetCellFont_RecorderRecordCode(void * self_, undefined4 p
 
 // FUNCTION: FFXIMAIN 0x1010FEB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_ForwardToGlobal1708(undefined4 param_1, undefined4 param_2)
+XI_API void __cdecl NetCellFont_ForwardToGlobal1708(bits32 arg1, bits32 arg2)
 {
-  if (DAT_104e1708_as_v1 != (void *)0x0) {
-    orig::NetCellFont_RecorderRecordCode(DAT_104e1708_as_v1,param_1,param_2);
+  if (g_104E1708_as_v1 != (void *)0x0) {
+    orig::NetCellFont_RecorderRecordCode(g_104E1708_as_v1,arg1,arg2);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1010FEE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_Copy12B(void * self_, void * param_1)
+XI_API void __thiscall NetCellFont_Copy12B(void * self_, void * arg2)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
-  if (self_ != param_1) {
-    iVar1 = (int)param_1 - (int)self_;
-    iVar2 = 3;
+  if (self_ != arg2) {
+    i1 = (int)arg2 - (int)self_;
+    i2 = 3;
     do {
-      *(undefined4 *)self_ = *(undefined4 *)(iVar1 + (int)self_);
+      *(bits32 *)self_ = *(bits32 *)(i1 + (int)self_);
       self_ = (void *)((int)self_ + 4);
-      iVar2 = iVar2 + -1;
-    } while (iVar2 != 0);
+      i2 = i2 + -1;
+    } while (i2 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10110040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_ListInsertBefore(void * self_, int param_1)
+XI_API void __thiscall NetCellFont_ListInsertBefore(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = *(int *)(param_1 + 4);
-  *(int *)((int)self_ + 8) = param_1;
-  *(int *)((int)self_ + 4) = iVar1;
-  if (iVar1 != 0) {
-    *(void **)(iVar1 + 8) = self_;
+  i1 = *(int *)(arg2 + 4);
+  *(int *)((int)self_ + 8) = arg2;
+  *(int *)((int)self_ + 4) = i1;
+  if (i1 != 0) {
+    *(void **)(i1 + 8) = self_;
   }
   if (*(int *)((int)self_ + 8) != 0) {
     *(void **)(*(int *)((int)self_ + 8) + 4) = self_;
@@ -6132,44 +6142,44 @@ XI_API void __thiscall NetCellFont_ListInsertBefore(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl NetCellFont_ClearTable1710(void)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  puVar2 = &DAT_104e1710_as_v0;
-  for (iVar1 = 0x10d; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = &g_104E1710_as_v0;
+  for (i1 = 0x10d; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10113CA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_StartRequestSlot24WithCallback(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __cdecl NetCellFont_StartRequestSlot24WithCallback(bits32 arg1, bits32 arg2, bits32 arg3)
 {
-  undefined4 *puVar1;
-  int iVar2;
+  bits32 *p1;
+  int i1;
   
-  if (DAT_104e1b68_as_v0 != (undefined4 *)0x0) {
+  if (g_104E1B68_as_v0 != (bits32 *)0x0) {
     return 0;
   }
-  DAT_104e1b68_as_v0 = orig::Allocator_Generic_v3(8);
-  if (DAT_104e1b68_as_v0 == (undefined4 *)0x0) {
-    DAT_104e1b68_as_v0 = (undefined4 *)0x0;
+  g_104E1B68_as_v0 = orig::Allocator_Generic_v3(8);
+  if (g_104E1B68_as_v0 == (bits32 *)0x0) {
+    g_104E1B68_as_v0 = (bits32 *)0x0;
     return 0xffffffff;
   }
-  *DAT_104e1b68_as_v0 = param_2;
-  DAT_104e1b68_as_v0[1] = param_3;
-  iVar2 = orig::NetCellFont_StartGlobalRequestSlot24(param_1,XI_CODE(FUN_10113c50),DAT_104e1b68_as_v0);
-  puVar1 = DAT_104e1b68_as_v0;
-  if (iVar2 == 0) {
+  *g_104E1B68_as_v0 = arg2;
+  g_104E1B68_as_v0[1] = arg3;
+  i1 = orig::NetCellFont_StartGlobalRequestSlot24(arg1,XI_CODE(game_10113C50),g_104E1B68_as_v0);
+  p1 = g_104E1B68_as_v0;
+  if (i1 == 0) {
     return 1;
   }
-  if (DAT_104e1b68_as_v0 != (undefined4 *)0x0) {
-    DAT_104e1b68_as_v0 = (undefined4 *)0x0;
-    orig::operator_delete_v1(puVar1);
+  if (g_104E1B68_as_v0 != (bits32 *)0x0) {
+    g_104E1B68_as_v0 = (bits32 *)0x0;
+    orig::operator_delete_v1(p1);
   }
-  DAT_104e1b68_as_v0 = (undefined4 *)0x0;
+  g_104E1B68_as_v0 = (bits32 *)0x0;
   return 0;
 }
 
@@ -6177,135 +6187,135 @@ XI_API undefined4 __cdecl NetCellFont_StartRequestSlot24WithCallback(undefined4 
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ErrorLogDtor(void * self_)
 {
-  uint32_t *puVar1;
-  uint32_t uVar2;
-  int *piVar3;
-  int iVar4;
+  uint32_t *p1;
+  uint32_t u1;
+  int *p2;
+  int i1;
   
-  if (self_ == DAT_104e1b6c) {
-    DAT_104e1b6c = (void *)0x0;
+  if (self_ == g_104E1B6C) {
+    g_104E1B6C = (void *)0x0;
   }
-  CloseHandle(*(undefined4 *)self_);
-  piVar3 = (int *)((int)self_ + 0x110);
-  iVar4 = 0x10;
+  CloseHandle(*(bits32 *)self_);
+  p2 = (int *)((int)self_ + 0x110);
+  i1 = 0x10;
   do {
-    puVar1 = (uint32_t *)piVar3[-4];
-    piVar3 = piVar3 + -4;
-    if (puVar1 != (uint32_t *)0x0) {
-      uVar2 = *puVar1;
-      *puVar1 = uVar2 - 1;
-      if (uVar2 < 2) {
-        if (*(LPVOID *)(*piVar3 + 4) != (LPVOID)0x0) {
-          orig::FUN_10312ead(*(LPVOID *)(*piVar3 + 4));
+    p1 = (uint32_t *)p2[-4];
+    p2 = p2 + -4;
+    if (p1 != (uint32_t *)0x0) {
+      u1 = *p1;
+      *p1 = u1 - 1;
+      if (u1 < 2) {
+        if (*(LPVOID *)(*p2 + 4) != (LPVOID)0x0) {
+          orig::game_10312EAD(*(LPVOID *)(*p2 + 4));
         }
-        orig::operator_delete_v1((LPVOID)*piVar3);
+        orig::operator_delete_v1((LPVOID)*p2);
       }
-      *piVar3 = 0;
+      *p2 = 0;
     }
-    iVar4 = iVar4 + -1;
-  } while (iVar4 != 0);
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10114120
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
-XI_API undefined4 * __thiscall NetCellFont_ErrorLogPop(void * self_, undefined4 * param_1)
+XI_API bits32 * __thiscall NetCellFont_ErrorLogPop(void * self_, bits32 * arg2)
 {
-  undefined4 *puVar1;
-  uint32_t *puVar2;
-  uint32_t uVar3;
-  LPVOID pvVar4;
-  int iVar5;
-  undefined4 uVar6;
-  uint32_t *puVar7;
+  bits32 *p1;
+  uint32_t *p2;
+  uint32_t u1;
+  LPVOID val1;
+  int i1;
+  bits32 u2;
+  uint32_t *p3;
   char xi_frame[16] __attribute__((aligned(4)));
-  undefined4  &local_10 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  undefined4  &local_c = *reinterpret_cast<undefined4  *>(xi_frame + 4);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 4);
   
-  puVar7 = (uint32_t *)0x0;
-  uVar6 = 0;
-  local_c = 0;
+  p3 = (uint32_t *)0x0;
+  u2 = 0;
+  u4 = 0;
   if ((*(short *)((int)self_ + 0x108) != *(short *)((int)self_ + 0x10a)) &&
-     (iVar5 = WaitForSingleObject(*(undefined4 *)self_,0xffffffff), iVar5 != -1)) {
-    puVar1 = (undefined4 *)((uint32_t)*(uint16_t *)((int)self_ + 0x108) * 0x10 + 8 + (int)self_);
-    if (&local_10 != puVar1) {
-      puVar7 = (uint32_t *)puVar1[2];
-      local_c = puVar1[1];
-      uVar6 = *puVar1;
-      if (puVar7 != (uint32_t *)0x0) {
-        *puVar7 = *puVar7 + 1;
+     (i1 = WaitForSingleObject(*(bits32 *)self_,0xffffffff), i1 != -1)) {
+    p1 = (bits32 *)((uint32_t)*(uint16_t *)((int)self_ + 0x108) * 0x10 + 8 + (int)self_);
+    if (&u3 != p1) {
+      p3 = (uint32_t *)p1[2];
+      u4 = p1[1];
+      u2 = *p1;
+      if (p3 != (uint32_t *)0x0) {
+        *p3 = *p3 + 1;
       }
     }
-    iVar5 = (uint32_t)*(uint16_t *)((int)self_ + 0x108) * 0x10;
-    puVar2 = *(uint32_t **)(iVar5 + 0x10 + (int)self_);
-    if (puVar2 != (uint32_t *)0x0) {
-      uVar3 = *puVar2;
-      *puVar2 = uVar3 - 1;
-      if (uVar3 < 2) {
-        pvVar4 = *(LPVOID *)(*(int *)((int)self_ + iVar5 + 0x10) + 4);
-        if (pvVar4 != (LPVOID)0x0) {
-          orig::FUN_10312ead(pvVar4);
+    i1 = (uint32_t)*(uint16_t *)((int)self_ + 0x108) * 0x10;
+    p2 = *(uint32_t **)(i1 + 0x10 + (int)self_);
+    if (p2 != (uint32_t *)0x0) {
+      u1 = *p2;
+      *p2 = u1 - 1;
+      if (u1 < 2) {
+        val1 = *(LPVOID *)(*(int *)((int)self_ + i1 + 0x10) + 4);
+        if (val1 != (LPVOID)0x0) {
+          orig::game_10312EAD(val1);
         }
-        orig::operator_delete_v1(*(LPVOID *)((int)self_ + iVar5 + 0x10));
+        orig::operator_delete_v1(*(LPVOID *)((int)self_ + i1 + 0x10));
       }
-      *(undefined4 *)((int)self_ + iVar5 + 0x10) = 0;
+      *(bits32 *)((int)self_ + i1 + 0x10) = 0;
     }
     *(uint16_t *)((int)self_ + 0x108) = (uint8_t)(*(char *)((int)self_ + 0x108) + 1) & 0xf;
-    ReleaseMutex(*(undefined4 *)self_);
+    ReleaseMutex(*(bits32 *)self_);
   }
-  param_1[2] = 0;
-  if (param_1 != &local_10) {
-    *param_1 = uVar6;
-    param_1[1] = local_c;
-    param_1[2] = puVar7;
-    if (puVar7 == (uint32_t *)0x0) {
-      return param_1;
+  arg2[2] = 0;
+  if (arg2 != &u3) {
+    *arg2 = u2;
+    arg2[1] = u4;
+    arg2[2] = p3;
+    if (p3 == (uint32_t *)0x0) {
+      return arg2;
     }
-    *puVar7 = *puVar7 + 1;
+    *p3 = *p3 + 1;
   }
-  if ((puVar7 != (uint32_t *)0x0) && (uVar3 = *puVar7, *puVar7 = uVar3 - 1, uVar3 < 2)) {
-    if ((LPVOID)puVar7[1] != (LPVOID)0x0) {
-      orig::FUN_10312ead((LPVOID)puVar7[1]);
+  if ((p3 != (uint32_t *)0x0) && (u1 = *p3, *p3 = u1 - 1, u1 < 2)) {
+    if ((LPVOID)p3[1] != (LPVOID)0x0) {
+      orig::game_10312EAD((LPVOID)p3[1]);
     }
-    orig::operator_delete_v1(puVar7);
+    orig::operator_delete_v1(p3);
   }
-  return param_1;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10114250
 // GATE: PASS -- 100 trials, 33 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 33
-XI_API undefined4 __thiscall NetCellFont_PushRingEntryLocked(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall NetCellFont_PushRingEntryLocked(void * self_, bits32 * arg2)
 {
-  undefined4 *puVar1;
-  uint32_t *puVar2;
-  uint32_t uVar3;
-  int *piVar4;
-  int iVar5;
-  BOOL BVar6;
+  bits32 *p1;
+  uint32_t *p2;
+  uint32_t u1;
+  int *p3;
+  int i1;
+  BOOL i2;
   
-  iVar5 = WaitForSingleObject(*(undefined4 *)self_,0xffffffff);
-  if (iVar5 != -1) {
-    puVar1 = (undefined4 *)((uint32_t)*(uint16_t *)((int)self_ + 0x10a) * 0x10 + 8 + (int)self_);
+  i1 = WaitForSingleObject(*(bits32 *)self_,0xffffffff);
+  if (i1 != -1) {
+    p1 = (bits32 *)((uint32_t)*(uint16_t *)((int)self_ + 0x10a) * 0x10 + 8 + (int)self_);
     *(uint16_t *)((int)self_ + 0x10a) = *(uint16_t *)((int)self_ + 0x10a) + 1;
-    if (puVar1 != param_1) {
-      puVar2 = (uint32_t *)puVar1[2];
-      if (puVar2 != (uint32_t *)0x0) {
-        uVar3 = *puVar2;
-        *puVar2 = uVar3 - 1;
-        if (uVar3 < 2) {
-          if (*(LPVOID *)(puVar1[2] + 4) != (LPVOID)0x0) {
-            orig::FUN_10312ead_v2(*(LPVOID *)(puVar1[2] + 4));
+    if (p1 != arg2) {
+      p2 = (uint32_t *)p1[2];
+      if (p2 != (uint32_t *)0x0) {
+        u1 = *p2;
+        *p2 = u1 - 1;
+        if (u1 < 2) {
+          if (*(LPVOID *)(p1[2] + 4) != (LPVOID)0x0) {
+            orig::game_10312EAD_v2(*(LPVOID *)(p1[2] + 4));
           }
-          orig::operator_delete_v3(puVar1[2]);
+          orig::operator_delete_v3(p1[2]);
         }
-        puVar1[2] = 0;
+        p1[2] = 0;
       }
-      *puVar1 = *param_1;
-      puVar1[1] = param_1[1];
-      piVar4 = (int *)param_1[2];
-      puVar1[2] = piVar4;
-      if (piVar4 != (int *)0x0) {
-        *piVar4 = *piVar4 + 1;
+      *p1 = *arg2;
+      p1[1] = arg2[1];
+      p3 = (int *)arg2[2];
+      p1[2] = p3;
+      if (p3 != (int *)0x0) {
+        *p3 = *p3 + 1;
       }
     }
     *(uint16_t *)((int)self_ + 0x10a) = *(uint16_t *)((int)self_ + 0x10a) & 0xf;
@@ -6314,8 +6324,8 @@ XI_API undefined4 __thiscall NetCellFont_PushRingEntryLocked(void * self_, undef
     }
                     /* WARNING: Could not recover jumptable at 0x1011430e. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    BVar6 = ReleaseMutex(*(HANDLE *)self_);
-    return BVar6;
+    i2 = ReleaseMutex(*(HANDLE *)self_);
+    return i2;
   }
   return 0xffffffff;
 }
@@ -6324,87 +6334,87 @@ XI_API undefined4 __thiscall NetCellFont_PushRingEntryLocked(void * self_, undef
 // GATE: PASS -- 100 trials, 85 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 85
 XI_API void __thiscall NetCellFont_ErrorLogFlush(void * self_)
 {
-  LPVOID pvVar1;
-  uint8_t bVar2;
-  uint16_t uVar3;
-  undefined4 uVar4;
-  uint32_t *puVar5;
-  int iVar6;
-  uint32_t uVar7;
-  uint16_t uVar8;
-  undefined4 *puVar9;
-  undefined4 *puVar10;
+  LPVOID val1;
+  uint8_t u1;
+  uint16_t u2;
+  bits32 u3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u4;
+  uint16_t u5;
+  bits32 *p2;
+  bits32 *p3;
   char xi_frame[16] __attribute__((aligned(4)));
-  undefined4  &local_10 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  short  &local_c = *reinterpret_cast<short  *>(xi_frame + 4);
-  uint16_t  &uStack_a = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
-  uint16_t  &local_8 = *reinterpret_cast<uint16_t  *>(xi_frame + 8);
-  uint16_t  &uStack_6 = *reinterpret_cast<uint16_t  *>(xi_frame + 10);
+  bits32  &u6 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  short  &i2 = *reinterpret_cast<short  *>(xi_frame + 4);
+  uint16_t  &u7 = *reinterpret_cast<uint16_t  *>(xi_frame + 6);
+  uint16_t  &u8 = *reinterpret_cast<uint16_t  *>(xi_frame + 8);
+  uint16_t  &u9 = *reinterpret_cast<uint16_t  *>(xi_frame + 10);
   
-  bVar2 = *(char *)((int)self_ + 0x10a) - *(char *)((int)self_ + 0x108);
-  uVar3 = bVar2 & 0xf;
-  if (((((bVar2 & 0xf) != 0) && (g_pFileMng_as_v0 != (void *)0x0)) &&
-      (uVar4 = orig::TextInputFiles_FileMngFwd101C18E0(g_pFileMng_as_v0,(int)self_ + 0x238), (char)uVar4 == '\0')) &&
-     (uVar8 = 0, (bVar2 & 0xf) != 0)) {
+  u1 = *(char *)((int)self_ + 0x10a) - *(char *)((int)self_ + 0x108);
+  u2 = u1 & 0xf;
+  if (((((u1 & 0xf) != 0) && (g_pFileMng_as_v0 != (void *)0x0)) &&
+      (u3 = orig::TextInputFiles_FileMngFwd101C18E0(g_pFileMng_as_v0,(int)self_ + 0x238), (char)u3 == '\0')) &&
+     (u5 = 0, (u1 & 0xf) != 0)) {
     do {
-      uVar3 = uVar3 - 1;
-      if (3 < uVar8) break;
-      orig::NetCellFont_ErrorLogPop(self_,&local_10);
-      if (local_c != 0) {
-        *(undefined4 *)((int)self_ + (uint32_t)uVar8 * 0x48 + 0x110) = local_10;
-        puVar10 = (undefined4 *)((int)self_ + (uint32_t)uVar8 * 0x48 + 0x118);
-        *(uint32_t *)((int)self_ + (uint32_t)uVar8 * 0x48 + 0x114) = ((uint32_t)(((uint32_t)(uint16_t)(uStack_a) << 16) | (uint16_t)(local_c)));
-        puVar9 = puVar10;
-        for (iVar6 = 0x10; iVar6 != 0; iVar6 = iVar6 + -1) {
-          *puVar9 = 0;
-          puVar9 = puVar9 + 1;
+      u2 = u2 - 1;
+      if (3 < u5) break;
+      orig::NetCellFont_ErrorLogPop(self_,&u6);
+      if (i2 != 0) {
+        *(bits32 *)((int)self_ + (uint32_t)u5 * 0x48 + 0x110) = u6;
+        p3 = (bits32 *)((int)self_ + (uint32_t)u5 * 0x48 + 0x118);
+        *(uint32_t *)((int)self_ + (uint32_t)u5 * 0x48 + 0x114) = ((uint32_t)(((uint32_t)(uint16_t)(u7) << 16) | (uint16_t)(i2)));
+        p2 = p3;
+        for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+          *p2 = 0;
+          p2 = p2 + 1;
         }
-        if ((uStack_a & 0xff00) != 0) {
-          puVar9 = *(undefined4 **)(((uint32_t)(((uint32_t)(uint16_t)(uStack_6) << 16) | (uint16_t)(local_8))) + 4);
-          for (uVar7 = (uint32_t)(uStack_a >> 8); uVar7 != 0; uVar7 = uVar7 - 1) {
-            *puVar10 = *puVar9;
-            puVar9 = puVar9 + 1;
-            puVar10 = puVar10 + 1;
+        if ((u7 & 0xff00) != 0) {
+          p2 = *(bits32 **)(((uint32_t)(((uint32_t)(uint16_t)(u9) << 16) | (uint16_t)(u8))) + 4);
+          for (u4 = (uint32_t)(u7 >> 8); u4 != 0; u4 = u4 - 1) {
+            *p3 = *p2;
+            p2 = p2 + 1;
+            p3 = p3 + 1;
           }
-          for (iVar6 = 0; iVar6 != 0; iVar6 = iVar6 + -1) {
-            *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-            puVar9 = (undefined4 *)((int)puVar9 + 1);
-            puVar10 = (undefined4 *)((int)puVar10 + 1);
+          for (i1 = 0; i1 != 0; i1 = i1 + -1) {
+            *(uint8_t *)p3 = *(uint8_t *)p2;
+            p2 = (bits32 *)((int)p2 + 1);
+            p3 = (bits32 *)((int)p3 + 1);
           }
         }
-        uVar8 = uVar8 + 1;
+        u5 = u5 + 1;
       }
-      puVar5 = (uint32_t *)((uint32_t)(((uint32_t)(uint16_t)(uStack_6) << 16) | (uint16_t)(local_8)));
-      if (puVar5 != (uint32_t *)0x0) {
-        uVar7 = *puVar5;
-        *puVar5 = uVar7 - 1;
-        if (uVar7 < 2) {
-          pvVar1 = *(LPVOID *)(((uint32_t)(((uint32_t)(uint16_t)(uStack_6) << 16) | (uint16_t)(local_8))) + 4);
-          if (pvVar1 != (LPVOID)0x0) {
-            orig::FUN_10312ead(pvVar1);
+      p1 = (uint32_t *)((uint32_t)(((uint32_t)(uint16_t)(u9) << 16) | (uint16_t)(u8)));
+      if (p1 != (uint32_t *)0x0) {
+        u4 = *p1;
+        *p1 = u4 - 1;
+        if (u4 < 2) {
+          val1 = *(LPVOID *)(((uint32_t)(((uint32_t)(uint16_t)(u9) << 16) | (uint16_t)(u8))) + 4);
+          if (val1 != (LPVOID)0x0) {
+            orig::game_10312EAD(val1);
           }
-          orig::operator_delete_v1((LPVOID)((uint32_t)(((uint32_t)(uint16_t)(uStack_6) << 16) | (uint16_t)(local_8))));
+          orig::operator_delete_v1((LPVOID)((uint32_t)(((uint32_t)(uint16_t)(u9) << 16) | (uint16_t)(u8))));
         }
-        local_8 = 0;
-        uStack_6 = 0;
+        u8 = 0;
+        u9 = 0;
       }
-    } while (uVar3 != 0);
-    if (uVar8 != 0) {
+    } while (u2 != 0);
+    if (u5 != 0) {
       if (*(uint32_t *)((int)self_ + 0x234) < 0x2711) {
-        uVar4 = 1;
+        u3 = 1;
       }
       else {
-        *(undefined4 *)((int)self_ + 0x234) = 0;
-        uVar3 = (uint8_t)(*(char *)((int)self_ + 0x232) + 1) & 7;
-        *(uint16_t *)((int)self_ + 0x232) = uVar3;
-        if (*(uint16_t *)((int)self_ + 0x230) == uVar3) {
+        *(bits32 *)((int)self_ + 0x234) = 0;
+        u2 = (uint8_t)(*(char *)((int)self_ + 0x232) + 1) & 7;
+        *(uint16_t *)((int)self_ + 0x232) = u2;
+        if (*(uint16_t *)((int)self_ + 0x230) == u2) {
           *(uint16_t *)((int)self_ + 0x230) = (uint8_t)((char)*(uint16_t *)((int)self_ + 0x230) + 1) & 7;
         }
-        orig::_sprintf((uint8_t *)((int)self_ + 0x238),s_err_03d_bin_1036c084,(uint32_t)uVar3);
-        uVar4 = 0;
+        orig::_sprintf((uint8_t *)((int)self_ + 0x238),str_err_03d_bin_1036C084,(uint32_t)u2);
+        u3 = 0;
       }
-      orig::TextInputFiles_FileMngQueuePath3F4Kind3(g_pFileMng_as_v0,(int)self_ + 0x238,(int)self_ + 0x110,(uint32_t)uVar8 * 0x48,uVar4);
-      *(int *)((int)self_ + 0x234) = *(int *)((int)self_ + 0x234) + (uint32_t)uVar8 * 0x48;
+      orig::TextInputFiles_FileMngQueuePath3F4Kind3(g_pFileMng_as_v0,(int)self_ + 0x238,(int)self_ + 0x110,(uint32_t)u5 * 0x48,u3);
+      *(int *)((int)self_ + 0x234) = *(int *)((int)self_ + 0x234) + (uint32_t)u5 * 0x48;
     }
   }
   return;
@@ -6412,87 +6422,87 @@ XI_API void __thiscall NetCellFont_ErrorLogFlush(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10114620
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall NetCellFont_SumWords16(uint16_t * param_1, undefined4 param_2)
+XI_API int __stdcall NetCellFont_SumWords16(uint16_t * arg1, bits32 arg2)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
+  uint16_t u1;
+  uint32_t u2;
+  uint32_t u3;
   
-  uVar3 = 0;
-  if ((uint16_t)param_2 >> 1 != 0) {
-    uVar2 = (uint32_t)((uint16_t)param_2 >> 1);
+  u3 = 0;
+  if ((uint16_t)arg2 >> 1 != 0) {
+    u2 = (uint32_t)((uint16_t)arg2 >> 1);
     do {
-      uVar1 = *param_1;
-      param_1 = param_1 + 1;
-      uVar3 = uVar3 + uVar1;
-      uVar2 = uVar2 - 1;
-    } while (uVar2 != 0);
+      u1 = *arg1;
+      arg1 = arg1 + 1;
+      u3 = u3 + u1;
+      u2 = u2 - 1;
+    } while (u2 != 0);
   }
-  uVar3 = (uVar3 >> 0x10) + (uVar3 & 0xffff);
-  return (uVar3 >> 0x10) + uVar3;
+  u3 = (u3 >> 0x10) + (u3 & 0xffff);
+  return (u3 >> 0x10) + u3;
 }
 
 // FUNCTION: FFXIMAIN 0x10114F10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_ReportError(uint32_t param_1, undefined4 * param_2, uint32_t param_3)
+XI_API void __cdecl NetCellFont_ReportError(uint32_t arg1, bits32 * arg2, uint32_t arg3)
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  uint32_t uVar3;
-  uint32_t *puVar4;
-  uint64_t uVar5;
+  bits32 u1;
+  bits32 *p1;
+  uint32_t u2;
+  uint32_t *p2;
+  uint64_t u3;
   char xi_frame[16] __attribute__((aligned(4)));
-  undefined4  &local_10 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  uint32_t  &local_c = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t * &local_8 = *reinterpret_cast<uint32_t * *>(xi_frame + 8);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  uint32_t  &u5 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
+  uint32_t * &p3 = *reinterpret_cast<uint32_t * *>(xi_frame + 8);
   
-  if (param_1 != 0) {
-    if (DAT_104e1708 != 0) {
-      uVar1 = orig::FUN_100dbe10();
-      orig::NetCellFont_ForwardToGlobal1708(param_1,uVar1);
+  if (arg1 != 0) {
+    if (g_104E1708 != 0) {
+      u1 = orig::game_100DBE10();
+      orig::NetCellFont_ForwardToGlobal1708(arg1,u1);
     }
-    if (DAT_104e1b6c != (void *)0x0) {
-      puVar4 = (uint32_t *)0x0;
-      local_8 = (uint32_t *)0x0;
-      local_10 = 0;
-      local_c = param_1 & 0xffff;
-      local_10 = orig::FUN_100dbe10();
-      if ((param_2 != (undefined4 *)0x0) && (param_3 != 0)) {
-        uVar5 = orig::Allocator_Generic_v1(8);
-        puVar4 = (uint32_t *)uVar5;
-        local_8 = puVar4;
-        if (puVar4 != (uint32_t *)0x0) {
-          if (0x3f < param_3) {
-            param_3 = 0x40;
+    if (g_104E1B6C != (void *)0x0) {
+      p2 = (uint32_t *)0x0;
+      p3 = (uint32_t *)0x0;
+      u4 = 0;
+      u5 = arg1 & 0xffff;
+      u4 = orig::game_100DBE10();
+      if ((arg2 != (bits32 *)0x0) && (arg3 != 0)) {
+        u3 = orig::Allocator_Generic_v1(8);
+        p2 = (uint32_t *)u3;
+        p3 = p2;
+        if (p2 != (uint32_t *)0x0) {
+          if (0x3f < arg3) {
+            arg3 = 0x40;
           }
-          puVar2 = orig::_malloc_0_v1(param_3 + 3 & 0xfffffffc);
-          puVar4[1] = (uint32_t)puVar2;
-          if (puVar2 == (undefined4 *)0x0) {
-            orig::operator_delete_v1(puVar4);
-            puVar4 = (uint32_t *)0x0;
-            local_8 = (uint32_t *)0x0;
+          p1 = orig::_malloc_0_v1(arg3 + 3 & 0xfffffffc);
+          p2[1] = (uint32_t)p1;
+          if (p1 == (bits32 *)0x0) {
+            orig::operator_delete_v1(p2);
+            p2 = (uint32_t *)0x0;
+            p3 = (uint32_t *)0x0;
           }
           else {
-            for (uVar3 = param_3 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-              *puVar2 = *param_2;
-              param_2 = param_2 + 1;
-              puVar2 = puVar2 + 1;
+            for (u2 = arg3 >> 2; u2 != 0; u2 = u2 - 1) {
+              *p1 = *arg2;
+              arg2 = arg2 + 1;
+              p1 = p1 + 1;
             }
-            for (uVar3 = param_3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-              *(uint8_t *)puVar2 = *(uint8_t *)param_2;
-              param_2 = (undefined4 *)((int)param_2 + 1);
-              puVar2 = (undefined4 *)((int)puVar2 + 1);
+            for (u2 = arg3 & 3; u2 != 0; u2 = u2 - 1) {
+              *(uint8_t *)p1 = *(uint8_t *)arg2;
+              arg2 = (bits32 *)((int)arg2 + 1);
+              p1 = (bits32 *)((int)p1 + 1);
             }
-            local_c = CONCAT13((char)(param_3 + 3 >> 2),(uint32_t)local_c) & 0x1fffffff;
+            u5 = ((uint32_t)(((uint32_t)(uint8_t)((char)(arg3 + 3 >> 2)) << 24) | ((uint32_t)((uint32_t)u5) & 0xFFFFFFu))) & 0x1fffffff;
           }
         }
       }
-      orig::NetCellFont_PushRingEntryLocked(DAT_104e1b6c,&local_10);
-      if ((puVar4 != (uint32_t *)0x0) && (uVar3 = *puVar4, *puVar4 = uVar3 - 1, uVar3 < 2)) {
-        if ((LPVOID)puVar4[1] != (LPVOID)0x0) {
-          orig::FUN_10312ead((LPVOID)puVar4[1]);
+      orig::NetCellFont_PushRingEntryLocked(g_104E1B6C,&u4);
+      if ((p2 != (uint32_t *)0x0) && (u2 = *p2, *p2 = u2 - 1, u2 < 2)) {
+        if ((LPVOID)p2[1] != (LPVOID)0x0) {
+          orig::game_10312EAD((LPVOID)p2[1]);
         }
-        orig::operator_delete_v1(puVar4);
+        orig::operator_delete_v1(p2);
       }
     }
   }
@@ -6503,199 +6513,201 @@ XI_API void __cdecl NetCellFont_ReportError(uint32_t param_1, undefined4 * param
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl FDtGmNoticeProc(void)
 {
-  char cVar1;
-  undefined4 uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  char *pcVar5;
-  char *pcVar6;
+  char c1;
+  bits32 u1;
+  int i1;
+  uint32_t u2;
+  char *p1;
+  char *p2;
   
-  if (DAT_104e1b6c != (void *)0x0) {
-    orig::NetCellFont_ErrorLogFlush(DAT_104e1b6c);
+  if (g_104E1B6C != (void *)0x0) {
+    orig::NetCellFont_ErrorLogFlush(g_104E1B6C);
   }
-  if ((((DAT_104e1710 == 0) || (XI_PIECE_S(DAT_104e1714, 2, 2) != 0)) ||
-      ((DAT_104e1718 == 0 && (DAT_104e1720 != 0)))) ||
+  if ((((g_104E1710 == 0) || (XI_PIECE_S(g_104E1714, 2, 2) != 0)) ||
+      ((g_104E1718 == 0 && (g_104E1720 != 0)))) ||
      ((g_pFileMng_as_v0 == (void *)0x0 ||
-      (uVar2 = orig::TextInputFiles_FileMngFwd101C1750(g_pFileMng_as_v0,s_gmNotice_fdt_1036c168,0), (char)uVar2 != '\0')))) {
+      (u1 = orig::TextInputFiles_FileMngFwd101C1750(g_pFileMng_as_v0,str_gmNotice_fdt_1036C168,0), (char)u1 != '\0')))) {
     return;
   }
-  if (DAT_104e1718 != DAT_104e1710) {
-    DAT_104e171c = 0;
-    DAT_104e1720 = 0;
-    DAT_104e1718 = DAT_104e1710;
+  if (g_104E1718 != g_104E1710) {
+    g_104E171C = 0;
+    g_104E1720 = 0;
+    g_104E1718 = g_104E1710;
   }
-  pcVar6 = (&PTR_DAT_1036c018)[DAT_104e171c & 0xffff];
-  if (pcVar6 == (char *)0x0) {
-    iVar3 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,s_gmNotice_siz_1036c158,&DAT_104e1720,2,0,0);
-    if (0 < iVar3) {
-      DAT_104e1718 = 0;
+  p2 = (&g_1036C018)[g_104E171C & 0xffff];
+  if (p2 == (char *)0x0) {
+    i1 = orig::TextInputFiles_FileMngSubmitPathKind3(g_pFileMng_as_v0,str_gmNotice_siz_1036C158,&g_104E1720,2,0,0);
+    if (0 < i1) {
+      g_104E1718 = 0;
       return;
     }
-    goto LAB_101151c9;
+    goto code_101151C9;
   }
-  if (*pcVar6 == '*') {
-    if (pcVar6[1] == 'H') {
-      orig::_sprintf(&DAT_104e1722,s_DEF_DATASET__04u_02u_02u_02u_1036c138,0x7d3,1,0x11,1);
-      uVar4 = 0xffffffff;
-      pcVar6 = &DAT_104e1722;
+  if (*p2 == '*') {
+    if (p2[1] == 'H') {
+      orig::_sprintf(&g_104E1722,str_DEF_DATASET__04u_02u_02u_02u_1036C138,0x7d3,1,0x11,1);
+      u2 = 0xffffffff;
+      p2 = &g_104E1722;
       do {
-        if (uVar4 == 0) break;
-        uVar4 = uVar4 - 1;
-        cVar1 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
-      } while (cVar1 != '\0');
-      iVar3 = orig::TextInputFiles_FileMngQueuePathKind3(g_pFileMng_as_v0,s_gmNotice_fdt_1036c168,&DAT_104e1722,~uVar4 - 1,0,0);
-      if (0 < iVar3) {
-        XI_PIECE_S(DAT_104e171c, 0, 2) = (short)DAT_104e171c + 1;
-        DAT_104e1720 = (short)(~uVar4 - 1);
+        if (u2 == 0) break;
+        u2 = u2 - 1;
+        c1 = *p2;
+        p2 = p2 + 1;
+      } while (c1 != '\0');
+      i1 = orig::TextInputFiles_FileMngQueuePathKind3(g_pFileMng_as_v0,str_gmNotice_fdt_1036C168,&g_104E1722,~u2 - 1,0,0);
+      if (0 < i1) {
+        XI_PIECE_S(g_104E171C, 0, 2) = (short)g_104E171C + 1;
+        g_104E1720 = (short)(~u2 - 1);
         return;
       }
-      goto LAB_101151c9;
+      goto code_101151C9;
     }
-    if (pcVar6[1] != 'T') goto LAB_10115190;
-    uVar4 = 0xffffffff;
-    pcVar6 = &DAT_104e1742;
+    if (p2[1] != 'T') goto code_10115190;
+    u2 = 0xffffffff;
+    p2 = &g_104E1742;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar1 != '\0');
-    pcVar6 = &DAT_104e1742;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    p2 = &g_104E1742;
   }
   else {
-LAB_10115190:
-    uVar4 = 0xffffffff;
-    pcVar5 = pcVar6;
+code_10115190:
+    u2 = 0xffffffff;
+    p1 = p2;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p1;
+      p1 = p1 + 1;
+    } while (c1 != '\0');
   }
-  iVar3 = orig::TextInputFiles_FileMngQueuePathKind3(g_pFileMng_as_v0,s_gmNotice_fdt_1036c168,pcVar6,~uVar4 - 1,1,0);
-  if (0 < iVar3) {
-    DAT_104e1720 = DAT_104e1720 + (short)(~uVar4 - 1);
-    XI_PIECE_S(DAT_104e171c, 0, 2) = (short)DAT_104e171c + 1;
+  i1 = orig::TextInputFiles_FileMngQueuePathKind3(g_pFileMng_as_v0,str_gmNotice_fdt_1036C168,p2,~u2 - 1,1,0);
+  if (0 < i1) {
+    g_104E1720 = g_104E1720 + (short)(~u2 - 1);
+    XI_PIECE_S(g_104E171C, 0, 2) = (short)g_104E171C + 1;
     return;
   }
-LAB_101151c9:
+code_101151C9:
   orig::NetCellFont_ClearTable1710();
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101152D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ReturnOneA(void)
+XI_API bits32 __cdecl NetCellFont_ReturnOneA(void)
 {
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101152E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ReturnOneB(void)
+XI_API bits32 __cdecl NetCellFont_ReturnOneB(void)
 {
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10115870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_ArmCounter10(int param_1)
+XI_API bits32 __cdecl NetCellFont_ArmCounter10(int arg1)
 {
-  orig::FontGlyphCache_MarkState3(param_1 + 0x3f12c);
-  *(undefined4 *)(param_1 + 0x4f1a8) = 10;
+  orig::FontGlyphCache_MarkState3(arg1 + 0x3f12c);
+  *(bits32 *)(arg1 + 0x4f1a8) = 10;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10115930
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetSessionData(int param_1, undefined4 * param_2)
+XI_API bits32 __cdecl NetCellFont_SetSessionData(int arg1, bits32 * arg2)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  if (*(int *)(param_1 + 0x4f1a8) != 0) {
+  if (*(int *)(arg1 + 0x4f1a8) != 0) {
     return 0;
   }
-  puVar2 = *(undefined4 **)(param_1 + 0x4f1ac);
-  for (iVar1 = 0x68d; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = *param_2;
-    param_2 = param_2 + 1;
-    puVar2 = puVar2 + 1;
+  p1 = *(bits32 **)(arg1 + 0x4f1ac);
+  for (i1 = 0x68d; i1 != 0; i1 = i1 + -1) {
+    *p1 = *arg2;
+    arg2 = arg2 + 1;
+    p1 = p1 + 1;
   }
-  *(undefined4 *)(param_1 + 0x4f1a8) = 0xd;
+  *(bits32 *)(arg1 + 0x4f1a8) = 0xd;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10115970
 // GATE: PASS -- 100 trials, 89 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 89
-XI_API undefined4 __cdecl NetCellFont_GetSessionData(int param_1, undefined4 * param_2)
+XI_API bits32 __cdecl NetCellFont_GetSessionData(int arg1, bits32 * arg2)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  if (*(int *)(param_1 + 0x4f1a8) != 0) {
+  if (*(int *)(arg1 + 0x4f1a8) != 0) {
     return 0;
   }
-  puVar2 = *(undefined4 **)(param_1 + 0x4f1ac);
-  for (iVar1 = 0x68d; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *param_2 = *puVar2;
-    puVar2 = puVar2 + 1;
-    param_2 = param_2 + 1;
+  p1 = *(bits32 **)(arg1 + 0x4f1ac);
+  for (i1 = 0x68d; i1 != 0; i1 = i1 + -1) {
+    *arg2 = *p1;
+    p1 = p1 + 1;
+    arg2 = arg2 + 1;
   }
-  *(undefined4 *)(param_1 + 0x4f1a8) = 0xe;
+  *(bits32 *)(arg1 + 0x4f1a8) = 0xe;
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101163A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsStateActive(int param_1)
+XI_API bits32 __cdecl NetCellFont_IsStateActive(int arg1)
 {
-  if (*(int *)(param_1 + 0x2f0f8) == 0) {
+  if (*(int *)(arg1 + 0x2f0f8) == 0) {
     return 0;
   }
-  return (uint32_t)(*(int *)(param_1 + 0x2f0f8) != 6);
+  return (uint32_t)(*(int *)(arg1 + 0x2f0f8) != 6);
 }
 
 // FUNCTION: FFXIMAIN 0x101164B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_GetField13C(int param_1, undefined4 * param_2)
+XI_API bits32 __cdecl NetCellFont_GetField13C(int arg1, bits32 * arg2)
 {
-  *param_2 = *(undefined4 *)(*(int *)(param_1 + 0x4f1ac) + 0x13c);
+  *arg2 = *(bits32 *)(*(int *)(arg1 + 0x4f1ac) + 0x13c);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10116D30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_NextSequence(int param_1, int param_2)
+XI_API int __cdecl NetCellFont_NextSequence(int arg1, int arg2)
 {
-  int iVar1;
-  char xi_frame[256] __attribute__((aligned(4)));
-  uint8_t  (&local_100)[256] = *reinterpret_cast<uint8_t  (*)[256]>(xi_frame + 0);
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[256];
+    struct __attribute__((packed)) { uint8_t u1[256]; };   // at 0x0
+  } frame;
   
-  if ((*(uint8_t *)(param_1 + 0x134) & 1) != 0) {
-    iVar1 = orig::NetCellFont_AddOne(param_2);
-    orig::_sprintf(local_100,s______MD5__d_1036c178,iVar1);
-    return iVar1;
+  if ((*(uint8_t *)(arg1 + 0x134) & 1) != 0) {
+    i1 = orig::NetCellFont_AddOne(arg2);
+    orig::_sprintf(frame.u1,str______MD5__d_1036C178,i1);
+    return i1;
   }
-  return param_2 + 1;
+  return arg2 + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x101170D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_SetPair(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API uint64_t __thiscall NetCellFont_SetPair(void * self_, bits32 arg2, bits32 arg3)
 {
-  *(undefined4 *)self_ = param_1;
-  *(undefined4 *)((int)self_ + 4) = param_2;
-  return ((uint64_t)(((uint64_t)(uint32_t)(param_2) << 32) | (uint32_t)(self_)));
+  *(bits32 *)self_ = arg2;
+  *(bits32 *)((int)self_ + 4) = arg3;
+  return ((uint64_t)(((uint64_t)(uint32_t)(arg3) << 32) | (uint32_t)(self_)));
 }
 
 // FUNCTION: FFXIMAIN 0x101172C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall NetCellFont_MenuCtor(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
   orig::NetCellFont_ClearWords(self_);
   orig::NetCellFont_Clear((void *)((int)self_ + 0x14));
@@ -6715,25 +6727,25 @@ XI_API uint64_t __thiscall NetCellFont_MenuCtor(void * self_)
   *(uint16_t *)((int)self_ + 0xbe) = 0;
   *(uint16_t *)((int)self_ + 0xc0) = 0;
   *(uint16_t *)((int)self_ + 0xc2) = 0;
-  uVar1 = orig::NetCellFont_SetPair((void *)((int)self_ + 0xc4),0,self_);
-  *(undefined4 *)((int)self_ + 4) = 0;
+  u1 = orig::NetCellFont_SetPair((void *)((int)self_ + 0xc4),0,self_);
+  *(bits32 *)((int)self_ + 4) = 0;
   *(uint16_t *)((int)self_ + 0x4c) = 0xffff;
   *(uint16_t *)((int)self_ + 0x4a) = 0xffff;
   *(uint16_t *)((int)self_ + 0x4e) = 0;
   *(uint16_t *)((int)self_ + 0x50) = 0;
   *(uint16_t *)((int)self_ + 0x54) = 0;
   *(uint16_t *)((int)self_ + 0x52) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
   *(uint16_t *)((int)self_ + 0x56) = 0;
-  *(undefined4 *)((int)self_ + 0x10) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
   *(uint8_t *)((int)self_ + 0x30) = 0xff;
-  *(undefined4 *)((int)self_ + 0x34) = 0xffff;
+  *(bits32 *)((int)self_ + 0x34) = 0xffff;
   *(uint16_t *)((int)self_ + 0x38) = 0;
   *(uint16_t *)((int)self_ + 0x58) = 0;
   *(uint8_t *)((int)self_ + 0x5c) = 1;
   *(uint16_t *)((int)self_ + 0x5e) = 0;
-  *(undefined4 *)((int)self_ + 0x7c) = 0;
-  *(undefined4 *)((int)self_ + 0x80) = 0;
+  *(bits32 *)((int)self_ + 0x7c) = 0;
+  *(bits32 *)((int)self_ + 0x80) = 0;
   *(uint8_t *)((int)self_ + 0x5d) = 0;
   *(uint8_t *)((int)self_ + 0x60) = 0;
   *(uint8_t *)((int)self_ + 0x61) = 1;
@@ -6750,22 +6762,22 @@ XI_API uint64_t __thiscall NetCellFont_MenuCtor(void * self_)
   *(uint8_t *)((int)self_ + 0x6c) = 0;
   *(uint8_t *)((int)self_ + 0x6e) = 0;
   *(uint8_t *)((int)self_ + 0x6f) = 0;
-  *(undefined4 *)((int)self_ + 0x88) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 0x88) = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
   *(uint8_t *)((int)self_ + 0x70) = 0;
   *(uint8_t *)((int)self_ + 0x71) = 0;
   *(uint8_t *)((int)self_ + 0x73) = 1;
   *(uint8_t *)((int)self_ + 0x72) = 0;
-  *(undefined4 *)((int)self_ + 0x94) = 0xfffffc19;
+  *(bits32 *)((int)self_ + 0x94) = 0xfffffc19;
   *(uint8_t *)((int)self_ + 0x75) = 0;
   *(uint8_t *)((int)self_ + 0x76) = 0;
   *(uint8_t *)((int)self_ + 0x9b) = 0;
-  *(undefined4 *)((int)self_ + 0xa4) = 0;
-  *(undefined4 *)((int)self_ + 0xa8) = 0;
-  *(undefined4 *)((int)self_ + 0xac) = 0;
-  *(undefined4 *)((int)self_ + 0xb0) = 0;
-  *(undefined4 *)((int)self_ + 0xb4) = 0;
-  *(undefined4 *)((int)self_ + 0xb8) = 0;
+  *(bits32 *)((int)self_ + 0xa4) = 0;
+  *(bits32 *)((int)self_ + 0xa8) = 0;
+  *(bits32 *)((int)self_ + 0xac) = 0;
+  *(bits32 *)((int)self_ + 0xb0) = 0;
+  *(bits32 *)((int)self_ + 0xb4) = 0;
+  *(bits32 *)((int)self_ + 0xb8) = 0;
   *(uint8_t *)((int)self_ + 0x98) = 0;
   *(uint8_t *)((int)self_ + 0x74) = 1;
   *(uint8_t *)((int)self_ + 0x77) = 1;
@@ -6776,381 +6788,385 @@ XI_API uint64_t __thiscall NetCellFont_MenuCtor(void * self_)
   *(uint16_t *)((int)self_ + 0xbe) = 0;
   *(uint16_t *)((int)self_ + 0xc0) = 0;
   *(uint16_t *)((int)self_ + 0xc2) = 0;
-  *(undefined4 *)((int)self_ + 0xcc) = 0x80808080;
+  *(bits32 *)((int)self_ + 0xcc) = 0x80808080;
   *(uint8_t *)((int)self_ + 0xd0) = 0;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self_)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self_)));
 }
 
 // FUNCTION: FFXIMAIN 0x10117460
 // GATE: PASS -- 100 trials, 42 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 42
 XI_API void __thiscall NetCellFont_DeleteAllEntries(void * self_)
 {
-  void *this_00;
-  short sVar1;
-  int *piVar2;
-  short *this_01;
-  uint64_t uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int * &local_4 = *reinterpret_cast<int * *>(xi_frame + 0);
+  void *obj1;
+  short i1;
+  int *p1;
+  short *obj2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int * p2; };   // at 0x0
+  } frame;
   
-  this_00 = (void *)((int)self_ + 0x14);
-  local_4 = self_;
-  local_4 = (int *)orig::NetCellFont_GetHead(this_00);
-joined_r0x10117478:
-  piVar2 = local_4;
-  local_4 = piVar2;
-  if (piVar2 == (int *)0x0) {
-    orig::NetCellFont_FreeListsAndReset(this_00);
-    *(undefined4 *)((int)self_ + 4) = 0;
-    *(undefined4 *)((int)self_ + 0x7c) = 0;
+  obj1 = (void *)((int)self_ + 0x14);
+  frame.p2 = self_;
+  frame.p2 = (int *)orig::NetCellFont_GetHead(obj1);
+L1:
+  p1 = frame.p2;
+  frame.p2 = p1;
+  if (p1 == (int *)0x0) {
+    orig::NetCellFont_FreeListsAndReset(obj1);
+    *(bits32 *)((int)self_ + 4) = 0;
+    *(bits32 *)((int)self_ + 0x7c) = 0;
     if (*(LPVOID *)((int)self_ + 0x88) != (LPVOID)0x0) {
       orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0x88));
-      *(undefined4 *)((int)self_ + 0x88) = 0;
+      *(bits32 *)((int)self_ + 0x88) = 0;
     }
-    orig::NetCellFont_FreeBothLists(this_00);
+    orig::NetCellFont_FreeBothLists(obj1);
     orig::NetCellFont_NoOp();
     return;
   }
-  uVar3 = orig::FUN_10126520((int *)&local_4);
-  this_01 = (short *)uVar3;
-  sVar1 = *this_01;
-  if (sVar1 != 0) goto code_r0x10117493;
-  orig::NetCellFont_Remove(this_00,piVar2);
-  orig::NetCellFont_FreeEntryData(this_01);
-  goto LAB_101174b9;
-code_r0x10117493:
-  if ((sVar1 == 1) || (sVar1 == 2)) {
-    orig::NetCellFont_Remove(this_00,piVar2);
+  u1 = orig::game_10126520((int *)&frame.p2);
+  obj2 = (short *)u1;
+  i1 = *obj2;
+  if (i1 != 0) goto L2;
+  orig::NetCellFont_Remove(obj1,p1);
+  orig::NetCellFont_FreeEntryData(obj2);
+  goto code_101174B9;
+L2:
+  if ((i1 == 1) || (i1 == 2)) {
+    orig::NetCellFont_Remove(obj1,p1);
     orig::NetCellFont_NoOp();
-LAB_101174b9:
-    orig::operator_delete_v1(this_01);
+code_101174B9:
+    orig::operator_delete_v1(obj2);
   }
-  goto joined_r0x10117478;
+  goto L1;
 }
 
 // FUNCTION: FFXIMAIN 0x101177D0
 // GATE: PASS -- 100 trials, 73 returned normally, 8 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 73
 XI_API void __thiscall Menu_DrawWindowItems(void * self_)
 {
-  uint16_t uVar1;
-  short sVar2;
-  int *this_00;
-  long double fVar3;
-  uint8_t bVar4;
-  short *psVar5;
-  short *psVar6;
-  uint32_t uVar7;
-  undefined4 uVar8;
-  uint16_t uVar9;
-  uint16_t uVar11;
-  int iVar10;
-  uint32_t uVar12;
-  void *pvVar13;
-  short sVar14;
-  short sVar15;
-  uint16_t uVar17;
-  int iVar16;
-  uint8_t bVar18;
-  uint8_t bVar19;
-  uint8_t bVar20;
-  long double fVar21;
-  uint64_t uVar22;
-  int64_t lVar23;
-  char xi_frame[56] __attribute__((aligned(4)));
-  int  &iVar24 = *reinterpret_cast<int  *>(xi_frame + 0);
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 28);
-  void * &local_18 = *reinterpret_cast<void * *>(xi_frame + 32);
-  uint32_t  &local_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 36);
-  int  &local_10 = *reinterpret_cast<int  *>(xi_frame + 40);
-  short * &local_c = *reinterpret_cast<short * *>(xi_frame + 44);
-  int  &local_8 = *reinterpret_cast<int  *>(xi_frame + 48);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 52);
+  uint16_t u1;
+  short i1;
+  int *obj1;
+  long double f1;
+  uint8_t u2;
+  short *p1;
+  short *p2;
+  uint32_t u3;
+  bits32 u4;
+  uint16_t u5;
+  uint16_t u6;
+  int i2;
+  uint32_t u7;
+  void *p3;
+  short i3;
+  short i4;
+  uint16_t u8;
+  int i5;
+  uint8_t u9;
+  uint8_t u10;
+  uint8_t u11;
+  long double f2;
+  uint64_t u12;
+  int64_t i6;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { int i7; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x18]; float f3; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; float f4; };   // at 0x1C
+    struct __attribute__((packed)) { unsigned char pad_4[0x20]; void * p4; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_5[0x24]; uint32_t u13; };   // at 0x24
+    struct __attribute__((packed)) { unsigned char pad_6[0x28]; int i8; };   // at 0x28
+    struct __attribute__((packed)) { unsigned char pad_7[0x2C]; short * p5; };   // at 0x2C
+    struct __attribute__((packed)) { unsigned char pad_8[0x30]; int i9; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_9[0x34]; int i10; };   // at 0x34
+  } frame;
   
-  orig::FUN_10117520(self_);
+  orig::game_10117520(self_);
   if (0 < *(short *)((int)self_ + 0x56)) {
     *(short *)((int)self_ + 0x56) = *(short *)((int)self_ + 0x56) + -1;
   }
-  if (((*(char *)(DAT_105781cc_as_s32 + 0x48) != '\0') && (*(void **)(DAT_105781cc_as_s32 + 8) != self_)) &&
+  if (((*(char *)(g_105781CC_as_s32 + 0x48) != '\0') && (*(void **)(g_105781CC_as_s32 + 8) != self_)) &&
      ((*(uint8_t *)((int)self_ + 0x34) & 0x40) == 0)) {
     return;
   }
-  local_10 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-  bVar18 = *(char *)((int)self_ + 0x9b) != '\0';
-  local_c = (short *)0x0;
-  bVar4 = false;
-  local_18 = (void *)0x0;
-  psVar5 = (short *)0x0;
-  uVar12 = local_14;
-  iVar10 = local_4;
-  if (bVar18) {
+  frame.i8 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  u9 = *(char *)((int)self_ + 0x9b) != '\0';
+  frame.p5 = (short *)0x0;
+  u2 = false;
+  frame.p4 = (void *)0x0;
+  p1 = (short *)0x0;
+  u7 = frame.u13;
+  i2 = frame.i10;
+  if (u9) {
     orig::NetCellFont_SetViewport(self_);
-    uVar12 = local_14;
-    iVar10 = local_4;
+    u7 = frame.u13;
+    i2 = frame.i10;
   }
-joined_r0x10117841:
-  if (local_10 == 0) goto LAB_10117cee;
-  uVar22 = orig::FUN_10126520(&local_10);
-  psVar6 = (short *)uVar22;
-  sVar14 = *psVar6;
-  uVar17 = (uint16_t)((uint32_t)iVar10 >> 0x10);
-  psVar5 = local_c;
-  if (sVar14 == 0) goto LAB_10117ac8;
-  if (sVar14 != 1) {
-    if ((sVar14 != 2) || (*(char *)((int)self_ + 0x78) == '\0')) goto LAB_10117a8b;
-    local_20 = 1.0f;
-    local_1c = 1.0f;
-    uVar12 = 0x80808080;
-    local_18 = (void *)0x0;
-    psVar5 = psVar6;
-    local_c = psVar6;
-    goto joined_r0x10117841;
+L1:
+  if (frame.i8 == 0) goto code_10117CEE;
+  u12 = orig::game_10126520(&frame.i8);
+  p2 = (short *)u12;
+  i3 = *p2;
+  u8 = (uint16_t)((uint32_t)i2 >> 0x10);
+  p1 = frame.p5;
+  if (i3 == 0) goto code_10117AC8;
+  if (i3 != 1) {
+    if ((i3 != 2) || (*(char *)((int)self_ + 0x78) == '\0')) goto code_10117A8B;
+    frame.f3 = 1.0f;
+    frame.f4 = 1.0f;
+    u7 = 0x80808080;
+    frame.p4 = (void *)0x0;
+    p1 = p2;
+    frame.p5 = p2;
+    goto L1;
   }
-  if ((char)psVar6[0x1e] == '\0') {
-    local_18 = (void *)0x0;
-    uVar12 = 0x80808080;
-    goto joined_r0x10117841;
+  if ((char)p2[0x1e] == '\0') {
+    frame.p4 = (void *)0x0;
+    u7 = 0x80808080;
+    goto L1;
   }
-  if ((char)psVar6[0x24] != '\0') {
-    if ((psVar6[0x1d] != *(short *)((int)self_ + 0x4c)) || (*(char *)((int)self_ + 99) == '\0')) {
-      local_18 = *(void **)(psVar6 + 2);
-      local_20 = *(float *)(psVar6 + 0xe);
-      iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + psVar6[0x16])));
-      local_1c = *(float *)(psVar6 + 0x10);
-      local_14 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(local_14, 2, 2)) << 16) | (uint16_t)(psVar6[0x15])));
-      uVar12 = 0x80808080;
-      goto LAB_10117a8b;
+  if ((char)p2[0x24] != '\0') {
+    if ((p2[0x1d] != *(short *)((int)self_ + 0x4c)) || (*(char *)((int)self_ + 99) == '\0')) {
+      frame.p4 = *(void **)(p2 + 2);
+      frame.f3 = *(float *)(p2 + 0xe);
+      i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + p2[0x16])));
+      frame.f4 = *(float *)(p2 + 0x10);
+      frame.u13 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(frame.u13, 2, 2)) << 16) | (uint16_t)(p2[0x15])));
+      u7 = 0x80808080;
+      goto code_10117A8B;
     }
-    sVar14 = psVar6[0x16];
-    local_18 = *(void **)(psVar6 + 2);
-    local_14 = (uint16_t)psVar6[0x15] + 1;
-    uVar12 = 0x80805020;
-    *(short **)((int)self_ + 8) = psVar6;
-    iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + sVar14))) + 1;
-LAB_10117a75:
-    local_20 = *(float *)(psVar6 + 0xe);
-    local_1c = *(float *)(psVar6 + 0x10);
-    goto LAB_10117a8b;
+    i3 = p2[0x16];
+    frame.p4 = *(void **)(p2 + 2);
+    frame.u13 = (uint16_t)p2[0x15] + 1;
+    u7 = 0x80805020;
+    *(short **)((int)self_ + 8) = p2;
+    i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + i3))) + 1;
+code_10117A75:
+    frame.f3 = *(float *)(p2 + 0xe);
+    frame.f4 = *(float *)(p2 + 0x10);
+    goto code_10117A8B;
   }
-  iVar10 = *(int *)(psVar6 + 8);
-  if (iVar10 == 5) {
-    if ((psVar6[0x1d] != *(short *)((int)self_ + 0x4c)) || (*(char *)((int)self_ + 99) == '\0')) {
-      uVar12 = 0x30808080;
-      goto LAB_10117a5e;
+  i2 = *(int *)(p2 + 8);
+  if (i2 == 5) {
+    if ((p2[0x1d] != *(short *)((int)self_ + 0x4c)) || (*(char *)((int)self_ + 99) == '\0')) {
+      u7 = 0x30808080;
+      goto code_10117A5E;
     }
-    local_18 = *(void **)(psVar6 + 2);
-    uVar1 = psVar6[0x15];
-    sVar14 = psVar6[0x16];
-    *(short **)((int)self_ + 8) = psVar6;
-    local_20 = *(float *)(psVar6 + 0xe);
-    local_1c = *(float *)(psVar6 + 0x10);
-    local_14 = uVar1 + 1;
-    uVar12 = 0x40402810;
-    iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + sVar14))) + 1;
+    frame.p4 = *(void **)(p2 + 2);
+    u1 = p2[0x15];
+    i3 = p2[0x16];
+    *(short **)((int)self_ + 8) = p2;
+    frame.f3 = *(float *)(p2 + 0xe);
+    frame.f4 = *(float *)(p2 + 0x10);
+    frame.u13 = u1 + 1;
+    u7 = 0x40402810;
+    i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + i3))) + 1;
   }
   else {
-    if (iVar10 == 0x10) {
-      uVar12 = 0x80808080;
-LAB_10117a5e:
-      local_18 = *(void **)(psVar6 + 2);
-      iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + psVar6[0x16])));
-      local_14 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(local_14, 2, 2)) << 16) | (uint16_t)(psVar6[0x15])));
-      goto LAB_10117a75;
+    if (i2 == 0x10) {
+      u7 = 0x80808080;
+code_10117A5E:
+      frame.p4 = *(void **)(p2 + 2);
+      i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + p2[0x16])));
+      frame.u13 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(frame.u13, 2, 2)) << 16) | (uint16_t)(p2[0x15])));
+      goto code_10117A75;
     }
-    if (((psVar6[0x1d] == *(short *)((int)self_ + 0x4c)) &&
-        (uVar8 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar10 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 99)))),
+    if (((p2[0x1d] == *(short *)((int)self_ + 0x4c)) &&
+        (u4 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i2 >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 99)))),
         *(char *)((int)self_ + 99) != '\0')) &&
        (((*(uint32_t *)((int)self_ + 0x34) & 0x80000) == 0 ||
-        (uVar8 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,(int)self_), (char)uVar8 != '\0')))) {
-      local_18 = *(void **)(psVar6 + 2);
-      iVar24 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar8 >> 0x10)) << 16) | (uint16_t)(psVar6[0x15])));
-      iVar16 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + psVar6[0x16])));
-      *(short **)((int)self_ + 8) = psVar6;
-      local_20 = *(float *)(psVar6 + 0xe);
-      local_1c = *(float *)(psVar6 + 0x10);
-      local_14 = iVar24 - 1;
-      iVar10 = iVar16 + -1;
-      uVar12 = 0x80805020;
-      if (*(int *)(psVar6 + 0xc) == 0xf) {
-        bVar4 = true;
+        (u4 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,(int)self_), (char)u4 != '\0')))) {
+      frame.p4 = *(void **)(p2 + 2);
+      frame.i7 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u4 >> 0x10)) << 16) | (uint16_t)(p2[0x15])));
+      i5 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + p2[0x16])));
+      *(short **)((int)self_ + 8) = p2;
+      frame.f3 = *(float *)(p2 + 0xe);
+      frame.f4 = *(float *)(p2 + 0x10);
+      frame.u13 = frame.i7 - 1;
+      i2 = i5 + -1;
+      u7 = 0x80805020;
+      if (*(int *)(p2 + 0xc) == 0xf) {
+        u2 = true;
       }
       if (0 < *(short *)((int)self_ + 0x5e)) {
-        iVar10 = iVar16 + 1;
-        local_14 = iVar24 + 1;
+        i2 = i5 + 1;
+        frame.u13 = frame.i7 + 1;
         orig::NetCellFont_DrawUnscaled
-                  (self_,local_18,local_14,iVar10,0x14,
-                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)(psVar6 + 0xc) >> 0x10)) << 16) | (uint16_t)(*(short *)((int)self_ + 0x5e)))));
-        psVar5 = local_c;
-        goto joined_r0x10117841;
+                  (self_,frame.p4,frame.u13,i2,0x14,
+                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)(p2 + 0xc) >> 0x10)) << 16) | (uint16_t)(*(short *)((int)self_ + 0x5e)))));
+        p1 = frame.p5;
+        goto L1;
       }
     }
     else {
-      local_18 = *(void **)(psVar6 + 2);
-      local_20 = *(float *)(psVar6 + 0xe);
-      iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + psVar6[0x16])));
-      local_1c = *(float *)(psVar6 + 0x10);
-      local_14 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(local_14, 2, 2)) << 16) | (uint16_t)(psVar6[0x15])));
-      uVar12 = 0x80808080;
+      frame.p4 = *(void **)(p2 + 2);
+      frame.f3 = *(float *)(p2 + 0xe);
+      i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + p2[0x16])));
+      frame.f4 = *(float *)(p2 + 0x10);
+      frame.u13 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(frame.u13, 2, 2)) << 16) | (uint16_t)(p2[0x15])));
+      u7 = 0x80808080;
     }
   }
-LAB_10117a8b:
-  psVar5 = local_c;
-  if (local_18 == (void *)0x0) goto joined_r0x10117841;
-  iVar24 = 0;
-  sVar14 = (short)iVar10;
-  sVar2 = (short)local_14;
-LAB_10117aaa:
-  orig::Shape_DrawScaled_v1(local_18,(int)sVar2,(int)sVar14,local_20,local_1c,uVar12,0,0,iVar24);
-  psVar5 = local_c;
-  goto joined_r0x10117841;
-LAB_10117ac8:
-  if ((*(uint8_t *)((int)self_ + 0x69) == 0) || ((char)psVar6[0x22] == '\x01')) goto joined_r0x10117841;
-  uVar22 = orig::TargetMenu_MenuTestItem34Or6B
+code_10117A8B:
+  p1 = frame.p5;
+  if (frame.p4 == (void *)0x0) goto L1;
+  frame.i7 = 0;
+  i3 = (short)i2;
+  i1 = (short)frame.u13;
+code_10117AAA:
+  orig::Shape_DrawScaled_v1(frame.p4,(int)i1,(int)i3,frame.f3,frame.f4,u7,0,0,frame.i7);
+  p1 = frame.p5;
+  goto L1;
+code_10117AC8:
+  if ((*(uint8_t *)((int)self_ + 0x69) == 0) || ((char)p2[0x22] == '\x01')) goto L1;
+  u12 = orig::TargetMenu_MenuTestItem34Or6B
                      (&g_menuMng_as_v0,(int)self_,(uint32_t)*(uint8_t *)((int)self_ + 0x69));
-  iVar10 = *(int *)(psVar6 + 2);
-  *(char *)(iVar10 + 8) = (char)uVar22;
-  uVar11 = (uint16_t)((uint64_t)uVar22 >> 0x30);
-  uVar9 = (uint16_t)((uint32_t)iVar10 >> 0x10);
-  if (0 < psVar6[0x13]) {
+  i2 = *(int *)(p2 + 2);
+  *(char *)(i2 + 8) = (char)u12;
+  u6 = (uint16_t)((uint64_t)u12 >> 0x30);
+  u5 = (uint16_t)((uint32_t)i2 >> 0x10);
+  if (0 < p2[0x13]) {
     if ((*(uint8_t *)((int)self_ + 0x34) & 0x20) == 0) {
-      iVar10 = **(int **)(psVar6 + 0x18);
-      orig::FUN_1011a250(self_,*(void **)(psVar6 + 2),
-                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar10 >> 0x10)) << 16) | (uint16_t)(*(short *)(iVar10 + 0xe) + psVar6[0xd]))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(*(short *)(iVar10 + 0x10) + *(short *)((int)self_ + 0xb8) +
-                                   psVar6[0xe]))),
-                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int **)(psVar6 + 0x18) >> 0x10)) << 16) | (uint16_t)(DAT_1036c190_as_v1))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(psVar6[0x13]))));
+      i2 = **(int **)(p2 + 0x18);
+      orig::game_1011A250(self_,*(void **)(p2 + 2),
+                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i2 >> 0x10)) << 16) | (uint16_t)(*(short *)(i2 + 0xe) + p2[0xd]))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(*(short *)(i2 + 0x10) + *(short *)((int)self_ + 0xb8) +
+                                   p2[0xe]))),
+                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int **)(p2 + 0x18) >> 0x10)) << 16) | (uint16_t)(g_1036C190_as_v1))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(p2[0x13]))));
     }
     else {
-      orig::FUN_1011a150(*(void **)(psVar6 + 4),((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x3a)))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar9) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + *(short *)((int)self_ + 0x3c)))),
-                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar22 >> 0x10)) << 16) | (uint16_t)(DAT_1036c190_as_v1))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(psVar6[0x13]))));
+      orig::game_1011A150(*(void **)(p2 + 4),((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x3a)))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u5) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + *(short *)((int)self_ + 0x3c)))),
+                   ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u12 >> 0x10)) << 16) | (uint16_t)(g_1036C190_as_v1))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(p2[0x13]))));
     }
-    goto LAB_10117ebe;
+    goto code_10117EBE;
   }
   if ((*(int *)((int)self_ + 0x10) == 0xe) && (*(short *)((int)self_ + 0x66) < 1)) {
-    uVar17 = (uint16_t)((uint32_t)DAT_1036c190_as_v2 >> 0x10);
+    u8 = (uint16_t)((uint32_t)g_1036C190_as_v2 >> 0x10);
     if ((*(uint8_t *)((int)self_ + 0x34) & 0x20) == 0) {
-      orig::FUN_1011a250(self_,*(void **)(psVar6 + 2),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(*(short *)(**(int **)(psVar6 + 0x18) + 0xe) + psVar6[0xd]))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(short *)(**(int **)(psVar6 + 0x18) + 0x10) +
-                                   *(short *)((int)self_ + 0xb8) + psVar6[0xe]))),DAT_1036c190_as_v2,
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(DAT_1036c190_as_v1 - *(short *)((int)self_ + 100)))));
+      orig::game_1011A250(self_,*(void **)(p2 + 2),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(*(short *)(**(int **)(p2 + 0x18) + 0xe) + p2[0xd]))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(short *)(**(int **)(p2 + 0x18) + 0x10) +
+                                   *(short *)((int)self_ + 0xb8) + p2[0xe]))),g_1036C190_as_v2,
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(g_1036C190_as_v1 - *(short *)((int)self_ + 100)))));
     }
     else {
-      orig::FUN_1011a150(*(void **)(psVar6 + 4),((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x3a)))),
-                   ((uint32_t)(((uint32_t)(uint16_t)(uVar11) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + *(short *)((int)self_ + 0x3c)))),
-                   DAT_1036c190_as_v2,((uint32_t)(((uint32_t)(uint16_t)(uVar9) << 16) | (uint16_t)(DAT_1036c190_as_v1 - *(short *)((int)self_ + 100)))));
+      orig::game_1011A150(*(void **)(p2 + 4),((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x3a)))),
+                   ((uint32_t)(((uint32_t)(uint16_t)(u6) << 16) | (uint16_t)(*(short *)((int)self_ + 0xb8) + *(short *)((int)self_ + 0x3c)))),
+                   g_1036C190_as_v2,((uint32_t)(((uint32_t)(uint16_t)(u5) << 16) | (uint16_t)(g_1036C190_as_v1 - *(short *)((int)self_ + 100)))));
     }
-    goto LAB_10117ebe;
+    goto code_10117EBE;
   }
-  lVar23 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)(psVar6 + 6) * (long double)128.0f);
-  local_20 = *(float *)(psVar6 + 8);
-  sVar14 = *(short *)((int)self_ + 0xb8) + psVar6[0xe];
-  iVar10 = ((uint32_t)(((uint32_t)(uint16_t)(uVar17) << 16) | (uint16_t)(sVar14)));
-  local_18 = *(void **)(psVar6 + 4);
-  local_14 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(local_14, 2, 2)) << 16) | (uint16_t)(psVar6[0xd])));
-  local_1c = *(float *)(psVar6 + 10);
-  uVar12 = (int)lVar23 << 0x18 | 0x808080;
+  i6 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)(p2 + 6) * (long double)128.0f);
+  frame.f3 = *(float *)(p2 + 8);
+  i3 = *(short *)((int)self_ + 0xb8) + p2[0xe];
+  i2 = ((uint32_t)(((uint32_t)(uint16_t)(u8) << 16) | (uint16_t)(i3)));
+  frame.p4 = *(void **)(p2 + 4);
+  frame.u13 = ((uint32_t)(((uint32_t)(uint16_t)(XI_PIECE(frame.u13, 2, 2)) << 16) | (uint16_t)(p2[0xd])));
+  frame.f4 = *(float *)(p2 + 10);
+  u7 = (int)i6 << 0x18 | 0x808080;
   if ((*(uint8_t *)((int)self_ + 0x34) & 0x20) == 0) {
-    local_4 = **(int **)(psVar6 + 0x18);
-    local_8 = (int)*(short *)(local_4 + 0xe);
-    lVar23 = XI_CALL_ST0(0x10311C2Cu)((long double)local_8 * (long double)local_20);
-    local_8 = (int)lVar23;
-    local_4 = (int)*(short *)(local_4 + 0x10);
-    lVar23 = XI_CALL_ST0(0x10311C2Cu)((long double)local_4 * (long double)local_1c);
-    uVar7 = *(uint32_t *)((int)self_ + 0x34);
-    uVar8 = 0;
-    if ((uVar7 & 0x800000) == 0) {
-      fVar21 = (long double)*(float *)(psVar6 + 6);
-      fVar3 = (long double)1.0f;
-      bVar20 = NAN(fVar21) || NAN(fVar3);
-      bVar19 = bVar20 || fVar21 < fVar3;
-      uVar7 = ((uint32_t)(((uint32_t)(uint16_t)((short)(uVar7 >> 0x10)) << 16) | (uint16_t)((uint16_t)bVar19 << 8 | (uint16_t)bVar20 << 10 |
-                       (uint16_t)(bVar20 || fVar21 == fVar3) << 0xe)));
-      if (bVar19 != bVar20) {
-        uVar8 = 0x44;
+    frame.i10 = **(int **)(p2 + 0x18);
+    frame.i9 = (int)*(short *)(frame.i10 + 0xe);
+    i6 = XI_CALL_ST0(0x10311C2Cu)((long double)frame.i9 * (long double)frame.f3);
+    frame.i9 = (int)i6;
+    frame.i10 = (int)*(short *)(frame.i10 + 0x10);
+    i6 = XI_CALL_ST0(0x10311C2Cu)((long double)frame.i10 * (long double)frame.f4);
+    u3 = *(uint32_t *)((int)self_ + 0x34);
+    u4 = 0;
+    if ((u3 & 0x800000) == 0) {
+      f2 = (long double)*(float *)(p2 + 6);
+      f1 = (long double)1.0f;
+      u11 = ((f2) != (f2)) || ((f1) != (f1));
+      u10 = u11 || f2 < f1;
+      u3 = ((uint32_t)(((uint32_t)(uint16_t)((short)(u3 >> 0x10)) << 16) | (uint16_t)((uint16_t)u10 << 8 | (uint16_t)u11 << 10 |
+                       (uint16_t)(u11 || f2 == f1) << 0xe)));
+      if (u10 != u11) {
+        u4 = 0x44;
       }
     }
     else {
-      uVar8 = 8;
+      u4 = 8;
     }
-    orig::FUN_10234a90(*(void **)(psVar6 + 2),(int)(short)local_8 + (int)(short)local_14,
-                 (int)(short)lVar23 + (int)sVar14,local_20,local_1c,uVar12,uVar8,
-                 ((uint32_t)(((uint32_t)(xi_strunc24((uVar7 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0xd0)))));
-    psVar5 = local_c;
-    if (local_18 == (void *)0x0) goto joined_r0x10117841;
-    sVar14 = psVar6[0x10];
-    iVar24 = 1;
-    sVar2 = psVar6[0xf];
-    goto LAB_10117aaa;
+    orig::game_10234A90(*(void **)(p2 + 2),(int)(short)frame.i9 + (int)(short)frame.u13,
+                 (int)(short)i6 + (int)i3,frame.f3,frame.f4,u7,u4,
+                 ((uint32_t)(((uint32_t)(xi_strunc24((u3 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0xd0)))));
+    p1 = frame.p5;
+    if (frame.p4 == (void *)0x0) goto L1;
+    i3 = p2[0x10];
+    frame.i7 = 1;
+    i1 = p2[0xf];
+    goto code_10117AAA;
   }
-  goto LAB_10117a8b;
-LAB_10117cee:
-  this_00 = *(int **)((int)self_ + 0xc);
-  if (((this_00 != (int *)0x0) && (*(char *)((int)self_ + 0x6a) != '\0')) &&
+  goto code_10117A8B;
+code_10117CEE:
+  obj1 = *(int **)((int)self_ + 0xc);
+  if (((obj1 != (int *)0x0) && (*(char *)((int)self_ + 0x6a) != '\0')) &&
      (*(int *)((int)self_ + 0x10) != 0xe)) {
-    ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0x10))))((void *)(this_00));
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0x10))))((void *)(obj1));
   }
-  if ((*(char *)((int)self_ + 0x9b) != '\0') && (bVar18)) {
-    bVar18 = false;
+  if ((*(char *)((int)self_ + 0x9b) != '\0') && (u9)) {
+    u9 = false;
     orig::Gfx_ApplyViewport1B70();
   }
   if (*(int *)((int)self_ + 0x10) == 0xe) {
     return;
   }
-  if (((psVar5 != (short *)0x0) && (*(char *)((int)self_ + 0x62) != '\0')) && (!bVar4)) {
-    local_14 = *(uint32_t *)((int)self_ + 0xcc);
-    uVar8 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,(int)self_);
-    if ((char)uVar8 == '\0') {
-      pvVar13 = *(void **)(psVar5 + 8);
+  if (((p1 != (short *)0x0) && (*(char *)((int)self_ + 0x62) != '\0')) && (!u2)) {
+    frame.u13 = *(uint32_t *)((int)self_ + 0xcc);
+    u4 = orig::Menu_IsFocusedItem(&g_menuMng_as_v0,(int)self_);
+    if ((char)u4 == '\0') {
+      p3 = *(void **)(p1 + 8);
     }
     else {
-      pvVar13 = *(void **)(psVar5 + 6);
+      p3 = *(void **)(p1 + 6);
     }
-    sVar14 = psVar5[0x14];
-    sVar2 = psVar5[0x10];
-    sVar15 = *(short *)((int)self_ + 0xb8) + local_c[0x15] + local_c[0x11];
+    i3 = p1[0x14];
+    i1 = p1[0x10];
+    i4 = *(short *)((int)self_ + 0xb8) + frame.p5[0x15] + frame.p5[0x11];
     if (*(char *)((int)self_ + 0x99) == '\0') {
-      if ((*(char *)((int)self_ + 0x9a) == '\0') || (pvVar13 == (void *)0x0)) {
-        local_20 = 1.0f;
-        local_1c = 1.0f;
-        if (pvVar13 == (void *)0x0) goto LAB_10117e97;
-        uVar8 = 1;
-        iVar10 = (int)sVar15;
+      if ((*(char *)((int)self_ + 0x9a) == '\0') || (p3 == (void *)0x0)) {
+        frame.f3 = 1.0f;
+        frame.f4 = 1.0f;
+        if (p3 == (void *)0x0) goto code_10117E97;
+        u4 = 1;
+        i2 = (int)i4;
       }
       else {
-        local_4 = (int)*(short *)((int)pvVar13 + 0x22) - (int)*(short *)((int)pvVar13 + 0x20);
-        uVar8 = 0;
-        iVar10 = (int)sVar15;
-        local_1c = 1.0f;
-        local_20 = (float)((long double)((int)*(short *)((int)self_ + 0x3e) -
-                                    (int)(short)(sVar14 + sVar2)) / (long double)local_4);
+        frame.i10 = (int)*(short *)((int)p3 + 0x22) - (int)*(short *)((int)p3 + 0x20);
+        u4 = 0;
+        i2 = (int)i4;
+        frame.f4 = 1.0f;
+        frame.f3 = (float)((long double)((int)*(short *)((int)self_ + 0x3e) -
+                                    (int)(short)(i3 + i1)) / (long double)frame.i10);
       }
     }
     else {
-      orig::TargetMenu_GetScaledPos80(&g_menuMng_as_v0,&local_20,&local_1c);
-      if (pvVar13 == (void *)0x0) goto LAB_10117e97;
-      local_4 = (int)sVar15;
-      lVar23 = XI_CALL_ST0(0x10311C2Cu)(((long double)local_1c - (long double)1.0f) *
-                      (long double)((int)*(short *)((int)pvVar13 + 0x26) -
-                               (int)*(short *)((int)pvVar13 + 0x24)) * (long double)0.5f +
-                      (long double)local_4);
-      uVar8 = 1;
-      iVar10 = (int)(short)lVar23;
+      orig::TargetMenu_GetScaledPos80(&g_menuMng_as_v0,&frame.f3,&frame.f4);
+      if (p3 == (void *)0x0) goto code_10117E97;
+      frame.i10 = (int)i4;
+      i6 = XI_CALL_ST0(0x10311C2Cu)(((long double)frame.f4 - (long double)1.0f) *
+                      (long double)((int)*(short *)((int)p3 + 0x26) -
+                               (int)*(short *)((int)p3 + 0x24)) * (long double)0.5f +
+                      (long double)frame.i10);
+      u4 = 1;
+      i2 = (int)(short)i6;
     }
-    orig::Shape_DrawScaled_v1(pvVar13,(int)(short)(sVar14 + sVar2),iVar10,local_20,local_1c,local_14,uVar8,0,0);
+    orig::Shape_DrawScaled_v1(p3,(int)(short)(i3 + i1),i2,frame.f3,frame.f4,frame.u13,u4,0,0);
   }
-LAB_10117e97:
-  pvVar13 = *(void **)((int)self_ + 0x88);
-  if (((pvVar13 != (void *)0x0) && (*(char *)((int)self_ + 0x69) != '\0')) &&
+code_10117E97:
+  p3 = *(void **)((int)self_ + 0x88);
+  if (((p3 != (void *)0x0) && (*(char *)((int)self_ + 0x69) != '\0')) &&
      ((*(char *)((int)self_ + 0x74) != '\0' &&
-      (*(int *)((int)pvVar13 + 0xc) < *(int *)((int)pvVar13 + 0x10))))) {
-    orig::MenuPanels_DrawProgressBar(pvVar13);
+      (*(int *)((int)p3 + 0xc) < *(int *)((int)p3 + 0x10))))) {
+    orig::MenuPanels_DrawProgressBar(p3);
   }
-LAB_10117ebe:
-  if ((*(char *)((int)self_ + 0x9b) != '\0') && (bVar18)) {
+code_10117EBE:
+  if ((*(char *)((int)self_ + 0x9b) != '\0') && (u9)) {
     orig::Gfx_ApplyViewport1B70();
   }
   return;
@@ -7158,16 +7174,16 @@ LAB_10117ebe:
 
 // FUNCTION: FFXIMAIN 0x10117EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_MenuReleaseItemCount(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_MenuReleaseItemCount(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = g_pTargetMng_as_s32;
+  i1 = g_pTargetMng_as_s32;
   if ('\0' < *(char *)((int)self_ + 0x6f)) {
     *(short *)(g_pTargetMng_as_s32 + 0x6a) =
          *(short *)(g_pTargetMng_as_s32 + 0x6a) - (short)*(char *)((int)self_ + 0x6f);
     *(uint8_t *)((int)self_ + 0x6f) = 0;
-    xi_eax = iVar1;
+    xi_eax = i1;
   }
   *(uint8_t *)((int)self_ + 0x70) = 0;
   *(uint8_t *)((int)self_ + 0x6e) = 0;
@@ -7181,7 +7197,7 @@ XI_API void __thiscall NetCellFont_InvokeChild34(void * self_)
   if (*(int **)((int)self_ + 0xc) != (int *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x10117f39. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (**(code **)(**(int **)((int)self_ + 0xc) + 0x34))();
+    (**(untyped_fn **)(**(int **)((int)self_ + 0xc) + 0x34))();
     return;
   }
   return;
@@ -7189,87 +7205,87 @@ XI_API void __thiscall NetCellFont_InvokeChild34(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10117F40
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
-XI_API void __thiscall NetCellFont_Rebuild(void * self_, void * param_1)
+XI_API void __thiscall NetCellFont_Rebuild(void * self_, void * arg2)
 {
-  int *piVar1;
-  void *pvVar2;
-  undefined4 uVar3;
-  int iVar4;
-  uint64_t uVar5;
+  int *p1;
+  void *p2;
+  bits32 u1;
+  int i1;
+  uint64_t u2;
   
-  *(void **)((int)self_ + 4) = param_1;
-  piVar1 = (int *)orig::NetCellFont_GetField8(param_1);
-  if (piVar1 != (int *)0x0) {
-    uVar5 = orig::Allocator_Generic_v1(0x50);
-    if ((void *)uVar5 == (void *)0x0) {
+  *(void **)((int)self_ + 4) = arg2;
+  p1 = (int *)orig::NetCellFont_GetField8(arg2);
+  if (p1 != (int *)0x0) {
+    u2 = orig::Allocator_Generic_v1(0x50);
+    if ((void *)u2 == (void *)0x0) {
       return;
     }
-    pvVar2 = orig::NetCellFont_InitScaled((void *)uVar5);
-    if (pvVar2 == (void *)0x0) {
+    p2 = orig::NetCellFont_InitScaled((void *)u2);
+    if (p2 == (void *)0x0) {
       return;
     }
-    uVar3 = orig::NetCellFont_SetSource(pvVar2,piVar1);
-    uVar3 = orig::NetCellFont_ComputeRect(pvVar2,0,0,
-                         ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99)))));
-    *(uint16_t *)((int)self_ + 0x52) = *(uint16_t *)((int)pvVar2 + 0x1a);
-    *(uint16_t *)((int)self_ + 0x54) = *(uint16_t *)((int)pvVar2 + 0x1c);
-    orig::NetCellFont_UpdateLayout(pvVar2,xi_castbits<float>(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99))))))
+    u1 = orig::NetCellFont_SetSource(p2,p1);
+    u1 = orig::NetCellFont_ComputeRect(p2,0,0,
+                         ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99)))));
+    *(uint16_t *)((int)self_ + 0x52) = *(uint16_t *)((int)p2 + 0x1a);
+    *(uint16_t *)((int)self_ + 0x54) = *(uint16_t *)((int)p2 + 0x1c);
+    orig::NetCellFont_UpdateLayout(p2,bit_cast<float>(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99))))))
     ;
-    *(short *)((int)self_ + 0x40) = *(short *)((int)pvVar2 + 0x24) + *(short *)((int)pvVar2 + 0x1c);
-    *(short *)((int)self_ + 0x3e) = *(short *)((int)pvVar2 + 0x22) + *(short *)((int)pvVar2 + 0x1a);
-    *(uint16_t *)((int)self_ + 0x3c) = *(uint16_t *)((int)pvVar2 + 0x1c);
-    *(uint16_t *)((int)self_ + 0x3a) = *(uint16_t *)((int)pvVar2 + 0x1a);
-    *(undefined4 *)((int)self_ + 0x42) = *(undefined4 *)((int)self_ + 0x3a);
-    *(undefined4 *)((int)self_ + 0x46) = *(undefined4 *)((int)self_ + 0x3e);
-    orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),pvVar2);
+    *(short *)((int)self_ + 0x40) = *(short *)((int)p2 + 0x24) + *(short *)((int)p2 + 0x1c);
+    *(short *)((int)self_ + 0x3e) = *(short *)((int)p2 + 0x22) + *(short *)((int)p2 + 0x1a);
+    *(uint16_t *)((int)self_ + 0x3c) = *(uint16_t *)((int)p2 + 0x1c);
+    *(uint16_t *)((int)self_ + 0x3a) = *(uint16_t *)((int)p2 + 0x1a);
+    *(bits32 *)((int)self_ + 0x42) = *(bits32 *)((int)self_ + 0x3a);
+    *(bits32 *)((int)self_ + 0x46) = *(bits32 *)((int)self_ + 0x3e);
+    orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),p2);
   }
-  pvVar2 = *(void **)((int)self_ + 4);
-  iVar4 = 0;
-  if (0 < *(short *)((int)pvVar2 + 0x18)) {
+  p2 = *(void **)((int)self_ + 4);
+  i1 = 0;
+  if (0 < *(short *)((int)p2 + 0x18)) {
     do {
-      piVar1 = (int *)orig::NetCellFont_GetEntry(pvVar2,iVar4 + 1);
-      if (piVar1 == (int *)0x0) break;
-      uVar5 = orig::Allocator_Generic_v1(0x60);
-      if ((void *)uVar5 == (void *)0x0) {
+      p1 = (int *)orig::NetCellFont_GetEntry(p2,i1 + 1);
+      if (p1 == (int *)0x0) break;
+      u2 = orig::Allocator_Generic_v1(0x60);
+      if ((void *)u2 == (void *)0x0) {
         return;
       }
-      pvVar2 = orig::NetCellFont_LayoutCtor((void *)uVar5,self_);
-      if (pvVar2 == (void *)0x0) {
+      p2 = orig::NetCellFont_LayoutCtor((void *)u2,self_);
+      if (p2 == (void *)0x0) {
         return;
       }
       *(short *)((int)self_ + 0x58) = *(short *)((int)self_ + 0x58) + 1;
-      uVar3 = orig::NetCellFont_SetNames(pvVar2,piVar1);
-      uVar3 = orig::NetCellFont_ComputeOffsets(pvVar2,(int)*(short *)((int)self_ + 0x52),
+      u1 = orig::NetCellFont_SetNames(p2,p1);
+      u1 = orig::NetCellFont_ComputeOffsets(p2,(int)*(short *)((int)self_ + 0x52),
                            (int)*(short *)((int)self_ + 0x54),
-                           ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99)))));
-      uVar3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar3 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99))));
-      orig::NetCellFont_UpdateState(pvVar2,uVar3,uVar3);
-      orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),pvVar2);
-      if (*(short *)((int)self_ + 0x4c) == *(short *)((int)pvVar2 + 0x3a)) {
-        *(void **)((int)self_ + 8) = pvVar2;
+                           ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99)))));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x99))));
+      orig::NetCellFont_UpdateState(p2,u1,u1);
+      orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),p2);
+      if (*(short *)((int)self_ + 0x4c) == *(short *)((int)p2 + 0x3a)) {
+        *(void **)((int)self_ + 8) = p2;
       }
-      pvVar2 = *(void **)((int)self_ + 4);
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < *(short *)((int)pvVar2 + 0x18));
+      p2 = *(void **)((int)self_ + 4);
+      i1 = i1 + 1;
+    } while (i1 < *(short *)((int)p2 + 0x18));
   }
-  iVar4 = orig::NetCellFont_GetFieldC(*(void **)((int)self_ + 4));
-  uVar3 = 0;
-  if (iVar4 != 0) {
-    uVar5 = orig::Allocator_Generic_v1(0x34);
-    if ((void *)uVar5 == (void *)0x0) {
+  i1 = orig::NetCellFont_GetFieldC(*(void **)((int)self_ + 4));
+  u1 = 0;
+  if (i1 != 0) {
+    u2 = orig::Allocator_Generic_v1(0x34);
+    if ((void *)u2 == (void *)0x0) {
       return;
     }
-    pvVar2 = orig::NetCellFont_InitDefaults((void *)uVar5);
-    if (pvVar2 == (void *)0x0) {
+    p2 = orig::NetCellFont_InitDefaults((void *)u2);
+    if (p2 == (void *)0x0) {
       return;
     }
-    orig::NetCellFont_SetShape(pvVar2,iVar4);
-    uVar3 = orig::NetCellFont_AttachTo(pvVar2,*(int *)((int)self_ + 8));
-    orig::NetCellFont_StepFrameCycle(pvVar2,uVar3);
-    uVar5 = orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),pvVar2);
-    uVar3 = (undefined4)uVar5;
+    orig::NetCellFont_SetShape(p2,i1);
+    u1 = orig::NetCellFont_AttachTo(p2,*(int *)((int)self_ + 8));
+    orig::NetCellFont_StepFrameCycle(p2,u1);
+    u2 = orig::NetCellFont_PushBack((void *)((int)self_ + 0x14),p2);
+    u1 = (bits32)u2;
   }
-  orig::NetCellFont_SelectEntry(self_,1,uVar3);
+  orig::NetCellFont_SelectEntry(self_,1,u1);
   return;
 }
 
@@ -7277,59 +7293,61 @@ XI_API void __thiscall NetCellFont_Rebuild(void * self_, void * param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ClearEntries(void * self_)
 {
-  void *this_00;
-  short sVar1;
-  int *piVar2;
-  short *this_01;
-  uint64_t uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int * &local_4 = *reinterpret_cast<int * *>(xi_frame + 0);
+  void *obj1;
+  short i1;
+  int *p1;
+  short *obj2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int * p2; };   // at 0x0
+  } frame;
   
-  this_00 = (void *)((int)self_ + 0x14);
-  local_4 = self_;
-  piVar2 = (int *)orig::NetCellFont_GetHead(this_00);
-joined_r0x10118105:
-  local_4 = piVar2;
-  if (piVar2 != (int *)0x0) {
-    uVar3 = orig::FUN_10126520((int *)&local_4);
-    this_01 = (short *)uVar3;
-    if (this_01 != (short *)0x0) {
-      orig::NetCellFont_Remove(this_00,piVar2);
-      sVar1 = *this_01;
-      if (sVar1 != 0) goto code_r0x1011812d;
-      orig::NetCellFont_FreeEntryData(this_01);
-      goto LAB_10118143;
+  obj1 = (void *)((int)self_ + 0x14);
+  frame.p2 = self_;
+  p1 = (int *)orig::NetCellFont_GetHead(obj1);
+L1:
+  frame.p2 = p1;
+  if (p1 != (int *)0x0) {
+    u1 = orig::game_10126520((int *)&frame.p2);
+    obj2 = (short *)u1;
+    if (obj2 != (short *)0x0) {
+      orig::NetCellFont_Remove(obj1,p1);
+      i1 = *obj2;
+      if (i1 != 0) goto L2;
+      orig::NetCellFont_FreeEntryData(obj2);
+      goto code_10118143;
     }
   }
-  orig::NetCellFont_FreeListsAndReset(this_00);
-  *(undefined4 *)((int)self_ + 4) = 0;
+  orig::NetCellFont_FreeListsAndReset(obj1);
+  *(bits32 *)((int)self_ + 4) = 0;
   return;
-code_r0x1011812d:
-  if ((sVar1 == 1) || (piVar2 = local_4, sVar1 == 2)) {
+L2:
+  if ((i1 == 1) || (p1 = frame.p2, i1 == 2)) {
     orig::NetCellFont_NoOp();
-LAB_10118143:
-    orig::operator_delete_v1(this_01);
-    piVar2 = local_4;
+code_10118143:
+    orig::operator_delete_v1(obj2);
+    p1 = frame.p2;
   }
-  goto joined_r0x10118105;
+  goto L1;
 }
 
 // FUNCTION: FFXIMAIN 0x10118170
 // GATE: PASS -- 100 trials, 56 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-XI_API void __thiscall NetCellFont_AttachSelection(void * self_, int param_1)
+XI_API void __thiscall NetCellFont_AttachSelection(void * self_, int arg2)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  uVar2 = orig::FUN_101181d0(self_,param_1);
-  iVar1 = (int)uVar2;
-  if (iVar1 != 0) {
-    param_1 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-    while (param_1 != 0) {
-      uVar2 = orig::FUN_10126520(&param_1);
-      if (*(short *)uVar2 == 2) {
-        orig::NetCellFont_AttachTo((short *)uVar2,iVar1);
-        *(int *)((int)self_ + 8) = iVar1;
+  u1 = orig::game_101181D0(self_,arg2);
+  i1 = (int)u1;
+  if (i1 != 0) {
+    arg2 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+    while (arg2 != 0) {
+      u1 = orig::game_10126520(&arg2);
+      if (*(short *)u1 == 2) {
+        orig::NetCellFont_AttachTo((short *)u1,i1);
+        *(int *)((int)self_ + 8) = i1;
       }
     }
   }
@@ -7340,107 +7358,109 @@ XI_API void __thiscall NetCellFont_AttachSelection(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 54 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 54
 XI_API short * __thiscall NetCellFont_FindFreeEntry(void * self_)
 {
-  uint64_t uVar1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
   do {
-    if (local_4 == (void *)0x0) {
+    if (frame.p1 == (void *)0x0) {
       return (short *)0x0;
     }
-    uVar1 = orig::FUN_10126520((int *)&local_4);
-  } while (*(short *)uVar1 != 0);
-  return (short *)uVar1;
+    u1 = orig::game_10126520((int *)&frame.p1);
+  } while (*(short *)u1 != 0);
+  return (short *)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10118260
 // GATE: PASS -- 100 trials, 100 returned normally, 13 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_MenuMoveSelection(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_MenuMoveSelection(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  uint16_t uVar3;
-  uint32_t uVar1;
-  int iVar2;
-  void *this_00;
-  undefined4 xi_eax_00;
-  short sVar4;
-  short sVar5;
-  uint64_t uVar6;
-  int local_4;
+  uint16_t u1;
+  uint32_t u2;
+  int i1;
+  void *obj1;
+  bits32 xi_eax_00;
+  short i2;
+  short i3;
+  uint64_t u3;
+  int i4;
   
   if (*(int *)((int)self_ + 0x10) == 0xe) {
     return 0;
   }
-  local_4 = 0;
+  i4 = 0;
   if (0 < *(short *)((int)self_ + 0x56)) {
     return 0;
   }
-  uVar6 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
-  if (((int)uVar6 != 0) && (*(int *)((int)uVar6 + 0x10) == 0x10)) {
+  u3 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+  if (((int)u3 != 0) && (*(int *)((int)u3 + 0x10) == 0x10)) {
     return 0;
   }
   if (*(char *)((int)self_ + 0x5c) != '\0') {
-    sVar4 = (short)param_2;
-    if ((*(char *)((int)self_ + 0x5d) != '\0') && (sVar4 != 6)) {
+    i2 = (short)arg4;
+    if ((*(char *)((int)self_ + 0x5d) != '\0') && (i2 != 6)) {
       return 0;
     }
-    uVar3 = (uint16_t)((uint32_t)(sVar4 + -1) >> 0x10);
-    switch(xi_sw(sVar4)) {
+    u1 = (uint16_t)((uint32_t)(i2 + -1) >> 0x10);
+    switch(xi_sw(i2)) {
     case 1:
     case 2:
     case 3:
     case 4:
       if ((*(char *)((int)self_ + 0x61) != '\0') && (0 < *(short *)((int)self_ + 0x58))) {
-        uVar1 = orig::NetCellFont_GetFieldByIndex
+        u2 = orig::NetCellFont_GetFieldByIndex
                           (*(void **)((int)self_ + 4),
-                           ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar6 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))),param_2);
-        sVar5 = (short)uVar1;
-        if (-1 < sVar5) {
-          uVar6 = orig::FUN_101181d0(self_,uVar1);
-          iVar2 = (int)uVar6;
-          if ((iVar2 == 0) || (*(int *)(iVar2 + 0x10) != 0x10)) {
-            if (sVar5 == *(short *)((int)self_ + 0x4c)) {
-              *(short *)((int)self_ + 0x5a) = sVar4;
+                           ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u3 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))),arg4);
+        i3 = (short)u2;
+        if (-1 < i3) {
+          u3 = orig::game_101181D0(self_,u2);
+          i1 = (int)u3;
+          if ((i1 == 0) || (*(int *)(i1 + 0x10) != 0x10)) {
+            if (i3 == *(short *)((int)self_ + 0x4c)) {
+              *(short *)((int)self_ + 0x5a) = i2;
             }
             else {
               *(uint16_t *)((int)self_ + 0x5a) = 0;
             }
-            orig::NetCellFont_SelectEntry_v1(self_,uVar1,iVar2);
+            orig::NetCellFont_SelectEntry_v1(self_,u2,i1);
             if ((*(char *)((int)self_ + 0x85) != '\0') && (*(short *)((int)self_ + 0x5a) == 0)) {
               orig::SetMusicTrackVolume_C();
             }
-            *(short *)((int)self_ + 0x4c) = sVar5;
+            *(short *)((int)self_ + 0x4c) = i3;
           }
         }
       }
       break;
     case 5:
-      uVar6 = orig::FUN_101181d0(self_,(uint32_t)*(uint16_t *)((int)self_ + 0x4c));
-      iVar2 = (int)uVar6;
-      uVar3 = (uint16_t)((uint64_t)uVar6 >> 0x30);
+      u3 = orig::game_101181D0(self_,(uint32_t)*(uint16_t *)((int)self_ + 0x4c));
+      i1 = (int)u3;
+      u1 = (uint16_t)((uint64_t)u3 >> 0x30);
       if (*(char *)((int)self_ + 0x86) != '\0') {
-        if ((iVar2 == 0) || (*(int *)(iVar2 + 0x10) != 5)) {
-          uVar6 = orig::SetMusicTrackVolume_A();
-          uVar3 = (uint16_t)((uint64_t)uVar6 >> 0x30);
+        if ((i1 == 0) || (*(int *)(i1 + 0x10) != 5)) {
+          u3 = orig::SetMusicTrackVolume_A();
+          u1 = (uint16_t)((uint64_t)u3 >> 0x30);
         }
         else {
-          uVar6 = orig::SetMusicTrackVolume_Tag0004_v1();
-          uVar3 = (uint16_t)((uint64_t)uVar6 >> 0x30);
+          u3 = orig::SetMusicTrackVolume_Tag0004_v1();
+          u1 = (uint16_t)((uint64_t)u3 >> 0x30);
         }
       }
-      if (iVar2 != 0) {
-        if (*(int *)(iVar2 + 0x10) == 5) {
+      if (i1 != 0) {
+        if (*(int *)(i1 + 0x10) == 5) {
           return 0;
         }
-        *(undefined4 *)(iVar2 + 0x10) = 1;
-        local_4 = orig::NetCellFont_GetEntryValueById(*(void **)((int)self_ + 4),
-                              ((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+        *(bits32 *)(i1 + 0x10) = 1;
+        i4 = orig::NetCellFont_GetEntryValueById(*(void **)((int)self_ + 4),
+                              ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
         *(uint16_t *)((int)self_ + 0x5e) = 9;
       }
       break;
     case 6:
-      xi_eax_00 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)(sVar4 + -1) >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x84))));
+      xi_eax_00 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)(i2 + -1) >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x84))));
       if (*(char *)((int)self_ + 0x84) != '\0') {
         xi_eax_00 = orig::SetMusicTrackVolume_B_v1();
       }
@@ -7450,48 +7470,48 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_MenuMoveSelec
       }
       break;
     case 9:
-      uVar6 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
-      this_00 = (void *)uVar6;
-      if (this_00 != (void *)0x0) {
+      u3 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+      obj1 = (void *)u3;
+      if (obj1 != (void *)0x0) {
         if (*(char *)((int)self_ + 0x85) != '\0') {
           orig::SetMusicTrackVolume_C();
         }
-        if (*(int *)((int)this_00 + 0x10) == 5) {
+        if (*(int *)((int)obj1 + 0x10) == 5) {
           return 0;
         }
-        *(uint16_t *)((int)this_00 + 0x28) = 0xffff;
-        orig::NetCellFont_SetState_v1(this_00,1);
+        *(uint16_t *)((int)obj1 + 0x28) = 0xffff;
+        orig::NetCellFont_SetState_v1(obj1,1);
       }
       break;
     case 0x14:
-      uVar6 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
-      iVar2 = (int)uVar6;
-      if ((iVar2 != 0) && (*(int *)(iVar2 + 0x10) != 5)) {
-        *(undefined4 *)(iVar2 + 0x10) = 2;
+      u3 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+      i1 = (int)u3;
+      if ((i1 != 0) && (*(int *)(i1 + 0x10) != 5)) {
+        *(bits32 *)(i1 + 0x10) = 2;
       }
       break;
     case 0x1d:
-      uVar6 = orig::FUN_101181d0(self_,(uint32_t)*(uint16_t *)((int)self_ + 0x4c));
-      iVar2 = (int)uVar6;
-      if (iVar2 != 0) {
-        if (*(int *)(iVar2 + 0x10) == 5) {
+      u3 = orig::game_101181D0(self_,(uint32_t)*(uint16_t *)((int)self_ + 0x4c));
+      i1 = (int)u3;
+      if (i1 != 0) {
+        if (*(int *)(i1 + 0x10) == 5) {
           return 0;
         }
-        *(undefined4 *)(iVar2 + 0x10) = 1;
-        local_4 = orig::NetCellFont_GetEntryValueById(*(void **)((int)self_ + 4),
-                              ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar6 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+        *(bits32 *)(i1 + 0x10) = 1;
+        i4 = orig::NetCellFont_GetEntryValueById(*(void **)((int)self_ + 4),
+                              ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u3 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
       }
     }
   }
   if ((((*(int *)((int)self_ + 0xc) != 0) && (*(int *)((int)self_ + 0x10) != 0xe)) &&
       (*(int *)((int)self_ + 4) != 0)) &&
-     (uVar6 = orig::MenuMng_TestNameForSceneState(&g_menuMng_as_v0,(char *)(*(int *)((int)self_ + 4) + 0x46)),
-     (char)uVar6 != '\0')) {
-    ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(code **)(**(int **)((int)self_ + 0xc) + 0x18))
-              ))((void *)(*(int **)((int)self_ + 0xc)),param_2,
-               ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar6 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+     (u3 = orig::MenuMng_TestNameForSceneState(&g_menuMng_as_v0,(char *)(*(int *)((int)self_ + 4) + 0x46)),
+     (char)u3 != '\0')) {
+    ((int (__thiscall *)(void *, XI_ANY, XI_ANY))((**(untyped_fn **)(**(int **)((int)self_ + 0xc) + 0x18))
+              ))((void *)(*(int **)((int)self_ + 0xc)),arg4,
+               ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u3 >> 0x30)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
   }
-  return local_4;
+  return i4;
 }
 
 // FUNCTION: FFXIMAIN 0x10118520
@@ -7503,28 +7523,28 @@ XI_API void __cdecl NetCellFont_NoOpB(void)
 
 // FUNCTION: FFXIMAIN 0x10118530
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_PlaceCursorObject(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall NetCellFont_PlaceCursorObject(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
-  int iVar2;
-  uint64_t uVar3;
+  int i1;
+  int i2;
+  uint64_t u1;
   
   if (*(int *)((int)self_ + 0x88) == 0) {
-    uVar3 = orig::Allocator_Generic_v1(0x2c);
-    *(int *)((int)self_ + 0x88) = (int)uVar3;
-    if ((int)uVar3 == 0) {
+    u1 = orig::Allocator_Generic_v1(0x2c);
+    *(int *)((int)self_ + 0x88) = (int)u1;
+    if ((int)u1 == 0) {
       return;
     }
   }
-  iVar1 = (int)(short)(*(short *)((int)self_ + 0x3e) + -8);
-  iVar2 = (int)*(short *)((int)self_ + 0x3c);
-  if ((short)param_2 != -1) {
-    orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
-                 (int)(short)param_2,(int)(short)param_1);
+  i1 = (int)(short)(*(short *)((int)self_ + 0x3e) + -8);
+  i2 = (int)*(short *)((int)self_ + 0x3c);
+  if ((short)arg3 != -1) {
+    orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),i1,i2,*(short *)((int)self_ + 0x40) - i2,
+                 (int)(short)arg3,(int)(short)arg2);
     return;
   }
-  orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),iVar1,iVar2,*(short *)((int)self_ + 0x40) - iVar2,
-               (int)*(short *)((int)self_ + 0x58),(int)(short)param_1);
+  orig::MenuPanels_InitDrawRect(*(void **)((int)self_ + 0x88),i1,i2,*(short *)((int)self_ + 0x40) - i2,
+               (int)*(short *)((int)self_ + 0x58),(int)(short)arg2);
   return;
 }
 
@@ -7532,24 +7552,26 @@ XI_API void __thiscall NetCellFont_PlaceCursorObject(void * self_, undefined4 pa
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall NetCellFont_GetFocusedValueA(void * self_)
 {
-  void *pvVar1;
-  short *psVar2;
-  uint64_t uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  void *p1;
+  short *p2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p3; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  pvVar1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
-  if (pvVar1 == self_) {
-    local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-    while (local_4 != (void *)0x0) {
-      uVar3 = orig::FUN_10126520((int *)&local_4);
-      psVar2 = (short *)uVar3;
-      if (*psVar2 == 0) {
-        if (*(int *)(psVar2 + 0x1e) != 0) {
-          return *(int *)(psVar2 + 0x1e);
+  frame.p3 = self_;
+  p1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
+  if (p1 == self_) {
+    frame.p3 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+    while (frame.p3 != (void *)0x0) {
+      u1 = orig::game_10126520((int *)&frame.p3);
+      p2 = (short *)u1;
+      if (*p2 == 0) {
+        if (*(int *)(p2 + 0x1e) != 0) {
+          return *(int *)(p2 + 0x1e);
         }
-        return *(int *)(psVar2 + 0x14);
+        return *(int *)(p2 + 0x14);
       }
     }
   }
@@ -7560,24 +7582,26 @@ XI_API int __thiscall NetCellFont_GetFocusedValueA(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall NetCellFont_GetFocusedValueB(void * self_)
 {
-  void *pvVar1;
-  short *psVar2;
-  uint64_t uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  void *p1;
+  short *p2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p3; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  pvVar1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
-  if (pvVar1 == self_) {
-    local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-    while (local_4 != (void *)0x0) {
-      uVar3 = orig::FUN_10126520((int *)&local_4);
-      psVar2 = (short *)uVar3;
-      if (*psVar2 == 0) {
-        if (*(int *)(psVar2 + 0x20) != 0) {
-          return *(int *)(psVar2 + 0x20);
+  frame.p3 = self_;
+  p1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
+  if (p1 == self_) {
+    frame.p3 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+    while (frame.p3 != (void *)0x0) {
+      u1 = orig::game_10126520((int *)&frame.p3);
+      p2 = (short *)u1;
+      if (*p2 == 0) {
+        if (*(int *)(p2 + 0x20) != 0) {
+          return *(int *)(p2 + 0x20);
         }
-        return *(int *)(psVar2 + 0x16);
+        return *(int *)(p2 + 0x16);
       }
     }
   }
@@ -7588,87 +7612,87 @@ XI_API int __thiscall NetCellFont_GetFocusedValueB(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_MenuUpdateFocusedHelp(void * self_)
 {
-  char cVar1;
-  void *pvVar2;
-  char *pcVar3;
-  char *pcVar4;
-  int iVar5;
-  int iVar6;
-  uint64_t uVar7;
-  undefined4 uVar8;
+  char c1;
+  void *p1;
+  char *p2;
+  char *p3;
+  int i1;
+  int i2;
+  uint64_t u1;
+  bits32 u2;
   
-  pvVar2 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
-  if (pvVar2 != self_) {
+  p1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
+  if (p1 != self_) {
     return;
   }
-  uVar7 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)pvVar2 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
-  iVar5 = (int)uVar7;
-  if (iVar5 == 0) {
+  u1 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)p1 >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x4c)))));
+  i1 = (int)u1;
+  if (i1 == 0) {
     return;
   }
-  if (*(char *)(iVar5 + 0x4a) == '\0') {
+  if (*(char *)(i1 + 0x4a) == '\0') {
     return;
   }
-  pcVar3 = *(char **)(iVar5 + 0x4c);
-  pcVar4 = pcVar3;
-  if (pcVar3 == (char *)0x0) {
-    pcVar4 = *(char **)(iVar5 + 0x40);
+  p2 = *(char **)(i1 + 0x4c);
+  p3 = p2;
+  if (p2 == (char *)0x0) {
+    p3 = *(char **)(i1 + 0x40);
   }
-  if (pcVar4 == (char *)0x0) {
-LAB_10118718:
-    if (g_pTkHelp == (void *)0x0) goto LAB_10118738;
-    uVar8 = 1;
-    pcVar3 = (char *)orig::NetCellFont_GetFocusedValueA(self_);
+  if (p3 == (char *)0x0) {
+code_10118718:
+    if (g_pTkHelp == (void *)0x0) goto code_10118738;
+    u2 = 1;
+    p2 = (char *)orig::NetCellFont_GetFocusedValueA(self_);
   }
   else {
-    pcVar4 = pcVar3;
-    if (pcVar3 == (char *)0x0) {
-      pcVar4 = *(char **)(iVar5 + 0x40);
+    p3 = p2;
+    if (p2 == (char *)0x0) {
+      p3 = *(char **)(i1 + 0x40);
     }
-    iVar6 = -1;
+    i2 = -1;
     do {
-      if (iVar6 == 0) break;
-      iVar6 = iVar6 + -1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar1 != '\0');
-    if (iVar6 == -2) goto LAB_10118718;
-    if (g_pTkHelp == (void *)0x0) goto LAB_10118738;
-    if (pcVar3 == (char *)0x0) {
-      pcVar3 = *(char **)(iVar5 + 0x40);
+      if (i2 == 0) break;
+      i2 = i2 + -1;
+      c1 = *p3;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    if (i2 == -2) goto code_10118718;
+    if (g_pTkHelp == (void *)0x0) goto code_10118738;
+    if (p2 == (char *)0x0) {
+      p2 = *(char **)(i1 + 0x40);
     }
-    uVar8 = 1;
+    u2 = 1;
   }
-  orig::TargetMenu_ForwardToPanel(g_pTkHelp,pcVar3,uVar8);
+  orig::TargetMenu_ForwardToPanel(g_pTkHelp,p2,u2);
   *(uint8_t *)((int)self_ + 0x6d) = 1;
-LAB_10118738:
-  pcVar3 = *(char **)(iVar5 + 0x44);
-  if (pcVar3 != (char *)0x0) {
-    iVar6 = -1;
-    pcVar4 = pcVar3;
+code_10118738:
+  p2 = *(char **)(i1 + 0x44);
+  if (p2 != (char *)0x0) {
+    i2 = -1;
+    p3 = p2;
     do {
-      if (iVar6 == 0) break;
-      iVar6 = iVar6 + -1;
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar1 != '\0');
-    if (iVar6 != -2) {
+      if (i2 == 0) break;
+      i2 = i2 + -1;
+      c1 = *p3;
+      p3 = p3 + 1;
+    } while (c1 != '\0');
+    if (i2 != -2) {
       if (g_pTkTitle_as_s32 == 0) {
         return;
       }
-      pcVar4 = *(char **)(iVar5 + 0x50);
-      if (*(char **)(iVar5 + 0x50) == (char *)0x0) {
-        pcVar4 = pcVar3;
+      p3 = *(char **)(i1 + 0x50);
+      if (*(char **)(i1 + 0x50) == (char *)0x0) {
+        p3 = p2;
       }
-      orig::TargetMenu_SetTextFwd_v1(pcVar4,1);
+      orig::TargetMenu_SetTextFwd_v1(p3,1);
       *(uint8_t *)((int)self_ + 0x6c) = 1;
       return;
     }
   }
   if (g_pTkTitle_as_s32 != 0) {
-    uVar8 = 1;
-    iVar5 = orig::NetCellFont_GetFocusedValueB(self_);
-    orig::TargetMenu_SetTextFwd_v1(iVar5,uVar8);
+    u2 = 1;
+    i1 = orig::NetCellFont_GetFocusedValueB(self_);
+    orig::TargetMenu_SetTextFwd_v1(i1,u2);
     *(uint8_t *)((int)self_ + 0x6c) = 1;
   }
   return;
@@ -7676,12 +7700,12 @@ LAB_10118738:
 
 // FUNCTION: FFXIMAIN 0x101187F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_MenuStartFade(void * self_, undefined4 xi_s1)
+XI_API void __thiscall NetCellFont_MenuStartFade(void * self_, bits32 xi_s1)
 {
-  *(undefined4 *)((int)self_ + 0x10) = 0xe;
+  *(bits32 *)((int)self_ + 0x10) = 0xe;
   *(uint16_t *)((int)self_ + 0x66) = 0;
   if (*(char *)((int)self_ + 0x68) != '\0') {
-    *(uint16_t *)((int)self_ + 100) = DAT_1036c190;
+    *(uint16_t *)((int)self_ + 100) = g_1036C190;
     return;
   }
   *(uint16_t *)((int)self_ + 100) = 0;
@@ -7690,117 +7714,123 @@ XI_API void __thiscall NetCellFont_MenuStartFade(void * self_, undefined4 xi_s1)
 
 // FUNCTION: FFXIMAIN 0x10118870
 // GATE: PASS -- 100 trials, 84 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 84
-XI_API undefined4 __thiscall NetCellFont_SelectFirstVisible(void * self_)
+XI_API bits32 __thiscall NetCellFont_SelectFirstVisible(void * self_)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   char xi_frame[4] __attribute__((aligned(4)));
-  undefined4  &local_4 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
   
-  local_4 = 1;
+  u2 = 1;
   if (((*(uint32_t *)((int)self_ + 0x34) & 0x10000) == 0) && (*(void **)((int)self_ + 4) != (void *)0x0))
   {
-    orig::NetCellFont_GetOffsets(*(void **)((int)self_ + 4),(uint16_t *)&local_4,(uint16_t *)((int)self_ + 0x4e));
-    if ((short)local_4 < 1) {
-      local_4 = 1;
+    orig::NetCellFont_GetOffsets(*(void **)((int)self_ + 4),(uint16_t *)&u2,(uint16_t *)((int)self_ + 0x4e));
+    if ((short)u2 < 1) {
+      u2 = 1;
     }
   }
-  uVar1 = orig::NetCellFont_SelectEntry(self_,local_4,local_4);
-  return (int)uVar1;
+  u1 = orig::NetCellFont_SelectEntry(self_,u2,u2);
+  return (int)u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10118B60
 // GATE: PASS -- 100 trials, 41 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 41
-XI_API undefined4 __thiscall NetCellFont_SetStateByIndex(void * self_, undefined4 param_1, int param_2)
+XI_API bits32 __thiscall NetCellFont_SetStateByIndex(void * self_, bits32 arg2, int arg3)
 {
-  short *this_00;
-  undefined4 uVar1;
-  uint64_t uVar2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  short *obj1;
+  bits32 u1;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-  uVar1 = 0;
-  if (local_4 != (void *)0x0) {
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  u1 = 0;
+  if (frame.p1 != (void *)0x0) {
     while( true ) {
-      uVar2 = orig::FUN_10126520((int *)&local_4);
-      this_00 = (short *)uVar2;
-      if ((*this_00 == 1) && (this_00[0x1d] == param_2)) break;
-      if (local_4 == (void *)0x0) {
+      u2 = orig::game_10126520((int *)&frame.p1);
+      obj1 = (short *)u2;
+      if ((*obj1 == 1) && (obj1[0x1d] == arg3)) break;
+      if (frame.p1 == (void *)0x0) {
         return 0;
       }
     }
-    uVar2 = orig::NetCellFont_SetState(this_00,param_1);
-    uVar1 = (undefined4)uVar2;
+    u2 = orig::NetCellFont_SetState(obj1,arg2);
+    u1 = (bits32)u2;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10118BC0
 // GATE: PASS -- 100 trials, 48 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 48
-XI_API undefined4 __thiscall NetCellFont_FindEntryValueById(void * self_, int param_1)
+XI_API bits32 __thiscall NetCellFont_FindEntryValueById(void * self_, int arg2)
 {
-  short *psVar1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  short *p1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  frame.p2 = self_;
+  frame.p2 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
   do {
-    if (local_4 == (void *)0x0) {
+    if (frame.p2 == (void *)0x0) {
       return 0;
     }
-    psVar1 = (short *)orig::FUN_10126520_v1((int *)&local_4);
-  } while ((*psVar1 != 1) || (psVar1[0x1d] != param_1));
-  return *(undefined4 *)(psVar1 + 8);
+    p1 = (short *)orig::game_10126520_v1((int *)&frame.p2);
+  } while ((*p1 != 1) || (p1[0x1d] != arg2));
+  return *(bits32 *)(p1 + 8);
 }
 
 // FUNCTION: FFXIMAIN 0x10118C10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall NetCellFont_HitTest(void * self_, uint32_t * param_1)
+XI_API uint32_t __thiscall NetCellFont_HitTest(void * self_, uint32_t * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = param_1[1];
-  if (((((int)*(short *)((int)self_ + 0x3c) <= (int)uVar1) &&
-       ((int)uVar1 <= (int)*(short *)((int)self_ + 0x40))) &&
-      (uVar1 = *param_1, (int)*(short *)((int)self_ + 0x3a) <= (int)uVar1)) &&
-     ((int)uVar1 <= (int)*(short *)((int)self_ + 0x3e))) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  u1 = arg2[1];
+  if (((((int)*(short *)((int)self_ + 0x3c) <= (int)u1) &&
+       ((int)u1 <= (int)*(short *)((int)self_ + 0x40))) &&
+      (u1 = *arg2, (int)*(short *)((int)self_ + 0x3a) <= (int)u1)) &&
+     ((int)u1 <= (int)*(short *)((int)self_ + 0x3e))) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
   }
-  return uVar1 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10118CB0
 // GATE: PASS -- 100 trials, 88 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 88
-XI_API undefined4 __thiscall NetCellFont_PickEntry(void * self_, int * param_1, int param_2)
+XI_API bits32 __thiscall NetCellFont_PickEntry(void * self_, int * arg2, int arg3)
 {
-  short *psVar1;
-  int iVar2;
-  uint64_t uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 0);
+  short *p1;
+  int i1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int i2; };   // at 0x0
+  } frame;
   
-  if ((!((long double)*(float *)(g_pCursor_as_s32 + 0x48) > (long double)0.0f)) &&
+  if ((!(*(float *)(g_pCursor_as_s32 + 0x48) > 0.0f)) &&
      (*(char *)(g_pCursor_as_s32 + 0x4e) != '\0')) {
-    local_4 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-    while (local_4 != 0) {
-      uVar3 = orig::FUN_10126520(&local_4);
-      psVar1 = (short *)uVar3;
-      if (*psVar1 == 1) {
-        *(uint8_t *)((int)psVar1 + 0x49) = 0;
-        iVar2 = (int)*(short *)(**(int **)(psVar1 + 6) + 0xe);
-        if ((psVar1[0x15] + iVar2 <= *param_1) &&
-           (*param_1 <= (int)psVar1[0x17] + (int)psVar1[0x15] + iVar2)) {
-          iVar2 = (int)*(short *)(**(int **)(psVar1 + 6) + 0x10);
-          if ((psVar1[0x16] + iVar2 <= param_1[1]) &&
-             (((param_1[1] <= (int)psVar1[0x18] + (int)psVar1[0x16] + iVar2 &&
-               (*(int *)(psVar1 + 8) != 0x10)) && (*(char *)((int)self_ + 0x77) != '\0')))) {
-            if (param_2 != 0) {
-              *(uint8_t *)param_2 = *(int *)(psVar1 + 8) != 5;
+    frame.i2 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+    while (frame.i2 != 0) {
+      u1 = orig::game_10126520(&frame.i2);
+      p1 = (short *)u1;
+      if (*p1 == 1) {
+        *(uint8_t *)((int)p1 + 0x49) = 0;
+        i1 = (int)*(short *)(**(int **)(p1 + 6) + 0xe);
+        if ((p1[0x15] + i1 <= *arg2) &&
+           (*arg2 <= (int)p1[0x17] + (int)p1[0x15] + i1)) {
+          i1 = (int)*(short *)(**(int **)(p1 + 6) + 0x10);
+          if ((p1[0x16] + i1 <= arg2[1]) &&
+             (((arg2[1] <= (int)p1[0x18] + (int)p1[0x16] + i1 &&
+               (*(int *)(p1 + 8) != 0x10)) && (*(char *)((int)self_ + 0x77) != '\0')))) {
+            if (arg3 != 0) {
+              *(uint8_t *)arg3 = *(int *)(p1 + 8) != 5;
             }
-            *(uint8_t *)((int)psVar1 + 0x49) = 1;
-            return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar3 >> 0x10)) << 16) | (uint16_t)(psVar1[0x1d])));
+            *(uint8_t *)((int)p1 + 0x49) = 1;
+            return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u1 >> 0x10)) << 16) | (uint16_t)(p1[0x1d])));
           }
         }
       }
@@ -7811,103 +7841,105 @@ XI_API undefined4 __thiscall NetCellFont_PickEntry(void * self_, int * param_1, 
 
 // FUNCTION: FFXIMAIN 0x10118DB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_SelectEntryMoveCursor(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2, undefined4 param_3)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_SelectEntryMoveCursor(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4, bits32 arg5)
 {
-  uint16_t uVar1;
-  long double fVar2;
-  uint16_t uVar4;
-  void *pvVar3;
-  undefined4 xi_eax_00;
-  uint8_t bVar5;
-  long double fVar6;
-  uint64_t uVar7;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&local_8)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  uint16_t u1;
+  long double f1;
+  uint16_t u2;
+  void *p1;
+  bits32 xi_eax_00;
+  uint8_t u3;
+  long double f2;
+  uint64_t u4;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i1[2]; };   // at 0x0
+  } frame;
   
-  if ((short)param_2 < 1) {
-    param_2 = 1;
+  if ((short)arg4 < 1) {
+    arg4 = 1;
   }
-  uVar4 = (uint16_t)((uint32_t)xi_eax >> 0x10);
-  if (*(short *)((int)self_ + 0x58) < (short)param_2) {
-    param_2 = ((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)(*(short *)((int)self_ + 0x58))));
+  u2 = (uint16_t)((uint32_t)xi_eax >> 0x10);
+  if (*(short *)((int)self_ + 0x58) < (short)arg4) {
+    arg4 = ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(*(short *)((int)self_ + 0x58))));
   }
-  if (*(short *)((int)self_ + 0x4c) != (short)param_2) {
-    uVar7 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)(uVar4) << 16) | (uint16_t)(*(short *)((int)self_ + 0x4c)))));
-    pvVar3 = (void *)uVar7;
-    if ((pvVar3 != (void *)0x0) &&
-       (*(uint8_t *)((int)pvVar3 + 0x24) = 0, *(int *)((int)pvVar3 + 0x10) != 5)) {
-      orig::NetCellFont_SetState(pvVar3,0);
+  if (*(short *)((int)self_ + 0x4c) != (short)arg4) {
+    u4 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(*(short *)((int)self_ + 0x4c)))));
+    p1 = (void *)u4;
+    if ((p1 != (void *)0x0) &&
+       (*(uint8_t *)((int)p1 + 0x24) = 0, *(int *)((int)p1 + 0x10) != 5)) {
+      orig::NetCellFont_SetState(p1,0);
     }
-    uVar7 = orig::FUN_101181d0(self_,param_2);
-    pvVar3 = (void *)uVar7;
-    if (pvVar3 != (void *)0x0) {
-      *(uint8_t *)((int)pvVar3 + 0x24) = 1;
-      if (*(int *)((int)pvVar3 + 0x10) != 5) {
-        orig::NetCellFont_SetState(pvVar3,3);
+    u4 = orig::game_101181D0(self_,arg4);
+    p1 = (void *)u4;
+    if (p1 != (void *)0x0) {
+      *(uint8_t *)((int)p1 + 0x24) = 1;
+      if (*(int *)((int)p1 + 0x10) != 5) {
+        orig::NetCellFont_SetState(p1,3);
       }
-      *(short *)((int)self_ + 0x4c) = (short)param_2;
-      orig::NetCellFont_AttachSelection(self_,param_2);
-      fVar6 = (long double)*(float *)((int)g_pCursor_as_v2 + 0x48);
-      fVar2 = (long double)0.0f;
-      bVar5 = NAN(fVar6) || NAN(fVar2);
-      uVar1 = (uint16_t)(bVar5 || fVar6 == fVar2);
-      if (((!(fVar6 >= fVar2)) || uVar1 != 0) &&
+      *(short *)((int)self_ + 0x4c) = (short)arg4;
+      orig::NetCellFont_AttachSelection(self_,arg4);
+      f2 = *(float *)((int)g_pCursor_as_v2 + 0x48);
+      f1 = 0.0f;
+      u3 = ((f2) != (f2)) || ((f1) != (f1));
+      u1 = (uint16_t)(u3 || f2 == f1);
+      if (((!(f2 >= f1)) || u1 != 0) &&
          (*(char *)((int)g_pCursor_as_v2 + 0x4e) != '\0')) {
-        orig::NetCellFont_MenuMoveSelection(self_,9,(uint32_t)((uint16_t)(((uint16_t)(uint8_t)((bVar5 || fVar6 < fVar2) |
-                                           (uint8_t)((uint16_t)(uVar1 << 0xe) >> 8)) << 8) | (uint8_t)(*(char *)((int)g_pCursor_as_v2 + 0x4e)))));
+        orig::NetCellFont_MenuMoveSelection(self_,9,(uint32_t)((uint16_t)(((uint16_t)(uint8_t)((u3 || f2 < f1) |
+                                           (uint8_t)((uint16_t)(u1 << 0xe) >> 8)) << 8) | (uint8_t)(*(char *)((int)g_pCursor_as_v2 + 0x4e)))));
       }
     }
-    if ((char)param_3 != '\0') {
-      xi_eax_00 = orig::NetCellFont_GetCenter(self_,local_8);
+    if ((char)arg5 != '\0') {
+      xi_eax_00 = orig::NetCellFont_GetCenter(self_,frame.i1);
       if ((char)xi_eax_00 != '\0') {
-        orig::Cursor_SetPosition_v1(g_pCursor_as_v2,local_8,18.0f,xi_eax_00);
+        orig::Cursor_SetPosition_v1(g_pCursor_as_v2,frame.i1,18.0f,xi_eax_00);
       }
     }
   }
-  uVar7 = orig::NetCellFont_MenuUpdateFocusedHelp(self_);
-  return (int)uVar7;
+  u4 = orig::NetCellFont_MenuUpdateFocusedHelp(self_);
+  return (int)u4;
 }
 
 // FUNCTION: FFXIMAIN 0x10118E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __attribute__((stdcall, regparm(3))) NetCellFont_SelectEntry(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2)
+XI_API uint64_t __attribute__((stdcall, regparm(3))) NetCellFont_SelectEntry(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4)
 {
-  uint16_t uVar2;
-  void *pvVar1;
-  uint64_t uVar3;
+  uint16_t u1;
+  void *p1;
+  uint64_t u2;
   
-  if ((short)param_2 < 1) {
-    param_2 = 1;
+  if ((short)arg4 < 1) {
+    arg4 = 1;
   }
-  uVar2 = (uint16_t)((uint32_t)xi_eax >> 0x10);
-  if (*(short *)((int)self_ + 0x58) < (short)param_2) {
-    param_2 = ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)(*(short *)((int)self_ + 0x58))));
+  u1 = (uint16_t)((uint32_t)xi_eax >> 0x10);
+  if (*(short *)((int)self_ + 0x58) < (short)arg4) {
+    arg4 = ((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(*(short *)((int)self_ + 0x58))));
   }
-  if (*(short *)((int)self_ + 0x4c) != (short)param_2) {
-    uVar3 = orig::FUN_101181d0(self_,((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)(*(short *)((int)self_ + 0x4c)))));
-    pvVar1 = (void *)uVar3;
-    if ((pvVar1 != (void *)0x0) &&
-       (*(uint8_t *)((int)pvVar1 + 0x24) = 0, *(int *)((int)pvVar1 + 0x10) != 5)) {
-      orig::NetCellFont_SetState(pvVar1,0);
+  if (*(short *)((int)self_ + 0x4c) != (short)arg4) {
+    u2 = orig::game_101181D0(self_,((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)(*(short *)((int)self_ + 0x4c)))));
+    p1 = (void *)u2;
+    if ((p1 != (void *)0x0) &&
+       (*(uint8_t *)((int)p1 + 0x24) = 0, *(int *)((int)p1 + 0x10) != 5)) {
+      orig::NetCellFont_SetState(p1,0);
     }
-    uVar3 = orig::FUN_101181d0(self_,param_2);
-    pvVar1 = (void *)uVar3;
-    if (pvVar1 != (void *)0x0) {
-      *(uint8_t *)((int)pvVar1 + 0x24) = 1;
-      if (*(int *)((int)pvVar1 + 0x10) != 5) {
-        orig::NetCellFont_SetState(pvVar1,3);
+    u2 = orig::game_101181D0(self_,arg4);
+    p1 = (void *)u2;
+    if (p1 != (void *)0x0) {
+      *(uint8_t *)((int)p1 + 0x24) = 1;
+      if (*(int *)((int)p1 + 0x10) != 5) {
+        orig::NetCellFont_SetState(p1,3);
       }
-      *(short *)((int)self_ + 0x4c) = (short)param_2;
-      orig::NetCellFont_AttachSelection(self_,param_2);
+      *(short *)((int)self_ + 0x4c) = (short)arg4;
+      orig::NetCellFont_AttachSelection(self_,arg4);
     }
   }
-  uVar3 = orig::NetCellFont_MenuUpdateFocusedHelp(self_);
-  return uVar3;
+  u2 = orig::NetCellFont_MenuUpdateFocusedHelp(self_);
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10118F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_SetChildOwner(void * self_, undefined4 xi_s1)
+XI_API void __thiscall NetCellFont_SetChildOwner(void * self_, bits32 xi_s1)
 {
   *(void **)(*(int *)((int)self_ + 0xc) + 8) = self_;
   return;
@@ -7915,15 +7947,15 @@ XI_API void __thiscall NetCellFont_SetChildOwner(void * self_, undefined4 xi_s1)
 
 // FUNCTION: FFXIMAIN 0x10118F30
 // GATE: PASS -- 100 trials, 14 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 14
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_CallMember0CSlot2(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_CallMember0CSlot2(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
   if (*(int **)((int)self_ + 0xc) != (int *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x10118f39. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    uVar1 = (**(code **)(**(int **)((int)self_ + 0xc) + 8))();
-    return uVar1;
+    u1 = (**(untyped_fn **)(**(int **)((int)self_ + 0xc) + 8))();
+    return u1;
   }
   return xi_eax;
 }
@@ -7932,45 +7964,47 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_CallMember0CS
 // GATE: PASS -- 100 trials, 100 returned normally, 86 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_FreeChild(void * self_)
 {
-  int *this_00;
+  int *obj1;
   
-  this_00 = *(int **)((int)self_ + 0xc);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *))((**(code **)(*this_00 + 0xc))))((void *)(this_00));
-    *(undefined4 *)(*(int *)((int)self_ + 0xc) + 8) = 0;
-    *(undefined4 *)((int)self_ + 0xc) = 0;
+  obj1 = *(int **)((int)self_ + 0xc);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *))((**(untyped_fn **)(*obj1 + 0xc))))((void *)(obj1));
+    *(bits32 *)(*(int *)((int)self_ + 0xc) + 8) = 0;
+    *(bits32 *)((int)self_ + 0xc) = 0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10118F70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_GetRect(void * self_, undefined4 * param_1)
+XI_API uint64_t __thiscall NetCellFont_GetRect(void * self_, bits32 * arg2)
 {
-  undefined4 uVar1;
-  int64_t lVar2;
-  char xi_frame[12] __attribute__((aligned(4)));
-  float  &local_c = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 4);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 8);
+  bits32 u1;
+  int64_t i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[12];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f2; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int i2; };   // at 0x8
+  } frame;
   
   if (*(char *)((int)self_ + 0x99) != '\0') {
-    orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,&local_c,&local_8);
-    local_4 = (int)*(short *)((int)self_ + 0x3a);
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)local_4 * (long double)local_c);
-    *(short *)param_1 = (short)lVar2;
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)((int)self_ + 0x3c) * (long double)local_8);
-    *(short *)((int)param_1 + 2) = (short)lVar2;
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)((int)self_ + 0x3e) * (long double)local_c);
-    *(short *)(param_1 + 1) = (short)lVar2;
-    lVar2 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)((int)self_ + 0x3a) * (long double)local_8);
-    *(short *)((int)param_1 + 6) = (short)lVar2;
-    return lVar2;
+    orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,&frame.f1,&frame.f2);
+    frame.i2 = (int)*(short *)((int)self_ + 0x3a);
+    i1 = XI_CALL_ST0(0x10311C2Cu)(frame.i2 * frame.f1);
+    *(short *)arg2 = (short)i1;
+    i1 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)((int)self_ + 0x3c) * frame.f2);
+    *(short *)((int)arg2 + 2) = (short)i1;
+    i1 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)((int)self_ + 0x3e) * frame.f1);
+    *(short *)(arg2 + 1) = (short)i1;
+    i1 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)((int)self_ + 0x3a) * frame.f2);
+    *(short *)((int)arg2 + 6) = (short)i1;
+    return i1;
   }
-  *param_1 = *(undefined4 *)((int)self_ + 0x3a);
-  uVar1 = *(undefined4 *)((int)self_ + 0x3e);
-  param_1[1] = uVar1;
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar1) << 32) | (uint32_t)(param_1)));
+  *arg2 = *(bits32 *)((int)self_ + 0x3a);
+  u1 = *(bits32 *)((int)self_ + 0x3e);
+  arg2[1] = u1;
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(arg2)));
 }
 
 // FUNCTION: FFXIMAIN 0x101190F0
@@ -7985,68 +8019,70 @@ XI_API void __thiscall NetCellFont_SetState10ForIndex58(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10119200
 // GATE: PASS -- 100 trials, 66 returned normally, 49 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 66
-XI_API void __thiscall NetCellFont_SetActive(void * self_, uint32_t param_1)
+XI_API void __thiscall NetCellFont_SetActive(void * self_, uint32_t arg2)
 {
-  int *this_00;
+  int *obj1;
   int xi_eax;
-  short *this_01;
-  uint64_t uVar1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  short *obj2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
   do {
-    this_01 = (short *)0x0;
-    if (local_4 == (void *)0x0) break;
-    uVar1 = orig::FUN_10126520((int *)&local_4);
-    this_01 = (short *)uVar1;
-  } while (*this_01 != 0);
+    obj2 = (short *)0x0;
+    if (frame.p1 == (void *)0x0) break;
+    u1 = orig::game_10126520((int *)&frame.p1);
+    obj2 = (short *)u1;
+  } while (*obj2 != 0);
   xi_eax = g_pTargetMng_as_s32;
-  if ((param_1 & 0xff) == 0) {
+  if ((arg2 & 0xff) == 0) {
     *(uint8_t *)(g_pTargetMng_as_s32 + 0x74) = *(uint8_t *)(g_pTargetMng_as_s32 + 0x74) & 0xfe;
-    orig::FUN_1011a560(self_,xi_eax);
+    orig::game_1011A560(self_,xi_eax);
   }
-  else if ((param_1 & 0xff) == 1) {
-    if (this_01 != (short *)0x0) {
-      orig::NetCellFont_ClearField34(this_01);
+  else if ((arg2 & 0xff) == 1) {
+    if (obj2 != (short *)0x0) {
+      orig::NetCellFont_ClearField34(obj2);
     }
     orig::NetCellFont_ApplyHelpAndTitle(self_);
     *(uint8_t *)(g_pTargetMng_as_s32 + 0x74) = *(uint8_t *)(g_pTargetMng_as_s32 + 0x74) | 1;
     orig::NetCellFont_MenuUpdateFocusedHelp(self_);
   }
-  this_00 = *(int **)((int)self_ + 0xc);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x24))))((void *)(this_00),param_1);
+  obj1 = *(int **)((int)self_ + 0xc);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x24))))((void *)(obj1),arg2);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101192B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_ClearEntryFlags(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall NetCellFont_ClearEntryFlags(void * self_, bits32 arg2, bits32 arg3)
 {
-  short *psVar1;
+  short *p1;
   
-  psVar1 = orig::FUN_101181d0_v1(self_,param_1);
-  if ((psVar1 != (short *)0x0) && (*(uint8_t *)(psVar1 + 0x1e) = 0, (char)param_2 == '\0')) {
-    *(uint8_t *)(psVar1 + 0x25) = 0;
+  p1 = orig::game_101181D0_v1(self_,arg2);
+  if ((p1 != (short *)0x0) && (*(uint8_t *)(p1 + 0x1e) = 0, (char)arg3 == '\0')) {
+    *(uint8_t *)(p1 + 0x25) = 0;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101192E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_MarkDirty(void * self_, undefined4 param_1)
+XI_API void __thiscall NetCellFont_MarkDirty(void * self_, bits32 arg2)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   
-  uVar2 = orig::FUN_101181d0(self_,param_1);
-  iVar1 = (int)uVar2;
-  if (iVar1 != 0) {
-    *(uint8_t *)(iVar1 + 0x3c) = 1;
-    *(uint8_t *)(iVar1 + 0x4a) = 1;
+  u1 = orig::game_101181D0(self_,arg2);
+  i1 = (int)u1;
+  if (i1 != 0) {
+    *(uint8_t *)(i1 + 0x3c) = 1;
+    *(uint8_t *)(i1 + 0x4a) = 1;
   }
   return;
 }
@@ -8059,25 +8095,25 @@ XI_API void * __thiscall NetCellFont_InitScaled(void * self_)
   *(uint16_t *)self_ = 0;
   *(uint16_t *)((int)self_ + 0x1c) = 0;
   *(uint16_t *)((int)self_ + 0x1a) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0x44) = 0;
-  *(undefined4 *)((int)self_ + 0x48) = 0;
-  *(undefined4 *)((int)self_ + 4) = 0;
+  *(bits32 *)((int)self_ + 0x48) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
   *(uint16_t *)((int)self_ + 0x22) = 0;
   *(uint16_t *)((int)self_ + 0x24) = 0;
   *(uint16_t *)((int)self_ + 0x26) = 0;
-  *(undefined4 *)((int)self_ + 0x28) = 0;
-  *(undefined4 *)((int)self_ + 0x2c) = 0;
-  *(undefined4 *)((int)self_ + 0x30) = 0;
-  *(undefined4 *)((int)self_ + 0x34) = 0;
-  *(undefined4 *)((int)self_ + 0x38) = 0;
-  *(undefined4 *)((int)self_ + 0x3c) = 0;
-  *(undefined4 *)((int)self_ + 0x40) = 0;
+  *(bits32 *)((int)self_ + 0x28) = 0;
+  *(bits32 *)((int)self_ + 0x2c) = 0;
+  *(bits32 *)((int)self_ + 0x30) = 0;
+  *(bits32 *)((int)self_ + 0x34) = 0;
+  *(bits32 *)((int)self_ + 0x38) = 0;
+  *(bits32 *)((int)self_ + 0x3c) = 0;
+  *(bits32 *)((int)self_ + 0x40) = 0;
   *(uint8_t *)((int)self_ + 0x4c) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x10) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x14) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0xc) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x10) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x14) = 0x3f800000;
   return self_;
 }
 
@@ -8087,7 +8123,7 @@ XI_API void __thiscall NetCellFont_FreeEntryData(void * self_)
 {
   if (*(LPVOID *)((int)self_ + 4) != (LPVOID)0x0) {
     orig::operator_delete_v1(*(LPVOID *)((int)self_ + 4));
-    *(undefined4 *)((int)self_ + 4) = 0;
+    *(bits32 *)((int)self_ + 4) = 0;
   }
   orig::NetCellFont_NoOp();
   return;
@@ -8097,15 +8133,15 @@ XI_API void __thiscall NetCellFont_FreeEntryData(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ClearField34(void * self_)
 {
-  *(undefined4 *)((int)self_ + 0x34) = 0;
+  *(bits32 *)((int)self_ + 0x34) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101193A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_StartFade(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_StartFade(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  *(uint16_t *)((int)self_ + 0x26) = DAT_1036c190;
+  *(uint16_t *)((int)self_ + 0x26) = g_1036C190;
   return;
 }
 
@@ -8119,162 +8155,162 @@ XI_API void __thiscall NetCellFont_StopFade(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101193D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_SetSource(void * self_, int * param_1)
+XI_API bits32 __thiscall NetCellFont_SetSource(void * self_, int * arg2)
 {
-  int iVar1;
+  int i1;
   
-  *(int **)((int)self_ + 0x30) = param_1;
-  *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(*param_1 + 10);
-  iVar1 = *param_1;
-  *(uint16_t *)((int)self_ + 0x24) = *(uint16_t *)(iVar1 + 0xc);
-  return iVar1;
+  *(int **)((int)self_ + 0x30) = arg2;
+  *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(*arg2 + 10);
+  i1 = *arg2;
+  *(uint16_t *)((int)self_ + 0x24) = *(uint16_t *)(i1 + 0xc);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101193F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_ComputeRect(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __thiscall NetCellFont_ComputeRect(void * self_, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  char cVar1;
-  int *piVar2;
-  short sVar3;
-  int iVar4;
-  int64_t lVar5;
+  char c1;
+  int *p1;
+  short i1;
+  int i2;
+  int64_t i3;
   char xi_frame[20] __attribute__((aligned(4)));
-  float  &local_14 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_10 = *reinterpret_cast<float  *>(xi_frame + 4);
-  undefined4  &local_c = *reinterpret_cast<undefined4  *>(xi_frame + 8);
-  short  &local_8 = *reinterpret_cast<short  *>(xi_frame + 12);
-  short  &sStack_6 = *reinterpret_cast<short  *>(xi_frame + 14);
+  float  &f1 = *reinterpret_cast<float  *>(xi_frame + 0);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 4);
+  bits32  &u1 = *reinterpret_cast<bits32  *>(xi_frame + 8);
+  short  &i4 = *reinterpret_cast<short  *>(xi_frame + 12);
+  short  &i5 = *reinterpret_cast<short  *>(xi_frame + 14);
   
-  iVar4 = 0;
+  i2 = 0;
   if (*(int *)((int)self_ + 0x30) != 0) {
-    local_14 = 1.0f;
-    local_10 = 1.0f;
-    if ((char)param_3 != '\0') {
-      orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,&local_14,&local_10);
+    f1 = 1.0f;
+    f2 = 1.0f;
+    if ((char)arg4 != '\0') {
+      orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,&f1,&f2);
     }
-    piVar2 = *(int **)((int)self_ + 0x30);
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)(*piVar2 + 2) * (long double)local_14);
-    *(short *)((int)self_ + 0x1a) = (short)lVar5 + (short)param_1;
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)(*piVar2 + 4) * (long double)local_10);
-    *(short *)((int)self_ + 0x1c) = (short)lVar5 + (short)param_2;
-    local_c = g_screenRectTopLeft_as_v1;
-    local_8 = (short)g_screenRectBottomRight_as_v1;
-    sVar3 = local_8;
-    sStack_6 = (short)((uint32_t)g_screenRectBottomRight_as_v1 >> 0x10);
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)(*piVar2 + 2) * (long double)local_14);
-    *(short *)((int)self_ + 0x1e) = (short)lVar5;
-    lVar5 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)(*piVar2 + 4) * (long double)local_10);
-    *(short *)((int)self_ + 0x20) = (short)lVar5;
-    cVar1 = *(char *)(*piVar2 + 0x13);
-    if (cVar1 == '\x01') {
-      *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + sVar3 + -0x200;
-      *(short *)((int)self_ + 0x1e) = *(short *)((int)self_ + 0x1e) + sVar3 + -0x200;
+    p1 = *(int **)((int)self_ + 0x30);
+    i3 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)(*p1 + 2) * f1);
+    *(short *)((int)self_ + 0x1a) = (short)i3 + (short)arg2;
+    i3 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)(*p1 + 4) * f2);
+    *(short *)((int)self_ + 0x1c) = (short)i3 + (short)arg3;
+    u1 = g_screenRectTopLeft_as_v1;
+    i4 = (short)g_screenRectBottomRight_as_v1;
+    i1 = i4;
+    i5 = (short)((uint32_t)g_screenRectBottomRight_as_v1 >> 0x10);
+    i3 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)(*p1 + 2) * f1);
+    *(short *)((int)self_ + 0x1e) = (short)i3;
+    i3 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)(*p1 + 4) * f2);
+    *(short *)((int)self_ + 0x20) = (short)i3;
+    c1 = *(char *)(*p1 + 0x13);
+    if (c1 == '\x01') {
+      *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + i1 + -0x200;
+      *(short *)((int)self_ + 0x1e) = *(short *)((int)self_ + 0x1e) + i1 + -0x200;
     }
-    else if (cVar1 == '\x02') {
-      *(short *)((int)self_ + 0x1c) = *(short *)((int)self_ + 0x1c) + sStack_6 + -0x1c0;
-      *(short *)((int)self_ + 0x20) = *(short *)((int)self_ + 0x20) + sStack_6 + -0x1c0;
+    else if (c1 == '\x02') {
+      *(short *)((int)self_ + 0x1c) = *(short *)((int)self_ + 0x1c) + i5 + -0x1c0;
+      *(short *)((int)self_ + 0x20) = *(short *)((int)self_ + 0x20) + i5 + -0x1c0;
     }
-    else if (cVar1 == '\x03') {
-      *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + sVar3 + -0x200;
-      *(short *)((int)self_ + 0x1e) = *(short *)((int)self_ + 0x1e) + sVar3 + -0x200;
-      *(short *)((int)self_ + 0x1c) = *(short *)((int)self_ + 0x1c) + sStack_6 + -0x1c0;
-      *(short *)((int)self_ + 0x20) = *(short *)((int)self_ + 0x20) + sStack_6 + -0x1c0;
+    else if (c1 == '\x03') {
+      *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + i1 + -0x200;
+      *(short *)((int)self_ + 0x1e) = *(short *)((int)self_ + 0x1e) + i1 + -0x200;
+      *(short *)((int)self_ + 0x1c) = *(short *)((int)self_ + 0x1c) + i5 + -0x1c0;
+      *(short *)((int)self_ + 0x20) = *(short *)((int)self_ + 0x20) + i5 + -0x1c0;
     }
-    *(undefined4 *)((int)self_ + 0x28) = 0;
-    iVar4 = piVar2[2];
-    if (iVar4 != 0) {
-      *(int *)((int)self_ + 0x28) = iVar4;
+    *(bits32 *)((int)self_ + 0x28) = 0;
+    i2 = p1[2];
+    if (i2 != 0) {
+      *(int *)((int)self_ + 0x28) = i2;
     }
-    *(undefined4 *)((int)self_ + 0x2c) = 0;
-    if (piVar2[3] != 0) {
-      *(int *)((int)self_ + 0x2c) = piVar2[3];
+    *(bits32 *)((int)self_ + 0x2c) = 0;
+    if (p1[3] != 0) {
+      *(int *)((int)self_ + 0x2c) = p1[3];
     }
   }
-  return iVar4;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10119550
 // GATE: PASS -- 100 trials, 79 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 79
-XI_API void __thiscall NetCellFont_UpdateLayout(void * self_, float param_1)
+XI_API void __thiscall NetCellFont_UpdateLayout(void * self_, float arg2)
 {
-  char cVar1;
-  short sVar2;
-  void *this_00;
-  int *piVar3;
-  int iVar4;
-  undefined4 uVar5;
-  int iVar6;
-  short *psVar7;
-  long double fVar8;
-  int64_t lVar9;
-  uint64_t uVar10;
+  char c1;
+  short i1;
+  void *obj1;
+  int *p1;
+  int i2;
+  bits32 u1;
+  int i3;
+  short *p2;
+  long double f1;
+  int64_t i4;
+  uint64_t u2;
   char xi_frame[40] __attribute__((aligned(4)));
-  float  &local_28 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int  &local_24 = *reinterpret_cast<int  *>(xi_frame + 4);
-  undefined4  &local_20 = *reinterpret_cast<undefined4  *>(xi_frame + 8);
-  undefined4  &local_1c = *reinterpret_cast<undefined4  *>(xi_frame + 12);
-  undefined4  &local_18 = *reinterpret_cast<undefined4  *>(xi_frame + 16);
-  undefined4  &local_14 = *reinterpret_cast<undefined4  *>(xi_frame + 20);
-  uint8_t  &local_10 = *reinterpret_cast<uint8_t  *>(xi_frame + 24);
+  float  &f2 = *reinterpret_cast<float  *>(xi_frame + 0);
+  int  &i5 = *reinterpret_cast<int  *>(xi_frame + 4);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 8);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 12);
+  bits32  &u5 = *reinterpret_cast<bits32  *>(xi_frame + 16);
+  bits32  &u6 = *reinterpret_cast<bits32  *>(xi_frame + 20);
+  uint8_t  &u7 = *reinterpret_cast<uint8_t  *>(xi_frame + 24);
   
-  piVar3 = *(int **)((int)self_ + 0x30);
-  if (piVar3 == (int *)0x0) {
+  p1 = *(int **)((int)self_ + 0x30);
+  if (p1 == (int *)0x0) {
     return;
   }
-  cVar1 = XI_PIECE_S(param_1, 0, 1);
+  c1 = XI_PIECE_S(arg2, 0, 1);
   if (*(int *)((int)self_ + 4) == 0) {
-    *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(*piVar3 + 10);
-    *(uint16_t *)((int)self_ + 0x24) = *(uint16_t *)(*piVar3 + 0xc);
-    if (XI_PIECE(param_1, 0, 1) != '\0') {
-      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&param_1,&local_28);
-      piVar3 = *(int **)((int)self_ + 0x30);
-      local_24 = (int)*(short *)(*piVar3 + 10);
-      lVar9 = XI_CALL_ST0(0x10311C2Cu)((long double)local_24 * (long double)param_1);
-      *(short *)((int)self_ + 0x22) = (short)lVar9;
-      local_24 = (int)*(short *)(*piVar3 + 0xc);
-      lVar9 = XI_CALL_ST0(0x10311C2Cu)((long double)local_24 * (long double)local_28);
-      *(short *)((int)self_ + 0x24) = (short)lVar9;
+    *(uint16_t *)((int)self_ + 0x22) = *(uint16_t *)(*p1 + 10);
+    *(uint16_t *)((int)self_ + 0x24) = *(uint16_t *)(*p1 + 0xc);
+    if (XI_PIECE(arg2, 0, 1) != '\0') {
+      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&arg2,&f2);
+      p1 = *(int **)((int)self_ + 0x30);
+      i5 = (int)*(short *)(*p1 + 10);
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)i5 * (long double)arg2);
+      *(short *)((int)self_ + 0x22) = (short)i4;
+      i5 = (int)*(short *)(*p1 + 0xc);
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)i5 * (long double)f2);
+      *(short *)((int)self_ + 0x24) = (short)i4;
     }
-    uVar10 = orig::Allocator_Generic_v1(0xc);
-    this_00 = (void *)uVar10;
-    *(void **)((int)self_ + 4) = this_00;
-    if (this_00 == (void *)0x0) {
+    u2 = orig::Allocator_Generic_v1(0xc);
+    obj1 = (void *)u2;
+    *(void **)((int)self_ + 4) = obj1;
+    if (obj1 == (void *)0x0) {
       return;
     }
-    orig::MenuPanels_SetPair(this_00,(int)*(short *)((int)self_ + 0x22),(int)*(short *)((int)self_ + 0x24));
+    orig::MenuPanels_SetPair(obj1,(int)*(short *)((int)self_ + 0x22),(int)*(short *)((int)self_ + 0x24));
   }
   else {
-    if (XI_PIECE(param_1, 0, 1) != '\0') {
-      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&param_1,&local_28);
-      piVar3 = *(int **)((int)self_ + 0x30);
-      local_24 = (int)*(short *)(*piVar3 + 10);
-      lVar9 = XI_CALL_ST0(0x10311C2Cu)((long double)local_24 * (long double)param_1);
-      *(short *)((int)self_ + 0x22) = (short)lVar9;
-      local_24 = (int)*(short *)(*piVar3 + 0xc);
-      lVar9 = XI_CALL_ST0(0x10311C2Cu)((long double)local_24 * (long double)local_28);
-      *(short *)((int)self_ + 0x24) = (short)lVar9;
+    if (XI_PIECE(arg2, 0, 1) != '\0') {
+      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&arg2,&f2);
+      p1 = *(int **)((int)self_ + 0x30);
+      i5 = (int)*(short *)(*p1 + 10);
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)i5 * (long double)arg2);
+      *(short *)((int)self_ + 0x22) = (short)i4;
+      i5 = (int)*(short *)(*p1 + 0xc);
+      i4 = XI_CALL_ST0(0x10311C2Cu)((long double)i5 * (long double)f2);
+      *(short *)((int)self_ + 0x24) = (short)i4;
     }
     **(int **)((int)self_ + 4) = (int)*(short *)((int)self_ + 0x22);
     *(int *)(*(int *)((int)self_ + 4) + 4) = (int)*(short *)((int)self_ + 0x24);
   }
   if (*(short *)((int)self_ + 0x26) < 1) {
-    *(undefined4 *)((int)self_ + 0x10) = 0x3f800000;
-    *(undefined4 *)((int)self_ + 0x14) = 0x3f800000;
-    if (cVar1 != '\0') {
-      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&param_1,&local_28);
+    *(bits32 *)((int)self_ + 0x10) = 0x3f800000;
+    *(bits32 *)((int)self_ + 0x14) = 0x3f800000;
+    if (c1 != '\0') {
+      orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,&arg2,&f2);
       *(float *)((int)self_ + 0x10) =
-           (float)((long double)param_1 * (long double)*(float *)((int)self_ + 0x10));
+           (float)((long double)arg2 * (long double)*(float *)((int)self_ + 0x10));
       *(float *)((int)self_ + 0x14) =
-           (float)((long double)local_28 * (long double)*(float *)((int)self_ + 0x14));
+           (float)((long double)f2 * (long double)*(float *)((int)self_ + 0x14));
     }
     if (0 < *(int *)((int)self_ + 0x48)) {
-      fVar8 = orig::Camera_GetFrameScale_v2();
-      lVar9 = XI_CALL_ST0(0x10311C2Cu)(fVar8);
-      iVar6 = *(int *)((int)self_ + 0x48) - (int)(short)lVar9;
-      *(int *)((int)self_ + 0x48) = iVar6;
-      if (iVar6 < 1) {
-        *(undefined4 *)((int)self_ + 0x48) = 0;
+      f1 = orig::Camera_GetFrameScale_v2();
+      i4 = XI_CALL_ST0(0x10311C2Cu)(f1);
+      i3 = *(int *)((int)self_ + 0x48) - (int)(short)i4;
+      *(int *)((int)self_ + 0x48) = i3;
+      if (i3 < 1) {
+        *(bits32 *)((int)self_ + 0x48) = 0;
         if (*(char *)((int)self_ + 0x44) == '\x02') {
           *(uint8_t *)((int)self_ + 0x44) = 1;
         }
@@ -8283,81 +8319,81 @@ XI_API void __thiscall NetCellFont_UpdateLayout(void * self_, float param_1)
         }
       }
     }
-    cVar1 = *(char *)((int)self_ + 0x44);
-    if (cVar1 == '\x01') {
-      *(undefined4 *)((int)self_ + 0xc) = 0;
+    c1 = *(char *)((int)self_ + 0x44);
+    if (c1 == '\x01') {
+      *(bits32 *)((int)self_ + 0xc) = 0;
     }
     else {
-      if (cVar1 == '\x02') {
-        fVar8 = (long double)*(int *)((int)self_ + 0x48) * (long double)0.0500000007450580596923828125f;
+      if (c1 == '\x02') {
+        f1 = (long double)*(int *)((int)self_ + 0x48) * (long double)0.0500000007450580596923828125f;
       }
       else {
-        if (cVar1 != '\x03') {
+        if (c1 != '\x03') {
           if (*(char *)((int)self_ + 0x4c) == '\0') {
-            *(undefined4 *)((int)self_ + 0xc) = 0x3f800000;
+            *(bits32 *)((int)self_ + 0xc) = 0x3f800000;
           }
           else {
-            *(undefined4 *)((int)self_ + 0xc) = 0x3f147ae1;
+            *(bits32 *)((int)self_ + 0xc) = 0x3f147ae1;
           }
-          goto LAB_1011979c;
+          goto code_1011979C;
         }
-        fVar8 = (long double)1.0f - (long double)*(int *)((int)self_ + 0x48) * (long double)0.0500000007450580596923828125f;
+        f1 = (long double)1.0f - (long double)*(int *)((int)self_ + 0x48) * (long double)0.0500000007450580596923828125f;
       }
-      *(float *)((int)self_ + 0xc) = (float)fVar8;
-      if (fVar8 > (long double)1.0f) {
-        *(undefined4 *)((int)self_ + 0xc) = 0x3f666666;
+      *(float *)((int)self_ + 0xc) = (float)f1;
+      if (f1 > (long double)1.0f) {
+        *(bits32 *)((int)self_ + 0xc) = 0x3f666666;
       }
     }
   }
   else {
-    fVar8 = orig::Camera_GetFrameScale_v2();
-    lVar9 = XI_CALL_ST0(0x10311C2Cu)(fVar8);
-    *(short *)((int)self_ + 0x26) = *(short *)((int)self_ + 0x26) - (short)lVar9;
+    f1 = orig::Camera_GetFrameScale_v2();
+    i4 = XI_CALL_ST0(0x10311C2Cu)(f1);
+    *(short *)((int)self_ + 0x26) = *(short *)((int)self_ + 0x26) - (short)i4;
     if (*(short *)((int)self_ + 0x26) < 0) {
       *(uint16_t *)((int)self_ + 0x26) = 0;
     }
-    fVar8 = (long double)(DAT_1036c190_as_s32 - *(short *)((int)self_ + 0x26)) / (long double)DAT_1036c190_as_s32;
-    *(float *)((int)self_ + 0xc) = (float)fVar8;
-    *(float *)((int)self_ + 0x14) = (float)fVar8;
-    *(float *)((int)self_ + 0x10) = (float)fVar8;
+    f1 = (long double)(g_1036C190_as_s32 - *(short *)((int)self_ + 0x26)) / (long double)g_1036C190_as_s32;
+    *(float *)((int)self_ + 0xc) = (float)f1;
+    *(float *)((int)self_ + 0x14) = (float)f1;
+    *(float *)((int)self_ + 0x10) = (float)f1;
     if ((long double)*(float *)((int)self_ + 0xc) > (long double)1.0f) {
-      *(undefined4 *)((int)self_ + 0xc) = 0x3f800000;
-      *(undefined4 *)((int)self_ + 0x14) = 0x3f800000;
-      *(undefined4 *)((int)self_ + 0x10) = 0x3f800000;
+      *(bits32 *)((int)self_ + 0xc) = 0x3f800000;
+      *(bits32 *)((int)self_ + 0x14) = 0x3f800000;
+      *(bits32 *)((int)self_ + 0x10) = 0x3f800000;
     }
   }
-LAB_1011979c:
+code_1011979C:
   if ((*(int *)((int)self_ + 0x38) != *(int *)((int)self_ + 0x34)) || (*(int *)((int)self_ + 8) == 0))
   {
     *(int *)((int)self_ + 0x38) = *(int *)((int)self_ + 0x34);
-    piVar3 = *(int **)((int)self_ + 0x30);
-    iVar6 = 0;
-    if (*(char *)(*piVar3 + 0x14) != '\0') {
-      local_24 = 0;
+    p1 = *(int **)((int)self_ + 0x30);
+    i3 = 0;
+    if (*(char *)(*p1 + 0x14) != '\0') {
+      i5 = 0;
       do {
-        psVar7 = (short *)(piVar3[1] + local_24);
-        if ((psVar7 != (short *)0x0) &&
-           ((*psVar7 == 0 ||
-            (iVar4 = orig::NetCellFont_MapKind119870(*(undefined4 *)((int)self_ + 0x34)), *psVar7 == iVar4)))) {
-          sVar2 = psVar7[1];
-          local_10 = 0;
-          local_20 = *(undefined4 *)(psVar7 + 2);
-          local_1c = *(undefined4 *)(psVar7 + 4);
-          local_18 = *(undefined4 *)(psVar7 + 6);
-          local_14 = *(undefined4 *)(psVar7 + 8);
-          if (*(int *)(psVar7 + 0xc) == 0) {
-            uVar5 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,&local_20);
-            *(undefined4 *)(psVar7 + 0xc) = uVar5;
+        p2 = (short *)(p1[1] + i5);
+        if ((p2 != (short *)0x0) &&
+           ((*p2 == 0 ||
+            (i2 = orig::NetCellFont_MapKind119870(*(bits32 *)((int)self_ + 0x34)), *p2 == i2)))) {
+          i1 = p2[1];
+          u7 = 0;
+          u3 = *(bits32 *)(p2 + 2);
+          u4 = *(bits32 *)(p2 + 4);
+          u5 = *(bits32 *)(p2 + 6);
+          u6 = *(bits32 *)(p2 + 8);
+          if (*(int *)(p2 + 0xc) == 0) {
+            u1 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,&u3);
+            *(bits32 *)(p2 + 0xc) = u1;
           }
-          if (*(int **)(psVar7 + 0xc) == (int *)0x0) {
+          if (*(int **)(p2 + 0xc) == (int *)0x0) {
             return;
           }
-          *(undefined4 *)((int)self_ + 8) = *(undefined4 *)(**(int **)(psVar7 + 0xc) + sVar2 * 4);
+          *(bits32 *)((int)self_ + 8) = *(bits32 *)(**(int **)(p2 + 0xc) + i1 * 4);
         }
-        piVar3 = *(int **)((int)self_ + 0x30);
-        local_24 = local_24 + 0x1c;
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < (int)(uint32_t)*(uint8_t *)(*piVar3 + 0x14));
+        p1 = *(int **)((int)self_ + 0x30);
+        i5 = i5 + 0x1c;
+        i3 = i3 + 1;
+      } while (i3 < (int)(uint32_t)*(uint8_t *)(*p1 + 0x14));
     }
   }
   return;
@@ -8365,9 +8401,9 @@ LAB_1011979c:
 
 // FUNCTION: FFXIMAIN 0x10119870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_MapKind119870(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_MapKind119870(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0:
     return 0;
   case 1:
@@ -8387,7 +8423,7 @@ XI_API undefined4 __cdecl NetCellFont_MapKind119870(undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x101198D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall NetCellFont_LayoutCtor(void * self_, undefined4 param_1)
+XI_API void * __thiscall NetCellFont_LayoutCtor(void * self_, bits32 arg2)
 {
   orig::NetCellFont_ClearWords(self_);
   *(uint16_t *)((int)self_ + 0x32) = 0;
@@ -8395,70 +8431,70 @@ XI_API void * __thiscall NetCellFont_LayoutCtor(void * self_, undefined4 param_1
   *(uint16_t *)((int)self_ + 0x36) = 0;
   *(uint16_t *)((int)self_ + 0x38) = 0;
   orig::NetCellFont_SetPair((void *)((int)self_ + 0x54),1,self_);
-  *(undefined4 *)((int)self_ + 0x5c) = param_1;
+  *(bits32 *)((int)self_ + 0x5c) = arg2;
   *(uint16_t *)self_ = 1;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
   *(uint8_t *)((int)self_ + 0x24) = 0;
   *(uint16_t *)((int)self_ + 0x26) = 0;
   *(uint16_t *)((int)self_ + 0x2e) = 0;
   *(uint16_t *)((int)self_ + 0x30) = 0;
   *(uint16_t *)((int)self_ + 0x3a) = 0;
-  *(undefined4 *)((int)self_ + 0x40) = 0;
-  *(undefined4 *)((int)self_ + 0x44) = 0;
+  *(bits32 *)((int)self_ + 0x40) = 0;
+  *(bits32 *)((int)self_ + 0x44) = 0;
   orig::NetCellFont_SetState(self_,0);
   *(uint16_t *)((int)self_ + 0x28) = 0xffff;
-  *(undefined4 *)((int)self_ + 0x20) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x1c) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x20) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x1c) = 0x3f800000;
   *(uint16_t *)((int)self_ + 0x2c) = 0;
   *(uint16_t *)((int)self_ + 0x2a) = 0;
-  *(undefined4 *)((int)self_ + 0x10) = 0;
-  *(undefined4 *)((int)self_ + 0x14) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0x18) = 0;
   *(uint8_t *)((int)self_ + 0x3c) = 1;
   *(uint8_t *)((int)self_ + 0x4a) = 1;
   *(uint8_t *)((int)self_ + 0x49) = 0;
-  *(undefined4 *)((int)self_ + 0x4c) = 0;
-  *(undefined4 *)((int)self_ + 0x50) = 0;
+  *(bits32 *)((int)self_ + 0x4c) = 0;
+  *(bits32 *)((int)self_ + 0x50) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10119970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_SetState(void * self_, undefined4 param_1)
+XI_API void __thiscall NetCellFont_SetState(void * self_, bits32 arg2)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg2)) {
   case 0:
     *(uint16_t *)((int)self_ + 0x28) = 0;
-    *(undefined4 *)((int)self_ + 0x10) = *(undefined4 *)((int)self_ + 0x18);
+    *(bits32 *)((int)self_ + 0x10) = *(bits32 *)((int)self_ + 0x18);
     return;
   case 1:
     *(uint16_t *)((int)self_ + 0x28) = 2;
-    *(undefined4 *)((int)self_ + 0x10) = 1;
+    *(bits32 *)((int)self_ + 0x10) = 1;
     return;
   case 3:
-    *(undefined4 *)((int)self_ + 0x10) = 3;
+    *(bits32 *)((int)self_ + 0x10) = 3;
     *(uint16_t *)((int)self_ + 0x28) = 0;
     return;
   case 5:
     *(uint16_t *)((int)self_ + 0x28) = 0;
-    *(undefined4 *)((int)self_ + 0x10) = 5;
-    *(undefined4 *)((int)self_ + 0x18) = 5;
+    *(bits32 *)((int)self_ + 0x10) = 5;
+    *(bits32 *)((int)self_ + 0x18) = 5;
     return;
   case 0xb:
     *(uint16_t *)((int)self_ + 0x28) = 0;
-    *(undefined4 *)((int)self_ + 0x10) = 0xb;
-    *(undefined4 *)((int)self_ + 0x18) = 0xb;
+    *(bits32 *)((int)self_ + 0x10) = 0xb;
+    *(bits32 *)((int)self_ + 0x18) = 0xb;
     return;
   case 0xf:
     *(uint16_t *)((int)self_ + 0x28) = 0;
-    *(undefined4 *)((int)self_ + 0x10) = 0xf;
-    *(undefined4 *)((int)self_ + 0x18) = 0xf;
+    *(bits32 *)((int)self_ + 0x10) = 0xf;
+    *(bits32 *)((int)self_ + 0x18) = 0xf;
     return;
   case 0x10:
-    *(undefined4 *)((int)self_ + 0x10) = 0x10;
-    *(undefined4 *)((int)self_ + 0x18) = 0x10;
+    *(bits32 *)((int)self_ + 0x10) = 0x10;
+    *(bits32 *)((int)self_ + 0x18) = 0x10;
     *(uint16_t *)((int)self_ + 0x28) = 0;
   }
   return;
@@ -8466,116 +8502,118 @@ XI_API void __thiscall NetCellFont_SetState(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x10119A50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_SetNames(void * self_, int * param_1)
+XI_API bits32 __thiscall NetCellFont_SetNames(void * self_, int * arg2)
 {
-  char cVar1;
-  short sVar2;
-  short sVar3;
-  short sVar4;
-  short sVar5;
-  uint16_t uVar6;
-  char *pcVar7;
-  int iVar8;
-  int iVar9;
-  char *pcVar10;
+  char c1;
+  short i1;
+  short i2;
+  short i3;
+  short i4;
+  uint16_t u1;
+  char *p1;
+  int i5;
+  int i6;
+  char *p2;
   
-  *(int **)((int)self_ + 0xc) = param_1;
-  iVar8 = *param_1;
-  sVar2 = *(short *)(iVar8 + 0xc);
-  sVar3 = *(short *)(iVar8 + 10);
-  sVar4 = *(short *)(iVar8 + 4);
-  sVar5 = *(short *)(iVar8 + 2);
-  *(short *)((int)self_ + 0x32) = sVar5;
-  *(short *)((int)self_ + 0x34) = sVar4;
-  *(short *)((int)self_ + 0x36) = sVar5 + sVar3;
-  *(short *)((int)self_ + 0x38) = sVar4 + sVar2;
-  iVar8 = *param_1;
-  uVar6 = *(uint16_t *)(iVar8 + 0x12);
-  *(undefined4 *)((int)self_ + 0x40) = 0;
-  *(uint16_t *)((int)self_ + 0x3a) = uVar6;
-  pcVar7 = (char *)param_1[2];
-  if (pcVar7 != (char *)0x0) {
-    iVar9 = -1;
-    iVar8 = 0;
-    pcVar10 = pcVar7;
+  *(int **)((int)self_ + 0xc) = arg2;
+  i5 = *arg2;
+  i1 = *(short *)(i5 + 0xc);
+  i2 = *(short *)(i5 + 10);
+  i3 = *(short *)(i5 + 4);
+  i4 = *(short *)(i5 + 2);
+  *(short *)((int)self_ + 0x32) = i4;
+  *(short *)((int)self_ + 0x34) = i3;
+  *(short *)((int)self_ + 0x36) = i4 + i2;
+  *(short *)((int)self_ + 0x38) = i3 + i1;
+  i5 = *arg2;
+  u1 = *(uint16_t *)(i5 + 0x12);
+  *(bits32 *)((int)self_ + 0x40) = 0;
+  *(uint16_t *)((int)self_ + 0x3a) = u1;
+  p1 = (char *)arg2[2];
+  if (p1 != (char *)0x0) {
+    i6 = -1;
+    i5 = 0;
+    p2 = p1;
     do {
-      if (iVar9 == 0) break;
-      iVar9 = iVar9 + -1;
-      cVar1 = *pcVar10;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar1 != '\0');
-    if (iVar9 != -2) {
-      *(char **)((int)self_ + 0x40) = pcVar7;
+      if (i6 == 0) break;
+      i6 = i6 + -1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    if (i6 != -2) {
+      *(char **)((int)self_ + 0x40) = p1;
     }
   }
-  *(undefined4 *)((int)self_ + 0x44) = 0;
-  pcVar7 = (char *)param_1[3];
-  if (pcVar7 != (char *)0x0) {
-    iVar9 = -1;
-    iVar8 = 0;
-    pcVar10 = pcVar7;
+  *(bits32 *)((int)self_ + 0x44) = 0;
+  p1 = (char *)arg2[3];
+  if (p1 != (char *)0x0) {
+    i6 = -1;
+    i5 = 0;
+    p2 = p1;
     do {
-      if (iVar9 == 0) break;
-      iVar9 = iVar9 + -1;
-      cVar1 = *pcVar10;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar1 != '\0');
-    if (iVar9 != -2) {
-      *(char **)((int)self_ + 0x44) = pcVar7;
+      if (i6 == 0) break;
+      i6 = i6 + -1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    if (i6 != -2) {
+      *(char **)((int)self_ + 0x44) = p1;
     }
   }
-  return iVar8;
+  return i5;
 }
 
 // FUNCTION: FFXIMAIN 0x10119AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_ComputeOffsets(void * self_, undefined4 param_1, undefined4 param_2, int param_3)
+XI_API bits32 __thiscall NetCellFont_ComputeOffsets(void * self_, bits32 arg2, bits32 arg3, int arg4)
 {
-  short sVar1;
-  int64_t lVar3;
-  char xi_frame[8] __attribute__((aligned(4)));
-  float  &local_8 = *reinterpret_cast<float  *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
-  undefined4 uVar2;
+  short i1;
+  int64_t i2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { float f1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i3; };   // at 0x4
+  } frame;
+  bits32 u1;
   
-  uVar2 = 0;
+  u1 = 0;
   if (*(int *)((int)self_ + 0xc) != 0) {
-    if ((char)param_3 != '\0') {
-      orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,(float *)&param_3,&local_8);
-      local_4 = (int)*(short *)((int)self_ + 0x32);
-      lVar3 = XI_CALL_ST0(0x10311C2Cu)((long double)local_4 * (long double)xi_castbits<float>(param_3));
-      *(short *)((int)self_ + 0x2a) = (short)lVar3 + (short)param_1;
-      lVar3 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)*(short *)((int)self_ + 0x34) * (long double)local_8);
-      *(short *)((int)self_ + 0x2c) = (short)lVar3 + (short)param_2;
-      lVar3 = XI_CALL_ST0(0x10311C2Cu)((long double)(int)(short)(*(short *)((int)self_ + 0x36) -
-                                          *(short *)((int)self_ + 0x32)) * (long double)xi_castbits<float>(param_3));
-      *(short *)((int)self_ + 0x2e) = (short)lVar3;
-      param_3 = (int)(short)(*(short *)((int)self_ + 0x38) - *(short *)((int)self_ + 0x34));
-      lVar3 = XI_CALL_ST0(0x10311C2Cu)((long double)param_3 * (long double)local_8);
-      *(short *)((int)self_ + 0x30) = (short)lVar3;
-      return (int)lVar3;
+    if ((char)arg4 != '\0') {
+      orig::Menu_GetNormalizedPos(&g_menuMng_as_v0,(float *)&arg4,&frame.f1);
+      frame.i3 = (int)*(short *)((int)self_ + 0x32);
+      i2 = XI_CALL_ST0(0x10311C2Cu)(frame.i3 * bit_cast<float>(arg4));
+      *(short *)((int)self_ + 0x2a) = (short)i2 + (short)arg2;
+      i2 = XI_CALL_ST0(0x10311C2Cu)((int)*(short *)((int)self_ + 0x34) * frame.f1);
+      *(short *)((int)self_ + 0x2c) = (short)i2 + (short)arg3;
+      i2 = XI_CALL_ST0(0x10311C2Cu)((int)(short)(*(short *)((int)self_ + 0x36) -
+                                          *(short *)((int)self_ + 0x32)) * bit_cast<float>(arg4));
+      *(short *)((int)self_ + 0x2e) = (short)i2;
+      arg4 = (int)(short)(*(short *)((int)self_ + 0x38) - *(short *)((int)self_ + 0x34));
+      i2 = XI_CALL_ST0(0x10311C2Cu)(arg4 * frame.f1);
+      *(short *)((int)self_ + 0x30) = (short)i2;
+      return (int)i2;
     }
-    sVar1 = *(short *)((int)self_ + 0x34) + (short)param_2;
-    uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)((int)self_ + 0xc) >> 0x10)) << 16) | (uint16_t)(sVar1)));
-    *(short *)((int)self_ + 0x2a) = *(short *)((int)self_ + 0x32) + (short)param_1;
-    *(short *)((int)self_ + 0x2c) = sVar1;
+    i1 = *(short *)((int)self_ + 0x34) + (short)arg3;
+    u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)*(int *)((int)self_ + 0xc) >> 0x10)) << 16) | (uint16_t)(i1)));
+    *(short *)((int)self_ + 0x2a) = *(short *)((int)self_ + 0x32) + (short)arg2;
+    *(short *)((int)self_ + 0x2c) = i1;
     *(short *)((int)self_ + 0x2e) = *(short *)((int)self_ + 0x36) - *(short *)((int)self_ + 0x32);
     *(short *)((int)self_ + 0x30) = *(short *)((int)self_ + 0x38) - *(short *)((int)self_ + 0x34);
   }
-  return uVar2;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10119BC0
 // NOT VERIFIED -- FAIL
-XI_API uint32_t __thiscall NetCellFont_ContainsPoint(void * self_, int * param_1)
+XI_API uint32_t __thiscall NetCellFont_ContainsPoint(void * self_, int * arg2)
 {
   uint32_t xi_entry_eax = 0;
   
-  if ((int)*(short *)((int)self_ + 0x2a) <= *param_1) {
+  if ((int)*(short *)((int)self_ + 0x2a) <= *arg2) {
     xi_entry_eax = (uint32_t)*(short *)((int)self_ + 0x2c);
-    if ((((int)xi_entry_eax <= param_1[1]) &&
-        (*param_1 <= (int)*(short *)((int)self_ + 0x2e) + (int)*(short *)((int)self_ + 0x2a))) &&
-       (param_1[1] <= (int)((int)*(short *)((int)self_ + 0x30) + xi_entry_eax))) {
+    if ((((int)xi_entry_eax <= arg2[1]) &&
+        (*arg2 <= (int)*(short *)((int)self_ + 0x2e) + (int)*(short *)((int)self_ + 0x2a))) &&
+       (arg2[1] <= (int)((int)*(short *)((int)self_ + 0x30) + xi_entry_eax))) {
       return ((uint32_t)(((uint32_t)(xi_strunc24((char)((uint16_t)*(short *)((int)self_ + 0x2c) >> 8))) << 8) | (uint8_t)(1)));
     }
   }
@@ -8584,90 +8622,90 @@ XI_API uint32_t __thiscall NetCellFont_ContainsPoint(void * self_, int * param_1
 
 // FUNCTION: FFXIMAIN 0x10119C00
 // GATE: PASS -- 100 trials, 81 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 81
-XI_API void __thiscall NetCellFont_UpdateState(void * self_, undefined4 param_1)
+XI_API void __thiscall NetCellFont_UpdateState(void * self_, bits32 arg2)
 {
-  short sVar1;
-  uint32_t uVar2;
-  int *piVar3;
-  int iVar4;
-  int iVar5;
-  short *psVar6;
+  short i1;
+  uint32_t u1;
+  int *p1;
+  int i2;
+  int i3;
+  short *p2;
   char xi_frame[60] __attribute__((aligned(4)));
-  undefined4  &uVar7 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  int  &local_28 = *reinterpret_cast<int  *>(xi_frame + 20);
-  undefined4  &local_24 = *reinterpret_cast<undefined4  *>(xi_frame + 24);
-  undefined4  &local_20 = *reinterpret_cast<undefined4  *>(xi_frame + 28);
-  undefined4  &local_1c = *reinterpret_cast<undefined4  *>(xi_frame + 32);
-  undefined4  &local_18 = *reinterpret_cast<undefined4  *>(xi_frame + 36);
-  undefined4  &local_14 = *reinterpret_cast<undefined4  *>(xi_frame + 40);
-  uint8_t  &local_10 = *reinterpret_cast<uint8_t  *>(xi_frame + 44);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  int  &i4 = *reinterpret_cast<int  *>(xi_frame + 20);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 24);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 28);
+  bits32  &u5 = *reinterpret_cast<bits32  *>(xi_frame + 32);
+  bits32  &u6 = *reinterpret_cast<bits32  *>(xi_frame + 36);
+  bits32  &u7 = *reinterpret_cast<bits32  *>(xi_frame + 40);
+  uint8_t  &u8 = *reinterpret_cast<uint8_t  *>(xi_frame + 44);
   
-  iVar5 = 0;
+  i3 = 0;
   if (*(int *)((int)self_ + 0xc) != 0) {
     if ((0 < *(short *)((int)self_ + 0x28)) &&
-       (sVar1 = *(short *)((int)self_ + 0x28) + -1, *(short *)((int)self_ + 0x28) = sVar1, sVar1 < 1))
+       (i1 = *(short *)((int)self_ + 0x28) + -1, *(short *)((int)self_ + 0x28) = i1, i1 < 1))
     {
       if (*(char *)((int)self_ + 0x24) == '\0') {
-        uVar7 = 0;
+        u2 = 0;
       }
       else {
-        uVar7 = 3;
+        u2 = 3;
       }
-      orig::NetCellFont_SetState_v1(self_,uVar7);
+      orig::NetCellFont_SetState_v1(self_,u2);
     }
     if (*(short *)((int)self_ + 0x28) < 0) {
       if (g_pCursor_as_s32 != 0) {
-        local_28 = *(int *)(g_pCursor_as_s32 + 4);
-        local_24 = *(undefined4 *)(g_pCursor_as_s32 + 8);
+        i4 = *(int *)(g_pCursor_as_s32 + 4);
+        u3 = *(bits32 *)(g_pCursor_as_s32 + 8);
       }
-      uVar2 = orig::NetCellFont_ContainsPoint(self_,&local_28);
-      if ((char)uVar2 == '\0') {
+      u1 = orig::NetCellFont_ContainsPoint(self_,&i4);
+      if ((char)u1 == '\0') {
         *(uint16_t *)((int)self_ + 0x28) = 0;
         orig::NetCellFont_SetState_v1(self_,0);
       }
     }
     if ((*(int *)((int)self_ + 4) == 0) || (*(int *)((int)self_ + 0x14) != *(int *)((int)self_ + 0x10))
        ) {
-      piVar3 = *(int **)((int)self_ + 0xc);
-      *(undefined4 *)((int)self_ + 0x14) = *(undefined4 *)((int)self_ + 0x10);
-      if (*(char *)(*piVar3 + 0x1b) != '\0') {
-        local_28 = 0;
+      p1 = *(int **)((int)self_ + 0xc);
+      *(bits32 *)((int)self_ + 0x14) = *(bits32 *)((int)self_ + 0x10);
+      if (*(char *)(*p1 + 0x1b) != '\0') {
+        i4 = 0;
         do {
-          psVar6 = (short *)(piVar3[1] + local_28);
-          if ((psVar6 != (short *)0x0) &&
-             ((sVar1 = *psVar6, sVar1 == 0 ||
-              (iVar4 = orig::NetCellFont_MapKind119870(*(undefined4 *)((int)self_ + 0x10)), sVar1 == iVar4)))) {
-            sVar1 = psVar6[1];
-            local_10 = 0;
-            local_20 = *(undefined4 *)(psVar6 + 2);
-            local_1c = *(undefined4 *)(psVar6 + 4);
-            local_18 = *(undefined4 *)(psVar6 + 6);
-            local_14 = *(undefined4 *)(psVar6 + 8);
-            if (*(int *)(psVar6 + 0xc) == 0) {
-              uVar7 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,&local_20);
-              *(undefined4 *)(psVar6 + 0xc) = uVar7;
+          p2 = (short *)(p1[1] + i4);
+          if ((p2 != (short *)0x0) &&
+             ((i1 = *p2, i1 == 0 ||
+              (i2 = orig::NetCellFont_MapKind119870(*(bits32 *)((int)self_ + 0x10)), i1 == i2)))) {
+            i1 = p2[1];
+            u8 = 0;
+            u4 = *(bits32 *)(p2 + 2);
+            u5 = *(bits32 *)(p2 + 4);
+            u6 = *(bits32 *)(p2 + 6);
+            u7 = *(bits32 *)(p2 + 8);
+            if (*(int *)(p2 + 0xc) == 0) {
+              u2 = orig::ShapeMng_FindShape_v2(&g_shapeMng_as_v0,&u4);
+              *(bits32 *)(p2 + 0xc) = u2;
             }
-            if (*(int **)(psVar6 + 0xc) == (int *)0x0) {
+            if (*(int **)(p2 + 0xc) == (int *)0x0) {
               return;
             }
-            *(undefined4 *)((int)self_ + 4) = *(undefined4 *)(**(int **)(psVar6 + 0xc) + sVar1 * 4);
-            if (*psVar6 == 0) {
+            *(bits32 *)((int)self_ + 4) = *(bits32 *)(**(int **)(p2 + 0xc) + i1 * 4);
+            if (*p2 == 0) {
               *(uint8_t *)((int)self_ + 0x48) = 0;
             }
             else {
               *(uint8_t *)((int)self_ + 0x48) = 1;
             }
           }
-          piVar3 = *(int **)((int)self_ + 0xc);
-          local_28 = local_28 + 0x1c;
-          iVar5 = iVar5 + 1;
-        } while (iVar5 < (int)(uint32_t)*(uint8_t *)(*piVar3 + 0x1b));
+          p1 = *(int **)((int)self_ + 0xc);
+          i4 = i4 + 0x1c;
+          i3 = i3 + 1;
+        } while (i3 < (int)(uint32_t)*(uint8_t *)(*p1 + 0x1b));
       }
     }
     if (*(int *)((int)self_ + 8) != 0) {
       *(int *)((int)self_ + 4) = *(int *)((int)self_ + 8);
     }
-    if ((char)param_1 != '\0') {
+    if ((char)arg2 != '\0') {
       orig::Menu_GetNormalizedPos_v1(&g_menuMng_as_v0,(float *)((int)self_ + 0x1c),(float *)((int)self_ + 0x20));
     }
   }
@@ -8678,27 +8716,27 @@ XI_API void __thiscall NetCellFont_UpdateState(void * self_, undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall NetCellFont_InitDefaults(void * self_)
 {
-  undefined4 *puVar1;
-  int iVar2;
+  bits32 *p1;
+  int i1;
   
   orig::NetCellFont_ClearWords(self_);
   *(uint16_t *)self_ = 2;
-  iVar2 = 2;
-  puVar1 = self_;
+  i1 = 2;
+  p1 = self_;
   do {
-    puVar1[3] = 0;
-    puVar1[1] = 0;
-    iVar2 = iVar2 + -1;
-    puVar1 = puVar1 + 1;
-  } while (iVar2 != 0);
-  *(undefined4 *)((int)self_ + 0x18) = 0;
-  *(undefined4 *)((int)self_ + 0x14) = 0;
+    p1[3] = 0;
+    p1[1] = 0;
+    i1 = i1 + -1;
+    p1 = p1 + 1;
+  } while (i1 != 0);
+  *(bits32 *)((int)self_ + 0x18) = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
   *(uint16_t *)((int)self_ + 0x1e) = 0xffff;
   *(uint16_t *)((int)self_ + 0x22) = 0;
   *(uint16_t *)((int)self_ + 0x20) = 0;
   *(uint16_t *)((int)self_ + 0x2e) = 0;
   *(uint16_t *)((int)self_ + 0x2c) = 3;
-  *(undefined4 *)((int)self_ + 0x24) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x24) = 0x3f800000;
   *(uint16_t *)((int)self_ + 0x2a) = 0;
   *(uint16_t *)((int)self_ + 0x28) = 0;
   return self_;
@@ -8706,196 +8744,198 @@ XI_API void * __thiscall NetCellFont_InitDefaults(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10119E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_SetShape(void * self_, undefined4 param_1)
+XI_API void __thiscall NetCellFont_SetShape(void * self_, bits32 arg2)
 {
-  *(undefined4 *)((int)self_ + 0x14) = param_1;
+  *(bits32 *)((int)self_ + 0x14) = arg2;
   orig::NetCellFont_ResolveShape(self_);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10119E30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_AttachTo(void * self_, int param_1)
+XI_API bits32 __thiscall NetCellFont_AttachTo(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  if ((param_1 != 0) && (iVar1 = *(int *)((int)self_ + 0x14), iVar1 != 0)) {
+  if ((arg2 != 0) && (i1 = *(int *)((int)self_ + 0x14), i1 != 0)) {
     *(short *)((int)self_ + 0x20) =
-         *(short *)(**(int **)(param_1 + 0xc) + 6) + *(short *)(iVar1 + 0x24) +
-         *(short *)(param_1 + 0x2a);
+         *(short *)(**(int **)(arg2 + 0xc) + 6) + *(short *)(i1 + 0x24) +
+         *(short *)(arg2 + 0x2a);
     *(short *)((int)self_ + 0x22) =
-         *(short *)(**(int **)(param_1 + 0xc) + 8) + *(short *)(iVar1 + 0x22) +
-         *(short *)(param_1 + 0x2c);
+         *(short *)(**(int **)(arg2 + 0xc) + 8) + *(short *)(i1 + 0x22) +
+         *(short *)(arg2 + 0x2c);
   }
-  return param_1;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10119E70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ResolveShape(void * self_)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  uint64_t uVar3;
+  bits32 *p1;
+  int i1;
+  uint64_t u1;
   char xi_frame[32] __attribute__((aligned(4)));
-  undefined4  &local_20 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  undefined4  &local_1c = *reinterpret_cast<undefined4  *>(xi_frame + 4);
-  undefined4  &local_18 = *reinterpret_cast<undefined4  *>(xi_frame + 8);
-  undefined4  &local_14 = *reinterpret_cast<undefined4  *>(xi_frame + 12);
-  uint8_t  &local_10 = *reinterpret_cast<uint8_t  *>(xi_frame + 16);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 4);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 8);
+  bits32  &u5 = *reinterpret_cast<bits32  *>(xi_frame + 12);
+  uint8_t  &u6 = *reinterpret_cast<uint8_t  *>(xi_frame + 16);
   
-  puVar1 = *(undefined4 **)((int)self_ + 0x14);
-  if (puVar1 != (undefined4 *)0x0) {
-    local_20 = *puVar1;
-    local_1c = puVar1[1];
-    local_18 = puVar1[2];
-    local_14 = puVar1[3];
-    local_10 = 0;
+  p1 = *(bits32 **)((int)self_ + 0x14);
+  if (p1 != (bits32 *)0x0) {
+    u2 = *p1;
+    u3 = p1[1];
+    u4 = p1[2];
+    u5 = p1[3];
+    u6 = 0;
     if (*(int *)((int)self_ + 4) == 0) {
-      uVar3 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,&local_20);
-      *(int *)((int)self_ + 4) = (int)uVar3;
-      if ((int)uVar3 == 0) {
+      u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,&u2);
+      *(int *)((int)self_ + 4) = (int)u1;
+      if ((int)u1 == 0) {
         return;
       }
     }
-    iVar2 = *(int *)((int)self_ + 0x14);
-    if (*(short *)(iVar2 + 0x20) == 0) {
+    i1 = *(int *)((int)self_ + 0x14);
+    if (*(short *)(i1 + 0x20) == 0) {
       *(uint8_t *)((int)self_ + 0x30) = 1;
-      *(undefined4 *)((int)self_ + 0xc) =
-           *(undefined4 *)(**(int **)((int)self_ + 4) + *(short *)(iVar2 + 0x20) * 4);
+      *(bits32 *)((int)self_ + 0xc) =
+           *(bits32 *)(**(int **)((int)self_ + 4) + *(short *)(i1 + 0x20) * 4);
       return;
     }
     *(uint8_t *)((int)self_ + 0x30) = 0;
     *(uint16_t *)((int)self_ + 0x2e) = 0;
-    *(undefined4 *)((int)self_ + 0xc) =
-         *(undefined4 *)(**(int **)((int)self_ + 4) + *(short *)(iVar2 + 0x20) * 4);
+    *(bits32 *)((int)self_ + 0xc) =
+         *(bits32 *)(**(int **)((int)self_ + 4) + *(short *)(i1 + 0x20) * 4);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10119F20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_StepFrameCycle(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_StepFrameCycle(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  undefined4 uVar1;
-  short sVar2;
-  int iVar3;
+  bits32 u1;
+  short i1;
+  int i2;
   long double st0;
-  int64_t lVar4;
+  int64_t i3;
   
-  iVar3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x30))));
-  if ((*(char *)((int)self_ + 0x30) != '\0') && (iVar3 = 0, *(int *)((int)self_ + 4) != 0)) {
+  i2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(*(char *)((int)self_ + 0x30))));
+  if ((*(char *)((int)self_ + 0x30) != '\0') && (i2 = 0, *(int *)((int)self_ + 4) != 0)) {
     st0 = orig::Camera_GetFrameScale_v1(*(int *)((int)self_ + 4));
-    lVar4 = XI_CALL_ST0(0x10311C2Cu)(st0);
-    iVar3 = (int)lVar4;
-    *(short *)((int)self_ + 0x2c) = *(short *)((int)self_ + 0x2c) - (short)lVar4;
+    i3 = XI_CALL_ST0(0x10311C2Cu)(st0);
+    i2 = (int)i3;
+    *(short *)((int)self_ + 0x2c) = *(short *)((int)self_ + 0x2c) - (short)i3;
     if (*(short *)((int)self_ + 0x2c) < 0) {
-      sVar2 = *(short *)((int)self_ + 0x2e) + 1;
-      uVar1 = *(undefined4 *)(**(int **)((int)self_ + 4) + *(short *)((int)self_ + 0x2e) * 4);
-      *(short *)((int)self_ + 0x2e) = sVar2;
-      iVar3 = (int)sVar2;
-      *(undefined4 *)((int)self_ + 0xc) = uVar1;
+      i1 = *(short *)((int)self_ + 0x2e) + 1;
+      u1 = *(bits32 *)(**(int **)((int)self_ + 4) + *(short *)((int)self_ + 0x2e) * 4);
+      *(short *)((int)self_ + 0x2e) = i1;
+      i2 = (int)i1;
+      *(bits32 *)((int)self_ + 0xc) = u1;
       *(uint16_t *)((int)self_ + 0x2c) = 3;
-      if (*(int *)(**(int **)((int)self_ + 4) + iVar3 * 4) == 0) {
+      if (*(int *)(**(int **)((int)self_ + 4) + i2 * 4) == 0) {
         *(uint16_t *)((int)self_ + 0x2e) = 0;
       }
     }
   }
-  return iVar3;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10119F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_DrawUnscaled(void * self_, void * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API uint64_t __thiscall NetCellFont_DrawUnscaled(void * self_, void * arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::FUN_10119fb0(self_,param_1,param_2,param_3,1.0f,1.0f,param_4,param_5);
-  return uVar1;
+  u1 = orig::game_10119FB0(self_,arg2,arg3,arg4,1.0f,1.0f,arg5,arg6);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011A3B0
 // GATE: PASS -- 100 trials, 32 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 32
-XI_API undefined4 __thiscall NetCellFont_InvokeCallback7C(void * self_)
+XI_API bits32 __thiscall NetCellFont_InvokeCallback7C(void * self_)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = 0;
-  if (*(code **)((int)self_ + 0x7c) != (code *)0x0) {
-    uVar1 = (**(code **)((int)self_ + 0x7c))
-                      (*(uint16_t *)((int)self_ + 0x4c),*(undefined4 *)((int)self_ + 0x80));
+  u1 = 0;
+  if (*(untyped_fn **)((int)self_ + 0x7c) != (untyped_fn *)0x0) {
+    u1 = (**(untyped_fn **)((int)self_ + 0x7c))
+                      (*(uint16_t *)((int)self_ + 0x4c),*(bits32 *)((int)self_ + 0x80));
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011A490
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ApplyHelpAndTitle(void * self_)
 {
-  char cVar1;
-  void *pvVar2;
-  short *psVar3;
-  char *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  uint64_t uVar7;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  char c1;
+  void *p1;
+  short *p2;
+  char *p3;
+  int i1;
+  char *p4;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p5; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  pvVar2 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
-  if (pvVar2 == self_) {
-    local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-    if (local_4 != (void *)0x0) {
+  frame.p5 = self_;
+  p1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
+  if (p1 == self_) {
+    frame.p5 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+    if (frame.p5 != (void *)0x0) {
       while( true ) {
-        uVar7 = orig::FUN_10126520((int *)&local_4);
-        psVar3 = (short *)uVar7;
-        if (*psVar3 == 0) break;
-        if (local_4 == (void *)0x0) {
+        u1 = orig::game_10126520((int *)&frame.p5);
+        p2 = (short *)u1;
+        if (*p2 == 0) break;
+        if (frame.p5 == (void *)0x0) {
           return;
         }
       }
-      pcVar6 = *(char **)(psVar3 + 0x1e);
-      pcVar4 = pcVar6;
-      if (pcVar6 == (char *)0x0) {
-        pcVar4 = *(char **)(psVar3 + 0x14);
+      p4 = *(char **)(p2 + 0x1e);
+      p3 = p4;
+      if (p4 == (char *)0x0) {
+        p3 = *(char **)(p2 + 0x14);
       }
-      if (pcVar4 != (char *)0x0) {
-        pcVar4 = pcVar6;
-        if (pcVar6 == (char *)0x0) {
-          pcVar4 = *(char **)(psVar3 + 0x14);
+      if (p3 != (char *)0x0) {
+        p3 = p4;
+        if (p4 == (char *)0x0) {
+          p3 = *(char **)(p2 + 0x14);
         }
-        iVar5 = -1;
+        i1 = -1;
         do {
-          if (iVar5 == 0) break;
-          iVar5 = iVar5 + -1;
-          cVar1 = *pcVar4;
-          pcVar4 = pcVar4 + 1;
-        } while (cVar1 != '\0');
-        if ((iVar5 != -2) && (g_pTkHelp != (void *)0x0)) {
-          if (pcVar6 == (char *)0x0) {
-            pcVar6 = *(char **)(psVar3 + 0x14);
+          if (i1 == 0) break;
+          i1 = i1 + -1;
+          c1 = *p3;
+          p3 = p3 + 1;
+        } while (c1 != '\0');
+        if ((i1 != -2) && (g_pTkHelp != (void *)0x0)) {
+          if (p4 == (char *)0x0) {
+            p4 = *(char **)(p2 + 0x14);
           }
-          orig::TargetMenu_ForwardToPanel(g_pTkHelp,pcVar6,1);
+          orig::TargetMenu_ForwardToPanel(g_pTkHelp,p4,1);
           *(uint8_t *)((int)self_ + 0x6d) = 1;
         }
       }
-      pcVar6 = *(char **)(psVar3 + 0x16);
-      if (pcVar6 != (char *)0x0) {
-        iVar5 = -1;
-        pcVar4 = pcVar6;
+      p4 = *(char **)(p2 + 0x16);
+      if (p4 != (char *)0x0) {
+        i1 = -1;
+        p3 = p4;
         do {
-          if (iVar5 == 0) break;
-          iVar5 = iVar5 + -1;
-          cVar1 = *pcVar4;
-          pcVar4 = pcVar4 + 1;
-        } while (cVar1 != '\0');
-        if ((iVar5 != -2) && (g_pTkTitle != (void *)0x0)) {
-          pcVar4 = *(char **)(psVar3 + 0x20);
-          if (*(char **)(psVar3 + 0x20) == (char *)0x0) {
-            pcVar4 = pcVar6;
+          if (i1 == 0) break;
+          i1 = i1 + -1;
+          c1 = *p3;
+          p3 = p3 + 1;
+        } while (c1 != '\0');
+        if ((i1 != -2) && (g_pTkTitle != (void *)0x0)) {
+          p3 = *(char **)(p2 + 0x20);
+          if (*(char **)(p2 + 0x20) == (char *)0x0) {
+            p3 = p4;
           }
-          orig::TargetMenu_SetTextFwd(g_pTkTitle,(int)pcVar4,1);
+          orig::TargetMenu_SetTextFwd(g_pTkTitle,(int)p3,1);
           *(uint8_t *)((int)self_ + 0x6c) = 1;
         }
       }
@@ -8906,89 +8946,91 @@ XI_API void __thiscall NetCellFont_ApplyHelpAndTitle(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1011A5A0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_SetRectAndUpdateNodes(void * self_, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7)
+XI_API bits32 __thiscall NetCellFont_SetRectAndUpdateNodes(void * self_, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6, bits32 arg7, bits32 arg8)
 {
-  short sVar1;
-  int *piVar2;
-  short *this_00;
-  char xi_frame[8] __attribute__((aligned(4)));
-  short * &local_8 = *reinterpret_cast<short * *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  short i1;
+  int *p1;
+  short *obj1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { short * p2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i2; };   // at 0x4
+  } frame;
   
-  local_4 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
-  local_8 = (short *)0x0;
-  while ((local_4 != 0 && (this_00 = (short *)orig::FUN_10126520_v1(&local_4), this_00 != (short *)0x0))) {
-    sVar1 = *this_00;
-    if (sVar1 == 0) {
-      *(short *)((int)self_ + 0x8c) = (short)param_1;
-      *(short *)((int)self_ + 0x8e) = (short)param_2;
-      *(short *)((int)self_ + 0x90) = (short)param_3;
-      *(short *)((int)self_ + 0x92) = (short)param_4;
-      this_00[0xf] = this_00[0xf] + ((short)param_1 - *(short *)((int)self_ + 0x3a));
-      this_00[0x10] = this_00[0x10] + (*(short *)((int)self_ + 0x8e) - *(short *)((int)self_ + 0x3c));
-      if ((char)param_6 == '\0') {
-        this_00[0xd] = *(short *)((int)self_ + 0x8c);
-        this_00[0xe] = *(short *)((int)self_ + 0x8e);
-        this_00[0x11] = *(short *)((int)self_ + 0x90);
-        this_00[0x12] = *(short *)((int)self_ + 0x92);
+  frame.i2 = orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  frame.p2 = (short *)0x0;
+  while ((frame.i2 != 0 && (obj1 = (short *)orig::game_10126520_v1(&frame.i2), obj1 != (short *)0x0))) {
+    i1 = *obj1;
+    if (i1 == 0) {
+      *(short *)((int)self_ + 0x8c) = (short)arg2;
+      *(short *)((int)self_ + 0x8e) = (short)arg3;
+      *(short *)((int)self_ + 0x90) = (short)arg4;
+      *(short *)((int)self_ + 0x92) = (short)arg5;
+      obj1[0xf] = obj1[0xf] + ((short)arg2 - *(short *)((int)self_ + 0x3a));
+      obj1[0x10] = obj1[0x10] + (*(short *)((int)self_ + 0x8e) - *(short *)((int)self_ + 0x3c));
+      if ((char)arg7 == '\0') {
+        obj1[0xd] = *(short *)((int)self_ + 0x8c);
+        obj1[0xe] = *(short *)((int)self_ + 0x8e);
+        obj1[0x11] = *(short *)((int)self_ + 0x90);
+        obj1[0x12] = *(short *)((int)self_ + 0x92);
       }
-      *(short *)((int)self_ + 0x3a) = (short)param_1;
-      *(short *)((int)self_ + 0x3e) = (short)param_3 + (short)param_1;
-      *(short *)((int)self_ + 0x3c) = (short)param_2;
-      *(short *)((int)self_ + 0x40) = (short)param_4 + (short)param_2;
-      *(undefined4 *)((int)self_ + 0x94) = 0;
-      local_8 = this_00;
+      *(short *)((int)self_ + 0x3a) = (short)arg2;
+      *(short *)((int)self_ + 0x3e) = (short)arg4 + (short)arg2;
+      *(short *)((int)self_ + 0x3c) = (short)arg3;
+      *(short *)((int)self_ + 0x40) = (short)arg5 + (short)arg3;
+      *(bits32 *)((int)self_ + 0x94) = 0;
+      frame.p2 = obj1;
     }
-    else if (sVar1 == 1) {
+    else if (i1 == 1) {
       orig::NetCellFont_ComputeOffsets_v1
-                (this_00,(int)local_8[0xd],(int)local_8[0xe],(uint32_t)*(uint8_t *)((int)self_ + 0x99));
+                (obj1,(int)frame.p2[0xd],(int)frame.p2[0xe],(uint32_t)*(uint8_t *)((int)self_ + 0x99));
     }
-    else if (sVar1 == 2) {
-      orig::NetCellFont_AttachTo_v1(this_00,*(int *)((int)self_ + 8));
+    else if (i1 == 2) {
+      orig::NetCellFont_AttachTo_v1(obj1,*(int *)((int)self_ + 8));
     }
   }
-  piVar2 = *(int **)((int)self_ + 0x88);
-  if (piVar2 == (int *)0x0) {
-    *(uint8_t *)((int)self_ + 0x9a) = (uint8_t)param_7;
+  p1 = *(int **)((int)self_ + 0x88);
+  if (p1 == (int *)0x0) {
+    *(uint8_t *)((int)self_ + 0x9a) = (uint8_t)arg8;
     return 0;
   }
-  sVar1 = *(short *)((int)self_ + 0x3e);
-  piVar2[1] = (int)*(short *)((int)self_ + 0x3c);
-  *piVar2 = sVar1 + -6;
-  *(uint8_t *)((int)self_ + 0x9a) = (uint8_t)param_7;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar2 >> 8))) << 8) | (uint8_t)((uint8_t)param_7)));
+  i1 = *(short *)((int)self_ + 0x3e);
+  p1[1] = (int)*(short *)((int)self_ + 0x3c);
+  *p1 = i1 + -6;
+  *(uint8_t *)((int)self_ + 0x9a) = (uint8_t)arg8;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)((uint8_t)arg8)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011A710
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_GetPos42(void * self_, undefined4 * param_1)
+XI_API uint64_t __thiscall NetCellFont_GetPos42(void * self_, bits32 * arg2)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = *(undefined4 *)((int)self_ + 0x42);
-  *param_1 = uVar1;
-  param_1[1] = *(undefined4 *)((int)self_ + 0x46);
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar1) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)param_1 >> 8))) << 8) | (uint8_t)(1))))));
+  u1 = *(bits32 *)((int)self_ + 0x42);
+  *arg2 = u1;
+  arg2[1] = *(bits32 *)((int)self_ + 0x46);
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)arg2 >> 8))) << 8) | (uint8_t)(1))))));
 }
 
 // FUNCTION: FFXIMAIN 0x1011AA40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall NetCellFont_SetViewport(__int16 *self_)
+XI_API int __thiscall NetCellFont_SetViewport(short *self_)
 {
-  DWORD v2;
-  int v3;
-  int v4;
-  D3DVIEWPORT8 v6;
-  qmemcpy(&g_viewport_1B70, orig::CDx_GetRenderTargetTop((unsigned __int8 *)g_pCDx), sizeof(g_viewport_1B70));
-  v2 = *(self_ + 79);
-  v3 = *(self_ + 80);
-  v6 = g_viewport_1B70;
-  v4 = *(self_ + 81);
-  v6.Y = v2;
-  v6.X = *(self_ + 78);
-  v6.Height = v4 - v2;
-  v6.Width = v3 - v6.X;
-  return orig::CDx_SetViewport(g_pCDx, &v6);
+  DWORD u1;
+  int i1;
+  int i2;
+  D3DVIEWPORT8 val1;
+  memcpy(&g_viewport_1B70, orig::CDx_GetRenderTargetTop((unsigned char *)g_pCDx), sizeof(g_viewport_1B70));
+  u1 = *(self_ + 79);
+  i1 = *(self_ + 80);
+  val1 = g_viewport_1B70;
+  i2 = *(self_ + 81);
+  val1.Y = u1;
+  val1.X = *(self_ + 78);
+  val1.Height = i2 - u1;
+  val1.Width = i1 - val1.X;
+  return orig::CDx_SetViewport(g_pCDx, &val1);
 }
 
 // FUNCTION: FFXIMAIN 0x1011AAC0
@@ -9000,57 +9042,59 @@ XI_API int __cdecl Gfx_ApplyViewport1B70(void)
 
 // FUNCTION: FFXIMAIN 0x1011ABF0
 // GATE: PASS -- 100 trials, 42 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 42
-XI_API undefined4 __thiscall NetCellFont_GetCenter(void * self_, int * param_1)
+XI_API bits32 __thiscall NetCellFont_GetCenter(void * self_, int * arg2)
 {
-  short sVar1;
-  short *psVar2;
-  int iVar3;
-  uint64_t uVar4;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  short i1;
+  short *p1;
+  int i2;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
-  sVar1 = *(short *)((int)self_ + 0x4c);
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
+  i1 = *(short *)((int)self_ + 0x4c);
+  frame.p2 = self_;
+  frame.p2 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 0x14));
   do {
-    if (local_4 == (void *)0x0) {
+    if (frame.p2 == (void *)0x0) {
       return 0;
     }
-    uVar4 = orig::FUN_10126520((int *)&local_4);
-    psVar2 = (short *)uVar4;
-  } while ((*psVar2 != 1) || (psVar2[0x1d] != sVar1));
-  *param_1 = (int)psVar2[0x17] / 2 + (int)psVar2[0x15];
-  iVar3 = (int)psVar2[0x18] / 2 + (int)psVar2[0x16];
-  param_1[1] = iVar3;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = orig::game_10126520((int *)&frame.p2);
+    p1 = (short *)u1;
+  } while ((*p1 != 1) || (p1[0x1d] != i1));
+  *arg2 = (int)p1[0x17] / 2 + (int)p1[0x15];
+  i2 = (int)p1[0x18] / 2 + (int)p1[0x16];
+  arg2[1] = i2;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i2 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011ADB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_SetEntryValue4C(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API bits32 __thiscall NetCellFont_SetEntryValue4C(void * self_, bits32 arg2, bits32 arg3)
 {
-  short *psVar1;
+  short *p1;
   
-  if ((0 < (short)param_1) && ((short)param_1 <= *(short *)((int)self_ + 0x58))) {
-    psVar1 = orig::FUN_101181d0_v1(self_,param_1);
-    param_1 = 0;
-    if (psVar1 != (short *)0x0) {
-      *(undefined4 *)(psVar1 + 0x26) = param_2;
-      param_1 = orig::NetCellFont_MenuUpdateFocusedHelp_v1(self_);
+  if ((0 < (short)arg2) && ((short)arg2 <= *(short *)((int)self_ + 0x58))) {
+    p1 = orig::game_101181D0_v1(self_,arg2);
+    arg2 = 0;
+    if (p1 != (short *)0x0) {
+      *(bits32 *)(p1 + 0x26) = arg3;
+      arg2 = orig::NetCellFont_MenuUpdateFocusedHelp_v1(self_);
     }
   }
-  return param_1;
+  return arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x1011AE10
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_AddEntry(void * self_, undefined4 param_1)
+XI_API void __thiscall NetCellFont_AddEntry(void * self_, bits32 arg2)
 {
-  short *psVar1;
+  short *p1;
   
-  psVar1 = orig::NetCellFont_FindFreeEntry(self_);
-  if (psVar1 != (short *)0x0) {
-    *(undefined4 *)(psVar1 + 0x1e) = param_1;
+  p1 = orig::NetCellFont_FindFreeEntry(self_);
+  if (p1 != (short *)0x0) {
+    *(bits32 *)(p1 + 0x1e) = arg2;
     orig::NetCellFont_MenuUpdateFocusedHelp(self_);
   }
   return;
@@ -9058,109 +9102,109 @@ XI_API void __thiscall NetCellFont_AddEntry(void * self_, undefined4 param_1)
 
 // FUNCTION: FFXIMAIN 0x1011B220
 // GATE: PASS -- 100 trials, 95 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 95
-XI_API uint32_t __thiscall NetCellFont_GetFieldByIndex(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API uint32_t __thiscall NetCellFont_GetFieldByIndex(void * self_, bits32 arg2, bits32 arg3)
 {
-  uint32_t uVar1;
-  uint16_t uVar2;
+  uint32_t u1;
+  uint16_t u2;
   
-  uVar1 = (uint32_t)(short)param_1;
-  if ((((int)(uVar1 - 1) < (int)*(short *)((int)self_ + 0x18)) && ((short)param_1 != 0)) &&
-     (uVar1 = *(uint32_t *)(*(int *)((int)self_ + 4) + -0x14 + uVar1 * 0x14),
-     *(short *)(uVar1 + 0x12) == (short)param_1)) {
-    uVar2 = (uint16_t)(uVar1 >> 0x10);
-    switch(xi_sw((uint16_t)param_2)) {
+  u1 = (uint32_t)(short)arg2;
+  if ((((int)(u1 - 1) < (int)*(short *)((int)self_ + 0x18)) && ((short)arg2 != 0)) &&
+     (u1 = *(uint32_t *)(*(int *)((int)self_ + 4) + -0x14 + u1 * 0x14),
+     *(short *)(u1 + 0x12) == (short)arg2)) {
+    u2 = (uint16_t)(u1 >> 0x10);
+    switch(xi_sw((uint16_t)arg3)) {
     case 1:
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((short)*(char *)(uVar1 + 0x18))));
+      return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((short)*(char *)(u1 + 0x18))));
     case 2:
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((short)*(char *)(uVar1 + 0x17))));
+      return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((short)*(char *)(u1 + 0x17))));
     case 3:
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((short)*(char *)(uVar1 + 0x19))));
+      return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((short)*(char *)(u1 + 0x19))));
     case 4:
-      return ((uint32_t)(((uint32_t)(uint16_t)(uVar2) << 16) | (uint16_t)((short)*(char *)(uVar1 + 0x1a))));
+      return ((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)((short)*(char *)(u1 + 0x1a))));
     }
   }
-  return uVar1 & 0xffff0000;
+  return u1 & 0xffff0000;
 }
 
 // FUNCTION: FFXIMAIN 0x1011B2A0
 // GATE: PASS -- 100 trials, 93 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 93
-XI_API int __thiscall NetCellFont_GetEntryValueById(void * self_, undefined4 param_1)
+XI_API int __thiscall NetCellFont_GetEntryValueById(void * self_, bits32 arg2)
 {
-  int *piVar1;
+  int *p1;
   
-  if (((short)param_1 + -1 < (int)*(short *)((int)self_ + 0x18)) &&
-     (piVar1 = (int *)(*(int *)((int)self_ + 4) + -0x14 + (short)param_1 * 0x14),
-     *(short *)(*piVar1 + 0x12) == (short)param_1)) {
-    return piVar1[4];
+  if (((short)arg2 + -1 < (int)*(short *)((int)self_ + 0x18)) &&
+     (p1 = (int *)(*(int *)((int)self_ + 4) + -0x14 + (short)arg2 * 0x14),
+     *(short *)(*p1 + 0x12) == (short)arg2)) {
+    return p1[4];
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1011B2E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall NetCellFont_GetEntry(void * self_, undefined4 param_1)
+XI_API int __thiscall NetCellFont_GetEntry(void * self_, bits32 arg2)
 {
-  if ((int)*(short *)((int)self_ + 0x18) <= (short)param_1 + -1) {
+  if ((int)*(short *)((int)self_ + 0x18) <= (short)arg2 + -1) {
     return 0;
   }
-  return *(int *)((int)self_ + 4) + -0x14 + (short)param_1 * 0x14;
+  return *(int *)((int)self_ + 4) + -0x14 + (short)arg2 * 0x14;
 }
 
 // FUNCTION: FFXIMAIN 0x1011B310
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetField8(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetField8(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 8);
+  return *(bits32 *)((int)self_ + 8);
 }
 
 // FUNCTION: FFXIMAIN 0x1011B320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetFieldC(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetFieldC(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 0xc);
+  return *(bits32 *)((int)self_ + 0xc);
 }
 
 // FUNCTION: FFXIMAIN 0x1011B330
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_GetOffsets(void * self_, uint16_t * param_1, uint16_t * param_2)
+XI_API void __thiscall NetCellFont_GetOffsets(void * self_, uint16_t * arg2, uint16_t * arg3)
 {
-  if (param_2 != (uint16_t *)0x0) {
-    *param_2 = *(uint16_t *)((int)self_ + 0x1c);
-    *param_1 = *(uint16_t *)((int)self_ + 0x1a);
+  if (arg3 != (uint16_t *)0x0) {
+    *arg3 = *(uint16_t *)((int)self_ + 0x1c);
+    *arg2 = *(uint16_t *)((int)self_ + 0x1a);
     return;
   }
-  *param_1 = *(uint16_t *)((int)self_ + 0x1a);
+  *arg2 = *(uint16_t *)((int)self_ + 0x1a);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011B360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_SetShorts1A1C(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 param_2, undefined4 param_3)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_SetShorts1A1C(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 arg4, bits32 arg5)
 {
-  *(uint16_t *)((int)self_ + 0x1c) = (uint16_t)param_3;
-  *(uint16_t *)((int)self_ + 0x1a) = (uint16_t)param_2;
-  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)param_3)));
+  *(uint16_t *)((int)self_ + 0x1c) = (uint16_t)arg5;
+  *(uint16_t *)((int)self_ + 0x1a) = (uint16_t)arg4;
+  return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)arg5)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011BA90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_InitColors(void * self_)
+XI_API bits32 __thiscall NetCellFont_InitColors(void * self_)
 {
-  *(undefined4 *)((int)self_ + 0x60) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x44) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x28) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0xc) = 0x3f800000;
-  *(undefined4 *)((int)self_ + 0x5c) = 0;
-  *(undefined4 *)((int)self_ + 0x40) = 0;
-  *(undefined4 *)((int)self_ + 0x24) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 100) = 0x80808080;
-  *(undefined4 *)((int)self_ + 0x48) = 0x80808080;
-  *(undefined4 *)((int)self_ + 0x2c) = 0x80808080;
-  *(undefined4 *)((int)self_ + 0x10) = 0x80808080;
-  *(undefined4 *)((int)self_ + 0x74) = 0;
-  *(undefined4 *)((int)self_ + 0x78) = 0;
-  *(undefined4 *)((int)self_ + 0x7c) = 0;
+  *(bits32 *)((int)self_ + 0x60) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x44) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x28) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0xc) = 0x3f800000;
+  *(bits32 *)((int)self_ + 0x5c) = 0;
+  *(bits32 *)((int)self_ + 0x40) = 0;
+  *(bits32 *)((int)self_ + 0x24) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 100) = 0x80808080;
+  *(bits32 *)((int)self_ + 0x48) = 0x80808080;
+  *(bits32 *)((int)self_ + 0x2c) = 0x80808080;
+  *(bits32 *)((int)self_ + 0x10) = 0x80808080;
+  *(bits32 *)((int)self_ + 0x74) = 0;
+  *(bits32 *)((int)self_ + 0x78) = 0;
+  *(bits32 *)((int)self_ + 0x7c) = 0;
   *(uint8_t *)((int)self_ + 0x80) = 1;
   return self_;
 }
@@ -9169,114 +9213,114 @@ XI_API undefined4 __thiscall NetCellFont_InitColors(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 93 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API char __thiscall Font_BindGlyphTexture(int self_)
 {
-  int v2;
-  int v4;
-  IDirect3DBaseTexture8 *v5;
-  int v6;
-  _BYTE v7[16];
-  if ( *(_DWORD *)(self_ + 116) == 0 )
+  int i1;
+  int i2;
+  IDirect3DBaseTexture8 *p1;
+  int i3;
+  uint8_t buf1[16];
+  if ( *(uint32_t *)(self_ + 116) == 0 )
   {
-    orig::Util_Copy16Bytes(v7, (int)aFontMoji);
-    v2 = orig::CYyTexMng_FindByName(g_pTextureMng, (int)v7);
-    *(_DWORD *)(self_ + 116) = v2;
-    if ( v2 == 0 )
+    orig::Util_Copy16Bytes(buf1, (int)aFontMoji);
+    i1 = orig::CYyTexMng_FindByName(g_pTextureMng, (int)buf1);
+    *(uint32_t *)(self_ + 116) = i1;
+    if ( i1 == 0 )
       return 0;
   }
-  if ( *(_BYTE *)(self_ + 128) == 1 && *(_DWORD *)(self_ + 120) == 0 )
+  if ( *(uint8_t *)(self_ + 128) == 1 && *(uint32_t *)(self_ + 120) == 0 )
     orig::Font_LoadHighResTexture((int *)self_);
   if ( orig::Font_IsHighResTextureLoaded(self_) )
   {
-    v4 = *(_DWORD *)(*(_DWORD *)(self_ + 120) + 8);
-    if ( *(_DWORD *)(v4 + 64) != 0 )
-      v5 = *(IDirect3DBaseTexture8 **)(v4 + 64);
+    i2 = *(uint32_t *)(*(uint32_t *)(self_ + 120) + 8);
+    if ( *(uint32_t *)(i2 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(i2 + 64);
     else
-      v5 = *(IDirect3DBaseTexture8 **)(v4 + 68);
+      p1 = *(IDirect3DBaseTexture8 **)(i2 + 68);
   }
   else
   {
-    v6 = *(_DWORD *)(self_ + 116);
-    v5 = *(IDirect3DBaseTexture8 **)(v6 + 64);
-    if ( v5 == nullptr )
-      v5 = *(IDirect3DBaseTexture8 **)(v6 + 68);
+    i3 = *(uint32_t *)(self_ + 116);
+    p1 = *(IDirect3DBaseTexture8 **)(i3 + 64);
+    if ( p1 == nullptr )
+      p1 = *(IDirect3DBaseTexture8 **)(i3 + 68);
   }
-  (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v5);
+  (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011BBA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Font_DrawGlyphQuadGrey(void * self_, undefined4 param_1, int * param_2, undefined4 param_3, undefined4 param_4)
+XI_API bits32 __thiscall Font_DrawGlyphQuadGrey(void * self_, bits32 arg2, int * arg3, bits32 arg4, bits32 arg5)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Font_DrawGlyphQuad(self_,param_1,param_2,0x80808080,param_3,param_4);
-  return uVar1;
+  u1 = orig::Font_DrawGlyphQuad(self_,arg2,arg3,0x80808080,arg4,arg5);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011BBD0
 // GATE: PASS -- 100 trials, 100 returned normally, 100 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Font_DrawGlyphQuad(float *self_, __int16 a2, int *a3, unsigned int a4, float a5, float a6)
+XI_API int __thiscall Font_DrawGlyphQuad(float *self_, short arg2, int *arg3, unsigned int arg4, float arg5, float arg6)
 {
-  double v7;
-  double v8;
-  double v9;
-  double v10;
-  double v11;
-  int v12;
-  unsigned int *v13;
-  double v14;
-  double v15;
-  double v16;
-  float *v17;
+  double f1;
+  double f2;
+  double f3;
+  double f4;
+  double f5;
+  int i1;
+  unsigned int *p1;
+  double f6;
+  double f7;
+  double f8;
+  float *p2;
   int result;
-  int v19;
-  unsigned int v20;
-  _DWORD v21[4];
-  float v22;
-  v7 = (double)*a3 - 0.5;
-  *(self_ + 14) = v7;
-  *self_ = v7;
-  v8 = a5 * 16.0 + (double)*a3 - 0.5;
-  *(self_ + 21) = v8;
-  *(self_ + 7) = v8;
-  v9 = (double)a3[1] - 0.5;
-  *(self_ + 8) = v9;
-  *(self_ + 1) = v9;
-  v10 = a6 * 16.0 + (double)a3[1] - 0.5;
-  *(self_ + 22) = v10;
-  *(self_ + 15) = v10;
-  v11 = (double)(a2 % 64);
-  v12 = 0;
-  v13 = (unsigned int *)(self_ + 4);
-  v22 = (float)(a2 / 64);
-  *(self_ + 19) = 0.015625 * v11;
-  *(self_ + 5) = 0.015625 * v11;
-  v14 = (v11 + 1.0) * 0.015625;
-  *(self_ + 26) = v14;
-  *(self_ + 12) = v14;
-  v15 = v22 * 0.0078125;
-  *(self_ + 13) = v15;
-  *(self_ + 6) = v15;
-  v16 = (v22 + 1.0) * 0.0078125;
-  *(self_ + 27) = v16;
-  *(self_ + 20) = v16;
+  int i2;
+  unsigned int u1;
+  uint32_t buf1[4];
+  float f9;
+  f1 = (double)*arg3 - 0.5;
+  *(self_ + 14) = f1;
+  *self_ = f1;
+  f2 = arg5 * 16.0 + (double)*arg3 - 0.5;
+  *(self_ + 21) = f2;
+  *(self_ + 7) = f2;
+  f3 = (double)arg3[1] - 0.5;
+  *(self_ + 8) = f3;
+  *(self_ + 1) = f3;
+  f4 = arg6 * 16.0 + (double)arg3[1] - 0.5;
+  *(self_ + 22) = f4;
+  *(self_ + 15) = f4;
+  f5 = (double)(arg2 % 64);
+  i1 = 0;
+  p1 = (unsigned int *)(self_ + 4);
+  f9 = (float)(arg2 / 64);
+  *(self_ + 19) = 0.015625 * f5;
+  *(self_ + 5) = 0.015625 * f5;
+  f6 = (f5 + 1.0) * 0.015625;
+  *(self_ + 26) = f6;
+  *(self_ + 12) = f6;
+  f7 = f9 * 0.0078125;
+  *(self_ + 13) = f7;
+  *(self_ + 6) = f7;
+  f8 = (f9 + 1.0) * 0.0078125;
+  *(self_ + 27) = f8;
+  *(self_ + 20) = f8;
   do
   {
-    v20 = *v13;
-    v21[v12] = *v13;
-    *v13 = orig::Color_ModulateArgb128(v20, a4);
-    ++v12;
-    v13 += 7;
+    u1 = *p1;
+    buf1[i1] = *p1;
+    *p1 = orig::Color_ModulateArgb128(u1, arg4);
+    ++i1;
+    p1 += 7;
   }
-  while ( v12 < 4 );
+  while ( i1 < 4 );
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
   orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self_, 28);
-  v17 = self_ + 4;
+  p2 = self_ + 4;
   for ( result = 0; result < 4; ++result )
   {
-    v19 = v21[result];
-    *(_DWORD *)v17 = v19;
-    v17 += 7;
+    i2 = buf1[result];
+    *(uint32_t *)p2 = i2;
+    p2 += 7;
   }
   return result;
 }
@@ -9292,72 +9336,74 @@ XI_API int __cdecl Gfx_SetAdditiveBlend(void)
 
 // FUNCTION: FFXIMAIN 0x1011BF40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Font_DrawChar(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+XI_API bits32 __cdecl Font_DrawChar(bits32 arg1, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5)
 {
-  void *pvVar1;
-  short sVar2;
-  undefined4 uVar3;
+  void *p1;
+  short i1;
+  bits32 u1;
   
-  pvVar1 = g_pFontGlyphs;
-  *(undefined4 *)((int)g_pFontGlyphs + 100) = param_2;
-  *(undefined4 *)((int)pvVar1 + 0x48) = param_2;
-  *(undefined4 *)((int)pvVar1 + 0x2c) = param_2;
-  *(undefined4 *)((int)pvVar1 + 0x10) = param_2;
-  sVar2 = (short)param_1;
-  if (sVar2 < 0x2115) {
-    uVar3 = orig::Font_DrawGlyphQuadGrey_v1(g_pFontGlyphs,param_1,&g_textCursorX_as_v0,param_4,param_5);
-    return uVar3;
+  p1 = g_pFontGlyphs;
+  *(bits32 *)((int)g_pFontGlyphs + 100) = arg2;
+  *(bits32 *)((int)p1 + 0x48) = arg2;
+  *(bits32 *)((int)p1 + 0x2c) = arg2;
+  *(bits32 *)((int)p1 + 0x10) = arg2;
+  i1 = (short)arg1;
+  if (i1 < 0x2115) {
+    u1 = orig::Font_DrawGlyphQuadGrey_v1(g_pFontGlyphs,arg1,&g_textCursorX_as_v0,arg4,arg5);
+    return u1;
   }
-  if (((DAT_10621934 != (int *)0x0) && (sVar2 < 0x2144)) &&
-     (pvVar1 = *(void **)(*DAT_10621934 + -0x8454 + sVar2 * 4), pvVar1 != (void *)0x0)) {
-    orig::FUN_1011fb60(pvVar1,g_textCursorX_as_v0,g_textCursorY_as_v0,0x80808080,0,0);
+  if (((g_10621934 != (int *)0x0) && (i1 < 0x2144)) &&
+     (p1 = *(void **)(*g_10621934 + -0x8454 + i1 * 4), p1 != (void *)0x0)) {
+    orig::game_1011FB60(p1,g_textCursorX_as_v0,g_textCursorY_as_v0,0x80808080,0,0);
   }
   orig::Gfx_SetAdditiveBlend_v1();
-  uVar3 = orig::Font_BindGlyphTexture_v1(g_pFontGlyphs);
-  return uVar3;
+  u1 = orig::Font_BindGlyphTexture_v1(g_pFontGlyphs);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011BFD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __stdcall Font_MeasureString(char * param_1, undefined4 xi_s2)
+XI_API int __stdcall Font_MeasureString(char * arg1, bits32 xi_s2)
 {
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int64_t lVar7;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&local_8)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  char c1;
+  int i1;
+  char *p1;
+  int i2;
+  int i3;
+  int i4;
+  int64_t i5;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i6[2]; };   // at 0x0
+  } frame;
   
-  pcVar3 = param_1;
-  iVar5 = 0;
-  cVar1 = *param_1;
-  iVar6 = 0;
-  while ((cVar1 != '\0' && (*param_1 != '\0'))) {
-    iVar4 = orig::Sjis_GetCharByteLen_v1(pcVar3 + iVar6);
-    iVar6 = iVar6 + iVar4;
-    iVar4 = orig::Font_DecodeNextChar_v1((int *)&param_1);
-    if ((((short)iVar4 == 0x87) &&
-        (((iVar2 = *(int *)(g_pSceneState + 8), (*(uint8_t *)(g_pSceneState + 0x18) & 0x80) == 0 ||
-          ((iVar2 != 2 && (iVar2 != 3)))) && (iVar2 == 2)))) && (7 < iVar5)) {
-      iVar5 = iVar5 + -8;
+  p1 = arg1;
+  i3 = 0;
+  c1 = *arg1;
+  i4 = 0;
+  while ((c1 != '\0' && (*arg1 != '\0'))) {
+    i2 = orig::Sjis_GetCharByteLen_v1(p1 + i4);
+    i4 = i4 + i2;
+    i2 = orig::Font_DecodeNextChar_v1((int *)&arg1);
+    if ((((short)i2 == 0x87) &&
+        (((i1 = *(int *)(g_pSceneState + 8), (*(uint8_t *)(g_pSceneState + 0x18) & 0x80) == 0 ||
+          ((i1 != 2 && (i1 != 3)))) && (i1 == 2)))) && (7 < i3)) {
+      i3 = i3 + -8;
     }
-    local_8[0] = 0;
-    orig::Font_AddGlyphAdvance_v1(iVar4,local_8,iVar4);
-    lVar7 = XI_CALL_ST0(0x10311C2Cu)((long double)local_8[0] * (long double)xi_s2 + (long double)0.5f);
-    iVar5 = iVar5 + (int)lVar7;
-    cVar1 = pcVar3[iVar6];
+    frame.i6[0] = 0;
+    orig::Font_AddGlyphAdvance_v1(i2,frame.i6,i2);
+    i5 = XI_CALL_ST0(0x10311C2Cu)((long double)frame.i6[0] * (long double)xi_s2 + (long double)0.5f);
+    i3 = i3 + (int)i5;
+    c1 = p1[i4];
   }
-  return iVar5;
+  return i3;
 }
 
 // FUNCTION: FFXIMAIN 0x1011C1F0
 // GATE: PASS -- 100 trials, 100 returned normally, 370 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Gfx_SetCellBlendMode(int a1, int a2, int a3, int a4)
+XI_API int __cdecl Gfx_SetCellBlendMode(int arg1, int arg2, int arg3, int arg4)
 {
-  if ( a1 == 0 )
+  if ( arg1 == 0 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
     return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
@@ -9365,25 +9411,25 @@ XI_API int __cdecl Gfx_SetCellBlendMode(int a1, int a2, int a3, int a4)
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE2X);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, TRUE);
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
-  if ( a2 != 0 )
+  if ( arg2 != 0 )
   {
-    if ( a2 != 1 )
+    if ( arg2 != 1 )
     {
-      if ( a2 != 2 )
+      if ( arg2 != 2 )
         return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
-      if ( a3 != 0 )
+      if ( arg3 != 0 )
       {
-        if ( a3 != 1 )
+        if ( arg3 != 1 )
         {
-          if ( a3 == 2 )
+          if ( arg3 == 2 )
           {
-            if ( a4 != 0 )
+            if ( arg4 != 0 )
             {
-              if ( a4 == 1 )
+              if ( arg4 == 1 )
               {
                 orig::ErrorReport_NoOpVarargsA(aCellZeroZeroFr);
               }
-              else if ( a4 == 2 )
+              else if ( arg4 == 2 )
               {
                 orig::ErrorReport_NoOpVarargsA(aCellZeroZeroZe);
               }
@@ -9395,53 +9441,53 @@ XI_API int __cdecl Gfx_SetCellBlendMode(int a1, int a2, int a3, int a4)
           }
           return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
         }
-        if ( a4 != 0 )
+        if ( arg4 != 0 )
         {
-          if ( a4 != 1 )
+          if ( arg4 != 1 )
           {
-            if ( a4 == 2 )
+            if ( arg4 == 2 )
               orig::ErrorReport_NoOpVarargsA(aCellZeroFrameZ);
             return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
           }
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_ZERO);
-LABEL_59:
+L1:
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
           return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
         }
-LABEL_60:
+L2:
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_ONE);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_SUBTRACT);
         return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
       }
-      if ( a4 == 0 )
+      if ( arg4 == 0 )
       {
         orig::ErrorReport_NoOpVarargsA(aCellZeroTextur_0);
         return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
       }
-      if ( a4 != 1 )
+      if ( arg4 != 1 )
       {
-        if ( a4 == 2 )
+        if ( arg4 == 2 )
           orig::ErrorReport_NoOpVarargsA(aCellZeroTextur);
         return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
       }
-LABEL_43:
+L3:
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
       return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
     }
-    if ( a3 != 0 )
+    if ( arg3 != 0 )
     {
-      if ( a3 == 1 )
+      if ( arg3 == 1 )
       {
-        if ( a4 != 0 )
+        if ( arg4 != 0 )
         {
-          if ( a4 == 1 )
+          if ( arg4 == 1 )
           {
             orig::ErrorReport_NoOpVarargsA(aCellFrameFrame_0);
           }
-          else if ( a4 == 2 )
+          else if ( arg4 == 2 )
           {
             orig::ErrorReport_NoOpVarargsA(aCellFrameFrame);
           }
@@ -9451,16 +9497,16 @@ LABEL_43:
           orig::ErrorReport_NoOpVarargsA(aCellFrameFrame_1);
         }
       }
-      else if ( a3 == 2 )
+      else if ( arg3 == 2 )
       {
-        if ( a4 != 0 )
+        if ( arg4 != 0 )
         {
-          if ( a4 == 1 )
+          if ( arg4 == 1 )
           {
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
           }
-          else if ( a4 == 2 )
+          else if ( arg4 == 2 )
           {
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_ZERO);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
@@ -9475,14 +9521,14 @@ LABEL_43:
     }
     else
     {
-      switch ( a4 )
+      switch ( arg4 )
       {
         case 0:
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_INVSRCALPHA);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
           return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
         case 1:
-          goto LABEL_43;
+          goto L3;
         case 2:
           orig::ErrorReport_NoOpVarargsA(aCellFrameTextu);
           break;
@@ -9491,17 +9537,17 @@ LABEL_43:
       }
     }
   }
-  else if ( a3 != 0 )
+  else if ( arg3 != 0 )
   {
-    if ( a3 == 1 )
+    if ( arg3 == 1 )
     {
-      switch ( a4 )
+      switch ( arg4 )
       {
         case 0:
-          goto LABEL_60;
+          goto L2;
         case 1:
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-          goto LABEL_59;
+          goto L1;
         case 2:
           orig::ErrorReport_NoOpVarargsA(aCellTextureFra);
           break;
@@ -9509,16 +9555,16 @@ LABEL_43:
           break;
       }
     }
-    else if ( a3 == 2 )
+    else if ( arg3 == 2 )
     {
-      if ( a4 != 0 )
+      if ( arg4 != 0 )
       {
-        if ( a4 == 1 )
+        if ( arg4 == 1 )
         {
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
         }
-        else if ( a4 == 2 )
+        else if ( arg4 == 2 )
         {
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ZERO);
@@ -9530,13 +9576,13 @@ LABEL_43:
       }
     }
   }
-  else if ( a4 != 0 )
+  else if ( arg4 != 0 )
   {
-    if ( a4 == 1 )
+    if ( arg4 == 1 )
     {
       orig::ErrorReport_NoOpVarargsA(aCellTextureTex_0);
     }
-    else if ( a4 == 2 )
+    else if ( arg4 == 2 )
     {
       orig::ErrorReport_NoOpVarargsA(aCellTextureTex);
     }
@@ -9550,123 +9596,125 @@ LABEL_43:
 
 // FUNCTION: FFXIMAIN 0x1011C5D0
 // GATE: PASS -- 100 trials, 45 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 45
-XI_API void __stdcall Font_AllocHighResImage(undefined4 * param_1, int param_2, int param_3)
+XI_API void __stdcall Font_AllocHighResImage(bits32 * arg1, int arg2, int arg3)
 {
-  undefined4 *puVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  undefined4 *puVar4;
-  uint64_t uVar5;
+  bits32 *p1;
+  uint32_t u1;
+  uint32_t u2;
+  bits32 *p2;
+  uint64_t u3;
   
-  uVar3 = param_2 * param_3 * 4 + 0x3d;
-  uVar5 = orig::Allocator_Generic_v1(uVar3);
-  puVar1 = (undefined4 *)uVar5;
-  if (puVar1 != (undefined4 *)0x0) {
-    puVar4 = puVar1;
-    for (uVar2 = uVar3 >> 2; uVar2 != 0; uVar2 = uVar2 - 1) {
-      *puVar4 = 0;
-      puVar4 = puVar4 + 1;
+  u2 = arg2 * arg3 * 4 + 0x3d;
+  u3 = orig::Allocator_Generic_v1(u2);
+  p1 = (bits32 *)u3;
+  if (p1 != (bits32 *)0x0) {
+    p2 = p1;
+    for (u1 = u2 >> 2; u1 != 0; u1 = u1 - 1) {
+      *p2 = 0;
+      p2 = p2 + 1;
     }
-    for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-      *(uint8_t *)puVar4 = 0;
-      puVar4 = (undefined4 *)((int)puVar4 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p2 = 0;
+      p2 = (bits32 *)((int)p2 + 1);
     }
-    *(uint8_t *)puVar1 = 0x30;
-    orig::TexBase_CopyName16((uint8_t *)((int)puVar1 + 1),s_font_high_1036c3f4);
-    *(int *)((int)puVar1 + 0x19) = param_3;
-    *(undefined4 *)((int)puVar1 + 0x11) = 0;
-    *(int *)((int)puVar1 + 0x15) = param_2;
-    *(uint16_t *)((int)puVar1 + 0x1d) = 0;
-    *(uint16_t *)((int)puVar1 + 0x1f) = 0x20;
-    *(undefined4 *)((int)puVar1 + 0x21) = 0;
-    *(undefined4 *)((int)puVar1 + 0x25) = 0;
-    *(undefined4 *)((int)puVar1 + 0x29) = 0;
-    *(undefined4 *)((int)puVar1 + 0x2d) = 0;
-    *(undefined4 *)((int)puVar1 + 0x31) = 0x100;
-    *(undefined4 *)((int)puVar1 + 0x35) = 0x20;
-    *(uint8_t *)((int)puVar1 + 0x39) = 1;
-    *param_1 = puVar1;
+    *(uint8_t *)p1 = 0x30;
+    orig::TexBase_CopyName16((uint8_t *)((int)p1 + 1),str_font_high_1036C3F4);
+    *(int *)((int)p1 + 0x19) = arg3;
+    *(bits32 *)((int)p1 + 0x11) = 0;
+    *(int *)((int)p1 + 0x15) = arg2;
+    *(uint16_t *)((int)p1 + 0x1d) = 0;
+    *(uint16_t *)((int)p1 + 0x1f) = 0x20;
+    *(bits32 *)((int)p1 + 0x21) = 0;
+    *(bits32 *)((int)p1 + 0x25) = 0;
+    *(bits32 *)((int)p1 + 0x29) = 0;
+    *(bits32 *)((int)p1 + 0x2d) = 0;
+    *(bits32 *)((int)p1 + 0x31) = 0x100;
+    *(bits32 *)((int)p1 + 0x35) = 0x20;
+    *(uint8_t *)((int)p1 + 0x39) = 1;
+    *arg1 = p1;
     return;
   }
-  *param_1 = 0;
+  *arg1 = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011C670
 // GATE: PASS -- 100 trials, 20 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 20
-XI_API unsigned char __stdcall Tex_LoadSurfaceFromDatFile(int param_1, undefined4 xi_s2)
+XI_API unsigned char __stdcall Tex_LoadSurfaceFromDatFile(int arg1, bits32 xi_s2)
 {
-  int *piVar1;
-  uint32_t uVar2;
-  void *pvVar3;
-  int iVar4;
-  uint8_t bVar5;
-  char xi_frame[44] __attribute__((aligned(4)));
-  int  &iStack_c = *reinterpret_cast<int  *>(xi_frame + 32);
-  int * &piStack_8 = *reinterpret_cast<int * *>(xi_frame + 36);
+  int *p1;
+  uint32_t u1;
+  void *p2;
+  int i1;
+  uint8_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[44];
+    struct __attribute__((packed)) { unsigned char pad_1[0x20]; int i2; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_2[0x24]; int * p3; };   // at 0x24
+  } frame;
   
-  bVar5 = false;
-  if ((param_1 != 0) &&
-     ((piVar1 = *(int **)(param_1 + 0x40), piVar1 != (int *)0x0 ||
-      (piVar1 = *(int **)(param_1 + 0x44), piVar1 != (int *)0x0)))) {
-    (**(code **)(*piVar1 + 0x3c))(piVar1,0,&param_1);
-    (**(code **)(*piStack_8 + 8))(piStack_8);
-    uVar2 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,(int)piStack_8);
-    if ((0 < (int)uVar2) && (pvVar3 = orig::Allocator_Generic_v3(uVar2), pvVar3 != (void *)0x0)) {
-      orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,(int)piStack_8,pvVar3,uVar2,0);
-      iVar4 = orig::FUN_102d445d(iStack_c,0,0,(int)pvVar3,uVar2,(int *)0x0,1,0,&xi_frame[0]);
-      bVar5 = iVar4 == 0;
-      orig::operator_delete_v1(pvVar3);
+  u2 = false;
+  if ((arg1 != 0) &&
+     ((p1 = *(int **)(arg1 + 0x40), p1 != (int *)0x0 ||
+      (p1 = *(int **)(arg1 + 0x44), p1 != (int *)0x0)))) {
+    (**(untyped_fn **)(*p1 + 0x3c))(p1,0,&arg1);
+    (**(untyped_fn **)(*frame.p3 + 8))(frame.p3);
+    u1 = orig::FileMng_ResolveOrExit_v1(g_pFileMng_as_v0,(int)frame.p3);
+    if ((0 < (int)u1) && (p2 = orig::Allocator_Generic_v3(u1), p2 != (void *)0x0)) {
+      orig::TextInputFiles_ForwardOrExit(g_pFileMng_as_v0,(int)frame.p3,p2,u1,0);
+      i1 = orig::game_102D445D(frame.i2,0,0,(int)p2,u1,(int *)0x0,1,0,&frame.bytes[0]);
+      u2 = i1 == 0;
+      orig::operator_delete_v1(p2);
     }
   }
-  return bVar5;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x1011C720
 // GATE: PASS -- 100 trials, 87 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 87
 XI_API void __thiscall Font_LoadHighResTexture(int *self_)
 {
-  int v2;
-  int v3;
-  int v4;
-  int v5;
-  int *v6;
-  int *v7;
-  int v8;
-  _DWORD *v9;
-  int v10;
+  int i1;
+  int i2;
+  int i3;
+  int i4;
+  int *p1;
+  int *p2;
+  int i5;
+  uint32_t *p3;
+  int i6;
   if ( g_cfgFontCompression == 0 )
-    goto LABEL_16;
-  v2 = g_cfgFontCompression - 1;
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x931)) != 0 )
-    goto LABEL_16;
-  if ( *(_DWORD *)&g_pCDx->maxTextureWidth < 0x800u )
-    v2 = 0;
-  if ( *(_DWORD *)&g_pCDx->maxTextureHeight < 0x1000u )
-    v2 = 0;
-  v3 = 3 * v2;
-  v4 = g_hiResFont_width[v3];
-  v5 = g_hiResFont_height[v3];
-  v10 = g_hiResFont_fileId[v3];
-  if ( orig::FileMng_ResolveOrExit((int *)g_pFileMng, v10) < 0 )
-    goto LABEL_16;
-  orig::Font_AllocHighResImage(self_ + 31, v4, v5);
+    goto L1;
+  i1 = g_cfgFontCompression - 1;
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x931)) != 0 )
+    goto L1;
+  if ( *(uint32_t *)&g_pCDx->maxTextureWidth < 0x800u )
+    i1 = 0;
+  if ( *(uint32_t *)&g_pCDx->maxTextureHeight < 0x1000u )
+    i1 = 0;
+  i2 = 3 * i1;
+  i3 = g_hiResFont_width[i2];
+  i4 = g_hiResFont_height[i2];
+  i6 = g_hiResFont_fileId[i2];
+  if ( orig::FileMng_ResolveOrExit((int *)g_pFileMng, i6) < 0 )
+    goto L1;
+  orig::Font_AllocHighResImage(self_ + 31, i3, i4);
   if ( *(self_ + 31) != 0 )
   {
-    v6 = orig::Mem_AllocDefault(124);
-    if ( v6 != nullptr )
-      v7 = orig::CYyIcon_Constructor(v6, -1, (_BYTE *)*(self_ + 31), 0);
+    p1 = orig::Mem_AllocDefault(124);
+    if ( p1 != nullptr )
+      p2 = orig::CYyIcon_Constructor(p1, -1, (uint8_t *)*(self_ + 31), 0);
     else
-      v7 = nullptr;
-    *(self_ + 30) = (int)v7;
+      p2 = nullptr;
+    *(self_ + 30) = (int)p2;
   }
-  v8 = *(self_ + 30);
-  if ( v8 == 0
-    || (v9 = *(_DWORD **)(v8 + 8)) == nullptr
-    || (orig::TexObj_CreateAndUpload(v9),
-        orig::Tex_LoadSurfaceFromDatFile(*(struct IDirect3DSurface8 **)(*(self_ + 30) + 8), v10) != 1) )
+  i5 = *(self_ + 30);
+  if ( i5 == 0
+    || (p3 = *(uint32_t **)(i5 + 8)) == nullptr
+    || (orig::TexObj_CreateAndUpload(p3),
+        orig::Tex_LoadSurfaceFromDatFile(*(struct IDirect3DSurface8 **)(*(self_ + 30) + 8), i6) != 1) )
   {
-LABEL_16:
+L1:
     orig::Font_ReleaseHighResTexture(self_);
   }
 }
@@ -9675,16 +9723,16 @@ LABEL_16:
 // GATE: PASS -- 100 trials, 100 returned normally, 72 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Font_ReleaseHighResTexture(void * self_)
 {
-  int *this_00;
+  int *obj1;
   
-  this_00 = *(int **)((int)self_ + 0x78);
-  if (this_00 != (int *)0x0) {
-    ((int (__thiscall *)(void *, XI_ANY))((**(code **)(*this_00 + 0x18))))((void *)(this_00),1);
-    *(undefined4 *)((int)self_ + 0x78) = 0;
+  obj1 = *(int **)((int)self_ + 0x78);
+  if (obj1 != (int *)0x0) {
+    ((int (__thiscall *)(void *, XI_ANY))((**(untyped_fn **)(*obj1 + 0x18))))((void *)(obj1),1);
+    *(bits32 *)((int)self_ + 0x78) = 0;
   }
   if (*(LPVOID *)((int)self_ + 0x7c) != (LPVOID)0x0) {
     orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0x7c));
-    *(undefined4 *)((int)self_ + 0x7c) = 0;
+    *(bits32 *)((int)self_ + 0x7c) = 0;
   }
   *(uint8_t *)((int)self_ + 0x80) = 0;
   return;
@@ -9705,430 +9753,434 @@ XI_API uint32_t __thiscall Font_IsHighResTextureLoaded(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1011C870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall unknown_libname_88(void * self_)
+XI_API bits32 __thiscall unknown_libname_88(void * self_)
 {
-  *(undefined4 *)self_ = 0;
+  *(bits32 *)self_ = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x1011C8B0
 // GATE: PASS -- 100 trials, 72 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 72
-XI_API undefined4 __cdecl Font_LoadWidthTable(void)
+XI_API bits32 __cdecl Font_LoadWidthTable(void)
 {
-  int *piVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  int *p1;
+  bits32 u1;
+  int i1;
+  bits32 *p2;
   
-  piVar1 = (int *)orig::Cell_FindEntryByName(&g_shapeMng_as_v0,s_menu_ncol_1036c408);
-  uVar2 = 0x80808080;
-  puVar4 = &DAT_104e1b98;
-  for (iVar3 = 0x17; iVar3 != 0; iVar3 = iVar3 + -1) {
-    *puVar4 = 0x80808080;
-    puVar4 = puVar4 + 1;
+  p1 = (int *)orig::Cell_FindEntryByName(&g_shapeMng_as_v0,str_menu_ncol_1036C408);
+  u1 = 0x80808080;
+  p2 = &g_104E1B98;
+  for (i1 = 0x17; i1 != 0; i1 = i1 + -1) {
+    *p2 = 0x80808080;
+    p2 = p2 + 1;
   }
-  if (piVar1 != (int *)0x0) {
-    iVar3 = 0;
+  if (p1 != (int *)0x0) {
+    i1 = 0;
     do {
-      uVar2 = orig::NetCellFont_GetNthEntryBytePair(*(void **)(iVar3 + *piVar1),0,0);
-      *(undefined4 *)((int)&DAT_104e1b98 + iVar3) = uVar2;
-      iVar3 = iVar3 + 4;
-    } while (iVar3 < 0x5c);
+      u1 = orig::NetCellFont_GetNthEntryBytePair(*(void **)(i1 + *p1),0,0);
+      *(bits32 *)((int)&g_104E1B98 + i1) = u1;
+      i1 = i1 + 4;
+    } while (i1 < 0x5c);
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar2 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011C900
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Font_IsSingleByte(uint8_t * param_1)
+XI_API bits32 __cdecl Font_IsSingleByte(uint8_t * arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)*param_1);
-  return (uint32_t)(iVar1 == 0);
+  i1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)*arg1);
+  return (uint32_t)(i1 == 0);
 }
 
 // FUNCTION: FFXIMAIN 0x1011C940
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl Sjis_ToJisIndex(uint8_t * param_1)
+XI_API uint64_t __cdecl Sjis_ToJisIndex(uint8_t * arg1)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint16_t uVar3;
-  uint32_t uVar4;
-  uint32_t uVar5;
+  int i1;
+  uint32_t u1;
+  uint16_t u2;
+  uint32_t u3;
+  uint32_t u4;
   
-  uVar4 = (uint32_t)param_1[1];
-  if (*param_1 < 0xa0) {
-    iVar1 = -0x71;
+  u3 = (uint32_t)arg1[1];
+  if (*arg1 < 0xa0) {
+    i1 = -0x71;
   }
   else {
-    iVar1 = -0xb1;
+    i1 = -0xb1;
   }
-  uVar2 = ((uint32_t)*param_1 + iVar1) * 2 | 1;
-  if (0x7f < uVar4) {
-    uVar4 = uVar4 - 1;
+  u1 = ((uint32_t)*arg1 + i1) * 2 | 1;
+  if (0x7f < u3) {
+    u3 = u3 - 1;
   }
-  if (uVar4 < 0x9e) {
-    iVar1 = -0x1f;
+  if (u3 < 0x9e) {
+    i1 = -0x1f;
   }
   else {
-    uVar2 = uVar2 + 1;
-    iVar1 = -0x7d;
+    u1 = u1 + 1;
+    i1 = -0x7d;
   }
-  uVar4 = uVar4 + iVar1;
-  uVar5 = uVar2 << 8 | uVar4;
-  uVar3 = (uint16_t)(uVar2 >> 0x10);
-  if (0x931f < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)(0xcb))))));
+  u3 = u3 + i1;
+  u4 = u1 << 8 | u3;
+  u2 = (uint16_t)(u1 >> 0x10);
+  if (0x931f < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(0xcb))))));
   }
-  if (0x7920 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar2 * 0x2f) << 32) | (uint32_t)((uVar4 - 0xcd1) + uVar2 * 0x5e)));
+  if (0x7920 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u1 * 0x2f) << 32) | (uint32_t)((u3 - 0xcd1) + u1 * 0x5e)));
   }
-  if (0x5020 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar2 * 0x2f) << 32) | (uint32_t)((uVar4 - 0xdec) + uVar2 * 0x5e)));
+  if (0x5020 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u1 * 0x2f) << 32) | (uint32_t)((u3 - 0xdec) + u1 * 0x5e)));
   }
-  if (0x3020 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar2 * 0x2f) << 32) | (uint32_t)((uVar4 - 0xdc1) + uVar2 * 0x5e)));
+  if (0x3020 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u1 * 0x2f) << 32) | (uint32_t)((u3 - 0xdc1) + u1 * 0x5e)));
   }
-  if (0x2f20 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x21e + uVar2)));
+  if (0x2f20 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x21e + u1)));
   }
-  if (0x2e20 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x271 + uVar2)));
+  if (0x2e20 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x271 + u1)));
   }
-  if (0x2e45 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x271 + uVar2)));
+  if (0x2e45 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x271 + u1)));
   }
-  if (0x2d5e < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x351 + uVar2)));
+  if (0x2d5e < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x351 + u1)));
   }
-  if (0x2d3f < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x359 + uVar2)));
+  if (0x2d3f < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x359 + u1)));
   }
-  if (0x2d20 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x35a + uVar2)));
+  if (0x2d20 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x35a + u1)));
   }
-  if (0x2a20 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x223 + uVar2)));
+  if (0x2a20 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x223 + u1)));
   }
-  if (0x2920 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x276 + uVar2)));
+  if (0x2920 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x276 + u1)));
   }
-  if (0x2820 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x203 + uVar2)));
+  if (0x2820 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x203 + u1)));
   }
-  if (0x2750 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x1b3 + uVar2)));
+  if (0x2750 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x1b3 + u1)));
   }
-  if (0x2720 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x1c2 + uVar2)));
+  if (0x2720 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x1c2 + u1)));
   }
-  if (0x2640 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x18b + uVar2)));
+  if (0x2640 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x18b + u1)));
   }
-  if (0x2620 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x193 + uVar2)));
+  if (0x2620 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x193 + u1)));
   }
-  if (0x2520 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x13e + uVar2)));
+  if (0x2520 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x13e + u1)));
   }
-  if (0x2420 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0xec + uVar2)));
+  if (0x2420 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0xec + u1)));
   }
-  if (0x2360 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x93 + uVar2)));
+  if (0x2360 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x93 + u1)));
   }
-  if (0x2340 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x99 + uVar2)));
+  if (0x2340 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x99 + u1)));
   }
-  if (0x232f < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0xa0 + uVar2)));
+  if (0x232f < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0xa0 + u1)));
   }
-  if (uVar5 == 0x227f) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(0x227f) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)(0xf2))))));
+  if (u4 == 0x227f) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(0x227f) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(uint16_t)(u2) << 16) | (uint16_t)(0xf2))))));
   }
-  if (0x2271 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x56 + uVar2)));
+  if (0x2271 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x56 + u1)));
   }
-  if (0x225b < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x5d + uVar2)));
+  if (0x225b < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x5d + u1)));
   }
-  if (0x2249 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x68 + uVar2)));
+  if (0x2249 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x68 + u1)));
   }
-  if (0x2239 < uVar5) {
-    return ((uint64_t)(((uint64_t)(uint32_t)(uVar5) << 32) | (uint32_t)(uVar4 + 0x70 + uVar2)));
+  if (0x2239 < u4) {
+    return ((uint64_t)(((uint64_t)(uint32_t)(u4) << 32) | (uint32_t)(u3 + 0x70 + u1)));
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(uVar2 * 0x2f) << 32) | (uint32_t)((uVar4 - 0xbdf) + uVar2 * 0x5e)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u1 * 0x2f) << 32) | (uint32_t)((u3 - 0xbdf) + u1 * 0x5e)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011CE80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Font_DecodeNextChar(int * param_1)
+XI_API int __cdecl Font_DecodeNextChar(int * arg1)
 {
-  uint8_t *pbVar1;
-  undefined4 uVar2;
-  uint64_t uVar3;
+  uint8_t *p1;
+  bits32 u1;
+  uint64_t u2;
   
-  pbVar1 = (uint8_t *)*param_1;
-  uVar2 = orig::Font_IsSingleByte(pbVar1);
-  if ((char)uVar2 != '\0') {
-    *param_1 = *param_1 + 1;
-    return *pbVar1 - 0x20;
+  p1 = (uint8_t *)*arg1;
+  u1 = orig::Font_IsSingleByte(p1);
+  if ((char)u1 != '\0') {
+    *arg1 = *arg1 + 1;
+    return *p1 - 0x20;
   }
-  *param_1 = *param_1 + 2;
-  uVar3 = orig::Sjis_ToJisIndex(pbVar1);
-  return (int)uVar3;
+  *arg1 = *arg1 + 2;
+  u2 = orig::Sjis_ToJisIndex(p1);
+  return (int)u2;
 }
 
 // FUNCTION: FFXIMAIN 0x1011CEC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Font_GetCharWidth(uint32_t param_1)
+XI_API int __cdecl Font_GetCharWidth(uint32_t arg1)
 {
-  int iVar1;
-  uint32_t uVar2;
-  uint64_t uVar3;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  &local_10 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  uint8_t  &local_f = *reinterpret_cast<uint8_t  *>(xi_frame + 1);
+  int i1;
+  uint32_t u1;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; uint8_t u4; };   // at 0x1
+  } frame;
   
-  if ((uint16_t)param_1 < 0x20) {
+  if ((uint16_t)arg1 < 0x20) {
     return 0;
   }
-  if ((uint16_t)param_1 < 0x7f) {
-    return (int)((uint8_t *)(s_menu_ncol_1036c408))[param_1 & 0xffff];
+  if ((uint16_t)arg1 < 0x7f) {
+    return (int)((uint8_t *)(str_menu_ncol_1036C408))[arg1 & 0xffff];
   }
-  local_10 = (uint8_t)(param_1 >> 8);
-  local_f = (uint8_t)param_1;
-  uVar3 = orig::Sjis_ToJisIndex(&local_10);
-  uVar2 = (uint32_t)(short)uVar3;
-  if ((0x2114 < uVar2) && (uVar2 < 0x2144)) {
-    if (DAT_10621934 == (int *)0x0) {
-      uVar3 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_font_usgaiji_1036c98c);
-      DAT_10621934 = (int *)uVar3;
+  frame.u3 = (uint8_t)(arg1 >> 8);
+  frame.u4 = (uint8_t)arg1;
+  u2 = orig::Sjis_ToJisIndex(&frame.u3);
+  u1 = (uint32_t)(short)u2;
+  if ((0x2114 < u1) && (u1 < 0x2144)) {
+    if (g_10621934 == (int *)0x0) {
+      u2 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_font_usgaiji_1036C98C);
+      g_10621934 = (int *)u2;
     }
-    iVar1 = *(int *)(*DAT_10621934 + -0x8454 + uVar2 * 4);
-    return (int)*(short *)(iVar1 + 0x22) - (int)*(short *)(iVar1 + 0x20);
+    i1 = *(int *)(*g_10621934 + -0x8454 + u1 * 4);
+    return (int)*(short *)(i1 + 0x22) - (int)*(short *)(i1 + 0x20);
   }
-  if (uVar2 < 0x440) {
-    return (int)(char)((uint8_t *)((&DAT_1036c428)))[uVar2];
+  if (u1 < 0x440) {
+    return (int)(char)((uint8_t *)((&g_1036C428)))[u1];
   }
   return 0xe;
 }
 
 // FUNCTION: FFXIMAIN 0x1011CF70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl Font_MeasureText(char * param_1, uint32_t param_2)
+XI_API int __cdecl Font_MeasureText(char * arg1, uint32_t arg2)
 {
-  uint8_t *pbVar1;
-  char cVar2;
-  char *pcVar3;
-  undefined4 uVar4;
-  int iVar5;
-  uint32_t uVar6;
+  uint8_t *p1;
+  char c1;
+  char *p2;
+  bits32 u1;
+  int i1;
+  uint32_t u2;
   
-  pcVar3 = param_1;
-  uVar6 = 0;
-  if (param_1 != (char *)0x0) {
-    cVar2 = *param_1;
-    param_1 = (char *)0x0;
-    while ((cVar2 != '\0' && ((param_2 == 0 || (uVar6 < param_2))))) {
-      pbVar1 = (uint8_t *)(pcVar3 + uVar6);
-      if (pcVar3[uVar6] == '\x04') {
-        uVar6 = uVar6 + 1;
+  p2 = arg1;
+  u2 = 0;
+  if (arg1 != (char *)0x0) {
+    c1 = *arg1;
+    arg1 = (char *)0x0;
+    while ((c1 != '\0' && ((arg2 == 0 || (u2 < arg2))))) {
+      p1 = (uint8_t *)(p2 + u2);
+      if (p2[u2] == '\x04') {
+        u2 = u2 + 1;
       }
       else {
-        uVar4 = orig::Font_IsSingleByte(pbVar1);
-        if ((char)uVar4 == '\0') {
-          iVar5 = orig::Font_GetCharWidth((uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*pbVar1) << 8) | (uint8_t)(pcVar3[uVar6 + 1]))));
-          uVar6 = uVar6 + 2;
+        u1 = orig::Font_IsSingleByte(p1);
+        if ((char)u1 == '\0') {
+          i1 = orig::Font_GetCharWidth((uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*p1) << 8) | (uint8_t)(p2[u2 + 1]))));
+          u2 = u2 + 2;
         }
         else {
-          iVar5 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar4 >> 0x10)) << 16) | (uint16_t)((uint16_t)*pbVar1))));
-          uVar6 = uVar6 + 1;
+          i1 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u1 >> 0x10)) << 16) | (uint16_t)((uint16_t)*p1))));
+          u2 = u2 + 1;
         }
-        param_1 = param_1 + iVar5;
+        arg1 = arg1 + i1;
       }
-      cVar2 = pcVar3[uVar6];
+      c1 = p2[u2];
     }
-    return (int)param_1;
+    return (int)arg1;
   }
   return -1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Font_MeasureTextAll(char * param_1)
+XI_API void __cdecl Font_MeasureTextAll(char * arg1)
 {
-  orig::Font_MeasureText_1011CF70(param_1,0);
+  orig::Font_MeasureText_1011CF70(arg1,0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Font_MeasureTextAll2(char * param_1)
+XI_API void __cdecl Font_MeasureTextAll2(char * arg1)
 {
-  orig::Font_MeasureTextAll(param_1);
+  orig::Font_MeasureTextAll(arg1);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint8_t __cdecl NetCellFont_IsNotControlChar(undefined4 param_1)
+XI_API uint8_t __cdecl NetCellFont_IsNotControlChar(bits32 arg1)
 {
-  char cVar1;
-  uint8_t *puVar2;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  &local_20 = *reinterpret_cast<uint8_t  *>(xi_frame + 0);
-  char  (&local_1f)[31] = *reinterpret_cast<char  (*)[31]>(xi_frame + 1);
+  char c1;
+  uint8_t *p1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x1]; char val1[31]; };   // at 0x1
+  } frame;
   
-  puVar2 = &local_20;
-  builtin_strncpy(local_1f,
+  p1 = &frame.u1;
+  stored_strncpy(frame.val1,
                   "\x02\x03\x04\x05\x06\a\n\v\f\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1c\x1d\x1e\x1f\x7f"
                   ,0x1d);
-  cVar1 = '\x01';
+  c1 = '\x01';
   do {
-    if (cVar1 == (char)param_1) {
+    if (c1 == (char)arg1) {
       return 0;
     }
-    cVar1 = puVar2[1];
-    puVar2 = puVar2 + 1;
-  } while (cVar1 != '\0');
+    c1 = p1[1];
+    p1 = p1 + 1;
+  } while (c1 != '\0');
   return 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_MeasureTextWidth(char * param_1, uint32_t param_2, undefined4 param_3)
+XI_API uint32_t __cdecl NetCellFont_MeasureTextWidth(char * arg1, uint32_t arg2, bits32 arg3)
 {
-  uint8_t *pbVar1;
-  char cVar2;
-  uint32_t uVar3;
-  char *pcVar4;
-  uint32_t uVar5;
-  undefined4 uVar6;
-  int iVar7;
-  uint32_t uVar8;
+  uint8_t *p1;
+  char c1;
+  uint32_t u1;
+  char *p2;
+  uint32_t u2;
+  bits32 u3;
+  int i1;
+  uint32_t u4;
   
-  pcVar4 = param_1;
-  if (param_1 == (char *)0x0) {
+  p2 = arg1;
+  if (arg1 == (char *)0x0) {
     return 0xffffffff;
   }
-  cVar2 = *param_1;
-  param_1 = (char *)0x0;
-  XI_PIECE_S(param_1, 0, 2) = 0;
-  uVar3 = 0;
-  while ((uVar8 = uVar3, uVar5 = param_2, cVar2 != '\0' && ((param_2 == 0 || (uVar3 < param_2))))) {
-    pbVar1 = (uint8_t *)(pcVar4 + uVar3);
-    if (pcVar4[uVar3] == '\x04') {
-      uVar8 = uVar3 + 1;
+  c1 = *arg1;
+  arg1 = (char *)0x0;
+  XI_PIECE_S(arg1, 0, 2) = 0;
+  u1 = 0;
+  while ((u4 = u1, u2 = arg2, c1 != '\0' && ((arg2 == 0 || (u1 < arg2))))) {
+    p1 = (uint8_t *)(p2 + u1);
+    if (p2[u1] == '\x04') {
+      u4 = u1 + 1;
     }
     else {
-      uVar6 = orig::Font_IsSingleByte(pbVar1);
-      if ((char)uVar6 == '\0') {
-        iVar7 = orig::Font_GetCharWidth((uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*pbVar1) << 8) | (uint8_t)(pcVar4[uVar3 + 1]))));
-        uVar8 = uVar3 + 2;
+      u3 = orig::Font_IsSingleByte(p1);
+      if ((char)u3 == '\0') {
+        i1 = orig::Font_GetCharWidth((uint32_t)((uint16_t)(((uint16_t)(uint8_t)(*p1) << 8) | (uint8_t)(p2[u1 + 1]))));
+        u4 = u1 + 2;
       }
       else {
-        iVar7 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar6 >> 0x10)) << 16) | (uint16_t)((uint16_t)*pbVar1))));
-        uVar8 = uVar3 + 1;
+        i1 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u3 >> 0x10)) << 16) | (uint16_t)((uint16_t)*p1))));
+        u4 = u1 + 1;
       }
-      param_1 = param_1 + iVar7;
+      arg1 = arg1 + i1;
     }
-    uVar5 = uVar3;
-    if ((short)param_3 < (short)param_1) break;
-    cVar2 = pcVar4[uVar8];
-    uVar3 = uVar8;
+    u2 = u1;
+    if ((short)arg3 < (short)arg1) break;
+    c1 = p2[u4];
+    u1 = u4;
   }
-  param_2 = uVar5;
-  if ((short)param_3 < (short)param_1) {
-    uVar8 = param_2;
+  arg2 = u2;
+  if ((short)arg3 < (short)arg1) {
+    u4 = arg2;
   }
-  return uVar8;
+  return u4;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_MeasureTextWidthAll(char * param_1, undefined4 param_2)
+XI_API void __cdecl NetCellFont_MeasureTextWidthAll(char * arg1, bits32 arg2)
 {
-  orig::NetCellFont_MeasureTextWidth(param_1,0,param_2);
+  orig::NetCellFont_MeasureTextWidth(arg1,0,arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D840
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __attribute__((cdecl, regparm(1))) Font_AddGlyphAdvance(undefined4 xi_eax, undefined4 param_1, int * param_2)
+XI_API uint32_t __attribute__((cdecl, regparm(1))) Font_AddGlyphAdvance(bits32 xi_eax, bits32 arg2, int * arg3)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  piVar2 = (int *)((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)param_1)));
-  if (-1 < (short)(uint16_t)param_1) {
-    if ((0x2114 < (short)(uint16_t)param_1) && ((short)(uint16_t)param_1 < 0x2144)) {
-      iVar1 = *(int *)(*DAT_10621934 + -0x8454 + (short)(uint16_t)param_1 * 4);
-      *param_2 = *param_2 + ((int)*(short *)(iVar1 + 0x22) - (int)*(short *)(iVar1 + 0x20));
-      return (uint32_t)param_2 & 0xffffff00;
+  p1 = (int *)((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)((uint16_t)arg2)));
+  if (-1 < (short)(uint16_t)arg2) {
+    if ((0x2114 < (short)(uint16_t)arg2) && ((short)(uint16_t)arg2 < 0x2144)) {
+      i1 = *(int *)(*g_10621934 + -0x8454 + (short)(uint16_t)arg2 * 4);
+      *arg3 = *arg3 + ((int)*(short *)(i1 + 0x22) - (int)*(short *)(i1 + 0x20));
+      return (uint32_t)arg3 & 0xffffff00;
     }
-    if ((uint16_t)param_1 < 0x440) {
-      *param_2 = *param_2 + (int)(char)((uint8_t *)((&DAT_1036c428)))[(short)(uint16_t)param_1];
-      return (uint32_t)param_2 & 0xffffff00;
+    if ((uint16_t)arg2 < 0x440) {
+      *arg3 = *arg3 + (int)(char)((uint8_t *)((&g_1036C428)))[(short)(uint16_t)arg2];
+      return (uint32_t)arg3 & 0xffffff00;
     }
-    *param_2 = *param_2 + 0xe;
-    piVar2 = param_2;
+    *arg3 = *arg3 + 0xe;
+    p1 = arg3;
   }
-  return (uint32_t)piVar2 & 0xffffff00;
+  return (uint32_t)p1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D8B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Font_IsPrintableAscii(int param_1)
+XI_API bits32 __cdecl Font_IsPrintableAscii(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = xi_trunc24(((uint32_t)param_1 >> 8));
-  if ((0x1f < param_1) && (param_1 < 0x7f)) {
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+  u1 = xi_trunc24(((uint32_t)arg1 >> 8));
+  if ((0x1f < arg1) && (arg1 < 0x7f)) {
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
-  return (uint32_t)uVar1 << 8;
+  return (uint32_t)u1 << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_MeasureTextWidthFwd(char * param_1, undefined4 param_2)
+XI_API void __cdecl NetCellFont_MeasureTextWidthFwd(char * arg1, bits32 arg2)
 {
-  orig::NetCellFont_MeasureTextWidthAll(param_1,param_2);
+  orig::NetCellFont_MeasureTextWidthAll(arg1,arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011D990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(2))) Font_GetCharWidthAt(uint32_t xi_eax_unused, undefined4 xi_edx, uint8_t * param_1)
+XI_API bits32 __attribute__((cdecl, regparm(2))) Font_GetCharWidthAt(uint32_t xi_eax_unused, bits32 xi_edx, uint8_t * arg3)
 {
-  undefined4 uVar1;
-  int iVar2;
+  bits32 u1;
+  int i1;
   
-  uVar1 = orig::Font_IsSingleByte(param_1);
-  if ((char)uVar1 != '\0') {
-    iVar2 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar1 >> 0x10)) << 16) | (uint16_t)((short)(char)*param_1))));
-    return iVar2;
+  u1 = orig::Font_IsSingleByte(arg3);
+  if ((char)u1 != '\0') {
+    i1 = orig::Font_GetCharWidth(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u1 >> 0x10)) << 16) | (uint16_t)((short)(char)*arg3))));
+    return i1;
   }
-  iVar2 = orig::Font_GetCharWidth((uint32_t)*param_1 << 8 |
-                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_edx >> 0x10)) << 16) | (uint16_t)((short)(char)param_1[1]))));
-  return iVar2;
+  i1 = orig::Font_GetCharWidth((uint32_t)*arg3 << 8 |
+                       ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_edx >> 0x10)) << 16) | (uint16_t)((short)(char)arg3[1]))));
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011DA30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Sjis_IsLeadByte(uint32_t param_1)
+XI_API bits32 __cdecl Sjis_IsLeadByte(uint32_t arg1)
 {
-  if ((0x80 < param_1) && (param_1 < 0xa0)) {
+  if ((0x80 < arg1) && (arg1 < 0xa0)) {
     return 1;
   }
-  if ((0xdf < param_1) && (param_1 < 0xf0)) {
+  if ((0xdf < arg1) && (arg1 < 0xf0)) {
     return 1;
   }
-  if ((0xf9 < param_1) && (param_1 < 0xfd)) {
+  if ((0xf9 < arg1) && (arg1 < 0xfd)) {
     return 1;
   }
   return 0;
@@ -10136,24 +10188,24 @@ XI_API undefined4 __cdecl Sjis_IsLeadByte(uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x1011DA80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Sjis_GetCharByteLen(uint8_t * param_1)
+XI_API bits32 __cdecl Sjis_GetCharByteLen(uint8_t * arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)*param_1);
-  return (iVar1 != 0) + 1;
+  i1 = orig::Sjis_IsLeadByte((uint32_t)(uint8_t)*arg1);
+  return (i1 != 0) + 1;
 }
 
 // FUNCTION: FFXIMAIN 0x1011DB40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Sjis_IsCodeInSet(void * param_1)
+XI_API bits32 __cdecl Sjis_IsCodeInSet(void * arg1)
 {
-  orig::FUN_1011daa0(param_1);
-  if ((((((uint16_t)param_1 < 0x41) || (0x5a < (uint16_t)param_1)) &&
-       (((uint16_t)param_1 < 0x859f || (0x85b5 < (uint16_t)param_1)))) &&
-      (((((uint16_t)param_1 < 0x85b7 || (0x85bd < (uint16_t)param_1)) && ((uint16_t)param_1 != 0x854c)) &&
-       (((uint16_t)param_1 != 0x854a && ((uint16_t)param_1 != 0x854e)))))) &&
-     ((uint16_t)param_1 != 0x855f)) {
+  orig::game_1011DAA0(arg1);
+  if ((((((uint16_t)arg1 < 0x41) || (0x5a < (uint16_t)arg1)) &&
+       (((uint16_t)arg1 < 0x859f || (0x85b5 < (uint16_t)arg1)))) &&
+      (((((uint16_t)arg1 < 0x85b7 || (0x85bd < (uint16_t)arg1)) && ((uint16_t)arg1 != 0x854c)) &&
+       (((uint16_t)arg1 != 0x854a && ((uint16_t)arg1 != 0x854e)))))) &&
+     ((uint16_t)arg1 != 0x855f)) {
     return 0;
   }
   return 1;
@@ -10161,110 +10213,110 @@ XI_API undefined4 __cdecl Sjis_IsCodeInSet(void * param_1)
 
 // FUNCTION: FFXIMAIN 0x1011DC00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_UppercaseCharThen1011DAE0(uint8_t * param_1, void * param_2)
+XI_API bits32 __cdecl NetCellFont_UppercaseCharThen1011DAE0(uint8_t * arg1, void * arg2)
 {
-  uint16_t uVar1;
-  undefined4 uVar2;
+  uint16_t u1;
+  bits32 u2;
   
-  orig::FUN_1011daa0(param_2);
-  uVar1 = (uint16_t)param_2;
-  if ((0x60 < uVar1) && (uVar1 < 0x7b)) {
-    uVar2 = orig::FUN_1011dae0(param_1,(int)param_2 + 0xffe0);
-    return uVar2;
+  orig::game_1011DAA0(arg2);
+  u1 = (uint16_t)arg2;
+  if ((0x60 < u1) && (u1 < 0x7b)) {
+    u2 = orig::game_1011DAE0(arg1,(int)arg2 + 0xffe0);
+    return u2;
   }
-  if ((0x85be < uVar1) && (uVar1 < 0x85d6)) {
-    uVar2 = orig::FUN_1011dae0(param_1,(int)param_2 + 0xffe0);
-    return uVar2;
+  if ((0x85be < u1) && (u1 < 0x85d6)) {
+    u2 = orig::game_1011DAE0(arg1,(int)arg2 + 0xffe0);
+    return u2;
   }
-  if ((0x85d6 < uVar1) && (uVar1 < 0x85de)) {
-    uVar2 = orig::FUN_1011dae0(param_1,(int)param_2 + 0xffe0);
-    return uVar2;
+  if ((0x85d6 < u1) && (u1 < 0x85de)) {
+    u2 = orig::game_1011DAE0(arg1,(int)arg2 + 0xffe0);
+    return u2;
   }
-  if (uVar1 == 0x855c) {
-    uVar2 = orig::FUN_1011dae0(param_1,0x854c);
-    return uVar2;
+  if (u1 == 0x855c) {
+    u2 = orig::game_1011DAE0(arg1,0x854c);
+    return u2;
   }
-  if (uVar1 == 0x855a) {
-    uVar2 = orig::FUN_1011dae0(param_1,0x854a);
-    return uVar2;
+  if (u1 == 0x855a) {
+    u2 = orig::game_1011DAE0(arg1,0x854a);
+    return u2;
   }
-  if (uVar1 == 0x855e) {
-    uVar2 = orig::FUN_1011dae0(param_1,0x854e);
-    return uVar2;
+  if (u1 == 0x855e) {
+    u2 = orig::game_1011DAE0(arg1,0x854e);
+    return u2;
   }
-  if (uVar1 == 0x85de) {
-    param_2 = (void *)0x855f;
+  if (u1 == 0x85de) {
+    arg2 = (void *)0x855f;
   }
-  uVar2 = orig::FUN_1011dae0(param_1,param_2);
-  return uVar2;
+  u2 = orig::game_1011DAE0(arg1,arg2);
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x1011DCC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_LowercaseCharThen1011DAE0(uint8_t * param_1, void * param_2)
+XI_API void __cdecl NetCellFont_LowercaseCharThen1011DAE0(uint8_t * arg1, void * arg2)
 {
-  uint16_t uVar1;
+  uint16_t u1;
   
-  orig::FUN_1011daa0(param_2);
-  uVar1 = (uint16_t)param_2;
-  if ((0x40 < uVar1) && (uVar1 < 0x5b)) {
-    orig::FUN_1011dae0(param_1,(int)param_2 + 0x20);
+  orig::game_1011DAA0(arg2);
+  u1 = (uint16_t)arg2;
+  if ((0x40 < u1) && (u1 < 0x5b)) {
+    orig::game_1011DAE0(arg1,(int)arg2 + 0x20);
     return;
   }
-  if ((0x859e < uVar1) && (uVar1 < 0x85b6)) {
-    orig::FUN_1011dae0(param_1,(int)param_2 + 0x20);
+  if ((0x859e < u1) && (u1 < 0x85b6)) {
+    orig::game_1011DAE0(arg1,(int)arg2 + 0x20);
     return;
   }
-  if ((0x85b6 < uVar1) && (uVar1 < 0x85be)) {
-    orig::FUN_1011dae0(param_1,(int)param_2 + 0x20);
+  if ((0x85b6 < u1) && (u1 < 0x85be)) {
+    orig::game_1011DAE0(arg1,(int)arg2 + 0x20);
     return;
   }
-  if (uVar1 == 0x854c) {
-    orig::FUN_1011dae0(param_1,0x855c);
+  if (u1 == 0x854c) {
+    orig::game_1011DAE0(arg1,0x855c);
     return;
   }
-  if (uVar1 == 0x854a) {
-    orig::FUN_1011dae0(param_1,0x855a);
+  if (u1 == 0x854a) {
+    orig::game_1011DAE0(arg1,0x855a);
     return;
   }
-  if (uVar1 == 0x854e) {
-    orig::FUN_1011dae0(param_1,0x855e);
+  if (u1 == 0x854e) {
+    orig::game_1011DAE0(arg1,0x855e);
     return;
   }
-  if (uVar1 == 0x855f) {
-    param_2 = (void *)0x85de;
+  if (u1 == 0x855f) {
+    arg2 = (void *)0x85de;
   }
-  orig::FUN_1011dae0(param_1,param_2);
+  orig::game_1011DAE0(arg1,arg2);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011DE80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API size_t __cdecl Sjis_CopyPrefix(char * param_1, int param_2, char * param_3)
+XI_API size_t __cdecl Sjis_CopyPrefix(char * arg1, int arg2, char * arg3)
 {
-  char *pcVar1;
-  char cVar2;
+  char *p1;
+  char c1;
   size_t _Count;
-  int iVar3;
-  int iVar4;
+  int i1;
+  int i2;
   
-  if (param_2 < 1) {
+  if (arg2 < 1) {
     return 0xffffffff;
   }
-  iVar4 = 0;
-  cVar2 = *param_3;
+  i2 = 0;
+  c1 = *arg3;
   _Count = 0;
-  pcVar1 = param_3;
-  while (cVar2 != '\0') {
-    iVar3 = orig::Sjis_GetCharByteLen_v1(pcVar1);
-    if (param_2 <= (int)(iVar3 + _Count)) break;
-    iVar4 = iVar4 + iVar3;
-    pcVar1 = param_3 + iVar4;
-    _Count = iVar3 + _Count;
-    cVar2 = param_3[iVar4];
+  p1 = arg3;
+  while (c1 != '\0') {
+    i1 = orig::Sjis_GetCharByteLen_v1(p1);
+    if (arg2 <= (int)(i1 + _Count)) break;
+    i2 = i2 + i1;
+    p1 = arg3 + i2;
+    _Count = i1 + _Count;
+    c1 = arg3[i2];
   }
-  orig::_strncpy_v2(param_1,param_3,_Count);
-  param_1[_Count] = '\0';
+  orig::_strncpy_v2(arg1,arg3,_Count);
+  arg1[_Count] = '\0';
   return _Count;
 }
 
@@ -10279,362 +10331,364 @@ XI_API int __thiscall Cell_GetField20Ptr(void * self_)
 // GATE: PASS -- 100 trials, 74 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 74
 XI_API void __thiscall Cell_ResolveSubCells(void * self_)
 {
-  void *this_00;
-  int iVar1;
+  void *obj1;
+  int i1;
   
-  iVar1 = 0;
+  i1 = 0;
   if (*(short *)((int)self_ + 0x3c) != 0) {
     do {
-      this_00 = *(void **)(*(int *)((int)self_ + 0x20) + iVar1 * 4);
-      if (this_00 != (void *)0x0) {
-        orig::Cell_ResolveTextureList(this_00);
+      obj1 = *(void **)(*(int *)((int)self_ + 0x20) + i1 * 4);
+      if (obj1 != (void *)0x0) {
+        orig::Cell_ResolveTextureList(obj1);
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < (int)(uint32_t)*(uint16_t *)((int)self_ + 0x3c));
+      i1 = i1 + 1;
+    } while (i1 < (int)(uint32_t)*(uint16_t *)((int)self_ + 0x3c));
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1011E6D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_ResolveTextureUV(void * self_)
+XI_API bits32 __thiscall Cell_ResolveTextureUV(void * self_)
 {
-  uint16_t uVar1;
-  int iVar2;
-  int iVar3;
-  long double fVar4;
-  long double fVar5;
-  uint64_t uVar6;
-  char xi_frame[16] __attribute__((aligned(4)));
-  uint8_t  (&local_10)[16] = *reinterpret_cast<uint8_t  (*)[16]>(xi_frame + 0);
+  uint16_t u1;
+  int i1;
+  int i2;
+  long double f1;
+  long double f2;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { uint8_t u3[16]; };   // at 0x0
+  } frame;
   
   orig::__strlwr_v1((char *)((int)self_ + 0x32));
-  orig::Util_Copy16Bytes_v1(local_10,(int)self_ + 0x32);
-  uVar6 = orig::CYyTexMng_FindByName_v1(g_pTextureMng_as_v2,(int)local_10);
-  iVar2 = (int)uVar6;
-  *(int *)((int)self_ + 0x4c) = iVar2;
-  if (iVar2 == 0) {
-    return (uint32_t)xi_trunc24(((uint64_t)uVar6 >> 8)) << 8;
+  orig::Util_Copy16Bytes_v1(frame.u3,(int)self_ + 0x32);
+  u2 = orig::CYyTexMng_FindByName_v1(g_pTextureMng_as_v2,(int)frame.u3);
+  i1 = (int)u2;
+  *(int *)((int)self_ + 0x4c) = i1;
+  if (i1 == 0) {
+    return (uint32_t)xi_trunc24(((uint64_t)u2 >> 8)) << 8;
   }
-  iVar3 = (int)*(short *)((int)self_ + 0xc);
-  uVar1 = *(uint16_t *)(iVar2 + 0x26);
+  i2 = (int)*(short *)((int)self_ + 0xc);
+  u1 = *(uint16_t *)(i1 + 0x26);
   if ((*(uint8_t *)((int)self_ + 0x1c) & 1) == 0) {
-    fVar4 = (long double)*(uint16_t *)(iVar2 + 0x24);
-    fVar5 = (long double)iVar3 / fVar4;
-    *(float *)((int)self_ + 0x9c) = (float)fVar5;
-    *(float *)((int)self_ + 100) = (float)fVar5;
-    fVar4 = (long double)(*(short *)((int)self_ + 8) + iVar3) / fVar4;
+    f1 = *(uint16_t *)(i1 + 0x24);
+    f2 = i2 / f1;
+    *(float *)((int)self_ + 0x9c) = (float)f2;
+    *(float *)((int)self_ + 100) = (float)f2;
+    f1 = (*(short *)((int)self_ + 8) + i2) / f1;
   }
   else {
-    fVar4 = (long double)*(uint16_t *)(iVar2 + 0x24);
-    fVar5 = (long double)(*(short *)((int)self_ + 8) + iVar3) / fVar4;
-    *(float *)((int)self_ + 0x9c) = (float)fVar5;
-    *(float *)((int)self_ + 100) = (float)fVar5;
-    fVar4 = (long double)iVar3 / fVar4;
+    f1 = *(uint16_t *)(i1 + 0x24);
+    f2 = (*(short *)((int)self_ + 8) + i2) / f1;
+    *(float *)((int)self_ + 0x9c) = (float)f2;
+    *(float *)((int)self_ + 100) = (float)f2;
+    f1 = i2 / f1;
   }
-  *(float *)((int)self_ + 0xb8) = (float)fVar4;
-  *(float *)((int)self_ + 0x80) = (float)fVar4;
-  iVar2 = (int)*(short *)((int)self_ + 0xe);
+  *(float *)((int)self_ + 0xb8) = (float)f1;
+  *(float *)((int)self_ + 0x80) = (float)f1;
+  i1 = (int)*(short *)((int)self_ + 0xe);
   if ((*(uint8_t *)((int)self_ + 0x1c) & 2) == 0) {
-    fVar4 = (long double)uVar1;
-    fVar5 = (long double)iVar2 / fVar4;
-    *(float *)((int)self_ + 0x84) = (float)fVar5;
-    *(float *)((int)self_ + 0x68) = (float)fVar5;
-    fVar4 = (long double)(*(short *)((int)self_ + 10) + iVar2) / fVar4;
+    f1 = u1;
+    f2 = i1 / f1;
+    *(float *)((int)self_ + 0x84) = (float)f2;
+    *(float *)((int)self_ + 0x68) = (float)f2;
+    f1 = (*(short *)((int)self_ + 10) + i1) / f1;
   }
   else {
-    fVar4 = (long double)uVar1;
-    fVar5 = (long double)(*(short *)((int)self_ + 10) + iVar2) / fVar4;
-    *(float *)((int)self_ + 0x84) = (float)fVar5;
-    *(float *)((int)self_ + 0x68) = (float)fVar5;
-    fVar4 = (long double)iVar2 / fVar4;
+    f1 = u1;
+    f2 = (*(short *)((int)self_ + 10) + i1) / f1;
+    *(float *)((int)self_ + 0x84) = (float)f2;
+    *(float *)((int)self_ + 0x68) = (float)f2;
+    f1 = i1 / f1;
   }
-  *(float *)((int)self_ + 0xbc) = (float)fVar4;
-  *(float *)((int)self_ + 0xa0) = (float)fVar4;
+  *(float *)((int)self_ + 0xbc) = (float)f1;
+  *(float *)((int)self_ + 0xa0) = (float)f1;
   return ((uint32_t)(((uint32_t)(xi_strunc24((char)((uint16_t)*(short *)((int)self_ + 0xe) >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x1011E800
 // GATE: PASS -- 100 trials, 100 returned normally, 69 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Cell_DrawAt(void *self_, int a1, int a2)
+XI_API int __thiscall Cell_DrawAt(void *self_, int arg2, int arg3)
 {
-  int v4;
+  int i1;
   int result;
-  IDirect3DBaseTexture8 *v6;
-  double v8;
-  int v9;
-  double v10;
-  int v11;
-  double v12;
-  int v13;
-  double v14;
-  int v15;
-  double v16;
-  int v17;
-  double v18;
-  int v19;
-  int v20;
-  int v21;
-  int v22;
-  int v23;
-  _BYTE v24[16];
+  IDirect3DBaseTexture8 *p1;
+  double f1;
+  int i2;
+  double f2;
+  int i3;
+  double f3;
+  int i4;
+  double f4;
+  int i5;
+  double f5;
+  int i6;
+  double f6;
+  int i7;
+  int i8;
+  int i9;
+  int i10;
+  int i11;
+  uint8_t buf1[16];
   int a1a;
   int a1b;
   int a1c;
   int a1d;
   int a1e;
   int a1f;
-  v4 = *((_DWORD *)self_ + 19);
-  if ( v4 != 0 )
+  i1 = *((uint32_t *)self_ + 19);
+  if ( i1 != 0 )
   {
-    if ( *(_DWORD *)(v4 + 64) != 0 )
-      v6 = *(IDirect3DBaseTexture8 **)(v4 + 64);
+    if ( *(uint32_t *)(i1 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 64);
     else
-      v6 = *(IDirect3DBaseTexture8 **)(v4 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v6);
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   }
   else
   {
     orig::__strlwr((char *)self_ + 50);
-    orig::Util_Copy16Bytes(v24, (int)self_ + 50);
-    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)v24);
-    *((_DWORD *)self_ + 19) = result;
+    orig::Util_Copy16Bytes(buf1, (int)self_ + 50);
+    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)buf1);
+    *((uint32_t *)self_ + 19) = result;
     if ( result == 0 )
       return result;
   }
-  v8 = (double)(a1 + *((__int16 *)self_ + 96)) - 0.5;
-  a1a = a1 + *((__int16 *)self_ + 98);
-  v9 = *((__int16 *)self_ + 97);
-  *((float *)self_ + 20) = v8;
-  v10 = (double)a1a;
-  a1b = a1 + v9;
-  v11 = *((__int16 *)self_ + 99);
-  *((float *)self_ + 34) = v10 - 0.5;
-  v12 = (double)a1b;
-  a1c = a1 + v11;
-  v13 = *((__int16 *)self_ + 100);
-  *((float *)self_ + 27) = v12 - 0.5;
-  v14 = (double)a1c;
-  a1d = a2 + v13;
-  v15 = *((__int16 *)self_ + 101);
-  *((float *)self_ + 41) = v14 - 0.5;
-  v16 = (double)a1d;
-  a1e = a2 + v15;
-  v17 = *((__int16 *)self_ + 102);
-  *((float *)self_ + 21) = v16 - 0.5;
-  v18 = (double)a1e;
-  a1f = a2 + v17;
-  v19 = *((__int16 *)self_ + 103);
-  *((float *)self_ + 28) = v18 - 0.5;
-  v23 = *((unsigned __int8 *)self_ + 48);
-  v20 = *((unsigned __int8 *)self_ + 46);
-  v22 = *((unsigned __int8 *)self_ + 47);
+  f1 = (double)(arg2 + *((short *)self_ + 96)) - 0.5;
+  a1a = arg2 + *((short *)self_ + 98);
+  i2 = *((short *)self_ + 97);
+  *((float *)self_ + 20) = f1;
+  f2 = (double)a1a;
+  a1b = arg2 + i2;
+  i3 = *((short *)self_ + 99);
+  *((float *)self_ + 34) = f2 - 0.5;
+  f3 = (double)a1b;
+  a1c = arg2 + i3;
+  i4 = *((short *)self_ + 100);
+  *((float *)self_ + 27) = f3 - 0.5;
+  f4 = (double)a1c;
+  a1d = arg3 + i4;
+  i5 = *((short *)self_ + 101);
+  *((float *)self_ + 41) = f4 - 0.5;
+  f5 = (double)a1d;
+  a1e = arg3 + i5;
+  i6 = *((short *)self_ + 102);
+  *((float *)self_ + 21) = f5 - 0.5;
+  f6 = (double)a1e;
+  a1f = arg3 + i6;
+  i7 = *((short *)self_ + 103);
+  *((float *)self_ + 28) = f6 - 0.5;
+  i11 = *((unsigned char *)self_ + 48);
+  i8 = *((unsigned char *)self_ + 46);
+  i10 = *((unsigned char *)self_ + 47);
   *((float *)self_ + 35) = (double)a1f - 0.5;
-  v21 = *((unsigned __int8 *)self_ + 45);
-  *((float *)self_ + 42) = (double)(a2 + v19) - 0.5;
-  return orig::Cell_DrawQuadBlended(self_, (int)self_ + 80, v21, v20, v22, v23);
+  i9 = *((unsigned char *)self_ + 45);
+  *((float *)self_ + 42) = (double)(arg3 + i7) - 0.5;
+  return orig::Cell_DrawQuadBlended(self_, (int)self_ + 80, i9, i8, i10, i11);
 }
 
 // FUNCTION: FFXIMAIN 0x1011E980
 // GATE: PASS -- 100 trials, 100 returned normally, 473 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Cell_DrawTexturedQuad(void *self_, int a1, int a2, int a3, int a4, int a5, int a6)
+XI_API int __thiscall Cell_DrawTexturedQuad(void *self_, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
-  int v8;
+  int i1;
   int result;
-  IDirect3DBaseTexture8 *v10;
-  __int16 *v11;
-  unsigned int *v12;
-  int v13;
-  unsigned int v14;
-  unsigned int v15;
-  double v16;
-  float *v17;
-  double v18;
-  double v20;
-  unsigned __int8 v21; // c0
-  unsigned __int8 v22; // c2
-  double v23;
-  double v24;
-  __int16 v25; // fps
-  double v26;
-  bool v27; // c0
-  char v28; // c2
-  bool v29; // c3
-  double v30;
-  double v32;
-  unsigned __int8 v33; // c0
-  unsigned __int8 v34; // c2
-  double v35;
-  double v36;
-  double v37;
-  double v39;
-  unsigned __int8 v40; // c0
-  unsigned __int8 v41; // c2
-  double v42;
-  double v43;
-  __int16 v44; // fps
-  double v45;
-  bool v46; // c0
-  char v47; // c2
-  bool v48; // c3
-  double v49;
-  double v51;
-  unsigned __int8 v52; // c0
-  unsigned __int8 v53; // c2
-  double v54;
-  double v55;
-  _DWORD *v56;
+  IDirect3DBaseTexture8 *p1;
+  short *p2;
+  unsigned int *p3;
+  int i2;
+  unsigned int u1;
+  unsigned int u2;
+  double f1;
+  float *p4;
+  double f2;
+  double f3;
+  unsigned char c1; // c0
+  unsigned char c2; // c2
+  double f4;
+  double f5;
+  short i3; // fps
+  double f6;
+  bool b1; // c0
+  char c3; // c2
+  bool b2; // c3
+  double f7;
+  double f8;
+  unsigned char c4; // c0
+  unsigned char c5; // c2
+  double f9;
+  double f10;
+  double f11;
+  double f12;
+  unsigned char c6; // c0
+  unsigned char c7; // c2
+  double f13;
+  double f14;
+  short i4; // fps
+  double f15;
+  bool b3; // c0
+  char c8; // c2
+  bool b4; // c3
+  double f16;
+  double f17;
+  unsigned char c9; // c0
+  unsigned char c10; // c2
+  double f18;
+  double f19;
+  uint32_t *p5;
   int i;
-  int v58;
-  int v59;
-  float v60;
-  _BYTE v61[64];
+  int i5;
+  int i6;
+  float f20;
+  uint8_t buf1[64];
   int a1b;
   int a1a;
   float a2a;
   int a2b;
   bool xi_fpu_unord = false;
 
-  v8 = *((_DWORD *)self_ + 19);
-  if ( v8 != 0 )
+  i1 = *((uint32_t *)self_ + 19);
+  if ( i1 != 0 )
   {
-    if ( *(_DWORD *)(v8 + 64) != 0 )
-      v10 = *(IDirect3DBaseTexture8 **)(v8 + 64);
+    if ( *(uint32_t *)(i1 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 64);
     else
-      v10 = *(IDirect3DBaseTexture8 **)(v8 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v10);
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   }
   else
   {
     orig::__strlwr((char *)self_ + 50);
-    orig::Util_Copy16Bytes(v61, (int)self_ + 50);
-    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)v61);
-    *((_DWORD *)self_ + 19) = result;
+    orig::Util_Copy16Bytes(buf1, (int)self_ + 50);
+    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)buf1);
+    *((uint32_t *)self_ + 19) = result;
     if ( result == 0 )
       return result;
   }
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-  v11 = (__int16 *)((char *)self_ + 200);
-  v12 = (unsigned int *)((char *)self_ + 96);
-  v13 = 0;
-  v60 = (float)a1;
-  a2a = (float)a2;
+  p2 = (short *)((char *)self_ + 200);
+  p3 = (unsigned int *)((char *)self_ + 96);
+  i2 = 0;
+  f20 = (float)arg2;
+  a2a = (float)arg3;
   do
   {
-    v14 = *v12;
-    v15 = v12[2];
-    *(_DWORD *)&v61[v13 + 32] = v12[1];
-    *(_DWORD *)&v61[v13 + 16] = v14;
-    *(_DWORD *)&v61[v13 + 48] = v15;
-    *v12 = orig::Color_ModulateArgb128(v14, a5);
-    v13 += 4;
-    v16 = (double)*(v11 - 4) * *(float *)&a3;
-    a1b = *v11++;
-    v12 += 7;
-    *((float *)v12 - 11) = v16 + v60 - 0.5;
-    *((float *)v12 - 10) = (double)a1b * *(float *)&a4 + a2a - 0.5;
+    u1 = *p3;
+    u2 = p3[2];
+    *(uint32_t *)&buf1[i2 + 32] = p3[1];
+    *(uint32_t *)&buf1[i2 + 16] = u1;
+    *(uint32_t *)&buf1[i2 + 48] = u2;
+    *p3 = orig::Color_ModulateArgb128(u1, arg6);
+    i2 += 4;
+    f1 = (double)*(p2 - 4) * *(float *)&arg4;
+    a1b = *p2++;
+    p3 += 7;
+    *((float *)p3 - 11) = f1 + f20 - 0.5;
+    *((float *)p3 - 10) = (double)a1b * *(float *)&arg5 + a2a - 0.5;
   }
-  while ( v13 < 16 );
-  v17 = (float *)((char *)self_ + 80);
-  *(float *)&a1a = (double)(__int16)(g_screenRectBottomRight - g_screenRectTopLeft) - 1.0;
-  *(float *)&a2b = (double)(__int16)(HIWORD(g_screenRectBottomRight) - HIWORD(g_screenRectTopLeft)) - 1.0;
+  while ( i2 < 16 );
+  p4 = (float *)((char *)self_ + 80);
+  *(float *)&a1a = (double)(short)(g_screenRectBottomRight - g_screenRectTopLeft) - 1.0;
+  *(float *)&a2b = (double)(short)((*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) - (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1))) - 1.0;
   if ( *((float *)self_ + 20) < 0.0 )
   {
-    v18 = *((float *)self_ + 27) - *v17;
-    v20 = v18;
-    if ( v18 < 0.0 )
-      v20 = -v18;
-    if ( v20 < 1.0 )
-      goto LABEL_35;
-    v23 = *((float *)self_ + 27) - -0.5;
-    *v17 = -0.5;
-    *((_DWORD *)self_ + 34) = -1090519040;
-    v24 = v23 / v18 * (*((float *)self_ + 32) - *((float *)self_ + 25));
-    *((float *)self_ + 25) = *((float *)self_ + 32) - v24;
-    *((float *)self_ + 39) = *((float *)self_ + 46) - v24;
+    f2 = *((float *)self_ + 27) - *p4;
+    f3 = f2;
+    if ( f2 < 0.0 )
+      f3 = -f2;
+    if ( f3 < 1.0 )
+      goto L1;
+    f4 = *((float *)self_ + 27) - -0.5;
+    *p4 = -0.5;
+    *((uint32_t *)self_ + 34) = -1090519040;
+    f5 = f4 / f2 * (*((float *)self_ + 32) - *((float *)self_ + 25));
+    *((float *)self_ + 25) = *((float *)self_ + 32) - f5;
+    *((float *)self_ + 39) = *((float *)self_ + 46) - f5;
   }
-  v26 = *((float *)self_ + 27);
-  (xi_fpu_unord = __builtin_isunordered(v26, *(float *)&a1a), v27 = v26 < *(float *)&a1a);
-  v28 = 0;
-  v29 = v26 == *(float *)&a1a;
-  if ( ((__int16)(((v27 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v29 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+  f6 = *((float *)self_ + 27);
+  (xi_fpu_unord = __builtin_isunordered(f6, *(float *)&a1a), b1 = f6 < *(float *)&a1a);
+  c3 = 0;
+  b2 = f6 == *(float *)&a1a;
+  if ( ((short)(((b1 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b2 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
   {
-    v30 = *((float *)self_ + 27) - *v17;
-    v32 = v30;
-    if ( v30 < 0.0 )
-      v32 = -v30;
-    if ( v32 < 1.0 )
-      goto LABEL_35;
-    v35 = *(float *)&a1a - 0.5;
-    *((float *)self_ + 27) = v35;
-    *((float *)self_ + 41) = v35;
-    v36 = (v35 - *v17) / v30 * (*((float *)self_ + 32) - *((float *)self_ + 25)) + *((float *)self_ + 25);
-    *((float *)self_ + 32) = v36;
-    *((float *)self_ + 46) = v36;
+    f7 = *((float *)self_ + 27) - *p4;
+    f8 = f7;
+    if ( f7 < 0.0 )
+      f8 = -f7;
+    if ( f8 < 1.0 )
+      goto L1;
+    f9 = *(float *)&a1a - 0.5;
+    *((float *)self_ + 27) = f9;
+    *((float *)self_ + 41) = f9;
+    f10 = (f9 - *p4) / f7 * (*((float *)self_ + 32) - *((float *)self_ + 25)) + *((float *)self_ + 25);
+    *((float *)self_ + 32) = f10;
+    *((float *)self_ + 46) = f10;
   }
   if ( *((float *)self_ + 21) < 0.0 )
   {
-    v37 = *((float *)self_ + 35) - *((float *)self_ + 21);
-    v39 = v37;
-    if ( v37 < 0.0 )
-      v39 = -v37;
-    if ( v39 < 1.0 )
-      goto LABEL_35;
-    v42 = *((float *)self_ + 35) - -0.5;
-    *((_DWORD *)self_ + 21) = -1090519040;
-    *((_DWORD *)self_ + 28) = -1090519040;
-    v43 = v42 / v37 * (*((float *)self_ + 40) - *((float *)self_ + 26));
-    *((float *)self_ + 26) = *((float *)self_ + 40) - v43;
-    *((float *)self_ + 33) = *((float *)self_ + 47) - v43;
+    f11 = *((float *)self_ + 35) - *((float *)self_ + 21);
+    f12 = f11;
+    if ( f11 < 0.0 )
+      f12 = -f11;
+    if ( f12 < 1.0 )
+      goto L1;
+    f13 = *((float *)self_ + 35) - -0.5;
+    *((uint32_t *)self_ + 21) = -1090519040;
+    *((uint32_t *)self_ + 28) = -1090519040;
+    f14 = f13 / f11 * (*((float *)self_ + 40) - *((float *)self_ + 26));
+    *((float *)self_ + 26) = *((float *)self_ + 40) - f14;
+    *((float *)self_ + 33) = *((float *)self_ + 47) - f14;
   }
-  v45 = *((float *)self_ + 35);
-  (xi_fpu_unord = __builtin_isunordered(v45, *(float *)&a2b), v46 = v45 < *(float *)&a2b);
-  v47 = 0;
-  v48 = v45 == *(float *)&a2b;
-  if ( ((__int16)(((v46 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((v48 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
+  f15 = *((float *)self_ + 35);
+  (xi_fpu_unord = __builtin_isunordered(f15, *(float *)&a2b), b3 = f15 < *(float *)&a2b);
+  c8 = 0;
+  b4 = f15 == *(float *)&a2b;
+  if ( ((short)(((b3 || xi_fpu_unord) ? 0x100 : 0) | ((xi_fpu_unord) ? 0x400 : 0) | ((b4 || xi_fpu_unord) ? 0x4000 : 0)) & 0x4100) == 0 )
   {
-    v49 = *((float *)self_ + 35) - *((float *)self_ + 21);
-    v51 = v49;
-    if ( v49 < 0.0 )
-      v51 = -v49;
-    if ( v51 < 1.0 )
-      goto LABEL_35;
-    v54 = *(float *)&a2b - 0.5;
-    *((float *)self_ + 35) = v54;
-    *((float *)self_ + 42) = v54;
-    v55 = (v54 - *((float *)self_ + 21)) / v49 * (*((float *)self_ + 40) - *((float *)self_ + 26)) + *((float *)self_ + 26);
-    *((float *)self_ + 40) = v55;
-    *((float *)self_ + 47) = v55;
+    f16 = *((float *)self_ + 35) - *((float *)self_ + 21);
+    f17 = f16;
+    if ( f16 < 0.0 )
+      f17 = -f16;
+    if ( f17 < 1.0 )
+      goto L1;
+    f18 = *(float *)&a2b - 0.5;
+    *((float *)self_ + 35) = f18;
+    *((float *)self_ + 42) = f18;
+    f19 = (f18 - *((float *)self_ + 21)) / f16 * (*((float *)self_ + 40) - *((float *)self_ + 26)) + *((float *)self_ + 26);
+    *((float *)self_ + 40) = f19;
+    *((float *)self_ + 47) = f19;
   }
-  if ( a6 != 0 )
+  if ( arg7 != 0 )
   {
-    orig::Cell_DrawQuadBlended(self_, (int)v17, 1, a6 & 3, (a6 >> 2) & 3, (a6 >> 6) & 3);
+    orig::Cell_DrawQuadBlended(self_, (int)p4, 1, arg7 & 3, (arg7 >> 2) & 3, (arg7 >> 6) & 3);
   }
-  else if ( *((_BYTE *)self_ + 45) != 0 )
+  else if ( *((uint8_t *)self_ + 45) != 0 )
   {
     orig::Cell_DrawQuadBlended(
       self_,
-      (int)v17,
+      (int)p4,
       1,
-      *((unsigned __int8 *)self_ + 46),
-      *((unsigned __int8 *)self_ + 47),
-      *((unsigned __int8 *)self_ + 48));
+      *((unsigned char *)self_ + 46),
+      *((unsigned char *)self_ + 47),
+      *((unsigned char *)self_ + 48));
   }
   else
   {
     orig::Cell_DrawWithDefaultBlend(self_);
   }
-LABEL_35:
-  v56 =(_DWORD*)((char *)self_ + 100);
+L1:
+  p5 =(uint32_t*)((char *)self_ + 100);
   for ( i = 0; i < 16; i += 4 )
   {
-    v58 = *(_DWORD *)&v61[i + 32];
-    *(v56 - 1) = *(_DWORD *)&v61[i + 16];
-    v59 = *(_DWORD *)&v61[i + 48];
-    *v56 = v58;
-    v56[1] = v59;
-    v56 += 7;
+    i5 = *(uint32_t *)&buf1[i + 32];
+    *(p5 - 1) = *(uint32_t *)&buf1[i + 16];
+    i6 = *(uint32_t *)&buf1[i + 48];
+    *p5 = i5;
+    p5[1] = i6;
+    p5 += 7;
   }
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
   return (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
@@ -10642,255 +10696,255 @@ LABEL_35:
 
 // FUNCTION: FFXIMAIN 0x1011EDE0
 // GATE: PASS -- 100 trials, 100 returned normally, 79 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_DrawTransformed(int self_, int a2, int a3, float a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, unsigned int a20, int a21)
+XI_API void __thiscall Cell_DrawTransformed(int self_, int arg2, int arg3, float arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18, int arg19, unsigned int arg20, int arg21)
 {
-  int v22;
-  int v23;
-  IDirect3DBaseTexture8 *v24;
-  unsigned int v25;
-  int v26;
-  int v27;
-  __int16 *v28;
-  int v29;
-  int v30;
-  double v31;
-  double v32;
-  int v33;
-  _DWORD *v34;
-  int v35;
-  unsigned int v36;
-  float v38;
-  _BYTE v39[32];
-  float v40;
-  v22 = *(_DWORD *)(self_ + 76);
-  if ( v22 != 0 )
+  int i1;
+  int i2;
+  IDirect3DBaseTexture8 *p1;
+  unsigned int u1;
+  int i3;
+  int i4;
+  short *p2;
+  int i5;
+  int i6;
+  double f1;
+  double f2;
+  int i7;
+  uint32_t *p3;
+  int i8;
+  unsigned int u2;
+  float f3;
+  uint8_t buf1[32];
+  float f4;
+  i1 = *(uint32_t *)(self_ + 76);
+  if ( i1 != 0 )
   {
-    if ( *(_DWORD *)(v22 + 64) != 0 )
-      v24 = *(IDirect3DBaseTexture8 **)(v22 + 64);
+    if ( *(uint32_t *)(i1 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 64);
     else
-      v24 = *(IDirect3DBaseTexture8 **)(v22 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v24);
+      p1 = *(IDirect3DBaseTexture8 **)(i1 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   }
   else
   {
     orig::__strlwr((char *)(self_ + 50));
-    orig::Util_Copy16Bytes(v39, self_ + 50);
-    v23 = orig::CYyTexMng_FindByName(g_pTextureMng, (int)v39);
-    *(_DWORD *)(self_ + 76) = v23;
-    if ( v23 == 0 )
-      goto LABEL_15;
+    orig::Util_Copy16Bytes(buf1, self_ + 50);
+    i2 = orig::CYyTexMng_FindByName(g_pTextureMng, (int)buf1);
+    *(uint32_t *)(self_ + 76) = i2;
+    if ( i2 == 0 )
+      goto L1;
   }
-  v25 = a20;
-  v26 = 0;
-  v27 = self_ + 80;
-  v28 = (__int16 *)(self_ + 200);
-  v40 = (double)a3 - 0.5;
+  u1 = arg20;
+  i3 = 0;
+  i4 = self_ + 80;
+  p2 = (short *)(self_ + 200);
+  f4 = (double)arg3 - 0.5;
   do
   {
-    v36 = *(_DWORD *)(v27 + 16);
-    *(_DWORD *)&v39[4 * v26 + 16] = v36;
-    v29 = orig::Color_ModulateArgb128(v36, v25);
-    v30 = *v28;
-    *(_DWORD *)(v27 + 16) = v29;
-    v31 = (double)*(v28 - 4);
-    *(_DWORD *)(v27 + 8) = 1065353216;
-    *(float *)v27 = v31;
-    *(float *)(v27 + 4) = (float)v30;
-    orig::Mat4_TransformNormalInPlace(&a4, (float *)v27);
-    v38 = (double)a2 - 0.5;
-    v32 = v38 + *(float *)v27;
-    *(_DWORD *)(v27 + 8) = 0;
-    ++v26;
-    ++v28;
-    v27 += 28;
-    *(float *)(v27 - 28) = v32;
-    *(float *)(v27 - 24) = v40 + *(float *)(v27 - 24);
+    u2 = *(uint32_t *)(i4 + 16);
+    *(uint32_t *)&buf1[4 * i3 + 16] = u2;
+    i5 = orig::Color_ModulateArgb128(u2, u1);
+    i6 = *p2;
+    *(uint32_t *)(i4 + 16) = i5;
+    f1 = (double)*(p2 - 4);
+    *(uint32_t *)(i4 + 8) = 1065353216;
+    *(float *)i4 = f1;
+    *(float *)(i4 + 4) = (float)i6;
+    orig::Mat4_TransformNormalInPlace(&arg4, (float *)i4);
+    f3 = (double)arg2 - 0.5;
+    f2 = f3 + *(float *)i4;
+    *(uint32_t *)(i4 + 8) = 0;
+    ++i3;
+    ++p2;
+    i4 += 28;
+    *(float *)(i4 - 28) = f2;
+    *(float *)(i4 - 24) = f4 + *(float *)(i4 - 24);
   }
-  while ( v26 < 4 );
-  if ( a21 != 0 )
-    orig::Cell_DrawQuadBlended((void *)self_, self_ + 80, 1, a21 & 3, (a21 >> 2) & 3, (a21 >> 6) & 3);
+  while ( i3 < 4 );
+  if ( arg21 != 0 )
+    orig::Cell_DrawQuadBlended((void *)self_, self_ + 80, 1, arg21 & 3, (arg21 >> 2) & 3, (arg21 >> 6) & 3);
   else
     orig::Cell_DrawWithDefaultBlend((void *)self_);
-  v33 = 0;
-  v34 = (_DWORD *)(self_ + 96);
+  i7 = 0;
+  p3 = (uint32_t *)(self_ + 96);
   do
   {
-    v35 = *(_DWORD *)&v39[4 * v33++ + 16];
-    *v34 = v35;
-    v34 += 7;
+    i8 = *(uint32_t *)&buf1[4 * i7++ + 16];
+    *p3 = i8;
+    p3 += 7;
   }
-  while ( v33 < 4 );
-LABEL_15:
+  while ( i7 < 4 );
+L1:
   orig::MathVector_Nop();
 }
 
 // FUNCTION: FFXIMAIN 0x1011EF60
 // GATE: PASS -- 100 trials, 100 returned normally, 471 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Cell_DrawStretchedWrapped(int self_, int a2, int a3, int a4, int a5, int a6, int a7, float a8, float a9, unsigned int a10, unsigned int a11, char a12)
+XI_API int __thiscall Cell_DrawStretchedWrapped(int self_, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, float arg8, float arg9, unsigned int arg10, unsigned int arg11, char arg12)
 {
-  int v12;
-  int v14;
+  int i1;
+  int i2;
   int result;
-  IDirect3DBaseTexture8 *v16;
-  double v17;
-  float *v18;
-  double v19;
-  int v20;
-  float v21;
-  float v22;
-  int v23;
-  double v24;
-  double v25;
-  double v26;
-  double v27;
-  char v28;
-  double v29;
-  double v30;
-  double v31;
-  double v32;
-  float *v33;
-  int v34;
-  float v35;
-  float v36;
-  float v37;
-  float v38;
-  float v39;
-  float v40;
-  float v41[16];
-  float v42;
-  int v43;
-  int v44;
-  float v45;
-  float v46;
-  v12 = 0;
+  IDirect3DBaseTexture8 *p1;
+  double f1;
+  float *p2;
+  double f2;
+  int i3;
+  float f3;
+  float f4;
+  int i4;
+  double f5;
+  double f6;
+  double f7;
+  double f8;
+  char c1;
+  double f9;
+  double f10;
+  double f11;
+  double f12;
+  float *p3;
+  int i5;
+  float f13;
+  float f14;
+  float f15;
+  float f16;
+  float f17;
+  float f18;
+  float buf1[16];
+  float f19;
+  int i6;
+  int i7;
+  float f20;
+  float f21;
+  i1 = 0;
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-  v14 = *(_DWORD *)(self_ + 76);
-  if ( v14 != 0 )
+  i2 = *(uint32_t *)(self_ + 76);
+  if ( i2 != 0 )
   {
-    if ( *(_DWORD *)(v14 + 64) != 0 )
-      v16 = *(IDirect3DBaseTexture8 **)(v14 + 64);
+    if ( *(uint32_t *)(i2 + 64) != 0 )
+      p1 = *(IDirect3DBaseTexture8 **)(i2 + 64);
     else
-      v16 = *(IDirect3DBaseTexture8 **)(v14 + 68);
-    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v16);
+      p1 = *(IDirect3DBaseTexture8 **)(i2 + 68);
+    (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p1);
   }
   else
   {
     orig::__strlwr((char *)(self_ + 50));
-    orig::Util_Copy16Bytes(v41, self_ + 50);
-    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)v41);
-    *(_DWORD *)(self_ + 76) = result;
+    orig::Util_Copy16Bytes(buf1, self_ + 50);
+    result = orig::CYyTexMng_FindByName(g_pTextureMng, (int)buf1);
+    *(uint32_t *)(self_ + 76) = result;
     if ( result == 0 )
       return result;
   }
-  v37 = (float)a4;
-  v17 = (double)(unsigned int)a6;
-  *(float *)&v44 = v17;
-  v18 = (float *)(self_ + 96);
-  v39 = v17 + v37;
-  v38 = (float)a5;
-  v19 = (double)(unsigned int)a7;
-  *(float *)&v43 = v19;
-  v40 = v19 + v38;
+  f15 = (float)arg4;
+  f1 = (double)(unsigned int)arg6;
+  *(float *)&i7 = f1;
+  p2 = (float *)(self_ + 96);
+  f17 = f1 + f15;
+  f16 = (float)arg5;
+  f2 = (double)(unsigned int)arg7;
+  *(float *)&i6 = f2;
+  f18 = f2 + f16;
   do
   {
-    v36 = *v18;
-    v41[v12 + 4] = *v18;
-    v20 = orig::Color_ModulateArgb128(LODWORD(v36), a10);
-    v21 = v18[1];
-    *(_DWORD *)v18 = v20;
-    v22 = v18[2];
-    v41[v12 + 8] = v21;
-    v41[v12 + 12] = v22;
-    ++v12;
-    v18 += 7;
+    f14 = *p2;
+    buf1[i1 + 4] = *p2;
+    i3 = orig::Color_ModulateArgb128((*(uint32_t *)&(f14)), arg10);
+    f3 = p2[1];
+    *(uint32_t *)p2 = i3;
+    f4 = p2[2];
+    buf1[i1 + 8] = f3;
+    buf1[i1 + 12] = f4;
+    ++i1;
+    p2 += 7;
   }
-  while ( v12 < 4 );
-  v23 = *(_DWORD *)(self_ + 76);
-  v24 = *(float *)(self_ + 104);
-  v42 = *(float *)(self_ + 100);
-  v25 = (double)*(unsigned __int16 *)(v23 + 36);
-  v45 = (float)*(unsigned __int16 *)(v23 + 38);
-  if ( a12 != 0 )
+  while ( i1 < 4 );
+  i4 = *(uint32_t *)(self_ + 76);
+  f5 = *(float *)(self_ + 104);
+  f19 = *(float *)(self_ + 100);
+  f6 = (double)*(unsigned short *)(i4 + 36);
+  f20 = (float)*(unsigned short *)(i4 + 38);
+  if ( arg12 != 0 )
   {
-    v26 = (double)*(__int16 *)(self_ + 8) / v25 + v42;
-    v27 = (double)*(__int16 *)(self_ + 10);
+    f7 = (double)*(short *)(self_ + 8) / f6 + f19;
+    f8 = (double)*(short *)(self_ + 10);
   }
   else
   {
-    v26 = *(float *)&v44 / v25 + v42;
-    v27 = *(float *)&v43;
+    f7 = *(float *)&i7 / f6 + f19;
+    f8 = *(float *)&i6;
   }
-  v28 = *(_BYTE *)(self_ + 28);
-  v46 = v27 / v45 + v24;
-  v29 = (double)a2;
-  v30 = v37 * a8 + v29 - 0.5;
-  *(float *)(self_ + 80) = v30;
-  *(float *)(self_ + 108) = v39 * a8 + v29 - 0.5;
-  *(float *)(self_ + 136) = v30;
-  *(float *)(self_ + 164) = v39 * a8 + v29 - 0.5;
-  v31 = (double)a3;
-  v32 = v38 * a9 + v31 - 0.5;
-  *(float *)(self_ + 84) = v32;
-  *(float *)(self_ + 112) = v32;
-  *(float *)(self_ + 140) = v40 * a9 + v31 - 0.5;
-  *(float *)(self_ + 168) = v40 * a9 + v31 - 0.5;
-  if ( (v28 & 1) != 0 )
+  c1 = *(uint8_t *)(self_ + 28);
+  f21 = f8 / f20 + f5;
+  f9 = (double)arg2;
+  f10 = f15 * arg8 + f9 - 0.5;
+  *(float *)(self_ + 80) = f10;
+  *(float *)(self_ + 108) = f17 * arg8 + f9 - 0.5;
+  *(float *)(self_ + 136) = f10;
+  *(float *)(self_ + 164) = f17 * arg8 + f9 - 0.5;
+  f11 = (double)arg3;
+  f12 = f16 * arg9 + f11 - 0.5;
+  *(float *)(self_ + 84) = f12;
+  *(float *)(self_ + 112) = f12;
+  *(float *)(self_ + 140) = f18 * arg9 + f11 - 0.5;
+  *(float *)(self_ + 168) = f18 * arg9 + f11 - 0.5;
+  if ( (c1 & 1) != 0 )
   {
-    *(float *)(self_ + 100) = v26;
-    *(float *)(self_ + 156) = v26;
-    *(float *)(self_ + 128) = v42;
-    *(float *)(self_ + 184) = v42;
+    *(float *)(self_ + 100) = f7;
+    *(float *)(self_ + 156) = f7;
+    *(float *)(self_ + 128) = f19;
+    *(float *)(self_ + 184) = f19;
   }
   else
   {
-    *(float *)(self_ + 128) = v26;
-    *(float *)(self_ + 184) = v26;
-    *(float *)(self_ + 156) = v42;
+    *(float *)(self_ + 128) = f7;
+    *(float *)(self_ + 184) = f7;
+    *(float *)(self_ + 156) = f19;
   }
-  if ( (v28 & 2) != 0 )
+  if ( (c1 & 2) != 0 )
   {
-    *(float *)(self_ + 160) = v24;
-    *(float *)(self_ + 188) = v24;
-    *(float *)(self_ + 104) = v46;
-    *(float *)(self_ + 132) = v46;
+    *(float *)(self_ + 160) = f5;
+    *(float *)(self_ + 188) = f5;
+    *(float *)(self_ + 104) = f21;
+    *(float *)(self_ + 132) = f21;
   }
   else
   {
-    *(float *)(self_ + 132) = v24;
-    *(float *)(self_ + 160) = v46;
-    *(float *)(self_ + 188) = v46;
+    *(float *)(self_ + 132) = f5;
+    *(float *)(self_ + 160) = f21;
+    *(float *)(self_ + 188) = f21;
   }
-  if ( a11 != 0 )
+  if ( arg11 != 0 )
   {
-    orig::Cell_DrawQuadBlended((void *)self_, self_ + 80, 1, a11 & 3, (a11 >> 2) & 3, (unsigned __int8)a11 >> 6);
+    orig::Cell_DrawQuadBlended((void *)self_, self_ + 80, 1, arg11 & 3, (arg11 >> 2) & 3, (unsigned char)arg11 >> 6);
   }
-  else if ( *(_BYTE *)(self_ + 45) != 0 )
+  else if ( *(uint8_t *)(self_ + 45) != 0 )
   {
     orig::Cell_DrawQuadBlended(
       (void *)self_,
       self_ + 80,
       1,
-      *(unsigned __int8 *)(self_ + 46),
-      *(unsigned __int8 *)(self_ + 47),
-      *(unsigned __int8 *)(self_ + 48));
+      *(unsigned char *)(self_ + 46),
+      *(unsigned char *)(self_ + 47),
+      *(unsigned char *)(self_ + 48));
   }
   else
   {
     orig::Cell_DrawWithDefaultBlend((void *)self_);
   }
-  v33 = (float *)(self_ + 100);
-  v34 = 0;
+  p3 = (float *)(self_ + 100);
+  i5 = 0;
   do
   {
-    v35 = v41[v34 + 4];
-    ++v34;
-    *(v33 - 1) = v35;
-    *v33 = v41[v34 + 7];
-    v33[1] = v41[v34 + 11];
-    v33 += 7;
+    f13 = buf1[i5 + 4];
+    ++i5;
+    *(p3 - 1) = f13;
+    *p3 = buf1[i5 + 7];
+    p3[1] = buf1[i5 + 11];
+    p3 += 7;
   }
-  while ( v34 < 4 );
+  while ( i5 < 4 );
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
   return (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
 }
@@ -10908,67 +10962,67 @@ XI_API void __thiscall Cell_DrawWithDefaultBlend(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1011F300
 // GATE: PASS -- 100 trials, 100 returned normally, 377 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Cell_DrawQuadBlended(void *self_, int a1, int a2, int a3, int a4, int a5)
+XI_API int __thiscall Cell_DrawQuadBlended(void *self_, int arg2, int arg3, int arg4, int arg5, int arg6)
 {
-  char v6;
+  char c1;
   IDirect3DDevice8 *pDevice;
   struct IDirect3DDevice8Vtbl *lpVtbl;
-  IDirect3DDevice8 *v10;
-  struct IDirect3DDevice8Vtbl *v11;
-  IDirect3DDevice8 *v12;
-  IDirect3DDevice8 *v13;
-  IDirect3DDevice8 *v14;
-  _DWORD *v15;
-  int v16;
-  int *v17;
-  int v18;
+  IDirect3DDevice8 *p1;
+  struct IDirect3DDevice8Vtbl *p2;
+  IDirect3DDevice8 *p3;
+  IDirect3DDevice8 *p4;
+  IDirect3DDevice8 *p5;
+  uint32_t *p6;
+  int i1;
+  int *p7;
+  int i2;
   int i;
-  int v20;
-  int v21;
-  IDirect3DBaseTexture8 *v22;
-  IDirect3DDevice8 *v23;
-  struct IDirect3DDevice8Vtbl *v24;
-  _DWORD *v25;
-  int v26;
-  int *v27;
-  int v28;
+  int i3;
+  int i4;
+  IDirect3DBaseTexture8 *p8;
+  IDirect3DDevice8 *p9;
+  struct IDirect3DDevice8Vtbl *p10;
+  uint32_t *p11;
+  int i5;
+  int *p12;
+  int i6;
   int j;
-  int v30;
-  _DWORD *v31;
-  int v32;
-  int *v33;
-  int v34;
+  int i7;
+  uint32_t *p13;
+  int i8;
+  int *p14;
+  int i9;
   int k;
-  int v36;
+  int i10;
   int result;
-  _DWORD v38[4];
-  v6 = 0;
+  uint32_t buf1[4];
+  c1 = 0;
   pDevice = (g_pCDx->pDevice);
   lpVtbl = pDevice->lpVtbl;
-  if ( a2 == 0 )
-    goto LABEL_76;
+  if ( arg3 == 0 )
+    goto L1;
   lpVtbl->SetRenderState(pDevice, D3DRS_ALPHABLENDENABLE, TRUE);
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) != 0 )
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) != 0 )
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
-  if ( a3 != 0 )
+  if ( arg4 != 0 )
   {
-    if ( a3 != 1 )
+    if ( arg4 != 1 )
     {
-      if ( a3 != 2 )
-        goto LABEL_77;
-      if ( a4 != 0 )
+      if ( arg4 != 2 )
+        goto L2;
+      if ( arg5 != 0 )
       {
-        if ( a4 != 1 )
+        if ( arg5 != 1 )
         {
-          if ( a4 == 2 )
+          if ( arg5 == 2 )
           {
-            if ( a5 != 0 )
+            if ( arg6 != 0 )
             {
-              if ( a5 == 1 )
+              if ( arg6 == 1 )
               {
                 orig::ErrorReport_NoOpVarargsA(aCellZeroZeroFr);
               }
-              else if ( a5 == 2 )
+              else if ( arg6 == 2 )
               {
                 orig::ErrorReport_NoOpVarargsA(aCellZeroZeroZe);
               }
@@ -10978,110 +11032,110 @@ XI_API int __thiscall Cell_DrawQuadBlended(void *self_, int a1, int a2, int a3, 
               orig::ErrorReport_NoOpVarargsA(aCellZeroZeroTe);
             }
           }
-          goto LABEL_77;
+          goto L2;
         }
-        if ( a5 != 0 )
+        if ( arg6 != 0 )
         {
-          if ( a5 != 1 )
+          if ( arg6 != 1 )
           {
-            if ( a5 == 2 )
+            if ( arg6 == 2 )
               orig::ErrorReport_NoOpVarargsA(aCellZeroFrameZ);
-            goto LABEL_77;
+            goto L2;
           }
-          v10 = (g_pCDx->pDevice);
-          if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) != 0 )
+          p1 = (g_pCDx->pDevice);
+          if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) != 0 )
           {
-            v10->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+            p1->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-            goto LABEL_77;
+            goto L2;
           }
-          goto LABEL_22;
+          goto L3;
         }
-        v10 = (g_pCDx->pDevice);
-        if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) == 0 )
+        p1 = (g_pCDx->pDevice);
+        if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) == 0 )
         {
-LABEL_22:
-          v11 = v10->lpVtbl;
-LABEL_23:
-          v11->SetRenderState(v10, D3DRS_ALPHABLENDENABLE, FALSE);
-          goto LABEL_77;
+L3:
+          p2 = p1->lpVtbl;
+L4:
+          p2->SetRenderState(p1, D3DRS_ALPHABLENDENABLE, FALSE);
+          goto L2;
         }
-        v10->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-        v12 = (g_pCDx->pDevice);
-LABEL_93:
-        v12->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
+        p1->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+        p3 = (g_pCDx->pDevice);
+L5:
+        p3->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_SUBTRACT);
-        goto LABEL_77;
+        goto L2;
       }
-      if ( a5 == 0 )
+      if ( arg6 == 0 )
       {
         orig::ErrorReport_NoOpVarargsA(aCellZeroTextur_0);
-        goto LABEL_77;
+        goto L2;
       }
-      if ( a5 != 1 )
+      if ( arg6 != 1 )
       {
-        if ( a5 == 2 )
+        if ( arg6 == 2 )
           orig::ErrorReport_NoOpVarargsA(aCellZeroTextur);
-        goto LABEL_77;
+        goto L2;
       }
-      v13 = (g_pCDx->pDevice);
-      if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) != 0 )
+      p4 = (g_pCDx->pDevice);
+      if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) != 0 )
       {
-        v13->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-        v14 = (g_pCDx->pDevice);
-LABEL_60:
-        v14->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+        p4->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+        p5 = (g_pCDx->pDevice);
+L6:
+        p5->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
-        goto LABEL_77;
+        goto L2;
       }
-      v13->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+      p4->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ZERO);
       (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
-      v15 =(_DWORD*)((char *)self_ + 96);
-      v16 = 0;
-      v17 = (int *)((char *)self_ + 96);
+      p6 =(uint32_t*)((char *)self_ + 96);
+      i1 = 0;
+      p7 = (int *)((char *)self_ + 96);
       do
       {
-        v18 = *v17;
-        *v17 = -1;
-        v38[v16++] = v18;
-        v17 += 7;
+        i2 = *p7;
+        *p7 = -1;
+        buf1[i1++] = i2;
+        p7 += 7;
       }
-      while ( v16 < 4 );
+      while ( i1 < 4 );
       orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self_ + 80, 28);
       for ( i = 0; i < 4; ++i )
       {
-        v20 = v38[i];
-        *v15 = v20;
-        v15 += 7;
+        i3 = buf1[i];
+        *p6 = i3;
+        p6 += 7;
       }
-LABEL_36:
+L7:
       (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
-      v21 = *((_DWORD *)self_ + 19);
-      v22 = *(IDirect3DBaseTexture8 **)(v21 + 64);
-      if ( v22 == nullptr )
-        v22 = *(IDirect3DBaseTexture8 **)(v21 + 68);
-      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v22);
+      i4 = *((uint32_t *)self_ + 19);
+      p8 = *(IDirect3DBaseTexture8 **)(i4 + 64);
+      if ( p8 == nullptr )
+        p8 = *(IDirect3DBaseTexture8 **)(i4 + 68);
+      (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p8);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
       (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ONE);
-      v6 = 1;
-      goto LABEL_77;
+      c1 = 1;
+      goto L2;
     }
-    if ( a4 != 0 )
+    if ( arg5 != 0 )
     {
-      if ( a4 != 1 )
+      if ( arg5 != 1 )
       {
-        if ( a4 == 2 )
+        if ( arg5 == 2 )
         {
-          if ( a5 != 0 )
+          if ( arg6 != 0 )
           {
-            if ( a5 == 1 )
+            if ( arg6 == 1 )
             {
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
             }
-            else if ( a5 == 2 )
+            else if ( arg6 == 2 )
             {
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_ZERO);
               (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
@@ -11093,60 +11147,60 @@ LABEL_36:
             (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
           }
         }
-        goto LABEL_77;
+        goto L2;
       }
-      if ( a5 != 0 )
+      if ( arg6 != 0 )
       {
-        if ( a5 == 1 )
+        if ( arg6 == 1 )
         {
           orig::ErrorReport_NoOpVarargsA(aCellFrameFrame_0);
         }
-        else if ( a5 == 2 )
+        else if ( arg6 == 2 )
         {
           orig::ErrorReport_NoOpVarargsA(aCellFrameFrame);
         }
-        goto LABEL_77;
+        goto L2;
       }
-      goto LABEL_75;
+      goto L8;
     }
-    switch ( a5 )
+    switch ( arg6 )
     {
       case 0:
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_INVSRCALPHA);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_SRCALPHA);
         break;
       case 1:
-        v23 = (g_pCDx->pDevice);
-        v24 = v23->lpVtbl;
-        if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) != 0 )
+        p9 = (g_pCDx->pDevice);
+        p10 = p9->lpVtbl;
+        if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) != 0 )
         {
-          v24->SetRenderState(v23, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-          v14 = (g_pCDx->pDevice);
-          goto LABEL_60;
+          p10->SetRenderState(p9, D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+          p5 = (g_pCDx->pDevice);
+          goto L6;
         }
-        v24->SetTextureStageState(v23, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+        p10->SetTextureStageState(p9, 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
         (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ZERO);
         (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
-        v25 =(_DWORD*)((char *)self_ + 96);
-        v26 = 0;
-        v27 = (int *)((char *)self_ + 96);
+        p11 =(uint32_t*)((char *)self_ + 96);
+        i5 = 0;
+        p12 = (int *)((char *)self_ + 96);
         do
         {
-          v28 = *v27;
-          *v27 = -1;
-          v38[v26++] = v28;
-          v27 += 7;
+          i6 = *p12;
+          *p12 = -1;
+          buf1[i5++] = i6;
+          p12 += 7;
         }
-        while ( v26 < 4 );
+        while ( i5 < 4 );
         orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self_ + 80, 28);
         for ( j = 0; j < 4; ++j )
         {
-          v30 = v38[j];
-          *v25 = v30;
-          v25 += 7;
+          i7 = buf1[j];
+          *p11 = i7;
+          p11 += 7;
         }
-        goto LABEL_36;
+        goto L7;
       case 2:
         orig::ErrorReport_NoOpVarargsA(aCellFrameTextu);
         break;
@@ -11154,20 +11208,20 @@ LABEL_36:
         break;
     }
   }
-  else if ( a4 != 0 )
+  else if ( arg5 != 0 )
   {
-    if ( a4 == 1 )
+    if ( arg5 == 1 )
     {
-      switch ( a5 )
+      switch ( arg6 )
       {
         case 0:
-          v10 = (g_pCDx->pDevice);
-          v11 = v10->lpVtbl;
-          if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) == 0 )
-            goto LABEL_23;
-          v11->SetRenderState(v10, D3DRS_SRCBLEND, D3DBLEND_ONE);
-          v12 = (g_pCDx->pDevice);
-          goto LABEL_93;
+          p1 = (g_pCDx->pDevice);
+          p2 = p1->lpVtbl;
+          if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) == 0 )
+            goto L4;
+          p2->SetRenderState(p1, D3DRS_SRCBLEND, D3DBLEND_ONE);
+          p3 = (g_pCDx->pDevice);
+          goto L5;
         case 1:
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
           (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -11181,15 +11235,15 @@ LABEL_36:
     }
     else
     {
-      if ( a4 != 2 )
-        goto LABEL_77;
-      switch ( a5 )
+      if ( arg5 != 2 )
+        goto L2;
+      switch ( arg6 )
       {
         case 0:
-LABEL_75:
+L8:
           pDevice = (g_pCDx->pDevice);
           lpVtbl = pDevice->lpVtbl;
-LABEL_76:
+L1:
           lpVtbl->SetRenderState(pDevice, D3DRS_ALPHABLENDENABLE, FALSE);
           break;
         case 1:
@@ -11205,13 +11259,13 @@ LABEL_76:
       }
     }
   }
-  else if ( a5 != 0 )
+  else if ( arg6 != 0 )
   {
-    if ( a5 == 1 )
+    if ( arg6 == 1 )
     {
       orig::ErrorReport_NoOpVarargsA(aCellTextureTex_0);
     }
-    else if ( a5 == 2 )
+    else if ( arg6 == 2 )
     {
       orig::ErrorReport_NoOpVarargsA(aCellTextureTex);
     }
@@ -11220,252 +11274,263 @@ LABEL_76:
   {
     orig::ErrorReport_NoOpVarargsA(aCellTextureTex_1);
   }
-LABEL_77:
+L2:
   (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), 324u);
-  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, a1, 28);
-  if ( v6 == 1 )
+  orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, arg2, 28);
+  if ( c1 == 1 )
   {
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
     (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_DESTBLEND, D3DBLEND_ZERO);
     (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
-    v31 =(_DWORD*)((char *)self_ + 96);
-    v32 = 0;
-    v33 = (int *)((char *)self_ + 96);
+    p13 =(uint32_t*)((char *)self_ + 96);
+    i8 = 0;
+    p14 = (int *)((char *)self_ + 96);
     do
     {
-      v34 = *v33;
-      *v33 = -1;
-      v38[v32++] = v34;
-      v33 += 7;
+      i9 = *p14;
+      *p14 = -1;
+      buf1[i8++] = i9;
+      p14 += 7;
     }
-    while ( v32 < 4 );
+    while ( i8 < 4 );
     orig::CDx_DrawPrimitiveUP(g_pCDx, 5, 2, (int)self_ + 80, 28);
     for ( k = 0; k < 4; ++k )
     {
-      v36 = v38[k];
-      *v31 = v36;
-      v31 += 7;
+      i10 = buf1[k];
+      *p13 = i10;
+      p13 += 7;
     }
     (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
   }
   (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_ALPHABLENDENABLE, FALSE);
   result = (int)g_pCDx;
-  if ( (*(unsigned __int8 *)((char *)g_pCDx + 0x913)) != 0 )
+  if ( (*(unsigned char *)((char *)g_pCDx + 0x913)) != 0 )
     return (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_BLENDOP, D3DBLENDOP_ADD);
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x1011FA80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Cell_GetFrameBounds(void * self_, int param_1, short * param_2)
+XI_API int __thiscall Cell_GetFrameBounds(void * self_, int arg2, short * arg3)
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  uint64_t uVar4;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  int i2;
+  bits32 *p1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p2; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
-  uVar4 = orig::FUN_10126520((int *)&local_4);
-  iVar1 = (int)uVar4;
-  if (iVar1 == 0) {
+  frame.p2 = self_;
+  frame.p2 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
+  u1 = orig::game_10126520((int *)&frame.p2);
+  i1 = (int)u1;
+  if (i1 == 0) {
     return 0;
   }
-  iVar2 = 0;
-  puVar3 = (undefined4 *)(iVar1 + 0x68);
+  i2 = 0;
+  p1 = (bits32 *)(i1 + 0x68);
   do {
-    *(undefined4 *)(param_1 + iVar2 * 8) = puVar3[-1];
-    *(undefined4 *)(param_1 + 4 + iVar2 * 8) = *puVar3;
-    iVar2 = iVar2 + 1;
-    puVar3 = puVar3 + 7;
-  } while (iVar2 < 4);
-  *param_2 = (*(short *)(iVar1 + 0xc2) - *(short *)(iVar1 + 0xc0)) + -1;
-  param_2[1] = (*(short *)(iVar1 + 0xcc) - *(short *)(iVar1 + 200)) + -1;
-  return iVar1 + 0x32;
+    *(bits32 *)(arg2 + i2 * 8) = p1[-1];
+    *(bits32 *)(arg2 + 4 + i2 * 8) = *p1;
+    i2 = i2 + 1;
+    p1 = p1 + 7;
+  } while (i2 < 4);
+  *arg3 = (*(short *)(i1 + 0xc2) - *(short *)(i1 + 0xc0)) + -1;
+  arg3[1] = (*(short *)(i1 + 0xcc) - *(short *)(i1 + 200)) + -1;
+  return i1 + 0x32;
 }
 
 // FUNCTION: FFXIMAIN 0x1011FB00
 // GATE: PASS -- 100 trials, 40 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 40
-XI_API undefined4 __thiscall NetCellFont_GetNthEntryBytePair(void * self_, int param_1, int param_2)
+XI_API bits32 __thiscall NetCellFont_GetNthEntryBytePair(void * self_, int arg2, int arg3)
 {
-  int iVar1;
-  uint64_t uVar2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
-  uVar2 = orig::FUN_10126520((int *)&local_4);
-  if (0 < param_1) {
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
+  u1 = orig::game_10126520((int *)&frame.p1);
+  if (0 < arg2) {
     do {
-      uVar2 = orig::FUN_10126520((int *)&local_4);
-      param_1 = param_1 + -1;
-    } while (param_1 != 0);
+      u1 = orig::game_10126520((int *)&frame.p1);
+      arg2 = arg2 + -1;
+    } while (arg2 != 0);
   }
-  iVar1 = (int)uVar2;
-  return ((uint32_t)(((uint32_t)(CONCAT21(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(iVar1 + 0x29 + param_2)) << 8) | (uint8_t)(*(uint8_t *)(iVar1 + 0x1d + param_2)))),
-                           *(uint8_t *)(iVar1 + 0x21 + param_2))) << 8) | (uint8_t)(*(uint8_t *)(iVar1 + 0x25 + param_2))));
+  i1 = (int)u1;
+  return ((uint32_t)(((uint32_t)(((uint32_t)(((uint32_t)(uint16_t)(((uint16_t)(((uint16_t)(uint8_t)(*(uint8_t *)(i1 + 0x29 + arg3)) << 8) | (uint8_t)(*(uint8_t *)(i1 + 0x1d + arg3))))) << 8) | (uint8_t)(*(uint8_t *)(i1 + 0x21 + arg3))))) << 8) | (uint8_t)(*(uint8_t *)(i1 + 0x25 + arg3))));
 }
 
 // FUNCTION: FFXIMAIN 0x10120000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall Cell_DrawFirstStretched(void * self_, uint32_t param_1, uint32_t param_2, undefined4 param_3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6, undefined4 xi_s7, undefined4 xi_s8, undefined4 xi_s9, undefined4 xi_s10, undefined4 xi_s11)
+XI_API uint64_t __thiscall Cell_DrawFirstStretched(void * self_, uint32_t arg2, uint32_t arg3, bits32 arg4, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6, bits32 xi_s7, bits32 xi_s8, bits32 xi_s9, bits32 xi_s10, bits32 xi_s11)
 {
-  uint64_t uVar1;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
-  uVar1 = orig::FUN_10126520((int *)&local_4);
-  if ((void *)uVar1 != (void *)0x0) {
-    uVar1 = orig::Cell_DrawStretchedWrapped
-                      ((void *)uVar1,param_1,param_2,param_3,xi_s4,xi_s5,xi_s6,xi_s7,xi_s8,xi_s9,
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
+  u1 = orig::game_10126520((int *)&frame.p1);
+  if ((void *)u1 != (void *)0x0) {
+    u1 = orig::Cell_DrawStretchedWrapped
+                      ((void *)u1,arg2,arg3,arg4,xi_s4,xi_s5,xi_s6,xi_s7,xi_s8,xi_s9,
                        xi_s10,xi_s11);
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10120070
 // GATE: PASS -- 100 trials, 65 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 65
 XI_API void __thiscall Cell_ResolveTextureList(void * self_)
 {
-  int iVar1;
-  uint64_t uVar2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  iVar1 = *(int *)((int)self_ + 0x14);
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
-  if (0 < iVar1) {
+  i1 = *(int *)((int)self_ + 0x14);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead((void *)((int)self_ + 4));
+  if (0 < i1) {
     do {
-      uVar2 = orig::FUN_10126520((int *)&local_4);
-      if ((void *)uVar2 != (void *)0x0) {
-        orig::Cell_ResolveTextureUV((void *)uVar2);
+      u1 = orig::game_10126520((int *)&frame.p1);
+      if ((void *)u1 != (void *)0x0) {
+        orig::Cell_ResolveTextureUV((void *)u1);
       }
-      iVar1 = iVar1 + -1;
-    } while (iVar1 != 0);
+      i1 = i1 + -1;
+    } while (i1 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101200B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl Color_ModulateArgb128(uint32_t param_1, uint32_t param_2)
+XI_API uint32_t __cdecl Color_ModulateArgb128(uint32_t arg1, uint32_t arg2)
 {
-  uint32_t uVar1;
-  uint32_t uVar2;
-  uint32_t uVar3;
-  uint32_t uVar4;
+  uint32_t u1;
+  uint32_t u2;
+  uint32_t u3;
+  uint32_t u4;
   
-  uVar4 = (param_1 >> 0x18) * (param_2 >> 0x18) >> 7;
-  if (0xff < uVar4) {
-    uVar4 = 0xff;
+  u4 = (arg1 >> 0x18) * (arg2 >> 0x18) >> 7;
+  if (0xff < u4) {
+    u4 = 0xff;
   }
-  uVar2 = (param_1 >> 0x10 & 0xff) * (param_2 >> 0x10 & 0xff) >> 7;
-  if (0xff < uVar2) {
-    uVar2 = 0xff;
+  u2 = (arg1 >> 0x10 & 0xff) * (arg2 >> 0x10 & 0xff) >> 7;
+  if (0xff < u2) {
+    u2 = 0xff;
   }
-  uVar3 = (param_1 >> 8 & 0xff) * (param_2 >> 8 & 0xff) >> 7;
-  if (0xff < uVar3) {
-    uVar3 = 0xff;
+  u3 = (arg1 >> 8 & 0xff) * (arg2 >> 8 & 0xff) >> 7;
+  if (0xff < u3) {
+    u3 = 0xff;
   }
-  uVar1 = (param_1 & 0xff) * (param_2 & 0xff) >> 7;
-  if (0xff < uVar1) {
-    uVar1 = 0xff;
+  u1 = (arg1 & 0xff) * (arg2 & 0xff) >> 7;
+  if (0xff < u1) {
+    u1 = 0xff;
   }
-  return ((uVar2 & 0xff | uVar4 << 8) << 8 | uVar3 & 0xff) << 8 | uVar1 & 0xff;
+  return ((u2 & 0xff | u4 << 8) << 8 | u3 & 0xff) << 8 | u1 & 0xff;
 }
 
 // FUNCTION: FFXIMAIN 0x10120450
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ShapeMng_FindShape(void * self_, char * id)
+XI_API bits32 __thiscall ShapeMng_FindShape(void * self_, char * id)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  uint64_t uVar4;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  int i2;
+  int i3;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  iVar2 = *(int *)((int)self_ + 0x10);
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead(self_);
-  iVar3 = 0;
-  if (0 < iVar2) {
+  i2 = *(int *)((int)self_ + 0x10);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead(self_);
+  i3 = 0;
+  if (0 < i2) {
     do {
-      uVar4 = orig::FUN_10126520((int *)&local_4);
-      iVar1 = orig::FUN_10325d00_v1((uint8_t *)((int)(void *)uVar4 + 0x24),id,0x10);
-      if (iVar1 == 0) {
-        iVar2 = orig::Cell_GetField20Ptr((void *)uVar4);
-        return iVar2;
+      u1 = orig::game_10126520((int *)&frame.p1);
+      i1 = orig::game_10325D00_v1((uint8_t *)((int)(void *)u1 + 0x24),id,0x10);
+      if (i1 == 0) {
+        i2 = orig::Cell_GetField20Ptr((void *)u1);
+        return i2;
       }
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < iVar2);
+      i3 = i3 + 1;
+    } while (i3 < i2);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101204B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_FindEntryByName(void * self_, char * param_1)
+XI_API bits32 __thiscall Cell_FindEntryByName(void * self_, char * arg2)
 {
-  int iVar1;
-  int iVar2;
-  uint64_t uVar3;
-  uint64_t uVar4;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  int i2;
+  uint64_t u1;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  iVar1 = *(int *)((int)self_ + 0x10);
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetTail(self_);
-  iVar2 = 0;
-  if (0 < iVar1) {
+  i1 = *(int *)((int)self_ + 0x10);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetTail(self_);
+  i2 = 0;
+  if (0 < i1) {
     do {
-      uVar3 = orig::NetCellFont_NextActiveValue((int *)&local_4);
-      uVar4 = orig::FUN_10325d00((uint8_t *)((int)(void *)uVar3 + 0x24),param_1,0x10);
-      if ((int)uVar4 == 0) {
-        iVar1 = orig::Cell_GetField20Ptr((void *)uVar3);
-        return iVar1;
+      u1 = orig::NetCellFont_NextActiveValue((int *)&frame.p1);
+      u2 = orig::game_10325D00((uint8_t *)((int)(void *)u1 + 0x24),arg2,0x10);
+      if ((int)u2 == 0) {
+        i1 = orig::Cell_GetField20Ptr((void *)u1);
+        return i1;
       }
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < iVar1);
+      i2 = i2 + 1;
+    } while (i2 < i1);
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x10120510
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ShapeMng_GetFontGlyph(void * self_, uint32_t param_1, undefined4 param_2, short * param_3, uint16_t * param_4, uint16_t * param_5)
+XI_API bits32 __thiscall ShapeMng_GetFontGlyph(void * self_, uint32_t arg2, bits32 arg3, short * arg4, uint16_t * arg5, uint16_t * arg6)
 {
-  void *this_00;
-  int iVar1;
-  uint64_t uVar2;
+  void *obj1;
+  int i1;
+  uint64_t u1;
   
   if (*(int *)((int)self_ + 0x2c) == 0) {
-    uVar2 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_font_fontshp_1036cf1c);
-    *(int *)((int)self_ + 0x2c) = (int)uVar2;
-    if ((int)uVar2 == 0) {
-      return (uint32_t)xi_trunc24(((uint64_t)uVar2 >> 8)) << 8;
+    u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_font_fontshp_1036CF1C);
+    *(int *)((int)self_ + 0x2c) = (int)u1;
+    if ((int)u1 == 0) {
+      return (uint32_t)xi_trunc24(((uint64_t)u1 >> 8)) << 8;
     }
   }
-  this_00 = *(void **)(**(int **)((int)self_ + 0x2c) + -0x80 + (param_1 & 0xff) * 4);
-  if (this_00 == (void *)0x0) {
+  obj1 = *(void **)(**(int **)((int)self_ + 0x2c) + -0x80 + (arg2 & 0xff) * 4);
+  if (obj1 == (void *)0x0) {
     return 0;
   }
-  if (param_4 != (uint16_t *)0x0) {
-    *param_4 = *(uint16_t *)((int)this_00 + 0x20);
+  if (arg5 != (uint16_t *)0x0) {
+    *arg5 = *(uint16_t *)((int)obj1 + 0x20);
   }
-  if (param_5 != (uint16_t *)0x0) {
-    *param_5 = *(uint16_t *)((int)this_00 + 0x24);
+  if (arg6 != (uint16_t *)0x0) {
+    *arg6 = *(uint16_t *)((int)obj1 + 0x24);
   }
-  iVar1 = orig::Cell_GetFrameBounds(this_00,param_2,param_3);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(iVar1 != 0)));
+  i1 = orig::Cell_GetFrameBounds(obj1,arg3,arg4);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(i1 != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10120660
@@ -11473,50 +11538,52 @@ XI_API undefined4 __thiscall ShapeMng_GetFontGlyph(void * self_, uint32_t param_
 XI_API void __thiscall ShapeMng_LoadFontTextures(void * self_)
 {
   char *_Str1;
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
-  uint64_t uVar5;
-  char xi_frame[28] __attribute__((aligned(4)));
-  int  &local_1c = *reinterpret_cast<int  *>(xi_frame + 0);
-  int  &local_18 = *reinterpret_cast<int  *>(xi_frame + 4);
-  int * &local_14 = *reinterpret_cast<int * *>(xi_frame + 8);
-  char  (&local_10)[16] = *reinterpret_cast<char  (*)[16]>(xi_frame + 12);
+  int i1;
+  int i2;
+  int i3;
+  int *p1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[28];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; int i5; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; int * p2; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; char val1[16]; };   // at 0xC
+  } frame;
   
-  orig::Util_Copy16Bytes_v1(local_10,(int)XI_GAME(0x1036CF30u));
-  uVar5 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,s_font_fontshp_1036cf1c);
-  local_14 = (int *)uVar5;
-  if (local_14 != (int *)0x0) {
-    iVar2 = 0;
-    local_1c = 0x20;
-    iVar1 = *(int *)*local_14;
-    if (iVar1 != 0) {
-      iVar3 = 0;
-      piVar4 = (int *)((int)self_ + 0x24);
+  orig::Util_Copy16Bytes_v1(frame.val1,(int)XI_GAME(0x1036CF30u));
+  u1 = orig::ShapeMng_FindShape_v1(&g_shapeMng_as_v0,str_font_fontshp_1036CF1C);
+  frame.p2 = (int *)u1;
+  if (frame.p2 != (int *)0x0) {
+    i2 = 0;
+    frame.i4 = 0x20;
+    i1 = *(int *)*frame.p2;
+    if (i1 != 0) {
+      i3 = 0;
+      p1 = (int *)((int)self_ + 0x24);
       do {
-        local_18 = orig::NetCellFont_GetHead((void *)(iVar1 + 4));
-        uVar5 = orig::FUN_10126520(&local_18);
-        if ((int)uVar5 != 0) {
-          _Str1 = (char *)((int)uVar5 + 0x32);
+        frame.i5 = orig::NetCellFont_GetHead((void *)(i1 + 4));
+        u1 = orig::game_10126520(&frame.i5);
+        if ((int)u1 != 0) {
+          _Str1 = (char *)((int)u1 + 0x32);
           orig::__strlwr_v1(_Str1);
-          uVar5 = orig::_strncmp_v1(_Str1,local_10,0x10);
-          if ((int)uVar5 != 0) {
-            orig::Util_Copy16Bytes_v1(local_10,(int)_Str1);
-            uVar5 = orig::CYyTexMng_FindByName_v1(g_pTextureMng_as_v2,(int)local_10);
-            piVar4[-2] = (int)uVar5;
-            *piVar4 = local_1c;
-            iVar2 = iVar2 + 1;
-            piVar4 = piVar4 + 1;
-            if (1 < iVar2) {
+          u1 = orig::_strncmp_v1(_Str1,frame.val1,0x10);
+          if ((int)u1 != 0) {
+            orig::Util_Copy16Bytes_v1(frame.val1,(int)_Str1);
+            u1 = orig::CYyTexMng_FindByName_v1(g_pTextureMng_as_v2,(int)frame.val1);
+            p1[-2] = (int)u1;
+            *p1 = frame.i4;
+            i2 = i2 + 1;
+            p1 = p1 + 1;
+            if (1 < i2) {
               return;
             }
           }
-          local_1c = local_1c + 1;
+          frame.i4 = frame.i4 + 1;
         }
-        iVar3 = iVar3 + 4;
-        iVar1 = *(int *)(*local_14 + iVar3);
-      } while (iVar1 != 0);
+        i3 = i3 + 4;
+        i1 = *(int *)(*frame.p2 + i3);
+      } while (i1 != 0);
     }
   }
   return;
@@ -11526,34 +11593,36 @@ XI_API void __thiscall ShapeMng_LoadFontTextures(void * self_)
 // GATE: PASS -- 100 trials, 69 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 69
 XI_API void __thiscall Cell_ResolveAllSubCells(void * self_)
 {
-  int iVar1;
-  uint64_t uVar2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  void * &local_4 = *reinterpret_cast<void * *>(xi_frame + 0);
+  int i1;
+  uint64_t u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { void * p1; };   // at 0x0
+  } frame;
   
-  iVar1 = *(int *)((int)self_ + 0x10);
-  local_4 = self_;
-  local_4 = (void *)orig::NetCellFont_GetHead(self_);
-  if (0 < iVar1) {
+  i1 = *(int *)((int)self_ + 0x10);
+  frame.p1 = self_;
+  frame.p1 = (void *)orig::NetCellFont_GetHead(self_);
+  if (0 < i1) {
     do {
-      uVar2 = orig::FUN_10126520((int *)&local_4);
-      orig::Cell_ResolveSubCells((void *)uVar2);
-      iVar1 = iVar1 + -1;
-    } while (iVar1 != 0);
+      u1 = orig::game_10126520((int *)&frame.p1);
+      orig::Cell_ResolveSubCells((void *)u1);
+      i1 = i1 + -1;
+    } while (i1 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10120B80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestAny38Or0B8(void)
+XI_API bits32 __cdecl Cell_TestAny38Or0B8(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x38);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0xb8);
-    if ((char)uVar1 == '\0') {
+  u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x38);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0xb8);
+    if ((char)u1 == '\0') {
       return 0;
     }
   }
@@ -11562,14 +11631,14 @@ XI_API undefined4 __cdecl Cell_TestAny38Or0B8(void)
 
 // FUNCTION: FFXIMAIN 0x10120BB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestAny1DOr9D(void)
+XI_API bits32 __cdecl Cell_TestAny1DOr9D(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x1d);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x9d);
-    if ((char)uVar1 == '\0') {
+  u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x1d);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x9d);
+    if ((char)u1 == '\0') {
       return 0;
     }
   }
@@ -11578,14 +11647,14 @@ XI_API undefined4 __cdecl Cell_TestAny1DOr9D(void)
 
 // FUNCTION: FFXIMAIN 0x10120BE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestAny2AOr36(void)
+XI_API bits32 __cdecl Cell_TestAny2AOr36(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x2a);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x36);
-    if ((char)uVar1 == '\0') {
+  u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x2a);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x36);
+    if ((char)u1 == '\0') {
       return 0;
     }
   }
@@ -11596,55 +11665,55 @@ XI_API undefined4 __cdecl Cell_TestAny2AOr36(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __cdecl Cell_GetByte253Scaled(void)
 {
-  return (long double)(int)(*(uint8_t *)(dword_104E1D44 + 0x253) - 0x80) * (long double)0.0078125f;
+  return (int)(*(uint8_t *)(g_104E1D44 + 0x253) - 0x80) * 0.0078125f;
 }
 
 // FUNCTION: FFXIMAIN 0x10120F30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __attribute__((cdecl, regparm(1))) NetCellFont_QueryState1D44AL(undefined4 xi_eax, uint32_t param_1)
+XI_API uint32_t __attribute__((cdecl, regparm(1))) NetCellFont_QueryState1D44AL(bits32 xi_eax, uint32_t arg2)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u1;
   
-  iVar2 = dword_104E1D44;
-  if (dword_104E1D44 == 0) {
-LAB_10120fd6:
+  i1 = g_104E1D44;
+  if (g_104E1D44 == 0) {
+code_10120FD6:
     return xi_eax & 0xffffff00;
   }
-  xi_eax = param_1;
-  switch(xi_sw(param_1)) {
+  xi_eax = arg2;
+  switch(xi_sw(arg2)) {
   case 0:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
     break;
   case 1:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228);
     break;
   case 2:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
-    *(uint32_t *)(dword_104E1D44 + 0x228) = *(uint32_t *)(dword_104E1D44 + 0x228) & 8;
-    *(undefined4 *)(iVar2 + 0x22c) = 0;
-    return (uint32_t)((uVar3 & 8) != 0);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
+    *(uint32_t *)(g_104E1D44 + 0x228) = *(uint32_t *)(g_104E1D44 + 0x228) & 8;
+    *(bits32 *)(i1 + 0x22c) = 0;
+    return (uint32_t)((u1 & 8) != 0);
   case 3:
-    puVar1 = (uint32_t *)(dword_104E1D44 + 0x228);
-    if ((*puVar1 & 8) != 0) {
-      *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-      *puVar1 = *puVar1 & 8;
+    p1 = (uint32_t *)(g_104E1D44 + 0x228);
+    if ((*p1 & 8) != 0) {
+      *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+      *p1 = *p1 & 8;
       return 1;
     }
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *puVar1 = 0;
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *p1 = 0;
     return 0;
   case 4:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x220);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x220);
     break;
   case 5:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x230);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x230);
     break;
   default:
-    goto LAB_10120fd6;
+    goto code_10120FD6;
   }
-  if ((uVar3 & 8) != 0) {
+  if ((u1 & 8) != 0) {
     return 1;
   }
   return 0;
@@ -11652,54 +11721,54 @@ LAB_10120fd6:
 
 // FUNCTION: FFXIMAIN 0x101210F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask100(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask100(uint32_t arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u1;
   
-  iVar2 = dword_104E1D44;
-  switch(xi_sw(param_1)) {
+  i1 = g_104E1D44;
+  switch(xi_sw(arg1)) {
   case 0:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
     break;
   case 1:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228);
     break;
   case 2:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238) & 0x100;
-    if (uVar3 == 0) {
-      uVar3 = 0;
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238) & 0x100;
+    if (u1 == 0) {
+      u1 = 0;
     }
     else {
-      uVar3 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    puVar1 = (uint32_t *)(dword_104E1D44 + 0x228);
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(uint32_t *)(iVar2 + 0x228) = *puVar1 & 0x100;
-    return uVar3;
+    p1 = (uint32_t *)(g_104E1D44 + 0x228);
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(uint32_t *)(i1 + 0x228) = *p1 & 0x100;
+    return u1;
   case 3:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228) & 0x100;
-    if (uVar3 != 0) {
-      *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-      *(uint32_t *)(iVar2 + 0x228) = uVar3;
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228) & 0x100;
+    if (u1 != 0) {
+      *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+      *(uint32_t *)(i1 + 0x228) = u1;
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(undefined4 *)(iVar2 + 0x228) = 0;
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(bits32 *)(i1 + 0x228) = 0;
     return 0;
   case 4:
-    if ((*(uint32_t *)(dword_104E1D44 + 0x220) & 0x100) == 0) {
+    if ((*(uint32_t *)(g_104E1D44 + 0x220) & 0x100) == 0) {
       return 0;
     }
     return 1;
   case 5:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x230);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x230);
     break;
   default:
-    return param_1 & 0xffffff00;
+    return arg1 & 0xffffff00;
   }
-  if ((uVar3 & 0x100) == 0) {
+  if ((u1 & 0x100) == 0) {
     return 0;
   }
   return 1;
@@ -11707,54 +11776,54 @@ XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask100(uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x10121420
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask1000(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask1000(uint32_t arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u1;
   
-  iVar2 = dword_104E1D44;
-  switch(xi_sw(param_1)) {
+  i1 = g_104E1D44;
+  switch(xi_sw(arg1)) {
   case 0:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
     break;
   case 1:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228);
     break;
   case 2:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238) & 0x1000;
-    if (uVar3 == 0) {
-      uVar3 = 0;
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238) & 0x1000;
+    if (u1 == 0) {
+      u1 = 0;
     }
     else {
-      uVar3 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    puVar1 = (uint32_t *)(dword_104E1D44 + 0x228);
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(uint32_t *)(iVar2 + 0x228) = *puVar1 & 0x1000;
-    return uVar3;
+    p1 = (uint32_t *)(g_104E1D44 + 0x228);
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(uint32_t *)(i1 + 0x228) = *p1 & 0x1000;
+    return u1;
   case 3:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228) & 0x1000;
-    if (uVar3 != 0) {
-      *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-      *(uint32_t *)(iVar2 + 0x228) = uVar3;
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228) & 0x1000;
+    if (u1 != 0) {
+      *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+      *(uint32_t *)(i1 + 0x228) = u1;
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(undefined4 *)(iVar2 + 0x228) = 0;
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(bits32 *)(i1 + 0x228) = 0;
     return 0;
   case 4:
-    if ((*(uint32_t *)(dword_104E1D44 + 0x220) & 0x1000) == 0) {
+    if ((*(uint32_t *)(g_104E1D44 + 0x220) & 0x1000) == 0) {
       return 0;
     }
     return 1;
   case 5:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x230);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x230);
     break;
   default:
-    return param_1 & 0xffffff00;
+    return arg1 & 0xffffff00;
   }
-  if ((uVar3 & 0x1000) == 0) {
+  if ((u1 & 0x1000) == 0) {
     return 0;
   }
   return 1;
@@ -11762,54 +11831,54 @@ XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask1000(uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x10121640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask4000(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask4000(uint32_t arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u1;
   
-  iVar2 = dword_104E1D44;
-  switch(xi_sw(param_1)) {
+  i1 = g_104E1D44;
+  switch(xi_sw(arg1)) {
   case 0:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
     break;
   case 1:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228);
     break;
   case 2:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238) & 0x4000;
-    if (uVar3 == 0) {
-      uVar3 = 0;
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238) & 0x4000;
+    if (u1 == 0) {
+      u1 = 0;
     }
     else {
-      uVar3 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+      u1 = ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    puVar1 = (uint32_t *)(dword_104E1D44 + 0x228);
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(uint32_t *)(iVar2 + 0x228) = *puVar1 & 0x4000;
-    return uVar3;
+    p1 = (uint32_t *)(g_104E1D44 + 0x228);
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(uint32_t *)(i1 + 0x228) = *p1 & 0x4000;
+    return u1;
   case 3:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228) & 0x4000;
-    if (uVar3 != 0) {
-      *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-      *(uint32_t *)(iVar2 + 0x228) = uVar3;
-      return ((uint32_t)(((uint32_t)(xi_strunc24((uVar3 >> 8))) << 8) | (uint8_t)(1)));
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228) & 0x4000;
+    if (u1 != 0) {
+      *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+      *(uint32_t *)(i1 + 0x228) = u1;
+      return ((uint32_t)(((uint32_t)(xi_strunc24((u1 >> 8))) << 8) | (uint8_t)(1)));
     }
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(undefined4 *)(iVar2 + 0x228) = 0;
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(bits32 *)(i1 + 0x228) = 0;
     return 0;
   case 4:
-    if ((*(uint32_t *)(dword_104E1D44 + 0x220) & 0x4000) == 0) {
+    if ((*(uint32_t *)(g_104E1D44 + 0x220) & 0x4000) == 0) {
       return 0;
     }
     return 1;
   case 5:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x230);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x230);
     break;
   default:
-    return param_1 & 0xffffff00;
+    return arg1 & 0xffffff00;
   }
-  if ((uVar3 & 0x4000) == 0) {
+  if ((u1 & 0x4000) == 0) {
     return 0;
   }
   return 1;
@@ -11817,46 +11886,46 @@ XI_API uint32_t __cdecl NetCellFont_QueryState1D44Mask4000(uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x10121DB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_QueryState1D44Clear22C(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_QueryState1D44Clear22C(uint32_t arg1)
 {
-  uint32_t *puVar1;
-  int iVar2;
-  uint32_t uVar3;
+  uint32_t *p1;
+  int i1;
+  uint32_t u1;
   
-  iVar2 = dword_104E1D44;
-  switch(xi_sw(param_1)) {
+  i1 = g_104E1D44;
+  switch(xi_sw(arg1)) {
   case 0:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
     break;
   case 1:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228);
     break;
   case 2:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x238);
-    puVar1 = (uint32_t *)(dword_104E1D44 + 0x228);
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(uint32_t *)(iVar2 + 0x228) = *puVar1 & 0x40;
-    return (uint32_t)((uVar3 & 0x40) != 0);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x238);
+    p1 = (uint32_t *)(g_104E1D44 + 0x228);
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(uint32_t *)(i1 + 0x228) = *p1 & 0x40;
+    return (uint32_t)((u1 & 0x40) != 0);
   case 3:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x228) & 0x40;
-    if (uVar3 != 0) {
-      *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-      *(uint32_t *)(iVar2 + 0x228) = uVar3;
+    u1 = *(uint32_t *)(g_104E1D44 + 0x228) & 0x40;
+    if (u1 != 0) {
+      *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+      *(uint32_t *)(i1 + 0x228) = u1;
       return 1;
     }
-    *(undefined4 *)(dword_104E1D44 + 0x22c) = 0;
-    *(undefined4 *)(iVar2 + 0x228) = 0;
+    *(bits32 *)(g_104E1D44 + 0x22c) = 0;
+    *(bits32 *)(i1 + 0x228) = 0;
     return 0;
   case 4:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x220);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x220);
     break;
   case 5:
-    uVar3 = *(uint32_t *)(dword_104E1D44 + 0x230);
+    u1 = *(uint32_t *)(g_104E1D44 + 0x230);
     break;
   default:
-    return param_1 & 0xffffff00;
+    return arg1 & 0xffffff00;
   }
-  if ((uVar3 & 0x40) != 0) {
+  if ((u1 & 0x40) != 0) {
     return 1;
   }
   return 0;
@@ -11866,66 +11935,66 @@ XI_API uint32_t __cdecl NetCellFont_QueryState1D44Clear22C(uint32_t param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __cdecl NetCellFont_Call10122E30With1(void)
 {
-  long double fVar1;
+  long double f1;
   
-  fVar1 = orig::FUN_10122e30(1);
-  return fVar1;
+  f1 = orig::game_10122E30(1);
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x101232E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __cdecl NetCellFont_GetCursorValueUnlessBlocked(void)
 {
-  int iVar1;
-  undefined4 uVar2;
-  long double fVar3;
+  int i1;
+  bits32 u1;
+  long double f1;
   
-  iVar1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  if (((char)iVar1 != '\0') || (*g_pSceneState_as_v0 != 0x60)) {
-    uVar2 = orig::Cell_TestFlagAny2AOr36(4);
-    if (((char)uVar2 == '\0') && (*(char *)((int)g_pCursor_as_v2 + 0x4d) != '\x05')) {
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  if (((char)i1 != '\0') || (*g_pSceneState_as_v0 != 0x60)) {
+    u1 = orig::Cell_TestFlagAny2AOr36(4);
+    if (((char)u1 == '\0') && (*(char *)((int)g_pCursor_as_v2 + 0x4d) != '\x05')) {
       if (*(int *)(g_pTargetMng_as_s32 + 0xc4) == 0) {
-LAB_10123335:
-        fVar3 = orig::FUN_101260d0(g_pCursor_as_v2);
-        return fVar3;
+code_10123335:
+        f1 = orig::game_101260D0(g_pCursor_as_v2);
+        return f1;
       }
-      if (DAT_10662d40 != (void *)0x0) {
-        uVar2 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40);
-        if ((char)uVar2 != '\0') goto LAB_10123335;
+      if (g_10662D40 != (void *)0x0) {
+        u1 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40);
+        if ((char)u1 != '\0') goto code_10123335;
       }
     }
   }
-  fVar3 = orig::FUN_10122e30(3);
-  return fVar3;
+  f1 = orig::game_10122E30(3);
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x10123350
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestFlagAny2AOr36(undefined4 param_1)
+XI_API bits32 __cdecl Cell_TestFlagAny2AOr36(bits32 arg1)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cell_TestFlagKind(0x2a,param_1);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cell_TestFlagKind(0x36,param_1);
-    if ((char)uVar1 == '\0') {
-      return uVar1;
+  u1 = orig::Cell_TestFlagKind(0x2a,arg1);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cell_TestFlagKind(0x36,arg1);
+    if ((char)u1 == '\0') {
+      return u1;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123380
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestFlagKind(uint32_t param_1, undefined4 param_2)
+XI_API bits32 __cdecl Cell_TestFlagKind(uint32_t arg1, bits32 arg2)
 {
-  undefined4 uVar1;
-  uint32_t uVar2;
+  bits32 u1;
+  uint32_t u2;
   
-  uVar1 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40);
-  if (((char)uVar1 != '\0') && (uVar1 = orig::Cursor_GetFlagBit4(&DAT_104e1c40,0x45), (char)uVar1 != '\0')) {
-    uVar2 = param_1 - 0x47;
-    switch(xi_sw(param_1)) {
+  u1 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40);
+  if (((char)u1 != '\0') && (u1 = orig::Cursor_GetFlagBit4(&g_104E1C40,0x45), (char)u1 != '\0')) {
+    u2 = arg1 - 0x47;
+    switch(xi_sw(arg1)) {
     case 0x47:
     case 0x48:
     case 0x49:
@@ -11936,89 +12005,89 @@ XI_API undefined4 __cdecl Cell_TestFlagKind(uint32_t param_1, undefined4 param_2
     case 0x50:
     case 0x51:
     case 0x52:
-switchD_101233b4_caseD_47:
-      return uVar2 & 0xffffff00;
+L1:
+      return u2 & 0xffffff00;
     }
   }
-  uVar2 = param_2;
-  switch(xi_sw(param_2)) {
+  u2 = arg2;
+  switch(xi_sw(arg2)) {
   case 0:
-    uVar1 = orig::Cell_TestFlagBit0(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cell_TestFlagBit0(&g_104E1C40,arg1);
+    return u1;
   case 1:
-    uVar1 = orig::Cell_TestFlagBit1(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cell_TestFlagBit1(&g_104E1C40,arg1);
+    return u1;
   case 2:
-    uVar1 = orig::Cursor_TakeEventFlag(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cursor_TakeEventFlag(&g_104E1C40,arg1);
+    return u1;
   case 3:
-    uVar1 = orig::Cell_TakeFlagBit2(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cell_TakeFlagBit2(&g_104E1C40,arg1);
+    return u1;
   case 4:
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,arg1);
+    return u1;
   case 5:
-    uVar1 = orig::Cell_TestFlagBit3(&DAT_104e1c40,param_1);
-    return uVar1;
+    u1 = orig::Cell_TestFlagBit3(&g_104E1C40,arg1);
+    return u1;
   }
-  goto switchD_101233b4_caseD_47;
+  goto L1;
 }
 
 // FUNCTION: FFXIMAIN 0x10123640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_GetByte1036E0F0(undefined4 param_1)
+XI_API bits32 __cdecl Cell_GetByte1036E0F0(bits32 arg1)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)((char)param_1 * 0x10) >> 8))) << 8) | (uint8_t)((&DAT_1036e0f0)[(char)param_1 * 0x10])));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)((char)arg1 * 0x10) >> 8))) << 8) | (uint8_t)((&g_1036E0F0)[(char)arg1 * 0x10])));
 }
 
 // FUNCTION: FFXIMAIN 0x10123650
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_SetByte1036E0F0(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl Cell_SetByte1036E0F0(bits32 arg1, bits32 arg2)
 {
-  (&DAT_1036e0f0)[(char)param_1 * 0x10] = (uint8_t)param_2;
-  return (char)param_1 * 0x10;
+  (&g_1036E0F0)[(char)arg1 * 0x10] = (uint8_t)arg2;
+  return (char)arg1 * 0x10;
 }
 
 // FUNCTION: FFXIMAIN 0x10123670
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_GetWord1036D6B0(undefined4 param_1)
+XI_API bits32 __cdecl Cell_GetWord1036D6B0(bits32 arg1)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)((short)param_1 * 3) >> 8))) << 8) | (uint8_t)(((uint8_t *)((&DAT_1036d6b0)))[(short)param_1 * 6])));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)((short)arg1 * 3) >> 8))) << 8) | (uint8_t)(((uint8_t *)((&g_1036D6B0)))[(short)arg1 * 6])));
 }
 
 // FUNCTION: FFXIMAIN 0x10123680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_SetWord1036D6B0(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl Cell_SetWord1036D6B0(bits32 arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = (int)(short)param_1;
-  *(uint16_t *)(((char *)&DAT_1036d6b0) + iVar1 * 6) = 0;
-  if ((char)param_2 != '\0') {
-    *(uint16_t *)(((char *)&DAT_1036d6b0) + iVar1 * 6) = ((uint16_t)(((uint16_t)(uint8_t)(0x10) << 8) | (uint8_t)((char)param_2)));
+  i1 = (int)(short)arg1;
+  *(uint16_t *)(((char *)&g_1036D6B0) + i1 * 6) = 0;
+  if ((char)arg2 != '\0') {
+    *(uint16_t *)(((char *)&g_1036D6B0) + i1 * 6) = ((uint16_t)(((uint16_t)(uint8_t)(0x10) << 8) | (uint8_t)((char)arg2)));
   }
-  return iVar1 * 3;
+  return i1 * 3;
 }
 
 // FUNCTION: FFXIMAIN 0x101236B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_SetTable1036D6B0Word(undefined4 param_1, undefined4 param_2)
+XI_API bits32 __cdecl NetCellFont_SetTable1036D6B0Word(bits32 arg1, bits32 arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = (int)(short)param_1;
-  *(uint16_t *)(((char *)&DAT_1036d6b0) + iVar1 * 6) = 0;
-  if ((char)param_2 != '\0') {
-    *(uint16_t *)(((char *)&DAT_1036d6b0) + iVar1 * 6) = ((uint16_t)(((uint16_t)(uint8_t)(0x80) << 8) | (uint8_t)((char)param_2)));
+  i1 = (int)(short)arg1;
+  *(uint16_t *)(((char *)&g_1036D6B0) + i1 * 6) = 0;
+  if ((char)arg2 != '\0') {
+    *(uint16_t *)(((char *)&g_1036D6B0) + i1 * 6) = ((uint16_t)(((uint16_t)(uint8_t)(0x80) << 8) | (uint8_t)((char)arg2)));
   }
-  return iVar1 * 3;
+  return i1 * 3;
 }
 
 // FUNCTION: FFXIMAIN 0x101236E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl Cell_SetGlobal1036E3A0(undefined4 param_1)
+XI_API void __cdecl Cell_SetGlobal1036E3A0(bits32 arg1)
 {
-  DAT_1036e3a0 = param_1;
+  g_1036E3A0 = arg1;
   return;
 }
 
@@ -12026,355 +12095,355 @@ XI_API void __cdecl Cell_SetGlobal1036E3A0(undefined4 param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __cdecl NetCellFont_Query123700UnlessBlocked(void)
 {
-  char cVar1;
-  char cVar2;
-  char cVar3;
-  char cVar4;
-  undefined4 uVar5;
-  int iVar6;
-  uint32_t uVar7;
-  undefined4 uVar8;
-  uint32_t uVar9;
-  char *pcVar10;
-  uint32_t *puVar11;
-  uint8_t bVar12;
-  uint64_t uVar13;
-  uint32_t local_8;
-  uint32_t local_4;
+  char c1;
+  char c2;
+  char c3;
+  char c4;
+  bits32 u1;
+  int i1;
+  uint32_t u2;
+  bits32 u3;
+  uint32_t u4;
+  char *p1;
+  uint32_t *p2;
+  uint8_t u5;
+  uint64_t u6;
+  uint32_t u7;
+  uint32_t u8;
   
-  if (((((DAT_10662d40 != (void *)0x0) && (uVar5 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40), (char)uVar5 != '\0'))
+  if (((((g_10662D40 != (void *)0x0) && (u1 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40), (char)u1 != '\0'))
        || (*g_pSceneState_as_v0 == 0x40)) ||
-      ((DAT_10662770 != (void *)0x0 && (uVar13 = orig::FUN_1011ba40(DAT_10662770), (char)uVar13 != '\0')))
-      ) || ((DAT_10662774 != (void *)0x0 &&
-            (uVar13 = orig::FUN_1011ba40(DAT_10662774), (char)uVar13 != '\0')))) {
+      ((g_10662770 != (void *)0x0 && (u6 = orig::game_1011BA40(g_10662770), (char)u6 != '\0')))
+      ) || ((g_10662774 != (void *)0x0 &&
+            (u6 = orig::game_1011BA40(g_10662774), (char)u6 != '\0')))) {
     return 0;
   }
-  iVar6 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  local_8 = 0;
-  local_4 = 0;
-  uVar5 = orig::Cell_TestAny1DOr9D();
-  cVar2 = (char)uVar5;
-  uVar5 = orig::Cell_TestAny38Or0B8();
-  cVar3 = (char)uVar5;
-  uVar5 = orig::Cell_TestAny2AOr36();
-  uVar7 = orig::TextInputFiles_IsState1Or3();
-  cVar4 = (char)uVar7;
-  if (DAT_1036e0f8 != 0 || DAT_1036e0fc != 0) {
-    puVar11 = (uint32_t *)&DAT_1036e0f8;
-    pcVar10 = &DAT_1036e0f1;
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  u7 = 0;
+  u8 = 0;
+  u1 = orig::Cell_TestAny1DOr9D();
+  c2 = (char)u1;
+  u1 = orig::Cell_TestAny38Or0B8();
+  c3 = (char)u1;
+  u1 = orig::Cell_TestAny2AOr36();
+  u2 = orig::TextInputFiles_IsState1Or3();
+  c4 = (char)u2;
+  if (g_1036E0F8 != 0 || g_1036E0FC != 0) {
+    p2 = (uint32_t *)&g_1036E0F8;
+    p1 = &g_1036E0F1;
     do {
-      if ((((uint8_t)(pcVar10[1] & 6U - ((char)iVar6 != '\0')) == pcVar10[1]) && (cVar4 != '\0')) &&
-         (uVar8 = ((uint32_t)(((uint32_t)(xi_strunc24((uVar7 >> 8))) << 8) | (uint8_t)(pcVar10[-1]))), pcVar10[-1] != '\0')) {
-        if (cVar3 == '\0') {
-          if (cVar2 == '\0') {
-            if (*pcVar10 != '\0') goto LAB_1012380b;
+      if ((((uint8_t)(p1[1] & 6U - ((char)i1 != '\0')) == p1[1]) && (c4 != '\0')) &&
+         (u3 = ((uint32_t)(((uint32_t)(xi_strunc24((u2 >> 8))) << 8) | (uint8_t)(p1[-1]))), p1[-1] != '\0')) {
+        if (c3 == '\0') {
+          if (c2 == '\0') {
+            if (*p1 != '\0') goto code_1012380B;
           }
           else {
-            bVar12 = *pcVar10 == '\x01';
-LAB_101237ef:
-            if (!bVar12) goto LAB_101237f1;
+            u5 = *p1 == '\x01';
+code_101237EF:
+            if (!u5) goto code_101237F1;
           }
         }
         else {
-          if (cVar2 == '\0') {
-            bVar12 = *pcVar10 == '\x02';
-            goto LAB_101237ef;
+          if (c2 == '\0') {
+            u5 = *p1 == '\x02';
+            goto code_101237EF;
           }
-LAB_101237f1:
-          if ((*pcVar10 != '\0') || (uVar8 = orig::TextInputFiles_HasTable1037A290CellByte(uVar8,uVar8), (char)uVar8 != '\0')) {
-            uVar8 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar8 >> 8))) << 8) | (uint8_t)(cVar3)));
-            if (cVar3 == '\0') {
-LAB_1012380b:
-              uVar9 = (uint32_t)((uint32_t)uVar8 >> 8);
-              uVar8 = ((uint32_t)(((uint32_t)(uVar9) << 8) | (uint8_t)(cVar2)));
-              if (cVar2 == '\0') {
-                cVar1 = *pcVar10;
-                uVar8 = ((uint32_t)(((uint32_t)(uVar9) << 8) | (uint8_t)(cVar1)));
-                if ((char)uVar5 == '\0') {
-                  bVar12 = cVar1 == '\b';
+code_101237F1:
+          if ((*p1 != '\0') || (u3 = orig::TextInputFiles_HasTable1037A290CellByte(u3,u3), (char)u3 != '\0')) {
+            u3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(c3)));
+            if (c3 == '\0') {
+code_1012380B:
+              u4 = (uint32_t)((uint32_t)u3 >> 8);
+              u3 = ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(c2)));
+              if (c2 == '\0') {
+                c1 = *p1;
+                u3 = ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(c1)));
+                if ((char)u1 == '\0') {
+                  u5 = c1 == '\b';
                 }
                 else {
-                  bVar12 = cVar1 == '\x04';
+                  u5 = c1 == '\x04';
                 }
-                if (bVar12) goto LAB_1012383e;
+                if (u5) goto code_1012383E;
               }
             }
-            if (*pcVar10 != '\a') goto LAB_10123939;
+            if (*p1 != '\a') goto code_10123939;
           }
         }
-LAB_1012383e:
-        uVar8 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar8 >> 8))) << 8) | (uint8_t)(pcVar10[-1]))));
-        if ((char)uVar8 != '\0') {
-          uVar7 = *puVar11;
-          local_8 = local_8 | uVar7;
-          local_4 = local_4 | puVar11[1];
-          if ((puVar11[1] == 0) && (uVar7 < 0x1000001)) {
-            if (uVar7 < 0x200001) {
-              if (uVar7 == 0x200000) {
-                *(uint8_t *)(dword_104E1D44 + 0x252) = 0xff;
+code_1012383E:
+        u3 = orig::Cursor_GetFlagBit2(&g_104E1C40,((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(p1[-1]))));
+        if ((char)u3 != '\0') {
+          u2 = *p2;
+          u7 = u7 | u2;
+          u8 = u8 | p2[1];
+          if ((p2[1] == 0) && (u2 < 0x1000001)) {
+            if (u2 < 0x200001) {
+              if (u2 == 0x200000) {
+                *(uint8_t *)(g_104E1D44 + 0x252) = 0xff;
               }
-              else if (uVar7 < 0x80001) {
-                if (uVar7 == 0x80000) {
-                  *(uint8_t *)(dword_104E1D44 + 0x251) = 0;
+              else if (u2 < 0x80001) {
+                if (u2 == 0x80000) {
+                  *(uint8_t *)(g_104E1D44 + 0x251) = 0;
                 }
-                else if (uVar7 == 0x20000) {
-                  *(uint8_t *)(dword_104E1D44 + 0x250) = 0xff;
+                else if (u2 == 0x20000) {
+                  *(uint8_t *)(g_104E1D44 + 0x250) = 0xff;
                 }
-                else if (uVar7 == 0x40000) {
-                  *(uint8_t *)(dword_104E1D44 + 0x250) = 0;
+                else if (u2 == 0x40000) {
+                  *(uint8_t *)(g_104E1D44 + 0x250) = 0;
                 }
               }
-              else if (uVar7 == 0x100000) {
-                *(uint8_t *)(dword_104E1D44 + 0x251) = 0xff;
+              else if (u2 == 0x100000) {
+                *(uint8_t *)(g_104E1D44 + 0x251) = 0xff;
               }
             }
-            else if (uVar7 == 0x400000) {
-              *(uint8_t *)(dword_104E1D44 + 0x252) = 0;
+            else if (u2 == 0x400000) {
+              *(uint8_t *)(g_104E1D44 + 0x252) = 0;
             }
-            else if (uVar7 == 0x800000) {
-              *(uint8_t *)(dword_104E1D44 + 0x253) = 0;
+            else if (u2 == 0x800000) {
+              *(uint8_t *)(g_104E1D44 + 0x253) = 0;
             }
-            else if (uVar7 == 0x1000000) {
-              *(uint8_t *)(dword_104E1D44 + 0x253) = 0xff;
+            else if (u2 == 0x1000000) {
+              *(uint8_t *)(g_104E1D44 + 0x253) = 0xff;
             }
           }
         }
       }
-LAB_10123939:
-      puVar11 = (uint32_t *)(pcVar10 + 0x17);
-      uVar7 = *(uint32_t *)(pcVar10 + 0x17) | *(uint32_t *)(pcVar10 + 0x1b);
-      pcVar10 = pcVar10 + 0x10;
-    } while (uVar7 != 0);
+code_10123939:
+      p2 = (uint32_t *)(p1 + 0x17);
+      u2 = *(uint32_t *)(p1 + 0x17) | *(uint32_t *)(p1 + 0x1b);
+      p1 = p1 + 0x10;
+    } while (u2 != 0);
   }
-  return ((uint64_t)(((uint64_t)(uint32_t)(local_4) << 32) | (uint32_t)(local_8)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(u8) << 32) | (uint32_t)(u7)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123A70
 // GATE: PASS -- 100 trials, 78 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 78
-XI_API undefined4 __attribute__((cdecl, regparm(1))) NetCellFont_TestCommand36CF60(undefined4 xi_eax, undefined4 param_1, int param_2, int param_3, int param_4)
+XI_API bits32 __attribute__((cdecl, regparm(1))) NetCellFont_TestCommand36CF60(bits32 xi_eax, bits32 arg2, int arg3, int arg4, int arg5)
 {
-  int iVar1;
-  uint16_t uVar2;
-  int iVar3;
-  uint32_t uVar4;
-  code *pcVar5;
-  undefined4 uVar6;
-  int iVar7;
-  uint8_t bVar8;
-  code *local_4;
+  int i1;
+  uint16_t u1;
+  int i2;
+  uint32_t u2;
+  untyped_fn *p1;
+  bits32 u3;
+  int i3;
+  uint8_t u4;
+  untyped_fn *p2;
   
-  iVar3 = param_2;
-  uVar4 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(DAT_104e1c3c_as_s8)));
-  if (((DAT_104e1c3c_as_s8 == '\x01') && (param_3 != 4)) || (param_2 == -1)) {
-LAB_10123d89:
-    return uVar4 & 0xffffff00;
+  i2 = arg3;
+  u2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_104E1C3C_as_s8)));
+  if (((g_104E1C3C_as_s8 == '\x01') && (arg4 != 4)) || (arg3 == -1)) {
+code_10123D89:
+    return u2 & 0xffffff00;
   }
-  uVar2 = *(uint16_t *)(((char *)&DAT_1036cf60) + param_2 * 2);
-  uVar4 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(uVar2)));
-  if (((uVar2 == 0) || ((uVar2 & DAT_1036e3a0_as_v0) == 0)) ||
-     (((uVar2 & 0x41) != 0 &&
-      ((DAT_10662d40 != (void *)0x0 &&
-       (uVar4 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40), (char)uVar4 != '\0'))))))
-  goto LAB_10123d89;
-  param_2 = 0;
-  if (param_4 == -1) {
-    pcVar5 = (code *)(&PTR_FUN_1036db18)[iVar3 * 2];
-    bVar8 = pcVar5 == (code *)0x0;
+  u1 = *(uint16_t *)(((char *)&g_1036CF60) + arg3 * 2);
+  u2 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(u1)));
+  if (((u1 == 0) || ((u1 & g_1036E3A0_as_v0) == 0)) ||
+     (((u1 & 0x41) != 0 &&
+      ((g_10662D40 != (void *)0x0 &&
+       (u2 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40), (char)u2 != '\0'))))))
+  goto code_10123D89;
+  arg3 = 0;
+  if (arg5 == -1) {
+    p1 = (untyped_fn *)(&g_1036DB18)[i2 * 2];
+    u4 = p1 == (untyped_fn *)0x0;
   }
   else {
-    pcVar5 = (code *)(&PTR_FUN_1036db18)[param_4 + iVar3 * 2];
-    if (pcVar5 == (code *)0x0) goto LAB_10123b0e;
-    bVar8 = param_4 == 1;
+    p1 = (untyped_fn *)(&g_1036DB18)[arg5 + i2 * 2];
+    if (p1 == (untyped_fn *)0x0) goto code_10123B0E;
+    u4 = arg5 == 1;
   }
-  if (!bVar8) {
-    pcVar5 = (code *)(*pcVar5)(param_3);
-    param_2 = (uint32_t)pcVar5 & 0xff;
+  if (!u4) {
+    p1 = (untyped_fn *)(*p1)(arg4);
+    arg3 = (uint32_t)p1 & 0xff;
   }
-LAB_10123b0e:
-  param_4 = 0;
-  local_4 = (code *)&DAT_1036da22;
+code_10123B0E:
+  arg5 = 0;
+  p2 = (untyped_fn *)&g_1036DA22;
   do {
-    pcVar5 = (code *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pcVar5 >> 8))) << 8) | (uint8_t)((char)param_2)));
-    if ((char)param_2 != '\0') break;
-    iVar7 = param_4 + iVar3 * 3;
-    iVar1 = iVar7 * 2;
-    if (*(uint16_t *)(((char *)&DAT_1036d6b0) + iVar7 * 2) != 0) {
-      bVar8 = true;
-      if (((*(uint16_t *)(((char *)&DAT_1036d6b0) + iVar7 * 2) & 0x4000) != 0) &&
-         ((bVar8 = false, DAT_10662d40 == (void *)0x0 ||
-          (uVar6 = orig::TextInputFiles_IsModeFourOrFive(DAT_10662d40), (char)uVar6 == '\0')))) {
-        bVar8 = true;
+    p1 = (untyped_fn *)((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)((char)arg3)));
+    if ((char)arg3 != '\0') break;
+    i3 = arg5 + i2 * 3;
+    i1 = i3 * 2;
+    if (*(uint16_t *)(((char *)&g_1036D6B0) + i3 * 2) != 0) {
+      u4 = true;
+      if (((*(uint16_t *)(((char *)&g_1036D6B0) + i3 * 2) & 0x4000) != 0) &&
+         ((u4 = false, g_10662D40 == (void *)0x0 ||
+          (u3 = orig::TextInputFiles_IsModeFourOrFive(g_10662D40), (char)u3 == '\0')))) {
+        u4 = true;
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 0x80) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cursor_TestAny1DOr9D();
-        if (((char)uVar6 == '\0') && (uVar6 = orig::Cursor_TestAnyB8Or38(), (char)uVar6 == '\0')) {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 0x80) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cursor_TestAny1DOr9D();
+        if (((char)u3 == '\0') && (u3 = orig::Cursor_TestAnyB8Or38(), (char)u3 == '\0')) {
+          u4 = true;
         }
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 1) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cell_TestFlagAny2AOr36Kind4();
-        if ((char)uVar6 != '\0') {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 1) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cell_TestFlagAny2AOr36Kind4();
+        if ((char)u3 != '\0') {
+          u4 = true;
         }
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 2) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cursor_TestAny1DOr9D();
-        if ((char)uVar6 != '\0') {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 2) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cursor_TestAny1DOr9D();
+        if ((char)u3 != '\0') {
+          u4 = true;
         }
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 4) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cursor_TestAnyB8Or38();
-        if ((char)uVar6 != '\0') {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 4) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cursor_TestAnyB8Or38();
+        if ((char)u3 != '\0') {
+          u4 = true;
         }
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 8) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cursor_TestAny1DOr9D();
-        if (((char)uVar6 != '\0') && (uVar6 = orig::Cursor_TestAnyB8Or38(), (char)uVar6 != '\0')) {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 8) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cursor_TestAny1DOr9D();
+        if (((char)u3 != '\0') && (u3 = orig::Cursor_TestAnyB8Or38(), (char)u3 != '\0')) {
+          u4 = true;
         }
       }
-      if (((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 0x10) != 0) && (bVar8)) {
-        bVar8 = false;
-        uVar6 = orig::Cursor_TestAny1DOr9D();
-        if ((((char)uVar6 != '\0') || (uVar6 = orig::Cursor_TestAnyB8Or38(), (char)uVar6 != '\0')) &&
-           (uVar6 = orig::Cell_GetByte1036CF5C(uVar6), (char)uVar6 != '\0')) {
-          bVar8 = true;
+      if (((((uint8_t *)((&g_1036D6B1)))[i1] & 0x10) != 0) && (u4)) {
+        u4 = false;
+        u3 = orig::Cursor_TestAny1DOr9D();
+        if ((((char)u3 != '\0') || (u3 = orig::Cursor_TestAnyB8Or38(), (char)u3 != '\0')) &&
+           (u3 = orig::Cell_GetByte1036CF5C(u3), (char)u3 != '\0')) {
+          u4 = true;
         }
       }
-      if ((((uint8_t *)((&DAT_1036d6b1)))[iVar1] & 0x20) == 0) {
-        if (bVar8) goto LAB_10123cee;
+      if ((((uint8_t *)((&g_1036D6B1)))[i1] & 0x20) == 0) {
+        if (u4) goto code_10123CEE;
       }
-      else if ((bVar8) && (uVar6 = orig::Cell_TestFlagAny2AOr36Kind4(), (char)uVar6 == '\0')) {
-LAB_10123cee:
-        uVar4 = (uint32_t)(uint8_t)((uint8_t *)((&DAT_1036d6b0)))[iVar1];
-        if (uVar4 == 0x1d) {
-          if (param_3 == 4) {
-            uVar4 = orig::Cell_TestAny1DOr9D();
-            param_2 = uVar4 & 0xff;
+      else if ((u4) && (u3 = orig::Cell_TestFlagAny2AOr36Kind4(), (char)u3 == '\0')) {
+code_10123CEE:
+        u2 = (uint32_t)(uint8_t)((uint8_t *)((&g_1036D6B0)))[i1];
+        if (u2 == 0x1d) {
+          if (arg4 == 4) {
+            u2 = orig::Cell_TestAny1DOr9D();
+            arg3 = u2 & 0xff;
           }
         }
-        else if (uVar4 == 0x2a) {
-          if (param_3 == 4) {
-            uVar4 = orig::Cell_TestAny2AOr36();
-            param_2 = uVar4 & 0xff;
+        else if (u2 == 0x2a) {
+          if (arg4 == 4) {
+            u2 = orig::Cell_TestAny2AOr36();
+            arg3 = u2 & 0xff;
           }
         }
-        else if (uVar4 == 0x38) {
-          if (param_3 == 4) {
-            uVar4 = orig::Cell_TestAny38Or0B8();
-            param_2 = uVar4 & 0xff;
+        else if (u2 == 0x38) {
+          if (arg4 == 4) {
+            u2 = orig::Cell_TestAny38Or0B8();
+            arg3 = u2 & 0xff;
           }
         }
         else {
-          uVar4 = orig::Cell_TestFlagKind(uVar4,param_3);
-          param_2 = uVar4 & 0xff;
+          u2 = orig::Cell_TestFlagKind(u2,arg4);
+          arg3 = u2 & 0xff;
         }
-        goto LAB_10123c9f;
+        goto code_10123C9F;
       }
-      if (((((iVar3 == 0x93) && ((*(uint16_t *)local_4 & 0x1000) != 0)) &&
-           ((char)*(uint16_t *)local_4 == '\x15')) && (param_3 == 5)) &&
-         (((uVar6 = orig::Cell_TestFlagKind(0x38,5), (char)uVar6 != '\0' ||
-           (uVar6 = orig::Cell_TestFlagKind(0xb8,5), (char)uVar6 != '\0')) ||
-          ((uVar6 = orig::Cell_TestFlagKind(0x1d,5), (char)uVar6 != '\0' ||
-           (uVar6 = orig::Cell_TestFlagKind(0x9d,5), (char)uVar6 != '\0')))))) {
-        param_2 = 1;
+      if (((((i2 == 0x93) && ((*(uint16_t *)p2 & 0x1000) != 0)) &&
+           ((char)*(uint16_t *)p2 == '\x15')) && (arg4 == 5)) &&
+         (((u3 = orig::Cell_TestFlagKind(0x38,5), (char)u3 != '\0' ||
+           (u3 = orig::Cell_TestFlagKind(0xb8,5), (char)u3 != '\0')) ||
+          ((u3 = orig::Cell_TestFlagKind(0x1d,5), (char)u3 != '\0' ||
+           (u3 = orig::Cell_TestFlagKind(0x9d,5), (char)u3 != '\0')))))) {
+        arg3 = 1;
       }
     }
-LAB_10123c9f:
-    pcVar5 = local_4 + 2;
-    param_4 = param_4 + 1;
-    local_4 = pcVar5;
-  } while ((int)pcVar5 < (int)XI_GAME(0x1036DA28u));
-  iVar7 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pcVar5 >> 8))) << 8) | (uint8_t)((char)param_2)));
-  if ((char)param_2 == '\x01') {
-    iVar7 = iVar3 + -0x76;
-    switch(xi_sw(iVar3)) {
+code_10123C9F:
+    p1 = p2 + 2;
+    arg5 = arg5 + 1;
+    p2 = p1;
+  } while ((int)p1 < (int)XI_GAME(0x1036DA28u));
+  i3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)((char)arg3)));
+  if ((char)arg3 == '\x01') {
+    i3 = i2 + -0x76;
+    switch(xi_sw(i2)) {
     case 0x76:
     case 0x77:
     case 0x89:
     case 0x8a:
       break;
     default:
-      iVar7 = orig::Cursor_UpdateVisibilityForMode(g_pCursor_as_v2,0);
+      i3 = orig::Cursor_UpdateVisibilityForMode(g_pCursor_as_v2,0);
       break;
     case 0x8b:
     case 0x8c:
     case 0x96:
-      uVar6 = orig::Cursor_UpdateVisibilityForMode(g_pCursor_as_v2,1);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar6 >> 8))) << 8) | (uint8_t)(1)));
+      u3 = orig::Cursor_UpdateVisibilityForMode(g_pCursor_as_v2,1);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u3 >> 8))) << 8) | (uint8_t)(1)));
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar7 >> 8))) << 8) | (uint8_t)((char)param_2)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)((char)arg3)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123DC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cursor_TestAny1DOr9D(void)
+XI_API bits32 __cdecl Cursor_TestAny1DOr9D(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x1d);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x9d);
-    if ((char)uVar1 == '\0') {
-      return uVar1;
+  u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x1d);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x9d);
+    if ((char)u1 == '\0') {
+      return u1;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123DF0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cursor_TestAnyB8Or38(void)
+XI_API bits32 __cdecl Cursor_TestAnyB8Or38(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0xb8);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cursor_GetFlagBit2(&DAT_104e1c40,0x38);
-    if ((char)uVar1 == '\0') {
-      return uVar1;
+  u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0xb8);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cursor_GetFlagBit2(&g_104E1C40,0x38);
+    if ((char)u1 == '\0') {
+      return u1;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestFlagAny2AOr36Kind4(void)
+XI_API bits32 __cdecl Cell_TestFlagAny2AOr36Kind4(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  uVar1 = orig::Cell_TestFlagKind(0x2a,4);
-  if ((char)uVar1 == '\0') {
-    uVar1 = orig::Cell_TestFlagKind(0x36,4);
-    if ((char)uVar1 == '\0') {
-      return uVar1;
+  u1 = orig::Cell_TestFlagKind(0x2a,4);
+  if ((char)u1 == '\0') {
+    u1 = orig::Cell_TestFlagKind(0x36,4);
+    if ((char)u1 == '\0') {
+      return u1;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123E50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cell_TestGlobal1036E3A0Mask(uint32_t param_1)
+XI_API bits32 __cdecl Cell_TestGlobal1036E3A0Mask(uint32_t arg1)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24((DAT_1036e3a0_as_v0 >> 8))) << 8) | (uint8_t)((DAT_1036e3a0_as_v0 & param_1) != 0)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24((g_1036E3A0_as_v0 >> 8))) << 8) | (uint8_t)((g_1036E3A0_as_v0 & arg1) != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) Cell_SetByte104E1C3E(undefined4 xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) Cell_SetByte104E1C3E(bits32 xi_eax, bits32 arg2)
 {
-  DAT_104e1c3e = (uint8_t)param_1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)param_1)));
+  g_104E1C3E = (uint8_t)arg2;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)((uint8_t)arg2)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123E80
@@ -12388,7 +12457,7 @@ XI_API void __cdecl Cell_Nop(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Cell_ClearFlag104E1C3C(void)
 {
-  DAT_104e1c3c = 0;
+  g_104E1C3C = 0;
   return;
 }
 
@@ -12396,126 +12465,126 @@ XI_API void __cdecl Cell_ClearFlag104E1C3C(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __cdecl Cell_SetFlag104E1C3C(void)
 {
-  DAT_104e1c3c = 1;
+  g_104E1C3C = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10123EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) Cell_GetByte1036CF5C(undefined4 xi_eax)
+XI_API bits32 __attribute__((cdecl, regparm(1))) Cell_GetByte1036CF5C(bits32 xi_eax)
 {
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(DAT_1036cf5c)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(g_1036CF5C)));
 }
 
 // FUNCTION: FFXIMAIN 0x10123F40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_SetFlagBit2(void * self_, uint32_t param_1)
+XI_API void __thiscall Cell_SetFlagBit2(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 | 2;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 | 2;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10123F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_SetFlagBit8(void * self_, uint32_t param_1)
+XI_API void __thiscall Cell_SetFlagBit8(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 | 8;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 | 8;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10123F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_SetByteFlag1(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall NetCellFont_SetByteFlag1(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 | 1;
-  return pbVar1;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 | 1;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10123FC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_SetFlagBit4Dirty(void * self_, uint32_t param_1)
+XI_API void __thiscall Cell_SetFlagBit4Dirty(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 | 4;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 | 4;
   *(uint8_t *)((int)self_ + 0x100) = 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10123FE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_SetFlagBit10(void * self_, uint32_t param_1)
+XI_API void __thiscall Cell_SetFlagBit10(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 | 0x10;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 | 0x10;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10124000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cell_ClearByte(void * self_, uint32_t param_1)
+XI_API void __thiscall Cell_ClearByte(void * self_, uint32_t arg2)
 {
-  *(uint8_t *)((param_1 & 0xff) + (int)self_) = 0;
+  *(uint8_t *)((arg2 & 0xff) + (int)self_) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10124010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_ClearFlag01And08(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cell_ClearFlag01And08(void * self_, uint32_t arg2)
 {
-  uint8_t *pbVar1;
+  uint8_t *p1;
   
-  pbVar1 = (uint8_t *)((param_1 & 0xff) + (int)self_);
-  *pbVar1 = *pbVar1 & 0xf4;
-  return pbVar1;
+  p1 = (uint8_t *)((arg2 & 0xff) + (int)self_);
+  *p1 = *p1 & 0xf4;
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10124050
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_ClearAllFlags(void * self_)
+XI_API bits32 __thiscall Cell_ClearAllFlags(void * self_)
 {
-  undefined4 uVar1;
-  uint32_t uVar2;
+  bits32 u1;
+  uint32_t u2;
   
-  uVar2 = 0;
+  u2 = 0;
   do {
-    uVar1 = orig::Cell_ClearFlag01And08(self_,uVar2);
-    uVar2 = uVar2 + 1;
-  } while ((int)uVar2 < 0x100);
+    u1 = orig::Cell_ClearFlag01And08(self_,u2);
+    u2 = u2 + 1;
+  } while ((int)u2 < 0x100);
   *(uint8_t *)((int)self_ + 0x100) = 0;
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10124070
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_TestFlagBit1(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cell_TestFlagBit1(void * self_, uint32_t arg2)
 {
-  return (uint32_t)(*(uint8_t *)((param_1 & 0xff) + (int)self_) >> 1 & 1);
+  return (uint32_t)(*(uint8_t *)((arg2 & 0xff) + (int)self_) >> 1 & 1);
 }
 
 // FUNCTION: FFXIMAIN 0x10124090
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_TakeFlagBit2(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cell_TakeFlagBit2(void * self_, uint32_t arg2)
 {
-  uint8_t bVar1;
-  uint8_t *pbVar2;
+  uint8_t u1;
+  uint8_t *p1;
   
-  pbVar2 = (uint8_t *)((int)self_ + (param_1 & 0xff));
-  bVar1 = *pbVar2;
-  if ((bVar1 & 2) != 0) {
-    *pbVar2 = bVar1 & 0xfd;
+  p1 = (uint8_t *)((int)self_ + (arg2 & 0xff));
+  u1 = *p1;
+  if ((u1 & 2) != 0) {
+    *p1 = u1 & 0xfd;
     return 1;
   }
   return 0;
@@ -12523,29 +12592,29 @@ XI_API undefined4 __thiscall Cell_TakeFlagBit2(void * self_, uint32_t param_1)
 
 // FUNCTION: FFXIMAIN 0x101240B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_TestFlagBit3(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cell_TestFlagBit3(void * self_, uint32_t arg2)
 {
-  return (uint32_t)(*(uint8_t *)((param_1 & 0xff) + (int)self_) >> 3 & 1);
+  return (uint32_t)(*(uint8_t *)((arg2 & 0xff) + (int)self_) >> 3 & 1);
 }
 
 // FUNCTION: FFXIMAIN 0x101240D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cell_TestFlagBit0(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cell_TestFlagBit0(void * self_, uint32_t arg2)
 {
-  return (uint32_t)(*(uint8_t *)((param_1 & 0xff) + (int)self_) & 1);
+  return (uint32_t)(*(uint8_t *)((arg2 & 0xff) + (int)self_) & 1);
 }
 
 // FUNCTION: FFXIMAIN 0x101240F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_TakeEventFlag(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cursor_TakeEventFlag(void * self_, uint32_t arg2)
 {
-  uint8_t bVar1;
-  uint8_t *pbVar2;
+  uint8_t u1;
+  uint8_t *p1;
   
-  pbVar2 = (uint8_t *)((int)self_ + (param_1 & 0xff));
-  bVar1 = *pbVar2;
-  if ((bVar1 & 1) != 0) {
-    *pbVar2 = bVar1 & 0xfe;
+  p1 = (uint8_t *)((int)self_ + (arg2 & 0xff));
+  u1 = *p1;
+  if ((u1 & 1) != 0) {
+    *p1 = u1 & 0xfe;
     return 1;
   }
   return 0;
@@ -12553,178 +12622,178 @@ XI_API undefined4 __thiscall Cursor_TakeEventFlag(void * self_, uint32_t param_1
 
 // FUNCTION: FFXIMAIN 0x10124110
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_GetFlagBit4(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cursor_GetFlagBit4(void * self_, uint32_t arg2)
 {
-  return (uint32_t)(*(uint8_t *)((param_1 & 0xff) + (int)self_) >> 4 & 1);
+  return (uint32_t)(*(uint8_t *)((arg2 & 0xff) + (int)self_) >> 4 & 1);
 }
 
 // FUNCTION: FFXIMAIN 0x10124130
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_GetFlagBit2(void * self_, uint32_t param_1)
+XI_API bits32 __thiscall Cursor_GetFlagBit2(void * self_, uint32_t arg2)
 {
-  return (uint32_t)(*(uint8_t *)((param_1 & 0xff) + (int)self_) >> 2 & 1);
+  return (uint32_t)(*(uint8_t *)((arg2 & 0xff) + (int)self_) >> 2 & 1);
 }
 
 // FUNCTION: FFXIMAIN 0x10124360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __attribute__((cdecl, regparm(1))) NetCellFont_HalfKanaToFullWidth(undefined4 xi_eax, uint8_t * param_1, undefined4 param_2)
+XI_API void __attribute__((cdecl, regparm(1))) NetCellFont_HalfKanaToFullWidth(bits32 xi_eax, uint8_t * arg2, bits32 arg3)
 {
-  short sVar1;
+  short i1;
   
-  if ((0xa0 < (uint8_t)param_2) && ((uint8_t)param_2 < 0xe0)) {
-    sVar1 = (uint16_t)(uint8_t)param_2 * 2 + -0x140;
-    *param_1 = ((uint8_t *)((&DAT_1036e3b8)))[sVar1];
-    param_1[1] = ((uint8_t *)((&DAT_1036e3b9)))[sVar1];
+  if ((0xa0 < (uint8_t)arg3) && ((uint8_t)arg3 < 0xe0)) {
+    i1 = (uint16_t)(uint8_t)arg3 * 2 + -0x140;
+    *arg2 = ((uint8_t *)((&g_1036E3B8)))[i1];
+    arg2[1] = ((uint8_t *)((&g_1036E3B9)))[i1];
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10124390
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((cdecl, regparm(1))) NetCellFont_IsHalfWidthKana(undefined4 xi_eax, undefined4 param_1)
+XI_API bits32 __attribute__((cdecl, regparm(1))) NetCellFont_IsHalfWidthKana(bits32 xi_eax, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = xi_trunc24(((uint32_t)xi_eax >> 8));
-  if ((-0x61 < (char)param_1) && ((char)param_1 < -0x20)) {
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+  u1 = xi_trunc24(((uint32_t)xi_eax >> 8));
+  if ((-0x61 < (char)arg2) && ((char)arg2 < -0x20)) {
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   }
-  return (uint32_t)uVar1 << 8;
+  return (uint32_t)u1 << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x10124440
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Cursor_Init(int self_)
 {
-  int v2; // kr00_4
-  __int16 v3;
-  int *v4;
-  int *v5;
+  int i1; // kr00_4
+  short i2;
+  int *p1;
+  int *p2;
   char *Shape;
-  int v7;
-  _DWORD *v8;
-  *(_DWORD *)(self_ + 88) = 0;
-  *(_DWORD *)(self_ + 92) = 0;
-  *(_DWORD *)(self_ + 96) = 0;
-  *(_DWORD *)(self_ + 100) = 0;
-  *(_DWORD *)(self_ + 104) = 0;
-  *(_DWORD *)(self_ + 112) = -998653952;
-  *(_BYTE *)(self_ + 77) = 0;
-  *(_BYTE *)(self_ + 136) = 1;
-  *(_DWORD *)(self_ + 140) = 0;
-  *(_DWORD *)(self_ + 144) = 0;
-  *(_DWORD *)(self_ + 148) = 0;
-  *(_DWORD *)(self_ + 152) = 0;
-  *(_DWORD *)(self_ + 156) = 0;
-  *(_WORD *)(self_ + 162) = 0;
-  *(_WORD *)(self_ + 164) = 0;
-  *(_BYTE *)(self_ + 160) = 0;
-  v2 = (__int16)(g_screenRectBottomRight - g_screenRectTopLeft);
-  *(_DWORD *)(self_ + 4) = v2 / 2;
-  *(_DWORD *)(self_ + 12) = v2 / 2;
-  v3 = HIWORD(g_screenRectBottomRight) - HIWORD(g_screenRectTopLeft);
-  *(_BYTE *)(self_ + 76) = 0;
-  *(_DWORD *)(self_ + 8) = v3 / 2;
-  *(_DWORD *)(self_ + 16) = v3 / 2;
-  *(_DWORD *)(self_ + 64) = orig::ShapeMng_FindShape(g_shapeMng, aAncAncScro);
-  *(_WORD *)(self_ + 68) = 0;
-  *(_DWORD *)(self_ + 128) = 1065353216;
-  *(_WORD *)(self_ + 132) = 0;
+  int i3;
+  uint32_t *p3;
+  *(uint32_t *)(self_ + 88) = 0;
+  *(uint32_t *)(self_ + 92) = 0;
+  *(uint32_t *)(self_ + 96) = 0;
+  *(uint32_t *)(self_ + 100) = 0;
+  *(uint32_t *)(self_ + 104) = 0;
+  *(uint32_t *)(self_ + 112) = -998653952;
+  *(uint8_t *)(self_ + 77) = 0;
+  *(uint8_t *)(self_ + 136) = 1;
+  *(uint32_t *)(self_ + 140) = 0;
+  *(uint32_t *)(self_ + 144) = 0;
+  *(uint32_t *)(self_ + 148) = 0;
+  *(uint32_t *)(self_ + 152) = 0;
+  *(uint32_t *)(self_ + 156) = 0;
+  *(uint16_t *)(self_ + 162) = 0;
+  *(uint16_t *)(self_ + 164) = 0;
+  *(uint8_t *)(self_ + 160) = 0;
+  i1 = (short)(g_screenRectBottomRight - g_screenRectTopLeft);
+  *(uint32_t *)(self_ + 4) = i1 / 2;
+  *(uint32_t *)(self_ + 12) = i1 / 2;
+  i2 = (*((uint16_t *)&(g_screenRectBottomRight) + sizeof(g_screenRectBottomRight) / 2 - 1)) - (*((uint16_t *)&(g_screenRectTopLeft) + sizeof(g_screenRectTopLeft) / 2 - 1));
+  *(uint8_t *)(self_ + 76) = 0;
+  *(uint32_t *)(self_ + 8) = i2 / 2;
+  *(uint32_t *)(self_ + 16) = i2 / 2;
+  *(uint32_t *)(self_ + 64) = orig::ShapeMng_FindShape(g_shapeMng, aAncAncScro);
+  *(uint16_t *)(self_ + 68) = 0;
+  *(uint32_t *)(self_ + 128) = 1065353216;
+  *(uint16_t *)(self_ + 132) = 0;
   if ( g_cursorShapes[0] == 0 )
   {
-    v4 = g_cursorShapes;
-    v5 = g_cursorShapes;
+    p1 = g_cursorShapes;
+    p2 = g_cursorShapes;
     do
     {
-      Shape = orig::ShapeMng_FindShape(g_shapeMng, (char *)v5 - 36);
-      v5 += 16;
-      *v4 = (int)Shape;
-      v4 = v5;
+      Shape = orig::ShapeMng_FindShape(g_shapeMng, (char *)p2 - 36);
+      p2 += 16;
+      *p1 = (int)Shape;
+      p1 = p2;
     }
-    while ( *v5 == 0 );
+    while ( *p2 == 0 );
   }
-  *(_BYTE *)(self_ + 78) = 0;
-  orig::Cursor_StoreScreenCenter((_DWORD *)self_);
-  *(_BYTE *)(self_ + 134) = 0;
-  *(_BYTE *)(self_ + 135) = 0;
-  *(_WORD *)(self_ + 166) = 0;
+  *(uint8_t *)(self_ + 78) = 0;
+  orig::Cursor_StoreScreenCenter((uint32_t *)self_);
+  *(uint8_t *)(self_ + 134) = 0;
+  *(uint8_t *)(self_ + 135) = 0;
+  *(uint16_t *)(self_ + 166) = 0;
   if ( g_pCDx != nullptr )
     orig::CDx_ShowCursor(g_pCDx, 0);
-  orig::Cursor_SetPosition(self_, (_DWORD *)(self_ + 4), 0.0);
-  v7 = 0;
-  v8 = (_DWORD *)(self_ + 32);
+  orig::Cursor_SetPosition(self_, (uint32_t *)(self_ + 4), 0.0);
+  i3 = 0;
+  p3 = (uint32_t *)(self_ + 32);
   do
   {
-    *(_BYTE *)(self_ + v7 + 52) = 0;
-    *(v8 - 1) = 0;
-    *v8 = 0;
-    ++v7;
-    v8 += 2;
+    *(uint8_t *)(self_ + i3 + 52) = 0;
+    *(p3 - 1) = 0;
+    *p3 = 0;
+    ++i3;
+    p3 += 2;
   }
-  while ( v7 < 3 );
-  *(_DWORD *)(self_ + 168) = 0;
-  *(_BYTE *)(self_ + 172) = 0;
+  while ( i3 < 3 );
+  *(uint32_t *)(self_ + 168) = 0;
+  *(uint8_t *)(self_ + 172) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101245C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_GetHwCursorSlot(void * self_)
+XI_API bits32 __thiscall Cursor_GetHwCursorSlot(void * self_)
 {
-  undefined4 xi_entry_eax = 0;
+  bits32 xi_entry_eax = 0;
   
   return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_entry_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0xa6))));
 }
 
 // FUNCTION: FFXIMAIN 0x101245D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall Cursor_HandleMouseMove(void * self_, int * param_1, undefined4 param_2, undefined4 xi_s3)
+XI_API void __thiscall Cursor_HandleMouseMove(void * self_, int * arg2, bits32 arg3, bits32 xi_s3)
 {
-  undefined4 uVar1;
-  int iVar2;
+  bits32 u1;
+  int i1;
   
-  uVar1 = orig::FontGlyphCache_IsStateTwo();
-  if ((char)uVar1 == '\0') {
-    orig::CTkMouse_OnMouseMove(self_,param_1,param_2);
+  u1 = orig::FontGlyphCache_IsStateTwo();
+  if ((char)u1 == '\0') {
+    orig::CTkMouse_OnMouseMove(self_,arg2,arg3);
     return;
   }
-  iVar2 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  if ((char)iVar2 != '\0') {
-    orig::CTkMouse_OnMouseMove(self_,param_1,param_2);
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  if ((char)i1 != '\0') {
+    orig::CTkMouse_OnMouseMove(self_,arg2,arg3);
     return;
   }
-  orig::FontGlyphCache_AddToCounter((int)(short)param_2);
-  orig::CTkMouse_OnMouseMove(self_,param_1,param_2);
+  orig::FontGlyphCache_AddToCounter((int)(short)arg3);
+  orig::CTkMouse_OnMouseMove(self_,arg2,arg3);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10124640
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall CTkMouse_OnMouseMove(int *self_, int *a2, __int16 a3)
+XI_API int __thiscall CTkMouse_OnMouseMove(int *self_, int *arg2, short arg3)
 {
   int result;
-  *((_WORD *)self_ + 40) = a3;
-  if ( (unsigned __int8)orig::Menu_GetStateB4(g_menuMng) == 0 && (*a2 != 0 || a2[1] != 0) )
+  *((uint16_t *)self_ + 40) = arg3;
+  if ( (unsigned char)orig::Menu_GetStateB4(g_menuMng) == 0 && (*arg2 != 0 || arg2[1] != 0) )
   {
     if ( g_pCDx != nullptr )
       orig::CDx_ShowCursor(g_pCDx, 1u);
     *(self_ + 18) = 0;
-    orig::Cursor_SetVisible((unsigned __int8 *)self_, 1u);
+    orig::Cursor_SetVisible((unsigned char *)self_, 1u);
   }
-  *(self_ + 1) += (__int64)(double)*a2;
-  *(self_ + 2) += (__int64)(double)a2[1];
-  *(self_ + 5) = (__int64)(double)*a2;
-  *(self_ + 6) = (__int64)(double)a2[1];
+  *(self_ + 1) += (long long)(double)*arg2;
+  *(self_ + 2) += (long long)(double)arg2[1];
+  *(self_ + 5) = (long long)(double)*arg2;
+  *(self_ + 6) = (long long)(double)arg2[1];
   if ( *(self_ + 1) < 0 )
     *(self_ + 1) = 0;
   if ( *(self_ + 2) < 0 )
     *(self_ + 2) = 0;
-  if ( *(self_ + 1) > (__int16)g_screenRectBottomRight )
-    *(self_ + 1) = (__int16)g_screenRectBottomRight - 1;
-  result = SHIWORD(g_screenRectBottomRight);
-  if ( *(self_ + 2) > SHIWORD(g_screenRectBottomRight) )
+  if ( *(self_ + 1) > (short)g_screenRectBottomRight )
+    *(self_ + 1) = (short)g_screenRectBottomRight - 1;
+  result = (*((int16_t *)&(g_screenRectBottomRight) + 1));
+  if ( *(self_ + 2) > (*((int16_t *)&(g_screenRectBottomRight) + 1)) )
   {
-    result = SHIWORD(g_screenRectBottomRight) - 1;
+    result = (*((int16_t *)&(g_screenRectBottomRight) + 1)) - 1;
     *(self_ + 2) = result;
   }
   return result;
@@ -12732,61 +12801,63 @@ XI_API int __thiscall CTkMouse_OnMouseMove(int *self_, int *a2, __int16 a3)
 
 // FUNCTION: FFXIMAIN 0x10124700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) Cursor_SetPosition(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, undefined4 * param_2, float param_3)
+XI_API bits32 __attribute__((stdcall, regparm(3))) Cursor_SetPosition(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, bits32 * arg4, float arg5)
 {
-  uint8_t bVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
-  uint8_t bVar5;
-  uint8_t bVar6;
-  long double fVar7;
-  long double fVar8;
+  uint8_t u1;
+  bits32 u2;
+  int Y;
+  int i2;
+  uint8_t u3;
+  uint8_t u4;
+  long double f1;
+  long double f2;
   long double st0;
-  int64_t lVar9;
-  char xi_frame[32] __attribute__((aligned(4)));
-  int  &local_20 = *reinterpret_cast<int  *>(xi_frame + 0);
-  tagRECT  &local_10 = *reinterpret_cast<tagRECT  *>(xi_frame + 16);
+  int64_t i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x10]; tagRECT val1; };   // at 0x10
+  } frame;
   
   if (self_ != (void *)0x0) {
-    bVar1 = *(uint8_t *)((int)self_ + 0x4d);
-    xi_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(bVar1)));
-    if ((bVar1 < 3) || (6 < bVar1)) {
-      fVar7 = (long double)param_3;
-      fVar8 = (long double)0.0f;
-      bVar5 = NAN(fVar7) || NAN(fVar8);
-      bVar6 = bVar5 || fVar7 == fVar8;
-      *(undefined4 *)((int)self_ + 4) = *param_2;
-      uVar2 = param_2[1];
-      *(undefined4 *)((int)self_ + 8) = uVar2;
-      xi_eax = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)uVar2 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar5 || fVar7 < fVar8) << 8 | (uint16_t)bVar5 << 10 |
-                        (uint16_t)bVar6 << 0xe)));
-      if (bVar5 == bVar6) {
-        *(float *)((int)self_ + 0x48) = param_3;
+    u1 = *(uint8_t *)((int)self_ + 0x4d);
+    xi_eax = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(u1)));
+    if ((u1 < 3) || (6 < u1)) {
+      f1 = arg5;
+      f2 = 0.0f;
+      u3 = ((f1) != (f1)) || ((f2) != (f2));
+      u4 = u3 || f1 == f2;
+      *(bits32 *)((int)self_ + 4) = *arg4;
+      u2 = arg4[1];
+      *(bits32 *)((int)self_ + 8) = u2;
+      xi_eax = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)u2 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u3 || f1 < f2) << 8 | (uint16_t)u3 << 10 |
+                        (uint16_t)u4 << 0xe)));
+      if (u3 == u4) {
+        *(float *)((int)self_ + 0x48) = arg5;
       }
       if ((((g_windowMode == 0) || (g_windowMode == 3)) && (xi_eax = 0, g_pCDx_as_s32 != 0)) &&
          (((xi_eax = 0, g_cfgHardwareMouse != 0 && (xi_eax = g_pApp_as_s32, g_pApp_as_s32 != 0)) &&
           (*(char *)(g_pApp_as_s32 + 0x1c) == '\x01')))) {
-        fVar8 = (long double)*(int *)((int)self_ + 8);
+        f2 = *(int *)((int)self_ + 8);
         if (g_windowMode != 0) {
-          iVar3 = (int)XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2);
-          iVar4 = (int)XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2);
-          GetWindowRect(*(HWND *)(g_pApp_as_s32 + 0x18),&local_10);
+          Y = (int)XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2);
+          i2 = (int)XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2);
+          GetWindowRect(*(HWND *)(g_pApp_as_s32 + 0x18),&frame.val1);
           GetSystemMetrics(0x20);
-          local_20 = GetSystemMetrics(0x21);
-          param_2 = (undefined4 *)GetSystemMetrics(4);
+          frame.i4 = GetSystemMetrics(0x21);
+          arg4 = (bits32 *)GetSystemMetrics(4);
           if (g_windowMode == 3) {
-            local_20 = 0;
-            param_2 = (undefined4 *)0x0;
+            frame.i4 = 0;
+            arg4 = (bits32 *)0x0;
           }
-          fVar8 = (long double)(((local_10.bottom + local_20 * -2) - local_10.top) - (int)param_2) *
-                  (long double)(float)((long double)(float)fVar8 / (long double)(iVar4 - iVar3)) +
-                  (long double)local_10.top + (long double)(int)param_2 + (long double)local_20;
+          f2 = (((frame.val1.bottom + frame.i4 * -2) - frame.val1.top) - (int)arg4) *
+                  (float)((float)f2 / (i2 - Y)) +
+                  frame.val1.top + (int)arg4 + frame.i4;
         }
-        lVar9 = XI_CALL_ST0(0x10311C2Cu)(fVar8);
-        iVar3 = (int)lVar9;
-        lVar9 = XI_CALL_ST0(0x10311C2Cu)(st0);
-        xi_eax = orig::SetCursorPos_10009770((int)lVar9,iVar3);
+        i3 = XI_CALL_ST0(0x10311C2Cu)(f2);
+        Y = (int)i3;
+        i3 = XI_CALL_ST0(0x10311C2Cu)(st0);
+        xi_eax = orig::SetCursorPos_10009770((int)i3,Y);
       }
     }
   }
@@ -12797,33 +12868,33 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) Cursor_SetPosition(undefi
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Cursor_UpdateTimer(void * self_)
 {
-  undefined4 xi_entry_eax = 0;
-  undefined4 uVar1;
-  uint8_t bVar2;
-  long double fVar3;
-  int64_t lVar4;
+  bits32 xi_entry_eax = 0;
+  bits32 u1;
+  uint8_t u2;
+  long double f1;
+  int64_t i1;
   
-  *(undefined4 *)((int)self_ + 0x5c) = 0;
-  *(undefined4 *)((int)self_ + 0x60) = 0;
-  *(undefined4 *)((int)self_ + 100) = 0;
-  uVar1 = orig::Menu_GetStateB4_v1(&g_menuMng_as_v0,xi_entry_eax);
-  if ((char)uVar1 == '\0') {
+  *(bits32 *)((int)self_ + 0x5c) = 0;
+  *(bits32 *)((int)self_ + 0x60) = 0;
+  *(bits32 *)((int)self_ + 100) = 0;
+  u1 = orig::Menu_GetStateB4_v1(&g_menuMng_as_v0,xi_entry_eax);
+  if ((char)u1 == '\0') {
     if ((*(uint32_t *)((int)self_ + 0x68) & *(uint32_t *)((int)self_ + 0x58)) == 0) {
-      *(undefined4 *)((int)self_ + 0x68) = 0;
-      *(undefined4 *)((int)self_ + 0x70) = 0xc479c000;
+      *(bits32 *)((int)self_ + 0x68) = 0;
+      *(bits32 *)((int)self_ + 0x70) = 0xc479c000;
     }
     else {
       if (*(int *)((int)self_ + 0x70) == -0x3b864000) {
-        *(undefined4 *)((int)self_ + 0x70) = 0x41c00000;
+        *(bits32 *)((int)self_ + 0x70) = 0x41c00000;
         return;
       }
-      fVar3 = orig::Camera_GetFrameScale_v1(*(uint32_t *)((int)self_ + 0x58));
-      lVar4 = XI_CALL_ST0(0x10311C2Cu)(fVar3);
-      fVar3 = (long double)*(float *)((int)self_ + 0x70) - (long double)(int)(short)lVar4;
-      *(float *)((int)self_ + 0x70) = (float)fVar3;
-      bVar2 = NAN(fVar3) || NAN((long double)0.0f);
-      if ((bVar2 || fVar3 < (long double)0.0f) != bVar2) {
-        *(undefined4 *)((int)self_ + 0x70) = 0x41400000;
+      f1 = orig::Camera_GetFrameScale_v1(*(uint32_t *)((int)self_ + 0x58));
+      i1 = XI_CALL_ST0(0x10311C2Cu)(f1);
+      f1 = *(float *)((int)self_ + 0x70) - (int)(short)i1;
+      *(float *)((int)self_ + 0x70) = (float)f1;
+      u2 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+      if ((u2 || f1 < 0.0f) != u2) {
+        *(bits32 *)((int)self_ + 0x70) = 0x41400000;
         *(uint32_t *)((int)self_ + 0x5c) = *(uint32_t *)((int)self_ + 0x5c) | *(uint32_t *)((int)self_ + 0x68);
         return;
       }
@@ -12836,42 +12907,42 @@ XI_API void __thiscall Cursor_UpdateTimer(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Cursor_EnterMode1(void * self_)
 {
-  undefined4 uVar1;
-  uint8_t bVar2;
-  uint32_t uVar3;
-  uint64_t uVar4;
+  bits32 u1;
+  uint8_t u2;
+  uint32_t u3;
+  uint64_t u4;
   
   if ((*(uint32_t *)((int)self_ + 0x60) & 1) == 0) {
-    uVar3 = *(uint32_t *)((int)self_ + 0x58);
-    *(undefined4 *)((int)self_ + 0x70) = 0xc479c000;
-    *(uint32_t *)((int)self_ + 0x58) = uVar3 | 1;
+    u3 = *(uint32_t *)((int)self_ + 0x58);
+    *(bits32 *)((int)self_ + 0x70) = 0xc479c000;
+    *(uint32_t *)((int)self_ + 0x58) = u3 | 1;
     *(uint32_t *)((int)self_ + 0x60) = *(uint32_t *)((int)self_ + 0x60) | 1;
-    *(undefined4 *)((int)self_ + 0x68) = 1;
-    uVar3 = uVar3 >> 1;
+    *(bits32 *)((int)self_ + 0x68) = 1;
+    u3 = u3 >> 1;
     *(uint32_t *)((int)self_ + 0x5c) = *(uint32_t *)((int)self_ + 0x5c) | 1;
-    *(undefined4 *)((int)self_ + 0x1c) = *(undefined4 *)((int)self_ + 4);
-    *(undefined4 *)((int)self_ + 0x20) = *(undefined4 *)((int)self_ + 8);
+    *(bits32 *)((int)self_ + 0x1c) = *(bits32 *)((int)self_ + 4);
+    *(bits32 *)((int)self_ + 0x20) = *(bits32 *)((int)self_ + 8);
     *(uint8_t *)((int)self_ + 0x34) = 1;
-    bVar2 = (uint8_t)uVar3;
-    uVar1 = orig::FontGlyphCache_IsStateTwo();
-    if ((char)uVar1 != '\0') {
-      if ((uVar3 & 1) != 0) {
+    u2 = (uint8_t)u3;
+    u1 = orig::FontGlyphCache_IsStateTwo();
+    if ((char)u1 != '\0') {
+      if ((u3 & 1) != 0) {
         return;
       }
-      bVar2 = (uint8_t)(*(uint32_t *)((int)self_ + 0x58) >> 2);
+      u2 = (uint8_t)(*(uint32_t *)((int)self_ + 0x58) >> 2);
     }
-    if ((bVar2 & 1) == 0) {
-      uVar4 = orig::Settings_GetValue_v1(0x90);
-      if ((int)uVar4 == 0) {
-        *(undefined4 *)((int)self_ + 0x38) = *(undefined4 *)((int)self_ + 4);
-        *(undefined4 *)((int)self_ + 0x3c) = *(undefined4 *)((int)self_ + 8);
+    if ((u2 & 1) == 0) {
+      u4 = orig::Settings_GetValue_v1(0x90);
+      if ((int)u4 == 0) {
+        *(bits32 *)((int)self_ + 0x38) = *(bits32 *)((int)self_ + 4);
+        *(bits32 *)((int)self_ + 0x3c) = *(bits32 *)((int)self_ + 8);
       }
       else {
         orig::Cursor_StoreScreenCenter_v1(self_);
       }
-      uVar1 = orig::FontGlyphCache_IsStateTwo();
-      if (((char)uVar1 != '\0') && (*(char *)((int)self_ + 0x4d) != '\x05')) {
-        DAT_104e1d48 = 0;
+      u1 = orig::FontGlyphCache_IsStateTwo();
+      if (((char)u1 != '\0') && (*(char *)((int)self_ + 0x4d) != '\x05')) {
+        g_104E1D48 = 0;
       }
     }
   }
@@ -12893,45 +12964,45 @@ XI_API void __thiscall Cursor_ToggleFlag1(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Cursor_EnterMode2(void * self_)
 {
-  uint32_t uVar1;
-  undefined4 uVar2;
-  uint8_t bVar3;
-  uint32_t uVar4;
-  uint64_t uVar5;
+  uint32_t u1;
+  bits32 u2;
+  uint8_t u3;
+  uint32_t u4;
+  uint64_t u5;
   
   if ((*(uint32_t *)((int)self_ + 0x60) & 2) != 0) {
     return;
   }
-  uVar1 = *(uint32_t *)((int)self_ + 0x58);
-  uVar4 = uVar1 | 2;
+  u1 = *(uint32_t *)((int)self_ + 0x58);
+  u4 = u1 | 2;
   *(uint32_t *)((int)self_ + 0x60) = *(uint32_t *)((int)self_ + 0x60) | 2;
-  *(undefined4 *)((int)self_ + 0x68) = 2;
-  *(uint32_t *)((int)self_ + 0x58) = uVar4;
+  *(bits32 *)((int)self_ + 0x68) = 2;
+  *(uint32_t *)((int)self_ + 0x58) = u4;
   *(uint32_t *)((int)self_ + 0x5c) = *(uint32_t *)((int)self_ + 0x5c) | 2;
-  *(undefined4 *)((int)self_ + 0x70) = 0xc479c000;
-  *(undefined4 *)((int)self_ + 0x24) = *(undefined4 *)((int)self_ + 4);
-  *(undefined4 *)((int)self_ + 0x28) = *(undefined4 *)((int)self_ + 8);
+  *(bits32 *)((int)self_ + 0x70) = 0xc479c000;
+  *(bits32 *)((int)self_ + 0x24) = *(bits32 *)((int)self_ + 4);
+  *(bits32 *)((int)self_ + 0x28) = *(bits32 *)((int)self_ + 8);
   *(uint8_t *)((int)self_ + 0x35) = 1;
-  bVar3 = (uint8_t)uVar4;
-  uVar2 = orig::FontGlyphCache_IsStateTwo();
-  if ((char)uVar2 != '\0') {
-    if ((uVar1 & 1) != 0) goto LAB_10124a86;
-    bVar3 = (uint8_t)(*(uint32_t *)((int)self_ + 0x58) >> 2);
+  u3 = (uint8_t)u4;
+  u2 = orig::FontGlyphCache_IsStateTwo();
+  if ((char)u2 != '\0') {
+    if ((u1 & 1) != 0) goto code_10124A86;
+    u3 = (uint8_t)(*(uint32_t *)((int)self_ + 0x58) >> 2);
   }
-  if ((bVar3 & 1) == 0) {
-    uVar5 = orig::Settings_GetValue_v1(0x90);
-    if ((int)uVar5 == 0) {
-      *(undefined4 *)((int)self_ + 0x38) = *(undefined4 *)((int)self_ + 4);
-      *(undefined4 *)((int)self_ + 0x3c) = *(undefined4 *)((int)self_ + 8);
+  if ((u3 & 1) == 0) {
+    u5 = orig::Settings_GetValue_v1(0x90);
+    if ((int)u5 == 0) {
+      *(bits32 *)((int)self_ + 0x38) = *(bits32 *)((int)self_ + 4);
+      *(bits32 *)((int)self_ + 0x3c) = *(bits32 *)((int)self_ + 8);
     }
     else {
       orig::Cursor_StoreScreenCenter_v1(self_);
     }
   }
-LAB_10124a86:
-  uVar2 = orig::FontGlyphCache_IsStateTwo();
-  if (((char)uVar2 != '\0') && (*(char *)((int)self_ + 0x4d) != '\x05')) {
-    DAT_104e1d48 = 1;
+code_10124A86:
+  u2 = orig::FontGlyphCache_IsStateTwo();
+  if (((char)u2 != '\0') && (*(char *)((int)self_ + 0x4d) != '\x05')) {
+    g_104E1D48 = 1;
   }
   return;
 }
@@ -12951,28 +13022,28 @@ XI_API void __thiscall Cursor_ToggleFlag2(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall Cursor_EnterMode4(void * self_)
 {
-  undefined4 uVar1;
-  uint64_t uVar2;
+  bits32 u1;
+  uint64_t u2;
   
   if ((*(uint32_t *)((int)self_ + 0x60) & 4) == 0) {
     *(uint32_t *)((int)self_ + 0x5c) = *(uint32_t *)((int)self_ + 0x5c) | 4;
     *(uint32_t *)((int)self_ + 0x60) = *(uint32_t *)((int)self_ + 0x60) | 4;
-    *(undefined4 *)((int)self_ + 0x68) = 4;
+    *(bits32 *)((int)self_ + 0x68) = 4;
     *(uint32_t *)((int)self_ + 0x58) = *(uint32_t *)((int)self_ + 0x58) | 4;
-    *(undefined4 *)((int)self_ + 0x70) = 0xc479c000;
-    *(undefined4 *)((int)self_ + 0x2c) = *(undefined4 *)((int)self_ + 4);
-    *(undefined4 *)((int)self_ + 0x30) = *(undefined4 *)((int)self_ + 8);
+    *(bits32 *)((int)self_ + 0x70) = 0xc479c000;
+    *(bits32 *)((int)self_ + 0x2c) = *(bits32 *)((int)self_ + 4);
+    *(bits32 *)((int)self_ + 0x30) = *(bits32 *)((int)self_ + 8);
     *(uint8_t *)((int)self_ + 0x36) = 1;
-    uVar1 = orig::FontGlyphCache_IsStateTwo();
-    if (((char)uVar1 != '\0') && ((*(uint8_t *)((int)self_ + 0x58) & 3) == 0)) {
-      uVar2 = orig::Settings_GetValue_v1(0x90);
-      if ((int)uVar2 != 0) {
+    u1 = orig::FontGlyphCache_IsStateTwo();
+    if (((char)u1 != '\0') && ((*(uint8_t *)((int)self_ + 0x58) & 3) == 0)) {
+      u2 = orig::Settings_GetValue_v1(0x90);
+      if ((int)u2 != 0) {
         orig::Cursor_StoreScreenCenter_v1(self_);
         *(uint8_t *)((int)self_ + 0x4d) = 4;
         return;
       }
-      *(undefined4 *)((int)self_ + 0x38) = *(undefined4 *)((int)self_ + 4);
-      *(undefined4 *)((int)self_ + 0x3c) = *(undefined4 *)((int)self_ + 8);
+      *(bits32 *)((int)self_ + 0x38) = *(bits32 *)((int)self_ + 4);
+      *(bits32 *)((int)self_ + 0x3c) = *(bits32 *)((int)self_ + 8);
       *(uint8_t *)((int)self_ + 0x4d) = 4;
     }
   }
@@ -12992,20 +13063,22 @@ XI_API void __thiscall Cursor_ToggleFlag4(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10124B70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_ResetPositionToMenu(void * self_)
+XI_API bits32 __thiscall Cursor_ResetPositionToMenu(void * self_)
 {
   int xi_eax;
-  void *this_00;
-  char xi_frame[8] __attribute__((aligned(4)));
-  int  (&local_8)[2] = *reinterpret_cast<int  (*)[2]>(xi_frame + 0);
+  void *obj1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[8];
+    struct __attribute__((packed)) { int i1[2]; };   // at 0x0
+  } frame;
   
-  *(undefined4 *)((int)self_ + 0x48) = 0x41900000;
+  *(bits32 *)((int)self_ + 0x48) = 0x41900000;
   xi_eax = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
   if ((char)xi_eax != '\0') {
-    this_00 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
-    xi_eax = orig::NetCellFont_GetCenter(this_00,local_8);
+    obj1 = (void *)orig::Menu_GetFocusedItem(&g_menuMng_as_v0);
+    xi_eax = orig::NetCellFont_GetCenter(obj1,frame.i1);
     if ((char)xi_eax != '\0') {
-      xi_eax = orig::Cursor_SetPosition_v1(self_,local_8,0.0f,xi_eax);
+      xi_eax = orig::Cursor_SetPosition_v1(self_,frame.i1,0.0f,xi_eax);
     }
   }
   return xi_eax;
@@ -13013,91 +13086,93 @@ XI_API undefined4 __thiscall Cursor_ResetPositionToMenu(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10124BC0
 // GATE: PASS -- 100 trials, 59 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 59
-XI_API undefined4 __thiscall NetCellFont_CursorUpdateEdgeAxes(void * self_)
+XI_API bits32 __thiscall NetCellFont_CursorUpdateEdgeAxes(void * self_)
 {
-  uint16_t uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 uVar5;
-  int iVar6;
-  uint8_t bVar7;
-  long double fVar8;
-  long double fVar9;
-  int64_t lVar10;
-  char xi_frame[32] __attribute__((aligned(4)));
-  float  &local_20 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_1c = *reinterpret_cast<float  *>(xi_frame + 4);
-  tagRECT  &local_10 = *reinterpret_cast<tagRECT  *>(xi_frame + 16);
+  uint16_t u1;
+  int i1;
+  int i2;
+  int i3;
+  bits32 u2;
+  int i4;
+  uint8_t u3;
+  long double f1;
+  long double f2;
+  int64_t i5;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { float f3; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f4; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x10]; tagRECT val1; };   // at 0x10
+  } frame;
   
-  iVar2 = 0;
-  *(undefined4 *)((int)self_ + 0x94) = 0;
-  *(undefined4 *)((int)self_ + 0x98) = 0;
-  *(undefined4 *)((int)self_ + 0x8c) = 0;
-  *(undefined4 *)((int)self_ + 0x90) = 0;
+  i1 = 0;
+  *(bits32 *)((int)self_ + 0x94) = 0;
+  *(bits32 *)((int)self_ + 0x98) = 0;
+  *(bits32 *)((int)self_ + 0x8c) = 0;
+  *(bits32 *)((int)self_ + 0x90) = 0;
   if (*(char *)((int)self_ + 0x4e) != '\0') {
-    iVar2 = *(int *)((int)self_ + 8);
-    iVar6 = *(int *)((int)self_ + 4);
+    i1 = *(int *)((int)self_ + 8);
+    i4 = *(int *)((int)self_ + 4);
     if (g_windowMode != 0) {
-      GetWindowRect(*(HWND *)(g_pApp_as_s32 + 0x18),&local_10);
-      iVar3 = GetSystemMetrics(0x20);
-      iVar4 = GetSystemMetrics(0x21);
+      GetWindowRect(*(HWND *)(g_pApp_as_s32 + 0x18),&frame.val1);
+      i2 = GetSystemMetrics(0x20);
+      i3 = GetSystemMetrics(0x21);
       GetSystemMetrics(4);
       if (g_windowMode == 3) {
-        iVar3 = 0;
-        iVar4 = 0;
+        i2 = 0;
+        i3 = 0;
       }
-      lVar10 = XI_CALL_ST0(0x10311C2Cu)(((long double)(local_10.right - local_10.left) /
-                      (long double)((local_10.right + iVar3 * -2) - local_10.left)) * (long double)iVar6);
-      iVar6 = (int)lVar10;
-      lVar10 = XI_CALL_ST0(0x10311C2Cu)(((long double)(local_10.bottom - local_10.top) /
-                      (long double)((local_10.bottom + iVar4 * -2) - local_10.top)) * (long double)iVar2);
-      iVar2 = (int)lVar10;
+      i5 = XI_CALL_ST0(0x10311C2Cu)(((long double)(frame.val1.right - frame.val1.left) /
+                      (long double)((frame.val1.right + i2 * -2) - frame.val1.left)) * (long double)i4);
+      i4 = (int)i5;
+      i5 = XI_CALL_ST0(0x10311C2Cu)(((long double)(frame.val1.bottom - frame.val1.top) /
+                      (long double)((frame.val1.bottom + i3 * -2) - frame.val1.top)) * (long double)i1);
+      i1 = (int)i5;
     }
-    local_1c = 0.0f;
-    local_20 = 0.0f;
+    frame.f4 = 0.0f;
+    frame.f3 = 0.0f;
     if ((*(char *)((int)self_ + 0x4c) == '\0') || (*(char *)((int)self_ + 0x4c) == '\x02')) {
-      iVar3 = orig::Settings_GetValue_v2(0x8f);
-      if (iVar3 == 0) {
-        uVar5 = orig::FontGlyphCache_IsStateTwo();
-        if ((char)uVar5 == '\0') {
-          if ((short)g_screenRectTopLeft_as_v0 + 1 < iVar6) {
-            if ((short)g_screenRectBottomRight_as_v0 + -1 <= iVar6) {
-              local_20 = 1.0f;
+      i2 = orig::Settings_GetValue_v2(0x8f);
+      if (i2 == 0) {
+        u2 = orig::FontGlyphCache_IsStateTwo();
+        if ((char)u2 == '\0') {
+          if ((short)g_screenRectTopLeft_as_v0 + 1 < i4) {
+            if ((short)g_screenRectBottomRight_as_v0 + -1 <= i4) {
+              frame.f3 = 1.0f;
             }
           }
           else {
-            local_20 = (-1.0f);
+            frame.f3 = (-1.0f);
           }
-          if (XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2) + 1 < iVar2) {
-            if (XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) + -1 <= iVar2) {
-              local_1c = 1.0f;
+          if (XI_PIECE_S(g_screenRectTopLeft_as_v0, 2, 2) + 1 < i1) {
+            if (XI_PIECE_S(g_screenRectBottomRight_as_v0, 2, 2) + -1 <= i1) {
+              frame.f4 = 1.0f;
             }
           }
           else {
-            local_1c = (-1.0f);
+            frame.f4 = (-1.0f);
           }
         }
-        fVar8 = (long double)*(float *)((int)self_ + 0x9c);
-        fVar9 = (long double)(-6.0f);
-        bVar7 = NAN(fVar8) || NAN(fVar9);
-        uVar1 = (uint16_t)(bVar7 || fVar8 == fVar9);
-        if ((fVar8 >= fVar9) && uVar1 == 0) {
-          fVar9 = orig::Camera_GetFrameScale_v1
-                            ((uint32_t)(uint16_t)((uint16_t)(bVar7 || fVar8 < fVar9) << 8 | uVar1 << 0xe));
-          lVar10 = XI_CALL_ST0(0x10311C2Cu)(fVar9);
+        f1 = (long double)*(float *)((int)self_ + 0x9c);
+        f2 = (long double)(-6.0f);
+        u3 = ((f1) != (f1)) || ((f2) != (f2));
+        u1 = (uint16_t)(u3 || f1 == f2);
+        if ((f1 >= f2) && u1 == 0) {
+          f2 = orig::Camera_GetFrameScale_v1
+                            ((uint32_t)(uint16_t)((uint16_t)(u3 || f1 < f2) << 8 | u1 << 0xe));
+          i5 = XI_CALL_ST0(0x10311C2Cu)(f2);
           *(float *)((int)self_ + 0x9c) =
-               (float)((long double)*(float *)((int)self_ + 0x9c) - (long double)(int)(short)lVar10);
+               (float)((long double)*(float *)((int)self_ + 0x9c) - (long double)(int)(short)i5);
         }
-        bVar7 = NAN((long double)*(float *)((int)self_ + 0x9c)) || NAN((long double)(-6.0f));
-        if ((bVar7 || (long double)*(float *)((int)self_ + 0x9c) < (long double)(-6.0f)) != bVar7) {
-          *(undefined4 *)((int)self_ + 0x9c) = 0xc0c00000;
+        u3 = (((long double)*(float *)((int)self_ + 0x9c)) != ((long double)*(float *)((int)self_ + 0x9c))) || (((long double)(-6.0f)) != ((long double)(-6.0f)));
+        if ((u3 || (long double)*(float *)((int)self_ + 0x9c) < (long double)(-6.0f)) != u3) {
+          *(bits32 *)((int)self_ + 0x9c) = 0xc0c00000;
         }
-        bVar7 = NAN((long double)local_1c) || NAN((long double)0.0f);
-        if ((bVar7 == (bVar7 || (long double)local_1c == (long double)0.0f)) ||
-           (bVar7 = NAN((long double)local_20) || NAN((long double)0.0f),
-           bVar7 == (bVar7 || (long double)local_20 == (long double)0.0f))) {
-          *(undefined4 *)((int)self_ + 0x9c) = 0x43200000;
+        u3 = (((long double)frame.f4) != ((long double)frame.f4)) || (((long double)0.0f) != ((long double)0.0f));
+        if ((u3 == (u3 || (long double)frame.f4 == (long double)0.0f)) ||
+           (u3 = (((long double)frame.f3) != ((long double)frame.f3)) || (((long double)0.0f) != ((long double)0.0f)),
+           u3 == (u3 || (long double)frame.f3 == (long double)0.0f))) {
+          *(bits32 *)((int)self_ + 0x9c) = 0x43200000;
           *(uint8_t *)((int)self_ + 0xa0) = 1;
         }
         else {
@@ -13105,272 +13180,272 @@ XI_API undefined4 __thiscall NetCellFont_CursorUpdateEdgeAxes(void * self_)
         }
       }
     }
-    if ((DAT_10663888 != 0) && (*(int *)(DAT_10663888 + 8) != 0)) {
-      *(float *)((int)self_ + 0x94) = local_20;
-      *(float *)((int)self_ + 0x98) = local_1c;
-      return local_1c;
+    if ((g_10663888 != 0) && (*(int *)(g_10663888 + 8) != 0)) {
+      *(float *)((int)self_ + 0x94) = frame.f3;
+      *(float *)((int)self_ + 0x98) = frame.f4;
+      return frame.f4;
     }
-    iVar2 = orig::ActorHandle_Resolve_v2(&g_targetActorHandle_as_v0);
-    if ((iVar2 == 0) || (XiControlActor_isFirstPersonView == '\0')) {
-      *(float *)((int)self_ + 0x90) = (float)-(long double)local_1c;
-      *(float *)((int)self_ + 0x8c) = (float)-(long double)local_20;
-      *(undefined4 *)((int)self_ + 0x9c) = 0xc0c00000;
-      iVar2 = orig::Settings_GetValue_v2(0x8b);
-      if (iVar2 != 0) {
+    i1 = orig::ActorHandle_Resolve_v2(&g_targetActorHandle_as_v0);
+    if ((i1 == 0) || (XiControlActor_isFirstPersonView == '\0')) {
+      *(float *)((int)self_ + 0x90) = (float)-(long double)frame.f4;
+      *(float *)((int)self_ + 0x8c) = (float)-(long double)frame.f3;
+      *(bits32 *)((int)self_ + 0x9c) = 0xc0c00000;
+      i1 = orig::Settings_GetValue_v2(0x8b);
+      if (i1 != 0) {
         *(float *)((int)self_ + 0x8c) =
              (float)((long double)*(float *)((int)self_ + 0x8c) * (long double)(-1.0f));
       }
-      iVar2 = orig::Settings_GetValue_v2(0x8c);
-      if (iVar2 != 0) {
+      i1 = orig::Settings_GetValue_v2(0x8c);
+      if (i1 != 0) {
         *(float *)((int)self_ + 0x90) =
              (float)((long double)*(float *)((int)self_ + 0x90) * (long double)(-1.0f));
       }
     }
     else {
-      *(float *)((int)self_ + 0x94) = local_20;
-      iVar6 = orig::Settings_GetValue_v2(0x8d);
-      iVar2 = 0;
-      if (iVar6 != 0) {
+      *(float *)((int)self_ + 0x94) = frame.f3;
+      i4 = orig::Settings_GetValue_v2(0x8d);
+      i1 = 0;
+      if (i4 != 0) {
         *(float *)((int)self_ + 0x8c) =
              (float)((long double)*(float *)((int)self_ + 0x8c) * (long double)(-1.0f));
-        return xi_castbits<float>(iVar6);
+        return bit_cast<float>(i4);
       }
     }
   }
-  return xi_castbits<float>(iVar2);
+  return bit_cast<float>(i1);
 }
 
 // FUNCTION: FFXIMAIN 0x10125040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_UpdateHoldState4(void * self_)
+XI_API bits32 __thiscall NetCellFont_UpdateHoldState4(void * self_)
 {
-  uint8_t bVar1;
-  char cVar2;
-  uint16_t uVar3;
-  undefined4 xi_entry_eax = 0;
-  uint32_t uVar5;
-  undefined4 uVar4;
+  uint8_t u1;
+  char c1;
+  uint16_t u2;
+  bits32 xi_entry_eax = 0;
+  uint32_t u3;
+  bits32 u4;
   uint32_t xi_eax;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  uint8_t bVar9;
-  long double fVar10;
-  long double fVar11;
-  uint64_t uVar12;
-  int64_t lVar13;
+  int i1;
+  int i2;
+  int i3;
+  uint8_t u5;
+  long double f1;
+  long double f2;
+  uint64_t u6;
+  int64_t i4;
   
-  bVar1 = *(uint8_t *)((int)self_ + 0x4d);
-  uVar5 = (uint32_t)((uint32_t)xi_entry_eax >> 8);
-  iVar8 = ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(bVar1)));
-  if (bVar1 != 0) {
-    if (bVar1 < 3) {
-      iVar8 = 0x8b;
-      iVar7 = 0;
-      uVar4 = orig::FontGlyphCache_IsStateTwo();
-      if ((char)uVar4 != '\0') {
-        iVar8 = 0x96;
-        iVar7 = 2;
+  u1 = *(uint8_t *)((int)self_ + 0x4d);
+  u3 = (uint32_t)((uint32_t)xi_entry_eax >> 8);
+  i3 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(u1)));
+  if (u1 != 0) {
+    if (u1 < 3) {
+      i3 = 0x8b;
+      i2 = 0;
+      u4 = orig::FontGlyphCache_IsStateTwo();
+      if ((char)u4 != '\0') {
+        i3 = 0x96;
+        i2 = 2;
       }
-      fVar10 = (long double)*(float *)((int)self_ + 0x74);
-      fVar11 = (long double)0.0f;
-      bVar9 = !(fVar10 >= fVar11);
-      uVar3 = (uint16_t)((NAN(fVar10) || NAN(fVar11)) || fVar10 == fVar11);
-      xi_eax = (uint32_t)(uint16_t)((uint16_t)bVar9 << 8 | uVar3 << 0xe);
-      if (bVar9 || uVar3 != 0) {
-LAB_101250cd:
-        *(undefined4 *)((int)self_ + 0x74) = 0x41c80000;
+      f1 = *(float *)((int)self_ + 0x74);
+      f2 = 0.0f;
+      u5 = !(f1 >= f2);
+      u2 = (uint16_t)((((f1) != (f1)) || ((f2) != (f2))) || f1 == f2);
+      xi_eax = (uint32_t)(uint16_t)((uint16_t)u5 << 8 | u2 << 0xe);
+      if (u5 || u2 != 0) {
+code_101250CD:
+        *(bits32 *)((int)self_ + 0x74) = 0x41c80000;
       }
       else {
-        uVar12 = orig::NetCellFont_TestCommand36CF60(0x3e,iVar8,4,-1,xi_eax);
-        xi_eax = (uint32_t)uVar12;
-        if ((char)uVar12 == '\0') goto LAB_101250cd;
-        fVar11 = orig::Camera_GetFrameScale_v1(xi_eax);
-        lVar13 = XI_CALL_ST0(0x10311C2Cu)(fVar11);
-        xi_eax = (uint32_t)(short)lVar13;
+        u6 = orig::NetCellFont_TestCommand36CF60(0x3e,i3,4,-1,xi_eax);
+        xi_eax = (uint32_t)u6;
+        if ((char)u6 == '\0') goto code_101250CD;
+        f2 = orig::Camera_GetFrameScale_v1(xi_eax);
+        i4 = XI_CALL_ST0(0x10311C2Cu)(f2);
+        xi_eax = (uint32_t)(short)i4;
         *(float *)((int)self_ + 0x74) =
-             (float)((long double)*(float *)((int)self_ + 0x74) - (long double)(int)xi_eax);
+             (float)(*(float *)((int)self_ + 0x74) - (int)xi_eax);
       }
-      uVar12 = orig::NetCellFont_TestCommand36CF60(0x3e,iVar8,4,-1,xi_eax);
-      iVar8 = (int)uVar12;
-      if (((char)uVar12 == '\x01') &&
-         (cVar2 = *(char *)(iVar7 + 0x34 + (int)self_),
-         iVar8 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)uVar12 >> 8))) << 8) | (uint8_t)(cVar2))), cVar2 != '\0')) {
-        iVar6 = *(int *)((int)self_ + 8) - *(int *)((int)self_ + iVar7 * 8 + 0x20);
-        iVar8 = *(int *)((int)self_ + 4) - *(int *)((int)self_ + iVar7 * 8 + 0x1c);
-        if (iVar6 * iVar6 + iVar8 * iVar8 < 0x41) {
-          fVar10 = (long double)*(float *)((int)self_ + 0x74);
-          fVar11 = (long double)0.0f;
-          bVar9 = NAN(fVar10) || NAN(fVar11);
-          iVar8 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)iVar8 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar9 || fVar10 < fVar11) << 8 | (uint16_t)bVar9 << 10 |
-                           (uint16_t)(bVar9 || fVar10 == fVar11) << 0xe)));
-          if (!(fVar10 <= fVar11))
-          goto LAB_1012506a;
+      u6 = orig::NetCellFont_TestCommand36CF60(0x3e,i3,4,-1,xi_eax);
+      i3 = (int)u6;
+      if (((char)u6 == '\x01') &&
+         (c1 = *(char *)(i2 + 0x34 + (int)self_),
+         i3 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u6 >> 8))) << 8) | (uint8_t)(c1))), c1 != '\0')) {
+        i1 = *(int *)((int)self_ + 8) - *(int *)((int)self_ + i2 * 8 + 0x20);
+        i3 = *(int *)((int)self_ + 4) - *(int *)((int)self_ + i2 * 8 + 0x1c);
+        if (i1 * i1 + i3 * i3 < 0x41) {
+          f1 = *(float *)((int)self_ + 0x74);
+          f2 = 0.0f;
+          u5 = ((f1) != (f1)) || ((f2) != (f2));
+          i3 = ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)i3 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u5 || f1 < f2) << 8 | (uint16_t)u5 << 10 |
+                           (uint16_t)(u5 || f1 == f2) << 0xe)));
+          if (!(f1 <= f2))
+          goto code_1012506A;
         }
-        uVar5 = (uint32_t)((uint32_t)iVar8 >> 8);
-        iVar8 = ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(*(char *)((int)self_ + 0x54))));
+        u3 = (uint32_t)((uint32_t)i3 >> 8);
+        i3 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x54))));
         if ((((*(char *)((int)self_ + 0x54) == '\0') &&
-             (iVar8 = ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(*(char *)((int)self_ + 0x55)))),
+             (i3 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x55)))),
              *(char *)((int)self_ + 0x55) == '\0')) && (*g_pSceneState_as_v0 == 0x60)) &&
-           (iVar8 = ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88)))), *(char *)((int)self_ + 0x88) != '\0'
+           (i3 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88)))), *(char *)((int)self_ + 0x88) != '\0'
            )) {
           *(uint8_t *)((int)self_ + 0x4d) = 4;
-          return ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(1)));
+          return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
         }
       }
-      goto LAB_1012506a;
+      goto code_1012506A;
     }
-    if ((bVar1 == 4) &&
-       (iVar8 = ((uint32_t)(((uint32_t)(uVar5) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88)))), *(char *)((int)self_ + 0x88) == '\0')) {
+    if ((u1 == 4) &&
+       (i3 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88)))), *(char *)((int)self_ + 0x88) == '\0')) {
       *(uint8_t *)((int)self_ + 0x4d) = 1;
     }
   }
-  *(undefined4 *)((int)self_ + 0x74) = 0x41c80000;
-LAB_1012506a:
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar8 >> 8))) << 8) | (uint8_t)(1)));
+  *(bits32 *)((int)self_ + 0x74) = 0x41c80000;
+code_1012506A:
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i3 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10125170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_UpdateHoldState5(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_UpdateHoldState5(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  uint8_t bVar1;
-  uint16_t uVar2;
-  char cVar3;
-  uint32_t uVar4;
-  undefined4 xi_eax_00;
+  uint8_t u1;
+  uint16_t u2;
+  char c1;
+  uint32_t u3;
+  bits32 xi_eax_00;
   uint32_t xi_eax_01;
-  int iVar5;
-  uint8_t bVar6;
-  long double fVar7;
-  long double fVar8;
-  uint64_t uVar9;
-  int64_t lVar10;
+  int i1;
+  uint8_t u4;
+  long double f1;
+  long double f2;
+  uint64_t u5;
+  int64_t i2;
   
-  bVar1 = *(uint8_t *)((int)self_ + 0x4d);
-  uVar4 = (uint32_t)((uint32_t)xi_eax >> 8);
-  xi_eax_01 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(bVar1)));
-  if (bVar1 != 0) {
-    if (bVar1 < 3) {
-      uVar9 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8c,4,-1,xi_eax_01);
-      cVar3 = (char)uVar9;
+  u1 = *(uint8_t *)((int)self_ + 0x4d);
+  u3 = (uint32_t)((uint32_t)xi_eax >> 8);
+  xi_eax_01 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(u1)));
+  if (u1 != 0) {
+    if (u1 < 3) {
+      u5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8c,4,-1,xi_eax_01);
+      c1 = (char)u5;
       xi_eax_00 = orig::FontGlyphCache_IsStateTwo();
-      iVar5 = 1;
-      if (((char)xi_eax_00 != '\0') && (iVar5 = DAT_104e1d48_as_s32, cVar3 == '\0')) {
-        uVar9 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8b,4,-1,xi_eax_00);
-        cVar3 = (char)uVar9;
-        iVar5 = DAT_104e1d48_as_s32;
+      i1 = 1;
+      if (((char)xi_eax_00 != '\0') && (i1 = g_104E1D48_as_s32, c1 == '\0')) {
+        u5 = orig::NetCellFont_TestCommand36CF60(0x3e,0x8b,4,-1,xi_eax_00);
+        c1 = (char)u5;
+        i1 = g_104E1D48_as_s32;
       }
-      fVar7 = (long double)*(float *)((int)self_ + 0x78);
-      fVar8 = (long double)0.0f;
-      bVar6 = !(fVar7 >= fVar8);
-      uVar2 = (uint16_t)((NAN(fVar7) || NAN(fVar8)) || fVar7 == fVar8);
-      xi_eax_01 = (uint32_t)(uint16_t)((uint16_t)bVar6 << 8 | uVar2 << 0xe);
-      if ((bVar6 || uVar2 != 0) || (cVar3 == '\0')) {
-        *(undefined4 *)((int)self_ + 0x78) = 0x41c80000;
+      f1 = *(float *)((int)self_ + 0x78);
+      f2 = 0.0f;
+      u4 = !(f1 >= f2);
+      u2 = (uint16_t)((((f1) != (f1)) || ((f2) != (f2))) || f1 == f2);
+      xi_eax_01 = (uint32_t)(uint16_t)((uint16_t)u4 << 8 | u2 << 0xe);
+      if ((u4 || u2 != 0) || (c1 == '\0')) {
+        *(bits32 *)((int)self_ + 0x78) = 0x41c80000;
       }
       else {
-        fVar8 = orig::Camera_GetFrameScale_v1(xi_eax_01);
-        lVar10 = XI_CALL_ST0(0x10311C2Cu)(fVar8);
-        xi_eax_01 = (uint32_t)(short)lVar10;
+        f2 = orig::Camera_GetFrameScale_v1(xi_eax_01);
+        i2 = XI_CALL_ST0(0x10311C2Cu)(f2);
+        xi_eax_01 = (uint32_t)(short)i2;
         *(float *)((int)self_ + 0x78) =
-             (float)((long double)*(float *)((int)self_ + 0x78) - (long double)(int)xi_eax_01);
+             (float)(*(float *)((int)self_ + 0x78) - (int)xi_eax_01);
       }
-      if ((cVar3 == '\x01') &&
-         (cVar3 = *(char *)(iVar5 + 0x34 + (int)self_),
-         xi_eax_01 = ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax_01 >> 8))) << 8) | (uint8_t)(cVar3))), cVar3 != '\0')) {
-        xi_eax_01 = *(int *)((int)self_ + 4) - *(int *)((int)self_ + iVar5 * 8 + 0x1c);
-        iVar5 = *(int *)((int)self_ + 8) - *(int *)((int)self_ + iVar5 * 8 + 0x20);
-        if ((int)(iVar5 * iVar5 + xi_eax_01 * xi_eax_01) < 0x41) {
-          fVar7 = (long double)*(float *)((int)self_ + 0x78);
-          fVar8 = (long double)0.0f;
-          bVar6 = NAN(fVar7) || NAN(fVar8);
-          xi_eax_01 = ((uint32_t)(((uint32_t)(uint16_t)((short)(xi_eax_01 >> 0x10)) << 16) | (uint16_t)((uint16_t)(bVar6 || fVar7 < fVar8) << 8 | (uint16_t)bVar6 << 10 |
-                               (uint16_t)(bVar6 || fVar7 == fVar8) << 0xe)));
-          if (!(fVar7 <= fVar8)) goto LAB_101252ad;
+      if ((c1 == '\x01') &&
+         (c1 = *(char *)(i1 + 0x34 + (int)self_),
+         xi_eax_01 = ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax_01 >> 8))) << 8) | (uint8_t)(c1))), c1 != '\0')) {
+        xi_eax_01 = *(int *)((int)self_ + 4) - *(int *)((int)self_ + i1 * 8 + 0x1c);
+        i1 = *(int *)((int)self_ + 8) - *(int *)((int)self_ + i1 * 8 + 0x20);
+        if ((int)(i1 * i1 + xi_eax_01 * xi_eax_01) < 0x41) {
+          f1 = *(float *)((int)self_ + 0x78);
+          f2 = 0.0f;
+          u4 = ((f1) != (f1)) || ((f2) != (f2));
+          xi_eax_01 = ((uint32_t)(((uint32_t)(uint16_t)((short)(xi_eax_01 >> 0x10)) << 16) | (uint16_t)((uint16_t)(u4 || f1 < f2) << 8 | (uint16_t)u4 << 10 |
+                               (uint16_t)(u4 || f1 == f2) << 0xe)));
+          if (!(f1 <= f2)) goto code_101252AD;
         }
-        uVar4 = (uint32_t)(xi_eax_01 >> 8);
-        xi_eax_01 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(*(char *)((int)self_ + 0x54))));
+        u3 = (uint32_t)(xi_eax_01 >> 8);
+        xi_eax_01 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x54))));
         if (((*(char *)((int)self_ + 0x54) == '\0') &&
-            (xi_eax_01 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(*(char *)((int)self_ + 0x55)))),
+            (xi_eax_01 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x55)))),
             *(char *)((int)self_ + 0x55) == '\0')) &&
            ((xi_eax_01 = orig::LobbyUi_GetGlobalDword(), xi_eax_01 != 0 ||
             ((xi_eax_01 = *g_pSceneState_as_v1, xi_eax_01 == 0x60 || (xi_eax_01 == 0xd0)))))) {
-          uVar4 = (uint32_t)(xi_eax_01 >> 8);
-          xi_eax_01 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88))));
+          u3 = (uint32_t)(xi_eax_01 >> 8);
+          xi_eax_01 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88))));
           if (*(char *)((int)self_ + 0x88) != '\0') {
             *(uint8_t *)((int)self_ + 0x4d) = 5;
-            return ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(1)));
+            return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
           }
         }
       }
-      goto LAB_101252ad;
+      goto code_101252AD;
     }
-    if (bVar1 == 5) {
-      xi_eax_01 = ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88))));
+    if (u1 == 5) {
+      xi_eax_01 = ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(*(char *)((int)self_ + 0x88))));
       if (*(char *)((int)self_ + 0x88) == '\0') {
         *(uint8_t *)((int)self_ + 0x4d) = 1;
-        return ((uint32_t)(((uint32_t)(uVar4) << 8) | (uint8_t)(1)));
+        return ((uint32_t)(((uint32_t)(u3) << 8) | (uint8_t)(1)));
       }
-      goto LAB_101252ad;
+      goto code_101252AD;
     }
   }
-  *(undefined4 *)((int)self_ + 0x78) = 0x41c80000;
-LAB_101252ad:
+  *(bits32 *)((int)self_ + 0x78) = 0x41c80000;
+code_101252AD:
   return ((uint32_t)(((uint32_t)(xi_strunc24((xi_eax_01 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101252C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Cursor_SetModeFromMenuActive(void * self_)
+XI_API bits32 __thiscall Cursor_SetModeFromMenuActive(void * self_)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  if ((char)iVar1 != '\0') {
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  if ((char)i1 != '\0') {
     *(uint8_t *)((int)self_ + 0x4d) = 2;
-    return iVar1;
+    return i1;
   }
   *(uint8_t *)((int)self_ + 0x4d) = 1;
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101252F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API unsigned __int8 __thiscall Cursor_SetVisible(unsigned __int8 *self_, unsigned __int8 a2)
+XI_API unsigned char __thiscall Cursor_SetVisible(unsigned char *self_, unsigned char arg2)
 {
-  unsigned __int8 result;
-  CDx *v4;
+  unsigned char result;
+  CDx *p1;
   result = g_cfgHardwareMouse;
-  v4 = g_pCDx;
+  p1 = g_pCDx;
   if ( g_cfgHardwareMouse != 0 )
   {
     if ( g_pCDx != nullptr )
     {
-      result = orig::CDx_ShowCursor(g_pCDx, a2);
-      v4 = g_pCDx;
+      result = orig::CDx_ShowCursor(g_pCDx, arg2);
+      p1 = g_pCDx;
     }
-    if ( *(self_ + 78) != a2 && a2 == 1 && v4 != nullptr )
-      result = (unsigned __int8)orig::CDx_SetCursorShape(v4, *(self_ + 76), 1);
-    *(self_ + 78) = a2;
-    *(self_ + 78) = a2;
+    if ( *(self_ + 78) != arg2 && arg2 == 1 && p1 != nullptr )
+      result = (unsigned char)orig::CDx_SetCursorShape(p1, *(self_ + 76), 1);
+    *(self_ + 78) = arg2;
+    *(self_ + 78) = arg2;
   }
   else
   {
     if ( g_pCDx != nullptr )
       result = orig::CDx_ShowCursor(g_pCDx, 0);
-    *(self_ + 78) = a2;
+    *(self_ + 78) = arg2;
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10125F70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall Cursor_UpdateVisibilityForMode(void * self_, undefined4 param_1)
+XI_API uint64_t __thiscall Cursor_UpdateVisibilityForMode(void * self_, bits32 arg2)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  if ((char)param_1 == '\0') {
+  if ((char)arg2 == '\0') {
     switch(xi_sw(*(uint8_t *)(g_pCursor_as_s32 + 0x4d))) {
     case 3:
     case 6:
@@ -13378,73 +13453,73 @@ XI_API uint64_t __thiscall Cursor_UpdateVisibilityForMode(void * self_, undefine
       break;
     case 4:
     case 5:
-      uVar1 = orig::Cursor_SetVisible_v1(self_,1);
-      return uVar1;
+      u1 = orig::Cursor_SetVisible_v1(self_,1);
+      return u1;
     }
-    uVar1 = orig::Cursor_SetVisible_v1(self_,0);
-    return uVar1;
+    u1 = orig::Cursor_SetVisible_v1(self_,0);
+    return u1;
   }
-  uVar1 = orig::Cursor_SetVisible_v1(self_,1);
-  return uVar1;
+  u1 = orig::Cursor_SetVisible_v1(self_,1);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x101260E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall Cursor_GetField98(void * self_)
 {
-  return (long double)*(float *)((int)self_ + 0x98);
+  return *(float *)((int)self_ + 0x98);
 }
 
 // FUNCTION: FFXIMAIN 0x101260F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall Cursor_GetField94(void * self_)
 {
-  return (long double)*(float *)((int)self_ + 0x94);
+  return *(float *)((int)self_ + 0x94);
 }
 
 // FUNCTION: FFXIMAIN 0x10126100
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall Cursor_GetNormalizedDeltaY(void * self_)
 {
-  uint8_t bVar1;
-  long double fVar2;
+  uint8_t u1;
+  long double f1;
   
-  fVar2 = (long double)(*(int *)((int)self_ + 4) - *(int *)((int)self_ + 0x38)) /
-          ((long double)(int)(short)((short)g_screenRectBottomRight_as_v1 - (short)g_screenRectTopLeft_as_v1) *
-          (long double)0.0476190485060214996337890625f);
-  if (fVar2 > (long double)1.0f) {
-    return (long double)1.0f;
+  f1 = (*(int *)((int)self_ + 4) - *(int *)((int)self_ + 0x38)) /
+          ((int)(short)((short)g_screenRectBottomRight_as_v1 - (short)g_screenRectTopLeft_as_v1) *
+          0.0476190485060214996337890625f);
+  if (f1 > 1.0f) {
+    return 1.0f;
   }
-  bVar1 = NAN(fVar2) || NAN((long double)(-1.0f));
-  if ((bVar1 || fVar2 < (long double)(-1.0f)) != bVar1) {
-    return (long double)(-1.0f);
+  u1 = ((f1) != (f1)) || (((-1.0f)) != ((-1.0f)));
+  if ((u1 || f1 < (-1.0f)) != u1) {
+    return (-1.0f);
   }
-  bVar1 = NAN(fVar2) || NAN((long double)1.0f);
-  if (((bVar1 || fVar2 < (long double)1.0f) != bVar1) &&
-     (fVar2 > (long double)(-1.0f))) {
-    fVar2 = (long double)0.0f;
+  u1 = ((f1) != (f1)) || ((1.0f) != (1.0f));
+  if (((u1 || f1 < 1.0f) != u1) &&
+     (f1 > (-1.0f))) {
+    f1 = 0.0f;
   }
-  return fVar2;
+  return f1;
 }
 
 // FUNCTION: FFXIMAIN 0x10126270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Cursor_HasTargetHover(void)
+XI_API bits32 __cdecl Cursor_HasTargetHover(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Target_PickNearestToPoint(g_pTargetMng);
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar1 >> 8))) << 8) | (uint8_t)(iVar1 != 0)));
+  i1 = orig::Target_PickNearestToPoint(g_pTargetMng);
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)(i1 != 0)));
 }
 
 // FUNCTION: FFXIMAIN 0x10126290
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl unknown_libname_89(void)
+XI_API bits32 __cdecl unknown_libname_89(void)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
-  return iVar1;
+  i1 = orig::Menu_HasFocusedItem(&g_menuMng_as_v0);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x101262A0
@@ -13460,7 +13535,7 @@ XI_API void __thiscall Cursor_StoreScreenCenter(void * self_)
 
 // FUNCTION: FFXIMAIN 0x101262E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_IsCursorMode2NoEvent(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_IsCursorMode2NoEvent(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   if (*(char *)((int)self_ + 0x4d) == '\x02') {
     xi_eax = orig::IsEvent_v1(0,xi_eax);
@@ -13473,20 +13548,20 @@ XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_IsCursorMode2
 
 // FUNCTION: FFXIMAIN 0x10126300
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_Init(void * self_)
+XI_API bits32 __thiscall NetCellFont_Init(void * self_)
 {
   *(uint8_t *)((int)self_ + 0x14) = 1;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)self_ = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 0x10) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)self_ = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10126320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_ClearWords(void * self_)
+XI_API bits32 __thiscall NetCellFont_ClearWords(void * self_)
 {
   *(uint16_t *)((int)self_ + 2) = 0;
   *(uint16_t *)self_ = 0;
@@ -13504,157 +13579,157 @@ XI_API void __cdecl NetCellFont_NoOp(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_Clear(void * self_)
 {
-  *(undefined4 *)((int)self_ + 0x10) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)self_ = 0;
-  *(undefined4 *)((int)self_ + 0x14) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)self_ = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0x18) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10126370
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_FreeBothLists(void * self_)
+XI_API bits32 __thiscall NetCellFont_FreeBothLists(void * self_)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  bits32 *p1;
+  int i1;
+  bits32 *p2;
+  int i2;
   
-  puVar3 = *(undefined4 **)self_;
-  while (puVar3 != (undefined4 *)0x0) {
-    puVar1 = (undefined4 *)*puVar3;
-    orig::operator_delete_v3(puVar3);
-    puVar3 = puVar1;
+  p2 = *(bits32 **)self_;
+  while (p2 != (bits32 *)0x0) {
+    p1 = (bits32 *)*p2;
+    orig::operator_delete_v3(p2);
+    p2 = p1;
   }
-  iVar4 = *(int *)((int)self_ + 8);
-  while (iVar4 != 0) {
-    iVar2 = *(int *)(iVar4 + 8);
-    orig::operator_delete_v3(iVar4);
-    iVar4 = iVar2;
+  i2 = *(int *)((int)self_ + 8);
+  while (i2 != 0) {
+    i1 = *(int *)(i2 + 8);
+    orig::operator_delete_v3(i2);
+    i2 = i1;
   }
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101263B0
 // GATE: PASS -- 100 trials, 99 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API undefined4 * __thiscall NetCellFont_Alloc(void * self_)
+XI_API bits32 * __thiscall NetCellFont_Alloc(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
-  uint64_t uVar3;
+  int i1;
+  bits32 *p1;
+  uint64_t u1;
   
   if (8 < *(int *)((int)self_ + 0x18)) {
-    puVar2 = *(undefined4 **)((int)self_ + 0xc);
-    iVar1 = puVar2[3];
-    *(int *)((int)self_ + 0xc) = iVar1;
-    *(undefined4 *)(iVar1 + 8) = 0;
+    p1 = *(bits32 **)((int)self_ + 0xc);
+    i1 = p1[3];
+    *(int *)((int)self_ + 0xc) = i1;
+    *(bits32 *)(i1 + 8) = 0;
     *(int *)((int)self_ + 0x18) = *(int *)((int)self_ + 0x18) + -1;
-LAB_101263cf:
+code_101263CF:
     *(int *)((int)self_ + 0x14) = *(int *)((int)self_ + 0x14) + 1;
-    *(uint8_t *)(puVar2 + 5) = 0;
-    puVar2[2] = 0;
-    puVar2[3] = 0;
-    *puVar2 = 0;
-    puVar2[1] = 0;
-    puVar2[4] = 0;
-    return puVar2;
+    *(uint8_t *)(p1 + 5) = 0;
+    p1[2] = 0;
+    p1[3] = 0;
+    *p1 = 0;
+    p1[1] = 0;
+    p1[4] = 0;
+    return p1;
   }
-  uVar3 = orig::Allocator_Generic_v1(0x18);
-  if ((void *)uVar3 != (void *)0x0) {
-    puVar2 = (undefined4 *)orig::NetCellFont_Init((void *)uVar3);
-    if (puVar2 != (undefined4 *)0x0) goto LAB_101263cf;
+  u1 = orig::Allocator_Generic_v1(0x18);
+  if ((void *)u1 != (void *)0x0) {
+    p1 = (bits32 *)orig::NetCellFont_Init((void *)u1);
+    if (p1 != (bits32 *)0x0) goto code_101263CF;
   }
-  return (undefined4 *)0x0;
+  return (bits32 *)0x0;
 }
 
 // FUNCTION: FFXIMAIN 0x10126460
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall NetCellFont_GetCount(int param_1)
+XI_API bits32 __stdcall NetCellFont_GetCount(int arg1)
 {
-  if (param_1 == 0) {
+  if (arg1 == 0) {
     return 0;
   }
-  return *(undefined4 *)(param_1 + 0x10);
+  return *(bits32 *)(arg1 + 0x10);
 }
 
 // FUNCTION: FFXIMAIN 0x10126480
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_PushBack(void * self_, undefined4 param_1)
+XI_API uint64_t __thiscall NetCellFont_PushBack(void * self_, bits32 arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::NetCellFont_Alloc(self_);
+  p1 = orig::NetCellFont_Alloc(self_);
   if (*(int *)self_ == 0) {
-    *(undefined4 **)self_ = puVar1;
+    *(bits32 **)self_ = p1;
   }
   if (*(int *)((int)self_ + 4) != 0) {
-    puVar1[1] = *(int *)((int)self_ + 4);
-    **(undefined4 **)((int)self_ + 4) = puVar1;
+    p1[1] = *(int *)((int)self_ + 4);
+    **(bits32 **)((int)self_ + 4) = p1;
   }
-  *(undefined4 **)((int)self_ + 4) = puVar1;
-  puVar1[4] = param_1;
+  *(bits32 **)((int)self_ + 4) = p1;
+  p1[4] = arg2;
   *(int *)((int)self_ + 0x10) = *(int *)((int)self_ + 0x10) + 1;
-  return ((uint64_t)(((uint64_t)(uint32_t)(param_1) << 32) | (uint32_t)(puVar1)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(arg2) << 32) | (uint32_t)(p1)));
 }
 
 // FUNCTION: FFXIMAIN 0x101264C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_PushFront(void * self_, undefined4 param_1)
+XI_API uint64_t __thiscall NetCellFont_PushFront(void * self_, bits32 arg2)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::NetCellFont_Alloc(self_);
+  p1 = orig::NetCellFont_Alloc(self_);
   if (*(int *)self_ == 0) {
-    *puVar1 = 0;
+    *p1 = 0;
   }
   else {
-    *(undefined4 **)(*(int *)self_ + 4) = puVar1;
-    *puVar1 = *(undefined4 *)self_;
+    *(bits32 **)(*(int *)self_ + 4) = p1;
+    *p1 = *(bits32 *)self_;
   }
-  *(undefined4 **)self_ = puVar1;
+  *(bits32 **)self_ = p1;
   if (*(int *)((int)self_ + 4) == 0) {
-    *(undefined4 **)((int)self_ + 4) = puVar1;
+    *(bits32 **)((int)self_ + 4) = p1;
   }
   *(int *)((int)self_ + 0x10) = *(int *)((int)self_ + 0x10) + 1;
-  puVar1[4] = param_1;
-  return ((uint64_t)(((uint64_t)(uint32_t)(param_1) << 32) | (uint32_t)(puVar1)));
+  p1[4] = arg2;
+  return ((uint64_t)(((uint64_t)(uint32_t)(arg2) << 32) | (uint32_t)(p1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10126500
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetHead(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetHead(void * self_)
 {
-  return *(undefined4 *)self_;
+  return *(bits32 *)self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10126510
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetTail(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetTail(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 4);
+  return *(bits32 *)((int)self_ + 4);
 }
 
 // FUNCTION: FFXIMAIN 0x10126550
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __stdcall NetCellFont_NextActiveValue(int * param_1)
+XI_API bits32 __stdcall NetCellFont_NextActiveValue(int * arg1)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  iVar2 = *param_1;
-  if (iVar2 != 0) {
-    cVar1 = *(char *)(iVar2 + 0x14);
+  i1 = *arg1;
+  if (i1 != 0) {
+    c1 = *(char *)(i1 + 0x14);
     while( true ) {
-      if (cVar1 == '\0') {
-        *param_1 = *(int *)(iVar2 + 4);
-        return *(undefined4 *)(iVar2 + 0x10);
+      if (c1 == '\0') {
+        *arg1 = *(int *)(i1 + 4);
+        return *(bits32 *)(i1 + 0x10);
       }
-      iVar2 = *(int *)(iVar2 + 4);
-      if (iVar2 == 0) break;
-      cVar1 = *(char *)(iVar2 + 0x14);
+      i1 = *(int *)(i1 + 4);
+      if (i1 == 0) break;
+      c1 = *(char *)(i1 + 0x14);
     }
   }
   return 0;
@@ -13662,29 +13737,29 @@ XI_API undefined4 __stdcall NetCellFont_NextActiveValue(int * param_1)
 
 // FUNCTION: FFXIMAIN 0x10126580
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_Remove(void * self_, int * param_1)
+XI_API void __thiscall NetCellFont_Remove(void * self_, int * arg2)
 {
-  int iVar1;
-  int *piVar2;
+  int i1;
+  int *p1;
   
-  if (param_1 != (int *)0x0) {
-    iVar1 = *param_1;
-    piVar2 = (int *)param_1[1];
-    if (*(int **)self_ == param_1) {
-      *(int *)self_ = iVar1;
+  if (arg2 != (int *)0x0) {
+    i1 = *arg2;
+    p1 = (int *)arg2[1];
+    if (*(int **)self_ == arg2) {
+      *(int *)self_ = i1;
     }
-    if (*(int **)((int)self_ + 4) == param_1) {
-      *(int **)((int)self_ + 4) = piVar2;
+    if (*(int **)((int)self_ + 4) == arg2) {
+      *(int **)((int)self_ + 4) = p1;
     }
-    param_1[4] = 0;
-    if (iVar1 != 0) {
-      *(int **)(iVar1 + 4) = piVar2;
+    arg2[4] = 0;
+    if (i1 != 0) {
+      *(int **)(i1 + 4) = p1;
     }
-    if (piVar2 != (int *)0x0) {
-      *piVar2 = iVar1;
+    if (p1 != (int *)0x0) {
+      *p1 = i1;
     }
     *(int *)((int)self_ + 0x10) = *(int *)((int)self_ + 0x10) + -1;
-    orig::FUN_10126410(self_, (int)param_1);
+    orig::game_10126410(self_, (int)arg2);
     return;
   }
   return;
@@ -13692,554 +13767,558 @@ XI_API void __thiscall NetCellFont_Remove(void * self_, int * param_1)
 
 // FUNCTION: FFXIMAIN 0x101265D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_FreeListsAndReset(void * self_)
+XI_API bits32 __thiscall NetCellFont_FreeListsAndReset(void * self_)
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  bits32 *p1;
+  int i1;
+  bits32 *p2;
+  int i2;
   
-  puVar3 = *(undefined4 **)self_;
-  while (puVar3 != (undefined4 *)0x0) {
-    puVar1 = (undefined4 *)*puVar3;
-    orig::operator_delete_v3(puVar3);
-    puVar3 = puVar1;
+  p2 = *(bits32 **)self_;
+  while (p2 != (bits32 *)0x0) {
+    p1 = (bits32 *)*p2;
+    orig::operator_delete_v3(p2);
+    p2 = p1;
   }
-  iVar4 = *(int *)((int)self_ + 8);
-  while (iVar4 != 0) {
-    iVar2 = *(int *)(iVar4 + 8);
-    orig::operator_delete_v3(iVar4);
-    iVar4 = iVar2;
+  i2 = *(int *)((int)self_ + 8);
+  while (i2 != 0) {
+    i1 = *(int *)(i2 + 8);
+    orig::operator_delete_v3(i2);
+    i2 = i1;
   }
-  *(undefined4 *)((int)self_ + 0x10) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)self_ = 0;
-  *(undefined4 *)((int)self_ + 0x14) = 0;
-  *(undefined4 *)((int)self_ + 0x18) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)self_ = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0x18) = 0;
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x101266B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_InsertBefore(void * self_, int param_1, int param_2)
+XI_API void __thiscall NetCellFont_InsertBefore(void * self_, int arg2, int arg3)
 {
-  undefined4 *puVar1;
-  int *piVar2;
+  bits32 *p1;
+  int *p2;
   
-  if (param_1 == 0) {
-    orig::NetCellFont_PushBack(self_,param_2);
+  if (arg2 == 0) {
+    orig::NetCellFont_PushBack(self_,arg3);
     return;
   }
-  piVar2 =(int*)(orig::NetCellFont_Alloc(self_));
-  puVar1 = *(undefined4 **)(param_1 + 4);
-  if (*(int *)self_ == param_1) {
-    *(int **)self_ = piVar2;
+  p2 =(int*)(orig::NetCellFont_Alloc(self_));
+  p1 = *(bits32 **)(arg2 + 4);
+  if (*(int *)self_ == arg2) {
+    *(int **)self_ = p2;
   }
-  piVar2[1] = (int)puVar1;
-  *piVar2 = param_1;
-  *(int **)(param_1 + 4) = piVar2;
-  if (puVar1 != (undefined4 *)0x0) {
-    *puVar1 = piVar2;
+  p2[1] = (int)p1;
+  *p2 = arg2;
+  *(int **)(arg2 + 4) = p2;
+  if (p1 != (bits32 *)0x0) {
+    *p1 = p2;
   }
-  piVar2[4] = param_2;
+  p2[4] = arg3;
   *(int *)((int)self_ + 0x10) = *(int *)((int)self_ + 0x10) + 1;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10126700
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __thiscall NetCellFont_InsertAfter(void * self_, int * param_1, int param_2)
+XI_API uint64_t __thiscall NetCellFont_InsertAfter(void * self_, int * arg2, int arg3)
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar3;
-  uint64_t uVar4;
+  int *p1;
+  int i1;
+  int *p2;
+  uint64_t u1;
   
-  if (param_1 == (int *)0x0) {
-    uVar4 = orig::NetCellFont_PushBack(self_,param_2);
-    return uVar4;
+  if (arg2 == (int *)0x0) {
+    u1 = orig::NetCellFont_PushBack(self_,arg3);
+    return u1;
   }
-  piVar3 =(int*)(orig::NetCellFont_Alloc(self_));
-  piVar1 = *(int **)((int)self_ + 4);
-  iVar2 = *param_1;
-  if (piVar1 == param_1) {
-    *(int **)((int)self_ + 4) = piVar3;
+  p2 =(int*)(orig::NetCellFont_Alloc(self_));
+  p1 = *(int **)((int)self_ + 4);
+  i1 = *arg2;
+  if (p1 == arg2) {
+    *(int **)((int)self_ + 4) = p2;
   }
-  piVar3[1] = (int)param_1;
-  *piVar3 = iVar2;
-  *param_1 = (int)piVar3;
-  if (iVar2 != 0) {
-    *(int **)(iVar2 + 4) = piVar3;
+  p2[1] = (int)arg2;
+  *p2 = i1;
+  *arg2 = (int)p2;
+  if (i1 != 0) {
+    *(int **)(i1 + 4) = p2;
   }
-  piVar3[4] = param_2;
+  p2[4] = arg3;
   *(int *)((int)self_ + 0x10) = *(int *)((int)self_ + 0x10) + 1;
-  return ((uint64_t)(((uint64_t)(uint32_t)(piVar1) << 32) | (uint32_t)(piVar3)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(p1) << 32) | (uint32_t)(p2)));
 }
 
 // FUNCTION: FFXIMAIN 0x10126750
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall NetCellFont_ChatListCtorA(void * self_, undefined4 param_1)
+XI_API void * __thiscall NetCellFont_ChatListCtorA(void * self_, bits32 arg2)
 {
-  orig::NetCellFont_ChatListInit(self_,param_1);
+  orig::NetCellFont_ChatListInit(self_,arg2);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10126770
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall NetCellFont_ChatListCtorB(void * self_, undefined4 param_1)
+XI_API void * __thiscall NetCellFont_ChatListCtorB(void * self_, bits32 arg2)
 {
-  orig::NetCellFont_ChatListInit(self_,param_1);
+  orig::NetCellFont_ChatListInit(self_,arg2);
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10126790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall NetCellFont_ChatListInit(void * self_, undefined4 param_1)
+XI_API void * __thiscall NetCellFont_ChatListInit(void * self_, bits32 arg2)
 {
   orig::NetCellFont_Clear(self_);
-  *(undefined4 *)((int)self_ + 0x30) = param_1;
+  *(bits32 *)((int)self_ + 0x30) = arg2;
   orig::NetCellFont_FreeListsAndReset(self_);
   *(uint8_t *)((int)self_ + 0x34) = 1;
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  *(undefined4 *)((int)self_ + 0x28) = 0;
-  *(undefined4 *)((int)self_ + 0x2c) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  *(bits32 *)((int)self_ + 0x28) = 0;
+  *(bits32 *)((int)self_ + 0x2c) = 0;
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101268F0
 // GATE: PASS -- 100 trials, 100 returned normally, 18 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_AddMessage(void * self_, char * param_1, char * param_2, undefined4 param_3)
+XI_API bits32 __thiscall NetCellFont_AddMessage(void * self_, char * arg2, char * arg3, bits32 arg4)
 {
-  void *this_00;
-  int iVar1;
-  uint64_t uVar2;
-  undefined4 local_4;
+  void *obj1;
+  int i1;
+  uint64_t u1;
+  bits32 u2;
   
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  uVar2 = orig::Allocator_Generic_v1(0x844);
-  iVar1 = 0;
-  if ((void *)uVar2 != (void *)0x0) {
-    this_00 = orig::NetCellFont_MessageCtor((void *)uVar2,self_,*(undefined4 *)((int)self_ + 0x30));
-    iVar1 = 0;
-    if (this_00 != (void *)0x0) {
-      local_4 = (uint32_t)self_ & 0xffffff00;
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  u1 = orig::Allocator_Generic_v1(0x844);
+  i1 = 0;
+  if ((void *)u1 != (void *)0x0) {
+    obj1 = orig::NetCellFont_MessageCtor((void *)u1,self_,*(bits32 *)((int)self_ + 0x30));
+    i1 = 0;
+    if (obj1 != (void *)0x0) {
+      u2 = (uint32_t)self_ & 0xffffff00;
       if ((*(uint8_t *)((int)self_ + 0x20) & 1) != 0) {
-        local_4 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)self_ >> 8))) << 8) | (uint8_t)(1)));
+        u2 = ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)self_ >> 8))) << 8) | (uint8_t)(1)));
       }
-      orig::NetCellFont_MessageSet(this_00,param_1,param_2,param_3,local_4);
+      orig::NetCellFont_MessageSet(obj1,arg2,arg3,arg4,u2);
       *(uint8_t *)((int)self_ + 0x34) = 0;
-      orig::NetCellFont_PushBack(self_,this_00);
-      iVar1 = *(int *)((int)self_ + 0x1c);
-      if (iVar1 == 0) {
-        *(void **)((int)self_ + 0x1c) = this_00;
-        iVar1 = ((int (__thiscall *)(void *))((**(code **)(**(int **)((int)self_ + 0x30) + 0x48))))((void *)(*(int **)((int)self_ + 0x30)));
+      orig::NetCellFont_PushBack(self_,obj1);
+      i1 = *(int *)((int)self_ + 0x1c);
+      if (i1 == 0) {
+        *(void **)((int)self_ + 0x1c) = obj1;
+        i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(**(int **)((int)self_ + 0x30) + 0x48))))((void *)(*(int **)((int)self_ + 0x30)));
       }
     }
   }
-  return iVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10126A00
 // GATE: PASS -- 100 trials, 44 returned normally, 44 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
-XI_API undefined4 __thiscall NetCellFont_ClearAllAndNotifyOwner(void * self_)
+XI_API bits32 __thiscall NetCellFont_ClearAllAndNotifyOwner(void * self_)
 {
-  int *piVar1;
-  int iVar2;
-  undefined4 uVar3;
-  char xi_frame[4] __attribute__((aligned(4)));
-  int * &local_4 = *reinterpret_cast<int * *>(xi_frame + 0);
+  int *p1;
+  int i1;
+  bits32 u1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { int * p2; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
+  frame.p2 = self_;
   if (*(int *)((int)self_ + 0x1c) != 0) {
-    iVar2 = *(int *)(*(int *)((int)self_ + 0x1c) + 0x10);
+    i1 = *(int *)(*(int *)((int)self_ + 0x1c) + 0x10);
     orig::NetCellFont_ClearFlag12FromValue
-              (*(void **)(*(int *)(*(int *)((int)self_ + 0x30) + 100) + 0x18),iVar2,iVar2);
+              (*(void **)(*(int *)(*(int *)((int)self_ + 0x30) + 100) + 0x18),i1,i1);
   }
-  piVar1 = (int *)orig::NetCellFont_GetHead(self_);
-  while (local_4 = piVar1, piVar1 != (int *)0x0) {
-    iVar2 = orig::FUN_10126520_v1((int *)&local_4);
-    orig::NetCellFont_Remove(self_,piVar1);
-    piVar1 = local_4;
-    if (iVar2 != 0) {
+  p1 = (int *)orig::NetCellFont_GetHead(self_);
+  while (frame.p2 = p1, p1 != (int *)0x0) {
+    i1 = orig::game_10126520_v1((int *)&frame.p2);
+    orig::NetCellFont_Remove(self_,p1);
+    p1 = frame.p2;
+    if (i1 != 0) {
       orig::NetCellFont_NoOp();
-      orig::operator_delete_v3(iVar2);
-      piVar1 = local_4;
+      orig::operator_delete_v3(i1);
+      p1 = frame.p2;
     }
   }
   orig::NetCellFont_FreeListsAndReset_v1(self_);
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  *(undefined4 *)((int)self_ + 0x28) = 0;
-  *(undefined4 *)((int)self_ + 0x2c) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  *(bits32 *)((int)self_ + 0x28) = 0;
+  *(bits32 *)((int)self_ + 0x2c) = 0;
   *(uint8_t *)((int)self_ + 0x34) = 1;
-  uVar3 = ((int (__thiscall *)(void *))((**(code **)(**(int **)((int)self_ + 0x30) + 0x4c))))((void *)(*(int **)((int)self_ + 0x30)));
-  DAT_10488208_as_v0 = 0;
-  return uVar3;
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(**(int **)((int)self_ + 0x30) + 0x4c))))((void *)(*(int **)((int)self_ + 0x30)));
+  g_10488208_as_v0 = 0;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10126B60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void * __thiscall NetCellFont_MessageCtor(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void * __thiscall NetCellFont_MessageCtor(void * self_, bits32 arg2, bits32 arg3)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
   orig::NetCellFont_ClearWords(self_);
-  *(undefined4 *)((int)self_ + 0x83c) = param_1;
-  *(undefined4 *)((int)self_ + 0x840) = param_2;
-  puVar2 = (undefined4 *)((int)self_ + 0x40);
-  for (iVar1 = 0x1fa; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  *(bits32 *)((int)self_ + 0x83c) = arg2;
+  *(bits32 *)((int)self_ + 0x840) = arg3;
+  p1 = (bits32 *)((int)self_ + 0x40);
+  for (i1 = 0x1fa; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(undefined4 *)((int)self_ + 0x828) = 0;
+  *(bits32 *)((int)self_ + 0x828) = 0;
   *(uint8_t *)((int)self_ + 0x82c) = 0x1e;
   *(uint8_t *)((int)self_ + 0x82d) = 1;
   *(uint8_t *)((int)self_ + 0x82e) = 0;
-  puVar2 = self_;
-  for (iVar1 = 0xf; puVar2 = puVar2 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
+  p1 = self_;
+  for (i1 = 0xf; p1 = p1 + 1, i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
   }
   return self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10126BC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_MessageSet(void * self_, char * param_1, char * param_2, undefined4 param_3, undefined4 param_4)
+XI_API void __thiscall NetCellFont_MessageSet(void * self_, char * arg2, char * arg3, bits32 arg4, bits32 arg5)
 {
-  int iVar1;
-  char *pcVar2;
-  undefined4 *puVar3;
-  uint64_t uVar4;
+  int i1;
+  char *p1;
+  bits32 *p2;
+  uint64_t u1;
   
-  pcVar2 = param_2;
-  puVar3 = self_;
-  for (iVar1 = 0xf; puVar3 = puVar3 + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar3 = *(undefined4 *)pcVar2;
-    pcVar2 = pcVar2 + 4;
+  p1 = arg3;
+  p2 = self_;
+  for (i1 = 0xf; p2 = p2 + 1, i1 != 0; i1 = i1 + -1) {
+    *p2 = *(bits32 *)p1;
+    p1 = p1 + 4;
   }
   *(uint8_t *)((int)self_ + 0x40) = 0x1e;
   *(uint8_t *)((int)self_ + 0x41) = 1;
-  orig::_strncpy_v2((char *)((int)self_ + 0x42),param_1,0x7e6);
-  iVar1 = *(int *)((int)self_ + 0x83c);
+  orig::_strncpy_v2((char *)((int)self_ + 0x42),arg2,0x7e6);
+  i1 = *(int *)((int)self_ + 0x83c);
   *(uint8_t *)((int)self_ + 0x82d) = 1;
   *(uint8_t *)((int)self_ + 0x82c) = 0x1e;
   *(int *)((int)self_ + 0x828) = (int)self_ + 0x40;
-  *(undefined4 *)(iVar1 + 0x20) = 0;
-  uVar4 = orig::NetCellFont_ParseMessageControlCode((int)self_,iVar1,(int *)((int)self_ + 0x828),(uint8_t *)((int)self_ + 0x82c))
+  *(bits32 *)(i1 + 0x20) = 0;
+  u1 = orig::NetCellFont_ParseMessageControlCode((int)self_,i1,(int *)((int)self_ + 0x828),(uint8_t *)((int)self_ + 0x82c))
   ;
-  if (*param_2 == -0x69) {
-    orig::TargetMenu_LayoutMessage(*(int *)((int)self_ + 0x840),(int)((uint64_t)uVar4 >> 0x20),(char *)uVar4,1,param_4
+  if (*arg3 == -0x69) {
+    orig::TargetMenu_LayoutMessage(*(int *)((int)self_ + 0x840),(int)((uint64_t)u1 >> 0x20),(char *)u1,1,arg5
                 );
     return;
   }
-  orig::TargetMenu_LayoutMessage(*(int *)((int)self_ + 0x840),param_4,(char *)uVar4,0,param_4);
+  orig::TargetMenu_LayoutMessage(*(int *)((int)self_ + 0x840),arg5,(char *)u1,0,arg5);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10126C60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) NetCellFont_ParseMessageControlCode(uint32_t xi_eax_unused, undefined4 param_2, int param_1, int * param_3, uint8_t * param_4)
+XI_API bits32 * __attribute__((stdcall, regparm(3))) NetCellFont_ParseMessageControlCode(uint32_t xi_eax_unused, bits32 arg2, int arg3, int * arg4, uint8_t * arg5)
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  uint8_t *puVar5;
-  uint32_t uVar6;
-  uint32_t uVar7;
-  char *pcVar8;
-  undefined4 *puVar9;
-  undefined4 *puVar10;
-  int64_t lVar11;
-  char xi_frame[552] __attribute__((aligned(4)));
-  int  &local_228 = *reinterpret_cast<int  *>(xi_frame + 0);
-  undefined4  (&local_224)[9] = *reinterpret_cast<undefined4  (*)[9]>(xi_frame + 4);
-  uint8_t  (&local_200)[512] = *reinterpret_cast<uint8_t  (*)[512]>(xi_frame + 40);
+  char c1;
+  int i1;
+  int i2;
+  bits32 u1;
+  uint8_t *p1;
+  uint32_t u2;
+  uint32_t u3;
+  char *p2;
+  bits32 *p3;
+  bits32 *p4;
+  int64_t i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[552];
+    struct __attribute__((packed)) { int i4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; bits32 u4[9]; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x28]; uint8_t u5[512]; };   // at 0x28
+  } frame;
   
-  XI_PIECE(DAT_104e1d50, 0, 1) = 0;
-  if ((char *)*param_3 == (char *)0x0) {
-    return (undefined4 *)0x0;
+  XI_PIECE(g_104E1D50, 0, 1) = 0;
+  if ((char *)*arg4 == (char *)0x0) {
+    return (bits32 *)0x0;
   }
-  if (*(char *)*param_3 == '\0') {
-    return (undefined4 *)0x0;
+  if (*(char *)*arg4 == '\0') {
+    return (bits32 *)0x0;
   }
-  local_228 = 0;
-  orig::NetCellFont_InitTextLayout(local_224,param_2);
-  *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8000;
-  iVar2 = *(int *)(param_1 + 0x83c);
-  *(undefined4 *)(iVar2 + 0x28) = 0;
-  *(undefined4 *)(iVar2 + 0x2c) = 0;
-  pcVar8 = (char *)*param_3;
-  cVar1 = *pcVar8;
+  frame.i4 = 0;
+  orig::NetCellFont_InitTextLayout(frame.u4,arg2);
+  *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8000;
+  i1 = *(int *)(arg3 + 0x83c);
+  *(bits32 *)(i1 + 0x28) = 0;
+  *(bits32 *)(i1 + 0x2c) = 0;
+  p2 = (char *)*arg4;
+  c1 = *p2;
   while( true ) {
-    if (cVar1 == '\0') goto LAB_10126ce4;
-    if (cVar1 == '\x7f') break;
-    cVar1 = pcVar8[1];
-    pcVar8 = pcVar8 + 1;
+    if (c1 == '\0') goto code_10126CE4;
+    if (c1 == '\x7f') break;
+    c1 = p2[1];
+    p2 = p2 + 1;
   }
-  switch(xi_sw(pcVar8[1])) {
+  switch(xi_sw(p2[1])) {
   case '1':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8001;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8001;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    orig::NetCellFont_SetString(local_224,(char *)&DAT_104e1d50,1,0,(int)param_4);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    orig::NetCellFont_SetString(frame.u4,(char *)&g_104E1D50,1,0,(int)arg5);
     while( true ) {
-      iVar2 = orig::NetCellFont_GetWord1A(local_224);
-      iVar3 = orig::NetCellFont_GetField20(local_224);
-      if (iVar3 != 0) break;
-      orig::FUN_1012a4f0(local_224,local_200,0x200,(int)*(short *)(DAT_1062193c_as_s32 + 0x32));
-      if (3 < local_228) {
-        *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 1;
-        iVar3 = *(int *)(param_1 + 0x83c);
-        *(undefined4 *)(iVar3 + 0x28) = 0;
-        *(undefined4 *)(iVar3 + 0x2c) = 0;
-        if (*(char *)(param_1 + 4) == -0x69) {
-          puVar5 = (uint8_t *)(*param_3 + iVar2 + -2);
-          *param_3 = (int)puVar5;
-          *puVar5 = *param_4;
-          *(uint8_t *)(*param_3 + 1) = param_4[1];
-          *(uint8_t *)((int)&DAT_104e1d50 + iVar2) = 0;
-          orig::FUN_1012a340_v1();
+      i1 = orig::NetCellFont_GetWord1A(frame.u4);
+      i2 = orig::NetCellFont_GetField20(frame.u4);
+      if (i2 != 0) break;
+      orig::game_1012A4F0(frame.u4,frame.u5,0x200,(int)*(short *)(g_1062193C_as_s32 + 0x32));
+      if (3 < frame.i4) {
+        *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 1;
+        i2 = *(int *)(arg3 + 0x83c);
+        *(bits32 *)(i2 + 0x28) = 0;
+        *(bits32 *)(i2 + 0x2c) = 0;
+        if (*(char *)(arg3 + 4) == -0x69) {
+          p1 = (uint8_t *)(*arg4 + i1 + -2);
+          *arg4 = (int)p1;
+          *p1 = *arg5;
+          *(uint8_t *)(*arg4 + 1) = arg5[1];
+          *(uint8_t *)((int)&g_104E1D50 + i1) = 0;
+          orig::game_1012A340_v1();
         }
         else {
-          puVar5 = (uint8_t *)(*param_3 + iVar2 + -4);
-          *param_3 = (int)puVar5;
-          *puVar5 = 0x20;
-          *(uint8_t *)(*param_3 + 1) = 0x20;
-          *(uint8_t *)(*param_3 + 2) = *param_4;
-          *(uint8_t *)(*param_3 + 3) = param_4[1];
-          *(uint8_t *)((int)&DAT_104e1d50 + iVar2) = 0;
-          orig::FUN_1012a340_v1();
+          p1 = (uint8_t *)(*arg4 + i1 + -4);
+          *arg4 = (int)p1;
+          *p1 = 0x20;
+          *(uint8_t *)(*arg4 + 1) = 0x20;
+          *(uint8_t *)(*arg4 + 2) = *arg5;
+          *(uint8_t *)(*arg4 + 3) = arg5[1];
+          *(uint8_t *)((int)&g_104E1D50 + i1) = 0;
+          orig::game_1012A340_v1();
         }
-        goto LAB_10126d1f;
+        goto code_10126D1F;
       }
-      if (local_228 == 3) {
-        uVar4 = orig::NetCellFont_GetByte9(local_224);
-        param_4[1] = (char)uVar4;
+      if (frame.i4 == 3) {
+        u1 = orig::NetCellFont_GetByte9(frame.u4);
+        arg5[1] = (char)u1;
       }
-      local_228 = local_228 + 1;
+      frame.i4 = frame.i4 + 1;
     }
-    uVar4 = orig::NetCellFont_GetByte9(local_224);
-    param_4[1] = (char)uVar4;
-    *pcVar8 = '\0';
-    *param_3 = (int)(pcVar8 + 2);
+    u1 = orig::NetCellFont_GetByte9(frame.u4);
+    arg5[1] = (char)u1;
+    *p2 = '\0';
+    *arg4 = (int)(p2 + 2);
     break;
   case '2':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x4002;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(undefined4 *)(iVar2 + 0x28) = 0;
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x4002;
+    i1 = *(int *)(arg3 + 0x83c);
+    *(bits32 *)(i1 + 0x28) = 0;
+    *(bits32 *)(i1 + 0x2c) = 0;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    *param_3 = (int)(pcVar8 + 2);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    *arg4 = (int)(p2 + 2);
     break;
   case '3':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x4001;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x4001;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    *param_3 = (int)(pcVar8 + 2);
-    if (pcVar8[2] == '\a') {
-      *param_3 = (int)(pcVar8 + 3);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    *arg4 = (int)(p2 + 2);
+    if (p2[2] == '\a') {
+      *arg4 = (int)(p2 + 3);
     }
     break;
   case '4':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8002;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8002;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(uint32_t *)(iVar2 + 0x28) = (uint32_t)(uint8_t)pcVar8[2];
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    lVar11 = orig::__allmul(*(uint32_t *)(iVar2 + 0x28),*(int *)(iVar2 + 0x2c),0x3c,0);
-    *(int64_t *)(iVar2 + 0x28) = lVar11;
-    *param_3 = (int)(pcVar8 + 3);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    i1 = *(int *)(arg3 + 0x83c);
+    *(uint32_t *)(i1 + 0x28) = (uint32_t)(uint8_t)p2[2];
+    *(bits32 *)(i1 + 0x2c) = 0;
+    i1 = *(int *)(arg3 + 0x83c);
+    i3 = orig::__allmul(*(uint32_t *)(i1 + 0x28),*(int *)(i1 + 0x2c),0x3c,0);
+    *(int64_t *)(i1 + 0x28) = i3;
+    *arg4 = (int)(p2 + 3);
     break;
   case '5':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8003;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(uint32_t *)(iVar2 + 0x28) = (uint32_t)(uint8_t)pcVar8[2];
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    lVar11 = orig::__allmul(*(uint32_t *)(iVar2 + 0x28),*(int *)(iVar2 + 0x2c),0x3c,0);
-    *(int64_t *)(iVar2 + 0x28) = lVar11;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8003;
+    i1 = *(int *)(arg3 + 0x83c);
+    *(uint32_t *)(i1 + 0x28) = (uint32_t)(uint8_t)p2[2];
+    *(bits32 *)(i1 + 0x2c) = 0;
+    i1 = *(int *)(arg3 + 0x83c);
+    i3 = orig::__allmul(*(uint32_t *)(i1 + 0x28),*(int *)(i1 + 0x2c),0x3c,0);
+    *(int64_t *)(i1 + 0x28) = i3;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    *param_3 = (int)(pcVar8 + 3);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    *arg4 = (int)(p2 + 3);
     break;
   case '6':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 2;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 2;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(uint32_t *)(iVar2 + 0x28) = (uint32_t)(uint8_t)pcVar8[2];
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    lVar11 = orig::__allmul(*(uint32_t *)(iVar2 + 0x28),*(int *)(iVar2 + 0x2c),0x3c,0);
-    *(int64_t *)(iVar2 + 0x28) = lVar11;
-    *param_3 = (int)(pcVar8 + 3);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    i1 = *(int *)(arg3 + 0x83c);
+    *(uint32_t *)(i1 + 0x28) = (uint32_t)(uint8_t)p2[2];
+    *(bits32 *)(i1 + 0x2c) = 0;
+    i1 = *(int *)(arg3 + 0x83c);
+    i3 = orig::__allmul(*(uint32_t *)(i1 + 0x28),*(int *)(i1 + 0x2c),0x3c,0);
+    *(int64_t *)(i1 + 0x28) = i3;
+    *arg4 = (int)(p2 + 3);
     break;
   case '7':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 1;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 1;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    *param_3 = (int)(pcVar8 + 2);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    *arg4 = (int)(p2 + 2);
     break;
   case '8':
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8002;
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8002;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *pcVar8 = '\0';
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(uint32_t *)(iVar2 + 0x28) = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(pcVar8[3]) << 8) | (uint8_t)(pcVar8[2])));
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    *param_3 = (int)(pcVar8 + 4);
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *p2 = '\0';
+    i1 = *(int *)(arg3 + 0x83c);
+    *(uint32_t *)(i1 + 0x28) = (uint32_t)((uint16_t)(((uint16_t)(uint8_t)(p2[3]) << 8) | (uint8_t)(p2[2])));
+    *(bits32 *)(i1 + 0x2c) = 0;
+    *arg4 = (int)(p2 + 4);
     break;
   default:
-    uVar6 = (int)pcVar8 - *param_3;
-    puVar9 = (undefined4 *)*param_3;
-    puVar10 =(undefined4*)(&DAT_104e1d50);
-    for (uVar7 = uVar6 >> 2; uVar7 != 0; uVar7 = uVar7 - 1) {
-      *puVar10 = *puVar9;
-      puVar9 = puVar9 + 1;
-      puVar10 = puVar10 + 1;
+    u2 = (int)p2 - *arg4;
+    p3 = (bits32 *)*arg4;
+    p4 =(bits32*)(&g_104E1D50);
+    for (u3 = u2 >> 2; u3 != 0; u3 = u3 - 1) {
+      *p4 = *p3;
+      p3 = p3 + 1;
+      p4 = p4 + 1;
     }
-    for (uVar6 = uVar6 & 3; uVar6 != 0; uVar6 = uVar6 - 1) {
-      *(uint8_t *)puVar10 = *(uint8_t *)puVar9;
-      puVar9 = (undefined4 *)((int)puVar9 + 1);
-      puVar10 = (undefined4 *)((int)puVar10 + 1);
+    for (u2 = u2 & 3; u2 != 0; u2 = u2 - 1) {
+      *(uint8_t *)p4 = *(uint8_t *)p3;
+      p3 = (bits32 *)((int)p3 + 1);
+      p4 = (bits32 *)((int)p4 + 1);
     }
-    *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-    *param_3 = 0;
-    *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8003;
-    iVar2 = *(int *)(param_1 + 0x83c);
-    *(undefined4 *)(iVar2 + 0x28) = 0;
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
+    *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+    *arg4 = 0;
+    *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8003;
+    i1 = *(int *)(arg3 + 0x83c);
+    *(bits32 *)(i1 + 0x28) = 0;
+    *(bits32 *)(i1 + 0x2c) = 0;
   }
-LAB_10126d1f:
+code_10126D1F:
   orig::NetCellFont_CallClearBuffers();
-  return(undefined4*)(&DAT_104e1d50);
-LAB_10126ce4:
-  orig::_strncpy_v1((char *)&DAT_104e1d50,(char *)*param_3,0x400);
-  *(uint8_t *)((int)&DAT_104e1d50 + ((int)pcVar8 - *param_3)) = 0;
-  *param_3 = 0;
-  *(undefined4 *)(*(int *)(param_1 + 0x83c) + 0x20) = 0x8003;
-  iVar2 = *(int *)(param_1 + 0x83c);
-  *(undefined4 *)(iVar2 + 0x28) = 0;
-  *(undefined4 *)(iVar2 + 0x2c) = 0;
-  goto LAB_10126d1f;
+  return(bits32*)(&g_104E1D50);
+code_10126CE4:
+  orig::_strncpy_v1((char *)&g_104E1D50,(char *)*arg4,0x400);
+  *(uint8_t *)((int)&g_104E1D50 + ((int)p2 - *arg4)) = 0;
+  *arg4 = 0;
+  *(bits32 *)(*(int *)(arg3 + 0x83c) + 0x20) = 0x8003;
+  i1 = *(int *)(arg3 + 0x83c);
+  *(bits32 *)(i1 + 0x28) = 0;
+  *(bits32 *)(i1 + 0x2c) = 0;
+  goto code_10126D1F;
 }
 
 // FUNCTION: FFXIMAIN 0x10127190
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall NetCellFont_MsgWinDataCtor(void * self_)
 {
-  *(undefined4 *)((int)self_ + 0x64044) = 0;
+  *(bits32 *)((int)self_ + 0x64044) = 0;
   orig::NetCellFont_MsgWinDataReset(self_);
   return self_;
 }
@@ -14248,16 +14327,16 @@ XI_API void * __thiscall NetCellFont_MsgWinDataCtor(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_MsgWinDataReset(void * self_)
 {
-  undefined4 uVar1;
-  int iVar2;
-  uint64_t uVar3;
+  bits32 u1;
+  int i1;
+  uint64_t u2;
   
-  uVar3 = orig::NetCellFont_ResetEntryRing(self_);
-  *(undefined4 *)self_ = 0;
-  *(undefined4 *)((int)self_ + 4) = 0;
-  *(undefined4 *)((int)self_ + 8) = 0;
-  *(undefined4 *)((int)self_ + 0xc) = 0;
-  *(undefined4 *)((int)self_ + 0x10) = 0;
+  u2 = orig::NetCellFont_ResetEntryRing(self_);
+  *(bits32 *)self_ = 0;
+  *(bits32 *)((int)self_ + 4) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 0xc) = 0;
+  *(bits32 *)((int)self_ + 0x10) = 0;
   *(uint8_t *)((int)self_ + 0x64020) = 0;
   *(uint8_t *)((int)self_ + 0x64021) = 0;
   *(uint8_t *)((int)self_ + 0x64022) = 0;
@@ -14269,10 +14348,10 @@ XI_API void __thiscall NetCellFont_MsgWinDataReset(void * self_)
   *(uint8_t *)((int)self_ + 0x64028) = 0;
   *(uint8_t *)((int)self_ + 0x64029) = 0;
   *(uint8_t *)((int)self_ + 0x64050) = 0;
-  uVar1 = orig::Font_GetCharWidthAt(&DAT_1036f120,(int)((uint64_t)uVar3 >> 0x20));
-  *(short *)((int)self_ + 0x64052) = (short)uVar1;
-  iVar2 = orig::NetCellFont_CountTextChars(&DAT_1036f120);
-  *(short *)((int)self_ + 0x64054) = (short)iVar2;
+  u1 = orig::Font_GetCharWidthAt(&g_1036F120,(int)((uint64_t)u2 >> 0x20));
+  *(short *)((int)self_ + 0x64052) = (short)u1;
+  i1 = orig::NetCellFont_CountTextChars(&g_1036F120);
+  *(short *)((int)self_ + 0x64054) = (short)i1;
   return;
 }
 
@@ -14280,13 +14359,13 @@ XI_API void __thiscall NetCellFont_MsgWinDataReset(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall NetCellFont_ResetEntryRing(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  puVar2 = (undefined4 *)((int)self_ + 0x20);
-  for (iVar1 = 0xc800; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (bits32 *)((int)self_ + 0x20);
+  for (i1 = 0xc800; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   *(uint16_t *)((int)self_ + 0x14) = 0;
   *(uint16_t *)((int)self_ + 0x16) = 0;
@@ -14297,501 +14376,505 @@ XI_API uint64_t __thiscall NetCellFont_ResetEntryRing(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10127280
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall NetCellFont_PushSlot(void * self_, undefined4 xi_s1)
+XI_API int __thiscall NetCellFont_PushSlot(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  short sVar4;
-  int iVar5;
-  undefined4 *puVar6;
+  int i1;
+  int i2;
+  int i3;
+  short i4;
+  int i5;
+  bits32 *p1;
   
-  iVar5 = *(short *)((int)self_ + 0x14) + 1;
-  if (99 < iVar5) {
-    iVar5 = 0;
+  i5 = *(short *)((int)self_ + 0x14) + 1;
+  if (99 < i5) {
+    i5 = 0;
   }
-  iVar1 = iVar5 * 0x800 + 0x20 + (int)self_;
-  if ((*(short *)((int)self_ + 0x16) == iVar5) && (0x32 < *(short *)((int)self_ + 0x1a))) {
-    iVar2 = iVar5;
-    iVar3 = iVar1;
-    if (*(int *)(iVar1 + 0xc) == *(int *)(iVar1 + 0xc)) {
+  i1 = i5 * 0x800 + 0x20 + (int)self_;
+  if ((*(short *)((int)self_ + 0x16) == i5) && (0x32 < *(short *)((int)self_ + 0x1a))) {
+    i2 = i5;
+    i3 = i1;
+    if (*(int *)(i1 + 0xc) == *(int *)(i1 + 0xc)) {
       do {
         *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + -1;
-        iVar2 = iVar2 + 1;
-        if (99 < iVar2) {
-          iVar2 = 0;
+        i2 = i2 + 1;
+        if (99 < i2) {
+          i2 = 0;
         }
-        iVar3 = iVar2 * 0x800 + 0x20 + (int)self_;
-      } while (*(int *)(iVar1 + 0xc) == *(int *)(iVar2 * 0x800 + 0x2c + (int)self_));
+        i3 = i2 * 0x800 + 0x20 + (int)self_;
+      } while (*(int *)(i1 + 0xc) == *(int *)(i2 * 0x800 + 0x2c + (int)self_));
     }
-    *(short *)((int)self_ + 0x16) = (short)iVar2;
-    *(undefined4 *)self_ = *(undefined4 *)(iVar3 + 0xc);
+    *(short *)((int)self_ + 0x16) = (short)i2;
+    *(bits32 *)self_ = *(bits32 *)(i3 + 0xc);
   }
-  sVar4 = (short)iVar5;
-  *(short *)((int)self_ + 0x14) = sVar4;
+  i4 = (short)i5;
+  *(short *)((int)self_ + 0x14) = i4;
   if (*(short *)((int)self_ + 0x1a) == 0) {
-    *(short *)((int)self_ + 0x16) = sVar4;
+    *(short *)((int)self_ + 0x16) = i4;
   }
   *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + 1;
-  puVar6 = (undefined4 *)(sVar4 * 0x800 + 0x20 + (int)self_);
-  for (iVar5 = 0x200; iVar5 != 0; iVar5 = iVar5 + -1) {
-    *puVar6 = 0;
-    puVar6 = puVar6 + 1;
+  p1 = (bits32 *)(i4 * 0x800 + 0x20 + (int)self_);
+  for (i5 = 0x200; i5 != 0; i5 = i5 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return *(short *)((int)self_ + 0x14) * 0x800 + 0x20 + (int)self_;
 }
 
 // FUNCTION: FFXIMAIN 0x10127320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall NetCellFont_NewRingEntry(void * self_, undefined4 xi_s1)
+XI_API int __thiscall NetCellFont_NewRingEntry(void * self_, bits32 xi_s1)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  short sVar4;
-  int iVar5;
-  undefined4 *puVar6;
+  int i1;
+  int i2;
+  int i3;
+  short i4;
+  int i5;
+  bits32 *p1;
   
-  iVar5 = *(short *)((int)self_ + 0x16) + -1;
-  if (iVar5 < 0) {
-    iVar5 = 99;
+  i5 = *(short *)((int)self_ + 0x16) + -1;
+  if (i5 < 0) {
+    i5 = 99;
   }
-  iVar1 = iVar5 * 0x800 + 0x20 + (int)self_;
-  if ((*(short *)((int)self_ + 0x14) == iVar5) && (0x32 < *(short *)((int)self_ + 0x1a))) {
-    iVar2 = iVar1;
-    iVar3 = iVar5;
-    if (*(int *)(iVar1 + 0xc) == *(int *)(iVar1 + 0xc)) {
+  i1 = i5 * 0x800 + 0x20 + (int)self_;
+  if ((*(short *)((int)self_ + 0x14) == i5) && (0x32 < *(short *)((int)self_ + 0x1a))) {
+    i2 = i1;
+    i3 = i5;
+    if (*(int *)(i1 + 0xc) == *(int *)(i1 + 0xc)) {
       do {
         *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + -1;
-        iVar3 = iVar3 + -1;
-        if (iVar3 < 0) {
-          iVar3 = 99;
+        i3 = i3 + -1;
+        if (i3 < 0) {
+          i3 = 99;
         }
-        iVar2 = iVar3 * 0x800 + 0x20 + (int)self_;
-      } while (*(int *)(iVar1 + 0xc) == *(int *)(iVar3 * 0x800 + 0x2c + (int)self_));
+        i2 = i3 * 0x800 + 0x20 + (int)self_;
+      } while (*(int *)(i1 + 0xc) == *(int *)(i3 * 0x800 + 0x2c + (int)self_));
     }
-    *(short *)((int)self_ + 0x14) = (short)iVar3;
-    *(undefined4 *)((int)self_ + 4) = *(undefined4 *)(iVar2 + 0xc);
+    *(short *)((int)self_ + 0x14) = (short)i3;
+    *(bits32 *)((int)self_ + 4) = *(bits32 *)(i2 + 0xc);
   }
-  sVar4 = (short)iVar5;
-  *(short *)((int)self_ + 0x16) = sVar4;
+  i4 = (short)i5;
+  *(short *)((int)self_ + 0x16) = i4;
   if (*(short *)((int)self_ + 0x1a) == 0) {
-    *(short *)((int)self_ + 0x14) = sVar4;
+    *(short *)((int)self_ + 0x14) = i4;
   }
   *(short *)((int)self_ + 0x1a) = *(short *)((int)self_ + 0x1a) + 1;
-  puVar6 = (undefined4 *)(sVar4 * 0x800 + 0x20 + (int)self_);
-  for (iVar5 = 0x200; iVar5 != 0; iVar5 = iVar5 + -1) {
-    *puVar6 = 0;
-    puVar6 = puVar6 + 1;
+  p1 = (bits32 *)(i4 * 0x800 + 0x20 + (int)self_);
+  for (i5 = 0x200; i5 != 0; i5 = i5 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
   return *(short *)((int)self_ + 0x16) * 0x800 + 0x20 + (int)self_;
 }
 
 // FUNCTION: FFXIMAIN 0x101273C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_BuildRecord(void * self_, uint8_t * param_1, char * param_2, uint16_t * param_3)
+XI_API void __thiscall NetCellFont_BuildRecord(void * self_, uint8_t * arg2, char * arg3, uint16_t * arg4)
 {
-  char cVar1;
-  uint8_t bVar2;
-  undefined4 uVar3;
-  int iVar4;
-  uint8_t *pbVar5;
-  char *pcVar6;
-  uint64_t uVar7;
-  char xi_frame[288] __attribute__((aligned(4)));
-  uint8_t  (&local_120)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
-  short  (&local_100)[128] = *reinterpret_cast<short  (*)[128]>(xi_frame + 32);
+  char c1;
+  uint8_t u1;
+  bits32 u2;
+  int i1;
+  uint8_t *p1;
+  char *p2;
+  uint64_t u3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[288];
+    struct __attribute__((packed)) { uint8_t u4[32]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x20]; short i2[128]; };   // at 0x20
+  } frame;
   
-  *(undefined4 *)(param_2 + 8) = *(undefined4 *)((int)self_ + 0xc);
-  *(uint16_t *)param_2 = *param_3;
-  cVar1 = *(char *)(param_3 + 1);
-  param_2[0x13] = '\x01';
-  param_2[2] = cVar1;
-  cVar1 = *param_2;
-  param_2[0x38] = '\0';
-  param_2[0x39] = '\0';
-  param_2[0x3a] = '\0';
-  param_2[0x3b] = '\0';
-  param_2[0x15] = '\0';
-  if ((cVar1 == -0x32) || ((param_2[1] & 0x40U) != 0)) {
-    bVar2 = true;
+  *(bits32 *)(arg3 + 8) = *(bits32 *)((int)self_ + 0xc);
+  *(uint16_t *)arg3 = *arg4;
+  c1 = *(char *)(arg4 + 1);
+  arg3[0x13] = '\x01';
+  arg3[2] = c1;
+  c1 = *arg3;
+  arg3[0x38] = '\0';
+  arg3[0x39] = '\0';
+  arg3[0x3a] = '\0';
+  arg3[0x3b] = '\0';
+  arg3[0x15] = '\0';
+  if ((c1 == -0x32) || ((arg3[1] & 0x40U) != 0)) {
+    u1 = true;
   }
   else {
-    bVar2 = false;
+    u1 = false;
   }
-  uVar7 = orig::NetCellFont_FindKindRecord(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)param_2 >> 0x10)) << 16) | (uint16_t)((uint16_t)*(uint8_t *)param_3))));
-  iVar4 = (int)uVar7;
-  if (iVar4 == 0) {
-    param_2[0x14] = '\0';
-    uVar3 = orig::NetCellFont_MapCode(0);
-    *(undefined4 *)(param_2 + 4) = uVar3;
-    param_2[0x12] = '\0';
+  u3 = orig::NetCellFont_FindKindRecord(((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)arg3 >> 0x10)) << 16) | (uint16_t)((uint16_t)*(uint8_t *)arg4))));
+  i1 = (int)u3;
+  if (i1 == 0) {
+    arg3[0x14] = '\0';
+    u2 = orig::NetCellFont_MapCode(0);
+    *(bits32 *)(arg3 + 4) = u2;
+    arg3[0x12] = '\0';
   }
   else {
-    param_2[0x14] = *(char *)(iVar4 + 3);
-    uVar3 = orig::NetCellFont_MapCode(((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)uVar7 >> 0x30)) << 16) | (uint16_t)((uint16_t)*(uint8_t *)(iVar4 + 2)))));
-    *(undefined4 *)(param_2 + 4) = uVar3;
-    param_2[0x12] = '\0';
-    switch(xi_sw(*param_2)) {
+    arg3[0x14] = *(char *)(i1 + 3);
+    u2 = orig::NetCellFont_MapCode(((uint32_t)(((uint32_t)(uint16_t)((short)((uint64_t)u3 >> 0x30)) << 16) | (uint16_t)((uint16_t)*(uint8_t *)(i1 + 2)))));
+    *(bits32 *)(arg3 + 4) = u2;
+    arg3[0x12] = '\0';
+    switch(xi_sw(*arg3)) {
     case '\x01':
     case '\t':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 1) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case '\x02':
     case '\x03':
     case '\n':
     case '\v':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 2) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case '\x04':
     case '\f':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 4) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case '\x05':
     case '\r':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 8) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case '\x06':
     case '\x0e':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 0x10) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case '\a':
     case '\x0f':
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 0x20) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case -0x79:
-      if (!bVar2) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if (!u1) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        arg3[0x15] = arg3[0x15] & 0xf1U | 1;
       }
       break;
     case -0x68:
     case -0x42:
-      param_2[0x12] = '\x01';
+      arg3[0x12] = '\x01';
       break;
     case -0x32:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       break;
     case -0x30:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       break;
     case -0x2e:
       if ((*(uint8_t *)((int)self_ + 0x6404c) & 0x40) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case -0x2d:
     case -0x2c:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if (*(char *)((int)self_ + 0x6404c) < '\0') {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case -0x2b:
     case -0x2a:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint32_t *)((int)self_ + 0x6404c) & 0x100) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case -0x25:
     case -0x24:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint32_t *)((int)self_ + 0x6404c) & 0x200) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
       break;
     case -0x23:
     case -0x22:
-      if ((param_2[1] & 0x1fU) == 0) {
-        uVar3 = orig::FUN_100dbe10();
-        *(undefined4 *)(param_2 + 0x38) = uVar3;
-        if (!bVar2) {
-          param_2[0x15] = param_2[0x15] & 0xf1U | 1;
+      if ((arg3[1] & 0x1fU) == 0) {
+        u2 = orig::game_100DBE10();
+        *(bits32 *)(arg3 + 0x38) = u2;
+        if (!u1) {
+          arg3[0x15] = arg3[0x15] & 0xf1U | 1;
         }
       }
       if ((*(uint32_t *)((int)self_ + 0x6404c) & 0x400) != 0) {
-        param_2[0x12] = '\x02';
+        arg3[0x12] = '\x02';
       }
     }
   }
-  orig::FUN_101284f0(param_1,local_100,0x80,local_120,0x20);
-  pbVar5 = local_120;
-  pcVar6 = param_2 + 0x18;
-  for (iVar4 = 8; iVar4 != 0; iVar4 = iVar4 + -1) {
-    *(undefined4 *)pcVar6 = *(undefined4 *)pbVar5;
-    pbVar5 = pbVar5 + 4;
-    pcVar6 = pcVar6 + 4;
+  orig::game_101284F0(arg2,frame.i2,0x80,frame.u4,0x20);
+  p1 = frame.u4;
+  p2 = arg3 + 0x18;
+  for (i1 = 8; i1 != 0; i1 = i1 + -1) {
+    *(bits32 *)p2 = *(bits32 *)p1;
+    p1 = p1 + 4;
+    p2 = p2 + 4;
   }
-  param_2[0x37] = '\0';
+  arg3[0x37] = '\0';
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10127870
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl NetCellFont_FindByKeyByte(uint32_t param_1)
+XI_API uint32_t __cdecl NetCellFont_FindByKeyByte(uint32_t arg1)
 {
-  int iVar1;
-  uint32_t uVar2;
-  int iVar3;
+  int i1;
+  uint32_t u1;
+  int i2;
   
-  iVar3 = 0;
-  uVar2 = DAT_1036e888;
-  if ((short)DAT_1036e888 != 0) {
-    while ((int)(short)uVar2 != (param_1 & 0xff)) {
-      iVar1 = iVar3 * 2;
-      uVar2 = ((uint32_t)(((uint32_t)(uint16_t)((short)uVar2 >> 0xf) << 16) | (uint16_t)((&DAT_1036e88c)[iVar1])));
-      iVar3 = iVar3 + 1;
-      if ((&DAT_1036e88c)[iVar1] == 0) {
-        return uVar2 & 0xffffff00;
+  i2 = 0;
+  u1 = g_1036E888;
+  if ((short)g_1036E888 != 0) {
+    while ((int)(short)u1 != (arg1 & 0xff)) {
+      i1 = i2 * 2;
+      u1 = ((uint32_t)(((uint32_t)(uint16_t)((short)u1 >> 0xf) << 16) | (uint16_t)((&g_1036E88C)[i1])));
+      i2 = i2 + 1;
+      if ((&g_1036E88C)[i1] == 0) {
+        return u1 & 0xffffff00;
       }
     }
-    uVar2 = ((uint32_t)(((uint32_t)(xi_strunc24((char)(uVar2 >> 8))) << 8) | (uint8_t)(1)));
-    if (*(char *)((int)&DAT_1036e888 + iVar3 * 4 + 3) == '\x01') {
-      return uVar2;
+    u1 = ((uint32_t)(((uint32_t)(xi_strunc24((char)(u1 >> 8))) << 8) | (uint8_t)(1)));
+    if (*(char *)((int)&g_1036E888 + i2 * 4 + 3) == '\x01') {
+      return u1;
     }
   }
-  return uVar2 & 0xffffff00;
+  return u1 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x101278B0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __cdecl NetCellFont_FindChar(char * param_1, undefined4 param_2)
+XI_API char * __cdecl NetCellFont_FindChar(char * arg1, bits32 arg2)
 {
-  char cVar1;
+  char c1;
   
-  cVar1 = *param_1;
+  c1 = *arg1;
   while( true ) {
-    if (cVar1 == '\0') {
+    if (c1 == '\0') {
       return (char *)0x0;
     }
-    if ((char)param_2 == cVar1) break;
-    cVar1 = param_1[1];
-    param_1 = param_1 + 1;
+    if ((char)arg2 == c1) break;
+    c1 = arg1[1];
+    arg1 = arg1 + 1;
   }
-  return param_1;
+  return arg1;
 }
 
 // FUNCTION: FFXIMAIN 0x101278D0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_FindSubstringIndex(char * param_1, char * param_2, int param_3)
+XI_API bits32 __cdecl NetCellFont_FindSubstringIndex(char * arg1, char * arg2, int arg3)
 {
-  char *pcVar1;
-  char cVar2;
-  int iVar3;
-  int iVar4;
+  char *p1;
+  char c1;
+  int i1;
+  int i2;
   
-  if ((*param_1 != '\0') && (iVar4 = 0, *param_2 != '\0')) {
+  if ((*arg1 != '\0') && (i2 = 0, *arg2 != '\0')) {
     do {
-      if (param_3 <= iVar4) {
+      if (arg3 <= i2) {
         return 0xffffffff;
       }
-      cVar2 = *param_1;
-      iVar3 = 0;
-      pcVar1 = param_1;
+      c1 = *arg1;
+      i1 = 0;
+      p1 = arg1;
       do {
-        if (cVar2 != pcVar1[(int)(param_2 + (iVar4 - (int)param_1))]) break;
-        cVar2 = pcVar1[1];
-        iVar3 = iVar3 + 1;
-        pcVar1 = pcVar1 + 1;
-      } while (cVar2 != '\0');
-      if (param_1[iVar3] == '\0') {
+        if (c1 != p1[(int)(arg2 + (i2 - (int)arg1))]) break;
+        c1 = p1[1];
+        i1 = i1 + 1;
+        p1 = p1 + 1;
+      } while (c1 != '\0');
+      if (arg1[i1] == '\0') {
         return 0;
       }
-      iVar4 = iVar4 + 1;
-    } while (param_2[iVar4] != '\0');
+      i2 = i2 + 1;
+    } while (arg2[i2] != '\0');
   }
   return 0xffffffff;
 }
 
 // FUNCTION: FFXIMAIN 0x10127930
 // GATE: PASS -- 100 trials, 75 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 75
-XI_API void __cdecl NetCellFont_CopyLimited(int param_1, char * param_2, int param_3)
+XI_API void __cdecl NetCellFont_CopyLimited(int arg1, char * arg2, int arg3)
 {
-  char *pcVar1;
-  int iVar2;
-  int iVar3;
+  char *p1;
+  int i1;
+  int i2;
   
-  iVar2 = 0;
-  if (*param_2 != '\0') {
-    iVar3 = param_1 - (int)param_2;
+  i1 = 0;
+  if (*arg2 != '\0') {
+    i2 = arg1 - (int)arg2;
     do {
-      if (param_3 <= iVar2) {
+      if (arg3 <= i1) {
         return;
       }
-      iVar2 = iVar2 + 1;
-      param_2[iVar3] = *param_2;
-      pcVar1 = param_2 + 1;
-      param_2 = param_2 + 1;
-    } while (*pcVar1 != '\0');
+      i1 = i1 + 1;
+      arg2[i2] = *arg2;
+      p1 = arg2 + 1;
+      arg2 = arg2 + 1;
+    } while (*p1 != '\0');
   }
-  *(uint8_t *)(iVar2 + param_1) = 0;
+  *(uint8_t *)(i1 + arg1) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10127970
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_ToLowerInPlace(char * param_1)
+XI_API void __cdecl NetCellFont_ToLowerInPlace(char * arg1)
 {
-  char *pcVar1;
-  char cVar2;
+  char *p1;
+  char c1;
   
-  cVar2 = *param_1;
-  while (cVar2 != '\0') {
-    cVar2 = *param_1;
-    if (('@' < cVar2) && (cVar2 < '[')) {
-      *param_1 = cVar2 + ' ';
+  c1 = *arg1;
+  while (c1 != '\0') {
+    c1 = *arg1;
+    if (('@' < c1) && (c1 < '[')) {
+      *arg1 = c1 + ' ';
     }
-    pcVar1 = param_1 + 1;
-    param_1 = param_1 + 1;
-    cVar2 = *pcVar1;
+    p1 = arg1 + 1;
+    arg1 = arg1 + 1;
+    c1 = *p1;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10127990
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __cdecl GetCallNum(char * param_1, char * param_2)
+XI_API uint32_t __cdecl GetCallNum(char * arg1, char * arg2)
 {
-  int *piVar1;
-  char cVar2;
-  uint32_t *puVar3;
-  char *pcVar4;
-  int iVar5;
-  uint32_t uVar6;
-  int iVar7;
-  char *pcVar8;
-  uint64_t uVar9;
-  char xi_frame[2048] __attribute__((aligned(4)));
-  char  (&local_800)[2047] = *reinterpret_cast<char  (*)[2047]>(xi_frame + 0);
-  uint8_t  &local_1 = *reinterpret_cast<uint8_t  *>(xi_frame + 2047);
+  int *p1;
+  char c1;
+  uint32_t *p2;
+  char *p3;
+  int i1;
+  uint32_t u1;
+  int i2;
+  char *p4;
+  uint64_t u2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[2048];
+    struct __attribute__((packed)) { char val1[2047]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x7FF]; uint8_t u3; };   // at 0x7FF
+  } frame;
   
-  cVar2 = *param_2;
-  if (cVar2 != '\x05') {
-    if (cVar2 == '\f') {
-      uVar9 = orig::Settings_GetValue_v1(0x47);
-      return -(uint32_t)((int)uVar9 != 0) & 0x30703430;
+  c1 = *arg2;
+  if (c1 != '\x05') {
+    if (c1 == '\f') {
+      u2 = orig::Settings_GetValue_v1(0x47);
+      return -(uint32_t)((int)u2 != 0) & 0x30703430;
     }
-    if (cVar2 != '\r') {
+    if (c1 != '\r') {
       return 0;
     }
   }
-  orig::NetCellFont_CopyLimited((int)local_800,param_1,0x800);
-  local_1 = 0;
-  orig::NetCellFont_ToLowerInPlace(local_800);
-  puVar3 = (uint32_t *)orig::NetCellFont_FindChar(local_800,0x3c);
-  if (puVar3 != (uint32_t *)0x0) {
+  orig::NetCellFont_CopyLimited((int)frame.val1,arg1,0x800);
+  frame.u3 = 0;
+  orig::NetCellFont_ToLowerInPlace(frame.val1);
+  p2 = (uint32_t *)orig::NetCellFont_FindChar(frame.val1,0x3c);
+  if (p2 != (uint32_t *)0x0) {
     while( true ) {
-      pcVar4 = orig::NetCellFont_FindChar((char *)((int)puVar3 + 1),0x3e);
-      if (pcVar4 == (char *)0x0) break;
-      if (((pcVar4[1] != '\"') || (*(char *)((int)puVar3 + -1) != '\"')) &&
-         (iVar7 = 0, DAT_1036ebb0 != 0)) {
-        pcVar4 = &DAT_1036eba0;
+      p3 = orig::NetCellFont_FindChar((char *)((int)p2 + 1),0x3e);
+      if (p3 == (char *)0x0) break;
+      if (((p3[1] != '\"') || (*(char *)((int)p2 + -1) != '\"')) &&
+         (i2 = 0, g_1036EBB0 != 0)) {
+        p3 = &g_1036EBA0;
         do {
-          uVar6 = 0xffffffff;
-          pcVar8 = pcVar4;
+          u1 = 0xffffffff;
+          p4 = p3;
           do {
-            if (uVar6 == 0) break;
-            uVar6 = uVar6 - 1;
-            cVar2 = *pcVar8;
-            pcVar8 = pcVar8 + 1;
-          } while (cVar2 != '\0');
-          iVar5 = orig::NetCellFont_FindSubstringIndex(pcVar4,(char *)puVar3,~uVar6 - 1);
-          if (iVar5 == 0) {
-            return (&DAT_1036ebb0)[iVar7 * 5];
+            if (u1 == 0) break;
+            u1 = u1 - 1;
+            c1 = *p4;
+            p4 = p4 + 1;
+          } while (c1 != '\0');
+          i1 = orig::NetCellFont_FindSubstringIndex(p3,(char *)p2,~u1 - 1);
+          if (i1 == 0) {
+            return (&g_1036EBB0)[i2 * 5];
           }
-          piVar1 = (int *)(pcVar4 + 0x24);
-          pcVar4 = pcVar4 + 0x14;
-          iVar7 = iVar7 + 1;
-        } while (*piVar1 != 0);
+          p1 = (int *)(p3 + 0x24);
+          p3 = p3 + 0x14;
+          i2 = i2 + 1;
+        } while (*p1 != 0);
       }
-      puVar3 = orig::FUN_103151d0((uint32_t *)((int)puVar3 + 1),0x3c);
-      if (puVar3 == (uint32_t *)0x0) {
+      p2 = orig::game_103151D0((uint32_t *)((int)p2 + 1),0x3c);
+      if (p2 == (uint32_t *)0x0) {
         return 0;
       }
     }
@@ -14801,86 +14884,88 @@ XI_API uint32_t __cdecl GetCallNum(char * param_1, char * param_2)
 
 // FUNCTION: FFXIMAIN 0x10127AB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_IsNearNamedActor(uint32_t * param_1)
+XI_API bits32 __cdecl NetCellFont_IsNearNamedActor(uint32_t * arg1)
 {
-  uint8_t bVar1;
-  uint32_t *puVar2;
+  uint8_t u1;
+  uint32_t *p1;
   int *_Count;
-  int *piVar3;
-  int *piVar4;
-  float *pfVar5;
-  int iVar6;
-  uint32_t uVar7;
-  uint8_t *pbVar8;
-  uint8_t *pbVar9;
-  uint8_t bVar10;
-  uint8_t bVar11;
-  uint64_t uVar12;
-  int64_t lVar13;
-  int64_t lVar14;
-  int64_t lVar15;
-  int64_t lVar16;
-  char xi_frame[32] __attribute__((aligned(4)));
-  uint8_t  (&local_20)[32] = *reinterpret_cast<uint8_t  (*)[32]>(xi_frame + 0);
+  int *p2;
+  int *p3;
+  float *p4;
+  int i1;
+  uint32_t u2;
+  uint8_t *p5;
+  uint8_t *p6;
+  uint8_t u3;
+  uint8_t u4;
+  uint64_t u5;
+  int64_t i2;
+  int64_t i3;
+  int64_t i4;
+  int64_t i5;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[32];
+    struct __attribute__((packed)) { uint8_t u6[32]; };   // at 0x0
+  } frame;
   
-  puVar2 = orig::FUN_103151d0(param_1,0x29);
+  p1 = orig::game_103151D0(arg1,0x29);
   _Count = (int *)0x0;
-  if (((puVar2 != (uint32_t *)0x0) &&
-      (_Count = (int *)((int)puVar2 + (-1 - (int)param_1)), (int)_Count < 0x20)) &&
+  if (((p1 != (uint32_t *)0x0) &&
+      (_Count = (int *)((int)p1 + (-1 - (int)arg1)), (int)_Count < 0x20)) &&
      (0 < (int)_Count)) {
-    orig::_strncpy_v2((char *)local_20,(char *)((int)param_1 + 1),(size_t)_Count);
-    local_20[(int)_Count] = 0;
-    uVar12 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
-    piVar3 = (int *)uVar12;
-    piVar4 = (int *)orig::Actor_GetObjectByName((char *)local_20);
-    _Count = piVar4;
-    if ((piVar3 != (int *)0x0) && (piVar4 != (int *)0x0)) {
-      if (piVar3 == piVar4) {
-        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar4 >> 8))) << 8) | (uint8_t)(1)));
+    orig::_strncpy_v2((char *)frame.u6,(char *)((int)arg1 + 1),(size_t)_Count);
+    frame.u6[(int)_Count] = 0;
+    u5 = orig::ActorHandle_Resolve_v1(&g_targetActorHandle_as_v0);
+    p2 = (int *)u5;
+    p3 = (int *)orig::Actor_GetObjectByName((char *)frame.u6);
+    _Count = p3;
+    if ((p2 != (int *)0x0) && (p3 != (int *)0x0)) {
+      if (p2 == p3) {
+        return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p3 >> 8))) << 8) | (uint8_t)(1)));
       }
-      iVar6 = piVar4[0x1c];
-      pbVar8 = (uint8_t *)(iVar6 + 0x214);
-      if (*(short *)(iVar6 + 0x210) == 0) {
-        pbVar8 = (uint8_t *)(iVar6 + 0x7c);
+      i1 = p3[0x1c];
+      p5 = (uint8_t *)(i1 + 0x214);
+      if (*(short *)(i1 + 0x210) == 0) {
+        p5 = (uint8_t *)(i1 + 0x7c);
       }
-      uVar7 = 0xffffffff;
-      pbVar9 = local_20;
+      u2 = 0xffffffff;
+      p6 = frame.u6;
       do {
-        if (uVar7 == 0) break;
-        uVar7 = uVar7 - 1;
-        bVar1 = *pbVar9;
-        pbVar9 = pbVar9 + 1;
-      } while (bVar1 != 0);
-      uVar7 = ~uVar7;
-      bVar10 = false;
+        if (u2 == 0) break;
+        u2 = u2 - 1;
+        u1 = *p6;
+        p6 = p6 + 1;
+      } while (u1 != 0);
+      u2 = ~u2;
+      u3 = false;
       _Count = (int *)0x0;
-      bVar11 = true;
-      pbVar9 = local_20;
+      u4 = true;
+      p6 = frame.u6;
       do {
-        uVar7 = uVar7 - 1;
-        if (uVar7 == 0) break;
-        bVar10 = *pbVar8 < *pbVar9;
-        bVar11 = *pbVar8 == *pbVar9;
-        pbVar8 = pbVar8 + 1;
-        pbVar9 = pbVar9 + 1;
-      } while (bVar11);
-      if (!bVar11) {
-        _Count = (int *)((1 - (uint32_t)bVar10) - (uint32_t)(bVar10 != 0));
+        u2 = u2 - 1;
+        if (u2 == 0) break;
+        u3 = *p5 < *p6;
+        u4 = *p5 == *p6;
+        p5 = p5 + 1;
+        p6 = p6 + 1;
+      } while (u4);
+      if (!u4) {
+        _Count = (int *)((1 - (uint32_t)u3) - (uint32_t)(u3 != 0));
       }
       if (_Count == (int *)0x0) {
-        pfVar5 = (float *)((int (__thiscall *)(void *))(*(code **)(*piVar4 + 0x1bc)))((void *)(piVar4));
-        lVar13 = XI_CALL_ST0(0x10311C2Cu)((long double)*pfVar5);
-        ((int (__thiscall *)(void *))(*(code **)(*piVar4 + 0x1bc)))((void *)(piVar4));
-        iVar6 = ((int (__thiscall *)(void *))(*(code **)(*piVar4 + 0x1bc)))((void *)(piVar4));
-        lVar14 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)(iVar6 + 8));
-        pfVar5 = (float *)((int (__thiscall *)(void *))(*(code **)(*piVar3 + 0x1bc)))((void *)(piVar3));
-        lVar15 = XI_CALL_ST0(0x10311C2Cu)((long double)*pfVar5);
-        ((int (__thiscall *)(void *))(*(code **)(*piVar3 + 0x1bc)))((void *)(piVar3));
-        iVar6 = ((int (__thiscall *)(void *))(*(code **)(*piVar3 + 0x1bc)))((void *)(piVar3));
-        lVar16 = XI_CALL_ST0(0x10311C2Cu)((long double)*(float *)(iVar6 + 8));
-        _Count = (int *)((int)lVar16 - (int)lVar14);
-        iVar6 = (int)lVar15 - (int)lVar13;
-        if (iVar6 * iVar6 + (int)_Count * (int)_Count < 0x10) {
+        p4 = (float *)((int (__thiscall *)(void *))(*(untyped_fn **)(*p3 + 0x1bc)))((void *)(p3));
+        i2 = XI_CALL_ST0(0x10311C2Cu)(*p4);
+        ((int (__thiscall *)(void *))(*(untyped_fn **)(*p3 + 0x1bc)))((void *)(p3));
+        i1 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*p3 + 0x1bc)))((void *)(p3));
+        i3 = XI_CALL_ST0(0x10311C2Cu)(*(float *)(i1 + 8));
+        p4 = (float *)((int (__thiscall *)(void *))(*(untyped_fn **)(*p2 + 0x1bc)))((void *)(p2));
+        i4 = XI_CALL_ST0(0x10311C2Cu)(*p4);
+        ((int (__thiscall *)(void *))(*(untyped_fn **)(*p2 + 0x1bc)))((void *)(p2));
+        i1 = ((int (__thiscall *)(void *))(*(untyped_fn **)(*p2 + 0x1bc)))((void *)(p2));
+        i5 = XI_CALL_ST0(0x10311C2Cu)(*(float *)(i1 + 8));
+        _Count = (int *)((int)i5 - (int)i3);
+        i1 = (int)i4 - (int)i2;
+        if (i1 * i1 + (int)_Count * (int)_Count < 0x10) {
           return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)_Count >> 8))) << 8) | (uint8_t)(1)));
         }
       }
@@ -14891,169 +14976,169 @@ XI_API undefined4 __cdecl NetCellFont_IsNearNamedActor(uint32_t * param_1)
 
 // FUNCTION: FFXIMAIN 0x10127C00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall ChatLog_AddMessage(void * self_, char * param_1, uint8_t * param_2, undefined4 param_3, undefined4 param_4, int param_5)
+XI_API bits32 __thiscall ChatLog_AddMessage(void * self_, char * arg2, uint8_t * arg3, bits32 arg4, bits32 arg5, int arg6)
 {
-  char cVar1;
-  uint8_t bVar2;
-  int iVar3;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  int *piVar6;
-  void *pvVar7;
-  void *pvVar8;
-  uint32_t uVar11;
-  uint32_t uVar9;
-  undefined4 uVar10;
-  int iVar12;
-  uint8_t uVar13;
-  uint32_t *puVar14;
-  undefined4 *puVar15;
-  char *pcVar16;
-  uint32_t *puVar17;
-  undefined4 *puVar18;
+  char c1;
+  uint8_t u1;
+  int i1;
+  uint8_t u2;
+  uint8_t u3;
+  int *p1;
+  void *p2;
+  void *p3;
+  uint32_t u4;
+  uint32_t u5;
+  bits32 u6;
+  int i2;
+  uint8_t u7;
+  uint32_t *p4;
+  bits32 *p5;
+  char *p6;
+  uint32_t *p7;
+  bits32 *p8;
   char xi_frame[2256] __attribute__((aligned(4)));
-  undefined4  (&auStack_8d0)[14] = *reinterpret_cast<undefined4  (*)[14]>(xi_frame + 0);
-  undefined4  &uStack_898 = *reinterpret_cast<undefined4  *>(xi_frame + 56);
-  char * &pcStack_894 = *reinterpret_cast<char * *>(xi_frame + 60);
-  uint32_t  (&auStack_890)[5] = *reinterpret_cast<uint32_t  (*)[5]>(xi_frame + 64);
-  undefined4  (&auStack_87c)[4] = *reinterpret_cast<undefined4  (*)[4]>(xi_frame + 84);
-  int  &local_844 = *reinterpret_cast<int  *>(xi_frame + 140);
-  void * &local_840 = *reinterpret_cast<void * *>(xi_frame + 144);
-  uint32_t  (&local_83c)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 148);
-  char  &local_82a = *reinterpret_cast<char  *>(xi_frame + 166);
-  char  (&local_800)[2048] = *reinterpret_cast<char  (*)[2048]>(xi_frame + 208);
+  bits32  (&u8)[14] = *reinterpret_cast<bits32  (*)[14]>(xi_frame + 0);
+  bits32  &u9 = *reinterpret_cast<bits32  *>(xi_frame + 56);
+  char * &p9 = *reinterpret_cast<char * *>(xi_frame + 60);
+  uint32_t  (&u10)[5] = *reinterpret_cast<uint32_t  (*)[5]>(xi_frame + 64);
+  bits32  (&u11)[4] = *reinterpret_cast<bits32  (*)[4]>(xi_frame + 84);
+  int  &i3 = *reinterpret_cast<int  *>(xi_frame + 140);
+  void * &p10 = *reinterpret_cast<void * *>(xi_frame + 144);
+  uint32_t  (&u12)[4] = *reinterpret_cast<uint32_t  (*)[4]>(xi_frame + 148);
+  char  &c2 = *reinterpret_cast<char  *>(xi_frame + 166);
+  char  (&val1)[2048] = *reinterpret_cast<char  (*)[2048]>(xi_frame + 208);
   
-  local_840 = self_;
-  pvVar8 = (void *)orig::JpegScreenshot_TestMask10663188(0,8);
-  if ((char)pvVar8 != '\0') {
-    bVar2 = *param_2;
-    uVar11 = (uint32_t)((uint32_t)pvVar8 >> 8);
-    pvVar8 = (void *)((uint32_t)(((uint32_t)(uVar11) << 8) | (uint8_t)(bVar2)));
-    if ((199 < bVar2) && (bVar2 < 0xca)) {
-      return ((uint32_t)(((uint32_t)(uVar11) << 8) | (uint8_t)(1)));
+  p10 = self_;
+  p3 = (void *)orig::JpegScreenshot_TestMask10663188(0,8);
+  if ((char)p3 != '\0') {
+    u1 = *arg3;
+    u4 = (uint32_t)((uint32_t)p3 >> 8);
+    p3 = (void *)((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(u1)));
+    if ((199 < u1) && (u1 < 0xca)) {
+      return ((uint32_t)(((uint32_t)(u4) << 8) | (uint8_t)(1)));
     }
   }
   if (*(char *)((int)self_ + 0x64050) == '\x01') {
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar8 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p3 >> 8))) << 8) | (uint8_t)(1)));
   }
-  uVar13 = 0;
-  orig::FUN_1012a340();
-  if (param_1 != (char *)0x0) {
-    orig::NetCellFont_BuildRecord(self_,param_1,(char *)local_83c,(uint16_t *)param_2);
-    uVar9 = orig::GetCallNum(param_1,(char *)param_2);
-    local_844 = ((uint32_t)(((uint32_t)(XI_PIECE(local_844, 1, 3)) << 8) | (uint8_t)(1)));
-    if (uVar9 != 0) {
-      if ((uVar9 & 0x800000) == 0) {
-        if ((uVar9 & 0x400000) != 0) {
-          uVar9 = uVar9 - 0x400000;
-          local_844 = (uint32_t)XI_PIECE(local_844, 1, 3) << 8;
+  u7 = 0;
+  orig::game_1012A340();
+  if (arg2 != (char *)0x0) {
+    orig::NetCellFont_BuildRecord(self_,arg2,(char *)u12,(uint16_t *)arg3);
+    u5 = orig::GetCallNum(arg2,(char *)arg3);
+    i3 = ((uint32_t)(((uint32_t)(XI_PIECE(i3, 1, 3)) << 8) | (uint8_t)(1)));
+    if (u5 != 0) {
+      if ((u5 & 0x800000) == 0) {
+        if ((u5 & 0x400000) != 0) {
+          u5 = u5 - 0x400000;
+          i3 = (uint32_t)XI_PIECE(i3, 1, 3) << 8;
         }
       }
       else {
-        uVar9 = uVar9 - 0x800000;
-        uVar10 = orig::NetCellFont_IsNearNamedActor((uint32_t *)param_1);
-        local_844 = ((uint32_t)(((uint32_t)(XI_PIECE(local_844, 1, 3)) << 8) | (uint8_t)((char)uVar10)));
+        u5 = u5 - 0x800000;
+        u6 = orig::NetCellFont_IsNearNamedActor((uint32_t *)arg2);
+        i3 = ((uint32_t)(((uint32_t)(XI_PIECE(i3, 1, 3)) << 8) | (uint8_t)((char)u6)));
       }
-      orig::MusicFont_Create(uVar9,0x3f800000,local_844);
+      orig::MusicFont_Create(u5,0x3f800000,i3);
     }
-    if ((char)param_4 == '\0') {
-      orig::_strncpy_v2(local_800,param_1,0x800);
+    if ((char)arg5 == '\0') {
+      orig::_strncpy_v2(val1,arg2,0x800);
     }
     else {
-      uVar9 = 0xffffffff;
-      pcVar16 = param_1;
+      u5 = 0xffffffff;
+      p6 = arg2;
       do {
-        if (uVar9 == 0) break;
-        uVar9 = uVar9 - 1;
-        cVar1 = *pcVar16;
-        pcVar16 = pcVar16 + 1;
-      } while (cVar1 != '\0');
-      auStack_87c[3] = (int)XI_GAME(0x10127D06u);
-      orig::TextInputFiles_InputCall101AC990(DAT_10662d40,local_800,0x800,param_1,~uVar9 - 1,1,0);
+        if (u5 == 0) break;
+        u5 = u5 - 1;
+        c1 = *p6;
+        p6 = p6 + 1;
+      } while (c1 != '\0');
+      u11[3] = (int)XI_GAME(0x10127D06u);
+      orig::TextInputFiles_InputCall101AC990(g_10662D40,val1,0x800,arg2,~u5 - 1,1,0);
     }
-    if ((0x95 < (uint8_t)local_83c[0]) && ((uint8_t)local_83c[0] < 0x98)) {
-      orig::NetCellFont_AddMessage(DAT_104e2150,local_800,local_83c,param_3);
-      uVar10 = orig::NetCellFont_AddMessage(DAT_104e2154,local_800,local_83c,param_3);
-      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar10 >> 8))) << 8) | (uint8_t)(1)));
+    if ((0x95 < (uint8_t)u12[0]) && ((uint8_t)u12[0] < 0x98)) {
+      orig::NetCellFont_AddMessage(g_104E2150,val1,u12,arg4);
+      u6 = orig::NetCellFont_AddMessage(g_104E2154,val1,u12,arg4);
+      return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u6 >> 8))) << 8) | (uint8_t)(1)));
     }
-    if ((local_83c[0] & 0x1f00) == 0) {
-      uVar9 = 0xffffffff;
-      pcVar16 = local_800;
+    if ((u12[0] & 0x1f00) == 0) {
+      u5 = 0xffffffff;
+      p6 = val1;
       do {
-        if (uVar9 == 0) break;
-        uVar9 = uVar9 - 1;
-        cVar1 = *pcVar16;
-        pcVar16 = pcVar16 + 1;
-      } while (cVar1 != '\0');
-      orig::Text_EncodeQuotes(local_800,~uVar9 - 1,0x800);
+        if (u5 == 0) break;
+        u5 = u5 - 1;
+        c1 = *p6;
+        p6 = p6 + 1;
+      } while (c1 != '\0');
+      orig::Text_EncodeQuotes(val1,~u5 - 1,0x800);
     }
-    if (local_82a == '\x02') {
-      iVar3 = *DAT_105781d4;
-      puVar14 = local_83c;
-      puVar17 = auStack_890;
-      for (iVar12 = 0xf; iVar12 != 0; iVar12 = iVar12 + -1) {
-        *puVar17 = *puVar14;
-        puVar14 = puVar14 + 1;
-        puVar17 = puVar17 + 1;
+    if (c2 == '\x02') {
+      i1 = *g_105781D4;
+      p4 = u12;
+      p7 = u10;
+      for (i2 = 0xf; i2 != 0; i2 = i2 + -1) {
+        *p7 = *p4;
+        p4 = p4 + 1;
+        p7 = p7 + 1;
       }
-      pcStack_894 = local_800;
-      uStack_898 = (int)XI_GAME(0x10127DC2u);
-      (**(code **)(iVar3 + 0x48))();
-      iVar3 = *DAT_105781d8;
-      puVar15 = auStack_87c;
-      puVar18 = auStack_8d0;
-      for (iVar12 = 0xf; iVar12 != 0; iVar12 = iVar12 + -1) {
-        *puVar18 = *puVar15;
-        puVar15 = puVar15 + 1;
-        puVar18 = puVar18 + 1;
+      p9 = val1;
+      u9 = (int)XI_GAME(0x10127DC2u);
+      (**(untyped_fn **)(i1 + 0x48))();
+      i1 = *g_105781D8;
+      p5 = u11;
+      p8 = u8;
+      for (i2 = 0xf; i2 != 0; i2 = i2 + -1) {
+        *p8 = *p5;
+        p5 = p5 + 1;
+        p8 = p8 + 1;
       }
-      (**(code **)(iVar3 + 0x48))(&local_840);
+      (**(untyped_fn **)(i1 + 0x48))(&p10);
     }
-    piVar6 = DAT_1062193c;
-    if ((param_5 == 0) || (DAT_1062193c == (int *)param_5)) {
-      bVar4 = true;
+    p1 = g_1062193C;
+    if ((arg6 == 0) || (g_1062193C == (int *)arg6)) {
+      u2 = true;
     }
     else {
-      bVar4 = false;
+      u2 = false;
     }
-    if ((param_5 == 0) || (DAT_10621940_as_v0 == (int *)param_5)) {
-      bVar5 = true;
+    if ((arg6 == 0) || (g_10621940_as_v0 == (int *)arg6)) {
+      u3 = true;
     }
     else {
-      bVar5 = false;
+      u3 = false;
     }
-    pvVar8 = (void *)param_5;
-    if (bVar4) {
-      uVar9 = orig::NetCellFont_FindByKeyByte(local_83c[0]);
-      pvVar7 = local_840;
-      orig::FUN_10128ce0(local_840,piVar6,local_800,local_83c,param_3,uVar9);
-      pvVar8 = (void *)(*(int *)((int)pvVar7 + 0xc) + 1);
-      *(void **)((int)pvVar7 + 0xc) = pvVar8;
+    p3 = (void *)arg6;
+    if (u2) {
+      u5 = orig::NetCellFont_FindByKeyByte(u12[0]);
+      p2 = p10;
+      orig::game_10128CE0(p10,p1,val1,u12,arg4,u5);
+      p3 = (void *)(*(int *)((int)p2 + 0xc) + 1);
+      *(void **)((int)p2 + 0xc) = p3;
     }
-    if (bVar5) {
-      uVar9 = orig::NetCellFont_FindByKeyByte(local_83c[0]);
-      orig::FUN_10128ce0(dword_1057815C_as_v1,DAT_10621940_as_v0,local_800,local_83c,param_3,uVar9);
-      pvVar8 = dword_1057815C_as_v1;
-      *(int *)((int)dword_1057815C_as_v1 + 0xc) = *(int *)((int)dword_1057815C_as_v1 + 0xc) + 1;
+    if (u3) {
+      u5 = orig::NetCellFont_FindByKeyByte(u12[0]);
+      orig::game_10128CE0(g_1057815C_as_v1,g_10621940_as_v0,val1,u12,arg4,u5);
+      p3 = g_1057815C_as_v1;
+      *(int *)((int)g_1057815C_as_v1 + 0xc) = *(int *)((int)g_1057815C_as_v1 + 0xc) + 1;
     }
-    uVar13 = 1;
+    u7 = 1;
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)pvVar8 >> 8))) << 8) | (uint8_t)(uVar13)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p3 >> 8))) << 8) | (uint8_t)(u7)));
 }
 
 // FUNCTION: FFXIMAIN 0x10127EA0
 // GATE: PASS -- 100 trials, 98 returned normally, 197 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API undefined4 __cdecl NetCellFont_ClearGlobalLists2150And2154(void)
+XI_API bits32 __cdecl NetCellFont_ClearGlobalLists2150And2154(void)
 {
-  undefined4 uVar1;
+  bits32 u1;
   
-  orig::NetCellFont_ClearAllAndNotifyOwner(DAT_104e2150);
-  orig::NetCellFont_ClearAllAndNotifyOwner(DAT_104e2154);
-  DAT_10488208_as_v0 = 2;
-  ((int (__thiscall *)(void *))((**(code **)(**(int **)((int)DAT_104e2150 + 0x30) + 0x4c))))((void *)(*(int **)((int)DAT_104e2150 + 0x30)));
-  uVar1 = ((int (__thiscall *)(void *))((**(code **)(**(int **)((int)DAT_104e2154 + 0x30) + 0x4c))
-                    ))((void *)(*(int **)((int)DAT_104e2154 + 0x30)));
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)uVar1 >> 8))) << 8) | (uint8_t)(1)));
+  orig::NetCellFont_ClearAllAndNotifyOwner(g_104E2150);
+  orig::NetCellFont_ClearAllAndNotifyOwner(g_104E2154);
+  g_10488208_as_v0 = 2;
+  ((int (__thiscall *)(void *))((**(untyped_fn **)(**(int **)((int)g_104E2150 + 0x30) + 0x4c))))((void *)(*(int **)((int)g_104E2150 + 0x30)));
+  u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(**(int **)((int)g_104E2154 + 0x30) + 0x4c))
+                    ))((void *)(*(int **)((int)g_104E2154 + 0x30)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)u1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10127EE0
@@ -15068,128 +15153,128 @@ XI_API void * __thiscall NetCellFont_CtorResetAll(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall NetCellFont_ResetAll(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
-  puVar2 = self_;
-  for (iVar1 = 0x1e; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = self_;
+  for (i1 = 0x1e; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(undefined4 *)((int)self_ + 0x78) = 0;
+  *(bits32 *)((int)self_ + 0x78) = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10127F60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall NetCellFont_IsInRow30(void * self_, int param_1, int param_2)
+XI_API uint32_t __thiscall NetCellFont_IsInRow30(void * self_, int arg2, int arg3)
 {
-  int *piVar1;
-  int iVar2;
+  int *p1;
+  int i1;
   
-  iVar2 = 0;
-  piVar1 = (int *)((int)self_ + param_1 * 0x78);
-  while ((*piVar1 == 0 || (*piVar1 != param_2))) {
-    iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 1;
-    if (0x1d < iVar2) {
-      return (uint32_t)piVar1 & 0xffffff00;
+  i1 = 0;
+  p1 = (int *)((int)self_ + arg2 * 0x78);
+  while ((*p1 == 0 || (*p1 != arg3))) {
+    i1 = i1 + 1;
+    p1 = p1 + 1;
+    if (0x1d < i1) {
+      return (uint32_t)p1 & 0xffffff00;
     }
   }
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)piVar1 >> 8))) << 8) | (uint8_t)(1)));
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)p1 >> 8))) << 8) | (uint8_t)(1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10127FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_FormatHexRecord(char * param_1, undefined4 xi_s2, undefined4 xi_s3, undefined4 xi_s4, undefined4 xi_s5, undefined4 xi_s6, undefined4 xi_s7, undefined4 xi_s8, undefined4 xi_s9, undefined4 xi_s10, undefined4 xi_s11, undefined4 xi_s12, undefined4 xi_s13, undefined4 xi_s14, undefined4 xi_s15, undefined4 xi_s16, undefined4 xi_s17)
+XI_API int __cdecl NetCellFont_FormatHexRecord(char * arg1, bits32 xi_s2, bits32 xi_s3, bits32 xi_s4, bits32 xi_s5, bits32 xi_s6, bits32 xi_s7, bits32 xi_s8, bits32 xi_s9, bits32 xi_s10, bits32 xi_s11, bits32 xi_s12, bits32 xi_s13, bits32 xi_s14, bits32 xi_s15, bits32 xi_s16, bits32 xi_s17)
 {
-  char cVar1;
-  uint32_t uVar2;
+  char c1;
+  uint32_t u1;
   
-  orig::_sprintf(param_1,s__02x__02x__02x__08x__08x__08x__0_1036f128,xi_s2 & 0xff,xi_s2 >> 8 & 0xff,
+  orig::_sprintf(arg1,str__02x__02x__02x__08x__08x__08x__0_1036F128,xi_s2 & 0xff,xi_s2 >> 8 & 0xff,
            xi_s2 >> 0x10 & 0xff,xi_s3,xi_s4,xi_s5,xi_s6 & 0xffff,0,xi_s6 >> 0x18,xi_s7 & 0xff,
            xi_s7 >> 8 & 0xff,xi_s8,xi_s9,xi_s10,xi_s11,xi_s12,xi_s13,xi_s14,xi_s15,xi_s16,
            xi_s17 & 0xff);
-  uVar2 = 0xffffffff;
+  u1 = 0xffffffff;
   do {
-    if (uVar2 == 0) break;
-    uVar2 = uVar2 - 1;
-    cVar1 = *param_1;
-    param_1 = param_1 + 1;
-  } while (cVar1 != '\0');
-  return ~uVar2 - 1;
+    if (u1 == 0) break;
+    u1 = u1 - 1;
+    c1 = *arg1;
+    arg1 = arg1 + 1;
+  } while (c1 != '\0');
+  return ~u1 - 1;
 }
 
 // FUNCTION: FFXIMAIN 0x10128060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API char * __cdecl NetCellFont_ParseHexRecord(uint8_t * param_1, undefined4 param_2, char * param_3)
+XI_API char * __cdecl NetCellFont_ParseHexRecord(uint8_t * arg1, bits32 arg2, char * arg3)
 {
-  char cVar1;
-  uint8_t bVar2;
-  char *pcVar3;
-  uint32_t uVar4;
-  char *pcVar5;
-  uint8_t local_50;
-  uint8_t local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_40;
-  uint16_t local_3c;
-  int local_38;
-  uint8_t local_34;
-  uint8_t local_30;
-  undefined4 local_2c;
-  int local_28;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  undefined4 local_8;
-  undefined4 local_4;
+  char c1;
+  uint8_t u1;
+  char *p1;
+  uint32_t u2;
+  char *p2;
+  uint8_t u3;
+  uint8_t u4;
+  bits32 u5;
+  bits32 u6;
+  bits32 u7;
+  uint16_t u8;
+  int i1;
+  uint8_t u9;
+  uint8_t u10;
+  bits32 u11;
+  int i2;
+  bits32 u12;
+  bits32 u13;
+  bits32 u14;
+  bits32 u15;
+  bits32 u16;
+  bits32 u17;
+  bits32 u18;
+  bits32 u19;
   
-  pcVar3 = param_3;
-  if (param_3 != (char *)0x0) {
-    uVar4 = 0xffffffff;
-    pcVar5 = param_3;
+  p1 = arg3;
+  if (arg3 != (char *)0x0) {
+    u2 = 0xffffffff;
+    p2 = arg3;
     do {
-      if (uVar4 == 0) break;
-      uVar4 = uVar4 - 1;
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar1 != '\0');
-    if (0x2b < ~uVar4 - 1) {
-      orig::FUN_10313643_v1(param_3,s__02x__02x__02x__08x__08x__08x__0_1036f128,&param_3);
-      *param_1 = XI_PIECE(param_3, 0, 1);
-      param_1[1] = local_50;
-      param_1[2] = local_4c;
-      *(undefined4 *)(param_1 + 4) = local_48;
-      *(undefined4 *)(param_1 + 8) = local_44;
-      *(undefined4 *)(param_1 + 0xc) = local_40;
-      *(uint16_t *)(param_1 + 0x10) = local_3c;
-      param_1[0x14] = local_34;
-      param_1[0x15] = local_30;
-      *(undefined4 *)(param_1 + 0x1c) = local_1c;
-      param_1[0x13] = local_38 != 0;
-      param_1[0x12] = 0;
-      *(undefined4 *)(param_1 + 0x18) = local_20;
-      *(undefined4 *)(param_1 + 0x20) = local_18;
-      *(undefined4 *)(param_1 + 0x24) = local_14;
-      *(undefined4 *)(param_1 + 0x28) = local_10;
-      *(undefined4 *)(param_1 + 0x2c) = local_c;
-      *(undefined4 *)(param_1 + 0x34) = local_4;
-      *(undefined4 *)(param_1 + 0x30) = local_8;
-      *(undefined4 *)(param_1 + 0x38) = local_2c;
-      *(uint8_t *)param_2 = local_28 != 0;
-      bVar2 = param_1[0x15];
-      if ((bVar2 & 0xf) == 1) {
-        uVar4 = orig::NetCellFont_IsInRow30(dword_10578160_as_v1,0,*(int *)(param_1 + 8));
-        if ((char)uVar4 != '\0') {
-          param_1[0x15] = bVar2 | 0x40;
+      if (u2 == 0) break;
+      u2 = u2 - 1;
+      c1 = *p2;
+      p2 = p2 + 1;
+    } while (c1 != '\0');
+    if (0x2b < ~u2 - 1) {
+      orig::game_10313643_v1(arg3,str__02x__02x__02x__08x__08x__08x__0_1036F128,&arg3);
+      *arg1 = XI_PIECE(arg3, 0, 1);
+      arg1[1] = u3;
+      arg1[2] = u4;
+      *(bits32 *)(arg1 + 4) = u5;
+      *(bits32 *)(arg1 + 8) = u6;
+      *(bits32 *)(arg1 + 0xc) = u7;
+      *(uint16_t *)(arg1 + 0x10) = u8;
+      arg1[0x14] = u9;
+      arg1[0x15] = u10;
+      *(bits32 *)(arg1 + 0x1c) = u13;
+      arg1[0x13] = i1 != 0;
+      arg1[0x12] = 0;
+      *(bits32 *)(arg1 + 0x18) = u12;
+      *(bits32 *)(arg1 + 0x20) = u14;
+      *(bits32 *)(arg1 + 0x24) = u15;
+      *(bits32 *)(arg1 + 0x28) = u16;
+      *(bits32 *)(arg1 + 0x2c) = u17;
+      *(bits32 *)(arg1 + 0x34) = u19;
+      *(bits32 *)(arg1 + 0x30) = u18;
+      *(bits32 *)(arg1 + 0x38) = u11;
+      *(uint8_t *)arg2 = i2 != 0;
+      u1 = arg1[0x15];
+      if ((u1 & 0xf) == 1) {
+        u2 = orig::NetCellFont_IsInRow30(g_10578160_as_v1,0,*(int *)(arg1 + 8));
+        if ((char)u2 != '\0') {
+          arg1[0x15] = u1 | 0x40;
         }
       }
-      return pcVar3 + 0x89;
+      return p1 + 0x89;
     }
   }
   return (char *)0x0;
@@ -15197,138 +15282,138 @@ XI_API char * __cdecl NetCellFont_ParseHexRecord(uint8_t * param_1, undefined4 p
 
 // FUNCTION: FFXIMAIN 0x101281F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_AddByType(void * self_, undefined4 param_1, undefined4 param_2)
+XI_API void __thiscall NetCellFont_AddByType(void * self_, bits32 arg2, bits32 arg3)
 {
-  char cVar1;
-  uint8_t bVar2;
+  char c1;
+  uint8_t u1;
   
-  cVar1 = (char)(short)param_2;
-  switch(xi_sw((uint8_t)param_1)) {
+  c1 = (char)(short)arg3;
+  switch(xi_sw((uint8_t)arg2)) {
   case 1:
   case 9:
-    bVar2 = *(char *)((int)self_ + 0x64020) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64020) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64020) + c1;
+    *(uint8_t *)((int)self_ + 0x64020) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64020) = 100;
     }
-    *(short *)((int)self_ + 0x64032) = *(short *)((int)self_ + 0x64032) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x64032) = *(short *)((int)self_ + 0x64032) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 2:
   case 3:
   case 10:
   case 0xb:
-    bVar2 = *(char *)((int)self_ + 0x64021) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64021) = bVar2;
-    if (99 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64021) + c1;
+    *(uint8_t *)((int)self_ + 0x64021) = u1;
+    if (99 < u1) {
       *(uint8_t *)((int)self_ + 0x64021) = 100;
     }
-    *(short *)((int)self_ + 0x64036) = *(short *)((int)self_ + 0x64036) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x64036) = *(short *)((int)self_ + 0x64036) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 4:
   case 0xc:
-    bVar2 = *(char *)((int)self_ + 0x64022) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64022) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64022) + c1;
+    *(uint8_t *)((int)self_ + 0x64022) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64022) = 100;
     }
-    *(short *)((int)self_ + 0x64034) = *(short *)((int)self_ + 0x64034) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x64034) = *(short *)((int)self_ + 0x64034) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 5:
   case 0xd:
   case 0xd2:
-    bVar2 = *(char *)((int)self_ + 0x64023) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64023) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64023) + c1;
+    *(uint8_t *)((int)self_ + 0x64023) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64023) = 100;
     }
-    *(short *)((int)self_ + 0x6402e) = *(short *)((int)self_ + 0x6402e) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x6402e) = *(short *)((int)self_ + 0x6402e) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 6:
   case 0xe:
-    bVar2 = *(char *)((int)self_ + 0x64024) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64024) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64024) + c1;
+    *(uint8_t *)((int)self_ + 0x64024) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64024) = 100;
     }
-    *(short *)((int)self_ + 0x64030) = *(short *)((int)self_ + 0x64030) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x64030) = *(short *)((int)self_ + 0x64030) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 0xd3:
   case 0xd4:
-    bVar2 = *(char *)((int)self_ + 0x64027) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64027) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64027) + c1;
+    *(uint8_t *)((int)self_ + 0x64027) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64027) = 100;
     }
-    *(short *)((int)self_ + 0x64038) = *(short *)((int)self_ + 0x64038) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x64038) = *(short *)((int)self_ + 0x64038) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 0xd5:
   case 0xd6:
-    bVar2 = *(char *)((int)self_ + 0x64025) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64025) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64025) + c1;
+    *(uint8_t *)((int)self_ + 0x64025) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64025) = 100;
     }
-    *(short *)((int)self_ + 0x6403a) = *(short *)((int)self_ + 0x6403a) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x6403a) = *(short *)((int)self_ + 0x6403a) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 0xdb:
   case 0xdc:
-    bVar2 = *(char *)((int)self_ + 0x64028) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64028) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64028) + c1;
+    *(uint8_t *)((int)self_ + 0x64028) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64028) = 100;
     }
-    *(short *)((int)self_ + 0x6403e) = *(short *)((int)self_ + 0x6403e) + (short)param_2;
-    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+    *(short *)((int)self_ + 0x6403e) = *(short *)((int)self_ + 0x6403e) + (short)arg3;
+    *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+    *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
     return;
   case 0xdd:
   case 0xde:
-    bVar2 = *(char *)((int)self_ + 0x64029) + cVar1;
-    *(uint8_t *)((int)self_ + 0x64029) = bVar2;
-    if (100 < bVar2) {
+    u1 = *(char *)((int)self_ + 0x64029) + c1;
+    *(uint8_t *)((int)self_ + 0x64029) = u1;
+    if (100 < u1) {
       *(uint8_t *)((int)self_ + 0x64029) = 100;
     }
-    *(short *)((int)self_ + 0x64040) = *(short *)((int)self_ + 0x64040) + (short)param_2;
+    *(short *)((int)self_ + 0x64040) = *(short *)((int)self_ + 0x64040) + (short)arg3;
   }
-  *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)param_2;
-  *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)param_2;
+  *(short *)((int)self_ + 0x6402c) = *(short *)((int)self_ + 0x6402c) + (short)arg3;
+  *(short *)((int)self_ + 0x6403c) = *(short *)((int)self_ + 0x6403c) + (short)arg3;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10128680
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl NetCellFont_CountTextChars(char * param_1)
+XI_API int __cdecl NetCellFont_CountTextChars(char * arg1)
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
+  char c1;
+  int i1;
+  int i2;
   
-  iVar3 = 0;
-  cVar1 = *param_1;
-  while (cVar1 != '\0') {
-    if (cVar1 == '\x7f') {
-      switch(xi_sw(param_1[1])) {
+  i2 = 0;
+  c1 = *arg1;
+  while (c1 != '\0') {
+    if (c1 == '\x7f') {
+      switch(xi_sw(arg1[1])) {
       case '4':
       case '5':
       case '6':
-        param_1 = param_1 + 3;
+        arg1 = arg1 + 3;
         break;
       case '8':
-        param_1 = param_1 + 4;
+        arg1 = arg1 + 4;
         break;
       case -5:
       case -4:
@@ -15336,52 +15421,52 @@ XI_API int __cdecl NetCellFont_CountTextChars(char * param_1)
       case '2':
       case '3':
       case '7':
-        param_1 = param_1 + 2;
+        arg1 = arg1 + 2;
         break;
       default:
-        param_1 = param_1 + 1;
+        arg1 = arg1 + 1;
       }
     }
-    else if (cVar1 == '\x1e') {
-      param_1 = param_1 + 2;
+    else if (c1 == '\x1e') {
+      arg1 = arg1 + 2;
     }
-    else if (cVar1 == '\x1f') {
-      param_1 = param_1 + 2;
+    else if (c1 == '\x1f') {
+      arg1 = arg1 + 2;
     }
     else {
-      iVar2 = orig::Sjis_GetCharByteLen_v1(param_1);
-      param_1 = param_1 + iVar2;
+      i1 = orig::Sjis_GetCharByteLen_v1(arg1);
+      arg1 = arg1 + i1;
     }
-    iVar3 = iVar3 + 1;
-    cVar1 = *param_1;
+    i2 = i2 + 1;
+    c1 = *arg1;
   }
-  return iVar3;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10128830
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl NetCellFont_CountTextCharsAndBytes(int * param_1, int * param_2, char * param_3)
+XI_API void __cdecl NetCellFont_CountTextCharsAndBytes(int * arg1, int * arg2, char * arg3)
 {
-  char cVar1;
-  int iVar2;
+  char c1;
+  int i1;
   
-  *param_1 = 0;
-  *param_2 = 0;
-  cVar1 = *param_3;
-  while (cVar1 != '\0') {
-    if (cVar1 == '\x7f') {
-      switch(xi_sw(param_3[1])) {
+  *arg1 = 0;
+  *arg2 = 0;
+  c1 = *arg3;
+  while (c1 != '\0') {
+    if (c1 == '\x7f') {
+      switch(xi_sw(arg3[1])) {
       case '4':
       case '5':
       case '6':
-        param_3 = param_3 + 3;
-        *param_2 = *param_2 + 3;
-        *param_1 = *param_1 + 1;
+        arg3 = arg3 + 3;
+        *arg2 = *arg2 + 3;
+        *arg1 = *arg1 + 1;
         break;
       case '8':
-        param_3 = param_3 + 4;
-        *param_2 = *param_2 + 4;
-        *param_1 = *param_1 + 1;
+        arg3 = arg3 + 4;
+        *arg2 = *arg2 + 4;
+        *arg1 = *arg1 + 1;
         break;
       case -5:
       case -4:
@@ -15389,82 +15474,82 @@ XI_API void __cdecl NetCellFont_CountTextCharsAndBytes(int * param_1, int * para
       case '2':
       case '3':
       case '7':
-        param_3 = param_3 + 2;
-        *param_2 = *param_2 + 2;
-        *param_1 = *param_1 + 1;
+        arg3 = arg3 + 2;
+        *arg2 = *arg2 + 2;
+        *arg1 = *arg1 + 1;
         break;
       default:
-        param_3 = param_3 + 1;
+        arg3 = arg3 + 1;
       }
     }
-    else if (cVar1 == '\x1e') {
-      param_3 = param_3 + 2;
-      *param_2 = *param_2 + 2;
-      *param_1 = *param_1 + 1;
+    else if (c1 == '\x1e') {
+      arg3 = arg3 + 2;
+      *arg2 = *arg2 + 2;
+      *arg1 = *arg1 + 1;
     }
-    else if (cVar1 == '\x1f') {
-      param_3 = param_3 + 2;
-      *param_2 = *param_2 + 2;
-      *param_1 = *param_1 + 1;
+    else if (c1 == '\x1f') {
+      arg3 = arg3 + 2;
+      *arg2 = *arg2 + 2;
+      *arg1 = *arg1 + 1;
     }
     else {
-      iVar2 = orig::Sjis_GetCharByteLen_v1(param_3);
-      param_3 = param_3 + iVar2;
-      *param_2 = *param_2 + iVar2;
+      i1 = orig::Sjis_GetCharByteLen_v1(arg3);
+      arg3 = arg3 + i1;
+      *arg2 = *arg2 + i1;
     }
-    cVar1 = *param_3;
+    c1 = *arg3;
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10128950
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl NetCellFont_BuildTextCharIndex(int * param_1, uint8_t * param_2, char * param_3)
+XI_API uint64_t __cdecl NetCellFont_BuildTextCharIndex(int * arg1, uint8_t * arg2, char * arg3)
 {
   int *_Source;
-  uint16_t *puVar1;
-  char cVar2;
+  uint16_t *p1;
+  char c1;
   size_t _Count;
-  int *piVar3;
-  int *piVar4;
-  int iVar5;
-  int local_4;
+  int *p2;
+  int *p3;
+  int i1;
+  int i2;
   
-  iVar5 = 0;
-  local_4 = 0;
-  if (*param_3 == '\0') {
-    *param_2 = 0;
-    return ((uint64_t)(((uint64_t)(uint32_t)(param_3) << 32) | (uint32_t)(param_2)));
+  i1 = 0;
+  i2 = 0;
+  if (*arg3 == '\0') {
+    *arg2 = 0;
+    return ((uint64_t)(((uint64_t)(uint32_t)(arg3) << 32) | (uint32_t)(arg2)));
   }
-  piVar3 = param_1 + 1;
+  p2 = arg1 + 1;
   do {
-    cVar2 = param_3[local_4];
-    _Source = (int *)(param_3 + local_4);
-    piVar4 = piVar3;
-    if (cVar2 == '\x7f') {
-      switch(xi_sw(param_3[local_4 + 1])) {
+    c1 = arg3[i2];
+    _Source = (int *)(arg3 + i2);
+    p3 = p2;
+    if (c1 == '\x7f') {
+      switch(xi_sw(arg3[i2 + 1])) {
       case '4':
       case '5':
       case '6':
-        *param_1 = iVar5;
-        param_1 = param_1 + 2;
-        piVar4 = piVar3 + 2;
-        local_4 = local_4 + 3;
-        *(short *)piVar3 = (short)*_Source;
-        *(char *)((int)piVar3 + 2) = *(char *)((int)_Source + 2);
-        puVar1 = (uint16_t *)(param_2 + iVar5);
-        iVar5 = iVar5 + 3;
-        *puVar1 = 0x404;
-        *(uint8_t *)(puVar1 + 1) = 4;
+        *arg1 = i1;
+        arg1 = arg1 + 2;
+        p3 = p2 + 2;
+        i2 = i2 + 3;
+        *(short *)p2 = (short)*_Source;
+        *(char *)((int)p2 + 2) = *(char *)((int)_Source + 2);
+        p1 = (uint16_t *)(arg2 + i1);
+        i1 = i1 + 3;
+        *p1 = 0x404;
+        *(uint8_t *)(p1 + 1) = 4;
         break;
       case '8':
-        *param_1 = iVar5;
-        param_1 = param_1 + 2;
-        *piVar3 = *_Source;
-        piVar4 = piVar3 + 2;
-        local_4 = local_4 + 4;
-        *(undefined4 *)(param_2 + iVar5) = 0x4040404;
-        iVar5 = iVar5 + 4;
+        *arg1 = i1;
+        arg1 = arg1 + 2;
+        *p2 = *_Source;
+        p3 = p2 + 2;
+        i2 = i2 + 4;
+        *(bits32 *)(arg2 + i1) = 0x4040404;
+        i1 = i1 + 4;
         break;
       case -5:
       case -4:
@@ -15472,80 +15557,80 @@ XI_API uint64_t __cdecl NetCellFont_BuildTextCharIndex(int * param_1, uint8_t * 
       case '2':
       case '3':
       case '7':
-        *param_1 = iVar5;
-        *(short *)piVar3 = (short)*_Source;
-LAB_10128a52:
-        param_1 = param_1 + 2;
-        piVar4 = piVar3 + 2;
-        local_4 = local_4 + 2;
-        *(uint16_t *)(param_2 + iVar5) = 0x404;
-        iVar5 = iVar5 + 2;
+        *arg1 = i1;
+        *(short *)p2 = (short)*_Source;
+code_10128A52:
+        arg1 = arg1 + 2;
+        p3 = p2 + 2;
+        i2 = i2 + 2;
+        *(uint16_t *)(arg2 + i1) = 0x404;
+        i1 = i1 + 2;
         break;
       default:
-        local_4 = local_4 + 1;
+        i2 = i2 + 1;
       }
     }
     else {
-      if ((cVar2 == '\x1e') || (cVar2 == '\x1f')) {
-        *param_1 = iVar5;
-        *(short *)piVar3 = (short)*_Source;
-        goto LAB_10128a52;
+      if ((c1 == '\x1e') || (c1 == '\x1f')) {
+        *arg1 = i1;
+        *(short *)p2 = (short)*_Source;
+        goto code_10128A52;
       }
       _Count = orig::Sjis_GetCharByteLen_v1((uint8_t *)_Source);
-      orig::_strncpy_v1(param_2 + iVar5,(char *)_Source,_Count);
-      iVar5 = iVar5 + _Count;
-      local_4 = local_4 + _Count;
+      orig::_strncpy_v1(arg2 + i1,(char *)_Source,_Count);
+      i1 = i1 + _Count;
+      i2 = i2 + _Count;
     }
-    piVar3 = piVar4;
-    if (param_3[local_4] == '\0') {
-      param_2[iVar5] = 0;
-      return ((uint64_t)(((uint64_t)(uint32_t)(param_2) << 32) | (uint32_t)(local_4)));
+    p2 = p3;
+    if (arg3[i2] == '\0') {
+      arg2[i1] = 0;
+      return ((uint64_t)(((uint64_t)(uint32_t)(arg2) << 32) | (uint32_t)(i2)));
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10128AE0
 // GATE: PASS -- 100 trials, 94 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 94
-XI_API int __cdecl NetCellFont_CopyTextFromIndex(uint8_t * param_1, char * param_2, uint8_t * param_3)
+XI_API int __cdecl NetCellFont_CopyTextFromIndex(uint8_t * arg1, char * arg2, uint8_t * arg3)
 {
-  char cVar1;
+  char c1;
   size_t _Count;
-  int iVar2;
-  int iVar3;
+  int i1;
+  int i2;
   char *_Source;
-  int local_4;
+  int i3;
   
-  iVar3 = 0;
-  iVar2 = 0;
-  local_4 = 0;
-  if (*param_2 == '\0') {
-    *param_1 = 0;
+  i2 = 0;
+  i1 = 0;
+  i3 = 0;
+  if (*arg2 == '\0') {
+    *arg1 = 0;
     return 0;
   }
-  _Source = param_3 + 4;
-  param_3 = param_3 + 5;
+  _Source = arg3 + 4;
+  arg3 = arg3 + 5;
   do {
-    if (param_2[iVar2] == '\x04') {
-      cVar1 = *_Source;
-      if (cVar1 == '\x7f') {
-        switch(xi_sw(*param_3)) {
+    if (arg2[i1] == '\x04') {
+      c1 = *_Source;
+      if (c1 == '\x7f') {
+        switch(xi_sw(*arg3)) {
         case 0x34:
         case 0x35:
         case 0x36:
-          orig::_strncpy_v1(param_1 + iVar3,_Source,3);
-          local_4 = local_4 + 1;
-          param_3 = param_3 + 8;
+          orig::_strncpy_v1(arg1 + i2,_Source,3);
+          i3 = i3 + 1;
+          arg3 = arg3 + 8;
           _Source = _Source + 8;
-          iVar3 = iVar3 + 3;
-          iVar2 = iVar2 + 3;
+          i2 = i2 + 3;
+          i1 = i1 + 3;
           break;
         case 0x38:
-          orig::_strncpy_v1(param_1 + iVar3,_Source,4);
-          local_4 = local_4 + 1;
-          param_3 = param_3 + 8;
+          orig::_strncpy_v1(arg1 + i2,_Source,4);
+          i3 = i3 + 1;
+          arg3 = arg3 + 8;
           _Source = _Source + 8;
-          iVar3 = iVar3 + 4;
-          iVar2 = iVar2 + 4;
+          i2 = i2 + 4;
+          i1 = i1 + 4;
           break;
         case 0xfb:
         case 0xfc:
@@ -15553,46 +15638,46 @@ XI_API int __cdecl NetCellFont_CopyTextFromIndex(uint8_t * param_1, char * param
         case 0x32:
         case 0x33:
         case 0x37:
-LAB_10128b51:
-          orig::_strncpy_v1(param_1 + iVar3,_Source,2);
-          local_4 = local_4 + 1;
-          param_3 = param_3 + 8;
+code_10128B51:
+          orig::_strncpy_v1(arg1 + i2,_Source,2);
+          i3 = i3 + 1;
+          arg3 = arg3 + 8;
           _Source = _Source + 8;
-          iVar3 = iVar3 + 2;
-          iVar2 = iVar2 + 2;
+          i2 = i2 + 2;
+          i1 = i1 + 2;
           break;
         default:
-          iVar2 = iVar2 + 1;
+          i1 = i1 + 1;
         }
       }
-      else if ((cVar1 == '\x1e') || (cVar1 == '\x1f')) goto LAB_10128b51;
+      else if ((c1 == '\x1e') || (c1 == '\x1f')) goto code_10128B51;
     }
     else {
-      _Count = orig::Sjis_GetCharByteLen_v1(param_2 + iVar2);
-      orig::_strncpy_v1(param_1 + iVar3,param_2 + iVar2,_Count);
-      iVar3 = iVar3 + _Count;
-      iVar2 = iVar2 + _Count;
+      _Count = orig::Sjis_GetCharByteLen_v1(arg2 + i1);
+      orig::_strncpy_v1(arg1 + i2,arg2 + i1,_Count);
+      i2 = i2 + _Count;
+      i1 = i1 + _Count;
     }
-    if (param_2[iVar2] == '\0') {
-      param_1[iVar3] = 0;
-      return local_4;
+    if (arg2[i1] == '\0') {
+      arg1[i2] = 0;
+      return i3;
     }
   } while( true );
 }
 
 // FUNCTION: FFXIMAIN 0x10129290
 // GATE: PASS -- 100 trials, 10 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 10
-XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_ClearFlag12FromValue(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, int param_2)
+XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_ClearFlag12FromValue(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, int arg4)
 {
   char xi_frame[8] __attribute__((aligned(4)));
-  undefined4  &local_8 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  int  &local_4 = *reinterpret_cast<int  *>(xi_frame + 4);
+  bits32  &u1 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  int  &i1 = *reinterpret_cast<int  *>(xi_frame + 4);
   
-  local_8 = orig::NetCellFont_GetRingHead14(self_,xi_eax);
-  while ((short)local_8 != -1) {
-    orig::NetCellFont_RingStepBack(self_,(short *)&local_8,&local_4,&local_4);
-    if (param_2 <= *(int *)(local_4 + 0xc)) {
-      *(uint8_t *)(local_4 + 0x12) = 0;
+  u1 = orig::NetCellFont_GetRingHead14(self_,xi_eax);
+  while ((short)u1 != -1) {
+    orig::NetCellFont_RingStepBack(self_,(short *)&u1,&i1,&i1);
+    if (arg4 <= *(int *)(i1 + 0xc)) {
+      *(uint8_t *)(i1 + 0x12) = 0;
     }
   }
   return;
@@ -15600,122 +15685,122 @@ XI_API void __attribute__((stdcall, regparm(3))) NetCellFont_ClearFlag12FromValu
 
 // FUNCTION: FFXIMAIN 0x101292E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __attribute__((stdcall, regparm(3))) NetCellFont_RingStepBack(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_, short * param_2, int * param_3)
+XI_API int __attribute__((stdcall, regparm(3))) NetCellFont_RingStepBack(bits32 xi_eax, uint32_t xi_edx_unused, void * self_, short * arg4, int * arg5)
 {
-  int iVar1;
-  short sVar2;
+  int i1;
+  short i2;
   
-  sVar2 = *param_2;
-  if (sVar2 == -1) {
+  i2 = *arg4;
+  if (i2 == -1) {
     return 0;
   }
-  iVar1 = sVar2 * 0x800 + 0x20 + (int)self_;
-  if (sVar2 == *(short *)((int)self_ + 0x16)) {
-    *param_2 = -1;
-    *param_3 = iVar1;
-    return iVar1 + 0x3c;
+  i1 = i2 * 0x800 + 0x20 + (int)self_;
+  if (i2 == *(short *)((int)self_ + 0x16)) {
+    *arg4 = -1;
+    *arg5 = i1;
+    return i1 + 0x3c;
   }
-  *param_2 = sVar2 + -1;
-  if ((short)(sVar2 + -1) < 0) {
-    *param_2 = 99;
+  *arg4 = i2 + -1;
+  if ((short)(i2 + -1) < 0) {
+    *arg4 = 99;
   }
-  *param_3 = iVar1;
-  return iVar1 + 0x3c;
+  *arg5 = i1;
+  return i1 + 0x3c;
 }
 
 // FUNCTION: FFXIMAIN 0x101293F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetOptionByte(void * self_, undefined4 param_1)
+XI_API bits32 __thiscall NetCellFont_GetOptionByte(void * self_, bits32 arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = xi_trunc24(((uint32_t)param_1 >> 8));
-  switch(xi_sw(param_1)) {
+  u1 = xi_trunc24(((uint32_t)arg2 >> 8));
+  switch(xi_sw(arg2)) {
   case 0:
   case 8:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(100)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(100)));
   case 1:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64023))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64023))));
   case 2:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64024))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64024))));
   case 3:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64020))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64020))));
   case 4:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64022))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64022))));
   case 5:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64021))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64021))));
   case 6:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64027))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64027))));
   case 7:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64025))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64025))));
   case 9:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64028))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64028))));
   case 10:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64029))));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 0x64029))));
   default:
-    return (uint32_t)uVar1 << 8;
+    return (uint32_t)u1 << 8;
   }
 }
 
 // FUNCTION: FFXIMAIN 0x10129490
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall NetCellFont_SetOptionByte(void * self_, undefined4 param_1, uint32_t param_2)
+XI_API void __thiscall NetCellFont_SetOptionByte(void * self_, bits32 arg2, uint32_t arg3)
 {
-  uint8_t uVar1;
+  uint8_t u1;
   
-  uVar1 = (uint8_t)param_2;
-  switch(xi_sw((uint8_t)param_1)) {
+  u1 = (uint8_t)arg3;
+  switch(xi_sw((uint8_t)arg2)) {
   case 1:
-    if (*(uint8_t *)((int)self_ + 0x64023) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64023) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64023) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64023) = u1;
       return;
     }
     break;
   case 2:
-    if (*(uint8_t *)((int)self_ + 0x64024) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64024) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64024) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64024) = u1;
       return;
     }
     break;
   case 3:
-    if (*(uint8_t *)((int)self_ + 0x64020) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64020) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64020) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64020) = u1;
       return;
     }
     break;
   case 4:
-    if (*(uint8_t *)((int)self_ + 0x64022) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64022) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64022) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64022) = u1;
       return;
     }
     break;
   case 5:
-    *(uint8_t *)((int)self_ + 0x64021) = uVar1;
-    if ((param_2 & 0xff) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64021) = uVar1;
+    *(uint8_t *)((int)self_ + 0x64021) = u1;
+    if ((arg3 & 0xff) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64021) = u1;
     }
     break;
   case 6:
-    if (*(uint8_t *)((int)self_ + 0x64027) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64027) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64027) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64027) = u1;
       return;
     }
     break;
   case 7:
-    if (*(uint8_t *)((int)self_ + 0x64025) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64025) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64025) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64025) = u1;
       return;
     }
     break;
   case 9:
-    if (*(uint8_t *)((int)self_ + 0x64028) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64028) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64028) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64028) = u1;
       return;
     }
     break;
   case 10:
-    if (*(uint8_t *)((int)self_ + 0x64029) != param_2) {
-      *(uint8_t *)((int)self_ + 0x64029) = uVar1;
+    if (*(uint8_t *)((int)self_ + 0x64029) != arg3) {
+      *(uint8_t *)((int)self_ + 0x64029) = u1;
       return;
     }
   }
@@ -15724,291 +15809,293 @@ XI_API void __thiscall NetCellFont_SetOptionByte(void * self_, undefined4 param_
 
 // FUNCTION: FFXIMAIN 0x10129BB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __stdcall NetCellFont_IsKindEnabledInSettings(undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4)
+XI_API uint64_t __stdcall NetCellFont_IsKindEnabledInSettings(bits32 arg1, bits32 arg2, bits32 arg3, bits32 arg4)
 {
-  int iVar1;
-  uint64_t uVar2;
+  int i1;
+  uint64_t u1;
   char xi_frame[8] __attribute__((aligned(4)));
-  undefined4  &local_8 = *reinterpret_cast<undefined4  *>(xi_frame + 0);
-  undefined4  &local_4 = *reinterpret_cast<undefined4  *>(xi_frame + 4);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 0);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 4);
   
-  uVar2 = orig::NetCellFont_FindKindRecord(param_1);
-  iVar1 = 0;
-  if ((int)uVar2 != 0) {
-    iVar1 = orig::NetCellFont_MapCode54ToIndex((uint32_t)*(uint8_t *)((int)uVar2 + 2));
-    if (-1 < iVar1) {
-      uVar2 = orig::Settings_GetValue_v1(param_3);
-      local_8 = (undefined4)uVar2;
-      uVar2 = orig::Settings_GetValue_v1(param_4);
-      local_4 = (undefined4)uVar2;
-      uVar2 = orig::TextInputFiles_TestBit64(iVar1,(int)&local_8);
-      return CONCAT44((int)((uint64_t)uVar2 >> 0x20),
-                      CONCAT31(xi_strunc24(((uint64_t)uVar2 >> 8)),(char)uVar2 != '\0'));
+  u1 = orig::NetCellFont_FindKindRecord(arg1);
+  i1 = 0;
+  if ((int)u1 != 0) {
+    i1 = orig::NetCellFont_MapCode54ToIndex((uint32_t)*(uint8_t *)((int)u1 + 2));
+    if (-1 < i1) {
+      u1 = orig::Settings_GetValue_v1(arg3);
+      u2 = (bits32)u1;
+      u1 = orig::Settings_GetValue_v1(arg4);
+      u3 = (bits32)u1;
+      u1 = orig::TextInputFiles_TestBit64(i1,(int)&u2);
+      return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(xi_strunc24(((uint64_t)u1 >> 8))) << 8) | (uint8_t)((char)u1 != '\0'))))));
     }
   }
-  return CONCAT44((int)((uint64_t)uVar2 >> 0x20),
-                  CONCAT31(xi_strunc24(((uint32_t)iVar1 >> 8)),(char)param_2 != '\0'));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i1 >> 8))) << 8) | (uint8_t)((char)arg2 != '\0'))))));
 }
 
 // FUNCTION: FFXIMAIN 0x10129C20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API short __thiscall NetCellFont_NextRingIndex(void * self_, undefined4 param_1, undefined4 xi_s2)
+XI_API short __thiscall NetCellFont_NextRingIndex(void * self_, bits32 arg2, bits32 xi_s2)
 {
-  short sVar1;
+  short i1;
   
-  if ((short)param_1 == -1) {
+  if ((short)arg2 == -1) {
     return -1;
   }
-  sVar1 = (short)param_1 + 1;
-  if (99 < sVar1) {
-    sVar1 = 0;
+  i1 = (short)arg2 + 1;
+  if (99 < i1) {
+    i1 = 0;
   }
-  if (sVar1 == *(short *)((int)self_ + 0x14)) {
-    sVar1 = *(short *)((int)self_ + 0x14);
+  if (i1 == *(short *)((int)self_ + 0x14)) {
+    i1 = *(short *)((int)self_ + 0x14);
   }
-  return sVar1;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10129C60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) NetCellFont_GetRingHead14(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) NetCellFont_GetRingHead14(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
   return ((uint32_t)(((uint32_t)(uint16_t)((short)((uint32_t)xi_eax >> 0x10)) << 16) | (uint16_t)(*(uint16_t *)((int)self_ + 0x14))));
 }
 
 // FUNCTION: FFXIMAIN 0x10129CD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl NetCellFont_FindKindRecord(undefined4 param_1)
+XI_API bits32 * __cdecl NetCellFont_FindKindRecord(bits32 arg1)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
+  uint16_t u1;
+  uint32_t u2;
+  int i1;
   
-  iVar3 = 0;
-  uVar1 = (uint16_t)DAT_1036e888;
-  uVar2 = DAT_1036e888;
+  i1 = 0;
+  u1 = (uint16_t)g_1036E888;
+  u2 = g_1036E888;
   while( true ) {
-    if (uVar1 == 0) {
-      return (undefined4 *)0x0;
+    if (u1 == 0) {
+      return (bits32 *)0x0;
     }
-    if ((short)uVar2 == (short)param_1) break;
-    uVar1 = (&DAT_1036e88c)[iVar3 * 2];
-    uVar2 = (uint32_t)uVar1;
-    iVar3 = iVar3 + 1;
+    if ((short)u2 == (short)arg1) break;
+    u1 = (&g_1036E88C)[i1 * 2];
+    u2 = (uint32_t)u1;
+    i1 = i1 + 1;
   }
-  return(undefined4*)(&DAT_1036e888 + iVar3);
+  return(bits32*)(&g_1036E888 + i1);
 }
 
 // FUNCTION: FFXIMAIN 0x10129D00
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_MapCode(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_MapCode(bits32 arg1)
 {
-  uint8_t bVar1;
-  int iVar2;
+  uint8_t u1;
+  int i1;
   
-  iVar2 = 0;
-  bVar1 = DAT_1036e6e8;
+  i1 = 0;
+  u1 = g_1036E6E8;
   while( true ) {
-    if (bVar1 == 0) {
+    if (u1 == 0) {
       return 0x80808080;
     }
-    if (bVar1 == (uint16_t)param_1) break;
-    bVar1 = (&DAT_1036e6f0)[iVar2 * 8];
-    iVar2 = iVar2 + 1;
+    if (u1 == (uint16_t)arg1) break;
+    u1 = (&g_1036E6F0)[i1 * 8];
+    i1 = i1 + 1;
   }
-  return (&DAT_1036e6ec)[iVar2 * 2];
+  return (&g_1036E6EC)[i1 * 2];
 }
 
 // FUNCTION: FFXIMAIN 0x10129D90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall ChatLog_AddTableMessage7(void * self_, uint32_t param_1)
+XI_API uint32_t __thiscall ChatLog_AddTableMessage7(void * self_, uint32_t arg2)
 {
-  char *pcVar1;
-  uint32_t uVar2;
+  char *p1;
+  uint32_t u1;
   
-  if (0x23 < (int)param_1) {
-    return param_1 & 0xffffff00;
+  if (0x23 < (int)arg2) {
+    return arg2 & 0xffffff00;
   }
-  pcVar1 = (char *)orig::TargetMenu_GetMessageFwd(7,((uint8_t *)((&DAT_103763b3)))[param_1 * 4]);
-  if (pcVar1 == (char *)0x0) {
+  p1 = (char *)orig::TargetMenu_GetMessageFwd(7,((uint8_t *)((&g_103763B3)))[arg2 * 4]);
+  if (p1 == (char *)0x0) {
     return 0;
   }
-  uVar2 = orig::ChatLog_AddMessage_v1(self_,pcVar1,((char *)&DAT_103763b0) + param_1 * 4,0,1,(int *)0x0);
-  return uVar2;
+  u1 = orig::ChatLog_AddMessage_v1(self_,p1,((char *)&g_103763B0) + arg2 * 4,0,1,(int *)0x0);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10129DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall ChatLog_AddMessage9Code379(void * self_, uint32_t param_1)
+XI_API uint32_t __thiscall ChatLog_AddMessage9Code379(void * self_, uint32_t arg2)
 {
-  char *pcVar1;
-  uint32_t uVar2;
-  uint32_t *puVar3;
-  int iVar4;
-  undefined4 uVar5;
-  int *piVar6;
+  char *p1;
+  uint32_t u1;
+  uint32_t *p2;
+  int i1;
+  bits32 u2;
+  int *p3;
   
-  uVar2 = param_1;
-  if ((-1 < (int)param_1) && ((int)param_1 < 0x15c)) {
-    piVar6 = (int *)0x0;
-    uVar5 = 1;
-    puVar3 = &param_1;
-    iVar4 = 0;
-    param_1 = CONCAT13(XI_PIECE(param_1, 3, 1),0x379);
-    pcVar1 = (char *)orig::TargetMenu_GetMessageFwd(9,uVar2);
-    uVar2 = orig::ChatLog_AddMessage_v1(self_,pcVar1,(uint8_t *)puVar3,iVar4,uVar5,piVar6);
-    return uVar2;
+  u1 = arg2;
+  if ((-1 < (int)arg2) && ((int)arg2 < 0x15c)) {
+    p3 = (int *)0x0;
+    u2 = 1;
+    p2 = &arg2;
+    i1 = 0;
+    arg2 = ((uint32_t)(((uint32_t)(uint8_t)(XI_PIECE(arg2, 3, 1)) << 24) | ((uint32_t)(0x379) & 0xFFFFFFu)));
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(9,u1);
+    u1 = orig::ChatLog_AddMessage_v1(self_,p1,(uint8_t *)p2,i1,u2,p3);
+    return u1;
   }
-  return param_1 & 0xffffff00;
+  return arg2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10129E30
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall ChatLog_AddMessage7Code37B(void * self_, uint32_t param_1)
+XI_API uint32_t __thiscall ChatLog_AddMessage7Code37B(void * self_, uint32_t arg2)
 {
-  char *pcVar1;
-  uint32_t uVar2;
-  uint32_t *puVar3;
-  int iVar4;
-  undefined4 uVar5;
-  int *piVar6;
+  char *p1;
+  uint32_t u1;
+  uint32_t *p2;
+  int i1;
+  bits32 u2;
+  int *p3;
   
-  uVar2 = param_1;
-  if ((-1 < (int)param_1) && ((int)param_1 < 0xc9)) {
-    piVar6 = (int *)0x0;
-    uVar5 = 1;
-    puVar3 = &param_1;
-    iVar4 = 0;
-    param_1 = CONCAT13(XI_PIECE(param_1, 3, 1),0x37b);
-    pcVar1 = (char *)orig::TargetMenu_GetMessageFwd(7,uVar2);
-    uVar2 = orig::ChatLog_AddMessage_v1(self_,pcVar1,(uint8_t *)puVar3,iVar4,uVar5,piVar6);
-    return uVar2;
+  u1 = arg2;
+  if ((-1 < (int)arg2) && ((int)arg2 < 0xc9)) {
+    p3 = (int *)0x0;
+    u2 = 1;
+    p2 = &arg2;
+    i1 = 0;
+    arg2 = ((uint32_t)(((uint32_t)(uint8_t)(XI_PIECE(arg2, 3, 1)) << 24) | ((uint32_t)(0x37b) & 0xFFFFFFu)));
+    p1 = (char *)orig::TargetMenu_GetMessageFwd(7,u1);
+    u1 = orig::ChatLog_AddMessage_v1(self_,p1,(uint8_t *)p2,i1,u2,p3);
+    return u1;
   }
-  return param_1 & 0xffffff00;
+  return arg2 & 0xffffff00;
 }
 
 // FUNCTION: FFXIMAIN 0x10129E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ChatLog_AddTextCode379(void * self_, char * param_1)
+XI_API void __thiscall ChatLog_AddTextCode379(void * self_, char * arg2)
 {
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t  &uStack_1 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x3]; uint8_t u2; };   // at 0x3
+  } frame;
   
-  *reinterpret_cast<uint32_t *>(xi_frame + 0) = CONCAT13((char)((uint32_t)self_ >> 0x18),0x379);
-  orig::ChatLog_AddMessage_v1(self_,param_1,(uint8_t *)&local_4,0,1,(int *)0x0);
+  *reinterpret_cast<uint32_t *>(frame.bytes + 0) = ((uint32_t)(((uint32_t)(uint8_t)((char)((uint32_t)self_ >> 0x18)) << 24) | ((uint32_t)(0x379) & 0xFFFFFFu)));
+  orig::ChatLog_AddMessage_v1(self_,arg2,(uint8_t *)&frame.u1,0,1,(int *)0x0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10129EB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ChatLog_AddTextCode37B(void * self_, char * param_1)
+XI_API void __thiscall ChatLog_AddTextCode37B(void * self_, char * arg2)
 {
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint32_t  &local_4 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint8_t  &uStack_1 = *reinterpret_cast<uint8_t  *>(xi_frame + 3);
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint32_t u1; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x3]; uint8_t u2; };   // at 0x3
+  } frame;
   
-  *reinterpret_cast<uint32_t *>(xi_frame + 0) = CONCAT13((char)((uint32_t)self_ >> 0x18),0x37b);
-  orig::ChatLog_AddMessage_v1(self_,param_1,(uint8_t *)&local_4,0,1,(int *)0x0);
+  *reinterpret_cast<uint32_t *>(frame.bytes + 0) = ((uint32_t)(((uint32_t)(uint8_t)((char)((uint32_t)self_ >> 0x18)) << 24) | ((uint32_t)(0x37b) & 0xFFFFFFu)));
+  orig::ChatLog_AddMessage_v1(self_,arg2,(uint8_t *)&frame.u1,0,1,(int *)0x0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10129EE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Font_DrawStringDefault(char * param_1)
+XI_API bits32 __cdecl Font_DrawStringDefault(char * arg1)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Font_MeasureString(param_1,0x3f800000);
-  return iVar1;
+  i1 = orig::Font_MeasureString(arg1,0x3f800000);
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10129F40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint64_t __cdecl Font_DrawStringFlags44(int param_1, undefined4 param_2, char * param_3, int param_4, undefined4 param_5, undefined4 param_6, undefined4 param_7)
+XI_API uint64_t __cdecl Font_DrawStringFlags44(int arg1, bits32 arg2, char * arg3, int arg4, bits32 arg5, bits32 arg6, bits32 arg7)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::FontGlyphs_DrawString
-                    (g_pFontGlyphs,param_1,param_2,param_3,param_4,param_5,(char *)0x44,param_6,
-                     param_7);
-  return uVar1;
+  u1 = orig::FontGlyphs_DrawString
+                    (g_pFontGlyphs,arg1,arg2,arg3,arg4,arg5,(char *)0x44,arg6,
+                     arg7);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10129F80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_MapCode1BTo54(int param_1)
+XI_API bits32 __cdecl NetCellFont_MapCode1BTo54(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)((uint32_t)(param_1 + -0x1b) >> 8);
-  switch(xi_sw(param_1)) {
+  u1 = (uint32_t)((uint32_t)(arg1 + -0x1b) >> 8);
+  switch(xi_sw(arg1)) {
   case 0x1b:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x54)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x54)));
   case 0x1c:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x55)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x55)));
   case 0x1d:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x56)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x56)));
   case 0x1e:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x57)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x57)));
   case 0x1f:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x58)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x58)));
   case 0x20:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x59)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x59)));
   case 0x21:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5a)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5a)));
   case 0x22:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5b)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5b)));
   case 0x23:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5c)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5c)));
   case 0x24:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5d)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5d)));
   case 0x25:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5e)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5e)));
   case 0x26:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x5f)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x5f)));
   case 0x27:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x60)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x60)));
   case 0x28:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x61)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x61)));
   case 0x29:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x62)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x62)));
   case 0x2a:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(99)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(99)));
   case 0x2b:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(100)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(100)));
   case 0x2c:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x65)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x65)));
   case 0x2d:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x66)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x66)));
   case 0x2e:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x67)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x67)));
   case 0x2f:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x68)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x68)));
   case 0x30:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x69)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x69)));
   case 0x31:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x6a)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x6a)));
   default:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(1)));
   case 0x9b:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x6c)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x6c)));
   case 0xb0:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x6d)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x6d)));
   case 0xb3:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x6e)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x6e)));
   case 0xcb:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x70)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x70)));
   case 0xcc:
-    return ((uint32_t)(((uint32_t)(uVar1) << 8) | (uint8_t)(0x71)));
+    return ((uint32_t)(((uint32_t)(u1) << 8) | (uint8_t)(0x71)));
   }
 }
 
 // FUNCTION: FFXIMAIN 0x1012A120
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl NetCellFont_MapCode54ToIndex(undefined4 param_1)
+XI_API bits32 __cdecl NetCellFont_MapCode54ToIndex(bits32 arg1)
 {
-  switch(xi_sw(param_1)) {
+  switch(xi_sw(arg1)) {
   case 0x54:
     return 0;
   case 0x55:
@@ -16080,26 +16167,26 @@ XI_API void __thiscall NetCellFont_CallClearBuffers(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1012A360
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __attribute__((stdcall, regparm(3))) NetCellFont_InitTextLayout(uint32_t xi_eax_unused, undefined4 xi_edx, undefined4 * param_1)
+XI_API bits32 * __attribute__((stdcall, regparm(3))) NetCellFont_InitTextLayout(uint32_t xi_eax_unused, bits32 xi_edx, bits32 * arg3)
 {
-  undefined4 uVar1;
-  int iVar2;
+  bits32 u1;
+  int i1;
   
-  *param_1 = 0;
-  param_1[3] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  *(uint16_t *)(param_1 + 6) = 0;
-  *(uint16_t *)((int)param_1 + 0x1a) = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  uVar1 = orig::Font_GetCharWidthAt(&DAT_1036f120,xi_edx);
-  *(short *)(param_1 + 1) = (short)uVar1;
-  iVar2 = orig::NetCellFont_CountTextChars(&DAT_1036f120);
-  *(short *)((int)param_1 + 6) = (short)iVar2;
-  *(uint8_t *)(param_1 + 2) = 0x1e;
-  *(uint8_t *)((int)param_1 + 9) = 1;
-  return param_1;
+  *arg3 = 0;
+  arg3[3] = 0;
+  arg3[4] = 0;
+  arg3[5] = 0;
+  *(uint16_t *)(arg3 + 6) = 0;
+  *(uint16_t *)((int)arg3 + 0x1a) = 0;
+  arg3[7] = 0;
+  arg3[8] = 0;
+  u1 = orig::Font_GetCharWidthAt(&g_1036F120,xi_edx);
+  *(short *)(arg3 + 1) = (short)u1;
+  i1 = orig::NetCellFont_CountTextChars(&g_1036F120);
+  *(short *)((int)arg3 + 6) = (short)i1;
+  *(uint8_t *)(arg3 + 2) = 0x1e;
+  *(uint8_t *)((int)arg3 + 9) = 1;
+  return arg3;
 }
 
 // FUNCTION: FFXIMAIN 0x1012A3B0
@@ -16108,17 +16195,17 @@ XI_API void __thiscall NetCellFont_ClearBuffers(void * self_)
 {
   if (*(LPVOID *)((int)self_ + 0xc) != (LPVOID)0x0) {
     orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0xc));
-    *(undefined4 *)((int)self_ + 0xc) = 0;
+    *(bits32 *)((int)self_ + 0xc) = 0;
   }
   if (*(LPVOID *)((int)self_ + 0x10) != (LPVOID)0x0) {
     orig::operator_delete_v1(*(LPVOID *)((int)self_ + 0x10));
-    *(undefined4 *)((int)self_ + 0x10) = 0;
+    *(bits32 *)((int)self_ + 0x10) = 0;
   }
-  *(undefined4 *)((int)self_ + 0x14) = 0;
+  *(bits32 *)((int)self_ + 0x14) = 0;
   *(uint16_t *)((int)self_ + 0x18) = 0;
   *(uint16_t *)((int)self_ + 0x1a) = 0;
-  *(undefined4 *)((int)self_ + 0x1c) = 0;
-  *(undefined4 *)((int)self_ + 0x20) = 0;
+  *(bits32 *)((int)self_ + 0x1c) = 0;
+  *(bits32 *)((int)self_ + 0x20) = 0;
   *(uint8_t *)((int)self_ + 8) = 0x1e;
   *(uint8_t *)((int)self_ + 9) = 1;
   return;
@@ -16126,90 +16213,90 @@ XI_API void __thiscall NetCellFont_ClearBuffers(void * self_)
 
 // FUNCTION: FFXIMAIN 0x1012A400
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetWord1A(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetWord1A(void * self_)
 {
   return (uint32_t)*(uint16_t *)((int)self_ + 0x1a);
 }
 
 // FUNCTION: FFXIMAIN 0x1012A410
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetByte9(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetByte9(void * self_)
 {
-  undefined4 xi_entry_eax = 0;
+  bits32 xi_entry_eax = 0;
   
   return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_entry_eax >> 8))) << 8) | (uint8_t)(*(uint8_t *)((int)self_ + 9))));
 }
 
 // FUNCTION: FFXIMAIN 0x1012A420
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API uint32_t __thiscall NetCellFont_SetString(void * self_, char * param_1, undefined4 param_2, int param_3, int param_4)
+XI_API uint32_t __thiscall NetCellFont_SetString(void * self_, char * arg2, bits32 arg3, int arg4, int arg5)
 {
-  int iVar1;
-  uint16_t uVar2;
-  uint64_t uVar3;
+  int i1;
+  uint16_t u1;
+  uint64_t u2;
   
   orig::NetCellFont_ClearBuffers(self_);
-  uVar2 = 0;
-  if (param_4 != 0) {
-    uVar2 = (uint16_t)((uint32_t)param_4 >> 0x10);
-    *(uint8_t *)((int)self_ + 9) = *(uint8_t *)(param_4 + 1);
+  u1 = 0;
+  if (arg5 != 0) {
+    u1 = (uint16_t)((uint32_t)arg5 >> 0x10);
+    *(uint8_t *)((int)self_ + 9) = *(uint8_t *)(arg5 + 1);
   }
-  if ((char)param_3 == '\0') {
-    *(uint32_t *)self_ = (uint32_t)((char)param_2 != '\0');
+  if ((char)arg4 == '\0') {
+    *(uint32_t *)self_ = (uint32_t)((char)arg3 != '\0');
   }
   else {
-    *(undefined4 *)self_ = 2;
+    *(bits32 *)self_ = 2;
   }
-  if (param_1 == (char *)0x0) {
-    *(undefined4 *)((int)self_ + 0x20) = 1;
-    return (uint32_t)uVar2 << 0x10;
+  if (arg2 == (char *)0x0) {
+    *(bits32 *)((int)self_ + 0x20) = 1;
+    return (uint32_t)u1 << 0x10;
   }
-  if (*param_1 == '\0') {
-    *(undefined4 *)((int)self_ + 0x20) = 1;
-    return (uint32_t)uVar2 << 0x10;
+  if (*arg2 == '\0') {
+    *(bits32 *)((int)self_ + 0x20) = 1;
+    return (uint32_t)u1 << 0x10;
   }
-  orig::NetCellFont_CountTextCharsAndBytes((int *)((int)self_ + 0x14),&param_3,param_1);
-  uVar3 = orig::Allocator_Generic_v1(param_3 + 1);
-  iVar1 = *(int *)((int)self_ + 0x14);
-  *(int *)((int)self_ + 0xc) = (int)uVar3;
-  if (iVar1 != 0) {
-    uVar3 = orig::Allocator_Generic_v1(iVar1 * 8);
-    *(int *)((int)self_ + 0x10) = (int)uVar3;
+  orig::NetCellFont_CountTextCharsAndBytes((int *)((int)self_ + 0x14),&arg4,arg2);
+  u2 = orig::Allocator_Generic_v1(arg4 + 1);
+  i1 = *(int *)((int)self_ + 0x14);
+  *(int *)((int)self_ + 0xc) = (int)u2;
+  if (i1 != 0) {
+    u2 = orig::Allocator_Generic_v1(i1 * 8);
+    *(int *)((int)self_ + 0x10) = (int)u2;
   }
-  uVar3 = orig::NetCellFont_BuildTextCharIndex(*(int **)((int)self_ + 0x10),*(uint8_t **)((int)self_ + 0xc),param_1);
-  *(undefined4 *)((int)self_ + 0x20) = 0;
-  return (uint32_t)(uint16_t)((uint64_t)uVar3 >> 0x10) << 0x10;
+  u2 = orig::NetCellFont_BuildTextCharIndex(*(int **)((int)self_ + 0x10),*(uint8_t **)((int)self_ + 0xc),arg2);
+  *(bits32 *)((int)self_ + 0x20) = 0;
+  return (uint32_t)(uint16_t)((uint64_t)u2 >> 0x10) << 0x10;
 }
 
 // FUNCTION: FFXIMAIN 0x1012A4E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall NetCellFont_GetField20(void * self_)
+XI_API bits32 __thiscall NetCellFont_GetField20(void * self_)
 {
-  return *(undefined4 *)((int)self_ + 0x20);
+  return *(bits32 *)((int)self_ + 0x20);
 }
 
 // FUNCTION: FFXIMAIN 0x1012AB20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall NetCellFont_Construct(void * self_)
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int i1;
+  bits32 *p1;
   
   orig::NetCellFont_ClearWords((void *)((int)self_ + 4));
   *(uint16_t *)((int)self_ + 0xe) = 0xffff;
-  *(undefined4 *)((int)self_ + 8) = 0;
+  *(bits32 *)((int)self_ + 8) = 0;
   *(uint8_t *)((int)self_ + 0xc) = 1;
   *(uint16_t *)((int)self_ + 0x56) = 0;
   *(uint16_t *)((int)self_ + 0x58) = 0;
   *(uint16_t *)((int)self_ + 0x5a) = 0;
   *(uint16_t *)((int)self_ + 0x5c) = 0;
-  *(uint8_t ***)self_ = &PTR_FUN_10333318;
+  *(uint8_t ***)self_ = &g_10333318;
   *(uint8_t *)((int)self_ + 0x54) = 0;
-  puVar2 = (undefined4 *)((int)self_ + 0x36);
-  for (iVar1 = 6; iVar1 != 0; iVar1 = iVar1 + -1) {
-    *puVar2 = 0;
-    puVar2 = puVar2 + 1;
+  p1 = (bits32 *)((int)self_ + 0x36);
+  for (i1 = 6; i1 != 0; i1 = i1 + -1) {
+    *p1 = 0;
+    p1 = p1 + 1;
   }
-  *(uint16_t *)puVar2 = 0;
+  *(uint16_t *)p1 = 0;
   return self_;
 }

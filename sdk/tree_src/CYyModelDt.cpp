@@ -5,10 +5,10 @@
 
 // FUNCTION: FFXIMAIN 0x10022FA0
 // GATE: PASS -- 100 trials, 100 returned normally, 83 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int __cdecl CYyModelDt::SetVertexShader(int a1)
+int __cdecl CYyModelDt::SetVertexShader(int arg1)
 {
-  g_vertexShader_6E4C = a1;
-  if ( a1 != 0 )
+  g_vertexShader_6E4C = arg1;
+  if ( arg1 != 0 )
     return (g_pCDx->pDevice)->lpVtbl->SetVertexShader((g_pCDx->pDevice), g_vertexShader_6E4C);
   else
     return 0;
@@ -19,7 +19,7 @@ int __cdecl CYyModelDt::SetVertexShader(int a1)
 void * __thiscall CYyModelDt::Construct(void * self)
 {
   orig::CYyModelDt_Init(self);
-  *(uint8_t ***)self = &PTR_CYyModelDt_GetRuntimeClass_1032a430;
+  *(uint8_t ***)self = &ptr_to_CYyModelDt_GetRuntimeClass_1032A430;
   *(uint32_t *)((int)self + 0x40) = 0;
   *(uint8_t *)((int)self + 0x3c) = 1;
   return self;
@@ -27,45 +27,45 @@ void * __thiscall CYyModelDt::Construct(void * self)
 
 // FUNCTION: FFXIMAIN 0x10025030
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-char CYyModelDt::PrepareRenderStateEntry(int a2, int a3, int a4, int a5, int a6, int a7)
+char CYyModelDt::PrepareRenderStateEntry(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  _BYTE *v7;
-  v7 = (_BYTE *)orig::ResourceHandle_Deref(this->modelResourceHandle);
-  return orig::CYyModelDt_PrepareRenderState(v7, a2, a3, a4, a5, (int)self);
+  uint8_t *modelResourceHandle;
+  modelResourceHandle = (uint8_t *)orig::ResourceHandle_Deref(this->modelResourceHandle);
+  return orig::CYyModelDt_PrepareRenderState(modelResourceHandle, arg1, arg2, arg3, arg4, (int)self);
 }
 
 // FUNCTION: FFXIMAIN 0x10025060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-unsigned __int16 CYyModelDt::PrepareRenderStateSimpleEntry(int a2, int a3, int a4, int a5, int a6)
+unsigned short CYyModelDt::PrepareRenderStateSimpleEntry(int arg1, int arg2, int arg3, int arg4, int arg5)
 {
   int * self = reinterpret_cast<int *>(this);  // byte-exact view for the rest
-  void *v6;
-  v6 = (void *)orig::ResourceHandle_Deref(this->modelResourceHandle);
-  return orig::CYyModelDt_PrepareRenderStateSimple(v6, a2, a3, a4, (int)self);
+  void *modelResourceHandle;
+  modelResourceHandle = (void *)orig::ResourceHandle_Deref(this->modelResourceHandle);
+  return orig::CYyModelDt_PrepareRenderStateSimple(modelResourceHandle, arg1, arg2, arg3, (int)self);
 }
 
 // FUNCTION: FFXIMAIN 0x100251A0
 // GATE: PASS -- 100 trials, 67 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 67
-int CYyModelDt::MarkReferencedBones(int a2)
+int CYyModelDt::MarkReferencedBones(int arg1)
 {
-  int v2;
-  int v3;
+  int modelResourceHandle;
+  int i2;
   int i;
-  int v5;
-  v2 = this->modelResourceHandle;
-  if ( v2 == 0 )
+  int i3;
+  modelResourceHandle = this->modelResourceHandle;
+  if ( modelResourceHandle == 0 )
     return 0;
-  v3 = orig::ResourceHandle_Deref(v2);
-  if ( v3 == 0 )
+  i2 = orig::ResourceHandle_Deref(modelResourceHandle);
+  if ( i2 == 0 )
     return 0;
   for ( i = 0;
-        (unsigned __int16)i < *(_WORD *)(v3 + 64);
-        *(_BYTE *)(*(unsigned __int16 *)(*(_DWORD *)(v3 + 60) + 2 * v5) + a2) = 0x80 )
+        (unsigned short)i < *(uint16_t *)(i2 + 64);
+        *(uint8_t *)(*(unsigned short *)(*(uint32_t *)(i2 + 60) + 2 * i3) + arg1) = 0x80 )
   {
-    v5 = (unsigned __int16)i++;
+    i3 = (unsigned short)i++;
   }
-  return *(unsigned __int16 *)(v3 + 64);
+  return *(unsigned short *)(i2 + 64);
 }
 
 // FUNCTION: FFXIMAIN 0x10029880
@@ -79,7 +79,7 @@ char ** __cdecl CYyModelDt::GetRuntimeClass()
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 void __thiscall CYyModelDt::InitBase(void * self)
 {
-  *(uint8_t ***)self = &PTR_FUN_1032a6dc;
+  *(uint8_t ***)self = &g_1032A6DC;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 8) = 0;
   *(uint32_t *)((int)self + 0xc) = 0;
@@ -95,10 +95,10 @@ void __thiscall CYyModelDt::InitBase(void * self)
 
 // FUNCTION: FFXIMAIN 0x10029C90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 * __thiscall CYyModelDt::Init(void * self)
+bits32 * __thiscall CYyModelDt::Init(void * self)
 {
   orig::CYyModelDt_InitBase((void *)((int)self + 0x10));
-  *(uint8_t ***)self = &PTR_CYyModelDt_GetRuntimeClass_1032a6e0;
+  *(uint8_t ***)self = &ptr_to_CYyModelDt_GetRuntimeClass_1032A6E0;
   *(uint32_t *)((int)self + 4) = 0;
   *(uint32_t *)((int)self + 8) = 0;
   *(uint32_t *)((int)self + 0xc) = 0;
@@ -107,178 +107,178 @@ undefined4 * __thiscall CYyModelDt::Init(void * self)
 
 // FUNCTION: FFXIMAIN 0x10029CB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CYyModelDt::ScalarDeletingDtor(char a1)
+uint32_t * CYyModelDt::ScalarDeletingDtor(char arg1)
 {
-  int v2;
-  orig::CYyModelDtBase_Destructor(this, v2);
-  if ( (a1 & 1) != 0 )
-    orig::thunk_sub_10028AA0((int)this);
-  return(_DWORD*)(&(*(CYyModelDt_vtbl * *)&this->vftable));
+  int i1;
+  orig::CYyModelDtBase_Destructor(this, i1);
+  if ( (arg1 & 1) != 0 )
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0((int)this);
+  return(uint32_t*)(&(*(CYyModelDt_vtbl * *)&this->vftable));
 }
 
 // FUNCTION: FFXIMAIN 0x1002A000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-void __thiscall CYyModelDt::PrepareRenderStateV2Entry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 * param_5, undefined4 * param_6)
+void __thiscall CYyModelDt::PrepareRenderStateV2Entry(void * self, bits32 arg2, bits32 arg3, bits32 _180, bits32 arg5, bits32 * arg6, bits32 * arg7)
 {
-  void *this_00;
+  void *obj1;
   
-  this_00 = (void *)orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
-  orig::CYyModelDt_SkinAndDrawV2(this_00,param_1,param_2,param_3,param_4,param_5,param_6);
+  obj1 = (void *)orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
+  orig::CYyModelDt_SkinAndDrawV2(obj1,arg2,arg3,_180,arg5,arg6,arg7);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A040
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CYyModelDt::PrepareRenderStateV2SimpleEntry(void * self, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5)
+bits32 __thiscall CYyModelDt::PrepareRenderStateV2SimpleEntry(void * self, bits32 arg2, bits32 arg3, bits32 arg4, bits32 arg5, bits32 arg6)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
-  orig::FUN_10030bd0(param_1,param_2,param_3,param_4,param_5);
-  return uVar1;
+  u1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
+  orig::game_10030BD0(arg2,arg3,arg4,arg5,arg6);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1002A080
 // GATE: PASS -- 100 trials, 80 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 80
-undefined4 __thiscall CYyModelDt::GetResourceWord5E(void * self)
+bits32 __thiscall CYyModelDt::GetResourceWord5E(void * self)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
-  return *(uint32_t *)(iVar1 + 0x5e);
+  i1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self + 8));
+  return *(uint32_t *)(i1 + 0x5e);
 }
 
 // FUNCTION: FFXIMAIN 0x1002DC10
 // GATE: PASS -- 100 trials, 60 returned normally, 967 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 60
-__int16 CYyModelDt::SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, _DWORD *a7)
+short CYyModelDt::SkinAndDrawV2(int arg1, int arg2, int _180, int arg4, uint32_t *arg5, uint32_t *arg6)
 {
   int self = reinterpret_cast<int>(this);  // byte-exact view for the rest
-  unsigned __int8 v8;
-  int v9;
-  int v10;
-  int v11;
-  unsigned int v12;
-  _BYTE *v13;
-  int v14;
-  int v15;
-  char v16;
-  float *v17;
-  __int64 v18; // rax
-  __int64 v19; // rax
-  __int64 v20; // rax
-  int v21;
-  IDirect3DBaseTexture8 *v22;
-  int v23;
-  int v24;
-  IDirect3DBaseTexture8 *v25;
-  int v26;
-  int v27;
-  bool v29;
-  unsigned __int8 v30;
-  int a4;
-  _WORD *v32;
-  int a1;
+  unsigned char c1;
+  int startIndex;
+  int i2;
+  int i3;
+  unsigned int Value;
+  uint8_t *p1;
+  int i4;
+  int i5;
+  char c2;
+  float *p2;
+  long long i6; // rax
+  long long i7; // rax
+  long long i8; // rax
+  int i9;
+  IDirect3DBaseTexture8 *p3;
+  int i10;
+  int i11;
+  IDirect3DBaseTexture8 *p4;
+  int primCount;
+  int i13;
+  bool b1;
+  unsigned char c3;
+  int i14;
+  uint16_t *p5;
+  int i15;
   int a1a;
-  unsigned int v36;
-  float *v37;
-  int v38;
-  float v39[11];
+  unsigned int u2;
+  float *p6;
+  int i16;
+  float buf1[11];
   orig::Gfx_SetVertexShaderCached(0);
   g_boneWeightMatrixTableCur = g_boneWeightMatrixTable;
-  v8 = (*(unsigned __int8 *)((char *)g_pCDx + 0x921));
-  *a6 = 0;
-  v30 = v8;
-  *a7 = 0;
-  v32 = *(_WORD **)(self + 54);
-  dword_1045B618 = **(_DWORD **)(self + 66);
-  v9 = 0;
-  v29 = false;
-  v10 = at<uint32_t>(this, 0x5E);
-  dword_1045B620 = at<uint32_t>(this, 0x48);
-  a4 = 0;
-  dword_1045B61C = dword_1045B620 + 4 * **(unsigned __int16 **)(self + 66);
-  v11 = *(_DWORD *)(v10 + 64);
-  if ( v11 == 0 )
-    return v11;
-  v11 = *(_DWORD *)(v10 + 76);
-  if ( v11 == 0 )
-    return v11;
-  if ( g_skinningCapabilityFlag != 0 || *(_BYTE *)(a3 + 184) != 1 )
+  c1 = (*(unsigned char *)((char *)g_pCDx + 0x921));
+  *arg5 = 0;
+  c3 = c1;
+  *arg6 = 0;
+  p5 = *(uint16_t **)(self + 54);
+  g_1045B618 = **(uint32_t **)(self + 66);
+  startIndex = 0;
+  b1 = false;
+  i2 = at<uint32_t>(this, 0x5E);
+  g_1045B620 = at<uint32_t>(this, 0x48);
+  i14 = 0;
+  g_1045B61C = g_1045B620 + 4 * **(unsigned short **)(self + 66);
+  i3 = *(uint32_t *)(i2 + 64);
+  if ( i3 == 0 )
+    return i3;
+  i3 = *(uint32_t *)(i2 + 76);
+  if ( i3 == 0 )
+    return i3;
+  if ( g_skinningCapabilityFlag != 0 || *(uint8_t *)(arg2 + 184) != 1 )
   {
-    v11 = *(_DWORD *)(v10 + 68);
-    if ( v11 == 0 )
-      return v11;
-    v11 = *(_DWORD *)(v10 + 72);
-    if ( v11 == 0 )
-      return v11;
-    while ( (*(int (__stdcall **)(_DWORD, _DWORD, int, int, int))(**(_DWORD **)(v10 + 68) + 44))(
-              *(_DWORD *)(v10 + 68),
+    i3 = *(uint32_t *)(i2 + 68);
+    if ( i3 == 0 )
+      return i3;
+    i3 = *(uint32_t *)(i2 + 72);
+    if ( i3 == 0 )
+      return i3;
+    while ( (*(int (__stdcall **)(uint32_t, uint32_t, int, int, int))(**(uint32_t **)(i2 + 68) + 44))(
+              *(uint32_t *)(i2 + 68),
               0,
-              12 * *(_DWORD *)(v10 + 88),
-              v10 + 142,
+              12 * *(uint32_t *)(i2 + 88),
+              i2 + 142,
               0x2000) != 0 )
       Sleep(0);
-    *(_DWORD *)(v10 + 146) = 0;
-    while ( (*(int (__stdcall **)(_DWORD, _DWORD, int, int, int))(**(_DWORD **)(v10 + 72) + 44))(
-              *(_DWORD *)(v10 + 72),
+    *(uint32_t *)(i2 + 146) = 0;
+    while ( (*(int (__stdcall **)(uint32_t, uint32_t, int, int, int))(**(uint32_t **)(i2 + 72) + 44))(
+              *(uint32_t *)(i2 + 72),
               0,
-              12 * *(_DWORD *)(v10 + 88),
-              v10 + 146,
+              12 * *(uint32_t *)(i2 + 88),
+              i2 + 146,
               0x2000) != 0 )
       Sleep(0);
     if ( (this->extraStreamFlags & 1) != 0 )
     {
-      if ( *(_DWORD *)(v10 + 80) == 0 || *(_DWORD *)(v10 + 84) == 0 )
+      if ( *(uint32_t *)(i2 + 80) == 0 || *(uint32_t *)(i2 + 84) == 0 )
       {
-        while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 68) + 48))(*(_DWORD *)(v10 + 68)) != 0 )
+        while ( (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 68) + 48))(*(uint32_t *)(i2 + 68)) != 0 )
           Sleep(0);
         while ( 1 )
         {
-          v11 = (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 72) + 48))(*(_DWORD *)(v10 + 72));
-          if ( v11 == 0 )
+          i3 = (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 72) + 48))(*(uint32_t *)(i2 + 72));
+          if ( i3 == 0 )
             break;
           Sleep(0);
         }
-        return v11;
+        return i3;
       }
-      while ( (*(int (__stdcall **)(_DWORD, _DWORD, int, int, int))(**(_DWORD **)(v10 + 80) + 44))(
-                *(_DWORD *)(v10 + 80),
+      while ( (*(int (__stdcall **)(uint32_t, uint32_t, int, int, int))(**(uint32_t **)(i2 + 80) + 44))(
+                *(uint32_t *)(i2 + 80),
                 0,
-                12 * *(_DWORD *)(v10 + 88),
-                v10 + 150,
+                12 * *(uint32_t *)(i2 + 88),
+                i2 + 150,
                 0x2000) != 0 )
         Sleep(0);
-      *(_DWORD *)(v10 + 154) = 0;
-      while ( (*(int (__stdcall **)(_DWORD, _DWORD, int, int, int))(**(_DWORD **)(v10 + 84) + 44))(
-                *(_DWORD *)(v10 + 84),
+      *(uint32_t *)(i2 + 154) = 0;
+      while ( (*(int (__stdcall **)(uint32_t, uint32_t, int, int, int))(**(uint32_t **)(i2 + 84) + 44))(
+                *(uint32_t *)(i2 + 84),
                 0,
-                12 * *(_DWORD *)(v10 + 88),
-                v10 + 154,
+                12 * *(uint32_t *)(i2 + 88),
+                i2 + 154,
                 0x2000) != 0 )
         Sleep(0);
     }
     orig::Model_SkinVerticesCpu((char *)self);
-    *(_BYTE *)(a3 + 184) = 1;
-    while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 68) + 48))(*(_DWORD *)(v10 + 68)) != 0 )
+    *(uint8_t *)(arg2 + 184) = 1;
+    while ( (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 68) + 48))(*(uint32_t *)(i2 + 68)) != 0 )
       Sleep(0);
-    while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 72) + 48))(*(_DWORD *)(v10 + 72)) != 0 )
+    while ( (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 72) + 48))(*(uint32_t *)(i2 + 72)) != 0 )
       Sleep(0);
     if ( (this->extraStreamFlags & 1) != 0 )
     {
-      while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 80) + 48))(*(_DWORD *)(v10 + 80)) != 0 )
+      while ( (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 80) + 48))(*(uint32_t *)(i2 + 80)) != 0 )
         Sleep(0);
-      while ( (*(int (__stdcall **)(_DWORD))(**(_DWORD **)(v10 + 84) + 48))(*(_DWORD *)(v10 + 84)) != 0 )
+      while ( (*(int (__stdcall **)(uint32_t))(**(uint32_t **)(i2 + 84) + 48))(*(uint32_t *)(i2 + 84)) != 0 )
         Sleep(0);
     }
   }
-  a1 = 0;
-  v12 = (unsigned __int8)((unsigned int)(g_modelColor * c_ps2White) >> 7)
-      | (((HIWORD(g_modelColor) * HIWORD(c_ps2White)) & 0x7F80 | 0xFFC00000) << 9)
-      | ((unsigned __int16)((unsigned int)g_modelColor >> 8) * (((unsigned int)c_ps2White >> 7) & 0xFFFE)) & 0xFF00;
-  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, v12);
+  i15 = 0;
+  Value = (unsigned char)((unsigned int)(g_modelColor * c_ps2White) >> 7)
+      | ((((*((uint16_t *)&(g_modelColor) + sizeof(g_modelColor) / 2 - 1)) * (*((uint16_t *)&(c_ps2White) + sizeof(c_ps2White) / 2 - 1))) & 0x7F80 | 0xFFC00000) << 9)
+      | ((unsigned short)((unsigned int)g_modelColor >> 8) * (((unsigned int)c_ps2White >> 7) & 0xFFFE)) & 0xFF00;
+  (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
   (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, nullptr);
   CYyModelDt_SkinAndDrawV2_passToken = 0;
-  dword_1045B64C = 0;
+  g_1045B64C = 0;
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
   (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
@@ -290,381 +290,381 @@ __int16 CYyModelDt::SkinAndDrawV2(int a2, int a3, int _180, int a5, _DWORD *a6, 
   switch ( this->renderVariant )
   {
     case 2:
-      *(_BYTE *)(a3 + 169) = 1;
+      *(uint8_t *)(arg2 + 169) = 1;
       break;
     case 3:
-      *(_BYTE *)(a3 + 169) = 1;
-      *(_BYTE *)(a3 + 170) = 1;
+      *(uint8_t *)(arg2 + 169) = 1;
+      *(uint8_t *)(arg2 + 170) = 1;
       break;
     case 4:
-      *(_BYTE *)(a3 + 169) = 1;
-      *(_BYTE *)(a3 + 170) = 1;
-      *(_BYTE *)(a3 + 171) = 1;
+      *(uint8_t *)(arg2 + 169) = 1;
+      *(uint8_t *)(arg2 + 170) = 1;
+      *(uint8_t *)(arg2 + 171) = 1;
       break;
     case 5:
-      *(_BYTE *)(a3 + 169) = 1;
-      *(_BYTE *)(a3 + 170) = 1;
-      *(_BYTE *)(a3 + 171) = 1;
-      *(_BYTE *)(a3 + 176) = 1;
-      *(_BYTE *)(a3 + 172) = 1;
+      *(uint8_t *)(arg2 + 169) = 1;
+      *(uint8_t *)(arg2 + 170) = 1;
+      *(uint8_t *)(arg2 + 171) = 1;
+      *(uint8_t *)(arg2 + 176) = 1;
+      *(uint8_t *)(arg2 + 172) = 1;
       break;
     case 6:
-      *(_BYTE *)(a3 + 169) = 1;
-      *(_BYTE *)(a3 + 170) = 1;
-      *(_BYTE *)(a3 + 171) = 1;
-      *(_BYTE *)(a3 + 176) = 1;
+      *(uint8_t *)(arg2 + 169) = 1;
+      *(uint8_t *)(arg2 + 170) = 1;
+      *(uint8_t *)(arg2 + 171) = 1;
+      *(uint8_t *)(arg2 + 176) = 1;
       break;
     case 0x12:
-      *(_BYTE *)(a3 + 173) = 1;
+      *(uint8_t *)(arg2 + 173) = 1;
       break;
     case 0x22:
-      *(_BYTE *)(a3 + 175) = 1;
+      *(uint8_t *)(arg2 + 175) = 1;
       break;
     case 0x32:
-      *(_BYTE *)(a3 + 174) = 1;
+      *(uint8_t *)(arg2 + 174) = 1;
       break;
     default:
       break;
   }
-  v13 =(_BYTE*)(v32);
-  v11 = (int)(((uint32_t)(v11) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(*v32) << 0));
-  while ( *v32 != 0xFFFF )
+  p1 =(uint8_t*)(p5);
+  i3 = (int)(((uint32_t)(i3) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(*p5) << 0));
+  while ( *p5 != 0xFFFF )
   {
-    if ( (v11 & 0x8000) == 0 )
+    if ( (i3 & 0x8000) == 0 )
     {
-      v26 = (unsigned __int16)v32[1];
-      if ( (unsigned __int16)v11 > 0x4353u )
+      primCount = (unsigned short)p5[1];
+      if ( (unsigned short)i3 > 0x4353u )
       {
-        if ( (unsigned __int16)v11 == 21587 )
+        if ( (unsigned short)i3 == 21587 )
         {
-          if ( *(_BYTE *)(v10 + 104) != 0 )
+          if ( *(uint8_t *)(i2 + 104) != 0 )
           {
-            if ( !v29 )
+            if ( !b1 )
             {
-              orig::Gfx_SetVertexShaderCached(*(_DWORD *)(v10 + 100));
-              orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-              orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-              orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+              orig::Gfx_SetVertexShaderCached(*(uint32_t *)(i2 + 100));
+              orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+              orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+              orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
               orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-              (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+              (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
               orig::CDx_DrawIndexedPrimitive(
                 g_pCDx,
                 5,
                 0,
-                *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                v9,
-                v26);
+                *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                startIndex,
+                primCount);
               ++g_modelDrawCallCount;
-              g_modelPrimitiveCount += v26;
+              g_modelPrimitiveCount += primCount;
               if ( (this->extraStreamFlags & 1) != 0 )
               {
-                orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                 orig::CDx_DrawIndexedPrimitive(
                   g_pCDx,
                   5,
                   0,
-                  *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                  v9,
-                  v26);
-                g_modelPrimitiveCount += v26;
+                  *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                  startIndex,
+                  primCount);
+                g_modelPrimitiveCount += primCount;
                 ++g_modelDrawCallCount;
               }
-LABEL_125:
+L1:
               if ( g_envMapEnabled != 0
-                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, v12, (float *)g_envMapTexMatrix) != 0 )
+                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, Value, (float *)g_envMapTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     5,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       5,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
-                orig::EnvMap_EndPass(a1);
+                orig::EnvMap_EndPass(i15);
               }
               if ( g_projTexEnabled != 0
-                && orig::ProjTex_BeginPass((_DWORD *)(a3 + 144), &CYyModelDt_SkinAndDrawV2_passToken, v12, g_projTexMatrix) != 0 )
+                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, Value, g_projTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     5,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       5,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
-                orig::ProjTex_EndPass((void *)(a3 + 144), a1);
+                orig::ProjTex_EndPass((void *)(arg2 + 144), i15);
               }
-              if ( orig::Model_BeginOffscreenPass(a3 + 72, &CYyModelDt_SkinAndDrawV2_passToken, v12) != 0 )
+              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, Value) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
-                  v9 = a4;
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
+                  startIndex = i14;
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     5,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       5,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 else
                 {
-                  v9 = a4;
+                  startIndex = i14;
                 }
-                orig::Model_EndOffscreenPassBindTextures((_DWORD *)(a3 + 72), a1);
+                orig::Model_EndOffscreenPassBindTextures((uint32_t *)(arg2 + 72), i15);
               }
               else
               {
-                v9 = a4;
+                startIndex = i14;
               }
             }
           }
-          else if ( !v29 )
+          else if ( !b1 )
           {
-            goto LABEL_125;
+            goto L1;
           }
-          v27 = v26 + 2;
-          *a7 += v26 + 2;
-          v32 += 5 * v26 + 12;
-          goto LABEL_145;
+          i13 = primCount + 2;
+          *arg6 += primCount + 2;
+          p5 += 5 * primCount + 12;
+          goto L2;
         }
       }
       else
       {
-        switch ( (unsigned __int16)v11 )
+        switch ( (unsigned short)i3 )
         {
           case 0x4353u:
-            v32 += v26 + 6;
+            p5 += primCount + 6;
             break;
           case 0x43u:
-            v32 += 5 * v26 + 2;
+            p5 += 5 * primCount + 2;
             break;
           case 0x54u:
-            v38 = 3 * v26;
-            if ( *(_BYTE *)(v10 + 104) != 0 )
+            i16 = 3 * primCount;
+            if ( *(uint8_t *)(i2 + 104) != 0 )
             {
-              if ( !v29 )
+              if ( !b1 )
               {
-                orig::Gfx_SetVertexShaderCached(*(_DWORD *)(v10 + 100));
-                orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                orig::Gfx_SetVertexShaderCached(*(uint32_t *)(i2 + 100));
+                orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                 orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+                (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
                 orig::CDx_DrawIndexedPrimitive(
                   g_pCDx,
                   4,
                   0,
-                  *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                  v9,
-                  v26);
-                g_modelPrimitiveCount += v26;
+                  *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                  startIndex,
+                  primCount);
+                g_modelPrimitiveCount += primCount;
                 ++g_modelDrawCallCount;
                 if ( (this->extraStreamFlags & 1) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     4,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    v9,
-                    v26);
-                  g_modelPrimitiveCount += v26;
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    startIndex,
+                    primCount);
+                  g_modelPrimitiveCount += primCount;
                   ++g_modelDrawCallCount;
                 }
               }
-              v32 += 15 * v26 + 2;
+              p5 += 15 * primCount + 2;
             }
-            if ( !v29 )
+            if ( !b1 )
             {
               if ( g_envMapEnabled != 0
-                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, v12, (float *)g_envMapTexMatrix) != 0 )
+                && orig::EnvMap_BeginPass(&CYyModelDt_SkinAndDrawV2_passToken, Value, (float *)g_envMapTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     4,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       4,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
-                orig::EnvMap_EndPass(a1);
+                orig::EnvMap_EndPass(i15);
               }
               if ( g_projTexEnabled != 0
-                && orig::ProjTex_BeginPass((_DWORD *)(a3 + 144), &CYyModelDt_SkinAndDrawV2_passToken, v12, g_projTexMatrix) != 0 )
+                && orig::ProjTex_BeginPass((uint32_t *)(arg2 + 144), &CYyModelDt_SkinAndDrawV2_passToken, Value, g_projTexMatrix) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     4,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       4,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
-                orig::ProjTex_EndPass((void *)(a3 + 144), a1);
+                orig::ProjTex_EndPass((void *)(arg2 + 144), i15);
               }
-              if ( orig::Model_BeginOffscreenPass(a3 + 72, &CYyModelDt_SkinAndDrawV2_passToken, v12) != 0 )
+              if ( orig::Model_BeginOffscreenPass(arg2 + 72, &CYyModelDt_SkinAndDrawV2_passToken, Value) != 0 )
               {
                 orig::Gfx_ApplyCachedVertexShader();
-                if ( *(_BYTE *)(v10 + 104) != 0 )
+                if ( *(uint8_t *)(i2 + 104) != 0 )
                 {
-                  orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 68), 12);
-                  orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 72), 12);
-                  orig::Gfx_SetStreamSourceCached(2u, *(_DWORD *)(v10 + 76), 8);
+                  orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 68), 12);
+                  orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 72), 12);
+                  orig::Gfx_SetStreamSourceCached(2u, *(uint32_t *)(i2 + 76), 8);
                   orig::Gfx_SetStreamSourceCached(3u, 0, 0);
-                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(v10 + 64), 0);
-                  v9 = a4;
+                  (g_pCDx->pDevice)->lpVtbl->SetIndices((g_pCDx->pDevice), *(IDirect3DIndexBuffer8 **)(i2 + 64), 0);
+                  startIndex = i14;
                   orig::CDx_DrawIndexedPrimitive(
                     g_pCDx,
                     4,
                     0,
-                    *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                    a4,
-                    v26);
+                    *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                    i14,
+                    primCount);
                   ++g_modelDrawCallCount;
                   if ( (this->extraStreamFlags & 1) != 0 )
                   {
-                    orig::Gfx_SetStreamSourceCached(0, *(_DWORD *)(v10 + 80), 12);
-                    orig::Gfx_SetStreamSourceCached(1u, *(_DWORD *)(v10 + 84), 12);
+                    orig::Gfx_SetStreamSourceCached(0, *(uint32_t *)(i2 + 80), 12);
+                    orig::Gfx_SetStreamSourceCached(1u, *(uint32_t *)(i2 + 84), 12);
                     orig::CDx_DrawIndexedPrimitive(
                       g_pCDx,
                       4,
                       0,
-                      *(_DWORD *)(v10 + 96) + (unsigned __int16)dword_1045B618 + HIWORD(dword_1045B618),
-                      a4,
-                      v26);
+                      *(uint32_t *)(i2 + 96) + (unsigned short)g_1045B618 + (*((uint16_t *)&(g_1045B618) + sizeof(g_1045B618) / 2 - 1)),
+                      i14,
+                      primCount);
                     ++g_modelDrawCallCount;
                   }
                 }
                 else
                 {
-                  v9 = a4;
+                  startIndex = i14;
                 }
-                orig::Model_EndOffscreenPassBindTextures((_DWORD *)(a3 + 72), a1);
-                v27 = 3 * v26;
-                *a6 += v38;
-                goto LABEL_145;
+                orig::Model_EndOffscreenPassBindTextures((uint32_t *)(arg2 + 72), i15);
+                i13 = 3 * primCount;
+                *arg5 += i16;
+                goto L2;
               }
-              v9 = a4;
+              startIndex = i14;
             }
-            v27 = 3 * v26;
-            *a6 += v38;
-LABEL_145:
-            v9 += v27;
-            a4 = v9;
+            i13 = 3 * primCount;
+            *arg5 += i16;
+L2:
+            startIndex += i13;
+            i14 = startIndex;
             break;
           default:
             break;
@@ -673,76 +673,76 @@ LABEL_145:
     }
     else
     {
-      v14 = (unsigned __int8)v11 >> 4;
-      if ( v14 == 0 )
+      i4 = (unsigned char)i3 >> 4;
+      if ( i4 == 0 )
       {
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
         (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-        if ( (*v13 & 1) == 0 )
+        if ( (*p1 & 1) == 0 )
         {
-          v23 = orig::CYyTexMng_FindByNameInResource(g_pTextureMng, v13 + 2, self);
-          *v13 |= 1u;
-          *(_DWORD *)(v13 + 2) = v23;
+          i10 = orig::CYyTexMng_FindByNameInResource(g_pTextureMng, p1 + 2, self);
+          *p1 |= 1u;
+          *(uint32_t *)(p1 + 2) = i10;
         }
-        v24 = *(_DWORD *)(v13 + 2);
-        if ( v24 != 0 && v24 != CYyModelDt_SkinAndDrawV2_passToken )
+        i11 = *(uint32_t *)(p1 + 2);
+        if ( i11 != 0 && i11 != CYyModelDt_SkinAndDrawV2_passToken )
         {
-          CYyModelDt_SkinAndDrawV2_passToken = *(_DWORD *)(v13 + 2);
-          if ( *(_DWORD *)(v24 + 64) != 0 )
-            v25 = *(IDirect3DBaseTexture8 **)(v24 + 64);
+          CYyModelDt_SkinAndDrawV2_passToken = *(uint32_t *)(p1 + 2);
+          if ( *(uint32_t *)(i11 + 64) != 0 )
+            p4 = *(IDirect3DBaseTexture8 **)(i11 + 64);
           else
-            v25 = *(IDirect3DBaseTexture8 **)(v24 + 68);
-          (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, v25);
+            p4 = *(IDirect3DBaseTexture8 **)(i11 + 68);
+          (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 0, p4);
         }
-        v32 =(_WORD*)(v13 + 18);
-        goto LABEL_146;
+        p5 =(uint16_t*)(p1 + 18);
+        goto L3;
       }
-      if ( v14 == 1 )
+      if ( i4 == 1 )
       {
-        qmemcpy(v39, v32 + 1, sizeof(v39));
-        v15 = (LODWORD(v39[3]) >> 8) & 0xF;
-        if ( *(_BYTE *)(v10 + 105) != 0 && LOWORD(v39[7]) != 0 )
-          v15 = 8;
+        memcpy(buf1, p5 + 1, sizeof(buf1));
+        i5 = ((*(uint32_t *)&(buf1[3])) >> 8) & 0xF;
+        if ( *(uint8_t *)(i2 + 105) != 0 && (*(uint16_t *)&(buf1[7])) != 0 )
+          i5 = 8;
         a1a = 0;
-        v16 = *(_BYTE *)(v15 + a3 + 168);
-        v17 = &g_lightTable_Start;
-        v29 = v16 != 0;
-        v37 = &g_lightTable_Start;
+        c2 = *(uint8_t *)(i5 + arg2 + 168);
+        p2 = &g_lightTable_Start;
+        b1 = c2 != 0;
+        p6 = &g_lightTable_Start;
         do
         {
-          if ( *(_DWORD *)v17 != 0 )
+          if ( *(uint32_t *)p2 != 0 )
           {
-            qmemcpy(&g_skinLight, v37, 0x68u);
-            g_skinLightDiffuseR = v39[4] * g_skinLightDiffuseR;
-            g_skinLightDiffuseG = v39[4] * g_skinLightDiffuseG;
-            g_skinLightDiffuseB = v39[4] * g_skinLightDiffuseB;
+            memcpy(&g_skinLight, p6, 0x68u);
+            g_skinLightDiffuseR = buf1[4] * g_skinLightDiffuseR;
+            g_skinLightDiffuseG = buf1[4] * g_skinLightDiffuseG;
+            g_skinLightDiffuseB = buf1[4] * g_skinLightDiffuseB;
             orig::CDx_SetLight(g_pCDx, a1a, &g_skinLight);
-            v17 = v37;
+            p2 = p6;
           }
-          v17 += 26;
+          p2 += 26;
           ++a1a;
-          v37 = v17;
+          p6 = p2;
         }
-        while ( (int)v17 < (int)&g_lightTable_End );
-        v18 = (__int64)((double)(unsigned __int8)g_ambientColorR * v39[4]);
-        if ( (unsigned int)v18 > 0xFF )
-          v18 = (__int64)(((uint64_t)(v18) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
-        v36 = (unsigned int)(((uint32_t)(v36) & 0xFF00FFFFu) | ((uint32_t)(uint8_t)(v18) << 16));
-        v19 = (__int64)((double)(unsigned __int8)g_ambientColorG * v39[4]);
-        if ( (unsigned int)v19 > 0xFF )
-          v19 = (__int64)(((uint64_t)(v19) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
-        v36 = (unsigned int)(((uint32_t)(v36) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)(v19) << 8));
-        v20 = (__int64)((double)g_ambientColor_as_u8 * v39[4]);
-        if ( (unsigned int)v20 > 0xFF )
-          v20 = (__int64)(((uint64_t)(v20) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
-        v36 = (unsigned int)(((uint32_t)(v36) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(v20) << 0));
-        v36 = (unsigned int)(((uint32_t)(v36) & 0xFFFFFFu) | ((uint32_t)(uint8_t)(g_ambientColorA) << 24));
-        (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, v36);
-        if ( HIWORD(v39[3]) != 0 && dword_1045745C != 0 && *(_DWORD *)dword_1045745C != 0 && v30 == 1 )
+        while ( (int)p2 < (int)&g_lightTable_End );
+        i6 = (long long)((double)(unsigned char)g_ambientColorR * buf1[4]);
+        if ( (unsigned int)i6 > 0xFF )
+          i6 = (long long)(((uint64_t)(i6) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
+        u2 = (unsigned int)(((uint32_t)(u2) & 0xFF00FFFFu) | ((uint32_t)(uint8_t)(i6) << 16));
+        i7 = (long long)((double)(unsigned char)g_ambientColorG * buf1[4]);
+        if ( (unsigned int)i7 > 0xFF )
+          i7 = (long long)(((uint64_t)(i7) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
+        u2 = (unsigned int)(((uint32_t)(u2) & 0xFFFF00FFu) | ((uint32_t)(uint8_t)(i7) << 8));
+        i8 = (long long)((double)g_ambientColor_as_u8 * buf1[4]);
+        if ( (unsigned int)i8 > 0xFF )
+          i8 = (long long)(((uint64_t)(i8) & 0xFFFFFFFFFFFFFF00ull) | ((uint64_t)(uint8_t)(-1) << 0));
+        u2 = (unsigned int)(((uint32_t)(u2) & 0xFFFFFF00u) | ((uint32_t)(uint8_t)(i8) << 0));
+        u2 = (unsigned int)(((uint32_t)(u2) & 0xFFFFFFu) | ((uint32_t)(uint8_t)(g_ambientColorA) << 24));
+        (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_AMBIENT, u2);
+        if ( (*((uint16_t *)&(buf1[3]) + sizeof(buf1[3]) / 2 - 1)) != 0 && g_1045745C != 0 && *(uint32_t *)g_1045745C != 0 && c3 == 1 )
         {
-          a1 = 2;
-          v12 = ((unsigned int)(__int64)(v39[9] * 0.5) << 24) | v12 & 0xFFFFFF;
-          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, v12);
+          i15 = 2;
+          Value = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | Value & 0xFFFFFF;
+          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG2, D3DTA_TEXTURE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_ADD);
@@ -750,44 +750,44 @@ LABEL_145:
           (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE1, g_texture1Matrix);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT3);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACENORMAL | 1);
-          dword_1045B64C = 0;
-          if ( dword_1045745C == 0 )
-            goto LABEL_77;
-          if ( *(_DWORD *)dword_1045745C == 0 )
-            goto LABEL_77;
-          v21 = *(_DWORD *)(*(_DWORD *)dword_1045745C + 48);
-          if ( v21 == 0 )
-            goto LABEL_77;
-          dword_1045B64C = *(_DWORD *)(*(_DWORD *)dword_1045745C + 48);
-          if ( *(_DWORD *)(v21 + 64) != 0 )
-            v22 = *(IDirect3DBaseTexture8 **)(v21 + 64);
+          g_1045B64C = 0;
+          if ( g_1045745C == 0 )
+            goto L4;
+          if ( *(uint32_t *)g_1045745C == 0 )
+            goto L4;
+          i9 = *(uint32_t *)(*(uint32_t *)g_1045745C + 48);
+          if ( i9 == 0 )
+            goto L4;
+          g_1045B64C = *(uint32_t *)(*(uint32_t *)g_1045745C + 48);
+          if ( *(uint32_t *)(i9 + 64) != 0 )
+            p3 = *(IDirect3DBaseTexture8 **)(i9 + 64);
           else
-            v22 = *(IDirect3DBaseTexture8 **)(v21 + 68);
+            p3 = *(IDirect3DBaseTexture8 **)(i9 + 68);
         }
         else
         {
-          if ( v39[10] == 0.0 || v30 != 1 )
+          if ( buf1[10] == 0.0 || c3 != 1 )
           {
-            a1 = 0;
+            i15 = 0;
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG2, D3DTA_TFACTOR);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_MODULATE4X);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
             (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXCOORDINDEX, 0);
-            v12 = (unsigned __int8)((unsigned int)(g_modelColor * LODWORD(v39[0])) >> 7)
-                | (HIWORD(g_modelColor) * ((LODWORD(v39[0]) >> 7) & 0x1FFFE00)) & 0xFF0000
-                | ((unsigned __int16)((unsigned int)g_modelColor >> 8) * ((LODWORD(v39[0]) >> 7) & 0xFFFE)) & 0xFF00
+            Value = (unsigned char)((unsigned int)(g_modelColor * (*(uint32_t *)&(buf1[0]))) >> 7)
+                | ((*((uint16_t *)&(g_modelColor) + sizeof(g_modelColor) / 2 - 1)) * (((*(uint32_t *)&(buf1[0])) >> 7) & 0x1FFFE00)) & 0xFF0000
+                | ((unsigned short)((unsigned int)g_modelColor >> 8) * (((*(uint32_t *)&(buf1[0])) >> 7) & 0xFFFE)) & 0xFF00
                 | 0x80000000;
-            (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, v12);
-LABEL_77:
-            v9 = a4;
-            v32 += 23;
-            goto LABEL_146;
+            (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
+L4:
+            startIndex = i14;
+            p5 += 23;
+            goto L3;
           }
-          a1 = 1;
-          v12 = ((unsigned int)(__int64)(v39[9] * 0.5) << 24) | v12 & 0xFFFFFF;
-          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, v12);
+          i15 = 1;
+          Value = ((unsigned int)(long long)(buf1[9] * 0.5) << 24) | Value & 0xFFFFFF;
+          (g_pCDx->pDevice)->lpVtbl->SetRenderState((g_pCDx->pDevice), D3DRS_TEXTUREFACTOR, Value);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLOROP, D3DTOP_MODULATEALPHA_ADDCOLOR);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_COLORARG2, D3DTA_TEXTURE);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_ALPHAOP, D3DTOP_ADD);
@@ -795,20 +795,20 @@ LABEL_77:
           (g_pCDx->pDevice)->lpVtbl->SetTransform((g_pCDx->pDevice), D3DTS_TEXTURE1, g_shadowTexMatrix);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT3);
           (g_pCDx->pDevice)->lpVtbl->SetTextureStageState((g_pCDx->pDevice), 1u, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEREFLECTIONVECTOR | 1);
-          dword_1045B64C = dword_104570F4;
-          if ( *(_DWORD *)(dword_104570F4 + 64) != 0 )
-            v22 = *(IDirect3DBaseTexture8 **)(dword_104570F4 + 64);
+          g_1045B64C = g_104570F4;
+          if ( *(uint32_t *)(g_104570F4 + 64) != 0 )
+            p3 = *(IDirect3DBaseTexture8 **)(g_104570F4 + 64);
           else
-            v22 = *(IDirect3DBaseTexture8 **)(dword_104570F4 + 68);
+            p3 = *(IDirect3DBaseTexture8 **)(g_104570F4 + 68);
         }
-        (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 1u, v22);
-        v9 = a4;
-        v32 += 23;
+        (g_pCDx->pDevice)->lpVtbl->SetTexture((g_pCDx->pDevice), 1u, p3);
+        startIndex = i14;
+        p5 += 23;
       }
     }
-LABEL_146:
-    v13 =(_BYTE*)(v32);
-    v11 = (int)(((uint32_t)(v11) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(*v32) << 0));
+L3:
+    p1 =(uint8_t*)(p5);
+    i3 = (int)(((uint32_t)(i3) & 0xFFFF0000u) | ((uint32_t)(uint16_t)(*p5) << 0));
   }
-  return v11;
+  return i3;
 }

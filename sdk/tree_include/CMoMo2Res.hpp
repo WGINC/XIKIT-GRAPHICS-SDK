@@ -5,14 +5,14 @@
 #pragma pack(push, 1)
 class XI_API CMoMo2Res {
 public:
-    int Slot4StoreInHandle(int a2);  // 0x10019A30
-    void Slot5Nop(int a1);  // 0x10019A40
+    int Slot4StoreInHandle(int arg1);  // 0x10019A30
+    void Slot5Nop(int arg1);  // 0x10019A40
     void Slot9Nop();  // 0x10071A00
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071AC0
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071AC0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x10];
-    _DWORD * field_14;  // +0x14
+    uint32_t * field_14;  // +0x14
     uint8_t _pad_18[0x18];
 };
 #pragma pack(pop)

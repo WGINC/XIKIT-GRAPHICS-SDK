@@ -4,50 +4,50 @@
 
 // FUNCTION: FFXIMAIN 0x102924F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 * __cdecl SqmoPlaybackChannel_Create(void)
+XI_API bits32 * __cdecl SqmoPlaybackChannel_Create(void)
 {
-  undefined4 *puVar1;
+  bits32 *p1;
   
-  puVar1 = orig::SqMem_AllocZeroed(1,0x5c,s_C__dev_dancer_modules_sqMotion_s_103bb254,0x109);
-  orig::SqmoPlaybackChannel_Init(puVar1);
-  return puVar1;
+  p1 = orig::SqMem_AllocZeroed(1,0x5c,str_C__dev_dancer_modules_sqMotion_s_103BB254,0x109);
+  orig::SqmoPlaybackChannel_Init(p1);
+  return p1;
 }
 
 // FUNCTION: FFXIMAIN 0x10292520
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmoPlaybackChannel_Init(undefined4 * param_1)
+XI_API void __cdecl SqmoPlaybackChannel_Init(bits32 * arg1)
 {
-  *param_1 = 0x50003;
-  param_1[2] = &LAB_10292590;
-  param_1[3] = XI_CODE(FUN_102925a0);
-  param_1[4] = XI_CODE(FUN_10292740);
-  param_1[5] = &LAB_10292a40;
-  param_1[6] = &LAB_10292b70;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[10] = 1;
-  param_1[9] = 0;
-  param_1[0xb] = 0;
-  param_1[0x12] = 0;
-  param_1[0xe] = 0;
-  param_1[0x11] = 0;
-  param_1[0xf] = 0;
-  param_1[0x10] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
-  param_1[0x13] = 0;
-  param_1[0x14] = 0;
-  *(uint8_t *)(param_1 + 0x15) = 0;
-  *(uint8_t *)((int)param_1 + 0x55) = 0;
-  param_1[0x16] = 0;
+  *arg1 = 0x50003;
+  arg1[2] = &code_10292590;
+  arg1[3] = XI_CODE(game_102925A0);
+  arg1[4] = XI_CODE(game_10292740);
+  arg1[5] = &code_10292A40;
+  arg1[6] = &code_10292B70;
+  arg1[7] = 0;
+  arg1[8] = 0;
+  arg1[10] = 1;
+  arg1[9] = 0;
+  arg1[0xb] = 0;
+  arg1[0x12] = 0;
+  arg1[0xe] = 0;
+  arg1[0x11] = 0;
+  arg1[0xf] = 0;
+  arg1[0x10] = 0;
+  arg1[0xc] = 0;
+  arg1[0xd] = 0;
+  arg1[0x13] = 0;
+  arg1[0x14] = 0;
+  *(uint8_t *)(arg1 + 0x15) = 0;
+  *(uint8_t *)((int)arg1 + 0x55) = 0;
+  arg1[0x16] = 0;
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10293000
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __cdecl SqmoPlaybackChannel_Update(int param_1, int param_2)
+XI_API void __cdecl SqmoPlaybackChannel_Update(int arg1, int arg2)
 {
-  orig::SqmoUtil_MarkSlot(*(int *)(param_1 + 0x50),*(int *)(param_1 + 0x1c),param_2,
-               (uint8_t *)(param_1 + 0x54));
+  orig::SqmoUtil_MarkSlot(*(int *)(arg1 + 0x50),*(int *)(arg1 + 0x1c),arg2,
+               (uint8_t *)(arg1 + 0x54));
   return;
 }

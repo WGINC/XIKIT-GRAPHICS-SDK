@@ -6,7 +6,7 @@ Group: `CYy` (by the file name only). Source: `sdk/tree_src/CYySkl.cpp`.
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CYySkl::Construct` | 0x10034230 | 26 | yes | - | Constructs the skeleton object and clears its fields. (reviewed as sub_10034230) | medium |
+| `CYySkl::Construct` | 0x10034230 | 26 | yes | - | Constructs the skeleton object and clears its fields. (reviewed as game_10034230) | medium |
 
 ## Direct calls
 

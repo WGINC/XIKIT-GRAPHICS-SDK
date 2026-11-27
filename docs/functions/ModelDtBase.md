@@ -15,5 +15,5 @@ Why the file has this name (data/unit_names.json): CYyModelDtBase_Destructor and
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `CYyModelDtBase_Destructor` calls `CMoResource::ReleaseChain`, `ResHandle_FreeIfUnreferenced`, `sub_10029C00`
+- `CYyModelDtBase_Destructor` calls `CMoResource::ReleaseChain`, `ResHandle_FreeIfUnreferenced`, `game_10029C00`
 - `ModelDtBase_GetField20` calls nothing directly

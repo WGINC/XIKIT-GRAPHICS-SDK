@@ -4,78 +4,78 @@
 
 // FUNCTION: FFXIMAIN 0x1028A0B0
 // GATE: PASS -- 100 trials, 65 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 65
-XI_API void __attribute__((cdecl, regparm(1))) Sq_PrintIndent(undefined4 xi_eax, int param_1)
+XI_API void __attribute__((cdecl, regparm(1))) Sq_PrintIndent(bits32 xi_eax, int arg2)
 {
-  if (0 < param_1) {
+  if (0 < arg2) {
     do {
       orig::sqDebugPrintf_v1(&c_strSpace_as_v0);
-      param_1 = param_1 + -1;
-    } while (param_1 != 0);
+      arg2 = arg2 + -1;
+    } while (arg2 != 0);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x1028A0E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl SqScriptRead_ReturnZero(void)
+XI_API bits32 __cdecl SqScriptRead_ReturnZero(void)
 {
   return 0;
 }
 
 // FUNCTION: FFXIMAIN 0x1028A0F0
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
-XI_API undefined4 * __cdecl SqScriptRead_ReadBlock(undefined4 * param_1, int param_2, int param_3, undefined4 * param_4, int param_5)
+XI_API bits32 * __cdecl SqScriptRead_ReadBlock(bits32 * arg1, int arg2, int arg3, bits32 * arg4, int arg5)
 {
-  uint32_t uVar1;
-  int iVar2;
-  uint32_t uVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
+  uint32_t u1;
+  int i1;
+  uint32_t u2;
+  bits32 *p1;
+  bits32 *p2;
   
-  uVar1 = param_2 * param_3;
-  puVar4 = param_4;
-  puVar5 = param_1;
-  for (uVar3 = uVar1 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *puVar5 = *puVar4;
-    puVar4 = puVar4 + 1;
-    puVar5 = puVar5 + 1;
+  u1 = arg2 * arg3;
+  p1 = arg4;
+  p2 = arg1;
+  for (u2 = u1 >> 2; u2 != 0; u2 = u2 - 1) {
+    *p2 = *p1;
+    p1 = p1 + 1;
+    p2 = p2 + 1;
   }
-  for (uVar3 = uVar1 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
-    *(uint8_t *)puVar5 = *(uint8_t *)puVar4;
-    puVar4 = (undefined4 *)((int)puVar4 + 1);
-    puVar5 = (undefined4 *)((int)puVar5 + 1);
+  for (u2 = u1 & 3; u2 != 0; u2 = u2 - 1) {
+    *(uint8_t *)p2 = *(uint8_t *)p1;
+    p1 = (bits32 *)((int)p1 + 1);
+    p2 = (bits32 *)((int)p2 + 1);
   }
-  if (param_5 != 0) {
-    orig::SqNibbleSwap_SwapNibblesXor((int)param_1,uVar1);
+  if (arg5 != 0) {
+    orig::SqNibbleSwap_SwapNibblesXor((int)arg1,u1);
   }
-  iVar2 = orig::SqScriptRead_ReturnZero();
-  if (iVar2 != 0) {
-    orig::SqIO_SwapBytes((uint8_t *)param_1,param_2,param_3,param_3);
+  i1 = orig::SqScriptRead_ReturnZero();
+  if (i1 != 0) {
+    orig::SqIO_SwapBytes((uint8_t *)arg1,arg2,arg3,arg3);
   }
-  return (undefined4 *)((int)param_4 + uVar1);
+  return (bits32 *)((int)arg4 + u1);
 }
 
 // FUNCTION: FFXIMAIN 0x1028A150
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl sqScript_TokenEquals(char * param_1, char * param_2)
+XI_API int __cdecl sqScript_TokenEquals(char * arg1, char * arg2)
 {
-  uint32_t uVar1;
-  uint32_t local_4;
+  uint32_t u1;
+  uint32_t u2;
   
-  local_4 = orig::FUN_103145a4((int)*param_1);
-  uVar1 = orig::FUN_103145a4((int)*param_2);
-  if ((char)local_4 == (char)uVar1) {
+  u2 = orig::game_103145A4((int)*arg1);
+  u1 = orig::game_103145A4((int)*arg2);
+  if ((char)u2 == (char)u1) {
     do {
-      param_2 = param_2 + 1;
-      param_1 = param_1 + 1;
-      if ((char)local_4 == '\0') {
+      arg2 = arg2 + 1;
+      arg1 = arg1 + 1;
+      if ((char)u2 == '\0') {
         return 0;
       }
-      local_4 = orig::FUN_103145a4((int)*param_1);
-      uVar1 = orig::FUN_103145a4((int)*param_2);
-    } while ((char)local_4 == (char)uVar1);
+      u2 = orig::game_103145A4((int)*arg1);
+      u1 = orig::game_103145A4((int)*arg2);
+    } while ((char)u2 == (char)u1);
   }
-  local_4 = local_4 & 0xff;
-  param_1 = (char *)(uVar1 & 0xff);
-  return local_4 - (int)param_1;
+  u2 = u2 & 0xff;
+  arg1 = (char *)(u1 & 0xff);
+  return u2 - (int)arg1;
 }

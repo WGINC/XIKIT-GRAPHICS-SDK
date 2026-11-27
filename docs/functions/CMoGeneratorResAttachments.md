@@ -6,7 +6,7 @@ Group: `CMo` (by the file name only). Source: `sdk/tree_src/CMoGeneratorResAttac
 
 | Function | Address | Size | Hookable | D3D depth | Summary (the naming review) | Confidence |
 |---|---|---|---|---|---|---|
-| `CMoGeneratorResAttachments::Slot1DeleteOwner` | 0x10054450 | 8 | yes | - | Deletes the object this attachments member belongs to. (reviewed as sub_10054450) | high |
+| `CMoGeneratorResAttachments::Slot1DeleteOwner` | 0x10054450 | 8 | yes | - | Deletes the object this attachments member belongs to. (reviewed as game_10054450) | high |
 
 ## Direct calls
 

@@ -6,58 +6,58 @@
 // GATE: PASS -- 100 trials, 66 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 66
 XI_API void __thiscall Skel_LoadBoneRotTrans(void * self_)
 {
-  undefined4 *this_00;
-  uint16_t uVar1;
-  float fVar2;
-  float fVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined4 *puVar6;
+  bits32 *obj1;
+  uint16_t u1;
+  float f1;
+  float f2;
+  bits32 *p1;
+  int i1;
+  bits32 *p2;
   char xi_frame[96] __attribute__((aligned(4)));
-  float  &local_60 = *reinterpret_cast<float  *>(xi_frame + 0);
-  undefined4  &local_5c = *reinterpret_cast<undefined4  *>(xi_frame + 4);
-  undefined4  &local_58 = *reinterpret_cast<undefined4  *>(xi_frame + 8);
-  undefined4  &local_54 = *reinterpret_cast<undefined4  *>(xi_frame + 12);
-  float  (&local_50)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 16);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 32);
+  float  &f3 = *reinterpret_cast<float  *>(xi_frame + 0);
+  bits32  &u2 = *reinterpret_cast<bits32  *>(xi_frame + 4);
+  bits32  &u3 = *reinterpret_cast<bits32  *>(xi_frame + 8);
+  bits32  &u4 = *reinterpret_cast<bits32  *>(xi_frame + 12);
+  float  (&f4)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 16);
+  uint8_t  (&u5)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 32);
   
-  orig::Quat_SetIdentityChained(&local_60);
+  orig::Quat_SetIdentityChained(&f3);
   if (*(int *)((int)self_ + 4) != 0) {
-    iVar5 = 0;
-    uVar1 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
-    if (uVar1 != 0) {
-      puVar6 = (undefined4 *)(g_pSharedSkeleton_as_s32 + 0x3a);
+    i1 = 0;
+    u1 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
+    if (u1 != 0) {
+      p2 = (bits32 *)(g_pSharedSkeleton_as_s32 + 0x3a);
       do {
-        local_60 = xi_castbits<float>(puVar6[-1]);
-        local_5c = *puVar6;
-        local_58 = puVar6[1];
-        local_54 = puVar6[2];
-        this_00 = &g_poseScratch_as_v0 + iVar5 * 0xd;
-        puVar4 = (undefined4 *)orig::Quat_Multiply(this_00,local_50,&local_60);
-        *this_00 = *puVar4;
-        (&DAT_1045f034)[iVar5 * 0xd] = puVar4[1];
-        (&DAT_1045f038)[iVar5 * 0xd] = puVar4[2];
-        (&DAT_1045f03c)[iVar5 * 0xd] = puVar4[3];
+        f3 = bit_cast<float>(p2[-1]);
+        u2 = *p2;
+        u3 = p2[1];
+        u4 = p2[2];
+        obj1 = &g_poseScratch_as_v0 + i1 * 0xd;
+        p1 = (bits32 *)orig::Quat_Multiply(obj1,f4,&f3);
+        *obj1 = *p1;
+        (&g_1045F034)[i1 * 0xd] = p1[1];
+        (&g_1045F038)[i1 * 0xd] = p1[2];
+        (&g_1045F03C)[i1 * 0xd] = p1[3];
         orig::BoneShadow_Nop();
-        orig::Quat_NormalizeInPlace(this_00);
-        fVar2 = xi_castbits<float>(puVar6[4]);
-        fVar3 = xi_castbits<float>(puVar6[5]);
-        (&g_poseTranslation_as_v0)[iVar5 * 0xd] =
-             xi_castbits<uint32_t>((float)((long double)xi_castbits<float>(puVar6[3]) + (long double)xi_castbits<float>((&g_poseTranslation_as_v0)[iVar5 * 0xd])));
-        (&DAT_1045f044)[iVar5 * 0xd] =
-             xi_castbits<uint32_t>((float)((long double)fVar2 + (long double)xi_castbits<float>((&DAT_1045f044)[iVar5 * 0xd])));
-        (&DAT_1045f048)[iVar5 * 0xd] =
-             xi_castbits<uint32_t>((float)((long double)fVar3 + (long double)xi_castbits<float>((&DAT_1045f048)[iVar5 * 0xd])));
-        if (iVar5 == 0) {
-          orig::MathVector_ReturnThis(local_40);
-          orig::Mat4_SetIdentity_v1(local_40);
-          orig::Mat4_PostRotateY_v1(local_40,4.7123889923095703125f);
-          orig::Mat4_TransformPointInPlace_v1(local_40,&g_poseTranslation_as_v0);
+        orig::Quat_NormalizeInPlace(obj1);
+        f1 = bit_cast<float>(p2[4]);
+        f2 = bit_cast<float>(p2[5]);
+        (&g_poseTranslation_as_v0)[i1 * 0xd] =
+             bit_cast<uint32_t>((float)(bit_cast<float>(p2[3]) + bit_cast<float>((&g_poseTranslation_as_v0)[i1 * 0xd])));
+        (&g_1045F044)[i1 * 0xd] =
+             bit_cast<uint32_t>((float)(f1 + bit_cast<float>((&g_1045F044)[i1 * 0xd])));
+        (&g_1045F048)[i1 * 0xd] =
+             bit_cast<uint32_t>((float)(f2 + bit_cast<float>((&g_1045F048)[i1 * 0xd])));
+        if (i1 == 0) {
+          orig::MathVector_ReturnThis(u5);
+          orig::Mat4_SetIdentity_v1(u5);
+          orig::Mat4_PostRotateY_v1(u5,4.7123889923095703125f);
+          orig::Mat4_TransformPointInPlace_v1(u5,&g_poseTranslation_as_v0);
           orig::MathVector_Nop();
         }
-        puVar6 = (undefined4 *)((int)puVar6 + 0x1e);
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < (int)(uint32_t)uVar1);
+        p2 = (bits32 *)((int)p2 + 0x1e);
+        i1 = i1 + 1;
+      } while (i1 < (int)(uint32_t)u1);
     }
   }
   orig::BoneShadow_Nop();
@@ -66,209 +66,211 @@ XI_API void __thiscall Skel_LoadBoneRotTrans(void * self_)
 
 // FUNCTION: FFXIMAIN 0x100347D0
 // GATE: PASS -- 100 trials, 98 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 98
-XI_API undefined4 __thiscall Skel_ComposeMode(void * self_, int param_1, int param_2, int param_3, int param_4)
+XI_API bits32 __thiscall Skel_ComposeMode(void * self_, int arg2, int arg3, int arg4, int arg5)
 {
-  uint8_t bVar1;
-  uint32_t uVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  uint32_t uVar7;
-  float *pfVar8;
-  undefined4 *puVar9;
-  char xi_frame[72] __attribute__((aligned(4)));
-  uint8_t * &local_48 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
-  float  (&local_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 8);
+  uint8_t u1;
+  uint32_t u2;
+  int i1;
+  int i2;
+  int i3;
+  char *p1;
+  uint32_t u3;
+  float *p2;
+  bits32 *p3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[72];
+    struct __attribute__((packed)) { uint8_t * p4; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x8]; float f1[16]; };   // at 0x8
+  } frame;
   
-  iVar4 = 0;
+  i2 = 0;
   if (*(int *)((int)self_ + 4) != 0) {
-    uVar7 = (uint32_t)*(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
-    if (param_2 == 0) {
-      param_2 = uVar7 - 1;
+    u3 = (uint32_t)*(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
+    if (arg3 == 0) {
+      arg3 = u3 - 1;
     }
-    local_48 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34);
-    if (param_3 == 0) {
-      if (param_4 != 0) {
-        pcVar6 = (char *)(param_4 + 2);
+    frame.p4 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34);
+    if (arg4 == 0) {
+      if (arg5 != 0) {
+        p1 = (char *)(arg5 + 2);
         do {
-          if (*pcVar6 != -1) {
-            (&g_boneTouched_as_v0)[*pcVar6] = 0;
-            orig::Vec3_MulInPlace_v1((float *)(((char *)&g_poseScale_as_v0) + pcVar6[-2] * 0x34),
-                            (float *)(((char *)&g_poseScale_as_v0) + *pcVar6 * 0x34));
+          if (*p1 != -1) {
+            (&g_boneTouched_as_v0)[*p1] = 0;
+            orig::Vec3_MulInPlace_v1((float *)(((char *)&g_poseScale_as_v0) + p1[-2] * 0x34),
+                            (float *)(((char *)&g_poseScale_as_v0) + *p1 * 0x34));
           }
-          pcVar6 = pcVar6 + 1;
-        } while ((int)(pcVar6 + (-2 - param_4)) < 2);
+          p1 = p1 + 1;
+        } while ((int)(p1 + (-2 - arg5)) < 2);
       }
-      iVar5 = 0;
-      if (-1 < param_2) {
+      i3 = 0;
+      if (-1 < arg3) {
         do {
-          uVar2 = (uint32_t)*local_48;
-          if (iVar5 == 0) {
-            orig::Vec3_Copy_v1((undefined4 *)&DAT_1045f058,(undefined4 *)&g_poseScale_as_v0);
+          u2 = (uint32_t)*frame.p4;
+          if (i3 == 0) {
+            orig::Vec3_Copy_v1((bits32 *)&g_1045F058,(bits32 *)&g_poseScale_as_v0);
             orig::BoneShadow_FromQuat(&g_poseScratch_as_v0,g_boneWeightMatrixTable_as_v0);
             orig::Mat4_SetTranslation_v1(g_boneWeightMatrixTable_as_v0,&g_poseTranslation_as_v0);
-            orig::Mat4_PostMultiply_v1(g_boneWeightMatrixTable_as_v0,param_1);
+            orig::Mat4_PostMultiply_v1(g_boneWeightMatrixTable_as_v0,arg2);
           }
-          else if ((&g_boneTouched_as_v0)[uVar2] == 0) {
-            (&g_boneTouched_as_v0)[iVar5] = 0;
+          else if ((&g_boneTouched_as_v0)[u2] == 0) {
+            (&g_boneTouched_as_v0)[i3] = 0;
           }
           else {
-            orig::Vec3_MulComponents_v1((float *)(((char *)&DAT_1045f058) + iVar5 * 0x34),
-                         (float *)(((char *)&DAT_1045f058) + uVar2 * 0x34),
-                         (float *)(((char *)&g_poseScale_as_v0) + iVar5 * 0x34));
-            orig::BoneShadow_FromQuat(&g_poseScratch_as_v0 + iVar5 * 0xd,g_boneWeightMatrixTable_as_v0 + iVar5 * 0x10);
-            orig::Vec3_MulComponents_v1(g_boneWeightMatrixTable_as_v0 + iVar5 * 0x10 + 0xc,
-                         (float *)(&g_poseTranslation_as_v0 + iVar5 * 0xd),
-                         (float *)(((char *)&DAT_1045f058) + uVar2 * 0x34));
-            orig::Mat4_PostMultiply_v1(g_boneWeightMatrixTable_as_v0 + iVar5 * 0x10,
-                              (int)(g_boneWeightMatrixTable_as_v0 + uVar2 * 0x10));
+            orig::Vec3_MulComponents_v1((float *)(((char *)&g_1045F058) + i3 * 0x34),
+                         (float *)(((char *)&g_1045F058) + u2 * 0x34),
+                         (float *)(((char *)&g_poseScale_as_v0) + i3 * 0x34));
+            orig::BoneShadow_FromQuat(&g_poseScratch_as_v0 + i3 * 0xd,g_boneWeightMatrixTable_as_v0 + i3 * 0x10);
+            orig::Vec3_MulComponents_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10 + 0xc,
+                         (float *)(&g_poseTranslation_as_v0 + i3 * 0xd),
+                         (float *)(((char *)&g_1045F058) + u2 * 0x34));
+            orig::Mat4_PostMultiply_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10,
+                              (int)(g_boneWeightMatrixTable_as_v0 + u2 * 0x10));
           }
-          local_48 = local_48 + 0x1e;
-          iVar5 = iVar5 + 1;
-        } while (iVar5 <= param_2);
+          frame.p4 = frame.p4 + 0x1e;
+          i3 = i3 + 1;
+        } while (i3 <= arg3);
       }
-      iVar4 = param_2;
-      if (iVar5 < (int)uVar7) {
-        iVar4 = 0;
-        puVar9 = &g_boneTouched_as_v0 + iVar5;
-        for (iVar3 = uVar7 - iVar5; iVar3 != 0; iVar3 = iVar3 + -1) {
-          *puVar9 = 0;
-          puVar9 = puVar9 + 1;
+      i2 = arg3;
+      if (i3 < (int)u3) {
+        i2 = 0;
+        p3 = &g_boneTouched_as_v0 + i3;
+        for (i1 = u3 - i3; i1 != 0; i1 = i1 + -1) {
+          *p3 = 0;
+          p3 = p3 + 1;
         }
       }
     }
-    else if (param_3 == 1) {
-      if (param_4 != 0) {
-        pcVar6 = (char *)(param_4 + 2);
+    else if (arg4 == 1) {
+      if (arg5 != 0) {
+        p1 = (char *)(arg5 + 2);
         do {
-          pfVar8 = g_boneWeightMatrixTable_as_v0;
-          if (*pcVar6 != -1) {
-            (&g_boneTouched_as_v0)[*pcVar6] = 1;
-            orig::Mat4_Copy_v1(pfVar8 + *pcVar6 * 0x10,pfVar8 + pcVar6[-2] * 0x10);
+          p2 = g_boneWeightMatrixTable_as_v0;
+          if (*p1 != -1) {
+            (&g_boneTouched_as_v0)[*p1] = 1;
+            orig::Mat4_Copy_v1(p2 + *p1 * 0x10,p2 + p1[-2] * 0x10);
           }
-          pcVar6 = pcVar6 + 1;
-        } while ((int)(pcVar6 + (-2 - param_4)) < 2);
+          p1 = p1 + 1;
+        } while ((int)(p1 + (-2 - arg5)) < 2);
       }
-      param_4 = 0;
-      iVar4 = 0;
-      if (-1 < param_2) {
-        iVar4 = 0;
-        pfVar8 = (float *)&DAT_1045f058;
+      arg5 = 0;
+      i2 = 0;
+      if (-1 < arg3) {
+        i2 = 0;
+        p2 = (float *)&g_1045F058;
         do {
-          bVar1 = *local_48;
-          if ((pfVar8 != (float *)&DAT_1045f058) && ((&g_boneTouched_as_v0)[param_4] == 0)) {
-            orig::Vec3_MulComponents_v1(pfVar8,(float *)(((char *)&DAT_1045f058) + (uint32_t)bVar1 * 0x34),pfVar8 + -3);
-            orig::BoneShadow_FromQuat(pfVar8 + -10,(float *)((int)g_boneWeightMatrixTable_as_v0 + iVar4));
-            orig::Vec3_MulComponents_v1((float *)((int)g_boneWeightMatrixTable_as_v0 + iVar4 + 0x30),pfVar8 + -6,
-                         (float *)(((char *)&DAT_1045f058) + (uint32_t)bVar1 * 0x34));
-            orig::Mat4_PostMultiply_v1((void *)((int)g_boneWeightMatrixTable_as_v0 + iVar4),
-                              (int)(g_boneWeightMatrixTable_as_v0 + (uint32_t)bVar1 * 0x10));
-            (&g_boneTouched_as_v0)[param_4] = 1;
+          u1 = *frame.p4;
+          if ((p2 != (float *)&g_1045F058) && ((&g_boneTouched_as_v0)[arg5] == 0)) {
+            orig::Vec3_MulComponents_v1(p2,(float *)(((char *)&g_1045F058) + (uint32_t)u1 * 0x34),p2 + -3);
+            orig::BoneShadow_FromQuat(p2 + -10,(float *)((int)g_boneWeightMatrixTable_as_v0 + i2));
+            orig::Vec3_MulComponents_v1((float *)((int)g_boneWeightMatrixTable_as_v0 + i2 + 0x30),p2 + -6,
+                         (float *)(((char *)&g_1045F058) + (uint32_t)u1 * 0x34));
+            orig::Mat4_PostMultiply_v1((void *)((int)g_boneWeightMatrixTable_as_v0 + i2),
+                              (int)(g_boneWeightMatrixTable_as_v0 + (uint32_t)u1 * 0x10));
+            (&g_boneTouched_as_v0)[arg5] = 1;
           }
-          local_48 = local_48 + 0x1e;
-          param_4 = param_4 + 1;
-          pfVar8 = pfVar8 + 0xd;
-          iVar4 = iVar4 + 0x40;
-        } while (param_4 <= param_2);
-        return param_4;
+          frame.p4 = frame.p4 + 0x1e;
+          arg5 = arg5 + 1;
+          p2 = p2 + 0xd;
+          i2 = i2 + 0x40;
+        } while (arg5 <= arg3);
+        return arg5;
       }
     }
     else {
-      iVar4 = param_3 + -2;
-      if (param_3 + -2 == 0) {
-        iVar5 = 0;
-        iVar4 = param_2;
-        if (-1 < param_2) {
+      i2 = arg4 + -2;
+      if (arg4 + -2 == 0) {
+        i3 = 0;
+        i2 = arg3;
+        if (-1 < arg3) {
           do {
-            if (iVar5 == 0) {
-              orig::Vec3_Copy_v1((undefined4 *)&DAT_1045f058,(undefined4 *)&g_poseScale_as_v0);
+            if (i3 == 0) {
+              orig::Vec3_Copy_v1((bits32 *)&g_1045F058,(bits32 *)&g_poseScale_as_v0);
             }
             else {
-              orig::Vec3_MulComponents_v1((float *)(((char *)&DAT_1045f058) + iVar5 * 0x34),
-                           (float *)(((char *)&DAT_1045f058) + (uint32_t)*local_48 * 0x34),
-                           (float *)(((char *)&g_poseScale_as_v0) + iVar5 * 0x34));
+              orig::Vec3_MulComponents_v1((float *)(((char *)&g_1045F058) + i3 * 0x34),
+                           (float *)(((char *)&g_1045F058) + (uint32_t)*frame.p4 * 0x34),
+                           (float *)(((char *)&g_poseScale_as_v0) + i3 * 0x34));
             }
-            orig::MathVector_ReturnThis_v1(local_40);
-            orig::Mat4_SetScale_v1(local_40,(undefined4 *)(((char *)&DAT_1045f058) + iVar5 * 0x34));
-            orig::Mat4_PreMultiply_v1(g_boneWeightMatrixTable_as_v0 + iVar5 * 0x10,local_40);
-            local_48 = local_48 + 0x1e;
+            orig::MathVector_ReturnThis_v1(frame.f1);
+            orig::Mat4_SetScale_v1(frame.f1,(bits32 *)(((char *)&g_1045F058) + i3 * 0x34));
+            orig::Mat4_PreMultiply_v1(g_boneWeightMatrixTable_as_v0 + i3 * 0x10,frame.f1);
+            frame.p4 = frame.p4 + 0x1e;
             orig::MathVector_Nop();
-            iVar5 = iVar5 + 1;
-          } while (iVar5 <= param_2);
-          return param_2;
+            i3 = i3 + 1;
+          } while (i3 <= arg3);
+          return arg3;
         }
       }
     }
   }
-  return iVar4;
+  return i2;
 }
 
 // FUNCTION: FFXIMAIN 0x10034B80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __stdcall Skel_ComposeFromBone(uint8_t * param_1)
+XI_API void __stdcall Skel_ComposeFromBone(uint8_t * arg1)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  uint8_t *pbVar3;
-  float *pfVar4;
-  int iVar5;
+  uint16_t u1;
+  uint32_t u2;
+  uint8_t *p1;
+  float *p2;
+  int i1;
   
-  uVar1 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
-  if ((int)param_1 < (int)(uint32_t)uVar1) {
-    iVar5 = (int)param_1 << 6;
-    pfVar4 = (float *)(((char *)&DAT_1045f058) + (int)param_1 * 0x34);
-    pbVar3 = param_1;
-    param_1 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34 + (int)param_1 * 0x1e);
+  u1 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32);
+  if ((int)arg1 < (int)(uint32_t)u1) {
+    i1 = (int)arg1 << 6;
+    p2 = (float *)(((char *)&g_1045F058) + (int)arg1 * 0x34);
+    p1 = arg1;
+    arg1 = (uint8_t *)(g_pSharedSkeleton_as_s32 + 0x34 + (int)arg1 * 0x1e);
     do {
-      uVar2 = (uint32_t)*param_1;
-      if ((&g_boneTouched_as_v0)[(int)pbVar3] == 0) {
-        orig::Vec3_MulComponents_v1(pfVar4,(float *)(((char *)&DAT_1045f058) + uVar2 * 0x34),pfVar4 + -3);
+      u2 = (uint32_t)*arg1;
+      if ((&g_boneTouched_as_v0)[(int)p1] == 0) {
+        orig::Vec3_MulComponents_v1(p2,(float *)(((char *)&g_1045F058) + u2 * 0x34),p2 + -3);
       }
-      orig::BoneShadow_FromQuat(pfVar4 + -10,(float *)(iVar5 + g_boneWeightMatrixTable));
-      orig::Vec3_MulComponents_v1((float *)(iVar5 + 0x30 + g_boneWeightMatrixTable),pfVar4 + -6,
-                   (float *)(((char *)&DAT_1045f058) + uVar2 * 0x34));
-      orig::Mat4_PostMultiply_v1((void *)(iVar5 + g_boneWeightMatrixTable),
-                        uVar2 * 0x40 + g_boneWeightMatrixTable);
-      (&g_boneTouched_as_v0)[(int)pbVar3] = 1;
-      param_1 = param_1 + 0x1e;
-      pbVar3 = pbVar3 + 1;
-      pfVar4 = pfVar4 + 0xd;
-      iVar5 = iVar5 + 0x40;
-    } while ((int)pbVar3 < (int)(uint32_t)uVar1);
+      orig::BoneShadow_FromQuat(p2 + -10,(float *)(i1 + g_boneWeightMatrixTable));
+      orig::Vec3_MulComponents_v1((float *)(i1 + 0x30 + g_boneWeightMatrixTable),p2 + -6,
+                   (float *)(((char *)&g_1045F058) + u2 * 0x34));
+      orig::Mat4_PostMultiply_v1((void *)(i1 + g_boneWeightMatrixTable),
+                        u2 * 0x40 + g_boneWeightMatrixTable);
+      (&g_boneTouched_as_v0)[(int)p1] = 1;
+      arg1 = arg1 + 0x1e;
+      p1 = p1 + 1;
+      p2 = p2 + 0xd;
+      i1 = i1 + 0x40;
+    } while ((int)p1 < (int)(uint32_t)u1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10035170
 // GATE: PASS -- 100 trials, 66 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 66
-XI_API void __thiscall Skel_OffsetAllTranslations(void * self_, float * param_1, int param_2)
+XI_API void __thiscall Skel_OffsetAllTranslations(void * self_, float * arg2, int arg3)
 {
-  int iVar1;
-  int iVar2;
+  int i1;
+  int i2;
   
   if ((*(int *)((int)self_ + 4) != 0) && (*(int *)((int)self_ + 0xc) != 0)) {
     g_boneWeightMatrixTable = *(int *)((int)self_ + 0xc);
     g_pSharedSkeleton_as_s32 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
-    if (param_2 == 0) {
-      param_2 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32) - 1;
+    if (arg3 == 0) {
+      arg3 = *(uint16_t *)(g_pSharedSkeleton_as_s32 + 0x32) - 1;
     }
-    if (-1 < param_2) {
-      iVar2 = param_2 + 1;
-      iVar1 = 0;
+    if (-1 < arg3) {
+      i2 = arg3 + 1;
+      i1 = 0;
       do {
-        iVar2 = iVar2 + -1;
-        *(float *)(iVar1 + 0x30 + g_boneWeightMatrixTable) =
-             (float)((long double)*param_1 + (long double)*(float *)(iVar1 + 0x30 + g_boneWeightMatrixTable)
+        i2 = i2 + -1;
+        *(float *)(i1 + 0x30 + g_boneWeightMatrixTable) =
+             (float)(*arg2 + *(float *)(i1 + 0x30 + g_boneWeightMatrixTable)
                     );
-        *(float *)(iVar1 + 0x34 + g_boneWeightMatrixTable) =
-             (float)((long double)*(float *)(iVar1 + 0x34 + g_boneWeightMatrixTable) +
-                    (long double)param_1[1]);
-        *(float *)(iVar1 + 0x38 + g_boneWeightMatrixTable) =
-             (float)((long double)param_1[2] +
-                    (long double)*(float *)(iVar1 + 0x38 + g_boneWeightMatrixTable));
-        iVar1 = iVar1 + 0x40;
-      } while (iVar2 != 0);
+        *(float *)(i1 + 0x34 + g_boneWeightMatrixTable) =
+             (float)(*(float *)(i1 + 0x34 + g_boneWeightMatrixTable) +
+                    arg2[1]);
+        *(float *)(i1 + 0x38 + g_boneWeightMatrixTable) =
+             (float)(arg2[2] +
+                    *(float *)(i1 + 0x38 + g_boneWeightMatrixTable));
+        i1 = i1 + 0x40;
+      } while (i2 != 0);
     }
   }
   return;
@@ -276,29 +278,29 @@ XI_API void __thiscall Skel_OffsetAllTranslations(void * self_, float * param_1,
 
 // FUNCTION: FFXIMAIN 0x100351F0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Skel_GetRecordAt(void * self_, int param_1)
+XI_API int __thiscall Skel_GetRecordAt(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Skel_GetBoneTableBase(self_);
-  if (iVar1 == 0) {
+  i1 = orig::Skel_GetBoneTableBase(self_);
+  if (i1 == 0) {
     return 0;
   }
-  return iVar1 + 4 + param_1 * 0x1a;
+  return i1 + 4 + arg2 * 0x1a;
 }
 
 // FUNCTION: FFXIMAIN 0x10035210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Skel_GetBoneTableBase(void * self_)
 {
-  uint32_t uVar1;
-  int iVar2;
+  uint32_t u1;
+  int i1;
   
   if (*(int *)((int)self_ + 4) != 0) {
-    uVar1 = orig::ResourceHandle_IsResident_v1((uint32_t *)((int)self_ + 4));
-    if ((char)uVar1 != '\0') {
-      iVar2 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
-      return iVar2 + 0x34 + (uint32_t)*(uint16_t *)(iVar2 + 0x32) * 0x1e;
+    u1 = orig::ResourceHandle_IsResident_v1((uint32_t *)((int)self_ + 4));
+    if ((char)u1 != '\0') {
+      i1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
+      return i1 + 0x34 + (uint32_t)*(uint16_t *)(i1 + 0x32) * 0x1e;
     }
   }
   return 0;
@@ -308,50 +310,50 @@ XI_API int __thiscall Skel_GetBoneTableBase(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint16_t * __thiscall Skel_GetTableAfterBones(void * self_)
 {
-  uint16_t *puVar1;
+  uint16_t *p1;
   
-  puVar1 = (uint16_t *)orig::Skel_GetBoneTableBase(self_);
-  if (puVar1 == (uint16_t *)0x0) {
+  p1 = (uint16_t *)orig::Skel_GetBoneTableBase(self_);
+  if (p1 == (uint16_t *)0x0) {
     return (uint16_t *)0x0;
   }
-  return puVar1 + (uint32_t)*puVar1 * 0xd + 2;
+  return p1 + (uint32_t)*p1 * 0xd + 2;
 }
 
 // FUNCTION: FFXIMAIN 0x10035270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall Skel_GetEntryAt(void * self_, int param_1)
+XI_API int __thiscall Skel_GetEntryAt(void * self_, int arg2)
 {
-  uint16_t *puVar1;
+  uint16_t *p1;
   
-  puVar1 = orig::Skel_GetTableAfterBones_v1(self_);
-  if (puVar1 == (uint16_t *)0x0) {
+  p1 = orig::Skel_GetTableAfterBones_v1(self_);
+  if (p1 == (uint16_t *)0x0) {
     return 0;
   }
-  return (int)(puVar1 + (param_1 * 3 + 0x12) * 2);
+  return (int)(p1 + (arg2 * 3 + 0x12) * 2);
 }
 
 // FUNCTION: FFXIMAIN 0x100352A0
 // GATE: PASS -- 100 trials, 88 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 88
-XI_API undefined4 __thiscall Skel_ClearMarks(void * self_)
+XI_API bits32 __thiscall Skel_ClearMarks(void * self_)
 {
-  uint16_t uVar1;
-  int iVar2;
-  int iVar3;
+  uint16_t u1;
+  int i1;
+  int i2;
   
   if ((*(int *)((int)self_ + 4) != 0) && (*(int *)((int)self_ + 0x14) != 0)) {
-    iVar2 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
-    uVar1 = *(uint16_t *)(iVar2 + 0x32);
-    iVar3 = 0;
-    iVar2 = iVar3;
-    if (uVar1 != 0) {
+    i1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
+    u1 = *(uint16_t *)(i1 + 0x32);
+    i2 = 0;
+    i1 = i2;
+    if (u1 != 0) {
       do {
-        iVar3 = iVar2 + 1;
-        *(uint8_t *)(iVar2 + *(int *)((int)self_ + 0x14)) = 0;
-        (&DAT_10462438)[iVar2] = 0;
-        iVar2 = iVar3;
-      } while (iVar3 < (int)(uint32_t)uVar1);
+        i2 = i1 + 1;
+        *(uint8_t *)(i1 + *(int *)((int)self_ + 0x14)) = 0;
+        (&g_10462438)[i1] = 0;
+        i1 = i2;
+      } while (i2 < (int)(uint32_t)u1);
     }
-    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)iVar3 >> 8))) << 8) | (uint8_t)(1)));
+    return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)i2 >> 8))) << 8) | (uint8_t)(1)));
   }
   return 0;
 }
@@ -360,16 +362,16 @@ XI_API undefined4 __thiscall Skel_ClearMarks(void * self_)
 // GATE: PASS -- 100 trials, 44 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 44
 XI_API void __thiscall Skel_MarkMarkedChains(void * self_)
 {
-  uint16_t uVar1;
-  uint32_t uVar2;
-  int iVar3;
+  uint16_t u1;
+  uint32_t u2;
+  int i1;
   
-  iVar3 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
-  uVar1 = *(uint16_t *)(iVar3 + 0x32);
-  uVar2 = (uint32_t)uVar1;
-  while (uVar2 = uVar2 - 1, -1 < (int)uVar2) {
-    if (*(char *)(uVar2 + *(int *)((int)self_ + 0x14)) != '\0') {
-      orig::Skel_MarkChain(self_,iVar3,(uint32_t)uVar1,uVar2);
+  i1 = orig::ResourceHandle_Deref_v1(*(uint32_t **)((int)self_ + 4));
+  u1 = *(uint16_t *)(i1 + 0x32);
+  u2 = (uint32_t)u1;
+  while (u2 = u2 - 1, -1 < (int)u2) {
+    if (*(char *)(u2 + *(int *)((int)self_ + 0x14)) != '\0') {
+      orig::Skel_MarkChain(self_,i1,(uint32_t)u1,u2);
     }
   }
   return;
@@ -377,15 +379,15 @@ XI_API void __thiscall Skel_MarkMarkedChains(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10035330
 // GATE: PASS -- 100 trials, 21 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 21
-XI_API void __thiscall Skel_MarkChain(void * self_, int param_1, undefined4 param_2, uint32_t param_3)
+XI_API void __thiscall Skel_MarkChain(void * self_, int arg2, bits32 arg3, uint32_t arg4)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = (uint32_t)*(uint8_t *)(param_1 + 0x34 + param_3 * 0x1e);
-  *(uint8_t *)(uVar1 + *(int *)((int)self_ + 0x14)) = 0x80;
-  if (uVar1 != param_3) {
-    orig::FUN_10035330(self_,param_1,param_2,uVar1);
+  u1 = (uint32_t)*(uint8_t *)(arg2 + 0x34 + arg4 * 0x1e);
+  *(uint8_t *)(u1 + *(int *)((int)self_ + 0x14)) = 0x80;
+  if (u1 != arg4) {
+    orig::Skel_MarkChain_as_v0(self_,arg2,arg3,u1);
   }
-  (&DAT_10462438)[uVar1] = 0x80;
+  (&g_10462438)[u1] = 0x80;
   return;
 }

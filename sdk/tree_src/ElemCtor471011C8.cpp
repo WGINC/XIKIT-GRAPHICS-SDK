@@ -4,8 +4,8 @@
 
 // FUNCTION: FFXIMAIN 0x10052E80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall ElemCtor471011C8_Set194(void * self_, undefined4 param_1)
+XI_API void __thiscall ElemCtor471011C8_Set194(void * self_, bits32 arg2)
 {
-  *(uint32_t *)((int)self_ + 0x194) = param_1;
+  *(uint32_t *)((int)self_ + 0x194) = arg2;
   return;
 }

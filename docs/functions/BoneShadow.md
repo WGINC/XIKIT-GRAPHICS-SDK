@@ -40,4 +40,4 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `Model_BeginOffscreenPass` calls `MathVector_ReturnThis`, `CDx::PushRenderTarget`, `CDx::EndClearBegin`, `D3DXMatrixPerspectiveFovLH_static`, `CDx::SetTransform`, `MathVector_Nop`
 - `Model_EndOffscreenPassBindTextures` calls `CDx::SetTexture`, `CDx::SetTransform`
 - `Shadow_DrawByMode` calls `XiZone::DrawGroundShadowQuad`, `XiZone::DrawDecalOnTriangles`, `CTsZoneMap::DrawProjectedShadow`
-- `Shadow_SmoothLightDirection` calls `Camera_GetFrameScale`, `Vec3_SubInPlace`, `Vec3_ScaleInPlace`, `Vec3_AddInPlace`, `Vec3_CopyThen100274B0`, `sub_100274B0`, `Vec3_Set`
+- `Shadow_SmoothLightDirection` calls `Camera_GetFrameScale`, `Vec3_SubInPlace`, `Vec3_ScaleInPlace`, `Vec3_AddInPlace`, `Vec3_CopyThen100274B0`, `game_100274B0`, `Vec3_Set`

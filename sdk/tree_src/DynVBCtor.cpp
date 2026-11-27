@@ -4,18 +4,18 @@
 
 // FUNCTION: FFXIMAIN 0x10043DD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __attribute__((stdcall, regparm(3))) DynVBCtor_ToggleByte45(undefined4 xi_eax, uint32_t xi_edx_unused, void * self_)
+XI_API bits32 __attribute__((stdcall, regparm(3))) DynVBCtor_ToggleByte45(bits32 xi_eax, uint32_t xi_edx_unused, void * self_)
 {
-  char cVar1;
+  char c1;
   
-  cVar1 = '\x01' - *(char *)((int)self_ + 0x45);
-  *(char *)((int)self_ + 0x45) = cVar1;
-  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(cVar1)));
+  c1 = '\x01' - *(char *)((int)self_ + 0x45);
+  *(char *)((int)self_ + 0x45) = c1;
+  return ((uint32_t)(((uint32_t)(xi_strunc24(((uint32_t)xi_eax >> 8))) << 8) | (uint8_t)(c1)));
 }
 
 // FUNCTION: FFXIMAIN 0x10043DE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl DynVBCtor_ReturnZero(void)
+XI_API bits32 __cdecl DynVBCtor_ReturnZero(void)
 {
   return 0;
 }
@@ -24,18 +24,18 @@ XI_API undefined4 __cdecl DynVBCtor_ReturnZero(void)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint64_t __thiscall DynVB_Constructor(void * self_)
 {
-  uint32_t *puVar1;
-  int iVar2;
+  uint32_t *p1;
+  int i1;
   
-  iVar2 = 2;
-  *(uint8_t ***)self_ = &PTR_CMoSchOp0CTask_ScalarDeletingDtor_2_1032afd4;
-  puVar1 = (uint32_t *)((int)self_ + 4);
+  i1 = 2;
+  *(uint8_t ***)self_ = &ptr_to_CMoSchOp0CTask_ScalarDeletingDtor_2_1032AFD4;
+  p1 = (uint32_t *)((int)self_ + 4);
   do {
-    *puVar1 = 0;
-    puVar1 = puVar1 + 8;
-    iVar2 = iVar2 + -1;
-  } while (iVar2 != 0);
+    *p1 = 0;
+    p1 = p1 + 8;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   *(uint8_t *)((int)self_ + 0x44) = 0;
   *(uint8_t *)((int)self_ + 0x45) = 0;
-  return ((uint64_t)(((uint64_t)(uint32_t)(puVar1) << 32) | (uint32_t)(self_)));
+  return ((uint64_t)(((uint64_t)(uint32_t)(p1) << 32) | (uint32_t)(self_)));
 }

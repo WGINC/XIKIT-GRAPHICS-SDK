@@ -4,47 +4,49 @@
 
 // FUNCTION: FFXIMAIN 0x1026FBB0
 // GATE: PASS -- 100 trials, 62 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 62
-XI_API undefined4 __cdecl ModelMinMax_ComputeMinMax(float * param_1)
+XI_API bits32 __cdecl ModelMinMax_ComputeMinMax(float * arg1)
 {
-  uint8_t bVar1;
-  float *pfVar2;
-  int iVar3;
-  float *pfVar4;
-  int iVar5;
-  uint8_t bVar6;
-  long double fVar7;
-  char xi_frame[24] __attribute__((aligned(4)));
-  float  (&local_18)[6] = *reinterpret_cast<float  (*)[6]>(xi_frame + 0);
+  uint8_t u1;
+  float *p1;
+  int i1;
+  float *p2;
+  int i2;
+  uint8_t u2;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[24];
+    struct __attribute__((packed)) { float f2[6]; };   // at 0x0
+  } frame;
   
-  pfVar2 = param_1;
-  orig::SqBounds_Reset(param_1);
-  bVar1 = false;
-  param_1 = (float *)0x0;
-  if (0 < DAT_1099aecc) {
+  p1 = arg1;
+  orig::SqBounds_Reset(arg1);
+  u1 = false;
+  arg1 = (float *)0x0;
+  if (0 < g_1099AECC) {
     do {
-      iVar3 = orig::Mdl_ComputeSlotBounds((int)param_1,local_18);
-      if (iVar3 == 0) {
-        bVar1 = true;
-        iVar5 = (int)local_18 + (0xc - (int)pfVar2);
-        iVar3 = 3;
-        pfVar4 = pfVar2;
+      i1 = orig::Mdl_ComputeSlotBounds((int)arg1,frame.f2);
+      if (i1 == 0) {
+        u1 = true;
+        i2 = (int)frame.f2 + (0xc - (int)p1);
+        i1 = 3;
+        p2 = p1;
         do {
-          fVar7 = (long double)*(float *)(((int)local_18 - (int)pfVar2) + (int)pfVar4);
-          bVar6 = NAN(fVar7) || NAN((long double)*pfVar4);
-          if ((bVar6 || fVar7 < (long double)*pfVar4) != bVar6) {
-            *pfVar4 = *(float *)(((int)local_18 - (int)pfVar2) + (int)pfVar4);
+          f1 = *(float *)(((int)frame.f2 - (int)p1) + (int)p2);
+          u2 = ((f1) != (f1)) || ((*p2) != (*p2));
+          if ((u2 || f1 < *p2) != u2) {
+            *p2 = *(float *)(((int)frame.f2 - (int)p1) + (int)p2);
           }
-          fVar7 = (long double)*(float *)(iVar5 + (int)pfVar4);
-          if (fVar7 > (long double)pfVar4[3]) {
-            pfVar4[3] = *(float *)(iVar5 + (int)pfVar4);
+          f1 = *(float *)(i2 + (int)p2);
+          if (f1 > p2[3]) {
+            p2[3] = *(float *)(i2 + (int)p2);
           }
-          pfVar4 = pfVar4 + 1;
-          iVar3 = iVar3 + -1;
-        } while (iVar3 != 0);
+          p2 = p2 + 1;
+          i1 = i1 + -1;
+        } while (i1 != 0);
       }
-      param_1 = (float *)((int)param_1 + 1);
-    } while ((int)param_1 < DAT_1099aecc);
-    if (bVar1) {
+      arg1 = (float *)((int)arg1 + 1);
+    } while ((int)arg1 < g_1099AECC);
+    if (u1) {
       return 0;
     }
   }

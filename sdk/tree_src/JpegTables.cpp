@@ -4,114 +4,114 @@
 
 // FUNCTION: FFXIMAIN 0x101CF660
 // GATE: PASS -- 100 trials, 47 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 47
-XI_API void __thiscall JpegTables_BuildTables(void * self_, int param_1)
+XI_API void __thiscall JpegTables_BuildTables(void * self_, int arg2)
 {
-  short sVar1;
-  int iVar2;
-  uint8_t *pbVar3;
-  uint8_t *pbVar4;
-  uint32_t uVar5;
-  int iVar6;
-  int *piVar7;
-  short *psVar8;
+  short i1;
+  int i2;
+  uint8_t *p1;
+  uint8_t *p2;
+  uint32_t u1;
+  int i3;
+  int *p3;
+  short *p4;
   
-  if (param_1 < 0) {
-    iVar2 = 5000;
+  if (arg2 < 0) {
+    i2 = 5000;
   }
   else {
-    if (param_1 < 0x65) {
-      if (param_1 < 0x32) {
-        iVar2 = (int)(5000 / (int64_t)param_1);
-        goto LAB_101cf692;
+    if (arg2 < 0x65) {
+      if (arg2 < 0x32) {
+        i2 = (int)(5000 / (int64_t)arg2);
+        goto code_101CF692;
       }
     }
     else {
-      param_1 = 100;
+      arg2 = 100;
     }
-    iVar2 = (100 - param_1) * 2;
+    i2 = (100 - arg2) * 2;
   }
-LAB_101cf692:
-  pbVar3 = (uint8_t *)((int)self_ + 0x65c);
-  iVar6 = 0;
-  pbVar4 = pbVar3;
+code_101CF692:
+  p1 = (uint8_t *)((int)self_ + 0x65c);
+  i3 = 0;
+  p2 = p1;
   do {
-    uVar5 = (*(int *)((int)&DAT_1037e430 + iVar6) * iVar2 + 0x32U) / 100;
-    if (uVar5 == 0) {
-      uVar5 = 1;
+    u1 = (*(int *)((int)&g_1037E430 + i3) * i2 + 0x32U) / 100;
+    if (u1 == 0) {
+      u1 = 1;
     }
-    else if (0xff < uVar5) {
-      uVar5 = 0xff;
+    else if (0xff < u1) {
+      u1 = 0xff;
     }
-    pbVar4[-0x40] = (uint8_t)uVar5;
-    uVar5 = (*(int *)((int)&DAT_1037e530 + iVar6) * iVar2 + 0x32U) / 100;
-    if (uVar5 == 0) {
-      uVar5 = 1;
+    p2[-0x40] = (uint8_t)u1;
+    u1 = (*(int *)((int)&g_1037E530 + i3) * i2 + 0x32U) / 100;
+    if (u1 == 0) {
+      u1 = 1;
     }
-    else if (0xff < uVar5) {
-      uVar5 = 0xff;
+    else if (0xff < u1) {
+      u1 = 0xff;
     }
-    *pbVar4 = (uint8_t)uVar5;
-    iVar6 = iVar6 + 4;
-    pbVar4 = pbVar4 + 1;
-  } while ((int)(pbVar4 + (-0x65c - (int)self_)) < 0x40);
+    *p2 = (uint8_t)u1;
+    i3 = i3 + 4;
+    p2 = p2 + 1;
+  } while ((int)(p2 + (-0x65c - (int)self_)) < 0x40);
   orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self_ + 8),0xdb);
   orig::JpegScreenshot_PutWordBE(*(void **)((int)self_ + 8),0x43);
   orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),0);
-  piVar7 =(int*)(&DAT_1037e330);
+  p3 =(int*)(&g_1037E330);
   do {
-    orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),(uint32_t)*(uint8_t *)(*piVar7 + 0x61c + (int)self_));
-    piVar7 = piVar7 + 1;
-  } while ((int)piVar7 < (int)XI_GAME(0x1037E430u));
+    orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),(uint32_t)*(uint8_t *)(*p3 + 0x61c + (int)self_));
+    p3 = p3 + 1;
+  } while ((int)p3 < (int)XI_GAME(0x1037E430u));
   orig::JpegScreenshot_PutFFThenByte(*(void **)((int)self_ + 8),0xdb);
   orig::JpegScreenshot_PutWordBE(*(void **)((int)self_ + 8),0x43);
   orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),1);
-  piVar7 =(int*)(&DAT_1037e330);
+  p3 =(int*)(&g_1037E330);
   do {
-    orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),(uint32_t)*(uint8_t *)(*piVar7 + 0x65c + (int)self_));
-    piVar7 = piVar7 + 1;
-  } while ((int)piVar7 < (int)XI_GAME(0x1037E430u));
-  pbVar4 = (uint8_t *)((int)self_ + 0x61c);
-  psVar8 = &DAT_1037e630;
+    orig::JpegScreenshot_PutByte(*(void **)((int)self_ + 8),(uint32_t)*(uint8_t *)(*p3 + 0x65c + (int)self_));
+    p3 = p3 + 1;
+  } while ((int)p3 < (int)XI_GAME(0x1037E430u));
+  p2 = (uint8_t *)((int)self_ + 0x61c);
+  p4 = &g_1037E630;
   do {
-    sVar1 = *psVar8;
-    psVar8 = psVar8 + 1;
-    *pbVar4 = (uint8_t)((int)((int)sVar1 * (uint32_t)*pbVar4 + 0x400) >> 0xb);
-    pbVar4 = pbVar4 + 1;
-  } while ((int)(pbVar4 + (-0x61c - (int)self_)) < 0x40);
-  psVar8 = &DAT_1037e630;
+    i1 = *p4;
+    p4 = p4 + 1;
+    *p2 = (uint8_t)((int)((int)i1 * (uint32_t)*p2 + 0x400) >> 0xb);
+    p2 = p2 + 1;
+  } while ((int)(p2 + (-0x61c - (int)self_)) < 0x40);
+  p4 = &g_1037E630;
   do {
-    sVar1 = *psVar8;
-    psVar8 = psVar8 + 1;
-    *pbVar3 = (uint8_t)((int)((int)sVar1 * (uint32_t)*pbVar3 + 0x400) >> 0xb);
-    pbVar3 = pbVar3 + 1;
-  } while ((int)(pbVar3 + (-0x65c - (int)self_)) < 0x40);
+    i1 = *p4;
+    p4 = p4 + 1;
+    *p1 = (uint8_t)((int)((int)i1 * (uint32_t)*p1 + 0x400) >> 0xb);
+    p1 = p1 + 1;
+  } while ((int)(p1 + (-0x65c - (int)self_)) < 0x40);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x101CF820
 // GATE: PASS -- 100 trials, 7 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); thin evidence: few trials returned; gates: fuzz PASS 7
-XI_API void __stdcall JpegTables_BuildCodeTable(int param_1, int param_2, int param_3, int param_4)
+XI_API void __stdcall JpegTables_BuildCodeTable(int arg1, int arg2, int arg3, int arg4)
 {
-  uint8_t bVar1;
-  short sVar2;
-  int iVar3;
-  int iVar4;
-  uint32_t uVar5;
+  uint8_t u1;
+  short i1;
+  int i2;
+  int i3;
+  uint32_t u2;
   
-  sVar2 = 0;
-  iVar4 = 0;
-  iVar3 = 1;
+  i1 = 0;
+  i3 = 0;
+  i2 = 1;
   do {
-    for (uVar5 = (uint32_t)*(uint8_t *)(iVar3 + param_4); uVar5 != 0; uVar5 = uVar5 - 1) {
-      bVar1 = *(uint8_t *)(iVar4 + param_3);
-      iVar4 = iVar4 + 1;
-      *(char *)((uint32_t)bVar1 + param_2) = (char)iVar3;
-      *(short *)(param_1 + (uint32_t)bVar1 * 2) = sVar2;
-      sVar2 = sVar2 + 1;
+    for (u2 = (uint32_t)*(uint8_t *)(i2 + arg4); u2 != 0; u2 = u2 - 1) {
+      u1 = *(uint8_t *)(i3 + arg3);
+      i3 = i3 + 1;
+      *(char *)((uint32_t)u1 + arg2) = (char)i2;
+      *(short *)(arg1 + (uint32_t)u1 * 2) = i1;
+      i1 = i1 + 1;
     }
-    sVar2 = sVar2 * 2;
-    iVar3 = iVar3 + 1;
-  } while (iVar3 < 0x11);
+    i1 = i1 * 2;
+    i2 = i2 + 1;
+  } while (i2 < 0x11);
   return;
 }
 
@@ -132,7 +132,7 @@ XI_API void __thiscall JpegTables_Reset(void * self_)
 XI_API void __thiscall JpegTables_Free(void * self_)
 {
   if (*(int *)((int)self_ + 8) != 0) {
-    orig::thunk_sub_10028AA0_v1(*(int *)((int)self_ + 8));
+    orig::thunk_Mem_FreeBlockMergeNeighbours_as_v0_v1(*(int *)((int)self_ + 8));
     *(uint32_t *)((int)self_ + 8) = 0;
   }
   if (*(LPVOID *)((int)self_ + 4) != (LPVOID)0x0) {

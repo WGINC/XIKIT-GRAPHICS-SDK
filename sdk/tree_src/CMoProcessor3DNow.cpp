@@ -4,50 +4,50 @@
 
 // FUNCTION: FFXIMAIN 0x1006CC40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot8CallSlot9(void * a1, void * a2, void * a3)
+int CMoProcessor3DNow::Slot8CallSlot9(void * arg1, void * arg2, void * arg3)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, void *, void *, void *))(*(_DWORD *)self + 36))(self, a1, a2, a3);
+  return (*(int (__thiscall **)(void *, void *, void *, void *))(*(uint32_t *)self + 36))(self, arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CC50
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot10CallSlot11(void * a1, void * a2, void * a3)
+int CMoProcessor3DNow::Slot10CallSlot11(void * arg1, void * arg2, void * arg3)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, void *, void *, void *))(*(_DWORD *)self + 44))(self, a1, a2, a3);
+  return (*(int (__thiscall **)(void *, void *, void *, void *))(*(uint32_t *)self + 44))(self, arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CC60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot40CallSlot41(float * a1)
+int CMoProcessor3DNow::Slot40CallSlot41(float * arg1)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, float *))(*(_DWORD *)self + 164))(self, a1);
+  return (*(int (__thiscall **)(void *, float *))(*(uint32_t *)self + 164))(self, arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CC70
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot38CallSlot39(float * a1, float * a2)
+int CMoProcessor3DNow::Slot38CallSlot39(float * arg1, float * arg2)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, float *, float *))(*(_DWORD *)self + 156))(self, a1, a2);
+  return (*(int (__thiscall **)(void *, float *, float *))(*(uint32_t *)self + 156))(self, arg1, arg2);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CC80
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot46CallSlot48(void * a1)
+int CMoProcessor3DNow::Slot46CallSlot48(void * arg1)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, void *))(*(_DWORD *)self + 192))(self, a1);
+  return (*(int (__thiscall **)(void *, void *))(*(uint32_t *)self + 192))(self, arg1);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CC90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-int CMoProcessor3DNow::Slot45CallSlot47(void * a1, void * a2)
+int CMoProcessor3DNow::Slot45CallSlot47(void * arg1, void * arg2)
 {
   void * self = reinterpret_cast<void *>(this);  // byte-exact view for the rest
-  return (*(int (__thiscall **)(void *, void *, void *))(*(_DWORD *)self + 188))(self, a1, a2);
+  return (*(int (__thiscall **)(void *, void *, void *))(*(uint32_t *)self + 188))(self, arg1, arg2);
 }
 
 // FUNCTION: FFXIMAIN 0x1006CCD0
@@ -59,63 +59,63 @@ char ** __cdecl CMoProcessor3DNow::CMoProcessor_GetRuntimeClass()
 
 // FUNCTION: FFXIMAIN 0x10070780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::Vec3AddScaled(float *a1, float *a2, float a3)
+float * CMoProcessor3DNow::Vec3AddScaled(float *arg1, float *arg2, float arg3)
 {
-  return orig::CMoProcessor_AddScaled3(a1, a2, a3);
+  return orig::CMoProcessor_AddScaled3(arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x10070790
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); float result equal at its declared precision (the original returns ST0 unrounded); gates: fuzz PASS 100
-double CMoProcessor3DNow::Vec3Dot(float *a1, float *a2)
+double CMoProcessor3DNow::Vec3Dot(float *arg1, float *arg2)
 {
-  return a1[2] * a2[2] + a1[1] * a2[1] + *a1 * *a2;
+  return arg1[2] * arg2[2] + arg1[1] * arg2[1] + *arg1 * *arg2;
 }
 
 // FUNCTION: FFXIMAIN 0x10070AA0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::Vec4TransformB(float *a1, float *a2, float *a3)
+float * CMoProcessor3DNow::Vec4TransformB(float *arg1, float *arg2, float *arg3)
 {
-  return orig::CMoProcessor_Vec4TransformB(a1, a2, a3);
+  return orig::CMoProcessor_Vec4TransformB(arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x10070AB0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::Vec4Transform(float *a1, float *a2, float *a3)
+float * CMoProcessor3DNow::Vec4Transform(float *arg1, float *arg2, float *arg3)
 {
-  return orig::CMoProcessor_Vec4Transform(a1, a2, a3);
+  return orig::CMoProcessor_Vec4Transform(arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x10070AC0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::Vec3Transform(float *a1, float *a2, float *a3)
+float * CMoProcessor3DNow::Vec3Transform(float *arg1, float *arg2, float *arg3)
 {
-  return orig::CMoProcessor_Vec3Transform(a1, a2, a3);
+  return orig::CMoProcessor_Vec3Transform(arg1, arg2, arg3);
 }
 
 // FUNCTION: FFXIMAIN 0x10070AD0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::Vec3Lerp(float *a1, float *a2, float *a3, float a4)
+float * CMoProcessor3DNow::Vec3Lerp(float *arg1, float *arg2, float *arg3, float arg4)
 {
-  return orig::CMoProcessor_Lerp3(a1, a2, a3, a4);
+  return orig::CMoProcessor_Lerp3(arg1, arg2, arg3, arg4);
 }
 
 // FUNCTION: FFXIMAIN 0x10070E20
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-float * CMoProcessor3DNow::ProjectVertsAndBounds(float *a1, float *a2, int a3, float *a4, float *a5, float a6, float a7)
+float * CMoProcessor3DNow::ProjectVertsAndBounds(float *arg1, float *arg2, int arg3, float *arg4, float *arg5, float arg6, float arg7)
 {
-  return orig::CMoProcessor_ProjectVertsAndBounds(a1, a2, a3, a4, a5, a6, a7);
+  return orig::CMoProcessor_ProjectVertsAndBounds(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
 // FUNCTION: FFXIMAIN 0x10070E40
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-CMoProcessor * CMoProcessor3DNow::CalcScreenBoundsAndVisible(float *a2, float *a3, int a4, int a5, int a6, float a7, float a8)
+CMoProcessor * CMoProcessor3DNow::CalcScreenBoundsAndVisible(float *arg1, float *arg2, int arg3, int arg4, int arg5, float arg6, float arg7)
 {
-  return orig::CMoProcessor_CalcScreenBoundsAndVisible((float *)this, a2, a3, a4, a5, a6, a7, a8);
+  return orig::CMoProcessor_CalcScreenBoundsAndVisible((float *)this, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
 // FUNCTION: FFXIMAIN 0x10070E60
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-CMoProcessor * CMoProcessor3DNow::CalcScreenBounds(float *a1, float *a2, int a3, int a4, const void *a5)
+CMoProcessor * CMoProcessor3DNow::CalcScreenBounds(float *arg1, float *arg2, int arg3, int arg4, const void *arg5)
 {
-  return orig::CMoProcessor_CalcScreenBounds(a1, a2, a3, a4, a5);
+  return orig::CMoProcessor_CalcScreenBounds(arg1, arg2, arg3, arg4, arg5);
 }

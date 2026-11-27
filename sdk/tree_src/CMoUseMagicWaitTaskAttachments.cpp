@@ -4,7 +4,7 @@
 
 // FUNCTION: FFXIMAIN 0x100AB060
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-_DWORD * CMoUseMagicWaitTaskAttachments::Slot1DeleteOwner(char a2)
+uint32_t * CMoUseMagicWaitTaskAttachments::Slot1DeleteOwner(char arg1)
 {
-  return orig::CMoUseMagicWaitTask_ScalarDeletingDtor((_DWORD *)this - 13, a2);
+  return orig::CMoUseMagicWaitTask_ScalarDeletingDtor((uint32_t *)this - 13, arg1);
 }

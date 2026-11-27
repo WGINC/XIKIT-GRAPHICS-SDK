@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): SharedConditionalStateReset: 
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SharedConditionalStateReset` calls `Generator_IsFlag400OrField22Zero`, `YmGenerater_Stop`, `CMoAttachments::GetTarget`, `CMoAttachments::GetCaster`, `Generator_StopGenerators`, `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `sub_10053E60`, `sub_100749B0`, `sub_10074A00`
+- `SharedConditionalStateReset` calls `Generator_IsFlag400OrField22Zero`, `YmGenerater_Stop`, `CMoAttachments::GetTarget`, `CMoAttachments::GetCaster`, `Generator_StopGenerators`, `Mem_AllocFromArea`, `CMoTask::ResetFields`, `CMoTask::Constructor`, `game_10053E60`, `game_100749B0`, `game_10074A00`

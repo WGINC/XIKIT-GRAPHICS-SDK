@@ -5,81 +5,83 @@
 
 // FUNCTION: FFXIMAIN 0x10040E70
 // GATE: PASS -- 100 trials, 100 returned normally, 148 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall CMoD3mLightmapElem::DrawLightmapPass(void * self)
+bits32 __thiscall CMoD3mLightmapElem::DrawLightmapPass(void * self)
 {
-  uint32_t *puVar1;
-  void *this_00;
-  uint32_t *puVar2;
-  uint32_t uVar3;
-  int iVar4;
-  int iVar5;
-  uint32_t *puVar6;
-  char xi_frame[36] __attribute__((aligned(4)));
-  uint32_t  &uStack_24 = *reinterpret_cast<uint32_t  *>(xi_frame + 0);
-  uint32_t  &uStack_20 = *reinterpret_cast<uint32_t  *>(xi_frame + 4);
-  uint32_t  &uStack_1c = *reinterpret_cast<uint32_t  *>(xi_frame + 8);
-  uint32_t  &uStack_18 = *reinterpret_cast<uint32_t  *>(xi_frame + 12);
-  uint32_t  &uStack_14 = *reinterpret_cast<uint32_t  *>(xi_frame + 16);
-  uint32_t  &uStack_10 = *reinterpret_cast<uint32_t  *>(xi_frame + 20);
-  float  (&afStack_c)[3] = *reinterpret_cast<float  (*)[3]>(xi_frame + 24);
+  uint32_t *p1;
+  void *obj1;
+  uint32_t *p2;
+  uint32_t u1;
+  int i1;
+  int i2;
+  uint32_t *p3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[36];
+    struct __attribute__((packed)) { uint32_t u2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; uint32_t u3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; uint32_t u4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0xC]; uint32_t u5; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_5[0x10]; uint32_t u6; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_6[0x14]; uint32_t u7; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_7[0x18]; float f1[3]; };   // at 0x18
+  } frame;
   
-  iVar4 = 0;
+  i1 = 0;
   if (*(int *)((int)self + 0x104) != 0) {
-    puVar1 = *(uint32_t **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
+    p1 = *(uint32_t **)(g_pProcessor_as_s32 + 0xa10 + *(int *)(g_pProcessor_as_s32 + 0xa90) * 4);
     *(int *)(g_pProcessor_as_s32 + 0xa90) = *(int *)(g_pProcessor_as_s32 + 0xa90) + 1;
-    puVar2 = (uint32_t *)((int)self + 0x60);
-    puVar6 = puVar1;
-    for (iVar4 = 0x10; iVar4 != 0; iVar4 = iVar4 + -1) {
-      *puVar6 = *puVar2;
-      puVar2 = puVar2 + 1;
-      puVar6 = puVar6 + 1;
+    p2 = (uint32_t *)((int)self + 0x60);
+    p3 = p1;
+    for (i1 = 0x10; i1 != 0; i1 = i1 + -1) {
+      *p3 = *p2;
+      p2 = p2 + 1;
+      p3 = p3 + 1;
     }
-    orig::CMoDX_SetWorldMatrix_v1(g_pResourceMng_as_v0,puVar1);
+    orig::CMoDX_SetWorldMatrix_v1(g_pResourceMng_as_v0,p1);
     orig::BeginEffectOffscreenPass();
     if (*(char *)((int)self + 0x179) == '\0') {
       if (*(uint32_t **)((int)self + 0x104) == (uint32_t *)0x0) {
-        this_00 = (void *)0x0;
+        obj1 = (void *)0x0;
       }
       else {
-        this_00 = (void *)**(uint32_t **)((int)self + 0x104);
+        obj1 = (void *)**(uint32_t **)((int)self + 0x104);
       }
-      orig::CMoDistModelElem_DrawBatches(this_00,&g_scratchValue_as_v1,(int)self);
+      orig::CMoDistModelElem_DrawBatches(obj1,&g_scratchValue_as_v1,(int)self);
     }
     else {
       orig::CMoElemFamily_SharedEarlyExit(self);
     }
-    puVar2 = (uint32_t *)orig::ElemFog_ComputeWorldPos_v1(self,afStack_c);
-    uStack_18 = *puVar2;
-    uStack_14 = puVar2[1];
-    uStack_10 = puVar2[2];
-    uStack_1c = 0;
-    uStack_20 = 0;
-    uStack_24 = 0;
+    p2 = (uint32_t *)orig::ElemFog_ComputeWorldPos_v1(self,frame.f1);
+    frame.u5 = *p2;
+    frame.u6 = p2[1];
+    frame.u7 = p2[2];
+    frame.u4 = 0;
+    frame.u3 = 0;
+    frame.u2 = 0;
     orig::YmElem_RestoreDevice(self,0xffff);
-    orig::FUN_1006a450(g_pResourceMng_as_v0);
+    orig::game_1006A450(g_pResourceMng_as_v0);
     orig::CMoDX_PopViewMatrix_v1(g_pResourceMng_as_v0);
-    orig::FUN_1006a0e0(g_pResourceMng_as_v0,0,0);
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3c))))((void *)(self));
-    orig::YmElem_SetupDevice(self,uVar3);
-    orig::EndEffectOffscreenPass(&uStack_18,&uStack_24);
-    uVar3 = ((int (__thiscall *)(void *))((**(code **)(*(int *)self + 0x3c))))((void *)(self));
-    orig::YmElem_RestoreDevice(self,uVar3);
-    iVar4 = g_pProcessor_as_s32;
-    iVar5 = *(int *)(g_pProcessor_as_s32 + 0xa90) + -1;
-    *(int *)(g_pProcessor_as_s32 + 0xa90) = iVar5;
-    *(uint32_t **)(iVar4 + 0xa10 + iVar5 * 4) = puVar1;
+    orig::game_1006A0E0(g_pResourceMng_as_v0,0,0);
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3c))))((void *)(self));
+    orig::YmElem_SetupDevice(self,u1);
+    orig::EndEffectOffscreenPass(&frame.u5,&frame.u2);
+    u1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*(int *)self + 0x3c))))((void *)(self));
+    orig::YmElem_RestoreDevice(self,u1);
+    i1 = g_pProcessor_as_s32;
+    i2 = *(int *)(g_pProcessor_as_s32 + 0xa90) + -1;
+    *(int *)(g_pProcessor_as_s32 + 0xa90) = i2;
+    *(uint32_t **)(i1 + 0xa10 + i2 * 4) = p1;
   }
-  return iVar4;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10052E90
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 uint64_t __thiscall CMoD3mLightmapElem::Ctor(void * self)
 {
-  uint64_t uVar1;
+  uint64_t u1;
   
-  uVar1 = orig::CMoElem_Constructor(self);
-  *(uint8_t ***)self = &PTR_CMoElem_GetRuntimeClass_variant8_1032b3b8;
+  u1 = orig::CMoElem_Constructor(self);
+  *(uint8_t ***)self = &ptr_to_CMoElem_GetRuntimeClass_variant8_1032B3B8;
   *(uint16_t *)((int)self + 0x176) = 0x19c;
-  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)uVar1 >> 0x20)) << 32) | (uint32_t)(self)));
+  return ((uint64_t)(((uint64_t)(uint32_t)((int)((uint64_t)u1 >> 0x20)) << 32) | (uint32_t)(self)));
 }

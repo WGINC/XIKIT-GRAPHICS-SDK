@@ -5,13 +5,13 @@
 
 // FUNCTION: FFXIMAIN 0x101D08E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-undefined4 __thiscall YkJpgBit::Init(void * self, undefined4 param_1, undefined4 param_2)
+bits32 __thiscall YkJpgBit::Init(void * self, bits32 arg2, bits32 arg3)
 {
   *(uint8_t *)((int)self + 5) = 0;
   *(uint32_t *)((int)self + 0xc) = 0;
-  *(uint8_t ***)self = &PTR_YkJpgBit_GetRuntimeClass_10337e98;
+  *(uint8_t ***)self = &ptr_to_YkJpgBit_GetRuntimeClass_10337E98;
   *(uint8_t *)((int)self + 4) = 0x80;
-  *(uint32_t *)((int)self + 0x10) = param_2;
-  *(uint32_t *)((int)self + 8) = param_1;
+  *(uint32_t *)((int)self + 0x10) = arg3;
+  *(uint32_t *)((int)self + 8) = arg2;
   return self;
 }

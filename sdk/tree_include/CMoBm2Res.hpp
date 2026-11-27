@@ -5,13 +5,13 @@
 #pragma pack(push, 1)
 class XI_API CMoBm2Res {
 public:
-    static undefined4 __thiscall ReleaseTexture(void * self);  // 0x1001DBD0
-    int Slot4StoreInHandle(int a2);  // 0x1001DC20
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10071A40
+    static bits32 __thiscall ReleaseTexture(void * self);  // 0x1001DBD0
+    int Slot4StoreInHandle(int arg1);  // 0x1001DC20
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10071A40
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x10];
-    _DWORD * field_14;  // +0x14
+    uint32_t * field_14;  // +0x14
     uint8_t _pad_18[0x18];
 };
 #pragma pack(pop)

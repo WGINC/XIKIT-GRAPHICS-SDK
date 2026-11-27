@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 class XI_API CMoMmbRes {
 public:
-    unsigned int ** ScalarDeletingDtor(char a2);  // 0x10176EA0
+    unsigned int ** ScalarDeletingDtor(char arg1);  // 0x10176EA0
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2C];

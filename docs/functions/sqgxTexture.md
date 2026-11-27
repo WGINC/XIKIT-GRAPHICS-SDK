@@ -36,6 +36,6 @@ Read from the game's code (call/jmp rel32 to a function start).
 - `sqgxTextureClut` calls nothing directly
 - `sqgxTextureUpdate` calls nothing directly
 - `sqgxTextureStencilClear` calls nothing directly
-- `sqgxTextureClear` calls `sub_10311C2C`
+- `sqgxTextureClear` calls `game_10311C2C`
 - `sqgxTextureDrawZ` calls nothing directly
 - `sqgxTextureDraw` calls `sqgxPixelSize`, `sqgxViewport`

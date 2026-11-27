@@ -7,10 +7,10 @@ class XI_API CMoDisintegrateProgElem {
 public:
     static char ** __cdecl GetRuntimeClass();  // 0x100426B0
     void Slot18DoNothing();  // 0x100426C0
-    static undefined8 __thiscall Construct(void * self, undefined4 param_1);  // 0x100530F0
-    BOOL IsKind13(int a1);  // 0x10053130
+    static uint64_t __thiscall Construct(void * self, bits32 arg2);  // 0x100530F0
+    BOOL IsKind13(int arg1);  // 0x10053130
     int Slot8CallSlot10();  // 0x10053140
-    int * ScalarDeletingDtor(char a2);  // 0x10053150
+    int * ScalarDeletingDtor(char arg1);  // 0x10053150
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x1DC];

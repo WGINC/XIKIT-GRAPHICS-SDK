@@ -140,8 +140,8 @@ static int box_crosses_near(void *self, int m) {
   return 0;
 }
 static xikit::fn<decltype(&CXiSkeletonActor::Slot244_Unknown)> prev_Box;
-static undefined4 __thiscall my_Box(void *self, float *mn, float *mx, int m) {
-  undefined4 r = prev_Box(self, mn, mx, m);
+static bits32 __thiscall my_Box(void *self, float *mn, float *mx, int m) {
+  bits32 r = prev_Box(self, mn, mx, m);
   if (g_in_pick && g_cur.n < 256) {
     Box &b = g_cur.b[g_cur.n++];
     b.actor = self; b.ok = (char)r != 0; b.near = 0;
@@ -190,7 +190,7 @@ static int __thiscall my_DPUP(CDx *self, int type, int count, int verts, int str
   return prev_DPUP(self, type, count, verts, stride);
 }
 static xikit::fn<decltype(&CXiSkeletonActor::DrawNameIfVisible)> prev_Name;
-static void __thiscall my_Name(void *self, undefined4 *pos, char *text, float scale, uint32_t color, uint32_t c2) {
+static void __thiscall my_Name(void *self, bits32 *pos, char *text, float scale, uint32_t color, uint32_t c2) {
   if (!g_host->setting_int("ct_names", 1)) { prev_Name(self, pos, text, scale, color, c2); return; }
   g_name_actor = self; g_nany = 0; g_plate_actor = self; g_plate_index = -1;
   prev_Name(self, pos, text, scale, color, c2);
@@ -219,12 +219,12 @@ static void plate_extend(float x0, float y0, float x1, float y1) {
 }
 
 // clicks: Target_RunActiveCommand around the click's pick, and its call of Target_ApplyAction
-typedef undefined4 (__thiscall *TmFn)(void *);
+typedef bits32 (__thiscall *TmFn)(void *);
 static xikit::fn<decltype(&Target_RunActiveCommand)> prev_Run;
-static undefined4 __thiscall my_Run(void *self) {
+static bits32 __thiscall my_Run(void *self) {
   g_in_run = 1; g_run_empty = 0;
   g_run_had = self && (char)reinterpret_cast<TmFn>(XI_GAME(0x10158470u))(self) != 0;          // Target_HasActor
-  undefined4 r = prev_Run(self);
+  bits32 r = prev_Run(self);
   g_in_run = 0;
   return r;
 }
@@ -234,7 +234,7 @@ static int would_deselect(void *self) {
   return *reinterpret_cast<const uint32_t *>(t + 0xC4) == 0 && *reinterpret_cast<const uint32_t *>(t + 0xC8) == 0;
 }
 static xikit::fn<decltype(&Target_ApplyAction)> prev_Apply;
-static undefined4 __thiscall my_Apply(void *self, undefined4 a) {
+static bits32 __thiscall my_Apply(void *self, bits32 a) {
   if (!would_deselect(self)) return prev_Apply(self, a);
   g_run_empty = 0;
   // the game's deselect (0x101587F0, kinds 17 and 23): if Target_GetCachedIfValid, Target_ClearAll

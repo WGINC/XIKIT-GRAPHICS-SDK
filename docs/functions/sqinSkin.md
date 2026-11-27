@@ -18,10 +18,10 @@ Group: `sq` (by the file name only). Source: `sdk/tree_src/sqinSkin.cpp`.
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `SqinSkin_Create` calls `sub_10275D80`, `SqinSkin_Init`
+- `SqinSkin_Create` calls `game_10275D80`, `SqinSkin_Init`
 - `SqinSkin_Init` calls `SqinShape_Reset`
-- `SqinSkin_InitShapeData` calls `SqdfShape_Create`, `sub_10275D80`
+- `SqinSkin_InitShapeData` calls `SqdfShape_Create`, `game_10275D80`
 - `SqinSkin_PropagateValue38` calls nothing directly
 - `SqinSkin_ResizeItemArray` calls `SqMem_Realloc`
-- `SqinSkin_BuildPartShapes` calls `SqTimer_GetMicroseconds`, `sub_10275D80`, `SqskSkeleton_Release`, `sub_1027F0E0`, `SqdfShape_Create`, `SqVec_CopyVec3`, `sqMatrix4_10280140`, `sub_1027EB10`, `sqFree`
+- `SqinSkin_BuildPartShapes` calls `SqTimer_GetMicroseconds`, `game_10275D80`, `SqskSkeleton_Release`, `game_1027F0E0`, `SqdfShape_Create`, `SqVec_CopyVec3`, `sqMatrix4_10280140`, `game_1027EB10`, `sqFree`
 - `SqinSkin_ReleaseIfHasData` calls `SqinSkin_BuildPartShapes`

@@ -5,13 +5,13 @@
 #pragma pack(push, 1)
 class XI_API CMoDistMorphElem {
 public:
-    int ApplyMorph(int a2, _DWORD *a3, int a4, int a5, _DWORD *C, char a7);  // 0x1003F440
-    _DWORD * ComputeMorphHandle(int a2, int a3);  // 0x1003F8A0
+    int ApplyMorph(int arg1, uint32_t *arg2, int arg3, int arg4, uint32_t *C, char arg6);  // 0x1003F440
+    uint32_t * ComputeMorphHandle(int arg1, int arg2);  // 0x1003F8A0
     static char ** __cdecl GetRuntimeClass();  // 0x10043580
-    static undefined8 __thiscall Construct(void * self);  // 0x10052E20
-    BOOL IsKind6(int a1);  // 0x10052E40
-    int set_field_1C0(int a2);  // 0x10052E50
-    int * ScalarDeletingDtor(char a2);  // 0x10052E60
+    static uint64_t __thiscall Construct(void * self);  // 0x10052E20
+    BOOL IsKind6(int arg1);  // 0x10052E40
+    int set_field_1C0(int arg1);  // 0x10052E50
+    int * ScalarDeletingDtor(char arg1);  // 0x10052E60
 
     void **vftable;  // +0x0
     uint8_t _pad_4[0x2E];

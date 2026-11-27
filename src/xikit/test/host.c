@@ -88,10 +88,57 @@ static HRESULT __stdcall d_tcl(void *d) { (void)d; tcl_calls++; return 0; }
 static HRESULT __stdcall d_beginscene(void *d) { (void)d; bs_calls++; return 0; }   /* GetColor's entry: the band it "draws" is bright while it is swapped */
 static uint8_t g_cdx[0x1000];
 
+/* (staterun) a stand-in actor's vtable +0xCC: the name the game draws (GetEnglishName's slot) */
+static const char *__attribute__((thiscall)) actor_drawn_name(void *self) { (void)self; return "Alice"; }
+/* (staterun, xianim) a stand-in actor's vtable slot 0, GetRuntimeClass, as CYyObject_IsKindOf (0x1002C8F0) calls it:
+   the player's stand-in is a CXiSkeletonActor (the game's own class descriptor 0x10330EBC); the other one is a class
+   whose chain ends at once (+8 NULL), like a door's actor (27 Nov: the owner's crash at prishe.dll+0x10F20) */
+static uint8_t g_other_class[16];
+static void *__attribute__((thiscall)) runtime_class_skeleton(void *self) { (void)self; return (void *)ga(0x10330EBCu); }
+static void *__attribute__((thiscall)) runtime_class_other(void *self) { (void)self; return g_other_class; }
+static const char *__attribute__((thiscall)) actor_drawn_name_bob(void *self) { (void)self; return "Bob"; }
+/* (prishert) a stand-in actor's vtable slot that returns 0 (GetModelPartWord's +0x3B4 test: the record path) */
+static int __attribute__((thiscall)) vt_zero(void *self) { (void)self; return 0; }
 static void check(int cond, const char *what) { printf("%s: %s\n", cond ? "ok" : "FAIL", what); if (!cond) fails++; }
 static void paint(void) {        /* the top band animates smoothly (a triangle wave); the bottom band is GetColor's */
   int t = presents % 400; uint32_t a = (uint32_t)(t < 200 ? t : 400 - t), b = g_paint_site && g_paint_site[0] == 0xE9 ? 200 : 50;
   for (int y = 0; y < PH; y++) for (int x = 0; x < PW; x++) g_bbpix[y * PW + x] = y < PH / 2 ? a * 0x010101u : (b << 16);
+}
+/* (staterun, 27 Nov) call a game entry so that it returns to a chosen game address, as if that site had called it:
+   the site's first 5 bytes become a jmp back here for the call, then are put back. ECX and up to one stack argument. */
+uintptr_t cf_saved_esp;
+extern void cf_stub(uintptr_t entry, uintptr_t ret_site, void *ecx_, int nargs, uint32_t arg);
+extern char cf_back[];
+__asm__(".globl _cf_stub\n_cf_stub:\n"
+        "  pushl %ebp\n  movl %esp, %ebp\n  pushl %ebx\n  pushl %esi\n  pushl %edi\n"
+        "  movl %esp, _cf_saved_esp\n"
+        "  movl 16(%ebp), %ecx\n"
+        "  cmpl $0, 20(%ebp)\n  je 1f\n  pushl 24(%ebp)\n"
+        "1:\n  pushl 12(%ebp)\n  jmp *8(%ebp)\n"
+        ".globl _cf_back\n_cf_back:\n"
+        "  movl _cf_saved_esp, %esp\n  popl %edi\n  popl %esi\n  popl %ebx\n  popl %ebp\n  ret\n");
+static void call_returning_to(uintptr_t entry, uintptr_t site, void *ecx_, int nargs, uint32_t arg) {
+  uint8_t save[5]; DWORD old; VirtualProtect((void *)site, 5, PAGE_EXECUTE_READWRITE, &old); memcpy(save, (void *)site, 5);
+  uint8_t *p = (uint8_t *)site; p[0] = 0xE9; *(int32_t *)(p + 1) = (int32_t)((uintptr_t)cf_back - (site + 5));
+  FlushInstructionCache(GetCurrentProcess(), (void *)site, 5);
+  cf_stub(entry, site, ecx_, nargs, arg);
+  memcpy((void *)site, save, 5); VirtualProtect((void *)site, 5, old, &old); FlushInstructionCache(GetCurrentProcess(), (void *)site, 5);
+}
+/* (29 Nov) the game's area allocator (Mem_AllocFromArea) is not set up in this host: while a test runs game code that
+   allocates, its allocate and free entries (cdecl, tree/src/MathVector.cpp, MemAllocDefault.cpp) jump to the host's */
+static void *__cdecl t_alloc2(int n, int a) { (void)a; return calloc(1, n > 0 ? n : 1); }
+static void *__cdecl t_alloc1(int n) { return calloc(1, n > 0 ? n : 1); }
+static void __cdecl t_free(void *p) { free(p); }
+static const uint32_t k_mem_fn[4] = { 0x10028640u, 0x1002C890u, 0x10028700u, 0x1002C8B0u };   /* Mem_AllocObject, Mem_AllocDefault, Mem_FreeObject, thunk_sub_10028AA0 */
+static uint8_t g_mem_save[4][5];
+static void host_allocator(int on) {
+  void *to[4] = { (void *)t_alloc2, (void *)t_alloc1, (void *)t_free, (void *)t_free };
+  for (int i = 0; i < 4; i++) {
+    uint8_t *p = (uint8_t *)ga(k_mem_fn[i]); DWORD old; VirtualProtect(p, 5, PAGE_EXECUTE_READWRITE, &old);
+    if (on) { memcpy(g_mem_save[i], p, 5); p[0] = 0xE9; *(int32_t *)(p + 1) = (int32_t)((uintptr_t)to[i] - ((uintptr_t)p + 5)); }
+    else memcpy(p, g_mem_save[i], 5);
+    VirtualProtect(p, 5, old, &old); FlushInstructionCache(GetCurrentProcess(), p, 5);
+  }
 }
 static void present(int n) { for (int i = 0; i < n; i++) { paint(); ((HRESULT (__stdcall *)(void *, const RECT *, const RECT *, HWND, const void *))g_dev.vt[15])(&g_dev, 0, 0, 0, 0); } }
 static void touch_ini(const char *ini, const char *body) {
@@ -578,6 +625,26 @@ static int phomod_run(IDirect3DDevice8 *dev) {
            m[2], m[6], m[10], m[14], c[0x44 / 4], c[0x44 / 4 + 1], c[0x44 / 4 + 2]);
   check(fabsf(fabsf(m[2]) - 1.0f) < 1e-4f && fabsf(m[6]) < 1e-4f && fabsf(m[10]) < 1e-4f && fabsf(fabsf(m[14]) - 20.0f) < 1e-3f &&
         c[0x44 / 4] == 0 && c[0x44 / 4 + 2] == -10.0f, what);
+  { /* (28 Nov) the game's own Camera_ApplyViewProjection (0x10015510) on a camera that has not moved: its saved copies
+       (+0x60 eye, +0x6C look-at, +0x78 roll) equal the current ones and +0xF4 is 0. First without the mod's frame: the
+       game builds no view (Camera_DiffersFromSaved is false), so the mod's hook is never reached (the owner's "the
+       camera features do nothing"). Then a Present (the mod's frame sets +0xF4, the game's own request) and the same
+       call: the view is built from the mod's eye, and the game has cleared +0xF4. */
+    static uint8_t cam[0x400], ctl2[0x200]; memset(cam, 0, sizeof cam); memset(ctl2, 0, sizeof ctl2);
+    float *d = (float *)ctl2; d[0x44 / 4 + 2] = -10.0f; d[0x60 / 4 + 2] = -10.0f; d[0xA8 / 4 + 1] = 1.0f;
+    *(float *)(cam + 0x28) = 1.0f; *(void **)(cam + 0x50) = ctl2; void *was = *(void **)ga(0x104568FCu); *(void **)ga(0x104568FCu) = cam;   /* g_pCamera */
+    typedef void (__cdecl *ApplyFn)(void);
+    ((ApplyFn)(void *)ga(0x10015510u))();
+    float *v = d + 1; int none = 1; for (int i = 0; i < 16; i++) none &= v[i] == 0.0f;
+    check(none && ctl2[0xF4] == 0, "phomod: a camera that has not moved: the game's Camera_ApplyViewProjection builds no view (the hook is not reached)");
+    IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL);
+    int asked = ctl2[0xF4];
+    ((ApplyFn)(void *)ga(0x10015510u))();
+    snprintf(what, sizeof what, "phomod: after the mod's frame (+0xF4 = %d): the game's Camera_ApplyViewProjection builds the view from the mod's eye: forward (%.3f %.3f %.3f), _43 %.3f; +0xF4 now %d; the game's eye back (%.1f %.1f %.1f)",
+             asked, v[2], v[6], v[10], v[14], ctl2[0xF4], d[0x44 / 4], d[0x44 / 4 + 1], d[0x44 / 4 + 2]);
+    check(asked == 1 && fabsf(fabsf(v[2]) - 1.0f) < 1e-4f && fabsf(v[6]) < 1e-4f && fabsf(v[10]) < 1e-4f && fabsf(fabsf(v[14]) - 20.0f) < 1e-3f &&
+          ctl2[0xF4] == 0 && d[0x44 / 4] == 0 && d[0x44 / 4 + 2] == -10.0f, what);
+    *(void **)ga(0x104568FCu) = was; }
   IDirect3DTexture8 *tex = NULL; IDirect3DSurface8 *ts = NULL, *old = NULL, *oldz = NULL, *rt = NULL;
   HRESULT hr = IDirect3DDevice8_CreateTexture(dev, 8, 8, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &tex);
   check(SUCCEEDED(hr) && tex, "phomod: an 8x8 render-target texture for the world");
@@ -919,6 +986,12 @@ static void fake_tool_form(const char *form) {
   uint8_t *e = (uint8_t *)ga(0x10080DC0u); DWORD o; VirtualProtect(e, 16, PAGE_EXECUTE_READWRITE, &o);
   void *to = (void *)fake_tool_runline; int32_t d = (int32_t)((uintptr_t)to - ((uintptr_t)e + 5));
   if (!strcmp(form, "ff25")) { g_tool_slot = to; void **sl = &g_tool_slot; e[0] = 0xFF; e[1] = 0x25; memcpy(e + 2, &sl, 4); }
+  else if (!strcmp(form, "dyn")) {                /* (28 Nov) a jump into code no module holds: a thunk in allocated memory
+                                                     that jumps on to the tool's function (Windower's hook at ChatLog_AddMessage) */
+    uint8_t *th = (uint8_t *)VirtualAlloc(NULL, 16, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    int32_t d2 = (int32_t)((uintptr_t)to - ((uintptr_t)th + 5)); th[0] = 0xE9; memcpy(th + 1, &d2, 4);
+    FlushInstructionCache(GetCurrentProcess(), th, 5);
+    d = (int32_t)((uintptr_t)th - ((uintptr_t)e + 5)); e[0] = 0xE9; memcpy(e + 1, &d, 4); e[5] = 0xCC; }
   else if (!strcmp(form, "pushret")) { uint32_t a = (uint32_t)(uintptr_t)to; e[0] = 0x68; memcpy(e + 1, &a, 4); e[5] = 0xC3; }
   else { e[0] = 0xE9; memcpy(e + 1, &d, 4); if (strcmp(form, "e9")) e[5] = 0x90; if (!strcmp(form, "bad")) e[10] ^= 0x55; }
   VirtualProtect(e, 16, o, &o); FlushInstructionCache(GetCurrentProcess(), e, 16);
@@ -1040,19 +1113,19 @@ static int hbmod_run(IDirect3DDevice8 *dev) {
   check(e1 == 0 && e2 == 1, what);
   { /* xikit_cmd.hpp: a typed "/HB env field" through the game's Command_RunLine entry reaches the mod's hook, which takes
        it (returns 0) without the game's code */
-    typedef int (__cdecl *RunFn)(char *, uint32_t); char line[] = "/HB env field";
+    typedef int (__cdecl *RunFn)(char *, uint32_t); char line[] = "/HTB env field";
     int rr = ((RunFn)(void *)ga(0x10080DC0u))(line, 0); int e3 = env(-1);
-    snprintf(what, sizeof what, "hbmod: \"/HB env field\" through Command_RunLine: returned %d (0), environment %d (0, field)", rr, e3);
+    snprintf(what, sizeof what, "hbmod: \"/HTB env field\" through Command_RunLine: returned %d (0), environment %d (0, field)", rr, e3);
     check(*(uint8_t *)ga(0x10080DC0u) == 0xE9 && rr == 0 && e3 == 0, what);
     /* another tool's hook was at the entry first (fake_tool_hook): a line the hotbar does not take reaches it */
     char other[] = "/wave"; long fc = g_fake_tool_calls; int ro = ((RunFn)(void *)ga(0x10080DC0u))(other, 0);
-    snprintf(what, sizeof what, "hbmod: with another tool's jmp at Command_RunLine first: \"/wave\" returned %d (7: the other tool's), the other tool called %ld time(s) (1); \"/HB env field\" did not reach it", ro, g_fake_tool_calls - fc);
+    snprintf(what, sizeof what, "hbmod: with another tool's jmp at Command_RunLine first: \"/wave\" returned %d (7: the other tool's), the other tool called %ld time(s) (1); \"/HTB env field\" did not reach it", ro, g_fake_tool_calls - fc);
     check(ro == 7 && g_fake_tool_calls - fc == 1, what);
-    /* "/hb run 1.1": the slot runs as its key or a click runs it */
-    int r0 = state(&nb, &ns, last, sizeof last); char l2[] = "/hb run 1.1";
+    /* "/htb run 1.1": the slot runs as its key or a click runs it */
+    int r0 = state(&nb, &ns, last, sizeof last); char l2[] = "/htb run 1.1";
     rr = ((RunFn)(void *)ga(0x10080DC0u))(l2, 0); HB_FRAME();
     runs = state(&nb, &ns, last, sizeof last);
-    snprintf(what, sizeof what, "hbmod: \"/hb run 1.1\": returned %d (0), %d run(s) more (1), the line \"%s\" (/heal)", rr, runs - r0, last);
+    snprintf(what, sizeof what, "hbmod: \"/htb run 1.1\": returned %d (0), %d run(s) more (1), the line \"%s\" (/heal)", rr, runs - r0, last);
     check(rr == 0 && runs - r0 == 1 && !strcmp(last, "/heal"), what); }
   { /* the default keys: 1.3 has none of its own ("none"), so it has 3; 1.1 was given f9, so 1 runs nothing */
     int r0 = state(&nb, &ns, last, sizeof last);
@@ -1095,10 +1168,279 @@ static int hbmod_run(IDirect3DDevice8 *dev) {
     long pc1 = pal ? pal() : -1;
     snprintf(what, sizeof what, "hbmod: hotbar mode: MenuMng_OpenByName(\"%s\") returned %d, (\"%s\") %d (0, 0); refused %ld (2)", p1n, o1, p2n, o2, pc1 - pc0);
     check(pal && *(uint8_t *)ga(0x1015E350u) == 0xE9 && o1 == 0 && o2 == 0 && pc1 - pc0 == 2, what);
-    typedef int (__cdecl *RunFn)(char *, uint32_t); char ml[] = "/hb mode macro"; char cwd[MAX_PATH], ini[MAX_PATH + 20];
+    typedef int (__cdecl *RunFn)(char *, uint32_t); char ml[] = "/htb mode macro"; char cwd[MAX_PATH], ini[MAX_PATH + 20];
     int rr = ((RunFn)(void *)ga(0x10080DC0u))(ml, 0); GetCurrentDirectoryA(sizeof cwd, cwd); snprintf(ini, sizeof ini, "%s\\xikit_mods.ini", cwd);
     int md = GetPrivateProfileIntA("hotbar", "hb_mode", -1, ini);
-    snprintf(what, sizeof what, "hbmod: \"/hb mode macro\": returned %d (0), hb_mode in xikit_mods.ini %d (0)", rr, md); check(rr == 0 && md == 0, what);
+    snprintf(what, sizeof what, "hbmod: \"/htb mode macro\": returned %d (0), hb_mode in xikit_mods.ini %d (0)", rr, md); check(rr == 0 && md == 0, what);
+  }
+  { /* (29 Nov) Petit Trois's commands and layout mode (/htb move): set, rename, clear; slots dragged onto slots and off
+       the bars; a bar's handle; the picker's tabs, list and an action dropped on a slot; a bar dragged. The slots go to
+       hotbar_slots_war.txt, the bars to hotbar_layout.txt */
+    typedef int (__cdecl *RunFn)(char *, uint32_t); typedef void (__attribute__((thiscall)) *CurFn2)(void *);
+    int (*hnd)(int, int, float *) = (int (*)(int, int, float *))(void *)GetProcAddress(m, "hb_test_handle");
+    int (*pkr)(int, float *) = (int (*)(int, float *))(void *)GetProcAddress(m, "hb_test_pk_rect");
+    int (*pick)(int *, char *, int) = (int (*)(int *, char *, int))(void *)GetProcAddress(m, "hb_test_pick");
+    int (*edit)(void) = (int (*)(void))(void *)GetProcAddress(m, "hb_test_edit");
+    check(hnd && pkr && pick && edit, "hbmod: layout mode's test exports");
+    #define RUNL(t) do { char _l[] = t; ((RunFn)(void *)ga(0x10080DC0u))(_l, 0); HB_FRAME(); } while (0)
+    #define AT(x_, y_) do { *(int *)(cursor + 4) = (int)(x_); *(int *)(cursor + 8) = (int)(y_); } while (0)
+    #define PRESS() do { ((CurFn2)(void *)ga(0x10124930u))(cursor); HB_FRAME(); } while (0)
+    #define RELEASE() do { ((CurFn2)(void *)ga(0x101249E0u))(cursor); HB_FRAME(); } while (0)
+    char lab[48], l0[200]; int nl, ic, mp;
+    env(1); RUNL("/htb set 1 3 ma Cure stpc My_Cure");
+    slot(1, 3, lab, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: \"/htb set 1 3 ma Cure stpc My_Cure\": 1.3 \"%s\" -> \"%s\", MP %d (My Cure, /ma \"Cure\" <stpc>, 8)", lab, l0, mp);
+    check(!strcmp(lab, "My Cure") && !strcmp(l0, "/ma \"Cure\" <stpc>") && mp == 8, what);
+    { FILE *sf = fopen("hotbar_slots_war.txt", "r"); char buf[2048] = ""; if (sf) { buf[fread(buf, 1, sizeof buf - 1, sf)] = 0; fclose(sf); }
+      check(strstr(buf, "put battle 1.3 xiv|ma|Cure|stpc|My Cure|") != NULL, "hbmod: hotbar_slots_war.txt has \"put battle 1.3 xiv|ma|Cure|stpc|My Cure|\""); }
+    RUNL("/htb rename 1 3 Heal_Me"); slot(1, 3, lab, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: \"/htb rename 1 3 Heal_Me\": 1.3 \"%s\" -> \"%s\" (Heal Me, the same line)", lab, l0);
+    check(!strcmp(lab, "Heal Me") && !strcmp(l0, "/ma \"Cure\" <stpc>"), what);
+    RUNL("/htb move"); check(edit() == 1, "hbmod: \"/htb move\": layout mode on");
+    int runs0 = state(&nb, &ns, last, sizeof last);
+    float r[4], r2[4];
+    rect(1, 3, r); rect(1, 1, r2);
+    AT((r[0] + r[2]) / 2, (r[1] + r[3]) / 2); PRESS(); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); HB_FRAME(); RELEASE();
+    char la[48], lb[48]; slot(1, 1, la, l0, &nl, &ic, &mp); slot(1, 3, lb, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: layout mode: 1.3 dragged onto 1.1: 1.1 \"%s\", 1.3 \"%s\" (Heal Me, Heal: swapped); nothing ran", la, lb);
+    check(!strcmp(la, "Heal Me") && !strcmp(lb, "Heal"), what);
+    AT((r[0] + r[2]) / 2, (r[1] + r[3]) / 2); PRESS(); AT(600, 450); HB_FRAME(); RELEASE();
+    int u = slot(1, 3, lb, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: layout mode: 1.3 dragged off the bars: emptied (%d, 0)", u); check(u == 0, what);
+    float w0 = r[2] - r[0]; rect(1, 0, r); w0 = r[2] - r[0];
+    hnd(1, 3, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+    rect(1, 0, r);
+    { FILE *lf = fopen("hotbar_layout.txt", "r"); char buf[1024] = ""; if (lf) { buf[fread(buf, 1, sizeof buf - 1, lf)] = 0; fclose(lf); }
+      snprintf(what, sizeof what, "hbmod: bar 1's handle +: the bar %.0f px wide (was %.0f: a slot more); hotbar_layout.txt has \"bar 1 4 100 100 c4\" (one row of 4)", r[2] - r[0], w0);
+      check(r[2] - r[0] > w0 && strstr(buf, "bar 1 4 100 100 c4\n") != NULL, what); }
+    int tab; char first[48];
+    pkr(11, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+    int nt = pick(&tab, first, sizeof first);
+    snprintf(what, sizeof what, "hbmod: the picker's Trusts tab: tab %d, %d action(s), the first \"%s\" (1, 1, Shantotto)", tab, nt, first);
+    check(tab == 1 && nt == 1 && !strcmp(first, "Shantotto"), what);
+    pkr(10, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+    int nm = pick(&tab, first, sizeof first);
+    snprintf(what, sizeof what, "hbmod: the picker's Magic tab: %d action(s), the first \"%s\" (2, Cure: Cure and Stone, no trusts; no job known in the test, so no level filter)", nm, first);
+    check(tab == 0 && nm == 2 && !strcmp(first, "Cure"), what);
+    pkr(100, r2); rect(1, 4, r);
+    AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); AT((r[0] + r[2]) / 2, (r[1] + r[3]) / 2); HB_FRAME(); RELEASE();
+    u = slot(1, 4, lb, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: the picker's Cure dropped on 1.4: %d \"%s\" -> \"%s\" (1, Cure, /ma \"Cure\" <t>: Cure's targets 63 hold Enemy, so Petit Trois's rule gives t)", u, lb, l0);
+    check(u == 1 && !strcmp(lb, "Cure") && !strcmp(l0, "/ma \"Cure\" <t>"), what);
+    rect(1, 0, r); hnd(1, 0, r2);
+    AT(r2[0] + 2, r2[1] + 2); PRESS(); AT(r2[0] + 42, r2[1] + 22); HB_FRAME(); RELEASE();
+    float rn[4]; rect(1, 0, rn);
+    { FILE *lf = fopen("hotbar_layout.txt", "r"); char buf[1024] = ""; if (lf) { buf[fread(buf, 1, sizeof buf - 1, lf)] = 0; fclose(lf); }
+      snprintf(what, sizeof what, "hbmod: bar 1 dragged by its handle 40,20 px: now at %.0f,%.0f (240,220); hotbar_layout.txt has \"bar 1 4 120 110 c4\"", rn[0], rn[1]);
+      check(rn[0] == r[0] + 40 && rn[1] == r[1] + 20 && strstr(buf, "bar 1 4 120 110 c4\n") != NULL, what); }
+    int runs1 = state(&nb, &ns, last, sizeof last);
+    snprintf(what, sizeof what, "hbmod: in layout mode presses on slots ran nothing (%d runs, %d before)", runs1, runs0); check(runs1 == runs0, what);
+    RUNL("/htb move"); check(edit() == 0, "hbmod: \"/htb move\" again: layout mode off");
+    RUNL("/htb clear 1 4"); u = slot(1, 4, lb, l0, &nl, &ic, &mp);
+    snprintf(what, sizeof what, "hbmod: \"/htb clear 1 4\": emptied (%d, 0)", u); check(u == 0, what);
+    remove("hotbar_layout.txt"); remove("hotbar_slots_war.txt");
+    /* (29 Nov) bar shapes (FFXIV's 12x1 .. 1x12): /htb bar 2 4 c2 makes bar 2 two by two; the handle's shape steps it */
+    RUNL("/htb bar 2 4 c2"); float s1[4], s2[4], s3[4];
+    rect(2, 1, s1); rect(2, 2, s2); rect(2, 3, s3);
+    snprintf(what, sizeof what, "hbmod: \"/htb bar 2 4 c2\": slot 2 right of slot 1 (%.0f > %.0f, same row %.0f), slot 3 under slot 1 (%.0f > %.0f, same column %.0f)", s2[0], s1[0], s2[1], s3[1], s1[1], s3[0]);
+    check(s2[0] > s1[0] && s2[1] == s1[1] && s3[1] > s1[1] && s3[0] == s1[0], what);
+    RUNL("/htb move"); hnd(2, 1, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE(); RUNL("/htb move");
+    rect(2, 1, s1); rect(2, 2, s2);
+    { FILE *lf = fopen("hotbar_layout.txt", "r"); char buf[1024] = ""; if (lf) { buf[fread(buf, 1, sizeof buf - 1, lf)] = 0; fclose(lf); }
+      snprintf(what, sizeof what, "hbmod: bar 2's shape handle: 2x2 -> 1x4 (slot 2 under slot 1: %.0f > %.0f, same column); hotbar_layout.txt has \"bar 2 4 10 10 c1\"", s2[1], s1[1]);
+      check(s2[1] > s1[1] && s2[0] == s1[0] && strstr(buf, "bar 2 4 10 10 c1\n") != NULL, what); }
+    /* shared bars: their slots go to hotbar_slots.txt, for every job */
+    RUNL("/htb bar 1 4 shared"); RUNL("/htb set 1 1 ma Cure t");
+    { FILE *a1 = fopen("hotbar_slots.txt", "r"), *a2 = fopen("hotbar_slots_war.txt", "r"); char b1[1024] = "", b2[1024] = "";
+      if (a1) { b1[fread(b1, 1, sizeof b1 - 1, a1)] = 0; fclose(a1); } if (a2) { b2[fread(b2, 1, sizeof b2 - 1, a2)] = 0; fclose(a2); }
+      slot(1, 1, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: bar 1 shared: \"/htb set 1 1 ma Cure t\" in hotbar_slots.txt (%d), not in hotbar_slots_war.txt (%d); 1.1 \"%s\"", strstr(b1, "put battle 1.1 xiv|ma|Cure|t||") != NULL, strstr(b2, "1.1") != NULL, lb);
+      check(strstr(b1, "put battle 1.1 xiv|ma|Cure|t||") != NULL && strstr(b2, "1.1") == NULL && !strcmp(lb, "Cure"), what); }
+    /* tooltips: Petit Trois's lines (text_formatter.lua) from the tables and descriptions */
+    int (*tip)(int, int, char *, int) = (int (*)(int, int, char *, int))(void *)GetProcAddress(m, "hb_test_tip");
+    int (*sst)(int, int, int *) = (int (*)(int, int, int *))(void *)GetProcAddress(m, "hb_test_slotstate");
+    check(tip && sst, "hbmod: the tooltip's and the slot state's test exports");
+    RUNL("/htb set 1 2 ws Fast_Blade t"); RUNL("/htb set 1 3 ja Provoke t");
+    static char tt[2048];
+    tip(1, 1, tt, sizeof tt);
+    snprintf(what, sizeof what, "hbmod: Cure's tooltip: [Cure], Target, the description, Range 20.4y and MP Cost 8MP, Cast 2s Recast 5s (%s)", tt);
+    check(strstr(tt, "[Cure]   Target: <t>") && strstr(tt, "Restores target's HP.") && strstr(tt, "Range: 20.4y    MP Cost: 8MP") && strstr(tt, "Cast: 2s    Recast: 5s"), what);
+    tip(1, 2, tt, sizeof tt);
+    snprintf(what, sizeof what, "hbmod: Fast Blade's tooltip: its description (ability_descriptions [32]), SC: Scission, Range 3.4y (%s)", tt);
+    check(strstr(tt, "[Fast Blade]") && strstr(tt, "Delivers a two-hit attack.") && strstr(tt, "SC: Scission") && strstr(tt, "Range: 3.4y"), what);
+    tip(1, 3, tt, sizeof tt);
+    snprintf(what, sizeof what, "hbmod: Provoke's tooltip: its description (ability_descriptions [35 + 512]), Range 16.4y (%s)", tt);
+    check(strstr(tt, "[Provoke]") && strstr(tt, "Goads an enemy into attacking you.") && strstr(tt, "Range: 16.4y"), what);
+    /* the slot state from the game's code: with no abilities' table, Provoke is not confirmed (rec -1 after the check) and
+       keeps Petit Trois's recast_id; then the table with record 0x223 (35 + 0x200: id 35, type 1, timer 5) and the recast
+       object 0x10666EC0 with timer 5 at 600 ticks: the game's record, its countdown, its check (2: recast) */
+    int o7[7];
+    HB_FRAME(); sst(1, 3, o7);
+    snprintf(what, sizeof what, "hbmod: Provoke with no abilities' table: kind %d, record %d (2, -2: not checked yet); its timer by Petit Trois's recast_id", o7[0], o7[1]);
+    check(o7[0] == 2 && o7[1] == -2, what);
+    void **pab = (void **)ga(0x1066714Cu); void *kab = *pab; static uint8_t abt[0xB00 * 0x30]; memset(abt, 0, sizeof abt); *pab = abt;
+    uint8_t *rec = abt + 0x223 * 0x30; *(uint16_t *)rec = 35; rec[2] = 1; *(uint16_t *)(rec + 8) = 5; rec[0xF] = 1;
+    uint8_t *ro = (uint8_t *)ga(0x10666EC0u), kro[0x180]; memcpy(kro, ro, sizeof kro);
+    for (int e = 0; e < 0x1F; e++) { ro[e * 8 + 2] = 0; ro[e * 8 + 3] = 0xFF; *(int16_t *)(ro + e * 8 + 4) = 0; }
+    ro[3] = 5; *(int *)(ro + 0xF8) = 600;
+    RUNL("/htb set 1 3 ja Provoke t");                              /* (the slot set again: its state checked afresh) */
+    for (int f = 0; f < 7; f++) HB_FRAME();
+    sst(1, 3, o7);
+    /* (the game's check gives 1 here: this host has no player entry, NetCellFont_SetByte9800AndGetEntry(0); its 2 and 0 for
+       a running and an ended recast are checked in staterun, which has one) */
+    snprintf(what, sizeof what, "hbmod: Provoke with the game's table: kind %d, record 0x%X (0x223), ticks %d (600), total %d, charges %d (-1), state %d (1: the game's check, no player entry here)", o7[0], o7[1], o7[2], o7[3], o7[4], o7[6]);
+    check(o7[0] == 2 && o7[1] == 0x223 && o7[2] == 600 && o7[3] == 600 && o7[4] == -1 && o7[6] == 1, what);
+    tip(1, 3, tt, sizeof tt);
+    snprintf(what, sizeof what, "hbmod: Provoke's tooltip has \"Recast: 10\" and the game's answer \"Cannot use now: not there (the game's check: 1)\" (%s)", tt);
+    check(strstr(tt, "Recast: 10") && strstr(tt, "Cannot use now: not there (the game's check: 1)"), what);
+    *(int *)(ro + 0xF8) = 300; for (int f = 0; f < 7; f++) HB_FRAME(); sst(1, 3, o7);
+    snprintf(what, sizeof what, "hbmod: the countdown at 300: ticks %d, total %d (300, 600: the sweep half)", o7[2], o7[3]); check(o7[2] == 300 && o7[3] == 600, what);
+    *(int *)(ro + 0xF8) = 0; for (int f = 0; f < 7; f++) HB_FRAME(); sst(1, 3, o7);
+    snprintf(what, sizeof what, "hbmod: the countdown at 0: ticks %d (0), total %d (0: no sweep)", o7[2], o7[3]); check(o7[2] == 0 && o7[3] == 0, what);
+    /* a record that does not match (id 99 at 0x223): not the game's record, not dimmed */
+    *(uint16_t *)rec = 99; RUNL("/htb clear 1 3"); RUNL("/htb set 1 3 ja Provoke t"); for (int f = 0; f < 7; f++) HB_FRAME(); sst(1, 3, o7);
+    snprintf(what, sizeof what, "hbmod: record 0x223 with id 99: record %d (-1: not the same, Petit Trois's recast_id kept), state %d (-1)", o7[1], o7[6]);
+    check(o7[1] == -1 && o7[6] == -1, what);
+    memcpy(ro, kro, sizeof kro); *pab = kab;
+    /* the picker's Ability and WSkills tabs by the game's lists: game state +0x2CDE8 (one bit a record; +0x2CF49 and
+       +0x2CF4A set when they came): record 0x223 (Provoke, 35 + 0x200) and 32 (Fast Blade) on; Sic (255 + 0x200) off */
+    RUNL("/htb move");
+    int tab2; char first2[48];
+    pkr(12, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+    int na0 = pick(&tab2, first2, sizeof first2);
+    uint8_t **gsp2 = (uint8_t **)ga(0x104DFD98u); uint8_t *kgs = *gsp2; static uint8_t gst2[0x30000]; memset(gst2, 0, sizeof gst2); *gsp2 = gst2;
+    gst2[0x2CDE8 + (0x223 >> 3)] |= 1 << (0x223 & 7); gst2[0x2CDE8 + (32 >> 3)] |= 1 << (32 & 7); gst2[0x2CF49] = gst2[0x2CF4A] = 1;
+    int na1 = pick(&tab2, first2, sizeof first2);
+    snprintf(what, sizeof what, "hbmod: the picker's Ability tab: %d before the game's list (3: Provoke, Sic, Geocrush; not Foot Kick, a Monster row), %d after it, the first \"%s\" (1, Provoke)", na0, na1, first2);
+    check(tab2 == 2 && na0 == 3 && na1 == 1 && !strcmp(first2, "Provoke"), what);
+    pkr(13, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+    int nw = pick(&tab2, first2, sizeof first2);
+    snprintf(what, sizeof what, "hbmod: the picker's WSkills tab by the game's list: %d, \"%s\" (1, Fast Blade)", nw, first2);
+    check(tab2 == 3 && nw == 1 && !strcmp(first2, "Fast Blade"), what);
+    gst2[0x2CDE8 + (32 >> 3)] = 0; nw = pick(&tab2, first2, sizeof first2);
+    snprintf(what, sizeof what, "hbmod: Fast Blade's bit off: %d weapon skills (0)", nw); check(nw == 0, what);
+    *gsp2 = kgs; RUNL("/htb move");
+    /* (29 Nov) skillchains: a message 0x028 built field by field as the game's reader reads it (LSB first from byte 5:
+       actor 32, targets 6, 4, category 4, param 32, 32; a target's id 32 and actions 4; an action's 3, 2, 12, 5, 5, param 17,
+       message 10, 31, the added effect's and the spike's flag bits), parsed by the game's own 0x1018CA40 (thiscall (status,
+       message + 4), ret 4: data/purges.json) into a status the game's 0x1018C610 made: the parser hands the record to
+       fn_1018D170, which the hotbar hooks. Petit Trois's rules then: Burning Blade (Liquefaction), 3 s .. 10 s later Fast
+       Blade (Scission) makes Scission (level 1); Stone (earth) bursts on it for 10 s. */
+    { void (*sct)(unsigned, int, long *, long *) = (void (*)(unsigned, int, long *, long *))(void *)GetProcAddress(m, "hb_test_sc");
+      int (*scs)(int, int, char *, int, int *) = (int (*)(int, int, char *, int, int *))(void *)GetProcAddress(m, "hb_test_scslot");
+      void (*clk)(int) = (void (*)(int))(void *)GetProcAddress(m, "hb_test_clock");
+      check(sct && scs && clk, "hbmod: the skillchain test exports");
+      typedef void *(__attribute__((fastcall)) *StCtor)(void *);
+      typedef int (__attribute__((thiscall)) *Parse)(void *, void *);
+      RUNL("/htb set 1 1 ma Stone t"); RUNL("/htb set 1 2 ws Fast_Blade t");
+      const unsigned tgt = 0x01020304u; long seen0 = 0, used0 = 0, seen1 = 0, used1 = 0;
+      sct(tgt, 0, &seen0, &used0);
+      int hooked_sc = 0; { FILE *lf = fopen("xikit.log", "r"); char lb2[512]; if (lf) { while (fgets(lb2, sizeof lb2, lf)) if (strstr(lb2, "fn_1018D170") && strstr(lb2, "refused")) hooked_sc = -1; fclose(lf); } }
+      check(hooked_sc == 0, "hbmod: the action message hook (fn_1018D170) taken (no \"refused\" line in xikit.log)");
+      #define SC_ACT(param_, msg_) do { static uint8_t pk[256]; memset(pk, 0, sizeof pk); int bp = 5 * 8; \
+        uint32_t fv[] = { 0x0A0B0C0Du, 1, 0, 3, (param_), 0, tgt, 1, 0, 0, 0, 0, 0, 0, (msg_), 0, 0, 0 }; \
+        int fw[] = { 32, 6, 4, 4, 32, 32, 32, 4, 3, 2, 12, 5, 5, 17, 10, 31, 1, 1 }; \
+        for (int f_ = 0; f_ < (int)(sizeof fw / sizeof fw[0]); f_++) for (int k_ = 0; k_ < fw[f_]; k_++, bp++) if ((fv[f_] >> k_) & 1) pk[bp >> 3] |= (uint8_t)(1 << (bp & 7)); \
+        static uint8_t st[16]; ((StCtor)(void *)ga(0x1018C610u))(st); ((Parse)(void *)ga(0x1018CA40u))(st, pk + 4); } while (0)
+      host_allocator(1);
+      SC_ACT(33, 185);                                                   /* Burning Blade, message 185 (a weapon skill's, Petit Trois's number) */
+      sct(tgt, 0, &seen1, &used1);
+      snprintf(what, sizeof what, "hbmod: the game's parser handed the record to the hook: seen %ld -> %ld, used %ld -> %ld (one more each)", seen0, seen1, used0, used1);
+      check(seen1 == seen0 + 1 && used1 == used0 + 1, what);
+      char pr[24]; int lvl = 0, r0 = scs(1, 2, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Fast Blade at once after Burning Blade: %d (0: under 3 s, no chain)", r0); check(r0 == 0, what);
+      clk(4000); r0 = scs(1, 2, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Fast Blade 4 s after: %d \"%s\" level %d (1, Scission, 1)", r0, pr, lvl); check(r0 == 1 && !strcmp(pr, "Scission") && lvl == 1, what);
+      tip(1, 2, tt, sizeof tt);
+      snprintf(what, sizeof what, "hbmod: Fast Blade's tooltip says \"Skillchain: Scission (level 1)\" (%s)", tt); check(strstr(tt, "Skillchain: Scission (level 1)") != NULL, what);
+      r0 = scs(1, 1, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Stone before a chain formed: %d (0)", r0); check(r0 == 0, what);
+      SC_ACT(32, 185);                                                   /* Fast Blade lands: Scission forms */
+      r0 = scs(1, 1, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Stone after Scission formed: %d (2: a magic burst, earth)", r0); check(r0 == 2, what);
+      /* (29 Nov) the rest of Petit Trois's: a blood pact rage that bloodpacts.lua calls magic bursts by its element (Geocrush,
+         earth); a BST pet's command (Foot Kick, type Monster) chains as the monster ability 3840 of that name in Windower's
+         res\monster_abilities.lua (Reverberation: Scission -> Reverberation, level 1); a monster ability's id (3840)
+         in a weapon skill's message applies its properties */
+      RUNL("/htb set 1 3 ja Geocrush t"); RUNL("/htb set 1 4 ja Foot_Kick t");
+      r0 = scs(1, 3, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Geocrush after Scission formed: %d (2: a magic burst, its bloodpacts.lua row magic)", r0); check(r0 == 2, what);
+      r0 = scs(1, 4, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Foot Kick at once after Fast Blade: %d (0: under 3 s)", r0); check(r0 == 0, what);
+      clk(4000); r0 = scs(1, 4, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Foot Kick (the pet's, as Windower's monster ability 3840) 4 s after: %d \"%s\" level %d (1, Reverberation, 1)", r0, pr, lvl);
+      check(r0 == 1 && !strcmp(pr, "Reverberation") && lvl == 1, what);
+      SC_ACT(3840, 185);                                                 /* the pet's Foot Kick lands: Reverberation forms */
+      char scp[64] = ""; int (*scprops)(char *, int) = (int (*)(char *, int))(void *)GetProcAddress(m, "hb_test_scprops");
+      if (scprops) scprops(scp, sizeof scp);
+      r0 = scs(1, 1, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: after monster ability 3840: the target's property \"%s\" (Reverberation), Stone %d (0: earth does not burst on it)", scp, r0);
+      check(!strcmp(scp, "Reverberation") && r0 == 0, what);
+      SC_ACT(32, 15);                                                    /* (message 15, not a weapon skill's: seen, not used) */
+      host_allocator(0);
+      sct(tgt, 0, &seen1, &used1);
+      snprintf(what, sizeof what, "hbmod: a message 15 action: seen %ld, used %ld (seen +4, used +3)", seen1, used1); check(seen1 == seen0 + 4 && used1 == used0 + 3, what);
+      RUNL("/htb sc");
+      clk(11000); r0 = scs(1, 1, pr, sizeof pr, &lvl);
+      snprintf(what, sizeof what, "hbmod: Stone 11 s after the chain: %d (0: the burst window is 10 s)", r0); check(r0 == 0, what);
+      sct(0, -1, NULL, NULL);
+      #undef SC_ACT
+    }
+    /* (29 Nov) items, from the game's inventory table (game state +0x9868 + (bag x 0x51 + index) x 0x2C: id, count) and
+       Windower's items.lua: an item slot's count is bag 3's and bag 0's together (Petit Trois), its icon Petit Trois's
+       images/icons/items/<id>.bmp; an autoitem slot is the first usable item whose name holds the filter, labelled as
+       shorten_ability_name labels it; the main weapon's skill reads the job file's table of that name as a set. */
+    { uint8_t **gsp = (uint8_t **)ga(0x104DFD98u); uint8_t *kgs = *gsp; static uint8_t gst[0x30000]; memset(gst, 0, sizeof gst); *gsp = gst;
+      #define INV(bag_, idx_, id_, n_) do { uint8_t *e_ = gst + 0x9868 + ((bag_) * 0x51 + (idx_)) * 0x2C; *(uint16_t *)e_ = (id_); *(int32_t *)(e_ + 4) = (n_); } while (0)
+      INV(0, 1, 4112, 12); INV(3, 1, 4112, 3); INV(0, 2, 16535, 1);
+      int (*itm)(int, int, int *, int *) = (int (*)(int, int, int *, int *))(void *)GetProcAddress(m, "hb_test_item");
+      void (*wpn)(int) = (void (*)(int))(void *)GetProcAddress(m, "hb_test_weapon");
+      check(itm && wpn, "hbmod: the item test exports");
+      RUNL("/htb set 1 1 item Potion me"); RUNL("/htb set 1 2 autoitem Pot");
+      int iid = 0, icn = 0; itm(1, 1, &iid, &icn); slot(1, 1, lb, l0, &nl, &ic, &mp);
+      { const char *ipath = NULL; (void)ipath; }
+      snprintf(what, sizeof what, "hbmod: item slot Potion: id %d (4112, Windower's items.lua), count %d (15: 12 in bag 0, 3 in bag 3), icon %d", iid, icn, ic);
+      check(iid == 4112 && icn == 15 && ic, what);
+      itm(1, 2, &iid, &icn); slot(1, 2, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: autoitem \"Pot\": \"%s\" runs \"%s\", id %d (Potn, /item \"Potion\" <me>, 4112)", lb, l0, iid);
+      check(!strcmp(lb, "Potn") && !strcmp(l0, "/item \"Potion\" <me>") && iid == 4112, what);
+      INV(0, 1, 0, 0); INV(3, 1, 0, 0); INV(0, 3, 4128, 2); for (int f = 0; f < 31; f++) HB_FRAME();
+      itm(1, 2, &iid, &icn); slot(1, 2, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: the Potions gone, an Ether there: autoitem \"Pot\" %s (none matches: the slot empty); item slot Potion count %d", nl ? l0 : "empty", (itm(1, 1, &iid, &icn), icn));
+      check(nl == 0 && icn == 0, what);
+      RUNL("/htb set 1 2 autoitem 1"); slot(1, 2, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: autoitem \"1\": \"%s\" (the first usable item: Ether)", l0); check(!strcmp(l0, "/item \"Ether\" <me>"), what);
+      /* weapon switching: hotbar.txt reads the Sword set; a club as the main weapon reads Club too (2.4: BS, Club's) */
+      slot(2, 4, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: 2.4 before a weapon: \"%s\" (FB, hotbar.txt's set Sword)", lb); check(!strcmp(lb, "FB"), what);
+      wpn(17024); for (int f = 0; f < 31; f++) HB_FRAME(); slot(2, 4, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: the main weapon an Ash Club (skill 11): 2.4 \"%s\" (BS: the job file's Club table read as a set)", lb); check(!strcmp(lb, "BS"), what);
+      wpn(-1); for (int f = 0; f < 31; f++) HB_FRAME(); slot(2, 4, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: no weapon again: 2.4 \"%s\" (FB: Club's table off)", lb); check(!strcmp(lb, "FB"), what);
+      /* bstpet N: the N-th learned /pet ability that is not a PetCommand, by id (Foot Kick 672; Sic 255 is a PetCommand),
+         by the game's learned list (game state +0x2CDE8, record id + 0x200) */
+      gst[0x2CDE8 + ((672 + 0x200) >> 3)] |= 1 << ((672 + 0x200) & 7); gst[0x2CDE8 + ((255 + 0x200) >> 3)] |= 1 << ((255 + 0x200) & 7); gst[0x2CF49] = gst[0x2CF4A] = 1;
+      RUNL("/htb set 1 1 bstpet 1"); slot(1, 1, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: bstpet 1: \"%s\" runs \"%s\" (FotKic, /ja \"Foot Kick\" <t>: Sic, a PetCommand, not counted)", lb, l0);
+      check(!strcmp(lb, "FotKic") && !strcmp(l0, "/ja \"Foot Kick\" <t>"), what);
+      RUNL("/htb set 1 2 bstpet 2"); slot(1, 2, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: bstpet 2: %s (empty: one pet ability learned)", nl ? l0 : "empty"); check(nl == 0, what);
+      gst[0x2CDE8 + ((672 + 0x200) >> 3)] = 0; for (int f = 0; f < 31; f++) HB_FRAME(); slot(1, 1, lb, l0, &nl, &ic, &mp);
+      snprintf(what, sizeof what, "hbmod: Foot Kick's bit off: bstpet 1 %s (empty, made again when the learned list changed)", nl ? l0 : "empty"); check(nl == 0, what);
+      #undef INV
+      RUNL("/htb clear 1 1"); RUNL("/htb clear 1 2");
+      *gsp = kgs;
+    }
+    /* (29 Nov) Horizon's spells: /htb horizon on reads priv_res/horizon_spells.lua instead of spells.lua (the picker's
+       Magic tab lists its spell "Horizon Glow"; Stone, only in spells.lua, is gone) */
+    { RUNL("/htb horizon on"); RUNL("/htb move"); pkr(10, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE();
+      int tabh; char firsth[48]; int nh = pick(&tabh, firsth, sizeof firsth);
+      snprintf(what, sizeof what, "hbmod: Horizon's spells: the Magic tab %d action(s), the first \"%s\" (2: Cure, Horizon Glow)", nh, firsth); check(nh == 2 && !strcmp(firsth, "Cure"), what);
+      RUNL("/htb move"); RUNL("/htb horizon off");
+      RUNL("/htb move"); pkr(10, r2); AT((r2[0] + r2[2]) / 2, (r2[1] + r2[3]) / 2); PRESS(); RELEASE(); nh = pick(&tabh, firsth, sizeof firsth); RUNL("/htb move");
+      snprintf(what, sizeof what, "hbmod: Horizon's spells off: %d (2: Cure, Stone)", nh); check(nh == 2, what); }
+    RUNL("/htb bar 1 4 own");
+    remove("hotbar_layout.txt"); remove("hotbar_slots_war.txt"); remove("hotbar_slots.txt");
   }
   mng[0xB4] = 1;
   snprintf(what, sizeof what, "hbmod: the interface hidden (menu manager +0xB4 = 1): (220,220) hits %d (0)", over(220, 220)); check(over(220, 220) == 0, what);
@@ -1280,6 +1622,16 @@ static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
     IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20);
   }
   snprintf(what, sizeof what, "prishert: after profile.json gives b_two priority 30 while running, ROM/1/2.DAT reads \"%s\" (b_two's)", b); check(!strcmp(b, "packB"), what);
+  { /* (28 Nov, live reloading) a file put into a pack while the game runs, with nothing else touched: prishe.dll sees the
+       folder change and reads the packs again by itself */
+    FILE *nf = fopen("prishe\\packs\\b_two\\files\\ROM\\1\\5.DAT", "wb"); if (nf) { fputs("new5x", nf); fclose(nf); }
+    snprintf(p, sizeof p, "%s/ROM/1/5.DAT", dir); b[0] = 0; int t;
+    for (t = 0; t < 1500; t++) {
+      read5(*slot, p, GENERIC_READ, b); if (!strcmp(b, "new5x")) break;
+      IDirect3DDevice8_Clear(dev, 0, NULL, D3DCLEAR_TARGET, 0xFF000000u, 1.0f, 0); IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20);
+    }
+    snprintf(what, sizeof what, "prishert: a file added to b_two while running is served without a button or a profile change: ROM/1/5.DAT reads \"%s\" (after %d frames)", b, t);
+    check(!strcmp(b, "new5x"), what); }
   { int (*lg)(const char *, char *, int) = (int (*)(const char *, char *, int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_log");
     char pk[64] = "";
     if (!lg) printf("note: prishert: prishe.dll has no resource log (an older Prishe)\n");
@@ -1299,6 +1651,59 @@ static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
     if (ok) { D3DLOCKED_RECT lr; if (SUCCEEDED(IDirect3DTexture8_LockRect(tx, 0, &lr, NULL, D3DLOCK_READONLY))) { v = *(uint32_t *)lr.pBits; IDirect3DTexture8_UnlockRect(tx, 0); } }
     snprintf(what, sizeof what, "prishert: prtex01 through the game's TexObj_Create: %ux%u, first texel %08lx (16x16, ff445566: b_two's, priority 30)", ok ? sd.Width : 0, ok ? sd.Height : 0, (unsigned long)v);
     check(ok && sd.Width == 16 && sd.Height == 16 && v == 0xFF445566u, what); }
+  /* (Prishe V2) the on-screen view's two hooks by name: LoadSkeletonSync (which character) and FindOrCreateTask (which
+     file number); no character is loaded here, so the view holds none */
+  check(*(uint8_t *)ga(0x100730E0u) == 0xE9 && *(uint8_t *)ga(0x100D2F60u) == 0xE9, "prishert: CMoResource::FindOrCreateTask's and CXiSkeletonActor::LoadSkeletonSync's entries jump (Prishe's on-screen view)");
+  { int (*os)(void) = (int (*)(void))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_onscreen");
+    if (os) check(os() == 0, "prishert: the on-screen view holds no character (none was loaded)"); }
+  /* (Prishe C1, S1) the look override: looks\mine.json (written by test_xikit.py) gives "Alice" slot 2 word 0x2077. A
+     stand-in record named Alice in the game DLL's record array, its actor's vtable +0x3B4 returning 0 (the record
+     path of GetModelPartWord); a few frames for Prishe to match it; then the game's own GetModelPartWord, called on
+     that actor, gives the look's word for slot 2 and the record's for slot 1 */
+  check(*(uint8_t *)ga(0x10084480u) == 0xE9, "prishert: CXiActor::GetModelPartWord's entry jumps (Prishe's look override)");
+  check(*(uint8_t *)ga(0x10127C00u) == 0xE9, "prishert: ChatLog_AddMessage's entry jumps (Prishe's chat events for plugins, P3)");
+  { static uint8_t rec[0x300]; static void *vt[0x100]; static void *act[0x40];
+    for (int k = 0; k < 0x100; k++) vt[k] = (void *)vt_zero;
+    act[0] = vt; *(void **)((uint8_t *)act + 0x70) = rec; *(void **)(rec + 0xA0) = act;
+    strcpy((char *)rec + 0x7C, "Alice"); rec[0xEF] = 2;
+    for (int s2 = 0; s2 < 9; s2++) *(uint16_t *)(rec + 0xFC + 2 * s2) = (uint16_t)(0x1000 * s2 + 0x11);
+    void **arr = (void **)(uintptr_t)ga(0x10480AF0u); arr[3] = rec;
+    for (int f = 0; f < 4; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    typedef unsigned (__attribute__((thiscall)) *WordFn)(void *, int);
+    unsigned w2 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 2), w1 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 1);
+    long (*lk)(void) = (long (*)(void))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_looks");
+    { long (*st)(int) = (long (*)(int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_state");
+      if (st) printf("  prishe state: %ld frames, %ld matched, %ld looks, record 3 %p (ours %p)\n", st(0), st(1), st(2), (void *)st(3), (void *)rec); }
+    snprintf(what, sizeof what, "prishert: the game's GetModelPartWord on Alice's actor: slot 2 %04x (the look's 2077), slot 1 %04x (the record's 1011); %ld replaced", w2 & 0xFFFF, w1 & 0xFFFF, lk ? lk() : -1);
+    check((w2 & 0xFFFF) == 0x2077 && (w1 & 0xFFFF) == 0x1011 && lk && lk() >= 1, what);
+    arr[3] = NULL; for (int f = 0; f < 3; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    w2 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 2);
+    snprintf(what, sizeof what, "prishert: after Alice's record left the array, slot 2 is the record's own again (%04x)", w2 & 0xFFFF);
+    check((w2 & 0xFFFF) == 0x2011, what);
+    /* (26 Nov) looks go only to records of kind 0 (+0xEE): an "Alice" of kind 1 (an NPC, as seen in the game) gets none */
+    rec[0xEE] = 1; arr[3] = rec; for (int f = 0; f < 4; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    w2 = ((WordFn)(uintptr_t)ga(0x10084480u))(act, 2);
+    snprintf(what, sizeof what, "prishert: an Alice of kind 1 keeps the record's slot 2 (%04x, not the look's 2077)", w2 & 0xFFFF);
+    check((w2 & 0xFFFF) == 0x2011, what);
+    arr[3] = NULL; rec[0xEE] = 0; for (int f = 0; f < 3; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); } }
+  /* (Prishe H1) host=1: the shared memory "Local\PrisheHost_<pid>" made by prishe.dll, its magic, and frames written */
+  { char nm[64]; snprintf(nm, sizeof nm, "Local\\PrisheHost_%lu", GetCurrentProcessId());
+    HANDLE hm = OpenFileMappingA(FILE_MAP_READ, FALSE, nm); const uint8_t *blk = hm ? (const uint8_t *)MapViewOfFile(hm, FILE_MAP_READ, 0, 0, 0x10050) : NULL;
+    uint32_t f1 = blk ? *(const uint32_t *)(blk + 0x14) : 0;
+    for (int f = 0; f < 3; f++) { IDirect3DDevice8_Present(dev, NULL, NULL, NULL, NULL); Sleep(20); }
+    uint32_t f2 = blk ? *(const uint32_t *)(blk + 0x14) : 0;
+    snprintf(what, sizeof what, "prishert: host=1: %s exists, magic %.7s, version %u, size %u, frames %u then %u", nm, blk ? (const char *)blk : "-", blk ? *(const uint32_t *)(blk + 8) : 0, blk ? *(const uint32_t *)(blk + 12) : 0, f1, f2);
+    check(blk && !memcmp(blk, "PRISHE1", 8) && *(const uint32_t *)(blk + 8) == 1 && *(const uint32_t *)(blk + 12) == 0x10050 && f2 >= f1 + 3, what);
+    if (blk) UnmapViewOfFile(blk); if (hm) CloseHandle(hm); }
+  /* (Prishe M4) dump_textures=1: the game's own prtex01 (8x8, before Prishe's replacement) written once to
+     prishe\textures_dump\prtex01_<crc>.dds, when this Prishe has the dump (built with the SDK's texture_replace_core) */
+  { WIN32_FIND_DATAA fd; HANDLE h = FindFirstFileA("prishe\\textures_dump\\prtex01_*.dds", &fd);
+    if (h == INVALID_HANDLE_VALUE) check(0, "prishert: dump_textures=1 wrote prishe\\textures_dump\\prtex01_<crc>.dds");
+    else { FindClose(h); char p[MAX_PATH]; snprintf(p, sizeof p, "prishe\\textures_dump\\%s", fd.cFileName);
+      FILE *f = fopen(p, "rb"); uint8_t hd[128] = {0}; size_t n = f ? fread(hd, 1, sizeof hd, f) : 0; if (f) fclose(f);
+      uint32_t w = 0, hh = 0; memcpy(&hh, hd + 12, 4); memcpy(&w, hd + 16, 4);
+      snprintf(what, sizeof what, "prishert: dump_textures=1 wrote %s, a DDS of %ux%u (the game's own 8x8, not the pack's 16x16)", fd.cFileName, w, hh);
+      check(n == 128 && !memcmp(hd, "DDS ", 4) && w == 8 && hh == 8, what); } }
   /* the in-game panel (runtime/panel.cpp, when Prishe was built with the SDK's xiimgui): panel_show=1 (xikit_mods.ini),
      five frames through the game's Menu_DrawLayers */
   { int (*panel)(int) = (int (*)(int))(void *)GetProcAddress(GetModuleHandleA("prishe.dll"), "prishe_test_panel");
@@ -1338,6 +1743,8 @@ static int prishert_run(IDirect3DDevice8 *dev, HMODULE g) {
 
 int main(int argc, char **argv) {
   int reloadrun = argc > 1 && !strcmp(argv[1], "reload"), chainrun = argc > 1 && !strcmp(argv[1], "chain");
+  int faultrun = argc > 1 && !strcmp(argv[1], "modfault");   /* (27 Nov, Prishe P4) a mod that faults stays alone */
+  int staterun = argc > 1 && !strcmp(argv[1], "staterun");   /* (27 Nov) xistate's record, player, zone readers and watchers */
   int toolrun = argc > 1 && !strcmp(argv[1], "toolhook");   /* (25 Nov) another tool's jump at Command_RunLine first */
   int modrun = argc > 1 && (!strcmp(argv[1], "mod") || !strcmp(argv[1], "modrel") || reloadrun);
   int caprun = argc > 1 && !strcmp(argv[1], "capture");
@@ -1444,9 +1851,9 @@ int main(int argc, char **argv) {
                   mf = fopen("effects.txt", "w"); if (mf) { fputs("# path-prefix percent\nspel/fire 0\nfile:4321 0\n", mf); fclose(mf); } fill_iat(g); }
     if (uirun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[ui_layout]\nui_dx=100\nui_list=1\n", mf); fclose(mf); }
                  mf = fopen("ui_layout.txt", "w"); if (mf) { fputs("# window dx dy\nmenuinventor 5 -3\n", mf); fclose(mf); } fill_iat(g); }
-    if (prtrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe]\npanel_show=1\nreplies_in_chat=0\n", mf); fclose(mf); } }   /* (Prishe's in-game panel shown) */
+    if (prtrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[prishe]\npanel_show=1\nreplies_in_chat=0\ndump_textures=1\nhost=1\n", mf); fclose(mf); } }   /* (Prishe's in-game panel shown) */
     if (hbrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[hotbar]\nhb_dry=1\n", mf); fclose(mf); }
-                 mf = fopen("hotbar.txt", "w"); if (mf) { fputs("bar 1 3 100 100\nbar 2 4 10 10 v\nxiv xiv\njob war\nset Sword\n"
+                 mf = fopen("hotbar.txt", "w"); if (mf) { fputs("bar 1 3 100 100\nbar 2 4 10 10 v\nxiv xiv\nwindower win\njob war\nset Sword\n"
                    "1.1 f9 Heal = /heal\n1.2 c-1 Check = /check <t>\n1.3 none Wave = /wave\nbattle 2.1 none Seq = /wave; wait 0.2; /bow\n"
                    "field 2.2 none Tag = hb env battle\n", mf); fclose(mf); }
                  CreateDirectoryA("xiv", NULL); CreateDirectoryA("xiv\\data", NULL); CreateDirectoryA("xiv\\priv_res", NULL);
@@ -1454,9 +1861,32 @@ int main(int argc, char **argv) {
                  mf = fopen("xiv\\data\\war.lua", "w"); if (mf) { fputs("xivhotbar_keybinds_job['Base'] = {\n  { 'battle 1 2', 'ja', 'Provoke', 't', 'Prov' },\n"
                    "  { 'battle 2 3', 'ma', 'Cure', 'stpc', 'Cure' },\n}\nxivhotbar_keybinds_job['Sword'] = {\n  { 'battle 2 4', 'ws', \"Fast Blade\", 't', 'FB' },\n}\n"
                    "xivhotbar_keybinds_job['Club'] = {\n  { 'battle 2 4', 'ws', 'Brainshaker', 't', 'BS' },\n}\n", mf); fclose(mf); }
-                 mf = fopen("xiv\\priv_res\\spells.lua", "w"); if (mf) { fputs("return {\n  [1] = { id = 1, en = \"Cure\", ja = \"x\", mp_cost = 8, recast = 5 },\n}\n", mf); fclose(mf); }
-                 mf = fopen("xiv\\priv_res\\job_abilities.lua", "w"); if (mf) { fputs("return {\n  [35] = { id = 35, en = \"Provoke\", mp_cost = 0, tp_cost = 0 },\n}\n", mf); fclose(mf); }
-                 mf = fopen("xiv\\priv_res\\weapon_skills.lua", "w"); if (mf) { fputs("return {\n  [32] = { id = 32, en = \"Fast Blade\", element = 0 },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\spells.lua", "w"); if (mf) { fputs("return {\n  [1] = { id = 1, en = \"Cure\", ja = \"x\", levels = { [3] = 1, [5] = 3 }, mp_cost = 8, prefix = \"/magic\", range = 12, cast_time = 2, recast = 5, recast_id = 1, skill = 33, targets = 63, type = \"WhiteMagic\" },\n"
+                   "  [159] = { id = 159, en = \"Stone\", ja = \"x\", element = 3, mp_cost = 4, prefix = \"/magic\", range = 12, recast_id = 159, skill = 36, targets = 32, type = \"BlackMagic\" },\n"
+                   "  [896] = { id = 896, en = \"Shantotto\", ja = \"x\", levels = { [1] = 1 }, mp_cost = 0, targets = 1, type = \"Trust\" },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\job_abilities.lua", "w"); if (mf) { fputs("return {\n  [35] = { id = 35, en = \"Provoke\", element = 1, mp_cost = 0, prefix = \"/jobability\", range = 11, recast_id = 5, targets = 32, tp_cost = 0, type = \"JobAbility\" },\n"
+                   "  [255] = { id = 255, en = \"Sic\", element = 0, mp_cost = 0, prefix = \"/pet\", range = 11, recast_id = 102, targets = 32, tp_cost = 0, type = \"PetCommand\" },\n"
+                   "  [600] = { id = 600, en = \"Geocrush\", element = 3, mp_cost = 0, prefix = \"/pet\", range = 4, recast_id = 173, targets = 32, tp_cost = 0, type = \"BloodPactRage\" },\n"
+                   "  [672] = { id = 672, en = \"Foot Kick\", element = 0, mp_cost = 1, prefix = \"/pet\", range = 4, recast_id = 102, targets = 32, tp_cost = 0, type = \"Monster\" },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\weapon_skills.lua", "w"); if (mf) { fputs("return {\n  [32] = { id = 32, en = \"Fast Blade\", element = 0, range = 2, skill = 3, skillchain_a = \"Scission\", skillchain_b = \"\", skillchain_c = \"\", targets = 32 },\n"
+                   "  [33] = { id = 33, en = \"Burning Blade\", element = 0, range = 2, skill = 3, skillchain_a = \"Liquefaction\", skillchain_b = \"\", skillchain_c = \"\", targets = 32 },\n}\n", mf); fclose(mf); }
+                 CreateDirectoryA("xiv\\lib", NULL); CreateDirectoryA("win", NULL); CreateDirectoryA("win\\res", NULL);
+                 mf = fopen("xiv\\lib\\bloodpacts.lua", "w"); if (mf) { fputs("return {\n  [600] = { id = 600, en = \"Geocrush\", damage = \"magic\" },\n}\n", mf); fclose(mf); }
+                 /* Windower's res\monster_abilities.lua, written as Windower writes it (no spaces) */
+                 mf = fopen("win\\res\\monster_abilities.lua", "w"); if (mf) { fputs("return {\n    [3840] = {id=3840,en=\"Foot Kick\",ja=\"x\",skillchain_a=\"Reverberation\",skillchain_b=\"\",skillchain_c=\"\"},\n    [3841] = {id=3841,en=\"Dust Cloud\",ja=\"x\"},\n}\n", mf); fclose(mf); }
+                 /* Windower's res\items.lua (no spaces), and Petit Trois's icon for the Potion: a 2x2 BMP */
+                 mf = fopen("win\\res\\items.lua", "w"); if (mf) { fputs("return {\n    [4112] = {id=4112,en=\"Potion\",ja=\"x\",category=\"Usable\",targets=1,type=7},\n"
+                   "    [4128] = {id=4128,en=\"Ether\",ja=\"x\",category=\"Usable\",targets=1,type=7},\n    [16535] = {id=16535,en=\"Bronze Sword\",ja=\"x\",category=\"Weapon\",skill=3,targets=0,type=4},\n"
+                   "    [17024] = {id=17024,en=\"Ash Club\",ja=\"x\",category=\"Weapon\",skill=11,targets=0,type=4},\n}\n", mf); fclose(mf); }
+                 CreateDirectoryA("xiv\\images", NULL); CreateDirectoryA("xiv\\images\\icons", NULL); CreateDirectoryA("xiv\\images\\icons\\items", NULL);
+                 mf = fopen("xiv\\images\\icons\\items\\4112.bmp", "wb");
+                 if (mf) { static const unsigned char bmp[70] = { 'B','M',70,0,0,0,0,0,0,0,54,0,0,0, 40,0,0,0, 2,0,0,0, 2,0,0,0, 1,0, 24,0, 0,0,0,0, 16,0,0,0, 0x13,0x0B,0,0, 0x13,0x0B,0,0, 0,0,0,0, 0,0,0,0,
+                     0,0,255, 0,255,0, 0,0, 255,0,0, 255,255,255, 0,0 }; fwrite(bmp, 1, sizeof bmp, mf); fclose(mf); }
+                 /* (29 Nov) Horizon's spell list (Windower's no-space form): a spell only it has */
+                 mf = fopen("xiv\\priv_res\\horizon_spells.lua", "w"); if (mf) { fputs("return {\n    [1] = {id=1,en=\"Cure\",ja=\"x\",levels={[3]=1,[5]=3},mp_cost=8,prefix=\"/magic\",range=12,targets=63,type=\"WhiteMagic\"},\n"
+                   "    [990] = {id=990,en=\"Horizon Glow\",ja=\"x\",mp_cost=1,prefix=\"/magic\",range=12,targets=1,type=\"WhiteMagic\"},\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\spell_descriptions.lua", "w"); if (mf) { fputs("return {\n  [1] = { id = 1, en = \"Restores target's HP.\" },\n}\n", mf); fclose(mf); }
+                 mf = fopen("xiv\\priv_res\\ability_descriptions.lua", "w"); if (mf) { fputs("return {\n  [32] = { id = 32, en = \"Delivers a two-hit attack.\" },\n  [547] = { id = 547, en = \"Goads an enemy into attacking you.\" },\n}\n", mf); fclose(mf); }
                  fill_iat(g); fake_tool_hook(); }
     if (pvrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[click_target]\nct_show=1\nct_log=1\n", mf); fclose(mf); } fill_iat(g); }
     if (cfrun) { FILE *mf = fopen("xikit_mods.ini", "w"); if (mf) { fputs("[color_filter]\ncb_mode=2\ncb_simulate=1\ncb_strength=100\ncb_check=1\n", mf); fclose(mf); } }
@@ -1499,6 +1929,8 @@ int main(int argc, char **argv) {
   touch_ini(ini, pubrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_public.dll\n"
                  : toolrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_cmd.dll\n"
                  : chainrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll,mod_chain.dll\nmod_reload=1\n"
+                 : faultrun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll,mod_fault.dll\n"
+                 : staterun ? "[xikit]\nlog_folder=0\nswap=0\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_state.dll\n"
                  : abrun ? "[xikit]\nlog_folder=1\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nab=1\nab_after=0\nab_phase=1\nab_rounds=2\nab_settle=3\n"
                  : profile ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nprofile=1\ncall_time=1\nkernel_calls=2\ntrace=1\ntrace_after=4\ntrace_count=1\nsample=1\ntrace_pictures=1\n"
                  : reloadrun ? "[xikit]\nlog_folder=0\nswap=1\ninclude_untested=1\ncount_calls=1\nreport_every=60\nhotkey=0\nlog_each=1\nmods=mod_test.dll\nmod_reload=1\n"
@@ -1575,7 +2007,11 @@ int main(int argc, char **argv) {
     printf("xi_shift:");
     if (xs) for (int i = 0; i <= 3 * xs[0] && i < 1 + 3 * 64; i++) printf(" %ld", (long)xs[i]);
     printf("\n");
-    check(xs != NULL, "the reconstruction exports xi_shift and the kit filled it (its ranges: the xi_shift line)");
+    int swap0 = 0; { FILE *ki = fopen("xikit.ini", "r"); char kl[256];      /* (28 Nov) this mode's kit configuration */
+      if (ki) { while (fgets(kl, sizeof kl, ki)) if (!strncmp(kl, "swap=0", 6)) swap0 = 1; fclose(ki); } }
+    if (swap0 && !GetModuleHandleA("gfx_recon_ingame.dll"))      /* swap=0: the kit loads no reconstruction to fill */
+      printf("note: swap=0 and no reconstruction loaded, so its xi_shift is not checked here\n");
+    else check(xs != NULL, "the reconstruction exports xi_shift and the kit filled it (its ranges: the xi_shift line)");
   }
   present(2);
   uint8_t *set = (uint8_t *)(uintptr_t)ga(SETCOLOR), *gam = (uint8_t *)(uintptr_t)ga(GAMMA);
@@ -1622,8 +2058,8 @@ int main(int argc, char **argv) {
     printf(fails ? "FAILED (%d)\n" : "ALL OK\n", fails);
     ExitProcess(fails ? 1 : 0);
   }
-  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
-  if (!caprun && !factrun && !toolrun && !chainrun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
+  if (!caprun && !factrun && !toolrun && !chainrun && !faultrun && !staterun && !g_no_swap && !(set[0] == 0xE9 && gam[0] == 0xE9)) printf("note: entry bytes SetColor %02X, FontGlyphCache_GetDevice %02X\n", set[0], gam[0]);
+  if (!caprun && !factrun && !toolrun && !chainrun && !faultrun && !staterun && !g_no_swap) check(set[0] == 0xE9 && gam[0] == 0xE9, "swap=1: the entries now jump to the reconstruction");
   if (g_swap_set && (argc < 2 || !strcmp(argv[1], "base"))) {      /* (at its base: the manifest's bytes are the preferred-base ones) */
     check(g_keep32 && !memcmp((uint8_t *)(uintptr_t)ga(g_keep32), g_keep32_bytes, 5), "swap_set build: a function of flag 32 keeps the game's code while the others swap");
     FILE *lf = fopen("xikit.log", "r"); char line[600]; int said = 0;
@@ -1718,7 +2154,7 @@ int main(int argc, char **argv) {
     if (!c) { printf("FAILED\n"); ExitProcess(1); }
     long inst = *(volatile long *)GetProcAddress(c, "cmd_install");
     int said_front = 0, said_bytes = 0; FILE *lg = fopen("xikit.log", "r");
-    if (lg) { while (fgets(l, sizeof l, lg)) { said_front |= strstr(l, "previous = another tool's hook in host.exe") != NULL; said_bytes |= strstr(l, "live bytes entry-4..+15:") != NULL; } fclose(lg); }
+    if (lg) { while (fgets(l, sizeof l, lg)) { said_front |= strstr(l, strcmp(tform, "dyn") ? "previous = another tool's hook in host.exe" : "previous = another tool's hook in memory no module holds") != NULL; said_bytes |= strstr(l, "live bytes entry-4..+15:") != NULL; } fclose(lg); }
     typedef int (__cdecl *TRunFn)(char *, uint32_t);
     if (!strcmp(tform, "bad")) {
       snprintf(what, sizeof what, "toolhook %s: a byte after the other tool's jump differs from the game's: refused (%ld, not 0), the log names the live bytes", tform, inst);
@@ -1733,6 +2169,167 @@ int main(int argc, char **argv) {
       check(s1 - s0 == 1 && t1 == t0 && t2 - t1 == 1 && rb == 7, what);
     }
     { FILE *lg2 = fopen("xikit.log", "r"); if (lg2) { while (fgets(l, sizeof l, lg2)) if (strstr(l, "Command_RunLine")) printf("  log: %s", l); fclose(lg2); } }
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (staterun) {
+    /* stand-in records in the game DLL's own record array (ActerBuffPtr 0x10480AF0, 0x900 pointers), its player
+       index (0x10485F7A) and g_pXiZone (0x1065CB04, the zone number at +0x1B4): written before the first frame, then
+       changed between frames; mod_state.dll reads them through xistate and counts the watchers' events */
+    static uint8_t rec[2][0x300], zone[0x200]; static void *avt[0x100]; static void *act[0x40];
+    void **arr = (void **)(uintptr_t)ga(0x10480AF0u); int16_t *self = (int16_t *)(uintptr_t)ga(0x10485F7Au); void **gz = (void **)(uintptr_t)ga(0x1065CB04u);
+    HMODULE m = GetModuleHandleA("mod_state.dll");
+    check(m != NULL, "mods=mod_state.dll: loaded");
+    if (!m) { printf("FAILED\n"); ExitProcess(1); }
+    const char *txt = (const char *)GetProcAddress(m, "state_text");
+    volatile long *ap = (volatile long *)GetProcAddress(m, "ev_appeared"), *lf = (volatile long *)GetProcAddress(m, "ev_left"), *gr = (volatile long *)GetProcAddress(m, "ev_gear"), *zn = (volatile long *)GetProcAddress(m, "ev_zone");
+    volatile long *gs = (volatile long *)GetProcAddress(m, "gear_slot"), *ga2 = (volatile long *)GetProcAddress(m, "gear_after");
+    for (int k = 0; k < 0x100; k++) avt[k] = NULL;
+    avt[0xCC / 4] = (void *)actor_drawn_name; avt[0] = (void *)runtime_class_skeleton; act[0] = avt;
+    /* Bob's actor: another class, with junk where a skeleton actor's part list would be (actor +0x674 +0x44) */
+    static void *bvt[0x100]; static uint8_t bobact[0x800];
+    for (int k = 0; k < 0x100; k++) bvt[k] = NULL;
+    bvt[0] = (void *)runtime_class_other; bvt[0xCC / 4] = (void *)actor_drawn_name_bob; *(void ***)bobact = bvt;
+    *(uintptr_t *)(bobact + 0x674 + 0x44) = 0x10;
+    strcpy((char *)rec[0] + 0x7C, "Alice"); rec[0][0xEE] = 0; rec[0][0xEF] = 2; *(uint32_t *)(rec[0] + 0x78) = 0x01000123u;
+    for (int s2 = 0; s2 < 9; s2++) *(uint16_t *)(rec[0] + 0xFC + 2 * s2) = (uint16_t)(0x1000 * s2 + 0x11);
+    float pos[3] = { 1.5f, 2.5f, -3.5f }, ang[3] = { 0.1f, 0.2f, 0.3f }; memcpy(rec[0] + 4, pos, 12); memcpy(rec[0] + 0x14, ang, 12);
+    *(void **)(rec[0] + 0xA0) = act;
+    strcpy((char *)rec[1] + 0x7C, "Bob"); *(int16_t *)(rec[1] + 0x210) = 1; strcpy((char *)rec[1] + 0x214, "Bob the Mithra"); rec[1][0xEF] = 7;
+    *(void **)(rec[1] + 0xA0) = bobact;
+    *(int *)(zone + 0x1B4) = 230;
+    long ap0 = *ap, zn0 = *zn;                                   /* (the mod may have run frames already: counts from here) */
+    /* (L21, xianim) the actor's model at +0x674: its parts' list at model +0x44; one part, its queue 0's list at part
+       +0x24 +0x78 +4, holding two motions whose vtable is the game's CYyMotionQue (0x1032A1C0) */
+    static uint8_t bigact[0x800], part[0x100], el1[0x40], el2[0x40];
+    memcpy(bigact, act, sizeof act); *(void **)(rec[0] + 0xA0) = bigact;
+    *(void **)(bigact + 0x674 + 0x44) = part; *(void **)(part + 0x24 + 0x78 + 4) = el1; *(void **)(el1 + 4) = el2;
+    *(uintptr_t *)el1 = (uintptr_t)ga(0x1032A1C0u); *(uintptr_t *)el2 = (uintptr_t)ga(0x1032A1C0u);
+    *(float *)(el1 + 0x24) = 10.0f; *(float *)(el1 + 0x28) = 1.0f; *(float *)(el2 + 0x24) = 3.0f; *(float *)(el2 + 0x28) = 0.5f;
+    arr[5] = rec[0]; arr[7] = rec[1]; *self = 5; *gz = zone;
+    present(2);
+    char what[700];
+    snprintf(what, sizeof what, "the readers: %s", txt); 
+    check(strstr(txt, "self=Alice drawn=Alice kind=0 race=2 id=01000123 w0=0011 w8=8011 pos=1.5,2.5,-3.5 ang=0.10,0.20,0.30 zone=230 known=-2 rec7=1") != NULL, what);
+    snprintf(what, sizeof what, "both stand-in records reported as appearing (%ld), the zone as one change (%ld)", *ap - ap0, *zn - zn0);
+    check(*ap - ap0 == 2 && *lf == 0 && *gr == 0 && *zn - zn0 == 1, what);
+    { /* (A9) the zone known only once the zone change has stored it: Actor_ResetDrawLists returning to the zone change's
+         site after its store (0x1018B4D8) marks the object; SetPtr1D8FromTable returning into XiZone's constructor
+         (0x1018B337) unmarks it. Both entries are the game's own, hooked by mod_state through install_zone_hooks */
+      volatile long *zh = (volatile long *)GetProcAddress(m, "zone_hooks");
+      snprintf(what, sizeof what, "install_zone_hooks: Actor_ResetDrawLists and XiZone::SetPtr1D8FromTable hooked (%ld)", zh ? *zh : -99);
+      check(zh && *zh == 0, what);
+      call_returning_to(ga(0x10081A50u), ga(0x1018B4D8u), NULL, 0, 0); present(1);
+      snprintf(what, sizeof what, "the zone change's call after its store marks the zone known (%s)", txt); check(strstr(txt, "zone=230 known=230") != NULL, what);
+      call_returning_to(ga(0x10081A50u), ga(0x10013B15u), NULL, 0, 0); present(1);
+      check(strstr(txt, "known=230") != NULL, "Actor_ResetDrawLists from another caller changes nothing");
+      call_returning_to(ga(0x1018BAE0u), ga(0x1018B337u), zone, 1, 0); present(1);
+      snprintf(what, sizeof what, "XiZone's constructor (a new zone object) makes it unknown again (%s)", txt); check(strstr(txt, "zone=230 known=-2") != NULL, what);
+      check(*(uintptr_t *)(zone + 0x1D8) == *(uintptr_t *)ga(0x10377C58u + 0), "and SetPtr1D8FromTable itself still ran (its +0x1D8 written from its table)");
+      call_returning_to(ga(0x10081A50u), ga(0x1018B4D8u), NULL, 0, 0); present(1);
+      check(strstr(txt, "known=230") != NULL, "stored again: known"); }
+    { const char *at = (const char *)GetProcAddress(m, "anim_text"); volatile long *ac = (volatile long *)GetProcAddress(m, "anim_cmd");
+      snprintf(what, sizeof what, "xianim: the player's actor's motions: %s", at); check(strstr(at, "motions=2 frozen=0 [q0 f=10.0 s=1.00] [q0 f=3.0 s=0.50]") != NULL, what);
+      *ac = 1; present(2);
+      snprintf(what, sizeof what, "xianim: frozen: both speeds 0 (%s)", at); check(strstr(at, "frozen=1 [q0 f=10.0 s=0.00] [q0 f=3.0 s=0.00]") != NULL, what);
+      *ac = 3; present(1);
+      snprintf(what, sizeof what, "xianim: stepped 5 frames while frozen (%s)", at); check(strstr(at, "[q0 f=15.0 s=0.00] [q0 f=8.0 s=0.00]") != NULL, what);
+      *ac = 2; present(1);
+      snprintf(what, sizeof what, "xianim: let go: the speeds back (%s)", at); check(strstr(at, "frozen=0 [q0 f=15.0 s=1.00] [q0 f=8.0 s=0.50]") != NULL, what); }
+    *(uint16_t *)(rec[0] + 0xFC + 2 * 4) = 0x4055; present(1);
+    snprintf(what, sizeof what, "gear: slot 4 changed to 0x4055: one gear event (%ld), slot %ld, word %lx", *gr, *gs, *ga2);
+    check(*gr == 1 && *gs == 4 && *ga2 == 0x4055, what);
+    *self = 7; present(1);
+    check(strstr(txt, "self=Bob the Mithra") != NULL && strstr(txt, "race=7") != NULL, "the player index set to 7: the record's second name (+0x214, its word at +0x210 set)");
+    { const char *at = (const char *)GetProcAddress(m, "anim_text");
+      snprintf(what, sizeof what, "xianim: an actor that is not a CXiSkeletonActor (junk at +0x6B8) has no motions and is not walked (%s)", at);
+      check(strncmp(at, "motions=0 frozen=0", 18) == 0, what); }
+    arr[7] = NULL; present(1);
+    check(*lf == 1 && strstr(txt, "self= ") != NULL && strstr(txt, "rec7=0") != NULL, "a record left: one event; the player's record then none (its slot empty)");
+    *(int *)(zone + 0x1B4) = 231; present(1);
+    check(*zn - zn0 == 2 && strstr(txt, "zone=231") != NULL, "the zone number changed: one zone event");
+    *gz = NULL; present(1);
+    check(*zn - zn0 == 3 && strstr(txt, "zone=-1 known=-1") != NULL, "g_pXiZone NULL (between zones): -1 (and known -1), one more event");
+    arr[5] = NULL; *self = 0; present(1);
+    { /* (29 Nov) the learned spells: the game's own handler of message 0xAA (0x100F00C0, cdecl: game state, -, message)
+         fills game state +0x2CF54 from the message's +4 and sets +0x2CFD4; its accessor (0x100F00A0) then gives the
+         block; xistate::spell_learned reads it as the magic menu does (bits[i >> 3] & (1 << (i & 7))) */
+      typedef int (__cdecl *SpellLearned)(int);
+      SpellLearned sl = (SpellLearned)(void *)GetProcAddress(m, "state_spell_learned");
+      uint8_t **gsp = (uint8_t **)ga(0x104DFD98u); uint8_t *keep = *gsp;
+      static uint8_t gstate[0x30000]; *gsp = gstate;
+      check(sl && sl(1) == -1, "learned spells: before message 0xAA, xistate::spell_learned says -1 (the list has not come)");
+      static uint8_t msg[0x84]; msg[4 + 0] = 0x06; msg[4 + 7] = 0x02; msg[4 + 127] = 0x80;   /* spells 1, 2, 57, 1023 */
+      typedef char (__cdecl *Handler)(void *, void *, void *);
+      char r = ((Handler)(void *)ga(0x100F00C0u))(gstate, NULL, msg);
+      typedef uint8_t *(__cdecl *Block)(void);
+      uint8_t *blk = ((Block)(void *)ga(0x100F00A0u))();
+      snprintf(what, sizeof what, "learned spells: the game's 0xAA handler returned %d (1); its accessor gives game state +0x%X (+0x2CF54)", r, blk ? (unsigned)(blk - gstate) : 0);
+      check(r == 1 && blk == gstate + 0x2CF54, what);
+      int ok = sl && sl(1) == 1 && sl(2) == 1 && sl(57) == 1 && sl(1023) == 1 && sl(0) == 0 && sl(3) == 0 && sl(56) == 0 && sl(58) == 0 && sl(1022) == 0 && sl(1024) == -1;
+      check(ok, "learned spells: after it, spells 1, 2, 57 and 1023 learned and 0, 3, 56, 58 and 1022 not, as the message's bits say");
+      { /* (29 Nov) the abilities: message 0xAC's handler (0x100E6120: 0xE0 bytes to +0x2CDE8, +0x2CF49) and the id-list
+           writer 0x100E6080 (cdecl: game state, ids, count; +0x2CEC8 cleared, its bits set, +0x2CF4A); then the game's
+           MenuPanels_GetSlotInfo on a record of the abilities' table [0x1066714C] whose timer id has a count in the recast
+           object 0x10666EC0 (entries of 8 bytes, timer id at +3; counts at +0xF8 + 4i, in 1/60 s) */
+        typedef int (__cdecl *I1)(int); typedef int (__cdecl *I2)(int, int *);
+        I1 al = (I1)(void *)GetProcAddress(m, "state_ability_learned"); I2 ar = (I2)(void *)GetProcAddress(m, "state_ability_recast");
+        I1 as = (I1)(void *)GetProcAddress(m, "state_ability_state"); I1 ss = (I1)(void *)GetProcAddress(m, "state_spell_state");
+        check(al && ar && as && ss, "abilities: mod_state's exports");
+        static uint8_t m2[0xE4]; m2[4 + (0x223 >> 3)] = 1 << (0x223 & 7);          /* record 0x223: job ability 0x23 */
+        ((Handler)(void *)ga(0x100E6120u))(gstate, NULL, m2);
+        int b0 = al ? al(0x223) : -2;
+        typedef void (__cdecl *IdList)(void *, uint16_t *, int); static uint16_t ids[1] = { 0x701 };
+        ((IdList)(void *)ga(0x100E6080u))(gstate, ids, 1);
+        int b1 = al(0x223), b2 = al(0x224), b3 = al(0x701), b4 = al(0x700);
+        snprintf(what, sizeof what, "abilities: after 0xAC alone %d (-1: the id list not yet); after the id list too: 0x223 %d, 0x224 %d, 0x701 %d, 0x700 %d (1 0 1 0)", b0, b1, b2, b3, b4);
+        check(b0 == -1 && b1 == 1 && b2 == 0 && b3 == 1 && b4 == 0, what);
+        void **pab = (void **)ga(0x1066714Cu); void *kab = *pab; static uint8_t abt[0xB00 * 0x30]; *pab = abt;
+        uint8_t *rec = abt + 0x223 * 0x30; *(uint16_t *)rec = 0x23; rec[2] = 1; *(uint16_t *)(rec + 8) = 5; rec[0xF] = 1;
+        uint8_t *ro = (uint8_t *)ga(0x10666EC0u), kro[0x180]; memcpy(kro, ro, sizeof kro);
+        for (int e = 0; e < 0x1F; e++) { ro[e * 8 + 2] = 0; ro[e * 8 + 3] = 0xFF; *(int16_t *)(ro + e * 8 + 4) = 0; }
+        ro[3] = 5; *(int *)(ro + 0xF8) = 600;                                    /* timer 5: 600/60 s left */
+        int ch = 7, sec = ar(0x223, &ch);
+        snprintf(what, sizeof what, "abilities: the game's MenuPanels_GetSlotInfo on record 0x223 (timer 5, 600 ticks): %d s, charges %d (10, -1)", sec, ch);
+        check(sec == 10 && ch == -1, what);
+        uint8_t *pl = (uint8_t *)ga(0x10485638u), kpl[0x200]; memcpy(kpl, pl, sizeof kpl);
+        pl[0x1EC] |= 1; pl[8] = 9; pl[9] = 30; rec[2] = 0x12; rec[0xE] = 0;     /* 0x10485824 bit 0; main job 9 at 30; type 0x12 */
+        sec = ar(0x223, &ch);
+        snprintf(what, sizeof what, "abilities: type 0x12 with main job 9 at level 30: %d s to the next charge, %d charges (10, 2: 3 charges in 90 s, 10 s left)", sec, ch);
+        check(sec == 10 && ch == 2, what);
+        memcpy(pl, kpl, sizeof kpl); rec[2] = 1;
+        /* type 1's case is 2 (the table at 0x1038615A + 3 x type: 02): only the recast; 2 while it runs, 0 when it is 0 */
+        int st = as(0x223); *(int *)(ro + 0xF8) = 0; int st0 = as(0x223);
+        snprintf(what, sizeof what, "abilities: the game's check 0x10224B70 on record 0x223 (type 1): %d with the recast running, %d at 0 (2, 0)", st, st0);
+        check(st == 2 && st0 == 0, what);
+        int sp = ss(1);
+        snprintf(what, sizeof what, "spells: xistate::spell_state with no spell table: %d (-1)", sp); check(sp == -1, what);
+        memcpy(ro, kro, sizeof kro); *pab = kab;
+      }
+      *gsp = keep;
+    }
+    printf("%s\n", fails ? "FAILED" : "ALL OK");
+    ExitProcess(fails ? 1 : 0);
+  }
+  if (faultrun) {
+    /* mod_test.dll (game + 1) and mod_fault.dll (+ 1000, faulting in its third frame) both hook GetColor. Before the
+       fault both run; the fault turns mod_fault off (hook taken off, no more frames), the game's frames go on, and
+       mod_test's hook still runs */
+    HMODULE m = GetModuleHandleA("mod_test.dll"), fm = GetModuleHandleA("mod_fault.dll");
+    check(m && fm, "mods=mod_test.dll,mod_fault.dll: both loaded");
+    if (!m || !fm) { printf("FAILED\n"); ExitProcess(1); }
+    uint8_t *get = (uint8_t *)(uintptr_t)ga(GETCOLOR);
+    ((SetColorFn)(uintptr_t)ga(SETCOLOR))(actor, 0x11223344u);
+    check(*(volatile long *)GetProcAddress(fm, "fault_hooked") == 0 && ((GetColorFn)get)(actor) == 0x11223344u + 1001, "before the fault: both hooks run (+ 1 + 1000)");
+    long before = presents;
+    present(20);
+    check(presents == before + 20, "the frames went on through the mod's fault (20 presents)");
+    check(*(volatile long *)GetProcAddress(fm, "fault_frames") == 3, "the faulting mod's frame callback ran 3 times, then no more");
+    check(((GetColorFn)get)(actor) == 0x11223344u + 1, "its hook is taken off: only mod_test's + 1 runs");
+    { FILE *lg = fopen("xikit.log", "r"); char l[900]; int said = 0; if (lg) { while (fgets(l, sizeof l, lg)) said |= strstr(l, "mod mod_fault.dll turned off: exception 0xC0000005") && strstr(l, "frame callback") && strstr(l, "1 function hooks"); fclose(lg); }
+      check(said, "xikit.log: the mod turned off, the exception, the callback and the hook taken off"); }
+    volatile long *mf = (volatile long *)GetProcAddress(m, "mod_frames"); long f0 = mf ? *mf : -1; present(5);
+    check(mf && *mf == f0 + 5, "the other mod's frame callback still runs");
     printf("%s\n", fails ? "FAILED" : "ALL OK");
     ExitProcess(fails ? 1 : 0);
   }

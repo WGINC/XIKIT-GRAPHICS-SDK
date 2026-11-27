@@ -4,38 +4,38 @@
 
 // FUNCTION: FFXIMAIN 0x10043E50
 // GATE: PASS -- 100 trials, 56 returned normally, 26 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 56
-XI_API int __thiscall DynVB_Create(_DWORD *self_, int a2, unsigned int a3, int a4)
+XI_API int __thiscall DynVB_Create(uint32_t *self_, int arg2, unsigned int FVF, int arg4)
 {
-  _DWORD *v4;
-  _DWORD *v5;
-  const void *v6;
+  uint32_t *p1;
+  uint32_t *p2;
+  const void *p3;
   int result;
-  int v8;
-  v4 = self_;
+  int i1;
+  p1 = self_;
   orig::DynVB_ReturnBuffersToPool(self_);
-  *((_BYTE *)v4 + 68) = 1;
-  v8 = 0;
-  v5 = v4 + 1;
+  *((uint8_t *)p1 + 68) = 1;
+  i1 = 0;
+  p2 = p1 + 1;
   do
   {
-    v5[1] = 0;
-    v5[5] = a3;
-    v5[6] = a2;
-    v5[7] = orig::Gfx_CalcFVFStride(a3);
-    v6 = (const void *)orig::VBPool_FindMatch((char *)g_pVbPool, (int)v5);
-    if ( v6 != nullptr )
+    p2[1] = 0;
+    p2[5] = FVF;
+    p2[6] = arg2;
+    p2[7] = orig::Gfx_CalcFVFStride(FVF);
+    p3 = (const void *)orig::VBPool_FindMatch((char *)g_pVbPool, (int)p2);
+    if ( p3 != nullptr )
     {
-      qmemcpy(v5, v6, 0x20u);
-      v4 = self_;
+      memcpy(p2, p3, 0x20u);
+      p1 = self_;
     }
     else
     {
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(a2 * v5[7], 520, a3, D3DPOOL_DEFAULT, (IDirect3DVertexBuffer8 **)(v5));
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->CreateVertexBuffer(arg2 * p2[7], 520, FVF, D3DPOOL_DEFAULT, (IDirect3DVertexBuffer8 **)(p2));
     }
-    v5 += 8;
-    result = ++v8;
+    p2 += 8;
+    result = ++i1;
   }
-  while ( v8 < *((char *)v4 + 68) );
+  while ( i1 < *((char *)p1 + 68) );
   return result;
 }
 
@@ -43,76 +43,76 @@ XI_API int __thiscall DynVB_Create(_DWORD *self_, int a2, unsigned int a3, int a
 // GATE: PASS -- 100 trials, 99 returned normally, 64 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
 XI_API void __thiscall DynVB_ReturnBuffersToPool(void * self_)
 {
-  uint32_t uVar1;
-  int *piVar2;
-  int iVar3;
+  uint32_t u1;
+  int *p1;
+  int i1;
   
-  piVar2 = (int *)((int)self_ + 4);
-  iVar3 = 2;
+  p1 = (int *)((int)self_ + 4);
+  i1 = 2;
   do {
-    if (*piVar2 != 0) {
-      uVar1 = orig::VBPool_Insert(g_pVbPool_as_v0,piVar2);
-      if ((char)uVar1 == '\0') {
-        ((int (__stdcall *)(XI_ANY))((**(code **)(*(int *)*piVar2 + 8))))((int *)*piVar2);
+    if (*p1 != 0) {
+      u1 = orig::VBPool_Insert(g_pVbPool_as_v0,p1);
+      if ((char)u1 == '\0') {
+        ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*(int *)*p1 + 8))))((int *)*p1);
       }
-      *piVar2 = 0;
+      *p1 = 0;
     }
-    piVar2 = piVar2 + 8;
-    iVar3 = iVar3 + -1;
-  } while (iVar3 != 0);
+    p1 = p1 + 8;
+    i1 = i1 + -1;
+  } while (i1 != 0);
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x10043F40
 // GATE: PASS -- 100 trials, 99 returned normally, 138 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 99
-XI_API int __thiscall CMoVuElem_Draw(int *self_, int a2, int a3, int a1, unsigned int a5, int a6)
+XI_API int __thiscall CMoVuElem_Draw(int *self_, int arg2, int PrimitiveCount, int arg4, unsigned int Handle, int arg6)
 {
-  int v7;
-  int *v8;
+  int i1;
+  int *p1;
   int result;
-  int *v10;
-  int v11;
-  int v12;
-  v7 = orig::DynVBCtor_ReturnZero();
-  v8 = self_ + 8 * v7;
-  result = v8[1];
+  int *p2;
+  int i2;
+  int i3;
+  i1 = orig::DynVBCtor_ReturnZero();
+  p1 = self_ + 8 * i1;
+  result = p1[1];
   if ( result != 0 )
   {
-    if ( a5 != 0 )
+    if ( Handle != 0 )
     {
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(a5);
-      v10 = *(int **)(g_pResourceMng + 3772);
-      v11 = *v10;
-      v12 = orig::Gfx_CalcFVFStride(a5);
-      (*(void (__stdcall **)(int *, _DWORD, int, int))(v11 + 332))(v10, 0, v8[1], v12);
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(Handle);
+      p2 = *(int **)(g_pResourceMng + 3772);
+      i2 = *p2;
+      i3 = orig::Gfx_CalcFVFStride(Handle);
+      (*(void (__stdcall **)(int *, uint32_t, int, int))(i2 + 332))(p2, 0, p1[1], i3);
     }
     else
     {
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(v8[6]);
-      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetStreamSource(0, (IDirect3DVertexBuffer8 *)(v8[1]), *(self_ + 8 * v7 + 8));
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetVertexShader(p1[6]);
+      (*(IDirect3DDevice8 **)(g_pResourceMng + 0xEBC))->SetStreamSource(0, (IDirect3DVertexBuffer8 *)(p1[1]), *(self_ + 8 * i1 + 8));
     }
-    return orig::CDx_DrawPrimitive(*(void **)(g_pResourceMng + 3528), a1, a2 + v8[3], a3);
+    return orig::CDx_DrawPrimitive(*(void **)(g_pResourceMng + 3528), arg4, arg2 + p1[3], PrimitiveCount);
   }
   return result;
 }
 
 // FUNCTION: FFXIMAIN 0x10044010
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API void __thiscall DynVB_Reserve(void * self_, int param_1)
+XI_API void __thiscall DynVB_Reserve(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::DynVBCtor_ReturnZero_v1();
-  if (*(int *)((int)self_ + iVar1 * 0x20 + 4) != 0) {
-    *(int *)((int)self_ + iVar1 * 0x20 + 0x10) = *(int *)((iVar1 + 1) * 0x20 + (int)self_) * param_1;
-    *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0xc) = *(uint32_t *)((int)self_ + iVar1 * 0x20 + 8);
-    *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0x14) = 0;
-    if (*(int *)((int)self_ + iVar1 * 0x20 + 0x1c) < *(int *)((int)self_ + iVar1 * 0x20 + 8) + param_1
+  i1 = orig::DynVBCtor_ReturnZero_v1();
+  if (*(int *)((int)self_ + i1 * 0x20 + 4) != 0) {
+    *(int *)((int)self_ + i1 * 0x20 + 0x10) = *(int *)((i1 + 1) * 0x20 + (int)self_) * arg2;
+    *(uint32_t *)((int)self_ + i1 * 0x20 + 0xc) = *(uint32_t *)((int)self_ + i1 * 0x20 + 8);
+    *(uint32_t *)((int)self_ + i1 * 0x20 + 0x14) = 0;
+    if (*(int *)((int)self_ + i1 * 0x20 + 0x1c) < *(int *)((int)self_ + i1 * 0x20 + 8) + arg2
        ) {
-      *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0xc) = 0;
-      *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0x14) = 0x2000;
+      *(uint32_t *)((int)self_ + i1 * 0x20 + 0xc) = 0;
+      *(uint32_t *)((int)self_ + i1 * 0x20 + 0x14) = 0x2000;
     }
-    *(int *)((int)self_ + iVar1 * 0x20 + 8) = *(int *)((int)self_ + iVar1 * 0x20 + 0xc) + param_1;
+    *(int *)((int)self_ + i1 * 0x20 + 8) = *(int *)((int)self_ + i1 * 0x20 + 0xc) + arg2;
   }
   return;
 }
@@ -121,145 +121,147 @@ XI_API void __thiscall DynVB_Reserve(void * self_, int param_1)
 // GATE: PASS -- 100 trials, 100 returned normally, 81 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API uint8_t * __thiscall DynVB_Lock(void * self_)
 {
-  int *a1;
-  int a5;
-  int iVar1;
-  int iVar2;
-  char xi_frame[4] __attribute__((aligned(4)));
-  uint8_t * &local_4 = *reinterpret_cast<uint8_t * *>(xi_frame + 0);
+  int *p1;
+  int i1;
+  int i2;
+  int i3;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[4];
+    struct __attribute__((packed)) { uint8_t * p2; };   // at 0x0
+  } frame;
   
-  local_4 = self_;
-  iVar1 = orig::DynVBCtor_ReturnZero_v1();
-  a1 = *(int **)((int)self_ + iVar1 * 0x20 + 4);
-  if (a1 == (int *)0x0) {
+  frame.p2 = self_;
+  i2 = orig::DynVBCtor_ReturnZero_v1();
+  p1 = *(int **)((int)self_ + i2 * 0x20 + 4);
+  if (p1 == (int *)0x0) {
     return (uint8_t *)0x0;
   }
-  a5 = *(int *)((int)self_ + iVar1 * 0x20 + 0x14);
-  iVar2 = (iVar1 + 1) * 0x20;
-  if (a5 != 0) {
-    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*a1 + 0x2c))
-              ))(a1,*(int *)(iVar2 + (int)self_) * *(int *)((int)self_ + iVar1 * 0x20 + 0xc),
-               *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0x10),&local_4,a5);
-    return local_4;
+  i1 = *(int *)((int)self_ + i2 * 0x20 + 0x14);
+  i3 = (i2 + 1) * 0x20;
+  if (i1 != 0) {
+    ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x2c))
+              ))(p1,*(int *)(i3 + (int)self_) * *(int *)((int)self_ + i2 * 0x20 + 0xc),
+               *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&frame.p2,i1);
+    return frame.p2;
   }
-  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(code **)(*a1 + 0x2c))
-            ))(a1,*(int *)(iVar2 + (int)self_) * *(int *)((int)self_ + iVar1 * 0x20 + 0xc),
-             *(uint32_t *)((int)self_ + iVar1 * 0x20 + 0x10),&local_4,0x1000);
-  return local_4;
+  ((int (__stdcall *)(XI_ANY, XI_ANY, XI_ANY, XI_ANY, XI_ANY))((**(untyped_fn **)(*p1 + 0x2c))
+            ))(p1,*(int *)(i3 + (int)self_) * *(int *)((int)self_ + i2 * 0x20 + 0xc),
+             *(uint32_t *)((int)self_ + i2 * 0x20 + 0x10),&frame.p2,0x1000);
+  return frame.p2;
 }
 
 // FUNCTION: FFXIMAIN 0x100441A0
 // GATE: PASS -- 100 trials, 100 returned normally, 81 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void __thiscall DynVB_Unlock(void * self_)
 {
-  int *a1;
-  int iVar1;
+  int *p1;
+  int i1;
   
-  iVar1 = orig::DynVBCtor_ReturnZero_v1();
-  a1 = *(int **)(iVar1 * 0x20 + 4 + (int)self_);
-  if (a1 != (int *)0x0) {
-    ((int (__stdcall *)(XI_ANY))((**(code **)(*a1 + 0x30))))(a1);
+  i1 = orig::DynVBCtor_ReturnZero_v1();
+  p1 = *(int **)(i1 * 0x20 + 4 + (int)self_);
+  if (p1 != (int *)0x0) {
+    ((int (__stdcall *)(XI_ANY))((**(untyped_fn **)(*p1 + 0x30))))(p1);
   }
   return;
 }
 
 // FUNCTION: FFXIMAIN 0x100441C0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __thiscall CameraCache_CacheViewProjection(_DWORD *self_)
+XI_API int __thiscall CameraCache_CacheViewProjection(uint32_t *self_)
 {
-  _DWORD *v1;
-  _DWORD *v2;
-  void *v3;
-  v1 = self_;
-  v2 = self_ + 4;
+  uint32_t *p1;
+  uint32_t *p2;
+  void *p3;
+  p1 = self_;
+  p2 = self_ + 4;
   orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 2, self_ + 4);
-  v3 = v1 + 36;
-  v1 += 20;
-  qmemcpy(v3, v2, 0x40u);
-  v1[30] = 0;
-  v1[29] = 0;
-  v1[28] = 0;
-  return orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 3, v1);
+  p3 = p1 + 36;
+  p1 += 20;
+  memcpy(p3, p2, 0x40u);
+  p1[30] = 0;
+  p1[29] = 0;
+  p1[28] = 0;
+  return orig::CDx_GetTransformCached(*(CDx **)(g_pResourceMng + 3528), 3, p1);
 }
 
 // FUNCTION: FFXIMAIN 0x10044210
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Gfx_SetViewMatrixFromField10(int self_)
 {
-  return orig::CDx_SetTransform(*(_DWORD ***)(g_pResourceMng + 3528), 2, (const void *)(self_ + 16));
+  return orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 2, (const void *)(self_ + 16));
 }
 
 // FUNCTION: FFXIMAIN 0x10044230
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Gfx_SetViewMatrixFromField90(int self_)
 {
-  return orig::CDx_SetTransform(*(_DWORD ***)(g_pResourceMng + 3528), 2, (const void *)(self_ + 144));
+  return orig::CDx_SetTransform(*(uint32_t ***)(g_pResourceMng + 3528), 2, (const void *)(self_ + 144));
 }
 
 // FUNCTION: FFXIMAIN 0x10044270
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API _DWORD * __cdecl Mo_InitSharedRenderResources(void)
+XI_API uint32_t * __cdecl Mo_InitSharedRenderResources(void)
 {
-  int *v0;
-  int v1;
-  _DWORD *v2;
-  char *v3;
-  char *v4;
-  char *v5;
-  char *v6;
-  char *v7;
-  _DWORD *result;
-  int v9;
+  int *p1;
+  int i1;
+  uint32_t *p2;
+  char *p3;
+  char *p4;
+  char *p5;
+  char *p6;
+  char *p7;
+  uint32_t *result;
+  int i2;
   orig::Rand_SeedMT19937(4357);
-  *((_DWORD *)&g_cubemapSpecName + 2) = *(_DWORD *)(int)XI_GAME(0x10353414u);
-  *((_DWORD *)&g_cubemapSpecName + 3) = *(_DWORD *)(int)XI_GAME(0x10353418u);
-  *((_DWORD *)&g_cubemapSpecName + 0) = *(_DWORD *)(int)XI_GAME(0x10353408u);
-  *((_DWORD *)&g_cubemapSpecName + 1) = *(_DWORD *)(int)XI_GAME(0x1035340Cu);
-  v0 = *(int **)(g_pMeshResourceMng + 262152);
-  if ( v0 != nullptr )
-    v1 = *v0;
+  *((uint32_t *)&g_cubemapSpecName + 2) = *(uint32_t *)(int)XI_GAME(0x10353414u);
+  *((uint32_t *)&g_cubemapSpecName + 3) = *(uint32_t *)(int)XI_GAME(0x10353418u);
+  *((uint32_t *)&g_cubemapSpecName + 0) = *(uint32_t *)(int)XI_GAME(0x10353408u);
+  *((uint32_t *)&g_cubemapSpecName + 1) = *(uint32_t *)(int)XI_GAME(0x1035340Cu);
+  p1 = *(int **)(g_pMeshResourceMng + 262152);
+  if ( p1 != nullptr )
+    i1 = *p1;
   else
-    v1 = 0;
-  orig::TexRef_ResolveByName((char *)&g_cubemapSpecName, v1);
-  v2 = orig::Mem_AllocDefault(16);
-  if ( v2 != nullptr )
-    g_pMoAccumTarget = (int)orig::CAcc_Constructor(v2);
+    i1 = 0;
+  orig::TexRef_ResolveByName((char *)&g_cubemapSpecName, i1);
+  p2 = orig::Mem_AllocDefault(16);
+  if ( p2 != nullptr )
+    g_pMoAccumTarget = (int)orig::CAcc_Constructor(p2);
   else
     g_pMoAccumTarget = 0;
-  v9 = 0;
-  *(_DWORD *)(g_pMoAccumTarget + 4) = orig::CMoDX_CreateTexture((_DWORD ***)g_pResourceMng, 0x100u, 0x100u, &v9);
-  *(_DWORD *)(g_pMoAccumTarget + 8) = v9;
-  *(_DWORD *)(g_pMoAccumTarget + 12) = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, 0x100u, 0x100u);
-  v3 = (char *)orig::Allocator_Generic(0x48u);
-  if ( v3 != nullptr )
-    g_pDynVB_FVF42 = (int)orig::DynVB_Constructor(v3);
+  i2 = 0;
+  *(uint32_t *)(g_pMoAccumTarget + 4) = orig::CMoDX_CreateTexture((uint32_t ***)g_pResourceMng, 0x100u, 0x100u, &i2);
+  *(uint32_t *)(g_pMoAccumTarget + 8) = i2;
+  *(uint32_t *)(g_pMoAccumTarget + 12) = orig::CDx_CreateDepthSurfaceLikeMain(g_pCDx, 0x100u, 0x100u);
+  p3 = (char *)orig::Allocator_Generic(0x48u);
+  if ( p3 != nullptr )
+    g_pDynVB_FVF42 = (int)orig::DynVB_Constructor(p3);
   else
     g_pDynVB_FVF42 = 0;
-  v4 = (char *)orig::Allocator_Generic(0x48u);
-  if ( v4 != nullptr )
-    g_pDynVB_FVF44 = (int)orig::DynVB_Constructor(v4);
+  p4 = (char *)orig::Allocator_Generic(0x48u);
+  if ( p4 != nullptr )
+    g_pDynVB_FVF44 = (int)orig::DynVB_Constructor(p4);
   else
     g_pDynVB_FVF44 = 0;
-  v5 = (char *)orig::Allocator_Generic(0x48u);
-  if ( v5 != nullptr )
-    g_pDynVB_FVF144 = (int)orig::DynVB_Constructor(v5);
+  p5 = (char *)orig::Allocator_Generic(0x48u);
+  if ( p5 != nullptr )
+    g_pDynVB_FVF144 = (int)orig::DynVB_Constructor(p5);
   else
     g_pDynVB_FVF144 = 0;
-  v6 = (char *)orig::Allocator_Generic(0x48u);
-  if ( v6 != nullptr )
-    g_pDynVB_FVF142 = (int)orig::DynVB_Constructor(v6);
+  p6 = (char *)orig::Allocator_Generic(0x48u);
+  if ( p6 != nullptr )
+    g_pDynVB_FVF142 = (int)orig::DynVB_Constructor(p6);
   else
     g_pDynVB_FVF142 = 0;
-  v7 = (char *)orig::Allocator_Generic(0x48u);
-  if ( v7 != nullptr )
-    g_pDynVB_FVF152 = (int)orig::DynVB_Constructor(v7);
+  p7 = (char *)orig::Allocator_Generic(0x48u);
+  if ( p7 != nullptr )
+    g_pDynVB_FVF152 = (int)orig::DynVB_Constructor(p7);
   else
     g_pDynVB_FVF152 = 0;
-  orig::DynVB_Create((_DWORD *)g_pDynVB_FVF42, 4096, 0x42u, 1);
-  orig::DynVB_Create((_DWORD *)g_pDynVB_FVF44, 4096, 0x44u, 1);
-  orig::DynVB_Create((_DWORD *)g_pDynVB_FVF144, 4096, 0x144u, 1);
-  orig::DynVB_Create((_DWORD *)g_pDynVB_FVF142, 4096, 0x142u, 1);
-  orig::DynVB_Create((_DWORD *)g_pDynVB_FVF152, 0x2000, 0x152u, 1);
+  orig::DynVB_Create((uint32_t *)g_pDynVB_FVF42, 4096, 0x42u, 1);
+  orig::DynVB_Create((uint32_t *)g_pDynVB_FVF44, 4096, 0x44u, 1);
+  orig::DynVB_Create((uint32_t *)g_pDynVB_FVF144, 4096, 0x144u, 1);
+  orig::DynVB_Create((uint32_t *)g_pDynVB_FVF142, 4096, 0x142u, 1);
+  orig::DynVB_Create((uint32_t *)g_pDynVB_FVF152, 0x2000, 0x152u, 1);
   result = orig::Mem_AllocDefault(208);
   if ( result != nullptr )
   {
@@ -298,36 +300,38 @@ XI_API void __stdcall DynVB_ToggleDynVBs(void)
 
 // FUNCTION: FFXIMAIN 0x100446A0
 // GATE: PASS -- 100 trials, 27 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 27
-XI_API void __cdecl DynVB_ReleaseResourcesOf(int param_1)
+XI_API void __cdecl DynVB_ReleaseResourcesOf(int arg1)
 {
-  void *pvVar1;
+  void *p1;
   void *self_;
-  int iVar2;
-  char xi_frame[56] __attribute__((aligned(4)));
-  uint8_t  (&local_38)[20] = *reinterpret_cast<uint8_t  (*)[20]>(xi_frame + 0);
-  int  &local_24 = *reinterpret_cast<int  *>(xi_frame + 20);
-  uint8_t  (&local_1c)[28] = *reinterpret_cast<uint8_t  (*)[28]>(xi_frame + 28);
+  int i1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[56];
+    struct __attribute__((packed)) { uint8_t u1[20]; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x14]; int i2; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_3[0x1C]; uint8_t u2[28]; };   // at 0x1C
+  } frame;
   
-  if (param_1 != 0) {
-    orig::FUN_100742a0(local_38);
-    orig::ResourceIter_FindFirst_v1(local_38,param_1,5,0,0xffffffff);
-    pvVar1 = (void *)orig::ResourceIter_FindNext_v1(local_38,0);
-    if (pvVar1 != (void *)0x0) {
-LAB_100446e6:
+  if (arg1 != 0) {
+    orig::game_100742A0(frame.u1);
+    orig::ResourceIter_FindFirst_v1(frame.u1,arg1,5,0,0xffffffff);
+    p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u1,0);
+    if (p1 != (void *)0x0) {
+code_100446E6:
       do {
-        orig::ResourceIter_Start(local_1c,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
+        orig::ResourceIter_Start(frame.u2,g_pMeshResourceMng_as_v0,5,0,0xffffffff);
         do {
           do {
-            self_ = (void *)orig::ResourceIter_FindNext_v1(local_1c,0);
+            self_ = (void *)orig::ResourceIter_FindNext_v1(frame.u2,0);
             if (self_ == (void *)0x0) {
-              orig::YmGenerater_Stop_v2(pvVar1,(uint32_t *)0x0);
-              orig::Generator_ClearSubobjectOrSetFlag_v2(pvVar1,1);
-              pvVar1 = (void *)orig::ResourceIter_FindNext_v1(local_38,0);
-              if (pvVar1 == (void *)0x0) goto LAB_10044784;
-              goto LAB_100446e6;
+              orig::YmGenerater_Stop_v2(p1,(uint32_t *)0x0);
+              orig::Generator_ClearSubobjectOrSetFlag_v2(p1,1);
+              p1 = (void *)orig::ResourceIter_FindNext_v1(frame.u1,0);
+              if (p1 == (void *)0x0) goto code_10044784;
+              goto code_100446E6;
             }
           } while (((*(uint8_t *)((int)self_ + 0x1a) >> 2 & 1) == 0) ||
-                  (*(int *)((int)self_ + 0x28) != *(int *)((int)pvVar1 + 0x14)));
+                  (*(int *)((int)self_ + 0x28) != *(int *)((int)p1 + 0x14)));
           orig::CMoResource_AddRefChain_v2(self_);
           orig::YmGenerater_Stop_v2(self_,(uint32_t *)0x0);
           orig::CMoResource_ReleaseChain_v1(self_);
@@ -335,32 +339,32 @@ LAB_100446e6:
         orig::MoRes_FreeIfUnreferenced_v1(*(int **)((int)self_ + 0x14));
       } while( true );
     }
-LAB_10044784:
-    orig::ResourceIter_FindFirst_v1(local_38,param_1,7,0,0xffffffff);
-joined_r0x1004479a:
-    if (local_24 != 0) {
-LAB_100447a1:
-      pvVar1 = *(void **)(dword_1047D140 + 0xd50);
+code_10044784:
+    orig::ResourceIter_FindFirst_v1(frame.u1,arg1,7,0,0xffffffff);
+L1:
+    if (frame.i2 != 0) {
+code_100447A1:
+      p1 = *(void **)(g_1047D140 + 0xd50);
       do {
-        if (pvVar1 == (void *)0x0) {
-          orig::ResourceIter_FindNext_v1(local_38,0);
-          goto joined_r0x1004479a;
+        if (p1 == (void *)0x0) {
+          orig::ResourceIter_FindNext_v1(frame.u1,0);
+          goto L1;
         }
-        if (*(int *)((int)pvVar1 + 0x1c) == 0x4d730000) {
-          if (*(int **)((int)pvVar1 + 0x80) == (int *)0x0) {
-            iVar2 = 0;
+        if (*(int *)((int)p1 + 0x1c) == 0x4d730000) {
+          if (*(int **)((int)p1 + 0x80) == (int *)0x0) {
+            i1 = 0;
           }
           else {
-            iVar2 = **(int **)((int)pvVar1 + 0x80);
+            i1 = **(int **)((int)p1 + 0x80);
           }
-          if (iVar2 == local_24) goto LAB_100447ce;
+          if (i1 == frame.i2) goto code_100447CE;
         }
-        pvVar1 = *(void **)((int)pvVar1 + 0xc);
+        p1 = *(void **)((int)p1 + 0xc);
       } while( true );
     }
   }
   return;
-LAB_100447ce:
-  orig::CMoTask_Release(pvVar1);
-  goto LAB_100447a1;
+code_100447CE:
+  orig::CMoTask_Release(p1);
+  goto code_100447A1;
 }

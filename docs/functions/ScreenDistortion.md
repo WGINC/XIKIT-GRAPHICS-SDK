@@ -14,4 +14,4 @@ Why the file has this name (data/unit_names.json): YmElem_DrawScreenDistortion
 
 Read from the game's code (call/jmp rel32 to a function start).
 
-- `YmElem_DrawScreenDistortion` calls `sub_10313486`, `RegisterWithProcessor`, `CDx::GetRenderTargetTop`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CDx::PushRenderTargetTexture_Flag1`, `MoDX_SetInvalid`, `sub_1006AE30`, `CMoVuElem_Draw`, `sub_1006A0E0`, `CMoDX::SetWorldMatrix`
+- `YmElem_DrawScreenDistortion` calls `game_10313486`, `RegisterWithProcessor`, `CDx::GetRenderTargetTop`, `DynVB_Reserve`, `DynVB_Lock`, `DynVB_Unlock`, `CDx::PushRenderTargetTexture_Flag1`, `MoDX_SetInvalid`, `game_1006AE30`, `CMoVuElem_Draw`, `game_1006A0E0`, `CMoDX::SetWorldMatrix`

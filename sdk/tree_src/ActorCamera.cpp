@@ -4,199 +4,203 @@
 
 // FUNCTION: FFXIMAIN 0x1001E760
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Camera_SetPosition(void * self_, undefined4 * param_1)
+XI_API bits32 __thiscall Camera_SetPosition(void * self_, bits32 * arg2)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x44),param_1);
-  return uVar1;
+  u1 = orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x44),arg2);
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x1001E780
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Camera_SetTargetIfMoved(void * self_, float * param_1)
+XI_API bits32 __thiscall Camera_SetTargetIfMoved(void * self_, float * arg2)
 {
-  uint16_t uVar1;
-  long double fVar2;
-  uint32_t uVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  char xi_frame[16] __attribute__((aligned(4)));
-  float  (&local_10)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 0);
+  uint16_t u1;
+  long double f1;
+  uint32_t u2;
+  uint8_t u3;
+  long double f2;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[16];
+    struct __attribute__((packed)) { float f3[4]; };   // at 0x0
+  } frame;
   
-  orig::Vec3_Sub_v1(local_10,param_1,(float *)((int)self_ + 0x44));
-  fVar5 = orig::MathVector_Length3(local_10);
-  fVar2 = (long double)0.0f;
-  bVar4 = NAN(fVar5) || NAN(fVar2);
-  uVar1 = (uint16_t)(bVar4 || fVar5 == fVar2);
-  uVar3 = (uint32_t)(uint16_t)((uint16_t)(bVar4 || fVar5 < fVar2) << 8 | uVar1 << 0xe);
-  if ((fVar5 >= fVar2) && uVar1 == 0) {
-    uVar3 = orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x50),param_1);
+  orig::Vec3_Sub_v1(frame.f3,arg2,(float *)((int)self_ + 0x44));
+  f2 = orig::MathVector_Length3(frame.f3);
+  f1 = 0.0f;
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u1 = (uint16_t)(u3 || f2 == f1);
+  u2 = (uint32_t)(uint16_t)((uint16_t)(u3 || f2 < f1) << 8 | u1 << 0xe);
+  if ((f2 >= f1) && u1 == 0) {
+    u2 = orig::Vec3_Copy_v1((uint32_t *)((int)self_ + 0x50),arg2);
   }
-  return uVar3;
+  return u2;
 }
 
 // FUNCTION: FFXIMAIN 0x10021680
 // GATE: PASS -- 100 trials, 100 returned normally, 500 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Camera_PlaceRelativeToActor(void * self_, float * param_1, int * param_2)
+XI_API bits32 __thiscall Camera_PlaceRelativeToActor(void * self_, float * arg2, int * arg3)
 {
-  float *pfVar1;
-  int iVar2;
-  uint32_t *puVar3;
-  uint8_t bVar4;
-  long double fVar5;
-  char xi_frame[88] __attribute__((aligned(4)));
-  float  &fStack_58 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &fStack_54 = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &fStack_4c = *reinterpret_cast<float  *>(xi_frame + 12);
-  float  &fStack_48 = *reinterpret_cast<float  *>(xi_frame + 16);
-  uint8_t  (&local_40)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 24);
+  float *p1;
+  int i1;
+  uint32_t *p2;
+  uint8_t u1;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[88];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0xC]; float f4; };   // at 0xC
+    struct __attribute__((packed)) { unsigned char pad_4[0x10]; float f5; };   // at 0x10
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; uint8_t u2[64]; };   // at 0x18
+  } frame;
   
-  orig::MathVector_ReturnThis(local_40);
+  orig::MathVector_ReturnThis(frame.u2);
   if (XiControlActor_isFirstPersonView == '\0') {
-    bVar4 = NAN((long double)*param_1) || NAN((long double)0.0f);
-    if (((bVar4 != (bVar4 || (long double)*param_1 == (long double)0.0f)) &&
-        (bVar4 = NAN((long double)param_1[1]) || NAN((long double)0.0f),
-        bVar4 != (bVar4 || (long double)param_1[1] == (long double)0.0f))) &&
-       (bVar4 = NAN((long double)param_1[2]) || NAN((long double)0.0f),
-       bVar4 != (bVar4 || (long double)param_1[2] == (long double)0.0f))) {
-      param_1[1] = (-2.0f);
-      *param_1 = (-4.0f);
+    u1 = ((*arg2) != (*arg2)) || ((0.0f) != (0.0f));
+    if (((u1 != (u1 || *arg2 == 0.0f)) &&
+        (u1 = ((arg2[1]) != (arg2[1])) || ((0.0f) != (0.0f)),
+        u1 != (u1 || arg2[1] == 0.0f))) &&
+       (u1 = ((arg2[2]) != (arg2[2])) || ((0.0f) != (0.0f)),
+       u1 != (u1 || arg2[2] == 0.0f))) {
+      arg2[1] = (-2.0f);
+      *arg2 = (-4.0f);
     }
-    orig::Mat4_SetIdentity_v2(local_40);
-    pfVar1 = (float *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateX_v1(local_40,*pfVar1);
-    iVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateY_v1(local_40,*(float *)(iVar2 + 4));
-    iVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateZ_v1(local_40,*(float *)(iVar2 + 8));
-    puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1bc))))((void *)(param_2));
-    orig::Mat4_SetTranslation_v2(local_40,puVar3);
-    orig::Mat4_TransformPoint_v1(local_40,&fStack_4c,param_1);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&fStack_4c);
+    orig::Mat4_SetIdentity_v2(frame.u2);
+    p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateX_v1(frame.u2,*p1);
+    i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateY_v1(frame.u2,*(float *)(i1 + 4));
+    i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateZ_v1(frame.u2,*(float *)(i1 + 8));
+    p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
+    orig::Mat4_SetTranslation_v2(frame.u2,p2);
+    orig::Mat4_TransformPoint_v1(frame.u2,&frame.f4,arg2);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&frame.f4);
     *(uint8_t *)((int)self_ + 0x88) = 1;
-    orig::Camera_SetPosition_v1(self_,&fStack_4c);
-    puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1bc))))((void *)(param_2));
-    orig::Vec3_Copy_v2(&fStack_58,puVar3);
-    fStack_54 = (float)((long double)fStack_54 - (long double)0.5f);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&fStack_58);
+    orig::Camera_SetPosition_v1(self_,&frame.f4);
+    p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
+    orig::Vec3_Copy_v2(&frame.f2,p2);
+    frame.f3 = (float)(frame.f3 - 0.5f);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&frame.f2);
     *(uint8_t *)((int)self_ + 0x89) = 1;
-    orig::Camera_SetTargetIfMoved_v1(self_,&fStack_58);
+    orig::Camera_SetTargetIfMoved_v1(self_,&frame.f2);
     *(uint8_t *)((int)self_ + 0xf0) = 0;
   }
   else {
-    orig::Mat4_SetIdentity_v2(local_40);
-    pfVar1 = (float *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateX_v1(local_40,*pfVar1);
-    iVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateY_v1(local_40,*(float *)(iVar2 + 4));
-    iVar2 = ((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1c0))))((void *)(param_2));
-    orig::Mat4_PostRotateZ_v1(local_40,*(float *)(iVar2 + 8));
-    puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1bc))))((void *)(param_2));
-    orig::Mat4_SetRow3_v1(local_40,puVar3);
-    orig::Vec3_Copy_v2(&fStack_58,(uint32_t *)&DAT_1035126c);
-    orig::Mat4_TransformPointInPlace_v1(local_40,&fStack_58);
-    orig::Camera_SetTargetIfMoved_v1(self_,&fStack_58);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&fStack_58);
+    orig::Mat4_SetIdentity_v2(frame.u2);
+    p1 = (float *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateX_v1(frame.u2,*p1);
+    i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateY_v1(frame.u2,*(float *)(i1 + 4));
+    i1 = ((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1c0))))((void *)(arg3));
+    orig::Mat4_PostRotateZ_v1(frame.u2,*(float *)(i1 + 8));
+    p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
+    orig::Mat4_SetRow3_v1(frame.u2,p2);
+    orig::Vec3_Copy_v2(&frame.f2,(uint32_t *)&g_1035126C);
+    orig::Mat4_TransformPointInPlace_v1(frame.u2,&frame.f2);
+    orig::Camera_SetTargetIfMoved_v1(self_,&frame.f2);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x98),&frame.f2);
     *(uint8_t *)((int)self_ + 0x89) = 1;
-    puVar3 = (uint32_t *)((int (__thiscall *)(void *))((**(code **)(*param_2 + 0x1bc))))((void *)(param_2));
-    orig::Vec3_Copy_v2(&fStack_4c,puVar3);
-    fStack_48 = fStack_54;
-    orig::Camera_SetPosition_v1(self_,&fStack_4c);
-    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&fStack_4c);
+    p2 = (uint32_t *)((int (__thiscall *)(void *))((**(untyped_fn **)(*arg3 + 0x1bc))))((void *)(arg3));
+    orig::Vec3_Copy_v2(&frame.f4,p2);
+    frame.f5 = frame.f3;
+    orig::Camera_SetPosition_v1(self_,&frame.f4);
+    orig::Vec3_Copy_v2((uint32_t *)((int)self_ + 0x8c),&frame.f4);
     *(uint8_t *)((int)self_ + 0x88) = 1;
   }
-  fVar5 = (long double)*(float *)((int)self_ + 0x48) - (long double)*(float *)((int)self_ + 0x54);
-  bVar4 = NAN(fVar5) || NAN((long double)0.0f);
-  if ((bVar4 || fVar5 < (long double)0.0f) != bVar4) {
-    fVar5 = -fVar5;
+  f1 = *(float *)((int)self_ + 0x48) - *(float *)((int)self_ + 0x54);
+  u1 = ((f1) != (f1)) || ((0.0f) != (0.0f));
+  if ((u1 || f1 < 0.0f) != u1) {
+    f1 = -f1;
   }
-  _DAT_10456d78_as_f32 = (float)fVar5;
-  iVar2 = orig::Camera_SnapshotState(self_);
+  g_10456D78_as_f32 = (float)f1;
+  i1 = orig::Camera_SnapshotState(self_);
   *(uint8_t *)((int)self_ + 0xf4) = 1;
   orig::MathVector_Nop();
-  return iVar2;
+  return i1;
 }
 
 // FUNCTION: FFXIMAIN 0x10021AE0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __thiscall Camera_DiffersFromSaved(void * self_)
+XI_API bits32 __thiscall Camera_DiffersFromSaved(void * self_)
 {
-  long double fVar1;
+  long double f1;
   uint32_t xi_entry_eax = 0;
-  uint16_t uVar3;
-  uint32_t uVar2;
-  uint8_t bVar4;
-  uint8_t bVar5;
-  long double fVar6;
+  uint16_t u1;
+  uint32_t u2;
+  uint8_t u3;
+  uint8_t u4;
+  long double f2;
   
-  fVar6 = (long double)*(float *)((int)self_ + 0x7c);
-  fVar1 = (long double)0.0f;
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  uVar3 = (uint16_t)((uint32_t)xi_entry_eax >> 0x10);
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x7c);
+  f1 = 0.0f;
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  u1 = (uint16_t)((uint32_t)xi_entry_eax >> 0x10);
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x60);
-  fVar1 = (long double)*(float *)((int)self_ + 0x44);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x60);
+  f1 = *(float *)((int)self_ + 0x44);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 100);
-  fVar1 = (long double)*(float *)((int)self_ + 0x48);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 100);
+  f1 = *(float *)((int)self_ + 0x48);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x68);
-  fVar1 = (long double)*(float *)((int)self_ + 0x4c);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x68);
+  f1 = *(float *)((int)self_ + 0x4c);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x6c);
-  fVar1 = (long double)*(float *)((int)self_ + 0x50);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x6c);
+  f1 = *(float *)((int)self_ + 0x50);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x70);
-  fVar1 = (long double)*(float *)((int)self_ + 0x54);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x70);
+  f1 = *(float *)((int)self_ + 0x54);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x74);
-  fVar1 = (long double)*(float *)((int)self_ + 0x58);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 |
-                                          (uint16_t)bVar4 << 10 | (uint16_t)bVar5 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x74);
+  f1 = *(float *)((int)self_ + 0x58);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(xi_strunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 |
+                                          (uint16_t)u3 << 10 | (uint16_t)u4 << 0xe))) >> 8))) << 8) | (uint8_t)(1)));
   }
-  fVar6 = (long double)*(float *)((int)self_ + 0x78);
-  fVar1 = (long double)*(float *)((int)self_ + 0x5c);
-  bVar4 = NAN(fVar6) || NAN(fVar1);
-  bVar5 = bVar4 || fVar6 == fVar1;
-  uVar2 = xi_trunc24((((uint32_t)(((uint32_t)(uint16_t)(uVar3) << 16) | (uint16_t)((uint16_t)(bVar4 || fVar6 < fVar1) << 8 | (uint16_t)bVar4 << 10 |
-                                 (uint16_t)bVar5 << 0xe))) >> 8));
-  if (bVar4 == bVar5) {
-    return ((uint32_t)(((uint32_t)(uVar2) << 8) | (uint8_t)(1)));
+  f2 = *(float *)((int)self_ + 0x78);
+  f1 = *(float *)((int)self_ + 0x5c);
+  u3 = ((f2) != (f2)) || ((f1) != (f1));
+  u4 = u3 || f2 == f1;
+  u2 = xi_trunc24((((uint32_t)(((uint32_t)(uint16_t)(u1) << 16) | (uint16_t)((uint16_t)(u3 || f2 < f1) << 8 | (uint16_t)u3 << 10 |
+                                 (uint16_t)u4 << 0xe))) >> 8));
+  if (u3 == u4) {
+    return ((uint32_t)(((uint32_t)(u2) << 8) | (uint8_t)(1)));
   }
-  return (uint32_t)uVar2 << 8;
+  return (uint32_t)u2 << 8;
 }
 
 // FUNCTION: FFXIMAIN 0x10021B70
@@ -214,46 +218,48 @@ XI_API int __thiscall Camera_SnapshotState(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API int __thiscall Camera_BuildLookAtView(void * self_)
 {
-  float *pfVar1;
-  uint32_t uVar2;
-  uint8_t bVar3;
-  long double fVar4;
-  char xi_frame[192] __attribute__((aligned(4)));
-  float  &local_c0 = *reinterpret_cast<float  *>(xi_frame + 0);
-  float  &local_bc = *reinterpret_cast<float  *>(xi_frame + 4);
-  float  &local_b8 = *reinterpret_cast<float  *>(xi_frame + 8);
-  float  &local_ac = *reinterpret_cast<float  *>(xi_frame + 20);
-  float  &local_a8 = *reinterpret_cast<float  *>(xi_frame + 24);
-  float  (&local_a0)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 32);
-  float  (&local_90)[4] = *reinterpret_cast<float  (*)[4]>(xi_frame + 48);
-  uint8_t  (&local_80)[64] = *reinterpret_cast<uint8_t  (*)[64]>(xi_frame + 64);
-  float  (&local_40)[16] = *reinterpret_cast<float  (*)[16]>(xi_frame + 128);
+  float *p1;
+  uint32_t u1;
+  uint8_t u2;
+  long double f1;
+  union __attribute__((aligned(4))) {   // the locals whose addresses the code takes, at their offsets in the original's frame
+    char bytes[192];
+    struct __attribute__((packed)) { float f2; };   // at 0x0
+    struct __attribute__((packed)) { unsigned char pad_2[0x4]; float f3; };   // at 0x4
+    struct __attribute__((packed)) { unsigned char pad_3[0x8]; float f4; };   // at 0x8
+    struct __attribute__((packed)) { unsigned char pad_4[0x14]; float f5; };   // at 0x14
+    struct __attribute__((packed)) { unsigned char pad_5[0x18]; float f6; };   // at 0x18
+    struct __attribute__((packed)) { unsigned char pad_6[0x20]; float f7[4]; };   // at 0x20
+    struct __attribute__((packed)) { unsigned char pad_7[0x30]; float f8[4]; };   // at 0x30
+    struct __attribute__((packed)) { unsigned char pad_8[0x40]; uint8_t u3[64]; };   // at 0x40
+    struct __attribute__((packed)) { unsigned char pad_9[0x80]; float f9[16]; };   // at 0x80
+  } frame;
   
-  orig::Vec3_Copy_v1(local_90,(float *)((int)self_ + 0x50));
-  pfVar1 = (float *)((int)self_ + 0x44);
-  orig::Vec3_Sub_v1(&local_c0,(float *)((int)self_ + 0x50),pfVar1);
-  orig::MathVector_ReturnThis_v1(local_80);
-  orig::Mat4_SetIdentity_v1(local_80);
-  fVar4 = xi_castbits<long double>(fpatan(-(long double)local_c0,-(long double)local_b8));
-  local_a8 = *(float *)((int)self_ + 0x5c);
-  local_ac = (float)fVar4;
-  orig::Mat4_PostRotateZ_v1(local_80,local_a8);
-  orig::Mat4_PostRotateY_v1(local_80,local_ac);
-  orig::Mat4_PostRotateX_v1(local_80,0.0f);
-  orig::Vec3_Copy_v1(local_a0,(uint32_t *)((int)self_ + 0xa8));
-  uVar2 = orig::Mat4_TransformNormalInPlace_v1(local_80,local_a0);
-  orig::FUN_100274b0(&local_c0,uVar2);
-  bVar3 = NAN((long double)*(float *)((int)self_ + 0x7c)) || NAN((long double)0.0f);
-  if (bVar3 == (bVar3 || (long double)*(float *)((int)self_ + 0x7c) == (long double)0.0f)) {
-    local_bc = (float)((long double)*(float *)((int)self_ + 0x84) * (long double)*(float *)((int)self_ + 0x7c)
-                      + (long double)local_bc);
-    orig::FUN_100274b0(&local_c0,&local_c0);
+  orig::Vec3_Copy_v1(frame.f8,(float *)((int)self_ + 0x50));
+  p1 = (float *)((int)self_ + 0x44);
+  orig::Vec3_Sub_v1(&frame.f2,(float *)((int)self_ + 0x50),p1);
+  orig::MathVector_ReturnThis_v1(frame.u3);
+  orig::Mat4_SetIdentity_v1(frame.u3);
+  f1 = bit_cast<long double>(x87_fpatan(-frame.f2,-frame.f4));
+  frame.f6 = *(float *)((int)self_ + 0x5c);
+  frame.f5 = (float)f1;
+  orig::Mat4_PostRotateZ_v1(frame.u3,frame.f6);
+  orig::Mat4_PostRotateY_v1(frame.u3,frame.f5);
+  orig::Mat4_PostRotateX_v1(frame.u3,0.0f);
+  orig::Vec3_Copy_v1(frame.f7,(uint32_t *)((int)self_ + 0xa8));
+  u1 = orig::Mat4_TransformNormalInPlace_v1(frame.u3,frame.f7);
+  orig::game_100274B0(&frame.f2,u1);
+  u2 = ((*(float *)((int)self_ + 0x7c)) != (*(float *)((int)self_ + 0x7c))) || ((0.0f) != (0.0f));
+  if (u2 == (u2 || *(float *)((int)self_ + 0x7c) == 0.0f)) {
+    frame.f3 = (float)(*(float *)((int)self_ + 0x84) * *(float *)((int)self_ + 0x7c)
+                      + frame.f3);
+    orig::game_100274B0(&frame.f2,&frame.f2);
   }
-  orig::Vec3_Add_10026FA0_v1(local_90,pfVar1,&local_c0);
-  orig::FUN_102d7ff9(local_40,pfVar1,local_90,local_a0);
-  uVar2 = orig::Occlusion_AreAll16FloatsAccepted(local_40);
-  if ((char)uVar2 != '\0') {
-    orig::Mat4_Copy_v1((void *)((int)self_ + 4),local_40);
+  orig::Vec3_Add_10026FA0_v1(frame.f8,p1,&frame.f2);
+  orig::game_102D7FF9(frame.f9,p1,frame.f8,frame.f7);
+  u1 = orig::Occlusion_AreAll16FloatsAccepted(frame.f9);
+  if ((char)u1 != '\0') {
+    orig::Mat4_Copy_v1((void *)((int)self_ + 4),frame.f9);
   }
   orig::MathVector_Nop();
   return (int)self_ + 4;
@@ -286,86 +292,86 @@ XI_API void __thiscall Actor_ClearIndexTable(void * self_)
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API long double __thiscall Actor_GetPercentScaleByIndex(void * self_, int no)
 {
-  uint8_t bVar1;
+  uint8_t u1;
   
   if ((3 < no) || (no < 0)) {
-    orig::ErrorReport_NoOpVarargsB_v1(&DAT_1035133c);
+    orig::ErrorReport_NoOpVarargsB_v1(&g_1035133C);
     no = 0;
   }
-  bVar1 = *(uint8_t *)(no + 10 + (int)self_);
-  if (bVar1 == 0xff) {
+  u1 = *(uint8_t *)(no + 10 + (int)self_);
+  if (u1 == 0xff) {
     return (long double)1.0f;
   }
-  return (long double)bVar1 * (long double)0.00999999977648258209228515625f;
+  return (long double)u1 * (long double)0.00999999977648258209228515625f;
 }
 
 // FUNCTION: FFXIMAIN 0x10022170
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API undefined4 __cdecl Actor_MapPercentScaleIndex(int param_1)
+XI_API bits32 __cdecl Actor_MapPercentScaleIndex(int arg1)
 {
-  uint32_t uVar1;
+  uint32_t u1;
   
-  uVar1 = 0xffffffff;
-  if (param_1 == 7) {
-    uVar1 = 0;
+  u1 = 0xffffffff;
+  if (arg1 == 7) {
+    u1 = 0;
   }
-  else if (param_1 == 8) {
+  else if (arg1 == 8) {
     return 2;
   }
-  return uVar1;
+  return u1;
 }
 
 // FUNCTION: FFXIMAIN 0x10022190
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __thiscall Actor_LookupPercentScaleA(void * self_, int param_2)
+XI_API long double __thiscall Actor_LookupPercentScaleA(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Actor_MapPercentScaleIndex(param_2);
-  if (iVar1 < 0) {
-    return (long double)1.0f;
+  i1 = orig::Actor_MapPercentScaleIndex(arg2);
+  if (i1 < 0) {
+    return 1.0f;
   }
-  iVar1 = (int)*(char *)(iVar1 + 10 + (int)self_);
-  if (iVar1 == 0xff) {
-    return (long double)1.0f;
+  i1 = (int)*(char *)(i1 + 10 + (int)self_);
+  if (i1 == 0xff) {
+    return 1.0f;
   }
-  return (long double)iVar1 * (long double)0.00999999977648258209228515625f;
+  return i1 * 0.00999999977648258209228515625f;
 }
 
 // FUNCTION: FFXIMAIN 0x100221E0
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API long double __thiscall Actor_LookupPercentScaleB(void * self_, int param_2)
+XI_API long double __thiscall Actor_LookupPercentScaleB(void * self_, int arg2)
 {
-  int iVar1;
+  int i1;
   
-  iVar1 = orig::Actor_MapPercentScaleIndex(param_2);
-  if (iVar1 < 0) {
-    return (long double)1.0f;
+  i1 = orig::Actor_MapPercentScaleIndex(arg2);
+  if (i1 < 0) {
+    return 1.0f;
   }
-  iVar1 = (int)*(char *)(iVar1 + 0xb + (int)self_);
-  if (iVar1 == 0xff) {
-    return (long double)1.0f;
+  i1 = (int)*(char *)(i1 + 0xb + (int)self_);
+  if (i1 == 0xff) {
+    return 1.0f;
   }
-  return (long double)iVar1 * (long double)0.00999999977648258209228515625f;
+  return i1 * 0.00999999977648258209228515625f;
 }
 
 // FUNCTION: FFXIMAIN 0x10022230
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
 XI_API void * __thiscall Actor_InitIndexTable(void * self_)
 {
-  uint8_t *puVar1;
+  uint8_t *p1;
   
   orig::Actor_ClearIndexTable(self_);
   *(uint8_t *)((int)self_ + 0x10) = 0xff;
   *(uint8_t *)((int)self_ + 0x11) = 0xff;
   *(uint8_t *)((int)self_ + 0x12) = 0xff;
   *(uint8_t *)((int)self_ + 0x13) = 0xff;
-  puVar1 = (uint8_t *)((int)self_ + 0x1c);
+  p1 = (uint8_t *)((int)self_ + 0x1c);
   do {
-    puVar1[-8] = 0xff;
-    *puVar1 = 0xff;
-    puVar1 = puVar1 + 1;
-  } while ((int)(puVar1 + (-0x1c - (int)self_)) < 8);
+    p1[-8] = 0xff;
+    *p1 = 0xff;
+    p1 = p1 + 1;
+  } while ((int)(p1 + (-0x1c - (int)self_)) < 8);
   *(uint8_t *)((int)self_ + 0x24) = 0xff;
   *(uint8_t *)((int)self_ + 0x25) = 0xff;
   return self_;
@@ -373,10 +379,10 @@ XI_API void * __thiscall Actor_InitIndexTable(void * self_)
 
 // FUNCTION: FFXIMAIN 0x10022320
 // GATE: PASS -- 100 trials, 100 returned normally, 0 D3D calls compared (diffemu_gfx, clean build); gates: fuzz PASS 100
-XI_API int __cdecl ActorCamera_LookupTable1032A41C(int param_1)
+XI_API int __cdecl ActorCamera_LookupTable1032A41C(int arg1)
 {
-  if (param_1 < 9) {
-    return (int)(char)((uint8_t *)((&DAT_1032a41c)))[param_1];
+  if (arg1 < 9) {
+    return (int)(char)((uint8_t *)((&g_1032A41C)))[arg1];
   }
   return -1;
 }
